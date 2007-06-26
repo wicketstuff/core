@@ -67,6 +67,7 @@ public class MarkupIdModel extends LoadableDetachableModel {
 		if (components == null) {
 			components = new HashSet<Component>();
 		}
+		component.setOutputMarkupId(true);
 		components.add(component);
 		return this;
 	}
@@ -82,7 +83,10 @@ public class MarkupIdModel extends LoadableDetachableModel {
 		if (components == null) {
 			components = new HashSet<Component>();
 		}
-		this.components.addAll(components);
+		for (Component component : components) {
+			component.setOutputMarkupId(true);
+			add(component);
+		}
 		return this;
 	}
 
