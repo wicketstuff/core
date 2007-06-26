@@ -1,5 +1,5 @@
 /*  
-	Animator.js 1.1.7
+	Animator.js 1.1.9
 	
 	This library is released under the BSD license:
 
@@ -40,12 +40,13 @@ function Animator(options) {
 	this.subjects = [];
 	this.target = 0;
 	this.state = 0;
+	this.lastTime = null;
 };
 Animator.prototype = {
 	// apply defaults
 	setOptions: function(options) {
 		this.options = Animator.applyDefaults({
-			interval: 40,  // time between animation frames
+			interval: 20,  // time between animation frames
 			duration: 400, // length of animation
 			onComplete: function(){},
 			onStep: function(){},
@@ -60,6 +61,7 @@ Animator.prototype = {
 	seekFromTo: function(from, to) {
 		this.target = Math.max(0, Math.min(1, to));
 		this.state = Math.max(0, Math.min(1, from));
+		this.lastTime = new Date().getTime();
 		if (!this.intervalId) {
 			this.intervalId = window.setInterval(this.timerDelegate, this.options.interval);
 		}
@@ -79,10 +81,6 @@ Animator.prototype = {
 		this.subjects[this.subjects.length] = subject;
 		return this;
 	},
-	// remove an object that was added with addSubject
-	removeSubject: function(subject) {
-		this.subjects = this.subjects.reject(function(item){return item == subject;});
-	},
 	// remove all subjects
 	clearSubjects: function() {
 		this.subjects = [];
@@ -100,8 +98,10 @@ Animator.prototype = {
 	},
 	// called once per frame to update the current state
 	onTimerEvent: function() {
-		
-		var movement = (this.options.interval / this.options.duration) * (this.state < this.target ? 1 : -1);
+		var now = new Date().getTime();
+		var timePassed = now - this.lastTime;
+		this.lastTime = now;
+		var movement = (timePassed / this.options.duration) * (this.state < this.target ? 1 : -1);
 		if (Math.abs(movement) >= Math.abs(this.state - this.target)) {
 			this.state = this.target;
 		} else {
@@ -124,7 +124,10 @@ Animator.prototype = {
 	reverse: function() {this.seekFromTo(1, 0)},
 	// return a string describing this Animator, for debugging
 	inspect: function() {
-		var str = "#<Animator:";
+		var str = "#<Animator:\n";
+		for (var i=0; i<this.subjects.length; i++) {
+			str += this.subjects[i].inspect();
+		}
 		str += ">";
 		return str;
 	}
@@ -253,6 +256,7 @@ NumericalStyleSubject.prototype = {
 			try {
 				this.els[i].style[this.property] = style;
 			} catch (e) {
+				// ignore fontWeight - intermediate numerical values cause exeptions in firefox
 				if (this.property != 'fontWeight') throw e;
 			}
 			if (j++ > 20) return;
@@ -263,6 +267,9 @@ NumericalStyleSubject.prototype = {
 		if (this.property == 'filter') return "alpha(opacity=" + Math.round(state*100) + ")";
 		if (this.property == 'opacity') return state;
 		return Math.round(state) + this.units;
+	},
+	inspect: function() {
+		return "\t" + this.property + "(" + this.from + this.units + " to " + this.to + this.units + ")\n";
 	}
 }
 
@@ -272,6 +279,8 @@ function ColorStyleSubject(els, property, from, to) {
 	this.property = Animator.camelize(property);
 	this.to = this.expandColor(to);
 	this.from = this.expandColor(from);
+	this.origFrom = from;
+	this.origTo = to;
 }
 
 ColorStyleSubject.prototype = {
@@ -300,6 +309,9 @@ ColorStyleSubject.prototype = {
 		for (var i=0; i<this.els.length; i++) {
 			this.els[i].style[this.property] = color;
 		}
+	},
+	inspect: function() {
+		return "\t" + this.property + "(" + this.origFrom + " to " + this.origTo + ")\n";
 	}
 }
 
@@ -351,6 +363,9 @@ DiscreteStyleSubject.prototype = {
 		for (var i=0; i<this.els.length; i++) {
 			this.els[i].style[this.property] = state <= this.threshold ? this.from : this.to; 
 		}
+	},
+	inspect: function() {
+		return "\t" + this.property + "(" + this.from + " to " + this.to + " @ " + this.threshold + ")\n";
 	}
 }
 
@@ -459,6 +474,13 @@ CSSStyleSubject.prototype = {
 		for (var i=0; i<this.subjects.length; i++) {
 			this.subjects[i].setState(state);
 		}
+	},
+	inspect: function() {
+		var str = "";
+		for (var i=0; i<this.subjects.length; i++) {
+			str += this.subjects[i].inspect();
+		}
+		return str;
 	}
 }
 // get the current value of a css property, 
