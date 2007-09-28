@@ -25,7 +25,8 @@ import org.apache.wicket.model.IModel;
  * @author Gerolf Seitz
  * 
  */
-public class ColorStyleSubject extends AbstractStyleSubject {
+public class ColorStyleSubject extends AbstractStyleSubject
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -47,8 +48,8 @@ public class ColorStyleSubject extends AbstractStyleSubject {
 	 * @param to
 	 *            the final hex value
 	 */
-	public ColorStyleSubject(IModel targets, String property, String from,
-			String to) {
+	public ColorStyleSubject(IModel targets, String property, String from, String to)
+	{
 		target(targets);
 		from(from);
 		to(to);
@@ -62,7 +63,8 @@ public class ColorStyleSubject extends AbstractStyleSubject {
 	 *            the property of the subject
 	 * @return this {@codeColorStyleSubject}
 	 */
-	public ColorStyleSubject property(String property) {
+	public ColorStyleSubject property(String property)
+	{
 		this.property = property;
 		return this;
 	}
@@ -73,7 +75,8 @@ public class ColorStyleSubject extends AbstractStyleSubject {
 	 * @see org.wicketstuff.animator.AbstractStyleSubject#writeArguments(java.lang.StringBuilder)
 	 */
 	@Override
-	protected void writeArguments(StringBuilder sb) {
+	protected void writeArguments(StringBuilder sb)
+	{
 		sb.append(", ");
 		sb.append("'");
 		sb.append(property);
@@ -87,7 +90,8 @@ public class ColorStyleSubject extends AbstractStyleSubject {
 	 * @see org.wicketstuff.animator.AbstractStyleSubject#getStyleType()
 	 */
 	@Override
-	protected String getStyleType() {
+	protected String getStyleType()
+	{
 		return "ColorStyleSubject";
 	}
 

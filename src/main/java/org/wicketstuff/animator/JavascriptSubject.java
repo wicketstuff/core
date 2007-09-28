@@ -25,15 +25,17 @@ package org.wicketstuff.animator;
  * @author Gerolf Seitz
  * 
  */
-public abstract class JavascriptSubject implements IAnimatorSubject {
+public abstract class JavascriptSubject implements IAnimatorSubject
+{
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.wicketstuff.animator.IAnimatorSubject#getJavaScript()
 	 */
-	public String getJavaScript() {
-		return "function (value) {" + getFunctionBody() + "};";
+	public String getJavaScript()
+	{
+		return "function (value) {" + getFunctionBody() + "}";
 	}
 
 	/**

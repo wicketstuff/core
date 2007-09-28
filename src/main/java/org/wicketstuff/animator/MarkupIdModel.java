@@ -31,7 +31,8 @@ import org.apache.wicket.model.LoadableDetachableModel;
  * @author Gerolf Seitz
  * 
  */
-public class MarkupIdModel extends LoadableDetachableModel {
+public class MarkupIdModel extends LoadableDetachableModel
+{
 
 	private static final long serialVersionUID = 1L;
 	private Set<Component> components;
@@ -42,7 +43,8 @@ public class MarkupIdModel extends LoadableDetachableModel {
 	 * @param component
 	 *            the component to be added.
 	 */
-	public MarkupIdModel(Component component) {
+	public MarkupIdModel(Component component)
+	{
 		add(component);
 	}
 
@@ -52,7 +54,8 @@ public class MarkupIdModel extends LoadableDetachableModel {
 	 * @param components
 	 *            the components to be added.
 	 */
-	public MarkupIdModel(Collection<? extends Component> components) {
+	public MarkupIdModel(Collection<? extends Component> components)
+	{
 		add(components);
 	}
 
@@ -63,8 +66,10 @@ public class MarkupIdModel extends LoadableDetachableModel {
 	 *            the component to be added.
 	 * @return this {@link MarkupIdModel} for fluent method calls.
 	 */
-	public MarkupIdModel add(Component component) {
-		if (components == null) {
+	public MarkupIdModel add(Component component)
+	{
+		if (components == null)
+		{
 			components = new HashSet<Component>();
 		}
 		component.setOutputMarkupId(true);
@@ -79,11 +84,14 @@ public class MarkupIdModel extends LoadableDetachableModel {
 	 *            the components to be added.
 	 * @return this {@link MarkupIdModel} for fluent method calls.
 	 */
-	public MarkupIdModel add(Collection<? extends Component> components) {
-		if (components == null) {
+	public MarkupIdModel add(Collection<? extends Component> components)
+	{
+		if (components == null)
+		{
 			components = new HashSet<Component>();
 		}
-		for (Component component : components) {
+		for (Component component : components)
+		{
 			component.setOutputMarkupId(true);
 			add(component);
 		}
@@ -96,9 +104,11 @@ public class MarkupIdModel extends LoadableDetachableModel {
 	 * @see org.apache.wicket.model.LoadableDetachableModel#load()
 	 */
 	@Override
-	protected Object load() {
+	protected Object load()
+	{
 		Set<String> ids = new HashSet<String>();
-		for (Component component : components) {
+		for (Component component : components)
+		{
 			ids.add(component.getMarkupId());
 		}
 		return ids;

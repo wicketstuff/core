@@ -33,7 +33,8 @@ import org.apache.wicket.util.template.TextTemplateHeaderContributor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Animator implements Serializable {
+public class Animator implements Serializable
+{
 
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = LoggerFactory.getLogger(Animator.class);
@@ -44,7 +45,8 @@ public class Animator implements Serializable {
 
 	private Map<String, String> options;
 
-	public Animator() {
+	public Animator()
+	{
 		subjects = new ArrayList<IAnimatorSubject>();
 		options = new HashMap<String, String>();
 	}
@@ -54,7 +56,8 @@ public class Animator implements Serializable {
 	 * 
 	 * @return this {@link Animator}
 	 */
-	public Animator withEaseInOutTransition() {
+	public Animator withEaseInOutTransition()
+	{
 		return withTransition("Animator.tx.easeInOut");
 	}
 
@@ -63,7 +66,8 @@ public class Animator implements Serializable {
 	 * 
 	 * @return this {@link Animator}
 	 */
-	public Animator withLinearTransition() {
+	public Animator withLinearTransition()
+	{
 		return withTransition("Animator.tx.linear");
 	}
 
@@ -72,7 +76,8 @@ public class Animator implements Serializable {
 	 * 
 	 * @return this {@link Animator}
 	 */
-	public Animator withEaseInTransition() {
+	public Animator withEaseInTransition()
+	{
 		return withTransition("Animator.tx.easeIn");
 	}
 
@@ -81,7 +86,8 @@ public class Animator implements Serializable {
 	 * 
 	 * @return this {@link Animator}
 	 */
-	public Animator withEaseOutTransition() {
+	public Animator withEaseOutTransition()
+	{
 		return withTransition("Animator.tx.easeOut");
 	}
 
@@ -90,7 +96,8 @@ public class Animator implements Serializable {
 	 * 
 	 * @return this {@link Animator}
 	 */
-	public Animator withStrongEaseInTransition() {
+	public Animator withStrongEaseInTransition()
+	{
 		return withTransition("Animator.tx.strongEaseIn");
 	}
 
@@ -99,7 +106,8 @@ public class Animator implements Serializable {
 	 * 
 	 * @return this {@link Animator}
 	 */
-	public Animator withStrongEaseOutTransition() {
+	public Animator withStrongEaseOutTransition()
+	{
 		return withTransition("Animator.tx.strongEaseOut");
 	}
 
@@ -108,7 +116,8 @@ public class Animator implements Serializable {
 	 * 
 	 * @return this {@link Animator}
 	 */
-	public Animator withElasticTransition() {
+	public Animator withElasticTransition()
+	{
 		return withTransition("Animator.tx.elastic");
 	}
 
@@ -117,7 +126,8 @@ public class Animator implements Serializable {
 	 * 
 	 * @return this {@link Animator}
 	 */
-	public Animator withVeryElasticTransition() {
+	public Animator withVeryElasticTransition()
+	{
 		return withTransition("Animator.tx.veryElastic");
 	}
 
@@ -126,7 +136,8 @@ public class Animator implements Serializable {
 	 * 
 	 * @return this {@link Animator}
 	 */
-	public Animator withBouncyTransition() {
+	public Animator withBouncyTransition()
+	{
 		return withTransition("Animator.tx.bouncy");
 	}
 
@@ -135,7 +146,8 @@ public class Animator implements Serializable {
 	 * 
 	 * @return this {@link Animator}
 	 */
-	public Animator withVeryBouncyTransition() {
+	public Animator withVeryBouncyTransition()
+	{
 		return withTransition("Animator.tx.veryBouncy");
 	}
 
@@ -146,7 +158,8 @@ public class Animator implements Serializable {
 	 *            the acceleration of the transition
 	 * @return this {@link Animator}
 	 */
-	public Animator withEaseInTransition(int acceleration) {
+	public Animator withEaseInTransition(int acceleration)
+	{
 		return withTransition("Animator.makeEaseIn", acceleration);
 	}
 
@@ -157,7 +170,8 @@ public class Animator implements Serializable {
 	 *            the acceleration of the transition
 	 * @return this {@link Animator}
 	 */
-	public Animator withEaseOutTransition(int acceleration) {
+	public Animator withEaseOutTransition(int acceleration)
+	{
 		return withTransition("Animator.makeEaseOut", acceleration);
 	}
 
@@ -168,7 +182,8 @@ public class Animator implements Serializable {
 	 *            the acceleration of the transition
 	 * @return this {@link Animator}
 	 */
-	public Animator withElasticTransition(int acceleration) {
+	public Animator withElasticTransition(int acceleration)
+	{
 		return withTransition("Animator.makeElastic", acceleration);
 	}
 
@@ -179,7 +194,8 @@ public class Animator implements Serializable {
 	 *            the acceleration of the transition
 	 * @return this {@link Animator}
 	 */
-	public Animator withBouncyTransition(int acceleration) {
+	public Animator withBouncyTransition(int acceleration)
+	{
 		return withTransition("Animator.makeBouncy", acceleration);
 	}
 
@@ -197,18 +213,19 @@ public class Animator implements Serializable {
 	 *            the sustainLevel
 	 * @return this {@link Animator}
 	 */
-	public Animator withADSRTransition(int attackEnd, int decayEnd,
-			int suspendEnd, int sustainLevel) {
-		return withTransition(String.format(
-				"Animator.makeADSR(%d, %d, %d, %d)", attackEnd, decayEnd,
-				suspendEnd, sustainLevel));
+	public Animator withADSRTransition(int attackEnd, int decayEnd, int suspendEnd, int sustainLevel)
+	{
+		return withTransition(String.format("Animator.makeADSR(%d, %d, %d, %d)", attackEnd,
+				decayEnd, suspendEnd, sustainLevel));
 	}
 
-	private Animator withTransition(String transition, int acceleration) {
+	private Animator withTransition(String transition, int acceleration)
+	{
 		return withTransition(String.format("%s(%d)", transition, acceleration));
 	}
 
-	private Animator withTransition(String transition) {
+	private Animator withTransition(String transition)
+	{
 		options.put("transition", transition);
 		return this;
 	}
@@ -220,7 +237,8 @@ public class Animator implements Serializable {
 	 *            the interval of the animation in milliseconds.
 	 * @return this {@link Animator}
 	 */
-	public Animator interval(int interval) {
+	public Animator interval(int interval)
+	{
 		options.put("interval", String.valueOf(interval));
 		return this;
 	}
@@ -232,7 +250,8 @@ public class Animator implements Serializable {
 	 *            the duration of the animation in milliseconds.
 	 * @return this {@link Animator}
 	 */
-	public Animator duration(int duration) {
+	public Animator duration(int duration)
+	{
 		options.put("duration", String.valueOf(duration));
 		return this;
 	}
@@ -244,7 +263,8 @@ public class Animator implements Serializable {
 	 *            the subject to add
 	 * @return this {@link Animator}
 	 */
-	public Animator addSubject(IAnimatorSubject subject) {
+	public Animator addSubject(IAnimatorSubject subject)
+	{
 		subjects.add(subject);
 		return this;
 	}
@@ -256,9 +276,9 @@ public class Animator implements Serializable {
 	 * @return this {@link Animator}
 	 */
 	public Animator addCssStyleSubject(IModel targets, String fromStyleOrClass,
-			String toStyleOrClass) {
-		return addSubject(new CssStyleSubject(targets, fromStyleOrClass,
-				toStyleOrClass));
+			String toStyleOrClass)
+	{
+		return addSubject(new CssStyleSubject(targets, fromStyleOrClass, toStyleOrClass));
 	}
 
 	/**
@@ -267,7 +287,8 @@ public class Animator implements Serializable {
 	 * @see CssStyleSubject#CssStyleSubject(IModel, String)
 	 * @return this {@link Animator}
 	 */
-	public Animator addCssStyleSubject(IModel targets, String toStyleOrClass) {
+	public Animator addCssStyleSubject(IModel targets, String toStyleOrClass)
+	{
 		return addSubject(new CssStyleSubject(targets, toStyleOrClass));
 	}
 
@@ -278,10 +299,10 @@ public class Animator implements Serializable {
 	 *      int)
 	 * @return this {@link Animator}
 	 */
-	public Animator addNumericalStyleSubject(IModel targets, String property,
-			int fromValue, int toValue) {
-		return addSubject(new NumericalStyleSubject(targets, property,
-				fromValue, toValue));
+	public Animator addNumericalStyleSubject(IModel targets, String property, int fromValue,
+			int toValue)
+	{
+		return addSubject(new NumericalStyleSubject(targets, property, fromValue, toValue));
 	}
 
 	/**
@@ -291,10 +312,10 @@ public class Animator implements Serializable {
 	 *      int, String)
 	 * @return this {@link Animator}
 	 */
-	public Animator addNumericalStyleSubject(IModel targets, String property,
-			int from, int to, String unit) {
-		return addSubject(new NumericalStyleSubject(targets, property, from,
-				to, unit));
+	public Animator addNumericalStyleSubject(IModel targets, String property, int from, int to,
+			String unit)
+	{
+		return addSubject(new NumericalStyleSubject(targets, property, from, to, unit));
 	}
 
 	/**
@@ -303,8 +324,8 @@ public class Animator implements Serializable {
 	 * @see DiscreteStyleSubject#DiscreteStyleSubject(IModel, String, int, int)
 	 * @return this {@link Animator}
 	 */
-	public Animator addDiscreteStyleSubject(IModel targets, String property,
-			int from, int to) {
+	public Animator addDiscreteStyleSubject(IModel targets, String property, int from, int to)
+	{
 		return addSubject(new DiscreteStyleSubject(targets, property, from, to));
 	}
 
@@ -315,10 +336,10 @@ public class Animator implements Serializable {
 	 *      double)
 	 * @return this {@link Animator}
 	 */
-	public Animator addDiscreteStyleSubject(IModel targets, String property,
-			int from, int to, double threshold) {
-		return addSubject(new DiscreteStyleSubject(targets, property, from, to,
-				threshold));
+	public Animator addDiscreteStyleSubject(IModel targets, String property, int from, int to,
+			double threshold)
+	{
+		return addSubject(new DiscreteStyleSubject(targets, property, from, to, threshold));
 	}
 
 	/**
@@ -327,10 +348,10 @@ public class Animator implements Serializable {
 	 * @see ColorStyleSubject#ColorStyleSubject(IModel, String, String, String)
 	 * @return this {@link Animator}
 	 */
-	public Animator addColorStyleSubject(IModel targets, String property,
-			String fromColor, String toColor) {
-		return addSubject(new ColorStyleSubject(targets, property, fromColor,
-				toColor));
+	public Animator addColorStyleSubject(IModel targets, String property, String fromColor,
+			String toColor)
+	{
+		return addSubject(new ColorStyleSubject(targets, property, fromColor, toColor));
 	}
 
 	/**
@@ -339,8 +360,10 @@ public class Animator implements Serializable {
 	 * @author Gerolf Seitz
 	 * 
 	 */
-	public static abstract class Action {
-		private Action() {
+	public static abstract class Action
+	{
+		private Action()
+		{
 		}
 
 		public abstract IModel getScript();
@@ -348,10 +371,13 @@ public class Animator implements Serializable {
 		/**
 		 * @return a new {@link Action} representing the toggle command
 		 */
-		public static Action toggle() {
-			return new Action() {
+		public static Action toggle()
+		{
+			return new Action()
+			{
 				@Override
-				public IModel getScript() {
+				public IModel getScript()
+				{
 					return new Model("${animatorId}.toggle();");
 				}
 			};
@@ -360,10 +386,13 @@ public class Animator implements Serializable {
 		/**
 		 * @return a new {@link Action} representing the play command
 		 */
-		public static Action play() {
-			return new Action() {
+		public static Action play()
+		{
+			return new Action()
+			{
 				@Override
-				public IModel getScript() {
+				public IModel getScript()
+				{
 					return new Model("${animatorId}.play();");
 				}
 			};
@@ -372,10 +401,13 @@ public class Animator implements Serializable {
 		/**
 		 * @return a new {@link Action} representing the reverse command
 		 */
-		public static Action reverse() {
-			return new Action() {
+		public static Action reverse()
+		{
+			return new Action()
+			{
 				@Override
-				public IModel getScript() {
+				public IModel getScript()
+				{
 					return new Model("${animatorId}.reverse();");
 				}
 			};
@@ -388,12 +420,15 @@ public class Animator implements Serializable {
 		 *            the final position of the animation (0 <= to <= 1)
 		 * @return a new {@link Action} representing the seekFromTo command
 		 */
-		public static Action seekFromTo(final double from, final double to) {
-			return new Action() {
+		public static Action seekFromTo(final double from, final double to)
+		{
+			return new Action()
+			{
 				@Override
-				public IModel getScript() {
-					return new Model(String.format(
-							"${animatorId}.seekFromTo(%.2f,%.2f);", from, to));
+				public IModel getScript()
+				{
+					return new Model(String
+							.format("${animatorId}.seekFromTo(%.2f,%.2f);", from, to));
 				}
 			};
 		}
@@ -403,12 +438,14 @@ public class Animator implements Serializable {
 		 *            the final position of the animation (0 <= to <= 1)
 		 * @return a new {@link Action} representing the seekTo command
 		 */
-		public static Action seekTo(final double to) {
-			return new Action() {
+		public static Action seekTo(final double to)
+		{
+			return new Action()
+			{
 				@Override
-				public IModel getScript() {
-					return new Model(String.format(
-							"${animatorId}.seekTo(%.2f);", to));
+				public IModel getScript()
+				{
+					return new Model(String.format("${animatorId}.seekTo(%.2f);", to));
 				}
 			};
 		}
@@ -418,12 +455,14 @@ public class Animator implements Serializable {
 		 *            the position to jump to
 		 * @return a new {@link Action} representing the jumpTo command
 		 */
-		public static Action jumpTo(final double to) {
-			return new Action() {
+		public static Action jumpTo(final double to)
+		{
+			return new Action()
+			{
 				@Override
-				public IModel getScript() {
-					return new Model(String.format(
-							"${animatorId}.jumpTo(%.2f);", to));
+				public IModel getScript()
+				{
+					return new Model(String.format("${animatorId}.jumpTo(%.2f);", to));
 				}
 			};
 		}
@@ -443,35 +482,38 @@ public class Animator implements Serializable {
 	 *            the action to be executed
 	 * @return the attached {@code AnimatorBehavior}
 	 */
-	public AnimatorBehavior attachTo(Component component, String event,
-			Action action) {
-		AnimatorBehavior behavior = new AnimatorBehavior(event, action
-				.getScript());
+	public AnimatorBehavior attachTo(Component component, String event, Action action)
+	{
+		AnimatorBehavior behavior = new AnimatorBehavior(event, action.getScript());
 		component.add(behavior);
 		return behavior;
 	}
 
-	private class AnimatorBehavior extends AttributeAppender {
+	private class AnimatorBehavior extends AttributeAppender
+	{
 
 		private static final long serialVersionUID = 1L;
 
-		public AnimatorBehavior(String attribute, IModel appendModel) {
-			super(attribute, appendModel, ";");
+		public AnimatorBehavior(String attribute, IModel appendModel)
+		{
+			super(attribute, true, appendModel, ";");
 		}
 
 		@Override
-		public void renderHead(IHeaderResponse response) {
+		public void renderHead(IHeaderResponse response)
+		{
 			super.renderHead(response);
 
-			response.renderJavascriptReference(new JavascriptResourceReference(
-					Animator.class, "animator.js"));
+			response.renderJavascriptReference(new JavascriptResourceReference(Animator.class,
+					"animator.js"));
 
 			Map<String, String> variables = new HashMap<String, String>();
 			variables.put("animatorId", animatorId);
 
 			StringBuffer optBuffer = new StringBuffer();
 			optBuffer.append("{ ");
-			for (String key : options.keySet()) {
+			for (String key : options.keySet())
+			{
 				optBuffer.append(key);
 				optBuffer.append(": ");
 				optBuffer.append(options.get(key));
@@ -481,32 +523,32 @@ public class Animator implements Serializable {
 			variables.put("options", optBuffer.toString());
 
 			StringBuffer init = new StringBuffer();
-			for (int i = 0; i < subjects.size(); i++) {
-				init.append("\n	.addSubject(");
-				init.append(((IAnimatorSubject) subjects.get(i))
-						.getJavaScript());
+			for (int i = 0; i < subjects.size(); i++)
+			{
+				init.append(".addSubject(");
+				init.append(((IAnimatorSubject)subjects.get(i)).getJavaScript());
 				init.append(")");
 			}
 			variables.put("addSubjects", init.toString());
 
-			TextTemplateHeaderContributor.forJavaScript(Animator.class,
-					"wicket-animator.js", Model.valueOf(variables)).renderHead(
-					response);
+			TextTemplateHeaderContributor.forJavaScript(Animator.class, "wicket-animator.js",
+					Model.valueOf(variables)).renderHead(response);
 			response.renderOnLoadJavascript("init" + animatorId + "();");
 			response.renderJavascriptReference(new JavascriptResourceReference(
 					AbstractDefaultAjaxBehavior.class, "wicket-ajax.js"));
 		}
 
 		@Override
-		public void bind(Component component) {
+		public void bind(Component component)
+		{
 			super.bind(component);
-			if (animatorId == null) {
+			if (animatorId == null)
+			{
 				animatorId = component.getId() + "Animator";
 			}
 			String script = getReplaceModel().getObject().toString();
 
-			getReplaceModel().setObject(
-					script.replaceAll("\\$\\{animatorId\\}", animatorId));
+			getReplaceModel().setObject(script.replaceAll("\\$\\{animatorId\\}", animatorId));
 
 		}
 	}

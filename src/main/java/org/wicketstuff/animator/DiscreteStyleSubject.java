@@ -25,7 +25,8 @@ import org.apache.wicket.model.IModel;
  * @author Gerolf Seitz
  * 
  */
-public class DiscreteStyleSubject extends AbstractStyleSubject {
+public class DiscreteStyleSubject extends AbstractStyleSubject
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -55,8 +56,8 @@ public class DiscreteStyleSubject extends AbstractStyleSubject {
 	 * @param to
 	 *            the final value of the animation
 	 */
-	public DiscreteStyleSubject(IModel targets, String property, int from,
-			int to) {
+	public DiscreteStyleSubject(IModel targets, String property, int from, int to)
+	{
 		this(targets, property, from, to, 0.5);
 	}
 
@@ -77,8 +78,8 @@ public class DiscreteStyleSubject extends AbstractStyleSubject {
 	 *            {@code from} value to the {@code to} value. <br>
 	 *            0 <= threshold <= 1
 	 */
-	public DiscreteStyleSubject(IModel targets, String property, int from,
-			int to, double threshold) {
+	public DiscreteStyleSubject(IModel targets, String property, int from, int to, double threshold)
+	{
 		target(targets);
 		from(String.valueOf(from));
 		to(String.valueOf(to));
@@ -94,7 +95,8 @@ public class DiscreteStyleSubject extends AbstractStyleSubject {
 	 *            the {@code from} value to the {@code to} value.
 	 * @return this {@link DiscreteStyleSubject}
 	 */
-	public DiscreteStyleSubject threshold(String threshold) {
+	public DiscreteStyleSubject threshold(String threshold)
+	{
 		this.threshold = threshold;
 		return this;
 	}
@@ -106,7 +108,8 @@ public class DiscreteStyleSubject extends AbstractStyleSubject {
 	 *            the property which should be animated.
 	 * @return this {@link DiscreteStyleSubject}
 	 */
-	public DiscreteStyleSubject property(String property) {
+	public DiscreteStyleSubject property(String property)
+	{
 		this.property = property;
 		return this;
 	}
@@ -117,7 +120,8 @@ public class DiscreteStyleSubject extends AbstractStyleSubject {
 	 * @see org.wicketstuff.animator.AbstractStyleSubject#writeArguments(java.lang.StringBuilder)
 	 */
 	@Override
-	protected void writeArguments(StringBuilder sb) {
+	protected void writeArguments(StringBuilder sb)
+	{
 		sb.append(", ");
 		sb.append("'");
 		sb.append(property);
@@ -133,7 +137,8 @@ public class DiscreteStyleSubject extends AbstractStyleSubject {
 	 * @see org.wicketstuff.animator.AbstractStyleSubject#getStyleType()
 	 */
 	@Override
-	protected String getStyleType() {
+	protected String getStyleType()
+	{
 		return "DiscreteStyleSubject";
 	}
 

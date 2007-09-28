@@ -22,7 +22,8 @@ package org.wicketstuff.animator;
  * @author Gerolf Seitz
  * 
  */
-public interface IAnimatorSubject {
+public interface IAnimatorSubject
+{
 
 	/**
 	 * 

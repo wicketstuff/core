@@ -24,7 +24,8 @@ import org.apache.wicket.model.IModel;
  * @author Gerolf Seitz
  * 
  */
-public class CssStyleSubject extends AbstractStyleSubject {
+public class CssStyleSubject extends AbstractStyleSubject
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -42,8 +43,8 @@ public class CssStyleSubject extends AbstractStyleSubject {
 	 *            the style or css class which is used as the final value of the
 	 *            animation.
 	 */
-	public CssStyleSubject(IModel targets, String fromStyleOrClass,
-			String toStyleOrClass) {
+	public CssStyleSubject(IModel targets, String fromStyleOrClass, String toStyleOrClass)
+	{
 		target(targets);
 		from(fromStyleOrClass);
 		to(toStyleOrClass);
@@ -60,7 +61,8 @@ public class CssStyleSubject extends AbstractStyleSubject {
 	 *            the style or css class which is used as the final value of the
 	 *            animation.
 	 */
-	public CssStyleSubject(IModel targets, String toStyleOrClass) {
+	public CssStyleSubject(IModel targets, String toStyleOrClass)
+	{
 		target(targets);
 		from(null);
 		to(toStyleOrClass);
@@ -72,8 +74,10 @@ public class CssStyleSubject extends AbstractStyleSubject {
 	 * @see org.wicketstuff.animator.AbstractStyleSubject#writeArguments(java.lang.StringBuilder)
 	 */
 	@Override
-	protected void writeArguments(StringBuilder sb) {
-		if (from != null) {
+	protected void writeArguments(StringBuilder sb)
+	{
+		if (from != null)
+		{
 			sb.append(", ");
 			sb.append("'");
 			sb.append(from);
@@ -91,7 +95,8 @@ public class CssStyleSubject extends AbstractStyleSubject {
 	 * @see org.wicketstuff.animator.AbstractStyleSubject#getStyleType()
 	 */
 	@Override
-	protected String getStyleType() {
+	protected String getStyleType()
+	{
 		return "CSSStyleSubject";
 	}
 }

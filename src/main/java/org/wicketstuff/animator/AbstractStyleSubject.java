@@ -27,8 +27,8 @@ import org.apache.wicket.model.IModel;
  * @author Gerolf Seitz
  * 
  */
-public abstract class AbstractStyleSubject implements Serializable,
-		IAnimatorSubject {
+public abstract class AbstractStyleSubject implements Serializable, IAnimatorSubject
+{
 
 	/**
 	 * the model representing the targets of this subject. the modelobject has
@@ -70,7 +70,8 @@ public abstract class AbstractStyleSubject implements Serializable,
 	 *            the target for this subject
 	 * @return this {@code AbstractStyleSubject}
 	 */
-	public AbstractStyleSubject target(IModel target) {
+	public AbstractStyleSubject target(IModel target)
+	{
 		this.target = target;
 		return this;
 	}
@@ -83,7 +84,8 @@ public abstract class AbstractStyleSubject implements Serializable,
 	 *            the from value of the subject
 	 * @return this {@code AbstractStyleSubject}
 	 */
-	public AbstractStyleSubject from(String from) {
+	public AbstractStyleSubject from(String from)
+	{
 		this.from = from;
 		return this;
 	}
@@ -96,7 +98,8 @@ public abstract class AbstractStyleSubject implements Serializable,
 	 *            the to value of the subject
 	 * @return this {@code AbstractStyleSubject}
 	 */
-	public AbstractStyleSubject to(String to) {
+	public AbstractStyleSubject to(String to)
+	{
 		this.to = to;
 		return this;
 	}
@@ -106,7 +109,8 @@ public abstract class AbstractStyleSubject implements Serializable,
 	 * 
 	 * @see org.wicketstuff.animator.IAnimatorSubject#getJavaScript()
 	 */
-	public String getJavaScript() {
+	public String getJavaScript()
+	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("new ");
 		sb.append(getStyleType());
@@ -117,21 +121,30 @@ public abstract class AbstractStyleSubject implements Serializable,
 		return sb.toString();
 	}
 
-	private void writeTargets(StringBuilder sb) {
+	private void writeTargets(StringBuilder sb)
+	{
 		sb.append("[");
 		Object obj = target.getObject();
 		String[] ids;
-		if (obj instanceof String) {
+		if (obj instanceof String)
+		{
 			ids = new String[] { obj.toString() };
-		} else if (obj instanceof String[]) {
-			ids = (String[]) target.getObject();
-		} else if (obj instanceof Collection) {
-			ids = (String[]) ((Collection) obj).toArray(new String[0]);
-		} else {
+		}
+		else if (obj instanceof String[])
+		{
+			ids = (String[])target.getObject();
+		}
+		else if (obj instanceof Collection)
+		{
+			ids = (String[])((Collection)obj).toArray(new String[0]);
+		}
+		else
+		{
 			throw new IllegalArgumentException(
 					"target must be of type String, String[], Collection<String>");
 		}
-		for (int i = 0; i < ids.length; i++) {
+		for (int i = 0; i < ids.length; i++)
+		{
 			sb.append("Wicket.$('");
 			sb.append(ids[i]);
 			sb.append("')");
@@ -145,7 +158,8 @@ public abstract class AbstractStyleSubject implements Serializable,
 	 * @param sb
 	 *            the StringBuilder to which the arguments should be written
 	 */
-	protected void writeArguments(StringBuilder sb) {
+	protected void writeArguments(StringBuilder sb)
+	{
 		sb.append(", ");
 
 		sb.append("'");

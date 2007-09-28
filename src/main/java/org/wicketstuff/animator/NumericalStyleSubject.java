@@ -24,7 +24,8 @@ import org.apache.wicket.model.IModel;
  * @author Gerolf Seitz
  * 
  */
-public class NumericalStyleSubject extends AbstractStyleSubject {
+public class NumericalStyleSubject extends AbstractStyleSubject
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -51,8 +52,8 @@ public class NumericalStyleSubject extends AbstractStyleSubject {
 	 * @param to
 	 *            the final value of the animation
 	 */
-	public NumericalStyleSubject(IModel targets, String property, int from,
-			int to) {
+	public NumericalStyleSubject(IModel targets, String property, int from, int to)
+	{
 		this(targets, property, from, to, "px");
 	}
 
@@ -71,8 +72,8 @@ public class NumericalStyleSubject extends AbstractStyleSubject {
 	 * @param unit
 	 *            the unit of the property
 	 */
-	public NumericalStyleSubject(IModel targets, String property, int from,
-			int to, String unit) {
+	public NumericalStyleSubject(IModel targets, String property, int from, int to, String unit)
+	{
 		target(targets);
 		from(Integer.toString(from));
 		to(Integer.toString(to));
@@ -87,7 +88,8 @@ public class NumericalStyleSubject extends AbstractStyleSubject {
 	 *            the unit of the style-property
 	 * @return this {@link NumericalStyleSubject}
 	 */
-	public NumericalStyleSubject unit(String unit) {
+	public NumericalStyleSubject unit(String unit)
+	{
 		this.unit = unit;
 		return this;
 	}
@@ -99,7 +101,8 @@ public class NumericalStyleSubject extends AbstractStyleSubject {
 	 *            the property which should be animated
 	 * @return this {@link NumericalStyleSubject}
 	 */
-	public NumericalStyleSubject property(String property) {
+	public NumericalStyleSubject property(String property)
+	{
 		this.property = property;
 		return this;
 	}
@@ -110,7 +113,8 @@ public class NumericalStyleSubject extends AbstractStyleSubject {
 	 * @see org.wicketstuff.animator.AbstractStyleSubject#writeArguments(java.lang.StringBuilder)
 	 */
 	@Override
-	protected void writeArguments(StringBuilder sb) {
+	protected void writeArguments(StringBuilder sb)
+	{
 		sb.append(", ");
 		sb.append("'");
 		sb.append(property);
@@ -127,7 +131,8 @@ public class NumericalStyleSubject extends AbstractStyleSubject {
 	 * @see org.wicketstuff.animator.AbstractStyleSubject#getStyleType()
 	 */
 	@Override
-	protected String getStyleType() {
+	protected String getStyleType()
+	{
 		return "NumericalStyleSubject";
 	}
 
