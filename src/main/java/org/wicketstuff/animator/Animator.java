@@ -489,6 +489,21 @@ public class Animator implements Serializable
 		return behavior;
 	}
 
+	/**
+	 * Gets the id of this animator for use in javascript.
+	 * 
+	 * @return the id of this animator
+	 */
+	public String getAnimatorId()
+	{
+		if (animatorId == null)
+		{
+			throw new IllegalStateException(
+					"You can't call Animator#getAnimatorId yet, as it has not yet been bound to a component!");
+		}
+		return animatorId;
+	}
+
 	private class AnimatorBehavior extends AttributeAppender
 	{
 
