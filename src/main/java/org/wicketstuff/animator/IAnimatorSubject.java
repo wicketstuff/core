@@ -16,13 +16,15 @@
  */
 package org.wicketstuff.animator;
 
+import java.io.Serializable;
+
 /**
  * The interface for a subject used for an animation.
  * 
  * @author Gerolf Seitz
  * 
  */
-public interface IAnimatorSubject
+public interface IAnimatorSubject extends Serializable
 {
 
 	/**

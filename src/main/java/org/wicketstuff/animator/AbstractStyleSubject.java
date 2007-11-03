@@ -16,7 +16,6 @@
  */
 package org.wicketstuff.animator;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 import org.apache.wicket.model.IModel;
@@ -27,7 +26,7 @@ import org.apache.wicket.model.IModel;
  * @author Gerolf Seitz
  * 
  */
-public abstract class AbstractStyleSubject implements Serializable, IAnimatorSubject
+public abstract class AbstractStyleSubject implements IAnimatorSubject
 {
 
 	/**

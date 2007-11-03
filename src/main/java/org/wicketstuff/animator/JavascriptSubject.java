@@ -27,7 +27,6 @@ package org.wicketstuff.animator;
  */
 public abstract class JavascriptSubject implements IAnimatorSubject
 {
-
 	/*
 	 * (non-Javadoc)
 	 * 
