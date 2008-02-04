@@ -164,9 +164,9 @@
 		</dependency>
 	</dependencies>
 	<modules>
-	<module>wasp</module>
-	<module>swarm</module>
-	<module>examples</module>
+	<module>wasp-parent</module>
+	<!-- <module>swarm</module>
+	<module>examples</module>	-->
 	</modules>
 	<!-- Build environment -->
 	<distributionManagement>
