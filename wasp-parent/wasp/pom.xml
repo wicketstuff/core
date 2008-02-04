@@ -33,6 +33,10 @@
 	<!-- Dependency list -->
 	<dependencies>
 		<dependency>
+			<groupId>org.apache.wicket.wicket-security</groupId>
+			<artifactId>wasp-actions</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-extensions</artifactId>
 		</dependency>

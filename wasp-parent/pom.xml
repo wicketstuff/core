@@ -31,5 +31,6 @@
 	<description>Parent project for WASP</description>
 	<modules>
 	<module>wasp</module>
+	<module>wasp-actions</module>
 	</modules>
 </project>
