@@ -220,6 +220,7 @@
 						<source>1.4</source>
 						<target>1.4</target>
 					</configuration>
+					<inherited>true</inherited>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -232,6 +233,7 @@
 							</goals>
 						</execution>
 					</executions>
+					<inherited>true</inherited>
 				</plugin>
 				<plugin>
 					<artifactId>maven-eclipse-plugin</artifactId>
@@ -244,6 +246,7 @@
 						</classpathContainers>
 					</configuration>
 				<!-- <version>2.5-SNAPSHOT</version>	-->
+				<inherited>true</inherited>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -256,6 +259,8 @@
 							</goals>
 						</execution>
 					</executions>
+					<version>2.2</version>
+					<inherited>true</inherited>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
