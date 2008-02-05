@@ -30,7 +30,7 @@ import org.apache.wicket.authorization.Action;
  */
 public interface ActionFactory
 {
-
+	// TODO move this method to WicketActionFactory interface
 	/**
 	 * Translates a wicket action to a wasp action. If the input is already a
 	 * WaspAction the same object is returned.

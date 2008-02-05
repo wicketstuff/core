@@ -163,17 +163,6 @@ public class ActionPermission extends Permission
 	}
 
 	/**
-	 * Check if an action is implied by this permission.
-	 * 
-	 * @param myActions
-	 *            the internal value of the action
-	 * @return true if the action is implied, false otherwise
-	 */
-	// public boolean hasAction(int myActions)
-	// {
-	// return this.actions.implies(myActions);
-	// }
-	/**
 	 * The internal representation of this action.
 	 * 
 	 * @return the action
