@@ -16,8 +16,6 @@
  */
 package org.apache.wicket.security.hive.authentication;
 
-import org.apache.wicket.security.strategies.LoginException;
-
 /**
  * Simple {@link LoginContext} for a username and password, which may or may not
  * be encrypted.

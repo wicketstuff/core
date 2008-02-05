@@ -71,7 +71,15 @@ public final class LoginContainer implements Serializable
 		if (subjects.containsKey(key))
 			throw new LoginException("Already logged in through this context ")
 					.setLoginContext(context);
-		Subject mySubject = context.login();
+		Subject mySubject;
+		try
+		{
+			mySubject = context.login();
+		}
+		catch (org.apache.wicket.security.hive.authentication.LoginException e)
+		{
+			throw new LoginException(e).setLoginContext(context);
+		}
 		if (mySubject == null)
 			throw new LoginException("Login failed ").setLoginContext(context);
 		mySubject.setReadOnly();

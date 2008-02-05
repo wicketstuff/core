@@ -16,8 +16,6 @@
  */
 package org.apache.wicket.security.hive.authentication;
 
-import org.apache.wicket.security.WaspSession;
-import org.apache.wicket.security.strategies.LoginException;
 
 /**
  * A LoginContext is little more than a factory to create a {@link Subject} and
@@ -74,8 +72,9 @@ public abstract class LoginContext
 	 * multi-login scenario's.
 	 * 
 	 * @param allowAdditionalLogings
-	 *            indicates if additional calls to
-	 *            {@link WaspSession#login(Object) are allowed}
+	 *            indicates if this context allows multiple subjects for one
+	 *            user and thus allows the user to gain more permissions on the
+	 *            fly.
 	 */
 	public LoginContext(boolean allowAdditionalLogings)
 	{
@@ -156,13 +155,13 @@ public abstract class LoginContext
 	}
 
 	/**
-	 * Signals to the {@link LoginContainer} that no additional context should
-	 * be allowed to login. The return value must be constant from one
-	 * invocation to another for this instance. This flag is checked once by the
-	 * container immediately after {@link #login()}. Note in a multi login
-	 * environment you will want your logincontext with the highest possible
-	 * sort order to prevent additional logins. In a single login environment
-	 * your logincontext should always prevent additional logins.
+	 * Signals that no additional context should be allowed to login. The return
+	 * value must be constant from one invocation to another for this instance.
+	 * This flag is checked once by the container immediately after
+	 * {@link #login()}. Note in a multi login environment you will want your
+	 * logincontext with the highest possible sort order to prevent additional
+	 * logins. In a single login environment your logincontext should always
+	 * prevent additional logins.
 	 * 
 	 * @return true if you do not want additional logins for this session, false
 	 *         otherwise.
