@@ -29,7 +29,6 @@ import org.apache.wicket.security.hive.authentication.CustomLoginContext;
 import org.apache.wicket.security.hive.authentication.LoginContext;
 import org.apache.wicket.security.hive.authentication.PrimaryLoginContext;
 import org.apache.wicket.security.hive.authorization.SimplePrincipal;
-import org.apache.wicket.security.hive.authorization.TestPrincipal;
 import org.apache.wicket.security.strategies.LoginException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,7 +89,7 @@ public class MockLoginPage extends WebPage
 			}
 			else if ("all".equals(username))
 			{
-				context = new CustomLoginContext(new TestPrincipal("all permissions"));
+				context = new CustomLoginContext(new SimplePrincipal("all permissions"));
 			}
 			else if ("speed".equals(username))
 			{

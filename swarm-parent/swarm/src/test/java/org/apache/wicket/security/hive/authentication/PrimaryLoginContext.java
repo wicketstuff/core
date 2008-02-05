@@ -18,7 +18,7 @@ package org.apache.wicket.security.hive.authentication;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.security.hive.authorization.TestPrincipal;
+import org.apache.wicket.security.hive.authorization.SimplePrincipal;
 import org.apache.wicket.security.pages.HighSecurityPage;
 
 /**
@@ -87,7 +87,7 @@ public final class PrimaryLoginContext extends LoginContext
 	public Subject login()
 	{
 		DefaultSubject defaultSubject = new MySubject();
-		defaultSubject.addPrincipal(new TestPrincipal("basic"));
+		defaultSubject.addPrincipal(new SimplePrincipal("basic"));
 		return defaultSubject;
 	}
 

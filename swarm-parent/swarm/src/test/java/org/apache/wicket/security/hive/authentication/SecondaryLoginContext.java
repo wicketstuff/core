@@ -18,7 +18,7 @@ package org.apache.wicket.security.hive.authentication;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.security.hive.authorization.TestPrincipal;
+import org.apache.wicket.security.hive.authorization.SimplePrincipal;
 
 /**
  * A context for multi login, this context is used to grant the most amount of
@@ -87,7 +87,7 @@ public final class SecondaryLoginContext extends LoginContext
 	public Subject login()
 	{
 		DefaultSubject defaultSubject = new MySecondSubject();
-		defaultSubject.addPrincipal(new TestPrincipal("admin"));
+		defaultSubject.addPrincipal(new SimplePrincipal("admin"));
 		return defaultSubject;
 	}
 
