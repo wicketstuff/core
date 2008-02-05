@@ -20,8 +20,8 @@ import org.apache.wicket.security.actions.ActionFactory;
 import org.apache.wicket.security.actions.AllActions;
 import org.apache.wicket.security.actions.Enable;
 import org.apache.wicket.security.actions.Render;
+import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.hive.authorization.Permission;
-import org.apache.wicket.security.swarm.actions.SwarmAction;
 
 /**
  * Permission that implies all other permissions, when created with the "all"
@@ -52,12 +52,10 @@ public class AllPermissions extends ActionPermission
 	 *            the name of this permission.
 	 * @param factory
 	 *            a factory capable of creating SwarmActions
-	 * @throws ClassCastException
-	 *             if the factory does not create {@link SwarmAction}s
 	 */
 	public AllPermissions(String name, ActionFactory factory)
 	{
-		this(name, (SwarmAction)factory.getAction(AllActions.class));
+		this(name, factory.getAction(AllActions.class));
 	}
 
 	/**
@@ -70,7 +68,7 @@ public class AllPermissions extends ActionPermission
 	 * @param actions
 	 * @see #implies(Permission)
 	 */
-	public AllPermissions(String name, SwarmAction actions)
+	public AllPermissions(String name, WaspAction actions)
 	{
 		super(name, actions);
 	}

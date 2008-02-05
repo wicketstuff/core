@@ -66,4 +66,11 @@ public interface WaspAction
 	 */
 	public WaspAction remove(WaspAction action);
 
+	/**
+	 * The actionFactory that created this action.
+	 * 
+	 * @return factory
+	 */
+	public ActionFactory getActionFactory();
+
 }

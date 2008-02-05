@@ -18,8 +18,8 @@ package org.apache.wicket.security.hive.authorization;
 
 import java.io.Serializable;
 
+import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.hive.authorization.permissions.ActionPermission;
-import org.apache.wicket.security.swarm.actions.SwarmAction;
 
 
 /**
@@ -54,7 +54,7 @@ import org.apache.wicket.security.swarm.actions.SwarmAction;
  * All permissions must at least have a public constructor accepting a String
  * parameter which will be used as name for the permission. Note that the
  * {@link ActionPermission} should also have a 2 argument constructor accepting
- * a string where for the name and a second {@link SwarmAction} parameter to
+ * a string where for the name and a second {@link WaspAction} parameter to
  * indicate which actions are allowed.
  * 
  * @author marrink

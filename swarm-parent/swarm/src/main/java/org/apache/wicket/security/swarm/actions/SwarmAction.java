@@ -210,9 +210,8 @@ public class SwarmAction extends AbstractWaspAction
 	}
 
 	/**
-	 * The actionFactory that created this action.
 	 * 
-	 * @return factory
+	 * @see org.apache.wicket.security.actions.WaspAction#getActionFactory()
 	 */
 	public final ActionFactory getActionFactory()
 	{

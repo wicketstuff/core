@@ -17,9 +17,9 @@
 package org.apache.wicket.security.hive.authorization.permissions;
 
 import org.apache.wicket.security.actions.Inherit;
+import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.hive.authorization.Permission;
 import org.apache.wicket.security.hive.config.HiveFactory;
-import org.apache.wicket.security.swarm.actions.SwarmAction;
 
 
 /**
@@ -36,7 +36,7 @@ public class ActionPermission extends Permission
 
 	private static final long serialVersionUID = 1L;
 
-	private SwarmAction actions;
+	private WaspAction actions;
 
 	/**
 	 * Creates a new ActionPermission with the specified name and actions.
@@ -47,7 +47,7 @@ public class ActionPermission extends Permission
 	 *            a logical and of all the allowed / required actions for this
 	 *            permission
 	 */
-	protected ActionPermission(String name, SwarmAction actions)
+	protected ActionPermission(String name, WaspAction actions)
 	{
 		super(name);
 		if (name == null)
@@ -55,7 +55,7 @@ public class ActionPermission extends Permission
 		if (actions == null)
 			throw new IllegalArgumentException("Actions is required.");
 		this.actions = actions;
-		// SwarmAction is immutable
+		// WaspAction is immutable
 	}
 
 	/**
@@ -122,8 +122,7 @@ public class ActionPermission extends Permission
 		if (obj != null && obj.getClass().equals(getClass()))
 		{
 			ActionPermission other = (ActionPermission)obj;
-			return other.getName().equals(getName())
-					&& other.actions.actions() == actions.actions();
+			return other.getName().equals(getName()) && other.actions.equals(actions);
 			// both fields are not null
 		}
 		return false;
@@ -170,17 +169,16 @@ public class ActionPermission extends Permission
 	 *            the internal value of the action
 	 * @return true if the action is implied, false otherwise
 	 */
-	public boolean hasAction(int myActions)
-	{
-		return this.actions.implies(myActions);
-	}
-
+	// public boolean hasAction(int myActions)
+	// {
+	// return this.actions.implies(myActions);
+	// }
 	/**
 	 * The internal representation of this action.
 	 * 
 	 * @return the action
 	 */
-	protected final SwarmAction getAction()
+	protected final WaspAction getAction()
 	{
 		return actions;
 	}

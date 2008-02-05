@@ -33,6 +33,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.wicket.security.actions.ActionFactory;
+import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.hive.BasicHive;
 import org.apache.wicket.security.hive.Hive;
 import org.apache.wicket.security.hive.SimpleCachingHive;
@@ -42,7 +43,6 @@ import org.apache.wicket.security.hive.authorization.Principal;
 import org.apache.wicket.security.hive.authorization.permissions.AllPermissions;
 import org.apache.wicket.security.hive.authorization.permissions.ComponentPermission;
 import org.apache.wicket.security.hive.authorization.permissions.DataPermission;
-import org.apache.wicket.security.swarm.actions.SwarmAction;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,7 +106,7 @@ public class PolicyFileHiveFactory implements HiveFactory
 	private static final Pattern aliasPattern = Pattern.compile("(\\$\\{[^\"\\{\\}\\$]+?\\})+?");
 
 	private static final Class[][] constructorArgs = new Class[][] {
-			new Class[] { String.class, SwarmAction.class },
+			new Class[] { String.class, WaspAction.class },
 			new Class[] { String.class, String.class },
 			new Class[] { String.class, ActionFactory.class }, new Class[] { String.class } };
 

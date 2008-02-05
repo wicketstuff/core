@@ -63,6 +63,10 @@
 			<artifactId>wasp</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.wicket.wicket-security</groupId>
+			<artifactId>hive</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<scope>test</scope>
