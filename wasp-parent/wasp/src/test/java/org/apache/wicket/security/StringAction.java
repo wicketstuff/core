@@ -19,7 +19,9 @@ package org.apache.wicket.security;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.security.actions.AbstractWaspAction;
+import org.apache.wicket.security.actions.ActionFactory;
 import org.apache.wicket.security.actions.WaspAction;
 
 /**
@@ -76,5 +78,14 @@ public class StringAction extends AbstractWaspAction
 		StringAction newAction = new StringAction(getName());
 		newAction.actions.removeAll(oAction.actions);
 		return newAction;
+	}
+
+	public ActionFactory getActionFactory()
+	{
+		// not a very good implementation since it binds this action type to
+		// wicket
+		return ((WaspApplication)Application.get()).getActionFactory();
+		// real world implementations should use the Actions class or some other
+		// non wicket specific way
 	}
 }

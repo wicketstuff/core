@@ -3,12 +3,12 @@ grant
 	permission org.apache.wicket.security.hive.authorization.TestPermission "A", "inherit, render";
 	permission org.apache.wicket.security.hive.authorization.TestPermission "A", "enable";
 };
-grant principal org.apache.wicket.security.hive.authorization.TestPrincipal "test1"
+grant principal org.apache.wicket.security.hive.authorization.SimplePrincipal "test1"
 {
 	permission org.apache.wicket.security.hive.authorization.TestPermission "1.A", "inherit, render";
 	permission org.apache.wicket.security.hive.authorization.TestPermission "1.A", "enable";
 };
-grant principal org.apache.wicket.security.hive.authorization.TestPrincipal "test2"
+grant principal org.apache.wicket.security.hive.authorization.SimplePrincipal "test2"
 {
 	permission org.apache.wicket.security.hive.authorization.TestPermission "2.A", "inherit, render";
 	permission org.apache.wicket.security.hive.authorization.TestPermission "2.A", "enable";
@@ -19,21 +19,21 @@ grant principal org.apache.wicket.security.hive.authorization.TestPrincipal "tes
 	permission org.apache.wicket.security.hive.authorization.TestPermission "2.C.1", "enable";
 	};
 };
-grant principal org.apache.wicket.security.hive.authorization.TestPrincipal "test3"
+grant principal org.apache.wicket.security.hive.authorization.SimplePrincipal "test3"
 {
 };
-grant principal org.apache.wicket.security.hive.authorization.TestPrincipal "test4"
+grant principal org.apache.wicket.security.hive.authorization.SimplePrincipal "test4"
 {};
 
-grant principal org.apache.wicket.security.hive.authorization.TestPrincipal "test5"
+grant principal org.apache.wicket.security.hive.authorization.SimplePrincipal "test5"
 };
-grant principal org.apache.wicket.security.hive.authorization.TestPrincipal "test6"
+grant principal org.apache.wicket.security.hive.authorization.SimplePrincipal "test6"
 {
 	permission org.apache.wicket.security.hive.authorization.TestPermission "6.A", "inherit, render";
 	permission org.apache.wicket.security.hive.authorization.TestPermission "6.A", "enable";
 	permission org.apache.wicket.security.hive.authorization.TestPermission "6.B", "inherit, render, enable";
 	permission org.apache.wicket.security.hive.authorization.TestPermission "6.B", "enable";
-	grant principal org.apache.wicket.security.hive.authorization.TestPrincipal "test7"
+	grant principal org.apache.wicket.security.hive.authorization.SimplePrincipal "test7"
 	{
 		permission org.apache.wicket.security.hive.authorization.TestPermission "7.A", "inherit, render";
 		permission org.apache.wicket.security.hive.authorization.TestPermission "7.A", "enable";
@@ -45,7 +45,7 @@ grant principal org.apache.wicket.security.hive.authorization.TestPrincipal "tes
 	permission org.apache.wicket.security.hive.authorization.TestPermission "6.C", "render, enable";
 	permission org.apache.wicket.security.hive.authorization.TestPermission "6.C.1", "enable";
 };
-grant principal org.apache.wicket.security.hive.authorization.TestPrincipal "test8"
+grant principal org.apache.wicket.security.hive.authorization.SimplePrincipal "test8"
 {
 	permission org.apache.wicket.security.hive.authorization.TestPermission "8.A";
 	permission org.apache.wicket.security.hive.authorization.TestPermission "8.B";
@@ -57,7 +57,7 @@ grant principal ${auth}.TestPrincipal "${test}${nine}"
 	permission ${perm} "${nine}.A";
 	permission ${perm} "${nine}.B", "test";
 };
-grant principal org.apache.wicket.security.hive.authorization.TestPrincipal "test10"
+grant principal org.apache.wicket.security.hive.authorization.SimplePrincipal "test10"
 	permission org.apache.wicket.security.hive.authorization.TestPermission "10.A";
 {
 	permission org.apache.wicket.security.hive.authorization.TestPermission "10.B";

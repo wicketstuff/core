@@ -33,9 +33,8 @@ import org.apache.wicket.security.actions.Actions;
 import org.apache.wicket.security.hive.Hive;
 import org.apache.wicket.security.hive.authorization.EverybodyPrincipal;
 import org.apache.wicket.security.hive.authorization.FaultyPermission;
+import org.apache.wicket.security.hive.authorization.SimplePrincipal;
 import org.apache.wicket.security.hive.authorization.TestPermission;
-import org.apache.wicket.security.hive.authorization.TestPrincipal;
-import org.apache.wicket.security.swarm.actions.SwarmActionFactory;
 
 /**
  * @author marrink
@@ -54,7 +53,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 
 	protected void setUp() throws Exception
 	{
-		new SwarmActionFactory(KEY);
+		new TestActionFactory(KEY);
 	}
 
 	protected void tearDown() throws Exception
@@ -158,9 +157,9 @@ public class PolicyFileHiveFactoryTest extends TestCase
 		// principals/permissions
 		Hive hive = factory.createHive();
 		assertTrue(hive.containsPrincipal(new EverybodyPrincipal()));
-		assertTrue(hive.containsPrincipal(new TestPrincipal("test1")));
-		assertTrue(hive.containsPrincipal(new TestPrincipal("test2")));
-		assertTrue(hive.containsPrincipal(new TestPrincipal("test6")));
+		assertTrue(hive.containsPrincipal(new SimplePrincipal("test1")));
+		assertTrue(hive.containsPrincipal(new SimplePrincipal("test2")));
+		assertTrue(hive.containsPrincipal(new SimplePrincipal("test6")));
 		assertTrue(hive.containsPermission(new TestPermission("A", "inherit, render")));
 		assertTrue(hive.containsPermission(new TestPermission("A", "enable")));
 		assertTrue(hive.containsPermission(new TestPermission("1.A", "inherit, render")));
@@ -183,14 +182,14 @@ public class PolicyFileHiveFactoryTest extends TestCase
 		assertFalse(hive.containsPermission(new TestPermission("6.B", "enable")));
 		assertFalse(hive.containsPermission(new TestPermission("6.C", "render, enable")));
 		assertFalse(hive.containsPermission(new TestPermission("6.C.1", "enable")));
-		assertTrue(hive.containsPrincipal(new TestPrincipal("test8")));
+		assertTrue(hive.containsPrincipal(new SimplePrincipal("test8")));
 		assertTrue(hive.containsPermission(new TestPermission("8.A")));
 		assertTrue(hive.containsPermission(new TestPermission("8.B")));
 		assertFalse(hive.containsPermission(new FaultyPermission()));
-		assertTrue(hive.containsPrincipal(new TestPrincipal("test9")));
+		assertTrue(hive.containsPrincipal(new SimplePrincipal("test9")));
 		assertTrue(hive.containsPermission(new TestPermission("9.A")));
 		assertTrue(hive.containsPermission(new TestPermission("9.B", "test")));
-		assertTrue(hive.containsPrincipal(new TestPrincipal("test10")));
+		assertTrue(hive.containsPrincipal(new SimplePrincipal("test10")));
 		assertTrue(hive.containsPermission(new TestPermission("10.B")));
 	}
 
