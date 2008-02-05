@@ -21,38 +21,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.apache.wicket.wicket-security</groupId>
-		<artifactId>wasp-parent</artifactId>
+		<artifactId>wicket-security</artifactId>
 		<version>1.3.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>wasp-actions</artifactId>
-	<packaging>jar</packaging>
-	<name>WASP Actions</name>
-	<description>Actions for WASP</description>
-	<!-- TODO remove dependency on wicket -->
-	<dependencies>
-	<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket</artifactId>
-		</dependency>
-	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-			</plugin>
-			<!-- 	<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clover-plugin</artifactId>
-				</plugin>	-->
-		</plugins>
-	</build>
+	<artifactId>swarm-parent</artifactId>
+	<packaging>pom</packaging>
+	<name>swarm-parent</name>
+	<description>Parent project for SWARM</description>
+	<modules>
+	<module>swarm</module>
+	<module>hive</module>
+	</modules>
 </project>
