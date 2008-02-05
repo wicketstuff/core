@@ -41,8 +41,6 @@ import org.apache.wicket.security.hive.authorization.EverybodyPrincipal;
 import org.apache.wicket.security.hive.authorization.Permission;
 import org.apache.wicket.security.hive.authorization.Principal;
 import org.apache.wicket.security.hive.authorization.permissions.AllPermissions;
-import org.apache.wicket.security.hive.authorization.permissions.ComponentPermission;
-import org.apache.wicket.security.hive.authorization.permissions.DataPermission;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,12 +77,9 @@ import org.slf4j.LoggerFactory;
  * <li>aliases are not allowed in actions or reserved words (grant, permission,
  * principal)</li>
  * <li>aliases are case sensitive</li>
- * By default the following aliases are available ComponentPermission,
- * DataPermission and AllPermissions for
- * org.apache.wicket.security.hive.authorization.permissions.ComponentPermission,
- * org.apache.wicket.security.hive.authorization.permissions.DataPermission and
+ * By default the following aliases is available: AllPermissions for
  * org.apache.wicket.security.hive.authorization.permissions.AllPermissions
- * respectively.
+ * 
  * 
  * @author marrink
  */
@@ -139,10 +134,6 @@ public class PolicyFileHiveFactory implements HiveFactory
 		policyFiles = new HashSet();
 		inputStreams = new HashSet();
 		inputReaders = new HashSet();
-		setAlias("ComponentPermission",
-				"org.apache.wicket.security.hive.authorization.permissions.ComponentPermission");
-		setAlias("DataPermission",
-				"org.apache.wicket.security.hive.authorization.permissions.DataPermission");
 		setAlias("AllPermissions",
 				"org.apache.wicket.security.hive.authorization.permissions.AllPermissions");
 
