@@ -121,6 +121,13 @@
 			<version>1.4.2</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.13</version>
+			<optional>true</optional>
+			<scope>test</scope>
+		</dependency>
 		<!-- wicket dependencies -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
@@ -146,7 +153,7 @@
 		<!-- wicket-security dependencies -->
 		<dependency>
 			<groupId>org.apache.wicket.wicket-security</groupId>
-			<artifactId>wasp-actions</artifactId>
+			<artifactId>wicomsec</artifactId>
 			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>
@@ -179,6 +186,10 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
 		</dependency>
 	</dependencies>
 	<modules>

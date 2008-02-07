@@ -1,4 +1,4 @@
-grant principal ${TestPrincipal} "basic"
+grant principal ${SimplePrincipal} "basic"
 {
 	permission ${ComponentPermission} "${myPackage}.MockHomePage", "inherit, render";
 	permission ${ComponentPermission} "${myPackage}.MockHomePage", "enable";
@@ -6,12 +6,12 @@ grant principal ${TestPrincipal} "basic"
 	permission ${ComponentPermission} "${myPackage}.PageA", "enable";
 	permission ${ComponentPermission} "${myPackage}.PageA:readonly", "render";
 };
-grant principal ${TestPrincipal} "admin"
+grant principal ${SimplePrincipal} "admin"
 {
 	permission ${ComponentPermission} "${myPackage}.VerySecurePage", "inherit, render";
 	permission ${ComponentPermission} "${myPackage}.VerySecurePage", "enable";
 };
-grant principal ${TestPrincipal} "all permissions"
+grant principal ${SimplePrincipal} "all permissions"
 {
 	permission ${AllPermissions} "everything";
 };

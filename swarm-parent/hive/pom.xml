@@ -35,7 +35,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.wicket.wicket-security</groupId>
-			<artifactId>wasp-actions</artifactId>
+			<artifactId>wicomsec</artifactId>
 		</dependency>
 	</dependencies>
 	<build>

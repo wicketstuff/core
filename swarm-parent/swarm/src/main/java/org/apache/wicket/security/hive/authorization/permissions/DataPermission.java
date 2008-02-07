@@ -18,8 +18,8 @@ package org.apache.wicket.security.hive.authorization.permissions;
 
 
 import org.apache.wicket.Component;
+import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.hive.authorization.Permission;
-import org.apache.wicket.security.swarm.actions.SwarmAction;
 import org.apache.wicket.security.swarm.models.SwarmModel;
 
 
@@ -46,7 +46,7 @@ public class DataPermission extends ActionPermission
 	 * @param actions
 	 *            a logical and of all the allowed / required actions
 	 */
-	public DataPermission(Component component, SwarmModel model, SwarmAction actions)
+	public DataPermission(Component component, SwarmModel model, WaspAction actions)
 	{
 		super(model.getSecurityId(component), actions);
 	}
@@ -57,7 +57,7 @@ public class DataPermission extends ActionPermission
 	 * @param name
 	 * @param actions
 	 */
-	public DataPermission(String name, SwarmAction actions)
+	public DataPermission(String name, WaspAction actions)
 	{
 		super(name, actions);
 	}

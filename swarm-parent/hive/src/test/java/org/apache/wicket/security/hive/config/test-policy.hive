@@ -52,7 +52,7 @@ grant principal org.apache.wicket.security.hive.authorization.SimplePrincipal "t
 	permission org.apache.wicket.security.hive.authorization.PestTermission "8.C";
 	permission org.apache.wicket.security.hive.authorization.FaultyPermission "8.D";
 };
-grant principal ${auth}.TestPrincipal "${test}${nine}"
+grant principal ${auth}.SimplePrincipal "${test}${nine}"
 {
 	permission ${perm} "${nine}.A";
 	permission ${perm} "${nine}.B", "test";

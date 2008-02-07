@@ -32,6 +32,7 @@ import org.apache.wicket.security.hive.HiveMind;
 import org.apache.wicket.security.hive.authentication.SecondaryLoginContext;
 import org.apache.wicket.security.hive.authorization.permissions.AllPermissions;
 import org.apache.wicket.security.hive.config.PolicyFileHiveFactory;
+import org.apache.wicket.security.hive.config.SwarmPolicyFileHiveFactory;
 import org.apache.wicket.security.pages.MockHomePage;
 import org.apache.wicket.security.pages.MockLoginPage;
 import org.apache.wicket.security.pages.PageA;
@@ -77,12 +78,12 @@ public class GeneralTest extends TestCase
 
 			protected void setUpHive()
 			{
-				PolicyFileHiveFactory factory = new PolicyFileHiveFactory(getActionFactory());
+				PolicyFileHiveFactory factory = new SwarmPolicyFileHiveFactory(getActionFactory());
 				try
 				{
 					factory.addPolicyFile(getServletContext().getResource("WEB-INF/policy.hive"));
-					factory.setAlias("TestPrincipal",
-							"org.apache.wicket.security.hive.authorization.TestPrincipal");
+					factory.setAlias("SimplePrincipal",
+							"org.apache.wicket.security.hive.authorization.SimplePrincipal");
 					factory.setAlias("myPackage", "org.apache.wicket.security.pages");
 				}
 				catch (MalformedURLException e)

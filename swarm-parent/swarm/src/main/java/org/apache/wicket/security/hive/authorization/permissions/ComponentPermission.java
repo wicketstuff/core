@@ -18,9 +18,9 @@ package org.apache.wicket.security.hive.authorization.permissions;
 
 
 import org.apache.wicket.Component;
+import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.components.SecureComponentHelper;
 import org.apache.wicket.security.hive.authorization.Permission;
-import org.apache.wicket.security.swarm.actions.SwarmAction;
 
 
 /**
@@ -42,7 +42,7 @@ public class ComponentPermission extends ActionPermission
 	 * @param action
 	 *            the action(s)
 	 */
-	public ComponentPermission(Component component, SwarmAction action)
+	public ComponentPermission(Component component, WaspAction action)
 	{
 		super(SecureComponentHelper.alias(component), action);
 	}
@@ -55,7 +55,7 @@ public class ComponentPermission extends ActionPermission
 	 * @param actions
 	 *            the granted action(s)
 	 */
-	public ComponentPermission(String componentAlias, SwarmAction actions)
+	public ComponentPermission(String componentAlias, WaspAction actions)
 	{
 		super(componentAlias, actions);
 	}
