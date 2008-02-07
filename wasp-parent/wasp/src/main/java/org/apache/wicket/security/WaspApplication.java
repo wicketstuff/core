@@ -20,6 +20,7 @@ import org.apache.wicket.Application;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.security.actions.ActionFactory;
+import org.apache.wicket.security.actions.WaspActionFactory;
 import org.apache.wicket.security.strategies.StrategyFactory;
 
 /**
@@ -50,7 +51,7 @@ public interface WaspApplication
 	 * 
 	 * @return a factory.
 	 */
-	public ActionFactory getActionFactory();
+	public WaspActionFactory getActionFactory();
 
 	/**
 	 * The Page to redirect to when the user is not authenticated. This is the

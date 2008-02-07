@@ -33,6 +33,7 @@ import org.apache.wicket.security.actions.Inherit;
 import org.apache.wicket.security.actions.RegistrationException;
 import org.apache.wicket.security.actions.Render;
 import org.apache.wicket.security.actions.WaspAction;
+import org.apache.wicket.security.actions.WaspActionFactory;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +46,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author marrink
  */
-public class SwarmActionFactory implements ActionFactory
+public class SwarmActionFactory implements WaspActionFactory
 {
 	private static final Logger log = LoggerFactory.getLogger(SwarmActionFactory.class);
 	/**

@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.wicket.authorization.Action;
 import org.apache.wicket.security.actions.Access;
 import org.apache.wicket.security.actions.ActionFactory;
 import org.apache.wicket.security.actions.Actions;
@@ -33,7 +32,6 @@ import org.apache.wicket.security.actions.Inherit;
 import org.apache.wicket.security.actions.RegistrationException;
 import org.apache.wicket.security.actions.Render;
 import org.apache.wicket.security.actions.WaspAction;
-import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,21 +99,20 @@ public class TestActionFactory implements ActionFactory
 	 * 
 	 * @see org.apache.wicket.security.actions.ActionFactory#getAction(org.apache.wicket.authorization.Action)
 	 */
-	public WaspAction getAction(Action action)
-	{
-		if (action != null)
-			try
-			{
-				return getAction(action.getName());
-			}
-			catch (IllegalArgumentException e)
-			{
-				// according to the spec we return null if the action does not
-				// exist
-			}
-		return null;
-	}
-
+	// public WaspAction getAction(Action action)
+	// {
+	// if (action != null)
+	// try
+	// {
+	// return getAction(action.getName());
+	// }
+	// catch (IllegalArgumentException e)
+	// {
+	// // according to the spec we return null if the action does not
+	// // exist
+	// }
+	// return null;
+	// }
 	/**
 	 * @param actions
 	 *            empty string means Access
@@ -231,7 +228,7 @@ public class TestActionFactory implements ActionFactory
 	 */
 	protected String buildActionString(int actions)
 	{
-		AppendingStringBuffer buff = new AppendingStringBuffer(power > 0 ? 10 * power : 10);
+		StringBuffer buff = new StringBuffer(power > 0 ? 10 * power : 10);
 		// estimate 10 chars per name
 		for (int i = -1; i < power; i++)
 		{
@@ -254,7 +251,7 @@ public class TestActionFactory implements ActionFactory
 	 * @param waspAction
 	 *            the action it should imply in order to append the string
 	 */
-	protected final void appendActionString(AppendingStringBuffer buff, int actions, int waspAction)
+	protected final void appendActionString(StringBuffer buff, int actions, int waspAction)
 	{
 		if (implies(actions, waspAction))
 			buff.append(valueOf(new Integer(waspAction))).append(", ");

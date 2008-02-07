@@ -18,6 +18,7 @@ package org.apache.wicket.security.swarm;
 
 import org.apache.wicket.security.WaspWebApplication;
 import org.apache.wicket.security.actions.ActionFactory;
+import org.apache.wicket.security.actions.WaspActionFactory;
 import org.apache.wicket.security.strategies.StrategyFactory;
 import org.apache.wicket.security.swarm.actions.SwarmActionFactory;
 import org.apache.wicket.security.swarm.strategies.SwarmStrategyFactory;
@@ -31,7 +32,7 @@ import org.apache.wicket.security.swarm.strategies.SwarmStrategyFactory;
  */
 public abstract class SwarmWebApplication extends WaspWebApplication
 {
-	private ActionFactory actionFactory;
+	private WaspActionFactory actionFactory;
 
 	private StrategyFactory strategyFactory;
 
@@ -52,7 +53,7 @@ public abstract class SwarmWebApplication extends WaspWebApplication
 	 * @throws IllegalStateException
 	 *             if the factory is set more than once.
 	 */
-	protected final void setActionFactory(ActionFactory factory)
+	protected final void setActionFactory(WaspActionFactory factory)
 	{
 		if (actionFactory == null)
 			actionFactory = factory;
@@ -114,7 +115,7 @@ public abstract class SwarmWebApplication extends WaspWebApplication
 	/**
 	 * @see org.apache.wicket.security.WaspApplication#getActionFactory()
 	 */
-	public ActionFactory getActionFactory()
+	public WaspActionFactory getActionFactory()
 	{
 		return actionFactory;
 	}

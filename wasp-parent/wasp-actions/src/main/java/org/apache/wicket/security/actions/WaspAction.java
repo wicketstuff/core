@@ -16,21 +16,20 @@
  */
 package org.apache.wicket.security.actions;
 
-import org.apache.wicket.authorization.Action;
 
 /**
- * Immutable {@link Action} with added logic for implies checks. These actions
- * are instantiated by an {@link ActionFactory}. Wicket {@link Action}s are
- * mapped to wasp actions.
+ * Immutable mapping for {@link org.apache.wicket.authorization.Action} with
+ * added logic for implies checks. These actions are instantiated by an
+ * {@link ActionFactory}.
  * 
  * @author marrink
- * @see Action
+ * @see org.apache.wicket.authorization.Action
  */
 public interface WaspAction
 {
 	/**
 	 * @return The name of this action
-	 * @see Action#getName()
+	 * @see org.apache.wicket.authorization.Action#getName()
 	 */
 	public String getName();
 

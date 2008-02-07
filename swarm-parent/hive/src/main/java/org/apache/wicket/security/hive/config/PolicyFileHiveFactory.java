@@ -41,7 +41,6 @@ import org.apache.wicket.security.hive.authorization.EverybodyPrincipal;
 import org.apache.wicket.security.hive.authorization.Permission;
 import org.apache.wicket.security.hive.authorization.Principal;
 import org.apache.wicket.security.hive.authorization.permissions.AllPermissions;
-import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -279,7 +278,7 @@ public class PolicyFileHiveFactory implements HiveFactory
 	private String resolveAliases(String raw)
 	{
 		Matcher m = aliasPattern.matcher(raw);
-		AppendingStringBuffer buff = new AppendingStringBuffer(raw.length() + 30); // guess
+		StringBuffer buff = new StringBuffer(raw.length() + 30); // guess
 		int index = 0;
 		while (m.find())
 		{

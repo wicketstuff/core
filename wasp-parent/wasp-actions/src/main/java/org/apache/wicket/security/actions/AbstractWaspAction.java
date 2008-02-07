@@ -16,8 +16,6 @@
  */
 package org.apache.wicket.security.actions;
 
-import org.apache.wicket.util.string.Strings;
-
 
 /**
  * Immutable {@link WaspAction} class. These actions are instantiated by an
@@ -46,8 +44,8 @@ public abstract class AbstractWaspAction implements WaspAction
 
 	/**
 	 * Small check to see if a string contains more then just whitespace. Copied
-	 * from {@link Strings#isEmpty(CharSequence)} to keep this as much separated
-	 * as possible from wicket code
+	 * from {@link org.apache.wicket.util.string.Strings#isEmpty(CharSequence)}
+	 * to keep this as much separated as possible from wicket code
 	 * 
 	 * @param string
 	 * @return

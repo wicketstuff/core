@@ -34,9 +34,10 @@ import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.protocol.http.WebRequestCycle;
 import org.apache.wicket.request.target.component.BookmarkablePageRequestTarget;
-import org.apache.wicket.security.actions.ActionFactory;
 import org.apache.wicket.security.actions.RegistrationException;
 import org.apache.wicket.security.actions.WaspAction;
+import org.apache.wicket.security.actions.WaspActionFactory;
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.checks.ComponentSecurityCheck;
 import org.apache.wicket.security.checks.LinkSecurityCheck;
 import org.apache.wicket.security.components.ISecureComponent;
@@ -61,7 +62,6 @@ import org.apache.wicket.security.pages.secure.PageC;
 import org.apache.wicket.security.pages.secure.PageC2;
 import org.apache.wicket.security.pages.secure.PageD;
 import org.apache.wicket.security.strategies.ClassAuthorizationStrategy;
-import org.apache.wicket.security.strategies.LoginException;
 import org.apache.wicket.security.strategies.SecurityException;
 import org.apache.wicket.security.strategies.StrategyFactory;
 import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
@@ -88,12 +88,9 @@ public class GeneralTest extends TestCase
 
 	private Class loginPage = LoginPage.class;
 
-	private Class secureClass = ISecureComponent.class; // note your best option
+	private Class secureClass = ISecureComponent.class;
 
-	// is to go
-
-	// for ISecurePage with this
-	// strategy
+	// note your best option is to go for ISecurePage with this strategy
 
 	/**
 	 * @see junit.framework.TestCase#setUp()
@@ -102,17 +99,17 @@ public class GeneralTest extends TestCase
 	{
 		mock = new WicketTester(application = new WaspWebApplication()
 		{
-			private ActionFactory actionFactory;
+			private WaspActionFactory actionFactory;
 
 			private StrategyFactory strategyFactory;
 
 			protected void setupActionFactory()
 			{
-				actionFactory = new ActionFactory()
+				actionFactory = new WaspActionFactory()
 				{
 					/**
 					 * 
-					 * @see org.apache.wicket.security.actions.ActionFactory#getAction(org.apache.wicket.authorization.Action)
+					 * @see org.apache.wicket.security.actions.WaspActionFactory#getAction(org.apache.wicket.authorization.Action)
 					 */
 					public WaspAction getAction(Action actions)
 					{
@@ -199,7 +196,7 @@ public class GeneralTest extends TestCase
 				return GeneralTest.this.getHomePage();
 			}
 
-			public ActionFactory getActionFactory()
+			public WaspActionFactory getActionFactory()
 			{
 				return actionFactory;
 			}

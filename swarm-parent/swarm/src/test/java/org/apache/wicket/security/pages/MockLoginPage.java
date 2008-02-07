@@ -25,11 +25,11 @@ import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.security.WaspSession;
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.hive.authentication.CustomLoginContext;
 import org.apache.wicket.security.hive.authentication.LoginContext;
 import org.apache.wicket.security.hive.authentication.PrimaryLoginContext;
 import org.apache.wicket.security.hive.authorization.SimplePrincipal;
-import org.apache.wicket.security.strategies.LoginException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

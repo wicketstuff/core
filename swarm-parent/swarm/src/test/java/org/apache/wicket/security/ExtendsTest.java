@@ -24,6 +24,7 @@ import org.apache.wicket.Response;
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.security.actions.ActionFactory;
+import org.apache.wicket.security.actions.WaspActionFactory;
 import org.apache.wicket.security.hive.HiveMind;
 import org.apache.wicket.security.hive.config.PolicyFileHiveFactory;
 import org.apache.wicket.security.pages.MockHomePage;
@@ -49,7 +50,7 @@ public class ExtendsTest extends GeneralTest
 	private static final class TestApplication extends WebApplication implements WaspApplication
 	{
 
-		private ActionFactory actionFactory;
+		private WaspActionFactory actionFactory;
 
 		private StrategyFactory strategyFactory;
 
@@ -124,7 +125,7 @@ public class ExtendsTest extends GeneralTest
 		/**
 		 * @see org.apache.wicket.security.WaspApplication#getActionFactory()
 		 */
-		public ActionFactory getActionFactory()
+		public WaspActionFactory getActionFactory()
 		{
 			return actionFactory;
 		}

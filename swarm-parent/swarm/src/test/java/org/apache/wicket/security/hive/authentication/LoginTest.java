@@ -20,9 +20,9 @@ import junit.framework.TestCase;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.hive.authorization.SimplePrincipal;
 import org.apache.wicket.security.pages.VerySecurePage;
-import org.apache.wicket.security.strategies.LoginException;
 import org.apache.wicket.util.tester.WicketTester;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

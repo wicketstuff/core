@@ -19,6 +19,7 @@ package org.apache.wicket.security.swarm.strategies;
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.security.actions.WaspAction;
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.components.ISecurePage;
 import org.apache.wicket.security.components.SecureComponentHelper;
 import org.apache.wicket.security.hive.Hive;
@@ -31,7 +32,6 @@ import org.apache.wicket.security.hive.authorization.permissions.ComponentPermis
 import org.apache.wicket.security.hive.authorization.permissions.DataPermission;
 import org.apache.wicket.security.models.ISecureModel;
 import org.apache.wicket.security.strategies.ClassAuthorizationStrategy;
-import org.apache.wicket.security.strategies.LoginException;
 import org.apache.wicket.security.strategies.SecurityException;
 import org.apache.wicket.security.swarm.actions.SwarmAction;
 import org.apache.wicket.security.swarm.models.SwarmModel;

@@ -16,6 +16,8 @@
  */
 package org.apache.wicket.security.hive.authentication;
 
+import org.apache.wicket.security.authentication.LoginException;
+
 
 /**
  * A LoginContext is little more than a factory to create a {@link Subject} and

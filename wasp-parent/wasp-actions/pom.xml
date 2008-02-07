@@ -29,13 +29,13 @@
 	<packaging>jar</packaging>
 	<name>WASP Actions</name>
 	<description>Actions for WASP</description>
-	<!-- TODO remove dependency on wicket -->
+	<!-- TODO remove dependency on wicket 
 	<dependencies>
 	<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket</artifactId>
 		</dependency>
-	</dependencies>
+	</dependencies>	-->
 	<build>
 		<plugins>
 			<plugin>

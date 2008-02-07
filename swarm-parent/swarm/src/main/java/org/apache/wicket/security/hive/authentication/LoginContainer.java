@@ -29,7 +29,7 @@ import java.util.Set;
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.security.strategies.LoginException;
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 
 /**
@@ -72,14 +72,7 @@ public final class LoginContainer implements Serializable
 			throw new LoginException("Already logged in through this context ")
 					.setLoginContext(context);
 		Subject mySubject;
-		try
-		{
-			mySubject = context.login();
-		}
-		catch (org.apache.wicket.security.hive.authentication.LoginException e)
-		{
-			throw new LoginException(e).setLoginContext(context);
-		}
+		mySubject = context.login();
 		if (mySubject == null)
 			throw new LoginException("Login failed ").setLoginContext(context);
 		mySubject.setReadOnly();

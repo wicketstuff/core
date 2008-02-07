@@ -24,8 +24,9 @@ import org.apache.wicket.authorization.Action;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.security.WaspApplication;
-import org.apache.wicket.security.actions.ActionFactory;
 import org.apache.wicket.security.actions.WaspAction;
+import org.apache.wicket.security.actions.WaspActionFactory;
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.checks.ISecurityCheck;
 import org.apache.wicket.security.components.ISecureComponent;
 import org.apache.wicket.security.components.SecureComponentHelper;
@@ -179,7 +180,7 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	 * 
 	 * @return the actionfactory from the application
 	 */
-	protected final ActionFactory getActionFactory()
+	protected final WaspActionFactory getActionFactory()
 	{
 		return ((WaspApplication)Application.get()).getActionFactory();
 	}

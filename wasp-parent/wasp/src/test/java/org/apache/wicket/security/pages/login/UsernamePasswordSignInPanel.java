@@ -34,6 +34,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.WaspWebApplication;
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.components.markup.html.form.SecureForm;
 import org.apache.wicket.security.components.markup.html.form.SecureTextField;
 import org.apache.wicket.security.components.markup.html.links.SecurePageLink;
@@ -119,7 +120,7 @@ public class UsernamePasswordSignInPanel extends Panel
 			session.login(authorized);
 			return true;
 		}
-		catch (org.apache.wicket.security.strategies.LoginException e)
+		catch (LoginException e)
 		{
 			log.error(e.getMessage(), e);
 		}

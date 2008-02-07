@@ -24,10 +24,10 @@ import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.security.actions.WaspAction;
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.components.SecureComponentHelper;
 import org.apache.wicket.security.models.ISecureModel;
 import org.apache.wicket.security.strategies.ClassAuthorizationStrategy;
-import org.apache.wicket.security.strategies.LoginException;
 
 /**
  * Implementation of a strategy for test purposes.

@@ -19,7 +19,6 @@ package org.apache.wicket.security.hive.config;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-import org.apache.wicket.authorization.Action;
 import org.apache.wicket.security.actions.AbstractWaspAction;
 import org.apache.wicket.security.actions.Access;
 import org.apache.wicket.security.actions.ActionFactory;
@@ -29,14 +28,13 @@ import org.apache.wicket.security.actions.WaspAction;
 
 
 /**
- * Immutable {@link Action} class based on int values to speed up inheritance
+ * {@link WaspAction} class based on int values to speed up inheritance
  * checking. Each action is assigned a power of 2 int value. Bitwise or checks
  * provide the imply logic. These actions are instantiated by an
  * {@link ActionFactory} which provides both the name and the int value for the
  * constructor.
  * 
  * @author marrink
- * @see Action
  */
 public class TestAction extends AbstractWaspAction
 {
@@ -215,7 +213,6 @@ public class TestAction extends AbstractWaspAction
 	 */
 	public final ActionFactory getActionFactory()
 	{
-		// TODO move to interface?
 		return Actions.getActionFactory(key);
 	}
 
