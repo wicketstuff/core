@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tomcatProjectProperties>
+    <rootDir>/src/webapp</rootDir>
+    <exportSource>false</exportSource>
+    <reloadable>true</reloadable>
+    <redirectLogger>true</redirectLogger>
+    <updateXml>true</updateXml>
+    <warLocation></warLocation>
+    <extraInfo></extraInfo>
+    <webPath>/examples</webPath>
+    <webClassPathEntries>
+        <webClassPathEntry>/examples/target/classes</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/asm/asm/1.5.3/asm-1.5.3.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/commons-codec/commons-codec/1.3/commons-codec-1.3.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/commons-collections/commons-collections/3.1/commons-collections-3.1.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/commons-lang/commons-lang/2.1/commons-lang-2.1.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/commons-logging/commons-logging/1.1/commons-logging-1.1.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/log4j/log4j/1.2.12/log4j-1.2.12.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/net/sf/ehcache/ehcache/1.2.4/ehcache-1.2.4.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/acegisecurity/acegi-security/1.0.5/acegi-security-1.0.5.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/apache/wicket/wicket-extensions/1.3.0-SNAPSHOT/wicket-extensions-1.3.0-SNAPSHOT.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/apache/wicket/wicket-ioc/1.3.0-SNAPSHOT/wicket-ioc-1.3.0-SNAPSHOT.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/apache/wicket/wicket-security/swarm/0.1-SNAPSHOT/swarm-0.1-SNAPSHOT.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/apache/wicket/wicket-security/wasp/0.1-SNAPSHOT/wasp-0.1-SNAPSHOT.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/apache/wicket/wicket-spring/1.3.0-SNAPSHOT/wicket-spring-1.3.0-SNAPSHOT.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/apache/wicket/wicket/1.3.0-SNAPSHOT/wicket-1.3.0-SNAPSHOT.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/slf4j/slf4j-api/1.4.2/slf4j-api-1.4.2.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/slf4j/slf4j-log4j12/1.4.2/slf4j-log4j12-1.4.2.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/springframework/spring/2.0/spring-2.0.jar</webClassPathEntry>
+    </webClassPathEntries>
+</tomcatProjectProperties>
