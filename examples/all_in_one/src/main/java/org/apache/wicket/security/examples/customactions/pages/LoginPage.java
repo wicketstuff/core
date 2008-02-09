@@ -20,7 +20,7 @@ import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.examples.customactions.authentication.MyLoginContext;
 import org.apache.wicket.security.examples.pages.login.UsernamePasswordSignInPanel;
 import org.apache.wicket.security.hive.authentication.LoginContext;
-import org.apache.wicket.security.strategies.LoginException;
+import org.apache.wicket.security.authentication.LoginException;
 
 /**
  * Custom login page.

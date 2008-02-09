@@ -207,7 +207,7 @@
 	<modules>
 	<module>wasp-parent</module>
 	<module>swarm-parent</module>
-<!--	<module>examples</module>	-->
+	<module>examples</module>
 	</modules>
 	<!-- Build environment -->
 	<distributionManagement>

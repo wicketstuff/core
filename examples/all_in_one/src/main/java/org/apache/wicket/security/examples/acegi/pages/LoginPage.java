@@ -23,7 +23,7 @@ import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.examples.acegi.authentication.AcegiLoginContext;
 import org.apache.wicket.security.examples.pages.login.UsernamePasswordSignInPanel;
 import org.apache.wicket.security.hive.authentication.LoginContext;
-import org.apache.wicket.security.strategies.LoginException;
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.util.lang.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

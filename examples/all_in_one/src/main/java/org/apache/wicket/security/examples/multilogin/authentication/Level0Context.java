@@ -24,7 +24,7 @@ import org.apache.wicket.security.examples.pages.TopSecretPage;
 import org.apache.wicket.security.hive.authentication.DefaultSubject;
 import org.apache.wicket.security.hive.authentication.LoginContext;
 import org.apache.wicket.security.hive.authentication.Subject;
-import org.apache.wicket.security.strategies.LoginException;
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.util.lang.Objects;
 
 /**

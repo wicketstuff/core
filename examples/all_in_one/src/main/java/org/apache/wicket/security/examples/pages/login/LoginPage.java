@@ -21,7 +21,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.examples.multilogin.authentication.Level0Context;
 import org.apache.wicket.security.hive.authentication.LoginContext;
-import org.apache.wicket.security.strategies.LoginException;
+import org.apache.wicket.security.authentication.LoginException;
 
 /**
  * primary loginpage uses username and password.

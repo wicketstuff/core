@@ -33,7 +33,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebRequest;
 import org.apache.wicket.protocol.http.WebResponse;
 import org.apache.wicket.security.WaspSession;
-import org.apache.wicket.security.strategies.LoginException;
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.util.crypt.Base64;
 import org.apache.wicket.util.lang.Objects;
 import org.apache.wicket.util.lang.PropertyResolver;

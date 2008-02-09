@@ -22,10 +22,10 @@ import org.acegisecurity.AuthenticationManager;
 import org.acegisecurity.context.SecurityContextHolder;
 import org.acegisecurity.providers.AbstractAuthenticationToken;
 import org.apache.wicket.Application;
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.examples.acegi.AcegiApplication;
 import org.apache.wicket.security.hive.authentication.LoginContext;
 import org.apache.wicket.security.hive.authentication.Subject;
-import org.apache.wicket.security.strategies.LoginException;
 
 /**
  * A general purpose wrapper to authenticate a user with Wasp through Acegi. It

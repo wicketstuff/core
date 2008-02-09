@@ -20,7 +20,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.hive.authentication.LoginContext;
-import org.apache.wicket.security.strategies.LoginException;
+import org.apache.wicket.security.authentication.LoginException;
 
 /**
  * secondary login page. this asks for a username and a token. well kind of :)

@@ -19,354 +19,63 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.apache.wicket.wicket-security</groupId>
-	<artifactId>examples</artifactId>
+	<parent>
+		<groupId>org.apache.wicket.wicket-security</groupId>
+		<artifactId>examples</artifactId>
+		<version>1.3.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>all_in_one</artifactId>
 	<packaging>war</packaging>
-	<version>1.3.1-SNAPSHOT</version>
-	<name>Examples</name>
-	<inceptionYear>2006</inceptionYear>
-	<description>Examples for WASP and SWARM</description>
-	<prerequisites>
-		<maven>2.0.4</maven>
-	</prerequisites>
-	<repositories>
-		<repository>
-			<id>wicket-snaps</id>
-			<url>http://wicketstuff.org/maven/repository</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-	</repositories>
-	<!-- Developers -->
-	<developers>
-		<developer>
-			<id>marrink</id>
-			<name>Maurice Marrink</name>
-			<roles>
-				<role>Developer</role>
-			</roles>
-			<organization>Topicus</organization>
-			<organizationUrl>http://www.topicus.nl/</organizationUrl>
-			<timezone>1</timezone>
-		</developer>
-	</developers>
-
-	<organization>
-		<name>Topicus</name>
-		<url>http://www.topicus.nl/</url>
-	</organization>
+	<name>All examples</name>
+	<description>All examples for Wicket-Security</description>
 
 	<!-- Dependency list -->
 	<dependencies>
-		<!-- test dependencies -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket</artifactId>
-			<version>1.3.0</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket-extensions</artifactId>
-			<version>1.3.0</version>
-			<scope>compile</scope>
-		</dependency>
-		<!-- begin acegi dependencies -->
-		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket-spring</artifactId>
-			<version>1.3.0</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.acegisecurity</groupId>
-			<artifactId>acegi-security</artifactId>
-			<version>1.0.5</version>
-			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-remoting</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-jdbc</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-support</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-aop</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-beans</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-context</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>oro</groupId>
-					<artifactId>oro</artifactId>
-				</exclusion>
-
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.ehcache</groupId>
-			<artifactId>ehcache</artifactId>
-			<version>1.2.4</version>
-			<scope>compile</scope>
-		</dependency>
-		<!-- end acegi dependencies -->
 		<dependency>
 			<groupId>org.apache.wicket.wicket-security</groupId>
 			<artifactId>swarm</artifactId>
-			<version>1.3.1-SNAPSHOT</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1</version>
-			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>logkit</groupId>
-					<artifactId>logkit</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>avalon-framework</groupId>
-					<artifactId>avalon-framework</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.4.2</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<scope>compile</scope>
+			<optional>false</optional>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</dependency>
+			<!-- begin acegi dependencies -->
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.acegisecurity</groupId>
+			<artifactId>acegi-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+		</dependency>
+		<!-- end acegi dependencies -->
 	</dependencies>
-	<!-- Build environment -->
-	<distributionManagement>
-		<snapshotRepository>
-			<id>repo</id>
-			<name>Local Bamboo/Tomcat repository</name>
-			<url>
-				file:/home/wicket/tomcat/webapps/maven/repository/
-			</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-		<repository>
-			<id>repo</id>
-			<name>Local Bamboo/Tomcat repository</name>
-			<url>
-				file:/home/wicket/tomcat/webapps/maven/repository/
-			</url>
-		</repository>
-	</distributionManagement>
 	<build>
-		<defaultGoal>package</defaultGoal>
-		<sourceDirectory>src/main/java</sourceDirectory>
-		<testSourceDirectory>src/test/java</testSourceDirectory>
-		<resources>
-			<resource>
-				<directory>${basedir}/src/main/java</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-				<includes>
-					<include>**/*</include>
-				</includes>
-			</resource>
-		</resources>
-		<testResources>
-			<testResource>
-				<directory>${basedir}/src/test/java</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-				<includes>
-					<include>**/*</include>
-				</includes>
-			</testResource>
-		</testResources>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<configuration>
-						<source>1.4</source>
-						<target>1.4</target>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-source-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>attach-sources</id>
-							<goals>
-								<goal>jar</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<artifactId>maven-eclipse-plugin</artifactId>
-					<configuration>
-						<downloadSources>true</downloadSources>
-						<classpathContainers>
-							<classpathContainer>
-								org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.4
-							</classpathContainer>
-						</classpathContainers>
-						<additionalProjectnatures>
-           					<projectnature>com.sysdeo.eclipse.tomcat.tomcatnature</projectnature>
-         				</additionalProjectnatures>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-				</plugin>
-				<!-- 		<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-clover-plugin</artifactId>
-					<configuration>
-					<targetPercentage>50%</targetPercentage>
-					<jdk>1.4</jdk>
-					<contextFilters>catch</contextFilters>
-					<excludes>
-					<exclude>**/*Exception.java</exclude>
-					<exclude>**/TestPermission.java</exclude>
-					<exclude>**/TestPrincipal.java</exclude>
-					</excludes>
-					</configuration>
-					<executions>
-					<execution>
-					<id>verify</id>
-					<phase>verify</phase>
-					<goals>
-					<goal>instrument</goal>
-					<goal>check</goal>
-					</goals>
-					</execution>
-					<execution>
-					<id>site</id>
-					<phase>pre-site</phase>
-					<goals>
-					<goal>instrument</goal>
-					</goals>
-					</execution>
-					</executions>
-					</plugin>	-->
-					<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-war-plugin</artifactId>
-					<configuration>
-						<warSourceDirectory>
-							src/webapp
-						</warSourceDirectory>
-						<warSourceExcludes>WEB-INF/lib/servlet-api-2.3.jar</warSourceExcludes>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
+		<plugins>		
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
+				<artifactId>maven-war-plugin</artifactId>
 			</plugin>
-			<!-- 	<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clover-plugin</artifactId>
-				</plugin>	-->
 		</plugins>
 	</build>
-
-	<!-- Report tools configuration -->
-	<reporting>
-		<plugins>
-			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<links>
-						<link>
-							http://java.sun.com/j2se/1.5.0/docs/api/
-						</link>
-					</links>
-					<show>package</show>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jxr-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>surefire-report-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>taglist-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>changes-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>
-					maven-project-info-reports-plugin
-				</artifactId>
-				<version>2.0</version>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>project-team</report>
-							<report>dependencies</report>
-							<report>dependency-convergence</report>
-							<report>scm</report>
-							<report>index</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-			<!-- 	<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clover-plugin</artifactId>
-				<configuration>
-				<targetPercentage>50%</targetPercentage>
-				<jdk>1.4</jdk>
-				<contextFilters>catch</contextFilters>
-				<excludes>
-				<exclude>**/*Exception.java</exclude>
-				</excludes>
-				</configuration>
-				</plugin>	-->
-		</plugins>
-	</reporting>
 </project>

@@ -20,7 +20,7 @@ import org.apache.wicket.security.examples.authorization.MyPrincipal;
 import org.apache.wicket.security.hive.authentication.DefaultSubject;
 import org.apache.wicket.security.hive.authentication.Subject;
 import org.apache.wicket.security.hive.authentication.UsernamePasswordContext;
-import org.apache.wicket.security.strategies.LoginException;
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.util.lang.Objects;
 
 /**
