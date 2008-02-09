@@ -29,6 +29,13 @@
 	<packaging>jar</packaging>
 	<name>Wicket Common Security</name>
 	<description>Library of common security related classes</description>
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket</artifactId>
+			<scope>test</scope>	<!-- we only need wicket because of the license header testing, might just copy the whole thing later to remove this dependency -->
+		</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
