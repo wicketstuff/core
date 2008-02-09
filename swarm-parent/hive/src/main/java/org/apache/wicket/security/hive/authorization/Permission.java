@@ -18,7 +18,6 @@ package org.apache.wicket.security.hive.authorization;
 
 import java.io.Serializable;
 
-import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.hive.authorization.permissions.ActionPermission;
 
 
@@ -54,8 +53,9 @@ import org.apache.wicket.security.hive.authorization.permissions.ActionPermissio
  * All permissions must at least have a public constructor accepting a String
  * parameter which will be used as name for the permission. Note that the
  * {@link ActionPermission} should also have a 2 argument constructor accepting
- * a string where for the name and a second {@link WaspAction} parameter to
- * indicate which actions are allowed.
+ * a string as the name and a second
+ * {@link org.apache.wicket.security.actions.WaspAction} parameter to indicate
+ * which actions are allowed.
  * 
  * @author marrink
  * 
@@ -72,7 +72,6 @@ public abstract class Permission implements Serializable
 	public Permission(String name)
 	{
 		this.name = name;
-
 	}
 
 	/**

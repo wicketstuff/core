@@ -51,6 +51,17 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 			</plugin>
+			<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<configuration>
+						<excludes>
+							<exclude>**/TestPermission.java</exclude>
+							<exclude>**/TestAction.java</exclude>
+							<exclude>**/TestActionFactory*</exclude>
+						</excludes>
+					</configuration>
+				</plugin>
 			<!-- 	<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clover-plugin</artifactId>
