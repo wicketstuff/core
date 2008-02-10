@@ -26,6 +26,7 @@ import org.apache.wicket.security.examples.tabs.pages.MasterPage;
 import org.apache.wicket.security.hive.HiveMind;
 import org.apache.wicket.security.hive.authentication.LoginContext;
 import org.apache.wicket.security.hive.config.PolicyFileHiveFactory;
+import org.apache.wicket.security.hive.config.SwarmPolicyFileHiveFactory;
 
 /**
  * default implementation of a swarm app.
@@ -81,7 +82,7 @@ public class MyApplication extends MultiUsableApplication
 	protected void setUpHive()
 	{
 		// create factory
-		PolicyFileHiveFactory factory = new PolicyFileHiveFactory(getActionFactory());
+		PolicyFileHiveFactory factory = new SwarmPolicyFileHiveFactory(getActionFactory());
 		try
 		{
 			// this example uses 1 policy file but you can add as many as you

@@ -22,6 +22,7 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.security.examples.denystrategy.factories.DenialFactory;
 import org.apache.wicket.security.hive.HiveMind;
 import org.apache.wicket.security.hive.config.PolicyFileHiveFactory;
+import org.apache.wicket.security.hive.config.SwarmPolicyFileHiveFactory;
 
 /**
  * This example re-uses almost everything from the tab example to show you how
@@ -66,7 +67,7 @@ public class MyApplication extends org.apache.wicket.security.examples.tabs.MyAp
 	protected void setUpHive()
 	{
 		// create factory
-		PolicyFileHiveFactory factory = new PolicyFileHiveFactory(getActionFactory());
+		PolicyFileHiveFactory factory = new SwarmPolicyFileHiveFactory(getActionFactory());
 		try
 		{
 			// this example uses 1 policy file but you can add as many as you

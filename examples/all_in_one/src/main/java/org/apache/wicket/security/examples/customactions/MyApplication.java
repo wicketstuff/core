@@ -31,6 +31,7 @@ import org.apache.wicket.security.examples.customactions.pages.OverviewPage;
 import org.apache.wicket.security.hive.HiveMind;
 import org.apache.wicket.security.hive.authentication.LoginContext;
 import org.apache.wicket.security.hive.config.PolicyFileHiveFactory;
+import org.apache.wicket.security.hive.config.SwarmPolicyFileHiveFactory;
 
 /**
  * default implementation of a swarm app with a custom actionfactory.
@@ -113,7 +114,7 @@ public class MyApplication extends MultiUsableApplication
 		if (HiveMind.getHive(getHiveKey()) == null)
 		{
 			// create factory
-			PolicyFileHiveFactory factory = new PolicyFileHiveFactory(getActionFactory());
+			PolicyFileHiveFactory factory = new SwarmPolicyFileHiveFactory(getActionFactory());
 			try
 			{
 				// this example uses 1 policy file but you can add as many as
@@ -153,7 +154,7 @@ public class MyApplication extends MultiUsableApplication
 	 */
 	protected void setupActionFactory()
 	{
-		setActionFactory(new MyActionFactory(getHiveKey()));
+		setActionFactory(new MyActionFactory(getClass().getName() + ":" + getHiveKey()));
 	}
 
 	/**
