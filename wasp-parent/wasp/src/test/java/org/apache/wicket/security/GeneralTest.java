@@ -939,4 +939,55 @@ public class GeneralTest extends TestCase
 				.getModelObject());
 
 	}
+
+	/**
+	 * make sure the session is invalidated after a logoff
+	 */
+	public void testSessionInvalidationWithSingleLogin()
+	{
+		doLogin();
+		Session session = Session.get();
+		assertNotNull(session);
+		assertEquals(session, mock.getWicketSession());
+		mock.setupRequestAndResponse();
+		((WaspSession)mock.getWicketSession()).logoff(null);
+		mock.processRequestCycle();
+		assertNotSame(session, mock.getWicketSession());
+		assertFalse(((WaspAuthorizationStrategy)mock.getWicketSession().getAuthorizationStrategy())
+				.isUserAuthenticated());
+
+	}
+
+	/**
+	 * make sure the session is invalidated after a logoff
+	 */
+	public void testSessionInvalidationWithMultiLogin()
+	{
+		doLogin();
+		Session session = Session.get();
+		assertNotNull(session);
+		assertEquals(session, mock.getWicketSession());
+		Map authorized = new HashMap();
+		authorized.put(SecureForm.class, application.getActionFactory().getAction("access render"));
+		login(authorized);
+		mock.setupRequestAndResponse();
+		mock.processRequestCycle();
+		assertTrue(((WaspAuthorizationStrategy)mock.getWicketSession().getAuthorizationStrategy())
+				.isUserAuthenticated());
+		assertEquals(session, mock.getWicketSession());
+		logoff(authorized);
+		mock.setupRequestAndResponse();
+		mock.processRequestCycle();
+		assertTrue(((WaspAuthorizationStrategy)mock.getWicketSession().getAuthorizationStrategy())
+				.isUserAuthenticated());
+		assertEquals(session, mock.getWicketSession());
+
+		mock.setupRequestAndResponse();
+		((WaspSession)mock.getWicketSession()).logoff(null);
+		mock.processRequestCycle();
+		assertNotSame(session, mock.getWicketSession());
+		assertFalse(((WaspAuthorizationStrategy)mock.getWicketSession().getAuthorizationStrategy())
+				.isUserAuthenticated());
+
+	}
 }

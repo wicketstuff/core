@@ -180,4 +180,13 @@ public class TestStrategy extends ClassAuthorizationStrategy
 		loggedin = !authorized.isEmpty();
 		return true;
 	}
+
+	/**
+	 * 
+	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isUserAuthenticated()
+	 */
+	public boolean isUserAuthenticated()
+	{
+		return loggedin;
+	}
 }

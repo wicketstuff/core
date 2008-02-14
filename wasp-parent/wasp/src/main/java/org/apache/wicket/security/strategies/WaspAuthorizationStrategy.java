@@ -108,6 +108,17 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	public abstract boolean isClassAuthenticated(Class clazz);
 
 	/**
+	 * Checks if there is a user logged in at all. This will return true after a
+	 * successful {@link #login(Object)} and false after a successful
+	 * {@link #logoff(Object)}. Note that in a multi-login scenario this method
+	 * returns true until all successful logins are countered with a successful
+	 * logoff.
+	 * 
+	 * @return true while a user is logged in, false otherwise
+	 */
+	public abstract boolean isUserAuthenticated();
+
+	/**
 	 * Attempts to log the user in. Note to implementations: It is generally
 	 * considered a bad idea to store the context if it contains sensitive data
 	 * (like a plaintext password). Implementations should handle temporary

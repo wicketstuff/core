@@ -95,7 +95,10 @@ public class WaspSession extends WebSession
 	{
 		if (securityStrategy != null && securityStrategy.logoff(context))
 		{
-			dirty();
+			if (securityStrategy.isUserAuthenticated())
+				dirty();
+			else
+				invalidate();
 			return true;
 		}
 		return false;

@@ -38,7 +38,7 @@ import org.apache.wicket.security.swarm.models.SwarmModel;
 
 /**
  * Implementation of a {@link ClassAuthorizationStrategy}. It allows for both
- * simple logins as multi level logins.
+ * simple logins as well as multi level logins.
  * 
  * @author marrink
  */
@@ -141,8 +141,7 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	 */
 	public boolean isClassAuthorized(Class clazz, WaspAction action)
 	{
-		return hasPermission(new ComponentPermission(SecureComponentHelper.alias(clazz),
-				(SwarmAction)action));
+		return hasPermission(new ComponentPermission(SecureComponentHelper.alias(clazz), action));
 	}
 
 	/**
@@ -161,7 +160,7 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	 */
 	public boolean isComponentAuthorized(Component component, WaspAction action)
 	{
-		return hasPermission(new ComponentPermission(component, (SwarmAction)action));
+		return hasPermission(new ComponentPermission(component, action));
 	}
 
 	/**
@@ -189,7 +188,7 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 		if (model instanceof SwarmModel)
 			permission = new DataPermission(component, (SwarmModel)model, (SwarmAction)action);
 		else
-			permission = new DataPermission(String.valueOf(model), (SwarmAction)action);
+			permission = new DataPermission(String.valueOf(model), action);
 		return hasPermission(permission);
 
 	}
@@ -234,5 +233,14 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	protected final LoginContainer getLoginContainer()
 	{
 		return loginContainer;
+	}
+
+	/**
+	 * 
+	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isUserAuthenticated()
+	 */
+	public boolean isUserAuthenticated()
+	{
+		return getSubject() != null;
 	}
 }
