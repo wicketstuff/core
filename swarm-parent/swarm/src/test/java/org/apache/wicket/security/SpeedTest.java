@@ -210,8 +210,8 @@ public class SpeedTest extends TestCase
 	 */
 	public void testPerformance()
 	{
-		noCacheAllAllowed();
 		cachedAllAllowed();
+		noCacheAllAllowed();
 		noCachePartialDenied();
 		cachedpartialDenied();
 		assertEquals(8, results.size());

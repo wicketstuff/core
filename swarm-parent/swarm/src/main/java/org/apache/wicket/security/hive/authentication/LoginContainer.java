@@ -82,11 +82,6 @@ public final class LoginContainer implements Serializable
 		logins.add(key);
 		Collections.sort(logins);
 		this.subject = new MultiSubject(logins, subjects);
-		Session session = Session.get();
-		if (session.isTemporary())
-			session.bind();
-		else
-			session.dirty();
 	}
 
 	/**

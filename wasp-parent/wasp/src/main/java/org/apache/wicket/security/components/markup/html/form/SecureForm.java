@@ -118,7 +118,29 @@ public class SecureForm extends Form implements ISecureComponent
 			tag.remove("action");
 			tag.remove("enctype");
 
-			// auto disbale all children
+			// auto disable all children
+			// visitChildren(new IVisitor()
+			// {
+			// public Object component(Component component)
+			// {
+			// component.setEnabled(false);
+			// return IVisitor.CONTINUE_TRAVERSAL;
+			// }
+			// });
+		}
+	}
+
+	/**
+	 * 
+	 * @see org.apache.wicket.Component#onBeforeRender()
+	 */
+	protected void onBeforeRender()
+	{
+		super.onBeforeRender();
+		// prevent client from submitting this form
+		if (!isEnableAllowed())
+		{
+			// auto disable all children
 			visitChildren(new IVisitor()
 			{
 				public Object component(Component component)
@@ -127,6 +149,8 @@ public class SecureForm extends Form implements ISecureComponent
 					return IVisitor.CONTINUE_TRAVERSAL;
 				}
 			});
+			// TODO test if this works with listviews etc
 		}
+
 	}
 }

@@ -115,4 +115,15 @@ public class WaspSession extends WebSession
 		securityStrategy.destroy();
 		super.invalidateNow();
 	}
+
+	/**
+	 * 
+	 * @see org.apache.wicket.Session#detach()
+	 */
+	protected void detach()
+	{
+		if (isTemporary() && securityStrategy.isUserAuthenticated())
+			bind();
+		super.detach();
+	}
 }
