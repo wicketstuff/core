@@ -17,6 +17,7 @@
 package org.apache.wicket.security.hive;
 
 import java.security.Policy;
+import java.util.Set;
 
 import org.apache.wicket.security.hive.authentication.Subject;
 import org.apache.wicket.security.hive.authorization.Permission;
@@ -68,4 +69,24 @@ public interface Hive
 	 *         otherwise.
 	 */
 	public boolean hasPermission(Subject subject, Permission permission);
+
+	/**
+	 * Returns a set of {@link Principal}s, each containing this permission.
+	 * Implementors must not allow modifications to the set change the internal
+	 * state of the hive.
+	 * 
+	 * @param permission
+	 * @return set, never null
+	 */
+	public Set getPrincipals(Permission permission);
+
+	/**
+	 * Returns a set of {@link Permission}s, contained within the principal.
+	 * Implementors must not allow modifications to the set change the internal
+	 * state of the hive.
+	 * 
+	 * @param principal
+	 * @return set, never null
+	 */
+	public Set getPermissions(Principal principal);
 }

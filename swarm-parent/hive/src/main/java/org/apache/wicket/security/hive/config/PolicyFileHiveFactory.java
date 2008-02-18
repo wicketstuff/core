@@ -117,8 +117,7 @@ public class PolicyFileHiveFactory implements HiveFactory
 	/**
 	 * 
 	 * Constructs a new factory that builds a Hive out of one (1) or more policy
-	 * files. It registers an alias for {@link ComponentPermission},
-	 * {@link DataPermission} and {@link AllPermissions}.
+	 * files. It registers an alias for {@link AllPermissions}.
 	 * 
 	 * @param actionFactory
 	 *            factory required to create the actions for the permissions
@@ -313,17 +312,28 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
+	 * Changeable by subclasses to return there own hive subclass. Note that the
+	 * actual filling with content happens in {@link #createHive()}. Default
+	 * implementation return either a {@link SimpleCachingHive} or a
+	 * {@link BasicHive} depending on {@link #isUsingHiveCache()}
+	 * 
+	 * @return {@link BasicHive} subclass.
+	 */
+	protected BasicHive constructHive()
+	{
+		if (isUsingHiveCache())
+			return new SimpleCachingHive();
+		return new BasicHive();
+	}
+
+	/**
 	 * This method is not thread safe.
 	 * 
 	 * @see org.apache.wicket.security.hive.config.HiveFactory#createHive()
 	 */
-	public Hive createHive()
+	public final Hive createHive()
 	{
-		BasicHive hive;
-		if (isUsingHiveCache())
-			hive = new SimpleCachingHive();
-		else
-			hive = new BasicHive();
+		BasicHive hive = constructHive();
 		boolean readAnything = false;
 		Iterator it = policyFiles.iterator();
 		while (it.hasNext())

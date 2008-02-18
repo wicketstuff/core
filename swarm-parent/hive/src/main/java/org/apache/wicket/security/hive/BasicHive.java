@@ -43,6 +43,9 @@ public class BasicHive implements Hive
 	 */
 	private ManyToManyMap principals;
 
+	/**
+	 * indicates if permissions and or principals are accepted by the hive.
+	 */
 	private boolean locked = false;
 
 	/**
@@ -71,7 +74,7 @@ public class BasicHive implements Hive
 	 * 
 	 * @return true if the hive is locked, false otherwise.
 	 */
-	public boolean isLocked()
+	public final boolean isLocked()
 	{
 		return locked;
 	}
@@ -88,7 +91,7 @@ public class BasicHive implements Hive
 	 * @throws IllegalArgumentException
 	 *             if either parameter is null
 	 */
-	public void addPrincipal(Principal principal, Collection permissions)
+	public final void addPrincipal(Principal principal, Collection permissions)
 	{
 		if (isLocked())
 			throw new IllegalStateException("While the hive is locked no changes are allowed.");
@@ -121,7 +124,7 @@ public class BasicHive implements Hive
 	 * @throws IllegalArgumentException
 	 *             if either parameter is null
 	 */
-	public void addPermission(Principal principal, Permission permission)
+	public final void addPermission(Principal principal, Permission permission)
 	{
 		if (isLocked())
 			throw new IllegalStateException("While the hive is locked no changes are allowed.");
@@ -137,7 +140,7 @@ public class BasicHive implements Hive
 	/**
 	 * @see org.apache.wicket.security.hive.Hive#containsPrincipal(org.apache.wicket.security.hive.authorization.Principal)
 	 */
-	public boolean containsPrincipal(Principal principal)
+	public final boolean containsPrincipal(Principal principal)
 	{
 		return principals.contains(principal);
 	}
@@ -179,7 +182,7 @@ public class BasicHive implements Hive
 	 * @see org.apache.wicket.security.hive.Hive#hasPermission(org.apache.wicket.security.hive.authentication.Subject,
 	 *      org.apache.wicket.security.hive.authorization.Permission)
 	 */
-	public boolean hasPermission(Subject subject, Permission permission)
+	public final boolean hasPermission(Subject subject, Permission permission)
 	{
 		Boolean cacheResult = cacheLookUp(subject, permission);
 		if (cacheResult != null)
@@ -233,7 +236,7 @@ public class BasicHive implements Hive
 	 * @return true if the subject has or implies at least one of the
 	 *         principals, false otherwise.
 	 */
-	private boolean hasPrincipal(Subject subject, Set principalSet)
+	private final boolean hasPrincipal(Subject subject, Set principalSet)
 	{
 		if (!principalSet.isEmpty())
 		{
@@ -257,8 +260,32 @@ public class BasicHive implements Hive
 	/**
 	 * @see org.apache.wicket.security.hive.Hive#containsPermission(org.apache.wicket.security.hive.authorization.Permission)
 	 */
-	public boolean containsPermission(Permission permission)
+	public final boolean containsPermission(Permission permission)
 	{
 		return principals.contains(permission);
+	}
+
+	/**
+	 * 
+	 * @see org.apache.wicket.security.hive.Hive#getPermissions(org.apache.wicket.security.hive.authorization.Principal)
+	 */
+	public final Set getPermissions(Principal principal)
+	{
+		Set set = principals.get(principal);
+		if (set == null)
+			return Collections.EMPTY_SET;
+		return Collections.unmodifiableSet(set);
+	}
+
+	/**
+	 * 
+	 * @see org.apache.wicket.security.hive.Hive#getPrincipals(org.apache.wicket.security.hive.authorization.Permission)
+	 */
+	public final Set getPrincipals(Permission permission)
+	{
+		Set set = principals.get(permission);
+		if (set == null)
+			return Collections.EMPTY_SET;
+		return Collections.unmodifiableSet(set);
 	}
 }

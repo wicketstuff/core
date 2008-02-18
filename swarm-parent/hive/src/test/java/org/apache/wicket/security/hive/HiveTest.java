@@ -17,11 +17,14 @@
 package org.apache.wicket.security.hive;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import junit.framework.TestCase;
 
 import org.apache.wicket.security.hive.authorization.EverybodyPrincipal;
+import org.apache.wicket.security.hive.authorization.SimplePrincipal;
 import org.apache.wicket.security.hive.authorization.TestPermission;
 
 /**
@@ -126,5 +129,45 @@ public class HiveTest extends TestCase
 		hive.addPermission(new EverybodyPrincipal(), new TestPermission("test", "read, write"));
 		assertTrue(hive.hasPermission(null, new TestPermission("test", "read")));
 		assertTrue(hive.hasPermission(null, new TestPermission("test")));
+	}
+
+	/**
+	 * @see BasicHive#getPrincipals(org.apache.wicket.security.hive.authorization.Permission)
+	 */
+	public void testGetPrincipals()
+	{
+		BasicHive hive = new BasicHive();
+		hive.addPermission(new EverybodyPrincipal(), new TestPermission("foobar"));
+		hive.addPermission(new SimplePrincipal("foo.bar"), new TestPermission("foobar"));
+		hive.addPermission(new EverybodyPrincipal(), new TestPermission("test", "read, write"));
+		assertEquals(Collections.EMPTY_SET, hive.getPrincipals(new TestPermission("foo")));
+		Set principals = hive.getPrincipals(new TestPermission("foobar"));
+		assertEquals(2, principals.size());
+		assertTrue(principals.contains(new EverybodyPrincipal()));
+		assertTrue(principals.contains(new SimplePrincipal("foo.bar")));
+		principals = hive.getPrincipals(new TestPermission("test", "read, write"));
+		assertEquals(1, principals.size());
+		assertTrue(principals.contains(new EverybodyPrincipal()));
+
+	}
+
+	/**
+	 * @see BasicHive#getPermissions(org.apache.wicket.security.hive.authorization.Principal)
+	 */
+	public void testGetPermissions()
+	{
+		BasicHive hive = new BasicHive();
+		hive.addPermission(new EverybodyPrincipal(), new TestPermission("foobar"));
+		hive.addPermission(new SimplePrincipal("foo.bar"), new TestPermission("foobar"));
+		hive.addPermission(new EverybodyPrincipal(), new TestPermission("test", "read, write"));
+		assertEquals(Collections.EMPTY_SET, hive.getPermissions(new SimplePrincipal("foobar")));
+		Set permissions = hive.getPermissions(new EverybodyPrincipal());
+		assertEquals(2, permissions.size());
+		assertTrue(permissions.contains(new TestPermission("foobar")));
+		assertTrue(permissions.contains(new TestPermission("test", "read, write")));
+		permissions = hive.getPermissions(new SimplePrincipal("foo.bar"));
+		assertEquals(1, permissions.size());
+		assertTrue(permissions.contains(new TestPermission("foobar")));
+
 	}
 }
