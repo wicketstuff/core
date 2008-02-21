@@ -381,6 +381,7 @@ public class PolicyFileHiveFactory implements HiveFactory
 		inputReaders.clear();
 		if (!readAnything)
 			log.warn("No policyFiles or inputstreams were added to the factory!");
+		hive.lock();
 		return hive;
 	}
 
