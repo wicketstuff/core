@@ -59,10 +59,7 @@ public class WaspSession extends WebSession
 	}
 
 	/**
-	 * Attempts to login with the current login info. Even though this call
-	 * already handles temporary sessions and dirty flags. The
-	 * {@link WaspAuthorizationStrategy} should also do the same as it is not
-	 * guaranteed that every login comes from the session.
+	 * Attempts to login with the current login info.
 	 * 
 	 * @param context
 	 *            any type of information required to login
