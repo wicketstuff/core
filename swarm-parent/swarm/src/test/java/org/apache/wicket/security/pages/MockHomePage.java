@@ -46,6 +46,7 @@ public class MockHomePage extends SecureWebPage
 		add(new PageLink("secret", VerySecurePage.class));
 
 		add(new SecurePageLink("link", PageA.class));
+		setStatelessHint(true);
 	}
 
 	/**
@@ -58,4 +59,5 @@ public class MockHomePage extends SecureWebPage
 	{
 		return ((WaspSession)Session.get()).logoff(context);
 	}
+
 }
