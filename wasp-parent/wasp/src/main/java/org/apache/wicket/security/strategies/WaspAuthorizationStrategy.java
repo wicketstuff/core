@@ -121,8 +121,7 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	/**
 	 * Attempts to log the user in. Note to implementations: It is generally
 	 * considered a bad idea to store the context if it contains sensitive data
-	 * (like a plaintext password). Implementations should handle temporary
-	 * sessions and dirty flags for clustering.
+	 * (like a plaintext password).
 	 * 
 	 * @param context
 	 *            a not further specified object that provides all the
@@ -134,12 +133,11 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 
 	/**
 	 * Log the user off. With the help of a context implementations might
-	 * facilitate multi level login / logoff. Implementations should handle
-	 * dirty flags for clustering.
+	 * facilitate multi level login / logoff.
 	 * 
 	 * @param context
 	 *            a not further specified object, might be null
-	 * @return true if the logoff was successfull, false otherwise
+	 * @return true if the logoff was successful, false otherwise
 	 */
 	public abstract boolean logoff(Object context);
 
