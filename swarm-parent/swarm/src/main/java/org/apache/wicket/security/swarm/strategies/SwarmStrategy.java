@@ -111,7 +111,9 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	}
 
 	/**
-	 * Performs the actual permission check at the {@link Hive}.
+	 * Performs the actual permission check at the {@link Hive}. This is equal
+	 * to using {@link #hasPermission(Permission, Subject)} with
+	 * {@link #getSubject()}
 	 * 
 	 * @param permission
 	 *            the permission to verify
@@ -119,12 +121,30 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	 *         otherwise
 	 * @throws SecurityException
 	 *             if the permission is null
+	 * @see #hasPermission(Permission, Subject)
 	 */
 	public boolean hasPermission(Permission permission)
 	{
+		return hasPermission(permission, getSubject());
+	}
+
+	/**
+	 * Performs the actual permission check at the {@link Hive}.
+	 * 
+	 * @param permission
+	 *            the permission to verify
+	 * @param subject
+	 *            optional subject to test against the permission
+	 * @return true if the subject has or implies the permission, false
+	 *         otherwise
+	 * @throws SecurityException
+	 *             if the permission is null
+	 */
+	public boolean hasPermission(Permission permission, Subject subject)
+	{
 		if (permission == null)
 			throw new SecurityException("permission is not allowed to be null");
-		return getHive().hasPermission(getSubject(), permission);
+		return getHive().hasPermission(subject, permission);
 	}
 
 	/**
