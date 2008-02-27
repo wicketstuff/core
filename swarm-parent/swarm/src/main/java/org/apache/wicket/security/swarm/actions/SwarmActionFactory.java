@@ -89,8 +89,7 @@ public class SwarmActionFactory implements WaspActionFactory
 			register(Access.class, "access");
 			register(Inherit.class, "inherit");
 			register(Render.class, "render");
-			register(Enable.class, new ImpliesOtherAction(nextPowerOf2(), "enable", key, this,
-					Render.class));
+			register(Enable.class, new ImpliesOtherAction("enable", key, this, Render.class));
 		}
 		catch (RegistrationException e)
 		{
@@ -100,7 +99,7 @@ public class SwarmActionFactory implements WaspActionFactory
 
 	/**
 	 * 
-	 * @see org.apache.wicket.security.actions.ActionFactory#getAction(org.apache.wicket.authorization.Action)
+	 * @see org.apache.wicket.security.actions.WaspActionFactory#getAction(org.apache.wicket.authorization.Action)
 	 */
 	public WaspAction getAction(Action action)
 	{
@@ -529,6 +528,8 @@ public class SwarmActionFactory implements WaspActionFactory
 		 *            factory where this class will be registered
 		 * @param otherAction
 		 *            a single action class to imply, not null
+		 * @deprecated replaced by
+		 *             {@link #ImpliesOtherAction(String, Object,SwarmActionFactory, Class)}
 		 */
 		public ImpliesOtherAction(int actions, String name, Object key, ActionFactory factory,
 				Class otherAction)
@@ -547,11 +548,50 @@ public class SwarmActionFactory implements WaspActionFactory
 		 *            factory where this class will be registered
 		 * @param otherActions
 		 *            any number of action classes to imply
+		 * @deprecated replaced by
+		 *             {@link #ImpliesOtherAction(String, Object,SwarmActionFactory, Class[])}
 		 */
 		public ImpliesOtherAction(int actions, String name, Object key, ActionFactory factory,
 				Class[] otherActions)
 		{
 			super(actions | bitwiseOr(factory, otherActions), name, key);
+		}
+
+		/**
+		 * the base action value
+		 * 
+		 * @param name
+		 *            name of the new action
+		 * @param key
+		 *            key to get the registered ActionFactory
+		 * @param factory
+		 *            factory where this class will be registered
+		 * @param otherAction
+		 *            a single action class to imply, not null
+		 */
+		public ImpliesOtherAction(String name, Object key, SwarmActionFactory factory,
+				Class otherAction)
+		{
+			super(factory.nextPowerOf2() | ((SwarmAction)factory.getAction(otherAction)).actions(),
+					name, key);
+		}
+
+		/**
+		 * the base action value
+		 * 
+		 * @param name
+		 *            name of the new action
+		 * @param key
+		 *            key to get the registered ActionFactory
+		 * @param factory
+		 *            factory where this class will be registered
+		 * @param otherActions
+		 *            any number of action classes to imply
+		 */
+		public ImpliesOtherAction(String name, Object key, SwarmActionFactory factory,
+				Class[] otherActions)
+		{
+			super(factory.nextPowerOf2() | bitwiseOr(factory, otherActions), name, key);
 		}
 
 		/**
