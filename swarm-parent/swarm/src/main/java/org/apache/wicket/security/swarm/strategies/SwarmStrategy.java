@@ -16,6 +16,9 @@
  */
 package org.apache.wicket.security.swarm.strategies;
 
+import java.util.Collections;
+import java.util.Set;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.security.actions.WaspAction;
@@ -30,6 +33,7 @@ import org.apache.wicket.security.hive.authentication.Subject;
 import org.apache.wicket.security.hive.authorization.Permission;
 import org.apache.wicket.security.hive.authorization.permissions.ComponentPermission;
 import org.apache.wicket.security.hive.authorization.permissions.DataPermission;
+import org.apache.wicket.security.log.IAuthorizationMessageSource;
 import org.apache.wicket.security.models.ISecureModel;
 import org.apache.wicket.security.strategies.ClassAuthorizationStrategy;
 import org.apache.wicket.security.strategies.SecurityException;
@@ -144,7 +148,45 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	{
 		if (permission == null)
 			throw new SecurityException("permission is not allowed to be null");
-		return getHive().hasPermission(subject, permission);
+		if (getHive().hasPermission(subject, permission))
+			return true;
+		logPermissionDenied(permission, subject);
+		return false;
+
+	}
+
+	/**
+	 * Logs (if logging is enabled) which permission was denied for a subject.
+	 * This method does not log directly but prepares an
+	 * {@link IAuthorizationMessageSource} for later retrieval. The following
+	 * variables are stored: "permission","actions", "subject" and "principals"
+	 * where principals is a collection of principals that contain the
+	 * permission and actions is a {@link String} representing all the
+	 * {@link WaspAction}s required. Note that the subject variable might be
+	 * null.
+	 * 
+	 * @param permission
+	 *            permission that was denied.
+	 * @param subject
+	 *            optional subject
+	 * @see #logMessages()
+	 * @see #getMessageSource()
+	 */
+	protected void logPermissionDenied(Permission permission, Subject subject)
+	{
+		IAuthorizationMessageSource source = getMessageSource(logMessages());
+		if (source == null)
+			return;
+		// note that even if logErrorMessages returns false we still populate
+		// the source with variables if there is a source
+		source.addVariable("permission", permission);
+		source.addVariable("actions", permission.getActions());
+		source.addVariable("subject", subject);
+		Set principals = getHive().getPrincipals(permission);
+		if (!principals.isEmpty())
+			source.addVariable("principals", principals);
+		else
+			source.addVariable("principals", Collections.EMPTY_SET);
 	}
 
 	/**
@@ -161,7 +203,10 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	 */
 	public boolean isClassAuthorized(Class clazz, WaspAction action)
 	{
-		return hasPermission(new ComponentPermission(SecureComponentHelper.alias(clazz), action));
+		if (hasPermission(new ComponentPermission(SecureComponentHelper.alias(clazz), action)))
+			return true;
+		logMessage(getMessageSource());
+		return false;
 	}
 
 	/**
@@ -180,7 +225,15 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	 */
 	public boolean isComponentAuthorized(Component component, WaspAction action)
 	{
-		return hasPermission(new ComponentPermission(component, action));
+		if (hasPermission(new ComponentPermission(component, action)))
+			return true;
+		IAuthorizationMessageSource message = getMessageSource();
+		if (message != null)
+		{
+			message.setComponent(component);
+			logMessage(message);
+		}
+		return false;
 	}
 
 	/**
@@ -209,7 +262,15 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 			permission = new DataPermission(component, (SwarmModel)model, (SwarmAction)action);
 		else
 			permission = new DataPermission(String.valueOf(model), action);
-		return hasPermission(permission);
+		if (hasPermission(permission))
+			return true;
+		IAuthorizationMessageSource message = getMessageSource();
+		if (message != null)
+		{
+			message.setComponent(component);
+			logMessage(message);
+		}
+		return false;
 
 	}
 

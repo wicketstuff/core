@@ -18,7 +18,7 @@ package org.apache.wicket.security.pages;
 
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.PageLink;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.components.SecureWebPage;
 import org.apache.wicket.security.components.markup.html.links.SecurePageLink;
@@ -43,7 +43,7 @@ public class MockHomePage extends SecureWebPage
 		// one you need to replace the securitycheck on the link with one that
 		// does use
 		// the target page.
-		add(new PageLink("secret", VerySecurePage.class));
+		add(new BookmarkablePageLink("secret", VerySecurePage.class));
 
 		add(new SecurePageLink("link", PageA.class));
 		setStatelessHint(true);

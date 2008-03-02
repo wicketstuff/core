@@ -17,9 +17,11 @@
 package org.apache.wicket.security.strategies;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
+import org.apache.wicket.RequestCycle;
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
 import org.apache.wicket.model.IModel;
@@ -30,7 +32,13 @@ import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.checks.ISecurityCheck;
 import org.apache.wicket.security.components.ISecureComponent;
 import org.apache.wicket.security.components.SecureComponentHelper;
+import org.apache.wicket.security.log.AuthorizationErrorKey;
+import org.apache.wicket.security.log.AuthorizationMessageSource;
+import org.apache.wicket.security.log.IAuthorizationMessageSource;
 import org.apache.wicket.security.models.ISecureModel;
+import org.apache.wicket.util.string.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -41,6 +49,13 @@ import org.apache.wicket.security.models.ISecureModel;
  */
 public abstract class WaspAuthorizationStrategy implements IAuthorizationStrategy, Serializable
 {
+	private static final Logger log = LoggerFactory.getLogger(WaspAuthorizationStrategy.class);
+	/**
+	 * Key used to store the {@link IAuthorizationMessageSource} in the
+	 * {@link RequestCycle} metadata.
+	 */
+	protected static final AuthorizationErrorKey MESSAGE_KEY = new AuthorizationErrorKey();
+
 	/**
 	 * Performs the actual authorization check on the component.
 	 * 
@@ -157,13 +172,178 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 		{
 			ISecurityCheck check = getSecurityCheck(component);
 			if (check != null)
-				return check.isActionAuthorized(getActionFactory().getAction(action));
+			{
+				if (check.isActionAuthorized(getActionFactory().getAction(action)))
+					return true;
+				IAuthorizationMessageSource message = getMessageSource();
+				if (message != null)
+				{
+					message.setComponent(component);
+					message.addVariable("wicket.action", action);
+					message.addVariable("wasp.action", getActionFactory().getAction(action));
+					logMessage(message);
+				}
+				return false;
+
+
+			}
 			IModel model = component.getModel();
 			if (model instanceof ISecureModel)
-				return ((ISecureModel)model).isAuthorized(component, getActionFactory().getAction(
-						action));
+			{
+				if (((ISecureModel)model).isAuthorized(component, getActionFactory().getAction(
+						action)))
+					return true;
+				IAuthorizationMessageSource message = getMessageSource();
+				if (message != null)
+				{
+					message.setComponent(component);
+					message.addVariable("wicket.action", action);
+					message.addVariable("wasp.action", getActionFactory().getAction(action));
+					logMessage(message);
+				}
+				return false;
+			}
 		}
 		return true;
+	}
+
+	/**
+	 * Logs a message indication an action was denied. The message is retrieved
+	 * through localization with the following resource
+	 * key:"authorization.denied" (no quotes). This method removes the
+	 * messagesource from the requestcycle.
+	 * 
+	 * @param message
+	 *            messagesource
+	 * @see #logMessage(String, Map, IAuthorizationMessageSource, boolean)
+	 */
+	protected final void logMessage(IAuthorizationMessageSource message)
+	{
+		logMessage("authorization.denied", null, message, true);
+	}
+
+	/**
+	 * Logs a message indication an action was denied. The message is retrieved
+	 * through localization with the specified resource key. Optionally the
+	 * message can be removed from the requestcycle, if it is not removed the
+	 * message might be processed multiple times (which might be what you want
+	 * if you want to use different resource keys). This invokes
+	 * {@link #logMessage(String, Map, IAuthorizationMessageSource)}
+	 * 
+	 * 
+	 * @param key
+	 *            the resource key to lookup the message
+	 * @param variables
+	 *            optional map containing additional variables that can be used
+	 *            during the message lookup
+	 * @param message
+	 *            messagesource
+	 * @param remove
+	 *            flag indicating if the message should be removed or not
+	 * @see #removeMessageSource()
+	 * @see #logMessage(String, Map, IAuthorizationMessageSource)
+	 */
+	protected final void logMessage(String key, Map variables, IAuthorizationMessageSource message,
+			boolean remove)
+	{
+		if (message == null || Strings.isEmpty(key))
+		{
+			if (remove)
+				removeMessageSource();
+			return;
+		}
+		logMessage(key, variables, message);
+		if (remove)
+			removeMessageSource();
+	}
+
+	/**
+	 * Logs a message indication an action was denied. The message is retrieved
+	 * through localization with the specified resource key. This default
+	 * implementation simply does something like <code>log.debug(...)</code>
+	 * Overwrite this method if you want for example wicket to print feedback
+	 * messages with something like <code>Session.get().error(...)</code>
+	 * 
+	 * @param key
+	 *            the resource key for the message
+	 * @param variables
+	 *            optional map containing additional variables that can be used
+	 *            during message construction
+	 * @param message
+	 *            the messagesource
+	 */
+	protected void logMessage(String key, Map variables, IAuthorizationMessageSource message)
+	{
+		String msg = message.getMessage(key);
+		if (!Strings.isEmpty(msg))
+			log.debug(message.substitute(msg, variables));
+	}
+
+
+	/**
+	 * Removes the message from the {@link RequestCycle}'s metadata.
+	 */
+	protected final void removeMessageSource()
+	{
+		RequestCycle.get().setMetaData(MESSAGE_KEY, null);
+	}
+
+	/**
+	 * Retrieves the messagesource from the {@link RequestCycle}'s metadata.
+	 * 
+	 * @return the messagesource or null if there is none
+	 */
+	protected final IAuthorizationMessageSource getMessageSource()
+	{
+		return getMessageSource(false);
+	}
+
+	/**
+	 * Retrieves the messagesource from the {@link RequestCycle}'s metadata.
+	 * optionally creating a new one if there is not already one.
+	 * 
+	 * @param create
+	 * @return the messagesource or null if there is none and the create flag
+	 *         was false
+	 */
+	protected final IAuthorizationMessageSource getMessageSource(boolean create)
+	{
+		IAuthorizationMessageSource resource = null;
+		if (RequestCycle.get() != null)
+			resource = (IAuthorizationMessageSource)RequestCycle.get().getMetaData(MESSAGE_KEY);
+		if (resource == null && create)
+		{
+			resource = createMessageSource();
+			RequestCycle.get().setMetaData(MESSAGE_KEY, resource);
+		}
+		return resource;
+	}
+
+	/**
+	 * Creates a new {@link IAuthorizationMessageSource}. Subclasses can
+	 * override this to return there own implementation.
+	 * 
+	 * @return a new IErrorMessageSource, never null
+	 */
+	protected IAuthorizationMessageSource createMessageSource()
+	{
+		return new AuthorizationMessageSource();
+	}
+
+	/**
+	 * Indicates if messages about denied actions should be logged. Default is
+	 * to use the slf4 log implementation checking if debug messages should be
+	 * printed. for example using log4j as the logging implementation for slf4j
+	 * logging could be turned on by putting the following line in your
+	 * log4.properties</br> <code>
+	 * log4j.category.org.apache.wicket.security.strategies.WaspAuthorizationStrategy=DEBUG
+	 * </code>
+	 * 
+	 * @return true if messages should be logged, false otherwise
+	 */
+	protected boolean logMessages()
+	{
+		return log.isDebugEnabled();
 	}
 
 	/**
