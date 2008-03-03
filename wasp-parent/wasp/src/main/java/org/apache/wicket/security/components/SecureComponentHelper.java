@@ -19,8 +19,10 @@ package org.apache.wicket.security.components;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
+import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.security.WaspApplication;
+import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.actions.ActionFactory;
 import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.checks.ISecurityCheck;
@@ -115,7 +117,25 @@ public final class SecureComponentHelper
 			WaspApplication app = (WaspApplication)application;
 			return app.getActionFactory();
 		}
-		throw new WicketRuntimeException(application + " is not a WaspApplication");
+		throw new WicketRuntimeException(application + " is not a " + WaspApplication.class);
+	}
+
+	/**
+	 * Gets the {@link WaspAuthorizationStrategy}.
+	 * 
+	 * @return the strategy
+	 * @throws WicketRuntimeException
+	 *             if a {@link WaspSession} is not found
+	 * @throws ClassCastException
+	 *             if the session does not contain a
+	 *             {@link WaspAuthorizationStrategy}
+	 */
+	private static WaspAuthorizationStrategy getStrategy()
+	{
+		Session session = Session.get();
+		if (session instanceof WaspSession)
+			return (WaspAuthorizationStrategy)session.getAuthorizationStrategy();
+		throw new WicketRuntimeException(session + " is not a " + WaspSession.class);
 	}
 
 	/**
@@ -183,7 +203,8 @@ public final class SecureComponentHelper
 	 * Default implementation for {@link ISecureComponent#isAuthenticated()}.
 	 * First tries to use the {@link ISecurityCheck} from the component if that
 	 * is not available it tries the {@link ISecureModel} if neither is present
-	 * the user is authenticated.
+	 * the user is authenticated if
+	 * {@link WaspAuthorizationStrategy#isUserAuthenticated()} returns true.
 	 * 
 	 * @param component
 	 *            the component to check
@@ -200,7 +221,7 @@ public final class SecureComponentHelper
 			return check.isAuthenticated();
 		if (hasSecureModel(component))
 			return ((ISecureModel)component.getModel()).isAuthenticated(component);
-		return true;
+		return getStrategy().isUserAuthenticated();
 	}
 
 	/**
