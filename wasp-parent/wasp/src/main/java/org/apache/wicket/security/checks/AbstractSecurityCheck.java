@@ -18,6 +18,7 @@ package org.apache.wicket.security.checks;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Session;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.security.WaspApplication;
 import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.actions.ActionFactory;
@@ -72,5 +73,25 @@ public abstract class AbstractSecurityCheck implements ISecurityCheck
 	protected final Class getLoginPage()
 	{
 		return ((WaspApplication)Application.get()).getLoginPage();
+	}
+
+	/**
+	 * Shortcut to {@link ISecurityCheck#isActionAuthorized(WaspAction)} if you
+	 * quickly want to check an action. Note that this is the same as doing
+	 * something like </br> <code>
+	 * check.isActionAuthorized(((WaspApplication)Application.get()).getActionFactory().getAction(Render.class));
+	 * </code>
+	 * 
+	 * @param waspAction
+	 * @return true if the action is authorized, false otherwise
+	 * @throws WicketRuntimeException
+	 *             if the class is not an instance of {@link WaspAction}
+	 */
+	public boolean isActionAuthorized(Class waspAction)
+	{
+		if (!WaspAction.class.isAssignableFrom(waspAction))
+			throw new WicketRuntimeException("The class: " + waspAction + " is not a valid "
+					+ WaspAction.class);
+		return isActionAuthorized(getActionFactory().getAction(waspAction));
 	}
 }
