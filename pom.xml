@@ -66,6 +66,15 @@
 			</properties>
 		</profile>
 		<profile>
+			<id>wicket-1.3.2</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<wicket.version>1.3.2</wicket.version>
+			</properties>
+		</profile>
+		<profile>
 			<id>wicket-1.3-SNAPSHOT</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -238,6 +247,7 @@
 	<module>wasp-parent</module>
 	<module>swarm-parent</module>
 	<module>examples</module>
+	<module>archetypes/swarm-quickstart</module>
 	</modules>
 	<!-- Build environment -->
 	<distributionManagement>
