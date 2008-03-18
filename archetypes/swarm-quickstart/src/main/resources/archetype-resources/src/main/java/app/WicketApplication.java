@@ -2,12 +2,17 @@ package ${packageName}.app;
 
 import java.net.MalformedURLException;
 
+import org.apache.wicket.Request;
+import org.apache.wicket.Response;
+import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.security.WaspApplication;
+import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.hive.HiveMind;
 import org.apache.wicket.security.hive.config.PolicyFileHiveFactory;
 import org.apache.wicket.security.hive.config.SwarmPolicyFileHiveFactory;
 import org.apache.wicket.security.swarm.SwarmWebApplication;
-
+import org.apache.wicket.util.string.Strings;
 import ${packageName}.web.SecureHomePage;
 
 /**
@@ -94,5 +99,75 @@ public class WicketApplication extends SwarmWebApplication
 	{
 		return LoginPage.class;
 	}
+	/**
+	 * Optionally you can override {@link #newSession(Request, Response)} to store information in the session. Just make
+	 * sure your session always extends {@link WaspSession}.
+	 * 
+	 * @see org.apache.wicket.security.WaspWebApplication#newSession(org.apache.wicket.Request,
+	 *      org.apache.wicket.Response)
+	 */
+	@Override
+	public Session newSession(Request request, Response response)
+	{
+		return new MySession(this, request);
+	}
+	/**
+	 * Custom session to store the username of the user.
+	 * 
+	 * @author marrink
+	 */
+	public static final class MySession extends WaspSession
+	{
 
+		private static final long serialVersionUID = 1L;
+
+		private String username = "guest";
+
+		/**
+		 * Constructor.
+		 * 
+		 * @param application
+		 * @param request
+		 */
+		public MySession(WaspApplication application, Request request)
+		{
+			super(application, request);
+		}
+
+		/**
+		 * @return the username
+		 */
+		public final String getUsername()
+		{
+			return username;
+		}
+
+		/**
+		 * @param username the username to set
+		 */
+		public final void setUsername(String username)
+		{
+			if(Strings.isEmpty(username))
+				this.username = "guest";
+			else
+				this.username = username;
+		}
+		/**
+		 * Override logoff to reset the username.
+		 * 
+		 * @see org.apache.wicket.security.WaspSession#logoff(java.lang.Object)
+		 */
+		@Override
+		public boolean logoff(Object context)
+		{
+			// quick check to see if the user logged off
+			if(super.logoff(context))
+			{
+				// then reset username
+				setUsername(null);
+				return true;
+			}
+			return false;
+		}
+	}
 }

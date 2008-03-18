@@ -1,7 +1,6 @@
 package ${packageName}.web;
 
 import org.apache.wicket.PageParameters;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.checks.ISecurityCheck;
 import org.apache.wicket.security.components.ISecurePage;
@@ -12,7 +11,7 @@ import org.apache.wicket.security.components.SecureComponentHelper;
  * automatically check if the user is allowed to instantiate this page. Feel free to use other super constructors as
  * required by your pages. All secure pages or components should be granted permissions in the application.hive
  */
-public class SecurePage extends WebPage implements ISecurePage
+public class SecurePage extends BasePage implements ISecurePage
 {
 
 	private static final long serialVersionUID = 1L;

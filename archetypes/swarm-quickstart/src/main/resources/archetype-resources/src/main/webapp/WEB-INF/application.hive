@@ -9,5 +9,5 @@ grant
 grant principal ${principal} "something"
 {
 	//grant permissions here, you can use ${ComponentPermission} and ${DataPermission}
-}
+};
 //you can also create new "grant principal" blocks to get a more finegrained authorization

@@ -11,7 +11,6 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.util.value.ValueMap;
-import org.apache.wicket.security.authentication.LoginException;
 
 /**
  * Panel for user authentication. Simple username password authentication.
@@ -37,6 +36,7 @@ public abstract class UsernamePasswordSignInPanel extends Panel
 	 * 
 	 * @param username
 	 * @param password
+	 * @throws LoginException if the user could not be authenticated
 	 */
 	public abstract void signIn(String username, String password) throws LoginException;
 

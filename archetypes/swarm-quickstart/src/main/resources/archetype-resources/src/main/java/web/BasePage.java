@@ -1,7 +1,16 @@
 package ${packageName}.web;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.PageParameters;
+import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.security.WaspApplication;
+import org.apache.wicket.security.WaspSession;
+import ${packageName}.app.authentication.ApplicationLoginContext;
 
 /**
  * Basic page. all other pages extend this page either directly or indirectly. Although a few exceptions, like the login page might occur. You can use
@@ -23,7 +32,53 @@ public class BasePage extends WebPage
 	public BasePage(final PageParameters parameters)
 	{
 		super(parameters);
+		add(new Label("username", new PropertyModel(this, "session.username")).setRenderBodyOnly(true));
+		add(new Link("login")
+		{
 
+			private static final long serialVersionUID = 1L;
+
+			/**
+			 * @see org.apache.wicket.markup.html.link.Link#onClick()
+			 */
+			public void onClick()
+			{
+				// by using this exception instead of a setResponsePage we will automatically be returned to this page
+				// after the login
+				throw new RestartResponseAtInterceptPageException(((WaspApplication) Application.get()).getLoginPage());
+			}
+			/**
+			 * @see org.apache.wicket.Component#isVisible()
+			 */
+			public boolean isVisible()
+			{
+				return !((WaspSession) Session.get()).isUserAuthenticated();
+			}
+		});
+		add(new Link("logoff")
+		{
+
+			private static final long serialVersionUID = 1L;
+
+			/**
+			 * @see org.apache.wicket.markup.html.link.Link#onClick()
+			 */
+			public void onClick()
+			{
+				if(((WaspSession) Session.get()).logoff(new ApplicationLoginContext()))
+					setResponsePage(((WaspApplication) Application.get()).getLoginPage());
+				else
+					error(getLocalizer().getString("exception.logoff", this));
+
+			}
+			/**
+			 * @see org.apache.wicket.Component#isVisible()
+			 */
+			public boolean isVisible()
+			{
+				return ((WaspSession) Session.get()).isUserAuthenticated();
+			}
+		});
 		// TODO Add components every page should have here
 	}
 }

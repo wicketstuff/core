@@ -102,6 +102,16 @@ public class WaspSession extends WebSession
 	}
 
 	/**
+	 * Quick check if any user at all is currently authenticated.
+	 * 
+	 * @return true if an authenticated user is present, false otherwise
+	 */
+	public boolean isUserAuthenticated()
+	{
+		return securityStrategy.isUserAuthenticated();
+	}
+
+	/**
 	 * Cleans up the WaspAuthorizationStrategy before killing this session. If
 	 * you override this method you must call super.invalidateNow().
 	 * 
