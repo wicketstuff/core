@@ -38,7 +38,6 @@ public class ApplicationLoginContext extends UsernamePasswordContext
 	 * @see org.apache.wicket.security.hive.authentication.UsernamePasswordContext#getSubject(java.lang.String,
 	 *      java.lang.String)
 	 */
-	@Override
 	protected Subject getSubject(String username, String password) throws LoginException
 	{
 		// TODO verify username, password, if user is not authenticated throw a LoginException

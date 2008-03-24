@@ -106,7 +106,6 @@ public class WicketApplication extends SwarmWebApplication
 	 * @see org.apache.wicket.security.WaspWebApplication#newSession(org.apache.wicket.Request,
 	 *      org.apache.wicket.Response)
 	 */
-	@Override
 	public Session newSession(Request request, Response response)
 	{
 		return new MySession(this, request);
@@ -157,7 +156,6 @@ public class WicketApplication extends SwarmWebApplication
 		 * 
 		 * @see org.apache.wicket.security.WaspSession#logoff(java.lang.Object)
 		 */
-		@Override
 		public boolean logoff(Object context)
 		{
 			// quick check to see if the user logged off
