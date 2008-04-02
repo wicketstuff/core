@@ -105,6 +105,7 @@
 	</dependencyManagement>
 	<modules>
 	<module>all_in_one</module>	<!-- currently all examples live as one subproject, in the future each example will get there own subproject -->
+	<module>yahoo-bbauth</module>
 	</modules>
 	<build>
 	<pluginManagement>
