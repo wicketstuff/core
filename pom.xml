@@ -27,7 +27,7 @@
 	<inceptionYear>2006</inceptionYear>
 	<description>Parent project for wicket security projects</description>
 	<prerequisites>
-		<maven>2.0.4</maven>
+		<maven>2.0.6</maven>
 	</prerequisites>
 	<profiles>
 		<profile>
@@ -96,23 +96,6 @@
 			</releases>
 		</repository>
 	</repositories>
-	<!-- the latest eclipse plugin solves an annoying JRE container issue http://jira.codehaus.org/browse/MECLIPSE-172 
-	unfortunatly it requires maven 2.0.6 or higher and bamboo is still running 2.0.4
-	
-	<pluginRepositories>
-        <pluginRepository>
-          <id>apache.org</id>
-          <name>Maven Plugin Snapshots</name>
-          <url>http://people.apache.org/maven-snapshot-repository/</url>
-          <releases>
-            <enabled>true</enabled>
-          </releases>
-          <snapshots>
-            <enabled>true</enabled>
-          </snapshots>
-        </pluginRepository>
-      </pluginRepositories>
-    -->
 	<!-- Developers -->
 	<developers>
 		<developer>
@@ -326,7 +309,7 @@
 							</classpathContainer>
 						</classpathContainers>
 					</configuration>
-				<!-- <version>2.5-SNAPSHOT</version>	-->
+				<version>2.5</version>
 				<inherited>true</inherited>
 				</plugin>
 				<plugin>
