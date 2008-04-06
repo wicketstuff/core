@@ -33,25 +33,30 @@ public class ContainerSecurityCheck extends ComponentSecurityCheck
 {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private final boolean enableAuthentication;
 
 	/**
-	 * Constructs a new check on the container. By default neither the model or the authentication is checked.
+	 * Constructs a new check on the container. By default neither the model or
+	 * the authentication is checked.
 	 * 
-	 * @param component the container
+	 * @param component
+	 *            the container
 	 */
 	public ContainerSecurityCheck(MarkupContainer component)
 	{
 		super(component);
-		enableAuthentication=false;
+		enableAuthentication = false;
 	}
 
 	/**
-	 * Constructs a new check on the container. By default authentication is not checked.
+	 * Constructs a new check on the container. By default authentication is not
+	 * checked.
 	 * 
-	 * @param component the container
-	 * @param checkSecureModelIfExists flag for enabling or disabling the securitycheck on the model
+	 * @param component
+	 *            the container
+	 * @param checkSecureModelIfExists
+	 *            flag for enabling or disabling the securitycheck on the model
 	 */
 	public ContainerSecurityCheck(MarkupContainer component, boolean checkSecureModelIfExists)
 	{
@@ -59,16 +64,20 @@ public class ContainerSecurityCheck extends ComponentSecurityCheck
 	}
 
 	/**
-	 * Constructs a new check on the container with the given flags for model and authentication checks.
+	 * Constructs a new check on the container with the given flags for model
+	 * and authentication checks.
 	 * 
 	 * @param component
-	 * @param checkSecureModelIfExists flag for enabling or disabling the securitycheck on the model
-	 * @param enableAuthenticationCheck flag if authentication should be checked for this component
+	 * @param checkSecureModelIfExists
+	 *            flag for enabling or disabling the securitycheck on the model
+	 * @param enableAuthenticationCheck
+	 *            flag if authentication should be checked for this component
 	 */
-	public ContainerSecurityCheck(MarkupContainer component, boolean checkSecureModelIfExists, boolean enableAuthenticationCheck)
+	public ContainerSecurityCheck(MarkupContainer component, boolean checkSecureModelIfExists,
+			boolean enableAuthenticationCheck)
 	{
 		super(component, checkSecureModelIfExists);
-		this.enableAuthentication=enableAuthenticationCheck;
+		this.enableAuthentication = enableAuthenticationCheck;
 	}
 
 	/**
@@ -80,7 +89,8 @@ public class ContainerSecurityCheck extends ComponentSecurityCheck
 	{
 		if (enableAuthentication && !isAuthenticated())
 			throw new RestartResponseAtInterceptPageException(getLoginPage());
-		boolean result = getStrategy().isClassAuthorized(getComponent().getClass(), action);
+		boolean result = getStrategy().isComponentAuthorized(getComponent(), action)
+				|| getStrategy().isClassAuthorized(getComponent().getClass(), action);
 		if (result && checkSecureModel() && SecureComponentHelper.hasSecureModel(getComponent()))
 			return ((ISecureModel)getComponent().getModel()).isAuthorized(getComponent(), action);
 		return result;

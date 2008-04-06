@@ -87,9 +87,9 @@ public class ActionPermission extends Permission
 	 *  This permission has the inherit action and all or more of the other permissions actions
 	 *     and the name of the other permission starts with the name of this permission.
 	 * </li>
-	 *  Subclasses like ComponentPermission that only wish to imply other ComponentPermissions could simply override implies like this.
+	 *  Subclasses like DataPermission that only wish to imply other DataPermissions could simply override implies like this.
 	 * <code>
-	 * if (permission instanceof ComponentPermission)
+	 * if (permission instanceof DataPermission)
 	 * 	return super.implies(permission);
 	 * return false;
 	 * </code>

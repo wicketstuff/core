@@ -17,7 +17,12 @@
 package org.apache.wicket.security.hive.authorization.permissions;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.wicket.Component;
+import org.apache.wicket.security.actions.Inherit;
 import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.components.SecureComponentHelper;
 import org.apache.wicket.security.hive.authorization.Permission;
@@ -33,6 +38,8 @@ public class ComponentPermission extends ActionPermission
 {
 
 	private static final long serialVersionUID = 8950870313751454034L;
+	private final List parents;
+	private final String[] path;
 
 	/**
 	 * Creates a new ComponentPermission with the specified actions.
@@ -45,6 +52,16 @@ public class ComponentPermission extends ActionPermission
 	public ComponentPermission(Component component, WaspAction action)
 	{
 		super(SecureComponentHelper.alias(component), action);
+		path = getName().split(SecureComponentHelper.PATH_SEPARATOR);
+		String[] aliasses = SecureComponentHelper.containerAliasses(component);
+		if (aliasses != null && aliasses.length > 0)
+		{
+			this.parents = new ArrayList(aliasses.length);
+			for (int i = 0; i < aliasses.length; i++)
+				this.parents.add(aliasses[i].split(SecureComponentHelper.PATH_SEPARATOR));
+		}
+		else
+			this.parents = Collections.EMPTY_LIST;
 	}
 
 	/**
@@ -58,13 +75,62 @@ public class ComponentPermission extends ActionPermission
 	public ComponentPermission(String componentAlias, WaspAction actions)
 	{
 		super(componentAlias, actions);
+		path = getName().split(SecureComponentHelper.PATH_SEPARATOR);
+		parents = Collections.EMPTY_LIST;
 	}
 
 	/**
+	 * Overrides {@link ActionPermission#implies(Permission)} to also include
+	 * inheritance between several levels of parent containers. The same rules
+	 * still apply
+	 * 
 	 * @see Permission#implies(Permission)
 	 */
 	public boolean implies(Permission permission)
 	{
-		return (permission instanceof ComponentPermission) && super.implies(permission);
+		if (permission instanceof ComponentPermission)
+		{
+			ComponentPermission other = (ComponentPermission)permission;
+			if (getAction().implies(getAction().getActionFactory().getAction(Inherit.class)))
+				return getAction().implies(other.getAction())
+						&& (implies(other.path, path) || impliesHierarchy(other));
+			return getAction().implies(other.getAction()) && getName().equals(other.getName());
+		}
+		return false;
+	}
+
+	private boolean impliesHierarchy(ComponentPermission other)
+	{
+		if (other == null)
+			return false;
+		for (int i = 0; i < other.parents.size(); i++)
+		{
+			if (implies(path, (String[])other.parents.get(i)))
+				return true;
+
+		}
+		return false;
+	}
+
+	private boolean implies(String[] path1, String[] path2)
+	{
+		int i = 0;
+		int j = 0;
+		for (; i < path1.length && j < path2.length; j++)
+		{
+			if (path1[i].equals(path2[j]))
+			{
+				i++;
+			}
+			else if (i > 0)
+				return false;
+		}
+		return path1.length == i;
+		// TODO wildcards would be nice:
+		// e.g org.MyPage:*:SomeComponent * fits just one parts
+		// org.MyPage:**:SomeComponent ** fits one or more parts so
+		// Panel1:Panel2 would be valid and we could grant permissions for
+		// components at an unknown depth
+		// ? could be used to fit a single char wildcard
 	}
 }

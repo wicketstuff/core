@@ -18,6 +18,7 @@ package org.apache.wicket.security.components;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Page;
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
@@ -30,6 +31,7 @@ import org.apache.wicket.security.checks.WaspKey;
 import org.apache.wicket.security.models.ISecureModel;
 import org.apache.wicket.security.strategies.SecurityException;
 import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
+import org.apache.wicket.util.string.PrependingStringBuffer;
 
 
 /**
@@ -42,6 +44,16 @@ import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
  */
 public final class SecureComponentHelper
 {
+
+	/**
+	 * String used to concatenate the parts that make up alias.
+	 * 
+	 * @see #alias(Class)
+	 * @see #alias(Component)
+	 * @see #containerAlias(MarkupContainer)
+	 * @see #containerAliasses(Component)
+	 */
+	public static final String PATH_SEPARATOR = "" + Component.PATH_SEPARATOR;
 
 	/**
 	 * The security check placed on the component or null. This uses the
@@ -254,7 +266,7 @@ public final class SecureComponentHelper
 		String relative = component.getPageRelativePath();
 		if (relative == null || "".equals(relative))
 			return alias;
-		return alias + ":" + relative;
+		return alias + PATH_SEPARATOR + relative;
 	}
 
 	/**
@@ -268,5 +280,65 @@ public final class SecureComponentHelper
 		if (class1 == null)
 			throw new SecurityException("Specified class is null");
 		return class1.getName();
+	}
+
+	/**
+	 * Builds an alias string for {@link MarkupContainer}s.
+	 * 
+	 * @param container
+	 * @return an alias
+	 */
+	public static String containerAlias(MarkupContainer container)
+	{
+		if (container == null)
+			throw new SecurityException("specified markupcontainer is null");
+		MarkupContainer parent = container;
+		PrependingStringBuffer buffer = new PrependingStringBuffer(150);
+		while (parent != null)
+		{
+			if (buffer.length() > 0)
+				buffer.prepend(PATH_SEPARATOR);
+			buffer.prepend(parent.getClass().getName());
+			parent = parent.getParent();
+		}
+		return buffer.toString();
+	}
+
+	/**
+	 * Builds a set of aliases for this component. Each alias can be used as
+	 * name in Permission.
+	 * 
+	 * @param component
+	 * @return an array with aliases for this component
+	 */
+	public static String[] containerAliasses(Component component)
+	{
+		if (component == null)
+			throw new SecurityException("specified component is null");
+		MarkupContainer parent = null;
+		if (component instanceof MarkupContainer)
+			parent = (MarkupContainer)component;
+		else
+			parent = component.getParent();
+		if (parent == null)
+			return new String[0];
+		String alias = containerAlias(parent);
+		String[] split = alias.split(PATH_SEPARATOR);
+		String[] result = new String[split.length + (split.length - 1)];
+		PrependingStringBuffer buffer = new PrependingStringBuffer(200);
+		int index = result.length - 1;
+		for (int i = split.length - 1; i >= 0; i--)
+		{
+			if (i < split.length - 1)
+			{
+				result[index] = split[i];
+				index--;
+				buffer.prepend(PATH_SEPARATOR);
+			}
+			buffer.prepend(split[i]);
+			result[index] = buffer.toString();
+			index--;
+		}
+		return result;
 	}
 }
