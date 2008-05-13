@@ -189,6 +189,15 @@ public class PolicyFileHiveFactoryTest extends TestCase
 		assertTrue(hive.containsPrincipal(new SimplePrincipal("test9")));
 		assertTrue(hive.containsPermission(new TestPermission("9.A")));
 		assertTrue(hive.containsPermission(new TestPermission("9.B", "test")));
+		assertTrue(hive.containsPrincipal(new SimplePrincipal("test9B")));
+		assertTrue(hive
+				.containsPermission(new TestPermission(
+						"test.ContainerPage2:test.ContainerPage2$SecureMarkupContainer",
+						"inherit, render")));
+		assertTrue(hive
+				.containsPermission(new TestPermission(
+						"test2.ContainerPage2:test.ContainerPage2$SecureMarkupContainer",
+						"inherit, render")));
 		assertTrue(hive.containsPrincipal(new SimplePrincipal("test10")));
 		assertTrue(hive.containsPermission(new TestPermission("10.B")));
 	}

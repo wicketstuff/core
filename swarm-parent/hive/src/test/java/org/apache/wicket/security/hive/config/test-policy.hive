@@ -57,6 +57,11 @@ grant principal ${auth}.SimplePrincipal "${test}${nine}"
 	permission ${perm} "${nine}.A";
 	permission ${perm} "${nine}.B", "test";
 };
+grant principal org.apache.wicket.security.hive.authorization.SimplePrincipal "test9B"
+{
+	permission org.apache.wicket.security.hive.authorization.TestPermission "${test}.ContainerPage2:${test}.ContainerPage2$SecureMarkupContainer", "inherit, render";
+	permission org.apache.wicket.security.hive.authorization.TestPermission "test2.ContainerPage2:${test}.ContainerPage2$SecureMarkupContainer", "inherit, render";
+};
 grant principal org.apache.wicket.security.hive.authorization.SimplePrincipal "test10"
 	permission org.apache.wicket.security.hive.authorization.TestPermission "10.A";
 {

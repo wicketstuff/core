@@ -282,21 +282,13 @@ public class PolicyFileHiveFactory implements HiveFactory
 		while (m.find())
 		{
 			if (m.start() > index)
+			{
 				buff.append(raw.substring(index, m.start()));
+				replaceAlias(raw, m, buff);
+			}
 			else if (m.start() == index)
 			{
-				String key = raw.substring(m.start() + 2, m.end() - 1);
-				String alias = getAlias(key);
-				if (alias == null) // will probably be skipped later on
-				{
-					alias = key;
-					if (log.isDebugEnabled())
-						log.debug("failed to resolve alias: " + key);
-				}
-				else if (log.isDebugEnabled())
-					log.debug("resolved alias: " + key + " to " + alias);
-				buff.ensureCapacity(buff.length() + alias.length());
-				buff.append(alias);
+				replaceAlias(raw, m, buff);
 			}
 			else
 				// should not happen
@@ -309,6 +301,32 @@ public class PolicyFileHiveFactory implements HiveFactory
 		if (temp.indexOf("${") >= 0)
 			throw new IllegalStateException("Nesting aliases is not supported: " + raw);
 		return temp;
+	}
+
+	/**
+	 * Replaces the alias with the actual value.
+	 * 
+	 * @param raw
+	 *            the raw input string
+	 * @param m
+	 *            the matcher holding the alias
+	 * @param buff
+	 *            output for the value
+	 */
+	private void replaceAlias(String raw, Matcher m, StringBuffer buff)
+	{
+		String key = raw.substring(m.start() + 2, m.end() - 1);
+		String alias = getAlias(key);
+		if (alias == null) // will probably be skipped later on
+		{
+			alias = key;
+			if (log.isDebugEnabled())
+				log.debug("failed to resolve alias: " + key);
+		}
+		else if (log.isDebugEnabled())
+			log.debug("resolved alias: " + key + " to " + alias);
+		buff.ensureCapacity(buff.length() + alias.length());
+		buff.append(alias);
 	}
 
 	/**
