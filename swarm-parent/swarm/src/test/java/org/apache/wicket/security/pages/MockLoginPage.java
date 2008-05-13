@@ -91,24 +91,10 @@ public class MockLoginPage extends WebPage
 			{
 				context = new CustomLoginContext(new SimplePrincipal("all permissions"));
 			}
-			else if ("speed".equals(username))
-			{
-				context = new CustomLoginContext(new SimplePrincipal("speed"));
-			}
-			else if ("container1".equals(username))
-			{
-				context = new CustomLoginContext(new SimplePrincipal("container1"));
-			}
-			else if ("container2".equals(username))
-			{
-				context = new CustomLoginContext(new SimplePrincipal("container2"));
-			}
-			else if ("container3".equals(username))
-			{
-				context = new CustomLoginContext(new SimplePrincipal("container3"));
-			}
 			else
-				throw new LoginException("username: " + username + " is not accepted for this test");
+			{
+				context = new CustomLoginContext(new SimplePrincipal(username));
+			}
 			((WaspSession)Session.get()).login(context);
 			if (!continueToOriginalDestination())
 				setResponsePage(Application.get().getHomePage());

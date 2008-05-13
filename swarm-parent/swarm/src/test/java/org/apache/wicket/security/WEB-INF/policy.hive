@@ -43,3 +43,23 @@ grant principal ${SimplePrincipal} "container3"
 	//permission ${ComponentPermission} "${myPackage}.ContainerHomePage:org.apache.wicket.security.components.L1Container:org.apache.wicket.markup.html.WebMarkupContainer", "inherit, render";
 	
 };
+grant principal ${SimplePrincipal} "container4"
+{
+	permission ${ComponentPermission} "${myPackage}.ContainerPage2", "render";
+	permission ${ComponentPermission} "${myPackage}.ContainerPage2", "enable";
+};
+grant principal ${SimplePrincipal} "container5"
+{
+	permission ${ComponentPermission} "${myPackage}.ContainerPage2:secure", "inherit, render";
+	permission ${ComponentPermission} "${myPackage}.ContainerPage2", "enable";
+};
+grant principal ${SimplePrincipal} "container6"
+{
+	permission ${ComponentPermission} "${myPackage}.ContainerPage2:${myPackage}.ContainerPage2$SecureMarkupContainer", "inherit, render";
+	permission ${ComponentPermission} "${myPackage}.ContainerPage2", "enable";
+};
+grant principal ${SimplePrincipal} "container7"
+{
+	permission ${ComponentPermission} "${myPackage}.ContainerPage2$SecureMarkupContainer", "inherit, render";
+	permission ${ComponentPermission} "${myPackage}.ContainerPage2", "enable";
+};
