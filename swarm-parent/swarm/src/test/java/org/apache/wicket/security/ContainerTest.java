@@ -21,10 +21,13 @@ import java.net.MalformedURLException;
 import junit.framework.TestCase;
 
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.protocol.http.WebRequestCycle;
+import org.apache.wicket.request.target.component.BookmarkablePageRequestTarget;
 import org.apache.wicket.security.hive.HiveMind;
 import org.apache.wicket.security.hive.config.PolicyFileHiveFactory;
 import org.apache.wicket.security.hive.config.SwarmPolicyFileHiveFactory;
 import org.apache.wicket.security.pages.ContainerHomePage;
+import org.apache.wicket.security.pages.ContainerPage2;
 import org.apache.wicket.security.pages.MockLoginPage;
 import org.apache.wicket.security.swarm.SwarmWebApplication;
 import org.apache.wicket.util.tester.FormTester;
@@ -182,4 +185,73 @@ public class ContainerTest extends TestCase
 		assertTrue(tagTester.getChild("name", "lvl1:lvl2:txt2").hasAttribute("disabled"));
 	}
 
+	/**
+	 * test inheriting permissions with different permissions.
+	 */
+	public void testContainerPermissionInheritance3()
+	{
+		// continueto originaldestination does not work if there is no url
+		// available, so we need to fake one here(testing only hack), fixed in
+		// wicket 1.3.4
+		mock.setupRequestAndResponse();
+		WebRequestCycle cycle = mock.createRequestCycle();
+		String url1 = cycle.urlFor(new BookmarkablePageRequestTarget(ContainerPage2.class, null))
+				.toString();
+		mock.getServletRequest().setURL("/ContainerTest$1/ContainerTest$1/" + url1);
+		mock.processRequestCycle();
+		mock.assertRenderedPage(MockLoginPage.class);
+		FormTester form = mock.newFormTester("form");
+		form.setValue("username", "container4");
+		form.submit();
+		mock.assertRenderedPage(ContainerPage2.class);
+		mock.assertInvisible("secure");
+		mock.assertVisible("label");
+	}
+
+	/**
+	 * test inheriting permissions with different permissions.
+	 */
+	public void testContainerPermissionInheritance4()
+	{
+		doContainerPermissionInheritance("container5");
+	}
+
+	/**
+	 * 
+	 */
+	private void doContainerPermissionInheritance(String username)
+	{
+		// continueto originaldestination does not work if there is no url
+		// available, so we need to fake one here(testing only hack), fixed in
+		// wicket 1.3.4
+		mock.setupRequestAndResponse();
+		WebRequestCycle cycle = mock.createRequestCycle();
+		String url1 = cycle.urlFor(new BookmarkablePageRequestTarget(ContainerPage2.class, null))
+				.toString();
+		mock.getServletRequest().setURL("/ContainerTest$1/ContainerTest$1/" + url1);
+		mock.processRequestCycle();
+		mock.assertRenderedPage(MockLoginPage.class);
+		FormTester form = mock.newFormTester("form");
+		form.setValue("username", username);
+		form.submit();
+		mock.assertRenderedPage(ContainerPage2.class);
+		mock.assertVisible("secure");
+		mock.assertVisible("label");
+	}
+
+	/**
+	 * test inheriting permissions with different permissions.
+	 */
+	public void testContainerPermissionInheritance5()
+	{
+		doContainerPermissionInheritance("container6");
+	}
+
+	/**
+	 * test inheriting permissions with different permissions.
+	 */
+	public void testContainerPermissionInheritance6()
+	{
+		doContainerPermissionInheritance("container7");
+	}
 }
