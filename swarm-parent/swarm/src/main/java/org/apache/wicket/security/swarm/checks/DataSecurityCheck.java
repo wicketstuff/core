@@ -22,7 +22,12 @@ import org.apache.wicket.security.hive.authorization.permissions.DataPermission;
 import org.apache.wicket.security.swarm.strategies.SwarmStrategy;
 
 /**
- * SecurityCheck that uses a {@link DataPermission}.
+ * SecurityCheck that uses a {@link DataPermission}. For example <br/> <code>
+ * new DataSecurityCheck("something");
+ * </code><br/>
+ * requires the following permission in your policy file:<br/>
+ * <code>permission ${DataPermission} "something", "render";</code><br/> if
+ * you want the component(s) having that securitycheck to be visible.
  * 
  * @author marrink
  */
