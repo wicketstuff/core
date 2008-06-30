@@ -56,7 +56,7 @@ public class ClassSecurityCheck extends AbstractSecurityCheck
 	/**
 	 * The class to check against.
 	 * 
-	 * @return Returns the clazz.
+	 * @return Returns the class.
 	 */
 	public Class getClazz()
 	{

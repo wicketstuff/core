@@ -75,6 +75,8 @@ public abstract class UsernamePasswordSignInPanel extends Panel
 		 */
 		public SignInForm(final String id)
 		{
+			// sets a compound model on this form, every component without an
+			// explicit model will use this model too
 			super(id, new CompoundPropertyModel(new ValueMap()));
 
 			// only remember username, not passwords
