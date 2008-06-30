@@ -499,9 +499,13 @@ public class SwarmActionFactory implements WaspActionFactory
 	{
 		power = 31; // prevents new registrations
 		maxAction = 0; // prevents lookups
-		registeredActions.clear();
-		cachedActions.clear();
-		stringValues.clear();
+		// protected against multiple destroy calls
+		if (registeredActions != null)
+			registeredActions.clear();
+		if (cachedActions != null)
+			cachedActions.clear();
+		if (stringValues != null)
+			stringValues.clear();
 		registeredActions = null;
 		cachedActions = null;
 		stringValues = null;
