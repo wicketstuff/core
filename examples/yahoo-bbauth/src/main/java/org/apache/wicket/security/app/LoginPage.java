@@ -1,9 +1,9 @@
-
 package org.apache.wicket.security.app;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.behavior.SimpleAttributeModifier;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -27,9 +27,11 @@ public class LoginPage extends WebPage
 	{
 		try
 		{
-			String url = YahooBBAuth.generateYahooAuthenticationUrl("lSX2cWPIkY126.fZ7ch.68YPRdgGQZp31g--",
-					"467a26b9a04603b6b8229278bea63e6d");
-			add(new WebMarkupContainer("yahooUrl").add(new SimpleAttributeModifier("content", "5; url=" + url)));
+			WicketApplication app = (WicketApplication)Application.get();
+			String url = YahooBBAuth.generateYahooAuthenticationUrl(app.getApplicationId(), app
+					.getSharedSecret());
+			add(new WebMarkupContainer("yahooUrl").add(new SimpleAttributeModifier("content",
+					"5; url=" + url)));
 			add(new WebMarkupContainer("yahooUrl2").add(new SimpleAttributeModifier("href", url)));
 		}
 		catch (UnsupportedEncodingException e)

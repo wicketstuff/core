@@ -20,6 +20,7 @@ import org.apache.wicket.PageParameters;
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.app.WicketApplication.MySession;
 import org.apache.wicket.security.app.authentication.ApplicationLoginContext;
@@ -48,17 +49,18 @@ public class YahooResponsePage extends WebPage
 		super(parameters);
 		try
 		{
-			// TODO add feedback panel
+			WicketApplication app = (WicketApplication)Application.get();
 			// set your application id and secret
-			String appId = "lSX2cWPIkY126.fZ7ch.68YPRdgGQZp31g--";
-			String secret = "467a26b9a04603b6b8229278bea63e6d";
+			String appId = app.getApplicationId();
+			String secret = app.getSharedSecret();
 
 			// change to your BBAuth handler
 			String uri = "/wicketsecurity/yahoo-bbauth/yahoo-response";
 			/**
-			 * The response querystring will include: appid=[application id]& token=[auth token]& appdata=[optional
-			 * data]& ts=[request time (Unix timestamp)]& sig=[MD5(request URI including querystring with secret
-			 * appended)
+			 * The response querystring will include: appid=[application id]&
+			 * token=[auth token]& appdata=[optional data]& ts=[request time
+			 * (Unix timestamp)]& sig=[MD5(request URI including querystring
+			 * with secret appended)
 			 */
 
 			// Hard coded parameters
@@ -72,13 +74,16 @@ public class YahooResponsePage extends WebPage
 			String requestsig = parameters.getString("sig");
 			String token = parameters.getString("token");
 
-			String calcsig = uri + "?appid=" + appId + "&token=" + token + "&appdata=" + appdata + "&ts=" + ts + secret;
+			String calcsig = uri + "?appid=" + appId + "&token=" + token + "&appdata=" + appdata
+					+ "&ts=" + ts + secret;
 			log.info(calcsig);
 			// MessageDigest digest = MessageDigest.getInstance("MD5");
-			// calcsig = new BigInteger(1, digest.digest((calcsig).getBytes())).toString(16);
+			// calcsig = new BigInteger(1,
+			// digest.digest((calcsig).getBytes())).toString(16);
 			calcsig = YahooBBAuth.MD5(calcsig);
-			// Verify that the signature sent by Yahoo! matches the calculated signture
-			if(!calcsig.equals(requestsig))
+			// Verify that the signature sent by Yahoo! matches the calculated
+			// signture
+			if (!calcsig.equals(requestsig))
 			{
 				error("Signature mismatch:" + requestsig + " vs " + calcsig);
 				return;
@@ -89,25 +94,28 @@ public class YahooResponsePage extends WebPage
 			long requesttime = Long.parseLong(ts);
 			long clockSkew = Math.abs(time - requesttime);
 
-			// Make sure the server time is within 10 minutes (600 seconds) of Yahoo!'s servers
-			if(clockSkew >= 600)
+			// Make sure the server time is within 10 minutes (600 seconds) of
+			// Yahoo!'s servers
+			if (clockSkew >= 600)
 			{
-				error("Invalid timestamp - clockSkew is " + clockSkew + " seconds, current time = " + time + ", ts ="
-						+ requesttime);
+				error("Invalid timestamp - clockSkew is " + clockSkew + " seconds, current time = "
+						+ time + ", ts =" + requesttime);
 				return;
 			}
 
 			/**
-			 * Generate the portion of the URL that's used for signing. More information on BBAuth can be found here:
+			 * Generate the portion of the URL that's used for signing. More
+			 * information on BBAuth can be found here:
 			 * http://developer.yahoo.com/auth/
 			 */
 			String authWS = "/WSLogin/V1/wspwtoken_login";
-			String sig = authWS + "?appid=" + YahooBBAuth.encode(appId) + "&token=" + YahooBBAuth.encode(token)
-					+ "&ts=" + time + secret;
-			// String signature = new BigInteger(1, digest.digest((sig).getBytes())).toString(16);
+			String sig = authWS + "?appid=" + YahooBBAuth.encode(appId) + "&token="
+					+ YahooBBAuth.encode(token) + "&ts=" + time + secret;
+			// String signature = new BigInteger(1,
+			// digest.digest((sig).getBytes())).toString(16);
 			String signature = YahooBBAuth.MD5(sig);
-			String authURL = "https://api.login.yahoo.com" + authWS + "?appid=" + appId + "&token=" + token + "&ts="
-					+ time + "&sig=" + signature;
+			String authURL = "https://api.login.yahoo.com" + authWS + "?appid=" + appId + "&token="
+					+ token + "&ts=" + time + "&sig=" + signature;
 			log.info(authURL);
 			// out.println(authURL);
 			// out.println("<br>");
@@ -115,13 +123,13 @@ public class YahooResponsePage extends WebPage
 			HttpClient client = new HttpClient();
 			GetMethod method = new GetMethod(authURL);
 			InputStream rstream = null;
-
+			client.executeMethod(method);
 			// Get the response body
 			rstream = method.getResponseBodyAsStream();
-			if(rstream == null)
+			if (rstream == null)
 			{
 				Header[] headers = method.getResponseHeaders();
-				if(headers != null)
+				if (headers != null)
 				{
 					for (int i = 0; i < headers.length; i++)
 					{
@@ -133,9 +141,11 @@ public class YahooResponsePage extends WebPage
 			}
 
 			/**
-			 * Retrieve the XML response to the auth request and get the wssid and cookie values.
+			 * Retrieve the XML response to the auth request and get the wssid
+			 * and cookie values.
 			 */
-			Document xmlresponse = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(rstream);
+			Document xmlresponse = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+					rstream);
 			StringWriter writer = new StringWriter(5000);
 			TransformerFactory.newInstance().newTransformer().transform(new DOMSource(xmlresponse),
 					new StreamResult(writer));
@@ -152,7 +162,7 @@ public class YahooResponsePage extends WebPage
 			Node wssidNode = wssidResponse.item(0);
 			Node cookieNode = cookieResponse.item(0);
 			Node timeoutNode = timeoutResponse.item(0);
-			if(wssidNode != null)
+			if (wssidNode != null)
 			{
 				// out.println("BBauth authentication Successful");
 				// out.println("<br>");
@@ -167,36 +177,41 @@ public class YahooResponsePage extends WebPage
 				// out.println("cookie = " + cookie);
 				// out.println("<br>");
 				// out.println("timeout = " + timeout);
-				((WaspSession) Session.get()).login(new ApplicationLoginContext("foo", "bar"));
-				((MySession) Session.get()).setUsername("foo");
-				if(!continueToOriginalDestination())
-					setResponsePage(((WicketApplication) Application.get()).getHomePage());
+				((WaspSession)Session.get()).login(new ApplicationLoginContext("foo", "bar"));
+				((MySession)Session.get()).setUsername("foo");
+				if (!continueToOriginalDestination())
+					setResponsePage(((WicketApplication)Application.get()).getHomePage());
 			}
 			else
 			{
 				/**
-				 * Print the response error code and message <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-				 * <wspwtoken_login_response> <Error> <ErrorCode>3000</ErrorCode> <ErrorDescription>Invalid (missing)
-				 * appid</ErrorDescription> </Error> </wspwtoken_login_response>
+				 * Print the response error code and message <?xml version="1.0"
+				 * encoding="UTF-8" standalone="no"?> <wspwtoken_login_response>
+				 * <Error> <ErrorCode>3000</ErrorCode>
+				 * <ErrorDescription>Invalid (missing) appid</ErrorDescription>
+				 * </Error> </wspwtoken_login_response>
 				 */
-				// String code = xmlresponse.getElementsByTagName("ErrorCode").item(0).getTextContent();
-				// String msg = xmlresponse.getElementsByTagName("ErrorDescription").item(0).getTextContent();
-				// out.println("BBAuth request failed with error code " + code + ", " + msg);
-				// out.println("<br>");
-				log.error("BBAuth request failed");
-				throw new WicketRuntimeException("BBAuth request failed");
+				String code = xmlresponse.getElementsByTagName("ErrorCode").item(0).getFirstChild()
+						.getNodeValue();
+				String msg = xmlresponse.getElementsByTagName("ErrorDescription").item(0)
+						.getFirstChild().getNodeValue();
+				String error = "BBAuth request failed with errorcode: " + code + ", " + msg;
+				log.error(error);
+				throw new WicketRuntimeException(error);
 			}
 
 			/**
-			 * The web service session id (wssid) and Yahoo! cookie can now be used for calls to the SOAP or JSON-RPC
-			 * endpoints. http://developer.yahoo.com/mail/docs/html/index.html
+			 * The web service session id (wssid) and Yahoo! cookie can now be
+			 * used for calls to the SOAP or JSON-RPC endpoints.
+			 * http://developer.yahoo.com/mail/docs/html/index.html
 			 */
 		}
 		catch (Exception e)
 		{
 			log.error(e.getMessage(), e);
+			error(e.getMessage());
 		}
-
+		add(new FeedbackPanel("feedback"));
 	}
 
 }

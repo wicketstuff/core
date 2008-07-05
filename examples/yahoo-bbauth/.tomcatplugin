@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tomcatProjectProperties>
+    <rootDir>/src/main/webapp</rootDir>
+    <exportSource>false</exportSource>
+    <reloadable>true</reloadable>
+    <redirectLogger>true</redirectLogger>
+    <updateXml>true</updateXml>
+    <warLocation></warLocation>
+    <extraInfo></extraInfo>
+    <webPath>/yahoo-bbauth</webPath>
+    <webClassPathEntries>
+        <webClassPathEntry>/hive/target/classes</webClassPathEntry>
+        <webClassPathEntry>/swarm/target/classes</webClassPathEntry>
+        <webClassPathEntry>/wasp/target/classes</webClassPathEntry>
+        <webClassPathEntry>/wicomsec/target/classes</webClassPathEntry>
+        <webClassPathEntry>/yahoo-bbauth/target/classes</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/avalon-framework/avalon-framework/4.1.3/avalon-framework-4.1.3.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/commons-codec/commons-codec/1.2/commons-codec-1.2.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/commons-collections/commons-collections/3.2/commons-collections-3.2.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/commons-logging/commons-logging/1.1/commons-logging-1.1.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/log4j/log4j/1.2.13/log4j-1.2.13.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/apache/wicket/wicket-extensions/1.3-SNAPSHOT/wicket-extensions-1.3-SNAPSHOT.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/apache/wicket/wicket/1.3-SNAPSHOT/wicket-1.3-SNAPSHOT.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/slf4j/slf4j-api/1.4.2/slf4j-api-1.4.2.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/slf4j/slf4j-log4j12/1.4.2/slf4j-log4j12-1.4.2.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar</webClassPathEntry>
+    </webClassPathEntries>
+</tomcatProjectProperties>
