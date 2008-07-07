@@ -40,7 +40,6 @@ import org.apache.wicket.security.actions.WaspAction;
  */
 public class SwarmAction extends AbstractWaspAction
 {
-	private static final long serialVersionUID = 1L;
 
 	private final int actions;
 
@@ -217,18 +216,5 @@ public class SwarmAction extends AbstractWaspAction
 	{
 		// TODO move to interface?
 		return Actions.getActionFactory(key);
-	}
-
-	/**
-	 * De-Serialization implementation.
-	 * 
-	 * @param stream
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
-	private final void readObject(ObjectInputStream stream) throws IOException,
-			ClassNotFoundException
-	{
-		stream.defaultReadObject();
 	}
 }
