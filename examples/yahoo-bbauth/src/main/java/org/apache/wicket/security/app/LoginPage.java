@@ -8,7 +8,7 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.behavior.SimpleAttributeModifier;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.security.app.authentication.YahooBBAuth;
+import org.apache.wicket.security.yahoo.YahooBBAuth;
 
 /**
  * Login Page. Uses Yahoo BBAuth.
