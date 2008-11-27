@@ -10,16 +10,19 @@
 		<version>1.4-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>calendarviews</artifactId>
-	<packaging>jar</packaging>
+	<artifactId>calendarviews-parent</artifactId>
+	<packaging>pom</packaging>
 
 	<name>WicketStuff CalendarViews</name>
 	<description>
-		WicketStuff CalendarViews aims to provide several Wicket components that make it easy
-		to incorporate a calendar into your application.  These calendars can be used to display
-		events and schedules.  NOTE: these are not kin to the datepicker style components for use
-		in forms - these are for displaying calendars of data, not receiving date input.
+		See the child project "calendarviews" for a more complete description.  This
+		is the parent for the actual project and the examples.
 	</description>
+
+	<modules>
+		<module>calendarviews</module>
+		<module>calendarviews-examples</module>
+	</modules>
 
 	<developers>
 		<developer>
@@ -60,26 +63,6 @@
 			<version>3.8.2</version>
 			<scope>test</scope>
 		</dependency>
-
-		<!--  JETTY DEPENDENCIES FOR TESTING  -->
-		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>jetty</artifactId>
-			<version>${jetty.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>jetty-util</artifactId>
-			<version>${jetty.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>jetty-management</artifactId>
-			<version>${jetty.version}</version>
-			<scope>provided</scope>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -98,6 +81,7 @@
 						<exclude>**/*.swf</exclude>
 					</excludes>
 				</configuration>
+				<!-- TODO - get this working again with new dir structure:
 				<executions>
 					<execution>
 						<phase>test</phase>
@@ -106,6 +90,7 @@
 						</goals>
 					</execution>
 				</executions>
+				-->
 			</plugin>
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
