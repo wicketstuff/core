@@ -21,14 +21,6 @@
 		in forms - these are for displaying calendars of data, not receiving date input.
 	</description>
 
-	<licenses>
-		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-
 	<developers>
 		<developer>
 			<id>jthomerson</id>

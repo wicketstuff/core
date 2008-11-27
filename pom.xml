@@ -23,24 +23,28 @@
 
 	<licenses>
 		<license>
-			<!--
-				TODO: Will this create problems for children who are not Apache
-				licensed? This project (core-parent) is being released under the
-				Apache 2 license, but does not require that all child projects are
-				released under the same license.
-			-->
 			<name>The Apache Software License, Version 2.0</name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 			<distribution>repo</distribution>
+			<comments>
+				This project (core-parent) is being released under the Apache 2 license, 
+				but does not require that all child projects are released under the same license.
+				If a child project defines a license of it's own different from the Apache license,
+				Maven recognizes this and uses only that license.  If a child wants to use the
+				Apache license, it does not need to define a license at all.  Do not remove this
+				license from the parent, or it will un-license child projects that do not have their
+				own defined.
+			</comments>
 		</license>
 	</licenses>
 
 	<developers>
-		<!-- 
-			Please add your name here if you help maintain the core parent or are involved
-			with managing WicketStuff core unified releases, etc.  Otherwise, add your developer
-			information to any subprojects that you are a part of.
-		 -->
+		<!--
+			Please add your name here if you help maintain the core parent or are
+			involved with managing WicketStuff core unified releases, etc.
+			Otherwise, add your developer information to any subprojects that you
+			are a part of.
+		-->
 		<developer>
 			<id>jthomerson</id>
 			<name>Jeremy Thomerson</name>
