@@ -81,7 +81,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>1.4-rc1</wicket.version>
+		<wicket.version>1.4-SNAPSHOT</wicket.version>
 	</properties>
 
 	<dependencies>
