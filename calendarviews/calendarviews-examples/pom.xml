@@ -19,6 +19,12 @@
 	</description>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>calendarviews</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
 		<!--  JETTY DEPENDENCIES -->
 		<dependency>
 			<groupId>org.mortbay.jetty</groupId>
