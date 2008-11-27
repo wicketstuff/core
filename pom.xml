@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.wicketstuff</groupId>
+	<artifactId>core-parent</artifactId>
+	<packaging>pom</packaging>
+	<version>1.4-rc2-SNAPSHOT</version>
+
+	<name>WicketStuff Core Parent</name>
+	<description>
+		WicketStuff Core Parent is the parent project for all of the core WicketStuff projects.  It tries
+		to unify the WS projects into a common structure that shares a common build / release cycle.  This
+		will hopefully keep WicketStuff projects more in sync with Wicket and make it easier on new users.
+	</description>
+
+	<modules>
+		<module>calendarviews</module>
+		<module>client-and-server-validation</module>
+	</modules>
+
+	<licenses>
+		<license>
+			<!--
+				TODO: Will this create problems for children who are not Apache
+				licensed? This project (core-parent) is being released under the
+				Apache 2 license, but does not require that all child projects are
+				released under the same license.
+			-->
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<ciManagement>
+		<system>continuum</system>
+		<url>http://www.wickettraining.com/continuum</url>
+	</ciManagement>
+
+	<issueManagement>
+		<system>jira</system>
+		<url>http://wicketstuff.org/jira</url>
+	</issueManagement>
+
+	<mailingLists>
+		<mailingList>
+			<name>Wicket User List</name>
+			<post>users@wicket.apache.org</post>
+			<subscribe>users-subscribe@wicket.apache.org</subscribe>
+			<unsubscribe>users-unsubscribe@wicket.apache.org</unsubscribe>
+			<archive>http://www.nabble.com/Wicket---User-f13976.html</archive>
+		</mailingList>
+	</mailingLists>
+
+	<scm>
+		<connection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk/wicketstuff-core</connection>
+	</scm>
+
+	<properties>
+		<wicket.version>1.4-rc1</wicket.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket</artifactId>
+			<version>${wicket.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<filtering>false</filtering>
+				<directory>src/test/java</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</testResource>
+		</testResources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<downloadSources>true</downloadSources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
