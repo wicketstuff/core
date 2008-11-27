@@ -27,6 +27,18 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+	
+	<developers>
+		<developer>
+			<id>jthomerson</id>
+			<name>Jeremy Thomerson</name>
+			<email>jeremy@wickettraining.com</email>
+			<url>http://www.jeremythomerson.com</url>
+			<timezone>-6</timezone>
+			<organization>WicketTraining.com</organization>
+			<organizationUrl>http://www.wickettraining.com</organizationUrl>
+		</developer>
+	</developers>
 
 	<dependencies>
 		<!-- JODA TIME -->
