@@ -17,10 +17,10 @@
 	</description>
 
 	<modules>
-		<module>calendarviews</module>
+		<module>calendarviews-parent</module>
 		<module>client-and-server-validation</module>
-		<module>inmethod-grid</module>
-		<module>tinymce</module>
+		<module>inmethod-grid-parent</module>
+		<module>tinymce-parent</module>
 	</modules>
 
 	<licenses>
