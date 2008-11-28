@@ -97,12 +97,6 @@
 					</plugin>
 				</plugins>
 			</build>
-			<!--
-				distributionManagement> <site> <id>local</id>
-				<url>file:target/site/</url> </site> <repository> <id>local</id>
-				<url>file:target/m2-repo/</url> </repository>
-				</distributionManagement
-			-->
 		</profile>
 		<profile>
 			<id>all</id>
@@ -112,7 +106,6 @@
 		</profile>
 	</profiles>
 
-	<url>http://www.inmethod.com</url>
 	<inceptionYear>2007</inceptionYear>
 
 	<organization>
