@@ -19,6 +19,7 @@
 	<modules>
 		<module>calendarviews</module>
 		<module>client-and-server-validation</module>
+		<module>inmethod-grid</module>
 	</modules>
 
 	<licenses>
@@ -91,6 +92,16 @@
 			<version>${wicket.version}</version>
 		</dependency>
 	</dependencies>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-extensions</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<resources>
