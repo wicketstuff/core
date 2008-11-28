@@ -26,6 +26,7 @@ import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.model.IModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +61,8 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
         newContent = onSave(newContent);
         newContent = onSave(target, newContent);
         Component component = getComponent();
-        component.getModel().setObject(newContent);
+        IModel defaultModel = component.getDefaultModel();
+        defaultModel.setObject(newContent);
         target.addComponent(component);
     }
 

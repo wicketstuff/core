@@ -40,17 +40,29 @@
 			<artifactId>tinymce</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
+		<!--  JETTY DEPENDENCIES -->
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty</artifactId>
+			<version>${jetty.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty-util</artifactId>
+			<version>${jetty.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty-management</artifactId>
+			<version>${jetty.version}</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<warSourceDirectory>src/webapp</warSourceDirectory>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+	<properties>
+		<jetty.version>6.1.4</jetty.version>
+	</properties>
 </project>
