@@ -173,4 +173,14 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<!-- TODO: get a place to deploy site
+	<distributionManagement>
+		<site>
+			<id>www.wicketstuff.org</id>
+			<url>scp://www.wicketstuff.org/www/docs/wicketstuff-core/</url>
+		</site>
+	</distributionManagement>
+	-->
+	
 </project>
