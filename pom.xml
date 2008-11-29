@@ -72,6 +72,25 @@
 		<url>http://www.wickettraining.com/continuum</url>
 	</ciManagement>
 
+	<profiles>
+		<profile>
+			<id>bamboo</id>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>repo</id>
+					<name>Local TeamCity/Tomcat repository</name>
+					<url>file:/home/wicket/tomcat/webapps/maven/repository/</url>
+					<uniqueVersion>false</uniqueVersion>
+				</snapshotRepository>
+				<repository>
+					<id>repo</id>
+					<name>Local TeamCity/Tomcat repository</name>
+					<url>file:/home/wicket/tomcat/webapps/maven/repository/</url>
+				</repository>
+			</distributionManagement>
+		</profile>
+	</profiles>
+
 	<issueManagement>
 		<system>jira</system>
 		<url>http://wicketstuff.org/jira</url>
@@ -102,7 +121,7 @@
 			<version>${wicket.version}</version>
 		</dependency>
 	</dependencies>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -177,16 +196,12 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-<!--
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<minmemory>128m</minmemory>
-					<maxmemory>256m</maxmemory>
-				</configuration>
-			</plugin>
--->
+			<!--
+				<plugin> <groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId> <configuration>
+				<minmemory>128m</minmemory> <maxmemory>256m</maxmemory>
+				</configuration> </plugin>
+			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -201,7 +216,7 @@
 					<includes>
 						<include>**/*Test.java</include>
 					</includes>
-					<testFailureIgnore>true</testFailureIgnore>
+					<testFailureIgnore>false</testFailureIgnore>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -210,7 +225,7 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<repositories>
 		<repository>
 			<id>wicket-snaps</id>
@@ -223,12 +238,12 @@
 			</releases>
 		</repository>
 	</repositories>
-	
+
 	<distributionManagement>
 		<site>
 			<id>local</id>
 			<url>file:///tmp/www/docs/wicketstuff-core/</url>
 		</site>
 	</distributionManagement>
-	
+
 </project>
