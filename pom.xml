@@ -25,6 +25,7 @@
 		<module>jquery-parent</module>
 		<module>misc</module>
 		<module>minis-parent</module>
+		<module>openlayers-parent</module>
 		<module>phonebook</module>
 		<module>scriptaculous-parent</module>
 		<module>tinymce-parent</module>
@@ -173,6 +174,7 @@
 				<configuration>
 					<source>1.5</source>
 					<target>1.5</target>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
