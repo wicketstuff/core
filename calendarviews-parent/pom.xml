@@ -13,7 +13,7 @@
 	<artifactId>calendarviews-parent</artifactId>
 	<packaging>pom</packaging>
 
-	<name>WicketStuff CalendarViews - Parent</name>
+	<name>CalendarViews - Parent</name>
 	<description>
 		See the child project "calendarviews" for a more complete description.  This
 		is the parent for the actual project and the examples.

@@ -20,6 +20,7 @@
 		<module>calendarviews-parent</module>
 		<module>client-and-server-validation</module>
 		<module>inmethod-grid-parent</module>
+		<module>minis-parent</module>
 		<module>tinymce-parent</module>
 	</modules>
 
@@ -174,13 +175,11 @@
 		</plugins>
 	</build>
 	
-	<!-- TODO: get a place to deploy site
 	<distributionManagement>
 		<site>
-			<id>www.wicketstuff.org</id>
-			<url>scp://www.wicketstuff.org/www/docs/wicketstuff-core/</url>
+			<id>local</id>
+			<url>file:///tmp/www/docs/wicketstuff-core/</url>
 		</site>
 	</distributionManagement>
-	-->
 	
 </project>

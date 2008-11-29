@@ -13,7 +13,7 @@
 	<artifactId>client-and-server-validation</artifactId>
 	<packaging>jar</packaging>
 
-	<name>WicketStuff Client and Server Validation</name>
+	<name>Client and Server Validation</name>
 	<description>
 		WicketStuff Client and Server Validation aims to provide a client side validation
 		framework that is as simple to use as Wicket's server side validation and will
