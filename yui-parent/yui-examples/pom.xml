@@ -43,6 +43,11 @@
 
   <build>
     <plugins>
+			<!-- TODO - see if this was what was causing TeamCity failure
+					and if so, fix it.  Commenting out now to see
+					if error is resolved.
+					IS IT EVEN NEEDED?
+				
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
@@ -52,10 +57,11 @@
           <workDirectory>target/assembly/work</workDirectory>
         </configuration>
       </plugin>
+      -->
       <plugin>
         <artifactId>maven-site-plugin</artifactId>
         <configuration>
-          <templateDirectory>file:src/site/template/</templateDirectory>
+          <templateDirectory>src/site/template/</templateDirectory>
           <template>wicket-site.vm</template>
         </configuration>
       </plugin>

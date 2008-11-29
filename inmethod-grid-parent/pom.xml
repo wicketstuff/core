@@ -64,11 +64,17 @@
 			</activation>
 			<build>
 				<plugins>
+			<!-- TODO - see if this was what was causing TeamCity failure
+					and if so, fix it.  Commenting out now to see
+					if error is resolved.
+					IS IT EVEN NEEDED?
+				
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-assembly-plugin</artifactId>
 						<inherited>true</inherited>
 					</plugin>
+-->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
@@ -299,6 +305,11 @@
 
 		<pluginManagement>
 			<plugins>
+			<!-- TODO - see if this was what was causing TeamCity failure
+					and if so, fix it.  Commenting out now to see
+					if error is resolved.
+					IS IT EVEN NEEDED?
+				
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-assembly-plugin</artifactId>
@@ -317,6 +328,7 @@
 						</finalName>
 					</configuration>
 				</plugin>
+-->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-eclipse-plugin</artifactId>
