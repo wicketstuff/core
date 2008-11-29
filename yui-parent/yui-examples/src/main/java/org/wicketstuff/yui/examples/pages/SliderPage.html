@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Wicket Examples - Yahoo UI library, Slider</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+    <span wicket:id="mainNavigation"/>
+
+<br/>
+<br/>
+	<form wicket:id ="sliderForm">
+	<span style="font-size:16pt;">Rank the following frameworks to your liking ...</span>
+	<br/>
+	<br/>
+		<table border="0" cellpadding="4" cellspacing="4" style="width:800px;">
+			<tr>
+				<td>
+					Wicket
+				</td>
+				<td>
+					<div wicket:id="wicketSlider"></div>
+				</td>
+				<td>
+					<input type="text" wicket:id="wicketScore" size="5"/>
+				</td>
+				<td>
+					300 px (-150 - 150 px) with divisor as 10 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Struts
+				</td>
+				<td>
+					<div wicket:id="strutsSlider"></div>
+				</td>
+				<td>
+					<input type="text" wicket:id="strutsScore" size="5"/>
+				</td>
+				<td>
+					300 px (-150 - 150 px)  with divisor as 30 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Tapestry
+				</td>
+				<td>
+					<div wicket:id="tapestrySlider"></div>
+				</td>
+				<td>
+					<input type="text" wicket:id="tapestryScore" size="5"/>
+				</td>
+				<td>
+					300 px (-150 - 150 px) with divisor as 30 
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					JSF
+				</td>
+				<td>
+					<div wicket:id="jsfSlider"></div>
+				</td>
+				<td>
+					<input type="text" wicket:id="jsfScore" size="5"/>
+				</td>
+				<td>
+					300 px (-150 - 150 px)  with divisor as 30 
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" style="text-align:right;">
+					<input type="submit" value="vote!">
+				</td>
+			</tr>
+		</table>
+	</form>
+		<div wicket:id="feedback" >
+	</div>
+</body>
+</html>
