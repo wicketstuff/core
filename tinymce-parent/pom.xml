@@ -24,7 +24,7 @@
 
 	<parent>
 		<groupId>org.wicketstuff</groupId>
-		<artifactId>core-parent</artifactId>
+		<artifactId>wicketstuff-core</artifactId>
 		<version>1.4-SNAPSHOT</version>
 	</parent>
 		
@@ -154,10 +154,6 @@
 	</reporting>
 
 	<repositories>
-		<repository>
-			<id>wicketstuff.org</id>
-			<url>http://wicketstuff.org/maven/repository</url>
-		</repository>
 		<repository>
 			<id>codeogre.com</id>
 			<name>codeogre provided maven repository</name>
