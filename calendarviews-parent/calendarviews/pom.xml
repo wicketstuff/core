@@ -13,7 +13,7 @@
 	<artifactId>calendarviews</artifactId>
 	<packaging>jar</packaging>
 
-	<name>WicketStuff CalendarViews</name>
+	<name>CalendarViews</name>
 	<description>
 		WicketStuff CalendarViews aims to provide several Wicket components that make it easy
 		to incorporate a calendar into your application.  These calendars can be used to display

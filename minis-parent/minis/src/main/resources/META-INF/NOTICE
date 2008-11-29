@@ -1,0 +1,12 @@
+
+   org.wicketstuff.minis.behavior.reflection
+   Contains reflection.js javascript library released under a MIT style license.
+   Contributors: Cow http://cow.neondragon.net
+                 Gfx http://www.jroller.com/page/gfx/
+                 Sitharus http://www.sitharus.com
+                 Andreas Linde http://www.andreaslinde.de
+                 Tralala, coder @ http://www.vbulletin.org
+
+	org.wicketstuff.minis.prototipbehaviour
+	Contains prototip.js, prototip.css and relevent image files
+	Licenced under terms printed in prototip.js, author Nick Stakenburg, see http://www.nickstakenburg.com/projects/prototip/ 
