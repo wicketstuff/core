@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<title>Holder I-Frame Source</title>
+		<style type="text/css">
+			body { padding: 0; margin: 0; }
+			a { display: block; background-color: pink; height: 150px; }
+			div { height: 150px; }
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/*
+			 * Indicates whether the scroll event is triggered by clicking the back/forward buttons
+			 * or by adding a new history entry
+			 */
+			isBackButton = true; 
+			
+			jQuery(function()
+			{
+				var scrollObject = $.browser.msie && $.browser.version >= 7 ? 'body' : window;
+				$(scrollObject).scroll(function(){
+					if (isBackButton) {
+						var divNumber = Math.floor($(window).scrollTop() - 150) / 300;
+						var hash = jQuery('a:eq(' + divNumber + ')').attr('name') || '';
+						window.parent.HistoryManager.setHistoryItem(hash);
+						window.parent.notifyBackButton();
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

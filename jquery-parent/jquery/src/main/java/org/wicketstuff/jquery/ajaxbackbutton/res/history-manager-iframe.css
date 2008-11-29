@@ -1,0 +1,8 @@
+#historyIframe {
+/* 
+ * Scroll Event doesn't fire if the iframe is hidden with display: none;
+ */
+	position: absolute;
+	left: -500px;
+	top: -500px;
+}
