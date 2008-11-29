@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns:wicket="http://wicket.sourceforge.net/">
+<head>
+  <style type="text/css">
+  div.cart-active {
+    background-color: #FFF4D8;
+  }
+  </style>
+</head>
+<body>
+  <div wicket:id="product1">
+    <img src="product.png" alt="Drag Me!"> <br />
+  </div>
+  <div wicket:id="product2">
+    <img src="product1.png" alt="Drag Me!"> <br />
+  </div>
+<br />
+<br />
+
+<ul wicket:id="itemList">
+  <li wicket:id="item"><span wicket:id="label">testing</span></li>
+</ul>
+<div wicket:id="indicator" />
+
+<div wicket:id="cart" style="border: 2px solid black">Drop images here.</div>
+
+</body>
+</html>

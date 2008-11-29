@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>scriptaculous-parent</artifactId>
+		<version>1.4-SNAPSHOT</version>
+	</parent>
+	
+	<artifactId>scriptaculous</artifactId>
+	<name>Scriptaculous Integration</name>
+	<description>
+		<![CDATA[The Wicket Contrib Prototype project showcases one possible way to integrate the
+		scriptaculous ajax framework.]]>
+	</description>
+
+	<organization>
+		<name>Wicket Stuff</name>
+		<url>http://www.wicketstuff.org</url>
+	</organization>
+
+	<inceptionYear>2006</inceptionYear>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Ryan Sonnek</name>
+			<id>wireframe6464</id>
+			<email>wireframe6464 at users.sourceforge.net</email>
+		</developer>
+		<developer>
+			<name>Nino Martinez</name>
+			<id>nmwael</id>
+			<email>nmwael at users.sourceforge.net</email>
+		</developer>
+
+	</developers>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>wicketstuff-prototype</artifactId>
+			<version>1.4-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>**/*Panel*</exclude>
+						<exclude>**/*Page*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

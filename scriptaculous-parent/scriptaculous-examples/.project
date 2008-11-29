@@ -1,7 +1,7 @@
 <projectDescription>
-  <name>minis</name>
-  <comment>WicketStuff Minis is a collection of assorted components and
-		behaviors that are too small to warrant their own project</comment>
+  <name>scriptaculous-examples</name>
+  <comment>The Wicket Contrib Scriptaculous project showcases one possible way to integrate the
+		scriptaculous ajax framework.</comment>
   <projects/>
   <buildSpec>
     <buildCommand>
