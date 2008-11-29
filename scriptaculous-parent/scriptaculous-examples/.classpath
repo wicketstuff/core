@@ -15,5 +15,9 @@
       <attribute value="jar:file:/C:/Users/jrthomerson/.m2/repository/org/wicketstuff/wicketstuff-prototype/1.4-SNAPSHOT/wicketstuff-prototype-1.4-SNAPSHOT-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
-  <classpathentry kind="var" path="M2_REPO/org/wicketstuff/wicketstuff-scriptaculous/1.4-SNAPSHOT/wicketstuff-scriptaculous-1.4-SNAPSHOT.jar" sourcepath="M2_REPO/org/wicketstuff/wicketstuff-scriptaculous/1.4-SNAPSHOT/wicketstuff-scriptaculous-1.4-SNAPSHOT-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/wicketstuff/wicketstuff-scriptaculous/1.4-SNAPSHOT/wicketstuff-scriptaculous-1.4-SNAPSHOT.jar" sourcepath="M2_REPO/org/wicketstuff/wicketstuff-scriptaculous/1.4-SNAPSHOT/wicketstuff-scriptaculous-1.4-SNAPSHOT-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/C:/Users/jrthomerson/.m2/repository/org/wicketstuff/wicketstuff-scriptaculous/1.4-SNAPSHOT/wicketstuff-scriptaculous-1.4-SNAPSHOT-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
 </classpath>
