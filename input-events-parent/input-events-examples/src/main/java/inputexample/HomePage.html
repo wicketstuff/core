@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<title>Wicket Quickstart Archetype Homepage</title>
+	</head>
+	<body>
+		<strong>Wicket Quickstart Archetype Homepage</strong>
+		<br />
+		<br />
+		<span wicket:id="message">message will be here</span>
+		<br />
+		<p>
+			Press ctrl+a or b,c to fire either form submission, button submit
+			or ajax event.
+			
+			ctrl+f,e to focus textfield or e to click link
+		</p>
+		<br />
+		Event was fired:
+		<label wicket:id="id"></label>
+		<form wicket:id="form" id="form">
+			<input type="submit" wicket:id="button" value="clickme!" />
+
+			<input type="submit" wicket:id="button2" value="clickme!ajax" />
+
+			<input type="text" wicket:id="text" />
+		</form>
+
+		<a href="#" wicket:id="link">Click here!</a>
+
+	</body>
+</html>
+

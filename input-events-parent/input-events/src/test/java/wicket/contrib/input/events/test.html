@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Input Events - testing page</title>
+<script type="text/javascript">
+function getKeyPressed(e)
+{
+  if( !e ) {
+    //if the browser did not pass the event information to the
+    //function, we will have to obtain it from the event register
+    if( window.event ) {
+      //Internet Explorer
+      e = window.event;
+    } else {
+      //total failure, we have no way of referencing the event
+      return;
+    }
+  }
+  if( typeof( e.keyCode ) == 'number'  ) {
+    //DOM
+    e = e.keyCode;
+  } else if( typeof( e.which ) == 'number' ) {
+    //NS 4 compatible
+    e = e.which;
+  } else if( typeof( e.charCode ) == 'number'  ) {
+    //also NS 6+, Mozilla 0.9+
+    e = e.charCode;
+  } else {
+    //total failure, we have no way of obtaining the key code
+    return;
+  }
+
+	return String.fromCharCode( e );
+
+}
+
+
+function keyPressed(event, keyCode, componentId, componentEvent) {
+	alert('entered function');
+	var keyPressed=getKeyPressed(event);
+	if(keyPressed==keyCode)
+	{
+		var component=document.getElementById(componentId);
+		alert('keyPressed:'+keyPressed+component);
+		component.componentEvent;
+		alert(		component.componentEvent);
+	}
+}
+function mousepressed(event,desiredClick,componentID,componentEvent){
+
+}
+function pokeComponent(component)
+{
+	component.submit;
+}
+function focusComponent(component)
+{
+	component.focus;
+}
+
+</script>
+</head>
+<body>
+<div wicket:id="id"
+	onkeydown="keyPressed(event, 'A', 'button0', 'onclick')">
+<button value="clickme!" wicket:id="button" name="button" id="button0"
+	onclick="alert('heey you clicked me!')">smooking!</button>
+</div>
+</body>
+</html>
