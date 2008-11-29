@@ -24,6 +24,7 @@
 		<module>minis-parent</module>
 		<module>phonebook</module>
 		<module>tinymce-parent</module>
+		<module>yui-parent</module>
 	</modules>
 
 	<licenses>
@@ -122,6 +123,11 @@
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
 				<artifactId>wicket-spring</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-velocity</artifactId>
 				<version>${wicket.version}</version>
 			</dependency>
 		</dependencies>
