@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<title>Animation Example</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<style>
+	
+	#ep1 .AnimatedItem .MouseoverItem
+	{
+		background-color : #101010;
+		color 			 : #FFFFFF; 
+		font-weight		 : bold;
+		text-align 		 : center;
+	}
+	
+	#ep1 .AnimatedItem .OnloadItem IMG
+	{
+		width : 100%;
+		height : 100%;
+	}
+
+	</style>
+</head>
+<body>
+    <span wicket:id="mainNavigation" />
+    <br/>
+	<input type="text" wicket:id="textfield" size="20"/>
+    <div wicket:id="ep1" id="ep1">
+    	[Ellipse Panel]
+    </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<html xmlns:wicket="http://wicket.apache.org/">
+<head>
+<title>Wicket Examples - nested</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<span wicket:id="mainNavigation" />
+
+<table>
+	<tr valign="top">
+		<td>
+		<h3>tree component</h3>
+		<p>
+		Right click on the folder nodes to add nodes and move the folder up and down.  You will notice that the root and the leaf nodes do not have a menu associated with.
+		</p>
+		<a href="#" wicket:id="expandAll">[expand all]</a> <a href="#"
+			wicket:id="collapseAll">[collapse all]</a>
+		<div wicket:id="treeContextMenu"><span wicket:id="tree"></span>
+		</div>
+		</td>
+	</tr>
+</table>
+</body>
+</html>
