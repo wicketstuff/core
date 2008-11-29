@@ -1,0 +1,24 @@
+<html xmlns:wicket>
+<wicket:extend>
+<form wicket:id="contactForm">
+<table cellspacing="0" cellpadding="2">
+<tr>
+	<td><wicket:message key="firstname">[first name]</wicket:message></td><td><input type="text" wicket:id="firstname" size="40" maxlength="32"/></td>
+</tr>
+<tr>
+	<td><wicket:message key="lastname">[last name]</wicket:message></td><td><input type="text" wicket:id="lastname" size="40" maxlength="32"/></td>
+</tr>
+<tr>
+	<td><wicket:message key="phonenumber">[phone number]</wicket:message></td><td><input type="text" wicket:id="phone" size="40" maxlength="16"/></td>
+</tr>
+<tr>
+	<td><wicket:message key="email">[email]</wicket:message></td><td><input type="text" wicket:id="email" size="40" maxlength="128"/></td>
+</tr>
+<tr>
+	<td>&nbsp;</td><td><input type="submit" wicket:id="save" value="[save]">
+	<input type="submit" wicket:id="cancel" value="[cancel]"/></td>
+</tr>
+</table>
+</form>
+</wicket:extend>
+</html>

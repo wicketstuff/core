@@ -21,6 +21,7 @@
 		<module>client-and-server-validation</module>
 		<module>inmethod-grid-parent</module>
 		<module>minis-parent</module>
+		<module>phonebook</module>
 		<module>tinymce-parent</module>
 	</modules>
 
@@ -100,6 +101,26 @@
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
 				<artifactId>wicket-extensions</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-datetime</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-ioc</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-guice</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-spring</artifactId>
 				<version>${wicket.version}</version>
 			</dependency>
 		</dependencies>

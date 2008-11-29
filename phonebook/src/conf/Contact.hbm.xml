@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping package="wicket.contrib.phonebook" default-access="field">
+    <class name="Contact" table="contact">
+        <cache usage="read-write"/>
+        <id name="id">
+            <generator class="identity"/>
+        </id>
+        <property name="firstname" length="32" not-null="true"/>
+        <property name="lastname" length="32" not-null="true"/>
+        <property name="email" length="128"/>
+        <property name="phone" length="16" not-null="true"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,12 @@
+<html xmlns:wicket>
+<wicket:extend>
+<a href="#" wicket:id="createLink"><wicket:message key="create.new">[Create New Contact]</wicket:message></a><br/><br/>
+<form wicket:id="filter-form">
+	<input type="hidden" name="tracker" wicket:id="focus-tracker"/>
+	<table wicket:id="users" cellspacing="0" cellpadding="2" class="grid">
+	</table>
+	<span wicket:id="focus-restore">[call to focus restore script]</span>
+	<input wicket:id="delete-selected" value="DELETE CHECKED CONTACTS" type="submit"/>
+</form>
+</wicket:extend>
+</html>
