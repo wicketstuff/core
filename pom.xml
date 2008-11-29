@@ -22,6 +22,7 @@
 		<module>client-and-server-validation</module>
 		<module>inmethod-grid-parent</module>
 		<module>jquery-parent</module>
+		<module>misc</module>
 		<module>minis-parent</module>
 		<module>phonebook</module>
 		<module>tinymce-parent</module>
