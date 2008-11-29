@@ -27,6 +27,7 @@
 		<module>minis-parent</module>
 		<module>openlayers-parent</module>
 		<module>phonebook</module>
+		<module>prototype</module>
 		<module>scriptaculous-parent</module>
 		<module>tinymce-parent</module>
 		<module>yui-parent</module>
