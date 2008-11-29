@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+>
+
+  <!-- only available with servlet spec. 2.4 -->
+  <locale-encoding-mapping-list>
+    <locale-encoding-mapping>
+      <locale>en</locale>
+      <encoding>UTF-8</encoding>
+    </locale-encoding-mapping>
+  </locale-encoding-mapping-list>
+
+  <!--
+    There are three means to configure Wickets configuration mode and they are
+    tested in the order given.
+    1) A system property: -Dwicket.configuration
+    2) servlet specific <init-param>
+    3) context specific <context-param>
+    The value might be either "development" (reloading when templates change)
+    or "deployment". If no configuration is found, "deployment" is the default.
+  -->
+
+  <context-param>
+    <param-name>configuration</param-name>
+    <param-value>development</param-value>
+  </context-param>
+
+  <filter>
+    <filter-name>MyApplication</filter-name>
+    <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+    <init-param>
+      <param-name>applicationClassName</param-name>
+      <param-value>org.wicketstuff.jquery.demo.DemoApplication</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>MyApplication</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <session-config>
+    <session-timeout>50</session-timeout>
+  </session-config>
+
+</web-app>
+
