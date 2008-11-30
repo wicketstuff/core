@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.wicketstuff.simile</groupId>
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>simile-timeline-parent</artifactId>
+		<version>1.4-SNAPSHOT</version>
+	</parent>
+
 	<artifactId>wicketstuff-simile-timeline</artifactId>
-	<version>SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>${artifactId}</name>
 	<description>Simile Timeline widget for Wicket</description>
@@ -71,22 +75,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket</artifactId>
-			<version>${wicket.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket-extensions</artifactId>
-			<version>${wicket.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket-datetime</artifactId>
-			<optional>true</optional>
-			<version>${wicket.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.3</version>
@@ -113,7 +101,4 @@
 		</dependency>
 
 	</dependencies>
-	<properties>
-		<wicket.version>1.4-rc1</wicket.version>
-	</properties>
 </project>
