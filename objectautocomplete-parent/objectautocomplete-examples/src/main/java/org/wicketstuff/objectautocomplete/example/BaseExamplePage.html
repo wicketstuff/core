@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Wicketstuff ObjectAutoComplete Examples</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+<span>
+    <div>
+        <img src="logo.png"/><span>
+    </span></div>
+    <div id="titleblock" style="font-size:larger;height:1.5em;vertical-align:middle;">
+    </div>
+    <br/>
+</span>
+
+<div class="referenceData">
+    <p>
+        This example autocompletes on the following entities (with the given id and name):
+    </p>
+    <table class="referenceData">
+        <tr>
+            <th>Id</th>
+            <th>Value</th>
+        </tr>
+        <tr wicket:id="acData">
+            <td><span wicket:id="id">[id]</span></td>
+            <td><span wicket:id="name">[name]</span></td>
+        </tr>
+    </table>
+</div>
+
+<wicket:child/>
+
+<div class="feedbackPanel" wicket:id="feedbackPanel">[Feedback]</div>
+<form wicket:id="form">
+  <div class="searchForm">
+    <table>
+      <tr>
+        <td>
+          <span id="searchFormLabel" wicket:id="acLabel"/>
+        </td>
+        <td>
+          <input type="text" wicket:id="acField" size="50"/>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div wicket:id="submitButtonPanel" class="submitButtonPanel">
+    <input wicket:id="submitButton" type="submit" value="Go"/>
+  </div>
+</form>
+
+<h3>Example HTML</h3>
+
+<div class="codeSample">
+    <pre><code wicket:id="acHtmlSample">[example html code]</code></pre>
+</div>
+
+<h3>Example Code</h3>
+
+<div class="codeSample">
+    <pre><code wicket:id="acCodeSample">[example source code]</code></pre>
+</div>
+
+</body>
+</html>
