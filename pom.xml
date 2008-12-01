@@ -25,6 +25,7 @@
 		<module>jquery-parent</module>
 		<module>misc</module>
 		<module>minis-parent</module>
+		<module>objectautocomplete-parent</module>
 		<module>openlayers-parent</module>
 		<module>phonebook</module>
 		<module>prototype</module>

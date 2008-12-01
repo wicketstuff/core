@@ -1,0 +1,49 @@
+<html>
+
+<body>
+<wicket:extend>
+    <h1><code>ReadOnlyObjectRenderer</code> demo</h1>
+
+    <p>
+        This example shows how a specific render can be used for presenting the read only view. This can be any
+        panel and is best used in conjunction with a Wicket <code>Fragment</code>. All you need to do is to implement
+        the interface  <code>ReadOnlyObjectRenderer</code> whose only purpose it to create a <code>Component</code> based
+        on the currently selected entity. Please refer to the javadoc for further explanation.
+    </p>
+
+    <!-- This fragment is used fo rendering the read only view -->
+    <wicket:fragment wicket:id="readOnlyView">
+        <div class="readOnlyResult">
+            <table>
+                <tr>
+                    <td>
+                        Name:
+                    </td>
+                    <td>
+                        <span class="readOnlyResult" wicket:id="search">[search]</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Id:
+                    </td>
+                    <td>
+                        <span class="readOnlyResult" wicket:id="id">[id]</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Object:
+                    </td>
+                    <td>
+                        <span class="readOnlyResult" wicket:id="object">[object]</span>
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+    </wicket:fragment>
+</wicket:extend>
+</body>
+</html>
+
