@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app
+        PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+    <display-name>Wicket Examples</display-name>
+
+	<filter>
+		<filter-name>ControlsGMapApplication</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+		  <param-name>applicationClassName</param-name>
+		  <param-value>wicket.contrib.examples.gmap.controls.ControlsGMapApplication</param-value>
+		</init-param>
+		<init-param>
+		  <param-name>GoogleMapsAPIkey</param-name>
+		  <param-value>ABQIAAAAzaZpf6nHOd9w1PfLaM9u2xQRS2YPSd8S9D1NKPBvdB1fr18_CxR-svEYj6URCf5QDFq3i03mqrDlbA</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>BothGMapApplication</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+		  <param-name>applicationClassName</param-name>
+		  <param-value>wicket.contrib.examples.gmap.both.BothGMapApplication</param-value>
+		</init-param>
+		<init-param>
+		  <param-name>GoogleMapsAPIkey</param-name>
+		  <param-value>ABQIAAAAzaZpf6nHOd9w1PfLaM9u2xQRS2YPSd8S9D1NKPBvdB1fr18_CxR-svEYj6URCf5QDFq3i03mqrDlbA</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>TopGMapApplication</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+		  <param-name>applicationClassName</param-name>
+		  <param-value>wicket.contrib.examples.gmap.top.TopGMapApplication</param-value>
+		</init-param>
+		<init-param>
+		  <param-name>GoogleMapsAPIkey</param-name>
+		  <param-value>ABQIAAAAzaZpf6nHOd9w1PfLaM9u2xQRS2YPSd8S9D1NKPBvdB1fr18_CxR-svEYj6URCf5QDFq3i03mqrDlbA</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>GeoCodeGMapApplication</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+		  <param-name>applicationClassName</param-name>
+		  <param-value>wicket.contrib.examples.gmap.geocode.GeoCodeGMapApplication</param-value>
+		</init-param>
+		<init-param>
+		  <param-name>GoogleMapsAPIkey</param-name>
+		  <param-value>ABQIAAAAzaZpf6nHOd9w1PfLaM9u2xQRS2YPSd8S9D1NKPBvdB1fr18_CxR-svEYj6URCf5QDFq3i03mqrDlbA</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>ListenGMapApplication</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+		  <param-name>applicationClassName</param-name>
+		  <param-value>wicket.contrib.examples.gmap.listen.ListenGMapApplication</param-value>
+		</init-param>
+		<init-param>
+		  <param-name>GoogleMapsAPIkey</param-name>
+		  <param-value>ABQIAAAAzaZpf6nHOd9w1PfLaM9u2xQRS2YPSd8S9D1NKPBvdB1fr18_CxR-svEYj6URCf5QDFq3i03mqrDlbA</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>ListenGMarkerApplication</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+		  <param-name>applicationClassName</param-name>
+		  <param-value>wicket.contrib.examples.gmap.listen.overlay.simple.ListenGMarkerApplication</param-value>
+		</init-param>
+		<init-param>
+		  <param-name>GoogleMapsAPIkey</param-name>
+		  <param-value>ABQIAAAAzaZpf6nHOd9w1PfLaM9u2xQRS2YPSd8S9D1NKPBvdB1fr18_CxR-svEYj6URCf5QDFq3i03mqrDlbA</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>AdvancedListenGMarkerApplication</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+		  <param-name>applicationClassName</param-name>
+		  <param-value>wicket.contrib.examples.gmap.listen.overlay.advanced.ListenGMarkerApplication</param-value>
+		</init-param>
+		<init-param>
+		  <param-name>GoogleMapsAPIkey</param-name>
+		  <param-value>ABQIAAAAzaZpf6nHOd9w1PfLaM9u2xQRS2YPSd8S9D1NKPBvdB1fr18_CxR-svEYj6URCf5QDFq3i03mqrDlbA</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>MarkerGMapApplication</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+		  <param-name>applicationClassName</param-name>
+		  <param-value>wicket.contrib.examples.gmap.marker.MarkerGMapApplication</param-value>
+		</init-param>
+		<init-param>
+		  <param-name>GoogleMapsAPIkey</param-name>
+		  <param-value>ABQIAAAAzaZpf6nHOd9w1PfLaM9u2xQRS2YPSd8S9D1NKPBvdB1fr18_CxR-svEYj6URCf5QDFq3i03mqrDlbA</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>CustompointGMapApplication</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+		  <param-name>applicationClassName</param-name>
+		  <param-value>wicket.contrib.examples.gmap.custompoint.CustompointGMapApplication</param-value>
+		</init-param>
+		<init-param>
+		  <param-name>GoogleMapsAPIkey</param-name>
+		  <param-value>ABQIAAAAzaZpf6nHOd9w1PfLaM9u2xQRS2YPSd8S9D1NKPBvdB1fr18_CxR-svEYj6URCf5QDFq3i03mqrDlbA</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>RefreshPointGMapApplication</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+		  <param-name>applicationClassName</param-name>
+		  <param-value>wicket.contrib.examples.gmap.refreshpoint.RefreshPointGMapApplication</param-value>
+		</init-param>
+		<init-param>
+		  <param-name>GoogleMapsAPIkey</param-name>
+		  <param-value>ABQIAAAAzaZpf6nHOd9w1PfLaM9u2xQRS2YPSd8S9D1NKPBvdB1fr18_CxR-svEYj6URCf5QDFq3i03mqrDlbA</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>ManyGMapApplication</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+		  <param-name>applicationClassName</param-name>
+		  <param-value>wicket.contrib.examples.gmap.many.ManyGMapApplication</param-value>
+		</init-param>
+		<init-param>
+		  <param-name>GoogleMapsAPIkey</param-name>
+		  <param-value>ABQIAAAAzaZpf6nHOd9w1PfLaM9u2xQRS2YPSd8S9D1NKPBvdB1fr18_CxR-svEYj6URCf5QDFq3i03mqrDlbA</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>InfoWindowGMapApplication</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+		  <param-name>applicationClassName</param-name>
+		  <param-value>wicket.contrib.examples.gmap.info.InfoWindowGMapApplication</param-value>
+		</init-param>
+		<init-param>
+		  <param-name>GoogleMapsAPIkey</param-name>
+		  <param-value>ABQIAAAAzaZpf6nHOd9w1PfLaM9u2xQRS2YPSd8S9D1NKPBvdB1fr18_CxR-svEYj6URCf5QDFq3i03mqrDlbA</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>SimpleGMapApplication</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+		  <param-name>applicationClassName</param-name>
+		  <param-value>wicket.contrib.examples.gmap.simple.SimpleGMapApplication</param-value>
+		</init-param>
+		<init-param>
+		  <param-name>GoogleMapsAPIkey</param-name>
+		  <param-value>ABQIAAAAzaZpf6nHOd9w1PfLaM9u2xQRS2YPSd8S9D1NKPBvdB1fr18_CxR-svEYj6URCf5QDFq3i03mqrDlbA</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>GGroundOverlayGMapApplication</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+		  <param-name>applicationClassName</param-name>
+		  <param-value>wicket.contrib.examples.gmap.ggroundOverlay.GGroundOverlayApplication</param-value>
+		</init-param>
+		<init-param>
+		  <param-name>GoogleMapsAPIkey</param-name>
+		  <param-value>ABQIAAAAzaZpf6nHOd9w1PfLaM9u2xQRS2YPSd8S9D1NKPBvdB1fr18_CxR-svEYj6URCf5QDFq3i03mqrDlbA</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>PolygonesGMapApplication</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+		  <param-name>applicationClassName</param-name>
+		  <param-value>wicket.contrib.examples.gmap.polygones.PolygonesGMapApplication</param-value>
+		</init-param>
+		<init-param>
+		  <param-name>GoogleMapsAPIkey</param-name>
+		  <param-value>ABQIAAAAzaZpf6nHOd9w1PfLaM9u2xQRS2YPSd8S9D1NKPBvdB1fr18_CxR-svEYj6URCf5QDFq3i03mqrDlbA</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>GeoCodeGMapApplication</filter-name>
+		<url-pattern>/geocode/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>ListenGMapApplication</filter-name>
+		<url-pattern>/listen/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>ListenGMarkerApplication</filter-name>
+		<url-pattern>/markerListener/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>AdvancedListenGMarkerApplication</filter-name>
+		<url-pattern>/markerListenerAdvanced/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>BothGMapApplication</filter-name>
+		<url-pattern>/both/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>MarkerGMapApplication</filter-name>
+		<url-pattern>/marker/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>CustompointGMapApplication</filter-name>
+		<url-pattern>/custompoint/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>RefreshPointGMapApplication</filter-name>
+		<url-pattern>/refreshpoint/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>ManyGMapApplication</filter-name>
+		<url-pattern>/many/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>ControlsGMapApplication</filter-name>
+		<url-pattern>/controls/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>TopGMapApplication</filter-name>
+		<url-pattern>/top/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>InfoWindowGMapApplication</filter-name>
+		<url-pattern>/info/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>SimpleGMapApplication</filter-name>
+		<url-pattern>/simple/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>GGroundOverlayGMapApplication</filter-name>
+		<url-pattern>/overlay/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>PolygonesGMapApplication</filter-name>
+		<url-pattern>/polygones/*</url-pattern>
+	</filter-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+</web-app>
