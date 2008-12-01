@@ -17,7 +17,6 @@
 	</description>
 
 	<modules>
-		<module>simile-timeline-parent</module>
 		<module>annotation</module>
 		<module>calendarviews-parent</module>
 		<module>client-and-server-validation</module>
@@ -30,6 +29,7 @@
 		<module>phonebook</module>
 		<module>prototype</module>
 		<module>scriptaculous-parent</module>
+		<module>simile-timeline-parent</module>
 		<module>tinymce-parent</module>
 		<module>yui-parent</module>
 	</modules>
