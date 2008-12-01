@@ -1,5 +1,3 @@
-﻿
-
 /* jquery-1.2.6.js */
 (function(){var _jQuery=window.jQuery,_$=window.$;
 var jQuery=window.jQuery=window.$=function(selector,context){return new jQuery.fn.init(selector,context);

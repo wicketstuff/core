@@ -1,5 +1,3 @@
-﻿
-
 /* decorators.js */
 Timeline.SpanHighlightDecorator=function(A){this._unit=("unit" in A)?A.unit:SimileAjax.NativeDateUnit;
 this._startDate=(typeof A.startDate=="string")?this._unit.parseFromObject(A.startDate):A.startDate;
