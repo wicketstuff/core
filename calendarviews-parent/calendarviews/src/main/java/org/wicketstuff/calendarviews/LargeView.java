@@ -22,6 +22,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.html.IHeaderContributor;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -33,8 +39,10 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketstuff.calendarviews.js.Prototype;
 import org.wicketstuff.calendarviews.model.IEvent;
 import org.wicketstuff.calendarviews.model.IEventProvider;
 
@@ -49,6 +57,8 @@ public class LargeView extends FullWeekCalendarView {
 	public LargeView(String id, Date startDate, Date endDate, IEventProvider eventProvider) {
 		super(id, startDate, endDate, eventProvider);
 
+		addJavascriptInitializers();
+		
 		IDataProvider<DateMidnight> dp = createDaysDataProvider();
 		Collection<? extends IEvent> allEvents = getEventProvider().getObject();
 		final Map<DateMidnight, List<IEvent>> mapOfEvents = convertToMapByDay(allEvents);
@@ -58,22 +68,44 @@ public class LargeView extends FullWeekCalendarView {
 		}
 		add(new LargeGridView("rows", dp, mapOfEvents));
 	}
+	
+	@Override
+	protected boolean includeEventInEachDayOfMap() {
+		return false;
+	}
 
-	protected ListView<IEvent> createEventListView(String id, IModel<List<IEvent>> model) {
+	private void addJavascriptInitializers() {
+		setOutputMarkupId(true);
+		add(HeaderContributor.forJavaScript(Prototype.getResourceReference()));
+		add(HeaderContributor.forJavaScript(getClass(), "LargeView.js"));
+		add(new HeaderContributor(new IHeaderContributor() {
+			private static final long serialVersionUID = 1L;
+
+			public void renderHead(IHeaderResponse response) {
+				String calID = LargeView.this.getMarkupId();
+				response.renderOnDomReadyJavascript("LargeViewCalendar.initialize('" + calID + "');");
+			}
+		}));
+	}
+
+	protected ListView<IEvent> createEventListView(String id, final IModel<DateMidnight> dateModel, final int cellsLeftInRow, IModel<List<IEvent>> model) {
 		return new ListView<IEvent>(id, model) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected void populateItem(ListItem<IEvent> item) {
 				item.add(new Label("title", new PropertyModel<String>(item.getModel(), "title")));
+				item.add(new HowManyDaysClassBehavior(dateModel, cellsLeftInRow, item.getModel()));
 			}
 		};
 	}
 
 	private class LargeGridView extends GridView<DateMidnight> {
 		private static final long serialVersionUID = 1L;
+		
 		private transient Map<DateMidnight, List<IEvent>> mMapOfEvents;
-
+		private int mCounter;
+		
 		public LargeGridView(String id, IDataProvider<DateMidnight> dp, Map<DateMidnight, List<IEvent>> mapOfEvents) {
 			super(id, dp);
 			mMapOfEvents = mapOfEvents;
@@ -91,8 +123,10 @@ public class LargeView extends FullWeekCalendarView {
 
 		@Override
 		protected void populateItem(final Item<DateMidnight> item) {
+			int cell = (mCounter++ % getColumns()) + 1;
+			int cellsLeft = getColumns() - cell;
 			item.add(new Label("date", new PropertyModel<Integer>(item.getModel(), "dayOfMonth")));
-			item.add(createEventListView("events", new AbstractReadOnlyModel<List<IEvent>>() {
+			item.add(createEventListView("events", item.getModel(), cellsLeft, new AbstractReadOnlyModel<List<IEvent>>() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -122,5 +156,32 @@ public class LargeView extends FullWeekCalendarView {
 		Date end = new DateTime(start).plusMonths(1).minusDays(1).toDate();
 		return new LargeView(id, start, end, eventProvider);
 	}
-	
+
+	private static class HowManyDaysClassBehavior extends AbstractBehavior {
+		private static final long serialVersionUID = 1L;
+
+		private int mDaysLeftInRow;
+		private IModel<DateMidnight> mDateModel;
+		private IModel<IEvent> mEventModel;
+		
+		public HowManyDaysClassBehavior(IModel<DateMidnight> dateModel, int daysLeftInRow, IModel<IEvent> model) {
+			mDaysLeftInRow = daysLeftInRow;
+			mDateModel = dateModel;
+			mEventModel = model;
+		}
+
+		@Override
+		public void onComponentTag(Component component, ComponentTag tag) {
+			super.onComponentTag(component, tag);
+			DateMidnight day = mDateModel.getObject();
+			Date end = mEventModel.getObject().getEndTime();
+			int numberOfDays = 1;
+			if (end != null) {
+				DateTime endTime = new DateTime(end);
+				int days = Math.abs(Days.daysBetween(day, endTime).getDays());
+				numberOfDays = Math.min(days, mDaysLeftInRow) + 1;
+			}
+			tag.put("days", numberOfDays);
+		}
+	}
 }
