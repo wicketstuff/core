@@ -38,6 +38,7 @@ LargeViewCalendar.initialize = function(calID) {
 		this.EMPTY_SPOTS.push(null);
 	}
 	var calendar = $(calID);
+	//calendar.relativize();
 	this.prepDayElements(calendar);
 	this.positionEvents(calendar);
 	this.postEventRendering(calendar);
@@ -45,9 +46,9 @@ LargeViewCalendar.initialize = function(calID) {
 
 LargeViewCalendar.postEventRendering = function(calendar) {
 	calendar.select(LargeViewCalendar.SELECTOR_DAYS).each(function(day) {
-		// TODO: make a real working "more events" link
 		var header = null;
 		if (day.moreEvents) {
+			// TODO: make a real working "more events" link
 			header = day.select(LargeViewCalendar.SELECTOR_HEADER_FROM_DAY).first();
 			header.innerHTML += ' (more)';
 		}
@@ -66,11 +67,14 @@ LargeViewCalendar.positionEvents = function(calendar) {
 };
 
 LargeViewCalendar.prepDayElements = function(calendar) {
+	var weekCounter = 0;
 	calendar.select(LargeViewCalendar.SELECTOR_WEEKS).each(function(week) {
+		weekCounter++;
 		var days = week.select(LargeViewCalendar.SELECTOR_DAYS).reverse();
 		var following = new Array();
 		days.each(function(day) {
 			day.relativize();
+			day.weekNumber = weekCounter;
 			day.events = 0;
 			day.spots = LargeViewCalendar.EMPTY_SPOTS.clone();
 			day.moreEvents = false;
