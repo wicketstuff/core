@@ -23,6 +23,7 @@ var LargeViewCalendar = {};
  */
 LargeViewCalendar.runMode = true;
 
+LargeViewCalendar.EMPTY_SPOTS = new Array();
 LargeViewCalendar.SELECTOR_DAYS = "div.day";
 LargeViewCalendar.SELECTOR_WEEKS = "div.week";
 LargeViewCalendar.SELECTOR_EVENTS_FROM_DAY = "li";
@@ -30,6 +31,10 @@ LargeViewCalendar.SELECTOR_EVENTS_FROM_DAY = "li";
 LargeViewCalendar.initialize = function(calID) {
 	if (!this.runMode) {
 		return;
+	}
+	// TODO : using random 100 value here - need to figure out better way
+	for (var i = 0; i < 100; i++) {
+		this.EMPTY_SPOTS.push(null);
 	}
 	var calendar = $(calID);
 	this.prepDayElements(calendar);
@@ -57,6 +62,7 @@ LargeViewCalendar.prepDayElements = function(calendar) {
 		days.each(function(day) {
 			day.relativize();
 			day.events = 0;
+			day.spots = LargeViewCalendar.EMPTY_SPOTS.clone();
 			day.moreEvents = false;
 			day.followingDays = following.clone().reverse();
 			following.push(day);
@@ -67,32 +73,50 @@ LargeViewCalendar.prepDayElements = function(calendar) {
 
 LargeViewCalendar.correctEventSize = function(event, day) {
 	var days = event.getAttribute('days');
-	var header = day.select('h5').first().getHeight();
+	var headerHeight = day.select('h5').first().getHeight();
 	var eventHeight = event.getHeight() + 1;
 	var eventWidth = (event.getWidth() * days);
 	var lastDay = day;
 	var top = null;
+	var finalSpot = day.events++;
 	event.absolutize();
-	day.events++;
+	// TODO : using random 100 value here - need to figure out better way
+	for (var spot = 0; spot < 100; spot++) {
+		if (this.spotWillWork(spot, day, days)) {
+			finalSpot = spot; 
+			break;
+		}
+	}
+	day.spots[finalSpot] = event;
 	for (var i = 0; i < (days - 1); i++) {
 		var fDay = day.followingDays[i];
 		lastDay = fDay;
-		if (fDay.events < day.events) {
-			fDay.events = day.events;
-		}
-		//alert(fDay.date + ' - ' + event.select('span').first().innerHTML);
+		fDay.spots[finalSpot] = event;
 	}
 	eventWidth = this.calculateWidthForEvent(event, lastDay);
 	event.style.width = eventWidth;
-	top = (event.getHeight() * (day.events - 1)) + header;
-	top = top + (day.events * 2); // TODO: this is for debugging - remove line
+	top = (event.getHeight() * (spot)) + headerHeight;
+	top = top + (spot * 2); // TODO: this is for debugging - adding spacing - remove line
 	if (top + eventHeight > day.getHeight()) {
 		day.moreEvents = true;
 		event.hide();
 	}
+	//alert(event.select('span').first().innerHTML + ' - ' + finalSpot);
 	this.setTop(event, top);
 };
 
+LargeViewCalendar.spotWillWork = function(spot, day, days) {
+	if (day.spots[spot] != null) {
+		return false;
+	}
+	for (var i = 0; i < (days - 1); i++) {
+		var fDay = day.followingDays[i];
+		if (fDay.spots[spot] != null) {
+			return false;
+		}
+	}
+	return true;
+};
 LargeViewCalendar.calculateWidthForEvent = function(event, lastDay) {
 	return (lastDay.cumulativeOffset().left + lastDay.getWidth()) - event.cumulativeOffset().left - 7;
 };
