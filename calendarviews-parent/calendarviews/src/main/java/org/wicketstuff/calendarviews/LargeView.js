@@ -42,15 +42,21 @@ LargeViewCalendar.initialize = function(calID) {
 	this.prepDayElements(calendar);
 	this.positionEvents(calendar);
 	this.postEventRendering(calendar);
+	Event.observe(window, "resize", function() {
+		LargeViewCalendar.prepDayElements(calendar);
+		LargeViewCalendar.positionEvents(calendar);
+		LargeViewCalendar.postEventRendering(calendar);
+	});
 };
 
 LargeViewCalendar.postEventRendering = function(calendar) {
 	calendar.select(LargeViewCalendar.SELECTOR_DAYS).each(function(day) {
 		var header = null;
-		if (day.moreEvents) {
+		if (day.moreEvents && !(day.moreEventLink)) {
 			// TODO: make a real working "more events" link
 			header = day.select(LargeViewCalendar.SELECTOR_HEADER_FROM_DAY).first();
 			header.innerHTML += ' (more)';
+			day.moreEventLink = true;
 		}
 	});
 };

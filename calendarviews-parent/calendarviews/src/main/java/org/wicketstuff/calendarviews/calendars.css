@@ -32,7 +32,7 @@
 	float: left;
 	border: 1px solid #CCCCFF;
 	width: 14%;
-	height: 100px;
+	height: 105px;
 }
 
 .LargeViewCalendar .day H5 {
@@ -59,6 +59,7 @@
 	white-space: nowrap;
 	padding-left: 0.3em;
 	border: 1px red solid;
+	background-color: #FFFFCC;
 	z-index: 2000;
 }
 .clear { clear: both; }
