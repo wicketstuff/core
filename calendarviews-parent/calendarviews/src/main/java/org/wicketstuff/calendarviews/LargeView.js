@@ -79,6 +79,10 @@ LargeViewCalendar.prepDayElements = function(calendar) {
 		var days = week.select(LargeViewCalendar.SELECTOR_DAYS).reverse();
 		var following = new Array();
 		days.each(function(day) {
+			// TODO: day.relativize() throws an error in IE unless I have these two lines - why??
+			day._originalHeight = null;
+			day._originalWidth = null;
+			
 			day.relativize();
 			day.weekNumber = weekCounter;
 			day.events = 0;

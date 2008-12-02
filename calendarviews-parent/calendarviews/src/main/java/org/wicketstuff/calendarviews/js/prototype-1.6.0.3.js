@@ -1,4 +1,3 @@
-// JRT - note that I modified this version around line 2071
 /*  Prototype JavaScript framework, version 1.6.0.3
  *  (c) 2005-2008 Sam Stephenson
  *
@@ -2068,10 +2067,8 @@ Element.Methods = {
 
     element.style.top    = top + 'px';
     element.style.left   = left + 'px';
-    // JRT - I changed the following two lines, adding the if clause.
-    //	before that, IE7 had a problem with this
-    if (element._originalHeight) element.style.height = element._originalHeight;
-    if (element._originalWidth) element.style.width  = element._originalWidth;
+    element.style.height = element._originalHeight;
+    element.style.width  = element._originalWidth;
     return element;
   },
 
