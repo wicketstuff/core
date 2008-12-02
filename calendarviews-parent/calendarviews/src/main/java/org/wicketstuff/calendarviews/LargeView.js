@@ -73,13 +73,15 @@ LargeViewCalendar.correctEventSize = function(event, day) {
 	var lastDay = day;
 	var top = null;
 	event.absolutize();
+	day.events++;
 	for (var i = 0; i < (days - 1); i++) {
 		var fDay = day.followingDays[i];
 		lastDay = fDay;
-		fDay.events++;
+		if (fDay.events < day.events) {
+			fDay.events = day.events;
+		}
 		//alert(fDay.date + ' - ' + event.select('span').first().innerHTML);
 	}
-	day.events++;
 	eventWidth = this.calculateWidthForEvent(event, lastDay);
 	event.style.width = eventWidth;
 	top = (event.getHeight() * (day.events - 1)) + header;
