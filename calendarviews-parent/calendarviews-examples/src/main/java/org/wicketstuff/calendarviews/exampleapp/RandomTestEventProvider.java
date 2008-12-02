@@ -50,12 +50,33 @@ public class RandomTestEventProvider extends LoadableDetachableModel<Collection<
 
 	public void initializeWithDateRange(Date start, Date end) {
 		int counter = 1;
-		for (Date current = start; current.before(end); current = new Date(current.getTime() + MILLIS_DAY)) {
-			int events = mRandom.nextInt(4);
+		if (getAdjustedDate(start, +3).before(end)) {
+			// let's add one that starts 10 days before and runs three days into range
+			mEvents.add(createEvent(counter++, true, getAdjustedDate(start, -10), getAdjustedDate(start, +3)));
+		}
+		// let's add one that starts 5 days before and runs 5 days after range
+		mEvents.add(createEvent(counter++, true, getAdjustedDate(start, -5), getAdjustedDate(end, +5)));
+		
+		// start a few days early so that we can get ones that start before but extend into this range
+		for (Date current = getAdjustedDate(start, -3); current.before(end); current = getAdjustedDate(current, +1)) {
+			int events = mRandom.nextInt(3);
 			for (int i = 1; i <= events; i++) {
-				mEvents.add(createRandomEvent(current, counter++));
+				IEvent evt = createRandomEvent(current, counter++);
+				if (evt.getStartTime().before(start)) {
+					// this is one that starts out of range, so let's only add it if it extends into range
+					//		this mimics what a well-behaved provider should do according to contract
+					if (evt.getEndTime() == null || evt.getEndTime().before(start)) {
+						counter--;
+						continue;
+					}
+				}
+				mEvents.add(evt);
 			}
 		}
+	}
+
+	protected final Date getAdjustedDate(Date date, int days) {
+		return new Date(date.getTime() + (days * MILLIS_DAY));
 	}
 
 	private IEvent createRandomEvent(Date current, int id) {
@@ -68,7 +89,10 @@ public class RandomTestEventProvider extends LoadableDetachableModel<Collection<
 		if (multiDay) {
 			end = new DateTime(start).plusDays(mRandom.nextInt(9)).toDate();
 		}
-		
+		return createEvent(id, allDay, start, end);
+	}
+
+	private BasicEvent createEvent(int id, boolean allDay, Date start, Date end) {
 		BasicEvent event = new BasicEvent();
 		StringBuffer title = new StringBuffer();
 		title.append("Event #").append(id).append(" [").append(DATE_FORMAT.format(start));
