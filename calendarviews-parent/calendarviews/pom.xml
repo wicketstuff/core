@@ -20,5 +20,13 @@
 		events and schedules.  NOTE: these are not kin to the datepicker style components for use
 		in forms - these are for displaying calendars of data, not receiving date input.
 	</description>
+	
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>jslibraries</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 
 </project>

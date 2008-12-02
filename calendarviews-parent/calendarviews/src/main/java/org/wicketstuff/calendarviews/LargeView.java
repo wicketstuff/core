@@ -42,15 +42,18 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.calendarviews.js.Prototype;
 import org.wicketstuff.calendarviews.model.IEvent;
 import org.wicketstuff.calendarviews.model.IEventProvider;
+import org.wicketstuff.jslibraries.JSReference;
+import org.wicketstuff.jslibraries.Library;
+import org.wicketstuff.jslibraries.VersionDescriptor;
 
 /**
  * @author Jeremy Thomerson
  */
 public class LargeView extends FullWeekCalendarView {
 	
+	private static final VersionDescriptor JS_LIB_VERSION_DESCRIPTOR = VersionDescriptor.alwaysLatestOfVersion(Library.PROTOTYPE, 1, 6);
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(LargeView.class);
 
@@ -76,7 +79,7 @@ public class LargeView extends FullWeekCalendarView {
 	
 	private void addJavascriptInitializers() {
 		setOutputMarkupId(true);
-		add(HeaderContributor.forJavaScript(Prototype.getResourceReference()));
+		add(HeaderContributor.forJavaScript(JSReference.getReference(JS_LIB_VERSION_DESCRIPTOR)));
 		add(HeaderContributor.forJavaScript(getClass(), "LargeView.js"));
 		add(new HeaderContributor(new IHeaderContributor() {
 			private static final long serialVersionUID = 1L;
