@@ -68,12 +68,12 @@ public class LargeView extends FullWeekCalendarView {
 		}
 		add(new LargeGridView("rows", dp, mapOfEvents));
 	}
-	
-	@Override
-	protected boolean includeEventInEachDayOfMap() {
-		return false;
-	}
 
+	@Override
+	protected RenderStrategy getRenderStrategy() {
+		return RenderStrategy.FIRST_AND_FIRST_OF_ROW;
+	}
+	
 	private void addJavascriptInitializers() {
 		setOutputMarkupId(true);
 		add(HeaderContributor.forJavaScript(Prototype.getResourceReference()));

@@ -17,7 +17,6 @@
 
 package org.wicketstuff.calendarviews;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -65,20 +64,8 @@ public abstract class BaseCalendarView extends Panel {
 	protected final Map<DateMidnight, List<IEvent>> convertToMapByDay(Collection<? extends IEvent> allEvents) {
 		// TODO: this could probably use a much more efficient algorithm
 		Map<DateMidnight, List<IEvent>> map = new HashMap<DateMidnight, List<IEvent>>();
-		boolean includeEventInEachDayOfMap = includeEventInEachDayOfMap();
 		for (IEvent event : allEvents) {
-			DateMidnight start = new DateMidnight(event.getStartTime());
-			DateMidnight end = start;
-			if (event.getEndTime() != null && event.getEndTime().equals(event.getStartTime()) == false) {
-				end = new DateMidnight(event.getEndTime());
-			}
-			if (end.isAfter(start) && includeEventInEachDayOfMap) {
-				for (Iterator<DateMidnight> it = new DateMidnightIterator(start.toDateTime(), end.toDateTime()); it.hasNext(); ) {
-					addEventToDate(map, it.next(), event);
-				}
-			} else {
-				addEventToDate(map, start, event);
-			}
+			getRenderStrategy().mapEvent(map, event, this);
 		}
 		// now sort
 		for (List<IEvent> list : map.values()) {
@@ -87,17 +74,8 @@ public abstract class BaseCalendarView extends Panel {
 		return map;
 	}
 
-	protected boolean includeEventInEachDayOfMap() {
-		return true;
-	}
-
-	protected final void addEventToDate(Map<DateMidnight, List<IEvent>> map, DateMidnight date, IEvent event) {
-		List<IEvent> events = map.get(date);
-		if (events == null) {
-			events = new ArrayList<IEvent>();
-			map.put(date, events);
-		}
-		events.add(event);
+	protected RenderStrategy getRenderStrategy() {
+		return RenderStrategy.EVERY_DAY_OF_EVENT;
 	}
 
 	protected IDataProvider<DateMidnight> createDaysDataProvider(final DateTime start, final DateTime end, final Period period) {

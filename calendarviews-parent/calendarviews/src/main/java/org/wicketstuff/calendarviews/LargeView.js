@@ -34,11 +34,21 @@ LargeViewCalendar.initialize = function(calID) {
 	var calendar = $(calID);
 	this.prepDayElements(calendar);
 	calendar.select(LargeViewCalendar.SELECTOR_DAYS).each(function(day) {
-		day.select(LargeViewCalendar.SELECTOR_EVENTS_FROM_DAY).each(function(event) {
+		day.select(LargeViewCalendar.SELECTOR_EVENTS_FROM_DAY).sort(function(a, b) {
+			return b.getAttribute('days') - a.getAttribute('days'); 
+		}).each(function(event) {
 			LargeViewCalendar.correctEventSize(event, day);
 		});
 	});
-}
+	calendar.select(LargeViewCalendar.SELECTOR_DAYS).each(function(day) {
+		// TODO: make a real working "more events" link
+		var header = null;
+		if (day.moreEvents) {
+			header = day.select('h5').first();
+			header.innerHTML += ' (more)';
+		}
+	});
+};
 
 LargeViewCalendar.prepDayElements = function(calendar) {
 	calendar.select(LargeViewCalendar.SELECTOR_WEEKS).each(function(week) {
@@ -47,14 +57,13 @@ LargeViewCalendar.prepDayElements = function(calendar) {
 		days.each(function(day) {
 			day.relativize();
 			day.events = 0;
+			day.moreEvents = false;
 			day.followingDays = following.clone().reverse();
 			following.push(day);
 			day.date = day.select("h5").first().innerHTML;
 		});
 	});
-}
-
-var counter = 0;
+};
 
 LargeViewCalendar.correctEventSize = function(event, day) {
 	var days = event.getAttribute('days');
@@ -62,16 +71,24 @@ LargeViewCalendar.correctEventSize = function(event, day) {
 	var eventHeight = event.getHeight() + 1;
 	var eventWidth = (event.getWidth() * days);
 	var lastDay = day;
+	var top = null;
 	event.absolutize();
 	for (var i = 0; i < (days - 1); i++) {
 		var fDay = day.followingDays[i];
 		lastDay = fDay;
 		fDay.events++;
+		//alert(fDay.date + ' - ' + event.select('span').first().innerHTML);
 	}
 	day.events++;
 	eventWidth = this.calculateWidthForEvent(event, lastDay);
 	event.style.width = eventWidth;
-	this.setTop(event, (event.getHeight() * (day.events - 1)) + header);
+	top = (event.getHeight() * (day.events - 1)) + header;
+	top = top + (day.events * 2); // TODO: this is for debugging - remove line
+	if (top + eventHeight > day.getHeight()) {
+		day.moreEvents = true;
+		event.hide();
+	}
+	this.setTop(event, top);
 };
 
 LargeViewCalendar.calculateWidthForEvent = function(event, lastDay) {
