@@ -55,7 +55,7 @@ LargeViewCalendar.postEventRendering = function(calendar) {
 		if (day.moreEvents && !(day.moreEventLink)) {
 			// TODO: make a real working "more events" link
 			header = day.select(LargeViewCalendar.SELECTOR_HEADER_FROM_DAY).first();
-			header.innerHTML += ' (more)';
+			header.innerHTML += ' (' + day.moreEvents + ' more)';
 			day.moreEventLink = true;
 		}
 	});
@@ -83,7 +83,7 @@ LargeViewCalendar.prepDayElements = function(calendar) {
 			day.weekNumber = weekCounter;
 			day.events = 0;
 			day.spots = LargeViewCalendar.EMPTY_SPOTS.clone();
-			day.moreEvents = false;
+			day.moreEvents = 0;
 			day.followingDays = following.clone().reverse();
 			following.push(day);
 			day.date = day.select(LargeViewCalendar.SELECTOR_HEADER_FROM_DAY).first().innerHTML;
@@ -118,7 +118,7 @@ LargeViewCalendar.correctEventSize = function(event, day) {
 	top = (event.getHeight() * (spot)) + headerHeight;
 	top = top + (spot * 2); // TODO: this is for debugging - adding spacing - remove line
 	if (top + eventHeight > day.getHeight()) {
-		day.moreEvents = true;
+		day.moreEvents++;
 		event.hide();
 	}
 	//alert(event.select('span').first().innerHTML + ' - ' + finalSpot);

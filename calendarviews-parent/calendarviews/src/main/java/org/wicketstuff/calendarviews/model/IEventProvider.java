@@ -37,7 +37,15 @@ public interface IEventProvider extends IModel<Collection<? extends IEvent>> {
 	 * <br />
 	 * Note that the end time is exclusive.  Therefore, if the calendar is 
 	 * displaying Sunday through Saturday, the start date will be Sunday at
-	 * 00:00:00.000 and the end date will be the following Sunday at 00:00:00.000
+	 * 00:00:00.000 and the end date will be the following Sunday at 00:00:00.000<br />
+	 * <br />
+	 * Also notable is that you need to remember to include not only events that
+	 * begin within this range, but also events that begin before, but end within
+	 * this range.  i.e. your query may be like:<br />
+	 * <pre>
+	 * 	where (start > :start and start < :end)
+	 *	   or (end < :end and end > :start)
+	 * </pre>
 	 * 
 	 * @param start The first instant that the calendar will display, inclusive
 	 * @param end The last instant that the calendar will display, exclusive
