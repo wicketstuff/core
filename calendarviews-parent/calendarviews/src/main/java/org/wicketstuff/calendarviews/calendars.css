@@ -15,15 +15,50 @@
  * limitations under the License.
  */
 
-.LargeViewCalendar TD {
-	vertical-align: top;
+.LargeViewCalendar {
+	font-size: 8.5pt;
+	font-family: Verdana, Arial;	
 }
 
-.LargeViewCalendar TD H5 {
+.LargeViewCalendar {
+}
+
+.LargeViewCalendar .week {
+	width: 100%;
+	float: left;
+}
+
+.LargeViewCalendar .day {
+	float: left;
+	border: 1px solid #CCCCFF;
+	width: 14%;
+	height: 100px;
+}
+
+.LargeViewCalendar .day H5 {
+	background-color: #E5E5FF;
 	margin: 0em;
 }
-.LargeViewCalendar TD OL {
+
+.LargeViewCalendar .today H5 {
+	background-color: #CCCCFF;
+}
+
+.LargeViewCalendar .today {
+	background-color: #FFFFCC;
+}
+
+.LargeViewCalendar .day UL {
 	list-style: none;
 	margin: 0em;
 	padding: 0em;
 }
+.LargeViewCalendar .day UL LI {
+	margin-bottom: 1px;
+	overflow: hidden;
+	height: 1.2em;
+	padding-left: 0.3em;
+	border: 1px red solid;
+	z-index: 2000;
+}
+.clear { clear: both; }

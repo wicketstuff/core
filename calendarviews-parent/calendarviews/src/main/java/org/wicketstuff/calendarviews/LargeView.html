@@ -24,16 +24,17 @@
     </head>
     <body>
 	    <wicket:panel>
-	    	<table class="LargeViewCalendar">
-	    		<tr wicket:id="rows">
-	    			<td wicket:id="cols">
+	    	<div class="LargeViewCalendar">
+	    		<div class="week" wicket:id="rows">
+	    			<div class="day" wicket:id="cols">
 	    				<h5 wicket:id="date"></h5>
-	    				<ol>
+	    				<ul>
 	    					<li wicket:id="events"><span wicket:id="title"></span></li>
-	    				</ol>
-	    			</td>
-	    		</tr>
-	    	</table>
+	    				</ul>
+	    			</div>
+	    			<span class="clear"></span>
+	    		</div>
+	    	</div>
 		</wicket:panel>
     </body>
 </html>
