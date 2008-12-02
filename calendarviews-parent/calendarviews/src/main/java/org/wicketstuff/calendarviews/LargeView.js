@@ -38,13 +38,11 @@ LargeViewCalendar.initialize = function(calID) {
 	}
 	var calendar = $(calID);
 	this.prepDayElements(calendar);
-	calendar.select(LargeViewCalendar.SELECTOR_DAYS).each(function(day) {
-		day.select(LargeViewCalendar.SELECTOR_EVENTS_FROM_DAY).sort(function(a, b) {
-			return b.getAttribute('days') - a.getAttribute('days'); 
-		}).each(function(event) {
-			LargeViewCalendar.correctEventSize(event, day);
-		});
-	});
+	this.positionEvents(calendar);
+	this.postEventRendering(calendar);
+};
+
+LargeViewCalendar.postEventRendering = function(calendar) {
 	calendar.select(LargeViewCalendar.SELECTOR_DAYS).each(function(day) {
 		// TODO: make a real working "more events" link
 		var header = null;
@@ -52,6 +50,17 @@ LargeViewCalendar.initialize = function(calID) {
 			header = day.select('h5').first();
 			header.innerHTML += ' (more)';
 		}
+	});
+};
+
+LargeViewCalendar.positionEvents = function(calendar) {
+	calendar.select(LargeViewCalendar.SELECTOR_DAYS).each(function(day) {
+		day.select(LargeViewCalendar.SELECTOR_EVENTS_FROM_DAY).sort(function(a, b) {
+			// TODO : this will need to switch to sort on start-time
+			return b.getAttribute('days') - a.getAttribute('days'); 
+		}).each(function(event) {
+			LargeViewCalendar.correctEventSize(event, day);
+		});
 	});
 };
 
