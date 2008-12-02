@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-core</artifactId>
+		<version>1.4-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>jslibraries</artifactId>
+	<packaging>jar</packaging>
+
+	<name>JSLibraries</name>
+	<description>
+		This project is simply a unified way of including common JS libraries
+		within Wicket so that you don't have to bundle them in your application,
+		and they aren't deployed with dozens of jars that may use them, but they
+		are deployed in only one.
+	</description>
+
+	<developers>
+		<developer>
+			<id>jthomerson</id>
+			<name>Jeremy Thomerson</name>
+			<email>jeremy@wickettraining.com</email>
+			<url>http://www.jeremythomerson.com</url>
+			<timezone>-6</timezone>
+			<organization>WicketTraining.com</organization>
+			<organizationUrl>http://www.wickettraining.com</organizationUrl>
+		</developer>
+	</developers>
+
+</project>

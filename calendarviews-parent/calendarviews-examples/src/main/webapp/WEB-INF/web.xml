@@ -34,6 +34,10 @@
 	      The value might be either "development" (reloading when templates change)
 	      or "deployment". If no configuration is found, "development" is the default.
 	-->
+	<context-param>
+		<param-name>configuration</param-name>
+		<param-value>development</param-value>
+	</context-param>
 
 	<filter>
 		<filter-name>wicket.calendarviews</filter-name>
