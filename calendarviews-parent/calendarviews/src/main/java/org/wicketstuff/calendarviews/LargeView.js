@@ -24,9 +24,10 @@ var LargeViewCalendar = {};
 LargeViewCalendar.runMode = true;
 
 LargeViewCalendar.EMPTY_SPOTS = new Array();
-LargeViewCalendar.SELECTOR_DAYS = "div.day";
-LargeViewCalendar.SELECTOR_WEEKS = "div.week";
-LargeViewCalendar.SELECTOR_EVENTS_FROM_DAY = "li";
+LargeViewCalendar.SELECTOR_DAYS = 'div.day';
+LargeViewCalendar.SELECTOR_WEEKS = 'div.week';
+LargeViewCalendar.SELECTOR_EVENTS_FROM_DAY = 'li';
+LargeViewCalendar.SELECTOR_HEADER_FROM_DAY = 'h5';
 
 LargeViewCalendar.initialize = function(calID) {
 	if (!this.runMode) {
@@ -47,7 +48,7 @@ LargeViewCalendar.postEventRendering = function(calendar) {
 		// TODO: make a real working "more events" link
 		var header = null;
 		if (day.moreEvents) {
-			header = day.select('h5').first();
+			header = day.select(LargeViewCalendar.SELECTOR_HEADER_FROM_DAY).first();
 			header.innerHTML += ' (more)';
 		}
 	});
@@ -75,14 +76,14 @@ LargeViewCalendar.prepDayElements = function(calendar) {
 			day.moreEvents = false;
 			day.followingDays = following.clone().reverse();
 			following.push(day);
-			day.date = day.select("h5").first().innerHTML;
+			day.date = day.select(LargeViewCalendar.SELECTOR_HEADER_FROM_DAY).first().innerHTML;
 		});
 	});
 };
 
 LargeViewCalendar.correctEventSize = function(event, day) {
 	var days = event.getAttribute('days');
-	var headerHeight = day.select('h5').first().getHeight();
+	var headerHeight = day.select(LargeViewCalendar.SELECTOR_HEADER_FROM_DAY).first().getHeight();
 	var eventHeight = event.getHeight() + 1;
 	var eventWidth = (event.getWidth() * days);
 	var lastDay = day;
