@@ -1,0 +1,57 @@
+/**
+ * Copyright (C) 2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.wicketstuff.calendarviews;
+
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.model.IModel;
+import org.wicketstuff.calendarviews.model.ICategorizedEvent;
+import org.wicketstuff.calendarviews.model.IEvent;
+import org.wicketstuff.calendarviews.util.StringUtil;
+
+public class AddCssClassBehavior extends AbstractBehavior {
+	private static final String ATTRIBUTE_NAME = "class";
+
+	private static final long serialVersionUID = 1L;
+
+	private final IModel<IEvent> mEventModel;
+	
+	public AddCssClassBehavior(IModel<IEvent> event) {
+		mEventModel = event;
+	}
+
+	@Override
+	public void onComponentTag(Component component, ComponentTag tag) {
+		super.onComponentTag(component, tag);
+		if (mEventModel.getObject() instanceof ICategorizedEvent) {
+			String css = ((ICategorizedEvent) mEventModel.getObject()).getCssClassForCategory();
+			if (StringUtil.isEmpty(css) == false) {
+				String value = tag.getAttributes().getString(ATTRIBUTE_NAME);
+				if (StringUtil.isEmpty(value)) {
+					value = "";
+				} else {
+					value += " ";
+				}
+				value += css;
+				tag.put(ATTRIBUTE_NAME, value);
+			}
+		}
+	}
+}
