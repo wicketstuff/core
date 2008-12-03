@@ -84,48 +84,11 @@
 	<build>
 		<plugins>
 			<plugin>
-				<!-- USAGE: mvn license:check OR mvn license:format -->
-				<groupId>com.mathieucarbou.mojo</groupId>
-				<artifactId>maven-license-plugin</artifactId>
-				<configuration>
-					<header>src/main/etc/header.txt</header>
-					<excludes>
-						<exclude>**/*.gif</exclude>
-						<exclude>**/*.jpg</exclude>
-						<exclude>**/*.jpeg</exclude>
-						<exclude>**/*.ico</exclude>
-						<exclude>**/*.swf</exclude>
-					</excludes>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>test</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>maven-jetty-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>maven-license-plugin-release</id>
-			<name>Maven repository of com.mathieucarbou.mojo (maven-license-plugin) releases</name>
-			<url>http://mc-repo.googlecode.com/svn/maven2/releases</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<properties>
 		<jetty.version>6.1.4</jetty.version>

@@ -41,4 +41,33 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<!-- USAGE: mvn license:check OR mvn license:format -->
+				<groupId>com.google.code.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<configuration>
+					<header>src/main/etc/header.txt</header>
+					<aggregate>true</aggregate>
+					<quiet>false</quiet>
+					<failIfMissing>true</failIfMissing>					
+					<excludes>
+						<exclude>**/*.jpeg</exclude>
+						<exclude>**/*.swf</exclude>
+						<exclude>src/main/java/org/wicketstuff/jslibraries/js/*</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>
