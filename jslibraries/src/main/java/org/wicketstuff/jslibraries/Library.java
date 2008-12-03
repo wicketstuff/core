@@ -9,25 +9,25 @@ import java.util.List;
 
 public enum Library {
 
-	PROTOTYPE("prototype", 4, ""),
-	JQUERY("jquery", 3, ".min"),
+	PROTOTYPE("prototype", ""),
+	JQUERY("jquery", ".min"),
 	;
 
 	static {
 		registerVersion(JQUERY, 1, 0, 4);
 		registerVersion(JQUERY, 1, 1, 4);
-		registerVersion(JQUERY, 1, 2, 0);
+		registerVersion(JQUERY, 1, 2);
 		registerVersion(JQUERY, 1, 2, 1);
 		registerVersion(JQUERY, 1, 2, 2);
 		registerVersion(JQUERY, 1, 2, 3);
 		registerVersion(JQUERY, 1, 2, 4);
 		registerVersion(JQUERY, 1, 2, 5);
 		registerVersion(JQUERY, 1, 2, 6);
-		registerVersion(PROTOTYPE, 1, 5, 0, 0);
-		registerVersion(PROTOTYPE, 1, 5, 1, 0);
+		registerVersion(PROTOTYPE, 1, 5, 0);
+		registerVersion(PROTOTYPE, 1, 5, 1);
 		registerVersion(PROTOTYPE, 1, 5, 1, 1);
 		registerVersion(PROTOTYPE, 1, 5, 1, 2);
-		registerVersion(PROTOTYPE, 1, 6, 0, 0);
+		registerVersion(PROTOTYPE, 1, 6, 0);
 		registerVersion(PROTOTYPE, 1, 6, 0, 2);
 		registerVersion(PROTOTYPE, 1, 6, 0, 3);
 		
@@ -35,6 +35,7 @@ public enum Library {
 			List<Version> list = new ArrayList<Version>(lib.mVersions);
 			Collections.sort(list);
 			lib.mVersions = Collections.unmodifiableList(list);
+			//System.out.println("Initalized: " + lib);
 		}
 	}
 
@@ -44,20 +45,16 @@ public enum Library {
 
 	private final String mLibraryName;
 	private final String mProductionVersionSignifier;
-	private final int mVersionDepth;
+	private int mMaxVersionDepth;
 	private Collection<Version> mVersions = new HashSet<Version>();
 
-	private Library(String name, int depth, String productionVersionSignifier) {
+	private Library(String name, String productionVersionSignifier) {
 		mLibraryName = name;
-		mVersionDepth = depth;
 		mProductionVersionSignifier = productionVersionSignifier;
 	}
 
 	public String getLibraryName() {
 		return mLibraryName;
-	}
-	public int getVersionDepth() {
-		return mVersionDepth;
 	}
 	public String getProductionVersionSignifier() {
 		return mProductionVersionSignifier;
@@ -68,6 +65,22 @@ public enum Library {
 	
 	public static void main(String[] args) {
 		Library.class.getSuperclass();
+	}
+
+	public int getMaxVersionDepth() {
+		if (mMaxVersionDepth == 0) {
+			int depth = 0;
+			for (Version version : mVersions) {
+				depth = version.getNumbers().length > depth ? version.getNumbers().length : depth;
+			}
+			mMaxVersionDepth = depth;
+		}
+		return mMaxVersionDepth;
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "\t [" + mVersions + "]";
 	}
 	
 }
