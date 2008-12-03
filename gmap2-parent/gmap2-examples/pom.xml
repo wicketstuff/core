@@ -20,18 +20,17 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.apache.wicket</groupId>
-		<artifactId>wicket-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
-	</parent>
-	<groupId>org.wicketstuff</groupId>
-	<artifactId>wicket-contrib-gmap2-examples</artifactId>
+    <parent>
+        <groupId>org.wicketstuff</groupId>
+        <artifactId>gmap2-parent</artifactId>
+        <version>1.4-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+	<artifactId>gmap2-examples</artifactId>
 	<packaging>war</packaging>
 
-	<name>Wicket Contrib GMap Examples</name>
-	<description>Examples gmap component.</description>
+	<name>GMap2 Examples</name>
+	<description>Examples gmap2 component.</description>
 
 	<dependencies>
 		<dependency>
