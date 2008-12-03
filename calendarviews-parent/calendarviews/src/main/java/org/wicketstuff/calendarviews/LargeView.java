@@ -100,6 +100,7 @@ public class LargeView extends FullWeekCalendarView {
 			protected void populateItem(ListItem<IEvent> item) {
 				item.add(new Label("title", new PropertyModel<String>(item.getModel(), "title")));
 				item.add(new HowManyDaysClassBehavior(dateModel, cellsLeftInRow, item.getModel()));
+				item.add(new AddCssClassBehavior(item.getModel()));
 			}
 		};
 	}

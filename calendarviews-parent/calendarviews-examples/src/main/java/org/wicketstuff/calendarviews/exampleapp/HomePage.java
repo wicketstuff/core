@@ -19,6 +19,8 @@
 package org.wicketstuff.calendarviews.exampleapp;
 
 import org.apache.wicket.PageParameters;
+import org.apache.wicket.ResourceReference;
+import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.Link;
 import org.wicketstuff.calendarviews.LargeView;
@@ -46,6 +48,7 @@ public class HomePage extends WebPage {
 			add(LargeView.createWeeksView("large", new PersistentRandomTestEventProvider(), weeks));
 		}
 		
+		add(HeaderContributor.forCss(new ResourceReference(getClass(), "examples.css")));
 		addLinks();
 	}
 

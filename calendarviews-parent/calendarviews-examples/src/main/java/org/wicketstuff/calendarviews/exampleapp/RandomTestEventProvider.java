@@ -29,6 +29,7 @@ import java.util.Set;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
+import org.wicketstuff.calendarviews.model.BasicCategorizedEvent;
 import org.wicketstuff.calendarviews.model.BasicEvent;
 import org.wicketstuff.calendarviews.model.IEvent;
 import org.wicketstuff.calendarviews.model.IEventProvider;
@@ -94,7 +95,7 @@ public class RandomTestEventProvider extends LoadableDetachableModel<Collection<
 	}
 
 	private BasicEvent createEvent(int id, boolean allDay, Date start, Date end) {
-		BasicEvent event = new BasicEvent();
+		BasicCategorizedEvent event = new BasicCategorizedEvent();
 		StringBuffer title = new StringBuffer();
 		title.append("Event #").append(id).append(" [").append(DATE_FORMAT.format(start));
 		if (end != null) {
@@ -105,6 +106,7 @@ public class RandomTestEventProvider extends LoadableDetachableModel<Collection<
 		event.setAllDayEvent(allDay);
 		event.setStartTime(start);
 		event.setEndTime(end);
+		event.setCssClassForCategory("cat" + ((id % 3) + 1));
 		return event;
 	}
 
