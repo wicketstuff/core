@@ -8,7 +8,7 @@
 (function() {
 	var each = tinymce.each;
 
-	tinymce.create('tinymce.plugins.TransitPlugin', {
+	tinymce.create('tinymce.plugins.MediaPlugin', {
 		init : function(ed, url) {
 			var t = this;
 			
