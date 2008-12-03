@@ -76,7 +76,7 @@ public abstract class PopupListener extends AbstractDefaultAjaxBehavior {
 
 		String markerParameter = request.getParameter("marker");
 		if (markerParameter != null) {
-			OpenLayersMap<Panel> map=getOpenLayerMap();
+			OpenLayersMap map=getOpenLayerMap();
 			for (Overlay ovl : map.getOverlays()) {
 				if (ovl.getId().equals(markerParameter)) {
 					overlay = ovl;
