@@ -1,19 +1,19 @@
 package org.wicketstuff.jslibraries;
 
+
 public class VersionDescriptor {
 
 	private final Library mLibrary;
 	private final Integer[] mVersions;
+	private final boolean mStopOnFirstMatch;
 
 	private boolean mMatchAttempted;
 	private Version mMatch;
 	
-	private VersionDescriptor(Library library, Integer... versions) {
-		if (library.getVersionDepth() != versions.length) {
-			throw new IllegalArgumentException("must supply correct version depth");
-		}
+	private VersionDescriptor(Library library, boolean stopOnFirstMatch, Integer... versions) {
 		mLibrary = library;
 		mVersions = versions;
+		mStopOnFirstMatch = stopOnFirstMatch;
 	}
 
 	public Library getLibrary() {
@@ -25,6 +25,9 @@ public class VersionDescriptor {
 			for (Version version : mLibrary.getVersions()) {
 				if (matches(version)) {
 					mMatch = version;
+					if (mStopOnFirstMatch) {
+						break;
+					}
 				}
 			}
 		}
@@ -43,11 +46,18 @@ public class VersionDescriptor {
 	public static VersionDescriptor alwaysLatest(Library lib) {
 		return alwaysLatestOfVersion(lib, new int[0]);
 	}
+	public static VersionDescriptor exactVersion(Library lib, int... version) {
+		Integer[] nums = new Integer[version.length];
+		for (int i = 0; i < version.length; i++) {
+			nums[i] = version[i];
+		}
+		return new VersionDescriptor(lib, true, nums);
+	}
 	public static VersionDescriptor alwaysLatestOfVersion(Library lib, int... baseVersion) {
-		Integer[] nums = new Integer[lib.getVersionDepth()];
+		Integer[] nums = new Integer[lib.getMaxVersionDepth()];
 		for (int i = 0; i < nums.length; i++) {
 			nums[i] = i < baseVersion.length ? baseVersion[i] : null;
 		}
-		return new VersionDescriptor(lib, nums);
+		return new VersionDescriptor(lib, false, nums);
 	}
 }
