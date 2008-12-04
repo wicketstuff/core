@@ -94,6 +94,27 @@
 				</repository>
 			</distributionManagement>
 		</profile>
+		<profile>
+			<id>wickettraining.com-continuum</id>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>snapshot-repo</id>
+					<name>Local Continuum Snapshot Repo</name>
+					<url>file:/usr/local/maven-continuum/snapshot-repo</url>
+					<uniqueVersion>false</uniqueVersion>
+				</snapshotRepository>
+				<repository>
+					<id>release-repo</id>
+					<name>Local Continuum Release Repo</name>
+					<url>file:/usr/local/maven-continuum/release-repo</url>
+				</repository>
+				<site>
+					<id>site-repo</id>
+					<name>Local Continuum Site Deployment Folder</name>
+					<url>file:/usr/local/maven-continuum/site-deployment</url>
+				</site>
+			</distributionManagement>
+		</profile>
 	</profiles>
 
 	<issueManagement>
@@ -468,23 +489,5 @@
 			</releases>
 		</pluginRepository>
 	</pluginRepositories>
-
-	<distributionManagement>
-		<site>
-			<id>local</id>
-			<url>file:///tmp/www/docs/wicketstuff-core/</url>
-		</site>
-		<snapshotRepository>
-			<id>repo</id>
-			<name>Local TeamCity/Tomcat repository</name>
-			<url>file:/home/wicket/tomcat/webapps/maven/repository/</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-		<repository>
-			<id>repo</id>
-			<name>Local TeamCity/Tomcat repository</name>
-			<url>file:/home/wicket/tomcat/webapps/maven/repository/</url>
-		</repository>
-	</distributionManagement>
 
 </project>
