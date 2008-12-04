@@ -18,9 +18,9 @@ package org.wicketstuff.openlayers.api;
 import java.io.Serializable;
 
 /**
- * Root class for any class that represents a GMap JavaScript class or object.
+ * Root class for any class that represents a OMap JavaScript class or object.
  */
-public interface GValue extends Serializable
+public interface OValue extends Serializable
 {
 	/**
 	 * @return A JavaScript constructor that represents this element.
