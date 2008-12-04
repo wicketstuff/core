@@ -1,0 +1,10 @@
+    
+. Try and use another, less bloated implementation of comet in javascript, or 
+      cleanup the huge DOJO dependency trail.
+
+. When you add a RemoveListener, the thread that will be executed won't have a 
+  reference to wicket's  Application.get() as it is quite possible the 
+  Filter won't set it.
+
+. Think about optimizing the communication mechanisms so less requests are 
+  issued on the client side.   
