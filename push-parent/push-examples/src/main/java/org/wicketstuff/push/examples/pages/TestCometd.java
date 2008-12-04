@@ -25,13 +25,13 @@ public class TestCometd extends ExamplePage {
     }
   }
 
-  private final TextField field;
+  private final TextField<String> field;
 	private String val;
 
   @SuppressWarnings("serial")
   public TestCometd(final PageParameters parameters)
 	{
-		final AjaxLink link = new AjaxLink("link"){
+		final AjaxLink<Void> link = new AjaxLink<Void>("link"){
 
 			@Override
       public void onClick(final AjaxRequestTarget target) {
@@ -41,7 +41,7 @@ public class TestCometd extends ExamplePage {
 		};
 		add(link);
 
-		field = new TextField("text", new Model(val));
+		field = new TextField<String>("text", new Model<String>(val));
 		field.setOutputMarkupId(true);
 		getCometdService().addChannelListener(this, CH_ID, new PostListener());
 		add(field);

@@ -1,7 +1,6 @@
 package org.wicketstuff.push.cometd;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.wicket.RequestCycle;
@@ -20,26 +19,30 @@ public class CometdBehavior extends CometdAbstractBehavior {
 		this.listener = listener;
 	}
 
-	public final String getCometdInterceptorScript() {
-		final HashMap map = new HashMap();
+	@Override
+  public final String getCometdInterceptorScript() {
+		final Map<String, Object> map = new HashMap<String, Object>();
 		map.put("markupId", getComponent().getMarkupId());
 		map.put("url", getCallbackUrl().toString());
 		return new DojoPackagedTextTemplate(CometdBehavior.class, "CometdDefaultBehaviorTemplate.js")
 						.asString(map);
 	}
 
-	public final CharSequence getPartialSubscriber() {
+	@Override
+  public final CharSequence getPartialSubscriber() {
 		return "'onEventFor"+ getComponent().getMarkupId() + "'";
 	}
 
-	protected final void respond(final AjaxRequestTarget target) {
-		final Map map = ((WebRequestCycle)RequestCycle.get()).getRequest().getParameterMap();
-		final Iterator it = map.keySet().iterator();
-		final HashMap eventAttribute = new HashMap();
-		while(it.hasNext()){
-			final String key = (String)it.next();
-			eventAttribute.put(key, ((String[])map.get(key))[0]);
+	@Override
+  protected final void respond(final AjaxRequestTarget target) {
+		final Map<String, String[]> map = ((WebRequestCycle) RequestCycle.get())
+        .getRequest().getParameterMap();
+		final Map<String, String> eventAttribute = new HashMap<String, String>();
+
+		for (final Map.Entry<String, String[]> entry : map.entrySet()) {
+			eventAttribute.put(entry.getKey(), entry.getValue()[0]);
 		}
+
 		final CometdTarget cTarget = new CometdTarget(target);
 		listener.onEvent(getChannelId(), eventAttribute, cTarget);
 	}
