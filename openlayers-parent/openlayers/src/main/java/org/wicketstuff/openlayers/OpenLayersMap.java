@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.Request;
 import org.apache.wicket.RequestCycle;
@@ -27,6 +29,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -43,11 +46,37 @@ import org.wicketstuff.openlayers.event.EventType;
 import org.wicketstuff.openlayers.event.OverlayListenerBehavior;
 import org.wicketstuff.openlayers.event.PopupListener;
 
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.PrecisionModel;
+
 /**
  * Wicket component to embed <a href="http://www.openlayers.org/">Openlayers
  * Maps</a> into your pages.
  */
 public class OpenLayersMap extends Panel {
+
+	private static org.apache.log4j.Logger log = Logger
+			.getLogger(OpenLayersMap.class);
+	/**
+	 * WGS84 (http://en.wikipedia.org/wiki/World_Geodetic_System#
+	 * A_new_World_Geodetic_System:_WGS_84)
+	 */
+	public static final int SRID = 4326;
+
+	private static GeometryFactory geometryFactory=new GeometryFactory(
+			new PrecisionModel(), SRID);
+	
+	public static GeometryFactory getGeoFactory() {
+		return geometryFactory;
+
+	}
+	public static Point createPoint(double x,double y) {
+		Coordinate coord=new Coordinate(x,y);
+		return geometryFactory.createPoint(coord);
+
+	}
 
 	private abstract class JSMethodBehavior extends AbstractBehavior {
 
@@ -614,6 +643,24 @@ public class OpenLayersMap extends Panel {
 
 	public InfoWindow getInfoWindow() {
 		return infoWindow;
+	}
+
+	/**
+	 * @see org.apache.wicket.MarkupContainer#onRender(org.apache.wicket.markup.MarkupStream)
+	 */
+	@Override
+	protected void onRender(MarkupStream markupStream) {
+		super.onRender(markupStream);
+		if (Application.DEVELOPMENT.equalsIgnoreCase(Application.get()
+				.getConfigurationType())
+				&& !Application.get().getMarkupSettings().getStripWicketTags()) {
+			log
+					.warn("Application is in DEVELOPMENT mode && Wicket tags are not stripped,"
+							+ " Firefox 3.0 will not render the OMap."
+							+ " Change to DEPLOYMENT mode  || turn on Wicket tags stripping."
+							+ " See:"
+							+ " http://www.nabble.com/Gmap2-problem-with-Firefox-3.0-to18137475.html.");
+		}
 	}
 
 }

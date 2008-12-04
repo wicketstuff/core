@@ -17,19 +17,21 @@ package org.wicketstuff.openlayers.api;
 
 import java.util.StringTokenizer;
 
+import org.wicketstuff.openlayers.OpenLayersMap;
 import org.wicketstuff.openlayers.js.Constructor;
+
+import com.vividsolutions.jts.geom.Point;
 
 /**
  * Represents an Open layers
  * http://dev.openlayers.org/apidocs/files/OpenLayers/BaseTypes/LonLat-js.html
  */
-public class LonLat implements GValue {
+public class LonLat implements OValue {
 	/**
 	 * Default serialVersionUID.
 	 */
 	private static final long serialVersionUID = 1L;
-	private final double lat;
-	private final double lng;
+	private final Point point;
 
 	/**
 	 * Construct.
@@ -38,16 +40,20 @@ public class LonLat implements GValue {
 	 * @param lng
 	 */
 	public LonLat(double lng, double lat) {
-		this.lat = lat;
-		this.lng = lng;
+
+		this.point = OpenLayersMap.createPoint(lng, lat);
+	}
+
+	public LonLat(Point point) {
+		this.point = point;
 	}
 
 	public double getLat() {
-		return lat;
+		return point.getY();
 	}
 
 	public double getLng() {
-		return lng;
+		return point.getX();
 	}
 
 	@Override
@@ -58,19 +64,21 @@ public class LonLat implements GValue {
 	/**
 	 */
 	public String getJSconstructor() {
-		return new Constructor("OpenLayers.LonLat").add(lng).add(lat).toJS();
+		return new Constructor("OpenLayers.LonLat").add(getLng()).add(getLat())
+				.toJS();
 	}
 
 	@Override
 	public int hashCode() {
-		return new Double(lat).hashCode() ^ new Double(lng).hashCode();
+		return new Double(getLat()).hashCode()
+				^ new Double(getLng()).hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof LonLat) {
 			LonLat t = (LonLat) obj;
-			return t.lat == lat && t.lng == lng;
+			return t.getLat() == getLat() && t.getLng() == getLng();
 		}
 		return false;
 	}

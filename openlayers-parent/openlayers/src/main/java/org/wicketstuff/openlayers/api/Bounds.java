@@ -21,7 +21,7 @@ import org.wicketstuff.openlayers.js.Constructor;
 
 /**
  */
-public class Bounds implements GValue {
+public class Bounds implements OValue {
 	/**
 	 * Default serialVersionUID.
 	 */
@@ -55,7 +55,7 @@ public class Bounds implements GValue {
 	}
 
 	/**
-	 * @see wicket.contrib.gmap.api.GValue#getJSconstructor()
+	 * @see OValue.contrib.gmap.api.GValue#getJSconstructor()
 	 */
 	public String getJSconstructor() {
 		return new Constructor("OpenLayers.Bounds").add(sw.getLng()).add(
