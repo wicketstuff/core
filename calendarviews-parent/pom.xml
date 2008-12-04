@@ -75,7 +75,7 @@
 					<header>${header.location}</header>
 					<aggregate>true</aggregate>
 					<quiet>false</quiet>
-					<failIfMissing>true</failIfMissing>					
+					<failIfMissing>${license-fail-if-missing}</failIfMissing>
 					<excludes>
 						<exclude>**/*.jpeg</exclude>
 						<exclude>**/*.swf</exclude>
@@ -96,9 +96,24 @@
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>bamboo</id>
+			<properties>
+				<license-fail-if-missing>false</license-fail-if-missing>
+			</properties>
+		</profile>
+		<profile>
+			<id>wickettraining.com-continuum</id>
+			<properties>
+				<license-fail-if-missing>false</license-fail-if-missing>
+			</properties>
+		</profile>
+	</profiles>
 	<properties>
 		<header.location>header.txt</header.location>
 		<jetty.version>6.1.4</jetty.version>
+		<license-fail-if-missing>true</license-fail-if-missing>
 	</properties>
 
 </project>
