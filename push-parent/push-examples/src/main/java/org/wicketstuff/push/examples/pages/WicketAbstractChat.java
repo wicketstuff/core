@@ -34,36 +34,39 @@ public abstract class WicketAbstractChat extends ExamplePage {
 	private static final long serialVersionUID = 1L;
 
 
-	public WicketAbstractChat(final PageParameters parameters)
+	@SuppressWarnings("serial")
+  public WicketAbstractChat(final PageParameters parameters)
 	{
 		final Message model = new Message();
 
-		final Form formChat = new Form("chatForm", new CompoundPropertyModel(model));
+		final Form<Message> formChat = new Form<Message>("chatForm", new CompoundPropertyModel<Message>(model));
 
-		final TextField field = new TextField("user");
+		final TextField<String> field = new TextField<String>("user");
 		field.setOutputMarkupId(false);
 		formChat.add(field);
 
 		final Label chat = new Label("chat");
 		chat.setOutputMarkupId(true);
 		getChannelService().addChannelListener(this, "chat", new IChannelListener() {
-			public void onEvent(final String channel, final Map datas, final IChannelTarget target) {
+			public void onEvent(final String channel, final Map<String, String> datas, final IChannelTarget target) {
 				target.appendJavascript("document.getElementById('" + chat.getMarkupId() + "').innerHTML += '<br/>" + datas.get("message") + "'");
 			}
 		});
 		formChat.add(chat);
 
-		final TextField mess = new TextField("message");
+		final TextField<String> mess = new TextField<String>("message");
 		mess.setOutputMarkupId(true);
 		formChat.add(mess);
 
 		formChat.add(new AjaxButton("send", formChat){
-			@Override
-			protected void onSubmit(final AjaxRequestTarget target, final Form form) {
+      private static final long serialVersionUID = 1L;
+
+      @Override
+			protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
 				//Update message
 				final String currentChat =
-							((Message)form.getModelObject()).getUser() + " said " +
-							((Message)form.getModelObject()).getMessage();
+							((Message) form.getModelObject()).getUser() + " said " +
+							((Message) form.getModelObject()).getMessage();
 				//send an event to refesh the chat area
 				final ChannelEvent event = new ChannelEvent("chat");
 				event.addData("message", currentChat);
@@ -82,7 +85,8 @@ public abstract class WicketAbstractChat extends ExamplePage {
 
 
 	public class Message implements Serializable {
-		private String chat;
+    private static final long serialVersionUID = 1L;
+    private String chat;
 		private String user;
 		private String message;
 		public String getMessage() {

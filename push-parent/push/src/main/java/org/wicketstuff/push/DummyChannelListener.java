@@ -14,7 +14,8 @@ public class DummyChannelListener implements IChannelListener {
 
 	private static final long serialVersionUID = 1L;
 
-	public void onEvent(final String channel, final Map datas, final IChannelTarget target) {
+	public void onEvent(final String channel, final Map<String, String> datas,
+      final IChannelTarget target) {
 		// do nothing at all
 	}
 

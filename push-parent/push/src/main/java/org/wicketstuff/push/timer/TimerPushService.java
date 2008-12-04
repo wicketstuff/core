@@ -1,7 +1,5 @@
 package org.wicketstuff.push.timer;
 
-import java.util.Iterator;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.IBehavior;
 import org.apache.wicket.util.time.Duration;
@@ -39,9 +37,7 @@ public class TimerPushService implements IPushService {
 	}
 
 	public void uninstallPush(final Component component) {
-		final Iterator iBehavior = component.getBehaviors().iterator();
-		while (iBehavior.hasNext()) {
-		  final IBehavior behavior = (IBehavior) iBehavior.next();
+	  for (final IBehavior behavior: component.getBehaviors()) {
 			if (behavior instanceof TimerChannelBehavior) {
 				component.remove(behavior);
 			}
