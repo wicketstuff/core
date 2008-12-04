@@ -81,6 +81,7 @@
 						<exclude>**/*.swf</exclude>
 					</excludes>
 				</configuration>
+				<!--
 				<executions>
 					<execution>
 						<goals>
@@ -88,6 +89,7 @@
 						</goals>
 					</execution>
 				</executions>
+				-->
 			</plugin>
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
