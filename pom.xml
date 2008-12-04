@@ -424,6 +424,17 @@
 			<id>local</id>
 			<url>file:///tmp/www/docs/wicketstuff-core/</url>
 		</site>
+		<snapshotRepository>
+			<id>repo</id>
+			<name>Local TeamCity/Tomcat repository</name>
+			<url>file:/home/wicket/tomcat/webapps/maven/repository/</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+		<repository>
+			<id>repo</id>
+			<name>Local TeamCity/Tomcat repository</name>
+			<url>file:/home/wicket/tomcat/webapps/maven/repository/</url>
+		</repository>
 	</distributionManagement>
 
 </project>
