@@ -8,16 +8,15 @@ import wicket.contrib.tinymce.settings.ContextMenuPlugin;
 import wicket.contrib.tinymce.settings.DateTimePlugin;
 import wicket.contrib.tinymce.settings.DirectionalityPlugin;
 import wicket.contrib.tinymce.settings.EmotionsPlugin;
-import wicket.contrib.tinymce.settings.FlashPlugin;
 import wicket.contrib.tinymce.settings.FullScreenPlugin;
 import wicket.contrib.tinymce.settings.IESpellPlugin;
+import wicket.contrib.tinymce.settings.MediaPlugin;
 import wicket.contrib.tinymce.settings.PastePlugin;
 import wicket.contrib.tinymce.settings.PreviewPlugin;
 import wicket.contrib.tinymce.settings.PrintPlugin;
 import wicket.contrib.tinymce.settings.SearchReplacePlugin;
 import wicket.contrib.tinymce.settings.TablePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
-import wicket.contrib.tinymce.settings.ZoomPlugin;
 
 /**
  * @author Iulian-Corneliu COSTAN
@@ -43,7 +42,6 @@ public class WordTinyMCEPage extends TinyMCEBasePage {
         dateTimePlugin.setDateFormat("Date: %m-%d-%Y");
         dateTimePlugin.setTimeFormat("Time: %H:%M");
         PreviewPlugin previewPlugin = new PreviewPlugin();
-        ZoomPlugin zoomPlugin = new ZoomPlugin();
         settings.add(TinyMCESettings.cut, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
         settings.add(TinyMCESettings.copy, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
         settings.add(pastePlugin.getPasteButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
@@ -60,7 +58,6 @@ public class WordTinyMCEPage extends TinyMCEBasePage {
         settings.add(dateTimePlugin.getTimeButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
         settings.add(TinyMCESettings.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
         settings.add(previewPlugin.getPreviewButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
-        settings.add(zoomPlugin.getZoomButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
         settings.add(TinyMCESettings.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
         settings.add(TinyMCESettings.forecolor, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
         settings.add(TinyMCESettings.backcolor, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
@@ -69,14 +66,14 @@ public class WordTinyMCEPage extends TinyMCEBasePage {
         TablePlugin tablePlugin = new TablePlugin();
         EmotionsPlugin emotionsPlugin = new EmotionsPlugin();
         IESpellPlugin iespellPlugin = new IESpellPlugin();
-        FlashPlugin flashPlugin = new FlashPlugin();
+        MediaPlugin mediaPlugin = new MediaPlugin();
         PrintPlugin printPlugin = new PrintPlugin();
         FullScreenPlugin fullScreenPlugin = new FullScreenPlugin();
         DirectionalityPlugin directionalityPlugin = new DirectionalityPlugin();
         settings.add(tablePlugin.getTableControls(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.before);
         settings.add(emotionsPlugin.getEmotionsButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
         settings.add(iespellPlugin.getIespellButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
-        settings.add(flashPlugin.getFlashButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
+        settings.add(mediaPlugin.getMediaButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
         settings.add(TinyMCESettings.separator, TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
         settings.add(printPlugin.getPrintButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
         settings.add(TinyMCESettings.separator, TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
