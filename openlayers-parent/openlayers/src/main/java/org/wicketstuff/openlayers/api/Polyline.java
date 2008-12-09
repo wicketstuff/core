@@ -19,10 +19,10 @@ import org.wicketstuff.openlayers.js.Array;
 import org.wicketstuff.openlayers.js.Constructor;
 
 /**
- * Represents an Google Maps API's
- * <a href="http://www.google.com/apis/maps/documentation/reference.html#GPolyline">GPolyline</a>.
+ * Represents an OpenLayers Map API's
+ * http://dev.openlayers.org/docs/files/OpenLayers/Geometry/LineString-js.html
  */
-public class GPolyline extends Overlay
+public class Polyline extends Overlay
 {
 	private static final long serialVersionUID = 1L;
 
@@ -31,7 +31,7 @@ public class GPolyline extends Overlay
 	private int weight;
 	private float opacity;
 
-	public GPolyline(String color, int weight, float opacity, LonLat... gLatLngs)
+	public Polyline(String color, int weight, float opacity, LonLat... gLatLngs)
 	{
 		super();
 		
@@ -44,7 +44,7 @@ public class GPolyline extends Overlay
 	@Override
 	protected String getJSconstructor()
 	{
-		Constructor constructor = new Constructor("GPolyline");
+		Constructor constructor = new Constructor("Polyline");
 		
 		Array array = new Array();
 		for (LonLat gLatLng : gLatLngs) {

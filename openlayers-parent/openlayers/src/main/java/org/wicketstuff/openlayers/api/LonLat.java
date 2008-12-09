@@ -26,7 +26,7 @@ import com.vividsolutions.jts.geom.Point;
  * Represents an Open layers
  * http://dev.openlayers.org/apidocs/files/OpenLayers/BaseTypes/LonLat-js.html
  */
-public class LonLat implements OValue {
+public class LonLat implements Value {
 	/**
 	 * Default serialVersionUID.
 	 */
@@ -81,6 +81,10 @@ public class LonLat implements OValue {
 			return t.getLat() == getLat() && t.getLng() == getLng();
 		}
 		return false;
+	}
+
+	public Point getPoint() {
+		return point;
 	}
 
 	/**

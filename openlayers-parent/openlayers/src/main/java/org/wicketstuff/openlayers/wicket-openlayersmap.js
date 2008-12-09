@@ -18,7 +18,7 @@
 /*
  * Wicket Openlayers Map
  *
- * @author Nino Martinz
+ * @author Nino Martinez
  */
 
 // Wicket Namespace
@@ -122,39 +122,6 @@ function WicketOMap(id, options) {
 		var self = this;
 		self.popupId = popid;
 	};
-//	this.setDraggingEnabled = function (enabled) {
-//		if (enabled) {
-//			// to be fixed!
-//			//this.map.enableDragging(true);
-//		} else {
-//			// to be fixed!
-//			//this.map.disableDragging(false);
-//		}
-//	};
-//	this.setDoubleClickZoomEnabled = function (enabled) {
-//		if (enabled) {
-//			// to be fixed!
-//			//this.map.enableDoubleClickZoom(true);
-//		} else {
-//			//this.map.disableDoubleClickZoom(false);
-//		}
-//	};
-//	this.setScrollWheelZoomEnabled = function (enabled) {
-//		if (enabled) {
-//			//this.map.enableScrollWheelZoom(true);
-//		} else {
-//			//this.map.disableScrollWheelZoom(false);
-//		}
-//	};
-//	this.setMapType = function (mapType) {
-//		//this.map.setMapType(mapType);
-//	};
-//	this.setZoom = function (level) {
-//		this.map.zoomTo(level);
-//	};
-//	this.setCenter = function (center) {
-//		this.map.setCenter(center);
-//	};
 	this.panDirection = function (dx, dy) {
 		this.map.pan(dx, dy);
 	};
@@ -212,5 +179,55 @@ function WicketOMap(id, options) {
 		var visible = layer.getVisibility();
 		layer.setVisibility(!visible);
 	};
+	
+	/*used for draw*/
+    this.serialize = function (feature) {
+        var in_options = {
+                'internalProjection': this.map.baseLayer.projection,
+                'externalProjection': new OpenLayers.Projection("wkt")
+            };   
+        var format =new OpenLayers.Format.WKT(in_options);
+        var str = format.write(feature, false);
+        return str;
+    }
+	this.addDrawFeature = function (callBack){
+	    this.drawLayer = new OpenLayers.Layer.Vector("Draw Layer");
+	    this.map.addLayers(this.drawLayer);
+		this.drawToolbar = new OpenLayers.Control.EditingToolbar(this.drawLayer);
+		this.map.addControl(this.drawToolbar);
+		var self = this;
+	    for(var i = 0; i<this.drawToolbar.controls.length; i++) {
+    	    var c = this.drawToolbar.controls[i];
+        	c.events.on({
+				"featureadded": function(e) {
+	                var in_options = {
+	                        'internalProjection': this.map.baseLayer.projection,
+	                        'externalProjection': new OpenLayers.Projection("wkt")
+	                    };   
+	                var format =new OpenLayers.Format.WKT(in_options);
+	                var str = format.write(e.feature, false);
+
+					var callModded = callBack + "&wkt=" + str;
+					var wcall = wicketAjaxGet(callModded, function () {}, null, null);
+        	    }
+    	    });
+	    }
+	}
+	this.removeDrawFeature = function (){
+		
+		if(this.drawToolbar !=null){
+			this.map.removeControl(this.drawToolbar);
+			this.drawToolbar=null;
+		}
+		if(this.drawLayer !=null){
+			this.drawLayer.destroy();
+			this.drawLayer=null;
+		}
+		
+	}
+
+	
+	
+	
 }
 

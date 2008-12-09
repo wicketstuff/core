@@ -19,7 +19,7 @@ package org.wicketstuff.openlayers.api;
 
 import org.wicketstuff.openlayers.js.ObjectLiteral;
 
-public class MarkerOptions implements OValue
+public class MarkerOptions implements Value
 {
 	private String title;
 	

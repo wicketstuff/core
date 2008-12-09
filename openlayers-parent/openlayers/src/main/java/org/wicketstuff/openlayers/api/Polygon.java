@@ -19,10 +19,10 @@ import org.wicketstuff.openlayers.js.Array;
 import org.wicketstuff.openlayers.js.Constructor;
 
 /**
- * Represents an Google Maps API's 
- * <a href="http://www.google.com/apis/maps/documentation/reference.html#GPolygon">GPolygon</a>.
+ * Represents an Openlayer Map API's 
+ * http://dev.openlayers.org/docs/files/OpenLayers/Geometry/Polygon-js.html.
  */
-public class GPolygon extends Overlay
+public class Polygon extends Overlay
 {
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +33,7 @@ public class GPolygon extends Overlay
 	private String fillColor;
 	private float fillOpacity;
 
-	public GPolygon(String strokeColor, int strokeWeight, float strokeOpacity, String fillColor, float fillOpacity, LonLat... gLatLngs)
+	public Polygon(String strokeColor, int strokeWeight, float strokeOpacity, String fillColor, float fillOpacity, LonLat... gLatLngs)
 	{
 		super();
 		
@@ -49,7 +49,7 @@ public class GPolygon extends Overlay
 	@Override
 	protected String getJSconstructor()
 	{
-		Constructor constructor = new Constructor("GPolygon");
+		Constructor constructor = new Constructor("Polygon");
 
 		Array array = new Array();
 		for (LonLat gLatLng : gLatLngs) {
