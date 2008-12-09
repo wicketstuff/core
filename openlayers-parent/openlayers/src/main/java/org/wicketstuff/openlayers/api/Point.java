@@ -26,13 +26,13 @@ import org.wicketstuff.openlayers.js.Constructor;
  * Represents an Maps API's GPoint that contains x and y coordinates.
  * 
  */
-public class GPoint implements Serializable
+public class Point implements Serializable
 {
 
 	private float longitude;
 	private float latitude;
 
-	public GPoint(float longitude, float latitude)
+	public Point(float longitude, float latitude)
 	{
 		this.longitude = longitude;
 		this.latitude = latitude;
