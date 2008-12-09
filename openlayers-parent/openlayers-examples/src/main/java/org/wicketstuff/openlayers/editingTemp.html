@@ -1,0 +1,125 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Vector Formats</title>
+<script src="http://openlayers.org/api/OpenLayers.js"></script>
+<style type="text/css">
+input,select,textarea {
+	font: 0.9em Verdana, Arial, sans-serif;
+}
+
+#leftcol {
+	position: absolute;
+	top: 0;
+	left: 1em;
+	padding: 0;
+	width: 517px;
+}
+
+#map {
+	width: 512px;
+	height: 225px;
+	border: 1px solid #ccc;
+}
+
+#input {
+	width: 512px;
+}
+
+#text {
+	font-size: 0.85em;
+	margin: 1em 0 1em 0;
+	width: 100%;
+	height: 10em;
+}
+
+#info {
+	position: relative;
+	padding: 2em 0;
+	margin-left: 540px;
+}
+
+#output {
+	font-size: 0.8em;
+	width: 100%;
+	height: 512px;
+	border: 0;
+}
+
+p {
+	margin: 0;
+	padding: 0.75em 0 0.75em 0;
+}
+</style>
+<script type="text/javascript">
+
+	var vectors, editingToolbar, themap;
+
+	function addDrawFeature(map){
+	    vectors = new OpenLayers.Layer.Vector("Vector Layer");
+		map.addLayers(vectors);
+		editingToolbar = new OpenLayers.Control.EditingToolbar(vectors);
+		map.addControl(editingToolbar);
+	    for(var i = 0; i<editingToolbar.controls.length; i++) {
+    	    var c = editingToolbar.controls[i];
+        	c.events.on({
+				"featureadded": function(e) {
+					serialize(e.feature);
+        	    }
+    	    });
+	    }
+	}
+	function removeDrawFeature(map,toolbar){
+		map.removeControl(toolbar);
+		vectors.destroy();
+		editingToolbar=null;
+		vectors=null;
+	}
+        
+        function init(){
+            map = new OpenLayers.Map('map');
+            themap=map;
+            var wms = new OpenLayers.Layer.WMS( "OpenLayers WMS",
+                "http://labs.metacarta.com/wms/vmap0?", {layers: 'basic'});
+
+            map.addLayers([wms]);
+            map.addControl(new OpenLayers.Control.MousePosition());
+
+
+            addDrawFeature(map);
+            
+
+            map.setCenter(new OpenLayers.LonLat(0, 0), 1);
+        }
+
+        function serialize(feature) {
+            var in_options = {
+                    'internalProjection': map.baseLayer.projection,
+                    'externalProjection': new OpenLayers.Projection("wkt")
+                };   
+            var format =new OpenLayers.Format.WKT(in_options);
+            var str = format.write(feature, false);
+            document.getElementById('output').value = str;
+        }
+    </script>
+</head>
+<body onload="init()">
+<div id="leftcol">
+
+<div id="map" class="smallmap"></div>
+
+
+
+</div>
+<div id="info">
+<button onclick="removeDrawFeature(themap, editingToolbar);">Remove Control</button>
+<p>Use the tools to the left to draw new polygons, lines, and
+points. After drawing some new features, hover over a feature to see the
+serialized version below.</p>
+
+<textarea id="output"></textarea></div>
+
+
+</body>
+</html>
+
