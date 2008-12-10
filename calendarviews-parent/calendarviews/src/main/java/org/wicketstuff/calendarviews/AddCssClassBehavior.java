@@ -18,6 +18,9 @@
  */
 package org.wicketstuff.calendarviews;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.ComponentTag;
@@ -26,6 +29,13 @@ import org.wicketstuff.calendarviews.model.ICategorizedEvent;
 import org.wicketstuff.calendarviews.model.IEvent;
 import org.wicketstuff.calendarviews.util.StringUtil;
 
+/**
+ * A behavior for adding a class attribute of <tt>ICategorizedEvent</tt>
+ * events to a component, even if there is already a class on the tag.  
+ * If there is, this behavior will add a space between the two classes.
+ *  
+ * @author Jeremy Thomerson
+ */
 public class AddCssClassBehavior extends AbstractBehavior {
 	private static final String ATTRIBUTE_NAME = "class";
 
@@ -40,18 +50,19 @@ public class AddCssClassBehavior extends AbstractBehavior {
 	@Override
 	public void onComponentTag(Component component, ComponentTag tag) {
 		super.onComponentTag(component, tag);
-		if (mEventModel.getObject() instanceof ICategorizedEvent) {
-			String css = ((ICategorizedEvent) mEventModel.getObject()).getCssClassForCategory();
-			if (StringUtil.isEmpty(css) == false) {
-				String value = tag.getAttributes().getString(ATTRIBUTE_NAME);
-				if (StringUtil.isEmpty(value)) {
-					value = "";
-				} else {
-					value += " ";
-				}
-				value += css;
-				tag.put(ATTRIBUTE_NAME, value);
-			}
+		List<String> classes = new ArrayList<String>();
+		String existing = tag.getAttributes().getString(ATTRIBUTE_NAME);
+		if (StringUtil.isEmpty(existing) == false) {
+			classes.add(existing);
 		}
+		
+		IEvent event = mEventModel.getObject();
+		classes.add(event.isAllDayEvent() ? "allday" : "partday");
+		
+		if (event instanceof ICategorizedEvent) {
+			String css = ((ICategorizedEvent) event).getCssClassForCategory();
+			classes.add(css);
+		}
+		tag.put(ATTRIBUTE_NAME, StringUtil.join(classes.toArray(new String[classes.size()]), " "));
 	}
 }

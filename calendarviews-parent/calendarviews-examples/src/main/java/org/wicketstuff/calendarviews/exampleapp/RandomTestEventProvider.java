@@ -42,6 +42,7 @@ public class RandomTestEventProvider extends LoadableDetachableModel<Collection<
 	private static final long serialVersionUID = 1L;
 	private static final long MILLIS_DAY = 1000 * 60 * 60 * 24;
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd");
+	private static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
 	
 	private final Random mRandom = new Random();
 	private final Set<IEvent> mEvents = new HashSet<IEvent>();
@@ -51,6 +52,9 @@ public class RandomTestEventProvider extends LoadableDetachableModel<Collection<
 	}
 
 	public void initializeWithDateRange(Date start, Date end) {
+		if (isAttached()) {
+			return;
+		}
 		int counter = 1;
 		if (getAdjustedDate(start, +3).before(end)) {
 			// let's add one that starts 10 days before and runs three days into range
@@ -82,31 +86,52 @@ public class RandomTestEventProvider extends LoadableDetachableModel<Collection<
 	}
 
 	private IEvent createRandomEvent(Date current, int id) {
-		// TODO: add support for events that last an hour, thirty minutes, or several hours on a single day
-		// and events that last from a certain time today to a certain time tomorrow
-		boolean allDay = mRandom.nextBoolean();
-		boolean multiDay = mRandom.nextBoolean();
+		// TODO: add support for events that last from a certain time today to a certain time tomorrow
+		boolean multiDay = mRandom.nextInt(4) == 1;
 		Date start = new DateMidnight(current).toDate();
-		Date end = null;
 		if (multiDay) {
-			end = new DateTime(start).plusDays(mRandom.nextInt(9)).toDate();
+			// a multi-day event (always all-day)
+			Date end = new DateTime(start).plusDays(mRandom.nextInt(9)).toDate();
+			return createEvent(id, true, start, end);
 		}
-		return createEvent(id, allDay, start, end);
+		boolean allDay = mRandom.nextInt(3) == 1;
+		if (allDay) {
+			// an all day, single-day event
+			return createEvent(id, true, start, null);
+		}
+		
+		// this is a partial day event
+		int startHour = mRandom.nextInt(13);
+		int startMinutes = (mRandom.nextInt(4) * 15);
+		int durationHours = mRandom.nextInt(5);
+		int durationMinutes = (mRandom.nextInt(4) * 15);
+		start = new DateTime(new DateMidnight(current)).plusHours(startHour).plusMinutes(startMinutes).toDate();
+		Date end = new DateTime(start).plusHours(durationHours).plusMinutes(durationMinutes).toDate();
+		return createEvent(id, false, start, end);
 	}
 
 	private BasicEvent createEvent(int id, boolean allDay, Date start, Date end) {
 		BasicCategorizedEvent event = new BasicCategorizedEvent();
 		StringBuffer title = new StringBuffer();
-		title.append("Event #").append(id).append(" [").append(DATE_FORMAT.format(start));
-		if (end != null) {
-			title.append(" - ").append(DATE_FORMAT.format(end));
+		//title.append("Event");
+		title.append(" #").append(id);
+		if (allDay) {
+			title.append(" [").append(DATE_FORMAT.format(start));
+			if (end != null) {
+				title.append(" - ").append(DATE_FORMAT.format(end));
+			}
+		} else {
+			title.append(" [").append(TIME_FORMAT.format(start));
+			if (end != null) {
+				title.append(" - ").append(TIME_FORMAT.format(end));
+			}
 		}
 		title.append("]");
 		event.setTitle(title.toString());
 		event.setAllDayEvent(allDay);
 		event.setStartTime(start);
 		event.setEndTime(end);
-		event.setCssClassForCategory("cat" + ((id % 3) + 1));
+		event.setCssClassForCategory("cat" + ((mRandom.nextInt(3)) + 1));
 		return event;
 	}
 

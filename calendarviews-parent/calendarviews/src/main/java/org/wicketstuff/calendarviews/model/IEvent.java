@@ -21,6 +21,11 @@ package org.wicketstuff.calendarviews.model;
 import java.util.Date;
 
 /**
+ * The main model-object interface for using CalendarViews - this is
+ * what maps your model to the CalendarViews model.  Your domain model
+ * object can either implement this interface directly, or you can use
+ * a DTO of sorts and convert between the two.
+ * 
  * @author Jeremy Thomerson
  */
 public interface IEvent {
@@ -28,6 +33,14 @@ public interface IEvent {
 	String getTitle();
 	Date getStartTime();
 	Date getEndTime();
+	
+	/**
+	 * Is this event an all day event or does it have a specific start
+	 * and end time throughout the day?  
+	 * 
+	 * @return true if the event lasts all day (has no hour / minute start time)
+	 * 	always false if the event is a multi-day event
+	 */
 	boolean isAllDayEvent();
 	
 }

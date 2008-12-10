@@ -46,6 +46,7 @@ public class ExampleCalendarApplication extends WebApplication {
 	protected void init() {
 		super.init();
 		
+		getDebugSettings().setComponentUseCheck(false);
 		mount(new IndexedParamUrlCodingStrategy("home", HomePage.class));
 	}
 }
