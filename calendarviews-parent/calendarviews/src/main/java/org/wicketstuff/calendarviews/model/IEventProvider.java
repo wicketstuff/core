@@ -24,6 +24,18 @@ import java.util.Date;
 import org.apache.wicket.model.IModel;
 
 /**
+ * The main data-locator interface between your service or data access
+ * layer and CalendarViews.  Note that it is at its heart a standard Wicket 
+ * IModel&lt;Collection&lt;? extends IEvent&gt;&gt;.  It only adds a
+ * single method so that the CalendarViews layer can initialize it to the
+ * proper date range needed.<br />
+ * <br />
+ * <b>NOTE: </b> Read the documentation on the <tt>initializeWithDateRange</tt>
+ * method carefully.  It is important to understand the difference between
+ * the dates that you initialize your calendar with and the dates that the
+ * calendar will initialize your <tt>IEventProvider</tt> with.
+ *  
+ * @see #initializeWithDateRange(Date, Date)
  * @author Jeremy Thomerson
  */
 public interface IEventProvider extends IModel<Collection<? extends IEvent>> {

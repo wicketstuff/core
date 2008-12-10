@@ -56,8 +56,21 @@
 	overflow: hidden;
 	white-space: nowrap;
 	padding-left: 0.3em;
-	border: 1px red solid;
-	background-color: #FFFFCC;
 	z-index: 2000;
+}
+
+.LargeViewCalendar .day UL LI {
+	border: 1px #9494B3 solid;
+	background-color: #D3D3FF;
+}	
+.LargeViewCalendar .day UL LI.partday {
+	/* 
+		TODO: make part day events not have background or border
+		and have some way clients can override coloring per category 
+	*/
+	/*
+	border: 1px solid;
+	background: none;
+	*/
 }
 .clear { clear: both; }

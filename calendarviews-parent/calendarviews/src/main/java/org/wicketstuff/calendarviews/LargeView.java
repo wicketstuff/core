@@ -29,6 +29,7 @@ import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -37,6 +38,7 @@ import org.apache.wicket.markup.repeater.data.GridView;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -50,6 +52,13 @@ import org.wicketstuff.jslibraries.Library;
 import org.wicketstuff.jslibraries.VersionDescriptor;
 
 /**
+ * This is a larger view of a calendar, typically used for multiple weeks
+ * or entire months.  It generates a month-style grid calendar with events
+ * that can span multiple days and supports categorized events.<br />
+ * <br />
+ * You could think of it as similar to the month view in Outlook or Google
+ * calendar.
+ * 
  * @author Jeremy Thomerson
  */
 public class LargeView extends FullWeekCalendarView {
@@ -74,8 +83,8 @@ public class LargeView extends FullWeekCalendarView {
 	}
 
 	@Override
-	protected RenderStrategy getRenderStrategy() {
-		return RenderStrategy.FIRST_AND_FIRST_OF_ROW;
+	protected IRenderStrategy getRenderStrategy() {
+		return IRenderStrategy.FIRST_AND_FIRST_OF_ROW;
 	}
 	
 	private void addJavascriptInitializers() {
@@ -92,15 +101,54 @@ public class LargeView extends FullWeekCalendarView {
 		}));
 	}
 
-	protected ListView<IEvent> createEventListView(String id, final IModel<DateMidnight> dateModel, final int cellsLeftInRow, IModel<List<IEvent>> model) {
+	protected final ListView<IEvent> createEventListView(String id, final IModel<DateMidnight> dateModel, final int cellsLeftInRow, IModel<List<IEvent>> model) {
 		return new ListView<IEvent>(id, model) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void populateItem(ListItem<IEvent> item) {
-				item.add(new Label("title", new PropertyModel<String>(item.getModel(), "title")));
+			protected void populateItem(final ListItem<IEvent> item) {
+				WebMarkupContainer link = getEventLinkCreator().createEventLink("link", item.getModel());
+				link.add(createStartTimeLabel("startTime", item.getModel()));
+				link.add(new Label("title", new PropertyModel<String>(item.getModel(), "title")));
+				item.add(link);
+				
+				// things to decorate the item itself
 				item.add(new HowManyDaysClassBehavior(dateModel, cellsLeftInRow, item.getModel()));
 				item.add(new AddCssClassBehavior(item.getModel()));
+			}
+
+			private Label createStartTimeLabel(String id, final IModel<IEvent> model) {
+				return new Label(id, new LoadableDetachableModel<String>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					protected String load() {
+						// TODO : make this implementation more internationalized... this one is too static
+						//			use dateformat or something
+						DateTime start = new DateTime(model.getObject().getStartTime());
+						StringBuffer sb = new StringBuffer();
+						int hr = start.getHourOfDay();
+						sb.append(hr > 12 ? hr - 12 : hr);
+						int min = start.getMinuteOfHour();
+						if (min != 0) {
+							sb.append(':');
+							if (min < 0) {
+								sb.append('0');
+							}
+							sb.append(min);
+						}
+						sb.append(hr > 12 ? 'p' : 'a');
+						return sb.toString();
+					}
+					
+				}) {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public boolean isVisible() {
+						return model.getObject().isAllDayEvent() == false;
+					}
+				};
 			}
 		};
 	}
@@ -186,6 +234,10 @@ public class LargeView extends FullWeekCalendarView {
 				int days = Math.abs(Days.daysBetween(day, endTime).getDays());
 				numberOfDays = Math.min(days, mDaysLeftInRow) + 1;
 			}
+			// TODO: is it valid XHTML to just arbitrarily add attributes not defined
+			//			in the spec?  It sure makes it simple on the JS-side to access
+			//			additional data about the event needed for the client-side 
+			//			rendering.
 			tag.put("days", numberOfDays);
 		}
 	}

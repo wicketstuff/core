@@ -48,7 +48,7 @@ public abstract class BaseCalendarView extends Panel {
 	private final Date mStartDate;
 	private final Date mEndDate;
 	private IEventProvider mEventProvider;
-	
+	private IEventLinkCreator mEventLinkCreator = IEventLinkCreator.DEFAULT_IMPL;
 
 	public BaseCalendarView(String id, Date startDate, Date endDate, IEventProvider eventProvider) {
 		super(id);
@@ -75,8 +75,8 @@ public abstract class BaseCalendarView extends Panel {
 		return map;
 	}
 
-	protected RenderStrategy getRenderStrategy() {
-		return RenderStrategy.EVERY_DAY_OF_EVENT;
+	protected IRenderStrategy getRenderStrategy() {
+		return IRenderStrategy.EVERY_DAY_OF_EVENT;
 	}
 
 	protected IDataProvider<DateMidnight> createDaysDataProvider(final DateTime start, final DateTime end, final Period period) {
@@ -124,13 +124,24 @@ public abstract class BaseCalendarView extends Panel {
 	
 
 	/* Getters / Setters */
-	public IEventProvider getEventProvider() {
+	public final IEventProvider getEventProvider() {
 		return mEventProvider;
 	}
-	public Date getStartDate() {
+	public final Date getStartDate() {
 		return mStartDate;
 	}
-	public Date getEndDate() {
+	public final Date getEndDate() {
 		return mEndDate;
+	}
+	public final IEventLinkCreator getEventLinkCreator() {
+		return mEventLinkCreator;
+	}
+
+	public BaseCalendarView setEventLinkCreator(IEventLinkCreator eventLinkCreator) {
+		if (eventLinkCreator == null) {
+			throw new IllegalArgumentException("event link creator can not be null");
+		}
+		mEventLinkCreator = eventLinkCreator;
+		return this;
 	}
 }
