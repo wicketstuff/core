@@ -82,7 +82,6 @@ class JazzySpellChecker extends WebResource {
         StringBufferResourceStream resourceStream = new StringBufferResourceStream();
 
         final String cmd = getParameters().getString("cmd");
-        final String lang = getParameters().getString("lang");
         final String id = getParameters().getString("id");
         final String check = getParameters().getString("check");
 
