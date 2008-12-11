@@ -28,7 +28,6 @@ package wicket.contrib.tinymce.settings;
  */
 public class Button extends wicket.contrib.tinymce.settings.Enum
 {
-
     /**
 	 * 
 	 */
