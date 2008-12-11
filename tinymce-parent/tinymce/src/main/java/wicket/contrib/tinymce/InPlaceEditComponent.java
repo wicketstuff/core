@@ -25,6 +25,7 @@ import org.apache.wicket.markup.html.form.AbstractTextComponent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import wicket.contrib.tinymce.settings.Button;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
 import wicket.contrib.tinymce.settings.WicketSavePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Position;
@@ -67,7 +68,7 @@ public class InPlaceEditComponent extends AbstractTextComponent {
             WicketSavePlugin savePlugin = new WicketSavePlugin(inPlaceSaveBehavior);
             settings.add(savePlugin.getSaveButton(), Toolbar.first, Position.before);
             settings.add(savePlugin.getCancelButton(), Toolbar.first, Position.before);
-            settings.add(TinyMCESettings.separator, Toolbar.first, Position.before);
+            settings.add(Button.separator, Toolbar.first, Position.before);
         }
         inPlaceEditBehavior = createEditBehavior(triggerComponent);
         if (inPlaceEditBehavior != null)

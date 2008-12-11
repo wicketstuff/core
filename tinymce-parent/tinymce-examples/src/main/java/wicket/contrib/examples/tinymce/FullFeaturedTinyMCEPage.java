@@ -4,6 +4,7 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.Model;
 
 import wicket.contrib.tinymce.TinyMceBehavior;
+import wicket.contrib.tinymce.settings.Button;
 import wicket.contrib.tinymce.settings.ContextMenuPlugin;
 import wicket.contrib.tinymce.settings.DateTimePlugin;
 import wicket.contrib.tinymce.settings.DirectionalityPlugin;
@@ -34,10 +35,10 @@ public class FullFeaturedTinyMCEPage extends TinyMCEBasePage {
         // first toolbar
         SavePlugin savePlugin = new SavePlugin();
         settings.add(savePlugin.getSaveButton(), TinyMCESettings.Toolbar.first, TinyMCESettings.Position.before);
-        settings.add(TinyMCESettings.newdocument, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.before);
-        settings.add(TinyMCESettings.separator, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.before);
-        settings.add(TinyMCESettings.fontselect, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.after);
-        settings.add(TinyMCESettings.fontsizeselect, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.after);
+        settings.add(Button.newdocument, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.before);
+        settings.add(Button.separator, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.before);
+        settings.add(Button.fontselect, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.after);
+        settings.add(Button.fontsizeselect, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.after);
 
         // second toolbar
         PastePlugin pastePlugin = new PastePlugin();
@@ -46,25 +47,25 @@ public class FullFeaturedTinyMCEPage extends TinyMCEBasePage {
         dateTimePlugin.setDateFormat("Date: %m-%d-%Y");
         dateTimePlugin.setTimeFormat("Time: %H:%M");
         PreviewPlugin previewPlugin = new PreviewPlugin();
-        settings.add(TinyMCESettings.cut, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
-        settings.add(TinyMCESettings.copy, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
+        settings.add(Button.cut, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
+        settings.add(Button.copy, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
         settings.add(pastePlugin.getPasteButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
         settings.add(pastePlugin.getPasteTextButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
         settings.add(pastePlugin.getPasteWordButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
-        settings.add(TinyMCESettings.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
+        settings.add(Button.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
         settings.add(searchReplacePlugin.getSearchButton(), TinyMCESettings.Toolbar.second,
                 TinyMCESettings.Position.before);
         settings.add(searchReplacePlugin.getReplaceButton(), TinyMCESettings.Toolbar.second,
                 TinyMCESettings.Position.before);
-        settings.add(TinyMCESettings.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
-        settings.add(TinyMCESettings.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
+        settings.add(Button.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
+        settings.add(Button.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
         settings.add(dateTimePlugin.getDateButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
         settings.add(dateTimePlugin.getTimeButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
-        settings.add(TinyMCESettings.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
+        settings.add(Button.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
         settings.add(previewPlugin.getPreviewButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
-        settings.add(TinyMCESettings.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
-        settings.add(TinyMCESettings.forecolor, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
-        settings.add(TinyMCESettings.backcolor, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
+        settings.add(Button.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
+        settings.add(Button.forecolor, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
+        settings.add(Button.backcolor, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
 
         // third toolbar
         TablePlugin tablePlugin = new TablePlugin();
@@ -78,14 +79,14 @@ public class FullFeaturedTinyMCEPage extends TinyMCEBasePage {
         settings.add(emotionsPlugin.getEmotionsButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
         settings.add(iespellPlugin.getIespellButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
         settings.add(mediaPlugin.getMediaButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
-        settings.add(TinyMCESettings.separator, TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
+        settings.add(Button.separator, TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
         settings.add(printPlugin.getPrintButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
-        settings.add(TinyMCESettings.separator, TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
+        settings.add(Button.separator, TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
         settings
                 .add(directionalityPlugin.getLtrButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
         settings
                 .add(directionalityPlugin.getRtlButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
-        settings.add(TinyMCESettings.separator, TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
+        settings.add(Button.separator, TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
         settings.add(fullScreenPlugin.getFullscreenButton(), TinyMCESettings.Toolbar.third,
                 TinyMCESettings.Position.after);
 

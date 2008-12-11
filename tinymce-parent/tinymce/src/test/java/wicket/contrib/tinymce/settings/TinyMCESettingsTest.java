@@ -38,16 +38,15 @@ public class TinyMCESettingsTest extends TestCase {
 		// Fail if not advanced theme:
 		try {
 			settings.setToolbarButtons(Toolbar.first, Arrays
-					.asList(new Button[] { TinyMCESettings.bold,
-							TinyMCESettings.separator, TinyMCESettings.copy }));
+					.asList(new Button[] { Button.bold, Button.separator,
+							Button.copy }));
 			fail("should have thrown illegalArgumentException");
 		} catch (IllegalArgumentException e) {
 		}
 
 		settings = new TinyMCESettings(Theme.advanced, Language.en);
 		settings.setToolbarButtons(Toolbar.first, Arrays.asList(new Button[] {
-				TinyMCESettings.bold, TinyMCESettings.separator,
-				TinyMCESettings.copy }));
+				Button.bold, Button.separator, Button.copy }));
 		settings.setToolbarButtons(Toolbar.third, Collections.EMPTY_LIST);
 		assertEquals(
 				",\n\ttheme_advanced_buttons1 : \"bold,separator,copy\",\n\ttheme_advanced_buttons3 : \"\"",
@@ -140,7 +139,7 @@ public class TinyMCESettingsTest extends TestCase {
 	}
 
 	public void testDisableButton1() {
-		settings.disableButton(TinyMCESettings.bold);
+		settings.disableButton(Button.bold);
 
 		settings.addDisabledButtons(buffer);
 
@@ -150,8 +149,8 @@ public class TinyMCESettingsTest extends TestCase {
 	}
 
 	public void testDisableButton2() {
-		settings.disableButton(TinyMCESettings.bold);
-		settings.disableButton(TinyMCESettings.italic);
+		settings.disableButton(Button.bold);
+		settings.disableButton(Button.italic);
 
 		settings.addDisabledButtons(buffer);
 

@@ -28,10 +28,49 @@ package wicket.contrib.tinymce.settings;
  */
 public class Button extends wicket.contrib.tinymce.settings.Enum
 {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+
+	// default tinymce buttons
+	public static final Button bold = new Button("bold");
+	public static final Button italic = new Button("italic");
+	public static final Button underline = new Button("underline");
+	public static final Button strikethrough = new Button("strikethrough");
+	public static final Button justifyleft = new Button("justifyleft");
+	public static final Button justifycenter = new Button("justifycenter");
+	public static final Button justifyright = new Button("justifyright");
+	public static final Button justifyfull = new Button("justifyfull");
+	public static final Button styleselect = new Button("styleselect");
+	public static final Button formatselect = new Button("formatselect");
+	public static final Button bullist = new Button("bullist");
+	public static final Button numlist = new Button("numlist");
+	public static final Button outdent = new Button("outdent");
+	public static final Button indent = new Button("indent");
+	public static final Button undo = new Button("undo");
+	public static final Button redo = new Button("redo");
+	public static final Button link = new Button("link");
+	public static final Button unlink = new Button("unlink");
+	public static final Button anchor = new Button("anchor");
+	public static final Button image = new Button("image");
+	public static final Button cleanup = new Button("cleanup");
+	public static final Button help = new Button("help");
+	public static final Button code = new Button("code");
+	public static final Button hr = new Button("hr");
+	public static final Button removeformat = new Button("removeformat");
+	public static final Button visualaid = new Button("visualaid");
+	public static final Button sub = new Button("sub");
+	public static final Button sup = new Button("sup");
+	public static final Button charmap = new Button("charmap");
+	public static final Button separator = new Button("separator");
+	
+	// others buttons added by plugins
+	public static final Button newdocument = new Button("newdocument");
+	public static final Button cut = new Button("cut");
+	public static final Button copy = new Button("copy");
+	public static final Button fontselect = new Button("fontselect");
+	public static final Button fontsizeselect = new Button("fontsizeselect");
+	public static final Button forecolor = new Button("forecolor");
+	public static final Button backcolor = new Button("backcolor");
+
 
 	protected Button(String name)
     {
