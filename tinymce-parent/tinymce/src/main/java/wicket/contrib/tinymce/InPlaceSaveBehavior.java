@@ -27,8 +27,6 @@ import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.model.IModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import wicket.contrib.tinymce.settings.WicketSavePlugin;
 
@@ -37,8 +35,6 @@ import wicket.contrib.tinymce.settings.WicketSavePlugin;
  * use {@link InPlaceEditComponent} instead of this class directly.
  */
 public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
-    private static final Logger LOG = LoggerFactory.getLogger(InPlaceSaveBehavior.class);
-
     private static final String PARAM_HTMLCONT = "htmlcont";
     private String saveEditorScriptName;
     private String cancelEditorScriptName;
@@ -58,7 +54,6 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
     protected final void respond(AjaxRequestTarget target) {
         Request request = RequestCycle.get().getRequest();
         String newContent = request.getParameter(PARAM_HTMLCONT);
-        newContent = onSave(newContent);
         newContent = onSave(target, newContent);
         Component component = getComponent();
         IModel defaultModel = component.getDefaultModel();
@@ -96,13 +91,6 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
     }
 
     /**
-     * @deprecated Override onSave(AjaxRequestTarget,String) instead
-     */
-    protected String onSave(String newContent) {
-        return newContent;
-    }
-
-    /**
      * This method gets called before the new content as received from the TinyMce editor is pushed to the website.
      * Override it to add additional processing to the content.
      * 
@@ -135,7 +123,6 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
     }
 
     private final String createCancelScript() {
-        String markupId = getComponent().getMarkupId();
         return "function " + getCancelCallbackName() + "(inst) {\n" //
                 + (additionalJavaScript == null ? "" : (additionalJavaScript + "\n"))//
                 + "}";
