@@ -17,10 +17,6 @@
  */
 package wicket.contrib.tinymce.settings;
 
-import java.util.HashMap;
-import java.util.Map;
-
-
 /**
  * Base class for all TinyMCE plugins.
  * <p>
@@ -34,7 +30,6 @@ public abstract class Plugin extends wicket.contrib.tinymce.settings.Enum
 	private static final long serialVersionUID = 1L;
 
 	private String pluginPath;
-	private Map settings;
 
 	protected Plugin(String name)
 	{
@@ -45,7 +40,6 @@ public abstract class Plugin extends wicket.contrib.tinymce.settings.Enum
 	{
 		super(name);
 		this.pluginPath = pluginPath;
-		settings = new HashMap();
 	}
 
 	/**

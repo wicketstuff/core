@@ -4,10 +4,6 @@ import java.util.Collections;
 import java.util.regex.Pattern;
 
 import junit.framework.TestCase;
-
-import org.apache.wicket.markup.html.form.TextArea;
-import org.apache.wicket.util.tester.WicketTester;
-
 import wicket.contrib.tinymce.settings.TinyMCESettings.Language;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Mode;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Theme;
@@ -17,10 +13,8 @@ import wicket.contrib.tinymce.settings.TinyMCESettings.Theme;
  * @author Frank Bille (fbille@avaleo.net)
  */
 public class TinyMCESettingsTest extends TestCase {
-
     private TinyMCESettings settings;
     private StringBuffer buffer;
-    private WicketTester tester;
 
     protected void setUp() throws Exception {
         settings = new TinyMCESettings(Theme.simple, Language.en);
@@ -28,7 +22,6 @@ public class TinyMCESettingsTest extends TestCase {
     }
 
     protected void tearDown() throws Exception {
-        tester = new WicketTester();
         settings = null;
         buffer = null;
     }
@@ -138,17 +131,5 @@ public class TinyMCESettingsTest extends TestCase {
 
         String javascript = settings.getAdditionalPluginJavaScript();
         assertEquals("alert('Hello Mock World');", javascript);
-    }
-
-    private TextArea createTextArea(final String id) {
-        TextArea textArea = new TextArea(id) {
-            // overridden so we don't get an exception that getMarkupId is called while
-            // the component is not yet coupled to a page.
-            // (In a real world example enableTextArea is called during a bind to a page).
-            public String getMarkupId() {
-                return id;
-            }
-        };
-        return textArea;
     }
 }
