@@ -55,7 +55,7 @@ import wicket.contrib.tinymce.InPlaceEditBehavior;
  * @see Button
  */
 public class TinyMCESettings implements Serializable {
-	private static final long serialVersionUID = 2L;
+	private static final long serialVersionUID = 3L;
 	private static final Logger LOG = LoggerFactory
 			.getLogger(TinyMCESettings.class);
 	public static final ResourceReference REFERENCE = new CompressedResourceReference(
@@ -75,19 +75,18 @@ public class TinyMCESettings implements Serializable {
 	private boolean resizingUseCookie = true;
 	private boolean autoResize;
 
-	private Set plugins;
-	private List controls;
-
-	private Set<Button> disabledButtons;
-	private Map<Toolbar, List<Button>> advancedButtons;
+	private Set<Plugin> plugins = new ListOrderedSet();
+	private List<Control> controls = new LinkedList();
+	private Set<Button> disabledButtons = new ListOrderedSet();
+	private Map<Toolbar, List<Button>> toolbarButtons;
 	private Boolean convertUrls = null;
 	private Boolean removeScriptHost = null;
 	private Boolean relativeUrls = null;
 	private String blockFormats = null;
-
 	private ResourceReference contentCss = null;
-
 	private String documentBaseUrl;
+
+	private List<String> customSettings;
 
 	public TinyMCESettings() {
 		this(Theme.simple);
@@ -99,9 +98,6 @@ public class TinyMCESettings implements Serializable {
 
 	public TinyMCESettings(Theme theme, Language lang) {
 		this.theme = theme;
-		this.controls = new LinkedList();
-		this.plugins = new ListOrderedSet();
-		this.disabledButtons = new ListOrderedSet();
 		this.language = lang;
 	}
 
@@ -109,8 +105,16 @@ public class TinyMCESettings implements Serializable {
 		try {
 			return Language.valueOf(Session.get().getLocale().getLanguage());
 		} catch (IllegalArgumentException e) {
+			return null;
 		}
-		return null;
+	}
+
+	public Theme getTheme() {
+		return theme;
+	}
+
+	public Language getLanguage() {
+		return language;
 	}
 
 	public String getDocumentBaseUrl() {
@@ -121,6 +125,16 @@ public class TinyMCESettings implements Serializable {
 		this.documentBaseUrl = documentBaseUrl;
 	}
 
+	public void addCustomSetting(String customSetting) {
+		if (customSettings == null)
+			customSettings = new ArrayList<String>();
+		customSettings.add(customSetting);
+	}
+
+	public String[] getCustomSettings() {
+		return customSettings.toArray(new String[customSettings.size()]);
+	}
+
 	public ResourceReference getContentCss() {
 		return contentCss;
 	}
@@ -129,7 +143,7 @@ public class TinyMCESettings implements Serializable {
 		this.contentCss = contentCss;
 	}
 
-	public boolean isAutoResize() {
+	public boolean getAutoResize() {
 		return autoResize;
 	}
 
@@ -149,23 +163,43 @@ public class TinyMCESettings implements Serializable {
 		this.toolbarLocation = toolbarLocation;
 	}
 
+	public Location getToolbarLocation() {
+		return toolbarLocation;
+	}
+
 	public void setStatusbarLocation(Location statusbarLocation) {
 		this.statusbarLocation = statusbarLocation;
+	}
+
+	public Location getStatusbarLocation() {
+		return statusbarLocation;
 	}
 
 	public void setToolbarAlign(Align toolbarAlign) {
 		this.toolbarAlign = toolbarAlign;
 	}
 
+	public Align getToolbarAlign() {
+		return toolbarAlign;
+	}
+
 	public void setResizing(boolean resizing) {
 		this.resizing = resizing;
+	}
+
+	public boolean getResizing() {
+		return resizing;
 	}
 
 	public void setHorizontalResizing(boolean horizontalResizing) {
 		this.horizontalResizing = horizontalResizing;
 	}
 
-	public boolean isResizingUseCookie() {
+	public boolean getHorizontalResizing() {
+		return horizontalResizing;
+	}
+
+	public boolean getResizingUseCookie() {
 		return resizingUseCookie;
 	}
 
@@ -188,8 +222,43 @@ public class TinyMCESettings implements Serializable {
 		this.convertUrls = convertUrls;
 	}
 
-	public void setLanguage(Language language) {
-		this.language = language;
+	public Boolean getConvertUrls() {
+		return convertUrls;
+	}
+
+	/**
+	 * If this option is enabled the protocol and host part of the URLs returned
+	 * from the MCFileManager will be removed. This option is only used if the
+	 * relative_urls option is set to false. This option is set to true by
+	 * default.
+	 * 
+	 * URL:s will be returned in this format: "/somedir/somefile.htm" instead of
+	 * the default mode: "http://www.somesite.com/somedir/somefile.htm".
+	 * 
+	 * @param removeScriptHost
+	 */
+	public void setRemoveScriptHost(Boolean removeScriptHost) {
+		this.removeScriptHost = removeScriptHost;
+	}
+
+	public Boolean getRemoveScriptHost() {
+		return removeScriptHost;
+	}
+
+	/**
+	 * If this option is set to true, all URLs returned from the MCFileManager
+	 * will be relative from the specified document_base_url. If it's set to
+	 * false all URLs will be converted to absolute URLs. This option is set to
+	 * true by default.
+	 * 
+	 * @param relativeUrls
+	 */
+	public void setRelativeUrls(Boolean relativeUrls) {
+		this.relativeUrls = relativeUrls;
+	}
+
+	public Boolean getRelativeUrls() {
+		return relativeUrls;
 	}
 
 	/**
@@ -238,21 +307,38 @@ public class TinyMCESettings implements Serializable {
 	/**
 	 * This option can only be used when theme is set to advanced and when the
 	 * theme_advanced_layout_manager option is set to the default value of
-	 * "SimpleLayout". You can remove a toolbar by associating it with an empty
-	 * list of buttons.
+	 * "SimpleLayout".
 	 * 
 	 * @param toolbar
-	 * 			the toolbar to define buttons for
+	 *            the toolbar to define buttons for
 	 * @param buttons
-	 * 			a list of buttons to show as that toolbar
+	 *            A list of buttons to show as that toolbar. An empty list will
+	 *            remove (make invisible) the toolbar in tinymce. Passing null
+	 *            will remove the setting for the toolbar.
 	 */
 	public void setToolbarButtons(Toolbar toolbar, List<Button> buttons) {
 		if (!Theme.advanced.equals(theme))
 			throw new IllegalArgumentException(
 					"setToolbarButtons is only applicable for advanced theme");
-		if (advancedButtons == null)
-			advancedButtons = new HashMap<Toolbar, List<Button>>();
-		advancedButtons.put(toolbar, buttons);
+		if (toolbarButtons == null)
+			toolbarButtons = new HashMap<Toolbar, List<Button>>();
+		if (buttons == null)
+			toolbarButtons.remove(toolbar);
+		else
+			toolbarButtons.put(toolbar, buttons);
+	}
+
+	/**
+	 * @param toolbar
+	 *            The toolbar to return the defined buttons for
+	 * @return The buttons that should be shown for that toolbar (empty list for
+	 *         invisible toolbar, null for no settings for that toolbar)
+	 */
+	public List<Button> getToolbarButtons(Toolbar toolbar) {
+		List<Button> result = null;
+		if (toolbarButtons != null)
+			result = toolbarButtons.get(toolbar);
+		return result;
 	}
 
 	/**
@@ -275,7 +361,7 @@ public class TinyMCESettings implements Serializable {
 	/**
 	 * Generates the initialisation script. Internal API, do not call.
 	 */
-	public String toJavaScript(Mode mode, Collection<Component> components) {
+	public final String toJavaScript(Mode mode, Collection<Component> components) {
 		StringBuffer buffer = new StringBuffer();
 
 		// mode
@@ -283,14 +369,23 @@ public class TinyMCESettings implements Serializable {
 		if (Mode.exact.equals(mode))
 			addElements(components, buffer);
 
-		// theme
-		buffer.append(",\n\t").append("theme : ").append("\"").append(
-				theme.getName()).append("\"");
-
 		// language
 		if (language != null)
 			buffer.append(",\n\t").append("language : ").append("\"").append(
 					language.toString()).append("\"");
+		
+		//theme
+		buffer.append(",\n\t").append("theme : ").append("\"").append(
+				theme.getName()).append("\"");
+
+		// other settings
+		buffer.append(toJavaScript());
+
+		return buffer.toString();
+	}
+
+	String toJavaScript() {
+		StringBuffer buffer = new StringBuffer();
 
 		if (convertUrls != null)
 			buffer.append(",\n\t").append("convert_urls : ")
@@ -320,7 +415,15 @@ public class TinyMCESettings implements Serializable {
 
 		appendPluginSettings(buffer);
 
+		appendCustomSettings(buffer);
+
 		return buffer.toString();
+	}
+
+	private void appendCustomSettings(StringBuffer buffer) {
+		if (customSettings != null)
+			for (String line : customSettings)
+				buffer.append(",\n\t").append(line);
 	}
 
 	private void addElements(Collection<Component> components,
@@ -331,9 +434,8 @@ public class TinyMCESettings implements Serializable {
 			while (iterator.hasNext()) {
 				Component component = (Component) iterator.next();
 				buffer.append(component.getMarkupId());
-				if (iterator.hasNext()) {
+				if (iterator.hasNext())
 					buffer.append(", ");
-				}
 			}
 			buffer.append("\"");
 		} else
@@ -448,10 +550,10 @@ public class TinyMCESettings implements Serializable {
 	}
 
 	private void addButtons(StringBuffer buffer) {
-		if (advancedButtons != null)
+		if (toolbarButtons != null)
 			for (int i = 1; i <= 3; ++i) {
 				Toolbar toolbar = getToolbar(i);
-				List<Button> buttons = advancedButtons.get(toolbar);
+				List<Button> buttons = toolbarButtons.get(toolbar);
 				if (buttons != null)
 					buffer.append(",\n\ttheme_advanced_buttons").append(i)
 							.append(" : \"").append(enumAsString(buttons))
@@ -812,32 +914,4 @@ public class TinyMCESettings implements Serializable {
 	public static final Button fontsizeselect = new Button("fontsizeselect");
 	public static final Button forecolor = new Button("forecolor");
 	public static final Button backcolor = new Button("backcolor");
-
-	/**
-	 * If this option is enabled the protocol and host part of the URLs returned
-	 * from the MCFileManager will be removed. This option is only used if the
-	 * relative_urls option is set to false. This option is set to true by
-	 * default.
-	 * 
-	 * URL:s will be returned in this format: "/somedir/somefile.htm" instead of
-	 * the default mode: "http://www.somesite.com/somedir/somefile.htm".
-	 * 
-	 * @param removeScriptHost
-	 */
-	public void setRemoveScriptHost(Boolean removeScriptHost) {
-		this.removeScriptHost = removeScriptHost;
-	}
-
-	/**
-	 * If this option is set to true, all URLs returned from the MCFileManager
-	 * will be relative from the specified document_base_url. If it's set to
-	 * false all URLs will be converted to absolute URLs. This option is set to
-	 * true by default.
-	 * 
-	 * @param relativeUrls
-	 */
-	public void setRelativeUrls(Boolean relativeUrls) {
-		this.relativeUrls = relativeUrls;
-	}
-
 }
