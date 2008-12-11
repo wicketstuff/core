@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 
 import junit.framework.TestCase;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Language;
-import wicket.contrib.tinymce.settings.TinyMCESettings.Mode;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Theme;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Toolbar;
 
@@ -28,6 +27,13 @@ public class TinyMCESettingsTest extends TestCase {
 		buffer = null;
 	}
 
+	public void testCustomSettings() {
+		settings.addCustomSetting("setting_1: false");
+		settings.addCustomSetting("setting : \"help,blah\"");
+		assertEquals(",\n\tsetting_1: false,\n\tsetting : \"help,blah\"",
+				settings.toJavaScript());
+	}
+
 	public void testToolbarButtons() {
 		// Fail if not advanced theme:
 		try {
@@ -44,8 +50,8 @@ public class TinyMCESettingsTest extends TestCase {
 				TinyMCESettings.copy }));
 		settings.setToolbarButtons(Toolbar.third, Collections.EMPTY_LIST);
 		assertEquals(
-				"\n\tmode : \"exact\",\n\ttheme : \"advanced\",\n\tlanguage : \"en\",\n\ttheme_advanced_buttons1 : \"bold,separator,copy\",\n\ttheme_advanced_buttons3 : \"\"",
-				settings.toJavaScript(Mode.exact, Collections.EMPTY_LIST));
+				",\n\ttheme_advanced_buttons1 : \"bold,separator,copy\",\n\ttheme_advanced_buttons3 : \"\"",
+				settings.toJavaScript());
 	}
 
 	public void testAddStatusbarLocation() throws Exception {
@@ -159,8 +165,7 @@ public class TinyMCESettingsTest extends TestCase {
 		plugin.setDateFormat("%Y-%m-%d");
 		settings.register(plugin);
 
-		String javascript = settings.toJavaScript(Mode.none,
-				Collections.EMPTY_LIST);
+		String javascript = settings.toJavaScript();
 		Pattern pattern = Pattern.compile(
 				".*,\n\tplugin_insertdate_dateFormat : \"%Y-%m-%d\"",
 				Pattern.DOTALL);

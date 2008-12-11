@@ -98,7 +98,7 @@ public class FullFeaturedTinyMCEPage extends TinyMCEBasePage {
         settings.setToolbarAlign(TinyMCESettings.Align.left);
         settings.setToolbarLocation(TinyMCESettings.Location.top);
         settings.setStatusbarLocation(TinyMCESettings.Location.bottom);
-        settings.setVerticalResizing(true);
+        settings.setResizing(true);
 
         TextArea textArea = new TextArea("ta", new Model(TEXT));
         textArea.add(new TinyMceBehavior(settings));
