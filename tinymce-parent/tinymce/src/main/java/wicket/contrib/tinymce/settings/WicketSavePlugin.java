@@ -18,6 +18,7 @@
  */
 package wicket.contrib.tinymce.settings;
 
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.util.string.JavascriptUtils;
 
@@ -31,7 +32,7 @@ public class WicketSavePlugin extends Plugin {
     private PluginButton cancelButton;
     private String saveCallbackname;
     private String cancelCallbackname;
-    private String saveMessage;
+    private StringResourceModel saveMessage;
 
     public WicketSavePlugin(InPlaceSaveBehavior behavior) {
         super("wicketsave");
@@ -39,7 +40,7 @@ public class WicketSavePlugin extends Plugin {
         cancelButton = new PluginButton("cancel", this);
         saveCallbackname = behavior.getSaveCallbackName();
         cancelCallbackname = behavior.getCancelCallbackName();
-        saveMessage = new StringResourceModel("wicket_updating_mess", behavior.getTheComponent(), null).getString();
+        saveMessage = new StringResourceModel("wicket_updating_mess", behavior.getTheComponent(), null);
     }
 
     public PluginButton getSaveButton() {
@@ -54,6 +55,6 @@ public class WicketSavePlugin extends Plugin {
         super.definePluginSettings(buffer);
         buffer.append(",\n\tsave_onwicketsavecallback: '" + saveCallbackname + "'");
         buffer.append(",\n\tsave_onwicketcancelcallback: '" + cancelCallbackname + "'");
-        buffer.append(",\n\twicket_updating_mess: '" + JavascriptUtils.escapeQuotes(saveMessage) + "'");
+        buffer.append(",\n\twicket_updating_mess: '" + JavascriptUtils.escapeQuotes(saveMessage.getString()) + "'");
     }
 }
