@@ -461,6 +461,22 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>surefire-report-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+			</plugin>
+      <plugin>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <configuration>
+          <downloadSources>true</downloadSources>
+          <additionalProjectnatures>
+            <projectnature>wicketbench.wicketnature</projectnature>
+          </additionalProjectnatures>
+          <additionalBuildcommands>
+            <buildcommand>wicketbench.associatedMarkupAuditor</buildcommand>
+          </additionalBuildcommands>
+        </configuration>
+      </plugin>
 		</plugins>
 	</build>
 	
