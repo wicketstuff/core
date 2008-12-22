@@ -30,27 +30,23 @@ public class ArtWorkCanvasBehaviorTest
         return new TestSuite( ArtWorkCanvasBehaviorTest.class );
     }
 
+    private WicketTester tester=new WicketTester();
+    
     /**
      * Rigourous Test :-)
      */
     public void testOneGraphic()
     {
-    	WicketTester tester=new WicketTester();
     	tester.startPage(OneGraphicPage.class);
     	tester.assertRenderedPage(OneGraphicPage.class) ;
-//    	create test for one graphich
-//    	create test for two graphich
-//    	create test for two graphich & chained
     }
     public void testTwoGraphic()
     {
-    	WicketTester tester=new WicketTester();
     	tester.startPage(TwoGraphicPage.class);
     	tester.assertRenderedPage(TwoGraphicPage.class) ;
     }
     public void testOneGraphicChained()
     {
-    	WicketTester tester=new WicketTester();
     	tester.startPage(OneGraphicChainedPage.class);
     	tester.assertRenderedPage(OneGraphicChainedPage.class) ;
     }
