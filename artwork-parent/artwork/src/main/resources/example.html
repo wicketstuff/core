@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<title>Liquid Canvas Example</title>
+    
+    <style type="text/css">
+      /* the CSS is used to position our DIV in the center of the web page */
+      #example { width:30%; margin:200px auto; padding:40px; }
+    </style>
+    
+    <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
+    <script type="text/javascript" src="jquery-1.2.6.js"></script>
+    <script type="text/javascript" src="liquid-canvas.js"></script>
+    <script type="text/javascript" src="liquid-canvas-plugins.js"></script>
+    
+    <script type="text/javascript">
+      // First we wait until the document is completely loaded using the handy
+      // jQuery "ready" method.
+      $(document).ready(function() {
+        // No we can paint our canvas. Something rounded with a shadow ;-)
+        $("#example").liquidCanvas(
+            "[shadow border gradient] => roundedRect{radius:50}");
+      });
+    </script>
+    
+	</head>
+	<body>
+	  <div id="example">
+	    This is a basic Liquid Canvas example. Please have a look at the source code of this 
+      web page. It contains only the stuff you need to get going - nothing
+      more - promised ;-)
+	  </div>
+	</body>
+</html>
