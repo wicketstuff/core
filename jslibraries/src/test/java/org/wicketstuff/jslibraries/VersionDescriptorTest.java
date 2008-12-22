@@ -30,6 +30,9 @@ public class VersionDescriptorTest extends TestCase {
 	public void testExactVersionDescriptor() throws Exception {
 		VersionDescriptor vd = VersionDescriptor.exactVersion(Library.JQUERY, 1, 2);
 		assertEquals(new Version(1, 2), vd.getVersion());
+		
+		vd = VersionDescriptor.exactVersion(Library.JQUERY, 1, 2, 6);
+		assertEquals(new Version(1, 2, 6), vd.getVersion());
 	}
 
 	public void testAlwaysLatestDescriptor() throws Exception {
