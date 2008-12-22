@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<title>Liquid Canvas Demo</title>
+    <style type="text/css">
+      html, body { margin:0; padding:0; font-size:95%; font-family:sans-serif; 
+          background:#333; color:#ccc; }
+      .meta a { color:#fff; }
+      #header { overflow:hidden; padding:20px 1.1%; }
+      * html #header { height: 1%; }
+      #header #info { float:left; width:50%; }
+      #header #title { float:right; width:40%; text-align:right; }
+      #header #title h1 { margin:0 0 10px 0; }
+      #header #title p { margin:0; }
+      #content { padding:20px 0; background:url(background.jpg); overflow:hidden; 
+         color:#000; }
+      * html #content { height:1%; }
+      .example { width:27.9%; margin:1% 0 1% 1%; padding:2%; float:left; overflow:hidden; }
+      * html .example { height:1%; }
+      .newline { clear:left; }
+      .example h3 { margin:0 0 10px 0; }
+      .example pre { width:96%; color:#affe73; overflow:auto; background:#000; padding:5px; }
+      * html .example pre { overflow:scroll; }
+    </style>
+    <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
+    <script type="text/javascript" src="jquery-1.2.6.js"></script>
+    <script type="text/javascript" src="liquid-canvas.js"></script>
+    <script type="text/javascript" src="liquid-canvas-plugins.js"></script>
+    <script type="text/javascript">
+
+      // register a user defined plugin       
+      $.registerLiquidCanvasPlugin({
+        name: "mandala",
+        paint: function(area) {
+          var opts = this.opts;
+          var ctx = area.ctx;
+          var min = area.width > area.height ? area.height : area.width;
+          var trans = min / 2;
+          var rad = trans / 3;
+          for (var i = 0; i < 10; ++i) {
+            area.save();
+            ctx.translate(area.width / 2, area.height / 2);
+            ctx.rotate(i * 2*Math.PI / 10);
+            ctx.translate(trans - rad, 0);
+            area.width = 30;
+            area.height = 30;
+            this.action.paint(area);
+            area.restore();
+          }
+        }
+      });
+
+      $(document).ready(function() {
+        var i = 0;
+        $('#content').find(".example").each(function() {
+          var element = $(this);
+          element.children("h3").html("Example " + (i++));
+          var example = element.children("pre").text();
+          element.liquidCanvas(example);
+        });
+        /*
+        $('#self-made').liquidCanvas(function(area) {
+          area.ctx.translate(area.width / 2, area.height / 2);
+          area.ctx.arc(0, 0, (area.height-2) / 2, 0, 2*Math.PI-0.01, false); // bug on ie without 0.01
+          area.ctx.closePath();
+          area.ctx.stroke();
+        });
+        */
+      });
+    </script>
+	</head>
+	<body>
+	  
+    <div id="header" class="meta">
+      <div id="title">
+        <h1><a href="http://www.ruzee.com/content/liquid-canvas">LiquidCanvas</a></h1>
+        <p>by Steffen Rusitschka</p>
+      </div>
+      <div id="info">
+        This demonstration doesn't use any images for the container backgrounds. 
+        Each container is layouted via CSS floats and its background is rendered 
+        using the operation shown inside.
+        <a href="http://www.ruzee.com/content/liquid-canvas">Liquid Canvas</a>
+        is based on HTML canvas, jQuery, and excanvas.
+        Tested with FF, IE6(!), Safari, Chrome.
+      </div>
+    </div>
+
+    <div id="content">    
+    
+      <div id="example0" class="example">
+        <h3>Example</h3>
+        Plugins are used to perform drawing operations. Here the 
+        <em>fill</em> plugin gets applied on the <em>rectangle</em> plugin.
+        This operation is called application.
+        Gray is the default fill style: a gray rectangle!
+        <pre>fill => rect</pre>
+      </div>
+      <div id="example1" class="example">
+        <h3>Example</h3>
+        You can assign properties to plugins. e.g. set a fill color. The 
+        syntax is CSS-like.
+        <pre>fill{color:#f80} => rect</pre>
+      </div>
+      <div id="example2" class="example">
+        <h3>Example</h3>
+        A plugin exists for rounded rectangles. Oh, btw.:
+        <strong>You should really resize your browser window - now! :-)</strong>
+        <pre>fill{color:#fff} => roundedRect</pre>
+      </div>
+      <div class="newline"><!-- against the IE6 float/clear on same element bug... --></div>
+      <div id="example3" class="example">
+        <h3>Example</h3>
+        You can also set the properties of plugins on the right hand side.
+        More curves!!!
+        <pre>fill => roundedRect{radius:80}</pre>
+      </div>
+      <div id="example4" class="example">
+        <h3>Example</h3>
+        Using an array-like syntax you can chain plugins: First draw a 
+        <em>shadow</em>, then <em>fill</em> it. Both plugins in the chain
+        act on a <em>roundedRect</em>.
+        <pre>[shadow fill] => roundedRect</pre>
+      </div>
+      <div id="example5" class="example">
+        <h3>Example</h3>
+        You can chain as mainy plugins as you want. Properties can by set on
+        any plugin.
+        <pre>[shadow border{color:#fff} fill{color:#f80}] => roundedRect{radius:30}</pre>
+      </div>
+      <div class="newline"><!-- against the IE6 float/clear on same element bug... --></div>
+      <div id="example6" class="example">
+        <h3>Example</h3>
+        Loads of plugins exist, e.g. the <em>gradient</em> plugin -
+        <strong>and you can write your own!</strong> If you are familiar
+        with <a href="http://en.wikipedia.org/wiki/Canvas_(HTML_element)">HTML canvas</a> you're ready to go.
+        <pre>gradient{from:rgba(255, 255, 255, 0.2); to:#888;} => roundedRect{radius:50}</pre>
+      </div>
+      <div id="example7" class="example">
+        <h3>Example</h3>
+        Applications can be chained as well to perform multiple operations 
+        inside one canvas. Just seperate them with a comma.
+        <pre>gradient => rect, border => roundedRect{radius:60}</pre>
+      </div>
+      <div id="example8" class="example">
+        <h3>Example</h3>
+        The application operation can be used recursively by using regular brackets.
+        This gives a different way of chaining operations.
+        <pre>fill => rect, mandala => ([border{color:#fff; width:1}] => roundedRect{radius:10})</pre>
+      </div>
+    </div>  <!-- / of content -->
+	</body>
+</html>
