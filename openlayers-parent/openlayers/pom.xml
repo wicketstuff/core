@@ -26,6 +26,7 @@
 	<name>Openlayers</name>
 	<description>Openlayer component.</description>
 	<inceptionYear>2008</inceptionYear>
+	<url>http://wicketstuff.org/confluence/display/STUFFWIKI/wicket-contrib-openlayers</url>
 	<developers>
 		<developer>
 			<name>Nino Martinez</name>

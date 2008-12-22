@@ -36,6 +36,7 @@
 		<module>tinymce-parent</module>
 		<module>yui-parent</module>
 		<module>push-parent</module>
+		<module>artwork-parent</module>
 	</modules>
 
 	<licenses>
