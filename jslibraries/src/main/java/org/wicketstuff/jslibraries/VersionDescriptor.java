@@ -53,6 +53,10 @@ public class VersionDescriptor {
 	}
 
 	private boolean matches(Version version) {
+		if (mVersions.length > version.getNumbers().length) {
+			// we're more specific - don't match
+			return false;
+		}
 		for (int i = 0; i < mVersions.length; i++) {
 			if (mVersions[i] != null && !mVersions[i].equals(version.getNumbers()[i])) {
 				return false;
