@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <parent>
+    <artifactId>wicketstuff-core</artifactId>
+    <groupId>org.wicketstuff</groupId>
+    <version>1.4-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.wicketstuff</groupId>
+  <artifactId>artwork-parent</artifactId>
+  <name>artwork-parent</name>
+  <packaging>pom</packaging>
+  
+  <modules>
+    <module>artwork-examples</module>
+    <module>artwork</module>
+  </modules>
+</project>
