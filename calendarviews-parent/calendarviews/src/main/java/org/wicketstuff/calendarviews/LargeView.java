@@ -210,6 +210,12 @@ public class LargeView extends FullWeekCalendarView {
 		return new LargeView(id, start, end, eventProvider);
 	}
 
+	public static LargeView createMonthView(String id, IEventProvider eventProvider, int month, int year) {
+		Date start = new DateTime().dayOfMonth().setCopy(1).monthOfYear().setCopy(month).year().setCopy(year).toDate();
+		Date end = new DateTime(start).plusMonths(1).minusDays(1).toDate();
+		return new LargeView(id, start, end, eventProvider);
+	}
+
 	private static class HowManyDaysClassBehavior extends AbstractBehavior {
 		private static final long serialVersionUID = 1L;
 
