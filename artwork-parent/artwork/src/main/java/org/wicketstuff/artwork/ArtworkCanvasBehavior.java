@@ -77,7 +77,7 @@ public class ArtworkCanvasBehavior extends AbstractBehavior implements
 				Graphics inspect = g;
 				while (moreChainedGraphics) {
 					if (inspect.isChained()) {
-						js += " ," + inspect.getStringForJS();
+						js += " " + inspect.getStringForJS();
 						inspect = inspect.getChainedGraphics();
 					} else {
 						moreChainedGraphics = false;
