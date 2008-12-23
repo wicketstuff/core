@@ -1,13 +1,13 @@
 package org.wicketstuff;
 
-import org.wicketstuff.artwork.ArtworkCanvasBehavior;
-import org.wicketstuff.artwork.graphics.Border;
+import org.wicketstuff.artwork.liquidcanvas.LiquidCanvasBehavior;
+import org.wicketstuff.artwork.liquidcanvas.graphics.Border;
 
 public class OneGraphicPage extends AbstractGraphicPage {
 
 	@Override
-	protected ArtworkCanvasBehavior getBehavior() {
-		return new ArtworkCanvasBehavior(new Border());
+	protected LiquidCanvasBehavior getBehavior() {
+		return new LiquidCanvasBehavior(new Border());
 	}
 
 }

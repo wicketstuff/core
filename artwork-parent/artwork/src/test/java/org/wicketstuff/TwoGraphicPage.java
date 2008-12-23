@@ -1,14 +1,14 @@
 package org.wicketstuff;
 
-import org.wicketstuff.artwork.ArtworkCanvasBehavior;
-import org.wicketstuff.artwork.graphics.Border;
-import org.wicketstuff.artwork.graphics.Shadow;
+import org.wicketstuff.artwork.liquidcanvas.LiquidCanvasBehavior;
+import org.wicketstuff.artwork.liquidcanvas.graphics.Border;
+import org.wicketstuff.artwork.liquidcanvas.graphics.Shadow;
 
 public class TwoGraphicPage extends AbstractGraphicPage {
 
 	@Override
-	protected ArtworkCanvasBehavior getBehavior() {
-		return new ArtworkCanvasBehavior(new Border(),new Shadow());
+	protected LiquidCanvasBehavior getBehavior() {
+		return new LiquidCanvasBehavior(new Border(),new Shadow());
 	}
 
 }

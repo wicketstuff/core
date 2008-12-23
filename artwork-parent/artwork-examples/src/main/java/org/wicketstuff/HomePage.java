@@ -3,12 +3,12 @@ package org.wicketstuff;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.WebPage;
-import org.wicketstuff.artwork.ArtworkCanvasBehavior;
-import org.wicketstuff.artwork.graphics.Border;
-import org.wicketstuff.artwork.graphics.Gradient;
-import org.wicketstuff.artwork.graphics.Graphics;
-import org.wicketstuff.artwork.graphics.RoundedRect;
-import org.wicketstuff.artwork.graphics.Shadow;
+import org.wicketstuff.artwork.liquidcanvas.LiquidCanvasBehavior;
+import org.wicketstuff.artwork.liquidcanvas.graphics.Border;
+import org.wicketstuff.artwork.liquidcanvas.graphics.Gradient;
+import org.wicketstuff.artwork.liquidcanvas.graphics.Graphics;
+import org.wicketstuff.artwork.liquidcanvas.graphics.RoundedRect;
+import org.wicketstuff.artwork.liquidcanvas.graphics.Shadow;
 
 /**
  * Homepage
@@ -30,7 +30,7 @@ public class HomePage extends WebPage {
         // Add the simplest type of label
     	Graphics g=new Shadow();
     	g.setChainedGraphics(new Border()).setChainedGraphics(new Gradient());
-    	ArtworkCanvasBehavior a=new ArtworkCanvasBehavior(g,new RoundedRect());
+    	LiquidCanvasBehavior a=new LiquidCanvasBehavior(g,new RoundedRect());
         add(new Label("message", "If you see this message wicket is properly configured and running").add(a));
 
         // TODO Add your page's components here
