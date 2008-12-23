@@ -109,10 +109,8 @@ public class ArtworkCanvasBehavior extends AbstractBehavior implements
 
 	private ResourceReference getJQueryReference() {
 
-		return JSReference.getReference(VersionDescriptor.alwaysLatest(Library.JQUERY));
-// Change to below, waiting for author to fix!
-//		return JSReference.getReference(VersionDescriptor.exactVersion(
-//				Library.JQUERY, 1, 2, 6));
+		return JSReference.getReference(VersionDescriptor.exactVersion(
+				Library.JQUERY, 1, 2, 6));
 
 	}
 }
