@@ -68,31 +68,33 @@ public class ArtworkCanvasBehavior extends AbstractBehavior implements
 			if (!first) {
 				js += " => ";
 			}
-			if (g.isChained()) {
-				js += "[ ";
-			}
-			js += " " + g.getStringForJS();
-			if (g.isChained()) {
-				boolean moreChainedGraphics = true;
-				Graphics inspect = g;
-				while (moreChainedGraphics) {
-					if (inspect.isChained()) {
-						js += " " + inspect.getStringForJS();
-						inspect = inspect.getChainedGraphics();
-					} else {
-						moreChainedGraphics = false;
-					}
-
-				}
-
-				js += " ]";
-			}
+			js = fillChained(js, g);
 			first = false;
 		}
 
 		js += endJs;
 		return js;
 
+	}
+
+	private String fillChained(String js, Graphics g) {
+		if (g.isChained()) {
+			js += "[ ";
+		}
+		js += " " + g.getStringForJS();
+		if (g.isChained()) {
+			boolean moreChainedGraphics = true;
+			Graphics inspect = g.getChainedGraphics();
+			while (moreChainedGraphics) {
+				moreChainedGraphics = inspect.isChained();
+				js += " " + inspect.getStringForJS();
+				inspect = inspect.getChainedGraphics();
+
+			}
+
+			js += " ]";
+		}
+		return js;
 	}
 
 	private ResourceReference getLiquidCanvasPluginsReference() {
