@@ -12,7 +12,7 @@
   <packaging>pom</packaging>
   
   <modules>
-    <module>artwork-examples</module>
     <module>artwork</module>
+    <module>artwork-examples</module>
   </modules>
 </project>

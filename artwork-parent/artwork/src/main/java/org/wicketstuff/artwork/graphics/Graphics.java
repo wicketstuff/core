@@ -13,8 +13,9 @@ public abstract class Graphics {
 		}
 		return false;
 	}
-	public void setChainedGraphics(Graphics chainedGraphics) {
+	public Graphics setChainedGraphics(Graphics chainedGraphics) {
 		this.chainedGraphics = chainedGraphics;
+		return chainedGraphics;
 	}
 	public abstract String getStringForJS();
 
