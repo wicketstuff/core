@@ -50,6 +50,7 @@ public class LiquidCanvasBehavior extends AbstractBehavior implements
 		response.renderJavascriptReference(getJQueryReference());
 		response.renderJavascriptReference(getLiquidCanvasReference());
 		response.renderJavascriptReference(getLiquidCanvasPluginsReference());
+		response.renderString(getExcanvasReference());
 		response.renderOnLoadJavascript(getCanvasJS());
 	}
 
@@ -95,6 +96,20 @@ public class LiquidCanvasBehavior extends AbstractBehavior implements
 			js += " ]";
 		}
 		return js;
+	}
+
+	/**
+	 * Returns a resource that only will be picked up by IE!
+	 * @return
+	 */
+	private String getExcanvasReference(){
+		
+		String excanvasUrl = "";
+		excanvasUrl="<!--[if IE]><script type=\"text/javascript\" src=\""+component.urlFor(new ResourceReference(LiquidCanvasBehavior.class, "excanvas.js")).toString()+"\"></script><![endif]-->";
+
+		
+		
+		return excanvasUrl;
 	}
 
 	private ResourceReference getLiquidCanvasPluginsReference() {
