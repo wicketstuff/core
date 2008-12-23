@@ -24,6 +24,10 @@ public class LiquidCanvasBehavior extends AbstractBehavior implements
 
 	private List<Graphics> graphicsList;
 
+	/**
+	 * For differences between the array the constructor takes and Chained graphics please see http://www.ruzee.com/files/liquid-canvas/demo.html  (example 5 and 7)
+	 * @param graphics
+	 */
 	public LiquidCanvasBehavior(Graphics... graphics) {
 		super();
 		this.graphicsList = Arrays.asList(graphics);
@@ -129,5 +133,9 @@ public class LiquidCanvasBehavior extends AbstractBehavior implements
 		return JSReference.getReference(VersionDescriptor.exactVersion(
 				Library.JQUERY, 1, 2, 6));
 
+	}
+
+	protected List<Graphics> getGraphicsList() {
+		return graphicsList;
 	}
 }

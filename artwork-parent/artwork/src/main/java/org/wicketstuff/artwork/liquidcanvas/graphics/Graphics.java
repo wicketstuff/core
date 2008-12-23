@@ -1,6 +1,8 @@
 package org.wicketstuff.artwork.liquidcanvas.graphics;
 
-public abstract class Graphics {
+import java.io.Serializable;
+
+public abstract class Graphics implements Serializable {
 	
 	private Graphics chainedGraphics=null;
 	
