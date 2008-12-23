@@ -20,4 +20,15 @@
 		behaviors that are too small to warrant their own project
 	</description>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>2.5.2</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+
+
 </project>
