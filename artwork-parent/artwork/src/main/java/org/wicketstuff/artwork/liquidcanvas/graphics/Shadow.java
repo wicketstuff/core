@@ -1,4 +1,4 @@
-package org.wicketstuff.artwork.graphics;
+package org.wicketstuff.artwork.liquidcanvas.graphics;
 
 public class Shadow extends Graphics {
 

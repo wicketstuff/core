@@ -1,18 +1,18 @@
 package org.wicketstuff;
 
-import org.wicketstuff.artwork.ArtworkCanvasBehavior;
-import org.wicketstuff.artwork.graphics.Border;
-import org.wicketstuff.artwork.graphics.Graphics;
-import org.wicketstuff.artwork.graphics.Shadow;
+import org.wicketstuff.artwork.liquidcanvas.LiquidCanvasBehavior;
+import org.wicketstuff.artwork.liquidcanvas.graphics.Border;
+import org.wicketstuff.artwork.liquidcanvas.graphics.Graphics;
+import org.wicketstuff.artwork.liquidcanvas.graphics.Shadow;
 
 public class OneGraphicChainedPage extends AbstractGraphicPage {
 
 	@Override
-	protected ArtworkCanvasBehavior getBehavior() {
+	protected LiquidCanvasBehavior getBehavior() {
 		Graphics g=new Border();
 		g.setChainedGraphics(new Shadow());
 		
-		return new ArtworkCanvasBehavior(g);
+		return new LiquidCanvasBehavior(g);
 	}
 
 }

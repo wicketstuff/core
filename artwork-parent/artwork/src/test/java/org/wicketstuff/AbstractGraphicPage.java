@@ -3,7 +3,7 @@ package org.wicketstuff;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
-import org.wicketstuff.artwork.ArtworkCanvasBehavior;
+import org.wicketstuff.artwork.liquidcanvas.LiquidCanvasBehavior;
 
 public abstract class AbstractGraphicPage extends WebPage {
 	
@@ -16,6 +16,6 @@ public abstract class AbstractGraphicPage extends WebPage {
 		
 		
 	}
-	protected abstract ArtworkCanvasBehavior getBehavior();
+	protected abstract LiquidCanvasBehavior getBehavior();
 
 }

@@ -1,4 +1,4 @@
-package org.wicketstuff.artwork;
+package org.wicketstuff.artwork.liquidcanvas;
 
 import java.util.Arrays;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.apache.wicket.ResourceReference;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.wicketstuff.artwork.graphics.Graphics;
+import org.wicketstuff.artwork.liquidcanvas.graphics.Graphics;
 import org.wicketstuff.jslibraries.JSReference;
 import org.wicketstuff.jslibraries.Library;
 import org.wicketstuff.jslibraries.VersionDescriptor;
@@ -17,14 +17,14 @@ import org.wicketstuff.jslibraries.VersionDescriptor;
  * 
  * @author Nino Martinez (nino.martinez.wael *at* gmail *dot* com remember no
  *         stars)
- * 
+ * @see http://www.ruzee.com/content/liquid-canvas
  */
-public class ArtworkCanvasBehavior extends AbstractBehavior implements
+public class LiquidCanvasBehavior extends AbstractBehavior implements
 		IHeaderContributor {
 
 	private List<Graphics> graphicsList;
 
-	public ArtworkCanvasBehavior(Graphics... graphics) {
+	public LiquidCanvasBehavior(Graphics... graphics) {
 		super();
 		this.graphicsList = Arrays.asList(graphics);
 	}
@@ -98,13 +98,13 @@ public class ArtworkCanvasBehavior extends AbstractBehavior implements
 	}
 
 	private ResourceReference getLiquidCanvasPluginsReference() {
-		return new ResourceReference(ArtworkCanvasBehavior.class,
+		return new ResourceReference(LiquidCanvasBehavior.class,
 				"liquid-canvas-plugins.js");
 
 	}
 
 	private ResourceReference getLiquidCanvasReference() {
-		return new ResourceReference(ArtworkCanvasBehavior.class,
+		return new ResourceReference(LiquidCanvasBehavior.class,
 				"liquid-canvas.js");
 
 	}

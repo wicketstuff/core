@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class ArtWorkCanvasBehaviorTest 
+public class LiquidCanvasBehaviorTest 
     extends TestCase
 {
     /**
@@ -17,7 +17,7 @@ public class ArtWorkCanvasBehaviorTest
      *
      * @param testName name of the test case
      */
-    public ArtWorkCanvasBehaviorTest( String testName )
+    public LiquidCanvasBehaviorTest( String testName )
     {
         super( testName );
     }
@@ -27,7 +27,7 @@ public class ArtWorkCanvasBehaviorTest
      */
     public static Test suite()
     {
-        return new TestSuite( ArtWorkCanvasBehaviorTest.class );
+        return new TestSuite( LiquidCanvasBehaviorTest.class );
     }
 
     private WicketTester tester=new WicketTester();
