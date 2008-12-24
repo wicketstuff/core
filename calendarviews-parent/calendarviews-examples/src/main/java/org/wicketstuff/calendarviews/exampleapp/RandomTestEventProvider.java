@@ -65,7 +65,7 @@ public class RandomTestEventProvider extends LoadableDetachableModel<Collection<
 		
 		// start a few days early so that we can get ones that start before but extend into this range
 		for (Date current = getAdjustedDate(start, -3); current.before(end); current = getAdjustedDate(current, +1)) {
-			int events = mRandom.nextInt(3);
+			int events = mRandom.nextInt(4);
 			for (int i = 1; i <= events; i++) {
 				IEvent evt = createRandomEvent(current, counter++);
 				if (evt.getStartTime().before(start)) {

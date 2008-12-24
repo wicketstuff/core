@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxEventBehavior;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.ComponentTag;
@@ -66,7 +68,7 @@ public class LargeView extends FullWeekCalendarView {
 	private static final VersionDescriptor JS_LIB_VERSION_DESCRIPTOR = VersionDescriptor.alwaysLatestOfVersion(Library.PROTOTYPE, 1, 6);
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(LargeView.class);
-
+	
 	public LargeView(String id, Date startDate, Date endDate, IEventProvider eventProvider) {
 		super(id, startDate, endDate, eventProvider);
 
@@ -178,8 +180,7 @@ public class LargeView extends FullWeekCalendarView {
 		protected void populateItem(final Item<DateMidnight> item) {
 			int cell = (mCounter++ % getColumns()) + 1;
 			int cellsLeft = getColumns() - cell;
-			item.add(new Label("date", new PropertyModel<Integer>(item.getModel(), "dayOfMonth")));
-			item.add(createEventListView("events", item.getModel(), cellsLeft, new AbstractReadOnlyModel<List<IEvent>>() {
+			final AbstractReadOnlyModel<List<IEvent>> eventsModel = new AbstractReadOnlyModel<List<IEvent>>() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -187,9 +188,22 @@ public class LargeView extends FullWeekCalendarView {
 					return mMapOfEvents.get(item.getModelObject());
 				}
 				
-			}));
+			};
+			Label dateHeader = new Label("date", new PropertyModel<Integer>(item.getModel(), "dayOfMonth"));
+			dateHeader.add(new AjaxEventBehavior("onclick") {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected void onEvent(AjaxRequestTarget target) {
+					LOGGER.debug("Show more events for: " + item.getModelObject());
+					onMoreLinkClicked(item.getModel(), eventsModel);
+				}
+			});
+			item.add(dateHeader);
+			item.add(createEventListView("events", item.getModel(), cellsLeft, eventsModel));
 		}
 		
+
 		@Override
 		protected void onDetach() {
 			super.onDetach();
@@ -197,6 +211,10 @@ public class LargeView extends FullWeekCalendarView {
 		}
 	}
 
+	protected void onMoreLinkClicked(IModel<DateMidnight> model, IModel<List<IEvent>> eventsModel) {
+		
+	}
+	
 	public static LargeView createWeeksView(String id, IEventProvider eventProvider, int weeks) {
 		// TODO add a similar method that allows an offset of weeks (i.e. 3 weeks, starting two weeks past today)
 		Date start = new Date();

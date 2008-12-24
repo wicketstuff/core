@@ -52,12 +52,25 @@ LargeViewCalendar.initialize = function(calID) {
 
 LargeViewCalendar.postEventRendering = function(calendar) {
 	calendar.select(LargeViewCalendar.SELECTOR_DAYS).each(function(day) {
-		var header = null;
+		var header = day.select(LargeViewCalendar.SELECTOR_HEADER_FROM_DAY).first();
+		var link = null;
 		if (day.moreEvents && !(day.moreEventLink)) {
-			// TODO: make a real working "more events" link
-			header = day.select(LargeViewCalendar.SELECTOR_HEADER_FROM_DAY).first();
-			header.innerHTML += ' (' + day.moreEvents + ' more)';
+			// create a "more" link
+			link = $(document.createElement('a'));
+			link.setAttribute('href', '#' + day.date);
+			// use the onclick provided by Wicket behavior in LargeView.java
+			link.onclick = header.onclick;
+			link.innerHTML = '(' + day.moreEvents + ' more)';
+			// add a space after the date and add the link to the header
+			header.innerHTML += ' &nbsp;';
+			header.insert(link);
+			// for later:
 			day.moreEventLink = true;
+			
+			// now clear the header's onclick so that we don't get double submission
+			header.onclick = function() {};
+		} else {
+			header.onclick = function() {};
 		}
 	});
 };
