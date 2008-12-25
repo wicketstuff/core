@@ -43,6 +43,7 @@ import org.wicketstuff.calendarviews.util.Comparators;
 public abstract class BaseCalendarView extends Panel {
 
 	private static final long serialVersionUID = 1L;
+	public static final ResourceReference CALENDARS_CSS_REFERENCE = new ResourceReference(BaseCalendarView.class, "calendars.css");
 //	private static final Logger LOGGER = LoggerFactory.getLogger(BaseCalendarView.class);
 
 	private final Date mStartDate;
@@ -52,7 +53,7 @@ public abstract class BaseCalendarView extends Panel {
 
 	public BaseCalendarView(String id, Date startDate, Date endDate, IEventProvider eventProvider) {
 		super(id);
-		add(HeaderContributor.forCss(new ResourceReference(LargeView.class, "calendars.css")));
+		add(HeaderContributor.forCss(CALENDARS_CSS_REFERENCE));
 		if (startDate == null || endDate == null || eventProvider == null) {
 			throw new IllegalArgumentException("no null parameters are allowed in this constructor");
 		}

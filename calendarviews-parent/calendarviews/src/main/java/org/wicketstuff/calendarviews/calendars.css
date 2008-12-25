@@ -74,3 +74,10 @@
 	*/
 }
 .clear { clear: both; }
+
+.row0 {
+	background-color: grey;
+}
+.row1 {
+	background-color: grey;
+}
