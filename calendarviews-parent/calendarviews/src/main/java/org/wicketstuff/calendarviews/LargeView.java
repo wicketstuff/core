@@ -24,10 +24,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow.PageCreator;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
@@ -47,6 +50,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketstuff.calendarviews.modal.DateDetailPage;
 import org.wicketstuff.calendarviews.model.IEvent;
 import org.wicketstuff.calendarviews.model.IEventProvider;
 import org.wicketstuff.jslibraries.JSReference;
@@ -68,11 +72,16 @@ public class LargeView extends FullWeekCalendarView {
 	private static final VersionDescriptor JS_LIB_VERSION_DESCRIPTOR = VersionDescriptor.alwaysLatestOfVersion(Library.PROTOTYPE, 1, 6);
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(LargeView.class);
+
+	private final ModalWindow mDetailModal;
 	
 	public LargeView(String id, Date startDate, Date endDate, IEventProvider eventProvider) {
 		super(id, startDate, endDate, eventProvider);
 
 		addJavascriptInitializers();
+		
+		add(mDetailModal = new ModalWindow("detailModal"));
+		initializeDetailModalWindow(mDetailModal);
 		
 		IDataProvider<DateMidnight> dp = createDaysDataProvider();
 		Collection<? extends IEvent> allEvents = getEventProvider().getObject();
@@ -84,8 +93,13 @@ public class LargeView extends FullWeekCalendarView {
 		add(new LargeGridView("rows", dp, mapOfEvents));
 	}
 
+	protected final void initializeDetailModalWindow(ModalWindow modal) {
+		modal.setPageMapName("calendar-detail-modal");
+		modal.setCookieName("calendar-detail-modal");
+	}
+
 	@Override
-	protected IRenderStrategy getRenderStrategy() {
+	protected final IRenderStrategy getRenderStrategy() {
 		return IRenderStrategy.FIRST_AND_FIRST_OF_ROW;
 	}
 	
@@ -158,7 +172,7 @@ public class LargeView extends FullWeekCalendarView {
 	private class LargeGridView extends GridView<DateMidnight> {
 		private static final long serialVersionUID = 1L;
 		
-		private transient Map<DateMidnight, List<IEvent>> mMapOfEvents;
+		private Map<DateMidnight, List<IEvent>> mMapOfEvents;
 		private int mCounter;
 		
 		public LargeGridView(String id, IDataProvider<DateMidnight> dp, Map<DateMidnight, List<IEvent>> mapOfEvents) {
@@ -180,11 +194,11 @@ public class LargeView extends FullWeekCalendarView {
 		protected void populateItem(final Item<DateMidnight> item) {
 			int cell = (mCounter++ % getColumns()) + 1;
 			int cellsLeft = getColumns() - cell;
-			final AbstractReadOnlyModel<List<IEvent>> eventsModel = new AbstractReadOnlyModel<List<IEvent>>() {
+			final AbstractReadOnlyModel<List<IEvent>> eventsModel = new LoadableDetachableModel<List<IEvent>>() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public List<IEvent> getObject() {
+				protected List<IEvent> load() {
 					return mMapOfEvents.get(item.getModelObject());
 				}
 				
@@ -196,7 +210,7 @@ public class LargeView extends FullWeekCalendarView {
 				@Override
 				protected void onEvent(AjaxRequestTarget target) {
 					LOGGER.debug("Show more events for: " + item.getModelObject());
-					onMoreLinkClicked(item.getModel(), eventsModel);
+					onMoreLinkClicked(target, item.getModel(), eventsModel);
 				}
 			});
 			item.add(dateHeader);
@@ -207,14 +221,24 @@ public class LargeView extends FullWeekCalendarView {
 		@Override
 		protected void onDetach() {
 			super.onDetach();
-			mMapOfEvents = null;
 		}
 	}
 
-	protected void onMoreLinkClicked(IModel<DateMidnight> model, IModel<List<IEvent>> eventsModel) {
-		
+	protected void onMoreLinkClicked(AjaxRequestTarget target, IModel<DateMidnight> model, IModel<List<IEvent>> eventsModel) {
+		mDetailModal.setPageCreator(getDetailModalPageCreator(model, eventsModel));
+		mDetailModal.show(target);
 	}
 	
+	protected PageCreator getDetailModalPageCreator(final IModel<DateMidnight> model, final IModel<List<IEvent>> eventsModel) {
+		return new ModalWindow.PageCreator() {
+			private static final long serialVersionUID = 1L;
+
+			public Page createPage() {
+				return new DateDetailPage(model, eventsModel);
+			}
+		};
+	}
+
 	public static LargeView createWeeksView(String id, IEventProvider eventProvider, int weeks) {
 		// TODO add a similar method that allows an offset of weeks (i.e. 3 weeks, starting two weeks past today)
 		Date start = new Date();

@@ -18,26 +18,19 @@
     limitations under the License.
 
 -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.sourceforge.net/" xml:lang="en" lang="en">  
+<html>
     <head>
-        <title>this is not rendered</title>
+        <title wicket:id="title">Detail Page</title>
     </head>
-    <body>
-	    <wicket:panel>
-	    	<div class="LargeViewCalendar">
-	    		<div wicket:id="detailModal"></div>
-	    		<div class="week" wicket:id="rows">
-	    			<div class="day" wicket:id="cols">
-	    				<h5 wicket:id="date"></h5>
-	    				<ul>
-	    					<li wicket:id="events"><a href="#" wicket:id="link"><span wicket:id="startTime"></span><span wicket:id="title"></span></a></li>
-	    				</ul>
-	    			</div>
-	    			<span class="clear"></span>
-	    		</div>
-	    	</div>
-		</wicket:panel>
+    <body id="DateDetailPage">
+        <h1 wicket:id="inPageTitle">Details</h1>
+        <ul>
+        	<li wicket:id="list">
+        		<h4 wicket:id="title"></h4>
+        		<b>Start:</b> <span wicket:id="startTime"></span>
+        		- <b>End:</b> <span wicket:id="endTime"></span>
+        	</li>
+        </ul>
     </body>
 </html>
 
