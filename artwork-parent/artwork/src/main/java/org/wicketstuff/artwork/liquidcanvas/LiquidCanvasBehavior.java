@@ -1,5 +1,6 @@
 package org.wicketstuff.artwork.liquidcanvas;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class LiquidCanvasBehavior extends AbstractBehavior implements
 	 */
 	public LiquidCanvasBehavior(Graphics... graphics) {
 		super();
-		this.graphicsList = Arrays.asList(graphics);
+		this.graphicsList = new ArrayList(Arrays.asList(graphics));
 	}
 
 	/** The target component. */
