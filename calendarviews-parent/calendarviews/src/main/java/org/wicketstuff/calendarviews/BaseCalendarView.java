@@ -49,7 +49,6 @@ public abstract class BaseCalendarView extends Panel {
 	private final Date mStartDate;
 	private final Date mEndDate;
 	private IEventProvider mEventProvider;
-	private IEventLinkCreator mEventLinkCreator = IEventLinkCreator.DEFAULT_IMPL;
 
 	public BaseCalendarView(String id, Date startDate, Date endDate, IEventProvider eventProvider) {
 		super(id);
@@ -133,16 +132,5 @@ public abstract class BaseCalendarView extends Panel {
 	}
 	public final Date getEndDate() {
 		return mEndDate;
-	}
-	public final IEventLinkCreator getEventLinkCreator() {
-		return mEventLinkCreator;
-	}
-
-	public BaseCalendarView setEventLinkCreator(IEventLinkCreator eventLinkCreator) {
-		if (eventLinkCreator == null) {
-			throw new IllegalArgumentException("event link creator can not be null");
-		}
-		mEventLinkCreator = eventLinkCreator;
-		return this;
 	}
 }

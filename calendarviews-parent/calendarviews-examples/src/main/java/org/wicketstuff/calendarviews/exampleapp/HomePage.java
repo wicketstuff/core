@@ -18,7 +18,10 @@
  */
 package org.wicketstuff.calendarviews.exampleapp;
 
+import java.util.List;
+
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.behavior.HeaderContributor;
@@ -28,9 +31,10 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.JavascriptUtils;
-import org.wicketstuff.calendarviews.IEventLinkCreator;
+import org.joda.time.DateMidnight;
 import org.wicketstuff.calendarviews.LargeView;
 import org.wicketstuff.calendarviews.model.IEvent;
+import org.wicketstuff.calendarviews.model.TimePeriod;
 
 /**
  * @author Jeremy Thomerson
@@ -40,24 +44,7 @@ public class HomePage extends WebPage {
 	private static final String KEY_WEEKS = "0";
 //	private static final Logger LOGGER = LoggerFactory.getLogger(HomePage.class);
 	private static final long serialVersionUID = 1L;
-
-	private static final IEventLinkCreator LINK_CREATOR = new IEventLinkCreator() {
-		private static final long serialVersionUID = 1L;
-
-		public WebMarkupContainer createEventLink(String id, final IModel<IEvent> model) {
-			WebMarkupContainer wmc = new WebMarkupContainer(id);
-			wmc.add(new AttributeModifier("onclick", true, new AbstractReadOnlyModel<String>() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public String getObject() {
-					return "alert('" + JavascriptUtils.escapeQuotes(model.getObject().getTitle()) + "');";
-				}
-				
-			}));
-			return wmc;
-		}
-	};
+	public static final ResourceReference EXAMPLES_CSS_REFERENCE = new ResourceReference(HomePage.class, "examples.css");
 
 	public HomePage() {
 		this(0);
@@ -67,13 +54,36 @@ public class HomePage extends WebPage {
 	}
 	
 	public HomePage(int weeks) {
-		if (weeks == 0) {
-			add(LargeView.createMonthView("large", new PersistentRandomTestEventProvider()).setEventLinkCreator(LINK_CREATOR));
-		} else {
-			add(LargeView.createWeeksView("large", new PersistentRandomTestEventProvider(), weeks).setEventLinkCreator(LINK_CREATOR));
+		TimePeriod tp = LargeView.createMonthViewDates();
+		if (weeks != 0) {
+			tp = LargeView.createWeeksViewDates(weeks);
 		}
+		add(new LargeView("large", tp, new PersistentRandomTestEventProvider()) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected Page createMoreDetailPage(IModel<DateMidnight> model, IModel<List<IEvent>> eventsModel) {
+				Page page = super.createMoreDetailPage(model, eventsModel);
+				page.add(HeaderContributor.forCss(EXAMPLES_CSS_REFERENCE));
+				return page;
+			}
+			@Override
+			protected WebMarkupContainer createEventLink(String id, final IModel<IEvent> model) {
+				WebMarkupContainer wmc = new WebMarkupContainer(id);
+				wmc.add(new AttributeModifier("onclick", true, new AbstractReadOnlyModel<String>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public String getObject() {
+						return "alert('" + JavascriptUtils.escapeQuotes(model.getObject().getTitle()) + "');";
+					}
+					
+				}));
+				return wmc;
+			}
+		});
 		
-		add(HeaderContributor.forCss(new ResourceReference(getClass(), "examples.css")));
+		add(HeaderContributor.forCss(EXAMPLES_CSS_REFERENCE));
 		addLinks();
 	}
 

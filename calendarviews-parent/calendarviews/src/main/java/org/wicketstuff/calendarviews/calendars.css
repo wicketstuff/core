@@ -75,9 +75,19 @@
 }
 .clear { clear: both; }
 
-.row0 {
-	background-color: grey;
+#DateDetailPage H1 {
+	margin: 0em;
 }
-.row1 {
-	background-color: grey;
+#DateDetailPage UL {
+	list-style: none;
+	padding: 0px;
+}
+#DateDetailPage UL LI {
+	list-style: none;
+		margin-top: 0.2em;
+	padding-left: 0.2em;
+}
+#DateDetailPage UL LI H4 {
+	margin: 0em;
+	padding-left: 0.2em;
 }

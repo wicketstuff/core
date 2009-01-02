@@ -30,6 +30,7 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.joda.time.DateMidnight;
+import org.wicketstuff.calendarviews.AddCssClassBehavior;
 import org.wicketstuff.calendarviews.BaseCalendarView;
 import org.wicketstuff.calendarviews.model.IEvent;
 
@@ -47,6 +48,7 @@ public class DateDetailPage extends WebPage {
 				item.add(new Label("title"));
 				item.add(new Label("startTime"));
 				item.add(new Label("endTime"));
+				
 				item.add(new AttributeModifier("class", true, new AbstractReadOnlyModel<String>() {
 					private static final long serialVersionUID = 1L;
 
@@ -55,6 +57,7 @@ public class DateDetailPage extends WebPage {
 						return "row" + (mCounter++ % 2);
 					}
 				}));
+				item.add(new AddCssClassBehavior(item.getModel()));
 			}
 		});
 	}
