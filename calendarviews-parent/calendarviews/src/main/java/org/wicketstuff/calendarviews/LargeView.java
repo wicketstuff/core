@@ -53,6 +53,7 @@ import org.slf4j.LoggerFactory;
 import org.wicketstuff.calendarviews.modal.DateDetailPage;
 import org.wicketstuff.calendarviews.model.IEvent;
 import org.wicketstuff.calendarviews.model.IEventProvider;
+import org.wicketstuff.calendarviews.model.TimePeriod;
 import org.wicketstuff.jslibraries.JSReference;
 import org.wicketstuff.jslibraries.Library;
 import org.wicketstuff.jslibraries.VersionDescriptor;
@@ -75,6 +76,10 @@ public class LargeView extends FullWeekCalendarView {
 
 	private final ModalWindow mDetailModal;
 	
+	public LargeView(String id, TimePeriod tp, IEventProvider eventProvider) {
+		this(id, tp.getStartDate(), tp.getEndDate(), eventProvider);
+	}
+
 	public LargeView(String id, Date startDate, Date endDate, IEventProvider eventProvider) {
 		super(id, startDate, endDate, eventProvider);
 
@@ -106,7 +111,7 @@ public class LargeView extends FullWeekCalendarView {
 	private void addJavascriptInitializers() {
 		setOutputMarkupId(true);
 		add(HeaderContributor.forJavaScript(JSReference.getReference(JS_LIB_VERSION_DESCRIPTOR)));
-		add(HeaderContributor.forJavaScript(getClass(), "LargeView.js"));
+		add(HeaderContributor.forJavaScript(LargeView.class, "LargeView.js"));
 		add(new HeaderContributor(new IHeaderContributor() {
 			private static final long serialVersionUID = 1L;
 
@@ -123,7 +128,7 @@ public class LargeView extends FullWeekCalendarView {
 
 			@Override
 			protected void populateItem(final ListItem<IEvent> item) {
-				WebMarkupContainer link = getEventLinkCreator().createEventLink("link", item.getModel());
+				WebMarkupContainer link = createEventLink("link", item.getModel());
 				link.add(createStartTimeLabel("startTime", item.getModel()));
 				link.add(new Label("title", new PropertyModel<String>(item.getModel(), "title")));
 				item.add(link);
@@ -234,28 +239,37 @@ public class LargeView extends FullWeekCalendarView {
 			private static final long serialVersionUID = 1L;
 
 			public Page createPage() {
-				return new DateDetailPage(model, eventsModel);
+				return createMoreDetailPage(model, eventsModel);
 			}
+
 		};
 	}
 
-	public static LargeView createWeeksView(String id, IEventProvider eventProvider, int weeks) {
+	protected Page createMoreDetailPage(final IModel<DateMidnight> model, final IModel<List<IEvent>> eventsModel) {
+		return new DateDetailPage(model, eventsModel);
+	}
+
+	protected WebMarkupContainer createEventLink(String id, IModel<IEvent> model) {
+		return new WebMarkupContainer(id);
+	}
+
+	public static TimePeriod createWeeksViewDates(int weeks) {
 		// TODO add a similar method that allows an offset of weeks (i.e. 3 weeks, starting two weeks past today)
 		Date start = new Date();
 		Date end = new DateTime(start).plusWeeks(weeks - 1).toDate();
-		return new LargeView(id, start, end, eventProvider);
+		return new TimePeriod(start, end);
 	}
 
-	public static LargeView createMonthView(String id, IEventProvider eventProvider) {
+	public static TimePeriod createMonthViewDates() {
 		Date start = new DateTime().dayOfMonth().setCopy(1).toDate();
 		Date end = new DateTime(start).plusMonths(1).minusDays(1).toDate();
-		return new LargeView(id, start, end, eventProvider);
+		return new TimePeriod(start, end);
 	}
 
-	public static LargeView createMonthView(String id, IEventProvider eventProvider, int month, int year) {
+	public static TimePeriod createMonthViewDates(int month, int year) {
 		Date start = new DateTime().dayOfMonth().setCopy(1).monthOfYear().setCopy(month).year().setCopy(year).toDate();
 		Date end = new DateTime(start).plusMonths(1).minusDays(1).toDate();
-		return new LargeView(id, start, end, eventProvider);
+		return new TimePeriod(start, end);
 	}
 
 	private static class HowManyDaysClassBehavior extends AbstractBehavior {

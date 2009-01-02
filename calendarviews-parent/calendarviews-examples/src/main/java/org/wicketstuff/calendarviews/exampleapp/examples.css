@@ -17,15 +17,16 @@
  * limitations under the License.
  */
 
-.LargeViewCalendar .day .cat1 {
+.LargeViewCalendar .day .cat1, #DateDetailPage .cat1 {
 	background-color: #D3D3FF;
 	border-color: #9494B3;
 }
-.LargeViewCalendar .day .cat2 {
+.LargeViewCalendar .day .cat2, #DateDetailPage .cat2 {
 	background-color: #FFE6CC;
 	border-color: B3A18F;
 }
-.LargeViewCalendar .day .cat3 {
+.LargeViewCalendar .day .cat3, #DateDetailPage .cat3 {
 	background-color: #FFFACC;
 	border-color: #B3AF8F;
 }
+
