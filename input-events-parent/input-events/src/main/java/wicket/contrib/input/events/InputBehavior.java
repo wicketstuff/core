@@ -1,8 +1,4 @@
 /*
- * $Id: org.eclipse.jdt.ui.prefs 5004 2006-03-17 20:47:08 -0800 (Fri, 17 Mar 2006) eelco12 $
- * $Revision: 5004 $
- * $Date: 2006-03-17 20:47:08 -0800 (Fri, 17 Mar 2006) $
- * 
  * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -21,7 +17,6 @@ package wicket.contrib.input.events;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ResourceReference;
@@ -42,9 +37,11 @@ import wicket.contrib.input.events.key.KeyType;
 /**
  * Add this to your button, link whatever to create a shortcut key..
  * 
- * <strong>WARNING:this behavior uses a special script for calling window.onload</strong>
+ * <strong>WARNING:this behavior uses a special script for calling
+ * window.onload</strong>
  * 
- * @author Nino Martinez Wael (nino.martinez@jayway.dk)
+ * @author Nino Martinez (nino.martinez.wael *at* gmail *dot* com remember no
+ *         stars)
  * 
  */
 public class InputBehavior extends AbstractBehavior implements
@@ -181,7 +178,7 @@ public class InputBehavior extends AbstractBehavior implements
 
 				keyComboString += "+";
 			}
-			keyComboString += keyType.toString();
+			keyComboString += keyType.getKeyCode();
 		}
 		if (eventType != null) {
 			variables.put("event", eventType.toString());
