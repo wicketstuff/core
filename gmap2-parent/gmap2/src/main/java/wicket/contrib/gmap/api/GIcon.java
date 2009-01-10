@@ -110,7 +110,7 @@ public class GIcon implements GValue, Cloneable
 	{
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("(function() {\n");
-		buffer.append("var icon = new GIcon();\n");
+		buffer.append("var icon = new GIcon(G_DEFAULT_ICON);\n");
 		buffer.append("icon.image = \"").append(image).append("\";\n");
 		buffer.append("icon.shadow = \"").append(shadow).append("\";\n");
 
