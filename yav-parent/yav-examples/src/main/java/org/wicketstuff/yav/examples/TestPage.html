@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:wicket="http://wicket.apache.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<style type="text/css">
+
+		p {font-size: 14px; color: rgb(0,0,255)}
+		.details {font-size: 10px; font-style: italic; color: navy;}
+	</style>
+</head>
+
+<body>
+<p> This will demonstrate all the features that are implemented in the Wikcey yav integration</p>
+
+<div wicket:id="feedback" id="errorsDiv" class="innerError" style="position: fixed;left: 700px; top:200px;"/>
+
+<form wicket:id="exampleForm">
+<table style="vertical-align: top;" width="700px">
+	<tr>
+		<td colspan="3">
+			<h4 class="title">Type validation</h4>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3">
+			<i>Yav can check if the input is of kind "date" or "integer" or decimal "double". It uses for that the model binded to the component.</i>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3"/>
+	</tr>
+	<tr>
+		<td width="200px">Date 1 (<script type="text/javascript">document.write(yav_config.DATE_FORMAT);</script>)</td>
+		<td><input type="text" wicket:id="typeDate1"/></td>
+		<td class="details">Uses the local on the wicket application to configure the date yav format. Please note that actually the yav library only supports any combination of the following (dd and MM and yyyy)</td>
+	</tr>
+	<tr><td colspan="3"/></tr>
+	<tr>
+		<td>Date 2 (<script type="text/javascript">document.write(yav_config.DATE_FORMAT);</script>)</td>
+		<td><input type="text" wicket:id="typeDate2"/></td>
+		<td class="details">Custom Wicket message defined for this field and for DateConverter. See TestPage.properties</td>
+	</tr>
+	<tr>
+		<td>Integer</td>
+		<td colspan="2"><input type="text" wicket:id="typeInt"/></td>
+	</tr>
+	<tr>
+		<td>Double</td>
+		<td colspan="2"><input type="text" wicket:id="typeDecimal"/></td>
+	</tr>
+
+	<tr><td colspan="3"/></tr>
+	<tr>
+		<td colspan="3">
+			<h4 class="title">Inline Validation</h4>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3">
+			<i>This is to show how to use Yav to display the message in front of the field instead of the feedback panel. A span needs to be added in front of the field with a specific id. errorsDiv + the input wicketId. in this case id="errorsDiv_typeBigDecimal"</i>
+		</td>
+	</tr>
+	<tr><td colspan="3"/></tr>
+
+	<tr>
+		<td>BigDecimal</td>
+		<td colspan="2"><input type="text" wicket:id="typeBigDecimal"/><span id=errorsDiv_typeBigDecimal></span></td>
+	</tr>
+
+	<tr><td colspan="3"/></tr>
+	<tr>
+		<td colspan="3">
+			<h4 class="title">StringValidator</h4>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3">
+			<i>Testing all the Wicket default String validators</i>
+		</td>
+	</tr>
+	<tr><td colspan="3"/></tr>
+	
+	<tr>
+		<td>Max 10 char : </td>
+		<td colspan="2"><input type="text" wicket:id="maxLengthString" /></td>
+	</tr>
+	<tr>
+		<td>Min 10 char : </td>
+		<td colspan="2"><input type="text" wicket:id="minLengthString" /></td>
+	</tr>
+	<tr>
+		<td>Exactly 10 char : </td>
+		<td colspan="2"><input type="text" wicket:id="exactLengthString" /></td>
+	</tr>
+	<tr>
+		<td>Between 10 and 20 : </td>
+		<td colspan="2"><input type="text" wicket:id="lengthBetweenString" /></td>
+	</tr>
+	<tr>
+		<td>Email : </td>
+		<td colspan="2"><input type="text" wicket:id="email" /></td>
+	</tr>
+	<tr>
+		<td>Pattern &#42;.com : </td>
+		<td><input type="text" wicket:id="pattern" /></td>
+		<td class="details">Uses new Model() and not the model defined on the form.</td>
+	</tr>
+
+	<tr><td colspan="3"/></tr>
+	<tr>
+		<td colspan="3">
+			<h4 class="title">IFormValidator</h4>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3">
+			<i>Tests the validator specific to the form. Mainly EqualInputValidator</i>
+		</td>
+	</tr>
+	<tr><td colspan="3"/></tr>
+
+	<tr>
+		<td>Date of Birth 1</td>
+		<td><input type="text" wicket:id="dateOfBirth1" /></td>
+		<td class="details">Configured in YAV and taken from the App Server local : <script type="text/javascript">document.write(yav_config.DATE_FORMAT);</script></td>
+	</tr>
+	<tr>
+		<td>Date of Birth 2</td>
+		<td><input type="text" wicket:id="dateOfBirth2" /></td>
+		<td class="details">Should be equal to dateOfBirth1. <script type="text/javascript">document.write(yav_config.DATE_FORMAT);</script></td>
+	</tr>
+
+	<tr><td colspan="3"/></tr>
+	<tr>
+		<td colspan="3">
+			<h4 class="title">IValidator</h4>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3">
+			<i>Tests the validator specific to the form. Only RangeValidator ported to YAV for now, and not the Max, Min and CompoundValidator</i>
+		</td>
+	</tr>
+	<tr><td colspan="3"/></tr>
+	
+	<tr>
+		<td>Range long (10 -&gt; 20):</td>
+		<td><input type="text" wicket:id="rangeLong" /></td>
+	</tr>
+	
+	<tr>
+		<td>&nbsp;</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td><input type="submit" value="Check" wicket:id="submit" /><br />
+		</td>
+		<td></td>
+	</tr>
+</table>
+</form>
+
+</body>
+</html>

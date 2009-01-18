@@ -1,0 +1,80 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>yav-parent</artifactId>
+		<version>1.4-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>wicketstuff-yav-examples</artifactId>
+	<packaging>war</packaging>
+	
+	<name>YAV Integration - Examples</name>
+	<description>
+		<![CDATA[The Wicket project showcases one possible way to integrate the yav ajax framework. It is a a client side validation framework.]]>
+	</description>
+
+	<organization>
+		<name>Wicket Stuff</name>
+		<url>http://wicket-stuff.sourceforge.net</url>
+	</organization>
+
+	<inceptionYear>2008</inceptionYear>
+
+	<licenses>
+	  <license>
+	     <name>The Apache Software License, Version 2.0</name>
+	     <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+	     <distribution>repo</distribution>
+	  </license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Carl Azoury</name>
+			<id>cazoury</id>
+			<email>cazoury at users.sourceforge.net</email>
+		</developer>
+		<developer>
+			<name>Vincent Rossi</name>
+			<id>vrossi</id>
+			<email>vrossi at users.sourceforge.net</email>
+		</developer>
+	</developers>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>wicketstuff-yav</artifactId>
+			<version>1.4-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.2</version>
+		</dependency>
+	</dependencies>
+
+  <build>
+      <plugins>
+        <plugin>
+          <groupId>org.mortbay.jetty</groupId>
+          <artifactId>maven-jetty-plugin</artifactId>
+          <version>6.1.5</version>
+          <configuration>
+            <webAppSourceDirectory>${basedir}/src/main/webapp</webAppSourceDirectory>
+            <scanIntervalSeconds>10</scanIntervalSeconds>
+            <contextPath>/</contextPath>
+          </configuration>
+        </plugin>
+      </plugins>
+</build>
+</project>

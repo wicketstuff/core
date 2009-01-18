@@ -1,0 +1,249 @@
+BODY {
+	MARGIN: 0px; FONT-FAMILY: Verdana, Helvetica, Arial, sans-serif
+}
+DIV {
+	
+}
+A {
+	FONT-WEIGHT: bold; COLOR: #004080; TEXT-DECORATION: none
+}
+A.selfref:link {
+	
+}
+A.selfref:visited {
+	
+}
+A:link {
+	
+}
+A:visited {
+	
+}
+A:active {
+	TEXT-DECORATION: underline;
+	COLOR: #FF8000
+}
+A:hover {
+	TEXT-DECORATION: underline;
+	COLOR: #FF8000
+}
+A.plain:active {
+	TEXT-DECORATION: none
+}
+A.plain:hover {
+	TEXT-DECORATION: none
+}
+#layout {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+#banner {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 8px; PADDING-TOP: 8px; BACKGROUND-COLOR: #7799bb; COLOR: #ffffff;
+}
+#bar {
+	PADDING-RIGHT: 12px; PADDING-LEFT: 12px; FONT-SIZE: x-small; PADDING-BOTTOM: 2px; PADDING-TOP: 2px; BACKGROUND-COLOR: #324b65
+}
+#bar TD {
+	FONT-SIZE: small; COLOR: #ffffff
+}
+#bar A {
+	FONT-WEIGHT: normal; COLOR: #ffffff
+}
+#layout {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+H1 {
+	BORDER: #aaaaaa 0px solid; PADDING-RIGHT: 4px; PADDING-LEFT: 30px; FONT-WEIGHT: normal; FONT-SIZE: larger; MARGIN-BOTTOM: 0.5em; PADDING-BOTTOM: 4px; COLOR: #000000; PADDING-TOP: 4px; BACKGROUND-COLOR: #d9d9d9
+}
+.heading1 {
+    background-image: url(ball.png);
+    background-position: left center;
+    background-repeat: no-repeat;
+}
+.highlight {
+	BORDER-RIGHT: #aaaaaa 1px solid; PADDING-RIGHT: 4px; BORDER-TOP: #aaaaaa 1px solid; PADDING-LEFT: 4px; FONT-WEIGHT: normal; FONT-SIZE: larger; MARGIN-BOTTOM: 0.5em; PADDING-BOTTOM: 4px; BORDER-LEFT: #aaaaaa 1px solid; COLOR: #333333; PADDING-TOP: 4px; BORDER-BOTTOM: #aaaaaa 1px solid; BACKGROUND-COLOR: #FFFF00
+}
+.highlight2 {
+	BORDER-RIGHT: #aaaaaa 1px solid; PADDING-RIGHT: 4px; BORDER-TOP: #aaaaaa 1px solid; PADDING-LEFT: 4px; FONT-WEIGHT: normal; FONT-SIZE: larger; MARGIN-BOTTOM: 0.5em; PADDING-BOTTOM: 4px; BORDER-LEFT: #aaaaaa 1px solid; COLOR: #333333; PADDING-TOP: 4px; BORDER-BOTTOM: #aaaaaa 1px solid; BACKGROUND-COLOR: #DFDF00
+}
+.ann {
+	BORDER-RIGHT: #aaaaaa 1px solid; PADDING-RIGHT: 4px; BORDER-TOP: #aaaaaa 1px solid; PADDING-LEFT: 4px; FONT-WEIGHT: normal; FONT-SIZE: larger; MARGIN-BOTTOM: 0.5em; PADDING-BOTTOM: 4px; BORDER-LEFT: #aaaaaa 1px solid; COLOR: #ff0000; PADDING-TOP: 4px; BORDER-BOTTOM: #aaaaaa 1px solid; BACKGROUND-COLOR: #eee
+}
+BODY:unknown {
+	PADDING-TOP: 0px
+}
+H2 {
+	PADDING-LEFT: 0.2em; FONT-WEIGHT: bold; FONT-SIZE: larger; MARGIN-BOTTOM: 0.5em; BORDER-LEFT: #999 1px solid; BORDER-BOTTOM: #999 1px solid; BACKGROUND-COLOR: white
+}
+H3 {
+	PADDING-RIGHT: 0.1em; PADDING-LEFT: 0.1em; FONT-WEIGHT: bold; MARGIN-BOTTOM: 0.5em; PADDING-BOTTOM: 0.1em; COLOR: #555; PADDING-TOP: 0.1em; BORDER-BOTTOM: #bbb 1px solid
+}
+H4 {
+	BORDER-RIGHT: #ddd 0px solid; PADDING-RIGHT: 0.1em; BORDER-TOP: #ddd 0px solid; PADDING-LEFT: 0.1em; MARGIN-BOTTOM: 0.5em; PADDING-BOTTOM: 0.1em; BORDER-LEFT: #ddd 1px solid; PADDING-TOP: 0.1em; BORDER-BOTTOM: #ddd 1px solid
+}
+#leftColumn {
+	WIDTH: 12em;
+}
+#leftColumn H3 {
+	BORDER-RIGHT: #ccc 1px solid; BORDER-TOP: #ccc 1px solid; MARGIN-BOTTOM: 0.5em; BORDER-LEFT: #ccc 1px solid; BORDER-BOTTOM: #ccc 1px solid; BACKGROUND-COLOR: #ddd
+}
+#leftColumn A {
+	COLOR: #0000cc; FONT-SIZE: small; FONT-WEIGHT: normal;
+}
+#bar A {
+	
+}
+P {
+	PADDING-RIGHT: 20px; PADDING-LEFT: 0px; MARGIN: 0px 0px 0.5em; LINE-HEIGHT: 1.2em
+}
+BLOCKQUOTE P {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px
+}
+UL {
+	MARGIN-TOP: 1em; PADDING-LEFT: 1.5em; MARGIN-BOTTOM: 1em
+}
+UL UL {
+	PADDING-LEFT: 1em; MARGIN: 0px
+}
+LI {
+	MARGIN: 0px 15% 0px 0px; LINE-HEIGHT: 1.2em
+}
+#leftColumn {
+	BORDER-RIGHT: #cccccc 0px solid; PADDING-RIGHT: 12px; PADDING-LEFT: 12px; FONT-SIZE: small; PADDING-BOTTOM: 12px; PADDING-TOP: 12px; BACKGROUND-COLOR: #7799bb
+}
+#leftColumn A {
+	FONT-SIZE: smaller
+}
+#leftColumn TT A {
+	
+}
+#leftColumn H3 A {
+	
+}
+TT {
+	FONT-SIZE: larger
+}
+#rightColumn {
+	BORDER-RIGHT: #cccccc 1px solid; PADDING-RIGHT: 16px; PADDING-LEFT: 16px; FONT-SIZE: small; PADDING-BOTTOM: 12px; PADDING-TOP: 12px
+}
+#footer {
+	BORDER-TOP: #000000 1px solid; PADDING-LEFT: 4px; FONT-SIZE: x-small; COLOR: #888888
+}
+BLOCKQUOTE {
+	BORDER-RIGHT: #bbbbbb 3px solid; PADDING-RIGHT: 12px; BORDER-TOP: #bbbbbb 1px solid; PADDING-LEFT: 12px; PADDING-BOTTOM: 12px; MARGIN-LEFT: 3em; BORDER-LEFT: #bbbbbb 3px solid; COLOR: #666666; LINE-HEIGHT: 1.5em; MARGIN-RIGHT: 3em; PADDING-TOP: 12px; BORDER-BOTTOM: #bbbbbb 1px solid; BACKGROUND-COLOR: white
+}
+
+.panelContent {
+	BORDER-RIGHT: #999 1px solid; PADDING-RIGHT: 1em; BORDER-TOP: #999 1px solid; PADDING-LEFT: 1em; PADDING-BOTTOM: 1em; MARGIN: 0em; BORDER-LEFT: #999 1px solid; PADDING-TOP: 1em; BORDER-BOTTOM: #999 1px solid
+}
+.inputError {
+	BORDER-RIGHT: #FF8000 1px solid; BORDER-TOP: #FF8000 1px solid; MARGIN: 0px; BORDER-LEFT: #FF8000 1px solid; BORDER-BOTTOM: #FF8000 1px solid; COLOR: #FF8000; BACKGROUND-COLOR: #FFFFD7
+}
+.inputNormal {
+	BORDER-RIGHT: #004080 1px solid; BORDER-TOP: #004080 1px solid; BORDER-LEFT: #004080 1px solid; BORDER-BOTTOM: #004080 1px solid; COLOR: #004080; BACKGROUND-COLOR: #efefef
+}
+.innerError {
+    background-image: url(invalid.gif);
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-color: white;
+    padding-left: 20px;
+    padding-top: 1px;
+	BORDER-RIGHT: #FF8000 0px solid; BORDER-TOP: #FF8000 10x solid; MARGIN: 0px; BORDER-LEFT: #FF8000 0px solid; BORDER-BOTTOM: #FF8000 0px solid; COLOR: #FF8000
+}
+.innerHelp {
+	background-image: url(valid.gif);
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-color: white;
+    padding-left: 20px;
+    padding-top: 1px;
+	BORDER-RIGHT: #008000 0px solid; BORDER-TOP: #008000 10x solid; MARGIN: 0px; BORDER-LEFT: #008000 0px solid; BORDER-BOTTOM: #008000 0px solid; COLOR: #008000
+}
+.date {
+	BORDER-RIGHT: #80FF80 1px solid; BORDER-TOP: #80FF80 1px solid; MARGIN: 0px; BORDER-LEFT: #80FF80 1px solid; BORDER-BOTTOM: #80FF80 1px solid; COLOR: #004080; BACKGROUND-COLOR: #efefef 
+}
+.date.inputError {
+	BORDER-RIGHT: #FF8000 1px solid; BORDER-TOP: #FF8000 1px solid; MARGIN: 0px; BORDER-LEFT: #FF8000 1px solid; BORDER-BOTTOM: #FF8000 1px solid; COLOR: #FF8000; BACKGROUND-COLOR: #FFFFD7
+}
+.buttonstyle {
+	border: #FF8000 1px solid;
+    padding: 2px;
+	margin: 0px;
+    background-position: center;
+	background-color: #EDEBE0;
+	color: #000000;
+    text-align: center;
+	text-decoration: none;
+    font-weight: bold;
+    font-family: verdana;
+    cursor: hand;
+}
+.buttonstyledisabled {
+	border: #aaaaaa 1px solid;
+    padding: 2px;
+	margin: 0px;
+    background-position: center;
+	background-color: #EDEBE0;
+	color: #aaaaaa;
+    text-align: center;
+	text-decoration: none;
+    font-weight: bold;
+    font-family: verdana;
+    cursor: hand;
+}
+.linkto {
+	FONT-SIZE: x-small; COLOR: #888888;font-weight: bold;
+    font-family: verdana;
+}
+.cssRules {
+    position: relative;
+    color: #004080;
+    background-color: #ffffff;
+    margin-left: 2px;
+    margin-right: 0px;
+    border: #004080 1px solid;
+    border-left: #004080 4px solid;
+    height: 100%;width: 100%;
+    z-index: 1;
+}
+.syntaxreq {
+	COLOR: #A80000
+}
+.syntaxopt {
+	COLOR: #0080C0
+}
+code {
+    border: 1px solid #efefef;	
+    color: #0080C0;
+    background-color: #ffffff;
+    font-size: 105%;
+    padding: 5px;
+    position: relative;
+    display: block;
+}
+#logo {
+    border: 1px solid;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    color: #FF8000;
+    background-color: #eee;
+    font-size: larger;
+    font-weight: bold;
+    font-family: verdana;
+}
+
+table.htmlBox{width:205px;margin:0 0 10px 0;table-layout:fixed;}
+table.htmlBox th {background-color:#aaaaaa;}
+table.htmlBox th.L{background-repeat : no-repeat;width:12px;vertical-align:top;background-position : top left;}
+table.htmlBox th.C{text-align:left;font-weight:bold;font-size:14px;color:#ffffff}
+table.htmlBox th.R{background-repeat : no-repeat;width:12px;vertical-align:top;background-position : top right;}
+table.htmlBox td.B{background-color:#efefef;border:1px #aaaaaa solid;border-top:none;font-size:12px;padding:6px;}
+
+ul.htmlBoxUl{font-size:14px;margin:0;padding:0 0 0 1.5em;list-style-type : circle;}
+ul.htmlBoxUl li,ul.htmlBoxUl li.htmlBoxUl{padding:0 0 0 0;font-size:14px;}
+	
+.ish {
+    display:none;
+}
