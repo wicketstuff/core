@@ -44,7 +44,7 @@ public class GMapHeaderContributor extends HeaderContributor
 				// see:
 				// http://www.google.com/apis/maps/documentation/#Memory_Leaks
 				
-				response.renderOnEventJavacript("window", "onUnload", "google.maps.Unload();");
+				response.renderOnEventJavascript("window", "onUnload", "google.maps.Unload();");
 			}
 		});
 	}
