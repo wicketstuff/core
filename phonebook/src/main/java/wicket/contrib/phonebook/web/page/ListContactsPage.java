@@ -192,10 +192,10 @@ public class ListContactsPage extends BasePage
 		return columns;
 	}
 
-	private TextFilteredPropertyColumn<String> createColumn(String key, String sortProperty,
+	private TextFilteredPropertyColumn createColumn(String key, String sortProperty,
 			String propertyExpression)
 	{
-		return new TextFilteredPropertyColumn<String>(new ResourceModel(key), sortProperty,
+		return new TextFilteredPropertyColumn(new ResourceModel(key), sortProperty,
 				propertyExpression);
 	}
 
