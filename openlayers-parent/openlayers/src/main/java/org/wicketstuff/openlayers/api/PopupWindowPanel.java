@@ -1,6 +1,7 @@
 package org.wicketstuff.openlayers.api;
 
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.Component;
 
 /**
  * A popup for your marker, please extend this if you want poups..
@@ -20,9 +21,10 @@ public class PopupWindowPanel extends Panel {
  * NEED STATIC ID!
  */
 	@Override
-	public void setMarkupId(String markupId) {
+	public Component setMarkupId(String markupId) {
 		// TODO Auto-generated method stub
 //		super.setMarkupId(markupId);
+    return this;
 	}
 	
 
