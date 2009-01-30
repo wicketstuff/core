@@ -37,6 +37,7 @@
 		<module>yui-parent</module>
 		<module>push-parent</module>
 		<module>artwork-parent</module>
+		<module>yav-parent</module>
 	</modules>
 
 	<licenses>

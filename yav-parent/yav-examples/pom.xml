@@ -9,7 +9,7 @@
 		<version>1.4-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>wicketstuff-yav-examples</artifactId>
+	<artifactId>yav-examples</artifactId>
 	<packaging>war</packaging>
 	
 	<name>YAV Integration - Examples</name>

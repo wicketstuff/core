@@ -10,7 +10,7 @@
 		<version>1.4-SNAPSHOT</version>
 	</parent>
 	
-	<artifactId>wicketstuff-yav</artifactId>
+	<artifactId>yav</artifactId>
 	<name>Yav Integration</name>
 	<description>
 		<![CDATA[The Wicket project showcases one possible way to integrate the yav ajax framework. It is a a client side validation framework.]]>
