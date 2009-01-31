@@ -48,7 +48,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>wicketstuff-yav</artifactId>
+			<artifactId>yav</artifactId>
 			<version>1.4-SNAPSHOT</version>
 		</dependency>
 		<dependency>
