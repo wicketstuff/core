@@ -43,8 +43,9 @@ public class GMapHeaderContributor extends HeaderContributor
 				response.renderJavascriptReference(WICKET_GMAP_JS);
 				// see:
 				// http://www.google.com/apis/maps/documentation/#Memory_Leaks
-				
-				response.renderOnEventJavascript("window", "onUnload", "google.maps.Unload();");
+				// XXX TODO fix this when the spelling error in Wicket API is corrected :-/
+//				response.renderOnEventJavascript("window", "onUnload", "google.maps.Unload();");
+				response.renderOnEventJavacript("window", "onUnload", "google.maps.Unload();");
 			}
 		});
 	}
