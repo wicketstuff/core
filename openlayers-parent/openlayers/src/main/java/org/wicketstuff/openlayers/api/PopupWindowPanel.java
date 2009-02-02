@@ -21,10 +21,10 @@ public class PopupWindowPanel extends Panel {
  * NEED STATIC ID!
  */
 	@Override
-	public void setMarkupId(String markupId) {
+	public Component setMarkupId(String markupId) {
 		// TODO Auto-generated method stub
 //		super.setMarkupId(markupId);
-//    return this;
+    return this;
 	}
 	
 
