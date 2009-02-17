@@ -157,7 +157,7 @@ public class DatePickerBehavior extends JQueryBehavior {
             component.setOutputMarkupId(true);
             
             if (component instanceof ITextFormatProvider) {
-            	format_ = ((ITextFormatProvider) component).getTextFormat();
+            	format_ = ((ITextFormatProvider) component).getTextFormat().toLowerCase();
             } else {
 	            TextField tf = (TextField) component;
 	            IConverter cnv = tf.getConverter(tf.getType());
