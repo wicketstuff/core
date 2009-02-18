@@ -20,6 +20,16 @@
 		behaviors that are too small to warrant their own project
 	</description>
 
+	<developers>
+		<developer>
+			<name>Nino Martinez</name>
+			<id>nmwael</id>
+			<email>nino.martinez.wael@gmail.com</email>
+		</developer>
+	</developers>
+
+
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
