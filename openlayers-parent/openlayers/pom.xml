@@ -31,9 +31,10 @@
 		<developer>
 			<name>Nino Martinez</name>
 			<id>nmwael</id>
-			<email>nino.martinez.wael at gmail.com</email>
+			<email>nino.martinez.wael@gmail.com</email>
 		</developer>
 	</developers>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.vividsolutions</groupId>
