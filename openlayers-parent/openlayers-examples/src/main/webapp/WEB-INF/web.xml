@@ -16,6 +16,10 @@
 	      or "deployment". If no configuration is found, "development" is the default.
 	-->
 
+	<context-param>
+		<param-name>wicket.configuration</param-name>
+		<param-value>deployment</param-value>
+	</context-param>
 	<filter>
 		<filter-name>wicket.openlayers-examples</filter-name>
  		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>

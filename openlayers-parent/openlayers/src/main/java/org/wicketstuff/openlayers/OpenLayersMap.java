@@ -40,6 +40,7 @@ import org.wicketstuff.openlayers.api.InfoWindow;
 import org.wicketstuff.openlayers.api.LonLat;
 import org.wicketstuff.openlayers.api.Marker;
 import org.wicketstuff.openlayers.api.Overlay;
+import org.wicketstuff.openlayers.api.layer.GMap;
 import org.wicketstuff.openlayers.api.layer.Layer;
 import org.wicketstuff.openlayers.api.layer.WMS;
 import org.wicketstuff.openlayers.event.EventType;
@@ -295,6 +296,7 @@ public class OpenLayersMap extends Panel {
 		add(callbackListener);
 
 		add(headerContrib);
+		addHeaderContributorsForLayers(layers);
 		add(new HeaderContributor(new IHeaderContributor() {
 			private static final long serialVersionUID = 1L;
 
@@ -311,6 +313,15 @@ public class OpenLayersMap extends Panel {
 		add(map);
 	}
 
+	private void addHeaderContributorsForLayers(List<Layer> layers) {
+		for(Layer layer : layers)
+		{
+			for(HeaderContributor contributor : layer.getHeaderContributors())
+			{
+				add(contributor);
+			}
+		}
+	}
 	/**
 	 * Add a control.
 	 * 
@@ -421,6 +432,13 @@ public class OpenLayersMap extends Panel {
 						+ wms.getJSconstructor() + ";\n");
 				js.append(getJSinvoke("addLayer(wms" + wms.getId() + ","
 						+ wms.getId() + ")"));
+			}
+			if (layer instanceof GMap) {
+				GMap gmap = (GMap) layer;
+				js.append("var gmap" + gmap.getId() + " ="
+						+ gmap.getJSconstructor() + ";\n");
+				js.append(getJSinvoke("addLayer(gmap" + gmap.getId() + ","
+						+ gmap.getId() + ")"));
 			}
 		}
 		js.append(getJSinvoke("zoomToMaxExtent()"));
