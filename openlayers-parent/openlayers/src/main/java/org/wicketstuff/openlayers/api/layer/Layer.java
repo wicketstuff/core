@@ -1,11 +1,16 @@
 package org.wicketstuff.openlayers.api.layer;
 
+import java.util.List;
+
+import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.markup.html.IHeaderContributor;
+
 /**
  * 
  * @author Nino Martinez Wael (nino.martinez@jayway.dk)
  *
  */
-public class Layer {
+public abstract class Layer {
 	private String name;
 	
 	public String getName() {
@@ -18,5 +23,7 @@ public class Layer {
 	public String getId() {
 		return String.valueOf(System.identityHashCode(this));
 	}
+	
+	public abstract List<HeaderContributor> getHeaderContributors();
 
 }

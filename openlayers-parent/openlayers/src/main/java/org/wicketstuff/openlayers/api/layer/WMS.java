@@ -1,8 +1,12 @@
 package org.wicketstuff.openlayers.api.layer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.markup.html.IHeaderContributor;
 import org.wicketstuff.openlayers.js.Constructor;
 
 /**
@@ -59,6 +63,11 @@ public class WMS extends Layer implements Serializable {
 
 		return new Constructor("OpenLayers.Layer.WMS").add("'" + getName() + "'")
 				.add("'" + url + "'").add("{" + optionlist + "}").toJS();
+	}
+
+	@Override
+	public List<HeaderContributor> getHeaderContributors() {
+		return new ArrayList<HeaderContributor>();
 	}
 
 }

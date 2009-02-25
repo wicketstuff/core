@@ -16,16 +16,7 @@ public class PopupWindowPanel extends Panel {
 		super(markupId);
 		setOutputMarkupId(true);
 	}
-/**
- * NOOP!
- * NEED STATIC ID!
- */
-	@Override
-	public Component setMarkupId(String markupId) {
-		// TODO Auto-generated method stub
-//		super.setMarkupId(markupId);
-    return this;
-	}
+
 	
 
 }
