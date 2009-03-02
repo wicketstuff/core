@@ -41,13 +41,8 @@ public class JQueryBehavior extends AbstractDefaultAjaxBehavior {
     /**
      *  ResourceReference for <a href="http://jquery.com">jquery-1.2.6</a> (include by default when you add the current Behavior).
      */
-    public static final CompressedResourceReference JQUERY_1_2_JS = new CompressedResourceReference(JQueryBehavior.class, "jquery.js");
+    public static final CompressedResourceReference JQUERY_JS = new CompressedResourceReference(JQueryBehavior.class, "jquery.js");
 
-    /**
-     *  ResourceReference for <a href="http://jquery.com">jquery</a> (include by default when you add the current Behavior).
-     */
-    public static final CompressedResourceReference JQUERY_JS = JQUERY_1_2_JS;
-    
     /**
      *  ResourceReference for <a href="http://jquery.glyphix.com/">jquery.debug.js</a> (include by default if wicket's configuration is "development")
      */
