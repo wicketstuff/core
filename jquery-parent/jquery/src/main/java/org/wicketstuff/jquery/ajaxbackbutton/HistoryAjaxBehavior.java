@@ -25,7 +25,7 @@ public abstract class HistoryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 	@Override
 	public void renderHead(final IHeaderResponse response) {
 		response.renderCSSReference(new ResourceReference(HistoryAjaxBehavior.class, "res/history-manager-iframe.css"));
-		response.renderJavascriptReference(JQueryBehavior.JQUERY_1_2_JS);
+		response.renderJavascriptReference(JQueryBehavior.JQUERY_JS);
 		response.renderJavascriptReference(new ResourceReference(HistoryAjaxBehavior.class, "res/history-manager.js"));
 		
 		/*

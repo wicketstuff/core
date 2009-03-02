@@ -50,15 +50,15 @@ public class DnDBehaviour extends JQueryBehavior implements IBehaviorListener {
 
 	@Override
     public void renderHead(IHeaderResponse response) {
-		droppableOptions.set("accept", dropSelector, false);
-		droppableOptions.set("drop", getDropScript());
+		droppableOptions.set("accept", dragSelector, false);
+		droppableOptions.set("drop", new FunctionString(getDropScript()));
 
 		response.renderJavascriptReference(JQueryBehavior.JQUERY_UI_JS);
 		super.renderHead(response);
     }
 
-	public FunctionString getDropScript() {
-		return new FunctionString("function(ev, ui) {\n " + getCallbackScript() + "\n}\n");
+	public String getDropScript() {
+		return "function(ev, ui) {\n " + getCallbackScript() + "\n}\n";
 	}
 
 	@Override

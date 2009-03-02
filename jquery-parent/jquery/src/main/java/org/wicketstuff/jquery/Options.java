@@ -23,93 +23,101 @@ import java.util.Map;
 @SuppressWarnings("serial")
 public class Options implements Serializable {
 
-    protected Map<String, Object> options_ = new HashMap<String, Object>();
+	protected Map<String, Object> options_ = new HashMap<String, Object>();
 
-    public Object get(String name) {
-        return options_.get(name);
-    }
+	public Object get(String name) {
+		return options_.get(name);
+	}
 
-    public Object get(String name, Object defaultValue) {
-        Object back = options_.get(name);
-        if (back == null) {
-            back = defaultValue;
-        }
-        return back;
-    }
+	public Object get(String name, Object defaultValue) {
+		Object back = options_.get(name);
+		if (back == null) {
+			back = defaultValue;
+		}
+		return back;
+	}
 
-    /**
-     * shortcut method, call set with overwrite = true.
-     *
-     * @param name  name of the option
-     * @param value new value of the option (if null, then remove the option)
-     * @return this
-     * @see #set(String,Object,boolean)
-     */
-    public Options set(String name, Object value) {
-        return set(name, value, true);
-    }
+	/**
+	 * shortcut method, call set with overwrite = true.
+	 *
+	 * @param name  name of the option
+	 * @param value new value of the option (if null, then remove the option)
+	 * @return this
+	 * @see #set(String,Object,boolean)
+	 */
+	public Options set(String name, Object value) {
+		return set(name, value, true);
+	}
 
-    /**
-     * set an option.
-     *
-     * @param name      name of the option
-     * @param value     new value of the option (if null, then remove the option)
-     * @param overwrite if false and the value is already set, then the option is unchanged
-     * @return this
-     */
-    public Options set(String name, Object value, boolean overwrite) {
-        if (!overwrite && options_.containsKey(name)) {
-            return this;
-        }
-        if ((value == null) && options_.containsKey(name)) {
-            options_.remove(name);
-        }
-        options_.put(name, value);
-        return this;
-    }
-    
-    @Override
-    public String toString() {
-        return toString(false).toString();
-    }
+	/**
+	 * set an option.
+	 *
+	 * @param name	  name of the option
+	 * @param value	 new value of the option (if null, then remove the option)
+	 * @param overwrite if false and the value is already set, then the option is unchanged
+	 * @return this
+	 */
+	public Options set(String name, Object value, boolean overwrite) {
+		if (!overwrite && options_.containsKey(name)) {
+			return this;
+		}
+		if ((value == null) && options_.containsKey(name)) {
+			options_.remove(name);
+		}
+		options_.put(name, value);
+		return this;
+	}
 
-    public CharSequence toString(boolean asFragment) {
-        if (options_.isEmpty()) {
-            return "";
-        }
-        StringBuilder str = new StringBuilder();
-        if (!asFragment) {
-            str.append("{\n");
-        }
-        for (Map.Entry<String, Object> entry : options_.entrySet()) {
-            str.append("\t'")
-                    .append(escape(entry.getKey()))
-                    .append("':'")
-                    .append(escape(entry.getValue().toString()))
-                    .append("',\n");
-        }
-        if (!asFragment) {
-            str.setLength(str.length() - 2);
-            str.append("\n}\n");
-        }
-        return str;
-    }
-    
-    /**
-     * Escapes any occurrence of '
-     * @param input
-     * @return escaped input
-     */
-    private String escape(final String input) {
-    	final StringBuilder output = new StringBuilder();
-    	
-    	for (final char ch : input.toCharArray()) {
-    		if (ch == '\'') {
-    			output.append('\\');
-    		}
-    		output.append(ch);
-    	}
-    	
-    	return output.toString();
-    }
+	@Override
+	public String toString() {
+		return toString(false).toString();
+	}
+
+	public CharSequence toString(boolean asFragment) {
+		if (options_.isEmpty()) {
+			return "";
+		}
+		StringBuilder str = new StringBuilder();
+		if (!asFragment) {
+			str.append("{\n");
+		}
+		for (Map.Entry<String, Object> entry : options_.entrySet()) {
+			str.append("\t'")
+					.append(escape(entry.getKey()))
+					.append("':");
+
+			// Don't surround function-strings in quotes
+			if (entry.getValue() instanceof FunctionString) {
+				str.append(entry.getValue().toString());
+			} else {
+				str.append("'" + escape(entry.getValue().toString()) + "'");
+			}
+
+			str.append(",\n");
+		}
+		if (!asFragment) {
+			str.setLength(str.length() - 2);
+			str.append("\n}\n");
+		}
+		return str;
+	}
+
+	/**
+	 * Escapes any occurrence of '
+	 * @param input
+	 * @return escaped input
+	 */
+	private String escape(final String input) {
+		final StringBuilder output = new StringBuilder();
+
+		for (final char ch : input.toCharArray()) {
+			if (ch == '\'') {
+				output.append('\\');
+			}
+			output.append(ch);
+		}
+
+		return output.toString();
+	}
+
 }
