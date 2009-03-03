@@ -1,18 +1,19 @@
 package org.wicketstuff.yui.behavior.dragdrop;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ResourceReference;
+import org.apache.wicket.Component.IVisitor;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 
 /**
- * Check out Draggable and Droppable under "sortable" - this version is also based on the same example.
- * - main difference : every draggable is a dropable (target and proxy) while Janne's nicely separate Draggable and Droppable 
+ * Check out Draggable and Droppable under "sortable" - this version is also
+ * based on the same example. - main difference : every draggable is a dropable
+ * (target and proxy) while Janne's nicely separate Draggable and Droppable
  * 
- * @deprecated 
- * 		see {@link Droppable} and {@link Draggable}
  * 
  * @author josh
  */
@@ -50,13 +51,27 @@ public abstract class YuiListDragDropBehavior extends AbstractDefaultAjaxBehavio
 	}
 
 	@Override
-	protected void respond(AjaxRequestTarget target)
+	protected void respond(final AjaxRequestTarget target)
 	{
-		String swapId = RequestCycle.get().getRequest().getParameter("swapId");
-		onDrop(target, swapId);
+		final String swapId = RequestCycle.get().getRequest().getParameter("swapId");
+
+		getComponent().getPage().visitChildren(new IVisitor<Component>()
+		{
+
+			public Object component(Component component)
+			{
+				if (swapId.equals(component.getMarkupId()))
+				{
+					onDrop(target, component);
+					return STOP_TRAVERSAL;
+				}
+				return CONTINUE_TRAVERSAL;
+			}
+		});
+
 	}
 
-	public abstract void onDrop(AjaxRequestTarget target, String swapId);
+	public abstract void onDrop(AjaxRequestTarget target, Component component);
 
 	@Override
 	protected void onBind()
