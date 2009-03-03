@@ -11,7 +11,7 @@ var DDM = YAHOO.util.DragDropMgr;
 //Creates a namespace for "dyntab"
 YAHOO.namespace ("ddlist");
 
-YAHOO.ddlist.DDList = function(id, sGroup, config, callbackWicket, tabIndex) {
+YAHOO.ddlist.DDList = function(id, sGroup, config, callbackWicket) {
 
     YAHOO.ddlist.DDList.superclass.constructor.call(this, id, sGroup, config);
 
@@ -22,8 +22,7 @@ YAHOO.ddlist.DDList = function(id, sGroup, config, callbackWicket, tabIndex) {
     this.goingUp = false;
     this.lastY = 0;
     this.callbackWicket = callbackWicket;
-    this.lastSwapId = tabIndex;
-    this.tabIndex = tabIndex;
+    this.lastSwapId = 0;
 };
 
 YAHOO.extend(YAHOO.ddlist.DDList, YAHOO.util.DDProxy, {

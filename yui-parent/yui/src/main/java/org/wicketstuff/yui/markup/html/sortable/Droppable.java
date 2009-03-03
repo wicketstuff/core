@@ -9,8 +9,8 @@ import org.apache.wicket.Response;
 import org.apache.wicket.Component.IVisitor;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.markup.html.JavascriptPackageResource;
 import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 import org.apache.wicket.util.string.JavascriptUtils;
 import org.wicketstuff.yui.YuiHeaderContributor;
@@ -19,7 +19,8 @@ public abstract class Droppable extends AbstractDefaultAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
 
-	private final static ResourceReference SORTABLELIST_JS = new JavascriptResourceReference(Droppable.class, "sortablelist.js");
+	private final static ResourceReference SORTABLELIST_JS = new JavascriptResourceReference(
+			Droppable.class, "sortablelist.js");
 
 	@Override
 	protected void onBind()
@@ -27,7 +28,7 @@ public abstract class Droppable extends AbstractDefaultAjaxBehavior
 		getComponent().setOutputMarkupId(true);
 		getComponent().add(YuiHeaderContributor.forModule("dragdrop"));
 		getComponent().add(YuiHeaderContributor.forModule("utilities"));
-		getComponent().add(HeaderContributor.forJavaScript(SORTABLELIST_JS));
+		getComponent().add(JavascriptPackageResource.getHeaderContribution(SORTABLELIST_JS));
 	}
 
 	@Override
@@ -41,7 +42,8 @@ public abstract class Droppable extends AbstractDefaultAjaxBehavior
 			@Override
 			void visit(Draggable draggable)
 			{
-				if (builder.length() > 0) {
+				if (builder.length() > 0)
+				{
 					builder.append(',');
 				}
 				builder.append('\'');
@@ -51,7 +53,8 @@ public abstract class Droppable extends AbstractDefaultAjaxBehavior
 		});
 
 		response.write(JavascriptUtils.SCRIPT_OPEN_TAG);
-		response.write("YAHOO.util.Event.onDOMReady(Wicket.yui.SortableListApp.init,{groupId:'" + groupId + "',items:[" + builder + "], callbackUrl:'" + getCallbackUrl() + "'});");
+		response.write("YAHOO.util.Event.onDOMReady(Wicket.yui.SortableListApp.init,{groupId:'"
+				+ groupId + "',items:[" + builder + "], callbackUrl:'" + getCallbackUrl() + "'});");
 		response.write(JavascriptUtils.SCRIPT_CLOSE_TAG);
 	}
 
@@ -66,12 +69,15 @@ public abstract class Droppable extends AbstractDefaultAjaxBehavior
 		Request request = getComponent().getRequest();
 		final int index = Integer.parseInt(request.getParameter("dindex"));
 		final String did = request.getParameter("did");
+
+
 		getComponent().getPage().visitChildren(new DraggableVisitor()
 		{
 			@Override
 			void visit(Draggable draggable)
 			{
-				if (draggable.getComponent().getMarkupId().equals(did)) {
+				if (draggable.getComponent().getMarkupId().equals(did))
+				{
 					onDrop(target, draggable.getComponent(), index);
 				}
 			}
@@ -80,17 +86,19 @@ public abstract class Droppable extends AbstractDefaultAjaxBehavior
 
 	public abstract void onDrop(AjaxRequestTarget target, Component component, int index);
 
-	private abstract class DraggableVisitor implements IVisitor
+	private abstract class DraggableVisitor implements IVisitor<Component>
 	{
-		@SuppressWarnings("unchecked")
 		public Object component(Component component)
 		{
 			List<IBehavior> behaviors = component.getBehaviors();
-			for (int a = 0; a < behaviors.size(); a++) {
+			for (int a = 0; a < behaviors.size(); a++)
+			{
 				IBehavior behavior = behaviors.get(a);
-				if (behavior instanceof Draggable) {
-					Draggable draggable = (Draggable) behavior;
-					if (accept(draggable)) {
+				if (behavior instanceof Draggable)
+				{
+					Draggable draggable = (Draggable)behavior;
+					if (accept(draggable))
+					{
 						visit(draggable);
 						return IVisitor.CONTINUE_TRAVERSAL_BUT_DONT_GO_DEEPER;
 					}
