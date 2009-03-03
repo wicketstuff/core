@@ -15,8 +15,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.list.Loop.LoopItem;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.yui.markup.html.sortable.Draggable;
-import org.wicketstuff.yui.markup.html.sortable.Droppable;
+import org.wicketstuff.yui.behavior.dragdrop.YuiListDragDropBehavior;
 
 /**
  * Dynamnic Ajax Tabbed Panel...
@@ -39,18 +38,6 @@ public abstract class DynamicAjaxTabbedPanel extends AjaxTabbedPanel
 
 		MarkupContainer tabContainer = (MarkupContainer)get("tabs-container");
 		tabContainer.setOutputMarkupId(true);
-
-		tabContainer.add(new Droppable()
-		{
-
-			@Override
-			public void onDrop(AjaxRequestTarget target, Component component, int index)
-			{
-				moveTab(component, index);
-				target.addComponent(DynamicAjaxTabbedPanel.this);
-			}
-
-		});
 
 		tabContainer.add(new AjaxFallbackLink<String>("add", new Model<String>("add"))
 		{
@@ -154,22 +141,30 @@ public abstract class DynamicAjaxTabbedPanel extends AjaxTabbedPanel
 	protected LoopItem newTabContainer(final int tabIndex)
 	{
 		LoopItem li = super.newTabContainer(tabIndex);
-		li.add(new Draggable());
+		li.add(new YuiListDragDropBehavior()
+		{
+
+			@Override
+			public void onDrop(AjaxRequestTarget target, Component component)
+			{
+				LoopItem li = (LoopItem)component;
+				rotateTabs(getTabs(), li.getIteration(), tabIndex);
+				target.addComponent(DynamicAjaxTabbedPanel.this);
+			}
+
+		});
 		return li;
 	}
 
-	protected void moveTab(Component component, int index)
+	protected void rotateTabs(List<?> list, int fromPos, int toPos)
 	{
-		LoopItem li = (LoopItem)component;
-		int fromPos = li.getIteration();
-		int toPos = index;
 		boolean moveRight = toPos > fromPos;
 
 		int fromIndex = moveRight ? fromPos : toPos;
 		int toIndex = (moveRight ? toPos : fromPos) + 1;
 		int distance = moveRight ? -1 : 1; // negative == backwards
 
-		Collections.rotate(getTabs().subList(fromIndex, toIndex), distance);
+		Collections.rotate(list.subList(fromIndex, toIndex), distance);
 
 	}
 }
