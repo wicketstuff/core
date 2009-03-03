@@ -352,4 +352,15 @@ span.tabpanel3 div.tab-row li.selected a {
   color:#A56060;
   }
 
- 
+/* dynamic tabbed panel */
+a.remove {
+    background: url(images/24icons.gif) no-repeat 0 -50px;
+    padding: 3px 10px;
+    text-decoration: none;
+}
+
+a.add {
+	background: url(images/24icons.gif) no-repeat 0 -75px;
+    padding: 3px 10px;
+    text-decoration: none;
+}

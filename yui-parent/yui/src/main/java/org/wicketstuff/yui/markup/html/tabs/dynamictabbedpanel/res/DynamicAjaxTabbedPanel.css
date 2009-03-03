@@ -1,0 +1,87 @@
+/* reset */
+div.dyn-tab-row {
+	width: auto;
+	height: auto;
+	float: none;
+	margin: 0px;
+	display: block;
+	padding: 0px;
+}
+
+div.dyn-tab-row ul {
+	width: auto;
+	height: auto;
+	border-bottom-width: 0px;
+	display: block;
+	padding: 0px;
+	margin: 0px;
+	float: none;
+}
+
+div.dyn-tab-row ul li {
+	margin: 0px;
+	padding: 0px;
+	display: block;
+}
+
+div.dyn-tab-row ul li a {
+	color: inherit;
+	background: inherit;
+	padding: 0px;
+	margin: 0px;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+div.dyn-tab-row ul li.selected a {
+	background: inherit;
+	padding: 0;
+}
+
+div.dyn-tab-row ul li a span {
+	color: inherit;
+}
+
+/* custom */
+div.dyn-tab-row ul li {
+    float: left;
+}
+
+div.dyn-tab-row ul li.selected a {
+	margin: 0 2px;
+	padding: 4px 8px;
+	border: 1px solid #888888;
+	background-color: #888888;
+	border-bottom: 0;
+	float: left;
+	color: #FFFFFF;
+}
+
+div.dyn-tab-row ul li a {
+	margin: 0px 2px;
+	padding: 4px 8px;
+	border: 1px dotted #DDDDDD;
+	border-bottom: 0;
+	float: left;
+}
+
+div.dyn-tab-row ul li a.add,div.dyn-tab-row ul li a.remove {
+	background: url(24icons.gif) no-repeat -30px 0;
+	padding: 2px 10px;
+}
+
+div.dyn-tab-row ul li a.add {
+	background-position: 0 -75px;
+	border: 0;
+}
+
+div.dyn-tab-row ul li a.remove {
+	background-position: 0 -50px;
+	border: 0;
+}
+
+div.dyn-tab-panel {
+	border: 1px solid #888888;
+	clear: left;
+	padding: 10px;
+}
