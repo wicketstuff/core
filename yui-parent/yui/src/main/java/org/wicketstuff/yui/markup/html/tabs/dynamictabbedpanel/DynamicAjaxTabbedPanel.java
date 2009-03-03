@@ -15,7 +15,8 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.list.Loop.LoopItem;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.yui.behavior.dragdrop.YuiListDragDropBehavior;
+import org.wicketstuff.yui.markup.html.sortable.Draggable;
+import org.wicketstuff.yui.markup.html.sortable.Droppable;
 
 /**
  * Dynamnic Ajax Tabbed Panel...
@@ -38,6 +39,18 @@ public abstract class DynamicAjaxTabbedPanel extends AjaxTabbedPanel
 
 		MarkupContainer tabContainer = (MarkupContainer)get("tabs-container");
 		tabContainer.setOutputMarkupId(true);
+
+		tabContainer.add(new Droppable()
+		{
+
+			@Override
+			public void onDrop(AjaxRequestTarget target, Component component, int index)
+			{
+				moveTab(component, index);
+				target.addComponent(DynamicAjaxTabbedPanel.this);
+			}
+
+		});
 
 		tabContainer.add(new AjaxFallbackLink<String>("add", new Model<String>("add"))
 		{
@@ -141,49 +154,22 @@ public abstract class DynamicAjaxTabbedPanel extends AjaxTabbedPanel
 	protected LoopItem newTabContainer(final int tabIndex)
 	{
 		LoopItem li = super.newTabContainer(tabIndex);
-		li.add(new YuiListDragDropBehavior(tabIndex)
-		{
-
-			@Override
-			public void onDrop(AjaxRequestTarget target, String swapId)
-			{
-				swapTabs(getDestinationIndex(swapId), tabIndex);
-				target.addComponent(DynamicAjaxTabbedPanel.this);
-			}
-
-		});
+		li.add(new Draggable());
 		return li;
 	}
 
-	private int getDestinationIndex(final String swapId)
+	protected void moveTab(Component component, int index)
 	{
-		final StringBuffer sb = new StringBuffer();
+		LoopItem li = (LoopItem)component;
+		int fromPos = li.getIteration();
+		int toPos = index;
+		boolean moveRight = toPos > fromPos;
 
-		DynamicAjaxTabbedPanel.this.visitChildren(new IVisitor<Component>()
-		{
+		int fromIndex = moveRight ? fromPos : toPos;
+		int toIndex = (moveRight ? toPos : fromPos) + 1;
+		int distance = moveRight ? -1 : 1; // negative == backwards
 
-			public Object component(Component component)
-			{
-				if (component instanceof LoopItem)
-				{
-					LoopItem li = (LoopItem)component;
-					if (swapId.equals(component.getMarkupId()))
-					{
-						sb.append(li.getIteration());
-						return STOP_TRAVERSAL;
-					}
-				}
-				return CONTINUE_TRAVERSAL;
-			}
-		});
+		Collections.rotate(getTabs().subList(fromIndex, toIndex), distance);
 
-		return Integer.parseInt(sb.toString());
 	}
-
-	private void swapTabs(int index, int withIndex)
-	{
-		Collections.swap(getTabs(), index, withIndex);
-		setSelectedTab(index);
-	}
-
 }

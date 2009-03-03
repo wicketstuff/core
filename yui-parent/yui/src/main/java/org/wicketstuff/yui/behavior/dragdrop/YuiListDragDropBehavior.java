@@ -7,6 +7,15 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 
+/**
+ * Check out Draggable and Droppable under "sortable" - this version is also based on the same example.
+ * - main difference : every draggable is a dropable (target and proxy) while Janne's nicely separate Draggable and Droppable 
+ * 
+ * @deprecated 
+ * 		see {@link Droppable} and {@link Draggable}
+ * 
+ * @author josh
+ */
 @SuppressWarnings("serial")
 public abstract class YuiListDragDropBehavior extends AbstractDefaultAjaxBehavior
 {
@@ -20,15 +29,12 @@ public abstract class YuiListDragDropBehavior extends AbstractDefaultAjaxBehavio
 
 	protected static final String PREFIX_GRP = "YDD_GRP_";
 
-	private static final ResourceReference DYN_TAB_JS = new JavascriptResourceReference(YuiListDragDropBehavior.class,
-			"YuiListDragDropBehavior.js");
+	private static final ResourceReference DYN_TAB_JS = new JavascriptResourceReference(
+			YuiListDragDropBehavior.class, "YuiListDragDropBehavior.js");
 
-	private int tabIndex;
-
-	public YuiListDragDropBehavior(int tabIndex)
+	public YuiListDragDropBehavior()
 	{
 		super();
-		this.tabIndex = tabIndex;
 	}
 
 	@Override
@@ -39,8 +45,8 @@ public abstract class YuiListDragDropBehavior extends AbstractDefaultAjaxBehavio
 		response.renderJavascriptReference(DRAGDROP_MIN);
 		response.renderJavascriptReference(ANIMATION_MIN);
 		response.renderJavascriptReference(DYN_TAB_JS);
-		response.renderOnDomReadyJavascript(getJavascriptForDragDrop(getComponent().getParent().getMarkupId(),
-				getComponent().getMarkupId()));
+		response.renderOnDomReadyJavascript(getJavascriptForDragDrop(getComponent().getParent()
+				.getMarkupId(), getComponent().getMarkupId()));
 	}
 
 	@Override
@@ -65,11 +71,12 @@ public abstract class YuiListDragDropBehavior extends AbstractDefaultAjaxBehavio
 		String targetVarId = PREFIX + targetMarkupId;
 		final String groupId = PREFIX_GRP + targetMarkupId;
 
-		js.append(targetVarId).append(" = new YAHOO.util.DDTarget(\"" + targetMarkupId + "\", \"" + groupId + "\");\n");
+		js.append(targetVarId).append(
+				" = new YAHOO.util.DDTarget(\"" + targetMarkupId + "\", \"" + groupId + "\");\n");
 
 		String varId = PREFIX + markupId;
-		js.append(varId + " = new YAHOO.ddlist.DDList(\"" + markupId + "\",\"" + groupId + "\"," + getConfig() + ","
-				+ getCallbackWicket() + "," + tabIndex +");\n");
+		js.append(varId + " = new YAHOO.ddlist.DDList(\"" + markupId + "\",\"" + groupId + "\","
+				+ getConfig() + "," + getCallbackWicket() + ");\n");
 		js.append(varId).append(".setHandleElId(\"" + markupId + "\");\n");
 
 		return js.toString();
@@ -83,7 +90,8 @@ public abstract class YuiListDragDropBehavior extends AbstractDefaultAjaxBehavio
 	@Override
 	protected CharSequence getCallbackScript()
 	{
-		return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl(false) + "&swapId=' + this.lastSwapId");
+		return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl(false)
+				+ "&swapId=' + this.lastSwapId");
 	}
 
 	private String getConfig()
