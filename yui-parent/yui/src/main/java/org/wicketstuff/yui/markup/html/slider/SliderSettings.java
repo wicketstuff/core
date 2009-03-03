@@ -2,7 +2,6 @@ package org.wicketstuff.yui.markup.html.slider;
 
 import java.io.Serializable;
 
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ResourceReference;
 import org.wicketstuff.yui.helper.CSSInlineStyle;
 import org.wicketstuff.yui.helper.ImageResourceInfo;
@@ -74,7 +73,7 @@ public class SliderSettings implements Serializable {
 
 	public static SliderSettings getDefault(int leftUp, int rightDown, int tick) {
 		ResourceReference background = new ResourceReference(Slider.class,
-				"style/bg.gif");
+				"style/bg.png");
 		ResourceReference thumb = new ResourceReference(Slider.class,
 				"style/thumb.png");
 		ResourceReference leftCorner = new ResourceReference(Slider.class,
@@ -286,10 +285,6 @@ public class SliderSettings implements Serializable {
 		setTick(Integer.toString(tick));
 
 		/* background */
-		getBackground().add(
-				"background",
-				"url(" + RequestCycle.get().urlFor(getBackgroundResource())
-						+ ") repeat-x");
 		getBackground().add("height", height + "px");
 		getBackground().add("width", width + "px");
 
@@ -300,10 +295,6 @@ public class SliderSettings implements Serializable {
 		getHandle().add("left", left + "px");
 
 		/* thumb */
-		getThumb().add(
-				"background",
-				"url(" + RequestCycle.get().urlFor(getThumbResource())
-						+ ") no-repeat");
 		getThumb().add("background-position", "center");
 		getThumb().add("height", "100%");
 		getThumb().add("width", thumbWidth + "px");
