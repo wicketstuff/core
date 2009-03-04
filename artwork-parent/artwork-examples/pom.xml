@@ -68,11 +68,6 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>org.apache.wicket</groupId>
-      <artifactId>wicket</artifactId>
-      <version>${wicket.version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.wicketstuff</groupId>
       <artifactId>artwork</artifactId>
       <version>${version}</version>
@@ -116,6 +111,5 @@
   </dependencies>
   <properties>
     <jetty.version>6.1.4</jetty.version>
-    <wicket.version>1.4-SNAPSHOT</wicket.version>
   </properties>
 </project>
