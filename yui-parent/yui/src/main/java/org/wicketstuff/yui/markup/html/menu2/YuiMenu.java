@@ -8,6 +8,7 @@ import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.behavior.IBehavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -73,7 +74,7 @@ public class YuiMenu extends AbstractYuiMenu {
 		}
 	}
 
-	public AbstractYuiMenuItem addMenuItem(String label, Link link) {
+	public AbstractYuiMenuItem addMenuItem(String label, AbstractLink link) {
 		YuiMenuItem item = new YuiMenuItem(label, link);
 		addMenuItem(item);
 		return item;
