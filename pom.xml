@@ -77,6 +77,21 @@
 		<system>continuum</system>
 		<url>http://www.wickettraining.com/continuum</url>
 	</ciManagement>
+	
+	<distributionManagement>
+		<!-- use the following if you're not using a snapshot version. -->
+		<repository>
+			<id>tmp-file-repo</id>
+			<name>tmp directory</name>
+			<url>file://tmp/wicketstuff-core-release-repo</url>
+		</repository>
+		<!-- use the following if you ARE using a snapshot version. -->
+		<snapshotRepository>
+			<id>tmp-file-snaps-repo</id>
+			<name>tmp snaps directory</name>
+			<url>file://tmp/wicketstuff-core-snaps-repo</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<profiles>
 		<profile>
