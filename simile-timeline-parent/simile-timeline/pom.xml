@@ -57,6 +57,7 @@
 					<nosuffix>true</nosuffix>
 					<force>false</force>
 					<excludes>
+						<exclude>**/*.java</exclude>
 						<exclude>**/interface-*.js</exclude>
 						<exclude>**/*pack.js</exclude>
 						<exclude>**/compressed.css</exclude>
