@@ -65,7 +65,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>wicketstuff-prototype</artifactId>
+			<artifactId>prototype</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
