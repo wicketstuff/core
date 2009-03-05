@@ -35,9 +35,7 @@ import org.wicketstuff.misc.behaviors.CompositeBehavior;
 import org.wicketstuff.misc.behaviors.SimpleAttributeAppender;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -75,12 +73,12 @@ public class DatePickerBehavior extends JQueryBehavior {
         options_ = options;
     }
 
-    private void convertDateInOptions(IConverter cnv, String key, Locale locale) {
-        Date date = (Date)options_.get(key);
-        if (date != null) {
-            options_.set(key, cnv.convertToString(date, locale));
-        }        
-    }
+//    private void convertDateInOptions(IConverter cnv, String key, Locale locale) {
+//        Date date = (Date)options_.get(key);
+//        if (date != null) {
+//            options_.set(key, cnv.convertToString(date, locale));
+//        }
+//    }
     @Override
     public void renderHead(IHeaderResponse response) {
 		if(includeJquery)
@@ -166,8 +164,8 @@ public class DatePickerBehavior extends JQueryBehavior {
 	            	format_ = sdf.toPattern().toLowerCase();
 	            }
 	            
-	            convertDateInOptions(cnv, "startDate", component.getLocale());
-	            convertDateInOptions(cnv, "endDate", component.getLocale());
+//	            convertDateInOptions(cnv, "startDate", component.getLocale());
+//	            convertDateInOptions(cnv, "endDate", component.getLocale());
             }
             
             component.add(getDatePickerStyle());
