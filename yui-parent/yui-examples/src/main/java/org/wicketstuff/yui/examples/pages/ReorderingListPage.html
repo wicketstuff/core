@@ -19,7 +19,7 @@ table ul {
 	margin: 0;
 	padding: 0;
 	width: 100px;
-	height: 250px;
+	height: 110px;
 }
 
 table ul.ddtarget {
@@ -31,9 +31,23 @@ table ul.ddtarget {
 	background-color: #88FF88;
 }
 
+.stationary li {
+	background-color: #FF8888;
+}
+
+.stationary ul {
+	background-color: #888;
+	border: 3px solid #000;
+}
+
 td {
 	vertical-align: top;
 	width: 150px;
+}
+
+ul.info {
+	font-size: 0.8em;
+	width: 350px;
 }
 </style>
 </head>
@@ -41,13 +55,22 @@ td {
 <body>
 <span wicket:id="mainNavigation" />
 <br>
-<table>
+<div style="width:500px;height:60px;" wicket:id="label"></div>
+<table cellpadding="4" cellspacing="4" border="0">
     <tr>
         <td>
         <ul wicket:id="list1">
             <li wicket:id="items"><span wicket:id="item"></span></li>
         </ul>
         list1</td>
+        <td>&nbsp;</td>
+        <td>
+        <ul class="info">
+            <li>list1 is a simple reorderable list (just add YuiDDList to each &lt;li&gt; item)</li>
+        </ul>
+        </td>
+    </tr>
+    <tr>
         <td>
         <ul class="animals ddtarget" wicket:id="list2">
             <li wicket:id="items"><span wicket:id="item"></span></li>
@@ -58,19 +81,30 @@ td {
             <li wicket:id="items"><span wicket:id="item"></span></li>
         </ul>
         list3</td>
+
         <td>
-        <ul style="width: 450px; font-size: 0.8em;">
-            <li>list1 is a simple reorderable list (just add YuiDDList to each &lt;li&gt; item)</li>
+        <ul class="info">
             <li>list2 and list3 are interactable becasue they have the same groupId</li>
             <li>list2 is also a DDTarget on the &lt;ul&gt; to allow DDList items to drop on it. If you drag all
             list3 items to list2, you can drag it back because list3 is not a DDTarget</li>
-            
+        </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <div class="stationary" wicket:id="list4"></div>
+        list4</td>
+        <td>
+        <div class="stationary" wicket:id="list5"></div>
+        list5</td>
+        <td>
+        <ul class="info">
+            <li>list4 &amp; list5 are YuiDDListViewPanel for convenience</li>
             <li>quirks : YuiDDList must be on &lt;li&gt;</li>
         </ul>
         </td>
     </tr>
 </table>
 <br />
-<div wicket:id="label"></div>
 </body>
 </html>

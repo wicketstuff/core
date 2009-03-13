@@ -29,6 +29,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.wicketstuff.yui.behavior.dragdrop.YuiDDTarget;
 import org.wicketstuff.yui.examples.WicketExamplePage;
 import org.wicketstuff.yui.markup.html.list.YuiDDListView;
+import org.wicketstuff.yui.markup.html.list.YuiDDListViewPanel;
 
 /**
  * 
@@ -85,7 +86,6 @@ public class ReorderingListPage extends WicketExamplePage
 		final List<String> list2items = new ArrayList<String>();
 		list2items.add("Dogs");
 		list2items.add("Cats");
-		list2items.add("Rats");
 
 		add(list2 = new WebMarkupContainer("list2"));
 		list2.setOutputMarkupId(true);
@@ -137,8 +137,6 @@ public class ReorderingListPage extends WicketExamplePage
 
 		List<String> list3items = new ArrayList<String>();
 		list3items.add("Squirrels");
-		list3items.add("Possums");
-		list3items.add("Hamsters");
 
 		list3.add(new YuiDDListView<String>("items", list3items)
 		{
@@ -164,5 +162,57 @@ public class ReorderingListPage extends WicketExamplePage
 			}
 		});
 
+
+		// list 4 and 5
+		final List<String> list4items = new ArrayList<String>();
+		add(new YuiDDListViewPanel<String>("list4", list4items)
+		{
+			@Override
+			protected Component newListItem(String id, ListItem<String> item)
+			{
+				return new Label(id, item.getModelObject());
+			}
+
+			@Override
+			protected String getGroupId()
+			{
+				return "stationary";
+			}
+
+			@Override
+			protected void onAjaxUpdate(AjaxRequestTarget target)
+			{
+				info("list4 : " + getList());
+				target.addComponent(feedback);
+			}
+		});
+
+
+		List<String> list5items = new ArrayList<String>();
+		list5items.add("Books");
+		list5items.add("Pencils");
+		list5items.add("Paper");
+		add(new YuiDDListViewPanel<String>("list5", list5items)
+		{
+			@Override
+			protected Component newListItem(String id, ListItem<String> item)
+			{
+				return new Label(id, item.getModelObject());
+			}
+
+			@Override
+			protected String getGroupId()
+			{
+				return "stationary";
+			}
+
+			@Override
+			protected void onAjaxUpdate(AjaxRequestTarget target)
+			{
+				info("list5 : " + getList());
+				target.addComponent(feedback);
+			}
+
+		});
 	}
 }
