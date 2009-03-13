@@ -4,17 +4,12 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.wicketstuff.yui.YuiHeaderContributor;
 
 public abstract class YuiDDTarget extends AbstractBehavior
 {
 
 	private static final long serialVersionUID = 1L;
-
-	private static final String YAHOO_DOM_EVENT_2_7_0 = "http://yui.yahooapis.com/combo?2.7.0/build/yahoo-dom-event/yahoo-dom-event.js&2.7.0/build/dragdrop/dragdrop-min.js";
-
-	private static final String DRAGDROP_MIN = "http://yui.yahooapis.com/2.7.0/build/dragdrop/dragdrop-min.js";
-
-	private static final String ANIMATION_MIN = "http://yui.yahooapis.com/2.7.0/build/animation/animation-min.js";
 
 	protected static final String PREFIX = "YDDT_";
 
@@ -32,9 +27,6 @@ public abstract class YuiDDTarget extends AbstractBehavior
 	public void renderHead(IHeaderResponse response)
 	{
 		super.renderHead(response);
-		response.renderJavascriptReference(YAHOO_DOM_EVENT_2_7_0);
-		response.renderJavascriptReference(DRAGDROP_MIN);
-		response.renderJavascriptReference(ANIMATION_MIN);
 		response.renderOnDomReadyJavascript(getJavascriptForDragDrop());
 	}
 
@@ -44,6 +36,10 @@ public abstract class YuiDDTarget extends AbstractBehavior
 		super.bind(component);
 		component.setOutputMarkupId(true);
 		targetId = component.getMarkupId();
+		component.add(YuiHeaderContributor.forModule("yahoo"));
+		component.add(YuiHeaderContributor.forModule("dom"));
+		component.add(YuiHeaderContributor.forModule("event"));
+		component.add(YuiHeaderContributor.forModule("dragdrop"));
 	}
 
 	private String getJavascriptForDragDrop()

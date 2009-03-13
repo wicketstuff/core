@@ -10,7 +10,9 @@ import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.IBehavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.html.JavascriptPackageResource;
 import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+import org.wicketstuff.yui.YuiHeaderContributor;
 
 
 /**
@@ -32,12 +34,6 @@ public abstract class YuiDDList extends AbstractDefaultAjaxBehavior
 	private static final String IDX = "idx";
 
 	private static final String DOI = "doi";
-
-	private static final String YAHOO_DOM_EVENT_2_7_0 = "http://yui.yahooapis.com/combo?2.7.0/build/yahoo-dom-event/yahoo-dom-event.js&2.7.0/build/dragdrop/dragdrop-min.js";
-
-	private static final String DRAGDROP_MIN = "http://yui.yahooapis.com/2.7.0/build/dragdrop/dragdrop-min.js";
-
-	private static final String ANIMATION_MIN = "http://yui.yahooapis.com/2.7.0/build/animation/animation-min.js";
 
 	protected static final String PREFIX = "YDDL_";
 
@@ -63,10 +59,6 @@ public abstract class YuiDDList extends AbstractDefaultAjaxBehavior
 	public void renderHead(IHeaderResponse response)
 	{
 		super.renderHead(response);
-		response.renderJavascriptReference(YAHOO_DOM_EVENT_2_7_0);
-		response.renderJavascriptReference(DRAGDROP_MIN);
-		response.renderJavascriptReference(ANIMATION_MIN);
-		response.renderJavascriptReference(YUI_DDLIST_JS);
 		response.renderOnDomReadyJavascript(getJavascriptForDragDrop());
 	}
 
@@ -75,6 +67,12 @@ public abstract class YuiDDList extends AbstractDefaultAjaxBehavior
 	{
 		super.onBind();
 		getComponent().setOutputMarkupId(true);
+		getComponent().add(YuiHeaderContributor.forModule("yahoo"));
+		getComponent().add(YuiHeaderContributor.forModule("dom"));
+		getComponent().add(YuiHeaderContributor.forModule("event"));
+		getComponent().add(YuiHeaderContributor.forModule("dragdrop"));
+		getComponent().add(YuiHeaderContributor.forModule("animation"));
+		getComponent().add(JavascriptPackageResource.getHeaderContribution(YUI_DDLIST_JS));
 		listId = getComponent().getMarkupId();
 	}
 
