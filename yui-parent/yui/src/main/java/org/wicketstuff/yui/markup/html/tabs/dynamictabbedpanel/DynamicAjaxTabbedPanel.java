@@ -1,6 +1,5 @@
 package org.wicketstuff.yui.markup.html.tabs.dynamictabbedpanel;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.Component;
@@ -15,7 +14,8 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.list.Loop.LoopItem;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.yui.behavior.dragdrop.YuiListDragDropBehavior;
+import org.wicketstuff.yui.behavior.dragdrop.YuiDDList;
+import org.wicketstuff.yui.helper.CollectionsHelper;
 
 /**
  * Dynamnic Ajax Tabbed Panel...
@@ -30,6 +30,8 @@ import org.wicketstuff.yui.behavior.dragdrop.YuiListDragDropBehavior;
 public abstract class DynamicAjaxTabbedPanel extends AjaxTabbedPanel
 {
 
+	private String groupId;
+
 	public DynamicAjaxTabbedPanel(String id, final List<ITab> tabs)
 	{
 		super(id, tabs);
@@ -38,6 +40,7 @@ public abstract class DynamicAjaxTabbedPanel extends AjaxTabbedPanel
 
 		MarkupContainer tabContainer = (MarkupContainer)get("tabs-container");
 		tabContainer.setOutputMarkupId(true);
+		groupId = tabContainer.getMarkupId();
 
 		tabContainer.add(new AjaxFallbackLink<String>("add", new Model<String>("add"))
 		{
@@ -140,31 +143,16 @@ public abstract class DynamicAjaxTabbedPanel extends AjaxTabbedPanel
 	@Override
 	protected LoopItem newTabContainer(final int tabIndex)
 	{
-		LoopItem li = super.newTabContainer(tabIndex);
-		li.add(new YuiListDragDropBehavior()
+		final LoopItem li = super.newTabContainer(tabIndex);
+		li.add(new YuiDDList(groupId)
 		{
-
 			@Override
-			public void onDrop(AjaxRequestTarget target, Component component)
+			protected void onDrop(AjaxRequestTarget target, int index, Component destItem)
 			{
-				LoopItem li = (LoopItem)component;
-				rotateTabs(getTabs(), li.getIteration(), tabIndex);
+				CollectionsHelper.rotateInto(getTabs(), li.getIteration(), index);
 				target.addComponent(DynamicAjaxTabbedPanel.this);
 			}
-
 		});
 		return li;
-	}
-
-	protected void rotateTabs(List<?> list, int fromPos, int toPos)
-	{
-		boolean moveRight = toPos > fromPos;
-
-		int fromIndex = moveRight ? fromPos : toPos;
-		int toIndex = (moveRight ? toPos : fromPos) + 1;
-		int distance = moveRight ? -1 : 1; // negative == backwards
-
-		Collections.rotate(list.subList(fromIndex, toIndex), distance);
-
 	}
 }

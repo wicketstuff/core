@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Reordering List Example</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<style>
+table li {
+	border: 1px solid #888;
+	padding: 4px;
+	margin: 4px;
+	list-style: none;
+	background-color: #FFF;
+}
+
+table ul {
+	border: 1px solid #888;
+	background-color: #888;
+	margin: 0;
+	padding: 0;
+	width: 100px;
+	height: 250px;
+}
+
+table ul.ddtarget {
+	background-color: #888;
+	border: 3px solid #000;
+}
+
+.animals li {
+	background-color: #88FF88;
+}
+
+td {
+	vertical-align: top;
+	width: 150px;
+}
+</style>
+</head>
+
+<body>
+<span wicket:id="mainNavigation" />
+<br>
+<table>
+    <tr>
+        <td>
+        <ul wicket:id="list1">
+            <li wicket:id="items"><span wicket:id="item"></span></li>
+        </ul>
+        list1</td>
+        <td>
+        <ul class="animals ddtarget" wicket:id="list2">
+            <li wicket:id="items"><span wicket:id="item"></span></li>
+        </ul>
+        list2</td>
+        <td>
+        <ul class="animals" wicket:id="list3">
+            <li wicket:id="items"><span wicket:id="item"></span></li>
+        </ul>
+        list3</td>
+        <td>
+        <ul style="width: 450px; font-size: 0.8em;">
+            <li>list1 is a simple reorderable list (just add YuiDDList to each &lt;li&gt; item)</li>
+            <li>list2 and list3 are interactable becasue they have the same groupId</li>
+            <li>list2 is also a DDTarget on the &lt;ul&gt; to allow DDList items to drop on it. If you drag all
+            list3 items to list2, you can drag it back because list3 is not a DDTarget</li>
+            
+            <li>quirks : YuiDDList must be on &lt;li&gt;</li>
+        </ul>
+        </td>
+    </tr>
+</table>
+<br />
+<div wicket:id="label"></div>
+</body>
+</html>
