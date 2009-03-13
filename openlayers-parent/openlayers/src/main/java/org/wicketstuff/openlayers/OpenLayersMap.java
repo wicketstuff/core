@@ -42,6 +42,7 @@ import org.wicketstuff.openlayers.api.Marker;
 import org.wicketstuff.openlayers.api.Overlay;
 import org.wicketstuff.openlayers.api.layer.GMap;
 import org.wicketstuff.openlayers.api.layer.Layer;
+import org.wicketstuff.openlayers.api.layer.OSM;
 import org.wicketstuff.openlayers.api.layer.WMS;
 import org.wicketstuff.openlayers.event.EventType;
 import org.wicketstuff.openlayers.event.OverlayListenerBehavior;
@@ -439,6 +440,13 @@ public class OpenLayersMap extends Panel {
 						+ gmap.getJSconstructor() + ";\n");
 				js.append(getJSinvoke("addLayer(gmap" + gmap.getId() + ","
 						+ gmap.getId() + ")"));
+			}
+			if (layer instanceof OSM) {
+				OSM osm = (OSM) layer;
+				js.append("var osm" + osm.getId() + " ="
+						+ osm.getJSconstructor() + ";\n");
+				js.append(getJSinvoke("addLayer(osm" + osm.getId() + ","
+						+ osm.getId() + ")"));
 			}
 		}
 		js.append(getJSinvoke("zoomToMaxExtent()"));
