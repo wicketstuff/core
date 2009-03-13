@@ -55,7 +55,27 @@ public class DynamicTabPage extends WicketExamplePage
 					@Override
 					public Panel getPanel(String panelId)
 					{
-						return new EmptyPanel(panelId);
+
+						List<ITab> innertabs = new ArrayList<ITab>();
+						return new DynamicAjaxTabbedPanel(panelId, innertabs)
+						{
+
+							@Override
+							protected ITab newTab(String label)
+							{
+								return new AbstractTab(new Model<String>(label))
+								{
+
+									@Override
+									public Panel getPanel(String panelId)
+									{
+										return new EmptyPanel(panelId);
+									}
+
+								};
+							}
+
+						};
 					}
 				};
 			}
