@@ -78,6 +78,22 @@
 		<url>http://www.wickettraining.com/continuum</url>
 	</ciManagement>
 
+	<distributionManagement>
+		<site>
+			<id>local</id>
+			<url>file:target/site</url>
+		</site>
+		<repository>
+			<id>local</id>
+			<url>file:target/m2-repo</url>
+		</repository>
+		<snapshotRepository>
+			<id>local</id>
+			<url>file:target/m2-snapshot-repo</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<profiles>
 		<profile>
 			<id>bamboo</id>
