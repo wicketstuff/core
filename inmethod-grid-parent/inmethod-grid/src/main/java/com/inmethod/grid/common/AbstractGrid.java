@@ -342,7 +342,6 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 			for (int i = 0; i < getActiveColumns().size(); ++i) {
 				result.append("<td></td>");
 			}
-			result.append("<td class=\"imxt-padding\"></td>");
 			return result.toString();
 		}
 	};
