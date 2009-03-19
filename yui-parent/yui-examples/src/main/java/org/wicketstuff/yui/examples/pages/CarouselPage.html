@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Carousel Example</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<style>
+.yui-carousel-element li {
+	height: 200px;
+	width: 400px;
+}
+
+.yui-carousel {
+	border: 2px solid #888;
+}
+</style>
+</head>
+
+<body>
+<span wicket:id="mainNavigation" />
+<ul>
+    <li>By default (or design) the carousel will show a drop down list instead of the dots if there's &gt; 5 items</li>
+    <li>By default, sam skin is applied as it is nicer</li>
+</ul>
+
+<div wicket:id="carousel_sam"></div>
+<br />
+<br />
+<ul>
+    <li>No Skin applied, except for the function requirement carousel-core.css</li>
+</ul>
+<div wicket:id="carousel"></div>
+
+</body>
+</html>
