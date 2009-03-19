@@ -36,6 +36,7 @@
 		<module>push-parent</module>
 		<module>artwork-parent</module>
 		<module>yav-parent</module>
+		<module>plugin</module>
 	</modules>
 
 	<licenses>
