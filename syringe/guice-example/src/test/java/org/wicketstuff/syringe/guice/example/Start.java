@@ -1,4 +1,4 @@
-package org.wicketstuff.syringe.spring.example;
+package org.wicketstuff.syringe.guice.example;
 
 import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Server;

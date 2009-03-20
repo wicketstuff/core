@@ -1,4 +1,4 @@
-package org.wicketstuff.syringe.spring.example;
+package org.wicketstuff.syringe.guice.example;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;

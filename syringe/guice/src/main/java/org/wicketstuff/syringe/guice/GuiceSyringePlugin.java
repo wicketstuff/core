@@ -31,7 +31,7 @@ public class GuiceSyringePlugin extends SyringePlugin
     public <T> T lookupDependency(Class<T> dependencyType, Inject injectAnnotation)
     {
         T bean = null;
-        if (injectAnnotation.name() == null)
+        if ("".equals(injectAnnotation.name()))
         {
             bean = injector.getInstance(Key.get(dependencyType));
         }

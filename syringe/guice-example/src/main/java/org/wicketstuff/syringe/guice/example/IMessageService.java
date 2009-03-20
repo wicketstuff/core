@@ -1,4 +1,4 @@
-package org.wicketstuff.syringe.spring.example;
+package org.wicketstuff.syringe.guice.example;
 
 /**
  * @since 1.4
