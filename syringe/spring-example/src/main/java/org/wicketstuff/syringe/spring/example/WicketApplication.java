@@ -4,6 +4,9 @@ import org.wicketstuff.plugin.WicketPluginApplication;
 import org.wicketstuff.syringe.spring.SpringSyringePlugin;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+/**
+ * @since 1.4
+ */
 public class WicketApplication extends WicketPluginApplication
 {    
     /**
