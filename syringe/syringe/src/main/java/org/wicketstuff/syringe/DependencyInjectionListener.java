@@ -56,7 +56,7 @@ public class DependencyInjectionListener implements IComponentInstantiationListe
     @SuppressWarnings("unchecked")
     public void onInstantiation(Component component)
     {
-        final Field[] fields = component.getClass().getFields();
+        final Field[] fields = component.getClass().getDeclaredFields();
         for (Field field : fields)
         {
             field.setAccessible(true);

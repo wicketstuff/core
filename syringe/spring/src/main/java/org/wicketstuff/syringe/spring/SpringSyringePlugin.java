@@ -32,7 +32,7 @@ public class SpringSyringePlugin extends SyringePlugin
     public <T> T lookupDependency(Class<T> dependencyType, Inject injectAnnotation)
     {
         Map<String, T> beanMap = applicationContext.getBeansOfType(dependencyType);
-        if (injectAnnotation.name() == null)
+        if ("".equals(injectAnnotation.name()))
         {
             switch (beanMap.size())
             {
