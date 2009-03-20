@@ -13,5 +13,5 @@
                            http://www.springframework.org/schema/aop
                            http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
     
-    <bean id="messageService" class="org.wicketstuff.syringe.spring.example.MessageServiceImpl" />
+    <bean id="messageService" class="org.wicketstuff.syringe.guice.example.MessageServiceImpl" />
 </beans>

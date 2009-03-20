@@ -1,9 +1,9 @@
-package org.wicketstuff.syringe.spring.example;
+package org.wicketstuff.syringe.guice.example;
 
 import junit.framework.TestCase;
 import org.apache.wicket.util.tester.WicketTester;
-import org.wicketstuff.syringe.spring.example.HomePage;
-import org.wicketstuff.syringe.spring.example.WicketApplication;
+import org.wicketstuff.syringe.guice.example.HomePage;
+import org.wicketstuff.syringe.guice.example.WicketApplication;
 
 /**
  * Simple test using the WicketTester
