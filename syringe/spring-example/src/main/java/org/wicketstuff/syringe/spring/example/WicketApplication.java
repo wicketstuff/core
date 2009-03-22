@@ -1,7 +1,8 @@
 package org.wicketstuff.syringe.spring.example;
 
 import org.wicketstuff.plugin.WicketPluginApplication;
-import org.wicketstuff.syringe.spring.SpringSyringePlugin;
+import org.wicketstuff.syringe.spring.SpringDependencyProvider;
+import org.wicketstuff.syringe.SyringePlugin;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
@@ -19,7 +20,7 @@ public class WicketApplication extends WicketPluginApplication
     @Override
     protected void init()
     {
-        getPluginRegistry().registerPlugin(new SpringSyringePlugin(this, WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext())));
+        getPluginRegistry().registerPlugin(new SyringePlugin(this, new SpringDependencyProvider(WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext()))));
     }
 
     /**

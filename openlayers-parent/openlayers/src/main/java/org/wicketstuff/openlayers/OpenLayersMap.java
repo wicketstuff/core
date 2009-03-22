@@ -20,7 +20,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.Request;
@@ -47,6 +46,8 @@ import org.wicketstuff.openlayers.api.layer.WMS;
 import org.wicketstuff.openlayers.event.EventType;
 import org.wicketstuff.openlayers.event.OverlayListenerBehavior;
 import org.wicketstuff.openlayers.event.PopupListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -59,8 +60,7 @@ import com.vividsolutions.jts.geom.PrecisionModel;
  */
 public class OpenLayersMap extends Panel {
 
-	private static org.apache.log4j.Logger log = Logger
-			.getLogger(OpenLayersMap.class);
+	private static Logger log = LoggerFactory.getLogger(OpenLayersMap.class);
 	/**
 	 * WGS84 (http://en.wikipedia.org/wiki/World_Geodetic_System#
 	 * A_new_World_Geodetic_System:_WGS_84)

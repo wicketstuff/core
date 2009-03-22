@@ -26,7 +26,6 @@
 
 	<properties>
 		<java.src.version>1.5</java.src.version>
-		<slf4j.version>1.4.3</slf4j.version>
 		<runtime.log>target/velocity.log</runtime.log>
 	</properties>
 
