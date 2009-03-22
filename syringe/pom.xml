@@ -24,5 +24,7 @@
         <module>spring-example</module>
         <module>guice</module>
         <module>guice-example</module>
+        <module>webbeans</module>
+        <module>webbeans-example</module>
     </modules>
 </project>

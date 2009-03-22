@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>wicket-syringe-parent</artifactId>
+        <groupId>org.wicketstuff</groupId>
+        <version>1.4-SNAPSHOT</version>
+    </parent>
+    <groupId>org.wicketstuff</groupId>
+    <artifactId>wicket-syringe-webbeans</artifactId>
+    <name>WebBeans Syringe Plugin</name>
+    <dependencies>
+        <dependency>
+            <groupId>org.wicketstuff</groupId>
+            <artifactId>wicket-syringe</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.openwebbeans</groupId>
+            <artifactId>openwebbeans-api</artifactId>
+            <version>1.0.0-incubating-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+</project>
