@@ -1,4 +1,4 @@
-package org.wicketstuff.syringe.spring.example;
+package org.wicketstuff.syringe.webbeans.example;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;
@@ -12,7 +12,7 @@ public class HomePage extends WebPage
 {
     private static final long serialVersionUID = 1L;
 
-    @Inject
+    @Inject(name="messageService")
     private IMessageService messageService;
 
     public HomePage(final PageParameters parameters)
