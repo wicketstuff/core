@@ -1,7 +1,8 @@
 package org.wicketstuff.syringe.guice.example;
 
 import org.wicketstuff.plugin.WicketPluginApplication;
-import org.wicketstuff.syringe.guice.GuiceSyringePlugin;
+import org.wicketstuff.syringe.guice.GuiceDependencyProvider;
+import org.wicketstuff.syringe.SyringePlugin;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -21,7 +22,7 @@ public class WicketApplication extends WicketPluginApplication
     protected void init()
     {
         Injector injector = Guice.createInjector(new GuiceModule());
-        getPluginRegistry().registerPlugin(new GuiceSyringePlugin(this, injector));
+        getPluginRegistry().registerPlugin(new SyringePlugin(this, new GuiceDependencyProvider(injector)));
     }
 
     /**

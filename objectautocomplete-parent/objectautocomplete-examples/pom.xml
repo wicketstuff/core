@@ -1,70 +1,69 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.wicketstuff</groupId>
-    <artifactId>objectautocomplete-parent</artifactId>
-    <version>1.4-SNAPSHOT</version>
-  </parent>
+    <parent>
+        <groupId>org.wicketstuff</groupId>
+        <artifactId>objectautocomplete-parent</artifactId>
+        <version>1.4-SNAPSHOT</version>
+    </parent>
 
-  <artifactId>objectautocomplete-examples</artifactId>
-  <packaging>war</packaging>
+    <artifactId>objectautocomplete-examples</artifactId>
+    <packaging>war</packaging>
 
-  <name>ObjectAutoComplete - Examples</name>
-  <description>Example showing the usage of the objectautocomplete component</description>
+    <name>ObjectAutoComplete - Examples</name>
+    <description>Example showing the usage of the objectautocomplete component</description>
 
-  <dependencies>
-    <!--  WICKET DEPENDENCIES -->
-    <dependency>
-      <groupId>org.wicketstuff</groupId>
-      <artifactId>objectautocomplete</artifactId>
-      <version>${project.version}</version>
-    </dependency>
+    <dependencies>
+        <!--  WICKET DEPENDENCIES -->
+        <dependency>
+            <groupId>org.wicketstuff</groupId>
+            <artifactId>objectautocomplete</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
-    <!-- LOGGING DEPENDENCIES - LOG4J -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>${slf4j.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.14</version>
-    </dependency>
+        <!-- LOGGING DEPENDENCIES - LOG4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
 
-    <!--  JUNIT DEPENDENCY FOR TESTING -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.2</version>
-      <scope>test</scope>
-    </dependency>
+        <!--  JUNIT DEPENDENCY FOR TESTING -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.2</version>
+            <scope>test</scope>
+        </dependency>
 
-    <!--  JETTY DEPENDENCIES FOR TESTING  -->
-    <dependency>
-      <groupId>org.mortbay.jetty</groupId>
-      <artifactId>jetty</artifactId>
-      <version>${jetty.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mortbay.jetty</groupId>
-      <artifactId>jetty-util</artifactId>
-      <version>${jetty.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mortbay.jetty</groupId>
-      <artifactId>jetty-management</artifactId>
-      <version>${jetty.version}</version>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
+        <!--  JETTY DEPENDENCIES FOR TESTING  -->
+        <dependency>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jetty</artifactId>
+            <version>${jetty.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jetty-util</artifactId>
+            <version>${jetty.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jetty-management</artifactId>
+            <version>${jetty.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
-  <properties>
-    <jetty.version>6.1.4</jetty.version>
-  </properties>
+    <properties>
+        <jetty.version>6.1.4</jetty.version>
+    </properties>
 
 </project>

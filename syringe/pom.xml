@@ -21,8 +21,8 @@
     <modules>
         <module>syringe</module>
         <module>spring</module>
-        <module>guice</module>
         <module>spring-example</module>
+        <module>guice</module>
         <module>guice-example</module>
     </modules>
 </project>
