@@ -5,6 +5,7 @@
 <title>Carousel Example</title>
 <link rel="stylesheet" type="text/css" href="style.css">
 <style>
+<!--
 .yui-carousel-element li {
 	height: 200px;
 	width: 400px;
@@ -13,12 +14,66 @@
 .yui-carousel {
 	border: 2px solid #888;
 }
+
+.custom .yui-carousel-nav {
+	background-color: #DDD;
+}
+
+.custom .yui-carousel-nav li {
+	float: left;
+	list-style: none;
+	margin: 0 4px;
+}
+
+/* customise skin */
+.customised .yui-carousel {
+	border: 1px dotted #DDD;
+	background: #EEE;
+}
+
+/* this makes the nav bar below */
+.customised .yui-carousel-nav {
+	background: none;
+	margin-bottom: -250px;
+	margin-top: 220px;
+}
+
+/* this removes the dots and dropdown */
+.customised .yui-carousel-nav ul {
+	display: none;
+}
+
+.customised  .yui-carousel-content {
+	margin-botton: 50px;
+}
+
+.customised  .yui-carousel-content .item {
+	width: 300px;
+	height: 200px;
+	display: inline;
+}
+
+/* this makes the carousel longer */
+.customised .yui-carousel-element li {
+	width: 650px;
+	height: 200px;
+	padding: 0 4px;
+	margin: 0 10px;
+}
+-->
 </style>
 </head>
 
 <body>
 <span wicket:id="mainNavigation" />
 <ul>
+    <li>No Skin applied, except for the function requirement carousel-core.css</li>
+</ul>
+<div wicket:id="carousel"></div>
+<br />
+<br />
+<ul>
+    <li>Sam Skin applied</li>
     <li>By default (or design) the carousel will show a drop down list instead of the dots if there's &gt; 5 items</li>
     <li>By default, sam skin is applied as it is nicer</li>
 </ul>
@@ -27,9 +82,13 @@
 <br />
 <br />
 <ul>
-    <li>No Skin applied, except for the function requirement carousel-core.css</li>
+    <li>you can customise the look and feel with some tricks .... from <a
+        href="http://www.szatanik.eu/js/yui_2.6.0/examples/uz/3dimensional_modelling_car.html"
+    >here</a></li>
 </ul>
-<div wicket:id="carousel"></div>
+<div wicket:id="carousel_sam_customised"></div>
+
+
 
 </body>
 </html>

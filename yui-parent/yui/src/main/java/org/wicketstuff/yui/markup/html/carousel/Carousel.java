@@ -13,11 +13,13 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.yui.YuiHeaderContributor;
 import org.wicketstuff.yui.behavior.Attributes;
 
-public class Carousel extends Panel implements IHeaderContributor
+public class Carousel<T> extends Panel implements IHeaderContributor
 {
 	private static final long serialVersionUID = 1L;
 
@@ -38,8 +40,7 @@ public class Carousel extends Panel implements IHeaderContributor
 
 	private WebMarkupContainer carousel;
 
-	@SuppressWarnings("unchecked")
-	public Carousel(String id, List list, ResourceReference css)
+	public Carousel(String id, IModel<List<T>> list, ResourceReference css)
 	{
 		super(id);
 
@@ -47,28 +48,77 @@ public class Carousel extends Panel implements IHeaderContributor
 		if (css != null)
 			add(CSSPackageResource.getHeaderContribution(css));
 
-		add(carousel = new WebMarkupContainer("carousel_container"));
+		WebMarkupContainer skinContainer;
+		add(skinContainer = new WebMarkupContainer("skin_container"));
+
+		skinContainer.add(carousel = new WebMarkupContainer("carousel_container"));
 		carousel.setOutputMarkupId(true);
 
-		carousel.add(new ListView("list", list)
+		carousel.add(new ListView<T>("list", list)
 		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void populateItem(ListItem item)
+			protected void populateItem(ListItem<T> item)
 			{
 				item.add(newPanel("item", item.getModelObject()).setRenderBodyOnly(true));
 			}
 		});
+
+		skinContainer.add(new AttributeModifier("class", true, new Model<String>(getCssClass())));
 	}
 
-	public Carousel(String id, List<String> list)
+	/**
+	 * default carousel with Sam Skin
+	 * 
+	 * @param id
+	 * @param list
+	 */
+	public Carousel(String id, final List<T> list)
 	{
-		this(id, list, SAM_SKIN);
-		carousel.add(new AttributeModifier("class", true, new Model<String>("yui-skin-sam")));
+		this(id, new LoadableDetachableModel<List<T>>()
+		{
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected List<T> load()
+			{
+				return list;
+			}
+
+		}, SAM_SKIN);
+
 	}
 
-	protected Component newPanel(String id, Object object)
+	/**
+	 * 
+	 * @param id
+	 * @param list
+	 * @param css
+	 */
+	public Carousel(String id, final List<T> list, ResourceReference css)
+	{
+		this(id, new LoadableDetachableModel<List<T>>()
+		{
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected List<T> load()
+			{
+				return list;
+			}
+
+		}, css);
+	}
+
+	protected String getCssClass()
+	{
+		return "yui-skin-sam";
+	}
+
+	protected Component newPanel(String id, T object)
 	{
 		return new EmptyPanel(id);
 	}

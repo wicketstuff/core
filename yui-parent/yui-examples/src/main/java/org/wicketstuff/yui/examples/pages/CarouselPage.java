@@ -26,14 +26,38 @@ public class CarouselPage extends WicketExamplePage
 				"images/jakarta.jpg", "images/sgp.jpg", "images/makati.jpg" });
 
 		// first carousel with just core css for functionality
-		add(new Carousel("carousel", list, Carousel.NO_SKIN_CORE_CSS)
+		add(new Carousel<String>("carousel", list, Carousel.NO_SKIN_CORE_CSS)
 		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Component newPanel(String id, Object object)
+			protected Component newPanel(String id, String object)
 			{
-				return new ImagePanel(id, object.toString());
+				return new ImagePanel(id, object);
+			}
+
+			@Override
+			protected String getOpts()
+			{
+				return carouselOpts();
+			}
+			
+			@Override
+			protected String getCssClass()
+			{
+				return "custom";
+			}
+		});
+
+		// 2nd carousel with  sam skin by default
+		add(new Carousel<String>("carousel_sam", list)
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected Component newPanel(String id, String object)
+			{
+				return new ImagePanel(id, object);
 			}
 
 			@Override
@@ -42,22 +66,28 @@ public class CarouselPage extends WicketExamplePage
 				return carouselOpts();
 			}
 		});
-
-		// 2nd carousel with sam skin by default
-		add(new Carousel("carousel_sam", list)
+		
+		// 3nd carousel with sam skin by default but customised 
+		add(new Carousel<String>("carousel_sam_customised", list)
 		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Component newPanel(String id, Object object)
+			protected Component newPanel(String id, String object)
 			{
-				return new ImagePanel(id, object.toString());
+				return new ImagePanel(id, object);
 			}
 
 			@Override
 			protected String getOpts()
 			{
 				return carouselOpts();
+			}
+			
+			@Override
+			protected String getCssClass()
+			{
+				return "customised yui-skin-sam";
 			}
 		});
 	}
