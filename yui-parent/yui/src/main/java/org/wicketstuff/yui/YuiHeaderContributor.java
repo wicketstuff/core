@@ -24,7 +24,7 @@ public class YuiHeaderContributor extends AbstractHeaderContributor
 
 	private static final Logger log = LoggerFactory.getLogger(YuiHeaderContributor.class);
 
-	static final String DEFAULT_YUI_BUILD = "2.5.2";
+	static final String DEFAULT_YUI_BUILD = "2.6.0";
 
 	static final String YUI_BUILD_ROOT = "inc";
 
