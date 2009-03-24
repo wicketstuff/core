@@ -1,12 +1,12 @@
 /*
- * 
+ *
  * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -44,6 +44,7 @@ import wicket.contrib.gmap.api.GInfoWindow;
 import wicket.contrib.gmap.api.GLatLng;
 import wicket.contrib.gmap.api.GLatLngBounds;
 import wicket.contrib.gmap.api.GMapType;
+import wicket.contrib.gmap.api.GMarker;
 import wicket.contrib.gmap.api.GOverlay;
 import wicket.contrib.gmap.event.GEventListenerBehavior;
 
@@ -89,7 +90,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Construct.
-	 * 
+	 *
 	 * @param id
 	 * @param gMapKey
 	 *            Google gmap API KEY
@@ -101,7 +102,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Construct.
-	 * 
+	 *
 	 * @param id
 	 * @param gMapKey
 	 *            Google gmap API KEY
@@ -117,7 +118,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Construct.
-	 * 
+	 *
 	 * @param id
 	 * @param headerContrib
 	 */
@@ -148,7 +149,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Construct.
-	 * 
+	 *
 	 * @param id
 	 * @param headerContrib
 	 * @param overlays
@@ -186,7 +187,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Add a control.
-	 * 
+	 *
 	 * @param control
 	 *            control to add
 	 * @return This
@@ -205,7 +206,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Remove a control.
-	 * 
+	 *
 	 * @param control
 	 *            control to remove
 	 * @return This
@@ -224,7 +225,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Add an overlay.
-	 * 
+	 *
 	 * @param overlay
 	 *            overlay to add
 	 * @return This
@@ -244,7 +245,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Remove an overlay.
-	 * 
+	 *
 	 * @param overlay
 	 *            overlay to remove
 	 * @return This
@@ -268,7 +269,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Clear all overlays.
-	 * 
+	 *
 	 * @return This
 	 */
 	public GMap2 removeAllOverlays()
@@ -397,7 +398,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Set the center.
-	 * 
+	 *
 	 * @param center
 	 *            center to set
 	 */
@@ -418,7 +419,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 	 * Changes the center point of the map to the given point. If the point is
 	 * already visible in the current map view, change the center in a smooth
 	 * animation.
-	 * 
+	 *
 	 * @param center
 	 *            the new center of the map
 	 */
@@ -443,7 +444,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 	/**
 	 * Generates the JavaScript used to instantiate this GMap2 as an JavaScript
 	 * class on the client side.
-	 * 
+	 *
 	 * @return The generated JavaScript
 	 */
 	private String getJSinit()
@@ -478,13 +479,14 @@ public class GMap2 extends Panel implements GOverlayContainer
 			js.append(((GEventListenerBehavior)behavior).getJSaddListener());
 		}
 
+
 		return js.toString();
 	}
 
 	/**
 	 * Convenience method for generating a JavaScript call on this GMap2 with
 	 * the given invocation.
-	 * 
+	 *
 	 * @param invocation
 	 *            The JavaScript call to invoke on this GMap2.
 	 * @return The generated JavaScript.
@@ -493,6 +495,78 @@ public class GMap2 extends Panel implements GOverlayContainer
 	public String getJSinvoke(String invocation)
 	{
 		return "Wicket.maps['" + map.getMarkupId() + "']." + invocation + ";\n";
+	}
+
+	/**
+	 * @see #fitMarkers(List, boolean, double)
+	 */
+	public void fitMarkers(final List<GLatLng> markersToShow) {
+		fitMarkers(markersToShow, false, 0.0);
+	}
+	
+	/**
+	 * @see #fitMarkers(List, boolean, double)
+	 */
+	public void fitMarkers(final List<GLatLng> markersToShow, boolean showMarkersForPoints) {
+		fitMarkers(markersToShow, showMarkersForPoints, 0.0);
+	}
+
+	/**
+	 * <p>
+	 * Makes the map zoom out and centre around all the GLatLng points in
+	 * markersToShow.
+	 * <p>
+	 * Big ups to Doug Leeper for the code.
+	 *
+	 * @see <a href=
+	 *      "http://www.nabble.com/Re%3A-initial-GMap2-bounds-question-p19886673.html"
+	 *      >Doug's Nabble post</a>
+	 * @param markersToShow
+	 *            the points to centre around.
+	 * @param showMarkersForPoints
+	 *            if true, will also add basic markers to the map for each point
+	 *            focused on. Just a simple convenience method - you will probably
+	 *            want to turn this off so that you can show more information
+	 *            with each marker when clicked etc.
+	 */
+	public void fitMarkers(final List<GLatLng> markersToShow, boolean showMarkersForPoints, final double zoomAdjustment) {
+		if (markersToShow.isEmpty()) {
+			log.warn("Empty list provided to GMap2.fitMarkers method.");
+			return;
+		}
+
+		this.add(new HeaderContributor(new IHeaderContributor() {
+			private static final long serialVersionUID = 1L;
+
+			public void renderHead(IHeaderResponse response) {
+				StringBuffer buf = new StringBuffer();
+				buf.append("var bounds = new GLatLngBounds();\n");
+				buf.append("var map = " + GMap2.this.getJSinvoke("map"));
+
+				// Ask google maps to keep extending the bounds to include each
+				// point
+				for (GLatLng point : markersToShow) {
+					buf.append("bounds.extend( " + point.getJSconstructor()
+							+ " );\n");
+				}
+
+				// set the zoom level that shows the bounds
+				buf.append("map.setZoom( map.getBoundsZoomLevel(bounds) + "
+						+ zoomAdjustment + ");\n");
+
+				// center in the middle of the bounds
+				buf.append("map.setCenter( bounds.getCenter() );\n");
+
+				response.renderOnDomReadyJavascript(buf.toString());
+			}
+		}));
+
+		// show the markers
+		if (showMarkersForPoints) {
+			for (GLatLng location : markersToShow) {
+				this.addOverlay(new GMarker(location));
+			}
+		}
 	}
 
 	private String getJSsetDraggingEnabled(boolean enabled)
