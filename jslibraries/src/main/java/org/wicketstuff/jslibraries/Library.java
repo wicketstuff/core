@@ -29,6 +29,8 @@ public enum Library {
 
 	PROTOTYPE("prototype", ""),
 	JQUERY("jquery", ".min"),
+	MOOTOOLS_CORE("mootools-core", ".min"),
+	MOOTOOLS_MORE("mootools-more", ".min"),
 	;
 
 	static {
@@ -48,6 +50,8 @@ public enum Library {
 		registerVersion(PROTOTYPE, 1, 6, 0);
 		registerVersion(PROTOTYPE, 1, 6, 0, 2);
 		registerVersion(PROTOTYPE, 1, 6, 0, 3);
+		registerVersion(MOOTOOLS_CORE, 1, 2, 1);
+		registerVersion(MOOTOOLS_MORE, 1, 2);
 		
 		for (Library lib : values()) {
 			List<Version> list = new ArrayList<Version>(lib.mVersions);
