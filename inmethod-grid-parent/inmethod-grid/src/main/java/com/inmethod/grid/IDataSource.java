@@ -58,7 +58,7 @@ import org.apache.wicket.model.IModel;
  * 
  * @author Matej Knopp
  */
-public interface IDataSource extends IDetachable, IClusterable {
+public interface IDataSource<T> extends IDetachable, IClusterable {
 
 	/**
 	 * Implementation of this method should load subset of the data specified by
@@ -79,7 +79,7 @@ public interface IDataSource extends IDetachable, IClusterable {
 	 * @param object
 	 * @return model that can be used to access the object
 	 */
-	public IModel model(Object object);
+	public IModel<T> model(T object);
 
 	/**
 	 * Specifies the subset of data to be loaded.
