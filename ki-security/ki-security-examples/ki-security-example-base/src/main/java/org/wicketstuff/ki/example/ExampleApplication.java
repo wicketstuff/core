@@ -15,6 +15,7 @@
  */
 package org.wicketstuff.ki.example;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.SecondLevelCacheSessionStore;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -32,7 +33,7 @@ import org.wicketstuff.ki.wicket.page.store.SessionPageStore;
 /**
  * 
  */
-public class ExampleApplication extends WebApplication
+public abstract class ExampleApplication extends WebApplication
 {
 
 	@Override
@@ -52,16 +53,18 @@ public class ExampleApplication extends WebApplication
 		mountBookmarkablePage("admin", RequireAdminPage.class);
 	}
 
+  public abstract Component getExampleInfoPanel( String id );
+  
 	@Override
 	public Class<? extends Page> getHomePage()
 	{
 		return IndexPage.class;
 	}
 
-	@Override
-	// You'll need to do this only if using JSecurity enterprise/clustered Sessions:
-	protected ISessionStore newSessionStore()
-	{
-		return new SecondLevelCacheSessionStore(this, new SessionPageStore(100));
-	}
+//	@Override
+//	// You'll need to do this only if using JSecurity enterprise/clustered Sessions:
+//	protected ISessionStore newSessionStore()
+//	{
+//		return new SecondLevelCacheSessionStore(this, new SessionPageStore(100));
+//	}
 }
