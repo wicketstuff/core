@@ -6,6 +6,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.wicketstuff.ki.component.KiConfigInfoPanel;
 import org.wicketstuff.ki.component.SimpleAuthHeader;
+import org.wicketstuff.ki.example.ExampleApplication;
 
 /**
  * Simple index page
@@ -26,8 +27,10 @@ public abstract class BasePage extends WebPage
 		links.add(new BookmarkablePageLink<Void>("admin", RequireAdminPage.class));
 		add(links);
 
+    add( ((ExampleApplication)getApplication()).getExampleInfoPanel("example") );
 		add(new KiConfigInfoPanel("info"));
 	}
+	
 
 	abstract String getTitle();
 }
