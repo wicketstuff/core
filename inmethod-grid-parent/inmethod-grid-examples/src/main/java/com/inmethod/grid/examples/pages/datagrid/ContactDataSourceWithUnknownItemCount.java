@@ -17,7 +17,7 @@ import com.inmethod.grid.examples.contact.DetachableContactModel;
  * 
  * @author Matej Knopp
  */
-public class ContactDataSourceWithUnknownItemCount implements IDataSource<Contact> {
+public class ContactDataSourceWithUnknownItemCount implements IDataSource {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,8 +31,8 @@ public class ContactDataSourceWithUnknownItemCount implements IDataSource<Contac
 	/**
 	 * {@inheritDoc}
 	 */
-	public IModel<Contact> model(Contact object) {
-		return new DetachableContactModel(object);
+	public IModel model(Object object) {
+		return new DetachableContactModel((Contact)object);
 	}
 
 	/**

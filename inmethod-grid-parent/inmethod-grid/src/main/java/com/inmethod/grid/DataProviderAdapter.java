@@ -11,16 +11,16 @@ import org.apache.wicket.model.IModel;
 import com.inmethod.grid.datagrid.DataGrid;
 
 /**
- * Adapter that allows using a wicket extension {@link IDataProvider} in a {@link DataGrid}. The
+ * Adapter that allows using a wicke extension {@link IDataProvider} in a {@link DataGrid}. The
  * adapter also supports sortable data providers.
  * 
  * @author Matej Knopp
  */
-public class DataProviderAdapter<T> implements IDataSource<T> {
+public class DataProviderAdapter implements IDataSource {
 
 	private static final long serialVersionUID = 1L;
 
-	final IDataProvider<T> dataProvider;
+	final IDataProvider dataProvider;
 
 	/**
 	 * Creates a new {@link DataProviderAdapter} instance.
@@ -28,7 +28,7 @@ public class DataProviderAdapter<T> implements IDataSource<T> {
 	 * @param dataProvider
 	 *            {@link IDataProvider} instance
 	 */
-	public DataProviderAdapter(IDataProvider<T> dataProvider) {
+	public DataProviderAdapter(IDataProvider dataProvider) {
 		this.dataProvider = dataProvider;
 	}
 
@@ -42,7 +42,7 @@ public class DataProviderAdapter<T> implements IDataSource<T> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public IModel<T> model(T object) {
+	public IModel model(Object object) {
 		return dataProvider.model(object);
 	}
 	
