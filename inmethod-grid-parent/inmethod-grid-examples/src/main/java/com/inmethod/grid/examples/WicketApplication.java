@@ -14,7 +14,6 @@ import com.inmethod.grid.examples.pages.datagrid.EditableDataGridWithSelectionPa
 import com.inmethod.grid.examples.pages.datagrid.SimpleDataGridPage;
 import com.inmethod.grid.examples.pages.datagrid.VerticalScrollingDataGridPage;
 import com.inmethod.grid.examples.pages.treegrid.EditableTreeGridPage;
-import com.inmethod.grid.examples.pages.treegrid.FileBrowsePage;
 import com.inmethod.grid.examples.pages.treegrid.SimpleTreeGridPage;
 import com.inmethod.grid.examples.pages.treegrid.TreeGridColumnPropertiesPage;
 import com.inmethod.grid.examples.pages.treegrid.TreeGridSelectionPage;
@@ -46,8 +45,7 @@ public class WicketApplication extends WebApplication
 		mount(new HybridUrlCodingStrategy("/tree-grid/vertical-scrolling", VerticalScrollingTreeGridPage.class));
 		mount(new HybridUrlCodingStrategy("/tree-grid/item-selection", TreeGridSelectionPage.class));
 		mount(new HybridUrlCodingStrategy("/tree-grid/column-properties", TreeGridColumnPropertiesPage.class));
-    mount(new HybridUrlCodingStrategy("/tree-grid/editable", EditableTreeGridPage.class));    
-    mount(new HybridUrlCodingStrategy("/tree-grid/browser", FileBrowsePage.class));    
+		mount(new HybridUrlCodingStrategy("/tree-grid/editable", EditableTreeGridPage.class));		
 	}
 	
 	/**

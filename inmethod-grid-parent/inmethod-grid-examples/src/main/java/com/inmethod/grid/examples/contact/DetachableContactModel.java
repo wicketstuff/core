@@ -24,7 +24,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
  * @author Igor Vaynberg
  * 
  */
-public class DetachableContactModel extends LoadableDetachableModel<Contact>
+public class DetachableContactModel extends LoadableDetachableModel
 {
 	private static final long serialVersionUID = 1L;
 	
@@ -90,7 +90,7 @@ public class DetachableContactModel extends LoadableDetachableModel<Contact>
 	/**
 	 * @see org.apache.wicket.model.LoadableDetachableModel#load()
 	 */
-	protected Contact load()
+	protected Object load()
 	{
 		// loads contact from the database
 		return getContactsDB().get(id);
