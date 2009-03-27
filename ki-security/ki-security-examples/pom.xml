@@ -64,7 +64,7 @@
 
 	<modules>
 		<module>ki-security-example-base</module>
-		<module>ki-security-example-stupid</module>
+		<module>ki-security-example-realm</module>
 		<module>ki-security-example-spring-jdbc</module>
 	</modules>
 

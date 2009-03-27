@@ -28,7 +28,7 @@
                # http://www.jsecurity.org/api/org/jsecurity/web/servlet/JSecurityFilter.html
 
 							 [main]
-							 stupidRealm = org.wicketstuff.ki.example.stupid.StupidRealm
+							 stupidRealm = org.wicketstuff.ki.example.realm.SillyRealm
            </param-value>
         </init-param>
     </filter>
@@ -37,7 +37,7 @@
         <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
         <init-param>
             <param-name>applicationClassName</param-name>
-            <param-value>org.wicketstuff.ki.example.stupid.StupidExampleApp</param-value>
+            <param-value>org.wicketstuff.ki.example.realm.RealmExampleApp</param-value>
         </init-param>
     </filter>
 

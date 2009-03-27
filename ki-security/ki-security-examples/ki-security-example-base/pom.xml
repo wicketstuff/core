@@ -12,7 +12,7 @@
     <artifactId>ki-security-example-base</artifactId>
     <packaging>jar</packaging>
 
-    <name>Apache Ki Security for Wicket - Base Example</name>
+    <name>Apache Ki Security for Wicket - Example Base</name>
 
     <dependencies>
         <dependency>

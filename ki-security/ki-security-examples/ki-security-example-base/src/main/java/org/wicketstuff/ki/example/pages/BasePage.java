@@ -27,6 +27,7 @@ public abstract class BasePage extends WebPage
 		links.add(new BookmarkablePageLink<Void>("admin", RequireAdminPage.class));
 		add(links);
 
+		add( new Label("appname", getApplication().getClass().getName() ) );
     add( ((ExampleApplication)getApplication()).getExampleInfoPanel("example") );
 		add(new KiConfigInfoPanel("info"));
 	}

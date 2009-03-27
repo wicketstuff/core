@@ -14,12 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.ki.example.stupid;
+package org.wicketstuff.ki.example.realm;
 
 import org.apache.wicket.Component;
 import org.wicketstuff.ki.example.ExampleApplication;
 
-public class StupidExampleApp extends ExampleApplication
+public class RealmExampleApp extends ExampleApplication
 {
   @Override
   public Component getExampleInfoPanel(String id) {
