@@ -9,10 +9,10 @@
         <version>1.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ki-security-example-stupid</artifactId>
+    <artifactId>ki-security-example-realm</artifactId>
     <packaging>war</packaging>
 
-    <name>Apache Ki Security for Wicket - Stupid Example</name>
+    <name>Apache Ki Security for Wicket - Realm Example</name>
 
     <dependencies>
         <dependency>

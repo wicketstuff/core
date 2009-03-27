@@ -1,4 +1,4 @@
-package org.wicketstuff.ki.example.stupid;
+package org.wicketstuff.ki.example.realm;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -36,11 +36,11 @@ import org.slf4j.LoggerFactory;
  * @author Les Hazlewood
  * @since Aug 28, 2008 5:13:06 PM
  */
-public class StupidRealm extends AuthorizingRealm
+public class SillyRealm extends AuthorizingRealm
 {
-	static final Logger log = LoggerFactory.getLogger(StupidRealm.class);
+	static final Logger log = LoggerFactory.getLogger(SillyRealm.class);
 
-	public StupidRealm()
+	public SillyRealm()
 	{
 		log.info("constructor...");
 	}
