@@ -27,6 +27,7 @@ import org.jsecurity.authc.AuthenticationToken;
 import org.jsecurity.authc.SimpleAccount;
 import org.jsecurity.authc.UsernamePasswordToken;
 import org.jsecurity.authz.AuthorizationInfo;
+import org.jsecurity.cache.HashtableCacheManager;
 import org.jsecurity.realm.AuthorizingRealm;
 import org.jsecurity.subject.PrincipalCollection;
 import org.slf4j.Logger;
@@ -43,6 +44,9 @@ public class SillyRealm extends AuthorizingRealm
 	public SillyRealm()
 	{
 		log.info("constructor...");
+		
+		// Only do authentication once for each request
+		this.setCacheManager( new HashtableCacheManager() );
 	}
 
 	/**
@@ -117,6 +121,9 @@ public class SillyRealm extends AuthorizingRealm
 
 		// get only the principals that this realm cares about:
 		Collection thisRealmPrincipals = principals.fromRealm(getName());
+		if( thisRealmPrincipals == null || thisRealmPrincipals.isEmpty() ) {
+		  return null;
+		}
 
 		// note that the return value of 'getName()' here is whatever you specify it to be in
 		// jsecurity.ini

@@ -58,6 +58,10 @@ public class KiAuthorizationStrategy implements IAuthorizationStrategy
 
   protected boolean isAuthorized(KiInstantiationAuthorization ki) {
     Subject subject = SecurityUtils.getSubject();
+    if (ki.loggedIn() && subject.getPrincipal() == null) {
+      return false;
+    }
+    
     if (ki.authenticated() && !subject.isAuthenticated()) {
       return false;
     }

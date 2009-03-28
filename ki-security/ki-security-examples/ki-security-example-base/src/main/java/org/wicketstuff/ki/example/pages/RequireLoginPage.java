@@ -20,9 +20,10 @@ import org.wicketstuff.ki.strategy.KiInstantiationAuthorization;
 
 
 @KiInstantiationAuthorization(authenticated = true)
-public class RequireAuthPage extends BasePage
+public class RequireLoginPage extends BasePage
 {
-	public RequireAuthPage()
+
+	public RequireLoginPage()
 	{
 
 	}
@@ -30,6 +31,6 @@ public class RequireAuthPage extends BasePage
 	@Override
 	String getTitle()
 	{
-		return "Authorized Page";
+		return "Logged in page";
 	}
 }

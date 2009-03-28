@@ -50,7 +50,7 @@ public class SimpleAuthHeader extends Panel
 	  WebMarkupContainer welcome = new WebMarkupContainer( "welcome") {
 	    @Override
       public boolean isVisible() {
-	      return SecurityUtils.getSubject().isAuthenticated();
+	      return SecurityUtils.getSubject().getPrincipal() != null;
 	    }
 	  };
 	  welcome.add( new Label( "name", new AbstractReadOnlyModel<String>() {
@@ -67,7 +67,7 @@ public class SimpleAuthHeader extends Panel
     WebMarkupContainer login = new WebMarkupContainer( "login") {
       @Override
       public boolean isVisible() {
-        return !SecurityUtils.getSubject().isAuthenticated();
+        return SecurityUtils.getSubject().getPrincipal() == null;
       }
     };
     login.add( new BookmarkablePageLink<Void>( "link", loginPage ) );
