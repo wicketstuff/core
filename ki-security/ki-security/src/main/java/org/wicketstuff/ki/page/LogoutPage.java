@@ -16,14 +16,19 @@
  */
 package org.wicketstuff.ki.page;
 
+import javax.servlet.http.Cookie;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.IRedirectListener;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
+import org.apache.wicket.RequestCycle;
 import org.apache.wicket.RestartResponseException;
+import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.protocol.http.WebResponse;
 import org.jsecurity.SecurityUtils;
 
 
@@ -39,7 +44,7 @@ public class LogoutPage extends WebPage
    */
   public LogoutPage(final CharSequence url)
   {
-    doLogoutAndAddRedirect(url, 0);
+    doLogoutAndAddRedirect(url, getDelayTime());
   }
   
 
@@ -58,11 +63,21 @@ public class LogoutPage extends WebPage
       pageClass = getApplication().getHomePage();
     }
     
-    doLogoutAndAddRedirect( urlFor(pageClass, null ), 0 );
+
+    this.setStatelessHint( true );
+    setResponsePage( pageClass );
+    
+    // this should remove the cookie...
+    SecurityUtils.getSubject().logout();
+    Session.get().invalidateNow(); // invalidate the wicket session
+    return;
+    
+    
+    //doLogoutAndAddRedirect( urlFor(pageClass, null ), getDelayTime() );
   }
   
   public LogoutPage( Class<? extends Page> pageClass ) {
-    doLogoutAndAddRedirect( urlFor(pageClass, null ), 0 );
+    doLogoutAndAddRedirect( urlFor(pageClass, null ), getDelayTime() );
   }
   
 
@@ -77,13 +92,23 @@ public class LogoutPage extends WebPage
    */
   private void doLogoutAndAddRedirect(final CharSequence url, final int waitBeforeRedirectInSeconds)
   {
+    this.setStatelessHint( true );
+    
+    // this should remove the cookie...
     SecurityUtils.getSubject().logout();
-    // TODO? invalidate the web session?
     
     final WebMarkupContainer redirect = new WebMarkupContainer("redirect");
     final String content = waitBeforeRedirectInSeconds + ";URL=" + url;
     redirect.add(new AttributeModifier("content", new Model<String>(content)));
     add(redirect);
+
+    // invalidate the session
+    Session.get().invalidateNow(); // invalidate the wicket session
+    
+    // HYMMMM
+    Cookie c = new Cookie( "rememberMe", "xxx" );
+    c.setMaxAge(0); 
+    ((WebResponse)RequestCycle.get().getResponse()).addCookie( c );
   }
 
   
@@ -120,5 +145,10 @@ public class LogoutPage extends WebPage
   public boolean isVersioned()
   {
     return false;
+  }
+  
+  public int getDelayTime()
+  {
+    return 0;
   }
 }

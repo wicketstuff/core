@@ -129,6 +129,9 @@ public class LoginPanel extends Panel
 		super(id);
 
 		this.includeRememberMe = includeRememberMe;
+		if( !includeRememberMe ) {
+		  this.rememberMe = false;
+		}
 
 		// Create feedback panel and add to page
 		add( new FeedbackPanel("feedback") );
