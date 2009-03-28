@@ -33,10 +33,14 @@ import java.lang.annotation.Target;
 public @interface KiInstantiationAuthorization {
 
   /**
-   * 
-   * @return if the Subject must be authenticated
+   * @return if the Subject has a valid Principal
    */
-  boolean authenticated() default true;
+  boolean loggedIn() default true;
+  
+  /**
+   * @return if the Subject must be authenticated <b>in this session</b>
+   */
+  boolean authenticated() default false;
 
   /**
    * Gets the roles that are allowed to take the action.

@@ -24,6 +24,7 @@ import org.wicketstuff.ki.example.pages.IndexPage;
 import org.wicketstuff.ki.example.pages.LoginPage;
 import org.wicketstuff.ki.example.pages.RequireAdminPage;
 import org.wicketstuff.ki.example.pages.RequireAuthPage;
+import org.wicketstuff.ki.example.pages.RequireLoginPage;
 import org.wicketstuff.ki.example.pages.UnauthorizedPage;
 import org.wicketstuff.ki.page.LogoutPage;
 import org.wicketstuff.ki.strategy.KiAuthorizationStrategy;
@@ -49,8 +50,9 @@ public abstract class ExampleApplication extends WebApplication
 		mountBookmarkablePage("account/login", LoginPage.class);
 		mountBookmarkablePage("account/logout", LogoutPage.class);
 
-		mountBookmarkablePage("user", RequireAuthPage.class);
+		mountBookmarkablePage("user", RequireLoginPage.class);
 		mountBookmarkablePage("admin", RequireAdminPage.class);
+    mountBookmarkablePage("auth", RequireAuthPage.class);
 	}
 
   public abstract Component getExampleInfoPanel( String id );

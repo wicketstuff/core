@@ -16,22 +16,32 @@
  */
 package org.wicketstuff.ki.page;
 
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.PageParameters;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.IRedirectListener;
 import org.apache.wicket.Page;
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.RestartResponseException;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.model.Model;
 import org.jsecurity.SecurityUtils;
 
-/**
- * An example of a Wicket SignOutPage using JSecurity's API.  Adapted from the 'SignOutPage' example in
- * Wicket in Action, Chapter 11 (Security your application), listing 11.5.
- * 
- * @author Les Hazlewood
- * @since 13 Oct 2008
- */
-public class LogoutPage extends WebPage 
+
+public class LogoutPage extends WebPage
 {
   public static final String REDIRECTPAGE_PARAM = "redirectpage";
+
+  /**
+   * Constructor. The page will immediately redirect to the given url.
+   * 
+   * @param url
+   *            The url to redirect to
+   */
+  public LogoutPage(final CharSequence url)
+  {
+    doLogoutAndAddRedirect(url, 0);
+  }
+  
 
   public LogoutPage( final PageParameters parameters ) {
     String page = parameters.getString(REDIRECTPAGE_PARAM);
@@ -48,12 +58,67 @@ public class LogoutPage extends WebPage
       pageClass = getApplication().getHomePage();
     }
     
-    SecurityUtils.getSubject().logout();
-    throw new RestartResponseException( pageClass );
+    doLogoutAndAddRedirect( urlFor(pageClass, null ), 0 );
   }
   
   public LogoutPage( Class<? extends Page> pageClass ) {
+    doLogoutAndAddRedirect( urlFor(pageClass, null ), 0 );
+  }
+  
+
+  /**
+   * Constructor. The page will redirect to the given url after waiting for the given number of
+   * seconds.
+   * 
+   * @param url
+   *            The url to redirect to
+   * @param waitBeforeRedirectInSeconds
+   *            The number of seconds the browser should wait before redirecting
+   */
+  private void doLogoutAndAddRedirect(final CharSequence url, final int waitBeforeRedirectInSeconds)
+  {
     SecurityUtils.getSubject().logout();
-    throw new RestartResponseException( pageClass );
+    // TODO? invalidate the web session?
+    
+    final WebMarkupContainer redirect = new WebMarkupContainer("redirect");
+    final String content = waitBeforeRedirectInSeconds + ";URL=" + url;
+    redirect.add(new AttributeModifier("content", new Model<String>(content)));
+    add(redirect);
+  }
+
+  
+//  
+//  /**
+//   * Construct. The page will redirect to the given Page.
+//   * 
+//   * @param page
+//   *            The page to redirect to.
+//   */
+//  public RedirectPage(final Page page)
+//  {
+//    this(page.urlFor(IRedirectListener.INTERFACE), 0);
+//  }
+//
+//  /**
+//   * Construct. The page will redirect to the given Page after waiting for the given number of
+//   * seconds.
+//   * 
+//   * @param page
+//   *            The page to redirect to.
+//   * @param waitBeforeRedirectInSeconds
+//   *            The number of seconds the browser should wait before redirecting
+//   */
+//  public RedirectPage(final Page page, final int waitBeforeRedirectInSeconds)
+//  {
+//    this(page.urlFor(IRedirectListener.INTERFACE), waitBeforeRedirectInSeconds);
+//  }
+
+  /**
+   * @see org.apache.wicket.Component#isVersioned()
+   */
+  @Override
+  public boolean isVersioned()
+  {
+    return false;
   }
 }
