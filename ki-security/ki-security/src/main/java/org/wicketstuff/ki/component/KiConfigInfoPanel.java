@@ -29,6 +29,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.value.ValueMap;
 import org.jsecurity.SecurityUtils;
@@ -39,6 +40,7 @@ import org.jsecurity.authc.UsernamePasswordToken;
 import org.jsecurity.mgt.SecurityManager;
 import org.jsecurity.subject.Subject;
 import org.wicketstuff.ki.KiSecurityManagerModel;
+import org.wicketstuff.ki.KiServletRequestModel;
 import org.wicketstuff.ki.KiSubjectModel;
 import org.wicketstuff.ki.page.LogoutPage;
 
@@ -50,15 +52,34 @@ public class KiConfigInfoPanel extends Panel
 	{
 	  super( id );
 	  
+	  IModel<?> model = new KiSecurityManagerModel();
 	  WebMarkupContainer manager = new WebMarkupContainer( "manager",
-	      new CompoundPropertyModel<SecurityManager>( new KiSecurityManagerModel() ) );
-	  manager.add( new Label("class" ));
+	      new CompoundPropertyModel( model ) );
+    manager.add( new Label("toString", model ));
+	  manager.add( new Label("class.name" ));
 	  add( manager );
-	  
+
+	  model = new KiServletRequestModel();
+    WebMarkupContainer request = new WebMarkupContainer( "request",
+        new CompoundPropertyModel( model ) );
+    request.add( new Label("toString", model ));
+    request.add( new Label("class.name" ));
+    request.add( new Label("RemoteUser" ));
+    request.add( new Label("RequestedSessionId" ));
+    request.add( new Label("UserPrincipal" ));
+    request.add( new Label("HttpSessions" ));
+    request.add( new Label("RequestedSessionIdFromCookie" ));
+    request.add( new Label("RequestedSessionIdFromUrl" ));
+    request.add( new Label("RequestedSessionIdFromURL" ));
+    request.add( new Label("RequestedSessionIdValid" ));
+    add( request );
+    
+	  model = new KiSubjectModel();
     WebMarkupContainer subject = new WebMarkupContainer( "subject",
-        new CompoundPropertyModel<SecurityManager>( new KiSubjectModel() ) );
+        new CompoundPropertyModel<SecurityManager>( model ) );
+    subject.add( new Label("toString", model ));
+    subject.add( new Label("class.name" ));
     subject.add( new Label("authenticated" ));
-    subject.add( new Label("class" ));
     subject.add( new Label("principal" ));
     subject.add( new Label("session" ));
     add( subject );
