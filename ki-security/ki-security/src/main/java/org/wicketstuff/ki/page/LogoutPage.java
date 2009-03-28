@@ -19,6 +19,7 @@ package org.wicketstuff.ki.page;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.Page;
+import org.apache.wicket.RestartResponseException;
 import org.jsecurity.SecurityUtils;
 
 /**
@@ -28,8 +29,8 @@ import org.jsecurity.SecurityUtils;
  * @author Les Hazlewood
  * @since 13 Oct 2008
  */
-public class LogoutPage extends WebPage {
-
+public class LogoutPage extends WebPage 
+{
   public static final String REDIRECTPAGE_PARAM = "redirectpage";
 
   public LogoutPage( final PageParameters parameters ) {
@@ -48,11 +49,11 @@ public class LogoutPage extends WebPage {
     }
     
     SecurityUtils.getSubject().logout();
-    setResponsePage(pageClass);
+    throw new RestartResponseException( pageClass );
   }
   
   public LogoutPage( Class<? extends Page> pageClass ) {
     SecurityUtils.getSubject().logout();
-    setResponsePage(pageClass);
+    throw new RestartResponseException( pageClass );
   }
 }
