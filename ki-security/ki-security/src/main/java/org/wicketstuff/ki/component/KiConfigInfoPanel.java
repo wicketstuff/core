@@ -39,7 +39,6 @@ import org.jsecurity.authc.UnknownAccountException;
 import org.jsecurity.authc.UsernamePasswordToken;
 import org.jsecurity.mgt.SecurityManager;
 import org.jsecurity.subject.Subject;
-import org.wicketstuff.ki.KiSecurityManagerModel;
 import org.wicketstuff.ki.KiServletRequestModel;
 import org.wicketstuff.ki.KiSubjectModel;
 import org.wicketstuff.ki.page.LogoutPage;
@@ -52,14 +51,7 @@ public class KiConfigInfoPanel extends Panel
 	{
 	  super( id );
 	  
-	  IModel<?> model = new KiSecurityManagerModel();
-	  WebMarkupContainer manager = new WebMarkupContainer( "manager",
-	      new CompoundPropertyModel( model ) );
-    manager.add( new Label("toString", model ));
-	  manager.add( new Label("class.name" ));
-	  add( manager );
-
-	  model = new KiServletRequestModel();
+	  IModel<?> model = new KiServletRequestModel();
     WebMarkupContainer request = new WebMarkupContainer( "request",
         new CompoundPropertyModel( model ) );
     request.add( new Label("toString", model ));
