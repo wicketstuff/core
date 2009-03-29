@@ -19,11 +19,9 @@ package org.wicketstuff.ki.page;
 import javax.servlet.http.Cookie;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.IRedirectListener;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.RequestCycle;
-import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;

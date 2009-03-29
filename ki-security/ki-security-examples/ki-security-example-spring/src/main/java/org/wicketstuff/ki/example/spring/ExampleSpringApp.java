@@ -14,16 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.ki.example.realm;
+package org.wicketstuff.ki.example.spring;
 
-import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.Component;
+import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.wicketstuff.ki.example.ExampleApplication;
 
-
-
-public class ExampleInfoPanel extends Panel
-{ 
-	public ExampleInfoPanel(String id)
+public class ExampleSpringApp extends ExampleApplication
+{
+	@Override
+	protected void init()
 	{
-	  super( id );
+		addComponentInstantiationListener(new SpringComponentInjector(this, context()));
+
+		// do the standard stuff...
+		super.init();
 	}
+
+	public ApplicationContext context()
+	{
+		return WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+	}
+
+  @Override
+  public Component getExampleInfoPanel(String id) {
+    return new SpringExamplePanel( id );
+  }
 }

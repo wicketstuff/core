@@ -17,9 +17,7 @@ package org.wicketstuff.ki.example;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.SecondLevelCacheSessionStore;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.session.ISessionStore;
 import org.wicketstuff.ki.example.pages.IndexPage;
 import org.wicketstuff.ki.example.pages.LoginPage;
 import org.wicketstuff.ki.example.pages.RequireAdminRolePage;
@@ -30,7 +28,6 @@ import org.wicketstuff.ki.example.pages.UnauthorizedPage;
 import org.wicketstuff.ki.page.LogoutPage;
 import org.wicketstuff.ki.strategy.KiAuthorizationStrategy;
 import org.wicketstuff.ki.strategy.KiUnauthorizedComponentListener;
-import org.wicketstuff.ki.wicket.page.store.SessionPageStore;
 
 /**
  * 

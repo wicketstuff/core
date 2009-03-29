@@ -16,6 +16,9 @@
  */
 package org.wicketstuff.ki.wicket.page.store;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.apache.wicket.Page;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.protocol.http.pagestore.AbstractPageStore;
@@ -24,9 +27,6 @@ import org.jsecurity.session.Session;
 import org.jsecurity.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * An {@link org.apache.wicket.protocol.http.SecondLevelCacheSessionStore.IPageStore IPageStore} implementation
