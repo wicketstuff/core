@@ -22,9 +22,10 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.session.ISessionStore;
 import org.wicketstuff.ki.example.pages.IndexPage;
 import org.wicketstuff.ki.example.pages.LoginPage;
-import org.wicketstuff.ki.example.pages.RequireAdminPage;
+import org.wicketstuff.ki.example.pages.RequireAdminRolePage;
 import org.wicketstuff.ki.example.pages.RequireAuthPage;
 import org.wicketstuff.ki.example.pages.RequireLoginPage;
+import org.wicketstuff.ki.example.pages.RequireViewPermissionPage;
 import org.wicketstuff.ki.example.pages.UnauthorizedPage;
 import org.wicketstuff.ki.page.LogoutPage;
 import org.wicketstuff.ki.strategy.KiAuthorizationStrategy;
@@ -51,7 +52,8 @@ public abstract class ExampleApplication extends WebApplication
 		mountBookmarkablePage("account/logout", LogoutPage.class);
 
 		mountBookmarkablePage("user", RequireLoginPage.class);
-		mountBookmarkablePage("admin", RequireAdminPage.class);
+		mountBookmarkablePage("admin", RequireAdminRolePage.class);
+    mountBookmarkablePage("view", RequireViewPermissionPage.class);
     mountBookmarkablePage("auth", RequireAuthPage.class);
 	}
 

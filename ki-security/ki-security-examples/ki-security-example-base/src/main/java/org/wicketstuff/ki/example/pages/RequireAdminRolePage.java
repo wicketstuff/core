@@ -20,10 +20,10 @@ import org.wicketstuff.ki.strategy.KiInstantiationAuthorization;
 
 
 @KiInstantiationAuthorization(role = "admin")
-public class RequireAdminPage extends BasePage
+public class RequireAdminRolePage extends BasePage
 {
 
-	public RequireAdminPage()
+	public RequireAdminRolePage()
 	{
 
 	}
