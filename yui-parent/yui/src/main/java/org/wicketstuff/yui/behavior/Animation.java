@@ -8,6 +8,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.html.JavascriptPackageResource;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.wicketstuff.yui.YuiHeaderContributor;
 import org.wicketstuff.yui.helper.JSArray;
@@ -28,7 +29,8 @@ import org.wicketstuff.yui.helper.JSArray;
  * click will "Blind Up" etc...
  * 
  * YAHOO.util.Anim / Motion / Scroll. Also include Effects from <a
- * href="http://blog.davglass.com/files/yui/effects/">http://blog.davglass.com/files/yui/effects/</a>
+ * href="http://blog.davglass.com/files/yui/effects/"
+ * >http://blog.davglass.com/files/yui/effects/</a>
  * 
  * @author josh
  */
@@ -115,7 +117,9 @@ public class Animation extends AbstractBehavior
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.apache.wicket.behavior.AbstractBehavior#bind(org.apache.wicket.Component)
+	 * @see
+	 * org.apache.wicket.behavior.AbstractBehavior#bind(org.apache.wicket.Component
+	 * )
 	 */
 	@Override
 	public void bind(Component component)
@@ -123,9 +127,12 @@ public class Animation extends AbstractBehavior
 		this.component = component;
 		this.component.setOutputMarkupId(true);
 		component.add(YuiHeaderContributor.forModule("animation"));
-		component.add(HeaderContributor.forJavaScript(AnimEffect.class, "effects/effects.js"));
-		component.add(HeaderContributor.forJavaScript(AnimEffect.class, "effects/tools.js"));
-		component.add(HeaderContributor.forJavaScript(AnimEffect.class, "effects/animator.js"));
+		component.add(JavascriptPackageResource.getHeaderContribution(AnimEffect.class,
+				"effects/effects.js"));
+		component.add(JavascriptPackageResource.getHeaderContribution(AnimEffect.class,
+				"effects/tools.js"));
+		component.add(JavascriptPackageResource.getHeaderContribution(AnimEffect.class,
+				"effects/animator.js"));
 
 		if (isTriggeredByAttachedComponent)
 		{
@@ -143,17 +150,18 @@ public class Animation extends AbstractBehavior
 	 * 
 	 * (non-Javadoc)
 	 * 
-	 * @see org.apache.wicket.behavior.AbstractBehavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+	 * @see
+	 * org.apache.wicket.behavior.AbstractBehavior#renderHead(org.apache.wicket
+	 * .markup.html.IHeaderResponse)
 	 */
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{
 		StringBuffer buffer = new StringBuffer().append("var ").append(getAnimVar()).append(" = ")
-				.append(buildEffectsJS()).append("Wicket.yui.Animator.add(")
-				.append(getAnimValueGroups()).append(",") 
-				.append("'").append(getOnEvent()).append("'").append(",") 
-				.append("'").append(getComponentId()).append("'") 
-				.append(")");
+				.append(buildEffectsJS()).append("Wicket.yui.Animator.add(").append(
+						getAnimValueGroups()).append(",").append("'").append(getOnEvent()).append(
+						"'").append(",").append("'").append(getComponentId()).append("'").append(
+						")");
 		response.renderOnDomReadyJavascript(buffer.toString());
 	}
 
@@ -187,7 +195,8 @@ public class Animation extends AbstractBehavior
 	 * need this to 1/ strip out the initial "eff =" 2/ end "animate()"
 	 * 
 	 * var anim_singapore0 = anim_singapore01=new
-	 * YAHOO.widget.Effects.BlindDown(singapore0,{delay:true},{delay:true});.animate();;
+	 * YAHOO.widget.Effects.BlindDown(
+	 * singapore0,{delay:true},{delay:true});.animate();;
 	 * 
 	 * @return
 	 */
@@ -440,12 +449,10 @@ public class Animation extends AbstractBehavior
 		{
 			StringBuffer script = new StringBuffer();
 
-			script.append("new Wicket.yui.AnimValueGroup(")
-							.append("'").append(getTriggerId()).append("'")
-							.append(",").append(getAnimVar()).append(",")
-							.append(getElementId()).append(",")
-							.append(getElementValue()).append(",")
-							.append(this.isAnimateOnValue).append(")");
+			script.append("new Wicket.yui.AnimValueGroup(").append("'").append(getTriggerId())
+					.append("'").append(",").append(getAnimVar()).append(",")
+					.append(getElementId()).append(",").append(getElementValue()).append(",")
+					.append(this.isAnimateOnValue).append(")");
 
 			return script.toString();
 		}

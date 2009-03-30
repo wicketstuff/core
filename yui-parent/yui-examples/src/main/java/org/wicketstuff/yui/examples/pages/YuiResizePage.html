@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Yui Panel Example</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<style>
+div.data {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+div.handle {
+	border: 2px solid #DDD;
+	height: 100px;
+	width: 200px;
+	background-color: #fff;
+	margin: 10px;
+}
+
+.data_image {
+	position: absolute;
+}
+</style>
+</head>
+<body>
+<span wicket:id="mainNavigation" />
+<br />
+based on
+<a href="http://developer.yahoo.com/yui/resize/">Yui Resize Utility</a>
+this wicket behavior lets you add Resizing ability to you mark up
+<br />
+<br />
+<div class="yui-skin-sam" style="padding: 0; margin: 0;"><span> Simple </span>
+<div class="handle" wicket:id="simple">
+<div class="data">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+</div>
+
+<span> Proxy </span>
+<div class="handle" wicket:id="proxy">
+<div class="data">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+</div>
+
+<span> Animated </span>
+<div class="handle" wicket:id="animated">
+<div class="data">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+</div>
+
+<span> 8-way Element Resize </span><br />
+<img wicket:id="eight" class="data_image" src="images/bangkok.jpg" id="yui_img" height="300" width="199"><br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<span> Ghosting and Custom Proxy Resize </span><br />
+<img wicket:id="ghost" class="data_image" src="images/kl.jpg" id="yui_img" height="300" width="199"></div>
+</body>
+</html>

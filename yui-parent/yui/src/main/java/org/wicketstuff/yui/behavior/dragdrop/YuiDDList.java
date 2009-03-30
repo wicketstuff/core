@@ -9,10 +9,8 @@ import org.apache.wicket.Component.IVisitor;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.IBehavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.JavascriptPackageResource;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
-import org.wicketstuff.yui.YuiHeaderContributor;
+import org.wicketstuff.yui.markup.html.contributor.YuiLoaderContributor;
+import org.wicketstuff.yui.markup.html.contributor.YuiLoaderModule;
 
 
 /**
@@ -26,9 +24,16 @@ import org.wicketstuff.yui.YuiHeaderContributor;
  * 
  * @author josh
  */
-@SuppressWarnings("serial")
 public abstract class YuiDDList extends AbstractDefaultAjaxBehavior
 {
+	private static final long serialVersionUID = 1L;
+
+	private static final String MODULE_NAME = "wicket_yui_ddlist";
+
+	private static final ResourceReference MODULE_REF_JS = new ResourceReference(YuiDDList.class,
+			"YuiDDList.js");
+
+	private static final String[] MODULE_REQUIRES = { "dragdrop", "animation" };
 
 	/** index of this new DDList item after being dragged */
 	private static final String IDX = "idx";
@@ -40,9 +45,6 @@ public abstract class YuiDDList extends AbstractDefaultAjaxBehavior
 	private String listId;
 
 	private String groupId = "default";
-
-	private static final ResourceReference YUI_DDLIST_JS = new JavascriptResourceReference(
-			YuiDDList.class, "YuiDDList.js");
 
 	public YuiDDList()
 	{
@@ -56,38 +58,24 @@ public abstract class YuiDDList extends AbstractDefaultAjaxBehavior
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response)
-	{
-		super.renderHead(response);
-		response.renderOnDomReadyJavascript(getJavascriptForDragDrop());
-	}
-
-	@Override
 	protected void onBind()
 	{
 		super.onBind();
 		getComponent().setOutputMarkupId(true);
-		getComponent().add(YuiHeaderContributor.forModule("yahoo"));
-		getComponent().add(YuiHeaderContributor.forModule("dom"));
-		getComponent().add(YuiHeaderContributor.forModule("event"));
-		getComponent().add(YuiHeaderContributor.forModule("dragdrop"));
-		getComponent().add(YuiHeaderContributor.forModule("animation"));
-		getComponent().add(JavascriptPackageResource.getHeaderContribution(YUI_DDLIST_JS));
 		listId = getComponent().getMarkupId();
-	}
+		getComponent().add(
+				YuiLoaderContributor.addModule(new YuiLoaderModule(MODULE_NAME,
+						YuiLoaderModule.ModuleType.js, MODULE_REF_JS, MODULE_REQUIRES)
+				{
+					private static final long serialVersionUID = 1L;
 
-	private String getJavascriptForDragDrop()
-	{
-		final StringBuffer js = new StringBuffer();
+					@Override
+					public String getInitJS()
+					{
+						return YuiDDList.this.getInitJS();
+					}
+				}));
 
-		String varId = PREFIX + listId;
-
-		js.append(varId + " = new Wicket.yui.DDList(\"" + listId + "\",\"" + getGroupId() + "\","
-				+ getConfig() + "," + getCallbackWicket() + ");\n");
-
-		js.append(varId).append(".setHandleElId(\"" + listId + "\");\n");
-
-		return js.toString();
 	}
 
 	private String getGroupId()
@@ -95,26 +83,30 @@ public abstract class YuiDDList extends AbstractDefaultAjaxBehavior
 		return groupId;
 	}
 
+	private String getInitJS()
+	{
+
+		final StringBuffer js = new StringBuffer();
+		String varId = PREFIX + listId;
+		js.append("var " + varId + " = new Wicket.yui.DDList(\"" + listId + "\",\"" + getGroupId()
+				+ "\"," + getConfig() + "," + getCallbackWicket() + ");\n");
+		js.append(varId).append(".setHandleElId(\"" + listId + "\");\n");
+		return js.toString();
+	}
+
 	private String getCallbackWicket()
 	{
 		return "function () { " + getCallbackScript() + " }";
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.apache.wicket.ajax.AbstractDefaultAjaxBehavior#getCallbackScript()
-	 */
 	@Override
-	protected CharSequence getCallbackScript()
+	protected CharSequence getCallbackScript(boolean onlyTargetActivePage)
 	{
 		StringBuffer params = new StringBuffer();
-
-		params.append("wicketAjaxGet('").append(getCallbackUrl(false)).append("'");
+		params.append(getCallbackUrl(onlyTargetActivePage)).append("'");
 		params.append(" + '&").append(IDX).append("=' + ").append("this.idx");
 		params.append(" + '&").append(DOI).append("=' + ").append("this.doi");
-		return generateCallbackScript(params.toString());
+		return generateCallbackScript("wicketAjaxGet('" + params.toString());
 	}
 
 	protected String getConfig()
