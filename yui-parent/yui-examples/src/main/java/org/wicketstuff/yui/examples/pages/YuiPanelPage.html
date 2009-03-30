@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Yui Panel Example</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<style>
+.mask {
+	background-color: #000;
+	-moz-opacity: 0.75;
+	opacity: .75;
+	filter: alpha(opacity = 75);
+}
+</style>
+</head>
+<body>
+<span wicket:id="mainNavigation" />
+<br />
+<div style="float: right; margin: 4px; padding: 2px; width: 400px; border: 1px solid #DDD;" id="alignId">
+<ul>
+    <li>A YuiPanel is a Wicket Panel that is also a <a href="http://developer.yahoo.com/yui/container/panel">
+    Yui Panel</a></li>
+    <li>To configure the it, override the <code>getOpts()</code> and provide the Javascript Literal. <a
+        href="http://developer.yahoo.com/yui/container/panel/#config"
+    >see config</a></li>
+    <ol>
+        <li>SLIDE Effect seems to takes the x,y position instead of the context positioning</li>
+        <li>FADE Effect seems to takes the context positioning instead of the x,y position</li>
+    </ol>
+</ul>
+</div>
+<div wicket:id="yuiPanelConfigure"></div>
+<div id="t" wicket:id="yuiPanel"></div>
+</body>
+</html>

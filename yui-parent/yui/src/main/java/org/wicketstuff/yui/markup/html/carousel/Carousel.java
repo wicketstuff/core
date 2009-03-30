@@ -5,9 +5,6 @@ import java.util.List;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ResourceReference;
-import org.apache.wicket.markup.html.CSSPackageResource;
-import org.apache.wicket.markup.html.IHeaderContributor;
-import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -16,37 +13,33 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.yui.YuiHeaderContributor;
 import org.wicketstuff.yui.behavior.Attributes;
+import org.wicketstuff.yui.markup.html.contributor.YuiLoaderContributor;
+import org.wicketstuff.yui.markup.html.contributor.YuiLoaderModule;
 
-public class Carousel<T> extends Panel implements IHeaderContributor
+public class Carousel<T> extends Panel
 {
 	private static final long serialVersionUID = 1L;
 
-	private static final String[] DEPENDENCIES = { "animation" };
+	private static final String MODULE_NAME = "wicket_yui_carousel";
 
-	private static final boolean DEBUG = false;
+	private static final ResourceReference MODULE_JS_REF = new ResourceReference(Carousel.class,
+			"Carousel.js");
 
-	private static final String BUILD = "2.6.0";
+	private static final String[] MODULE_REQUIRES = { "carousel", "animation" };
 
-	private static final String MODULE = "carousel";
-
-	public static final ResourceReference SAM_SKIN = new ResourceReference(
-			YuiHeaderContributor.class, "inc/" + BUILD + "/assets/skins/sam/" + MODULE + ".css");
-
-	public static final ResourceReference NO_SKIN_CORE_CSS = new ResourceReference(
-			YuiHeaderContributor.class, "inc/" + BUILD + "/" + MODULE + "/assets/" + MODULE
-					+ "-core.css");
-
+	/** the carousel */
 	private WebMarkupContainer carousel;
 
-	public Carousel(String id, IModel<List<T>> list, ResourceReference css)
+	/**
+	 * 
+	 * @param id
+	 * @param list
+	 * @param css
+	 */
+	public Carousel(String id, IModel<List<T>> list)
 	{
 		super(id);
-
-		add(YuiHeaderContributor.forModule(MODULE, DEPENDENCIES, DEBUG, BUILD));
-		if (css != null)
-			add(CSSPackageResource.getHeaderContribution(css));
 
 		WebMarkupContainer skinContainer;
 		add(skinContainer = new WebMarkupContainer("skin_container"));
@@ -66,6 +59,36 @@ public class Carousel<T> extends Panel implements IHeaderContributor
 		});
 
 		skinContainer.add(new AttributeModifier("class", true, new Model<String>(getCssClass())));
+
+		// add this new Yui Loader Module
+		add(YuiLoaderContributor.addModule(new YuiLoaderModule(MODULE_NAME,
+				YuiLoaderModule.ModuleType.js, MODULE_JS_REF, MODULE_REQUIRES)
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getInitJS()
+			{
+				StringBuffer buffer = new StringBuffer();
+				buffer.append("var ").append(getCarouselVar()).append(
+						" = new YAHOO.widget.Carousel(").append("\"").append(getCarouselId())
+						.append("\",").append(getOpts()).append(");");
+
+				buffer.append(getCarouselVar()).append(".render();");
+				buffer.append(getCarouselVar()).append(".show()");
+				return buffer.toString();
+			}
+
+			private String getCarouselVar()
+			{
+				return "var_" + getCarouselId();
+			}
+
+			private String getCarouselId()
+			{
+				return carousel.getMarkupId();
+			}
+		}));
 	}
 
 	/**
@@ -87,30 +110,7 @@ public class Carousel<T> extends Panel implements IHeaderContributor
 				return list;
 			}
 
-		}, SAM_SKIN);
-
-	}
-
-	/**
-	 * 
-	 * @param id
-	 * @param list
-	 * @param css
-	 */
-	public Carousel(String id, final List<T> list, ResourceReference css)
-	{
-		this(id, new LoadableDetachableModel<List<T>>()
-		{
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected List<T> load()
-			{
-				return list;
-			}
-
-		}, css);
+		});
 	}
 
 	protected String getCssClass()
@@ -121,23 +121,6 @@ public class Carousel<T> extends Panel implements IHeaderContributor
 	protected Component newPanel(String id, T object)
 	{
 		return new EmptyPanel(id);
-	}
-
-	/**
-	 * YAHOO.util.Event.onContentReady("container", function (ev) { var carousel
-	 * = new YAHOO.widget.Carousel("container"); carousel.show(); // rest of the
-	 * code });
-	 */
-	public void renderHead(IHeaderResponse response)
-	{
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("var ").append(getCarouselVar()).append(" = new YAHOO.widget.Carousel(")
-				.append("\"").append(getCarouselId()).append("\",").append(getOpts()).append(");");
-
-		buffer.append(getCarouselVar()).append(".render();");
-		buffer.append(getCarouselVar()).append(".show()");
-		response.renderOnDomReadyJavascript(buffer.toString());
-
 	}
 
 	/**
@@ -163,13 +146,4 @@ public class Carousel<T> extends Panel implements IHeaderContributor
 		return attributes.toString();
 	}
 
-	private String getCarouselVar()
-	{
-		return "var_" + getCarouselId();
-	}
-
-	private String getCarouselId()
-	{
-		return carousel.getMarkupId();
-	}
 }

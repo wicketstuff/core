@@ -26,7 +26,7 @@ public class CarouselPage extends WicketExamplePage
 				"images/jakarta.jpg", "images/sgp.jpg", "images/makati.jpg" });
 
 		// first carousel with just core css for functionality
-		add(new Carousel<String>("carousel", list, Carousel.NO_SKIN_CORE_CSS)
+		add(new Carousel<String>("carousel", list)
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -41,7 +41,7 @@ public class CarouselPage extends WicketExamplePage
 			{
 				return carouselOpts();
 			}
-			
+
 			@Override
 			protected String getCssClass()
 			{
@@ -49,7 +49,7 @@ public class CarouselPage extends WicketExamplePage
 			}
 		});
 
-		// 2nd carousel with  sam skin by default
+		// 2nd carousel with sam skin by default
 		add(new Carousel<String>("carousel_sam", list)
 		{
 			private static final long serialVersionUID = 1L;
@@ -66,8 +66,8 @@ public class CarouselPage extends WicketExamplePage
 				return carouselOpts();
 			}
 		});
-		
-		// 3nd carousel with sam skin by default but customised 
+
+		// 3nd carousel with sam skin by default but customised
 		add(new Carousel<String>("carousel_sam_customised", list)
 		{
 			private static final long serialVersionUID = 1L;
@@ -83,7 +83,7 @@ public class CarouselPage extends WicketExamplePage
 			{
 				return carouselOpts();
 			}
-			
+
 			@Override
 			protected String getCssClass()
 			{

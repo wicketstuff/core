@@ -9,6 +9,7 @@ import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableLabel;
 import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.CSSPackageResource;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.list.Loop.LoopItem;
@@ -143,16 +144,54 @@ public abstract class DynamicAjaxTabbedPanel extends AjaxTabbedPanel
 	@Override
 	protected LoopItem newTabContainer(final int tabIndex)
 	{
-		final LoopItem li = super.newTabContainer(tabIndex);
-		li.add(new YuiDDList(groupId)
+		return new LoopItem(tabIndex)
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			protected void onDrop(AjaxRequestTarget target, int index, Component destItem)
+			protected void onComponentTag(ComponentTag tag)
 			{
-				CollectionsHelper.rotateInto(getTabs(), li.getIteration(), index);
-				target.addComponent(DynamicAjaxTabbedPanel.this);
+				super.onComponentTag(tag);
+				String cssClass = (String)tag.getString("class");
+				if (cssClass == null)
+				{
+					cssClass = " ";
+				}
+				cssClass += " tab" + getIteration();
+
+				if (getIteration() == getSelectedTab())
+				{
+					cssClass += " selected";
+				}
+				if (getIteration() == getTabs().size() - 1)
+				{
+					cssClass += " last";
+				}
+				tag.put("class", cssClass.trim());
 			}
-		});
-		return li;
+
+			@Override
+			public boolean isVisible()
+			{
+				return getTabs().get(tabIndex).isVisible();
+			}
+
+			@Override
+			protected void onBeforeRender()
+			{
+				super.onBeforeRender();
+
+				add(new YuiDDList(groupId)
+				{
+					@Override
+					protected void onDrop(AjaxRequestTarget target, int index, Component destItem)
+					{
+						CollectionsHelper.rotateInto(getTabs(), getIteration(), index);
+						target.addComponent(DynamicAjaxTabbedPanel.this);
+					}
+				});
+			}
+
+		};
 	}
 }

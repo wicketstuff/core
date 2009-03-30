@@ -5,11 +5,10 @@ import java.util.List;
 
 
 /**
- * a Javascript Array "[value1, value2, value3]"
- * TODO : Use JSON ?
+ * a Javascript Array "[value1, value2, value3]" TODO : Use JSON ?
  * 
  * @author josh
- *
+ * 
  */
 public class JSArray extends TokenSeparatedValues implements JavascriptObject
 {
@@ -22,7 +21,7 @@ public class JSArray extends TokenSeparatedValues implements JavascriptObject
 	 * the list of values
 	 */
 	private List<String> values = new ArrayList<String>();
-	
+
 	/**
 	 * construct.
 	 */
@@ -33,21 +32,30 @@ public class JSArray extends TokenSeparatedValues implements JavascriptObject
 
 	/**
 	 * constructor for a list of array
+	 * 
 	 * @param array
 	 */
 	public JSArray(List<String> array)
 	{
 		values.addAll(array);
 	}
-	
+
 	/**
 	 * @param int_values
 	 */
-	public JSArray(int ... int_values)
+	public JSArray(int... int_values)
 	{
 		for (int a_int : int_values)
 		{
 			values.add(Integer.toString(a_int));
+		}
+	}
+
+	public JSArray(String[] javaArray)
+	{
+		for (String s : javaArray)
+		{
+			values.add("\"" + s + "\"");
 		}
 	}
 
@@ -66,7 +74,7 @@ public class JSArray extends TokenSeparatedValues implements JavascriptObject
 		values.add(object.toString());
 		return this;
 	}
-	
+
 	@Override
 	public String getPrefix()
 	{
