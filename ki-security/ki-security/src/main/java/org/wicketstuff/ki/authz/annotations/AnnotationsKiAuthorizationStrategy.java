@@ -25,16 +25,26 @@ import org.jsecurity.SecurityUtils;
 import org.jsecurity.mgt.SecurityManager;
 import org.jsecurity.subject.Subject;
 import org.jsecurity.util.ThreadContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class AnnotationsKiAuthorizationStrategy implements IAuthorizationStrategy 
 { 
+  static final Logger log = LoggerFactory.getLogger( AnnotationsKiAuthorizationStrategy.class );
+    
   /**
    * @see org.apache.wicket.authorization.IAuthorizationStrategy#isInstantiationAuthorized(java.lang.Class)
    */
   public <T extends Component> boolean isInstantiationAuthorized( final Class<T> componentClass) 
   {
-    return checkInvalidInstantiation( componentClass ) == null;
+    Annotation fail = checkInvalidInstantiation( componentClass );
+    if( fail != null ) {
+      log.info( "Unuthorized Instantiation :: component={} reason={} subject={}", 
+          new Object[] { componentClass, fail, SecurityUtils.getSubject() } );
+      return false;
+    }
+    return true;
   }
 
   public <T extends Component> Annotation checkInvalidInstantiation( final Class<T> componentClass )
