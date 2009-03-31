@@ -65,6 +65,10 @@ function WicketOMap(id, options) {
 		self.map.addLayer(layer);
 		self.layers[id] = layer;
 	};
+	this.setCenter = function (center, zoom) {
+		var self = this;
+		self.map.setCenter(center, zoom);		
+	}
 	this.zoomToMaxExtent = function () {
 		var self = this;
 		self.map.zoomToMaxExtent();
