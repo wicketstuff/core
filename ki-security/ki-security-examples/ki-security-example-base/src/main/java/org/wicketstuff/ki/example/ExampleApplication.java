@@ -17,17 +17,17 @@ package org.wicketstuff.ki.example;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
+import org.apache.wicket.authorization.UnauthorizedInstantiationException;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.wicketstuff.ki.authz.KiUnauthorizedComponentListener;
+import org.wicketstuff.ki.authz.annotations.AnnotationsKiAuthorizationStrategy;
 import org.wicketstuff.ki.example.pages.IndexPage;
 import org.wicketstuff.ki.example.pages.LoginPage;
 import org.wicketstuff.ki.example.pages.RequireAdminRolePage;
 import org.wicketstuff.ki.example.pages.RequireAuthPage;
-import org.wicketstuff.ki.example.pages.RequireLoginPage;
 import org.wicketstuff.ki.example.pages.RequireViewPermissionPage;
 import org.wicketstuff.ki.example.pages.UnauthorizedPage;
 import org.wicketstuff.ki.page.LogoutPage;
-import org.wicketstuff.ki.strategy.KiAuthorizationStrategy;
-import org.wicketstuff.ki.strategy.KiUnauthorizedComponentListener;
 
 /**
  * 
@@ -39,16 +39,16 @@ public abstract class ExampleApplication extends WebApplication
 	protected void init()
 	{
 		getMarkupSettings().setStripWicketTags(true);
-
-		getSecuritySettings().setAuthorizationStrategy(new KiAuthorizationStrategy());
+		
+		AnnotationsKiAuthorizationStrategy authz = new AnnotationsKiAuthorizationStrategy();
+		getSecuritySettings().setAuthorizationStrategy(authz);
 
 		getSecuritySettings().setUnauthorizedComponentInstantiationListener(
-			new KiUnauthorizedComponentListener(LoginPage.class, UnauthorizedPage.class));
+			new KiUnauthorizedComponentListener(LoginPage.class, UnauthorizedPage.class, authz));
 
 		mountBookmarkablePage("account/login", LoginPage.class);
 		mountBookmarkablePage("account/logout", LogoutPage.class);
 
-		mountBookmarkablePage("user", RequireLoginPage.class);
 		mountBookmarkablePage("admin", RequireAdminRolePage.class);
     mountBookmarkablePage("view", RequireViewPermissionPage.class);
     mountBookmarkablePage("auth", RequireAuthPage.class);

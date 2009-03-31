@@ -23,7 +23,6 @@ public abstract class BasePage extends WebPage
 
 		WebMarkupContainer links = new WebMarkupContainer("links");
 		links.add(new BookmarkablePageLink<Void>("home", IndexPage.class));
-		links.add(new BookmarkablePageLink<Void>("user", RequireLoginPage.class));
 		links.add(new BookmarkablePageLink<Void>("admin", RequireAdminRolePage.class));
     links.add(new BookmarkablePageLink<Void>("auth", RequireAuthPage.class));
     links.add(new BookmarkablePageLink<Void>("view", RequireViewPermissionPage.class));

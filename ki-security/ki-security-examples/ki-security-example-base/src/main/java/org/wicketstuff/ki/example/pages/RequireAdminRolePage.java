@@ -16,10 +16,12 @@
  */
 package org.wicketstuff.ki.example.pages;
 
-import org.wicketstuff.ki.strategy.KiInstantiationAuthorization;
+import org.wicketstuff.ki.authz.annotations.InstantiationRequiresRole;
 
 
-@KiInstantiationAuthorization(role = "admin")
+@InstantiationRequiresRole( role="admin", 
+    loginMessage="You must be logged in to view this page",
+    unauthorizedMessage="You need to be an ADMIN" )
 public class RequireAdminRolePage extends BasePage
 {
 
