@@ -16,10 +16,10 @@
  */
 package org.wicketstuff.ki.example.pages;
 
-import org.wicketstuff.ki.strategy.KiInstantiationAuthorization;
+import org.wicketstuff.ki.authz.annotations.InstantiationRequiresAuthentication;
 
 
-@KiInstantiationAuthorization(authenticated = true)
+@InstantiationRequiresAuthentication
 public class RequireAuthPage extends BasePage
 {
 	public RequireAuthPage()

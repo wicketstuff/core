@@ -16,10 +16,10 @@
  */
 package org.wicketstuff.ki.example.pages;
 
-import org.wicketstuff.ki.strategy.KiInstantiationAuthorization;
+import org.wicketstuff.ki.authz.annotations.InstantiationRequiresPermission;
 
 
-@KiInstantiationAuthorization( permission="view" )
+@InstantiationRequiresPermission( permission="view" )
 public class RequireViewPermissionPage extends BasePage
 {
 

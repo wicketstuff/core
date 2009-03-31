@@ -17,12 +17,12 @@
 package org.wicketstuff.ki.test;
 
 import org.apache.wicket.markup.html.WebPage;
-import org.wicketstuff.ki.strategy.KiInstantiationAuthorization;
+import org.wicketstuff.ki.authz.annotations.InstantiationRequiresPermission;
 
 /**
  * Test page that should only be available for role ADMIN.
  */
-@KiInstantiationAuthorization( role="ADMIN" )
+@InstantiationRequiresPermission( permission = "something:print" )
 public class AdminPage extends WebPage
 {
 	private static final long serialVersionUID = 1L;
