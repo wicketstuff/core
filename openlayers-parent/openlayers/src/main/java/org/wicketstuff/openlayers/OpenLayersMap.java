@@ -131,15 +131,17 @@ public class OpenLayersMap extends Panel {
 		private static final long serialVersionUID = 1L;
 
 		private LonLat gLatLng;
+		private int zoom;
 
-		public SetCenterBehavior(String event, LonLat gLatLng) {
+		public SetCenterBehavior(String event, LonLat gLatLng, int zoom) {
 			super(event);
 			this.gLatLng = gLatLng;
+			this.zoom = zoom;
 		}
 
 		@Override
 		protected String getJSinvoke() {
-			return getJSsetCenter(gLatLng);
+			return getJSsetCenter(gLatLng, zoom);
 		}
 	}
 
@@ -518,9 +520,9 @@ public class OpenLayersMap extends Panel {
 		return getJSinvoke("panDirection(" + dx + "," + dy + ")");
 	}
 
-	private String getJSsetCenter(LonLat center) {
-		if (center != null)
-			return getJSinvoke("setCenter(" + center.getJSconstructor() + ")");
+	private String getJSsetCenter(LonLat center, int zoom) {
+		if (center != null && zoom > 0)
+			return getJSinvoke("setCenter(" + center.getJSconstructor() + ", " + zoom + ")");
 		else
 			return "";
 	}
@@ -612,13 +614,14 @@ public class OpenLayersMap extends Panel {
 	 * @param center
 	 *            center to set
 	 */
-	public void setCenter(LonLat center) {
+	public void setCenter(LonLat center, int zoom) {
 		if (!this.center.equals(center)) {
 			this.center = center;
+			this.zoom = zoom;
 
 			if (AjaxRequestTarget.get() != null && findPage() != null) {
 				AjaxRequestTarget.get()
-						.appendJavascript(getJSsetCenter(center));
+						.appendJavascript(getJSsetCenter(center, zoom));
 			}
 		}
 	}
