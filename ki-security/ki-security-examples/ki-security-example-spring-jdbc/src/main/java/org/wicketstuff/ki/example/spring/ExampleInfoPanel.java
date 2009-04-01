@@ -38,7 +38,6 @@ import org.jsecurity.authc.UnknownAccountException;
 import org.jsecurity.authc.UsernamePasswordToken;
 import org.jsecurity.mgt.SecurityManager;
 import org.jsecurity.subject.Subject;
-import org.wicketstuff.ki.KiSecurityManagerModel;
 import org.wicketstuff.ki.KiSubjectModel;
 import org.wicketstuff.ki.page.LogoutPage;
 
