@@ -17,6 +17,7 @@
 package org.wicketstuff.ki.example.spring;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -41,6 +42,6 @@ public class ExampleSpringApp extends ExampleApplication
   @Override
   public Component getExampleInfoPanel(String id) {
     // TODO Auto-generated method stub
-    return null;
+    return new Label(id, "woohoo!");
   }
 }
