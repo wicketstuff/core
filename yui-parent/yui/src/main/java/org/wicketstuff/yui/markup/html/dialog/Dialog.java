@@ -18,7 +18,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.template.TextTemplateHeaderContributor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.yui.YuiHeaderContributor;
+import org.wicketstuff.yui.markup.html.contributor.YuiHeaderContributor;
 
 public abstract class Dialog extends Panel implements IHeaderContributor {
     private static final long serialVersionUID = 1L;

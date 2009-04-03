@@ -4,31 +4,31 @@ import org.apache.wicket.Component;
 import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.wicketstuff.yui.behavior.Anim;
-import org.wicketstuff.yui.behavior.AnimEffect;
-import org.wicketstuff.yui.behavior.Animation;
-import org.wicketstuff.yui.behavior.Attributes;
-import org.wicketstuff.yui.behavior.Easing;
-import org.wicketstuff.yui.behavior.OnEvent;
+import org.wicketstuff.yui.behavior.animation.YuiAnim;
+import org.wicketstuff.yui.behavior.animation.YuiAnimEffect;
+import org.wicketstuff.yui.behavior.animation.YuiAnimation;
+import org.wicketstuff.yui.behavior.animation.YuiEasing;
+import org.wicketstuff.yui.helper.Attributes;
+import org.wicketstuff.yui.helper.OnEvent;
 
 /**
  * AnimatedItem contains 3 component which have in built animations that will
- * overlay on the mouseover/out/click events. This serves as the base class for 
+ * overlay on the mouseover/out/click events. This serves as the base class for
  * other Animated interested in this behaviour.
  * 
- *  nb: if the child component is a complex panel with lots of nested divs it may not
- *  work. I only use a Panel of IMG and Labels
+ * nb: if the child component is a complex panel with lots of nested divs it may
+ * not work. I only use a Panel of IMG and Labels
  * 
  * @author josh
- *
+ * 
  */
 @SuppressWarnings("serial")
-public abstract class AnimatedItem extends Panel 
+public abstract class AnimatedItem extends Panel
 {
 	private static final long serialVersionUID = 1L;
-		
-	private Component onloadItem ;
-	
+
+	private Component onloadItem;
+
 	private Component mouseoverItem;
 
 	private Component onclickItem;
@@ -39,12 +39,12 @@ public abstract class AnimatedItem extends Panel
 
 	private String unselectValue;
 
-	private Animation onunselectAnimation;
+	private YuiAnimation onunselectAnimation;
 
 	public static Attributes SHOW_ATTRIBUTE = new Attributes("zIndex", 0, 1);
-	
+
 	public static Attributes HIDE_ATTRIBUTE = new Attributes("zIndex", 1, 0);
-	
+
 	/**
 	 * 
 	 * @param id
@@ -55,7 +55,7 @@ public abstract class AnimatedItem extends Panel
 		super(id);
 		add(HeaderContributor.forCss(AnimatedItem.class, "AnimatedItem.css"));
 	}
-	
+
 	/**
 	 * 
 	 * @param id
@@ -72,52 +72,53 @@ public abstract class AnimatedItem extends Panel
 	}
 
 	/**
-	 * CHILD CLASS MUST CALL THIS !! 
-	 * TODO : but how to ensure this???
+	 * CHILD CLASS MUST CALL THIS !! TODO : but how to ensure this???
 	 */
 	public void init()
 	{
 		add(onloadItem = newOnloadItem("onload_item"));
 		add(mouseoverItem = newMouseoverItem("mouseover_item"));
 		add(onclickItem = newOnclickItem("onclick_item"));
-		
+
 		// animation
-		mouseoverItem.add(new Animation(OnEvent.mouseover, onloadItem).addEffect(mouseoverEffect()));
-		mouseoverItem.add(new Animation(OnEvent.mouseout, mouseoverItem).addEffect(mouseoutEffect()));
-		
+		mouseoverItem.add(new YuiAnimation(OnEvent.mouseover, onloadItem)
+				.addEffect(mouseoverEffect()));
+		mouseoverItem.add(new YuiAnimation(OnEvent.mouseout, mouseoverItem)
+				.addEffect(mouseoutEffect()));
+
 		// this is the "select"
-		onclickItem.add(new Animation(OnEvent.click, mouseoverItem, getElement(), getSelectValue())
-							.addEffect(onselectEffect()));
-		
+		onclickItem.add(new YuiAnimation(OnEvent.click, mouseoverItem, getElement(),
+				getSelectValue()).addEffect(onselectEffect()));
+
 		// this is the "unselect"
-		onclickItem.add(onunselectAnimation = new Animation(OnEvent.click, onclickItem, getElement(), getUnselectValue())
-							.addEffect(onunselectEffect()));
-	}
-	
-	public AnimEffect onunselectEffect()
-	{
-		return new Anim(Anim.Type.Anim, HIDE_ATTRIBUTE, 1, Easing.easeNone);
+		onclickItem.add(onunselectAnimation = new YuiAnimation(OnEvent.click, onclickItem,
+				getElement(), getUnselectValue()).addEffect(onunselectEffect()));
 	}
 
-	public AnimEffect onselectEffect()
+	public YuiAnimEffect onunselectEffect()
 	{
-		return new Anim(Anim.Type.Anim, SHOW_ATTRIBUTE, 1, Easing.easeNone);
+		return new YuiAnim(YuiAnim.Type.Anim, HIDE_ATTRIBUTE, 1, YuiEasing.easeNone);
 	}
 
-	public AnimEffect mouseoutEffect()
+	public YuiAnimEffect onselectEffect()
 	{
-		return new Anim(Anim.Type.Anim, HIDE_ATTRIBUTE, 1, Easing.easeNone);
+		return new YuiAnim(YuiAnim.Type.Anim, SHOW_ATTRIBUTE, 1, YuiEasing.easeNone);
 	}
 
-	public AnimEffect mouseoverEffect()
+	public YuiAnimEffect mouseoutEffect()
 	{
-		return new Anim(Anim.Type.Anim, SHOW_ATTRIBUTE, 1, Easing.easeNone);
+		return new YuiAnim(YuiAnim.Type.Anim, HIDE_ATTRIBUTE, 1, YuiEasing.easeNone);
+	}
+
+	public YuiAnimEffect mouseoverEffect()
+	{
+		return new YuiAnim(YuiAnim.Type.Anim, SHOW_ATTRIBUTE, 1, YuiEasing.easeNone);
 	}
 
 	public abstract Component newOnloadItem(String id);
-	
+
 	public abstract Component newMouseoverItem(String id);
-	
+
 	public abstract Component newOnclickItem(String id);
 
 	public FormComponent getElement()
@@ -150,12 +151,12 @@ public abstract class AnimatedItem extends Panel
 		this.unselectValue = unselectValue;
 	}
 
-	public Animation getOnunselectAnimation()
+	public YuiAnimation getOnunselectAnimation()
 	{
 		return onunselectAnimation;
 	}
 
-	public void setOnunselectAnimation(Animation onunselectAnimation)
+	public void setOnunselectAnimation(YuiAnimation onunselectAnimation)
 	{
 		this.onunselectAnimation = onunselectAnimation;
 	}

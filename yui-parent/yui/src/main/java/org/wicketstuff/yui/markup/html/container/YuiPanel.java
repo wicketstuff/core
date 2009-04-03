@@ -11,8 +11,8 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.yui.behavior.resize.YuiResize;
-import org.wicketstuff.yui.markup.html.contributor.YuiLoaderContributor;
-import org.wicketstuff.yui.markup.html.contributor.YuiLoaderModule;
+import org.wicketstuff.yui.markup.html.contributor.yuiloader.YuiLoaderContributor;
+import org.wicketstuff.yui.markup.html.contributor.yuiloader.YuiLoaderModule;
 
 public class YuiPanel extends Panel implements Serializable
 {
@@ -104,12 +104,11 @@ public class YuiPanel extends Panel implements Serializable
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public String getInitJS()
+			public String onSuccessJS()
 			{
 				return YuiPanel.this.getInitJS();
 			}
 		}));
-
 	}
 
 	protected Component newFooterPanel(String id)

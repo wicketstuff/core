@@ -11,7 +11,7 @@ import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.util.template.PackagedTextTemplate;
 
-import org.wicketstuff.yui.YuiImage;
+import org.wicketstuff.yui.helper.YuiImage;
 
 /**
  * A SortGroup groups the images

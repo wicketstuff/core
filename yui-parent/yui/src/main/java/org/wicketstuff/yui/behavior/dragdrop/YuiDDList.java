@@ -9,8 +9,8 @@ import org.apache.wicket.Component.IVisitor;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.IBehavior;
-import org.wicketstuff.yui.markup.html.contributor.YuiLoaderContributor;
-import org.wicketstuff.yui.markup.html.contributor.YuiLoaderModule;
+import org.wicketstuff.yui.markup.html.contributor.yuiloader.YuiLoaderContributor;
+import org.wicketstuff.yui.markup.html.contributor.yuiloader.YuiLoaderModule;
 
 
 /**
@@ -57,30 +57,27 @@ public abstract class YuiDDList extends AbstractDefaultAjaxBehavior
 		this.groupId = groupId;
 	}
 
+	@SuppressWarnings("serial")
 	@Override
 	protected void onBind()
 	{
 		super.onBind();
 		getComponent().setOutputMarkupId(true);
 		listId = getComponent().getMarkupId();
+
+		final String initScript = getInitJS();
 		getComponent().add(
 				YuiLoaderContributor.addModule(new YuiLoaderModule(MODULE_NAME,
 						YuiLoaderModule.ModuleType.js, MODULE_REF_JS, MODULE_REQUIRES)
 				{
-					private static final long serialVersionUID = 1L;
 
 					@Override
-					public String getInitJS()
+					public String onSuccessJS()
 					{
-						return YuiDDList.this.getInitJS();
+						return initScript;
 					}
 				}));
 
-	}
-
-	private String getGroupId()
-	{
-		return groupId;
 	}
 
 	private String getInitJS()
@@ -88,8 +85,8 @@ public abstract class YuiDDList extends AbstractDefaultAjaxBehavior
 
 		final StringBuffer js = new StringBuffer();
 		String varId = PREFIX + listId;
-		js.append("var " + varId + " = new Wicket.yui.DDList(\"" + listId + "\",\"" + getGroupId()
-				+ "\"," + getConfig() + "," + getCallbackWicket() + ");\n");
+		js.append("var " + varId + " = new YAHOO.Wicket.DDList(\"" + listId + "\",\""
+				+ getGroupId() + "\"," + getConfig() + "," + getCallbackWicket() + ");\n");
 		js.append(varId).append(".setHandleElId(\"" + listId + "\");\n");
 		return js.toString();
 	}
@@ -106,7 +103,13 @@ public abstract class YuiDDList extends AbstractDefaultAjaxBehavior
 		params.append(getCallbackUrl(onlyTargetActivePage)).append("'");
 		params.append(" + '&").append(IDX).append("=' + ").append("this.idx");
 		params.append(" + '&").append(DOI).append("=' + ").append("this.doi");
-		return generateCallbackScript("wicketAjaxGet('" + params.toString());
+		CharSequence s = generateCallbackScript("wicketAjaxGet('" + params.toString());
+		return s;
+	}
+
+	private String getGroupId()
+	{
+		return groupId;
 	}
 
 	protected String getConfig()
@@ -117,7 +120,6 @@ public abstract class YuiDDList extends AbstractDefaultAjaxBehavior
 	@Override
 	protected void respond(final AjaxRequestTarget target)
 	{
-
 		final String idx = RequestCycle.get().getRequest().getParameter(IDX);
 		final String doi = RequestCycle.get().getRequest().getParameter(DOI);
 
@@ -134,7 +136,6 @@ public abstract class YuiDDList extends AbstractDefaultAjaxBehavior
 
 					// check if the dragOverId is a Target or
 					// a DDList
-
 					List<IBehavior> behaviors = component.getBehaviors();
 
 					for (IBehavior behavior : behaviors)

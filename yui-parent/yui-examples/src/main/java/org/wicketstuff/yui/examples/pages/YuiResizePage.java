@@ -64,9 +64,11 @@ public class YuiResizePage extends WicketExamplePage
 			protected String getStartResizeJs()
 			{
 
-				return "function() { "
-						+ " this.getProxyEl().innerHTML = '<img src=\"' + this.get('element').src + '\" style=\"height: 100%; width: 100%;\">';"
-						+ " Dom.setStyle(this.getProxyEl().firstChild, 'opacity', '.25');" + "}";
+				return "function() { " + " var Dom = YAHOO.util.Dom;" + getYuiResizeVar()
+						+ ".getProxyEl().innerHTML = '<img src=\"' + " + getYuiResizeVar()
+						+ ".get('element').src + '\" style=\"height: 100%; width: 100%;\">';"
+						+ " Dom.setStyle(" + getYuiResizeVar()
+						+ ".getProxyEl().firstChild, 'opacity', '.25');" + "}";
 			}
 		}));
 

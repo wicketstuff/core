@@ -1,6 +1,5 @@
 package org.wicketstuff.yui.helper;
 
-import org.wicketstuff.yui.behavior.Attributes;
 
 import junit.framework.TestCase;
 

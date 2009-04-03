@@ -4,9 +4,14 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AbstractBehavior;
-import org.wicketstuff.yui.markup.html.contributor.YuiLoaderContributor;
-import org.wicketstuff.yui.markup.html.contributor.YuiLoaderModule;
+import org.wicketstuff.yui.markup.html.contributor.yuiloader.YuiLoaderContributor;
+import org.wicketstuff.yui.markup.html.contributor.yuiloader.YuiLoaderModule;
 
+/**
+ * DDTarget used for empty list
+ * @author josh
+ *
+ */
 public abstract class YuiDDTarget extends AbstractBehavior
 {
 
@@ -31,6 +36,7 @@ public abstract class YuiDDTarget extends AbstractBehavior
 		this.groupId = groupId;
 	}
 
+	@SuppressWarnings("serial")
 	@Override
 	public void bind(Component component)
 	{
@@ -40,10 +46,8 @@ public abstract class YuiDDTarget extends AbstractBehavior
 		component.add(YuiLoaderContributor.addModule(new YuiLoaderModule(MODULE_NAME,
 				YuiLoaderModule.ModuleType.js, MODULE_REF_JS, MODULE_REQUIRES)
 		{
-			private static final long serialVersionUID = 1L;
-
 			@Override
-			public String getInitJS()
+			public String onSuccessJS()
 			{
 				return YuiDDTarget.this.getInitJS();
 			}

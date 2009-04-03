@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ResourceReference;
-import org.wicketstuff.yui.YuiImage;
 import org.wicketstuff.yui.helper.CSSInlineStyle;
 import org.wicketstuff.yui.helper.ImageResourceInfo;
+import org.wicketstuff.yui.helper.YuiImage;
 
 /**
  * Allows the user to define the anim select settings

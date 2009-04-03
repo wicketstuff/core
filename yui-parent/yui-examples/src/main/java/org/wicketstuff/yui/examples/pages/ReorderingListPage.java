@@ -89,7 +89,7 @@ public class ReorderingListPage extends WicketExamplePage
 
 		add(list2 = new WebMarkupContainer("list2"));
 		list2.setOutputMarkupId(true);
-		list2.add(new YuiDDTarget(GROUP_ID)
+		 list2.add(new YuiDDTarget(GROUP_ID)
 		{
 
 			@SuppressWarnings("unchecked")
@@ -162,7 +162,6 @@ public class ReorderingListPage extends WicketExamplePage
 			}
 		});
 
-
 		// list 4 and 5
 		final List<String> list4items = new ArrayList<String>();
 		add(new YuiDDListViewPanel<String>("list4", list4items)
@@ -185,6 +184,7 @@ public class ReorderingListPage extends WicketExamplePage
 				info("list4 : " + getList());
 				target.addComponent(feedback);
 			}
+
 		});
 
 

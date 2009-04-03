@@ -6,10 +6,10 @@ import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.AbstractReadOnlyModel;
-import org.wicketstuff.yui.behavior.Anim;
-import org.wicketstuff.yui.behavior.AnimEffect;
-import org.wicketstuff.yui.behavior.Attributes;
-import org.wicketstuff.yui.behavior.Easing;
+import org.wicketstuff.yui.behavior.animation.YuiAnim;
+import org.wicketstuff.yui.behavior.animation.YuiAnimEffect;
+import org.wicketstuff.yui.behavior.animation.YuiEasing;
+import org.wicketstuff.yui.helper.Attributes;
 import org.wicketstuff.yui.helper.CSSInlineStyle;
 import org.wicketstuff.yui.markup.html.image.URIImagePanel;
 /**
@@ -62,21 +62,21 @@ public class AnimatedThumbnail extends AnimatedItem
 	}
 
 	@Override
-	public AnimEffect mouseoverEffect()
+	public YuiAnimEffect mouseoverEffect()
 	{
 		Attributes attributes = new Attributes();
 		attributes.add(SHOW_ATTRIBUTE);
 		attributes.add(new Attributes("opacity", 0, getSettings().getOpacity()));
-		return new Anim(AnimEffect.Type.Anim, attributes, 0, Easing.easeNone);	
+		return new YuiAnim(YuiAnimEffect.Type.Anim, attributes, 0, YuiEasing.easeNone);	
 	}
 	
 	@Override
-	public AnimEffect mouseoutEffect()
+	public YuiAnimEffect mouseoutEffect()
 	{
 		Attributes attributes = new Attributes();
 		attributes.add(HIDE_ATTRIBUTE);
 		attributes.add(new Attributes("opacity", getSettings().getOpacity(), 0f));
-		return new Anim(AnimEffect.Type.Anim, attributes, 1, Easing.easeNone);	
+		return new YuiAnim(YuiAnimEffect.Type.Anim, attributes, 1, YuiEasing.easeNone);	
 	}
 	
 	/*
@@ -96,7 +96,7 @@ public class AnimatedThumbnail extends AnimatedItem
 	 * @see org.wicketstuff.yui.markup.html.animation.thumbnail.AnimatedItem#onselectEffect()
 	 */
 	@Override
-	public AnimEffect onselectEffect()
+	public YuiAnimEffect onselectEffect()
 	{
 		Attributes attributes = new Attributes();
 		attributes.add(SHOW_ATTRIBUTE);
@@ -105,17 +105,17 @@ public class AnimatedThumbnail extends AnimatedItem
 		attributes.add(new Attributes("top", 0, getSettings().getPictureTop()));
 		attributes.add(new Attributes("left", 0, getSettings().getPictureLeft()));
 		
-		return new Anim(AnimEffect.Type.Anim, attributes, 1, Easing.easeNone);	
+		return new YuiAnim(YuiAnimEffect.Type.Anim, attributes, 1, YuiEasing.easeNone);	
 	}
 	
 	@Override
-	public AnimEffect onunselectEffect()
+	public YuiAnimEffect onunselectEffect()
 	{
 		Attributes attributes = new Attributes();
 		attributes.add(HIDE_ATTRIBUTE);
 		attributes.add(new Attributes("width", getSettings().getPictureWidth(), 0));
 		attributes.add(new Attributes("height", getSettings().getPictureHeight(), 0));
-		return new Anim(AnimEffect.Type.Anim, attributes, 1, Easing.easeNone);	
+		return new YuiAnim(YuiAnimEffect.Type.Anim, attributes, 1, YuiEasing.easeNone);	
 	}
 	
 	/*

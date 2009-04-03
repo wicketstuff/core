@@ -82,7 +82,7 @@ public abstract class YuiDDListView<T> extends ListView<T>
 
 					// remove the item from the list if it was dropped on
 					// anther list item
-					
+
 					if (!getList().contains(destItem))
 					{
 						removeItem(item);
@@ -159,7 +159,7 @@ public abstract class YuiDDListView<T> extends ListView<T>
 	/**
 	 * 
 	 * when an Item is dropped on the list, it could be a new item or it could
-	 * be an existing item. 
+	 * be an existing item.
 	 * 
 	 * @param pos
 	 * @param destItem

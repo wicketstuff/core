@@ -16,8 +16,8 @@ import org.apache.wicket.util.template.PackagedTextTemplate;
 import org.apache.wicket.util.template.TextTemplate;
 import org.apache.wicket.util.template.TextTemplateHeaderContributor;
 
-import org.wicketstuff.yui.YuiHeaderContributor;
-import org.wicketstuff.yui.YuiImage;
+import org.wicketstuff.yui.helper.YuiImage;
+import org.wicketstuff.yui.markup.html.contributor.YuiHeaderContributor;
 
 public class DragDropGroup extends WebMarkupContainer {
 	private static final long serialVersionUID = 1L;

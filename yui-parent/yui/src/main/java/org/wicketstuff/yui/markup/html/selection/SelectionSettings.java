@@ -10,12 +10,12 @@ import java.util.Set;
 import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ResourceReference;
 
-import org.wicketstuff.yui.YuiAttribute;
-import org.wicketstuff.yui.YuiImage;
-import org.wicketstuff.yui.YuiProperty;
-import org.wicketstuff.yui.YuiTextBox;
 import org.wicketstuff.yui.helper.ImageResourceInfo;
 import org.wicketstuff.yui.helper.CSSInlineStyle;
+import org.wicketstuff.yui.helper.YuiAttribute;
+import org.wicketstuff.yui.helper.YuiImage;
+import org.wicketstuff.yui.helper.YuiProperty;
+import org.wicketstuff.yui.helper.YuiTextBox;
 
 public class SelectionSettings implements Serializable {
 	private static final long serialVersionUID = 1L;

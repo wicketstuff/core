@@ -18,8 +18,8 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebRequestCycle;
-import org.wicketstuff.yui.YuiHeaderContributor;
-import org.wicketstuff.yui.YuiLoaderHeaderContributor;
+import org.wicketstuff.yui.markup.html.contributor.YuiHeaderContributor;
+import org.wicketstuff.yui.markup.html.contributor.YuiLoaderHeaderContributor;
 
 /**
  *

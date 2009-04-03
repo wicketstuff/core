@@ -2,7 +2,6 @@ package org.wicketstuff.yui.helper;
 
 import junit.framework.TestCase;
 
-import org.wicketstuff.yui.behavior.Attributes;
 
 public class JSObjectTest extends TestCase
 {

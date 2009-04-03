@@ -7,9 +7,9 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.resource.ContextRelativeResource;
-import org.wicketstuff.yui.behavior.Attributes;
 import org.wicketstuff.yui.examples.WicketExamplePage;
-import org.wicketstuff.yui.markup.html.carousel.Carousel;
+import org.wicketstuff.yui.helper.Attributes;
+import org.wicketstuff.yui.markup.html.carousel.YuiCarousel;
 
 /**
  * Example on using Animation...
@@ -26,7 +26,7 @@ public class CarouselPage extends WicketExamplePage
 				"images/jakarta.jpg", "images/sgp.jpg", "images/makati.jpg" });
 
 		// first carousel with just core css for functionality
-		add(new Carousel<String>("carousel", list)
+		add(new YuiCarousel<String>("carousel", list)
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -50,7 +50,7 @@ public class CarouselPage extends WicketExamplePage
 		});
 
 		// 2nd carousel with sam skin by default
-		add(new Carousel<String>("carousel_sam", list)
+		add(new YuiCarousel<String>("carousel_sam", list)
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -68,7 +68,7 @@ public class CarouselPage extends WicketExamplePage
 		});
 
 		// 3nd carousel with sam skin by default but customised
-		add(new Carousel<String>("carousel_sam_customised", list)
+		add(new YuiCarousel<String>("carousel_sam_customised", list)
 		{
 			private static final long serialVersionUID = 1L;
 
