@@ -13,7 +13,7 @@ import org.apache.wicket.behavior.IBehavior;
 import org.apache.wicket.markup.html.JavascriptPackageResource;
 import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 import org.apache.wicket.util.string.JavascriptUtils;
-import org.wicketstuff.yui.YuiHeaderContributor;
+import org.wicketstuff.yui.markup.html.contributor.YuiHeaderContributor;
 
 public abstract class Droppable extends AbstractDefaultAjaxBehavior
 {

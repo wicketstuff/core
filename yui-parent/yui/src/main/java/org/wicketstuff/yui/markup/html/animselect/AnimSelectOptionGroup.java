@@ -8,7 +8,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.util.template.PackagedTextTemplate;
-import org.wicketstuff.yui.YuiHeaderContributor;
+import org.wicketstuff.yui.markup.html.contributor.YuiHeaderContributor;
 
 /**
  * Grouping of the options

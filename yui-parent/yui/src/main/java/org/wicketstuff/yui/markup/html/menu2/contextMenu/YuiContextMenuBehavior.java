@@ -13,7 +13,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.yui.YuiHeaderContributor;
+import org.wicketstuff.yui.markup.html.contributor.YuiHeaderContributor;
 
 public class YuiContextMenuBehavior extends AbstractDefaultAjaxBehavior {
 

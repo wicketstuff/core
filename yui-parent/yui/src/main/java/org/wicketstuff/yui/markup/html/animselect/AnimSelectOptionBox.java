@@ -11,9 +11,9 @@ import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.util.template.PackagedTextTemplate;
-import org.wicketstuff.yui.YuiHeaderContributor;
-import org.wicketstuff.yui.YuiImage;
 import org.wicketstuff.yui.helper.CSSInlineStyle;
+import org.wicketstuff.yui.helper.YuiImage;
+import org.wicketstuff.yui.markup.html.contributor.YuiHeaderContributor;
 
 /**
  * Represent each options

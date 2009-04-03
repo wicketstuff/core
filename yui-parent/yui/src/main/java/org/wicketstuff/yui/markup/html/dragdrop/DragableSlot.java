@@ -1,6 +1,6 @@
 package org.wicketstuff.yui.markup.html.dragdrop;
 
-import org.wicketstuff.yui.YuiImage;
+import org.wicketstuff.yui.helper.YuiImage;
 
 public class DragableSlot{
 	private YuiImage slot;

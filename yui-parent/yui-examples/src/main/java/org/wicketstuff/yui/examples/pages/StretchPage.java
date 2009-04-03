@@ -17,7 +17,7 @@
 package org.wicketstuff.yui.examples.pages;
 
 import org.apache.wicket.Component;
-import org.wicketstuff.yui.YuiEasingConstants;
+import org.wicketstuff.yui.behavior.animation.YuiEasing;
 import org.wicketstuff.yui.examples.WicketExamplePage;
 import org.wicketstuff.yui.markup.html.anim.stretch.StretchPanel;
 import org.wicketstuff.yui.markup.html.calendar.Calendar;
@@ -34,7 +34,7 @@ public class StretchPage extends WicketExamplePage
 	 */
 	public StretchPage()
 	{
-		StretchPanel sp = new StretchPanel("stretch","My Expanding Calendar")
+		StretchPanel sp = new StretchPanel("stretch", "My Expanding Calendar")
 		{
 			@Override
 			protected Component getStretchPanel(String id)
@@ -42,12 +42,12 @@ public class StretchPage extends WicketExamplePage
 				return new Calendar(id);
 			}
 		};
-		
+
 		sp.setCollapsedHeight(0);
 		sp.setExpandedHeight(140);
 		sp.setDelayTime(2);
 		sp.setDefaultState(StretchPanel.EXPANDED);
-		sp.setEasing(YuiEasingConstants.EASE_OUT_STRONG);
+		sp.setEasing(YuiEasing.easeOutStrong);
 		add(sp);
 	}
 }

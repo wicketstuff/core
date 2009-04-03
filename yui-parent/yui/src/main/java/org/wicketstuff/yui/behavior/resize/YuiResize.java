@@ -1,19 +1,17 @@
 package org.wicketstuff.yui.behavior.resize;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.behavior.AbstractBehavior;
-import org.apache.wicket.protocol.http.RequestUtils;
-import org.wicketstuff.yui.markup.html.contributor.YuiLoaderContributor;
-import org.wicketstuff.yui.markup.html.contributor.YuiLoaderModule;
+import org.wicketstuff.yui.markup.html.contributor.yuiloader.YuiLoaderContributor;
+import org.wicketstuff.yui.markup.html.contributor.yuiloader.YuiLoaderModule;
 
 public class YuiResize extends AbstractBehavior
 {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String WICKET_YUI_RESIZE = "wicket_yui_resize";
+	private static final String WICKET_YUI_RESIZE = "wicket_resize";
 
 	private static final ResourceReference WICKET_YUI_RESIZE_JS = new ResourceReference(
 			YuiResize.class, "YuiResize.js");
@@ -22,6 +20,9 @@ public class YuiResize extends AbstractBehavior
 
 	private String componentId;
 
+	public YuiResize()
+	{
+	}
 
 	@Override
 	public void bind(Component component)
@@ -29,18 +30,15 @@ public class YuiResize extends AbstractBehavior
 		super.bind(component);
 
 		component.setOutputMarkupId(true);
-		componentId = component.getMarkupId();
-
-		String relativePath = (String)RequestCycle.get().urlFor(WICKET_YUI_RESIZE_JS);
-		String fullpath = RequestUtils.toAbsolutePath(relativePath);
+		this.componentId = component.getMarkupId();
 
 		component.add(YuiLoaderContributor.addModule(new YuiLoaderModule(WICKET_YUI_RESIZE,
-				YuiLoaderModule.ModuleType.js, fullpath, REQUIRE_YUI_MODULES)
+				YuiLoaderModule.ModuleType.js, WICKET_YUI_RESIZE_JS, REQUIRE_YUI_MODULES)
 		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public String getInitJS()
+			public String onSuccessJS()
 			{
 				return initJS();
 			}
@@ -49,7 +47,7 @@ public class YuiResize extends AbstractBehavior
 
 	private String initJS()
 	{
-		return "var " + getYuiResizeVar() + " = new Wicket.yui.Resize(\"" + getComponentId()
+		return "var " + getYuiResizeVar() + " = new YAHOO.Wicket.Resize(\"" + getComponentId()
 				+ "\"," + getOpts() + "," + getStartResizeJs() + "," + getResizeJs() + ");";
 	}
 
@@ -70,7 +68,7 @@ public class YuiResize extends AbstractBehavior
 
 	private String getComponentId()
 	{
-		return componentId;
+		return this.componentId;
 	}
 
 	protected String getYuiResizeVar()

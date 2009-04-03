@@ -16,11 +16,11 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.util.template.PackagedTextTemplate;
-import org.wicketstuff.yui.YuiAttribute;
-import org.wicketstuff.yui.YuiHeaderContributor;
-import org.wicketstuff.yui.YuiImage;
-import org.wicketstuff.yui.YuiTextBox;
 import org.wicketstuff.yui.helper.CSSInlineStyle;
+import org.wicketstuff.yui.helper.YuiAttribute;
+import org.wicketstuff.yui.helper.YuiImage;
+import org.wicketstuff.yui.helper.YuiTextBox;
+import org.wicketstuff.yui.markup.html.contributor.YuiHeaderContributor;
 
 public class Selection extends Panel {
     

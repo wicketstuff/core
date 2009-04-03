@@ -15,7 +15,7 @@ import org.apache.wicket.util.collections.MiniMap;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.velocity.VelocityHeaderContributor;
 import org.apache.wicket.velocity.VelocityJavascriptContributor;
-import org.wicketstuff.yui.YuiHeaderContributor;
+import org.wicketstuff.yui.markup.html.contributor.YuiHeaderContributor;
 
 public class YuiMenuBar extends Panel {
 	private static final long serialVersionUID = 1L;

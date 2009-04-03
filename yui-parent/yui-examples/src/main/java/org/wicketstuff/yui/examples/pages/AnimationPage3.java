@@ -10,11 +10,11 @@ import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.wicketstuff.yui.behavior.Anim;
-import org.wicketstuff.yui.behavior.AnimEffect;
-import org.wicketstuff.yui.behavior.Attributes;
-import org.wicketstuff.yui.behavior.Easing;
+import org.wicketstuff.yui.behavior.animation.YuiAnim;
+import org.wicketstuff.yui.behavior.animation.YuiAnimEffect;
+import org.wicketstuff.yui.behavior.animation.YuiEasing;
 import org.wicketstuff.yui.examples.WicketExamplePage;
+import org.wicketstuff.yui.helper.Attributes;
 import org.wicketstuff.yui.markup.html.animation.thumbnail.AnimatedItem;
 import org.wicketstuff.yui.markup.html.animation.thumbnail.AnimatedThumbnail;
 import org.wicketstuff.yui.markup.html.animation.thumbnail.AnimatedThumbnailSettings;
@@ -94,7 +94,7 @@ public class AnimationPage3 extends WicketExamplePage
 		}
 		
 		@Override
-		public AnimEffect onselectEffect()
+		public YuiAnimEffect onselectEffect()
 		{
 			Attributes attributes = new Attributes();
 			attributes.add(SHOW_ATTRIBUTE);
@@ -104,11 +104,11 @@ public class AnimationPage3 extends WicketExamplePage
 			attributes.add(new Attributes("top", 0, getSettings().getPictureTop()));
 			attributes.add(new Attributes("opacity", 0, 1));
 			
-			return new Anim(AnimEffect.Type.Anim, attributes, 1, Easing.bounceIn);	
+			return new YuiAnim(YuiAnimEffect.Type.Anim, attributes, 1, YuiEasing.bounceIn);	
 		}
 		
 		@Override
-		public AnimEffect onunselectEffect()
+		public YuiAnimEffect onunselectEffect()
 		{
 			Attributes attributes = new Attributes();
 			attributes.add(HIDE_ATTRIBUTE);
@@ -118,7 +118,7 @@ public class AnimationPage3 extends WicketExamplePage
 			attributes.add(new Attributes("top", getSettings().getPictureTop(), 0));
 			attributes.add(new Attributes("opacity", 0.6f, 0f));
 			
-			return new Anim(AnimEffect.Type.Anim, attributes, 1, Easing.bounceOut);
+			return new YuiAnim(YuiAnimEffect.Type.Anim, attributes, 1, YuiEasing.bounceOut);
 		}
 	}
 	
