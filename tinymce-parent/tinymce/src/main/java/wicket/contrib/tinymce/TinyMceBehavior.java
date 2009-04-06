@@ -22,8 +22,12 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.Request;
+import org.apache.wicket.RequestCycle;
 import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.protocol.http.WebRequest;
 import org.apache.wicket.protocol.http.WebResponse;
 
 import wicket.contrib.tinymce.settings.TinyMCESettings;
@@ -66,15 +70,19 @@ public class TinyMceBehavior extends AbstractBehavior {
     protected String getRenderOnDomReadyJavascript(IHeaderResponse response) {
         if (component == null)
             throw new IllegalStateException("TinyMceBehavior is not bound to a component");
-        if (response instanceof WebResponse && ((WebResponse)response).isAjax())
+        if (! mayRenderJavascriptDirect())
             return getAddTinyMceSettingsScript(Mode.exact, Collections.singletonList(component));
         return null;
     }
 
-    protected String getRenderJavascript(IHeaderResponse response) {
+    private boolean mayRenderJavascriptDirect() {
+    	return RequestCycle.get().getRequest() instanceof WebRequest && !((WebRequest)RequestCycle.get().getRequest()).isAjax();
+	}
+
+	protected String getRenderJavascript(IHeaderResponse response) {
         if (component == null)
             throw new IllegalStateException("TinyMceBehavior is not bound to a component");
-        if (!(response instanceof WebResponse) || !((WebResponse)response).isAjax())
+        if (mayRenderJavascriptDirect())
             return getAddTinyMceSettingsScript(Mode.exact, Collections.singletonList(component));
         return null;
     }
@@ -102,4 +110,6 @@ public class TinyMceBehavior extends AbstractBehavior {
     protected Component getComponent() {
         return component;
     }
+    
+    
 }
