@@ -1,6 +1,10 @@
 package wicket.contrib.examples.tinymce;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.Panel;
 
 import wicket.contrib.examples.WicketExamplePage;
 
@@ -37,6 +41,15 @@ public class TinyMCEBasePage extends WicketExamplePage
 			{
 				setResponsePage(WordTinyMCEPage.class);
 			}
+		});
+		add(new Link("ajax")
+		{
+
+			public void onClick()
+			{
+				setResponsePage(AjaxTinyMCEPage.class);
+			}
+			
 		});
 		add(new Link("inline")
 		{
