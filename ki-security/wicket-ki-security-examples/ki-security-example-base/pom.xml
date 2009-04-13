@@ -9,7 +9,7 @@
         <version>1.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ki-security-example-base</artifactId>
+    <artifactId>wicket-ki-security-example-base</artifactId>
     <packaging>jar</packaging>
 
     <name>Apache Ki Security for Wicket - Example Base</name>

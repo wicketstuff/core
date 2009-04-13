@@ -9,7 +9,7 @@
         <version>1.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ki-security-example-realm</artifactId>
+    <artifactId>wicket-ki-security-example-realm</artifactId>
     <packaging>war</packaging>
 
     <name>Apache Ki Security for Wicket - Realm Example</name>
@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>ki-security-example-base</artifactId>
+            <artifactId>wicket-ki-security-example-base</artifactId>
             <version>${project.version}</version>
         </dependency>
 
