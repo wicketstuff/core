@@ -22,12 +22,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.wicketstuff</groupId>
-		<artifactId>ki-security-parent</artifactId>
+		<artifactId>wicket-ki-security-parent</artifactId>
 		<version>1.4-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>ki-security</artifactId>
+	<artifactId>wicket-ki-security</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Apache Ki Security for Wicket</name>

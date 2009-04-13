@@ -9,7 +9,7 @@
 		<version>1.4-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>ki-security-parent</artifactId>
+	<artifactId>wicket-ki-security-parent</artifactId>
 	<packaging>pom</packaging>
 
 	<name>Apache Ki Security for Wicket - Parent</name>
@@ -69,8 +69,8 @@
 	</dependencies>
 
 	<modules>
-		<module>ki-security</module>
-		<module>ki-security-examples</module>
+		<module>wicket-ki-security</module>
+		<module>wicket-ki-security-examples</module>
 	</modules>
 
 </project>
