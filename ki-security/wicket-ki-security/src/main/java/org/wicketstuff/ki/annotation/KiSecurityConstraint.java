@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wicketstuff.ki.authz.annotations;
+package org.wicketstuff.ki.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -26,15 +26,27 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.apache.wicket.Page;
+import org.wicketstuff.ki.KiAction;
+import org.wicketstuff.ki.KiConstraint;
 
 
-@Target(ElementType.TYPE)
+@Target( ElementType.TYPE )
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface InstantiationRequiresAuthentication {
+public @interface KiSecurityConstraint {
+  
+  KiAction action() default KiAction.INSTANTIATE; 
+  
+  KiConstraint constraint();  
+  String value() default "";
 
+  // optional
   String loginMessage() default "";         // goes to INFO
+  String unauthorizedMessage() default "";  // goes to ERROR
 
+  // optional
   Class<? extends Page> loginPage() default Page.class;
+  Class<? extends Page> unauthorizedPage() default Page.class;
 }
+

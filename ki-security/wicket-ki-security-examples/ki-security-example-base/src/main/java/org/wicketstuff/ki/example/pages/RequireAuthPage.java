@@ -16,10 +16,12 @@
  */
 package org.wicketstuff.ki.example.pages;
 
-import org.wicketstuff.ki.authz.annotations.InstantiationRequiresAuthentication;
+import org.wicketstuff.ki.KiConstraint;
+import org.wicketstuff.ki.annotation.KiSecurityConstraint;
 
-
-@InstantiationRequiresAuthentication
+@KiSecurityConstraint( 
+  constraint = KiConstraint.IsAuthenticated
+)
 public class RequireAuthPage extends BasePage
 {
 	public RequireAuthPage()

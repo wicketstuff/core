@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.ki.authz.annotations;
+package org.wicketstuff.ki.annotation;
 
 import java.lang.annotation.Annotation;
 
@@ -27,6 +27,7 @@ import org.jsecurity.subject.Subject;
 import org.jsecurity.util.ThreadContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketstuff.ki.KiAction;
 
 
 public class AnnotationsKiAuthorizationStrategy implements IAuthorizationStrategy 
@@ -47,11 +48,11 @@ public class AnnotationsKiAuthorizationStrategy implements IAuthorizationStrateg
     return true;
   }
 
-  public <T extends Component> Annotation checkInvalidInstantiation( final Class<T> componentClass )
+  public <T extends Component> KiSecurityConstraint checkInvalidInstantiation( final Class<T> componentClass )
   {
-    Annotation fail = checkInvalidInstantiation( componentClass.getAnnotations() );
+    KiSecurityConstraint fail = checkInvalidInstantiation( componentClass.getAnnotations(), KiAction.INSTANTIATE );
     if( fail == null ) {
-      fail = checkInvalidInstantiation( componentClass.getPackage().getAnnotations() );
+      fail = checkInvalidInstantiation( componentClass.getPackage().getAnnotations(), KiAction.INSTANTIATE );
     }
     return fail;
   }
@@ -61,7 +62,7 @@ public class AnnotationsKiAuthorizationStrategy implements IAuthorizationStrateg
    * @param clazz
    * @return null if ok, or the Annotation that failed
    */
-  protected Annotation checkInvalidInstantiation( Annotation[] annotations )
+  protected KiSecurityConstraint checkInvalidInstantiation( Annotation[] annotations, KiAction action )
   {
     if( annotations == null ) {
       return null;
@@ -69,54 +70,57 @@ public class AnnotationsKiAuthorizationStrategy implements IAuthorizationStrateg
     
     for( Annotation annotation : annotations ) {
       // Check Permissions
-      if( annotation instanceof InstantiationRequiresPermission) {
-        InstantiationRequiresPermission perm = (InstantiationRequiresPermission)annotation;
-        SecurityManager sm = ThreadContext.getSecurityManager();
-        Subject subject = SecurityUtils.getSubject();
-        if( sm == null ) {
-          if( !subject.isPermitted( perm.permission() ) ) {
-            return perm;
+      if( annotation instanceof KiSecurityConstraint ) {
+        KiSecurityConstraint constraint = (KiSecurityConstraint)annotation;
+        if( action == constraint.action() ) {
+          SecurityManager sm = ThreadContext.getSecurityManager();
+          Subject subject = SecurityUtils.getSubject();
+          switch( constraint.constraint() ) {
+            case HasRole: {
+              if(!sm.hasRole( subject.getPrincipals(), constraint.value() ) ) {
+                return constraint;
+              }
+              break;
+            }
+            
+            case HasPermission: {
+              if(!sm.isPermitted( subject.getPrincipals(), constraint.value() ) ) {
+                return constraint;
+              }
+              break;
+            }
+            
+            case IsAuthenticated: {
+              if(!subject.isAuthenticated() ) {
+                return constraint;
+              }
+              break;
+            }
+            
+            case LoggedIn: {
+              if( subject.getPrincipal() == null ) {
+                return constraint;
+              }
+              break;
+            }
           }
         }
-        else {
-          if( !sm.isPermitted( subject.getPrincipals(), perm.permission() ) ) {
-            return perm;
-          }
-        }
-      }
-      
-      // Check Roles
-      if( annotation instanceof InstantiationRequiresRole) {
-        InstantiationRequiresRole role = (InstantiationRequiresRole)annotation;
-        SecurityManager sm = ThreadContext.getSecurityManager();
-        Subject subject = SecurityUtils.getSubject();
-        if( sm == null ) {
-          if( !subject.hasRole( role.role() ) ) {
-            return role;
-          }
-        }
-        else {
-          if( !sm.hasRole( subject.getPrincipals(), role.role() ) ) {
-            return role;
-          }
-        }
-      }
-      
-      // Check Authentication
-      if( annotation instanceof InstantiationRequiresAuthentication ) {
-        Subject subject = SecurityUtils.getSubject();
-        if( !subject.isAuthenticated() ) {
-          return annotation;
-        }
-      }
+      } // end if KiSecurityConstraint
     }
     return null;
   }
 
   public boolean isActionAuthorized(final Component component, final Action action) {
-    // TODO -- check if action is permitted...
-    // TODO!!!!
-    return true;
+    
+    KiAction _action = (action.getName().equals( Action.RENDER ) ) 
+      ? KiAction.RENDER : KiAction.ENABLE;
+    
+    Class<? extends Component> clazz = component.getClass();
+    KiSecurityConstraint fail = checkInvalidInstantiation( clazz.getAnnotations(), _action );
+    if( fail == null ) {
+      fail = checkInvalidInstantiation( clazz.getPackage().getAnnotations(), _action );
+    }
+    return fail == null;
   }
   
 }

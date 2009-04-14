@@ -9,11 +9,11 @@ import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.Session;
 import org.apache.wicket.authorization.IUnauthorizedComponentInstantiationListener;
 import org.jsecurity.SecurityUtils;
+import org.jsecurity.mgt.SecurityManager;
 import org.jsecurity.subject.Subject;
-import org.wicketstuff.ki.authz.annotations.AnnotationsKiAuthorizationStrategy;
-import org.wicketstuff.ki.authz.annotations.InstantiationRequiresAuthentication;
-import org.wicketstuff.ki.authz.annotations.InstantiationRequiresPermission;
-import org.wicketstuff.ki.authz.annotations.InstantiationRequiresRole;
+import org.jsecurity.util.ThreadContext;
+import org.wicketstuff.ki.annotation.AnnotationsKiAuthorizationStrategy;
+import org.wicketstuff.ki.annotation.KiSecurityConstraint;
 
 public class KiUnauthorizedComponentListener implements IUnauthorizedComponentInstantiationListener 
 {
@@ -34,72 +34,22 @@ public class KiUnauthorizedComponentListener implements IUnauthorizedComponentIn
   public void onUnauthorizedInstantiation(Component component) 
   {
     Subject subject = SecurityUtils.getSubject();
-    boolean unauth = subject.getPrincipal() != null;
-    Class<? extends Page> page = unauth ? unauthorizedPage : loginPage;
+    boolean notLoggedIn = (subject.getPrincipal()==null);
+    Class<? extends Page> page = notLoggedIn ? loginPage : unauthorizedPage;
     
     if( annotationStrategy != null ) {
-      Annotation fail = annotationStrategy.checkInvalidInstantiation(  component.getClass() );
+      KiSecurityConstraint fail = annotationStrategy.checkInvalidInstantiation(  component.getClass() );
       if( fail != null ) {
-        // Annotation inheretance would sure be nice!!!
-
-        // Check Permissions
-        if( fail instanceof InstantiationRequiresPermission) {
-          InstantiationRequiresPermission perm = (InstantiationRequiresPermission)fail;
-          if( unauth ) {
-            if( perm.unauthorizedMessage().length() > 0 ) {
-              Session.get().error( getMessage(perm.unauthorizedMessage(), fail, component ) );
-            }
-            if( perm.unauthorizedPage() != Page.class ) {
-              page = perm.unauthorizedPage();
-            }
-          }
-          else {
-            if( perm.loginMessage() .length() > 0 ) {
-              Session.get().info( getMessage(perm.loginMessage(), fail, component ) );
-            }
-            if( perm.loginPage() != Page.class ) {
-              page = perm.loginPage();
-            }
-          }
+        if( notLoggedIn ) {
+          addLoginMessagesAndGetPage(fail, component, page);
         }
-        
-        // Check Roles
-        if( fail instanceof InstantiationRequiresRole) {
-          InstantiationRequiresRole role = (InstantiationRequiresRole)fail;
-          if( unauth ) {
-            if( role.unauthorizedMessage().length() > 0 ) {
-              Session.get().info( "XXXXXXXXXXX" );  // HYMMM Why is this not showing up?!?!?!?!?!?!
-              Session.get().error( getMessage(role.unauthorizedMessage(), fail, component ) );
-            }
-            if( role.unauthorizedPage() != Page.class ) {
-              page = role.unauthorizedPage();
-            }
-          }
-          else {
-            if( role.loginMessage().length() > 0 ) {
-              Session.get().info( getMessage(role.loginMessage(), fail, component ) );
-            }
-            if( role.loginPage() != Page.class ) {
-              page = role.loginPage();
-            }
-          }
-        }
-        
-        if( fail instanceof InstantiationRequiresAuthentication ) {
-          if( !unauth ) {
-            InstantiationRequiresAuthentication a = (InstantiationRequiresAuthentication)fail;
-            if( a.loginMessage().length() > 0 ) {
-              Session.get().info( getMessage(a.loginMessage(), fail, component ) );
-            }
-            if( a.loginPage() != Page.class ) {
-              page = a.loginPage();
-            }
-          }
+        else {
+          addUnauthorizedMessagesAndGetPage(fail, component, page);
         }
       }
     }
     
-    if( unauth ) {
+    if( notLoggedIn ) {
       throw new RestartResponseException( page );
     }
     throw new RestartResponseAtInterceptPageException( page );
@@ -118,9 +68,37 @@ public class KiUnauthorizedComponentListener implements IUnauthorizedComponentIn
   //----------------------------------------------------------------------------
   //----------------------------------------------------------------------------
   
-  protected String getMessage( String key, Annotation anno, Component comp )
+  protected Class<? extends Page> addUnauthorizedMessagesAndGetPage( 
+      KiSecurityConstraint constraint, 
+      Component component, 
+      Class<? extends Page> page )
+  {
+    if( constraint.unauthorizedMessage().length() > 0 ) {
+      Session.get().info( getMessage(constraint.unauthorizedMessage(), constraint, component ) );
+    }
+    if( constraint.unauthorizedPage() != Page.class ) {
+      page = constraint.unauthorizedPage();
+    }
+    return page;
+  }
+
+  protected Class<? extends Page> addLoginMessagesAndGetPage( 
+      KiSecurityConstraint constraint, 
+      Component component, 
+      Class<? extends Page> page )
+  {   
+    if( constraint.loginMessage().length() > 0 ) {
+      Session.get().info( getMessage(constraint.loginMessage(), constraint, component ) );
+    }
+    if( constraint.loginPage() != Page.class ) {
+      page = constraint.loginPage();
+    }
+    return page;
+  }
+  
+  
+  protected String getMessage( String key, KiSecurityConstraint anno, Component comp )
   {
     return key; // TODO, this could be more complicated....
   }
-
 }

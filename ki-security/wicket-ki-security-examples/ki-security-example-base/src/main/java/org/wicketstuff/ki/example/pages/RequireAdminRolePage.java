@@ -16,12 +16,15 @@
  */
 package org.wicketstuff.ki.example.pages;
 
-import org.wicketstuff.ki.authz.annotations.InstantiationRequiresRole;
+import org.wicketstuff.ki.KiConstraint;
+import org.wicketstuff.ki.annotation.KiSecurityConstraint;
 
-
-@InstantiationRequiresRole( role="admin", 
-    loginMessage="You must be logged in to view this page",
-    unauthorizedMessage="You need to be an ADMIN" )
+@KiSecurityConstraint( 
+  constraint   = KiConstraint.HasRole, 
+  value        = "admin",
+  loginMessage = "You must be logged in to view this page",
+  unauthorizedMessage = "You need to be an ADMIN"
+)
 public class RequireAdminRolePage extends BasePage
 {
 
