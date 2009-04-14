@@ -38,7 +38,9 @@
 		<module>artwork-parent</module>
 		<module>yav-parent</module>
 		<module>plugin</module>
-        <module>syringe</module>
+		<module>syringe</module>
+		<module>ki-security</module>
+		<module>sitemap-xml-parent</module>		
   </modules>
 
 	<licenses>
