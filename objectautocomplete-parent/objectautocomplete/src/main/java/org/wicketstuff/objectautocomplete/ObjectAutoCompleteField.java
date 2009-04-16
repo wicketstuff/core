@@ -19,6 +19,7 @@ package org.wicketstuff.objectautocomplete;
 import org.apache.wicket.Component;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
+import org.apache.wicket.util.value.IValueMap;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
@@ -34,6 +35,8 @@ import org.apache.wicket.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Iterator;
 import java.io.Serializable;
 
 /**
@@ -280,6 +283,16 @@ public class ObjectAutoCompleteField<O /* object */,I /* its id */ extends Seria
     protected void onComponentTag(ComponentTag pTag) {
         super.onComponentTag(pTag);
         pTag.setName("span");
+        // Remove non-conformant attributes
+        IValueMap attribMap = pTag.getAttributes();
+        Iterator<Map.Entry<String,Object>> attrIterator = attribMap.entrySet().iterator();
+        while (attrIterator.hasNext()) {
+            Map.Entry<String,Object> entry = attrIterator.next();
+            String key = entry.getKey();
+            if (!key.equalsIgnoreCase("id") && !key.equalsIgnoreCase("wicket:id") ) {
+                attrIterator.remove();
+            }
+        }
     }
 
     private void notifyListeners(AjaxRequestTarget pTarget) {
