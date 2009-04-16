@@ -1,0 +1,112 @@
+.myclearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+    padding-bottom:3px;
+}
+
+.myclearfix {
+    display: inline-block;
+}
+
+.tag_parent {
+     border: 1px solid rgb(132,150,186);
+     padding-right: 3px;
+     padding-top: 3px;
+     padding-bottom: 3px;
+     width: 350px;
+}
+
+html[xmlns] .myclearfix {
+    display: block;
+}
+
+* html .myclearfix {
+    height: 1%;
+}
+
+a {
+    color:#3B5998;
+    cursor:pointer;
+    outline-style:none;
+    text-decoration:none;
+}
+.tag_entry {
+    font-size:11px;
+    /*height: 100%;*.
+    display:block;
+    cursor:text;
+    /*border: 1px solid black;*/
+    
+}
+
+div.tag_entry .tag_input {
+    color:black;
+    white-space:nowrap;
+    margin-top:3px;
+    margin-left:4px;
+    padding-top:3px; /* padding above text */
+    padding-left:3px;
+    float:left;
+    font-size: 11px;
+    border:none;
+    width:10px;
+}
+
+div.tag_entry .tag_input_hide {
+    visibility:hidden;
+}
+
+div.tag_entry .tag {
+    background-image:url('http://dev.lentstuff.com/images/tag.gif');
+    background-repeat:no-repeat;
+    color:black;
+    white-space:nowrap;
+    margin-top:3px;margin-left:3px;
+    padding-top:3px; /* padding above text */
+    padding-bottom:3px; /* this needs to match padding-bottom from "div.tag_entry .tag span span" */
+    float:left;
+    font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+}
+
+div.tag_entry .tag_hover {
+    background-image:url('http://dev.lentstuff.com/images/tag_hover.gif');
+}
+
+div.tag_entry .tag span {
+    background-image:url('http://dev.lentstuff.com/images/tag.gif');
+    background-position:top right;
+    background-repeat:no-repeat;
+    padding-top:3px; /* padding above text */
+}
+
+div.tag_entry .tag_hover span {
+    background-image:url('http://dev.lentstuff.com/images/tag_hover.gif');
+}
+
+div.tag_entry .tag span span {
+    background-position:bottom right;
+    padding-bottom:3px; /* padding below text */
+}
+
+div.tag_entry .tag span span span {
+    background-position:bottom left;
+    
+}
+
+div.tag_entry .tag span span span span {
+    background-image:none;
+    padding:2px 3px 2px 5px;
+}
+
+div.tag_entry .tag span span span span span.tag_x {
+    background-image:url('http://dev.lentstuff.com/images/tag_x.gif');
+    width:20px;
+    background-position:2px 3px;
+    cursor:pointer;
+    padding:0px 6px 0px 6px;
+} 
+

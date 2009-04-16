@@ -1,0 +1,118 @@
+.myclearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+    padding-bottom:3px;
+}
+
+.myclearfix {
+    display: inline-block;
+}
+
+.tag_parent {
+     border: 1px solid rgb(132,150,186);
+     padding-right: 3px;
+     padding-top: 3px;
+     padding-bottom: 3px;
+     width: 350px;
+}
+
+html[xmlns] .myclearfix {
+    display: block;
+}
+
+* html .myclearfix {
+    height: 1%;
+}
+
+a {
+    color:#3B5998;
+    cursor:pointer;
+    outline-style:none;
+}
+.tag_entry {
+    font-size:11px;
+    height: 100%;
+    display:block;
+    cursor:text;
+    /*border: 1px solid black;*/
+    
+}
+
+div.tag_entry .tag_input {
+    color:black;
+    white-space:nowrap;
+    margin-top:-1px;
+    margin-left:4px;
+    padding-top:3px; /* padding above text */
+    padding-left:3px;
+    float:left;
+    font-size: 11px;
+    border:none;
+    width:10px;
+}
+
+div.tag_entry .tag_input_hide {
+    visibility:hidden;
+}
+
+div.tag_entry .tag {
+    background-image:url('http://dev.lentstuff.com/images/tag.gif');
+    background-repeat:no-repeat;
+    color:black;
+    white-space:nowrap;
+    float:left;
+    margin-bottom:4px; /* space between rows of tags */
+    margin-left:4px; /* space between tags */
+    text-decoration:none;
+    font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+}
+
+div.tag_entry .tag_hover {
+    background-image:url('http://dev.lentstuff.com/images/tag_hover.gif');
+}
+
+div.tag_entry .tag span {
+    background-image:url('http://dev.lentstuff.com/images/tag.gif');
+    background-position:top right;
+    background-repeat:no-repeat;
+    padding-top:0px; /* padding above text */
+    display:block;
+}
+
+div.tag_entry .tag_hover span {
+    background-image:url('http://dev.lentstuff.com/images/tag_hover.gif');
+}
+
+div.tag_entry .tag span span {
+    background-position:bottom right;
+    background-repeat:no-repeat;
+    display:inline-block;
+}
+
+div.tag_entry .tag span span span {
+    background-position:bottom left;
+    background-repeat:no-repeat;
+}
+
+div.tag_entry .tag span span span span {
+    background-image:none;
+    background-repeat:no-repeat;
+    padding:0px 3px 0px 5px;
+    margin-bottom:3px;
+}
+
+div.tag_entry .tag span span span span span.tag_x {
+    background-image:url('http://dev.lentstuff.com/images/tag_x.gif');
+    width:5px;
+    height:13px;
+    background-position:2px 3px;
+    cursor:pointer;
+    padding:0px 6px 0px 3px;
+    display:inline-block;
+    margin-bottom:-2px; /* this has to offset the 'span span span span' margin-bottom */
+} 
+
