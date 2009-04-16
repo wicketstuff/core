@@ -41,6 +41,7 @@
 		<module>syringe</module>
 		<module>ki-security</module>
 		<module>sitemap-xml-parent</module>		
+        <module>multi-text-input-parent</module>
   </modules>
 
 	<licenses>
