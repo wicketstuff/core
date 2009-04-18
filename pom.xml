@@ -38,10 +38,12 @@
 		<module>artwork-parent</module>
 		<module>yav-parent</module>
 		<module>plugin</module>
-		<module>syringe</module>
+    <!--commented out until org.apache.commons:commons-proxy:jar:1.1-SNAPSHOT is available -->
+    <!--see http://www.nabble.com/Wicketstuff-core...-td23105708.html#a23106385 -->
+		<!--<module>syringe</module>-->
 		<module>ki-security</module>
 		<module>sitemap-xml-parent</module>		
-        <module>multi-text-input-parent</module>
+    <module>multi-text-input-parent</module>
   </modules>
 
 	<licenses>
@@ -505,14 +507,15 @@
 	<reporting>
 		<plugins>
 			<!-- HERE ARE SOME EXPERIMENTAL PLUGINS TO WORK IN SITE GEN: -->
-			<plugin>
-	        	<artifactId>maven-pmd-plugin</artifactId>
-	        	<configuration>
-					<linkXref>true</linkXref>
-					<sourceEncoding>utf-8</sourceEncoding>
-					<minimumTokens>100</minimumTokens>
-	        	</configuration>
-			</plugin>
+      <plugin>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <configuration>
+          <linkXRef>true</linkXRef>
+          <sourceEncoding>utf-8</sourceEncoding>
+          <targetJdk>1.5</targetJdk>
+          <minimumTokens>100</minimumTokens>
+        </configuration>
+      </plugin>
 			<plugin>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
 			</plugin>
