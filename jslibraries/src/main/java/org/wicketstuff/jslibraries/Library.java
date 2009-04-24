@@ -29,6 +29,7 @@ public enum Library {
 
 	PROTOTYPE("prototype", ""),
 	JQUERY("jquery", ".min"),
+	JQUERY_UI("jquery", ""),
 	MOOTOOLS_CORE("mootools-core", ".min"),
 	MOOTOOLS_MORE("mootools-more", ".min"),
 	;
@@ -46,6 +47,7 @@ public enum Library {
 		registerVersion(JQUERY, 1, 3);
 		registerVersion(JQUERY, 1, 3, 1);
 		registerVersion(JQUERY, 1, 3, 2);
+		registerVersion(JQUERY_UI, 1, 7, 1);
 		registerVersion(PROTOTYPE, 1, 5, 0);
 		registerVersion(PROTOTYPE, 1, 5, 1);
 		registerVersion(PROTOTYPE, 1, 5, 1, 1);
