@@ -38,7 +38,7 @@ public class VersionDescriptorTest extends TestCase {
 	public void testAlwaysLatestDescriptor() throws Exception {
 		// this test will obviously fail every time we add a new JQUERY version
 		VersionDescriptor vd = VersionDescriptor.alwaysLatest(Library.JQUERY);
-		assertEquals(new Version(1, 2, 6), vd.getVersion());
+		assertEquals(new Version(1, 3, 2), vd.getVersion());
 	}
 	
 	public void testLibraryWithManyVersionDepths() throws Exception {
