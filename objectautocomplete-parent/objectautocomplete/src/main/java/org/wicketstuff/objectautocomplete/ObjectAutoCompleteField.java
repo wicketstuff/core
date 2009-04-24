@@ -17,9 +17,6 @@
 package org.wicketstuff.objectautocomplete;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.util.string.AppendingStringBuffer;
-import org.apache.wicket.util.string.Strings;
-import org.apache.wicket.util.value.IValueMap;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
@@ -27,17 +24,17 @@ import org.apache.wicket.behavior.SimpleAttributeModifier;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.model.*;
+import org.apache.wicket.util.string.AppendingStringBuffer;
+import org.apache.wicket.util.string.Strings;
+import org.apache.wicket.util.value.IValueMap;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Iterator;
 import java.io.Serializable;
+import java.util.*;
 
 /**
  * Wicket component for selecting a single object of type T with an identifier of type I via
@@ -54,6 +51,14 @@ import java.io.Serializable;
 public class ObjectAutoCompleteField<O /* object */,I /* its id */ extends Serializable> extends FormComponentPanel<I>
         implements ObjectAutoCompleteCancelListener {
 
+    // Used for removing non-conformant span attributes
+    final private static Set<String> ALLOWED_SPAN_ATTRIBUTES =
+            new HashSet<String>(
+                    Arrays.asList("wicket:id","id", "class", "lang", "dir", "title",
+                                  "style", "align", "onclick","ondblclick", "onmousedown",
+                                  "onmouseup", "onmouseover", "onmousemove",
+                                  "onmouseout", "onkeypress", "onkeydown", "onkeyup")
+            );
 
     // Listener to be notified on a selection change. These need not to be components
     private List<ObjectAutoCompleteSelectionChangeListener<I>> selectionChangeListeners =
@@ -283,13 +288,13 @@ public class ObjectAutoCompleteField<O /* object */,I /* its id */ extends Seria
     protected void onComponentTag(ComponentTag pTag) {
         super.onComponentTag(pTag);
         pTag.setName("span");
-        // Remove non-conformant attributes
+        // Remove non-conformant <span> attributes
         IValueMap attribMap = pTag.getAttributes();
         Iterator<Map.Entry<String,Object>> attrIterator = attribMap.entrySet().iterator();
         while (attrIterator.hasNext()) {
             Map.Entry<String,Object> entry = attrIterator.next();
-            String key = entry.getKey();
-            if (!key.equalsIgnoreCase("id") && !key.equalsIgnoreCase("wicket:id") ) {
+            String key = entry.getKey().toLowerCase();
+            if (!ALLOWED_SPAN_ATTRIBUTES.contains(key)) {
                 attrIterator.remove();
             }
         }
@@ -302,6 +307,20 @@ public class ObjectAutoCompleteField<O /* object */,I /* its id */ extends Seria
 
     }
 
+    /**
+     * Access to internal text field which can be used for adding
+     * some decorations or behaviours (like JS-Handler or specific
+     * CSS). Please be conservative in what you are doing, i.e.
+     * do not modify its model.
+     *
+     * Note: This method might vanish until the first release, it's probably
+     * better to provide delegation methods.
+     *
+     * @return textfield textfield holding the search input
+     */
+    public TextField<String> getSearchTextField() {
+        return searchTextField;
+    }
 
     // =========================================================================================
 
