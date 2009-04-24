@@ -43,6 +43,9 @@ public enum Library {
 		registerVersion(JQUERY, 1, 2, 4);
 		registerVersion(JQUERY, 1, 2, 5);
 		registerVersion(JQUERY, 1, 2, 6);
+		registerVersion(JQUERY, 1, 3);
+		registerVersion(JQUERY, 1, 3, 1);
+		registerVersion(JQUERY, 1, 3, 2);
 		registerVersion(PROTOTYPE, 1, 5, 0);
 		registerVersion(PROTOTYPE, 1, 5, 1);
 		registerVersion(PROTOTYPE, 1, 5, 1, 1);
