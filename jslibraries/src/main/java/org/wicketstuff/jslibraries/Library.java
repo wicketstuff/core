@@ -29,7 +29,7 @@ public enum Library {
 
 	PROTOTYPE("prototype", ""),
 	JQUERY("jquery", ".min"),
-	JQUERY_UI("jquery", ""),
+	JQUERY_UI("jquery-ui", ""),
 	MOOTOOLS_CORE("mootools-core", ".min"),
 	MOOTOOLS_MORE("mootools-more", ".min"),
 	;
