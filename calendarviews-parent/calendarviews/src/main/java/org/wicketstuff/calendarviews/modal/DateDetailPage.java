@@ -18,6 +18,7 @@
  */
 package org.wicketstuff.calendarviews.modal;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
@@ -37,7 +38,7 @@ import org.wicketstuff.calendarviews.model.IEvent;
 
 public class DateDetailPage extends WebPage {
 
-	public static interface IDateDetailPageEventLinkCreator {
+	public static interface IDateDetailPageEventLinkCreator extends Serializable {
 		WebMarkupContainer createEventLink(String id, IModel<IEvent> model);
 	}
 	
