@@ -26,7 +26,7 @@ import org.mortbay.jetty.webapp.WebAppContext;
 /**
  * @author Jeremy Thomerson
  */
-public class Start {
+public class StartCalendarViewsExamples {
 
 	public static void main(String[] args) throws Exception {
 		Server server = new Server();
