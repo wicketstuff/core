@@ -34,6 +34,7 @@ import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow.PageCreat
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.html.JavascriptPackageResource;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -110,8 +111,8 @@ public class LargeView extends FullWeekCalendarView {
 	
 	private void addJavascriptInitializers() {
 		setOutputMarkupId(true);
-		add(HeaderContributor.forJavaScript(JSReference.getReference(JS_LIB_VERSION_DESCRIPTOR)));
-		add(HeaderContributor.forJavaScript(LargeView.class, "LargeView.js"));
+		add(JavascriptPackageResource.getHeaderContribution(JSReference.getReference(JS_LIB_VERSION_DESCRIPTOR)));
+		add(JavascriptPackageResource.getHeaderContribution(LargeView.class, "LargeView.js"));
 		add(new HeaderContributor(new IHeaderContributor() {
 			private static final long serialVersionUID = 1L;
 

@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.ResourceReference;
-import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.markup.html.CSSPackageResource;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
@@ -52,7 +52,7 @@ public abstract class BaseCalendarView extends Panel {
 
 	public BaseCalendarView(String id, Date startDate, Date endDate, IEventProvider eventProvider) {
 		super(id);
-		add(HeaderContributor.forCss(CALENDARS_CSS_REFERENCE));
+		add(CSSPackageResource.getHeaderContribution(CALENDARS_CSS_REFERENCE));
 		if (startDate == null || endDate == null || eventProvider == null) {
 			throw new IllegalArgumentException("no null parameters are allowed in this constructor");
 		}

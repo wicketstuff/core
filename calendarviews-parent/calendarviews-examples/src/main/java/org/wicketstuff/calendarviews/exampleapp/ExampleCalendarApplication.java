@@ -25,7 +25,7 @@ import org.apache.wicket.request.target.coding.IndexedParamUrlCodingStrategy;
  * Application object for your web application. If you want to run this
  * application without deploying, run the Start class.
  * 
- * @see org.wicketstuff.calendarviews.exampleapp.Start#main(String[])
+ * @see org.wicketstuff.calendarviews.exampleapp.StartCalendarsExamples#main(String[])
  * @author Jeremy Thomerson
  */
 public class ExampleCalendarApplication extends WebApplication {
