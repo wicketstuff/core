@@ -24,7 +24,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ResourceReference;
-import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.markup.html.CSSPackageResource;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.Link;
@@ -64,7 +64,7 @@ public class HomePage extends WebPage {
 			@Override
 			protected Page createMoreDetailPage(IModel<DateMidnight> model, IModel<List<IEvent>> eventsModel) {
 				Page page = super.createMoreDetailPage(model, eventsModel);
-				page.add(HeaderContributor.forCss(EXAMPLES_CSS_REFERENCE));
+				page.add(CSSPackageResource.getHeaderContribution(EXAMPLES_CSS_REFERENCE));
 				return page;
 			}
 			@Override
@@ -83,7 +83,7 @@ public class HomePage extends WebPage {
 			}
 		});
 		
-		add(HeaderContributor.forCss(EXAMPLES_CSS_REFERENCE));
+		add(CSSPackageResource.getHeaderContribution(EXAMPLES_CSS_REFERENCE));
 		addLinks();
 	}
 
