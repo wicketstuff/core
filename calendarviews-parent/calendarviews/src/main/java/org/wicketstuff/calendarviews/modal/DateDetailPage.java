@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.CSSPackageResource;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -36,7 +37,11 @@ import org.wicketstuff.calendarviews.model.IEvent;
 
 public class DateDetailPage extends WebPage {
 
-	public DateDetailPage(IModel<DateMidnight> model, IModel<List<IEvent>> eventsModel) {
+	public static interface IDateDetailPageEventLinkCreator {
+		WebMarkupContainer createEventLink(String id, IModel<IEvent> model);
+	}
+	
+	public DateDetailPage(IModel<DateMidnight> model, IModel<List<IEvent>> eventsModel, final IDateDetailPageEventLinkCreator linkCreator) {
 		add(CSSPackageResource.getHeaderContribution(BaseCalendarView.CALENDARS_CSS_REFERENCE));
 		add(new Label("title", new StringResourceModel("DateDetailPage.windowTitle", null, new Object[] { model.getObject().toDate() })));
 		add(new Label("inPageTitle", new StringResourceModel("DateDetailPage.inPageTitle", null, new Object[] { model.getObject().toDate() })));
@@ -45,7 +50,9 @@ public class DateDetailPage extends WebPage {
 			private int mCounter = 0;
 			@Override
 			protected void populateItem(ListItem<IEvent> item) {
-				item.add(new Label("title"));
+				WebMarkupContainer link = linkCreator.createEventLink("link", item.getModel());
+				link.add(new Label("title").setRenderBodyOnly(true));
+				item.add(link);
 				item.add(new Label("startTime"));
 				item.add(new Label("endTime"));
 				
