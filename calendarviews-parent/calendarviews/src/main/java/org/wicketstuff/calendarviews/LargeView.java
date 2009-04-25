@@ -247,7 +247,11 @@ public class LargeView extends FullWeekCalendarView {
 	}
 
 	protected Page createMoreDetailPage(final IModel<DateMidnight> model, final IModel<List<IEvent>> eventsModel) {
-		return new DateDetailPage(model, eventsModel);
+		return new DateDetailPage(model, eventsModel, new DateDetailPage.IDateDetailPageEventLinkCreator() {
+			public WebMarkupContainer createEventLink(String id, IModel<IEvent> model) {
+				return LargeView.this.createEventLink(id, model);
+			}
+		});
 	}
 
 	protected WebMarkupContainer createEventLink(String id, IModel<IEvent> model) {
