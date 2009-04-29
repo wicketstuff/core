@@ -9,7 +9,7 @@
         <version>1.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jquery-examples</artifactId>
+    <artifactId>wicketstuff-jquery-examples</artifactId>
     <packaging>war</packaging>
 
     <name>JQuery Integration - Examples</name>
