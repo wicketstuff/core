@@ -23,7 +23,7 @@ public class Page4Block extends PageSupport {
 	  options.setMessage( "Hello!!!" );
 	  
 
-	  BlockingAjaxLink<Void> ajaxlink = new BlockingAjaxLink<Void>( "ajaxlink", "hello!" ) {
+	  body.add( new BlockingAjaxLink<Void>( "ajaxlink", "hello!" ) {
       @Override
       public void doClick(AjaxRequestTarget target) {
         try {
@@ -35,8 +35,25 @@ public class Page4Block extends PageSupport {
         info( "Clicked link: "+this.toString() );
         target.addChildren( getPage(), FeedbackPanel.class );
       }
-    };
-    body.add( ajaxlink );
+    });
+    
+	  body.add( new BlockingAjaxLink<Void>( "block2", "hello!" ) {
+      @Override
+      public void doClick(AjaxRequestTarget target) {
+        try {
+          Thread.sleep( 3000 );
+        } 
+        catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+        info( "Clicked link: "+this.toString() );
+        target.addChildren( getPage(), FeedbackPanel.class );
+      }
+      
+      public CharSequence getBlockElementsSelector() {
+        return "div.blockMe";
+      }
+    });
 	}
 
 }

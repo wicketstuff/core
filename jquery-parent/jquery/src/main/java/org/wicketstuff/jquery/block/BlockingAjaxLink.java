@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.jquery.block;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxCallDecorator;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -30,7 +31,7 @@ public abstract class BlockingAjaxLink<T> extends AjaxLink<T> implements IHeader
 
   final BlockOptions options;
   
-	public BlockingAjaxLink(final String id, BlockOptions options )
+  public BlockingAjaxLink(final String id, BlockOptions options )
 	{
 		super(id, null);
 		this.options = options;
@@ -55,7 +56,15 @@ public abstract class BlockingAjaxLink<T> extends AjaxLink<T> implements IHeader
 	{
 		return new IAjaxCallDecorator() {
       public CharSequence decorateScript(CharSequence script) {
-        return "$.blockUI( "+options.toString()+" ); " + script;
+        StringBuilder js = new StringBuilder();
+        CharSequence sel = getBlockElementsSelector();
+        if( sel != null ) {
+          js.append( "$('" ).append( sel ).append( "').block( " );
+        }
+        else {
+          js.append( "$.blockUI( " );
+        }
+        return js.append( options.toString() ).append( " ); " ).append( script );
       }
       
       public CharSequence decorateOnFailureScript(CharSequence script) {
@@ -68,10 +77,22 @@ public abstract class BlockingAjaxLink<T> extends AjaxLink<T> implements IHeader
 		};
 	}
 
+	public CharSequence getBlockElementsSelector()
+	{
+	  return null;
+	}
+	
   final public void onClick(final AjaxRequestTarget target)
   {
     doClick( target );
-    target.appendJavascript( "$.unblockUI()" );
+
+    CharSequence sel = getBlockElementsSelector();
+    if( sel != null ) {
+      target.appendJavascript( "$('"+sel+"').unblock(); " );
+    }
+    else {
+      target.appendJavascript( "$.unblockUI(); " );
+    }
   }
   
   public abstract void doClick(final AjaxRequestTarget target);
