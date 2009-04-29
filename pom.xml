@@ -467,6 +467,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
+        <version>2.5</version> <!-- NOTE 2.6 does not include resources from the src/main directory in build path! -->
 				<configuration>
 					<downloadSources>true</downloadSources>
 				</configuration>
