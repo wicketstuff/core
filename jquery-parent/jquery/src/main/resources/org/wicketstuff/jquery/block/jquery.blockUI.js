@@ -1,4 +1,4 @@
-﻿/*
+/*
  * jQuery blockUI plugin
  * Version 2.18 (16-APR-2009)
  * @requires jQuery v1.2.3 or later
@@ -11,6 +11,7 @@
  *
  * Thanks to Amir-Hossein Sobhi for some excellent contributions!
  */
+
 
 ;(function($) {
 
@@ -100,7 +101,7 @@ $.blockUI.defaults = {
 	    '-webkit-border-radius': '10px',
 	    '-moz-border-radius':    '10px'
 	},
-	
+
 	iframeSrc: 'javascript:false', // 'about:blank' fails on HTTPS
 
 	// force usage of iframe in non-IE browsers (handy for blocking over objects and applets)
