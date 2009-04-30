@@ -50,9 +50,11 @@ public class KiUnauthorizedComponentListener implements IUnauthorizedComponentIn
     }
     
     if( notLoggedIn ) {
-      throw new RestartResponseException( page );
+      // the login page
+      throw new RestartResponseAtInterceptPageException( page );
     }
-    throw new RestartResponseAtInterceptPageException( page );
+    // the unauthorized page
+    throw new RestartResponseException( page );
   }
   
 
