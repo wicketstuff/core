@@ -2,6 +2,7 @@ package org.wicketstuff;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.wicketstuff.artwork.liquidcanvas.LiquidCanvasBehavior;
 import org.wicketstuff.artwork.liquidcanvas.graphics.Border;
@@ -9,6 +10,7 @@ import org.wicketstuff.artwork.liquidcanvas.graphics.Gradient;
 import org.wicketstuff.artwork.liquidcanvas.graphics.Graphics;
 import org.wicketstuff.artwork.liquidcanvas.graphics.RoundedRect;
 import org.wicketstuff.artwork.liquidcanvas.graphics.Shadow;
+import org.wicketstuff.artwork.niftycorners.NiftyCornersBehavior;
 
 /**
  * Homepage
@@ -31,7 +33,10 @@ public class HomePage extends WebPage {
     	Graphics g=new Shadow();
     	g.setChainedGraphics(new Border()).setChainedGraphics(new Gradient());
     	LiquidCanvasBehavior a=new LiquidCanvasBehavior(g,new RoundedRect());
-        add(new Label("message", "If you see this message wicket is properly configured and running").add(a));
+        add(new WebMarkupContainer("message").add(a));
+        
+        
+        add(new WebMarkupContainer("box").add(new NiftyCornersBehavior("div")));
 
         // TODO Add your page's components here
     }

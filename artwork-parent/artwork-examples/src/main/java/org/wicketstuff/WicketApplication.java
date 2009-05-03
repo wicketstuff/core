@@ -16,6 +16,12 @@ public class WicketApplication extends WebApplication
 	{
 	}
 	
+	@Override
+	protected void init() {
+			super.init();
+			getMarkupSettings().setStripWicketTags(true);
+	}
+	
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
