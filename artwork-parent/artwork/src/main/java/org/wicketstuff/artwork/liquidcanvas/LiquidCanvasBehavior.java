@@ -46,11 +46,6 @@ public class LiquidCanvasBehavior extends AbstractBehavior implements
 	}
 
 	@Override
-	public void onRendered(Component component) {
-		super.onRendered(component);
-	}
-
-	@Override
 	public void renderHead(IHeaderResponse response) {
 		response.renderJavascriptReference(getJQueryReference());
 		response.renderJavascriptReference(getLiquidCanvasReference());
