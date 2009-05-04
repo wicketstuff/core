@@ -36,7 +36,7 @@ public class HomePage extends WebPage {
         add(new WebMarkupContainer("message").add(a));
         
         
-        add(new WebMarkupContainer("box").add(new NiftyCornersBehavior("div")));
+        add(new WebMarkupContainer("box").add(new NiftyCornersBehavior()));
 
         // TODO Add your page's components here
     }
