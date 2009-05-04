@@ -105,12 +105,4 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>codeogre.com</id>
-			<name>codeogre provided maven repository</name>
-			<url>http://repo.codeogre.com/archiva/repository/public/</url>
-		</repository>
-	</repositories>
 </project>
