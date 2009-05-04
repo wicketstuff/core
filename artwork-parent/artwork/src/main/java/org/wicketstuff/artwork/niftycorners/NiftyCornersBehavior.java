@@ -1,5 +1,8 @@
 package org.wicketstuff.artwork.niftycorners;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.Response;
@@ -7,13 +10,23 @@ import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.internal.HeaderResponse;
-import org.apache.wicket.util.string.JavascriptUtils;
 
+/**
+ * 
+ * @author nmwael
+ * @see http://www.html.it/articoli/niftycube/index.html
+ */
 public class NiftyCornersBehavior extends AbstractBehavior {
 
 	String tagName = "";
+	List<NiftyOption> niftyOptions = null;
 
 	public NiftyCornersBehavior() {
+		this(NiftyOption.normal);
+	}
+
+	public NiftyCornersBehavior(NiftyOption... niftyOptions) {
+		this.niftyOptions = Arrays.asList(niftyOptions);
 	}
 
 	/** The target component. */
@@ -31,13 +44,20 @@ public class NiftyCornersBehavior extends AbstractBehavior {
 	public void renderHead(IHeaderResponse response) {
 		response.renderJavascriptReference(getNiftyCornersJSReference());
 		response.renderCSSReference(getNiftyCornersCSSReference());
-//		response.renderOnLoadJavascript(getNiftyJS(tagName));
+		// response.renderOnLoadJavascript(getNiftyJS(tagName));
 	}
 
 	private String getNiftyJS(String tagName) {
+		String niftyOptionsString = "";
+		for (NiftyOption niftyOption : this.niftyOptions) {
+			if (niftyOptionsString.length() > 0) {
+				niftyOptionsString += ", ";
+			}
+			niftyOptionsString += niftyOption.toString();
+		}
 
-		return "Nifty(\"" + tagName + "#" + component.getMarkupId()
-				+ "\",\"big\")";
+		return "Nifty(\"" + tagName + "#" + component.getMarkupId() + "\",\""
+				+ niftyOptionsString + "\")";
 	}
 
 	private ResourceReference getNiftyCornersJSReference() {
@@ -61,8 +81,8 @@ public class NiftyCornersBehavior extends AbstractBehavior {
 	public void onRendered(final Component component) {
 		// TODO Auto-generated method stub
 		super.onRendered(component);
-		HeaderResponse headerResponse=new HeaderResponse(){
-		
+		HeaderResponse headerResponse = new HeaderResponse() {
+
 			@Override
 			protected Response getRealResponse() {
 				// TODO Auto-generated method stub
