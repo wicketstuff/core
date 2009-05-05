@@ -11,30 +11,32 @@ import org.wicketstuff.artwork.liquidcanvas.graphics.Shadow;
 import org.wicketstuff.artwork.niftycorners.NiftyCornersBehavior;
 
 /**
- * Homepage
+ * 
  */
-public class HomePage extends ArtworkParentExamplePage {
+public class LiquidExamplePage extends ArtworkParentExamplePage {
 
 	private static final long serialVersionUID = 1L;
 
 	// TODO Add any page properties or variables here
 
-	/**
+    /**
 	 * Constructor that is invoked when page is invoked without a session.
 	 * 
 	 * @param parameters
 	 *            Page parameters
 	 */
-	public HomePage(final PageParameters parameters) {
-		super(parameters);
-		// Add the simplest type of label
-		Graphics g = new Shadow();
-		g.setChainedGraphics(new Border()).setChainedGraphics(new Gradient());
-		LiquidCanvasBehavior a = new LiquidCanvasBehavior(g, new RoundedRect());
-		add(new WebMarkupContainer("message").add(a));
+    public LiquidExamplePage(final PageParameters parameters) {
+    	super(parameters);
 
-		add(new WebMarkupContainer("box").add(new NiftyCornersBehavior()));
+        // Add the simplest type of label
+    	Graphics g=new Shadow();
+    	g.setChainedGraphics(new Border()).setChainedGraphics(new Gradient());
+    	LiquidCanvasBehavior a=new LiquidCanvasBehavior(g,new RoundedRect());
+        add(new WebMarkupContainer("message").add(a));
+        
+        
+        add(new WebMarkupContainer("box").add(new NiftyCornersBehavior()));
 
-		// TODO Add your page's components here
-	}
+        // TODO Add your page's components here
+    }
 }

@@ -11,9 +11,9 @@ import org.wicketstuff.artwork.liquidcanvas.graphics.Shadow;
 import org.wicketstuff.artwork.niftycorners.NiftyCornersBehavior;
 
 /**
- * Homepage
+ * 
  */
-public class HomePage extends ArtworkParentExamplePage {
+public class NiftyExamplePage extends ArtworkParentExamplePage {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,7 +25,7 @@ public class HomePage extends ArtworkParentExamplePage {
 	 * @param parameters
 	 *            Page parameters
 	 */
-	public HomePage(final PageParameters parameters) {
+	public NiftyExamplePage(final PageParameters parameters) {
 		super(parameters);
 		// Add the simplest type of label
 		Graphics g = new Shadow();
