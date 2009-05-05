@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Wicket Quickstart Archetype Homepage</title>
+<wicket:head>
   	    <style type="text/css">
     	  /* the CSS is used to position our DIV in the center of the web page */
       		.example { width:30%; margin:200px auto; padding:40px; }
@@ -15,9 +15,10 @@ h1,p{margin:0;padding:10px 20px}
    		</style>
       
 
+    </wicket:head>
     </head>
     <body>
-        <strong>Wicket Quickstart Archetype Homepage</strong>
+   	<wicket:extend>
         <div wicket:id="message" class="example">
             <h1>Liquid&trade;</h1>
 			<p>Power of graphics</p>
@@ -26,7 +27,7 @@ h1,p{margin:0;padding:10px 20px}
         	<h1>Nifty Corners Cube&trade;</h1>
 			<p>One call. Two parameters. Three sizes.</p>
 		</div>
- 
+ 	</wicket:extend>
     </body>
 </html>
 
