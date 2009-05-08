@@ -21,7 +21,7 @@ public class YuiMenuItem extends AbstractYuiMenuItem {
 			if (link.getId().equals(LINK_ID) == false) {
 				throw new RuntimeException("Link's id needs to be 'link' ");
 			}
-		} else if (action instanceof AjaxFallbackLink) {
+		} else if (action instanceof IYuiMenuAjaxAction) {
 			link = new AjaxFallbackLink(LINK_ID, action.getName()) {
 				private static final long serialVersionUID = 1L;
 
