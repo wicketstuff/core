@@ -16,6 +16,7 @@ import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketstuff.yui.inc.YUI;
 
 public class YuiHeaderContributor extends AbstractHeaderContributor
 {
@@ -26,7 +27,7 @@ public class YuiHeaderContributor extends AbstractHeaderContributor
 
 	static final String DEFAULT_YUI_BUILD = "2.7.0b";
 
-	static final String YUI_BUILD_ROOT = "../../../inc";
+	static final String YUI_BUILD_ROOT = "/org/wicketstuff/yui/inc";
 
 	static final Map<String, ResourceReference> moduleCache = Collections
 			.synchronizedMap(new HashMap<String, ResourceReference>());
@@ -146,8 +147,13 @@ public class YuiHeaderContributor extends AbstractHeaderContributor
 
 			if (null != realName)
 			{
-				final String path = buildPath + "/" + name + "/" + realName
+				// final String path = buildPath + "/" + name + "/" + realName
+				// + ((debug) ? "-debug.js" : ".js");
+
+				final String path = build + "/" + name + "/" + realName
 						+ ((debug) ? "-debug.js" : ".js");
+
+
 				final ResourceReference moduleScript;
 				if (YuiHeaderContributor.this.moduleCache.containsKey(path))
 				{
@@ -157,20 +163,22 @@ public class YuiHeaderContributor extends AbstractHeaderContributor
 				{
 					if (debug)
 					{
-						moduleScript = new ResourceReference(YuiHeaderContributor.class, path);
+						moduleScript = new ResourceReference(YUI.class, path);
 					}
 					else
 					{
-						moduleScript = new JavascriptResourceReference(YuiHeaderContributor.class,
-								path);
+						moduleScript = new JavascriptResourceReference(YUI.class, path);
 					}
 					YuiHeaderContributor.this.moduleCache.put(path, moduleScript);
 				}
 				response.renderJavascriptReference(moduleScript);
 				if (dependencyResolver.hasCssAsset(name, YUI_BUILD_ROOT + "/" + build))
 				{
-					final String assetPath = YUI_BUILD_ROOT + "/" + build + "/" + name + "/assets/"
-							+ name + ".css";
+					// final String assetPath = YUI_BUILD_ROOT + "/" + build +
+					// "/" + name + "/assets/"
+					// + name + ".css";
+
+					final String assetPath = build + "/" + name + "/assets/" + name + ".css";
 					final ResourceReference assetRef;
 					if (YuiHeaderContributor.this.moduleCache.containsKey(assetPath))
 					{
@@ -178,8 +186,7 @@ public class YuiHeaderContributor extends AbstractHeaderContributor
 					}
 					else
 					{
-						assetRef = new CompressedResourceReference(YuiHeaderContributor.class,
-								assetPath);
+						assetRef = new CompressedResourceReference(YUI.class, assetPath);
 						YuiHeaderContributor.this.moduleCache.put(assetPath, assetRef);
 					}
 
