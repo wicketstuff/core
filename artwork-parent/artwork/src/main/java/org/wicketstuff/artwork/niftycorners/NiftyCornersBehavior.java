@@ -18,18 +18,56 @@ import org.apache.wicket.markup.html.internal.HeaderResponse;
  */
 public class NiftyCornersBehavior extends AbstractBehavior {
 
-	String tagName = "";
-	List<NiftyOption> niftyOptions = null;
+	protected String tagName = "";
+	protected List<NiftyOption> niftyOptions = null;
+	protected String decendantsOfSelector = null;
+	protected boolean grabTag = false;
+	protected boolean singleComponent;
 
+	/**
+	 * Select by component tag (for example for a specific div)
+	 */
 	public NiftyCornersBehavior() {
 		this(NiftyOption.normal);
 	}
 
-	public NiftyCornersBehavior(NiftyOption... niftyOptions) {
+	/**
+	 * for example "div#content h2" or "ul.news li" (dependent on idSelector ) ,
+	 * you just provide h2 or a
+	 * 
+	 * You would typically add this behavior to the page or a component that
+	 * contains other components
+	 * 
+	 * * @param decendentsOfSelector * @param grabTag should it automatically
+	 * grab the tag? Use false if it's a page * @param singleComponent * @param
+	 * niftyOptions
+	 */
+	public NiftyCornersBehavior(String decendentsOfSelector, boolean grabTag,
+			boolean singleComponent, NiftyOption... niftyOptions) {
 		this.niftyOptions = Arrays.asList(niftyOptions);
+		this.decendantsOfSelector=decendentsOfSelector;
+		this.grabTag = grabTag;
+		this.singleComponent = singleComponent;
+
 	}
 
-	/** The target component. */
+	/**
+	 * Select by component tag (for example for a specific div) Use for only
+	 * applying nifty to a single component
+	 * 
+	 * @param niftyOptions
+	 */
+	public NiftyCornersBehavior(NiftyOption... niftyOptions) {
+		this(null, true, true, niftyOptions);
+
+	}
+
+	/**
+	 * One for all constructor :) Internal use only
+	 * 
+	 * 
+	 * /** The target component.
+	 */
 	private Component component;
 
 	@Override
@@ -44,20 +82,43 @@ public class NiftyCornersBehavior extends AbstractBehavior {
 	public void renderHead(IHeaderResponse response) {
 		response.renderJavascriptReference(getNiftyCornersJSReference());
 		response.renderCSSReference(getNiftyCornersCSSReference());
-		// response.renderOnLoadJavascript(getNiftyJS(tagName));
+		if (!grabTag && !singleComponent) {
+			if (decendantsOfSelector != null) {
+				response.renderOnLoadJavascript(getNiftyJS("",
+						decendantsOfSelector, false, false));
+			} else {
+				response.renderOnLoadJavascript(getNiftyJS("",
+						decendantsOfSelector, true, false));
+			}
+		}
 	}
 
-	private String getNiftyJS(String tagName) {
+	private String getNiftyJS(String selectorString) {
+		return getNiftyJS(selectorString, "", true, true);
+	}
+
+	private String getNiftyJS(String selectorString, String descendents,
+			boolean shouldSeperate, boolean grabComponentTag) {
 		String niftyOptionsString = "";
 		for (NiftyOption niftyOption : this.niftyOptions) {
 			if (niftyOptionsString.length() > 0) {
-				niftyOptionsString += ", ";
+				niftyOptionsString += " ";
 			}
 			niftyOptionsString += niftyOption.toString();
 		}
 
-		return "Nifty(\"" + tagName + "#" + component.getMarkupId() + "\",\""
-				+ niftyOptionsString + "\")";
+		String returnString = "Nifty(\"" + selectorString;
+		if (shouldSeperate) {
+			returnString += "#";
+		}
+		if (grabComponentTag) {
+			returnString += component.getMarkupId() + " " + descendents
+					+ "\",\"" + niftyOptionsString + "\")";
+		} else {
+			returnString += descendents + "\",\""
+					+ niftyOptionsString + "\")";
+		}
+		return returnString;
 	}
 
 	private ResourceReference getNiftyCornersJSReference() {
@@ -79,16 +140,23 @@ public class NiftyCornersBehavior extends AbstractBehavior {
 
 	@Override
 	public void onRendered(final Component component) {
-		// TODO Auto-generated method stub
 		super.onRendered(component);
-		HeaderResponse headerResponse = new HeaderResponse() {
+		if (grabTag) {
+			HeaderResponse headerResponse = new HeaderResponse() {
 
-			@Override
-			protected Response getRealResponse() {
-				// TODO Auto-generated method stub
-				return component.getResponse();
+				@Override
+				protected Response getRealResponse() {
+					// TODO Auto-generated method stub
+					return component.getResponse();
+				}
+			};
+			if (decendantsOfSelector == null) {
+				headerResponse.renderOnDomReadyJavascript(getNiftyJS(tagName));
+			} else {
+				headerResponse.renderOnDomReadyJavascript(getNiftyJS(tagName,
+						decendantsOfSelector, true,true));
+
 			}
-		};
-		headerResponse.renderOnDomReadyJavascript(getNiftyJS(tagName));
+		}
 	}
 }
