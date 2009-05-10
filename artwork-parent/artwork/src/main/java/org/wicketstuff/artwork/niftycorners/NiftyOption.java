@@ -1,7 +1,7 @@
 package org.wicketstuff.artwork.niftycorners;
 
 public enum NiftyOption {
-	tl, tr, bl, br, top, bottom, left, right, all, none, normal, big, tansparent, fixedheight(
+	tl, tr, bl, br, top, bottom, left, right, all, none,small, normal, big, transparent, fixedheight(
 			"fixedheight"), sameheight("sameheight");
 
 	private String name = null;
