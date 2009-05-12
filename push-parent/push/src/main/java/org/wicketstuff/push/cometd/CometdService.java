@@ -53,14 +53,37 @@ public class CometdService implements IChannelService {
     }
   }
 
+  private final class RemovalListener implements RemoveListener {
+
+    private final RemoveListener removeListener;
+
+    public RemovalListener(final RemoveListener listener) {
+      removeListener = listener;
+    }
+
+    public void removed(final String clientId, final boolean timeout) {
+      final boolean hasNoApp = !Application.exists();
+      if (hasNoApp) {
+        Application.set(getApplication());
+      }
+
+      removeListener.removed(clientId, timeout);
+
+      if (hasNoApp) {
+        Application.unset();
+      }
+    }
+
+  }
+
   public static final String BAYEUX_CLIENT_PREFIX = "wicket-push";
 
   private final Map<String, RemoveListener> removalListeners;
 
-  final WebApplication              _application;
-  private Bayeux                            _bayeux;
-  private Client                            serviceClient;
-  private boolean                           listeningToConnect;
+  final WebApplication _application;
+  private Bayeux       _bayeux;
+  private Client       serviceClient;
+  private boolean      listeningToConnect;
 
   public CometdService(final WebApplication application) {
     _application = application;
@@ -88,7 +111,7 @@ public class CometdService implements IChannelService {
       serviceClient.addListener(new RemovalForwardingListener());
       listeningToConnect = true;
     }
-    removalListeners.put("/" + chnl, listener);
+    removalListeners.put("/" + chnl, new RemovalListener(listener));
   }
 
   /**
@@ -127,7 +150,7 @@ public class CometdService implements IChannelService {
   private void initBayeux() {
     final String cfgType = _application.getConfigurationType();
     _bayeux = (Bayeux) _application.getServletContext().getAttribute(
-        Bayeux.DOJOX_COMETD_BAYEUX);
+        Bayeux.ATTRIBUTE);
 
     if (_bayeux instanceof AbstractBayeux
         && Application.DEVELOPMENT.equalsIgnoreCase(cfgType)) {
@@ -139,6 +162,10 @@ public class CometdService implements IChannelService {
     }
 
     serviceClient = _bayeux.newClient(BAYEUX_CLIENT_PREFIX);
+  }
+
+  public Application getApplication() {
+    return _application;
   }
 
 }
