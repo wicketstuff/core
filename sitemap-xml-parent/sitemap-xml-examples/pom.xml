@@ -8,8 +8,8 @@
         <artifactId>sitemap-xml-parent</artifactId>
         <version>0.1</version>
     </parent>
-  
-    <groupId>sitemap-xml-parent</groupId>
+    <name>sitemap-xml-examples</name>  
+    <groupId>org.wicketstuff</groupId>
     <artifactId>sitemap-xml-examples</artifactId>
     <version>1.0</version>
     <dependencies>
