@@ -8,6 +8,7 @@
         <artifactId>wicketstuff-core</artifactId>
         <version>1.4-SNAPSHOT</version>
     </parent>
+    <name>sitemap-xml-parent</name>
     <developers>
         <developer>
             <name>Andreas Petersson</name>

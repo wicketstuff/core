@@ -9,6 +9,7 @@
         <artifactId>sitemap-xml-parent</artifactId>
         <version>0.1</version>
     </parent>
+    <name>sitemap-xml</name>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
