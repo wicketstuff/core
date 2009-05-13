@@ -112,7 +112,7 @@ public class NiftyCornersBehavior extends AbstractBehavior {
 			returnString += "#";
 		}
 		if (grabComponentTag) {
-			returnString += component.getMarkupId() + " " + descendents
+			returnString += component.getMarkupId() +  descendents
 					+ "\",\"" + niftyOptionsString + "\")";
 		} else {
 			returnString += descendents + "\",\""
@@ -151,9 +151,9 @@ public class NiftyCornersBehavior extends AbstractBehavior {
 				}
 			};
 			if (decendantsOfSelector == null) {
-				headerResponse.renderOnDomReadyJavascript(getNiftyJS(tagName));
+				headerResponse.renderOnLoadJavascript(getNiftyJS(tagName));
 			} else {
-				headerResponse.renderOnDomReadyJavascript(getNiftyJS(tagName,
+				headerResponse.renderOnLoadJavascript(getNiftyJS(tagName,
 						decendantsOfSelector, true,true));
 
 			}

@@ -1,22 +1,35 @@
 <wicket:head>
 	<style type="text/css">
-		html,body{margin:0;padding:0}
-		body{background: #FFF;
-		    font: 70% Arial,sans-serif}
-		div#menu{float:left;width: 100%;padding-top:120px;background: #BBD9EE}
-		ul#nav,ul#nav li{list-style-type:none;margin:0;padding:0}
-		ul#nav{margin-left: 100px;width:650px}
-		ul#nav li{float:left;margin-right: 3px;text-align: center}
-		ul#nav a,ul#nav span{float:left;width: 7em;padding: 5px 0;background: #E7F1F8;text-decoration:none;color: #666}
-		ul#nav a:hover{background: #FFA826;color: #FFF}
-		ul#nav li.activelink a,ul#nav li.activelink a:hover{background: #FFF;color: #003}
-		ul#nav span{background: #00BFFF;color: #003}
+	
+	.niftyOne{
+			    background:#E6E6E6;color:#000;
+	}
+	.niftyTwo{
+			    background:blue;color:#000;
+
+	}
+	h1{font: lighter 200% "Trebuchet MS",Arial sans-serif;color: #208BE1}
+	h1,p{margin:0;padding:10px 20px;
+	}
+	
+	.niftyOne,.niftyTwo{
+		width: 18em;padding: 20px;margin:0 auto;
+		margin-bottom: 10px;
+		
+		}
+	
 	</style>
 </wicket:head>
 
 <html>
     <body>
     <wicket:extend>
+    <div class="niftyOne">
+    Use Nifty for simple stuff, it's fast but simple!
+    </div>
+    <div wicket:id="niftyOne" class="niftyOne"><h1>NiftyOne</h1><p>This is Nifty One example!</p></div>
+    <div wicket:id="niftyTwo" class="niftyTwo"><h1>NiftyTwo</h1><p>This is Nifty Two example!</p></div>
+    
      </wicket:extend>
     </body>
 </html>
