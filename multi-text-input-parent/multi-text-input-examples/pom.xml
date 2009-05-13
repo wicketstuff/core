@@ -27,7 +27,7 @@
 
   <artifactId>multi-text-input-examples</artifactId>
   <packaging>war</packaging>
-  <name>quickstart</name>
+  <name>multi-text-input-examples</name>
   <version>1.0-SNAPSHOT</version>
   <description></description>
   <licenses>
