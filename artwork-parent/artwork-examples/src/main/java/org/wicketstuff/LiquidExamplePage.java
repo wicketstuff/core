@@ -28,15 +28,24 @@ public class LiquidExamplePage extends ArtworkParentExamplePage {
     public LiquidExamplePage(final PageParameters parameters) {
     	super(parameters);
 
-        // Add the simplest type of label
     	Graphics g=new Shadow();
     	g.setChainedGraphics(new Border()).setChainedGraphics(new Gradient());
-    	LiquidCanvasBehavior a=new LiquidCanvasBehavior(g,new RoundedRect());
-        add(new WebMarkupContainer("message").add(a));
+    	LiquidCanvasBehavior liquidCanvasBehaviorOne=new LiquidCanvasBehavior(g,new RoundedRect());
+    	
+    	WebMarkupContainer liquidOneExample=new WebMarkupContainer("LiquidOne");
+    	liquidOneExample.add(liquidCanvasBehaviorOne);
+        add(liquidOneExample);
         
         
-        add(new WebMarkupContainer("box").add(new NiftyCornersBehavior()));
+    	g=new Shadow(9,"#FF3300",2);
+    	g.setChainedGraphics(new Border()).setChainedGraphics(new Gradient());
+    	LiquidCanvasBehavior liquidCanvasBehaviorTwo=new LiquidCanvasBehavior(g,new RoundedRect());
 
-        // TODO Add your page's components here
+        
+    	WebMarkupContainer liquidTwoExample=new WebMarkupContainer("LiquidTwo");
+    	liquidTwoExample.add(liquidCanvasBehaviorTwo);
+        add(liquidTwoExample);
+
+        
     }
 }
