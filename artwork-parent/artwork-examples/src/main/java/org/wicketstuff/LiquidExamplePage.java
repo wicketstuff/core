@@ -8,7 +8,6 @@ import org.wicketstuff.artwork.liquidcanvas.graphics.Gradient;
 import org.wicketstuff.artwork.liquidcanvas.graphics.Graphics;
 import org.wicketstuff.artwork.liquidcanvas.graphics.RoundedRect;
 import org.wicketstuff.artwork.liquidcanvas.graphics.Shadow;
-import org.wicketstuff.artwork.niftycorners.NiftyCornersBehavior;
 
 /**
  * 
@@ -46,6 +45,17 @@ public class LiquidExamplePage extends ArtworkParentExamplePage {
     	liquidTwoExample.add(liquidCanvasBehaviorTwo);
         add(liquidTwoExample);
 
+        
+    	g=new Gradient("rgba(255,255,255, 0.2)","#888");
+    	
+    	LiquidCanvasBehavior liquidCanvasBehaviorThree=new LiquidCanvasBehavior(g,new RoundedRect());
+
+        
+    	WebMarkupContainer liquidThreeExample=new WebMarkupContainer("LiquidThree");
+    	liquidThreeExample.add(liquidCanvasBehaviorThree);
+        add(liquidThreeExample);
+        
+        
         
     }
 }

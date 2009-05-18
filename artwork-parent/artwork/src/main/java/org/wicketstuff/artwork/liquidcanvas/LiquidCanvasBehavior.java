@@ -127,7 +127,7 @@ public class LiquidCanvasBehavior extends AbstractBehavior implements
 	private ResourceReference getJQueryReference() {
 
 		return JSReference.getReference(VersionDescriptor.exactVersion(
-				Library.JQUERY, 1, 2, 6));
+				Library.JQUERY, 1, 3, 2));
 
 	}
 
