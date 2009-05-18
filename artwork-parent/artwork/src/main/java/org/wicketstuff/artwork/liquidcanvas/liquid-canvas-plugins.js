@@ -93,7 +93,7 @@
 
   $.registerLiquidCanvasPlugin({
     name: "border",
-    defaultOpts: { color:'#f80', width:3 },
+    defaultOpts: { color:'#8f4', width:3 },
     paint: function(area) {
       var bw = this.opts.width;
       area.ctx.strokeStyle = this.opts.color;
