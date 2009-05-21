@@ -2,18 +2,21 @@
     <head>
 <wicket:head>
   	    <style type="text/css">
-    	  /* the CSS is used to position our DIV in the center of the web page */
-      		.example { width:30%; margin:200px auto; padding:40px; }
-      		
-      		body{padding: 30px 0 0;background:#FFF;
-    font: 100.01%/1.3 Verdana,Arial,sans-serif;text-align:center}
-.box{width: 18em;padding: 20px;margin:0 auto;
-    background:#E6E6E6;color:#000}
-h1{font: lighter 200% "Trebuchet MS",Arial sans-serif;color: #208BE1}
-h1,p{margin:0;padding:10px 20px}
-      		
+      		.example { 
+      			float:left;
+      			width:18em; 
+      			padding:20px; 
+      			margin:0 auto;
+      			}
+			.box{
+				float:left;
+				width: 18em;
+				margin:0 auto;
+				padding: 20px;
+    			background:#E6E6E6;
+    			color:#000
+    			}
    		</style>
-      
 
     </wicket:head>
     </head>
@@ -25,7 +28,7 @@ h1,p{margin:0;padding:10px 20px}
 		</div>
         <div wicket:id="box" class="box">
         	<h1>Nifty Corners Cube&trade;</h1>
-			<p>One call. Two parameters. Three sizes.</p>
+			<p>Simple and fast!</p>
 		</div>
  	</wicket:extend>
     </body>
