@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.wicketstuff.openlayers.OpenLayersMap;
+import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.event.OverlayListenerBehavior;
 
 /**
@@ -60,7 +60,7 @@ public abstract class Overlay implements Serializable {
 		return "overlay" + getId();
 	}
 	
-	public String getJSadd(OpenLayersMap map) {
+	public String getJSadd(IOpenLayersMap map) {
 		StringBuffer js = new StringBuffer();
 		js.append("var "+getOverlayJSVar()+" = " + getJSconstructor() + ";\n");
 		js.append(map.getJSinvoke("addOverlay('" + getId() + "', overlay"
@@ -68,7 +68,7 @@ public abstract class Overlay implements Serializable {
 		return js.toString();
 	}
 
-	public String getJSremove(OpenLayersMap map) {
+	public String getJSremove(IOpenLayersMap map) {
 		return map.getJSinvoke("removeOverlay('" + getId() + "')");
 	}
 

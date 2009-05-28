@@ -4,7 +4,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.openlayers.OpenLayersMap;
+import org.wicketstuff.openlayers.IOpenLayersMap;
 
 /**
  * Attaches itself to a element, and onclick removes the drawcontrol 
@@ -13,8 +13,8 @@ import org.wicketstuff.openlayers.OpenLayersMap;
  */
 public class RemoveDrawControl extends AbstractBehavior {
 	
-	private OpenLayersMap map;
-	public RemoveDrawControl(OpenLayersMap map) {
+	private IOpenLayersMap map;
+	public RemoveDrawControl(IOpenLayersMap map) {
 		this.map=map;
 	}
 
