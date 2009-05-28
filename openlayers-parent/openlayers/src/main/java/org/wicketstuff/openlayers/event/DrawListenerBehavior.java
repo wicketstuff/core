@@ -5,7 +5,8 @@ import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.wicketstuff.openlayers.OpenLayersMap;
+import org.wicketstuff.openlayers.IOpenLayersMap;
+import org.wicketstuff.openlayers.OpenLayersMapUtils;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
@@ -22,7 +23,7 @@ public abstract class DrawListenerBehavior extends AbstractDefaultAjaxBehavior {
 
 	@Override
 	protected void onBind() {
-		if (!(getComponent() instanceof OpenLayersMap)) {
+		if (!(getComponent() instanceof IOpenLayersMap)) {
 			throw new IllegalArgumentException(
 					"must be bound to Openlayers map");
 		}
@@ -33,8 +34,8 @@ public abstract class DrawListenerBehavior extends AbstractDefaultAjaxBehavior {
 				"addDrawFeature('" + getCallbackUrl() + "')");
 	}
 
-	protected final OpenLayersMap getOpenLayersMap() {
-		return (OpenLayersMap) getComponent();
+	protected final IOpenLayersMap getOpenLayersMap() {
+		return (IOpenLayersMap) getComponent();
 	}
 
 	/**
@@ -57,7 +58,7 @@ public abstract class DrawListenerBehavior extends AbstractDefaultAjaxBehavior {
 		Request request = RequestCycle.get().getRequest();
 		String wkt = request.getParameter("wkt");
 
-		WKTReader wktReader = new WKTReader(OpenLayersMap.getGeoFactory());
+		WKTReader wktReader = new WKTReader(OpenLayersMapUtils.getGeoFactory());
 
 		Geometry geom=null;
 		try {

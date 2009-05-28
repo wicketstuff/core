@@ -20,7 +20,7 @@ package org.wicketstuff.openlayers.event;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.wicketstuff.openlayers.OpenLayersMap;
+import org.wicketstuff.openlayers.IOpenLayersMap;
 
 public abstract class EventListenerBehavior extends AbstractDefaultAjaxBehavior {
 	private static final long serialVersionUID = 1L;
@@ -34,7 +34,7 @@ public abstract class EventListenerBehavior extends AbstractDefaultAjaxBehavior 
 
 	@Override
 	protected void onBind() {
-		if (!(getComponent() instanceof OpenLayersMap)) {
+		if (!(getComponent() instanceof IOpenLayersMap)) {
 			throw new IllegalArgumentException(
 					"must be bound to Openlayers map");
 		}
@@ -47,8 +47,8 @@ public abstract class EventListenerBehavior extends AbstractDefaultAjaxBehavior 
 								+ getCallbackUrl() + "')");
 	}
 
-	protected final OpenLayersMap getOpenLayersMap() {
-		return (OpenLayersMap) getComponent();
+	protected final IOpenLayersMap getOpenLayersMap() {
+		return (IOpenLayersMap) getComponent();
 	}
 
 	/**

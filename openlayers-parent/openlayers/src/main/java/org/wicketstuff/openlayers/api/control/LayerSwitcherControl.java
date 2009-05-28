@@ -9,7 +9,7 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.openlayers.OpenLayersMap;
+import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.api.layer.Layer;
 
 /**
@@ -19,7 +19,7 @@ import org.wicketstuff.openlayers.api.layer.Layer;
  */
 public class LayerSwitcherControl extends Panel {
 
-	public LayerSwitcherControl(String id, OpenLayersMap map) {
+	public LayerSwitcherControl(String id, IOpenLayersMap map) {
 		super(id);
 		add(new Toggler("layers", map.getLayers(), map));
 		
@@ -38,9 +38,9 @@ public class LayerSwitcherControl extends Panel {
 	}
 
 	private class Toggler extends ListView {
-		private OpenLayersMap omap;
+		private IOpenLayersMap omap;
 
-		public Toggler(String id, List list, final OpenLayersMap omap) {
+		public Toggler(String id, List list, final IOpenLayersMap omap) {
 			super(id, list);
 			this.omap = omap;
 		}

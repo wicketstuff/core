@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.html.IHeaderContributor;
+import org.wicketstuff.openlayers.IOpenLayersMap;
 
 /**
  * 
@@ -23,7 +24,18 @@ public abstract class Layer {
 	public String getId() {
 		return String.valueOf(System.identityHashCode(this));
 	}
-	
+
+	public final String getJSAddLayer(IOpenLayersMap map) {
+		return "var layer"
+				+ getId()
+				+ " = "
+				+ getJSconstructor()
+				+ ";\n"
+				+ map.getJSinvoke("addLayer(layer" + getId() + ", " + getId()
+						+ ")");
+	}
+
 	public abstract List<HeaderContributor> getHeaderContributors();
 
+	public abstract String getJSconstructor();
 }

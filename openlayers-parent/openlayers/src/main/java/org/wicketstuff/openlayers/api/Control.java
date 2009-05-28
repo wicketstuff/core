@@ -17,7 +17,7 @@ package org.wicketstuff.openlayers.api;
 
 import java.io.Serializable;
 
-import org.wicketstuff.openlayers.OpenLayersMap;
+import org.wicketstuff.openlayers.IOpenLayersMap;
 
 /**
  * Represents an OpenLayers
@@ -26,7 +26,7 @@ import org.wicketstuff.openlayers.OpenLayersMap;
 public enum Control implements Serializable {
 	PanZoomBar(true), MouseToolbar(false), LayerSwitcher(true), Permalink(true), MousePosition(
 			true), OverviewMap(false), KeyboardDefaults(false), PanZoom(false), Navigation(
-			false);
+			false), ScaleLine(false);
 
 	private final boolean externalizable;
 
@@ -35,7 +35,7 @@ public enum Control implements Serializable {
 
 	}
 
-	public String getJSadd(OpenLayersMap map) {
+	public String getJSadd(IOpenLayersMap map) {
 
 		String jsControlCreate = "";
 
@@ -51,7 +51,7 @@ public enum Control implements Serializable {
 		return jsControlCreate;
 	}
 
-	public String getJSremove(OpenLayersMap map) {
+	public String getJSremove(IOpenLayersMap map) {
 		return map.getJSinvoke("removeControl('" + name() + "')");
 	}
 }

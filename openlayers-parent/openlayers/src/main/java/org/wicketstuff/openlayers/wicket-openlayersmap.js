@@ -65,6 +65,10 @@ function WicketOMap(id, options) {
 		self.map.addLayer(layer);
 		self.layers[id] = layer;
 	};
+	this.addFeature = function (feature, layer) {
+		var self = this;
+		layer.addFeatures([feature]);
+	}
 	this.setCenter = function (center, zoom) {
 		var self = this;
 		self.map.setCenter(center, zoom);		
@@ -84,6 +88,12 @@ function WicketOMap(id, options) {
 				self.onEvent(callBack, {});
 			});
 		}
+	};
+	this.addMoveEndListener = function (callBack) {
+		var self = this;
+		self.map.events.register("moveend", self.map, function (e) {
+			self.onEvent(callBack, {});
+		});
 	};
 	this.addClickListener = function (callBack) {
 		var self = this;

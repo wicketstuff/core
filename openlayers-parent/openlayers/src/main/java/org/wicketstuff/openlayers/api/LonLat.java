@@ -17,7 +17,7 @@ package org.wicketstuff.openlayers.api;
 
 import java.util.StringTokenizer;
 
-import org.wicketstuff.openlayers.OpenLayersMap;
+import org.wicketstuff.openlayers.OpenLayersMapUtils;
 import org.wicketstuff.openlayers.js.Constructor;
 
 import com.vividsolutions.jts.geom.Point;
@@ -41,7 +41,7 @@ public class LonLat implements Value {
 	 */
 	public LonLat(double lng, double lat) {
 
-		this.point = OpenLayersMap.createPoint(lng, lat);
+		this.point = OpenLayersMapUtils.createPoint(lng, lat);
 	}
 
 	public LonLat(Point point) {
@@ -97,6 +97,30 @@ public class LonLat implements Value {
 			float lat = Float.valueOf(tokenizer.nextToken());
 			float lng = Float.valueOf(tokenizer.nextToken());
 			return new LonLat(lat, lng);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	/**
+	 * (lon=37.34068368469045, lat=-122.48519897460936)
+	 */
+	public static LonLat parseWithNames(String value) {
+		try {
+			StringTokenizer tokenizer = new StringTokenizer(value, "(, )");
+			float lng = 0;
+			float lat = 0;
+			for (int i = 0; i < 2; i++) {
+				String item = tokenizer.nextToken().toLowerCase();
+				if (item.startsWith("lon=")) {
+					lng = Float.parseFloat(item.substring(4));
+				} else if (item.startsWith("lat=")) {
+					lat = Float.parseFloat(item.substring(4));
+				} else {
+					return null;
+				}
+			}
+			return new LonLat(lng, lat);
 		} catch (Exception e) {
 			return null;
 		}

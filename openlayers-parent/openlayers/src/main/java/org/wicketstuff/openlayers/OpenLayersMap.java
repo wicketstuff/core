@@ -33,6 +33,8 @@ import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wicketstuff.openlayers.api.Bounds;
 import org.wicketstuff.openlayers.api.Control;
 import org.wicketstuff.openlayers.api.InfoWindow;
@@ -46,39 +48,13 @@ import org.wicketstuff.openlayers.api.layer.WMS;
 import org.wicketstuff.openlayers.event.EventType;
 import org.wicketstuff.openlayers.event.OverlayListenerBehavior;
 import org.wicketstuff.openlayers.event.PopupListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.PrecisionModel;
 
 /**
  * Wicket component to embed <a href="http://www.openlayers.org/">Openlayers
  * Maps</a> into your pages.
  */
-public class OpenLayersMap extends Panel {
-
+public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	private static Logger log = LoggerFactory.getLogger(OpenLayersMap.class);
-	/**
-	 * WGS84 (http://en.wikipedia.org/wiki/World_Geodetic_System#
-	 * A_new_World_Geodetic_System:_WGS_84)
-	 */
-	public static final int SRID = 4326;
-
-	private static GeometryFactory geometryFactory=new GeometryFactory(
-			new PrecisionModel(), SRID);
-	
-	public static GeometryFactory getGeoFactory() {
-		return geometryFactory;
-
-	}
-	public static Point createPoint(double x,double y) {
-		Coordinate coord=new Coordinate(x,y);
-		return geometryFactory.createPoint(coord);
-
-	}
 
 	private abstract class JSMethodBehavior extends AbstractBehavior {
 
@@ -131,9 +107,9 @@ public class OpenLayersMap extends Panel {
 		private static final long serialVersionUID = 1L;
 
 		private LonLat gLatLng;
-		private int zoom;
+		private Integer zoom;
 
-		public SetCenterBehavior(String event, LonLat gLatLng, int zoom) {
+		public SetCenterBehavior(String event, LonLat gLatLng, Integer zoom) {
 			super(event);
 			this.gLatLng = gLatLng;
 			this.zoom = zoom;
@@ -148,9 +124,9 @@ public class OpenLayersMap extends Panel {
 	public class SetZoomBehavior extends JSMethodBehavior {
 		private static final long serialVersionUID = 1L;
 
-		private int zoom;
+		private Integer zoom;
 
-		public SetZoomBehavior(final String event, final int zoom) {
+		public SetZoomBehavior(final String event, final Integer zoom) {
 			super(event);
 			this.zoom = zoom;
 		}
@@ -209,7 +185,7 @@ public class OpenLayersMap extends Panel {
 
 	private List<Overlay> overlays = new ArrayList<Overlay>();
 
-	private int zoom = 13;
+	private Integer zoom = 13;
 
 	/**
 	 * 
@@ -520,8 +496,8 @@ public class OpenLayersMap extends Panel {
 		return getJSinvoke("panDirection(" + dx + "," + dy + ")");
 	}
 
-	private String getJSsetCenter(LonLat center, int zoom) {
-		if (center != null && zoom > 0)
+	private String getJSsetCenter(LonLat center, Integer zoom) {
+		if (center != null && zoom != null)
 			return getJSinvoke("setCenter(" + center.getJSconstructor() + ", " + zoom + ")");
 		else
 			return "";
@@ -539,8 +515,8 @@ public class OpenLayersMap extends Panel {
 		return getJSinvoke("setScrollWheelZoomEnabled(" + enabled + ")");
 	}
 
-	private String getJSsetZoom(int zoom) {
-		return getJSinvoke("setZoom(" + zoom + ")");
+	private String getJSsetZoom(Integer zoom) {
+		return zoom != null ? getJSinvoke("setZoom(" + zoom + ")") : "";
 	}
 
 	private String getJSzoomIn() {
@@ -559,7 +535,7 @@ public class OpenLayersMap extends Panel {
 		return Collections.unmodifiableList(overlays);
 	}
 
-	public int getZoom() {
+	public Integer getZoom() {
 		return zoom;
 	}
 
@@ -614,7 +590,7 @@ public class OpenLayersMap extends Panel {
 	 * @param center
 	 *            center to set
 	 */
-	public void setCenter(LonLat center, int zoom) {
+	public void setCenter(LonLat center, Integer zoom) {
 		if (!this.center.equals(center)) {
 			this.center = center;
 			this.zoom = zoom;
@@ -641,7 +617,7 @@ public class OpenLayersMap extends Panel {
 		}
 	}
 
-	public void setZoom(int level) {
+	public void setZoom(Integer level) {
 		if (this.zoom != level) {
 			this.zoom = level;
 
@@ -660,7 +636,7 @@ public class OpenLayersMap extends Panel {
 		// Attention: don't use setters as this will result in an endless
 		// AJAX request loop
 		bounds = Bounds.parse(request.getParameter("bounds"));
-		center = LonLat.parse(request.getParameter("center"));
+		center = LonLat.parseWithNames(request.getParameter("center"));
 		zoom = Integer.parseInt(request.getParameter("zoom"));
 
 		getInfoWindow().update(target);
@@ -692,4 +668,11 @@ public class OpenLayersMap extends Panel {
 		}
 	}
 
+	public void setBounds(Bounds bounds) {
+		this.bounds = bounds;
+	}
+
+	public void setCenter(LonLat center) {
+		setCenter(center, zoom);
+	}
 }

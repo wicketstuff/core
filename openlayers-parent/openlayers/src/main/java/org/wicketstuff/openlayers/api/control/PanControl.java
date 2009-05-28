@@ -5,7 +5,7 @@ import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.openlayers.OpenLayersMap;
+import org.wicketstuff.openlayers.IOpenLayersMap;
 
 /**
  * External controls
@@ -33,12 +33,12 @@ public class PanControl extends Panel {
 	 * @param id
 	 * @param map
 	 */
-	public PanControl(String id, OpenLayersMap map) {
+	public PanControl(String id, IOpenLayersMap map) {
 		this(id, map, panoffset);
 
 	}
 
-	public PanControl(String id, OpenLayersMap map, int panOffset) {
+	public PanControl(String id, IOpenLayersMap map, int panOffset) {
 		this(id, map, panOffset, PAN_UP, PAN_LEFT, PAN_RIGHT, PAN_DOWN);
 
 	}
@@ -55,7 +55,7 @@ public class PanControl extends Panel {
 	 * @param panRightResource
 	 * @param panDownResource
 	 */
-	public PanControl(String id, OpenLayersMap map, int panOffset,
+	public PanControl(String id, IOpenLayersMap map, int panOffset,
 			ResourceReference panUpResource, ResourceReference panLeftResource,
 			ResourceReference panRightResource,
 			ResourceReference panDownResource) {
