@@ -36,6 +36,7 @@ import org.wicketstuff.openlayers.api.LonLat;
 import org.wicketstuff.openlayers.api.Marker;
 import org.wicketstuff.openlayers.api.Overlay;
 import org.wicketstuff.openlayers.api.feature.Feature;
+import org.wicketstuff.openlayers.api.feature.FeatureStyle;
 import org.wicketstuff.openlayers.api.layer.Layer;
 import org.wicketstuff.openlayers.api.layer.Vector;
 import org.wicketstuff.openlayers.event.EventType;
@@ -50,14 +51,30 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	private final List<Feature> features;
 	private final List<Control> controls = new ArrayList<Control>();
 	private final List<Overlay> overlays = new ArrayList<Overlay>();
+	private final List<FeatureStyle> featureStyles;
 	private Vector featureLayer = null;
 	private boolean externalControls = false;
 	private Bounds bounds = null;
 	private LonLat center = null;
 	private Integer zoom = null;
 
+	public AjaxOpenLayersMap(final String id, final List<Layer> layers) {
+		this(id, layers, null);
+	}
+
+	public AjaxOpenLayersMap(final String id, final List<Layer> layers,
+			final HashMap<String, String> options) {
+		this(id, layers, options, null);
+	}
+
 	public AjaxOpenLayersMap(final String id, final List<Layer> layers,
 			final HashMap<String, String> options, final List<Feature> features) {
+		this(id, layers, options, features, null);
+	}
+
+	public AjaxOpenLayersMap(final String id, final List<Layer> layers,
+			final HashMap<String, String> options,
+			final List<Feature> features, final List<FeatureStyle> featureStyles) {
 		super(id);
 		setOutputMarkupId(true);
 		this.layers = (layers == null) ? new ArrayList<Layer>() : layers;
@@ -65,6 +82,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 				: options;
 		this.features = (features == null) ? new ArrayList<Feature>()
 				: features;
+		this.featureStyles = (featureStyles == null) ? new ArrayList<FeatureStyle>()
+				: featureStyles;
 		add(new HeaderContributor(new IHeaderContributor() {
 			private static final long serialVersionUID = 1L;
 
@@ -91,7 +110,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		}
 		pathToOpenLayersJS = pathToOpenLayersJS + "OpenLayers.js";
 		response.renderJavascriptReference(pathToOpenLayersJS);
-//		TODO Import all other JS files which will be used later on
+		// TODO Import all other JS files which will be used later on
 		response.renderJavascriptReference(WicketEventReference.INSTANCE);
 		response.renderJavascriptReference(WicketAjaxReference.INSTANCE);
 		response.renderJavascriptReference(new JavascriptResourceReference(
@@ -189,6 +208,57 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	}
 
 	/**
+	 * Add a layer.
+	 * 
+	 * @param layer
+	 *            layer to add
+	 * @return This
+	 */
+	public IOpenLayersMap addLayer(Layer layer) {
+		layers.add(layer);
+		if (AjaxRequestTarget.get() != null) {
+			AjaxRequestTarget.get().appendJavascript(layer.getJSAddLayer(this));
+		}
+		return this;
+	}
+
+	/**
+	 * Add a feature.
+	 * 
+	 * @param feature
+	 *            feature to add
+	 * @return This
+	 */
+	public IOpenLayersMap addFeature(Feature feature) {
+		features.add(feature);
+		if (featureLayer == null) {
+			featureLayer = new Vector("Vector");
+			addLayer(featureLayer);
+		}
+		if (AjaxRequestTarget.get() != null) {
+			AjaxRequestTarget.get().appendJavascript(
+					feature.getJSAddFeature(this, featureLayer));
+		}
+		return this;
+	}
+
+	/**
+	 * Add a feature style.
+	 * 
+	 * @param featureStyle
+	 *            featureStyle to add
+	 * @return This
+	 */
+	public IOpenLayersMap addFeatureStyle(FeatureStyle featureStyle) {
+		featureStyles.add(featureStyle);
+		if (AjaxRequestTarget.get() != null) {
+			AjaxRequestTarget.get().appendJavascript(
+					featureStyle.getJSAddStyle());
+		}
+		return this;
+	}
+
+	/**
 	 * Clear all overlays.
 	 * 
 	 * @return This
@@ -232,7 +302,9 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		} else {
 			js.append("new WicketOMap('" + this.getMarkupId() + "', null);\n");
 		}
-
+		for (FeatureStyle featureStyle : featureStyles) {
+			js.append(featureStyle.getJSAddStyle());
+		}
 		for (Layer layer : getLayers()) {
 			js.append(layer.getJSAddLayer(this));
 		}
@@ -254,8 +326,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	}
 
 	/**
-	 * Convenience method for generating a JavaScript call on this AjaxOpenLayersMap
-	 * with the given invocation.
+	 * Convenience method for generating a JavaScript call on this
+	 * AjaxOpenLayersMap with the given invocation.
 	 * 
 	 * @param invocation
 	 *            The JavaScript call to invoke on this AjaxOpenLayersMap.
@@ -349,7 +421,6 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	public String getJSInstance() {
 		return "Wicket.omaps['" + this.getMarkupId() + "']";
 	}
-	
 
 	public List<Overlay> getOverlays() {
 		return Collections.unmodifiableList(overlays);

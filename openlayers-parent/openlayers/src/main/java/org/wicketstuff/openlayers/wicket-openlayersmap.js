@@ -69,6 +69,10 @@ function WicketOMap(id, options) {
 		var self = this;
 		layer.addFeatures([feature]);
 	}
+	this.removeFeature = function (feature, layer) {
+		var self = this;
+		layer.removeFeatures([feature]);
+	}
 	this.setCenter = function (center, zoom) {
 		var self = this;
 		self.map.setCenter(center, zoom);		
