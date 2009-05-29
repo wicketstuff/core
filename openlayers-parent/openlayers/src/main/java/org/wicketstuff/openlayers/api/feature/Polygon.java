@@ -20,11 +20,16 @@ import java.util.List;
 import com.vividsolutions.jts.geom.Coordinate;
 
 public class Polygon extends Feature {
-
+	private static final long serialVersionUID = 2381878612322151640L;
 	private final List<Coordinate> coordinates;
 
 	public Polygon(List<Coordinate> coordinates) {
 		super();
+		this.coordinates = coordinates;
+	}
+
+	public Polygon(List<Coordinate> coordinates, FeatureStyle featureStyle) {
+		super(featureStyle);
 		this.coordinates = coordinates;
 	}
 

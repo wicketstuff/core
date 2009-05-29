@@ -23,7 +23,15 @@ import org.wicketstuff.openlayers.api.layer.Vector;
 import com.vividsolutions.jts.geom.Coordinate;
 
 public abstract class Feature implements Serializable {
+	private static final long serialVersionUID = 364944041007700590L;
+	private FeatureStyle featureStyle = null;
 
+	public Feature() {}
+	
+	public Feature(FeatureStyle featureStyle) {
+		this.featureStyle = featureStyle;
+	}
+	
 	public String getId() {
 		return String.valueOf(System.identityHashCode(this));
 	}
@@ -34,7 +42,7 @@ public abstract class Feature implements Serializable {
 				+ getId()
 				+ " = new OpenLayers.Feature.Vector(feature"
 				+ getId()
-				+ ", null, null);\n"
+				+ ", null, " + (featureStyle != null ? "layer_style" + featureStyle.getId() : "null") + ");\n"
 				+ map.getJSinvoke("addFeature(draw" + getId() + ", layer"
 						+ vector.getId() + ")");
 	}
@@ -45,4 +53,12 @@ public abstract class Feature implements Serializable {
 	}
 
 	public abstract String getJSconstructor();
+
+	public void setFeatureStyle(FeatureStyle featureStyle) {
+		this.featureStyle = featureStyle;
+	}
+
+	public FeatureStyle getFeatureStyle() {
+		return featureStyle;
+	}
 }
