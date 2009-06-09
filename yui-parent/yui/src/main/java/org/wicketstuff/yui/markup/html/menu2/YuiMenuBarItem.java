@@ -1,5 +1,7 @@
 package org.wicketstuff.yui.markup.html.menu2;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -31,6 +33,22 @@ public class YuiMenuBarItem extends AbstractYuiMenuItem {
 			if (link.getId().equals(LINK_ID) == false) {
 				throw new RuntimeException("Link's id needs to be 'link' ");
 			}
+		} else if (action instanceof IYuiMenuAjaxAction) {
+			link = new AjaxFallbackLink(LINK_ID, action.getName()) {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onClick(AjaxRequestTarget target) {
+					if(action instanceof IYuiMenuAjaxAction && target != null)
+					{
+						((IYuiMenuAjaxAction) action).onClick(target, LINK_ID);
+					}
+					else
+					{
+						action.onClick();
+					}
+				}
+			};
 		} else {
 			link = new Link(LINK_ID, action.getName()) {
 
