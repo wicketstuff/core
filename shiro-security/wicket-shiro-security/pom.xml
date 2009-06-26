@@ -32,26 +32,32 @@
 
 	<name>Apache Shiro Security for Wicket</name>
 	<description>
-		Shiro Security for Apache Wicket.  (The project formerly known as Apache Ki and JSecurity)
+		Shiro Security for Apache Wicket.  (Shiro was formerly known as Apache Ki and JSecurity)
 	</description>
 
     <dependencies>
     
+<!--
         <dependency>
             <groupId>org.jsecurity</groupId>
             <artifactId>jsecurity</artifactId>
             <version>0.9.0</version>
             <scope>compile</scope>
         </dependency>
-<!--
+-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
             <version>1.0-incubating-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
--->
-		
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>1.0-incubating-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+			
 		<!-- servlet api -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -60,7 +66,13 @@
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
-        
+
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
