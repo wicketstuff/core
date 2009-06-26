@@ -9,7 +9,7 @@ import org.apache.wicket.model.IModel;
  * A simple wrapper for to access {@link SecurityUtils#getSubject()}
  * as an {@link IModel}
  */
-public class KiSubjectModel extends AbstractReadOnlyModel<Subject>
+public class ShiroSubjectModel extends AbstractReadOnlyModel<Subject>
 {
   @Override
   public Subject getObject() {

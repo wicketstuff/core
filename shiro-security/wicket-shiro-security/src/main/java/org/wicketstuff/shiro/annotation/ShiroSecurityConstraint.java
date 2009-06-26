@@ -26,19 +26,19 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.apache.wicket.Page;
-import org.wicketstuff.shiro.KiAction;
-import org.wicketstuff.shiro.KiConstraint;
+import org.wicketstuff.shiro.ShiroAction;
+import org.wicketstuff.shiro.ShiroConstraint;
 
 
 @Target( ElementType.TYPE )
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface KiSecurityConstraint {
+public @interface ShiroSecurityConstraint {
   
-  KiAction action() default KiAction.INSTANTIATE; 
+  ShiroAction action() default ShiroAction.INSTANTIATE; 
   
-  KiConstraint constraint();  
+  ShiroConstraint constraint();  
   String value() default "";
 
   // optional

@@ -17,14 +17,14 @@
 package org.wicketstuff.shiro.test;
 
 import org.apache.wicket.markup.html.WebPage;
-import org.wicketstuff.shiro.KiConstraint;
-import org.wicketstuff.shiro.annotation.KiSecurityConstraint;
+import org.wicketstuff.shiro.ShiroConstraint;
+import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
 
 /**
  * Test page that should only be available for role ADMIN.
  */
-@KiSecurityConstraint( 
-  constraint = KiConstraint.HasPermission, 
+@ShiroSecurityConstraint( 
+  constraint = ShiroConstraint.HasPermission, 
   value      = "something:print" 
 )
 public class AdminPage extends WebPage

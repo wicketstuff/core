@@ -27,12 +27,12 @@ import org.apache.wicket.authorization.Action;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.shiro.KiAction;
+import org.wicketstuff.shiro.ShiroAction;
 
 
-public class AnnotationsKiAuthorizationStrategy implements IAuthorizationStrategy 
+public class AnnotationsShiroAuthorizationStrategy implements IAuthorizationStrategy 
 { 
-  static final Logger log = LoggerFactory.getLogger( AnnotationsKiAuthorizationStrategy.class );
+  static final Logger log = LoggerFactory.getLogger( AnnotationsShiroAuthorizationStrategy.class );
     
   /**
    * @see org.apache.wicket.authorization.IAuthorizationStrategy#isInstantiationAuthorized(java.lang.Class)
@@ -48,11 +48,11 @@ public class AnnotationsKiAuthorizationStrategy implements IAuthorizationStrateg
     return true;
   }
 
-  public <T extends Component> KiSecurityConstraint checkInvalidInstantiation( final Class<T> componentClass )
+  public <T extends Component> ShiroSecurityConstraint checkInvalidInstantiation( final Class<T> componentClass )
   {
-    KiSecurityConstraint fail = checkInvalidInstantiation( componentClass.getAnnotations(), KiAction.INSTANTIATE );
+    ShiroSecurityConstraint fail = checkInvalidInstantiation( componentClass.getAnnotations(), ShiroAction.INSTANTIATE );
     if( fail == null ) {
-      fail = checkInvalidInstantiation( componentClass.getPackage().getAnnotations(), KiAction.INSTANTIATE );
+      fail = checkInvalidInstantiation( componentClass.getPackage().getAnnotations(), ShiroAction.INSTANTIATE );
     }
     return fail;
   }
@@ -62,7 +62,7 @@ public class AnnotationsKiAuthorizationStrategy implements IAuthorizationStrateg
    * @param clazz
    * @return null if ok, or the Annotation that failed
    */
-  protected KiSecurityConstraint checkInvalidInstantiation( Annotation[] annotations, KiAction action )
+  protected ShiroSecurityConstraint checkInvalidInstantiation( Annotation[] annotations, ShiroAction action )
   {
     if( annotations == null ) {
       return null;
@@ -70,8 +70,8 @@ public class AnnotationsKiAuthorizationStrategy implements IAuthorizationStrateg
     
     for( Annotation annotation : annotations ) {
       // Check Permissions
-      if( annotation instanceof KiSecurityConstraint ) {
-        KiSecurityConstraint constraint = (KiSecurityConstraint)annotation;
+      if( annotation instanceof ShiroSecurityConstraint ) {
+        ShiroSecurityConstraint constraint = (ShiroSecurityConstraint)annotation;
         if( action == constraint.action() ) {
           SecurityManager sm = ThreadContext.getSecurityManager();
           Subject subject = SecurityUtils.getSubject();
@@ -112,11 +112,11 @@ public class AnnotationsKiAuthorizationStrategy implements IAuthorizationStrateg
 
   public boolean isActionAuthorized(final Component component, final Action action) {
     
-    KiAction _action = (action.getName().equals( Action.RENDER ) ) 
-      ? KiAction.RENDER : KiAction.ENABLE;
+    ShiroAction _action = (action.getName().equals( Action.RENDER ) ) 
+      ? ShiroAction.RENDER : ShiroAction.ENABLE;
     
     Class<? extends Component> clazz = component.getClass();
-    KiSecurityConstraint fail = checkInvalidInstantiation( clazz.getAnnotations(), _action );
+    ShiroSecurityConstraint fail = checkInvalidInstantiation( clazz.getAnnotations(), _action );
     if( fail == null ) {
       fail = checkInvalidInstantiation( clazz.getPackage().getAnnotations(), _action );
     }
