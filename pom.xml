@@ -44,7 +44,9 @@
 		<module>ki-security</module>
 		<module>sitemap-xml-parent</module>		
     	<module>multi-text-input-parent</module>
-    	<module>shiro-security</module>
+	<!-- commented out until org.apache.shiro dependencies are available -->
+	<!-- see http://www.nabble.com/Migration-of-wicket-ki-security-to-wicket-shiro-security-td24216686.html -->
+    	<!--<module>shiro-security</module>-->
   </modules>
 
 	<licenses>
