@@ -21,7 +21,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.wicketstuff.ki.example.ExampleApplication;
+import org.wicketstuff.shiro.example.ExampleApplication;
 
 public class ExampleSpringApp extends ExampleApplication
 {

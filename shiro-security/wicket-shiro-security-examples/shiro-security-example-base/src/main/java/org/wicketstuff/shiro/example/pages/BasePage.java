@@ -1,12 +1,12 @@
-package org.wicketstuff.ki.example.pages;
+package org.wicketstuff.shiro.example.pages;
 
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.wicketstuff.ki.component.KiConfigInfoPanel;
-import org.wicketstuff.ki.component.SimpleAuthHeader;
-import org.wicketstuff.ki.example.ExampleApplication;
+import org.wicketstuff.shiro.component.ShiroConfigInfoPanel;
+import org.wicketstuff.shiro.component.SimpleAuthHeader;
+import org.wicketstuff.shiro.example.ExampleApplication;
 
 /**
  * Simple index page
@@ -30,7 +30,7 @@ public abstract class BasePage extends WebPage
 
 		add( new Label("appname", getApplication().getClass().getName() ) );
     add( ((ExampleApplication)getApplication()).getExampleInfoPanel("example") );
-		add(new KiConfigInfoPanel("info"));
+		add(new ShiroConfigInfoPanel("info"));
 	}
 	
 

@@ -1,4 +1,4 @@
-package org.wicketstuff.ki.example.pages;
+package org.wicketstuff.shiro.example.pages;
 
 
 /**

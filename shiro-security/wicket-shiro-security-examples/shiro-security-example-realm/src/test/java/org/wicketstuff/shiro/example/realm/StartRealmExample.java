@@ -18,7 +18,7 @@
  */
 package org.wicketstuff.shiro.example.realm;
 
-import org.wicketstuff.ki.example.ExampleRunner;
+import org.wicketstuff.shiro.example.ExampleRunner;
 
 public class StartRealmExample
 {

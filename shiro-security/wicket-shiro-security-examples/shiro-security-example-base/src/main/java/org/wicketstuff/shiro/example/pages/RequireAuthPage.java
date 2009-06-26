@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.ki.example.pages;
+package org.wicketstuff.shiro.example.pages;
 
-import org.wicketstuff.ki.KiConstraint;
-import org.wicketstuff.ki.annotation.KiSecurityConstraint;
+import org.wicketstuff.shiro.ShiroConstraint;
+import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
 
-@KiSecurityConstraint( 
-  constraint = KiConstraint.IsAuthenticated
+@ShiroSecurityConstraint( 
+  constraint = ShiroConstraint.IsAuthenticated
 )
 public class RequireAuthPage extends BasePage
 {

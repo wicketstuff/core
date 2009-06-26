@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.ki.example.pages;
+package org.wicketstuff.shiro.example.pages;
 
-import org.wicketstuff.ki.KiConstraint;
-import org.wicketstuff.ki.annotation.KiSecurityConstraint;
+import org.wicketstuff.shiro.ShiroConstraint;
+import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
 
-@KiSecurityConstraint( 
-  constraint   = KiConstraint.HasRole, 
+@ShiroSecurityConstraint( 
+  constraint   = ShiroConstraint.HasRole, 
   value        = "admin",
   loginMessage = "You must be logged in to view this page",
   unauthorizedMessage = "You need to be an ADMIN"

@@ -1,6 +1,6 @@
-package org.wicketstuff.ki.example.pages;
+package org.wicketstuff.shiro.example.pages;
 
-import org.wicketstuff.ki.component.LoginPanel;
+import org.wicketstuff.shiro.component.LoginPanel;
 
 
 /**
