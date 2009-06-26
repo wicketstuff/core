@@ -21,11 +21,11 @@
 
 	<parent>
 		<groupId>org.wicketstuff</groupId>
-		<artifactId>wicket-shiro-security-parent</artifactId>
+		<artifactId>wicket-shiro-parent</artifactId>
 		<version>1.4-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>wicket-shiro-security-examples</artifactId>
+	<artifactId>wicket-shiro-examples</artifactId>
 	<packaging>pom</packaging>
 
 	<name>Apache Shiro Security for Wicket - Examples</name>
@@ -78,9 +78,9 @@
 	</dependencies>
 
 	<modules>
-		<module>shiro-security-example-base</module>
-		<module>shiro-security-example-realm</module>
-		<module>shiro-security-example-spring-jdbc</module>
+		<module>shiro-example-base</module>
+		<module>shiro-example-realm</module>
+		<module>shiro-example-spring-jdbc</module>
 	</modules>
 
 </project>

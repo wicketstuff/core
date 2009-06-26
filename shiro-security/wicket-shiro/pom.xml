@@ -22,12 +22,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.wicketstuff</groupId>
-		<artifactId>wicket-shiro-security-parent</artifactId>
+		<artifactId>wicket-shiro-parent</artifactId>
 		<version>1.4-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>wicket-shiro-security</artifactId>
+	<artifactId>wicket-shiro</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Apache Shiro Security for Wicket</name>
