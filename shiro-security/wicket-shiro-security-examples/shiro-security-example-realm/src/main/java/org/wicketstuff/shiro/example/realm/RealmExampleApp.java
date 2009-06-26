@@ -17,7 +17,7 @@
 package org.wicketstuff.shiro.example.realm;
 
 import org.apache.wicket.Component;
-import org.wicketstuff.ki.example.ExampleApplication;
+import org.wicketstuff.shiro.example.ExampleApplication;
 
 public class RealmExampleApp extends ExampleApplication
 {

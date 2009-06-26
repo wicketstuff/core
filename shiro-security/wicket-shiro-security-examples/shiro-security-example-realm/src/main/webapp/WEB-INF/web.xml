@@ -28,7 +28,7 @@
                # http://www.jsecurity.org/api/org/jsecurity/web/servlet/JSecurityFilter.html
 
 							 [main]
-							 stupidRealm = org.wicketstuff.ki.example.realm.SillyRealm
+							 stupidRealm = org.wicketstuff.shiro.example.realm.SillyRealm
            </param-value>
         </init-param>
     </filter>

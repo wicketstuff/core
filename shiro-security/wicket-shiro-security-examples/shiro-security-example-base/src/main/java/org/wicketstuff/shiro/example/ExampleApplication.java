@@ -13,21 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.ki.example;
+package org.wicketstuff.shiro.example;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
-import org.apache.wicket.authorization.UnauthorizedInstantiationException;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.wicketstuff.ki.annotation.AnnotationsKiAuthorizationStrategy;
-import org.wicketstuff.ki.authz.KiUnauthorizedComponentListener;
-import org.wicketstuff.ki.example.pages.IndexPage;
-import org.wicketstuff.ki.example.pages.LoginPage;
-import org.wicketstuff.ki.example.pages.RequireAdminRolePage;
-import org.wicketstuff.ki.example.pages.RequireAuthPage;
-import org.wicketstuff.ki.example.pages.RequireViewPermissionPage;
-import org.wicketstuff.ki.example.pages.UnauthorizedPage;
-import org.wicketstuff.ki.page.LogoutPage;
+import org.wicketstuff.shiro.annotation.AnnotationsShiroAuthorizationStrategy;
+import org.wicketstuff.shiro.authz.ShiroUnauthorizedComponentListener;
+import org.wicketstuff.shiro.example.pages.IndexPage;
+import org.wicketstuff.shiro.example.pages.LoginPage;
+import org.wicketstuff.shiro.example.pages.RequireAdminRolePage;
+import org.wicketstuff.shiro.example.pages.RequireAuthPage;
+import org.wicketstuff.shiro.example.pages.RequireViewPermissionPage;
+import org.wicketstuff.shiro.example.pages.UnauthorizedPage;
+import org.wicketstuff.shiro.page.LogoutPage;
 
 /**
  * 
@@ -40,11 +39,11 @@ public abstract class ExampleApplication extends WebApplication
 	{
 		getMarkupSettings().setStripWicketTags(true);
 		
-		AnnotationsKiAuthorizationStrategy authz = new AnnotationsKiAuthorizationStrategy();
+		AnnotationsShiroAuthorizationStrategy authz = new AnnotationsShiroAuthorizationStrategy();
 		getSecuritySettings().setAuthorizationStrategy(authz);
 
 		getSecuritySettings().setUnauthorizedComponentInstantiationListener(
-			new KiUnauthorizedComponentListener(LoginPage.class, UnauthorizedPage.class, authz));
+			new ShiroUnauthorizedComponentListener(LoginPage.class, UnauthorizedPage.class, authz));
 
 		mountBookmarkablePage("account/login", LoginPage.class);
 		mountBookmarkablePage("account/logout", LogoutPage.class);

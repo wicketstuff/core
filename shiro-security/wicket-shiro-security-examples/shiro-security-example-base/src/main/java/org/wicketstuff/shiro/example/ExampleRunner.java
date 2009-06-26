@@ -1,4 +1,4 @@
-package org.wicketstuff.ki.example;
+package org.wicketstuff.shiro.example;
 
 import java.lang.management.ManagementFactory;
 
