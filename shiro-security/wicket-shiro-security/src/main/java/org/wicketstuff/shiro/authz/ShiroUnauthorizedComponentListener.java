@@ -8,19 +8,19 @@ import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.Session;
 import org.apache.wicket.authorization.IUnauthorizedComponentInstantiationListener;
-import org.wicketstuff.shiro.annotation.AnnotationsKiAuthorizationStrategy;
-import org.wicketstuff.shiro.annotation.KiSecurityConstraint;
+import org.wicketstuff.shiro.annotation.AnnotationsShiroAuthorizationStrategy;
+import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
 
-public class KiUnauthorizedComponentListener implements IUnauthorizedComponentInstantiationListener 
+public class ShiroUnauthorizedComponentListener implements IUnauthorizedComponentInstantiationListener 
 {
   private final Class<? extends Page> loginPage;
   private final Class<? extends Page> unauthorizedPage;
-  private AnnotationsKiAuthorizationStrategy annotationStrategy = null;
+  private AnnotationsShiroAuthorizationStrategy annotationStrategy = null;
   
-  public KiUnauthorizedComponentListener( 
+  public ShiroUnauthorizedComponentListener( 
       Class<? extends Page> loginPage, 
       Class<? extends Page> unauthorizedPage, 
-      AnnotationsKiAuthorizationStrategy s  ) 
+      AnnotationsShiroAuthorizationStrategy s  ) 
   {
     this.loginPage = loginPage;
     this.unauthorizedPage = unauthorizedPage;
@@ -34,7 +34,7 @@ public class KiUnauthorizedComponentListener implements IUnauthorizedComponentIn
     Class<? extends Page> page = notLoggedIn ? loginPage : unauthorizedPage;
     
     if( annotationStrategy != null ) {
-      KiSecurityConstraint fail = annotationStrategy.checkInvalidInstantiation(  component.getClass() );
+      ShiroSecurityConstraint fail = annotationStrategy.checkInvalidInstantiation(  component.getClass() );
       if( fail != null ) {
         if( notLoggedIn ) {
           addLoginMessagesAndGetPage(fail, component, page);
@@ -54,12 +54,12 @@ public class KiUnauthorizedComponentListener implements IUnauthorizedComponentIn
   }
   
 
-  public AnnotationsKiAuthorizationStrategy getAnnotationStrategy() {
+  public AnnotationsShiroAuthorizationStrategy getAnnotationStrategy() {
     return annotationStrategy;
   }
 
   public void setAnnotationStrategy(
-      AnnotationsKiAuthorizationStrategy annotationStrategy) {
+      AnnotationsShiroAuthorizationStrategy annotationStrategy) {
     this.annotationStrategy = annotationStrategy;
   }
 
@@ -67,7 +67,7 @@ public class KiUnauthorizedComponentListener implements IUnauthorizedComponentIn
   //----------------------------------------------------------------------------
   
   protected Class<? extends Page> addUnauthorizedMessagesAndGetPage( 
-      KiSecurityConstraint constraint, 
+      ShiroSecurityConstraint constraint, 
       Component component, 
       Class<? extends Page> page )
   {
@@ -81,7 +81,7 @@ public class KiUnauthorizedComponentListener implements IUnauthorizedComponentIn
   }
 
   protected Class<? extends Page> addLoginMessagesAndGetPage( 
-      KiSecurityConstraint constraint, 
+      ShiroSecurityConstraint constraint, 
       Component component, 
       Class<? extends Page> page )
   {   
@@ -95,7 +95,7 @@ public class KiUnauthorizedComponentListener implements IUnauthorizedComponentIn
   }
   
   
-  protected String getMessage( String key, KiSecurityConstraint anno, Component comp )
+  protected String getMessage( String key, ShiroSecurityConstraint anno, Component comp )
   {
     return key; // TODO, this could be more complicated....
   }

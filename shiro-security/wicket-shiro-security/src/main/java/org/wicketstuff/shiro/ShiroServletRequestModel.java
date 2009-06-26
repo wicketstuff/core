@@ -7,7 +7,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.protocol.http.WebRequestCycle;
 
 
-public class KiServletRequestModel extends LoadableDetachableModel<HttpServletRequest>
+public class ShiroServletRequestModel extends LoadableDetachableModel<HttpServletRequest>
 {
   @Override
   protected HttpServletRequest load() {

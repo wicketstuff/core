@@ -1,6 +1,6 @@
 package org.wicketstuff.shiro;
 
-public enum KiConstraint {
+public enum ShiroConstraint {
   HasRole,
   HasPermission,
   IsAuthenticated,  // in this session

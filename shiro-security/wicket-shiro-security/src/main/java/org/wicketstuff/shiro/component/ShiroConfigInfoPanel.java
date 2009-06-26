@@ -22,18 +22,18 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
-import org.wicketstuff.shiro.KiServletRequestModel;
-import org.wicketstuff.shiro.KiSubjectModel;
+import org.wicketstuff.shiro.ShiroServletRequestModel;
+import org.wicketstuff.shiro.ShiroSubjectModel;
 
 
 
-public class KiConfigInfoPanel extends Panel
+public class ShiroConfigInfoPanel extends Panel
 { 
-	public KiConfigInfoPanel(String id)
+	public ShiroConfigInfoPanel(String id)
 	{
 	  super( id );
 	  
-	  IModel<?> model = new KiServletRequestModel();
+	  IModel<?> model = new ShiroServletRequestModel();
     WebMarkupContainer request = new WebMarkupContainer( "request",
         new CompoundPropertyModel( model ) );
     request.add( new Label("toString", model ));
@@ -48,7 +48,7 @@ public class KiConfigInfoPanel extends Panel
     request.add( new Label("RequestedSessionIdValid" ));
     add( request );
     
-	  model = new KiSubjectModel();
+	  model = new ShiroSubjectModel();
     WebMarkupContainer subject = new WebMarkupContainer( "subject",
         new CompoundPropertyModel<SecurityManager>( model ) );
     subject.add( new Label("toString", model ));
