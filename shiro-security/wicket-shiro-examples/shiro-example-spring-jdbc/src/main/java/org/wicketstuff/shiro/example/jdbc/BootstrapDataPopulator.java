@@ -73,53 +73,47 @@ public class BootstrapDataPopulator implements InitializingBean
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		jdbcTemplate.execute(CREATE_TABLES);
 
-		// password is 'user1' SHA hashed and base64 encoded:
+		// password is 'user' SHA hashed and base64 encoded:
 		// The first argument to the hash constructor is the actual value to be hased. The 2nd is
 		// the
 		// salt. In this simple demo scenario, the username and the password are the same, but to
 		// clarify the
 		// distinction, you would see this in practice:
 		// new Sha256Hash( <password>, <username> )
-		String query = "insert into users values ('user1', '" +
-			new Sha256Hash("user1", "user1").toBase64() + "' )";
+		String query = "insert into users values ('user', '" +
+			new Sha256Hash("user", "user").toBase64() + "' )";
 		jdbcTemplate.execute(query);
-		log.debug("Created user1.");
+		log.debug("Created user.");
 
-		// password is 'user2' SHA hashed and base64 encoded:
-		query = "insert into users values ( 'user2', '" +
-			new Sha256Hash("user2", "user2").toBase64() + "' )";
+		// password is 'admin' SHA hashed and base64 encoded:
+		query = "insert into users values ( 'admin', '" +
+			new Sha256Hash("admin", "admin").toBase64() + "' )";
 		jdbcTemplate.execute(query);
-		log.debug("Created user2.");
+		log.debug("Created admin.");
 
-		query = "insert into roles values ( 'role1' )";
+		query = "insert into roles values ( 'user' )";
 		jdbcTemplate.execute(query);
-		log.debug("Created role1");
+		log.debug("Created user");
 
-		query = "insert into roles values ( 'role2' )";
+		query = "insert into roles values ( 'admin' )";
 		jdbcTemplate.execute(query);
-		log.debug("Created role2");
+		log.debug("Created admin");
 
-		query = "insert into roles_permissions values ( 'role1', 'permission1')";
+		query = "insert into roles_permissions values ( 'user', 'view')";
 		jdbcTemplate.execute(query);
-		log.debug("Created permission 1 for role 1");
+		log.debug("Created permission view for role user");
 
-		query = "insert into roles_permissions values ( 'role1', 'permission2')";
+		query = "insert into roles_permissions values ( 'admin', 'user:*')";
 		jdbcTemplate.execute(query);
-		log.debug("Created permission 2 for role 1");
+		log.debug("Created permission user:* for role admin");
 
-		query = "insert into roles_permissions values ( 'role2', 'permission1')";
+		query = "insert into user_roles values ( 'user', 'user' )";
 		jdbcTemplate.execute(query);
-		log.debug("Created permission 1 for role 2");
+		log.debug("Assigned user role user");
 
-		query = "insert into user_roles values ( 'user1', 'role1' )";
+		query = "insert into user_roles values ( 'admin', 'admin' )";
 		jdbcTemplate.execute(query);
-		query = "insert into user_roles values ( 'user1', 'role2' )";
-		jdbcTemplate.execute(query);
-		log.debug("Assigned user1 roles role1 and role2");
-
-		query = "insert into user_roles values ( 'user2', 'role2' )";
-		jdbcTemplate.execute(query);
-		log.debug("Assigned user2 role role2");
+		log.debug("Assigned admin role admin");
 	}
 
 }

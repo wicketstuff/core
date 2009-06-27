@@ -14,17 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.shiro.example.spring;
+package org.wicketstuff.shiro.example.sprhib;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.wicketstuff.shiro.component.SimpleAuthHeader;
 import org.wicketstuff.shiro.example.ExampleApplication;
 import org.wicketstuff.shiro.example.pages.LoginPage;
 
-public class ExampleSpringApp extends ExampleApplication
+public class ExampleHibernateApp extends ExampleApplication
 {
 	@Override
 	protected void init()
@@ -42,13 +41,12 @@ public class ExampleSpringApp extends ExampleApplication
 
   @Override
   public Component getExampleInfoPanel(String id) {
-//    return new Label(id, "woohoo!");
     return new ExampleInfoPanel( id );
   }
   
   @Override
 	public Component getAuthHeaderPanel(String id) {
-	  return new SimpleAuthHeader(id, LoginPage.class);
+	  return new UserAuthHeader(id, LoginPage.class);
 	}
 
 }

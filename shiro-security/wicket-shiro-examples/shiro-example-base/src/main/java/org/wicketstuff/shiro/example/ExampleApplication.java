@@ -54,6 +54,8 @@ public abstract class ExampleApplication extends WebApplication
 	}
 
   public abstract Component getExampleInfoPanel( String id );
+  public abstract Component getAuthHeaderPanel(String id);
+  
   
 	@Override
 	public Class<? extends Page> getHomePage()

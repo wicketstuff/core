@@ -5,7 +5,6 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.wicketstuff.shiro.component.ShiroConfigInfoPanel;
-import org.wicketstuff.shiro.component.SimpleAuthHeader;
 import org.wicketstuff.shiro.example.ExampleApplication;
 
 /**
@@ -19,8 +18,9 @@ public abstract class BasePage extends WebPage
 	public BasePage()
 	{
 		add(new Label("title", getTitle()));
-		add(new SimpleAuthHeader("headerAuth", LoginPage.class));
-
+//		add(new SimpleAuthHeader("headerAuth", LoginPage.class));
+		add(((ExampleApplication)getApplication()).getAuthHeaderPanel("headerAuth"));
+		
 		WebMarkupContainer links = new WebMarkupContainer("links");
 		links.add(new BookmarkablePageLink<Void>("home", IndexPage.class));
 		links.add(new BookmarkablePageLink<Void>("admin", RequireAdminRolePage.class));
@@ -35,4 +35,5 @@ public abstract class BasePage extends WebPage
 	
 
 	abstract String getTitle();
+	
 }
