@@ -6,6 +6,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.version.undo.Change;
 import org.wicketstuff.yui.behavior.dragdrop.YuiDDList;
 import org.wicketstuff.yui.helper.CollectionsHelper;
@@ -57,6 +58,12 @@ public abstract class YuiDDListView<T> extends ListView<T>
 		setOutputMarkupId(true);
 	}
 
+	public YuiDDListView(String id, IModel<List<T>> model)
+	{
+		super(id, model);
+		setOutputMarkupId(true);
+	}
+	
 	@Override
 	protected void populateItem(final ListItem<T> item)
 	{
