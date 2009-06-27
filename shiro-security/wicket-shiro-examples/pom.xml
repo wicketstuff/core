@@ -81,6 +81,7 @@
 		<module>shiro-example-base</module>
 		<module>shiro-example-realm</module>
 		<module>shiro-example-spring-jdbc</module>
+		<module>shiro-example-spring-hibernate</module>
 	</modules>
 
 </project>
