@@ -17,6 +17,6 @@ public class IndexPage extends BasePage
 	@Override
 	public String getTitle()
 	{
-		return "Ki Security for Apache Wicket -- example";
+		return "Shiro for Apache Wicket -- example app";
 	}
 }

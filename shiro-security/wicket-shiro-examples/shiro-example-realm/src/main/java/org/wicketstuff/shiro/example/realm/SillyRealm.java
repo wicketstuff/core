@@ -94,6 +94,7 @@ public class SillyRealm extends AuthorizingRealm
 		account.addStringPermission("printer:print:laserjet2000"); // allowed to 'print' to the
 		// 'printer' identified
 		// by the id 'laserjet2000'
+		account.addStringPermission("view"); // all users have view permission
 
 		return account;
 	}

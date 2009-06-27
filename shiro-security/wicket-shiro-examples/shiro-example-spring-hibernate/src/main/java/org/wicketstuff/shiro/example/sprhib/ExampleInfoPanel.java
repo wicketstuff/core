@@ -14,21 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.shiro.example.realm;
+package org.wicketstuff.shiro.example.sprhib;
 
-import org.apache.wicket.Component;
-import org.wicketstuff.shiro.component.SimpleAuthHeader;
-import org.wicketstuff.shiro.example.ExampleApplication;
-import org.wicketstuff.shiro.example.pages.LoginPage;
+import org.apache.wicket.markup.html.panel.Panel;
 
-public class RealmExampleApp extends ExampleApplication
-{
-  @Override
-  public Component getExampleInfoPanel(String id) {
-    return new ExampleInfoPanel( id );
-  }
-  @Override
-	public Component getAuthHeaderPanel(String id) {
-	  return new SimpleAuthHeader(id, LoginPage.class);
+
+
+public class ExampleInfoPanel extends Panel
+{ 
+	public ExampleInfoPanel(String id)
+	{
+	  super( id );
 	}
 }
