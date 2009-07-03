@@ -60,7 +60,7 @@ public class YuiPanelPage extends WicketExamplePage
 				return "{ " + "close:false, " + "draggable : false,"
 						+ "width: '520px', height : '440px', "
 						+ "autofillheight:'body', constraintoviewport : true"
-				
+
 						+ " }";
 			}
 
@@ -107,6 +107,14 @@ public class YuiPanelPage extends WicketExamplePage
 						protected String getOpts()
 						{
 							return YuiPanelPage.this.opts;
+						}
+
+						@Override
+						protected void onHide(AjaxRequestTarget target, String type)
+						{
+							super.onHide(target, type);
+							YuiPanelPage.this.replace(new EmptyPanel("yuiPanel"));
+
 						}
 					});
 

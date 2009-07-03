@@ -4,7 +4,10 @@ import java.io.Serializable;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
+import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ResourceReference;
+import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -31,6 +34,10 @@ public class YuiPanel extends Panel implements Serializable
 
 	private WebMarkupContainer yuiPanel;
 
+	private AbstractDefaultAjaxBehavior ajaxBehavior;
+
+	private static final String EVENT_TYPE = "type";
+
 	public YuiPanel(String id, IModel<?> model)
 	{
 		super(id, model);
@@ -45,6 +52,20 @@ public class YuiPanel extends Panel implements Serializable
 
 	private void init()
 	{
+
+		add(ajaxBehavior = new AbstractDefaultAjaxBehavior()
+		{
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void respond(AjaxRequestTarget target)
+			{
+				final String type = RequestCycle.get().getRequest().getParameter(EVENT_TYPE);
+				onHide(target, type);
+			}
+		});
+
 		add(container = new WebMarkupContainer("yuiPanel_container"));
 		container.add(new AttributeModifier("class", true, new Model<String>(getCssClass())));
 
@@ -111,6 +132,10 @@ public class YuiPanel extends Panel implements Serializable
 		}));
 	}
 
+	protected void onHide(AjaxRequestTarget target, String type)
+	{
+	}
+
 	protected Component newFooterPanel(String id)
 	{
 		return new Label(id, "FOOTER");
@@ -134,14 +159,21 @@ public class YuiPanel extends Panel implements Serializable
 	public String getInitJS()
 	{
 		return "var " + getYuiPanelVar() + " = new YAHOO.widget.Panel(\"" + getYuiPanelId() + "\","
-				+ getOpts() + ");" + getYuiPanelVar() + ".render();\n";
+				+ getOpts() + ");" + getYuiPanelVar() + ".render();\n"
+				+ subscribeEventCallback("hide");
+	}
+
+	protected String subscribeEventCallback(String jsEvent)
+	{
+		return getYuiPanelVar() + ".subscribe(\"hide\", function(type, args) { "
+				+ "wicketAjaxGet('" + ajaxBehavior.getCallbackUrl(true) + "&" + EVENT_TYPE
+				+ "='+type);" + " } );";
 	}
 
 	private String getResizeOpts()
 	{
 		return "{ handles : ['br'], proxy: true, status: true, animate: true, animateDuration: .75, "
 				+ "animateEasing: YAHOO.util.Easing.backBoth}";
-
 	}
 
 	protected String getOpts()

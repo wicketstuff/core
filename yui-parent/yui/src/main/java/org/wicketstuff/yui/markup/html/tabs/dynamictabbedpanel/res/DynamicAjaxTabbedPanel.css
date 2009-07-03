@@ -69,12 +69,13 @@ div.dyn-tab-row ul li a.add,div.dyn-tab-row ul li a.remove {
 	background: url(24icons.gif) no-repeat -30px 0;
 	padding: 2px 10px;
 }
-
+div.dyn-tab-row ul li a.add:hover,
 div.dyn-tab-row ul li a.add {
 	background-position: 0 -75px;
 	border: 0;
 }
 
+div.dyn-tab-row ul li a.remove:hover,
 div.dyn-tab-row ul li a.remove {
 	background-position: 0 -50px;
 	border: 0;

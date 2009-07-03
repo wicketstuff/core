@@ -24,6 +24,8 @@ public class YuiDDListViewPanel<T> extends Panel
 
 	private WebMarkupContainer container;
 
+	private WebMarkupContainer listContainer;
+
 	private YuiDDListView<T> listview;
 
 	/**
@@ -35,6 +37,7 @@ public class YuiDDListViewPanel<T> extends Panel
 		super(id);
 		setOutputMarkupId(true);
 
+		// dd target
 		add(container = new WebMarkupContainer("ddTarget"));
 		container.setOutputMarkupId(true);
 		container.add(new YuiDDTarget(getGroupId())
@@ -55,7 +58,11 @@ public class YuiDDListViewPanel<T> extends Panel
 
 		});
 
-		container.add(listview = new YuiDDListView<T>("items", list)
+		// list container
+		container.add(listContainer = new WebMarkupContainer("list"));
+		listContainer.setOutputMarkupId(true);
+
+		listContainer.add(listview = new YuiDDListView<T>("items", list)
 		{
 
 			@Override
@@ -68,7 +75,7 @@ public class YuiDDListViewPanel<T> extends Panel
 			@Override
 			protected void onAjaxUpdate(AjaxRequestTarget target)
 			{
-				target.addComponent(container);
+				target.addComponent(listContainer);
 				YuiDDListViewPanel.this.onAjaxUpdate(target);
 			}
 
