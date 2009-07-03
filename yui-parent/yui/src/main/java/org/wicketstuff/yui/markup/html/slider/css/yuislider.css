@@ -1,0 +1,53 @@
+DIV.yuislider {
+    position: relative;
+}
+
+DIV.yuislider-bg-lu {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: none;
+    float: left;
+}
+
+DIV.yuislider-bg {
+    padding: 0;
+    margin: auto 0;
+    position: relative;
+    cursor: pointer;
+    float: left;
+    border: 0;
+    outline: none;
+}
+
+DIV.yuislider-thumb {
+    padding: 0;
+    margin: 0 auto;
+    position: absolute;
+    cursor: pointer;
+}
+
+DIV.yuislider-bg-rd {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: none;
+    float: left;
+}
+
+/* vertical */
+DIV.yuislider-vert {
+    position: relative;
+}
+
+DIV.yuislider-vert DIV.yuislider-bg-lu {
+    float: none;
+}
+
+DIV.yuislider-vert DIV.yuislider-bg {
+    float: none;
+}
+
+DIV.yuislider-vert DIV.yuislider-bg-rd {
+    float: none;
+}

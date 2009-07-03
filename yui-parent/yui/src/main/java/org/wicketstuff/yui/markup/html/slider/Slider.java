@@ -44,6 +44,8 @@ import org.wicketstuff.yui.markup.html.contributor.YuiHeaderContributor;
 /**
  * Slider component based on the Slider of Yahoo UI Library.
  * 
+ * @deprecated see {@link YuiHorizSlider} for alternative. 
+ * 
  * @author Eelco Hillenius
  * @author Joshua Lim
  */

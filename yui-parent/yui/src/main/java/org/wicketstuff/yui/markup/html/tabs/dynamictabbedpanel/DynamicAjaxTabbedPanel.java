@@ -49,7 +49,9 @@ public abstract class DynamicAjaxTabbedPanel extends AjaxTabbedPanel
 			@Override
 			public void onClick(AjaxRequestTarget target)
 			{
-				tabs.add(newTab(getNewTabLabel()));
+				String label = getNewTabLabel();
+				tabs.add(newTab(label));
+				onAdd(target, label);
 				target.addComponent(DynamicAjaxTabbedPanel.this);
 			}
 		});
@@ -60,7 +62,7 @@ public abstract class DynamicAjaxTabbedPanel extends AjaxTabbedPanel
 			@Override
 			public void onClick(AjaxRequestTarget target)
 			{
-				getTabs().remove(getSelectedTab());
+				onRemove(target, getSelectedTab());
 				target.addComponent(DynamicAjaxTabbedPanel.this);
 			}
 		});
@@ -121,7 +123,7 @@ public abstract class DynamicAjaxTabbedPanel extends AjaxTabbedPanel
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected Component newTitle(String titleId, final IModel<?> titleModel, int index)
+	protected Component newTitle(String titleId, final IModel<?> titleModel, final int index)
 	{
 
 		return new AjaxEditableLabel<String>(titleId, (IModel<String>)titleModel)
@@ -131,6 +133,13 @@ public abstract class DynamicAjaxTabbedPanel extends AjaxTabbedPanel
 			protected String getLabelAjaxEvent()
 			{
 				return "ondblclick";
+			}
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target)
+			{
+				super.onSubmit(target);
+				onLabelChanged(target, index, titleModel.getObject().toString());
 			}
 		};
 	}
@@ -186,12 +195,30 @@ public abstract class DynamicAjaxTabbedPanel extends AjaxTabbedPanel
 					@Override
 					protected void onDrop(AjaxRequestTarget target, int index, Component destItem)
 					{
-						CollectionsHelper.rotateInto(getTabs(), getIteration(), index);
-						target.addComponent(DynamicAjaxTabbedPanel.this);
+						DynamicAjaxTabbedPanel.this.onDrop(target, getIteration(), index);
 					}
 				});
 			}
-
 		};
 	}
+
+	protected void onAdd(AjaxRequestTarget target, String label)
+	{
+	}
+
+	protected void onRemove(AjaxRequestTarget target, int selectedTab)
+	{
+		getTabs().remove(getSelectedTab());
+	}
+
+	protected void onDrop(AjaxRequestTarget target, int fromInd, int toInd)
+	{
+		CollectionsHelper.rotateInto(getTabs(), fromInd, toInd);
+		target.addComponent(DynamicAjaxTabbedPanel.this);
+	}
+
+	protected void onLabelChanged(AjaxRequestTarget target, int index, String label)
+	{
+	}
+
 }

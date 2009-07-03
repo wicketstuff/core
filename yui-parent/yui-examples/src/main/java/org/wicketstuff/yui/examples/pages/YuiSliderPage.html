@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Wicket Examples - Yahoo UI library, Slider</title>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+        <style>
+            h2 {
+                clear: both;
+            }
+            
+            code {
+                border: 1px dashed #888;
+                background-color: #DDD;
+                margin: 10px;
+                padding: 10px;
+                width: 650px;
+                clear: both;
+                display: block;
+            }.hslider {
+                clear: both;
+                padding-left: 50px;
+            } .vslider {
+                float: left;
+                border: 1px dashed #888;
+                margin: 10px;
+                width: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <span wicket:id="mainNavigation"/><h2>Horizontal Slider</h2>
+        <code>
+            add(new YuiHorizSlider("hslider1", YuiSliderSettings.getHorizDefault(300, 20, 150)));
+        </code>
+        <div class="hslider" wicket:id="hslider1">
+            Horiz Slider 1
+        </div>
+        <br>
+        <code>
+            add(new YuiHorizSlider("hslider2", YuiSliderSettings.getHorizDefault(150, 1, 0)));
+        </code>
+        <div class="hslider" wicket:id="hslider2">
+            Horiz Slider 2
+        </div>
+        <h2>Vertical Slider</h2>
+        <code>
+            add(new YuiVertSlider("vslider1", YuiSliderSettings.getVertDefault(300, 10, 150)));
+            add(new YuiVertSlider("vslider2", YuiSliderSettings.getVertDefault(200, 1, 73)));
+        </code>
+        <div class="vslider" wicket:id="vslider1">
+            Vert Slider
+        </div>
+        <div class="vslider" wicket:id="vslider2">
+            Vert Slider
+        </div>
+        <h2>Custom Slider</h2>
+        YuiSlider is a simple slider based on YUI. you can use override 
+        <blockquote>
+            getOnChangeJSFunc
+        </blockquote>
+        to provide the calculation for label/input elements you wish to populate
+        <code>
+            add(new YuiHorizSlider("hslider3", YuiSliderSettings.getHorizDefault(200, 20, 100))
+        </code>
+        <div class="hslider" wicket:id="hslider3">
+            Horiz Slider 3
+        </div>
+        <br/>
+        <br/>
+        Pixel Value : <span wicket:id="slider3Label">label</span>
+        <br/>
+        Calculated value: <input type="text" wicket:id="slider3Text" />
+    </body>
+</html>

@@ -1,7 +1,7 @@
 /* CSS for all Horizontal Slider Bars */
 
 DIV.horizWrapper 	{
-	border		: 0px solid #FF00FF;
+	border		: 0px solid #F00;
 	padding		: 0px;
 	margin		: 0px;
 }
@@ -13,7 +13,7 @@ DIV.horizBGDiv 	{
 	z-index		: 5;
 	padding		: 0px;
 	margin 		: 0px;
-	border		: 0px solid #FF00FF;
+	border		: 0px solid #0F0;
 } 
 
 DIV.horizHandleDiv { 
@@ -21,7 +21,7 @@ DIV.horizHandleDiv {
     cursor		: pointer;
    	padding		: 0px;
 	margin 		: 0px;
-	border		: 0px solid #FF00FF;	
+	border		: 0px solid #00F;	
 }
 
 DIV.horizThumbDiv { 
