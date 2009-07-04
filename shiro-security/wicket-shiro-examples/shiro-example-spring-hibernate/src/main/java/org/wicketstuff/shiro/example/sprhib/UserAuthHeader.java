@@ -24,6 +24,7 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketstuff.shiro.example.sprhib.model.User;
 import org.wicketstuff.shiro.example.sprhib.service.UserService;
 import org.wicketstuff.shiro.page.LogoutPage;
 
@@ -49,8 +50,13 @@ public class UserAuthHeader extends Panel
 	  welcome.add( new Label( "name", new AbstractReadOnlyModel<String>() {
       @Override
       public String getObject() {
-    	  Long id = (Long) SecurityUtils.getSubject().getPrincipal();
-    	  return userService.getUser(id).getUsername();
+    	  User user = userService.getCurrentUser();
+    	  if (user != null) {
+    		  return user.getUsername();
+    	  }
+    	  else {
+    		  return "Unknown User";
+    	  }
       }
 	  }) );
 	  welcome.add( new BookmarkablePageLink<Void>( "link", LogoutPage.class ) );

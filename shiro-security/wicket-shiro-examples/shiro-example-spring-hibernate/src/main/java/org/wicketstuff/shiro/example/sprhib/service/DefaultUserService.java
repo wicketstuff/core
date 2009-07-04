@@ -44,10 +44,13 @@ public class DefaultUserService implements UserService {
     }
 
     public User getCurrentUser() {
-        final Long currentUserId = (Long) SecurityUtils.getSubject().getPrincipal();
-        if( currentUserId != null ) {
-            return getUser(currentUserId);
+        Long id = (Long)SecurityUtils.getSubject().getPrincipal();
+        if ( id != null ) {
+            // they are either authenticated or remembered from a previous session,
+            // so return the user:
+            return getUser(id);
         } else {
+            //not logged in or remembered:
             return null;
         }
     }
