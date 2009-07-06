@@ -21,7 +21,9 @@ public class TimelineEventModel implements ITimelineEvent {
 	
 	private String text;
 	
-	public TimelineEventModel(String title, Date start, Date end, String link, boolean isDuration)
+	private String caption;
+	
+	public TimelineEventModel(String title, String caption, Date start, Date end, String link, boolean isDuration)
 	{
 		if (start == null)
 		{
@@ -32,6 +34,7 @@ public class TimelineEventModel implements ITimelineEvent {
 		this.end = end;
 		this.link = link;
 		this.isDuration = isDuration;
+		this.caption = caption;
 	}
 	
 	/* (non-Javadoc)
@@ -53,6 +56,15 @@ public class TimelineEventModel implements ITimelineEvent {
 		this.start = start;
 	}
 
+	
+	public Date getEnd() {
+		return end;
+	}
+
+	public void setEnd(Date end) {
+		this.end = end;
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.wicketstuff.simile.timeline.ITimelineEvent#getLink()
 	 */
@@ -112,4 +124,13 @@ public class TimelineEventModel implements ITimelineEvent {
 	public void setText(String text) {
 		this.text = text;
 	}
+
+	public String getCaption() {
+		return caption;
+	}
+
+	public void setCaption(String caption) {
+		this.caption = caption;
+	}
+
 }

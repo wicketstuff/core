@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class BandInfoParameters {
 	public enum DateTime {
-		MONTH, YEAR
+		SECOND, MINUTE, HOUR, WEEK, DAY, MONTH, YEAR
 	}
 	
 	private String width = "100px";

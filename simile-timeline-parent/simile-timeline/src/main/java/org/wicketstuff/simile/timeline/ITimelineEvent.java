@@ -1,6 +1,8 @@
 package org.wicketstuff.simile.timeline;
 
-public interface ITimelineEvent {
+import java.io.Serializable;
+
+public interface ITimelineEvent extends Serializable {
 
 	String getTitle();
 
