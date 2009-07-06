@@ -31,7 +31,7 @@ public class Timeline extends Panel implements IHeaderContributor {
 			.getName()
 			+ "PARAMS_JS";
 
-	private JsonUtils jsonUtils = new JsonUtils();
+	private transient JsonUtils jsonUtils = new JsonUtils();
 	
 	private String timelineMarkupId;
 	private String timelineDataId;
