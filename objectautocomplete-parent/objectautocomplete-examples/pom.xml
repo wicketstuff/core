@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wicketstuff</groupId>
-        <artifactId>objectautocomplete-parent</artifactId>
-        <version>1.4-SNAPSHOT</version>
+      <groupId>org.wicketstuff</groupId>
+      <artifactId>objectautocomplete-parent</artifactId>
+      <version>1.4-rc6</version>
     </parent>
 
     <artifactId>objectautocomplete-examples</artifactId>
