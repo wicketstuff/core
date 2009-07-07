@@ -14,7 +14,9 @@ public class BandInfoParameters {
 	private boolean showEventText = false;
 	private RawString theme = new RawString("theme");
 	private RawString eventSource = new RawString("eventSource");
+	private Integer syncWith = 0;
 	private boolean highlight = true;
+	private boolean overview = false;
 	
 	public Integer getIntervalPixels() {
 		return intervalPixels;
@@ -63,5 +65,17 @@ public class BandInfoParameters {
 	}
 	public void setHighlight(boolean highlight) {
 		this.highlight = highlight;
+	}
+	public void setSyncWith(Integer syncWith) {
+		this.syncWith = syncWith;
+	}
+	public Integer getSyncWith() {
+		return syncWith;
+	}
+	public void setOverview(boolean overview) {
+		this.overview = overview;
+	}
+	public boolean isOverview() {
+		return overview;
 	}
 }
