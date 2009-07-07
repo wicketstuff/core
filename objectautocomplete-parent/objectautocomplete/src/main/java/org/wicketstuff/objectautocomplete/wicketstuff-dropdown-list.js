@@ -206,7 +206,7 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
     var index = getOffsetParentZIndex(elementId);
     var width = config.width ? config.width : input.offsetWidth;
     container.show();
-    container.style.zIndex = (Number(index) != Number.NaN ? Number(index) + 1 : index);
+    container.style.zIndex = (!isNaN(Number(index)) ? Number(index) + 1 : index); 
     container.style.top = (input.offsetHeight + position[1]) + 'px';
     container.style.width = width + 'px';
 
