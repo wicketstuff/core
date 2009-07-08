@@ -201,7 +201,7 @@ function WicketstuffDropDown(elementId,updateChoicesFunc,updateValueFunc,config)
     var input = wicketGet(elementId);
     var index = getOffsetParentZIndex(elementId);
     container.show();
-    container.style.zIndex = (Number(index) != Number.NaN ? Number(index) + 1 : index);
+    container.style.zIndex = (!isNaN(Number(index)) ? Number(index) + 1 : index);
     container.style.left = position[0] + 'px'
     container.style.top = (input.offsetHeight + position[1]) + 'px';
     container.style.width = input.offsetWidth + 'px';
