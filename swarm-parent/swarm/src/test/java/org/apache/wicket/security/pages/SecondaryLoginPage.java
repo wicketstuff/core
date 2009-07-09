@@ -63,7 +63,7 @@ public class SecondaryLoginPage extends WebPage
 
 			protected void onSubmit()
 			{
-				login(get("username").getModelObjectAsString());
+				login(get("username").getDefaultModelObjectAsString());
 			}
 		});
 		form.add(textField = new TextField("username", new Model()));

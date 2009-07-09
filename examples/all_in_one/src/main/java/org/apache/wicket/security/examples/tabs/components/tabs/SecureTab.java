@@ -101,7 +101,13 @@ public class SecureTab implements ITab, ISecureContainer
 		return cachedWrapper;
 	}
 
-	/**
+    @Override
+    public boolean isVisible() {
+        //@TODO what todo with the new isVisible method ?
+        return true;
+    }
+
+    /**
 	 * Access to the cached panel.
 	 * 
 	 * @return the panel or null if it isn't cached yet

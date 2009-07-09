@@ -422,7 +422,7 @@ public class SwarmFormTester
 					{
 						public Object component(Component component)
 						{
-							if (checkGroupValues.contains(component.getModelObject()))
+							if (checkGroupValues.contains(component.getDefaultModelObject()))
 							{
 								addFormComponentValue(formComponent, ((Check)component).getValue());
 							}

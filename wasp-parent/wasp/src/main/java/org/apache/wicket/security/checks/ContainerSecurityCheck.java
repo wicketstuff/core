@@ -92,7 +92,8 @@ public class ContainerSecurityCheck extends ComponentSecurityCheck
 		boolean result = getStrategy().isComponentAuthorized(getComponent(), action)
 				|| getStrategy().isClassAuthorized(getComponent().getClass(), action);
 		if (result && checkSecureModel() && SecureComponentHelper.hasSecureModel(getComponent()))
-			return ((ISecureModel)getComponent().getModel()).isAuthorized(getComponent(), action);
+			return ((ISecureModel)getComponent().getDefaultModel()).isAuthorized(getComponent(),
+					action);
 		return result;
 	}
 }

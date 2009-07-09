@@ -116,7 +116,8 @@ public class LinkSecurityCheck extends ComponentSecurityCheck
 		// checks will handle authentication
 		boolean result = getStrategy().isClassAuthorized(getClickTarget(), action);
 		if (result && checkSecureModel() && SecureComponentHelper.hasSecureModel(getComponent()))
-			return ((ISecureModel)getComponent().getModel()).isAuthorized(getComponent(), action);
+			return ((ISecureModel)getComponent().getDefaultModel()).isAuthorized(getComponent(),
+					action);
 		return result;
 
 	}

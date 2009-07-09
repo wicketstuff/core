@@ -509,7 +509,7 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	public Result hasLabel(String path, String expectedLabelText)
 	{
 		Label label = (Label)getComponentFromLastRenderedPage(path);
-		return isEqual(expectedLabelText, label.getModelObjectAsString());
+		return isEqual(expectedLabelText, label.getDefaultModelObjectAsString());
 	}
 
 	/**

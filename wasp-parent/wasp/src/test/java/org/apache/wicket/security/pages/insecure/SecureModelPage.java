@@ -43,7 +43,7 @@ public class SecureModelPage extends BasePage
 	public SecureModelPage()
 	{
 		ValueMap map = new ValueMap("label=hello,input=type in me");
-		setModel(new SecureCompoundPropertyModel(map));
+		setDefaultModel(new SecureCompoundPropertyModel(map));
 		add(new Label("label"));
 		add(new TextField("input"));
 	}

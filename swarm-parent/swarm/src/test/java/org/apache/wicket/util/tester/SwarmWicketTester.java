@@ -35,11 +35,11 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.protocol.http.HttpSessionStore;
 import org.apache.wicket.protocol.http.SwarmMockHttpServletResponse;
 import org.apache.wicket.protocol.http.SecondLevelCacheSessionStore;
-import org.apache.wicket.protocol.http.UnitTestSettings;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WebResponse;
 import org.apache.wicket.protocol.http.SecondLevelCacheSessionStore.IPageStore;
 import org.apache.wicket.session.ISessionStore;
+//import org.apache.wicket.protocol.http.UnitTestSettings;
 import org.apache.wicket.util.diff.DiffUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -309,7 +309,8 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 
 		// We need to turn this on for unit testing so that url encoding will be
 		// done on sorted maps of parameters and they will string compare
-		UnitTestSettings.setSortUrlParameters(true);
+        //TODO the UnitTestSettings are gone.... 1.4
+		//UnitTestSettings.setSortUrlParameters(true);
 	}
 
 
@@ -447,7 +448,7 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 	public void assertLabel(String path, String expectedLabelText)
 	{
 		Label label = (Label)getComponentFromLastRenderedPage(path);
-		Assert.assertEquals(expectedLabelText, label.getModelObjectAsString());
+		Assert.assertEquals(expectedLabelText, label.getDefaultModelObjectAsString());
 	}
 
 	/**
@@ -461,7 +462,7 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 	public void assertModelValue(String path, Object expectedValue)
 	{
 		Component component = getComponentFromLastRenderedPage(path);
-		Assert.assertEquals(expectedValue, component.getModelObject());
+		Assert.assertEquals(expectedValue, component.getDefaultModelObject());
 	}
 
 	/**

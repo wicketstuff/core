@@ -86,4 +86,10 @@ public class SecurePanelCachingTab implements ISecureTab
 		return cachedPanel;
 	}
 
+    @Override
+    public boolean isVisible() {
+        //@TODO what todo with the new isVisible method ?
+        return true;
+    }
+    
 }

@@ -91,7 +91,13 @@ public class MasterPage extends SecurePage
 				return new Gifkikker(panelId);
 			}
 
-			public IModel getTitle()
+            @Override
+            public boolean isVisible() {
+                //@TODO what todo with the new isVisible method ?
+                return true;
+            }
+
+            public IModel getTitle()
 			{
 				return new Model("Gifkikker");
 			}
@@ -104,6 +110,12 @@ public class MasterPage extends SecurePage
 			{
 				return new Heineken(panelId);
 			}
+
+            @Override
+            public boolean isVisible() {
+                //@TODO what todo with the new isVisible method ?
+                return true;
+            }
 
 			public IModel getTitle()
 			{
@@ -118,6 +130,12 @@ public class MasterPage extends SecurePage
 			{
 				return new Grolsch(panelId);
 			}
+
+            @Override
+            public boolean isVisible() {
+                //@TODO what todo with the new isVisible method ?
+                return true;
+            }
 
 			public IModel getTitle()
 			{

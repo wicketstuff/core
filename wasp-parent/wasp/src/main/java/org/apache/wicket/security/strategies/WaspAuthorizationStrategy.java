@@ -187,7 +187,7 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 
 
 			}
-			IModel model = component.getModel();
+			IModel model = component.getDefaultModel();
 			if (model instanceof ISecureModel)
 			{
 				if (((ISecureModel)model).isAuthorized(component, getActionFactory().getAction(
@@ -310,7 +310,7 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	{
 		IAuthorizationMessageSource resource = null;
 		if (RequestCycle.get() != null)
-			resource = (IAuthorizationMessageSource)RequestCycle.get().getMetaData(MESSAGE_KEY);
+			resource = RequestCycle.get().getMetaData(MESSAGE_KEY);
 		if (resource == null && create)
 		{
 			resource = createMessageSource();

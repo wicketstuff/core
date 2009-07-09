@@ -22,7 +22,7 @@
 	<parent>
 		<groupId>org.apache.wicket.wicket-security</groupId>
 		<artifactId>wasp-parent</artifactId>
-		<version>1.3-SNAPSHOT</version>
+		<version>1.4-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>swarm</artifactId>
@@ -39,7 +39,7 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<properties>
-				<wicket.version>1.3.0</wicket.version>
+				<wicket.version>1.4-rc4</wicket.version>
 			</properties>
 			<build>
 				<plugins>

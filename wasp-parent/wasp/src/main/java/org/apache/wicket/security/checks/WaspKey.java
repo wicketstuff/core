@@ -25,7 +25,7 @@ import org.apache.wicket.MetaDataKey;
  * 
  * @author marrink
  */
-public class WaspKey extends MetaDataKey
+public class WaspKey extends MetaDataKey<ISecurityCheck>
 {
 
 	/**
@@ -38,7 +38,7 @@ public class WaspKey extends MetaDataKey
 	 */
 	public WaspKey()
 	{
-		super(ISecurityCheck.class);
+		super();
 	}
 
 }

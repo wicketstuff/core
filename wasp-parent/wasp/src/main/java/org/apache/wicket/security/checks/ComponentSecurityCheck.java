@@ -93,7 +93,7 @@ public class ComponentSecurityCheck extends AbstractSecurityCheck
 	{
 		boolean result = getStrategy().isComponentAuthenticated(getComponent());
 		if (result && checkSecureModel() && SecureComponentHelper.hasSecureModel(getComponent()))
-			return ((ISecureModel)getComponent().getModel()).isAuthenticated(getComponent());
+			return ((ISecureModel)getComponent().getDefaultModel()).isAuthenticated(getComponent());
 		return result;
 	}
 
@@ -126,7 +126,8 @@ public class ComponentSecurityCheck extends AbstractSecurityCheck
 			throw new RestartResponseAtInterceptPageException(getLoginPage());
 		boolean result = getStrategy().isComponentAuthorized(getComponent(), action);
 		if (result && checkSecureModel() && SecureComponentHelper.hasSecureModel(getComponent()))
-			return ((ISecureModel)getComponent().getModel()).isAuthorized(getComponent(), action);
+			return ((ISecureModel)getComponent().getDefaultModel()).isAuthorized(getComponent(),
+					action);
 		return result;
 	}
 

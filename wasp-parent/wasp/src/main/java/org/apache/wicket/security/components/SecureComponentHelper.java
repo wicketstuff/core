@@ -66,7 +66,7 @@ public final class SecureComponentHelper
 	public static ISecurityCheck getSecurityCheck(Component component)
 	{
 		if (component != null)
-			return (ISecurityCheck)component.getMetaData(new WaspKey());
+			return component.getMetaData(new WaspKey());
 		return null;
 	}
 
@@ -111,7 +111,7 @@ public final class SecureComponentHelper
 	 */
 	public static boolean hasSecureModel(Component component)
 	{
-		return component != null && component.getModel() instanceof ISecureModel;
+		return component != null && component.getDefaultModel() instanceof ISecureModel;
 	}
 
 	/**
@@ -153,10 +153,10 @@ public final class SecureComponentHelper
 	/**
 	 * Default implementation for
 	 * {@link ISecureComponent#isActionAuthorized(String)} and
-	 * {@link WaspAuthorizationStrategy#isActionAuthorized(Component, org.apache.wicket.authorization.Action)}.
-	 * First tries to use the {@link ISecurityCheck} from the component if that
-	 * is not available it tries the {@link ISecureModel} if neither is present
-	 * the action is authorized on the component.
+	 * {@link WaspAuthorizationStrategy#isActionAuthorized(Component, org.apache.wicket.authorization.Action)}
+	 * . First tries to use the {@link ISecurityCheck} from the component if
+	 * that is not available it tries the {@link ISecureModel} if neither is
+	 * present the action is authorized on the component.
 	 * 
 	 * @param component
 	 *            the component to check
@@ -176,18 +176,18 @@ public final class SecureComponentHelper
 		if (check != null)
 			return check.isActionAuthorized(getActionFactory().getAction(action));
 		if (hasSecureModel(component))
-			return ((ISecureModel)component.getModel()).isAuthorized(component, getActionFactory()
-					.getAction(action));
+			return ((ISecureModel)component.getDefaultModel()).isAuthorized(component,
+					getActionFactory().getAction(action));
 		return true;
 	}
 
 	/**
 	 * Default implementation for
 	 * {@link ISecureComponent#isActionAuthorized(WaspAction)} and
-	 * {@link WaspAuthorizationStrategy#isActionAuthorized(Component, org.apache.wicket.authorization.Action)}.
-	 * First tries to use the {@link ISecurityCheck} from the component if that
-	 * is not available it tries the {@link ISecureModel} if neither is present
-	 * the action is authorized on the component.
+	 * {@link WaspAuthorizationStrategy#isActionAuthorized(Component, org.apache.wicket.authorization.Action)}
+	 * . First tries to use the {@link ISecurityCheck} from the component if
+	 * that is not available it tries the {@link ISecureModel} if neither is
+	 * present the action is authorized on the component.
 	 * 
 	 * @param component
 	 *            the component to check
@@ -207,7 +207,7 @@ public final class SecureComponentHelper
 		if (check != null)
 			return check.isActionAuthorized(action);
 		if (hasSecureModel(component))
-			return ((ISecureModel)component.getModel()).isAuthorized(component, action);
+			return ((ISecureModel)component.getDefaultModel()).isAuthorized(component, action);
 		return true;
 	}
 
@@ -232,7 +232,7 @@ public final class SecureComponentHelper
 		if (check != null)
 			return check.isAuthenticated();
 		if (hasSecureModel(component))
-			return ((ISecureModel)component.getModel()).isAuthenticated(component);
+			return ((ISecureModel)component.getDefaultModel()).isAuthenticated(component);
 		return getStrategy().isUserAuthenticated();
 	}
 

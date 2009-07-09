@@ -86,6 +86,12 @@ public class MasterPageHiddenContents extends MasterPage
 				return panel;
 			}
 
+            @Override
+            public boolean isVisible() {
+                //@TODO what todo with the new isVisible method ?
+                return true;
+            }
+
 			public IModel getTitle()
 			{
 				return new Model("Gifkikker");
@@ -101,6 +107,12 @@ public class MasterPageHiddenContents extends MasterPage
 				SecureComponentHelper.setSecurityCheck(panel, new ContainerSecurityCheck(panel));
 				return panel;
 			}
+
+            @Override
+            public boolean isVisible() {
+                //@TODO what todo with the new isVisible method ?
+                return true;
+            }
 
 			public IModel getTitle()
 			{
@@ -118,6 +130,12 @@ public class MasterPageHiddenContents extends MasterPage
 				return panel;
 			}
 
+            @Override
+            public boolean isVisible() {
+                //@TODO what todo with the new isVisible method ?
+                return true;
+            }
+            
 			public IModel getTitle()
 			{
 				return new Model("Grolsch");
