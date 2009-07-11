@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:security="http://www.springframework.org/schema/security"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.xsd">
+
+    <security:authentication-manager alias="authenticationManager"/>
+    
+    <security:http auto-config='true'>
+        <security:anonymous username="anonymous" granted-authority="ROLE_ANONYMOUS"/>
+        <!-- security:intercept-url pattern="/login" access="ROLE_ANONYMOUS"/ -->
+        <security:intercept-url pattern="/**" access="ROLE_USER, ROLE_ANONYMOUS" />
+        <security:form-login login-page="/login"/>
+    </security:http>
+
+    <security:authentication-provider>
+        <security:user-service id="userDetailsService" properties="WEB-INF/users.properties"/>
+    </security:authentication-provider>
+
+    <!--
+    <bean id="authenticationManager" class="org.springframework.security.providers.ProviderManager">
+         <property name="providers">
+             <list>
+                 <ref local="testAuthenticationProvider"/>
+             </list>
+         </property>
+     </bean>
+     -->
+    
+     <!-- Authentication provider for test authentication. -->
+    <!--
+    <bean id="testAuthenticationProvider" class="org.springframework.security.providers.TestingAuthenticationProvider">
+     </bean>
+     -->
+    
+    <!-- setup wicket application -->
+    <bean id="wicketApplication" class="org.apache.wicket.security.examples.springsecurity.SpringSecureWicketApplication">
+    <property name="authenticationManager" ref="authenticationManager"/>
+    </bean>
+
+    <!--
+    <bean id="wicketComponentInjector"
+          class="org.apache.wicket.security.examples.springsecurity.test.wicket.ConfigurableInjectorBean">
+        <property name="fieldValueFactory">
+            <bean class="org.apache.wicket.security.examples.springsecurity.test.wicket.MultiContextFieldValueFactory"/>
+        </property>
+    </bean>
+    -->
+
+</beans>
