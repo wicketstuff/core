@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<wicket:head>
+			<wicket:link>
+				<link href="DDCalendarPanel.css" rel="stylesheet" type="text/css"/>
+			</wicket:link>
+		</wicket:head>
+	</head>
+	<body>
+		<wicket:panel>
+			<div wicket:id="calendar" style="position: absolute; float: left; left: 0; right: 160px; bottom: 0; top: 0; verflow: hidden;">[CALENDAR]</div>
+			<div style="position: absolute; right: 5px; top: 0; width: 150px; height: 50px; background-color: rgb(200,200,200); text-align: center; vertical-align: middle;">
+				<span wicket:id="calendarItemListCaption" style="font-weight: bold; color: white;"/>
+			</div>
+			<div style="position: absolute; right: 5px; width: 150px; height: 100%; top: 50px;">
+				<ul wicket:id="taskListContainer" style="border-style: solid; border-color: rgb(200,200,200); border-width: 1px; margin: 0; padding: 0; position: absolute; width: 100%; height: 100%;">
+		 			<li wicket:id="eventList" class="eventListItem">
+		 					<div wicket:id="eventListContent" class="event"/>
+					</li>
+				</ul>
+			</div>
+		</wicket:panel>
+	</body>
+</html>
