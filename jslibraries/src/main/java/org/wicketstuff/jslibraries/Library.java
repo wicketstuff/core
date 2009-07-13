@@ -18,96 +18,73 @@
  */
 package org.wicketstuff.jslibraries;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
+import org.wicketstuff.jslibraries.util.Assert;
 
 public enum Library {
 
-	PROTOTYPE("prototype", ""),
-	JQUERY("jquery", ".min"),
-	JQUERY_UI("jquery-ui", ""),
-	MOOTOOLS_CORE("mootools-core", ".min"),
-	MOOTOOLS_MORE("mootools-more", ".min"),
-	;
+	DOJO, EXT_CORE,JQUERY, JQUERY_UI, MOOTOOLS_CORE, MOOTOOLS_MORE, PROTOTYPE, SCRIPTACULOUS, SWFOBJECT, YUI;
 
 	static {
-		registerVersion(JQUERY, 1, 0, 4);
-		registerVersion(JQUERY, 1, 1, 4);
-		registerVersion(JQUERY, 1, 2);
-		registerVersion(JQUERY, 1, 2, 1);
-		registerVersion(JQUERY, 1, 2, 2);
-		registerVersion(JQUERY, 1, 2, 3);
-		registerVersion(JQUERY, 1, 2, 4);
-		registerVersion(JQUERY, 1, 2, 5);
-		registerVersion(JQUERY, 1, 2, 6);
-		registerVersion(JQUERY, 1, 3);
-		registerVersion(JQUERY, 1, 3, 1);
-		registerVersion(JQUERY, 1, 3, 2);
-		registerVersion(JQUERY_UI, 1, 7, 1);
-		registerVersion(PROTOTYPE, 1, 5, 0);
-		registerVersion(PROTOTYPE, 1, 5, 1);
-		registerVersion(PROTOTYPE, 1, 5, 1, 1);
-		registerVersion(PROTOTYPE, 1, 5, 1, 2);
-		registerVersion(PROTOTYPE, 1, 6, 0);
-		registerVersion(PROTOTYPE, 1, 6, 0, 2);
-		registerVersion(PROTOTYPE, 1, 6, 0, 3);
-		registerVersion(MOOTOOLS_CORE, 1, 2, 1);
-		registerVersion(MOOTOOLS_MORE, 1, 2);
+		new LibraryData();
+	}
+	private Map<Provider, SortedSet<Version>> providerInfo = new HashMap<Provider, SortedSet<Version>>();
+
+	static void register(final Library lib, final Provider provider,
+			final int[]... versions) {
+		Assert.parameterNotNull(lib, "lib");
+		Assert.parameterNotNull(provider, "provider");
+		Assert.parameterNotNull(versions, "versions");
+
+		lib.register(provider, versions);
+	}
+
+	private void register(final Provider provider, final int[]... versions) {
+		Assert.parameterNotNull(provider, "provider");
+		Assert.parameterNotNull(versions, "versions");
+
+		SortedSet<Version> versionsAvailable = providerInfo.get(provider);
+		if (versionsAvailable == null) {
+			versionsAvailable = new TreeSet<Version>();
+			providerInfo.put(provider, versionsAvailable);
+		}
+		for (int i = 0; i < versions.length; i++) {
+			Version v = new Version(versions[i]);
+			versionsAvailable.add(v);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public Set<Version> getVersions(final Provider provider) {
+		Assert.parameterNotNull(provider, "provider");
 		
-		for (Library lib : values()) {
-			List<Version> list = new ArrayList<Version>(lib.mVersions);
-			Collections.sort(list);
-			lib.mVersions = Collections.unmodifiableList(list);
-			//System.out.println("Initalized: " + lib);
+		SortedSet<Version> sortedSet = providerInfo.get(provider);
+		if (sortedSet == null) {
+			return Collections.EMPTY_SET;
 		}
+		return sortedSet;
 	}
 
-	private static void registerVersion(Library lib, int... versions) {
-		lib.mVersions.add(new Version(versions));
-	}
-
-	private final String mLibraryName;
-	private final String mProductionVersionSignifier;
-	private int mMaxVersionDepth;
-	private Collection<Version> mVersions = new HashSet<Version>();
-
-	private Library(String name, String productionVersionSignifier) {
-		mLibraryName = name;
-		mProductionVersionSignifier = productionVersionSignifier;
-	}
-
+	@Deprecated
 	public String getLibraryName() {
-		return mLibraryName;
-	}
-	public String getProductionVersionSignifier() {
-		return mProductionVersionSignifier;
-	}
-	public Collection<Version> getVersions() {
-		return mVersions;
-	}
-	
-	public static void main(String[] args) {
-		Library.class.getSuperclass();
+		return LocalProvider.DEFAULT.getLocalFileName(this);
 	}
 
-	public int getMaxVersionDepth() {
-		if (mMaxVersionDepth == 0) {
-			int depth = 0;
-			for (Version version : mVersions) {
-				depth = version.getNumbers().length > depth ? version.getNumbers().length : depth;
-			}
-			mMaxVersionDepth = depth;
+	int getMaxVersionDepth(LocalProvider provider) {
+		Assert.parameterNotNull(provider, "provider");
+
+		int depth = 0;
+		for (Version version : getVersions(provider)) {
+			depth = version.getNumbers().length > depth ? version.getNumbers().length
+					: depth;
 		}
-		return mMaxVersionDepth;
+		return depth;
 	}
-	
-	@Override
-	public String toString() {
-		return super.toString() + "\t [" + mVersions + "]";
-	}
-	
+
 }
