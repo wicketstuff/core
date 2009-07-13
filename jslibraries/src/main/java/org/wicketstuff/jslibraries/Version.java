@@ -20,20 +20,23 @@ package org.wicketstuff.jslibraries;
 
 import java.util.Arrays;
 
+import org.wicketstuff.jslibraries.util.Assert;
 
 public class Version implements Comparable<Version> {
 
 	private final int[] mNumbers;
-	
+
 	public Version(int... numbers) {
 		mNumbers = numbers;
 	}
-	
+
 	public int[] getNumbers() {
 		return mNumbers;
 	}
 
 	public int compareTo(Version other) {
+		Assert.parameterNotNull(other, "other");
+		
 		for (int i = 0; i < mNumbers.length; i++) {
 			if (mNumbers[i] != other.mNumbers[i]) {
 				return mNumbers[i] - other.mNumbers[i];
@@ -46,16 +49,10 @@ public class Version implements Comparable<Version> {
 		}
 		return 0;
 	}
-	
+
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("v");
-		for (int num : mNumbers) {
-			sb.append(num).append('.');
-		}
-		sb.setLength(sb.length() - 1);
-		return sb.toString();
+		return 'v' + renderVersionNumbers();
 	}
 
 	@Override
@@ -78,6 +75,15 @@ public class Version implements Comparable<Version> {
 		if (!Arrays.equals(mNumbers, other.mNumbers))
 			return false;
 		return true;
+	}
+
+	protected String renderVersionNumbers() {
+		StringBuffer sb = new StringBuffer();
+		for (int num : mNumbers) {
+			sb.append(num).append('.');
+		}
+		sb.setLength(sb.length() - 1);
+		return sb.toString();
 	}
 
 }

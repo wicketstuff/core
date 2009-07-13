@@ -18,26 +18,58 @@
  */
 package org.wicketstuff.jslibraries;
 
-import org.apache.wicket.Application;
 import org.apache.wicket.ResourceReference;
+import org.wicketstuff.jslibraries.util.Assert;
+import org.wicketstuff.jslibraries.util.WicketDeploymentState;
 
 public class JSReference {
+	private JSReference() {
+	}
 
-	public static ResourceReference getReference(VersionDescriptor versionDescriptor) {
-		Version version = versionDescriptor.getVersion();
+	public static ResourceReference getReference(
+			VersionDescriptor versionDescriptor) {
+		return getReference(versionDescriptor, WicketDeploymentState
+				.isProduction());
+	}
+
+	public static ResourceReference getReference(
+			VersionDescriptor versionDescriptor, boolean production) {
+
+		Assert.parameterNotNull(versionDescriptor, "versionDescriptor");
+
+		Version version = versionDescriptor.getVersion(LocalProvider.DEFAULT);
+		if (version == null) {
+			// no matching version found for local provider
+			return null;
+		}
 		Library lib = versionDescriptor.getLibrary();
+		StringBuffer sb = createFileName(lib, version, production);
+		return new ResourceReference(JSReference.class, sb.toString());
+	}
+
+	public static StringBuffer createFileName(Library lib, Version version,
+			boolean production) {
+
+		Assert.parameterNotNull(lib, "lib");
+		Assert.parameterNotNull(version, "version");
+
 		StringBuffer sb = new StringBuffer();
-		sb.append("js/").append(lib.getLibraryName()).append('-');
+		sb.append("js/").append(LocalProvider.DEFAULT.getLocalFileName(lib))
+				.append('-');
 		for (int i = 0; i < version.getNumbers().length; i++) {
 			sb.append(version.getNumbers()[i]);
 			if (i < (version.getNumbers().length - 1)) {
 				sb.append('.');
 			}
 		}
-		if (Application.DEPLOYMENT.equals(Application.get().getConfigurationType())) {
-			sb.append(lib.getProductionVersionSignifier());
+		if (production) {
+			String productionSignifier = LocalProvider.DEFAULT
+					.getProductionSignifier(lib);
+			if (productionSignifier != null)
+				sb.append(productionSignifier);
 		}
 		sb.append(".js");
-		return new ResourceReference(JSReference.class, sb.toString());
+		return sb;
 	}
+
 }
