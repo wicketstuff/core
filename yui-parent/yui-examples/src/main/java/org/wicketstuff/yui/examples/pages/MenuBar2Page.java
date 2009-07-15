@@ -1,77 +1,112 @@
 package org.wicketstuff.yui.examples.pages;
 
-
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.yui.examples.WicketExamplePage;
+import org.wicketstuff.yui.helper.Attributes;
 import org.wicketstuff.yui.markup.html.menu2.AbstractYuiMenuItem;
 import org.wicketstuff.yui.markup.html.menu2.IYuiMenuAction;
 import org.wicketstuff.yui.markup.html.menu2.YuiMenu;
 import org.wicketstuff.yui.markup.html.menu2.YuiMenuBar;
 import org.wicketstuff.yui.markup.html.menu2.YuiMenuBarItem;
+import org.wicketstuff.yui.markup.html.menu2.action.AjaxLinkAction;
 
+public class MenuBar2Page extends WicketExamplePage
+{
+	private FeedbackPanel feedback;
 
-public class MenuBar2Page extends WicketExamplePage {
+	private YuiMenuBar mb;
 
-	public MenuBar2Page() {
-
+	public MenuBar2Page()
+	{
 		initMenuBar();
-		
-		add(new FeedbackPanel("feedback"));
+		add(feedback = new FeedbackPanel("feedback"));
+		feedback.setOutputMarkupId(true);
 	}
-	
-	private void initMenuBar() {
+
+	@SuppressWarnings("serial")
+	private void initMenuBar()
+	{
+		mb = new YuiMenuBar("menuBar")
+		{
+			@Override
+			protected String getOpts()
+			{
+				Attributes attributes = new Attributes();
+				attributes.add(new Attributes("visible", true));
+				attributes.add(new Attributes("clicktohide", false));
+				attributes.add(new Attributes("autosubmenudisplay", true));
+				attributes.add(new Attributes("hidedelay", 5000));
+				attributes.add(new Attributes("lazyload", true));
+				attributes.add(new Attributes("effect",
+						"{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.25}"));
+				return attributes.toString();
+			}
+		};
+		mb.setOutputMarkupId(true);
+
+		YuiMenuBarItem firstMenu = mb.addMenu("First Menu");
+
+		// 1st Menu
 		AbstractYuiMenuItem mi = null;
 		YuiMenu subMenu = null;
-		
-		YuiMenuBar mb = new YuiMenuBar( "menuBar", "menuBar");
-		
-		YuiMenuBarItem firstMenu = mb.addMenu( "First Menu" );
 
-
-		subMenu = firstMenu.newSubMenu( "mb_firstMenu");
-		
+		subMenu = firstMenu.newSubMenu("mb_firstMenu");
 		subMenu.addMenuItem(new TestAction("M1 : L1"));
 		subMenu.addMenuItem(new TestAction("M1 : L2"));
 		mi = subMenu.addMenuItem(new TestAction("M1 : L3"));
 		subMenu.addMenuItem(new TestAction("M1 : L4"));
 		subMenu.addMenuItem(new TestAction("M1 : L5"));
-		
-		subMenu = mi.newSubMenu( "subMenu1" );
+		subMenu = mi.newSubMenu("subMenu1");
 		subMenu.addMenuItem(new TestAction("Label 1"));
 		subMenu.addMenuItem(new TestAction("Label 2"));
-		
-		YuiMenuBarItem secondMenu = mb.addMenu( "Second Menu");
-		
-		subMenu = secondMenu.newSubMenu( "mb_secondMenu");
-		subMenu.addMenuItem(new TestAction("M2 : L1"));
-		subMenu.addMenuItem(new TestAction("M2 : L2"));
-		subMenu.addMenuItem(new TestAction("M2 : L3"));
-		subMenu.addMenuItem(new TestAction("M2 : L4"));
-		subMenu.addMenuItem(new TestAction("M2 : L5"));
 
-		
-		YuiMenuBarItem thirdMenu = mb.addMenu( new TestAction( "Third Menu" ) );
+		// 2nd Menu
+		YuiMenuBarItem secondMenu = mb.addMenu(new TestAction("Second Menu"));
 
-		
-		add( mb );
+		final YuiMenu subMenu2 = secondMenu.newSubMenu("mb_secondMenu");
+		subMenu2.setOutputMarkupId(true);
+		subMenu2.addMenuItem(new TestAction("M2 : L1"));
+		subMenu2.addMenuItem(new TestAction("M2 : L2"));
+		subMenu2.addMenuItem(new AjaxLinkAction("M2 : L3 (Ajax) - removes 1st item")
+		{
+			@Override
+			public void onClick(AjaxRequestTarget target)
+			{
+				MenuBar2Page.this.info(getName().getObject());
+				subMenu2.removeMenuItem(0);
+				target.addComponent(feedback);
+				target.addComponent(mb);
+			}
+		});
+		subMenu2.addMenuItem(new TestAction("M2 : L4"));
+		subMenu2.addMenuItem(new TestAction("M2 : L5"));
+
+		// 3rd Menu
+		mb.addMenu(new TestAction("Third Menu"));
+		add(mb);
+
 	}
-	
 
-	private static class TestAction implements IYuiMenuAction, java.io.Serializable {
+	private class TestAction implements IYuiMenuAction, java.io.Serializable
+	{
 		private String id;
 
-		public TestAction(String id) {
+		public TestAction(String id)
+		{
 			this.id = id;
 		}
-		
-		public IModel getName() {
-			return new Model( id );
+
+		public IModel getName()
+		{
+			return new Model(id);
 		}
 
-		public void onClick() {
-			System.out.println("Link: " + id);
+		public void onClick()
+		{
+			MenuBar2Page.this.info("Link: " + id);
 		}
 	}
 

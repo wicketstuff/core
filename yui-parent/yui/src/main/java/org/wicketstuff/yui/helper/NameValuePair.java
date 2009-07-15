@@ -6,25 +6,27 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This is the abstract class that helps to generate the notations for name pairs
+ * This is the abstract class that helps to generate the notations for name
+ * pairs
  * 
- * 1. Inline Styles. eg. padding:1px ; color:#FF0000;
- * 2. Javscript Objects. eg. {name:"josh" , age : "44"}
+ * 1. Inline Styles. eg. padding:1px ; color:#FF0000; 2. Javscript Objects. eg.
+ * {name:"josh" , age : "44"}
  * 
- * as both are the same thing except it is used at different points (1) in "style=" and (2) in javascript
- * this abstract class handles the basic concatenation of these name/value pairs and generate the "dhtml" 
+ * as both are the same thing except it is used at different points (1) in
+ * "style=" and (2) in javascript this abstract class handles the basic
+ * concatenation of these name/value pairs and generate the "dhtml"
  * 
  * @author josh
  * 
  */
-public abstract class NameValuePair<T> extends TokenSeparatedValues 
+public abstract class NameValuePair<T> extends TokenSeparatedValues
 {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * the map used internally
 	 */
-	Map<String, String> propertyMap = new HashMap<String, String>();
+	Map<String, Object> propertyMap = new HashMap<String, Object>();
 
 	/**
 	 * construct
@@ -39,40 +41,49 @@ public abstract class NameValuePair<T> extends TokenSeparatedValues
 	 * @param value
 	 */
 	@SuppressWarnings("unchecked")
-	public T add(String element, String value) 
+	public T add(String element, Object object)
 	{
-		if (isValid(element, value)) 
+
+		if (isValid(element, object))
 		{
-			if ((!value.startsWith("{")) &&
-				(!value.startsWith("[")) &&
-				(!value.startsWith("\"")))
+
+			if (object instanceof Boolean)
 			{
-				try 
-				{
-					Float.parseFloat(value);
-				}
-				catch (Exception e) 
-				{
-					value = wrapValue(value);
-				}
+				propertyMap.put(element, object);
 			}
-			propertyMap.put(element, value);
+			else
+			{
+				String value = object.toString();
+				if ((!value.startsWith("{")) && (!value.startsWith("["))
+						&& (!value.startsWith("\"")))
+				{
+					try
+					{
+						Float.parseFloat(value);
+					}
+					catch (Exception e)
+					{
+						value = wrapValue(value);
+					}
+				}
+				propertyMap.put(element, value);
+			}
 		}
-		return (T) this;
+		return (T)this;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public T add(NameValuePair another)
 	{
-		Map<String, String> am = another.propertyMap;
-		
-		for (Map.Entry<String, String> entry : am.entrySet())
+		Map<String, Object> am = another.propertyMap;
+
+		for (Map.Entry<String, Object> entry : am.entrySet())
 		{
 			add(entry.getKey(), entry.getValue());
 		}
 		return (T)this;
 	}
-	
+
 	/**
 	 * 
 	 * @param element
@@ -84,7 +95,7 @@ public abstract class NameValuePair<T> extends TokenSeparatedValues
 		return this.add(element, Integer.toString(int_value));
 	}
 
-	
+
 	/*
 	 * the List to be used by TSV
 	 */
@@ -92,22 +103,22 @@ public abstract class NameValuePair<T> extends TokenSeparatedValues
 	public List<String> getValues()
 	{
 		List<String> list = new ArrayList<String>();
-		
-		for (Map.Entry<String, String> entry : propertyMap.entrySet())
+
+		for (Map.Entry<String, Object> entry : propertyMap.entrySet())
 		{
 			list.add(entry.getKey() + getNameValueSeparator() + entry.getValue());
 		}
 		return list;
 	}
-	
+
 	/**
 	 * this should always be true for now...
-	 *  
+	 * 
 	 * @param element
 	 * @param value
 	 * @return
 	 */
-	public boolean isValid(String key, String value)
+	public boolean isValid(String key, Object value)
 	{
 		return true;
 	}
@@ -117,11 +128,11 @@ public abstract class NameValuePair<T> extends TokenSeparatedValues
 	 * @return
 	 */
 	public abstract String getNameValueSeparator();
-	
-	protected String wrapValue(String value) 
+
+	protected String wrapValue(String value)
 	{
 		return "\"" + value + "\"";
 	}
-	
-	
+
+
 }

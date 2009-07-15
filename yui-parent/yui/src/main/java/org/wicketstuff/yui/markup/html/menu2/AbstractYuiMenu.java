@@ -1,37 +1,87 @@
 package org.wicketstuff.yui.markup.html.menu2;
 
+import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.util.string.Strings;
-import org.wicketstuff.yui.markup.html.contributor.YuiHeaderContributor;
+import org.wicketstuff.yui.helper.Attributes;
+import org.wicketstuff.yui.markup.html.contributor.yuiloader.YuiLoaderContributor;
+import org.wicketstuff.yui.markup.html.contributor.yuiloader.YuiLoaderModule;
 
-public abstract class AbstractYuiMenu extends Panel {
+@SuppressWarnings("serial")
+public abstract class AbstractYuiMenu extends Panel
+{
 	private WebMarkupContainer menucontainer;
+
 	private String menuId;
 
-	public AbstractYuiMenu(String wicketId, final String menuId) {
+	private static final String MODULE_NAME = "wicket_yui_menu";
+
+	private static final ResourceReference MODULE_JS_REF = new ResourceReference(YuiMenuBar.class,
+			"res/YuiMenu.js");
+
+	private static final String[] MODULE_REQUIRES = { "menu" };
+
+	public AbstractYuiMenu(String wicketId, final String menuId, final boolean addInit)
+	{
 		super(wicketId);
 
 		this.menuId = menuId;
 
-		add(YuiHeaderContributor.forModule("menu", null, false, "2.5.2"));
+		add(YuiLoaderContributor.addModule(new YuiLoaderModule(MODULE_NAME,
+				YuiLoaderModule.ModuleType.js, MODULE_JS_REF, MODULE_REQUIRES)
+		{
+
+			@Override
+			public String onSuccessJS()
+			{
+				StringBuffer buffer = new StringBuffer();
+				if (addInit)
+				{
+					buffer.append("var ").append(getMenuVar()).append(" = new YAHOO.widget.Menu(")
+							.append("\"").append(getMenuId()).append("\",").append(getOpts())
+							.append(");");
+					buffer.append(getMenuVar()).append(".render();");
+					buffer.append(getMenuVar()).append(".show();");
+				}
+				return buffer.toString();
+			}
+
+			private Object getMenuVar()
+			{
+				return "var_" + getMenuId();
+			}
+
+			private String getMenuId()
+			{
+				return menuId;
+			}
+
+		}));
 
 		menucontainer = getMenuContainer();
-		if (menucontainer != null) {
+		if (menucontainer != null)
+		{
 			add(menucontainer);
 		}
 	}
 
-	protected WebMarkupContainer getMenuContainer() {
-		if (menucontainer == null) {
-			menucontainer = new WebMarkupContainer("menucontainer") {
+	protected WebMarkupContainer getMenuContainer()
+	{
+		if (menucontainer == null)
+		{
+			menucontainer = new WebMarkupContainer("menucontainer")
+			{
 				private static final long serialVersionUID = 1L;
+
 				@Override
-				protected void onComponentTag(ComponentTag tag) {
+				protected void onComponentTag(ComponentTag tag)
+				{
 					super.onComponentTag(tag);
 
-					if (!Strings.isEmpty(menuId)) {
+					if (!Strings.isEmpty(menuId))
+					{
 						tag.put("id", menuId);
 					}
 					tag.put("class", getMenuClass());
@@ -42,7 +92,8 @@ public abstract class AbstractYuiMenu extends Panel {
 		return menucontainer;
 	}
 
-	protected String getMenuId() {
+	protected String getMenuId()
+	{
 		return menuId;
 	}
 
@@ -50,4 +101,11 @@ public abstract class AbstractYuiMenu extends Panel {
 
 	protected abstract String getMenuName();
 
+	protected String getOpts()
+	{
+		Attributes attributes = new Attributes();
+		attributes.add(new Attributes("visible", true));
+		attributes.add(new Attributes("clicktohide", false));
+		return attributes.toString();
+	}
 }
