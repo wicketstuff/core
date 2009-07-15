@@ -1,6 +1,7 @@
 package org.wicketstuff.yui.markup.html.contributor.yuiloader;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.RequestCycle;
 import org.apache.wicket.markup.html.IHeaderResponse;
 
 /**
@@ -27,7 +28,7 @@ public class YuiLoaderInsert extends YuiLoader
 		{
 			bufy.append("\n").append("loader.filter=" + DEBUG + ";");
 		}
-
+		bufy.append("loader.base = '" + (String)RequestCycle.get().urlFor(BASE) + "';");
 		bufy.append("loader.combine = false;");
 		bufy.append("loader.onSuccess = " + getOnSuccessJS() + ";");
 		bufy.append("loader.insert();");

@@ -2,11 +2,10 @@ package org.wicketstuff.yui.helper;
 
 
 /**
- * Attributes is a Javascript Object
- * TODO : need to clean up
-
+ * Attributes is a Javascript Object TODO : need to clean up
+ * 
  * @author josh
- *
+ * 
  */
 public class Attributes extends JSObject<Attributes>
 {
@@ -22,6 +21,7 @@ public class Attributes extends JSObject<Attributes>
 
 	/**
 	 * constructor. Adds a single value
+	 * 
 	 * @param element
 	 * @param value
 	 */
@@ -29,29 +29,30 @@ public class Attributes extends JSObject<Attributes>
 	{
 		this.add(element, value);
 	}
-	
+
 	/**
 	 * 
 	 * @param element
 	 * @param value
 	 */
-	public Attributes(String element ,int value)
+	public Attributes(String element, int value)
 	{
 		this.add(element, Integer.toString(value));
 	}
-	
+
 	/**
 	 * 
 	 * @param element
 	 * @param value
 	 */
-	public Attributes(String element ,float value)
+	public Attributes(String element, float value)
 	{
 		this.add(element, Float.toString(value));
 	}
-	
+
 	/**
 	 * constructor for 2 elements
+	 * 
 	 * @param element1
 	 * @param value1
 	 * @param element2
@@ -61,7 +62,7 @@ public class Attributes extends JSObject<Attributes>
 	{
 		this.add(element1, value1).add(element2, value2);
 	}
-	
+
 	/**
 	 * 
 	 * @param element1
@@ -87,7 +88,7 @@ public class Attributes extends JSObject<Attributes>
 		this(element1, float1);
 		this.add(element2, float2);
 	}
-	
+
 	/**
 	 * 
 	 * @param element
@@ -97,7 +98,7 @@ public class Attributes extends JSObject<Attributes>
 	{
 		this.add(element, json.toString());
 	}
-	
+
 	/**
 	 * 
 	 * @param element
@@ -120,8 +121,14 @@ public class Attributes extends JSObject<Attributes>
 		this.add(element, new Attributes("from", from, "to", to));
 	}
 
+	public Attributes(String element, boolean b)
+	{
+		this.add(element, b);
+	}
+
 	/**
 	 * allow adding of int values
+	 * 
 	 * @param element
 	 * @param int_value
 	 */
@@ -129,9 +136,10 @@ public class Attributes extends JSObject<Attributes>
 	{
 		return super.add(element, Integer.toString(int_value));
 	}
-	
+
 	/**
 	 * allow adding of int values
+	 * 
 	 * @param element
 	 * @param float_value
 	 */
@@ -139,7 +147,7 @@ public class Attributes extends JSObject<Attributes>
 	{
 		return super.add(element, Float.toString(float_value));
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -148,6 +156,6 @@ public class Attributes extends JSObject<Attributes>
 	{
 		return "{}".equals(toString());
 	}
-	
+
 	public static Attributes DELAY = new Attributes("delay", "true");
 }

@@ -7,12 +7,11 @@ import java.util.List;
 /**
  * Basic class for generating DHTML values for Javascript and CSS
  * 
- * 1. Javscript Arrays : ['value1', 'value2','value3']
- * 2. Javscript Objects : {name:"josh" , age : "44"}
- * 3. Inline Styles : padding:1px ; color:#FF0000;
+ * 1. Javscript Arrays : ['value1', 'value2','value3'] 2. Javscript Objects :
+ * {name:"josh" , age : "44"} 3. Inline Styles : padding:1px ; color:#FF0000;
  * 
  * @author josh
- *
+ * 
  */
 public abstract class TokenSeparatedValues implements Serializable
 {
@@ -28,7 +27,7 @@ public abstract class TokenSeparatedValues implements Serializable
 	{
 		super();
 	}
-	
+
 	/**
 	 * the actual String to be returned for the Javscript
 	 */
@@ -36,37 +35,40 @@ public abstract class TokenSeparatedValues implements Serializable
 	public String toString()
 	{
 		final StringBuffer buffer = new StringBuffer();
-		
-		for (String aValue : getValues())
+
+		for (Object aValue : getValues())
 		{
-			buffer.append(getValueSeparator())
-			.append(aValue);
+			buffer.append(getValueSeparator()).append(aValue);
 		}
 
-		String ret = (buffer.length() > 0) ? buffer.substring(1) : ""; 
+		String ret = (buffer.length() > 0) ? buffer.substring(1) : "";
 		return getPrefix() + ret + getSuffix();
 	}
 
 	/**
-	 * allow child to quote 
+	 * allow child to quote
+	 * 
 	 * @return
 	 */
 	public abstract List<String> getValues();
 
 	/**
 	 * the suffix
+	 * 
 	 * @return
 	 */
 	public abstract String getSuffix();
 
 	/**
 	 * the prefix
+	 * 
 	 * @return
 	 */
 	public abstract String getPrefix();
 
 	/**
-	 * the separator value 
+	 * the separator value
+	 * 
 	 * @return
 	 */
 	public abstract String getValueSeparator();
