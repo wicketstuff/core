@@ -81,10 +81,9 @@ public class AnnotationTest extends TestCase
     /**
      * Subclass to provide access to reference to Page class
      */
-    @SuppressWarnings({"PublicInnerClass"})
     public static class TestCodingStrategy extends MixedParamUrlCodingStrategy
     {
-        public TestCodingStrategy(String mountPath, Class<?> bookmarkablePageClass, String pageMapName, String[] parameterNames)
+        public <C extends Page> TestCodingStrategy(String mountPath, Class<C> bookmarkablePageClass, String pageMapName, String[] parameterNames)
         {
             super(mountPath, bookmarkablePageClass, pageMapName, parameterNames);
         }
