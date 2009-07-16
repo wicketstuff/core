@@ -21,7 +21,7 @@ limitations under the License.
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>gmap2-parent</artifactId>
-        <version>1.4-rc7</version>
+        <version>1.4-rc8-SNAPSHOT</version>
     </parent>
 
     <artifactId>gmap2</artifactId>

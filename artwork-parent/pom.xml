@@ -3,7 +3,7 @@
   <parent>
     <artifactId>wicketstuff-core</artifactId>
     <groupId>org.wicketstuff</groupId>
-    <version>1.4-rc7</version>
+    <version>1.4-rc8-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.wicketstuff</groupId>
