@@ -17,6 +17,8 @@ package org.wicketstuff.openlayers.api.feature;
 
 import java.util.List;
 
+import org.wicketstuff.openlayers.IOpenLayersMap;
+
 import com.vividsolutions.jts.geom.Coordinate;
 
 /**
@@ -26,7 +28,7 @@ import com.vividsolutions.jts.geom.Coordinate;
  */
 public class LineString extends Feature {
 	private static final long serialVersionUID = -5542486035161202325L;
-	private final List<Coordinate> coordinates;
+	private List<Coordinate> coordinates;
 
 	public LineString(List<Coordinate> coordinates) {
 		super();
@@ -35,6 +37,17 @@ public class LineString extends Feature {
 
 	public LineString(List<Coordinate> coordinates, FeatureStyle featureStyle) {
 		super(featureStyle);
+		this.coordinates = coordinates;
+	}
+
+	public LineString(List<Coordinate> coordinates, IOpenLayersMap map) {
+		super(map);
+		this.coordinates = coordinates;
+	}
+
+	public LineString(List<Coordinate> coordinates, FeatureStyle featureStyle,
+			IOpenLayersMap map) {
+		super(featureStyle, map);
 		this.coordinates = coordinates;
 	}
 
@@ -50,5 +63,13 @@ public class LineString extends Feature {
 				+ " = new OpenLayers.Geometry.LineString(points" + getId()
 				+ ");\n");
 		return result.toString();
+	}
+
+	public void setCoordinates(List<Coordinate> coordinates) {
+		this.coordinates = coordinates;
+	}
+
+	public List<Coordinate> getCoordinates() {
+		return coordinates;
 	}
 }

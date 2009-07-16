@@ -15,6 +15,8 @@
  */
 package org.wicketstuff.openlayers.api.feature;
 
+import org.wicketstuff.openlayers.IOpenLayersMap;
+
 import com.vividsolutions.jts.geom.Coordinate;
 
 /**
@@ -24,7 +26,7 @@ import com.vividsolutions.jts.geom.Coordinate;
  */
 public class Point extends Feature {
 	private static final long serialVersionUID = -4295187268790863039L;
-	private final Coordinate coordinate;
+	private Coordinate coordinate;
 
 	public Point(Coordinate coordinate) {
 		super();
@@ -34,6 +36,25 @@ public class Point extends Feature {
 	public Point(Coordinate coordinate, FeatureStyle featureStyle) {
 		super(featureStyle);
 		this.coordinate = coordinate;
+	}
+
+	public Point(Coordinate coordinate, IOpenLayersMap map) {
+		super(map);
+		this.coordinate = coordinate;
+	}
+
+	public Point(Coordinate coordinate, FeatureStyle featureStyle,
+			IOpenLayersMap map) {
+		super(featureStyle, map);
+		this.coordinate = coordinate;
+	}
+
+	public void setCoordinate(Coordinate coordinate) {
+		this.coordinate = coordinate;
+	}
+
+	public Coordinate getCoordinate() {
+		return coordinate;
 	}
 
 	@Override
