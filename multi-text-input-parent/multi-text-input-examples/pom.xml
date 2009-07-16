@@ -28,8 +28,6 @@
   <artifactId>multi-text-input-examples</artifactId>
   <packaging>war</packaging>
   <name>multi-text-input-examples</name>
-  <version>1.0-SNAPSHOT</version>
-  <description></description>
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
