@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>ddcalendar-parent</artifactId>
 		<groupId>org.wicketstuff</groupId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.4-rc7</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.wicketstuff</groupId>
@@ -91,7 +91,7 @@
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>yui</artifactId>
-			<version>1.4-SNAPSHOT</version>
+			<version>1.4-rc7</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
