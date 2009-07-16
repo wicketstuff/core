@@ -15,8 +15,6 @@
  */
 package org.wicketstuff.openlayers.api.feature;
 
-import java.util.List;
-
 import com.vividsolutions.jts.geom.Coordinate;
 
 /**
@@ -24,31 +22,23 @@ import com.vividsolutions.jts.geom.Coordinate;
  * @author Marin Mandradjiev (marinsm@hotmail.com)
  * 
  */
-public class Polygon extends Feature {
-	private static final long serialVersionUID = 2381878612322151640L;
-	private final List<Coordinate> coordinates;
+public class Point extends Feature {
+	private static final long serialVersionUID = -4295187268790863039L;
+	private final Coordinate coordinate;
 
-	public Polygon(List<Coordinate> coordinates) {
+	public Point(Coordinate coordinate) {
 		super();
-		this.coordinates = coordinates;
+		this.coordinate = coordinate;
 	}
 
-	public Polygon(List<Coordinate> coordinates, FeatureStyle featureStyle) {
+	public Point(Coordinate coordinate, FeatureStyle featureStyle) {
 		super(featureStyle);
-		this.coordinates = coordinates;
+		this.coordinate = coordinate;
 	}
 
 	@Override
 	public String getJSconstructor() {
-		StringBuffer result = new StringBuffer();
-		result.append("var points" + getId() + " = [];\n");
-		for (Coordinate coordinate : coordinates) {
-			result.append("points" + getId() + ".push("
-					+ getJScoordinate(coordinate) + ");\n");
-		}
-		result.append("var feature" + getId()
-				+ " = new OpenLayers.Geometry.LinearRing(points" + getId()
-				+ ");\n");
-		return result.toString();
+		return "var feature" + getId() + " = " + getJScoordinate(coordinate)
+				+ ";\n";
 	}
 }
