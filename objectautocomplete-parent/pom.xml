@@ -26,8 +26,6 @@
 	</modules>
 
 	<properties>
-    <wicket.version>1.4-SNAPSHOT</wicket.version>
-		<java.src.version>1.5</java.src.version>
 		<runtime.log>target/velocity.log</runtime.log>
 	</properties>
 
