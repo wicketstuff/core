@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>sitemap-xml-parent</artifactId>
-        <version>0.1</version>
+        <version>1.4-rc7</version>
     </parent>
     <name>sitemap-xml</name>
     <packaging>jar</packaging>
@@ -25,7 +25,6 @@
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket</artifactId>
-            <version>1.4-rc1</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>

@@ -6,22 +6,20 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>sitemap-xml-parent</artifactId>
-        <version>0.1</version>
+        <version>1.4-rc7</version>
     </parent>
     <name>sitemap-xml-examples</name>  
     <groupId>org.wicketstuff</groupId>
     <artifactId>sitemap-xml-examples</artifactId>
-    <version>1.0</version>
     <dependencies>
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket</artifactId>
-            <version>1.4-rc1</version>
         </dependency>
         <dependency>
             <groupId>org.wicketstuff</groupId>
             <artifactId>sitemap-xml</artifactId>
-            <version>0.1</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

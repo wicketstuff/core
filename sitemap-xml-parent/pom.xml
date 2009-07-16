@@ -16,7 +16,6 @@
     </developers>
     <artifactId>sitemap-xml-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.1</version>
     <modules>
         <module>sitemap-xml</module>
         <module>sitemap-xml-examples</module>
