@@ -30,13 +30,26 @@ import com.vividsolutions.jts.geom.Coordinate;
 public abstract class Feature implements Serializable {
 	private static final long serialVersionUID = 364944041007700590L;
 	private FeatureStyle featureStyle = null;
+	private IOpenLayersMap map = null;
+	private String projection = "EPSG:4326";
 
-	public Feature() {}
-	
-	public Feature(FeatureStyle featureStyle) {
-		this.featureStyle = featureStyle;
+	public Feature() {
+		this(null, null);
 	}
-	
+
+	public Feature(FeatureStyle featureStyle) {
+		this(featureStyle, null);
+	}
+
+	public Feature(IOpenLayersMap map) {
+		this(null, map);
+	}
+
+	public Feature(FeatureStyle featureStyle, IOpenLayersMap map) {
+		this.featureStyle = featureStyle;
+		this.map = map;
+	}
+
 	public String getId() {
 		return String.valueOf(System.identityHashCode(this));
 	}
@@ -47,14 +60,23 @@ public abstract class Feature implements Serializable {
 				+ getId()
 				+ " = new OpenLayers.Feature.Vector(feature"
 				+ getId()
-				+ ", null, " + (featureStyle != null ? "layer_style" + featureStyle.getId() : "null") + ");\n"
+				+ ", null, "
+				+ (featureStyle != null ? "layer_style" + featureStyle.getId()
+						: "null")
+				+ ");\n"
 				+ map.getJSinvoke("addFeature(draw" + getId() + ", layer"
 						+ vector.getId() + ")");
 	}
 
-	protected static String getJScoordinate(Coordinate coordinate) {
+	protected String getJScoordinate(Coordinate coordinate) {
+		String transformation = "";
+		if (map != null && projection != null) {
+			transformation = ".transform(new OpenLayers.Projection(\""
+					+ projection + "\"), " + map.getJSinvokeNoLineEnd("map")
+					+ ".getProjectionObject())";
+		}
 		return "new OpenLayers.Geometry.Point(" + coordinate.x + ", "
-				+ coordinate.y + ")";
+				+ coordinate.y + ")" + transformation;
 	}
 
 	public abstract String getJSconstructor();
@@ -65,5 +87,21 @@ public abstract class Feature implements Serializable {
 
 	public FeatureStyle getFeatureStyle() {
 		return featureStyle;
+	}
+
+	public void setMap(IOpenLayersMap map) {
+		this.map = map;
+	}
+
+	public IOpenLayersMap getMap() {
+		return map;
+	}
+
+	public void setProjection(String projection) {
+		this.projection = projection;
+	}
+
+	public String getProjection() {
+		return projection;
 	}
 }
