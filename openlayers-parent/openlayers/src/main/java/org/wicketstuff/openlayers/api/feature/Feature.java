@@ -22,6 +22,11 @@ import org.wicketstuff.openlayers.api.layer.Vector;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
+/**
+ * 
+ * @author Marin Mandradjiev (marinsm@hotmail.com)
+ * 
+ */
 public abstract class Feature implements Serializable {
 	private static final long serialVersionUID = 364944041007700590L;
 	private FeatureStyle featureStyle = null;

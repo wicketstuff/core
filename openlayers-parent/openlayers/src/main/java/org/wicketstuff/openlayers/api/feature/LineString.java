@@ -24,16 +24,16 @@ import com.vividsolutions.jts.geom.Coordinate;
  * @author Marin Mandradjiev (marinsm@hotmail.com)
  * 
  */
-public class Polygon extends Feature {
-	private static final long serialVersionUID = 2381878612322151640L;
+public class LineString extends Feature {
+	private static final long serialVersionUID = -5542486035161202325L;
 	private final List<Coordinate> coordinates;
 
-	public Polygon(List<Coordinate> coordinates) {
+	public LineString(List<Coordinate> coordinates) {
 		super();
 		this.coordinates = coordinates;
 	}
 
-	public Polygon(List<Coordinate> coordinates, FeatureStyle featureStyle) {
+	public LineString(List<Coordinate> coordinates, FeatureStyle featureStyle) {
 		super(featureStyle);
 		this.coordinates = coordinates;
 	}
@@ -47,7 +47,7 @@ public class Polygon extends Feature {
 					+ getJScoordinate(coordinate) + ");\n");
 		}
 		result.append("var feature" + getId()
-				+ " = new OpenLayers.Geometry.LinearRing(points" + getId()
+				+ " = new OpenLayers.Geometry.LineString(points" + getId()
 				+ ");\n");
 		return result.toString();
 	}
