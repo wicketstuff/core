@@ -9,7 +9,6 @@
   <artifactId>flot-examples</artifactId>
   <packaging>war</packaging>
   <name>quickstart</name>
-  <version>1.0-SNAPSHOT</version>
   <description></description>
   <licenses>
     <license>
