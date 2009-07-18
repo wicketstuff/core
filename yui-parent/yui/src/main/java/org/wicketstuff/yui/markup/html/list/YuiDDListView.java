@@ -63,7 +63,7 @@ public abstract class YuiDDListView<T> extends ListView<T>
 		super(id, model);
 		setOutputMarkupId(true);
 	}
-	
+
 	@Override
 	protected void populateItem(final ListItem<T> item)
 	{
@@ -144,10 +144,11 @@ public abstract class YuiDDListView<T> extends ListView<T>
 			final int oldIndex = getList().indexOf(item.getModelObject());
 			final T removedObject = item.getModelObject();
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public void undo()
 			{
-				getList().add(oldIndex, removedObject);
+				((List<T>)getList()).add(oldIndex, removedObject);
 			}
 
 		});
@@ -172,6 +173,7 @@ public abstract class YuiDDListView<T> extends ListView<T>
 	 * @param destItem
 	 */
 
+	@SuppressWarnings("unchecked")
 	protected void onDrop(int pos, T destItem)
 	{
 
@@ -179,7 +181,7 @@ public abstract class YuiDDListView<T> extends ListView<T>
 
 		if (source < 0)
 		{
-			getList().add(pos, destItem);
+			((List<T>)getList()).add(pos, destItem);
 		}
 		else
 		{

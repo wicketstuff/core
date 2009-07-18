@@ -7,14 +7,15 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>yui-parent</artifactId>
-        <version>1.4-rc7</version>
+        <version>1.4-rc8-SNAPSHOT</version>
     </parent>
 
     <artifactId>yui-examples</artifactId>
     <packaging>war</packaging>
 
     <name>Wicket YUI Integration - Examples</name>
-    <description>Examples for the Yahoo User Interface (YUI) library.</description>
+    <description>Examples for the Yahoo User Interface (YUI)
+        library.</description>
 
     <inceptionYear>2006</inceptionYear>
 

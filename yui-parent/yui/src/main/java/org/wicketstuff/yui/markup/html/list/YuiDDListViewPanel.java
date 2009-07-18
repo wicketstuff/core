@@ -111,8 +111,9 @@ public class YuiDDListViewPanel<T> extends Panel
 		return new EmptyPanel(id);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<T> getList()
 	{
-		return listview.getList();
+		return (List<T>)listview.getList();
 	}
 }
