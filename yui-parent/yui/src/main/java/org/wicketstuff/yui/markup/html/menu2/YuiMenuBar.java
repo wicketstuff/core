@@ -15,7 +15,7 @@ import org.wicketstuff.yui.markup.html.contributor.yuiloader.YuiLoaderModule;
 
 
 @SuppressWarnings( { "serial", "unchecked" })
-public class YuiMenuBar extends Panel
+public class YuiMenuBar extends Panel implements IYuiMenu
 {
 	private static final long serialVersionUID = 1L;
 
@@ -54,13 +54,13 @@ public class YuiMenuBar extends Panel
 			{
 				StringBuffer buffer = new StringBuffer();
 
-				buffer.append("var menu = YAHOO.widget.MenuManager.getMenu('" + getMenuBarId()
+				buffer.append("var menu = YAHOO.widget.MenuManager.getMenu('" + getYuiMenuId()
 						+ "');");
 
 				buffer.append("if (menu) { menu.destroy(); } ");
 
 				buffer.append("var ").append(getMenuBarVar())
-						.append(" = new YAHOO.widget.MenuBar(").append("\"").append(getMenuBarId())
+						.append(" = new YAHOO.widget.MenuBar(").append("\"").append(getYuiMenuId())
 						.append("\",").append(getOpts()).append(");");
 
 				buffer.append(getMenuBarVar()).append(".render();");
@@ -70,12 +70,7 @@ public class YuiMenuBar extends Panel
 
 			private Object getMenuBarVar()
 			{
-				return "var_" + getMenuBarId();
-			}
-
-			private String getMenuBarId()
-			{
-				return mg.getMarkupId();
+				return "var_" + getYuiMenuId();
 			}
 
 		}));
@@ -148,5 +143,10 @@ public class YuiMenuBar extends Panel
 	protected String getCssClass()
 	{
 		return "yui-skin-sam";
+	}
+
+	public String getYuiMenuId()
+	{
+		return mg.getMarkupId();
 	}
 }

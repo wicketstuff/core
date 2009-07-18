@@ -11,6 +11,7 @@ import org.wicketstuff.yui.markup.html.menu2.IYuiMenuAction;
 import org.wicketstuff.yui.markup.html.menu2.YuiMenu;
 import org.wicketstuff.yui.markup.html.menu2.YuiMenuBar;
 import org.wicketstuff.yui.markup.html.menu2.YuiMenuBarItem;
+import org.wicketstuff.yui.markup.html.menu2.YuiMenuItem;
 import org.wicketstuff.yui.markup.html.menu2.action.AjaxLinkAction;
 
 public class MenuBar2Page extends WicketExamplePage
@@ -36,10 +37,10 @@ public class MenuBar2Page extends WicketExamplePage
 			{
 				Attributes attributes = new Attributes();
 				attributes.add(new Attributes("visible", true));
-				attributes.add(new Attributes("clicktohide", false));
+				attributes.add(new Attributes("clicktohide", true));
 				attributes.add(new Attributes("autosubmenudisplay", true));
 				attributes.add(new Attributes("hidedelay", 5000));
-				attributes.add(new Attributes("lazyload", true));
+				// attributes.add(new Attributes("lazyload", true));
 				attributes.add(new Attributes("effect",
 						"{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.25}"));
 				return attributes.toString();
@@ -69,14 +70,19 @@ public class MenuBar2Page extends WicketExamplePage
 		final YuiMenu subMenu2 = secondMenu.newSubMenu("mb_secondMenu");
 		subMenu2.setOutputMarkupId(true);
 		subMenu2.addMenuItem(new TestAction("M2 : L1"));
-		subMenu2.addMenuItem(new TestAction("M2 : L2"));
-		subMenu2.addMenuItem(new AjaxLinkAction("M2 : L3 (Ajax) - removes 1st item")
+
+		final YuiMenuItem m2L2 = new YuiMenuItem(new TestAction("M2 : L2"));
+		subMenu2.addMenuItem(m2L2);
+
+		subMenu2.addMenuItem(new AjaxLinkAction("M2 : L3 (Ajax) - toggles M2 : L2")
 		{
 			@Override
 			public void onClick(AjaxRequestTarget target)
 			{
 				MenuBar2Page.this.info(getName().getObject());
-				subMenu2.removeMenuItem(0);
+				m2L2.setDisabled(!m2L2.isDisabled());
+				m2L2.setChecked(!m2L2.isDisabled());
+				m2L2.setSelected(m2L2.isChecked());
 				target.addComponent(feedback);
 				target.addComponent(mb);
 			}
@@ -90,6 +96,7 @@ public class MenuBar2Page extends WicketExamplePage
 
 	}
 
+	@SuppressWarnings("serial")
 	private class TestAction implements IYuiMenuAction, java.io.Serializable
 	{
 		private String id;

@@ -110,7 +110,7 @@ public class YuiMenu extends AbstractYuiMenu
 	@Override
 	public String getMenuName()
 	{
-		return "yuiMenu" + getMenuId();
+		return "yuiMenu" + getYuiMenuId();
 	}
 
 	public void removeMenuItem(int idx)
@@ -118,5 +118,10 @@ public class YuiMenu extends AbstractYuiMenu
 		AbstractYuiMenuItem item = items.get(idx);
 		items.remove(item);
 		list.setList(items);
+	}
+
+	public String getYuiMenuId()
+	{
+		return getMarkupId();
 	}
 }

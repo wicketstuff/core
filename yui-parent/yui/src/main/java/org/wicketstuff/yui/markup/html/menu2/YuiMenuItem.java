@@ -10,9 +10,12 @@ import org.apache.wicket.model.Model;
 public class YuiMenuItem extends AbstractYuiMenuItem
 {
 	private static final long serialVersionUID = 1L;
+
 	public static final String MENU_ITEM_ID = "menuItem";
+
 	public static final String LINK_ID = "link";
 
+	@SuppressWarnings("unchecked")
 	public YuiMenuItem(final IYuiMenuAction action)
 	{
 		super(MENU_ITEM_ID);
@@ -58,7 +61,7 @@ public class YuiMenuItem extends AbstractYuiMenuItem
 				}
 			};
 		}
-		add(link);
+		getItemContainer().add(link);
 		link.add(new Label("linkLabel", action.getName()).setRenderBodyOnly(true));
 		newSubMenu("emptyMenu").setVisible(false);
 	}
@@ -71,8 +74,8 @@ public class YuiMenuItem extends AbstractYuiMenuItem
 			throw new RuntimeException("Link's id needs to be 'link' ");
 		}
 
-		add(link);
-		link.add(new Label("linkLabel", new Model(label)).setRenderBodyOnly(true));
+		getItemContainer().add(link);
+		link.add(new Label("linkLabel", new Model<String>(label)).setRenderBodyOnly(true));
 		newSubMenu("emptyMenu").setVisible(false);
 	}
 
