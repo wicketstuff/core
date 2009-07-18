@@ -10,7 +10,7 @@ import org.wicketstuff.yui.markup.html.contributor.yuiloader.YuiLoaderContributo
 import org.wicketstuff.yui.markup.html.contributor.yuiloader.YuiLoaderModule;
 
 @SuppressWarnings("serial")
-public abstract class AbstractYuiMenu extends Panel
+public abstract class AbstractYuiMenu extends Panel implements IYuiMenu
 {
 	private WebMarkupContainer menucontainer;
 
@@ -40,7 +40,7 @@ public abstract class AbstractYuiMenu extends Panel
 				if (addInit)
 				{
 					buffer.append("var ").append(getMenuVar()).append(" = new YAHOO.widget.Menu(")
-							.append("\"").append(getMenuId()).append("\",").append(getOpts())
+							.append("\"").append(getYuiMenuId()).append("\",").append(getOpts())
 							.append(");");
 					buffer.append(getMenuVar()).append(".render();");
 					buffer.append(getMenuVar()).append(".show();");
@@ -50,12 +50,7 @@ public abstract class AbstractYuiMenu extends Panel
 
 			private Object getMenuVar()
 			{
-				return "var_" + getMenuId();
-			}
-
-			private String getMenuId()
-			{
-				return menuId;
+				return "var_" + getYuiMenuId();
 			}
 
 		}));
@@ -65,6 +60,11 @@ public abstract class AbstractYuiMenu extends Panel
 		{
 			add(menucontainer);
 		}
+	}
+
+	public String getYuiMenuId()
+	{
+		return menuId;
 	}
 
 	protected WebMarkupContainer getMenuContainer()
@@ -92,15 +92,14 @@ public abstract class AbstractYuiMenu extends Panel
 		return menucontainer;
 	}
 
-	protected String getMenuId()
-	{
-		return menuId;
-	}
-
 	protected abstract String getMenuClass();
 
 	protected abstract String getMenuName();
 
+	/**
+	 * Override this for your own config
+	 * @return
+	 */
 	protected String getOpts()
 	{
 		Attributes attributes = new Attributes();

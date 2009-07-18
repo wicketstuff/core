@@ -18,28 +18,41 @@ import org.apache.wicket.velocity.VelocityHeaderContributor;
 import org.apache.wicket.velocity.VelocityJavascriptContributor;
 import org.wicketstuff.yui.markup.html.contributor.YuiHeaderContributor;
 
-public class YuiMenuGroup extends Panel {
+/**
+ * TODO : clean up this to use YuiLoader 
+ * @author josh
+ *
+ */
+public class YuiMenuGroup extends Panel
+{
 	private static final long serialVersionUID = 1L;
+
 	public static final String MENU_GROUP_ID = "menuGroup";
 
 
 	private List<YuiMenu> menus = new ArrayList<YuiMenu>();
+
 	private ListView list;
 
-	public YuiMenuGroup(final String elementId) {
+	public YuiMenuGroup(final String elementId)
+	{
 		this("menu", elementId);
 	}
 
-	public YuiMenuGroup(String wicketId, final String elementId) {
+	public YuiMenuGroup(String wicketId, final String elementId)
+	{
 		super(wicketId);
 
-		add(YuiHeaderContributor.forModule("menu", null, false, "2.5.2"));		
+		add(YuiHeaderContributor.forModule("menu", null, false, "2.5.2"));
 		setRenderBodyOnly(true);
-		WebMarkupContainer mg = new WebMarkupContainer(MENU_GROUP_ID) {
-			protected void onComponentTag(ComponentTag tag) {
+		WebMarkupContainer mg = new WebMarkupContainer(MENU_GROUP_ID)
+		{
+			protected void onComponentTag(ComponentTag tag)
+			{
 				super.onComponentTag(tag);
 
-				if (!Strings.isEmpty(elementId)) {
+				if (!Strings.isEmpty(elementId))
+				{
 					tag.put("id", elementId);
 				}
 				tag.put("class", "yuimenu");
@@ -48,17 +61,19 @@ public class YuiMenuGroup extends Panel {
 
 		add(mg);
 
-		list = new ListView("menuItems", menus) {
+		list = new ListView("menuItems", menus)
+		{
 
 			@Override
-			protected void populateItem(ListItem item) {
+			protected void populateItem(ListItem item)
+			{
 				item.setRenderBodyOnly(true);
-				YuiMenuGroupMenu menu = (YuiMenuGroupMenu) item
-						.getModelObject();
+				YuiMenuGroupMenu menu = (YuiMenuGroupMenu)item.getModelObject();
 
-                if(0 == item.getIndex()) {
-                	menu.addFirstOfType();
-                }
+				if (0 == item.getIndex())
+				{
+					menu.addFirstOfType();
+				}
 				menu.setRenderBodyOnly(true);
 				item.add(menu);
 			}
@@ -68,34 +83,36 @@ public class YuiMenuGroup extends Panel {
 		mg.add(list);
 		add(getMenuInit(elementId));
 	}
-	
-	public YuiMenu addMenu( IModel label ) {
+
+	public YuiMenu addMenu(IModel label)
+	{
 		YuiMenuGroupMenu subMenu = new YuiMenuGroupMenu(label, menus.size() == 0, false);
-		menus.add( subMenu );
-		list.setList( menus );
+		menus.add(subMenu);
+		list.setList(menus);
 
 		return subMenu;
 	}
-	
-	public YuiMenu addMenu( String label ) {
-		return addMenu( new Model( label ));
+
+	public YuiMenu addMenu(String label)
+	{
+		return addMenu(new Model(label));
 	}
 
-	public YuiMenu addMenu() {
+	public YuiMenu addMenu()
+	{
 		YuiMenuGroupMenu subMenu = new YuiMenuGroupMenu(false, false);
-		menus.add( subMenu );
-		list.setList( menus );
+		menus.add(subMenu);
+		list.setList(menus);
 
 		return subMenu;
 	}
 
-	private IBehavior getMenuInit(String elementId) {
+	private IBehavior getMenuInit(String elementId)
+	{
 		final Map<String, String> vars = new MiniMap(2);
 		vars.put("menuName", "Menu");
 		vars.put("elementId", elementId);
-		return new VelocityHeaderContributor()
-				.add(new VelocityJavascriptContributor(YuiMenuGroup.class,
-						"res/menuinit.vm", Model.valueOf(vars), elementId
-								+ "Script"));
+		return new VelocityHeaderContributor().add(new VelocityJavascriptContributor(
+				YuiMenuGroup.class, "res/menuinit.vm", Model.valueOf(vars), elementId + "Script"));
 	}
 }
