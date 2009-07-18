@@ -62,7 +62,7 @@ public abstract class DynamicAjaxTabbedPanel extends AjaxTabbedPanel
 			@Override
 			public void onClick(AjaxRequestTarget target)
 			{
-				onRemove(target, getSelectedTab());
+				DynamicAjaxTabbedPanel.this.onRemove(target, getSelectedTab());
 				target.addComponent(DynamicAjaxTabbedPanel.this);
 			}
 		});
