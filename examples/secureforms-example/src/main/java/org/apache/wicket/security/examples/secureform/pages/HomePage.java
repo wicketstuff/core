@@ -17,6 +17,9 @@
 package org.apache.wicket.security.examples.secureform.pages;
 
 import org.apache.wicket.PageParameters;
+import org.apache.wicket.security.components.markup.html.links.SecurePageLink;
+import org.apache.wicket.security.components.SecureComponentHelper;
+import org.apache.wicket.security.checks.InverseSecurityCheck;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.Link;
@@ -30,9 +33,7 @@ public class HomePage extends WebPage {
 
 	private static final long serialVersionUID = 1L;
 
-	// TODO Add any page properties or variables here
-
-    /**
+     /**
 	 * Constructor that is invoked when page is invoked without a session.
 	 * 
 	 * @param parameters
@@ -56,5 +57,11 @@ public class HomePage extends WebPage {
                 setResponsePage(LoginPage.class);
             }
         });
+        
+        SecurePageLink securePageLink = new SecurePageLink("secureLink", MySecureLinkedPage.class);
+		add(securePageLink);
+		add(SecureComponentHelper.setSecurityCheck(new Label("sorry",
+				"you are not allowed to go to MySecuredLinkedPage"), new InverseSecurityCheck(securePageLink
+				.getSecurityCheck())));
     }
 }

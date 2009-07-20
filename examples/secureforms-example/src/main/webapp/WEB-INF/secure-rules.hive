@@ -10,4 +10,5 @@ grant principal org.apache.wicket.security.hive.authorization.SimplePrincipal "a
 	permission ${ComponentPermission} "org.apache.wicket.security.examples.secureform.pages.MySecurePage:sampleForm", "inherit, render";
 	permission ${ComponentPermission} "org.apache.wicket.security.examples.secureform.pages.MySecurePage:sampleForm", "enable";
 	permission ${ComponentPermission} "org.apache.wicket.security.examples.secureform.pages.MySecurePage:sampleForm:name", "enable";
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.secureform.pages.MySecureLinkedPage", "render, enable";
 };
