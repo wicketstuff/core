@@ -95,17 +95,6 @@
 			</param-value>
 		</init-param>
 	</filter>
-	<!-- acegi filter-->
-    <!--
-	<filter>
-        <filter-name>Acegi HTTP Request Security Filter</filter-name>
-        <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
-        <init-param>
-            <param-name>targetClass</param-name>
-            <param-value>org.acegisecurity.util.FilterChainProxy</param-value>
-        </init-param>
-    </filter>
-    -->
     <!-- Spring Wicket app-->
 	<filter>
 		<filter-name>acegi</filter-name>
@@ -144,11 +133,6 @@
 		<url-pattern>/denial/*</url-pattern>
 	</filter-mapping>
 	
-    <!-- regular mapping for spring wicket app -->
-	<filter-mapping>
-		<filter-name>acegi</filter-name>
-		<url-pattern>/acegi/*</url-pattern>
-	</filter-mapping>
 	<!-- Listener for Spring -->
 	<listener>
 	    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

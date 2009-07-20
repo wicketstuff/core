@@ -95,7 +95,7 @@ public class WaspSession extends WebSession
 			if (securityStrategy.isUserAuthenticated())
 				dirty();
 			else
-				invalidate();
+				invalidateNow();
 			return true;
 		}
 		return false;
