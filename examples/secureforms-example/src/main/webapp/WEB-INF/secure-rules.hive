@@ -1,0 +1,13 @@
+grant
+{
+    permission org.apache.wicket.security.hive.authorization.permissions.ComponentPermission "org.apache.wicket.security.examples.secureform.pages.MySecurePage", "inherit, render";
+    permission org.apache.wicket.security.hive.authorization.permissions.ComponentPermission "org.apache.wicket.security.examples.secureform.pages.MySecurePage", "enable";
+};
+
+grant principal org.apache.wicket.security.hive.authorization.SimplePrincipal "admin"
+{
+    // this will enable the form components for 'admin' users
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.secureform.pages.MySecurePage:sampleForm", "inherit, render";
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.secureform.pages.MySecurePage:sampleForm", "enable";
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.secureform.pages.MySecurePage:sampleForm:name", "enable";
+};

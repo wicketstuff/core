@@ -36,7 +36,7 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<properties>
-				<wicket.version>1.4-rc6</wicket.version>
+				<wicket.version>1.4-rc7</wicket.version>
 			</properties>
 			<build>
 				<plugins>
