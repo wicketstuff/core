@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>1.4-rc8-SNAPSHOT</version>
+		<version>1.4-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>objectautocomplete-parent</artifactId>
 	<packaging>pom</packaging>
-  <version>1.4-rc8-SNAPSHOT</version>
+  <version>1.4-SNAPSHOT</version>
 
 	<name>ObjectAutoComplete - Parent</name>
 	<description>
