@@ -29,7 +29,9 @@ import org.mortbay.jetty.webapp.WebAppContext;
 import org.mortbay.management.MBeanContainer;
 
 /**
- * Seperate startup class for people that want to run the examples directly.
+ * Separate startup class for people that want to run the examples directly.
+ * <p>
+ * Application is available on the URL http://localhost:8080/wicket-contrib-yui-examples
  */
 public class StartYuiExamples {
 
