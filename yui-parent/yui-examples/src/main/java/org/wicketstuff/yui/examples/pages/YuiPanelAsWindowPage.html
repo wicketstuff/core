@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Yui Panel Example</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<style>
+.mask {
+	background-color: #000;
+	-moz-opacity: 0.75;
+	opacity: .75;
+	filter: alpha(opacity = 75);
+}
+</style>
+</head>
+<body>
+<span wicket:id="mainNavigation" />
+<br />
+<div style="float: right; margin: 4px; padding: 2px; width: 400px; border: 1px solid #DDD;" id="alignId">
+<ul>
+    <li>This example extends on the other YuiPanel example.</li>
+    <li>You can open up to 4 panels and move them around.</li>
+    <li>A YUI overlay manager makes sure that the active panel stays on top and makes it look like windows.
+    (Use method <tt>panel.setUsesOverlayManager(true)</tt>.)</li>
+</ul>
+</div>
+<div wicket:id="yuiPanelConfigure"></div>
+<div wicket:id="yuiPanel1"></div>
+<div wicket:id="yuiPanel2"></div>
+<div wicket:id="yuiPanel3"></div>
+<div wicket:id="yuiPanel4"></div>
+<wicket:fragment wicket:id="configureYuiPanel">
+    you can return "{}" for empty javascript Object
+    <br/>
+    <form wicket:id="form">
+        <textarea rows="17" cols="60" wicket:id="opts" value=""></textarea><br/>
+        <div wicket:id="panelSelect">
+            Panel: <label><input type="radio" value="1" wicket:id="p1" /> 1</label> 
+            <label><input type="radio" value="1" wicket:id="p2" /> 2</label>
+            <label><input type="radio" value="1" wicket:id="p3" /> 3</label>
+            <label><input type="radio" value="1" wicket:id="p4" /> 4</label>
+        </div><br/>
+        <a href="#" wicket:id="show">SHOW ME THE PANEL</a>
+    </form>
+</wicket:fragment>
+</body>
+</html>
