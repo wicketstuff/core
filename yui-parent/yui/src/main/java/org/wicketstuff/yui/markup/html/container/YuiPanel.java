@@ -36,8 +36,16 @@ public class YuiPanel extends Panel implements Serializable
 
 	private AbstractDefaultAjaxBehavior ajaxBehavior;
 
+	private boolean usesOverlayManager;
+
 	private static final String EVENT_TYPE = "type";
 
+	/**
+	 * Ctor.
+	 * 
+	 * @param id component id
+	 * @param model model
+	 */
 	public YuiPanel(String id, IModel<?> model)
 	{
 		super(id, model);
@@ -50,6 +58,17 @@ public class YuiPanel extends Panel implements Serializable
 		init();
 	}
 
+	/**
+	 * @param usesOverlayManager true to make a panel that is registered at a YUI overlay
+	 *   manager, false otherwise (the default is false)
+	 * @return this
+	 */
+	public YuiPanel setUsesOverlayManager(boolean usesOverlayManager)
+	{
+		this.usesOverlayManager = usesOverlayManager;
+		return this;
+	}
+	
 	private void init()
 	{
 
@@ -160,17 +179,24 @@ public class YuiPanel extends Panel implements Serializable
 	{
 		return "var " + getYuiPanelVar() + " = new YAHOO.widget.Panel(\"" + getYuiPanelId() + "\","
 				+ getOpts() + ");" + getYuiPanelVar() + ".render();\n"
-				+ subscribeEventCallback("hide");
+				+ subscribeEventCallback("hide")
+				+ (usesOverlayManager ? registerPanelJs() : "");
 	}
 
-	protected String subscribeEventCallback(String jsEvent)
+    protected String subscribeEventCallback(String jsEvent)
 	{
 		return getYuiPanelVar() + ".subscribe(\"hide\", function(type, args) { "
 				+ "wicketAjaxGet('" + ajaxBehavior.getCallbackUrl(true) + "&" + EVENT_TYPE
-				+ "='+type);" + " } );";
+				+ "='+type);" + " } );\n";
+		// TODO: find out if we need to unregister the panel if it has been registered by registerPanelJs
 	}
 
-	private String getResizeOpts()
+    private String registerPanelJs()
+    {
+	    return "WicketStuff.Yui.registerPanel('"+ getYuiPanelId() +"',"+ getYuiPanelVar() +");\n";
+	}
+
+	protected String getResizeOpts()
 	{
 		return "{ handles : ['br'], proxy: true, status: true, animate: true, animateDuration: .75, "
 				+ "animateEasing: YAHOO.util.Easing.backBoth}";
