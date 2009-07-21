@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de" xmlns:wicket="http://wicket.sourceforge.net/">
+
+<head>
+	<title>Demo page for jQuery integration with Apache Wicket (<span wicket:id="title"/>)</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<link rel="stylesheet" type="text/css" href="styles/demo.css" />
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Cache-Control" content="no-store, no-cache, max-age=0, must-revalidate"/>
+	<meta http-equiv="Cache-Control" content="post-check=1, pre-check=2"/>
+	<meta http-equiv="Expires" content="-1"/>
+</head>
+
+<body style="height:100%;">
+
+	<table cellpadding="0" cellspacing="0" style="height:100%;">
+		<tbody style="height:100%;">
+			<tr style="height:100%;">
+				<td style="height:100%;">
+					<table cellpadding="5" style="height:100%;">
+					 	<tbody style="height:100%;">
+							<tr><td><div wicket:id="draggable1"/>
+								</td>
+							</tr>
+
+							<tr><td><div wicket:id="draggableDroppable1"/>
+								</td>
+							</tr>
+
+							<tr><td style="vertical-align:top; height:100%;">
+									<div wicket:id="droppable1"/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+				<td style="width:100%; text-align:center; vertical-align:top; height:100%;">
+					<table cellpadding="5" style="height:100%;width:100%;">
+						<tbody style="height:100%;width:100%;">
+							<tr><td style="text-align:center;vertical-align:top;width:100%;">
+									<div style="height:100px;"/>
+									<div wicket:id="resizable1" style="text-align:center;"/>
+									<div style="height:10px;">&nbsp;</div>
+									<div wicket:id="draggableAndResizable1"/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+				<td><table cellpadding="5" style="height:100%;">
+						<tbody>
+							<tr><td><div wicket:id="draggable2"/>
+								</td>
+							</tr>
+
+							<tr><td><div wicket:id="draggableDroppable2"/>
+								</td>
+							</tr>
+
+							<tr><td style="vertical-align:top;height:100%;"><div wicket:id="droppable2"/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+				<td><div wicket:id="ganzeSpalte">
+						<div style="width:100px;height:30px;text-align: center;vertical-align: middle;display: block;">Head</div>
+						<div wicket:id="a"/>
+						<div wicket:id="b"/>
+						<div wicket:id="c"/>
+					</div>
+				</td>
+			</tr>
+
+			<tr><td colspan="3" style="width:100%;padding-top:15px;">
+					<table style="width:100%;">
+						<tr><td style="text-align:left;">|</td>
+							<td style="text-align:center;width:33%;"><a wicket:id="dragSwitch" href="#"><span wicket:id="dragSwitchLabel">disable dragging</span></a></td>
+							<td style="text-align:center;">|</td>
+							<td style="text-align:center;width:33%;"><a wicket:id="dropSwitch" href="#"><span wicket:id="dropSwitchLabel">disable dropping</span></a></td>
+							<td style="text-align:center;">|</td>
+							<td style="text-align:center;width:33%;"><a wicket:id="resizeSwitch" href="#"><span wicket:id="resizeSwitchLabel">disable resizing</span></a></td>
+							<td style="text-align:right;">|</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+
+	
+	<div wicket:id="replaceMe" />
+
+
+
+	<div>
+		<a href="#" wicket:id="ajaxLink">AjaxLink</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="#" wicket:id="link">PageLink</a>
+	</div>
+
+
+
+	<div style="position:absolute; bottom:5px; left: 5px;" wicket:id="version"/>
+
+
+
+	<div style="position:absolute; bottom:5px; right: 5px;">
+		<a href="http://users.skynet.be/mgueury/mozilla/">
+			<img src="http://users.skynet.be/mgueury/mozilla/serial_16.gif"
+				alt="Validated by HTML Validator" height="16" width="39"/>
+		</a>
+	</div>
+
+
+</body>
+</html>

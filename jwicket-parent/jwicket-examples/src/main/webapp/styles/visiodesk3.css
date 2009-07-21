@@ -1,0 +1,137 @@
+body, div {
+	font-family: verdana, arial, sans-serif;
+	}
+
+
+.toolTip {
+	background-color: rgb(50,50,50);
+	color:white;
+	width:180px;
+	}
+
+.toolTippingComponent {
+	border: 2px dashed rgb(200,0,20);
+	}
+
+
+.invisibleParent {
+	border:  0 0 0 0;
+	margin:  0 0 0 0;
+	padding: 0 0 0 0;
+	}
+
+.draggableComponent {
+	border: 2px inset rgb(150, 150, 150);
+	background-color: rgb(220, 220, 220);
+	text-align: center;
+	vertical-align: top;
+	}
+
+
+
+.resizableComponent {
+	border: 2px inset rgb(50, 50, 50);
+	background-color: rgb(150, 150, 150);
+	text-align: center;
+	vertical-align: middle;
+	display:block;
+	}
+
+
+
+
+	
+.ui-draggable-dragging {
+	border: 2px outset rgb(180, 180, 180);
+	background-color: rgb(235, 235, 235);
+	display:block;
+	z-index: 9999999999;
+	}
+
+	
+.activeClass {
+	background-color: rgb(200, 200, 200);
+	}
+
+
+.hoverClass {
+	background-color: rgb(50, 50, 50);
+	color:white;
+	}
+		
+		
+.ui-resizable {
+	position: relative;
+	}
+
+.ui-resizable-handle {
+	position: absolute;
+	font-size: 0.1px;
+	z-index: 99999;
+	display: block;
+	}
+
+
+ui-resizable-disabled .ui-resizable-handle {
+	visibility: hidden;
+	} 
+
+.ui-resizable-n {
+	background:transparent url(images/resizable-vertical.gif) repeat scroll center bottom;
+	top:0;
+	cursor:n-resize;
+	height:5px;
+	left:0;
+	width:100%;
+	z-index:1000;
+}
+
+.ui-resizable-s {
+	background:transparent url(images/resizable-vertical.gif) repeat scroll center top;
+	bottom:0;
+	cursor:s-resize;
+	height:5px;
+	left:0;
+	width:100%;
+	z-index:1000;
+}
+
+.ui-resizable-e {
+	background:transparent url(images/resizable-horizontal.gif) repeat scroll center right;
+	top:0;
+	cursor:e-resize;
+	height:100%;
+	right:0;
+	width:5px;
+	z-index:1000;
+}
+
+.ui-resizable-w {
+	background:transparent url(images/resizable-horizontal.gif) repeat scroll center left;
+	top:0;
+	cursor:w-resize;
+	height:100%;
+	left:0;
+	width:5px;
+	z-index:1000;
+}
+
+.ui-resizable-nw {
+	background:transparent url(images/resizable-diagonal.gif) repeat scroll 0 0;
+	top:0;
+	cursor:nw-resize;
+	height:5px;
+	left:0;
+	width:5px;
+	z-index:1001;
+}
+
+.ui-resizable-se {
+	background:transparent url(images/resizable-diagonal.gif) repeat scroll 0 0;
+	bottom:0;
+	cursor:se-resize;
+	height:5px;
+	right:0;
+	width:5px;
+	z-index:1001;
+}
