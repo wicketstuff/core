@@ -18,8 +18,10 @@ package org.apache.wicket.security;
 
 import org.apache.wicket.security.pages.insecure.SecureModelPage;
 import org.apache.wicket.security.models.SecureCompoundPropertyModel;
+import org.apache.wicket.security.components.SecureComponentHelper;
 import org.apache.wicket.util.tester.TagTester;
 import org.apache.wicket.authorization.UnauthorizedActionException;
+import org.apache.wicket.Component;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -34,12 +36,11 @@ public class SecureCompoundPropertyModelTest extends WaspAbstractTestBase {
     /**
      * Test secure model.
      */
-    public void testSecureCompoundPropertyModelInputDisabled()
+    public void testSecureCompoundPropertyModelForRender()
     {
         doLogin();
         Map authorized = new HashMap();
-        authorized.put("model:" + SecureModelPage.class.getName(), application.getActionFactory()
-                .getAction("render"));
+        authorized.put("model:" + SecureModelPage.class.getName(), application.getActionFactory().getAction("render"));
         login(authorized);
         mock.startPage(SecureModelPage.class);
         mock.assertRenderedPage(SecureModelPage.class);
@@ -67,37 +68,39 @@ public class SecureCompoundPropertyModelTest extends WaspAbstractTestBase {
         catch (UnauthorizedActionException e)
         {
         }
-
     }
 
-    //TODO fix this test. The disabled tag should not be in the input field. Intresting thing is: It is allowed to write text in the input field. 
-    public void testSecureCompoundPropertyModelInputEnabled()
-    {
+    public void testSecureCompoundPropertyModelForEnable() {
         doLogin();
         Map authorized = new HashMap();
-        authorized.put("model:" + SecureModelPage.class.getName(), application.getActionFactory()
-                .getAction("render"));
-        authorized.put("model:input", application.getActionFactory().getAction("access, render, enable"));
+        // NOTE: The page as such is not secure (and thus not protected, the model in the page is, so that needs authorization
+        authorized.put("model:" + SecureModelPage.class.getName(), application.getActionFactory().getAction("render"));
+        authorized.put("model:label", application.getActionFactory().getAction("render"));
+        // TODO enabling does not seems to matter a lot :(
+        authorized.put("model:input", application.getActionFactory().getAction("render enable"));
+        //authorized.put("model:input", application.getActionFactory().getAction("enable"));
         login(authorized);
         mock.startPage(SecureModelPage.class);
-        mock.assertRenderedPage(SecureModelPage.class);
-        //mock.dumpPage();
-        mock.assertVisible("input");
+        mock.dumpPage();
         TagTester tag = mock.getTagByWicketId("input");
-        //assertFalse("disabled tag found in tag <" + tag.getName() + ">", tag.hasAttribute("disabled"));
-        //assertNull("disabled attribute found, should not be there", tag.getAttribute("disabled"));
-
+        assertNotNull("input tag should be available", tag);
+        // DUMP 4
+        // TODO the next assertion goes wrong.
+        //assertFalse(tag.hasAttribute("disabled"));
         String writings = "now we are getting somewhere";
+
         mock.getComponentFromLastRenderedPage("input").setDefaultModelObject(writings);
         assertEquals(writings, mock.getComponentFromLastRenderedPage("input")
                 .getDefaultModelObject());
         mock.startPage(mock.getLastRenderedPage());
         mock.assertRenderedPage(SecureModelPage.class);
+        // DUMP 5
+        mock.dumpPage();
         tag = mock.getTagByWicketId("input");
         assertTrue(tag.getAttributeIs("value", writings));
         assertEquals(SecureCompoundPropertyModel.class.getName() + ":input", mock
                 .getComponentFromLastRenderedPage("input").getDefaultModel().toString());
 
     }
-
+    
 }
