@@ -16,6 +16,16 @@
  */
 package org.apache.wicket.security;
 
+import org.apache.wicket.security.components.ISecurePage;
+import org.apache.wicket.security.pages.insecure.SecureComponentPage;
+import org.apache.wicket.security.pages.insecure.SecureLinkPage;
+import org.apache.wicket.protocol.http.WebRequestCycle;
+import org.apache.wicket.request.target.component.BookmarkablePageRequestTarget;
+import org.apache.wicket.util.tester.FormTester;
+
+import java.util.Map;
+import java.util.HashMap;
+
 /**
  * Test unsecured pages
  *
@@ -39,8 +49,6 @@ public class UnsecuredPageTest extends WaspAbstractTestBase {
      */
     public void testUnsecuredPage2()
     {
-        // TODO check the intented behaviour and rewrite
-        /*
         // change to default behavior of ClassAuthorizationStrategy
         setSecureClass(ISecurePage.class);
         setUp();
@@ -50,7 +58,7 @@ public class UnsecuredPageTest extends WaspAbstractTestBase {
         WebRequestCycle cycle = mock.createRequestCycle();
         String url1 = cycle.urlFor(
                 new BookmarkablePageRequestTarget(SecureComponentPage.class, null)).toString();
-        mock.getServletRequest().setURL("/GeneralTest$1/GeneralTest$1/" + url1);
+        mock.getServletRequest().setURL("/WaspAbstractTestBase$1/WaspAbstractTestBase$1/" + url1);
         mock.processRequestCycle();
         mock.assertRenderedPage(getLoginPage());
         FormTester form = mock.newFormTester("signInPanel:signInForm");
@@ -59,7 +67,6 @@ public class UnsecuredPageTest extends WaspAbstractTestBase {
         form.submit();
         mock.assertRenderedPage(SecureComponentPage.class);
         mock.assertInvisible("secure"); // no render rights on the component
-        */
     }
 
     /**
@@ -67,15 +74,13 @@ public class UnsecuredPageTest extends WaspAbstractTestBase {
      */
     public void testUnsecuredPage3()
     {
-        //TODO rewrite
-        /*
         // continueto originaldestination does not work if there is no url
         // available, so we need to fake one here(testing only hack)
         mock.setupRequestAndResponse();
         WebRequestCycle cycle = mock.createRequestCycle();
         String url1 = cycle.urlFor(new BookmarkablePageRequestTarget(SecureLinkPage.class, null))
                 .toString();
-        mock.getServletRequest().setURL("/GeneralTest$1/GeneralTest$1/" + url1);
+        mock.getServletRequest().setURL("/WaspAbstractTestBase$1/WaspAbstractTestBase$1/" + url1);
         mock.processRequestCycle();
         mock.assertRenderedPage(getLoginPage());
         FormTester form = mock.newFormTester("signInPanel:signInForm");
@@ -92,7 +97,6 @@ public class UnsecuredPageTest extends WaspAbstractTestBase {
         mock.assertVisible("secure");
         mock.clickLink("secure", false);
         mock.assertRenderedPage(getHomePage());
-        */
     }
 
 }
