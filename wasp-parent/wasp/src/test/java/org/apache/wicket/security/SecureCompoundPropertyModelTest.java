@@ -74,19 +74,16 @@ public class SecureCompoundPropertyModelTest extends WaspAbstractTestBase {
         doLogin();
         Map authorized = new HashMap();
         // NOTE: The page as such is not secure (and thus not protected, the model in the page is, so that needs authorization
-        authorized.put("model:" + SecureModelPage.class.getName(), application.getActionFactory().getAction("render"));
+        // NOTE: If you want to enable the input field, you need to enable the parent. When the parent is disabled, it will
+        //       disable the textfield even when you put it on 'enable' like here below. 
+        authorized.put("model:" + SecureModelPage.class.getName(), application.getActionFactory().getAction("render enable"));
         authorized.put("model:label", application.getActionFactory().getAction("render"));
-        // TODO enabling does not seems to matter a lot :(
         authorized.put("model:input", application.getActionFactory().getAction("render enable"));
-        //authorized.put("model:input", application.getActionFactory().getAction("enable"));
         login(authorized);
         mock.startPage(SecureModelPage.class);
-        mock.dumpPage();
         TagTester tag = mock.getTagByWicketId("input");
         assertNotNull("input tag should be available", tag);
-        // DUMP 4
-        // TODO the next assertion goes wrong.
-        //assertFalse(tag.hasAttribute("disabled"));
+        assertFalse(tag.hasAttribute("disabled"));
         String writings = "now we are getting somewhere";
 
         mock.getComponentFromLastRenderedPage("input").setDefaultModelObject(writings);
@@ -94,8 +91,6 @@ public class SecureCompoundPropertyModelTest extends WaspAbstractTestBase {
                 .getDefaultModelObject());
         mock.startPage(mock.getLastRenderedPage());
         mock.assertRenderedPage(SecureModelPage.class);
-        // DUMP 5
-        mock.dumpPage();
         tag = mock.getTagByWicketId("input");
         assertTrue(tag.getAttributeIs("value", writings));
         assertEquals(SecureCompoundPropertyModel.class.getName() + ":input", mock

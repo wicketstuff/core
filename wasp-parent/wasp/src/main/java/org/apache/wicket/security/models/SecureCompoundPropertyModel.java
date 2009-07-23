@@ -59,6 +59,19 @@ import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
  * will result in an {@link AccessDeniedPage}. Failing the 2nd will result in
  * Wicket complaining about missing components. Therefore it is best to set this
  * model on a {@link Panel} or {@link Form}.
+ *
+ * Notes for usage:
+ * When you have a model that enables the use of a form, note that you need to enable the parent model if you
+ * want your form components enabled (like the textfield).
+ * The code below shows (copied out the SecureCompoundPropertyModelTest) what you need to set in order to get a form
+ * to work.  
+ * <pre>
+ * <code>
+ *       authorized.put("model:" + SecureModelPage.class.getName(), application.getActionFactory().getAction("render enable"));
+ *       authorized.put("model:label", application.getActionFactory().getAction("render"));
+ *       authorized.put("model:input", application.getActionFactory().getAction("render enable"));
+ * </code>
+ * </pre>
  * 
  * @author marrink
  */
