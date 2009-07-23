@@ -27,6 +27,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 		return "0.4.0";
 	}
 
+
 	protected JQueryAjaxBehavior(
 				final JavascriptResourceReference baseLibrary,
 				final JavascriptResourceReference[] requiredLibraries) {
