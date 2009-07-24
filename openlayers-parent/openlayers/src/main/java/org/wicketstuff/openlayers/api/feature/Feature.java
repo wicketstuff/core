@@ -68,6 +68,11 @@ public abstract class Feature implements Serializable {
 						+ vector.getId() + ")");
 	}
 
+	public String getJSRemoveFeature(IOpenLayersMap map, Vector vector) {
+		return map.getJSinvoke("removeFeature(draw" + getId() + ", layer"
+				+ vector.getId() + ")");
+	}
+
 	protected String getJScoordinate(Coordinate coordinate) {
 		String transformation = "";
 		if (map != null && projection != null) {
