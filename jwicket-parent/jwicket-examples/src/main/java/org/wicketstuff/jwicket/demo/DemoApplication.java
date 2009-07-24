@@ -9,7 +9,7 @@ public class DemoApplication extends WebApplication {
 
 	public static final String globalEncoding     = "UTF-8";
 
-	public boolean debug = true;
+	public boolean debug = false;
 
 	public DemoApplication() {
 		super();
@@ -64,5 +64,5 @@ public class DemoApplication extends WebApplication {
 	    getMarkupSettings().setDefaultMarkupEncoding(DemoApplication.globalEncoding);
 	    getRequestCycleSettings().setResponseRequestEncoding(DemoApplication.globalEncoding);
 	}
-	
+
 }

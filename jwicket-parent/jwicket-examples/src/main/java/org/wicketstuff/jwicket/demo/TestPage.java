@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.jwicket.JQueryAjaxBehavior;
+import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggableBehavior;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggablesAcceptedByDroppable;
 
@@ -27,19 +28,19 @@ public class TestPage extends WebPage {
 	private final DraggableAndDroppableElement draggableDroppable2;
 
 	private final ResizableElement resizable1;
-	
+
 	private final DraggableAndResizableElement draggableAndResizable1;
-	
-	
+
+
 	private Label replaceMe;
 
 	public TestPage() {
 		super();
-		
+
 
 		addOrReplace(new Label("title", JQueryAjaxBehavior.getVersion()).setRenderBodyOnly(true));
-		
-		
+
+
 		DraggablesAcceptedByDroppable defaultValues = new DraggablesAcceptedByDroppable("one", "two", "three");
 
 
@@ -51,14 +52,14 @@ public class TestPage extends WebPage {
 
 		add(droppable1 = new DroppableElement("droppable1", defaultValues));
 
-		
-		
+
+
 		add(resizable1 = new ResizableElement("resizable1"));
-		
+
 		add(draggableAndResizable1 = new DraggableAndResizableElement("draggableAndResizable1"));
-		
-		
-		
+
+
+
 
 		add(draggable2 = new DraggableElement("draggable2"));
 
@@ -70,7 +71,7 @@ public class TestPage extends WebPage {
 
 		final Label dragSwitchLabel = new Label("dragSwitchLabel", "disable dragging");
 		dragSwitchLabel.setOutputMarkupId(true);
-		
+
 		AjaxLink<Void> dragSwitch = new AjaxLink<Void>("dragSwitch") {
 			private static final long serialVersionUID = 1L;
 			private boolean on = true;
@@ -102,20 +103,20 @@ public class TestPage extends WebPage {
 		dragSwitch.add(dragSwitchLabel);
 		add(dragSwitch);
 
-		
-		
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
+
+
 
 
 
 		final Label dropSwitchLabel = new Label("dropSwitchLabel", "disable dropping");
 		dropSwitchLabel.setOutputMarkupId(true);
-		
+
 		AjaxLink<Void> dropSwitch = new AjaxLink<Void>("dropSwitch") {
 			private static final long serialVersionUID = 1L;
 			private boolean on = true;
@@ -179,20 +180,20 @@ public class TestPage extends WebPage {
 		};
 		resizeSwitch.add(resizeSwitchLabel);
 		add(resizeSwitch);
-		
-		
-		
-		
-		add(new Label("version", "Wicket jQuery Integration Demo Version " + JQueryAjaxBehavior.getVersion()));
 
 
-		
-		
-		
-		
+
+
+		add(new Label("version", "jWicket: Wicket jQuery Integration - Demonstration  " + JQuery.getVersion()));
+
+
+
+
+
+
 		replaceMe = new Label("replaceMe", "replace me");
 		replaceMe.add(new DraggableBehavior());
-		
+
 		replaceMe.add(new AjaxEventBehavior("onclick") {
 			private static final long serialVersionUID = 1L;
 
@@ -200,13 +201,12 @@ public class TestPage extends WebPage {
 			protected void onEvent(AjaxRequestTarget target) {
 				System.out.println("klicked!");
 			}
-			
+
 		});
-		
+
 		add(replaceMe);
-System.out.println("replaceMe: ID = " + replaceMe.getMarkupId());
-		
-		
+
+
 
 
 		add(new AjaxLink<Void>("ajaxLink"){
@@ -220,7 +220,7 @@ System.out.println("replaceMe: ID = " + replaceMe.getMarkupId());
 				target.addComponent(newDraggableElement);
 			}
 		});
-		
+
 		add(new Link<Void>("link"){
 			private static final long serialVersionUID = 1L;
 
@@ -229,35 +229,35 @@ System.out.println("replaceMe: ID = " + replaceMe.getMarkupId());
 				setResponsePage(TestPage.class);
 			}
 		});
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		WebMarkupContainer ganzeSpalte = new WebMarkupContainer("ganzeSpalte");
 		ganzeSpalte.add(new DraggableBehavior());
-		
-		
+
+
 		ganzeSpalte.add(new DraggableAndDroppableElement("a"));
 		ganzeSpalte.add(new DroppableElement("b"));
 		ganzeSpalte.add(new DraggableAndDroppableElement("c"));
-		
-		
-		
-		
+
+
+
+
 		add(ganzeSpalte);
 	}
-	
+
 }
