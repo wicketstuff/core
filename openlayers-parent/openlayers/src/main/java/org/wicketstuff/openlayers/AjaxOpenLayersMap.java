@@ -400,6 +400,24 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	}
 
 	/**
+	 * Remove an feature.
+	 * 
+	 * @param feature
+	 *            feature to remove
+	 * @return This
+	 */
+	public IOpenLayersMap removeFeature(Feature feature) {
+		while (features.contains(feature)) {
+			features.remove(feature);
+		}
+		if (AjaxRequestTarget.get() != null) {
+			AjaxRequestTarget.get().appendJavascript(
+					feature.getJSRemoveFeature(this, featureLayer));
+		}
+		return this;
+	}
+
+	/**
 	 * Update state from a request to an AJAX target.
 	 */
 	public void update(AjaxRequestTarget target) {
