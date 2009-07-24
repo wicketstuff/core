@@ -28,7 +28,7 @@ public class JQuery extends AbstractDefaultAjaxBehavior {
 	private final JavascriptResourceReference[] requiredLibraries;
 
 	public static final String getVersion() {
-		return "0.4.0";
+		return "0.4.1";
 	}
 
 
@@ -97,9 +97,9 @@ System.out.println("ieVersion = " + ieVersion);
 	public static List<JavascriptResourceReference> getUserProvidedResourceReferences() {
 		return userProvidedResourceReferences;
 	}
-	
-	
-	
+
+
+
 
 	@Override
 	protected void respond(AjaxRequestTarget target) { }
