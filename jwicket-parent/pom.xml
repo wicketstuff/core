@@ -92,6 +92,8 @@
 	</dependencies>
 
     <modules>
+    	<module>jwicket-core</module>
+
     	<module>jwicket</module>
     	<module>jwicket-examples</module>
     </modules>
