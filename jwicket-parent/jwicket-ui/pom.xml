@@ -15,23 +15,20 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.wicketstuff</groupId>
-		<artifactId>jwicket-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
-	</parent>
-
-	<artifactId>jwicket-core</artifactId>
-	<packaging>jar</packaging>
-
-    <name>jWicket: jQuery Wicket integration core</name>
+    <parent>
+        <groupId>org.wicketstuff</groupId>
+        <artifactId>jwicket-parent</artifactId>
+        <version>1.4-SNAPSHOT</version>
+    </parent>
+	
+    <artifactId>jwicket-ui</artifactId>
+	<packaging>pom</packaging>
+	
+    <name>jWicket: jQuery Wicket integration - ui</name>
     <description>
         WicketJQuery by Stefan Lindner has been renamed to jWicket, mavenized, and migrated
         to WicketStuff. This Wicketstuff version supercedes the original version which was available
@@ -50,5 +47,21 @@
             <email>tauren at tauren.com</email>
         </developer>
     </developers>
+
+
+    <modules>
+    	<module>jwicket-ui-dragdrop</module>
+    	<module>jwicket-ui-resize</module>
+    	<module>jwicket-ui-effects</module>
+    </modules>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>jwicket-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

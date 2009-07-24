@@ -93,8 +93,9 @@
 
     <modules>
     	<module>jwicket-core</module>
+    	<module>jwicket-ui</module>
+    	<module>jwicket-tooltip</module>
 
-    	<module>jwicket</module>
     	<module>jwicket-examples</module>
     </modules>
 	

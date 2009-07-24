@@ -23,32 +23,32 @@
 
 	<parent>
 		<groupId>org.wicketstuff</groupId>
-		<artifactId>jwicket-parent</artifactId>
+		<artifactId>jwicket-tooltip</artifactId>
 		<version>1.4-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>jwicket-core</artifactId>
+	<artifactId>jwicket-tooltip-wtooltips</artifactId>
 	<packaging>jar</packaging>
 
-    <name>jWicket: jQuery Wicket integration core</name>
+    <name>jWicket: jQuery Wicket integration - toolstips.wtooltips</name>
     <description>
         WicketJQuery by Stefan Lindner has been renamed to jWicket, mavenized, and migrated
         to WicketStuff. This Wicketstuff version supercedes the original version which was available
         at http://subversion.visionet.de/project/WicketJQuery/wiki
     </description>
-
-    <developers>
-        <developer>
-            <name>Stefan Lindnnner</name>
-            <id>lindner</id>
-            <email>lindner at visionet.de</email>
-        </developer>
-        <developer>
-            <name>Tauren Mills</name>
-            <id>tauren</id>
-            <email>tauren at tauren.com</email>
-        </developer>
-    </developers>
+	
+	<developers>
+		<developer>
+			<name>Stefan Lindnnner</name>
+			<id>lindner</id>
+			<email>lindner at visionet.de</email>
+		</developer>
+		<developer>
+			<name>Tauren Mills</name>
+			<id>tauren</id>
+			<email>tauren at tauren.com</email>
+		</developer>
+	</developers>
 
 </project>

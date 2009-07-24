@@ -1,82 +1,28 @@
 package org.wicketstuff.jwicket;
 
 
-import java.io.PrintStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
-import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 
 
 /**
  * This is the base class for the jQuery integration with wicket.
  */
-public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
+public abstract class JQueryAjaxBehavior extends JQuery {
 
 	private static final long serialVersionUID = 1L;
-
-	private final JavascriptResourceReference baseLibrary;
-	private final JavascriptResourceReference[] requiredLibraries;
-
-	public static final String getVersion() {
-		return "0.4.0";
-	}
-
 
 	protected JQueryAjaxBehavior(
 				final JavascriptResourceReference baseLibrary,
 				final JavascriptResourceReference[] requiredLibraries) {
-		super();
-		this.baseLibrary = baseLibrary;
-		this.requiredLibraries = requiredLibraries;
+		super(baseLibrary, requiredLibraries);
 	}
+		
 
-
-
-	public void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
-
-		addJavascriptReference(response, new JavascriptResourceReference(JQueryAjaxBehavior.class, "jquery-1.3.2.min.js"));
-
-		response.renderJavascript("jQuery.noConflict();", "noConflict");
-
-		if (baseLibrary != null)
-			addJavascriptReference(response, baseLibrary);
-		for (JavascriptResourceReference requiredLibrary : requiredLibraries)
-			addJavascriptReference(response, requiredLibrary);
-	}
-
-
-
-	protected void addJavascriptReference(IHeaderResponse response, JavascriptResourceReference resource) {
-		response.renderJavascriptReference(resource);
-	}
-
-
-
-	/**
-	 * for debugging only
-	 */
-	protected void printParameters(final PrintStream stream, final Map<String, String[]> parameterMap) {
-		for (String key : parameterMap.keySet()) {
-			String valuesString = "";
-			for (String value : parameterMap.get(key)) {
-				if (valuesString.length() > 0)
-					valuesString += ", ";
-				valuesString += value;
-			}
-			stream.println("\t" + key + " = " + valuesString);
-		}
-	}
-
-	protected void printParameters(final Map<String, String[]> parameterMap) {
-		printParameters(System.out, parameterMap);
-	}
 
 
 	protected String rawOptions = null;
