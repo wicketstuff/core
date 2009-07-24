@@ -1,2 +1,0 @@
-jquery*.js:		http://jquery.com
-ui.*			http://jqueryui.com
