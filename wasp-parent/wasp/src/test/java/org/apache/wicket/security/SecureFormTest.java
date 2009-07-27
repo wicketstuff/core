@@ -21,6 +21,8 @@ import org.apache.wicket.security.components.markup.html.form.SecureForm;
 import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.TagTester;
+import org.apache.wicket.protocol.http.request.InvalidUrlException;
+import org.apache.wicket.authorization.UnauthorizedActionException;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -75,14 +77,14 @@ public class SecureFormTest extends WaspAbstractTestBase {
             form.setValue("area", "also not allowed");
             form.submit();
             fail("should not be able to enter data and submit the form");
-        } catch (RuntimeException e)
+        } catch (UnauthorizedActionException e)
         {
-            assertEquals("Expected a UnauthorizedActionException", "org.apache.wicket.authorization.UnauthorizedActionException", e.getCause().getClass().getName());
+            //assertEquals("Expected a UnauthorizedActionException", "org.apache.wicket.authorization.UnauthorizedActionException", e.getCause().getClass().getName());
         } catch (Throwable t) {
             
         }
-        mock.processRequestCycle();
         */
+        mock.processRequestCycle();
     }
 
     /**
