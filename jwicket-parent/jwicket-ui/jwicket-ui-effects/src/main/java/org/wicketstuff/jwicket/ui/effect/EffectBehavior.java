@@ -5,6 +5,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiBehavior;
 
 
@@ -21,19 +22,19 @@ public class EffectBehavior extends AbstractJqueryUiBehavior {
 	private static final long serialVersionUID = 1L;
 
 	public EffectBehavior() {
-		super(	new JavascriptResourceReference(EffectBehavior.class, "effects.core-1.7.2.js"),
-				new JavascriptResourceReference(EffectBehavior.class, "effects.blind-1.7.2.js"),
-				new JavascriptResourceReference(EffectBehavior.class, "effects.bounce-1.7.2.js"),
-				new JavascriptResourceReference(EffectBehavior.class, "effects.clip-1.7.2.js"),
-				new JavascriptResourceReference(EffectBehavior.class, "effects.drop-1.7.2.js"),
-				new JavascriptResourceReference(EffectBehavior.class, "effects.explode-1.7.2.js"),
-				new JavascriptResourceReference(EffectBehavior.class, "effects.fold-1.7.2.js"),
-				new JavascriptResourceReference(EffectBehavior.class, "effects.highlight-1.7.2.js"),
-				new JavascriptResourceReference(EffectBehavior.class, "effects.pulsate-1.7.2.js"),
-				new JavascriptResourceReference(EffectBehavior.class, "effects.scale-1.7.2.js"),
-				new JavascriptResourceReference(EffectBehavior.class, "effects.shake-1.7.2.js"),
-				new JavascriptResourceReference(EffectBehavior.class, "effects.slide-1.7.2.js"),
-				new JavascriptResourceReference(EffectBehavior.class, "effects.transfer-1.7.2.js")
+		super(	new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.core-1.7.2.js"),
+				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.blind-1.7.2.js"),
+				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.bounce-1.7.2.js"),
+				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.clip-1.7.2.js"),
+				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.drop-1.7.2.js"),
+				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.explode-1.7.2.js"),
+				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.fold-1.7.2.js"),
+				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.highlight-1.7.2.js"),
+				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.pulsate-1.7.2.js"),
+				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.scale-1.7.2.js"),
+				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.shake-1.7.2.js"),
+				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.slide-1.7.2.js"),
+				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.transfer-1.7.2.js")
 		);
 	}
 	

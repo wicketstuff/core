@@ -6,6 +6,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.wicketstuff.jwicket.SpecialKey;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggableBehavior;
 import org.wicketstuff.jwicket.ui.dragdrop.IDraggable;
 import org.wicketstuff.jwicket.ui.resizable.IResizable;
@@ -76,17 +77,17 @@ public class DraggableAndResizableElement extends GenericPanel<String>  {
 
 		private static final long serialVersionUID = 1L;
 
-		public void onDragStop(AjaxRequestTarget target) {
+		public void onDragStop(AjaxRequestTarget target, final SpecialKey... specialKeys) {
 			setModelObject("Drag me!");
 			target.addComponent(l);
 		}
 
-		public void onDragStart(AjaxRequestTarget target) {
+		public void onDragStart(AjaxRequestTarget target, final SpecialKey... specialKeys) {
 			setModelObject("dragging...");
 			target.addComponent(l);
 		}
 
-		public void onDrag(AjaxRequestTarget target) {}
+		public void onDrag(AjaxRequestTarget target, final SpecialKey... specialKeys) {}
 	}
 	
 
@@ -99,15 +100,15 @@ public class DraggableAndResizableElement extends GenericPanel<String>  {
 
 		private static final long serialVersionUID = 1L;
 
-		public void onResize(AjaxRequestTarget target, int top, int left, int width, int height) {
+		public void onResize(AjaxRequestTarget target, int top, int left, int width, int height, final SpecialKey... specialKeys) {
 			setModelObject("(" + left + ", " + top + ", " + height + ", " + width + ")");
 			target.addComponent(l);
 		}
 
-		public void onResizeStart(AjaxRequestTarget target, int top, int left, int width, int height) {}
+		public void onResizeStart(AjaxRequestTarget target, int top, int left, int width, int height, final SpecialKey... specialKeys) {}
 
 		public void onResized(AjaxRequestTarget target, int top, int left, int width, int height,
-				int originalTop, int originalLeft, int originalWidth, int originalHeight) {}
+				int originalTop, int originalLeft, int originalWidth, int originalHeight, final SpecialKey... specialKeys) {}
 	}
 	
 	

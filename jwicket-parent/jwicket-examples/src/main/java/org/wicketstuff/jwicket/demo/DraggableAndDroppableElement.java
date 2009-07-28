@@ -7,6 +7,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.wicketstuff.jwicket.SpecialKey;
 import org.wicketstuff.jwicket.tooltip.WTooltip;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggableBehavior;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggablesAcceptedByDroppable;
@@ -84,32 +85,32 @@ public class DraggableAndDroppableElement extends GenericPanel<String>  {
 
 		private static final long serialVersionUID = 1L;
 
-		public void onDragStop(final AjaxRequestTarget target) {
+		public void onDragStop(final AjaxRequestTarget target, final SpecialKey... specialKeys) {
 			setModelObject("Drag me!");
 			target.addComponent(l);
 		}
 
-		public void onDragStart(final AjaxRequestTarget target) {
+		public void onDragStart(final AjaxRequestTarget target, final SpecialKey... specialKeys) {
 			setModelObject("dragging...");
 			target.addComponent(l);
 		}
 
-		public void onDrag(final AjaxRequestTarget target) {}
+		public void onDrag(final AjaxRequestTarget target, final SpecialKey... specialKeys) {}
 
-		public void onDrop(final AjaxRequestTarget target, final Component draggedComponent) {
+		public void onDrop(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKey... specialKeys) {
 			setModelObject("You dropped '" + draggedComponent.getId() + "' into me!");
 			target.addComponent(l);
 			dropped = true;
 			effects.pulsate(target, 2, 250);
 		}
 
-		public void onActivate(final AjaxRequestTarget target, final Component draggedComponent) {
+		public void onActivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKey... specialKeys) {
 			setModelObject("Drop '" + ((draggedComponent==null)?"<null>":draggedComponent.getId()) + "' into me!");
 			target.addComponent(l);
 			dropped = false;
 		}
 
-		public void onDeactivate(final AjaxRequestTarget target, final Component draggedComponent) {
+		public void onDeactivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKey... specialKeys) {
 			if (!dropped) {
 				setModelObject("Drag me!");
 				target.addComponent(l);

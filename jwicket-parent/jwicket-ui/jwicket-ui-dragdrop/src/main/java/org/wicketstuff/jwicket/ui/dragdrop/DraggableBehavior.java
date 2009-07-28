@@ -4,10 +4,10 @@ package org.wicketstuff.jwicket.ui.dragdrop;
 import org.apache.wicket.Component;
 import org.apache.wicket.Request;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 import org.wicketstuff.jwicket.CssCursor;
 import org.wicketstuff.jwicket.CssPosition;
-
+import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.SpecialKey;
 
 
 /**
@@ -23,7 +23,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	
 	public DraggableBehavior() {
-		super(new JavascriptResourceReference(DraggableBehavior.class, "ui.draggable-1.7.2.js"));
+		super(new JQueryJavascriptResourceReference(DraggableBehavior.class, "ui.draggable-1.7.2.js"));
 	}
 
 
@@ -42,20 +42,20 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 			if (component instanceof IDraggable) {
 				IDraggable draggableComponent = (IDraggable)component;
 				if (dragEventType == EventType.DRAG_START)
-					draggableComponent.onDragStart(target);
+					draggableComponent.onDragStart(target, getSpecialKeys(request));
 				else if (dragEventType == EventType.DRAG_END)
-					draggableComponent.onDragStop(target);
+					draggableComponent.onDragStop(target, getSpecialKeys(request));
 				else if (dragEventType == EventType.DRAG)
-					draggableComponent.onDrag(target);
+					draggableComponent.onDrag(target, getSpecialKeys(request));
 			}
 
 
 			if (dragEventType == EventType.DRAG_START)
-				onDragStart(target);
+				onDragStart(target, getSpecialKeys(request));
 			else if (dragEventType == EventType.DRAG_END)
-				onDragStop(target);
+				onDragStop(target, getSpecialKeys(request));
 			else if (dragEventType == EventType.DRAG)
-				onDrag(target);
+				onDrag(target, getSpecialKeys(request));
 		}
 	}
 	
@@ -633,8 +633,9 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 	 * method to perform some action when dragging starts.
 	 *
 	 * @param target the AjaxRequestTarget of the drag operation.
+	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	protected void onDragStart(final AjaxRequestTarget target) {}
+	protected void onDragStart(final AjaxRequestTarget target, final SpecialKey... specialKeys) {}
 
 
 	/**
@@ -643,8 +644,9 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 	 * You can override this method to perform some action during the drag operation.
 	 *
 	 * @param target the AjaxRequestTarget of the drag operation.
+	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	protected void onDrag(final AjaxRequestTarget target) {}
+	protected void onDrag(final AjaxRequestTarget target, final SpecialKey... specialKeys) {}
 
 
 	/**
@@ -653,8 +655,9 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 	 * method to perform some action when dragging stops.
 	 *
 	 * @param target the AjaxRequestTarget of the drag operation.
+	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	protected void onDragStop(final AjaxRequestTarget target) {}
+	protected void onDragStop(final AjaxRequestTarget target, final SpecialKey... specialKeys) {}
 
 
 	/**
@@ -686,7 +689,11 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 			options.put(EventType.DRAG_END.getEventName(),
 						new JsFunction("function() { wicketAjaxGet('" +
 										this.getCallbackUrl(false) +
-										"&" + EventType.IDENTIFIER + "=" + EventType.DRAG_END + "'); }"));
+										"&" + EventType.IDENTIFIER + "=" + EventType.DRAG_END + "'" +
+
+										"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
+
+										"); }"));
 		else
 			options.remove(EventType.DRAG_END.getEventName());
 
@@ -695,7 +702,11 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 			options.put(EventType.DRAG.getEventName(),
 						new JsFunction("function() { wicketAjaxGet('" +
 										this.getCallbackUrl() +
-										"&" + EventType.IDENTIFIER + "=" + EventType.DRAG + "'); }"));
+										"&" + EventType.IDENTIFIER + "=" + EventType.DRAG + "'" +
+
+										"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
+
+										"); }"));
 		else
 			options.remove(EventType.DRAG.getEventName());
 
@@ -704,7 +715,11 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 			options.put(EventType.DRAG_START.getEventName(),
 						new JsFunction("function() { wicketAjaxGet('" +
 										this.getCallbackUrl() +
-										"&" + EventType.IDENTIFIER + "=" + EventType.DRAG_START + "'); }"));
+										"&" + EventType.IDENTIFIER + "=" + EventType.DRAG_START + "'" +
+
+										"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
+
+										"); }"));
 		else
 			options.remove(EventType.DRAG_START.getEventName());
 

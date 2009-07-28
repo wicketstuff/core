@@ -8,11 +8,11 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 import org.apache.wicket.util.string.JavascriptUtils;
 import org.wicketstuff.jwicket.JQuery;
+import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryJavascriptResourceReferenceType;
 import org.wicketstuff.jwicket.tooltip.AbstractToolTip;
-
 
 
 /**
@@ -64,7 +64,7 @@ public class WalterZornTips extends AbstractToolTip {
 		private static final long serialVersionUID = 1L;
 
 		protected HeaderContributor() {
-			super(new JavascriptResourceReference(WalterZornTips.class, "walterzorn_tip.js"));
+			super(new JQueryJavascriptResourceReference(WalterZornTips.class, "walterzorn_tip.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE));
 		}
 
 		

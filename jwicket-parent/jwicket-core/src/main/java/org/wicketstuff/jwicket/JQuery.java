@@ -24,23 +24,23 @@ public class JQuery extends AbstractDefaultAjaxBehavior {
 
 	private static final long serialVersionUID = 1L;
 
-	private final JavascriptResourceReference baseLibrary;
-	private final JavascriptResourceReference[] requiredLibraries;
+	private final JQueryJavascriptResourceReference baseLibrary;
+	private final JQueryJavascriptResourceReference[] requiredLibraries;
 
 	public static final String getVersion() {
 		return "0.4.1";
 	}
 
 
-	public JQuery(final JavascriptResourceReference baseLibrary) {
+	public JQuery(final JQueryJavascriptResourceReference baseLibrary) {
 		super();
 		this.baseLibrary = baseLibrary;
-		this.requiredLibraries = new JavascriptResourceReference[0];
+		this.requiredLibraries = new JQueryJavascriptResourceReference[0];
 	}
 
 	public JQuery(
-				final JavascriptResourceReference baseLibrary,
-				final JavascriptResourceReference... requiredLibraries) {
+				final JQueryJavascriptResourceReference baseLibrary,
+				final JQueryJavascriptResourceReference... requiredLibraries) {
 		super();
 		this.baseLibrary = baseLibrary;
 		this.requiredLibraries = requiredLibraries;
@@ -48,6 +48,10 @@ public class JQuery extends AbstractDefaultAjaxBehavior {
 
 
 	protected void addJavascriptReference(IHeaderResponse response, JavascriptResourceReference resource) {
+		response.renderJavascriptReference(resource);
+	}
+
+	protected void addJavascriptReference(IHeaderResponse response, JQueryJavascriptResourceReference resource) {
 		response.renderJavascriptReference(resource);
 	}
 
@@ -74,24 +78,34 @@ public class JQuery extends AbstractDefaultAjaxBehavior {
 System.out.println("ieVersion = " + ieVersion);
 
 		if (userProvidedResourceReferences.size() == 0) {
-			addJavascriptReference(response, new JavascriptResourceReference(JQuery.class, "jquery-1.3.2.min.js"));
+			// No user provided Resources, use internal resources
+			addJavascriptReference(response, new JQueryJavascriptResourceReference(JQuery.class, "jquery-1.3.2.min.js"));
 
 			response.renderJavascript("jQuery.noConflict();", "noConflict");
 
 			if (baseLibrary != null)
 				addJavascriptReference(response, baseLibrary);
-			for (JavascriptResourceReference requiredLibrary : requiredLibraries)
+			for (JQueryJavascriptResourceReference requiredLibrary : requiredLibraries)
 				addJavascriptReference(response, requiredLibrary);
 		}
-		else
+		else {
+			// Userdefined resources, use them but also use the NOT_OVERRIDABLE internal resources
 			for (JavascriptResourceReference userLibrary : userProvidedResourceReferences)
 				addJavascriptReference(response, userLibrary);
+
+			if (baseLibrary != null && baseLibrary.getType() == JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE)
+				addJavascriptReference(response, baseLibrary);
+			for (JQueryJavascriptResourceReference requiredLibrary : requiredLibraries)
+				if (requiredLibrary.getType() == JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE)
+					addJavascriptReference(response, requiredLibrary);
+
+		}
 	}
 
 
 	private static final List<JavascriptResourceReference> userProvidedResourceReferences = new ArrayList<JavascriptResourceReference>();
 
-	public static final void addUserProvidedResourceReferences(final JavascriptResourceReference ressources) {
+	public static final void addUserProvidedResourceReferences(final JavascriptResourceReference...ressources) {
 		userProvidedResourceReferences.addAll(Arrays.asList(ressources));
 	}
 	public static List<JavascriptResourceReference> getUserProvidedResourceReferences() {
