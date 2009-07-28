@@ -83,7 +83,7 @@ ui-resizable-disabled .ui-resizable-handle {
 	height:5px;
 	left:0;
 	width:100%;
-	z-index:1000;
+	z-index:100099;
 }
 
 .ui-resizable-s {

@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 
 
 /**
@@ -17,8 +16,8 @@ public abstract class JQueryAjaxBehavior extends JQuery {
 	private static final long serialVersionUID = 1L;
 
 	protected JQueryAjaxBehavior(
-				final JavascriptResourceReference baseLibrary,
-				final JavascriptResourceReference[] requiredLibraries) {
+				final JQueryJavascriptResourceReference baseLibrary,
+				final JQueryJavascriptResourceReference[] requiredLibraries) {
 		super(baseLibrary, requiredLibraries);
 	}
 		

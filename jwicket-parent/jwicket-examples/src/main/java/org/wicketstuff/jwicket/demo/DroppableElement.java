@@ -7,6 +7,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.wicketstuff.jwicket.SpecialKey;
 import org.wicketstuff.jwicket.tooltip.BeautyTips;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggablesAcceptedByDroppable;
 import org.wicketstuff.jwicket.ui.dragdrop.DroppableBehavior;
@@ -83,20 +84,20 @@ public class DroppableElement extends GenericPanel<String>  {
 
 		private static final long serialVersionUID = 1L;
 
-		public void onDrop(final AjaxRequestTarget target, final Component draggedComponent) {
+		public void onDrop(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKey... specialKeys) {
 			setModelObject("You dropped '" + draggedComponent.getId() + "' into me!");
 			target.addComponent(l);
 			dropped = true;
 			effects.pulsate(target, 2, 250);
 		}
 
-		public void onActivate(final AjaxRequestTarget target, final Component draggedComponent) {
+		public void onActivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKey... specialKeys) {
 			setModelObject("Drop '" + ((draggedComponent==null)?"<null>":draggedComponent.getId()) + "' into me!");
 			target.addComponent(l);
 			dropped = false;
 		}
 
-		public void onDeactivate(final AjaxRequestTarget target, final Component draggedComponent) {
+		public void onDeactivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKey... specialKeys) {
 			if (!dropped) {
 				setModelObject("Drop it!");
 				target.addComponent(l);

@@ -4,8 +4,9 @@ package org.wicketstuff.jwicket.tooltip;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 import org.wicketstuff.jwicket.JQuery;
+import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryJavascriptResourceReferenceType;
 
 
 /**
@@ -32,9 +33,10 @@ public class WTooltip extends AbstractToolTip {
 	@Override
 	IHeaderContributor getHeadercontributor() {
 		return new JQuery(
-				new JavascriptResourceReference(WTooltip.class, "wTooltip.js")
+				new JQueryJavascriptResourceReference(WTooltip.class, "wTooltip.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE)
 		) {
-			
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void renderHead(IHeaderResponse response) {
 				super.renderHead(response);

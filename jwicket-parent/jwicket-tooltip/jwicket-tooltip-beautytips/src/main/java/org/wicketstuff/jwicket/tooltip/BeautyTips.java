@@ -2,17 +2,12 @@ package org.wicketstuff.jwicket.tooltip;
 
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
-import org.apache.wicket.protocol.http.ClientProperties;
-import org.apache.wicket.protocol.http.WebSession;
-import org.apache.wicket.protocol.http.request.WebClientInfo;
-import org.apache.wicket.request.ClientInfo;
 
 import org.wicketstuff.jwicket.JQuery;
-import org.wicketstuff.jwicket.JQueryAjaxBehavior;
+import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryJavascriptResourceReferenceType;
 import org.wicketstuff.jwicket.tooltip.AbstractToolTip;
 
 
@@ -38,13 +33,14 @@ public class BeautyTips extends AbstractToolTip {
 	@Override
 	IHeaderContributor getHeadercontributor() {
 		return new JQuery(
-				new JavascriptResourceReference(BeautyTips.class, "jquery.hoverIntent.minified.js"),
-				new JavascriptResourceReference(BeautyTips.class, "jquery.bgiframe.min.js"),
-				new JavascriptResourceReference(BeautyTips.class, "excanvas.compiled.js"),
-				new JavascriptResourceReference(BeautyTips.class, "jquery.bt.min.js"),
-				new JavascriptResourceReference(BeautyTips.class, "jquery.easing.1.3.js")
+				new JQueryJavascriptResourceReference(BeautyTips.class, "jquery.hoverIntent.minified.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE),
+				new JQueryJavascriptResourceReference(BeautyTips.class, "jquery.bgiframe.min.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE),
+				new JQueryJavascriptResourceReference(BeautyTips.class, "excanvas.compiled.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE),
+				new JQueryJavascriptResourceReference(BeautyTips.class, "jquery.bt.min.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE),
+				new JQueryJavascriptResourceReference(BeautyTips.class, "jquery.easing.1.3.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE)
 		) {
-			
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void renderHead(IHeaderResponse response) {
 				super.renderHead(response);

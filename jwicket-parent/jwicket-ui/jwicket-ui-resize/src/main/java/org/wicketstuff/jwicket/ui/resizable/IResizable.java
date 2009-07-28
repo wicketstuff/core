@@ -3,6 +3,7 @@ package org.wicketstuff.jwicket.ui.resizable;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.wicketstuff.jwicket.SpecialKey;
 
 
 /** This is a marker interface. You can mark any Wicket {@link Component}
@@ -24,8 +25,9 @@ public interface IResizable {
 	 * @param left the current left in px 
 	 * @param width the current width in px
 	 * @param height the current height in px
+	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	public void onResizeStart(final AjaxRequestTarget target, final int top, final int left, final int width, final int height);
+	public void onResizeStart(final AjaxRequestTarget target, final int top, final int left, final int width, final int height, final SpecialKey... specialKeys);
 
 	
 	/**
@@ -40,8 +42,9 @@ public interface IResizable {
 	 * @param left the current left in px 
 	 * @param width the current width in px
 	 * @param height the current height in px
+	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	public void onResize(final AjaxRequestTarget target, final int top, final int left, final int width, final int height);
+	public void onResize(final AjaxRequestTarget target, final int top, final int left, final int width, final int height, final SpecialKey... specialKeys);
 
 
 	/**
@@ -58,8 +61,10 @@ public interface IResizable {
 	 * @param originalLeft the final original left in px before resizing
 	 * @param originalWidth the final original width in px before resizing
 	 * @param originalHeight the final original height in px before resizing
+	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
 	public void onResized(final AjaxRequestTarget target,
 			final int top, final int left, final int width, final int height,
-			final int originalTop, final int originalLeft, final int originalWidth, final int originalHeight);
+			final int originalTop, final int originalLeft, final int originalWidth,
+			final int originalHeight, final SpecialKey... specialKeys);
 }

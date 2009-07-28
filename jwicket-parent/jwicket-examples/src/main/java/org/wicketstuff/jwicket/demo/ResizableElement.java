@@ -6,6 +6,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.wicketstuff.jwicket.SpecialKey;
 import org.wicketstuff.jwicket.ui.resizable.IResizable;
 import org.wicketstuff.jwicket.ui.resizable.ResizableBehavior;
 import org.wicketstuff.jwicket.ui.resizable.ResizableBehavior.ResizableDirections;
@@ -56,16 +57,16 @@ public class ResizableElement extends GenericPanel<String>  {
 
 		private static final long serialVersionUID = 1L;
 
-		public void onResize(AjaxRequestTarget target, int top, int left, int width, int height) {
+		public void onResize(AjaxRequestTarget target, int top, int left, int width, int height, final SpecialKey... specialKeys) {
 			setModelObject("(" + left + ", " + top + ", " + height + ", " + width + ")");
 			target.addComponent(l);
 		}
 
-		public void onResizeStart(AjaxRequestTarget target, int top, int left, int width, int height) {}
+		public void onResizeStart(AjaxRequestTarget target, int top, int left, int width, int height, final SpecialKey... specialKeys) {}
 
 		public void onResized(AjaxRequestTarget target,
 				int top, int left, int width, int height,
-				int originalTop, int originalLeft, int originalWidth, int originalHeight) {}
+				int originalTop, int originalLeft, int originalWidth, int originalHeight, final SpecialKey... specialKeys) {}
 	}
 	
 	

@@ -5,7 +5,6 @@ import org.apache.wicket.RequestCycle;
 import org.apache.wicket.Response;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 import org.apache.wicket.util.string.JavascriptUtils;
 
 
@@ -89,8 +88,8 @@ public abstract class JQueryEmbeddedAjaxBehavior extends JQueryAjaxBehavior {
 	private int rendered = 0;
 
 	protected JQueryEmbeddedAjaxBehavior(
-			final JavascriptResourceReference baseLibrary,
-			final JavascriptResourceReference[] requiredLibraries) {
+			final JQueryJavascriptResourceReference baseLibrary,
+			final JQueryJavascriptResourceReference[] requiredLibraries) {
 		super(baseLibrary, requiredLibraries);
 	}
 

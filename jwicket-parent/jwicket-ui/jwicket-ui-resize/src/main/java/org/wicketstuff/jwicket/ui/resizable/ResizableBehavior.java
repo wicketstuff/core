@@ -7,9 +7,9 @@ import org.apache.wicket.Component;
 import org.apache.wicket.Request;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.SpecialKey;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
-
 
 
 /**
@@ -26,7 +26,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 
 	public ResizableBehavior() {
-		super(new JavascriptResourceReference(ResizableBehavior.class, "ui.resizable-1.7.2.js"));
+		super(new JQueryJavascriptResourceReference(ResizableBehavior.class, "ui.resizable-1.7.2.js"));
 	}
 
 	/**
@@ -67,19 +67,19 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 			if (component instanceof IResizable) {
 				IResizable resizableComponent = (IResizable)component;
 				if (eventType == EventType.RESIZE_END)
-					resizableComponent.onResized(target, top, left, width, height, originalTop, originalLeft, originalWidth, originalHeight);
+					resizableComponent.onResized(target, top, left, width, height, originalTop, originalLeft, originalWidth, originalHeight, getSpecialKeys(request));
 				else if (eventType == EventType.RESIZE_START)
-					resizableComponent.onResizeStart(target, top, left, width, height);
+					resizableComponent.onResizeStart(target, top, left, width, height, getSpecialKeys(request));
 				else if (eventType == EventType.RESIZE)
-					resizableComponent.onResize(target, top, left, width, height);
+					resizableComponent.onResize(target, top, left, width, height, getSpecialKeys(request));
 			}
 
 			if (eventType == EventType.RESIZE_END)
-				onResized(target, top, left, width, height, originalTop, originalLeft, originalWidth, originalHeight);
+				onResized(target, top, left, width, height, originalTop, originalLeft, originalWidth, originalHeight, getSpecialKeys(request));
 			else if (eventType == EventType.RESIZE_START)
-				onResizeStart(target, top, left, width, height);
+				onResizeStart(target, top, left, width, height, getSpecialKeys(request));
 			else if (eventType == EventType.RESIZE)
-				onResize(target, top, left, width, height);
+				onResize(target, top, left, width, height, getSpecialKeys(request));
 		}
 	}
 
@@ -519,6 +519,9 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 								"+'&top='+jQuery(ui.position).attr('top')" +
 								"+'&left='+jQuery(ui.position).attr('left')" +
 								"+'&" + EventType.IDENTIFIER + "=" + EventType.RESIZE_START + "'" +
+
+								"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
+
 								"); }"));
 		else
 			options.remove(EventType.RESIZE_START.getEventName());
@@ -536,6 +539,9 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 								"+'&originalTop='+jQuery(ui.originalPosition).attr('top')" +
 								"+'&originalLeft='+jQuery(ui.originalPosition).attr('left')" +
 								"+'&" + EventType.IDENTIFIER + "=" + EventType.RESIZE_END + "'" +
+
+								"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
+
 								"); }"));
 
 
@@ -548,6 +554,9 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 								"+'&top='+jQuery(ui.position).attr('top')" +
 								"+'&left='+jQuery(ui.position).attr('left')" +
 								"+'&" + EventType.IDENTIFIER + "=" + EventType.RESIZE + "'" +
+
+								"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
+
 								"); }"));
 		else
 			options.remove(EventType.RESIZE.getEventName());
@@ -576,8 +585,9 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 	 * method to perform some action when resizing starts.
 	 *
 	 * @param target the AjaxRequestTarget of the resize operation.
+	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	protected void onResizeStart(final AjaxRequestTarget target, final int top, final int left, final int width, final int height) {}
+	protected void onResizeStart(final AjaxRequestTarget target, final int top, final int left, final int width, final int height, final SpecialKey... specialKeys) {}
 
 	/**
 	 * If you have set {@link #setWantOnResizeNotification(boolean)} to {@code true}
@@ -586,18 +596,21 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 	 * method to perform some action during the resize operation.
 	 *
 	 * @param target the AjaxRequestTarget of the resize operation.
+	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	protected void onResize(final AjaxRequestTarget target, final int top, final int left, final int width, final int height) {}
+	protected void onResize(final AjaxRequestTarget target, final int top, final int left, final int width, final int height, final SpecialKey... specialKeys) {}
 
 	/**
 	 * After the resize operation has ended this method is called. 
 	 * You can override this method to perform some action after the
 	 * resize operation has finished.
 	 * @param target the AjaxRequestTarget of the resize operation.
+	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
 	protected void onResized(final AjaxRequestTarget target,
 			final int top, final int left, final int width, final int height,
-			final int originalTop, final int originalLeft, final int originalWidth, final int originalHeight) {}
+			final int originalTop, final int originalLeft, final int originalWidth, final int originalHeight,
+			final SpecialKey... specialKeys) {}
 
 
 	/**
