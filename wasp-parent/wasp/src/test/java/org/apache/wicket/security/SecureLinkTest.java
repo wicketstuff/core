@@ -27,6 +27,7 @@ import org.apache.wicket.util.tester.TagTester;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.Page;
+import org.apache.wicket.markup.html.pages.AccessDeniedPage;
 import org.apache.wicket.protocol.http.WebRequestCycle;
 import org.apache.wicket.request.target.component.BookmarkablePageRequestTarget;
 
@@ -136,15 +137,8 @@ public class SecureLinkTest extends WaspAbstractTestBase {
         mock.assertRenderedPage(getHomePage());
         mock.assertInvisible("sorry");
         mock.assertVisible("link");
-        mock.dumpPage();
-        try {
-            mock.clickLink("link", false);
-            fail("clickLink should have caused unauthorized access");
-        } catch (RuntimeException ex) {
-
-        }
-        
-
+        mock.clickLink("link", false);
+        mock.assertRenderedPage(AccessDeniedPage.class);
         // step five, add enable rights and click the link again. 
         authorized.put(PageA.class, application.getActionFactory()
                 .getAction("access render enable"));
@@ -153,7 +147,6 @@ public class SecureLinkTest extends WaspAbstractTestBase {
         // testcase
         login(authorized);
         mock.startPage(getHomePage());
-        mock.dumpPage();
         mock.clickLink("link", false);
         mock.assertRenderedPage(PageA.class);
     }
