@@ -3,7 +3,7 @@ package org.wicketstuff.jwicket.ui.resizable;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.wicketstuff.jwicket.SpecialKey;
+import org.wicketstuff.jwicket.SpecialKeys;
 
 
 /** This is a marker interface. You can mark any Wicket {@link Component}
@@ -27,7 +27,7 @@ public interface IResizable {
 	 * @param height the current height in px
 	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	public void onResizeStart(final AjaxRequestTarget target, final int top, final int left, final int width, final int height, final SpecialKey... specialKeys);
+	public void onResizeStart(final AjaxRequestTarget target, final int top, final int left, final int width, final int height, final SpecialKeys specialKeys);
 
 	
 	/**
@@ -44,7 +44,7 @@ public interface IResizable {
 	 * @param height the current height in px
 	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	public void onResize(final AjaxRequestTarget target, final int top, final int left, final int width, final int height, final SpecialKey... specialKeys);
+	public void onResize(final AjaxRequestTarget target, final int top, final int left, final int width, final int height, final SpecialKeys specialKeys);
 
 
 	/**
@@ -66,5 +66,5 @@ public interface IResizable {
 	public void onResized(final AjaxRequestTarget target,
 			final int top, final int left, final int width, final int height,
 			final int originalTop, final int originalLeft, final int originalWidth,
-			final int originalHeight, final SpecialKey... specialKeys);
+			final int originalHeight, final SpecialKeys specialKeys);
 }

@@ -6,13 +6,12 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.jwicket.SpecialKey;
+import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggableBehavior;
 import org.wicketstuff.jwicket.ui.dragdrop.IDraggable;
 import org.wicketstuff.jwicket.ui.resizable.IResizable;
 import org.wicketstuff.jwicket.ui.resizable.ResizableBehavior;
 import org.wicketstuff.jwicket.ui.resizable.ResizableBehavior.ResizableDirections;
-
 
 
 public class DraggableAndResizableElement extends GenericPanel<String>  {
@@ -77,17 +76,17 @@ public class DraggableAndResizableElement extends GenericPanel<String>  {
 
 		private static final long serialVersionUID = 1L;
 
-		public void onDragStop(AjaxRequestTarget target, final SpecialKey... specialKeys) {
+		public void onDragStop(AjaxRequestTarget target, final SpecialKeys specialKeys) {
 			setModelObject("Drag me!");
 			target.addComponent(l);
 		}
 
-		public void onDragStart(AjaxRequestTarget target, final SpecialKey... specialKeys) {
+		public void onDragStart(AjaxRequestTarget target, final SpecialKeys specialKeys) {
 			setModelObject("dragging...");
 			target.addComponent(l);
 		}
 
-		public void onDrag(AjaxRequestTarget target, final SpecialKey... specialKeys) {}
+		public void onDrag(AjaxRequestTarget target, final SpecialKeys specialKeys) {}
 	}
 	
 
@@ -100,15 +99,15 @@ public class DraggableAndResizableElement extends GenericPanel<String>  {
 
 		private static final long serialVersionUID = 1L;
 
-		public void onResize(AjaxRequestTarget target, int top, int left, int width, int height, final SpecialKey... specialKeys) {
+		public void onResize(AjaxRequestTarget target, int top, int left, int width, int height, final SpecialKeys specialKeys) {
 			setModelObject("(" + left + ", " + top + ", " + height + ", " + width + ")");
 			target.addComponent(l);
 		}
 
-		public void onResizeStart(AjaxRequestTarget target, int top, int left, int width, int height, final SpecialKey... specialKeys) {}
+		public void onResizeStart(AjaxRequestTarget target, int top, int left, int width, int height, final SpecialKeys specialKeys) {}
 
 		public void onResized(AjaxRequestTarget target, int top, int left, int width, int height,
-				int originalTop, int originalLeft, int originalWidth, int originalHeight, final SpecialKey... specialKeys) {}
+				int originalTop, int originalLeft, int originalWidth, int originalHeight, final SpecialKeys specialKeys) {}
 	}
 	
 	

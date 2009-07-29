@@ -8,12 +8,11 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.jwicket.CssCursor;
 import org.wicketstuff.jwicket.CssPosition;
-import org.wicketstuff.jwicket.SpecialKey;
+import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.tooltip.WalterZornTips;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggableBehavior;
 import org.wicketstuff.jwicket.ui.dragdrop.IDraggable;
 import org.wicketstuff.jwicket.ui.effect.EffectBehavior;
-
 
 
 public class DraggableElement extends GenericPanel<String>  {
@@ -99,20 +98,20 @@ dragger
 			}
 		}
 
-		public void onDragStop(final AjaxRequestTarget target, final SpecialKey... specialKeys) {
+		public void onDragStop(final AjaxRequestTarget target, final SpecialKeys specialKeys) {
 			setModelObject("Drag me!");
 			target.addComponent(l);
 			ignoreClick = false;
 			effects.explode(target, 25, 1500);
 		}
 
-		public void onDragStart(final AjaxRequestTarget target, final SpecialKey... specialKeys) {
+		public void onDragStart(final AjaxRequestTarget target, final SpecialKeys specialKeys) {
 			setModelObject("dragging...");
 			target.addComponent(l);
 			ignoreClick = true;
 		}
 
-		public void onDrag(final AjaxRequestTarget target, final SpecialKey... specialKeys) {}
+		public void onDrag(final AjaxRequestTarget target, final SpecialKeys specialKeys) {}
 	}
 
 

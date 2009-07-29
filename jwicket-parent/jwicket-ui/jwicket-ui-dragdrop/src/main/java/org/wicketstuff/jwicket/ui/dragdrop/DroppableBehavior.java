@@ -12,7 +12,7 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReferenceType;
-import org.wicketstuff.jwicket.SpecialKey;
+import org.wicketstuff.jwicket.SpecialKeys;
 
 
 /**
@@ -27,6 +27,8 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 	private static final long serialVersionUID = 1L;
 
 	private static final String DROPPED_COMPONENTID_IDENTIFIER = "wsjqDroppedComponent";
+	private static final JQueryJavascriptResourceReference uiDroppable = new JQueryJavascriptResourceReference(DraggableBehavior.class, "ui.droppable-1.7.2.js");
+	private static final JQueryJavascriptResourceReference specialKeys = new JQueryJavascriptResourceReference(JQuery.class, "SpecialKeys.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE);
 
 	private JsMap options = new JsMap();
 
@@ -34,9 +36,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 
 	
 	public DroppableBehavior() {
-		super(	new JQueryJavascriptResourceReference(DraggableBehavior.class, "ui.droppable-1.7.2.js"),
-				new JQueryJavascriptResourceReference(JQuery.class, "SpecialKeys.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE)
-		);
+		super(uiDroppable, specialKeys);
 	}
 
 
@@ -255,20 +255,20 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 			if (component instanceof IDroppable) {
 				IDroppable draggableComponent = (IDroppable)component;
 				if (dragEventType == EventType.DROP)
-					draggableComponent.onDrop(target, visitor.getFoundComponent(), getSpecialKeys(request));
+					draggableComponent.onDrop(target, visitor.getFoundComponent(), new SpecialKeys(request));
 				else if (dragEventType == EventType.DROP_ACTIVATE)
-					draggableComponent.onActivate(target, visitor.getFoundComponent(), getSpecialKeys(request));
+					draggableComponent.onActivate(target, visitor.getFoundComponent(), new SpecialKeys(request));
 				else if (dragEventType == EventType.DROP_DEACTIVATE)
-					draggableComponent.onDeactivate(target, visitor.getFoundComponent(), getSpecialKeys(request));
+					draggableComponent.onDeactivate(target, visitor.getFoundComponent(), new SpecialKeys(request));
 			}
 
 
 			if (dragEventType == EventType.DROP)
-				onDrop(target, visitor.getFoundComponent(), getSpecialKeys(request));
+				onDrop(target, visitor.getFoundComponent(), new SpecialKeys(request));
 			else if (dragEventType == EventType.DROP_ACTIVATE)
-				onActivate(target, visitor.getFoundComponent(), getSpecialKeys(request));
+				onActivate(target, visitor.getFoundComponent(), new SpecialKeys(request));
 			else if (dragEventType == EventType.DROP_DEACTIVATE)
-				onDeactivate(target, visitor.getFoundComponent(), getSpecialKeys(request));
+				onDeactivate(target, visitor.getFoundComponent(), new SpecialKeys(request));
 		}
 	}
 
@@ -281,7 +281,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 	 * @param draggedComponent The dragged component 
 	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	protected void onDrop(AjaxRequestTarget target, final Component draggedComponent, final SpecialKey...specialKeys) {}
+	protected void onDrop(AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {}
 
 	
 	/**
@@ -294,7 +294,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 	 * @param draggedComponent The dragged component 
 	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	protected void onActivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKey... specialKeys) {}
+	protected void onActivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {}
 
 
 	/**
@@ -307,7 +307,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 	 * @param draggedComponent The dragged component 
 	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	protected void onDeactivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKey... specialKeys) {}
+	protected void onDeactivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {}
 
 
 	/**

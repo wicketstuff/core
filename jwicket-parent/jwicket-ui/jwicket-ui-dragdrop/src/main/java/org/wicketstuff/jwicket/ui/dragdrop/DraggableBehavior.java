@@ -7,7 +7,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.jwicket.CssCursor;
 import org.wicketstuff.jwicket.CssPosition;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
-import org.wicketstuff.jwicket.SpecialKey;
+import org.wicketstuff.jwicket.SpecialKeys;
 
 
 /**
@@ -19,11 +19,13 @@ import org.wicketstuff.jwicket.SpecialKey;
 public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	private static final long serialVersionUID = 1L;
+	private static final JQueryJavascriptResourceReference uiDraggable = new JQueryJavascriptResourceReference(DraggableBehavior.class, "ui.draggable-1.7.2.js");
+	
 	private JsMap options = new JsMap();
 
 	
 	public DraggableBehavior() {
-		super(new JQueryJavascriptResourceReference(DraggableBehavior.class, "ui.draggable-1.7.2.js"));
+		super(uiDraggable);
 	}
 
 
@@ -42,20 +44,20 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 			if (component instanceof IDraggable) {
 				IDraggable draggableComponent = (IDraggable)component;
 				if (dragEventType == EventType.DRAG_START)
-					draggableComponent.onDragStart(target, getSpecialKeys(request));
+					draggableComponent.onDragStart(target, new SpecialKeys(request));
 				else if (dragEventType == EventType.DRAG_END)
-					draggableComponent.onDragStop(target, getSpecialKeys(request));
+					draggableComponent.onDragStop(target, new SpecialKeys(request));
 				else if (dragEventType == EventType.DRAG)
-					draggableComponent.onDrag(target, getSpecialKeys(request));
+					draggableComponent.onDrag(target, new SpecialKeys(request));
 			}
 
 
 			if (dragEventType == EventType.DRAG_START)
-				onDragStart(target, getSpecialKeys(request));
+				onDragStart(target, new SpecialKeys(request));
 			else if (dragEventType == EventType.DRAG_END)
-				onDragStop(target, getSpecialKeys(request));
+				onDragStop(target, new SpecialKeys(request));
 			else if (dragEventType == EventType.DRAG)
-				onDrag(target, getSpecialKeys(request));
+				onDrag(target, new SpecialKeys(request));
 		}
 	}
 	
@@ -635,7 +637,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 	 * @param target the AjaxRequestTarget of the drag operation.
 	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	protected void onDragStart(final AjaxRequestTarget target, final SpecialKey... specialKeys) {}
+	protected void onDragStart(final AjaxRequestTarget target, final SpecialKeys specialKeys) {}
 
 
 	/**
@@ -646,7 +648,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 	 * @param target the AjaxRequestTarget of the drag operation.
 	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	protected void onDrag(final AjaxRequestTarget target, final SpecialKey... specialKeys) {}
+	protected void onDrag(final AjaxRequestTarget target, final SpecialKeys specialKeys) {}
 
 
 	/**
@@ -657,7 +659,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 	 * @param target the AjaxRequestTarget of the drag operation.
 	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	protected void onDragStop(final AjaxRequestTarget target, final SpecialKey... specialKeys) {}
+	protected void onDragStop(final AjaxRequestTarget target, final SpecialKeys specialKeys) {}
 
 
 	/**
