@@ -42,6 +42,11 @@ import org.wicketstuff.openlayers.api.layer.Vector;
 import org.wicketstuff.openlayers.event.EventType;
 import org.wicketstuff.openlayers.event.OverlayListenerBehavior;
 
+/**
+ * 
+ * @author Marin Mandradjiev (marinsm@hotmail.com)
+ * 
+ */
 public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		IOpenLayersMap {
 	private static final long serialVersionUID = 159201381315392564L;
@@ -57,6 +62,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	private Bounds bounds = null;
 	private LonLat center = null;
 	private Integer zoom = null;
+	private String businessLogicProjection = null;
 
 	public AjaxOpenLayersMap(final String id, final List<Layer> layers) {
 		this(id, layers, null);
@@ -172,6 +178,14 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		}
 		return getJSinvoke("setCenter(" + center.getJSconstructor() + ", "
 				+ zoom.toString() + ")");
+	}
+
+	private String getJSSetBusinessLogicProjection() {
+		if (businessLogicProjection == null) {
+			return getJSinvoke("setBusinessLogicProjection(null)");
+		}
+		return getJSinvoke("setBusinessLogicProjection('"
+				+ businessLogicProjection + "')");
 	}
 
 	/**
@@ -322,6 +336,9 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		for (Overlay overlay : overlays) {
 			js.append(getJsOverlay(overlay));
 		}
+		if (businessLogicProjection != null) {
+			js.append(getJSSetBusinessLogicProjection());
+		}
 		return js.toString();
 	}
 
@@ -426,6 +443,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		// AJAX request loop
 		center = LonLat.parseWithNames(request.getParameter("center"));
 		zoom = Integer.parseInt(request.getParameter("zoom"));
+		bounds = Bounds.parseWithNames(request.getParameter("bounds"));
 	}
 
 	public List<Layer> getLayers() {
@@ -453,5 +471,17 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		for (Overlay overlay : overlays) {
 			addOverlay(overlay);
 		}
+	}
+
+	public void setBusinessLogicProjection(String businessLogicProjection) {
+		this.businessLogicProjection = businessLogicProjection;
+		if (AjaxRequestTarget.get() != null) {
+			AjaxRequestTarget.get().appendJavascript(
+					getJSSetBusinessLogicProjection());
+		}
+	}
+
+	public String getBusinessLogicProjection() {
+		return businessLogicProjection;
 	}
 }

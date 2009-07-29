@@ -40,6 +40,7 @@ function WicketOMap(id, options) {
 	} else {
 		this.map = new OpenLayers.Map(id);
 	}
+	this.businessLogicProjection = null;
 	this.controls = {};
 	this.overlays = {};
 	this.layers = {};
@@ -50,9 +51,9 @@ function WicketOMap(id, options) {
 	this.popup = null;
 	this.popupId = "content";
 	this.onEvent = function (callBack, params) {
-		params["center"] = this.map.getCenter();
-		params["bounds"] = this.map.getExtent();
-		params["zoom"] = this.map.getZoomForExtent(this.map.getExtent(), false);
+		params["center"] = this.businessLogicProjection != null ? this.map.getCenter().transform(this.map.getProjectionObject(), new OpenLayers.Projection(this.businessLogicProjection)) : this.map.getCenter();
+		params["bounds"] = this.businessLogicProjection != null ? this.map.getExtent().transform(this.map.getProjectionObject(), new OpenLayers.Projection(this.businessLogicProjection)) : this.map.getExtent();
+		params["zoom"] = this.map.getZoomForExtent(this.map.getExtent(), true);
 		for (var key in params) {
 			callBack = callBack + "&" + key + "=" + params[key];
 		}
@@ -232,7 +233,6 @@ function WicketOMap(id, options) {
 	    }
 	}
 	this.removeDrawFeature = function (){
-		
 		if(this.drawToolbar !=null){
 			this.map.removeControl(this.drawToolbar);
 			this.drawToolbar=null;
@@ -243,9 +243,7 @@ function WicketOMap(id, options) {
 		}
 		
 	}
-
-	
-	
-	
+	this.setBusinessLogicProjection = function (newProjection) {
+		this.businessLogicProjection = newProjection;
+	}
 }
-
