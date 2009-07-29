@@ -8,9 +8,20 @@
 	
 	var pressedKeys = {};
 	var keyname = {
+		'shift': 16,
 		'ctrl': 17,
 		'alt': 18,
-		'shift': 16
+		'pageup' : 33,
+		'pagedown' : 34,
+		'end' : 35,
+		'pos1' : 36,
+		'crsr-left' : 37,
+		'crsr-up' : 38,
+		'crsr-right' : 39,
+		'crsr-down' :40,
+		'insert' : 45,
+		'delete' : 46,
+		'esc': 27
 	};
 
 	jQuery.jWicketSpecialKeysIsPressed = function(key) {
@@ -26,27 +37,15 @@
 		var pressed = '';
 		var first = true;
 
-		if (pressedKeys[keyname['ctrl']]) {
-			pressed = 'ctrl';
-			first = false;
-		}
-
-		if (pressedKeys[keyname['alt']]) {
-			if (first) {
-				pressed += 'alt';
-				first = false;
+		for (key in keyname) {
+			if (pressedKeys[keyname[key]]) {
+				if (first) {
+					pressed += key;
+					first = false;
+				}
+				else
+					pressed += ','+key;
 			}
-			else
-				pressed += ',alt';
-		}
-
-		if (pressedKeys[keyname['shift']]) {
-			if (first) {
-				pressed += 'shift';
-				first = false;
-			}
-			else
-				pressed += ',shift';
 		}
 
 		return pressed;

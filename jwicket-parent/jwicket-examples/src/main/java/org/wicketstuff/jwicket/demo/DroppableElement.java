@@ -8,12 +8,12 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.jwicket.SpecialKey;
+import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.tooltip.BeautyTips;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggablesAcceptedByDroppable;
 import org.wicketstuff.jwicket.ui.dragdrop.DroppableBehavior;
 import org.wicketstuff.jwicket.ui.dragdrop.IDroppable;
 import org.wicketstuff.jwicket.ui.effect.EffectBehavior;
-
 
 
 public class DroppableElement extends GenericPanel<String>  {
@@ -84,20 +84,26 @@ public class DroppableElement extends GenericPanel<String>  {
 
 		private static final long serialVersionUID = 1L;
 
-		public void onDrop(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKey... specialKeys) {
+		public void onDrop(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {
 			setModelObject("You dropped '" + draggedComponent.getId() + "' into me!");
 			target.addComponent(l);
 			dropped = true;
 			effects.pulsate(target, 2, 250);
+			
+System.out.println("////////// onDrop: specialKeys = " + specialKeys);
+if (specialKeys.is(SpecialKey.SHIFT))
+	System.out.println("Es ist die SHIFT-Taste gedrückt");
+if (specialKeys.is(SpecialKey.SHIFT, SpecialKey.CTRL))
+	System.out.println("Es ist die SHIFT- und die CONTROL-Taste gedrückt");
 		}
 
-		public void onActivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKey... specialKeys) {
+		public void onActivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {
 			setModelObject("Drop '" + ((draggedComponent==null)?"<null>":draggedComponent.getId()) + "' into me!");
 			target.addComponent(l);
 			dropped = false;
 		}
 
-		public void onDeactivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKey... specialKeys) {
+		public void onDeactivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {
 			if (!dropped) {
 				setModelObject("Drop it!");
 				target.addComponent(l);

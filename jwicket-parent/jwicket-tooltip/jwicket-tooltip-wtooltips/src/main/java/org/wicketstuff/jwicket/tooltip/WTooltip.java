@@ -15,6 +15,9 @@ import org.wicketstuff.jwicket.JQueryJavascriptResourceReferenceType;
 public class WTooltip extends AbstractToolTip {
 	private static final long serialVersionUID = 1L;
 
+	private static final JQueryJavascriptResourceReference wTooltip = new JQueryJavascriptResourceReference(WTooltip.class, "wTooltip.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE);
+
+
 	private String style;
 	private String cssClassName;
 	private int offsetX = 1;
@@ -32,9 +35,7 @@ public class WTooltip extends AbstractToolTip {
 
 	@Override
 	IHeaderContributor getHeadercontributor() {
-		return new JQuery(
-				new JQueryJavascriptResourceReference(WTooltip.class, "wTooltip.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE)
-		) {
+		return new JQuery(wTooltip) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -44,20 +45,6 @@ public class WTooltip extends AbstractToolTip {
 				response.renderJavascript(getJavaScript(), null);
 			}
 		};
-		/*
-		return new IHeaderContributor() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void renderHead(final IHeaderResponse response) {
-				response.renderJavascriptReference(new JavascriptResourceReference(JQueryAjaxBehavior.class, "jquery-1.3.2.js"));
-				response.renderJavascript("jQuery.noConflict();", "noConflict");
-				response.renderJavascriptReference(new JavascriptResourceReference(WTooltip.class, "wTooltip.js"));
-
-				response.renderJavascript(getJavaScript(), null);
-			}
-		};
-		*/
 	}
 	
 	

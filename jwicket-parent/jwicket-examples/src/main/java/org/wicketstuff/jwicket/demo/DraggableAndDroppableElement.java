@@ -7,7 +7,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.jwicket.SpecialKey;
+import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.tooltip.WTooltip;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggableBehavior;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggablesAcceptedByDroppable;
@@ -15,7 +15,6 @@ import org.wicketstuff.jwicket.ui.dragdrop.DroppableBehavior;
 import org.wicketstuff.jwicket.ui.dragdrop.IDraggable;
 import org.wicketstuff.jwicket.ui.dragdrop.IDroppable;
 import org.wicketstuff.jwicket.ui.effect.EffectBehavior;
-
 
 
 public class DraggableAndDroppableElement extends GenericPanel<String>  {
@@ -85,32 +84,32 @@ public class DraggableAndDroppableElement extends GenericPanel<String>  {
 
 		private static final long serialVersionUID = 1L;
 
-		public void onDragStop(final AjaxRequestTarget target, final SpecialKey... specialKeys) {
+		public void onDragStop(final AjaxRequestTarget target, final SpecialKeys specialKeys) {
 			setModelObject("Drag me!");
 			target.addComponent(l);
 		}
 
-		public void onDragStart(final AjaxRequestTarget target, final SpecialKey... specialKeys) {
+		public void onDragStart(final AjaxRequestTarget target, final SpecialKeys specialKeys) {
 			setModelObject("dragging...");
 			target.addComponent(l);
 		}
 
-		public void onDrag(final AjaxRequestTarget target, final SpecialKey... specialKeys) {}
+		public void onDrag(final AjaxRequestTarget target, final SpecialKeys specialKeys) {}
 
-		public void onDrop(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKey... specialKeys) {
+		public void onDrop(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {
 			setModelObject("You dropped '" + draggedComponent.getId() + "' into me!");
 			target.addComponent(l);
 			dropped = true;
 			effects.pulsate(target, 2, 250);
 		}
 
-		public void onActivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKey... specialKeys) {
+		public void onActivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {
 			setModelObject("Drop '" + ((draggedComponent==null)?"<null>":draggedComponent.getId()) + "' into me!");
 			target.addComponent(l);
 			dropped = false;
 		}
 
-		public void onDeactivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKey... specialKeys) {
+		public void onDeactivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {
 			if (!dropped) {
 				setModelObject("Drag me!");
 				target.addComponent(l);

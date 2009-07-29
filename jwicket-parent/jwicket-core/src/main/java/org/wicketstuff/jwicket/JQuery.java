@@ -28,7 +28,7 @@ public class JQuery extends AbstractDefaultAjaxBehavior {
 	private final JQueryJavascriptResourceReference[] requiredLibraries;
 
 	public static final String getVersion() {
-		return "0.4.1";
+		return "0.4.2";
 	}
 
 

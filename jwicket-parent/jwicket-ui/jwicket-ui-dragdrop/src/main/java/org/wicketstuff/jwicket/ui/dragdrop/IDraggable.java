@@ -3,7 +3,7 @@ package org.wicketstuff.jwicket.ui.dragdrop;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.wicketstuff.jwicket.SpecialKey;
+import org.wicketstuff.jwicket.SpecialKeys;
 
 
 /** This is a marker interfaece. You can mark any Wicket {@link Component}
@@ -24,7 +24,7 @@ public interface IDraggable {
 	 *			drag operation.
 	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	void onDragStart(final AjaxRequestTarget target, final SpecialKey... specialKeys);
+	void onDragStart(final AjaxRequestTarget target, final SpecialKeys specialKeys);
 
 
 	/**
@@ -38,7 +38,7 @@ public interface IDraggable {
 	 *			drag operation.
 	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	void onDrag(final AjaxRequestTarget target, final SpecialKey... specialKeys);
+	void onDrag(final AjaxRequestTarget target, final SpecialKeys specialKeys);
 	
 
 	/**
@@ -60,5 +60,5 @@ public interface IDraggable {
 	 *			drag operation.
 	 * @param SpecialKey the special keys that were pressed when the event occurs
 	 */
-	void onDragStop(final AjaxRequestTarget target, final SpecialKey... specialKeys);
+	void onDragStop(final AjaxRequestTarget target, final SpecialKeys specialKeys);
 }

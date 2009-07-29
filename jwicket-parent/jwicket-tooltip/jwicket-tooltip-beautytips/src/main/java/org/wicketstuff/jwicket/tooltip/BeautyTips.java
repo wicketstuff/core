@@ -24,6 +24,12 @@ import org.wicketstuff.jwicket.tooltip.AbstractToolTip;
 public class BeautyTips extends AbstractToolTip {
 	private static final long serialVersionUID = 1L;
 
+	private static final JQueryJavascriptResourceReference jqueryHoverIntent = new JQueryJavascriptResourceReference(BeautyTips.class, "jquery.hoverIntent.minified.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE);
+	private static final JQueryJavascriptResourceReference jqueryBgiframe = new JQueryJavascriptResourceReference(BeautyTips.class, "jquery.bgiframe.min.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE);
+	private static final JQueryJavascriptResourceReference excanvas = new JQueryJavascriptResourceReference(BeautyTips.class, "excanvas.compiled.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE);
+	private static final JQueryJavascriptResourceReference bt = new JQueryJavascriptResourceReference(BeautyTips.class, "jquery.bt.min.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE);
+	private static final JQueryJavascriptResourceReference jqueryEasing = new JQueryJavascriptResourceReference(BeautyTips.class, "jquery.easing.1.3.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE);
+
 
 	public BeautyTips(final String tooltipText) {
 		super(tooltipText);
@@ -32,13 +38,7 @@ public class BeautyTips extends AbstractToolTip {
 
 	@Override
 	IHeaderContributor getHeadercontributor() {
-		return new JQuery(
-				new JQueryJavascriptResourceReference(BeautyTips.class, "jquery.hoverIntent.minified.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE),
-				new JQueryJavascriptResourceReference(BeautyTips.class, "jquery.bgiframe.min.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE),
-				new JQueryJavascriptResourceReference(BeautyTips.class, "excanvas.compiled.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE),
-				new JQueryJavascriptResourceReference(BeautyTips.class, "jquery.bt.min.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE),
-				new JQueryJavascriptResourceReference(BeautyTips.class, "jquery.easing.1.3.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE)
-		) {
+		return new JQuery(jqueryHoverIntent, jqueryBgiframe, excanvas, bt, jqueryEasing) {
 			private static final long serialVersionUID = 1L;
 
 			@Override

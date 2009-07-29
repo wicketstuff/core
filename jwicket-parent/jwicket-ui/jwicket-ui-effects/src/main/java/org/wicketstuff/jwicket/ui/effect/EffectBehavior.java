@@ -21,21 +21,25 @@ public class EffectBehavior extends AbstractJqueryUiBehavior {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final JQueryJavascriptResourceReference effectsCore = new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.core-1.7.2.js");
+	private static final JQueryJavascriptResourceReference effectsBlind = new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.blind-1.7.2.js");
+	private static final JQueryJavascriptResourceReference effectsBounce = new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.bounce-1.7.2.js");
+	private static final JQueryJavascriptResourceReference effectsClip = new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.clip-1.7.2.js");
+	private static final JQueryJavascriptResourceReference effectsDrop = new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.drop-1.7.2.js");
+	private static final JQueryJavascriptResourceReference effectsExplode = new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.explode-1.7.2.js");
+	private static final JQueryJavascriptResourceReference effectsFold = new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.fold-1.7.2.js");
+	private static final JQueryJavascriptResourceReference effectsHighlight = new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.highlight-1.7.2.js");
+	private static final JQueryJavascriptResourceReference effectsPulsate = new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.pulsate-1.7.2.js");
+	private static final JQueryJavascriptResourceReference effectsScale = new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.scale-1.7.2.js");
+	private static final JQueryJavascriptResourceReference effectsShake = new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.shake-1.7.2.js");
+	private static final JQueryJavascriptResourceReference effectsSlide = new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.slide-1.7.2.js");
+	private static final JQueryJavascriptResourceReference effectsTransfer = new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.transfer-1.7.2.js");
+
+
 	public EffectBehavior() {
-		super(	new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.core-1.7.2.js"),
-				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.blind-1.7.2.js"),
-				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.bounce-1.7.2.js"),
-				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.clip-1.7.2.js"),
-				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.drop-1.7.2.js"),
-				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.explode-1.7.2.js"),
-				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.fold-1.7.2.js"),
-				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.highlight-1.7.2.js"),
-				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.pulsate-1.7.2.js"),
-				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.scale-1.7.2.js"),
-				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.shake-1.7.2.js"),
-				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.slide-1.7.2.js"),
-				new JQueryJavascriptResourceReference(EffectBehavior.class, "effects.transfer-1.7.2.js")
-		);
+		super(	effectsCore,
+				effectsBlind, effectsBounce, effectsClip, effectsDrop, effectsExplode, effectsFold,
+				effectsHighlight, effectsPulsate, effectsScale, effectsShake, effectsSlide, effectsTransfer);
 	}
 	
 	
