@@ -97,4 +97,26 @@ public class Bounds implements Value {
 				.valueOf(tokenizer.nextToken()));
 		return new Bounds(sw, ne);
 	}
+
+	/**
+	 * left-bottom=(37.34068368469045, -122.48519897460936)
+	 * right-top=(37.72184917678752, -121.79855346679686)
+	 */
+	public static Bounds parseWithNames(String value) {
+		try {
+			StringTokenizer tokenizer = new StringTokenizer(value, "(, )");
+			if (tokenizer.countTokens() != 6) {
+				return null;
+			}
+			tokenizer.nextToken();
+			LonLat sw = new LonLat(Float.valueOf(tokenizer.nextToken()), Float
+					.valueOf(tokenizer.nextToken()));
+			tokenizer.nextToken();
+			LonLat ne = new LonLat(Float.valueOf(tokenizer.nextToken()), Float
+					.valueOf(tokenizer.nextToken()));
+			return new Bounds(sw, ne);
+		} catch (NullPointerException e) {
+			return null;
+		}
+	}
 }
