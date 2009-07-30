@@ -54,8 +54,8 @@ function WicketOMap(id, options) {
 		params["center"] = this.map.getCenter();
 		params["bounds"] = this.map.getExtent();
 		params["zoom"] = this.map.getZoomForExtent(this.map.getExtent(), false);
-		params["centerConverted"] = this.businessLogicProjection != null ? this.map.getCenter().transform(this.map.getProjectionObject(), new OpenLayers.Projection(this.businessLogicProjection)) : this.map.getCenter();
-		params["boundsConverted"] = this.businessLogicProjection != null ? this.map.getExtent().transform(this.map.getProjectionObject(), new OpenLayers.Projection(this.businessLogicProjection)) : this.map.getExtent();
+		params["centerConverted"] = this.businessLogicProjection != null ? this.map.getCenter().clone().transform(this.map.getProjectionObject(), new OpenLayers.Projection(this.businessLogicProjection)) : this.map.getCenter();
+		params["boundsConverted"] = this.businessLogicProjection != null ? this.map.getExtent().clone().transform(this.map.getProjectionObject(), new OpenLayers.Projection(this.businessLogicProjection)) : this.map.getExtent();
 		params["zoomConverted"] = this.map.getZoomForExtent(this.map.getExtent(), true);
 		for (var key in params) {
 			callBack = callBack + "&" + key + "=" + params[key];
