@@ -129,18 +129,33 @@ public abstract class WaspWebApplication extends WebApplication implements WaspA
 
             @Override
             public Page onRuntimeException(Page page, RuntimeException e) {
-                Throwable t = e.getCause();
-                while (t != null) {
-                    if (t instanceof AuthorizationException) {
-                        try {
-                            return getApplicationSettings().getAccessDeniedPage().newInstance();
-                        } catch (InstantiationException e1) {
-                            super.onRuntimeException(page, new RuntimeException("Exception while creating access denied page", e1));
-                        } catch (IllegalAccessException e1) {
-                            super.onRuntimeException(page, new RuntimeException("Exception while creating access denied page", e1));
-                        }
+                try {
+                    if (e instanceof AuthorizationException) {
+
+                        return getApplicationSettings().getAccessDeniedPage().newInstance();
+
                     }
-                    t = t.getCause();
+                    Throwable t = e.getCause();
+                    while (t != null) {
+                        if (t instanceof AuthorizationException) {
+                            try {
+                                return getApplicationSettings().getAccessDeniedPage().newInstance();
+                            } catch (InstantiationException e1) {
+                                super.onRuntimeException(page,
+                                        new RuntimeException("Exception while creating access denied page", e1));
+                            } catch (IllegalAccessException e1) {
+                                super.onRuntimeException(page,
+                                        new RuntimeException("Exception while creating access denied page", e1));
+                            }
+                        }
+                        t = t.getCause();
+                    }
+                } catch (InstantiationException e1) {
+                    super.onRuntimeException(page,
+                            new RuntimeException("Exception while creating access denied page", e1));
+                } catch (IllegalAccessException e1) {
+                    super.onRuntimeException(page,
+                            new RuntimeException("Exception while creating access denied page", e1));
                 }
                 return super.onRuntimeException(page, e);
             }

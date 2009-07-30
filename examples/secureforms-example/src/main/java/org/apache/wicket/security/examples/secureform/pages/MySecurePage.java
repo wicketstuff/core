@@ -17,12 +17,18 @@
 package org.apache.wicket.security.examples.secureform.pages;
 
 import org.apache.wicket.PageParameters;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.security.components.SecureWebPage;
 import org.apache.wicket.security.components.markup.html.form.SecureForm;
 import org.apache.wicket.security.components.markup.html.form.SecureTextField;
+import org.apache.wicket.security.components.markup.html.links.SecureAjaxLink;
+
+import java.util.Collection;
 
 /**
  * This Secure Page contains secure form components.
@@ -42,20 +48,48 @@ public class MySecurePage extends SecureWebPage
     private String name;
     private boolean information;
 
+    private SecureForm sampleForm;
+    private SecureTextField secureNameField;
+    private CheckBox informationCheckBox;
+
 	/**
 	 * @param parameters
 	 */
 	public MySecurePage(PageParameters parameters)
 	{
 		super(parameters);
-        SecureForm sampleForm = new SecureForm("sampleForm", new CompoundPropertyModel(this)) {
+        sampleForm = new SecureForm("sampleForm", new CompoundPropertyModel(this)) {
             @Override
             protected void onSubmit() {
                 super.onSubmit();
             }
         };
-        sampleForm.add(new SecureTextField("name"));
-        sampleForm.add(new CheckBox("information"));
+        sampleForm.setOutputMarkupId(true);
+        secureNameField = new SecureTextField("name");
+        secureNameField.setOutputMarkupId(true);
+        sampleForm.add(secureNameField);
+        informationCheckBox = new CheckBox("information");
+        informationCheckBox.setOutputMarkupId(true);
+        sampleForm.add(informationCheckBox);
+
+        // Add the enable / disable link for the form. This is a admin only feature.
+        SecureAjaxLink disableLink = new SecureAjaxLink("disableLink") {
+            public void onClick(AjaxRequestTarget target) {
+                if (secureNameField.isEnabled()) {
+                    secureNameField.setEnabled(false);
+                } else {
+                    secureNameField.setEnabled(true);
+                }
+                if (informationCheckBox.isEnabled()) {
+                    informationCheckBox.setEnabled(false);
+                } else {
+                    informationCheckBox.setEnabled(true);
+                }
+                target.addComponent(sampleForm);
+            }
+        };
+        sampleForm.add(disableLink);
+        
 
         add(sampleForm);
 

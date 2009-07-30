@@ -95,7 +95,7 @@
     <dependency>
       <groupId>org.apache.wicket</groupId>
       <artifactId>wicket</artifactId>
-      <version>1.4-rc7</version>
+      <version>1.4.0</version>
     </dependency>
 
     <dependency>
@@ -206,6 +206,6 @@
   </dependencies>
   <properties>
     <jetty.version>6.1.4</jetty.version>
-    <wicket.version>1.4-rc7</wicket.version>
+    <wicket.version>1.4.0</wicket.version>
   </properties>
 </project>

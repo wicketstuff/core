@@ -27,13 +27,10 @@ import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.model.IModel;
 
 /**
- * Pagelink with visibility / clickability based on user rights. Requires render
- * rights to be visible, and enable rights to be clickable. This class is by
- * default outfitted with a {@link LinkSecurityCheck}, please see its
- * documentation on how to enable the alternative security check
+ * AjaxLink with visibility / clickability based on user rights. Requires render
+ * rights to be visible, and enable rights to be clickable.
  *
  * @author Olger Warnier
- * @see LinkSecurityCheck
  */
 abstract public class SecureAjaxLink extends AjaxLink implements ISecureComponent {
 

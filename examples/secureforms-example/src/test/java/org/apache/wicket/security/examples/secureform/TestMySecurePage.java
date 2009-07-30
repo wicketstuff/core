@@ -28,7 +28,7 @@ public class TestMySecurePage extends AbstractSecurePageTestBase {
         loginAs("user");
         tester.startPage(MySecurePage.class);
         tester.assertRenderedPage(MySecurePage.class);
-
+        tester.dumpPage();
         TagTester tag = tester.getTagByWicketId("sampleForm");
         assertEquals("div", tag.getName());
 

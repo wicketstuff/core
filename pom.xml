@@ -36,7 +36,7 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<properties>
-				<wicket.version>1.4-rc7</wicket.version>
+				<wicket.version>1.4.0</wicket.version>
 			</properties>
 			<build>
 				<plugins>
@@ -84,12 +84,12 @@
             </properties>
         </profile>
 		<profile>
-			<id>wicket-1.4-SNAPSHOT</id>
+			<id>wicket-1.4.0</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<wicket.version>1.4-SNAPSHOT</wicket.version>
+				<wicket.version>1.4.0</wicket.version>
 			</properties>
 		</profile>
 	</profiles>
@@ -115,6 +115,16 @@
 			</roles>
 			<organization>Topicus</organization>
 			<organizationUrl>http://www.topicus.nl/</organizationUrl>
+			<timezone>1</timezone>
+		</developer>
+        <developer>
+			<id>terranvs</id>
+			<name>Olger Warnier</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<organization>Joining Tracks / Zorginitiatieven</organization>
+			<organizationUrl>http://www.joiningtracks.org/</organizationUrl>
 			<timezone>1</timezone>
 		</developer>
 	</developers>
@@ -170,13 +180,13 @@
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket</artifactId>
-			<version>1.4-rc7</version>
+			<version>${wicket.version}</version>
 			<scope>compile</scope>
 		</dependency>
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket</artifactId>
-            <version>1.4-rc7</version>
+            <version>${wicket.version}</version>
             <classifier>test</classifier>
             <scope>test</scope>
         </dependency>
