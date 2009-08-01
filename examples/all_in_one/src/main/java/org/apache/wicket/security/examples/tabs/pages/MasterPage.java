@@ -91,7 +91,6 @@ public class MasterPage extends SecurePage
 				return new Gifkikker(panelId);
 			}
 
-            @Override
             public boolean isVisible() {
                 //@TODO what todo with the new isVisible method ?
                 return true;
@@ -111,7 +110,6 @@ public class MasterPage extends SecurePage
 				return new Heineken(panelId);
 			}
 
-            @Override
             public boolean isVisible() {
                 //@TODO what todo with the new isVisible method ?
                 return true;
@@ -131,7 +129,6 @@ public class MasterPage extends SecurePage
 				return new Grolsch(panelId);
 			}
 
-            @Override
             public boolean isVisible() {
                 //@TODO what todo with the new isVisible method ?
                 return true;

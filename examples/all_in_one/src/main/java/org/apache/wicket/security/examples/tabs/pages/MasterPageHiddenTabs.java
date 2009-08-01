@@ -84,7 +84,6 @@ public class MasterPageHiddenTabs extends MasterPage
 				return panel;
 			}
 
-            @Override
             public boolean isVisible() {
                 //@TODO what todo with the new isVisible method ?
                 return true;
@@ -111,8 +110,7 @@ public class MasterPageHiddenTabs extends MasterPage
 				return panel;
 			}
 
-            @Override
-            public boolean isVisible() {
+             public boolean isVisible() {
                 //@TODO what todo with the new isVisible method ?
                 return true;
             }
@@ -138,7 +136,6 @@ public class MasterPageHiddenTabs extends MasterPage
 				return panel;
 			}
 
-            @Override
             public boolean isVisible() {
                 //@TODO what todo with the new isVisible method ?
                 return true;
