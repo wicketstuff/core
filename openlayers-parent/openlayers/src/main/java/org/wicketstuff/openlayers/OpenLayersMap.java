@@ -381,7 +381,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	 * 
 	 * @return The generated JavaScript
 	 */
-	private String getJSinit() {
+	protected String getJSinit() {
 
 		StringBuffer js = new StringBuffer();
 
