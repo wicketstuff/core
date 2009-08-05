@@ -236,8 +236,8 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	 * @param overlays
 	 * 
 	 */
-	private OpenLayersMap(final String id,
-			final OpenLayersMapHeaderContributor headerContrib,
+	protected OpenLayersMap(final String id,
+			final HeaderContributor headerContrib,
 			List<Overlay> overlays, List<Layer> defaultLayers,
 			HashMap<String, String> options) {
 		this(id, headerContrib, overlays, new PopupListener(false) {
@@ -260,7 +260,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	 * @param overlays
 	 */
 	private OpenLayersMap(final String id,
-			final OpenLayersMapHeaderContributor headerContrib,
+			final HeaderContributor headerContrib,
 			List<Overlay> overlays, PopupListener popupListener,
 			List<Layer> defaultLayers, HashMap<String, String> options) {
 		super(id);
