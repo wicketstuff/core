@@ -32,6 +32,9 @@ if (!Wicket) {
 }
 Wicket.omaps = {};
 function WicketOMap(id, options) {
+	WicketOMap(id, options, null);
+}
+function WicketOMap(id, options, markersLayerName) {
 	// Default seems to be 0
 	OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
 	Wicket.omaps[id] = this;
@@ -45,7 +48,7 @@ function WicketOMap(id, options) {
 	this.overlays = {};
 	this.layers = {};
 	this.div = id;
-	this.openOverlays = new OpenLayers.Layer.Markers("markers" + id);
+	this.openOverlays = new OpenLayers.Layer.Markers(markersLayerName == null ? "markers" + id : markersLayerName);
 	this.map.addLayer(this.openOverlays);
 	this.layers[1] = this.openOverlays;
 	this.popup = null;

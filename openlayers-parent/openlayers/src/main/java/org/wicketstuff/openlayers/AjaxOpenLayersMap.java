@@ -57,12 +57,13 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	private final List<Control> controls = new ArrayList<Control>();
 	private final List<Overlay> overlays = new ArrayList<Overlay>();
 	private final List<FeatureStyle> featureStyles;
-	private Vector featureLayer = null;
+	private final HashMap<String, Vector> featureVectors = new HashMap<String, Vector>();
 	private boolean externalControls = false;
 	private Bounds bounds = null;
 	private LonLat center = null;
 	private Integer zoom = null;
 	private String businessLogicProjection = null;
+	private String markersLayerName = null;
 
 	public AjaxOpenLayersMap(final String id, final List<Layer> layers) {
 		this(id, layers, null);
@@ -97,9 +98,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 				response.renderOnDomReadyJavascript(getJSinit());
 			}
 		}));
-		if (!this.features.isEmpty()) {
-			featureLayer = new Vector("Vector");
-			layers.add(featureLayer);
+		for (Feature feature : this.features) {
+			getFeatureVector(feature.getDisplayInLayer());
 		}
 	}
 
@@ -245,14 +245,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	 */
 	public IOpenLayersMap addFeature(Feature feature) {
 		features.add(feature);
-		if (featureLayer == null) {
-			featureLayer = new Vector("Vector");
-			addLayer(featureLayer);
-		}
-		if (AjaxRequestTarget.get() != null) {
-			AjaxRequestTarget.get().appendJavascript(
-					feature.getJSAddFeature(this, featureLayer));
-		}
+		getFeatureVector(feature.getDisplayInLayer());
 		return this;
 	}
 
@@ -299,6 +292,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	 */
 	protected String getJSinit() {
 		StringBuffer js = new StringBuffer();
+		String jsMarkersLayerName = getMarkersLayerName() == null ? ", null"
+				: ", '" + getMarkersLayerName() + "'";
 		if (options.size() > 0) {
 			js.append("\nvar options = {");
 			boolean first = true;
@@ -311,10 +306,11 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 				js.append(key + ":" + options.get(key));
 			}
 			js.append("};\n");
-			js.append("new WicketOMap('" + this.getMarkupId()
-					+ "', options);\n");
+			js.append("new WicketOMap('" + this.getMarkupId() + "', options"
+					+ jsMarkersLayerName + ");\n");
 		} else {
-			js.append("new WicketOMap('" + this.getMarkupId() + "', null);\n");
+			js.append("new WicketOMap('" + this.getMarkupId() + "', null"
+					+ jsMarkersLayerName + ");\n");
 		}
 		for (FeatureStyle featureStyle : featureStyles) {
 			js.append(featureStyle.getJSAddStyle());
@@ -323,7 +319,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 			js.append(layer.getJSAddLayer(this));
 		}
 		for (Feature feature : features) {
-			js.append(feature.getJSAddFeature(this, featureLayer));
+			js.append(feature.getJSAddFeature(this, featureVectors.get(feature
+					.getDisplayInLayer())));
 		}
 		js.append(getJSSetCenter());
 		if (center == null || zoom == null) {
@@ -429,7 +426,8 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		}
 		if (AjaxRequestTarget.get() != null) {
 			AjaxRequestTarget.get().appendJavascript(
-					feature.getJSRemoveFeature(this, featureLayer));
+					feature.getJSRemoveFeature(this, featureVectors.get(feature
+							.getDisplayInLayer())));
 		}
 		return this;
 	}
@@ -483,5 +481,23 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 
 	public String getBusinessLogicProjection() {
 		return businessLogicProjection;
+	}
+
+	public Vector getFeatureVector(String name) {
+		Vector vector = featureVectors.get(name);
+		if (vector == null) {
+			vector = new Vector(name == null ? "Default" : name);
+			addLayer(vector);
+			featureVectors.put(name, vector);
+		}
+		return vector;
+	}
+
+	public void setMarkersLayerName(String markersLayerName) {
+		this.markersLayerName = markersLayerName;
+	}
+
+	public String getMarkersLayerName() {
+		return markersLayerName;
 	}
 }

@@ -32,6 +32,7 @@ public abstract class Feature implements Serializable {
 	private FeatureStyle featureStyle = null;
 	private IOpenLayersMap map = null;
 	private String projection = "EPSG:4326";
+	private String displayInLayer = null;
 
 	public Feature() {
 		this(null, null);
@@ -108,5 +109,13 @@ public abstract class Feature implements Serializable {
 
 	public String getProjection() {
 		return projection;
+	}
+
+	public void setDisplayInLayer(String displayInLayer) {
+		this.displayInLayer = displayInLayer;
+	}
+
+	public String getDisplayInLayer() {
+		return displayInLayer;
 	}
 }
