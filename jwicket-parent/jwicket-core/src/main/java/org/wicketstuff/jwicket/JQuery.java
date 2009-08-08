@@ -75,8 +75,6 @@ public class JQuery extends AbstractDefaultAjaxBehavior {
 			}
 		}
 
-System.out.println("ieVersion = " + ieVersion);
-
 		if (userProvidedResourceReferences.size() == 0) {
 			// No user provided Resources, use internal resources
 			addJavascriptReference(response, new JQueryJavascriptResourceReference(JQuery.class, "jquery-1.3.2.min.js"));
