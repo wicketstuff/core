@@ -3,6 +3,8 @@ package org.apache.wicket.security.examples.springsecurity.security;
 import org.apache.wicket.security.hive.authorization.Principal;
 import org.apache.wicket.security.hive.authentication.DefaultSubject;
 import org.springframework.security.GrantedAuthority;
+import org.springframework.security.Authentication;
+import org.springframework.security.userdetails.UserDetails;
 import org.springframework.security.context.SecurityContextHolder;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -13,6 +15,8 @@ import java.util.Iterator;
  * Subject that gets is principals from the authenticated user in the
  * {@link org.springframework.security.context.SecurityContextHolder}. This class is converts all authorities to
  * {@link SpringSecurePrincipal}s but could serve as a template for your implementation.
+ * When Spring Security is configured with a UserDetails service, the subject will contain the UserDetails object
+ * for later reference. 
  *
  * @author marrink
  * @author Olger Warnier
@@ -21,14 +25,14 @@ public class SpringSecureSubject extends DefaultSubject
 {
     private static final long serialVersionUID = 1L;
 	private static final Logger log = LoggerFactory.getLogger(SpringSecureSubject.class);
-
+    private UserDetails userDetails = null;
     /**
      * Constructor.
      */
     public SpringSecureSubject()
     {
-        GrantedAuthority[] authorities = SecurityContextHolder.getContext().getAuthentication()
-                .getAuthorities();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        GrantedAuthority[] authorities = authentication.getAuthorities();
         if (authorities != null)
         {
             Principal principal;
@@ -38,6 +42,11 @@ public class SpringSecureSubject extends DefaultSubject
                 if (principal != null)
                     addPrincipal(principal);
             }
+        }
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            userDetails = (UserDetails) authentication.getPrincipal();
+        } else if (authentication.getDetails() instanceof UserDetails) {
+            userDetails = (UserDetails) authentication.getDetails();
         }
     }
 
@@ -69,6 +78,10 @@ public class SpringSecureSubject extends DefaultSubject
             strBld.append(" ");
         }
         return strBld.toString();
+    }
+
+    public UserDetails getUserDetails() {
+        return userDetails;
     }
 
 }
