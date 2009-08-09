@@ -143,7 +143,7 @@ public class FlotPanel extends Panel {
 	}
 	
 	public void setAxisTimeModeX(boolean timeMode) {
-		String mode = timeMode ? "null" : "time";
+		String mode = timeMode ? "time" : "null";
 		options.get("xaxis").put("mode", mode);
 	}
 	
@@ -190,7 +190,7 @@ public class FlotPanel extends Panel {
 	 * @throws FileNotFoundException If the resource cannot be found.
 	 * @throws IOException If anything goes wrong while reading the resource.
 	 */
-	public static String getResourceContents(Class<?> clazz, String location) throws IOException {
+	private static String getResourceContents(Class<?> clazz, String location) throws IOException {
 		InputStream in = clazz.getResourceAsStream(location);
 		if(in == null)
 			throw new FileNotFoundException("'"+location+"' not found.");
@@ -201,7 +201,7 @@ public class FlotPanel extends Panel {
 	 * Returns the complete content of the given stream.
 	 * @throws IOException If anything goes wrong while reading the stream.
 	 */
-	public static String getStreamContents(InputStreamReader inputStreamReader) throws IOException {
+	private static String getStreamContents(InputStreamReader inputStreamReader) throws IOException {
 		StringBuffer str = new StringBuffer();
 		BufferedReader in = new BufferedReader(inputStreamReader);
 		
