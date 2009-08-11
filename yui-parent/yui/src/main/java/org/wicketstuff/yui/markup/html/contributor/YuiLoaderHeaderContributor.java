@@ -20,7 +20,7 @@ import org.apache.wicket.markup.html.IHeaderResponse;
  */
 public class YuiLoaderHeaderContributor {
     
-    static final String DEFAULT_YUI_BUILD = "2.5.2";
+    static final String DEFAULT_YUI_BUILD = "2.7.0b";
     static final String YUI_BUILD_ROOT = "../../../inc";
     
     
