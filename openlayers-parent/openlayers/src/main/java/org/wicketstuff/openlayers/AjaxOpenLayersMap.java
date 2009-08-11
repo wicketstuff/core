@@ -307,10 +307,10 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 			}
 			js.append("};\n");
 			js.append("new WicketOMap('" + this.getMarkupId() + "', options"
-					+ jsMarkersLayerName + ");\n");
+					+ jsMarkersLayerName + ", true);\n");
 		} else {
 			js.append("new WicketOMap('" + this.getMarkupId() + "', null"
-					+ jsMarkersLayerName + ");\n");
+					+ jsMarkersLayerName + ", true);\n");
 		}
 		for (FeatureStyle featureStyle : featureStyles) {
 			js.append(featureStyle.getJSAddStyle());

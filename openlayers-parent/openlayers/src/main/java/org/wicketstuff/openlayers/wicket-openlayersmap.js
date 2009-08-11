@@ -32,9 +32,11 @@ if (!Wicket) {
 }
 Wicket.omaps = {};
 function WicketOMap(id, options) {
-	WicketOMap(id, options, null);
+	WicketOMap(id, options, null, true);
 }
-function WicketOMap(id, options, markersLayerName) {
+
+
+function WicketOMap(id, options, markersLayerName, showMarkersInLayerSwitcher) {
 	// Default seems to be 0
 	OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
 	Wicket.omaps[id] = this;
@@ -48,7 +50,9 @@ function WicketOMap(id, options, markersLayerName) {
 	this.overlays = {};
 	this.layers = {};
 	this.div = id;
+	this.showMarkersInLayerSwitcher = showMarkersInLayerSwitcher;
 	this.openOverlays = new OpenLayers.Layer.Markers(markersLayerName == null ? "markers" + id : markersLayerName);
+	this.openOverlays.displayInLayerSwitcher = this.showMarkersInLayerSwitcher;
 	this.map.addLayer(this.openOverlays);
 	this.layers[1] = this.openOverlays;
 	this.popup = null;
@@ -195,6 +199,7 @@ function WicketOMap(id, options, markersLayerName) {
 		this.map.removeLayer(this.openOverlays);
 		this.openOverlays.destroy();
 		this.openOverlays = new OpenLayers.Layer.Markers("markers" + this.div);
+		this.openOverlays.displayInLayerSwitcher = showMarkersInLayerSwitcher;
 		this.map.addLayer(this.openOverlays);
 		this.layers[1] = this.openOverlays;
 		this.layers[1].setVisibility(visible);

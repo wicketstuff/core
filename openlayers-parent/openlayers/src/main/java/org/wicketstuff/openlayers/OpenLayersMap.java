@@ -187,6 +187,9 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 
 	private Integer zoom = 13;
 
+	// determines if the marker layer will be visible in the OpenLayers.Control.LayerSwitcher
+	private boolean showMarkersInLayerSwitcher = true;
+
 	/**
 	 * 
 	 * Constructs a map with a default layer : "OpenLayers WMS",
@@ -399,9 +402,9 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 			js.append("};\n");
 			js
 					.append("new WicketOMap('" + map.getMarkupId()
-							+ "', options);\n");
+							+ "', options, null, " + String.valueOf(this.showMarkersInLayerSwitcher) + ");\n");
 		} else {
-			js.append("new WicketOMap('" + map.getMarkupId() + "', null);\n");
+			js.append("new WicketOMap('" + map.getMarkupId() + "', null, null, " + String.valueOf(this.showMarkersInLayerSwitcher) + ");\n");
 		}
 
 		for (Layer layer : layers) {
@@ -675,4 +678,17 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	public void setCenter(LonLat center) {
 		setCenter(center, zoom);
 	}
+
+	/**
+	 * @param showMarkersInLayerSwitcher if true the internal markers layer will be visible in the OpenLayers.Control.LayerSwitcher 
+	 * 
+	 * Default is true.
+	 * 
+	 * Set to false to hide the markers layer from the LayerSwitcher.
+	 */
+	public void setShowMarkersInLayerSwitcher(boolean showMarkersInLayerSwitcher) {
+		this.showMarkersInLayerSwitcher = showMarkersInLayerSwitcher;
+	}
+	
+	
 }
