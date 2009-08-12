@@ -5,3 +5,6 @@ if(typeof(WicketStuff.Yui.overlaymanager)=='undefined') WicketStuff.Yui.overlaym
 WicketStuff.Yui.registerPanel = function(yuiPanelId, yuiPanelVar) {
  if(!WicketStuff.Yui.overlaymanager.find(yuiPanelId)) WicketStuff.Yui.overlaymanager.register(yuiPanelVar)
 }
+WicketStuff.Yui.deregisterPanel = function(yuiPanelVar) {
+ WicketStuff.Yui.overlaymanager.remove(yuiPanelVar)
+}
