@@ -81,6 +81,9 @@ public class YuiPanel extends Panel implements Serializable
 			protected void respond(AjaxRequestTarget target)
 			{
 				final String type = RequestCycle.get().getRequest().getParameter(EVENT_TYPE);
+				if (usesOverlayManager) {
+					target.prependJavascript(deregisterPanelJs());
+				}
 				onHide(target, type);
 			}
 		});
@@ -188,12 +191,16 @@ public class YuiPanel extends Panel implements Serializable
 		return getYuiPanelVar() + ".subscribe(\"hide\", function(type, args) { "
 				+ "wicketAjaxGet('" + ajaxBehavior.getCallbackUrl(true) + "&" + EVENT_TYPE
 				+ "='+type);" + " } );\n";
-		// TODO: find out if we need to unregister the panel if it has been registered by registerPanelJs
 	}
 
     private String registerPanelJs()
     {
 	    return "WicketStuff.Yui.registerPanel('"+ getYuiPanelId() +"',"+ getYuiPanelVar() +");\n";
+	}
+
+    private String deregisterPanelJs()
+    {
+	    return "WicketStuff.Yui.deregisterPanel("+ getYuiPanelVar() +");\n";
 	}
 
 	protected String getResizeOpts()
