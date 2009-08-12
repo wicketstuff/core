@@ -3,6 +3,7 @@ package org.wicketstuff.yui.markup.html.menu2;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.markup.html.link.Link;
@@ -83,26 +84,19 @@ public class YuiMenuBarItem extends AbstractYuiMenuItem
 	{
 		super(MENU_ITEM_ID);
 
-		if (link == null)
+		WebMarkupContainer l = link;
+		if (l == null)
 		{
-			link = new Link<String>(LINK_ID)
-			{
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void onClick()
-				{
-				}
-			};
+			l = new WebMarkupContainer(LINK_ID);
 		}
 
-		if (link.getId().equals(LINK_ID) == false)
+		if (l.getId().equals(LINK_ID) == false)
 		{
 			throw new RuntimeException("Link's id needs to be 'link' ");
 		}
 
-		getItemContainer().add(link);
-		link.add(new Label(LINK_LABEL_ID, new Model<String>(label)).setRenderBodyOnly(true));
+		getItemContainer().add(l);
+		l.add(new Label(LINK_LABEL_ID, new Model<String>(label)).setRenderBodyOnly(true));
 		newSubMenu("emptyMenu").setVisible(false);
 	}
 
