@@ -496,6 +496,73 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 		return this;
 	}
 
+	public static enum DragHelperMode {
+
+		ORIGINAL("original"),
+		CLONE("clone")
+		;
+
+		private final String value;
+		private DragHelperMode(final String value) {
+			this.value = value;
+		}
+
+		public String getValue() {
+			return this.value;
+		}
+
+		public String toString() {
+			return this.value;
+		}
+	}
+
+	/**
+	 * Sets the 'helper' property for this draggable with a function. Please 
+	 * consult the jQuery documentation for a detailed description of this property.
+	 * DraggableHelper can be used for values of "original" and "clone", or
+	 * a custom function can be used.
+	 * @param function
+	 * @return this object
+	 */
+	public DraggableBehavior setHelper(final String function) {
+		if (function == null)
+			options.remove("helper");
+		else 
+			options.put("helper", new JsFunction(function));
+		return this;
+	}
+	public DraggableBehavior setHelper(final AjaxRequestTarget target, final String function) {
+		setHelper(function);
+		if (function != null)
+			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').draggable('option','helper'," + function + ");");
+		else
+			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').draggable('option','helper','original');");
+		return this;
+	}
+
+	/**
+	 * Sets the 'helper' property for this draggable to either "original"
+	 * or "clone". Please consult the jQuery documentation for a detailed 
+	 * description of this property.
+	 * @param value
+	 * @return this object
+	 */
+	public DraggableBehavior setHelper(final DragHelperMode value) {
+		if (value == null)
+			options.remove("helper");
+		else {
+			options.put("helper", value.getValue());
+		}
+		return this;
+	}
+	public DraggableBehavior setHelper(final AjaxRequestTarget target, final DragHelperMode value) {
+		setHelper(value);
+		if (value != null)
+			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').draggable('option','helper','" + value + "');");
+		else
+			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').draggable('option','helper','original');");
+		return this;
+	}
 
 	public static enum DragSnapMode {
 
@@ -517,7 +584,6 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 			return this.value;
 		}
 	}
-
 
 	/**
 	 * Sets the 'snapMode' property for this draggable. Please consult the
