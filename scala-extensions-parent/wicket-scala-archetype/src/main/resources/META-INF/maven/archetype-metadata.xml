@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><archetype-descriptor name="wicket-scala-sample">
+  <fileSets>
+    <fileSet encoding="UTF-8">
+      <directory>project</directory>
+      <includes>
+        <include>**/*.properties</include>
+        <include>**/*.scala</include>
+      </includes>
+    </fileSet>	
+    <fileSet filtered="true" packaged="true" encoding="UTF-8">
+      <directory>src/main/java</directory>
+      <includes>
+        <include>**/*.java</include>
+        <include>**/*.html</include>
+        <include>**/*.xml</include>
+      </includes>
+    </fileSet>
+    <fileSet filtered="true" packaged="true" encoding="UTF-8">
+      <directory>src/main/scala</directory>
+      <includes>
+        <include>**/*.scala</include>
+        <include>**/*.html</include>
+        <include>**/*.xml</include>
+      </includes>
+    </fileSet>
+    <fileSet filtered="true" encoding="UTF-8">
+      <directory>src/main/webapp</directory>
+      <includes>
+        <include>**/*.html</include>
+        <include>**/*.xml</include>
+      </includes>
+    </fileSet>
+    <fileSet filtered="true" packaged="true" encoding="UTF-8">
+      <directory>src/test/scala</directory>
+      <includes>
+        <include>**/*.scala</include>
+        <include>**/*.html</include>
+      </includes>
+    </fileSet>
+    <fileSet filtered="true" encoding="UTF-8">
+      <directory></directory>
+      <includes>
+        <include>README</include>
+      </includes>
+    </fileSet>
+  </fileSets>
+</archetype-descriptor>

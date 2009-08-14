@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>org.wicketstuff.scala</groupId>
+		<artifactId>scala-extensions-parent</artifactId>
+		<version>1.4-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>wicket-scala</artifactId>
+	<name>Wicket-Scala</name>
+
+	<description>Collection of code relevant to developing Wicket with Scala, including core utilities, Wicket extensions, Wicket Components and Scala language extensions.</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.scala-tools.testing</groupId>
+			<artifactId>specs</artifactId>
+			<version>1.5.0</version>
+		</dependency>
+	</dependencies>
+
+</project>

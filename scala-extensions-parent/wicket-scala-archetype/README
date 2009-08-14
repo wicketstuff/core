@@ -1,0 +1,3 @@
+To use or test the archetype, run install, then either just run archetype:generate and select it from the list, or run a variant of:
+
+mvn archetype:generate -DarchetypeGroupId=org.wicketstuff.scala -DarchetypeArtifactId=wicket-scala-archetype -DgroupId=com.sharca -DartifactId=scalawicket-archetypetest -DarchetypeVersion=1.4-SNAPSHOT

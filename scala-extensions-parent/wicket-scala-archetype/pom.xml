@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>org.wicketstuff.scala</groupId>
+		<artifactId>scala-extensions-parent</artifactId>
+		<version>1.4-SNAPSHOT</version>
+	</parent>
+	
+	<packaging>maven-archetype</packaging>	
+	<artifactId>wicket-scala-archetype</artifactId>
+	<name>Wicket-Scala Archetype</name>
+	<description>Basic setup for a project that combines Scala and Wicket, 
+		depending on the Wicket-Scala project. Includes an example Specs 
+		test.</description>
+	
+	<developers>
+		<developer>
+			<name>Antony Stubbs</name>
+			<email>antony.stubbs@gmail.com</email>
+			<url>antonystubbs.com</url>
+			<timezone>+12</timezone>
+		</developer>
+		<developer>
+			<name>Daan van Etten</name>
+			<url>stuq.nl</url>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+	
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.archetype</groupId>
+				<artifactId>archetype-packaging</artifactId>
+				<version>2.0-alpha-4</version>
+			</extension>
+		</extensions>
+		<plugins>
+			<plugin>
+				<artifactId>maven-archetype-plugin</artifactId>
+				<version>2.0-alpha-4</version>
+				<extensions>true</extensions>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>

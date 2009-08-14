@@ -1,0 +1,29 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<html>
+<head>
+    <style type="text/css">
+        INPUT, BODY { font-size: 24px; font-family: Helvetica; }
+        BODY { margin-left: 30%; margin-right: 30%; margin-top: 10%; }
+        .header { background-color: ${symbol_pound}E05717; color: white; padding: 10px; }
+        FORM { background-color: ${symbol_pound}7EACCB; padding: 30px; }
+        P { margin: 0 }
+    </style>
+</head>
+
+<body>
+    <p class="header"><strong>Hello, Wicket World!</strong></p>
+    <form wicket:id="form">
+        What's your name? <br/>
+        <input wicket:id="name"/>
+        <input type="submit" value = "OK" />
+
+        <p>slabel Your name is: <strong><span wicket:id="helloworld2"/></strong></p>
+    </form>
+
+<h2>See the Scala-Wicket Sample project for more examples of usage.</h2>
+
+</body>
+
+</html>
