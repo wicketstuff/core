@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><archetype>
+  <id>wicket-scala-sample</id>
+  <sources>
+    <source>src/main/java/ExtendsScalaImplementation.java</source>
+    <source>src/main/java/SomeInterface.java</source>
+    <source>src/main/scala/HelloWicketWorld.java</source>
+    <source>src/main/scala/HomePage.html</source>
+    <source>src/main/scala/SomeImplementation.scala</source>
+    <source>src/test/scala/SamplePageSpec.java</source>
+  </sources>
+  <resources>
+    <resource>README</resource>
+    <resource>project/build.properties</resource>
+    <resource>project/build/Sample.scala</resource>
+    <resource>src/main/HelloWicketWorld.scala</resource>
+    <resource>src/main/HomePage.html</resource>
+    <resource>src/main/SomeImplementation.scala</resource>
+    <resource>src/main/webapp/WEB-INF/web.xml</resource>
+    <resource>src/test/scala/RestServiceSpec.scala</resource>
+  </resources>
+</archetype>

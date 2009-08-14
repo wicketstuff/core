@@ -16,6 +16,7 @@
 	</description>
 
 	<modules>
+		<module>scala-extensions-parent</module>
 		<module>annotation</module>
 		<module>calendarviews-parent</module>
 		<module>client-and-server-validation</module>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launchConfiguration type="scala.application">
+<stringAttribute key="bad_container_name" value="/scala-extensions-parent/wicket-scala/src/main/eclipse"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/wicket-scala"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="run"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-p org.wicketstuff.scala -k ComponentSpecs,FodelSpecs"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="wicket-scala"/>
+</launchConfiguration>
