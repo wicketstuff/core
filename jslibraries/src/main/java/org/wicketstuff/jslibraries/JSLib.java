@@ -18,6 +18,8 @@
  */
 package org.wicketstuff.jslibraries;
 
+import org.apache.wicket.Application;
+import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.html.JavascriptPackageResource;
@@ -38,66 +40,113 @@ import org.wicketstuff.jslibraries.util.WicketDeploymentState;
  * either readable or minimized (if Wicket is in
  * 'deployment'-configuration-type) form.
  * </p>
- * 
  * <p>
  * <code>
  * JSLib.getHeaderContributor(VersionDescriptor.exactVersion(Library.JQUERY, 1,3,1), CDN.ANY)
  * </code> will serve it from the any CDN where it is available, falling back to
  * the local version if necessary.
  * </p>
- * 
  * <p>
  * <code>
  * JSLib.getHeaderContributor(VersionDescriptor.exactVersion(Library.JQUERY, 1,3,1), true, CDN.GOOGLE)
  * </code> will serve it from Google (or the local Version as fallback) in
  * minimized form, no matter what Wicket´s configuration is.
  * </p>
+ * <p>
+ * Component Developers should not select providers.
+ * </p>
+ * <p>
+ * Application Developers can set the providers they want to use on a per
+ * Application basis by using <br />
+ * <code>
+ * JSLib.setOverrideProviders(Application.get(), LocalProvider.DEFAULT);
+ * </code> for Local use only, or <br />
+ * <code>
+ * JSLib.setOverrideProviders(Application.get(), CDN.GOOGLE); 
+ * </code> or even <br />
+ * <code>
+ * JSLib.setOverrideProviders(Application.get(), CDN.ANY); 
+ * </code>
+ * </p>
  * 
- * @author Uwe Schäfer, (uwe@codesmell.de)
  */
-public class JSLib {
-	private JSLib() {
-	}
+public class JSLib
+{
+    private JSLib()
+    {
+    }
 
-	/**
-	 * 
-	 * provides a HeaderContributor according to parameters. Note that Providers will be asked one by one and the first matching wins.
-	 * If 
-	 * 
-	 * @param versionDescriptor
-	 * @param providers
-	 *            list of alternative providers
-	 * @return matching HeaderContributor from the first matching provider
-	 */
-	public static HeaderContributor getHeaderContribution(
-			final VersionDescriptor versionDescriptor,
-			final Provider... providers) {
-		return getHeaderContribution(versionDescriptor, WicketDeploymentState
-				.isProduction(), providers);
-	}
+    private static final MetaDataKey<Provider[]> PROVIDER_KEY = new MetaDataKey<Provider[]>()
+    {
+    };
 
-	public static HeaderContributor getHeaderContribution(
-			final VersionDescriptor versionDescriptor,
-			final boolean production, final Provider... providers) {
+    /**
+     * Not to be used by Component authors. This should be used as an
+     * application-wide setting for which providers to use. If set, it will be
+     * applied instead of the providers passed
+     * 
+     * @param app
+     * @param providers
+     */
+    public static void setOverrideProviders(final Application app, final Provider... providers)
+    {
+        Assert.parameterNotNull(app, "app");
+        Assert.parameterNotNull(providers, "providers");
+        app.setMetaData(PROVIDER_KEY, providers);
+    }
 
-		Assert.parameterNotNull(versionDescriptor,
-				"versionDescriptor");
-		
-		if (providers != null) {
-			for (Provider provider : providers) {
-				HeaderContributor hc = provider.getHeaderContributor(
-						versionDescriptor, production);
-				if (hc != null) {
-					return hc;
-				}
-			}
-		}
+    /**
+     * @param versionDescriptor
+     * @param providers
+     *            list of alternative providers (might be ignored if
+     *            setOverrideProviders was used)
+     * @return matching HeaderContributor from the first matching provider
+     */
+    public static HeaderContributor getHeaderContribution(final VersionDescriptor versionDescriptor,
+            final Provider... providers)
+    {
+        return getHeaderContribution(versionDescriptor, WicketDeploymentState.isProduction(), providers);
+    }
 
-		ResourceReference reference = JSReference.getReference(
-				versionDescriptor, production);
-		if (reference != null)
-			return JavascriptPackageResource.getHeaderContribution(reference);
-		else
-			return null;
-	}
+    /**
+     * @param versionDescriptor
+     * @param production
+     *            if true tried to serve minimized versions
+     * @param providers
+     *            list of alternative providers (might be ignored if
+     *            setOverrideProviders was used
+     * @return matching HeaderContributor from the first matching provider
+     */
+    public static HeaderContributor getHeaderContribution(final VersionDescriptor versionDescriptor,
+            final boolean production, final Provider... providers)
+    {
+
+        Provider[] prov = Application.get().getMetaData(PROVIDER_KEY);
+        if (prov == null)
+        {
+            prov = providers;
+        }
+
+        if (prov != null)
+        {
+            for (final Provider provider : prov)
+            {
+                final HeaderContributor hc = provider.getHeaderContributor(versionDescriptor, production);
+                if (hc != null)
+                {
+                    return hc;
+                }
+            }
+        }
+
+        final ResourceReference reference = JSReference.getReference(versionDescriptor, production);
+        if (reference != null)
+        {
+            return JavascriptPackageResource.getHeaderContribution(reference);
+        }
+        else
+        {
+            return null;
+        }
+    }
 }
