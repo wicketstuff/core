@@ -27,9 +27,6 @@ import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.html.JavascriptPackageResource;
 import org.wicketstuff.jslibraries.util.Assert;
 
-/**
- * @author Uwe Schäfer, (uwe@codesmell.de)
- */
 public enum CDN implements Provider {
 
 	GOOGLE {

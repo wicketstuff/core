@@ -26,62 +26,62 @@ import org.apache.wicket.markup.html.JavascriptPackageResource;
 import org.wicketstuff.jslibraries.util.Assert;
 
 
-class LocalProvider implements Provider {
+public class LocalProvider implements Provider {
 
-	static final LocalProvider DEFAULT = new LocalProvider();
-	private Map<Library, String> localFileNames = new HashMap<Library, String>();
-	private Map<Library, String> localProductionSignifiers = new HashMap<Library, String>();
+    static final LocalProvider DEFAULT = new LocalProvider();
+    private Map<Library, String> localFileNames = new HashMap<Library, String>();
+    private Map<Library, String> localProductionSignifiers = new HashMap<Library, String>();
 
-	private LocalProvider() {
-		//
-		localFileNames.put(Library.JQUERY, "jquery");
-		localFileNames.put(Library.JQUERY_UI, "jquery-ui");
-		localFileNames.put(Library.MOOTOOLS_CORE, "mootools-core");
-		localFileNames.put(Library.MOOTOOLS_MORE, "mootools-more");
-		localFileNames.put(Library.PROTOTYPE, "prototype");
-		localFileNames.put(Library.SCRIPTACULOUS, "scriptaculous");
-		localFileNames.put(Library.YUI, "yuiloader");
-		localFileNames.put(Library.DOJO, "dojo");
-		localFileNames.put(Library.SWFOBJECT, "swfobject");
-		localFileNames.put(Library.EXT_CORE, "ext-core");
-		//
-		localProductionSignifiers.put(Library.JQUERY, ".min");
-		localProductionSignifiers.put(Library.JQUERY_UI, ".min");
-		localProductionSignifiers.put(Library.MOOTOOLS_CORE, ".min");
-		localProductionSignifiers.put(Library.MOOTOOLS_MORE, ".min");
-		localProductionSignifiers.put(Library.PROTOTYPE, null);
-		localProductionSignifiers.put(Library.SCRIPTACULOUS, null);
-		localProductionSignifiers.put(Library.YUI, ".min");
-		localProductionSignifiers.put(Library.DOJO, ".min");
-		localProductionSignifiers.put(Library.SWFOBJECT, ".min");
-		localProductionSignifiers.put(Library.EXT_CORE, ".min");
-	}
+    private LocalProvider() {
+        //
+        localFileNames.put(Library.JQUERY, "jquery");
+        localFileNames.put(Library.JQUERY_UI, "jquery-ui");
+        localFileNames.put(Library.MOOTOOLS_CORE, "mootools-core");
+        localFileNames.put(Library.MOOTOOLS_MORE, "mootools-more");
+        localFileNames.put(Library.PROTOTYPE, "prototype");
+        localFileNames.put(Library.SCRIPTACULOUS, "scriptaculous");
+        localFileNames.put(Library.YUI, "yuiloader");
+        localFileNames.put(Library.DOJO, "dojo");
+        localFileNames.put(Library.SWFOBJECT, "swfobject");
+        localFileNames.put(Library.EXT_CORE, "ext-core");
+        //
+        localProductionSignifiers.put(Library.JQUERY, ".min");
+        localProductionSignifiers.put(Library.JQUERY_UI, ".min");
+        localProductionSignifiers.put(Library.MOOTOOLS_CORE, ".min");
+        localProductionSignifiers.put(Library.MOOTOOLS_MORE, ".min");
+        localProductionSignifiers.put(Library.PROTOTYPE, null);
+        localProductionSignifiers.put(Library.SCRIPTACULOUS, null);
+        localProductionSignifiers.put(Library.YUI, ".min");
+        localProductionSignifiers.put(Library.DOJO, ".min");
+        localProductionSignifiers.put(Library.SWFOBJECT, ".min");
+        localProductionSignifiers.put(Library.EXT_CORE, ".min");
+    }
 
-	public HeaderContributor getHeaderContributor(
-			final VersionDescriptor versionDescriptor, boolean production) {
-		
-		Assert.parameterNotNull(versionDescriptor,
-				"versionDescriptor");
-		
-		return JavascriptPackageResource.getHeaderContribution(JSReference
-				.getReference(versionDescriptor, production));
-	}
+    public HeaderContributor getHeaderContributor(
+            final VersionDescriptor versionDescriptor, boolean production) {
+        
+        Assert.parameterNotNull(versionDescriptor,
+                "versionDescriptor");
+        
+        return JavascriptPackageResource.getHeaderContribution(JSReference
+                .getReference(versionDescriptor, production));
+    }
 
-	String getLocalFileName(Library lib) {
-		Assert.parameterNotNull(lib, "lib");
+    String getLocalFileName(Library lib) {
+        Assert.parameterNotNull(lib, "lib");
 
-		String name = localFileNames.get(lib);
-		if (name == null)
-			throw new IllegalArgumentException("Library '"+lib+"' is unknown to '"
-					+ getClass().getSimpleName() + "'");
-		return name;
-	}
+        String name = localFileNames.get(lib);
+        if (name == null)
+            throw new IllegalArgumentException("Library '"+lib+"' is unknown to '"
+                    + getClass().getSimpleName() + "'");
+        return name;
+    }
 
-	String getProductionSignifier(Library lib) {
-		Assert.parameterNotNull(lib, "lib");
+    String getProductionSignifier(Library lib) {
+        Assert.parameterNotNull(lib, "lib");
 
-		String signifier = localProductionSignifiers.get(lib);
-		return signifier;
-	}
+        String signifier = localProductionSignifiers.get(lib);
+        return signifier;
+    }
 
 }
