@@ -15,43 +15,40 @@
  */
 package org.wicketstuff.openlayers.api;
 
-import java.io.Serializable;
-
-import org.wicketstuff.openlayers.IOpenLayersMap;
+import org.wicketstuff.openlayers.api.control.AbstractControl;
 
 /**
  * Represents an OpenLayers
  * http://dev.openlayers.org/apidocs/files/OpenLayers/Control-js.html
+ * 
+ * These are the controls that take no context specific options in the constructor (the externalizable=true controls 
+ * may include a div but this is not set by the caller).
+ * 
+ * See @link {@link IJavascriptComponent} for the hierarchy
+ * 
  */
-public enum Control implements Serializable {
-	PanZoomBar(true), MouseToolbar(false), LayerSwitcher(true), Permalink(true), MousePosition(
-			true), OverviewMap(false), KeyboardDefaults(false), PanZoom(false), Navigation(
-			false), ScaleLine(false);
-
-	private final boolean externalizable;
-
-	private Control(boolean externalizable) {
-		this.externalizable = externalizable;
-
+public class Control extends AbstractControl {
+	
+	public static final Control PanZoomBar = new Control("PanZoomBar", true);
+	
+	public static final Control MouseToolbar = new Control("MouseToolbar", false);
+	public static final Control LayerSwitcher = new Control("LayerSwitcher", true);
+	public static final Control Permalink = new Control("Permalink", true);
+	public static final Control MousePosition = new Control("MousePosition", true);
+	public static final Control OverviewMap = new Control("OverviewMap", false);
+	public static final Control KeyboardDefaults = new Control("KeyboardDefaults", false);
+	public static final Control PanZoom = new Control("PanZoom", false);
+	public static final Control Navigation = new Control("Navigation", false);
+	public static final Control ScaleLine = new Control("ScaleLine", false);
+	
+	/**
+	 * @param name
+	 * @param externalizable
+	 */
+	public Control(String name, boolean externalizable) {
+		super(name, externalizable);
 	}
+	
 
-	public String getJSadd(IOpenLayersMap map) {
-
-		String jsControlCreate = "";
-
-		if (map.isExternalControls() && externalizable) {
-			jsControlCreate = map.getJSinvoke("addControl('" + name()
-					+ "', new OpenLayers.Control." + name()
-					+ "({div: OpenLayers.Util.getElement('wicketOpenlayer"
-					+ name() + "')}))");
-		} else {
-			jsControlCreate = map.getJSinvoke("addControl('" + name()
-					+ "', new OpenLayers.Control." + name() + "())");
-		}
-		return jsControlCreate;
-	}
-
-	public String getJSremove(IOpenLayersMap map) {
-		return map.getJSinvoke("removeControl('" + name() + "')");
-	}
+	
 }

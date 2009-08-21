@@ -21,6 +21,17 @@
 	<modules>
 		<module>openlayers</module>
 		<module>openlayers-examples</module>
+		<module>openlayers-proxy</module>
 	</modules>
+	
+	<dependencyManagement>
+		<dependencies>
+		<dependency>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>openlayers</artifactId>
+		<version>${project.version}</version>
+		</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 </project>

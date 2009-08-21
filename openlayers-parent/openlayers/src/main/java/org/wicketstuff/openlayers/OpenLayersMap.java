@@ -36,7 +36,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.openlayers.api.Bounds;
-import org.wicketstuff.openlayers.api.Control;
+import org.wicketstuff.openlayers.api.IJavascriptComponent;
 import org.wicketstuff.openlayers.api.InfoWindow;
 import org.wicketstuff.openlayers.api.LonLat;
 import org.wicketstuff.openlayers.api.Marker;
@@ -44,6 +44,8 @@ import org.wicketstuff.openlayers.api.Overlay;
 import org.wicketstuff.openlayers.api.layer.GMap;
 import org.wicketstuff.openlayers.api.layer.Layer;
 import org.wicketstuff.openlayers.api.layer.OSM;
+import org.wicketstuff.openlayers.api.layer.Vector;
+import org.wicketstuff.openlayers.api.layer.WFS;
 import org.wicketstuff.openlayers.api.layer.WMS;
 import org.wicketstuff.openlayers.event.EventType;
 import org.wicketstuff.openlayers.event.OverlayListenerBehavior;
@@ -171,7 +173,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 
 	private LonLat center = new LonLat(37.4419, -122.1419);
 
-	private List<Control> controls = new ArrayList<Control>();
+	private List<IJavascriptComponent> controls = new ArrayList<IJavascriptComponent>();
 
 	private boolean externalControls = false;
 
@@ -311,7 +313,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	 *            control to add
 	 * @return This
 	 */
-	public OpenLayersMap addControl(Control control) {
+	public OpenLayersMap addControl(IJavascriptComponent control) {
 		controls.add(control);
 
 		if (AjaxRequestTarget.get() != null && findPage() != null) {
@@ -374,7 +376,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 		return center;
 	}
 
-	public List<Control> getControls() {
+	public List<IJavascriptComponent> getControls() {
 		return controls;
 	}
 
@@ -429,9 +431,25 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 				js.append(getJSinvoke("addLayer(osm" + osm.getId() + ","
 						+ osm.getId() + ")"));
 			}
+			if (layer instanceof WFS) {
+				WFS wfs = (WFS) layer;
+				js.append("var wfs" + wfs.getId() + " ="
+						+ wfs.getJSconstructor() + ";\n");
+				js.append(getJSinvoke("addLayer(wfs" + wfs.getId() + ","
+						+ wfs.getId() + ")"));
+				
+			}
+			if (layer instanceof Vector) {
+				Vector vec = (Vector) layer;
+				js.append("var vec" + vec.getId() + " ="
+						+ vec.getJSconstructor() + ";\n");
+				js.append(getJSinvoke("addLayer(vec" + vec.getId() + ","
+						+ vec.getId() + ")"));
+				
+			}
 		}
 		js.append(getJSinvoke("zoomToMaxExtent()"));
-		for (Control control : controls) {
+		for (IJavascriptComponent control : controls) {
 			js.append(control.getJSadd(this));
 		}
 		// Add the overlays.
@@ -553,7 +571,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	 *            control to remove
 	 * @return This
 	 */
-	public OpenLayersMap removeControl(Control control) {
+	public OpenLayersMap removeControl(IJavascriptComponent control) {
 		controls.remove(control);
 
 		if (AjaxRequestTarget.get() != null && findPage() != null) {

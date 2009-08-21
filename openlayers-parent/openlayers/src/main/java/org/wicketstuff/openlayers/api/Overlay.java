@@ -26,7 +26,7 @@ import org.wicketstuff.openlayers.event.OverlayListenerBehavior;
 /**
  * Represents an Openlayers API's // legacy to be removed
  */
-public abstract class Overlay implements Serializable {
+public abstract class Overlay implements IJavascriptComponent {
 	List<OverlayListenerBehavior> behaviors = new ArrayList<OverlayListenerBehavior>();
 
 	public Overlay addBehavior(OverlayListenerBehavior behavior) {

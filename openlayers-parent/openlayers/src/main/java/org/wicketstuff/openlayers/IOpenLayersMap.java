@@ -20,6 +20,7 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.openlayers.api.Bounds;
 import org.wicketstuff.openlayers.api.Control;
+import org.wicketstuff.openlayers.api.IJavascriptComponent;
 import org.wicketstuff.openlayers.api.LonLat;
 import org.wicketstuff.openlayers.api.Overlay;
 import org.wicketstuff.openlayers.api.layer.Layer;
@@ -53,17 +54,17 @@ public interface IOpenLayersMap {
 
 	public List<Layer> getLayers();
 
-	public List<Control> getControls();
+	public List<IJavascriptComponent> getControls();
 
 	public List<Overlay> getOverlays();
 
-	public IOpenLayersMap addControl(Control control);
+	public IOpenLayersMap addControl(IJavascriptComponent control);
 
 	public IOpenLayersMap addOverlay(Overlay overlay);
 
 	public IOpenLayersMap clearOverlays();
 
-	public IOpenLayersMap removeControl(Control control);
+	public IOpenLayersMap removeControl(IJavascriptComponent control);
 
 	public IOpenLayersMap removeOverlay(Overlay overlay);
 
