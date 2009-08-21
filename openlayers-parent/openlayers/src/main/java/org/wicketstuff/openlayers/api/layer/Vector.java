@@ -17,11 +17,13 @@ package org.wicketstuff.openlayers.api.layer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.wicket.behavior.HeaderContributor;
 import org.wicketstuff.openlayers.js.Constructor;
+import org.wicketstuff.openlayers.js.JSUtils;
 
 public class Vector extends Layer implements Serializable {
 
@@ -44,19 +46,10 @@ public class Vector extends Layer implements Serializable {
 
 	@Override
 	public String getJSconstructor() {
-		String optionlist = "";
-		if (options != null) {
-			boolean first = true;
-			for (String key : options.keySet()) {
-				if (first) {
-					first = false;
-				} else {
-					optionlist += ",\n";
-				}
-				optionlist += key + ": " + options.get(key);
-			}
-		}
-		return new Constructor("OpenLayers.Layer.Vector").add(
-				"'" + getName() + "'").add("{" + optionlist + "}").toJS();
+		
+		String options = super.getJSOptionsMap(this.options);
+		
+		return super.getJSconstructor("OpenLayers.Layer.Vector", Arrays.asList(JSUtils.getQuotedString(getName()), options));
+		
 	}
 }

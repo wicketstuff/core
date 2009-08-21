@@ -2,12 +2,12 @@ package org.wicketstuff.openlayers.api.layer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.wicket.behavior.HeaderContributor;
-import org.apache.wicket.markup.html.IHeaderContributor;
-import org.wicketstuff.openlayers.js.Constructor;
+import org.wicketstuff.openlayers.js.JSUtils;
 
 /**
  * 
@@ -25,6 +25,7 @@ public class WMS extends Layer implements Serializable {
 	 * 
 	 */
 	private HashMap<String, String> options = new HashMap<String, String>();
+	private final HashMap<String, String> extraOptions;
 
 	public String getUrl() {
 		return url;
@@ -33,9 +34,21 @@ public class WMS extends Layer implements Serializable {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	
+	public WMS(String name, String url, HashMap<String, String>options) {
+		this (name, url, options, null);
+	}
 
-	public WMS(String name, String url, HashMap<String, String> options) {
+	/**
+	 * 
+	 * @param name
+	 * @param url
+	 * @param options layer options
+	 * @param extraOptions things like baseLayer: need to be placed in extraOptions.
+	 */
+	public WMS(String name, String url, HashMap<String, String> options, HashMap<String, String>extraOptions) {
 		super();
+		this.extraOptions = extraOptions;
 		setName(name);
 		this.url = url;
 		this.options = options;
@@ -43,26 +56,19 @@ public class WMS extends Layer implements Serializable {
 	}
 
 	/*
-	 * 
+	 * name, url, options
 	 */
 
 	public String getJSconstructor() {
-		String optionlist = "";
-
-		boolean first = true;
-
-		for (String key : options.keySet()) {
-			if (first) {
-				first = false;
-			} else {
-				optionlist += ",\n";
-			}
-			optionlist += key + ": " + options.get(key);
-
-		}
-
-		return new Constructor("OpenLayers.Layer.WMS").add("'" + getName() + "'")
-				.add("'" + url + "'").add("{" + optionlist + "}").toJS();
+		
+		String options = super.getJSOptionsMap(this.options);
+		String extraOptions = super.getJSOptionsMap(this.extraOptions);
+		
+		if (extraOptions == null)
+			return getJSconstructor("OpenLayers.Layer.WMS", Arrays.asList(new String[] {JSUtils.getQuotedString(getName()), JSUtils.getQuotedString(getUrl()), options}));
+		else 			
+			return getJSconstructor("OpenLayers.Layer.WMS", Arrays.asList(new String[] {JSUtils.getQuotedString(getName()), JSUtils.getQuotedString(getUrl()), options, extraOptions}));
+		
 	}
 
 	@Override

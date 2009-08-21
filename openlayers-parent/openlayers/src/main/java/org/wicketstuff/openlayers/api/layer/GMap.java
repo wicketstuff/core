@@ -2,13 +2,14 @@ package org.wicketstuff.openlayers.api.layer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.wicketstuff.openlayers.js.Constructor;
+import org.wicketstuff.openlayers.js.JSUtils;
 
 public class GMap extends Layer implements Serializable {
 
@@ -31,7 +32,7 @@ public class GMap extends Layer implements Serializable {
 
 	@Override
 	public List<HeaderContributor> getHeaderContributors() {
-		List contributors = new ArrayList<IHeaderContributor>();
+		List<HeaderContributor> contributors = new ArrayList<HeaderContributor>();
 		contributors.add(new HeaderContributor(new IHeaderContributor() {
 
 			public void renderHead(IHeaderResponse response) {
@@ -49,22 +50,10 @@ public class GMap extends Layer implements Serializable {
 	 */
 
 	public String getJSconstructor() {
-		String optionlist = "";
-
-		boolean first = true;
-
-		for (String key : options.keySet()) {
-			if (first) {
-				first = false;
-			} else {
-				optionlist += ",\n";
-			}
-			optionlist += key + ": " + options.get(key);
-
-		}
-
-		return new Constructor("OpenLayers.Layer.Google").add(
-				"'" + getName() + "'").add("{" + optionlist + "}").toJS();
+		
+		String options = super.getJSOptionsMap(this.options);
+		
+		return getJSconstructor("OpenLayers.Layer.Google", Arrays.asList (JSUtils.getQuotedString(getName()), options));
 	}
 
 }

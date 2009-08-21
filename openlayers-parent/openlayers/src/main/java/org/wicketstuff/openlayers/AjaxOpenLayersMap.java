@@ -31,7 +31,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WicketEventReference;
 import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 import org.wicketstuff.openlayers.api.Bounds;
-import org.wicketstuff.openlayers.api.Control;
+import org.wicketstuff.openlayers.api.IJavascriptComponent;
 import org.wicketstuff.openlayers.api.LonLat;
 import org.wicketstuff.openlayers.api.Marker;
 import org.wicketstuff.openlayers.api.Overlay;
@@ -54,7 +54,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	private List<Layer> layers;
 	private final HashMap<String, String> options;
 	private final List<Feature> features;
-	private final List<Control> controls = new ArrayList<Control>();
+	private final List<IJavascriptComponent> controls = new ArrayList<IJavascriptComponent>();
 	private final List<Overlay> overlays = new ArrayList<Overlay>();
 	private final List<FeatureStyle> featureStyles;
 	private final HashMap<String, Vector> featureVectors = new HashMap<String, Vector>();
@@ -195,7 +195,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	 *            control to add
 	 * @return This
 	 */
-	public IOpenLayersMap addControl(Control control) {
+	public IOpenLayersMap addControl(IJavascriptComponent control) {
 		controls.add(control);
 		if (AjaxRequestTarget.get() != null) {
 			AjaxRequestTarget.get().appendJavascript(control.getJSadd(this));
@@ -326,7 +326,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		if (center == null || zoom == null) {
 			js.append(getJSinvoke("zoomToMaxExtent()"));
 		}
-		for (Control control : controls) {
+		for (IJavascriptComponent control : controls) {
 			js.append(control.getJSadd(this));
 		}
 		// Add the overlays.
@@ -385,7 +385,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	 *            control to remove
 	 * @return This
 	 */
-	public IOpenLayersMap removeControl(Control control) {
+	public IOpenLayersMap removeControl(IJavascriptComponent control) {
 		controls.remove(control);
 		if (AjaxRequestTarget.get() != null) {
 			AjaxRequestTarget.get().appendJavascript(control.getJSremove(this));
@@ -448,7 +448,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		return layers;
 	}
 
-	public List<Control> getControls() {
+	public List<IJavascriptComponent> getControls() {
 		return controls;
 	}
 
