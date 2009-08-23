@@ -18,6 +18,7 @@ package org.wicketstuff.jquery.sparkline;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxCallDecorator;
@@ -97,7 +98,16 @@ public class Sparkline extends WebComponent implements IHeaderContributor
     StringBuilder js = new StringBuilder();
     js.append( "$('#" ).append( this.getMarkupId() ).append( "' ).sparkline( " );
     if( model != null ) {
-      js.append( model.getObject().toString() ); // list will output at "[1,2,3]"
+      Collection<Integer> vals = model.getObject();
+      js.append( '[' );
+      Iterator<Integer> iter = vals.iterator();
+      while( iter.hasNext() ) {
+        js.append( iter.next() );
+        if( iter.hasNext() ) {
+          js.append( ',' );
+        }
+      }
+      js.append( ']' );
     }
     else {
       js.append( values );
