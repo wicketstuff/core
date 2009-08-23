@@ -41,6 +41,7 @@ public class PageSupport extends WebPage {
         add(new BookmarkablePageLink("datePicker", Page4DatePicker.class));
         add(new BookmarkablePageLink("jgrowl", Page4JGrowl.class));
         add(new BookmarkablePageLink("block", Page4Block.class));
+        add(new BookmarkablePageLink("sparkline", Page4Sparkline.class));
         add(new BookmarkablePageLink("ajaxbackbutton", Page4AjaxBackButton.class));
         add(new BookmarkablePageLink("uislider", Page4Slider.class));
 
