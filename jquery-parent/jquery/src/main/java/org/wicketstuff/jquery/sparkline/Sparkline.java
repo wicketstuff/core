@@ -41,6 +41,7 @@ public class Sparkline extends WebComponent implements IHeaderContributor
   final SparklineOptions options;
   final IModel<Collection<Integer>> model;
   final CharSequence values;
+  boolean writeJSOnReady = true; 
   
   public Sparkline(final String id, 
       IModel<Collection<Integer>> values, 
@@ -93,7 +94,16 @@ public class Sparkline extends WebComponent implements IHeaderContributor
 
   //---------------------------------------------------------------
   //---------------------------------------------------------------
-  
+
+  public boolean isWriteJSOnReady() {
+    return writeJSOnReady;
+  }
+
+  public Sparkline setWriteJSOnReady(boolean writeJSOnReady) {
+    this.writeJSOnReady = writeJSOnReady;
+    return this;
+  }
+
   public CharSequence getSparklineJS() {
     StringBuilder js = new StringBuilder();
     js.append( "$('#" ).append( this.getMarkupId() ).append( "' ).sparkline( " );
@@ -123,7 +133,7 @@ public class Sparkline extends WebComponent implements IHeaderContributor
     response.renderJavascriptReference(JQueryBehavior.JQUERY_JS);
     response.renderJavascriptReference(SPARKLINE_JS);
 
-    if( true ) {
+    if( writeJSOnReady ) {
       StringBuilder builder = new StringBuilder();
       builder.append("$(document).ready(function(){\n");
       builder.append(getSparklineJS());
