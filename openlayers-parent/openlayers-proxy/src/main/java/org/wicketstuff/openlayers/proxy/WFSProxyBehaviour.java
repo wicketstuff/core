@@ -3,6 +3,9 @@ package org.wicketstuff.openlayers.proxy;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,8 +79,7 @@ public class WFSProxyBehaviour extends AbstractAjaxBehavior {
 			WebResponse response = (WebResponse) requestCycle.getResponse();
 
 			HttpServletRequest request = wr.getHttpServletRequest();
-			
-			
+
 			
 			String requestURL = request.getParameter("url");
 			
@@ -96,17 +98,49 @@ public class WFSProxyBehaviour extends AbstractAjaxBehavior {
 
 					String decodedURL = URLDecoder.decode(requestURL, "UTF-8");
 					
-					GetMethod getMethod = new GetMethod(decodedURL);
+					StringBuffer getUrl = new StringBuffer(decodedURL);
+				
+					
+					Set<String> parameters = request.getParameterMap().keySet();
+					
+					boolean first = true;
+					
+					for (String p : parameters) {
+					
+						if (p.equals("url"))
+							continue; // skip the url parameter
+						
+						if (p.startsWith("wicket:"))
+							continue; // skip the wicket parameters
+						
+						String value = request.getParameter(p);
+					
+						if (first) {
+							// first parameter needs to applied with question mark.
+							getUrl.append("?");
+							first = false;
+						}
+						else { 
+							getUrl.append("&");
+						}
+						
+						getUrl.append(p);
+						getUrl.append("=");
+						getUrl.append(URLEncoder.encode(value, "UTF-8"));
+						
+					}
+					
+					log.debug("Get = " + getUrl.toString());
+					
+					GetMethod getMethod = new GetMethod (getUrl.toString());
 
-					int proxyResponseCode = client.executeMethod(getMethod);
+					int proxyResponseCode = client.executeMethod( getMethod);
 
 					log.debug("redirected get, code = " + proxyResponseCode);
 					
 					if (proxyResponseCode != 200) {
 						throw new AbortWithHttpStatusException(proxyResponseCode, false);
 					}
-					
-//					response.getHttpServletResponse().setStatus(proxyResponseCode);
 					
 					// Pass response headers back to the client
 			        Header[] headerArrayResponse = getMethod.getResponseHeaders();
@@ -125,8 +159,6 @@ public class WFSProxyBehaviour extends AbstractAjaxBehavior {
 				} else if (request.getMethod().toLowerCase().equals("post")) {
 					
 					// need to get the first line and get the url.
-					
-				
 					
 					String decodedURL = URLDecoder.decode(requestURL, "UTF-8");
 					
