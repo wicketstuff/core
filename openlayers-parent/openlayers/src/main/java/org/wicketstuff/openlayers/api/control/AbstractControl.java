@@ -19,6 +19,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.api.IJavascriptComponent;
@@ -40,7 +42,7 @@ public class AbstractControl implements IJavascriptComponent {
 
 	private final String name;
 	
-	private StringBuffer eventJavascript = new StringBuffer();
+	private LinkedList<IModel<String>> eventJavascript = new LinkedList<IModel<String>>();
 	
 
 	protected AbstractControl(String name, boolean externalizable) {
@@ -59,6 +61,12 @@ public class AbstractControl implements IJavascriptComponent {
 	 * @return the initialization javascript that adds this control to the map using the parameters if given.
 	 */
 	protected String getJSadd(IOpenLayersMap map, Map<String, String> parameters) {
+	
+		return this.getJSadd(map, "OpenLayers.Control." + this.name, parameters);
+	}
+	
+	protected String getJSadd(IOpenLayersMap map, String javascriptClassName, Map<String, String> parameters) {
+	
 
 		if (map.isExternalControls() && externalizable) {
 
@@ -97,7 +105,7 @@ public class AbstractControl implements IJavascriptComponent {
 			buf.append(value);
 		}
 
-		return getJSadd(map, buf.toString());
+		return getJSadd(map, javascriptClassName, buf.toString());
 
 	}
 
@@ -110,22 +118,43 @@ public class AbstractControl implements IJavascriptComponent {
 	 */
 	protected String getJSadd(IOpenLayersMap map, String parameterString) {
 
+		return this.getJSadd(map, "OpenLayers.Control." + this.name, parameterString);
+	}
+
+	/**
+	 * 
+	 * @param map the openlayers map java binding.
+	 * @param javascriptClassName the name of the javascript class being invoked.
+	 * @param parameterString the constructor parameters if any.
+	 * @return the javascript to invoke the map.addControl() method containing the initialized constructor for the control type.
+	 * 
+	 */
+	protected String getJSadd(IOpenLayersMap map, String javascriptClassName, String parameterString) {
+		
 		String invocation = null;
 		
 		String id = getId();
 		
 		if (parameterString.length() == 0) {
 			invocation =  map.getJSinvoke("addControl('" + id
-					+ "', new OpenLayers.Control." + this.name + "())");
+					+ "', new " + javascriptClassName + "())");
 		} else {
 			invocation =  map.getJSinvoke("addControl('" + id
-					+ "', new OpenLayers.Control." + this.name + "({"
+					+ "', new " + javascriptClassName + "({"
 					+ parameterString + "}))");
 		}
 		
-		if (eventJavascript.length() > 0) {
+		if (eventJavascript.size() > 0) {
 			// prepend the creational logic to the event registration javascript.
-			return eventJavascript.insert(0, invocation).toString();
+			
+			StringBuffer renderedJavascript = new StringBuffer(invocation);
+			
+			for (IModel<String> model : eventJavascript) {
+			
+				renderedJavascript.append(model.getObject());
+				
+			}
+			return renderedJavascript.toString();
 		}
 		else
 			return invocation;
@@ -166,15 +195,53 @@ public class AbstractControl implements IJavascriptComponent {
 	 * @param model an IModel<String> that provides the javascript text to be registered on the event.
 	 * 
 	 */
-	public void registerJavascriptEvent(IOpenLayersMap map, String event, IModel<String> eventHandlingJavascriptModel) {
+	public void registerJavascriptEvent(final IOpenLayersMap map, final String event, final IModel<String> eventHandlingJavascriptModel) {
 		
-		eventJavascript.append(map.getJSinvokeNoLineEnd("controls['"+getId()+"'].events.register(\""));
-		eventJavascript.append(event);
-		eventJavascript.append("\", this, function (evt) {");
-		eventJavascript.append(eventHandlingJavascriptModel.getObject());
-		eventJavascript.append("});\n");
+		// added through a model so that we can wait until the render phase before calculating the callback urls if the event handling javascript contains
+		// wicket behaviours.
+		eventJavascript.add(new AbstractReadOnlyModel<String>() {
 
+			/* (non-Javadoc)
+			 * @see org.apache.wicket.model.AbstractReadOnlyModel#getObject()
+			 */
+			@Override
+			public String getObject() {
+				
+				StringBuffer buf = new StringBuffer();
+				
+				buf.append(map.getJSinvokeNoLineEnd("controls['"+getId()+"'].events.register(\""));
+				buf.append(event);
+				buf.append("\", this, function (evt) {");
+				buf.append(eventHandlingJavascriptModel.getObject());
+				buf.append("});\n");
+
+				
+				return buf.toString();
+			}
+			
+		});
 		
 	}
+
+	/* (non-Javadoc)
+	 * @see org.wicketstuff.openlayers.api.IJavascriptComponent#getJSResourceReference()
+	 */
+	public JavascriptResourceReference[] getJSResourceReferences() {
+		// default is to not have any custom javascript for the control.
+		return null;
+	}
+
+	/**
+	 * A helper similiar to OpenLayersMap.getJSInvoke except instead of just getting the map context we get this control context from the root.
+	 * 
+	 * @param map
+	 * @param invocation
+	 * @return
+	 */
+	protected String getJSinvoke(IOpenLayersMap map,  String invocation) {
+		return map.getJSinvoke("controls['" + this.getId() + "']." + invocation);
+	}
+	
+	
 
 }

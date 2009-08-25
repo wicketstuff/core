@@ -17,11 +17,11 @@ package org.wicketstuff.openlayers.api.control;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
-import org.apache.wicket.model.Model;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.api.layer.WMS;
-import org.wicketstuff.openlayers.event.EventListenerBehavior;
+import org.wicketstuff.openlayers.event.FeatureSelectedEventHandler;
 import org.wicketstuff.openlayers.js.JSUtils;
 
 /**
@@ -43,8 +43,8 @@ private final HashMap<String, String> parameters;
 		this.parameters = parameters;
 		
 	}
-
-	/**
+	
+	/*
 	 * Standard constructor that builds the parameter map as required.
 	 * @param layer
 	 * @param box
@@ -72,6 +72,8 @@ private final HashMap<String, String> parameters;
 	}
 
 
+	
+
 	/* (non-Javadoc)
 	 * @see org.wicketstuff.openlayers.api.IJavascriptControl#getJSadd(org.wicketstuff.openlayers.IOpenLayersMap)
 	 */
@@ -79,7 +81,13 @@ private final HashMap<String, String> parameters;
 		
 		// is special as it requires an explicit activation.
 		// so we append the activate() command after the control is created.
-		return super.getJSadd(map, parameters) + "\n" + map.getJSinvoke("controls['" + this.getId() + "'].activate()");
+		return super.getJSadd(map, parameters) + "\n" + super.getJSinvoke(map, "activate()");
+	}
+
+	public void addAjaxListener(IOpenLayersMap map,
+			FeatureSelectedEventHandler featureSelectedEventHandler) {
+		
+		
 	}
 
 	

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.event.OverlayListenerBehavior;
 
@@ -70,6 +71,15 @@ public abstract class Overlay implements IJavascriptComponent {
 
 	public String getJSremove(IOpenLayersMap map) {
 		return map.getJSinvoke("removeOverlay('" + getId() + "')");
+	}
+
+	
+	/* (non-Javadoc)
+	 * @see org.wicketstuff.openlayers.api.IJavascriptComponent#getJSResourceReference()
+	 */
+	public JavascriptResourceReference[] getJSResourceReferences() {
+		// intentionally not implemented.
+		return null;
 	}
 
 	public String getId() {

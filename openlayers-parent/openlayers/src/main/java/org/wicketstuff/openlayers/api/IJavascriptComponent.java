@@ -16,6 +16,9 @@
 package org.wicketstuff.openlayers.api;
 
 import org.apache.wicket.IClusterable;
+import org.apache.wicket.ResourceReference;
+import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+import org.apache.wicket.util.template.JavaScriptTemplate;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 
 /**
@@ -28,6 +31,7 @@ import org.wicketstuff.openlayers.IOpenLayersMap;
  */
 public interface IJavascriptComponent extends IClusterable {
 
+	
 	/**
 	 * 
 	 * @param map
@@ -51,5 +55,13 @@ public interface IJavascriptComponent extends IClusterable {
 	 * 
 	 */
 	public String getId();
+
+	/**
+	 * In some cases a javascript component will provide its own javascript resource.  This is used by the map to add in the references.
+	 * 
+	 * @return
+	 * 
+	 */
+	public JavascriptResourceReference[] getJSResourceReferences();
 
 }
