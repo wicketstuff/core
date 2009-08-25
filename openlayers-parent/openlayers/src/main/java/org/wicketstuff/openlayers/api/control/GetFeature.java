@@ -17,11 +17,9 @@ package org.wicketstuff.openlayers.api.control;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.api.layer.WMS;
-import org.wicketstuff.openlayers.event.FeatureSelectedEventHandler;
 import org.wicketstuff.openlayers.js.JSUtils;
 
 /**
@@ -84,11 +82,7 @@ private final HashMap<String, String> parameters;
 		return super.getJSadd(map, parameters) + "\n" + super.getJSinvoke(map, "activate()");
 	}
 
-	public void addAjaxListener(IOpenLayersMap map,
-			FeatureSelectedEventHandler featureSelectedEventHandler) {
-		
-		
-	}
+	
 
 	
 }
