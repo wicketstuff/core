@@ -18,6 +18,7 @@ package org.wicketstuff.openlayers.api.control;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 
 /**
@@ -30,6 +31,7 @@ public class WMSGetFeatureInfo extends AbstractControl {
 
 	private static final long serialVersionUID = -4288329995840372517L;
 	private final Map<String, String> parameters;
+	private final AbstractReadOnlyModel<String> onEventJavascript;
 
 	/**
 	 * @param parameters a list of parameters that will be passed into the javascript constructor.
@@ -44,11 +46,13 @@ public class WMSGetFeatureInfo extends AbstractControl {
             featureNS: 'http://www.openplans.org/topp'
         },
         queryVisible: true
+	 * @param onEventJavascript any javascript to be called when the 'getfeatureinfo' event is fired (one parameter evt in scope).
  
 	 */
-	public WMSGetFeatureInfo(HashMap<String, String>parameters) {
+	public WMSGetFeatureInfo(HashMap<String, String>parameters, AbstractReadOnlyModel<String> onEventJavascript) {
 		super("WMSGetFeatureInfo", false);
 		this.parameters = parameters;
+		this.onEventJavascript = onEventJavascript;
 		
 	}
 
@@ -57,8 +61,11 @@ public class WMSGetFeatureInfo extends AbstractControl {
 	 */
 	public String getJSadd(IOpenLayersMap map) {
 		
+		if (onEventJavascript != null)
+			parameters.put("eventListeners", "{getfeatureinfo: function(evt) {"+onEventJavascript.getObject()+"}}");
+		
 		// is special as it requires an explicit activation.
-		return super.getJSadd(map, parameters) + "\n" + map.getJSinvoke("controls['" + this.getId() + "'].activate()");
+		return super.getJSadd(map, parameters) + "\n" + super.getJSinvoke(map, ".activate()");
 	}
 	
 

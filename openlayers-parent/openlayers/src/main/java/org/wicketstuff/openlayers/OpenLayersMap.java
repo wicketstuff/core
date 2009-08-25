@@ -31,8 +31,10 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.html.JavascriptPackageResource;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.openlayers.api.Bounds;
@@ -316,9 +318,34 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	public OpenLayersMap addControl(IJavascriptComponent control) {
 		controls.add(control);
 
-		if (AjaxRequestTarget.get() != null && findPage() != null) {
-			AjaxRequestTarget.get().appendJavascript(
+		JavascriptResourceReference[] jsReferences = control.getJSResourceReferences();
+		
+		if (jsReferences != null && jsReferences.length > 0) {
+			
+			for (int i = 0; i < jsReferences.length; i++) {
+				JavascriptResourceReference javascriptResourceReference = jsReferences[i];
+				
+				add(JavascriptPackageResource.getHeaderContribution(javascriptResourceReference));
+			}
+		}
+		
+		AjaxRequestTarget target = AjaxRequestTarget.get();
+		
+		if (target != null && findPage() != null) {
+				target.appendJavascript(
 					control.getJSadd(OpenLayersMap.this));
+				
+				if (jsReferences != null && jsReferences.length > 0) {
+					
+					for (int i = 0; i < jsReferences.length; i++) {
+						JavascriptResourceReference javascriptResourceReference = jsReferences[i];
+						
+						target.getHeaderResponse().renderJavascriptReference((javascriptResourceReference));
+					}
+				}
+				
+				
+				
 		}
 
 		return this;
