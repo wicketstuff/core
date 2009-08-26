@@ -33,7 +33,7 @@
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket</artifactId>
-            <version>1.4.0</version>
+            <version>1.4.1</version>
 			<scope>test</scope>	<!-- we only need wicket because of the license header testing, might just copy the whole thing later to remove this dependency -->
 		</dependency>
 	</dependencies>

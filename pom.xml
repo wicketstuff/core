@@ -36,7 +36,7 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<properties>
-				<wicket.version>1.4.0</wicket.version>
+				<wicket.version>1.4.1</wicket.version>
 			</properties>
 			<build>
 				<plugins>
@@ -92,6 +92,15 @@
 				<wicket.version>1.4.0</wicket.version>
 			</properties>
 		</profile>
+        <profile>
+            <id>wicket-1.4.1</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <wicket.version>1.4.1</wicket.version>
+            </properties>
+        </profile>
 	</profiles>
 	<repositories>
 		<repository>
