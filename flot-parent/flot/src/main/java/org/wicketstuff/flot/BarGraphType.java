@@ -15,6 +15,8 @@
  */
 package org.wicketstuff.flot;
 
+import java.io.Serializable;
+
 
 /**
  * 
@@ -22,6 +24,9 @@ package org.wicketstuff.flot;
  *
  */
 public class BarGraphType extends GraphType {
+	/** Required by {@link Serializable} */
+	private static final long serialVersionUID = 1L;
+
 	public enum Align {LEFT, CENTER};
 	
 	private Double barWidth;

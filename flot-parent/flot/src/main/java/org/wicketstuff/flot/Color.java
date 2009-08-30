@@ -21,8 +21,10 @@ import java.util.Random;
 import org.apache.log4j.Logger;
 
 public class Color implements Serializable {
+	/** Required by {@link Serializable} */
 	private static final long serialVersionUID = 1L;
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(Color.class);
 
 	public static final Color BLACK = new Color(0.0, 0.0, 0.0);

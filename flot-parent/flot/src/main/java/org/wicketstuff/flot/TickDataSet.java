@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 Michael Würtinger (mwuertinger@users.sourceforge.net)
+ * Copyright 2009 Michael W�rtinger (mwuertinger@users.sourceforge.net)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,23 +16,29 @@
 package org.wicketstuff.flot;
 
 import java.io.Serializable;
+import java.util.Locale;
 
-public class LineGraphType extends GraphType implements Serializable {
+public class TickDataSet implements Serializable {
 	/** Required by {@link Serializable} */
 	private static final long serialVersionUID = 1L;
 
-	public LineGraphType(Double lineWidth, Boolean fill, Color fillColor) {
-		super(lineWidth, fill, fillColor);
+	private double x;
+	private String label;
+
+    public TickDataSet(double x, String label) {
+		this.x = x;
+		this.label = label;
 	}
-	
-	@Override
+
+	public double getX() {
+		return x;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
 	public String toString() {
-		StringBuffer str = new StringBuffer();
-		
-		str.append("lines: {");
-		str.append(super.toString());
-		str.append("}");
-		
-		return str.toString();
+		return String.format(Locale.US, "[%f, \"%s\"]", x, label);
 	}
 }

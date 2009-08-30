@@ -15,11 +15,15 @@
  */
 package org.wicketstuff.flot;
 
-import java.util.Locale;
-
 import org.joda.time.DateTime;
 
-public class DataSet {
+import java.io.Serializable;
+import java.util.Locale;
+
+public class DataSet implements Serializable {
+	/** Required by {@link Serializable} */
+	private static final long serialVersionUID = 1L;
+
 	private double x;
 	private double y;
 	
