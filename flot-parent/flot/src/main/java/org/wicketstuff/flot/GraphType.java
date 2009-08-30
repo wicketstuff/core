@@ -15,7 +15,12 @@
  */
 package org.wicketstuff.flot;
 
-public abstract class GraphType {
+import java.io.Serializable;
+
+public abstract class GraphType implements Serializable {
+	/** Required by {@link Serializable} */
+	private static final long serialVersionUID = 1L;
+
 	private Double lineWidth;
 	private Boolean fill;
 	private Color fillColor;

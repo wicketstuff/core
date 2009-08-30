@@ -15,7 +15,12 @@
  */
 package org.wicketstuff.flot;
 
-public class PointsGraphType extends GraphType {
+import java.io.Serializable;
+
+public class PointsGraphType extends GraphType implements Serializable {
+	/** Required by {@link Serializable} */
+	private static final long serialVersionUID = 1L;
+   
 	private Double radius;
 
 	public PointsGraphType(Double lineWidth, Boolean fill, Color fillColor, Double radius) {

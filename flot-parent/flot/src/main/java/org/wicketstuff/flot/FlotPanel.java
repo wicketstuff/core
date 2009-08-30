@@ -15,16 +15,6 @@
  */
 package org.wicketstuff.flot;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.log4j.Logger;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
@@ -33,13 +23,27 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.model.IModel;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 public class FlotPanel extends Panel {
+	/** Required by {@link Serializable} */
 	private static final long serialVersionUID = 1L;
+
 	private static final Logger logger = Logger.getLogger(FlotPanel.class);
 
 	private Map<String, Map<String, Object>> options = new HashMap<String, Map<String, Object>>();
-	
-	public FlotPanel(final String id, final IModel<List<Series>> model) {
+    private boolean showTooltip = false;
+
+    public FlotPanel(final String id, final IModel<List<Series>> model) {
 		super(id, model);
 		
 		String[] optionsKeys = {"lines", "points", "legend", "xaxis", "yaxis", "x2axis", "y2axis", "selection", "grid"};
@@ -50,8 +54,10 @@ public class FlotPanel extends Panel {
 		options.get("selection").put("mode", "xy");
 		options.get("grid").put("hoverable", true);
 		options.get("grid").put("clickable", true);
-		options.get("yaxis").put("min", 0);
-		options.get("yaxis").put("max", 15);
+
+        // JN - commented out to allow autoscaling if not set
+		//options.get("yaxis").put("min", 0);
+		//options.get("yaxis").put("max", 15);
 		
 		// This custom component fills the <script> tag with the script returned by getFlotScript().
 		add(new WebComponent("flotScript") {
@@ -98,11 +104,11 @@ public class FlotPanel extends Panel {
 			strData.append("]");
 			
 			String strOptions = mapToString(options);
-			
-			return String.format(str, strData, strOptions);
+
+			return String.format(str, strData, strOptions, (showTooltip ? "true" : "false"));
 		}
 		catch(IOException e) {
-			throw new RuntimeException("Unable to load ProgressView.js", e);
+			throw new RuntimeException("Unable to load FlotPanel.js", e);
 		}
 	}
 	
@@ -182,6 +188,75 @@ public class FlotPanel extends Panel {
 	public Double getAxisMaxY() {
 		return (Double) options.get("yaxis").get("max");
 	}
+
+    public void setAxisTicksX(TickCollection tickCollection) {
+        options.get("xaxis").put("ticks", tickCollection);
+    }
+
+    public TickCollection getAxisTicksX() {
+        return (TickCollection)options.get("xaxis").get("ticks");
+    }
+
+    public void setAxisTicksY(TickCollection tickCollection) {
+        options.get("yaxis").put("ticks", tickCollection);
+    }
+
+    public TickCollection getAxisTicksY() {
+        return (TickCollection)options.get("yaxis").get("ticks");
+    }
+
+    public void setLegendPosition(LegendPosition position) {
+        options.get("legend").put("position", position.getPosition());
+    }
+
+    public LegendPosition getLegendPosition() {
+        return LegendPosition.toLegendPosition((String)options.get("legend").get("position"));
+    }
+
+    public void setForegroundColor(Color color) {
+        options.get("grid").put("color", color);
+    }
+    
+    public Color getForegroundColor() {
+        return (Color)options.get("grid").get("color");
+    }
+
+    public void setBackgroundColor(Color color) {
+        options.get("grid").put("backgroundColor", color);
+    }
+
+    public Color getBackgroundColor() {
+        return (Color)options.get("grid").get("backgroundColor");
+    }
+
+    public void setTickColor(Color color) {
+        options.get("grid").put("tickColor", color);
+    }
+
+    public Color getTickColor() {
+        return (Color)options.get("grid").get("tickColor");
+    }
+
+    public void setClickable(boolean clickable) {
+        options.get("grid").put("clickable", clickable);
+    }
+
+    public boolean getClickable() {
+        return (Boolean)options.get("grid").get("clickable");
+    }
+
+    public boolean getHoverable() {
+        return (Boolean)options.get("grid").get("hoverable");
+    }
+
+    public void setHoverable(boolean hoverable) {
+        options.get("grid").put("hoverable", hoverable);
+    }
+
+    public void showTooltip(boolean showTooltip) {
+        this.showTooltip = showTooltip;
+        if (showTooltip) setHoverable(true);
+    }
 
 	/**
 	 * Returns the contents of the given resource.

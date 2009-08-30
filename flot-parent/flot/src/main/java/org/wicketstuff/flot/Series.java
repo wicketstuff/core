@@ -15,6 +15,9 @@
  */
 package org.wicketstuff.flot;
 
+import org.apache.log4j.Logger;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,10 +25,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+public class Series implements Serializable {
+	/** Required by {@link Serializable} */
+	private static final long serialVersionUID = 1L;
 
-public class Series {
-	private static final Logger logger = Logger.getLogger(Series.class);
+	private transient static final Logger logger = Logger.getLogger(Series.class);
 	
 	String label;
 	Color color;
