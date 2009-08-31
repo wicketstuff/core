@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>scriptaculous-parent</artifactId>
-		<version>1.4.1</version>
+		<version>1.4-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>scriptaculous</artifactId>
@@ -68,7 +68,7 @@
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>prototype</artifactId>
-			<version>1.4.1</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

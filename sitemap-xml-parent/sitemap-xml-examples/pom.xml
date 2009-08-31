@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>sitemap-xml-parent</artifactId>
-        <version>1.4.1</version>
+        <version>1.4-SNAPSHOT</version>
     </parent>
     <name>sitemap-xml-examples</name>  
     <groupId>org.wicketstuff</groupId>
@@ -13,7 +13,7 @@
         <dependency>
             <groupId>org.wicketstuff</groupId>
             <artifactId>sitemap-xml</artifactId>
-            <version>1.4.1</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

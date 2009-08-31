@@ -2,7 +2,7 @@
   <parent>
     <artifactId>flot-parent</artifactId>
     <groupId>org.wicketstuff</groupId>
-    <version>1.4.1</version>
+    <version>1.4-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.wicketstuff</groupId>
@@ -70,7 +70,7 @@
     <dependency>
         <groupId>org.wicketstuff</groupId>
         <artifactId>flot</artifactId>
-        <version>1.4.1</version>
+        <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.wicket</groupId>

@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>1.4.1</version>
+		<version>1.4-SNAPSHOT</version>
 	</parent>
 
 	<groupId>org.wicketstuff</groupId>
@@ -137,7 +137,7 @@
 			<dependency>
 				<groupId>org.wicketstuff</groupId>
 				<artifactId>inmethod-grid</artifactId>
-				<version>1.4.1</version>
+				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -303,7 +303,7 @@
 							</descriptor>
 						</descriptors>
 						<finalName>
-							apache-wicket-1.4.1
+							apache-wicket-${project.version}
 						</finalName>
 					</configuration>
 				</plugin>
