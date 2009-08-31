@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>yav-parent</artifactId>
-		<version>${project.version}</version>
+		<version>1.4.1</version>
 	</parent>
 
 	<artifactId>yav-examples</artifactId>
@@ -48,7 +48,7 @@
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>yav</artifactId>
-			<version>${project.version}</version>
+			<version>1.4.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

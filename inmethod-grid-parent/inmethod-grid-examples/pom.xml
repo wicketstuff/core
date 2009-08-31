@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>inmethod-grid-parent</artifactId>
-		<version>${project.version}</version>
+		<version>1.4.1</version>
 	</parent>
 	
 	<artifactId>inmethod-grid-examples</artifactId>
@@ -18,7 +18,7 @@
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>inmethod-grid</artifactId>
-			<version>${project.version}</version>
+			<version>1.4.1</version>
 		</dependency>	
 	</dependencies>			
 	

@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>gmap2-parent</artifactId>
-        <version>${project.version}</version>
+        <version>1.4.1</version>
     </parent>
 
     <artifactId>gmap2-examples</artifactId>
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>org.wicketstuff</groupId>
             <artifactId>gmap2</artifactId>
-            <version>${project.version}</version>
+            <version>1.4.1</version>
         </dependency>
         <dependency>
             <groupId>org.mortbay.jetty</groupId>

@@ -184,7 +184,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>${project.version}</wicket.version>
+		<wicket.version>1.4.1</wicket.version>
 		<jetty.version>6.1.11</jetty.version>
 		<lucene.version>2.4.0</lucene.version>
         <slf4j.version>1.5.6</slf4j.version>
@@ -477,9 +477,9 @@
 						</manifest>
 						<manifestEntries>
 							<Specification-Title>${project.name}</Specification-Title>
-							<Specification-Version>${project.version}</Specification-Version>
+							<Specification-Version>1.4.1</Specification-Version>
 							<Implementation-Title>${project.name}</Implementation-Title>
-							<Implementation-Version>${project.version} ${buildNumber} - ${user.name}</Implementation-Version>
+							<Implementation-Version>1.4.1 ${buildNumber} - ${user.name}</Implementation-Version>
 							<SCM-Revision>${buildNumber}</SCM-Revision>
 							<SCM-url>${scm.url}</SCM-url>
 						</manifestEntries>
