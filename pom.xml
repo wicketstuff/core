@@ -184,7 +184,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>1.4.1</wicket.version>
+		<wicket.version>${project.version}</wicket.version>
 		<jetty.version>6.1.11</jetty.version>
 		<lucene.version>2.4.0</lucene.version>
         <slf4j.version>1.5.6</slf4j.version>

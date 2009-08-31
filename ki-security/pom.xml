@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>${project.version}</version>
 	</parent>
 
 	<artifactId>wicket-ki-security-parent</artifactId>
