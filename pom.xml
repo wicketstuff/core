@@ -477,9 +477,9 @@
 						</manifest>
 						<manifestEntries>
 							<Specification-Title>${project.name}</Specification-Title>
-							<Specification-Version>1.4.1</Specification-Version>
+							<Specification-Version>${project.version}</Specification-Version>
 							<Implementation-Title>${project.name}</Implementation-Title>
-							<Implementation-Version>1.4.1 ${buildNumber} - ${user.name}</Implementation-Version>
+							<Implementation-Version>${project.version} ${buildNumber} - ${user.name}</Implementation-Version>
 							<SCM-Revision>${buildNumber}</SCM-Revision>
 							<SCM-url>${scm.url}</SCM-url>
 						</manifestEntries>
