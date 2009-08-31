@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>jquery-parent</artifactId>
-        <version>1.4.1</version>
+        <version>1.4-SNAPSHOT</version>
     </parent>
 
     <artifactId>wicketstuff-jquery-examples</artifactId>
