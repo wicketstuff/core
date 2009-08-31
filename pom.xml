@@ -49,7 +49,7 @@
 		<!-- see http://www.nabble.com/Migration-of-wicket-ki-security-to-wicket-shiro-security-td24216686.html -->
 		<!--<module>shiro-security</module>-->
 		<module>flot-parent</module>
-    	<module>jwicket-parent</module>
+		<module>jwicket-parent</module>
 		<!-- commented out till it compiles
 		<module>ddcalendar-parent</module>
 		-->
@@ -113,6 +113,19 @@
 
 	<profiles>
 		<profile>
+			<id>wicketstuff.org</id>
+			<distributionManagement>
+				<site>
+					<id>wicketstuff-org-site</id>
+					<url>scpexe://wicketstuff.org/tmp/wicketstuff-core-site</url>
+				</site>
+				<repository>
+					<id>wicketstuff-org-maven</id>
+					<url>scpexe://wicketstuff.org/home/wicket/tomcat/webapps/maven/repository</url>
+				</repository>
+			</distributionManagement>
+		</profile>
+		<profile>
 			<id>bamboo</id>
 			<distributionManagement>
 				<snapshotRepository>
@@ -171,7 +184,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>1.4-SNAPSHOT</wicket.version>
+		<wicket.version>1.4.1</wicket.version>
 		<jetty.version>6.1.11</jetty.version>
 		<lucene.version>2.4.0</lucene.version>
         <slf4j.version>1.5.6</slf4j.version>
