@@ -4,7 +4,7 @@
   <parent>
     <artifactId>wicketstuff-core</artifactId>
     <groupId>org.wicketstuff</groupId>
-    <version>${project.version}</version>
+    <version>1.4.1</version>
   </parent>
 
   <artifactId>push-parent</artifactId>

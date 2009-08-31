@@ -25,7 +25,7 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>multi-text-input-parent</artifactId>
-        <version>${project.version}</version>
+        <version>1.4.1</version>
     </parent>
 
     <artifactId>multi-text-input</artifactId>
@@ -51,7 +51,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>prototype</artifactId>
-            <version>${project.version}</version>
+            <version>1.4.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.wicket</groupId>

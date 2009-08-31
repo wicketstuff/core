@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>jwicket-parent</artifactId>
-        <version>${project.version}</version>
+        <version>1.4.1</version>
     </parent>
 
     <artifactId>jwicket-examples</artifactId>
@@ -37,39 +37,39 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jwicket-core</artifactId>
-            <version>${project.version}</version>
+            <version>1.4.1</version>
         </dependency>
 
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jwicket-ui-dragdrop</artifactId>
-            <version>${project.version}</version>
+            <version>1.4.1</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jwicket-ui-resize</artifactId>
-            <version>${project.version}</version>
+            <version>1.4.1</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jwicket-ui-effects</artifactId>
-            <version>${project.version}</version>
+            <version>1.4.1</version>
         </dependency>
 
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jwicket-tooltip-walterzorn</artifactId>
-            <version>${project.version}</version>
+            <version>1.4.1</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jwicket-tooltip-beautytips</artifactId>
-            <version>${project.version}</version>
+            <version>1.4.1</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jwicket-tooltip-wtooltips</artifactId>
-            <version>${project.version}</version>
+            <version>1.4.1</version>
         </dependency>
         
         

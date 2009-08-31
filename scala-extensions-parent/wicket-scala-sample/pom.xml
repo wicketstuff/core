@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.wicketstuff.scala</groupId>
 		<artifactId>scala-extensions-parent</artifactId>
-		<version>${project.version}</version>
+		<version>1.4.1</version>
 	</parent>
 
 	<artifactId>sample</artifactId>
@@ -17,7 +17,7 @@
 		<dependency>
 			<groupId>org.wicketstuff.scala</groupId>
 			<artifactId>wicket-scala</artifactId>
-			<version>${project.version}</version>
+			<version>1.4.1</version>
 		</dependency>
 	</dependencies>
 

@@ -2,7 +2,7 @@
     <parent>
         <artifactId>artwork-parent</artifactId>
         <groupId>org.wicketstuff</groupId>
-        <version>${project.version}</version>
+        <version>1.4.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wicketstuff</groupId>
@@ -70,7 +70,7 @@
         <dependency>
             <groupId>org.wicketstuff</groupId>
             <artifactId>artwork</artifactId>
-            <version>${project.version}</version>
+            <version>1.4.1</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

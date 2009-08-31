@@ -64,7 +64,7 @@
         <dependency>
             <groupId>org.wicketstuff</groupId>
             <artifactId>wicket-syringe-guice</artifactId>
-            <version>${project.version}</version>
+            <version>1.4.1</version>
         </dependency>
 
         <dependency>
