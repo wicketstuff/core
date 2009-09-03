@@ -1,0 +1,55 @@
+.lavalamp {
+	width: 				544px !important;
+	margin: 			10px 0;
+	height:				64px;
+	overflow: 			hidden;
+	background-color:	#B6B0A4;
+}
+.lavalamp li {
+			float: 		left;
+			list-style: none;
+		}
+			.lavalamp li.back {
+				width: 					9px;
+				height: 				64px;
+				background-color:		#ff0000;
+				z-index: 				8;
+				position: 				absolute;
+			}
+			.lavalamp li a {
+				text-decoration: 		none;
+				outline: 				none;
+				text-align: 			center;
+				letter-spacing: 		0;
+				z-index: 				10;
+				display: 				block;
+				position: 				relative;
+				overflow: 				hidden;
+				width:					116px;
+				height:					64px;
+				padding:				0;
+			}
+				.lavalamp li a span{
+					position:			absolute;
+					left:				-2000px;
+				}
+.pad{
+	background-color:		#fff;
+	width:					40px;
+	height:					64px;
+	z-index:				1000 !important;
+	position:				relative;
+}
+.link1{
+	background:		url(eg2_link1.png);
+}
+.link2{
+	background:		url(eg2_link2.png);
+}
+.link3{
+	background:		url(eg2_link3.png);
+}
+.link4{
+	background:		url(eg2_link4.png);
+}
+
