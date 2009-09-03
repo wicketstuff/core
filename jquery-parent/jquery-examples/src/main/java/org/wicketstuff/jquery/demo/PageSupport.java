@@ -26,6 +26,7 @@ import org.wicketstuff.jquery.demo.dnd.Page4ClientSideOnly;
 import org.wicketstuff.jquery.demo.dnd.Page4MultiGroup;
 import org.wicketstuff.jquery.demo.dnd.Page4OneGroup;
 import org.wicketstuff.jquery.demo.dnd.Page4SimpleList;
+import org.wicketstuff.jquery.demo.lavalamp.Page4LavaLamp;
 import org.wicketstuff.jquery.demo.ui.Page4Slider;
 
 public class PageSupport extends WebPage {
@@ -44,6 +45,7 @@ public class PageSupport extends WebPage {
         add(new BookmarkablePageLink("sparkline", Page4Sparkline.class));
         add(new BookmarkablePageLink("ajaxbackbutton", Page4AjaxBackButton.class));
         add(new BookmarkablePageLink("uislider", Page4Slider.class));
+        add(new BookmarkablePageLink("lavalamp", Page4LavaLamp.class));
 
         add(new FeedbackPanel("feedback").setOutputMarkupId(true));
     }
