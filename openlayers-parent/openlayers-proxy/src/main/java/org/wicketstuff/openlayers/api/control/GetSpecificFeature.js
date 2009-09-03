@@ -123,9 +123,6 @@ onClick: function(evt) {
 		
 		var format = new WicketOpenLayersGetSpecificFeature();
 		
-		// should work but then the question is how to pass through the values?
-// format.setupLayer('DMG', 'http://www.dmg.utoronto.ca',
-// 'tts06_zone_boundary_900913', 'gta06');
 		format.setupLayer(this.featureTypePrefix, this.featureTypeUrl, this.featureTypeName, this.propertyName);
 
 		if (request.status == 200) {
