@@ -164,13 +164,20 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
   // =================================================================================================
 
   this.updateChoices = function() {
-    selected = config.preselect ? 0 : -1;
-    updateChoicesFunc(this,elementId);
-  }
+      selected = config.preselect ? 0 : -1;
+      if (!config.delay) {
+          updateChoicesFunc(this, elementId);
+      } else {
+          // Bind 'this'
+          setTimeout(function() {
+              updateChoicesFunc(this, elementId);
+          }.bind(this), config.delay);
+      }
+  };
 
   this.updateValue = function() {
     updateValueFunc(this,elementId,this.getSelectedElement());
-  }
+  };
 
   this.render = function() {
     var menu = getMenu();
@@ -206,7 +213,7 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
     var index = getOffsetParentZIndex(elementId);
     var width = config.width ? config.width : input.offsetWidth;
     container.show();
-    container.style.zIndex = (!isNaN(Number(index)) ? Number(index) + 1 : index); 
+    container.style.zIndex = (!isNaN(Number(index)) ? Number(index) + 1 : index);
     container.style.top = (input.offsetHeight + position[1]) + 'px';
     container.style.width = width + 'px';
 

@@ -42,6 +42,9 @@ public class ObjectAutoCompleteBuilder<O,I extends Serializable> {
     // whether the first match should be preselected
     boolean preselect;
 
+    // delay in milliseconds after which an update should occur
+    long delay;
+
     // maximum height of autocompletion list
     int maxHeightInPx;
 
@@ -152,6 +155,11 @@ public class ObjectAutoCompleteBuilder<O,I extends Serializable> {
 
     public ObjectAutoCompleteBuilder<O,I> preselect() {
         this.preselect = true;
+        return this;
+    }
+
+    public ObjectAutoCompleteBuilder<O,I> delay(long pDelay) {
+        this.delay = pDelay;
         return this;
     }
 

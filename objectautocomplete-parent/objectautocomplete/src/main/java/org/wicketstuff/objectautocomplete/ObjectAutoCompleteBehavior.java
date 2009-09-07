@@ -79,6 +79,8 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior 
     // width of drop down
     private long width = 0;
 
+    // delay for how long to wait for the update
+    private long delay;
 
     <I extends Serializable> ObjectAutoCompleteBehavior(Component pObjectElement,ObjectAutoCompleteBuilder<O,I> pBuilder) {
         renderer = pBuilder.autoCompleteRenderer;
@@ -94,6 +96,7 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior 
         responseRenderer = pBuilder.autoCompleteResponseRenderer;
         cancelListener = pBuilder.cancelListener;
         choicesProvider = pBuilder.choicesProvider;
+        delay = pBuilder.delay;
     }
 
     /**
@@ -235,6 +238,9 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior 
             }
             if (width != 0) {
                 builder.append(",width: ").append(width);
+            }
+            if (delay != 0) {
+                builder.append(",delay: ").append(delay);
             }
             builder.append("}");
         }
