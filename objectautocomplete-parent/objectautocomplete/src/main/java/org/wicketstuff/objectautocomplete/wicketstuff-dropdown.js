@@ -160,8 +160,15 @@ function WicketstuffDropDown(elementId,updateChoicesFunc,updateValueFunc,config)
   // =================================================================================================
 
   this.updateChoices = function() {
-    selected = config.preselect ? 0 : -1;
-    updateChoicesFunc(this,elementId);
+      selected = config.preselect ? 0 : -1;
+      if (!config.delay) {
+          updateChoicesFunc(this, elementId);
+      } else {
+          // Bind 'this'
+          setTimeout(function() {
+              updateChoicesFunc(this, elementId);
+          }.bind(this), config.delay);
+      }
   }
 
   this.updateValue = function() {
