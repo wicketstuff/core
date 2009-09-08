@@ -50,6 +50,7 @@
 		<!--<module>shiro-security</module>-->
 		<module>flot-parent</module>
 		<module>jwicket-parent</module>
+		<module>mbeanview-parent</module>
 		<!-- commented out till it compiles
 		<module>ddcalendar-parent</module>
 		-->
