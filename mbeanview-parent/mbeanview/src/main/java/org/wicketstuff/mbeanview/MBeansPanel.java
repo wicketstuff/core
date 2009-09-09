@@ -89,39 +89,45 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
 		    return ManagementFactory.getPlatformMBeanServer();
 		}
 	    };
-	    Tree mBeansTree = new Tree("mBeansTree", getTreeModel(reachMbeanServer)) {
-		@Override
-		protected ResourceReference getCSS() {
-		    return CSS;
-		}
-
-		@Override
-		protected void onNodeLinkClicked(AjaxRequestTarget target, TreeNode node) {
-		    if (node instanceof MbeanNode) {
-			MBeansPanel.this.replace(((MbeanNode) node).getView(VIEW_PANEL_ID));
-			setResponsePage(getPage());
-		    }
-		}
-
-		@Override
-		protected Component newNodeIcon(MarkupContainer parent, String id, TreeNode node) {
-		    if (node instanceof DefaultMutableTreeNode) {
-			DefaultMutableTreeNode mutableNode = (DefaultMutableTreeNode) node;
-			if (mutableNode.getChildCount() > 0
-				&& ((mutableNode.getChildAt(0) instanceof AttributeNode)
-					|| (mutableNode.getChildAt(0) instanceof OperationNode) || (mutableNode
-					.getChildAt(0) instanceof NotificationNode))) {
-			    return new EmptyPanel(id).add(new SimpleAttributeModifier("style",
-				    "width:0;"));
-			}
-		    }
-		    return super.newNodeIcon(parent, id, node);
-		}
-	    };
+	    MBeanTree mBeansTree = new MBeanTree("mBeansTree", getTreeModel(reachMbeanServer));
 	    add(mBeansTree);
 	    add(new EmptyPanel("view"));
 	} catch (Exception e) {
 	    e.printStackTrace();
+	}
+    }
+
+    private class MBeanTree extends Tree {
+	public MBeanTree(String id, TreeModel model) {
+	    super(id, model);
+	    getTreeState().expandNode(getModelObject().getRoot());
+	}
+
+	@Override
+	protected ResourceReference getCSS() {
+	    return CSS;
+	}
+
+	@Override
+	protected void onNodeLinkClicked(AjaxRequestTarget target, TreeNode node) {
+	    if (node instanceof MbeanNode) {
+		MBeansPanel.this.replace(((MbeanNode) node).getView(VIEW_PANEL_ID));
+		setResponsePage(MBeansPanel.this.getPage());
+	    }
+	}
+
+	@Override
+	protected Component newNodeIcon(MarkupContainer parent, String id, TreeNode node) {
+	    if (node instanceof DefaultMutableTreeNode) {
+		DefaultMutableTreeNode mutableNode = (DefaultMutableTreeNode) node;
+		if (mutableNode.getChildCount() > 0
+			&& ((mutableNode.getChildAt(0) instanceof AttributeNode)
+				|| (mutableNode.getChildAt(0) instanceof OperationNode) || (mutableNode
+				.getChildAt(0) instanceof NotificationNode))) {
+		    return new EmptyPanel(id).add(new SimpleAttributeModifier("style", "width:0;"));
+		}
+	    }
+	    return super.newNodeIcon(parent, id, node);
 	}
     }
 
@@ -132,7 +138,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
 	TreeModel model = new DefaultTreeModel(rootNode);
 	String[] domains = reachMbeanServer.get().getDomains();
 	for (int i = 0; i < domains.length; i++) {
-	    DefaultMutableTreeNode domainNode = new DefaultMutableTreeNode(domains[i]);
+	    MbeanNode domainNode = new MbeanNode(domains[i]);
 	    rootNode.add(domainNode);
 	    Set<ObjectName> domainNames = reachMbeanServer.get().queryNames(null,
 		    new ObjectName(domains[i] + ":*"));
@@ -168,8 +174,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
 	return model;
     }
 
-    private static void addDomainsCildrens(DefaultMutableTreeNode rootNode,
-	    Set<Set<String>> domainNames) {
+    private void addDomainsCildrens(DefaultMutableTreeNode rootNode, Set<Set<String>> domainNames) {
 	Map<String, Set<Set<String>>> parentProps = new HashMap<String, Set<Set<String>>>();
 	for (Set<String> names : domainNames) {
 	    List<String> namesList = new ArrayList(names);
@@ -208,13 +213,17 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
 
     }
 
-    private static class MbeanNode extends DefaultMutableTreeNode {
+    private class MbeanNode extends DefaultMutableTreeNode {
 	protected ObjectInstance objectInstance;
 	protected MbeanServerLocator mBeanServerLocator;
 	protected String name;
 	protected String keyValue;
 
 	public MbeanNode() {
+	}
+
+	public MbeanNode(String domainName) {
+	    super(domainName);
 	}
 
 	public MbeanNode(ObjectInstance objectInstance, String keyValue) {
@@ -255,7 +264,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
 
 	@Override
 	public String toString() {
-	    return name;
+	    return name != null && !"".equals(name.trim()) ? name : super.toString();
 	}
 
 	public String getKeyValue() {
@@ -263,11 +272,11 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
 	}
 
 	public Component getView(String wicketId) {
-	    return new EmptyPanel(wicketId);
+	    return new MBeanTree(wicketId, new DefaultTreeModel(this));
 	}
     }
 
-    private static class AttributesNode extends MbeanNode {
+    private class AttributesNode extends MbeanNode {
 	private MBeanAttributeInfo[] beanAttributeInfos;
 
 	public AttributesNode(MBeanAttributeInfo[] beanAttributeInfos,
@@ -291,7 +300,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
 	}
     }
 
-    private static class AttributeNode extends MbeanNode {
+    private class AttributeNode extends MbeanNode {
 	private MBeanAttributeInfo attributeInfo;
 
 	public AttributeNode(MBeanAttributeInfo attributeInfo, MbeanServerLocator reachMbeanServer) {
@@ -305,7 +314,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
 	}
     }
 
-    private static class OperationsNode extends MbeanNode {
+    private class OperationsNode extends MbeanNode {
 	private MBeanOperationInfo[] beanOperationInfos;
 
 	public OperationsNode(MBeanOperationInfo[] beanOperationInfos,
@@ -329,7 +338,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
 	}
     }
 
-    private static class OperationNode extends MbeanNode {
+    private class OperationNode extends MbeanNode {
 	private MBeanOperationInfo beanOperationInfo;
 
 	public OperationNode(MBeanOperationInfo beanOperationInfo,
@@ -344,7 +353,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
 	}
     }
 
-    private static class NotificationNode extends MbeanNode {
+    private class NotificationNode extends MbeanNode {
 	private MBeanNotificationInfo beanNotificationInfo;
 
 	public NotificationNode(MBeanNotificationInfo beanNotificationInfo,
