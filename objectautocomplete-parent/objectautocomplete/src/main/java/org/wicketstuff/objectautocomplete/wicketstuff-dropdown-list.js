@@ -12,6 +12,7 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
   var selected = null;
   var mouseactive = 0;
   var visible = 0;
+  var delayTimeOutId = null;
 
   // DOM-Id used for the aac menu
   var menuId = elementId + "-autocomplete";
@@ -168,8 +169,13 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
       if (!config.delay) {
           updateChoicesFunc(this, elementId);
       } else {
+          // remove pending requests
+          if(delayTimeOutId != null) {
+              clearTimeout(delayTimeOutId);
+              delayTimeOutId = null;
+          };
           // Bind 'this'
-          setTimeout(function() {
+          delayTimeOutId = setTimeout(function() {
               updateChoicesFunc(this, elementId);
           }.bind(this), config.delay);
       }
