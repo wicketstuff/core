@@ -11,10 +11,14 @@
 	<packaging>jar</packaging>
 	<name>mbeanview</name>
 	<description></description>
-	<!--
-		TODO <organization> <name>company name</name> <url>company url</url>
-		</organization>
-	-->
+	<dependencies>
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>fixed-feedback-panel</artifactId>
+			<version>1.4-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -22,5 +26,4 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-
 </project>
