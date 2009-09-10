@@ -14,22 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.wicketstuff.mbeanview;
 
 import java.lang.management.ManagementFactory;
@@ -43,7 +27,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Map.Entry;
 
 import javax.management.InstanceNotFoundException;
 import javax.management.IntrospectionException;
@@ -142,7 +125,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
 	    rootNode.add(domainNode);
 	    Set<ObjectName> domainNames = reachMbeanServer.get().queryNames(null,
 		    new ObjectName(domains[i] + ":*"));
-	    addDomainsCildrens(domainNode, parseToPropsSet(domainNames));
+	    addDomainsCildrens(domainNode, DataUtil.parseToPropsSet(domainNames));
 	    Enumeration<DefaultMutableTreeNode> enumeration = domainNode.postorderEnumeration();
 	    Set<DefaultMutableTreeNode> nodes = new HashSet<DefaultMutableTreeNode>();
 	    while (enumeration.hasMoreElements()) {
@@ -219,9 +202,6 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
 	protected String name;
 	protected String keyValue;
 
-	public MbeanNode() {
-	}
-
 	public MbeanNode(String domainName) {
 	    super(domainName);
 	}
@@ -232,32 +212,34 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
 	    name = keyValue.split("=")[1];
 	}
 
-	public MbeanNode(ObjectInstance objectInstance, MbeanServerLocator mbeanServerLocator) {
-	    this.objectInstance = objectInstance;
-	    this.mBeanServerLocator = mbeanServerLocator;
+	public MbeanNode(MbeanNode parent) {
+	    this.objectInstance = parent.objectInstance;
+	    this.mBeanServerLocator = parent.mBeanServerLocator;
+	    this.objectInstance = parent.objectInstance;
+	    this.keyValue = parent.keyValue;
 	}
 
 	public void setObjectInstance(ObjectInstance objectInstance,
 		MbeanServerLocator reachMbeanServer) throws InstanceNotFoundException,
 		IntrospectionException, ReflectionException {
 	    this.objectInstance = objectInstance;
+	    this.mBeanServerLocator = reachMbeanServer;
 	    MBeanInfo info = reachMbeanServer.get().getMBeanInfo(objectInstance.getObjectName());
 	    MBeanAttributeInfo[] beanAttributeInfos = info.getAttributes();
 	    MBeanOperationInfo[] beanOperationInfos = info.getOperations();
 	    MBeanNotificationInfo[] beanNotificationInfos = info.getNotifications();
 	    if (beanAttributeInfos.length > 0) {
-		add(new AttributesNode(beanAttributeInfos, objectInstance, reachMbeanServer));
+		add(new AttributesNode(this, beanAttributeInfos));
 	    }
 	    if (beanOperationInfos.length > 0) {
-		add(new OperationsNode(beanOperationInfos, objectInstance, reachMbeanServer));
+		add(new OperationsNode(this, beanOperationInfos));
 	    }
 	    if (beanNotificationInfos.length > 0) {
 		DefaultMutableTreeNode notificationsNode = new DefaultMutableTreeNode(
 			"Notification");
 		add(notificationsNode);
 		for (int i = 0; i < beanNotificationInfos.length; i++) {
-		    notificationsNode.add(new NotificationNode(beanNotificationInfos[i],
-			    reachMbeanServer));
+		    notificationsNode.add(new NotificationNode(this, beanNotificationInfos[i]));
 		}
 	    }
 	}
@@ -279,12 +261,11 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
     private class AttributesNode extends MbeanNode {
 	private MBeanAttributeInfo[] beanAttributeInfos;
 
-	public AttributesNode(MBeanAttributeInfo[] beanAttributeInfos,
-		ObjectInstance objectInstance, MbeanServerLocator mbeanServerLocator) {
-	    super(objectInstance, mbeanServerLocator);
+	public AttributesNode(MbeanNode parent, MBeanAttributeInfo[] beanAttributeInfos) {
+	    super(parent);
 	    this.beanAttributeInfos = beanAttributeInfos;
 	    for (int i = 0; i < beanAttributeInfos.length; i++) {
-		add(new AttributeNode(beanAttributeInfos[i], mBeanServerLocator));
+		add(new AttributeNode(this, beanAttributeInfos[i]));
 	    }
 	}
 
@@ -303,9 +284,15 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
     private class AttributeNode extends MbeanNode {
 	private MBeanAttributeInfo attributeInfo;
 
-	public AttributeNode(MBeanAttributeInfo attributeInfo, MbeanServerLocator reachMbeanServer) {
-	    this.attributeInfo = attributeInfo;
-	    this.mBeanServerLocator = reachMbeanServer;
+	public AttributeNode(MbeanNode parent, MBeanAttributeInfo mBeanAttributeInfo) {
+	    super(parent);
+	    this.attributeInfo = mBeanAttributeInfo;
+	}
+
+	@Override
+	public Component getView(String wicketId) {
+	    return new AttributeValuesPanel(wicketId, objectInstance.getObjectName(),
+		    new MBeanAttributeInfo[] { attributeInfo }, mBeanServerLocator);
 	}
 
 	@Override
@@ -317,12 +304,11 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
     private class OperationsNode extends MbeanNode {
 	private MBeanOperationInfo[] beanOperationInfos;
 
-	public OperationsNode(MBeanOperationInfo[] beanOperationInfos,
-		ObjectInstance objectInstance, MbeanServerLocator mbeanServerLocator) {
-	    super(objectInstance, mbeanServerLocator);
+	public OperationsNode(MbeanNode parent, MBeanOperationInfo[] beanOperationInfos) {
+	    super(parent);
 	    this.beanOperationInfos = beanOperationInfos;
 	    for (int i = 0; i < beanOperationInfos.length; i++) {
-		add(new OperationNode(beanOperationInfos[i], mBeanServerLocator));
+		add(new OperationNode(this, beanOperationInfos[i]));
 	    }
 	}
 
@@ -341,10 +327,15 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
     private class OperationNode extends MbeanNode {
 	private MBeanOperationInfo beanOperationInfo;
 
-	public OperationNode(MBeanOperationInfo beanOperationInfo,
-		MbeanServerLocator reachMbeanServer) {
-	    this.beanOperationInfo = beanOperationInfo;
-	    this.mBeanServerLocator = reachMbeanServer;
+	public OperationNode(OperationsNode parent, MBeanOperationInfo mBeanOperationInfo) {
+	    super(parent);
+	    this.beanOperationInfo = mBeanOperationInfo;
+	}
+
+	@Override
+	public Component getView(String wicketId) {
+	    return new OperationsPanel(wicketId, objectInstance.getObjectName(),
+		    new MBeanOperationInfo[] { beanOperationInfo }, mBeanServerLocator);
 	}
 
 	@Override
@@ -356,30 +347,15 @@ public class MBeansPanel extends Panel implements IHeaderContributor {
     private class NotificationNode extends MbeanNode {
 	private MBeanNotificationInfo beanNotificationInfo;
 
-	public NotificationNode(MBeanNotificationInfo beanNotificationInfo,
-		MbeanServerLocator reachMbeanServer) {
-	    this.beanNotificationInfo = beanNotificationInfo;
-	    this.mBeanServerLocator = reachMbeanServer;
+	public NotificationNode(MbeanNode parent, MBeanNotificationInfo mBeanNotificationInfo) {
+	    super(parent);
+	    this.beanNotificationInfo = mBeanNotificationInfo;
 	}
 
 	@Override
 	public String toString() {
 	    return beanNotificationInfo.getName();
 	}
-    }
-
-    private static Set<Set<String>> parseToPropsSet(Set<ObjectName> domainNames) {
-	Set result = new HashSet();
-	for (Iterator i = domainNames.iterator(); i.hasNext();) {
-	    ObjectName names = (ObjectName) i.next();
-	    Set<String> propValue = new HashSet<String>();
-	    for (Iterator it = names.getKeyPropertyList().entrySet().iterator(); it.hasNext();) {
-		Entry<String, String> entry = (Entry<String, String>) it.next();
-		propValue.add(entry.getKey() + "=" + entry.getValue());
-	    }
-	    result.add(propValue);
-	}
-	return result;
     }
 
     public void renderHead(IHeaderResponse res) {

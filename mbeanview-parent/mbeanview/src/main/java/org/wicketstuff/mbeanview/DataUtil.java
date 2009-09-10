@@ -16,8 +16,14 @@
  */
 package org.wicketstuff.mbeanview;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.Map.Entry;
+
 import javax.management.MBeanAttributeInfo;
 import javax.management.MBeanParameterInfo;
+import javax.management.ObjectName;
 
 /**
  * @author Pedro Henrique Oliveira dos Santos
@@ -58,5 +64,19 @@ public class DataUtil {
     public static Object getCompatibleData(Object object, MBeanParameterInfo beanParameterInfo)
 	    throws ClassNotFoundException {
 	return tryParseToType(object, getClassFromInfo(beanParameterInfo.getType()));
+    }
+
+    public static Set<Set<String>> parseToPropsSet(Set<ObjectName> domainNames) {
+        Set result = new HashSet();
+        for (Iterator i = domainNames.iterator(); i.hasNext();) {
+            ObjectName names = (ObjectName) i.next();
+            Set<String> propValue = new HashSet<String>();
+            for (Iterator it = names.getKeyPropertyList().entrySet().iterator(); it.hasNext();) {
+        	Entry<String, String> entry = (Entry<String, String>) it.next();
+        	propValue.add(entry.getKey() + "=" + entry.getValue());
+            }
+            result.add(propValue);
+        }
+        return result;
     }
 }

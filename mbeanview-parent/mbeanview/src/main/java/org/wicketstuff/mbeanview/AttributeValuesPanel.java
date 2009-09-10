@@ -16,7 +16,9 @@
  */
 package org.wicketstuff.mbeanview;
 
+import java.io.PrintWriter;
 import java.io.Serializable;
+import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -38,13 +40,14 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.panel.ComponentFeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.wicketstuff.fixedfeedbackpanel.FixedFeedbackPanel;
+
 /**
  * @author Pedro Henrique Oliveira dos Santos
- *
+ * 
  */
 public class AttributeValuesPanel extends Panel {
 
@@ -70,7 +73,10 @@ public class AttributeValuesPanel extends Panel {
 			    value = mbeanServerLocator.get().getAttribute(objectName,
 				    info.getName());
 			} catch (RuntimeMBeanException e) {
-			    item.error(e.getMessage());
+			    StringWriter sw = new StringWriter();
+			    PrintWriter pw = new PrintWriter(sw);
+			    e.printStackTrace(pw);
+			    item.error(sw.toString());
 			}
 		    }
 		    AjaxLink link = null;
@@ -106,16 +112,11 @@ public class AttributeValuesPanel extends Panel {
 		    });
 		    item.add(new Button("submit", new Model("Submit")) {
 			@Override
-			public void onSubmit() {
-
-			}
-
-			@Override
 			public boolean isVisible() {
 			    return info.isWritable();
 			}
 		    });
-		    item.add(new ComponentFeedbackPanel("feedback", item));
+		    item.add(new FixedFeedbackPanel("feedback", item));
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}
