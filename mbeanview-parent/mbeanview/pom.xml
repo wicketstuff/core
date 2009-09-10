@@ -10,7 +10,14 @@
 	<artifactId>mbeanview</artifactId>
 	<packaging>jar</packaging>
 	<name>mbeanview</name>
-	<description></description>
+	<description>Jmx panel, to view and operate the applications mbeans</description>
+	<developers>
+		<developer>
+			<name>Pedro Henrique Oliveira dos Santos</name>
+			<id>pedrosans</id>
+			<email>pedrosans@gmail.com</email>
+		</developer>
+	</developers>
 	<dependencies>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
@@ -18,7 +25,6 @@
 			<version>1.4-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>

@@ -56,6 +56,8 @@ import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 
 /**
+ * Jmx panel, to view and operate the applications mbeans
+ * 
  * @author Pedro Henrique Oliveira dos Santos
  * 
  */
