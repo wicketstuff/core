@@ -14,8 +14,7 @@
 	<packaging>pom</packaging>
 
 	<name>MBeanView - Parent</name>
-	<description>
-	</description>
+	<description>Jmx panel, to view and operate the applications mbeans</description>
 
 	<modules>
 		<module>mbeanview</module>
@@ -24,8 +23,8 @@
 
 	<developers>
 		<developer>
+			<name>Pedro Henrique Oliveira dos Santos</name>
 			<id>pedrosans</id>
-			<name>Pedro Santos</name>
 			<email>pedrosans@gmail.com</email>
 			<timezone>-4</timezone>
 		</developer>
