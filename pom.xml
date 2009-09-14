@@ -55,6 +55,7 @@
 		<module>ddcalendar-parent</module>
 		-->
 		<module>fixed-feedback-panel</module>
+		<module>table-parent</module>
   </modules>
 
 	<licenses>

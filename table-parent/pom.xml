@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-core</artifactId>
+		<version>1.4-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>table-parent</artifactId>
+	<packaging>pom</packaging>
+
+	<name>Table</name>
+	<description>Table that uses an TableModel to render, like JTable on swing framework</description>
+
+	<modules>
+		<module>table</module>
+		<module>table-examples</module>
+	</modules>
+
+	<developers>
+		<developer>
+			<name>Pedro Henrique Oliveira dos Santos</name>
+			<id>pedrosans</id>
+			<email>pedrosans@gmail.com</email>
+			<timezone>-4</timezone>
+		</developer>
+	</developers>
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-extensions</artifactId>
+			<version>${wicket.version}</version>
+		</dependency>
+	</dependencies>
+</project>
