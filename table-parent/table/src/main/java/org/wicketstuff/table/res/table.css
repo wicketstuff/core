@@ -1,7 +1,6 @@
 tr.odd {
 	background-color: rgb(245, 252, 248);
 }
-
 tr.even {
 	background-color: #FFFFFF;
 }
@@ -15,4 +14,7 @@ tr.selected {
 }
 img.arrow{
 	float: right;
+}
+label.headerLabel{
+	float: left;
 }
