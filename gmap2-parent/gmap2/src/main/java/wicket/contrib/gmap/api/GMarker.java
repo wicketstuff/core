@@ -65,7 +65,7 @@ public class GMarker extends GOverlay
 	}
 
 	@Override
-	protected String getJSconstructor()
+	public String getJSconstructor()
 	{
 		Constructor constructor = new Constructor("GMarker").add(latLng.getJSconstructor());
 		if (options != null)

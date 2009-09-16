@@ -99,7 +99,7 @@ public abstract class GOverlay implements Serializable
 	 * 
 	 * @return String representing the JavaScript constructor.
 	 */
-	protected abstract String getJSconstructor();
+	public abstract String getJSconstructor();
 
 	public GMap2 getParent()
 	{

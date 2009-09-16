@@ -50,7 +50,7 @@ public class GPolygon extends GOverlay
 	}
 
 	@Override
-	protected String getJSconstructor()
+	public String getJSconstructor()
 	{
 		Constructor constructor = new Constructor("GPolygon");
 
