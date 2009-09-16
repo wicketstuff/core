@@ -48,7 +48,7 @@ public class HomePage extends WebPage {
 
 	    @Override
 	    public Object getValueAt(int row, int column) {
-		return "" + row + column;
+		return new Character((char) (row + 65)).toString() + row + column;
 	    }
 
 	    @Override
@@ -59,12 +59,14 @@ public class HomePage extends WebPage {
 		AjaxRequestTarget.get().addComponent(editionnOut);
 	    }
 	};
-	add(new Table("message", tableModel) {
+	Table table = null;
+	add(table = new Table("message", tableModel) {
 	    @Override
 	    protected void onSelection(int newSelectionIndex, AjaxRequestTarget target) {
 		selectionOut.setDefaultModelObject(" new selection: " + newSelectionIndex);
 		target.addComponent(selectionOut);
 	    }
 	});
+	table.setAutoCreateRowSorter(true);
     }
 }
