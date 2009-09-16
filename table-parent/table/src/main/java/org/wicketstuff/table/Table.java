@@ -19,7 +19,6 @@ package org.wicketstuff.table;
 import java.io.Serializable;
 import java.util.Iterator;
 
-import javax.swing.DefaultListSelectionModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
@@ -38,10 +37,11 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.list.PageableListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wicketstuff.table.sorter.SerializableTableRowSorter;
 
 /**
@@ -52,6 +52,7 @@ import org.wicketstuff.table.sorter.SerializableTableRowSorter;
  */
 public class Table extends Panel implements IHeaderContributor {
 
+    private static final Logger log = LoggerFactory.getLogger(Table.class);
     private static final long serialVersionUID = 1L;
     public static final ResourceReference TABLE_CSS = new ResourceReference(Table.class,
 	    "res/table.css");
@@ -61,8 +62,7 @@ public class Table extends Panel implements IHeaderContributor {
 	    "res/arrow_off.png");
     public static final ResourceReference ARROW_DOWN = new ResourceReference(Table.class,
 	    "res/arrow_down.png");
-    private PageableListView rowsListView;
-    private ListSelectionModel selectionModel;
+    private TableListView rowsListView;
     private RowSorter sorter;
     private boolean autoCreateRowSorter;
 
@@ -75,8 +75,6 @@ public class Table extends Panel implements IHeaderContributor {
     public Table(String id, TableModel swingTableModel) {
 	super(id);
 	setDefaultModel(new TableModelAdapter(swingTableModel));
-	selectionModel = new DefaultListSelectionModel();
-	setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	setOutputMarkupId(true);
 	add(new ListView("headers") {
 	    @Override
@@ -122,6 +120,21 @@ public class Table extends Panel implements IHeaderContributor {
 			}
 		    }
 		});
+		item.add(new AjaxEventBehavior("ondblclick") {
+		    @Override
+		    protected void onEvent(AjaxRequestTarget target) {
+			if (sorter != null) {
+			    int columnIndex = item.getIndex();
+			    for (Iterator i = sorter.getSortKeys().iterator(); i.hasNext();) {
+				SortKey sortKey = (SortKey) i.next();
+				if (sortKey.getColumn() == columnIndex) {
+				    i.remove();
+				}
+			    }
+			    target.addComponent(Table.this);
+			}
+		    }
+		});
 	    }
 
 	    @Override
@@ -157,9 +170,10 @@ public class Table extends Panel implements IHeaderContributor {
 			try {
 			    return sorter.convertRowIndexToModel(getIndex());
 			} catch (IndexOutOfBoundsException e) {
-			    System.out.println(e.getMessage());
-			    System.out.println(sorter);
-			    System.out.println(sorter.getModel());
+			    log.debug(e.getMessage());
+			    log.debug(sorter.toString());
+			    log.debug(sorter.getModel() == null ? null : sorter.getModel()
+				    .toString());
 			    return super.getIndexOnModel();
 			}
 		    } else {
@@ -173,11 +187,10 @@ public class Table extends Panel implements IHeaderContributor {
 	@Override
 	protected void onSelection(SelectableListItem listItem, AjaxRequestTarget target) {
 	    int rowIndex = listItem.getIndex();
-	    System.out.print("selecting: " + rowIndex);
 	    if (sorter != null) {
 		rowIndex = sorter.convertRowIndexToModel(rowIndex);
-		System.out.print(" converted to: " + rowIndex);
 	    }
+	    log.debug("rendering: " + listItem.getIndex() + " converted to: " + rowIndex);
 	    System.out.println();
 	    Table.this.onSelection(rowIndex, target);
 	}
@@ -188,19 +201,17 @@ public class Table extends Panel implements IHeaderContributor {
 		@Override
 		protected void populateItem(ListItem dataItem) {
 		    int rowIndex = rowItem.getIndex();
-		    System.out.print("rendering: " + rowIndex);
 		    if (sorter != null) {
 			try {
 			    rowIndex = sorter.convertRowIndexToView(rowIndex);
 			} catch (IndexOutOfBoundsException e) {
-			    System.out.println();
-			    System.out.println(e.getMessage());
-			    System.out.println(sorter);
-			    System.out.println(sorter.getModel());
+			    log.debug(e.getMessage());
+			    log.debug(sorter.toString());
+			    log.debug(sorter.getModel() == null ? null : sorter.getModel()
+				    .toString());
 			}
-			System.out.print(" converted to: " + rowIndex);
 		    }
-		    System.out.println();
+		    log.debug("rendering: " + rowItem.getIndex() + " converted to: " + rowIndex);
 		    Object data = getTableModel().getValueAt(rowIndex, dataItem.getIndex());
 		    /*
 		     * TODO from the table model we can get much more
@@ -221,11 +232,7 @@ public class Table extends Panel implements IHeaderContributor {
 
     public AjaxPagingNavigator getAjaxPagingNavigator(String id, int rowsPerPage) {
 	rowsListView.setRowsPerPage(rowsPerPage);
-	return new AjaxPagingNavigator(id, rowsListView) {
-	    protected void onComponentTag(ComponentTag tag) {
-		tag.put("class", "navigator");
-	    }
-	};
+	return new AjaxPagingNavigator(id, rowsListView);
     }
 
     /**
@@ -243,7 +250,11 @@ public class Table extends Panel implements IHeaderContributor {
      * @param selectionMode
      */
     public void setSelectionMode(int selectionMode) {
-	selectionModel.setSelectionMode(selectionMode);
+	rowsListView.getListSelectionModel().setSelectionMode(selectionMode);
+    }
+
+    public ListSelectionModel getListSelectionModel() {
+	return rowsListView.getListSelectionModel();
     }
 
     /**
@@ -251,15 +262,12 @@ public class Table extends Panel implements IHeaderContributor {
      * selection occurs.
      */
     public void addListSelectionListener(ListSelectionListener x) {
-	selectionModel.addListSelectionListener(x);
+	rowsListView.getListSelectionModel().addListSelectionListener(x);
     }
 
     public void setSelectionIndex(Integer newSelectionIndex) {
-	selectionModel.setSelectionInterval(newSelectionIndex, newSelectionIndex);
-    }
-
-    public ListSelectionModel getListSelectionModel() {
-	return selectionModel;
+	rowsListView.getListSelectionModel().setSelectionInterval(newSelectionIndex,
+		newSelectionIndex);
     }
 
     public TableModel getTableModel() {
@@ -294,7 +302,6 @@ public class Table extends Panel implements IHeaderContributor {
 	this.sorter = sorter;
     }
 
-    @Override
     public void renderHead(IHeaderResponse response) {
 	response.renderCSSReference(getCss());
     }

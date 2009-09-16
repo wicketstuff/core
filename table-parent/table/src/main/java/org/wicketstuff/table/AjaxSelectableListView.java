@@ -80,7 +80,6 @@ public abstract class AjaxSelectableListView extends PageableListView {
 
     public IModel getSelection() {
 	return (IModel) visitChildren(SelectableListItem.class, new IVisitor() {
-	    @Override
 	    public Object component(Component component) {
 		SelectableListItem item = (SelectableListItem) component;
 		if (item.getIndex() == listSelectionModel.getLeadSelectionIndex()) {
@@ -109,7 +108,6 @@ public abstract class AjaxSelectableListView extends PageableListView {
 	listSelectionModel.setSelectionInterval(selectedItem.getIndexOnModel(), selectedItem
 		.getIndexOnModel());
 	visitChildren(SelectableListItem.class, new IVisitor() {
-	    @Override
 	    public Object component(Component component) {
 		SelectableListItem listItem = (SelectableListItem) component;
 		if (listItem.getIndexOnModel() == selectedItem.getIndexOnModel()) {

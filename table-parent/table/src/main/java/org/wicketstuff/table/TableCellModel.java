@@ -37,17 +37,14 @@ public class TableCellModel implements IModel {
 	this.columnIndex = columnIndex;
     }
 
-    @Override
     public Object getObject() {
 	return tableModel.getValueAt(rowIndex, columnIndex);
     }
 
-    @Override
     public void setObject(Object object) {
 	tableModel.setValueAt(object, rowIndex, columnIndex);
     }
 
-    @Override
     public void detach() {
 
     }
