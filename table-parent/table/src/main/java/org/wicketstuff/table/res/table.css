@@ -13,3 +13,6 @@ tr.onMouseOver {
 tr.selected {
 	background-color: #018787;
 }
+img.arrow{
+	float: right;
+}

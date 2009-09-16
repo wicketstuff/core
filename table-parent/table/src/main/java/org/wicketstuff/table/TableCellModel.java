@@ -21,8 +21,10 @@ import javax.swing.table.TableModel;
 import org.apache.wicket.model.IModel;
 
 /**
+ * Model responsible to receive and update an value from a table model position.
+ * 
  * @author Pedro Henrique Oliveira dos Santos
- *
+ * 
  */
 public class TableCellModel implements IModel {
     private TableModel tableModel;

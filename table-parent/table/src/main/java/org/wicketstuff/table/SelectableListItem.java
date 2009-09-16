@@ -29,10 +29,13 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.JavascriptUtils;
 
 /**
+ * List item that resolve the view complexity for a item that can or not to be
+ * selected based on a ListSelectionModel
+ * 
  * @author Pedro Henrique Oliveira dos Santos
- *
+ * 
  */
-public class SelectableListItem extends ColoredListItem {
+public abstract class SelectableListItem extends ColoredListItem {
     private static final long serialVersionUID = 1L;
     public static final String CLASS_SELECTED = "selected";
     public static final String CLASS_MOUSE_OVER = "onMouseOver";
@@ -40,10 +43,14 @@ public class SelectableListItem extends ColoredListItem {
     private static final HeaderContributor TABLE_JS = JavascriptPackageResource
 	    .getHeaderContribution(new ResourceReference(SelectableListItem.class, "res/table.js"));
 
-    public SelectableListItem(int index, IModel model) {
-	this(index, model, null);
-    }
-
+    /**
+     * @param index
+     * @param model
+     *            list item model, users parameter.
+     * @param listSelectionModel
+     *            Based on its state, the row selection is resolved. Ex: row css
+     *            class will reflect the actual state.
+     */
     public SelectableListItem(int index, IModel model, ListSelectionModel listSelectionModel) {
 	super(index, model);
 	setOutputMarkupId(true);
@@ -57,20 +64,17 @@ public class SelectableListItem extends ColoredListItem {
 	    protected void onEvent(AjaxRequestTarget target) {
 		onSelection(target);
 	    }
-
 	});
     }
 
-    protected void onSelection(AjaxRequestTarget target) {
+    protected abstract void onSelection(AjaxRequestTarget target);
 
-    }
-
-    public void removeSelection(AjaxRequestTarget target) {
-	updateOnAjaxRequest(target);
-    }
-
-    public void setSelected(AjaxRequestTarget target) {
-	updateOnAjaxRequest(target);
+    public void updateOnAjaxRequest(AjaxRequestTarget target) {
+	updateBackgroundColor();
+	target.appendJavascript("document.getElementById('" + getMarkupId() + "').className = '"
+		+ classAttribute + "';");
+	target.appendJavascript("document.getElementById('" + getMarkupId()
+		+ "').setAttribute('originalClass', '" + classAttribute + "'); ");
     }
 
     @Override
@@ -84,18 +88,14 @@ public class SelectableListItem extends ColoredListItem {
 
     @Override
     protected void updateBackgroundColor() {
-	if (listSelectionModel != null && listSelectionModel.isSelectedIndex(this.getIndex())) {
+	if (listSelectionModel != null && listSelectionModel.isSelectedIndex(getIndexOnModel())) {
 	    classAttribute = CLASS_SELECTED;
 	} else {
 	    super.updateBackgroundColor();
 	}
     }
 
-    private void updateOnAjaxRequest(AjaxRequestTarget target) {
-	updateBackgroundColor();
-	target.appendJavascript("document.getElementById('" + getMarkupId() + "').className = '"
-		+ classAttribute + "';");
-	target.appendJavascript("document.getElementById('" + getMarkupId()
-		+ "').setAttribute('originalClass', '" + classAttribute + "'); ");
+    protected int getIndexOnModel() {
+	return this.getIndex();
     }
 }

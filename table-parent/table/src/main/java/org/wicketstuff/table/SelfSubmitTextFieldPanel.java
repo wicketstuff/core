@@ -22,14 +22,17 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
-public class EditablePanel extends Panel {
-    public EditablePanel(String id, IModel inputModel) {
+/**
+ * @author Pedro Henrique Oliveira dos Santos
+ * 
+ */
+public class SelfSubmitTextFieldPanel extends Panel {
+    public SelfSubmitTextFieldPanel(String id, IModel inputModel) {
 	super(id);
 	setRenderBodyOnly(true);
 	TextField field = new TextField("textfield", inputModel);
 	add(field);
-
-	field.add(new AjaxFormComponentUpdatingBehavior("onblur") {
+	field.add(new AjaxFormComponentUpdatingBehavior("onchange") {
 	    protected void onUpdate(AjaxRequestTarget target) {
 	    }
 	});
