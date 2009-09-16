@@ -44,7 +44,7 @@ public class GPolyline extends GOverlay
 	}
 
 	@Override
-	protected String getJSconstructor()
+	public String getJSconstructor()
 	{
 		Constructor constructor = new Constructor("GPolyline");
 
