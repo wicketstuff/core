@@ -37,6 +37,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.list.PageableListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
@@ -151,6 +152,7 @@ public class Table extends Panel implements IHeaderContributor {
      * 
      */
     class TableListView extends AjaxSelectableListView {
+
 	public TableListView(String id) {
 	    super(id, new ListModelAdapter(getTableModel()), Integer.MAX_VALUE);
 	}
@@ -167,15 +169,7 @@ public class Table extends Panel implements IHeaderContributor {
 		@Override
 		protected int getIndexOnModel() {
 		    if (sorter != null) {
-			try {
-			    return sorter.convertRowIndexToModel(getIndex());
-			} catch (IndexOutOfBoundsException e) {
-			    log.debug(e.getMessage());
-			    log.debug(sorter.toString());
-			    log.debug(sorter.getModel() == null ? null : sorter.getModel()
-				    .toString());
-			    return super.getIndexOnModel();
-			}
+			return sorter.convertRowIndexToModel(getIndex());
 		    } else {
 			return super.getIndexOnModel();
 		    }
@@ -190,28 +184,23 @@ public class Table extends Panel implements IHeaderContributor {
 	    if (sorter != null) {
 		rowIndex = sorter.convertRowIndexToModel(rowIndex);
 	    }
-	    log.debug("rendering: " + listItem.getIndex() + " converted to: " + rowIndex);
-	    System.out.println();
+	    log.debug("rendering: " + listItem.getIndex() + " converted to: " + rowIndex
+		    + " using: " + sorter);
 	    Table.this.onSelection(rowIndex, target);
 	}
 
 	@Override
 	protected void populateItem(final ListItem rowItem) {
-	    rowItem.add(new ListView("collums", new ColumnsModelAdapter(getTableModel())) {
+	    rowItem.add(new PageableListView("collums", new ColumnsModelAdapter(getTableModel()),
+		    Integer.MAX_VALUE) {
 		@Override
 		protected void populateItem(ListItem dataItem) {
 		    int rowIndex = rowItem.getIndex();
 		    if (sorter != null) {
-			try {
-			    rowIndex = sorter.convertRowIndexToView(rowIndex);
-			} catch (IndexOutOfBoundsException e) {
-			    log.debug(e.getMessage());
-			    log.debug(sorter.toString());
-			    log.debug(sorter.getModel() == null ? null : sorter.getModel()
-				    .toString());
-			}
+			rowIndex = sorter.convertRowIndexToModel(rowIndex);
 		    }
-		    log.debug("rendering: " + rowItem.getIndex() + " converted to: " + rowIndex);
+		    log.debug("rendering: " + rowItem.getIndex() + " converted to: " + rowIndex
+			    + " using: " + sorter);
 		    Object data = getTableModel().getValueAt(rowIndex, dataItem.getIndex());
 		    /*
 		     * TODO from the table model we can get much more
@@ -228,9 +217,10 @@ public class Table extends Panel implements IHeaderContributor {
 		}
 	    });
 	}
+
     }
 
-    public AjaxPagingNavigator getAjaxPagingNavigator(String id, int rowsPerPage) {
+    public AjaxPagingNavigator getRowsAjaxPagingNavigator(String id, int rowsPerPage) {
 	rowsListView.setRowsPerPage(rowsPerPage);
 	return new AjaxPagingNavigator(id, rowsListView);
     }

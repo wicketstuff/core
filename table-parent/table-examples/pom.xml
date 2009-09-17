@@ -1,13 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
+	<!--
 	<parent>
-		<groupId>org.wicketstuff</groupId>
 		<artifactId>table-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
 	</parent>
+  -->
 
+	<groupId>org.wicketstuff</groupId>
+	<version>1.4-SNAPSHOT</version>
 	<artifactId>table-examples</artifactId>
 	<packaging>war</packaging>
 
@@ -54,7 +55,7 @@
 			<version>${jetty.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>table</artifactId>
