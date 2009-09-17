@@ -32,7 +32,11 @@ import org.wicketstuff.table.Table;
  */
 public class HomePage extends WebPage {
 
-    private static final long serialVersionUID = 1L;
+    private static String[][] values = {
+	    { "Label", "MultiLineLabel", "Panel", "Border", "Include" },
+	    { "TabbedPanel", "Fragment", "Link", "ExternalLink", "PageLink" },
+	    { "BookmarkablePageLink", "Form", "Button", "SubmitLink", "TextField" },
+	    { "TextArea", "CheckBox", "CheckBoxMultipleChoice", "Palette", "DropDownChoice" } };
 
     public HomePage(final PageParameters parameters) {
 	final Component selectionOut = new Label("selectionOut", new Model())
@@ -40,7 +44,7 @@ public class HomePage extends WebPage {
 	final Component editionnOut = new Label("editionnOut", new Model()).setOutputMarkupId(true);
 	add(selectionOut);
 	add(editionnOut);
-	TableModel tableModel = new DefaultTableModel(10, 5) {
+	TableModel tableModel = new DefaultTableModel(values.length, values[0].length) {
 	    @Override
 	    public boolean isCellEditable(int row, int column) {
 		return column == 1 ? false : super.isCellEditable(row, column);
@@ -48,12 +52,12 @@ public class HomePage extends WebPage {
 
 	    @Override
 	    public Object getValueAt(int row, int column) {
-		return new Character((char) (row + 65)).toString() + row + column;
+		return values[row][column];
 	    }
 
 	    @Override
 	    public void setValueAt(Object aValue, int row, int column) {
-		super.setValueAt(aValue, row, column);
+		values[row][column] = aValue == null ? null : aValue.toString();
 		editionnOut.setDefaultModelObject(" value at " + row + " x " + column
 			+ " changed to " + aValue);
 		AjaxRequestTarget.get().addComponent(editionnOut);
@@ -68,5 +72,6 @@ public class HomePage extends WebPage {
 	    }
 	});
 	table.setAutoCreateRowSorter(true);
+	add(table.getRowsAjaxPagingNavigator("rowsPaging", 3));
     }
 }
