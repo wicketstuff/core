@@ -20,7 +20,7 @@ package wicket.contrib.input.events;
  *
  */
 public enum EventType {
-	dbclick,click,focus,blur, change,submit;
+	dbclick,click,focus,blur, change,submit, onclick;
 	
 	private String eventType;
 	
