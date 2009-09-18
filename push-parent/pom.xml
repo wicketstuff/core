@@ -52,7 +52,6 @@
     <dependency>
       <groupId>org.mortbay.jetty</groupId>
       <artifactId>cometd-client</artifactId>
-      <version>${jetty.version}</version>
     </dependency>
   </dependencies>
 

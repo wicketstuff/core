@@ -172,19 +172,16 @@
 		<dependency>
 			<groupId>org.mortbay.jetty</groupId>
 			<artifactId>jetty</artifactId>
-			<version>${jetty.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mortbay.jetty</groupId>
 			<artifactId>jetty-util</artifactId>
-			<version>${jetty.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mortbay.jetty</groupId>
 			<artifactId>jetty-management</artifactId>
-			<version>${jetty.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -400,7 +397,4 @@
 		</plugins>
 	</reporting>
 
-	<properties>
-		<jetty.version>6.1.4</jetty.version>
-	</properties>
 </project>
