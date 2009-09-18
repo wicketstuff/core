@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>datatable-autocomplete-parent</artifactId>
+    <groupId>org.wicketstuff</groupId>
+    <version>1.4-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>datatable-autocomplete</artifactId>
+  <name>Datatable Autocomplete</name>
+  
+  <packaging>jar</packaging>
+  
+  <description>
+  The Datatable autocomplete project provides a Trie backed datastructure that allows AJAX searches on large datasets fast.
+  
+  It is not memory efficient but it is fast especially to know how many results a given prefix matches.
+  
+  Provides a Datatable component when tied to a textfield will show the matched objects in a table format.
+  
+  </description>
+  
+  <inceptionYear>2008</inceptionYear>
+	<developers>
+		<developer>
+		<id>mocleiri</id>
+		<name>Michael O'Cleirigh</name>
+		<email>michael.ocleirigh@rivulet.ca</email>
+		</developer>
+	</developers>
+	
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	
+  <dependencies>
+  <dependency>
+  	<groupId>org.wicketstuff</groupId>
+  	<artifactId>datatable-autocomplete-common</artifactId>
+  	<version>${project.version}</version>
+  </dependency>
+  </dependencies>
+</project>
