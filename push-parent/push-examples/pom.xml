@@ -21,7 +21,6 @@
     <dependency>
       <groupId>org.mortbay.jetty</groupId>
       <artifactId>jetty</artifactId>
-      <version>${jetty.version}</version>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
@@ -52,7 +51,6 @@
       <plugin>
         <groupId>org.mortbay.jetty</groupId>
         <artifactId>maven-jetty-plugin</artifactId>
-        <version>${jetty.version}</version>
         <configuration>
           <scanIntervalSeconds>60</scanIntervalSeconds>
           <webAppSourceDirectory>src/main/webapp</webAppSourceDirectory>
