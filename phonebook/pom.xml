@@ -90,7 +90,7 @@
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
-			<version>1.2.2</version>
+			<version>20030825.184428</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mortbay.jetty</groupId>

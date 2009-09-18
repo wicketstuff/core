@@ -319,12 +319,12 @@
 			<dependency>
 				<groupId>commons-dbcp</groupId>
 				<artifactId>commons-dbcp</artifactId>
-				<version>1.2.2</version>
+				<version>20030825.184428</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-dbutils</groupId>
 				<artifactId>commons-dbutils</artifactId>
-				<version>1.1</version>
+				<version>1.2</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-io</groupId>
@@ -334,7 +334,7 @@
 			<dependency>
 				<groupId>commons-codec</groupId>
 				<artifactId>commons-codec</artifactId>
-				<version>1.3</version>
+				<version>1.4</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-logging</groupId>
