@@ -20,7 +20,7 @@ public class Shadow extends Graphics {
 	
 	@Override
 	public String getStringForJS() {
-				return "shadow { width:"+width+"; color:"+color+", shift:"+shift+";}";
+				return "shadow { width:"+width+"; color:"+color+"; shift:"+shift+";}";
 	}
 
 }
