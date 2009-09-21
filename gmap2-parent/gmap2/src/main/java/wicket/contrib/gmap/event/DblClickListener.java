@@ -41,7 +41,7 @@ public abstract class DblClickListener extends GEventListenerBehavior {
 
 		GLatLng latLng = null;
 
-		String latLngParameter = request.getParameter("argument0");
+		String latLngParameter = request.getParameter("argument1");
 		if (latLngParameter != null) {
 			latLng = GLatLng.parse(latLngParameter);
 		}
