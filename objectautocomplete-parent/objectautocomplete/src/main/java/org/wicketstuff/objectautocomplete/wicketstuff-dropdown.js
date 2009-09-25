@@ -59,6 +59,14 @@ function WicketstuffDropDown(elementId,updateChoicesFunc,updateValueFunc,config)
   objonkeyup = obj.onkeyup;
   objonkeypress = obj.onkeypress;
 
+  obj.onpaste = function(event) {
+    if(config.searchOnPaste) {
+       setTimeout(function() {
+         ddObject.updateChoices();
+       }, 50);
+    }
+  };
+    
   // WICKET-1280
   objonchangeoriginal = obj.onchange;
   obj.onchange = function(event) {

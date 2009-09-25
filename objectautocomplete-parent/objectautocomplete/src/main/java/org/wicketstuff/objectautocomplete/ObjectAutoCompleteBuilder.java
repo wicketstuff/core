@@ -57,6 +57,9 @@ public class ObjectAutoCompleteBuilder<O,I extends Serializable> {
     // whether to react on 'onClick' on the read only view itself
     boolean searchOnClick;
 
+    //whether search should be triggered on paste events
+    boolean searchOnPaste;
+
     // An own component to use as 'search link' content
     Component searchLinkContent;
 
@@ -103,6 +106,7 @@ public class ObjectAutoCompleteBuilder<O,I extends Serializable> {
         autoCompleteResponseRenderer = null;
         preselect = false;
         searchOnClick = false;
+        searchOnPaste = false;
         showListOnEmptyInput = false;
         maxHeightInPx = -1;
         selectionChangeListener = new ArrayList<ObjectAutoCompleteSelectionChangeListener<I>>();
@@ -167,6 +171,11 @@ public class ObjectAutoCompleteBuilder<O,I extends Serializable> {
         this.searchOnClick = true;
         return this;
     }
+
+     public ObjectAutoCompleteBuilder<O,I> searchOnPaste() {
+         this.searchOnPaste = true;
+         return this;
+     }
 
     public ObjectAutoCompleteBuilder<O,I> searchLinkContent(Component pContent) {
         if (!pContent.getId().equals(SEARCH_LINK_PANEL_ID)) {

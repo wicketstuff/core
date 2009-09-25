@@ -82,6 +82,9 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior 
     // delay for how long to wait for the update
     private long delay;
 
+    // weether search should be triggered on paste event
+    private boolean searchOnPaste;
+
     <I extends Serializable> ObjectAutoCompleteBehavior(Component pObjectElement,ObjectAutoCompleteBuilder<O,I> pBuilder) {
         renderer = pBuilder.autoCompleteRenderer;
         settings = new AutoCompleteSettings()
@@ -96,6 +99,7 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior 
         responseRenderer = pBuilder.autoCompleteResponseRenderer;
         cancelListener = pBuilder.cancelListener;
         choicesProvider = pBuilder.choicesProvider;
+        searchOnPaste = pBuilder.searchOnPaste;
         delay = pBuilder.delay;
     }
 
@@ -241,6 +245,9 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior 
             }
             if (delay != 0) {
                 builder.append(",delay: ").append(delay);
+            }
+            if (searchOnPaste) {
+                builder.append(",searchOnPaste: true");
             }
             builder.append("}");
         }
