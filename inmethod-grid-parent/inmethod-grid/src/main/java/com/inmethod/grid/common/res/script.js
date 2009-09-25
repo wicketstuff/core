@@ -1394,7 +1394,7 @@ InMethod.XTable.prototype = {
 	updatePrelight: function(element) {		
 		if (this.dragging != true) {
 		 		
-		 	update = function(e) {
+		 	var update = function(e) {
 		 		
 		 		var scrollLeft;
 		 		
