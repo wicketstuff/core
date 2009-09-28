@@ -40,7 +40,7 @@ public class StartPhonebook {
 		WebAppContext context = new WebAppContext();
 		context.setServer(server);
 		context.setContextPath("/phonebook");
-		context.setWar("src/webapp");
+		context.setWar("src/main/webapp");
 
 		server.addHandler(context);
 		try {
