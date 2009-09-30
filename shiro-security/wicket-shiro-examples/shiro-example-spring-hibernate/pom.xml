@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>wicket-shiro-examples</artifactId>
-        <version>1.4-rc7</version>
+        <version>1.4-SNAPSHOT</version>
     </parent>
 
     <artifactId>wicket-shiro-example-spring-hibernate</artifactId>
@@ -41,7 +41,6 @@
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 

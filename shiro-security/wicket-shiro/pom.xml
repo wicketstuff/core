@@ -23,7 +23,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicket-shiro-parent</artifactId>
-		<version>1.4-rc7</version>
+		<version>1.4-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -37,24 +37,14 @@
 
     <dependencies>
     
-<!--
-        <dependency>
-            <groupId>org.jsecurity</groupId>
-            <artifactId>jsecurity</artifactId>
-            <version>0.9.0</version>
-            <scope>compile</scope>
-        </dependency>
--->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-web</artifactId>
-            <version>1.0-incubating-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 			
@@ -88,7 +78,14 @@
             <artifactId>log4j</artifactId>
             <scope>test</scope>
         </dependency>
-        
+    
+		<!-- TESTING / DEV -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		     
     </dependencies>
 
 
