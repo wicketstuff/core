@@ -1,5 +1,5 @@
 /*
-	Copyright (c) 2004-2008, The Dojo Foundation All Rights Reserved.
+	Copyright (c) 2004-2009, The Dojo Foundation All Rights Reserved.
 	Available via Academic Free License >= 2.1 OR the modified BSD license.
 	see: http://dojotoolkit.org/license for details
 */
@@ -46,111 +46,111 @@ var _f=(dojo.config["dojoCallbackUrl"]||dojo.moduleUrl("dojo","resources/blank.h
 var _10=new dojo._Url(window.location,_f);
 var doc=dojo.doc;
 var _12=_b||dojo.body();
-function styleFrame(_13){
-_13.style.width="100%";
-_13.style.height="100%";
-_13.style.border="0px";
+function _13(_14){
+_14.style.width="100%";
+_14.style.height="100%";
+_14.style.border="0px";
 };
 if(dojo.isMoz&&![].reduce){
-var _14=doc.createElement("iframe");
-styleFrame(_14);
+var _15=doc.createElement("iframe");
+_13(_15);
 if(!_b){
-_14.style.display="none";
+_15.style.display="none";
 }
-_12.appendChild(_14);
-var _15=_14.contentWindow;
-doc=_15.document;
+_12.appendChild(_15);
+var _16=_15.contentWindow;
+doc=_16.document;
 doc.write("<html><body margin='0px'><iframe style='width:100%;height:100%;border:0px' name='protectedFrame'></iframe></body></html>");
 doc.close();
-var _16=_15[0];
-_15.__defineGetter__(0,function(){
+var _17=_16[0];
+_16.__defineGetter__(0,function(){
 });
-_15.__defineGetter__("protectedFrame",function(){
+_16.__defineGetter__("protectedFrame",function(){
 });
-doc=_16.document;
+doc=_17.document;
 doc.write("<html><body margin='0px'></body></html>");
 doc.close();
 _12=doc.body;
 }
-var _17=_d.frame=_17=doc.createElement(dojo.isIE?"<iframe name=\""+_10+"\" onload=\"dojox.io.windowName["+_e+"]()\">":"iframe");
-styleFrame(_17);
-_d.outerFrame=_14=_14||_17;
+var _18=_d.frame=_18=doc.createElement(dojo.isIE?"<iframe name=\""+_10+"\" onload=\"dojox.io.windowName["+_e+"]()\">":"iframe");
+_13(_18);
+_d.outerFrame=_15=_15||_18;
 if(!_b){
-_14.style.display="none";
+_15.style.display="none";
 }
-var _18=0;
-function getData(){
-var _19=_17.contentWindow.name;
-if(typeof _19=="string"){
-if(_19!=_10){
-_18=2;
-_9.ioArgs.hash=_17.contentWindow.location.hash;
-_9.callback(_19);
+var _19=0;
+function _1a(){
+var _1b=_18.contentWindow.name;
+if(typeof _1b=="string"){
+if(_1b!=_10){
+_19=2;
+_9.ioArgs.hash=_18.contentWindow.location.hash;
+_9.callback(_1b);
 }
 }
 };
-dojox.io.windowName[_e]=_17.onload=function(){
+dojox.io.windowName[_e]=_18.onload=function(){
 try{
-if(!dojo.isMoz&&_17.contentWindow.location=="about:blank"){
+if(!dojo.isMoz&&_18.contentWindow.location=="about:blank"){
 return;
 }
 }
 catch(e){
 }
-if(!_18){
-_18=1;
+if(!_19){
+_19=1;
 if(_b){
 if(_c){
 _c();
 }
 }else{
-_17.contentWindow.location=_f;
+_18.contentWindow.location=_f;
 }
 }
 try{
-if(_18<2){
-getData();
+if(_19<2){
+_1a();
 }
 }
 catch(e){
 }
 };
-_17.name=_10;
+_18.name=_10;
 if(_a.match(/GET/i)){
 dojo._ioAddQueryToUrl(_d);
-_17.src=_d.url;
-_12.appendChild(_17);
-if(_17.contentWindow){
-_17.contentWindow.location.replace(_d.url);
+_18.src=_d.url;
+_12.appendChild(_18);
+if(_18.contentWindow){
+_18.contentWindow.location.replace(_d.url);
 }
 }else{
 if(_a.match(/POST/i)){
-_12.appendChild(_17);
-var _1a=dojo.doc.createElement("form");
-dojo.body().appendChild(_1a);
-var _1b=dojo.queryToObject(_d.query);
-for(var i in _1b){
-var _1d=_1b[i];
-_1d=_1d instanceof Array?_1d:[_1d];
-for(j=0;j<_1d.length;j++){
-var _1e=doc.createElement("input");
-_1e.type="hidden";
-_1e.name=i;
-_1e.value=_1d[j];
-_1a.appendChild(_1e);
+_12.appendChild(_18);
+var _1c=dojo.doc.createElement("form");
+dojo.body().appendChild(_1c);
+var _1d=dojo.queryToObject(_d.query);
+for(var i in _1d){
+var _1f=_1d[i];
+_1f=_1f instanceof Array?_1f:[_1f];
+for(var j=0;j<_1f.length;j++){
+var _21=doc.createElement("input");
+_21.type="hidden";
+_21.name=i;
+_21.value=_1f[j];
+_1c.appendChild(_21);
 }
 }
-_1a.method="POST";
-_1a.action=_d.url;
-_1a.target=_10;
-_1a.submit();
-_1a.parentNode.removeChild(_1a);
+_1c.method="POST";
+_1c.action=_d.url;
+_1c.target=_10;
+_1c.submit();
+_1c.parentNode.removeChild(_1c);
 }else{
 throw new Error("Method "+_a+" not supported with the windowName transport");
 }
 }
-if(_17.contentWindow){
-_17.contentWindow.name=_10;
+if(_18.contentWindow){
+_18.contentWindow.name=_10;
 }
 },_frameNum:0};
 }

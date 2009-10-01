@@ -1,5 +1,5 @@
 /*
-	Copyright (c) 2004-2008, The Dojo Foundation All Rights Reserved.
+	Copyright (c) 2004-2009, The Dojo Foundation All Rights Reserved.
 	Available via Academic Free License >= 2.1 OR the modified BSD license.
 	see: http://dojotoolkit.org/license for details
 */
@@ -10,30 +10,30 @@ dojo._hasResource["dojox.rpc.JsonRPC"]=true;
 dojo.provide("dojox.rpc.JsonRPC");
 dojo.require("dojox.rpc.Service");
 (function(){
-function jsonRpcEnvelope(_1){
-return {serialize:function(_2,_3,_4,_5){
-var d={id:this._requestId++,method:_3.name,params:_4};
-if(_1){
-d.jsonrpc=_1;
+function _1(_2){
+return {serialize:function(_3,_4,_5,_6){
+var d={id:this._requestId++,method:_4.name,params:_5};
+if(_2){
+d.jsonrpc=_2;
 }
 return {data:dojo.toJson(d),handleAs:"json",contentType:"application/json",transport:"POST"};
-},deserialize:function(_7){
-if("Error"==_7.name){
-_7=dojo.fromJson(_7.responseText);
+},deserialize:function(_8){
+if("Error"==_8.name){
+_8=dojo.fromJson(_8.responseText);
 }
-if(_7.error){
-var e=new Error(_7.error.message||_7.error);
-e._rpcErrorObject=_7.error;
+if(_8.error){
+var e=new Error(_8.error.message||_8.error);
+e._rpcErrorObject=_8.error;
 return e;
 }
-return _7.result;
+return _8.result;
 }};
 };
-dojox.rpc.envelopeRegistry.register("JSON-RPC-1.0",function(_9){
-return _9=="JSON-RPC-1.0";
-},dojo.mixin({namedParams:false},jsonRpcEnvelope()));
-dojox.rpc.envelopeRegistry.register("JSON-RPC-2.0",function(_a){
-return _a=="JSON-RPC-2.0";
-},jsonRpcEnvelope("2.0"));
+dojox.rpc.envelopeRegistry.register("JSON-RPC-1.0",function(_a){
+return _a=="JSON-RPC-1.0";
+},dojo.mixin({namedParams:false},_1()));
+dojox.rpc.envelopeRegistry.register("JSON-RPC-2.0",function(_b){
+return _b=="JSON-RPC-2.0";
+},_1("2.0"));
 })();
 }

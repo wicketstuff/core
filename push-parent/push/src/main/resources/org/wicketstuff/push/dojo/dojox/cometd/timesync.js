@@ -1,5 +1,5 @@
 /*
-	Copyright (c) 2004-2008, The Dojo Foundation All Rights Reserved.
+	Copyright (c) 2004-2009, The Dojo Foundation All Rights Reserved.
 	Available via Academic Free License >= 2.1 OR the modified BSD license.
 	see: http://dojotoolkit.org/license for details
 */
@@ -11,8 +11,9 @@ dojo.provide("dojox.cometd.timesync");
 dojo.require("dojox.cometd._base");
 dojox.cometd.timesync=new function(){
 this._window=10;
-this._minWindow=4;
+this._lags=[];
 this._offsets=[];
+this.lag=0;
 this.offset=0;
 this.samples=0;
 this.getServerTime=function(){
@@ -36,33 +37,37 @@ if(_7&&_7.indexOf("/meta/")==0){
 if(_6.ext&&_6.ext.timesync){
 var _8=_6.ext.timesync;
 var _9=new Date().getTime();
-this._offsets.push(_8.ts-_8.tc-(_9-_8.tc-_8.p)/2);
+var l=(_9-_8.tc-_8.p)/2-_8.a;
+var o=_8.ts-_8.tc-l;
+this._lags.push(l);
+this._offsets.push(o);
 if(this._offsets.length>this._window){
 this._offsets.shift();
+this._lags.shift();
 }
 this.samples++;
-var _a=0;
+l=0;
+o=0;
 for(var i in this._offsets){
-_a+=this._offsets[i];
+l+=this._lags[i];
+o+=this._offsets[i];
 }
-this.offset=parseInt((_a/this._offsets.length).toFixed());
-if(this.samples<this._minWindow){
-setTimeout(dojox._scopeName+".cometd.publish('/meta/ping',null)",100);
-}
+this.offset=parseInt((o/this._offsets.length).toFixed());
+this.lag=parseInt((l/this._lags.length).toFixed());
 }
 }
 return _6;
 };
-this._out=function(_c){
-var _d=_c.channel;
-if(_d&&_d.indexOf("/meta/")==0){
-var _e=new Date().getTime();
-if(!_c.ext){
-_c.ext={};
+this._out=function(_d){
+var _e=_d.channel;
+if(_e&&_e.indexOf("/meta/")==0){
+var _f=new Date().getTime();
+if(!_d.ext){
+_d.ext={};
 }
-_c.ext.timesync={tc:_e};
+_d.ext.timesync={tc:_f,l:this.lag,o:this.offset};
 }
-return _c;
+return _d;
 };
 };
 dojox.cometd._extendInList.push(dojo.hitch(dojox.cometd.timesync,"_in"));
