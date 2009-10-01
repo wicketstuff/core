@@ -19,11 +19,7 @@
 package wicket.contrib.phonebook.web.page;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
@@ -34,6 +30,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.Filte
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilteredAbstractColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.GoAndClearFilter;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.TextFilteredPropertyColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -142,29 +139,26 @@ public class ListContactsPage extends BasePage
 			@Override
 			public void onSubmit()
 			{
-				Iterator<Long> it = selectedContactIds.iterator();
-				while (it.hasNext())
-				{
-					dao.delete(it.next());
-				}
+        for (Long selectedContactId : selectedContactIds) {
+          dao.delete(selectedContactId);
+        }
 				// clear out the set, we no longer need the selection
 				selectedContactIds.clear();
 			}
 		});
 
 		// create the data table
-		IColumn[] columns = createColumns();
-		users = new DefaultDataTable("users", Arrays.asList(columns), dataProvider, 10);
+		users = new DefaultDataTable<Contact> ("users", createColumns(), dataProvider, 10);
 		users.addTopToolbar(new FilterToolbar(users, form, dataProvider));
 		form.add(users);
 
 		add(form);
 	}
 
-	private IColumn[] createColumns()
+	private List<IColumn<Contact>> createColumns()
 	{
-		IColumn[] columns = new IColumn[6];
-		columns[0] = new CheckBoxColumn(new PropertyModel(this, "selectedContactIds"))
+    List<IColumn<Contact>> columns = new ArrayList<IColumn<Contact>>();
+		columns.add( new CheckBoxColumn<Contact>(new PropertyModel<Collection<Serializable>>(this, "selectedContactIds"))
 		{
 
 			@Override
@@ -173,29 +167,29 @@ public class ListContactsPage extends BasePage
 				return ((Contact)model.getObject()).getId();
 			}
 
-		};
-		columns[1] = createActionsColumn();
-		columns[2] = createColumn("first.name", "firstname", "firstname");
-		columns[3] = new ChoiceFilteredPropertyColumn(new ResourceModel("last.name"), "lastname",
-				"lastname", new LoadableDetachableModel()
+		});
+		columns.add(createActionsColumn());
+		columns.add(createColumn("first.name", "firstname", "firstname"));
+		columns.add( new ChoiceFilteredPropertyColumn<Contact, String>(new ResourceModel("last.name"), "lastname",
+				"lastname", new LoadableDetachableModel<List<? extends String>>()
 				{
 					@Override
-					protected Object load()
+					protected List<String> load()
 					{
 						List<String> uniqueLastNames = dao.getUniqueLastNames();
 						uniqueLastNames.add(0, "");
 						return uniqueLastNames;
 					}
-				});
-		columns[4] = createColumn("phone", "phone", "phone");
-		columns[5] = createColumn("email", "email", "email");
+				}));
+		columns.add( createColumn("phone", "phone", "phone"));
+		columns.add( createColumn("email", "email", "email"));
 		return columns;
 	}
 
-	private TextFilteredPropertyColumn createColumn(String key, String sortProperty,
+	private TextFilteredPropertyColumn<Contact, String> createColumn(String key, String sortProperty,
 			String propertyExpression)
 	{
-		return new TextFilteredPropertyColumn(new ResourceModel(key), sortProperty,
+		return new TextFilteredPropertyColumn<Contact, String>(new ResourceModel(key), sortProperty,
 				propertyExpression);
 	}
 
@@ -204,9 +198,9 @@ public class ListContactsPage extends BasePage
 	 * adds a UserActionsPanel as its cell contents. It also provides the
 	 * go-and-clear filter control panel.
 	 */
-	private FilteredAbstractColumn<Object> createActionsColumn()
+	private FilteredAbstractColumn<Contact> createActionsColumn()
 	{
-		return new FilteredAbstractColumn<Object>(new Model<String>(getString("actions")))
+		return new FilteredAbstractColumn<Contact>(new Model<String>(getString("actions")))
 		{
 			// return the go-and-clear filter for the filter toolbar
 			public Component getFilter(String componentId, FilterForm form)
@@ -216,11 +210,11 @@ public class ListContactsPage extends BasePage
 			}
 
 			// add the UserActionsPanel to the cell item
-			public void populateItem(Item cellItem, String componentId, IModel model)
-			{
-				cellItem.add(new UserActionsPanel(componentId, model));
-			}
-		};
+      public void populateItem(Item<ICellPopulator<Contact>> cellItem, String componentId, IModel<Contact> rowModel)
+      {
+	      cellItem.add(new UserActionsPanel(componentId, rowModel));
+      }
+    };
 	}
 
 	private void addCreateLink()
