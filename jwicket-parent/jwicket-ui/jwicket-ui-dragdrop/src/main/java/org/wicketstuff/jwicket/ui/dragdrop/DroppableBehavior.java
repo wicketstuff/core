@@ -39,10 +39,9 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 		super(uiDroppable, specialKeys);
 	}
 
-
 	private boolean onActivatedNotificationWanted = false;
 	/**
-	 * If set to {@code true}, the callback-Method {@link #onActivate(AjaxRequestTarget, Component)} 
+	 * If set to {@code true}, the callback-Method {@link #onActivate(AjaxRequestTarget, Component, SpecialKeys)} 
 	 * is called when the drag operation ends.
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
@@ -55,7 +54,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 
 	private boolean onDeactivateNotificationWanted = false;
 	/**
-	 * If set to {@code true}, the callback-Method {@link #onDeactivate(AjaxRequestTarget, Component)} 
+	 * If set to {@code true}, the callback-Method {@link #onDeactivate(AjaxRequestTarget, Component, SpecialKeys)} 
 	 * is called when the drag operation ends.
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
@@ -279,7 +278,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 	 *
 	 * @param target the AjaxRequestTarget of the drop operation.
 	 * @param draggedComponent The dragged component 
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	protected void onDrop(AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {}
 
@@ -292,7 +291,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 	 * @param target The {@link AjaxRequestTarget} associated with this
 	 *			drop operation.
 	 * @param draggedComponent The dragged component 
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	protected void onActivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {}
 
@@ -305,7 +304,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 	 * @param target The {@link AjaxRequestTarget} associated with this
 	 *			drop operation.
 	 * @param draggedComponent The dragged component 
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	protected void onDeactivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {}
 

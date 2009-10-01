@@ -22,7 +22,7 @@ public interface IDraggable {
 	 *
 	 * @param target The {@link AjaxRequestTarget} associated with this
 	 *			drag operation.
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	void onDragStart(final AjaxRequestTarget target, final SpecialKeys specialKeys);
 
@@ -36,7 +36,7 @@ public interface IDraggable {
 	 *
 	 * @param target The {@link AjaxRequestTarget} associated with this
 	 *			drag operation.
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	void onDrag(final AjaxRequestTarget target, final SpecialKeys specialKeys);
 	
@@ -58,7 +58,7 @@ public interface IDraggable {
 	 *
 	 * @param target The {@link AjaxRequestTarget} associated with this
 	 *			drag operation.
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	void onDragStop(final AjaxRequestTarget target, final SpecialKeys specialKeys);
 }

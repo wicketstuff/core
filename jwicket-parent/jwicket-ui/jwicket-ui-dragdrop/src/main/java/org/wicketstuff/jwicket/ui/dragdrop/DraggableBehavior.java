@@ -658,7 +658,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	private boolean onDragStopNotificationWanted = false;
 	/**
-	 * If set to {@code true}, the callback-Method {@link #onDragStop(AjaxRequestTarget)} 
+	 * If set to {@code true}, the callback-Method {@link #onDragStop(AjaxRequestTarget,SpecialKeys)} 
 	 * is called when the drag operation ends.
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
@@ -670,7 +670,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	private boolean onDragNotificationWanted = false;
 	/**
-	 * If set to {@code true}, the callback-Method {@link #onDrag(AjaxRequestTarget)} 
+	 * If set to {@code true}, the callback-Method {@link #onDrag(AjaxRequestTarget,SpecialKeys)} 
 	 * is called every time the mouse moves during the drag operation.
 	 * Be careful using this callback because it can generate a lot of Ajax calls.
 	 * @param value {@code true} or {@code false}.
@@ -683,7 +683,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	private boolean onDragStartNotificationWanted = false;
 	/**
-	 * If set to {@code true}, the callback-Method {@link #onDragStart(AjaxRequestTarget)} 
+	 * If set to {@code true}, the callback-Method {@link #onDragStart(AjaxRequestTarget,SpecialKeys)} 
 	 * is called when the drag operation starts.
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
@@ -701,7 +701,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 	 * method to perform some action when dragging starts.
 	 *
 	 * @param target the AjaxRequestTarget of the drag operation.
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	protected void onDragStart(final AjaxRequestTarget target, final SpecialKeys specialKeys) {}
 
@@ -712,7 +712,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 	 * You can override this method to perform some action during the drag operation.
 	 *
 	 * @param target the AjaxRequestTarget of the drag operation.
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	protected void onDrag(final AjaxRequestTarget target, final SpecialKeys specialKeys) {}
 
@@ -723,7 +723,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 	 * method to perform some action when dragging stops.
 	 *
 	 * @param target the AjaxRequestTarget of the drag operation.
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	protected void onDragStop(final AjaxRequestTarget target, final SpecialKeys specialKeys) {}
 

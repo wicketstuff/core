@@ -484,7 +484,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	private boolean onResizeStartNotificationWanted = false;
 	/**
-	 * If set to {@code true}, the callback-Method {@link #onResizeStart(AjaxRequestTarget, int, int, int, int)} 
+	 * If set to {@code true}, the callback-Method {@link #onResizeStart(AjaxRequestTarget, int, int, int, int, SpecialKeys)}
 	 * is called when the resize operation starts.
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
@@ -497,7 +497,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	private boolean onResizeNotificationWanted = false;
 	/**
-	 * If set to {@code true}, the callback-Method {@link #onResize(AjaxRequestTarget, int, int, int, int)} 
+	 * If set to {@code true}, the callback-Method {@link #onResize(AjaxRequestTarget, int, int, int, int, SpecialKeys)} 
 	 * is called every time the mouse moves during the resize operation.
 	 * Be careful using this callback because it can generate a lot of Ajax calls.
 	 * @param value {@code true} or {@code false}.
@@ -587,7 +587,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 	 * method to perform some action when resizing starts.
 	 *
 	 * @param target the AjaxRequestTarget of the resize operation.
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	protected void onResizeStart(final AjaxRequestTarget target, final int top, final int left, final int width, final int height, final SpecialKeys specialKeys) {}
 
@@ -598,7 +598,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 	 * method to perform some action during the resize operation.
 	 *
 	 * @param target the AjaxRequestTarget of the resize operation.
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	protected void onResize(final AjaxRequestTarget target, final int top, final int left, final int width, final int height, final SpecialKeys specialKeys) {}
 
@@ -607,7 +607,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 	 * You can override this method to perform some action after the
 	 * resize operation has finished.
 	 * @param target the AjaxRequestTarget of the resize operation.
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	protected void onResized(final AjaxRequestTarget target,
 			final int top, final int left, final int width, final int height,
