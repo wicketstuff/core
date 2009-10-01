@@ -23,7 +23,7 @@ public interface IDroppable {
 	 * @param target The {@link AjaxRequestTarget} associated with this
 	 *			drop operation.
 	 * @param draggedComponent The dragged component
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	public void onDrop(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys);
 
@@ -35,7 +35,7 @@ public interface IDroppable {
 	 * @param target The {@link AjaxRequestTarget} associated with this
 	 *			drop operation.
 	 * @param draggedComponent The dragged component
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	public void onActivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys);
 
@@ -47,7 +47,7 @@ public interface IDroppable {
 	 * @param target The {@link AjaxRequestTarget} associated with this
 	 * 			drop operation.
 	 * @param draggedComponent The dragged component
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
-	public void onDeactivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys SpecialKey);
+	public void onDeactivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys);
 }

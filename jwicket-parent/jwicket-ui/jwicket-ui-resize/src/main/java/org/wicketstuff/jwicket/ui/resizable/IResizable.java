@@ -25,7 +25,7 @@ public interface IResizable {
 	 * @param left the current left in px 
 	 * @param width the current width in px
 	 * @param height the current height in px
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	public void onResizeStart(final AjaxRequestTarget target, final int top, final int left, final int width, final int height, final SpecialKeys specialKeys);
 
@@ -42,7 +42,7 @@ public interface IResizable {
 	 * @param left the current left in px 
 	 * @param width the current width in px
 	 * @param height the current height in px
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	public void onResize(final AjaxRequestTarget target, final int top, final int left, final int width, final int height, final SpecialKeys specialKeys);
 
@@ -61,7 +61,7 @@ public interface IResizable {
 	 * @param originalLeft the final original left in px before resizing
 	 * @param originalWidth the final original width in px before resizing
 	 * @param originalHeight the final original height in px before resizing
-	 * @param SpecialKey the special keys that were pressed when the event occurs
+	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	public void onResized(final AjaxRequestTarget target,
 			final int top, final int left, final int width, final int height,
