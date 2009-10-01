@@ -1,5 +1,5 @@
 /*
-	Copyright (c) 2004-2008, The Dojo Foundation All Rights Reserved.
+	Copyright (c) 2004-2009, The Dojo Foundation All Rights Reserved.
 	Available via Academic Free License >= 2.1 OR the modified BSD license.
 	see: http://dojotoolkit.org/license for details
 */
@@ -8,7 +8,7 @@
 if(!dojo._hasResource["dojox.data.HtmlStore"]){
 dojo._hasResource["dojox.data.HtmlStore"]=true;
 dojo.provide("dojox.data.HtmlStore");
-dojo.require("dojox.data.dom");
+dojo.require("dojox.xml.parser");
 dojo.require("dojo.data.util.simpleFetch");
 dojo.require("dojo.data.util.filter");
 dojo.declare("dojox.data.HtmlStore",null,{constructor:function(_1){
@@ -52,7 +52,7 @@ c++;
 this._headings=[];
 if(this._rootNode.tHead){
 dojo.forEach(this._rootNode.tHead.rows[0].cells,dojo.hitch(this,function(th){
-this._headings.push(dojox.data.dom.textContent(th));
+this._headings.push(dojox.xml.parser.textContent(th));
 }));
 }else{
 this._headings=["name"];
@@ -90,9 +90,9 @@ this._assertIsItem(_d);
 var _f=this._assertIsAttribute(_e);
 if(_f>-1){
 if(_d.cells){
-return [dojox.data.dom.textContent(_d.cells[_f])];
+return [dojox.xml.parser.textContent(_d.cells[_f])];
 }else{
-return [dojox.data.dom.textContent(_d)];
+return [dojox.xml.parser.textContent(_d)];
 }
 }
 return [];
@@ -246,7 +246,7 @@ if(_44._rootNode.rows){
 _45=this._rootNode.rows[_43+1];
 }else{
 for(var i=0;i<_44._rootNode.childNodes.length;i++){
-if(_44._rootNode.childNodes[i].nodeType===1&&_43===dojox.data.dom.textContent(_44._rootNode.childNodes[i])){
+if(_44._rootNode.childNodes[i].nodeType===1&&_43===dojox.xml.parser.textContent(_44._rootNode.childNodes[i])){
 _45=_44._rootNode.childNodes[i];
 }
 }
@@ -281,7 +281,7 @@ if(_44._rootNode.rows&&_43<=_44._rootNode.rows.length){
 _45=_44._rootNode.rows[_43-1];
 }else{
 for(var i=0;i<_44._rootNode.childNodes.length;i++){
-if(_44._rootNode.childNodes[i].nodeType===1&&_43===dojox.data.dom.textContent(_44._rootNode.childNodes[i])){
+if(_44._rootNode.childNodes[i].nodeType===1&&_43===dojox.xml.parser.textContent(_44._rootNode.childNodes[i])){
 _45=_44._rootNode.childNodes[i];
 break;
 }

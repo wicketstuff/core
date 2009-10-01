@@ -24,7 +24,8 @@ Stores: CouchDBRestStore.js  JsonReferencing.js  PersevereRestStore.js
 These stores are fresh new and alpha. The will likely be moved to dojox.data 
 after they are well tested and documented.
 
-SMDLibrary contains smd files representing external services
+SMDLibrary contains smd files representing external services.
+
 -------------------------------------------------------------------------------
 Project authors
 	Dustin Machi

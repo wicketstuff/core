@@ -1,5 +1,5 @@
 /*
-	Copyright (c) 2004-2008, The Dojo Foundation All Rights Reserved.
+	Copyright (c) 2004-2009, The Dojo Foundation All Rights Reserved.
 	Available via Academic Free License >= 2.1 OR the modified BSD license.
 	see: http://dojotoolkit.org/license for details
 */
@@ -361,7 +361,7 @@ var _5a=this._arrayOfAllItems[i];
 if(_5a!==null){
 var _5b={};
 for(var key in _5a){
-if(key!==this._storeRefPropName&&key!==this._itemNumPropName){
+if(key!==this._storeRefPropName&&key!==this._itemNumPropName&&key!==this._reverseRefMap&&key!==this._rootItemPropName){
 var _5d=key;
 var _5e=this.getValues(_5a,_5d);
 if(_5e.length==1){
