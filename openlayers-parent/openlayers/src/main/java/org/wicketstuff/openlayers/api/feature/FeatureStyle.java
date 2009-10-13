@@ -17,6 +17,8 @@ package org.wicketstuff.openlayers.api.feature;
 
 import java.io.Serializable;
 
+import org.wicketstuff.openlayers.IOpenLayersMap;
+
 /**
  * 
  * @author Marin Mandradjiev (marinsm@hotmail.com)
@@ -94,14 +96,14 @@ public class FeatureStyle implements Serializable {
 		return "";
 	}
 
-	public String getJSAddStyle() {
+	public String getJSAddStyle(IOpenLayersMap map) {
 		StringBuffer result = new StringBuffer();
 		result.append("var layer_style" + getId()
 				+ " = OpenLayers.Util.extend({}, ");
 		result
 				.append(extendDefaultStyleName != null ? "OpenLayers.Feature.Vector.style['"
 						+ extendDefaultStyleName + "']"
-						: "layer_style" + extendStyle.getId());
+						: extendStyle.getJSGetStyleNoLineEnd(map));
 		result.append(");\n");
 		result.append(convert("fill", fill));
 		result.append(convert("fillColor", fillColor));
@@ -139,7 +141,21 @@ public class FeatureStyle implements Serializable {
 		result.append(convert("fontSize", fontSize));
 		result.append(convert("fontWeight", fontWeight));
 		result.append(convert("display", display));
+		result.append(map.getJSinvoke("addFeatureStyle(layer_style" + getId()
+				+ ", " + getId() + ")"));
 		return result.toString();
+	}
+
+	public String getJSGetStyle(IOpenLayersMap map) {
+		return map.getJSinvoke("getFeatureStyle(" + getId() + ")");
+	}
+
+	public String getJSGetStyleNoLineEnd(IOpenLayersMap map) {
+		return map.getJSinvokeNoLineEnd("getFeatureStyle(" + getId() + ")");
+	}
+
+	public String getJSRemoveStyle(IOpenLayersMap map) {
+		return map.getJSinvoke("removeFeatureStyle(" + getId() + ")");
 	}
 
 	public void setFill(Boolean fill) {
