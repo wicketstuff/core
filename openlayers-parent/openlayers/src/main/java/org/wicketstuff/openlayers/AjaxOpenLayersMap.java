@@ -245,7 +245,11 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	 */
 	public IOpenLayersMap addFeature(Feature feature) {
 		features.add(feature);
-		getFeatureVector(feature.getDisplayInLayer());
+		if (AjaxRequestTarget.get() != null) {
+			AjaxRequestTarget.get().appendJavascript(
+					feature.getJSAddFeature(this, getFeatureVector(feature
+							.getDisplayInLayer())));
+		}
 		return this;
 	}
 
@@ -260,7 +264,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		featureStyles.add(featureStyle);
 		if (AjaxRequestTarget.get() != null) {
 			AjaxRequestTarget.get().appendJavascript(
-					featureStyle.getJSAddStyle());
+					featureStyle.getJSAddStyle(this));
 		}
 		return this;
 	}
@@ -313,7 +317,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 					+ jsMarkersLayerName + ", true);\n");
 		}
 		for (FeatureStyle featureStyle : featureStyles) {
-			js.append(featureStyle.getJSAddStyle());
+			js.append(featureStyle.getJSAddStyle(this));
 		}
 		for (Layer layer : getLayers()) {
 			js.append(layer.getJSAddLayer(this));
@@ -426,7 +430,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		}
 		if (AjaxRequestTarget.get() != null) {
 			AjaxRequestTarget.get().appendJavascript(
-					feature.getJSRemoveFeature(this, featureVectors.get(feature
+					feature.getJSRemoveFeature(this, getFeatureVector(feature
 							.getDisplayInLayer())));
 		}
 		return this;

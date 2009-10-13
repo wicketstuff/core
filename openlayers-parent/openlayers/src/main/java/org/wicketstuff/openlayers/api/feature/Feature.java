@@ -62,16 +62,16 @@ public abstract class Feature implements Serializable {
 				+ " = new OpenLayers.Feature.Vector(feature"
 				+ getId()
 				+ ", null, "
-				+ (featureStyle != null ? "layer_style" + featureStyle.getId()
-						: "null")
+				+ (featureStyle != null ? featureStyle
+						.getJSGetStyleNoLineEnd(map) : "null")
 				+ ");\n"
-				+ map.getJSinvoke("addFeature(draw" + getId() + ", layer"
-						+ vector.getId() + ")");
+				+ map.getJSinvoke("addFeature(" + vector.getId() + ", draw"
+						+ getId() + ", " + getId() + ")");
 	}
 
 	public String getJSRemoveFeature(IOpenLayersMap map, Vector vector) {
-		return map.getJSinvoke("removeFeature(draw" + getId() + ", layer"
-				+ vector.getId() + ")");
+		return map.getJSinvoke("removeFeature(" + vector.getId() + ", "
+				+ getId() + ")");
 	}
 
 	protected String getJScoordinate(Coordinate coordinate) {
