@@ -59,6 +59,7 @@ import org.wicketstuff.openlayers.event.PopupListener;
  */
 public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	private static Logger log = LoggerFactory.getLogger(OpenLayersMap.class);
+	private String businessLogicProjection = null;
 
 	private abstract class JSMethodBehavior extends AbstractBehavior {
 
@@ -191,7 +192,8 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 
 	private Integer zoom = 13;
 
-	// determines if the marker layer will be visible in the OpenLayers.Control.LayerSwitcher
+	// determines if the marker layer will be visible in the
+	// OpenLayers.Control.LayerSwitcher
 	private boolean showMarkersInLayerSwitcher = true;
 
 	/**
@@ -244,9 +246,8 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	 * 
 	 */
 	protected OpenLayersMap(final String id,
-			final HeaderContributor headerContrib,
-			List<Overlay> overlays, List<Layer> defaultLayers,
-			HashMap<String, String> options) {
+			final HeaderContributor headerContrib, List<Overlay> overlays,
+			List<Layer> defaultLayers, HashMap<String, String> options) {
 		this(id, headerContrib, overlays, new PopupListener(false) {
 			@Override
 			protected void onClick(AjaxRequestTarget target, Overlay overlay) {
@@ -267,9 +268,9 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	 * @param overlays
 	 */
 	private OpenLayersMap(final String id,
-			final HeaderContributor headerContrib,
-			List<Overlay> overlays, PopupListener popupListener,
-			List<Layer> defaultLayers, HashMap<String, String> options) {
+			final HeaderContributor headerContrib, List<Overlay> overlays,
+			PopupListener popupListener, List<Layer> defaultLayers,
+			HashMap<String, String> options) {
 		super(id);
 		popupListener.setOpenLayersMap(this);
 
@@ -300,14 +301,13 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	}
 
 	private void addHeaderContributorsForLayers(List<Layer> layers) {
-		for(Layer layer : layers)
-		{
-			for(HeaderContributor contributor : layer.getHeaderContributors())
-			{
+		for (Layer layer : layers) {
+			for (HeaderContributor contributor : layer.getHeaderContributors()) {
 				add(contributor);
 			}
 		}
 	}
+
 	/**
 	 * Add a control.
 	 * 
@@ -318,34 +318,34 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	public OpenLayersMap addControl(IJavascriptComponent control) {
 		controls.add(control);
 
-		JavascriptResourceReference[] jsReferences = control.getJSResourceReferences();
-		
+		JavascriptResourceReference[] jsReferences = control
+				.getJSResourceReferences();
+
 		if (jsReferences != null && jsReferences.length > 0) {
-			
+
 			for (int i = 0; i < jsReferences.length; i++) {
 				JavascriptResourceReference javascriptResourceReference = jsReferences[i];
-				
-				add(JavascriptPackageResource.getHeaderContribution(javascriptResourceReference));
+
+				add(JavascriptPackageResource
+						.getHeaderContribution(javascriptResourceReference));
 			}
 		}
-		
+
 		AjaxRequestTarget target = AjaxRequestTarget.get();
-		
+
 		if (target != null && findPage() != null) {
-				target.appendJavascript(
-					control.getJSadd(OpenLayersMap.this));
-				
-				if (jsReferences != null && jsReferences.length > 0) {
-					
-					for (int i = 0; i < jsReferences.length; i++) {
-						JavascriptResourceReference javascriptResourceReference = jsReferences[i];
-						
-						target.getHeaderResponse().renderJavascriptReference((javascriptResourceReference));
-					}
+			target.appendJavascript(control.getJSadd(OpenLayersMap.this));
+
+			if (jsReferences != null && jsReferences.length > 0) {
+
+				for (int i = 0; i < jsReferences.length; i++) {
+					JavascriptResourceReference javascriptResourceReference = jsReferences[i];
+
+					target.getHeaderResponse().renderJavascriptReference(
+							(javascriptResourceReference));
 				}
-				
-				
-				
+			}
+
 		}
 
 		return this;
@@ -429,11 +429,13 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 				js.append(key + ":" + options.get(key));
 			}
 			js.append("};\n");
-			js
-					.append("new WicketOMap('" + map.getMarkupId()
-							+ "', options, null, " + String.valueOf(this.showMarkersInLayerSwitcher) + ");\n");
+			js.append("new WicketOMap('" + map.getMarkupId()
+					+ "', options, null, "
+					+ String.valueOf(this.showMarkersInLayerSwitcher) + ");\n");
 		} else {
-			js.append("new WicketOMap('" + map.getMarkupId() + "', null, null, " + String.valueOf(this.showMarkersInLayerSwitcher) + ");\n");
+			js.append("new WicketOMap('" + map.getMarkupId()
+					+ "', null, null, "
+					+ String.valueOf(this.showMarkersInLayerSwitcher) + ");\n");
 		}
 
 		for (Layer layer : layers) {
@@ -464,7 +466,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 						+ wfs.getJSconstructor() + ";\n");
 				js.append(getJSinvoke("addLayer(wfs" + wfs.getId() + ","
 						+ wfs.getId() + ")"));
-				
+
 			}
 			if (layer instanceof Vector) {
 				Vector vec = (Vector) layer;
@@ -472,7 +474,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 						+ vec.getJSconstructor() + ";\n");
 				js.append(getJSinvoke("addLayer(vec" + vec.getId() + ","
 						+ vec.getId() + ")"));
-				
+
 			}
 		}
 		js.append(getJSinvoke("zoomToMaxExtent()"));
@@ -486,6 +488,10 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 		}
 		js.append(getJSinvoke("setPopupId('"
 				+ getInfoWindow().getContent().getMarkupId() + "')"));
+
+		if (businessLogicProjection != null) {
+			js.append(getJSSetBusinessLogicProjection());
+		}
 
 		return js.toString();
 	}
@@ -546,7 +552,8 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 
 	private String getJSsetCenter(LonLat center, Integer zoom) {
 		if (center != null && zoom != null)
-			return getJSinvoke("setCenter(" + center.getJSconstructor() + ", " + zoom + ")");
+			return getJSinvoke("setCenter(" + center.getJSconstructor() + ", "
+					+ zoom + ")");
 		else
 			return "";
 	}
@@ -644,8 +651,8 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 			this.zoom = zoom;
 
 			if (AjaxRequestTarget.get() != null && findPage() != null) {
-				AjaxRequestTarget.get()
-						.appendJavascript(getJSsetCenter(center, zoom));
+				AjaxRequestTarget.get().appendJavascript(
+						getJSsetCenter(center, zoom));
 			}
 		}
 	}
@@ -683,9 +690,9 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 
 		// Attention: don't use setters as this will result in an endless
 		// AJAX request loop
-		bounds = Bounds.parse(request.getParameter("bounds"));
-		center = LonLat.parseWithNames(request.getParameter("center"));
-		zoom = Integer.parseInt(request.getParameter("zoom"));
+		center = LonLat.parseWithNames(request.getParameter("centerConverted"));
+		zoom = Integer.parseInt(request.getParameter("zoomConverted"));
+		bounds = Bounds.parseWithNames(request.getParameter("boundsConverted"));
 
 		getInfoWindow().update(target);
 	}
@@ -725,15 +732,35 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	}
 
 	/**
-	 * @param showMarkersInLayerSwitcher if true the internal markers layer will be visible in the OpenLayers.Control.LayerSwitcher 
+	 * @param showMarkersInLayerSwitcher
+	 *            if true the internal markers layer will be visible in the
+	 *            OpenLayers.Control.LayerSwitcher
 	 * 
-	 * Default is true.
+	 *            Default is true.
 	 * 
-	 * Set to false to hide the markers layer from the LayerSwitcher.
+	 *            Set to false to hide the markers layer from the LayerSwitcher.
 	 */
 	public void setShowMarkersInLayerSwitcher(boolean showMarkersInLayerSwitcher) {
 		this.showMarkersInLayerSwitcher = showMarkersInLayerSwitcher;
 	}
-	
-	
+
+	public void setBusinessLogicProjection(String businessLogicProjection) {
+		this.businessLogicProjection = businessLogicProjection;
+		if (AjaxRequestTarget.get() != null) {
+			AjaxRequestTarget.get().appendJavascript(
+					getJSSetBusinessLogicProjection());
+		}
+	}
+
+	public String getBusinessLogicProjection() {
+		return businessLogicProjection;
+	}
+
+	private String getJSSetBusinessLogicProjection() {
+		if (businessLogicProjection == null) {
+			return getJSinvoke("setBusinessLogicProjection(null)");
+		}
+		return getJSinvoke("setBusinessLogicProjection('"
+				+ businessLogicProjection + "')");
+	}
 }

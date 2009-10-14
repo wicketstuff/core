@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.openlayers.api.Bounds;
-import org.wicketstuff.openlayers.api.Control;
 import org.wicketstuff.openlayers.api.IJavascriptComponent;
 import org.wicketstuff.openlayers.api.LonLat;
 import org.wicketstuff.openlayers.api.Overlay;
@@ -71,4 +70,8 @@ public interface IOpenLayersMap {
 	public void setLayers(List<Layer> layers);
 
 	public void setOverlays(List<Overlay> overlays);
+
+	public void setBusinessLogicProjection(String businessLogicProjection);
+
+	public String getBusinessLogicProjection();
 }

@@ -173,11 +173,19 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		if (center == null) {
 			return "";
 		}
-		if (zoom == null) {
-			return getJSinvoke("setCenter(" + center.getJSconstructor() + ")");
+		String transformation = "";
+		if (getBusinessLogicProjection() != null) {
+			transformation = ".transform(new OpenLayers.Projection(\""
+					+ getBusinessLogicProjection() + "\"), "
+					+ getJSinvokeNoLineEnd("map") + ".getProjectionObject())";
 		}
-		return getJSinvoke("setCenter(" + center.getJSconstructor() + ", "
-				+ zoom.toString() + ")");
+
+		if (zoom == null) {
+			return getJSinvoke("setCenter(" + center.getJSconstructor()
+					+ transformation + ")");
+		}
+		return getJSinvoke("setCenter(" + center.getJSconstructor()
+				+ transformation + ", " + zoom.toString() + ")");
 	}
 
 	private String getJSSetBusinessLogicProjection() {
@@ -443,9 +451,9 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		Request request = RequestCycle.get().getRequest();
 		// Attention: don't use setters as this will result in an endless
 		// AJAX request loop
-		center = LonLat.parseWithNames(request.getParameter("center"));
-		zoom = Integer.parseInt(request.getParameter("zoom"));
-		bounds = Bounds.parseWithNames(request.getParameter("bounds"));
+		center = LonLat.parseWithNames(request.getParameter("centerConverted"));
+		zoom = Integer.parseInt(request.getParameter("zoomConverted"));
+		bounds = Bounds.parseWithNames(request.getParameter("boundsConverted"));
 	}
 
 	public List<Layer> getLayers() {

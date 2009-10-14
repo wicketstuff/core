@@ -31,7 +31,6 @@ public abstract class Feature implements Serializable {
 	private static final long serialVersionUID = 364944041007700590L;
 	private FeatureStyle featureStyle = null;
 	private IOpenLayersMap map = null;
-	private String projection = "EPSG:4326";
 	private String displayInLayer = null;
 
 	public Feature() {
@@ -76,9 +75,10 @@ public abstract class Feature implements Serializable {
 
 	protected String getJScoordinate(Coordinate coordinate) {
 		String transformation = "";
-		if (map != null && projection != null) {
+		if (map != null && map.getBusinessLogicProjection() != null) {
 			transformation = ".transform(new OpenLayers.Projection(\""
-					+ projection + "\"), " + map.getJSinvokeNoLineEnd("map")
+					+ map.getBusinessLogicProjection() + "\"), "
+					+ map.getJSinvokeNoLineEnd("map")
 					+ ".getProjectionObject())";
 		}
 		return "new OpenLayers.Geometry.Point(" + coordinate.x + ", "
@@ -101,14 +101,6 @@ public abstract class Feature implements Serializable {
 
 	public IOpenLayersMap getMap() {
 		return map;
-	}
-
-	public void setProjection(String projection) {
-		this.projection = projection;
-	}
-
-	public String getProjection() {
-		return projection;
 	}
 
 	public void setDisplayInLayer(String displayInLayer) {
