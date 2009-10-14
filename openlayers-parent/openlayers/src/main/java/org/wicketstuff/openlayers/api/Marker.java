@@ -19,10 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.wicketstuff.openlayers.api.Icon;
-import org.wicketstuff.openlayers.api.LonLat;
-import org.wicketstuff.openlayers.api.Overlay;
-import org.wicketstuff.openlayers.api.PopupWindowPanel;
+import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.event.EventType;
 import org.wicketstuff.openlayers.js.Constructor;
 
@@ -41,12 +38,19 @@ public class Marker extends Overlay {
 
 	private PopupWindowPanel popup = null;
 
+	private IOpenLayersMap map = null;
+
 	/**
 	 * @param gLatLng
 	 *            the point on the map where this marker will be anchored
 	 */
 	public Marker(LonLat gLatLng) {
 		this(gLatLng, new EventType[] {}, null);
+	}
+
+	public Marker(LonLat gLatLng, IOpenLayersMap map) {
+		this(gLatLng, new EventType[] {}, null);
+		this.map = map;
 	}
 
 	public Marker(LonLat lonLat, EventType[] events, PopupWindowPanel popup) {
@@ -97,8 +101,15 @@ public class Marker extends Overlay {
 
 	@Override
 	protected String getJSconstructor() {
+		String transformation = "";
+		if (map != null && map.getBusinessLogicProjection() != null) {
+			transformation = ".transform(new OpenLayers.Projection(\""
+					+ map.getBusinessLogicProjection() + "\"), "
+					+ map.getJSinvokeNoLineEnd("map")
+					+ ".getProjectionObject())";
+		}
 		Constructor constructor = new Constructor("OpenLayers.Marker")
-				.add(lonLat.getJSconstructor());
+				.add(lonLat.getJSconstructor() + transformation);
 		if (icon != null) {
 			constructor.add(icon.getId());
 		}
@@ -120,5 +131,13 @@ public class Marker extends Overlay {
 
 	public void setLagLng(LonLat gLatLng) {
 		this.lonLat = gLatLng;
+	}
+
+	public void setMap(IOpenLayersMap map) {
+		this.map = map;
+	}
+
+	public IOpenLayersMap getMap() {
+		return map;
 	}
 }
