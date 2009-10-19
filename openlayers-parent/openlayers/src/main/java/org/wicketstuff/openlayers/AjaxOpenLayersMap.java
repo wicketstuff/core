@@ -220,6 +220,9 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	 */
 	public IOpenLayersMap addOverlay(Overlay overlay) {
 		overlays.add(overlay);
+		if (overlay instanceof Marker) {
+			((Marker) overlay).setMap(this);
+		}
 		for (OverlayListenerBehavior behavior : overlay.getBehaviors()) {
 			add(behavior);
 		}
@@ -253,6 +256,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	 */
 	public IOpenLayersMap addFeature(Feature feature) {
 		features.add(feature);
+		feature.setMap(this);
 		if (AjaxRequestTarget.get() != null) {
 			AjaxRequestTarget.get().appendJavascript(
 					feature.getJSAddFeature(this, getFeatureVector(feature
@@ -273,6 +277,17 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		if (AjaxRequestTarget.get() != null) {
 			AjaxRequestTarget.get().appendJavascript(
 					featureStyle.getJSAddStyle(this));
+		}
+		return this;
+	}
+
+	public IOpenLayersMap removeFeatureStyle(FeatureStyle featureStyle) {
+		while (featureStyles.contains(featureStyle)) {
+			featureStyles.remove(featureStyle);
+		}
+		if (AjaxRequestTarget.get() != null) {
+			AjaxRequestTarget.get().appendJavascript(
+					featureStyle.getJSRemoveStyle(this));
 		}
 		return this;
 	}
@@ -327,11 +342,15 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		for (FeatureStyle featureStyle : featureStyles) {
 			js.append(featureStyle.getJSAddStyle(this));
 		}
+		// This will add all layers which are used in features
+		for (Feature feature : features) {
+			getFeatureVector(feature.getDisplayInLayer());
+		}
 		for (Layer layer : getLayers()) {
 			js.append(layer.getJSAddLayer(this));
 		}
 		for (Feature feature : features) {
-			js.append(feature.getJSAddFeature(this, featureVectors.get(feature
+			js.append(feature.getJSAddFeature(this, getFeatureVector(feature
 					.getDisplayInLayer())));
 		}
 		js.append(getJSSetCenter());
