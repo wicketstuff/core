@@ -128,6 +128,11 @@
 					<id>wicketstuff-org-maven</id>
 					<url>scpexe://wicketstuff.org/home/wicket/tomcat/webapps/maven/repository</url>
 				</repository>
+				<snapshotRepository>
+					<id>wicketstuff-org-maven</id>
+					<url>scpexe://wicketstuff.org/home/wicket/tomcat/webapps/maven/repository</url>
+					<uniqueVersion>false</uniqueVersion>
+				</snapshotRepository>
 			</distributionManagement>
 		</profile>
 		<profile>
