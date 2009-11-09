@@ -1,0 +1,128 @@
+body
+{
+	font-family: "Verdana" ,"Helvetica" , sans-serif , "Arial" ;
+	background-color:#2a4c9a;
+	background:url("images/body-background.png") #2a4c9a repeat-y;
+	background-position: center;
+	
+}
+
+#main
+{
+	width:1024px;
+	margin:0px;
+	padding:0px;
+	margin-left:auto;
+	margin-right:auto;
+	border:0px solid black;
+	background-color:white;
+}
+
+#header
+{
+	
+}
+
+#navigation
+{
+	width:200px;
+	float: left;
+}
+
+#content
+{
+	margin:0px;
+	margin-left:0px;
+	float:right;
+	width:804px;
+	padding-left:10px;
+	padding-right:10px;
+}
+
+#footer
+{
+	clear: both;	
+}
+
+a
+{
+	color:#0060d1;
+	
+}
+
+
+/*---------------------------------*/
+ul.feedbackPanel
+{
+	padding-left:0px;
+}
+
+ul.feedbackPanel li
+{
+	list-style-type: none;
+	list-style-position: outside;
+}
+
+li.feedbackPanelERROR, li.feedbackPanelWARNING, li.feedbackPanelINFO
+{
+	padding:4px;
+	margin-bottom:2px;
+}
+
+li.feedbackPanelERROR
+{
+	border:1px solid #ff1e00;
+	color:#9f1300;
+	background-color: #ff847e;
+/*	background:url("images/feedbackpanel-error-background.png") #ff847e no-repeat ;*/
+	font-weight: bold;
+}
+
+li.feedbackPanelWARNING
+{
+	border:1px solid #bd5400;
+	color: #bd5400;
+	background-color: #fff77e;
+/*	background:url("images/feedbackpanel-warning-background.png") #fff77e no-repeat ;*/
+}
+
+li.feedbackPanelINFO
+{
+	border:1px solid #477436;
+	color:#2a441f;
+	background-color: #79c55b;
+/*	background:url("images/feedbackpanel-info-background.png") #79c55b no-repeat ;*/
+}
+
+/*------------------------------------------------*/
+
+table.datatable
+{
+	border:1px solid #93bdc9;
+	border-collapse: collapse;
+	width:100%;
+	margin:0px;
+	background-color:#dee9ec;
+/*	background:url("images/datatable-background.png") #dee9ec no-repeat;*/
+	
+}
+
+table.datatable thead th
+{
+	text-align: left;
+}
+
+table.datatable tr td,table.datatable tr th
+{
+	padding:4px;
+	
+}
+
+table.datatable tr.odd td
+{
+	background-color:#eef4f5;
+}
+table.datatable tr.even td
+{
+	background-color:#f3f7f8;
+}
