@@ -20,6 +20,7 @@
  </build>
   
   <modules>
+    <module>theme-base</module>
     <module>theme-default</module>
   </modules>
 </project>

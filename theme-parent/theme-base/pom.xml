@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>theme-parent</artifactId>
+		<groupId>org.wicketstuff</groupId>
+		<version>1.4-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.wicketstuff</groupId>
+	<artifactId>theme-base</artifactId>
+	<name>theme-base</name>
+	<packaging>jar</packaging>
+	<description>Wicket Theme Base</description>
+	<url>http://maven.apache.org</url>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt
+			</url>
+			<distribution>repo</distribution>
+			<comments>
+				This project (core-parent) is being released under the
+				Apache 2 license,
+				but does not require that all child projects are
+				released under the
+				same license.
+				If a child project defines a license
+				of it's own
+				different from the Apache license,
+				Maven recognizes this
+				and uses
+				only that license. If a child wants to use the
+				Apache
+				license, it
+				does not need to define a license at all. Do not remove
+				this
+				license
+				from the parent, or it will un-license child projects
+				that do not
+				have their
+				own defined.
+			</comments>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Michael Mosmann</name>
+			<id>mosmann</id>
+			<email>michael@mosmann.de</email>
+		</developer>
+	</developers>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+      <scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
