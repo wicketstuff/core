@@ -7,10 +7,10 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.wicketstuff</groupId>
-	<artifactId>theme-base</artifactId>
-	<name>theme-base</name>
+	<artifactId>theme-tester</artifactId>
+	<name>theme-tester</name>
 	<packaging>jar</packaging>
-	<description>Wicket Theme Base</description>
+	<description>Default Wicket Theme</description>
 	<url>http://maven.apache.org</url>
 
 	<licenses>
@@ -71,5 +71,15 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>theme-standard</artifactId>
+			<version>1.4-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>maven-support</artifactId>
+			<version>1.4-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>
