@@ -38,6 +38,10 @@ public class MavenDevResourceStreamLocator extends ResourceStreamLocator
 		{
 			return new FileResourceStream(f);
 		}
+		else
+		{
+			_logger.debug("Could not get File: {}",f.getAbsolutePath());
+		}
 		return null;
 	}
 }
