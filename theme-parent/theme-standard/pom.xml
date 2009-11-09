@@ -70,5 +70,11 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>theme-base</artifactId>
+			<version>1.4-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>
