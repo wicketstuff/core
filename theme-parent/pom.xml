@@ -11,7 +11,7 @@
   <name>theme-parent</name>
   <packaging>pom</packaging>
   
-   <build>
+	<build>
    <plugins>
      <plugin>
        <artifactId>maven-eclipse-plugin</artifactId>
@@ -22,5 +22,25 @@
   <modules>
     <module>theme-base</module>
     <module>theme-standard</module>
+    <module>theme-tester</module>
   </modules>
+
+		<!--  JETTY DEPENDENCIES FOR TESTING  -->
+	<dependencies>
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty-util</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty-management</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 </project>
