@@ -21,6 +21,6 @@
   
   <modules>
     <module>theme-base</module>
-    <module>theme-default</module>
+    <module>theme-standard</module>
   </modules>
 </project>

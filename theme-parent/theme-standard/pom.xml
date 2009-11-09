@@ -7,8 +7,8 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.wicketstuff</groupId>
-	<artifactId>theme-default</artifactId>
-	<name>theme-default</name>
+	<artifactId>theme-standard</artifactId>
+	<name>theme-standard</name>
 	<packaging>jar</packaging>
 	<description>Default Wicket Theme</description>
 	<url>http://maven.apache.org</url>
