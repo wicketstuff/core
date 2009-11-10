@@ -58,6 +58,8 @@
 		<!-- commented out till it compiles
 		<module>table-parent</module>
 		-->
+		<module>maven-support</module>
+		<module>theme-parent</module>
   </modules>
 
 	<licenses>

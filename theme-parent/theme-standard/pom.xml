@@ -58,6 +58,7 @@
 			<artifactId>slf4j-log4j12</artifactId>
       <scope>test</scope>
 		</dependency>
+<!--
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -70,11 +71,11 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+-->
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>theme-base</artifactId>
-			<version>1.4-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>
