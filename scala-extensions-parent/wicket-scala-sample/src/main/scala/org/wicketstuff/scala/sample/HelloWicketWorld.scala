@@ -46,7 +46,7 @@ class HomePage extends WebPage with ScalaWicket {
   // using a fodel
   form.add(new Label("helloworld4", new Fodel({println ("f()label gtr"); name;})))
    
-  // usig an SLabel with a closure
+  // using an SLabel with a closure
   form.add(new SLabel("helloworld2", {println ("slabel gtr"); name;}))
 
   // the form for new presentations and votes

@@ -131,7 +131,7 @@ class ComponentSpecs extends Specification with JUnit with ScalaTest with ScalaW
       new SPropertyListView[Int]("votes", fodel, null) must notBeNull
     }
     "use the fodel converter" in {
-      new WicketTester() // -- for some reason the doBefore doesn't work hhere
+      new WicketTester() // -- for some reason the doBefore doesn't work here
       val theBackingList = List(1,2,3)
       val fodel = new Fodel[List[Int]](theBackingList)
       val correctFodel = fodelListToFodelJavaList(fodel)
@@ -161,7 +161,7 @@ class ComponentSpecs extends Specification with JUnit with ScalaTest with ScalaW
     }
     "be able to be constructed with a Function literal for the backing list, implicitly, typed as a Scala list" in {
       val theBackingList = List(1,2,3)
-      new SPropertyListView[Int]("votes", () => theBackingList, null) // -- un comment this line for the test
+      new SPropertyListView[Int]("votes", () => theBackingList, null) // -- uncomment this line for the test
     }
     "be able to be constructed with a Function literal for the backing list, typed as a Java list" in {
       val theBackingList = new java.util.ArrayList[Int]()
@@ -189,7 +189,7 @@ class ComponentSpecs extends Specification with JUnit with ScalaTest with ScalaW
       skip("Does not compile. The compiler appears to not be able to infer the generic parameter of SPropertyListView")
       // new SPropertyListView("votes", List[Int](), null) must notBeNull // -- uncomment for test
     }
-    "be constructed using an infered function type (that is, the return value is infered to be ())" in {
+    "be constructed using an inferred function type (that is, the return value is inferred to be ())" in {
 	  val theBackingList = new java.util.ArrayList[Int]()
 	  new SPropertyListView[Int]("votes", theBackingList, (li:ListItem[Int]) => { 5 }) // should not have to put '()' at the end of the function block
 	  new SPropertyListView[Int]("votes", theBackingList, _.add(new Label("","")))

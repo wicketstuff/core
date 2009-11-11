@@ -8,9 +8,9 @@ import org.apache.wicket.model._
 import org.apache.wicket.model.IModel
 
 /**
- * A functional version of a wicket IModel. Uses anonymous functions to find to backing objects, instead of reflection.
+ * A functional version of a wicket IModel. Uses anonymous functions to find backing objects, instead of reflection.
  *
- * @param getter the function which retreives the backing object value
+ * @param getter the function which retrieves the backing object value
  * @param setter the function which assigns the backing object value with the passed in value T
  * @see http://technically.us/code/x/the-escape-hatch
  * @author Nathan Hamblen
