@@ -7,8 +7,8 @@ package org.wicketstuff.scala
  * so as soon as that's out, we will switch to simply using the 
  * library for list conversion.</p>
  *
- * <p>If the conversions here are not suffecient for you, check out Scala-JavaUtils library:
- * http://github.com/jorgeortiz85/scala-javautils which has quite a large sellection. Use 
+ * <p>If the conversions here are not sufficient for you, check out Scala-JavaUtils library:
+ * http://github.com/jorgeortiz85/scala-javautils which has quite a large selection. Use 
  * this until Scala 2.8 comes out.</p>
  * 
  * @author Antony Stubbs
@@ -45,7 +45,7 @@ trait ScalaWicket {
   implicit def func2Fodel5[T](listFunc: () ⇒ List[T]):Fodel[java.util.List[T]] = new Fodel[java.util.List[T]](listFunc(), null)
   
   /**
-   * Converts an by name List paremter, into a java.util.List Fodel. Useful for ListViews etc.
+   * Converts an by name List parameter, into a java.util.List Fodel. Useful for ListViews etc.
    */
   implicit def func2Fodel4[T](list: ⇒ List[T]):Fodel[java.util.List[T]] = new Fodel[java.util.List[T]](list, null)
   

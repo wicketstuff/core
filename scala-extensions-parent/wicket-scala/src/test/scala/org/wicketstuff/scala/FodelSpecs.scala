@@ -16,7 +16,7 @@ class FodelSpecs extends Specification with JUnit with ScalaTest {
   val karyn = "Karyn"
 
   "Read only Fodel" should {
-    "have it's type paremeter inferred" in {
+    "have it's type parameter inferred" in {
       var bound = tony
 	  var f = new Fodel(bound);
       f.getObject must be equalTo(tony)
@@ -42,7 +42,7 @@ class FodelSpecs extends Specification with JUnit with ScalaTest {
       bound = karyn
       f.getObject must be equalTo(karyn)
     }
-    "readonly fodel sholdn't allow setting, by throwing an exception" in {
+    "readonly fodel shouldn't allow setting, by throwing an exception" in {
       var bound = tony
 	  var f = new FodelString(bound);
       f.getObject must be equalTo(tony)
