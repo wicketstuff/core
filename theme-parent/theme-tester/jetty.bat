@@ -1,0 +1,1 @@
+mvn -Dtest=**JettyStarter test
