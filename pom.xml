@@ -110,6 +110,7 @@
 		<repository>
 			<id>local</id>
 			<url>file:target/m2-repo</url>
+			<uniqueVersion>false</uniqueVersion>
 		</repository>
 		<snapshotRepository>
 			<id>local</id>
@@ -129,6 +130,7 @@
 				<repository>
 					<id>wicketstuff-org-maven</id>
 					<url>scpexe://wicketstuff.org/home/wicket/tomcat/webapps/maven/repository</url>
+					<uniqueVersion>false</uniqueVersion>
 				</repository>
 				<snapshotRepository>
 					<id>wicketstuff-org-maven</id>
@@ -150,6 +152,7 @@
 					<id>repo</id>
 					<name>Local TeamCity/Tomcat repository</name>
 					<url>file:/home/wicket/tomcat/webapps/maven/repository/</url>
+					<uniqueVersion>false</uniqueVersion>
 				</repository>
 			</distributionManagement>
 		</profile>
