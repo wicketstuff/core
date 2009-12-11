@@ -7,4 +7,28 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>datatable-autocomplete-common</artifactId>
   <name>Datatable Autocomplete Common</name>
+  
+  <description>This module provides the Patricia Trie implementation.  It is seperated from the main datatable-autocomplete module to allow reuse in non wicket environments.</description>
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>junit</groupId>
+  		<artifactId>junit</artifactId>
+  		<version>4.7</version>
+  		<scope>test</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.slf4j</groupId>
+  		<artifactId>slf4j-log4j12</artifactId>
+  		<version>1.5.8</version>
+  		<scope>test</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>commons-collections</groupId>
+  		<artifactId>commons-collections</artifactId>
+  		<version>3.2.1</version>
+  		<scope>test</scope>
+  	</dependency>
+  
+  </dependencies>
 </project>

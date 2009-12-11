@@ -11,7 +11,7 @@
   <packaging>jar</packaging>
   
   <description>
-  The Datatable autocomplete project provides a Trie backed datastructure that allows AJAX searches on large datasets fast.
+  The Datatable autocomplete project provides a Trie datastructure that allows AJAX searches on large datasets fast.
   
   It is not memory efficient but it is fast especially to know how many results a given prefix matches.
   
@@ -19,28 +19,36 @@
   
   </description>
   
-  <inceptionYear>2008</inceptionYear>
+  <inceptionYear>2009</inceptionYear>
 	<developers>
 		<developer>
 		<id>mocleiri</id>
 		<name>Michael O'Cleirigh</name>
-		<email>michael.ocleirigh@rivulet.ca</email>
 		</developer>
 	</developers>
 	
 	<licenses>
+	
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 			<distribution>repo</distribution>
+			<comments>
+			
+			</comments>
 		</license>
+		
 	</licenses>
 	
   <dependencies>
   <dependency>
   	<groupId>org.wicketstuff</groupId>
   	<artifactId>datatable-autocomplete-common</artifactId>
-  	<version>${project.version}</version>
+  </dependency>
+  
+  <dependency>
+  <groupId>org.apache.wicket</groupId>
+  <artifactId>wicket-extensions</artifactId>
   </dependency>
   </dependencies>
 </project>
