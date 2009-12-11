@@ -15,7 +15,7 @@
 	<name>Datatable Autocomplete - Parent</name>
 	<description>
 		See the child project "datatable-autocomplete" for a more complete description.  This
-		is the parent for the actual project and the examples.
+		is the parent for the actual project, trie datastructure implementation and the examples.
 	</description>
 	
 	<modules>
@@ -24,19 +24,25 @@
 		<module>datatable-autocomplete-examples</module>
 	</modules>
 	
-		<repositories>
-		<repository>
-			<id>wicket-snaps</id>
-			<url>http://wicketstuff.org/maven/repository</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-	</repositories>
-
+	<developers>
+	<developer><id>mocleiri</id><name>Michael O'Cleirigh</name></developer>
+	</developers>
 	
+	
+	<dependencyManagement>
+	<dependencies>
+	
+	<dependency>
+	<groupId>org.wicketstuff</groupId>
+	<artifactId>datatable-autocomplete-common</artifactId>
+	<version>${project.version}</version>
+	</dependency>
+	<dependency>
+	<groupId>org.wicketstuff</groupId>
+	<artifactId>datatable-autocomplete</artifactId>
+	<version>${project.version}</version>
+	</dependency>
+	</dependencies>
+	</dependencyManagement>
 
 </project>

@@ -1,6 +1,25 @@
 <html>
 <head><title>Datatable Autocomplete Example</title></head>
 <body>
-autocomplete goes here.
+
+This is an example of the DataTable Autocomplete.  Here we have loaded <span wicket:id="numberOfMethods"/> methods from the <b>rt.jar</b> of the JVM that is running this application.
+A Patricia Trie is used as the index so that this search field will work fast using AJAX to look up any element.
+
+<br/>
+
+Below you will find a listing of the size of each subtree based on the first character of the string.
+
+
+<p/>
+<form wicket:id="settingsForm">
+Match Mode: <select wicket:id="findMethod"></select>
+</form>
+Search: <span wicket:id="field" /><br/>
+Selected: <span wicket:id="selectedMethod" />
+<p/>
+
+<span wicket:id="alphabetFrequency"/>
+
+
 </body>
 </html>

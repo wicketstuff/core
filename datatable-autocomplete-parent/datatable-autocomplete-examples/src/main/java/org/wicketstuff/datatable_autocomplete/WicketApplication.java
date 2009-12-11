@@ -16,16 +16,33 @@
 
 package org.wicketstuff.datatable_autocomplete;
 
+import java.lang.reflect.Method;
+
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wicketstuff.datatable_autocomplete.data.TrieBuilder;
+import org.wicketstuff.datatable_autocomplete.trie.Trie;
 import org.wicketstuff.datatable_autocomplete.web.page.HomePage;
 
 
 /**
- * @author Michael O'Cleirigh (michael.ocleirigh@rivulet.ca)
- *
+ * @author mocleiri
  */
+
 public class WicketApplication extends WebApplication {
+
+	/*
+	 * The number of methods to load into the Trie index. 
+	 */
+	private static final int methodLimit = 125000;
+
+
+	private static Logger log = LoggerFactory.getLogger(WicketApplication.class);
+	
+	
+	private static Trie<Method> trie;
 
 	/**
 	 * 
@@ -41,5 +58,28 @@ public class WicketApplication extends WebApplication {
 	public Class<? extends Page> getHomePage() {
 		return HomePage.class;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.apache.wicket.protocol.http.WebApplication#init()
+	 */
+	@Override
+	protected void init() {
+		super.init();
+		
+		TrieBuilder builder = new TrieBuilder();
+		
+		builder.buildTrie(methodLimit);
+
+		WicketApplication.trie = builder.getTrie();
+		
+		
+	}
+
+	public static Trie<Method> getTrie() {
+		
+		return trie;
+	}
+	
+	
 
 }

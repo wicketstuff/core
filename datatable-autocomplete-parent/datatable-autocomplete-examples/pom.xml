@@ -1,33 +1,44 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
- <modelVersion>4.0.0</modelVersion>
- 
-  <parent>
-    <artifactId>datatable-autocomplete-parent</artifactId>
-    <groupId>org.wicketstuff</groupId>
-    <version>1.4-SNAPSHOT</version>
-  </parent>
- 
-  <artifactId>datatable-autocomplete-examples</artifactId>
-  <packaging>war</packaging>
-  
-   <name>Datatable Autocomplete Examples</name>
-  
-  <dependencies>
-  <dependency>
-  	<groupId>org.wicketstuff</groupId> 
-  	<artifactId>datatable-autocomplete</artifactId>
-  	<version>${project.version}</version>
-  </dependency>
-  <dependency>
-  	<groupId>org.apache.wicket</groupId>
-  	<artifactId>wicket</artifactId>
-  	<!-- Not sure why the version is required but it should be removed and come from the parent project -->
-  	<version>1.4.1</version>
-  </dependency>
-  	<dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-        </dependency>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  </dependencies>
+	<parent>
+		<artifactId>datatable-autocomplete-parent</artifactId>
+		<groupId>org.wicketstuff</groupId>
+		<version>1.4-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>datatable-autocomplete-examples</artifactId>
+	<packaging>war</packaging>
+
+	<name>Datatable Autocomplete Examples</name>
+	
+	<description>Provides an example application that shows how the AutoCompletingTextField can be used for fast AJAX lookups.
+	</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>datatable-autocomplete</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.7</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+			<scope>test</scope>
+		</dependency>
+		
+
+	</dependencies>
 </project>
