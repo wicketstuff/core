@@ -1,0 +1,27 @@
+/*
+ Used to position an overlay panel.
+
+ Positions below and over top of subsequent panels.
+ 
+ Note that the automatic sizing was disabled as this was causing the entire page to redraw on each ajax update. 
+ 
+ 
+ */
+.dta_wicket_ajax_panel_overlay {
+    background-color: white;
+    border: solid 1px #000000; /* black */
+    padding: 0.25em;
+    
+    /*float: left;*/
+	position: absolute;
+	/* overflow: auto; */
+	/* width: auto;*/
+	/*height: 350px;*/
+	/* height: auto; */ 
+	z-index:11111;
+	/* tries to center the overlay panel */
+	text-alignment: center;
+	/* margin-left: auto; */
+	/* margin-right: auto; */
+}
+

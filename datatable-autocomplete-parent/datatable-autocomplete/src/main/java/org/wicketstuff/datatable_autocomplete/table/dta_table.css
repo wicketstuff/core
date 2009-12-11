@@ -1,0 +1,15 @@
+
+table.dta_data_table tr.even { background-color: #ffebcd; }
+table.dta_data_table tr.selected { background-color: yellow; }
+table.dta_data_table tr.odd { background-color: #fff; }
+
+table.dta_data_table tr.headers { color: black; padding-top: 3px; padding-bottom: 3px; padding-left: 8px; padding-right: 30px; background-color: #c1e4ff; border-bottom: 1px solid #0079d6; border-top: 1px solid #0079d6; text-align: left; white-space: nowrap; vertical-align: middle;}
+
+table.dta_data_table {
+
+	text-align: center;
+	/* margining should be handled by the parent */
+/*	margin: auto; */
+	
+}
+
