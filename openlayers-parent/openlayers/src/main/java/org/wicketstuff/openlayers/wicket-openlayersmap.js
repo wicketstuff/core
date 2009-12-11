@@ -279,4 +279,20 @@ function WicketOMap(id, options, markersLayerName, showMarkersInLayerSwitcher) {
 	this.setBusinessLogicProjection = function (newProjection) {
 		this.businessLogicProjection = newProjection;
 	}
+	
+	this.convertArray = function (points, projection) {
+		var end = points.length - 1;
+		var result = [];
+		for(var i=0;i<end;i+=2)
+			result.push(new OpenLayers.Geometry.Point(points[i],points[i+1]).transform(new OpenLayers.Projection(projection), this.map.getProjectionObject()));
+		return result.length == 1 ? result[0] : result;
+	}
+}
+
+function convertArray(points) {
+	var end = points.length - 1;
+	var result = [];
+	for(var i=0;i<end;i+=2)
+		result.push(new OpenLayers.Geometry.Point(points[i],points[i+1]));
+	return result.length == 1 ? result[0] : result;
 }

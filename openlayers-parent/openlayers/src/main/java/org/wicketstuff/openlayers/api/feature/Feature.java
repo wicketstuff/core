@@ -16,6 +16,8 @@
 package org.wicketstuff.openlayers.api.feature;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.api.layer.Vector;
@@ -32,6 +34,7 @@ public abstract class Feature implements Serializable {
 	private FeatureStyle featureStyle = null;
 	private IOpenLayersMap map = null;
 	private String displayInLayer = null;
+	private List<Coordinate> coordinates = new ArrayList<Coordinate>();
 
 	public Feature() {
 		this(null, null);
@@ -54,6 +57,8 @@ public abstract class Feature implements Serializable {
 		return String.valueOf(System.identityHashCode(this));
 	}
 
+	protected abstract String getType();
+
 	public String getJSAddFeature(IOpenLayersMap map, Vector vector) {
 		return getJSconstructor()
 				+ "var draw"
@@ -73,19 +78,44 @@ public abstract class Feature implements Serializable {
 				+ getId() + ")");
 	}
 
-	protected String getJScoordinate(Coordinate coordinate) {
-		String transformation = "";
-		if (map != null && map.getBusinessLogicProjection() != null) {
-			transformation = ".transform(new OpenLayers.Projection(\""
-					+ map.getBusinessLogicProjection() + "\"), "
-					+ map.getJSinvokeNoLineEnd("map")
-					+ ".getProjectionObject())";
-		}
-		return "new OpenLayers.Geometry.Point(" + coordinate.x + ", "
-				+ coordinate.y + ")" + transformation;
+	protected String getJScoordinateList(String type, String coordinateList) {
+		return "var feature"
+				+ getId()
+				+ " = "
+				+ (type == null ? "" : "new " + type + "(")
+				+ (map != null && map.getBusinessLogicProjection() != null ? map
+						.getJSinvokeNoLineEnd("")
+						: "")
+				+ "convertArray(["
+				+ coordinateList
+				+ "]"
+				+ (map != null && map.getBusinessLogicProjection() != null ? ", \""
+						+ map.getBusinessLogicProjection() + "\""
+						: "") + ")" + (type != null ? ")" : "") + ";\n";
 	}
 
-	public abstract String getJSconstructor();
+	public String getJSconstructor() {
+		StringBuffer coordinateList = new StringBuffer();
+		for (Coordinate coordinate : coordinates) {
+			if (coordinateList.length() > 0)
+				coordinateList.append(", ");
+			coordinateList.append(coordinate.x + ", " + coordinate.y);
+		}
+		StringBuffer result = new StringBuffer();
+		result.append("var feature" + getId() + " = ");
+		if (getType() != null)
+			result.append("new " + getType() + "(");
+		if (map != null && map.getBusinessLogicProjection() != null)
+			result.append(map.getJSinvokeNoLineEnd(""));
+		result.append("convertArray([" + coordinateList.toString() + "]");
+		if (map != null && map.getBusinessLogicProjection() != null)
+			result.append(", \"" + map.getBusinessLogicProjection() + "\"");
+		result.append(")");
+		if (getType() != null)
+			result.append(")");
+		result.append(";\n");
+		return result.toString();
+	}
 
 	public void setFeatureStyle(FeatureStyle featureStyle) {
 		this.featureStyle = featureStyle;
@@ -109,5 +139,13 @@ public abstract class Feature implements Serializable {
 
 	public String getDisplayInLayer() {
 		return displayInLayer;
+	}
+
+	public void setCoordinates(List<Coordinate> coordinates) {
+		this.coordinates = coordinates;
+	}
+
+	public List<Coordinate> getCoordinates() {
+		return coordinates;
 	}
 }
