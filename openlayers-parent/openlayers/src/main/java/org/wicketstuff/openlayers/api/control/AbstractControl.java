@@ -24,6 +24,7 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.api.IJavascriptComponent;
+import org.wicketstuff.openlayers.api.layer.Layer;
 
 /**
  * @author Michael O'Cleirigh
@@ -41,6 +42,8 @@ public class AbstractControl implements IJavascriptComponent {
 	private final boolean externalizable;
 
 	private final String name;
+	
+	private List<Layer> layerList = null;
 	
 	private LinkedList<IModel<String>> eventJavascript = new LinkedList<IModel<String>>();
 	
@@ -135,12 +138,22 @@ public class AbstractControl implements IJavascriptComponent {
 		
 		String id = getId();
 		
+		StringBuffer layers = new StringBuffer();
+		if (layerList != null && !layerList.isEmpty()) {
+			layers.append("[");
+			for (Layer item: layerList) {
+				if (layers.length() > 1) layers.append(", ");
+				layers.append("layer" + item.getId());
+			}
+			layers.append("]");
+		}
+		
 		if (parameterString.length() == 0) {
 			invocation =  map.getJSinvoke("addControl('" + id
-					+ "', new " + javascriptClassName + "())");
+					+ "', new " + javascriptClassName + "(" + layers.toString() +"))");
 		} else {
 			invocation =  map.getJSinvoke("addControl('" + id
-					+ "', new " + javascriptClassName + "({"
+					+ "', new " + javascriptClassName + "(" + (layers.length() > 0 ? layers.toString() + ", " : "") + "{"
 					+ parameterString + "}))");
 		}
 		
@@ -241,7 +254,12 @@ public class AbstractControl implements IJavascriptComponent {
 	protected String getJSinvoke(IOpenLayersMap map,  String invocation) {
 		return map.getJSinvoke("controls['" + this.getId() + "']." + invocation);
 	}
-	
-	
 
+	public void setLayerList(List<Layer> layerList) {
+		this.layerList = layerList;
+	}
+	
+	public List<Layer> getLayerList() {
+		return layerList;
+	}
 }

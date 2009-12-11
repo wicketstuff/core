@@ -15,6 +15,8 @@
  */
 package org.wicketstuff.openlayers.api.feature;
 
+import java.util.ArrayList;
+
 import org.wicketstuff.openlayers.IOpenLayersMap;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -26,40 +28,44 @@ import com.vividsolutions.jts.geom.Coordinate;
  */
 public class Point extends Feature {
 	private static final long serialVersionUID = -4295187268790863039L;
-	private Coordinate coordinate;
 
 	public Point(Coordinate coordinate) {
 		super();
-		this.coordinate = coordinate;
+		getCoordinates().add(coordinate);
 	}
 
 	public Point(Coordinate coordinate, FeatureStyle featureStyle) {
 		super(featureStyle);
-		this.coordinate = coordinate;
+		getCoordinates().add(coordinate);
 	}
 
 	public Point(Coordinate coordinate, IOpenLayersMap map) {
 		super(map);
-		this.coordinate = coordinate;
+		getCoordinates().add(coordinate);
 	}
 
 	public Point(Coordinate coordinate, FeatureStyle featureStyle,
 			IOpenLayersMap map) {
 		super(featureStyle, map);
-		this.coordinate = coordinate;
+		getCoordinates().add(coordinate);
 	}
 
 	public void setCoordinate(Coordinate coordinate) {
-		this.coordinate = coordinate;
+		if (getCoordinates() == null)
+			setCoordinates(new ArrayList<Coordinate>());
+		else
+			getCoordinates().clear();
+		getCoordinates().add(coordinate);
 	}
 
 	public Coordinate getCoordinate() {
-		return coordinate;
+		return getCoordinates() != null && !getCoordinates().isEmpty() ? getCoordinates()
+				.get(0)
+				: null;
 	}
 
 	@Override
-	public String getJSconstructor() {
-		return "var feature" + getId() + " = " + getJScoordinate(coordinate)
-				+ ";\n";
+	protected String getType() {
+		return null;
 	}
 }

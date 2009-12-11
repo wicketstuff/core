@@ -28,48 +28,30 @@ import com.vividsolutions.jts.geom.Coordinate;
  */
 public class Polygon extends Feature {
 	private static final long serialVersionUID = 2381878612322151640L;
-	private List<Coordinate> coordinates;
 
 	public Polygon(List<Coordinate> coordinates) {
 		super();
-		this.coordinates = coordinates;
+		setCoordinates(coordinates);
 	}
 
 	public Polygon(List<Coordinate> coordinates, FeatureStyle featureStyle) {
 		super(featureStyle);
-		this.coordinates = coordinates;
+		setCoordinates(coordinates);
 	}
 
 	public Polygon(List<Coordinate> coordinates, IOpenLayersMap map) {
 		super(map);
-		this.coordinates = coordinates;
+		setCoordinates(coordinates);
 	}
 
 	public Polygon(List<Coordinate> coordinates, FeatureStyle featureStyle,
 			IOpenLayersMap map) {
 		super(featureStyle, map);
-		this.coordinates = coordinates;
+		setCoordinates(coordinates);
 	}
 
 	@Override
-	public String getJSconstructor() {
-		StringBuffer result = new StringBuffer();
-		result.append("var points" + getId() + " = [];\n");
-		for (Coordinate coordinate : coordinates) {
-			result.append("points" + getId() + ".push("
-					+ getJScoordinate(coordinate) + ");\n");
-		}
-		result.append("var feature" + getId()
-				+ " = new OpenLayers.Geometry.LinearRing(points" + getId()
-				+ ");\n");
-		return result.toString();
-	}
-
-	public void setCoordinates(List<Coordinate> coordinates) {
-		this.coordinates = coordinates;
-	}
-
-	public List<Coordinate> getCoordinates() {
-		return coordinates;
+	protected String getType() {
+		return "OpenLayers.Geometry.LinearRing";
 	}
 }
