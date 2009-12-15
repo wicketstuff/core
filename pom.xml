@@ -448,6 +448,9 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
+					<fork>true</fork>
+					<meminitial>128m</meminitial>
+					<maxmem>512m</maxmem>
 					<source>1.5</source>
 					<target>1.5</target>
 					<encoding>UTF-8</encoding>
