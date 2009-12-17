@@ -20,6 +20,7 @@
 		<module>annotation</module>
 		<module>calendarviews-parent</module>
 		<module>client-and-server-validation</module>
+		<module>datatable-autocomplete-parent</module>
 		<module>gmap2-parent</module>
 		<module>inmethod-grid-parent</module>
 		<module>input-events-parent</module>
