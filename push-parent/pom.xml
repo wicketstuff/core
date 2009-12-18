@@ -39,15 +39,10 @@
   </modules>
 
   <properties>
-    <jetty.version>6.1.17</jetty.version>
+    <jetty.version>6.1.22</jetty.version>
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.5</version>
-    </dependency>
     <!-- Cometd Usage in wicket (Only available on Jetty) -->
     <dependency>
       <groupId>org.mortbay.jetty</groupId>
