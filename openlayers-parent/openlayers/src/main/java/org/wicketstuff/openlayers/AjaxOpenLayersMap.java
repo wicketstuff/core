@@ -531,4 +531,52 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	public String getMarkersLayerName() {
 		return markersLayerName;
 	}
+
+	public void setVisibleOnlyLayers(String... names) {
+		if (AjaxRequestTarget.get() != null) {
+			List<String> invisibleNames = new ArrayList<String>();
+			invisibleNames.add(markersLayerName);
+			invisibleNames.addAll(featureVectors.keySet());
+			StringBuffer visibleLayers = new StringBuffer();
+			String layerId = null;
+			for (String name : names) {
+				layerId = findLayerId(name);
+				if (layerId != null) {
+					if (visibleLayers.length() > 0)
+						visibleLayers.append(",");
+					visibleLayers.append(layerId);
+				}
+				invisibleNames.remove(name);
+			}
+			StringBuffer invisibleLayers = new StringBuffer();
+			for (String name : invisibleNames) {
+				layerId = findLayerId(name);
+				if (layerId != null) {
+					if (invisibleLayers.length() > 0)
+						invisibleLayers.append(",");
+					invisibleLayers.append(layerId);
+				}
+			}
+			AjaxRequestTarget.get().appendJavascript(
+					getJSinvoke("setLayersVisibility(["
+							+ visibleLayers.toString() + "], ["
+							+ invisibleLayers.toString() + "])"));
+		}
+	}
+
+	public void toggleLayer(String name) {
+		String layerId = findLayerId(name);
+		if (layerId != null && AjaxRequestTarget.get() != null) {
+			AjaxRequestTarget.get().appendJavascript(
+					getJSinvoke("toggleLayer(" + layerId + ")"));
+		}
+	}
+
+	private String findLayerId(String name) {
+		Vector vector = featureVectors.get(name);
+		if (vector != null)
+			return vector.getId();
+		return markersLayerName != null && markersLayerName.equals(name) ? "1"
+				: null;
+	}
 }

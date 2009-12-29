@@ -231,6 +231,12 @@ function WicketOMap(id, options, markersLayerName, showMarkersInLayerSwitcher) {
 		var visible = layer.getVisibility();
 		layer.setVisibility(!visible);
 	};
+	this.setLayersVisibility = function (visibleLayers, invisibleLayers) {
+		for(index in visibleLayers)
+			this.layers[visibleLayers[index]].setVisibility(true);
+		for(index in invisibleLayers)
+			this.layers[invisibleLayers[index]].setVisibility(false);
+	}
 	
 	/*used for draw*/
     this.serialize = function (feature) {
