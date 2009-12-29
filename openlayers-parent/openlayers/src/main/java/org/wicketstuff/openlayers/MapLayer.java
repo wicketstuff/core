@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.wicketstuff.openlayers.api.IMapCenter;
 import org.wicketstuff.openlayers.api.LonLat;
@@ -289,6 +290,18 @@ public class MapLayer implements Serializable {
 			setCenter(init_location);
 		}
 		init(values);
+	}
+
+	public final Set<String> getMarkerIdList() {
+		return markerList.keySet();
+	}
+
+	public final Set<String> getFeatureIdList() {
+		return featureList.keySet();
+	}
+
+	public final Set<String> getFeatureStyleIdList() {
+		return featureStyleList.keySet();
 	}
 
 	private class Feature2FeatureStyle implements Serializable {
