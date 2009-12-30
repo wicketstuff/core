@@ -54,6 +54,24 @@ public class Page4Block extends PageSupport {
         return "div.blockMe";
       }
     });
+	  
+	  BlockOptions opts = new BlockOptions();
+	  opts.setFadeIn( 5000 );
+	  opts.setFadeOut( 0 );
+	  
+    body.add( new BlockingAjaxLink<Void>( "block3", opts ) {
+      @Override
+      public void doClick(AjaxRequestTarget target) {
+        try {
+          Thread.sleep( 5000 );
+        } 
+        catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+        info( "Clicked link: "+this.toString() );
+        target.addChildren( getPage(), FeedbackPanel.class );
+      }
+    });
 	}
 
 }
