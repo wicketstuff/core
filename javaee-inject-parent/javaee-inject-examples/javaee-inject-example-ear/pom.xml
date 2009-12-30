@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.wicketstuff</groupId>
+        <artifactId>javaee-inject-examples</artifactId>
+        <version>1.4-SNAPSHOT</version>
+    </parent>
+    <artifactId>javaee-inject-example-ear</artifactId>
+    <packaging>ear</packaging>
+    <name>JavaEE Inject - Example EAR</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <configuration>
+                    <version>5</version>
+                    <modules>
+                        <webModule>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>javaee-inject-example-war</artifactId>
+                            <contextRoot>/example</contextRoot>
+                            <!--unpack>true</unpack-->
+                        </webModule>
+                        <ejbModule>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>javaee-inject-example-ejb</artifactId>
+                            <!--unpack>true</unpack-->
+                        </ejbModule>
+                    </modules>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <type>ejb</type>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>javaee-inject-example-ejb</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <type>war</type>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>javaee-inject-example-war</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+</project>
