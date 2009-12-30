@@ -36,7 +36,6 @@ public class ContactDaoBean implements ContactDaoLocal {
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    @Override
     public List<Contact> getContacts() {
         return em.createQuery("SELECT c FROM Contact c").getResultList();
     }
@@ -44,7 +43,6 @@ public class ContactDaoBean implements ContactDaoLocal {
     /**
      * {@inheritDoc}
      */
-    @Override
     public Contact getContact(Long id) {
         return em.find(Contact.class, id);
     }
@@ -52,7 +50,6 @@ public class ContactDaoBean implements ContactDaoLocal {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void addContact(String name, String email) {
         em.merge(new Contact(null, name, email));
     }
@@ -60,7 +57,6 @@ public class ContactDaoBean implements ContactDaoLocal {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void remove(Contact modelObject) {
         Contact managed = em.merge(modelObject);
         em.remove(managed);
