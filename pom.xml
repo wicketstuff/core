@@ -24,6 +24,7 @@
 		<module>gmap2-parent</module>
 		<module>inmethod-grid-parent</module>
 		<module>input-events-parent</module>
+		<module>javaee-inject-parent</module>
 		<!-- <module>jslibraries</module> commented out due to test fails -->
 		<module>jquery-parent</module>
 		<module>misc</module>

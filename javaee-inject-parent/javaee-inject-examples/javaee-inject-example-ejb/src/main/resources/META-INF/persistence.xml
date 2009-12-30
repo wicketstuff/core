@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+ <persistence-unit name="defaultPersistenceUnit" transaction-type="JTA">
+ <jta-data-source>jdbc/__default</jta-data-source>
+ <properties>
+ <property name="toplink.platform.class.name"
+ value="oracle.toplink.essentials.platform.database.DerbyPlatform"/>
+  <property name="toplink.ddl-generation" value="drop-and-create-tables"/>
+  <property name="toplink.create-ddl-jdbc-file-name" value="create.jdbc"/>
+  <property name="toplink.drop-ddl-jdbc-file-name" value="drop.jdbc"/>
+ </properties>
+ </persistence-unit>
+</persistence>
