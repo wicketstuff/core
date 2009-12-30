@@ -87,10 +87,15 @@ public class Options implements Serializable {
 					.append("':");
 
 			// Don't surround function-strings in quotes
-			if (entry.getValue() instanceof FunctionString) {
-				str.append(entry.getValue().toString());
-			} else {
-				str.append("'" + escape(entry.getValue().toString()) + "'");
+			Object val = entry.getValue();
+			if (val instanceof FunctionString) {
+				str.append(val.toString());
+			} 
+			else if( (val instanceof Boolean) || (val instanceof Number) ) {
+        str.append(val.toString());
+      } 
+			else {
+				str.append("'" + escape(val.toString()) + "'");
 			}
 
 			str.append(",\n");
