@@ -1,10 +1,10 @@
 grant
 {
-    permission org.apache.wicket.security.hive.authorization.permissions.ComponentPermission "org.apache.wicket.security.examples.secureform.pages.MySecurePage", "render";
-    permission org.apache.wicket.security.hive.authorization.permissions.ComponentPermission "org.apache.wicket.security.examples.secureform.pages.MySecurePage", "enable";
+    permission org.apache.wicket.security.hive.authorization.permissions.ComponentPermission "org.apache.wicket.security.examples.secureform.pages.MySecurePage", "render, enable";
+    //permission org.apache.wicket.security.hive.authorization.permissions.ComponentPermission "org.apache.wicket.security.examples.secureform.pages.MySecurePage", "enable";
     permission ${ComponentPermission} "org.apache.wicket.security.examples.secureform.pages.MySecurePage:sampleForm", "render";
     permission ${ComponentPermission} "org.apache.wicket.security.examples.secureform.pages.MySecurePage:sampleForm:name", "render";
-    permission ${ComponentPermission} "org.apache.wicket.security.examples.secureform.pages.HomePage$2$1", "render, enable";
+    //permission ${ComponentPermission} "org.apache.wicket.security.examples.secureform.pages.HomePage$2$1", "render, enable";
 };
 
 grant principal org.apache.wicket.security.hive.authorization.SimplePrincipal "admin"

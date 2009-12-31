@@ -28,7 +28,10 @@ public class TestMySecurePage extends AbstractSecurePageTestBase {
         loginAs("user");
         tester.startPage(MySecurePage.class);
         tester.assertRenderedPage(MySecurePage.class);
-        tester.dumpPage();
+//        tester.dumpPage();
+
+        //NOTE: Because MySecurePage has no inherit (only render and enable)
+        //      it is possible to disable the form for this standard user. (without the admin principal)
         TagTester tag = tester.getTagByWicketId("sampleForm");
         assertEquals("div", tag.getName());
 

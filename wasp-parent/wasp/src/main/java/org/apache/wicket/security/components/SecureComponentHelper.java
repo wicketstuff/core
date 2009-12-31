@@ -271,6 +271,7 @@ public final class SecureComponentHelper
 
 	/**
 	 * Builds an alias for a class.
+     * NOTE: When an anonymous class is given, it will return the name of the parent class. 
 	 * 
 	 * @param class1
 	 * @return an alias
@@ -279,6 +280,10 @@ public final class SecureComponentHelper
 	{
 		if (class1 == null)
 			throw new SecurityException("Specified class is null");
+        if (class1.isAnonymousClass()) {
+            return class1.getSuperclass().getName();
+        } 
+
 		return class1.getName();
 	}
 
