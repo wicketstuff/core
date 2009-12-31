@@ -36,7 +36,8 @@
     
     <!-- setup wicket application -->
     <bean id="wicketApplication" class="org.apache.wicket.security.examples.springsecurity.SpringSecureWicketApplication">
-    <property name="authenticationManager" ref="authenticationManager"/>
+    <!--suppress SpringModelInspection -->
+        <property name="authenticationManager" ref="authenticationManager"/>
     </bean>
 
     <!--

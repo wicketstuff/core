@@ -51,6 +51,26 @@ public class HomePage extends WebPage {
             }
         });
 
+         add(new Link("mySecureAnonymousPageLink"){
+             public void onClick() {
+                 setResponsePage(new MySecurePage(parameters) {
+                     // Override a method to mimic a real anonymous class. 
+                     @Override
+                     protected void onBeforeRender() {
+                         super.onBeforeRender();
+                     }
+                 });
+             }
+         });
+
+        /*
+         setResponsePage(new CreateItemPage(getPage()) {
+	@Override
+	protected void onSuccess(final Serializable index) {
+		setResponsePage(new ViewItemPage(getBackPage(), index));
+	}
+});
+*/
         // add a link to the login page
         add(new Link("toLogin") {
             public void onClick() {

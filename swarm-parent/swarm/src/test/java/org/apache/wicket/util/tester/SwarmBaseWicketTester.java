@@ -770,11 +770,11 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 					Field parametersField = BookmarkablePageLink.class
 							.getDeclaredField("parameters");
 					Method getParametersMethod = BookmarkablePageLink.class.getDeclaredMethod(
-							"getPageParameters", null);
+							"getPageParameters");
 					getParametersMethod.setAccessible(true);
 
 					PageParameters parameters = (PageParameters)getParametersMethod.invoke(
-							bookmarkablePageLink, null);
+							bookmarkablePageLink);
 					setParametersForNextRequest(parameters);
 				}
 				catch (Exception e)

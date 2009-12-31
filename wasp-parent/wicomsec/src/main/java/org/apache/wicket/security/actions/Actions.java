@@ -33,14 +33,14 @@ public class Actions
 {
 	private static final Actions INSTANCE = new Actions();
 
-	private Map factoryCollection;
+	private Map<Object, ActionFactory> factoryCollection;
 
 	/**
 	 * Private constructor for this simple class.
 	 */
 	private Actions()
 	{
-		factoryCollection = new HashMap();
+		factoryCollection = new HashMap<Object, ActionFactory>();
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class Actions
 	 */
 	public static ActionFactory getActionFactory(Object key)
 	{
-		return (ActionFactory)INSTANCE.factoryCollection.get(key);
+		return INSTANCE.factoryCollection.get(key);
 	}
 
 	/**
@@ -66,7 +66,6 @@ public class Actions
 	 *            the ActionFactory.
 	 * @throws IllegalArgumentException
 	 *             if the factory is null
-	 * @throws IllegalArgumentException
 	 *             if an attempt is made to overwrite the registration.
 	 * @see #unregisterActionFactory(Object)
 	 */
@@ -94,6 +93,6 @@ public class Actions
 	 */
 	public static ActionFactory unregisterActionFactory(Object key)
 	{
-		return (ActionFactory)INSTANCE.factoryCollection.remove(key);
+		return INSTANCE.factoryCollection.remove(key);
 	}
 }
