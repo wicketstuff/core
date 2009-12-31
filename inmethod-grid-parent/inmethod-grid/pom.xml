@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>inmethod-grid-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.4.2-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>inmethod-grid</artifactId>
