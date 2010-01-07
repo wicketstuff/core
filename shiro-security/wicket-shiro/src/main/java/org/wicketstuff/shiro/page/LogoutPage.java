@@ -19,6 +19,7 @@ package org.wicketstuff.shiro.page;
 import javax.servlet.http.Cookie;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
@@ -28,15 +29,19 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.protocol.http.WebResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class LogoutPage extends WebPage
 {
   public static final String REDIRECTPAGE_PARAM = "redirectpage";
+  
+  static Logger log = LoggerFactory.getLogger( LogoutPage.class );
 
   /**
    * Constructor. The page will immediately redirect to the given url.
-   * 
+   *
    * @param url
    *            The url to redirect to
    */
@@ -44,7 +49,7 @@ public class LogoutPage extends WebPage
   {
     doLogoutAndAddRedirect(url, getDelayTime());
   }
-  
+
 
   public LogoutPage( final PageParameters parameters ) {
     String page = parameters.getString(REDIRECTPAGE_PARAM);
@@ -52,37 +57,36 @@ public class LogoutPage extends WebPage
     if ( page != null ) {
       try {
         pageClass = (Class<? extends Page>)Class.forName(page);
-      } 
+      }
       catch (ClassNotFoundException e) {
         throw new RuntimeException(e);
       }
-    } 
+    }
     else {
       pageClass = getApplication().getHomePage();
     }
-    
+
 
     this.setStatelessHint( true );
     setResponsePage( pageClass );
-    
+
     // this should remove the cookie...
-    SecurityUtils.getSubject().logout();
+    Subject subject = SecurityUtils.getSubject();
+    log.info( "logout: "+subject );
+    subject.logout();
     Session.get().invalidateNow(); // invalidate the wicket session
     return;
-    
-    
-    //doLogoutAndAddRedirect( urlFor(pageClass, null ), getDelayTime() );
   }
-  
+
   public LogoutPage( Class<? extends Page> pageClass ) {
     doLogoutAndAddRedirect( urlFor(pageClass, null ), getDelayTime() );
   }
-  
+
 
   /**
    * Constructor. The page will redirect to the given url after waiting for the given number of
    * seconds.
-   * 
+   *
    * @param url
    *            The url to redirect to
    * @param waitBeforeRedirectInSeconds
@@ -91,10 +95,12 @@ public class LogoutPage extends WebPage
   private void doLogoutAndAddRedirect(final CharSequence url, final int waitBeforeRedirectInSeconds)
   {
     this.setStatelessHint( true );
-    
+
     // this should remove the cookie...
-    SecurityUtils.getSubject().logout();
-    
+    Subject subject = SecurityUtils.getSubject();
+    log.info( "logout: "+subject );
+    subject.logout();
+
     final WebMarkupContainer redirect = new WebMarkupContainer("redirect");
     final String content = waitBeforeRedirectInSeconds + ";URL=" + url;
     redirect.add(new AttributeModifier("content", new Model<String>(content)));
@@ -102,39 +108,12 @@ public class LogoutPage extends WebPage
 
     // invalidate the session
     Session.get().invalidateNow(); // invalidate the wicket session
-    
+
     // HYMMMM
     Cookie c = new Cookie( "rememberMe", "xxx" );
-    c.setMaxAge(0); 
+    c.setMaxAge(0);
     ((WebResponse)RequestCycle.get().getResponse()).addCookie( c );
   }
-
-  
-//  
-//  /**
-//   * Construct. The page will redirect to the given Page.
-//   * 
-//   * @param page
-//   *            The page to redirect to.
-//   */
-//  public RedirectPage(final Page page)
-//  {
-//    this(page.urlFor(IRedirectListener.INTERFACE), 0);
-//  }
-//
-//  /**
-//   * Construct. The page will redirect to the given Page after waiting for the given number of
-//   * seconds.
-//   * 
-//   * @param page
-//   *            The page to redirect to.
-//   * @param waitBeforeRedirectInSeconds
-//   *            The number of seconds the browser should wait before redirecting
-//   */
-//  public RedirectPage(final Page page, final int waitBeforeRedirectInSeconds)
-//  {
-//    this(page.urlFor(IRedirectListener.INTERFACE), waitBeforeRedirectInSeconds);
-//  }
 
   /**
    * @see org.apache.wicket.Component#isVersioned()
@@ -144,7 +123,7 @@ public class LogoutPage extends WebPage
   {
     return false;
   }
-  
+
   public int getDelayTime()
   {
     return 0;
