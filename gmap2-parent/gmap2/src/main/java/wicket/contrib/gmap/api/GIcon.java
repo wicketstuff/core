@@ -18,18 +18,16 @@
  */
 package wicket.contrib.gmap.api;
 
+import java.util.Iterator;
+import java.util.List;
 
 /**
- * Represents an Google Maps API's
- * http://code.google.com/apis/maps/documentation/reference.html#GIcon
+ * Represents an Google Maps API's http://code.google.com/apis/maps/documentation/reference.html#GIcon
  * 
  * @author Robert Jacolin, Gregory Maes, Vincent Demay, Anyware Technologies
  */
-public class GIcon implements GValue, Cloneable
-{
-	/**
-	 * 
-	 */
+public class GIcon implements GValue, Cloneable {
+
 	private static final long serialVersionUID = 1714038753187423501L;
 
 	private String image = "http://www.google.com/mapfiles/marker.png";
@@ -39,24 +37,24 @@ public class GIcon implements GValue, Cloneable
 	private GPoint iconAnchor = null;
 	private GPoint infoWindowAnchor = null;
 	private GPoint infoShadowAnchor = null;
+	/**
+	 * http://code.google.com/intl/de/apis/maps/documentation/reference.html#GIcon.imageMap
+	 */
+	private List<Integer> imageMap = null;
 
-	public GIcon()
-	{
+	public GIcon() {
 	}
 
-	public GIcon(String image)
-	{
+	public GIcon(String image) {
 		this.image = image;
 	}
 
-	public GIcon(String image, String shadow)
-	{
+	public GIcon(String image, String shadow) {
 		this.image = image;
 		this.shadow = shadow;
 	}
 
-	public GIcon(String image, String shadow, GSize iconSize, GSize shadowSize, GPoint iconAnchor, GPoint infoWindowAnchor, GPoint infoShadowAnchor)
-	{
+	public GIcon(String image, String shadow, GSize iconSize, GSize shadowSize, GPoint iconAnchor, GPoint infoWindowAnchor, GPoint infoShadowAnchor) {
 		this.image = image;
 		this.shadow = shadow;
 		this.iconSize = iconSize;
@@ -66,76 +64,148 @@ public class GIcon implements GValue, Cloneable
 		this.infoShadowAnchor = infoShadowAnchor;
 	}
 
-	public String getId()
-	{
-		return "icon" + String.valueOf(System.identityHashCode(this));
+	@Override
+	public GIcon clone() {
+		try {
+			return (GIcon) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new Error(e);
+		}
 	}
 
-	public String getImage()
-	{
-		return image;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		GIcon other = (GIcon) obj;
+		if (iconAnchor == null) {
+			if (other.iconAnchor != null) {
+				return false;
+			}
+		} else if (!iconAnchor.equals(other.iconAnchor)) {
+			return false;
+		}
+		if (iconSize == null) {
+			if (other.iconSize != null) {
+				return false;
+			}
+		} else if (!iconSize.equals(other.iconSize)) {
+			return false;
+		}
+		if (image == null) {
+			if (other.image != null) {
+				return false;
+			}
+		} else if (!image.equals(other.image)) {
+			return false;
+		}
+		if (imageMap == null) {
+			if (other.imageMap != null) {
+				return false;
+			}
+		} else if (!imageMap.equals(other.imageMap)) {
+			return false;
+		}
+		if (infoShadowAnchor == null) {
+			if (other.infoShadowAnchor != null) {
+				return false;
+			}
+		} else if (!infoShadowAnchor.equals(other.infoShadowAnchor)) {
+			return false;
+		}
+		if (infoWindowAnchor == null) {
+			if (other.infoWindowAnchor != null) {
+				return false;
+			}
+		} else if (!infoWindowAnchor.equals(other.infoWindowAnchor)) {
+			return false;
+		}
+		if (shadow == null) {
+			if (other.shadow != null) {
+				return false;
+			}
+		} else if (!shadow.equals(other.shadow)) {
+			return false;
+		}
+		if (shadowSize == null) {
+			if (other.shadowSize != null) {
+				return false;
+			}
+		} else if (!shadowSize.equals(other.shadowSize)) {
+			return false;
+		}
+		return true;
 	}
 
-	public String getShadow()
-	{
-		return shadow;
+	public GPoint getIconAnchor() {
+		return iconAnchor;
 	}
 
-	public GSize getIconSize()
-	{
+	public GSize getIconSize() {
 		return iconSize;
 	}
 
-	public GSize getShadowSize()
-	{
-		return this.shadowSize;
+	public String getId() {
+		return "icon" + String.valueOf(System.identityHashCode(this));
 	}
 
-	public GPoint getIconAnchor()
-	{
-		return this.iconAnchor;
+	public String getImage() {
+		return image;
 	}
 
-	public GPoint getInfoWindowAnchor()
-	{
-		return this.infoWindowAnchor;
+	public List<Integer> getImageMap() {
+		return imageMap;
 	}
 
-	public GPoint getInfoShadowAnchor()
-	{
-		return this.infoShadowAnchor;
+	public GPoint getInfoShadowAnchor() {
+		return infoShadowAnchor;
 	}
 
-	public String getJSconstructor()
-	{
+	public GPoint getInfoWindowAnchor() {
+		return infoWindowAnchor;
+	}
+
+	public String getJSconstructor() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("(function() {\n");
 		buffer.append("var icon = new GIcon(G_DEFAULT_ICON);\n");
 		buffer.append("icon.image = \"").append(image).append("\";\n");
 		buffer.append("icon.shadow = \"").append(shadow).append("\";\n");
 
-		if (iconSize != null)
-		{
+		if (iconSize != null) {
 			buffer.append("icon.iconSize = ").append(iconSize.getJSconstructor()).append(";\n");
 		}
 
-		if (shadowSize != null)
-		{
+		if (shadowSize != null) {
 			buffer.append("icon.shadowSize = ").append(shadowSize.getJSconstructor()).append(";\n");
 		}
-
-		if (iconAnchor != null)
-		{
+		if (imageMap != null) {
+			buffer.append("icon.imageMap  = [");
+			Iterator<Integer> imit = imageMap.iterator();
+			while (imit.hasNext()) {
+				buffer.append(imit.next().toString());
+				if (imit.hasNext()) {
+					buffer.append(", ");
+				}
+			}
+			buffer.append("];\n");
+		}
+		if (iconAnchor != null) {
 			buffer.append("icon.iconAnchor = ").append(iconAnchor.getJSconstructor()).append(";\n");
 		}
 
-		if (infoWindowAnchor != null)
-		{
+		if (infoWindowAnchor != null) {
 			buffer.append("icon.infoWindowAnchor = ").append(infoWindowAnchor.getJSconstructor()).append(";\n");
 		}
 
-		if (infoShadowAnchor != null)
-		{
+		if (infoShadowAnchor != null) {
 			buffer.append("icon.infoShadowAnchor = ").append(infoShadowAnchor.getJSconstructor()).append(";\n");
 		}
 
@@ -144,126 +214,88 @@ public class GIcon implements GValue, Cloneable
 		return buffer.toString();
 	}
 
+	public String getShadow() {
+		return shadow;
+	}
+
+	public GSize getShadowSize() {
+		return shadowSize;
+	}
+
 	@Override
-	public int hashCode()
-	{
-		final int PRIME = 31;
+	public int hashCode() {
+		final int prime = 31;
 		int result = 1;
-		result = PRIME * result + ((iconAnchor == null) ? 0 : iconAnchor.hashCode());
-		result = PRIME * result + ((iconSize == null) ? 0 : iconSize.hashCode());
-		result = PRIME * result + ((image == null) ? 0 : image.hashCode());
-		result = PRIME * result + ((infoShadowAnchor == null) ? 0 : infoShadowAnchor.hashCode());
-		result = PRIME * result + ((infoWindowAnchor == null) ? 0 : infoWindowAnchor.hashCode());
-		result = PRIME * result + ((shadow == null) ? 0 : shadow.hashCode());
-		result = PRIME * result + ((shadowSize == null) ? 0 : shadowSize.hashCode());
+		result = prime * result + ((iconAnchor == null) ? 0 : iconAnchor.hashCode());
+		result = prime * result + ((iconSize == null) ? 0 : iconSize.hashCode());
+		result = prime * result + ((image == null) ? 0 : image.hashCode());
+		result = prime * result + ((imageMap == null) ? 0 : imageMap.hashCode());
+		result = prime * result + ((infoShadowAnchor == null) ? 0 : infoShadowAnchor.hashCode());
+		result = prime * result + ((infoWindowAnchor == null) ? 0 : infoWindowAnchor.hashCode());
+		result = prime * result + ((shadow == null) ? 0 : shadow.hashCode());
+		result = prime * result + ((shadowSize == null) ? 0 : shadowSize.hashCode());
 		return result;
 	}
 
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		final GIcon other = (GIcon)obj;
-		if (iconAnchor == null)
-		{
-			if (other.iconAnchor != null)
-				return false;
-		}
-		else if (!iconAnchor.equals(other.iconAnchor))
-			return false;
-		if (iconSize == null)
-		{
-			if (other.iconSize != null)
-				return false;
-		}
-		else if (!iconSize.equals(other.iconSize))
-			return false;
-		if (image == null)
-		{
-			if (other.image != null)
-				return false;
-		}
-		else if (!image.equals(other.image))
-			return false;
-		if (infoShadowAnchor == null)
-		{
-			if (other.infoShadowAnchor != null)
-				return false;
-		}
-		else if (!infoShadowAnchor.equals(other.infoShadowAnchor))
-			return false;
-		if (infoWindowAnchor == null)
-		{
-			if (other.infoWindowAnchor != null)
-				return false;
-		}
-		else if (!infoWindowAnchor.equals(other.infoWindowAnchor))
-			return false;
-		if (shadow == null)
-		{
-			if (other.shadow != null)
-				return false;
-		}
-		else if (!shadow.equals(other.shadow))
-			return false;
-		if (shadowSize == null)
-		{
-			if (other.shadowSize != null)
-				return false;
-		}
-		else if (!shadowSize.equals(other.shadowSize))
-			return false;
-		return true;
-	}
-
-	public GIcon clone() {
-		try
-		{
-			return (GIcon)super.clone();
-		}
-		catch (CloneNotSupportedException e)
-		{
-			throw new Error(e);
-		}
-	}
-
-	public GIcon iconSize(GSize iconSize)
-	{
-		GIcon clone = clone();
-		clone.iconSize = iconSize;
-		return clone;
-	}
-
-	public GIcon shadowSize(GSize shadowSize)
-	{
-		GIcon clone = clone();
-		clone.shadowSize = shadowSize;
-		return clone;
-	}
-
-	public GIcon iconAnchor(GPoint iconAnchor)
-	{
+	public GIcon iconAnchor(GPoint iconAnchor) {
 		GIcon clone = clone();
 		clone.iconAnchor = iconAnchor;
 		return clone;
 	}
 
-	public GIcon infoWindowAnchor(GPoint infoWindowAnchor)
-	{
+	public GIcon iconSize(GSize iconSize) {
+		GIcon clone = clone();
+		clone.iconSize = iconSize;
+		return clone;
+	}
+
+	public GIcon infoShadowAnchor(GPoint infoShadowAnchor) {
+		GIcon clone = clone();
+		clone.infoShadowAnchor = infoShadowAnchor;
+		return clone;
+	}
+
+	public GIcon infoWindowAnchor(GPoint infoWindowAnchor) {
 		GIcon clone = clone();
 		clone.infoWindowAnchor = infoWindowAnchor;
 		return clone;
 	}
 
-	public GIcon infoShadowAnchor(GPoint infoShadowAnchor)
-	{
+	public void setIconAnchor(GPoint iconAnchor) {
+		this.iconAnchor = iconAnchor;
+	}
+
+	public void setIconSize(GSize iconSize) {
+		this.iconSize = iconSize;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public void setImageMap(List<Integer> imageMap) {
+		this.imageMap = imageMap;
+	}
+
+	public void setInfoShadowAnchor(GPoint infoShadowAnchor) {
+		this.infoShadowAnchor = infoShadowAnchor;
+	}
+
+	public void setInfoWindowAnchor(GPoint infoWindowAnchor) {
+		this.infoWindowAnchor = infoWindowAnchor;
+	}
+
+	public void setShadow(String shadow) {
+		this.shadow = shadow;
+	}
+
+	public void setShadowSize(GSize shadowSize) {
+		this.shadowSize = shadowSize;
+	}
+
+	public GIcon shadowSize(GSize shadowSize) {
 		GIcon clone = clone();
-		clone.infoShadowAnchor = infoShadowAnchor;
+		clone.shadowSize = shadowSize;
 		return clone;
-	}	
+	}
 }
