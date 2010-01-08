@@ -15,19 +15,22 @@
  */
 package wicket.contrib.gmap.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.StringTokenizer;
 
 import wicket.contrib.gmap.api.GLatLng;
 
 /**
- * Geocoder. See:
- * http://www.google.com/apis/maps/documentation/services.html#Geocoding_Direct
+ * Geocoder. See: http://www.google.com/apis/maps/documentation/services.html#Geocoding_Direct
  * 
  * @author Thijs Vonk
  */
-public class Geocoder implements Serializable
-{
+public class Geocoder implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -50,24 +53,15 @@ public class Geocoder implements Serializable
 	 * @throws IllegalArgumentException
 	 *             If the API key is <code>null</code>
 	 */
-	public Geocoder(String gMapKey)
-	{
-		if (gMapKey == null)
-		{
+	public Geocoder(String gMapKey) {
+		if (gMapKey == null) {
 			throw new IllegalArgumentException("API key cannot be null");
 		}
 
 		this.gMapKey = gMapKey;
 	}
 
-	public String encode(String address)
-	{
-		return "http://maps.google.com/maps/geo?q=" + address.replace(' ', '+') + "&output="
-				+ output + "&key=" + gMapKey;
-	}
-
-	public GLatLng decode(String response) throws GeocoderException
-	{
+	public GLatLng decode(String response) throws GeocoderException {
 
 		StringTokenizer gLatLng = new StringTokenizer(response, ",");
 
@@ -76,11 +70,64 @@ public class Geocoder implements Serializable
 		String latitude = gLatLng.nextToken();
 		String longitude = gLatLng.nextToken();
 
-		if (Integer.parseInt(status) != GeocoderException.G_GEO_SUCCESS)
-		{
+		if (Integer.parseInt(status) != GeocoderException.G_GEO_SUCCESS) {
 			throw new GeocoderException(Integer.parseInt(status));
 		}
 
 		return new GLatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+	}
+
+	/**
+	 * builds the google geo-coding url
+	 * 
+	 * @param address
+	 * @return
+	 */
+	public String encode(final String address) {
+		return "http://maps.google.com/maps/geo?q=" + urlEncode(address) + "&output=" + output + "&key=" + gMapKey;
+	}
+
+	/**
+	 * @param address
+	 * @return
+	 * @throws IOException
+	 */
+	public GLatLng geocode(final String address) throws IOException {
+		InputStream is = invokeService(encode(address));
+		if (is != null) {
+			try {
+				String content = org.apache.wicket.util.io.IOUtils.toString(is);
+				return decode(content);
+			} finally {
+				is.close();
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * fetches the url content
+	 * 
+	 * @param address
+	 * @return
+	 * @throws IOException
+	 */
+	protected InputStream invokeService(final String address) throws IOException {
+		URL url = new URL(address);
+		return url.openStream();
+	}
+
+	/**
+	 * url-encode a value
+	 * 
+	 * @param value
+	 * @return
+	 */
+	private String urlEncode(final String value) {
+		try {
+			return URLEncoder.encode(value, "UTF-8");
+		} catch (UnsupportedEncodingException ex) {
+			throw new RuntimeException(ex.getMessage());
+		}
 	}
 }
