@@ -112,7 +112,7 @@ public class ComponentPermission extends ActionPermission
 		return false;
 	}
 
-	private boolean implies(String[] path1, String[] path2)
+	protected boolean implies(String[] path1, String[] path2)
 	{
 		int i = 0;
 		int j = 0;
