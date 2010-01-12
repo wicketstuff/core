@@ -19,7 +19,8 @@ public class Start {
 		WebAppContext bb = new WebAppContext();
 		bb.setServer(server);
 		bb.setContextPath("/");
-		bb.setWar("examples/secureforms-example/src/main/webapp");
+		//bb.setWar("examples/secureforms-example/src/main/webapp");
+		bb.setWar("src/main/webapp");
 
 		
 		// START JMX SERVER

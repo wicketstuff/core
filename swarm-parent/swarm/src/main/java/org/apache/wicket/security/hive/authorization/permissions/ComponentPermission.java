@@ -94,7 +94,7 @@ public class ComponentPermission extends ActionPermission
 			if (getAction().implies(getAction().getActionFactory().getAction(Inherit.class)))
 				return getAction().implies(other.getAction())
 						&& (implies(other.path, path) || impliesHierarchy(other));
-			return getAction().implies(other.getAction()) && getName().equals(other.getName());
+			return getAction().implies(other.getAction()) && equals(other.path, path);
 		}
 		return false;
 	}
@@ -110,6 +110,18 @@ public class ComponentPermission extends ActionPermission
 
 		}
 		return false;
+	}
+
+	protected boolean equals(String[] path1, String[] path2)
+	{
+		if (path1.length != path2.length)
+			return false;
+		for (int count = 0; count < path1.length; count++)
+		{
+			if (!path1[count].equals(path2[count]))
+				return false;
+		}
+		return true;
 	}
 
 	protected boolean implies(String[] path1, String[] path2)

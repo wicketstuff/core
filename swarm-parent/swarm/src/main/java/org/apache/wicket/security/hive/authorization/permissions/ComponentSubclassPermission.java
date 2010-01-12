@@ -39,6 +39,20 @@ public class ComponentSubclassPermission extends ComponentPermission
 		super(componentAlias, actions);
 	}
 
+	protected boolean equals(String[] path1, String[] path2)
+	{
+		if (path1.length != path2.length)
+			return false;
+		for (int count = 0; count < path1.length; count++)
+		{
+			if ((count == 0 && !isSubclass(path1[0], path2[0]))
+					|| (count > 0 && !path1[count].equals(path2[count])))
+				return false;
+		}
+		return true;
+	}
+
+
 	protected boolean implies(String[] path1, String[] path2)
 	{
 		int i = 0;
@@ -65,8 +79,8 @@ public class ComponentSubclassPermission extends ComponentPermission
 	{
 		try
 		{
-			Class class1 = Class.forName(classname1);
-			Class class2 = Class.forName(classname2);
+			Class<?> class1 = Class.forName(classname1);
+			Class<?> class2 = Class.forName(classname2);
 			return class2.isAssignableFrom(class1);
 		}
 		catch (ClassNotFoundException e)
