@@ -15,8 +15,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.apache.wicket.wicket-security</groupId>
 	<artifactId>wicket-security</artifactId>
@@ -26,14 +25,13 @@
 	<inceptionYear>2006</inceptionYear>
 	<description>Parent project for wicket security projects</description>
 	<prerequisites>
-		<maven>2.0.9</maven>
+		<maven>2.1</maven>
 	</prerequisites>
-
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jetty.version>6.1.21</jetty.version>
 		<wicket.version>1.4.5</wicket.version>
 	</properties>
-
 	<profiles>
 		<profile>
 			<id>release</id>
@@ -69,7 +67,6 @@
 		<developerConnection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk/wicket-security</developerConnection>
 		<url>http://wicket-stuff.svn.sourceforge.net/viewvc/wicket-stuff/trunk/wicket-security</url>
 	</scm>
-
 	<!-- Developers -->
 	<developers>
 		<developer>
@@ -104,12 +101,10 @@
 			<timezone>1</timezone>
 		</developer>
 	</developers>
-
 	<organization>
 		<name>Apache Software Foundation</name>
 		<url>http://apache.org</url>
 	</organization>
-
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -118,10 +113,9 @@
 		</license>
 	</licenses>
 	<ciManagement>
-		<system>bamboo</system>
-		<url>http://wicketstuff.org/bamboo</url>
+		<system>teamcity</system>
+		<url>http://wicketstuff.org/teamcity</url>
 	</ciManagement>
-
 	<!-- Dependency list -->
 	<dependencyManagement>
 		<dependencies>
@@ -180,7 +174,6 @@
 				<scope>compile</scope>
 				<optional>true</optional>
 			</dependency>
-
 			<!-- servlet api -->
 			<dependency>
 				<groupId>javax.servlet</groupId>
@@ -261,6 +254,7 @@
 		</repository>
 	</distributionManagement>
 	<build>
+		<sourceEncoding>UTF-8</sourceEncoding>
 		<defaultGoal>package</defaultGoal>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
@@ -319,9 +313,7 @@
 					<configuration>
 						<downloadSources>true</downloadSources>
 						<classpathContainers>
-							<classpathContainer>
-								org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5
-							</classpathContainer>
+							<classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5</classpathContainer>
 						</classpathContainers>
 					</configuration>
 					<version>2.7</version>
@@ -350,14 +342,16 @@
 							</goals>
 							<configuration>
 								<resourceBundles>
-									<resourceBundle>
-										org.apache:apache-jar-resource-bundle:1.4
-									</resourceBundle>
+									<resourceBundle>org.apache:apache-jar-resource-bundle:1.4</resourceBundle>
 								</resourceBundles>
 							</configuration>
 						</execution>
 					</executions>
 					<inherited>true</inherited>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -373,7 +367,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<!-- Report tools configuration -->
 	<reporting>
 		<plugins>
