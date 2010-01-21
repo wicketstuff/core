@@ -38,26 +38,26 @@ public class ApacheLicenceHeaderTest extends ApacheLicenseHeaderTestCase
 		 * a license header would confuse and make it unclear what the example
 		 * is about.
 		 */
-		"src/main/java", "src/webapp" };
+		"src/main/java", "src/main/webapp" };
 
 		cssIgnore = new String[] {
 		/*
 		 * a license header would confuse and make it unclear what the test is
 		 * about.
 		 */
-		"src/webapp" };
+		"src/main/webapp" };
 
 		xmlIgnore = new String[] { "EclipseCodeFormat.xml", "codetemplates.xml",
 				"src/webapp/WEB-INF/applicationContext.xml" };
 
-		javaIgnore = new String[] {};
+		javaIgnore = new String[] { };
 
 		javaScriptIgnore = new String[] {
 		/*
 		 * .js in test is very test specific and a license header would confuse
 		 * and make it unclear what the test is about.
 		 */
-		"src/webapp" };
+		"src/main/webapp" };
 
 		propertiesIgnore = new String[] {
 		/*

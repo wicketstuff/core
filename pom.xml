@@ -15,8 +15,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.apache.wicket.wicket-security</groupId>
@@ -29,78 +28,29 @@
 	<prerequisites>
 		<maven>2.0.9</maven>
 	</prerequisites>
+
+	<properties>
+		<jetty.version>6.1.21</jetty.version>
+		<wicket.version>1.4.5</wicket.version>
+	</properties>
+
 	<profiles>
 		<profile>
 			<id>release</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<properties>
-				<wicket.version>1.4.1</wicket.version>
-			</properties>
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-remote-resources-plugin</artifactId>
-						<inherited>true</inherited>
-					</plugin>
-				</plugins>
-			</build>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>wicketstuff</id>
+					<name>Wicket Stuff repository</name>
+					<url>scp://wicketstuff.org/home/wicket/tomcat/webapps/maven/repository/</url>
+					<uniqueVersion>false</uniqueVersion>
+				</snapshotRepository>
+				<repository>
+					<id>wicketstuff</id>
+					<name>Wicket Stuff repository</name>
+					<url>scp://wicketstuff.org/home/wicket/tomcat/webapps/maven/repository/</url>
+				</repository>
+			</distributionManagement>
 		</profile>
-		<profile>
-			<id>wicket-1.3.3</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<properties>
-				<wicket.version>1.3.3</wicket.version>
-			</properties>
-		</profile>
-		<profile>
-			<id>wicket-1.3.4</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<properties>
-				<wicket.version>1.3.4</wicket.version>
-			</properties>
-		</profile>
-        <profile>
-            <id>wicket-1.3.5</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <wicket.version>1.3.5</wicket.version>
-            </properties>
-        </profile>
-        <profile>
-            <id>wicket-1.3.6</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <wicket.version>1.3.6</wicket.version>
-            </properties>
-        </profile>
-		<profile>
-			<id>wicket-1.4.0</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<wicket.version>1.4.0</wicket.version>
-			</properties>
-		</profile>
-        <profile>
-            <id>wicket-1.4.1</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <wicket.version>1.4.1</wicket.version>
-            </properties>
-        </profile>
 	</profiles>
 	<repositories>
 		<repository>
@@ -114,6 +64,12 @@
 			</releases>
 		</repository>
 	</repositories>
+	<scm>
+		<connection>scm:svn:http://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk/wicket-security</connection>
+		<developerConnection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk/wicket-security</developerConnection>
+		<url>http://wicket-stuff.svn.sourceforge.net/viewvc/wicket-stuff/trunk/wicket-security</url>
+	</scm>
+
 	<!-- Developers -->
 	<developers>
 		<developer>
@@ -121,12 +77,23 @@
 			<name>Maurice Marrink</name>
 			<roles>
 				<role>Developer</role>
+				<role>Deceased</role>
 			</roles>
 			<organization>Topicus</organization>
 			<organizationUrl>http://www.topicus.nl/</organizationUrl>
 			<timezone>1</timezone>
 		</developer>
-        <developer>
+		<developer>
+			<id>papegaaij</id>
+			<name>Emond Papegaaij</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<organization>Topicus</organization>
+			<organizationUrl>http://www.topicus.nl/</organizationUrl>
+			<timezone>1</timezone>
+		</developer>
+		<developer>
 			<id>terranvs</id>
 			<name>Olger Warnier</name>
 			<roles>
@@ -157,89 +124,97 @@
 
 	<!-- Dependency list -->
 	<dependencyManagement>
-	<dependencies>
-		<!-- logging dependency -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.4.2</version>
-			<scope>compile</scope>
-		</dependency>
-		<!-- test dependencies -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.4.2</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.13</version>
-			<optional>true</optional>
-			<scope>test</scope>
-		</dependency>
-		<!-- wicket dependencies -->
-		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket</artifactId>
-			<version>${wicket.version}</version>
-			<scope>compile</scope>
-		</dependency>
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket</artifactId>
-            <version>${wicket.version}</version>
-            <classifier>test</classifier>
-            <scope>test</scope>
-        </dependency>
-		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket-extensions</artifactId>
-			<version>${wicket.version}</version>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		<!-- servlet api -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.3</version>
-			<type>jar</type>
-			<scope>provided</scope>
-		</dependency>
-		<!-- wicket-security dependencies -->
-		<dependency>
-			<groupId>org.apache.wicket.wicket-security</groupId>
-			<artifactId>wicomsec</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.wicket.wicket-security</groupId>
-			<artifactId>wasp</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.wicket.wicket-security</groupId>
-			<artifactId>hive</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.wicket.wicket-security</groupId>
-			<artifactId>swarm</artifactId>
-			<version>${project.version}</version>
-			<scope>compile</scope>
-		</dependency>
-	</dependencies>
+		<dependencies>
+			<!-- logging dependency -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.4.2</version>
+				<scope>compile</scope>
+			</dependency>
+			<!-- test dependencies -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>3.8.1</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>1.4.2</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>1.2.13</version>
+				<optional>true</optional>
+				<scope>test</scope>
+			</dependency>
+			<!-- wicket dependencies -->
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket</artifactId>
+				<version>${wicket.version}</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket</artifactId>
+				<version>${wicket.version}</version>
+				<classifier>test</classifier>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-extensions</artifactId>
+				<version>${wicket.version}</version>
+				<scope>compile</scope>
+				<optional>true</optional>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-spring</artifactId>
+				<version>${wicket.version}</version>
+				<scope>compile</scope>
+				<optional>true</optional>
+			</dependency>
+
+			<!-- servlet api -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>2.3</version>
+				<type>jar</type>
+				<scope>provided</scope>
+			</dependency>
+			<!-- wicket-security dependencies -->
+			<dependency>
+				<groupId>org.apache.wicket.wicket-security</groupId>
+				<artifactId>wicomsec</artifactId>
+				<version>${project.version}</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket.wicket-security</groupId>
+				<artifactId>wasp</artifactId>
+				<version>${project.version}</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket.wicket-security</groupId>
+				<artifactId>hive</artifactId>
+				<version>${project.version}</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket.wicket-security</groupId>
+				<artifactId>swarm</artifactId>
+				<version>${project.version}</version>
+				<scope>compile</scope>
+			</dependency>
+		</dependencies>
 	</dependencyManagement>
 	<dependencies>
 		<!-- logging dependency -->
@@ -262,10 +237,10 @@
 		</dependency>
 	</dependencies>
 	<modules>
-	<module>wasp-parent</module>
-	<module>swarm-parent</module>
-	<module>examples</module>
-	<module>archetypes/swarm-quickstart</module>
+		<module>wasp-parent</module>
+		<module>swarm-parent</module>
+		<module>examples</module>
+		<module>archetypes/swarm-quickstart</module>
 	</modules>
 	<!-- Build environment -->
 	<distributionManagement>
@@ -291,7 +266,10 @@
 		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<resources>
 			<resource>
-				<directory>${basedir}/src/main/java</directory>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>src/main/java</directory>
 				<excludes>
 					<exclude>**/*.java</exclude>
 				</excludes>
@@ -301,6 +279,9 @@
 			</resource>
 		</resources>
 		<testResources>
+			<testResource>
+				<directory>${basedir}/src/test/resources</directory>
+			</testResource>
 			<testResource>
 				<directory>${basedir}/src/test/java</directory>
 				<excludes>
@@ -322,7 +303,6 @@
 					<inherited>true</inherited>
 				</plugin>
 				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
 					<executions>
 						<execution>
@@ -340,15 +320,14 @@
 						<downloadSources>true</downloadSources>
 						<classpathContainers>
 							<classpathContainer>
-								org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.4
+								org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5
 							</classpathContainer>
 						</classpathContainers>
 					</configuration>
-				<version>2.5</version>
-				<inherited>true</inherited>
+					<version>2.7</version>
+					<inherited>true</inherited>
 				</plugin>
 				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
 					<executions>
 						<execution>
@@ -362,11 +341,8 @@
 					<inherited>true</inherited>
 				</plugin>
 				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>
-						maven-remote-resources-plugin
-					</artifactId>
-					<version>1.0-alpha-5</version>
+					<artifactId>maven-remote-resources-plugin</artifactId>
+					<version>1.1</version>
 					<executions>
 						<execution>
 							<goals>
@@ -375,7 +351,7 @@
 							<configuration>
 								<resourceBundles>
 									<resourceBundle>
-										org.apache:apache-jar-resource-bundle:1.2
+										org.apache:apache-jar-resource-bundle:1.4
 									</resourceBundle>
 								</resourceBundles>
 							</configuration>
@@ -383,42 +359,19 @@
 					</executions>
 					<inherited>true</inherited>
 				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-				<!-- 	<version>2.1.3</version>	-->
-				</plugin>
-				<!-- 			<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-clover-plugin</artifactId>
-					<configuration>
-					<targetPercentage>50%</targetPercentage>
-					<jdk>1.4</jdk>
-					<contextFilters>catch</contextFilters>
-					<excludes>
-					<exclude>**/*Exception.java</exclude>
-					</excludes>
-					</configuration>
-					<executions>
-					<execution>
-					<id>verify</id>
-					<phase>verify</phase>
-					<goals>
-					<goal>instrument</goal>
-					<goal>check</goal>
-					</goals>
-					</execution>
-					<execution>
-					<id>site</id>
-					<phase>pre-site</phase>
-					<goals>
-					<goal>instrument</goal>
-					</goals>
-					</execution>
-					</executions>
-					</plugin>	-->
 			</plugins>
 		</pluginManagement>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+		</plugins>
 	</build>
 
 	<!-- Report tools configuration -->
@@ -442,7 +395,6 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>surefire-report-maven-plugin</artifactId>
-			<!-- 	<version>2.1.3</version>	-->
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -454,9 +406,7 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>
-					maven-project-info-reports-plugin
-				</artifactId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
 				<version>2.0</version>
 				<reportSets>
 					<reportSet>
@@ -471,18 +421,6 @@
 					</reportSet>
 				</reportSets>
 			</plugin>
-			<!-- 	<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clover-plugin</artifactId>
-				<configuration>
-				<targetPercentage>50%</targetPercentage>
-				<jdk>1.5</jdk>
-				<contextFilters>catch</contextFilters>
-				<excludes>
-				<exclude>**/*Exception.java</exclude>
-				</excludes>
-				</configuration>
-				</plugin>	-->
 		</plugins>
 	</reporting>
 </project>

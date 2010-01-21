@@ -14,7 +14,9 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
---><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.apache.wicket.wicket-security</groupId>
@@ -28,43 +30,32 @@
 	<description>Parent project for Wicket Security Examples</description>
 	<dependencyManagement>
 		<dependencies>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1</version>
-			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>logkit</groupId>
-					<artifactId>logkit</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>avalon-framework</groupId>
-					<artifactId>avalon-framework</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>1.1</version>
+				<scope>compile</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>logkit</groupId>
+						<artifactId>logkit</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>avalon-framework</groupId>
+						<artifactId>avalon-framework</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<modules>
-	<module>all_in_one</module>	<!-- currently all examples live as one subproject, in the future each example will get there own subproject -->
-	<module>yahoo-bbauth</module>
-	<module>spring-security</module>
-    <module>secureforms-example</module>
-  </modules>
-	<build>
-	<pluginManagement>
-		<plugins>
-			<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-war-plugin</artifactId>
-					<configuration>
-						<warSourceDirectory>
-							src/webapp
-						</warSourceDirectory>
-					</configuration>
-				</plugin>
-		</plugins>
-	</pluginManagement>
-	</build>
+		<module>all_in_one</module>
+		<!--
+			currently all examples live as one subproject, in the future each
+			example will get there own subproject
+		-->
+		<module>yahoo-bbauth</module>
+		<module>spring-security</module>
+		<module>secureforms-example</module>
+	</modules>
 </project>

@@ -615,7 +615,7 @@ public class SwarmFormTester
 		{
 			Field multiPart = Form.class.getDeclaredField("multiPart");
 			multiPart.setAccessible(true);
-			return multiPart.getBoolean(workingForm);
+			return multiPart.getShort(workingForm) != 0;
 		}
 		catch (SecurityException e)
 		{
