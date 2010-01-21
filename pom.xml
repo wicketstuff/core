@@ -254,7 +254,6 @@
 		</repository>
 	</distributionManagement>
 	<build>
-		<sourceEncoding>UTF-8</sourceEncoding>
 		<defaultGoal>package</defaultGoal>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
