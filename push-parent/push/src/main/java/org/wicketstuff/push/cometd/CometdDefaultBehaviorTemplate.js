@@ -1,4 +1,4 @@
-function onEventFor${markupId}(message){
+function onEventFor${behaviorMarkupId}(message){
 	if (message.data.proxy = "true"){
 		var addToUrl = "" 
 		var doRoundTrip = "true";
