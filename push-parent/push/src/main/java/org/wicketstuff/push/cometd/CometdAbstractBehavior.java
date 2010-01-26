@@ -27,7 +27,11 @@ public abstract class CometdAbstractBehavior extends
   // CometdBehavior in the same web container!
   private final static String cometdServletPath = getCometdServletPath();
 
+  private static short idex = 'a';
+
   private String channelId;
+
+  private final short index;
 
   /**
    * Construct a commetd Behavior
@@ -36,6 +40,7 @@ public abstract class CometdAbstractBehavior extends
   public CometdAbstractBehavior(final String channelId) {
     super();
     this.channelId = channelId;
+    index = idex++;
   }
 
   @Override
@@ -56,13 +61,9 @@ public abstract class CometdAbstractBehavior extends
     response.renderJavascript(getInitCometdScript(), "initCometd");
     final String cometdInterceptorScript = getCometdInterceptorScript();
     if (cometdInterceptorScript != null) {
-      response.renderJavascript(cometdInterceptorScript, "Interceptor"
-                                                         + getComponent()
-                                                             .getMarkupId());
+      response.renderJavascript(cometdInterceptorScript, "Interceptor" + getBehaviorMarkupId());
     }
-    response.renderJavascript(getSubscriberScript(), "Subscribe"
-                                                     + getComponent()
-                                                         .getMarkupId());
+    response.renderJavascript(getSubscriberScript(), "Subscribe" + getBehaviorMarkupId());
   }
 
   /**
@@ -139,6 +140,15 @@ public abstract class CometdAbstractBehavior extends
   public void setChannelId(final String channelId) {
     this.channelId = channelId;
   }
+
+  /** Returns the id string
+   * @return
+   */
+  public final CharSequence getBehaviorMarkupId() {
+    final StringBuilder sb = new StringBuilder(getComponent().getMarkupId());
+    return sb.append(getChannelId()).append(index).toString();
+  }
+
 
   /**
    * Parse the web.xml to find cometd context Path. This context path will be
