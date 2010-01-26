@@ -29,21 +29,22 @@ import org.apache.wicket.security.components.SecureComponentHelper;
 import org.apache.wicket.security.extensions.markup.html.tabs.ISecureTab;
 
 /**
- * Secure Tab showing a warning panel when the content is forbidden. This is
- * basically a decorator around a regular tab. Like {@link PanelCachingTab} it
- * caches the panel for improved performance. All methods from
- * {@link ISecureComponent} operate on this cached panel which automatically
- * receives the {@link ISecurityCheck} specified in
- * {@link #getSecurityCheckForPanel(Panel)}. Note unlike the {@link ISecureTab}
- * this tab will always show up, even if the contents is forbidden. So there
- * really is no point in this component implementing or wrapping an ISecureTab
+ * Secure Tab showing a warning panel when the content is forbidden. This is basically a
+ * decorator around a regular tab. Like {@link PanelCachingTab} it caches the panel for
+ * improved performance. All methods from {@link ISecureComponent} operate on this cached
+ * panel which automatically receives the {@link ISecurityCheck} specified in
+ * {@link #getSecurityCheckForPanel(Panel)}. Note unlike the {@link ISecureTab} this tab
+ * will always show up, even if the contents is forbidden. So there really is no point in
+ * this component implementing or wrapping an ISecureTab
  * 
  * @author marrink
  */
 public class SecureTab implements ITab, ISecureContainer
 {
 	private static final long serialVersionUID = 1L;
+
 	private ITab delegate;
+
 	private WrapperPanel cachedWrapper;
 
 	/**
@@ -65,8 +66,8 @@ public class SecureTab implements ITab, ISecureContainer
 	 * @param id
 	 *            wicket component id of this warning panel
 	 * @param restrictedPanel
-	 *            the panel dictating if the warning panel should be visible by
-	 *            its renderAllowed flag
+	 *            the panel dictating if the warning panel should be visible by its
+	 *            renderAllowed flag
 	 * @return a panel telling the user he/she is not authorized.
 	 */
 	protected Panel getWarningPanel(String id, Panel restrictedPanel)
@@ -101,12 +102,13 @@ public class SecureTab implements ITab, ISecureContainer
 		return cachedWrapper;
 	}
 
-    public boolean isVisible() {
-        //@TODO what todo with the new isVisible method ?
-        return true;
-    }
+	public boolean isVisible()
+	{
+		// @TODO what todo with the new isVisible method ?
+		return true;
+	}
 
-    /**
+	/**
 	 * Access to the cached panel.
 	 * 
 	 * @return the panel or null if it isn't cached yet
@@ -126,7 +128,7 @@ public class SecureTab implements ITab, ISecureContainer
 		if (cachedWrapper == null)
 			return null;
 		if (cachedWrapper.cachedTabPanel instanceof ISecureComponent)
-			return ((ISecureComponent)cachedWrapper.cachedTabPanel).getSecurityCheck();
+			return ((ISecureComponent) cachedWrapper.cachedTabPanel).getSecurityCheck();
 		return SecureComponentHelper.getSecurityCheck(cachedWrapper.cachedTabPanel);
 	}
 
@@ -140,21 +142,21 @@ public class SecureTab implements ITab, ISecureContainer
 		if (cachedWrapper == null)
 			return true;
 		if (cachedWrapper.cachedTabPanel instanceof ISecureComponent)
-			return ((ISecureComponent)cachedWrapper.cachedTabPanel).isActionAuthorized(waspAction);
+			return ((ISecureComponent) cachedWrapper.cachedTabPanel).isActionAuthorized(waspAction);
 		return SecureComponentHelper.isActionAuthorized(cachedWrapper.cachedTabPanel, waspAction);
 	}
 
 	/**
 	 * Operates on the cached panel.
 	 * 
-	 * @see org.apache.wicket.security.components.ISecureComponent#isActionAuthorized(org.apache.wicket.security.actions.AbstractWaspAction)
+	 * @see org.apache.wicket.security.components.ISecureComponent#isActionAuthorized(WaspAction)
 	 */
 	public boolean isActionAuthorized(WaspAction action)
 	{
 		if (cachedWrapper == null)
 			return true;
 		if (cachedWrapper.cachedTabPanel instanceof ISecureComponent)
-			return ((ISecureComponent)cachedWrapper.cachedTabPanel).isActionAuthorized(action);
+			return ((ISecureComponent) cachedWrapper.cachedTabPanel).isActionAuthorized(action);
 		return SecureComponentHelper.isActionAuthorized(cachedWrapper.cachedTabPanel, action);
 	}
 
@@ -168,7 +170,7 @@ public class SecureTab implements ITab, ISecureContainer
 		if (cachedWrapper == null)
 			return true;
 		if (cachedWrapper.cachedTabPanel instanceof ISecureComponent)
-			return ((ISecureComponent)cachedWrapper.cachedTabPanel).isAuthenticated();
+			return ((ISecureComponent) cachedWrapper.cachedTabPanel).isAuthenticated();
 		return SecureComponentHelper.isAuthenticated(cachedWrapper.cachedTabPanel);
 	}
 
@@ -182,7 +184,7 @@ public class SecureTab implements ITab, ISecureContainer
 		if (cachedWrapper == null)
 			return;
 		if (cachedWrapper.cachedTabPanel instanceof ISecureComponent)
-			((ISecureComponent)cachedWrapper.cachedTabPanel).setSecurityCheck(check);
+			((ISecureComponent) cachedWrapper.cachedTabPanel).setSecurityCheck(check);
 		else
 			SecureComponentHelper.setSecurityCheck(cachedWrapper.cachedTabPanel, check);
 	}
@@ -190,20 +192,21 @@ public class SecureTab implements ITab, ISecureContainer
 	/**
 	 * @see org.apache.wicket.extensions.markup.html.tabs.ITab#getTitle()
 	 */
-	public IModel getTitle()
+	public IModel<String> getTitle()
 	{
 		return delegate.getTitle();
 	}
 
 	/**
-	 * Panel to wrap the regular tab panel and a warning panel in one component.
-	 * Only one of them is actually shown.
+	 * Panel to wrap the regular tab panel and a warning panel in one component. Only one
+	 * of them is actually shown.
 	 * 
 	 * @author marrink
 	 */
 	private class WrapperPanel extends Panel
 	{
 		private static final long serialVersionUID = 1L;
+
 		private Panel cachedTabPanel;
 
 		/**

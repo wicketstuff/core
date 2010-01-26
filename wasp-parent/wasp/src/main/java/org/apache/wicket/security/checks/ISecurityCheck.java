@@ -23,28 +23,25 @@ import org.apache.wicket.security.components.ISecureComponent;
 import org.apache.wicket.security.models.ISecureModel;
 import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
 
-
 /**
- * A securitycheck knows how to authorize or authenticate a user. and will
- * decide if the class, component, model or any combination of those 3 or
- * something entirely different will be checked. Usually a securitycheck is
- * triggered by the
- * {@link WaspAuthorizationStrategy#isActionAuthorized(org.apache.wicket.Component, org.apache.wicket.authorization.Action)} ,
- * {@link ISecureComponent#isActionAuthorized(WaspAction)} or by
- * {@link ISecureComponent#isAuthenticated()}. Usually they just redirect the
- * call to the {@link WaspAuthorizationStrategy}, but it is not unimaginable
- * that securitychecks are targeted at specific wasp implementations and take
- * care of there authentication or authorization themself.
+ * A securitycheck knows how to authorize or authenticate a user. and will decide if the
+ * class, component, model or any combination of those 3 or something entirely different
+ * will be checked. Usually a securitycheck is triggered by the
+ * {@link WaspAuthorizationStrategy#isActionAuthorized(org.apache.wicket.Component, org.apache.wicket.authorization.Action)}
+ * , {@link ISecureComponent#isActionAuthorized(WaspAction)} or by
+ * {@link ISecureComponent#isAuthenticated()}. Usually they just redirect the call to the
+ * {@link WaspAuthorizationStrategy}, but it is not unimaginable that securitychecks are
+ * targeted at specific wasp implementations and take care of there authentication or
+ * authorization themself.
  * 
  * @author marrink
  */
 public interface ISecurityCheck extends Serializable
 {
 	/**
-	 * Checks if there are sufficient rights to perform the desired action(s).
-	 * Note that we don't ask what needs to have these rights, the
-	 * implementation will decide if it checks the class, component, model or
-	 * whatever they like.
+	 * Checks if there are sufficient rights to perform the desired action(s). Note that
+	 * we don't ask what needs to have these rights, the implementation will decide if it
+	 * checks the class, component, model or whatever they like.
 	 * 
 	 * @param action
 	 *            the action(s) like render or enable.
@@ -57,9 +54,8 @@ public interface ISecurityCheck extends Serializable
 	public boolean isActionAuthorized(WaspAction action);
 
 	/**
-	 * Checks if there is an authenticated user available. If not a page might
-	 * decide to redirect to a login page instead. other components won't use
-	 * this ordinarily.
+	 * Checks if there is an authenticated user available. If not a page might decide to
+	 * redirect to a login page instead. other components won't use this ordinarily.
 	 * 
 	 * @return true if an authenticated user is available, false otherwise.
 	 * @see WaspAuthorizationStrategy#isComponentAuthenticated(org.apache.wicket.Component)

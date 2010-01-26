@@ -69,7 +69,7 @@ public class SecureWebPage extends WebPage implements ISecurePage
 	/**
 	 * @param model
 	 */
-	public SecureWebPage(IModel model)
+	public SecureWebPage(IModel<?> model)
 	{
 		super(model);
 		setSecurityCheck(new ComponentSecurityCheck(this));
@@ -83,7 +83,7 @@ public class SecureWebPage extends WebPage implements ISecurePage
 	 * @param pageMap
 	 * @param model
 	 */
-	public SecureWebPage(IPageMap pageMap, IModel model)
+	public SecureWebPage(IPageMap pageMap, IModel<?> model)
 	{
 		super(pageMap, model);
 		setSecurityCheck(new ComponentSecurityCheck(this));

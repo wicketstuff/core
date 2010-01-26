@@ -20,6 +20,7 @@ import java.net.MalformedURLException;
 
 import junit.framework.TestCase;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.RequestCycle;
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -39,7 +40,6 @@ import org.apache.wicket.util.tester.SwarmWicketTester;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * @author marrink
  */
@@ -47,6 +47,7 @@ public class SessionBindTest extends TestCase
 {
 	private final class MyWebApplication extends SwarmWebApplication
 	{
+		@Override
 		protected Object getHiveKey()
 		{
 			// if we were using servlet-api 2.5 we could get the contextpath
@@ -54,6 +55,7 @@ public class SessionBindTest extends TestCase
 			return "test";
 		}
 
+		@Override
 		protected void setUpHive()
 		{
 			PolicyFileHiveFactory factory = new SwarmPolicyFileHiveFactory(getActionFactory());
@@ -61,7 +63,7 @@ public class SessionBindTest extends TestCase
 			{
 				factory.addPolicyFile(getServletContext().getResource("WEB-INF/policy.hive"));
 				factory.setAlias("SimplePrincipal",
-						"org.apache.wicket.security.hive.authorization.SimplePrincipal");
+					"org.apache.wicket.security.hive.authorization.SimplePrincipal");
 				factory.setAlias("myPackage", "org.apache.wicket.security.pages");
 			}
 			catch (MalformedURLException e)
@@ -71,12 +73,13 @@ public class SessionBindTest extends TestCase
 			HiveMind.registerHive(getHiveKey(), factory);
 		}
 
-		public Class getHomePage()
+		@Override
+		public Class< ? extends Page> getHomePage()
 		{
 			return MockHomePage.class;
 		}
 
-		public Class getLoginPage()
+		public Class< ? extends Page> getLoginPage()
 		{
 			return MockLoginPage.class;
 		}
@@ -88,6 +91,7 @@ public class SessionBindTest extends TestCase
 	 * The swarm application used for the test.
 	 */
 	protected WebApplication application;
+
 	/**
 	 * Handle to the mock environment.
 	 */
@@ -96,9 +100,11 @@ public class SessionBindTest extends TestCase
 	/**
 	 * @see junit.framework.TestCase#setUp()
 	 */
+	@Override
 	protected void setUp()
 	{
-		mock = new SwarmWicketTester(application = new MyWebApplication(), "src/test/java/"
+		mock =
+			new SwarmWicketTester(application = new MyWebApplication(), "src/test/java/"
 				+ getClass().getPackage().getName().replace('.', '/'));
 
 	}
@@ -106,6 +112,7 @@ public class SessionBindTest extends TestCase
 	/**
 	 * @see junit.framework.TestCase#tearDown()
 	 */
+	@Override
 	protected void tearDown()
 	{
 		mock.setupRequestAndResponse();
@@ -139,8 +146,7 @@ public class SessionBindTest extends TestCase
 	}
 
 	/**
-	 * Test if the session is correctly bound even if we do not use the session
-	 * to login.
+	 * Test if the session is correctly bound even if we do not use the session to login.
 	 */
 	public void testStrategyLogin()
 	{
@@ -154,8 +160,8 @@ public class SessionBindTest extends TestCase
 		mock.setupRequestAndResponse();
 		try
 		{
-			((WaspAuthorizationStrategy)mock.getWicketSession().getAuthorizationStrategy())
-					.login(new PrimaryLoginContext());
+			((WaspAuthorizationStrategy) mock.getWicketSession().getAuthorizationStrategy())
+				.login(new PrimaryLoginContext());
 		}
 		catch (LoginException e)
 		{
@@ -163,7 +169,7 @@ public class SessionBindTest extends TestCase
 		}
 		// hack to prevent mock from throwing away the requestcycle with our
 		// subject
-		WebRequestCycle cycle = ((WebRequestCycle)RequestCycle.get());
+		WebRequestCycle cycle = ((WebRequestCycle) RequestCycle.get());
 		assertNotNull(cycle);
 		try
 		{

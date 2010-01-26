@@ -22,12 +22,12 @@ import org.apache.wicket.security.examples.customactions.entities.Department;
 import org.apache.wicket.security.swarm.models.SwarmCompoundPropertyModel;
 
 /**
- * A model for departments. It automatically handles security for all components
- * using this model.
+ * A model for departments. It automatically handles security for all components using
+ * this model.
  * 
  * @author marrink
  */
-public class DepartmentModel extends SwarmCompoundPropertyModel
+public class DepartmentModel extends SwarmCompoundPropertyModel<Department>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -53,24 +53,21 @@ public class DepartmentModel extends SwarmCompoundPropertyModel
 	 * @see org.apache.wicket.security.models.ISecureModel#isAuthorized(org.apache.wicket.Component,
 	 *      org.apache.wicket.security.actions.WaspAction)
 	 */
+	@Override
 	public boolean isAuthorized(Component component, WaspAction action)
 	{
-		WaspAction myAction = action;
-		Object obj = getObject();
 		// the department entity not to be confused with the department action
 		// further down.
-		if (obj instanceof Department)
-		{
-			Department department = (Department)obj;
-			// for secure departments you need organization rights, else
-			// department rights are sufficient
-			myAction = action
-					.add(getActionFactory()
-							.getAction(
-									department.secure
-											? Organization.class
-											: org.apache.wicket.security.examples.customactions.authorization.Department.class));
-		}
+		Department department = getObject();
+		// for secure departments you need organization rights, else
+		// department rights are sufficient
+		WaspAction myAction =
+			action
+				.add(getActionFactory()
+					.getAction(
+						department.secure
+							? Organization.class
+							: org.apache.wicket.security.examples.customactions.authorization.Department.class));
 		return super.isAuthorized(component, myAction);
 	}
 

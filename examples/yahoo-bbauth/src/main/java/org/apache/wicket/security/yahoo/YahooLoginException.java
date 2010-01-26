@@ -19,8 +19,7 @@ package org.apache.wicket.security.yahoo;
 import org.apache.wicket.security.authentication.LoginException;
 
 /**
- * Login exception with additional information obtained from the Yahoo
- * webservice.
+ * Login exception with additional information obtained from the Yahoo webservice.
  * 
  * @author marrink
  */
@@ -30,7 +29,6 @@ public class YahooLoginException extends LoginException
 	private static final long serialVersionUID = 1L;
 
 	private final String errorCode;
-
 
 	/**
 	 * Construct.

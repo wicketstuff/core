@@ -31,9 +31,6 @@
  */
 package org.apache.wicket.security.examples.springsecurity.security;
 
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.GrantedAuthorityImpl;
-import org.springframework.security.providers.TestingAuthenticationToken;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Application;
@@ -48,112 +45,131 @@ import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.hive.authentication.LoginContext;
 import org.apache.wicket.util.lang.Objects;
-import org.apache.wicket.security.examples.springsecurity.security.SpringSecureLoginContext;
-
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.GrantedAuthorityImpl;
+import org.springframework.security.providers.TestingAuthenticationToken;
 
 /**
- * MockLoginPage creates a Spring Security logincontext based on the TestingAuthenticationToken
- * This context is used by the wicket security components to create the right session.
- *
- * When logged on with any name except 'admin' the user is logged on with ROLE_USER
- * when logged on with the name 'admin' the user is logged on with ROLE_USER and ROLE_ADMIN. 
- *
+ * MockLoginPage creates a Spring Security logincontext based on the
+ * TestingAuthenticationToken This context is used by the wicket security components to
+ * create the right session.
+ * 
+ * When logged on with any name except 'admin' the user is logged on with ROLE_USER when
+ * logged on with the name 'admin' the user is logged on with ROLE_USER and ROLE_ADMIN.
+ * 
  * @author Olger Warnier
  */
-public class MockLoginPage extends WebPage {
-    /**
+public class MockLoginPage extends WebPage
+{
+	/**
      *
      */
-    private static final long serialVersionUID = 1L;
-    private static final Log log = LogFactory.getLog(MockLoginPage.class);
+	private static final long serialVersionUID = 1L;
 
-    private Form form;
-    private TextField textField;
+	private static final Log log = LogFactory.getLog(MockLoginPage.class);
 
-    /**
+	private Form<Void> form;
+
+	private TextField<String> textField;
+
+	/**
      *
      */
-    public MockLoginPage() {
-        super();
-        setStatelessHint(true);
-        add(new Label("label", "welcome please login"));
-        add(form = new StatelessForm("form") {
+	public MockLoginPage()
+	{
+		super();
+		setStatelessHint(true);
+		add(new Label("label", "welcome please login"));
+		add(form = new StatelessForm<Void>("form")
+		{
 
-            /**
+			/**
              *
              */
-            private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-            protected void onSubmit() {
-                login(get("username").getDefaultModelObjectAsString());
-            }
-        });
-        form.add(textField = new TextField("username", new Model()));
-    }
+			@Override
+			protected void onSubmit()
+			{
+				login(get("username").getDefaultModelObjectAsString());
+			}
+		});
+		form.add(textField = new TextField<String>("username", new Model<String>()));
+	}
 
-    /**
-     * @param username
-     * @return true if the login was successful, false otherwise
-     */
-    public boolean login(String username) {
-        try {
-            LoginContext context;
+	/**
+	 * @param username
+	 * @return true if the login was successful, false otherwise
+	 */
+	public boolean login(String username)
+	{
+		try
+		{
+			LoginContext context;
 
-            context = new SpringSecureLoginContext(new TestingAuthenticationToken(
-                    username, username, getAuthorities(username, username)));
-            ((WaspSession) Session.get()).login(context);
-            if (!continueToOriginalDestination())
-                setResponsePage(Application.get().getHomePage());
-            return true;
-        }
-        catch (LoginException e) {
-            log.error(e.getMessage(), e);
-        }
-        return false;
-    }
+			context =
+				new SpringSecureLoginContext(new TestingAuthenticationToken(username, username,
+					getAuthorities(username, username)));
+			((WaspSession) Session.get()).login(context);
+			if (!continueToOriginalDestination())
+				setResponsePage(Application.get().getHomePage());
+			return true;
+		}
+		catch (LoginException e)
+		{
+			log.error(e.getMessage(), e);
+		}
+		return false;
+	}
 
-    /**
-     * @return the form
-     */
-    public final Form getForm() {
-        return form;
-    }
+	/**
+	 * @return the form
+	 */
+	public final Form<Void> getForm()
+	{
+		return form;
+	}
 
-    /**
-     * @return the username textfield
-     */
-    public final TextField getTextField() {
-        return textField;
-    }
+	/**
+	 * @return the username textfield
+	 */
+	public final TextField<String> getTextField()
+	{
+		return textField;
+	}
 
-    /**
-     * This Login Page uses the TestingAuthenticationToken therefore we
-     * need to provide the authorities up front. Other
-     * AuthenticationTokens will get this from a database or wherever
-     * they are designed to get it from.
-     * <p/>
-     * Thanks to Marrik and his ACEGI examples.
-     *
-     * @param username
-     * @param password
-     * @return
-     */
-    private GrantedAuthority[] getAuthorities(String username, String password) {
-        GrantedAuthority[] authorities = null;
-        if (username != null && Objects.equal(username, password)) {
+	/**
+	 * This Login Page uses the TestingAuthenticationToken therefore we need to provide
+	 * the authorities up front. Other AuthenticationTokens will get this from a database
+	 * or wherever they are designed to get it from.
+	 * <p/>
+	 * Thanks to Marrik and his ACEGI examples.
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	private GrantedAuthority[] getAuthorities(String username, String password)
+	{
+		GrantedAuthority[] authorities = null;
+		if (username != null && Objects.equal(username, password))
+		{
 
-            if ("admin".equals(username)) {
-                authorities = new GrantedAuthority[2];
-                authorities[0] = new GrantedAuthorityImpl("ROLE_ADMIN");
-                authorities[1] = new GrantedAuthorityImpl("ROLE_USER");
-            } else {
-                authorities = new GrantedAuthority[1];
-                authorities[0] = new GrantedAuthorityImpl("ROLE_USER");
-            }
-            // the subject returned in AcegiLoginContext knows how to
-            // convert these names to principals
-        }
-        return authorities;
-    }
+			if ("admin".equals(username))
+			{
+				authorities = new GrantedAuthority[2];
+				authorities[0] = new GrantedAuthorityImpl("ROLE_ADMIN");
+				authorities[1] = new GrantedAuthorityImpl("ROLE_USER");
+			}
+			else
+			{
+				authorities = new GrantedAuthority[1];
+				authorities[0] = new GrantedAuthorityImpl("ROLE_USER");
+			}
+			// the subject returned in AcegiLoginContext knows how to
+			// convert these names to principals
+		}
+		return authorities;
+	}
 
 }

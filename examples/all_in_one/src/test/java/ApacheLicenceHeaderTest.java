@@ -16,11 +16,10 @@
  */
 import org.apache.wicket.util.license.ApacheLicenseHeaderTestCase;
 
-
 /**
- * Test that the license headers are in place in this project. The tests are run
- * from {@link ApacheLicenseHeaderTestCase}, but you can add project specific
- * tests here if needed.
+ * Test that the license headers are in place in this project. The tests are run from
+ * {@link ApacheLicenseHeaderTestCase}, but you can add project specific tests here if
+ * needed.
  * 
  * @author Frank Bille Jensen (frankbille)
  */
@@ -35,34 +34,33 @@ public class ApacheLicenceHeaderTest extends ApacheLicenseHeaderTestCase
 
 		htmlIgnore = new String[] {
 		/*
-		 * a license header would confuse and make it unclear what the example
-		 * is about.
+		 * a license header would confuse and make it unclear what the example is about.
 		 */
-		"src/main/java", "src/main/webapp" };
+		"src/main/java", "src/main/webapp"};
 
 		cssIgnore = new String[] {
 		/*
-		 * a license header would confuse and make it unclear what the test is
-		 * about.
+		 * a license header would confuse and make it unclear what the test is about.
 		 */
-		"src/main/webapp" };
+		"src/main/webapp"};
 
-		xmlIgnore = new String[] { "EclipseCodeFormat.xml", "codetemplates.xml",
-				"src/webapp/WEB-INF/applicationContext.xml" };
+		xmlIgnore =
+			new String[] {"EclipseCodeFormat.xml", "codetemplates.xml",
+				"src/webapp/WEB-INF/applicationContext.xml"};
 
-		javaIgnore = new String[] { };
+		javaIgnore = new String[] {};
 
 		javaScriptIgnore = new String[] {
 		/*
-		 * .js in test is very test specific and a license header would confuse
-		 * and make it unclear what the test is about.
+		 * .js in test is very test specific and a license header would confuse and make
+		 * it unclear what the test is about.
 		 */
-		"src/main/webapp" };
+		"src/main/webapp"};
 
 		propertiesIgnore = new String[] {
 		/*
 		 * .properties and a license header make no sense.
 		 */
-		"src/main/java", };
+		"src/main/java"};
 	}
 }

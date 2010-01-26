@@ -41,7 +41,7 @@ public class BasicHive implements Hive
 	/**
 	 * Maps {@link Permission}s to {@link Principal}s
 	 */
-	private ManyToManyMap principals;
+	private ManyToManyMap<Permission, Principal> principals;
 
 	/**
 	 * indicates if permissions and or principals are accepted by the hive.
@@ -54,7 +54,8 @@ public class BasicHive implements Hive
 	 */
 	public BasicHive()
 	{
-		principals = new ManyToManyMap(500); // guess lots of principals
+		// guess lots of principals
+		principals = new ManyToManyMap<Permission, Principal>(500);
 	}
 
 	/**
@@ -91,7 +92,7 @@ public class BasicHive implements Hive
 	 * @throws IllegalArgumentException
 	 *             if either parameter is null
 	 */
-	public final void addPrincipal(Principal principal, Collection permissions)
+	public final void addPrincipal(Principal principal, Collection<Permission> permissions)
 	{
 		if (isLocked())
 			throw new IllegalStateException("While the hive is locked no changes are allowed.");
@@ -100,12 +101,9 @@ public class BasicHive implements Hive
 		if (permissions == null)
 			throw new IllegalArgumentException("At least one permission is required for principal "
 					+ principal);
-		Iterator it = permissions.iterator();
-		Permission next = null;
 		boolean debug = log.isDebugEnabled();
-		while (it.hasNext())
+		for (Permission next : permissions)
 		{
-			next = (Permission)it.next();
 			principals.add(next, principal);
 			if (debug)
 				log.debug("Adding " + next + " to " + principal);
@@ -142,7 +140,7 @@ public class BasicHive implements Hive
 	 */
 	public final boolean containsPrincipal(Principal principal)
 	{
-		return principals.contains(principal);
+		return principals.containsRight(principal);
 	}
 
 	/**
@@ -192,7 +190,7 @@ public class BasicHive implements Hive
 						+ cacheResult.booleanValue());
 			return cacheResult.booleanValue();
 		}
-		if (hasPrincipal(subject, principals.get(permission)))
+		if (hasPrincipal(subject, principals.getRight(permission)))
 		{
 			if (log.isDebugEnabled())
 				log.debug(subject + " has an exact match for " + permission);
@@ -200,24 +198,18 @@ public class BasicHive implements Hive
 			return true;
 		}
 		// permission has no exact match, perform an implies check
-		Iterator it = principals.iterator();
-		Object temp = null;
-		Permission possibleMatch = null;
+		Iterator<Permission> it = principals.leftIterator();
 		while (it.hasNext())
 		{
-			temp = it.next();
-			if (temp instanceof Permission)
+			Permission possibleMatch = it.next();
+			if (!possibleMatch.implies(permission))
+				continue;
+			if (hasPrincipal(subject, principals.getRight(possibleMatch)))
 			{
-				possibleMatch = (Permission)temp;
-				if (!possibleMatch.implies(permission))
-					continue;
-				if (hasPrincipal(subject, principals.get(possibleMatch)))
-				{
-					if (log.isDebugEnabled())
-						log.debug(subject + " implies " + permission);
-					cacheResult(subject, permission, true);
-					return true;
-				}
+				if (log.isDebugEnabled())
+					log.debug(subject + " implies " + permission);
+				cacheResult(subject, permission, true);
+				return true;
 			}
 		}
 		if (log.isDebugEnabled())
@@ -236,21 +228,18 @@ public class BasicHive implements Hive
 	 * @return true if the subject has or implies at least one of the
 	 *         principals, false otherwise.
 	 */
-	private final boolean hasPrincipal(Subject subject, Set principalSet)
+	private final boolean hasPrincipal(Subject subject, Set<Principal> principalSet)
 	{
 		if (!principalSet.isEmpty())
 		{
-			Iterator it = principalSet.iterator();
-			Principal temp;
-			Set subjectPrincipals;
+			Set<Principal> subjectPrincipals;
 			if (subject == null)
-				subjectPrincipals = Collections.EMPTY_SET;
+				subjectPrincipals = Collections.emptySet();
 			else
 				subjectPrincipals = subject.getPrincipals();
-			while (it.hasNext())
+			for (Principal curPrincipal : principalSet)
 			{
-				temp = (Principal)it.next();
-				if (subjectPrincipals.contains(temp) || temp.implies(subject))
+				if (subjectPrincipals.contains(curPrincipal) || curPrincipal.implies(subject))
 					return true;
 			}
 		}
@@ -262,18 +251,18 @@ public class BasicHive implements Hive
 	 */
 	public final boolean containsPermission(Permission permission)
 	{
-		return principals.contains(permission);
+		return principals.containsLeft(permission);
 	}
 
 	/**
 	 * 
 	 * @see org.apache.wicket.security.hive.Hive#getPermissions(org.apache.wicket.security.hive.authorization.Principal)
 	 */
-	public final Set getPermissions(Principal principal)
+	public final Set<Permission> getPermissions(Principal principal)
 	{
-		Set set = principals.get(principal);
+		Set<Permission> set = principals.getLeft(principal);
 		if (set == null)
-			return Collections.EMPTY_SET;
+			return Collections.emptySet();
 		return Collections.unmodifiableSet(set);
 	}
 
@@ -281,11 +270,11 @@ public class BasicHive implements Hive
 	 * 
 	 * @see org.apache.wicket.security.hive.Hive#getPrincipals(org.apache.wicket.security.hive.authorization.Permission)
 	 */
-	public final Set getPrincipals(Permission permission)
+	public final Set<Principal> getPrincipals(Permission permission)
 	{
-		Set set = principals.get(permission);
+		Set<Principal> set = principals.getRight(permission);
 		if (set == null)
-			return Collections.EMPTY_SET;
+			return Collections.emptySet();
 		return Collections.unmodifiableSet(set);
 	}
 }

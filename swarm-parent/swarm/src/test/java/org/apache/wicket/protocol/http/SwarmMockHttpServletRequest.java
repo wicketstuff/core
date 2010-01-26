@@ -16,26 +16,12 @@
  */
 package org.apache.wicket.protocol.http;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.CharArrayReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLEncoder;
 import java.security.Principal;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -44,13 +30,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.wicket.Application;
-import org.apache.wicket.Component;
-import org.apache.wicket.IPageMap;
-import org.apache.wicket.IRedirectListener;
-import org.apache.wicket.IResourceListener;
-import org.apache.wicket.Page;
-import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.*;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.IFormSubmitListener;
@@ -60,12 +40,10 @@ import org.apache.wicket.markup.html.link.ILinkListener;
 import org.apache.wicket.protocol.http.request.WebRequestCodingStrategy;
 import org.apache.wicket.util.file.File;
 import org.apache.wicket.util.io.IOUtils;
-import org.apache.wicket.util.lang.Classes;
 import org.apache.wicket.util.upload.FileUploadBase;
 import org.apache.wicket.util.value.ValueMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 /**
  * Mock servlet request. Implements all of the methods from the standard
@@ -83,7 +61,9 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	private class UploadedFile
 	{
 		private String fieldName;
+
 		private File file;
+
 		private String contentType;
 
 		/**
@@ -109,28 +89,12 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 		}
 
 		/**
-		 * @param contentType
-		 *            The content type.
-		 */
-		public void setContentType(String contentType)
-		{
-			this.contentType = contentType;
-		}
-
-		/**
 		 * @return The field name.
 		 */
+		@SuppressWarnings("unused")
 		public String getFieldName()
 		{
 			return fieldName;
-		}
-
-		/**
-		 * @param fieldName
-		 */
-		public void setFieldName(String fieldName)
-		{
-			this.fieldName = fieldName;
 		}
 
 		/**
@@ -139,14 +103,6 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 		public File getFile()
 		{
 			return file;
-		}
-
-		/**
-		 * @param file
-		 */
-		public void setFile(File file)
-		{
-			this.file = file;
 		}
 	}
 
@@ -164,9 +120,9 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 
 	private final ServletContext context;
 
-	private final List cookies = new ArrayList();
+	private final List<Cookie> cookies = new ArrayList<Cookie>();
 
-	private final ValueMap headers = new ValueMap();
+	private final Map<String, List<String>> headers = new LinkedHashMap<String, List<String>>();
 
 	private String method;
 
@@ -178,7 +134,7 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 
 	private String url;
 
-	private Map/* <String, UploadedFile> */uploadedFiles;
+	private Map<String, UploadedFile> uploadedFiles;
 
 	private boolean useMultiPartContentType;
 
@@ -213,8 +169,8 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	}
 
 	/**
-	 * Add an uploaded file to the request. Use this to simulate a file that has
-	 * been uploaded to a field.
+	 * Add an uploaded file to the request. Use this to simulate a file that has been
+	 * uploaded to a field.
 	 * 
 	 * @param fieldName
 	 *            The fieldname of the upload field.
@@ -233,19 +189,19 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 		if (file.exists() == false)
 		{
 			throw new IllegalArgumentException(
-					"File does not exists. You must provide an existing file: "
-							+ file.getAbsolutePath());
+				"File does not exists. You must provide an existing file: "
+					+ file.getAbsolutePath());
 		}
 
 		if (file.isFile() == false)
 		{
 			throw new IllegalArgumentException(
-					"You can only add a File, which is not a directory. Only files can be uploaded.");
+				"You can only add a File, which is not a directory. Only files can be uploaded.");
 		}
 
 		if (uploadedFiles == null)
 		{
-			uploadedFiles = new HashMap/* <String, UploadedFile> */();
+			uploadedFiles = new HashMap<String, UploadedFile>();
 		}
 
 		UploadedFile uf = new UploadedFile(fieldName, file, contentType);
@@ -263,10 +219,10 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	 */
 	public void addHeader(String name, String value)
 	{
-		List list = (List)headers.get(name);
+		List<String> list = headers.get(name);
 		if (list == null)
 		{
-			list = new ArrayList(1);
+			list = new ArrayList<String>(1);
 			headers.put(name, list);
 		}
 		list.add(value);
@@ -289,7 +245,7 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	 * 
 	 * @return The names
 	 */
-	public Enumeration getAttributeNames()
+	public Enumeration<String> getAttributeNames()
 	{
 		return Collections.enumeration(attributes.keySet());
 	}
@@ -326,14 +282,13 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 		this.useMultiPartContentType = useMultiPartContentType;
 	}
 
-
 	/**
 	 * Return the length of the content. This is always -1 except if
-	 * useMultiPartContentType set as true. Then the length will be the length
-	 * of the generated request.
+	 * useMultiPartContentType set as true. Then the length will be the length of the
+	 * generated request.
 	 * 
-	 * @return -1 if useMultiPartContentType is false. Else the length of the
-	 *         generated request.
+	 * @return -1 if useMultiPartContentType is false. Else the length of the generated
+	 *         request.
 	 */
 	public int getContentLength()
 	{
@@ -349,8 +304,8 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	/**
 	 * If useMultiPartContentType set as true return the correct content-type.
 	 * 
-	 * @return The correct multipart content-type if useMultiPartContentType is
-	 *         true. Else null.
+	 * @return The correct multipart content-type if useMultiPartContentType is true. Else
+	 *         null.
 	 */
 	public String getContentType()
 	{
@@ -363,8 +318,8 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	}
 
 	/**
-	 * Get the context path. For this mock implementation the name of the
-	 * application is always returned.
+	 * Get the context path. For this mock implementation the name of the application is
+	 * always returned.
 	 * 
 	 * @return The context path
 	 */
@@ -385,7 +340,7 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 			return null;
 		}
 		Cookie[] result = new Cookie[cookies.size()];
-		return (Cookie[])cookies.toArray(result);
+		return cookies.toArray(result);
 	}
 
 	/**
@@ -413,7 +368,7 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 		catch (ParseException e)
 		{
 			throw new IllegalArgumentException("Can't convert header to date " + name + ": "
-					+ value);
+				+ value);
 		}
 	}
 
@@ -426,14 +381,14 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	 */
 	public String getHeader(final String name)
 	{
-		final List l = (List)headers.get(name);
+		final List<String> l = headers.get(name);
 		if (l == null || l.size() < 1)
 		{
 			return null;
 		}
 		else
 		{
-			return (String)l.get(0);
+			return l.get(0);
 		}
 	}
 
@@ -442,7 +397,7 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	 * 
 	 * @return The header names
 	 */
-	public Enumeration getHeaderNames()
+	public Enumeration<String> getHeaderNames()
 	{
 		return Collections.enumeration(headers.keySet());
 	}
@@ -454,12 +409,12 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	 *            The name
 	 * @return The header values
 	 */
-	public Enumeration getHeaders(final String name)
+	public Enumeration<String> getHeaders(final String name)
 	{
-		List list = (List)headers.get(name);
+		List<String> list = headers.get(name);
 		if (list == null)
 		{
-			list = new ArrayList();
+			list = new ArrayList<String>();
 		}
 		return Collections.enumeration(list);
 	}
@@ -483,6 +438,7 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 
 			return new ServletInputStream()
 			{
+				@Override
 				public int read()
 				{
 					return bais.read();
@@ -493,6 +449,7 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 		{
 			return new ServletInputStream()
 			{
+				@Override
 				public int read()
 				{
 					return -1;
@@ -521,8 +478,8 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	}
 
 	/**
-	 * Get the locale of the request. Attempts to decode the Accept-Language
-	 * header and if not found returns the default locale of the JVM.
+	 * Get the locale of the request. Attempts to decode the Accept-Language header and if
+	 * not found returns the default locale of the JVM.
 	 * 
 	 * @return The locale
 	 */
@@ -559,14 +516,13 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	}
 
 	/**
-	 * Return all the accepted locales. This implementation always returns just
-	 * one.
+	 * Return all the accepted locales. This implementation always returns just one.
 	 * 
 	 * @return The locales
 	 */
-	public Enumeration getLocales()
+	public Enumeration<Locale> getLocales()
 	{
-		List list = new ArrayList(1);
+		List<Locale> list = new ArrayList<Locale>(1);
 		list.add(getLocale());
 		return Collections.enumeration(list);
 	}
@@ -598,7 +554,7 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	 * 
 	 * @return The parameters
 	 */
-	public Map getParameterMap()
+	public Map< ? extends String, ? extends Object> getParameterMap()
 	{
 		return parameters;
 	}
@@ -608,7 +564,7 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	 * 
 	 * @return The parameter names
 	 */
-	public Enumeration getParameterNames()
+	public Enumeration<String> getParameterNames()
 	{
 		return Collections.enumeration(parameters.keySet());
 	}
@@ -630,7 +586,7 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 
 		if (value instanceof String[])
 		{
-			return (String[])value;
+			return (String[]) value;
 		}
 		else
 		{
@@ -686,9 +642,9 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 			final StringBuffer buf = new StringBuffer();
 			try
 			{
-				for (Iterator iterator = parameters.keySet().iterator(); iterator.hasNext();)
+				for (Iterator<String> iterator = parameters.keySet().iterator(); iterator.hasNext();)
 				{
-					final String name = (String)iterator.next();
+					final String name = iterator.next();
 					final String value = parameters.getString(name);
 					buf.append(URLEncoder.encode(name, "UTF-8"));
 					buf.append('=');
@@ -708,8 +664,8 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	}
 
 	/**
-	 * This feature is not implemented at this time as we are not supporting
-	 * binary servlet input. This functionality may be added in the future.
+	 * This feature is not implemented at this time as we are not supporting binary
+	 * servlet input. This functionality may be added in the future.
 	 * 
 	 * @return The reader
 	 * @throws IOException
@@ -728,6 +684,7 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	 * @return The path
 	 * @deprecated Use ServletContext.getRealPath(String) instead.
 	 */
+	@Deprecated
 	public String getRealPath(String name)
 	{
 		return context.getRealPath(name);
@@ -764,8 +721,8 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	}
 
 	/**
-	 * Return a dummy dispatcher that just records that dispatch has occurred
-	 * without actually doing anything.
+	 * Return a dummy dispatcher that just records that dispatch has occurred without
+	 * actually doing anything.
 	 * 
 	 * @param name
 	 *            The name to dispatch to
@@ -777,8 +734,7 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	}
 
 	/**
-	 * Get the requested session id. Always returns the id of the current
-	 * session.
+	 * Get the requested session id. Always returns the id of the current session.
 	 * 
 	 * @return The session id
 	 */
@@ -860,8 +816,8 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	}
 
 	/**
-	 * The servlet path may either be the application name or /. For test
-	 * purposes we always return the servlet name.
+	 * The servlet path may either be the application name or /. For test purposes we
+	 * always return the servlet name.
 	 * 
 	 * @return The servlet path
 	 */
@@ -960,6 +916,7 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	 * 
 	 * @return Always false
 	 */
+	@Deprecated
 	public boolean isRequestedSessionIdFromUrl()
 	{
 		return false;
@@ -1100,14 +1057,14 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	 * @param parameters
 	 *            the parameters to set
 	 */
-	public void setParameters(final Map parameters)
+	public void setParameters(final Map< ? extends String, ? extends Object> parameters)
 	{
 		this.parameters.putAll(parameters);
 	}
 
 	/**
-	 * Set the path that this request is supposed to be serving. The path is
-	 * relative to the web application root and should start with a / character
+	 * Set the path that this request is supposed to be serving. The path is relative to
+	 * the web application root and should start with a / character
 	 * 
 	 * @param path
 	 */
@@ -1153,19 +1110,19 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	}
 
 	/**
-	 * Initialize the request parameters to point to the given bookmarkable
-	 * page.
+	 * Initialize the request parameters to point to the given bookmarkable page.
 	 * 
 	 * @param page
 	 *            The page to point to
 	 * @param params
 	 *            Additional parameters
 	 */
-	public void setRequestToBookmarkablePage(final Page page, final Map params)
+	public void setRequestToBookmarkablePage(final Page page,
+			final Map< ? extends String, ? extends Object> params)
 	{
 		parameters.putAll(params);
 		parameters.put(WebRequestCodingStrategy.BOOKMARKABLE_PAGE_PARAMETER_NAME, page.getClass()
-				.getName());
+			.getName());
 	}
 
 	/**
@@ -1178,16 +1135,17 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	{
 		final IPageMap pageMap = component.getPage().getPageMap();
 		final String pageMapName = pageMap.isDefault() ? "" : pageMap.getName();
-		if (component instanceof BookmarkablePageLink)
+		if (component instanceof BookmarkablePageLink< ? >)
 		{
-			final Class clazz = ((BookmarkablePageLink)component).getPageClass();
+			final Class< ? extends Page> clazz =
+				((BookmarkablePageLink< ? >) component).getPageClass();
 			parameters.put(WebRequestCodingStrategy.BOOKMARKABLE_PAGE_PARAMETER_NAME, pageMapName
-					+ ':' + clazz.getName());
+				+ ':' + clazz.getName());
 		}
 		else
 		{
 			int version = component.getPage().getCurrentVersionNumber();
-			Class clazz = null;
+			Class< ? extends IRequestListener> clazz = null;
 			if (component instanceof IRedirectListener)
 			{
 				clazz = IRedirectListener.class;
@@ -1211,49 +1169,50 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 			else
 			{
 				throw new IllegalArgumentException(
-						"The component class doesn't seem to implement any of the known *Listener interfaces: "
-								+ component.getClass());
+					"The component class doesn't seem to implement any of the known *Listener interfaces: "
+						+ component.getClass());
 			}
 
 			parameters.put(WebRequestCodingStrategy.INTERFACE_PARAMETER_NAME, pageMapName + ':'
-					+ component.getPath() + ':' + (version == 0 ? "" : "" + version) + ':'
-					+ Classes.simpleName(clazz) + "::");
+				+ component.getPath() + ':' + (version == 0 ? "" : "" + version) + ':'
+				+ clazz.getSimpleName() + "::");
 
 			if (component.isStateless() && component.getPage().isBookmarkable())
 			{
 				parameters.put(WebRequestCodingStrategy.BOOKMARKABLE_PAGE_PARAMETER_NAME,
-						pageMapName + ':' + component.getPage().getClass().getName());
+					pageMapName + ':' + component.getPage().getClass().getName());
 			}
 		}
 	}
 
 	/**
-	 * Initialize the request parameters to point to the given form component.
-	 * The additional map should contain mappings between individual components
-	 * that appear in the form and the string value that should be submitted for
-	 * each of these components.
+	 * Initialize the request parameters to point to the given form component. The
+	 * additional map should contain mappings between individual components that appear in
+	 * the form and the string value that should be submitted for each of these
+	 * components.
 	 * 
 	 * @param form
 	 *            The for to send the request to
 	 * @param values
 	 *            The values for each of the form components
 	 */
-	public void setRequestToFormComponent(final Form form, final Map values)
+	public void setRequestToFormComponent(final Form< ? > form,
+			final Map<FormComponent< ? >, String> values)
 	{
 		setRequestToComponent(form);
 
-		final Map valuesApplied = new HashMap();
-		form.visitChildren(new Component.IVisitor()
+		final Map<String, Component> valuesApplied = new HashMap<String, Component>();
+		form.visitChildren(new Component.IVisitor<Component>()
 		{
 			public Object component(final Component component)
 			{
-				if (component instanceof FormComponent)
+				if (component instanceof FormComponent< ? >)
 				{
-					String value = (String)values.get(component);
+					String value = values.get(component);
 					if (value != null)
 					{
-						parameters.put(((FormComponent)component).getInputName(), values
-								.get(component));
+						parameters.put(((FormComponent< ? >) component).getInputName(), values
+							.get(component));
 						valuesApplied.put(component.getId(), component);
 					}
 				}
@@ -1263,24 +1222,23 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 
 		if (values.size() != valuesApplied.size())
 		{
-			Map diff = new HashMap();
-			diff.putAll(values);
+			Set<String> diff = new HashSet<String>();
+			diff.addAll(values.values());
 
-			Iterator iter = valuesApplied.keySet().iterator();
+			Iterator<String> iter = valuesApplied.keySet().iterator();
 			while (iter.hasNext())
 			{
 				diff.remove(iter.next());
 			}
 
-			log
-					.error("Parameter mismatch: didn't find all components referenced in parameter 'values': "
-							+ diff.keySet());
+			log.error("Parameter mismatch: didn't find all components "
+				+ "referenced in parameter 'values': " + diff);
 		}
 	}
 
 	/**
-	 * Initialize the request parameters from the given redirect string that
-	 * redirects back to a particular component for display.
+	 * Initialize the request parameters from the given redirect string that redirects
+	 * back to a particular component for display.
 	 * 
 	 * @param redirect
 	 *            The redirect string to display from
@@ -1315,16 +1273,17 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 	{
 		headers.clear();
 		addHeader("Accept", "text/xml,application/xml,application/xhtml+xml,"
-				+ "text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5");
+			+ "text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5");
 		addHeader("Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.7");
 		Locale l = Locale.getDefault();
 		addHeader("Accept-Language", l.getLanguage().toLowerCase() + "-"
-				+ l.getCountry().toLowerCase() + "," + l.getLanguage().toLowerCase() + ";q=0.5");
+			+ l.getCountry().toLowerCase() + "," + l.getLanguage().toLowerCase() + ";q=0.5");
 		addHeader("User-Agent",
-				"Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7) Gecko/20040707 Firefox/0.9.2");
+			"Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7) Gecko/20040707 Firefox/0.9.2");
 	}
 
 	private static final String crlf = "\r\n";
+
 	private static final String boundary = "--abcdefgABCDEFG";
 
 	private void newAttachment(OutputStream out) throws IOException
@@ -1347,9 +1306,9 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 
 			// Add parameters
-			for (Iterator iterator = parameters.keySet().iterator(); iterator.hasNext();)
+			for (Iterator<String> iterator = parameters.keySet().iterator(); iterator.hasNext();)
 			{
-				final String name = (String)iterator.next();
+				final String name = iterator.next();
 				newAttachment(out);
 				out.write("; name=\"".getBytes());
 				out.write(name.getBytes());
@@ -1363,11 +1322,12 @@ public class SwarmMockHttpServletRequest implements HttpServletRequest
 			// Add files
 			if (uploadedFiles != null)
 			{
-				for (Iterator iterator = uploadedFiles.keySet().iterator(); iterator.hasNext();)
+				for (Iterator<String> iterator = uploadedFiles.keySet().iterator(); iterator
+					.hasNext();)
 				{
-					String fieldName = (String)iterator.next();
+					String fieldName = iterator.next();
 
-					UploadedFile uf = (UploadedFile)uploadedFiles.get(fieldName);
+					UploadedFile uf = uploadedFiles.get(fieldName);
 
 					newAttachment(out);
 					out.write("; name=\"".getBytes());

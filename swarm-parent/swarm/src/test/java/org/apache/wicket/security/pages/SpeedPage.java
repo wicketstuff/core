@@ -31,7 +31,6 @@ import org.apache.wicket.security.checks.ComponentSecurityCheck;
 import org.apache.wicket.security.components.SecureComponentHelper;
 import org.apache.wicket.security.components.SecureWebPage;
 
-
 /**
  * Page with lots of secure components to test performance.
  * 
@@ -52,26 +51,28 @@ public class SpeedPage extends SecureWebPage
 	public SpeedPage()
 	{
 		super();
-		final IModel columnModel = new ColumnModel();
+		final ColumnModel columnModel = new ColumnModel();
 		add(new Label("secure", new StatusModel()).setOutputMarkupId(true));
-		add(new ListView("rows", new RowModel())
+		add(new ListView<String>("rows", new RowModel())
 		{
 			private static final long serialVersionUID = 1L;
 
-			protected void populateItem(ListItem item)
+			@Override
+			protected void populateItem(ListItem<String> outerItem)
 			{
-				item.add(new ListView("cols", columnModel)
+				outerItem.add(new ListView<String>("cols", columnModel)
 				{
 					private static final long serialVersionUID = 1L;
 
-					protected void populateItem(ListItem item)
+					@Override
+					protected void populateItem(ListItem<String> innerItem)
 					{
-						Label label = new Label("label", item.getModel());
+						Label label = new Label("label", innerItem.getModel());
 						if (secured)
-							item.add(SecureComponentHelper.setSecurityCheck(label,
-									new ComponentSecurityCheck(label)));
+							innerItem.add(SecureComponentHelper.setSecurityCheck(label,
+								new ComponentSecurityCheck(label)));
 						else
-							item.add(label);
+							innerItem.add(label);
 						// this will generate loads of distinct checks for
 						// component permissions
 						// usually you do not want this, instead you should use
@@ -92,45 +93,36 @@ public class SpeedPage extends SecureWebPage
 	 */
 	public boolean logoff(Object context)
 	{
-		return ((WaspSession)Session.get()).logoff(context);
+		return ((WaspSession) Session.get()).logoff(context);
 	}
 
-	private final class StatusModel implements IModel
+	private final class StatusModel implements IModel<String>
 	{
+		private static final long serialVersionUID = 1L;
 
-		/**
-		 * 
-		 * @see org.apache.wicket.model.IModel#getObject()
-		 */
-		public Object getObject()
+		public String getObject()
 		{
 			return secured ? "secure" : "not secure";
 		}
 
-		/**
-		 * 
-		 * @see org.apache.wicket.model.IModel#setObject(java.lang.Object)
-		 */
-		public void setObject(Object object)
+		public void setObject(String object)
 		{
 			// noop
 		}
 
-		/**
-		 * 
-		 * @see org.apache.wicket.model.IDetachable#detach()
-		 */
 		public void detach()
 		{
 			// noop
 		}
 
 	}
-	private static final class RowModel extends LoadableDetachableModel
+
+	private static final class RowModel extends LoadableDetachableModel<List<String>>
 	{
 
 		private static final long serialVersionUID = 1L;
-		private List rows = new ArrayList(SpeedTest.ROWS);
+
+		private List<String> rows = new ArrayList<String>(SpeedTest.ROWS);
 
 		/**
 		 * Construct.
@@ -147,17 +139,20 @@ public class SpeedPage extends SecureWebPage
 		 * 
 		 * @see org.apache.wicket.model.LoadableDetachableModel#load()
 		 */
-		protected Object load()
+		@Override
+		protected List<String> load()
 		{
 			return rows;
 		}
 
 	}
-	private static final class ColumnModel extends LoadableDetachableModel
+
+	private static final class ColumnModel extends LoadableDetachableModel<List<String>>
 	{
 
 		private static final long serialVersionUID = 1L;
-		private List columns = new ArrayList(SpeedTest.COLS);
+
+		private List<String> columns = new ArrayList<String>(SpeedTest.COLS);
 
 		/**
 		 * Construct.
@@ -174,7 +169,8 @@ public class SpeedPage extends SecureWebPage
 		 * 
 		 * @see org.apache.wicket.model.LoadableDetachableModel#load()
 		 */
-		protected Object load()
+		@Override
+		protected List<String> load()
 		{
 			return columns;
 		}

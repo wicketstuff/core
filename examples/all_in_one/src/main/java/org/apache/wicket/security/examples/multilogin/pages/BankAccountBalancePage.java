@@ -48,11 +48,12 @@ public class BankAccountBalancePage extends SecurePage
 	public BankAccountBalancePage()
 	{
 		add(new ButtonContainer("buttoncontainer", ButtonContainer.BUTTON_OVERVIEW));
-		add(new ListView("transactions", generateData())
+		add(new ListView<Entry>("transactions", generateData())
 		{
 			private static final long serialVersionUID = 1L;
 
-			protected void populateItem(ListItem item)
+			@Override
+			protected void populateItem(ListItem<Entry> item)
 			{
 				item.add(new Label("when"));
 				item.add(new Label("from"));
@@ -63,14 +64,12 @@ public class BankAccountBalancePage extends SecurePage
 					item.add(new SimpleAttributeModifier("class", "outside halfhour"));
 			}
 
-			/**
-			 * 
-			 * @see org.apache.wicket.markup.html.list.ListView#getListItemModel(org.apache.wicket.model.IModel,
-			 *      int)
-			 */
-			protected IModel getListItemModel(IModel listViewModel, int index)
+			@Override
+			protected IModel<Entry> getListItemModel(IModel< ? extends List<Entry>> listViewModel,
+					int index)
 			{
-				return new CompoundPropertyModel(super.getListItemModel(listViewModel, index));
+				return new CompoundPropertyModel<Entry>(super
+					.getListItemModel(listViewModel, index));
 			}
 		});
 	}
@@ -80,18 +79,18 @@ public class BankAccountBalancePage extends SecurePage
 	 * 
 	 * @return
 	 */
-	private List generateData()
+	private List<Entry> generateData()
 	{
-		int size = (int)(Math.random() * 90) + 10;
-		List data = new ArrayList(size);
+		int size = (int) (Math.random() * 90) + 10;
+		List<Entry> data = new ArrayList<Entry>(size);
 		String to = "" + System.currentTimeMillis();
 		for (int i = 0; i < size; i++)
 		{
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.DAY_OF_YEAR, (-1 * size) + i);
-			cal.add(Calendar.HOUR_OF_DAY, (int)Math.random() * 12);
+			cal.add(Calendar.HOUR_OF_DAY, (int) Math.random() * 12);
 			data.add(new Entry("" + cal.getTimeInMillis(), to, cal.getTime().toString(), "foobar",
-					"$" + (Math.random() * 2546.789)));
+				"$" + (Math.random() * 2546.789)));
 		}
 		return data;
 	}

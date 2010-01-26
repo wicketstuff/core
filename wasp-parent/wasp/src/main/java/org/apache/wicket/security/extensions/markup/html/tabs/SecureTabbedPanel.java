@@ -22,14 +22,14 @@ import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.extensions.markup.html.tabs.TabbedPanel;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.security.checks.ISecurityCheck;
 import org.apache.wicket.security.checks.LinkSecurityCheck;
 import org.apache.wicket.security.components.SecureComponentHelper;
 
 /**
- * A Tab bar that hides the tabs if the user has insufficient rights to see the
- * contents. Note that tabs not implementing the {@link ISecureTab} interface
- * will always show up.
+ * A Tab bar that hides the tabs if the user has insufficient rights to see the contents.
+ * Note that tabs not implementing the {@link ISecureTab} interface will always show up.
  * 
  * @author marrink
  */
@@ -48,7 +48,7 @@ public class SecureTabbedPanel extends TabbedPanel
 	 * @param tabs
 	 * @see TabbedPanel#TabbedPanel(String, List)
 	 */
-	public SecureTabbedPanel(String id, List tabs)
+	public SecureTabbedPanel(String id, List<ITab> tabs)
 	{
 		super(id, tabs);
 		// In jdk1.5 we can enforce a list ISecureTabs, in 1.4 we just have to
@@ -61,10 +61,11 @@ public class SecureTabbedPanel extends TabbedPanel
 	 * @see org.apache.wicket.extensions.markup.html.tabs.TabbedPanel#newLink(java.lang.String,
 	 *      int)
 	 */
+	@Override
 	protected WebMarkupContainer newLink(String linkId, int index)
 	{
-		Link link = (Link)super.newLink(linkId, index);
-		Class panelClass = getTabClass(index);
+		Link< ? > link = (Link< ? >) super.newLink(linkId, index);
+		Class< ? extends Panel> panelClass = getTabClass(index);
 		// We are using a LinkSecurityCheck instead of a ContainerSecurityCheck
 		// because it operates on classes instead of instances.
 		if (panelClass != null)
@@ -76,18 +77,17 @@ public class SecureTabbedPanel extends TabbedPanel
 	}
 
 	/**
-	 * Gets the class of the panel. Note that it needs {@link ISecureTab}s for
-	 * this.
+	 * Gets the class of the panel. Note that it needs {@link ISecureTab}s for this.
 	 * 
 	 * @param tabIndex
 	 *            the index of the tab
 	 * @return the class or null if the tab at the index is not an ISecureTab
 	 */
-	protected Class getTabClass(int tabIndex)
+	protected Class< ? extends Panel> getTabClass(int tabIndex)
 	{
-		ITab tab = (ITab)getTabs().get(tabIndex);
+		ITab tab = getTabs().get(tabIndex);
 		if (tab instanceof ISecureTab)
-			return ((ISecureTab)tab).getPanel();
+			return ((ISecureTab) tab).getPanel();
 		return null;
 	}
 }

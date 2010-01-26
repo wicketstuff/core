@@ -27,11 +27,12 @@ public class LoginPage extends WebPage
 	{
 		try
 		{
-			WicketApplication app = (WicketApplication)Application.get();
-			String url = YahooBBAuth.generateYahooAuthenticationUrl(app.getApplicationId(), app
+			WicketApplication app = (WicketApplication) Application.get();
+			String url =
+				YahooBBAuth.generateYahooAuthenticationUrl(app.getApplicationId(), app
 					.getSharedSecret());
 			add(new WebMarkupContainer("yahooUrl").add(new SimpleAttributeModifier("content",
-					"5; url=" + url)));
+				"5; url=" + url)));
 			add(new WebMarkupContainer("yahooUrl2").add(new SimpleAttributeModifier("href", url)));
 		}
 		catch (UnsupportedEncodingException e)

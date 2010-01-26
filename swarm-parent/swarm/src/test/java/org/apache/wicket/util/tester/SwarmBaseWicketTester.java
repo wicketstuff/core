@@ -16,6 +16,8 @@
  */
 package org.apache.wicket.util.tester;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -51,9 +53,7 @@ import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.markup.html.link.IPageLink;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.link.PageLink;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.protocol.http.HttpSessionStore;
@@ -66,14 +66,15 @@ import org.apache.wicket.session.ISessionStore;
 import org.apache.wicket.util.diff.DiffUtil;
 import org.apache.wicket.util.lang.Classes;
 import org.apache.wicket.util.string.Strings;
+import org.apache.wicket.util.tester.WicketTesterHelper.ComponentData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A helper class to ease unit testing of Wicket applications without the need
- * for a servlet container. See javadoc of <code>WicketTester</code> for
- * example usage. This class can be used as is, but JUnit users should use
- * derived class <code>WicketTester</code>.
+ * A helper class to ease unit testing of Wicket applications without the need for a
+ * servlet container. See javadoc of <code>WicketTester</code> for example usage. This
+ * class can be used as is, but JUnit users should use derived class
+ * <code>WicketTester</code>.
  * 
  * @see SwarmWicketTester
  * 
@@ -117,16 +118,19 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 */
 	public static class DummyWebApplication extends WebApplication
 	{
-		public Class getHomePage()
+		@Override
+		public Class< ? extends Page> getHomePage()
 		{
 			return DummyHomePage.class;
 		}
 
+		@Override
 		protected void outputDevelopmentModeWarning()
 		{
 			// Do nothing.
 		}
 
+		@Override
 		protected ISessionStore newSessionStore()
 		{
 			// Don't use a filestore, or we spawn lots of threads, which makes
@@ -151,23 +155,26 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 * @param homePage
 	 *            a home page <code>Class</code>
 	 */
-	public SwarmBaseWicketTester(final Class homePage)
+	public SwarmBaseWicketTester(final Class< ? extends Page> homePage)
 	{
 		this(new WebApplication()
 		{
 			/**
 			 * @see org.apache.wicket.Application#getHomePage()
 			 */
-			public Class getHomePage()
+			@Override
+			public Class< ? extends Page> getHomePage()
 			{
 				return homePage;
 			}
 
+			@Override
 			protected void outputDevelopmentModeWarning()
 			{
 				// Do nothing.
 			}
 
+			@Override
 			protected ISessionStore newSessionStore()
 			{
 				// Don't use a filestore, or we spawn lots of threads, which
@@ -182,8 +189,7 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 * Creates a <code>WicketTester</code>.
 	 * 
 	 * @param application
-	 *            a <code>WicketTester</code> <code>WebApplication</code>
-	 *            object
+	 *            a <code>WicketTester</code> <code>WebApplication</code> object
 	 */
 	public SwarmBaseWicketTester(final WebApplication application)
 	{
@@ -194,14 +200,13 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 * Creates a <code>WicketTester</code> for unit testing.
 	 * 
 	 * @param application
-	 *            a <code>WicketTester</code> <code>WebApplication</code>
-	 *            object
+	 *            a <code>WicketTester</code> <code>WebApplication</code> object
 	 * @param path
-	 *            the absolute path on disk to the <code>WebApplication</code>'s
-	 *            contents (e.g. war root) - may be <code>null</code>
+	 *            the absolute path on disk to the <code>WebApplication</code>'s contents
+	 *            (e.g. war root) - may be <code>null</code>
 	 * 
-	 * @see org.apache.wicket.protocol.http.MockWebApplication#MockWebApplication(
-	 *      org.apache.wicket.protocol.http.WebApplication, String)
+	 * @see org.apache.wicket.protocol.http.MockWebApplication#MockWebApplication(org.apache.wicket.protocol.http.WebApplication,
+	 *      String)
 	 */
 	public SwarmBaseWicketTester(final WebApplication application, final String path)
 	{
@@ -209,10 +214,9 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	}
 
 	/**
-	 * Renders a <code>Page</code> defined in <code>TestPageSource</code>.
-	 * This is usually used when a page does not have default constructor. For
-	 * example, a <code>ViewBook</code> page requires a <code>Book</code>
-	 * instance:
+	 * Renders a <code>Page</code> defined in <code>TestPageSource</code>. This is usually
+	 * used when a page does not have default constructor. For example, a
+	 * <code>ViewBook</code> page requires a <code>Book</code> instance:
 	 * 
 	 * <pre>
 	 * tester.startPage(new TestPageSource()
@@ -226,14 +230,13 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 * </pre>
 	 * 
 	 * @param testPageSource
-	 *            a <code>Page</code> factory that creates a test page
-	 *            instance
+	 *            a <code>Page</code> factory that creates a test page instance
 	 * @return the rendered Page
 	 */
 	public final Page startPage(final ITestPageSource testPageSource)
 	{
 		startPage(DummyHomePage.class);
-		DummyHomePage page = (DummyHomePage)getLastRenderedPage();
+		DummyHomePage page = (DummyHomePage) getLastRenderedPage();
 		page.setTestPageSource(testPageSource);
 
 		executeListener(page.getTestPageLink());
@@ -242,8 +245,8 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 
 	/**
 	 * Builds and processes a request suitable for invoking a listener. The
-	 * <code>Component</code> must implement any of the known
-	 * <code>IListener</code> interfaces.
+	 * <code>Component</code> must implement any of the known <code>IListener</code>
+	 * interfaces.
 	 * 
 	 * @param component
 	 *            the listener to invoke
@@ -292,7 +295,7 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 *            a test <code>Page</code> class with default constructor
 	 * @return the rendered <code>Page</code>
 	 */
-	public final Page startPage(Class pageClass)
+	public final Page startPage(Class< ? extends Page> pageClass)
 	{
 		processRequestCycle(pageClass);
 		return getLastRenderedPage();
@@ -307,22 +310,20 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 *            the parameters to use for the class.
 	 * @return the rendered <code>Page</code>
 	 */
-	public final Page startPage(Class pageClass, PageParameters parameters)
+	public final Page startPage(Class< ? extends Page> pageClass, PageParameters parameters)
 	{
 		processRequestCycle(pageClass, parameters);
 		return getLastRenderedPage();
 	}
 
 	/**
-	 * Creates a {@link SwarmFormTester} for the <code>Form</code> at a given path,
-	 * and fills all child
-	 * {@link org.apache.wicket.markup.html.form.FormComponent}s with blank
-	 * <code>String</code>s.
+	 * Creates a {@link SwarmFormTester} for the <code>Form</code> at a given path, and
+	 * fills all child {@link org.apache.wicket.markup.html.form.FormComponent}s with
+	 * blank <code>String</code>s.
 	 * 
 	 * @param path
 	 *            path to <code>FormComponent</code>
-	 * @return a <code>FormTester</code> instance for testing the
-	 *         <code>Form</code>
+	 * @return a <code>FormTester</code> instance for testing the <code>Form</code>
 	 * @see #newFormTester(String, boolean)
 	 */
 	public SwarmFormTester newFormTester(String path)
@@ -336,24 +337,23 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 * @param path
 	 *            path to <code>FormComponent</code>
 	 * @param fillBlankString
-	 *            specifies whether to fill all child <code>FormComponent</code>s
-	 *            with blank <code>String</code>s
-	 * @return a <code>FormTester</code> instance for testing the
-	 *         <code>Form</code>
+	 *            specifies whether to fill all child <code>FormComponent</code> s with
+	 *            blank <code>String</code>s
+	 * @return a <code>FormTester</code> instance for testing the <code>Form</code>
 	 * @see SwarmFormTester
 	 */
 	public SwarmFormTester newFormTester(String path, boolean fillBlankString)
 	{
-		return new SwarmFormTester(path, (Form)getComponentFromLastRenderedPage(path), this,
-				fillBlankString);
+		return new SwarmFormTester(path, (Form< ? >) getComponentFromLastRenderedPage(path), this,
+			fillBlankString);
 	}
 
 	/**
-	 * Renders a <code>Panel</code> defined in <code>TestPanelSource</code>.
-	 * The usage is similar to {@link #startPage(ITestPageSource)}. Please note
-	 * that testing <code>Panel</code> must use the supplied
+	 * Renders a <code>Panel</code> defined in <code>TestPanelSource</code>. The usage is
+	 * similar to {@link #startPage(ITestPageSource)}. Please note that testing
+	 * <code>Panel</code> must use the supplied
 	 * <code>panelId<code> as a <code>Component</code> id.
-	 *
+	 * 
 	 * <pre>
 	 * tester.startPanel(new TestPanelSource()
 	 * {
@@ -364,14 +364,15 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 * 	}
 	 * });
 	 * </pre>
-	 *
+	 * 
 	 * @param testPanelSource
-	 *            a <code>Panel</code> factory that creates test <code>Panel</code> instances
+	 *            a <code>Panel</code> factory that creates test <code>Panel</code>
+	 *            instances
 	 * @return a rendered <code>Panel</code>
 	 */
 	public final Panel startPanel(final TestPanelSource testPanelSource)
 	{
-		return (Panel)startPage(new ITestPageSource()
+		return (Panel) startPage(new ITestPageSource()
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -383,17 +384,16 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	}
 
 	/**
-	 * Renders a <code>Panel</code> from a <code>Panel(String id)</code>
-	 * constructor.
+	 * Renders a <code>Panel</code> from a <code>Panel(String id)</code> constructor.
 	 * 
 	 * @param panelClass
-	 *            a test <code>Panel</code> class with
-	 *            <code>Panel(String id)</code> constructor
+	 *            a test <code>Panel</code> class with <code>Panel(String id)</code>
+	 *            constructor
 	 * @return a rendered <code>Panel</code>
 	 */
-	public final Panel startPanel(final Class panelClass)
+	public final Panel startPanel(final Class< ? extends Panel> panelClass)
 	{
-		return (Panel)startPage(new ITestPageSource()
+		return (Panel) startPage(new ITestPageSource()
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -407,8 +407,9 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 					{
 						try
 						{
-							Constructor c = panelClass.getConstructor(new Class[] { String.class });
-							return (Panel)c.newInstance(new Object[] { panelId });
+							Constructor< ? extends Panel> c =
+								panelClass.getConstructor(new Class[] {String.class});
+							return c.newInstance(new Object[] {panelId});
 						}
 						catch (SecurityException e)
 						{
@@ -437,25 +438,23 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	}
 
 	/**
-	 * A helper method for starting a component for a test without attaching it
-	 * to a Page.
+	 * A helper method for starting a component for a test without attaching it to a Page.
 	 * 
-	 * Components which are somehow dependent on the page structure can not be
-	 * currently tested with this method.
+	 * Components which are somehow dependent on the page structure can not be currently
+	 * tested with this method.
 	 * 
 	 * Example:
 	 * 
-	 * UserDataView view = new UserDataView("view", new
-	 * ListDataProvider(userList)); tester.startComponent(view); assertEquals(4,
-	 * view.size());
+	 * UserDataView view = new UserDataView("view", new ListDataProvider(userList));
+	 * tester.startComponent(view); assertEquals(4, view.size());
 	 * 
 	 * @param component
 	 */
 	public void startComponent(Component component)
 	{
-		if (component instanceof FormComponent)
+		if (component instanceof FormComponent< ? >)
 		{
-			((FormComponent)component).processInput();
+			((FormComponent< ? >) component).processInput();
 		}
 		component.beforeRender();
 	}
@@ -472,9 +471,9 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	}
 
 	/**
-	 * Gets the component with the given path from last rendered page. This
-	 * method fails in case the component couldn't be found, and it will return
-	 * null if the component was found, but is not visible.
+	 * Gets the component with the given path from last rendered page. This method fails
+	 * in case the component couldn't be found, and it will return null if the component
+	 * was found, but is not visible.
 	 * 
 	 * @param path
 	 *            Path to component
@@ -487,7 +486,7 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 		if (component == null)
 		{
 			fail("path: '" + path + "' does not exist for page: "
-					+ Classes.simpleName(getLastRenderedPage().getClass()));
+				+ Classes.simpleName(getLastRenderedPage().getClass()));
 			return component;
 		}
 		if (component.isVisibleInHierarchy())
@@ -508,41 +507,8 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 */
 	public Result hasLabel(String path, String expectedLabelText)
 	{
-		Label label = (Label)getComponentFromLastRenderedPage(path);
+		Label label = (Label) getComponentFromLastRenderedPage(path);
 		return isEqual(expectedLabelText, label.getDefaultModelObjectAsString());
-	}
-
-	/**
-	 * assert <code>PageLink</code> link to page class.
-	 * 
-	 * @param path
-	 *            path to <code>PageLink</code> component
-	 * @param expectedPageClass
-	 *            expected page class to link
-	 * @return a <code>Result</code>
-	 */
-	public Result isPageLink(String path, Class expectedPageClass)
-	{
-		PageLink pageLink = (PageLink)getComponentFromLastRenderedPage(path);
-		try
-		{
-			Field iPageLinkField = pageLink.getClass().getDeclaredField("pageLink");
-			iPageLinkField.setAccessible(true);
-			IPageLink iPageLink = (IPageLink)iPageLinkField.get(pageLink);
-			return isEqual(expectedPageClass, iPageLink.getPageIdentity());
-		}
-		catch (SecurityException e)
-		{
-			throw convertoUnexpect(e);
-		}
-		catch (NoSuchFieldException e)
-		{
-			throw convertoUnexpect(e);
-		}
-		catch (IllegalAccessException e)
-		{
-			throw convertoUnexpect(e);
-		}
 	}
 
 	/**
@@ -554,12 +520,12 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 *            expected component class
 	 * @return a <code>Result</code>
 	 */
-	public Result isComponent(String path, Class expectedComponentClass)
+	public Result isComponent(String path, Class< ? extends Component> expectedComponentClass)
 	{
 		Component component = getComponentFromLastRenderedPage(path);
 		return isTrue("component '" + Classes.simpleName(component.getClass()) + "' is not type:"
-				+ Classes.simpleName(expectedComponentClass), expectedComponentClass
-				.isAssignableFrom(component.getClass()));
+			+ expectedComponentClass.getSimpleName(), expectedComponentClass
+			.isAssignableFrom(component.getClass()));
 	}
 
 	/**
@@ -575,7 +541,8 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 		if (component == null)
 		{
 			fail("path: '" + path + "' does no exist for page: "
-					+ Classes.simpleName(getLastRenderedPage().getClass()));
+				+ Classes.simpleName(getLastRenderedPage().getClass()));
+			return null;
 		}
 
 		return isTrue("component '" + path + "' is not visible", component.isVisible());
@@ -603,7 +570,7 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	public Result ifContains(String pattern)
 	{
 		return isTrue("pattern '" + pattern + "' not found", getServletResponse().getDocument()
-				.matches("(?s).*" + pattern + ".*"));
+			.matches("(?s).*" + pattern + ".*"));
 	}
 
 	/**
@@ -614,9 +581,9 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 * @param expectedList
 	 *            expected list in the model of {@link ListView}
 	 */
-	public void assertListView(String path, List expectedList)
+	public void assertListView(String path, List< ? > expectedList)
 	{
-		ListView listView = (ListView)getComponentFromLastRenderedPage(path);
+		ListView< ? > listView = (ListView< ? >) getComponentFromLastRenderedPage(path);
 		WicketTesterHelper.assertEquals(expectedList, listView.getList());
 	}
 
@@ -637,50 +604,50 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	/**
 	 * Click the {@link Link} in the last rendered Page.
 	 * <p>
-	 * This method also works for {@link AjaxLink}, {@link AjaxFallbackLink}
-	 * and {@link AjaxSubmitLink}.
+	 * This method also works for {@link AjaxLink}, {@link AjaxFallbackLink} and
+	 * {@link AjaxSubmitLink}.
 	 * <p>
-	 * On AjaxLinks and AjaxFallbackLinks the onClick method is invoked with a
-	 * valid AjaxRequestTarget. In that way you can test the flow of your
-	 * application when using AJAX.
+	 * On AjaxLinks and AjaxFallbackLinks the onClick method is invoked with a valid
+	 * AjaxRequestTarget. In that way you can test the flow of your application when using
+	 * AJAX.
 	 * <p>
-	 * When clicking an AjaxSubmitLink the form, which the AjaxSubmitLink is
-	 * attached to is first submitted, and then the onSubmit method on
-	 * AjaxSubmitLink is invoked. If you have changed some values in the form
-	 * during your test, these will also be submitted. This should not be used
-	 * as a replacement for the {@link SwarmFormTester} to test your forms. It should
-	 * be used to test that the code in your onSubmit method in AjaxSubmitLink
-	 * actually works.
+	 * When clicking an AjaxSubmitLink the form, which the AjaxSubmitLink is attached to
+	 * is first submitted, and then the onSubmit method on AjaxSubmitLink is invoked. If
+	 * you have changed some values in the form during your test, these will also be
+	 * submitted. This should not be used as a replacement for the {@link SwarmFormTester}
+	 * to test your forms. It should be used to test that the code in your onSubmit method
+	 * in AjaxSubmitLink actually works.
 	 * <p>
-	 * This method is also able to simulate that AJAX (javascript) is disabled
-	 * on the client. This is done by setting the isAjax parameter to false. If
-	 * you have an AjaxFallbackLink you can then check that it doesn't fail when
-	 * invoked as a normal link.
+	 * This method is also able to simulate that AJAX (javascript) is disabled on the
+	 * client. This is done by setting the isAjax parameter to false. If you have an
+	 * AjaxFallbackLink you can then check that it doesn't fail when invoked as a normal
+	 * link.
 	 * 
 	 * @param path
 	 *            path to <code>Link</code> component
 	 * @param isAjax
-	 *            Whether to simulate that AJAX (javascript) is enabled or not.
-	 *            If it's false then AjaxLink and AjaxSubmitLink will fail,
-	 *            since it wouldn't work in real life. AjaxFallbackLink will be
-	 *            invoked with null as the AjaxRequestTarget parameter.
+	 *            Whether to simulate that AJAX (javascript) is enabled or not. If it's
+	 *            false then AjaxLink and AjaxSubmitLink will fail, since it wouldn't work
+	 *            in real life. AjaxFallbackLink will be invoked with null as the
+	 *            AjaxRequestTarget parameter.
 	 */
+	@SuppressWarnings("null")
 	public void clickLink(String path, boolean isAjax)
 	{
 		Component linkComponent = getComponentFromLastRenderedPage(path);
 
 		// if the link is an AjaxLink, we process it differently
 		// than a normal link
-		if (linkComponent instanceof AjaxLink)
+		if (linkComponent instanceof AjaxLink< ? >)
 		{
 			// If it's not ajax we fail
 			if (isAjax == false)
 			{
 				fail("Link " + path + "is an AjaxLink and will "
-						+ "not be invoked when AJAX (javascript) is disabled.");
+					+ "not be invoked when AJAX (javascript) is disabled.");
 			}
 
-			AjaxLink link = (AjaxLink)linkComponent;
+			AjaxLink< ? > link = (AjaxLink< ? >) linkComponent;
 
 			setupRequestAndResponse(true);
 			RequestCycle requestCycle = createRequestCycle();
@@ -696,9 +663,9 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 		// AjaxFallbackLinks is processed like an AjaxLink if isAjax is true
 		// If it's not handling of the linkComponent is passed through to the
 		// Link.
-		else if (linkComponent instanceof AjaxFallbackLink && isAjax)
+		else if (linkComponent instanceof AjaxFallbackLink< ? > && isAjax)
 		{
-			AjaxFallbackLink link = (AjaxFallbackLink)linkComponent;
+			AjaxFallbackLink< ? > link = (AjaxFallbackLink< ? >) linkComponent;
 
 			setupRequestAndResponse(true);
 			RequestCycle requestCycle = createRequestCycle();
@@ -719,21 +686,19 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 			if (isAjax == false)
 			{
 				fail("Link " + path + "is an AjaxSubmitLink and "
-						+ "will not be invoked when AJAX (javascript) is disabled.");
+					+ "will not be invoked when AJAX (javascript) is disabled.");
 			}
 
-			AjaxSubmitLink link = (AjaxSubmitLink)linkComponent;
+			AjaxSubmitLink link = (AjaxSubmitLink) linkComponent;
 
 			// We cycle through the attached behaviors and select the
 			// LAST matching behavior as the one we handle.
-			List behaviors = link.getBehaviors();
 			AjaxFormSubmitBehavior ajaxFormSubmitBehavior = null;
-			for (Iterator iter = behaviors.iterator(); iter.hasNext();)
+			for (IBehavior behavior : link.getBehaviors())
 			{
-				Object behavior = iter.next();
 				if (behavior instanceof AjaxFormSubmitBehavior)
 				{
-					AjaxFormSubmitBehavior submitBehavior = (AjaxFormSubmitBehavior)behavior;
+					AjaxFormSubmitBehavior submitBehavior = (AjaxFormSubmitBehavior) behavior;
 					ajaxFormSubmitBehavior = submitBehavior;
 				}
 			}
@@ -756,31 +721,29 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 		// if the link is a normal link (or ResourceLink)
 		else if (linkComponent instanceof AbstractLink)
 		{
-			AbstractLink link = (AbstractLink)linkComponent;
+			AbstractLink link = (AbstractLink) linkComponent;
 
 			/*
-			 * If the link is a bookmarkable link, then we need to transfer the
-			 * parameters to the next request.
+			 * If the link is a bookmarkable link, then we need to transfer the parameters
+			 * to the next request.
 			 */
-			if (link instanceof BookmarkablePageLink)
+			if (link instanceof BookmarkablePageLink< ? >)
 			{
-				BookmarkablePageLink bookmarkablePageLink = (BookmarkablePageLink)link;
+				BookmarkablePageLink< ? > bookmarkablePageLink = (BookmarkablePageLink< ? >) link;
 				try
 				{
-					Field parametersField = BookmarkablePageLink.class
-							.getDeclaredField("parameters");
-					Method getParametersMethod = BookmarkablePageLink.class.getDeclaredMethod(
-							"getPageParameters");
+					Method getParametersMethod =
+						BookmarkablePageLink.class.getDeclaredMethod("getPageParameters");
 					getParametersMethod.setAccessible(true);
 
-					PageParameters parameters = (PageParameters)getParametersMethod.invoke(
-							bookmarkablePageLink);
+					PageParameters parameters =
+						(PageParameters) getParametersMethod.invoke(bookmarkablePageLink);
 					setParametersForNextRequest(parameters);
 				}
 				catch (Exception e)
 				{
 					fail("Internal error in WicketTester. "
-							+ "Please report this in Wickets Issue Tracker.");
+						+ "Please report this in Wickets Issue Tracker.");
 				}
 
 			}
@@ -801,16 +764,14 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 */
 	public void submitForm(String path)
 	{
-		Form form = (Form)getComponentFromLastRenderedPage(path);
-		executeListener(form);
+		executeListener(getComponentFromLastRenderedPage(path));
 	}
 
 	/**
-	 * Sets a parameter for the <code>Component</code> with the given path to
-	 * be used with the next request.
+	 * Sets a parameter for the <code>Component</code> with the given path to be used with
+	 * the next request.
 	 * <p>
-	 * NOTE: this method only works when a <code>Page</code> was rendered
-	 * first.
+	 * NOTE: this method only works when a <code>Page</code> was rendered first.
 	 * 
 	 * @param componentPath
 	 *            path to the <code>Component</code>
@@ -831,58 +792,50 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 			return;
 		}
 
-		if (c instanceof FormComponent)
+		if (c instanceof FormComponent< ? >)
 		{
-			getParametersForNextRequest().put(((FormComponent)c).getInputName(), value);
+			getParametersForNextRequest().put(((FormComponent< ? >) c).getInputName(), value);
 		}
 		else
 		{
 			getParametersForNextRequest().put(c.getPath(), value);
 		}
-
 	}
 
 	/**
 	 * Asserts the last rendered <code>Page</code> class.
 	 * 
-	 * FIXME explain why the code is so complicated to compare two classes, or
-	 * simplify
-	 * 
 	 * @param expectedRenderedPageClass
 	 *            expected class of last rendered page
 	 * @return a <code>Result</code>
 	 */
-	public Result isRenderedPage(Class expectedRenderedPageClass)
+	public Result isRenderedPage(Class< ? extends Page> expectedRenderedPageClass)
 	{
 		Page page = getLastRenderedPage();
 		if (page == null)
 		{
 			return Result.fail("page was null");
 		}
-		if (!page.getClass().isAssignableFrom(expectedRenderedPageClass))
-		{
-			return isEqual(Classes.simpleName(expectedRenderedPageClass), Classes.simpleName(page
-					.getClass()));
-		}
-		return Result.pass();
+		return expectedRenderedPageClass.isAssignableFrom(page.getClass()) ? Result.pass() : Result
+			.fail("Rendered page is not a " + expectedRenderedPageClass.getSimpleName());
 	}
 
 	/**
-	 * Asserts last rendered <code>Page</code> against an expected HTML
-	 * document.
+	 * Asserts last rendered <code>Page</code> against an expected HTML document.
 	 * <p>
-	 * Use <code>-Dwicket.replace.expected.results=true</code> to
-	 * automatically replace the expected output file.
+	 * Use <code>-Dwicket.replace.expected.results=true</code> to automatically replace
+	 * the expected output file.
 	 * </p>
 	 * 
 	 * @param pageClass
-	 *            used to load the <code>File</code> (relative to
-	 *            <code>clazz</code> package)
+	 *            used to load the <code>File</code> (relative to <code>clazz</code>
+	 *            package)
 	 * @param filename
 	 *            expected output <code>File</code> name
-	 * @throws Exception
+	 * @throws IOException
 	 */
-	public void assertResultPage(final Class pageClass, final String filename) throws Exception
+	public void assertResultPage(final Class< ? extends Page> pageClass, final String filename)
+			throws IOException
 	{
 		// Validate the document
 		String document = getServletResponse().getDocument();
@@ -890,8 +843,8 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	}
 
 	/**
-	 * Asserts last rendered <code>Page</code> against an expected HTML
-	 * document as a <code>String</code>.
+	 * Asserts last rendered <code>Page</code> against an expected HTML document as a
+	 * <code>String</code>.
 	 * 
 	 * @param expectedDocument
 	 *            expected output
@@ -912,9 +865,9 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 */
 	public Result hasNoErrorMessage()
 	{
-		List messages = getMessages(FeedbackMessage.ERROR);
+		List<Serializable> messages = getMessages(FeedbackMessage.ERROR);
 		return isTrue("expect no error message, but contains\n"
-				+ WicketTesterHelper.asLined(messages), messages.isEmpty());
+			+ WicketTesterHelper.asLined(messages), messages.isEmpty());
 	}
 
 	/**
@@ -924,9 +877,9 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 */
 	public Result hasNoInfoMessage()
 	{
-		List messages = getMessages(FeedbackMessage.INFO);
+		List<Serializable> messages = getMessages(FeedbackMessage.INFO);
 		return isTrue("expect no info message, but contains\n"
-				+ WicketTesterHelper.asLined(messages), messages.isEmpty());
+			+ WicketTesterHelper.asLined(messages), messages.isEmpty());
 	}
 
 	/**
@@ -938,10 +891,10 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 * @return <code>List</code> of messages (as <code>String</code>s)
 	 * @see FeedbackMessage
 	 */
-	public List getMessages(final int level)
+	public List<Serializable> getMessages(final int level)
 	{
 		FeedbackMessages feedbackMessages = Session.get().getFeedbackMessages();
-		List allMessages = feedbackMessages.messages(new IFeedbackMessageFilter()
+		List<FeedbackMessage> allMessages = feedbackMessages.messages(new IFeedbackMessageFilter()
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -950,10 +903,10 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 				return message.getLevel() == level;
 			}
 		});
-		List actualMessages = new ArrayList();
-		for (Iterator iter = allMessages.iterator(); iter.hasNext();)
+		List<Serializable> actualMessages = new ArrayList<Serializable>();
+		for (FeedbackMessage message : allMessages)
 		{
-			actualMessages.add(((FeedbackMessage)iter.next()).getMessage());
+			actualMessages.add(message.getMessage());
 		}
 		return actualMessages;
 	}
@@ -975,9 +928,8 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	}
 
 	/**
-	 * Dumps the <code>Component</code> trees to log. Show only the
-	 * <code>Component</code>s whose paths contain the filter
-	 * <code>String</code>.
+	 * Dumps the <code>Component</code> trees to log. Show only the <code>Component</code>
+	 * s whose paths contain the filter <code>String</code>.
 	 * 
 	 * @param filter
 	 *            a filter <code>String</code>
@@ -985,10 +937,10 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	public void debugComponentTrees(String filter)
 	{
 		log.info("debugging ----------------------------------------------");
-		for (Iterator iter = WicketTesterHelper.getComponentData(getLastRenderedPage()).iterator(); iter
-				.hasNext();)
+		for (Iterator<ComponentData> iter =
+			WicketTesterHelper.getComponentData(getLastRenderedPage()).iterator(); iter.hasNext();)
 		{
-			WicketTesterHelper.ComponentData obj = (WicketTesterHelper.ComponentData)iter.next();
+			WicketTesterHelper.ComponentData obj = iter.next();
 			if (obj.path.matches(".*" + filter + ".*"))
 			{
 				log.info("path\t" + obj.path + " \t" + obj.type + " \t[" + obj.value + "]");
@@ -999,14 +951,12 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	/**
 	 * Tests that a <code>Component</code> has been added to a
 	 * <code>AjaxRequestTarget</code>, using
-	 * {@link AjaxRequestTarget#addComponent(Component)}. This method actually
-	 * tests that a <code>Component</code> is on the Ajax response sent back
-	 * to the client.
+	 * {@link AjaxRequestTarget#addComponent(Component)}. This method actually tests that
+	 * a <code>Component</code> is on the Ajax response sent back to the client.
 	 * <p>
-	 * PLEASE NOTE! This method doesn't actually insert the
-	 * <code>Component</code> in the client DOM tree, using Javascript. But it
-	 * shouldn't be needed because you have to trust that the Wicket Ajax
-	 * Javascript just works.
+	 * PLEASE NOTE! This method doesn't actually insert the <code>Component</code> in the
+	 * client DOM tree, using Javascript. But it shouldn't be needed because you have to
+	 * trust that the Wicket Ajax Javascript just works.
 	 * 
 	 * @param component
 	 *            the <code>Component</code> to test
@@ -1014,7 +964,8 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 */
 	public Result isComponentOnAjaxResponse(Component component)
 	{
-		String failMessage = "A component which is null could not have been added to the AJAX response";
+		String failMessage =
+			"A component which is null could not have been added to the AJAX response";
 		notNull(failMessage, component);
 
 		Result result;
@@ -1023,7 +974,8 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 		// visible
 		if (!component.isVisible())
 		{
-			failMessage = "A component which is invisible and doesn't render a placeholder tag"
+			failMessage =
+				"A component which is invisible and doesn't render a placeholder tag"
 					+ " will not be rendered at all and thus won't be accessible for subsequent AJAX interaction";
 			result = isTrue(failMessage, component.getOutputMarkupPlaceholderTag());
 			if (result.wasFailed())
@@ -1032,15 +984,15 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 			}
 		}
 
-
 		// Get the AJAX response
 		String ajaxResponse = getServletResponse().getDocument();
 
 		// Test that the previous response was actually a AJAX response
-		failMessage = "The Previous response was not an AJAX response. "
+		failMessage =
+			"The Previous response was not an AJAX response. "
 				+ "You need to execute an AJAX event, using clickLink, before using this assert";
-		boolean isAjaxResponse = ajaxResponse
-				.startsWith("<?xml version=\"1.0\" encoding=\"UTF-8\"?><ajax-response>");
+		boolean isAjaxResponse =
+			ajaxResponse.startsWith("<?xml version=\"1.0\" encoding=\"UTF-8\"?><ajax-response>");
 		result = isTrue(failMessage, isAjaxResponse);
 		if (result.wasFailed())
 		{
@@ -1050,7 +1002,8 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 		// See if the component has a markup id
 		String markupId = component.getMarkupId();
 
-		failMessage = "The component doesn't have a markup id, "
+		failMessage =
+			"The component doesn't have a markup id, "
 				+ "which means that it can't have been added to the AJAX response";
 		result = isTrue(failMessage, !Strings.isEmpty(markupId));
 		if (result.wasFailed())
@@ -1059,8 +1012,8 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 		}
 
 		// Look for that the component is on the response, using the markup id
-		boolean isComponentInAjaxResponse = ajaxResponse.matches("(?s).*<component id=\""
-				+ markupId + "\" ?>.*");
+		boolean isComponentInAjaxResponse =
+			ajaxResponse.matches("(?s).*<component id=\"" + markupId + "\" ?>.*");
 		failMessage = "Component wasn't found in the AJAX response";
 		return isTrue(failMessage, isComponentInAjaxResponse);
 	}
@@ -1074,8 +1027,8 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 * @param componentPath
 	 *            the <code>Component</code> path
 	 * @param event
-	 *            the event which we simulate being fired. If <code>event</code>
-	 *            is <code>null</code>, the test will fail.
+	 *            the event which we simulate being fired. If <code>event</code> is
+	 *            <code>null</code>, the test will fail.
 	 */
 	public void executeAjaxEvent(String componentPath, String event)
 	{
@@ -1095,8 +1048,8 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 *     ...
 	 * </pre>
 	 * 
-	 * You can then test that the code inside <code>onEvent</code> actually
-	 * does what it's supposed to, using the <code>WicketTester</code>:
+	 * You can then test that the code inside <code>onEvent</code> actually does what it's
+	 * supposed to, using the <code>WicketTester</code>:
 	 * 
 	 * <pre>
 	 *     ...
@@ -1105,22 +1058,22 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 *     ...
 	 * </pre>
 	 * 
-	 * This also works with <code>AjaxFormSubmitBehavior</code>, where it
-	 * will "submit" the <code>Form</code> before executing the command.
+	 * This also works with <code>AjaxFormSubmitBehavior</code>, where it will "submit"
+	 * the <code>Form</code> before executing the command.
 	 * <p>
-	 * PLEASE NOTE! This method doesn't actually insert the
-	 * <code>Component</code> in the client DOM tree, using Javascript.
+	 * PLEASE NOTE! This method doesn't actually insert the <code>Component</code> in the
+	 * client DOM tree, using Javascript.
 	 * 
 	 * 
 	 * @param component
-	 *            the <code>Component</code> that has the
-	 *            <code>AjaxEventBehavior</code> we want to test. If the
-	 *            <code>Component</code> is <code>null</code>, the test
-	 *            will fail.
+	 *            the <code>Component</code> that has the <code>AjaxEventBehavior</code>
+	 *            we want to test. If the <code>Component</code> is <code>null</code>, the
+	 *            test will fail.
 	 * @param event
 	 *            the event to simulate being fired. If <code>event</code> is
 	 *            <code>null</code>, the test will fail.
 	 */
+	@SuppressWarnings("null")
 	public void executeAjaxEvent(Component component, String event)
 	{
 		String failMessage = "Can't execute event on a component which is null.";
@@ -1132,15 +1085,12 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 		// Run through all the behavior and select the LAST ADDED behavior which
 		// matches the event parameter.
 		AjaxEventBehavior ajaxEventBehavior = null;
-		List behaviors = component.getBehaviors();
-		for (Iterator iter = behaviors.iterator(); iter.hasNext();)
+		for (IBehavior behavior : component.getBehaviors())
 		{
-			IBehavior behavior = (IBehavior)iter.next();
-
 			// AjaxEventBehavior is the one to look for
 			if (behavior instanceof AjaxEventBehavior)
 			{
-				AjaxEventBehavior tmp = (AjaxEventBehavior)behavior;
+				AjaxEventBehavior tmp = (AjaxEventBehavior) behavior;
 
 				if (event.equals(tmp.getEvent()))
 				{
@@ -1151,7 +1101,8 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 
 		// If there haven't been found any event behaviors on the component
 		// which matches the parameters we fail.
-		failMessage = "No AjaxEventBehavior found on component: " + component.getId()
+		failMessage =
+			"No AjaxEventBehavior found on component: " + component.getId()
 				+ " which matches the event: " + event;
 		notNull(failMessage, ajaxEventBehavior);
 
@@ -1165,7 +1116,7 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 		}
 		else
 		{
-			requestCycle = (WebRequestCycle)RequestCycle.get();
+			requestCycle = (WebRequestCycle) RequestCycle.get();
 		}
 		// when the requestcycle is not created via
 		// setupRequestAndResponse(true), it can happen
@@ -1176,14 +1127,15 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 			HttpServletRequest req = requestCycle.getWebRequest().getHttpServletRequest();
 			if (req instanceof SwarmMockHttpServletRequest)
 			{
-				((SwarmMockHttpServletRequest)req).addHeader("Wicket-Ajax", "Yes");
+				((SwarmMockHttpServletRequest) req).addHeader("Wicket-Ajax", "Yes");
 			}
 		}
 
 		// If the event is an FormSubmitBehavior then also "submit" the form
 		if (ajaxEventBehavior instanceof AjaxFormSubmitBehavior)
 		{
-			AjaxFormSubmitBehavior ajaxFormSubmitBehavior = (AjaxFormSubmitBehavior)ajaxEventBehavior;
+			AjaxFormSubmitBehavior ajaxFormSubmitBehavior =
+				(AjaxFormSubmitBehavior) ajaxEventBehavior;
 			submitAjaxFormSubmitBehavior(ajaxFormSubmitBehavior);
 		}
 
@@ -1194,9 +1146,9 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	}
 
 	/**
-	 * Retrieves a <code>TagTester</code> based on a <code>wicket:id</code>.
-	 * If more <code>Component</code>s exist with the same
-	 * <code>wicket:id</code> in the markup, only the first one is returned.
+	 * Retrieves a <code>TagTester</code> based on a <code>wicket:id</code>. If more
+	 * <code>Component</code>s exist with the same <code>wicket:id</code> in the markup,
+	 * only the first one is returned.
 	 * 
 	 * @param wicketId
 	 *            the <code>wicket:id</code> to search for
@@ -1206,18 +1158,17 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	public TagTester getTagByWicketId(String wicketId)
 	{
 		return TagTester.createTagByAttribute(getServletResponse().getDocument(), "wicket:id",
-				wicketId);
+			wicketId);
 	}
 
 	/**
 	 * Retrieves a <code>TagTester</code> based on an DOM id. If more
-	 * <code>Component</code>s exist with the same id in the markup, only the
-	 * first one is returned.
+	 * <code>Component</code>s exist with the same id in the markup, only the first one is
+	 * returned.
 	 * 
 	 * @param id
 	 *            the DOM id to search for.
-	 * @return the <code>TagTester</code> for the tag which has the given DOM
-	 *         id
+	 * @return the <code>TagTester</code> for the tag which has the given DOM id
 	 */
 	public TagTester getTagById(String id)
 	{
@@ -1225,27 +1176,28 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	}
 
 	/**
-	 * Helper method for all the places where an Ajax call should submit an
-	 * associated <code>Form</code>.
+	 * Helper method for all the places where an Ajax call should submit an associated
+	 * <code>Form</code>.
 	 * 
 	 * @param behavior
-	 *            The <code>AjaxFormSubmitBehavior</code> with the
-	 *            <code>Form</code> to "submit"
+	 *            The <code>AjaxFormSubmitBehavior</code> with the <code>Form</code> to
+	 *            "submit"
 	 */
 	private void submitAjaxFormSubmitBehavior(AjaxFormSubmitBehavior behavior)
 	{
 		// We need to get the form submitted, using reflection.
 		// It needs to be "submitted".
-		Form form = null;
+		Form< ? > form = null;
 		try
 		{
 			Field formField = AjaxFormSubmitBehavior.class.getDeclaredField("form");
 			formField.setAccessible(true);
-			form = (Form)formField.get(behavior);
+			form = (Form< ? >) formField.get(behavior);
 		}
 		catch (Exception e)
 		{
 			fail(e.getMessage());
+			return;
 		}
 
 		String failMessage = "No form attached to the submitlink.";
@@ -1253,10 +1205,12 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 
 		form.visitFormComponents(new FormComponent.AbstractVisitor()
 		{
-			public void onFormComponent(FormComponent formComponent)
+			@Override
+			public void onFormComponent(FormComponent< ? > formComponent)
 			{
-				if (!(formComponent instanceof Button) && !(formComponent instanceof RadioGroup)
-						&& !(formComponent instanceof CheckGroup))
+				if (!(formComponent instanceof Button)
+					&& !(formComponent instanceof RadioGroup< ? >)
+					&& !(formComponent instanceof CheckGroup< ? >))
 				{
 					String name = formComponent.getInputName();
 					String value = formComponent.getValue();
@@ -1281,7 +1235,8 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 */
 	public String getContentTypeFromResponseHeader()
 	{
-		String contentType = ((SwarmMockHttpServletResponse)getWicketResponse().getHttpServletResponse())
+		String contentType =
+			((SwarmMockHttpServletResponse) getWicketResponse().getHttpServletResponse())
 				.getHeader("Content-Type");
 		if (contentType == null)
 		{
@@ -1297,8 +1252,9 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 */
 	public int getContentLengthFromResponseHeader()
 	{
-		String contentLength = ((SwarmMockHttpServletResponse)getWicketResponse()
-				.getHttpServletResponse()).getHeader("Content-Length");
+		String contentLength =
+			((SwarmMockHttpServletResponse) getWicketResponse().getHttpServletResponse())
+				.getHeader("Content-Length");
 		if (contentLength == null)
 		{
 			throw new WicketRuntimeException("No Content-Length header found");
@@ -1313,8 +1269,8 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 */
 	public String getLastModifiedFromResponseHeader()
 	{
-		return ((SwarmMockHttpServletResponse)getWicketResponse().getHttpServletResponse())
-				.getHeader("Last-Modified");
+		return ((SwarmMockHttpServletResponse) getWicketResponse().getHttpServletResponse())
+			.getHeader("Last-Modified");
 	}
 
 	/**
@@ -1324,8 +1280,8 @@ public class SwarmBaseWicketTester extends SwarmMockWebApplication
 	 */
 	public String getContentDispositionFromResponseHeader()
 	{
-		return ((SwarmMockHttpServletResponse)getWicketResponse().getHttpServletResponse())
-				.getHeader("Content-Disposition");
+		return ((SwarmMockHttpServletResponse) getWicketResponse().getHttpServletResponse())
+			.getHeader("Content-Disposition");
 	}
 
 	private Result isTrue(String message, boolean condition)

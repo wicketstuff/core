@@ -51,7 +51,7 @@ public class SecurePanel extends Panel implements ISecureContainer
 	/**
 	 * @see Panel#Panel(String, IModel)
 	 */
-	public SecurePanel(String id, IModel model)
+	public SecurePanel(String id, IModel<?> model)
 	{
 		super(id, model);
 		setSecurityCheck(new ContainerSecurityCheck(this));

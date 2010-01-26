@@ -19,6 +19,7 @@ package org.apache.wicket.security;
 import java.net.MalformedURLException;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.Page;
 import org.apache.wicket.Request;
 import org.apache.wicket.Response;
 import org.apache.wicket.Session;
@@ -39,10 +40,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Test if everything still works if we don't inherit from
- * {@link SwarmWebApplication} but simply implement all the required interfaces.
- * This simply runs all the tests from {@link GeneralTest} and if we don't get a
- * {@link ClassCastException} or something like that everything works OK.
+ * Test if everything still works if we don't inherit from {@link SwarmWebApplication} but
+ * simply implement all the required interfaces. This simply runs all the tests from
+ * {@link GeneralTest} and if we don't get a {@link ClassCastException} or something like
+ * that everything works OK.
  * 
  * @author marrink
  */
@@ -85,7 +86,7 @@ public class ExtendsTest extends GeneralTest
 			{
 				factory.addPolicyFile(getServletContext().getResource("WEB-INF/policy.hive"));
 				factory.setAlias("SimplePrincipal",
-						"org.apache.wicket.security.hive.authorization.SimplePrincipal");
+					"org.apache.wicket.security.hive.authorization.SimplePrincipal");
 				factory.setAlias("myPackage", "org.apache.wicket.security.pages");
 			}
 			catch (MalformedURLException e)
@@ -99,7 +100,8 @@ public class ExtendsTest extends GeneralTest
 		 * 
 		 * @see org.apache.wicket.Application#getHomePage()
 		 */
-		public Class getHomePage()
+		@Override
+		public Class< ? extends Page> getHomePage()
 		{
 			return MockHomePage.class;
 		}
@@ -108,7 +110,7 @@ public class ExtendsTest extends GeneralTest
 		 * 
 		 * @see org.apache.wicket.security.WaspApplication#getLoginPage()
 		 */
-		public Class getLoginPage()
+		public Class< ? extends Page> getLoginPage()
 		{
 			return MockLoginPage.class;
 		}
@@ -118,6 +120,7 @@ public class ExtendsTest extends GeneralTest
 		 * @see org.apache.wicket.protocol.http.WebApplication#newSession(org.apache.wicket.Request,
 		 *      org.apache.wicket.Response)
 		 */
+		@Override
 		public Session newSession(Request request, Response response)
 		{
 			return new WaspSession(this, request);
@@ -163,11 +166,12 @@ public class ExtendsTest extends GeneralTest
 		}
 
 		/**
-		 * triggers the setup of the factories and the hive. Please remember to
-		 * call super.init() when you override this method.
+		 * triggers the setup of the factories and the hive. Please remember to call
+		 * super.init() when you override this method.
 		 * 
 		 * @see org.apache.wicket.security.WaspWebApplication#init()
 		 */
+		@Override
 		protected void init()
 		{
 			setupActionFactory();
@@ -176,11 +180,12 @@ public class ExtendsTest extends GeneralTest
 		}
 
 		/**
-		 * Destroys the strategy factory and the action factory. In that order.
-		 * If you override this method you must call super.destroy().
+		 * Destroys the strategy factory and the action factory. In that order. If you
+		 * override this method you must call super.destroy().
 		 * 
 		 * @see Application#onDestroy()
 		 */
+		@Override
 		protected void onDestroy()
 		{
 			StrategyFactory factory = getStrategyFactory();
@@ -197,9 +202,11 @@ public class ExtendsTest extends GeneralTest
 	/**
 	 * @see junit.framework.TestCase#setUp()
 	 */
-	protected void setUp() throws Exception
+	@Override
+	protected void setUp()
 	{
-		mock = new WicketTester(application = new TestApplication(), "src/test/java/"
+		mock =
+			new WicketTester(application = new TestApplication(), "src/test/java/"
 				+ getClass().getPackage().getName().replace('.', '/'));
 	}
 

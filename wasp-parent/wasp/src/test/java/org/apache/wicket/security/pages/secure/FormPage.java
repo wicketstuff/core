@@ -46,10 +46,11 @@ public class FormPage extends SecureTestPage
 	public FormPage()
 	{
 		ValueMap map = new ValueMap("text=hello,area=foobar");
-		Form form = new SecureForm("form", new CompoundPropertyModel(map));
+		Form<ValueMap> form = new SecureForm<ValueMap>("form", new CompoundPropertyModel<ValueMap>(
+				map));
 		add(form);
-		form.add(new TextField("text"));
-		form.add(new TextArea("area"));
+		form.add(new TextField<String>("text"));
+		form.add(new TextArea<String>("area"));
 		form.add(new Button("button"));
 		// TODO add listview
 	}

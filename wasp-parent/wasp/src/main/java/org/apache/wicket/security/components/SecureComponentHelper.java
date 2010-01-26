@@ -111,7 +111,7 @@ public final class SecureComponentHelper
 	 */
 	public static boolean hasSecureModel(Component component)
 	{
-		return component != null && component.getDefaultModel() instanceof ISecureModel;
+		return component != null && component.getDefaultModel() instanceof ISecureModel<?>;
 	}
 
 	/**
@@ -176,7 +176,7 @@ public final class SecureComponentHelper
 		if (check != null)
 			return check.isActionAuthorized(getActionFactory().getAction(action));
 		if (hasSecureModel(component))
-			return ((ISecureModel)component.getDefaultModel()).isAuthorized(component,
+			return ((ISecureModel<?>)component.getDefaultModel()).isAuthorized(component,
 					getActionFactory().getAction(action));
 		return true;
 	}
@@ -207,7 +207,7 @@ public final class SecureComponentHelper
 		if (check != null)
 			return check.isActionAuthorized(action);
 		if (hasSecureModel(component))
-			return ((ISecureModel)component.getDefaultModel()).isAuthorized(component, action);
+			return ((ISecureModel<?>)component.getDefaultModel()).isAuthorized(component, action);
 		return true;
 	}
 
@@ -232,7 +232,7 @@ public final class SecureComponentHelper
 		if (check != null)
 			return check.isAuthenticated();
 		if (hasSecureModel(component))
-			return ((ISecureModel)component.getDefaultModel()).isAuthenticated(component);
+			return ((ISecureModel<?>)component.getDefaultModel()).isAuthenticated(component);
 		return getStrategy().isUserAuthenticated();
 	}
 
@@ -275,7 +275,7 @@ public final class SecureComponentHelper
 	 * @param class1
 	 * @return an alias
 	 */
-	public static String alias(Class class1)
+	public static String alias(Class<?> class1)
 	{
 		if (class1 == null)
 			throw new SecurityException("Specified class is null");

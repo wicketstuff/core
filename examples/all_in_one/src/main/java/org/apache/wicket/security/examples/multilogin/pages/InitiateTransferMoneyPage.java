@@ -16,7 +16,6 @@
  */
 package org.apache.wicket.security.examples.multilogin.pages;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,14 +24,13 @@ import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.security.examples.multilogin.components.navigation.ButtonContainer;
 import org.apache.wicket.security.examples.multilogin.MySession;
+import org.apache.wicket.security.examples.multilogin.components.navigation.ButtonContainer;
 import org.apache.wicket.security.examples.multilogin.entities.Entry;
 
 /**
- * Page for starting some money transfers. Note that you will need to commit
- * these transfers on a 2nd page. which is more secured.
+ * Page for starting some money transfers. Note that you will need to commit these
+ * transfers on a 2nd page. which is more secured.
  * 
  * @author marrink
  */
@@ -50,7 +48,8 @@ public class InitiateTransferMoneyPage extends SecurePage
 	public InitiateTransferMoneyPage()
 	{
 		add(new ButtonContainer("buttoncontainer", ButtonContainer.BUTTON_TRANSACTION));
-		final Form form = new Form("form", new CompoundPropertyModel(new Entry()));
+		final Form<Entry> form =
+			new Form<Entry>("form", new CompoundPropertyModel<Entry>(new Entry()));
 		add(form);
 		form.add(new Button("transfer")
 		{
@@ -59,6 +58,7 @@ public class InitiateTransferMoneyPage extends SecurePage
 			/**
 			 * @see org.apache.wicket.markup.html.form.Button#onSubmit()
 			 */
+			@Override
 			public void onSubmit()
 			{
 				// usually we would check to see if all required fieds are
@@ -74,6 +74,7 @@ public class InitiateTransferMoneyPage extends SecurePage
 			/**
 			 * @see org.apache.wicket.markup.html.form.Button#onSubmit()
 			 */
+			@Override
 			public void onSubmit()
 			{
 				// usually we would check to see if all required fieds are
@@ -86,14 +87,14 @@ public class InitiateTransferMoneyPage extends SecurePage
 				setResponsePage(CommitTransferMoneyPage.class);
 			}
 		});
-		form.add(new TextField("amount"));
-		form.add(new TextField("to"));
-		form.add(new TextField("owner"));
-		form.add(new TextField("description"));
-		form.add(new TextField("bank"));
-		List accounts = new ArrayList(2);
+		form.add(new TextField<String>("amount"));
+		form.add(new TextField<String>("to"));
+		form.add(new TextField<String>("owner"));
+		form.add(new TextField<String>("description"));
+		form.add(new TextField<String>("bank"));
+		List<String> accounts = new ArrayList<String>(2);
 		accounts.add("123456789");
 		accounts.add("987654321");
-		form.add(new DropDownChoice("from", new Model((Serializable)accounts)));
+		form.add(new DropDownChoice<String>("from", accounts));
 	}
 }

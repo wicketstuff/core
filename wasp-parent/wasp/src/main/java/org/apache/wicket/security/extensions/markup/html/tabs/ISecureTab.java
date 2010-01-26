@@ -17,6 +17,7 @@
 package org.apache.wicket.security.extensions.markup.html.tabs;
 
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
+import org.apache.wicket.markup.html.panel.Panel;
 
 /**
  * {@link ITab} which uses the class of the panel to check for sufficient
@@ -33,5 +34,5 @@ public interface ISecureTab extends ITab
 	 * 
 	 * @return the class
 	 */
-	public Class getPanel();
+	public Class<? extends Panel> getPanel();
 }

@@ -30,22 +30,17 @@ import org.apache.wicket.model.IModel;
  */
 public class DefaultSubject extends BaseSubject implements WicketSubject
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
 	 * @see org.apache.wicket.security.hive.authentication.WicketSubject#isClassAuthenticated(java.lang.Class)
 	 */
-	public boolean isClassAuthenticated(Class class1)
+	public boolean isClassAuthenticated(Class<?> class1)
 	{
 		return true;
 	}
 
 	/**
-	 * 
 	 * @see org.apache.wicket.security.hive.authentication.WicketSubject#isComponentAuthenticated(org.apache.wicket.Component)
 	 */
 	public boolean isComponentAuthenticated(Component component)
@@ -54,11 +49,10 @@ public class DefaultSubject extends BaseSubject implements WicketSubject
 	}
 
 	/**
-	 * 
 	 * @see org.apache.wicket.security.hive.authentication.WicketSubject#isModelAuthenticated(org.apache.wicket.model.IModel,
 	 *      org.apache.wicket.Component)
 	 */
-	public boolean isModelAuthenticated(IModel model, Component component)
+	public boolean isModelAuthenticated(IModel<?> model, Component component)
 	{
 		return true;
 	}

@@ -21,16 +21,14 @@ import org.apache.wicket.model.IWrapModel;
 import org.apache.wicket.security.models.SecureCompoundPropertyModel;
 
 /**
- * Swarm version of {@link SecureCompoundPropertyModel}. Because of the
- * wrappedmodel it was not as easy as slapping an implements SwarmModel on this
- * class, now it is as easy as providing an implementation for
- * {@link SwarmModel#getSecurityId(Component)}
+ * Swarm version of {@link SecureCompoundPropertyModel}. Because of the wrappedmodel it
+ * was not as easy as slapping an implements SwarmModel on this class, now it is as easy
+ * as providing an implementation for {@link SwarmModel#getSecurityId(Component)}
  * 
  * @author marrink
  */
-public abstract class SwarmCompoundPropertyModel extends SecureCompoundPropertyModel
-		implements
-			SwarmModel
+public abstract class SwarmCompoundPropertyModel<T> extends SecureCompoundPropertyModel<T>
+		implements SwarmModel<T>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -47,9 +45,10 @@ public abstract class SwarmCompoundPropertyModel extends SecureCompoundPropertyM
 	/**
 	 * @see org.apache.wicket.security.models.SecureCompoundPropertyModel#wrapOnInheritance(org.apache.wicket.Component)
 	 */
-	public IWrapModel wrapOnInheritance(Component component)
+	@Override
+	public <C> IWrapModel<C> wrapOnInheritance(Component component)
 	{
-		return new AttachedSwarmCompoundPropertyModel(component);
+		return new AttachedSwarmCompoundPropertyModel<C>(component);
 	}
 
 	/**
@@ -58,9 +57,8 @@ public abstract class SwarmCompoundPropertyModel extends SecureCompoundPropertyM
 	 * 
 	 * @author marrink
 	 */
-	protected class AttachedSwarmCompoundPropertyModel extends AttachedSecureCompoundPropertyModel
-			implements
-				SwarmModel
+	protected class AttachedSwarmCompoundPropertyModel<Y> extends
+			AttachedSecureCompoundPropertyModel<Y> implements SwarmModel<Y>
 	{
 		private static final long serialVersionUID = 1L;
 
@@ -81,9 +79,8 @@ public abstract class SwarmCompoundPropertyModel extends SecureCompoundPropertyM
 		 */
 		public String getSecurityId(Component component)
 		{
-			return SwarmCompoundPropertyModel.this.getSecurityId(component != null
-					? component
-					: getOwner());
+			return SwarmCompoundPropertyModel.this.getSecurityId(component != null ? component
+				: getOwner());
 		}
 
 	}

@@ -27,7 +27,6 @@ import org.apache.wicket.security.components.SecureComponentHelper;
 import org.apache.wicket.security.components.markup.html.links.SecureContainerLink;
 import org.apache.wicket.security.pages.BasePage;
 
-
 /**
  * Insecure page with secure components. Any logged in user can see this page.
  * 
@@ -39,8 +38,8 @@ public class SecureComponentPage extends BasePage
 
 	/**
 	 * Simple container. This is not an anonymous inner class of the
-	 * {@link SecureContainerLink} because that would make it an
-	 * {@link ISecureComponent} and we do not want that for this test.
+	 * {@link SecureContainerLink} because that would make it an {@link ISecureComponent}
+	 * and we do not want that for this test.
 	 * 
 	 * @author marrink
 	 */
@@ -57,6 +56,7 @@ public class SecureComponentPage extends BasePage
 		 * 
 		 * @see org.apache.wicket.Component#onComponentTag(org.apache.wicket.markup.ComponentTag)
 		 */
+		@Override
 		protected void onComponentTag(ComponentTag tag)
 		{
 			super.onComponentTag(tag);
@@ -79,7 +79,7 @@ public class SecureComponentPage extends BasePage
 		add(new Label("welcome", "Welcome Anyone can see this page as long as they are logged in"));
 		Label secureLabel = new Label("secure", "this label is what forces you to login");
 		add(SecureComponentHelper.setSecurityCheck(secureLabel, new ComponentSecurityCheck(
-				secureLabel)));
+			secureLabel)));
 
 		add(new WebMarkupContainer("replaceMe")); // content is irrelevant in
 		// this example so i will
@@ -87,18 +87,13 @@ public class SecureComponentPage extends BasePage
 		// without there own markup.
 		// this link will only show up if you have the enable action for a
 		// WebMarkupContainer
-		add(new SecureContainerLink("link", MyReplacementContainer.class, this, "replaceMe")
+		add(new SecureContainerLink<Void>("link", MyReplacementContainer.class, this, "replaceMe")
 		{
-
 			private static final long serialVersionUID = 1L;
 
-			/**
-			 * 
-			 * @see org.apache.wicket.security.components.markup.html.links.SecureContainerLink#getReplacementFor(org.apache.wicket.Component,
-			 *      java.lang.String, java.lang.Class)
-			 */
+			@Override
 			protected MarkupContainer getReplacementFor(Component current, String id,
-					Class replacementClass)
+					Class< ? extends MarkupContainer> replacementClass)
 			{
 				setVisible(false);
 				return new MyReplacementContainer(id);

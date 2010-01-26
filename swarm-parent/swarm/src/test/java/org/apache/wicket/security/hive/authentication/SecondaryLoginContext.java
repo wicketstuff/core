@@ -29,8 +29,8 @@ import org.apache.wicket.security.hive.authorization.SimplePrincipal;
 public final class SecondaryLoginContext extends LoginContext
 {
 	/**
-	 * Subject for secondary logins. Note try not to serialize the logincontext
-	 * with the subject.
+	 * Subject for secondary logins. Note try not to serialize the logincontext with the
+	 * subject.
 	 * 
 	 * @author marrink
 	 */
@@ -42,7 +42,8 @@ public final class SecondaryLoginContext extends LoginContext
 		 * 
 		 * @see org.apache.wicket.security.hive.authentication.DefaultSubject#isClassAuthenticated(java.lang.Class)
 		 */
-		public boolean isClassAuthenticated(Class class1)
+		@Override
+		public boolean isClassAuthenticated(Class< ? > class1)
 		{
 			return true;
 			// we also could just return true if the class is a HighSecurityPage
@@ -54,6 +55,7 @@ public final class SecondaryLoginContext extends LoginContext
 		 * 
 		 * @see org.apache.wicket.security.hive.authentication.DefaultSubject#isComponentAuthenticated(org.apache.wicket.Component)
 		 */
+		@Override
 		public boolean isComponentAuthenticated(Component component)
 		{
 			return true;
@@ -64,7 +66,8 @@ public final class SecondaryLoginContext extends LoginContext
 		 * @see org.apache.wicket.security.hive.authentication.DefaultSubject#isModelAuthenticated(org.apache.wicket.model.IModel,
 		 *      org.apache.wicket.Component)
 		 */
-		public boolean isModelAuthenticated(IModel model, Component component)
+		@Override
+		public boolean isModelAuthenticated(IModel< ? > model, Component component)
 		{
 			return true;
 		}
@@ -84,6 +87,7 @@ public final class SecondaryLoginContext extends LoginContext
 	 * 
 	 * @see org.apache.wicket.security.hive.authentication.LoginContext#login()
 	 */
+	@Override
 	public Subject login()
 	{
 		DefaultSubject defaultSubject = new MySecondSubject();
@@ -94,6 +98,7 @@ public final class SecondaryLoginContext extends LoginContext
 	/**
 	 * @see org.apache.wicket.security.hive.authentication.LoginContext#preventsAdditionalLogins()
 	 */
+	@Override
 	public boolean preventsAdditionalLogins()
 	{
 		return true;

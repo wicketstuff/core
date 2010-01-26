@@ -26,8 +26,9 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.security.examples.multilogin.components.navigation.ButtonContainer;
 import org.apache.wicket.security.examples.multilogin.MySession;
+import org.apache.wicket.security.examples.multilogin.components.navigation.ButtonContainer;
+import org.apache.wicket.security.examples.multilogin.entities.Entry;
 import org.apache.wicket.security.examples.pages.TopSecretPage;
 
 /**
@@ -50,44 +51,42 @@ public class CommitTransferMoneyPage extends SecurePage implements TopSecretPage
 	{
 		add(new ButtonContainer("buttoncontainer", ButtonContainer.BUTTON_COMMIT));
 		// copy list as it is at this moment
-		final ListView transactions = new ListView("transactions", new ArrayList(MySession
-				.getSessesion().getMoneyTransfers()))
-		{
-			private static final long serialVersionUID = 1L;
-
-			protected void populateItem(ListItem item)
+		final ListView<Entry> transactions =
+			new ListView<Entry>("transactions", new ArrayList<Entry>(MySession.getSessesion()
+				.getMoneyTransfers()))
 			{
-				item.add(new Label("when"));
-				item.add(new Label("from"));
-				item.add(new Label("to"));
-				item.add(new Label("description"));
-				item.add(new Label("amount"));
-				if (item.getIndex() % 2 == 0)
-					item.add(new SimpleAttributeModifier("class", "outside halfhour"));
-			}
+				private static final long serialVersionUID = 1L;
 
-			/**
-			 * 
-			 * @see org.apache.wicket.markup.html.list.ListView#getListItemModel(org.apache.wicket.model.IModel,
-			 *      int)
-			 */
-			protected IModel getListItemModel(IModel listViewModel, int index)
-			{
-				return new CompoundPropertyModel(super.getListItemModel(listViewModel, index));
-			}
-		};
+				@Override
+				protected void populateItem(ListItem<Entry> item)
+				{
+					item.add(new Label("when"));
+					item.add(new Label("from"));
+					item.add(new Label("to"));
+					item.add(new Label("description"));
+					item.add(new Label("amount"));
+					if (item.getIndex() % 2 == 0)
+						item.add(new SimpleAttributeModifier("class", "outside halfhour"));
+				}
+
+				@Override
+				protected IModel<Entry> getListItemModel(
+						IModel< ? extends List<Entry>> listViewModel, int index)
+				{
+					return new CompoundPropertyModel<Entry>(super.getListItemModel(listViewModel,
+						index));
+				}
+			};
 		add(transactions);
 		// not a secure link because the page itself is already secure.
-		add(new Link("commit")
+		add(new Link<Void>("commit")
 		{
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public void onClick()
 			{
-				List temp = (List)transactions.getModelObject();
+				List<Entry> temp = transactions.getModelObject();
 				for (int i = 0; i < temp.size(); i++)
 				{
 					if (MySession.getSessesion().getMoneyTransfers().remove(temp.get(i)))

@@ -37,11 +37,12 @@ public class ManyToManyMapTest extends TestCase
 
 	/**
 	 * Test method for
-	 * {@link org.apache.wicket.security.util.ManyToManyMap#add(java.lang.Object, java.lang.Object)}.
+	 * {@link org.apache.wicket.security.util.ManyToManyMap#add(java.lang.Object, java.lang.Object)}
+	 * .
 	 */
 	public void testAdd()
 	{
-		ManyToManyMap map = new ManyToManyMap();
+		ManyToManyMap<String, String> map = new ManyToManyMap<String, String>();
 		map.add("A.1", "A");
 		map.add("A.2", "A");
 		map.add("A.1", "AB");
@@ -52,32 +53,33 @@ public class ManyToManyMapTest extends TestCase
 		map.add("B.2", "AB");
 		map.add("C.1", "C");
 		assertEquals(9, map.size());
-		Set manys = map.get("A.1");
+		Set<String> manys = map.getRight("A.1");
 		assertEquals(2, manys.size());
 		assertTrue(manys.contains("A"));
 		assertTrue(manys.contains("AB"));
-		manys = map.get("A");
+		manys = map.getLeft("A");
 		assertEquals(2, manys.size());
 		assertTrue(manys.contains("A.1"));
 		assertTrue(manys.contains("A.2"));
-		manys = map.get("AB");
+		manys = map.getLeft("AB");
 		assertEquals(4, manys.size());
 		assertTrue(manys.contains("A.1"));
 		assertTrue(manys.contains("A.2"));
 		assertTrue(manys.contains("B.1"));
 		assertTrue(manys.contains("B.2"));
-		manys = map.get("C");
+		manys = map.getLeft("C");
 		assertEquals(1, manys.size());
 		assertTrue(manys.contains("C.1"));
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.apache.wicket.security.util.ManyToManyMap#remove(java.lang.Object, java.lang.Object)}.
+	 * {@link org.apache.wicket.security.util.ManyToManyMap#remove(java.lang.Object, java.lang.Object)}
+	 * .
 	 */
 	public void testRemove()
 	{
-		ManyToManyMap map = new ManyToManyMap();
+		ManyToManyMap<String, String> map = new ManyToManyMap<String, String>();
 		map.add("A.1", "A");
 		map.add("A.2", "A");
 		assertEquals(3, map.size());
@@ -85,12 +87,8 @@ public class ManyToManyMapTest extends TestCase
 		assertEquals(2, map.size());
 		map.add("A.1", "A");
 		assertEquals(3, map.size());
-		// also works in reverse order
-		assertTrue(map.remove("A", "A.1"));
-		assertEquals(2, map.size());
-		assertFalse(map.remove("A", "A.1"));
 
-		map = new ManyToManyMap();
+		map = new ManyToManyMap<String, String>();
 		map.add("A.1", "A");
 		assertEquals(2, map.size());
 		map.remove("A.1", "A");
@@ -100,52 +98,51 @@ public class ManyToManyMapTest extends TestCase
 
 	/**
 	 * Test method for
-	 * {@link org.apache.wicket.security.util.ManyToManyMap#removeAllMappings(java.lang.Object)}.
+	 * {@link org.apache.wicket.security.util.ManyToManyMap#removeAllMappingsForLeft(Object)}
+	 * and right.
 	 */
 	public void testRemoveAllMappings()
 	{
-		ManyToManyMap map = new ManyToManyMap();
+		ManyToManyMap<String, String> map = new ManyToManyMap<String, String>();
 		map.add("A.1", "A");
 		map.add("A.2", "A");
-		Set manys = map.removeAllMappings("A");
+		Set<String> manys = map.removeAllMappingsForRight("A");
 		assertEquals(0, map.size());
 		assertTrue(manys.contains("A.1"));
 		assertTrue(manys.contains("A.2"));
 
 		map.add("A.1", "A");
 		map.add("A.2", "A");
-		map.add("A.2", "A.1");
-		manys = map.removeAllMappings("A.1");
-		assertEquals(2, map.size());
+		map.add("A.2", "B");
+		manys = map.removeAllMappingsForLeft("A.1");
+		assertEquals(3, map.size());
 		assertTrue(manys.contains("A"));
-		assertTrue(manys.contains("A.2"));
-
+		assertFalse(manys.contains("B"));
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.apache.wicket.security.util.ManyToManyMap#get(java.lang.Object)}.
+	 * {@link org.apache.wicket.security.util.ManyToManyMap#getLeft(java.lang.Object)} .
 	 */
 	public void testGet()
 	{
-		ManyToManyMap map = new ManyToManyMap();
+		ManyToManyMap<String, String> map = new ManyToManyMap<String, String>();
 		map.add("A.1", "A");
 		map.add("A.2", "A");
-		Set manys = map.get("B");
+		Set<String> manys = map.getLeft("B");
 		assertNotNull(manys);
 		assertTrue(manys.isEmpty());
-		manys = map.get("A");
+		manys = map.getLeft("A");
 		assertFalse(manys.isEmpty());
 		assertEquals(2, manys.size());
 	}
 
 	/**
-	 * Test method for
-	 * {@link org.apache.wicket.security.util.ManyToManyMap#size()}.
+	 * Test method for {@link org.apache.wicket.security.util.ManyToManyMap#size()}.
 	 */
 	public void testSize()
 	{
-		ManyToManyMap map = new ManyToManyMap();
+		ManyToManyMap<String, String> map = new ManyToManyMap<String, String>();
 		assertEquals(0, map.size());
 		map.add("A.1", "A");
 		map.add("A.2", "A");
@@ -154,48 +151,48 @@ public class ManyToManyMapTest extends TestCase
 
 	/**
 	 * Test method for
-	 * {@link org.apache.wicket.security.util.ManyToManyMap#numberOfmappings(java.lang.Object)}.
+	 * {@link org.apache.wicket.security.util.ManyToManyMap#numberOfmappingsForLeft(Object)}
+	 * and right.
 	 */
 	public void testNumberOfmappings()
 	{
-		ManyToManyMap map = new ManyToManyMap();
+		ManyToManyMap<String, String> map = new ManyToManyMap<String, String>();
 		map.add("A.1", "A");
 		map.add("A.2", "A");
-		assertEquals(2, map.numberOfmappings("A"));
-		assertEquals(1, map.numberOfmappings("A.1"));
-		assertEquals(0, map.numberOfmappings("B"));
+		assertEquals(2, map.numberOfmappingsForRight("A"));
+		assertEquals(1, map.numberOfmappingsForLeft("A.1"));
+		assertEquals(0, map.numberOfmappingsForRight("B"));
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.apache.wicket.security.util.ManyToManyMap#contains(java.lang.Object)}.
+	 * {@link org.apache.wicket.security.util.ManyToManyMap#containsLeft(Object)} and
+	 * right.
 	 */
 	public void testContains()
 	{
-		ManyToManyMap map = new ManyToManyMap();
+		ManyToManyMap<String, String> map = new ManyToManyMap<String, String>();
 		map.add("A.1", "A");
-		assertTrue(map.contains("A"));
-		assertTrue(map.contains("A.1"));
-		assertFalse(map.contains("A.2"));
+		assertTrue(map.containsRight("A"));
+		assertTrue(map.containsLeft("A.1"));
+		assertFalse(map.containsLeft("A.2"));
 	}
 
 	/**
-	 * Test method for
-	 * {@link org.apache.wicket.security.util.ManyToManyMap#isEmpty()}.
+	 * Test method for {@link org.apache.wicket.security.util.ManyToManyMap#isEmpty()}.
 	 */
 	public void testIsEmpty()
 	{
-		assertTrue(new ManyToManyMap().isEmpty());
+		assertTrue(new ManyToManyMap<String, String>().isEmpty());
 	}
 
 	/**
-	 * Test method for
-	 * {@link org.apache.wicket.security.util.ManyToManyMap#clear()}.
+	 * Test method for {@link org.apache.wicket.security.util.ManyToManyMap#clear()}.
 	 */
 	public void testClear()
 	{
-		ManyToManyMap map = new ManyToManyMap();
-		map.add(new Integer(1), new Integer(10));
+		ManyToManyMap<Integer, Integer> map = new ManyToManyMap<Integer, Integer>();
+		map.add(1, 10);
 		assertFalse(map.isEmpty());
 		map.clear();
 		assertTrue(map.isEmpty());

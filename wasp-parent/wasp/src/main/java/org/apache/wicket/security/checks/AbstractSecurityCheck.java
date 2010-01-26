@@ -17,6 +17,7 @@
 package org.apache.wicket.security.checks;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.Page;
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.security.WaspApplication;
@@ -24,7 +25,6 @@ import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.actions.ActionFactory;
 import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
-
 
 /**
  * Basic check providing some utility methods.
@@ -34,6 +34,8 @@ import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
  */
 public abstract class AbstractSecurityCheck implements ISecurityCheck
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Noop constructor for Serialization.
 	 * 
@@ -50,7 +52,7 @@ public abstract class AbstractSecurityCheck implements ISecurityCheck
 	 */
 	protected final ActionFactory getActionFactory()
 	{
-		return ((WaspApplication)Application.get()).getActionFactory();
+		return ((WaspApplication) Application.get()).getActionFactory();
 	}
 
 	/**
@@ -61,7 +63,7 @@ public abstract class AbstractSecurityCheck implements ISecurityCheck
 	 */
 	protected final WaspAuthorizationStrategy getStrategy()
 	{
-		return (WaspAuthorizationStrategy)((WaspSession)Session.get()).getAuthorizationStrategy();
+		return (WaspAuthorizationStrategy) ((WaspSession) Session.get()).getAuthorizationStrategy();
 	}
 
 	/**
@@ -70,15 +72,15 @@ public abstract class AbstractSecurityCheck implements ISecurityCheck
 	 * @return the login page
 	 * @see WaspApplication#getLoginPage()
 	 */
-	protected final Class getLoginPage()
+	protected final Class< ? extends Page> getLoginPage()
 	{
-		return ((WaspApplication)Application.get()).getLoginPage();
+		return ((WaspApplication) Application.get()).getLoginPage();
 	}
 
 	/**
-	 * Shortcut to {@link ISecurityCheck#isActionAuthorized(WaspAction)} if you
-	 * quickly want to check an action. Note that this is the same as doing
-	 * something like </br> <code>
+	 * Shortcut to {@link ISecurityCheck#isActionAuthorized(WaspAction)} if you quickly
+	 * want to check an action. Note that this is the same as doing something like </br>
+	 * <code>
 	 * check.isActionAuthorized(((WaspApplication)Application.get()).getActionFactory().getAction(Render.class));
 	 * </code>
 	 * 
@@ -87,11 +89,11 @@ public abstract class AbstractSecurityCheck implements ISecurityCheck
 	 * @throws WicketRuntimeException
 	 *             if the class is not an instance of {@link WaspAction}
 	 */
-	public boolean isActionAuthorized(Class waspAction)
+	public boolean isActionAuthorized(Class< ? extends WaspAction> waspAction)
 	{
 		if (!WaspAction.class.isAssignableFrom(waspAction))
 			throw new WicketRuntimeException("The class: " + waspAction + " is not a valid "
-					+ WaspAction.class);
+				+ WaspAction.class);
 		return isActionAuthorized(getActionFactory().getAction(waspAction));
 	}
 }

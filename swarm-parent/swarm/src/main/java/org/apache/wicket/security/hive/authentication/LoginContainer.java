@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,11 +29,12 @@ import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.security.authentication.LoginException;
+import org.apache.wicket.security.hive.authorization.Principal;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 
 /**
- * Container class for multiple {@link LoginContext}s. Allows the concept of
- * multi-level login. Note this class is not thread safe.
+ * Container class for multiple {@link LoginContext}s. Allows the concept of multi-level
+ * login. Note this class is not thread safe.
  * 
  * @author marrink
  */
@@ -42,19 +42,18 @@ public final class LoginContainer implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	private List logins = new ArrayList();
+	private List<HashKey> logins = new ArrayList<HashKey>();
 
-	private Map subjects = new HashMap();
+	private Map<HashKey, Subject> subjects = new HashMap<HashKey, Subject>();
 
 	private WicketSubject subject = null;
 
 	private HashKey preventsLogin = null;
 
 	/**
-	 * Attempts to login through the context, if successful the subject and all
-	 * its rights are included in the overall user rights. When successful this
-	 * binds the session if not already bound and marks it dirty to support
-	 * cluster replication.
+	 * Attempts to login through the context, if successful the subject and all its rights
+	 * are included in the overall user rights. When successful this binds the session if
+	 * not already bound and marks it dirty to support cluster replication.
 	 * 
 	 * @param context
 	 * @throws LoginException
@@ -70,7 +69,7 @@ public final class LoginContainer implements Serializable
 		HashKey key = new HashKey(context);
 		if (subjects.containsKey(key))
 			throw new LoginException("Already logged in through this context ")
-					.setLoginContext(context);
+				.setLoginContext(context);
 		Subject mySubject;
 		mySubject = context.login();
 		if (mySubject == null)
@@ -85,8 +84,8 @@ public final class LoginContainer implements Serializable
 	}
 
 	/**
-	 * Removes the subject and all its rights associated with a certain context
-	 * from this container.
+	 * Removes the subject and all its rights associated with a certain context from this
+	 * container.
 	 * 
 	 * @param context
 	 * @return true if the logoff was successful, false otherwise
@@ -97,7 +96,7 @@ public final class LoginContainer implements Serializable
 			return false;
 		HashKey key = new HashKey(context);
 
-		Subject removed = (Subject)subjects.remove(key);
+		Subject removed = subjects.remove(key);
 		if (removed != null)
 		{
 			if (preventsLogin != null && preventsLogin.equals(key))
@@ -115,10 +114,10 @@ public final class LoginContainer implements Serializable
 	}
 
 	/**
-	 * returns an immutable Subject which Contains all the principals of the
-	 * subjects in the loginContexts. Note that the Subject is replaced by a new
-	 * one if a login or logoff is performed, so don't keep a reference to this
-	 * subject any longer then required.
+	 * returns an immutable Subject which Contains all the principals of the subjects in
+	 * the loginContexts. Note that the Subject is replaced by a new one if a login or
+	 * logoff is performed, so don't keep a reference to this subject any longer then
+	 * required.
 	 * 
 	 * @return a subject
 	 */
@@ -138,31 +137,31 @@ public final class LoginContainer implements Serializable
 	}
 
 	/**
-	 * Queries all available subjects (descending sort order) for the
-	 * authentication of a model.
+	 * Queries all available subjects (descending sort order) for the authentication of a
+	 * model.
 	 * 
 	 * @param model
 	 *            the model
 	 * @param component
 	 *            the component holding the model
-	 * @return true if at least one of the registered subjects authenticates the
-	 *         model, false otherwise.
-	 * @see Subject#isModelAuthenticated(IModel, Component)
+	 * @return true if at least one of the registered subjects authenticates the model,
+	 *         false otherwise.
+	 * @see WicketSubject#isModelAuthenticated(IModel, Component)
 	 */
-	public boolean isModelAuthenticated(IModel model, Component component)
+	public boolean isModelAuthenticated(IModel< ? > model, Component component)
 	{
 		return subject == null ? false : subject.isModelAuthenticated(model, component);
 	}
 
 	/**
-	 * Queries all available subjects (descending sort order) for the
-	 * authentication of a component.
+	 * Queries all available subjects (descending sort order) for the authentication of a
+	 * component.
 	 * 
 	 * @param component
 	 *            the component
 	 * @return true if at least one of the registered subjects authenticates the
 	 *         component, false otherwise.
-	 * @see Subject#isComponentAuthenticated(Component)
+	 * @see WicketSubject#isComponentAuthenticated(Component)
 	 */
 	public boolean isComponentAuthenticated(Component component)
 	{
@@ -170,23 +169,23 @@ public final class LoginContainer implements Serializable
 	}
 
 	/**
-	 * Queries all available subjects (descending sort order) for the
-	 * authentication of a class.
+	 * Queries all available subjects (descending sort order) for the authentication of a
+	 * class.
 	 * 
 	 * @param clazz
 	 *            the (component) class
-	 * @return true if at least one of the registered subjects authenticates the
-	 *         class, false otherwise.
-	 * @see Subject#isClassAuthenticated(Class)
+	 * @return true if at least one of the registered subjects authenticates the class,
+	 *         false otherwise.
+	 * @see WicketSubject#isClassAuthenticated(Class)
 	 */
-	public boolean isClassAuthenticated(Class clazz)
+	public boolean isClassAuthenticated(Class< ? > clazz)
 	{
 		return subject == null ? false : subject.isClassAuthenticated(clazz);
 	}
 
 	/**
-	 * Subject merging all the subjects from the logincontainer into one. This
-	 * subject is not fully backed by the logincontainer.
+	 * Subject merging all the subjects from the logincontainer into one. This subject is
+	 * not fully backed by the logincontainer.
 	 * 
 	 * @author marrink
 	 */
@@ -194,18 +193,19 @@ public final class LoginContainer implements Serializable
 	{
 		private static final long serialVersionUID = 1L;
 
-		private Set principals;
+		private Set<Principal> principals;
 
-		private Set readOnlyPrincipals;
+		private Set<Principal> readOnlyPrincipals;
 
-		private final List keys;
+		private final List<HashKey> keys;
 
-		private final Map mySubjects;
+		private final Map<HashKey, Subject> mySubjects;
+
 		private transient String toStringCache = null;
 
 		/**
-		 * Creates a new MultiSubject containing only the principals of the
-		 * subjects at this time.
+		 * Creates a new MultiSubject containing only the principals of the subjects at
+		 * this time.
 		 * 
 		 * @param keys
 		 *            keys of the logincontexts
@@ -213,7 +213,7 @@ public final class LoginContainer implements Serializable
 		 *            subjects mapped to keys
 		 * 
 		 */
-		public MultiSubject(List keys, Map values)
+		public MultiSubject(List<HashKey> keys, Map<HashKey, Subject> values)
 		{
 			super();
 			// TODO make this subject fully backed by the logincontainer or not
@@ -221,11 +221,10 @@ public final class LoginContainer implements Serializable
 			// principals don't change
 			this.keys = keys;
 			this.mySubjects = values;
-			principals = new HashSet(100);
-			Iterator subjects = values.values().iterator();
-			while (subjects.hasNext())
+			principals = new HashSet<Principal>(100);
+			for (Subject curSubject : values.values())
 			{
-				principals.addAll(((Subject)subjects.next()).getPrincipals());
+				principals.addAll(curSubject.getPrincipals());
 			}
 			readOnlyPrincipals = Collections.unmodifiableSet(principals);
 		}
@@ -234,7 +233,7 @@ public final class LoginContainer implements Serializable
 		 * 
 		 * @see org.apache.wicket.security.hive.authentication.Subject#getPrincipals()
 		 */
-		public Set getPrincipals()
+		public Set<Principal> getPrincipals()
 		{
 			return readOnlyPrincipals;
 		}
@@ -261,28 +260,28 @@ public final class LoginContainer implements Serializable
 		}
 
 		/**
-		 * Queries all available subjects (higher levels first) for the
-		 * authentication of a model.
+		 * Queries all available subjects (higher levels first) for the authentication of
+		 * a model.
 		 * 
 		 * @param model
 		 *            the model
 		 * @param component
 		 *            the component holding the model
-		 * @return true if at least one of the registered subjects authenticates
-		 *         the model, false otherwise.
-		 * @see Subject#isModelAuthenticated(IModel, Component)
+		 * @return true if at least one of the registered subjects authenticates the
+		 *         model, false otherwise.
+		 * @see WicketSubject#isModelAuthenticated(IModel, Component)
 		 */
-		public boolean isModelAuthenticated(IModel model, Component component)
+		public boolean isModelAuthenticated(IModel< ? > model, Component component)
 		{
 			HashKey ctx = null;
 			Subject subj;
 			for (int i = 0; i < keys.size(); i++)
 			{
-				ctx = (HashKey)keys.get(i);
-				subj = (Subject)mySubjects.get(ctx);
+				ctx = keys.get(i);
+				subj = mySubjects.get(ctx);
 				if (subj instanceof WicketSubject)
 				{
-					if (((WicketSubject)subj).isModelAuthenticated(model, component))
+					if (((WicketSubject) subj).isModelAuthenticated(model, component))
 						return true;
 				}
 				else
@@ -292,14 +291,14 @@ public final class LoginContainer implements Serializable
 		}
 
 		/**
-		 * Queries all available subjects (higher levels first) for the
-		 * authentication of a component.
+		 * Queries all available subjects (higher levels first) for the authentication of
+		 * a component.
 		 * 
 		 * @param component
 		 *            the component
-		 * @return true if at least one of the registered subjects authenticates
-		 *         the component, false otherwise.
-		 * @see Subject#isComponentAuthenticated(Component)
+		 * @return true if at least one of the registered subjects authenticates the
+		 *         component, false otherwise.
+		 * @see WicketSubject#isComponentAuthenticated(Component)
 		 */
 		public boolean isComponentAuthenticated(Component component)
 		{
@@ -307,11 +306,11 @@ public final class LoginContainer implements Serializable
 			Subject subj;
 			for (int i = 0; i < keys.size(); i++)
 			{
-				ctx = (HashKey)keys.get(i);
-				subj = (Subject)mySubjects.get(ctx);
+				ctx = keys.get(i);
+				subj = mySubjects.get(ctx);
 				if (subj instanceof WicketSubject)
 				{
-					if (((WicketSubject)subj).isComponentAuthenticated(component))
+					if (((WicketSubject) subj).isComponentAuthenticated(component))
 						return true;
 				}
 				else
@@ -321,26 +320,26 @@ public final class LoginContainer implements Serializable
 		}
 
 		/**
-		 * Queries all available subjects (higher levels first) for the
-		 * authentication of a class.
+		 * Queries all available subjects (higher levels first) for the authentication of
+		 * a class.
 		 * 
 		 * @param clazz
 		 *            the (component) class
-		 * @return true if at least one of the registered subjects authenticates
-		 *         the class, false otherwise.
-		 * @see Subject#isClassAuthenticated(Class)
+		 * @return true if at least one of the registered subjects authenticates the
+		 *         class, false otherwise.
+		 * @see WicketSubject#isClassAuthenticated(Class)
 		 */
-		public boolean isClassAuthenticated(Class clazz)
+		public boolean isClassAuthenticated(Class< ? > clazz)
 		{
 			HashKey ctx = null;
 			Subject subj;
 			for (int i = 0; i < keys.size(); i++)
 			{
-				ctx = (HashKey)keys.get(i);
-				subj = (Subject)mySubjects.get(ctx);
+				ctx = keys.get(i);
+				subj = mySubjects.get(ctx);
 				if (subj instanceof WicketSubject)
 				{
-					if (((WicketSubject)subj).isClassAuthenticated(clazz))
+					if (((WicketSubject) subj).isClassAuthenticated(clazz))
 						return true;
 				}
 				else
@@ -352,6 +351,7 @@ public final class LoginContainer implements Serializable
 		/**
 		 * @see java.lang.Object#toString()
 		 */
+		@Override
 		public String toString()
 		{
 			if (toStringCache != null)
@@ -362,7 +362,7 @@ public final class LoginContainer implements Serializable
 			HashKey ctx = null;
 			for (int i = 0; i < keys.size(); i++)
 			{
-				ctx = (HashKey)keys.get(i);
+				ctx = keys.get(i);
 				buffer.append(ctx).append(" = ").append(mySubjects.get(ctx));
 				if (comma)
 					buffer.append(", ");
@@ -373,21 +373,24 @@ public final class LoginContainer implements Serializable
 			return toStringCache = buffer.toString();
 		}
 	}
+
 	/**
-	 * Simple key for storing the hashcode, sort order and
-	 * preventsAdditionalLogins flag of a {@link LoginContext} As it is better
-	 * to not keep a reference to the context especially when it contains user
-	 * credentials.
+	 * Simple key for storing the hashcode, sort order and preventsAdditionalLogins flag
+	 * of a {@link LoginContext} As it is better to not keep a reference to the context
+	 * especially when it contains user credentials.
 	 * 
 	 * @author marrink
 	 */
-	private static final class HashKey implements Serializable, Comparable
+	private static final class HashKey implements Serializable, Comparable<HashKey>
 	{
 		private static final long serialVersionUID = 1L;
 
 		private final int contextHash;
+
 		private final boolean preventsAdditionalLogin;
+
 		private int sortOrder;
+
 		private String toStringCache;
 
 		/**
@@ -402,13 +405,15 @@ public final class LoginContainer implements Serializable
 			preventsAdditionalLogin = context.preventsAdditionalLogins();
 			this.sortOrder = context.getSortOrder();
 			// guess size
-			toStringCache = new AppendingStringBuffer(25).append("HashKey: ").append(contextHash)
-					.append(", sortOrder ").append(sortOrder).toString();
+			toStringCache =
+				new AppendingStringBuffer(25).append("HashKey: ").append(contextHash).append(
+					", sortOrder ").append(sortOrder).toString();
 		}
 
 		/**
 		 * @see java.lang.Object#toString()
 		 */
+		@Override
 		public String toString()
 		{
 			return toStringCache;
@@ -419,25 +424,9 @@ public final class LoginContainer implements Serializable
 		 * 
 		 * @see java.lang.Comparable#compareTo(java.lang.Object)
 		 */
-		public int compareTo(Object arg0)
+		public int compareTo(HashKey arg)
 		{
-			if (arg0 instanceof HashKey)
-			{
-				HashKey lc0 = (HashKey)arg0;
-				return sortOrder - lc0.sortOrder;
-			}
-			throw new IllegalArgumentException("Can only compare with " + LoginContext.class
-					+ " not with " + arg0);
-		}
-
-		/**
-		 * Gets contextHash.
-		 * 
-		 * @return contextHash
-		 */
-		public int getContextHash()
-		{
-			return contextHash;
+			return sortOrder - arg.sortOrder;
 		}
 
 		/**
@@ -453,6 +442,7 @@ public final class LoginContainer implements Serializable
 		/**
 		 * @see java.lang.Object#hashCode()
 		 */
+		@Override
 		public int hashCode()
 		{
 			final int PRIME = 31;
@@ -465,6 +455,7 @@ public final class LoginContainer implements Serializable
 		/**
 		 * @see java.lang.Object#equals(java.lang.Object)
 		 */
+		@Override
 		public boolean equals(Object obj)
 		{
 			if (this == obj)
@@ -473,7 +464,7 @@ public final class LoginContainer implements Serializable
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			final HashKey other = (HashKey)obj;
+			final HashKey other = (HashKey) obj;
 			if (contextHash != other.contextHash)
 				return false;
 			if (preventsAdditionalLogin != other.preventsAdditionalLogin)

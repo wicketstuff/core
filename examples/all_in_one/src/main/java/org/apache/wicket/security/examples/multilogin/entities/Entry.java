@@ -29,30 +29,37 @@ public final class Entry implements Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Who initiated the transfer
 	 */
 	public String from;
+
 	/**
 	 * What was the destination.
 	 */
 	public String to;
+
 	/**
 	 * When was it send.
 	 */
 	public String when;
+
 	/**
 	 * Why was it send.
 	 */
 	public String description;
+
 	/**
 	 * How much was send.
 	 */
 	public String amount;
+
 	/**
 	 * The name of the beneficiary.
 	 */
 	public String owner;
+
 	/**
 	 * The bank of the beneficiary
 	 */

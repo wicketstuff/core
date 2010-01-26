@@ -21,12 +21,12 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.security.components.SecureWebPage;
 
 /**
- * This Secure Linked Page is part of the demo on how to enable a link to a page
- * The admin user (admin principal) has the right to see this page.
- * The link is only visible for this user. 
- *
+ * This Secure Linked Page is part of the demo on how to enable a link to a page The admin
+ * user (admin principal) has the right to see this page. The link is only visible for
+ * this user.
+ * 
  * @author Olger Warnier
- *
+ * 
  */
 public class MySecureLinkedPage extends SecureWebPage
 {
@@ -40,19 +40,29 @@ public class MySecureLinkedPage extends SecureWebPage
 	{
 		super(parameters);
 
-        // add the link back to the homepage
-        add(new Link("toHomePage"){
-            public void onClick() {
-                setResponsePage(HomePage.class);
-            }
-        });
+		// add the link back to the homepage
+		add(new Link<Void>("toHomePage")
+		{
+			private static final long serialVersionUID = 1L;
 
-        // add the link to the login page, it is possible to login as another user
-        add(new Link("toLogin") {
-            public void onClick() {
-                setResponsePage(LoginPage.class);
-            }
-        });
+			@Override
+			public void onClick()
+			{
+				setResponsePage(HomePage.class);
+			}
+		});
+
+		// add the link to the login page, it is possible to login as another user
+		add(new Link<Void>("toLogin")
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick()
+			{
+				setResponsePage(LoginPage.class);
+			}
+		});
 	}
 
 }

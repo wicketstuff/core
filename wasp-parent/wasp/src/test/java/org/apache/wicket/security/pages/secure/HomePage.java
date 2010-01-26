@@ -41,7 +41,7 @@ public class HomePage extends SecureTestPage
 	public HomePage()
 	{
 		add(new Label("welcome", "Welcome Only logged in users can see this page"));
-		SecurePageLink securePageLink = new SecurePageLink("link", PageA.class);
+		SecurePageLink<Void> securePageLink = new SecurePageLink<Void>("link", PageA.class);
 		add(securePageLink);
 		add(SecureComponentHelper.setSecurityCheck(new Label("sorry",
 				"you are not allowed to go to Page A"), new InverseSecurityCheck(securePageLink

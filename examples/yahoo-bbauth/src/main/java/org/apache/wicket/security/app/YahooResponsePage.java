@@ -4,7 +4,6 @@
 
 package org.apache.wicket.security.app;
 
-
 import org.apache.wicket.Application;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.Session;
@@ -36,7 +35,7 @@ public class YahooResponsePage extends WebPage
 		super(parameters);
 		try
 		{
-			WicketApplication app = (WicketApplication)Application.get();
+			WicketApplication app = (WicketApplication) Application.get();
 			// set your application id and secret
 			String appId = app.getApplicationId();
 			String secret = app.getSharedSecret();
@@ -44,10 +43,9 @@ public class YahooResponsePage extends WebPage
 			// change to your BBAuth handler
 			String uri = "/wicketsecurity/yahoo-bbauth/yahoo-response";
 			/**
-			 * The response querystring will include: appid=[application id]&
-			 * token=[auth token]& appdata=[optional data]& ts=[request time
-			 * (Unix timestamp)]& sig=[MD5(request URI including querystring
-			 * with secret appended)
+			 * The response querystring will include: appid=[application id]& token=[auth
+			 * token]& appdata=[optional data]& ts=[request time (Unix timestamp)]&
+			 * sig=[MD5(request URI including querystring with secret appended)
 			 */
 
 			// Hard coded parameters
@@ -61,13 +59,13 @@ public class YahooResponsePage extends WebPage
 			String requestsig = parameters.getString("sig");
 			String token = parameters.getString("token");
 
-			YahooResponse authenticateUser = YahooBBAuth.authenticateUser(appId, secret, uri,
-					appdata, ts, requestsig, token);
+			YahooResponse authenticateUser =
+				YahooBBAuth.authenticateUser(appId, secret, uri, appdata, ts, requestsig, token);
 			// TODO identify user and log in
-			((WaspSession)Session.get()).login(new ApplicationLoginContext("foo", "bar"));
-			((MySession)Session.get()).setUsername("foo");
+			((WaspSession) Session.get()).login(new ApplicationLoginContext("foo", "bar"));
+			((MySession) Session.get()).setUsername("foo");
 			if (!continueToOriginalDestination())
-				setResponsePage(((WicketApplication)Application.get()).getHomePage());
+				setResponsePage(((WicketApplication) Application.get()).getHomePage());
 		}
 		catch (Exception e)
 		{

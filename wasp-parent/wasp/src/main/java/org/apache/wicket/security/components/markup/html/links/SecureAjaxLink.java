@@ -18,40 +18,38 @@
 package org.apache.wicket.security.components.markup.html.links;
 
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.security.actions.WaspAction;
+import org.apache.wicket.security.checks.ComponentSecurityCheck;
+import org.apache.wicket.security.checks.ISecurityCheck;
 import org.apache.wicket.security.components.ISecureComponent;
 import org.apache.wicket.security.components.SecureComponentHelper;
-import org.apache.wicket.security.checks.LinkSecurityCheck;
-import org.apache.wicket.security.checks.ISecurityCheck;
-import org.apache.wicket.security.checks.ComponentSecurityCheck;
-import org.apache.wicket.security.actions.WaspAction;
-import org.apache.wicket.model.IModel;
 
 /**
  * AjaxLink with visibility / clickability based on user rights. Requires render
  * rights to be visible, and enable rights to be clickable.
- *
+ * 
  * @author Olger Warnier
  */
-abstract public class SecureAjaxLink extends AjaxLink implements ISecureComponent {
-
-
-	/**
-	 *
-	 */
+abstract public class SecureAjaxLink<T> extends AjaxLink<T> implements ISecureComponent
+{
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @param id    wicket id as found in the HTML
-     * @param model the model
+	 * @param id
+	 *            wicket id as found in the HTML
+	 * @param model
+	 *            the model
 	 */
-	public SecureAjaxLink(final String id, final IModel model)
+	public SecureAjaxLink(final String id, final IModel<T> model)
 	{
 		super(id, model);
 		setSecurityCheck(new ComponentSecurityCheck(this));
 	}
 
 	/**
-	 * @param id wicket id as found in the HTML
+	 * @param id
+	 *            wicket id as found in the HTML
 	 */
 	public SecureAjaxLink(final String id)
 	{

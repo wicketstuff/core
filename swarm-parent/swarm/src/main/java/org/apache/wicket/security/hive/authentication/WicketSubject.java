@@ -40,7 +40,7 @@ public interface WicketSubject extends Subject
 	 * @return true if the class is authenticated, false otherwise.
 	 * @see WaspAuthorizationStrategy#isClassAuthenticated(Class)
 	 */
-	public abstract boolean isClassAuthenticated(Class class1);
+	public abstract boolean isClassAuthenticated(Class<?> class1);
 
 	/**
 	 * Performs the authentication check on a component.
@@ -59,5 +59,5 @@ public interface WicketSubject extends Subject
 	 * @return true if the model is authenticated, false otherwise
 	 * @see WaspAuthorizationStrategy#isModelAuthenticated(IModel, Component)
 	 */
-	public abstract boolean isModelAuthenticated(IModel model, Component component);
+	public abstract boolean isModelAuthenticated(IModel<?> model, Component component);
 }

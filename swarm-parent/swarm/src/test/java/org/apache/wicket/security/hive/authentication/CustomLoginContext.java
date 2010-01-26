@@ -19,8 +19,8 @@ package org.apache.wicket.security.hive.authentication;
 import org.apache.wicket.security.hive.authorization.Principal;
 
 /**
- * LoginContext which returns a subject containing the principal passed on to
- * the constructor.
+ * LoginContext which returns a subject containing the principal passed on to the
+ * constructor.
  * 
  * @author marrink
  */
@@ -50,6 +50,7 @@ public class CustomLoginContext extends LoginContext
 	/**
 	 * @see org.apache.wicket.security.hive.authentication.LoginContext#login()
 	 */
+	@Override
 	public Subject login()
 	{
 		DefaultSubject subject = new DefaultSubject();

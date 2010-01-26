@@ -20,11 +20,10 @@ import org.apache.wicket.security.hive.authentication.LoginContext;
 import org.apache.wicket.security.swarm.SwarmWebApplication;
 
 /**
- * For these examples, we sometimes reuse applications from other examples. Only
- * changing the way Swarm is set up or the method of logging in. For maximum
- * efficiency this class stores a few things that often change with the new
- * example. For your regular web apps you should not take this class as an
- * example.
+ * For these examples, we sometimes reuse applications from other examples. Only changing
+ * the way Swarm is set up or the method of logging in. For maximum efficiency this class
+ * stores a few things that often change with the new example. For your regular web apps
+ * you should not take this class as an example.
  * 
  * @author marrink
  */
@@ -39,8 +38,8 @@ public abstract class MultiUsableApplication extends SwarmWebApplication
 	}
 
 	/**
-	 * Each example uses a different context to login/off specifying it here
-	 * maximizes reuse of pages.
+	 * Each example uses a different context to login/off specifying it here maximizes
+	 * reuse of pages.
 	 * 
 	 * @return a new context suitable for logging off.
 	 */

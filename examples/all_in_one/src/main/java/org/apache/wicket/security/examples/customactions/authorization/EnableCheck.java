@@ -22,8 +22,8 @@ import org.apache.wicket.security.checks.AbstractSecurityCheck;
 import org.apache.wicket.security.checks.ISecurityCheck;
 
 /**
- * Shows how to chain securitychecks rather than overriding them. It enforces
- * the "enable" action on every check.
+ * Shows how to chain securitychecks rather than overriding them. It enforces the "enable"
+ * action on every check.
  * 
  * @author marrink
  */

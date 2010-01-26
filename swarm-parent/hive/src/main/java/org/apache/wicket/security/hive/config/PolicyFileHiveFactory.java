@@ -26,7 +26,6 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -45,10 +44,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A factory to produce Hive's based on policy files. This factory is designed
- * to make a best effort when problems occur. Meaning any malconfiguration in
- * the policy file is logged and then skipped. This factory accepts the
- * following policy format<br>
+ * A factory to produce Hive's based on policy files. This factory is designed to make a
+ * best effort when problems occur. Meaning any malconfiguration in the policy file is
+ * logged and then skipped. This factory accepts the following policy format<br>
  * 
  * <pre>
  * grant[ principal &lt;principal class&gt; &quot;name&quot;]
@@ -58,23 +56,22 @@ import org.slf4j.LoggerFactory;
  * </pre>
  * 
  * where [] denotes an optional block, &lt;&gt; denotes a classname.<br>
- * For brevity aliases are allowed in / for classnames and permission-,
- * principal names. An alias takes the form of ${foo} the alias (the part
- * between {}) must be at least 1 character long and must not contain one of the
- * following 4 characters "${} For example: permission ${ComponentPermission}
- * "myname.${foo}", "render";<br>
+ * For brevity aliases are allowed in / for classnames and permission-, principal names.
+ * An alias takes the form of ${foo} the alias (the part between {}) must be at least 1
+ * character long and must not contain one of the following 4 characters "${} For example:
+ * permission ${ComponentPermission} "myname.${foo}", "render";<br>
  * Note that:
  * <ul>
  * <li>names and action must be quoted</li>
  * <li>a permission statement must be on a single line and terminated by a ;</li>
  * <li>the grant block must be terminated by a ;</li>
- * <li>if you don't specify a principal after the grant statement, everybody
- * will be given those permissions automagically</li>
+ * <li>if you don't specify a principal after the grant statement, everybody will be given
+ * those permissions automagically</li>
  * <li>using double quotes '"' is not allowed, instead use a single quote '''</li>
  * <li>aliases may be chained but not nested, so ${foo}${bar} is valid but not
  * ${foo${bar}}</li>
- * <li>aliases are not allowed in actions or reserved words (grant, permission,
- * principal)</li>
+ * <li>aliases are not allowed in actions or reserved words (grant, permission, principal)
+ * </li>
  * <li>aliases are case sensitive</li>
  * By default the following aliases is available: AllPermissions for
  * org.apache.wicket.security.hive.authorization.permissions.AllPermissions
@@ -87,24 +84,27 @@ public class PolicyFileHiveFactory implements HiveFactory
 	private static final Logger log = LoggerFactory.getLogger(PolicyFileHiveFactory.class);
 
 	// TODO use JAAS to check for enough rights
-	private Set policyFiles;
-	private Set inputStreams;
-	private Set inputReaders;
+	private Set<URL> policyFiles;
 
-	private static final Pattern principalPattern = Pattern
-			.compile("\\s*(?:grant(?:\\s+principal\\s+([^\"]+)\\s+\"([^\"]+)\")?){1}\\s*");
+	private Set<InputStream> inputStreams;
 
-	private static final Pattern permissionPattern = Pattern
+	private Set<Reader> inputReaders;
+
+	private static final Pattern principalPattern =
+		Pattern.compile("\\s*(?:grant(?:\\s+principal\\s+([^\"]+)\\s+\"([^\"]+)\")?){1}\\s*");
+
+	private static final Pattern permissionPattern =
+		Pattern
 			.compile("\\s*(?:permission\\s+([^\",]+?)\\s+(?:(?:\"([^\"]+)\"){1}?(?:\\s*,\\s*\"([^\"]*)\")?)?\\s*;){1}\\s*");
 
 	private static final Pattern aliasPattern = Pattern.compile("(\\$\\{[^\"\\{\\}\\$]+?\\})+?");
 
-	private static final Class[][] constructorArgs = new Class[][] {
-			new Class[] { String.class, WaspAction.class },
-			new Class[] { String.class, String.class },
-			new Class[] { String.class, ActionFactory.class }, new Class[] { String.class } };
+	private static final Class< ? >[][] constructorArgs =
+		new Class[][] {new Class[] {String.class, WaspAction.class},
+			new Class[] {String.class, String.class},
+			new Class[] {String.class, ActionFactory.class}, new Class[] {String.class}};
 
-	private Map aliases = new HashMap();
+	private Map<String, String> aliases = new HashMap<String, String>();
 
 	private boolean useHiveCache = true;
 
@@ -116,8 +116,8 @@ public class PolicyFileHiveFactory implements HiveFactory
 
 	/**
 	 * 
-	 * Constructs a new factory that builds a Hive out of one (1) or more policy
-	 * files. It registers an alias for {@link AllPermissions}.
+	 * Constructs a new factory that builds a Hive out of one (1) or more policy files. It
+	 * registers an alias for {@link AllPermissions}.
 	 * 
 	 * @param actionFactory
 	 *            factory required to create the actions for the permissions
@@ -129,18 +129,17 @@ public class PolicyFileHiveFactory implements HiveFactory
 		this.actionFactory = actionFactory;
 		if (actionFactory == null)
 			throw new IllegalArgumentException("Must provide an ActionFactory");
-		policyFiles = new HashSet();
-		inputStreams = new HashSet();
-		inputReaders = new HashSet();
+		policyFiles = new HashSet<URL>();
+		inputStreams = new HashSet<InputStream>();
+		inputReaders = new HashSet<Reader>();
 		setAlias("AllPermissions",
-				"org.apache.wicket.security.hive.authorization.permissions.AllPermissions");
+			"org.apache.wicket.security.hive.authorization.permissions.AllPermissions");
 
 	}
 
 	/**
 	 * Adds a new Hive policy file to this factory. The file is not used until
-	 * {@link #createHive()} is executed. Url's are always retained for possible
-	 * re-use.
+	 * {@link #createHive()} is executed. Url's are always retained for possible re-use.
 	 * 
 	 * @param file
 	 * @return true, if the file was added, false otherwise
@@ -160,7 +159,7 @@ public class PolicyFileHiveFactory implements HiveFactory
 	 * 
 	 * @return a set containing {@link URL}'s
 	 */
-	protected final Set getPolicyFiles()
+	protected final Set<URL> getPolicyFiles()
 	{
 		return Collections.unmodifiableSet(policyFiles);
 	}
@@ -168,10 +167,9 @@ public class PolicyFileHiveFactory implements HiveFactory
 	/**
 	 * Adds a new Hive policy to this factory. The stream is not read until
 	 * {@link #createHive()} is executed. Depending on the state of the flag
-	 * {@link #isCloseInputStreams()} the stream is closed or left untouched
-	 * after it is read. In all cases the stream is removed from the factory
-	 * after being read. The format of the inputstream must be the same as that
-	 * of a regular policy file.
+	 * {@link #isCloseInputStreams()} the stream is closed or left untouched after it is
+	 * read. In all cases the stream is removed from the factory after being read. The
+	 * format of the inputstream must be the same as that of a regular policy file.
 	 * 
 	 * @param stream
 	 * @return true, if the stream was added, false otherwise
@@ -191,7 +189,7 @@ public class PolicyFileHiveFactory implements HiveFactory
 	 * 
 	 * @return a set containing {@link InputStream}s
 	 */
-	protected final Set getStreams()
+	protected final Set<InputStream> getStreams()
 	{
 		return Collections.unmodifiableSet(inputStreams);
 	}
@@ -199,10 +197,9 @@ public class PolicyFileHiveFactory implements HiveFactory
 	/**
 	 * Adds a new Hive policy to this factory. The reader is not read until
 	 * {@link #createHive()} is executed. Depending on the state of the flag
-	 * {@link #isCloseInputStreams()} the reader is closed or left untouched
-	 * after it is read. In all cases the reader is removed from the factory
-	 * after being read. The format of the inputstream must be the same as that
-	 * of a regular policy file.
+	 * {@link #isCloseInputStreams()} the reader is closed or left untouched after it is
+	 * read. In all cases the reader is removed from the factory after being read. The
+	 * format of the inputstream must be the same as that of a regular policy file.
 	 * 
 	 * @param input
 	 * @return true, if the reader was added, false otherwise
@@ -222,7 +219,7 @@ public class PolicyFileHiveFactory implements HiveFactory
 	 * 
 	 * @return a set containing {@link Reader}s
 	 */
-	protected final Set getReaders()
+	protected final Set<Reader> getReaders()
 	{
 		return Collections.unmodifiableSet(inputReaders);
 	}
@@ -236,12 +233,11 @@ public class PolicyFileHiveFactory implements HiveFactory
 	 */
 	public final String getAlias(String key)
 	{
-		return (String)aliases.get(key);
+		return aliases.get(key);
 	}
 
 	/**
-	 * Sets the value for an alias, overwrites any existing alias with the same
-	 * name
+	 * Sets the value for an alias, overwrites any existing alias with the same name
 	 * 
 	 * @param key
 	 *            the part between the ${}
@@ -251,7 +247,7 @@ public class PolicyFileHiveFactory implements HiveFactory
 	 */
 	public final String setAlias(String key, String value)
 	{
-		return (String)aliases.put(key, value);
+		return aliases.put(key, value);
 	}
 
 	/**
@@ -265,10 +261,9 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Checks raw input for aliases and then replaces those with the registered
-	 * values. Note that if the encountered alias is not allowed it is left
-	 * unresolved and will probably later in the creation of the factory be
-	 * skipped or cause a failure.
+	 * Checks raw input for aliases and then replaces those with the registered values.
+	 * Note that if the encountered alias is not allowed it is left unresolved and will
+	 * probably later in the creation of the factory be skipped or cause a failure.
 	 * 
 	 * @param raw
 	 *            the raw input
@@ -330,10 +325,10 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Changeable by subclasses to return there own hive subclass. Note that the
-	 * actual filling with content happens in {@link #createHive()}. Default
-	 * implementation return either a {@link SimpleCachingHive} or a
-	 * {@link BasicHive} depending on {@link #isUsingHiveCache()}
+	 * Changeable by subclasses to return there own hive subclass. Note that the actual
+	 * filling with content happens in {@link #createHive()}. Default implementation
+	 * return either a {@link SimpleCachingHive} or a {@link BasicHive} depending on
+	 * {@link #isUsingHiveCache()}
 	 * 
 	 * @return {@link BasicHive} subclass.
 	 */
@@ -353,11 +348,9 @@ public class PolicyFileHiveFactory implements HiveFactory
 	{
 		BasicHive hive = constructHive();
 		boolean readAnything = false;
-		Iterator it = policyFiles.iterator();
-		while (it.hasNext())
+		for (URL file : policyFiles)
 		{
 			readAnything = true;
-			URL file = (URL)it.next();
 			try
 			{
 				readPolicyFile(file, hive);
@@ -367,11 +360,9 @@ public class PolicyFileHiveFactory implements HiveFactory
 				log.error("Could not read from " + file, e);
 			}
 		}
-		it = inputStreams.iterator();
-		while (it.hasNext())
+		for (InputStream stream : inputStreams)
 		{
 			readAnything = true;
-			InputStream stream = (InputStream)it.next();
 			try
 			{
 				readInputStream(stream, hive);
@@ -382,11 +373,9 @@ public class PolicyFileHiveFactory implements HiveFactory
 			}
 		}
 		inputStreams.clear();
-		it = inputReaders.iterator();
-		while (it.hasNext())
+		for (Reader stream : inputReaders)
 		{
 			readAnything = true;
-			Reader stream = (Reader)it.next();
 			try
 			{
 				readInputReader(stream, hive);
@@ -404,8 +393,7 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Reads principals and permissions from a file, found items are added to
-	 * the hive.
+	 * Reads principals and permissions from a file, found items are added to the hive.
 	 * 
 	 * @param file
 	 *            the file to read
@@ -433,9 +421,8 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Reads principals and permissions from a stream, found items are added to
-	 * the hive. The stream is closed depending on the
-	 * {@link #isCloseInputStreams()} flag.
+	 * Reads principals and permissions from a stream, found items are added to the hive.
+	 * The stream is closed depending on the {@link #isCloseInputStreams()} flag.
 	 * 
 	 * @param stream
 	 *            the stream to read
@@ -464,9 +451,9 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Reads principals and permissions from a {@link Reader}, found items are
-	 * added to the hive. The reader is closed depending on the
-	 * {@link #isCloseInputStreams()} flag.
+	 * Reads principals and permissions from a {@link Reader}, found items are added to
+	 * the hive. The reader is closed depending on the {@link #isCloseInputStreams()}
+	 * flag.
 	 * 
 	 * @param input
 	 *            the reader to read
@@ -495,14 +482,14 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Reads principals and permissions from a {@link Reader}, found items are
-	 * added to the hive. Subclasses should override this method or
-	 * {@link #readStream(InputStream, BasicHive)} if they want do do something
-	 * different from the default. No need to call the notifyMethods as that is
-	 * handled by {@link #readInputReader(Reader, BasicHive)} and
+	 * Reads principals and permissions from a {@link Reader}, found items are added to
+	 * the hive. Subclasses should override this method or
+	 * {@link #readStream(InputStream, BasicHive)} if they want do do something different
+	 * from the default. No need to call the notifyMethods as that is handled by
+	 * {@link #readInputReader(Reader, BasicHive)} and
 	 * {@link #readInputStream(InputStream, BasicHive)} respectively. Default
-	 * implementation is to call {@link #read(Reader, BasicHive)}. This method
-	 * never closes the reader.
+	 * implementation is to call {@link #read(Reader, BasicHive)}. This method never
+	 * closes the reader.
 	 * 
 	 * @param input
 	 * @param hive
@@ -514,9 +501,9 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Notifies that the stream will be read no further. Typically this is
-	 * because the end of the stream is reached but it is also called when an
-	 * exception occurs while reading the stream.
+	 * Notifies that the stream will be read no further. Typically this is because the end
+	 * of the stream is reached but it is also called when an exception occurs while
+	 * reading the stream.
 	 * 
 	 * @param stream
 	 * @param lineNr
@@ -537,9 +524,9 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Notifies that the {@link Reader} will be read no further. Typically this
-	 * is because the end of the stream is reached but it is also called when an
-	 * exception occurs while reading the reader.
+	 * Notifies that the {@link Reader} will be read no further. Typically this is because
+	 * the end of the stream is reached but it is also called when an exception occurs
+	 * while reading the reader.
 	 * 
 	 * @param input
 	 * @param lineNr
@@ -560,8 +547,8 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Reads principals and permissions from a {@link InputStream} , found items
-	 * are added to the hive. This method never closes the input stream.
+	 * Reads principals and permissions from a {@link InputStream} , found items are added
+	 * to the hive. This method never closes the input stream.
 	 * 
 	 * @param input
 	 * @param hive
@@ -573,8 +560,8 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Reads principals and permissions from a {@link Reader} , found items are
-	 * added to the hive. This method never closes the reader.
+	 * Reads principals and permissions from a {@link Reader} , found items are added to
+	 * the hive. This method never closes the reader.
 	 * 
 	 * @param input
 	 * @param hive
@@ -584,13 +571,13 @@ public class PolicyFileHiveFactory implements HiveFactory
 	{
 		BufferedReader reader;
 		if (input instanceof BufferedReader)
-			reader = (BufferedReader)input;
+			reader = (BufferedReader) input;
 		else
 			reader = new BufferedReader(input);
 
 		boolean inPrincipalBlock = false;
 		Principal principal = null;
-		Set permissions = null;
+		Set<Permission> permissions = null;
 		currentLineNr = 0;
 		String line = reader.readLine();
 		while (line != null)
@@ -604,7 +591,7 @@ public class PolicyFileHiveFactory implements HiveFactory
 				{
 					if (permissions != null || principal == null)
 						skipIllegalPrincipal(currentLineNr, principal, permissions);
-					permissions = new HashSet();
+					permissions = new HashSet<Permission>();
 				}
 				boolean endsWith = trim.endsWith("};");
 				if (endsWith)
@@ -630,10 +617,9 @@ public class PolicyFileHiveFactory implements HiveFactory
 							line = reader.readLine();
 							continue;
 						}
-						Class permissionClass = null;
 						try
 						{
-							permissionClass = Class.forName(resolveAliases(classname));
+							Class< ? > permissionClass = Class.forName(resolveAliases(classname));
 							if (!Permission.class.isAssignableFrom(permissionClass))
 							{
 								skipPermission(currentLineNr, permissionClass);
@@ -642,7 +628,9 @@ public class PolicyFileHiveFactory implements HiveFactory
 							}
 							String name = resolveAliases(m.group(2));
 							String actions = m.group(3);
-							Permission temp = createPermission(permissionClass, name, actions);
+							Permission temp =
+								createPermission(permissionClass.asSubclass(Permission.class),
+									name, actions);
 							if (temp == null)
 							{
 								line = reader.readLine();
@@ -684,31 +672,34 @@ public class PolicyFileHiveFactory implements HiveFactory
 						principal = new EverybodyPrincipal();
 					else
 					{
-						Class principalClass = null;
 						try
 						{
-							principalClass = Class.forName(resolveAliases(classname));
-							if (!Principal.class.isAssignableFrom(principalClass))
+							Class< ? > readPrincipalClass =
+								Class.forName(resolveAliases(classname));
+							if (!Principal.class.isAssignableFrom(readPrincipalClass))
 							{
-								skipPrincipalClass(currentLineNr, principalClass);
+								skipPrincipalClass(currentLineNr, readPrincipalClass);
 								line = reader.readLine();
 								continue;
 							}
-							Constructor constructor = null;
+							Class< ? extends Principal> principalClass =
+								readPrincipalClass.asSubclass(Principal.class);
+							Constructor< ? extends Principal> constructor = null;
 							try
 							{
-								constructor = principalClass
+								constructor =
+									principalClass
 										.getConstructor(constructorArgs[constructorArgs.length - 1]);
 							}
 							catch (SecurityException e)
 							{
 								log.error("No valid constructor found for "
-										+ principalClass.getName(), e);
+									+ principalClass.getName(), e);
 							}
 							catch (NoSuchMethodException e)
 							{
 								log.error("No valid constructor found for "
-										+ principalClass.getName(), e);
+									+ principalClass.getName(), e);
 							}
 							if (constructor == null)
 							{
@@ -718,8 +709,9 @@ public class PolicyFileHiveFactory implements HiveFactory
 							}
 							try
 							{
-								principal = (Principal)constructor
-										.newInstance(new Object[] { resolveAliases(m.group(2)) });
+								principal =
+									constructor
+										.newInstance(new Object[] {resolveAliases(m.group(2))});
 							}
 							catch (Exception e)
 							{
@@ -762,8 +754,7 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Tries to create a permission. Only a few constructors are tried before
-	 * giving up.
+	 * Tries to create a permission. Only a few constructors are tried before giving up.
 	 * 
 	 * @param permissionClass
 	 * @param name
@@ -771,9 +762,10 @@ public class PolicyFileHiveFactory implements HiveFactory
 	 * @return the permission or null if it could not be created.
 	 * @see #findConstructor(Class, String)
 	 */
-	private Permission createPermission(Class permissionClass, String name, String actions)
+	private Permission createPermission(Class< ? extends Permission> permissionClass, String name,
+			String actions)
 	{
-		Constructor constructor = findConstructor(permissionClass, actions);
+		Constructor< ? extends Permission> constructor = findConstructor(permissionClass, actions);
 		if (constructor == null)
 		{
 			skipPermission(currentLineNr, permissionClass);
@@ -781,24 +773,24 @@ public class PolicyFileHiveFactory implements HiveFactory
 		}
 		Object[] argValues = null;
 		if (match(constructor.getParameterTypes(), constructorArgs[0]))
-			argValues = new Object[] { name, getActionFactory().getAction(actions) };
+			argValues = new Object[] {name, getActionFactory().getAction(actions)};
 		else if (match(constructor.getParameterTypes(), constructorArgs[1]))
-			argValues = new Object[] { name, actions };
+			argValues = new Object[] {name, actions};
 		else if (match(constructor.getParameterTypes(), constructorArgs[2]))
-			argValues = new Object[] { name, actionFactory };
+			argValues = new Object[] {name, actionFactory};
 		else if (match(constructor.getParameterTypes(), constructorArgs[3]))
-			argValues = new Object[] { name };
+			argValues = new Object[] {name};
 		else
 		{
 			// should not happen
-			String msg = "Unable to handle constructor " + constructor + ", at line nr "
-					+ currentLineNr;
+			String msg =
+				"Unable to handle constructor " + constructor + ", at line nr " + currentLineNr;
 			log.error(msg);
 			throw new RuntimeException(msg);
 		}
 		try
 		{
-			return (Permission)constructor.newInstance(argValues);
+			return constructor.newInstance(argValues);
 		}
 		catch (Exception e)
 		{
@@ -809,10 +801,9 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Signals a match between to arrays of classes. A match is found when every
-	 * class in the second array is either the same or a subclass of the class
-	 * in the first array with the same index. Used to compare constructor
-	 * arguments.
+	 * Signals a match between to arrays of classes. A match is found when every class in
+	 * the second array is either the same or a subclass of the class in the first array
+	 * with the same index. Used to compare constructor arguments.
 	 * 
 	 * @param args1
 	 *            reference array
@@ -820,7 +811,7 @@ public class PolicyFileHiveFactory implements HiveFactory
 	 *            this array should match the first array
 	 * @return true if both arrays are a match, false otherwise.
 	 */
-	private boolean match(Class[] args1, Class[] args2)
+	private boolean match(Class< ? >[] args1, Class< ? >[] args2)
 	{
 		if (args1 == args2)
 			return true;
@@ -844,7 +835,8 @@ public class PolicyFileHiveFactory implements HiveFactory
 	 *            a comma separated list of actions (optional)
 	 * @return a matching constructor. or null if none can be found.
 	 */
-	private Constructor findConstructor(Class permissionClass, String actions)
+	private Constructor< ? extends Permission> findConstructor(
+			Class< ? extends Permission> permissionClass, String actions)
 	{
 		int index = 0;
 		if (actions == null)
@@ -853,20 +845,21 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Tries to find a constructor matching the constructor arguments at the
-	 * specified index for {@link #constructorArgs}. If no such constructor is
-	 * found it recursivly tries to find another.
+	 * Tries to find a constructor matching the constructor arguments at the specified
+	 * index for {@link #constructorArgs}. If no such constructor is found it recursivly
+	 * tries to find another.
 	 * 
 	 * @param permissionClass
 	 * @param index
 	 * @return a suitable constructor or null if none was found.
 	 */
-	private Constructor findConstructor(Class permissionClass, int index)
+	private Constructor< ? extends Permission> findConstructor(
+			Class< ? extends Permission> permissionClass, int index)
 	{
 		if (index >= constructorArgs.length)
 			return null;
-		Class[] args = constructorArgs[index];
-		Constructor constructor = null;
+		Class< ? >[] args = constructorArgs[index];
+		Constructor< ? extends Permission> constructor = null;
 		try
 		{
 			constructor = permissionClass.getConstructor(args);
@@ -889,9 +882,9 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Warning when the last principal of a file is not properly closed.
-	 * Although the principal is automatically closed the user should complete
-	 * the block statement for the principal.
+	 * Warning when the last principal of a file is not properly closed. Although the
+	 * principal is automatically closed the user should complete the block statement for
+	 * the principal.
 	 * 
 	 * @param principal
 	 * @param lineNr
@@ -899,12 +892,12 @@ public class PolicyFileHiveFactory implements HiveFactory
 	protected void warnUnclosedPrincipalBlock(Principal principal, int lineNr)
 	{
 		log.warn("The principal " + principal + " running to line " + lineNr
-				+ " is not properly closed with '};'.");
+			+ " is not properly closed with '};'.");
 	}
 
 	/**
-	 * Notifies when a file is closed, either because the end of the file was
-	 * reached or because an uncaught exception was thrown. Default is noop.
+	 * Notifies when a file is closed, either because the end of the file was reached or
+	 * because an uncaught exception was thrown. Default is noop.
 	 * 
 	 * @param file
 	 *            the file
@@ -926,8 +919,8 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Notifies when a permission class could not be found. Default is to log
-	 * the exception
+	 * Notifies when a permission class could not be found. Default is to log the
+	 * exception
 	 * 
 	 * @param lineNr
 	 *            the faulty line
@@ -956,8 +949,8 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Notifies of duplicate permissions for a principal. Default is to log an
-	 * exception. Note that the duplicates might appear in different files.
+	 * Notifies of duplicate permissions for a principal. Default is to log an exception.
+	 * Note that the duplicates might appear in different files.
 	 * 
 	 * @param lineNr
 	 *            the duplicate line
@@ -969,12 +962,12 @@ public class PolicyFileHiveFactory implements HiveFactory
 	protected void skipPermission(int lineNr, Principal principal, Permission permission)
 	{
 		log.debug(permission + " skipped because it was already added to the permission set for "
-				+ principal + ", line nr " + lineNr);
+			+ principal + ", line nr " + lineNr);
 	}
 
 	/**
-	 * Notifies of permissions located outside the { and }; block statements but
-	 * after a valid principal was found.
+	 * Notifies of permissions located outside the { and }; block statements but after a
+	 * valid principal was found.
 	 * 
 	 * @param lineNr
 	 *            the line declaring the illegal permission
@@ -986,7 +979,7 @@ public class PolicyFileHiveFactory implements HiveFactory
 	protected void skipIllegalPermission(int lineNr, Principal principal, Permission permission)
 	{
 		log.debug(permission + " skipped because the pricipal " + principal
-				+ " has not yet declared its opening block statement '{', line nr " + lineNr);
+			+ " has not yet declared its opening block statement '{', line nr " + lineNr);
 	}
 
 	/**
@@ -1006,18 +999,18 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Notifies when the principal does not have an accessible constructor for a
-	 * single {@link String} argument. Default is to log the exception.
+	 * Notifies when the principal does not have an accessible constructor for a single
+	 * {@link String} argument. Default is to log the exception.
 	 * 
 	 * @param lineNr
 	 *            the faulty line
 	 * @param principalClass
 	 *            the class of the Principal
 	 */
-	protected void skipPrincipal(int lineNr, Class principalClass)
+	protected void skipPrincipal(int lineNr, Class< ? extends Principal> principalClass)
 	{
 		log.error("No valid constructor found for " + principalClass.getName() + " at line "
-				+ lineNr);
+			+ lineNr);
 	}
 
 	/**
@@ -1033,8 +1026,8 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Notifies when a new instance of the principl could not be created.
-	 * Default is to log the exception.
+	 * Notifies when a new instance of the principl could not be created. Default is to
+	 * log the exception.
 	 * 
 	 * @param lineNr
 	 *            the line currently read
@@ -1043,30 +1036,30 @@ public class PolicyFileHiveFactory implements HiveFactory
 	 * @param e
 	 *            the exception thrown when trying to create a new instance
 	 */
-	protected void skipPrincipal(int lineNr, Class principalClass, Exception e)
+	protected void skipPrincipal(int lineNr, Class< ? extends Principal> principalClass, Exception e)
 	{
 		log.error("Unable to create new instance of " + principalClass.getName() + " at line nr "
-				+ lineNr, e);
+			+ lineNr, e);
 	}
 
 	/**
-	 * Notifies when a classname is not a {@link Principal}. Default is to log
-	 * the exception.
+	 * Notifies when a classname is not a {@link Principal}. Default is to log the
+	 * exception.
 	 * 
 	 * @param lineNr
 	 *            the faulty line
 	 * @param principalClass
 	 *            the class which is not a subclass of Principal
 	 */
-	protected void skipPrincipalClass(int lineNr, Class principalClass)
+	protected void skipPrincipalClass(int lineNr, Class< ? > principalClass)
 	{
 		log.error(principalClass.getName() + "is not a subclass of " + Principal.class.getName()
-				+ ", line nr " + lineNr);
+			+ ", line nr " + lineNr);
 	}
 
 	/**
-	 * Notifies when a line is skipped because it was not understood for any
-	 * other reason. Default is to print this debug info.
+	 * Notifies when a line is skipped because it was not understood for any other reason.
+	 * Default is to print this debug info.
 	 * 
 	 * @param lineNr
 	 *            the number of the line in the file
@@ -1079,8 +1072,8 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Notified when a new instance of the permission could not be created.
-	 * Default is to log the exception
+	 * Notified when a new instance of the permission could not be created. Default is to
+	 * log the exception
 	 * 
 	 * @param lineNr
 	 *            the faulty line
@@ -1091,11 +1084,12 @@ public class PolicyFileHiveFactory implements HiveFactory
 	 * @param e
 	 *            the exception thrown when trying to create a new instance
 	 */
-	protected void skipPermission(int lineNr, Class permissionClass, Object[] argValues, Exception e)
+	protected void skipPermission(int lineNr, Class< ? extends Permission> permissionClass,
+			Object[] argValues, Exception e)
 	{
 		log.error("Unable to create new instance of class " + permissionClass.getName()
-				+ " using the following argument(s) " + arrayToString(argValues) + ", line nr "
-				+ lineNr, e);
+			+ " using the following argument(s) " + arrayToString(argValues) + ", line nr "
+			+ lineNr, e);
 	}
 
 	/**
@@ -1103,8 +1097,8 @@ public class PolicyFileHiveFactory implements HiveFactory
 	 * 
 	 * @param array
 	 *            the input
-	 * @return a comma separated string, an empty string or null if the input
-	 *         array has 1 or more items, zero items or is null respectively.
+	 * @return a comma separated string, an empty string or null if the input array has 1
+	 *         or more items, zero items or is null respectively.
 	 */
 	protected final String arrayToString(Object[] array)
 	{
@@ -1123,8 +1117,8 @@ public class PolicyFileHiveFactory implements HiveFactory
 	}
 
 	/**
-	 * Notifies when a Permission could not be created because no suitable
-	 * constructor was found. Default is to log an exception.
+	 * Notifies when a Permission could not be created because no suitable constructor was
+	 * found. Default is to log an exception.
 	 * 
 	 * @param lineNr
 	 *            the faulty line
@@ -1134,15 +1128,16 @@ public class PolicyFileHiveFactory implements HiveFactory
 	 *            the number and type of constructor arguments
 	 * 
 	 */
-	protected void notifyPermission(int lineNr, Class permissionClass, Class[] args)
+	protected void notifyPermission(int lineNr, Class< ? extends Permission> permissionClass,
+			Class< ? >[] args)
 	{
 		log.debug("No constructor found matching argument(s) " + arrayToString(args)
-				+ " for class " + permissionClass.getName() + ", line nr " + lineNr);
+			+ " for class " + permissionClass.getName() + ", line nr " + lineNr);
 	}
 
 	/**
-	 * Notifies when a Class is skipped because it is not a Permission or no
-	 * valid constructors could be found. Default is to log an exception.
+	 * Notifies when a Class is skipped because it is not a Permission or no valid
+	 * constructors could be found. Default is to log an exception.
 	 * 
 	 * @param lineNr
 	 *            the faulty line
@@ -1150,21 +1145,21 @@ public class PolicyFileHiveFactory implements HiveFactory
 	 *            the class (if available)
 	 * 
 	 */
-	protected void skipPermission(int lineNr, Class permissionClass)
+	protected void skipPermission(int lineNr, Class< ? > permissionClass)
 	{
 		if (permissionClass == null)
 			log.error("Missing permission class at line " + lineNr);
 		else if (Permission.class.isAssignableFrom(permissionClass))
 			log.error("No valid constructor found for class " + permissionClass.getName()
-					+ ", line nr " + lineNr);
+				+ ", line nr " + lineNr);
 		else
 			log.error(permissionClass.getName() + " is not a subclass of "
-					+ Permission.class.getName());
+				+ Permission.class.getName());
 	}
 
 	/**
-	 * Notifies when a principal is skipped because there are no permissions
-	 * attached. Default is to log an exception.
+	 * Notifies when a principal is skipped because there are no permissions attached.
+	 * Default is to log an exception.
 	 * 
 	 * @param lineNr
 	 *            the line closing the principal.
@@ -1175,12 +1170,12 @@ public class PolicyFileHiveFactory implements HiveFactory
 	{
 		if (log.isDebugEnabled())
 			log.debug("skipping principal " + principal + ", no permissions found before line nr "
-					+ lineNr);
+				+ lineNr);
 	}
 
 	/**
-	 * Notifies when a {@link Principal} begins at an illegal place in the file.
-	 * Default is to log an exception.
+	 * Notifies when a {@link Principal} begins at an illegal place in the file. Default
+	 * is to log an exception.
 	 * 
 	 * @param lineNr
 	 *            the faulty line
@@ -1189,14 +1184,14 @@ public class PolicyFileHiveFactory implements HiveFactory
 	 * @param permissions
 	 *            the permission collected for the current principal so far.
 	 */
-	protected void skipIllegalPrincipal(int lineNr, Principal principal, Set permissions)
+	protected void skipIllegalPrincipal(int lineNr, Principal principal, Set<Permission> permissions)
 	{
 		log.error("Illegal principal block detected at line " + lineNr);
 	}
 
 	/**
-	 * Flag indicating if caching for the {@link Hive} is enabled or disabled.
-	 * Default is enabled.
+	 * Flag indicating if caching for the {@link Hive} is enabled or disabled. Default is
+	 * enabled.
 	 * 
 	 * @return useHiveCache
 	 */

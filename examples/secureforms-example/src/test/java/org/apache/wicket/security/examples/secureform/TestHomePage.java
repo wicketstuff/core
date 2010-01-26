@@ -20,25 +20,26 @@ import org.apache.wicket.security.examples.secureform.pages.HomePage;
 
 /**
  * Test the HomePage.
- *
+ * 
  * @author Olger Warnier
  */
 public class TestHomePage extends AbstractSecurePageTestBase
 {
 
-    /**
-     * The home page is not secure and should render at the first call (no redirection to login or whatsoever.
-     */
+	/**
+	 * The home page is not secure and should render at the first call (no redirection to
+	 * login or whatsoever.
+	 */
 	public void testRenderMyPage()
 	{
-		//start and render the test page
+		// start and render the test page
 		tester.startPage(HomePage.class);
 
-		//assert rendered page class
+		// assert rendered page class
 		tester.assertRenderedPage(HomePage.class);
 
-		//assert rendered label component
+		// assert rendered label component
 		tester.assertLabel("message", "Welcome this is a SWARM/WASP based Secure Forms example");
-        
+
 	}
 }

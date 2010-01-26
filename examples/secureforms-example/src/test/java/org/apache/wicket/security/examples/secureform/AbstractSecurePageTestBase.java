@@ -16,74 +16,86 @@
  */
 package org.apache.wicket.security.examples.secureform;
 
-import junit.framework.TestCase;
-
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.wicket.util.tester.WicketTester;
-import org.apache.wicket.util.tester.FormTester;
+import junit.framework.TestCase;
+
 import org.apache.wicket.security.examples.secureform.pages.LoginPage;
-import org.apache.wicket.Page;
+import org.apache.wicket.util.tester.FormTester;
+import org.apache.wicket.util.tester.WicketTester;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This is the base class to extend new test classes from if you like to use a wicket-security enabled test.
- * It Checks the project structure in order to set the proper web application directory and connects
- * the secure application to the test.
- *
+ * This is the base class to extend new test classes from if you like to use a
+ * wicket-security enabled test. It Checks the project structure in order to set the
+ * proper web application directory and connects the secure application to the test.
+ * 
  * @author Olger Warnier
  */
-public class AbstractSecurePageTestBase extends TestCase {
+public class AbstractSecurePageTestBase extends TestCase
+{
 
-    protected WicketTester tester;
-    private static final Logger log = LoggerFactory.getLogger(TestMySecurePage.class);
+	protected WicketTester tester;
 
-    /**
-     * Check the base path and construct the proper secure webapplication.
-     */
-    public void setUp()
-    {
-        String webAppLocation = null;
+	private static final Logger log = LoggerFactory.getLogger(TestMySecurePage.class);
 
-        if (tester == null) {
-            File currentDir = new File(".");
-            try {
-                if (currentDir.getCanonicalPath().endsWith("examples/secureforms-example")) {
-                    webAppLocation = "src/main/webapp";
-                } else {
-                    webAppLocation = "examples/secureforms-example/src/main/webapp";
-                }
-            } catch (IOException e) {
-                log.error("Could not get the current directory", e);
-            }
+	/**
+	 * Check the base path and construct the proper secure webapplication.
+	 */
+	@Override
+	public void setUp()
+	{
+		String webAppLocation = null;
 
-            tester = new WicketTester(new SecureFormWicketApplication(), webAppLocation);
-        }
-    }
+		if (tester == null)
+		{
+			File currentDir = new File(".");
+			try
+			{
+				if (currentDir.getCanonicalPath().endsWith("examples/secureforms-example"))
+				{
+					webAppLocation = "src/main/webapp";
+				}
+				else
+				{
+					webAppLocation = "examples/secureforms-example/src/main/webapp";
+				}
+			}
+			catch (IOException e)
+			{
+				log.error("Could not get the current directory", e);
+			}
 
-    public void tearDown() {
-        tester.destroy();
-        tester = null;
-    }
+			tester = new WicketTester(new SecureFormWicketApplication(), webAppLocation);
+		}
+	}
 
-    public void loginAs(String user) {
-        tester.startPage(LoginPage.class);
-        tester.assertRenderedPage(LoginPage.class);
+	@Override
+	public void tearDown()
+	{
+		tester.destroy();
+		tester = null;
+	}
 
-        FormTester formTester = tester.newFormTester("signInForm");
-        formTester.setValue("username", user);
-        formTester.setValue("password", user);
-        formTester.submit();
+	public void loginAs(String user)
+	{
+		tester.startPage(LoginPage.class);
+		tester.assertRenderedPage(LoginPage.class);
 
-        Page loginPage = tester.getLastRenderedPage();
-        tester.assertNoErrorMessage();
-        tester.assertNoInfoMessage();
+		FormTester formTester = tester.newFormTester("signInForm");
+		formTester.setValue("username", user);
+		formTester.setValue("password", user);
+		formTester.submit();
 
-    }
+		tester.assertNoErrorMessage();
+		tester.assertNoInfoMessage();
 
-    public void logout() {
+	}
 
-    }
+	public void logout()
+	{
+
+	}
 }

@@ -19,11 +19,8 @@ package org.apache.wicket.security.examples.tabs.components.tabs;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 
-;
-
 /**
- * Panel showing a text to warn the user he/she is not authorized to view its
- * contents.
+ * Panel showing a text to warn the user he/she is not authorized to view its contents.
  * 
  * @author marrink
  */
@@ -31,11 +28,12 @@ public class WarningPanel extends Panel
 {
 
 	private static final long serialVersionUID = 1L;
+
 	private final Panel restrictedPanel;
 
 	/**
-	 * Constructs a new WarningPanel that will be visible when the restricted
-	 * panel is not allowed to be rendered. Invisible otherwise.
+	 * Constructs a new WarningPanel that will be visible when the restricted panel is not
+	 * allowed to be rendered. Invisible otherwise.
 	 * 
 	 * @param id
 	 * @param restrictedPanel
@@ -51,10 +49,10 @@ public class WarningPanel extends Panel
 	/**
 	 * @see org.apache.wicket.Component#isVisible()
 	 */
+	@Override
 	public boolean isVisible()
 	{
 		return !restrictedPanel.isRenderAllowed();
 	}
-
 
 }

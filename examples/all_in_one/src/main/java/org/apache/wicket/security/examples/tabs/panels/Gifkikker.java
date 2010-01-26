@@ -42,16 +42,18 @@ public class Gifkikker extends BeerPanel
 	/**
 	 * @see org.apache.wicket.security.examples.tabs.panels.BeerPanel#getDescription()
 	 */
+	@Override
 	public String getDescription()
 	{
 		return "<img src='../img/beer/logo_gifkikker.jpg' />\r\n\r\n"
-				+ "On November 24 2005, Topicus employees brewed for the very first time this original beer.\r\n"
-				+ "This unique beer after own recepy was proudly crissened 'Gifkikker'. A surprisingly tastefull and headstrong beer from the east of the Netherlands.";
+			+ "On November 24 2005, Topicus employees brewed for the very first time this original beer.\r\n"
+			+ "This unique beer after own recepy was proudly crissened 'Gifkikker'. A surprisingly tastefull and headstrong beer from the east of the Netherlands.";
 	}
 
 	/**
 	 * @see org.apache.wicket.security.examples.tabs.panels.BeerPanel#getName()
 	 */
+	@Override
 	public String getName()
 	{
 		return "Topicus Gifkikker";
@@ -60,6 +62,7 @@ public class Gifkikker extends BeerPanel
 	/**
 	 * @see org.apache.wicket.security.examples.tabs.panels.BeerPanel#getUrl()
 	 */
+	@Override
 	public String getUrl()
 	{
 		return "http://gifkikker.topicus.nl/";

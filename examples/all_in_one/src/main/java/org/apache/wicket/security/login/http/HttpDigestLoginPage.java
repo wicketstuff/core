@@ -44,23 +44,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ==WARNING, This class is not production ready, and as of yet contains a
- * serious bug preventing this class from doing its intended task.== Login page
- * that uses httpauthentication to login. This class adds support for the digest
- * scheme. RFC 2617. Support for the basic scheme is configurable. Before you
- * use this class you should at least understand the principals behind digest
- * authentication. A few notes:<br />
+ * ==WARNING, This class is not production ready, and as of yet contains a serious bug
+ * preventing this class from doing its intended task.== Login page that uses
+ * httpauthentication to login. This class adds support for the digest scheme. RFC 2617.
+ * Support for the basic scheme is configurable. Before you use this class you should at
+ * least understand the principals behind digest authentication. A few notes:<br />
  * <ul>
- * <li> if you want to use qop=auth-int you need to do this yourself in
+ * <li>if you want to use qop=auth-int you need to do this yourself in
  * {@link #getQop(WebRequest, WebResponse)} and
- * {@link #getA2Value(org.apache.wicket.security.login.http.HttpDigestLoginPage.DigestAuthorizationRequestHeader, WebRequest)}.</li>
- * <li>You need to take care of storing the checksum H(A1) if you use the
- * MD5-sess algorithm</li>
- * <li>You need either the value of H(A1) for the specified algorithm or the
- * clear text password of the user</li>
+ * {@link #getA2Value(org.apache.wicket.security.login.http.HttpDigestLoginPage.DigestAuthorizationRequestHeader, WebRequest)}
+ * .</li>
+ * <li>You need to take care of storing the checksum H(A1) if you use the MD5-sess
+ * algorithm</li>
+ * <li>You need either the value of H(A1) for the specified algorithm or the clear text
+ * password of the user</li>
  * <li>No Authentication-Info header is send unless you do so in
- * {@link #addDigestHeaders(WebRequest, WebResponse)}, this means only a single
- * nonce is used, see also {@link #validateNonceCount(String, String)}</li>
+ * {@link #addDigestHeaders(WebRequest, WebResponse)}, this means only a single nonce is
+ * used, see also {@link #validateNonceCount(String, String)}</li>
  * </ul>
  * 
  * @author marrink
@@ -69,30 +69,29 @@ import org.slf4j.LoggerFactory;
 public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 {
 	private static final Logger log = LoggerFactory.getLogger(HttpDigestLoginPage.class);
-	/**
-	 * Matches recurring patterns like : key="some value" or key=value separated
-	 * by a comma (,). groups are as following 1:key-value pair, 2:key, 3:value
-	 * without quotes if value was quoted, 4: value if value was not quoted.
-	 */
-	private static final Pattern HEADER_FIELDS = Pattern
-			.compile("(([a-zA-Z]+)=(?:\"([\\p{Graph}\\p{Blank}]+?)\"|([^\\s\",]+)))+,?");
 
+	/**
+	 * Matches recurring patterns like : key="some value" or key=value separated by a
+	 * comma (,). groups are as following 1:key-value pair, 2:key, 3:value without quotes
+	 * if value was quoted, 4: value if value was not quoted.
+	 */
+	private static final Pattern HEADER_FIELDS =
+		Pattern.compile("(([a-zA-Z]+)=(?:\"([\\p{Graph}\\p{Blank}]+?)\"|([^\\s\",]+)))+,?");
 
 	private boolean allowBasicAuthenication = true;
 
 	/**
-	 * If the MD5-sess algorithm is used the hash value is only calculated once.
-	 * The results of the checksum of this hash are stored in this value. The
-	 * spec calls this H(A1).
+	 * If the MD5-sess algorithm is used the hash value is only calculated once. The
+	 * results of the checksum of this hash are stored in this value. The spec calls this
+	 * H(A1).
 	 * 
-	 * @see <a href="http://tools.ietf.org/html/rfc2617#section-3.2.2.2">section
-	 *      3.2.2.2 (A1)</a>
+	 * @see <a href="http://tools.ietf.org/html/rfc2617#section-3.2.2.2">section 3.2.2.2
+	 *      (A1)</a>
 	 */
 	private String a1ChecksumForMD5Sess;
 
 	/**
-	 * The nonceCount of the server. Please build your own support for multiple
-	 * nonces.
+	 * The nonceCount of the server. Please build your own support for multiple nonces.
 	 */
 	private int nonceCount;
 
@@ -108,7 +107,7 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	 * 
 	 * @param model
 	 */
-	public HttpDigestLoginPage(IModel model)
+	public HttpDigestLoginPage(IModel< ? > model)
 	{
 		super(model);
 	}
@@ -139,7 +138,7 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	 * @param pageMap
 	 * @param model
 	 */
-	public HttpDigestLoginPage(IPageMap pageMap, IModel model)
+	public HttpDigestLoginPage(IPageMap pageMap, IModel< ? > model)
 	{
 		super(pageMap, model);
 	}
@@ -149,6 +148,7 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	 *      org.apache.wicket.protocol.http.WebResponse, java.lang.String,
 	 *      java.lang.String)
 	 */
+	@Override
 	protected void handleAuthentication(WebRequest request, WebResponse response, String scheme,
 			String param) throws LoginException
 	{
@@ -160,21 +160,20 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 		{
 			log.error("Unsupported Http authentication type: " + scheme);
 			throw new RestartResponseAtInterceptPageException(Application.get()
-					.getApplicationSettings().getAccessDeniedPage());
+				.getApplicationSettings().getAccessDeniedPage());
 		}
 	}
 
 	/**
-	 * Handles authentication for the "Digest" scheme. If the scheme is not the
-	 * digest scheme true is returned so another implementation may try it
+	 * Handles authentication for the "Digest" scheme. If the scheme is not the digest
+	 * scheme true is returned so another implementation may try it
 	 * 
 	 * @param request
 	 * @param response
 	 * @param scheme
 	 * @param param
-	 * @return true if authentication by another scheme should be attempted,
-	 *         false if authentication by another scheme should not be
-	 *         attempted.
+	 * @return true if authentication by another scheme should be attempted, false if
+	 *         authentication by another scheme should not be attempted.
 	 * @throws LoginException
 	 *             if the user can not be logged in
 	 */
@@ -218,7 +217,7 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 			if (!validateNonceCount(header.getNonce(), header.getNc()))
 			{
 				log.warn("Nonce-count failed, expected: " + Integer.toHexString(this.nonceCount)
-						+ " but got " + header.getNc() + ", possible replay");
+					+ " but got " + header.getNc() + ", possible replay");
 				response.getHttpServletResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				return false;
 			}
@@ -239,22 +238,24 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 		String hA1 = getA1Checksum(header, request), a2 = getA2Value(header, request);
 		if ("auth".equals(header.getQop()) || "auth-int".equals(header.getQop()))
 		{
-			expectedDigest = digest(header.getAlgorithm(), hA1, header.getNonce() + ":"
-					+ header.getNc() + ":" + header.getCnonce() + ":" + header.getQop() + ":"
+			expectedDigest =
+				digest(header.getAlgorithm(), hA1, header.getNonce() + ":" + header.getNc() + ":"
+					+ header.getCnonce() + ":" + header.getQop() + ":"
 					+ checksum(header.getAlgorithm(), a2));
 		}
 		else
 		{
-			expectedDigest = digest(header.getAlgorithm(), hA1, header.getNonce() + ":"
+			expectedDigest =
+				digest(header.getAlgorithm(), hA1, header.getNonce() + ":"
 					+ checksum(header.getAlgorithm(), a2));
 		}
 		if (!expectedDigest.equals(header.getResponse()))
 		{
 			log
-					.warn("A request-digest from the client did not match the expected value, this might indicate malicious activity.");
+				.warn("A request-digest from the client did not match the expected value, this might indicate malicious activity.");
 			if (log.isDebugEnabled())
 				log.debug("Expected the following digest: \"" + expectedDigest
-						+ "\", the request contained the following headers: " + header);
+					+ "\", the request contained the following headers: " + header);
 		}
 		else
 		{
@@ -264,11 +265,11 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 			if (session instanceof WaspSession)
 			{
 				if (!isAuthenticated())
-					((WaspSession)session).login(loginContext);
+					((WaspSession) session).login(loginContext);
 				if (!continueToOriginalDestination())
 				{
 					throw new RestartResponseAtInterceptPageException(Application.get()
-							.getHomePage());
+						.getHomePage());
 				}
 			}
 			else
@@ -278,10 +279,10 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	}
 
 	/**
-	 * Delivers a context suitable for logging in with the specified username.
-	 * The password can be considered verified, and is unknown to the server at
-	 * this time (only a checksum is required to verify the password). Please
-	 * refer to your specific wasp implementation for a suitable context.
+	 * Delivers a context suitable for logging in with the specified username. The
+	 * password can be considered verified, and is unknown to the server at this time
+	 * (only a checksum is required to verify the password). Please refer to your specific
+	 * wasp implementation for a suitable context.
 	 * 
 	 * @param username
 	 * @return the login context or null if none could be created
@@ -290,32 +291,32 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 
 	/**
 	 * Calculates the checksum for the A1 value from the specification. This
-	 * implementation knows how to calculate this value for MD5 and MD5-sess but
-	 * requires the cleartext password. If you do not have the cleartext
-	 * password you must know the checksum and return it here directly.
+	 * implementation knows how to calculate this value for MD5 and MD5-sess but requires
+	 * the cleartext password. If you do not have the cleartext password you must know the
+	 * checksum and return it here directly.
 	 * 
 	 * @param header
 	 * @param request
 	 * @return the calculated value
 	 * @throws WicketRuntimeException
 	 *             if the algorithm is not understood
-	 * @see <a href="http://tools.ietf.org/html/rfc2617#section-3.2.2.2">section
-	 *      3.2.2.2 (A1)</a>
+	 * @see <a href="http://tools.ietf.org/html/rfc2617#section-3.2.2.2">section 3.2.2.2
+	 *      (A1)</a>
 	 * @see #onMD5SessHashCalculated()
 	 */
 	protected String getA1Checksum(DigestAuthorizationRequestHeader header, WebRequest request)
 	{
 		if (Strings.isEmpty(header.getAlgorithm()) || "MD5".equals(header.getAlgorithm()))
 			return checksum(header.getAlgorithm(), header.getUsername() + ":" + header.getRealm()
-					+ ":" + getClearTextPassword(header.getUsername()));
+				+ ":" + getClearTextPassword(header.getUsername()));
 		else if ("MD5-sess".equals(header.getAlgorithm()))
 		{
 			if (Strings.isEmpty(getA1ChecksumForMD5Sess()))
 			{
 				setA1ChecksumForMD5Sess(checksum(header.getAlgorithm(), checksum(header
-						.getAlgorithm(), header.getUsername() + ":" + header.getRealm() + ":"
-						+ getClearTextPassword(header.getUsername()))
-						+ ":" + header.getNonce() + ":" + header.getCnonce()));
+					.getAlgorithm(), header.getUsername() + ":" + header.getRealm() + ":"
+					+ getClearTextPassword(header.getUsername()))
+					+ ":" + header.getNonce() + ":" + header.getCnonce()));
 				onMD5SessHashCalculated();
 			}
 			return getA1ChecksumForMD5Sess();
@@ -324,10 +325,10 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	}
 
 	/**
-	 * Called when the MD5-sess algorithm is used and the hash is calculated for
-	 * the first time. Implementations should use this notification to store
-	 * this hash somewhere, like the session. Implementations are also
-	 * responsible for retrieving this value uppon creation of this page.
+	 * Called when the MD5-sess algorithm is used and the hash is calculated for the first
+	 * time. Implementations should use this notification to store this hash somewhere,
+	 * like the session. Implementations are also responsible for retrieving this value
+	 * uppon creation of this page.
 	 * 
 	 * @see #getA1ChecksumForMD5Sess()
 	 * @see #setA1ChecksumForMD5Sess(String)
@@ -335,17 +336,16 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	protected abstract void onMD5SessHashCalculated();
 
 	/**
-	 * Calculates the A2 value from the specification. This implementation only
-	 * knows how to calculate this value when there is no qop present or when
-	 * the qop is 'auth'.
+	 * Calculates the A2 value from the specification. This implementation only knows how
+	 * to calculate this value when there is no qop present or when the qop is 'auth'.
 	 * 
 	 * @param header
 	 * @param request
 	 * @return the calculated value
 	 * @throws WicketRuntimeException
 	 *             if the qop value is not understood
-	 * @see <a href="http://tools.ietf.org/html/rfc2617#section-3.2.2.3">section
-	 *      3.2.2.3 (A2)</a>
+	 * @see <a href="http://tools.ietf.org/html/rfc2617#section-3.2.2.3">section 3.2.2.3
+	 *      (A2)</a>
 	 */
 	protected String getA2Value(DigestAuthorizationRequestHeader header, WebRequest request)
 	{
@@ -355,32 +355,32 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	}
 
 	/**
-	 * In order to prove the validity of the request the server need to have
-	 * access to the clear text value of the password. Note that you only need
-	 * to provide the clear text password if you do not have access to the H(A1)
-	 * value. If you do you should return that in
+	 * In order to prove the validity of the request the server need to have access to the
+	 * clear text value of the password. Note that you only need to provide the clear text
+	 * password if you do not have access to the H(A1) value. If you do you should return
+	 * that in
 	 * {@link #getA1Checksum(org.apache.wicket.security.login.http.HttpDigestLoginPage.DigestAuthorizationRequestHeader, WebRequest)}
 	 * instead.
 	 * 
 	 * @param username
 	 *            the username from the request
 	 * @return the password as typed by the user
-	 * @see <a href="http://tools.ietf.org/html/rfc2617#section-3.2.2.2">section
-	 *      3.2.2.2 (A1)</a>
+	 * @see <a href="http://tools.ietf.org/html/rfc2617#section-3.2.2.2">section 3.2.2.2
+	 *      (A1)</a>
 	 */
 	protected abstract String getClearTextPassword(String username);
 
 	/**
-	 * Performs a digest over a secret and some data as required by the
-	 * algorithm. The default only supports MD5 and MD5-sess.
+	 * Performs a digest over a secret and some data as required by the algorithm. The
+	 * default only supports MD5 and MD5-sess.
 	 * 
 	 * @param algorithm
 	 * @param secret
 	 * @param data
 	 * @return the digest or null if the algorithm is not supported
 	 * @see #checksum(String, String)
-	 * @see <a href="http://tools.ietf.org/html/rfc2617#section-3.2.1">section
-	 *      3.2.1 (algorithm)</a>
+	 * @see <a href="http://tools.ietf.org/html/rfc2617#section-3.2.1">section 3.2.1
+	 *      (algorithm)</a>
 	 */
 	protected String digest(String algorithm, String secret, String data)
 	{
@@ -393,16 +393,16 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	}
 
 	/**
-	 * Performs a checksum operation over the data as required by the algorithm.
-	 * The default only supports MD5 and MD5-sess.
+	 * Performs a checksum operation over the data as required by the algorithm. The
+	 * default only supports MD5 and MD5-sess.
 	 * 
 	 * @param algorithm
 	 * @param data
 	 * @return a checksum or null if the algorithm is not supported
 	 * @throws WicketRuntimeException
 	 *             if the algorithm could not be located
-	 * @see <a href="http://tools.ietf.org/html/rfc2617#section-3.2.1">section
-	 *      3.2.1 (algorithm)</a>
+	 * @see <a href="http://tools.ietf.org/html/rfc2617#section-3.2.1">section 3.2.1
+	 *      (algorithm)</a>
 	 */
 	protected String checksum(String algorithm, String data)
 	{
@@ -416,7 +416,7 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 			catch (NoSuchAlgorithmException e)
 			{
 				throw new WicketRuntimeException("Client requested " + algorithm
-						+ ", but the algorithm could not be located");
+					+ ", but the algorithm could not be located");
 			}
 			digest.update(data.getBytes());
 			return new String(digest.digest());
@@ -428,6 +428,7 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	 * @see org.apache.wicket.security.login.http.HttpAuthenticationLoginPage#requestAuthentication(org.apache.wicket.protocol.http.WebRequest,
 	 *      org.apache.wicket.protocol.http.WebResponse)
 	 */
+	@Override
 	protected void requestAuthentication(WebRequest request, WebResponse response)
 	{
 		if (allowBasicAuthenication)
@@ -439,8 +440,7 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	}
 
 	/**
-	 * Adds a "WWW-Authenticate" header for digest authentication to the
-	 * response.
+	 * Adds a "WWW-Authenticate" header for digest authentication to the response.
 	 * 
 	 * @param request
 	 * @param response
@@ -457,7 +457,7 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 		DigestAuthorizationRequestHeader header = parseHeader(request);
 		if (header != null)
 			buffer.append(", stale=\"").append(isNonceStale(request, header.getNonce())).append(
-					"\"");
+				"\"");
 		String algorithm = getAlgorithm(request, response);
 		if (algorithm != null)
 			buffer.append(", algorithm=\"").append(algorithm).append("\"");
@@ -468,10 +468,9 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	}
 
 	/**
-	 * The optional qop-options as specified in section 3.2.1 of RFC 2617.
-	 * According to the spec 'auth' or 'auth-int' can be used or neither.
-	 * Multiple options must be separated by a space. Default is to return only
-	 * 'auth'.
+	 * The optional qop-options as specified in section 3.2.1 of RFC 2617. According to
+	 * the spec 'auth' or 'auth-int' can be used or neither. Multiple options must be
+	 * separated by a space. Default is to return only 'auth'.
 	 * 
 	 * @param request
 	 * @param response
@@ -483,8 +482,8 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	}
 
 	/**
-	 * The optional algorithm as specified in section 3.2.1 of RFC 2617. Default
-	 * is to return MD5.
+	 * The optional algorithm as specified in section 3.2.1 of RFC 2617. Default is to
+	 * return MD5.
 	 * 
 	 * @param request
 	 * @param response
@@ -496,13 +495,13 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	}
 
 	/**
-	 * The optional (list of) domain(s) as specified in section 3.2.1 of RFC
-	 * 2617. Default is to return null.
+	 * The optional (list of) domain(s) as specified in section 3.2.1 of RFC 2617. Default
+	 * is to return null.
 	 * 
 	 * @param request
 	 * @param response
-	 * @return an unquoted list of space separated URI's, or null if all URI's
-	 *         on this server apply.
+	 * @return an unquoted list of space separated URI's, or null if all URI's on this
+	 *         server apply.
 	 */
 	protected String getDomain(WebRequest request, WebResponse response)
 	{
@@ -510,9 +509,9 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	}
 
 	/**
-	 * Validates the contents of nonce send with the request. as specified in
-	 * section 3.2.1 of RFC 2617. By default it does not enforce a time limit on
-	 * nonces but does check for a valid timestamp, ETag and private key.
+	 * Validates the contents of nonce send with the request. as specified in section
+	 * 3.2.1 of RFC 2617. By default it does not enforce a time limit on nonces but does
+	 * check for a valid timestamp, ETag and private key.
 	 * 
 	 * @param request
 	 * 
@@ -546,20 +545,20 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	 * 
 	 * @param nonce
 	 *            the nonce used by the client
-	 * @param nonceCount
+	 * @param clientNonceCount
 	 *            the number of times the client used this nonce, counted in hex
-	 * @return true if the client nonce count matches the server nonce count,
-	 *         false otherwise
+	 * @return true if the client nonce count matches the server nonce count, false
+	 *         otherwise
 	 */
-	protected boolean validateNonceCount(String nonce, String nonceCount)
+	protected boolean validateNonceCount(String nonce, String clientNonceCount)
 	{
-		if (nonceCount == null || nonceCount.length() == 0)
+		if (clientNonceCount == null || clientNonceCount.length() == 0)
 			return false;
 		// skip leading zero's
 		int index = 0;
-		while (nonceCount.charAt(index) == '0')
+		while (clientNonceCount.charAt(index) == '0')
 			index++;
-		return Integer.toHexString(this.nonceCount).equals(nonceCount.substring(index));
+		return Integer.toHexString(this.nonceCount).equals(clientNonceCount.substring(index));
 	}
 
 	/**
@@ -574,8 +573,8 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	{
 		long time = System.currentTimeMillis();
 		return new String(Base64.encodeBase64(new AppendingStringBuffer(50).append(time)
-				.append(":").append(request.getHttpServletRequest().getHeader("ETag")).append(":")
-				.append(getPrivateKey()).toString().getBytes()));
+			.append(":").append(request.getHttpServletRequest().getHeader("ETag")).append(":")
+			.append(getPrivateKey()).toString().getBytes()));
 	}
 
 	/**
@@ -602,8 +601,7 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	}
 
 	/**
-	 * Tells if besides digest also basic authentication is supported. Default
-	 * is true
+	 * Tells if besides digest also basic authentication is supported. Default is true
 	 * 
 	 * @return true if basic authentication is also supported, false otherwise
 	 */
@@ -648,8 +646,8 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	 * Parses the authorization header for a digest scheme.
 	 * 
 	 * @param request
-	 * @return the header or null if the header was not available or for a
-	 *         different scheme
+	 * @return the header or null if the header was not available or for a different
+	 *         scheme
 	 */
 	protected final DigestAuthorizationRequestHeader parseHeader(WebRequest request)
 	{
@@ -677,28 +675,37 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 	}
 
 	/**
-	 * Simple pojo to hold all the parsed fields from the request header
-	 * "Authorization".
+	 * Simple pojo to hold all the parsed fields from the request header "Authorization".
 	 * 
 	 * @author marrink
 	 */
 	protected static final class DigestAuthorizationRequestHeader
 	{
-		private static final PropertyResolverConverter converter = new NoOpPropertyResolverConverter();
+		private static final PropertyResolverConverter converter =
+			new NoOpPropertyResolverConverter();
+
 		private String username;
+
 		private String realm;
+
 		private String nonce;
+
 		private String uri;
+
 		private String qop;
+
 		private String nc;
+
 		private String cnonce;
+
 		private String response;
+
 		private String opaque;
+
 		private String algorithm;
 
 		/**
-		 * Constructor to be used when key value pairs are going to be added
-		 * later.
+		 * Constructor to be used when key value pairs are going to be added later.
 		 * 
 		 * @see #addKeyValuePair(String, String)
 		 */
@@ -712,8 +719,7 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 		 * 
 		 * @param key
 		 * @param value
-		 * @return true, if the value was set, false if the value could not be
-		 *         set
+		 * @return true, if the value was set, false if the value could not be set
 		 */
 		public boolean addKeyValuePair(String key, String value)
 		{
@@ -945,17 +951,19 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 		 * 
 		 * @see java.lang.Object#toString()
 		 */
+		@Override
 		public String toString()
 		{
 			AppendingStringBuffer buffer = new AppendingStringBuffer(150);
 			buffer.append("WWW-Authenticate: Digest username=\"").append(getUsername()).append(
-					"\", realm=\"").append(getRealm()).append("\", nonce=\"").append(getNonce())
-					.append("\", uri=\"").append(getUri()).append("\", qop=").append(getQop())
-					.append(", cnonce=\"").append(getCnonce()).append("\", nc=").append(getNc())
-					.append(", response=\"").append(getResponse()).append("\"");
+				"\", realm=\"").append(getRealm()).append("\", nonce=\"").append(getNonce())
+				.append("\", uri=\"").append(getUri()).append("\", qop=").append(getQop()).append(
+					", cnonce=\"").append(getCnonce()).append("\", nc=").append(getNc()).append(
+					", response=\"").append(getResponse()).append("\"");
 			return buffer.toString();
 		}
 	}
+
 	private static class NoOpPropertyResolverConverter extends PropertyResolverConverter
 	{
 		private static final long serialVersionUID = 1L;
@@ -972,7 +980,8 @@ public abstract class HttpDigestLoginPage extends HttpAuthenticationLoginPage
 		 * @see org.apache.wicket.util.lang.PropertyResolverConverter#convert(java.lang.Object,
 		 *      java.lang.Class)
 		 */
-		public Object convert(Object object, Class clz)
+		@Override
+		public Object convert(Object object, Class< ? > clz)
 		{
 			return object; // assume correct type.
 		}

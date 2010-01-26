@@ -43,9 +43,9 @@ public class MockHomePage extends SecureWebPage
 		// one you need to replace the securitycheck on the link with one that
 		// does use
 		// the target page.
-		add(new BookmarkablePageLink("secret", VerySecurePage.class));
+		add(new BookmarkablePageLink<Void>("secret", VerySecurePage.class));
 
-		add(new SecurePageLink("link", PageA.class));
+		add(new SecurePageLink<Void>("link", PageA.class));
 		setStatelessHint(true);
 	}
 

@@ -49,6 +49,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class WaspAuthorizationStrategy implements IAuthorizationStrategy, Serializable
 {
+	private static final long serialVersionUID = 1L;
 	private static final Logger log = LoggerFactory.getLogger(WaspAuthorizationStrategy.class);
 	/**
 	 * Key used to store the {@link IAuthorizationMessageSource} in the
@@ -76,7 +77,7 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	 *            the action to check
 	 * @return true if authorized, false otherwise
 	 */
-	public abstract boolean isModelAuthorized(ISecureModel model, Component component,
+	public abstract boolean isModelAuthorized(ISecureModel<?> model, Component component,
 			WaspAction action);
 
 	/**
@@ -88,7 +89,7 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	 *            the action to check
 	 * @return true if authorized, false otherwise
 	 */
-	public abstract boolean isClassAuthorized(Class clazz, WaspAction action);
+	public abstract boolean isClassAuthorized(Class<?> clazz, WaspAction action);
 
 	/**
 	 * Performs the authentication check.
@@ -110,7 +111,7 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	 * 
 	 * @return true if the user is authenticated, false otherwise
 	 */
-	public abstract boolean isModelAuthenticated(IModel model, Component component);
+	public abstract boolean isModelAuthenticated(IModel<?> model, Component component);
 
 	/**
 	 * Performs the authentication check.
@@ -120,7 +121,7 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	 * 
 	 * @return true if the user is authenticated, false otherwise
 	 */
-	public abstract boolean isClassAuthenticated(Class clazz);
+	public abstract boolean isClassAuthenticated(Class<?> clazz);
 
 	/**
 	 * Checks if there is a user logged in at all. This will return true after a
@@ -187,10 +188,10 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 
 
 			}
-			IModel model = component.getDefaultModel();
-			if (model instanceof ISecureModel)
+			IModel<?> model = component.getDefaultModel();
+			if (model instanceof ISecureModel<?>)
 			{
-				if (((ISecureModel)model).isAuthorized(component, getActionFactory().getAction(
+				if (((ISecureModel<?>)model).isAuthorized(component, getActionFactory().getAction(
 						action)))
 					return true;
 				IAuthorizationMessageSource message = getMessageSource();
@@ -243,8 +244,8 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	 * @see #removeMessageSource()
 	 * @see #logMessage(String, Map, IAuthorizationMessageSource)
 	 */
-	protected final void logMessage(String key, Map variables, IAuthorizationMessageSource message,
-			boolean remove)
+	protected final void logMessage(String key, Map<String, Object> variables,
+			IAuthorizationMessageSource message, boolean remove)
 	{
 		if (message == null || Strings.isEmpty(key))
 		{
@@ -272,7 +273,8 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	 * @param message
 	 *            the messagesource
 	 */
-	protected void logMessage(String key, Map variables, IAuthorizationMessageSource message)
+	protected void logMessage(String key, Map<String, Object> variables,
+			IAuthorizationMessageSource message)
 	{
 		String msg = message.getMessage(key);
 		if (!Strings.isEmpty(msg))

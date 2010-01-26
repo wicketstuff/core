@@ -19,71 +19,68 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.apache.wicket.spring.test.ApplicationContextMock;
-//import static org.easymock.EasyMock.createMock;
-//import static org.easymock.EasyMock.expect;
-//import static org.easymock.EasyMock.replay;
-
 
 /**
  * Test the HomePage and follow up pages.
- *
+ * 
  * @author Olger Warnier
  */
-public class HomePageTest extends AbstractSecureTestPage {
-    protected static final Log log = LogFactory.getLog(HomePageTest.class);
+public class HomePageTest extends AbstractSecureTestPage
+{
+	protected static final Log log = LogFactory.getLog(HomePageTest.class);
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        ApplicationContextMock appctx = new ApplicationContextMock();
+	@Override
+	protected void setUp() throws Exception
+	{
+		super.setUp();
+		ApplicationContextMock appctx = new ApplicationContextMock();
 
-        application.addComponentInstantiationListener(new SpringComponentInjector(application, appctx));
+		application.addComponentInstantiationListener(new SpringComponentInjector(application,
+			appctx));
 
-    }
+	}
 
-    /**
-     * Test Login to the application.
-     * This makes use of a mock login page as the application is based upon Spring Security authentication.
-     */
-    public void testLogin() {
-        loginToApp("test");
-        logoutOfApp();
-    }
+	/**
+	 * Test Login to the application. This makes use of a mock login page as the
+	 * application is based upon Spring Security authentication.
+	 */
+	public void testLogin()
+	{
+		loginToApp("test");
+		logoutOfApp();
+	}
 
-    public void testStartFirstSecure() {
-        /*
-        mock.startPage(MockLoginPage.class);
-		mock.setupRequestAndResponse();
-		assertTrue(mock.getWicketSession().isTemporary());
-		mock.processRequestCycle(MockLoginPage.class);
-		// loginpage, else the homepage will be used which will trigger a bind
-		// because a throw restartResponseAtInterceptPageexception will trigger
-		// a session.bind
-		SwarmFormTester form = mock.newFormTester("form");
-		form.setValue("username", "test");
-		form.submit();
-		mock.assertRenderedPage(MockHomePage.class);
-		mock.setupRequestAndResponse();
-		assertFalse(Session.get().isTemporary());
-		mock.processRequestCycle(MockLoginPage.class);
-        */
-        ApplicationContextMock appctx = new ApplicationContextMock();
-        //appctx.putBean("patientService", patientService);
+	public void testStartFirstSecure()
+	{
+		/*
+		 * mock.startPage(MockLoginPage.class); mock.setupRequestAndResponse();
+		 * assertTrue(mock.getWicketSession().isTemporary());
+		 * mock.processRequestCycle(MockLoginPage.class); // loginpage, else the homepage
+		 * will be used which will trigger a bind // because a throw
+		 * restartResponseAtInterceptPageexception will trigger // a session.bind
+		 * SwarmFormTester form = mock.newFormTester("form"); form.setValue("username",
+		 * "test"); form.submit(); mock.assertRenderedPage(MockHomePage.class);
+		 * mock.setupRequestAndResponse(); assertFalse(Session.get().isTemporary());
+		 * mock.processRequestCycle(MockLoginPage.class);
+		 */
+		ApplicationContextMock appctx = new ApplicationContextMock();
+		// appctx.putBean("patientService", patientService);
 
-        application.addComponentInstantiationListener(new SpringComponentInjector(application, appctx));
+		application.addComponentInstantiationListener(new SpringComponentInjector(application,
+			appctx));
 
+		loginToApp("user");
+		// first link is the create patient link
+		// have to set the proper controls in order to proceed.
+		mock.assertRenderedPage(HomePage.class);
 
-        loginToApp("user");
-        // first link is the create patient link
-        // have to set the proper controls in order to proceed.
-        mock.assertRenderedPage(HomePage.class);
+		// mock.clickLink("to_firstsecure");
+		// Page thePage = mock.getLastRenderedPage();
 
-        //mock.clickLink("to_firstsecure");
-        //Page thePage = mock.getLastRenderedPage();
+		// mock.assertRenderedPage(FirstSecurePage.class);
 
-        //mock.assertRenderedPage(FirstSecurePage.class);
+		logoutOfApp();
 
-        logoutOfApp();
-
-    }
+	}
 
 }

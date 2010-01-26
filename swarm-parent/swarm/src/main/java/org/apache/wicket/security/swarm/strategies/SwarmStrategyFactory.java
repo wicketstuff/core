@@ -16,6 +16,7 @@
  */
 package org.apache.wicket.security.swarm.strategies;
 
+import org.apache.wicket.security.components.ISecureComponent;
 import org.apache.wicket.security.components.ISecurePage;
 import org.apache.wicket.security.hive.Hive;
 import org.apache.wicket.security.hive.authorization.permissions.ComponentPermission;
@@ -29,7 +30,7 @@ import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
  */
 public class SwarmStrategyFactory implements StrategyFactory
 {
-	private final Class secureClass;
+	private final Class<? extends ISecureComponent> secureClass;
 
 	private Object hiveQueen;
 
@@ -54,7 +55,7 @@ public class SwarmStrategyFactory implements StrategyFactory
 	 * @param hiveQueen
 	 *            hiveQueen the key to get the {@link Hive}
 	 */
-	public SwarmStrategyFactory(Class secureClass, Object hiveQueen)
+	public SwarmStrategyFactory(Class<? extends ISecureComponent> secureClass, Object hiveQueen)
 	{
 		this.secureClass = secureClass;
 		this.hiveQueen = hiveQueen;
@@ -66,7 +67,8 @@ public class SwarmStrategyFactory implements StrategyFactory
 	 */
 	public void destroy()
 	{
-		// should we clean up all sessions or is that taken care of automatically
+		// should we clean up all sessions or is that taken care of
+		// automatically
 		// when the
 		// session is invalidated
 
@@ -96,9 +98,8 @@ public class SwarmStrategyFactory implements StrategyFactory
 	 * 
 	 * @return the class required to have instantiation rights
 	 */
-	protected final Class getSecureClass()
+	protected final Class<? extends ISecureComponent> getSecureClass()
 	{
 		return secureClass;
 	}
-
 }

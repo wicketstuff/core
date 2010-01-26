@@ -36,12 +36,12 @@ public class StringAction extends AbstractWaspAction
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Set actions;
+	private Set<String> actions;
 
 	StringAction(String name)
 	{
 		super(name);
-		actions = new HashSet();
+		actions = new HashSet<String>();
 		String[] names = name.split(" ");
 		for (int i = 0; i < names.length; i++)
 		{
@@ -64,7 +64,7 @@ public class StringAction extends AbstractWaspAction
 	 */
 	public boolean implies(WaspAction other)
 	{
-		StringAction oAction = (StringAction)other;
+		StringAction oAction = (StringAction) other;
 		return actions.containsAll(oAction.actions);
 	}
 
@@ -74,7 +74,7 @@ public class StringAction extends AbstractWaspAction
 	 */
 	public WaspAction remove(WaspAction other)
 	{
-		StringAction oAction = (StringAction)other;
+		StringAction oAction = (StringAction) other;
 		StringAction newAction = new StringAction(getName());
 		newAction.actions.removeAll(oAction.actions);
 		return newAction;
@@ -84,7 +84,7 @@ public class StringAction extends AbstractWaspAction
 	{
 		// not a very good implementation since it binds this action type to
 		// wicket
-		return ((WaspApplication)Application.get()).getActionFactory();
+		return ((WaspApplication) Application.get()).getActionFactory();
 		// real world implementations should use the Actions class or some other
 		// non wicket specific way
 	}

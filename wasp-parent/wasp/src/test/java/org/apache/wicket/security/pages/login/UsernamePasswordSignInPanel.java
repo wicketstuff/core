@@ -34,7 +34,9 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.WaspWebApplication;
+import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.authentication.LoginException;
+import org.apache.wicket.security.components.SecureComponentHelper;
 import org.apache.wicket.security.components.markup.html.form.SecureForm;
 import org.apache.wicket.security.components.markup.html.form.SecureTextField;
 import org.apache.wicket.security.components.markup.html.links.SecurePageLink;
@@ -49,7 +51,6 @@ import org.apache.wicket.util.value.ValueMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * 
  * @author marrink
@@ -61,6 +62,7 @@ public class UsernamePasswordSignInPanel extends Panel
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = LoggerFactory.getLogger(UsernamePasswordSignInPanel.class);
 
 	/**
@@ -86,34 +88,35 @@ public class UsernamePasswordSignInPanel extends Panel
 	 */
 	public boolean signIn(String username, String password)
 	{
-		Map authorized = new HashMap();
-		authorized.put(HomePage.class, getWaspApplication().getActionFactory().getAction(
-				"access render"));
-		authorized.put(PageB.class, getWaspApplication().getActionFactory().getAction(
-				"access render"));
-		authorized.put(PageC.class, getWaspApplication().getActionFactory().getAction("access"));
-		authorized.put(PageC2.class, getWaspApplication().getActionFactory().getAction(
-				"access render foo"));
-		authorized.put(PageD.class, getWaspApplication().getActionFactory().getAction(
-				"access render"));
-		authorized.put(FormPage.class, getWaspApplication().getActionFactory().getAction(
-				"access render"));
+		Map<String, WaspAction> authorized = new HashMap<String, WaspAction>();
+		authorized.put(SecureComponentHelper.alias(HomePage.class), getWaspApplication()
+			.getActionFactory().getAction("access render"));
+		authorized.put(SecureComponentHelper.alias(PageB.class), getWaspApplication()
+			.getActionFactory().getAction("access render"));
+		authorized.put(SecureComponentHelper.alias(PageC.class), getWaspApplication()
+			.getActionFactory().getAction("access"));
+		authorized.put(SecureComponentHelper.alias(PageC2.class), getWaspApplication()
+			.getActionFactory().getAction("access render foo"));
+		authorized.put(SecureComponentHelper.alias(PageD.class), getWaspApplication()
+			.getActionFactory().getAction("access render"));
+		authorized.put(SecureComponentHelper.alias(FormPage.class), getWaspApplication()
+			.getActionFactory().getAction("access render"));
 		// because this test uses the ISecureComponent class as base class for
 		// instantiation checks we need to grant all ISecureComponents access
-		authorized.put(SecurePageLink.class, getWaspApplication().getActionFactory().getAction(
-				"access"));
-		authorized.put(SecureTextField.class, getWaspApplication().getActionFactory().getAction(
-				"access"));
-		authorized.put(SecureForm.class, getWaspApplication().getActionFactory()
-				.getAction("access"));
+		authorized.put(SecureComponentHelper.alias(SecurePageLink.class), getWaspApplication()
+			.getActionFactory().getAction("access"));
+		authorized.put(SecureComponentHelper.alias(SecureTextField.class), getWaspApplication()
+			.getActionFactory().getAction("access"));
+		authorized.put(SecureComponentHelper.alias(SecureForm.class), getWaspApplication()
+			.getActionFactory().getAction("access"));
 		// grant models rights Page D
 		authorized.put("model:modelcheck", getWaspApplication().getActionFactory().getAction(
-				"access render"));
+			"access render"));
 		authorized.put("model:bothcheck", getWaspApplication().getActionFactory().getAction(
-				"access render"));
+			"access render"));
 		// panels
-		authorized.put(MySecurePanel.class, getWaspApplication().getActionFactory().getAction(
-				"access"));
+		authorized.put(SecureComponentHelper.alias(MySecurePanel.class), getWaspApplication()
+			.getActionFactory().getAction("access"));
 		WaspSession session = getSecureSession();
 		try
 		{
@@ -134,7 +137,7 @@ public class UsernamePasswordSignInPanel extends Panel
 	 */
 	protected final WaspSession getSecureSession()
 	{
-		return (WaspSession)Session.get();
+		return (WaspSession) Session.get();
 	}
 
 	/**
@@ -144,13 +147,13 @@ public class UsernamePasswordSignInPanel extends Panel
 	 */
 	protected final WaspWebApplication getWaspApplication()
 	{
-		return (WaspWebApplication)Application.get();
+		return (WaspWebApplication) Application.get();
 	}
 
 	/**
 	 * Sign in form.
 	 */
-	public final class SignInForm extends StatelessForm
+	public final class SignInForm extends StatelessForm<ValueMap>
 	{
 		private static final long serialVersionUID = 1L;
 
@@ -164,23 +167,25 @@ public class UsernamePasswordSignInPanel extends Panel
 		 */
 		public SignInForm(final String id)
 		{
-			super(id, new CompoundPropertyModel(new ValueMap()));
+			super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
 
 			// only save username, not passwords
-			add(new TextField("username").setPersistent(rememberMe));
+			add(new TextField<String>("username").setPersistent(rememberMe));
 			add(new PasswordTextField("password"));
 			// MarkupContainer row for remember me checkbox
 			WebMarkupContainer rememberMeRow = new WebMarkupContainer("rememberMeRow");
 			add(rememberMeRow);
 
 			// Add rememberMe checkbox
-			rememberMeRow.add(new CheckBox("rememberMe", new PropertyModel(this, "rememberMe")));
+			rememberMeRow.add(new CheckBox("rememberMe", new PropertyModel<Boolean>(this,
+				"rememberMe")));
 		}
 
 		/**
 		 * 
 		 * @see org.apache.wicket.markup.html.form.Form#onSubmit()
 		 */
+		@Override
 		public final void onSubmit()
 		{
 			if (!rememberMe)
@@ -188,7 +193,7 @@ public class UsernamePasswordSignInPanel extends Panel
 				getPage().removePersistedFormData(SignInForm.class, true);
 			}
 
-			ValueMap values = (ValueMap)getModelObject();
+			ValueMap values = getModelObject();
 			String username = values.getString("username");
 			String password = values.getString("password");
 
@@ -204,7 +209,7 @@ public class UsernamePasswordSignInPanel extends Panel
 				// Try the component based localizer first. If not found try the
 				// application localizer. Else use the default
 				error(getLocalizer().getString("exception.login", this,
-						"Illegal username password combo"));
+					"Illegal username password combo"));
 			}
 		}
 
@@ -226,7 +231,7 @@ public class UsernamePasswordSignInPanel extends Panel
 		public void setRememberMe(boolean rememberMe)
 		{
 			this.rememberMe = rememberMe;
-			((FormComponent)get("username")).setPersistent(rememberMe);
+			((FormComponent< ? >) get("username")).setPersistent(rememberMe);
 		}
 	}
 }

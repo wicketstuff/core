@@ -18,6 +18,7 @@ package org.apache.wicket.security.examples.tabs;
 
 import java.net.MalformedURLException;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.security.examples.MultiUsableApplication;
 import org.apache.wicket.security.examples.tabs.authentication.MyLoginContext;
@@ -47,6 +48,7 @@ public class MyApplication extends MultiUsableApplication
 	/**
 	 * @see org.apache.wicket.security.swarm.SwarmWebApplication#init()
 	 */
+	@Override
 	protected void init()
 	{
 		super.init();
@@ -60,6 +62,7 @@ public class MyApplication extends MultiUsableApplication
 	/**
 	 * @see org.apache.wicket.security.swarm.SwarmWebApplication#getHiveKey()
 	 */
+	@Override
 	protected Object getHiveKey()
 	{
 		// if you are using servlet api 2.5 i would suggest using:
@@ -79,6 +82,7 @@ public class MyApplication extends MultiUsableApplication
 	/**
 	 * @see org.apache.wicket.security.swarm.SwarmWebApplication#setUpHive()
 	 */
+	@Override
 	protected void setUpHive()
 	{
 		// create factory
@@ -101,7 +105,8 @@ public class MyApplication extends MultiUsableApplication
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
-	public Class getHomePage()
+	@Override
+	public Class< ? extends Page> getHomePage()
 	{
 		return MasterPage.class;
 	}
@@ -109,7 +114,7 @@ public class MyApplication extends MultiUsableApplication
 	/**
 	 * @see org.apache.wicket.security.WaspApplication#getLoginPage()
 	 */
-	public Class getLoginPage()
+	public Class< ? extends Page> getLoginPage()
 	{
 		return LoginPage.class;
 	}
@@ -118,6 +123,7 @@ public class MyApplication extends MultiUsableApplication
 	 * 
 	 * @see org.apache.wicket.security.examples.MultiUsableApplication#getLogoffContext()
 	 */
+	@Override
 	public LoginContext getLogoffContext()
 	{
 		return new MyLoginContext();

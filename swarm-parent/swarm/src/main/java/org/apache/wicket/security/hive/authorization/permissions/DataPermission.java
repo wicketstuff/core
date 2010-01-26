@@ -16,16 +16,14 @@
  */
 package org.apache.wicket.security.hive.authorization.permissions;
 
-
 import org.apache.wicket.Component;
 import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.hive.authorization.Permission;
 import org.apache.wicket.security.swarm.models.SwarmModel;
 
-
 /**
- * A permission for data or plain old pojo's. Can have actions like access,
- * render or enable.
+ * A permission for data or plain old pojo's. Can have actions like access, render or
+ * enable.
  * 
  * @author marrink
  * 
@@ -35,9 +33,9 @@ public class DataPermission extends ActionPermission
 	private static final long serialVersionUID = 5192668688933417376L;
 
 	/**
-	 * Creates a new DataPermission for a components model. The model will
-	 * specify the name for this permission. Currently we don't check if the
-	 * component really has the model you specified here.
+	 * Creates a new DataPermission for a components model. The model will specify the
+	 * name for this permission. Currently we don't check if the component really has the
+	 * model you specified here.
 	 * 
 	 * @param component
 	 *            component containing the model
@@ -46,7 +44,7 @@ public class DataPermission extends ActionPermission
 	 * @param actions
 	 *            a logical and of all the allowed / required actions
 	 */
-	public DataPermission(Component component, SwarmModel model, WaspAction actions)
+	public DataPermission(Component component, SwarmModel< ? > model, WaspAction actions)
 	{
 		super(model.getSecurityId(component), actions);
 	}
@@ -65,6 +63,7 @@ public class DataPermission extends ActionPermission
 	/**
 	 * @see Permission#implies(Permission)
 	 */
+	@Override
 	public boolean implies(Permission permission)
 	{
 		return (permission instanceof DataPermission) && super.implies(permission);
@@ -74,6 +73,7 @@ public class DataPermission extends ActionPermission
 	 * 
 	 * @see org.apache.wicket.security.hive.authorization.permissions.ActionPermission#equals(java.lang.Object)
 	 */
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (obj instanceof DataPermission)
@@ -85,6 +85,7 @@ public class DataPermission extends ActionPermission
 	 * 
 	 * @see org.apache.wicket.security.hive.authorization.permissions.ActionPermission#hashCode()
 	 */
+	@Override
 	public int hashCode()
 	{
 		// super implementation already gives out distinct hashcodes per

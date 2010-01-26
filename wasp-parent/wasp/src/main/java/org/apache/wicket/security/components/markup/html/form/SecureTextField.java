@@ -27,13 +27,13 @@ import org.apache.wicket.security.models.ISecureModel;
 
 /**
  * Textfield which automatically switches between read and write mode based on
- * the user rights. By default it does not consider {@link ISecureModel},
- * unless told to do so by either removing the securitycheck or by using the
+ * the user rights. By default it does not consider {@link ISecureModel}, unless
+ * told to do so by either removing the securitycheck or by using the
  * specialized constructor.
  * 
  * @author marrink
  */
-public class SecureTextField extends TextField implements ISecureComponent
+public class SecureTextField<T> extends TextField<T> implements ISecureComponent
 {
 	private static final long serialVersionUID = 1L;
 
@@ -50,7 +50,7 @@ public class SecureTextField extends TextField implements ISecureComponent
 	 * @param id
 	 * @param type
 	 */
-	public SecureTextField(String id, Class type)
+	public SecureTextField(String id, Class<T> type)
 	{
 		super(id, type);
 		setSecurityCheck(new ComponentSecurityCheck(this));
@@ -60,7 +60,7 @@ public class SecureTextField extends TextField implements ISecureComponent
 	 * @param id
 	 * @param object
 	 */
-	public SecureTextField(String id, IModel object)
+	public SecureTextField(String id, IModel<T> object)
 	{
 		super(id, object);
 		setSecurityCheck(new ComponentSecurityCheck(this));
@@ -73,7 +73,7 @@ public class SecureTextField extends TextField implements ISecureComponent
 	 *            tells the {@link ComponentSecurityCheck} to also check this
 	 *            model.
 	 */
-	public SecureTextField(String id, ISecureModel model, boolean checkModel)
+	public SecureTextField(String id, ISecureModel<T> model, boolean checkModel)
 	{
 		super(id, model);
 		setSecurityCheck(new ComponentSecurityCheck(this, checkModel));
@@ -84,7 +84,7 @@ public class SecureTextField extends TextField implements ISecureComponent
 	 * @param model
 	 * @param type
 	 */
-	public SecureTextField(String id, IModel model, Class type)
+	public SecureTextField(String id, IModel<T> model, Class<T> type)
 	{
 		super(id, model, type);
 		setSecurityCheck(new ComponentSecurityCheck(this));
@@ -98,7 +98,7 @@ public class SecureTextField extends TextField implements ISecureComponent
 	 *            model.
 	 * @param type
 	 */
-	public SecureTextField(String id, ISecureModel model, boolean checkModel, Class type)
+	public SecureTextField(String id, ISecureModel<T> model, boolean checkModel, Class<T> type)
 	{
 		super(id, model, type);
 		setSecurityCheck(new ComponentSecurityCheck(this, checkModel));

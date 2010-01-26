@@ -16,6 +16,7 @@
  */
 package org.apache.wicket.security.examples.denystrategy.factories;
 
+import org.apache.wicket.security.components.ISecureComponent;
 import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
 import org.apache.wicket.security.swarm.strategies.SwarmStrategyFactory;
 
@@ -43,7 +44,7 @@ public class DenialFactory extends SwarmStrategyFactory
 	 * @param secureClass
 	 * @param hiveQueen
 	 */
-	public DenialFactory(Class secureClass, Object hiveQueen)
+	public DenialFactory(Class< ? extends ISecureComponent> secureClass, Object hiveQueen)
 	{
 		super(secureClass, hiveQueen);
 	}
@@ -51,6 +52,7 @@ public class DenialFactory extends SwarmStrategyFactory
 	/**
 	 * @see org.apache.wicket.security.swarm.strategies.SwarmStrategyFactory#newStrategy()
 	 */
+	@Override
 	public WaspAuthorizationStrategy newStrategy()
 	{
 		return new DenialStrategy(getSecureClass(), getHiveKey());

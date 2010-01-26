@@ -23,7 +23,6 @@ import org.apache.wicket.security.checks.ClassSecurityCheck;
 import org.apache.wicket.security.checks.ISecurityCheck;
 import org.apache.wicket.security.components.SecureWebPage;
 
-
 /**
  * @author marrink
  */
@@ -34,6 +33,7 @@ public class VerySecurePage extends SecureWebPage implements HighSecurityPage
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Redirects to the secondaryloginpage
 	 */
@@ -44,6 +44,7 @@ public class VerySecurePage extends SecureWebPage implements HighSecurityPage
 		/**
 		 * @see org.apache.wicket.security.checks.ClassSecurityCheck#isActionAuthorized(org.apache.wicket.security.actions.WaspAction)
 		 */
+		@Override
 		public boolean isActionAuthorized(WaspAction action)
 		{
 			if (isAuthenticated())

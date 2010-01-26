@@ -19,7 +19,6 @@ package org.apache.wicket.security.pages.insecure;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.security.pages.BasePage;
 
-
 /**
  * @author marrink
  * 

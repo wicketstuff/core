@@ -19,8 +19,7 @@ package org.apache.wicket.security.yahoo;
 import java.io.Serializable;
 
 /**
- * Simple pojo to contain the response for an authenticated user from a Yahoo
- * webservice.
+ * Simple pojo to contain the response for an authenticated user from a Yahoo webservice.
  * 
  * @author marrink
  */
@@ -51,8 +50,8 @@ public final class YahooResponse implements Serializable
 	 * @param timeout
 	 *            session timeout in ??
 	 * @param cookieContent
-	 *            content of the cookie to be used for all authenticated
-	 *            webservice calls to Yahoo
+	 *            content of the cookie to be used for all authenticated webservice calls
+	 *            to Yahoo
 	 */
 	public YahooResponse(String sessionId, long timeout, String cookieContent)
 	{
@@ -61,7 +60,6 @@ public final class YahooResponse implements Serializable
 		this.timeout = timeout;
 		this.sessionId = sessionId;
 	}
-
 
 	/**
 	 * The Yahoo session id.

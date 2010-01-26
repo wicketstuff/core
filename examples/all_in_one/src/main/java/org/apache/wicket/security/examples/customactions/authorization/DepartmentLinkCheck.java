@@ -24,9 +24,9 @@ import org.apache.wicket.security.examples.customactions.entities.Department;
 /**
  * A check for {@link Department}s (not to be confused with the
  * {@link org.apache.wicket.security.examples.customactions.authorization.Department}
- * action which is used to do that. there are two type of departments, secure
- * (which you can only see/edit when you have organization rights and unsecure
- * departments where department rights are sufficient.
+ * action which is used to do that. there are two type of departments, secure (which you
+ * can only see/edit when you have organization rights and unsecure departments where
+ * department rights are sufficient.
  * 
  * @author marrink
  */
@@ -48,7 +48,7 @@ public class DepartmentLinkCheck extends LinkSecurityCheck
 	 * @param department
 	 *            the department to check
 	 */
-	public DepartmentLinkCheck(AbstractLink component, Class clickTarget, Department department)
+	public DepartmentLinkCheck(AbstractLink component, Class< ? > clickTarget, Department department)
 	{
 		super(component, clickTarget);
 		secureDepartment = department.secure;
@@ -63,8 +63,8 @@ public class DepartmentLinkCheck extends LinkSecurityCheck
 	 *            the department to check
 	 * @param checkSecureModelIfExists
 	 */
-	public DepartmentLinkCheck(AbstractLink component, Class clickTarget, Department department,
-			boolean checkSecureModelIfExists)
+	public DepartmentLinkCheck(AbstractLink component, Class< ? > clickTarget,
+			Department department, boolean checkSecureModelIfExists)
 	{
 		super(component, clickTarget, checkSecureModelIfExists);
 		secureDepartment = department.secure;
@@ -73,16 +73,18 @@ public class DepartmentLinkCheck extends LinkSecurityCheck
 	/**
 	 * @see org.apache.wicket.security.checks.LinkSecurityCheck#isActionAuthorized(org.apache.wicket.security.actions.WaspAction)
 	 */
+	@Override
 	public boolean isActionAuthorized(WaspAction action)
 	{
 		// for secure departments you need organization rights, else department
 		// rights are sufficient
-		WaspAction myAction = action
+		WaspAction myAction =
+			action
 				.add(getActionFactory()
-						.getAction(
-								secureDepartment
-										? Organization.class
-										: org.apache.wicket.security.examples.customactions.authorization.Department.class));
+					.getAction(
+						secureDepartment
+							? Organization.class
+							: org.apache.wicket.security.examples.customactions.authorization.Department.class));
 		return super.isActionAuthorized(myAction);
 	}
 

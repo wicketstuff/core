@@ -52,11 +52,12 @@ public class DepartmentsPage extends SecurePage
 	public DepartmentsPage()
 	{
 		add(new ButtonContainer("buttoncontainer", ButtonContainer.BUTTON_DEPARTMENTS));
-		add(new ListView("departments", generateData())
+		add(new ListView<Department>("departments", generateData())
 		{
 			private static final long serialVersionUID = 1L;
 
-			protected void populateItem(final ListItem item)
+			@Override
+			protected void populateItem(final ListItem<Department> item)
 			{
 				item.add(new Label("name"));
 				item.add(new Label("description"));
@@ -69,32 +70,29 @@ public class DepartmentsPage extends SecurePage
 				// all departments), then the
 				// securitycheck of the link kicks in preventing you from
 				// clicking on the secure departments.
-				SecurePageLink link = new SecurePageLink("link", new IPageLink()
+				SecurePageLink<Void> link = new SecurePageLink<Void>("link", new IPageLink()
 				{
 					private static final long serialVersionUID = 1L;
 
 					public Page getPage()
 					{
-						return new DepartmentPage((Department)item.getModelObject());
+						return new DepartmentPage(item.getModelObject());
 					}
 
-					public Class getPageIdentity()
+					public Class< ? extends Page> getPageIdentity()
 					{
 						return DepartmentPage.class;
 					}
 				});
-				link.setSecurityCheck(new DepartmentLinkCheck(link, DepartmentPage.class,
-						(Department)item.getModelObject()));
+				link.setSecurityCheck(new DepartmentLinkCheck(link, DepartmentPage.class, item
+					.getModelObject()));
 				item.add(link);
 
 			}
 
-			/**
-			 * 
-			 * @see org.apache.wicket.markup.html.list.ListView#getListItemModel(org.apache.wicket.model.IModel,
-			 *      int)
-			 */
-			protected IModel getListItemModel(IModel listViewModel, int index)
+			@Override
+			protected IModel<Department> getListItemModel(
+					IModel< ? extends List<Department>> listViewModel, int index)
 			{
 				// by using a securemodel we are preventing the secure
 				// departments from showing up.
@@ -111,8 +109,8 @@ public class DepartmentsPage extends SecurePage
 	 * 
 	 * @return
 	 */
-	private List generateData()
+	private List<Department> generateData()
 	{
-		return ((MyApplication)Application.get()).DEPARTMENTS;
+		return ((MyApplication) Application.get()).DEPARTMENTS;
 	}
 }

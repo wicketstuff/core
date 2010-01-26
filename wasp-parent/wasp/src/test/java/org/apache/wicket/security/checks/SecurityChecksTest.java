@@ -29,6 +29,7 @@ public class SecurityChecksTest extends TestCase
 	/**
 	 * @see junit.framework.TestCase#setUp()
 	 */
+	@Override
 	protected void setUp() throws Exception
 	{
 		super.setUp();
@@ -37,6 +38,7 @@ public class SecurityChecksTest extends TestCase
 	/**
 	 * @see junit.framework.TestCase#tearDown()
 	 */
+	@Override
 	protected void tearDown() throws Exception
 	{
 		super.tearDown();
@@ -44,44 +46,45 @@ public class SecurityChecksTest extends TestCase
 
 	/**
 	 * Test method for
-	 * {@link org.apache.wicket.security.checks.SecurityChecks#and(org.apache.wicket.security.checks.ISecurityCheck[])}.
+	 * {@link org.apache.wicket.security.checks.SecurityChecks#and(org.apache.wicket.security.checks.ISecurityCheck[])}
+	 * .
 	 */
 	public void testAnd()
 	{
 		runCheck(SecurityChecks.and(null, null), true, true);
 		runCheck(SecurityChecks.and(null), true, true);
 		runCheck(SecurityChecks.and(new BogusCheck(true), null), true, true);
-		runCheck(SecurityChecks.and(new ISecurityCheck[] { new BogusCheck(true) }), true, true);
-		runCheck(SecurityChecks.and(new ISecurityCheck[] { new BogusCheck(true), null }), true,
-				true);
-		runCheck(SecurityChecks.and(new ISecurityCheck[] { new BogusCheck(true),
-				new BogusCheck(true, false) }), true, false);
-		runCheck(SecurityChecks.and(new ISecurityCheck[] { new BogusCheck(true),
-				new BogusCheck(false, true) }), false, true);
-		runCheck(SecurityChecks.and(new ISecurityCheck[] { new BogusCheck(true), null,
-				new BogusCheck(true), new BogusCheck(false) }), false, false);
-		runCheck(SecurityChecks.and(new ISecurityCheck[] { new BogusCheck(false) }), false, false);
+		runCheck(SecurityChecks.and(new ISecurityCheck[] {new BogusCheck(true)}), true, true);
+		runCheck(SecurityChecks.and(new ISecurityCheck[] {new BogusCheck(true), null}), true, true);
+		runCheck(SecurityChecks.and(new ISecurityCheck[] {new BogusCheck(true),
+			new BogusCheck(true, false)}), true, false);
+		runCheck(SecurityChecks.and(new ISecurityCheck[] {new BogusCheck(true),
+			new BogusCheck(false, true)}), false, true);
+		runCheck(SecurityChecks.and(new ISecurityCheck[] {new BogusCheck(true), null,
+			new BogusCheck(true), new BogusCheck(false)}), false, false);
+		runCheck(SecurityChecks.and(new ISecurityCheck[] {new BogusCheck(false)}), false, false);
 		runCheck(SecurityChecks.and(new BogusCheck(false), new BogusCheck(false)), false, false);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.apache.wicket.security.checks.SecurityChecks#or(org.apache.wicket.security.checks.ISecurityCheck[])}.
+	 * {@link org.apache.wicket.security.checks.SecurityChecks#or(org.apache.wicket.security.checks.ISecurityCheck[])}
+	 * .
 	 */
 	public void testOr()
 	{
 		runCheck(SecurityChecks.or(null, null), true, true);
 		runCheck(SecurityChecks.or(null), true, true);
 		runCheck(SecurityChecks.or(new BogusCheck(true), null), true, true);
-		runCheck(SecurityChecks.or(new ISecurityCheck[] { new BogusCheck(true) }), true, true);
-		runCheck(SecurityChecks.or(new ISecurityCheck[] { new BogusCheck(true), null }), true, true);
-		runCheck(SecurityChecks.or(new ISecurityCheck[] { new BogusCheck(true),
-				new BogusCheck(true, false) }), true, true);
-		runCheck(SecurityChecks.or(new ISecurityCheck[] { new BogusCheck(true),
-				new BogusCheck(false, true) }), true, true);
-		runCheck(SecurityChecks.or(new ISecurityCheck[] { new BogusCheck(true), null,
-				new BogusCheck(true), new BogusCheck(false) }), true, true);
-		runCheck(SecurityChecks.or(new ISecurityCheck[] { new BogusCheck(false) }), false, false);
+		runCheck(SecurityChecks.or(new ISecurityCheck[] {new BogusCheck(true)}), true, true);
+		runCheck(SecurityChecks.or(new ISecurityCheck[] {new BogusCheck(true), null}), true, true);
+		runCheck(SecurityChecks.or(new ISecurityCheck[] {new BogusCheck(true),
+			new BogusCheck(true, false)}), true, true);
+		runCheck(SecurityChecks.or(new ISecurityCheck[] {new BogusCheck(true),
+			new BogusCheck(false, true)}), true, true);
+		runCheck(SecurityChecks.or(new ISecurityCheck[] {new BogusCheck(true), null,
+			new BogusCheck(true), new BogusCheck(false)}), true, true);
+		runCheck(SecurityChecks.or(new ISecurityCheck[] {new BogusCheck(false)}), false, false);
 		runCheck(SecurityChecks.or(new BogusCheck(false), new BogusCheck(false)), false, false);
 	}
 
@@ -105,7 +108,10 @@ public class SecurityChecksTest extends TestCase
 	 */
 	private static final class BogusCheck implements ISecurityCheck
 	{
+		private static final long serialVersionUID = 1L;
+
 		private boolean authorized;
+
 		private boolean authenticated;
 
 		/**
@@ -131,14 +137,6 @@ public class SecurityChecksTest extends TestCase
 			super();
 			this.authorized = flag;
 			this.authenticated = flag;
-		}
-
-		/**
-		 * Construct. All false.
-		 */
-		public BogusCheck()
-		{
-			super();
 		}
 
 		/**

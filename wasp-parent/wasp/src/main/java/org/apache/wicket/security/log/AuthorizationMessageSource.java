@@ -38,7 +38,7 @@ public class AuthorizationMessageSource implements IAuthorizationMessageSource
 	/**
 	 * Map containing the variable we can use to compose an error message.
 	 */
-	private Map variables = new HashMap();
+	private Map<String, Object> variables = new HashMap<String, Object>();
 	/**
 	 * Source of the authorization denied.
 	 */
@@ -59,7 +59,7 @@ public class AuthorizationMessageSource implements IAuthorizationMessageSource
 	 * @param vars
 	 *            initial variables
 	 */
-	public AuthorizationMessageSource(Map vars)
+	public AuthorizationMessageSource(Map<String, Object> vars)
 	{
 		variables.putAll(vars);
 	}
@@ -91,7 +91,8 @@ public class AuthorizationMessageSource implements IAuthorizationMessageSource
 	 * @see org.apache.wicket.validation.IErrorMessageSource#substitute(java.lang.String,
 	 *      java.util.Map)
 	 */
-	public final String substitute(String string, Map vars) throws IllegalStateException
+	public final String substitute(String string, Map<String, Object> vars)
+			throws IllegalStateException
 	{
 		return new MapVariableInterpolator(string, mergeVariables(vars), Application.get()
 				.getResourceSettings().getThrowExceptionOnMissingResource()).toString();
@@ -124,9 +125,9 @@ public class AuthorizationMessageSource implements IAuthorizationMessageSource
 	 * @return new map containing both the internal variables and the extra
 	 *         variables from the map
 	 */
-	protected final Map mergeVariables(Map map)
+	protected final Map<String, Object> mergeVariables(Map<String, Object> map)
 	{
-		Map result = new HashMap(variables);
+		Map<String, Object> result = new HashMap<String, Object>(variables);
 		if (map != null && !map.isEmpty())
 			result.putAll(map);
 		return result;

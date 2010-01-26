@@ -46,14 +46,14 @@ public class L1Container extends Panel
 	 * @param id
 	 * @param model
 	 */
-	public L1Container(String id, IModel model)
+	public L1Container(String id, IModel<?> model)
 	{
 		super(id, model);
 		SecureComponentHelper.setSecurityCheck(this, new ContainerSecurityCheck(this));
-		add(new SecureTextField("txt1", new Model("foo")));
+		add(new SecureTextField<String>("txt1", new Model<String>("foo")));
 		WebMarkupContainer lvl2 = new WebMarkupContainer("lvl2");
 		add(lvl2);
 		SecureComponentHelper.setSecurityCheck(lvl2, new ContainerSecurityCheck(lvl2));
-		lvl2.add(new SecureTextField("txt2", new Model("bar")));
+		lvl2.add(new SecureTextField<String>("txt2", new Model<String>("bar")));
 	}
 }

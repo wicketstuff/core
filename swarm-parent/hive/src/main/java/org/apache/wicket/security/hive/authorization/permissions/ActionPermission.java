@@ -21,13 +21,12 @@ import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.hive.authorization.Permission;
 import org.apache.wicket.security.hive.config.HiveFactory;
 
-
 /**
  * Base class for any Permission that uses actions. Each implementation of
- * ActionPermission should at least expose the ActionPermission(String name,
- * SwarmAction actions) constructor to the outside world, for it will be used by
- * a {@link HiveFactory} when constructing permissions. Note if you do not wish
- * to use actions in your permissions you should build your own permissions.
+ * ActionPermission should at least expose the ActionPermission(String name, SwarmAction
+ * actions) constructor to the outside world, for it will be used by a {@link HiveFactory}
+ * when constructing permissions. Note if you do not wish to use actions in your
+ * permissions you should build your own permissions.
  * 
  * @author marrink
  */
@@ -44,8 +43,7 @@ public class ActionPermission extends Permission
 	 * @param name
 	 *            non null name of the permission
 	 * @param actions
-	 *            a logical and of all the allowed / required actions for this
-	 *            permission
+	 *            a logical and of all the allowed / required actions for this permission
 	 */
 	protected ActionPermission(String name, WaspAction actions)
 	{
@@ -59,9 +57,9 @@ public class ActionPermission extends Permission
 	}
 
 	/**
-	 * Performs a logical and to see if this permission has at least all the
-	 * actions as the other permission and thus if this permission implies the
-	 * other permission. Inherited actions are considered.
+	 * Performs a logical and to see if this permission has at least all the actions as
+	 * the other permission and thus if this permission implies the other permission.
+	 * Inherited actions are considered.
 	 * 
 	 * <pre>
 	 *  Some basic rules about implies:
@@ -98,11 +96,12 @@ public class ActionPermission extends Permission
 	 * 
 	 * @see Permission#implies(Permission)
 	 */
+	@Override
 	public boolean implies(Permission permission)
 	{
 		if (permission instanceof ActionPermission)
 		{
-			ActionPermission other = (ActionPermission)permission;
+			ActionPermission other = (ActionPermission) permission;
 			if (actions.implies(actions.getActionFactory().getAction(Inherit.class)))
 				return actions.implies(other.actions) && other.getName().startsWith(getName());
 			return actions.implies(other.actions) && getName().equals(other.getName());
@@ -111,17 +110,17 @@ public class ActionPermission extends Permission
 	}
 
 	/**
-	 * ActionPermissions are only equal if they have the same class, name and
-	 * actions.
+	 * ActionPermissions are only equal if they have the same class, name and actions.
 	 * 
 	 * @see Permission#equals(java.lang.Object)
 	 * 
 	 */
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (obj != null && obj.getClass().equals(getClass()))
 		{
-			ActionPermission other = (ActionPermission)obj;
+			ActionPermission other = (ActionPermission) obj;
 			return other.getName().equals(getName()) && other.actions.equals(actions);
 			// both fields are not null
 		}
@@ -133,6 +132,7 @@ public class ActionPermission extends Permission
 	 * 
 	 * @see Permission#hashCode()
 	 */
+	@Override
 	public int hashCode()
 	{
 		int result = 4679;
@@ -143,11 +143,12 @@ public class ActionPermission extends Permission
 	}
 
 	/**
-	 * A logically ordered comma separated string containing each action this
-	 * permission has.
+	 * A logically ordered comma separated string containing each action this permission
+	 * has.
 	 * 
 	 * @see Permission#getActions()
 	 */
+	@Override
 	public final String getActions()
 	{
 		return actions.getName();
@@ -157,6 +158,7 @@ public class ActionPermission extends Permission
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString()
 	{
 		return getClass().getName() + " \"" + getName() + "\" \"" + getActions() + "\"";

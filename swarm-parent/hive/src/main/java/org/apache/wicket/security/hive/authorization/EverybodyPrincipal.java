@@ -18,12 +18,11 @@ package org.apache.wicket.security.hive.authorization;
 
 import org.apache.wicket.security.hive.authentication.Subject;
 
-
 /**
- * Principal used for permissions granted to everyone, regardless of an
- * authenticated subject. This is the principal used when you specify a grant
- * statement without principal in the policy file. You should not need to
- * manually add this principal to your {@link Subject}.
+ * Principal used for permissions granted to everyone, regardless of an authenticated
+ * subject. This is the principal used when you specify a grant statement without
+ * principal in the policy file. You should not need to manually add this principal to
+ * your {@link Subject}.
  * 
  * @author marrink
  * 
@@ -65,6 +64,7 @@ public final class EverybodyPrincipal implements Principal
 	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (obj == this)
@@ -79,6 +79,7 @@ public final class EverybodyPrincipal implements Principal
 	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
+	@Override
 	public int hashCode()
 	{
 		return getClass().hashCode();
@@ -88,6 +89,7 @@ public final class EverybodyPrincipal implements Principal
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString()
 	{
 		return getName();

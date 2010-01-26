@@ -33,14 +33,13 @@ import org.apache.wicket.security.examples.tabs.panels.Grolsch;
 import org.apache.wicket.security.examples.tabs.panels.Heineken;
 
 /**
- * Basic page showing a tab bar. Although all tabs are visible the contents of
- * the tab will not show if there are insufficient rights. The reason the tab
- * panels are not shown rather than throwing a AccessDeniedPage is because the
- * panels do not implement {@link ISecureComponent}. You might recall that by
- * default only ISecureComponents are checked for instantiation, and since
- * wicket only shows an {@link AccessDeniedPage} if the instantiation fails the
- * panels are just not rendered. So if you want an AccessDeniedPage all you have
- * to do is make your panels implement ISecureComponent.
+ * Basic page showing a tab bar. Although all tabs are visible the contents of the tab
+ * will not show if there are insufficient rights. The reason the tab panels are not shown
+ * rather than throwing a AccessDeniedPage is because the panels do not implement
+ * {@link ISecureComponent}. You might recall that by default only ISecureComponents are
+ * checked for instantiation, and since wicket only shows an {@link AccessDeniedPage} if
+ * the instantiation fails the panels are just not rendered. So if you want an
+ * AccessDeniedPage all you have to do is make your panels implement ISecureComponent.
  * 
  * @author marrink
  */
@@ -62,6 +61,7 @@ public class MasterPageHiddenContents extends MasterPage
 	/**
 	 * @see org.apache.wicket.security.examples.tabs.pages.MasterPage#getActiveMenuButton()
 	 */
+	@Override
 	protected Integer getActiveMenuButton()
 	{
 		return ButtonContainer.BUTTON_HIDE_CONTENT;
@@ -70,9 +70,10 @@ public class MasterPageHiddenContents extends MasterPage
 	/**
 	 * @see org.apache.wicket.security.examples.tabs.pages.MasterPage#getTabs()
 	 */
-	protected List getTabs()
+	@Override
+	protected List<ITab> getTabs()
 	{
-		List tabs = new ArrayList();
+		List<ITab> tabs = new ArrayList<ITab>();
 		tabs.add(new ITab()
 		{
 			private static final long serialVersionUID = 1L;
@@ -86,14 +87,15 @@ public class MasterPageHiddenContents extends MasterPage
 				return panel;
 			}
 
-            public boolean isVisible() {
-                //@TODO what todo with the new isVisible method ?
-                return true;
-            }
-
-			public IModel getTitle()
+			public boolean isVisible()
 			{
-				return new Model("Gifkikker");
+				// @TODO what todo with the new isVisible method ?
+				return true;
+			}
+
+			public IModel<String> getTitle()
+			{
+				return new Model<String>("Gifkikker");
 			}
 		});
 		tabs.add(new ITab()
@@ -107,14 +109,15 @@ public class MasterPageHiddenContents extends MasterPage
 				return panel;
 			}
 
-            public boolean isVisible() {
-                //@TODO what todo with the new isVisible method ?
-                return true;
-            }
-
-			public IModel getTitle()
+			public boolean isVisible()
 			{
-				return new Model("Heineken");
+				// @TODO what todo with the new isVisible method ?
+				return true;
+			}
+
+			public IModel<String> getTitle()
+			{
+				return new Model<String>("Heineken");
 			}
 		});
 		tabs.add(new ITab()
@@ -128,14 +131,15 @@ public class MasterPageHiddenContents extends MasterPage
 				return panel;
 			}
 
-            public boolean isVisible() {
-                //@TODO what todo with the new isVisible method ?
-                return true;
-            }
-            
-			public IModel getTitle()
+			public boolean isVisible()
 			{
-				return new Model("Grolsch");
+				// @TODO what todo with the new isVisible method ?
+				return true;
+			}
+
+			public IModel<String> getTitle()
+			{
+				return new Model<String>("Grolsch");
 			}
 		});
 		return tabs;

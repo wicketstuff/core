@@ -16,11 +16,11 @@
  */
 package org.apache.wicket.security.examples.tabs.authentication;
 
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.examples.authorization.MyPrincipal;
 import org.apache.wicket.security.hive.authentication.DefaultSubject;
 import org.apache.wicket.security.hive.authentication.LoginContext;
 import org.apache.wicket.security.hive.authentication.Subject;
-import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.util.lang.Objects;
 
 /**
@@ -31,6 +31,7 @@ import org.apache.wicket.util.lang.Objects;
 public final class MyLoginContext extends LoginContext
 {
 	private final String username;
+
 	private final String password;
 
 	/**
@@ -59,6 +60,7 @@ public final class MyLoginContext extends LoginContext
 	/**
 	 * @see org.apache.wicket.security.hive.authentication.LoginContext#login()
 	 */
+	@Override
 	public Subject login() throws LoginException
 	{
 		// irrelevant check

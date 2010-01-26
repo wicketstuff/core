@@ -19,6 +19,7 @@ public class TestHomePage extends TestCase
 	/**
 	 * @see junit.framework.TestCase#setUp()
 	 */
+	@Override
 	public void setUp()
 	{
 		tester = new WicketTester(new WicketApplication(), "src/main/webapp");

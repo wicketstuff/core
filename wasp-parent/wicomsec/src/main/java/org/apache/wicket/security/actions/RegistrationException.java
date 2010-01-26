@@ -17,8 +17,8 @@
 package org.apache.wicket.security.actions;
 
 /**
- * Exception throw when there is a problem registering a new action. See the
- * cause for more information.
+ * Exception throw when there is a problem registering a new action. See the cause for
+ * more information.
  * 
  * @author marrink
  */

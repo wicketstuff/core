@@ -16,7 +16,6 @@
  */
 package org.apache.wicket.security.pages;
 
-
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.security.actions.WaspAction;
@@ -25,24 +24,16 @@ import org.apache.wicket.security.checks.ISecurityCheck;
 import org.apache.wicket.security.components.ISecurePage;
 import org.apache.wicket.security.components.SecureComponentHelper;
 
-
 /**
- * Secure version of {@link BasePage}. This class only allows logged in users
- * with sufficient rights to access the page.
+ * Secure version of {@link BasePage}. This class only allows logged in users with
+ * sufficient rights to access the page.
  * 
  * @author marrink
  */
 public class SecureTestPage extends BasePage implements ISecurePage
 {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
 	public SecureTestPage()
 	{
 		super();
@@ -52,7 +43,7 @@ public class SecureTestPage extends BasePage implements ISecurePage
 	/**
 	 * @param model
 	 */
-	public SecureTestPage(IModel model)
+	public SecureTestPage(IModel< ? > model)
 	{
 		super(model);
 		setSecurityCheck(new ComponentSecurityCheck(this));

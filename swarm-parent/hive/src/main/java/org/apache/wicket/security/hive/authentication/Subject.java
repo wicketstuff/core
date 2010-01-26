@@ -39,7 +39,7 @@ public interface Subject extends Serializable
 	 * 
 	 * @return the principals
 	 */
-	public Set getPrincipals();
+	public Set<Principal> getPrincipals();
 
 	/**
 	 * When set it is no longer possible to change the set of principals of this

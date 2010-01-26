@@ -19,8 +19,8 @@ package org.apache.wicket.security.components;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
 
 /**
- * Tagging interface, could be used by an {@link IAuthorizationStrategy} to
- * check if this class should be checked for instantiation.
+ * Tagging interface, could be used by an {@link IAuthorizationStrategy} to check if this
+ * class should be checked for instantiation.
  * 
  * @author marrink
  */

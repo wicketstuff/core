@@ -19,14 +19,12 @@ package org.apache.wicket.security.hive.config;
 import org.apache.wicket.security.actions.ActionFactory;
 
 /**
- * Policyfile factory with some extra aliases for wicket specific permissions.
- * By default the following aliases are available ComponentPermission,
- * DataPermission and AllPermissions for
- * org.apache.wicket.security.hive.authorization
+ * Policyfile factory with some extra aliases for wicket specific permissions. By default
+ * the following aliases are available ComponentPermission, DataPermission and
+ * AllPermissions for org.apache.wicket.security.hive.authorization
  * .permissions.ComponentPermission,
  * org.apache.wicket.security.hive.authorization.permissions.DataPermission and
- * org.apache.wicket.security.hive.authorization.permissions.AllPermissions
- * respectively.
+ * org.apache.wicket.security.hive.authorization.permissions.AllPermissions respectively.
  * 
  * @see PolicyFileHiveFactory
  * @author marrink
@@ -43,11 +41,11 @@ public class SwarmPolicyFileHiveFactory extends PolicyFileHiveFactory
 	{
 		super(actionFactory);
 		setAlias("ComponentPermission",
-				"org.apache.wicket.security.hive.authorization.permissions.ComponentPermission");
+			"org.apache.wicket.security.hive.authorization.permissions.ComponentPermission");
 		setAlias("DataPermission",
-				"org.apache.wicket.security.hive.authorization.permissions.DataPermission");
+			"org.apache.wicket.security.hive.authorization.permissions.DataPermission");
 		setAlias("ComponentSubclassPermission",
-				"org.apache.wicket.security.hive.authorization.permissions.ComponentSubclassPermission");
+			"org.apache.wicket.security.hive.authorization.permissions.ComponentSubclassPermission");
 	}
 
 }

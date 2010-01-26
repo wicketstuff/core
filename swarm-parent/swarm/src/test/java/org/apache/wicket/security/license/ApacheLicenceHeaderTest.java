@@ -18,11 +18,10 @@ package org.apache.wicket.security.license;
 
 import org.apache.wicket.util.license.ApacheLicenseHeaderTestCase;
 
-
 /**
- * Test that the license headers are in place in this project. The tests are run
- * from {@link ApacheLicenseHeaderTestCase}, but you can add project specific
- * tests here if needed.
+ * Test that the license headers are in place in this project. The tests are run from
+ * {@link ApacheLicenseHeaderTestCase}, but you can add project specific tests here if
+ * needed.
  * 
  * @author Frank Bille Jensen (frankbille)
  */
@@ -37,38 +36,38 @@ public class ApacheLicenceHeaderTest extends ApacheLicenseHeaderTestCase
 
 		htmlIgnore = new String[] {
 		/*
-		 * .html in test is very test specific and a license header would
-		 * confuse and make it unclear what the test is about.
+		 * .html in test is very test specific and a license header would confuse and make
+		 * it unclear what the test is about.
 		 */
 		"src/test/java",
 		/*
 		 * See NOTICE.txt
 		 */
-		"src/main/java/org/apache/wicket/util/diff", };
+		"src/main/java/org/apache/wicket/util/diff",};
 
 		cssIgnore = new String[] {
 		/*
-		 * .css in test is very test specific and a license header would confuse
-		 * and make it unclear what the test is about.
+		 * .css in test is very test specific and a license header would confuse and make
+		 * it unclear what the test is about.
 		 */
-		"src/test/java" };
+		"src/test/java"};
 
-		xmlIgnore = new String[] { "EclipseCodeFormat.xml", "codetemplates.xml" };
+		xmlIgnore = new String[] {"EclipseCodeFormat.xml", "codetemplates.xml"};
 
 		javaIgnore = new String[] {};
 
 		javaScriptIgnore = new String[] {
 		/*
-		 * .js in test is very test specific and a license header would confuse
-		 * and make it unclear what the test is about.
+		 * .js in test is very test specific and a license header would confuse and make
+		 * it unclear what the test is about.
 		 */
-		"src/test/java" };
+		"src/test/java"};
 
 		propertiesIgnore = new String[] {
 		/*
-		 * .properties in test is very test specific and a license header would
-		 * confuse and make it unclear what the test is about.
+		 * .properties in test is very test specific and a license header would confuse
+		 * and make it unclear what the test is about.
 		 */
-		"src/test/java", };
+		"src/test/java",};
 	}
 }

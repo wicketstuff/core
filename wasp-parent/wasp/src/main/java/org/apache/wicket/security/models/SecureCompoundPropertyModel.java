@@ -34,10 +34,9 @@ import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
 
 /**
- * A secure {@link CompoundPropertyModel}. Please note that this model does not
- * enforce a security on get or setObject as this is left to Wicket. Please
- * provide an override on the inner class
- * {@link AttachedSecureCompoundPropertyModel} if you wish to do so
+ * A secure {@link CompoundPropertyModel}. Please note that this model does not enforce a
+ * security on get or setObject as this is left to Wicket. Please provide an override on
+ * the inner class {@link AttachedSecureCompoundPropertyModel} if you wish to do so
  * 
  * <pre>
  * <code>
@@ -51,20 +50,19 @@ import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
  * </code>
  * </pre>
  * 
- * and override {@link #wrapOnInheritance(Component)} to return your class. Also
- * note that Wicket by default only checks the setter and not the getter as that
- * is generally equivalent to the render check on the component. Note when
- * setting this model on a page the model is shared with every component on this
- * page including the page itself, failing to grant enough rights to the page
- * will result in an {@link AccessDeniedPage}. Failing the 2nd will result in
- * Wicket complaining about missing components. Therefore it is best to set this
- * model on a {@link Panel} or {@link Form}.
- *
- * Notes for usage:
- * When you have a model that enables the use of a form, note that you need to enable the parent model if you
- * want your form components enabled (like the textfield).
- * The code below shows (copied out the SecureCompoundPropertyModelTest) what you need to set in order to get a form
- * to work.  
+ * and override {@link #wrapOnInheritance(Component)} to return your class. Also note that
+ * Wicket by default only checks the setter and not the getter as that is generally
+ * equivalent to the render check on the component. Note when setting this model on a page
+ * the model is shared with every component on this page including the page itself,
+ * failing to grant enough rights to the page will result in an {@link AccessDeniedPage}.
+ * Failing the 2nd will result in Wicket complaining about missing components. Therefore
+ * it is best to set this model on a {@link Panel} or {@link Form}.
+ * 
+ * Notes for usage: When you have a model that enables the use of a form, note that you
+ * need to enable the parent model if you want your form components enabled (like the
+ * textfield). The code below shows (copied out the SecureCompoundPropertyModelTest) what
+ * you need to set in order to get a form to work.
+ * 
  * <pre>
  * <code>
  *       authorized.put("model:" + SecureModelPage.class.getName(), application.getActionFactory().getAction("render enable"));
@@ -75,7 +73,8 @@ import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
  * 
  * @author marrink
  */
-public class SecureCompoundPropertyModel extends CompoundPropertyModel implements ISecureModel
+public class SecureCompoundPropertyModel<T> extends CompoundPropertyModel<T> implements
+		ISecureModel<T>
 {
 
 	/**
@@ -100,7 +99,8 @@ public class SecureCompoundPropertyModel extends CompoundPropertyModel implement
 	 */
 	protected final WaspAuthorizationStrategy getStrategy()
 	{
-		return ((WaspAuthorizationStrategy)((WaspSession)Session.get()).getAuthorizationStrategy());
+		return ((WaspAuthorizationStrategy) ((WaspSession) Session.get())
+			.getAuthorizationStrategy());
 	}
 
 	/**
@@ -110,15 +110,16 @@ public class SecureCompoundPropertyModel extends CompoundPropertyModel implement
 	 */
 	protected final ActionFactory getActionFactory()
 	{
-		return ((WaspApplication)Application.get()).getActionFactory();
+		return ((WaspApplication) Application.get()).getActionFactory();
 	}
 
 	/**
 	 * @see org.apache.wicket.model.CompoundPropertyModel#wrapOnInheritance(org.apache.wicket.Component)
 	 */
-	public IWrapModel wrapOnInheritance(Component component)
+	@Override
+	public <C> IWrapModel<C> wrapOnInheritance(Component component)
 	{
-		return new AttachedSecureCompoundPropertyModel(component);
+		return new AttachedSecureCompoundPropertyModel<C>(component);
 	}
 
 	/**
@@ -143,6 +144,7 @@ public class SecureCompoundPropertyModel extends CompoundPropertyModel implement
 	 * 
 	 * @see org.apache.wicket.model.CompoundPropertyModel#toString()
 	 */
+	@Override
 	public String toString()
 	{
 		return getClass().getName();
@@ -150,16 +152,13 @@ public class SecureCompoundPropertyModel extends CompoundPropertyModel implement
 
 	/**
 	 * Component aware variation of the {@link SecureCompoundPropertyModel} that
-	 * components that inherit the model get. Copy of
-	 * AttachedCompoundPropertyModel.
+	 * components that inherit the model get. Copy of AttachedCompoundPropertyModel.
 	 * 
 	 * @author ivaynberg
 	 * @author marrink
 	 */
-	protected class AttachedSecureCompoundPropertyModel extends AbstractPropertyModel
-			implements
-				IWrapModel,
-				ISecureModel
+	protected class AttachedSecureCompoundPropertyModel<Y> extends AbstractPropertyModel<Y>
+			implements IWrapModel<Y>, ISecureModel<Y>
 	{
 		private static final long serialVersionUID = 1L;
 
@@ -190,6 +189,7 @@ public class SecureCompoundPropertyModel extends CompoundPropertyModel implement
 		/**
 		 * @see org.apache.wicket.model.AbstractPropertyModel#propertyExpression()
 		 */
+		@Override
 		protected String propertyExpression()
 		{
 			return SecureCompoundPropertyModel.this.propertyExpression(owner);
@@ -198,7 +198,7 @@ public class SecureCompoundPropertyModel extends CompoundPropertyModel implement
 		/**
 		 * @see org.apache.wicket.model.IWrapModel#getWrappedModel()
 		 */
-		public IModel getWrappedModel()
+		public IModel<T> getWrappedModel()
 		{
 			return SecureCompoundPropertyModel.this;
 		}
@@ -206,6 +206,7 @@ public class SecureCompoundPropertyModel extends CompoundPropertyModel implement
 		/**
 		 * @see org.apache.wicket.model.AbstractPropertyModel#detach()
 		 */
+		@Override
 		public void detach()
 		{
 			super.detach();
@@ -218,9 +219,8 @@ public class SecureCompoundPropertyModel extends CompoundPropertyModel implement
 		 */
 		public boolean isAuthenticated(Component component)
 		{
-			return SecureCompoundPropertyModel.this.isAuthenticated(component != null
-					? component
-					: owner);
+			return SecureCompoundPropertyModel.this.isAuthenticated(component != null ? component
+				: owner);
 		}
 
 		/**
@@ -230,19 +230,19 @@ public class SecureCompoundPropertyModel extends CompoundPropertyModel implement
 		 */
 		public boolean isAuthorized(Component component, WaspAction action)
 		{
-			return SecureCompoundPropertyModel.this.isAuthorized(component != null
-					? component
-					: owner, action);
+			return SecureCompoundPropertyModel.this.isAuthorized(component != null ? component
+				: owner, action);
 		}
 
 		/**
 		 * 
 		 * @see org.apache.wicket.model.AbstractPropertyModel#toString()
 		 */
+		@Override
 		public String toString()
 		{
 			return SecureCompoundPropertyModel.this.toString() + ":"
-					+ (getOwner() != null ? getOwner().getId() : "null");
+				+ (getOwner() != null ? getOwner().getId() : "null");
 		}
 	}
 

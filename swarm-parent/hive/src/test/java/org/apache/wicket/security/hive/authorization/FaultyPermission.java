@@ -16,16 +16,16 @@
  */
 package org.apache.wicket.security.hive.authorization;
 
-
 /**
- * Permission that does not follow the rule that all permissions must have at
- * least a constructor accepting a single String parameter.
+ * Permission that does not follow the rule that all permissions must have at least a
+ * constructor accepting a single String parameter.
  * 
  * @author marrink
  */
 public class FaultyPermission extends Permission
 {
 	private static final long serialVersionUID = 1L;
+
 	private String actions = "";
 
 	/**
@@ -42,6 +42,7 @@ public class FaultyPermission extends Permission
 	 * 
 	 * @see org.apache.wicket.security.hive.authorization.Permission#equals(java.lang.Object)
 	 */
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (obj == this)
@@ -50,7 +51,7 @@ public class FaultyPermission extends Permission
 			return false;
 		if (obj.getClass().equals(this.getClass()))
 		{
-			FaultyPermission other = (FaultyPermission)obj;
+			FaultyPermission other = (FaultyPermission) obj;
 			return other.getName().equals(getName()) && other.getActions().equals(getActions());
 		}
 		return false;
@@ -60,6 +61,7 @@ public class FaultyPermission extends Permission
 	 * 
 	 * @see org.apache.wicket.security.hive.authorization.Permission#getActions()
 	 */
+	@Override
 	public String getActions()
 	{
 		return actions;
@@ -69,6 +71,7 @@ public class FaultyPermission extends Permission
 	 * 
 	 * @see org.apache.wicket.security.hive.authorization.Permission#hashCode()
 	 */
+	@Override
 	public int hashCode()
 	{
 		return getName().hashCode();
@@ -78,6 +81,7 @@ public class FaultyPermission extends Permission
 	 * 
 	 * @see org.apache.wicket.security.hive.authorization.Permission#implies(org.apache.wicket.security.hive.authorization.Permission)
 	 */
+	@Override
 	public boolean implies(Permission permission)
 	{
 		if (permission == this)
@@ -86,9 +90,9 @@ public class FaultyPermission extends Permission
 			return false;
 		if (permission.getClass().equals(this.getClass()))
 		{
-			FaultyPermission other = (FaultyPermission)permission;
+			FaultyPermission other = (FaultyPermission) permission;
 			return other.getName().equals(getName())
-					&& getActions().indexOf(other.getActions()) > -1;
+				&& getActions().indexOf(other.getActions()) > -1;
 		}
 		return false;
 	}

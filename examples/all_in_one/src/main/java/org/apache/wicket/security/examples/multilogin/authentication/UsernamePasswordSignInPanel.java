@@ -31,6 +31,8 @@ import org.apache.wicket.util.value.ValueMap;
  */
 public abstract class UsernamePasswordSignInPanel extends Panel
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructor.
 	 * 
@@ -55,7 +57,7 @@ public abstract class UsernamePasswordSignInPanel extends Panel
 	/**
 	 * Sign in form.
 	 */
-	public final class SignInForm extends StatelessForm
+	public final class SignInForm extends StatelessForm<ValueMap>
 	{
 		private static final long serialVersionUID = 1L;
 
@@ -67,10 +69,10 @@ public abstract class UsernamePasswordSignInPanel extends Panel
 		 */
 		public SignInForm(final String id)
 		{
-			super(id, new CompoundPropertyModel(new ValueMap()));
+			super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
 
 			// only remember username, not passwords
-			add(new TextField("username").setOutputMarkupId(false));
+			add(new TextField<String>("username").setOutputMarkupId(false));
 			// the token
 			add(new PasswordTextField("password").setOutputMarkupId(false));
 		}
@@ -79,9 +81,10 @@ public abstract class UsernamePasswordSignInPanel extends Panel
 		 * 
 		 * @see org.apache.wicket.markup.html.form.Form#onSubmit()
 		 */
+		@Override
 		public final void onSubmit()
 		{
-			ValueMap values = (ValueMap)getModelObject();
+			ValueMap values = getModelObject();
 			String username = values.getString("username");
 			String password = values.getString("password");
 
@@ -98,7 +101,7 @@ public abstract class UsernamePasswordSignInPanel extends Panel
 				// Try the component based localizer first. If not found try the
 				// application localizer. Else use the default
 				error(getLocalizer().getString("exception.login", this,
-						"Illegal username password combo"));
+					"Illegal username password combo"));
 			}
 		}
 	}

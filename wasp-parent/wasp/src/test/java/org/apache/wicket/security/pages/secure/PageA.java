@@ -40,7 +40,7 @@ public class PageA extends SecureTestPage
 	public PageA()
 	{
 		add(new Label("welcome", "Welcome Only logged in users can see this page"));
-		add(new SecureTextField("secure", new Model("secure textfield")));
+		add(new SecureTextField<String>("secure", new Model<String>("secure textfield")));
 	}
 
 }

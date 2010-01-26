@@ -18,16 +18,16 @@ package org.apache.wicket.security.examples.multilogin.authentication;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.examples.authorization.MyPrincipal;
 import org.apache.wicket.security.hive.authentication.DefaultSubject;
 import org.apache.wicket.security.hive.authentication.LoginContext;
 import org.apache.wicket.security.hive.authentication.Subject;
-import org.apache.wicket.security.authentication.LoginException;
+import org.apache.wicket.security.hive.authentication.WicketSubject;
 import org.apache.wicket.util.lang.Objects;
 
 /**
- * Secondary authentication for topsecret pages like the commit page for
- * transactions.
+ * Secondary authentication for topsecret pages like the commit page for transactions.
  * 
  * @author marrink
  * 
@@ -44,9 +44,10 @@ public class Level1Context extends LoginContext
 		private static final long serialVersionUID = 1L;
 
 		/**
-		 * @see Subject#isClassAuthenticated(java.lang.Class)
+		 * @see WicketSubject#isClassAuthenticated(java.lang.Class)
 		 */
-		public boolean isClassAuthenticated(Class class1)
+		@Override
+		public boolean isClassAuthenticated(Class< ? > class1)
 		{
 			// we could return true only if the page is a Topsecretpage,
 			// but this way we can also login inmediatly on the second
@@ -56,24 +57,27 @@ public class Level1Context extends LoginContext
 		}
 
 		/**
-		 * @see Subject#isComponentAuthenticated(org.apache.wicket.Component)
+		 * @see WicketSubject#isComponentAuthenticated(org.apache.wicket.Component)
 		 */
+		@Override
 		public boolean isComponentAuthenticated(Component component)
 		{
 			return true;
 		}
 
 		/**
-		 * @see Subject#isModelAuthenticated(org.apache.wicket.model.IModel,
+		 * @see WicketSubject#isModelAuthenticated(org.apache.wicket.model.IModel,
 		 *      org.apache.wicket.Component)
 		 */
-		public boolean isModelAuthenticated(IModel model, Component component)
+		@Override
+		public boolean isModelAuthenticated(IModel< ? > model, Component component)
 		{
 			return true;
 		}
 	}
 
 	private String username;
+
 	private String token;
 
 	/**
@@ -91,6 +95,7 @@ public class Level1Context extends LoginContext
 	/**
 	 * @see org.apache.wicket.security.hive.authentication.LoginContext#login()
 	 */
+	@Override
 	public Subject login() throws LoginException
 	{
 		// irrelevant check
@@ -115,6 +120,7 @@ public class Level1Context extends LoginContext
 	 * 
 	 * @see org.apache.wicket.security.hive.authentication.LoginContext#preventsAdditionalLogins()
 	 */
+	@Override
 	public boolean preventsAdditionalLogins()
 	{
 		// we don't want / need to upgrade the credentials of this user any

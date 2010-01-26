@@ -7,9 +7,10 @@ import org.apache.wicket.security.components.ISecurePage;
 import org.apache.wicket.security.components.SecureComponentHelper;
 
 /**
- * Secure page. all other secure pages extend this page. It uses the same layout as {@link BasePage}. Wicket will
- * automatically check if the user is allowed to instantiate this page. Feel free to use other super constructors as
- * required by your pages. All secure pages or components should be granted permissions in the application.hive
+ * Secure page. all other secure pages extend this page. It uses the same layout as
+ * {@link BasePage}. Wicket will automatically check if the user is allowed to instantiate
+ * this page. Feel free to use other super constructors as required by your pages. All
+ * secure pages or components should be granted permissions in the application.hive
  */
 public class SecurePage extends BasePage implements ISecurePage
 {
@@ -19,12 +20,14 @@ public class SecurePage extends BasePage implements ISecurePage
 	/**
 	 * Constructor that is invoked when page is invoked without a session.
 	 * 
-	 * @param parameters Page parameters
+	 * @param parameters
+	 *            Page parameters
 	 */
 	public SecurePage(final PageParameters parameters)
 	{
 		super(parameters);
 	}
+
 	/**
 	 * @see org.apache.wicket.security.components.ISecureComponent#getSecurityCheck()
 	 */
@@ -32,6 +35,7 @@ public class SecurePage extends BasePage implements ISecurePage
 	{
 		return SecureComponentHelper.getSecurityCheck(this);
 	}
+
 	/**
 	 * @see org.apache.wicket.security.components.ISecureComponent#isActionAuthorized(java.lang.String)
 	 */
@@ -39,6 +43,7 @@ public class SecurePage extends BasePage implements ISecurePage
 	{
 		return SecureComponentHelper.isActionAuthorized(this, waspAction);
 	}
+
 	/**
 	 * @see org.apache.wicket.security.components.ISecureComponent#isActionAuthorized(org.apache.wicket.security.actions.WaspAction)
 	 */
@@ -46,6 +51,7 @@ public class SecurePage extends BasePage implements ISecurePage
 	{
 		return SecureComponentHelper.isActionAuthorized(this, action);
 	}
+
 	/**
 	 * @see org.apache.wicket.security.components.ISecureComponent#isAuthenticated()
 	 */
@@ -53,6 +59,7 @@ public class SecurePage extends BasePage implements ISecurePage
 	{
 		return SecureComponentHelper.isAuthenticated(this);
 	}
+
 	/**
 	 * @see org.apache.wicket.security.components.ISecureComponent#setSecurityCheck(org.apache.wicket.security.checks.ISecurityCheck)
 	 */

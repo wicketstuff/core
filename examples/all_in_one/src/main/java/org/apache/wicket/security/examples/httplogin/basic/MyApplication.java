@@ -18,6 +18,7 @@ package org.apache.wicket.security.examples.httplogin.basic;
 
 import java.net.MalformedURLException;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.security.examples.httplogin.basic.pages.HomePage;
 import org.apache.wicket.security.examples.httplogin.basic.pages.LoginPage;
@@ -45,6 +46,7 @@ public class MyApplication extends SwarmWebApplication
 	/**
 	 * @see org.apache.wicket.security.swarm.SwarmWebApplication#init()
 	 */
+	@Override
 	protected void init()
 	{
 		super.init();
@@ -58,6 +60,7 @@ public class MyApplication extends SwarmWebApplication
 	/**
 	 * @see org.apache.wicket.security.swarm.SwarmWebApplication#getHiveKey()
 	 */
+	@Override
 	protected Object getHiveKey()
 	{
 		// if you are using servlet api 2.5 i would suggest using:
@@ -77,6 +80,7 @@ public class MyApplication extends SwarmWebApplication
 	/**
 	 * @see org.apache.wicket.security.swarm.SwarmWebApplication#setUpHive()
 	 */
+	@Override
 	protected synchronized void setUpHive()
 	{
 		// example of shared hive
@@ -105,7 +109,8 @@ public class MyApplication extends SwarmWebApplication
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
-	public Class getHomePage()
+	@Override
+	public Class< ? extends Page> getHomePage()
 	{
 		return HomePage.class;
 	}
@@ -113,7 +118,7 @@ public class MyApplication extends SwarmWebApplication
 	/**
 	 * @see org.apache.wicket.security.WaspApplication#getLoginPage()
 	 */
-	public Class getLoginPage()
+	public Class< ? extends Page> getLoginPage()
 	{
 		return LoginPage.class;
 	}

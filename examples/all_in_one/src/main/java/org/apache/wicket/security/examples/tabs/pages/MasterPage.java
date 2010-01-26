@@ -30,11 +30,10 @@ import org.apache.wicket.security.examples.tabs.panels.Gifkikker;
 import org.apache.wicket.security.examples.tabs.panels.Grolsch;
 import org.apache.wicket.security.examples.tabs.panels.Heineken;
 
-
 /**
  * Basic page showing a tab bar. The tabs used have an additional feature of a
- * warningpanel. If you are not allowed to see the tab contents you will instead
- * see a nice message telling you that you can not see the contents.
+ * warningpanel. If you are not allowed to see the tab contents you will instead see a
+ * nice message telling you that you can not see the contents.
  * 
  * @author marrink
  * 
@@ -79,9 +78,9 @@ public class MasterPage extends SecurePage
 	 * 
 	 * @return the tabs
 	 */
-	protected List getTabs()
+	protected List<ITab> getTabs()
 	{
-		List tabs = new ArrayList();
+		List<ITab> tabs = new ArrayList<ITab>();
 		tabs.add(new SecureTab(new ITab()
 		{
 			private static final long serialVersionUID = 1L;
@@ -91,14 +90,15 @@ public class MasterPage extends SecurePage
 				return new Gifkikker(panelId);
 			}
 
-            public boolean isVisible() {
-                //@TODO what todo with the new isVisible method ?
-                return true;
-            }
-
-            public IModel getTitle()
+			public boolean isVisible()
 			{
-				return new Model("Gifkikker");
+				// @TODO what todo with the new isVisible method ?
+				return true;
+			}
+
+			public IModel<String> getTitle()
+			{
+				return new Model<String>("Gifkikker");
 			}
 		}));
 		tabs.add(new SecureTab(new ITab()
@@ -110,14 +110,15 @@ public class MasterPage extends SecurePage
 				return new Heineken(panelId);
 			}
 
-            public boolean isVisible() {
-                //@TODO what todo with the new isVisible method ?
-                return true;
-            }
-
-			public IModel getTitle()
+			public boolean isVisible()
 			{
-				return new Model("Heineken");
+				// @TODO what todo with the new isVisible method ?
+				return true;
+			}
+
+			public IModel<String> getTitle()
+			{
+				return new Model<String>("Heineken");
 			}
 		}));
 		tabs.add(new SecureTab(new ITab()
@@ -129,14 +130,15 @@ public class MasterPage extends SecurePage
 				return new Grolsch(panelId);
 			}
 
-            public boolean isVisible() {
-                //@TODO what todo with the new isVisible method ?
-                return true;
-            }
-
-			public IModel getTitle()
+			public boolean isVisible()
 			{
-				return new Model("Grolsch");
+				// @TODO what todo with the new isVisible method ?
+				return true;
+			}
+
+			public IModel<String> getTitle()
+			{
+				return new Model<String>("Grolsch");
 			}
 		}));
 		return tabs;

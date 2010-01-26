@@ -23,6 +23,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.authentication.LoginException;
+import org.apache.wicket.security.components.ISecureComponent;
 import org.apache.wicket.security.components.ISecurePage;
 import org.apache.wicket.security.components.SecureComponentHelper;
 import org.apache.wicket.security.hive.Hive;
@@ -31,6 +32,7 @@ import org.apache.wicket.security.hive.authentication.LoginContainer;
 import org.apache.wicket.security.hive.authentication.LoginContext;
 import org.apache.wicket.security.hive.authentication.Subject;
 import org.apache.wicket.security.hive.authorization.Permission;
+import org.apache.wicket.security.hive.authorization.Principal;
 import org.apache.wicket.security.hive.authorization.permissions.ComponentPermission;
 import org.apache.wicket.security.hive.authorization.permissions.DataPermission;
 import org.apache.wicket.security.log.IAuthorizationMessageSource;
@@ -41,8 +43,8 @@ import org.apache.wicket.security.swarm.actions.SwarmAction;
 import org.apache.wicket.security.swarm.models.SwarmModel;
 
 /**
- * Implementation of a {@link ClassAuthorizationStrategy}. It allows for both
- * simple logins as well as multi level logins.
+ * Implementation of a {@link ClassAuthorizationStrategy}. It allows for both simple
+ * logins as well as multi level logins.
  * 
  * @author marrink
  */
@@ -76,12 +78,11 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	 * Constructs a new strategy linked to the specified hive.
 	 * 
 	 * @param secureClass
-	 *            instances of this class will be required to have access
-	 *            authorization.
+	 *            instances of this class will be required to have access authorization.
 	 * @param hiveQueen
 	 *            A key to retrieve the {@link Hive}
 	 */
-	public SwarmStrategy(Class secureClass, Object hiveQueen)
+	public SwarmStrategy(Class< ? extends ISecureComponent> secureClass, Object hiveQueen)
 	{
 		super(secureClass);
 		this.hiveQueen = hiveQueen;
@@ -104,8 +105,8 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	}
 
 	/**
-	 * The currently logged in subject, note that at any time there is at most 1
-	 * subject logged in.
+	 * The currently logged in subject, note that at any time there is at most 1 subject
+	 * logged in.
 	 * 
 	 * @return the subject or null if no login has succeeded yet
 	 */
@@ -115,14 +116,12 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	}
 
 	/**
-	 * Performs the actual permission check at the {@link Hive}. This is equal
-	 * to using {@link #hasPermission(Permission, Subject)} with
-	 * {@link #getSubject()}
+	 * Performs the actual permission check at the {@link Hive}. This is equal to using
+	 * {@link #hasPermission(Permission, Subject)} with {@link #getSubject()}
 	 * 
 	 * @param permission
 	 *            the permission to verify
-	 * @return true if the subject has or implies the permission, false
-	 *         otherwise
+	 * @return true if the subject has or implies the permission, false otherwise
 	 * @throws SecurityException
 	 *             if the permission is null
 	 * @see #hasPermission(Permission, Subject)
@@ -139,8 +138,7 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	 *            the permission to verify
 	 * @param subject
 	 *            optional subject to test against the permission
-	 * @return true if the subject has or implies the permission, false
-	 *         otherwise
+	 * @return true if the subject has or implies the permission, false otherwise
 	 * @throws SecurityException
 	 *             if the permission is null
 	 */
@@ -156,14 +154,12 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	}
 
 	/**
-	 * Logs (if logging is enabled) which permission was denied for a subject.
-	 * This method does not log directly but prepares an
-	 * {@link IAuthorizationMessageSource} for later retrieval. The following
-	 * variables are stored: "permission","actions", "subject" and "principals"
-	 * where principals is a collection of principals that contain the
-	 * permission and actions is a {@link String} representing all the
-	 * {@link WaspAction}s required. Note that the subject variable might be
-	 * null.
+	 * Logs (if logging is enabled) which permission was denied for a subject. This method
+	 * does not log directly but prepares an {@link IAuthorizationMessageSource} for later
+	 * retrieval. The following variables are stored: "permission","actions", "subject"
+	 * and "principals" where principals is a collection of principals that contain the
+	 * permission and actions is a {@link String} representing all the {@link WaspAction}s
+	 * required. Note that the subject variable might be null.
 	 * 
 	 * @param permission
 	 *            permission that was denied.
@@ -182,7 +178,7 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 		source.addVariable("permission", permission);
 		source.addVariable("actions", permission.getActions());
 		source.addVariable("subject", subject);
-		Set principals = getHive().getPrincipals(permission);
+		Set<Principal> principals = getHive().getPrincipals(permission);
 		if (!principals.isEmpty())
 			source.addVariable("principals", principals);
 		else
@@ -192,7 +188,8 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	/**
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isClassAuthenticated(java.lang.Class)
 	 */
-	public boolean isClassAuthenticated(Class clazz)
+	@Override
+	public boolean isClassAuthenticated(Class< ? > clazz)
 	{
 		return loginContainer.isClassAuthenticated(clazz);
 	}
@@ -201,7 +198,8 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isClassAuthorized(java.lang.Class,
 	 *      org.apache.wicket.security.actions.WaspAction)
 	 */
-	public boolean isClassAuthorized(Class clazz, WaspAction action)
+	@Override
+	public boolean isClassAuthorized(Class< ? > clazz, WaspAction action)
 	{
 		if (hasPermission(new ComponentPermission(SecureComponentHelper.alias(clazz), action)))
 			return true;
@@ -213,6 +211,7 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	 * 
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isComponentAuthenticated(org.apache.wicket.Component)
 	 */
+	@Override
 	public boolean isComponentAuthenticated(Component component)
 	{
 		return loginContainer.isComponentAuthenticated(component);
@@ -223,6 +222,7 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isComponentAuthorized(org.apache.wicket.Component,
 	 *      org.apache.wicket.security.actions.WaspAction)
 	 */
+	@Override
 	public boolean isComponentAuthorized(Component component, WaspAction action)
 	{
 		if (hasPermission(new ComponentPermission(component, action)))
@@ -241,25 +241,27 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isModelAuthenticated(org.apache.wicket.model.IModel,
 	 *      org.apache.wicket.Component)
 	 */
-	public boolean isModelAuthenticated(IModel model, Component component)
+	@Override
+	public boolean isModelAuthenticated(IModel< ? > model, Component component)
 	{
 		return loginContainer.isModelAuthenticated(model, component);
 	}
 
 	/**
-	 * Checks if some action is granted on the model. Although
-	 * {@link SwarmModel}s are preferred any {@link ISecureModel} can be used,
-	 * in that case it uses the {@link ISecureModel#toString()} method as the
-	 * name of the {@link DataPermission}
+	 * Checks if some action is granted on the model. Although {@link SwarmModel}s are
+	 * preferred any {@link ISecureModel} can be used, in that case it uses the
+	 * {@link ISecureModel#toString()} method as the name of the {@link DataPermission}
 	 * 
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isModelAuthorized(ISecureModel,
 	 *      Component, WaspAction)
 	 */
-	public boolean isModelAuthorized(ISecureModel model, Component component, WaspAction action)
+	@Override
+	public boolean isModelAuthorized(ISecureModel< ? > model, Component component, WaspAction action)
 	{
 		DataPermission permission;
-		if (model instanceof SwarmModel)
-			permission = new DataPermission(component, (SwarmModel)model, (SwarmAction)action);
+		if (model instanceof SwarmModel< ? >)
+			permission =
+				new DataPermission(component, (SwarmModel< ? >) model, (SwarmAction) action);
 		else
 			permission = new DataPermission(String.valueOf(model), action);
 		if (hasPermission(permission))
@@ -275,33 +277,33 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	}
 
 	/**
-	 * Logs a user in. Note that the context must be an instance of
-	 * {@link LoginContext}.
+	 * Logs a user in. Note that the context must be an instance of {@link LoginContext}.
 	 * 
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#login(java.lang.Object)
 	 */
+	@Override
 	public void login(Object context) throws LoginException
 	{
 		if (context instanceof LoginContext)
 		{
-			loginContainer.login((LoginContext)context);
+			loginContainer.login((LoginContext) context);
 		}
 		else
 			throw new SecurityException("Unable to process login with context: " + context);
 	}
 
 	/**
-	 * Loggs a user off. Note that the context must be an instance of
-	 * {@link LoginContext} and must be the same (or equal) to the logincontext
-	 * used to log in.
+	 * Loggs a user off. Note that the context must be an instance of {@link LoginContext}
+	 * and must be the same (or equal) to the logincontext used to log in.
 	 * 
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#logoff(Object)
 	 */
+	@Override
 	public boolean logoff(Object context)
 	{
 		if (context instanceof LoginContext)
 		{
-			return loginContainer.logoff((LoginContext)context);
+			return loginContainer.logoff((LoginContext) context);
 		}
 		throw new SecurityException("Unable to process logoff with context: " + context);
 	}
@@ -320,6 +322,7 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	 * 
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isUserAuthenticated()
 	 */
+	@Override
 	public boolean isUserAuthenticated()
 	{
 		return getSubject() != null;

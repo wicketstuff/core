@@ -16,11 +16,9 @@
  */
 package org.apache.wicket.security.actions;
 
-
 /**
- * Immutable mapping for {@link org.apache.wicket.authorization.Action} with
- * added logic for implies checks. These actions are instantiated by an
- * {@link ActionFactory}.
+ * Immutable mapping for {@link org.apache.wicket.authorization.Action} with added logic
+ * for implies checks. These actions are instantiated by an {@link ActionFactory}.
  * 
  * @author marrink
  * @see org.apache.wicket.authorization.Action
@@ -44,9 +42,9 @@ public interface WaspAction
 	public boolean implies(WaspAction other);
 
 	/**
-	 * Creates a new WaspAction containing both the specified actions and the
-	 * actions of this WaspAction. This method must return a new WaspAction
-	 * unless this action can be returned unmodified.
+	 * Creates a new WaspAction containing both the specified actions and the actions of
+	 * this WaspAction. This method must return a new WaspAction unless this action can be
+	 * returned unmodified.
 	 * 
 	 * @param other
 	 *            the actions to add
@@ -60,8 +58,8 @@ public interface WaspAction
 	 * 
 	 * @param action
 	 *            the actions to remove
-	 * @return a new WaspAction or this action if the specified actions were
-	 *         never part of this action.
+	 * @return a new WaspAction or this action if the specified actions were never part of
+	 *         this action.
 	 */
 	public WaspAction remove(WaspAction action);
 

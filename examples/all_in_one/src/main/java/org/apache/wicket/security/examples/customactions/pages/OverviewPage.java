@@ -18,7 +18,6 @@ package org.apache.wicket.security.examples.customactions.pages;
 
 import org.apache.wicket.security.examples.customactions.components.navigation.ButtonContainer;
 
-
 /**
  * The home page, this one is secured with a login. Dummy page really
  * 

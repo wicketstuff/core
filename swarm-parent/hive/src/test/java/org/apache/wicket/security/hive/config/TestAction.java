@@ -26,13 +26,11 @@ import org.apache.wicket.security.actions.Actions;
 import org.apache.wicket.security.actions.Render;
 import org.apache.wicket.security.actions.WaspAction;
 
-
 /**
- * {@link WaspAction} class based on int values to speed up inheritance
- * checking. Each action is assigned a power of 2 int value. Bitwise or checks
- * provide the imply logic. These actions are instantiated by an
- * {@link ActionFactory} which provides both the name and the int value for the
- * constructor.
+ * {@link WaspAction} class based on int values to speed up inheritance checking. Each
+ * action is assigned a power of 2 int value. Bitwise or checks provide the imply logic.
+ * These actions are instantiated by an {@link ActionFactory} which provides both the name
+ * and the int value for the constructor.
  * 
  * @author marrink
  */
@@ -48,17 +46,16 @@ public class TestAction extends AbstractWaspAction
 	private final Object key;
 
 	/**
-	 * The default constructor for actions. Use it if your action does not
-	 * inherit any other actions (other then {@link Access}), like
-	 * {@link Render}.
+	 * The default constructor for actions. Use it if your action does not inherit any
+	 * other actions (other then {@link Access}), like {@link Render}.
 	 * 
 	 * @param action
 	 *            a power of 2 which provides the base value for this action
 	 * @param name
 	 *            the name of the action
 	 * @param key
-	 *            the key used to register the owning {@link ActionFactory} with
-	 *            the {@link Actions} object
+	 *            the key used to register the owning {@link ActionFactory} with the
+	 *            {@link Actions} object
 	 */
 	protected TestAction(int action, String name, Object key)
 	{
@@ -70,8 +67,7 @@ public class TestAction extends AbstractWaspAction
 	}
 
 	/**
-	 * Check if the supplied actions are implied (bitwise or) by this
-	 * SwarmAction.
+	 * Check if the supplied actions are implied (bitwise or) by this SwarmAction.
 	 * 
 	 * @param otherActions
 	 *            internal value of some other action(s)
@@ -93,17 +89,18 @@ public class TestAction extends AbstractWaspAction
 	}
 
 	/**
-	 * Any SwarmAction is equal to another if there 'actions' value is the same.
-	 * In other words the name of an action is not important.
+	 * Any SwarmAction is equal to another if there 'actions' value is the same. In other
+	 * words the name of an action is not important.
 	 * 
 	 * @see Object#equals(java.lang.Object)
 	 * @see #actions()
 	 */
+	@Override
 	public final boolean equals(Object obj)
 	{
 		if (obj instanceof TestAction)
 		{
-			TestAction other = (TestAction)obj;
+			TestAction other = (TestAction) obj;
 			return other.actions() == actions;
 		}
 		return false;
@@ -112,6 +109,7 @@ public class TestAction extends AbstractWaspAction
 	/**
 	 * @see Object#hashCode()
 	 */
+	@Override
 	public final int hashCode()
 	{
 		int result = 4679;
@@ -129,13 +127,12 @@ public class TestAction extends AbstractWaspAction
 	 */
 	public final boolean implies(WaspAction other)
 	{
-		return other instanceof TestAction && implies(((TestAction)other).actions());
+		return other instanceof TestAction && implies(((TestAction) other).actions());
 	}
 
 	/**
-	 * Creates a new {@link WaspAction} containing both the specified actions
-	 * and the actions of this {@link WaspAction}. This method always returns a
-	 * new SwarmAction.
+	 * Creates a new {@link WaspAction} containing both the specified actions and the
+	 * actions of this {@link WaspAction}. This method always returns a new SwarmAction.
 	 * 
 	 * @param otherActions
 	 *            the actions to add
@@ -147,29 +144,28 @@ public class TestAction extends AbstractWaspAction
 	}
 
 	/**
-	 * Creates a new {@link WaspAction} containing both the specified actions
-	 * and the actions of this {@link WaspAction}. This method always returns a
-	 * new SwarmAction.
+	 * Creates a new {@link WaspAction} containing both the specified actions and the
+	 * actions of this {@link WaspAction}. This method always returns a new SwarmAction.
 	 * 
 	 * @param other
 	 *            the other action(s)
 	 * @return a new WaspAction containing all the actions
 	 */
-	public final WaspAction add(WaspAction other)
+	public final TestAction add(WaspAction other)
 	{
 		if (other instanceof TestAction)
-			return newInstance(actions | ((TestAction)other).actions());
+			return newInstance(actions | ((TestAction) other).actions());
 		throw new IllegalArgumentException("other must be a SwarmAction");
 	}
 
 	/**
-	 * Creates a new {@link WaspAction} with all the actions of this action
-	 * except those specified.
+	 * Creates a new {@link WaspAction} with all the actions of this action except those
+	 * specified.
 	 * 
 	 * @param otherActions
 	 *            the actions to remove
-	 * @return a new WaspAction or this action if the specified actions were
-	 *         never part of this action.
+	 * @return a new WaspAction or this action if the specified actions were never part of
+	 *         this action.
 	 */
 	public final TestAction remove(int otherActions)
 	{
@@ -184,27 +180,26 @@ public class TestAction extends AbstractWaspAction
 	 * 
 	 * @param action
 	 *            the actions to remove
-	 * @return a new WaspAction or this action if the specified actions were
-	 *         never part of this action.
+	 * @return a new WaspAction or this action if the specified actions were never part of
+	 *         this action.
 	 */
 	public final WaspAction remove(WaspAction action)
 	{
 		if (action instanceof TestAction)
-			return remove(((TestAction)action).actions);
+			return remove(((TestAction) action).actions);
 		throw new IllegalArgumentException("action must be a SwarmAction");
 	}
 
 	/**
-	 * Creates a new action. This might actually return the same object
-	 * depending on the implementation if the new SwarmAction does not have more
-	 * actions then the current.
+	 * Creates a new action. This might actually return the same object depending on the
+	 * implementation if the new SwarmAction does not have more actions then the current.
 	 * 
 	 * @param myActions
 	 * @return
 	 */
 	private TestAction newInstance(int myActions)
 	{
-		return ((TestActionFactory)getActionFactory()).getAction(myActions);
+		return ((TestActionFactory) getActionFactory()).getAction(myActions);
 	}
 
 	/**

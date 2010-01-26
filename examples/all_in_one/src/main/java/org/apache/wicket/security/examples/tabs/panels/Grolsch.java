@@ -42,22 +42,24 @@ public class Grolsch extends BeerPanel
 	/**
 	 * @see org.apache.wicket.security.examples.tabs.panels.BeerPanel#getDescription()
 	 */
+	@Override
 	public String getDescription()
 	{
 		return "<img src='../img/beer/grolsch.jpg' align='left'/><div style='margin-left:4px;'>"
-				+ "<b>Grolsch Premium Lager - quality from start to finish</b>\r\n"
-				+ "Our genuine Dutch Premium Lager owes its superb quality to the finest "
-				+ "ingredients and the traditional bottom fermentation brewing process.\r\n"
-				+ "<b>Brewed to be the best</b>\r\nFor almost four centuries, Grolsch brewers "
-				+ "have been employing skill and patience to produce a beer that is renowned worldwide "
-				+ "for its flavour and character. Besides malt, hops and water, Grolsch brewers use a "
-				+ "fourth vital ingredient: <i>time</i>. It takes several weeks to complete the "
-				+ "perfectly natural brewing process, that makes Grolsch beer so special. </div>";
+			+ "<b>Grolsch Premium Lager - quality from start to finish</b>\r\n"
+			+ "Our genuine Dutch Premium Lager owes its superb quality to the finest "
+			+ "ingredients and the traditional bottom fermentation brewing process.\r\n"
+			+ "<b>Brewed to be the best</b>\r\nFor almost four centuries, Grolsch brewers "
+			+ "have been employing skill and patience to produce a beer that is renowned worldwide "
+			+ "for its flavour and character. Besides malt, hops and water, Grolsch brewers use a "
+			+ "fourth vital ingredient: <i>time</i>. It takes several weeks to complete the "
+			+ "perfectly natural brewing process, that makes Grolsch beer so special. </div>";
 	}
 
 	/**
 	 * @see org.apache.wicket.security.examples.tabs.panels.BeerPanel#getName()
 	 */
+	@Override
 	public String getName()
 	{
 		return "Grolsch";
@@ -66,6 +68,7 @@ public class Grolsch extends BeerPanel
 	/**
 	 * @see org.apache.wicket.security.examples.tabs.panels.BeerPanel#getUrl()
 	 */
+	@Override
 	public String getUrl()
 	{
 		return "http://grolsch.com/";

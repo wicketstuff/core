@@ -47,9 +47,8 @@ public class ContainerPage2 extends SecureWebPage
 	 * 
 	 * @author marrink
 	 */
-	private static final class SecureMarkupContainer extends WebMarkupContainer
-			implements
-				ISecureComponent
+	private static final class SecureMarkupContainer extends WebMarkupContainer implements
+			ISecureComponent
 	{
 		/**
 		 * 

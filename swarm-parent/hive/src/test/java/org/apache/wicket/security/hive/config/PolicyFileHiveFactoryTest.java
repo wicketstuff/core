@@ -51,19 +51,22 @@ public class PolicyFileHiveFactoryTest extends TestCase
 		super(name);
 	}
 
-	protected void setUp() throws Exception
+	@Override
+	protected void setUp()
 	{
 		new TestActionFactory(KEY);
 	}
 
-	protected void tearDown() throws Exception
+	@Override
+	protected void tearDown()
 	{
 		Actions.unregisterActionFactory(KEY);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.apache.wicket.security.hive.config.PolicyFileHiveFactory#addPolicyFile(java.net.URL)}.
+	 * {@link org.apache.wicket.security.hive.config.PolicyFileHiveFactory#addPolicyFile(java.net.URL)}
+	 * .
 	 */
 	public void testAddPolicyFile()
 	{
@@ -190,14 +193,10 @@ public class PolicyFileHiveFactoryTest extends TestCase
 		assertTrue(hive.containsPermission(new TestPermission("9.A")));
 		assertTrue(hive.containsPermission(new TestPermission("9.B", "test")));
 		assertTrue(hive.containsPrincipal(new SimplePrincipal("test9B")));
-		assertTrue(hive
-				.containsPermission(new TestPermission(
-						"test.ContainerPage2:test.ContainerPage2$SecureMarkupContainer",
-						"inherit, render")));
-		assertTrue(hive
-				.containsPermission(new TestPermission(
-						"test2.ContainerPage2:test.ContainerPage2$SecureMarkupContainer",
-						"inherit, render")));
+		assertTrue(hive.containsPermission(new TestPermission(
+			"test.ContainerPage2:test.ContainerPage2$SecureMarkupContainer", "inherit, render")));
+		assertTrue(hive.containsPermission(new TestPermission(
+			"test2.ContainerPage2:test.ContainerPage2$SecureMarkupContainer", "inherit, render")));
 		assertTrue(hive.containsPrincipal(new SimplePrincipal("test10")));
 		assertTrue(hive.containsPermission(new TestPermission("10.B")));
 	}
@@ -205,6 +204,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 	/**
 	 * Test if the regex used in the factory is OK.
 	 */
+	@SuppressWarnings("null")
 	public void testRegExPrincipalPattern()
 	{
 		Pattern principalPattern = null;
@@ -212,7 +212,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 		{
 			Field field = PolicyFileHiveFactory.class.getDeclaredField("principalPattern");
 			field.setAccessible(true);
-			principalPattern = (Pattern)field.get(null);
+			principalPattern = (Pattern) field.get(null);
 		}
 		catch (IllegalArgumentException e)
 		{
@@ -234,25 +234,24 @@ public class PolicyFileHiveFactoryTest extends TestCase
 		assertFalse(principalPattern.matcher("").matches());
 		assertTrue(principalPattern.matcher("grant").matches());
 		assertTrue(principalPattern.matcher(
-				"grant principal org.apache.wicket.TestPrincipal \"render\"").matches());
+			"grant principal org.apache.wicket.TestPrincipal \"render\"").matches());
 		assertFalse(principalPattern.matcher("grant foo").matches());
 		assertFalse(principalPattern.matcher(
-				"grant principal org.apache.wicket.TestPrincipal \"render").matches());
+			"grant principal org.apache.wicket.TestPrincipal \"render").matches());
 		assertFalse(principalPattern.matcher(
-				"grant principal \"org.apache.wicket.TestPrincipal\" \"render\"").matches());
+			"grant principal \"org.apache.wicket.TestPrincipal\" \"render\"").matches());
 		assertTrue(principalPattern.matcher(
-				"grant principal org.apache. wicket.TestPrincipal \"render\"").matches());
+			"grant principal org.apache. wicket.TestPrincipal \"render\"").matches());
 		assertFalse(principalPattern.matcher(
-				"grant principal org.apache.wicket\".TestPrincipal \"render\"").matches());
+			"grant principal org.apache.wicket\".TestPrincipal \"render\"").matches());
 		assertFalse(principalPattern.matcher(
-				"grant principal org.apache.wicket.TestPrincipal \"render\" \"enable\"").matches());
+			"grant principal org.apache.wicket.TestPrincipal \"render\" \"enable\"").matches());
 		assertTrue(principalPattern.matcher(
-				"grant principal org.apache.wicket.TestPrincipal \"some 'wicket' actions\"")
-				.matches());
+			"grant principal org.apache.wicket.TestPrincipal \"some 'wicket' actions\"").matches());
 		assertFalse(principalPattern.matcher("grant principal \"org.apache.wicket.TestPrincipal\"")
-				.matches());
+			.matches());
 		assertFalse(principalPattern.matcher(
-				"grant principal org.apache.wicket.TestPrincipal render").matches());
+			"grant principal org.apache.wicket.TestPrincipal render").matches());
 	}
 
 	/**
@@ -265,47 +264,45 @@ public class PolicyFileHiveFactoryTest extends TestCase
 		{
 			Field field = PolicyFileHiveFactory.class.getDeclaredField("permissionPattern");
 			field.setAccessible(true);
-			permissionPattern = (Pattern)field.get(null);
+			permissionPattern = (Pattern) field.get(null);
 			assertTrue(permissionPattern.matcher(
-					"permission org.apache.wicket.TestPrincipal \"test\", \"render\";").matches());
+				"permission org.apache.wicket.TestPrincipal \"test\", \"render\";").matches());
 			assertTrue(permissionPattern.matcher(
-					"permission org.apache.wicket.TestPrincipal \"test\";").matches());
+				"permission org.apache.wicket.TestPrincipal \"test\";").matches());
 			assertTrue(permissionPattern.matcher(
-					"permission org.apache.wicket.TestPrincipal \"test 123\", \"render\";")
-					.matches());
+				"permission org.apache.wicket.TestPrincipal \"test 123\", \"render\";").matches());
 			assertTrue(permissionPattern.matcher(
-					"permission org.apache.wicket.TestPrincipal \"test\", \"render 123\";")
-					.matches());
+				"permission org.apache.wicket.TestPrincipal \"test\", \"render 123\";").matches());
 			assertTrue(permissionPattern.matcher(
-					"permission org.apache.wicket.TestPrincipal \"test\", \"render 'wicket'\";")
-					.matches());
+				"permission org.apache.wicket.TestPrincipal \"test\", \"render 'wicket'\";")
+				.matches());
 			assertTrue(permissionPattern.matcher(
-					"permission org.apache. wicket.TestPrincipal \"test\", \"render 'wicket'\";")
-					.matches());
+				"permission org.apache. wicket.TestPrincipal \"test\", \"render 'wicket'\";")
+				.matches());
 			assertTrue(permissionPattern.matcher(
-					"permission org.apache.wicket.TestPrincipal \"test 'wicket'\", \"render\";")
-					.matches());
+				"permission org.apache.wicket.TestPrincipal \"test 'wicket'\", \"render\";")
+				.matches());
 			assertFalse(permissionPattern.matcher("permission org.apache.wicket.TestPrincipal;")
-					.matches());
+				.matches());
 			assertFalse(permissionPattern.matcher("permission ").matches());
 			assertFalse(permissionPattern.matcher(
-					" org.apache.wicket.TestPrincipal \"test\", \"render\";").matches());
+				" org.apache.wicket.TestPrincipal \"test\", \"render\";").matches());
 			assertFalse(permissionPattern.matcher(
-					"permission org.apache.wicket.TestPrincipal \"test\" \"test\";").matches());
+				"permission org.apache.wicket.TestPrincipal \"test\" \"test\";").matches());
 			assertFalse(permissionPattern.matcher(
-					"permission org.apache.wicket.TestPrincipal \"test\", ;").matches());
+				"permission org.apache.wicket.TestPrincipal \"test\", ;").matches());
 			assertFalse(permissionPattern.matcher(
-					"permission org.apache.wicket.TestPrincipal \"test\", \"render\"").matches());
+				"permission org.apache.wicket.TestPrincipal \"test\", \"render\"").matches());
 			assertFalse(permissionPattern.matcher(
-					"permission ${ComponentPermission} ${ml}, \"inherit, render\";").matches());
+				"permission ${ComponentPermission} ${ml}, \"inherit, render\";").matches());
 			assertTrue(permissionPattern.matcher(
-					"permission ${ComponentPermission} \"${ml}\", \"inherit, render\";").matches());
+				"permission ${ComponentPermission} \"${ml}\", \"inherit, render\";").matches());
 			assertTrue(permissionPattern.matcher(
-					"permission ${ComponentPermission} ${ml} \"${ml}\", \"inherit, render\";")
-					.matches());
+				"permission ${ComponentPermission} ${ml} \"${ml}\", \"inherit, render\";")
+				.matches());
 			assertFalse(permissionPattern.matcher(
-					"permission ${ComponentPermission} ${ml}, \"whatever\", \"inherit, render\";")
-					.matches());
+				"permission ${ComponentPermission} ${ml}, \"whatever\", \"inherit, render\";")
+				.matches());
 			// technically spaces and some other characters are not allowed in
 			// classnames either but they don't cause any problems yet "," did
 		}
@@ -338,7 +335,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 		{
 			Field field = PolicyFileHiveFactory.class.getDeclaredField("aliasPattern");
 			field.setAccessible(true);
-			aliasPattern = (Pattern)field.get(null);
+			aliasPattern = (Pattern) field.get(null);
 			assertFalse(aliasPattern.matcher("no alias used whatsoever").find());
 			Matcher m = aliasPattern.matcher("foo${bar}");
 			assertTrue(m.find());
@@ -397,13 +394,15 @@ public class PolicyFileHiveFactoryTest extends TestCase
 	{
 		try
 		{
-			Method method = PolicyFileHiveFactory.class.getDeclaredMethod("resolveAliases",
-					new Class[] { String.class });
+			Method method =
+				PolicyFileHiveFactory.class.getDeclaredMethod("resolveAliases",
+					new Class[] {String.class});
 			method.setAccessible(true);
-			PolicyFileHiveFactory factory = new PolicyFileHiveFactory(Actions.getActionFactory(KEY));
+			PolicyFileHiveFactory factory =
+				new PolicyFileHiveFactory(Actions.getActionFactory(KEY));
 			factory.setAlias("foo", "foo");
 			factory.setAlias("foobar", "foobar");
-			String result = (String)method.invoke(factory, new Object[] { "${${foo}bar}" });
+			String result = (String) method.invoke(factory, new Object[] {"${${foo}bar}"});
 			fail("Unable to detect nested aliases: " + result);
 
 		}
@@ -441,13 +440,15 @@ public class PolicyFileHiveFactoryTest extends TestCase
 	{
 		try
 		{
-			Method method = PolicyFileHiveFactory.class.getDeclaredMethod("resolveAliases",
-					new Class[] { String.class });
+			Method method =
+				PolicyFileHiveFactory.class.getDeclaredMethod("resolveAliases",
+					new Class[] {String.class});
 			method.setAccessible(true);
-			PolicyFileHiveFactory factory = new PolicyFileHiveFactory(Actions.getActionFactory(KEY));
+			PolicyFileHiveFactory factory =
+				new PolicyFileHiveFactory(Actions.getActionFactory(KEY));
 			factory.setAlias("foo", "foo");
 			factory.setAlias("foobar", "foobar");
-			String result = (String)method.invoke(factory, new Object[] { "${${foo}" });
+			String result = (String) method.invoke(factory, new Object[] {"${${foo}"});
 			fail("Unable to detect nested aliases: " + result);
 
 		}

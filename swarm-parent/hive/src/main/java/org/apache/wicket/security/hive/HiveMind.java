@@ -35,14 +35,14 @@ public class HiveMind
 	// TODO JAAS check for rights on all methods
 	private static final HiveMind INSTANCE = new HiveMind();
 
-	private Map hiveCollection;
+	private Map<Object, Hive> hiveCollection;
 
 	/**
 	 * Private constructor for this simple class.
 	 */
 	private HiveMind()
 	{
-		hiveCollection = new HashMap();
+		hiveCollection = new HashMap<Object, Hive>();
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class HiveMind
 	 */
 	public static Hive getHive(Object queen)
 	{
-		return (Hive)INSTANCE.hiveCollection.get(queen);
+		return INSTANCE.hiveCollection.get(queen);
 	}
 
 	/**
@@ -99,6 +99,6 @@ public class HiveMind
 	 */
 	public static Hive unregisterHive(Object queen)
 	{
-		return (Hive)INSTANCE.hiveCollection.remove(queen);
+		return INSTANCE.hiveCollection.remove(queen);
 	}
 }

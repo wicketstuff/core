@@ -30,8 +30,7 @@ import org.apache.wicket.security.pages.HighSecurityPage;
 public final class PrimaryLoginContext extends LoginContext
 {
 	/**
-	 * Custom Subject. Note try not to serialize the logincontext with the
-	 * subject.
+	 * Custom Subject. Note try not to serialize the logincontext with the subject.
 	 * 
 	 * @author marrink
 	 */
@@ -43,7 +42,8 @@ public final class PrimaryLoginContext extends LoginContext
 		 * 
 		 * @see org.apache.wicket.security.hive.authentication.DefaultSubject#isClassAuthenticated(java.lang.Class)
 		 */
-		public boolean isClassAuthenticated(Class class1)
+		@Override
+		public boolean isClassAuthenticated(Class< ? > class1)
 		{
 			// for this test class authentication is enough
 			if (class1 == null)
@@ -55,6 +55,7 @@ public final class PrimaryLoginContext extends LoginContext
 		 * 
 		 * @see org.apache.wicket.security.hive.authentication.DefaultSubject#isComponentAuthenticated(org.apache.wicket.Component)
 		 */
+		@Override
 		public boolean isComponentAuthenticated(Component component)
 		{
 			return true;
@@ -65,7 +66,8 @@ public final class PrimaryLoginContext extends LoginContext
 		 * @see org.apache.wicket.security.hive.authentication.DefaultSubject#isModelAuthenticated(org.apache.wicket.model.IModel,
 		 *      org.apache.wicket.Component)
 		 */
-		public boolean isModelAuthenticated(IModel model, Component component)
+		@Override
+		public boolean isModelAuthenticated(IModel< ? > model, Component component)
 		{
 			return true;
 		}
@@ -84,6 +86,7 @@ public final class PrimaryLoginContext extends LoginContext
 	 * 
 	 * @see org.apache.wicket.security.hive.authentication.LoginContext#login()
 	 */
+	@Override
 	public Subject login()
 	{
 		DefaultSubject defaultSubject = new MySubject();
@@ -94,6 +97,7 @@ public final class PrimaryLoginContext extends LoginContext
 	/**
 	 * @see org.apache.wicket.security.hive.authentication.LoginContext#preventsAdditionalLogins()
 	 */
+	@Override
 	public boolean preventsAdditionalLogins()
 	{
 		return false;

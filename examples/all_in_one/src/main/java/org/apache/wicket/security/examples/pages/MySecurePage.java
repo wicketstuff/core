@@ -59,7 +59,7 @@ public abstract class MySecurePage extends SecureWebPage
 	/**
 	 * @param model
 	 */
-	public MySecurePage(IModel model)
+	public MySecurePage(IModel< ? > model)
 	{
 		super(model);
 		init();
@@ -71,14 +71,15 @@ public abstract class MySecurePage extends SecureWebPage
 	protected void init()
 	{
 		// not a secure link because everyone can logoff.
-		Link logoff = new Link("logoff")
+		Link<Void> logoff = new Link<Void>("logoff")
 		{
 
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public void onClick()
 			{
-				WaspSession waspSession = ((WaspSession)getSession());
+				WaspSession waspSession = ((WaspSession) getSession());
 				if (waspSession.logoff(getLogoffContext()))
 				{
 					// homepage is not allowed anymore so we end up at the
@@ -100,7 +101,7 @@ public abstract class MySecurePage extends SecureWebPage
 	 */
 	protected final WaspSession getSecureSession()
 	{
-		return (WaspSession)Session.get();
+		return (WaspSession) Session.get();
 	}
 
 	/**
@@ -110,12 +111,11 @@ public abstract class MySecurePage extends SecureWebPage
 	 */
 	protected final SwarmWebApplication getSecureApplication()
 	{
-		return (SwarmWebApplication)Application.get();
+		return (SwarmWebApplication) Application.get();
 	}
 
 	/**
-	 * Allows subclasses to specify which context should be used when logging
-	 * off
+	 * Allows subclasses to specify which context should be used when logging off
 	 * 
 	 * @return the context
 	 */
@@ -123,8 +123,8 @@ public abstract class MySecurePage extends SecureWebPage
 	{
 		Application app = Application.get();
 		if (app instanceof MultiUsableApplication)
-			return ((MultiUsableApplication)app).getLogoffContext();
+			return ((MultiUsableApplication) app).getLogoffContext();
 		throw new WicketRuntimeException("Application is not a subclass of "
-				+ MultiUsableApplication.class);
+			+ MultiUsableApplication.class);
 	}
 }

@@ -20,6 +20,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.security.examples.MultiUsableApplication;
 import org.apache.wicket.security.examples.customactions.authentication.MyLoginContext;
@@ -45,7 +46,7 @@ public class MyApplication extends MultiUsableApplication
 	/**
 	 * List of departments so we can make changes to them.
 	 */
-	public final List DEPARTMENTS;
+	public final List<Department> DEPARTMENTS;
 
 	/**
 	 * 
@@ -57,17 +58,18 @@ public class MyApplication extends MultiUsableApplication
 		// normally you would get them from a db or something else.
 		Organization organization = new Organization();
 		organization.name = "Bee Hive: Honey Production (inc)";
-		String[] departments = new String[] { "Tracking", "Tracks swarm movements", "false",
-				"H.I.E", "Honey Industrial Espionage", "true", "C.B.I.A",
+		String[] departments =
+			new String[] {"Tracking", "Tracks swarm movements", "false", "H.I.E",
+				"Honey Industrial Espionage", "true", "C.B.I.A",
 				"Counter Bee Interrogation Agency", "true", "Honey Gathering",
 				"Gathers honey from all the swarms", "false", "Storage", "Stores all the honey",
-				"false" };
+				"false"};
 		int size = 5;
-		List data = new ArrayList(size);
+		List<Department> data = new ArrayList<Department>(size);
 		for (int i = 0; i < size; i++)
 		{
 			data.add(new Department(organization, departments[i * 3], departments[(i * 3) + 1],
-					Boolean.valueOf(departments[(i * 3) + 2]).booleanValue()));
+				Boolean.valueOf(departments[(i * 3) + 2]).booleanValue()));
 		}
 		DEPARTMENTS = data;
 	}
@@ -75,6 +77,7 @@ public class MyApplication extends MultiUsableApplication
 	/**
 	 * @see org.apache.wicket.security.swarm.SwarmWebApplication#init()
 	 */
+	@Override
 	protected void init()
 	{
 		super.init();
@@ -88,6 +91,7 @@ public class MyApplication extends MultiUsableApplication
 	/**
 	 * @see org.apache.wicket.security.swarm.SwarmWebApplication#getHiveKey()
 	 */
+	@Override
 	protected Object getHiveKey()
 	{
 		// if you are using servlet api 2.5 i would suggest using:
@@ -107,6 +111,7 @@ public class MyApplication extends MultiUsableApplication
 	/**
 	 * @see org.apache.wicket.security.swarm.SwarmWebApplication#setUpHive()
 	 */
+	@Override
 	protected void setUpHive()
 	{
 		// example of shared hive
@@ -121,7 +126,7 @@ public class MyApplication extends MultiUsableApplication
 				// you
 				// like
 				factory.addPolicyFile(getServletContext()
-						.getResource("/WEB-INF/customactions.hive"));
+					.getResource("/WEB-INF/customactions.hive"));
 			}
 			catch (MalformedURLException e)
 			{
@@ -136,7 +141,8 @@ public class MyApplication extends MultiUsableApplication
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
-	public Class getHomePage()
+	@Override
+	public Class< ? extends Page> getHomePage()
 	{
 		return OverviewPage.class;
 	}
@@ -144,7 +150,7 @@ public class MyApplication extends MultiUsableApplication
 	/**
 	 * @see org.apache.wicket.security.WaspApplication#getLoginPage()
 	 */
-	public Class getLoginPage()
+	public Class< ? extends Page> getLoginPage()
 	{
 		return LoginPage.class;
 	}
@@ -152,6 +158,7 @@ public class MyApplication extends MultiUsableApplication
 	/**
 	 * @see org.apache.wicket.security.swarm.SwarmWebApplication#setupActionFactory()
 	 */
+	@Override
 	protected void setupActionFactory()
 	{
 		setActionFactory(new MyActionFactory(getClass().getName() + ":" + getHiveKey()));
@@ -161,6 +168,7 @@ public class MyApplication extends MultiUsableApplication
 	 * 
 	 * @see org.apache.wicket.security.examples.MultiUsableApplication#getLogoffContext()
 	 */
+	@Override
 	public LoginContext getLogoffContext()
 	{
 		return new MyLoginContext();

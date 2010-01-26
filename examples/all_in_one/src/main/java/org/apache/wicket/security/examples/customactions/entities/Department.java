@@ -19,10 +19,9 @@ package org.apache.wicket.security.examples.customactions.entities;
 import java.io.Serializable;
 
 /**
- * The department entity. it has a boolean secure which is used by the security
- * checks to decide if
- * {@link org.apache.wicket.security.examples.customactions.authorization.Department}
- * or
+ * The department entity. it has a boolean secure which is used by the security checks to
+ * decide if
+ * {@link org.apache.wicket.security.examples.customactions.authorization.Department} or
  * {@link org.apache.wicket.security.examples.customactions.authorization.Organization}
  * rights are required.
  * 
@@ -31,21 +30,24 @@ import java.io.Serializable;
 public class Department implements Serializable
 {
 	private static final long serialVersionUID = 1L;
+
 	/**
 	 * the organization of this department.
 	 */
 	public Organization organization;
+
 	/**
 	 * The name.
 	 */
 	public String name;
+
 	/**
 	 * A description.
 	 */
 	public String description;
+
 	/**
-	 * indicates if this department is only visible to users with organization
-	 * clearance.
+	 * indicates if this department is only visible to users with organization clearance.
 	 */
 	public final boolean secure;
 
@@ -78,6 +80,7 @@ public class Department implements Serializable
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
+	@Override
 	public int hashCode()
 	{
 		final int PRIME = 31;
@@ -89,6 +92,7 @@ public class Department implements Serializable
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (this == obj)
@@ -97,7 +101,7 @@ public class Department implements Serializable
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final Department other = (Department)obj;
+		final Department other = (Department) obj;
 		if (name == null)
 		{
 			if (other.name != null)
@@ -107,6 +111,5 @@ public class Department implements Serializable
 			return false;
 		return true;
 	}
-
 
 }

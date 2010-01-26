@@ -2,6 +2,7 @@ package org.apache.wicket.security.app;
 
 import java.net.MalformedURLException;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.Request;
 import org.apache.wicket.Response;
 import org.apache.wicket.Session;
@@ -23,6 +24,7 @@ import org.apache.wicket.util.string.Strings;
 public class WicketApplication extends SwarmWebApplication
 {
 	private static final String APPLICATION_ID = "Vp7ADu7IkY.VE0ZpW0h7177EpkSvLTa9MQ--";
+
 	private static final String SHARED_SECRET = "9ef3b44ef112a23e33e0fbbefe51bebb";
 
 	/**
@@ -36,6 +38,7 @@ public class WicketApplication extends SwarmWebApplication
 	/**
 	 * @see org.apache.wicket.security.swarm.SwarmWebApplication#init()
 	 */
+	@Override
 	protected void init()
 	{
 		// You must call super!!
@@ -49,6 +52,7 @@ public class WicketApplication extends SwarmWebApplication
 	/**
 	 * @see org.apache.wicket.security.swarm.SwarmWebApplication#getHiveKey()
 	 */
+	@Override
 	protected Object getHiveKey()
 	{
 		// if you are using servlet api 2.5 i would suggest using:
@@ -67,6 +71,7 @@ public class WicketApplication extends SwarmWebApplication
 	/**
 	 * @see org.apache.wicket.security.swarm.SwarmWebApplication#setUpHive()
 	 */
+	@Override
 	protected void setUpHive()
 	{
 		// create factory to read policy files
@@ -80,7 +85,7 @@ public class WicketApplication extends SwarmWebApplication
 			factory.setAlias("web", "org.apache.wicket.security.web");
 			// alias for the principals
 			factory.setAlias("principal",
-					"org.apache.wicket.security.hive.authorization.SimplePrincipal");
+				"org.apache.wicket.security.hive.authorization.SimplePrincipal");
 		}
 		catch (MalformedURLException e)
 		{
@@ -93,7 +98,8 @@ public class WicketApplication extends SwarmWebApplication
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
-	public Class getHomePage()
+	@Override
+	public Class< ? extends Page> getHomePage()
 	{
 		return SecureHomePage.class;
 		// optionally you can use HomePage.class
@@ -102,19 +108,20 @@ public class WicketApplication extends SwarmWebApplication
 	/**
 	 * @see org.apache.wicket.security.WaspApplication#getLoginPage()
 	 */
-	public Class getLoginPage()
+	public Class< ? extends Page> getLoginPage()
 	{
 		return LoginPage.class;
 	}
 
 	/**
-	 * Optionally you can override {@link #newSession(Request, Response)} to
-	 * store information in the session. Just make sure your session always
-	 * extends {@link WaspSession}.
+	 * Optionally you can override {@link #newSession(Request, Response)} to store
+	 * information in the session. Just make sure your session always extends
+	 * {@link WaspSession}.
 	 * 
 	 * @see org.apache.wicket.security.WaspWebApplication#newSession(org.apache.wicket.Request,
 	 *      org.apache.wicket.Response)
 	 */
+	@Override
 	public Session newSession(Request request, Response response)
 	{
 		return new MySession(this, request);
@@ -168,6 +175,7 @@ public class WicketApplication extends SwarmWebApplication
 		 * 
 		 * @see org.apache.wicket.security.WaspSession#logoff(java.lang.Object)
 		 */
+		@Override
 		public boolean logoff(Object context)
 		{
 			// quick check to see if the user logged off

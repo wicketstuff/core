@@ -19,9 +19,9 @@ package org.apache.wicket.security.examples.pages.login;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.security.WaspSession;
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.examples.multilogin.authentication.Level0Context;
 import org.apache.wicket.security.hive.authentication.LoginContext;
-import org.apache.wicket.security.authentication.LoginException;
 
 /**
  * primary loginpage uses username and password.
@@ -48,6 +48,7 @@ public class LoginPage extends WebPage
 			/**
 			 * @see org.apache.wicket.Component#isVisible()
 			 */
+			@Override
 			public boolean isVisible()
 			{
 				return anyMessage();
@@ -68,12 +69,13 @@ public class LoginPage extends WebPage
 		{
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public boolean signIn(String username, String password)
 			{
 				LoginContext ctx = new Level0Context(username, password);
 				try
 				{
-					((WaspSession)getSession()).login(ctx);
+					((WaspSession) getSession()).login(ctx);
 				}
 				catch (LoginException e)
 				{

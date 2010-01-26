@@ -41,5 +41,4 @@ public class MySecurePanel extends SecurePanel
 		add(new Label("welcome", "This panel is restricted"));
 	}
 
-
 }

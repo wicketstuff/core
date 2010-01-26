@@ -19,10 +19,10 @@ package org.apache.wicket.security.examples.httplogin.basic.pages;
 import org.apache.wicket.security.components.SecureWebPage;
 
 /**
- * Home page, you need to login in with basic http authentication to get here.
- * Note that normally with http authentication every page again requests the
- * authentication headers, not here because the application takes over the
- * authentication part after the user has logged in.
+ * Home page, you need to login in with basic http authentication to get here. Note that
+ * normally with http authentication every page again requests the authentication headers,
+ * not here because the application takes over the authentication part after the user has
+ * logged in.
  * 
  * @author marrink
  */

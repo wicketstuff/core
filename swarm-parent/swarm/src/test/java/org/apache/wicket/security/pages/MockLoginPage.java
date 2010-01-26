@@ -33,7 +33,6 @@ import org.apache.wicket.security.hive.authorization.SimplePrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * @author marrink
  * 
@@ -44,10 +43,12 @@ public class MockLoginPage extends WebPage
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = LoggerFactory.getLogger(MockLoginPage.class);
 
-	private Form form;
-	private TextField textField;
+	private Form<Void> form;
+
+	private TextField<String> textField;
 
 	/**
 	 * 
@@ -57,7 +58,7 @@ public class MockLoginPage extends WebPage
 		super();
 		setStatelessHint(true);
 		add(new Label("label", "welcome please login"));
-		add(form = new StatelessForm("form")
+		add(form = new StatelessForm<Void>("form")
 		{
 
 			/**
@@ -65,12 +66,13 @@ public class MockLoginPage extends WebPage
 			 */
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			protected void onSubmit()
 			{
 				login(get("username").getDefaultModelObjectAsString());
 			}
 		});
-		form.add(textField = new TextField("username", new Model()));
+		form.add(textField = new TextField<String>("username", new Model<String>()));
 	}
 
 	/**
@@ -95,7 +97,7 @@ public class MockLoginPage extends WebPage
 			{
 				context = new CustomLoginContext(new SimplePrincipal(username));
 			}
-			((WaspSession)Session.get()).login(context);
+			((WaspSession) Session.get()).login(context);
 			if (!continueToOriginalDestination())
 				setResponsePage(Application.get().getHomePage());
 			return true;
@@ -111,7 +113,7 @@ public class MockLoginPage extends WebPage
 	 * 
 	 * @return the form
 	 */
-	public final Form getForm()
+	public final Form<Void> getForm()
 	{
 		return form;
 	}
@@ -120,7 +122,7 @@ public class MockLoginPage extends WebPage
 	 * 
 	 * @return the username textfield
 	 */
-	public final TextField getTextField()
+	public final TextField<String> getTextField()
 	{
 		return textField;
 	}

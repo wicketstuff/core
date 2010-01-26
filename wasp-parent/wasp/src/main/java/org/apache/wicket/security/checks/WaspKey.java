@@ -19,9 +19,9 @@ package org.apache.wicket.security.checks;
 import org.apache.wicket.MetaDataKey;
 
 /**
- * The default way of attaching an {@link ISecurityCheck} to a component is
- * through the metadata, this is the key used to store it under. This only
- * allows 1 check for each component but you can always nest the checks.
+ * The default way of attaching an {@link ISecurityCheck} to a component is through the
+ * metadata, this is the key used to store it under. This only allows 1 check for each
+ * component but you can always nest the checks.
  * 
  * @author marrink
  */

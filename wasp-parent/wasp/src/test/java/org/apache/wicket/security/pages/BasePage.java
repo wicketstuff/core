@@ -24,7 +24,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.WaspWebApplication;
 
-
 /**
  * Basic page. This page is accessible by everyone.
  * 
@@ -33,15 +32,8 @@ import org.apache.wicket.security.WaspWebApplication;
  */
 public class BasePage extends WebPage
 {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
 	public BasePage()
 	{
 	}
@@ -49,7 +41,7 @@ public class BasePage extends WebPage
 	/**
 	 * @param model
 	 */
-	public BasePage(IModel model)
+	public BasePage(IModel< ? > model)
 	{
 		super(model);
 	}
@@ -69,7 +61,7 @@ public class BasePage extends WebPage
 	 */
 	protected final WaspSession getSecureSession()
 	{
-		return (WaspSession)Session.get();
+		return (WaspSession) Session.get();
 	}
 
 	/**
@@ -79,6 +71,6 @@ public class BasePage extends WebPage
 	 */
 	protected final WaspWebApplication getWaspApplication()
 	{
-		return (WaspWebApplication)Application.get();
+		return (WaspWebApplication) Application.get();
 	}
 }

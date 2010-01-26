@@ -37,57 +37,48 @@ import org.apache.wicket.request.target.component.IBookmarkablePageRequestTarget
 import org.apache.wicket.request.target.component.IPageRequestTarget;
 import org.apache.wicket.settings.IRequestCycleSettings;
 import org.apache.wicket.util.file.WebApplicationPath;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 /**
- * Relatively small changes to make the mock classes work with a temporary
- * session, so {@link Session#bind()} behavior and {@link Session#isTemporary()}
- * can be tested.</br> Maurice</br></br>
+ * Relatively small changes to make the mock classes work with a temporary session, so
+ * {@link Session#bind()} behavior and {@link Session#isTemporary()} can be tested.</br>
+ * Maurice</br></br>
  * 
- * This class provides a mock implementation of a Wicket HTTP based tester that
- * can be used for testing. It emulates all of the functionality of an
- * HttpServlet in a controlled, single-threaded environment. It is supported
- * with mock objects for WebSession, HttpServletRequest, HttpServletResponse and
- * ServletContext.
+ * This class provides a mock implementation of a Wicket HTTP based tester that can be
+ * used for testing. It emulates all of the functionality of an HttpServlet in a
+ * controlled, single-threaded environment. It is supported with mock objects for
+ * WebSession, HttpServletRequest, HttpServletResponse and ServletContext.
  * <p>
- * In its most basic usage you can just create a new MockWebApplication and
- * provide your Wicket Application object. This should be sufficient to allow
- * you to construct components and pages and so on for testing. To use certain
- * features such as localization you must also call setupRequestAndResponse().
+ * In its most basic usage you can just create a new MockWebApplication and provide your
+ * Wicket Application object. This should be sufficient to allow you to construct
+ * components and pages and so on for testing. To use certain features such as
+ * localization you must also call setupRequestAndResponse().
  * <p>
- * The tester takes an optional path attribute that defines a directory on the
- * disk which will correspond to the root of the WAR bundle. This can then be
- * used for locating non-tester resources.
+ * The tester takes an optional path attribute that defines a directory on the disk which
+ * will correspond to the root of the WAR bundle. This can then be used for locating
+ * non-tester resources.
  * <p>
- * To actually test the processing of a particular page or component you can
- * also call processRequestCycle() to do all the normal work of a Wicket
- * request.
+ * To actually test the processing of a particular page or component you can also call
+ * processRequestCycle() to do all the normal work of a Wicket request.
  * <p>
- * Between calling setupRequestAndResponse() and processRequestCycle() you can
- * get hold of any of the objects for initialization. The servlet request object
- * has some handy convenience methods for Initializing the request to invoke
- * certain types of pages and components.
+ * Between calling setupRequestAndResponse() and processRequestCycle() you can get hold of
+ * any of the objects for initialization. The servlet request object has some handy
+ * convenience methods for Initializing the request to invoke certain types of pages and
+ * components.
  * <p>
- * After completion of processRequestCycle() you will probably just be testing
- * component states. However, you also have full access to the response document
- * (or binary data) and result codes via the servlet response object.
+ * After completion of processRequestCycle() you will probably just be testing component
+ * states. However, you also have full access to the response document (or binary data)
+ * and result codes via the servlet response object.
  * <p>
  * IMPORTANT NOTES
  * <ul>
  * <li>This harness is SINGLE THREADED - there is only one global session. For
- * multi-threaded testing you must do integration testing with a full tester
- * server.
+ * multi-threaded testing you must do integration testing with a full tester server.
  * </ul>
  * 
  * @author Chris Turner
  */
 public class SwarmMockWebApplication
 {
-	/** Logging */
-	private static final Logger log = LoggerFactory.getLogger(SwarmMockWebApplication.class);
-
 	/** The last rendered page. */
 	private Page lastRenderedPage;
 
@@ -107,7 +98,7 @@ public class SwarmMockWebApplication
 	private WebRequest wicketRequest;
 
 	/** Parameters to be set on the next request. */
-	private Map parametersForNextRequest = new HashMap();
+	private Map<String, Object> parametersForNextRequest = new HashMap<String, Object>();
 
 	/** Response. */
 	private WebResponse wicketResponse;
@@ -128,8 +119,8 @@ public class SwarmMockWebApplication
 	 * @param application
 	 *            The wicket application object
 	 * @param path
-	 *            The absolute path on disk to the web tester contents (e.g. war
-	 *            root) - may be null
+	 *            The absolute path on disk to the web tester contents (e.g. war root) -
+	 *            may be null
 	 * @see org.apache.wicket.protocol.http.MockServletContext
 	 */
 	public SwarmMockWebApplication(final WebApplication application, final String path)
@@ -140,14 +131,16 @@ public class SwarmMockWebApplication
 
 		filter = new WicketFilter()
 		{
+			@Override
 			protected IWebApplicationFactory getApplicationFactory()
 			{
 				return new IWebApplicationFactory()
 				{
+					@SuppressWarnings("hiding")
 					public WebApplication createApplication(WicketFilter filter)
 					{
 						return application;
-					};
+					}
 				};
 			}
 		};
@@ -162,7 +155,7 @@ public class SwarmMockWebApplication
 					return context;
 				}
 
-				public Enumeration getInitParameterNames()
+				public Enumeration<String> getInitParameterNames()
 				{
 					return null;
 				}
@@ -204,7 +197,7 @@ public class SwarmMockWebApplication
 		createRequestCycle();
 
 		this.application.getRequestCycleSettings().setRenderStrategy(
-				IRequestCycleSettings.ONE_PASS_RENDER);
+			IRequestCycleSettings.ONE_PASS_RENDER);
 		// Don't buffer the response, as this can break ajax tests: see
 		// WICKET-1264
 		this.application.getRequestCycleSettings().setBufferResponse(false);
@@ -227,8 +220,8 @@ public class SwarmMockWebApplication
 	 * Used to create a new mock servlet context.
 	 * 
 	 * @param path
-	 *            The absolute path on disk to the web tester contents (e.g. war
-	 *            root) - may be null
+	 *            The absolute path on disk to the web tester contents (e.g. war root) -
+	 *            may be null
 	 * @return ServletContext
 	 */
 	public ServletContext newServletContext(final String path)
@@ -339,7 +332,7 @@ public class SwarmMockWebApplication
 
 		if (component instanceof Page)
 		{
-			lastRenderedPage = (Page)component;
+			lastRenderedPage = (Page) component;
 		}
 		postProcessRequestCycle(cycle);
 	}
@@ -349,7 +342,7 @@ public class SwarmMockWebApplication
 	 * 
 	 * @param pageClass
 	 */
-	public void processRequestCycle(final Class pageClass)
+	public void processRequestCycle(final Class< ? extends Page> pageClass)
 	{
 		processRequestCycle(pageClass, null);
 	}
@@ -360,7 +353,7 @@ public class SwarmMockWebApplication
 	 * @param pageClass
 	 * @param params
 	 */
-	public void processRequestCycle(final Class pageClass, PageParameters params)
+	public void processRequestCycle(final Class< ? extends Page> pageClass, PageParameters params)
 	{
 		setupRequestAndResponse();
 		final WebRequestCycle cycle = createRequestCycle();
@@ -376,8 +369,8 @@ public class SwarmMockWebApplication
 	}
 
 	/**
-	 * Create and process the request cycle using the current request and
-	 * response information.
+	 * Create and process the request cycle using the current request and response
+	 * information.
 	 */
 	public void processRequestCycle()
 	{
@@ -385,8 +378,8 @@ public class SwarmMockWebApplication
 	}
 
 	/**
-	 * Create and process the request cycle using the current request and
-	 * response information.
+	 * Create and process the request cycle using the current request and response
+	 * information.
 	 * 
 	 * @param cycle
 	 */
@@ -416,15 +409,16 @@ public class SwarmMockWebApplication
 		{
 			// handle redirects which are usually managed by the browser
 			// transparently
-			final SwarmMockHttpServletResponse httpResponse = (SwarmMockHttpServletResponse)cycle
-					.getWebResponse().getHttpServletResponse();
+			final SwarmMockHttpServletResponse httpResponse =
+				(SwarmMockHttpServletResponse) cycle.getWebResponse().getHttpServletResponse();
 
 			if (httpResponse.isRedirect())
 			{
 				lastRenderedPage = generateLastRenderedPage(cycle);
 
-				SwarmMockHttpServletRequest newHttpRequest = new SwarmMockHttpServletRequest(
-						application, servletSession, application.getServletContext());
+				SwarmMockHttpServletRequest newHttpRequest =
+					new SwarmMockHttpServletRequest(application, servletSession, application
+						.getServletContext());
 				newHttpRequest.setRequestToRedirectString(httpResponse.getRedirectLocation());
 				wicketRequest = application.newWebRequest(newHttpRequest);
 
@@ -438,7 +432,7 @@ public class SwarmMockWebApplication
 
 		if (getLastRenderedPage() instanceof ExceptionErrorPage)
 		{
-			throw (RuntimeException)((ExceptionErrorPage)getLastRenderedPage()).getThrowable();
+			throw (RuntimeException) ((ExceptionErrorPage) getLastRenderedPage()).getThrowable();
 		}
 	}
 
@@ -452,31 +446,33 @@ public class SwarmMockWebApplication
 		Page newLastRenderedPage = cycle.getResponsePage();
 		if (newLastRenderedPage == null)
 		{
-			Class responseClass = cycle.getResponsePageClass();
+			Class< ? extends Page> responseClass = cycle.getResponsePageClass();
 			if (responseClass != null)
 			{
 				Session.set(cycle.getSession());
 				IRequestTarget target = cycle.getRequestTarget();
 				if (target instanceof IPageRequestTarget)
 				{
-					newLastRenderedPage = ((IPageRequestTarget)target).getPage();
+					newLastRenderedPage = ((IPageRequestTarget) target).getPage();
 				}
 				else if (target instanceof IBookmarkablePageRequestTarget)
 				{
 					// create a new request cycle for the newPage call
 					createRequestCycle();
-					IBookmarkablePageRequestTarget pageClassRequestTarget = (IBookmarkablePageRequestTarget)target;
-					Class pageClass = pageClassRequestTarget.getPageClass();
+					IBookmarkablePageRequestTarget pageClassRequestTarget =
+						(IBookmarkablePageRequestTarget) target;
+					Class< ? extends Page> pageClass = pageClassRequestTarget.getPageClass();
 					PageParameters parameters = pageClassRequestTarget.getPageParameters();
 					if (parameters == null || parameters.size() == 0)
 					{
-						newLastRenderedPage = application.getSessionSettings().getPageFactory()
-								.newPage(pageClass);
+						newLastRenderedPage =
+							application.getSessionSettings().getPageFactory().newPage(pageClass);
 					}
 					else
 					{
-						newLastRenderedPage = application.getSessionSettings().getPageFactory()
-								.newPage(pageClass, parameters);
+						newLastRenderedPage =
+							application.getSessionSettings().getPageFactory().newPage(pageClass,
+								parameters);
 					}
 				}
 			}
@@ -491,8 +487,8 @@ public class SwarmMockWebApplication
 	}
 
 	/**
-	 * Create and process the request cycle using the current request and
-	 * response information.
+	 * Create and process the request cycle using the current request and response
+	 * information.
 	 * 
 	 * @return A new and initialized WebRequestCyle
 	 */
@@ -500,11 +496,11 @@ public class SwarmMockWebApplication
 	{
 		// Create a web request cycle using factory
 
-		final WebRequestCycle cycle = (WebRequestCycle)application.newRequestCycle(wicketRequest,
-				wicketResponse);
+		final WebRequestCycle cycle =
+			(WebRequestCycle) application.newRequestCycle(wicketRequest, wicketResponse);
 
 		// Construct session
-		wicketSession = (WebSession)Session.findOrCreate();
+		wicketSession = (WebSession) Session.findOrCreate();
 
 		// Set request cycle so it won't detach automatically and clear messages
 		// we want to check
@@ -513,13 +509,13 @@ public class SwarmMockWebApplication
 	}
 
 	/**
-	 * Reset the request and the response back to a starting state and recreate
-	 * the necessary wicket request, response and session objects. The request
-	 * and response objects can be accessed and Initialized at this point.
+	 * Reset the request and the response back to a starting state and recreate the
+	 * necessary wicket request, response and session objects. The request and response
+	 * objects can be accessed and Initialized at this point.
 	 * 
 	 * @param isAjax
-	 *            indicates whether the request should be initialized as an ajax
-	 *            request (ajax header "Wicket-Ajax" is set)
+	 *            indicates whether the request should be initialized as an ajax request
+	 *            (ajax header "Wicket-Ajax" is set)
 	 */
 	public WebRequestCycle setupRequestAndResponse(boolean isAjax)
 	{
@@ -540,9 +536,9 @@ public class SwarmMockWebApplication
 	}
 
 	/**
-	 * Reset the request and the response back to a starting state and recreate
-	 * the necessary wicket request, response and session objects. The request
-	 * and response objects can be accessed and Initialized at this point.
+	 * Reset the request and the response back to a starting state and recreate the
+	 * necessary wicket request, response and session objects. The request and response
+	 * objects can be accessed and Initialized at this point.
 	 */
 	public WebRequestCycle setupRequestAndResponse()
 	{
@@ -554,7 +550,7 @@ public class SwarmMockWebApplication
 	 * 
 	 * @return the parameters to be set on the next request
 	 */
-	public Map getParametersForNextRequest()
+	public Map<String, Object> getParametersForNextRequest()
 	{
 		return parametersForNextRequest;
 	}
@@ -565,7 +561,7 @@ public class SwarmMockWebApplication
 	 * @param parametersForNextRequest
 	 *            the parameters to be set on the next request
 	 */
-	public void setParametersForNextRequest(Map parametersForNextRequest)
+	public void setParametersForNextRequest(Map<String, Object> parametersForNextRequest)
 	{
 		this.parametersForNextRequest = parametersForNextRequest;
 	}
@@ -576,7 +572,7 @@ public class SwarmMockWebApplication
 	public void destroy()
 	{
 		filter.destroy();
-		File dir = (File)context.getAttribute("javax.servlet.context.tempdir");
+		File dir = (File) context.getAttribute("javax.servlet.context.tempdir");
 		deleteDir(dir);
 	}
 

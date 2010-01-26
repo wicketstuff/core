@@ -34,6 +34,8 @@ import org.apache.wicket.util.value.ValueMap;
  */
 public abstract class UsernamePasswordSignInPanel extends Panel
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructor.
 	 * 
@@ -58,7 +60,7 @@ public abstract class UsernamePasswordSignInPanel extends Panel
 	/**
 	 * Sign in form.
 	 */
-	public final class SignInForm extends StatelessForm
+	public final class SignInForm extends StatelessForm<ValueMap>
 	{
 		private static final long serialVersionUID = 1L;
 
@@ -77,18 +79,20 @@ public abstract class UsernamePasswordSignInPanel extends Panel
 		{
 			// sets a compound model on this form, every component without an
 			// explicit model will use this model too
-			super(id, new CompoundPropertyModel(new ValueMap()));
+			super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
 
 			// only remember username, not passwords
-			add(new TextField("username").setPersistent(rememberMe).setOutputMarkupId(false));
+			add(new TextField<String>("username").setPersistent(rememberMe)
+				.setOutputMarkupId(false));
 			add(new PasswordTextField("password").setOutputMarkupId(false));
-			add(new CheckBox("rememberMe", new PropertyModel(this, "rememberMe")));
+			add(new CheckBox("rememberMe", new PropertyModel<Boolean>(this, "rememberMe")));
 		}
 
 		/**
 		 * 
 		 * @see org.apache.wicket.Component#getMarkupId()
 		 */
+		@Override
 		public String getMarkupId()
 		{
 			// fix javascript id
@@ -99,6 +103,7 @@ public abstract class UsernamePasswordSignInPanel extends Panel
 		 * 
 		 * @see org.apache.wicket.markup.html.form.Form#onSubmit()
 		 */
+		@Override
 		public final void onSubmit()
 		{
 			if (!rememberMe)
@@ -107,7 +112,7 @@ public abstract class UsernamePasswordSignInPanel extends Panel
 				getPage().removePersistedFormData(SignInForm.class, true);
 			}
 
-			ValueMap values = (ValueMap)getModelObject();
+			ValueMap values = getModelObject();
 			String username = values.getString("username");
 			String password = values.getString("password");
 
@@ -124,13 +129,12 @@ public abstract class UsernamePasswordSignInPanel extends Panel
 				// Try the component based localizer first. If not found try the
 				// application localizer. Else use the default
 				error(getLocalizer().getString("exception.login", this,
-						"Illegal username password combo"));
+					"Illegal username password combo"));
 			}
 		}
 
 		/**
-		 * @return true if formdata should be made persistent (cookie) for later
-		 *         logins.
+		 * @return true if formdata should be made persistent (cookie) for later logins.
 		 */
 		public boolean getRememberMe()
 		{
@@ -146,7 +150,7 @@ public abstract class UsernamePasswordSignInPanel extends Panel
 		public void setRememberMe(boolean rememberMe)
 		{
 			this.rememberMe = rememberMe;
-			((FormComponent)get("username")).setPersistent(rememberMe);
+			((FormComponent< ? >) get("username")).setPersistent(rememberMe);
 		}
 	}
 }

@@ -29,7 +29,6 @@ public class OrganizationCheck extends ComponentSecurityCheck
 {
 	private static final long serialVersionUID = 1L;
 
-
 	/**
 	 * Construct.
 	 * 
@@ -54,6 +53,7 @@ public class OrganizationCheck extends ComponentSecurityCheck
 	/**
 	 * @see org.apache.wicket.security.checks.ComponentSecurityCheck#isActionAuthorized(org.apache.wicket.security.actions.WaspAction)
 	 */
+	@Override
 	public boolean isActionAuthorized(WaspAction action)
 	{
 		WaspAction myAction = action.add(getActionFactory().getAction(Organization.class));

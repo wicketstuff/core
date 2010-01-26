@@ -39,13 +39,13 @@ public class BaseSubject implements Subject
 
 	private boolean readOnly;
 
-	private Set principals = new HashSet(100);// guess
-	private Set readOnlyPrincipals = Collections.unmodifiableSet(principals);
+	private Set<Principal> principals = new HashSet<Principal>(100);// guess
+	private Set<Principal> readOnlyPrincipals = Collections.unmodifiableSet(principals);
 
 	/**
 	 * @see org.apache.wicket.security.hive.authentication.Subject#getPrincipals()
 	 */
-	public final Set getPrincipals()
+	public final Set<Principal> getPrincipals()
 	{
 		return readOnlyPrincipals;
 	}

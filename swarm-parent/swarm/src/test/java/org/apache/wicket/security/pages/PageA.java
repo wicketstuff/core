@@ -42,10 +42,10 @@ public class PageA extends SecureWebPage
 	{
 		super();
 		add(new Label("label", "this page shows security inheritance"));
-		add(new SecurePageLink("link", MockHomePage.class));
-		add(new SecureTextField("invisible"));
-		add(new SecureTextField("readonly"));
-		add(new TextField("unchecked"));
+		add(new SecurePageLink<Void>("link", MockHomePage.class));
+		add(new SecureTextField<String>("invisible"));
+		add(new SecureTextField<String>("readonly"));
+		add(new TextField<String>("unchecked"));
 	}
 
 	/**

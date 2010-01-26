@@ -19,8 +19,7 @@ package org.apache.wicket.security.actions;
 import java.util.List;
 
 /**
- * The actionFactory translates between string based actions, and class based
- * actions.
+ * The actionFactory translates between string based actions, and class based actions.
  * 
  * @author marrink
  */
@@ -36,8 +35,8 @@ public interface ActionFactory
 	public WaspAction getAction(String actions);
 
 	/**
-	 * Register a new action. By default {@link Access}, {@link Inherit},
-	 * {@link Render} and {@link Enable} are already registered
+	 * Register a new action. By default {@link Access}, {@link Inherit}, {@link Render}
+	 * and {@link Enable} are already registered
 	 * 
 	 * @param waspActionClass
 	 *            the class of the action to register (must be subclass of
@@ -48,7 +47,8 @@ public interface ActionFactory
 	 * @throws RegistrationException
 	 *             if the action cannot be registered
 	 */
-	public WaspAction register(Class waspActionClass, String name) throws RegistrationException;
+	public WaspAction register(Class< ? extends WaspAction> waspActionClass, String name)
+			throws RegistrationException;
 
 	/**
 	 * Returns the registered action of this class.
@@ -59,15 +59,15 @@ public interface ActionFactory
 	 * @throws IllegalArgumentException
 	 *             if the class is not registered.
 	 */
-	public WaspAction getAction(Class waspActionClass);
+	public WaspAction getAction(Class< ? extends WaspAction> waspActionClass);
 
 	/**
-	 * Returns a list of all the registered actions at the time of the
-	 * invocation. This list is not kept in sync with the factory.
+	 * Returns a list of all the registered actions at the time of the invocation. This
+	 * list is not kept in sync with the factory.
 	 * 
 	 * @return a list of actions (instances, not classes)
 	 */
-	public List getRegisteredActions();
+	public List<WaspAction> getRegisteredActions();
 
 	/**
 	 * Clean up any resources this factory holds.

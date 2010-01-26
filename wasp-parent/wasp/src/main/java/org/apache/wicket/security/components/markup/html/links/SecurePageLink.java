@@ -16,8 +16,9 @@
  */
 package org.apache.wicket.security.components.markup.html.links;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.link.IPageLink;
-import org.apache.wicket.markup.html.link.PageLink;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.checks.ISecurityCheck;
 import org.apache.wicket.security.checks.LinkSecurityCheck;
@@ -33,22 +34,42 @@ import org.apache.wicket.security.components.SecureComponentHelper;
  * @author marrink
  * @see LinkSecurityCheck
  */
-public class SecurePageLink extends PageLink implements ISecureComponent
+public class SecurePageLink<T> extends Link<T> implements ISecureComponent
 {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+
+	private IPageLink pageLink;
 
 	/**
 	 * @param id
 	 * @param c
 	 */
-	public SecurePageLink(String id, Class c)
+	public <C extends Page> SecurePageLink(String id, final Class<C> c)
 	{
-		super(id, c);
+		super(id);
 		setSecurityCheck(new LinkSecurityCheck(this, c));
+
+		// Ensure that c is a subclass of Page
+		if (!Page.class.isAssignableFrom(c))
+		{
+			throw new IllegalArgumentException("Class " + c + " is not a subclass of Page");
+		}
+
+		pageLink = new IPageLink()
+		{
+			private static final long serialVersionUID = 1L;
+
+			public Page getPage()
+			{
+				// Create page using page factory
+				return getSession().getPageFactory().newPage(c);
+			}
+
+			public Class<? extends Page> getPageIdentity()
+			{
+				return c;
+			}
+		};
 	}
 
 	/**
@@ -57,8 +78,22 @@ public class SecurePageLink extends PageLink implements ISecureComponent
 	 */
 	public SecurePageLink(String id, IPageLink pageLink)
 	{
-		super(id, pageLink);
+		super(id);
+		this.pageLink = pageLink;
 		setSecurityCheck(new LinkSecurityCheck(this, pageLink.getPageIdentity()));
+	}
+
+	/**
+	 * Handles a link click by asking for a concrete Page instance through the
+	 * IPageLink.getPage() delayed linking interface. This call will normally
+	 * cause the destination page to be created.
+	 * 
+	 * @see org.apache.wicket.markup.html.link.Link#onClick()
+	 */
+	@Override
+	public void onClick()
+	{
+		setResponsePage(pageLink.getPage());
 	}
 
 	/**

@@ -42,21 +42,23 @@ public class Heineken extends BeerPanel
 	/**
 	 * @see org.apache.wicket.security.examples.tabs.panels.BeerPanel#getDescription()
 	 */
+	@Override
 	public String getDescription()
 	{
 		return "<img src='../img/beer/heineken.jpg' />\r\n\r\n"
-				+ "Heineken has wide international presence through a global network of "
-				+ "distributors and breweries. Heineken owns and manages one of the world’s "
-				+ "leading portfolios of beer brands and is one of the world’s leading brewers "
-				+ "in terms of sales volume and profitability. Our principal international brands are "
-				+ "Heineken and Amstel, but the group brews and sells more than 170 international premium, "
-				+ "regional, local and specialty beers, including Cruzcampo, Tiger, Zywiec, "
-				+ "Birra Moretti, Ochota, Murphy’s and Star.";
+			+ "Heineken has wide international presence through a global network of "
+			+ "distributors and breweries. Heineken owns and manages one of the worldï¿½s "
+			+ "leading portfolios of beer brands and is one of the worldï¿½s leading brewers "
+			+ "in terms of sales volume and profitability. Our principal international brands are "
+			+ "Heineken and Amstel, but the group brews and sells more than 170 international premium, "
+			+ "regional, local and specialty beers, including Cruzcampo, Tiger, Zywiec, "
+			+ "Birra Moretti, Ochota, Murphyï¿½s and Star.";
 	}
 
 	/**
 	 * @see org.apache.wicket.security.examples.tabs.panels.BeerPanel#getName()
 	 */
+	@Override
 	public String getName()
 	{
 		return "Heineken";
@@ -65,6 +67,7 @@ public class Heineken extends BeerPanel
 	/**
 	 * @see org.apache.wicket.security.examples.tabs.panels.BeerPanel#getUrl()
 	 */
+	@Override
 	public String getUrl()
 	{
 		return "http://heineken.com/";

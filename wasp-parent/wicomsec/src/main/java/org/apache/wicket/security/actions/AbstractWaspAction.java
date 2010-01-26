@@ -16,10 +16,8 @@
  */
 package org.apache.wicket.security.actions;
 
-
 /**
- * Immutable {@link WaspAction} class. These actions are instantiated by an
- * ActionFactory.
+ * Immutable {@link WaspAction} class. These actions are instantiated by an ActionFactory.
  * 
  * @author marrink
  */
@@ -38,13 +36,13 @@ public abstract class AbstractWaspAction implements WaspAction
 		this.name = name;
 		if (isEmpty(name))
 			throw new IllegalArgumentException(
-					"Name argument may not be null, whitespace or the empty string");
+				"Name argument may not be null, whitespace or the empty string");
 	}
 
 	/**
-	 * Small check to see if a string contains more then just whitespace. Copied
-	 * from {@link org.apache.wicket.util.string.Strings#isEmpty(CharSequence)}
-	 * to keep this as much separated as possible from wicket code
+	 * Small check to see if a string contains more then just whitespace. Copied from
+	 * {@link org.apache.wicket.util.string.Strings#isEmpty(CharSequence)} to keep this as
+	 * much separated as possible from wicket code
 	 * 
 	 * @param string
 	 * @return

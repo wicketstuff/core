@@ -24,13 +24,12 @@ import org.apache.wicket.security.examples.httplogin.basic.authentication.MyLogi
 import org.apache.wicket.security.login.http.HttpAuthenticationLoginPage;
 
 /**
- * The login page. compared to login pages from the other examples it is a bit
- * different because there is no login form. Using http authentication the
- * browser is going to take care of that for us. In order to display a little
- * message to the user this page is rendered normally and the authentication is
- * only requested after the login button is pushed. If you do not want a login
- * button you can request authentication immediately by calling the
- * {@link #doAuthentication()} directly in the constructor instead of when the
+ * The login page. compared to login pages from the other examples it is a bit different
+ * because there is no login form. Using http authentication the browser is going to take
+ * care of that for us. In order to display a little message to the user this page is
+ * rendered normally and the authentication is only requested after the login button is
+ * pushed. If you do not want a login button you can request authentication immediately by
+ * calling the {@link #doAuthentication()} directly in the constructor instead of when the
  * button is clicked.
  * 
  * @author marrink
@@ -61,6 +60,7 @@ public class LoginPage extends HttpAuthenticationLoginPage
 			/**
 			 * @see org.apache.wicket.Component#isVisible()
 			 */
+			@Override
 			public boolean isVisible()
 			{
 				return anyMessage();
@@ -68,11 +68,12 @@ public class LoginPage extends HttpAuthenticationLoginPage
 		});
 		// either allow the user to postpone logging in until the button has
 		// been pushed
-		add(new Link("link")
+		add(new Link<Void>("link")
 		{
 
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public void onClick()
 			{
 				doAuthentication();
@@ -88,6 +89,7 @@ public class LoginPage extends HttpAuthenticationLoginPage
 	 * @see org.apache.wicket.security.login.http.HttpAuthenticationLoginPage#getBasicLoginContext(java.lang.String,
 	 *      java.lang.String)
 	 */
+	@Override
 	protected Object getBasicLoginContext(String username, String password)
 	{
 		return new MyLoginContext(username, password);
@@ -97,10 +99,11 @@ public class LoginPage extends HttpAuthenticationLoginPage
 	 * @see org.apache.wicket.security.login.http.HttpAuthenticationLoginPage#getRealm(org.apache.wicket.protocol.http.WebRequest,
 	 *      org.apache.wicket.protocol.http.WebResponse)
 	 */
+	@Override
 	public String getRealm(WebRequest request, WebResponse response)
 	{
 		return "examples-basic"; // could be anything according to the http
-									// spec
+		// spec
 	}
 
 }

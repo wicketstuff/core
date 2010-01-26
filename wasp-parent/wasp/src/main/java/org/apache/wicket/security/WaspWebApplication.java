@@ -17,17 +17,16 @@
 package org.apache.wicket.security;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.Page;
 import org.apache.wicket.Request;
+import org.apache.wicket.RequestCycle;
 import org.apache.wicket.Response;
 import org.apache.wicket.Session;
-import org.apache.wicket.Page;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.markup.html.pages.AccessDeniedPage;
 import org.apache.wicket.authorization.AuthorizationException;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.protocol.http.WebResponse;
 import org.apache.wicket.protocol.http.WebRequest;
 import org.apache.wicket.protocol.http.WebRequestCycle;
+import org.apache.wicket.protocol.http.WebResponse;
 import org.apache.wicket.security.actions.ActionFactory;
 import org.apache.wicket.security.strategies.StrategyFactory;
 
@@ -54,12 +53,13 @@ public abstract class WaspWebApplication extends WebApplication implements WaspA
 	}
 
 	/**
-	 * Initializes the actionfactory and the strategyfactory. If you override
-	 * this method you must either call super.init() or setup the actionfactory
-	 * and the strategyfactory yourself. In that order.
+	 * Initializes the actionfactory and the strategyfactory. If you override this method
+	 * you must either call super.init() or setup the actionfactory and the
+	 * strategyfactory yourself. In that order.
 	 * 
 	 * @see WebApplication#init()
 	 */
+	@Override
 	protected void init()
 	{
 		setupActionFactory();
@@ -67,41 +67,43 @@ public abstract class WaspWebApplication extends WebApplication implements WaspA
 	}
 
 	/**
-	 * Creates a new WaspSession. If you override this method make sure you
-	 * return a subclass of {@link WaspSession}.
+	 * Creates a new WaspSession. If you override this method make sure you return a
+	 * subclass of {@link WaspSession}.
 	 * 
 	 * @see org.apache.wicket.protocol.http.WebApplication#newSession(org.apache.wicket.Request,
 	 *      org.apache.wicket.Response)
 	 */
+	@Override
 	public Session newSession(Request request, Response response)
 	{
 		return new WaspSession(this, request);
 	}
 
 	/**
-	 * Called by the {@link WaspWebApplication#init()}. use this to create and
-	 * initialize your factory. The factory created here should be returned when
-	 * calling {@link WaspApplication#getStrategyFactory()}.
+	 * Called by the {@link WaspWebApplication#init()}. use this to create and initialize
+	 * your factory. The factory created here should be returned when calling
+	 * {@link WaspApplication#getStrategyFactory()}.
 	 * 
 	 * @see WaspApplication#getStrategyFactory()
 	 */
 	protected abstract void setupStrategyFactory();
 
 	/**
-	 * Called by the {@link WaspWebApplication#init()}. use this to create and
-	 * initialize your factory. The factory created here should be returned when
-	 * calling {@link WaspApplication#getActionFactory()}.
+	 * Called by the {@link WaspWebApplication#init()}. use this to create and initialize
+	 * your factory. The factory created here should be returned when calling
+	 * {@link WaspApplication#getActionFactory()}.
 	 * 
 	 * @see WaspApplication#getActionFactory()
 	 */
 	protected abstract void setupActionFactory();
 
 	/**
-	 * Destroys the strategy factory and the action factory. In that order. If
-	 * you override this method you must call super.onDestroy().
+	 * Destroys the strategy factory and the action factory. In that order. If you
+	 * override this method you must call super.onDestroy().
 	 * 
 	 * @see Application#onDestroy()
 	 */
+	@Override
 	protected void onDestroy()
 	{
 		StrategyFactory factory = getStrategyFactory();
@@ -114,51 +116,67 @@ public abstract class WaspWebApplication extends WebApplication implements WaspA
 			factory2.destroy();
 	}
 
-    /**
-     * Override the newRequestCycle to return an accessdenied page instead of the wicket default page that is
-     * returned for a InvalidUrlException. This override will return the override page in the
-     * AbstractRequestCycleProcessor
-     * 
-     * @inheritdoc
-     *
-     * @see org.apache.wicket.request.AbstractRequestCycleProcessor
-     */
-    @Override
-    public RequestCycle newRequestCycle(final Request request, final Response response) {
-        return new WebRequestCycle(this, (WebRequest) request, (WebResponse) response) {
+	/**
+	 * Override the newRequestCycle to return an accessdenied page instead of the wicket
+	 * default page that is returned for a InvalidUrlException. This override will return
+	 * the override page in the AbstractRequestCycleProcessor
+	 * 
+	 * @inheritdoc
+	 * 
+	 * @see org.apache.wicket.request.AbstractRequestCycleProcessor
+	 */
+	@Override
+	public RequestCycle newRequestCycle(final Request request, final Response response)
+	{
+		return new WebRequestCycle(this, (WebRequest) request, (WebResponse) response)
+		{
 
-            @Override
-            public Page onRuntimeException(Page page, RuntimeException e) {
-                try {
-                    if (e instanceof AuthorizationException) {
+			@Override
+			public Page onRuntimeException(Page page, RuntimeException e)
+			{
+				try
+				{
+					if (e instanceof AuthorizationException)
+					{
 
-                        return getApplicationSettings().getAccessDeniedPage().newInstance();
+						return getApplicationSettings().getAccessDeniedPage().newInstance();
 
-                    }
-                    Throwable t = e.getCause();
-                    while (t != null) {
-                        if (t instanceof AuthorizationException) {
-                            try {
-                                return getApplicationSettings().getAccessDeniedPage().newInstance();
-                            } catch (InstantiationException e1) {
-                                super.onRuntimeException(page,
-                                        new RuntimeException("Exception while creating access denied page", e1));
-                            } catch (IllegalAccessException e1) {
-                                super.onRuntimeException(page,
-                                        new RuntimeException("Exception while creating access denied page", e1));
-                            }
-                        }
-                        t = t.getCause();
-                    }
-                } catch (InstantiationException e1) {
-                    super.onRuntimeException(page,
-                            new RuntimeException("Exception while creating access denied page", e1));
-                } catch (IllegalAccessException e1) {
-                    super.onRuntimeException(page,
-                            new RuntimeException("Exception while creating access denied page", e1));
-                }
-                return super.onRuntimeException(page, e);
-            }
-        };
-    }
+					}
+					Throwable t = e.getCause();
+					while (t != null)
+					{
+						if (t instanceof AuthorizationException)
+						{
+							try
+							{
+								return getApplicationSettings().getAccessDeniedPage().newInstance();
+							}
+							catch (InstantiationException e1)
+							{
+								super.onRuntimeException(page, new RuntimeException(
+									"Exception while creating access denied page", e1));
+							}
+							catch (IllegalAccessException e1)
+							{
+								super.onRuntimeException(page, new RuntimeException(
+									"Exception while creating access denied page", e1));
+							}
+						}
+						t = t.getCause();
+					}
+				}
+				catch (InstantiationException e1)
+				{
+					super.onRuntimeException(page, new RuntimeException(
+						"Exception while creating access denied page", e1));
+				}
+				catch (IllegalAccessException e1)
+				{
+					super.onRuntimeException(page, new RuntimeException(
+						"Exception while creating access denied page", e1));
+				}
+				return super.onRuntimeException(page, e);
+			}
+		};
+	}
 }

@@ -17,6 +17,7 @@
 package org.apache.wicket.security;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.Page;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.security.actions.ActionFactory;
@@ -24,10 +25,10 @@ import org.apache.wicket.security.actions.WaspActionFactory;
 import org.apache.wicket.security.strategies.StrategyFactory;
 
 /**
- * Interface over Application to get the factories. All implementations should
- * extend the {@link Application} class or a subclass thereof. Implementations
- * of {@link WebApplication} should also cleanup the factories with a call to
- * destroy when the time has come.
+ * Interface over Application to get the factories. All implementations should extend the
+ * {@link Application} class or a subclass thereof. Implementations of
+ * {@link WebApplication} should also cleanup the factories with a call to destroy when
+ * the time has come.
  * 
  * @see Application
  * @see ActionFactory
@@ -38,30 +39,29 @@ public interface WaspApplication
 {
 
 	/**
-	 * Returns the factory that will be used to create strategies for each
-	 * session. There is only one factory for each application. Can not be null.
+	 * Returns the factory that will be used to create strategies for each session. There
+	 * is only one factory for each application. Can not be null.
 	 * 
 	 * @return a factory
 	 */
 	public StrategyFactory getStrategyFactory();
 
 	/**
-	 * Returns factory for action mapping. There is only one factory for each
-	 * application. Can not be null.
+	 * Returns factory for action mapping. There is only one factory for each application.
+	 * Can not be null.
 	 * 
 	 * @return a factory.
 	 */
 	public WaspActionFactory getActionFactory();
 
 	/**
-	 * The Page to redirect to when the user is not authenticated. This is the
-	 * primary login page. if an application requires a multi-level login, an
-	 * ISecurityCheck could throw an
-	 * {@link RestartResponseAtInterceptPageException} to redirect to the
-	 * desired secondary login page.
+	 * The Page to redirect to when the user is not authenticated. This is the primary
+	 * login page. if an application requires a multi-level login, an ISecurityCheck could
+	 * throw an {@link RestartResponseAtInterceptPageException} to redirect to the desired
+	 * secondary login page.
 	 * 
 	 * @return a page.
 	 */
-	public Class getLoginPage();
+	public Class< ? extends Page> getLoginPage();
 
 }

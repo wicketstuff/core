@@ -25,11 +25,11 @@ import org.apache.wicket.security.hive.config.PolicyFileHiveFactory;
 import org.apache.wicket.security.hive.config.SwarmPolicyFileHiveFactory;
 
 /**
- * This example re-uses almost everything from the tab example to show you how
- * simple it is to just replace the strategy. The effect we are trying to create
- * is that the regular user now has all the power of the super user and vice
- * versa. Offcourse there are simpler ways for doing that but then we would not
- * have an example about using a custom strategy now did we?
+ * This example re-uses almost everything from the tab example to show you how simple it
+ * is to just replace the strategy. The effect we are trying to create is that the regular
+ * user now has all the power of the super user and vice versa. Offcourse there are
+ * simpler ways for doing that but then we would not have an example about using a custom
+ * strategy now did we?
  * 
  * @author marrink
  */
@@ -46,6 +46,7 @@ public class MyApplication extends org.apache.wicket.security.examples.tabs.MyAp
 	/**
 	 * @see org.apache.wicket.security.swarm.SwarmWebApplication#setupStrategyFactory()
 	 */
+	@Override
 	protected void setupStrategyFactory()
 	{
 		setStrategyFactory(new DenialFactory(getHiveKey()));
@@ -54,6 +55,7 @@ public class MyApplication extends org.apache.wicket.security.examples.tabs.MyAp
 	/**
 	 * @see org.apache.wicket.security.examples.tabs.MyApplication#getHiveKey()
 	 */
+	@Override
 	protected Object getHiveKey()
 	{
 		// use a different hive because we need to make some changes to the
@@ -64,6 +66,7 @@ public class MyApplication extends org.apache.wicket.security.examples.tabs.MyAp
 	/**
 	 * @see org.apache.wicket.security.examples.tabs.MyApplication#setUpHive()
 	 */
+	@Override
 	protected void setUpHive()
 	{
 		// create factory

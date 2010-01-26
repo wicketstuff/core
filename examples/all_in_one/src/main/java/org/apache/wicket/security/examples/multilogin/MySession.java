@@ -23,6 +23,7 @@ import org.apache.wicket.Request;
 import org.apache.wicket.Session;
 import org.apache.wicket.security.WaspApplication;
 import org.apache.wicket.security.WaspSession;
+import org.apache.wicket.security.examples.multilogin.entities.Entry;
 
 /**
  * custom session to keep track of moneytransfers.
@@ -31,13 +32,9 @@ import org.apache.wicket.security.WaspSession;
  */
 public class MySession extends WaspSession
 {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	private List moneyTransfers;
+	private List<Entry> moneyTransfers;
 
 	/**
 	 * Construct.
@@ -48,7 +45,7 @@ public class MySession extends WaspSession
 	public MySession(WaspApplication application, Request request)
 	{
 		super(application, request);
-		moneyTransfers = new ArrayList();
+		moneyTransfers = new ArrayList<Entry>();
 	}
 
 	/**
@@ -56,7 +53,7 @@ public class MySession extends WaspSession
 	 * 
 	 * @return moneytransfers
 	 */
-	public List getMoneyTransfers()
+	public List<Entry> getMoneyTransfers()
 	{
 		return moneyTransfers;
 	}
@@ -68,6 +65,6 @@ public class MySession extends WaspSession
 	 */
 	public static final MySession getSessesion()
 	{
-		return (MySession)Session.get();
+		return (MySession) Session.get();
 	}
 }

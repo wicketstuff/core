@@ -18,39 +18,38 @@ package org.apache.wicket.security.examples.secureform.pages;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.form.CheckBox;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.security.components.SecureWebPage;
 import org.apache.wicket.security.components.markup.html.form.SecureForm;
 import org.apache.wicket.security.components.markup.html.form.SecureTextField;
 import org.apache.wicket.security.components.markup.html.links.SecureAjaxLink;
 
-import java.util.Collection;
-
 /**
- * This Secure Page contains secure form components.
- * The secure form components are visible but disabled for default users.
- * The admin user has specific 'rights' (as defined in the secure-rules.hive) and has the ability
- * to enter data and submit the form. 
- *
+ * This Secure Page contains secure form components. The secure form components are
+ * visible but disabled for default users. The admin user has specific 'rights' (as
+ * defined in the secure-rules.hive) and has the ability to enter data and submit the
+ * form.
+ * 
  * @author Olger Warnier
- *
+ * 
  */
 public class MySecurePage extends SecureWebPage
 {
 
 	private static final long serialVersionUID = 1L;
 
-    /* form properties */
-    private String name;
-    private boolean information;
+	/* form properties */
+	private String name;
 
-    private SecureForm sampleForm;
-    private SecureTextField secureNameField;
-    private CheckBox informationCheckBox;
+	private boolean information;
+
+	private SecureForm<MySecurePage> sampleForm;
+
+	private SecureTextField<String> secureNameField;
+
+	private CheckBox informationCheckBox;
 
 	/**
 	 * @param parameters
@@ -58,70 +57,100 @@ public class MySecurePage extends SecureWebPage
 	public MySecurePage(PageParameters parameters)
 	{
 		super(parameters);
-        sampleForm = new SecureForm("sampleForm", new CompoundPropertyModel(this)) {
-            @Override
-            protected void onSubmit() {
-                super.onSubmit();
-            }
-        };
-        sampleForm.setOutputMarkupId(true);
-        secureNameField = new SecureTextField("name");
-        secureNameField.setOutputMarkupId(true);
-        sampleForm.add(secureNameField);
-        informationCheckBox = new CheckBox("information");
-        informationCheckBox.setOutputMarkupId(true);
-        sampleForm.add(informationCheckBox);
+		sampleForm =
+			new SecureForm<MySecurePage>("sampleForm",
+				new CompoundPropertyModel<MySecurePage>(this))
+			{
+				private static final long serialVersionUID = 1L;
 
-        // Add the enable / disable link for the form. This is a admin only feature.
-        SecureAjaxLink disableLink = new SecureAjaxLink("disableLink") {
-            public void onClick(AjaxRequestTarget target) {
-                if (secureNameField.isEnabled()) {
-                    secureNameField.setEnabled(false);
-                } else {
-                    secureNameField.setEnabled(true);
-                }
-                if (informationCheckBox.isEnabled()) {
-                    informationCheckBox.setEnabled(false);
-                } else {
-                    informationCheckBox.setEnabled(true);
-                }
-                target.addComponent(sampleForm);
-            }
-        };
-        sampleForm.add(disableLink);
-        
+				@Override
+				protected void onSubmit()
+				{
+					super.onSubmit();
+				}
+			};
+		sampleForm.setOutputMarkupId(true);
+		secureNameField = new SecureTextField<String>("name");
+		secureNameField.setOutputMarkupId(true);
+		sampleForm.add(secureNameField);
+		informationCheckBox = new CheckBox("information");
+		informationCheckBox.setOutputMarkupId(true);
+		sampleForm.add(informationCheckBox);
 
-        add(sampleForm);
+		// Add the enable / disable link for the form. This is a admin only feature.
+		SecureAjaxLink<Void> disableLink = new SecureAjaxLink<Void>("disableLink")
+		{
+			private static final long serialVersionUID = 1L;
 
-        // add the link back to the homepage
-        add(new Link("toHomePage"){
-            public void onClick() {
-                setResponsePage(HomePage.class);
-            }
-        });
+			@Override
+			public void onClick(AjaxRequestTarget target)
+			{
+				if (secureNameField.isEnabled())
+				{
+					secureNameField.setEnabled(false);
+				}
+				else
+				{
+					secureNameField.setEnabled(true);
+				}
+				if (informationCheckBox.isEnabled())
+				{
+					informationCheckBox.setEnabled(false);
+				}
+				else
+				{
+					informationCheckBox.setEnabled(true);
+				}
+				target.addComponent(sampleForm);
+			}
+		};
+		sampleForm.add(disableLink);
 
-        // add the link to the login page, it is possible to login as another user
-        add(new Link("toLogin") {
-            public void onClick() {
-                setResponsePage(LoginPage.class);
-            }
-        });
+		add(sampleForm);
+
+		// add the link back to the homepage
+		add(new Link<Void>("toHomePage")
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick()
+			{
+				setResponsePage(HomePage.class);
+			}
+		});
+
+		// add the link to the login page, it is possible to login as another user
+		add(new Link<Void>("toLogin")
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick()
+			{
+				setResponsePage(LoginPage.class);
+			}
+		});
 	}
 
-    /* getters and setters in order to support the compound property model */
-    public String getName() {
-        return this.name;
-    }
+	/* getters and setters in order to support the compound property model */
+	public String getName()
+	{
+		return this.name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name)
+	{
+		this.name = name;
+	}
 
-    public boolean getInformation() {
-        return this.information;
-    }
+	public boolean getInformation()
+	{
+		return this.information;
+	}
 
-    public void setInformation(boolean information) {
-        this.information = information;   
-    }
+	public void setInformation(boolean information)
+	{
+		this.information = information;
+	}
 }

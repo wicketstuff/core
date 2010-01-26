@@ -32,7 +32,7 @@ import org.apache.wicket.security.swarm.strategies.SwarmStrategy;
  * @see SwarmStrategy#isModelAuthorized(ISecureModel, Component,
  *      org.apache.wicket.security.actions.WaspAction)
  */
-public interface SwarmModel extends ISecureModel
+public interface SwarmModel<T> extends ISecureModel<T>
 {
 	/**
 	 * Returns a string identifying this model for security purposes. This id is

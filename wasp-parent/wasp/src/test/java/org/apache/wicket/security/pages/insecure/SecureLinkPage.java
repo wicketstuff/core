@@ -40,7 +40,7 @@ public class SecureLinkPage extends BasePage
 	public SecureLinkPage()
 	{
 		add(new Label("welcome", "Welcome Anyone can see this page as long as they are logged in"));
-		add(new SecurePageLink("secure", HomePage.class));
+		add(new SecurePageLink<Void>("secure", HomePage.class));
 	}
 
 }

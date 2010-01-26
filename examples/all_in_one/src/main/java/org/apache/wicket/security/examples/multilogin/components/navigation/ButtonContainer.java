@@ -16,6 +16,9 @@
  */
 package org.apache.wicket.security.examples.multilogin.components.navigation;
 
+import java.util.ArrayList;
+
+import org.apache.wicket.Page;
 import org.apache.wicket.security.examples.multilogin.pages.BankAccountBalancePage;
 import org.apache.wicket.security.examples.multilogin.pages.CommitTransferMoneyPage;
 import org.apache.wicket.security.examples.multilogin.pages.HomePage;
@@ -24,9 +27,8 @@ import org.apache.wicket.security.examples.multilogin.pages.InitiateTransferMone
 /**
  * @author marrink
  */
-public class ButtonContainer
-		extends
-			org.apache.wicket.security.examples.components.navigation.ButtonContainer
+public class ButtonContainer extends
+		org.apache.wicket.security.examples.components.navigation.ButtonContainer
 {
 
 	private static final long serialVersionUID = 1L;
@@ -35,14 +37,17 @@ public class ButtonContainer
 	 * A button.
 	 */
 	public static final Integer BUTTON_HOME = new Integer(0);
+
 	/**
 	 * A button.
 	 */
 	public static final Integer BUTTON_OVERVIEW = new Integer(1);
+
 	/**
 	 * A button.
 	 */
 	public static final Integer BUTTON_TRANSACTION = new Integer(2);
+
 	/**
 	 * A button.
 	 */
@@ -62,12 +67,16 @@ public class ButtonContainer
 	/**
 	 * @see org.apache.wicket.security.examples.components.navigation.ButtonContainer#setupButtons()
 	 */
+	@Override
 	protected void setupButtons()
 	{
-		BUTTONS = new Integer[] { BUTTON_HOME, BUTTON_OVERVIEW, BUTTON_TRANSACTION, BUTTON_COMMIT };
-		NAMES = new String[] { "Home", "Account balance", "Transfer", "Commit transfers" };
-		PAGES = new Class[] { HomePage.class, BankAccountBalancePage.class,
-				InitiateTransferMoneyPage.class, CommitTransferMoneyPage.class };
+		BUTTONS = new Integer[] {BUTTON_HOME, BUTTON_OVERVIEW, BUTTON_TRANSACTION, BUTTON_COMMIT};
+		NAMES = new String[] {"Home", "Account balance", "Transfer", "Commit transfers"};
+		PAGES = new ArrayList<Class< ? extends Page>>();
+		PAGES.add(HomePage.class);
+		PAGES.add(BankAccountBalancePage.class);
+		PAGES.add(InitiateTransferMoneyPage.class);
+		PAGES.add(CommitTransferMoneyPage.class);
 	}
 
 }

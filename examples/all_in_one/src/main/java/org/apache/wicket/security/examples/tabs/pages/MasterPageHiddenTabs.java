@@ -19,6 +19,7 @@ package org.apache.wicket.security.examples.tabs.pages;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -54,6 +55,7 @@ public class MasterPageHiddenTabs extends MasterPage
 	/**
 	 * @see org.apache.wicket.security.examples.tabs.pages.MasterPage#getActiveMenuButton()
 	 */
+	@Override
 	protected Integer getActiveMenuButton()
 	{
 		return ButtonContainer.BUTTON_HIDE_TAB;
@@ -62,6 +64,7 @@ public class MasterPageHiddenTabs extends MasterPage
 	/**
 	 * @see org.apache.wicket.security.examples.tabs.pages.MasterPage#getTabBar(java.lang.String)
 	 */
+	@Override
 	protected Panel getTabBar(String id)
 	{
 		return new SecureTabbedPanel(id, getTabs());
@@ -70,9 +73,10 @@ public class MasterPageHiddenTabs extends MasterPage
 	/**
 	 * @see org.apache.wicket.security.examples.tabs.pages.MasterPage#getTabs()
 	 */
-	protected List getTabs()
+	@Override
+	protected List<ITab> getTabs()
 	{
-		List tabs = new ArrayList();
+		List<ITab> tabs = new ArrayList<ITab>();
 		tabs.add(new ISecureTab()
 		{
 			private static final long serialVersionUID = 1L;
@@ -84,17 +88,18 @@ public class MasterPageHiddenTabs extends MasterPage
 				return panel;
 			}
 
-            public boolean isVisible() {
-                //@TODO what todo with the new isVisible method ?
-                return true;
-            }
-
-			public IModel getTitle()
+			public boolean isVisible()
 			{
-				return new Model("Gifkikker");
+				// @TODO what todo with the new isVisible method ?
+				return true;
 			}
 
-			public Class getPanel()
+			public IModel<String> getTitle()
+			{
+				return new Model<String>("Gifkikker");
+			}
+
+			public Class< ? extends Panel> getPanel()
 			{
 				return Gifkikker.class;
 			}
@@ -110,17 +115,18 @@ public class MasterPageHiddenTabs extends MasterPage
 				return panel;
 			}
 
-             public boolean isVisible() {
-                //@TODO what todo with the new isVisible method ?
-                return true;
-            }
-
-			public IModel getTitle()
+			public boolean isVisible()
 			{
-				return new Model("Heineken");
+				// @TODO what todo with the new isVisible method ?
+				return true;
 			}
 
-			public Class getPanel()
+			public IModel<String> getTitle()
+			{
+				return new Model<String>("Heineken");
+			}
+
+			public Class< ? extends Panel> getPanel()
 			{
 				return Heineken.class;
 			}
@@ -136,17 +142,18 @@ public class MasterPageHiddenTabs extends MasterPage
 				return panel;
 			}
 
-            public boolean isVisible() {
-                //@TODO what todo with the new isVisible method ?
-                return true;
-            }
-            
-			public IModel getTitle()
+			public boolean isVisible()
 			{
-				return new Model("Grolsch");
+				// @TODO what todo with the new isVisible method ?
+				return true;
 			}
 
-			public Class getPanel()
+			public IModel<String> getTitle()
+			{
+				return new Model<String>("Grolsch");
+			}
+
+			public Class< ? extends Panel> getPanel()
 			{
 				return Grolsch.class;
 			}

@@ -42,7 +42,7 @@ public class MyUnSecurePage extends WebPage
 	/**
 	 * @param model
 	 */
-	public MyUnSecurePage(IModel model)
+	public MyUnSecurePage(IModel< ? > model)
 	{
 		super(model);
 	}
@@ -67,7 +67,7 @@ public class MyUnSecurePage extends WebPage
 	 * @param pageMap
 	 * @param model
 	 */
-	public MyUnSecurePage(IPageMap pageMap, IModel model)
+	public MyUnSecurePage(IPageMap pageMap, IModel< ? > model)
 	{
 		super(pageMap, model);
 	}

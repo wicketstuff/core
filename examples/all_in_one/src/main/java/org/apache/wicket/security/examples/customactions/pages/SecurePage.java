@@ -21,8 +21,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.security.examples.pages.MySecurePage;
 
 /**
- * Custom secure page, required, because the way all these examples are set up,
- * to return the context for logging off.
+ * Custom secure page, required, because the way all these examples are set up, to return
+ * the context for logging off.
  * 
  * @author marrink
  */
@@ -56,7 +56,7 @@ public class SecurePage extends MySecurePage
 	 * 
 	 * @param model
 	 */
-	public SecurePage(IModel model)
+	public SecurePage(IModel< ? > model)
 	{
 		super(model);
 	}

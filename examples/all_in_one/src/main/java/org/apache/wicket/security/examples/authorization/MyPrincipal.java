@@ -28,6 +28,7 @@ import org.apache.wicket.security.hive.authorization.Principal;
 public class MyPrincipal implements Principal
 {
 	private static final long serialVersionUID = 1L;
+
 	private String name;
 
 	/**
@@ -65,6 +66,7 @@ public class MyPrincipal implements Principal
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString()
 	{
 		return getClass().getName() + ": " + getName();
@@ -75,6 +77,7 @@ public class MyPrincipal implements Principal
 	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
+	@Override
 	public int hashCode()
 	{
 		final int PRIME = 31;
@@ -89,6 +92,7 @@ public class MyPrincipal implements Principal
 	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (this == obj)
@@ -97,7 +101,7 @@ public class MyPrincipal implements Principal
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final MyPrincipal other = (MyPrincipal)obj;
+		final MyPrincipal other = (MyPrincipal) obj;
 		if (name == null)
 		{
 			if (other.name != null)

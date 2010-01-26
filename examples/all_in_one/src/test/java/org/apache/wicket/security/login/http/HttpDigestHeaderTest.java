@@ -45,6 +45,7 @@ public class HttpDigestHeaderTest extends TestCase
 	/**
 	 * @see junit.framework.TestCase#setUp()
 	 */
+	@Override
 	protected void setUp() throws Exception
 	{
 		super.setUp();
@@ -53,6 +54,7 @@ public class HttpDigestHeaderTest extends TestCase
 	/**
 	 * @see junit.framework.TestCase#tearDown()
 	 */
+	@Override
 	protected void tearDown() throws Exception
 	{
 		super.tearDown();
@@ -61,6 +63,7 @@ public class HttpDigestHeaderTest extends TestCase
 	/**
 	 * Test regex pattern used in parsing request header.
 	 */
+	@SuppressWarnings("null")
 	public void testRegExPattern()
 	{
 		Pattern headerPattern = null;
@@ -68,7 +71,7 @@ public class HttpDigestHeaderTest extends TestCase
 		{
 			Field field = HttpDigestLoginPage.class.getDeclaredField("HEADER_FIELDS");
 			field.setAccessible(true);
-			headerPattern = (Pattern)field.get(null);
+			headerPattern = (Pattern) field.get(null);
 		}
 		catch (IllegalArgumentException e)
 		{
@@ -88,7 +91,8 @@ public class HttpDigestHeaderTest extends TestCase
 		}
 		assertNotNull(headerPattern);
 		assertFalse(headerPattern.matcher("").matches());
-		String header = "username=\"Mufasa\",realm=\"testrealm@host.com\","
+		String header =
+			"username=\"Mufasa\",realm=\"testrealm@host.com\","
 				+ "nonce=\"dcd98b7102dd2f0e8b11d0f600bfb0c093\",uri=\"/dir/index.html\","
 				+ "qop=auth,nc=00000001,cnonce=\"0a4f113b\","
 				+ "response=\"6629fae49393a05397450978507c4ef1\","

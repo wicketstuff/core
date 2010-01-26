@@ -18,25 +18,22 @@ package org.apache.wicket.security.hive.authentication;
 
 import org.apache.wicket.security.authentication.LoginException;
 
-
 /**
- * A LoginContext is little more than a factory to create a {@link Subject} and
- * can be discarded afterwards. Usually it contains some credentials such as
- * username and password. Note that generally it is no a good idea to store
- * those type of credentials in the session, so if you plan on keeping this
- * context in the session be sure to clear them before you return a Subject in
- * {@link #login()}. Some applications will require you to login with two or
- * more different LoginContexts before a user is fully authenticated. For that
- * purpose a sortOrder is available in the context. which is used in descending
- * order to pass authentication requests to the subjects until one of them
- * authenticates. Sort orders are &gt;=0 and are not required to have an
- * interval of 1. For example 0, 5,6 are all perfectly legal sort orders for one
- * user. Duplicates are also allowed, in that case they are queried in reverse
- * order of login. The context also contains a flag to indicate if an additional
- * login is allowed. Note that both the sort order and the additional login flag
- * must be constant. Also note that all LoginContexts of the same class and with
- * the same sort order are equal, thus for logoff you do not need to keep a
- * reference to the context but can simply use a new instance.
+ * A LoginContext is little more than a factory to create a {@link Subject} and can be
+ * discarded afterwards. Usually it contains some credentials such as username and
+ * password. Note that generally it is no a good idea to store those type of credentials
+ * in the session, so if you plan on keeping this context in the session be sure to clear
+ * them before you return a Subject in {@link #login()}. Some applications will require
+ * you to login with two or more different LoginContexts before a user is fully
+ * authenticated. For that purpose a sortOrder is available in the context. which is used
+ * in descending order to pass authentication requests to the subjects until one of them
+ * authenticates. Sort orders are &gt;=0 and are not required to have an interval of 1.
+ * For example 0, 5,6 are all perfectly legal sort orders for one user. Duplicates are
+ * also allowed, in that case they are queried in reverse order of login. The context also
+ * contains a flag to indicate if an additional login is allowed. Note that both the sort
+ * order and the additional login flag must be constant. Also note that all LoginContexts
+ * of the same class and with the same sort order are equal, thus for logoff you do not
+ * need to keep a reference to the context but can simply use a new instance.
  * 
  * @author marrink
  * @see #preventsAdditionalLogins()
@@ -44,11 +41,12 @@ import org.apache.wicket.security.authentication.LoginException;
 public abstract class LoginContext
 {
 	private final int sortOrder;
+
 	private final boolean additionalLoginsPrevented;
 
 	/**
-	 * Constructs a context for single login applications. At sortorder 0 and
-	 * preventing additional logins.
+	 * Constructs a context for single login applications. At sortorder 0 and preventing
+	 * additional logins.
 	 */
 	public LoginContext()
 	{
@@ -56,9 +54,9 @@ public abstract class LoginContext
 	}
 
 	/**
-	 * Constructs a new context at the specified sort order. Additional logins
-	 * are prevented. This constructor is usually used in mult-login scenario's
-	 * for the context with the the highest sort order.
+	 * Constructs a new context at the specified sort order. Additional logins are
+	 * prevented. This constructor is usually used in mult-login scenario's for the
+	 * context with the the highest sort order.
 	 * 
 	 * @param sortOrder
 	 *            a number of 0 or higher.
@@ -69,14 +67,12 @@ public abstract class LoginContext
 	}
 
 	/**
-	 * Constructs a new context with sort order 0 and a customizable flag for
-	 * preventing additional logins. This constructor is mostly used in
-	 * multi-login scenario's.
+	 * Constructs a new context with sort order 0 and a customizable flag for preventing
+	 * additional logins. This constructor is mostly used in multi-login scenario's.
 	 * 
 	 * @param allowAdditionalLogings
-	 *            indicates if this context allows multiple subjects for one
-	 *            user and thus allows the user to gain more permissions on the
-	 *            fly.
+	 *            indicates if this context allows multiple subjects for one user and thus
+	 *            allows the user to gain more permissions on the fly.
 	 */
 	public LoginContext(boolean allowAdditionalLogings)
 	{
@@ -84,9 +80,8 @@ public abstract class LoginContext
 	}
 
 	/**
-	 * Constructs a new context with customizable sort order and flag for
-	 * preventing additional logins. This constructor is mostly used in
-	 * multi-login scenario's.
+	 * Constructs a new context with customizable sort order and flag for preventing
+	 * additional logins. This constructor is mostly used in multi-login scenario's.
 	 * 
 	 * @param sortOrder
 	 * @param allowAdditionalLogins
@@ -95,28 +90,26 @@ public abstract class LoginContext
 	{
 		if (sortOrder < 0)
 			throw new IllegalArgumentException("0 is the lowest sort order allowed, not "
-					+ sortOrder);
+				+ sortOrder);
 		this.sortOrder = sortOrder;
 		this.additionalLoginsPrevented = !allowAdditionalLogins;
 	}
 
-
 	/**
-	 * Perform a login. If the login fails in any way a {@link LoginException}
-	 * must be thrown rather then returning null. You should clear all sensitive
-	 * data stored in this context before returning the subject or throwing an
-	 * exception.
+	 * Perform a login. If the login fails in any way a {@link LoginException} must be
+	 * thrown rather then returning null. You should clear all sensitive data stored in
+	 * this context before returning the subject or throwing an exception.
 	 * 
 	 * @return a {@link Subject}, never null.
 	 * @throws LoginException
-	 *             if an exception occurs or if the subject could not login for
-	 *             some other reason
+	 *             if an exception occurs or if the subject could not login for some other
+	 *             reason
 	 */
 	public abstract Subject login() throws LoginException;
 
 	/**
-	 * Indicates the sort order of this context. the higher the value the more
-	 * you are authorized / authenticated for.
+	 * Indicates the sort order of this context. the higher the value the more you are
+	 * authorized / authenticated for.
 	 * 
 	 * @return the level
 	 */
@@ -128,6 +121,7 @@ public abstract class LoginContext
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
+	@Override
 	public final int hashCode()
 	{
 		final int PRIME = 31;
@@ -139,11 +133,12 @@ public abstract class LoginContext
 	}
 
 	/**
-	 * A loginContext is equal to a LoginContext of the same class (not
-	 * subclass) and level.
+	 * A loginContext is equal to a LoginContext of the same class (not subclass) and
+	 * level.
 	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
+	@Override
 	public final boolean equals(Object obj)
 	{
 		if (this == obj)
@@ -152,18 +147,17 @@ public abstract class LoginContext
 			return false;
 		if (!getClass().getName().equals(obj.getClass().getName()))
 			return false;
-		final LoginContext other = (LoginContext)obj;
+		final LoginContext other = (LoginContext) obj;
 		return sortOrder == other.sortOrder;
 	}
 
 	/**
-	 * Signals that no additional context should be allowed to login. The return
-	 * value must be constant from one invocation to another for this instance.
-	 * This flag is checked once by the container immediately after
-	 * {@link #login()}. Note in a multi login environment you will want your
-	 * logincontext with the highest possible sort order to prevent additional
-	 * logins. In a single login environment your logincontext should always
-	 * prevent additional logins.
+	 * Signals that no additional context should be allowed to login. The return value
+	 * must be constant from one invocation to another for this instance. This flag is
+	 * checked once by the container immediately after {@link #login()}. Note in a multi
+	 * login environment you will want your logincontext with the highest possible sort
+	 * order to prevent additional logins. In a single login environment your logincontext
+	 * should always prevent additional logins.
 	 * 
 	 * @return true if you do not want additional logins for this session, false
 	 *         otherwise.
@@ -174,11 +168,10 @@ public abstract class LoginContext
 	}
 
 	/**
-	 * Callback to take some action after a subject has been logged off. Note
-	 * that the LoginContext receiving this notification is not necessarily the
-	 * same instance that created the subject. This is because Swarm does not
-	 * store LoginContexts as they may contain sensitive data. By default this
-	 * method does nothing.
+	 * Callback to take some action after a subject has been logged off. Note that the
+	 * LoginContext receiving this notification is not necessarily the same instance that
+	 * created the subject. This is because Swarm does not store LoginContexts as they may
+	 * contain sensitive data. By default this method does nothing.
 	 * 
 	 * @param subject
 	 *            the user that has just been logged off

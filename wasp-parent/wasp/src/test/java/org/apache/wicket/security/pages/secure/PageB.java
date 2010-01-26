@@ -42,7 +42,8 @@ public class PageB extends SecureTestPage
 	public PageB()
 	{
 		add(new Label("welcome", "Welcome Only logged in users can see this page"));
-		TextField textField = new TextField("secure", new Model("secure textfield"));
+		TextField<String> textField = new TextField<String>("secure", new Model<String>(
+				"secure textfield"));
 		add(SecureComponentHelper
 				.setSecurityCheck(textField, new ComponentSecurityCheck(textField)));
 	}

@@ -20,6 +20,7 @@ import java.net.MalformedURLException;
 
 import junit.framework.TestCase;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WebRequestCycle;
 import org.apache.wicket.request.target.component.BookmarkablePageRequestTarget;
@@ -36,7 +37,6 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * @author marrink
  */
@@ -48,6 +48,7 @@ public class ContainerTest extends TestCase
 	 * The swarm application used for the test.
 	 */
 	protected WebApplication application;
+
 	/**
 	 * Handle to the mock environment.
 	 */
@@ -56,11 +57,13 @@ public class ContainerTest extends TestCase
 	/**
 	 * @see junit.framework.TestCase#setUp()
 	 */
-	protected void setUp() throws Exception
+	@Override
+	protected void setUp()
 	{
 		mock = new WicketTester(application = new SwarmWebApplication()
 		{
 
+			@Override
 			protected Object getHiveKey()
 			{
 				// if we were using servlet-api 2.5 we could get the contextpath
@@ -68,6 +71,7 @@ public class ContainerTest extends TestCase
 				return "test";
 			}
 
+			@Override
 			protected void setUpHive()
 			{
 				PolicyFileHiveFactory factory = new SwarmPolicyFileHiveFactory(getActionFactory());
@@ -75,7 +79,7 @@ public class ContainerTest extends TestCase
 				{
 					factory.addPolicyFile(getServletContext().getResource("WEB-INF/policy.hive"));
 					factory.setAlias("SimplePrincipal",
-							"org.apache.wicket.security.hive.authorization.SimplePrincipal");
+						"org.apache.wicket.security.hive.authorization.SimplePrincipal");
 					factory.setAlias("myPackage", "org.apache.wicket.security.pages");
 				}
 				catch (MalformedURLException e)
@@ -85,12 +89,13 @@ public class ContainerTest extends TestCase
 				HiveMind.registerHive(getHiveKey(), factory);
 			}
 
-			public Class getHomePage()
+			@Override
+			public Class< ? extends Page> getHomePage()
 			{
 				return ContainerHomePage.class;
 			}
 
-			public Class getLoginPage()
+			public Class< ? extends Page> getLoginPage()
 			{
 				return MockLoginPage.class;
 			}
@@ -100,7 +105,8 @@ public class ContainerTest extends TestCase
 	/**
 	 * @see junit.framework.TestCase#tearDown()
 	 */
-	protected void tearDown() throws Exception
+	@Override
+	protected void tearDown()
 	{
 		mock.setupRequestAndResponse();
 		mock.getWicketSession().invalidate();
@@ -133,9 +139,9 @@ public class ContainerTest extends TestCase
 			return;
 		assertTrue(tagTester.hasAttribute("disabled"));
 		assertTrue(mock.getTagByWicketId("lvl1").getChild("name", "lvl1:txt1").hasAttribute(
-				"disabled"));
+			"disabled"));
 		assertTrue(mock.getTagByWicketId("lvl1").getChild("name", "lvl1:lvl2:txt2").hasAttribute(
-				"disabled"));
+			"disabled"));
 	}
 
 	/**
@@ -195,8 +201,8 @@ public class ContainerTest extends TestCase
 		// wicket 1.3.4
 		mock.setupRequestAndResponse();
 		WebRequestCycle cycle = mock.createRequestCycle();
-		String url1 = cycle.urlFor(new BookmarkablePageRequestTarget(ContainerPage2.class, null))
-				.toString();
+		String url1 =
+			cycle.urlFor(new BookmarkablePageRequestTarget(ContainerPage2.class, null)).toString();
 		mock.getServletRequest().setURL("/ContainerTest$1/ContainerTest$1/" + url1);
 		mock.processRequestCycle();
 		mock.assertRenderedPage(MockLoginPage.class);
@@ -226,8 +232,8 @@ public class ContainerTest extends TestCase
 		// wicket 1.3.4
 		mock.setupRequestAndResponse();
 		WebRequestCycle cycle = mock.createRequestCycle();
-		String url1 = cycle.urlFor(new BookmarkablePageRequestTarget(ContainerPage2.class, null))
-				.toString();
+		String url1 =
+			cycle.urlFor(new BookmarkablePageRequestTarget(ContainerPage2.class, null)).toString();
 		mock.getServletRequest().setURL("/ContainerTest$1/ContainerTest$1/" + url1);
 		mock.processRequestCycle();
 		mock.assertRenderedPage(MockLoginPage.class);

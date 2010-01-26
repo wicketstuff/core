@@ -19,13 +19,12 @@ package org.apache.wicket.security.actions;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
- * Actions maintains the collection of {@link ActionFactory}s. There can only
- * be one Actions in each virtual machine. Having a separate instance where all
- * the ActionFactories are registered makes it easier to use them outside wicket
- * because there now is a single (non wicket) point of entry.
- * {@link ActionFactory}s should not be shared.
+ * Actions maintains the collection of {@link ActionFactory}s. There can only be one
+ * Actions in each virtual machine. Having a separate instance where all the
+ * ActionFactories are registered makes it easier to use them outside wicket because there
+ * now is a single (non wicket) point of entry. {@link ActionFactory}s should not be
+ * shared.
  * 
  * @author marrink
  */
@@ -56,17 +55,17 @@ public class Actions
 	}
 
 	/**
-	 * Registers a new ActionFactory for anybody knowing the right key to be
-	 * retrieved. It is not possible to overwrite a registration without first
-	 * unregistering the previous factory.
+	 * Registers a new ActionFactory for anybody knowing the right key to be retrieved. It
+	 * is not possible to overwrite a registration without first unregistering the
+	 * previous factory.
 	 * 
 	 * @param key
 	 *            the key to store the factory with.
 	 * @param factory
 	 *            the ActionFactory.
 	 * @throws IllegalArgumentException
-	 *             if the factory is null
-	 *             if an attempt is made to overwrite the registration.
+	 *             if the factory is null if an attempt is made to overwrite the
+	 *             registration.
 	 * @see #unregisterActionFactory(Object)
 	 */
 	public static void registerActionFactory(Object key, ActionFactory factory)
@@ -77,8 +76,7 @@ public class Actions
 		{
 			if (INSTANCE.factoryCollection.containsKey(key))
 				throw new IllegalArgumentException(
-						"Another ActionFactory is already registered with the following key: "
-								+ key);
+					"Another ActionFactory is already registered with the following key: " + key);
 			INSTANCE.factoryCollection.put(key, factory);
 		}
 	}
@@ -88,8 +86,7 @@ public class Actions
 	 * 
 	 * @param key
 	 *            the key the factory is registered with
-	 * @return the registered factory or null if none was registered with the
-	 *         key.
+	 * @return the registered factory or null if none was registered with the key.
 	 */
 	public static ActionFactory unregisterActionFactory(Object key)
 	{

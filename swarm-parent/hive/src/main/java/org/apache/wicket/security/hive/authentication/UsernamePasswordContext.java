@@ -19,8 +19,8 @@ package org.apache.wicket.security.hive.authentication;
 import org.apache.wicket.security.authentication.LoginException;
 
 /**
- * Simple {@link LoginContext} for a username and password, which may or may not
- * be encrypted.
+ * Simple {@link LoginContext} for a username and password, which may or may not be
+ * encrypted.
  * 
  * @author marrink
  */
@@ -30,6 +30,7 @@ public abstract class UsernamePasswordContext extends LoginContext
 	 * The user attempting to login.
 	 */
 	private String username;
+
 	/**
 	 * The password for that user.
 	 */
@@ -60,8 +61,7 @@ public abstract class UsernamePasswordContext extends LoginContext
 	}
 
 	/**
-	 * Constructor for logoff purposes should you have chosen allow additional
-	 * logins.
+	 * Constructor for logoff purposes should you have chosen allow additional logins.
 	 * 
 	 * @param sortOrder
 	 * @param allowAdditionalLogins
@@ -75,8 +75,7 @@ public abstract class UsernamePasswordContext extends LoginContext
 	}
 
 	/**
-	 * Constructor for login purposes should you have chosen allow additional
-	 * logins.
+	 * Constructor for login purposes should you have chosen allow additional logins.
 	 * 
 	 * @param username
 	 *            the user attempting to login
@@ -99,6 +98,7 @@ public abstract class UsernamePasswordContext extends LoginContext
 	 * 
 	 * @see org.apache.wicket.security.hive.authentication.LoginContext#login()
 	 */
+	@Override
 	public final Subject login() throws LoginException
 	{
 		if (username == null || password == null)
@@ -120,5 +120,6 @@ public abstract class UsernamePasswordContext extends LoginContext
 	 * @throws LoginException
 	 *             if the user could not be validated
 	 */
+	@SuppressWarnings("hiding")
 	protected abstract Subject getSubject(String username, String password) throws LoginException;
 }

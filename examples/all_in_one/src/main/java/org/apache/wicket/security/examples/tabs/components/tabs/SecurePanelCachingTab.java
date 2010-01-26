@@ -22,8 +22,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.security.extensions.markup.html.tabs.ISecureTab;
 
 /**
- * Wrapper around {@link ISecureTab}. behaves just like {@link PanelCachingTab}.
- * Note this class is not used in this example.
+ * Wrapper around {@link ISecureTab}. behaves just like {@link PanelCachingTab}. Note this
+ * class is not used in this example.
  * 
  * @author marrink
  */
@@ -35,6 +35,7 @@ public class SecurePanelCachingTab implements ISecureTab
 	private static final long serialVersionUID = 1L;
 
 	private Panel cachedPanel;
+
 	private ISecureTab delegate;
 
 	/**
@@ -52,7 +53,7 @@ public class SecurePanelCachingTab implements ISecureTab
 	 * 
 	 * @see org.apache.wicket.security.extensions.markup.html.tabs.ISecureTab#getPanel()
 	 */
-	public Class getPanel()
+	public Class< ? extends Panel> getPanel()
 	{
 		return delegate.getPanel();
 	}
@@ -70,7 +71,7 @@ public class SecurePanelCachingTab implements ISecureTab
 	/**
 	 * @see org.apache.wicket.extensions.markup.html.tabs.ITab#getTitle()
 	 */
-	public IModel getTitle()
+	public IModel<String> getTitle()
 	{
 		return delegate.getTitle();
 	}
@@ -78,17 +79,17 @@ public class SecurePanelCachingTab implements ISecureTab
 	/**
 	 * Access to the cached panel for subclasses.
 	 * 
-	 * @return the panel that is already cached or null if the panel is not yet
-	 *         cached.
+	 * @return the panel that is already cached or null if the panel is not yet cached.
 	 */
 	protected final Panel getCachedPanel()
 	{
 		return cachedPanel;
 	}
 
-    public boolean isVisible() {
-        //@TODO what todo with the new isVisible method ?
-        return true;
-    }
-    
+	public boolean isVisible()
+	{
+		// @TODO what todo with the new isVisible method ?
+		return true;
+	}
+
 }

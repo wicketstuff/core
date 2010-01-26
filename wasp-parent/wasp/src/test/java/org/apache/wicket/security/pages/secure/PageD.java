@@ -34,11 +34,8 @@ import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
 public class PageD extends SecureTestPage
 {
 
-	private final class SecureModel implements ISecureModel
+	private final class SecureModel implements ISecureModel<String>
 	{
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 
 		private String value = "foo";
@@ -74,7 +71,7 @@ public class PageD extends SecureTestPage
 		 * 
 		 * @see org.apache.wicket.model.IModel#getObject()
 		 */
-		public Object getObject()
+		public String getObject()
 		{
 			return value;
 		}
@@ -83,9 +80,9 @@ public class PageD extends SecureTestPage
 		 * 
 		 * @see org.apache.wicket.model.IModel#setObject(java.lang.Object)
 		 */
-		public void setObject(Object object)
+		public void setObject(String object)
 		{
-			value = String.valueOf(object);
+			value = object;
 		}
 
 		/**
@@ -110,10 +107,10 @@ public class PageD extends SecureTestPage
 	{
 		add(new Label("welcome", "Welcome Only logged in users can see this page"));
 
-		add(new SecureTextField("componentcheck", new Model("secure textfield")));
-		add(new TextField("modelcheck", new SecureModel()));
-		add(new SecureTextField("both", new SecureModel()));
-		add(new SecureTextField("bothcheck", new SecureModel(), true));
+		add(new SecureTextField<String>("componentcheck", new Model<String>("secure textfield")));
+		add(new TextField<String>("modelcheck", new SecureModel()));
+		add(new SecureTextField<String>("both", new SecureModel()));
+		add(new SecureTextField<String>("bothcheck", new SecureModel(), true));
 	}
 
 }

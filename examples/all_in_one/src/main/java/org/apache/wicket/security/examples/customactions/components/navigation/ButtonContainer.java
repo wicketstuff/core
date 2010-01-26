@@ -16,6 +16,9 @@
  */
 package org.apache.wicket.security.examples.customactions.components.navigation;
 
+import java.util.ArrayList;
+
+import org.apache.wicket.Page;
 import org.apache.wicket.security.examples.customactions.pages.DepartmentsPage;
 import org.apache.wicket.security.examples.customactions.pages.OverviewPage;
 
@@ -24,9 +27,8 @@ import org.apache.wicket.security.examples.customactions.pages.OverviewPage;
  * 
  * @author marrink
  */
-public class ButtonContainer
-		extends
-			org.apache.wicket.security.examples.components.navigation.ButtonContainer
+public class ButtonContainer extends
+		org.apache.wicket.security.examples.components.navigation.ButtonContainer
 {
 
 	private static final long serialVersionUID = 1L;
@@ -35,6 +37,7 @@ public class ButtonContainer
 	 * A button.
 	 */
 	public static final Integer BUTTON_OVERVIEW = new Integer(0);
+
 	/**
 	 * A button.
 	 */
@@ -54,11 +57,14 @@ public class ButtonContainer
 	/**
 	 * @see org.apache.wicket.security.examples.components.navigation.ButtonContainer#setupButtons()
 	 */
+	@Override
 	protected void setupButtons()
 	{
-		BUTTONS = new Integer[] { BUTTON_OVERVIEW, BUTTON_DEPARTMENTS };
-		NAMES = new String[] { "Overview", "Departments" };
-		PAGES = new Class[] { OverviewPage.class, DepartmentsPage.class };
+		BUTTONS = new Integer[] {BUTTON_OVERVIEW, BUTTON_DEPARTMENTS};
+		NAMES = new String[] {"Overview", "Departments"};
+		PAGES = new ArrayList<Class< ? extends Page>>();
+		PAGES.add(OverviewPage.class);
+		PAGES.add(DepartmentsPage.class);
 	}
 
 }

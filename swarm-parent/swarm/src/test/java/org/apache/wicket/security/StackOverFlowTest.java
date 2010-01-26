@@ -20,6 +20,7 @@ import java.net.MalformedURLException;
 
 import junit.framework.TestCase;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.Request;
 import org.apache.wicket.Response;
 import org.apache.wicket.Session;
@@ -36,7 +37,6 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * @author marrink
  */
@@ -44,6 +44,7 @@ public class StackOverFlowTest extends TestCase
 {
 	private final class MyWebApplication extends SwarmWebApplication
 	{
+		@Override
 		protected Object getHiveKey()
 		{
 			// if we were using servlet-api 2.5 we could get the contextpath
@@ -51,6 +52,7 @@ public class StackOverFlowTest extends TestCase
 			return "test";
 		}
 
+		@Override
 		protected void setUpHive()
 		{
 			PolicyFileHiveFactory factory = new SwarmPolicyFileHiveFactory(getActionFactory());
@@ -58,7 +60,7 @@ public class StackOverFlowTest extends TestCase
 			{
 				factory.addPolicyFile(getServletContext().getResource("WEB-INF/policy.hive"));
 				factory.setAlias("SimplePrincipal",
-						"org.apache.wicket.security.hive.authorization.SimplePrincipal");
+					"org.apache.wicket.security.hive.authorization.SimplePrincipal");
 				factory.setAlias("myPackage", "org.apache.wicket.security.pages");
 			}
 			catch (MalformedURLException e)
@@ -68,19 +70,21 @@ public class StackOverFlowTest extends TestCase
 			HiveMind.registerHive(getHiveKey(), factory);
 		}
 
-		public Class getHomePage()
+		@Override
+		public Class< ? extends Page> getHomePage()
 		{
 			return MockHomePage.class;
 		}
 
-		public Class getLoginPage()
+		public Class< ? extends Page> getLoginPage()
 		{
 			return MockLoginPage.class;
 		}
 
+		@Override
 		public Session newSession(Request request, Response response)
 		{
-			WaspSession session = (WaspSession)super.newSession(request, response);
+			WaspSession session = (WaspSession) super.newSession(request, response);
 			try
 			{
 				session.login(new PrimaryLoginContext());
@@ -99,6 +103,7 @@ public class StackOverFlowTest extends TestCase
 	 * The swarm application used for the test.
 	 */
 	protected WebApplication application;
+
 	/**
 	 * Handle to the mock environment.
 	 */
@@ -107,15 +112,18 @@ public class StackOverFlowTest extends TestCase
 	/**
 	 * @see junit.framework.TestCase#setUp()
 	 */
+	@Override
 	protected void setUp()
 	{
-		mock = new WicketTester(application = new MyWebApplication(), "src/test/java/"
+		mock =
+			new WicketTester(application = new MyWebApplication(), "src/test/java/"
 				+ getClass().getPackage().getName().replace('.', '/'));
 	}
 
 	/**
 	 * @see junit.framework.TestCase#tearDown()
 	 */
+	@Override
 	protected void tearDown()
 	{
 		mock.setupRequestAndResponse();

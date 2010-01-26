@@ -26,6 +26,7 @@ import org.apache.wicket.security.hive.config.HiveFactory;
 public class TestPermission extends Permission
 {
 	private static final long serialVersionUID = 1L;
+
 	private String actions = "";
 
 	/**
@@ -56,6 +57,7 @@ public class TestPermission extends Permission
 	 * 
 	 * @see org.apache.wicket.security.hive.authorization.Permission#equals(java.lang.Object)
 	 */
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (obj == this)
@@ -64,7 +66,7 @@ public class TestPermission extends Permission
 			return false;
 		if (obj.getClass().equals(this.getClass()))
 		{
-			TestPermission other = (TestPermission)obj;
+			TestPermission other = (TestPermission) obj;
 			return other.getName().equals(getName()) && other.getActions().equals(getActions());
 		}
 		return false;
@@ -74,6 +76,7 @@ public class TestPermission extends Permission
 	 * 
 	 * @see org.apache.wicket.security.hive.authorization.Permission#getActions()
 	 */
+	@Override
 	public String getActions()
 	{
 		return actions;
@@ -83,6 +86,7 @@ public class TestPermission extends Permission
 	 * 
 	 * @see org.apache.wicket.security.hive.authorization.Permission#hashCode()
 	 */
+	@Override
 	public int hashCode()
 	{
 		return getName().hashCode();
@@ -92,6 +96,7 @@ public class TestPermission extends Permission
 	 * 
 	 * @see org.apache.wicket.security.hive.authorization.Permission#implies(org.apache.wicket.security.hive.authorization.Permission)
 	 */
+	@Override
 	public boolean implies(Permission permission)
 	{
 		if (permission == this)
@@ -100,9 +105,9 @@ public class TestPermission extends Permission
 			return false;
 		if (permission.getClass().equals(this.getClass()))
 		{
-			TestPermission other = (TestPermission)permission;
+			TestPermission other = (TestPermission) permission;
 			return other.getName().equals(getName())
-					&& getActions().indexOf(other.getActions()) > -1;
+				&& getActions().indexOf(other.getActions()) > -1;
 		}
 		return false;
 	}

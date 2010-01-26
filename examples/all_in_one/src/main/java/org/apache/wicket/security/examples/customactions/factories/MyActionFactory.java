@@ -24,8 +24,7 @@ import org.apache.wicket.security.swarm.actions.SwarmAction;
 import org.apache.wicket.security.swarm.actions.SwarmActionFactory;
 
 /**
- * Custom action factory. Registers {@link Department} and {@link Organization}
- * actions.
+ * Custom action factory. Registers {@link Department} and {@link Organization} actions.
  * 
  * @author marrink
  */
@@ -54,7 +53,7 @@ public class MyActionFactory extends SwarmActionFactory
 			// because we need to inherit the department action not because we
 			// want our actions to be a certain subclass.
 			register(Organization.class, new DepartmentInheritor(nextPowerOf2(), "organization",
-					this));
+				this));
 
 		}
 		catch (RegistrationException e)
@@ -86,8 +85,7 @@ public class MyActionFactory extends SwarmActionFactory
 		protected DepartmentInheritor(int actions, String name, SwarmActionFactory factory)
 		{
 			// bitwise or to inherit department action
-			super(actions | ((SwarmAction)factory.getAction(Department.class)).actions(), name,
-					factory);
+			super(actions | factory.getAction(Department.class).actions(), name, factory);
 		}
 	}
 }

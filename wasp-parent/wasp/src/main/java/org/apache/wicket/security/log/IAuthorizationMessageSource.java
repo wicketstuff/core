@@ -21,11 +21,9 @@ import java.io.Serializable;
 import org.apache.wicket.Component;
 import org.apache.wicket.validation.IErrorMessageSource;
 
-
 /**
- * {@link IErrorMessageSource} which also knows which {@link Component} (if any)
- * triggered this message and keeps track of variables that can be used by the
- * message.
+ * {@link IErrorMessageSource} which also knows which {@link Component} (if any) triggered
+ * this message and keeps track of variables that can be used by the message.
  * 
  * @author marrink
  */
@@ -49,8 +47,8 @@ public interface IAuthorizationMessageSource extends IErrorMessageSource, Serial
 	public abstract void setComponent(Component component);
 
 	/**
-	 * Adds, or overwrites a previously associated variable with that name, to
-	 * this resource.
+	 * Adds, or overwrites a previously associated variable with that name, to this
+	 * resource.
 	 * 
 	 * @param name
 	 *            variable name

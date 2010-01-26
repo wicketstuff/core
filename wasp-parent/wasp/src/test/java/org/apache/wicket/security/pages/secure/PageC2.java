@@ -34,26 +34,27 @@ public class PageC2 extends PageC
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	/**
-	 * Instantiation check that requires foo rights instead of the default
-	 * access rights.
+	 * Instantiation check that requires foo rights instead of the default access rights.
 	 */
 	static final ISecurityCheck alternate2 = new ClassSecurityCheck(PageC2.class)
 	{
 
 		/**
-		 * 
+		 *  
 		 */
 		private static final long serialVersionUID = 1L;
 
 		/**
 		 * @see org.apache.wicket.security.checks.ClassSecurityCheck#isActionAuthorized(org.apache.wicket.security.actions.WaspAction)
 		 */
+		@Override
 		public boolean isActionAuthorized(WaspAction action)
 		{
 			if (isAuthenticated())
 				return getStrategy().isClassAuthorized(getClazz(),
-						action.add(getActionFactory().getAction("foo")));
+					action.add(getActionFactory().getAction("foo")));
 			throw new RestartResponseAtInterceptPageException(getLoginPage());
 		}
 

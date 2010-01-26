@@ -30,7 +30,6 @@ import org.apache.wicket.security.hive.authentication.SecondaryLoginContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * @author marrink
  * 
@@ -41,10 +40,12 @@ public class SecondaryLoginPage extends WebPage
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = LoggerFactory.getLogger(SecondaryLoginPage.class);
 
-	private Form form;
-	private TextField textField;
+	private Form<Void> form;
+
+	private TextField<String> textField;
 
 	/**
 	 * 
@@ -53,7 +54,7 @@ public class SecondaryLoginPage extends WebPage
 	{
 		super();
 		add(new Label("label", "welcome please login to continue to the secret"));
-		add(form = new Form("form")
+		add(form = new Form<Void>("form")
 		{
 
 			/**
@@ -61,12 +62,13 @@ public class SecondaryLoginPage extends WebPage
 			 */
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			protected void onSubmit()
 			{
 				login(get("username").getDefaultModelObjectAsString());
 			}
 		});
-		form.add(textField = new TextField("username", new Model()));
+		form.add(textField = new TextField<String>("username", new Model<String>()));
 	}
 
 	/**
@@ -80,7 +82,7 @@ public class SecondaryLoginPage extends WebPage
 		try
 		{
 			LoginContext context = new SecondaryLoginContext();
-			((WaspSession)Session.get()).login(context);
+			((WaspSession) Session.get()).login(context);
 			if (!continueToOriginalDestination())
 				setResponsePage(Application.get().getHomePage());
 			return true;
@@ -96,7 +98,7 @@ public class SecondaryLoginPage extends WebPage
 	 * 
 	 * @return the form
 	 */
-	public final Form getForm()
+	public final Form<Void> getForm()
 	{
 		return form;
 	}
@@ -105,7 +107,7 @@ public class SecondaryLoginPage extends WebPage
 	 * 
 	 * @return the username textfield
 	 */
-	public final TextField getTextField()
+	public final TextField<String> getTextField()
 	{
 		return textField;
 	}

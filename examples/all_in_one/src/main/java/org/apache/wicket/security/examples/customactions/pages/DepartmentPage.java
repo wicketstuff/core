@@ -29,10 +29,9 @@ import org.apache.wicket.security.examples.customactions.authorization.Organizat
 import org.apache.wicket.security.examples.customactions.components.navigation.ButtonContainer;
 import org.apache.wicket.security.examples.customactions.entities.Department;
 
-
 /**
- * Page for showing some department info. Only a user with organization rights
- * is allowed to edit.
+ * Page for showing some department info. Only a user with organization rights is allowed
+ * to edit.
  * 
  * @author marrink
  * 
@@ -51,19 +50,21 @@ public class DepartmentPage extends SecurePage
 	public DepartmentPage(Department department)
 	{
 		add(new ButtonContainer("buttoncontainer", ButtonContainer.BUTTON_DEPARTMENTS));
-		SecureForm form = new SecureForm("form", new CompoundPropertyModel(department));
+		SecureForm<Department> form =
+			new SecureForm<Department>("form", new CompoundPropertyModel<Department>(department));
 		// make sure we have organization rights
 		form.setSecurityCheck(new OrganizationCheck(form));
 		add(form);
 		// no need to secure the child components, the form will automatically
 		// disable them
 		// when required
-		form.add(new TextField("name"));
-		form.add(new TextArea("description"));
+		form.add(new TextField<String>("name"));
+		form.add(new TextArea<String>("description"));
 		form.add(new Button("button")
 		{
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public void onSubmit()
 			{
 				setResponsePage(DepartmentsPage.class);
@@ -73,7 +74,7 @@ public class DepartmentPage extends SecurePage
 		// make the label show up when the form is disabled
 		// notice the use of security check chaining.
 		SecureComponentHelper.setSecurityCheck(label, new InverseSecurityCheck(new EnableCheck(form
-				.getSecurityCheck())));
+			.getSecurityCheck())));
 		form.add(label);
 
 	}

@@ -25,6 +25,7 @@ import org.apache.wicket.Page;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.authentication.LoginException;
+import org.apache.wicket.security.components.ISecureComponent;
 import org.apache.wicket.security.components.SecureComponentHelper;
 import org.apache.wicket.security.models.ISecureModel;
 import org.apache.wicket.security.strategies.ClassAuthorizationStrategy;
@@ -43,7 +44,7 @@ public class TestStrategy extends ClassAuthorizationStrategy
 
 	private boolean loggedin = false;
 
-	private Map authorized = new HashMap();
+	private Map<String, WaspAction> authorized = new HashMap<String, WaspAction>();
 
 	/**
 	 * 
@@ -56,7 +57,7 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	/**
 	 * @param secureClass
 	 */
-	public TestStrategy(Class secureClass)
+	public TestStrategy(Class< ? extends ISecureComponent> secureClass)
 	{
 		super(secureClass);
 	}
@@ -65,6 +66,7 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	 * 
 	 * @see org.apache.wicket.security.strategies.ClassAuthorizationStrategy#destroy()
 	 */
+	@Override
 	public void destroy()
 	{
 		super.destroy();
@@ -74,7 +76,8 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	 * 
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isClassAuthenticated(java.lang.Class)
 	 */
-	public boolean isClassAuthenticated(Class clazz)
+	@Override
+	public boolean isClassAuthenticated(Class< ? > clazz)
 	{
 		return loggedin;
 	}
@@ -84,9 +87,10 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isClassAuthorized(java.lang.Class,
 	 *      org.apache.wicket.security.actions.WaspAction)
 	 */
-	public boolean isClassAuthorized(Class clazz, WaspAction action)
+	@Override
+	public boolean isClassAuthorized(Class< ? > clazz, WaspAction action)
 	{
-		return isAuthorized(clazz, action);
+		return isAuthorized(SecureComponentHelper.alias(clazz), action);
 	}
 
 	/**
@@ -94,9 +98,9 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	 * @param action
 	 * @return
 	 */
-	private boolean isAuthorized(Object obj, WaspAction action)
+	private boolean isAuthorized(String alias, WaspAction action)
 	{
-		WaspAction authorizedAction = (WaspAction)authorized.get(obj);
+		WaspAction authorizedAction = authorized.get(alias);
 		if (authorizedAction == null)
 			return false;
 		return authorizedAction.implies(action);
@@ -106,6 +110,7 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	 * 
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isComponentAuthenticated(org.apache.wicket.Component)
 	 */
+	@Override
 	public boolean isComponentAuthenticated(Component component)
 	{
 		return loggedin;
@@ -116,9 +121,10 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isComponentAuthorized(org.apache.wicket.Component,
 	 *      org.apache.wicket.security.actions.WaspAction)
 	 */
+	@Override
 	public boolean isComponentAuthorized(Component component, WaspAction action)
 	{
-		if (!isAuthorized(component.getClass(), action))
+		if (!isAuthorized(SecureComponentHelper.alias(component.getClass()), action))
 			return isAuthorized(SecureComponentHelper.alias(component), action);
 		return true;
 	}
@@ -128,7 +134,8 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isModelAuthenticated(org.apache.wicket.model.IModel,
 	 *      org.apache.wicket.Component)
 	 */
-	public boolean isModelAuthenticated(IModel model, Component component)
+	@Override
+	public boolean isModelAuthenticated(IModel< ? > model, Component component)
 	{
 		return loggedin;
 	}
@@ -136,42 +143,46 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	/**
 	 * 
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isModelAuthorized(org.apache.wicket.security.models.ISecureModel,
-	 *      org.apache.wicket.Component,
-	 *      org.apache.wicket.security.actions.WaspAction)
+	 *      org.apache.wicket.Component, org.apache.wicket.security.actions.WaspAction)
 	 */
-	public boolean isModelAuthorized(ISecureModel model, Component component, WaspAction action)
+	@Override
+	public boolean isModelAuthorized(ISecureModel< ? > model, Component component, WaspAction action)
 	{
 		return isAuthorized("model:"
-				+ (component instanceof Page ? component.getClass().getName() : component.getId()),
-				action);
+			+ (component instanceof Page ? component.getClass().getName() : component.getId()),
+			action);
 	}
 
 	/**
 	 * 
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#login(java.lang.Object)
 	 */
+	@Override
+	@SuppressWarnings("unchecked")
 	public void login(Object context) throws LoginException
 	{
-		if (context instanceof Map)
+		if (context instanceof Map< ? , ? >)
 		{
 			loggedin = true;
-			authorized.putAll((Map)context);
+			authorized.putAll((Map<String, WaspAction>) context);
 		}
 		else
 			throw new LoginException(
-					"Specify a map containing all the classes/components and what actions are authorized");
+				"Specify a map containing all the classes/components and what actions are authorized");
 	}
 
 	/**
 	 * 
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#logoff(java.lang.Object)
 	 */
+	@Override
+	@SuppressWarnings("unchecked")
 	public boolean logoff(Object context)
 	{
-		if (context instanceof Map)
+		if (context instanceof Map< ? , ? >)
 		{
-			Map map = (Map)context;
-			Iterator it = map.keySet().iterator();
+			Map<String, WaspAction> map = (Map<String, WaspAction>) context;
+			Iterator<String> it = map.keySet().iterator();
 			while (it.hasNext())
 				authorized.remove(it.next());
 		}
@@ -185,6 +196,7 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	 * 
 	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isUserAuthenticated()
 	 */
+	@Override
 	public boolean isUserAuthenticated()
 	{
 		return loggedin;

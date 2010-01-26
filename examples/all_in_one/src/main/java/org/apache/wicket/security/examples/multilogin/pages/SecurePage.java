@@ -53,7 +53,7 @@ public class SecurePage extends MySecurePage
 	 * 
 	 * @param model
 	 */
-	public SecurePage(IModel model)
+	public SecurePage(IModel< ? > model)
 	{
 		super(model);
 	}

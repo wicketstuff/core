@@ -24,17 +24,17 @@ import org.apache.wicket.security.hive.authentication.Subject;
 import org.apache.wicket.security.hive.authorization.Permission;
 
 /**
- * A very simple caching mechanism on top of {@link BasicHive}. If you want
- * more control over your cache you could for example use EHCache and extend
- * BasicHive yourself. This cache is cleared when a subject logs off but no
- * guarantees are given that the cache will not be cleared prematurely or how
- * long it takes after a user logs off to clear the cached results.
+ * A very simple caching mechanism on top of {@link BasicHive}. If you want more control
+ * over your cache you could for example use EHCache and extend BasicHive yourself. This
+ * cache is cleared when a subject logs off but no guarantees are given that the cache
+ * will not be cleared prematurely or how long it takes after a user logs off to clear the
+ * cached results.
  * 
  * @author marrink
  */
 public class SimpleCachingHive extends BasicHive
 {
-	private final WeakHashMap cache;
+	private final WeakHashMap<Subject, Map<Permission, Boolean>> cache;
 
 	/**
 	 * Constructor.
@@ -42,7 +42,8 @@ public class SimpleCachingHive extends BasicHive
 	public SimpleCachingHive()
 	{
 		super();
-		cache = new WeakHashMap(50); // reasonable init cache size
+		// reasonable init cache size
+		cache = new WeakHashMap<Subject, Map<Permission, Boolean>>(50);
 	}
 
 	/**
@@ -50,6 +51,7 @@ public class SimpleCachingHive extends BasicHive
 	 * @see org.apache.wicket.security.hive.BasicHive#cacheLookUp(org.apache.wicket.security.hive.authentication.Subject,
 	 *      org.apache.wicket.security.hive.authorization.Permission)
 	 */
+	@Override
 	protected Boolean cacheLookUp(Subject subject, Permission permission)
 	{
 		// easier not use cache when subject is null, since there is no timeout
@@ -57,9 +59,9 @@ public class SimpleCachingHive extends BasicHive
 		if (subject == null || permission == null)
 			return null;
 		// no synch, since it does not matter much if we miss a cache hit
-		Map result = (Map)cache.get(subject);
+		Map<Permission, Boolean> result = cache.get(subject);
 		if (result != null)
-			return (Boolean)result.get(permission);
+			return result.get(permission);
 		return null;
 
 	}
@@ -69,21 +71,22 @@ public class SimpleCachingHive extends BasicHive
 	 * @see org.apache.wicket.security.hive.BasicHive#cacheResult(org.apache.wicket.security.hive.authentication.Subject,
 	 *      org.apache.wicket.security.hive.authorization.Permission, boolean)
 	 */
+	@Override
 	protected void cacheResult(Subject subject, Permission permission, boolean result)
 	{
 		if (subject == null || permission == null)
 			return;
 
 		// again no caching, does not matter much if we overwrite a new cache
-		Map resultMap = (Map)cache.get(subject);
+		Map<Permission, Boolean> resultMap = cache.get(subject);
 		if (resultMap == null)
 		{
-			resultMap = new HashMap();
-			resultMap.put(permission, Boolean.valueOf(result));
+			resultMap = new HashMap<Permission, Boolean>();
+			resultMap.put(permission, result);
 			cache.put(subject, resultMap);
 		}
 		else
-			resultMap.put(permission, Boolean.valueOf(result));
+			resultMap.put(permission, result);
 	}
 
 }

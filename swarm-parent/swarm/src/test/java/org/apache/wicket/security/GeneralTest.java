@@ -44,7 +44,6 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * @author marrink
  */
@@ -56,6 +55,7 @@ public class GeneralTest extends TestCase
 	 * The swarm application used for the test.
 	 */
 	protected WebApplication application;
+
 	/**
 	 * Handle to the mock environment.
 	 */
@@ -64,11 +64,13 @@ public class GeneralTest extends TestCase
 	/**
 	 * @see junit.framework.TestCase#setUp()
 	 */
-	protected void setUp() throws Exception
+	@Override
+	protected void setUp()
 	{
 		mock = new WicketTester(application = new SwarmWebApplication()
 		{
 
+			@Override
 			protected Object getHiveKey()
 			{
 				// if we were using servlet-api 2.5 we could get the contextpath
@@ -76,6 +78,7 @@ public class GeneralTest extends TestCase
 				return "test";
 			}
 
+			@Override
 			protected void setUpHive()
 			{
 				PolicyFileHiveFactory factory = new SwarmPolicyFileHiveFactory(getActionFactory());
@@ -83,7 +86,7 @@ public class GeneralTest extends TestCase
 				{
 					factory.addPolicyFile(getServletContext().getResource("WEB-INF/policy.hive"));
 					factory.setAlias("SimplePrincipal",
-							"org.apache.wicket.security.hive.authorization.SimplePrincipal");
+						"org.apache.wicket.security.hive.authorization.SimplePrincipal");
 					factory.setAlias("myPackage", "org.apache.wicket.security.pages");
 				}
 				catch (MalformedURLException e)
@@ -93,12 +96,13 @@ public class GeneralTest extends TestCase
 				HiveMind.registerHive(getHiveKey(), factory);
 			}
 
-			public Class getHomePage()
+			@Override
+			public Class< ? extends Page> getHomePage()
 			{
 				return MockHomePage.class;
 			}
 
-			public Class getLoginPage()
+			public Class< ? extends Page> getLoginPage()
 			{
 				return MockLoginPage.class;
 			}
@@ -108,7 +112,8 @@ public class GeneralTest extends TestCase
 	/**
 	 * @see junit.framework.TestCase#tearDown()
 	 */
-	protected void tearDown() throws Exception
+	@Override
+	protected void tearDown()
 	{
 		mock.setupRequestAndResponse();
 		mock.getWicketSession().invalidate();
@@ -136,7 +141,7 @@ public class GeneralTest extends TestCase
 		form.setValue("username", "test");
 		form.submit();
 		mock.assertRenderedPage(VerySecurePage.class);
-		assertTrue(((WaspSession)mock.getWicketSession()).logoff(new SecondaryLoginContext()));
+		assertTrue(((WaspSession) mock.getWicketSession()).logoff(new SecondaryLoginContext()));
 		mock.startPage(mock.getLastRenderedPage());
 		mock.assertRenderedPage(application.getApplicationSettings().getAccessDeniedPage());
 		// access denied because the page is already constructed
@@ -209,7 +214,7 @@ public class GeneralTest extends TestCase
 		Page lastRendered = mock.getLastRenderedPage();
 
 		// prepare serialization
-		WaspSession session = (WaspSession)mock.getWicketSession();
+		WaspSession session = (WaspSession) mock.getWicketSession();
 		assertNotNull(session);
 		assertFalse(session.isTemporary());
 		assertFalse(session.isSessionInvalidated());
@@ -218,8 +223,9 @@ public class GeneralTest extends TestCase
 			ByteArrayOutputStream bytes = new ByteArrayOutputStream(512 * 1024);
 			ObjectOutputStream stream = new ObjectOutputStream(bytes);
 			stream.writeObject(session);
-			WaspSession session2 = (WaspSession)new ObjectInputStream(new ByteArrayInputStream(
-					bytes.toByteArray())).readObject();
+			WaspSession session2 =
+				(WaspSession) new ObjectInputStream(new ByteArrayInputStream(bytes.toByteArray()))
+					.readObject();
 			assertNotNull(session2);
 			assertNotSame(session, session2);
 			// fake restore session from disk
@@ -239,7 +245,7 @@ public class GeneralTest extends TestCase
 			fail(e.getMessage());
 		}
 		// attempt logoff
-		WaspSession waspSession = ((WaspSession)mock.getWicketSession());
+		WaspSession waspSession = ((WaspSession) mock.getWicketSession());
 		assertNotSame(session, waspSession);
 		// instead of simulating a different jvm we can make sure the hashcode
 		// always stays the same

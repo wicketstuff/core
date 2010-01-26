@@ -23,8 +23,8 @@ import org.apache.wicket.security.checks.ISecurityCheck;
 import org.apache.wicket.security.examples.multilogin.authentication.LoginPage2;
 
 /**
- * Tagging interface to differentiate between page where 1 login is sufficient
- * and pages where a secondary login is required.
+ * Tagging interface to differentiate between page where 1 login is sufficient and pages
+ * where a secondary login is required.
  * 
  * @author marrink
  */
@@ -42,6 +42,7 @@ public interface TopSecretPage
 		/**
 		 * @see org.apache.wicket.security.checks.ClassSecurityCheck#isActionAuthorized(org.apache.wicket.security.actions.WaspAction)
 		 */
+		@Override
 		public boolean isActionAuthorized(WaspAction action)
 		{
 			// if not authenticated for topsecret pages go to the secondary

@@ -43,7 +43,7 @@ public class SecurePage extends Page implements ISecurePage
 	 * @param pageMap
 	 * @param model
 	 */
-	public SecurePage(IPageMap pageMap, IModel model)
+	public SecurePage(IPageMap pageMap, IModel<?> model)
 	{
 		super(pageMap, model);
 		setSecurityCheck(new ComponentSecurityCheck(this));
@@ -82,7 +82,7 @@ public class SecurePage extends Page implements ISecurePage
 	/**
 	 * @param model
 	 */
-	public SecurePage(IModel model)
+	public SecurePage(IModel<?> model)
 	{
 		super(model);
 		setSecurityCheck(new ComponentSecurityCheck(this));

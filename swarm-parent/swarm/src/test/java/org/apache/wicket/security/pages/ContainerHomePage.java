@@ -37,7 +37,7 @@ public class ContainerHomePage extends SecureWebPage
 	public ContainerHomePage()
 	{
 		super();
-		add(new SecureTextField("txt1", new Model("foobar")));
+		add(new SecureTextField<String>("txt1", new Model<String>("foobar")));
 		add(new L1Container("lvl1"));
 	}
 

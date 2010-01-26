@@ -20,8 +20,8 @@ import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.security.actions.WaspAction;
 
 /**
- * A securitycheck that always grants the permission to the user. Subclasses may
- * overwrite {@link #isAuthenticated()} to enforce a logged in user.
+ * A securitycheck that always grants the permission to the user. Subclasses may overwrite
+ * {@link #isAuthenticated()} to enforce a logged in user.
  * 
  * @author marrink
  */

@@ -16,7 +16,6 @@
  */
 package org.apache.wicket.security.hive.authorization.permissions;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,10 +26,8 @@ import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.components.SecureComponentHelper;
 import org.apache.wicket.security.hive.authorization.Permission;
 
-
 /**
- * Permission for certain components. Can have actions like access, render or
- * enable.
+ * Permission for certain components. Can have actions like access, render or enable.
  * 
  * @author marrink
  */
@@ -38,7 +35,9 @@ public class ComponentPermission extends ActionPermission
 {
 
 	private static final long serialVersionUID = 8950870313751454034L;
-	private final List parents;
+
+	private final List<String[]> parents;
+
 	private final String[] path;
 
 	/**
@@ -56,12 +55,12 @@ public class ComponentPermission extends ActionPermission
 		String[] aliasses = SecureComponentHelper.containerAliasses(component);
 		if (aliasses != null && aliasses.length > 0)
 		{
-			this.parents = new ArrayList(aliasses.length);
+			this.parents = new ArrayList<String[]>(aliasses.length);
 			for (int i = 0; i < aliasses.length; i++)
 				this.parents.add(aliasses[i].split(SecureComponentHelper.PATH_SEPARATOR));
 		}
 		else
-			this.parents = Collections.EMPTY_LIST;
+			this.parents = Collections.emptyList();
 	}
 
 	/**
@@ -76,24 +75,24 @@ public class ComponentPermission extends ActionPermission
 	{
 		super(componentAlias, actions);
 		path = getName().split(SecureComponentHelper.PATH_SEPARATOR);
-		parents = Collections.EMPTY_LIST;
+		parents = Collections.emptyList();
 	}
 
 	/**
-	 * Overrides {@link ActionPermission#implies(Permission)} to also include
-	 * inheritance between several levels of parent containers. The same rules
-	 * still apply
+	 * Overrides {@link ActionPermission#implies(Permission)} to also include inheritance
+	 * between several levels of parent containers. The same rules still apply
 	 * 
 	 * @see Permission#implies(Permission)
 	 */
+	@Override
 	public boolean implies(Permission permission)
 	{
 		if (permission instanceof ComponentPermission)
 		{
-			ComponentPermission other = (ComponentPermission)permission;
+			ComponentPermission other = (ComponentPermission) permission;
 			if (getAction().implies(getAction().getActionFactory().getAction(Inherit.class)))
 				return getAction().implies(other.getAction())
-						&& (implies(other.path, path) || impliesHierarchy(other));
+					&& (implies(other.path, path) || impliesHierarchy(other));
 			return getAction().implies(other.getAction()) && equals(other.path, path);
 		}
 		return false;
@@ -105,7 +104,7 @@ public class ComponentPermission extends ActionPermission
 			return false;
 		for (int i = 0; i < other.parents.size(); i++)
 		{
-			if (implies(path, (String[])other.parents.get(i)))
+			if (implies(path, other.parents.get(i)))
 				return true;
 
 		}

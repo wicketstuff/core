@@ -16,6 +16,7 @@
  */
 package org.apache.wicket.security.components.markup.html.links;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.security.actions.WaspAction;
@@ -33,19 +34,17 @@ import org.apache.wicket.security.components.SecureComponentHelper;
  * @author marrink
  * @see LinkSecurityCheck
  */
-public class SecureBookmarkablePageLink extends BookmarkablePageLink implements ISecureComponent
+public class SecureBookmarkablePageLink<T> extends BookmarkablePageLink<T>
+		implements
+			ISecureComponent
 {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @param id
 	 * @param pageClass
 	 */
-	public SecureBookmarkablePageLink(String id, Class pageClass)
+	public SecureBookmarkablePageLink(String id, Class<? extends Page> pageClass)
 	{
 		super(id, pageClass);
 		setSecurityCheck(new LinkSecurityCheck(this, pageClass));
@@ -56,7 +55,8 @@ public class SecureBookmarkablePageLink extends BookmarkablePageLink implements 
 	 * @param pageClass
 	 * @param parameters
 	 */
-	public SecureBookmarkablePageLink(String id, Class pageClass, PageParameters parameters)
+	public SecureBookmarkablePageLink(String id, Class<? extends Page> pageClass,
+			PageParameters parameters)
 	{
 		super(id, pageClass, parameters);
 		setSecurityCheck(new LinkSecurityCheck(this, pageClass));

@@ -16,9 +16,10 @@
  */
 package org.apache.wicket.util.tester;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -33,21 +34,18 @@ import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.protocol.http.HttpSessionStore;
-import org.apache.wicket.protocol.http.SwarmMockHttpServletResponse;
 import org.apache.wicket.protocol.http.SecondLevelCacheSessionStore;
+import org.apache.wicket.protocol.http.SwarmMockHttpServletResponse;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WebResponse;
 import org.apache.wicket.protocol.http.SecondLevelCacheSessionStore.IPageStore;
 import org.apache.wicket.session.ISessionStore;
-//import org.apache.wicket.protocol.http.UnitTestSettings;
 import org.apache.wicket.util.diff.DiffUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 /**
- * A helper class to ease unit testing of Wicket applications without the need for a servlet
- * container. To start a test, either use <code>startPage</code> or <code>startPanel</code>:
+ * A helper class to ease unit testing of Wicket applications without the need for a
+ * servlet container. To start a test, either use <code>startPage</code> or
+ * <code>startPanel</code>:
  * 
  * <pre>
  * // production page
@@ -112,9 +110,10 @@ import org.slf4j.LoggerFactory;
  * }
  * </pre>
  * 
- * <code>tester.clickLink(path);</code> will simulate user click on the component (in this case,
- * it's a <code>Link</code>) and render the response page <code>YourPage</code>. Ok, unit test
- * of <code>MyPage</code> is completed. Now we test <code>YourPage</code> standalone:
+ * <code>tester.clickLink(path);</code> will simulate user click on the component (in this
+ * case, it's a <code>Link</code>) and render the response page <code>YourPage</code>. Ok,
+ * unit test of <code>MyPage</code> is completed. Now we test <code>YourPage</code>
+ * standalone:
  * 
  * <pre>
  * //test code
@@ -131,16 +130,16 @@ import org.slf4j.LoggerFactory;
  * 	tester.assertRenderedPage(YourPage.class);
  * 	tester.assertLabel(&quot;yourMessage&quot;, &quot;mock message&quot;);
  * 	// assert feedback messages in INFO Level
- * 	tester.assertInfoMessages(new String[] { &quot;Wicket Rocks ;-)&quot; });
+ * 	tester.assertInfoMessages(new String[] {&quot;Wicket Rocks ;-)&quot;});
  * }
  * </pre>
  * 
  * Instead of <code>tester.startPage(pageClass)</code>, we define a
- * {@link org.apache.wicket.util.tester.ITestPageSource} to provide testing page instance for
- * <code>WicketTester</code>. This is necessary because <code>YourPage</code> uses a custom
- * constructor, which is very common for transferring model data, but cannot be instantiated by
- * reflection. Finally, we use <code>assertInfoMessages</code> to assert there is a feedback
- * message "Wicket Rocks ;-)" at the INFO level.
+ * {@link org.apache.wicket.util.tester.ITestPageSource} to provide testing page instance
+ * for <code>WicketTester</code>. This is necessary because <code>YourPage</code> uses a
+ * custom constructor, which is very common for transferring model data, but cannot be
+ * instantiated by reflection. Finally, we use <code>assertInfoMessages</code> to assert
+ * there is a feedback message "Wicket Rocks ;-)" at the INFO level.
  * 
  * TODO General: Example usage of FormTester
  * 
@@ -152,19 +151,21 @@ import org.slf4j.LoggerFactory;
 public class SwarmWicketTester extends SwarmBaseWicketTester
 {
 	/**
-	 * Default dummy web application for testing. Uses {@link HttpSessionStore} to store pages and
-	 * the <code>Session</code>.
+	 * Default dummy web application for testing. Uses {@link HttpSessionStore} to store
+	 * pages and the <code>Session</code>.
 	 */
 	public static class DummyWebApplication extends WebApplication
 	{
 		/**
 		 * @see org.apache.wicket.Application#getHomePage()
 		 */
-		public Class getHomePage()
+		@Override
+		public Class< ? extends Page> getHomePage()
 		{
 			return DummyHomePage.class;
 		}
 
+		@Override
 		protected ISessionStore newSessionStore()
 		{
 			// Don't use a filestore, or we spawn lots of threads, which makes
@@ -175,11 +176,13 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 		/**
 		 * @see org.apache.wicket.protocol.http.WebApplication#newWebResponse(javax.servlet.http.HttpServletResponse)
 		 */
+		@Override
 		protected WebResponse newWebResponse(final HttpServletResponse servletResponse)
 		{
 			return new WebResponse(servletResponse);
 		}
 
+		@Override
 		protected void outputDevelopmentModeWarning()
 		{
 			// do nothing
@@ -187,11 +190,13 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 	}
 
 	/**
-	 * Dummy web application that does not support back button support but is cheaper to use for
-	 * unit tests. Uses {@link SecondLevelCacheSessionStore} with a noop {@link IPageStore}.
+	 * Dummy web application that does not support back button support but is cheaper to
+	 * use for unit tests. Uses {@link SecondLevelCacheSessionStore} with a noop
+	 * {@link IPageStore}.
 	 */
 	public static class NonPageCachingDummyWebApplication extends DummyWebApplication
 	{
+		@Override
 		protected ISessionStore newSessionStore()
 		{
 			return new SecondLevelCacheSessionStore(this, new IPageStore()
@@ -201,7 +206,7 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 				}
 
 				public Page getPage(String sessionId, String pagemap, int id, int versionNumber,
-					int ajaxVersionNumber)
+						int ajaxVersionNumber)
 				{
 					return null;
 				}
@@ -223,7 +228,7 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 				}
 
 				public boolean containsPage(String sessionId, String pageMapName, int pageId,
-					int pageVersion)
+						int pageVersion)
 				{
 					return false;
 				}
@@ -231,12 +236,9 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 		}
 	}
 
-	/** log. */
-	private static final Logger log = LoggerFactory.getLogger(SwarmWicketTester.class);
-
 	/**
-	 * Creates a <code>WicketTester</code> and automatically creates a <code>WebApplication</code>,
-	 * but the tester will have no home page.
+	 * Creates a <code>WicketTester</code> and automatically creates a
+	 * <code>WebApplication</code>, but the tester will have no home page.
 	 */
 	public SwarmWicketTester()
 	{
@@ -244,23 +246,26 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 	}
 
 	/**
-	 * Creates a <code>WicketTester</code> and automatically creates a <code>WebApplication</code>.
+	 * Creates a <code>WicketTester</code> and automatically creates a
+	 * <code>WebApplication</code>.
 	 * 
 	 * @param homePage
 	 *            a home page <code>Class</code>
 	 */
-	public SwarmWicketTester(final Class homePage)
+	public SwarmWicketTester(final Class< ? extends Page> homePage)
 	{
 		this(new WebApplication()
 		{
 			/**
 			 * @see org.apache.wicket.Application#getHomePage()
 			 */
-			public Class getHomePage()
+			@Override
+			public Class< ? extends Page> getHomePage()
 			{
 				return homePage;
 			}
 
+			@Override
 			protected ISessionStore newSessionStore()
 			{
 				// Don't use a filestore, or we spawn lots of threads, which
@@ -268,11 +273,13 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 				return new HttpSessionStore(this);
 			}
 
+			@Override
 			protected WebResponse newWebResponse(final HttpServletResponse servletResponse)
 			{
 				return new WebResponse(servletResponse);
 			}
 
+			@Override
 			protected void outputDevelopmentModeWarning()
 			{
 				// Do nothing.
@@ -297,11 +304,11 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 	 * @param application
 	 *            a <code>WicketTester</code> <code>WebApplication</code> object
 	 * @param path
-	 *            the absolute path on disk to the web application's contents (e.g. war root) - may
-	 *            be <code>null</code>
+	 *            the absolute path on disk to the web application's contents (e.g. war
+	 *            root) - may be <code>null</code>
 	 * 
-	 * @see org.apache.wicket.protocol.http.MockWebApplication#MockWebApplication(
-	 *      org.apache.wicket.protocol.http.WebApplication, String)
+	 * @see org.apache.wicket.protocol.http.MockWebApplication#MockWebApplication(org.apache.wicket.protocol.http.WebApplication,
+	 *      String)
 	 */
 	public SwarmWicketTester(final WebApplication application, final String path)
 	{
@@ -309,29 +316,33 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 
 		// We need to turn this on for unit testing so that url encoding will be
 		// done on sorted maps of parameters and they will string compare
-        //TODO the UnitTestSettings are gone.... 1.4
-		//UnitTestSettings.setSortUrlParameters(true);
+		// TODO the UnitTestSettings are gone.... 1.4
+		// UnitTestSettings.setSortUrlParameters(true);
 	}
-
 
 	/**
 	 * Asserts that the Ajax location header is present.
 	 */
 	public void assertAjaxLocation()
 	{
-		if (null != ((SwarmMockHttpServletResponse)getWicketResponse().getHttpServletResponse()).getRedirectLocation())
+		if (null != ((SwarmMockHttpServletResponse) getWicketResponse().getHttpServletResponse())
+			.getRedirectLocation())
 		{
 			throw new AssertionFailedError(
 				"Location header should *not* be present when using Ajax");
 		}
 
-		String ajaxLocation = ((SwarmMockHttpServletResponse)getWicketResponse().getHttpServletResponse()).getHeader("Ajax-Location");
+		String ajaxLocation =
+			((SwarmMockHttpServletResponse) getWicketResponse().getHttpServletResponse())
+				.getHeader("Ajax-Location");
 		if (null == ajaxLocation)
 		{
 			throw new AssertionFailedError("Ajax-Location header should be present when using Ajax");
 		}
 
-		int statusCode = ((SwarmMockHttpServletResponse)getWicketResponse().getHttpServletResponse()).getStatus();
+		int statusCode =
+			((SwarmMockHttpServletResponse) getWicketResponse().getHttpServletResponse())
+				.getStatus();
 		if (statusCode != 200)
 		{
 			throw new AssertionFailedError("Expected HTTP status code to be 200 (OK)");
@@ -346,19 +357,20 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 	 * @param expectedComponentClass
 	 *            expected <code>Component</code> class
 	 */
-	public void assertComponent(String path, Class expectedComponentClass)
+	public void assertComponent(String path, Class< ? extends Component> expectedComponentClass)
 	{
 		assertResult(isComponent(path, expectedComponentClass));
 	}
 
 	/**
-	 * Tests that a <code>Component</code> has been added to a <code>AjaxRequestTarget</code>,
-	 * using {@link AjaxRequestTarget#addComponent(Component)}. This method actually tests that a
-	 * <code>Component</code> is on the Ajax response sent back to the client.
+	 * Tests that a <code>Component</code> has been added to a
+	 * <code>AjaxRequestTarget</code>, using
+	 * {@link AjaxRequestTarget#addComponent(Component)}. This method actually tests that
+	 * a <code>Component</code> is on the Ajax response sent back to the client.
 	 * <p>
-	 * PLEASE NOTE! This method doesn't actually insert the <code>Component</code> in the client
-	 * DOM tree, using Javascript. But it shouldn't be needed because you just have to trust that
-	 * Wicket Ajax Javascript works.
+	 * PLEASE NOTE! This method doesn't actually insert the <code>Component</code> in the
+	 * client DOM tree, using Javascript. But it shouldn't be needed because you just have
+	 * to trust that Wicket Ajax Javascript works.
 	 * 
 	 * @param component
 	 *            a <code>Component</code> to be tested
@@ -370,13 +382,14 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 	}
 
 	/**
-	 * Tests that a <code>Component</code> has been added to a <code>AjaxRequestTarget</code>,
-	 * using {@link AjaxRequestTarget#addComponent(Component)}. This method actually tests that a
-	 * <code>Component</code> is on the Ajax response sent back to the client.
+	 * Tests that a <code>Component</code> has been added to a
+	 * <code>AjaxRequestTarget</code>, using
+	 * {@link AjaxRequestTarget#addComponent(Component)}. This method actually tests that
+	 * a <code>Component</code> is on the Ajax response sent back to the client.
 	 * <p>
-	 * PLEASE NOTE! This method doesn't actually insert the <code>Component</code> in the client
-	 * DOM tree, using Javascript. But it shouldn't be needed because you just have to trust that
-	 * Wicket Ajax Javascript works.
+	 * PLEASE NOTE! This method doesn't actually insert the <code>Component</code> in the
+	 * client DOM tree, using Javascript. But it shouldn't be needed because you just have
+	 * to trust that Wicket Ajax Javascript works.
 	 * 
 	 * @param componentPath
 	 *            a <code>Component</code> path to test
@@ -405,11 +418,10 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 	 */
 	public void assertErrorMessages(String[] expectedErrorMessages)
 	{
-		List actualMessages = getMessages(FeedbackMessage.ERROR);
-		List msgs = new ArrayList();
-		for (Iterator iterator = actualMessages.iterator(); iterator.hasNext();)
+		List<String> msgs = new ArrayList<String>();
+		for (Serializable message : getMessages(FeedbackMessage.ERROR))
 		{
-			msgs.add(iterator.next().toString());
+			msgs.add(message.toString());
 		}
 		WicketTesterHelper.assertEquals(Arrays.asList(expectedErrorMessages), msgs);
 	}
@@ -422,7 +434,7 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 	 */
 	public void assertInfoMessages(String[] expectedInfoMessages)
 	{
-		List actualMessages = getMessages(FeedbackMessage.INFO);
+		List<Serializable> actualMessages = getMessages(FeedbackMessage.INFO);
 		WicketTesterHelper.assertEquals(Arrays.asList(expectedInfoMessages), actualMessages);
 	}
 
@@ -447,7 +459,7 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 	 */
 	public void assertLabel(String path, String expectedLabelText)
 	{
-		Label label = (Label)getComponentFromLastRenderedPage(path);
+		Label label = (Label) getComponentFromLastRenderedPage(path);
 		Assert.assertEquals(expectedLabelText, label.getDefaultModelObjectAsString());
 	}
 
@@ -473,9 +485,10 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 	 * @param expectedList
 	 *            expected <code>List</code> in the model of the given {@link ListView}
 	 */
-	public void assertListView(String path, List expectedList)
+	@Override
+	public void assertListView(String path, List< ? > expectedList)
 	{
-		ListView listView = (ListView)getComponentFromLastRenderedPage(path);
+		ListView< ? > listView = (ListView< ? >) getComponentFromLastRenderedPage(path);
 		WicketTesterHelper.assertEquals(expectedList, listView.getList());
 	}
 
@@ -484,9 +497,9 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 	 */
 	public void assertNoErrorMessage()
 	{
-		List messages = getMessages(FeedbackMessage.ERROR);
-		Assert.assertTrue("expect no error message, but contains\n" +
-			WicketTesterHelper.asLined(messages), messages.isEmpty());
+		List<Serializable> messages = getMessages(FeedbackMessage.ERROR);
+		Assert.assertTrue("expect no error message, but contains\n"
+			+ WicketTesterHelper.asLined(messages), messages.isEmpty());
 	}
 
 	/**
@@ -494,22 +507,9 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 	 */
 	public void assertNoInfoMessage()
 	{
-		List messages = getMessages(FeedbackMessage.INFO);
-		Assert.assertTrue("expect no info message, but contains\n" +
-			WicketTesterHelper.asLined(messages), messages.isEmpty());
-	}
-
-	/**
-	 * Asserts a <code>PageLink</code> link to a <code>Page</code> class.
-	 * 
-	 * @param path
-	 *            path to <code>PageLink</code> <code>Component</code>
-	 * @param expectedPageClass
-	 *            expected <code>Page</code> class to link
-	 */
-	public void assertPageLink(String path, Class expectedPageClass)
-	{
-		assertResult(isPageLink(path, expectedPageClass));
+		List<Serializable> messages = getMessages(FeedbackMessage.INFO);
+		Assert.assertTrue("expect no info message, but contains\n"
+			+ WicketTesterHelper.asLined(messages), messages.isEmpty());
 	}
 
 	/**
@@ -518,7 +518,7 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 	 * @param expectedRenderedPageClass
 	 *            expected class of last rendered <code>Page</code>
 	 */
-	public void assertRenderedPage(Class expectedRenderedPageClass)
+	public void assertRenderedPage(Class< ? extends Page> expectedRenderedPageClass)
 	{
 		assertResult(isRenderedPage(expectedRenderedPageClass));
 	}
@@ -526,17 +526,19 @@ public class SwarmWicketTester extends SwarmBaseWicketTester
 	/**
 	 * Asserts last-rendered <code>Page</code> against an expected HTML document.
 	 * <p>
-	 * Use <code>-Dwicket.replace.expected.results=true</code> to automatically replace the
-	 * expected output file.
+	 * Use <code>-Dwicket.replace.expected.results=true</code> to automatically replace
+	 * the expected output file.
 	 * 
 	 * @param clazz
 	 *            <code>Class</code> used to load the file (relative to <code>clazz</code>
 	 *            package)
 	 * @param filename
 	 *            expected output filename <code>String</code>
-	 * @throws Exception
+	 * @throws IOException
 	 */
-	public void assertResultPage(final Class clazz, final String filename) throws Exception
+	@Override
+	public void assertResultPage(final Class< ? extends Page> clazz, final String filename)
+			throws IOException
 	{
 		String document = getServletResponse().getDocument();
 		setupRequestAndResponse();

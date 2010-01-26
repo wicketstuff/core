@@ -19,23 +19,21 @@ package org.apache.wicket.security.actions;
 import org.apache.wicket.authorization.Action;
 
 /**
- * The actionFactory translates between the wicket actions, which are string
- * based, and the waspactions, which are based on something else (depending on
- * the implementation). Swarm for instance uses bitwise or to handle implies
- * checks.
+ * The actionFactory translates between the wicket actions, which are string based, and
+ * the waspactions, which are based on something else (depending on the implementation).
+ * Swarm for instance uses bitwise or to handle implies checks.
  * 
  * @author marrink
  */
 public interface WaspActionFactory extends ActionFactory
 {
 	/**
-	 * Translates a wicket action to a wasp action. If the input is already a
-	 * WaspAction the same object is returned.
+	 * Translates a wicket action to a wasp action. If the input is already a WaspAction
+	 * the same object is returned.
 	 * 
 	 * @param actions
 	 *            a wicket action
-	 * @return a WaspAction or null if there is no mapping possible or the input
-	 *         is null.
+	 * @return a WaspAction or null if there is no mapping possible or the input is null.
 	 */
 	public WaspAction getAction(Action actions);
 }

@@ -23,9 +23,9 @@ import org.apache.wicket.security.components.SecureComponentHelper;
 import org.apache.wicket.security.models.ISecureModel;
 
 /**
- * Security check for when you replace panels on a page instead of using new
- * pages. This is done by checking if the panel / container class is authorized
- * just like it does with pages.
+ * Security check for when you replace panels on a page instead of using new pages. This
+ * is done by checking if the panel / container class is authorized just like it does with
+ * pages.
  * 
  * @author marrink
  */
@@ -37,8 +37,8 @@ public class ContainerSecurityCheck extends ComponentSecurityCheck
 	private final boolean enableAuthentication;
 
 	/**
-	 * Constructs a new check on the container. By default neither the model or
-	 * the authentication is checked.
+	 * Constructs a new check on the container. By default neither the model or the
+	 * authentication is checked.
 	 * 
 	 * @param component
 	 *            the container
@@ -50,8 +50,7 @@ public class ContainerSecurityCheck extends ComponentSecurityCheck
 	}
 
 	/**
-	 * Constructs a new check on the container. By default authentication is not
-	 * checked.
+	 * Constructs a new check on the container. By default authentication is not checked.
 	 * 
 	 * @param component
 	 *            the container
@@ -64,8 +63,8 @@ public class ContainerSecurityCheck extends ComponentSecurityCheck
 	}
 
 	/**
-	 * Constructs a new check on the container with the given flags for model
-	 * and authentication checks.
+	 * Constructs a new check on the container with the given flags for model and
+	 * authentication checks.
 	 * 
 	 * @param component
 	 * @param checkSecureModelIfExists
@@ -85,15 +84,17 @@ public class ContainerSecurityCheck extends ComponentSecurityCheck
 	 * 
 	 * @see org.apache.wicket.security.checks.ComponentSecurityCheck#isActionAuthorized(org.apache.wicket.security.actions.WaspAction)
 	 */
+	@Override
 	public boolean isActionAuthorized(WaspAction action)
 	{
 		if (enableAuthentication && !isAuthenticated())
 			throw new RestartResponseAtInterceptPageException(getLoginPage());
-		boolean result = getStrategy().isComponentAuthorized(getComponent(), action)
+		boolean result =
+			getStrategy().isComponentAuthorized(getComponent(), action)
 				|| getStrategy().isClassAuthorized(getComponent().getClass(), action);
 		if (result && checkSecureModel() && SecureComponentHelper.hasSecureModel(getComponent()))
-			return ((ISecureModel)getComponent().getDefaultModel()).isAuthorized(getComponent(),
-					action);
+			return ((ISecureModel< ? >) getComponent().getDefaultModel()).isAuthorized(
+				getComponent(), action);
 		return result;
 	}
 }

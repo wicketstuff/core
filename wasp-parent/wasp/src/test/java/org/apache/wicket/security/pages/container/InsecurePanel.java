@@ -19,8 +19,6 @@ package org.apache.wicket.security.pages.container;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 
-;
-
 /**
  * @author marrink
  */
@@ -42,6 +40,4 @@ public class InsecurePanel extends Panel
 		super(id);
 		add(new Label("welcome", "This panel is visible for everybody"));
 	}
-
-
 }

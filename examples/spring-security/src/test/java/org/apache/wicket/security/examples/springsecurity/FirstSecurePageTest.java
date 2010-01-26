@@ -22,59 +22,66 @@ import org.apache.wicket.spring.test.ApplicationContextMock;
 
 /**
  * Test the HomePage and follow up pages.
- *
+ * 
  * @author Olger Warnier
  */
-public class FirstSecurePageTest extends AbstractSecureTestPage {
-    protected static final Log log = LogFactory.getLog(FirstSecurePageTest.class);
+public class FirstSecurePageTest extends AbstractSecureTestPage
+{
+	private static final Log log = LogFactory.getLog(FirstSecurePageTest.class);
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        ApplicationContextMock appctx = new ApplicationContextMock();
+	@Override
+	protected void setUp() throws Exception
+	{
+		super.setUp();
+		ApplicationContextMock appctx = new ApplicationContextMock();
 
-        application.addComponentInstantiationListener(new SpringComponentInjector(application, appctx));
+		application.addComponentInstantiationListener(new SpringComponentInjector(application,
+			appctx));
 
-    }
+	}
 
-    /**
-     * Test Login to the application.
-     * This makes use of a mock login page as the application is based upon Spring Security authentication.
-     */
-    public void testLogin() {
-        loginToApp("test");
-        logoutOfApp();
-    }
+	/**
+	 * Test Login to the application. This makes use of a mock login page as the
+	 * application is based upon Spring Security authentication.
+	 */
+	public void testLogin()
+	{
+		loginToApp("test");
+		logoutOfApp();
+	}
 
-    public void testStartFirstSecureAsUser() {
-        log.debug("Login as user");
-        loginToApp("user");
-        mock.assertRenderedPage(HomePage.class);
+	public void testStartFirstSecureAsUser()
+	{
+		log.debug("Login as user");
+		loginToApp("user");
+		mock.assertRenderedPage(HomePage.class);
 
-        mock.startPage(FirstSecurePage.class);
-        mock.assertRenderedPage(FirstSecurePage.class);
-        // the user has no rights to use the second page. So it is disabled. 
-        mock.assertInvisible("to_secondsecurepage");
+		mock.startPage(FirstSecurePage.class);
+		mock.assertRenderedPage(FirstSecurePage.class);
+		// the user has no rights to use the second page. So it is disabled.
+		mock.assertInvisible("to_secondsecurepage");
 
-        //mock.assertContains("ajaxLink");
-        // the user has no rights to use the ajaxLink. So it is disabled.
-        //mock.assertInvisible("ajaxLink");
-        logoutOfApp();
-    }
+		// mock.assertContains("ajaxLink");
+		// the user has no rights to use the ajaxLink. So it is disabled.
+		// mock.assertInvisible("ajaxLink");
+		logoutOfApp();
+	}
 
-    public void testStartFirstSecureAsAdmin() {
-        log.debug("Login as admin");
-        loginToApp("admin");
-        mock.assertRenderedPage(HomePage.class);
+	public void testStartFirstSecureAsAdmin()
+	{
+		log.debug("Login as admin");
+		loginToApp("admin");
+		mock.assertRenderedPage(HomePage.class);
 
-        mock.startPage(FirstSecurePage.class);
-        mock.assertRenderedPage(FirstSecurePage.class);
+		mock.startPage(FirstSecurePage.class);
+		mock.assertRenderedPage(FirstSecurePage.class);
 
-        mock.assertContains("to_secondsecurepage");
+		mock.assertContains("to_secondsecurepage");
 
-        mock.assertContains("ajaxLink");
-        mock.clickLink("ajaxLink", true);
+		mock.assertContains("ajaxLink");
+		mock.clickLink("ajaxLink", true);
 
-        logoutOfApp();
-    }
+		logoutOfApp();
+	}
 
 }

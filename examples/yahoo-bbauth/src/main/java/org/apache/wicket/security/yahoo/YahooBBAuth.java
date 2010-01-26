@@ -1,4 +1,3 @@
-
 package org.apache.wicket.security.yahoo;
 
 import java.io.InputStream;
@@ -23,10 +22,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * Yahoo! Web Services Example: Browser Based Authentication (BBAuth) This example shows how to generate the URL used
- * for Yahoo! Brower Based Authentication. This example should be run before YahooBBAuthRequest to obtain the auth token
- * via the callback URL specified when you obtained your application ID and secret. If you do not have an Application ID
- * and Secret, go to the Yahoo! BBAuth Registration page: https://developer.yahoo.com/wsregapp/index.php
+ * Yahoo! Web Services Example: Browser Based Authentication (BBAuth) This example shows
+ * how to generate the URL used for Yahoo! Brower Based Authentication. This example
+ * should be run before YahooBBAuthRequest to obtain the auth token via the callback URL
+ * specified when you obtained your application ID and secret. If you do not have an
+ * Application ID and Secret, go to the Yahoo! BBAuth Registration page:
+ * https://developer.yahoo.com/wsregapp/index.php
  * 
  * @author Daniel Jones www.danieljones.org Copyright 2007
  * @author marrink, slightly modified
@@ -72,24 +73,30 @@ public class YahooBBAuth
 	 * @throws UnsupportedEncodingException
 	 * @throws NoSuchAlgorithmException
 	 */
-	public static String generateYahooAuthenticationUrl(String appId, String secret) throws UnsupportedEncodingException, NoSuchAlgorithmException
+	public static String generateYahooAuthenticationUrl(String appId, String secret)
+			throws UnsupportedEncodingException, NoSuchAlgorithmException
 	{
 		// Get the current time. Needed to sign the request.
 		long time = System.currentTimeMillis() / 1000;
 
 		/**
-		 * Generate the Yahoo! authentication URL that you will send users to to verify their Yahoo! identity More
-		 * information can be found here: http://developer.yahoo.com/auth/user.html
+		 * Generate the Yahoo! authentication URL that you will send users to to verify
+		 * their Yahoo! identity More information can be found here:
+		 * http://developer.yahoo.com/auth/user.html
 		 */
 		String appData = "foobar";
 		String authWS = "/WSLogin/V1/wslogin";
-		String sig = authWS + "?appid=" + encode(appId) + "&appdata=" + encode(appData) + "&ts=" + time + secret;
+		String sig =
+			authWS + "?appid=" + encode(appId) + "&appdata=" + encode(appData) + "&ts=" + time
+				+ secret;
 		String signature = MD5(sig);
-		String authURL = "https://api.login.yahoo.com" + authWS + "?appid=" + appId + "&appdata=" + appData + "&ts="
-				+ time + "&sig=" + signature;
+		String authURL =
+			"https://api.login.yahoo.com" + authWS + "?appid=" + appId + "&appdata=" + appData
+				+ "&ts=" + time + "&sig=" + signature;
 		/**
-		 * The end user will browse to this URL and allow access to your web application. After authenticating, the user
-		 * will be forwarded to the callback URL specified when you obtained your application ID and secret.
+		 * The end user will browse to this URL and allow access to your web application.
+		 * After authenticating, the user will be forwarded to the callback URL specified
+		 * when you obtained your application ID and secret.
 		 */
 		return authURL;
 	}
@@ -105,7 +112,7 @@ public class YahooBBAuth
 		MessageDigest digest = MessageDigest.getInstance("MD5");
 		md5Text = new BigInteger(1, digest.digest((text).getBytes())).toString(16);
 
-		if(md5Text.length() == 31)
+		if (md5Text.length() == 31)
 		{
 			md5Text = "0" + md5Text;
 		}
@@ -123,18 +130,18 @@ public class YahooBBAuth
 	}
 
 	/**
-	 * Returns a session id and cookie if the user was succesfully
-	 * authenticated. The web service session id (wssid) and Yahoo! cookie can
-	 * then be used for calls to the SOAP or JSON-RPC endpoints.
-	 * http://developer.yahoo.com/mail/docs/html/index.html
+	 * Returns a session id and cookie if the user was succesfully authenticated. The web
+	 * service session id (wssid) and Yahoo! cookie can then be used for calls to the SOAP
+	 * or JSON-RPC endpoints. http://developer.yahoo.com/mail/docs/html/index.html
 	 */
 	public static YahooResponse authenticateUser(String appId, String secret, String uri,
 			String appdata, String ts, String requestsig, String token) throws LoginException
 	{
 		try
 		{
-			String calcsig = uri + "?appid=" + appId + "&token=" + token + "&appdata=" + appdata
-					+ "&ts=" + ts + secret;
+			String calcsig =
+				uri + "?appid=" + appId + "&token=" + token + "&appdata=" + appdata + "&ts=" + ts
+					+ secret;
 			// log.info(calcsig);
 			// MessageDigest digest = MessageDigest.getInstance("MD5");
 			// calcsig = new BigInteger(1,
@@ -144,35 +151,36 @@ public class YahooBBAuth
 			// signture
 			if (!calcsig.equals(requestsig))
 				throw new YahooLoginException("Signature mismatch:" + requestsig + " vs " + calcsig);
-	
+
 			// Get the current time. Needed to sign the request.
 			long time = System.currentTimeMillis() / 1000;
 			long requesttime = Long.parseLong(ts);
 			long clockSkew = Math.abs(time - requesttime);
-	
+
 			// Make sure the server time is within 10 minutes (600 seconds) of
 			// Yahoo!'s servers
 			if (clockSkew >= 600)
 				throw new YahooLoginException("Invalid timestamp - clockSkew is " + clockSkew
-						+ " seconds, current time = " + time + ", ts =" + requesttime);
-	
+					+ " seconds, current time = " + time + ", ts =" + requesttime);
+
 			/**
-			 * Generate the portion of the URL that's used for signing. More
-			 * information on BBAuth can be found here:
-			 * http://developer.yahoo.com/auth/
+			 * Generate the portion of the URL that's used for signing. More information
+			 * on BBAuth can be found here: http://developer.yahoo.com/auth/
 			 */
 			String authWS = "/WSLogin/V1/wspwtoken_login";
-			String sig = authWS + "?appid=" + encode(appId) + "&token="
-					+ encode(token) + "&ts=" + time + secret;
+			String sig =
+				authWS + "?appid=" + encode(appId) + "&token=" + encode(token) + "&ts=" + time
+					+ secret;
 			// String signature = new BigInteger(1,
 			// digest.digest((sig).getBytes())).toString(16);
 			String signature = MD5(sig);
-			String authURL = "https://api.login.yahoo.com" + authWS + "?appid=" + appId + "&token="
-					+ token + "&ts=" + time + "&sig=" + signature;
+			String authURL =
+				"https://api.login.yahoo.com" + authWS + "?appid=" + appId + "&token=" + token
+					+ "&ts=" + time + "&sig=" + signature;
 			// log.info(authURL);
 			// out.println(authURL);
 			// out.println("<br>");
-	
+
 			HttpClient client = new HttpClient();
 			GetMethod method = new GetMethod(authURL);
 			InputStream rstream = null;
@@ -192,18 +200,18 @@ public class YahooBBAuth
 				}
 				throw new YahooLoginException("No response from Yahoo.");
 			}
-	
+
 			/*
-			 * Retrieve the XML response to the auth request and get the wssid
-			 * and cookie values.
+			 * Retrieve the XML response to the auth request and get the wssid and cookie
+			 * values.
 			 */
-			Document xmlresponse = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
-					rstream);
+			Document xmlresponse =
+				DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(rstream);
 			StringWriter writer = new StringWriter(5000);
 			TransformerFactory.newInstance().newTransformer().transform(new DOMSource(xmlresponse),
-					new StreamResult(writer));
+				new StreamResult(writer));
 			// log.info("\n" + writer.toString());
-	
+
 			// Check if token is in the response
 			NodeList wssidResponse = xmlresponse.getElementsByTagName("WSSID");
 			NodeList cookieResponse = xmlresponse.getElementsByTagName("Cookie");
@@ -213,26 +221,27 @@ public class YahooBBAuth
 			Node timeoutNode = timeoutResponse.item(0);
 			if (wssidNode != null)
 			{
-				YahooResponse response = new YahooResponse(
-						wssidNode.getFirstChild().getNodeValue(), Long.valueOf(
-								timeoutNode.getFirstChild().getNodeValue()).longValue(), cookieNode
-								.getFirstChild().getNodeValue());
+				YahooResponse response =
+					new YahooResponse(wssidNode.getFirstChild().getNodeValue(), Long.valueOf(
+						timeoutNode.getFirstChild().getNodeValue()).longValue(), cookieNode
+						.getFirstChild().getNodeValue());
 				return response;
-	
+
 			}
 			else
 			{
 				/*
 				 * Print the response error code and message <?xml version="1.0"
-				 * encoding="UTF-8" standalone="no"?> <wspwtoken_login_response>
-				 * <Error> <ErrorCode>3000</ErrorCode> <ErrorDescription>Invalid
-				 * (missing) appid</ErrorDescription> </Error>
-				 * </wspwtoken_login_response>
+				 * encoding="UTF-8" standalone="no"?> <wspwtoken_login_response> <Error>
+				 * <ErrorCode>3000</ErrorCode> <ErrorDescription>Invalid (missing)
+				 * appid</ErrorDescription> </Error> </wspwtoken_login_response>
 				 */
-				String code = xmlresponse.getElementsByTagName("ErrorCode").item(0).getFirstChild()
+				String code =
+					xmlresponse.getElementsByTagName("ErrorCode").item(0).getFirstChild()
 						.getNodeValue();
-				String msg = xmlresponse.getElementsByTagName("ErrorDescription").item(0)
-						.getFirstChild().getNodeValue();
+				String msg =
+					xmlresponse.getElementsByTagName("ErrorDescription").item(0).getFirstChild()
+						.getNodeValue();
 				throw new YahooLoginException(code, msg);
 			}
 		}

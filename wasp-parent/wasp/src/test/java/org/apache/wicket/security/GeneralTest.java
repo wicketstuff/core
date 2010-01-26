@@ -50,17 +50,18 @@ import org.apache.wicket.util.tester.TagTester;
  * 
  * @author marrink
  */
-public class GeneralTest extends WaspAbstractTestBase {
+public class GeneralTest extends WaspAbstractTestBase
+{
 
-    /**
+	/**
 	 * Test reading and writing from and to a secure textfield.
 	 */
 	public void testReadWrite()
 	{
 		doLogin();
-		Map authorized = new HashMap<Class,WaspAction>();
-		authorized.put(PageA.class, application.getActionFactory()
-				.getAction("access render enable"));
+		Map<String, WaspAction> authorized = new HashMap<String, WaspAction>();
+		authorized.put(SecureComponentHelper.alias(PageA.class), application.getActionFactory()
+			.getAction("access render enable"));
 		login(authorized);
 		mock.setupRequestAndResponse();
 		mock.processRequestCycle();
@@ -68,7 +69,7 @@ public class GeneralTest extends WaspAbstractTestBase {
 		mock.assertRenderedPage(PageA.class);
 		mock.assertInvisible("secure");
 		authorized.put(SecureComponentHelper.alias(mock.getLastRenderedPage().get("secure")),
-				application.getActionFactory().getAction("access render"));
+			application.getActionFactory().getAction("access render"));
 		login(authorized);
 		mock.startPage(PageA.class);
 		mock.assertVisible("secure");
@@ -77,15 +78,15 @@ public class GeneralTest extends WaspAbstractTestBase {
 		try
 		{
 			mock.getComponentFromLastRenderedPage("secure").setDefaultModelObject(
-					"writing in textfield");
+				"writing in textfield");
 			fail("should not be able to write in textfield");
 		}
 		catch (UnauthorizedActionException e)
 		{
 		}
 		authorized.put(
-				SecureComponentHelper.alias(mock.getComponentFromLastRenderedPage("secure")),
-				application.getActionFactory().getAction("access render enable"));
+			SecureComponentHelper.alias(mock.getComponentFromLastRenderedPage("secure")),
+			application.getActionFactory().getAction("access render enable"));
 		login(authorized);
 		mock.startPage(PageA.class);
 		mock.assertVisible("secure");
@@ -94,7 +95,7 @@ public class GeneralTest extends WaspAbstractTestBase {
 		String writings = "now we are getting somewhere";
 		mock.getComponentFromLastRenderedPage("secure").setDefaultModelObject(writings);
 		assertEquals(writings, mock.getComponentFromLastRenderedPage("secure")
-				.getDefaultModelObject());
+			.getDefaultModelObject());
 		mock.startPage(mock.getLastRenderedPage());
 		mock.assertRenderedPage(PageA.class);
 		tag = mock.getTagByWicketId("secure");
@@ -116,12 +117,14 @@ public class GeneralTest extends WaspAbstractTestBase {
 		// secureTextfield has there is no instantiation check because it is not
 		// an
 		// IsecureComponent
-		Map authorized = new HashMap();
-		authorized.put(PageA.class, application.getActionFactory().getAction("access"));
+		Map<String, WaspAction> authorized = new HashMap<String, WaspAction>();
+		authorized.put(SecureComponentHelper.alias(PageA.class), application.getActionFactory()
+			.getAction("access"));
 		login(authorized);
 		new PageA(); // still allowed here
 		authorized.clear();
-		authorized.put(SecureTextField.class, application.getActionFactory().getAction("access"));
+		authorized.put(SecureComponentHelper.alias(SecureTextField.class), application
+			.getActionFactory().getAction("access"));
 		logoff(authorized);
 		try
 		{
@@ -152,7 +155,8 @@ public class GeneralTest extends WaspAbstractTestBase {
 		mock.setupRequestAndResponse();
 		logoff(authorized);
 		authorized.clear();
-		authorized.put(PageA.class, application.getActionFactory().getAction("access"));
+		authorized.put(SecureComponentHelper.alias(PageA.class), application.getActionFactory()
+			.getAction("access"));
 		// need to enable page a again
 		login(authorized);
 		new PageA(); // only pages are checked so now securetextfield is
@@ -170,8 +174,9 @@ public class GeneralTest extends WaspAbstractTestBase {
 		// even if we are logged in and have access rights it will redirect us
 		// to the access denied page because it need render rights
 		mock.assertRenderedPage(application.getApplicationSettings().getAccessDeniedPage());
-		Map authorized = new HashMap();
-		authorized.put(PageC.class, application.getActionFactory().getAction("access render"));
+		Map<String, WaspAction> authorized = new HashMap<String, WaspAction>();
+		authorized.put(SecureComponentHelper.alias(PageC.class), application.getActionFactory()
+			.getAction("access render"));
 		login(authorized);
 		mock.startPage(PageC.class);
 		mock.assertRenderedPage(PageC.class);
@@ -191,7 +196,7 @@ public class GeneralTest extends WaspAbstractTestBase {
 	 */
 	public void testSecureComponentHelper()
 	{
-		TextField field = new TextField("id");
+		TextField<String> field = new TextField<String>("id");
 		assertNull(SecureComponentHelper.getSecurityCheck(field));
 		assertTrue(SecureComponentHelper.isActionAuthorized(field, "whatever"));
 		ComponentSecurityCheck check = new ComponentSecurityCheck(field);
@@ -213,12 +218,8 @@ public class GeneralTest extends WaspAbstractTestBase {
 		{
 		}
 		assertFalse(SecureComponentHelper.hasSecureModel(field));
-		field.setModel(new ISecureModel()
+		field.setModel(new ISecureModel<String>()
 		{
-
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
 			public void detach()
@@ -226,38 +227,21 @@ public class GeneralTest extends WaspAbstractTestBase {
 				// noop
 			}
 
-			/**
-			 * 
-			 * @see org.apache.wicket.model.IModel#setObject(java.lang.Object)
-			 */
-			public void setObject(Object object)
+			public void setObject(String object)
 			{
 				// noop
 			}
 
-			/**
-			 * 
-			 * @see org.apache.wicket.model.IModel#getObject()
-			 */
-			public Object getObject()
+			public String getObject()
 			{
 				return "test";
 			}
 
-			/**
-			 * 
-			 * @see org.apache.wicket.security.models.ISecureModel#isAuthorized(org.apache.wicket.Component,
-			 *      org.apache.wicket.security.actions.WaspAction)
-			 */
 			public boolean isAuthorized(Component component, WaspAction action)
 			{
 				return false;
 			}
 
-			/**
-			 * 
-			 * @see org.apache.wicket.security.models.ISecureModel#isAuthenticated(org.apache.wicket.Component)
-			 */
 			public boolean isAuthenticated(Component component)
 			{
 				return false;
@@ -287,11 +271,11 @@ public class GeneralTest extends WaspAbstractTestBase {
 		catch (UnauthorizedActionException e)
 		{
 		}
-		Map authorized = new HashMap();
-		authorized.put(SecureTextField.class, application.getActionFactory().getAction(
-				"access render"));
+		Map<String, WaspAction> authorized = new HashMap<String, WaspAction>();
+		authorized.put(SecureComponentHelper.alias(SecureTextField.class), application
+			.getActionFactory().getAction("access render"));
 		authorized.put("model:modelcheck", application.getActionFactory().getAction(
-				"access render enable"));
+			"access render enable"));
 		login(authorized);
 		mock.startPage(PageD.class);
 		mock.assertRenderedPage(PageD.class);
@@ -301,11 +285,11 @@ public class GeneralTest extends WaspAbstractTestBase {
 		mock.assertVisible("bothcheck");
 		mock.getComponentFromLastRenderedPage("modelcheck").setDefaultModelObject("foobar");
 		assertEquals("foobar", mock.getComponentFromLastRenderedPage("modelcheck")
-				.getDefaultModelObject());
-		((ISecureComponent)mock.getComponentFromLastRenderedPage("both")).setSecurityCheck(null);
+			.getDefaultModelObject());
+		((ISecureComponent) mock.getComponentFromLastRenderedPage("both")).setSecurityCheck(null);
 		authorized.clear();
 		authorized.put("model:modelcheck", application.getActionFactory()
-				.getAction("access render"));
+			.getAction("access render"));
 		authorized.put("model:bothcheck", application.getActionFactory().getAction("access"));
 		login(authorized);
 		mock.startPage(mock.getLastRenderedPage());
@@ -327,8 +311,7 @@ public class GeneralTest extends WaspAbstractTestBase {
 	}
 
 	/**
-	 * Test workings if we are not using a page strategy but a panel replace
-	 * strategy.
+	 * Test workings if we are not using a page strategy but a panel replace strategy.
 	 */
 	public void testPanelReplacement()
 	{
@@ -357,9 +340,9 @@ public class GeneralTest extends WaspAbstractTestBase {
 		mock.assertInvisible("panel");
 		// note by adding a second panel visible if the main panel is invisible
 		// we could tell the user he is not authorized or something like that
-		Map authorized = new HashMap();
-		authorized.put(MySecurePanel.class, application.getActionFactory().getAction(
-				"access render"));
+		Map<String, WaspAction> authorized = new HashMap<String, WaspAction>();
+		authorized.put(SecureComponentHelper.alias(MySecurePanel.class), application
+			.getActionFactory().getAction("access render"));
 		login(authorized);
 		mock.startPage(mock.getLastRenderedPage());
 		mock.assertVisible("panel");
@@ -368,8 +351,8 @@ public class GeneralTest extends WaspAbstractTestBase {
 	}
 
 	/**
-	 * Test what happens if someone goofed up and made an illogical choice for a
-	 * login page.
+	 * Test what happens if someone goofed up and made an illogical choice for a login
+	 * page.
 	 */
 	public void testBogusLoginPage()
 	{

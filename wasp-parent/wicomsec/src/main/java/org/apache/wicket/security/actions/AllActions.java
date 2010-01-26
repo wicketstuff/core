@@ -17,11 +17,10 @@
 package org.apache.wicket.security.actions;
 
 /**
- * A special action that implies all other actions. This action is not
- * registered through {@link ActionFactory}s but can be requested from them.
- * Factory implementations should create a custom action implying all registered
- * actions when receiving a request for this action. The name of the action is
- * "all", without quotes.
+ * A special action that implies all other actions. This action is not registered through
+ * {@link ActionFactory}s but can be requested from them. Factory implementations should
+ * create a custom action implying all registered actions when receiving a request for
+ * this action. The name of the action is "all", without quotes.
  * 
  * @author marrink
  */

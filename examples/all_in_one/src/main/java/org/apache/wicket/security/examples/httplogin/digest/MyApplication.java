@@ -16,14 +16,14 @@
  */
 package org.apache.wicket.security.examples.httplogin.digest;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.security.examples.httplogin.digest.pages.LoginPage;
 
 /**
  * @author marrink
  */
-public class MyApplication
-		extends
-			org.apache.wicket.security.examples.httplogin.basic.MyApplication
+public class MyApplication extends
+		org.apache.wicket.security.examples.httplogin.basic.MyApplication
 {
 
 	/**
@@ -37,7 +37,8 @@ public class MyApplication
 	 * 
 	 * @see org.apache.wicket.security.examples.httplogin.basic.MyApplication#getLoginPage()
 	 */
-	public Class getLoginPage()
+	@Override
+	public Class< ? extends Page> getLoginPage()
 	{
 		return LoginPage.class;
 	}

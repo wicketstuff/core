@@ -16,6 +16,9 @@
  */
 package org.apache.wicket.security.examples.tabs.components.navigation;
 
+import java.util.ArrayList;
+
+import org.apache.wicket.Page;
 import org.apache.wicket.security.examples.tabs.pages.MasterPage;
 import org.apache.wicket.security.examples.tabs.pages.MasterPageHiddenContents;
 import org.apache.wicket.security.examples.tabs.pages.MasterPageHiddenTabs;
@@ -25,9 +28,8 @@ import org.apache.wicket.security.examples.tabs.pages.MasterPageHiddenTabs;
  * 
  * @author marrink
  */
-public class ButtonContainer
-		extends
-			org.apache.wicket.security.examples.components.navigation.ButtonContainer
+public class ButtonContainer extends
+		org.apache.wicket.security.examples.components.navigation.ButtonContainer
 {
 
 	private static final long serialVersionUID = 1L;
@@ -36,6 +38,7 @@ public class ButtonContainer
 	 * A button.
 	 */
 	public static final Integer BUTTON_SHOW_WARNING_PANEL = new Integer(0);
+
 	/**
 	 * A button.
 	 */
@@ -60,12 +63,15 @@ public class ButtonContainer
 	/**
 	 * @see org.apache.wicket.security.examples.components.navigation.ButtonContainer#setupButtons()
 	 */
+	@Override
 	protected void setupButtons()
 	{
-		BUTTONS = new Integer[] { BUTTON_SHOW_WARNING_PANEL, BUTTON_HIDE_CONTENT, BUTTON_HIDE_TAB };
-		NAMES = new String[] { "Show warnings", "Hide contents", "Hide tabs" };
-		PAGES = new Class[] { MasterPage.class, MasterPageHiddenContents.class,
-				MasterPageHiddenTabs.class };
+		BUTTONS = new Integer[] {BUTTON_SHOW_WARNING_PANEL, BUTTON_HIDE_CONTENT, BUTTON_HIDE_TAB};
+		NAMES = new String[] {"Show warnings", "Hide contents", "Hide tabs"};
+		PAGES = new ArrayList<Class< ? extends Page>>();
+		PAGES.add(MasterPage.class);
+		PAGES.add(MasterPageHiddenContents.class);
+		PAGES.add(MasterPageHiddenTabs.class);
 	}
 
 }

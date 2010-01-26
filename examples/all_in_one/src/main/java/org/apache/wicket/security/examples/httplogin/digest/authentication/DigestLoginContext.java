@@ -26,24 +26,15 @@ import org.apache.wicket.security.hive.authentication.Subject;
  */
 public class DigestLoginContext extends LoginContext
 {
-
-	private transient String username;
-
-	/**
-	 * Construct.
-	 * 
-	 * @param username
-	 */
-	public DigestLoginContext(String username)
+	public DigestLoginContext()
 	{
 		super();
-		this.username = username;
-
 	}
 
 	/**
 	 * @see org.apache.wicket.security.hive.authentication.LoginContext#login()
 	 */
+	@Override
 	public Subject login()
 	{
 		// username password combo is already verified, just get the user object
@@ -51,7 +42,6 @@ public class DigestLoginContext extends LoginContext
 		// getting the user object is being skipped in this example
 		DefaultSubject subject = new DefaultSubject();
 		subject.addPrincipal(new MyPrincipal("digest"));
-		username = null; // clean up
 		return subject;
 	}
 

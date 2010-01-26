@@ -21,6 +21,7 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.security.actions.ActionFactory;
 import org.apache.wicket.security.hive.BasicHive;
@@ -40,7 +41,6 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * @author marrink
  */
@@ -52,14 +52,15 @@ public class SpeedTest extends TestCase
 	 * Nr. of rows and columns in our repeater.
 	 */
 	public static final int ROWS = 50;
+
 	public static final int COLS = 50;
 
 	private boolean useCache = false;
-	private Map results = new HashMap();
+
+	private Map<Key, Result> results = new HashMap<Key, Result>();
 
 	/**
-	 * number of denied permissions. 1=0% denied, 2 =50% denied, 3 =66% denied,
-	 * etc
+	 * number of denied permissions. 1=0% denied, 2 =50% denied, 3 =66% denied, etc
 	 */
 	private int denialFactor = 1;
 
@@ -67,6 +68,7 @@ public class SpeedTest extends TestCase
 	 * The swarm application used for the test.
 	 */
 	protected WebApplication application;
+
 	/**
 	 * Handle to the mock environment.
 	 */
@@ -77,6 +79,7 @@ public class SpeedTest extends TestCase
 		mock = new WicketTester(application = new SwarmWebApplication()
 		{
 
+			@Override
 			protected Object getHiveKey()
 			{
 				// if we were using servlet-api 2.5 we could get the contextpath
@@ -84,18 +87,20 @@ public class SpeedTest extends TestCase
 				return "test";
 			}
 
+			@Override
 			protected void setUpHive()
 			{
 				HiveFactory factory = new DummyFactory(useCache, denialFactor, getActionFactory());
 				HiveMind.registerHive(getHiveKey(), factory);
 			}
 
-			public Class getHomePage()
+			@Override
+			public Class< ? extends Page> getHomePage()
 			{
 				return SpeedPage.class;
 			}
 
-			public Class getLoginPage()
+			public Class< ? extends Page> getLoginPage()
 			{
 				return MockLoginPage.class;
 			}
@@ -144,8 +149,8 @@ public class SpeedTest extends TestCase
 	}
 
 	/**
-	 * Test performance diff between secure page and "unsecure" page with lots
-	 * of components.
+	 * Test performance diff between secure page and "unsecure" page with lots of
+	 * components.
 	 */
 	public void noCacheAllAllowed()
 	{
@@ -187,7 +192,7 @@ public class SpeedTest extends TestCase
 		results.put(unsecured, new Result(start, end, count, ROWS * COLS));
 		log.info("security now enabled");
 		// enable security checks
-		((SpeedPage)mock.getLastRenderedPage()).setSecured(true);
+		((SpeedPage) mock.getLastRenderedPage()).setSecured(true);
 		// warmup
 		log.info("warmup");
 		for (int i = 0; i < warmup; i++)
@@ -215,51 +220,55 @@ public class SpeedTest extends TestCase
 		noCachePartialDenied();
 		cachedpartialDenied();
 		assertEquals(8, results.size());
-		Result noCache1 = (Result)results.get(printResults(new Key(1, false, false)));
-		Result noCache2 = (Result)results.get(printResults(new Key(1, false, true)));
+		Result noCache1 = results.get(printResults(new Key(1, false, false)));
+		Result noCache2 = results.get(printResults(new Key(1, false, true)));
 		assertTrue("secure components are faster than normal components",
-				(noCache1.end - noCache1.start) / noCache1.runs < (noCache2.end - noCache2.start)
-						/ noCache2.runs);
-		long diffNoCache = (((noCache2.end - noCache2.start) / noCache2.runs) - ((noCache1.end - noCache1.start) / noCache1.runs));
-		Result cache1 = (Result)results.get(printResults(new Key(1, true, false)));
-		Result cache2 = (Result)results.get(printResults(new Key(1, true, true)));
+			(noCache1.end - noCache1.start) / noCache1.runs < (noCache2.end - noCache2.start)
+				/ noCache2.runs);
+		long diffNoCache =
+			(((noCache2.end - noCache2.start) / noCache2.runs) - ((noCache1.end - noCache1.start) / noCache1.runs));
+		Result cache1 = results.get(printResults(new Key(1, true, false)));
+		Result cache2 = results.get(printResults(new Key(1, true, true)));
 		assertTrue((cache1.end - cache1.start) / cache1.runs < (cache2.end - cache2.start)
-				/ cache2.runs);
-		long diffCache = (((cache2.end - cache2.start) / cache2.runs) - ((cache1.end - cache1.start) / cache1.runs));
+			/ cache2.runs);
+		long diffCache =
+			(((cache2.end - cache2.start) / cache2.runs) - ((cache1.end - cache1.start) / cache1.runs));
 		assertTrue("caching is actually bad for performance", diffCache < diffNoCache);
 
-
 		// 50 % permissions denied
-		noCache1 = (Result)results.get(printResults(new Key(2, false, false)));
-		noCache2 = (Result)results.get(printResults(new Key(2, false, true)));
+		noCache1 = results.get(printResults(new Key(2, false, false)));
+		noCache2 = results.get(printResults(new Key(2, false, true)));
 		assertTrue((noCache1.end - noCache1.start) / noCache1.runs < (noCache2.end - noCache2.start)
-				/ noCache2.runs);
-		diffNoCache = (((noCache2.end - noCache2.start) / noCache2.runs) - ((noCache1.end - noCache1.start) / noCache1.runs));
-		cache1 = (Result)results.get(printResults(new Key(2, true, false)));
-		cache2 = (Result)results.get(printResults(new Key(2, true, true)));
+			/ noCache2.runs);
+		diffNoCache =
+			(((noCache2.end - noCache2.start) / noCache2.runs) - ((noCache1.end - noCache1.start) / noCache1.runs));
+		cache1 = results.get(printResults(new Key(2, true, false)));
+		cache2 = results.get(printResults(new Key(2, true, true)));
 		assertTrue((cache1.end - cache1.start) / cache1.runs < (cache2.end - cache2.start)
-				/ cache2.runs);
-		diffCache = (((cache2.end - cache2.start) / cache2.runs) - ((cache1.end - cache1.start) / cache1.runs));
+			/ cache2.runs);
+		diffCache =
+			(((cache2.end - cache2.start) / cache2.runs) - ((cache1.end - cache1.start) / cache1.runs));
 		assertTrue("caching is actually bad for performance", diffCache < diffNoCache);
 	}
 
 	private Key printResults(Key key)
 	{
-		Result result = (Result)results.get(key);
+		Result result = results.get(key);
 		log.info("Test results with cache enabled = " + key.caching);
 		log.info("Testing " + result.components + " components");
 		if (key.secured)
 			log.info(result.components / key.denialRate + " component permissions granted");
 		log.info((key.secured ? "secured" : "unsecured") + " page took "
-				+ (result.end - result.start) + " ms total, "
-				+ ((result.end - result.start) / result.runs) + " ms on average over "
-				+ result.runs + " requests");
+			+ (result.end - result.start) + " ms total, "
+			+ ((result.end - result.start) / result.runs) + " ms on average over " + result.runs
+			+ " requests");
 		if (key.secured)
 		{
-			Result result2 = (Result)results.get(new Key(key.denialRate, key.caching, false));
-			long diff = (((result.end - result.start) / result.runs) - ((result2.end - result2.start) / result2.runs));
-			log.info("each component security check took " + ((double)diff / result.components)
-					+ " ms");
+			Result result2 = results.get(new Key(key.denialRate, key.caching, false));
+			long diff =
+				(((result.end - result.start) / result.runs) - ((result2.end - result2.start) / result2.runs));
+			log.info("each component security check took " + ((double) diff / result.components)
+				+ " ms");
 		}
 		return key;
 
@@ -291,6 +300,7 @@ public class SpeedTest extends TestCase
 	{
 
 		private final boolean cache;
+
 		private final int denialFactor;
 
 		private ActionFactory actionFactory;
@@ -325,9 +335,9 @@ public class SpeedTest extends TestCase
 			else
 				hive = new BasicHive();
 			Principal principal = new SimplePrincipal("speed");
-			SwarmAction action = (SwarmAction)actionFactory.getAction("access, render");
+			SwarmAction action = (SwarmAction) actionFactory.getAction("access, render");
 			hive.addPermission(principal, new ComponentPermission(
-					"org.apache.wicket.security.pages.SpeedPage", action));
+				"org.apache.wicket.security.pages.SpeedPage", action));
 			for (int i = 0; i < ROWS; i++)
 			{
 				for (int j = 0; j < COLS / denialFactor; j++)
@@ -336,14 +346,15 @@ public class SpeedTest extends TestCase
 					// linear time to check, the more permissions the more time
 					// will be added
 					hive.addPermission(principal, new ComponentPermission(
-							"org.apache.wicket.security.pages.SpeedPage:rows:" + i + ":cols:" + j
-									+ ":label", action));
+						"org.apache.wicket.security.pages.SpeedPage:rows:" + i + ":cols:" + j
+							+ ":label", action));
 				}
 			}
 			return hive;
 		}
 
 	}
+
 	/**
 	 * Key to store results in a hashMap.
 	 * 
@@ -352,7 +363,9 @@ public class SpeedTest extends TestCase
 	private static final class Key
 	{
 		public final int denialRate;
+
 		public final boolean caching;
+
 		public final boolean secured;
 
 		/**
@@ -373,6 +386,7 @@ public class SpeedTest extends TestCase
 		/**
 		 * @see java.lang.Object#hashCode()
 		 */
+		@Override
 		public int hashCode()
 		{
 			final int prime = 31;
@@ -386,6 +400,7 @@ public class SpeedTest extends TestCase
 		/**
 		 * @see java.lang.Object#equals(java.lang.Object)
 		 */
+		@Override
 		public boolean equals(Object obj)
 		{
 			if (this == obj)
@@ -394,7 +409,7 @@ public class SpeedTest extends TestCase
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			final Key other = (Key)obj;
+			final Key other = (Key) obj;
 			if (caching != other.caching)
 				return false;
 			if (denialRate != other.denialRate)
@@ -404,6 +419,7 @@ public class SpeedTest extends TestCase
 			return true;
 		}
 	}
+
 	/**
 	 * Helper class to store results.
 	 * 
@@ -412,8 +428,11 @@ public class SpeedTest extends TestCase
 	private static final class Result
 	{
 		public final long start;
+
 		public final long end;
+
 		public final int runs;
+
 		public final long components;
 
 		/**
@@ -436,20 +455,22 @@ public class SpeedTest extends TestCase
 		/**
 		 * @see java.lang.Object#hashCode()
 		 */
+		@Override
 		public int hashCode()
 		{
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + (int)(components ^ (components >>> 32));
-			result = prime * result + (int)(end ^ (end >>> 32));
+			result = prime * result + (int) (components ^ (components >>> 32));
+			result = prime * result + (int) (end ^ (end >>> 32));
 			result = prime * result + runs;
-			result = prime * result + (int)(start ^ (start >>> 32));
+			result = prime * result + (int) (start ^ (start >>> 32));
 			return result;
 		}
 
 		/**
 		 * @see java.lang.Object#equals(java.lang.Object)
 		 */
+		@Override
 		public boolean equals(Object obj)
 		{
 			if (this == obj)
@@ -458,7 +479,7 @@ public class SpeedTest extends TestCase
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			final Result other = (Result)obj;
+			final Result other = (Result) obj;
 			if (components != other.components)
 				return false;
 			if (end != other.end)

@@ -16,53 +16,65 @@
  */
 package org.apache.wicket.security.examples.secureform;
 
-import org.apache.wicket.security.swarm.SwarmWebApplication;
-import org.apache.wicket.security.hive.config.PolicyFileHiveFactory;
-import org.apache.wicket.security.hive.config.SwarmPolicyFileHiveFactory;
-import org.apache.wicket.security.hive.HiveMind;
+import java.net.MalformedURLException;
+
+import org.apache.wicket.Page;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.security.examples.secureform.pages.HomePage;
 import org.apache.wicket.security.examples.secureform.pages.LoginPage;
-import org.apache.wicket.WicketRuntimeException;
-
-import java.net.MalformedURLException;
+import org.apache.wicket.security.hive.HiveMind;
+import org.apache.wicket.security.hive.config.PolicyFileHiveFactory;
+import org.apache.wicket.security.hive.config.SwarmPolicyFileHiveFactory;
+import org.apache.wicket.security.swarm.SwarmWebApplication;
 
 /**
  * 
  */
 public class SecureFormWicketApplication extends SwarmWebApplication
-{    
-    /**
-     * Constructor
-     */
+{
+	/**
+	 * Constructor
+	 */
 	public SecureFormWicketApplication()
 	{
 	}
 
-    /**
+	/**
 	 * @see SecureFormWicketApplication#getHomePage()
 	 */
-	public Class getHomePage()
+	@Override
+	public Class< ? extends Page> getHomePage()
 	{
 		return HomePage.class;
 	}
 
-    protected void setUpHive() {
-        if (HiveMind.getHive(getHiveKey()) == null) {
-            PolicyFileHiveFactory factory = new SwarmPolicyFileHiveFactory(getActionFactory());
-            try {
-                factory.addPolicyFile(getServletContext().getResource("/WEB-INF/secure-rules.hive"));
-            } catch (MalformedURLException e) {
-                throw new WicketRuntimeException(e);
-            }
-            HiveMind.registerHive(getHiveKey(), factory);
-        }
-    }
+	@Override
+	protected void setUpHive()
+	{
+		if (HiveMind.getHive(getHiveKey()) == null)
+		{
+			PolicyFileHiveFactory factory = new SwarmPolicyFileHiveFactory(getActionFactory());
+			try
+			{
+				factory
+					.addPolicyFile(getServletContext().getResource("/WEB-INF/secure-rules.hive"));
+			}
+			catch (MalformedURLException e)
+			{
+				throw new WicketRuntimeException(e);
+			}
+			HiveMind.registerHive(getHiveKey(), factory);
+		}
+	}
 
-    protected Object getHiveKey() {
-        return "sample-static-key";
-    }
+	@Override
+	protected Object getHiveKey()
+	{
+		return "sample-static-key";
+	}
 
-    public Class getLoginPage() {
-        return LoginPage.class;
-    }
+	public Class< ? extends Page> getLoginPage()
+	{
+		return LoginPage.class;
+	}
 }

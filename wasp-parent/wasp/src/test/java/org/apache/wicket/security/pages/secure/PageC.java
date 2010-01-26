@@ -26,8 +26,8 @@ import org.apache.wicket.security.components.SecureWebPage;
 
 /**
  * Shows how to overide the default instantiation check. Although we only show
- * instantiation checks based on classes you could ofcource use something
- * different like strings.
+ * instantiation checks based on classes you could ofcource use something different like
+ * strings.
  * 
  * @author marrink
  */
@@ -41,8 +41,8 @@ public class PageC extends SecureWebPage // or SecureTestPage, really does
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Instantiation check that requires render rights instead of the default
-	 * access rights.
+	 * Instantiation check that requires render rights instead of the default access
+	 * rights.
 	 */
 	static final ISecurityCheck alternate = new ClassSecurityCheck(PageC.class)
 	{
@@ -55,11 +55,12 @@ public class PageC extends SecureWebPage // or SecureTestPage, really does
 		/**
 		 * @see org.apache.wicket.security.checks.ClassSecurityCheck#isActionAuthorized(org.apache.wicket.security.actions.WaspAction)
 		 */
+		@Override
 		public boolean isActionAuthorized(WaspAction action)
 		{
 			if (isAuthenticated())
 				return getStrategy().isClassAuthorized(getClazz(),
-						action.add(getActionFactory().getAction(Render.class)));
+					action.add(getActionFactory().getAction(Render.class)));
 			throw new RestartResponseAtInterceptPageException(getLoginPage());
 		}
 

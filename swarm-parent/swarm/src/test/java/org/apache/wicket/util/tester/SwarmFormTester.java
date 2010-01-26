@@ -29,29 +29,15 @@ import java.util.Map;
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.Component.IVisitor;
-import org.apache.wicket.markup.html.form.AbstractTextComponent;
-import org.apache.wicket.markup.html.form.Check;
-import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.CheckGroup;
-import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.IChoiceRenderer;
-import org.apache.wicket.markup.html.form.IFormSubmittingComponent;
-import org.apache.wicket.markup.html.form.ListMultipleChoice;
-import org.apache.wicket.markup.html.form.Radio;
-import org.apache.wicket.markup.html.form.RadioChoice;
-import org.apache.wicket.markup.html.form.RadioGroup;
+import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.protocol.http.SwarmMockHttpServletRequest;
 import org.apache.wicket.protocol.http.WebRequestCycle;
 import org.apache.wicket.util.file.File;
 import org.apache.wicket.util.string.Strings;
 
-
 /**
- * A helper class for testing validation and submission of
- * <code>FormComponent</code>s.
+ * A helper class for testing validation and submission of <code>FormComponent</code>s.
  * 
  * @author Ingram Chen
  * @author Frank Bille (frankbille)
@@ -60,16 +46,16 @@ import org.apache.wicket.util.string.Strings;
 public class SwarmFormTester
 {
 	/**
-	 * A selector template for selecting selectable <code>FormComponent</code>s
-	 * with an index of option -- supports <code>RadioGroup</code>,
-	 * <code>CheckGroup</code>, and <code>AbstractChoice</code> family.
+	 * A selector template for selecting selectable <code>FormComponent</code>s with an
+	 * index of option -- supports <code>RadioGroup</code>, <code>CheckGroup</code>, and
+	 * <code>AbstractChoice</code> family.
 	 */
 	protected abstract class ChoiceSelector
 	{
 		/**
 		 * TODO need Javadoc from author.
 		 */
-		private final class SearchOptionByIndexVisitor implements IVisitor
+		private final class SearchOptionByIndexVisitor implements IVisitor<Component>
 		{
 			int count = 0;
 
@@ -98,7 +84,7 @@ public class SwarmFormTester
 			}
 		}
 
-		private final FormComponent formComponent;
+		private final FormComponent< ? > formComponent;
 
 		/**
 		 * Constructor.
@@ -106,7 +92,7 @@ public class SwarmFormTester
 		 * @param formComponent
 		 *            a <code>FormComponent</code>
 		 */
-		protected ChoiceSelector(FormComponent formComponent)
+		protected ChoiceSelector(FormComponent< ? > formComponent)
 		{
 			this.formComponent = formComponent;
 		}
@@ -114,12 +100,13 @@ public class SwarmFormTester
 		/**
 		 * Implements whether toggle or accumulate the selection.
 		 * 
-		 * @param formComponent
+		 * @param choiceComponent
 		 *            a <code>FormComponent</code>
 		 * @param value
 		 *            a <code>String</code> value
 		 */
-		protected abstract void assignValueToFormComponent(FormComponent formComponent, String value);
+		protected abstract void assignValueToFormComponent(FormComponent< ? > choiceComponent,
+				String value);
 
 		/**
 		 * Selects a given index in a selectable <code>FormComponent</code>.
@@ -128,64 +115,62 @@ public class SwarmFormTester
 		 */
 		protected final void doSelect(final int index)
 		{
-			if (formComponent instanceof RadioGroup)
+			if (formComponent instanceof RadioGroup< ? >)
 			{
-				Radio foundRadio = (Radio)formComponent.visitChildren(Radio.class,
+				Radio< ? > foundRadio =
+					(Radio< ? >) formComponent.visitChildren(Radio.class,
 						new SearchOptionByIndexVisitor(index));
 				if (foundRadio == null)
-				{
 					fail("RadioGroup " + formComponent.getPath() + " does not have index:" + index);
-				}
-				assignValueToFormComponent(formComponent, foundRadio.getValue());
+				else
+					assignValueToFormComponent(formComponent, foundRadio.getValue());
 			}
-			else if (formComponent instanceof CheckGroup)
+			else if (formComponent instanceof CheckGroup< ? >)
 			{
-				Check foundCheck = (Check)formComponent.visitChildren(Check.class,
+				Check< ? > foundCheck =
+					(Check< ? >) formComponent.visitChildren(Check.class,
 						new SearchOptionByIndexVisitor(index));
 				if (foundCheck == null)
-				{
 					fail("CheckGroup " + formComponent.getPath() + " does not have index:" + index);
-				}
-
-				assignValueToFormComponent(formComponent, foundCheck.getValue());
+				else
+					assignValueToFormComponent(formComponent, foundCheck.getValue());
 			}
 			else
 			{
 				String idValue = selectAbstractChoice(formComponent, index);
 				if (idValue == null)
-				{
 					fail(formComponent.getPath() + " is not a selectable Component.");
-				}
 				else
-				{
 					assignValueToFormComponent(formComponent, idValue);
-				}
 			}
 		}
 
 		/**
 		 * Selects a given index in a selectable <code>FormComponent</code>.
 		 * 
-		 * @param formComponent
+		 * @param choiceComponent
 		 *            a <code>FormComponent</code>
 		 * @param index
 		 *            the index to select
 		 * @return the id value at the selected index
 		 */
-		private String selectAbstractChoice(FormComponent formComponent, final int index)
+		@SuppressWarnings("unchecked")
+		private String selectAbstractChoice(FormComponent< ? > choiceComponent, final int index)
 		{
 			try
 			{
-				Method getChoicesMethod = formComponent.getClass().getMethod("getChoices",
-						(Class[])null);
+				Method getChoicesMethod =
+					choiceComponent.getClass().getMethod("getChoices", (Class[]) null);
 				getChoicesMethod.setAccessible(true);
-				List choices = (List)getChoicesMethod.invoke(formComponent, (Object[])null);
+				List<Object> choices =
+					(List<Object>) getChoicesMethod.invoke(choiceComponent, (Object[]) null);
 
-				Method getChoiceRendererMethod = formComponent.getClass().getMethod(
-						"getChoiceRenderer", (Class[])null);
+				Method getChoiceRendererMethod =
+					choiceComponent.getClass().getMethod("getChoiceRenderer", (Class[]) null);
 				getChoiceRendererMethod.setAccessible(true);
-				IChoiceRenderer choiceRenderer = (IChoiceRenderer)getChoiceRendererMethod.invoke(
-						formComponent, (Object[])null);
+				IChoiceRenderer<Object> choiceRenderer =
+					(IChoiceRenderer<Object>) getChoiceRendererMethod.invoke(choiceComponent,
+						(Object[]) null);
 
 				return choiceRenderer.getIdValue(choices.get(index), index);
 			}
@@ -211,8 +196,8 @@ public class SwarmFormTester
 	}
 
 	/**
-	 * A factory that creates an appropriate <code>ChoiceSelector</code> based
-	 * on type of <code>FormComponent</code>.
+	 * A factory that creates an appropriate <code>ChoiceSelector</code> based on type of
+	 * <code>FormComponent</code>.
 	 */
 	private class ChoiceSelectorFactory
 	{
@@ -227,13 +212,13 @@ public class SwarmFormTester
 			 * @param formComponent
 			 *            a <code>FormComponent</code>
 			 */
-			protected MultipleChoiceSelector(FormComponent formComponent)
+			protected MultipleChoiceSelector(FormComponent< ? > formComponent)
 			{
 				super(formComponent);
 				if (!allowMultipleChoice(formComponent))
 				{
 					fail("Component:'" + formComponent.getPath()
-							+ "' Does not support multiple selection.");
+						+ "' Does not support multiple selection.");
 				}
 			}
 
@@ -242,7 +227,8 @@ public class SwarmFormTester
 			 * @see org.apache.wicket.util.tester.SwarmFormTester.ChoiceSelector#assignValueToFormComponent(org.apache.wicket.markup.html.form.FormComponent,
 			 *      java.lang.String)
 			 */
-			protected void assignValueToFormComponent(FormComponent formComponent, String value)
+			@Override
+			protected void assignValueToFormComponent(FormComponent< ? > formComponent, String value)
 			{
 				// multiple selectable should retain selected option
 				addFormComponentValue(formComponent, value);
@@ -260,7 +246,7 @@ public class SwarmFormTester
 			 * @param formComponent
 			 *            a <code>FormComponent</code>
 			 */
-			protected SingleChoiceSelector(FormComponent formComponent)
+			protected SingleChoiceSelector(FormComponent< ? > formComponent)
 			{
 				super(formComponent);
 			}
@@ -269,7 +255,8 @@ public class SwarmFormTester
 			 * @see org.apache.wicket.util.tester.SwarmFormTester.ChoiceSelector#assignValueToFormComponent(org.apache.wicket.markup.html.form.FormComponent,
 			 *      java.lang.String)
 			 */
-			protected void assignValueToFormComponent(FormComponent formComponent, String value)
+			@Override
+			protected void assignValueToFormComponent(FormComponent< ? > formComponent, String value)
 			{
 				// single selectable should overwrite already selected option
 				setFormComponentValue(formComponent, value);
@@ -283,15 +270,17 @@ public class SwarmFormTester
 		 *            a <code>FormComponent</code>
 		 * @return ChoiceSelector a <code>ChoiceSelector</code>
 		 */
-		protected ChoiceSelector create(FormComponent formComponent)
+		protected ChoiceSelector create(FormComponent< ? > formComponent)
 		{
 			if (formComponent == null)
 			{
 				fail("Trying to select on null component.");
+				return null;
 			}
 
-			if (formComponent instanceof RadioGroup || formComponent instanceof DropDownChoice
-					|| formComponent instanceof RadioChoice)
+			if (formComponent instanceof RadioGroup< ? >
+				|| formComponent instanceof DropDownChoice< ? >
+				|| formComponent instanceof RadioChoice< ? >)
 			{
 				return new SingleChoiceSelector(formComponent);
 			}
@@ -302,7 +291,7 @@ public class SwarmFormTester
 			else
 			{
 				fail("Selecting on the component:'" + formComponent.getPath()
-						+ "' is not supported.");
+					+ "' is not supported.");
 				return null;
 			}
 		}
@@ -314,7 +303,7 @@ public class SwarmFormTester
 		 *            a <code>FormComponent</code>
 		 * @return ChoiceSelector a <code>ChoiceSelector</code>
 		 */
-		protected ChoiceSelector createForMultiple(FormComponent formComponent)
+		protected ChoiceSelector createForMultiple(FormComponent< ? > formComponent)
 		{
 			return new MultipleChoiceSelector(formComponent);
 		}
@@ -324,21 +313,20 @@ public class SwarmFormTester
 		 * 
 		 * @param formComponent
 		 *            a <code>FormComponent</code>
-		 * @return <code>true</code> if the given FormComponent allows
-		 *         multiple choice
+		 * @return <code>true</code> if the given FormComponent allows multiple choice
 		 */
-		private boolean allowMultipleChoice(FormComponent formComponent)
+		private boolean allowMultipleChoice(FormComponent< ? > formComponent)
 		{
-			return formComponent instanceof CheckGroup
-					|| formComponent instanceof ListMultipleChoice;
+			return formComponent instanceof CheckGroup< ? >
+				|| formComponent instanceof ListMultipleChoice< ? >;
 		}
 	}
 
 	private final ChoiceSelectorFactory choiceSelectorFactory = new ChoiceSelectorFactory();
 
 	/**
-	 * An instance of <code>FormTester</code> can only be used once. Create a
-	 * new instance of each test.
+	 * An instance of <code>FormTester</code> can only be used once. Create a new instance
+	 * of each test.
 	 */
 	private boolean closed = false;
 
@@ -349,7 +337,7 @@ public class SwarmFormTester
 	private final SwarmBaseWicketTester baseWicketTester;
 
 	/** <code>FormComponent</code> to be tested */
-	private final Form workingForm;
+	private final Form< ? > workingForm;
 
 	/**
 	 * @see WicketTester#newFormTester(String)
@@ -359,13 +347,12 @@ public class SwarmFormTester
 	 * @param workingForm
 	 *            <code>FormComponent</code> to be tested
 	 * @param wicketTester
-	 *            <code>WicketTester</code> that creates
-	 *            <code>FormTester</code>
+	 *            <code>WicketTester</code> that creates <code>FormTester</code>
 	 * @param fillBlankString
-	 *            specifies whether to fill child <code>TextComponent</code>s
-	 *            with blank <code>String</code>s
+	 *            specifies whether to fill child <code>TextComponent</code>s with blank
+	 *            <code>String</code>s
 	 */
-	protected SwarmFormTester(final String path, final Form workingForm,
+	protected SwarmFormTester(final String path, final Form< ? > workingForm,
 			final SwarmBaseWicketTester wicketTester, final boolean fillBlankString)
 	{
 		this.path = path;
@@ -376,7 +363,8 @@ public class SwarmFormTester
 		// fill blank String for Text Component.
 		workingForm.visitFormComponents(new FormComponent.AbstractVisitor()
 		{
-			public void onFormComponent(final FormComponent formComponent)
+			@Override
+			public void onFormComponent(final FormComponent< ? > formComponent)
 			{
 				// do nothing for invisible component
 				if (!formComponent.isVisibleInHierarchy())
@@ -386,7 +374,7 @@ public class SwarmFormTester
 
 				// if component is text field and do not have exist value, fill
 				// blank String if required
-				if (formComponent instanceof AbstractTextComponent)
+				if (formComponent instanceof AbstractTextComponent< ? >)
 				{
 					if (Strings.isEmpty(formComponent.getValue()))
 					{
@@ -400,31 +388,33 @@ public class SwarmFormTester
 						setFormComponentValue(formComponent, formComponent.getValue());
 					}
 				}
-				else if ((formComponent instanceof DropDownChoice)
-						|| (formComponent instanceof RadioChoice)
-						|| (formComponent instanceof CheckBox))
+				else if ((formComponent instanceof DropDownChoice< ? >)
+					|| (formComponent instanceof RadioChoice< ? >)
+					|| (formComponent instanceof CheckBox))
 				{
 					setFormComponentValue(formComponent, formComponent.getValue());
 				}
-				else if (formComponent instanceof ListMultipleChoice)
+				else if (formComponent instanceof ListMultipleChoice< ? >)
 				{
-					final String[] modelValues = formComponent.getValue().split(
-							FormComponent.VALUE_SEPARATOR);
+					final String[] modelValues =
+						formComponent.getValue().split(FormComponent.VALUE_SEPARATOR);
 					for (int i = 0; i < modelValues.length; i++)
 					{
 						addFormComponentValue(formComponent, modelValues[i]);
 					}
 				}
-				else if (formComponent instanceof CheckGroup)
+				else if (formComponent instanceof CheckGroup< ? >)
 				{
-					final Collection checkGroupValues = (Collection)formComponent.getModelObject();
-					formComponent.visitChildren(Check.class, new IVisitor()
+					final Collection< ? > checkGroupValues =
+						(Collection< ? >) formComponent.getModelObject();
+					formComponent.visitChildren(Check.class, new IVisitor<Component>()
 					{
 						public Object component(Component component)
 						{
 							if (checkGroupValues.contains(component.getDefaultModelObject()))
 							{
-								addFormComponentValue(formComponent, ((Check)component).getValue());
+								addFormComponentValue(formComponent, ((Check< ? >) component)
+									.getValue());
 							}
 							return CONTINUE_TRAVERSAL;
 						}
@@ -440,14 +430,13 @@ public class SwarmFormTester
 	 * 
 	 * @return the working <code>Form</code>
 	 */
-	public Form getForm()
+	public Form< ? > getForm()
 	{
 		return workingForm;
 	}
 
 	/**
-	 * Gets the value for an <code>AbstractTextComponent</code> with the
-	 * provided id.
+	 * Gets the value for an <code>AbstractTextComponent</code> with the provided id.
 	 * 
 	 * @param id
 	 *            <code>Component</code> id
@@ -456,21 +445,21 @@ public class SwarmFormTester
 	public String getTextComponentValue(String id)
 	{
 		Component c = getForm().get(id);
-		if (c instanceof AbstractTextComponent)
+		if (c instanceof AbstractTextComponent< ? >)
 		{
-			return ((AbstractTextComponent)c).getValue();
+			return ((AbstractTextComponent< ? >) c).getValue();
 		}
 		return null;
 	}
 
 	/**
-	 * Simulates selecting an option of a <code>FormComponent</code>.
-	 * Supports <code>RadioGroup</code>, <code>CheckGroup</code>, and
-	 * <code>AbstractChoice</code> family currently. The behavior is similar
-	 * to interacting on the browser: For a single choice, such as
-	 * <code>Radio</code> or <code>DropDownList</code>, the selection will
-	 * toggle each other. For multiple choice, such as <code>Checkbox</code>
-	 * or <code>ListMultipleChoice</code>, the selection will accumulate.
+	 * Simulates selecting an option of a <code>FormComponent</code>. Supports
+	 * <code>RadioGroup</code>, <code>CheckGroup</code>, and <code>AbstractChoice</code>
+	 * family currently. The behavior is similar to interacting on the browser: For a
+	 * single choice, such as <code>Radio</code> or <code>DropDownList</code>, the
+	 * selection will toggle each other. For multiple choice, such as
+	 * <code>Checkbox</code> or <code>ListMultipleChoice</code>, the selection will
+	 * accumulate.
 	 * 
 	 * @param formComponentId
 	 *            relative path (from <code>Form</code>) to the selectable
@@ -481,22 +470,24 @@ public class SwarmFormTester
 	public void select(String formComponentId, int index)
 	{
 		checkClosed();
-		FormComponent component = (FormComponent)workingForm.get(formComponentId);
+		FormComponent< ? > component = (FormComponent< ? >) workingForm.get(formComponentId);
 
 		ChoiceSelector choiceSelector = choiceSelectorFactory.create(component);
 		choiceSelector.doSelect(index);
-		if (component instanceof DropDownChoice)
+		if (component instanceof DropDownChoice< ? >)
 		{
 			try
 			{
-				Method wantOnSelectionChangedNotificationsMethod = DropDownChoice.class
-						.getDeclaredMethod("wantOnSelectionChangedNotifications", new Class[0]);
+				Method wantOnSelectionChangedNotificationsMethod =
+					DropDownChoice.class.getDeclaredMethod("wantOnSelectionChangedNotifications",
+						new Class[0]);
 				wantOnSelectionChangedNotificationsMethod.setAccessible(true);
-				boolean wantOnSelectionChangedNotifications = ((Boolean)wantOnSelectionChangedNotificationsMethod
-						.invoke(component, new Object[0])).booleanValue();
+				boolean wantOnSelectionChangedNotifications =
+					((Boolean) wantOnSelectionChangedNotificationsMethod.invoke(component,
+						new Object[0])).booleanValue();
 				if (wantOnSelectionChangedNotifications)
 				{
-					((DropDownChoice)component).onSelectionChanged();
+					((DropDownChoice< ? >) component).onSelectionChanged();
 				}
 			}
 			catch (Exception e)
@@ -507,9 +498,8 @@ public class SwarmFormTester
 	}
 
 	/**
-	 * A convenience method to select multiple options for the
-	 * <code>FormComponent</code>. The method only support multiple
-	 * selectable <code>FormComponent</code>s.
+	 * A convenience method to select multiple options for the <code>FormComponent</code>.
+	 * The method only support multiple selectable <code>FormComponent</code>s.
 	 * 
 	 * @see #select(String, int)
 	 * 
@@ -523,8 +513,9 @@ public class SwarmFormTester
 	{
 		checkClosed();
 
-		ChoiceSelector choiceSelector = choiceSelectorFactory
-				.createForMultiple((FormComponent)workingForm.get(formComponentId));
+		ChoiceSelector choiceSelector =
+			choiceSelectorFactory.createForMultiple((FormComponent< ? >) workingForm
+				.get(formComponentId));
 
 		for (int i = 0; i < indexes.length; i++)
 		{
@@ -537,8 +528,7 @@ public class SwarmFormTester
 	 * 
 	 * @param formComponentId
 	 *            relative path (from <code>Form</code>) to the selectable
-	 *            <code>FormComponent</code> or
-	 *            <code>IFormSubmittingComponent</code>
+	 *            <code>FormComponent</code> or <code>IFormSubmittingComponent</code>
 	 * @param value
 	 *            the field value
 	 */
@@ -549,11 +539,11 @@ public class SwarmFormTester
 		Component component = workingForm.get(formComponentId);
 		if (component instanceof IFormSubmittingComponent)
 		{
-			setFormSubmittingComponentValue((IFormSubmittingComponent)component, value);
+			setFormSubmittingComponentValue((IFormSubmittingComponent) component, value);
 		}
-		else if (component instanceof FormComponent)
+		else if (component instanceof FormComponent< ? >)
 		{
-			setFormComponentValue((FormComponent)component, value);
+			setFormComponentValue((FormComponent< ? >) component, value);
 		}
 	}
 
@@ -562,8 +552,8 @@ public class SwarmFormTester
 	 * 
 	 * @param formComponentId
 	 *            relative path (from <code>Form</code>) to the selectable
-	 *            <code>FormComponent</code>. The <code>FormComponent</code>
-	 *            must be of a type <code>FileUploadField</code>.
+	 *            <code>FormComponent</code>. The <code>FormComponent</code> must be of a
+	 *            type <code>FileUploadField</code>.
 	 * @param file
 	 *            the <code>File</code> to upload.
 	 * @param contentType
@@ -573,13 +563,13 @@ public class SwarmFormTester
 	{
 		checkClosed();
 
-		FormComponent formComponent = (FormComponent)workingForm.get(formComponentId);
+		FormComponent< ? > formComponent = (FormComponent< ? >) workingForm.get(formComponentId);
 
 		if (formComponent instanceof FileUploadField == false)
 		{
 			throw new IllegalArgumentException("'" + formComponentId + "' is not "
-					+ "a FileUploadField. You can only attach a file to form "
-					+ "component of this type.");
+				+ "a FileUploadField. You can only attach a file to form "
+				+ "component of this type.");
 		}
 
 		SwarmMockHttpServletRequest servletRequest = baseWicketTester.getServletRequest();
@@ -587,8 +577,8 @@ public class SwarmFormTester
 	}
 
 	/**
-	 * Submits the <code>Form</code>. Note that <code>submit</code> can be
-	 * executed only once.
+	 * Submits the <code>Form</code>. Note that <code>submit</code> can be executed only
+	 * once.
 	 */
 	public void submit()
 	{
@@ -632,11 +622,10 @@ public class SwarmFormTester
 	}
 
 	/**
-	 * A convenience method for submitting the <code>Form</code> with an
-	 * alternate button.
+	 * A convenience method for submitting the <code>Form</code> with an alternate button.
 	 * <p>
-	 * Note that if the button is associated with a model, it's better to use
-	 * the <code>setValue</code> method instead:
+	 * Note that if the button is associated with a model, it's better to use the
+	 * <code>setValue</code> method instead:
 	 * 
 	 * <pre>
 	 * formTester.setValue(&quot;to:my:button&quot;, &quot;value on the button&quot;);
@@ -653,25 +642,25 @@ public class SwarmFormTester
 	}
 
 	/**
-	 * Adds an additional <code>FormComponent</code>'s value into request
-	 * parameter -- this method retains existing parameters but removes any
-	 * duplicate parameters.
+	 * Adds an additional <code>FormComponent</code>'s value into request parameter --
+	 * this method retains existing parameters but removes any duplicate parameters.
 	 * 
 	 * @param formComponent
 	 *            a <code>FormComponent</code>
 	 * @param value
 	 *            a value to add
 	 */
-	private void addFormComponentValue(FormComponent formComponent, String value)
+	private void addFormComponentValue(FormComponent< ? > formComponent, String value)
 	{
 		if (parameterExist(formComponent))
 		{
-			String[] values = baseWicketTester.getServletRequest().getParameterValues(
+			String[] values =
+				baseWicketTester.getServletRequest().getParameterValues(
 					formComponent.getInputName());
 			// remove duplicated
-			HashSet all = new HashSet(Arrays.asList(values));
+			HashSet<String> all = new HashSet<String>(Arrays.asList(values));
 			all.add(value);
-			Map newParameters = new HashMap();
+			Map<String, String[]> newParameters = new HashMap<String, String[]>();
 			newParameters.put(formComponent.getInputName(), all.toArray(new String[all.size()]));
 			baseWicketTester.getServletRequest().setParameters(newParameters);
 		}
@@ -682,52 +671,50 @@ public class SwarmFormTester
 	}
 
 	/**
-	 * <code>FormTester</code> must only be used once. Create a new instance
-	 * of <code>FormTester</code> for each test.
+	 * <code>FormTester</code> must only be used once. Create a new instance of
+	 * <code>FormTester</code> for each test.
 	 */
 	private void checkClosed()
 	{
 		if (closed)
 		{
 			throw new IllegalStateException("'" + path
-					+ "' already sumbitted. Note that FormTester "
-					+ "is allowed to submit only once");
+				+ "' already sumbitted. Note that FormTester " + "is allowed to submit only once");
 		}
 	}
 
 	/**
-	 * Returns <code>true</code> if the parameter exists in the
-	 * <code>FormComponent</code>.
+	 * Returns <code>true</code> if the parameter exists in the <code>FormComponent</code>
+	 * .
 	 * 
 	 * @param formComponent
 	 *            a <code>FormComponent</code>
-	 * @return <code>true</code> if the parameter exists in the
-	 *         <code>FormComponent</code>
+	 * @return <code>true</code> if the parameter exists in the <code>FormComponent</code>
 	 */
-	private boolean parameterExist(FormComponent formComponent)
+	private boolean parameterExist(FormComponent< ? > formComponent)
 	{
-		String parameter = baseWicketTester.getServletRequest().getParameter(
-				formComponent.getInputName());
+		String parameter =
+			baseWicketTester.getServletRequest().getParameter(formComponent.getInputName());
 		return parameter != null && parameter.trim().length() > 0;
 	}
 
 	/**
-	 * Set formComponent's value into request parameter, this method overwrites
-	 * existing parameters.
+	 * Set formComponent's value into request parameter, this method overwrites existing
+	 * parameters.
 	 * 
 	 * @param formComponent
 	 *            a <code>FormComponent</code>
 	 * @param value
 	 *            a value to add
 	 */
-	private void setFormComponentValue(FormComponent formComponent, String value)
+	private void setFormComponentValue(FormComponent< ? > formComponent, String value)
 	{
 		baseWicketTester.getServletRequest().setParameter(formComponent.getInputName(), value);
 	}
 
 	/**
-	 * Set component's value into request parameter, this method overwrites
-	 * existing parameters.
+	 * Set component's value into request parameter, this method overwrites existing
+	 * parameters.
 	 * 
 	 * @param component
 	 *            an {@link IFormSubmittingComponent}

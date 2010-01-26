@@ -19,8 +19,8 @@ package org.apache.wicket.security.examples.multilogin.authentication;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.security.WaspSession;
-import org.apache.wicket.security.hive.authentication.LoginContext;
 import org.apache.wicket.security.authentication.LoginException;
+import org.apache.wicket.security.hive.authentication.LoginContext;
 
 /**
  * secondary login page. this asks for a username and a token. well kind of :)
@@ -49,6 +49,7 @@ public class LoginPage2 extends WebPage
 			/**
 			 * @see org.apache.wicket.Component#isVisible()
 			 */
+			@Override
 			public boolean isVisible()
 			{
 				return anyMessage();
@@ -69,12 +70,13 @@ public class LoginPage2 extends WebPage
 		{
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public boolean signIn(String username, String password)
 			{
 				LoginContext ctx = new Level1Context(username, password);
 				try
 				{
-					((WaspSession)getSession()).login(ctx);
+					((WaspSession) getSession()).login(ctx);
 				}
 				catch (LoginException e)
 				{

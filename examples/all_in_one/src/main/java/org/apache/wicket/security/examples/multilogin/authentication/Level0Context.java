@@ -19,17 +19,18 @@ package org.apache.wicket.security.examples.multilogin.authentication;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.examples.authorization.MyPrincipal;
 import org.apache.wicket.security.examples.pages.TopSecretPage;
 import org.apache.wicket.security.hive.authentication.DefaultSubject;
 import org.apache.wicket.security.hive.authentication.LoginContext;
 import org.apache.wicket.security.hive.authentication.Subject;
-import org.apache.wicket.security.authentication.LoginException;
+import org.apache.wicket.security.hive.authentication.WicketSubject;
 import org.apache.wicket.util.lang.Objects;
 
 /**
- * Context for primary login. It will let you use the home, balance and transfer
- * pages. just not the commit page. you will need a secondary login for that.
+ * Context for primary login. It will let you use the home, balance and transfer pages.
+ * just not the commit page. you will need a secondary login for that.
  * 
  * @author marrink
  * 
@@ -46,17 +47,19 @@ public class Level0Context extends LoginContext
 		private static final long serialVersionUID = 1L;
 
 		/**
-		 * @see Subject#isClassAuthenticated(java.lang.Class)
+		 * @see WicketSubject#isClassAuthenticated(java.lang.Class)
 		 */
-		public boolean isClassAuthenticated(Class class1)
+		@Override
+		public boolean isClassAuthenticated(Class< ? > class1)
 		{
 			// only authenticate non topsecret pages
 			return !TopSecretPage.class.isAssignableFrom(class1);
 		}
 
 		/**
-		 * @see Subject#isComponentAuthenticated(org.apache.wicket.Component)
+		 * @see WicketSubject#isComponentAuthenticated(org.apache.wicket.Component)
 		 */
+		@Override
 		public boolean isComponentAuthenticated(Component component)
 		{
 			// we only care about pages
@@ -66,16 +69,18 @@ public class Level0Context extends LoginContext
 		}
 
 		/**
-		 * @see Subject#isModelAuthenticated(org.apache.wicket.model.IModel,
+		 * @see WicketSubject#isModelAuthenticated(org.apache.wicket.model.IModel,
 		 *      org.apache.wicket.Component)
 		 */
-		public boolean isModelAuthenticated(IModel model, Component component)
+		@Override
+		public boolean isModelAuthenticated(IModel< ? > model, Component component)
 		{
 			return true;
 		}
 	}
 
 	private final String username;
+
 	private final String password;
 
 	/**
@@ -105,6 +110,7 @@ public class Level0Context extends LoginContext
 	/**
 	 * @see org.apache.wicket.security.hive.authentication.LoginContext#login()
 	 */
+	@Override
 	public Subject login() throws LoginException
 	{
 		// irrelevant check
@@ -123,6 +129,7 @@ public class Level0Context extends LoginContext
 	 * 
 	 * @see org.apache.wicket.security.hive.authentication.LoginContext#preventsAdditionalLogins()
 	 */
+	@Override
 	public boolean preventsAdditionalLogins()
 	{
 		return false;

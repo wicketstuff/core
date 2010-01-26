@@ -24,6 +24,8 @@ import java.util.Set;
 import junit.framework.TestCase;
 
 import org.apache.wicket.security.hive.authorization.EverybodyPrincipal;
+import org.apache.wicket.security.hive.authorization.Permission;
+import org.apache.wicket.security.hive.authorization.Principal;
 import org.apache.wicket.security.hive.authorization.SimplePrincipal;
 import org.apache.wicket.security.hive.authorization.TestPermission;
 
@@ -62,7 +64,7 @@ public class HiveTest extends TestCase
 			assertNotNull(e);
 		}
 		assertFalse(hive.containsPrincipal(new EverybodyPrincipal()));
-		List permissions = new ArrayList();
+		List<Permission> permissions = new ArrayList<Permission>();
 		permissions.add(new TestPermission("foo.bar"));
 		permissions.add(new TestPermission("test"));
 		hive.addPrincipal(new EverybodyPrincipal(), permissions);
@@ -141,7 +143,7 @@ public class HiveTest extends TestCase
 		hive.addPermission(new SimplePrincipal("foo.bar"), new TestPermission("foobar"));
 		hive.addPermission(new EverybodyPrincipal(), new TestPermission("test", "read, write"));
 		assertEquals(Collections.EMPTY_SET, hive.getPrincipals(new TestPermission("foo")));
-		Set principals = hive.getPrincipals(new TestPermission("foobar"));
+		Set<Principal> principals = hive.getPrincipals(new TestPermission("foobar"));
 		assertEquals(2, principals.size());
 		assertTrue(principals.contains(new EverybodyPrincipal()));
 		assertTrue(principals.contains(new SimplePrincipal("foo.bar")));
@@ -161,7 +163,7 @@ public class HiveTest extends TestCase
 		hive.addPermission(new SimplePrincipal("foo.bar"), new TestPermission("foobar"));
 		hive.addPermission(new EverybodyPrincipal(), new TestPermission("test", "read, write"));
 		assertEquals(Collections.EMPTY_SET, hive.getPermissions(new SimplePrincipal("foobar")));
-		Set permissions = hive.getPermissions(new EverybodyPrincipal());
+		Set<Permission> permissions = hive.getPermissions(new EverybodyPrincipal());
 		assertEquals(2, permissions.size());
 		assertTrue(permissions.contains(new TestPermission("foobar")));
 		assertTrue(permissions.contains(new TestPermission("test", "read, write")));

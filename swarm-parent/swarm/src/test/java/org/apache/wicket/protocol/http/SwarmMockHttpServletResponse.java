@@ -21,26 +21,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.TimeZone;
+import java.util.*;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.wicket.util.value.ValueMap;
-
-
 /**
- * Mock servlet response. Implements all of the methods from the standard HttpServletResponse class
- * plus helper methods to aid viewing the generated response.
+ * Mock servlet response. Implements all of the methods from the standard
+ * HttpServletResponse class plus helper methods to aid viewing the generated response.
  * 
  * @author Chris Turner
  */
@@ -58,11 +47,11 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 
 	private int code = HttpServletResponse.SC_OK;
 
-	private final List cookies = new ArrayList();
+	private final List<Cookie> cookies = new ArrayList<Cookie>();
 
 	private String errorMessage = null;
 
-	private final ValueMap headers = new ValueMap();
+	private final Map<String, List<String>> headers = new LinkedHashMap<String, List<String>>();
 
 	private Locale locale = null;
 
@@ -126,10 +115,10 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 	 */
 	public void addHeader(final String name, final String value)
 	{
-		List list = (List)headers.get(name);
+		List<String> list = headers.get(name);
 		if (list == null)
 		{
-			list = new ArrayList(1);
+			list = new ArrayList<String>(1);
 			headers.put(name, list);
 		}
 		list.add(value);
@@ -161,21 +150,22 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 	}
 
 	/**
-	 * Encode the redirectLocation URL. Does no changes as this test implementation uses cookie
-	 * based url tracking.
+	 * Encode the redirectLocation URL. Does no changes as this test implementation uses
+	 * cookie based url tracking.
 	 * 
 	 * @param url
 	 *            The url to encode
 	 * @return The encoded url
 	 */
+	@Deprecated
 	public String encodeRedirectUrl(final String url)
 	{
 		return url;
 	}
 
 	/**
-	 * Encode the redirectLocation URL. Does no changes as this test implementation uses cookie
-	 * based url tracking.
+	 * Encode the redirectLocation URL. Does no changes as this test implementation uses
+	 * cookie based url tracking.
 	 * 
 	 * @param url
 	 *            The url to encode
@@ -187,19 +177,22 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 	}
 
 	/**
-	 * Encode the URL. Does no changes as this test implementation uses cookie based url tracking.
+	 * Encode the URL. Does no changes as this test implementation uses cookie based url
+	 * tracking.
 	 * 
 	 * @param url
 	 *            The url to encode
 	 * @return The encoded url
 	 */
+	@Deprecated
 	public String encodeUrl(final String url)
 	{
 		return url;
 	}
 
 	/**
-	 * Encode the URL. Does no changes as this test implementation uses cookie based url tracking.
+	 * Encode the URL. Does no changes as this test implementation uses cookie based url
+	 * tracking.
 	 * 
 	 * @param url
 	 *            The url to encode
@@ -275,7 +268,7 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 	 * 
 	 * @return The collection of cookies
 	 */
-	public Collection getCookies()
+	public Collection<Cookie> getCookies()
 	{
 		return cookies;
 	}
@@ -316,14 +309,14 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 	 */
 	public String getHeader(final String name)
 	{
-		List l = (List)headers.get(name);
+		List<String> l = headers.get(name);
 		if (l == null || l.size() < 1)
 		{
 			return null;
 		}
 		else
 		{
-			return (String)l.get(0);
+			return l.get(0);
 		}
 	}
 
@@ -332,7 +325,7 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 	 * 
 	 * @return The header names
 	 */
-	public Set getHeaderNames()
+	public Set<String> getHeaderNames()
 	{
 		return headers.keySet();
 	}
@@ -416,6 +409,7 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 		byteStream = new ByteArrayOutputStream();
 		servletStream = new ServletOutputStream()
 		{
+			@Override
 			public void write(int b)
 			{
 				byteStream.write(b);
@@ -424,11 +418,13 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 		stringWriter = new StringWriter();
 		printWriter = new PrintWriter(stringWriter)
 		{
+			@Override
 			public void close()
 			{
 				// Do nothing
 			}
 
+			@Override
 			public void flush()
 			{
 				// Do nothing
@@ -491,32 +487,34 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 	}
 
 	/**
-	 * Send an error code. This implementation just sets the internal error state information.
+	 * Send an error code. This implementation just sets the internal error state
+	 * information.
 	 * 
-	 * @param code
+	 * @param errorCode
 	 *            The code
 	 * @throws IOException
 	 *             Not used
 	 */
-	public void sendError(final int code) throws IOException
+	public void sendError(final int errorCode) throws IOException
 	{
-		this.code = code;
+		this.code = errorCode;
 		errorMessage = null;
 	}
 
 	/**
-	 * Send an error code. This implementation just sets the internal error state information.
+	 * Send an error code. This implementation just sets the internal error state
+	 * information.
 	 * 
-	 * @param code
+	 * @param errorCode
 	 *            The error code
 	 * @param msg
 	 *            The error message
 	 * @throws IOException
 	 *             Not used
 	 */
-	public void sendError(final int code, final String msg) throws IOException
+	public void sendError(final int errorCode, final String msg) throws IOException
 	{
-		this.code = code;
+		this.code = errorCode;
 		errorMessage = msg;
 	}
 
@@ -526,15 +524,12 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 	private String getURL()
 	{
 		/*
-		 * Servlet 2.3 specification :
-		 * 
-		 * Servlet Path: The path section that directly corresponds to the mapping which activated
-		 * this request. This path starts with a "/" character except in the case where the request
-		 * is matched with the "/*" pattern, in which case it is the empty string.
-		 * 
-		 * PathInfo: The part of the request path that is not part of the Context Path or the
-		 * Servlet Path. It is either null if there is no extra path, or is a string with a leading
-		 * "/".
+		 * Servlet 2.3 specification : Servlet Path: The path section that directly
+		 * corresponds to the mapping which activated this request. This path starts with
+		 * a "/" character except in the case where the request is matched with the "/*"
+		 * pattern, in which case it is the empty string. PathInfo: The part of the
+		 * request path that is not part of the Context Path or the Servlet Path. It is
+		 * either null if there is no extra path, or is a string with a leading "/".
 		 */
 		String url = servletRequest.getServletPath();
 		final String pathInfo = servletRequest.getPathInfo();
@@ -561,8 +556,9 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 	}
 
 	/**
-	 * Indicate sending of a redirectLocation to a particular named resource. This implementation
-	 * just keeps hold of the redirectLocation info and makes it available for query.
+	 * Indicate sending of a redirectLocation to a particular named resource. This
+	 * implementation just keeps hold of the redirectLocation info and makes it available
+	 * for query.
 	 * 
 	 * @param location
 	 *            The location to redirectLocation to
@@ -579,8 +575,10 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 			int index = url.lastIndexOf("/");
 			if (index != -1)
 			{
-				// Then we have to recalculate what the real redirect is for the next request
-				// which is just getContext() + getServletPath() + "/" + location;
+				// Then we have to recalculate what the real redirect is for the
+				// next request
+				// which is just getContext() + getServletPath() + "/" +
+				// location;
 				url = url.substring(0, index + 1) + location;
 				url = RequestUtils.removeDoubleDots(url);
 
@@ -667,13 +665,14 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 	}
 
 	/* BEGIN: This code comes from Jetty 6.1.1 */
-	private static String[] DAYS = { "Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
-	private static String[] MONTHS = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
-			"Sep", "Oct", "Nov", "Dec", "Jan" };
+	private static String[] DAYS = {"Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+
+	private static String[] MONTHS =
+		{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan"};
 
 	/**
-	 * Format HTTP date "EEE, dd MMM yyyy HH:mm:ss 'GMT'" or "EEE, dd-MMM-yy HH:mm:ss 'GMT'"for
-	 * cookies
+	 * Format HTTP date "EEE, dd MMM yyyy HH:mm:ss 'GMT'" or
+	 * "EEE, dd-MMM-yy HH:mm:ss 'GMT'"for cookies
 	 * 
 	 * @param buf
 	 * @param calendar
@@ -691,7 +690,7 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 		int century = year / 100;
 		year = year % 100;
 
-		int epoch = (int)((calendar.getTimeInMillis() / 1000) % (60 * 60 * 24));
+		int epoch = (int) ((calendar.getTimeInMillis() / 1000) % (60 * 60 * 24));
 		int seconds = epoch % 60;
 		epoch = epoch / 60;
 		int minutes = epoch % 60;
@@ -734,8 +733,8 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 	{
 		if (i < 100)
 		{
-			buf.append((char)(i / 10 + '0'));
-			buf.append((char)(i % 10 + '0'));
+			buf.append((char) (i / 10 + '0'));
+			buf.append((char) (i % 10 + '0'));
 		}
 	}
 
@@ -751,7 +750,7 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 	 */
 	public void setHeader(final String name, final String value)
 	{
-		List l = new ArrayList(1);
+		List<String> l = new ArrayList<String>(1);
 		l.add(value);
 		headers.put(name, l);
 	}
@@ -800,6 +799,7 @@ public class SwarmMockHttpServletResponse implements HttpServletResponse
 	 *            The message
 	 * @deprecated
 	 */
+	@Deprecated
 	public void setStatus(final int status, final String msg)
 	{
 		setStatus(status);

@@ -25,13 +25,12 @@ import org.apache.wicket.security.examples.httplogin.digest.authentication.Diges
 import org.apache.wicket.security.login.http.HttpDigestLoginPage;
 
 /**
- * The login page. compared to login pages from the other examples it is a bit
- * different because there is no login form. Using http authentication the
- * browser is going to take care of that for us. In order to display a little
- * message to the user this page is rendered normally and the authentication is
- * only requested after the login button is pushed. If you do not want a login
- * button you can request authentication immediately by calling the
- * {@link #doAuthentication()} directly in the constructor instead of when the
+ * The login page. compared to login pages from the other examples it is a bit different
+ * because there is no login form. Using http authentication the browser is going to take
+ * care of that for us. In order to display a little message to the user this page is
+ * rendered normally and the authentication is only requested after the login button is
+ * pushed. If you do not want a login button you can request authentication immediately by
+ * calling the {@link #doAuthentication()} directly in the constructor instead of when the
  * button is clicked.
  * 
  * @author marrink
@@ -62,6 +61,7 @@ public class LoginPage extends HttpDigestLoginPage
 			/**
 			 * @see org.apache.wicket.Component#isVisible()
 			 */
+			@Override
 			public boolean isVisible()
 			{
 				return anyMessage();
@@ -69,11 +69,12 @@ public class LoginPage extends HttpDigestLoginPage
 		});
 		// either allow the user to postpone logging in until the button has
 		// been pushed
-		add(new Link("link")
+		add(new Link<Void>("link")
 		{
 
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public void onClick()
 			{
 				doAuthentication();
@@ -92,6 +93,7 @@ public class LoginPage extends HttpDigestLoginPage
 	 * @see org.apache.wicket.security.login.http.HttpAuthenticationLoginPage#getBasicLoginContext(java.lang.String,
 	 *      java.lang.String)
 	 */
+	@Override
 	protected Object getBasicLoginContext(String username, String password)
 	{
 		return new MyLoginContext(username, password);
@@ -101,6 +103,7 @@ public class LoginPage extends HttpDigestLoginPage
 	 * @see org.apache.wicket.security.login.http.HttpAuthenticationLoginPage#getRealm(org.apache.wicket.protocol.http.WebRequest,
 	 *      org.apache.wicket.protocol.http.WebResponse)
 	 */
+	@Override
 	public String getRealm(WebRequest request, WebResponse response)
 	{
 		return "examples-digest"; // could be anything according to the http
@@ -111,6 +114,7 @@ public class LoginPage extends HttpDigestLoginPage
 	 * 
 	 * @see org.apache.wicket.security.login.http.HttpDigestLoginPage#getClearTextPassword(java.lang.String)
 	 */
+	@Override
 	protected String getClearTextPassword(String username)
 	{
 		return username;
@@ -120,17 +124,19 @@ public class LoginPage extends HttpDigestLoginPage
 	 * 
 	 * @see org.apache.wicket.security.login.http.HttpDigestLoginPage#getDigestLoginContext(java.lang.String)
 	 */
+	@Override
 	protected Object getDigestLoginContext(String username)
 	{
 		// password username combo is already verified in getClearTextPassword,
 		// so all the context has to do is deliver the subject
-		return new DigestLoginContext(username);
+		return new DigestLoginContext();
 	}
 
 	/**
 	 * 
 	 * @see org.apache.wicket.security.login.http.HttpDigestLoginPage#onMD5SessHashCalculated()
 	 */
+	@Override
 	protected void onMD5SessHashCalculated()
 	{
 		// noop since by default we do not support md5-sess, see getAlgorithm

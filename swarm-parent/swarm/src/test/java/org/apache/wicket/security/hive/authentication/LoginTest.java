@@ -36,7 +36,8 @@ public class LoginTest extends TestCase
 
 	/**
 	 * Test method for
-	 * {@link org.apache.wicket.security.hive.authentication.LoginContainer#login(org.apache.wicket.security.hive.authentication.LoginContext)}.
+	 * {@link org.apache.wicket.security.hive.authentication.LoginContainer#login(org.apache.wicket.security.hive.authentication.LoginContext)}
+	 * .
 	 */
 	public void testLogin()
 	{
@@ -53,6 +54,7 @@ public class LoginTest extends TestCase
 		{
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public Subject login()
 			{
 				DefaultSubject subject = new DefaultSubject();
@@ -85,6 +87,7 @@ public class LoginTest extends TestCase
 			// bad example, do not create an anonymous Subject in a LoginContext
 			// as it will cause the context to be serialized along with the
 			// subject
+			@Override
 			public Subject login()
 			{
 				return new DefaultSubject()
@@ -95,7 +98,8 @@ public class LoginTest extends TestCase
 					 * 
 					 * @see org.apache.wicket.security.hive.authentication.DefaultSubject#isClassAuthenticated(java.lang.Class)
 					 */
-					public boolean isClassAuthenticated(Class class1)
+					@Override
+					public boolean isClassAuthenticated(Class< ? > class1)
 					{
 						return false;
 					}
@@ -104,6 +108,7 @@ public class LoginTest extends TestCase
 					 * 
 					 * @see org.apache.wicket.security.hive.authentication.DefaultSubject#isComponentAuthenticated(org.apache.wicket.Component)
 					 */
+					@Override
 					public boolean isComponentAuthenticated(Component component)
 					{
 						return false;
@@ -114,7 +119,8 @@ public class LoginTest extends TestCase
 					 * @see org.apache.wicket.security.hive.authentication.DefaultSubject#isModelAuthenticated(org.apache.wicket.model.IModel,
 					 *      org.apache.wicket.Component)
 					 */
-					public boolean isModelAuthenticated(IModel model, Component component)
+					@Override
+					public boolean isModelAuthenticated(IModel< ? > model, Component component)
 					{
 						return false;
 					}
@@ -124,6 +130,7 @@ public class LoginTest extends TestCase
 			/**
 			 * @see org.apache.wicket.security.hive.authentication.LoginContext#preventsAdditionalLogins()
 			 */
+			@Override
 			public boolean preventsAdditionalLogins()
 			{
 				return true;
@@ -150,7 +157,8 @@ public class LoginTest extends TestCase
 
 	/**
 	 * Test method for
-	 * {@link org.apache.wicket.security.hive.authentication.LoginContainer#logoff(org.apache.wicket.security.hive.authentication.LoginContext)}.
+	 * {@link org.apache.wicket.security.hive.authentication.LoginContainer#logoff(org.apache.wicket.security.hive.authentication.LoginContext)}
+	 * .
 	 */
 	public void testLogoff()
 	{
@@ -163,6 +171,7 @@ public class LoginTest extends TestCase
 			 */
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public Subject login()
 			{
 				return new DefaultSubject();
@@ -207,13 +216,13 @@ public class LoginTest extends TestCase
 			container.login(low);
 			assertFalse(container.isClassAuthenticated(VerySecurePage.class));
 			assertTrue(container.getSubject().getPrincipals()
-					.contains(new SimplePrincipal("basic")));
+				.contains(new SimplePrincipal("basic")));
 			assertFalse(container.getSubject().getPrincipals().contains(
-					new SimplePrincipal("admin")));
+				new SimplePrincipal("admin")));
 			container.login(high);
 			assertTrue(container.isClassAuthenticated(VerySecurePage.class));
 			assertTrue(container.getSubject().getPrincipals()
-					.contains(new SimplePrincipal("admin")));
+				.contains(new SimplePrincipal("admin")));
 			mock.processRequestCycle();
 			mock.destroy();
 		}
@@ -283,6 +292,7 @@ public class LoginTest extends TestCase
 		/**
 		 * @see org.apache.wicket.security.hive.authentication.LoginContext#login()
 		 */
+		@Override
 		public Subject login()
 		{
 			return new DefaultSubject();

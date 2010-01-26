@@ -24,32 +24,30 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Maps keys to lists of values and values to lists of keys. The whole concept
- * of key value is a bit vague here because each value is also a key. Consider
- * the following example: A maps to B and C, B maps to D. get(A) would return B
- * and C, get(B) would return A and D, get(C) would return A, get(D) would
- * return B. Each mapping is bidirectional.
+ * Maps keys to lists of values and values to lists of keys. The whole concept of key
+ * value is a bit vague here because each value is also a key. Consider the following
+ * example: A maps to B and C, B maps to D. get(A) would return B and C, get(B) would
+ * return A and D, get(C) would return A, get(D) would return B. Each mapping is
+ * bidirectional.
  * 
  * @author marrink
  */
-public class ManyToManyMap
+public class ManyToManyMap<L, R>
 {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final Iterator EMPTY_ITERATOR = new EmptyIterator();
+	private Map<L, Set<R>> lToRMappings;
 
-	private Map mappings;
+	private Map<R, Set<L>> rToLMappings;
 
 	/**
 	 * Creates map with default initial size and load factor.
 	 */
 	public ManyToManyMap()
 	{
-		mappings = new HashMap();
+		lToRMappings = new HashMap<L, Set<R>>();
+		rToLMappings = new HashMap<R, Set<L>>();
 	}
 
 	/**
@@ -59,52 +57,54 @@ public class ManyToManyMap
 	 */
 	public ManyToManyMap(int initialCapacity)
 	{
-		mappings = new HashMap(initialCapacity);
+		lToRMappings = new HashMap<L, Set<R>>(initialCapacity);
+		rToLMappings = new HashMap<R, Set<L>>(initialCapacity);
 	}
 
 	/**
-	 * Creates map with specified initial size and load factor. For more
-	 * information about these see {@link HashMap}
+	 * Creates map with specified initial size and load factor. For more information about
+	 * these see {@link HashMap}
 	 * 
 	 * @param initialCapacity
 	 * @param loadFactor
 	 */
 	public ManyToManyMap(int initialCapacity, float loadFactor)
 	{
-		mappings = new HashMap(initialCapacity, loadFactor);
+		lToRMappings = new HashMap<L, Set<R>>(initialCapacity, loadFactor);
+		rToLMappings = new HashMap<R, Set<L>>(initialCapacity, loadFactor);
 	}
 
 	/**
-	 * Adds a key value mapping in this map. Since this maps many to many
-	 * relations no previous mappings will be overridden. The size of the map
-	 * may or may not change depending on whether both objects are already
-	 * present or not
+	 * Adds a key value mapping in this map. Since this maps many to many relations no
+	 * previous mappings will be overridden. The size of the map may or may not change
+	 * depending on whether both objects are already present or not
 	 * 
 	 * @param left
 	 * @param right
 	 */
-	public void add(Object left, Object right)
+	public void add(L left, R right)
 	{
 		if (left == null)
 			throw new NullPointerException("left must not be null.");
 		if (right == null)
 			throw new NullPointerException("right must not be null.");
-		Set manys = (Set)mappings.get(left);
-		if (manys == null)
-			manys = new HashSet();
-		manys.add(right);
-		mappings.put(left, manys);
-		manys = (Set)mappings.get(right);
-		if (manys == null)
-			manys = new HashSet();
-		manys.add(left);
-		mappings.put(right, manys);
+
+		Set<R> rights = lToRMappings.get(left);
+		if (rights == null)
+			rights = new HashSet<R>();
+		rights.add(right);
+		lToRMappings.put(left, rights);
+
+		Set<L> lefts = rToLMappings.get(right);
+		if (lefts == null)
+			lefts = new HashSet<L>();
+		lefts.add(left);
+		rToLMappings.put(right, lefts);
 	}
 
 	/**
-	 * Removes a many to many mapping between two objects. The size of the map
-	 * may or may not change depending on on whether or not both objects have
-	 * other mappings.
+	 * Removes a many to many mapping between two objects. The size of the map may or may
+	 * not change depending on on whether or not both objects have other mappings.
 	 * 
 	 * @param left
 	 *            left side of the mapping
@@ -112,19 +112,20 @@ public class ManyToManyMap
 	 *            right side of the mapping
 	 * @return false if the mapping did not exist, true otherwise
 	 */
-	public boolean remove(Object left, Object right)
+	public boolean remove(L left, R right)
 	{
-		Set manys = (Set)mappings.get(left);
-		if (manys != null)
+		Set<R> rights = lToRMappings.get(left);
+		if (rights != null)
 		{
-			if (manys.remove(right))
+			if (rights.remove(right))
 			{
-				if (manys.isEmpty())
-					mappings.remove(left);
-				manys = (Set)mappings.get(right);
-				manys.remove(left);
-				if (manys.isEmpty())
-					mappings.remove(right);
+				if (rights.isEmpty())
+					lToRMappings.remove(left);
+
+				Set<L> lefts = rToLMappings.get(right);
+				lefts.remove(left);
+				if (lefts.isEmpty())
+					rToLMappings.remove(right);
 				return true;
 			}
 		}
@@ -132,31 +133,51 @@ public class ManyToManyMap
 	}
 
 	/**
-	 * Remove all mappings for an object. The size of the map will at least
-	 * decrease by one (if the object is present) but possibly more.
+	 * Remove all mappings for an object. The size of the map will at least decrease by
+	 * one (if the object is present) but possibly more.
 	 * 
-	 * @param leftOrRight
-	 *            the left or right side of the many to many mapping
+	 * @param left
+	 *            the left side of the many to many mapping
 	 * @return the mappings that will be removed by this action
 	 */
-	public Set removeAllMappings(Object leftOrRight)
+	public Set<R> removeAllMappingsForLeft(L left)
 	{
-		Set manys = (Set)mappings.remove(leftOrRight);
-		if (manys != null)
+		Set<R> rights = lToRMappings.remove(left);
+		if (rights != null)
 		{
-			Iterator it = manys.iterator();
-			Set temp = null;
-			Object next;
-			while (it.hasNext())
+			for (R curRight : rights)
 			{
-				next = it.next();
-				temp = (Set)mappings.get(next);
-				temp.remove(leftOrRight);
-				if (temp.isEmpty())
-					mappings.remove(next);
+				Set<L> curLefts = rToLMappings.get(curRight);
+				curLefts.remove(left);
+				if (curLefts.isEmpty())
+					rToLMappings.remove(curRight);
 			}
 		}
-		return manys;
+		return rights;
+	}
+
+	/**
+	 * Remove all mappings for an object. The size of the map will at least decrease by
+	 * one (if the object is present) but possibly more.
+	 * 
+	 * @param right
+	 *            the right side of the many to many mapping
+	 * @return the mappings that will be removed by this action
+	 */
+	public Set<L> removeAllMappingsForRight(R right)
+	{
+		Set<L> lefts = rToLMappings.remove(right);
+		if (lefts != null)
+		{
+			for (L curLeft : lefts)
+			{
+				Set<R> curRights = lToRMappings.get(curLeft);
+				curRights.remove(right);
+				if (curRights.isEmpty())
+					lToRMappings.remove(curLeft);
+			}
+		}
+		return lefts;
 	}
 
 	/**
@@ -165,33 +186,61 @@ public class ManyToManyMap
 	 * @param left
 	 * @return the many to many mappings for this object
 	 */
-	public Set get(Object left)
+	public Set<R> getRight(L left)
 	{
-		Set set = (Set)mappings.get(left);
+		Set<R> set = lToRMappings.get(left);
 		if (set == null)
-			return Collections.EMPTY_SET;
+			return Collections.emptySet();
 		return Collections.unmodifiableSet(set);
 	}
 
 	/**
-	 * The number of distinct objects that are mapped.
+	 * Gets the bidirectional mappings for this object.
 	 * 
-	 * @return the number of distinct objects
+	 * @param right
+	 * @return the many to many mappings for this object
+	 */
+	public Set<L> getLeft(R right)
+	{
+		Set<L> set = rToLMappings.get(right);
+		if (set == null)
+			return Collections.emptySet();
+		return Collections.unmodifiableSet(set);
+	}
+
+	/**
+	 * Returns the number of mapped values, left or right
+	 * 
+	 * @return the number of mapped values
 	 */
 	public int size()
 	{
-		return mappings.size();
+		return lToRMappings.size() + rToLMappings.size();
 	}
 
 	/**
 	 * Returns the number of keys mapped to a value.
 	 * 
-	 * @param value
+	 * @param left
 	 * @return the number of keys mapped to this value
 	 */
-	public int numberOfmappings(Object value)
+	public int numberOfmappingsForLeft(L left)
 	{
-		Set set = (Set)mappings.get(value);
+		Set<R> set = lToRMappings.get(left);
+		if (set == null)
+			return 0;
+		return set.size();
+	}
+
+	/**
+	 * Returns the number of keys mapped to a value.
+	 * 
+	 * @param right
+	 * @return the number of keys mapped to this value
+	 */
+	public int numberOfmappingsForRight(R right)
+	{
+		Set<L> set = rToLMappings.get(right);
 		if (set == null)
 			return 0;
 		return set.size();
@@ -200,24 +249,35 @@ public class ManyToManyMap
 	/**
 	 * Check if this map contains a key.
 	 * 
-	 * @param key
+	 * @param left
 	 *            a mapped object
 	 * @return true if this map contains the key, false otherwise
 	 */
-	public boolean contains(Object key)
+	public boolean containsLeft(L left)
 	{
-		return mappings.containsKey(key);
+		return lToRMappings.containsKey(left);
 	}
 
 	/**
-	 * Check if this map contains any mappings. If this map does is empty size
-	 * will be 0.
+	 * Check if this map contains a key.
+	 * 
+	 * @param right
+	 *            a mapped object
+	 * @return true if this map contains the key, false otherwise
+	 */
+	public boolean containsRight(R right)
+	{
+		return rToLMappings.containsKey(right);
+	}
+
+	/**
+	 * Check if this map contains any mappings. If this map does is empty size will be 0.
 	 * 
 	 * @return true if no mappings are present, false otherwise
 	 */
 	public boolean isEmpty()
 	{
-		return mappings.isEmpty();
+		return lToRMappings.isEmpty();
 	}
 
 	/**
@@ -225,45 +285,62 @@ public class ManyToManyMap
 	 */
 	public void clear()
 	{
-		mappings.clear();
+		lToRMappings.clear();
+		rToLMappings.clear();
 	}
 
 	/**
-	 * Returns an <tt>Iterator</tt> over every left and right hand mapping in
-	 * this map. In no particular order.
+	 * Returns an <tt>Iterator</tt> over every left hand mapping in this map. In no
+	 * particular order.
 	 * 
 	 * @return an iterator over this map
 	 */
-	public Iterator iterator()
+	public Iterator<L> leftIterator()
 	{
-		if (mappings.isEmpty())
-			return EMPTY_ITERATOR;
-		return mappings.keySet().iterator();
+		return lToRMappings.keySet().iterator();
+	}
+
+	/**
+	 * Returns an <tt>Iterator</tt> over every rightt hand mapping in this map. In no
+	 * particular order.
+	 * 
+	 * @return an iterator over this map
+	 */
+	public Iterator<R> rightIterator()
+	{
+		return rToLMappings.keySet().iterator();
 	}
 
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
+	@Override
 	public boolean equals(Object obj)
 	{
-		if (obj instanceof ManyToManyMap)
-			return mappings.equals(((ManyToManyMap)obj).mappings);
+		if (obj instanceof ManyToManyMap< ? , ? >)
+		{
+			ManyToManyMap< ? , ? > other = (ManyToManyMap< ? , ? >) obj;
+			return lToRMappings.equals(other.lToRMappings)
+				&& rToLMappings.equals(other.lToRMappings);
+		}
 		return false;
 	}
 
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
+	@Override
 	public int hashCode()
 	{
-		return 37 * mappings.hashCode() + 1979;
+		return (7 * rToLMappings.hashCode()) ^ (37 * lToRMappings.hashCode()) + 1979;
 	}
 
 	/**
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString()
 	{
-		return mappings.toString();
+		return lToRMappings.toString() + '\n' + rToLMappings.toString();
 	}
 }

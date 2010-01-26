@@ -17,10 +17,10 @@
 package org.apache.wicket.security.examples.customactions.pages;
 
 import org.apache.wicket.security.WaspSession;
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.examples.customactions.authentication.MyLoginContext;
 import org.apache.wicket.security.examples.pages.login.UsernamePasswordSignInPanel;
 import org.apache.wicket.security.hive.authentication.LoginContext;
-import org.apache.wicket.security.authentication.LoginException;
 
 /**
  * Custom login page.
@@ -34,6 +34,7 @@ public class LoginPage extends org.apache.wicket.security.examples.pages.login.L
 	/**
 	 * @see org.apache.wicket.security.examples.pages.login.LoginPage#newUserPasswordSignInPanel(java.lang.String)
 	 */
+	@Override
 	protected void newUserPasswordSignInPanel(String panelId)
 	{
 		add(new UsernamePasswordSignInPanel(panelId)
@@ -41,6 +42,7 @@ public class LoginPage extends org.apache.wicket.security.examples.pages.login.L
 
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public boolean signIn(final String username, final String password)
 			{
 				// authentication in swarm is handled by contexts, which are
@@ -48,7 +50,7 @@ public class LoginPage extends org.apache.wicket.security.examples.pages.login.L
 				LoginContext context = new MyLoginContext(username, password);
 				try
 				{
-					((WaspSession)getSession()).login(context);
+					((WaspSession) getSession()).login(context);
 				}
 				catch (LoginException e)
 				{

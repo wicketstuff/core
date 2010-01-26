@@ -24,9 +24,8 @@ import org.apache.wicket.security.swarm.actions.SwarmActionFactory;
 import org.apache.wicket.security.swarm.strategies.SwarmStrategyFactory;
 
 /**
- * A default webapp. It sets up the strategy and action factories and triggers
- * the hive setup. but you must remember to call super in the init or do your
- * own factory setups.
+ * A default webapp. It sets up the strategy and action factories and triggers the hive
+ * setup. but you must remember to call super in the init or do your own factory setups.
  * 
  * @author marrink
  */
@@ -39,6 +38,7 @@ public abstract class SwarmWebApplication extends WaspWebApplication
 	/**
 	 * @see org.apache.wicket.security.WaspWebApplication#setupActionFactory()
 	 */
+	@Override
 	protected void setupActionFactory()
 	{
 		setActionFactory(new SwarmActionFactory(getClass().getName() + ":" + getHiveKey()));
@@ -64,6 +64,7 @@ public abstract class SwarmWebApplication extends WaspWebApplication
 	/**
 	 * @see org.apache.wicket.security.WaspWebApplication#setupStrategyFactory()
 	 */
+	@Override
 	protected void setupStrategyFactory()
 	{
 		setStrategyFactory(new SwarmStrategyFactory(getHiveKey()));
@@ -91,6 +92,7 @@ public abstract class SwarmWebApplication extends WaspWebApplication
 	 * 
 	 * @see org.apache.wicket.security.WaspWebApplication#init()
 	 */
+	@Override
 	protected void init()
 	{
 		setupActionFactory();
@@ -104,11 +106,10 @@ public abstract class SwarmWebApplication extends WaspWebApplication
 	 * PolicyFileHiveFactory factory = new PolicyFileHiveFactory();
 	 * factory.addPolicyFile("/policy.hive");
 	 * HiveMind.registerHive(getHiveKey(), factory);
-	 * </code>
-	 * Note that you must setup the actionfactory before you can setup the hive.
-	 * Note that the hive is not automatically unregistered since there is a
-	 * chance you want to share it with another webapp. If you want to
-	 * unregister the hive please do so in the {@link #onDestroy()}
+	 * </code> Note that you must setup the actionfactory before you can setup the hive.
+	 * Note that the hive is not automatically unregistered since there is a chance you
+	 * want to share it with another webapp. If you want to unregister the hive please do
+	 * so in the {@link #onDestroy()}
 	 */
 	protected abstract void setUpHive();
 

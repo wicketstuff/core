@@ -78,7 +78,7 @@ public interface Hive
 	 * @param permission
 	 * @return set, never null
 	 */
-	public Set getPrincipals(Permission permission);
+	public Set<Principal> getPrincipals(Permission permission);
 
 	/**
 	 * Returns a set of {@link Permission}s, contained within the principal.
@@ -88,5 +88,5 @@ public interface Hive
 	 * @param principal
 	 * @return set, never null
 	 */
-	public Set getPermissions(Principal principal);
+	public Set<Permission> getPermissions(Principal principal);
 }

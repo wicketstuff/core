@@ -16,11 +16,11 @@
  */
 package org.apache.wicket.security.examples.httplogin.basic.authentication;
 
+import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.examples.authorization.MyPrincipal;
 import org.apache.wicket.security.hive.authentication.DefaultSubject;
 import org.apache.wicket.security.hive.authentication.Subject;
 import org.apache.wicket.security.hive.authentication.UsernamePasswordContext;
-import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.util.lang.Objects;
 
 /**
@@ -53,6 +53,7 @@ public class MyLoginContext extends UsernamePasswordContext
 	 * @see org.apache.wicket.security.hive.authentication.UsernamePasswordContext#getSubject(java.lang.String,
 	 *      java.lang.String)
 	 */
+	@Override
 	protected Subject getSubject(String username, String password) throws LoginException
 	{
 		// irrelevant check
