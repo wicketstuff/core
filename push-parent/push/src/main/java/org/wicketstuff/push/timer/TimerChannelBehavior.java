@@ -107,12 +107,14 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 	private static class DelayedMethodCallList implements Serializable {
 		private static final long serialVersionUID = 1L;
 
+		private final Application _application;
+
 		/**
 		 * Used to store a method and its parameters to be later invoked on an object.
 		 *
 		 * @author Xavier Hanin
 		 */
-		private static class DelayedMethodCall implements Serializable {
+		private class DelayedMethodCall implements Serializable {
 			private static final long serialVersionUID = 1L;
 
 			/**
@@ -130,7 +132,8 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 			 * @param m the index of the method to be called
 			 * @param parameters the parameters to use when the method is called
 			 */
-			public DelayedMethodCall(final int m, final Object[] parameters)
+			public DelayedMethodCall(final int m,
+			    final Object[] parameters)
 			{
 				this.m = m;
 				this.parameters = parameters;
@@ -147,7 +150,9 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 			 */
 			public void invoke(final Object o) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException
 			{
+			  Application.set(_application);
 				methods[m].invoke(o, parameters);
+				Application.unset();
 			}
 		}
 		/**
@@ -160,6 +165,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 		 */
 		public DelayedMethodCallList()
 		{
+		  _application = Application.get();
 			calls = new ArrayList<DelayedMethodCall>();
 		}
 
@@ -169,6 +175,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 		 */
 		public DelayedMethodCallList(final DelayedMethodCallList dmcl)
 		{
+		  _application = Application.get();
 			calls = new ArrayList<DelayedMethodCall>(dmcl.calls);
 		}
 
