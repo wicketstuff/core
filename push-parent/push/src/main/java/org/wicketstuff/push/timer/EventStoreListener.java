@@ -24,8 +24,8 @@ import java.util.Map;
  *
  * @author Vincent Demay
  */
-abstract class EventStoreListener{
+interface EventStoreListener {
 
-  public abstract void EventTriggered(String channel, Map<String, String> data);
+  void EventTriggered(String channel, Map<String, String> data);
 
 }
