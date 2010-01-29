@@ -36,7 +36,7 @@ public class HomePageTest extends AbstractSecureTestPage
 		ApplicationContextMock appctx = new ApplicationContextMock();
 
 		application.addComponentInstantiationListener(new SpringComponentInjector(application,
-			appctx));
+			appctx, true));
 
 	}
 
@@ -67,7 +67,7 @@ public class HomePageTest extends AbstractSecureTestPage
 		// appctx.putBean("patientService", patientService);
 
 		application.addComponentInstantiationListener(new SpringComponentInjector(application,
-			appctx));
+			appctx, true));
 
 		loginToApp("user");
 		// first link is the create patient link

@@ -36,7 +36,7 @@ public class FirstSecurePageTest extends AbstractSecureTestPage
 		ApplicationContextMock appctx = new ApplicationContextMock();
 
 		application.addComponentInstantiationListener(new SpringComponentInjector(application,
-			appctx));
+			appctx, true));
 
 	}
 

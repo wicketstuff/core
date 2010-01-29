@@ -53,7 +53,7 @@ public class SpringSecureWicketTestApplication extends SpringSecureWicketApplica
 
 		// Make injection of spring beans in wicket-related classes possible using
 		// @SpringBean.
-		addComponentInstantiationListener(new SpringComponentInjector(this, appctx));
+		addComponentInstantiationListener(new SpringComponentInjector(this, appctx, true));
 
 		ProviderManager authMan = new ProviderManager();
 		List<TestingAuthenticationProvider> providerList =
