@@ -62,6 +62,7 @@
 		-->
 		<module>maven-support</module>
 		<module>theme-parent</module>
+        <module>wicket-html5-parent</module>
   </modules>
 
 	<licenses>
