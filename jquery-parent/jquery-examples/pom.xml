@@ -8,7 +8,7 @@
         <version>1.4.2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>wicketstuff-jquery-examples</artifactId>
+    <artifactId>jquery-examples</artifactId>
     <packaging>war</packaging>
 
     <name>JQuery Integration - Examples</name>
@@ -29,7 +29,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>wicketstuff-jquery</artifactId>
+            <artifactId>jquery</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -4,7 +4,7 @@
 
 	<parent>
 		<groupId>org.wicketstuff</groupId>
-		<artifactId>jwicket-ui</artifactId>
+		<artifactId>jwicket-table</artifactId>
 		<version>1.4.2-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
