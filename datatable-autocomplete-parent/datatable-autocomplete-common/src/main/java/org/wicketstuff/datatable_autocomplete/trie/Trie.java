@@ -30,18 +30,24 @@ import org.slf4j.LoggerFactory;
  * 
  *         A Trie is a specialized search tree that is optimized for
  *         <i>retrieval</i> of data.
- *
- *        This implementation is read-only and expects to load the data then minimize itself and be part of a singleton that returns the indexed data.
- *
- *        It works well for prefix matching.  It supports substring matching by traversing all nodes recursively looking for a match.    
- *        
- *        @see http://en.wikipedia.org/wiki/Radix_tree
- *        
- *        It is suited for quick retrieval of prefix matches over large static datasets (100,000 elements)
- *        
- *        This implementation will index an object C based on the word (String) that is extracted using the ITrieNodeConfiguration.getWord (C c) method.
- *        
- *        It supports prefix matching and also anystring matching which is slightly more complicated but seems to return correct results.
+ * 
+ *         This implementation is read-only and expects to load the data then
+ *         minimize itself and be part of a singleton that returns the indexed
+ *         data.
+ * 
+ *         It works well for prefix matching. It supports substring matching by
+ *         traversing all nodes recursively looking for a match.
+ * 
+ * @see http://en.wikipedia.org/wiki/Radix_tree
+ * 
+ *      It is suited for quick retrieval of prefix matches over large static
+ *      datasets (100,000 elements)
+ * 
+ *      This implementation will index an object C based on the word (String)
+ *      that is extracted using the ITrieNodeConfiguration.getWord (C c) method.
+ * 
+ *      It supports prefix matching and also anystring matching which is
+ *      slightly more complicated but seems to return correct results.
  * 
  */
 public class Trie<C> implements IClusterable {
@@ -49,14 +55,13 @@ public class Trie<C> implements IClusterable {
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= -6075870905379098868L;
+	private static final long serialVersionUID = -6075870905379098868L;
 
-	private static final Logger		log				= LoggerFactory
-															.getLogger(Trie.class);
+	private static final Logger log = LoggerFactory.getLogger(Trie.class);
 
-	private TrieNode<C>				root			= null;
+	private TrieNode<C> root = null;
 
-	private ITrieConfiguration<C>	configuration	= null;
+	private ITrieConfiguration<C> configuration = null;
 
 	/**
 	 * 
@@ -65,14 +70,12 @@ public class Trie<C> implements IClusterable {
 
 		super();
 	}
-	
 
 	/**
 	 * 
 	 */
 	public Trie(ITrieConfiguration<C> configuration) {
 
-	
 		this.configuration = configuration;
 		this.root = new TrieNode<C>(null, "", "", this.configuration);
 
@@ -136,11 +139,9 @@ public class Trie<C> implements IClusterable {
 
 	}
 
-	
-
-	
 	/**
-	 * Visit each TrieNode<C> 
+	 * Visit each TrieNode<C>
+	 * 
 	 * @param v
 	 */
 
@@ -150,7 +151,8 @@ public class Trie<C> implements IClusterable {
 	}
 
 	/**
-	 * Compresses the sparse nodes with only 1 branch; makes the Trie into a Patricia Trie which uses less space.
+	 * Compresses the sparse nodes with only 1 branch; makes the Trie into a
+	 * Patricia Trie which uses less space.
 	 */
 	public void simplifyIndex() {
 
@@ -167,7 +169,6 @@ public class Trie<C> implements IClusterable {
 		final List<TrieNode<C>> leafNodeList = new LinkedList<TrieNode<C>>();
 
 		this.root.visit(new ITrieNodeVisitor<C>() {
-		
 
 			public void visit(TrieNode<C> element) {
 
@@ -186,19 +187,17 @@ public class Trie<C> implements IClusterable {
 
 			TrieNode<C> parentNode = trieNode.getParentNode();
 			TrieNode<C> currentNode = trieNode;
-			
-			
-			
+
 			while (parentNode != null) {
 
 				// start at the bottom and work upwards
 
 				int currentLength = currentNode.getCharacter().length();
-				
-				int currentMax = currentNode.getMaxChildStringLength() + currentLength;
-				
-				int maxParentLength = parentNode
-						.getMaxChildStringLength();
+
+				int currentMax = currentNode.getMaxChildStringLength()
+						+ currentLength;
+
+				int maxParentLength = parentNode.getMaxChildStringLength();
 
 				if (currentMax > maxParentLength) {
 					parentNode.setMaxChildStringLength(currentMax);
@@ -213,7 +212,6 @@ public class Trie<C> implements IClusterable {
 		}
 
 	}
-	
 
 	/**
 	 * Builds a list where the filter string occurs anywhere within a particular
@@ -223,23 +221,23 @@ public class Trie<C> implements IClusterable {
 	 * 
 	 * @return
 	 */
-	public List<C> getAnyMatchingWordList(final String substring, TrieFilter<C>nodeFilter) {
+	public List<C> getAnyMatchingWordList(final String substring,
+			TrieFilter<C> nodeFilter) {
 
 		List<C> dataList = new LinkedList<C>();
 
-		
-		Set<TrieNode<C>>matchingNodeList = this.root.findAnyMatch(substring);
-		
+		Set<TrieNode<C>> matchingNodeList = this.root.findAnyMatch(substring);
+
 		for (TrieNode<C> trieNode : matchingNodeList) {
 			dataList.addAll(getWordList(trieNode, nodeFilter));
 		}
-		
 
 		return dataList;
 	}
-	
+
 	/**
-	 * Get the list of words that have the substring given contained anywhere within them.
+	 * Get the list of words that have the substring given contained anywhere
+	 * within them.
 	 * 
 	 * Note that we take the first match found to avoid double counting.
 	 * 
@@ -250,6 +248,7 @@ public class Trie<C> implements IClusterable {
 	public List<C> getAnyMatchingWordList(String substring) {
 		return this.getAnyMatchingWordList(substring, null);
 	}
+
 	/**
 	 * @return
 	 */
@@ -260,28 +259,52 @@ public class Trie<C> implements IClusterable {
 
 	/**
 	 * 
+	 * @param prefix
+	 * @return the number of elements in the subtree corresponding to the prefix
+	 *         given.
+	 * 
+	 */
+	public int getPrefixMatchedElementCount(String prefix) {
+
+		TrieNodeMatch<C> match = root.find(prefix);
+
+		final AtomicInteger counter = new AtomicInteger(0);
+
+		match.getNode().visit(new ITrieNodeVisitor<C>() {
+
+			public void visit(TrieNode<C> node) {
+
+				counter.addAndGet(node.getTotalMatches());
+			}
+		});
+
+		return counter.intValue();
+
+	}
+
+	/**
+	 * 
 	 * @return the total number of elements indexed by this trie.
 	 * 
-	 * Note this can be an expensive call as each node in the trie is visited.
+	 *         Note this can be an expensive call as each node in the trie is
+	 *         visited.
 	 * 
 	 */
 
 	public int size() {
-		
+
 		final AtomicInteger counter = new AtomicInteger(0);
-		
+
 		root.visit(new ITrieNodeVisitor<C>() {
-			
+
 			public void visit(TrieNode<C> node) {
-		
+
 				counter.addAndGet(node.getTotalMatches());
 			}
 		});
-		
-		
+
 		return counter.intValue();
 	}
-
 
 	/**
 	 * @return
@@ -290,11 +313,5 @@ public class Trie<C> implements IClusterable {
 	public Set<String> getNextNodeCharacterSet() {
 		return root.getNextNodeCharacterSet();
 	}
-
-
-
-
-	
-	
 
 }
