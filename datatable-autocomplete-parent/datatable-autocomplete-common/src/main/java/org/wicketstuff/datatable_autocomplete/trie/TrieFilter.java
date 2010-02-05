@@ -25,7 +25,7 @@ public interface TrieFilter<C> {
 		/**
 		 * 
 		 * @param n
-		 * @return true if the node is visible in the current context.
+		 * @return true if the node (and sub nodes) are visible in the current context.
 		 */
 		public boolean isVisible (TrieNode<C> n);
 }
