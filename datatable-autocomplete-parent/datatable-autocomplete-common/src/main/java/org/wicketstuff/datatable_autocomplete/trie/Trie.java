@@ -37,6 +37,10 @@ import org.slf4j.LoggerFactory;
  * 
  *         It works well for prefix matching. It supports substring matching by
  *         traversing all nodes recursively looking for a match.
+ *         
+ *         The basic implementation supports indexing a single 'word' string but extended attribute details can also be included within each TrieNode.
+ *         This extra information is useful for efficient constraint based filtering of the candidate data; and you get the benefit of accurate match
+ *         counts.
  * 
  * @see http://en.wikipedia.org/wiki/Radix_tree
  * 
@@ -258,6 +262,7 @@ public class Trie<C> implements IClusterable {
 	}
 
 	/**
+	 * Return the size of the subtree for the prefix given.  This avoids the need to get the list especially when the count is large.
 	 * 
 	 * @param prefix
 	 * @return the number of elements in the subtree corresponding to the prefix
@@ -267,6 +272,9 @@ public class Trie<C> implements IClusterable {
 	public int getPrefixMatchedElementCount(String prefix) {
 
 		TrieNodeMatch<C> match = root.find(prefix);
+		
+		if (match == null)
+			return 0;
 
 		final AtomicInteger counter = new AtomicInteger(0);
 
