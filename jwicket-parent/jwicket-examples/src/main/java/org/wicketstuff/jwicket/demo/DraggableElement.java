@@ -12,7 +12,8 @@ import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.tooltip.WalterZornTips;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggableBehavior;
 import org.wicketstuff.jwicket.ui.dragdrop.IDraggable;
-import org.wicketstuff.jwicket.ui.effect.EffectBehavior;
+import org.wicketstuff.jwicket.ui.effect.Explode;
+import org.wicketstuff.jwicket.ui.effect.Puff;
 
 
 public class DraggableElement extends GenericPanel<String>  {
@@ -22,7 +23,8 @@ public class DraggableElement extends GenericPanel<String>  {
 	private final DraggableLink draggable;
 	private final Label l;
 	
-	private final EffectBehavior effects;
+	private final Puff effects;
+	private final Explode explode;
 	private final DraggableBehavior dragger;
 
 	public DraggableElement(String id) {
@@ -52,8 +54,17 @@ dragger
 
 ;
 
-		effects = new EffectBehavior();
+		effects = new Puff();
+		effects.setPercen(70);
+		effects.setSpeed(1200);
+		add(effects);
 
+		
+		explode = new Explode();
+		explode.setPieces(16);
+		explode.setSpeed(1500);
+		explode.setFadeInAfter(500);
+		add(explode);
 
 		WalterZornTips tooltip = new WalterZornTips("This rectangle is draggable!")
 			.setShadow(true)
@@ -63,7 +74,7 @@ dragger
 		draggable = new DraggableLink("draggableLink", model);
 		draggable.add(tooltip);
 		draggable.add(dragger);
-		draggable.add(effects);
+		draggable.setOutputMarkupId(true);
 
 		draggable.add(l = new Label("theModel", model));
 		l.setOutputMarkupId(true);
@@ -91,10 +102,7 @@ dragger
 		@Override
 		public void onClick(final AjaxRequestTarget target) {
 			if (!ignoreClick) {
-				effects	//.pulsate(target, 5, 250)
-						.puff(target, 70, 1200)
-						//.explode(target, 25, 1500)
-				;
+				effects.fire(target, draggable);
 			}
 		}
 
@@ -102,7 +110,7 @@ dragger
 			setModelObject("Drag me!");
 			target.addComponent(l);
 			ignoreClick = false;
-			effects.explode(target, 25, 1500);
+			explode.fire(target, draggable);
 		}
 
 		public void onDragStart(final AjaxRequestTarget target, final SpecialKeys specialKeys) {

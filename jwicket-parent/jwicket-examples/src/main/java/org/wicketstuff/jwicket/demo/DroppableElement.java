@@ -13,7 +13,7 @@ import org.wicketstuff.jwicket.tooltip.BeautyTips;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggablesAcceptedByDroppable;
 import org.wicketstuff.jwicket.ui.dragdrop.DroppableBehavior;
 import org.wicketstuff.jwicket.ui.dragdrop.IDroppable;
-import org.wicketstuff.jwicket.ui.effect.EffectBehavior;
+import org.wicketstuff.jwicket.ui.effect.Pulsate;
 
 
 public class DroppableElement extends GenericPanel<String>  {
@@ -22,7 +22,8 @@ public class DroppableElement extends GenericPanel<String>  {
 
 	protected final Label l;
 
-	private final EffectBehavior effects;
+	private final Pulsate effects;
+	private final DroppableBox droppable;
 	private final DroppableBehavior dropper;
 
 	public DroppableElement(final String id) {
@@ -44,7 +45,10 @@ public class DroppableElement extends GenericPanel<String>  {
 		if (accepted != null)
 			dropper.setDraggablesAcceptedByDroppable(accepted);
 
-		effects = new EffectBehavior();
+		effects = new Pulsate();
+		effects.setTimes(2);
+		effects.setSpeed(250);
+		add(effects);
 
 		
 
@@ -57,16 +61,15 @@ public class DroppableElement extends GenericPanel<String>  {
 
 		
 		
-		DroppableBox draggable = new DroppableBox("droppable", model);
-		draggable.add(dropper);
-		draggable.add(toolTip);
+		droppable = new DroppableBox("droppable", model);
+		droppable.add(dropper);
+		droppable.add(toolTip);
 
-		draggable.add(l = new Label("theModel", model));
-		draggable.add(effects);
+		droppable.add(l = new Label("theModel", model));
+		droppable.setOutputMarkupId(true);
 
 		l.setOutputMarkupId(true);
-		add(draggable);
-
+		add(droppable);
 
 		setRenderBodyOnly(true);
 	}
@@ -88,7 +91,7 @@ public class DroppableElement extends GenericPanel<String>  {
 			setModelObject("You dropped '" + draggedComponent.getId() + "' into me!");
 			target.addComponent(l);
 			dropped = true;
-			effects.pulsate(target, 2, 250);
+			effects.fire(target, droppable);
 			
 System.out.println("////////// onDrop: specialKeys = " + specialKeys);
 if (specialKeys.is(SpecialKey.SHIFT))

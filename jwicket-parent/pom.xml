@@ -92,7 +92,6 @@
     	<module>jwicket-ui</module>
     	<module>jwicket-tooltip</module>
     	<module>jwicket-examples</module>
-    	<module>jwicket-table</module>
     </modules>
 	
 </project>

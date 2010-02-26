@@ -9,7 +9,7 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.util.string.JavascriptUtils;
-import org.wicketstuff.jwicket.JQuery;
+import org.wicketstuff.jwicket.JQueryAjaxBehavior;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReferenceType;
 import org.wicketstuff.jwicket.tooltip.AbstractToolTip;
@@ -63,7 +63,7 @@ public class WalterZornTips extends AbstractToolTip {
 	
 	
 	
-	private class HeaderContributor extends JQuery {
+	private class HeaderContributor extends JQueryAjaxBehavior {
 		private static final long serialVersionUID = 1L;
 
 		protected HeaderContributor() {

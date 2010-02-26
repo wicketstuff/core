@@ -8,6 +8,7 @@ import org.wicketstuff.jwicket.CssCursor;
 import org.wicketstuff.jwicket.CssPosition;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.SpecialKeys;
+import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 
 
 /**
@@ -19,13 +20,15 @@ import org.wicketstuff.jwicket.SpecialKeys;
 public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	private static final long serialVersionUID = 1L;
-	private static final JQueryJavascriptResourceReference uiDraggable = new JQueryJavascriptResourceReference(DraggableBehavior.class, "ui.draggable-1.7.2.js");
+	public  static final JQueryJavascriptResourceReference jQueryUiDraggable = new JQueryJavascriptResourceReference(DraggableBehavior.class, "jquery.ui.draggable-1.8.min.js");
 	
 	private JsMap options = new JsMap();
 
 	
 	public DraggableBehavior() {
-		super(uiDraggable);
+		super(	AbstractJqueryUiEmbeddedBehavior.jQueryUiWidget,
+				AbstractJqueryUiEmbeddedBehavior.jQueryUiMouse,
+				jQueryUiDraggable);
 	}
 
 
@@ -794,16 +797,15 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 		JsBuilder builder = new JsBuilder();
 
-
-		builder.append("jQuery(function(){");
+//xxx		builder.append("jQuery(function(){");
 
 		builder.append("jQuery('#" + getComponent().getMarkupId() + "').draggable(");
 		builder.append("{");
 		builder.append(options.toString(rawOptions));
 		builder.append("}");
 		builder.append(");");
-
-		builder.append("});");
+		
+//xxx		builder.append("});");
 
 
 		if (name != null)

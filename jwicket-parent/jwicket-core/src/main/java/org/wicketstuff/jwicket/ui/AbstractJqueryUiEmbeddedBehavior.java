@@ -1,18 +1,20 @@
 package org.wicketstuff.jwicket.ui;
 
 
-import org.wicketstuff.jwicket.JQueryEmbeddedAjaxBehavior;
+import org.wicketstuff.jwicket.JQueryDurableAjaxBehavior;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 
 
-public abstract class AbstractJqueryUiEmbeddedBehavior extends JQueryEmbeddedAjaxBehavior {
+public abstract class AbstractJqueryUiEmbeddedBehavior extends JQueryDurableAjaxBehavior {
 
 	private static final long serialVersionUID = 1L;
 	
-	private static final JQueryJavascriptResourceReference jqueryCore = new JQueryJavascriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery-ui-core-1.7.2.min.js");
+	private static final JQueryJavascriptResourceReference jQueryUiCore   = new JQueryJavascriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.core-1.8.min.js");
+	public  static final JQueryJavascriptResourceReference jQueryUiWidget = new JQueryJavascriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.widget-1.8.min.js");
+	public  static final JQueryJavascriptResourceReference jQueryUiMouse  = new JQueryJavascriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.mouse-1.8.min.js");
 
 	public AbstractJqueryUiEmbeddedBehavior(final JQueryJavascriptResourceReference... requiredLibraries) {
-		super(jqueryCore, requiredLibraries);
+		super(jQueryUiCore, requiredLibraries);
 	}
 
 }

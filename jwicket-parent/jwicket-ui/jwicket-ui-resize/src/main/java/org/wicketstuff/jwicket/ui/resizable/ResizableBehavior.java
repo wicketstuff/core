@@ -22,13 +22,15 @@ import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	private static final long serialVersionUID = 1L;
-	private static final JQueryJavascriptResourceReference uiResizable = new JQueryJavascriptResourceReference(ResizableBehavior.class, "ui.resizable-1.7.2.js");
+	private static final JQueryJavascriptResourceReference uiResizable = new JQueryJavascriptResourceReference(ResizableBehavior.class, "jquery.ui.resizable-1.8.min.js");
 
 	private JsMap options = new JsMap();
 
 
 	public ResizableBehavior() {
-		super(uiResizable);
+		super(	AbstractJqueryUiEmbeddedBehavior.jQueryUiWidget,
+				AbstractJqueryUiEmbeddedBehavior.jQueryUiMouse,
+				uiResizable);
 	}
 
 	/**
@@ -65,7 +67,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 				// should not happen!
 				throw new WicketRuntimeException(e);
 			}
-
+			
 			if (component instanceof IResizable) {
 				IResizable resizableComponent = (IResizable)component;
 				if (eventType == EventType.RESIZE_END)
@@ -567,7 +569,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 		JsBuilder builder = new JsBuilder();
 
-		builder.append("jQuery(function(){");
+//		builder.append("jQuery(function(){");
 
 		builder.append("jQuery('#" + getComponent().getMarkupId() + "').resizable(");
 		builder.append("{");
@@ -575,7 +577,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 		builder.append("}");
 		builder.append(");");
 
-		builder.append("});");
+//		builder.append("});");
 
 		return builder;
 	}

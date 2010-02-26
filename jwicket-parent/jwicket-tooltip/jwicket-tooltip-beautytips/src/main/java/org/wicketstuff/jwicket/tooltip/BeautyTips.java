@@ -6,6 +6,7 @@ import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 
 import org.wicketstuff.jwicket.JQuery;
+import org.wicketstuff.jwicket.JQueryAjaxBehavior;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReferenceType;
 import org.wicketstuff.jwicket.tooltip.AbstractToolTip;
@@ -38,7 +39,7 @@ public class BeautyTips extends AbstractToolTip {
 
 	@Override
 	IHeaderContributor getHeadercontributor() {
-		return new JQuery(jqueryHoverIntent, jqueryBgiframe, excanvas, bt, jqueryEasing) {
+		return new JQueryAjaxBehavior(jqueryHoverIntent, jqueryBgiframe, excanvas, bt, jqueryEasing) {
 			private static final long serialVersionUID = 1L;
 
 			@Override

@@ -135,3 +135,12 @@ ui-resizable-disabled .ui-resizable-handle {
 	width:5px;
 	z-index:1001;
 }
+
+
+
+
+.ui-effects-transfer {
+	background-color: red;
+	color:blue;
+	font-size:50px;
+}

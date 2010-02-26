@@ -5,6 +5,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.jwicket.JQuery;
+import org.wicketstuff.jwicket.JQueryAjaxBehavior;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReferenceType;
 
@@ -35,7 +36,7 @@ public class WTooltip extends AbstractToolTip {
 
 	@Override
 	IHeaderContributor getHeadercontributor() {
-		return new JQuery(wTooltip) {
+		return new JQueryAjaxBehavior(wTooltip) {
 			private static final long serialVersionUID = 1L;
 
 			@Override

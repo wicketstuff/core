@@ -14,7 +14,7 @@ import org.wicketstuff.jwicket.ui.dragdrop.DraggablesAcceptedByDroppable;
 import org.wicketstuff.jwicket.ui.dragdrop.DroppableBehavior;
 import org.wicketstuff.jwicket.ui.dragdrop.IDraggable;
 import org.wicketstuff.jwicket.ui.dragdrop.IDroppable;
-import org.wicketstuff.jwicket.ui.effect.EffectBehavior;
+import org.wicketstuff.jwicket.ui.effect.Pulsate;
 
 
 public class DraggableAndDroppableElement extends GenericPanel<String>  {
@@ -22,10 +22,11 @@ public class DraggableAndDroppableElement extends GenericPanel<String>  {
 	private static final long serialVersionUID = 1L;
 
 	protected final Label l;
+	private DraggableAndDroppableBox draggable;
 	private final DraggableBehavior dragger;
 	private final DroppableBehavior dropper;
 
-	private final EffectBehavior effects;
+	private final Pulsate effect;
 
 	public DraggableAndDroppableElement(final String id) {
 		this(id, new Model<String>("Drag me!"), null);
@@ -51,19 +52,22 @@ public class DraggableAndDroppableElement extends GenericPanel<String>  {
 		if (accepted != null)
 			dropper.setDraggablesAcceptedByDroppable(accepted);
 
-		effects = new EffectBehavior();
+		effect = new Pulsate();
+		effect.setTimes(2);
+		effect.setSpeed(250);
+		add(effect);
+
 		
 
 		WTooltip toolTip = new WTooltip("You may drag one of the droppable elements on this page into this rectangle. Otherwise you can drag this rectangle itself and drop it somewhere.").setCssClass("toolTip");
 
 
-		DraggableAndDroppableBox draggable = new DraggableAndDroppableBox("draggableAndDroppable", model);
+		draggable = new DraggableAndDroppableBox("draggableAndDroppable", model);
 		draggable.add(toolTip);
 		draggable.add(dragger);
 		draggable.add(dropper);
 
 		draggable.add(l = new Label("theModel", model));
-		draggable.add(effects);
 		l.setOutputMarkupId(true);
 		add(draggable);
 
@@ -100,7 +104,7 @@ public class DraggableAndDroppableElement extends GenericPanel<String>  {
 			setModelObject("You dropped '" + draggedComponent.getId() + "' into me!");
 			target.addComponent(l);
 			dropped = true;
-			effects.pulsate(target, 2, 250);
+			effect.fire(target, draggable);
 		}
 
 		public void onActivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {
