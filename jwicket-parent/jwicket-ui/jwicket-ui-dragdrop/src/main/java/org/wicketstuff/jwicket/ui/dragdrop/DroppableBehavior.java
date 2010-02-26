@@ -13,6 +13,7 @@ import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReferenceType;
 import org.wicketstuff.jwicket.SpecialKeys;
+import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 
 
 /**
@@ -27,7 +28,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 	private static final long serialVersionUID = 1L;
 
 	private static final String DROPPED_COMPONENTID_IDENTIFIER = "wsjqDroppedComponent";
-	private static final JQueryJavascriptResourceReference uiDroppable = new JQueryJavascriptResourceReference(DraggableBehavior.class, "ui.droppable-1.7.2.js");
+	private static final JQueryJavascriptResourceReference uiDroppable = new JQueryJavascriptResourceReference(DraggableBehavior.class, "jquery.ui.droppable-1.8.min.js");
 	private static final JQueryJavascriptResourceReference specialKeys = new JQueryJavascriptResourceReference(JQuery.class, "SpecialKeys.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE);
 
 	private JsMap options = new JsMap();
@@ -36,7 +37,11 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 
 	
 	public DroppableBehavior() {
-		super(uiDroppable, specialKeys);
+		super(	AbstractJqueryUiEmbeddedBehavior.jQueryUiWidget,
+				AbstractJqueryUiEmbeddedBehavior.jQueryUiMouse,
+				DraggableBehavior.jQueryUiDraggable,
+				uiDroppable,
+				specialKeys);
 	}
 
 	private boolean onActivatedNotificationWanted = false;
@@ -359,14 +364,19 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 
 
 
+	// We need to render the drop accept checker function only once
+	private boolean dropAcceptedCheckerRendered = false;
+
 	/**
 	 * @see org.apache.wicket.behavior.AbstractAjaxBehavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
 	public void renderHead(final IHeaderResponse response) {
 		super.renderHead(response);
-		if (draggablesAcceptedByDroppable != null)
+		if (draggablesAcceptedByDroppable != null && ! dropAcceptedCheckerRendered) {
 			draggablesAcceptedByDroppable.renderJsDropAcceptFunction(response);
+			dropAcceptedCheckerRendered = true;
+		}
 	}
 
 
@@ -391,13 +401,13 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 		options.put("drop",
 				new JsFunction("function(ev,ui) { \n"+
 								"wicketAjaxGet('" +
-								this.getCallbackUrl() +
-								"&" + EventType.IDENTIFIER + "=" + EventType.DROP +
-								"&" + DROPPED_COMPONENTID_IDENTIFIER + "='+jQuery(ui.draggable).attr('id')" +
-
-								"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-
-								"); }"));
+									this.getCallbackUrl() +
+									"&" + EventType.IDENTIFIER + "=" + EventType.DROP +
+									"&" + DROPPED_COMPONENTID_IDENTIFIER + "='+jQuery(ui.draggable).attr('id')" +
+	
+									"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
+								"); " +
+								"}"));
 
 		if (onActivatedNotificationWanted)
 			options.put("activate",
@@ -414,7 +424,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 		JsBuilder builder = new JsBuilder();
 
 
-		builder.append("jQuery(function(){");
+//		builder.append("jQuery(function(){");
 
 		builder.append("jQuery('#" + getComponent().getMarkupId() + "').droppable(");
 		builder.append("{");
@@ -422,7 +432,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 		builder.append("}");
 		builder.append(");");
 
-		builder.append("});");
+//		builder.append("});");
 
 
 		return builder;

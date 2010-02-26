@@ -10,7 +10,7 @@ public abstract class AbstractJqueryUiBehavior extends JQueryAjaxBehavior {
 	private static final long serialVersionUID = 1L;
 
 	public AbstractJqueryUiBehavior(final JQueryJavascriptResourceReference... requiredLibraries) {
-		super(new JQueryJavascriptResourceReference(AbstractJqueryUiBehavior.class, "jquery-ui-core-1.7.2.min.js"), requiredLibraries);
+		super(new JQueryJavascriptResourceReference(AbstractJqueryUiBehavior.class, "jquery.ui.core-1.8.min.js"), requiredLibraries);
 	}
 
 }
