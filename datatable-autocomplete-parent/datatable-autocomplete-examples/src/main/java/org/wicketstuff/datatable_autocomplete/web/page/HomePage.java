@@ -19,19 +19,30 @@ package org.wicketstuff.datatable_autocomplete.web.page;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
+import org.apache.wicket.extensions.markup.html.form.palette.Palette;
+import org.apache.wicket.extensions.markup.html.form.palette.component.Choices;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortParam;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -46,6 +57,7 @@ import org.wicketstuff.datatable_autocomplete.provider.ITrieProvider;
 import org.wicketstuff.datatable_autocomplete.provider.TrieDataProvider;
 import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandler;
 import org.wicketstuff.datatable_autocomplete.trie.Trie;
+import org.wicketstuff.datatable_autocomplete.trie.ITrieFilter;
 import org.wicketstuff.datatable_autocomplete.web.model.LoadableDetachableMethodModel;
 import org.wicketstuff.datatable_autocomplete.web.table.column.MethodColumn;
 import org.wicketstuff.datatable_autocomplete.web.table.column.MethodColumn.MethodColumnType;
@@ -59,6 +71,8 @@ public class HomePage extends WebPage {
 	private static final String SUBSTRING_MATCH = "SUBSTRING_MATCH";
 
 	private static final String PREFIX_MATCH = "PREFIX_MATCH";
+	
+	private TextField<String>classNameFilterField;
 	
 	private AutoCompletingTextField<Method> field;
 	private LoadableDetachableMethodModel selectedMethodModel;
@@ -136,7 +150,37 @@ public class HomePage extends WebPage {
 						return WicketApplication.getTrie();
 					}
 
-				}, stringModel, new IProviderSorter<Method>() {
+				},
+				new ITrieFilter<Method>() {
+
+					/* (non-Javadoc)
+					 * @see org.wicketstuff.datatable_autocomplete.trie.TrieFilter#isVisible(java.lang.Object)
+					 */
+					public boolean isVisible(Method word) {
+						
+						String classNameFilter = classNameFilterField.getModelObject();
+						
+						if (classNameFilter == null || classNameFilter.trim().length() == 0)
+							return true;
+						
+						if (classNameFilter != null && classNameFilter.trim().length() > 0) {
+							
+							String className = word.getDeclaringClass().getName();
+							
+							word.getDeclaringClass().getName();
+							
+							if (className.matches(".*" + classNameFilter + ".*"))
+								return true;
+						}
+						
+						// all other cases
+						return false;
+						
+					}
+					
+				},
+				
+				stringModel, new IProviderSorter<Method>() {
 
 					/*
 					 * (non-Javadoc)
@@ -166,6 +210,25 @@ public class HomePage extends WebPage {
 					}
 					
 				});
+		
+		classNameFilterField = new TextField<String>("filter", new Model<String>(""));
+		
+		
+		
+		classNameFilterField.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+
+			/* (non-Javadoc)
+			 * @see org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior#onUpdate(org.apache.wicket.ajax.AjaxRequestTarget)
+			 */
+			@Override
+			protected void onUpdate(AjaxRequestTarget target) {
+				
+				
+				
+			}
+		
+			
+		});
 
 
 		field = new AutoCompletingTextField<Method>(
@@ -274,10 +337,14 @@ public class HomePage extends WebPage {
 			
 		}));
 		
+		
+		
 		freqLabel.setEscapeModelStrings(false);
 		
 
 		Form<?>form = new Form("settingsForm");
+		
+		form.add(classNameFilterField);
 		
 		DropDownChoice<String> findMethodDDC;
 		form.add(findMethodDDC= new DropDownChoice<String>("findMethod", new IModel<String>() {

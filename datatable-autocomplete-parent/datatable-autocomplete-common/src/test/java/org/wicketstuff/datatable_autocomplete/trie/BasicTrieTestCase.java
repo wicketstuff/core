@@ -25,8 +25,6 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author mocleiri
@@ -57,7 +55,7 @@ public class BasicTrieTestCase extends TestCase {
 
 	protected void init() {
 
-		this.trie = new Trie<String>(new ITrieConfiguration<String>() {
+		this.trie = new Trie<String>(new AbstractTrieConfiguration<String>() {
 
 			/*
 			 * (non-Javadoc)
@@ -77,6 +75,7 @@ public class BasicTrieTestCase extends TestCase {
 				// default to no insensitivity
 				return false;
 			}
+			
 			
 			
 
@@ -127,7 +126,7 @@ public class BasicTrieTestCase extends TestCase {
 
 	public void testAnyDoubleZeroMatch() {
 
-		List<String> wordList = trie.getAnyMatchingWordList("00", null);
+		List<String> wordList = trie.getAnyMatchingWordList("00");
 
 		Collection<String> disjunction = CollectionUtils.disjunction(wordList, doubleZeroWordList);
 		
@@ -147,7 +146,7 @@ public class BasicTrieTestCase extends TestCase {
 	
 	public void testAnyOneMatch () {
 		
-		List<String> wordList = trie.getAnyMatchingWordList("1", null);
+		List<String> wordList = trie.getAnyMatchingWordList("1");
 
 		Collection<String> disjunction = CollectionUtils.disjunction(wordList, oneWordList);
 		

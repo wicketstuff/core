@@ -21,18 +21,17 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration;
+import org.wicketstuff.datatable_autocomplete.trie.AbstractTrieConfiguration;
 import org.wicketstuff.datatable_autocomplete.trie.Trie;
+import org.wicketstuff.datatable_autocomplete.trie.TrieNodeInspectingVisitor;
 
 /**
  * @author mocleirihe boot class path for the rt.jar and then loading X methods where X is large.
@@ -51,7 +50,7 @@ public final class TrieBuilder {
 	 * 
 	 */
 	public TrieBuilder() {
-		trie = new Trie<Method>(new ITrieConfiguration<Method>() {
+		trie = new Trie<Method>(new AbstractTrieConfiguration<Method>() {
 
 			/* (non-Javadoc)
 			 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#getWord(java.lang.Object)
@@ -163,10 +162,28 @@ public final class TrieBuilder {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		log.info ("indexed " + addedElements + " elements.");
 		// compact the trie.
 		
+		TrieNodeInspectingVisitor<Method> visitor = new TrieNodeInspectingVisitor<Method>();
+		
+		trie.visit(visitor);
+		
+		log.info("total trie nodes = " + visitor.getTotalNodes());
+		
+		log.info("total consolidateable = " + visitor.getTotalConsolidateable());
+		
 		trie.simplifyIndex();
+		
+		visitor.reset();
+		
+		trie.visit(visitor);
+		
+		log.info("total trie nodes = " + visitor.getTotalNodes());
+		
+		
+		
 	}
 
 	public List<Method> getListForFirstCharacter (String character) {
