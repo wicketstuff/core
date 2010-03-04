@@ -38,9 +38,7 @@ import org.slf4j.LoggerFactory;
  *         It works well for prefix matching. It supports substring matching by
  *         traversing all nodes recursively looking for a match.
  *         
- *         The basic implementation supports indexing a single 'word' string but extended attribute details can also be included within each TrieNode.
- *         This extra information is useful for efficient constraint based filtering of the candidate data; and you get the benefit of accurate match
- *         counts.
+ *         An ITrieFilter<C> can be used to filter additional fields within an indexed object when the list of matching words (objects) is being computed.
  * 
  * @see http://en.wikipedia.org/wiki/Radix_tree
  * 
@@ -49,9 +47,6 @@ import org.slf4j.LoggerFactory;
  * 
  *      This implementation will index an object C based on the word (String)
  *      that is extracted using the ITrieNodeConfiguration.getWord (C c) method.
- * 
- *      It supports prefix matching and also anystring matching which is
- *      slightly more complicated but seems to return correct results.
  * 
  */
 public class Trie<C> implements IClusterable {
@@ -67,6 +62,7 @@ public class Trie<C> implements IClusterable {
 
 	private ITrieConfiguration<C> configuration = null;
 
+	
 	/**
 	 * 
 	 */
@@ -108,36 +104,36 @@ public class Trie<C> implements IClusterable {
 	 */
 	public List<C> getWordList(String prefix) {
 
-		return getWordList(prefix, null);
+		return getWordList(prefix, configuration.getDefaultFilter(), -1);
 
 	}
 
-	private List<C> getWordList(TrieNode<C> prefixNode) {
-
-		return getWordList(prefixNode, null);
-	}
+//	private List<C> getWordList(TrieNode<C> prefixNode) {
+//
+//		return getWordList(prefixNode, configuration.getDefaultFilter(), -1);
+//	}
 
 	public TrieNodeMatch<C> find(String prefix) {
 
 		return this.root.find(prefix);
 	}
 
-	public List<C> getWordList(String prefix, TrieFilter<C> filter) {
+	public List<C> getWordList(String prefix, ITrieFilter<C> filter, int limit) {
 
 		TrieNodeMatch<C> prefixNodeMatch = this.root.find(prefix);
 
 		if (prefixNodeMatch == null)
 			return new LinkedList<C>();
 		else
-			return getWordList(prefixNodeMatch.getNode(), filter);
+			return getWordList(prefixNodeMatch.getNode(), filter, limit);
 	}
 
-	public List<C> getWordList(TrieNode<C> prefixNode, TrieFilter<C> filter) {
+	public List<C> getWordList(TrieNode<C> prefixNode, ITrieFilter<C> filter, int limit) {
 
 		List<C> wordList = new ArrayList<C>();
 
 		if (prefixNode != null)
-			prefixNode.buildWordList(wordList, filter);
+			prefixNode.buildWordList(wordList, filter, limit);
 
 		return wordList;
 
@@ -226,14 +222,14 @@ public class Trie<C> implements IClusterable {
 	 * @return
 	 */
 	public List<C> getAnyMatchingWordList(final String substring,
-			TrieFilter<C> nodeFilter) {
+			ITrieFilter<C> nodeFilter, int limit) {
 
 		List<C> dataList = new LinkedList<C>();
 
 		Set<TrieNode<C>> matchingNodeList = this.root.findAnyMatch(substring);
 
 		for (TrieNode<C> trieNode : matchingNodeList) {
-			dataList.addAll(getWordList(trieNode, nodeFilter));
+			dataList.addAll(getWordList(trieNode, nodeFilter, limit));
 		}
 
 		return dataList;
@@ -250,7 +246,7 @@ public class Trie<C> implements IClusterable {
 	 */
 
 	public List<C> getAnyMatchingWordList(String substring) {
-		return this.getAnyMatchingWordList(substring, null);
+		return this.getAnyMatchingWordList(substring, configuration.getDefaultFilter(), -1);
 	}
 
 	/**
@@ -303,6 +299,8 @@ public class Trie<C> implements IClusterable {
 
 		final AtomicInteger counter = new AtomicInteger(0);
 
+		
+		// visit each node an aggregate the number of matches:
 		root.visit(new ITrieNodeVisitor<C>() {
 
 			public void visit(TrieNode<C> node) {
@@ -319,6 +317,10 @@ public class Trie<C> implements IClusterable {
 	 * @see org.wicketstuff.datatable_autocomplete.trie.TrieNode#getNextNodeCharacterSet()
 	 */
 	public Set<String> getNextNodeCharacterSet() {
+		/*
+		 * This is really just to support the datatable-autocomplete-examples where we give a count of the matches for each first character contained in
+		 * this set.
+		 */
 		return root.getNextNodeCharacterSet();
 	}
 

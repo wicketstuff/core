@@ -15,17 +15,20 @@
  */
 package org.wicketstuff.datatable_autocomplete.trie;
 
+import org.apache.wicket.IClusterable;
+
 
 
 /**
  * @author mocleiri
  *
  */
-public interface TrieFilter<C> {
+public interface ITrieFilter<C> extends IClusterable {
 		/**
 		 * 
 		 * @param n
-		 * @return true if the node (and sub nodes) are visible in the current context.
+		 * @return true if the indexed word should be visible.
+		 * 
 		 */
-		public boolean isVisible (TrieNode<C> n);
+		public boolean isVisible (C word);
 }

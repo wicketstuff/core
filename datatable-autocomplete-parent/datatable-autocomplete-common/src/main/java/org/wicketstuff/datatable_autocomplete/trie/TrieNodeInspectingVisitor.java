@@ -62,6 +62,12 @@ public class TrieNodeInspectingVisitor<Context> implements ITrieNodeVisitor<Cont
 		
 			return this.totalNodes;
 		}
+
+		public void reset() {
+
+			this.totalConsolidateable = 0;
+			this.totalNodes = 0;
+		}
 		
 		
 		

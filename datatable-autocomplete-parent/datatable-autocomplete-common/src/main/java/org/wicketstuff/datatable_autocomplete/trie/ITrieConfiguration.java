@@ -36,6 +36,14 @@ public interface ITrieConfiguration<C> extends IClusterable {
 	 */
 	public String getWord (C ctx);
 	
+
+	
+	/**
+	 * Provides the default filter to be used when searching for a match.
+	 * 
+	 */
+	public ITrieFilter<C> getDefaultFilter();
+	
 	/**
 	 * 
 	 * If true then capitalized and lower case will be sorted separately.
@@ -46,5 +54,9 @@ public interface ITrieConfiguration<C> extends IClusterable {
 	 * 
 	 */
 	public boolean isIndexCaseSensitive();
+	
+
+	public TrieNode<C> createTrieNode(TrieNode<C> parent, String rootMatchedString,
+			String nextCharacter);
 	
 }

@@ -17,7 +17,6 @@ package org.wicketstuff.datatable_autocomplete.provider;
 
 
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -27,11 +26,11 @@ import java.util.List;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortParam;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.provider.utils.DataProviderUtils;
 import org.wicketstuff.datatable_autocomplete.trie.Trie;
+import org.wicketstuff.datatable_autocomplete.trie.ITrieFilter;
 
 /**
  * @author mocleiri
@@ -57,6 +56,8 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 	private final IModel<String>							fieldStringModel;
 	
 	private final IProviderSorter<C>					sorter;
+	
+	private ITrieFilter<C>							trieResultFilter;
 	
 
 	// default to show no results for an empty string
@@ -127,11 +128,12 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 	 * @param fieldStringModel
 	 * 
 	 */
-	public TrieDataProvider(ITrieProvider<C> trieProvider,
+	public TrieDataProvider(ITrieProvider<C> trieProvider, ITrieFilter<C>resultFilter,
 			IModel<String> fieldStringModel, IProviderSorter<C> sorter, IModelProvider<C> modelProvider) {
 
 		super();
 		this.trieProvider = trieProvider;
+		trieResultFilter = resultFilter;
 
 		this.fieldStringModel = fieldStringModel;
 		this.sorter = sorter;
@@ -164,13 +166,23 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 				if (matchAnyWhereInString) {
 					// substring matching
 					// not the most efficent but it works.
-					currentListData = trieProvider.provideTrie()
-							.getAnyMatchingWordList(prefix);
+					
+					if (trieResultFilter != null)
+						currentListData = trieProvider.provideTrie()
+							.getAnyMatchingWordList(prefix, trieResultFilter, -1);
+					else
+						currentListData = trieProvider.provideTrie()
+						.getAnyMatchingWordList(prefix);
 				}
 				else {
 					// prefix matching
-					currentListData = trieProvider.provideTrie().getWordList(
-							prefix);
+					
+					if (trieResultFilter != null)
+						currentListData = trieProvider.provideTrie().getWordList(
+							prefix, trieResultFilter, -1);
+					else
+						currentListData = trieProvider.provideTrie().getWordList(
+								prefix);
 				}
 			}
 

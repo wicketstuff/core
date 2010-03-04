@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.wicket.validation.validator.StringValidator.LengthBetweenValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,6 +90,9 @@ public class TrieNode<C> implements Serializable {
 	// i.e. index 0 matches the character.get(0) and index 1 matches the element
 	// that matches to character.get(0) + character.get(1)
 	private Map<Integer, List<C>> matchMap = new LinkedHashMap<Integer, List<C>>();
+	
+	// restrictor type to Map of restrictor keys to map of 
+	private Map<String, Map<String, Map<Integer, List<C>>>>restrictorMatchMap = new LinkedHashMap<String, Map<String,Map<Integer,List<C>>>>();
 
 	// if the entire tree below this node was traversed this would be the length
 	// of the longest string formed.
@@ -233,8 +235,7 @@ public class TrieNode<C> implements Serializable {
 
 				String matchedSubString = word.substring(0, startingIndex);
 
-				nextNode = newNode(this, matchedSubString, nextCharacter,
-						context);
+				nextNode = newNode(this, matchedSubString, nextCharacter);
 				nodeMap.put(nextCharacter, nextNode);
 				orderedNodeList.add(nextNode);
 
@@ -251,10 +252,9 @@ public class TrieNode<C> implements Serializable {
 	 * @return
 	 */
 	protected TrieNode<C> newNode(TrieNode<C> parent, String rootMatchedString,
-			String nextCharacter, C context) {
+			String nextCharacter) {
 
-		return new TrieNode<C>(parent, rootMatchedString, nextCharacter,
-				this.configuration);
+		return this.configuration.createTrieNode(parent, rootMatchedString, nextCharacter);
 	}
 
 	/**
@@ -434,30 +434,38 @@ public class TrieNode<C> implements Serializable {
 	}
 
 	/**
+	 * @param limit -1 if no limit or the value at which point the list should stop being filled in.
 	 * @param prefix
 	 * @return
 	 */
-	public void buildWordList(List<C> wordList, TrieFilter<C> filter) {
+	public void buildWordList(List<C> wordList, ITrieFilter<C> filter, int limit) {
 
-		if (this.orderedNodeList.size() == 0
-				&& (filter == null || filter.isVisible(this))) {
-			// can be null in certain cases where the match is to an empty Trie.
-			addExistingContextToList(wordList);
-
-		} else {
+//		if (this.orderedNodeList.size() == 0
+//				&& (filter == null || filter.isVisible(this))) {
+//			// can be null in certain cases where the match is to an empty Trie.
+//			addExistingContextToList(wordList, filter);
+//
+//		} else {
 
 			log.debug(orderedNodeList.toString());
 
-			addExistingContextToList(wordList);
+			addExistingContextToList(wordList, filter, limit);
+			
+			if (wordList.size() == limit)
+				return;
 
 			for (TrieNode<C> node : orderedNodeList) {
-				node.buildWordList(wordList, filter);
+				node.buildWordList(wordList, filter, limit);
+				
+				if (wordList.size() == limit)
+					return;
+				
 			}
-		}
+//		}
 
 	}
 
-	private void addExistingContextToList(List<C> wordList) {
+	private void addExistingContextToList(List<C> wordList, ITrieFilter<C> filter, int limit) {
 
 		List<Integer> keyList = new LinkedList<Integer>();
 
@@ -471,8 +479,22 @@ public class TrieNode<C> implements Serializable {
 		for (Integer i : keyList) {
 
 			List<C> contextList = this.matchMap.get(i);
+			
+			// check with the filter to only include those with the proper
+			
+			for (C c : contextList) {
+				
+				if (filter.isVisible(c)) {
+					wordList.add(c);
+					
+					if (wordList.size() == limit)
+						return;
+				}
+				
+				
+			}
 
-			wordList.addAll(contextList);
+		
 		}
 	}
 
