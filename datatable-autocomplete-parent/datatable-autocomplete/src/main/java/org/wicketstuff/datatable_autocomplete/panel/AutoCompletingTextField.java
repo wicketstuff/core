@@ -27,7 +27,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.datatable_autocomplete.behaviour.AutoCompletingBehaviour;
+import org.wicketstuff.datatable_autocomplete.behaviour.AutoCompletingBehavior;
 import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandler;
 
 /**
@@ -49,7 +49,7 @@ public class AutoCompletingTextField<R> extends Panel {
 
 	private final IAutocompleteRenderingHints renderingHints;
 	private final IModel<String> searchFieldModel;
-	private AutoCompletingBehaviour autoCompletingBehaviour;
+	private AutoCompletingBehavior autoCompletingBehaviour;
 
 	/**
 	 * 
@@ -128,7 +128,7 @@ public class AutoCompletingTextField<R> extends Panel {
 
 		add(autoCompletingPanel);
 
-		searchField.add(autoCompletingBehaviour = new AutoCompletingBehaviour(searchField,
+		searchField.add(autoCompletingBehaviour = new AutoCompletingBehavior(searchField,
 				autoCompletingPanel, throttlingDelay));
 		
 		add(new AjaxLink<Void>("showLink") {

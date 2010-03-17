@@ -27,20 +27,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.panel.AbstractAutoCompleteDependencyProcessor;
 import org.wicketstuff.datatable_autocomplete.panel.AutoCompletingPanel;
-import org.wicketstuff.datatable_autocomplete.panel.AJAXAutoCompleteBehaviour;
+import org.wicketstuff.datatable_autocomplete.panel.AJAXAutoCompleteBehavior;
 
 /**
  * @author mocleiri
  * 
  */
-public class AutoCompletingBehaviour extends AJAXAutoCompleteBehaviour {
+public class AutoCompletingBehavior extends AJAXAutoCompleteBehavior {
 
 	/**
 	 * 
 	 */
 	private static final long		serialVersionUID	= 7722548233439995560L;
 	private static final Logger		log					= LoggerFactory
-																.getLogger(AutoCompletingBehaviour.class);
+																.getLogger(AutoCompletingBehavior.class);
 	private TextField<String>				textModel;
 	private final HiddenField<?>	selectedContextField;
 
@@ -105,7 +105,7 @@ public class AutoCompletingBehaviour extends AJAXAutoCompleteBehaviour {
 	 *            the number of mmiliseconds that must elapse before a
 	 *            subsequent get request will be sent from the client.
 	 */
-	public AutoCompletingBehaviour(HiddenField<?> selectedContextField,
+	public AutoCompletingBehavior(HiddenField<?> selectedContextField,
 			TextField<String> textComponent,
 			AutoCompletingPanel<?> referenceAutoCompletingPanel,
 			long milisecondDurationBetweenRequests) {
@@ -121,7 +121,7 @@ public class AutoCompletingBehaviour extends AJAXAutoCompleteBehaviour {
 
 	}
 
-	public AutoCompletingBehaviour(TextField<String> textComponent,
+	public AutoCompletingBehavior(TextField<String> textComponent,
 			AutoCompletingPanel<?> referenceAutoCompletingPanel,
 			long milisecondDurationBetweenRequests) {
 

@@ -124,9 +124,9 @@ public class AutoCompletingPanel<T> extends Panel {
 	public AutoCompletingPanel(String id, IModel<String> fieldStringModel,
 			int resultsToShow, IColumn<?>[] columns,
 			SortableDataProvider<T> dataProvider,
-			ITableRowSelectionHandler<T> rowSelectionHandler, boolean b) {
+			ITableRowSelectionHandler<T> rowSelectionHandler, boolean paginationEnabled) {
 		
-		this (id, fieldStringModel, columns,  dataProvider, rowSelectionHandler, new DefaultAutocompleteRenderingHints(resultsToShow, b));
+		this (id, fieldStringModel, columns,  dataProvider, rowSelectionHandler, new DefaultAutocompleteRenderingHints(resultsToShow, paginationEnabled));
 	}
 
 	/*
