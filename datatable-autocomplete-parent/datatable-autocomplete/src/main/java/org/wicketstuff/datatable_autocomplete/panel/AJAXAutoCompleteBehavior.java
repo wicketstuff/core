@@ -46,13 +46,13 @@ import org.wicketstuff.datatable_autocomplete.util.StringUtils;
  * 
  * 
  */
-public class AJAXAutoCompleteBehaviour extends
+public class AJAXAutoCompleteBehavior extends
 		AjaxEventBehavior {
 
 	/**
 	 * @param event
 	 */
-	public AJAXAutoCompleteBehaviour(String event) {
+	public AJAXAutoCompleteBehavior(String event) {
 
 		super(event);
 		
@@ -65,7 +65,7 @@ public class AJAXAutoCompleteBehaviour extends
 	private static final long	serialVersionUID	= -3314379544248117565L;
 
 	private static final Logger	log					= LoggerFactory
-															.getLogger(AJAXAutoCompleteBehaviour.class);
+															.getLogger(AJAXAutoCompleteBehavior.class);
 
 
 	// controls how the dependencies are appended to the behaviour callback URL and then parsed
@@ -76,7 +76,7 @@ public class AJAXAutoCompleteBehaviour extends
 	/**
 		 * 
 		 */
-	public AJAXAutoCompleteBehaviour(String event,
+	public AJAXAutoCompleteBehavior(String event,
 			AutoCompleteDependencyProcessor processor) {
 
 		super(event);
