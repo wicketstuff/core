@@ -7,7 +7,7 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryAjaxBehavior;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
-import org.wicketstuff.jwicket.JQueryJavascriptResourceReferenceType;
+import org.wicketstuff.jwicket.JQueryResourceReferenceType;
 
 
 /**
@@ -16,7 +16,7 @@ import org.wicketstuff.jwicket.JQueryJavascriptResourceReferenceType;
 public class WTooltip extends AbstractToolTip {
 	private static final long serialVersionUID = 1L;
 
-	private static final JQueryJavascriptResourceReference wTooltip = new JQueryJavascriptResourceReference(WTooltip.class, "wTooltip.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE);
+	private static final JQueryJavascriptResourceReference wTooltip = new JQueryJavascriptResourceReference(WTooltip.class, "wTooltip.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
 
 
 	private String style;

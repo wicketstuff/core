@@ -2,8 +2,10 @@ package org.wicketstuff.jwicket.demo;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.wicket.ResourceReference;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -11,8 +13,11 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.wicketstuff.jwicket.JQuery;
+import org.wicketstuff.jwicket.SpecialKeys;
+import org.wicketstuff.jwicket.ui.datepicker.DatePicker;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggableBehavior;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggablesAcceptedByDroppable;
 import org.wicketstuff.jwicket.ui.effect.AbstractJqueryUiEffect;
@@ -486,6 +491,46 @@ public class TestPage extends WebPage {
 
 
 		add(ganzeSpalte);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		TextField<Date> datePickerInput = new TextField<Date>("datePickerInput");
+		DatePicker datePicker = new DatePicker(calendar22x24) {
+			private static final long serialVersionUID = 1L;
+			@Override
+			protected void onSelect(final AjaxRequestTarget target, final String pickedDate, final SpecialKeys specialKeys) {
+				target.appendJavascript(
+						"alert('Selected Date: " + pickedDate + ", Pressed keys: " +
+						specialKeys.toString() + "');"
+				);
+			}
+			@Override
+			protected void onChangeMonthYear(final AjaxRequestTarget target, final String year, final String month, final SpecialKeys specialKeys) {
+				target.appendJavascript(
+						"alert('Selected Year: " + year + ", selected month: " + month + ", Pressed keys: " +
+						specialKeys.toString() + "');"
+				);
+			}
+		}
+		.setWantOnSelectNotification(true)
+		.setWantOnChangeMonthYearNotification(true)
+		.setWantOnBeforeShowDayNotification(true)
+		;
+		datePickerInput.add(datePicker);
+		add(datePickerInput);
 	}
+
+	
+	private static final ResourceReference calendar22x24 = new ResourceReference(TestPage.class, "calendar22x24.gif");
 
 }

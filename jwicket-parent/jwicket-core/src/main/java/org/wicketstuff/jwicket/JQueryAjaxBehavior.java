@@ -24,19 +24,20 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 
 	private static final long serialVersionUID = 1L;
 
-	private final JQueryJavascriptResourceReference baseLibrary;
-	private final JQueryJavascriptResourceReference[] requiredLibraries;
+	private final JQueryResourceReference baseLibrary;
+	private final JQueryResourceReference[] requiredLibraries;
+	private final List<JQueryResourceReference> additionLibraries = new ArrayList<JQueryResourceReference>();
 
 
-	public JQueryAjaxBehavior(final JQueryJavascriptResourceReference baseLibrary) {
+	public JQueryAjaxBehavior(final JQueryResourceReference baseLibrary) {
 		super();
 		this.baseLibrary = baseLibrary;
 		this.requiredLibraries = new JQueryJavascriptResourceReference[0];
 	}
 
 	public JQueryAjaxBehavior(
-				final JQueryJavascriptResourceReference baseLibrary,
-				final JQueryJavascriptResourceReference... requiredLibraries) {
+				final JQueryResourceReference baseLibrary,
+				final JQueryResourceReference... requiredLibraries) {
 		super();
 		this.baseLibrary = baseLibrary;
 		this.requiredLibraries = requiredLibraries;
@@ -269,9 +270,12 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 		}
 	}
 
-	protected void addJavascriptReference(IHeaderResponse response, JQueryJavascriptResourceReference resource) {
+	protected void addJavascriptReference(IHeaderResponse response, JQueryResourceReference resource) {
 		if (!response.wasRendered(resource)) {
-			response.renderJavascriptReference(resource);
+			if (resource instanceof org.wicketstuff.jwicket.JQueryJavascriptResourceReference)
+				response.renderJavascriptReference(resource);
+			else
+				response.renderCSSReference(resource);
 			response.markRendered(resource);
 		}
 	}
@@ -306,7 +310,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 			if (baseLibrary != null)
 				addJavascriptReference(response, baseLibrary);
 			if (requiredLibraries != null)
-				for (JQueryJavascriptResourceReference requiredLibrary : requiredLibraries)
+				for (JQueryResourceReference requiredLibrary : requiredLibraries)
 					addJavascriptReference(response, requiredLibrary);
 		}
 		else {
@@ -314,25 +318,35 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 			for (JavascriptResourceReference userLibrary : userProvidedResourceReferences)
 				addJavascriptReference(response, userLibrary);
 
-			if (baseLibrary != null && baseLibrary.getType() == JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE)
+			if (baseLibrary != null && baseLibrary.getType() == JQueryResourceReferenceType.NOT_OVERRIDABLE)
 				addJavascriptReference(response, baseLibrary);
 			if (requiredLibraries != null)
-				for (JQueryJavascriptResourceReference requiredLibrary : requiredLibraries)
-					if (requiredLibrary.getType() == JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE)
+				for (JQueryResourceReference requiredLibrary : requiredLibraries)
+					if (requiredLibrary.getType() == JQueryResourceReferenceType.NOT_OVERRIDABLE)
 						addJavascriptReference(response, requiredLibrary);
 		}
+
+		for (JQueryResourceReference res : additionLibraries)
+			addJavascriptReference(response, res);
 	}
 
 
 	private static final List<JavascriptResourceReference> userProvidedResourceReferences = new ArrayList<JavascriptResourceReference>();
 
-	public static final void addUserProvidedResourceReferences(final JavascriptResourceReference...ressources) {
-		userProvidedResourceReferences.addAll(Arrays.asList(ressources));
+	public static final void addUserProvidedResourceReferences(final JavascriptResourceReference...resources) {
+		userProvidedResourceReferences.addAll(Arrays.asList(resources));
 	}
 	public static List<JavascriptResourceReference> getUserProvidedResourceReferences() {
 		return userProvidedResourceReferences;
 	}
 
+
+	
+	
+	protected final void addUserProvidedResourceReferences(final JQueryResourceReference...resources) {
+		for (JQueryResourceReference res : resources)
+			additionLibraries.add(res);
+	}
 
 
 
@@ -359,8 +373,6 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 	protected void printParameters(final Map<String, String[]> parameterMap) {
 		printParameters(System.out, parameterMap);
 	}
-
-
 
 
 }

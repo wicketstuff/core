@@ -11,7 +11,7 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.util.string.JavascriptUtils;
 import org.wicketstuff.jwicket.JQueryAjaxBehavior;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
-import org.wicketstuff.jwicket.JQueryJavascriptResourceReferenceType;
+import org.wicketstuff.jwicket.JQueryResourceReferenceType;
 import org.wicketstuff.jwicket.tooltip.AbstractToolTip;
 
 
@@ -26,7 +26,7 @@ import org.wicketstuff.jwicket.tooltip.AbstractToolTip;
 public class WalterZornTips extends AbstractToolTip {
 	private static final long serialVersionUID = 1L;
 
-	private static final JQueryJavascriptResourceReference walterzorn = new JQueryJavascriptResourceReference(WalterZornTips.class, "walterzorn_tip.js", JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE);
+	private static final JQueryJavascriptResourceReference walterzorn = new JQueryJavascriptResourceReference(WalterZornTips.class, "walterzorn_tip.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
 
 
 	public WalterZornTips(final String tooltipText) {

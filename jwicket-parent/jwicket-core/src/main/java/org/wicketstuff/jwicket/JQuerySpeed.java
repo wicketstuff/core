@@ -1,6 +1,6 @@
-package org.wicketstuff.jwicket.ui.effect;
+package org.wicketstuff.jwicket;
 
-public enum EffectSpeed {
+public enum JQuerySpeed {
 
 	SLOW("slow"),
 	NORMAL("normal"),
@@ -9,7 +9,7 @@ public enum EffectSpeed {
 
 	private final String name;
 
-	private EffectSpeed(final String speed) {
+	private JQuerySpeed(final String speed) {
 		this.name = speed;
 	}
 
