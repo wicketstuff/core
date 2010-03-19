@@ -80,7 +80,7 @@
 		<plugins>
 			<plugin>
 				<!-- USAGE: mvn license:check OR mvn license:format -->
-				<groupId>com.google.code.maven-license-plugin</groupId>
+				<groupId>com.mycila.maven-license-plugin</groupId>
 				<artifactId>maven-license-plugin</artifactId>
 				<configuration>
 					<header>src/main/etc/header.txt</header>
