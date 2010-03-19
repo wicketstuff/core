@@ -1,7 +1,7 @@
 package org.wicketstuff.jwicket;
 
 
-public enum JQueryJavascriptResourceReferenceType {
+public enum JQueryResourceReferenceType {
 
 	OVERRIDABLE, NOT_OVERRIDABLE
 }

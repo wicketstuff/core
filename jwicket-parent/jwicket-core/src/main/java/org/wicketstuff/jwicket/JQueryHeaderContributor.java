@@ -88,11 +88,11 @@ public class JQueryHeaderContributor extends AbstractBehavior {
 			for (JavascriptResourceReference userLibrary : userProvidedResourceReferences)
 				addJavascriptReference(response, userLibrary);
 
-			if (baseLibrary != null && baseLibrary.getType() == JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE)
+			if (baseLibrary != null && baseLibrary.getType() == JQueryResourceReferenceType.NOT_OVERRIDABLE)
 				addJavascriptReference(response, baseLibrary);
 			if (requiredLibraries != null)
 				for (JQueryJavascriptResourceReference requiredLibrary : requiredLibraries)
-					if (requiredLibrary.getType() == JQueryJavascriptResourceReferenceType.NOT_OVERRIDABLE)
+					if (requiredLibrary.getType() == JQueryResourceReferenceType.NOT_OVERRIDABLE)
 						addJavascriptReference(response, requiredLibrary);
 		}
 	}
@@ -100,8 +100,8 @@ public class JQueryHeaderContributor extends AbstractBehavior {
 
 	private static final List<JavascriptResourceReference> userProvidedResourceReferences = new ArrayList<JavascriptResourceReference>();
 
-	public static final void addUserProvidedResourceReferences(final JavascriptResourceReference...ressources) {
-		userProvidedResourceReferences.addAll(Arrays.asList(ressources));
+	public static final void addUserProvidedResourceReferences(final JavascriptResourceReference...resources) {
+		userProvidedResourceReferences.addAll(Arrays.asList(resources));
 	}
 	public static List<JavascriptResourceReference> getUserProvidedResourceReferences() {
 		return userProvidedResourceReferences;

@@ -53,6 +53,7 @@
     	<module>jwicket-ui-dragdrop</module>
     	<module>jwicket-ui-resize</module>
     	<module>jwicket-ui-effects</module>
+    	<module>jwicket-ui-datepicker</module>
     </modules>
 
 

@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.wicketstuff.jwicket.JQuerySpeed;
 import org.wicketstuff.jwicket.JQueryHeaderContributor;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 
@@ -123,11 +124,11 @@ public abstract class AbstractJqueryUiEffect extends JQueryHeaderContributor  {
 	protected String speed = null;
 
 	/**	A common parameter for all effects is the speed. You may control the speed in
-	 *	predefined {@link EffectSpeed} steps with this method
+	 *	predefined {@link JQuerySpeed} steps with this method
 	 *
 	 *	@param value the desired speed or {@code null} to reset the speed to the default value.
 	 */
-	public AbstractJqueryUiEffect setSpeed(final EffectSpeed value) {
+	public AbstractJqueryUiEffect setSpeed(final JQuerySpeed value) {
 		if (value == null)
 			this.speed = null;
 		else
@@ -191,7 +192,7 @@ public abstract class AbstractJqueryUiEffect extends JQueryHeaderContributor  {
 		return this;
 	}
 
-	public AbstractJqueryUiEffect setFadeInAfter(final EffectSpeed speed) {
+	public AbstractJqueryUiEffect setFadeInAfter(final JQuerySpeed speed) {
 		if (speed == null)
 			this.fadeInAfter = null;
 		else

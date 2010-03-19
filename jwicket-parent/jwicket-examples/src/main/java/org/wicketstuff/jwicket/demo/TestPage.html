@@ -96,7 +96,7 @@
 
 
 	<div>
-		<a href="#" wicket:id="ajaxLink">AjaxLink</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="#" wicket:id="ajaxLink">Show animations</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="#" wicket:id="link">PageLink</a>
 	</div>
 
@@ -114,9 +114,10 @@
 	</div>
 
 
-	<div test onclick="alert(jQuery.jWicketSpecialKeysGetPressed());">
-		Test
+	<div onclick="alert(jQuery.jWicketSpecialKeysGetPressed());">
+		Test keypressed detection
 	</div>
 
+	<div><input wicket:id="datePickerInput" type="text" maxlength="10" size="11" style="z-index:100000;"/></div>
 </body>
 </html>
