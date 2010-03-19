@@ -43,6 +43,8 @@ import com.swabunga.spell.event.StringWordTokenizer;
 /**
  * Wicket web resource that acts as backend spell checker for tinymce component.
  * 
+ * FIXME: I believe this needs to be rewritten as TinyMCE's RPC format appears to have changed.
+ * 
  * @author ivaynberg
  * @author Iulian Costan (iulian.costan@gmail.com)
  */

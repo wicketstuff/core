@@ -18,12 +18,15 @@
 package wicket.contrib.tinymce.settings;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.ResourceReference;
+import org.apache.wicket.Session;
 
 import wicket.contrib.tinymce.TinyMceBehavior;
 
 /**
- * This plugin adds spellchecker functionality to TinyMCE by providing a new button that performs a AJAX call to a
- * backend wicket resource. In order to use this plugin you have to download jazzy spellchecker <a
+ * This plugin adds spellchecker functionality to TinyMCE by providing 
+ * a new button that performs an AJAX call to a backend wicket resource. 
+ * The spell checking is performed by the Jazzy spellchecker <a
  * href="http://jazzy.sourceforge.net/">Jazzy</a>.
  * 
  * @author Iulian Costan (iulian.costan@gmail.com)
@@ -31,7 +34,8 @@ import wicket.contrib.tinymce.TinyMceBehavior;
 public class SpellCheckPlugin extends Plugin {
     private static final long serialVersionUID = 1L;
 
-    private static final String resourceKey = "tiny_mce/plugins/spellchecker/tinyspell.php";
+    private static final String resourceKey = "spellcheck_rpc";
+    private static final String resourceUrl = "resources/" + TinyMceBehavior.class.getCanonicalName() + "/" + resourceKey;
 
     private PluginButton spellCheckButton;
 
@@ -57,6 +61,7 @@ public class SpellCheckPlugin extends Plugin {
 
     protected void definePluginSettings(StringBuffer buffer) {
         define(buffer, "spellchecker_languages", "+English=en");
+        define(buffer, "spellchecker_rpc_url", resourceUrl);
     }
 
 }

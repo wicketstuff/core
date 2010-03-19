@@ -93,7 +93,7 @@ public class FullFeaturedTinyMCEPage extends TinyMCEBasePage {
         // fourth toolbar
         SpellCheckPlugin spellCheckPlugin = new SpellCheckPlugin();
         settings.add(spellCheckPlugin.getSpellCheckButton(), TinyMCESettings.Toolbar.fourth,
-                TinyMCESettings.Position.after);
+               TinyMCESettings.Position.after);
 
         // other settings
         settings.setToolbarAlign(TinyMCESettings.Align.left);
@@ -101,7 +101,7 @@ public class FullFeaturedTinyMCEPage extends TinyMCEBasePage {
         settings.setStatusbarLocation(TinyMCESettings.Location.bottom);
         settings.setResizing(true);
 
-        TextArea textArea = new TextArea("ta", new Model(TEXT));
+        TextArea<String> textArea = new TextArea<String>("ta", new Model<String>(TEXT));
         textArea.add(new TinyMceBehavior(settings));
         add(textArea);
     }

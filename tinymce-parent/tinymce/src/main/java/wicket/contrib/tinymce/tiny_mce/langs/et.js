@@ -77,12 +77,12 @@ advlink:{
 link_desc:"Sisesta/redigeeri link"
 },
 xhtmlxtras:{
-cite_desc:"Citation",
-abbr_desc:"Abbreviation",
-acronym_desc:"Acronym",
-del_desc:"Deletion",
-ins_desc:"Insertion",
-attribs_desc:"Insert/Edit Attributes"
+cite_desc:"Tsitaat",
+abbr_desc:"L\u00FChend",
+acronym_desc:"Akron\u00FC\u00FCm",
+del_desc:"Kustutus",
+ins_desc:"Lisandus",
+attribs_desc:"Sisesta muuda atribuute"
 },
 style:{
 desc:"Redigeeri CSS stiili"

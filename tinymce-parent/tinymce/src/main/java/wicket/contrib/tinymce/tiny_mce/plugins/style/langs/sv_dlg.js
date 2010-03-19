@@ -57,7 +57,7 @@ position:"Position",
 positioning_type:"Positionstyp",
 visibility:"Synlighet",
 zindex:"Z-index",
-overflow:"\u00D6verfl\u00F6de",
+overflow:"\u00D6\u0096verfl\u00F6de",
 placement:"Placering",
 clip:"Besk\u00E4rning"
 });

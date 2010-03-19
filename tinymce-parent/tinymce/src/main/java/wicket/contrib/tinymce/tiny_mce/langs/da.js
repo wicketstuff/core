@@ -1,6 +1,6 @@
 tinyMCE.addI18n({da:{
 common:{
-edit_confirm:"Vil du bruge den avancerede tekst redigering?",
+edit_confirm:"Vil du bruge den avancerede tekstredigering?",
 apply:"Anvend",
 insert:"Inds\u00E6t",
 update:"Opdater",
@@ -10,8 +10,8 @@ browse:"Gennemse",
 class_name:"Klasse",
 not_set:"-- Ikke sat --",
 clipboard_msg:"Kopier/Klip/inds\u00E6t er ikke muligt i Mozilla eller Firefox.\nVil du have mere information om dette emne?",
-clipboard_no_support:"P\u00E5 nuv\u00E6rende tidspunkt ikke supporteret af din browser. Anvend istedet genvejene p\u00E5 tastaturet.",
-popup_blocked:"Undskyld, men vi har noteret os at din popup-blocker har forhindret et vindue, der giver programmet funktionalitet, at \u00E5bne op. Hvis du vil have  den fulde funktionalitet m\u00E5 du sl\u00E5 popup-blockeren fra for dette websted.",
+clipboard_no_support:"P\u00E5 nuv\u00E6rende tidspunkt ikke supporteret af din browser. Anvend i stedet genvejene p\u00E5 tastaturet.",
+popup_blocked:"Undskyld, men vi har noteret os, at din popup-blocker har forhindret et vindue, der giver programmet funktionalitet, at \u00E5bne op. Hvis du vil have  den fulde funktionalitet, m\u00E5 du sl\u00E5 popup-blockeren fra for dette websted.",
 invalid_data:"Fejl: Forkerte v\u00E6rdier indtastet i felter markeret med r\u00F8d.",
 more_colors:"Flere farver"
 },
@@ -43,7 +43,7 @@ ltr_desc:"Retning venstre mod h\u00F8jre",
 rtl_desc:"Retning h\u00F8jre mod venstre"
 },
 layer:{
-insertlayer_desc:"Inds\u00E6t ny lag",
+insertlayer_desc:"Inds\u00E6t nyt lag",
 forward_desc:"Flyt fremad",
 backward_desc:"Flyt bagud",
 absolute_desc:"Sl\u00E5 absolut positionering til/fra",
@@ -68,13 +68,14 @@ emotions_desc:"Hum\u00F8rikoner"
 },
 searchreplace:{
 search_desc:"S\u00F8g",
-replace_desc:"S\u00F8g/Erstat"
+replace_desc:"S\u00F8g/erstat"
 },
 advimage:{
 image_desc:"Inds\u00E6t/rediger billede"
 },
 advlink:{
-link_desc:"Inds\u00E6t/rediger link"
+link_desc:"Inds\u00E6t/rediger link",
+delta_width:"40"
 },
 xhtmlxtras:{
 cite_desc:"Citat",
@@ -120,7 +121,7 @@ col:"Kolonne",
 cell:"Celle"
 },
 autosave:{
-unload_msg:"Har du foretaget nogle \u00E6ndringer vil de g\u00E5 tabt hvis du navigerer v\u00E6k fra denne side."
+unload_msg:"Har du foretaget nogle \u00E6ndringer, vil de g\u00E5 tabt, hvis du navigerer v\u00E6k fra denne side."
 },
 fullscreen:{
 desc:"Vis/skjul fuldsk\u00E6rmstilstand"
@@ -130,7 +131,7 @@ desc:"Inds\u00E6t/rediger indlejret mediefil",
 edit:"Rediger indlejret mediefil"
 },
 fullpage:{
-desc:"Dokument egenskaber"
+desc:"Dokumentegenskaber"
 },
 template:{
 desc:"Inds\u00E6t pr\u00E6defineret skabelonindhold"
