@@ -1,6 +1,6 @@
 tinyMCE.addI18n({fi:{
 common:{
-edit_confirm:"Haluatko k\u00E4ytt\u00E4\u00E4 WYSIWYG tilaa t\u00E4ss\u00E4 tekstikent\u00E4ss\u00E4?",
+edit_confirm:"Haluatko k\u00E4ytt\u00E4\u00E4 WYSIWYG-tilaa t\u00E4ss\u00E4 tekstikent\u00E4ss\u00E4?",
 apply:"K\u00E4yt\u00E4",
 insert:"Lis\u00E4\u00E4",
 update:"P\u00E4ivit\u00E4",
@@ -9,8 +9,8 @@ close:"Sulje",
 browse:"Selaa",
 class_name:"Luokka",
 not_set:"-- Ei m\u00E4\u00E4ritetty --",
-clipboard_msg:"Kopioi/Leikkaa/Liit\u00E4 ei ole k\u00E4ytett\u00E4viss\u00E4 Mozilla ja Firefox selaimilla.\nHaluatko lis\u00E4tietoa t\u00E4st\u00E4 ongelmasta?",
-clipboard_no_support:"Selaimesi ei ole tuettu, k\u00E4yt\u00E4 sen sijaan n\u00E4pp\u00E4in oikoteit\u00E4.",
+clipboard_msg:"Kopioi/Leikkaa/Liit\u00E4 ei ole k\u00E4ytett\u00E4viss\u00E4 Mozilla ja Firefox -selaimilla.\nHaluatko lis\u00E4tietoa t\u00E4st\u00E4 ongelmasta?",
+clipboard_no_support:"Selaimesi ei ole tuettu, k\u00E4yt\u00E4 sen sijaan n\u00E4pp\u00E4inoikoteit\u00E4.",
 popup_blocked:"Sinulla on k\u00E4yt\u00F6ss\u00E4si ohjelma, joka est\u00E4\u00E4 ponnahdusikkunoiden n\u00E4yt\u00F6n. Sinun t\u00E4ytyy kytke\u00E4 ponnahdusikkunoiden esto pois p\u00E4\u00E4lt\u00E4 voidaksesi hy\u00F6dynt\u00E4\u00E4 t\u00E4ysin t\u00E4t\u00E4 ty\u00F6kalua.",
 invalid_data:"Virhe: Sy\u00F6tit virheellisi\u00E4 arvoja, ne n\u00E4kyv\u00E4t punaisina.",
 more_colors:"Enemm\u00E4n v\u00E4rej\u00E4"
@@ -57,11 +57,11 @@ nonbreaking:{
 nonbreaking_desc:"Lis\u00E4\u00E4 tyhj\u00E4 merkki (nbsp)"
 },
 iespell:{
-iespell_desc:"Oikeinkirjoituksetn tarkistus",
-download:"ieSpell ohjelmaa ei havaittu. Haluatko asentaa sen nyt?"
+iespell_desc:"Oikeinkirjoituksen tarkistus",
+download:"ieSpell-ohjelmaa ei havaittu. Haluatko asentaa sen nyt?"
 },
 advhr:{
-advhr_desc:"Vaakataso viivain"
+advhr_desc:"Vaakatasoviivain"
 },
 emotions:{
 emotions_desc:"Hymi\u00F6t"
@@ -85,7 +85,7 @@ ins_desc:"Lis\u00E4ys",
 attribs_desc:"Lis\u00E4\u00E4/muokkaa attribuutteja"
 },
 style:{
-desc:"Muokkaa CSS tyylej\u00E4"
+desc:"Muokkaa CSS-tyylej\u00E4"
 },
 paste:{
 paste_text_desc:"Liit\u00E4 pelkk\u00E4n\u00E4 tekstin\u00E4",
@@ -93,9 +93,9 @@ paste_word_desc:"Liit\u00E4 Wordist\u00E4",
 selectall_desc:"Valitse kaikki"
 },
 paste_dlg:{
-text_title:"Paina CTRL+V liitt\u00E4\u00E4ksesi teksti ikkunaan.",
+text_title:"Paina CTRL+V liitt\u00E4\u00E4ksesi sis\u00E4ll\u00F6n ikkunaan.",
 text_linebreaks:"S\u00E4ilyt\u00E4 rivinvaihdot",
-word_title:"Paina CTRL+V liitt\u00E4\u00E4ksesi teksti ikkunaan."
+word_title:"Paina CTRL+V liitt\u00E4\u00E4ksesi sis\u00E4ll\u00F6n ikkunaan."
 },
 table:{
 desc:"Lis\u00E4\u00E4 uusi taulukko",
@@ -117,7 +117,8 @@ copy_row_desc:"Kopioi taulukon rivi",
 del:"Poista taulukko",
 row:"Rivi",
 col:"Sarake",
-cell:"Solu"
+cell:"Solu",
+cellprops_delta_width:"80"
 },
 autosave:{
 unload_msg:"Tekem\u00E4si muutokset menetet\u00E4\u00E4n jos poistut t\u00E4lt\u00E4 sivulta."
@@ -133,10 +134,10 @@ fullpage:{
 desc:"Tiedoston asetukset"
 },
 template:{
-desc:"Lis\u00E4\u00E4 esim\u00E4\u00E4ritetty\u00E4 sivupohja sis\u00E4lt\u00F6\u00E4"
+desc:"Lis\u00E4\u00E4 esim\u00E4\u00E4ritetty\u00E4 sivupohjasis\u00E4lt\u00F6\u00E4"
 },
 visualchars:{
-desc:"Visual control characters on/off."
+desc:"N\u00E4yt\u00E4/piilota muotoilumerkit."
 },
 spellchecker:{
 desc:"Oikeinkirjoituksen tarkistus",

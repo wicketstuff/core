@@ -1,6 +1,6 @@
 tinyMCE.addI18n({sv:{
 common:{
-edit_confirm:"Vill du anv\u00E4nda WYSIWYG l\u00E4get f\u00F6r denna textarea.",
+edit_confirm:"Vill du anv\u00E4nda WYSIWYG f\u00F6r denna textarea?",
 apply:"Applicera",
 insert:"Infoga",
 update:"Uppdatera",
@@ -120,7 +120,7 @@ col:"Kolumn",
 cell:"Cell"
 },
 autosave:{
-unload_msg:"F\u00F6r\u00E4ndringarna du gjorde kommer att g\u00E5 f\u00F6rlorade om du v\u00E4ljer att l\u00E4mna denna sida."
+unload_msg:"De f\u00F6r\u00E4ndringar som du gjort kommer att g\u00E5 f\u00F6rlorade om du l\u00E4mnar sidan."
 },
 fullscreen:{
 desc:"Sl\u00E5 av/p\u00E5 fullsk\u00E4rmsl\u00E4ge"
@@ -147,7 +147,7 @@ langs:"Spr\u00E5k",
 wait:"Var god v\u00E4nta...",
 sug:"F\u00F6rslag",
 no_sug:"Inga f\u00F6rslag",
-no_mpell:"Kunde inte finna n\u00E5gra felstavningar."
+no_mpell:"Inga felstavningar funna."
 },
 pagebreak:{
 desc:"Infoga sidbrytning"

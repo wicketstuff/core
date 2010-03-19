@@ -1,6 +1,6 @@
 tinyMCE.addI18n({ro:{
 common:{
-edit_confirm:"Dori\u0163i s\u0103 folosi\u0163i un editor avansat pentru aceast\u0103 zona de text?",
+edit_confirm:"Dori\u0163i s\u0103 folosi\u0163i un editor avansat pentru aceast\u0103 zon\u0103d de text?",
 apply:"Aplic\u0103",
 insert:"Insereaz\u0103",
 update:"Actualizeaz\u0103",
@@ -54,17 +54,17 @@ save_desc:"Salveaz\u0103",
 cancel_desc:"Anuleaz\u0103 toate schimb\u0103rile"
 },
 nonbreaking:{
-nonbreaking_desc:"Insert non-breaking space character"
+nonbreaking_desc:"Insereaz\u0103 caracterul spa\u0163iu"
 },
 iespell:{
-iespell_desc:"Ruleaz\u0103 corector de limb\u0103",
+iespell_desc:"Ruleaz\u0103 corectorul de limb\u0103",
 download:"ieSpell nu a fost detectat. Dori\u0163i s\u0103-l instala\u0163i?"
 },
 advhr:{
 advhr_desc:"Linie orizontal\u0103"
 },
 emotions:{
-emotions_desc:"Emoticoane"
+emotions_desc:"Figurine"
 },
 searchreplace:{
 search_desc:"Caut\u0103",
@@ -74,7 +74,7 @@ advimage:{
 image_desc:"Inserare/editare imagine"
 },
 advlink:{
-link_desc:"Insereaz\u0103/editeaz\u0103 link"
+link_desc:"Inserare/editare leg\u0103tur\u0103"
 },
 xhtmlxtras:{
 cite_desc:"Citat",
@@ -82,7 +82,7 @@ abbr_desc:"Abreviere",
 acronym_desc:"Acronim",
 del_desc:"\u015Etergere",
 ins_desc:"Inserare",
-attribs_desc:"Insereaz\u0103/Editeaz\u0103 atribute"
+attribs_desc:"Insereaz\u0103/editeaz\u0103 atribute"
 },
 style:{
 desc:"Editare CSS"
@@ -94,7 +94,7 @@ selectall_desc:"Selecteaz\u0103 tot"
 },
 paste_dlg:{
 text_title:"Folosi\u0163i CTRL+V pentru a lipi \u00EEn aceast\u0103 zon\u0103.",
-text_linebreaks:"Pastreaza linii noi.",
+text_linebreaks:"P\u0103streaz\u0103 separatoarele de linii.",
 word_title:"Folosi\u0163i CTRL+V pentru a lipi \u00EEn aceast\u0103 zon\u0103."
 },
 table:{
@@ -136,7 +136,7 @@ template:{
 desc:"Insereaz\u0103 un \u015Fablon predefinit"
 },
 visualchars:{
-desc:"Visual control characters on/off."
+desc:"Comut\u0103 caracterele vizuale de control"
 },
 spellchecker:{
 desc:"Activare/dezactivare dic\u0163ionar",
@@ -150,5 +150,5 @@ no_sug:"Nu sunt sugestii.",
 no_mpell:"Nu sunt gre\u015Feli."
 },
 pagebreak:{
-desc:"Insereaz\u0103 page break."
+desc:"Insereaz\u0103 un separator de pagin\u0103"
 }}});

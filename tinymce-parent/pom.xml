@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.4.2-SNAPSHOT</version>
 	</parent>
 		
 	<artifactId>tinymce-parent</artifactId>
@@ -101,8 +101,7 @@
 		<dependency>
 			<groupId>jazzyplugin</groupId>
 			<artifactId>jazzyplugin</artifactId>
-			<version>0.2.1</version>
-			<scope>provided</scope>
+			<version>0.5.2</version>
 		</dependency>
 	</dependencies>
 </project>

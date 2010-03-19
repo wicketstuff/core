@@ -24,7 +24,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>tinymce-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.4.2-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>tinymce-examples</artifactId>
@@ -39,14 +39,10 @@
 			<artifactId>tinymce</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
-		<!-- needed for spellcheck (advanced example) 
-			(too bad we're not specifying any spellchecker callback yet)
-		-->
 		<dependency>
 			<groupId>jazzyplugin</groupId>
 			<artifactId>jazzyplugin</artifactId>
-			<version>0.2.1</version>
+			<version>0.5.2</version>
 		</dependency>
 
 		<!--  JETTY DEPENDENCIES -->
