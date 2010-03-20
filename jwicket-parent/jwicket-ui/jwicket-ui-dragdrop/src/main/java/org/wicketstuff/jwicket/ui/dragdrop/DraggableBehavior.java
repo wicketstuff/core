@@ -6,7 +6,9 @@ import org.apache.wicket.Request;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.jwicket.CssCursor;
 import org.wicketstuff.jwicket.CssPosition;
+import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReferenceType;
 import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 
@@ -21,13 +23,15 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	private static final long serialVersionUID = 1L;
 	public  static final JQueryJavascriptResourceReference jQueryUiDraggable = new JQueryJavascriptResourceReference(DraggableBehavior.class, "jquery.ui.draggable-1.8.min.js");
-	
+	private static final JQueryJavascriptResourceReference specialKeys = new JQueryJavascriptResourceReference(JQuery.class, "SpecialKeys.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
+
 	private JsMap options = new JsMap();
 
 	
 	public DraggableBehavior() {
 		super(	AbstractJqueryUiEmbeddedBehavior.jQueryUiWidget,
 				AbstractJqueryUiEmbeddedBehavior.jQueryUiMouse,
+				specialKeys,
 				jQueryUiDraggable);
 	}
 
@@ -760,10 +764,8 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 			options.put(EventType.DRAG_END.getEventName(),
 						new JsFunction("function() { wicketAjaxGet('" +
 										this.getCallbackUrl(false) +
-										"&" + EventType.IDENTIFIER + "=" + EventType.DRAG_END + "'" +
-
-										"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-
+										"&" + EventType.IDENTIFIER + "=" + EventType.DRAG_END +
+										"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
 										"); }"));
 		else
 			options.remove(EventType.DRAG_END.getEventName());
@@ -773,10 +775,8 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 			options.put(EventType.DRAG.getEventName(),
 						new JsFunction("function() { wicketAjaxGet('" +
 										this.getCallbackUrl() +
-										"&" + EventType.IDENTIFIER + "=" + EventType.DRAG + "'" +
-
-										"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-
+										"&" + EventType.IDENTIFIER + "=" + EventType.DRAG +
+										"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
 										"); }"));
 		else
 			options.remove(EventType.DRAG.getEventName());
@@ -786,10 +786,8 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 			options.put(EventType.DRAG_START.getEventName(),
 						new JsFunction("function() { wicketAjaxGet('" +
 										this.getCallbackUrl() +
-										"&" + EventType.IDENTIFIER + "=" + EventType.DRAG_START + "'" +
-
-										"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-
+										"&" + EventType.IDENTIFIER + "=" + EventType.DRAG_START +
+										"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
 										"); }"));
 		else
 			options.remove(EventType.DRAG_START.getEventName());
@@ -797,15 +795,11 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 		JsBuilder builder = new JsBuilder();
 
-//xxx		builder.append("jQuery(function(){");
-
 		builder.append("jQuery('#" + getComponent().getMarkupId() + "').draggable(");
 		builder.append("{");
 		builder.append(options.toString(rawOptions));
 		builder.append("}");
 		builder.append(");");
-		
-//xxx		builder.append("});");
 
 
 		if (name != null)
