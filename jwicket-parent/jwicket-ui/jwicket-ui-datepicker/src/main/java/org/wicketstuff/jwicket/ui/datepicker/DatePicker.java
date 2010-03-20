@@ -275,9 +275,23 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 	}
 	public DatePicker setDuration(final AjaxRequestTarget target, final String value) {
 		setDuration(value);
+		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','duration','" + value + "');");
+		return this;
+	}
+
+	public DatePicker setDuration(final int value) {
+		if (value <= 0)
+			options.remove("duration");
+		else
+			options.put("duration", value);
+		return this;
+	}
+	public DatePicker setDuration(final AjaxRequestTarget target, final int value) {
+		setDuration(value);
 		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','duration'," + value + ");");
 		return this;
 	}
+
 
 
 	/**	
@@ -333,9 +347,9 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 			Locale locale = Session.get().getLocale();
 			DateFormat df;
 			if (locale != null)
-				df = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
 			else
-				df = DateFormat.getDateInstance(DateFormat.SHORT);
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 			options.put("maxDate", df.format(value));
 		}
 		return this;
@@ -348,9 +362,9 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 			Locale locale = Session.get().getLocale();
 			DateFormat df;
 			if (locale != null)
-				df = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
 			else
-				df = DateFormat.getDateInstance(DateFormat.SHORT);
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate','" + df.format(value) + "');");
 		}
 		return this;
@@ -363,9 +377,9 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 			Locale locale = Session.get().getLocale();
 			DateFormat df;
 			if (locale != null)
-				df = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
 			else
-				df = DateFormat.getDateInstance(DateFormat.SHORT);
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 			options.put("maxDate", df.format(value));
 		}
 		return this;
@@ -378,9 +392,9 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 			Locale locale = Session.get().getLocale();
 			DateFormat df;
 			if (locale != null)
-				df = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
 			else
-				df = DateFormat.getDateInstance(DateFormat.SHORT);
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate','" + df.format(value) + "');");
 		}
 		return this;
@@ -420,9 +434,9 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 			Locale locale = Session.get().getLocale();
 			DateFormat df;
 			if (locale != null)
-				df = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
 			else
-				df = DateFormat.getDateInstance(DateFormat.SHORT);
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 			options.put("minDate", df.format(value));
 		}
 		return this;
@@ -435,9 +449,9 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 			Locale locale = Session.get().getLocale();
 			DateFormat df;
 			if (locale != null)
-				df = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
 			else
-				df = DateFormat.getDateInstance(DateFormat.SHORT);
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate','" + df.format(value) + "');");
 		}
 		return this;
@@ -450,9 +464,9 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 			Locale locale = Session.get().getLocale();
 			DateFormat df;
 			if (locale != null)
-				df = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
 			else
-				df = DateFormat.getDateInstance(DateFormat.SHORT);
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 			options.put("minDate", df.format(value));
 		}
 		return this;
@@ -465,9 +479,9 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 			Locale locale = Session.get().getLocale();
 			DateFormat df;
 			if (locale != null)
-				df = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
 			else
-				df = DateFormat.getDateInstance(DateFormat.SHORT);
+				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate','" + df.format(value) + "');");
 		}
 		return this;
@@ -875,6 +889,12 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 		builder.append("}");
 		builder.append(");");
 
+
+System.out.println("---------------------------------------------------------------------");
+System.out.println("---------------------------------------------------------------------");
+System.out.println(builder.toString());
+System.out.println("---------------------------------------------------------------------");
+		
 		return builder;
 	}
 
