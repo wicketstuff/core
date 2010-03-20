@@ -342,7 +342,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 
 
 	
-	
+
 	protected final void addUserProvidedResourceReferences(final JQueryResourceReference...resources) {
 		for (JQueryResourceReference res : resources)
 			additionLibraries.add(res);
