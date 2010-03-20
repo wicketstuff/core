@@ -36,6 +36,15 @@ public abstract class JQueryDurableAjaxBehavior extends JQueryAjaxBehavior {
 		target.appendJavascript(getJsBuilder().toString());
 	}
 
+	
+	protected boolean rendered = false;
+	public boolean isAlreadyRendered() {
+		return this.rendered;
+	}
+	private boolean restoreAfterRedraw = true;
+	public void setRestoreAfterRedraw(final boolean value) {
+		this.restoreAfterRedraw = value;
+	}
 
 	@Override
 	/**
@@ -48,6 +57,9 @@ public abstract class JQueryDurableAjaxBehavior extends JQueryAjaxBehavior {
 	public void renderHead(IHeaderResponse response) {
 		super.renderHead(response);
 
-		response.renderOnDomReadyJavascript(getJsBuilder().toString());
+		if (!rendered || restoreAfterRedraw)
+			response.renderOnDomReadyJavascript(getJsBuilder().toString());
+		
+		rendered = true;
 	}
 }

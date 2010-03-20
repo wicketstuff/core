@@ -12,7 +12,7 @@ public class JQuery implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String getVersion() {
-		return "0.5.1";
+		return "0.5.2";
 	}
 
 
