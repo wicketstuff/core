@@ -7,7 +7,9 @@ import org.apache.wicket.Component;
 import org.apache.wicket.Request;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReferenceType;
 import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 
@@ -23,6 +25,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	private static final long serialVersionUID = 1L;
 	private static final JQueryJavascriptResourceReference uiResizable = new JQueryJavascriptResourceReference(ResizableBehavior.class, "jquery.ui.resizable-1.8.min.js");
+	private static final JQueryJavascriptResourceReference specialKeys = new JQueryJavascriptResourceReference(JQuery.class, "SpecialKeys.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
 
 	private JsMap options = new JsMap();
 
@@ -30,6 +33,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 	public ResizableBehavior() {
 		super(	AbstractJqueryUiEmbeddedBehavior.jQueryUiWidget,
 				AbstractJqueryUiEmbeddedBehavior.jQueryUiMouse,
+				specialKeys,
 				uiResizable);
 	}
 
@@ -522,10 +526,8 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 								"+'&width='+jQuery(ui.size).attr('width')" +
 								"+'&top='+jQuery(ui.position).attr('top')" +
 								"+'&left='+jQuery(ui.position).attr('left')" +
-								"+'&" + EventType.IDENTIFIER + "=" + EventType.RESIZE_START + "'" +
-
-								"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-
+								"+'&" + EventType.IDENTIFIER + "=" + EventType.RESIZE_START +
+								"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
 								"); }"));
 		else
 			options.remove(EventType.RESIZE_START.getEventName());
@@ -542,10 +544,8 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 								"+'&originalWidth='+jQuery(ui.originalSize).attr('width')" +
 								"+'&originalTop='+jQuery(ui.originalPosition).attr('top')" +
 								"+'&originalLeft='+jQuery(ui.originalPosition).attr('left')" +
-								"+'&" + EventType.IDENTIFIER + "=" + EventType.RESIZE_END + "'" +
-
-								"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-
+								"+'&" + EventType.IDENTIFIER + "=" + EventType.RESIZE_END +
+								"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
 								"); }"));
 
 
@@ -557,10 +557,8 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 								"+'&width='+jQuery(ui.size).attr('width')" +
 								"+'&top='+jQuery(ui.position).attr('top')" +
 								"+'&left='+jQuery(ui.position).attr('left')" +
-								"+'&" + EventType.IDENTIFIER + "=" + EventType.RESIZE + "'" +
-
-								"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-
+								"+'&" + EventType.IDENTIFIER + "=" + EventType.RESIZE +
+								"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
 								"); }"));
 		else
 			options.remove(EventType.RESIZE.getEventName());
@@ -569,15 +567,11 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 		JsBuilder builder = new JsBuilder();
 
-//		builder.append("jQuery(function(){");
-
 		builder.append("jQuery('#" + getComponent().getMarkupId() + "').resizable(");
 		builder.append("{");
 		builder.append(options.toString(rawOptions));
 		builder.append("}");
 		builder.append(");");
-
-//		builder.append("});");
 
 		return builder;
 	}

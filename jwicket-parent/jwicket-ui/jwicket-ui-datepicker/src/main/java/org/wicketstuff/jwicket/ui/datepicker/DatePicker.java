@@ -11,7 +11,9 @@ import org.apache.wicket.Request;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReferenceType;
 import org.wicketstuff.jwicket.JQuerySpeed;
 import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
@@ -27,7 +29,9 @@ import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 
 	private static final long serialVersionUID = 1L;
+
 	private static final JQueryJavascriptResourceReference uiDatepicker = new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker.js");
+	private static final JQueryJavascriptResourceReference specialKeys = new JQueryJavascriptResourceReference(JQuery.class, "SpecialKeys.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
 
 	private JsMap options = new JsMap();
 
@@ -37,7 +41,8 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 	}
 
 	public DatePicker(final ResourceReference icon) {
-		super(	uiDatepicker,
+		super(	specialKeys,
+				uiDatepicker,
 				AbstractJqueryUiEmbeddedBehavior.jQueryUiBaseCss,
 				AbstractJqueryUiEmbeddedBehavior.jQueryUiThemeCss
 		);
@@ -60,7 +65,6 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 		Request request;
 		if (component != null && (request = component.getRequest()) != null) {
 			EventType eventType = EventType.stringToType(request.getParameter(EventType.IDENTIFIER));
-
 			if (eventType == EventType.ON_SELECT) {
 				onSelect(target, request.getParameter("date"), new SpecialKeys(request));
 			}
@@ -805,8 +809,8 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 				new JsFunction("function(dateText,inst) { wicketAjaxGet('" +
 								this.getCallbackUrl() +
 								"&date='+dateText" +
-								"+'&" + EventType.IDENTIFIER + "=" + EventType.ON_SELECT + "'" +
-								"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
+								"+'&" + EventType.IDENTIFIER + "=" + EventType.ON_SELECT +
+								"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
 								");}"));
 		else
 			options.remove(EventType.ON_SELECT.getEventName());
@@ -817,8 +821,8 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 				new JsFunction("function(dateText,inst) { wicketAjaxGet('" +
 								this.getCallbackUrl() +
 								"&date='+dateText" +
-								"+'&" + EventType.IDENTIFIER + "=" + EventType.ON_CLOSE + "'" +
-								"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
+								"+'&" + EventType.IDENTIFIER + "=" + EventType.ON_CLOSE +
+								"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
 								");}"));
 		else
 			options.remove(EventType.ON_CLOSE.getEventName());
@@ -830,8 +834,8 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 								this.getCallbackUrl() +
 								"&year='+year" +
 								"+'&month='+month" +
-								"+'&" + EventType.IDENTIFIER + "=" + EventType.ON_CHANGE_MONTH_YEAR + "'" +
-								"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
+								"+'&" + EventType.IDENTIFIER + "=" + EventType.ON_CHANGE_MONTH_YEAR +
+								"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
 								");}"));
 		else
 			options.remove(EventType.ON_CHANGE_MONTH_YEAR.getEventName());
@@ -842,8 +846,8 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 				new JsFunction("function(date) { wicketAjaxGet('" +
 								this.getCallbackUrl() +
 								"&date='+date" +
-								"+'&" + EventType.IDENTIFIER + "=" + EventType.BEFORE_SHOW_DAY + "'" +
-								"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
+								"+'&" + EventType.IDENTIFIER + "=" + EventType.BEFORE_SHOW_DAY +
+								"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
 								");return new Array(true, '','');}"));
 		else
 			options.remove(EventType.BEFORE_SHOW_DAY.getEventName());
@@ -890,11 +894,6 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 		builder.append(");");
 
 
-System.out.println("---------------------------------------------------------------------");
-System.out.println("---------------------------------------------------------------------");
-System.out.println(builder.toString());
-System.out.println("---------------------------------------------------------------------");
-		
 		return builder;
 	}
 

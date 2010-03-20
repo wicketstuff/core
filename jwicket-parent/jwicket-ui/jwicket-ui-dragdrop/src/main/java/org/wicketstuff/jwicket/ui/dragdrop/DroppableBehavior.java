@@ -393,9 +393,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 								this.getCallbackUrl() +
 								"&" + EventType.IDENTIFIER + "=" + EventType.DROP_DEACTIVATE +
 								"&" + DROPPED_COMPONENTID_IDENTIFIER + "='+jQuery(ui.draggable).attr('id')" + 
-
 								"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-
 								"); }"));
 
 		options.put("drop",
@@ -404,7 +402,6 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 									this.getCallbackUrl() +
 									"&" + EventType.IDENTIFIER + "=" + EventType.DROP +
 									"&" + DROPPED_COMPONENTID_IDENTIFIER + "='+jQuery(ui.draggable).attr('id')" +
-	
 									"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
 								"); " +
 								"}"));
@@ -416,23 +413,17 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 								this.getCallbackUrl() +
 								"&" + EventType.IDENTIFIER + "=" + EventType.DROP_ACTIVATE +
 								"&" + DROPPED_COMPONENTID_IDENTIFIER + "='+jQuery(ui.draggable).attr('id')" + 
-
 								"+'&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-
 								"); }"));
 
 		JsBuilder builder = new JsBuilder();
 
-
-//		builder.append("jQuery(function(){");
 
 		builder.append("jQuery('#" + getComponent().getMarkupId() + "').droppable(");
 		builder.append("{");
 		builder.append(options.toString(rawOptions));
 		builder.append("}");
 		builder.append(");");
-
-//		builder.append("});");
 
 
 		return builder;
