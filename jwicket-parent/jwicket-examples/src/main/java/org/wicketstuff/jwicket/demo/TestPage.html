@@ -118,6 +118,11 @@
 		Test keypressed detection
 	</div>
 
-	<div><input wicket:id="datePickerInput" type="text" maxlength="10" size="11" style="z-index:100000;"/></div>
+	<div wicket:id="dateRedrawContainer">
+		<div><input wicket:id="datePickerInput" type="text" maxlength="10" size="11" style="z-index:100000;"/></div>
+	</div>
+	<a href="#" wicket:id="ajaxLinkRedrawDate">redraw Date</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="#" wicket:id="ajaxLinkRedrawDateContainer">redraw Date container</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	
 </body>
 </html>

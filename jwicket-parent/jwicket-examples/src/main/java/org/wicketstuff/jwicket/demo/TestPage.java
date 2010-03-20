@@ -15,6 +15,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.model.Model;
 import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.ui.datepicker.DatePicker;
@@ -411,10 +412,6 @@ public class TestPage extends WebPage {
 		postEffects.add(transfer);
 
 
-		System.out.println("---------- prepariere den ersten Effekt");
-
-
-
 		List<AbstractJqueryUiEffect> postEffects2 = new ArrayList<AbstractJqueryUiEffect>();
 		
 		final Puff puff = new Puff();
@@ -447,7 +444,6 @@ public class TestPage extends WebPage {
 				
 				
 				explode.fire(target, postEffects, draggable1);
-				System.out.println("---------- prepariere den ZWEITEN Effekt");
 				//explode.fire(target, postEffects2, draggable2);
 				puff.fire(target, draggable2);
 
@@ -497,14 +493,16 @@ public class TestPage extends WebPage {
 		
 		
 		
+
+		final WebMarkupContainer datecontainer = new WebMarkupContainer("dateRedrawContainer");
+		datecontainer.setOutputMarkupId(true);
+		add(datecontainer);
 		
 		
 		
 		
 		
-		
-		
-		TextField<Date> datePickerInput = new TextField<Date>("datePickerInput");
+		final TextField<Date> datePickerInput = new TextField<Date>("datePickerInput", new Model<Date>());
 		DatePicker datePicker = new DatePicker(calendar22x24) {
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -527,7 +525,30 @@ public class TestPage extends WebPage {
 		.setWantOnBeforeShowDayNotification(true)
 		;
 		datePickerInput.add(datePicker);
-		add(datePickerInput);
+		datecontainer.add(datePickerInput);
+		
+		
+		add(new AjaxLink<Void>("ajaxLinkRedrawDate"){
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick(AjaxRequestTarget target) {
+				datePickerInput.setModelObject(new Date());
+				target.addComponent(datePickerInput);
+			}
+		});
+
+		
+		add(new AjaxLink<Void>("ajaxLinkRedrawDateContainer"){
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick(AjaxRequestTarget target) {
+				datePickerInput.setModelObject(new Date());
+				target.addComponent(datecontainer);
+			}
+		});
+
 	}
 
 	
