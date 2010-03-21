@@ -48,8 +48,7 @@ public class JavaEEComponentInjector extends ComponentInjector {
      * @param webapp   - wicket web application
      * @param namingStrategy -  a jndi naming strategy to lookup ejb references
      */
-    public JavaEEComponentInjector(WebApplication webapp,
-            IJndiNamingStrategy namingStrategy) {
+    public JavaEEComponentInjector(WebApplication webapp, IJndiNamingStrategy namingStrategy) {
         InjectorHolder.setInjector(new AnnotJavaEEInjector(namingStrategy));
     }
 }

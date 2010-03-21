@@ -103,8 +103,7 @@ public class JavaEEProxyFieldValueFactory implements IFieldValueFactory {
         }
 
         if (field.isAnnotationPresent(PersistenceUnit.class)) {
-            return new EntityManagerFactoryLocator(field.getAnnotation(
-                    PersistenceUnit.class).unitName());
+            return new EntityManagerFactoryLocator(field.getAnnotation(PersistenceUnit.class).unitName());
         }
 
         if (field.isAnnotationPresent(Resource.class)) {

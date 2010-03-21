@@ -29,7 +29,7 @@ import org.wicketstuff.javaee.naming.StandardJndiNamingStrategy;
  */
 public class AnnotJavaEEInjector extends ConfigurableInjector {
 
-    IFieldValueFactory factory;
+    private IFieldValueFactory factory;
 
     /**
      * Constructor
