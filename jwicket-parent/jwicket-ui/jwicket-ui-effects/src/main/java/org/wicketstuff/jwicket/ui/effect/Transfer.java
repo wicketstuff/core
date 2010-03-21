@@ -11,7 +11,7 @@ public class Transfer extends AbstractJqueryUiEffect {
 
 
 	public Transfer() {
-		super(new JQueryJavascriptResourceReference(Transfer.class, "jquery.effects.transfer-1.8.min.js"));
+		super(new JQueryJavascriptResourceReference(Transfer.class, "jquery.effects.transfer.min.js"));
 	}
 
 

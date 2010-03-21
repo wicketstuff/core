@@ -503,7 +503,7 @@ public class TestPage extends WebPage {
 		
 		
 		final TextField<Date> datePickerInput = new TextField<Date>("datePickerInput", new Model<Date>());
-		DatePicker datePicker = new DatePicker(calendar22x24) {
+		DatePicker datePicker = new DatePicker(calendar20x22) {
 			private static final long serialVersionUID = 1L;
 			@Override
 			protected void onSelect(final AjaxRequestTarget target, final String pickedDate, final SpecialKeys specialKeys) {
@@ -552,6 +552,6 @@ public class TestPage extends WebPage {
 	}
 
 	
-	private static final ResourceReference calendar22x24 = new ResourceReference(TestPage.class, "calendar22x24.gif");
+	private static final ResourceReference calendar20x22 = new ResourceReference(TestPage.class, "calendar20x22.gif");
 
 }

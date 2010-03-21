@@ -10,7 +10,7 @@ public class Explode extends AbstractJqueryUiEffect {
 
 
 	public Explode() {
-		super(new JQueryJavascriptResourceReference(Explode.class, "jquery.effects.explode-1.8.min.js"));
+		super(new JQueryJavascriptResourceReference(Explode.class, "jquery.effects.explode.min.js"));
 	}
 
 

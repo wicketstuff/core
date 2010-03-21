@@ -7,9 +7,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.Request;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
-import org.wicketstuff.jwicket.JQueryResourceReferenceType;
 import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 
@@ -24,17 +22,16 @@ import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	private static final long serialVersionUID = 1L;
-	private static final JQueryJavascriptResourceReference uiResizable = new JQueryJavascriptResourceReference(ResizableBehavior.class, "jquery.ui.resizable-1.8.min.js");
-	private static final JQueryJavascriptResourceReference specialKeys = new JQueryJavascriptResourceReference(JQuery.class, "SpecialKeys.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
+	private static final JQueryJavascriptResourceReference uiResizableJs = new JQueryJavascriptResourceReference(ResizableBehavior.class, "jquery.ui.resizable.min.js");
 
 	private JsMap options = new JsMap();
 
 
 	public ResizableBehavior() {
-		super(	AbstractJqueryUiEmbeddedBehavior.jQueryUiWidget,
-				AbstractJqueryUiEmbeddedBehavior.jQueryUiMouse,
-				specialKeys,
-				uiResizable);
+		super(	AbstractJqueryUiEmbeddedBehavior.jQueryUiWidgetJs,
+				AbstractJqueryUiEmbeddedBehavior.jQueryUiMouseJs,
+				SpecialKeys.specialKeysJs,
+				uiResizableJs);
 	}
 
 	/**

@@ -10,7 +10,7 @@ public class Clip extends AbstractJqueryUiEffect {
 
 
 	public Clip() {
-		super(new JQueryJavascriptResourceReference(Clip.class, "jquery.effects.clip-1.8.min.js"));
+		super(new JQueryJavascriptResourceReference(Clip.class, "jquery.effects.clip.min.js"));
 	}
 
 

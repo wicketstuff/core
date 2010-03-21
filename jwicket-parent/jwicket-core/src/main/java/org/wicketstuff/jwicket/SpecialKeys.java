@@ -13,6 +13,9 @@ import org.apache.wicket.util.string.Strings;
 public class SpecialKeys implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	public static final JQueryJavascriptResourceReference specialKeysJs = new JQueryJavascriptResourceReference(SpecialKeys.class, "SpecialKeys.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
+
 
 	public SpecialKeys(final SpecialKey...additionalSpecialKeys) {
 		Collections.addAll(specialKeys, additionalSpecialKeys);

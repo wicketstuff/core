@@ -1,5 +1,5 @@
 /*
- * jQuery UI Effects Drop 1.8rc2
+ * jQuery UI Effects Drop 1.8
  *
  * Copyright (c) 2010 AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT (MIT-LICENSE.txt)

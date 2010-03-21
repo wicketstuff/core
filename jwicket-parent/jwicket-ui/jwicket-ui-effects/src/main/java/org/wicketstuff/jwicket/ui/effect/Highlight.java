@@ -10,7 +10,7 @@ public class Highlight extends AbstractJqueryUiEffect {
 
 
 	public Highlight() {
-		super(new JQueryJavascriptResourceReference(Highlight.class, "jquery.effects.highlight-1.8.min.js"));
+		super(new JQueryJavascriptResourceReference(Highlight.class, "jquery.effects.highlight.min.js"));
 	}
 
 

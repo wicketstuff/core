@@ -12,17 +12,16 @@ public abstract class AbstractJqueryUiEmbeddedBehavior extends JQueryDurableAjax
 	private static final long serialVersionUID = 1L;
 	
 	// Javascript
-	private static final JQueryJavascriptResourceReference jQueryUiCore   = new JQueryJavascriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.core-1.8.min.js");
-	public  static final JQueryJavascriptResourceReference jQueryUiWidget = new JQueryJavascriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.widget-1.8.min.js");
-	public  static final JQueryJavascriptResourceReference jQueryUiMouse  = new JQueryJavascriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.mouse-1.8.min.js");
-	public  static final JQueryJavascriptResourceReference jQueryUiI18n   = new JQueryJavascriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.i18n-1.8.js");
+	public static final JQueryJavascriptResourceReference jQueryUiCoreJs   = new JQueryJavascriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.core.min.js");
+	public static final JQueryJavascriptResourceReference jQueryUiWidgetJs = new JQueryJavascriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.widget.min.js");
+	public static final JQueryJavascriptResourceReference jQueryUiMouseJs  = new JQueryJavascriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.mouse.min.js");
 
 	// CSS
 	public  static final JQueryCssResourceReference jQueryUiBaseCss       = new JQueryCssResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "css/jquery.ui.base.css");
 	public  static final JQueryCssResourceReference jQueryUiThemeCss      = new JQueryCssResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "css/jquery.ui.theme.css");
 
 	public AbstractJqueryUiEmbeddedBehavior(final JQueryResourceReference... requiredLibraries) {
-		super(jQueryUiCore, requiredLibraries);
+		super(jQueryUiCoreJs, requiredLibraries);
 	}
 
 }
