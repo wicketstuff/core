@@ -49,6 +49,7 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>javaee-inject-example-ejb</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
