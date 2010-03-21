@@ -10,7 +10,7 @@ public class Drop extends AbstractJqueryUiEffect {
 
 
 	public Drop() {
-		super(new JQueryJavascriptResourceReference(Drop.class, "jquery.effects.drop-1.8.min.js"));
+		super(new JQueryJavascriptResourceReference(Drop.class, "jquery.effects.drop.min.js"));
 	}
 
 

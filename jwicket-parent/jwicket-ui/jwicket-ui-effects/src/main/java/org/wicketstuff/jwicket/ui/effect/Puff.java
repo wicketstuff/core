@@ -9,7 +9,7 @@ public class Puff extends AbstractJqueryUiEffect {
 
 
 	public Puff() {
-		super(new JQueryJavascriptResourceReference(Scale.class, "jquery.effects.scale-1.8.min.js"));
+		super(new JQueryJavascriptResourceReference(Scale.class, "jquery.effects.scale.min.js"));
 	}
 
 

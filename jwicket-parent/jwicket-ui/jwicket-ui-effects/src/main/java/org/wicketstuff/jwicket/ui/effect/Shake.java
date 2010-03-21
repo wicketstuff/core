@@ -10,7 +10,7 @@ public class Shake extends AbstractJqueryUiEffect {
 
 
 	public Shake() {
-		super(new JQueryJavascriptResourceReference(Shake.class, "jquery.effects.shake-1.8.min.js"));
+		super(new JQueryJavascriptResourceReference(Shake.class, "jquery.effects.shake.min.js"));
 	}
 
 

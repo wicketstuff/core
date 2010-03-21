@@ -10,7 +10,7 @@ public class Bounce extends AbstractJqueryUiEffect {
 
 
 	public Bounce() {
-		super(new JQueryJavascriptResourceReference(Bounce.class, "jquery.effects.bounce-1.8.min.js"));
+		super(new JQueryJavascriptResourceReference(Bounce.class, "jquery.effects.bounce.min.js"));
 	}
 
 

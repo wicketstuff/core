@@ -10,7 +10,7 @@ public class Blind extends AbstractJqueryUiEffect {
 
 
 	public Blind() {
-		super(new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.blind-1.8.min.js"));
+		super(new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.blind.min.js"));
 	}
 
 

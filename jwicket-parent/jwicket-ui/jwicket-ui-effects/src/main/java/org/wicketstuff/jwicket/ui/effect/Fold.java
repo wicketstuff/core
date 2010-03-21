@@ -10,7 +10,7 @@ public class Fold extends AbstractJqueryUiEffect {
 
 
 	public Fold() {
-		super(new JQueryJavascriptResourceReference(Fold.class, "jquery.effects.fold-1.8.min.js"));
+		super(new JQueryJavascriptResourceReference(Fold.class, "jquery.effects.fold.min.js"));
 	}
 
 

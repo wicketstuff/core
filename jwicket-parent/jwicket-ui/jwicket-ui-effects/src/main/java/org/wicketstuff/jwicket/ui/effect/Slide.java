@@ -10,7 +10,7 @@ public class Slide extends AbstractJqueryUiEffect {
 
 
 	public Slide() {
-		super(new JQueryJavascriptResourceReference(Slide.class, "jquery.effects.slide-1.8.min.js"));
+		super(new JQueryJavascriptResourceReference(Slide.class, "jquery.effects.slide.min.js"));
 	}
 
 

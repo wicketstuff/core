@@ -11,9 +11,7 @@ import org.apache.wicket.Request;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
-import org.wicketstuff.jwicket.JQueryResourceReferenceType;
 import org.wicketstuff.jwicket.JQuerySpeed;
 import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
@@ -30,8 +28,7 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final JQueryJavascriptResourceReference uiDatepicker = new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker.js");
-	private static final JQueryJavascriptResourceReference specialKeys = new JQueryJavascriptResourceReference(JQuery.class, "SpecialKeys.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
+	public static final JQueryJavascriptResourceReference uiDatepickerJs = new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker.min.js");
 
 	private JsMap options = new JsMap();
 
@@ -41,8 +38,8 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 	}
 
 	public DatePicker(final ResourceReference icon) {
-		super(	specialKeys,
-				uiDatepicker,
+		super(	SpecialKeys.specialKeysJs,
+				uiDatepickerJs,
 				AbstractJqueryUiEmbeddedBehavior.jQueryUiBaseCss,
 				AbstractJqueryUiEmbeddedBehavior.jQueryUiThemeCss
 		);

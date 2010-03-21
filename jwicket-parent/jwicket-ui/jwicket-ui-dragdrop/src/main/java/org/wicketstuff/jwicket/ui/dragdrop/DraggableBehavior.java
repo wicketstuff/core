@@ -6,9 +6,7 @@ import org.apache.wicket.Request;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.jwicket.CssCursor;
 import org.wicketstuff.jwicket.CssPosition;
-import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
-import org.wicketstuff.jwicket.JQueryResourceReferenceType;
 import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 
@@ -22,17 +20,16 @@ import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	private static final long serialVersionUID = 1L;
-	public  static final JQueryJavascriptResourceReference jQueryUiDraggable = new JQueryJavascriptResourceReference(DraggableBehavior.class, "jquery.ui.draggable-1.8.min.js");
-	private static final JQueryJavascriptResourceReference specialKeys = new JQueryJavascriptResourceReference(JQuery.class, "SpecialKeys.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
+	public  static final JQueryJavascriptResourceReference jQueryUiDraggableJs = new JQueryJavascriptResourceReference(DraggableBehavior.class, "jquery.ui.draggable.min.js");
 
 	private JsMap options = new JsMap();
 
 	
 	public DraggableBehavior() {
-		super(	AbstractJqueryUiEmbeddedBehavior.jQueryUiWidget,
-				AbstractJqueryUiEmbeddedBehavior.jQueryUiMouse,
-				specialKeys,
-				jQueryUiDraggable);
+		super(	AbstractJqueryUiEmbeddedBehavior.jQueryUiWidgetJs,
+				AbstractJqueryUiEmbeddedBehavior.jQueryUiMouseJs,
+				SpecialKeys.specialKeysJs,
+				jQueryUiDraggableJs);
 	}
 
 

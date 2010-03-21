@@ -10,7 +10,7 @@ public class Pulsate extends AbstractJqueryUiEffect {
 
 
 	public Pulsate() {
-		super(new JQueryJavascriptResourceReference(Pulsate.class, "jquery.effects.pulsate-1.8.min.js"));
+		super(new JQueryJavascriptResourceReference(Pulsate.class, "jquery.effects.pulsate.min.js"));
 	}
 
 
