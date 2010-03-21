@@ -21,8 +21,12 @@ import java.lang.reflect.Modifier;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.persistence.PersistenceUnit;
+import javax.servlet.http.HttpSession;
+import org.apache.wicket.RequestCycle;
 import org.apache.wicket.injection.IFieldValueFactory;
+import org.apache.wicket.protocol.http.WebRequest;
 import org.apache.wicket.proxy.IProxyTargetLocator;
 import org.apache.wicket.proxy.LazyInitProxyFactory;
 import org.wicketstuff.javaee.EntityManagerFactoryLocator;
@@ -63,7 +67,7 @@ public class JavaEEProxyFieldValueFactory implements IFieldValueFactory {
      */
     public Object getFieldValue(Field field, Object fieldOwner) {
         IProxyTargetLocator locator = getProxyTargetLocator(field);
-        return getCachedProxy(field.getType(), locator);
+        return getCachedProxy(field, locator);
     }
 
     /**
@@ -75,25 +79,54 @@ public class JavaEEProxyFieldValueFactory implements IFieldValueFactory {
                 || field.isAnnotationPresent(PersistenceUnit.class);
     }
 
-    private Object getCachedProxy(Class<?> type, IProxyTargetLocator locator) {
+    /**
+     * Gets the corresponding object (or its proxy) for the field from the cache,
+     * or if it's not cached, then returns a newly created proxy or the object
+     * itself.
+     * @param field The field, in which we're trying to inject
+     * @param locator The locator, which will locate the corresponding object for
+     * the field
+     * @return The injectable value
+     */
+    private Object getCachedProxy(Field field, IProxyTargetLocator locator) {
+        Class<?> type = field.getType();
         if (locator == null) {
             return null;
         }
 
-        if (cache.containsKey(locator)) {
-            return cache.get(locator);
-        }
-
-        if (!Modifier.isFinal(type.getModifiers())) {
-            Object proxy = LazyInitProxyFactory.createProxy(type, locator);
-            cache.put(locator, proxy);
-            return proxy;
+        //if the field contains the "stateful" description, or the field itself
+        //is a no-interfaceview Stateful bean
+        if ((field.isAnnotationPresent(EJB.class)
+                && field.getAnnotation(EJB.class).description().equals("stateful")
+                || field.getType().isAnnotationPresent(Stateful.class))) {
+            //creates a session if there wasn't already
+            HttpSession session = ((WebRequest) RequestCycle.get().getRequest()).getHttpServletRequest().getSession();
+            //check if it's already cached
+            Object retValue = session.getAttribute(type.getName());
+            if (retValue == null) {
+                if (!Modifier.isFinal(type.getModifiers())) {
+                    retValue = LazyInitProxyFactory.createProxy(type, locator);
+                } else {
+                    retValue = locator.locateProxyTarget();
+                }
+                session.setAttribute(type.getName(), retValue);
+            }
+            return retValue;
         } else {
-            Object value = locator.locateProxyTarget();
-            cache.put(locator, value);
-            return value;
-        }
 
+            if (cache.containsKey(locator)) {
+                return cache.get(locator);
+            }
+            if (!Modifier.isFinal(type.getModifiers())) {
+                Object proxy = LazyInitProxyFactory.createProxy(type, locator);
+                cache.put(locator, proxy);
+                return proxy;
+            } else {
+                Object value = locator.locateProxyTarget();
+                cache.put(locator, value);
+                return value;
+            }
+        }
     }
 
     private IProxyTargetLocator getProxyTargetLocator(Field field) {
