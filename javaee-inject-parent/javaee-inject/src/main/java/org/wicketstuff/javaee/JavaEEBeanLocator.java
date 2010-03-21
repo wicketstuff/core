@@ -57,8 +57,7 @@ public class JavaEEBeanLocator implements IProxyTargetLocator {
      * @param beanType bean class
      * @param namingStrategy - naming strategy
      */
-    public JavaEEBeanLocator(String beanId, Class<?> beanType,
-            IJndiNamingStrategy namingStrategy) {
+    public JavaEEBeanLocator(String beanId, Class<?> beanType, IJndiNamingStrategy namingStrategy) {
         if (beanType == null) {
             throw new IllegalArgumentException("[beanType] argument cannot be null");
         }
@@ -104,7 +103,6 @@ public class JavaEEBeanLocator implements IProxyTargetLocator {
      * @see org.apache.wicket.proxy.IProxyTargetLocator#locateProxyTarget()
      */
     public Object locateProxyTarget() {
-
         if (beanName != null && beanName.length() > 0) {
             return lookupEjb(beanName, beanType);
         } else {
