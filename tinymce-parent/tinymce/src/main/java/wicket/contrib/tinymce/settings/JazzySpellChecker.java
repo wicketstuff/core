@@ -18,6 +18,7 @@
  */
 package wicket.contrib.tinymce.settings;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,10 +27,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.wicket.markup.html.WebResource;
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.wicket.RequestCycle;
+import org.apache.wicket.Resource;
+import org.apache.wicket.Response;
 import org.apache.wicket.protocol.http.WebResponse;
+import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.StringBufferResourceStream;
+import org.apache.wicket.util.time.Time;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,120 +55,181 @@ import com.swabunga.spell.event.StringWordTokenizer;
 /**
  * Wicket web resource that acts as backend spell checker for tinymce component.
  * 
- * FIXME: I believe this needs to be rewritten as TinyMCE's RPC format appears to have changed.
- * 
  * @author ivaynberg
  * @author Iulian Costan (iulian.costan@gmail.com)
+ * @author Boris Goldowsky
  */
-class JazzySpellChecker extends WebResource {
-    private static final Logger LOG = LoggerFactory.getLogger(JazzySpellChecker.class);
+class JazzySpellChecker extends Resource {
 
-    private static final long serialVersionUID = 1L;
+	protected static final String dictFile = "wicket/contrib/tinymce/jazzy/english.0";
 
-    private static final String dictFile = "wicket/contrib/tinymce/jazzy/english.0";
+	private SpellDictionary dict;
 
-    private SpellDictionary dict;
+	private StringBufferResourceStream resourceStream;
+	
+	protected static final String contentType = "application/json";
 
-    /**
-     * Construct spell checker resource.
-     */
-    public JazzySpellChecker() {
-        // todo load dict file from jazzy.jar archive.
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(dictFile);
-        InputStreamReader reader = new InputStreamReader(inputStream);
-        try {
-            dict = new SpellDictionaryHashMap(reader);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                reader.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
+	private static final Logger LOG = LoggerFactory.getLogger(JazzySpellChecker.class);
 
-    /**
-     * @see org.apache.wicket.Resource#getResourceStream()
-     */
-    public IResourceStream getResourceStream() {
-        StringBufferResourceStream resourceStream = new StringBufferResourceStream();
+	private static final long serialVersionUID = 1L;
 
-        final String cmd = getParameters().getString("cmd");
-        final String id = getParameters().getString("id");
-        final String check = getParameters().getString("check");
+	/**
+	 * Construct spell checker resource.
+	 */
+	public JazzySpellChecker() {
+		// todo load dict file from jazzy.jar archive.
+		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(dictFile);
+		InputStreamReader reader = new InputStreamReader(inputStream);
+		try {
+			dict = new SpellDictionaryHashMap(reader);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} finally {
+			try {
+				reader.close();
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		resourceStream = new StringBufferResourceStream(contentType);
+	}
 
-        if (check == null) {
-            handleEmptyCheckList(resourceStream, cmd, id);
-        } else if ("spell".equals(cmd)) {
-            doSpell(resourceStream, cmd, id, check);
-        } else if ("suggest".equals(cmd)) {
-            doSuggest(resourceStream, cmd, id, check);
-        }
+	/**
+	 * Read the Request and do the processing needed to construct a response.
+	 * Why here?  configureResponse is one of the few Resource methods 
+	 * that is called only once per Request.  Running the spellcheck anew each time
+	 * getResourceStream is called, for example, would be wasteful.
+	 * 
+	 * @see org.apache.wicket.Resource#configureResponse(Response response)
+	 */
+	@Override
+	protected void configureResponse(Response response) {
+		buildResourceStream();
 
-        LOG.debug("Spellcheck response: " + resourceStream.asString());
+		if (response instanceof WebResponse)
+			((WebResponse)response).setHeader("Cache-Control", "no-cache, must-revalidate");
+	}
 
-        return resourceStream;
-    }
+	/**
+	 * @see org.apache.wicket.Resource#getResourceStream()
+	 */
+	public IResourceStream getResourceStream() {
+		return resourceStream;
+	}
 
-    protected void setHeaders(WebResponse response) {
-        response.setContentType("text/xml; charset=utf-8");
-    }
+	/** 
+	 * Read the Request and construct an appropriate ResourceStream to respond with.
+	 */
+	protected void buildResourceStream() {
+		JSONObject json;
+		String cmd=null, id=null;
+		JSONArray paramArray = null;
 
-    private void handleEmptyCheckList(StringBufferResourceStream resourceStream, final String cmd, final String id) {
-        respond(null, cmd, id, resourceStream);
-    }
+		HttpServletRequest req = ((ServletWebRequest) RequestCycle.get().getRequest()).getHttpServletRequest();
+		BufferedReader reader = null;
+		try {
+			ServletInputStream sis = req.getInputStream();
+			reader = new BufferedReader(new InputStreamReader(sis, "UTF-8"));
+			//Used for debugging:
+			//			reader.mark(10);
+			//			if (reader.read() == -1) {
+			//				LOG.error("No request seen");
+			//			}
+			//			reader.reset();
 
-    private void doSuggest(StringBufferResourceStream resourceStream, final String cmd, final String id,
-            final String check) {
-        final SpellChecker checker = new SpellChecker(dict);
-        List suggestions = checker.getSuggestions(check, 2);
+			json = new JSONObject(new JSONTokener(reader));
+			//			LOG.debug("JSON Object: {}", json);	
 
-        respond(suggestions.iterator(), cmd, id, resourceStream);
-    }
+			id = json.getString("id");
+			cmd = json.getString("method");
+			paramArray = json.getJSONArray("params");
 
-    private void doSpell(StringBufferResourceStream resourceStream, final String cmd, final String id,
-            final String check) {
-        final SpellChecker checker = new SpellChecker(dict);
+		} catch (IOException e) {
+			jsonError("I/O exception while parsing");
+		} catch (JSONException e) {
+			jsonError("Could not parse command");
+		} finally {
+			try {
+				if (reader != null)
+					reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
-        final Set errors = new HashSet();
+		if (paramArray == null) {
+			handleEmptyCheckList(cmd, id);
+		} else if ("checkWords".equals(cmd)) {
+			doSpell(cmd, id, paramArray);
+		} else if ("getSuggestions".equals(cmd)) {
+			doSuggest(cmd, id, paramArray);
+		} else {
+			jsonError("Unknown command");
+		}
 
-        checker.addSpellCheckListener(new SpellCheckListener() {
-            public void spellingError(SpellCheckEvent event) {
-                errors.add(event.getInvalidWord());
-            }
-        });
+		//LOG.debug("Processed command {}; output will be {}", cmd, resourceStream.asString());
+	}
 
-        checker.checkSpelling(new StringWordTokenizer(check));
 
-        respond(errors.iterator(), cmd, id, resourceStream);
-    }
+	private void handleEmptyCheckList(final String cmd, final String id) {
+		respond(null, cmd, id);
+	}
 
-    private void respond(Iterator words, String cmd, String id, StringBufferResourceStream out) {
-        out.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-        out.append("\n");
-        out.append("<res id=\"");
-        out.append(id);
-        out.append("\" cmd=\"");
-        out.append(cmd);
-        out.append("\"");
+	@SuppressWarnings("unchecked")
+	private void doSuggest(final String cmd, final String id,
+			final JSONArray paramArray) {
+		final SpellChecker checker = new SpellChecker(dict);
+		String word = paramArray.optString(1);
+		List<String> suggestions = checker.getSuggestions(word, 2);
 
-        if (words == null || words.hasNext() == false) {
-            out.append("/>");
-            out.append("\n");
-        } else {
-            out.append(">");
+		respond(suggestions.iterator(), cmd, id);
+	}
 
-            while (words.hasNext()) {
-                out.append(words.next().toString());
-                if (words.hasNext()) {
-                    out.append(" ");
-                }
-            }
+	private void doSpell(final String cmd, final String id,	final JSONArray paramArray) {
+		final SpellChecker checker = new SpellChecker(dict);
 
-            out.append("</res>");
-        }
-    }
+		final Set<String> errors = new HashSet<String>();
+
+		checker.addSpellCheckListener(new SpellCheckListener() {
+			public void spellingError(SpellCheckEvent event) {
+				errors.add(event.getInvalidWord());
+			}
+		});
+
+		JSONArray words = paramArray.optJSONArray(1);
+		checker.checkSpelling(new StringWordTokenizer(words.toString()));
+		respond(errors.iterator(), cmd, id);
+	}
+
+	private void respond(Iterator<String> words, String cmd, String id) {
+		JSONArray array = new JSONArray();
+		if (words != null) {
+			while (words.hasNext())
+				array.put(words.next());
+		}
+
+		JSONObject response = new JSONObject();
+		try {
+			response.put("id", id);
+			response.put("error", (String)null);
+			response.put("result", array);
+			setResponse(response.toString());
+		} catch (JSONException e) {
+			jsonError("Failed to construct response");
+		}
+	}
+	
+	private void setResponse(String response) {
+		resourceStream.clear();
+		resourceStream.append(response);
+		resourceStream.setLastModified(Time.now());
+	}
+
+	// Simple method of returning a user-visible error message to TinyMCE
+	private void jsonError(String message) {
+		setResponse("{\"error\":\"" + message + "\"}");
+		LOG.debug("Error message return from RPC call: {}", message);
+	}
 
 }
+
