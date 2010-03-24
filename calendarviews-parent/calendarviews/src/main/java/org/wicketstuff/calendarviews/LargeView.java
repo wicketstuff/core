@@ -200,7 +200,7 @@ public class LargeView extends FullWeekCalendarView {
 		protected void populateItem(final Item<DateMidnight> item) {
 			int cell = (mCounter++ % getColumns()) + 1;
 			int cellsLeft = getColumns() - cell;
-			final AbstractReadOnlyModel<List<IEvent>> eventsModel = new LoadableDetachableModel<List<IEvent>>() {
+			final LoadableDetachableModel<List<IEvent>> eventsModel = new LoadableDetachableModel<List<IEvent>>() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
