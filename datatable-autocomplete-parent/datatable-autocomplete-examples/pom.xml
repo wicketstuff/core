@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>datatable-autocomplete-parent</artifactId>
 		<groupId>org.wicketstuff</groupId>
-		<version>1.4.2-SNAPSHOT</version>
+		<version>1.4.7-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>datatable-autocomplete-examples</artifactId>
