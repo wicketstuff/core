@@ -40,7 +40,7 @@ public abstract class BasePhonebookApplication extends WebApplication
 	protected void init()
 	{
 		super.init();
-		addComponentInstantiationListener(new SpringComponentInjector(this, context()));
+		addComponentInstantiationListener(new SpringComponentInjector(this, context(), true));
 	}
 
 	public abstract ApplicationContext context();
