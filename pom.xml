@@ -6,7 +6,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>1.4.2-SNAPSHOT</version>
+	<version>1.4.7-SNAPSHOT</version>
 
 	<name>WicketStuff Core Parent</name>
 	<description>
@@ -35,7 +35,7 @@
 		<module>prototype</module>
 		<module>scriptaculous-parent</module>
 		<module>simile-timeline-parent</module>
-		<!--  <module>tinymce-parent</module> commented out until jazzyplugin:jazzyplugin:jar:0.2.1 is available -->
+		<module>tinymce-parent</module>
 		<module>yui-parent</module>
 		<module>push-parent</module>
 		<module>artwork-parent</module>
@@ -202,10 +202,10 @@
 	</scm>
 
 	<properties>
-		<wicket.version>1.4.1</wicket.version>
-		<jetty.version>6.1.11</jetty.version>
-		<lucene.version>2.4.0</lucene.version>
-    <slf4j.version>1.5.8</slf4j.version>
+		<wicket.version>1.4.7</wicket.version>
+		<jetty.version>6.1.22</jetty.version>
+		<lucene.version>2.4.1</lucene.version>
+        <slf4j.version>1.5.11</slf4j.version>
 	</properties>
 
 	<dependencies>
@@ -279,7 +279,7 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-        <version>4.6</version>
+                <version>4.8.1</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>

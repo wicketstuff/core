@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>javaee-inject-parent</artifactId>
-        <version>1.4.2-SNAPSHOT</version>
+        <version>1.4.7-SNAPSHOT</version>
     </parent>
     <artifactId>javaee-inject-examples</artifactId>
     <packaging>pom</packaging>
