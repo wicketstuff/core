@@ -63,7 +63,28 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 		if (component != null && (request = component.getRequest()) != null) {
 			EventType eventType = EventType.stringToType(request.getParameter(EventType.IDENTIFIER));
 			if (eventType == EventType.ON_SELECT) {
-				onSelect(target, request.getParameter("date"), new SpecialKeys(request));
+				String selectedDate = request.getParameter("date");
+				SpecialKeys specialKeys = new SpecialKeys(request);
+				onSelect(target, selectedDate, specialKeys);
+				Locale locale = Session.get().getLocale();
+				DateFormat df;
+				if (locale != null)
+					df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+				else
+					df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+
+				try {
+					onSelect(target, df.parse(selectedDate), specialKeys);
+				} catch (Exception e) {
+					onSelect(target, (java.util.Date)null, specialKeys);
+				}
+
+				try {
+					java.sql.Date date = new java.sql.Date(df.parse(selectedDate).getTime());
+					onSelect(target, date, specialKeys);
+				} catch (Exception e) {
+					onSelect(target, (java.sql.Date)null, specialKeys);
+				}
 			}
 			else if (eventType == EventType.ON_CLOSE) {
 				onClose(target, request.getParameter("date"), new SpecialKeys(request));
@@ -900,9 +921,30 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 	 * this method is called after the user picked a date in the datepicker.
 	 *
 	 * @param target the AjaxRequestTarget of the resize operation.
+	 * @param pickedDate The selected date as {@code String}
 	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	protected void onSelect(final AjaxRequestTarget target, final String pickedDate, final SpecialKeys specialKeys) {}
+
+	/**
+	 * If you have set {@link #setWantOnSelectNotification(boolean)} to {@code true}
+	 * this method is called after the user picked a date in the datepicker.
+	 *
+	 * @param target the AjaxRequestTarget of the resize operation.
+	 * @param pickedDate The selected date as {@link java.util.Date}
+	 * @param specialKeys the special keys that were pressed when the event occurs
+	 */
+	protected void onSelect(final AjaxRequestTarget target, final java.util.Date pickedDate, final SpecialKeys specialKeys) {}
+
+	/**
+	 * If you have set {@link #setWantOnSelectNotification(boolean)} to {@code true}
+	 * this method is called after the user picked a date in the datepicker.
+	 *
+	 * @param target the AjaxRequestTarget of the resize operation.
+	 * @param pickedDate The selected date as {@link java.sql.Date}
+	 * @param specialKeys the special keys that were pressed when the event occurs
+	 */
+	protected void onSelect(final AjaxRequestTarget target, final java.sql.Date pickedDate, final SpecialKeys specialKeys) {}
 
 
 	/**
