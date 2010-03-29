@@ -16,12 +16,12 @@ import org.apache.wicket.model.Model;
  *
  * @author Stefan Lindner (lindner@visionet.de)
  */
-public class Menu implements Serializable{
+public class Menu implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private final Model<String> model;
-	private final List<MenuItem> menuItems;
+	private final List<IMenuLink> menuItems;
 	private boolean visible = true;
 
 	/**
@@ -30,7 +30,7 @@ public class Menu implements Serializable{
 	 * @param model The {@link Model} that name of the menu
 	 * @param menuItems A {@code List} of the {@link MenuItem}s that belong to this {@link Menu}.
 	 */
-	public Menu(final Model<String> model, final List<MenuItem> menuItems) {
+	public Menu(final Model<String> model, final List<IMenuLink> menuItems) {
 		if (model == null) {
 			throw new IllegalArgumentException("argument [model] cannot be null");
 		}
@@ -63,7 +63,7 @@ public class Menu implements Serializable{
 	 *
 	 * @return All {@link MenuItem}s of this {@link Menu}.
 	 */
-	public List<MenuItem> getMenuItems() {
+	public List<IMenuLink> getMenuItems() {
 		return this.menuItems;
 	}
 
