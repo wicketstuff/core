@@ -1,0 +1,188 @@
+.menubar {
+	height:25px;
+	line-height:20px;
+	z-index:20;
+	display:block;
+	text-align:right;
+	width:100%;
+	}
+
+.menubar h1 {
+	text-align: center;
+	padding: 0 0 0.25em 0;
+	margin: 0;
+	z-index: 999;
+}
+
+.menubar ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	z-index: 999;
+}
+
+ul.nav a {
+	font-weight: bold;
+	color: rgb(15,15,15);
+	text-align: left;
+	text-decoration: none;
+	text-align: left;
+}
+
+/* Text-Entries in a dropped down menu */
+ul.nav li li a {
+	font-weight: bold;
+	text-align: left;
+	display: block;
+	color: rgb(41,41,41);
+	padding : 0.2em 10px;
+	white-space : nowrap;
+	z-index: 999;
+}
+
+
+/* Disabled text-Entries in a dropped down menu*/
+ul.nav li li.disabled {
+	font-weight: bold;
+	text-align: left;
+	display: block;
+	padding : 0.2em 10px; 
+	white-space : nowrap;
+	z-index: 999;
+}
+
+/* Draw some bars left and right on hover a dropped down menu entry */
+ul.nav li li a:hover {
+	padding: 0.2em 5px;
+	border: 1px solid rgb(34,69,104);
+	border-width: 0 5px;
+	text-align: left;
+}
+
+ul.nav li li a:hover span {
+	color:gray; /*rgb(34,69,104);*/
+	}
+
+/* Border around the menubar line */
+.menubar li {
+	float: left;
+	position: relative;
+	text-align: center;
+	cursor: default;
+	background-color: rgb(152,186,225);
+	border: 1px solid rgb(34,69,104);
+	border-width: 1px 0;
+	text-align: left;
+	z-index: 999;
+}
+
+.menubar li.singleMenu {
+	z-index:20;
+	padding-left: 0.95em;
+	padding-right: 0.95em;
+	border-left-width: 2px;
+	border-right-width: 2px;
+	margin-right: 2px;
+	white-space : nowrap;
+}
+
+.menubar li.firstMenu {
+	z-index:20;
+	padding-left: 0.95em;
+	padding-right: 0.95em;
+	border-left-width: 2px;
+	border-right-width: 2px;
+	margin-right: 2px;
+	white-space : nowrap;
+}
+
+.menubar li.middleMenu {
+	padding-left: 0.95em;
+	padding-right: 0.95em;
+	border-left-width: 2px;
+	border-right-width: 2px;
+	margin-right: 2px;
+	white-space : nowrap;
+}
+
+.menubar li.lastMenu {
+	padding-left: 0.95em;
+	padding-right: 0.95em;
+	border-left-width: 2px;
+	border-right-width: 2px;
+	white-space : nowrap;
+}
+
+/* The rectangle that is shown when a menue is dropped down */
+.menubar li ul {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	font-weight: normal;
+	background-color: rgb(152,186,225);
+	padding: 0.5em 0;
+	border-right: 2px ridge rgb(125,125,125);
+	border-left: 2px ridge rgb(125,125,125);
+	border-bottom: 2px ridge rgb(125,125,125);
+	text-align: left;
+}
+
+.menubar li>ul {
+	top:20px; /* For IE7 */
+	/*	top: auto;  does not work in IE7 but in all other browsers */
+	left:0;
+}
+
+.menubar li li {
+	display: block;
+	float: none;
+	background-color: rgb(152,186,225);
+	border: 0;
+	color: rgb(41,41,41);
+}
+
+.menubar li li.disabled {
+	display: block;
+	float: none;
+	background-color: rgb(152,186,225);
+	border: 0;
+	color: rgb(123,123,123);
+}
+
+.menubar li:hover ul, li.over ul {
+	display: block;
+}
+
+/* Hovering over a menu entry */
+/* does not work in IE6, can't control the color */
+.menubar li ul li a:hover {
+	/* background-color: rgb(34,69,104); */
+	/* color :	rgb(232,240,255); */
+	background-color: white;
+}
+
+
+.menubar hr {
+	display: none;
+}
+
+.menubar p {
+	clear: left;
+	background: url(images/remora.gif) center left no-repeat;
+	padding: 0.95em 0.95em 0 0.95em;
+	margin: 0;
+}
+
+.menubar p.image {
+	float: right;
+	text-align: center;
+	color: #7d6340;
+	padding: 1.25em 1.25em 0.25em 0.25em;
+}
+
+.menubar  p.image img {
+	display: block;
+	border: 1px solid #7d6340;
+}
+

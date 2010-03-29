@@ -7,14 +7,12 @@ import java.util.List;
 
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.SpecialKeys;
@@ -59,11 +57,13 @@ public class TestPage extends WebPage {
 	private final DraggableAndResizableElement draggableAndResizable1;
 
 
-	private Label replaceMe;
-
 	public TestPage() {
 		super();
 
+		
+		add(new MenuDemo("simpleMenu").setRenderBodyOnly(true));
+		
+		
 
 		addOrReplace(new Label("title", JQuery.getVersion()).setRenderBodyOnly(true));
 
@@ -220,25 +220,6 @@ public class TestPage extends WebPage {
 
 
 
-		replaceMe = new Label("replaceMe", "replace me");
-		replaceMe.add(new DraggableBehavior());
-
-		replaceMe.add(new AjaxEventBehavior("onclick") {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onEvent(AjaxRequestTarget target) {
-				System.out.println("klicked!");
-			}
-
-		});
-
-		add(replaceMe);
-
-
-		
-		
-		
 		final Explode explode = new Explode();
 		explode.setSpeed(1000);
 		explode.setPieces(3);
@@ -447,15 +428,6 @@ public class TestPage extends WebPage {
 				//explode.fire(target, postEffects2, draggable2);
 				puff.fire(target, draggable2);
 
-			}
-		});
-
-		add(new Link<Void>("link"){
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onClick() {
-				setResponsePage(TestPage.class);
 			}
 		});
 

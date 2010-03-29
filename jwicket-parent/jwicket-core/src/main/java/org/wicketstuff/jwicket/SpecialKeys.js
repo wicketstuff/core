@@ -1,6 +1,6 @@
 /**
  * JQuery SpecialKeys for jWicket
- * @version 1.0
+ * @version 1.1
  * 
  */
 
@@ -54,10 +54,14 @@
 
 	$(document).bind('keydown', function(e) {
 		pressedKeys[e.keyCode] = true;
+		console.log('keydown: keycode = ' + e.keyCode);
 	});
 
 	$(document).bind('keyup', function(e) {
+		pressedKeys[e.keyCode] = false;
 		delete pressedKeys[e.keyCode];
+		console.log('keyup: keycode = ' + e.keyCode);
+		console.log('pressed = ' + jQuery.jWicketSpecialKeysGetPressed() );
 	});
 
 })(jQuery);
