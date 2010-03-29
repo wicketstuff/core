@@ -10,11 +10,63 @@
 	<meta http-equiv="Cache-Control" content="no-store, no-cache, max-age=0, must-revalidate"/>
 	<meta http-equiv="Cache-Control" content="post-check=1, pre-check=2"/>
 	<meta http-equiv="Expires" content="-1"/>
+	
+	<style type="text/css">
+		li.ui-menu-item {
+			display:inline;
+		}
+	</style>
+	
 </head>
 
 <body style="height:100%;">
 
-	<table cellpadding="0" cellspacing="0" style="height:100%;">
+
+<!-- In the future: Test for jQuerys ui-menu
+	--- Menü -------------------------------------<br/>
+	<div id="menu1">
+
+		<ul id="sisIsSeUl">
+			<li><a href="#">Celebrity news</a></li>
+			<li><a href="#">Gossip</a></li>
+			<li><a href="#">Movies</a></li>
+			<li><a href="#">Music</a>
+				<ul>
+					<li><a href="#">Alternative</a></li>
+					<li><a href="#">Country</a></li>
+					<li><a href="#">Dance</a></li>
+					<li><a href="#">Electronica</a></li>
+					<li><a href="#">Metal</a></li>
+					<li><a href="#">Pop</a></li>
+					<li><a href="#">Rock</a>
+						<ul>
+							<li><a href="#">Bands</a>
+								<ul>
+									<li><a href="#">Dokken</a></li>
+								</ul>
+							</li>
+							<li><a href="#">Fan Clubs</a></li>
+							<li><a href="#">Songs</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li><a href="#">Slide shows</a></li>
+			<li><a href="#">Red carpet</a></li>
+		</ul>
+	
+	</div>
+	--- Menü Ende --------------------------------<br/>
+
+-->
+
+	<div wicket:id="simpleMenu"/>
+
+	
+
+
+
+	<table cellpadding="0" cellspacing="0" style="display:block;">
 		<tbody style="height:100%;">
 			<tr style="height:100%;">
 				<td style="height:100%;">
@@ -91,13 +143,8 @@
 
 
 	
-	<div wicket:id="replaceMe" />
-
-
-
-	<div>
+	<div style="margin-top:10px;">
 		<a href="#" wicket:id="ajaxLink">Show animations</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<a href="#" wicket:id="link">PageLink</a>
 	</div>
 
 
@@ -113,16 +160,13 @@
 		</a>
 	</div>
 
-
-	<div onclick="alert(jQuery.jWicketSpecialKeysGetPressed());">
-		Test keypressed detection
-	</div>
-
 	<div wicket:id="dateRedrawContainer">
 		<div><input wicket:id="datePickerInput" type="text" maxlength="10" size="11" style="z-index:100000;"/></div>
 	</div>
-	<a href="#" wicket:id="ajaxLinkRedrawDate">redraw Date</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<a href="#" wicket:id="ajaxLinkRedrawDateContainer">redraw Date container</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<div>
+		<a href="#" wicket:id="ajaxLinkRedrawDate">redraw Date</a>
+		<a href="#" wicket:id="ajaxLinkRedrawDateContainer">redraw Date container</a>
+	</div>
 	
 </body>
 </html>

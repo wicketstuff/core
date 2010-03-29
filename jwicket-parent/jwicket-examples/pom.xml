@@ -21,7 +21,7 @@
 
     <developers>
         <developer>
-            <name>Stefan Lindnnner</name>
+            <name>Stefan Lindner</name>
             <id>lindner</id>
             <email>lindner at visionet.de</email>
         </developer>
@@ -74,6 +74,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jwicket-tooltip-wtooltips</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>dropdown-menu</artifactId>
             <version>${project.version}</version>
         </dependency>
         

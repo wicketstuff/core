@@ -9,17 +9,17 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>jwicket-ui-datepicker</artifactId>
+	<artifactId>jwicket-ui-menu</artifactId>
 	<packaging>jar</packaging>
 
-    <name>jWicket: jQuery Wicket integration - ui.datepicker</name>
+    <name>jWicket: jQuery Wicket integration - ui.menu</name>
     <description>
         Implementation of jQuery's Datepicker for Apache Wicket.
     </description>
 	
 	<developers>
 		<developer>
-			<name>Stefan Lindner</name>
+			<name>Stefan Lindnnner</name>
 			<id>lindner</id>
 			<email>lindner at visionet.de</email>
 		</developer>

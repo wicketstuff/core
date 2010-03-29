@@ -91,6 +91,7 @@
     	<module>jwicket-core</module>
     	<module>jwicket-ui</module>
     	<module>jwicket-tooltip</module>
+    	<module>dropdown-menu</module>
     	<module>jwicket-examples</module>
     </modules>
 	
