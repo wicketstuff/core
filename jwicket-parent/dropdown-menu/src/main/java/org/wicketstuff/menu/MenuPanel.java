@@ -6,8 +6,13 @@ package org.wicketstuff.menu;
 
 import java.util.List;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.behavior.SimpleAttributeModifier;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.panel.Panel;
 
@@ -22,9 +27,9 @@ class MenuPanel extends Panel {
 	private static final long serialVersionUID = 1L;
 	private static final SimpleAttributeModifier disabledMenuItem = new SimpleAttributeModifier("class", "disabled");
 
-	private List<MenuItem> menuItems;
+	private List<IMenuLink> menuItems;
 
-	protected MenuPanel(final String id, List<MenuItem> menuItems) {
+	protected MenuPanel(final String id, List<IMenuLink> menuItems) {
 		super(id);
 		if (menuItems == null) {
 			throw new IllegalArgumentException("argument [menuItems] cannot be null");
@@ -43,8 +48,25 @@ class MenuPanel extends Panel {
 			@Override
 			protected void populateItem(LoopItem item) {
 				final int index = item.getIteration();
-				final MenuItem menuItem = MenuPanel.this.menuItems.get(index);
+				final IMenuLink menuItem = MenuPanel.this.menuItems.get(index);
+				final AbstractLink link;
+				final Component linkLabel = menuItem.getDisplayComponent("menuLinkLabel");
+				
+				if (linkLabel instanceof Image) {
+					item.add(new WebMarkupContainer("menuLink1").setVisible(false));
+					link = menuItem.getLink("menuLink2");
+				}
+				else {
+					link = menuItem.getLink("menuLink1");
+					item.add(new WebMarkupContainer("menuLink2").setVisible(false));
+				}
+				link.add(linkLabel);
+				
+				item.add(link);
 
+				
+/*				
+				
 				if (menuItem.isVisible()) {
 					if (menuItem.isEnabled())
 						item.add(new MenuLinkPanel("menuItem", menuItem));
@@ -55,6 +77,7 @@ class MenuPanel extends Panel {
 				}
 				else
 					item.setVisible(false);
+*/
 			}
 
 		});
