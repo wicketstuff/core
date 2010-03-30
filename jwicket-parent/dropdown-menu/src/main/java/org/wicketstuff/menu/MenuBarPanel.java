@@ -7,7 +7,9 @@ package org.wicketstuff.menu;
 import java.util.List;
 
 import org.apache.wicket.ResourceReference;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.SimpleAttributeModifier;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
 import org.apache.wicket.markup.html.list.Loop;
@@ -16,7 +18,6 @@ import org.apache.wicket.protocol.http.ClientProperties;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.protocol.http.request.WebClientInfo;
 import org.apache.wicket.request.ClientInfo;
-import org.wicketstuff.jwicket.JQueryHeaderContributor;
 
 
 /**
@@ -240,6 +241,7 @@ public class MenuBarPanel extends Panel {
 	private static final SimpleAttributeModifier idMiddleMenu = new SimpleAttributeModifier("class", "middleMenu");
 	private static final SimpleAttributeModifier idLastMenu = new SimpleAttributeModifier("class", "lastMenu");
 
+	private final WebMarkupContainer menubar;
 	/**
 	 * Constructs a {@code MenuBarPanel}.
 	 *
@@ -252,7 +254,9 @@ public class MenuBarPanel extends Panel {
 
 		this.menus = menus;
 
-		this.setRenderBodyOnly(true);
+		menubar = new WebMarkupContainer("menubar");
+		menubar.setOutputMarkupId(true);
+		add(menubar);
 	}
 
 
@@ -282,7 +286,7 @@ public class MenuBarPanel extends Panel {
 
 
 		// add the loop used to generate each single menu
-		addOrReplace(new Loop("menus", menus.size()) {
+		menubar.addOrReplace(new Loop("menus", menus.size()) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -316,6 +320,9 @@ public class MenuBarPanel extends Panel {
 					item.add(new SimpleAttributeModifier("onmouseover", "this.className+=' over';"));
 					item.add(new SimpleAttributeModifier("onmouseout", "this.className=this.className.replace(' over','');"));
 				}
+				
+				item.setOutputMarkupId(true);
+				menu.setAssociatedComponent(item);
 			}
 		});
 		super.onBeforeRender();
@@ -327,37 +334,12 @@ public class MenuBarPanel extends Panel {
 	public void renderHead(HtmlHeaderContainer container) {
 		super.renderHead(container);
 		container.getHeaderResponse().renderCSSReference(new ResourceReference(MenuBarPanel.class, "menu.css"));
-
-
-		// For IE6 we need bgiframe. <select><option>...</option></select> tags would shine througth dropped down menus
-		if (!browserDetected) {
-			ClientInfo ci = WebSession.get().getClientInfo();
-			if (ci instanceof WebClientInfo) {
-				ClientProperties properties = ((WebClientInfo)ci).getProperties();
-				if (properties.isBrowserInternetExplorer()) {
-					if (properties.getBrowserVersionMajor() < 7)
-						browserIsIe56 = true;
-				}
-			}
-			else {
-				// perhaps it is IE, we don't know.
-				browserIsIe56 = true;
-			}
-
-			browserDetected = true;
-		}
-
-
-		if (browserIsIe56) {
-			container.getHeaderResponse().renderJavascriptReference(JQueryHeaderContributor.jQueryCoreJs);
-			container.getHeaderResponse().renderJavascript("jQuery.noConflict();", "noConflict");
-			container.getHeaderResponse().renderJavascriptReference(JQueryHeaderContributor.jQueryBgiframeJs);
-			container.getHeaderResponse().renderJavascript(
-					"jQuery(function(){ jQuery('div.menubar ul.nav ul').bgiframe(); });"
-					
-					,"menuRepairForIE6");
-		}
-
 	}
 
+	
+	
+	
+	public void refresh(final AjaxRequestTarget target) {
+		target.addComponent(menubar);
+	}
 }

@@ -5,14 +5,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.wicket.Application;
+import org.apache.wicket.Component;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.link.AbstractLink;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.SpecialKeys;
@@ -39,6 +46,9 @@ import org.wicketstuff.jwicket.ui.effect.Transfer;
 import org.wicketstuff.jwicket.ui.effect.Bounce.BounceMode;
 import org.wicketstuff.jwicket.ui.effect.Scale.ScaleDirection;
 import org.wicketstuff.jwicket.ui.effect.Scale.ScaleElement;
+import org.wicketstuff.menu.IMenuLink;
+import org.wicketstuff.menu.Menu;
+import org.wicketstuff.menu.MenuBarPanel;
 
 
 public class TestPage extends WebPage {
@@ -56,12 +66,226 @@ public class TestPage extends WebPage {
 
 	private final DraggableAndResizableElement draggableAndResizable1;
 
+	private final Explode explode = new Explode();
+	private final Puff puff = new Puff();
+	private final List<AbstractJqueryUiEffect> postEffects;
+	private final List<AbstractJqueryUiEffect> postEffects2;
+
 
 	public TestPage() {
 		super();
-
 		
-		add(new MenuDemo("simpleMenu").setRenderBodyOnly(true));
+		
+		
+		/* Demo for a simple menu bar ***************************************************/
+
+		/* Menu 1 with some static links */
+		List<IMenuLink> itemsForMenu1 = new ArrayList<IMenuLink>();
+
+		// Link to Homepage
+		itemsForMenu1.add(new IMenuLink() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public Component getDisplayComponent(String id) {
+				//return new Label(id, "Home");
+				return new Image(id, new ResourceReference(TestPage.class, "P_orange_81x81.gif"));
+			}
+			@Override
+			public AbstractLink getLink(String id) {
+				return new BookmarkablePageLink<Void>(id, Application.get().getHomePage());
+			}
+		});
+
+		// Link to Apache Wicket
+		itemsForMenu1.add(new IMenuLink() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public Component getDisplayComponent(String id) {
+				return new Label(id, "Apache Wicket");
+			}
+			@Override
+			public AbstractLink getLink(String id) {
+				return new ExternalLink(id, "http://www.wicketframework.org");
+			}
+		});
+
+		// Link to Wicketstuff
+		itemsForMenu1.add(new IMenuLink() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public Component getDisplayComponent(String id) {
+				return new Label(id, "Wicketstuff");
+			}
+			@Override
+			public AbstractLink getLink(String id) {
+				return new ExternalLink(id, "http://www.wicketstuff.org");
+			}
+		});
+
+
+		Menu menu1 = new Menu(new Model<String>("Pages"), itemsForMenu1);
+		/* End of menu 1 */
+		
+		
+		
+		/* Menu 2 with some AJAX links for drag/drop and resize control */
+		final Menu menu2 = new Menu(new Model<String>("Ajax Control"));
+
+		// Enable/disable dragging
+		menu2.addMenuItem(new IMenuLink() {
+			private static final long serialVersionUID = 1L;
+			private boolean isEnabled = true;
+			private Model<String> labelModel = new Model<String>("disable drag");
+			@Override
+			public Component getDisplayComponent(String id) {
+				return new Label(id, labelModel);
+			}
+			@Override
+			public AbstractLink getLink(String id) {
+				return new AjaxFallbackLink<Void>(id) {
+					private static final long serialVersionUID = 1L;
+					@Override
+					public void onClick(AjaxRequestTarget target) {
+						if (isEnabled) {
+							isEnabled = false;
+							labelModel.setObject("enable drag");
+							draggable1.disable(target);
+							draggable2.disable(target);
+							draggableDroppable1.disableDraggable(target);
+							draggableDroppable2.disableDraggable(target);
+							draggableAndResizable1.disableDraggable(target);
+						}
+						else {
+							isEnabled = true;
+							labelModel.setObject("disable drag");
+							draggable1.enable(target);
+							draggable2.enable(target);
+							draggableDroppable1.enableDraggable(target);
+							draggableDroppable2.enableDraggable(target);
+							draggableAndResizable1.enableDraggable(target);
+						}
+
+						// Redraw menu
+						menu2.redraw(target);
+					}
+				};
+			}
+		});
+
+
+		// Enable/disable dropping
+		menu2.addMenuItem(new IMenuLink() {
+			private static final long serialVersionUID = 1L;
+			private boolean isEnabled = true;
+			private Model<String> labelModel = new Model<String>("disable drop");
+			@Override
+			public Component getDisplayComponent(String id) {
+				return new Label(id, labelModel);
+			}
+			@Override
+			public AbstractLink getLink(String id) {
+				return new AjaxFallbackLink<Void>(id) {
+					private static final long serialVersionUID = 1L;
+					@Override
+					public void onClick(AjaxRequestTarget target) {
+						if (isEnabled) {
+							isEnabled = false;
+							labelModel.setObject("enable drop");
+							droppable1.disable(target);
+							droppable2.disable(target);
+							draggableDroppable1.disableDroppable(target);
+							draggableDroppable2.disableDroppable(target);
+						}
+						else {
+							isEnabled = true;
+							labelModel.setObject("disable drop");
+							droppable1.enable(target);
+							droppable2.enable(target);
+							draggableDroppable1.enableDroppable(target);
+							draggableDroppable2.enableDroppable(target);
+						}
+
+						// Redraw menu
+						menu2.redraw(target);
+					}
+				};
+			}
+		});
+
+
+		// Enable/disable resize
+		menu2.addMenuItem(new IMenuLink() {
+			private static final long serialVersionUID = 1L;
+			private boolean isEnabled = true;
+			private Model<String> labelModel = new Model<String>("disable resize");
+			@Override
+			public Component getDisplayComponent(String id) {
+				return new Label(id, labelModel);
+			}
+			@Override
+			public AbstractLink getLink(String id) {
+				return new AjaxFallbackLink<Void>(id) {
+					private static final long serialVersionUID = 1L;
+					@Override
+					public void onClick(AjaxRequestTarget target) {
+						if (isEnabled) {
+							isEnabled = false;
+							labelModel.setObject("enable resize");
+							resizable1.disable(target);
+							draggableAndResizable1.disableResizable(target);
+						}
+						else {
+							isEnabled = true;
+							labelModel.setObject("disable resize");
+							resizable1.enable(target);
+							draggableAndResizable1.enableResizable(target);
+						}
+
+						// Redraw menu
+						menu2.redraw(target);
+					}
+				};
+			}
+		});
+
+
+		// Enable/disable resize
+		menu2.addMenuItem(new IMenuLink() {
+			private static final long serialVersionUID = 1L;
+			private Model<String> labelModel = new Model<String>("show animations");
+			@Override
+			public Component getDisplayComponent(String id) {
+				return new Label(id, labelModel);
+			}
+			@Override
+			public AbstractLink getLink(String id) {
+				return new AjaxFallbackLink<Void>(id) {
+					private static final long serialVersionUID = 1L;
+					@Override
+					public void onClick(AjaxRequestTarget target) {
+						// Redraw menu
+						menu2.redraw(target);
+
+						// Show the effects
+						explode.fire(target, postEffects, draggable1);
+						puff.fire(target, postEffects2, draggable2);
+					}
+				};
+			}
+		});
+
+		/* End of menu 2 */
+
+
+
+		/* The Menus as a list */
+		List<Menu> menus = new ArrayList<Menu>(2);
+		menus.add(menu1);
+		menus.add(menu2);
+		
+
+		/* And the menubar itself */
+		add(new MenuBarPanel("simpleMenu", menus));
 		
 		
 
@@ -98,117 +322,6 @@ public class TestPage extends WebPage {
 
 
 
-		final Label dragSwitchLabel = new Label("dragSwitchLabel", "disable dragging");
-		dragSwitchLabel.setOutputMarkupId(true);
-
-		AjaxLink<Void> dragSwitch = new AjaxLink<Void>("dragSwitch") {
-			private static final long serialVersionUID = 1L;
-			private boolean on = true;
-
-			@Override
-			public void onClick(AjaxRequestTarget target) {
-				if (on) {
-					on = false;
-					draggable1.disable(target);
-					draggable2.disable(target);
-					draggableDroppable1.disableDraggable(target);
-					draggableDroppable2.disableDraggable(target);
-					draggableAndResizable1.disableDraggable(target);
-					dragSwitchLabel.setDefaultModelObject("enable dragging");
-					target.addComponent(dragSwitchLabel);
-				}
-				else {
-					on = true;
-					draggable1.enable(target);
-					draggable2.enable(target);
-					draggableDroppable1.enableDraggable(target);
-					draggableDroppable2.enableDraggable(target);
-					draggableAndResizable1.enableDraggable(target);
-					dragSwitchLabel.setDefaultModelObject("disable dragging");
-					target.addComponent(dragSwitchLabel);
-				}
-			}
-		};
-		dragSwitch.add(dragSwitchLabel);
-		add(dragSwitch);
-
-
-
-
-
-
-
-
-
-
-
-
-		final Label dropSwitchLabel = new Label("dropSwitchLabel", "disable dropping");
-		dropSwitchLabel.setOutputMarkupId(true);
-
-		AjaxLink<Void> dropSwitch = new AjaxLink<Void>("dropSwitch") {
-			private static final long serialVersionUID = 1L;
-			private boolean on = true;
-
-			@Override
-			public void onClick(AjaxRequestTarget target) {
-				if (on) {
-					on = false;
-					droppable1.disable(target);
-					droppable2.disable(target);
-					draggableDroppable1.disableDroppable(target);
-					draggableDroppable2.disableDroppable(target);
-					dropSwitchLabel.setDefaultModelObject("enable dropping");
-					target.addComponent(dropSwitchLabel);
-				}
-				else {
-					on = true;
-					droppable1.enable(target);
-					droppable2.enable(target);
-					draggableDroppable1.enableDroppable(target);
-					draggableDroppable2.enableDroppable(target);
-					dropSwitchLabel.setDefaultModelObject("disable dropping");
-					target.addComponent(dropSwitchLabel);
-				}
-			}
-		};
-		dropSwitch.add(dropSwitchLabel);
-		add(dropSwitch);
-
-
-
-
-
-
-
-
-		final Label resizeSwitchLabel = new Label("resizeSwitchLabel", "disable resizing");
-		resizeSwitchLabel.setOutputMarkupId(true);
-
-		AjaxLink<Void> resizeSwitch = new AjaxLink<Void>("resizeSwitch") {
-			private static final long serialVersionUID = 1L;
-			private boolean on = true;
-
-			@Override
-			public void onClick(AjaxRequestTarget target) {
-				if (on) {
-					on = false;
-					resizable1.disable(target);
-					draggableAndResizable1.disableResizable(target);
-					resizeSwitchLabel.setDefaultModelObject("enable resizing");
-					target.addComponent(resizeSwitchLabel);
-				}
-				else {
-					on = true;
-					resizable1.enable(target);
-					draggableAndResizable1.enableResizable(target);
-					resizeSwitchLabel.setDefaultModelObject("disable resizing");
-					target.addComponent(resizeSwitchLabel);
-				}
-			}
-		};
-		resizeSwitch.add(resizeSwitchLabel);
-		add(resizeSwitch);
 
 
 
@@ -220,7 +333,6 @@ public class TestPage extends WebPage {
 
 
 
-		final Explode explode = new Explode();
 		explode.setSpeed(1000);
 		explode.setPieces(3);
 		add(explode);
@@ -231,7 +343,7 @@ public class TestPage extends WebPage {
 		 * Prepare a bunch of effects. Need to add them here for header
 		 * contribution.
 		 */
-		final List<AbstractJqueryUiEffect> postEffects = new ArrayList<AbstractJqueryUiEffect>();
+		postEffects = new ArrayList<AbstractJqueryUiEffect>();
 		
 		Blind blindOut = new Blind();
 		add(blindOut);
@@ -393,9 +505,8 @@ public class TestPage extends WebPage {
 		postEffects.add(transfer);
 
 
-		List<AbstractJqueryUiEffect> postEffects2 = new ArrayList<AbstractJqueryUiEffect>();
+		postEffects2 = new ArrayList<AbstractJqueryUiEffect>();
 		
-		final Puff puff = new Puff();
 		add(puff);
 		puff.setMode(EffectMode.SHOW);
 		puff.setPercen(5);
@@ -405,35 +516,6 @@ public class TestPage extends WebPage {
 		postEffects2.add(highlight1);
 		postEffects2.add(highlight2);
 		postEffects2.add(transfer);
-
-
-		add(new AjaxLink<Void>("ajaxLink"){
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onClick(AjaxRequestTarget target) {
-/*
-				DraggableElement newDraggableElement = new DraggableElement("draggable1", new Model<String>("Am I still draggable?"));
-				newDraggableElement.setOutputMarkupId(true);
-				TestPage.this.addOrReplace(newDraggableElement);
-				target.addComponent(newDraggableElement);
-*/				
-				
-				
-//				effect.fire(target, replaceMe);
-
-				
-				
-				explode.fire(target, postEffects, draggable1);
-				//explode.fire(target, postEffects2, draggable2);
-				puff.fire(target, draggable2);
-
-			}
-		});
-
-
-
-
 
 
 

@@ -23,6 +23,11 @@ public abstract class JQueryDurableAjaxBehavior extends JQueryAjaxBehavior {
 	private static final long serialVersionUID = 1L;
 
 	protected JQueryDurableAjaxBehavior(
+			final JQueryResourceReference baseLibrary) {
+		super(baseLibrary);
+	}
+
+	protected JQueryDurableAjaxBehavior(
 			final JQueryResourceReference baseLibrary,
 			final JQueryResourceReference[] requiredLibraries) {
 		super(baseLibrary, requiredLibraries);
