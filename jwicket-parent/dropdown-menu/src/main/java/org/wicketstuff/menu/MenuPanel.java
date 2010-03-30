@@ -7,14 +7,14 @@ package org.wicketstuff.menu;
 import java.util.List;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.SimpleAttributeModifier;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.wicketstuff.jwicket.BgIframeBehavior;
 
 
 /**
@@ -28,6 +28,8 @@ class MenuPanel extends Panel {
 	private static final SimpleAttributeModifier disabledMenuItem = new SimpleAttributeModifier("class", "disabled");
 
 	private List<IMenuLink> menuItems;
+	
+	private final WebMarkupContainer menu;
 
 	protected MenuPanel(final String id, List<IMenuLink> menuItems) {
 		super(id);
@@ -41,8 +43,13 @@ class MenuPanel extends Panel {
 
 		this.menuItems = menuItems;
 
+
+		menu = new WebMarkupContainer("menu");
+		menu.setOutputMarkupId(true);
+		menu.add(new BgIframeBehavior());
+
 		// add the loop used to generate menu items
-		add(new Loop("items", menuItems.size()) {
+		menu.add(new Loop("items", menuItems.size()) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -60,9 +67,13 @@ class MenuPanel extends Panel {
 					link = menuItem.getLink("menuLink1");
 					item.add(new WebMarkupContainer("menuLink2").setVisible(false));
 				}
+				link.setOutputMarkupId(true);
+				linkLabel.setOutputMarkupId(true);
 				link.add(linkLabel);
 				
 				item.add(link);
+				
+				item.setOutputMarkupId(true);
 
 				
 /*				
@@ -81,5 +92,18 @@ class MenuPanel extends Panel {
 			}
 
 		});
+
+		add(menu);
 	}
+
+
+	public Component getRedrawComponent() {
+		return this.menu;
+	}
+
+
+	public void redraw(final AjaxRequestTarget target) {
+		target.addComponent(menu);
+	}
+
 }

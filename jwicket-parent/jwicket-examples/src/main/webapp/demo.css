@@ -67,7 +67,7 @@ body, div {
 .ui-resizable-handle {
 	position: absolute;
 	font-size: 0.1px;
-	z-index: 99999;
+	z-index: 1000;
 	display: block;
 	}
 
@@ -144,3 +144,12 @@ ui-resizable-disabled .ui-resizable-handle {
 	color:blue;
 	font-size:50px;
 }
+
+
+
+
+
+.bgiframe {
+	z-index: 100009;
+	background-color: red;
+	}

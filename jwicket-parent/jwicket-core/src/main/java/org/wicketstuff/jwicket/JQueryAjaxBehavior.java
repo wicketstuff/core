@@ -30,9 +30,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 
 
 	public JQueryAjaxBehavior(final JQueryResourceReference baseLibrary) {
-		super();
-		this.baseLibrary = baseLibrary;
-		this.requiredLibraries = new JQueryJavascriptResourceReference[0];
+		this(baseLibrary, new JQueryJavascriptResourceReference[0]);
 	}
 
 	public JQueryAjaxBehavior(
@@ -42,7 +40,6 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 		this.baseLibrary = baseLibrary;
 		this.requiredLibraries = requiredLibraries;
 	}
-		
 
 
 

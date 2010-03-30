@@ -11,14 +11,14 @@
 	text-align: center;
 	padding: 0 0 0.25em 0;
 	margin: 0;
-	z-index: 999;
+	z-index: 100009;
 }
 
 .menubar ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
-	z-index: 999;
+	z-index: 100009;
 }
 
 ul.nav a {
@@ -37,7 +37,7 @@ ul.nav li li a {
 	color: rgb(41,41,41);
 	padding : 0.2em 10px;
 	white-space : nowrap;
-	z-index: 999;
+	z-index: 100009;
 }
 
 
@@ -48,7 +48,7 @@ ul.nav li li.disabled {
 	display: block;
 	padding : 0.2em 10px; 
 	white-space : nowrap;
-	z-index: 999;
+	z-index: 100009;
 }
 
 /* Draw some bars left and right on hover a dropped down menu entry */
@@ -73,7 +73,7 @@ ul.nav li li a:hover span {
 	border: 1px solid rgb(34,69,104);
 	border-width: 1px 0;
 	text-align: left;
-	z-index: 999;
+	z-index: 100009;
 }
 
 .menubar li.singleMenu {
@@ -152,6 +152,7 @@ ul.nav li li a:hover span {
 
 .menubar li:hover ul, li.over ul {
 	display: block;
+	z-index:100009;
 }
 
 /* Hovering over a menu entry */

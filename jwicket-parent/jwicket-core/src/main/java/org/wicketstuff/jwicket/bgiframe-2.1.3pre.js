@@ -23,11 +23,12 @@ $.fn.bgiframe = ($.browser.msie && /msie 6\.0/i.test(navigator.userAgent) ? func
                        'width:'+(s.width=='auto'?'expression(this.parentNode.offsetWidth+\'px\')':prop(s.width))+';'+
                        'height:'+(s.height=='auto'?'expression(this.parentNode.offsetHeight+\'px\')':prop(s.height))+';'+
                 '"/>';
+    
     return this.each(function() {
         if ( $(this).children('iframe.bgiframe').length === 0 )
             this.insertBefore( document.createElement(html), this.firstChild );
     });
-} : function() { return this; });
+} : function() {return this; });
  
 // old alias
 $.fn.bgIframe = $.fn.bgiframe;

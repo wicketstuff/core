@@ -5,7 +5,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 
-import org.wicketstuff.jwicket.JQuery;
+import org.wicketstuff.jwicket.BgIframeBehavior;
 import org.wicketstuff.jwicket.JQueryAjaxBehavior;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.JQueryResourceReferenceType;
@@ -26,7 +26,6 @@ public class BeautyTips extends AbstractToolTip {
 	private static final long serialVersionUID = 1L;
 
 	private static final JQueryJavascriptResourceReference jqueryHoverIntent = new JQueryJavascriptResourceReference(BeautyTips.class, "jquery.hoverIntent.minified.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
-	private static final JQueryJavascriptResourceReference jqueryBgiframe = new JQueryJavascriptResourceReference(BeautyTips.class, "jquery.bgiframe.min.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
 	private static final JQueryJavascriptResourceReference excanvas = new JQueryJavascriptResourceReference(BeautyTips.class, "excanvas.compiled.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
 	private static final JQueryJavascriptResourceReference bt = new JQueryJavascriptResourceReference(BeautyTips.class, "jquery.bt.min.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
 	private static final JQueryJavascriptResourceReference jqueryEasing = new JQueryJavascriptResourceReference(BeautyTips.class, "jquery.easing.1.3.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
@@ -39,7 +38,7 @@ public class BeautyTips extends AbstractToolTip {
 
 	@Override
 	IHeaderContributor getHeadercontributor() {
-		return new JQueryAjaxBehavior(jqueryHoverIntent, jqueryBgiframe, excanvas, bt, jqueryEasing) {
+		return new JQueryAjaxBehavior(jqueryHoverIntent, BgIframeBehavior.jQueryBgiframeJs, excanvas, bt, jqueryEasing) {
 			private static final long serialVersionUID = 1L;
 
 			@Override

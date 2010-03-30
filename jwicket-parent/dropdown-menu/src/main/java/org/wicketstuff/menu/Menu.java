@@ -1,12 +1,12 @@
-/*
- * This piece of code is dedicated to the wicket project (http://www.wicketframework.org).
- */
 package org.wicketstuff.menu;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.Model;
 
 
@@ -37,15 +37,23 @@ public class Menu implements Serializable {
 		if (menuItems == null) {
 			throw new IllegalArgumentException("argument [menuItems] cannot be null");
 		}
-		if (menuItems.size() < 1) {
-			throw new IllegalArgumentException(
-					"argument [menuItems] must contain a list of at least one menuItem");
-		}
+
 		this.model = model;
 		this.menuItems = menuItems;
 	}
 
 
+	public Menu(final Model<String> model) {
+		this(model, new ArrayList<IMenuLink>());
+	}
+	
+	
+	public Menu addMenuItem(final IMenuLink item) {
+		menuItems.add(item);
+		return this;
+	}
+
+	
 	/**
 	 * Gets the model. It returns the object that wraps the backing model. The model of a
 	 * {@link Menu} is used to hold the {@code String} that is used to disply the title
@@ -88,4 +96,26 @@ public class Menu implements Serializable {
 	public boolean isVisible() {
 		return this.visible;
 	}
+	
+	
+	
+	
+	
+	private Component associatedComponent;
+	public Menu setAssociatedComponent(final Component c) {
+		this.associatedComponent = c;
+		return this;
+	}
+	
+
+	public void redraw(final AjaxRequestTarget target) {
+		if (this.associatedComponent != null) {
+System.out.println("--- redraw -----------------------------------------------");
+System.out.println("associatedComponent:ID = " + associatedComponent.getId());
+System.out.println("associatedComponent:MarkupID = " + associatedComponent.getMarkupId());
+System.out.println("getOutputMarkupId() = " + associatedComponent.getOutputMarkupId());
+			target.addComponent(this.associatedComponent);
+		}
+	}
+
 }

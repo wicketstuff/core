@@ -15,7 +15,6 @@ public class JQueryHeaderContributor extends AbstractBehavior {
 	private static final long serialVersionUID = 1L;
 
 	public static final JQueryJavascriptResourceReference jQueryCoreJs     = new JQueryJavascriptResourceReference(JQuery.class, "jquery-1.4.2-special.js");
-	public static final JQueryJavascriptResourceReference jQueryBgiframeJs = new JQueryJavascriptResourceReference(JQuery.class, "bgiframe-2.1.3pre.js");
 
 	private final JQueryJavascriptResourceReference baseLibrary;
 	private final JQueryJavascriptResourceReference[] requiredLibraries;
