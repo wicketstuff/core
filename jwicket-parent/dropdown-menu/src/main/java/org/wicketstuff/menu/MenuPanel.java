@@ -14,6 +14,7 @@ import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.util.value.ValueMap;
 import org.wicketstuff.jwicket.BgIframeBehavior;
 
 
@@ -70,25 +71,22 @@ class MenuPanel extends Panel {
 				link.setOutputMarkupId(true);
 				linkLabel.setOutputMarkupId(true);
 				link.add(linkLabel);
-				
+
 				item.add(link);
 				
-				item.setOutputMarkupId(true);
+				
+				
+				if (!link.isEnabled()) {
+					item.add(disabledMenuItem);
+				}
 
 				
-/*				
-				
-				if (menuItem.isVisible()) {
-					if (menuItem.isEnabled())
-						item.add(new MenuLinkPanel("menuItem", menuItem));
-					else {
-						item.add(new Label("menuItem", menuItem.getModel()).setRenderBodyOnly(true));
-						item.add(disabledMenuItem);
-					}
-				}
-				else
+				if (!link.isVisible()) {
 					item.setVisible(false);
-*/
+				}
+				
+				
+				item.setOutputMarkupId(true);
 			}
 
 		});

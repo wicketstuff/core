@@ -12,6 +12,7 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.behavior.SimpleAttributeModifier;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -88,7 +89,9 @@ public class TestPage extends WebPage {
 			@Override
 			public Component getDisplayComponent(String id) {
 				//return new Label(id, "Home");
-				return new Image(id, new ResourceReference(TestPage.class, "P_orange_81x81.gif"));
+				return new Image(id, new ResourceReference(TestPage.class, "P_orange_81x81.gif"))
+						.add(new SimpleAttributeModifier("alt", ""))
+					;
 			}
 			@Override
 			public AbstractLink getLink(String id) {
@@ -119,6 +122,21 @@ public class TestPage extends WebPage {
 			@Override
 			public AbstractLink getLink(String id) {
 				return new ExternalLink(id, "http://www.wicketstuff.org");
+			}
+		});
+
+		// Disabled Link to nowhere
+		itemsForMenu1.add(new IMenuLink() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public Component getDisplayComponent(String id) {
+				return new Label(id, "Nowhere");
+			}
+			@Override
+			public AbstractLink getLink(String id) {
+				ExternalLink link = new ExternalLink(id, "http://www.nowhere.somewhere");
+				link.setEnabled(false);
+				return link;
 			}
 		});
 
