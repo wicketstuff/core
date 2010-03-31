@@ -22,7 +22,7 @@
 }
 
 ul.nav a {
-	font-weight: bold;
+	/* font-weight: bold; */
 	color: rgb(15,15,15);
 	text-align: left;
 	text-decoration: none;
@@ -31,7 +31,7 @@ ul.nav a {
 
 /* Text-Entries in a dropped down menu */
 ul.nav li li a {
-	font-weight: bold;
+	/* font-weight: bold; */
 	text-align: left;
 	display: block;
 	color: rgb(41,41,41);
@@ -43,7 +43,7 @@ ul.nav li li a {
 
 /* Disabled text-Entries in a dropped down menu*/
 ul.nav li li.disabled {
-	font-weight: bold;
+	/* font-weight: bold; */
 	text-align: left;
 	display: block;
 	padding : 0.2em 10px; 
