@@ -909,7 +909,7 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 		builder.append("{");
 		builder.append(options.toString(rawOptions));
 		builder.append("}");
-		builder.append(");");
+		builder.append(")");
 
 
 		return builder;

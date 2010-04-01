@@ -29,7 +29,7 @@ public abstract class JQueryDurableAjaxBehavior extends JQueryAjaxBehavior {
 
 	protected JQueryDurableAjaxBehavior(
 			final JQueryResourceReference baseLibrary,
-			final JQueryResourceReference[] requiredLibraries) {
+			final JQueryResourceReference... requiredLibraries) {
 		super(baseLibrary, requiredLibraries);
 	}
 
