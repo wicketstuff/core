@@ -37,10 +37,12 @@ class MenuPanel extends Panel {
 		if (menuItems == null) {
 			throw new IllegalArgumentException("argument [menuItems] cannot be null");
 		}
+		/*
 		if (menuItems.size() < 1) {
 			throw new IllegalArgumentException(
 					"argument [menuItems] must contain a list of at least one menuItem");
 		}
+		*/
 
 		this.menuItems = menuItems;
 

@@ -24,9 +24,7 @@ public class BgIframeBehavior extends JQueryDurableAjaxBehavior {
 
 
 	public BgIframeBehavior() {
-		super(/*jQueryBgiframeJs*/ 
-				JQueryHeaderContributor.jQueryCoreJs		
-		);
+		super(jQueryBgiframeJs);
 		
 		setRestoreAfterRedraw(true);
 	}
@@ -135,7 +133,7 @@ public class BgIframeBehavior extends JQueryDurableAjaxBehavior {
 		builder.append("{");
 		builder.append(options.toString(rawOptions));
 		builder.append("}");
-		builder.append(");");
+		builder.append(")");
 
 		return builder;
 	}

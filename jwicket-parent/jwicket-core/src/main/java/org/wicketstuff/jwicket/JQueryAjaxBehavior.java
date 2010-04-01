@@ -301,7 +301,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 
 		if (userProvidedResourceReferences.size() == 0) {
 			// No user provided Resources, use internal resources
-			addJavascriptReference(response, new JQueryJavascriptResourceReference(JQuery.class, "jquery-1.4.2-special.js"));
+			addJavascriptReference(response, JQueryHeaderContributor.jQueryCoreJs);
 			response.renderJavascript("jQuery.noConflict();", "noConflict");
 
 			if (baseLibrary != null)
