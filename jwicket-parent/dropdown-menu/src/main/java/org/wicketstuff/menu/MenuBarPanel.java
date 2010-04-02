@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.SimpleAttributeModifier;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
@@ -18,6 +19,8 @@ import org.apache.wicket.protocol.http.ClientProperties;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.protocol.http.request.WebClientInfo;
 import org.apache.wicket.request.ClientInfo;
+import org.wicketstuff.jwicket.IStyleResolver;
+import org.wicketstuff.jwicket.JQueryCssResourceReference;
 
 
 /**
@@ -230,9 +233,11 @@ import org.apache.wicket.request.ClientInfo;
  *
  * @author Stefan Lindner (lindner@visionet.de)
  */
-public class MenuBarPanel extends Panel {
+public class MenuBarPanel extends Panel implements IStyleResolver {
 
 	private static final long serialVersionUID = 1L;
+
+	public static JQueryCssResourceReference[] CSS = {new JQueryCssResourceReference(MenuBarPanel.class, "menu.css")};
 
 	protected final List<Menu> menus;
 
@@ -333,7 +338,12 @@ public class MenuBarPanel extends Panel {
 	@Override
 	public void renderHead(HtmlHeaderContainer container) {
 		super.renderHead(container);
-		container.getHeaderResponse().renderCSSReference(new ResourceReference(MenuBarPanel.class, "menu.css"));
+		JQueryCssResourceReference[] cssResources = getCssResources();
+		if (cssResources!= null) {
+			IHeaderResponse headerResponse = container.getHeaderResponse();
+			for (JQueryCssResourceReference cssResource : cssResources)
+				headerResponse.renderCSSReference(cssResource);
+		}
 	}
 
 	
@@ -341,5 +351,12 @@ public class MenuBarPanel extends Panel {
 	
 	public void refresh(final AjaxRequestTarget target) {
 		target.addComponent(menubar);
+	}
+
+
+
+	@Override
+	public JQueryCssResourceReference[] getCssResources() {
+		return CSS;
 	}
 }
