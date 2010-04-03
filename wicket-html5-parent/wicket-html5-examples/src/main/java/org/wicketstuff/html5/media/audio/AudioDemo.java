@@ -4,10 +4,13 @@
  * Date: Jan 31, 2010
  * Time: 8:56:25 PM
  */
-package org.wicketstuff.html5;
+package org.wicketstuff.html5.media.audio;
 
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.wicketstuff.html5.BasePage;
+import org.wicketstuff.html5.media.MediaSource;
+import org.wicketstuff.html5.media.audio.Html5Audio;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +27,17 @@ public class AudioDemo extends BasePage {
         mm.add(new MediaSource("/loser.ogg"));
 
         IModel<List<MediaSource>> mediaSourceList = new AbstractReadOnlyModel<List<MediaSource>>() {
-            public List<MediaSource> getObject() {
+			private static final long serialVersionUID = 1L;
+
+			public List<MediaSource> getObject() {
                 return mm;
             }
         };
 
         add(new Html5Audio("loser", mediaSourceList) {
+			private static final long serialVersionUID = 1L;
 
-            @Override
+			@Override
             protected boolean isControls() {
                 return true;
             }

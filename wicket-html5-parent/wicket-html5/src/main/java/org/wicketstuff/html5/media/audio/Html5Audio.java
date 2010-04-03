@@ -4,9 +4,11 @@
  * Date: Jan 31, 2010
  * Time: 9:19:11 AM
  */
-package org.wicketstuff.html5;
+package org.wicketstuff.html5.media.audio;
 
 import org.apache.wicket.model.IModel;
+import org.wicketstuff.html5.media.Html5Media;
+import org.wicketstuff.html5.media.MediaSource;
 
 import java.util.List;
 
@@ -16,7 +18,9 @@ import java.util.List;
  */
 public class Html5Audio extends Html5Media {
 
-    public Html5Audio(String id, IModel<List<MediaSource>> model) {
+	private static final long serialVersionUID = 1L;
+
+	public Html5Audio(String id, IModel<List<MediaSource>> model) {
         super(id, model);
     }
 

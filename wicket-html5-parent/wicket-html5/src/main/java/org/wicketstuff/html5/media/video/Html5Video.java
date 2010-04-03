@@ -4,10 +4,12 @@
  * Date: Jan 31, 2010
  * Time: 9:19:11 AM
  */
-package org.wicketstuff.html5;
+package org.wicketstuff.html5.media.video;
 
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.model.IModel;
+import org.wicketstuff.html5.media.Html5Media;
+import org.wicketstuff.html5.media.MediaSource;
 
 import java.util.List;
 
@@ -17,8 +19,10 @@ import java.util.List;
  */
 public class Html5Video extends Html5Media {
 
+	private static final long serialVersionUID = 1L;
 
-    // TODO add support for poster
+
+	// TODO add support for poster
     public Html5Video(String id, IModel<List<MediaSource>> model) {
         super(id, model);
     }

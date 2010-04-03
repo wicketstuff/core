@@ -4,7 +4,7 @@
  * Date: Jan 31, 2010
  * Time: 1:46:11 PM
  */
-package org.wicketstuff.html5;
+package org.wicketstuff.html5.media;
 
 import java.io.Serializable;
 

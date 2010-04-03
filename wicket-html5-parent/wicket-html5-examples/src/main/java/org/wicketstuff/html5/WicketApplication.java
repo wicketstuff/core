@@ -8,16 +8,14 @@ package org.wicketstuff.html5;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.wicketstuff.html5.media.audio.AudioDemo;
+import org.wicketstuff.html5.media.video.VideoDemo;
 
 /**
  *
  * @author Andrew Lombardi
  */
 public class WicketApplication extends WebApplication {
-
-    private static final Logger logger = LoggerFactory.getLogger(WicketApplication.class);
 
     /**
      * Constructor

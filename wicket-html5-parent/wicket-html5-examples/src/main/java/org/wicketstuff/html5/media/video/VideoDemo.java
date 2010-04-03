@@ -4,10 +4,13 @@
  * Date: Jan 31, 2010
  * Time: 8:20:47 PM
  */
-package org.wicketstuff.html5;
+package org.wicketstuff.html5.media.video;
 
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.wicketstuff.html5.BasePage;
+import org.wicketstuff.html5.media.MediaSource;
+import org.wicketstuff.html5.media.video.Html5Video;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +28,17 @@ public class VideoDemo extends BasePage {
         mm.add(new MediaSource("/dizzy.ogv", "video/ogg"));
 
         IModel<List<MediaSource>> mediaSourceList = new AbstractReadOnlyModel<List<MediaSource>>() {
-            public List<MediaSource> getObject() {
+			private static final long serialVersionUID = 1L;
+
+			public List<MediaSource> getObject() {
                 return mm;
             }
         };
 
         add(new Html5Video("dizzy", mediaSourceList) {
+			private static final long serialVersionUID = 1L;
 
-            @Override
+			@Override
             protected boolean isControls() {
                 return true;
             }

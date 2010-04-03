@@ -16,7 +16,9 @@ import org.apache.wicket.markup.html.resources.CompressedResourceReference;
  */
 public class Html5UtilsBehavior extends AbstractBehavior {
 
-    private final CompressedResourceReference H5UTILS_JS = new CompressedResourceReference(Html5Media.class, "h5utils.js");
+	private static final long serialVersionUID = 1L;
+
+	private final CompressedResourceReference H5UTILS_JS = new CompressedResourceReference(Html5UtilsBehavior.class, "h5utils.js");
 
 
 	/**
