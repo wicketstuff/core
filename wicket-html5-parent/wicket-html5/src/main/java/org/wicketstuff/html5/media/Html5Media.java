@@ -4,7 +4,7 @@
  * Date: Jan 31, 2010
  * Time: 8:26:39 AM
  */
-package org.wicketstuff.html5;
+package org.wicketstuff.html5.media;
 
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
@@ -12,6 +12,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.AppendingStringBuffer;
+import org.wicketstuff.html5.Html5UtilsBehavior;
 
 import java.util.List;
 
@@ -21,7 +22,9 @@ import java.util.List;
  */
 public class Html5Media extends WebMarkupContainer {
 
-    private IModel<List<MediaSource>> sources;
+	private static final long serialVersionUID = 1L;
+
+	private IModel<List<MediaSource>> sources;
 
 /*
     public Html5Media(final String id) {
