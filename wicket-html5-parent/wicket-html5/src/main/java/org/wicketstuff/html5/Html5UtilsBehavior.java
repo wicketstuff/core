@@ -18,8 +18,7 @@ public class Html5UtilsBehavior extends AbstractBehavior {
 
 	private static final long serialVersionUID = 1L;
 
-	private final CompressedResourceReference H5UTILS_JS = new CompressedResourceReference(Html5UtilsBehavior.class, "h5utils.js");
-
+	private static final CompressedResourceReference H5UTILS_JS = new CompressedResourceReference(Html5UtilsBehavior.class, "h5utils.js");
 
 	/**
 	 * @see org.apache.wicket.markup.html.IHeaderContributor#renderHead(org.apache.wicket.markup.html.IHeaderResponse)

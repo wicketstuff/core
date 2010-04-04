@@ -9,6 +9,7 @@ package org.wicketstuff.html5;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.wicketstuff.html5.geolocation.GeolocationDemo;
+import org.wicketstuff.html5.markup.html.form.RangeTextFieldDemo;
 import org.wicketstuff.html5.media.audio.AudioDemo;
 import org.wicketstuff.html5.media.video.VideoDemo;
 
@@ -35,5 +36,6 @@ public class WicketApplication extends WebApplication {
         mountBookmarkablePage("/audio", AudioDemo.class);
         mountBookmarkablePage("/video", VideoDemo.class);
         mountBookmarkablePage("/geolocation", GeolocationDemo.class);
+        mountBookmarkablePage("/form/range", RangeTextFieldDemo.class);
     }
 }
