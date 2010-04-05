@@ -327,8 +327,9 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 		for (JQueryResourceReference res : additionLibraries)
 			addJavascriptReference(response, res);
 
-		for (JQueryCssResourceReference res : cssResources)
-			addJavascriptReference(response, res);
+		if (cssResources != null)
+			for (JQueryCssResourceReference res : cssResources)
+				addJavascriptReference(response, res);
 	}
 
 
