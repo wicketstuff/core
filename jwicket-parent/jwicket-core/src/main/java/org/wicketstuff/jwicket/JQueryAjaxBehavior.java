@@ -27,6 +27,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 	private final JQueryResourceReference baseLibrary;
 	private final JQueryResourceReference[] requiredLibraries;
 	private final List<JQueryResourceReference> additionLibraries = new ArrayList<JQueryResourceReference>();
+	private List<JQueryCssResourceReference> cssResources;
 
 
 	public JQueryAjaxBehavior(final JQueryResourceReference baseLibrary) {
@@ -260,14 +261,14 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 
 
 
-	protected void addJavascriptReference(IHeaderResponse response, JavascriptResourceReference resource) {
+	private void addJavascriptReference(IHeaderResponse response, JavascriptResourceReference resource) {
 		if (!response.wasRendered(resource)) {
 			response.renderJavascriptReference(resource);
 			response.markRendered(resource);
 		}
 	}
 
-	protected void addJavascriptReference(IHeaderResponse response, JQueryResourceReference resource) {
+	private void addJavascriptReference(IHeaderResponse response, JQueryResourceReference resource) {
 		if (!response.wasRendered(resource)) {
 			if (resource instanceof org.wicketstuff.jwicket.JQueryJavascriptResourceReference)
 				response.renderJavascriptReference(resource);
@@ -325,6 +326,9 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 
 		for (JQueryResourceReference res : additionLibraries)
 			addJavascriptReference(response, res);
+
+		for (JQueryCssResourceReference res : cssResources)
+			addJavascriptReference(response, res);
 	}
 
 
@@ -371,5 +375,15 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 		printParameters(System.out, parameterMap);
 	}
 
+
+
+	protected void addCssResources(final JQueryCssResourceReference ... res) {
+		if (res == null || res.length == 0)
+			return;
+		if (cssResources == null)
+			cssResources = new ArrayList<JQueryCssResourceReference>();
+		for (JQueryCssResourceReference r : res)
+			cssResources.add(r);
+	}
 
 }

@@ -11,6 +11,8 @@ import org.apache.wicket.Request;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.wicketstuff.jwicket.IStyleResolver;
+import org.wicketstuff.jwicket.JQueryCssResourceReference;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.JQuerySpeed;
 import org.wicketstuff.jwicket.SpecialKeys;
@@ -24,7 +26,7 @@ import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
  * {@link Component}. Another {@link Component} that should have exactly the
  * same behavior needs it's own instance.
  */
-public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
+public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements IStyleResolver {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,10 +41,10 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 
 	public DatePicker(final ResourceReference icon) {
 		super(	SpecialKeys.specialKeysJs,
-				uiDatepickerJs,
-				AbstractJqueryUiEmbeddedBehavior.jQueryUiBaseCss,
-				AbstractJqueryUiEmbeddedBehavior.jQueryUiThemeCss
+				uiDatepickerJs
 		);
+		addCssResources(getCssResources());
+
 		Locale locale = Session.get().getLocale();
 		if (locale != null)
 			addUserProvidedResourceReferences(new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker-" + locale.getLanguage() + ".js"));
@@ -1087,4 +1089,15 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior {
 			return this.triggerName;
 		}
 	}
+
+
+
+	@Override
+	public JQueryCssResourceReference[] getCssResources() {
+		return new JQueryCssResourceReference[] {
+			AbstractJqueryUiEmbeddedBehavior.jQueryUiBaseCss,
+			AbstractJqueryUiEmbeddedBehavior.jQueryUiThemeCss
+		};
+	}
+
 }
