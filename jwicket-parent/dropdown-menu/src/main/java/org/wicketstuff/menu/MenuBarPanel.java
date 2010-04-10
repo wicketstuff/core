@@ -294,7 +294,7 @@ public class MenuBarPanel extends Panel implements IStyleResolver {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void populateItem(LoopItem item) {
+			protected void populateItem(final LoopItem item) {
 				final int index = item.getIteration();
 				final Menu menu = MenuBarPanel.this.menus.get(index);
 

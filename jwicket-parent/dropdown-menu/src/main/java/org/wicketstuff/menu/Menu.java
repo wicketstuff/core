@@ -106,7 +106,7 @@ public class Menu implements Serializable {
 		this.associatedComponent = c;
 		return this;
 	}
-	
+
 
 	public void redraw(final AjaxRequestTarget target) {
 		if (this.associatedComponent != null) {
@@ -116,6 +116,12 @@ System.out.println("associatedComponent:MarkupID = " + associatedComponent.getMa
 System.out.println("getOutputMarkupId() = " + associatedComponent.getOutputMarkupId());
 			target.addComponent(this.associatedComponent);
 		}
+	}
+
+
+
+	public String toString() {
+		return "Menu: " + getModel().getObject() + " visible = " + isVisible();
 	}
 
 }
