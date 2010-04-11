@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="jsr303/target/classes" path="jsr303/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="jsr303/target/classes" path="jsr303/src/main/resources"/>
+	<classpathentry kind="src" output="jsr303/target/test-classes" path="jsr303/src/test/java"/>
+	<classpathentry kind="src" output="jsr303-examples/target/classes" path="jsr303-examples/src/main/java"/>
+	<classpathentry kind="src" output="jsr303-examples/target/test-classes" path="jsr303-examples/src/test/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
