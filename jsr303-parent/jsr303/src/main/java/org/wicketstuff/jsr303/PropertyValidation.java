@@ -40,18 +40,10 @@ public class PropertyValidation extends AbstractBehavior
         }
     }
 
-    private Component context;
     private boolean assigned = false;
 
     @Override
-    public void bind(final Component context)
-    {
-        this.context = context;
-        super.bind(context);
-    }
-
-    @Override
-    public synchronized void onRendered(final Component component)
+    public synchronized void onRendered(final Component context)
     {
         if (!assigned)
         {
