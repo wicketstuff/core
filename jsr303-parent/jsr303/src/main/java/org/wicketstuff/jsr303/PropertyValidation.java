@@ -47,6 +47,7 @@ public class PropertyValidation extends AbstractBehavior
     {
         if (!assigned)
         {
+            assigned = true;
             if (context instanceof Form<?>)
             {
                 final Form<?> form = (Form<?>) context;

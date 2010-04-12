@@ -52,7 +52,7 @@ public class JSR303Validation
     }
 
     private JSR303Validation()
-    { // @TODO implement constructor
+    {
     }
 
     private synchronized ValidatorFactory createFactory()
