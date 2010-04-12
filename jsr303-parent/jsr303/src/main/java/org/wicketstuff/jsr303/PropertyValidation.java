@@ -40,36 +40,49 @@ public class PropertyValidation extends AbstractBehavior
         }
     }
 
+    private Component context;
+    private boolean assigned = false;
+
     @Override
     public void bind(final Component context)
     {
-        if (context instanceof Form<?>)
+        this.context = context;
+        super.bind(context);
+    }
+
+    @Override
+    public synchronized void onRendered(final Component component)
+    {
+        if (!assigned)
         {
-            final Form<?> form = (Form<?>) context;
-            form.visitFormComponents(new JSR303ValidatorFormComponentVisitor());
-        }
-        else
-        {
-            if ((context instanceof FormComponent<?>))
+            if (context instanceof Form<?>)
             {
-                final FormComponent<?> fc = (FormComponent<?>) context;
-                final IModel<?> m = fc.getModel();
-                if (m instanceof AbstractPropertyModel<?>)
-                {
-                    final AbstractPropertyModel<?> apm = (AbstractPropertyModel<?>) m;
-                    fc.add(new PropertyValidator(apm));
-                }
-                else
-                {
-                    throw new IllegalArgumentException("Expected something that provides an AbstractPropertyModel");
-                }
+                final Form<?> form = (Form<?>) context;
+                form.visitFormComponents(new JSR303ValidatorFormComponentVisitor());
             }
             else
             {
-                throw new IllegalStateException("Can only be applied to Forms or FormComponents");
+                if ((context instanceof FormComponent<?>))
+                {
+                    final FormComponent<?> fc = (FormComponent<?>) context;
+                    final IModel<?> m = fc.getModel();
+                    if (m instanceof AbstractPropertyModel<?>)
+                    {
+                        final AbstractPropertyModel<?> apm = (AbstractPropertyModel<?>) m;
+                        fc.add(new PropertyValidator(apm));
+                    }
+                    else
+                    {
+                        throw new IllegalArgumentException("Expected something that provides an AbstractPropertyModel");
+                    }
+                }
+                else
+                {
+                    throw new IllegalStateException("Can only be applied to Forms or FormComponents");
+                }
             }
         }
-        super.bind(context);
+        super.onRendered(component);
     }
 
 }
