@@ -74,7 +74,7 @@ public class PropertyValidation extends AbstractBehavior
                 }
             }
         }
-        super.onRendered(component);
+        super.onRendered(context);
     }
 
 }
