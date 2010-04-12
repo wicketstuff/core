@@ -61,6 +61,9 @@ public class JSR303Validation
         final Configuration<?> configuration = Validation.byDefaultProvider().configure();
         // FIXME seems like needed for hib-val 4.0.2.? strange enough it does
         // not respect the locale passed on interpolate call. Working on it.
+
+        // geez. they screwed it up.
+        // http://opensource.atlassian.com/projects/hibernate/browse/HV-306
         Locale.setDefault(Session.get().getLocale());
         final ValidatorFactory validationFactory = configuration.messageInterpolator(
                 new WicketSessionLocaleMessageInterpolator()).buildValidatorFactory();
