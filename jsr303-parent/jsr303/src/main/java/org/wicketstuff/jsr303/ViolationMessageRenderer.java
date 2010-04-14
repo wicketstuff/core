@@ -12,13 +12,20 @@ import javax.validation.ConstraintViolation;
  */
 public interface ViolationMessageRenderer
 {
-    String render(ConstraintViolation<?> violation);
+    String renderPropertyViolation(ConstraintViolation<?> violation);
+
+    String renderBeanViolation(final ConstraintViolation<?> violation);
 
     class Default implements ViolationMessageRenderer
     {
-        public String render(final ConstraintViolation<?> violation)
+        public String renderPropertyViolation(final ConstraintViolation<?> violation)
         {
             return "'${label}' " + violation.getMessage();
+        }
+
+        public String renderBeanViolation(final ConstraintViolation<?> violation)
+        {
+            return violation.getMessage();
         }
     }
 }
