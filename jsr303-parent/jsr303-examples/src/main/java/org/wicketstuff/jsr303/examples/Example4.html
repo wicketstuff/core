@@ -1,0 +1,30 @@
+<html xmlns:wicket="http://wicket.apache.org/">
+    <head>
+        <title>JSR303 Examples</title>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+      <a href="/">back</a>
+      <hr/>
+      
+      <div wicket:id="fb"/>
+      <div wicket:id="message" style="background-color: green; color: #fff; font-size: +2em">All validated well.</div>
+      <br/>
+           
+      <form wicket:id="form">
+      Email that will be validated:
+      <input type="text" wicket:id="email1"></input>
+      
+      <br/>
+      
+      Email that will NOT be validated:
+      <input type="text" wicket:id="email2"></input>
+      
+      <br/>
+      
+      <input type="submit" value="test"></input>
+      
+      
+      </form>
+    </body>
+</html>
