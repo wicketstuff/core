@@ -1,24 +1,56 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.wicketstuff</groupId>
-        <artifactId>jsr303-parent</artifactId>
-        <version>1.4.7-SNAPSHOT</version>
-    </parent>
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>jsr303-parent</artifactId>
+		<version>1.4.7-SNAPSHOT</version>
+	</parent>
 
-    <artifactId>jsr303-examples</artifactId>
-    <packaging>war</packaging>
+	<artifactId>jsr303-examples</artifactId>
+	<packaging>war</packaging>
 
-    <name>JSR303 - Examples</name>
-    <description>Examples for JSR303 Validation</description>
+	<name>JSR303 - Examples</name>
+	<description>Examples for JSR303 Validation</description>
 
-    <dependencies>
-         <dependency>
-            <groupId>org.wicketstuff</groupId>
-            <artifactId>jsr303</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+	<dependencies>
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>jsr303</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 
-    </dependencies>
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty-util</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty-management</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		<!--  TODO  -->
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>jsr303</artifactId>
+			<version>1.4.7-SNAPSHOT</version>
+		</dependency>
+
+	</dependencies>
 </project>
