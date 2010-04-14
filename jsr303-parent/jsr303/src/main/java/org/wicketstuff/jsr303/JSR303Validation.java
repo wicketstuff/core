@@ -6,7 +6,6 @@ package org.wicketstuff.jsr303;
 import java.util.Locale;
 
 import javax.validation.Configuration;
-import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
@@ -14,7 +13,6 @@ import javax.validation.ValidatorFactory;
 import org.apache.wicket.Application;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.Session;
-import org.apache.wicket.validation.ValidationError;
 import org.hibernate.validator.engine.ResourceBundleMessageInterpolator;
 import org.wicketstuff.jsr303.util.Assert;
 
@@ -46,16 +44,16 @@ public class JSR303Validation
         return INSTANCE;
     }
 
-    public static Validator getValidator()
+    public static Validator getValidator(final boolean forPropertyValidation)
     {
-        return getInstance().createFactory().getValidator();
+        return getInstance().createFactory(forPropertyValidation).getValidator();
     }
 
     private JSR303Validation()
     {
     }
 
-    private synchronized ValidatorFactory createFactory()
+    private synchronized ValidatorFactory createFactory(final boolean forPropertyValidation)
     {
 
         final Configuration<?> configuration = Validation.byDefaultProvider().configure();
@@ -71,35 +69,7 @@ public class JSR303Validation
         return validationFactory;
     }
 
-    static ValidationError createValidationError(final ConstraintViolation<?> violation)
-    {
-        Assert.parameterNotNull(violation, "violation");
-        final ValidationError ve = new ValidationError();
-        ve.setMessage(getViolationMessageRenderer().render(violation));
-        final String messageTemplate = violation.getMessageTemplate();
-        final String key = extractKey(messageTemplate);
-        if (key != null)
-        {
-            ve.addMessageKey(key);
-        }
-        return ve;
-    }
-
-    private static String extractKey(final String messageTemplate)
-    {
-        Assert.parameterNotNull(messageTemplate, "messageTemplate");
-        final String key = messageTemplate.trim();
-        if (key.startsWith("{") && key.endsWith("}"))
-        {
-            return key.substring(1, key.length() - 1);
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    private synchronized static ViolationMessageRenderer getViolationMessageRenderer()
+    synchronized static ViolationMessageRenderer getViolationMessageRenderer()
     {
         final Application app = Application.get();
         ViolationMessageRenderer renderer = app.getMetaData(violationMessageRendererKey);

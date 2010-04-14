@@ -28,16 +28,11 @@ class PropertyValidator<T> implements INullAcceptingValidator<T>, Serializable
     {
         final T value = validatable.getValue();
 
-        if (value == null)
-        {
-            return;
-        }
-
-        final Set<?> violations = JSR303Validation.getValidator().validateValue(this.beanClass,
+        final Set<?> violations = JSR303Validation.getValidator(true).validateValue(this.beanClass,
                 this.propertyExpression, value);
         for (final Object v : violations)
         {
-            validatable.error(JSR303Validation.createValidationError((ConstraintViolation<?>) v));
+            validatable.error(new ViolationErrorBuilder.Property((ConstraintViolation) v).createError());
         }
     }
 }
