@@ -6,6 +6,7 @@ package org.wicketstuff.jsr303;
 import java.util.Locale;
 
 import javax.validation.Configuration;
+import javax.validation.MessageInterpolator;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
@@ -13,24 +14,47 @@ import javax.validation.ValidatorFactory;
 import org.apache.wicket.Application;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.Session;
-import org.hibernate.validator.engine.ResourceBundleMessageInterpolator;
 import org.wicketstuff.jsr303.util.Assert;
 
 public class JSR303Validation
 {
-    public class WicketSessionLocaleMessageInterpolator extends ResourceBundleMessageInterpolator
+    public class WicketSessionLocaleMessageInterpolator implements MessageInterpolator
     {
-        @Override
-        public String interpolate(final String message, final Context context)
+        private final MessageInterpolator delegate;
+
+        public WicketSessionLocaleMessageInterpolator(final MessageInterpolator delegate)
         {
-            return super.interpolate(message, context, Session.get().getLocale());
+            this.delegate = delegate;
+            Assert.parameterNotNull(delegate, "delegate");
         }
 
-        @Override
+        public String interpolate(final String message, final Context context)
+        {
+            return delegate.interpolate(message, context, Session.get().getLocale());
+        }
+
         public String interpolate(final String message, final Context context, final Locale locale)
         {
-            return super.interpolate(message, context, Session.get().getLocale());
+            return delegate.interpolate(message, context, Session.get().getLocale());
         }
+    }
+
+    private synchronized ValidatorFactory createFactory()
+    {
+
+        final Configuration<?> configuration = Validation.byDefaultProvider().configure();
+        // FIXME seems like needed for hib-val 4.0.2.? strange enough it does
+        // not respect the locale passed on interpolate call. Working on it.
+
+        // geez. they screwed it up.
+        // http://opensource.atlassian.com/projects/hibernate/browse/HV-306
+        Locale.setDefault(Session.get().getLocale());
+
+        final ValidatorFactory validationFactory = configuration.messageInterpolator(
+                new WicketSessionLocaleMessageInterpolator(configuration.getDefaultMessageInterpolator()))
+                .buildValidatorFactory();
+
+        return validationFactory;
     }
 
     private static final JSR303Validation INSTANCE = new JSR303Validation();
@@ -44,29 +68,13 @@ public class JSR303Validation
         return INSTANCE;
     }
 
-    public static Validator getValidator(final boolean forPropertyValidation)
+    public static Validator getValidator()
     {
-        return getInstance().createFactory(forPropertyValidation).getValidator();
+        return getInstance().createFactory().getValidator();
     }
 
     private JSR303Validation()
     {
-    }
-
-    private synchronized ValidatorFactory createFactory(final boolean forPropertyValidation)
-    {
-
-        final Configuration<?> configuration = Validation.byDefaultProvider().configure();
-        // FIXME seems like needed for hib-val 4.0.2.? strange enough it does
-        // not respect the locale passed on interpolate call. Working on it.
-
-        // geez. they screwed it up.
-        // http://opensource.atlassian.com/projects/hibernate/browse/HV-306
-        Locale.setDefault(Session.get().getLocale());
-        final ValidatorFactory validationFactory = configuration.messageInterpolator(
-                new WicketSessionLocaleMessageInterpolator()).buildValidatorFactory();
-
-        return validationFactory;
     }
 
     synchronized static ViolationMessageRenderer getViolationMessageRenderer()
