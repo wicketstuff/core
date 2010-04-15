@@ -28,7 +28,7 @@ class PropertyValidator<T> implements INullAcceptingValidator<T>, Serializable
     {
         final T value = validatable.getValue();
 
-        final Set<?> violations = JSR303Validation.getValidator(true).validateValue(this.beanClass,
+        final Set<?> violations = JSR303Validation.getValidator().validateValue(this.beanClass,
                 this.propertyExpression, value);
         for (final Object v : violations)
         {

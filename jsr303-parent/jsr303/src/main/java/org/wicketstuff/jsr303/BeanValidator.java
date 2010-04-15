@@ -29,7 +29,7 @@ public class BeanValidator
 
     public BeanValidator(final Form contextOrNull)
     {
-        this.context = contextOrNull;
+        context = contextOrNull;
     }
 
     public <U> boolean isValid(final U e)
@@ -40,7 +40,7 @@ public class BeanValidator
         }
 
         JSR303Validation.getInstance();
-        final java.util.Set<?> s = JSR303Validation.getValidator(false).validate(e);
+        final java.util.Set<?> s = JSR303Validation.getValidator().validate(e);
         if (s.isEmpty())
         {
             return true;
@@ -49,10 +49,10 @@ public class BeanValidator
         for (final Object v : s)
         {
             final ConstraintViolation<?> violation = (ConstraintViolation<?>) v;
-            if (this.context != null)
+            if (context != null)
             {
                 final IValidationError ve = new ViolationErrorBuilder.Bean((ConstraintViolation) v).createError();
-                this.context.error(new ValidationErrorFeedback(ve, ve.getErrorMessage(new MessageSource())));
+                context.error(new ValidationErrorFeedback(ve, ve.getErrorMessage(new MessageSource())));
             }
         }
         return false;
@@ -72,36 +72,36 @@ public class BeanValidator
             // log4j.logger.org.apache.wicket.resource.loader=DEBUG
             // log4j.logger.org.apache.wicket.Localizer=DEBUG
 
-            final Localizer localizer = BeanValidator.this.context.getLocalizer();
+            final Localizer localizer = context.getLocalizer();
 
             // retrieve prefix that will be used to construct message keys
-            final String prefix = BeanValidator.this.context.getValidatorKeyPrefix();
+            final String prefix = context.getValidatorKeyPrefix();
             String message = null;
 
             // first try the full form of key [form-component-id].[key]
-            String resource = BeanValidator.this.context.getId() + "." + prefix(prefix, key);
-            message = getString(localizer, resource, BeanValidator.this.context);
+            String resource = context.getId() + "." + prefix(prefix, key);
+            message = getString(localizer, resource, context);
 
             // if not found, try a more general form (without prefix)
             // [form-component-id].[prefix].[key]
             if (Strings.isEmpty(message) && Strings.isEmpty(prefix))
             {
-                resource = BeanValidator.this.context.getId() + "." + key;
-                message = getString(localizer, resource, BeanValidator.this.context);
+                resource = context.getId() + "." + key;
+                message = getString(localizer, resource, context);
             }
 
             // If not found try a more general form [prefix].[key]
             if (Strings.isEmpty(message))
             {
                 resource = prefix(prefix, key);
-                message = getString(localizer, resource, BeanValidator.this.context);
+                message = getString(localizer, resource, context);
             }
 
             // If not found try the most general form [key]
             if (Strings.isEmpty(message))
             {
                 // Try a variation of the resource key
-                message = getString(localizer, key, BeanValidator.this.context);
+                message = getString(localizer, key, context);
             }
 
             // convert empty string to null in case our default value of "" was
@@ -133,7 +133,7 @@ public class BeanValidator
          */
         private String getString(final Localizer localizer, final String key, final Component component)
         {
-            this.triedKeys.add(key);
+            triedKeys.add(key);
 
             // Note: It is important that the default value of "" is
             // provided to getString() not to throw a MissingResourceException
