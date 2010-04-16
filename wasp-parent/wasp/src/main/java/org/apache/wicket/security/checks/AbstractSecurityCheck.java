@@ -18,7 +18,6 @@ package org.apache.wicket.security.checks;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Page;
-import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.security.WaspApplication;
 import org.apache.wicket.security.WaspSession;
@@ -50,7 +49,7 @@ public abstract class AbstractSecurityCheck implements ISecurityCheck
 	 * @return the factory
 	 * @see WaspApplication#getActionFactory()
 	 */
-	protected final ActionFactory getActionFactory()
+	protected ActionFactory getActionFactory()
 	{
 		return ((WaspApplication) Application.get()).getActionFactory();
 	}
@@ -61,9 +60,9 @@ public abstract class AbstractSecurityCheck implements ISecurityCheck
 	 * @return the strategy
 	 * @see WaspSession#getAuthorizationStrategy()
 	 */
-	protected final WaspAuthorizationStrategy getStrategy()
+	protected WaspAuthorizationStrategy getStrategy()
 	{
-		return (WaspAuthorizationStrategy) ((WaspSession) Session.get()).getAuthorizationStrategy();
+		return WaspAuthorizationStrategy.get();
 	}
 
 	/**

@@ -110,7 +110,7 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	 * 
 	 * @return the subject or null if no login has succeeded yet
 	 */
-	public final Subject getSubject()
+	public Subject getSubject()
 	{
 		return loginContainer.getSubject();
 	}

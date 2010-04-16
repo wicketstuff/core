@@ -18,7 +18,6 @@ package org.apache.wicket.security.models;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
-import org.apache.wicket.Session;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.pages.AccessDeniedPage;
@@ -28,7 +27,6 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.IWrapModel;
 import org.apache.wicket.security.WaspApplication;
-import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.actions.ActionFactory;
 import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
@@ -99,8 +97,7 @@ public class SecureCompoundPropertyModel<T> extends CompoundPropertyModel<T> imp
 	 */
 	protected final WaspAuthorizationStrategy getStrategy()
 	{
-		return ((WaspAuthorizationStrategy) ((WaspSession) Session.get())
-			.getAuthorizationStrategy());
+		return WaspAuthorizationStrategy.get();
 	}
 
 	/**

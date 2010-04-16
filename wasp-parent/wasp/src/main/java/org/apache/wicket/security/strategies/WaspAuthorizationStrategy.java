@@ -22,10 +22,12 @@ import java.util.Map;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.RequestCycle;
+import org.apache.wicket.Session;
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.security.WaspApplication;
+import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.actions.WaspActionFactory;
 import org.apache.wicket.security.authentication.LoginException;
@@ -56,6 +58,8 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	 * {@link RequestCycle} metadata.
 	 */
 	protected static final AuthorizationErrorKey MESSAGE_KEY = new AuthorizationErrorKey();
+
+	private static final ThreadLocal resolver = new ThreadLocal();
 
 	/**
 	 * Performs the actual authorization check on the component.
@@ -374,5 +378,29 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	protected final WaspActionFactory getActionFactory()
 	{
 		return ((WaspApplication)Application.get()).getActionFactory();
+	}
+
+	/**
+	 * Returns the WaspAuthorizationStrategy. This defaults to
+	 * {@link WaspSession#getAuthorizationStrategy()}, but a different
+	 * implementation can be registered via a {@link StrategyResolver}.
+	 * 
+	 * @return
+	 */
+	public static WaspAuthorizationStrategy get()
+	{
+		StrategyResolver threadResolver = (StrategyResolver)resolver.get();
+		return threadResolver == null ? (WaspAuthorizationStrategy)((WaspSession)Session.get())
+				.getAuthorizationStrategy() : threadResolver.getStrategy();
+	}
+
+	/**
+	 * Sets the StrategyResolver for the current thread
+	 * 
+	 * @param threadResolver
+	 */
+	public static void setStrategyResolver(StrategyResolver threadResolver)
+	{
+		resolver.set(threadResolver);
 	}
 }
