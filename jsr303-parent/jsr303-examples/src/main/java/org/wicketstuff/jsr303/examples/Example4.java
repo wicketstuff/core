@@ -6,6 +6,7 @@ package org.wicketstuff.jsr303.examples;
 import java.io.Serializable;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
@@ -14,7 +15,6 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
 import org.wicketstuff.jsr303.PropertyValidation;
 
 public class Example4 extends WebPage
@@ -29,13 +29,13 @@ public class Example4 extends WebPage
     static class ValidatedBean implements Serializable
     {
         @Email
-        @NotBlank
+        @NotNull
         String email;
     }
     static class NonValidatedBean implements Serializable
     {
         @Email
-        @NotBlank
+        @NotNull
         String email;
     }
 
