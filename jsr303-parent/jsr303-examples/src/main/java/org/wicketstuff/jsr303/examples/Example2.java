@@ -14,7 +14,6 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
 import org.wicketstuff.jsr303.PropertyValidation;
 
 public class Example2 extends WebPage
@@ -23,7 +22,6 @@ public class Example2 extends WebPage
     {
         @Email
         @NotNull
-        @NotBlank
         String email = "";
     }
 

@@ -45,12 +45,17 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 		</dependency>
-		<!--  TODO  -->
-		<dependency>
-			<groupId>org.wicketstuff</groupId>
-			<artifactId>jsr303</artifactId>
-			<version>1.4.7-SNAPSHOT</version>
-		</dependency>
 
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.0.2.GA</version>
+		</dependency>
 	</dependencies>
 </project>
