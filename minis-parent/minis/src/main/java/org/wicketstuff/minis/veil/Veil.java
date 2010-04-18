@@ -59,7 +59,7 @@ public class Veil extends VeilResources
 	public void bind(Component component)
 	{
 		super.bind(component);
-		if (component != null)
+		if (this.component != null)
 		{
 			throw new IllegalStateException(
 					"This behavior is already bound to component. An instance of this behavior cannot be reused between components. Bound component: "
