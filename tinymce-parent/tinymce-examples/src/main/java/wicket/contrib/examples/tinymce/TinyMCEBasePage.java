@@ -59,5 +59,13 @@ public class TinyMCEBasePage extends WicketExamplePage
 				setResponsePage(InlineTinyMCEPage.class);
 			}
 		});
+		add(new Link("image")
+		{
+			
+			public void onClick()
+			{
+				setResponsePage(ImageUploadTinyMCEPage.class);
+			}
+		});
 	}
 }
