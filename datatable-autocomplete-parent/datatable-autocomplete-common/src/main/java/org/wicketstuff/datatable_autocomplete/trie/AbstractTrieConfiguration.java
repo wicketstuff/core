@@ -63,6 +63,7 @@ public abstract class AbstractTrieConfiguration<C> implements ITrieConfiguration
 	}
 
 	private final ITrieFilter<C>defaultFilter;
+	private Trie<C> containerTrie;
 	
 	/* (non-Javadoc)
 	 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#getDefaultFilter()
@@ -71,6 +72,16 @@ public abstract class AbstractTrieConfiguration<C> implements ITrieConfiguration
 		
 		return defaultFilter;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#setTrie(org.wicketstuff.datatable_autocomplete.trie.Trie)
+	 */
+	public void setTrie(Trie<C> containerTrie) {
+		this.containerTrie = containerTrie;
+		
+	}
+	
+	
 	
 	
 	

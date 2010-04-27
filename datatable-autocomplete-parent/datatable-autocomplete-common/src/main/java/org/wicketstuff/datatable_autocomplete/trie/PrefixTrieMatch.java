@@ -13,34 +13,33 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package org.wicketstuff.datatable_autocomplete.trie;
 
-import java.io.Serializable;
-
+import java.util.LinkedList;
+import java.util.List;
 
 
 /**
  * @author mocleiri
  * 
- * Represents a match of a string into a Trie
+ * A trie match using the prefix search.
  *
  */
-public class TrieNodeMatch<Context> implements Serializable {
-
-	private static final long	serialVersionUID	= -6521672186761294453L;
-
-	// the node that the prefix was matched to
-	private TrieNode<Context> node;
-	
-	
+public class PrefixTrieMatch<C> extends TrieMatch<C> {
 
 	/**
-	 * @param node
-	 * @param matchedPrefix
+	 * 
 	 */
-	public TrieNodeMatch(TrieNode<Context> node) {
-
-		super();
+	private static final long serialVersionUID = 1L;
+	// the node that the prefix was matched to
+	private TrieNode<C> node;
+	
+	/**
+	 * @param node
+	 */
+	public PrefixTrieMatch(String matched, ITrieFilter<C>nodeFilter, TrieNode<C> node) {
+		super(matched, Type.PREFIX_MATCH, nodeFilter);
 		this.node = node;
 	}
 
@@ -48,17 +47,24 @@ public class TrieNodeMatch<Context> implements Serializable {
 	/**
 	 * @return the node
 	 */
-	public TrieNode<Context> getNode() {
+	public TrieNode<C> getNode() {
 	
 		return this.node;
 	}
 
-	
 
-
-
-	
-	
+	/* (non-Javadoc)
+	 * @see org.wicketstuff.datatable_autocomplete.trie.TrieMatch#getWordList(int)
+	 */
+	@Override
+	public List<C> getWordList(int limit) {
+		
+		List<C> wordList = new LinkedList<C>();;
+		
+		this.node.buildWordList(wordList, nodeFilter, limit);
+		
+		return wordList;
+	}
 	
 	
 }

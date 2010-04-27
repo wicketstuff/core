@@ -99,6 +99,15 @@ public class DefaultSelectableTableViewPanelButtonProviderImpl implements
 	public String getCSSClassName() {
 		return cssClassName;
 	}
+
+	/**
+	 * @param cssClassName the cssClassName to set
+	 */
+	public void setCssClassName(String cssClassName) {
+		this.cssClassName = cssClassName;
+	}
+	
+	
 	
 	
 }

@@ -59,4 +59,10 @@ public interface ITrieConfiguration<C> extends IClusterable {
 	public TrieNode<C> createTrieNode(TrieNode<C> parent, String rootMatchedString,
 			String nextCharacter);
 	
+	/**
+	 * A callback to let the instantiated trie to register with us.
+	 * @param containerTrie
+	 */
+	public void setTrie (Trie<C> containerTrie);
+	
 }

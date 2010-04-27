@@ -30,6 +30,7 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.traversal.NodeFilter;
 
 /**
  * @author mocleiri
@@ -101,6 +102,8 @@ public class TrieNode<C> implements Serializable {
 	private int maxChildStringLength = 0;
 
 	private final ITrieConfiguration<C> configuration;
+
+	private Long nodeID;
 
 	/**
 	 * @param context
@@ -263,7 +266,7 @@ public class TrieNode<C> implements Serializable {
 	 * @param input
 	 * @return
 	 */
-	public Set<TrieNode<C>> findAnyMatch(String substring) {
+	public AnyWhereTrieMatch<C> findAnyMatch(String substring, ITrieFilter<C>filter) {
 
 		if (!configuration.isIndexCaseSensitive())
 			substring = substring.toLowerCase();
@@ -273,15 +276,15 @@ public class TrieNode<C> implements Serializable {
 		 * that contain the substring.
 		 */
 
-		Set<TrieNode<C>> matchingNodeList = new LinkedHashSet<TrieNode<C>>();
+		Set<TrieNode<C>> matchingNodeSet = new LinkedHashSet<TrieNode<C>>();
 
 		for (TrieNode<C> trieNode : this.orderedNodeList) {
 
-			trieNode.findMatchingNodes(matchingNodeList, substring);
+			trieNode.findMatchingNodes(matchingNodeSet, filter, substring);
 
 		}
 
-		return matchingNodeList;
+		return new AnyWhereTrieMatch<C>(substring, filter, matchingNodeSet);
 	}
 
 	/**
@@ -295,10 +298,10 @@ public class TrieNode<C> implements Serializable {
 	 * @param matchingNodeList
 	 * @param substring
 	 */
-	private void findMatchingNodes(Set<TrieNode<C>> matchingNodeList,
+	private void findMatchingNodes(Set<TrieNode<C>> matchingNodeList, ITrieFilter<C>nodeFilter,
 			String substring) {
 
-		TrieNodeMatch<C> match = find(substring);
+		PrefixTrieMatch<C> match = find(substring, nodeFilter);
 
 		if (match != null) {
 			TrieNode<C> node = match.getNode();
@@ -315,7 +318,7 @@ public class TrieNode<C> implements Serializable {
 
 		for (TrieNode<C> trieNode : this.orderedNodeList) {
 
-			trieNode.findMatchingNodes(matchingNodeList, substring);
+			trieNode.findMatchingNodes(matchingNodeList, nodeFilter, substring);
 			// match = trieNode.find(substring);
 			//			
 			// if (match != null)
@@ -325,10 +328,11 @@ public class TrieNode<C> implements Serializable {
 
 	}
 
+	
 	/*
 	 * Recursively finds the Node that corresponds to the prefix specificed.
 	 */
-	public TrieNodeMatch<C> find(String key) {
+	public PrefixTrieMatch<C> find(String key, ITrieFilter<C>nodeFilter) {
 
 
 		if (!configuration.isIndexCaseSensitive())
@@ -346,7 +350,7 @@ public class TrieNode<C> implements Serializable {
 
 			if (getCharacter().equals(key)) {
 				// match
-				return new TrieNodeMatch<C>(this);
+				return new PrefixTrieMatch<C>(getWord(), nodeFilter, this);
 			} else {
 				// no match
 				return null;
@@ -371,7 +375,7 @@ public class TrieNode<C> implements Serializable {
 				if (nextNode == null)
 					return null;
 
-				return nextNode.find(newKey);
+				return nextNode.find(newKey, nodeFilter);
 
 			} else {
 				return null;
@@ -381,7 +385,7 @@ public class TrieNode<C> implements Serializable {
 			// keyLength < characterLength
 			if (keyLength > 0 && characterLength > 1
 					&& getCharacter().contains(key)) {
-				return new TrieNodeMatch<C>(this);
+				return new PrefixTrieMatch<C>(getWord(), nodeFilter, this);
 			}
 			return null;
 
@@ -599,5 +603,43 @@ public class TrieNode<C> implements Serializable {
 	public Set<String> getNextNodeCharacterSet() {
 		return this.nodeMap.keySet();
 	}
+
+	public void setNodeID(Long nodeID) {
+		this.nodeID = nodeID;
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * @return the nodeID
+	 */
+	public Long getNodeID() {
+		return nodeID;
+	}
+	
+	/**
+	 * 
+	 * @return the ordered list of matches for this node
+	 */
+	public List<C>getOrderedMatchList() {
+		
+		List<C>matchList = new LinkedList<C>();
+		
+		List<Integer>keyList =  new ArrayList<Integer>();
+		
+		keyList.addAll(matchMap.keySet());
+		
+		Collections.sort(keyList);
+		
+		for (Integer key : keyList) {
+			
+			matchList.addAll(matchMap.get(key));
+			
+		}
+		
+		return matchList;
+		
+	}
+	
 
 }

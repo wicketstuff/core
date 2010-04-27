@@ -19,29 +19,20 @@ package org.wicketstuff.datatable_autocomplete.web.page;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
-import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
-import org.apache.wicket.extensions.markup.html.form.palette.Palette;
-import org.apache.wicket.extensions.markup.html.form.palette.component.Choices;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortParam;
-import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
@@ -51,13 +42,14 @@ import org.wicketstuff.datatable_autocomplete.WicketApplication;
 import org.wicketstuff.datatable_autocomplete.comparator.DTAComparator;
 import org.wicketstuff.datatable_autocomplete.panel.AutoCompletingTextField;
 import org.wicketstuff.datatable_autocomplete.panel.DefaultAutocompleteRenderingHints;
+import org.wicketstuff.datatable_autocomplete.provider.DefaultTrieDataProviderHints;
 import org.wicketstuff.datatable_autocomplete.provider.IModelProvider;
 import org.wicketstuff.datatable_autocomplete.provider.IProviderSorter;
 import org.wicketstuff.datatable_autocomplete.provider.ITrieProvider;
 import org.wicketstuff.datatable_autocomplete.provider.TrieDataProvider;
 import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandler;
-import org.wicketstuff.datatable_autocomplete.trie.Trie;
 import org.wicketstuff.datatable_autocomplete.trie.ITrieFilter;
+import org.wicketstuff.datatable_autocomplete.trie.Trie;
 import org.wicketstuff.datatable_autocomplete.web.model.LoadableDetachableMethodModel;
 import org.wicketstuff.datatable_autocomplete.web.table.column.MethodColumn;
 import org.wicketstuff.datatable_autocomplete.web.table.column.MethodColumn.MethodColumnType;
@@ -209,7 +201,7 @@ public class HomePage extends WebPage {
 						return new LoadableDetachableMethodModel (obj);
 					}
 					
-				});
+				}, new DefaultTrieDataProviderHints());
 		
 		classNameFilterField = new TextField<String>("filter", new Model<String>(""));
 		
