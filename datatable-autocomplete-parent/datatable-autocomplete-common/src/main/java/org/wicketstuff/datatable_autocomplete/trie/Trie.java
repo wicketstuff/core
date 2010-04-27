@@ -16,10 +16,13 @@
 package org.wicketstuff.datatable_autocomplete.trie;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.wicket.IClusterable;
 import org.slf4j.Logger;
@@ -37,8 +40,10 @@ import org.slf4j.LoggerFactory;
  * 
  *         It works well for prefix matching. It supports substring matching by
  *         traversing all nodes recursively looking for a match.
- *         
- *         An ITrieFilter<C> can be used to filter additional fields within an indexed object when the list of matching words (objects) is being computed.
+ * 
+ *         An ITrieFilter<C> can be used to filter additional fields within an
+ *         indexed object when the list of matching words (objects) is being
+ *         computed.
  * 
  * @see http://en.wikipedia.org/wiki/Radix_tree
  * 
@@ -61,7 +66,6 @@ public class Trie<C> implements IClusterable {
 	private TrieNode<C> root = null;
 
 	private ITrieConfiguration<C> configuration = null;
-
 	
 	/**
 	 * 
@@ -71,13 +75,17 @@ public class Trie<C> implements IClusterable {
 		super();
 	}
 
+	
 	/**
 	 * 
 	 */
 	public Trie(ITrieConfiguration<C> configuration) {
 
 		this.configuration = configuration;
-		this.root = new TrieNode<C>(null, "", "", this.configuration);
+		this.configuration.setTrie(this);
+		
+		this.root = configuration.createTrieNode(null, "", "");
+		
 
 	}
 
@@ -108,36 +116,27 @@ public class Trie<C> implements IClusterable {
 
 	}
 
-//	private List<C> getWordList(TrieNode<C> prefixNode) {
-//
-//		return getWordList(prefixNode, configuration.getDefaultFilter(), -1);
-//	}
+	// private List<C> getWordList(TrieNode<C> prefixNode) {
+	//
+	// return getWordList(prefixNode, configuration.getDefaultFilter(), -1);
+	// }
 
-	public TrieNodeMatch<C> find(String prefix) {
+	public PrefixTrieMatch<C> find(String prefix, ITrieFilter<C>filter) {
 
-		return this.root.find(prefix);
+		return this.root.find(prefix, filter);
 	}
 
 	public List<C> getWordList(String prefix, ITrieFilter<C> filter, int limit) {
 
-		TrieNodeMatch<C> prefixNodeMatch = this.root.find(prefix);
+		PrefixTrieMatch<C> prefixNodeMatch = this.root.find(prefix, filter);
 
 		if (prefixNodeMatch == null)
 			return new LinkedList<C>();
 		else
-			return getWordList(prefixNodeMatch.getNode(), filter, limit);
+			return prefixNodeMatch.getWordList(limit);
 	}
 
-	public List<C> getWordList(TrieNode<C> prefixNode, ITrieFilter<C> filter, int limit) {
-
-		List<C> wordList = new ArrayList<C>();
-
-		if (prefixNode != null)
-			prefixNode.buildWordList(wordList, filter, limit);
-
-		return wordList;
-
-	}
+	
 
 	/**
 	 * Visit each TrieNode<C>
@@ -222,17 +221,20 @@ public class Trie<C> implements IClusterable {
 	 * @return
 	 */
 	public List<C> getAnyMatchingWordList(final String substring,
-			ITrieFilter<C> nodeFilter, int limit) {
+			final ITrieFilter<C> nodeFilter, final int limit) {
 
-		List<C> dataList = new LinkedList<C>();
+		AnyWhereTrieMatch<C> matchingNode = this.root.findAnyMatch(substring, nodeFilter);
 
-		Set<TrieNode<C>> matchingNodeList = this.root.findAnyMatch(substring);
+		return matchingNode.getWordList(limit);
+	}
 
-		for (TrieNode<C> trieNode : matchingNodeList) {
-			dataList.addAll(getWordList(trieNode, nodeFilter, limit));
-		}
+	
+	public AnyWhereTrieMatch<C> getAnyMatchingTrieMatch(String value,
+			ITrieFilter<C> nodeFilter) {
 
-		return dataList;
+		AnyWhereTrieMatch<C> matchingNode = this.root.findAnyMatch(value, nodeFilter);
+
+		return matchingNode;
 	}
 
 	/**
@@ -246,7 +248,8 @@ public class Trie<C> implements IClusterable {
 	 */
 
 	public List<C> getAnyMatchingWordList(String substring) {
-		return this.getAnyMatchingWordList(substring, configuration.getDefaultFilter(), -1);
+		return this.getAnyMatchingWordList(substring, configuration
+				.getDefaultFilter(), -1);
 	}
 
 	/**
@@ -258,17 +261,18 @@ public class Trie<C> implements IClusterable {
 	}
 
 	/**
-	 * Return the size of the subtree for the prefix given.  This avoids the need to get the list especially when the count is large.
+	 * Return the size of the subtree for the prefix given. This avoids the need
+	 * to get the list especially when the count is large.
 	 * 
 	 * @param prefix
 	 * @return the number of elements in the subtree corresponding to the prefix
 	 *         given.
 	 * 
 	 */
-	public int getPrefixMatchedElementCount(String prefix) {
+	public int getPrefixMatchedElementCount(String prefix, final ITrieFilter<C>nodeFilter) {
 
-		TrieNodeMatch<C> match = root.find(prefix);
-		
+		PrefixTrieMatch<C> match = root.find(prefix, nodeFilter);
+
 		if (match == null)
 			return 0;
 
@@ -277,8 +281,13 @@ public class Trie<C> implements IClusterable {
 		match.getNode().visit(new ITrieNodeVisitor<C>() {
 
 			public void visit(TrieNode<C> node) {
-
-				counter.addAndGet(node.getTotalMatches());
+				
+				for (C value : node.getOrderedMatchList()) {
+					if (nodeFilter.isVisible(value)) {
+						counter.addAndGet(node.getTotalMatches());		
+					}
+				} 
+				
 			}
 		});
 
@@ -299,7 +308,6 @@ public class Trie<C> implements IClusterable {
 
 		final AtomicInteger counter = new AtomicInteger(0);
 
-		
 		// visit each node an aggregate the number of matches:
 		root.visit(new ITrieNodeVisitor<C>() {
 
@@ -318,8 +326,9 @@ public class Trie<C> implements IClusterable {
 	 */
 	public Set<String> getNextNodeCharacterSet() {
 		/*
-		 * This is really just to support the datatable-autocomplete-examples where we give a count of the matches for each first character contained in
-		 * this set.
+		 * This is really just to support the datatable-autocomplete-examples
+		 * where we give a count of the matches for each first character
+		 * contained in this set.
 		 */
 		return root.getNextNodeCharacterSet();
 	}

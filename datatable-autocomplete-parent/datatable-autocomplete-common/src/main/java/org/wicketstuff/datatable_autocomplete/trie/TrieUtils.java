@@ -25,7 +25,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
- * @author mocleiriing a built Trie<?> to disk.
+ * @author mocleiri persist a built Trie<?> to disk.
  *
  */
 public final class TrieUtils {
@@ -77,4 +77,11 @@ public final class TrieUtils {
 		return trie;
 
 	}
+	
+	
+	
+	
+	
+	
+
 }

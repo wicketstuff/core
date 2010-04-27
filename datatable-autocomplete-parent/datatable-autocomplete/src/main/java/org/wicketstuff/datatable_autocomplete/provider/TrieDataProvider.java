@@ -29,6 +29,8 @@ import org.apache.wicket.model.IModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.provider.utils.DataProviderUtils;
+import org.wicketstuff.datatable_autocomplete.trie.AnyWhereTrieMatch;
+import org.wicketstuff.datatable_autocomplete.trie.PrefixTrieMatch;
 import org.wicketstuff.datatable_autocomplete.trie.Trie;
 import org.wicketstuff.datatable_autocomplete.trie.ITrieFilter;
 
@@ -66,6 +68,8 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 	private boolean									matchAnyWhereInString = false;
 
 	private final IModelProvider<C> modelProvider;
+
+	private final ITrieDataProviderHints hints;
 
 	protected IModel<String> getInputModel() {
 
@@ -129,7 +133,7 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 	 * 
 	 */
 	public TrieDataProvider(ITrieProvider<C> trieProvider, ITrieFilter<C>resultFilter,
-			IModel<String> fieldStringModel, IProviderSorter<C> sorter, IModelProvider<C> modelProvider) {
+			IModel<String> fieldStringModel, IProviderSorter<C> sorter, IModelProvider<C> modelProvider, ITrieDataProviderHints hints) {
 
 		super();
 		this.trieProvider = trieProvider;
@@ -138,6 +142,7 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 		this.fieldStringModel = fieldStringModel;
 		this.sorter = sorter;
 		this.modelProvider = modelProvider;
+		this.hints = hints;
 	}
 
 	
@@ -163,26 +168,24 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 					return 0;
 				}
 				
+				int maxResults = hints.getMaxResultsLimit(prefix);
+				
+				
+				
 				if (matchAnyWhereInString) {
 					// substring matching
 					// not the most efficent but it works.
 					
-					if (trieResultFilter != null)
-						currentListData = trieProvider.provideTrie()
-							.getAnyMatchingWordList(prefix, trieResultFilter, -1);
-					else
-						currentListData = trieProvider.provideTrie()
-						.getAnyMatchingWordList(prefix);
+						AnyWhereTrieMatch<C> anyMatch = trie.getAnyMatchingTrieMatch(prefix, this.trieResultFilter);
+						
+						currentListData = anyMatch.getWordList(maxResults);
 				}
 				else {
 					// prefix matching
+					PrefixTrieMatch<C>prefixMatch = trie.find(prefix, this.trieResultFilter);
 					
-					if (trieResultFilter != null)
-						currentListData = trieProvider.provideTrie().getWordList(
-							prefix, trieResultFilter, -1);
-					else
-						currentListData = trieProvider.provideTrie().getWordList(
-								prefix);
+					currentListData = prefixMatch.getWordList(maxResults);
+					
 				}
 			}
 

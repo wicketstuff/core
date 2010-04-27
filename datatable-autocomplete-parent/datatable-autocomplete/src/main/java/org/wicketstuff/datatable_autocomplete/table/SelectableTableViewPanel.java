@@ -212,6 +212,13 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 
 	}
 
+	
+	public void setButtonCSSClass (String cssClass) {
+		this.createButtonProvider.setCssClassName(cssClass);
+		this.editButtonProvider.setCssClassName(cssClass);
+		this.deleteButtonProvider.setCssClassName(cssClass);
+	}
+	
 	/**
 	 * @param formOnSubmitAction
 	 */
