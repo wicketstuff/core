@@ -78,6 +78,7 @@
 		<module>shiro-example-realm</module>
 		<module>shiro-example-spring-jdbc</module>
 		<module>shiro-example-spring-hibernate</module>
+		<module>shiro-example-spring-hibernate-native</module>
 	</modules>
 
 </project>
