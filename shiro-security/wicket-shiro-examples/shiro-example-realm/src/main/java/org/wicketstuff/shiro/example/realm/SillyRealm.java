@@ -27,7 +27,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAccount;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.cache.HashtableCacheManager;
+import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
@@ -46,7 +46,7 @@ public class SillyRealm extends AuthorizingRealm
 		log.info("constructor...");
 		
 		// Only do authentication once for each request
-		this.setCacheManager( new HashtableCacheManager() );
+		this.setCacheManager( new MemoryConstrainedCacheManager() );
 	}
 
 	/**
