@@ -31,6 +31,10 @@
 
     <name>Apache Shiro Security for Wicket - Spring, Hibernate Example, Shiro Native Sessions</name>
 
+<!-- TODO: This example is not currently properly working. It is based on the spring/hibernate example,
+		but has shiro native sessions enabled. In addition, there are many shiro API changes and deprecated
+		classes being made in preparation for the 1.0 release. This sample is an attempt to address those
+		changes. This comment will be removed once this project is ready. -->
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
