@@ -39,23 +39,22 @@ public abstract class ExampleApplication extends WebApplication
 	{
 		getMarkupSettings().setStripWicketTags(true);
 		
+		// Configure Shiro
 		AnnotationsShiroAuthorizationStrategy authz = new AnnotationsShiroAuthorizationStrategy();
 		getSecuritySettings().setAuthorizationStrategy(authz);
-
 		getSecuritySettings().setUnauthorizedComponentInstantiationListener(
 			new ShiroUnauthorizedComponentListener(LoginPage.class, UnauthorizedPage.class, authz));
 
 		mountBookmarkablePage("account/login", LoginPage.class);
 		mountBookmarkablePage("account/logout", LogoutPage.class);
-
 		mountBookmarkablePage("admin", RequireAdminRolePage.class);
-    mountBookmarkablePage("view", RequireViewPermissionPage.class);
-    mountBookmarkablePage("auth", RequireAuthPage.class);
+		mountBookmarkablePage("view", RequireViewPermissionPage.class);
+		mountBookmarkablePage("auth", RequireAuthPage.class);
 	}
 
-  public abstract Component getExampleInfoPanel( String id );
-  public abstract Component getAuthHeaderPanel(String id);
-  
+	public abstract Component getExampleInfoPanel( String id );
+
+	public abstract Component getAuthHeaderPanel(String id);
   
 	@Override
 	public Class<? extends Page> getHomePage()
@@ -64,7 +63,7 @@ public abstract class ExampleApplication extends WebApplication
 	}
 
 //	@Override
-//	// You'll need to do this only if using JSecurity enterprise/clustered Sessions:
+//	// You'll need to do this only if using Shiro enterprise/clustered Sessions:
 //	protected ISessionStore newSessionStore()
 //	{
 //		return new SecondLevelCacheSessionStore(this, new SessionPageStore(100));
