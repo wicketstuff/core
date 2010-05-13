@@ -15,6 +15,7 @@
  */
 package org.wicketstuff.datatable_autocomplete.panel;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.behavior.SimpleAttributeModifier;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
@@ -24,6 +25,7 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.CSSPackageResource;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.markup.repeater.DefaultItemReuseStrategy;
@@ -70,7 +72,7 @@ public class AutoCompletingPanel<T> extends Panel {
 	 */
 	public AutoCompletingPanel(String id, IModel<String> fieldStringModel,
 			IColumn<?>[] columns, SortableDataProvider<T> aliasDataProvider,
-			ITableRowSelectionHandler<T> rowSelectionHandler,
+			ITableRowSelectionHandler<T> rowSelectionHandler, IAutocompleteControlPanelProvider controlPanelProvider,
 			IAutocompleteRenderingHints renderingHints) {
 
 		super(id, new Model());
@@ -81,6 +83,13 @@ public class AutoCompletingPanel<T> extends Panel {
 		this.provider = aliasDataProvider;
 
 		add(CSSPackageResource.getHeaderContribution(CSS));
+		
+		Component controlPanel = controlPanelProvider.getPanel(this, "controlPanel");
+		
+		if (controlPanel == null)
+			controlPanel = new EmptyPanel("controlPanel");
+		
+		add(controlPanel);
 
 		viewPanel = new SelectableTableViewPanel<T>("view", TABLE_CSS,
 				"dta_data_table", "{title}", columns, aliasDataProvider,
@@ -96,9 +105,9 @@ public class AutoCompletingPanel<T> extends Panel {
 		add(viewPanel);
 
 		if (renderingHints.isVisibleOnZeroMatches()) {
-			viewPanel.setHideIfNoResults(true);
-		} else {
 			viewPanel.setHideIfNoResults(false);
+		} else {
+			viewPanel.setHideIfNoResults(true);
 		}
 
 		add(theLabel = new Label("label_close", "Close"));
@@ -121,12 +130,13 @@ public class AutoCompletingPanel<T> extends Panel {
 
 	}
 
+
 	public AutoCompletingPanel(String id, IModel<String> fieldStringModel,
 			int resultsToShow, IColumn<?>[] columns,
 			SortableDataProvider<T> dataProvider,
-			ITableRowSelectionHandler<T> rowSelectionHandler, boolean paginationEnabled) {
+			ITableRowSelectionHandler<T> rowSelectionHandler, IAutocompleteControlPanelProvider controlPanelProvider, boolean paginationEnabled) {
 		
-		this (id, fieldStringModel, columns,  dataProvider, rowSelectionHandler, new DefaultAutocompleteRenderingHints(resultsToShow, paginationEnabled));
+		this (id, fieldStringModel, columns,  dataProvider, rowSelectionHandler, controlPanelProvider, new DefaultAutocompleteRenderingHints(resultsToShow, paginationEnabled));
 	}
 
 	/*

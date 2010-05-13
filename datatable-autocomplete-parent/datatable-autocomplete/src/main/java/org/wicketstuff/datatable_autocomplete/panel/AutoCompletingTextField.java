@@ -72,11 +72,11 @@ public class AutoCompletingTextField<R> extends Panel {
 	public AutoCompletingTextField(String id, IModel<String> searchFieldModel,
 			IColumn<?>[] columns,
 			SortableDataProvider<R> provider,
-			ITableRowSelectionHandler<R> rowSelectionHandler,
+			ITableRowSelectionHandler<R> rowSelectionHandler, IAutocompleteControlPanelProvider controlPanelProvider,
 			IAutocompleteRenderingHints renderingHints) {
 
 		this(id, searchFieldModel, columns, provider,
-				rowSelectionHandler, 300, renderingHints);
+				rowSelectionHandler, controlPanelProvider, 300, renderingHints);
 
 	}
 
@@ -104,7 +104,7 @@ public class AutoCompletingTextField<R> extends Panel {
 	public AutoCompletingTextField(String id, IModel<String> searchFieldModel,
 			IColumn<?>[] columns,
 			SortableDataProvider<R> provider,
-			ITableRowSelectionHandler<R> rowSelectionHandler,
+			ITableRowSelectionHandler<R> rowSelectionHandler, IAutocompleteControlPanelProvider controlPanelProvider,
 			int throttlingDelay, IAutocompleteRenderingHints renderingHints) {
 
 		// dummy model.
@@ -121,8 +121,8 @@ public class AutoCompletingTextField<R> extends Panel {
 				new Model<String>("off")));
 
 		autoCompletingPanel = new AutoCompletingPanel<R>("autoCompletingPanel",
-				searchField.getModel(), columns, provider,
-				rowSelectionHandler, renderingHints);
+				searchField.getModel(), columns, provider, 
+				rowSelectionHandler, controlPanelProvider, renderingHints);
 
 		add(searchField);
 

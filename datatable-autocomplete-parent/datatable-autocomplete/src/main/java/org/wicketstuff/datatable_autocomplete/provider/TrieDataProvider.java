@@ -165,7 +165,9 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 				
 				if (trie == null) {
 					log.warn("trie is unexpectantly null!");
+					currentListData = new LinkedList<C>();
 					return 0;
+					
 				}
 				
 				int maxResults = hints.getMaxResultsLimit(prefix);
@@ -178,14 +180,21 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 					
 						AnyWhereTrieMatch<C> anyMatch = trie.getAnyMatchingTrieMatch(prefix, this.trieResultFilter);
 						
-						currentListData = anyMatch.getWordList(maxResults);
+						if (anyMatch != null)
+							currentListData = anyMatch.getWordList(maxResults);
+						else {
+							currentListData = new LinkedList<C>();
+						}
 				}
 				else {
 					// prefix matching
 					PrefixTrieMatch<C>prefixMatch = trie.find(prefix, this.trieResultFilter);
 					
-					currentListData = prefixMatch.getWordList(maxResults);
-					
+					if (prefixMatch != null)
+						currentListData = prefixMatch.getWordList(maxResults);
+					else {
+						currentListData = new LinkedList<C>();
+					}
 				}
 			}
 
@@ -237,14 +246,5 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 		
 		return modelProvider.model (object);
 	}
-
-	
-	
-	
-
-
-
-	
-	
 
 }
