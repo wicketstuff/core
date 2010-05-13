@@ -25,6 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
@@ -42,6 +43,7 @@ import org.wicketstuff.datatable_autocomplete.WicketApplication;
 import org.wicketstuff.datatable_autocomplete.comparator.DTAComparator;
 import org.wicketstuff.datatable_autocomplete.panel.AutoCompletingTextField;
 import org.wicketstuff.datatable_autocomplete.panel.DefaultAutocompleteRenderingHints;
+import org.wicketstuff.datatable_autocomplete.panel.IAutocompleteControlPanelProvider;
 import org.wicketstuff.datatable_autocomplete.provider.DefaultTrieDataProviderHints;
 import org.wicketstuff.datatable_autocomplete.provider.IModelProvider;
 import org.wicketstuff.datatable_autocomplete.provider.IProviderSorter;
@@ -51,6 +53,7 @@ import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandle
 import org.wicketstuff.datatable_autocomplete.trie.ITrieFilter;
 import org.wicketstuff.datatable_autocomplete.trie.Trie;
 import org.wicketstuff.datatable_autocomplete.web.model.LoadableDetachableMethodModel;
+import org.wicketstuff.datatable_autocomplete.web.panel.MatchControlPanel;
 import org.wicketstuff.datatable_autocomplete.web.table.column.MethodColumn;
 import org.wicketstuff.datatable_autocomplete.web.table.column.MethodColumn.MethodColumnType;
 
@@ -60,9 +63,7 @@ import org.wicketstuff.datatable_autocomplete.web.table.column.MethodColumn.Meth
  */
 public class HomePage extends WebPage {
 
-	private static final String SUBSTRING_MATCH = "SUBSTRING_MATCH";
-
-	private static final String PREFIX_MATCH = "PREFIX_MATCH";
+	
 	
 	private TextField<String>classNameFilterField;
 	
@@ -127,6 +128,15 @@ public class HomePage extends WebPage {
 		super();
 
 		IModel<String> stringModel = new Model<String>();
+		
+classNameFilterField = new TextField<String>("filter", new Model<String>(""));
+		
+		
+		
+		
+		
+		
+		add(classNameFilterField);
 
 		final TrieDataProvider<Method> methodProvider = new TrieDataProvider<Method>(
 				new ITrieProvider<Method>() {
@@ -203,24 +213,7 @@ public class HomePage extends WebPage {
 					
 				}, new DefaultTrieDataProviderHints());
 		
-		classNameFilterField = new TextField<String>("filter", new Model<String>(""));
 		
-		
-		
-		classNameFilterField.add(new AjaxFormComponentUpdatingBehavior("onchange") {
-
-			/* (non-Javadoc)
-			 * @see org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior#onUpdate(org.apache.wicket.ajax.AjaxRequestTarget)
-			 */
-			@Override
-			protected void onUpdate(AjaxRequestTarget target) {
-				
-				
-				
-			}
-		
-			
-		});
 
 
 		field = new AutoCompletingTextField<Method>(
@@ -257,10 +250,34 @@ public class HomePage extends WebPage {
 								
 								
 							}
+						}, new IAutocompleteControlPanelProvider() {
+							
+							public Component getPanel(Component onChangeComponent, String controlPanelId) {
+								
+								return new MatchControlPanel(controlPanelId, methodProvider, onChangeComponent);
+								
+							}
 						}, new DefaultAutocompleteRenderingHints(25, true));
 
 		field.setOutputMarkupId(true);
 		
+		classNameFilterField.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+
+			/* (non-Javadoc)
+			 * @see org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior#onUpdate(org.apache.wicket.ajax.AjaxRequestTarget)
+			 */
+			@Override
+			protected void onUpdate(AjaxRequestTarget target) {
+				
+				if (target != null) {
+					target.addComponent(field);
+				}
+				
+				
+			}
+		
+			
+		});
 		selectedMethodField = new Label("selectedMethod", selectedMethodModel = new LoadableDetachableMethodModel(null));
 		
 		selectedMethodField.setOutputMarkupId(true);
@@ -334,60 +351,7 @@ public class HomePage extends WebPage {
 		freqLabel.setEscapeModelStrings(false);
 		
 
-		Form<?>form = new Form("settingsForm");
-		
-		form.add(classNameFilterField);
-		
-		DropDownChoice<String> findMethodDDC;
-		form.add(findMethodDDC= new DropDownChoice<String>("findMethod", new IModel<String>() {
-
-			/*
-			 * This model toggles the substring to prefix string behaviour of the TrieDataProvider.
-			 * 
-			 */
-			/* (non-Javadoc)
-			 * @see org.apache.wicket.model.IModel#getObject()
-			 */
-			public String getObject() {
-				
-				if (methodProvider.isMatchAnyWhereInString())
-					return SUBSTRING_MATCH;
-				else
-					return PREFIX_MATCH;
-				
-			}
-
-			/* (non-Javadoc)
-			 * @see org.apache.wicket.model.IModel#setObject(java.lang.Object)
-			 */
-			public void setObject(String object) {
-				
-				if (object.equals(SUBSTRING_MATCH))
-					methodProvider.setMatchAnyWhereInString(true);
-				else
-					methodProvider.setMatchAnyWhereInString(false);
-				
-			}
-
-			/* (non-Javadoc)
-			 * @see org.apache.wicket.model.IDetachable#detach()
-			 */
-			public void detach() {
-				
-				// intentionally not implemented.
-				
-			}},  new ListModel<String>(Arrays.asList(PREFIX_MATCH, SUBSTRING_MATCH))) {
-
-				/* (non-Javadoc)
-				 * @see org.apache.wicket.markup.html.form.DropDownChoice#wantOnSelectionChangedNotifications()
-				 */
-				@Override
-				protected boolean wantOnSelectionChangedNotifications() {
-					// cause the change to be recorded when the ddc is changed.
-					return true;
-				}});
 	
-		add(form);
 	
 	}
 
