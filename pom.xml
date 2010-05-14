@@ -63,7 +63,9 @@
 		-->
 		<module>maven-support</module>
 		<module>theme-parent</module>
-        <module>wicket-html5-parent</module>
+		<!-- commented out until the jetty plugin can be resolved properly (is
+		breaking the build) -->
+		<!--        <module>wicket-html5-parent</module> -->
   </modules>
 
 	<licenses>
@@ -98,6 +100,13 @@
 			<timezone>-6</timezone>
 			<organization>WicketTraining.com</organization>
 			<organizationUrl>http://www.wickettraining.com</organizationUrl>
+		</developer>
+
+		<developer>
+			<id>mocleiri</id>
+			<name>Michael O'Cleirigh</name>
+			<email>michael.ocleirigh[at]rivulet.ca</email>
+			<timezone>-4</timezone>
 		</developer>
 	</developers>
 
@@ -181,6 +190,96 @@
 				</site>
 			</distributionManagement>
 		</profile>
+
+		<profile>
+			<id>oss.sonatype.org-staged-release</id>
+			<!-- This is the profile to use for releasing into the staged
+			release repo.  We need to sign the artifacts. -->	
+
+				<activation>
+
+		        <property>
+        		  <name>performRelease</name>
+		        </property>
+
+			</activation>
+
+
+			<build>
+				<plugins>
+			  <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-gpg-plugin</artifactId>
+			        <executions>
+			          <execution>
+			            <id>sign-artifacts</id>
+			            <phase>verify</phase>
+            			<goals>
+			              <goal>sign</goal>
+            			</goals>
+			          </execution>
+			        </executions>
+		      </plugin>
+
+			 </plugins>
+
+			</build>
+
+			 <distributionManagement>
+      		  <repository>
+			      <id>sonatype-nexus-staging</id>
+			      <name>Nexus Release Repository</name>
+			      <url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                  <uniqueVersion>false</uniqueVersion>
+
+			  </repository>
+
+		    </distributionManagement>
+
+		</profile>
+
+
+
+		<profile>
+			<!-- setup for using oss.sonatype.org to hold snapshots -->
+			<!-- should be active for all sessions except where the release
+			plugin is being used.
+
+				We keep this in a profile since central sync up requires no
+				<repository> tags at the top level of the POM.
+			-->
+			<id>oss.sonatype.org-snapshots</id>
+
+
+			<activation>
+
+		        <property>
+        		  <name>!performRelease</name>
+		        </property>
+
+			</activation>
+
+			 <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+             <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
+
+			<repositories>
+				<repository>
+					<id>nexus-snapshots</id>
+					<name>Sonatype Nexus Snapshots</name>
+            		<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+					<snapshots><enabled>true</enabled></snapshots>
+
+				</repository>
+			</repositories>
+
+		</profile>
+
 	</profiles>
 
 	<issueManagement>
@@ -555,6 +654,7 @@
           </additionalBuildcommands>
         </configuration>
       </plugin>
+
 		</plugins>
 	</build>
 	
@@ -597,6 +697,8 @@
 		</plugins>
 	</reporting>
 
+	<!-- Not allowed for central sync up these need to be included in via a
+	profile.
 	<repositories>
 		<repository>
 			<id>wicket-snaps</id>
@@ -623,5 +725,7 @@
 			</releases>
 		</pluginRepository>
 	</pluginRepositories>
+
+		-->
 
 </project>
