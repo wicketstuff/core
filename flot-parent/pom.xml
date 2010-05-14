@@ -24,6 +24,7 @@
 		<module>flot-examples</module>
 	</modules>
 
+	<!-- commented out so that snapshots can go into the oss.sonatype.org repo
 	<distributionManagement>
 		<snapshotRepository>
 			<id>repo</id>
@@ -37,9 +38,12 @@
 			<url>file:/home/wicket/tomcat/webapps/maven/repository/</url>
 		</repository>
 	</distributionManagement>
+	-->
 	<ciManagement>
 		<system>TeamCity</system>
 		<url>http://wicketstuff.org/teamcity</url>
 	</ciManagement>
+
+
 </project>
 
