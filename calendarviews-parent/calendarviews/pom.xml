@@ -43,7 +43,9 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>jslibraries</artifactId>
-			<version>1.4-SNAPSHOT</version>
+			<!-- changed to work with oss.sonatype.org maven repo
+			<version>1.4-SNAPSHOT</version> -->
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
