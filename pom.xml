@@ -258,7 +258,12 @@
              <uniqueVersion>false</uniqueVersion>
         </snapshotRepository>
     </distributionManagement>
-
+		</profile>
+		<profile>
+			<id>resolve-oss.sonatype.org-snapshots</id>
+			<activation>
+			<activeByDefault>true</activeByDefault>
+			</activation>
 			<repositories>
 				<repository>
 					<id>nexus-snapshots</id>
