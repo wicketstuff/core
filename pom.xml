@@ -250,15 +250,6 @@
 			-->
 			<id>oss.sonatype.org-snapshots</id>
 
-
-			<activation>
-
-		        <property>
-        		  <name>!performRelease</name>
-		        </property>
-
-			</activation>
-
 			 <distributionManagement>
         <snapshotRepository>
             <id>sonatype-nexus-snapshots</id>
