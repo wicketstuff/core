@@ -92,9 +92,6 @@ public class TrieNode<C> implements Serializable {
 	// that matches to character.get(0) + character.get(1)
 	private Map<Integer, List<C>> matchMap = new LinkedHashMap<Integer, List<C>>();
 	
-	// restrictor type to Map of restrictor keys to map of 
-	private Map<String, Map<String, Map<Integer, List<C>>>>restrictorMatchMap = new LinkedHashMap<String, Map<String,Map<Integer,List<C>>>>();
-
 	// if the entire tree below this node was traversed this would be the length
 	// of the longest string formed.
 	// this is used when doing a 'superselect' match to know when a branch is
@@ -176,12 +173,25 @@ public class TrieNode<C> implements Serializable {
 	 * Recurses down the tree until all of the characters in word have been
 	 * placed.
 	 * 
-	 * @param word
+	 * @param object
 	 * @return
 	 */
-	public TrieNode<C> index(C word) {
+	public TrieNode<C> index(C object) {
 
-		return index(word, 0);
+		String word = configuration.getWord(object);
+		
+		return index(word, object);
+	}
+	
+	/**
+	 * 
+	 * @param word
+	 * @param object
+	 * 
+	 * @return return the node that the word was finally attached to
+	 */
+	public TrieNode<C> index (String word, C object) {
+		return index(word, object, 0);
 	}
 
 	public List<TrieNode<C>> getOrderedNodeList() {
@@ -195,10 +205,9 @@ public class TrieNode<C> implements Serializable {
 	 * @param i
 	 * @return
 	 */
-	private TrieNode<C> index(C context, int startingIndex) {
+	private TrieNode<C> index(String word, C context, int startingIndex) {
 
-		String word = configuration.getWord(context);
-
+		
 		if (!configuration.isIndexCaseSensitive())
 			word = word.toLowerCase();
 		
@@ -244,7 +253,7 @@ public class TrieNode<C> implements Serializable {
 
 			}
 
-			return nextNode.index(context, startingIndex + 1);
+			return nextNode.index(word, context, startingIndex + 1);
 
 		}
 
@@ -260,32 +269,7 @@ public class TrieNode<C> implements Serializable {
 		return this.configuration.createTrieNode(parent, rootMatchedString, nextCharacter);
 	}
 
-	/**
-	 * Find the list of nodes that match the
-	 * 
-	 * @param input
-	 * @return
-	 */
-	public AnyWhereTrieMatch<C> findAnyMatch(String substring, ITrieFilter<C>filter) {
-
-		if (!configuration.isIndexCaseSensitive())
-			substring = substring.toLowerCase();
-		
-		/*
-		 * We want to do a single pass over the nodes and find all the strings
-		 * that contain the substring.
-		 */
-
-		Set<TrieNode<C>> matchingNodeSet = new LinkedHashSet<TrieNode<C>>();
-
-		for (TrieNode<C> trieNode : this.orderedNodeList) {
-
-			trieNode.findMatchingNodes(matchingNodeSet, filter, substring);
-
-		}
-
-		return new AnyWhereTrieMatch<C>(substring, filter, matchingNodeSet);
-	}
+	
 
 	/**
 	 * 

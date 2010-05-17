@@ -67,6 +67,15 @@ public final class TrieBuilder {
 				// default to not distinuishing between the case of the strings in the index.
 				return false;
 			}
+
+			/* (non-Javadoc)
+			 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#isSuffixTree()
+			 */
+			public boolean isSuffixTree() {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
 			
 			
 		});

@@ -36,8 +36,6 @@ public interface ITrieConfiguration<C> extends IClusterable {
 	 */
 	public String getWord (C ctx);
 	
-
-	
 	/**
 	 * Provides the default filter to be used when searching for a match.
 	 * 
@@ -64,5 +62,13 @@ public interface ITrieConfiguration<C> extends IClusterable {
 	 * @param containerTrie
 	 */
 	public void setTrie (Trie<C> containerTrie);
+	
+	
+	/**
+	 * 
+	 * @return true if the trie contains a suffix tree (used when the trie is built to make sure we build it right).
+	 * 
+	 */
+	public boolean isSuffixTree();
 	
 }

@@ -99,9 +99,34 @@ public class Trie<C> implements IClusterable {
 		// traverse to the point where no match is found and then insert at that
 		// point.
 
-		this.root.index(value);
+		if (configuration.isSuffixTree()) {
+			// suffix tree
+			// for anystring match
+			
+			String word = configuration.getWord(value);
+			
+			int length = word.length();
+			
+			for (int i = 0; i < length; i++) {
+				
+				// index each substring of the word from the initial full word through to the last character.
+				String subWord = word.substring(i);
+				
+				this.root.index(subWord, value);
+				
+				
+			}
+		}
+		else {
+			// prefix tree
+			// for prefix match
+			this.root.index(value);
+			
+		}
+	
 
 	}
+	
 
 	/**
 	 * Get the list of strings that are reachable from the prefix given.
@@ -213,45 +238,9 @@ public class Trie<C> implements IClusterable {
 
 	}
 
-	/**
-	 * Builds a list where the filter string occurs anywhere within a particular
-	 * tree branch.
-	 * 
-	 * @param substring
-	 * 
-	 * @return
-	 */
-	public List<C> getAnyMatchingWordList(final String substring,
-			final ITrieFilter<C> nodeFilter, final int limit) {
-
-		AnyWhereTrieMatch<C> matchingNode = this.root.findAnyMatch(substring, nodeFilter);
-
-		return matchingNode.getWordList(limit);
-	}
+	
 
 	
-	public AnyWhereTrieMatch<C> getAnyMatchingTrieMatch(String value,
-			ITrieFilter<C> nodeFilter) {
-
-		AnyWhereTrieMatch<C> matchingNode = this.root.findAnyMatch(value, nodeFilter);
-
-		return matchingNode;
-	}
-
-	/**
-	 * Get the list of words that have the substring given contained anywhere
-	 * within them.
-	 * 
-	 * Note that we take the first match found to avoid double counting.
-	 * 
-	 * @param substring
-	 * @return the list of words that the substring matches.
-	 */
-
-	public List<C> getAnyMatchingWordList(String substring) {
-		return this.getAnyMatchingWordList(substring, configuration
-				.getDefaultFilter(), -1);
-	}
 
 	/**
 	 * @return

@@ -80,6 +80,8 @@ public abstract class AbstractTrieConfiguration<C> implements ITrieConfiguration
 		this.containerTrie = containerTrie;
 		
 	}
+
+	
 	
 	
 	
