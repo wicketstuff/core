@@ -19,6 +19,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.IClusterable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.behavior.IBehavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.markup.html.form.TextField;
@@ -50,6 +51,7 @@ public class AutoCompletingTextField<R> extends Panel {
 	private final IAutocompleteRenderingHints renderingHints;
 	private final IModel<String> searchFieldModel;
 	private AutoCompletingBehavior autoCompletingBehaviour;
+	private TextField<String> searchField;
 
 	/**
 	 * 
@@ -114,7 +116,7 @@ public class AutoCompletingTextField<R> extends Panel {
 		this.searchFieldModel = searchFieldModel;
 		this.renderingHints = renderingHints;
 
-		TextField<String> searchField = new TextField<String>("searchField",
+		searchField = new TextField<String>("searchField",
 				searchFieldModel);
 
 		searchField.add(new AttributeModifier("autocomplete", true,
@@ -191,6 +193,16 @@ public class AutoCompletingTextField<R> extends Panel {
 	}
 
 
+	/**
+	 * Allows behaviours to be placed on the inner text field.
+	 * 
+	 * This can be used to add an onblur action to push results to the server side. 
+	 * 
+	 * @param beh
+	 */
+	public void addBehaviorToAutoCompletingTextField (IBehavior beh) {
+		this.searchField.add(beh);
+	}
 	
 
 }
