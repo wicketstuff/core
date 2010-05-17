@@ -38,8 +38,9 @@ import org.slf4j.LoggerFactory;
  *         minimize itself and be part of a singleton that returns the indexed
  *         data.
  * 
- *         It works well for prefix matching. It supports substring matching by
- *         traversing all nodes recursively looking for a match.
+ *         A Patricia Trie is used to index words from left to right.
+ *         
+ *         A Suffix Tree, which is useful for any string matching, can be build on top of a Patricia Trie simply using a variant indexing method.
  * 
  *         An ITrieFilter<C> can be used to filter additional fields within an
  *         indexed object when the list of matching words (objects) is being
