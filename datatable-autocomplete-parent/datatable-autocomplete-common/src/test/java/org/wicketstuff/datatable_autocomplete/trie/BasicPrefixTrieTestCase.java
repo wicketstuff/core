@@ -30,7 +30,7 @@ import org.apache.commons.collections.CollectionUtils;
  * @author mocleiri
  */
 
-public class BasicTrieTestCase extends TestCase {
+public class BasicPrefixTrieTestCase extends TestCase {
 
 	private Trie<String> trie;
 	private List<String> dataList;
@@ -41,14 +41,14 @@ public class BasicTrieTestCase extends TestCase {
 	/**
 	 * 
 	 */
-	public BasicTrieTestCase() {
+	public BasicPrefixTrieTestCase() {
 		init();
 	}
 
 	/**
 	 * @param name
 	 */
-	public BasicTrieTestCase(String name) {
+	public BasicPrefixTrieTestCase(String name) {
 		super(name);
 		init();
 	}
@@ -73,6 +73,14 @@ public class BasicTrieTestCase extends TestCase {
 			 */
 			public boolean isIndexCaseSensitive() {
 				// default to no insensitivity
+				return false;
+			}
+
+			/* (non-Javadoc)
+			 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#isSuffixTree()
+			 */
+			public boolean isSuffixTree() {
+				// TODO Auto-generated method stub
 				return false;
 			}
 			
@@ -126,7 +134,7 @@ public class BasicTrieTestCase extends TestCase {
 
 	public void testAnyDoubleZeroMatch() {
 
-		List<String> wordList = trie.getAnyMatchingWordList("00");
+		List<String> wordList = trie.getWordList("00");
 
 		Collection<String> disjunction = CollectionUtils.disjunction(wordList, doubleZeroWordList);
 		
@@ -146,7 +154,7 @@ public class BasicTrieTestCase extends TestCase {
 	
 	public void testAnyOneMatch () {
 		
-		List<String> wordList = trie.getAnyMatchingWordList("1");
+		List<String> wordList = trie.getWordList("1");
 
 		Collection<String> disjunction = CollectionUtils.disjunction(wordList, oneWordList);
 		

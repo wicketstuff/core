@@ -18,7 +18,6 @@
 package org.wicketstuff.datatable_autocomplete.web.page;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -32,19 +31,15 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortParam;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.util.ListModel;
 import org.wicketstuff.datatable_autocomplete.WicketApplication;
 import org.wicketstuff.datatable_autocomplete.comparator.DTAComparator;
 import org.wicketstuff.datatable_autocomplete.panel.AutoCompletingTextField;
 import org.wicketstuff.datatable_autocomplete.panel.DefaultAutocompleteRenderingHints;
 import org.wicketstuff.datatable_autocomplete.panel.IAutocompleteControlPanelProvider;
-import org.wicketstuff.datatable_autocomplete.provider.DefaultTrieDataProviderHints;
 import org.wicketstuff.datatable_autocomplete.provider.IModelProvider;
 import org.wicketstuff.datatable_autocomplete.provider.IProviderSorter;
 import org.wicketstuff.datatable_autocomplete.provider.ITrieProvider;
@@ -211,7 +206,7 @@ classNameFilterField = new TextField<String>("filter", new Model<String>(""));
 						return new LoadableDetachableMethodModel (obj);
 					}
 					
-				}, new DefaultTrieDataProviderHints());
+				});
 		
 		
 

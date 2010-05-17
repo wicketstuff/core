@@ -20,8 +20,10 @@ package org.wicketstuff.datatable_autocomplete.provider;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.wicket.extensions.markup.html.repeater.util.SortParam;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
@@ -29,10 +31,9 @@ import org.apache.wicket.model.IModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.provider.utils.DataProviderUtils;
-import org.wicketstuff.datatable_autocomplete.trie.AnyWhereTrieMatch;
+import org.wicketstuff.datatable_autocomplete.trie.ITrieFilter;
 import org.wicketstuff.datatable_autocomplete.trie.PrefixTrieMatch;
 import org.wicketstuff.datatable_autocomplete.trie.Trie;
-import org.wicketstuff.datatable_autocomplete.trie.ITrieFilter;
 
 /**
  * @author mocleiri
@@ -69,7 +70,8 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 
 	private final IModelProvider<C> modelProvider;
 
-	private final ITrieDataProviderHints hints;
+	private Map<Integer, Integer> resultLimitMap = new LinkedHashMap<Integer, Integer>();
+
 
 	protected IModel<String> getInputModel() {
 
@@ -133,7 +135,7 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 	 * 
 	 */
 	public TrieDataProvider(ITrieProvider<C> trieProvider, ITrieFilter<C>resultFilter,
-			IModel<String> fieldStringModel, IProviderSorter<C> sorter, IModelProvider<C> modelProvider, ITrieDataProviderHints hints) {
+			IModel<String> fieldStringModel, IProviderSorter<C> sorter, IModelProvider<C> modelProvider) {
 
 		super();
 		this.trieProvider = trieProvider;
@@ -142,7 +144,6 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 		this.fieldStringModel = fieldStringModel;
 		this.sorter = sorter;
 		this.modelProvider = modelProvider;
-		this.hints = hints;
 	}
 
 	
@@ -169,33 +170,29 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 					return 0;
 					
 				}
-				
-				int maxResults = hints.getMaxResultsLimit(prefix);
-				
-				
-				
-				if (matchAnyWhereInString) {
-					// substring matching
-					// not the most efficent but it works.
-					
-						AnyWhereTrieMatch<C> anyMatch = trie.getAnyMatchingTrieMatch(prefix, this.trieResultFilter);
-						
-						if (anyMatch != null)
-							currentListData = anyMatch.getWordList(maxResults);
-						else {
-							currentListData = new LinkedList<C>();
-						}
-				}
-				else {
+			
 					// prefix matching
 					PrefixTrieMatch<C>prefixMatch = trie.find(prefix, this.trieResultFilter);
 					
-					if (prefixMatch != null)
-						currentListData = prefixMatch.getWordList(maxResults);
+					if (prefixMatch != null) {
+						
+						Integer limit = this.resultLimitMap.get(prefix.length());
+						
+						if (limit == null) {
+							// no limit
+							currentListData = prefixMatch.getWordList(-1);
+						}
+							 
+						else {
+							currentListData = prefixMatch.getWordList(limit);	
+						}
+						
+						
+						
+					}
 					else {
 						currentListData = new LinkedList<C>();
 					}
-				}
 			}
 
 			return currentListData.size();
@@ -247,4 +244,15 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 		return modelProvider.model (object);
 	}
 
+	/**
+	 * Used to set the upper bounds on results returned based on the length of the prefix being searched.
+	 * 
+	 * @param resultMatchMap
+	 * 
+	 */
+	public void setMaxResultMap (Map<Integer, Integer>resultMatchMap)  {
+		this.resultLimitMap = resultMatchMap;
+		
+	}
+	
 }
