@@ -262,7 +262,7 @@
 		<profile>
 			<id>resolve-oss.sonatype.org-snapshots</id>
 			<activation>
-			<activeByDefault>true</activeByDefault>
+			<property><name>!performRelease</name></property>
 			</activation>
 			<repositories>
 				<repository>
