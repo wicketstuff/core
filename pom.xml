@@ -15,6 +15,7 @@
 		will hopefully keep WicketStuff projects more in sync with Wicket and make it easier on new users.
 	</description>
 
+	<url>http://wicketstuff.org</url>
 	<modules>
 		<module>scala-extensions-parent</module>
 		<module>annotation</module>
@@ -306,11 +307,12 @@
 	</mailingLists>
 
 	<scm>
+		<url>https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/</url>
 		<connection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk/wicketstuff-core</connection>
 	</scm>
 
 	<properties>
-		<wicket.version>1.4.7</wicket.version>
+		<wicket.version>1.4.8</wicket.version>
 		<jetty.version>6.1.22</jetty.version>
 		<lucene.version>2.4.1</lucene.version>
         <slf4j.version>1.5.11</slf4j.version>
@@ -570,6 +572,7 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.2</version>
