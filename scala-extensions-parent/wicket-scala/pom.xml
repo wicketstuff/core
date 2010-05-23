@@ -11,7 +11,7 @@
 
 	<artifactId>wicket-scala</artifactId>
 	<name>Wicket-Scala</name>
-
+	<packaging>jar</packaging>
 	<description>Collection of code relevant to developing Wicket with Scala, including core utilities, Wicket extensions, Wicket Components and Scala language extensions.</description>
 
 	<dependencies>

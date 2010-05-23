@@ -10,7 +10,6 @@
 
 	<artifactId>sample</artifactId>
 	<name>Wicket-Scala Samples</name>
-
 	<description>An example project demonstrating various uses of the WicketStuff-Scala-Extensions project.</description>
 
 	<dependencies>
