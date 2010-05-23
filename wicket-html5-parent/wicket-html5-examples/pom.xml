@@ -4,7 +4,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicket-html5-examples</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
+<!--	<version>1.0-SNAPSHOT</version> -->
 	<name>Wicket HTML5 :: Wicket-HTML5 Examples</name>
 	<description>
 		Some simple components and behaviors to support HTMl5
@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicket-html5-parent</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.4.8-SNAPSHOT</version>
 	</parent>
 	
 	<organization>
@@ -34,18 +34,19 @@
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicket-html5</artifactId>
+			<version>${project.version}</version>
 		</dependency>                    
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20090211</version>
 		</dependency>
-		<!--  WICKET DEPENDENCIES -->
+		<!--  WICKET DEPENDENCIES 
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket</artifactId>
 		</dependency>
-		
+		-->
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -66,34 +67,34 @@
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-util</artifactId>
-			<version>${jetty.version}</version>
+			<version>${eclipse.jetty.version}</version>
 			<scope>test</scope>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
-			<version>${jetty.version}</version>
+			<version>${eclipse.jetty.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-webapp</artifactId>
-			<version>${jetty.version}</version>
+			<version>${eclipse.jetty.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 		 <groupId>org.eclipse.jetty</groupId>
 		  <artifactId>jetty-servlet</artifactId>
-		  <version>${jetty.version}</version>
+		  <version>${eclipse.jetty.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-websocket</artifactId>
-			<version>${jetty.version}</version>
+			<version>${eclipse.jetty.version}</version>
 			<scope>test</scope>
 		</dependency>
 		
