@@ -2,7 +2,7 @@
     <parent>
         <artifactId>artwork-parent</artifactId>
         <groupId>org.wicketstuff</groupId>
-        <version>1.4.7</version>
+        <version>1.4.8-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wicketstuff</groupId>
