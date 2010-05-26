@@ -4,7 +4,7 @@
     <parent>
         <artifactId>wicket-syringe-parent</artifactId>
         <groupId>org.wicketstuff</groupId>
-        <version>1.4-rc7</version>
+        <version>1.4.8-SNAPSHOT</version>
     </parent>
     <artifactId>wicket-syringe-spring</artifactId>
     <name>Spring Syringe Plugin</name>
