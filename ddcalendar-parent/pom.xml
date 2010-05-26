@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>1.4-rc7</version>
+		<version>1.4.8-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>ddcalendar-parent</artifactId>
@@ -20,6 +20,7 @@
 		See the child project "ddcalendar" for a more complete description.
 	</description>
 
+	<!-- not needed when we deploy using oss.sonatype.org
 	<distributionManagement>
 		<snapshotRepository>
 			<id>repo</id>
@@ -33,6 +34,8 @@
 			<url>file:/home/wicket/tomcat/webapps/maven/repository/</url>
 		</repository>
 	</distributionManagement>
+	-->
+
 	<ciManagement>
 		<system>TeamCity</system>
 		<url>http://wicketstuff.org/teamcity</url>

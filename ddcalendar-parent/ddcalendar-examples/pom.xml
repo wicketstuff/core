@@ -2,14 +2,13 @@
   <parent>
     <artifactId>ddcalendar-parent</artifactId>
     <groupId>org.wicketstuff</groupId>
-    <version>1.4-rc7</version>
+    <version>1.4.8-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.wicketstuff</groupId>
   <artifactId>ddcalendar-examples</artifactId>
   <packaging>war</packaging>
   <name>Drag and drop calendar - Examples</name>
-  <version>1.0-SNAPSHOT</version>
   <description></description>
   <licenses>
     <license>
@@ -69,11 +68,6 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>org.apache.wicket</groupId>
-      <artifactId>wicket</artifactId>
-      <version>${wicket.version}</version>
-    </dependency>
-    <dependency>
         <groupId>org.wicketstuff</groupId>
         <artifactId>ddcalendar</artifactId>
         <version>${project.version}</version>
@@ -108,7 +102,4 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
-  <properties>
-    <wicket.version>1.4-rc4</wicket.version>
-  </properties>
 </project>
