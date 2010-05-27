@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>mbeanview-parent</artifactId>
-		<version>1.4.7</version>
+		<version>1.4.7.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>mbeanview</artifactId>
@@ -21,7 +21,7 @@
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>fixed-feedback-panel</artifactId>
-			<version>1.4.7</version>
+			<version>1.4.7.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<licenses>

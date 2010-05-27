@@ -5,7 +5,7 @@
     <parent>
       <groupId>org.wicketstuff</groupId>
       <artifactId>objectautocomplete-parent</artifactId>
-      <version>1.4.7</version>
+      <version>1.4.7.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>objectautocomplete-examples</artifactId>
