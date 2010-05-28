@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>wicketstuff-core</artifactId>
         <groupId>org.wicketstuff</groupId>
-        <version>1.4.9-SNAPSHOT</version>
+        <version>1.4.9</version>
     </parent>
     <groupId>org.wicketstuff</groupId>
     <artifactId>wicket-html5-parent</artifactId>
@@ -12,7 +11,7 @@
 <!--    <version>1.0-SNAPSHOT</version> -->
     <!-- TODO project name  -->
     <name>Wicket HTML5 :: Parent</name>
-    <description></description>
+    <description />
 
     <organization>
         <name>Mystic Coders, LLC</name>
