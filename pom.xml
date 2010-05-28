@@ -29,6 +29,7 @@
 		<module>javaee-inject-parent</module>
 		<module>jslibraries</module>
 		<module>jquery-parent</module>
+		<module>jsr303-parent</module>
 		<module>misc</module>
 		<module>minis-parent</module>
 		<module>objectautocomplete-parent</module>
