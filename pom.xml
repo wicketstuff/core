@@ -6,7 +6,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>1.4.8-SNAPSHOT</version>
+	<version>1.4.9-SNAPSHOT</version>
 
 	<name>WicketStuff Core Parent</name>
 	<description>
@@ -305,7 +305,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>1.4.8</wicket.version>
+		<wicket.version>1.4.9</wicket.version>
 		<jetty.version>6.1.22</jetty.version>
 		<lucene.version>2.4.1</lucene.version>
         <slf4j.version>1.5.11</slf4j.version>
