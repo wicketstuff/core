@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>jsr303-parent</artifactId>
-		<version>1.4.8-SNAPSHOT</version>
+		<version>1.4.9.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jsr303-examples</artifactId>
@@ -58,4 +58,24 @@
 			<version>4.0.2.GA</version>
 		</dependency>
 	</dependencies>
+
+<profiles>
+		<profile>
+			<id>jboss repo</id>
+ 
+			<activation>
+			<activeByDefault>true</activeByDefault>
+			 </activation>
+			<repositories>
+				<repository>
+					<id>hibernate-releases</id>
+					<name>hibernate releases</name>
+            		<url>http://repository.jboss.org/maven2</url>
+					<releases><enabled>true</enabled></releases>
+
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
+
 </project>
