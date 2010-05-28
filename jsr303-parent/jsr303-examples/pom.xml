@@ -58,4 +58,24 @@
 			<version>4.0.2.GA</version>
 		</dependency>
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>jboss repo</id>
+ 
+			<activation>
+			<activeByDefault>true</activeByDefault>
+			 </activation>
+			<repositories>
+				<repository>
+					<id>hibernate-releases</id>
+					<name>hibernate releases</name>
+            		<url>http://repository.jboss.org/maven2</url>
+					<releases><enabled>true</enabled></releases>
+
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
+
 </project>
