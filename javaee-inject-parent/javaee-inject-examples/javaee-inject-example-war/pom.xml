@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>javaee-inject-examples</artifactId>
-        <version>1.4.8</version>
+        <version>1.4.8-SNAPSHOT</version>
     </parent>
     <artifactId>javaee-inject-example-war</artifactId>
     <packaging>war</packaging>
@@ -48,7 +48,7 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>javaee-inject-example-ejb</artifactId>
             <version>${project.version}</version>
-            <scope>provided</scope>
+            <!-- mocleiri: this is causing a problem with release resolution of this artifact <scope>provided</scope>  -->
         </dependency>
     </dependencies>
 </project>
