@@ -171,7 +171,7 @@
     <properties>
        <!-- inherited from parent <wicket.version>1.4.7</wicket.version> -->
 	<!-- this is for eclipse jetty included in the examples -->
-       <eclipse.jetty.version>7.0.2.v20100331</eclipse.jetty.version> 
+       <eclipse.jetty.version>7.1.3.v20100526</eclipse.jetty.version> 
        <!-- <wicket-html5.version>1.0-SNAPSHOT</wicket-html5.version> -->
     </properties>
 </project>
