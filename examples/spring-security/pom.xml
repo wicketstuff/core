@@ -19,12 +19,12 @@
 	<parent>
 		<artifactId>examples</artifactId>
 		<groupId>org.apache.wicket.wicket-security</groupId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.4</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>spring-security</artifactId>
 	<packaging>war</packaging>
-	<version>1.4-SNAPSHOT</version>
+	<version>1.4</version>
 	<name>Spring Security example</name>
 	<description>Spring Security integration with Wicket</description>
 

@@ -19,14 +19,14 @@
 	<parent>
 		<artifactId>examples</artifactId>
 		<groupId>org.apache.wicket.wicket-security</groupId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.4</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.apache.wicket.wicket.security</groupId>
 	<artifactId>secureforms-example</artifactId>
 	<packaging>war</packaging>
 	<name>Secure Form example</name>
-	<version>1.4-SNAPSHOT</version>
+	<version>1.4</version>
 	<description>Sample on how to use secure forms</description>
 	<licenses>
 		<license>
