@@ -20,7 +20,7 @@
 	<parent>
 		<groupId>org.apache.wicket.wicket-security</groupId>
 		<artifactId>wicket-security</artifactId>
-		<version>1.4</version>
+		<version>1.5-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>examples</artifactId>
