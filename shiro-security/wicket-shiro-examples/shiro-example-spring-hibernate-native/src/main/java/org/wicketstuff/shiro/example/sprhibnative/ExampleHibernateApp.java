@@ -30,7 +30,7 @@ public class ExampleHibernateApp extends ExampleApplication
 	@Override
 	protected void init()
 	{
-		addComponentInstantiationListener(new SpringComponentInjector(this, context()));
+		addComponentInstantiationListener(new SpringComponentInjector(this, context(), true));
 
 		// do the standard stuff...
 		super.init();

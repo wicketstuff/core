@@ -23,8 +23,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicket-shiro-parent</artifactId>
-		<version>1.4.8-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
+		<version>1.4.10-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicket-shiro</artifactId>
