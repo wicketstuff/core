@@ -32,7 +32,7 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 
 	public static final JQueryJavascriptResourceReference uiDatepickerJs = new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker.min.js");
 
-	private JsMap options = new JsMap();
+	protected JsMap options = new JsMap();
 
 
 	public DatePicker() {
