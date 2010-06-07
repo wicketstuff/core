@@ -32,7 +32,7 @@ import org.apache.commons.collections.CollectionUtils;
 
 public class BasicSuffixTrieTestCase extends TestCase {
 
-	private Trie<String> trie;
+	private PatriciaTrie<String> trie;
 	private List<String> dataList;
 
 	private ArrayList<String> doubleZeroWordList;
@@ -55,7 +55,7 @@ public class BasicSuffixTrieTestCase extends TestCase {
 
 	protected void init() {
 
-		this.trie = new Trie<String>(new AbstractTrieConfiguration<String>() {
+		this.trie = new PatriciaTrie<String>(new AbstractTrieConfiguration<String>() {
 
 			/*
 			 * (non-Javadoc)
