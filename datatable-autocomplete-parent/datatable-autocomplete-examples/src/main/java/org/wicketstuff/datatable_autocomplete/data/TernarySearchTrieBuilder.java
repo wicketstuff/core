@@ -30,27 +30,30 @@ import java.util.jar.JarFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.trie.AbstractTrieConfiguration;
-import org.wicketstuff.datatable_autocomplete.trie.PatriciaTrie;
-import org.wicketstuff.datatable_autocomplete.trie.TrieNodeInspectingVisitor;
+import org.wicketstuff.datatable_autocomplete.tst.TernaryNodeCountingVisitor;
+import org.wicketstuff.datatable_autocomplete.tst.TernarySearchTrie;
 
 /**
- * @author mocleirihe boot class path for the rt.jar and then loading X methods where X is large.
+ * @author mocleiri
+ * 
+ * Builds a TernartSearchTrie by loading Methods from the rt.jar in the JVM running the examples.
+ * 
  *
  */
-public final class TrieBuilder {
+public final class TernarySearchTrieBuilder {
 
-	private static final Logger log = LoggerFactory.getLogger(TrieBuilder.class);
+	private static final Logger log = LoggerFactory.getLogger(TernarySearchTrieBuilder.class);
 	
 	// holds the count of first charcter to count
 	private Map<String, List<Method>>map = new LinkedHashMap<String, List<Method>>();
 
-	private PatriciaTrie<Method> trie;
+	private TernarySearchTrie<Method> trie;
 	
 	/**
 	 * 
 	 */
-	public TrieBuilder() {
-		trie = new PatriciaTrie<Method>(new AbstractTrieConfiguration<Method>() {
+	public TernarySearchTrieBuilder(final boolean suffixTrie) {
+		trie = new TernarySearchTrie<Method>(new AbstractTrieConfiguration<Method>() {
 
 			/* (non-Javadoc)
 			 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#getWord(java.lang.Object)
@@ -72,8 +75,7 @@ public final class TrieBuilder {
 			 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#isSuffixTree()
 			 */
 			public boolean isSuffixTree() {
-				// TODO Auto-generated method stub
-				return false;
+				return suffixTrie;
 			}
 			
 			
@@ -153,7 +155,7 @@ public final class TrieBuilder {
 						if (addedElements >= maxElements) {
 							
 							log.info ("indexed " + addedElements + " elements.");
-							trie.simplifyIndex();
+//							trie.simplifyIndex();
 							return;
 						}
 						
@@ -173,23 +175,8 @@ public final class TrieBuilder {
 		}
 		
 		log.info ("indexed " + addedElements + " elements.");
-		// compact the trie.
 		
-		TrieNodeInspectingVisitor<Method> visitor = new TrieNodeInspectingVisitor<Method>();
-		
-		trie.visit(visitor);
-		
-		log.info("total trie nodes = " + visitor.getTotalNodes());
-		
-		log.info("total consolidateable = " + visitor.getTotalConsolidateable());
-		
-		trie.simplifyIndex();
-		
-		visitor.reset();
-		
-		trie.visit(visitor);
-		
-		log.info("total trie nodes = " + visitor.getTotalNodes());
+		trie.visit(new TernaryNodeCountingVisitor<Method>());
 		
 		
 		
@@ -201,7 +188,7 @@ public final class TrieBuilder {
 			
 	}
 
-	public PatriciaTrie<Method> getTrie() {
+	public TernarySearchTrie<Method> getTrie() {
 		return trie;
 	}
 }

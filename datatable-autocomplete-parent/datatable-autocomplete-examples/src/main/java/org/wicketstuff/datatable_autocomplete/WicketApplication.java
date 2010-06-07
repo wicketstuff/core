@@ -23,7 +23,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.data.TrieBuilder;
-import org.wicketstuff.datatable_autocomplete.trie.Trie;
+import org.wicketstuff.datatable_autocomplete.trie.PatriciaTrie;
 import org.wicketstuff.datatable_autocomplete.web.page.HomePage;
 
 
@@ -42,7 +42,7 @@ public class WicketApplication extends WebApplication {
 	private static Logger log = LoggerFactory.getLogger(WicketApplication.class);
 	
 	
-	private static Trie<Method> trie;
+	private static PatriciaTrie<Method> trie;
 
 	/**
 	 * 
@@ -75,7 +75,7 @@ public class WicketApplication extends WebApplication {
 		
 	}
 
-	public static Trie<Method> getTrie() {
+	public static PatriciaTrie<Method> getTrie() {
 		
 		return trie;
 	}

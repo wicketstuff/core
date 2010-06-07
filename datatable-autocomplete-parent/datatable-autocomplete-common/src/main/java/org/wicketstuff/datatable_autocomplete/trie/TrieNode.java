@@ -191,6 +191,10 @@ public class TrieNode<C> implements Serializable {
 	 * @return return the node that the word was finally attached to
 	 */
 	public TrieNode<C> index (String word, C object) {
+		
+		if (!configuration.isIndexCaseSensitive())
+			word = word.toLowerCase();
+		
 		return index(word, object, 0);
 	}
 
@@ -208,8 +212,7 @@ public class TrieNode<C> implements Serializable {
 	private TrieNode<C> index(String word, C context, int startingIndex) {
 
 		
-		if (!configuration.isIndexCaseSensitive())
-			word = word.toLowerCase();
+		
 		
 		if (word.length() == startingIndex) {
 

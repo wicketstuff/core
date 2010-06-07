@@ -14,7 +14,7 @@
  * the License.
  */
 
-package org.wicketstuff.datatable_autocomplete.trie;
+package org.wicketstuff.datatable_autocomplete.tst;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -26,10 +26,10 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.wicketstuff.datatable_autocomplete.data.TrieBuilder;
+import org.wicketstuff.datatable_autocomplete.data.TernarySearchTrieBuilder;
 
 /**
- * @author mocleiriilding properly.
+ * @author mocleiri
  * 
  *         This done in the examples because of the availability of the
  *         TrieBuilder which can build a large dataset.
@@ -40,22 +40,22 @@ public class LargeTrieTestCase extends TestCase {
 
 	// note you will need to increase the heap size to run this example
 	private static final int TRIE_SIZE = 125000;
-	private PatriciaTrie<Method> trie;
-	private TrieBuilder builder;
+	private TernarySearchTrie<Method> trie;
+	private TernarySearchTrieBuilder builder;
 
 	/**
 	 * 
 	 */
 	public LargeTrieTestCase() {
 		super("LargeTrieTestCase");
-		init();
+		init(true);
 	}
 
 	/*
 	 */
-	protected void init() {
+	protected void init(boolean isSuffixTrie) {
 
-		builder = new TrieBuilder();
+		builder = new TernarySearchTrieBuilder(isSuffixTrie);
 
 		builder.buildTrie(TRIE_SIZE);
 
@@ -81,13 +81,14 @@ public class LargeTrieTestCase extends TestCase {
 		int total = 0;
 
 		List<String> nextCharacterList = new LinkedList<String>();
+		
 		nextCharacterList.addAll(trie.getNextNodeCharacterSet());
 
 		Collections.sort(nextCharacterList);
 
 		for (String c : nextCharacterList) {
 
-			List<Method> wordList = trie.getWordList(c);
+			List<Method> wordList = trie.getWordList(c, -1);
 
 			List<Method> indexedList = builder.getListForFirstCharacter(c);
 
@@ -136,7 +137,7 @@ public class LargeTrieTestCase extends TestCase {
 
 	public void testSpecificWords() {
 
-		List<Method> wordList = trie.getWordList("assign");
+		List<Method> wordList = trie.getWordList("assign", -1);
 
 		for (Method method : wordList) {
 
@@ -146,7 +147,7 @@ public class LargeTrieTestCase extends TestCase {
 
 		System.out.println("assign matches " + wordList.size() + " methods.");
 		
-		wordList = trie.getWordList("access");
+		wordList = trie.getWordList("access", -1);
 
 		for (Method method : wordList) {
 
