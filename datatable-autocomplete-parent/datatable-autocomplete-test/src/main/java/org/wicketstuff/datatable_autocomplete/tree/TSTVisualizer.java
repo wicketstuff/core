@@ -20,9 +20,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 import org.apache.commons.collections15.Transformer;
-import org.wicketstuff.datatable_autocomplete.trie.AbstractTrieConfiguration;
-import org.wicketstuff.datatable_autocomplete.trie.PatriciaTrie;
-import org.wicketstuff.datatable_autocomplete.trie.TrieNode;
+import org.wicketstuff.datatable_autocomplete.tst.TernaryNode;
 
 import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.algorithms.layout.TreeLayout;
@@ -32,37 +30,36 @@ import edu.uci.ics.jung.visualization.renderers.Renderer.VertexLabel.Position;
 
 /**
  * @author mocleiri
- * 
- * To visualize the Patricia-Trie using JUNG.
- * 
  *
  */
-public class TrieVisualizer {
+public class TSTVisualizer {
 
-	private TrieGraph<String> graph;
-
+	
+	
+	
 	/**
+	 * @param title 
 	 * @param graph 
 	 * 
 	 */
-	public TrieVisualizer(String title, TrieGraph<String> graph) {
-	
+	public TSTVisualizer(String title, TSTGraph<String> graph) {
+		super();
 		
 		this.graph = graph;
 		
 		// The Layout<V, E> is parameterized by the vertex and edge types
-		Layout<TrieNode<String>, String> layout = new TreeLayout<TrieNode<String>, String>(new DelegateForest<TrieNode<String>, String>(graph));
+		Layout<TernaryNode<String>, String> layout = new TreeLayout<TernaryNode<String>, String>(new DelegateForest<TernaryNode<String>, String>(graph));
 //		layout.setSize(new Dimension(300,300)); // sets the initial size of the space
 		// The BasicVisualizationServer<V,E> is parameterized by the edge types
-		BasicVisualizationServer<TrieNode<String>, String>  vv =
-		new BasicVisualizationServer<TrieNode<String>, String> (layout);
+		BasicVisualizationServer<TernaryNode<String>, String>  vv =
+		new BasicVisualizationServer<TernaryNode<String>, String> (layout);
 		vv.setPreferredSize(new Dimension(350,350)); //Sets the viewing area size
 		
 		vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
 		
-		vv.getRenderContext().setVertexLabelTransformer(new Transformer<TrieNode<String>, String>() {
+		vv.getRenderContext().setVertexLabelTransformer(new Transformer<TernaryNode<String>, String>() {
 			
-			public String transform(TrieNode<String> node) {
+			public String transform(TernaryNode<String> node) {
 				return node.getCharacter();
 			}
 		});	
@@ -73,47 +70,9 @@ public class TrieVisualizer {
 		frame.pack();
 		frame.setVisible(true);
 	}
+
+	private TSTGraph<String>graph;
 	
-	public static void main(String[] args) {
-		
-		PatriciaTrie<String>trie = new PatriciaTrie<String>(new AbstractTrieConfiguration<String>() {
-
-			/* (non-Javadoc)
-			 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#getWord(java.lang.Object)
-			 */
-			public String getWord(String ctx) {
-				return ctx;
-			}
-
-			/* (non-Javadoc)
-			 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#isIndexCaseSensitive()
-			 */
-			public boolean isIndexCaseSensitive() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			/* (non-Javadoc)
-			 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#isSuffixTree()
-			 */
-			public boolean isSuffixTree() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-		});
-		
-		
-		trie.index("transit");
-		trie.index("trip");
-		
-		
-		TrieGraph<String> g = new TrieGraph<String>(trie);
-		
-		new TrieVisualizer("Patrcia Trie", g);
-		
-		
-		
-		}
+	
 
 }

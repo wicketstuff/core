@@ -10,4 +10,59 @@
   <version>1.4.10-SNAPSHOT</version>
   <name>DataTable Autocomplete Test</name>
   <description>Test code for visualizing a Trie.  Seperated so that projects can use the JUNG visualization against their actual production data</description>
+  
+  <dependencies>
+  
+  
+   <!-- These are for visualizing the Trie and Ternary Search Trie to make sure their structure is correct (more towards tree like than a linked list)  -->
+  <dependency>
+  	<groupId>net.sf.jung</groupId>
+  	<artifactId>jung2</artifactId>
+  	<version>2.0.1</version>
+  	<type>pom</type>
+  </dependency>
+  <dependency>
+  	<groupId>net.sf.jung</groupId>
+  	<artifactId>jung-visualization</artifactId>
+  	<version>2.0.1</version>
+  	<type>jar</type>
+  </dependency>
+  <dependency>
+  	<groupId>net.sf.jung</groupId>
+  	<artifactId>jung-api</artifactId>
+  	<version>2.0.1</version>
+  	<type>jar</type>
+  </dependency>
+  <dependency>
+  	<groupId>net.sf.jung</groupId>
+  	<artifactId>jung-jai</artifactId>
+  	<version>2.0.1</version>
+  	<type>jar</type>
+  </dependency>
+  <dependency>
+  	<groupId>net.sf.jung</groupId>
+  	<artifactId>jung-graph-impl</artifactId>
+  	<version>2.0.1</version>
+  	<type>jar</type>
+  </dependency>
+  <dependency>
+  	<groupId>net.sf.jung</groupId>
+  	<artifactId>jung-io</artifactId>
+  	<version>2.0.1</version>
+  	<type>jar</type>
+  </dependency>
+  <dependency>
+  	<groupId>org.slf4j</groupId>
+  	<artifactId>slf4j-log4j12</artifactId>
+  	<type>jar</type>
+  	<scope>test</scope>
+  </dependency>
+  <dependency>
+  	<groupId>org.wicketstuff</groupId>
+  	<artifactId>datatable-autocomplete-common</artifactId>
+  	<version>${project.version}</version>
+  	<type>jar</type>
+  	<scope>compile</scope>
+  </dependency>
+  </dependencies>
 </project>
