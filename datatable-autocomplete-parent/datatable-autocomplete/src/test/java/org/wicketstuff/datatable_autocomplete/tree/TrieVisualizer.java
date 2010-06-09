@@ -74,7 +74,7 @@ public class TrieVisualizer {
 		frame.setVisible(true);
 	}
 	
-public static void main(String[] args) {
+	public static void main(String[] args) {
 		
 		PatriciaTrie<String>trie = new PatriciaTrie<String>(new AbstractTrieConfiguration<String>() {
 
