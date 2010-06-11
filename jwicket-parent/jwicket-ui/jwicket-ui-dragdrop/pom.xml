@@ -21,14 +21,9 @@
 	
 	<developers>
 		<developer>
-			<name>Stefan Lindnnner</name>
+			<name>Stefan Lindner</name>
 			<id>lindner</id>
 			<email>lindner at visionet.de</email>
-		</developer>
-		<developer>
-			<name>Tauren Mills</name>
-			<id>tauren</id>
-			<email>tauren at tauren.com</email>
 		</developer>
 	</developers>
 

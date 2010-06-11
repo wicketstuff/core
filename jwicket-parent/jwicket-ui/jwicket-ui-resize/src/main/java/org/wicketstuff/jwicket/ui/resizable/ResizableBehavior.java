@@ -24,7 +24,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 	private static final long serialVersionUID = 1L;
 	private static final JQueryJavascriptResourceReference uiResizableJs = new JQueryJavascriptResourceReference(ResizableBehavior.class, "jquery.ui.resizable.min.js");
 
-	private JsMap options = new JsMap();
+	protected JsMap options = new JsMap();
 
 
 	public ResizableBehavior() {
