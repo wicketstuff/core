@@ -27,10 +27,10 @@ public class LibraryData {
 		Library.register(Library.JQUERY, LocalProvider.DEFAULT, new int[][] {
 				{ 1, 0, 4 }, { 1, 1, 4 }, { 1, 2 }, { 1, 2, 1 }, { 1, 2, 2 },
 				{ 1, 2, 3 }, { 1, 2, 4 }, { 1, 2, 5 }, { 1, 2, 6 }, { 1, 3 },
-				{ 1, 3, 1 }, { 1, 3, 2 } });
+				{ 1, 3, 1 }, { 1, 3, 2 } ,{ 1, 4, 0 },{ 1, 4, 1 },{ 1, 4, 2 }});
 		Library.register(Library.JQUERY_UI, LocalProvider.DEFAULT,
 				new int[][] { { 1, 5, 2 }, { 1, 5, 3 }, { 1, 7, 0 },
-						{ 1, 7, 1 }, { 1, 7, 2 } });
+						{ 1, 7, 1 }, { 1, 7, 2 } ,{ 1, 8,0 },{ 1, 8,1 }});
 		Library.register(Library.MOOTOOLS_CORE, LocalProvider.DEFAULT,
 				new int[][] { { 1, 2, 1 }, });
 		Library.register(Library.MOOTOOLS_MORE, LocalProvider.DEFAULT,
@@ -53,10 +53,10 @@ public class LibraryData {
 		// Google CDN
 		Library.register(Library.JQUERY, CDN.GOOGLE,
 				new int[][] { { 1, 2, 3 }, { 1, 2, 6 }, { 1, 3, 0 },
-						{ 1, 3, 1 }, { 1, 3, 2 } });
+						{ 1, 3, 1 }, { 1, 3, 2 } ,{ 1, 4, 0 },{ 1, 4, 1 },{ 1, 4, 2 }});
 		Library.register(Library.JQUERY_UI, CDN.GOOGLE, new int[][] {
 				{ 1, 5, 2 }, { 1, 5, 3 }, { 1, 6 }, { 1, 7, 0 }, { 1, 7, 1 },
-				{ 1, 7, 2 } });
+				{ 1, 7, 2 },{ 1, 8,0 },{ 1, 8,1 } });
 		Library.register(Library.MOOTOOLS_CORE, CDN.GOOGLE, new int[][] {
 				{ 1, 11 }, { 1, 2, 1 }, { 1, 2, 2 }, { 1, 2, 3 } });
 		Library.register(Library.PROTOTYPE, CDN.GOOGLE, new int[][] {

@@ -109,7 +109,7 @@ public class DnDSortableBehavior extends JQueryBehavior implements IBehaviorList
         params.put("callbackUrl", getCallbackUrl());
         params.put("dndHandlerStart", getJSFunctionName4Start());
         params.put("dndHandlerStop", getJSFunctionName4Stop());
-        params.put("startOnLoad", options_.get("startOnLoad", "true").toString());
+       // params.put("startOnLoad", options_.get("startOnLoad", "true").toString());
         // perform subsitution and return the result
         return template.asString(params);
     }
@@ -120,6 +120,11 @@ public class DnDSortableBehavior extends JQueryBehavior implements IBehaviorList
             back = getComponent().getId() + "_dndContainer";
         }
         return back;
+    }
+    
+    @Override
+    public String getOnReadyScript() {
+      return "$( "+getJSFunctionName4Start()+" );";
     }
 
     /**

@@ -664,6 +664,14 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 	/**
 	 * If set to {@code true}, the callback-Method {@link #onDragStop(AjaxRequestTarget,SpecialKeys)} 
 	 * is called when the drag operation ends.
+	 *
+	 * Be careful when using this in conjunction with {@link DroppableBehavior#onDrop(AjaxRequestTarget, Component, SpecialKeys)}.
+	 * The Ajax calls issued by jQuery are processed asynchronous. So it my happen that the
+	 * onDrop event reaches Wicket <em>before</em> the onDragStop event. This will cause
+	 * an Exception in Wicket's internal processing if you replaced the dragged component with a new one
+	 * in your onDrop handler becaus the dragged component no longer exists in wickets store when
+	 * the onDragStop event is processed by Wicket.
+	 *
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
 	 */
@@ -677,6 +685,9 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 	 * If set to {@code true}, the callback-Method {@link #onDrag(AjaxRequestTarget,SpecialKeys)} 
 	 * is called every time the mouse moves during the drag operation.
 	 * Be careful using this callback because it can generate a lot of Ajax calls.
+	 *
+	 * See {@link #setWantOnDragStartNotification(boolean) for a serious warning!
+	 *
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
 	 */

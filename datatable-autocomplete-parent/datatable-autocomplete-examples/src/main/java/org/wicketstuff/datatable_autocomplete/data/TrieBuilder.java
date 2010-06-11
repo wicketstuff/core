@@ -30,7 +30,7 @@ import java.util.jar.JarFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.trie.AbstractTrieConfiguration;
-import org.wicketstuff.datatable_autocomplete.trie.Trie;
+import org.wicketstuff.datatable_autocomplete.trie.PatriciaTrie;
 import org.wicketstuff.datatable_autocomplete.trie.TrieNodeInspectingVisitor;
 
 /**
@@ -44,13 +44,13 @@ public final class TrieBuilder {
 	// holds the count of first charcter to count
 	private Map<String, List<Method>>map = new LinkedHashMap<String, List<Method>>();
 
-	private Trie<Method> trie;
+	private PatriciaTrie<Method> trie;
 	
 	/**
 	 * 
 	 */
 	public TrieBuilder() {
-		trie = new Trie<Method>(new AbstractTrieConfiguration<Method>() {
+		trie = new PatriciaTrie<Method>(new AbstractTrieConfiguration<Method>() {
 
 			/* (non-Javadoc)
 			 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#getWord(java.lang.Object)
@@ -201,7 +201,7 @@ public final class TrieBuilder {
 			
 	}
 
-	public Trie<Method> getTrie() {
+	public PatriciaTrie<Method> getTrie() {
 		return trie;
 	}
 }

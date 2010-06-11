@@ -40,7 +40,7 @@ public class LargeTrieTestCase extends TestCase {
 
 	// note you will need to increase the heap size to run this example
 	private static final int TRIE_SIZE = 125000;
-	private Trie<Method> trie;
+	private PatriciaTrie<Method> trie;
 	private TrieBuilder builder;
 
 	/**

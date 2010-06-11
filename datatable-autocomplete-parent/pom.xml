@@ -22,6 +22,7 @@
 		<module>datatable-autocomplete</module>
 		<module>datatable-autocomplete-common</module>
 		<module>datatable-autocomplete-examples</module>
+		<module>datatable-autocomplete-test</module>
 	</modules>
 	
 	<developers>

@@ -46,6 +46,7 @@ import org.wicketstuff.datatable_autocomplete.provider.ITrieProvider;
 import org.wicketstuff.datatable_autocomplete.provider.TrieDataProvider;
 import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandler;
 import org.wicketstuff.datatable_autocomplete.trie.ITrieFilter;
+import org.wicketstuff.datatable_autocomplete.trie.PatriciaTrie;
 import org.wicketstuff.datatable_autocomplete.trie.Trie;
 import org.wicketstuff.datatable_autocomplete.web.model.LoadableDetachableMethodModel;
 import org.wicketstuff.datatable_autocomplete.web.panel.MatchControlPanel;
@@ -309,7 +310,7 @@ classNameFilterField = new TextField<String>("filter", new Model<String>(""));
 				
 				StringBuffer buf = new StringBuffer();
 				
-				Trie<Method>trie = WicketApplication.getTrie();
+				PatriciaTrie<Method>trie = WicketApplication.getTrie();
 				
 				List<String>nextCharacterList = new LinkedList<String>();
 				nextCharacterList.addAll(trie.getNextNodeCharacterSet());
