@@ -354,7 +354,7 @@ public class MenuBarPanel extends Panel implements IStyleResolver {
 
 
 
-	@Override
+//	@Override commented out to build in java 1.5 (mocleiri)
 	public JQueryCssResourceReference[] getCssResources() {
 		return CSS;
 	}

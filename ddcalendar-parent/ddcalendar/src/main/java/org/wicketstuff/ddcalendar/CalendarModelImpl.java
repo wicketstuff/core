@@ -30,22 +30,24 @@ public abstract class CalendarModelImpl implements CalendarModel, Serializable {
 	
 	public abstract Set<CalendarEvent> getEvents(CalendarWeek week);
 
-	@Override
+	// annotations commented out by (mocleiri) to get java 1.5 compilation process to work
+	
+//	@Override
 	public CalendarWeek getWeek() {
 		return week;
 	}
 
-	@Override
+//	@Override
 	public Set<CalendarEvent> getEventsForCurrentWeek() {
 		return getEvents(getWeek());
 	}
 
-	@Override
+//	@Override
 	public void setNextWeek() {
 		week = week.getNextWeek();
 	}
 
-	@Override
+//	@Override
 	public void setPreviousWeek() {
 		week = week.getPreviousWeek();
 	}

@@ -6,7 +6,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>1.4.9.1-SNAPSHOT</version>
+	<version>1.4.9.1</version>
 
 	<name>WicketStuff Core Parent</name>
 	<description>
@@ -632,7 +632,7 @@
 							<Implementation-Title>${project.name}</Implementation-Title>
 							<Implementation-Version>${project.version} ${buildNumber} - ${user.name}</Implementation-Version>
 							<SCM-Revision>${buildNumber}</SCM-Revision>
-							<SCM-url>${scm.url}</SCM-url>
+							<SCM-url>${project.scm.url}</SCM-url>
 						</manifestEntries>
 					</archive>
 				</configuration>

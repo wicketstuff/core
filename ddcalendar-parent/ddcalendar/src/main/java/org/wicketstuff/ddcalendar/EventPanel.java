@@ -33,16 +33,16 @@ public class EventPanel<T extends CalendarEvent> extends Panel {
 		super(id, new IModel<CalendarEvent>() {
 			private static final long serialVersionUID = 1L;
 			
-			@Override
+//			@Override
 			public CalendarEvent getObject() {
 				return event;
 			}
 
-			@Override
+//			@Override
 			public void setObject(CalendarEvent object) {
 			}
 
-			@Override
+//			@Override
 			public void detach() {
 			}
 		});
