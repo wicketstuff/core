@@ -9,10 +9,10 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>jwicket-ui-resize</artifactId>
+	<artifactId>jwicket-ui-sort</artifactId>
 	<packaging>jar</packaging>
 
-    <name>jWicket: jQuery Wicket integration - ui.resize</name>
+    <name>jWicket: jQuery Wicket integration - ui.sort</name>
     <description>
         WicketJQuery by Stefan Lindner has been renamed to jWicket, mavenized, and migrated
         to WicketStuff. This Wicketstuff version supercedes the original version which was available

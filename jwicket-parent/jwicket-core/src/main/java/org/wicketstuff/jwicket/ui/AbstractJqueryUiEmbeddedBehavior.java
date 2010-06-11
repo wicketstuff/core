@@ -20,9 +20,12 @@ public abstract class AbstractJqueryUiEmbeddedBehavior extends JQueryDurableAjax
 
 
 	// CSS
+	public  static final JQueryCssResourceReference jQueryUiCss              = new JQueryCssResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "css/jquery-ui.css");
 	public  static final JQueryCssResourceReference jQueryUiBaseCss          = new JQueryCssResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "css/jquery.ui.base.css");
 	public  static final JQueryCssResourceReference jQueryUiThemeCss         = new JQueryCssResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "css/jquery.ui.theme.css");
+	public  static final JQueryCssResourceReference jQueryUiAccordionCss     = new JQueryCssResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "css/jquery.ui.accordion.css");
 	public  static final JQueryCssResourceReference jQueryUiCustomCss        = new JQueryCssResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "css/jquery-ui.custom.css");
+
 
 	public AbstractJqueryUiEmbeddedBehavior(final JQueryResourceReference... requiredLibraries) {
 		super(jQueryUiCoreJs, requiredLibraries);
