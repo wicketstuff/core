@@ -8,8 +8,9 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.Panel;
 
-public class Accordion<T extends Serializable> extends WebMarkupContainer {
+public class Accordion<T extends Serializable> extends Panel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -27,11 +28,13 @@ public class Accordion<T extends Serializable> extends WebMarkupContainer {
 				item.setRenderBodyOnly(true);
 			}
 		};
-		repeater.setRenderBodyOnly(true);
-		add(repeater);
-		setOutputMarkupId(true);
-		
-		add(new AccordionBehavior());
+
+		WebMarkupContainer accordion = new WebMarkupContainer("accordion");
+		accordion.setOutputMarkupId(true);
+		accordion.setRenderBodyOnly(false);
+		accordion.add(repeater);
+		accordion.add(new AccordionBehavior());
+		add(accordion);
 	}
 	
 	

@@ -10,10 +10,11 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
 
-public class Sortable<T extends Serializable> extends WebMarkupContainer {
+public class Sortable<T extends Serializable> extends Panel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -34,11 +35,8 @@ public class Sortable<T extends Serializable> extends WebMarkupContainer {
 				item.setRenderBodyOnly(true);
 			}
 		};
-		repeater.setRenderBodyOnly(true);
-		add(repeater);
-		setOutputMarkupId(true);
-		
-		add(sortableBehavior = new SortableBehavior() {
+
+		sortableBehavior = new SortableBehavior() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -56,7 +54,14 @@ public class Sortable<T extends Serializable> extends WebMarkupContainer {
 			protected void onRemoved(final AjaxRequestTarget target, final Component movedComponent) {
 				Sortable.this.onRemoved(target, movedComponent);
 			}
-		});
+		};
+		
+		WebMarkupContainer sortable = new WebMarkupContainer("sortable");
+		sortable.setOutputMarkupId(true);
+		sortable.setRenderBodyOnly(false);
+		sortable.add(repeater);
+		sortable.add(sortableBehavior);
+		add(sortable);
 	}
 
 

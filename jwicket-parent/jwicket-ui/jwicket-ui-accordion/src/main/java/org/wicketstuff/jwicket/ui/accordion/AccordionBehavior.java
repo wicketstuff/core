@@ -10,6 +10,7 @@ import org.wicketstuff.jwicket.IStyleResolver;
 import org.wicketstuff.jwicket.JQueryCssResourceReference;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
+import org.wicketstuff.jwicket.ui.sortable.SortableBehavior;
 
 
 public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implements IStyleResolver {
@@ -22,8 +23,10 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 
 	public AccordionBehavior() {
 		super(
+//AbstractJqueryUiEmbeddedBehavior.jQueryUiMouseJs,
 				AbstractJqueryUiEmbeddedBehavior.jQueryUiWidgetJs,
 				uiAccordionJs
+//,SortableBehavior.uiSortableJs
 			);
 			addCssResources(getCssResources());
 	}
@@ -99,7 +102,15 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 		builder.append("{");
 		builder.append(options.toString(rawOptions));
 		builder.append("}");
-		builder.append(");");
+		builder.append(")");
+		
+
+//builder.append(".sortable({axis: 'y', handle: 'h3', stop: function(event, ui) { stop = true; } })");
+		
+		
+		
+				
+		builder.append(";");
 
 		return builder;
 	}
