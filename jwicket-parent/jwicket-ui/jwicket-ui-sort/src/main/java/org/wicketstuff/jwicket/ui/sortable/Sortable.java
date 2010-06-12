@@ -17,6 +17,8 @@ import org.apache.wicket.model.IModel;
 public class Sortable<T extends Serializable> extends Panel {
 
 	private static final long serialVersionUID = 1L;
+	
+	public static final String SORTABLE_COMPONENT_ID = "sortable";
 
 	SortableBehavior sortableBehavior;
 
@@ -56,7 +58,7 @@ public class Sortable<T extends Serializable> extends Panel {
 			}
 		};
 		
-		WebMarkupContainer sortable = new WebMarkupContainer("sortable");
+		WebMarkupContainer sortable = new WebMarkupContainer(SORTABLE_COMPONENT_ID);
 		sortable.setOutputMarkupId(true);
 		sortable.setRenderBodyOnly(false);
 		sortable.add(repeater);

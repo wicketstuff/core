@@ -1,7 +1,6 @@
 package org.wicketstuff.jwicket.ui.sortable;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.Request;
@@ -48,15 +47,13 @@ public class SortableBehavior extends AbstractJqueryUiEmbeddedBehavior implement
 
 			String draggedItemId = request.getParameter("draggedItemId");
 
-System.out.println("----- respond: eventType = " + eventType);
-
 			// We need the body of the <li> tag, the component inside it
 			ChildrenFinder childrenFinder = new ChildrenFinder(draggedItemId);
 			component.getPage().visitChildren(childrenFinder);
 			if (childrenFinder.getFoundComponents().size() != 1)
 				throw new WicketRuntimeException("this should not happen");
 			Component sortedComponent = childrenFinder.getFoundComponents().get(0);
-System.out.println("\tsortedComponent = " + sortedComponent);
+
 			if (eventType == EventType.STOP) {
 				int newPosition = 0;
 
@@ -79,7 +76,7 @@ System.out.println("\tsortedComponent = " + sortedComponent);
 
 				try {
 					String s = request.getParameter("newPosition");
-System.out.println("\tnewPositon = " + s);
+
 					newPosition = Integer.parseInt(s);
 					otherSortableId = request.getParameter("otherSortableId");
 
@@ -96,35 +93,20 @@ System.out.println("\tnewPositon = " + s);
 				}
 			}
 			else if (eventType == EventType.REMOVE) {
-				int newPosition = 0;
+				if (sortedComponent instanceof ISortable)
+					((ISortable)sortedComponent).onRemoved(target);
 
-				try {
-					String s = request.getParameter("newPosition");
-System.out.println("\tnewPositon = " + s);
-					newPosition = Integer.parseInt(s);
-
-					if (sortedComponent instanceof ISortable) {
-						((ISortable)sortedComponent).onRemoved(target);
-					}
-
-					onRemoved(target, sortedComponent);
-				} catch (Exception e) {
-					// don't process 
-				}
+				onRemoved(target, sortedComponent);
 			}
-
-			
-			
-			
-//			otherSortableId
-			
-			
 		}
 	}
 
 	
 	public void connectWith(final Sortable<?> other) {
-		options.put(CONNECT_WITH_OPTION, "#" + other.getMarkupId());
+		Component otherSortable = other.get(Sortable.SORTABLE_COMPONENT_ID);
+		if (other == null)
+			throw new WicketRuntimeException("The provides Sortable has no sortable child with id '" + Sortable.SORTABLE_COMPONENT_ID + "'");
+		options.put(CONNECT_WITH_OPTION, "#" + otherSortable.getMarkupId());
 	}
 
 	
@@ -137,7 +119,6 @@ System.out.println("\tnewPositon = " + s);
 
 	@Override
 	protected JsBuilder getJsBuilder() {
-System.out.println("++++++++++ Sortable.getJsBuilder");
 		options.put(EventType.STOP.eventName,
 			new JsFunction(
 					"function(ev,ui) {" +
@@ -171,12 +152,6 @@ System.out.println("++++++++++ Sortable.getJsBuilder");
 		builder.append("}");
 		builder.append(");");
 
-Set<String> keySet = options.keySet();
-for (String s : keySet) {
-System.out.println("Key: " + s);
-}
-
-		
 		return builder;
 	}
 	
