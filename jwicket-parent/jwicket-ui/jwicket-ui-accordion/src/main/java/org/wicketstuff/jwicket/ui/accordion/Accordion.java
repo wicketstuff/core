@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.wicketstuff.jwicket.ui.sortable.SortableBehavior;
 
 public class Accordion<T extends Serializable> extends Panel {
 
@@ -34,6 +35,7 @@ public class Accordion<T extends Serializable> extends Panel {
 		accordion.setRenderBodyOnly(false);
 		accordion.add(repeater);
 		accordion.add(new AccordionBehavior());
+		accordion.add(new SortableBehavior()); // experimental
 		add(accordion);
 	}
 	

@@ -10,7 +10,6 @@ import org.wicketstuff.jwicket.IStyleResolver;
 import org.wicketstuff.jwicket.JQueryCssResourceReference;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
-import org.wicketstuff.jwicket.ui.sortable.SortableBehavior;
 
 
 public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implements IStyleResolver {
@@ -23,10 +22,8 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 
 	public AccordionBehavior() {
 		super(
-//AbstractJqueryUiEmbeddedBehavior.jQueryUiMouseJs,
 				AbstractJqueryUiEmbeddedBehavior.jQueryUiWidgetJs,
 				uiAccordionJs
-//,SortableBehavior.uiSortableJs
 			);
 			addCssResources(getCssResources());
 	}
@@ -41,41 +38,16 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 		if (component != null && (request = component.getRequest()) != null) {
 			EventType eventType = EventType.stringToType(request.getParameter(EventType.IDENTIFIER));
 
-			String id1 = "";
-			String id2 = "";
-			String id3 = "";
-			String id4 = "";
+			String newHeader = "";
+			String oldHeader = "";
+			String newContent = "";
+			String oldContent = "";
 
-			id1 = request.getParameter("newHeader");
-			id2 = request.getParameter("oldHeader");
-			id3 = request.getParameter("newContent");
-			id4 = request.getParameter("oldContent");
+			newHeader = request.getParameter("newHeader");
+			oldHeader = request.getParameter("oldHeader");
+			newContent = request.getParameter("newContent");
+			oldContent = request.getParameter("oldContent");
 
-
-			/*
-			if (component instanceof IResizable) {
-				IResizable resizableComponent = (IResizable)component;
-				if (eventType == EventType.RESIZE_END)
-					resizableComponent.onResized(target, top, left, width, height, originalTop, originalLeft, originalWidth, originalHeight, new SpecialKeys(request));
-				else if (eventType == EventType.RESIZE_START)
-					resizableComponent.onResizeStart(target, top, left, width, height, new SpecialKeys(request));
-				else if (eventType == EventType.RESIZE)
-					resizableComponent.onResize(target, top, left, width, height, new SpecialKeys(request));
-			}
-
-			if (eventType == EventType.RESIZE_END)
-				onResized(target, top, left, width, height, originalTop, originalLeft, originalWidth, originalHeight, new SpecialKeys(request));
-			else if (eventType == EventType.RESIZE_START)
-				onResizeStart(target, top, left, width, height, new SpecialKeys(request));
-			else if (eventType == EventType.RESIZE)
-				onResize(target, top, left, width, height, new SpecialKeys(request));
-			*/
-			
-			System.out.println("----- respond: component = " + component);
-			System.out.println("id1 = " + id1);
-			System.out.println("id2 = " + id2);
-			System.out.println("id3 = " + id3);
-			System.out.println("id4 = " + id4);
 		}
 	}
 
@@ -91,7 +63,6 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 							"+'&newContent='+jQuery(ui.newContent).attr('id')" +
 							"+'&oldContent='+jQuery(ui.oldContent).attr('id')" +
 							"+'&" + EventType.IDENTIFIER + "=" + EventType.CHANGE +
-//							"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
 							"'" +
 							"); }"));
 
@@ -103,12 +74,6 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 		builder.append(options.toString(rawOptions));
 		builder.append("}");
 		builder.append(")");
-		
-
-//builder.append(".sortable({axis: 'y', handle: 'h3', stop: function(event, ui) { stop = true; } })");
-		
-		
-		
 				
 		builder.append(";");
 
