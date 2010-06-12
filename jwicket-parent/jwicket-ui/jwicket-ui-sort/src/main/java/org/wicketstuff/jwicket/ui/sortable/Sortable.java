@@ -21,6 +21,8 @@ public class Sortable<T extends Serializable> extends Panel {
 	public static final String SORTABLE_COMPONENT_ID = "sortable";
 
 	SortableBehavior sortableBehavior;
+	
+	private WebMarkupContainer sortable;
 
 	public Sortable(final String id, final List<T> list) {
 		super(id);
@@ -58,7 +60,7 @@ public class Sortable<T extends Serializable> extends Panel {
 			}
 		};
 		
-		WebMarkupContainer sortable = new WebMarkupContainer(SORTABLE_COMPONENT_ID);
+		sortable = new WebMarkupContainer(SORTABLE_COMPONENT_ID);
 		sortable.setOutputMarkupId(true);
 		sortable.setRenderBodyOnly(false);
 		sortable.add(repeater);
@@ -85,4 +87,42 @@ public class Sortable<T extends Serializable> extends Panel {
 	protected void onRemoved(final AjaxRequestTarget target, final Component movedComponent) {}
 
 	
+	
+	/**
+	 * Sets the 'placeholder' property for this sortable. Please consult the
+	 * jquery documentation for a detailled description of this property.
+	 * @param value the placeholder css class name
+	 * @return this object
+	 */
+	public Sortable<T> setPlaceholder(final String value) {
+		if (value == null)
+			sortableBehavior.getOptions().remove("placeholder");
+		else
+			sortableBehavior.getOptions().put("placeholder", value);
+		return this;
+	}
+	public Sortable<T> setPlaceholder(final AjaxRequestTarget target, final String value) {
+		setPlaceholder(value);
+		target.appendJavascript("jQuery('#" + sortable.getMarkupId() + "').sortable('option','placeholder','" + value + "');");
+		return this;
+	}
+
+	/**
+	 * Sets the default 'placeholder' property for this sortable: 'ui-state-highlight'. Please consult the
+	 * jquery documentation for a detailled description of this property.
+	 * @return this object
+	 */
+	public Sortable<T> setPlaceholder() {
+		sortableBehavior.getOptions().put("placeholder", "ui-state-highlight");
+		return this;
+	}
+	public Sortable<T> setPlaceholder(final AjaxRequestTarget target) {
+		setPlaceholder("ui-state-highlight");
+		target.appendJavascript("jQuery('#" + sortable.getMarkupId() + "').sortable('option','placeholder','ui-state-highlight');");
+		return this;
+	}
+	
+	
+	
+
 }

@@ -8,6 +8,7 @@ import org.apache.wicket.Request;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JsMap;
 import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 
@@ -91,7 +92,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	/**
 	 * Sets the 'animate' property for this resizable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
 	 */
@@ -111,7 +112,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	/**
 	 * Sets the 'animateDuration' property for this resizable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
 	 */
@@ -134,7 +135,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	/**
 	 * Sets the 'animateEasing' property for this resizable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param value the behavior
 	 * @return this object
 	 */
@@ -157,7 +158,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	/**
 	 * Sets the 'aspectRatio' property for this resizable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param value the aspect ratio
 	 * @return this object
 	 */
@@ -194,7 +195,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	/**
 	 * Sets the 'autoHide' property for this resizable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
 	 */
@@ -214,7 +215,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	/**
 	 * Sets the 'delay' property for this resizable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param value the delay in ms
 	 * @return this object
 	 */
@@ -237,7 +238,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	/**
 	 * Sets the 'distance' property for this resizable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param value the distance in px
 	 * @return this object
 	 */
@@ -260,7 +261,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	/**
 	 * Sets the 'ghost' property for this resizable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
 	 */
@@ -280,7 +281,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	/**
 	 * Sets the 'grid' property for this draggable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param x the stepping along the x axis
 	 * @param y the stepping along the y axis
 	 * @return this object
@@ -359,7 +360,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	/**
 	 * Sets the 'helper' property for this resizable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param value the helper's CSS class
 	 * @return this object
 	 */
@@ -382,7 +383,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	/**
 	 * Sets the 'maxHeight' property for this resizable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param value the value of the property
 	 * @return this object
 	 */
@@ -405,7 +406,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	/**
 	 * Sets the 'maxWidth' property for this resizable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param value the value of the property
 	 * @return this object
 	 */
@@ -428,7 +429,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	/**
 	 * Sets the 'minHeight' property for this resizable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param value the value of the property
 	 * @return this object
 	 */
@@ -451,7 +452,7 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	/**
 	 * Sets the 'minWidth' property for this resizable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param value the value of the property
 	 * @return this object
 	 */
