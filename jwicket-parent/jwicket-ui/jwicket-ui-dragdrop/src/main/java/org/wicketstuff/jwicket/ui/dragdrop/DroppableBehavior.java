@@ -1,16 +1,13 @@
 package org.wicketstuff.jwicket.ui.dragdrop;
 
 
-import java.io.Serializable;
-
 import org.apache.wicket.Component;
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Request;
-import org.apache.wicket.Component.IVisitor;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.jwicket.ComponentFinder;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JsMap;
 import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 
@@ -87,7 +84,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 	
 	/**
 	 * Sets the 'activeClass' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param activeClass the CSS class' name
 	 * @return this object
 	 */
@@ -110,7 +107,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'addClasses' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
 	 */
@@ -130,7 +127,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'greedy' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
 	 */
@@ -150,7 +147,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 	
 	/**
 	 * Sets the 'hoverClass' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param hoverClass the CSS class' name
 	 * @return this object
 	 */
@@ -173,7 +170,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 	
 	/**
 	 * Sets the 'scope' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param scope the scode
 	 * @return this object
 	 */
@@ -219,7 +216,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'tolerance' property for this droppable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param tolerance the tolerance
 	 * @return this object
 	 */

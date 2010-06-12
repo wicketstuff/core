@@ -4,6 +4,7 @@ package org.wicketstuff.jwicket.ui.menu;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JsMap;
 import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 

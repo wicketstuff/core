@@ -7,6 +7,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.jwicket.CssCursor;
 import org.wicketstuff.jwicket.CssPosition;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JsMap;
+import org.wicketstuff.jwicket.JsOption;
 import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 
@@ -90,7 +92,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 	
 	/**
 	 * Sets the 'addClasses' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
 	 */
@@ -110,7 +112,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 	
 	/**
 	 * Sets the 'axis' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param value {@code 'x'} or {@code 'y'}.
 	 * @return this object
 	 */
@@ -130,7 +132,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 	
 	/**
 	 * Sets the 'cursor' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param value a {@link CssCursor}
 	 * @return this object
 	 */
@@ -150,7 +152,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 	
 	/**
 	 * Sets the 'cursorAt' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param position a {@link CssPosition}
 	 * @return this object
 	 */
@@ -170,7 +172,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 	
 	/**
 	 * Sets the 'cursorAt' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param position1 a {@link CssPosition}
 	 * @param offset1 the offset from {@code position1}
 	 * @param position2 a {@link CssPosition}
@@ -193,7 +195,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 	
 	/**
 	 * Sets the 'delay' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param value the delay in ms
 	 * @return this object
 	 */
@@ -213,7 +215,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'distance' property for this draggable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param value the value of this property.
 	 * @return this object
 	 */
@@ -233,7 +235,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'grid' property for this draggable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param x the stepping along the x axis
 	 * @param y the stepping along the y axis
 	 * @return this object
@@ -254,7 +256,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'helper' property for this draggable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param value {@code original} or {@code clone}
 	 * @return this object
 	 */
@@ -274,7 +276,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'iframeFix' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
 	 */
@@ -294,7 +296,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'opacity' property for this draggable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param value the opacity between 0 (transparent) and 1 (not transparent).
 	 * @return this object
 	 */
@@ -314,7 +316,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'refreshPositions' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
 	 */
@@ -367,7 +369,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'revert' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param value the revert behavior
 	 * @return this object
 	 */
@@ -394,7 +396,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'revertDuration' property for this draggable. Please consult the
-	 * jquery documentation for a detailled description of this peroperty.
+	 * jquery documentation for a detailled description of this property.
 	 * @param value the duration of the revert animation
 	 * @return this object
 	 */
@@ -417,7 +419,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'scroll' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
 	 */
@@ -437,7 +439,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'scrollSensitivity' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param value the scroll sensitivity in px
 	 * @return this object
 	 */
@@ -460,7 +462,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'scrollSpeed' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param value the scroll speed in px
 	 * @return this object
 	 */
@@ -483,7 +485,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'snap' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param value {@code true} or {@code false}.
 	 * @return this object
 	 */
@@ -591,7 +593,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'snapMode' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param value the revert behavior
 	 * @return this object
 	 */
@@ -615,7 +617,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'snapTolerance' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param value the scroll speed in px
 	 * @return this object
 	 */
@@ -638,7 +640,7 @@ public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	/**
 	 * Sets the 'zIndex' property for this draggable. Please consult the
-	 * jQuery documentation for a detailled description of this peroperty.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param value the scroll speed in px
 	 * @return this object
 	 */

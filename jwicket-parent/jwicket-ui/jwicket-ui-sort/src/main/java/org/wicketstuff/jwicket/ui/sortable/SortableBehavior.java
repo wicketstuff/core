@@ -11,7 +11,9 @@ import org.wicketstuff.jwicket.ComponentFinder;
 import org.wicketstuff.jwicket.IStyleResolver;
 import org.wicketstuff.jwicket.JQueryCssResourceReference;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JsMap;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
+
 
 public class SortableBehavior extends AbstractJqueryUiEmbeddedBehavior implements IStyleResolver {
 
@@ -24,6 +26,9 @@ public class SortableBehavior extends AbstractJqueryUiEmbeddedBehavior implement
 
 	protected JsMap options = new JsMap();
 
+	public JsMap getOptions() {
+		return options;
+	}
 	
 	public SortableBehavior() {
 		super(
@@ -35,8 +40,10 @@ public class SortableBehavior extends AbstractJqueryUiEmbeddedBehavior implement
 		addCssResources(getCssResources());
 	}
 	
+
+
 	/**
-	 * Handles the event processing during resizing.
+	 * Handles the event processing during sorting.
 	 */
 	@Override
 	protected void respond(final AjaxRequestTarget target) {
