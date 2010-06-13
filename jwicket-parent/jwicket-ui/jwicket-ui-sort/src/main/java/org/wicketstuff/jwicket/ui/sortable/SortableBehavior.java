@@ -26,10 +26,7 @@ public class SortableBehavior extends AbstractJqueryUiEmbeddedBehavior implement
 
 	protected JsMap options = new JsMap();
 
-	public JsMap getOptions() {
-		return options;
-	}
-	
+
 	public SortableBehavior() {
 		super(
 			AbstractJqueryUiEmbeddedBehavior.jQueryUiMouseJs,
@@ -41,6 +38,40 @@ public class SortableBehavior extends AbstractJqueryUiEmbeddedBehavior implement
 	}
 	
 
+
+	/**
+	 * Sets the 'placeholder' property for this sortable. Please consult the
+	 * jquery documentation for a detailled description of this property.
+	 * @param value the placeholder css class name
+	 * @return this object
+	 */
+	public SortableBehavior setPlaceholder(final String value) {
+		if (value == null)
+			options.remove("placeholder");
+		else
+			options.put("placeholder", value);
+		return this;
+	}
+	public SortableBehavior setPlaceholder(final AjaxRequestTarget target, final String value) {
+		setPlaceholder(value);
+		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').sortable('option','placeholder','" + value + "');");
+		return this;
+	}
+
+	/**
+	 * Sets the default 'placeholder' property for this sortable: 'ui-state-highlight'. Please consult the
+	 * jquery documentation for a detailled description of this property.
+	 * @return this object
+	 */
+	public SortableBehavior setPlaceholder() {
+		options.put("placeholder", "ui-state-highlight");
+		return this;
+	}
+	public SortableBehavior setPlaceholder(final AjaxRequestTarget target) {
+		setPlaceholder("ui-state-highlight");
+		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').sortable('option','placeholder','ui-state-highlight');");
+		return this;
+	}
 
 	/**
 	 * Handles the event processing during sorting.

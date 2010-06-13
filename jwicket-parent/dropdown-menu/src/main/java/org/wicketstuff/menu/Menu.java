@@ -110,10 +110,6 @@ public class Menu implements Serializable {
 
 	public void redraw(final AjaxRequestTarget target) {
 		if (this.associatedComponent != null) {
-System.out.println("--- redraw -----------------------------------------------");
-System.out.println("associatedComponent:ID = " + associatedComponent.getId());
-System.out.println("associatedComponent:MarkupID = " + associatedComponent.getMarkupId());
-System.out.println("getOutputMarkupId() = " + associatedComponent.getOutputMarkupId());
 			target.addComponent(this.associatedComponent);
 		}
 	}

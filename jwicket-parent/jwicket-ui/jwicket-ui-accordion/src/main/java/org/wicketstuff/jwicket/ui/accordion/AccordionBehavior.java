@@ -22,10 +22,6 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 
 	protected JsMap options = new JsMap();
 
-	public JsMap getOptions() {
-		return options;
-	}
-
 	public AccordionBehavior() {
 		super(
 				AbstractJqueryUiEmbeddedBehavior.jQueryUiWidgetJs,
@@ -33,7 +29,62 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 			);
 			addCssResources(getCssResources());
 	}
+
 	
+
+
+	/**
+	 * Sets the 'autoHeight' property for this accordion. Please consult the
+	 * jquery documentation for a detailled description of this property.
+	 * @param value the autoHeight value
+	 * @return this object
+	 */
+	public AccordionBehavior setAutoHeight(final boolean value) {
+		options.put("autoHeight", value);
+		return this;
+	}
+	public AccordionBehavior setAutoHeight(final AjaxRequestTarget target, final boolean value) {
+		setAutoHeight(value);
+		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').accordion('option','autoHeight'," + value + ");");
+		return this;
+	}
+
+
+
+	/**
+	 * Sets the 'collapsible' property for this accordion. Please consult the
+	 * jquery documentation for a detailled description of this property.
+	 * @param value the collapsible value
+	 * @return this object
+	 */
+	public AccordionBehavior setCollapsible(final boolean value) {
+		options.put("collapsible", value);
+		return this;
+	}
+	public AccordionBehavior setCollapsible(final AjaxRequestTarget target, final boolean value) {
+		setCollapsible(value);
+		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').accordion('option','collapsible'," + value + ");");
+		return this;
+	}
+
+
+
+	/**
+	 * Sets the 'active' property for this accordion. Please consult the
+	 * jquery documentation for a detailled description of this property.
+	 * @param value the active (=expanded) item
+	 * @return this object
+	 */
+	public AccordionBehavior setActive(final int value) {
+		options.put("active", value);
+		return this;
+	}
+	public AccordionBehavior setActive(final AjaxRequestTarget target, final int value) {
+		setActive(value);
+		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').accordion('option','active'," + value + ");");
+		return this;
+	}
+
 	/**
 	 * Handles the event processing during resizing.
 	 */
@@ -55,31 +106,30 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 			oldContent = request.getParameter("oldContent");
 
 			
-			System.out.println("---------- respond ----------------------------");
-			System.out.println("\toldHeader = " + oldHeader);
-			System.out.println("\tnewHeader = " + newHeader);
-			System.out.println("\toldContent = " + oldContent);
-			System.out.println("\tnewContent = " + newContent);
-			
-			
-			
-			
-			if (newContent != null && newHeader != null) {
-				ComponentFinder finder = new ComponentFinder(newHeader);
-				component.getPage().visitChildren(finder);
-				Component newHeaderComponent = finder.getFoundComponent();
-System.out.println("\tnewHeaderComponent for ID '" + newHeader + "' = " + ((newHeaderComponent==null)?"<null>":newHeaderComponent));
-				finder = new ComponentFinder(newContent);
-				component.getPage().visitChildren(finder);
-				Component newContentComponent = finder.getFoundComponent();
-System.out.println("\tnewContentComponent for ID '" + newContent + "' = " + ((newContentComponent==null)?"<null>":newContentComponent));
+			if (eventType == EventType.CHANGE) {
+				if (newContent != null && newHeader != null) {
+					ComponentFinder finder = new ComponentFinder(newHeader);
+					component.getPage().visitChildren(finder);
+					Component newHeaderComponent = finder.getFoundComponent();
+					finder = new ComponentFinder(newContent);
+					component.getPage().visitChildren(finder);
+					Component newContentComponent = finder.getFoundComponent();
 
-				onExpand(target, newHeaderComponent, newContentComponent);
-			}
+					if (newHeaderComponent != null && newContentComponent != null)
+						onExpand(target, newHeaderComponent, newContentComponent);
+				}
 			
-			if (oldContent != null && oldHeader != null) {
-				onCollapse(target, oldHeader, oldContent);
+				if (oldContent != null && oldHeader != null) {
+					ComponentFinder finder = new ComponentFinder(oldHeader);
+					component.getPage().visitChildren(finder);
+					Component oldHeaderComponent = finder.getFoundComponent();
+					finder = new ComponentFinder(oldContent);
+					component.getPage().visitChildren(finder);
+					Component oldContentComponent = finder.getFoundComponent();
+					onCollapse(target, oldHeaderComponent, oldContentComponent);
+				}
 			}
+
 		}
 	}
 
@@ -143,8 +193,8 @@ System.out.println("\tnewContentComponent for ID '" + newContent + "' = " + ((ne
 		}
 	}
 
-	
-	
+
+
 	@Override
 	public JQueryCssResourceReference[] getCssResources() {
 		return new JQueryCssResourceReference[] {
@@ -155,15 +205,11 @@ System.out.println("\tnewContentComponent for ID '" + newContent + "' = " + ((ne
 	}
 
 
-	
-	
-	protected void onExpand(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand) {
-		
-	}
 
 
-	protected void onCollapse(final AjaxRequestTarget target, final String headerToExpandId, final String contentToExpandId) {
-		
-	}
+	protected void onExpand(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand) { }
+
+
+	protected void onCollapse(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand) { }
 
 }

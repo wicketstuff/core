@@ -40,7 +40,6 @@ public class Menu extends AbstractJqueryUiEmbeddedBehavior {
 	 */
 	@Override
 	protected void respond(final AjaxRequestTarget target) {
-		System.out.println("+++++ Menu.respond()");
 		/***********
 		Component component = getComponent();
 		Request request;
