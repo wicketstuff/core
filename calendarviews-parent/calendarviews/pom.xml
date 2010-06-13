@@ -43,8 +43,6 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>jslibraries</artifactId>
-			<!-- changed to work with oss.sonatype.org maven repo
-			<version>1.4-SNAPSHOT</version> -->
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

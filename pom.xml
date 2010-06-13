@@ -316,15 +316,15 @@
 	</mailingLists>
 
 	<scm>
-		<url>https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/</url>
-		<connection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk/wicketstuff-core</connection>
+		<url>https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/tags/wicketstuff-core-1.4.9.1</url>
+		<connection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/tags/wicketstuff-core-1.4.9.1</connection>
 	</scm>
 
 	<properties>
 		<wicket.version>1.4.9</wicket.version>
 		<jetty.version>6.1.22</jetty.version>
 		<lucene.version>2.4.1</lucene.version>
-        <slf4j.version>1.5.11</slf4j.version>
+        <slf4j.version>1.5.8</slf4j.version>
 	</properties>
 
 	<dependencies>

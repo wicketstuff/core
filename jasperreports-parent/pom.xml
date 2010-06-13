@@ -92,4 +92,8 @@
 	</properties>
 	
 
+<modules>
+	<module>jasperreports</module>
+	<module>jasperreports-examples</module>
+</modules>
 </project>
