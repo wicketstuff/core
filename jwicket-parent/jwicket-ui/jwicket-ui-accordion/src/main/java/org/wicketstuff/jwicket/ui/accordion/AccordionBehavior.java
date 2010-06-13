@@ -6,6 +6,7 @@ import java.io.Serializable;
 import org.apache.wicket.Component;
 import org.apache.wicket.Request;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.wicketstuff.jwicket.ComponentFinder;
 import org.wicketstuff.jwicket.IStyleResolver;
 import org.wicketstuff.jwicket.JQueryCssResourceReference;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
@@ -20,6 +21,10 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 	public static final JQueryJavascriptResourceReference uiAccordionJs = new JQueryJavascriptResourceReference(AccordionBehavior.class, "jquery.ui.accordion.min.js");
 
 	protected JsMap options = new JsMap();
+
+	public JsMap getOptions() {
+		return options;
+	}
 
 	public AccordionBehavior() {
 		super(
@@ -49,6 +54,32 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 			newContent = request.getParameter("newContent");
 			oldContent = request.getParameter("oldContent");
 
+			
+			System.out.println("---------- respond ----------------------------");
+			System.out.println("\toldHeader = " + oldHeader);
+			System.out.println("\tnewHeader = " + newHeader);
+			System.out.println("\toldContent = " + oldContent);
+			System.out.println("\tnewContent = " + newContent);
+			
+			
+			
+			
+			if (newContent != null && newHeader != null) {
+				ComponentFinder finder = new ComponentFinder(newHeader);
+				component.getPage().visitChildren(finder);
+				Component newHeaderComponent = finder.getFoundComponent();
+System.out.println("\tnewHeaderComponent for ID '" + newHeader + "' = " + ((newHeaderComponent==null)?"<null>":newHeaderComponent));
+				finder = new ComponentFinder(newContent);
+				component.getPage().visitChildren(finder);
+				Component newContentComponent = finder.getFoundComponent();
+System.out.println("\tnewContentComponent for ID '" + newContent + "' = " + ((newContentComponent==null)?"<null>":newContentComponent));
+
+				onExpand(target, newHeaderComponent, newContentComponent);
+			}
+			
+			if (oldContent != null && oldHeader != null) {
+				onCollapse(target, oldHeader, oldContent);
+			}
 		}
 	}
 
@@ -123,5 +154,16 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 		};
 	}
 
+
+	
+	
+	protected void onExpand(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand) {
+		
+	}
+
+
+	protected void onCollapse(final AjaxRequestTarget target, final String headerToExpandId, final String contentToExpandId) {
+		
+	}
 
 }
