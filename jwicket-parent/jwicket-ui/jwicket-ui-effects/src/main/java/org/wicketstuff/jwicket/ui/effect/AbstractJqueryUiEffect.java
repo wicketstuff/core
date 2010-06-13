@@ -95,8 +95,6 @@ public abstract class AbstractJqueryUiEffect extends JQueryHeaderContributor  {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final boolean debug = false;
-
 	private static long nextId = 0;
 
 	public AbstractJqueryUiEffect(final JQueryJavascriptResourceReference... requiredLibraries) {
@@ -223,11 +221,7 @@ public abstract class AbstractJqueryUiEffect extends JQueryHeaderContributor  {
 	 *	activated in the post procession function of the preceding effect.
 	 */
 	private void prepare(final StringBuilder jsString, final AbstractJqueryUiEffect firstEffect, final List<AbstractJqueryUiEffect> chain) {
-		if (debug)
-			System.out.println("--- prepare " + ((firstEffect==null)?"<null>":firstEffect.getEffectName()) + ", chain " + ((chain==null)?"<null>":chain.size()+" effects"));
 		if (firstEffect == null && (chain == null || chain.size() == 0)) {
-			if (debug)
-				System.out.println("\tcreate finish up code: restoreStyleAfterEffect of " + getEffectName() + " = " + restoreStyleAfterEffect);
 			// We are through. No more effects to append. We can clear up.
 			if (restoreStyleAfterEffect) {
 				// effectElement<n>.attr('style',originalStyle<n>);
@@ -383,11 +377,6 @@ public abstract class AbstractJqueryUiEffect extends JQueryHeaderContributor  {
 				}
 				else
 					throw new WicketRuntimeException("You must not fire a jQuery effet on a component wich hast not set output markupId to true! Component: " + component);
-		if (debug) {
-			System.out.println("--- javascript for effects --------------------------------");
-			System.out.println(jsString.toString());
-			System.out.println("-----------------------------------------------------------");
-		}
 
 		target.appendJavascript(jsString.toString());
 		//target.getHeaderResponse().renderOnLoadJavascript(jsString.toString());

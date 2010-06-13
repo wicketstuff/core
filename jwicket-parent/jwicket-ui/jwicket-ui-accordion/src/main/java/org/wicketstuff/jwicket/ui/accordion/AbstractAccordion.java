@@ -5,26 +5,59 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.wicketstuff.jwicket.ui.sortable.Sortable;
 
 
+/**	This is the base class for all variations of jQuery's Accordion effect.
+ *
+ *	The general usage:
+ *	<br/>
+ *	HTML:
+<pre>
+	&lt;div wicket:id="accordion" /div&gt;
+</pre>
+ *
+ *	Java:
+<pre>
+	class MyEntity implements Serializable {
+	   ...
+	}
+
+	IModel<List<MyEntity>> listModel;
+
+	add(new AbstractAccordion("accordion", listModel) {
+		protected abstract Component getHeader(final String id, final IModel<T> t) {
+		   // Return a Wicket Component for the header part
+		}
+
+		protected abstract Component getContent(final String id, final IModel<T> t) {
+		   // Return a Wicket Component for the content part
+		}
+
+	});
+</pre>
+ *
+ *	Customizing the behavior of an Accordion is done throug the associated
+ *	{@link AccordionBehavior}. You may obtain the associated {@link AccordionBehavior}
+ *	through {@link #getAccordionBehavior()}.
+ */
 public abstract class AbstractAccordion<T extends Serializable> extends Panel {
 
 	private static final long serialVersionUID = 1L;
 
 	protected final WebMarkupContainer accordion;
-	
+
 	protected final AccordionBehavior accordionBehavior;
-	
-//	protected final T firstToExpand;
 
 	public AbstractAccordion(final String id, final IModel<? extends List<T>> list) {
+		this(id, list, -1);
+	}
+
+	public AbstractAccordion(final String id, final IModel<? extends List<T>> list, final int expanded) {
 		super(id, list);
 		
 		ListView<T> repeater = new ListView<T>("repeater", list) {
@@ -54,30 +87,20 @@ public abstract class AbstractAccordion<T extends Serializable> extends Panel {
 		accordion.setRenderBodyOnly(false);
 		accordion.add(repeater);
 
-		accordion.add(accordionBehavior = getAccordionBehavior());
+		accordion.add(accordionBehavior = initAccordionBehavior());
+
+		if (expanded >= 0)
+			getAccordionBehavior().setActive(expanded);
 
 		add(accordion);
 	}
 
 
-	protected abstract AccordionBehavior getAccordionBehavior();
+	abstract AccordionBehavior initAccordionBehavior();
 
 
-
-	/**
-	 * Sets the 'autoHeight' property for this accordion. Please consult the
-	 * jquery documentation for a detailled description of this property.
-	 * @param value the autoHeight value
-	 * @return this object
-	 */
-	public AbstractAccordion<T> setAutoHeight(final boolean value) {
-		accordionBehavior.getOptions().put("autoHeight", value);
-		return this;
-	}
-	public AbstractAccordion<T> setAutoHeight(final AjaxRequestTarget target, final boolean value) {
-		setAutoHeight(value);
-		target.appendJavascript("jQuery('#" + accordion.getMarkupId() + "').accordion('option','autoHeight'," + value + ");");
-		return this;
+	public final AccordionBehavior getAccordionBehavior() {
+		return this.accordionBehavior;
 	}
 
 

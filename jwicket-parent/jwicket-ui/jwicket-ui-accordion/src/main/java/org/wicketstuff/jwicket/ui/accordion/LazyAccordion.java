@@ -15,21 +15,27 @@ public abstract class LazyAccordion<T extends Serializable> extends AbstractAcco
 
 	private static final long serialVersionUID = 1L;
 
+
 	public LazyAccordion(final String id, final IModel<? extends List<T>> list) {
-		super(id, list);
+		this(id, list, -1);
+	}
+
+	public LazyAccordion(final String id, final IModel<? extends List<T>> list, final int expanded) {
+		super(id, list, expanded);
 		
-		setAutoHeight(false);
+		getAccordionBehavior().setAutoHeight(false);
+		getAccordionBehavior().setCollapsible(true);
+		getAccordionBehavior().setActive(-1);
 	}
 
 
 	@Override
-	protected AccordionBehavior getAccordionBehavior() {
+	protected AccordionBehavior initAccordionBehavior() {
 		return new AccordionBehavior() {
 			private static final long serialVersionUID = 1L;
 			@Override
 			protected void onExpand(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand) {
 				Component contentAnchor = ((WebMarkupContainer)contentToExpand).get("contentAnchor");
-System.out.println("\tcontentAnchor = " + contentAnchor.getClass().getName());
 				if (contentAnchor != null) {
 					Component content = ((WebMarkupContainer)contentAnchor).get("content");
 					// The Model is parked in the content
@@ -37,9 +43,7 @@ System.out.println("\tcontentAnchor = " + contentAnchor.getClass().getName());
 						// Currently there is only a placeholder for the content. Replace the
 						// Placeholder with real content
 						ModelParkingLot modelParkingLot = (ModelParkingLot)content;
-System.out.println("\tcontent = ModelParkingLot, model = " + modelParkingLot.getModel().getObject());
 						((WebMarkupContainer)contentAnchor).addOrReplace(getLazyContent("content", modelParkingLot.getModel()));
-System.out.println("\tlazyContent = " + getLazyContent("content", modelParkingLot.getModel()));
 						target.addComponent(contentAnchor);
 					}
 					// else: this was already expanded before

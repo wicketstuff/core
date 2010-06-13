@@ -7,18 +7,23 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
+import org.wicketstuff.jwicket.ui.sortable.SortableBehavior;
 
 
-public class SimpleAccordion<T extends Serializable> extends AbstractAccordion<T> {
+public class SimpleSortableAccordion<T extends Serializable> extends AbstractAccordion<T> {
 
 	private static final long serialVersionUID = 1L;
 
-	public SimpleAccordion(final String id, final IModel<? extends List<T>> list) {
-		super(id, list);
+	SortableBehavior sortableBehavior;
+
+	public SimpleSortableAccordion(final String id, final IModel<? extends List<T>> list) {
+		this(id, list, -1);
 	}
 
-	public SimpleAccordion(final String id, final IModel<? extends List<T>> list, final int expanded) {
+	public SimpleSortableAccordion(final String id, final IModel<? extends List<T>> list, final int expanded) {
 		super(id, list, expanded);
+		
+		accordion.add(sortableBehavior = new SortableBehavior());
 	}
 
 
@@ -38,9 +43,13 @@ public class SimpleAccordion<T extends Serializable> extends AbstractAccordion<T
 	}
 
 
+	public SortableBehavior getSortableBehavior() {
+		return this.sortableBehavior;
+	}
+
 
 	@Override
-	protected AccordionBehavior initAccordionBehavior() {
+	AccordionBehavior initAccordionBehavior() {
 		return new AccordionBehavior();
 	}
 

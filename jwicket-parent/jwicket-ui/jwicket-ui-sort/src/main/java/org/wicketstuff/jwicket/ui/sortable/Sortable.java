@@ -68,6 +68,10 @@ public class Sortable<T extends Serializable> extends Panel {
 		add(sortable);
 	}
 
+	
+	public SortableBehavior getSortableBehavior() {
+		return this.sortableBehavior;
+	}
 
 	public void connectWith(final Sortable<T> other) {
 		sortableBehavior.connectWith(other);
@@ -85,44 +89,5 @@ public class Sortable<T extends Serializable> extends Panel {
 	protected void onReceived(final AjaxRequestTarget target, final Component movedComponent, final int newPosition, final Sortable<T> from) { }
 
 	protected void onRemoved(final AjaxRequestTarget target, final Component movedComponent) {}
-
-	
-	
-	/**
-	 * Sets the 'placeholder' property for this sortable. Please consult the
-	 * jquery documentation for a detailled description of this property.
-	 * @param value the placeholder css class name
-	 * @return this object
-	 */
-	public Sortable<T> setPlaceholder(final String value) {
-		if (value == null)
-			sortableBehavior.getOptions().remove("placeholder");
-		else
-			sortableBehavior.getOptions().put("placeholder", value);
-		return this;
-	}
-	public Sortable<T> setPlaceholder(final AjaxRequestTarget target, final String value) {
-		setPlaceholder(value);
-		target.appendJavascript("jQuery('#" + sortable.getMarkupId() + "').sortable('option','placeholder','" + value + "');");
-		return this;
-	}
-
-	/**
-	 * Sets the default 'placeholder' property for this sortable: 'ui-state-highlight'. Please consult the
-	 * jquery documentation for a detailled description of this property.
-	 * @return this object
-	 */
-	public Sortable<T> setPlaceholder() {
-		sortableBehavior.getOptions().put("placeholder", "ui-state-highlight");
-		return this;
-	}
-	public Sortable<T> setPlaceholder(final AjaxRequestTarget target) {
-		setPlaceholder("ui-state-highlight");
-		target.appendJavascript("jQuery('#" + sortable.getMarkupId() + "').sortable('option','placeholder','ui-state-highlight');");
-		return this;
-	}
-	
-	
-	
 
 }
