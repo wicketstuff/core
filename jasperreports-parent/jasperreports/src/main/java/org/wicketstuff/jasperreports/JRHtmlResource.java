@@ -1,6 +1,6 @@
 /*
- * $Id$ $Revision:
- * 1.3 $ $Date$
+ * $Id$
+ * $Revision$ $Date$
  * 
  * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -15,27 +15,27 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package wicket.contrib.jasperreports;
+package org.wicketstuff.jasperreports;
 
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 
 import net.sf.jasperreports.engine.JRAbstractExporter;
-import net.sf.jasperreports.engine.export.JRRtfExporter;
+import net.sf.jasperreports.engine.export.JRHtmlExporter;
 
 /**
- * Resource class for jasper reports RTF resources.
+ * Resource class for jasper reports HTML resources.
  * 
  * @author Eelco Hillenius
  */
-public final class JRRtfResource extends JRResource
+public final class JRHtmlResource extends JRResource
 {
 	/**
 	 * Construct without a report. You must provide a report before you can use
 	 * this resource.
 	 */
-	public JRRtfResource()
+	public JRHtmlResource()
 	{
 		super();
 	}
@@ -46,7 +46,7 @@ public final class JRRtfResource extends JRResource
 	 * @param report
 	 *            the report input stream
 	 */
-	public JRRtfResource(InputStream report)
+	public JRHtmlResource(InputStream report)
 	{
 		super(report);
 	}
@@ -57,7 +57,7 @@ public final class JRRtfResource extends JRResource
 	 * @param report
 	 *            the report input stream
 	 */
-	public JRRtfResource(URL report)
+	public JRHtmlResource(URL report)
 	{
 		super(report);
 	}
@@ -68,32 +68,32 @@ public final class JRRtfResource extends JRResource
 	 * @param report
 	 *            the report input stream
 	 */
-	public JRRtfResource(File report)
+	public JRHtmlResource(File report)
 	{
 		super(report);
 	}
 
 	/**
-	 * @see JRResource#newExporter()
+	 * @see org.wicketstuff.jasperreports.JRResource#newExporter()
 	 */
 	public JRAbstractExporter newExporter()
 	{
-		return new JRRtfExporter();
+		return new JRHtmlExporter();
 	}
 
 	/**
-	 * @see JRResource#getContentType()
+	 * @see org.wicketstuff.jasperreports.JRResource#getContentType()
 	 */
 	public String getContentType()
 	{
-		return "text/rtf";
+		return "text/html";
 	}
 
 	/**
-	 * @see wicket.contrib.jasperreports.JRResource#getExtension()
+	 * @see org.wicketstuff.jasperreports.JRResource#getExtension()
 	 */
 	public String getExtension()
 	{
-		return "rtf";
+		return "html";
 	}
 }

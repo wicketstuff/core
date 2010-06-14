@@ -15,7 +15,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package wicket.contrib.jasperreports;
+package org.wicketstuff.jasperreports;
 
 import org.apache.wicket.IResourceListener;
 import org.apache.wicket.ResourceReference;

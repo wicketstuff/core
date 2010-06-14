@@ -1,18 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	
-    <parent>
-        <groupId>org.wicketstuff</groupId>
-        <artifactId>wicketstuff-core</artifactId>
-        <version>1.4.10-SNAPSHOT</version>
-    </parent>
-	
-	<artifactId>wicket-contrib-jasperreports</artifactId>
-	<packaging>jar</packaging>
-	
-	<name>Wicket Contrib JasperReports</name>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-core</artifactId>
+		<version>1.4.10-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>jasperreports-parent</artifactId>
+	<packaging>pom</packaging>
+
+	<name>JasperReports Integration - parent</name>
 	<description>JasperReports integration components and resources for Wicket.</description>
 	<url>http://wicketstuff.org/confluence/display/STUFFWIKI/wicket-contrib-jasperreports</url>
 	<inceptionYear>2005</inceptionYear>
@@ -30,14 +31,10 @@
 		</license>
 	</licenses>
 
-	<issueManagement>
-		<url>http://sourceforge.net/tracker/?group_id=119783</url>
-	</issueManagement>
-
 	<scm>
-		<connection>scm:svn:${maven.scm.anonymous}@wicket-stuff.svn.sourceforge.net:/svnroot/wicket-stuff/trunk/wicket-contrib-jasperreports</connection>
-		<developerConnection>scm:svn:${maven.scm.user}@wicket-stuff.svn.sourceforge.net:/svnroot/wicket-stuff/trunk/wicket-contrib-jasperreports</developerConnection>
-		<url>http://wicket-stuff.svn.sourceforge.net/viewvc/wicket-stuff/trunk/wicket-contrib-jasperreports/</url>
+		<connection>scm:svn:${maven.scm.anonymous}@wicket-stuff.svn.sourceforge.net:/svnroot/wicket-stuff/trunk/wicketstuff-core/jasperreports-parent</connection>
+		<developerConnection>scm:svn:${maven.scm.user}@wicket-stuff.svn.sourceforge.net:/svnroot/wicket-stuff/trunk/wicketstuff-core/jasperreports-parent</developerConnection>
+		<url>http://wicket-stuff.svn.sourceforge.net/viewvc/wicket-stuff/trunk/wicketstuff-core/jasperreports-parent/</url>
 	</scm>
 
 	<mailingLists>
@@ -84,7 +81,21 @@
 			<id>kryptt</id>
 			<email>kryptt at gmail.com</email>
 		</developer>
+		<developer>
+			<name>Chuck Deal</name>
+			<id>cdeal</id>
+			<email>cdeal at users.sf.net</email>
+		</developer>
 	</developers>
+
+	<properties>
+		<jasperreports.version>3.5.3</jasperreports.version>
+	</properties>
+
+    <modules>
+    	<module>jasperreports</module>
+    	<module>jasperreports-examples</module>
+    </modules>
 
 	<dependencies>
 		<!-- TEST -->
@@ -94,61 +105,42 @@
 			<version>4.5</version>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- Inherited -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-
-		<!-- Module-specific -->
-		<dependency>
-			<groupId>commons-beanutils</groupId>
-			<artifactId>commons-beanutils</artifactId>
-			<version>1.8.0</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>3.2.1</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-digester</groupId>
-			<artifactId>commons-digester</artifactId>
-			<version>1.8.1</version>
-		</dependency>
-		<dependency>
-			<groupId>jasperreports</groupId>
-			<artifactId>jasperreports</artifactId>
-			<version>${jasperreports.version}</version>
-		</dependency>
-
-		<!-- Provided -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-			<scope>provided</scope>
-		</dependency>
 	</dependencies>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>commons-beanutils</groupId>
+				<artifactId>commons-beanutils</artifactId>
+				<version>1.8.0</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+				<version>3.2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-digester</groupId>
+				<artifactId>commons-digester</artifactId>
+				<version>1.8.1</version>
+			</dependency>
+			<dependency>
+				<groupId>jasperreports</groupId>
+				<artifactId>jasperreports</artifactId>
+				<version>${jasperreports.version}</version>
+			</dependency>
+
+			<!-- Provided -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>2.5</version>
+				<scope>provided</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<build>
-		<sourceDirectory>src/java</sourceDirectory>
-		<testSourceDirectory>src/test</testSourceDirectory>
-
-		<resources>
-			<resource>
-				<filtering>false</filtering>
-				<directory>src/java</directory>
-				<includes>
-					<include>**</include>
-				</includes>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
-
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -209,14 +201,6 @@
 					</reportSet>
 				</reportSets>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-			</plugin>
 		</plugins>
 	</reporting>
-
-	<properties>
-		<jasperreports.version>3.5.3</jasperreports.version>
-	</properties>
 </project>

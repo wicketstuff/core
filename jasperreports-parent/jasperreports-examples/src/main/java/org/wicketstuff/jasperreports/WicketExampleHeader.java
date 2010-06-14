@@ -15,24 +15,29 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package wicket.contrib.examples;
+package org.wicketstuff.jasperreports;
 
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.util.string.Strings;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.panel.Panel;
 
 /**
- * Base class for all example pages.
+ * Navigation panel for the examples project.
  * 
- * @author Jonathan Locke
+ * @author Eelco Hillenius
  */
-public class WicketExamplePage extends WebPage
+public final class WicketExampleHeader extends Panel
 {
 	/**
-	 * Constructor.
+	 * Construct.
+	 * 
+	 * @param id
+	 *            name of the component
+	 * @param exampleTitle
+	 *            title of the example
 	 */
-	public WicketExamplePage()
+	public WicketExampleHeader(String id, String exampleTitle)
 	{
-		final String packageName = getClass().getPackage().getName();
-		add(new WicketExampleHeader("mainNavigation", Strings.afterLast(packageName, '.')));
+		super(id);
+		add(new Label("exampleTitle", exampleTitle));
 	}
 }
