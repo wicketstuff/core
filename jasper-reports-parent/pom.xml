@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-core</artifactId>
+		<version>1.4.9.1</version>
+	</parent>
+
+	<artifactId>jasper-reports-parent</artifactId>
+	<packaging>pom</packaging>
+
+	<name>Wicket Contrib JasperReports - Parent</name>
+	<description>JasperReports integration components and resources for Wicket.</description>
+	<url>http://wicketstuff.org/confluence/display/STUFFWIKI/wicket-contrib-jasperreports</url>
+	<inceptionYear>2005</inceptionYear>
+
+	<modules>
+	<module>jasper-reports</module>
+	<module>jasper-reports-examples</module>
+	</modules>
+
+
+	<issueManagement>
+		<url>http://sourceforge.net/tracker/?group_id=119783</url>
+	</issueManagement>
+
+
+	<developers>
+		<developer>
+			<name>Eelco Hillenius</name>
+			<id>Eelco</id>
+			<email>eelco12 at users.sf.net</email>
+		</developer>
+		<developer>
+			<name>Rodolfo Hansen</name>
+			<id>kryptt</id>
+			<email>kryptt at gmail.com</email>
+		</developer>
+	</developers>
+
+	<properties>
+		<jasperreports.version>3.5.3</jasperreports.version>
+	</properties>
+	
+
+</project>

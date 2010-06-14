@@ -27,7 +27,7 @@
 		<module>inmethod-grid-parent</module>
 		<module>input-events-parent</module>
 		<module>javaee-inject-parent</module>
-		<module>jasperreports-parent</module>
+		<module>jasper-reports-parent</module>
 		<module>jslibraries</module>
 		<module>jquery-parent</module>
 		<module>jsr303-parent</module>
