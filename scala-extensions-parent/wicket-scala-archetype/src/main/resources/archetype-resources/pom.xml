@@ -11,7 +11,7 @@
 	<properties>
 		<version.scala>2.7.3</version.scala>
 		<version.wicket>1.4.0</version.wicket>
-		<version.wicketstuff>1.4-SNAPSHOT</version.wicketstuff>
+		<version.wicketstuff>${project.version}</version.wicketstuff>
 		<version.scalatest>0.9.5</version.scalatest>
 	</properties>
 

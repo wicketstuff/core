@@ -65,8 +65,10 @@
   <profiles>
     <profile>
       <id>shiro-repository</id>
+      <!-- mocleiri: in 1.4.9.1 we just switch to the release versions that are in central -->
       <activation>
-        <activeByDefault>true</activeByDefault>
+      
+        <activeByDefault>false</activeByDefault>
       </activation>
       
       <repositories>
