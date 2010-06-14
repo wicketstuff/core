@@ -25,6 +25,8 @@
  */
 package wicket.contrib.jasperreports.examples;
 
+import org.apache.wicket.IClusterable;
+
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
@@ -33,7 +35,7 @@ import net.sf.jasperreports.engine.JRField;
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  * @version $Id$
  */
-public class ExampleDataSource implements JRDataSource
+public class ExampleDataSource implements JRDataSource, IClusterable
 {
 
 	/**
