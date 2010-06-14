@@ -6,7 +6,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>1.4.9.1</version>
+	<version>1.4.9.2-SNAPSHOT</version>
 
 	<name>WicketStuff Core Parent</name>
 	<description>
@@ -316,8 +316,8 @@
 	</mailingLists>
 
 	<scm>
-		<url>https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/tags/wicketstuff-core-1.4.9.1</url>
-		<connection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/tags/wicketstuff-core-1.4.9.1</connection>
+		<url>https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/branches/wicketstuff-core-1.4.9</url>
+		<connection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/branches/wicketstuff-core-1.4.9</connection>
 	</scm>
 
 	<properties>
