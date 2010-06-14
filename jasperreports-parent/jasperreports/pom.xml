@@ -7,7 +7,6 @@
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>jasperreports-parent</artifactId>
 		<version>1.4.10-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
 	</parent>
 	
 	<artifactId>jasperreports</artifactId>

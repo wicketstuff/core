@@ -15,39 +15,29 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.wicketstuff.jasperreports;
+package org.wicketstuff.jasperreports.examples;
 
-import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.time.Duration;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.panel.Panel;
 
 /**
- * Wicket application class for jasper reports example.
+ * Navigation panel for the examples project.
  * 
  * @author Eelco Hillenius
  */
-public class JasperReportsApplication extends WebApplication
+public final class WicketExampleHeader extends Panel
 {
 	/**
-	 * Constructor.
+	 * Construct.
+	 * 
+	 * @param id
+	 *            name of the component
+	 * @param exampleTitle
+	 *            title of the example
 	 */
-	public JasperReportsApplication()
+	public WicketExampleHeader(String id, String exampleTitle)
 	{
-	}
-
-	/**
-	 * @see org.apache.wicket.protocol.http.WebApplication#init()
-	 */
-	protected void init()
-	{
-		getResourceSettings().setResourcePollFrequency(Duration.ONE_SECOND);
-	}
-
-	/**
-	 * @see org.apache.wicket.Application#getHomePage()
-	 */
-	public Class<? extends Page> getHomePage()
-	{
-		return Index.class;
+		super(id);
+		add(new Label("exampleTitle", exampleTitle));
 	}
 }
