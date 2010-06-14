@@ -23,7 +23,7 @@
  * JasperSoft Corporation 185, Berry Street, Suite 6200 San Francisco CA 94107
  * http://www.jaspersoft.com
  */
-package org.wicketstuff.jasperreports;
+package org.wicketstuff.jasperreports.examples;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;

@@ -15,7 +15,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.wicketstuff.jasperreports;
+package org.wicketstuff.jasperreports.examples;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.util.string.Strings;

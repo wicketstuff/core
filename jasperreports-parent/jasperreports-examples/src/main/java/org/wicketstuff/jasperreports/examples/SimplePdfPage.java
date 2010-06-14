@@ -15,53 +15,37 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.wicketstuff.jasperreports;
+package org.wicketstuff.jasperreports.examples;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 
-import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.wicketstuff.jasperreports.EmbeddedJRReport;
+import org.wicketstuff.jasperreports.JRPdfResource;
+import org.wicketstuff.jasperreports.JRResource;
 
 /**
  * Simple Jasper reports example with PDF output and a jasper reports panel..
  * 
  * @author Eelco Hillenius
  */
-public class ReportLinksPage extends WicketExamplePage
+public class SimplePdfPage extends WicketExamplePage
 {
 	/**
 	 * Constructor.
 	 */
-	public ReportLinksPage()
+	public SimplePdfPage()
 	{
 		ServletContext context = ((WebApplication) getApplication()).getServletContext();
 		final File reportFile = new File(context.getRealPath("/reports/example.jasper"));
-
-		JRResource pdfResource = new JRPdfResource(reportFile)
-				.setReportDataSource(new ExampleDataSource());
-		add(new ResourceLink("linkToPdf", pdfResource));
-
-		JRResource rtfResource = new JRRtfResource(reportFile)
-				.setReportDataSource(new ExampleDataSource());
-		add(new ResourceLink("linkToRtf", rtfResource));
-
-		JRResource htmlResource = new JRHtmlResource(reportFile)
-				.setReportDataSource(new ExampleDataSource());
-		add(new ResourceLink("linkToHtml", htmlResource));
-
-		JRResource textResource = new JRTextResource(reportFile)
-				.setReportDataSource(new ExampleDataSource());
-		add(new ResourceLink("linkToText", textResource));
-
-		JRResource imageResource = new JRImageResource(reportFile)
-				.setReportDataSource(new ExampleDataSource());
-		add(new ResourceLink("linkToImage", imageResource));
-
-		JRResource csvResource = new JRCsvResource(reportFile)
-				.setReportDataSource(new ExampleDataSource());
-		add(new ResourceLink("linkToCsv", csvResource));
+		final Map parameters = new HashMap();
+		JRResource pdfResource = new JRPdfResource(reportFile).setReportParameters(
+				parameters).setReportDataSource(new ExampleDataSource());
+		add(new EmbeddedJRReport("report", pdfResource));
 	}
 
 	/**
