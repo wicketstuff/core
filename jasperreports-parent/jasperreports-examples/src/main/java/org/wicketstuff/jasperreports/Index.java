@@ -16,9 +16,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package wicket.contrib.jasperreports.examples;
+package org.wicketstuff.jasperreports;
 
-import wicket.contrib.examples.WicketExamplePage;
 
 /**
  * Jasper reports example index page.

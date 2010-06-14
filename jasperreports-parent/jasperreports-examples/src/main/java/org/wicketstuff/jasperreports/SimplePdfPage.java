@@ -15,7 +15,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package wicket.contrib.jasperreports.examples;
+package org.wicketstuff.jasperreports;
 
 import java.io.File;
 import java.util.HashMap;
@@ -23,10 +23,6 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
-import wicket.contrib.examples.WicketExamplePage;
-import wicket.contrib.jasperreports.EmbeddedJRReport;
-import wicket.contrib.jasperreports.JRPdfResource;
-import wicket.contrib.jasperreports.JRResource;
 import org.apache.wicket.protocol.http.WebApplication;
 
 /**

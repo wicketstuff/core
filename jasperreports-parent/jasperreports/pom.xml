@@ -1,0 +1,58 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>jasperreports-parent</artifactId>
+		<version>1.4.10-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	
+	<artifactId>jasperreports</artifactId>
+	<packaging>jar</packaging>
+	
+	<name>JasperReports Integration</name>
+	<description>JasperReports integration components and resources for Wicket.</description>
+	<url>http://wicketstuff.org/confluence/display/STUFFWIKI/wicket-contrib-jasperreports</url>
+
+	<scm>
+		<connection>scm:svn:${maven.scm.anonymous}@wicket-stuff.svn.sourceforge.net:/svnroot/wicket-stuff/trunk/wicketstuff-core/jasperreports-parent/jasperreports</connection>
+		<developerConnection>scm:svn:${maven.scm.user}@wicket-stuff.svn.sourceforge.net:/svnroot/wicket-stuff/trunk/wicketstuff-core/jasperreports-parent/jasperreports</developerConnection>
+		<url>http://wicket-stuff.svn.sourceforge.net/viewvc/wicket-stuff/trunk/wicketstuff-core/jasperreports-parent/jasperreports/</url>
+	</scm>
+
+	<dependencies>
+		<!-- Inherited -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<!-- Module-specific -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-digester</groupId>
+			<artifactId>commons-digester</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+		</dependency>
+
+		<!-- Provided -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,4 +1,4 @@
-package wicket.contrib.jasperreports;
+package org.wicketstuff.jasperreports;
 
 import java.io.File;
 import java.io.InputStream;
@@ -57,7 +57,7 @@ public final class JRXlsResource extends JRResource
 	}
 
 	/**
-	 * @see JRResource#newExporter()
+	 * @see org.wicketstuff.jasperreports.JRResource#newExporter()
 	 */
 	public JRAbstractExporter newExporter()
 	{
@@ -65,7 +65,7 @@ public final class JRXlsResource extends JRResource
 	}
 
 	/**
-	 * @see JRResource#getContentType()
+	 * @see org.wicketstuff.jasperreports.JRResource#getContentType()
 	 */
 	public String getContentType()
 	{
@@ -73,7 +73,7 @@ public final class JRXlsResource extends JRResource
 	}
 
 	/**
-	 * @see wicket.contrib.jasperreports.JRResource#getExtension()
+	 * @see org.wicketstuff.jasperreports.JRResource#getExtension()
 	 */
 	public String getExtension()
 	{

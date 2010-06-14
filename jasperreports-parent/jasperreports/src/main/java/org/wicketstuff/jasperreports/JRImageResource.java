@@ -15,7 +15,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package wicket.contrib.jasperreports;
+package org.wicketstuff.jasperreports;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -109,7 +109,7 @@ public final class JRImageResource extends JRResource
 	}
 
 	/**
-	 * @see JRResource#newExporter()
+	 * @see org.wicketstuff.jasperreports.JRResource#newExporter()
 	 */
 	public final JRAbstractExporter newExporter()
 	{
@@ -118,7 +118,7 @@ public final class JRImageResource extends JRResource
 	}
 
 	/**
-	 * @see DynamicWebResource#getResourceState()
+	 * @see org.wicketstuff.jasperreports.JRResource#getResourceState()
 	 */
 	protected ResourceState getResourceState()
 	{
@@ -137,8 +137,8 @@ public final class JRImageResource extends JRResource
 			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
 
 			// create an image object
-			int width = (int) ((float) print.getPageWidth() * getZoomRatio());
-			int height = (int) ((float) print.getPageHeight() * getZoomRatio());
+			int width = (int) (print.getPageWidth() * getZoomRatio());
+			int height = (int) (print.getPageHeight() * getZoomRatio());
 			BufferedImage image = new BufferedImage(width, height, type);
 			exporter.setParameter(JRGraphics2DExporterParameter.GRAPHICS_2D, image
 					.getGraphics());
@@ -192,7 +192,7 @@ public final class JRImageResource extends JRResource
 			final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
 			// Get image writer for format
-			final ImageWriter writer = (ImageWriter) ImageIO.getImageWritersByFormatName(
+			final ImageWriter writer = ImageIO.getImageWritersByFormatName(
 					format).next();
 
 			// Write out image
@@ -210,7 +210,7 @@ public final class JRImageResource extends JRResource
 	}
 
 	/**
-	 * @see JRResource#getContentType()
+	 * @see org.wicketstuff.jasperreports.JRResource#getContentType()
 	 */
 	public String getContentType()
 	{
@@ -281,7 +281,7 @@ public final class JRImageResource extends JRResource
 	}
 
 	/**
-	 * @see wicket.contrib.jasperreports.JRResource#getExtension()
+	 * @see org.wicketstuff.jasperreports.JRResource#getExtension()
 	 */
 	public String getExtension()
 	{

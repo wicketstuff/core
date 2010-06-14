@@ -15,20 +15,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package wicket.contrib.jasperreports.examples;
+package org.wicketstuff.jasperreports;
 
 import java.io.File;
 
 import javax.servlet.ServletContext;
 
-import wicket.contrib.examples.WicketExamplePage;
-import wicket.contrib.jasperreports.JRCsvResource;
-import wicket.contrib.jasperreports.JRHtmlResource;
-import wicket.contrib.jasperreports.JRImageResource;
-import wicket.contrib.jasperreports.JRPdfResource;
-import wicket.contrib.jasperreports.JRResource;
-import wicket.contrib.jasperreports.JRRtfResource;
-import wicket.contrib.jasperreports.JRTextResource;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.protocol.http.WebApplication;
 
