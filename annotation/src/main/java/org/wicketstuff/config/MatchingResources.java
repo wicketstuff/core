@@ -86,12 +86,14 @@ public class MatchingResources
         return urls;
     }
 
+
     /**
      * Get all matching classes that are annotated with the given Annotation.
      * @param annotation an annotation class
+     * @param includeSubclasses if true, this will also return classes whose superclass has the specified annotation
      * @return List of all classes that have the given annotation.  List is empty if non matches found.
      */
-    public List<Class<?>> getAnnotatedMatches(Class<? extends Annotation> annotation)
+    public List<Class<?>> getAnnotatedMatches(Class<? extends Annotation> annotation, boolean includeSubclasses) 
     {
         List<Class<?>> matches = new ArrayList<Class<?>>();
         MetadataReaderFactory f = new SimpleMetadataReaderFactory();
@@ -108,19 +110,42 @@ public class MatchingResources
             }
             AnnotationMetadata anno = meta.getAnnotationMetadata();
             Set<String> types = anno.getAnnotationTypes();
-            if (types.contains(annotation.getName()))
+            if (types.contains(annotation.getName()) || (includeSubclasses && anySuperHas(getClass(anno.getSuperClassName()), annotation)))
             {
-                try
-                {
-                    matches.add(Class.forName(anno.getClassName()));
-                }
-                catch (ClassNotFoundException e)
-                {
-                    throw new RuntimeException(e);
-                }
+                matches.add(getClass(anno.getClassName()));
             }
         }
         return matches;
+    }
+
+    /**
+     * Get all matching classes that are annotated with the given Annotation.  Note that this method only returns
+     * those classes that actually contain the annotation, and does not return classes whose superclass contains 
+     * the annotation.
+     *  
+     * @param annotation an annotation class
+     * @return List of all classes that have the given annotation.  List is empty if non matches found.
+     * @see MatchingResources#getAnnotatedMatches(Class, boolean)
+     */
+    public List<Class<?>> getAnnotatedMatches(Class<? extends Annotation> annotation)
+    {
+        return getAnnotatedMatches(annotation, false);
+    }
+
+    private boolean anySuperHas(Class<?> clz, Class<? extends Annotation> annotation) 
+    {
+        return clz != null && (clz.isAnnotationPresent(annotation) || anySuperHas(clz.getSuperclass(), annotation));
+    }
+
+    private Class<?> getClass(String className) {
+        try
+        {
+            return Class.forName(className);
+        }
+        catch (ClassNotFoundException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
