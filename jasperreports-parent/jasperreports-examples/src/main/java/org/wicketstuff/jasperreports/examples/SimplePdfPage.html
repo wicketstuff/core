@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.sourceforge.net/" xml:lang="en" lang="en">
-<head>
-    <title>Wicket Examples - simple jasper reports pdf page</title>
-    <link rel="stylesheet" type="text/css" href="style.css"/>
-</head>
-<body>
-    <span wicket:id="mainNavigation"/>
-    
-    <div>
-    Before<br />
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd"
+	xml:lang="en" lang="en">
+	<head>
+		<title>WicketStuff JasperReports Integration - Embedded PDF</title>
+	</head>
+	<body>
+		<div>
+			Before
+			<br />
 
-		<object wicket:id="report" height="40%" width="80%" />
+			<object wicket:id="report" height="60%" width="80%" />
 
-    <br />After
-    </div>
-</body>
+			<br />
+			After
+		</div>
+		<div>
+			<wicket:link>
+				<a href="Index.html">Back to Examples Index</a>
+			</wicket:link>
+		</div>
+	</body>
 </html>
