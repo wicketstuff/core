@@ -20,9 +20,7 @@ package org.wicketstuff.jasperreports;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.net.URL;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,42 +49,6 @@ public abstract class JRResource extends DynamicWebResource
 	private static Logger log = LoggerFactory.getLogger(JRResource.class);
 
 	/**
-	 * Provides JDBC connection.
-	 */
-	public static interface IDatabaseConnectionProvider extends Serializable
-	{
-		/**
-		 * Gets a JDBC connection to use when filling the report.
-		 * 
-		 * @return a JDBC connection
-		 */
-		Connection get();
-
-		/**
-		 * Called when the report is generated and the connection can be
-		 * released again.
-		 */
-		void release();
-	}
-
-	/**
-	 * Factory class for lazy initialization of the jasper report.
-	 */
-	private static interface JasperReportFactory extends Serializable
-	{
-		/**
-		 * Create a jasper report instance.
-		 * 
-		 * @return the new jasper report instance.
-		 * 
-		 * @throws JRException
-		 */
-		JasperReport newJasperReport() throws JRException;
-	}
-
-	;
-
-	/**
 	 * the connection provider if any for filling this report.
 	 */
 	private IDatabaseConnectionProvider connectionProvider;
@@ -94,7 +56,7 @@ public abstract class JRResource extends DynamicWebResource
 	/**
 	 * factory for delayed report creation.
 	 */
-	private JasperReportFactory jasperReportFactory;
+	private IJasperReportFactory jasperReportFactory;
 
 	/**
 	 * The compiled report this resource references. Made transient as we don't
@@ -139,7 +101,7 @@ public abstract class JRResource extends DynamicWebResource
 	 */
 	public JRResource(final InputStream report)
 	{
-		this(new JasperReportFactory()
+		this(new IJasperReportFactory()
 		{
 			public JasperReport newJasperReport() throws JRException
 			{
@@ -158,7 +120,7 @@ public abstract class JRResource extends DynamicWebResource
 	 */
 	public JRResource(final URL report)
 	{
-		this(new JasperReportFactory()
+		this(new IJasperReportFactory()
 		{
 			public JasperReport newJasperReport() throws JRException
 			{
@@ -177,7 +139,7 @@ public abstract class JRResource extends DynamicWebResource
 	 */
 	public JRResource(final File report)
 	{
-		this(new JasperReportFactory()
+		this(new IJasperReportFactory()
 		{
 			public JasperReport newJasperReport() throws JRException
 			{
@@ -194,7 +156,7 @@ public abstract class JRResource extends DynamicWebResource
 	 * @param factory
 	 *            report factory for lazy initialization
 	 */
-	private JRResource(JasperReportFactory factory)
+	public JRResource(IJasperReportFactory factory)
 	{
 		super();
 		setCacheable(false);

@@ -21,15 +21,17 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 
-import net.sf.jasperreports.engine.JRAbstractExporter;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
+import org.wicketstuff.jasperreports.handlers.PdfResourceHandler;
 
 /**
  * Resource class for jasper reports PDF resources.
  * 
  * @author Eelco Hillenius
+ * @author cdeal
+ * @deprecated Use JRConcreteResource(*, new PdfResourceHandler())
  */
-public final class JRPdfResource extends JRResource
+@Deprecated
+public final class JRPdfResource extends JRConcreteResource<PdfResourceHandler>
 {
 	/**
 	 * Construct without a report. You must provide a report before you can use
@@ -37,7 +39,7 @@ public final class JRPdfResource extends JRResource
 	 */
 	public JRPdfResource()
 	{
-		super();
+		super(new PdfResourceHandler());
 	}
 
 	/**
@@ -48,7 +50,7 @@ public final class JRPdfResource extends JRResource
 	 */
 	public JRPdfResource(InputStream report)
 	{
-		super(report);
+		super(report, new PdfResourceHandler());
 	}
 
 	/**
@@ -59,7 +61,7 @@ public final class JRPdfResource extends JRResource
 	 */
 	public JRPdfResource(URL report)
 	{
-		super(report);
+		super(report, new PdfResourceHandler());
 	}
 
 	/**
@@ -70,30 +72,6 @@ public final class JRPdfResource extends JRResource
 	 */
 	public JRPdfResource(File report)
 	{
-		super(report);
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#newExporter()
-	 */
-	public JRAbstractExporter newExporter()
-	{
-		return new JRPdfExporter();
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#getContentType()
-	 */
-	public String getContentType()
-	{
-		return "application/pdf";
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#getExtension()
-	 */
-	public String getExtension()
-	{
-		return "pdf";
+		super(report, new PdfResourceHandler());
 	}
 }

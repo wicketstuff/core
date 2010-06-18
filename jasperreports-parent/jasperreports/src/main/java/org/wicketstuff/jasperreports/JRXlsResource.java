@@ -4,15 +4,17 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 
-import net.sf.jasperreports.engine.JRAbstractExporter;
-import net.sf.jasperreports.engine.export.JRXlsExporter;
+import org.wicketstuff.jasperreports.handlers.XlsResourceHandler;
 
 /**
- * Resource class for jasper reports Excell resources.
+ * Resource class for jasper reports Excel resources.
  * 
  * @author Justin Lee
+ * @author cdeal
+ * @deprecated Use JRConcreteResource(*, new XlsResourceHandler()) 
  */
-public final class JRXlsResource extends JRResource
+@Deprecated
+public final class JRXlsResource extends JRConcreteResource<XlsResourceHandler>
 {
 	/**
 	 * Construct without a report. You must provide a report before you can use
@@ -20,7 +22,7 @@ public final class JRXlsResource extends JRResource
 	 */
 	public JRXlsResource()
 	{
-		super();
+		super(new XlsResourceHandler());
 	}
 
 	/**
@@ -31,7 +33,7 @@ public final class JRXlsResource extends JRResource
 	 */
 	public JRXlsResource(InputStream report)
 	{
-		super(report);
+		super(report, new XlsResourceHandler());
 	}
 
 	/**
@@ -42,7 +44,7 @@ public final class JRXlsResource extends JRResource
 	 */
 	public JRXlsResource(URL report)
 	{
-		super(report);
+		super(report, new XlsResourceHandler());
 	}
 
 	/**
@@ -53,30 +55,6 @@ public final class JRXlsResource extends JRResource
 	 */
 	public JRXlsResource(File report)
 	{
-		super(report);
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#newExporter()
-	 */
-	public JRAbstractExporter newExporter()
-	{
-		return new JRXlsExporter();
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#getContentType()
-	 */
-	public String getContentType()
-	{
-		return "application/excel";
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#getExtension()
-	 */
-	public String getExtension()
-	{
-		return "xls";
+		super(report, new XlsResourceHandler());
 	}
 }
