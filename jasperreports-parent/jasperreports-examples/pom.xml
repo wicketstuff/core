@@ -21,6 +21,7 @@
 
 	<build>
 		<plugins>
+<!-- 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jasperreports-maven-plugin</artifactId>
@@ -52,7 +53,8 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-		</plugins>
+ -->
+ 		</plugins>
 	</build>
 
 	<dependencies>
