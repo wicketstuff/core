@@ -21,15 +21,17 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 
-import net.sf.jasperreports.engine.JRAbstractExporter;
-import net.sf.jasperreports.engine.export.JRCsvExporter;
+import org.wicketstuff.jasperreports.handlers.CsvResourceHandler;
 
 /**
  * Resource class for jasper reports CSV resources.
  * 
  * @author Eelco Hillenius
+ * @author cdeal
+ * @deprecated Use JRConcreteResource(*, new CsvResourceHandler())
  */
-public final class JRCsvResource extends JRResource
+@Deprecated
+public final class JRCsvResource extends JRConcreteResource<CsvResourceHandler>
 {
 	/**
 	 * Construct without a report. You must provide a report before you can use
@@ -37,7 +39,7 @@ public final class JRCsvResource extends JRResource
 	 */
 	public JRCsvResource()
 	{
-		super();
+		super(new CsvResourceHandler());
 	}
 
 	/**
@@ -48,7 +50,7 @@ public final class JRCsvResource extends JRResource
 	 */
 	public JRCsvResource(InputStream report)
 	{
-		super(report);
+		super(report, new CsvResourceHandler());
 	}
 
 	/**
@@ -59,7 +61,7 @@ public final class JRCsvResource extends JRResource
 	 */
 	public JRCsvResource(URL report)
 	{
-		super(report);
+		super(report, new CsvResourceHandler());
 	}
 
 	/**
@@ -70,30 +72,6 @@ public final class JRCsvResource extends JRResource
 	 */
 	public JRCsvResource(File report)
 	{
-		super(report);
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#newExporter()
-	 */
-	public JRAbstractExporter newExporter()
-	{
-		return new JRCsvExporter();
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#getContentType()
-	 */
-	public String getContentType()
-	{
-		return "text/plain";
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#getExtension()
-	 */
-	public String getExtension()
-	{
-		return "csv";
+		super(report, new CsvResourceHandler());
 	}
 }

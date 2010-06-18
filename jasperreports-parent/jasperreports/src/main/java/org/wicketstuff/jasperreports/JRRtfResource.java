@@ -21,15 +21,17 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 
-import net.sf.jasperreports.engine.JRAbstractExporter;
-import net.sf.jasperreports.engine.export.JRRtfExporter;
+import org.wicketstuff.jasperreports.handlers.RtfResourceHandler;
 
 /**
  * Resource class for jasper reports RTF resources.
  * 
  * @author Eelco Hillenius
+ * @author cdeal
+ * @deprecated Use JRConcreteResource(*, new RtfResourceHandler())
  */
-public final class JRRtfResource extends JRResource
+@Deprecated
+public final class JRRtfResource extends JRConcreteResource<RtfResourceHandler>
 {
 	/**
 	 * Construct without a report. You must provide a report before you can use
@@ -37,7 +39,7 @@ public final class JRRtfResource extends JRResource
 	 */
 	public JRRtfResource()
 	{
-		super();
+		super(new RtfResourceHandler());
 	}
 
 	/**
@@ -48,7 +50,7 @@ public final class JRRtfResource extends JRResource
 	 */
 	public JRRtfResource(InputStream report)
 	{
-		super(report);
+		super(report, new RtfResourceHandler());
 	}
 
 	/**
@@ -59,7 +61,7 @@ public final class JRRtfResource extends JRResource
 	 */
 	public JRRtfResource(URL report)
 	{
-		super(report);
+		super(report, new RtfResourceHandler());
 	}
 
 	/**
@@ -70,30 +72,6 @@ public final class JRRtfResource extends JRResource
 	 */
 	public JRRtfResource(File report)
 	{
-		super(report);
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#newExporter()
-	 */
-	public JRAbstractExporter newExporter()
-	{
-		return new JRRtfExporter();
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#getContentType()
-	 */
-	public String getContentType()
-	{
-		return "text/rtf";
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#getExtension()
-	 */
-	public String getExtension()
-	{
-		return "rtf";
+		super(report, new RtfResourceHandler());
 	}
 }

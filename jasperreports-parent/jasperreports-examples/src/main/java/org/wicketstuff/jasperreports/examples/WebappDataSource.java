@@ -27,18 +27,18 @@
  */
 package org.wicketstuff.jasperreports.examples;
 
+import java.io.Serializable;
+
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
-
-import org.apache.wicket.IClusterable;
 
 
 /**
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  * @version $Id: WebappDataSource.java 2692 2009-03-24 17:17:32Z teodord $
  */
-public class WebappDataSource implements IClusterable, JRDataSource
+public class WebappDataSource implements Serializable, JRDataSource
 {
 
 

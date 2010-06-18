@@ -21,15 +21,17 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 
-import net.sf.jasperreports.engine.JRAbstractExporter;
-import net.sf.jasperreports.engine.export.JRHtmlExporter;
+import org.wicketstuff.jasperreports.handlers.HtmlResourceHandler;
 
 /**
  * Resource class for jasper reports HTML resources.
  * 
  * @author Eelco Hillenius
+ * @author cdeal
+ * @deprecated Use JRConcreteResource(*, new HtmlResourceHandler())
  */
-public final class JRHtmlResource extends JRResource
+@Deprecated
+public final class JRHtmlResource extends JRConcreteResource<HtmlResourceHandler>
 {
 	/**
 	 * Construct without a report. You must provide a report before you can use
@@ -37,7 +39,7 @@ public final class JRHtmlResource extends JRResource
 	 */
 	public JRHtmlResource()
 	{
-		super();
+		super(new HtmlResourceHandler());
 	}
 
 	/**
@@ -48,7 +50,7 @@ public final class JRHtmlResource extends JRResource
 	 */
 	public JRHtmlResource(InputStream report)
 	{
-		super(report);
+		super(report, new HtmlResourceHandler());
 	}
 
 	/**
@@ -59,7 +61,7 @@ public final class JRHtmlResource extends JRResource
 	 */
 	public JRHtmlResource(URL report)
 	{
-		super(report);
+		super(report, new HtmlResourceHandler());
 	}
 
 	/**
@@ -70,30 +72,6 @@ public final class JRHtmlResource extends JRResource
 	 */
 	public JRHtmlResource(File report)
 	{
-		super(report);
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#newExporter()
-	 */
-	public JRAbstractExporter newExporter()
-	{
-		return new JRHtmlExporter();
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#getContentType()
-	 */
-	public String getContentType()
-	{
-		return "text/html";
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#getExtension()
-	 */
-	public String getExtension()
-	{
-		return "html";
+		super(report, new HtmlResourceHandler());
 	}
 }

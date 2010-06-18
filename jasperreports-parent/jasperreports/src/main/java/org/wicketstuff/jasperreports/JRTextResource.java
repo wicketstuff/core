@@ -21,34 +21,25 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 
-import net.sf.jasperreports.engine.JRAbstractExporter;
-import net.sf.jasperreports.engine.export.JRTextExporter;
-import net.sf.jasperreports.engine.export.JRTextExporterParameter;
+import org.wicketstuff.jasperreports.handlers.TextResourceHandler;
 
 /**
  * Resource class for jasper reports text resources.
  * 
  * @author Eelco Hillenius
+ * @author cdeal
+ * @deprecated Use JRConcreteResource(*, new TextResourceHandler())
  */
-public final class JRTextResource extends JRResource
+@Deprecated
+public final class JRTextResource extends JRConcreteResource<TextResourceHandler>
 {
-	/**
-	 * an integer representing the page width in characters.
-	 */
-	private int pageWidth = 100;
-
-	/**
-	 * an integer representing the page height in characters.
-	 */
-	private int pageHeight = 100;
-
 	/**
 	 * Construct without a report. You must provide a report before you can use
 	 * this resource.
 	 */
 	public JRTextResource()
 	{
-		super();
+		super(new TextResourceHandler());
 	}
 
 	/**
@@ -59,7 +50,7 @@ public final class JRTextResource extends JRResource
 	 */
 	public JRTextResource(InputStream report)
 	{
-		super(report);
+		super(report, new TextResourceHandler());
 	}
 
 	/**
@@ -70,7 +61,7 @@ public final class JRTextResource extends JRResource
 	 */
 	public JRTextResource(URL report)
 	{
-		super(report);
+		super(report, new TextResourceHandler());
 	}
 
 	/**
@@ -81,27 +72,7 @@ public final class JRTextResource extends JRResource
 	 */
 	public JRTextResource(File report)
 	{
-		super(report);
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#newExporter()
-	 */
-	public JRAbstractExporter newExporter()
-	{
-		JRTextExporter exporter = new JRTextExporter();
-		exporter.setParameter(JRTextExporterParameter.PAGE_WIDTH, new Integer(pageWidth));
-		exporter.setParameter(JRTextExporterParameter.PAGE_HEIGHT,
-				new Integer(pageHeight));
-		return exporter;
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#getContentType()
-	 */
-	public String getContentType()
-	{
-		return "text/plain";
+		super(report, new TextResourceHandler());
 	}
 
 	/**
@@ -111,7 +82,7 @@ public final class JRTextResource extends JRResource
 	 */
 	public int getPageHeight()
 	{
-		return pageHeight;
+		return getHandler().getPageHeight();
 	}
 
 	/**
@@ -122,7 +93,7 @@ public final class JRTextResource extends JRResource
 	 */
 	public void setPageHeight(int height)
 	{
-		this.pageHeight = height;
+		getHandler().setPageHeight(height);
 	}
 
 	/**
@@ -132,7 +103,7 @@ public final class JRTextResource extends JRResource
 	 */
 	public int getPageWidth()
 	{
-		return pageWidth;
+		return getHandler().getPageWidth();
 	}
 
 	/**
@@ -143,14 +114,6 @@ public final class JRTextResource extends JRResource
 	 */
 	public void setPageWidth(int width)
 	{
-		this.pageWidth = width;
-	}
-
-	/**
-	 * @see org.wicketstuff.jasperreports.JRResource#getExtension()
-	 */
-	public String getExtension()
-	{
-		return "txt";
+		getHandler().setPageWidth(width);
 	}
 }
