@@ -27,4 +27,11 @@
 		</developer>
 	</developers>
 
+        <dependencies>
+            <dependency>
+                <groupId>org.wicketstuff</groupId>
+                <artifactId>jwicket-ui-sort</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
 </project>
