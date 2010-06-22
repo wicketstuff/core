@@ -28,10 +28,10 @@ import org.wicketstuff.openlayers.api.layer.Layer;
 import org.wicketstuff.openlayers.api.layer.WFS;
 import org.wicketstuff.openlayers.api.layer.WMS;
 import org.wicketstuff.openlayers.js.JSUtils;
-import org.wicketstuff.openlayers.proxy.WFSProxyBehaviour;
+import org.wicketstuff.openlayers.proxy.WFSProxyBehavior;
 
 /**
- * @author Michael O'Cleirigh (michael.ocleirigh@rivulet.ca)
+ * @author mocleiri
  *
  * Shows how a WFS layer can be used.
  * 
@@ -72,9 +72,9 @@ public class MapWithWFSLayerPage extends WebPage {
 		
 		layerList.add(wfsLayer);
 		
-		final WFSProxyBehaviour wfsProxy = new WFSProxyBehaviour();
+		final WFSProxyBehavior wfsProxy = new WFSProxyBehavior();
 		
-		OpenLayersMap map = new OpenLayersMap("map", layerList, new LinkedHashMap<String, String>()) {
+		OpenLayersMap map = new OpenLayersMap("map", true, layerList, new LinkedHashMap<String, String>()) {
 
 			/* (non-Javadoc)
 			 * @see org.wicketstuff.openlayers.OpenLayersMap#getJSinit()

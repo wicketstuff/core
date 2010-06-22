@@ -1,11 +1,24 @@
+/*
+ * 
+ * ==============================================================================
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package org.wicketstuff.openlayers.proxy;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,34 +40,39 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-* @author Michael O'Cleirigh (michael.ocleirigh@rivulet.ca)
+* @author mocleiri
 * 
-* The OpenLayer.ProxyHost javascript variable when defined will allow requests
-* to be sent through a server side proxy.  This gets around cross site scripting problems.
+* When working with Web Feature Service (WFS) Requests a proxy needs to be used to get around cross site scripting restrictions that are present in browsers.
 * 
+* The Openlayers.org site lists several CGI approaches for proxying.  In this approach we implement a proxy within a Wicket Ajax Behavior.
 * 
-* In order to make the behaviour work it needs to be added onto the OpenLayersMap.
+* In order to make the behaviour work it needs to be added onto the OpenLayersMap; and emitted when the map is created in javascript.
 * 
 * Then the OpenLayers.ProxyHost=behaviour.getProxyUrl() method can be used.
 * 
-* See openlayers-examples for an example (e.g. MapWithWMSGetFeatureInfo)
-*
+* See openlayers-examples for an example (e.g. MapWithWMSGetFeatureInfo.class)
+* 
+* Using this behaviour binds the lifecycle of map access to an active session which is useful in some cases but might be a problem in others.
+* 
+* The ProxyRequestTarget implementation could be used for example in a Servlet Filter to proxy without caring about the current session and/or the users
+* authorization to view the map data.
+* 
 */
-public class WFSProxyBehaviour extends AbstractAjaxBehavior { 
+public class WFSProxyBehavior extends AbstractAjaxBehavior { 
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4710843334047637872L;
 
-	private static final Logger log = LoggerFactory.getLogger(WFSProxyBehaviour.class);
+	private static final Logger log = LoggerFactory.getLogger(WFSProxyBehavior.class);
 	
 	private String wmsURL;
 	
 	/**
 	 * 
 	 */
-	public WFSProxyBehaviour() {
+	public WFSProxyBehavior() {
 	}
 	
 	class ProxyResponseTarget implements IRequestTarget {

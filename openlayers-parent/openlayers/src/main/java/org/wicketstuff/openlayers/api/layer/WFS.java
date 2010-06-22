@@ -24,7 +24,7 @@ import org.apache.wicket.behavior.HeaderContributor;
 import org.wicketstuff.openlayers.js.JSUtils;
 
 /**
- * @author Michael O'Cleirigh (michael.ocleirigh@rivulet.ca)
+ * @author mocleiri
  * 
  * Maps the OpenLayers.Layer.WFS object.
  * 

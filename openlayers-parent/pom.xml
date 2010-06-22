@@ -33,5 +33,50 @@
 		</dependency>
 		</dependencies>
 	</dependencyManagement>
+	
+	<!--  this is temporary until this is included in the parent -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.5</version>
+			</plugin>
+		</plugins>
+	</build>
+	<profiles>
+<profile>
+			<!-- setup for using oss.sonatype.org to hold snapshots -->
+			<!-- Resolve snapshots through the 			-->
+			<id>oss.sonatype.org-snapshots</id>
+
+
+			<activation>
+
+				<activeByDefault>false</activeByDefault>
+
+			</activation>
+
+			 <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+			<repositories>
+				<repository>
+					<id>nexus-snapshots</id>
+					<name>Sonatype Nexus Snapshots</name>
+            		<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+					<snapshots><enabled>true</enabled></snapshots>
+
+				</repository>
+			</repositories>
+
+		</profile>
+
+	</profiles>
 
 </project>

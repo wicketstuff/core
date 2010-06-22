@@ -49,8 +49,6 @@ function WicketOMap(id, options, markersLayerName, showMarkersInLayerSwitcher) {
 	this.controls = {};
 	this.overlays = {};
 	this.layers = {};
-	this.features = {};
-	this.featureStyles = {};
 	this.div = id;
 	this.showMarkersInLayerSwitcher = showMarkersInLayerSwitcher;
 	this.openOverlays = new OpenLayers.Layer.Markers(markersLayerName == null ? "markers" + id : markersLayerName);
@@ -74,37 +72,17 @@ function WicketOMap(id, options, markersLayerName, showMarkersInLayerSwitcher) {
 		});
 	};
 	this.addLayer = function (layer, id) {
-		if (this.layers[id] == null) {
-			this.map.addLayer(layer);
-			this.layers[id] = layer;
-		}
+		var self = this;
+		self.map.addLayer(layer);
+		self.layers[id] = layer;
 	};
-	this.removeLayer = function(layerId) {
-		if (this.layers[layerId] !== null) {
-			this.map.removeLayer(this.layers[layerId]);
-			this.layers[layerId] = null;
-		}
+	this.addFeature = function (feature, layer) {
+		var self = this;
+		layer.addFeatures([feature]);
 	}
-	this.addFeature = function (layerId, feature, id) {
-		if (this.layers[layerId] !== null && this.features[id] == null) {
-			this.layers[layerId].addFeatures([feature]);
-			this.features[id] = feature;
-		}
-	}
-	this.removeFeature = function (layerId, featureId) {
-		if (this.layers[layerId] !== null && this.features[featureId] !== null) {
-			this.layers[layerId].removeFeatures([this.features[featureId]]);
-			this.features[featureId] = null;
-		}
-	}
-	this.addFeatureStyle = function (featureStyle, id) {
-		this.featureStyles[id] = featureStyle;
-	}
-	this.getFeatureStyle = function (featureStyleId) {
-		return this.featureStyles[featureStyleId];
-	}
-	this.removeFeatureStyle = function (featureStyleId) {
-		this.featureStyles[featureStyleId] = null;
+	this.removeFeature = function (feature, layer) {
+		var self = this;
+		layer.removeFeatures([feature]);
 	}
 	this.setCenter = function (center, zoom) {
 		var self = this;

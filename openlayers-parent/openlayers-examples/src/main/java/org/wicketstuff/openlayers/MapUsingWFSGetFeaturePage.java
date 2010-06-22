@@ -29,10 +29,10 @@ import org.wicketstuff.openlayers.api.layer.Layer;
 import org.wicketstuff.openlayers.api.layer.Vector;
 import org.wicketstuff.openlayers.api.layer.WMS;
 import org.wicketstuff.openlayers.js.JSUtils;
-import org.wicketstuff.openlayers.proxy.WFSProxyBehaviour;
+import org.wicketstuff.openlayers.proxy.WFSProxyBehavior;
 
 /**
- * @author Michael O'Cleirigh (michael.ocleirigh@rivulet.ca)
+ * @author mocleiri
  * 
  * An example that shows how a WFS layer can be used.
  * 
@@ -108,9 +108,9 @@ public class MapUsingWFSGetFeaturePage extends WebPage {
 //		mapOptions.put("maxExtent",
 //				"new OpenLayers.Bounds(143.834,-43.648,148.479,-39.573)");
 
-		final WFSProxyBehaviour proxyBehaviour = new WFSProxyBehaviour();
+		final WFSProxyBehavior proxyBehaviour = new WFSProxyBehavior();
 
-		OpenLayersMap map = new OpenLayersMap("map", layerList, mapOptions) {
+		OpenLayersMap map = new OpenLayersMap("map", true, layerList, mapOptions) {
 
 			/*
 			 * (non-Javadoc)
@@ -123,6 +123,8 @@ public class MapUsingWFSGetFeaturePage extends WebPage {
 						+ proxyBehaviour.getProxyUrl(true) + "';\n"
 						+ super.getJSinit();
 			}
+			
+			
 
 		};
 

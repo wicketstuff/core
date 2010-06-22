@@ -38,7 +38,7 @@ public class SimpleOpenStreetMapPage extends WebPage {
 		mapOptions.put("maxResolution", "156543");
 		mapOptions.put("numZoomLevels", "18");
 
-		OpenLayersMap map = new OpenLayersMap("map", layers, mapOptions);		
+		OpenLayersMap map = new OpenLayersMap("map", true, layers, mapOptions);		
 	
 		map.addControl(Control.LayerSwitcher);
 		map.addControl(Control.MousePosition);
