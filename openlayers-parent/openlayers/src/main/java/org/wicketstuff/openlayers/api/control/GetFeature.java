@@ -23,7 +23,7 @@ import org.wicketstuff.openlayers.api.layer.WMS;
 import org.wicketstuff.openlayers.js.JSUtils;
 
 /**
- * @author Michael O'Cleirigh (michael.ocleirigh@rivulet.ca)
+ * @author mocleiri
  * 
  * See: http://dev.openlayers.org/releases/OpenLayers-2.8/doc/apidocs/files/OpenLayers/Control/GetFeature-js.html
  */

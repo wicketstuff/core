@@ -22,7 +22,7 @@ import org.apache.wicket.util.template.JavaScriptTemplate;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 
 /**
- * @author Michael O'Cleirigh (michael.ocleirigh@rivulet.ca)
+ * @author mocleiri
  * 
  * Created as part of the Control conversion from an enumerated type to a class hierarchy.  
  * 

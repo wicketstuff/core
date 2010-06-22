@@ -1,13 +1,17 @@
-/**
- * MapWithGetSpecificFeaturePage.java
- *
- * Michael O'Cleirigh
+/*
  * 
- * Data Management Group
- * Department of Civil Engineering
- * University of Toronto
- *
- * Created: Aug 25, 2009
+ * ==============================================================================
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 package org.wicketstuff.openlayers;
 
@@ -29,10 +33,10 @@ import org.wicketstuff.openlayers.api.layer.Layer;
 import org.wicketstuff.openlayers.api.layer.Vector;
 import org.wicketstuff.openlayers.api.layer.WMS;
 import org.wicketstuff.openlayers.js.JSUtils;
-import org.wicketstuff.openlayers.proxy.WFSProxyBehaviour;
+import org.wicketstuff.openlayers.proxy.WFSProxyBehavior;
 
 /**
- * @author Michael O'Cleirigh (michael.ocleirigh@dmg.utoronto.ca)
+ * @author mocleiri
  *
  */
 public class MapWithGetSpecificFeaturePage extends WebPage {
@@ -64,12 +68,16 @@ public class MapWithGetSpecificFeaturePage extends WebPage {
 				
 				options.put("layers", JSUtils.getQuotedString("topp:states"));
 				options.put("format", JSUtils.getQuotedString("image/png8"));
+				options.put("srs", JSUtils.getQuotedString("EPSG:4326"));
 				
-				WMS layer = new WMS("States WMS/WFS", "http://127.0.0.1:8081/geoserver/wms", options);
+				
+
+				
+				WMS layer = new WMS("States WMS/WFS", "http://demo.opengeo.org:80/geoserver/wms", options);
 
 				layerList.add(layer);
 
-				final WFSProxyBehaviour proxyBehaviour = new WFSProxyBehaviour();
+				final WFSProxyBehavior proxyBehaviour = new WFSProxyBehavior();
 				
 				final AbstractDefaultAjaxBehavior callbackBehaviour = new AbstractDefaultAjaxBehavior() {
 					
@@ -88,18 +96,19 @@ public class MapWithGetSpecificFeaturePage extends WebPage {
 					}
 				};
 				
-				GetSpecificFeature control = new GetSpecificFeature(layer, proxyBehaviour, callbackBehaviour, "http://127.0.0.1:8081/geoserver/wfs", "topp", "http://www.openplans.org/topp", "states", 4326, "STATE_NAME");
+				GetSpecificFeature control = new GetSpecificFeature(layer, proxyBehaviour, callbackBehaviour, "http://demo.opengeo.org:80/geoserver/wms", "topp", "http://www.openplans.org/topp", "states", 4326, "STATE_NAME");
 				
 
 		HashMap<String, String> mapOptions = new LinkedHashMap<String, String>();
 
-		mapOptions.put("srs", "4326");
+		mapOptions.put("projection", JSUtils.getQuotedString("EPSG:4326"));
+		mapOptions.put("units", JSUtils.getQuotedString("degrees"));
 //		mapOptions.put("maxExtent",
 //				"new OpenLayers.Bounds(143.834,-43.648,148.479,-39.573)");
 
 		
 
-		OpenLayersMap map = new OpenLayersMap("map", layerList, mapOptions) {
+		OpenLayersMap map = new OpenLayersMap("map", true, layerList, mapOptions) {
 
 			/*
 			 * (non-Javadoc)

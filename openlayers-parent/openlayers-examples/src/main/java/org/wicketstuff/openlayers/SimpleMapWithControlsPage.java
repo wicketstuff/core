@@ -20,7 +20,7 @@ public class SimpleMapWithControlsPage extends WebPage {
 	 *            Page parameters
 	 */
 	public SimpleMapWithControlsPage(final PageParameters parameters) {
-		OpenLayersMap openLayersMap = new OpenLayersMap("map");
+		OpenLayersMap openLayersMap = new OpenLayersMap("map", true);
 		add(openLayersMap);
 		openLayersMap.getControls().add(Control.LayerSwitcher);
 		openLayersMap.getControls().add(Control.PanZoomBar);

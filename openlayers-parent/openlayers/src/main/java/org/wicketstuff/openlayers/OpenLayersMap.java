@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.Request;
 import org.apache.wicket.RequestCycle;
@@ -52,12 +53,16 @@ import org.wicketstuff.openlayers.api.layer.WMS;
 import org.wicketstuff.openlayers.event.EventType;
 import org.wicketstuff.openlayers.event.OverlayListenerBehavior;
 import org.wicketstuff.openlayers.event.PopupListener;
+import org.wicketstuff.openlayers.js.JSUtils;
 
 /**
  * Wicket component to embed <a href="http://www.openlayers.org/">Openlayers
  * Maps</a> into your pages.
  */
 public class OpenLayersMap extends Panel implements IOpenLayersMap {
+	
+	private static final String OPEN_LAYERS_VERSION = "2.9.1";
+	
 	private static Logger log = LoggerFactory.getLogger(OpenLayersMap.class);
 	private String businessLogicProjection = null;
 
@@ -203,13 +208,21 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	 * 
 	 * @param id
 	 */
-	public OpenLayersMap(final String id) {
-		this(id, new OpenLayersMapHeaderContributor(),
+	public OpenLayersMap(final String id, boolean developmentMode) {
+		this(id, new OpenLayersMapHeaderContributor(developmentMode, OPEN_LAYERS_VERSION),
 				new ArrayList<Overlay>(), new ArrayList<Layer>(),
 				new HashMap<String, String>());
-		options.put("layers", "'basic'");
+		
+		HashMap<String, String>layerOptions = new HashMap<String, String>();
+		
+		layerOptions.put("layers", JSUtils.getQuotedString("basic"));
+		
 		layers.add(new WMS("OpenLayers WMS",
-				"http://labs.metacarta.com/wms/vmap0", options));
+				"http://labs.metacarta.com/wms/vmap0", layerOptions));
+	}
+	
+	public OpenLayersMap (String id) {
+		this (id, false);
 	}
 
 	/**
@@ -217,28 +230,50 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	 * 
 	 * @param id
 	 */
-	public OpenLayersMap(final String id, List<Layer> defaultLayers,
+	public OpenLayersMap(final String id, boolean developmentMode,  List<Layer> defaultLayers,
 			HashMap<String, String> options) {
-		this(id, new OpenLayersMapHeaderContributor(),
+		this(id, new OpenLayersMapHeaderContributor(developmentMode, OPEN_LAYERS_VERSION),
 				new ArrayList<Overlay>(), defaultLayers, options);
 	}
-
+	
 	public OpenLayersMap(final String id, List<Layer> defaultLayers,
+			HashMap<String, String> options) {
+	
+		this (id, false, defaultLayers, options);
+	}	
+
+	public OpenLayersMap(final String id, boolean developmentMode, List<Layer> defaultLayers,
 			HashMap<String, String> options, List<Overlay> overlays) {
-		this(id, new OpenLayersMapHeaderContributor(), overlays, defaultLayers,
+		this(id, new OpenLayersMapHeaderContributor(developmentMode, OPEN_LAYERS_VERSION), overlays, defaultLayers,
 				options);
 	}
+	
+	public OpenLayersMap(final String id, List<Layer> defaultLayers,
+			HashMap<String, String> options, List<Overlay> overlays) {
+		this (id, false, defaultLayers, options, overlays);
+	}
+	
+	
 
 	public OpenLayersMap(final String id, List<Layer> defaultLayers,
 			HashMap<String, String> options, List<Overlay> overlays,
 			PopupListener popupListener) {
-		this(id, new OpenLayersMapHeaderContributor(), overlays, popupListener,
+		
+		this (id, false, defaultLayers, options, overlays, popupListener);
+	}
+	
+	public OpenLayersMap(final String id, boolean developmentMode, List<Layer> defaultLayers,
+			HashMap<String, String> options, List<Overlay> overlays,
+			PopupListener popupListener) {
+		this(id, new OpenLayersMapHeaderContributor(developmentMode, OPEN_LAYERS_VERSION), overlays, popupListener,
 				defaultLayers, options);
 	}
 
 	/**
 	 * 
 	 * Popups up the window as default!
+	 * 
+	 * is protected to allow subclasses to override the HeaderContributor that is used. @see OpenLayersMapHeaderContributor
 	 * 
 	 * @param id
 	 * @param headerContrib
@@ -477,7 +512,22 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 
 			}
 		}
-		js.append(getJSinvoke("zoomToMaxExtent()"));
+		
+		/*
+		 * If zoom and center are available then use them on the initial map rendering.
+		 */
+		if (this.zoom != null) {
+			if (this.center != null)
+				js.append(getJSsetCenter(center, zoom));
+			else
+				js.append(getJSsetZoom(zoom));
+		}
+		else {
+			js.append(getJSinvoke("zoomToMaxExtent()"));
+		}
+		
+		
+		
 		for (IJavascriptComponent control : controls) {
 			js.append(control.getJSadd(this));
 		}
