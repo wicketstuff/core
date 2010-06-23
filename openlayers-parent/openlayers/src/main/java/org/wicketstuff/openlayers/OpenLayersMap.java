@@ -179,7 +179,8 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 
 	private PopupListener callbackListener = null;
 
-	private LonLat center = new LonLat(37.4419, -122.1419);
+	private static final LonLat DEFAULT_CENTER = new LonLat(37.4419, -122.1419); 
+	private LonLat center = DEFAULT_CENTER;
 
 	private List<IJavascriptComponent> controls = new ArrayList<IJavascriptComponent>();
 
@@ -195,7 +196,8 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 
 	private List<Overlay> overlays = new ArrayList<Overlay>();
 
-	private Integer zoom = 13;
+	private static final Integer DEFAULT_ZOOM = 13;
+	private Integer zoom = DEFAULT_ZOOM;
 
 	// determines if the marker layer will be visible in the
 	// OpenLayers.Control.LayerSwitcher
@@ -516,8 +518,9 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 		/*
 		 * If zoom and center are available then use them on the initial map rendering.
 		 */
-		if (this.zoom != null) {
-			if (this.center != null)
+		if (!this.zoom.equals(DEFAULT_ZOOM)) {
+			
+			if (!this.center.equals(DEFAULT_CENTER))
 				js.append(getJSsetCenter(center, zoom));
 			else
 				js.append(getJSsetZoom(zoom));
