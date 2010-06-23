@@ -19,11 +19,20 @@ package org.wicketstuff.javaee.naming;
 import java.io.Serializable;
 
 /**
- * Specifies a pluggable implementation for a naming strategy of ejbs
+ * Specifies a pluggable implementation for a naming strategy of EJB's
+ *
+ * @see org.wicketstuff.javaee.naming.StandardJndiNamingStrategy
+ * @see org.wicketstuff.javaee.naming.global.GlobalJndiNamingStrategy
  *
  * @author Filippo Diotalevi
  */
 public interface IJndiNamingStrategy extends Serializable {
 
+    /**
+     * Calculates the JNDI name based on the given name and type
+     * @param ejbName The name value for the EJB annotation.
+     * @param ejbType The type of the injectable field.
+     * @return The full JNDI name for the given field based on a naming strategy.
+     */
     String calculateName(String ejbName, Class<?> ejbType);
 }
