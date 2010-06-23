@@ -10,6 +10,13 @@
     <packaging>pom</packaging>
     <name>JavaEE Inject - Examples</name>
 
+    <description>
+        This is a sample JAVA EE 6 project for demonstrating how the JavaEE Inject
+        library should been used in Enterprise and/or Web Applications.
+        Note, that with small changes you can easily convert this project back
+        to JAVA EE 5, which is also supported by the library.
+    </description>
+    
     <modules>
         <module>javaee-inject-example-ear</module>
         <module>javaee-inject-example-ejb</module>
