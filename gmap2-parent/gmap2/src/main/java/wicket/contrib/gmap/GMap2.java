@@ -66,6 +66,8 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	private GLatLng center = new GLatLng(37.4419, -122.1419);
 
+	private boolean googleBarEnabled = true;
+	
 	private boolean draggingEnabled = true;
 
 	private boolean doubleClickZoomEnabled = false;
@@ -305,6 +307,18 @@ public class GMap2 extends Panel implements GOverlayContainer
 	{
 		return bounds;
 	}
+	
+	public void enableGoogleBar(boolean enabled) {
+		if (this.googleBarEnabled != enabled)
+		{
+			googleBarEnabled = enabled;
+
+			if (AjaxRequestTarget.get() != null && findPage() != null)
+			{
+				AjaxRequestTarget.get().appendJavascript(getJSsetGoogleBarEnabled(enabled));
+			}
+		}
+	}
 
 	public void setDraggingEnabled(boolean enabled)
 	{
@@ -457,6 +471,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 		js.append(getJSsetDraggingEnabled(draggingEnabled));
 		js.append(getJSsetDoubleClickZoomEnabled(doubleClickZoomEnabled));
 		js.append(getJSsetScrollWheelZoomEnabled(scrollWheelZoomEnabled));
+		js.append(getJSsetGoogleBarEnabled(googleBarEnabled));
 
 		js.append(mapType.getJSsetMapType(this));
 
@@ -567,6 +582,11 @@ public class GMap2 extends Panel implements GOverlayContainer
 				this.addOverlay(new GMarker(location));
 			}
 		}
+	}
+
+	private String getJSsetGoogleBarEnabled(boolean enabled)
+	{
+		return getJSinvoke("setGoogleBarEnabled(" + enabled + ")");
 	}
 
 	private String getJSsetDraggingEnabled(boolean enabled)

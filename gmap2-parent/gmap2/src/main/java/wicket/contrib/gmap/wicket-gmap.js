@@ -125,30 +125,39 @@ function WicketMap2(id){
         google.maps.Event.clearListeners(overlay, event);
     }
     
-    this.setDraggingEnabled = function(enabled){
+    this.setGoogleBarEnabled = function(enabled){
         if (enabled) {
-            this.map.enableDragging(true);
+            this.map.enableGoogleBar();
         }
         else {
-            this.map.disableDragging(false);
+            this.map.disableGoogleBar();
+        }
+    }
+    
+    this.setDraggingEnabled = function(enabled){
+        if (enabled) {
+            this.map.enableDragging();
+        }
+        else {
+            this.map.disableDragging();
         }
     }
     
     this.setDoubleClickZoomEnabled = function(enabled){
         if (enabled) {
-            this.map.enableDoubleClickZoom(true);
+            this.map.enableDoubleClickZoom();
         }
         else {
-            this.map.disableDoubleClickZoom(false);
+            this.map.disableDoubleClickZoom();
         }
     }
     
     this.setScrollWheelZoomEnabled = function(enabled){
         if (enabled) {
-            this.map.enableScrollWheelZoom(true);
+            this.map.enableScrollWheelZoom();
         }
         else {
-            this.map.disableScrollWheelZoom(false);
+            this.map.disableScrollWheelZoom();
         }
     }
     
