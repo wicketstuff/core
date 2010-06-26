@@ -7,7 +7,6 @@ import org.apache.wicket.model.PropertyModel;
 import wicket.contrib.examples.GMapExampleApplication;
 import wicket.contrib.examples.WicketExamplePage;
 import wicket.contrib.gmap.GMap2;
-import wicket.contrib.gmap.GMap2.SetMapTypeBehavior;
 import wicket.contrib.gmap.api.GControl;
 import wicket.contrib.gmap.api.GMapType;
 import wicket.contrib.gmap.event.MapTypeChangedListener;
