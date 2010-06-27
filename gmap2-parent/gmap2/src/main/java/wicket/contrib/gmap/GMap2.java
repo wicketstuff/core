@@ -66,7 +66,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	private GLatLng center = new GLatLng(37.4419, -122.1419);
 
-	private boolean googleBarEnabled = true;
+	private boolean googleBarEnabled = false;
 	
 	private boolean draggingEnabled = true;
 
