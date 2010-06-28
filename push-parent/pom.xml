@@ -1,17 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <!--parent>
+  <parent>
     <artifactId>wicketstuff-core</artifactId>
     <groupId>org.wicketstuff</groupId>
     <version>1.4.10-SNAPSHOT</version>
-  </parent-->
-
-  <groupId>org.wicketstuff</groupId>
+  </parent>
+  
   <artifactId>push-parent</artifactId>
   <packaging>pom</packaging>
-  <version>1.4.11-SNAPSHOT</version>
-  
+
   <name>Push - Parent</name>
   <description>See the child project "push"for more information</description>
 
