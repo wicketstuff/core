@@ -4,7 +4,7 @@
   <parent>
     <artifactId>wicketstuff-core</artifactId>
     <groupId>org.wicketstuff</groupId>
-    <version>1.4-rc2</version>
+    <version>1.4-SNAPSHOT</version>
   </parent>
   
   <artifactId>push-parent</artifactId>
