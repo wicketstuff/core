@@ -2,6 +2,7 @@ package org.wicketstuff.push.examples.application;
 
 import java.io.Serializable;
 
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.push.IChannelService;
@@ -34,7 +35,7 @@ public class ExampleApplication extends WebApplication implements Serializable {
 	 * @see wicket.Application#getHomePage()
 	 */
 	@Override
-  public Class getHomePage() {
+  public Class<? extends WebPage> getHomePage() {
 		return Index.class;
 	}
 

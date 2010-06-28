@@ -61,10 +61,10 @@ public abstract class AbstractDefaultDojoBehavior extends
    * a Unique key to know if a CompressedResourceReference is set by the user in
    * order to use a custom dojo distribution
    */
-  public static final MetaDataKey USE_CUSTOM_DOJO_DIST =
-      new MetaDataKey(CompressedResourceReference.class) {
-        private static final long serialVersionUID = 1L;
-      };
+  public static final MetaDataKey<CompressedResourceReference>
+  USE_CUSTOM_DOJO_DIST  = new MetaDataKey<CompressedResourceReference>() {
+    private static final long serialVersionUID = 1L;
+  };
 
   /** reference to the dojo support javascript file. */
   public static final ResourceReference DOJO =
@@ -78,6 +78,7 @@ public abstract class AbstractDefaultDojoBehavior extends
   /**
    * @see wicket.ajax.AbstractDefaultAjaxBehavior#renderHead(wicket.markup.html.IHeaderResponse)
    */
+  @Override
   public void renderHead(final IHeaderResponse response) {
     super.renderHead(response);
 
@@ -110,7 +111,7 @@ public abstract class AbstractDefaultDojoBehavior extends
         || !(Application.get().getMetaData(USE_CUSTOM_DOJO_DIST) instanceof CompressedResourceReference)) {
         return DOJO;
     } else {
-      return (CompressedResourceReference) Application.get().getMetaData(
+      return Application.get().getMetaData(
           USE_CUSTOM_DOJO_DIST);
     }
   }

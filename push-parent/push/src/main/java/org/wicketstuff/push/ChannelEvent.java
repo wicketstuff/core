@@ -30,11 +30,12 @@ import java.util.Map;
  *
  *
  * @author Vincent Demay
+ * @author Rodolfo Hansen
  */
 public class ChannelEvent
 {
 	private String channel;
-	private final HashMap data;
+	private final Map<String, String> data;
   private String id = "0";
 
 	/**
@@ -43,7 +44,7 @@ public class ChannelEvent
 	 */
 	public ChannelEvent(final String channel){
 		this.channel = channel;
-		data = new HashMap();
+		data = new HashMap<String, String>();
 	}
 
 	/**
@@ -78,7 +79,7 @@ public class ChannelEvent
 	 * Returns all data in the event
 	 * @return all data in the event
 	 */
-	public Map getData(){
+	public Map<String, String> getData(){
 		return data;
 	}
 
