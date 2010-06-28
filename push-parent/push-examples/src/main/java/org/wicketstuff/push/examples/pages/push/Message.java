@@ -23,7 +23,7 @@ public class Message implements Serializable {
 	public void setUser(String user) {
 		this.user = user;
 	}
-	
+
 	@Override
 	public String toString() {
 		return user + " said "+message;
