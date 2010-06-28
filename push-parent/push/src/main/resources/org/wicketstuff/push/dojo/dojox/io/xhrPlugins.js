@@ -1,5 +1,5 @@
 /*
-	Copyright (c) 2004-2008, The Dojo Foundation All Rights Reserved.
+	Copyright (c) 2004-2009, The Dojo Foundation All Rights Reserved.
 	Available via Academic Free License >= 2.1 OR the modified BSD license.
 	see: http://dojotoolkit.org/license for details
 */
@@ -62,15 +62,15 @@ xdr.setRequestHeader=function(){
 xdr.getResponseHeader=function(_17){
 return _17=="Content-Type"?xdr.contentType:null;
 };
-function handler(_18,_19){
+function _18(_19,_1a){
 return function(){
-xdr.readyState=_19;
-xdr.status=_18;
+xdr.readyState=_1a;
+xdr.status=_19;
 };
 };
-xdr.onload=handler(200,4);
-xdr.onprogress=handler(200,3);
-xdr.onerror=handler(404,4);
+xdr.onload=_18(200,4);
+xdr.onprogress=_18(200,3);
+xdr.onerror=_18(404,4);
 return xdr;
 };
 var dfd=(_11?_11(_2):_2).apply(dojo,arguments);
@@ -78,33 +78,32 @@ dojo._xhrObj=_15;
 return dfd;
 });
 };
-dojox.io.xhrPlugins.fullHttpAdapter=function(_1b,_1c){
-return function(_1d,_1e,_1f){
-var _20={};
+dojox.io.xhrPlugins.fullHttpAdapter=function(_1c,_1d){
+return function(_1e,_1f,_20){
 var _21={};
-if(!(_1d=="GET"||_1d=="POST")){
-_21["http-method"]=_1d;
-_1d="POST";
-if(_1e.putData&&_1c){
-_20["http-content"]=_1e.putData;
-delete _1e.putData;
-_1f=false;
+var _22={};
+if(_1e!="GET"){
+_22["http-method"]=_1e;
+if(_1f.putData&&_1d){
+_21["http-content"]=_1f.putData;
+delete _1f.putData;
+_20=false;
 }
-}else{
-if(_1d=="POST"&&_1e.postData&&_1c){
-_20["http-content"]=_1e.postData;
-delete _1e.postData;
-_1f=false;
+if(_1f.postData&&_1d){
+_21["http-content"]=_1f.postData;
+delete _1f.postData;
+_20=false;
 }
+_1e="POST";
 }
-for(var i in _1e.headers){
-var _23=i.match(/^X-/)?i.substring(2).replace(/-/g,"_").toLowerCase():("http-"+i);
-_21[_23]=_1e.headers[i];
+for(var i in _1f.headers){
+var _24=i.match(/^X-/)?i.substring(2).replace(/-/g,"_").toLowerCase():("http-"+i);
+_22[_24]=_1f.headers[i];
 }
-_1e.query=dojo.objectToQuery(_21);
-dojo._ioAddQueryToUrl(_1e);
-_1e.content=dojo.mixin(_1e.content||{},_20);
-return _1b.call(dojo,_1d,_1e,_1f);
+_1f.query=dojo.objectToQuery(_22);
+dojo._ioAddQueryToUrl(_1f);
+_1f.content=dojo.mixin(_1f.content||{},_21);
+return _1c.call(dojo,_1e,_1f,_20);
 };
 };
 })();

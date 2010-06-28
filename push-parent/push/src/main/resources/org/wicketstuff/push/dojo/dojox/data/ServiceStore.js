@@ -1,5 +1,5 @@
 /*
-	Copyright (c) 2004-2008, The Dojo Foundation All Rights Reserved.
+	Copyright (c) 2004-2009, The Dojo Foundation All Rights Reserved.
 	Available via Academic Free License >= 2.1 OR the modified BSD license.
 	see: http://dojotoolkit.org/license for details
 */
@@ -16,7 +16,7 @@ dojo.mixin(this,_1);
 }
 this.idAttribute=(_1&&_1.idAttribute)||(this.schema&&this.schema._idAttr);
 this.labelAttribute=this.labelAttribute||"label";
-},schema:null,idAttribute:"id",syncMode:false,getSchema:function(){
+},schema:null,idAttribute:"id",syncMode:false,estimateCountFactor:1,getSchema:function(){
 return this.schema;
 },loadLazyValues:true,getValue:function(_2,_3,_4){
 var _5=_2[_3];
@@ -27,7 +27,9 @@ return _8 instanceof Array?_8:_8===undefined?[]:[_8];
 },getAttributes:function(_9){
 var _a=[];
 for(var i in _9){
+if(_9.hasOwnProperty(i)&&!(i.charAt(0)=="_"&&i.charAt(1)=="_")){
 _a.push(i);
+}
 }
 return _a;
 },hasAttribute:function(_c,_d){
@@ -35,7 +37,7 @@ return _d in _c;
 },containsValue:function(_e,_f,_10){
 return dojo.indexOf(this.getValues(_e,_f),_10)>-1;
 },isItem:function(_11){
-return typeof _11=="object";
+return (typeof _11=="object")&&_11&&!(_11 instanceof Date);
 },isItemLoaded:function(_12){
 return _12&&!_12._loadObject;
 },loadItem:function(_13){
@@ -49,6 +51,10 @@ if(_16){
 _16.call(_13.scope,_15);
 }
 });
+}else{
+if(_13.onItem){
+_13.onItem.call(_13.scope,_13.item);
+}
 }
 return _14;
 },_currentId:0,_processResults:function(_17,_18){
@@ -77,7 +83,7 @@ _17[i]=this._processResults(_17[i],_18).items;
 }
 }
 var _1d=_17.length;
-return {totalCount:_18.request.count==_1d?_1d*2:_1d,items:_17};
+return {totalCount:_18.request.count==_1d?(_18.request.start||0)+_1d*this.estimateCountFactor:_1d,items:_17};
 },close:function(_1e){
 return _1e&&_1e.abort&&_1e.abort();
 },fetch:function(_1f){
@@ -90,7 +96,7 @@ var _21=_1f.scope||_20;
 var _22=this.cachingFetch?this.cachingFetch(_1f):this._doQuery(_1f);
 _22.request=_1f;
 _22.addCallback(function(_23){
-if(_1f.clientQuery){
+if(_1f.clientFetch){
 _23=_20.clientSideFetch({query:_1f.clientFetch,sort:_1f.sort,start:_1f.start,count:_1f.count},_23);
 }
 var _24=_20._processResults(_23,_22);
@@ -124,9 +130,6 @@ return this.getValue(_28,this.labelAttribute);
 },getLabelAttributes:function(_29){
 return [this.labelAttribute];
 },getIdentity:function(_2a){
-if(!("__id" in _2a)){
-throw new Error("Identity attribute not found");
-}
 return _2a.__id;
 },getIdentityAttributes:function(_2b){
 return [this.idAttribute];

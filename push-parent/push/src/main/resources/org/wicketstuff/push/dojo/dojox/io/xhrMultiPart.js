@@ -1,5 +1,5 @@
 /*
-	Copyright (c) 2004-2008, The Dojo Foundation All Rights Reserved.
+	Copyright (c) 2004-2009, The Dojo Foundation All Rights Reserved.
 	Available via Academic Free License >= 2.1 OR the modified BSD license.
 	see: http://dojotoolkit.org/license for details
 */
@@ -10,62 +10,62 @@ dojo._hasResource["dojox.io.xhrMultiPart"]=true;
 dojo.provide("dojox.io.xhrMultiPart");
 dojo.require("dojox.uuid.generateRandomUuid");
 (function(){
-function _createPart(_1,_2){
-if(!_1["name"]&&!_1["content"]){
+function _1(_2,_3){
+if(!_2["name"]&&!_2["content"]){
 throw new Error("Each part of a multi-part request requires 'name' and 'content'.");
 }
-var _3=[];
-_3.push("--"+_2,"Content-Disposition: form-data; name=\""+_1.name+"\""+(_1["filename"]?"; filename=\""+_1.filename+"\"":""));
-if(_1["contentType"]){
-var ct="Content-Type: "+_1.contentType;
-if(_1["charset"]){
-ct+="; Charset="+_1.charset;
+var _4=[];
+_4.push("--"+_3,"Content-Disposition: form-data; name=\""+_2.name+"\""+(_2["filename"]?"; filename=\""+_2.filename+"\"":""));
+if(_2["contentType"]){
+var ct="Content-Type: "+_2.contentType;
+if(_2["charset"]){
+ct+="; Charset="+_2.charset;
 }
-_3.push(ct);
+_4.push(ct);
 }
-if(_1["contentTransferEncoding"]){
-_3.push("Content-Transfer-Encoding: "+_1.contentTransferEncoding);
+if(_2["contentTransferEncoding"]){
+_4.push("Content-Transfer-Encoding: "+_2.contentTransferEncoding);
 }
-_3.push("",_1.content);
-return _3;
+_4.push("",_2.content);
+return _4;
 };
-function _partsFromNode(_5,_6){
-var o=dojo.formToObject(_5),_8=[];
+function _6(_7,_8){
+var o=dojo.formToObject(_7),_a=[];
 for(var p in o){
 if(dojo.isArray(o[p])){
-dojo.forEach(o[p],function(_a){
-_8=_8.concat(_createPart({name:p,content:_a},_6));
+dojo.forEach(o[p],function(_c){
+_a=_a.concat(_1({name:p,content:_c},_8));
 });
 }else{
-_8=_8.concat(_createPart({name:p,content:o[p]},_6));
+_a=_a.concat(_1({name:p,content:o[p]},_8));
 }
 }
-return _8;
+return _a;
 };
-dojox.io.xhrMultiPart=function(_b){
-if(!_b["file"]&&!_b["content"]&&!_b["form"]){
+dojox.io.xhrMultiPart=function(_d){
+if(!_d["file"]&&!_d["content"]&&!_d["form"]){
 throw new Error("content, file or form must be provided to dojox.io.xhrMultiPart's arguments");
 }
-var _c=dojox.uuid.generateRandomUuid(),_d=[],_e="";
-if(_b["file"]||_b["content"]){
-var v=_b["file"]||_b["content"];
-dojo.forEach((dojo.isArray(v)?v:[v]),function(_10){
-_d=_d.concat(_createPart(_10,_c));
+var _e=dojox.uuid.generateRandomUuid(),_f=[],out="";
+if(_d["file"]||_d["content"]){
+var v=_d["file"]||_d["content"];
+dojo.forEach((dojo.isArray(v)?v:[v]),function(_12){
+_f=_f.concat(_1(_12,_e));
 });
 }else{
-if(_b["form"]){
-if(dojo.query("input[type=file]",_b["form"]).length){
+if(_d["form"]){
+if(dojo.query("input[type=file]",_d["form"]).length){
 throw new Error("dojox.io.xhrMultiPart cannot post files that are values of an INPUT TYPE=FILE.  Use dojo.io.iframe.send() instead.");
 }
-_d=_partsFromNode(_b["form"],_c);
+_f=_6(_d["form"],_e);
 }
 }
-if(_d.length){
-_d.push("--"+_c+"--","");
-_e=_d.join("\r\n");
+if(_f.length){
+_f.push("--"+_e+"--","");
+out=_f.join("\r\n");
 }
 
-return dojo.rawXhrPost(dojo.mixin(_b,{contentType:"multipart/form-data; boundary="+_c,postData:_e}));
+return dojo.rawXhrPost(dojo.mixin(_d,{contentType:"multipart/form-data; boundary="+_e,postData:out}));
 };
 })();
 }

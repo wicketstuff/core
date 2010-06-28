@@ -1,5 +1,5 @@
 /*
-	Copyright (c) 2004-2008, The Dojo Foundation All Rights Reserved.
+	Copyright (c) 2004-2009, The Dojo Foundation All Rights Reserved.
 	Available via Academic Free License >= 2.1 OR the modified BSD license.
 	see: http://dojotoolkit.org/license for details
 */
@@ -8,7 +8,7 @@
 if(!dojo._hasResource["dojox.data.HtmlTableStore"]){
 dojo._hasResource["dojox.data.HtmlTableStore"]=true;
 dojo.provide("dojox.data.HtmlTableStore");
-dojo.require("dojox.data.dom");
+dojo.require("dojox.xml.parser");
 dojo.require("dojo.data.util.simpleFetch");
 dojo.require("dojo.data.util.filter");
 dojo.declare("dojox.data.HtmlTableStore",null,{constructor:function(_1){
@@ -34,7 +34,7 @@ this._rootNode.rows[i].store=this;
 },url:"",tableId:"",_getHeadings:function(){
 this._headings=[];
 dojo.forEach(this._rootNode.tHead.rows[0].cells,dojo.hitch(this,function(th){
-this._headings.push(dojox.data.dom.textContent(th));
+this._headings.push(dojox.xml.parser.textContent(th));
 }));
 },_getAllItems:function(){
 var _4=[];
@@ -59,7 +59,7 @@ return (_b.length>0)?_b[0]:_a;
 this._assertIsItem(_c);
 var _e=this._assertIsAttribute(_d);
 if(_e>-1){
-return [dojox.data.dom.textContent(_c.cells[_e])];
+return [dojox.xml.parser.textContent(_c.cells[_e])];
 }
 return [];
 },getAttributes:function(_f){

@@ -1,5 +1,5 @@
 /*
-	Copyright (c) 2004-2008, The Dojo Foundation All Rights Reserved.
+	Copyright (c) 2004-2009, The Dojo Foundation All Rights Reserved.
 	Available via Academic Free License >= 2.1 OR the modified BSD license.
 	see: http://dojotoolkit.org/license for details
 */
@@ -50,9 +50,9 @@ _5=[_5.parse];
 if(_5.query&&_5.query.search){
 _5=_5.query.search;
 var _7=this;
-for(i in _5){
-_5[i]._loadObject=function(_8){
-_7.fetch({query:{action:"parse",title:this.title},onItem:_8});
+for(var i in _5){
+_5[i]._loadObject=function(_9){
+_7.fetch({query:{action:"parse",title:this.title},onItem:_9});
 delete this._loadObject;
 };
 }

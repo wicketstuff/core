@@ -13,8 +13,8 @@
  */
 package org.wicketstuff.push.dojo;
 
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.apache.wicket.RequestCycle;
@@ -43,7 +43,7 @@ public abstract class AbstractRequireDojoBehavior extends
 
   private static final long serialVersionUID = 1L;
 
-  private final Set<String> libs = new HashSet<String>();
+  private final Set<String> libs = new LinkedHashSet<String>();
 
   /*
    * (non-Javadoc)

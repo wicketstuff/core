@@ -1,5 +1,5 @@
 /*
-	Copyright (c) 2004-2008, The Dojo Foundation All Rights Reserved.
+	Copyright (c) 2004-2009, The Dojo Foundation All Rights Reserved.
 	Available via Academic Free License >= 2.1 OR the modified BSD license.
 	see: http://dojotoolkit.org/license for details
 */
@@ -28,7 +28,7 @@ if(this._cometd._advice&&this._cometd._advice["reconnect"]=="none"){
 return;
 }
 var _5=this._cometd._interval();
-if(this._cometd._connected){
+if(this._cometd._status=="connected"){
 setTimeout(dojo.hitch(this,"_connect"),_5);
 }else{
 setTimeout(dojo.hitch(this._cometd,function(){
@@ -44,11 +44,11 @@ if(this._cometd._polling){
 return;
 }
 if((this._cometd._advice)&&(this._cometd._advice["reconnect"]=="handshake")){
-this._cometd._connected=false;
+this._cometd._status="unconnected";
 this._initialized=false;
 this._cometd.init(this._cometd.url,this._cometd._props);
 }else{
-if(this._cometd._connected){
+if(this._cometd._status=="connected"){
 var _6={channel:"/meta/connect",connectionType:this._connectionType,clientId:this._cometd.clientId,id:""+this._cometd.messageId++};
 if(this._cometd.connectTimeout>=this._cometd.expectedNetworkDelay){
 _6.advice={timeout:this._cometd.connectTimeout-this._cometd.expectedNetworkDelay};
@@ -68,37 +68,38 @@ this._cometd.deliver(_b);
 this._cometd._backon();
 this.tunnelCollapse();
 }),error:dojo.hitch(this,function(_c){
+var _d={failure:true,error:_c,advice:this._cometd._advice};
 this._cometd._polling=false;
-this._cometd._publishMeta("connect",false);
+this._cometd._publishMeta("connect",false,_d);
 this._cometd._backoff();
 this.tunnelCollapse();
 })};
-var _d=this._cometd._connectTimeout();
-if(_d>0){
-_a.timeout=_d;
+var _e=this._cometd._connectTimeout();
+if(_e>0){
+_a.timeout=_e;
 }
 this._poll=dojo.xhrPost(_a);
 };
-this.sendMessages=function(_e){
-for(var i=0;i<_e.length;i++){
-_e[i].clientId=this._cometd.clientId;
-_e[i].id=""+this._cometd.messageId++;
-_e[i]=this._cometd._extendOut(_e[i]);
+this.sendMessages=function(_f){
+for(var i=0;i<_f.length;i++){
+_f[i].clientId=this._cometd.clientId;
+_f[i].id=""+this._cometd.messageId++;
+_f[i]=this._cometd._extendOut(_f[i]);
 }
-return dojo.xhrPost({url:this._cometd.url||dojo.config["cometdRoot"],handleAs:this._cometd.handleAs,load:dojo.hitch(this._cometd,"deliver"),content:{message:dojo.toJson(_e)},error:dojo.hitch(this,function(err){
-this._cometd._publishMeta("publish",false,{messages:_e});
+return dojo.xhrPost({url:this._cometd.url||dojo.config["cometdRoot"],handleAs:this._cometd.handleAs,load:dojo.hitch(this._cometd,"deliver"),content:{message:dojo.toJson(_f)},error:dojo.hitch(this,function(err){
+this._cometd._publishMeta("publish",false,{messages:_f});
 }),timeout:this._cometd.expectedNetworkDelay});
 };
-this.startup=function(_11){
-if(this._cometd._connected){
+this.startup=function(_12){
+if(this._cometd._status=="connected"){
 return;
 }
 this.tunnelInit();
 };
 this.disconnect=function(){
-var _12={channel:"/meta/disconnect",clientId:this._cometd.clientId,id:""+this._cometd.messageId++};
-_12=this._cometd._extendOut(_12);
-dojo.xhrPost({url:this._cometd.url||dojo.config["cometdRoot"],handleAs:this._cometd.handleAs,content:{message:dojo.toJson([_12])}});
+var _13={channel:"/meta/disconnect",clientId:this._cometd.clientId,id:""+this._cometd.messageId++};
+_13=this._cometd._extendOut(_13);
+dojo.xhrPost({url:this._cometd.url||dojo.config["cometdRoot"],handleAs:this._cometd.handleAs,content:{message:dojo.toJson([_13])}});
 };
 this.cancelConnect=function(){
 if(this._poll){
