@@ -20,9 +20,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -155,14 +153,14 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 		/**
 		 * stores the list of {@link DelayedMethodCall} to invoke
 		 */
-		private final List calls;
+		private final List<DelayedMethodCall> calls;
 
 		/**
 		 * Construct.
 		 */
 		public DelayedMethodCallList()
 		{
-			calls = new ArrayList();
+			calls = new ArrayList<DelayedMethodCall>();
 		}
 
 		/**
@@ -171,7 +169,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 		 */
 		public DelayedMethodCallList(final DelayedMethodCallList dmcl)
 		{
-			calls = new ArrayList(dmcl.calls);
+			calls = new ArrayList<DelayedMethodCall>(dmcl.calls);
 		}
 
 		/**
@@ -193,9 +191,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 		 * @throws InvocationTargetException
 		 */
     public void invoke(final Object o) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-			final Iterator it = calls.iterator();
-      while (it.hasNext()) {
-				final DelayedMethodCall dmc = (DelayedMethodCall) it.next();
+			for (final DelayedMethodCall dmc : calls) {
 				dmc.invoke(o);
 			}
 		}
@@ -319,7 +315,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 				trigger = new DelayedMethodCallList(currentTrigger);
 				currentTrigger.clear();
 			}
-			final List triggers = getTriggers();
+			final List<DelayedMethodCallList> triggers = getTriggers();
 			synchronized (triggers)
 			{
 				triggers.add(trigger);
@@ -336,7 +332,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 		 *
 		 * @return a List of triggers queued for the current component
 		 */
-		private List getTriggers()
+		private List<DelayedMethodCallList> getTriggers()
 		{
 			return TimerChannelBehavior.getTriggers(application, id);
 		}
@@ -369,7 +365,8 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 		this.timeout = timeout;
 	}
 
-	protected void onBind() {
+	@Override
+  protected void onBind() {
 		super.onBind();
 		touch(getComponent().getApplication(), id);
 	}
@@ -377,22 +374,21 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 	/**
 	 * @see AbstractAjaxTimerBehavior#onTimer(AjaxRequestTarget)
 	 */
+  @Override
   protected void onTimer(final AjaxRequestTarget target)
 	{
 		touch(getComponent().getApplication(), id);
-		final List triggers = getTriggers(getComponent().getApplication(), id);
-		List triggersCopy;
+		final List<DelayedMethodCallList> triggers = getTriggers(getComponent().getApplication(), id);
+		List<DelayedMethodCallList> triggersCopy;
 		synchronized (triggers)
 		{
 			if (triggers.isEmpty()) {
 				return;
 			}
-			triggersCopy = new ArrayList(triggers);
+			triggersCopy = new ArrayList<DelayedMethodCallList>(triggers);
 			triggers.clear();
 		}
-		final Iterator it = triggersCopy.iterator();
-		while (it.hasNext()) {
-			final DelayedMethodCallList dmcl = (DelayedMethodCallList) it.next();
+		for (final DelayedMethodCallList dmcl : triggersCopy) {
 			try
 			{
 				dmcl.invoke(target);
@@ -412,7 +408,8 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 		return new TimerPushTarget(Application.get(), id, timeout);
 	}
 
-	public void renderHead(final IHeaderResponse response) {
+	@Override
+  public void renderHead(final IHeaderResponse response) {
 		touch(getComponent().getApplication(), id);
 		final String timerChannelPageId = getComponent().getPage().getId()+":updateInterval:"+getUpdateInterval();
 		if (!getPageId(getComponent().getApplication(), id).equals(id))
@@ -439,7 +436,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 	/**
 	 * Meta data key for queued triggers, stored by page behavior id
 	 */
-	static final MetaDataKey TRIGGERS_KEY = new MetaDataKey(Map.class)
+	static final MetaDataKey<ConcurrentMap<String, List<DelayedMethodCallList>>> TRIGGERS_KEY = new MetaDataKey<ConcurrentMap<String, List<DelayedMethodCallList>>>()
 	{
 		private static final long serialVersionUID = 1L;
 	};
@@ -447,7 +444,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 	/**
 	 * Meta data key for poll events time, stored by page behavior id
 	 */
-	static final MetaDataKey EVENTS_KEY = new MetaDataKey(Map.class)
+	static final MetaDataKey<ConcurrentMap<String, Time>> EVENTS_KEY = new MetaDataKey<ConcurrentMap<String, Time>>()
 	{
 		private static final long serialVersionUID = 1L;
 	};
@@ -455,7 +452,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 	/**
 	 * Meta data key for page behavior ids, stored by behavior id
 	 */
-	static final MetaDataKey PAGE_ID_KEY = new MetaDataKey(Map.class)
+	static final MetaDataKey<ConcurrentMap<String, String>> PAGE_ID_KEY = new MetaDataKey<ConcurrentMap<String, String>>()
 	{
 		private static final long serialVersionUID = 1L;
 	};
@@ -491,25 +488,25 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 	 *
 	 * @return a List of triggers queued for the component
 	 */
-  private static List getTriggers(final Application application, String id)
+  private static List<DelayedMethodCallList> getTriggers(final Application application, String id)
 	{
 		id = getPageId(application, id);
-		ConcurrentMap triggersById;
+		ConcurrentMap<String,List<DelayedMethodCallList>> triggersById;
 		synchronized (application)
 		{
 			triggersById =
-					(ConcurrentMap) application.getMetaData(TRIGGERS_KEY);
+					application.getMetaData(TRIGGERS_KEY);
 			if (triggersById == null)
 			{
-				triggersById = new ConcurrentHashMap();
-				application.setMetaData(TRIGGERS_KEY, (Serializable) triggersById);
+				triggersById = new ConcurrentHashMap<String, List<DelayedMethodCallList>>();
+				application.setMetaData(TRIGGERS_KEY, triggersById);
 			}
 		}
-		List triggers = (List) triggersById.get(id);
+		List<DelayedMethodCallList> triggers = triggersById.get(id);
 		if (triggers == null)
 		{
-			triggersById.putIfAbsent(id, new ArrayList());
-			triggers = (List) triggersById.get(id);
+			triggersById.putIfAbsent(id, new ArrayList<DelayedMethodCallList>());
+			triggers = triggersById.get(id);
 		}
 		return triggers;
 	}
@@ -522,21 +519,21 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
   private static void cleanMetadata(final Application application, String id)
 	{
 		id = getPageId(application, id);
-		ConcurrentMap triggersById = null;
-		ConcurrentMap eventsTimeById = null;
-		ConcurrentMap pageIdsById = null;
+		ConcurrentMap<String, List<DelayedMethodCallList>> triggersById = null;
+		ConcurrentMap<String, Time> eventsTimeById = null;
+		ConcurrentMap<String, String> pageIdsById = null;
 		synchronized (application)
 		{
 			triggersById =
-					(ConcurrentMap) application.getMetaData(TRIGGERS_KEY);
+					application.getMetaData(TRIGGERS_KEY);
 			eventsTimeById =
-				(ConcurrentMap) application.getMetaData(EVENTS_KEY);
+				application.getMetaData(EVENTS_KEY);
 			pageIdsById =
-				(ConcurrentMap) application.getMetaData(PAGE_ID_KEY);
+				application.getMetaData(PAGE_ID_KEY);
 		}
 		if (triggersById != null)
 		{
-			final List triggers = (List) triggersById.remove(id);
+			final List<DelayedMethodCallList> triggers = triggersById.remove(id);
 			if (triggers != null)
 			{
 				synchronized (triggers)
@@ -558,15 +555,15 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
   private static void touch(final Application application, String id)
 	{
 		id = getPageId(application, id);
-		ConcurrentMap eventsTimeById;
+		ConcurrentMap<String, Time> eventsTimeById;
 		synchronized (application)
 		{
 			eventsTimeById =
-					(ConcurrentMap) application.getMetaData(EVENTS_KEY);
+					application.getMetaData(EVENTS_KEY);
 			if (eventsTimeById == null)
 			{
-				eventsTimeById = new ConcurrentHashMap();
-				application.setMetaData(EVENTS_KEY, (Serializable) eventsTimeById);
+				eventsTimeById = new ConcurrentHashMap<String, Time>();
+				application.setMetaData(EVENTS_KEY, eventsTimeById);
 			}
 		}
 		eventsTimeById.put(id, Time.now());
@@ -575,17 +572,17 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
   private static Time getLastPollEvent(final Application application, String id)
 	{
 		id = getPageId(application, id);
-		ConcurrentMap eventsTimeById;
+		ConcurrentMap<String, Time> eventsTimeById;
 		synchronized (application)
 		{
 			eventsTimeById =
-					(ConcurrentMap) application.getMetaData(EVENTS_KEY);
+					application.getMetaData(EVENTS_KEY);
 			if (eventsTimeById == null)
 			{
 				return null;
 			}
 		}
-		final Time time = (Time) eventsTimeById.get(id);
+		final Time time = eventsTimeById.get(id);
 		return time;
 	}
 
@@ -600,33 +597,33 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 	 * @return the page behavior id corresponding the given behavior id.
 	 */
   private static String getPageId(final Application application, final String id) {
-		ConcurrentMap pageIdsById;
+    ConcurrentMap<String, String> pageIdsById;
 		synchronized (application)
 		{
 			pageIdsById =
-					(ConcurrentMap) application.getMetaData(PAGE_ID_KEY);
+					application.getMetaData(PAGE_ID_KEY);
 			if (pageIdsById == null)
 			{
 				return id;
 			}
 		}
-		final String pageId = (String) pageIdsById.get(id);
+		final String pageId = pageIdsById.get(id);
 		return pageId == null?id:pageId;
 	}
 
   private static void setRedirectId(final Application application, final String id, final String redirectedId) {
-		ConcurrentMap pageIdsById;
+		ConcurrentMap<String, String> pageIdsById;
 		synchronized (application)
 		{
 			pageIdsById =
-					(ConcurrentMap) application.getMetaData(PAGE_ID_KEY);
+					application.getMetaData(PAGE_ID_KEY);
 			if (pageIdsById == null)
 			{
-				pageIdsById = new ConcurrentHashMap();
-				application.setMetaData(PAGE_ID_KEY, (Serializable) pageIdsById);
+				pageIdsById = new ConcurrentHashMap<String, String>();
+				application.setMetaData(PAGE_ID_KEY, pageIdsById);
 			}
 		}
-		final String oldRedirectedId = (String) pageIdsById.put(id, redirectedId);
+		final String oldRedirectedId = pageIdsById.put(id, redirectedId);
 		if (!redirectedId.equals(oldRedirectedId))
 		{
 			/*
@@ -641,31 +638,31 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 
   private static void redirect(final Application application, final String idToRedirect,
 			final String redirectedId) {
-		ConcurrentMap triggersById = null;
-		ConcurrentMap eventsTimeById = null;
+    ConcurrentMap<String,List<DelayedMethodCallList>> triggersById = null;
+		ConcurrentMap<String, Time> eventsTimeById = null;
 		synchronized (application)
 		{
 			triggersById =
-					(ConcurrentMap) application.getMetaData(TRIGGERS_KEY);
+					application.getMetaData(TRIGGERS_KEY);
 			eventsTimeById =
-				(ConcurrentMap) application.getMetaData(EVENTS_KEY);
+				application.getMetaData(EVENTS_KEY);
 		}
 		if (triggersById != null)
 		{
-			final List triggersToRedirect = (List) triggersById.remove(idToRedirect);
+			final List<DelayedMethodCallList> triggersToRedirect = triggersById.remove(idToRedirect);
 			if (triggersToRedirect != null)
 			{
 				// we redirect triggers to the new list, in two steps, to avoid acquiring
 				// locks on two triggers simultaneously, which would be a source of risk of
 				// dead locks
-				List triggersToRedirectCopy;
+				List<DelayedMethodCallList> triggersToRedirectCopy;
 				synchronized (triggersToRedirect)
 				{
-					triggersToRedirectCopy = new ArrayList(triggersToRedirect);
+					triggersToRedirectCopy = new ArrayList<DelayedMethodCallList>(triggersToRedirect);
 					triggersToRedirect.clear();
 				}
 				if (!triggersToRedirectCopy.isEmpty()) {
-					final List triggers = getTriggers(application, redirectedId);
+					final List<DelayedMethodCallList> triggers = getTriggers(application, redirectedId);
 					synchronized (triggers)
 					{
 						triggers.addAll(triggersToRedirectCopy);
@@ -683,7 +680,8 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 		}
 	}
 
-	public String toString() {
+	@Override
+  public String toString() {
 		return "TimerChannelBehavior::"+id;
 	}
 
