@@ -6,6 +6,7 @@ import java.util.WeakHashMap;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
+import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.cometd.Bayeux;
 import org.cometd.Channel;
@@ -56,21 +57,30 @@ public class CometdService implements IChannelService {
   private final class RemovalListener implements RemoveListener {
 
     private final RemoveListener removeListener;
+    private final Session sess;
 
-    public RemovalListener(final RemoveListener listener) {
+    public RemovalListener(final RemoveListener listener, final Session sess) {
       removeListener = listener;
+      this.sess = sess;
     }
 
     public void removed(final String clientId, final boolean timeout) {
       final boolean hasNoApp = !Application.exists();
+      final boolean hasNoSession = !Session.exists();
       if (hasNoApp) {
         Application.set(getApplication());
+      }
+      if (hasNoSession && sess != null) {
+        Session.set(sess);
       }
 
       removeListener.removed(clientId, timeout);
 
       if (hasNoApp) {
         Application.unset();
+      }
+      if (hasNoSession) {
+        Session.unset();
       }
     }
 
@@ -102,16 +112,26 @@ public class CometdService implements IChannelService {
    *
    * @param channel
    * @param listener
+   * @param sess Wicket Session you wish to associate with the listener.
    */
   public void addChannelRemoveListener(final String chnl,
-      final RemoveListener listener) {
+      final RemoveListener listener, final Session sess) {
     if (!listeningToConnect) {
       getBayeux().getChannel(Bayeux.META_SUBSCRIBE, true).subscribe(
           serviceClient);
       serviceClient.addListener(new RemovalForwardingListener());
       listeningToConnect = true;
     }
-    removalListeners.put("/" + chnl, new RemovalListener(listener));
+    removalListeners.put("/" + chnl, new RemovalListener(listener, sess));
+  }
+
+
+  /**
+   * @see #addChannelRemoveListener(String, RemoveListener, Session)
+   */
+  public void addChannelRemoveListener(final String chnl,
+      final RemoveListener listener) {
+    addChannelRemoveListener(chnl, listener, null);
   }
 
   /**
