@@ -5,40 +5,38 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.push.IChannelTarget;
 
 /**
- * This merthod is a wrapper of {@link AjaxRequestTarget} on {@link IChannelTarget}
- * used in {@link CometdBehavior}
- * 
- * 
- * @author Vincent Demay
+ * This merthod is a wrapper of {@link AjaxRequestTarget} on
+ * {@link IChannelTarget} used in {@link CometdBehavior}.
  *
+ * @author Vincent Demay
  */
-public class CometdTarget implements IChannelTarget{
+public class CometdTarget implements IChannelTarget {
 
-	private AjaxRequestTarget target;
-	
-	public CometdTarget(AjaxRequestTarget target) {
-		super();
-		this.target = target;
-	}
+  private final AjaxRequestTarget target;
 
-	public void addComponent(Component component) {
-		target.addComponent(component);
-	}
+  public CometdTarget(final AjaxRequestTarget target) {
+    super();
+    this.target = target;
+  }
 
-	public void addComponent(Component component, String markupId) {
-		target.addComponent(component, markupId);
-	}
+  public void addComponent(final Component component) {
+    target.addComponent(component);
+  }
 
-	public void appendJavascript(String javascript) {
-		target.appendJavascript(javascript);
-	}
+  public void addComponent(final Component component, final String markupId) {
+    target.addComponent(component, markupId);
+  }
 
-	public void focusComponent(Component component) {
-		target.focusComponent(component);
-	}
+  public void appendJavascript(final String javascript) {
+    target.appendJavascript(javascript);
+  }
 
-	public void prependJavascript(String javascript) {
-		target.prependJavascript(javascript);
-	}
+  public void focusComponent(final Component component) {
+    target.focusComponent(component);
+  }
+
+  public void prependJavascript(final String javascript) {
+    target.prependJavascript(javascript);
+  }
 
 }
