@@ -32,13 +32,13 @@
 		<dependency>
 			<groupId>org.cometd.java</groupId>
 			<artifactId>cometd-java-client</artifactId>
-			<version>2.0.0.RC1</version>
+			<version>${cometd.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.cometd.java</groupId>
 			<artifactId>cometd-java-server</artifactId>
-			<version>2.0.0.RC1</version>
+			<version>${cometd.version}</version>
 		</dependency>
 
 	</dependencies>
