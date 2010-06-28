@@ -17,7 +17,7 @@ public class WicketCometdChat extends WicketAbstractChat {
 
 	      public void removed(final ServerSession client, final boolean timeout) {
 	        final ChannelEvent event = new ChannelEvent("chat");
-	        event.addData("message", client.getId() + "just left");
+	        event.addData("message", client.getId() + " just left");
 	        getChannelService().publish(event);
 	      }
 		});
