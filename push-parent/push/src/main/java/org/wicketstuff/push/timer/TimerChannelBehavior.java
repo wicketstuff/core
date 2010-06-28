@@ -150,9 +150,13 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior
 			 */
 			public void invoke(final Object o) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException
 			{
-			  Application.set(_application);
-				methods[m].invoke(o, parameters);
-				Application.unset();
+				final Application originalApplication = Application.get();
+				try {
+					Application.set(_application);
+					methods[m].invoke(o, parameters);
+				} finally {
+					Application.set(originalApplication);
+				}
 			}
 		}
 		/**
