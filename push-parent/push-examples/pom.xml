@@ -4,12 +4,11 @@
   <parent>
     <groupId>org.wicketstuff</groupId>
     <artifactId>push-parent</artifactId>
-    <version>1.4.11-SNAPSHOT</version>
+    <version>1.4.10-SNAPSHOT</version>
   </parent>
 
   <artifactId>push-examples</artifactId>
   <packaging>war</packaging>
-  <version>1.4.11-SNAPSHOT</version>
 
   <name>Wicket Contrib Cometd Examples</name>
   <description>An integration project for the Ajax JavaScript library
