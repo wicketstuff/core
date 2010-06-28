@@ -4,11 +4,12 @@ import org.apache.wicket.PageParameters;
 import org.wicketstuff.push.IPushService;
 
 public class WicketTimerPushChat extends WicketAbstractPushChat {
+
+	private static final long serialVersionUID = 1L;
+	
 	public WicketTimerPushChat(PageParameters parameters) {
 		super(parameters);
 	}
-
-	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected IPushService getPushService() {

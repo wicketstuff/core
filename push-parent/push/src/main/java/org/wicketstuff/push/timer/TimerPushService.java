@@ -8,20 +8,21 @@ import org.wicketstuff.push.IPushTarget;
 
 /**
  * An implementation of IPushService based on a polling mechanism.
- *
+ * 
  * This class is thread safe, and can be safely reused.
- *
+ * 
  * @author Xavier Hanin
  */
 public class TimerPushService implements IPushService {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private final Duration duration;
+	private final Duration duration;
 
 	/**
 	 * Constructs a TimerPushService with the given polling interval.
-	 *
-	 * @param duration the polling interval, must not be null
+	 * 
+	 * @param duration
+	 *            the polling interval, must not be null
 	 */
 	public TimerPushService(final Duration duration) {
 		if (duration == null) {
@@ -32,12 +33,12 @@ public class TimerPushService implements IPushService {
 
 	public IPushTarget installPush(final Component component) {
 		final TimerChannelBehavior tcb = new TimerChannelBehavior(duration);
-    component.add(tcb);
+		component.add(tcb);
 		return tcb.newPushTarget();
 	}
 
 	public void uninstallPush(final Component component) {
-	  for (final IBehavior behavior: component.getBehaviors()) {
+		for (final IBehavior behavior : component.getBehaviors()) {
 			if (behavior instanceof TimerChannelBehavior) {
 				component.remove(behavior);
 			}
@@ -46,6 +47,7 @@ public class TimerPushService implements IPushService {
 
 	/**
 	 * Returns the polling interval
+	 * 
 	 * @return the polling interval
 	 */
 	public Duration getDuration() {

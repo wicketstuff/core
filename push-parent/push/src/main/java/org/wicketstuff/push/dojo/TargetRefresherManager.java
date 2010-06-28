@@ -27,72 +27,74 @@ import org.apache.wicket.behavior.IBehavior;
  * A Manager to deal with {@link AjaxRequestTarget} and makeWidget in dojo. Only
  * top level dojoComponents needs to be rerender during a response to a Ajax
  * Query
- *
+ * 
  * @author Vincent Demay
  */
 public class TargetRefresherManager implements IListener {
-  private static TargetRefresherManager instance;
-  private Map<String, Component>        dojoComponents;
+	private static TargetRefresherManager instance;
+	private Map<String, Component> dojoComponents;
 
-  private TargetRefresherManager() {
-    dojoComponents = new HashMap<String, Component>();
-  }
+	private TargetRefresherManager() {
+		dojoComponents = new HashMap<String, Component>();
+	}
 
-  public static TargetRefresherManager getInstance() {
-    if (instance == null) {
-      instance = new TargetRefresherManager();
-    }
-    return instance;
-  }
+	public static TargetRefresherManager getInstance() {
+		if (instance == null) {
+			instance = new TargetRefresherManager();
+		}
+		return instance;
+	}
 
-  public void onAfterRespond(final Map<String, Component> map,
-      final IJavascriptResponse response) {
-    // we need to find all dojoWidget that should be reParsed
-    final Map<String, Component> real = new HashMap<String, Component>();
-    String requires = "";
+	public void onAfterRespond(final Map<String, Component> map,
+			final IJavascriptResponse response) {
+		// we need to find all dojoWidget that should be reParsed
+		final Map<String, Component> real = new HashMap<String, Component>();
+		String requires = "";
 
-    for (final Component c : dojoComponents.values()) {
-      for (final IBehavior behavior : c.getBehaviors()) {
-        if (behavior instanceof AbstractRequireDojoBehavior) {
-          requires += ((AbstractRequireDojoBehavior) behavior).getRequire();
-        }
-      }
-    }
-    dojoComponents = real;
+		for (final Component c : dojoComponents.values()) {
+			for (final IBehavior behavior : c.getBehaviors()) {
+				if (behavior instanceof AbstractRequireDojoBehavior) {
+					requires += ((AbstractRequireDojoBehavior) behavior)
+							.getRequire();
+				}
+			}
+		}
+		dojoComponents = real;
 
-    if (generateReParseJs() != null) {
-      response.addJavascript(requires + generateReParseJs());
-    }
-    instance = null;
+		if (generateReParseJs() != null) {
+			response.addJavascript(requires + generateReParseJs());
+		}
+		instance = null;
 
-  }
+	}
 
-  public void onBeforeRespond(final Map<String, Component> map,
-      final AjaxRequestTarget target) {
-    // Null op
-  }
+	public void onBeforeRespond(final Map<String, Component> map,
+			final AjaxRequestTarget target) {
+		// Null op
+	}
 
-  /**
-   *
-   */
-  public void addComponent(final Component component) {
-    dojoComponents.put(component.getMarkupId(), component);
-  }
+	/**
+	 *
+	 */
+	public void addComponent(final Component component) {
+		dojoComponents.put(component.getMarkupId(), component);
+	}
 
-  private String generateReParseJs() {
-    if (!dojoComponents.isEmpty()) {
-      final Iterator<Component> it = dojoComponents.values().iterator();
-      String parseJs = "[";
-      while (it.hasNext()) {
-        final Component c = it.next();
-        parseJs += "'" + c.getMarkupId() + "',";
-      }
-      parseJs = parseJs.substring(0, parseJs.length() - 1);
-      parseJs += "]";
-      return "djConfig.searchIds = " + parseJs + ";dojo.hostenv.makeWidgets();";
-    } else {
-      return null;
-    }
-  }
+	private String generateReParseJs() {
+		if (!dojoComponents.isEmpty()) {
+			final Iterator<Component> it = dojoComponents.values().iterator();
+			String parseJs = "[";
+			while (it.hasNext()) {
+				final Component c = it.next();
+				parseJs += "'" + c.getMarkupId() + "',";
+			}
+			parseJs = parseJs.substring(0, parseJs.length() - 1);
+			parseJs += "]";
+			return "djConfig.searchIds = " + parseJs
+					+ ";dojo.hostenv.makeWidgets();";
+		} else {
+			return null;
+		}
+	}
 
 }

@@ -38,7 +38,7 @@ public abstract class WicketAbstractPushChat extends ExamplePage {
 
 
 	@SuppressWarnings("serial")
-  public WicketAbstractPushChat(final PageParameters parameters)
+	public WicketAbstractPushChat(final PageParameters parameters)
 	{
 		final Message model = new Message();
 
@@ -80,7 +80,6 @@ public abstract class WicketAbstractPushChat extends ExamplePage {
 		});
 		add(formChat);
 	}
-
 
 	protected abstract IPushService getPushService();
 }

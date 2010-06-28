@@ -21,13 +21,17 @@ public class TimerChannelService implements IChannelService, Serializable {
 		this.duration = duration;
 	}
 
-	public void addChannelListener(final Component component, final String listenerChannel, final IChannelListener listener) {
-		final TimerChannelBehavior timerChannelBehavior = new TimerChannelBehavior(duration);
+	public void addChannelListener(final Component component,
+			final String listenerChannel, final IChannelListener listener) {
+		
+		final TimerChannelBehavior timerChannelBehavior = new TimerChannelBehavior(
+				duration);
 		final IPushTarget pushTarget = timerChannelBehavior.newPushTarget();
 		component.add(timerChannelBehavior);
 		EventStore.get().addEventStoreListener(new EventStoreListener() {
 
-			public void eventTriggered(final String eventChannel, final Map<String, String> data) {
+			public void eventTriggered(final String eventChannel,
+					final Map<String, String> data) {
 				if (listenerChannel.equals(eventChannel)) {
 					listener.onEvent(listenerChannel, data, pushTarget);
 					pushTarget.trigger();
