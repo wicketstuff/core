@@ -10,6 +10,7 @@ import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.cometd.bayeux.Channel;
 import org.cometd.bayeux.server.BayeuxServer;
+import org.cometd.bayeux.server.ServerChannel;
 import org.cometd.bayeux.server.ServerMessage;
 import org.cometd.bayeux.server.ServerSession;
 import org.cometd.bayeux.server.ServerSession.MessageListener;
@@ -152,11 +153,8 @@ public class CometdService implements IChannelService {
 		 */
 		event.addData("proxy", "true");
 		final String channelId = "/" + event.getChannel();
-		Object channel = getBayeux().getChannel(channelId);
-		System.err.println(channel);
-		// final ClientSessionChannel channel = (ClientSessionChannel)
-		// getBayeux().getSession("").getLocalSession().g Channel(channelId);
-		// channel.publish(event.getData(), event.getId());
+		ServerChannel channel = getBayeux().getChannel(channelId);
+		channel.publish(null, event.getData(), event.getId());
 	}
 
 	private final BayeuxServer getBayeux() {
