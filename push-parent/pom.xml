@@ -1,18 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  
+
   <parent>
     <artifactId>wicketstuff-core</artifactId>
     <groupId>org.wicketstuff</groupId>
     <version>1.4-SNAPSHOT</version>
   </parent>
-  
+
   <artifactId>push-parent</artifactId>
   <packaging>pom</packaging>
-  
+
   <name>Push - Parent</name>
   <description>See the child project "push"for more information</description>
-  
+
   <developers>
     <developer>
       <id>rhansen</id>
@@ -30,7 +30,7 @@
       <properties>
         <status>Retired</status>
       </properties>
-    </developer>    
+    </developer>
   </developers>
 
   <modules>
@@ -39,9 +39,9 @@
   </modules>
 
   <properties>
-    <jetty.version>6.1.14</jetty.version>
+    <jetty.version>6.1.17</jetty.version>
   </properties>
-  
+
   <dependencies>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -51,9 +51,9 @@
     <!-- Cometd Usage in wicket (Only available on Jetty) -->
     <dependency>
       <groupId>org.mortbay.jetty</groupId>
-      <artifactId>cometd-jetty</artifactId>
+      <artifactId>cometd-client</artifactId>
       <version>${jetty.version}</version>
     </dependency>
   </dependencies>
-  
+
 </project>
