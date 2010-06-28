@@ -23,7 +23,7 @@ public class CometdBehavior extends CometdAbstractBehavior {
   @Override
   public final String getCometdInterceptorScript() {
     final Map<String, Object> map = new HashMap<String, Object>();
-    map.put("markupId", getComponent().getMarkupId());
+    map.put("behaviorMarkupId", getBehaviorMarkupId());
     map.put("url", getCallbackUrl().toString());
     return new DojoPackagedTextTemplate(CometdBehavior.class,
         "CometdDefaultBehaviorTemplate.js").asString(map);
@@ -31,7 +31,7 @@ public class CometdBehavior extends CometdAbstractBehavior {
 
   @Override
   public final CharSequence getPartialSubscriber() {
-    return "'onEventFor"+ getComponent().getMarkupId() + "'";
+    return "'onEventFor"+ getBehaviorMarkupId() + "'";
   }
 
   @Override
