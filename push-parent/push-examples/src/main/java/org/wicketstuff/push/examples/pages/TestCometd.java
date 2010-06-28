@@ -13,29 +13,29 @@ import org.wicketstuff.push.IChannelTarget;
 
 public class TestCometd extends ExamplePage {
 
-  private static final String CH_ID = "myChannel";
+	private static final String CH_ID = "myChannel";
 
-  @SuppressWarnings("serial")
-  private final class PostListener implements IChannelListener {
-    @SuppressWarnings("unchecked")
-    public void onEvent(final String channel, final Map datas,
-        final IChannelTarget target) {
-      field.setModel(new Model("updated"));
-      target.addComponent(field);
-    }
-  }
+	@SuppressWarnings("serial")
+	private final class PostListener implements IChannelListener {
+		@SuppressWarnings("unchecked")
+		public void onEvent(final String channel, final Map<String, String> datas, final IChannelTarget target) {
+			
+			field.setModel(new Model<String>("updated"));
+			target.addComponent(field);
+		}
+	}
 
-  private final TextField<String> field;
+	private final TextField<String> field;
 	private String val;
 
-  @SuppressWarnings("serial")
-  public TestCometd(final PageParameters parameters)
-	{
-		final AjaxLink<Void> link = new AjaxLink<Void>("link"){
+	@SuppressWarnings("serial")
+	public TestCometd(final PageParameters parameters) {
+		
+		final AjaxLink<Void> link = new AjaxLink<Void>("link") {
 
 			@Override
-      public void onClick(final AjaxRequestTarget target) {
-			  getCometdService().publish(new ChannelEvent(CH_ID));
+			public void onClick(final AjaxRequestTarget target) {
+				getCometdService().publish(new ChannelEvent(CH_ID));
 			}
 
 		};
