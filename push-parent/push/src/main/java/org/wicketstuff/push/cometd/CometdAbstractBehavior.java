@@ -19,8 +19,7 @@ import org.wicketstuff.push.dojo.AbstractRequireDojoBehavior;
  * This behavior will be asked by client side when it will receive a cometd
  * event associated with the kind of event
  */
-public abstract class CometdAbstractBehavior extends
-    AbstractRequireDojoBehavior {
+public abstract class CometdAbstractBehavior extends AbstractRequireDojoBehavior {
   private static final long serialVersionUID = 1L;
 
   // FIXME: put this in application scope, we may have several webapp using
@@ -95,7 +94,7 @@ public abstract class CometdAbstractBehavior extends
 
   /**
    * Javascript allowing cometd to be initialized on commetd
-   * @return javascript to initialize cometd on client Side
+   * @return javascript to initialize cometd on client side
    */
   protected final CharSequence getInitCometdScript() {
     return "dojox.cometd.init('" + cometdServletPath + "')\n";
