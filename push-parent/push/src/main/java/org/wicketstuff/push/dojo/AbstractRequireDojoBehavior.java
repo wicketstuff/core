@@ -43,7 +43,7 @@ public abstract class AbstractRequireDojoBehavior extends
 
   private static final long serialVersionUID = 1L;
 
-  private final Set libs = new HashSet();
+  private final Set<String> libs = new HashSet<String>();
 
   /*
    * (non-Javadoc)
@@ -52,6 +52,7 @@ public abstract class AbstractRequireDojoBehavior extends
    * .html.IHeaderResponse) TODO : is there a way to put all dojo.require at the
    * same place on the rendered page??????
    */
+  @Override
   public void renderHead(final IHeaderResponse response) {
     super.renderHead(response);
 
@@ -68,7 +69,7 @@ public abstract class AbstractRequireDojoBehavior extends
     setRequire(libs); // will be implemented by childs
     final StringBuffer require = new StringBuffer();
 
-    final Iterator ite = libs.iterator();
+    final Iterator<String> ite = libs.iterator();
     while (ite.hasNext()) {
       require.append("dojo.require(\"");
       require.append(ite.next());
@@ -84,13 +85,14 @@ public abstract class AbstractRequireDojoBehavior extends
    * allow subclass to register new Dojo require libs
    * @param libs
    */
-  public abstract void setRequire(Set libs);
+  public abstract void setRequire(Set<String> libs);
 
   /**
    * this method is used to interpret dojoWidgets rendered via XMLHTTPRequest
    * FIXME : in TargetRefresherMPanager differency AbstractRequire and
    * DojoWidgetBehavior
    */
+  @Override
   protected void onComponentRendered() {
 
     // if a Dojo Widget is rerender needs to run some javascript to refresh

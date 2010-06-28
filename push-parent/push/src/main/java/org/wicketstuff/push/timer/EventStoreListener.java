@@ -26,6 +26,6 @@ import java.util.Map;
  */
 abstract class EventStoreListener{
 
-  public abstract void EventTriggered(String channel, Map data);
+  public abstract void EventTriggered(String channel, Map<String, String> data);
 
 }

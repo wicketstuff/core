@@ -17,7 +17,7 @@
 package org.wicketstuff.push.timer;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 
 import org.wicketstuff.push.ChannelEvent;
 
@@ -35,18 +35,16 @@ class EventStore
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private transient final ArrayList listenerList = new ArrayList();
+	private transient final List<EventStoreListener> listenerList =
+	  new ArrayList<EventStoreListener>();
 
 	private final static EventStore eventStore = new EventStore();
 
 
-	public void add(final Object value)
+	public void add(final ChannelEvent value)
 	{
-		//triggered listener
-		final Iterator ite = listenerList.iterator();
-		while(ite.hasNext()){
-			final EventStoreListener listener = (EventStoreListener) ite.next();
-			listener.EventTriggered(((ChannelEvent)value).getChannel(), ((ChannelEvent)value).getData());
+	  for (final EventStoreListener listener : listenerList) {
+			listener.EventTriggered(value.getChannel(), value.getData());
 		}
 	}
 

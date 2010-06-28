@@ -1,134 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.wicketstuff</groupId>
-	<artifactId>wicketstuff-push</artifactId>
+  
+  <parent>
+    <groupId>org.wicketstuff</groupId>
+    <artifactId>push-parent</artifactId>
+    <version>1.4-SNAPSHOT</version>
+  </parent>
+	
+	<artifactId>push</artifactId>
 	<packaging>jar</packaging>
-	<version>1.3.5-SNAPSHOT</version>
-	<name>Wicketstuff Push</name>
+	
+	
+  <name>Wicketstuff Push</name>
 	<description>An integration project for server side pushing in Wicket</description>
 	<url>http://wicket-stuff.sourceforge.net/wicket-contrib-cometd</url>
-	<inceptionYear>2005</inceptionYear>
-	<organization>
-		<name>Wicket developers</name>
-		<url>http://wicket.sourceforge.net</url>
-	</organization>
-	<licenses>
-		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-	<issueManagement>
-		<url>http://sourceforge.net/tracker/?group_id=119783</url>
-	</issueManagement>
-	<properties>
-		<java.version>1.4</java.version>
-		<wicket.version>1.3.5</wicket.version>
-		<jetty.version>6.1.14</jetty.version>
-	</properties>
-	<mailingLists>
-		<mailingList>
-			<name>Wicket Announcements List</name>
-			<subscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-announce</subscribe>
-			<unsubscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-announce</unsubscribe>
-			<archive>http://sourceforge.net/mailarchive/forum.php?forum=wicket-announce</archive>
-		</mailingList>
-		<mailingList>
-			<name>Wicket User List</name>
-			<subscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-user</subscribe>
-			<unsubscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-user</unsubscribe>
-			<archive>http://sourceforge.net/mailarchive/forum.php?forum=wicket-user</archive>
-		</mailingList>
-		<mailingList>
-			<name>Wicket Development List</name>
-			<subscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-develop</subscribe>
-			<unsubscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-develop</unsubscribe>
-			<archive>http://sourceforge.net/mailarchive/forum.php?forum=wicket-develop</archive>
-		</mailingList>
-		<mailingList>
-			<name>Wicket CVS commit List</name>
-			<subscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-autocvs</subscribe>
-			<unsubscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-autocvs</unsubscribe>
-			<archive>http://sourceforge.net/mailarchive/forum.php?forum=wicket-autocvs</archive>
-		</mailingList>
-		<mailingList>
-			<name>Wicket automated builds List</name>
-			<subscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-builds</subscribe>
-			<unsubscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-builds</unsubscribe>
-			<archive>http://sourceforge.net/mailarchive/forum.php?forum=wicket-builds</archive>
-		</mailingList>
-	</mailingLists>
-	<developers>
-		<developer>
-			<name>Rodolfo Hansen</name>
-			<id>kryptt</id>
-			<email>kryptt at users.sf.net</email>
-			<organization>kindleit.net</organization>
-		</developer>
-		<developer>
-			<name>Vincent Demay</name>
-			<id>vdemay</id>
-			<email>vdemay at users.sf.net</email>
-			<properties>
-				<status>Retired</status>
-			</properties>
-		</developer>
-	</developers>
-	<dependencies>
-		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket</artifactId>
-			<version>${wicket.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-		</dependency>
-	  <!-- Cometd Usage in wicket (Only available on Jetty) -->
-		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>cometd-jetty</artifactId>
-			<version>${jetty.version}</version>
-		</dependency>
-	</dependencies>
-	<build>
-		<resources>
-			<resource>
-				<filtering>false</filtering>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**</include>
-				</includes>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-			<resource>
-				<filtering>false</filtering>
-				<directory>src/main/resources</directory>
-			</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<inherited>true</inherited>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<minmemory>128m</minmemory>
-					<maxmemory>256m</maxmemory>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+
 </project>

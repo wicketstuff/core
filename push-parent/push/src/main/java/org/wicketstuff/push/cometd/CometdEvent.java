@@ -22,7 +22,8 @@ public class CometdEvent extends ChannelEvent{
 		super(channel);
 	}
 
-	public final Map getData() {
+	@Override
+  public final Map<String, String> getData() {
 		addData("proxy", "true");
 		return super.getData();
 	}
