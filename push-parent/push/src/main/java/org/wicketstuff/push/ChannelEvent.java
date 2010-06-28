@@ -36,7 +36,7 @@ public class ChannelEvent
 {
 	private String channel;
 	private final Map<String, String> data;
-  private String id = "0";
+	private String id = "0";
 
 	/**
 	 * Construct.

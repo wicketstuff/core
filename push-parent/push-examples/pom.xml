@@ -4,12 +4,12 @@
   <parent>
     <groupId>org.wicketstuff</groupId>
     <artifactId>push-parent</artifactId>
-    <version>1.4.10-SNAPSHOT</version>
+    <version>1.4.11-SNAPSHOT</version>
   </parent>
 
   <artifactId>push-examples</artifactId>
   <packaging>war</packaging>
-
+  <version>1.4.11-SNAPSHOT</version>
 
   <name>Wicket Contrib Cometd Examples</name>
   <description>An integration project for the Ajax JavaScript library
@@ -18,14 +18,39 @@
   <url>http://wicket-stuff.sourceforge.net/wicket-contrib-dojo</url>
 
   <dependencies>
-    <dependency>
-      <groupId>org.mortbay.jetty</groupId>
-      <artifactId>jetty</artifactId>
-    </dependency>
+
+	<dependency>
+		<groupId>org.eclipse.jetty</groupId>
+		<artifactId>jetty-util</artifactId>
+		<version>${jetty.version}</version>
+		<scope>test</scope>
+	</dependency>
+	
+	<dependency>
+		<groupId>org.eclipse.jetty</groupId>
+		<artifactId>jetty-server</artifactId>
+		<version>${jetty.version}</version>
+		<scope>test</scope>
+	</dependency>
+
+	<dependency>
+		<groupId>org.eclipse.jetty</groupId>
+		<artifactId>jetty-webapp</artifactId>
+		<version>${jetty.version}</version>
+		<scope>test</scope>
+	</dependency>
+
+	<dependency>
+		<groupId>org.eclipse.jetty</groupId>
+		<artifactId>jetty-servlet</artifactId>
+		<version>${jetty.version}</version>
+		<scope>test</scope>
+	</dependency>
+	
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>0.9.17</version>
+      <version>0.9.20</version>
     </dependency>
     <dependency>
       <groupId>org.wicketstuff</groupId>
@@ -47,15 +72,5 @@
         </excludes>
       </resource>
     </resources>
-    <plugins>
-      <plugin>
-        <groupId>org.mortbay.jetty</groupId>
-        <artifactId>maven-jetty-plugin</artifactId>
-        <configuration>
-          <scanIntervalSeconds>60</scanIntervalSeconds>
-          <webAppSourceDirectory>src/main/webapp</webAppSourceDirectory>
-        </configuration>
-      </plugin>
-    </plugins>
   </build>
 </project>

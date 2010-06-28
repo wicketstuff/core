@@ -16,9 +16,9 @@ import org.wicketstuff.push.timer.TimerPushService;
  * Runs the ExampleApplication when invoked from command line.
  */
 public class ExampleApplication extends WebApplication implements Serializable {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private final IChannelService cometdService;
+	private final IChannelService cometdService;
 	private final IChannelService timerChannelService;
 	private final IPushService timerPushService;
 
@@ -35,7 +35,7 @@ public class ExampleApplication extends WebApplication implements Serializable {
 	 * @see wicket.Application#getHomePage()
 	 */
 	@Override
-  public Class<? extends WebPage> getHomePage() {
+	public Class<? extends WebPage> getHomePage() {
 		return Index.class;
 	}
 

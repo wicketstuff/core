@@ -12,7 +12,7 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.parser.XmlPullParser;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.mortbay.cometd.continuation.ContinuationCometdServlet;
+import org.cometd.server.CometdServlet;
 import org.wicketstuff.push.dojo.AbstractRequireDojoBehavior;
 
 /**
@@ -198,7 +198,7 @@ public abstract class CometdAbstractBehavior extends
           // msparer: taking isAssignAbleFrom enables the use of subclasses of
           // CometdServlet
         } while (servletClass == null
-                 || !ContinuationCometdServlet.class.isAssignableFrom(Class
+                 || !CometdServlet.class.isAssignableFrom(Class
                      .forName(servletClass)));
 
         // go down until servlet is found
