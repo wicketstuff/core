@@ -33,7 +33,7 @@ import org.wicketstuff.push.IChannelService;
  * This mean that each time an event is published, a new connection is made to
  * the server to get the actual page update required by the
  * {@link IChannelListener}.
- * 
+ *
  * @author Xavier Hanin
  * @author Rodolfo Hansen
  * @see IChannelService
@@ -42,17 +42,15 @@ public class CometdService implements IChannelService {
 
 	private final class RemovalForwardingListener implements ServerChannel.SubscriptionListener {
 
-		@Override
-		public void subscribed(ServerSession session, ServerChannel channel) {
+		public void subscribed(final ServerSession session, final ServerChannel channel) {
 			final String channelId = channel.getId();
 			if (removalListeners.containsKey(channelId)) {
 				session.addListener(removalListeners.get(channel));
 			}
-			
+
 		}
 
-		@Override
-		public void unsubscribed(ServerSession session, ServerChannel channel) {
+		public void unsubscribed(final ServerSession session, final ServerChannel channel) {
 			final String channelId = channel.getId();
 			if (removalListeners.containsKey(channelId)) {
 				session.removeListener(removalListeners.get(channel));
@@ -113,14 +111,14 @@ public class CometdService implements IChannelService {
 
 	/**
 	 * Cometd Specific method to Listen for client removals
-	 * 
+	 *
 	 * @param channel
 	 * @param listener
 	 * @param sess
 	 *            Wicket Session you wish to associate with the listener.
 	 */
 	public void addChannelRemoveListener(final String channelId, final RemoveListener listener, final Session sess) {
-		
+
 		if (!listeningToConnect) {
 			final ServerChannel serverChannel = getBayeux().getChannel(Channel.META_SUBSCRIBE);
 			serverChannel.addListener(new RemovalForwardingListener());
@@ -141,7 +139,7 @@ public class CometdService implements IChannelService {
 	 * actually sends a cometd event to the client with a "proxy" attribute set
 	 * to "true", which in turn triggers a wicket ajax call to get the listener
 	 * notified and update the page.
-	 * 
+	 *
 	 * @event the event to publish, which will be modify with "proxy" set to
 	 *        "true"
 	 */
@@ -154,7 +152,7 @@ public class CometdService implements IChannelService {
 		 */
 		event.addData("proxy", "true");
 		final String channelId = "/" + event.getChannel();
-		ServerChannel channel = getBayeux().getChannel(channelId);
+		final ServerChannel channel = getBayeux().getChannel(channelId);
 		channel.publish(null, event.getData(), event.getId());
 	}
 
