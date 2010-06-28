@@ -1,10 +1,10 @@
 package org.wicketstuff.push.examples.pages;
 
 import org.apache.wicket.PageParameters;
+import org.cometd.RemoveListener;
+import org.wicketstuff.push.ChannelEvent;
 import org.wicketstuff.push.IChannelService;
 import org.wicketstuff.push.cometd.CometdService;
-
-import dojox.cometd.RemoveListener;
 
 public class WicketCometdChat extends WicketAbstractChat {
 	private static final long serialVersionUID = 1L;
@@ -15,7 +15,9 @@ public class WicketCometdChat extends WicketAbstractChat {
 		s.addChannelRemoveListener("chat", new RemoveListener () {
 
       public void removed(final String clientId, final boolean timeout) {
-        System.out.println("Chat Removed");
+        final ChannelEvent event = new ChannelEvent("chat");
+        event.addData("message", clientId + "just left");
+        getChannelService().publish(event);
       }
 		});
 	}

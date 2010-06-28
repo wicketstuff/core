@@ -49,5 +49,6 @@ public interface IChannelListener extends Serializable, EventListener {
 	 * @param datas data sent by the event
 	 * @param target see {@link IChannelTarget}
 	 */
-	public abstract void onEvent(String channel, Map datas, IChannelTarget target);
+	public abstract void onEvent(String channel, Map<String, String> datas,
+      IChannelTarget target);
 }

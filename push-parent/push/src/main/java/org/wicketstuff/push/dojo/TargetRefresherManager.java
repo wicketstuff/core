@@ -27,14 +27,15 @@ import org.apache.wicket.behavior.IBehavior;
  * A Manager to deal with {@link AjaxRequestTarget} and makeWidget in dojo. Only
  * top level dojoComponents needs to be rerender during a response to a Ajax
  * Query
+ *
  * @author Vincent Demay
  */
 public class TargetRefresherManager implements IListener {
   private static TargetRefresherManager instance;
-  private HashMap dojoComponents;
+  private Map<String, Component>        dojoComponents;
 
   private TargetRefresherManager() {
-    dojoComponents = new HashMap();
+    dojoComponents = new HashMap<String, Component>();
   }
 
   public static TargetRefresherManager getInstance() {
@@ -44,18 +45,14 @@ public class TargetRefresherManager implements IListener {
     return instance;
   }
 
-  public void onAfterRespond(final Map map, final IJavascriptResponse response) {
+  public void onAfterRespond(final Map<String, Component> map,
+      final IJavascriptResponse response) {
     // we need to find all dojoWidget that should be reParsed
-    final Iterator it = dojoComponents.entrySet().iterator();
-    final HashMap real = new HashMap();
+    final Map<String, Component> real = new HashMap<String, Component>();
     String requires = "";
 
-    while (it.hasNext()) {
-      final Component c = (Component) ((Map.Entry) it.next()).getValue();
-
-      final Iterator iBehaviors = c.getBehaviors().iterator();
-      while (iBehaviors.hasNext()) {
-        final IBehavior behavior = (IBehavior) iBehaviors.next();
+    for (final Component c : dojoComponents.values()) {
+      for (final IBehavior behavior : c.getBehaviors()) {
         if (behavior instanceof AbstractRequireDojoBehavior) {
           requires += ((AbstractRequireDojoBehavior) behavior).getRequire();
         }
@@ -70,7 +67,8 @@ public class TargetRefresherManager implements IListener {
 
   }
 
-  public void onBeforeRespond(final Map map, final AjaxRequestTarget target) {
+  public void onBeforeRespond(final Map<String, Component> map,
+      final AjaxRequestTarget target) {
     // Null op
   }
 
@@ -83,16 +81,15 @@ public class TargetRefresherManager implements IListener {
 
   private String generateReParseJs() {
     if (!dojoComponents.isEmpty()) {
-      final Iterator it = dojoComponents.values().iterator();
+      final Iterator<Component> it = dojoComponents.values().iterator();
       String parseJs = "[";
       while (it.hasNext()) {
-        final Component c = (Component) it.next();
+        final Component c = it.next();
         parseJs += "'" + c.getMarkupId() + "',";
       }
       parseJs = parseJs.substring(0, parseJs.length() - 1);
       parseJs += "]";
-      return "djConfig.searchIds = " + parseJs
-             + ";dojo.hostenv.makeWidgets();";
+      return "djConfig.searchIds = " + parseJs + ";dojo.hostenv.makeWidgets();";
     } else {
       return null;
     }
