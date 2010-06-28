@@ -1,5 +1,5 @@
 /*
-	Copyright (c) 2004-2008, The Dojo Foundation All Rights Reserved.
+	Copyright (c) 2004-2009, The Dojo Foundation All Rights Reserved.
 	Available via Academic Free License >= 2.1 OR the modified BSD license.
 	see: http://dojotoolkit.org/license for details
 */
@@ -228,7 +228,7 @@ return _3b;
 }
 _3c=dojo.filter(_3d[0].childNodes,"return item.tagName && item.tagName.toLowerCase() == 'entry'");
 if(_3a.onBegin){
-_3a.onBegin(_3c.length);
+_3a.onBegin(_3c.length,this.sendQuery?_3a:{});
 }
 for(var i=0;i<_3c.length;i++){
 var _40=_3c[i];
@@ -246,92 +246,92 @@ return {element:_42,store:this};
 var _44=_43._attribs;
 var _45=this;
 var _46,_47;
-function getNodeText(_48){
-var txt=_48.textContent||_48.innerHTML||_48.innerXML;
-if(!txt&&_48.childNodes[0]){
-var _4a=_48.childNodes[0];
-if(_4a&&(_4a.nodeType==3||_4a.nodeType==4)){
-txt=_48.childNodes[0].nodeValue;
+function _48(_49){
+var txt=_49.textContent||_49.innerHTML||_49.innerXML;
+if(!txt&&_49.childNodes[0]){
+var _4b=_49.childNodes[0];
+if(_4b&&(_4b.nodeType==3||_4b.nodeType==4)){
+txt=_49.childNodes[0].nodeValue;
 }
 }
 return txt;
 };
-function parseTextAndType(_4b){
-return {text:getNodeText(_4b),type:_4b.getAttribute("type")};
+function _4c(_4d){
+return {text:_48(_4d),type:_4d.getAttribute("type")};
 };
-dojo.forEach(_43.element.childNodes,function(_4c){
-var _4d=_4c.tagName?_4c.tagName.toLowerCase():"";
-switch(_4d){
+dojo.forEach(_43.element.childNodes,function(_4e){
+var _4f=_4e.tagName?_4e.tagName.toLowerCase():"";
+switch(_4f){
 case "title":
-_44[_4d]={text:getNodeText(_4c),type:_4c.getAttribute("type")};
+_44[_4f]={text:_48(_4e),type:_4e.getAttribute("type")};
 break;
 case "subtitle":
 case "summary":
 case "content":
-_44[_4d]=parseTextAndType(_4c);
+_44[_4f]=_4c(_4e);
 break;
 case "author":
-var _4e,_4f;
-dojo.forEach(_4c.childNodes,function(_50){
-if(!_50.tagName){
+var _50,_51;
+dojo.forEach(_4e.childNodes,function(_52){
+if(!_52.tagName){
 return;
 }
-switch(_50.tagName.toLowerCase()){
+switch(_52.tagName.toLowerCase()){
 case "name":
-_4e=_50;
+_50=_52;
 break;
 case "uri":
-_4f=_50;
+_51=_52;
 break;
 }
 });
-var _51={};
-if(_4e&&_4e.length==1){
-_51.name=getNodeText(_4e[0]);
+var _53={};
+if(_50&&_50.length==1){
+_53.name=_48(_50[0]);
 }
-if(_4f&&_4f.length==1){
-_51.uri=getNodeText(_4f[0]);
+if(_51&&_51.length==1){
+_53.uri=_48(_51[0]);
 }
-_44[_4d]=_51;
+_44[_4f]=_53;
 break;
 case "id":
-_44[_4d]=getNodeText(_4c);
+_44[_4f]=_48(_4e);
 break;
 case "updated":
-_44[_4d]=dojo.date.stamp.fromISOString(getNodeText(_4c));
+_44[_4f]=dojo.date.stamp.fromISOString(_48(_4e));
 break;
 case "published":
-_44[_4d]=dojo.date.stamp.fromISOString(getNodeText(_4c));
+_44[_4f]=dojo.date.stamp.fromISOString(_48(_4e));
 break;
 case "category":
-if(!_44[_4d]){
-_44[_4d]=[];
+if(!_44[_4f]){
+_44[_4f]=[];
 }
-_44[_4d].push({scheme:_4c.getAttribute("scheme"),term:_4c.getAttribute("term")});
+_44[_4f].push({scheme:_4e.getAttribute("scheme"),term:_4e.getAttribute("term")});
 break;
 case "link":
-if(!_44[_4d]){
-_44[_4d]=[];
+if(!_44[_4f]){
+_44[_4f]=[];
 }
-var _52={rel:_4c.getAttribute("rel"),href:_4c.getAttribute("href"),type:_4c.getAttribute("type")};
-_44[_4d].push(_52);
-if(_52.rel=="alternate"){
-_44["alternate"]=_52;
+var _54={rel:_4e.getAttribute("rel"),href:_4e.getAttribute("href"),type:_4e.getAttribute("type")};
+_44[_4f].push(_54);
+if(_54.rel=="alternate"){
+_44["alternate"]=_54;
 }
 break;
 default:
 break;
 }
 });
-},_unescapeHTML:function(_53){
-_53=_53.replace(/&#8217;/m,"'").replace(/&#8243;/m,"\"").replace(/&#60;/m,">").replace(/&#62;/m,"<").replace(/&#38;/m,"&");
-return _53;
-},_assertIsItem:function(_54){
-if(!this.isItem(_54)){
+},_unescapeHTML:function(_55){
+_55=_55.replace(/&#8217;/m,"'").replace(/&#8243;/m,"\"").replace(/&#60;/m,">").replace(/&#62;/m,"<").replace(/&#38;/m,"&");
+return _55;
+},_assertIsItem:function(_56){
+if(!this.isItem(_56)){
 throw new Error("dojox.data.AtomReadStore: Invalid item argument.");
 }
-},_assertIsAttribute:function(_55){
-if(typeof _55!=="string"){
+},_assertIsAttribute:function(_57){
+if(typeof _57!=="string"){
 throw new Error("dojox.data.AtomReadStore: Invalid attribute argument.");
 }
 }});
