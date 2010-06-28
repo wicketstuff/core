@@ -86,7 +86,7 @@ public abstract class WicketAbstractChat extends ExamplePage {
 
 	private static class Message implements Serializable {
 		private static final long serialVersionUID = 1L;
-		private String chat;
+
 		private String user;
 		private String message;
 
@@ -94,24 +94,8 @@ public abstract class WicketAbstractChat extends ExamplePage {
 			return message;
 		}
 
-		public void setMessage(final String message) {
-			this.message = message;
-		}
-
 		public String getUser() {
 			return user;
-		}
-
-		public void setUser(final String user) {
-			this.user = user;
-		}
-
-		public String getChat() {
-			return chat;
-		}
-
-		public void setChat(final String chat) {
-			this.chat = chat;
 		}
 	}
 }

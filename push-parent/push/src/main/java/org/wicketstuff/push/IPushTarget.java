@@ -38,6 +38,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author Xavier Hanin
  */
 public interface IPushTarget extends IChannelTarget {
+	
 	void trigger();
+	
 	boolean isConnected();
 }

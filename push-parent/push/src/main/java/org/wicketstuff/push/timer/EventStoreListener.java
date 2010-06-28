@@ -19,13 +19,13 @@ package org.wicketstuff.push.timer;
 import java.util.Map;
 
 /**
- * Listener to add in {@link EventStore}.
- * It is for internal use only (volontary package)
- *
+ * Listener to add in {@link EventStore}. It is for internal use only (volontary
+ * package)
+ * 
  * @author Vincent Demay
  */
 interface EventStoreListener {
 
-  void eventTriggered(String channel, Map<String, String> data);
+	void eventTriggered(String channel, Map<String, String> data);
 
 }

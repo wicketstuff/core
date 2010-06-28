@@ -41,79 +41,79 @@ import org.apache.wicket.markup.html.resources.CompressedResourceReference;
  * this jar. If you want to use an other Dojo Distribution (A custom one to fit
  * to your need), You should write the following code in your
  * {@link Application} to use a custom {@link CompressedResourceReference}
- *
+ * 
  * <pre>
  *  CompressedResourceReference myCustomDojo = new CompressedResourceReference([...]);
  *  setMetaData(AbstractDefaultDojoBehavior.USE_CUSTOM_DOJO_DIST, myCustomDojo);
  * </pre>
- *
+ * 
  * <b>WARNING</b> : the package dojo distribution contains some patches on dojo.
  * If you use your own distribution it can break some component behaviors.
  * </p>
+ * 
  * @see <a href="http://dojotoolkit.org/">Dojo< /a>
  * @author Eelco Hillenius
  */
 public abstract class AbstractDefaultDojoBehavior extends
-    AbstractDefaultAjaxBehavior {
-  private static final long serialVersionUID = 1L;
+		AbstractDefaultAjaxBehavior {
+	
+	private static final long serialVersionUID = 1L;
 
-  /**
-   * a Unique key to know if a CompressedResourceReference is set by the user in
-   * order to use a custom dojo distribution
-   */
-  public static final MetaDataKey<CompressedResourceReference>
-  USE_CUSTOM_DOJO_DIST  = new MetaDataKey<CompressedResourceReference>() {
-    private static final long serialVersionUID = 1L;
-  };
+	/**
+	 * a Unique key to know if a CompressedResourceReference is set by the user
+	 * in order to use a custom dojo distribution
+	 */
+	public static final MetaDataKey<CompressedResourceReference> USE_CUSTOM_DOJO_DIST = new MetaDataKey<CompressedResourceReference>() {
+		private static final long serialVersionUID = 1L;
+	};
 
-  /** reference to the dojo support javascript file. */
-  public static final ResourceReference DOJO =
-      new CompressedResourceReference(AbstractDefaultDojoBehavior.class,
-          "dojo/dojo.js");
+	/** reference to the dojo support javascript file. */
+	public static final ResourceReference DOJO = new CompressedResourceReference(
+			AbstractDefaultDojoBehavior.class, "dojo/dojo.js");
 
-  /** A unique ID for the JavaScript Dojo config script */
-  private static final String COMETD_DOJO_CONFIG_ID =
-      AbstractDefaultDojoBehavior.class.getName() + "::debug";
+	/** A unique ID for the JavaScript Dojo config script */
+	private static final String COMETD_DOJO_CONFIG_ID = AbstractDefaultDojoBehavior.class
+			.getName() + "::debug";
 
-  /**
-   * @see wicket.ajax.AbstractDefaultAjaxBehavior#renderHead(wicket.markup.html.IHeaderResponse)
-   */
-  @Override
-  public void renderHead(final IHeaderResponse response) {
-    super.renderHead(response);
+	/**
+	 * @see wicket.ajax.AbstractDefaultAjaxBehavior#renderHead(wicket.markup.html.IHeaderResponse)
+	 */
+	@Override
+	public void renderHead(final IHeaderResponse response) {
+		super.renderHead(response);
 
-    // Dojo configuration
-    final StringBuffer dojoConfig = new StringBuffer();
-    dojoConfig.append("var djConfig = {};\n");
+		// Dojo configuration
+		final StringBuffer dojoConfig = new StringBuffer();
+		dojoConfig.append("var djConfig = {};\n");
 
-    // enable dojo debug if our configuration type is DEVELOPMENT
-    final String configurationType = Application.get().getConfigurationType();
-    if (configurationType.equalsIgnoreCase(Application.DEVELOPMENT)) {
-      dojoConfig.append("djConfig.isDebug = true;\n");
-      dojoConfig.append("djConfig.parseOnLoad = true;\n");
-    } else {
-      dojoConfig.append("djConfig.isDebug = false;\n");
-    }
+		// enable dojo debug if our configuration type is DEVELOPMENT
+		final String configurationType = Application.get()
+				.getConfigurationType();
+		if (configurationType.equalsIgnoreCase(Application.DEVELOPMENT)) {
+			dojoConfig.append("djConfig.isDebug = true;\n");
+			dojoConfig.append("djConfig.parseOnLoad = true;\n");
+		} else {
+			dojoConfig.append("djConfig.isDebug = false;\n");
+		}
 
-    // render dojo config
-    response
-        .renderJavascript(dojoConfig.toString(), COMETD_DOJO_CONFIG_ID);
+		// render dojo config
+		response.renderJavascript(dojoConfig.toString(), COMETD_DOJO_CONFIG_ID);
 
-    response.renderJavascriptReference(getDojoResourceReference());
-  }
+		response.renderJavascriptReference(getDojoResourceReference());
+	}
 
-  /**
-   * Get the reference to the Dojo scripts.
-   * @return
-   */
-  public ResourceReference getDojoResourceReference() {
-    if (Application.get().getMetaData(USE_CUSTOM_DOJO_DIST) == null
-        || !(Application.get().getMetaData(USE_CUSTOM_DOJO_DIST) instanceof CompressedResourceReference)) {
-        return DOJO;
-    } else {
-      return Application.get().getMetaData(
-          USE_CUSTOM_DOJO_DIST);
-    }
-  }
+	/**
+	 * Get the reference to the Dojo scripts.
+	 * 
+	 * @return
+	 */
+	public ResourceReference getDojoResourceReference() {
+		if (Application.get().getMetaData(USE_CUSTOM_DOJO_DIST) == null
+				|| !(Application.get().getMetaData(USE_CUSTOM_DOJO_DIST) instanceof CompressedResourceReference)) {
+			return DOJO;
+		} else {
+			return Application.get().getMetaData(USE_CUSTOM_DOJO_DIST);
+		}
+	}
 
 }

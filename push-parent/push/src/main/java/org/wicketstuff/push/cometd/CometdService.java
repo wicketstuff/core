@@ -95,7 +95,7 @@ public class CometdService implements IChannelService {
 
 	private final Map<String, RemoveListener> removalListeners;
 
-	final WebApplication _application;
+	private final WebApplication _application;
 	private BayeuxServer _bayeux;
 	private boolean listeningToConnect;
 
@@ -132,8 +132,7 @@ public class CometdService implements IChannelService {
 	/**
 	 * @see #addChannelRemoveListener(String, RemoveListener, Session)
 	 */
-	public void addChannelRemoveListener(final String chnl,
-			final RemoveListener listener) {
+	public void addChannelRemoveListener(final String chnl, final RemoveListener listener) {
 		addChannelRemoveListener(chnl, listener, null);
 	}
 
@@ -171,8 +170,7 @@ public class CometdService implements IChannelService {
 	 * Initializes the Jetty CometD Bayeux Service to be used.
 	 */
 	private void initBayeux() {
-		_bayeux = (BayeuxServer) _application.getServletContext().getAttribute(
-				BayeuxServer.ATTRIBUTE);
+		_bayeux = (BayeuxServer) _application.getServletContext().getAttribute(BayeuxServer.ATTRIBUTE);
 	}
 
 	public Application getApplication() {

@@ -29,6 +29,4 @@ public class ExamplePage extends WebPage {
 	public IPushService getTimerPushService() {
 		return getExampleApplication().getTimerPushService();
 	}
-	
-	
 }

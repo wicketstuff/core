@@ -22,43 +22,38 @@ import java.util.List;
 import org.wicketstuff.push.ChannelEvent;
 
 /**
- * Here we are simulating a bus with this event store
- * It is an Internal class (volontary package)
- *
- *
+ * Here we are simulating a bus with this event store It is an Internal class
+ * (volontary package)
+ * 
+ * 
  * @author Vincent Demay
  */
-class EventStore
-{
-	/**
-	 *
-	 */
+class EventStore {
+	
 	private static final long serialVersionUID = 1L;
 
-	private transient final List<EventStoreListener> listenerList =
-	  new ArrayList<EventStoreListener>();
+	private transient final List<EventStoreListener> listenerList = new ArrayList<EventStoreListener>();
 
 	private final static EventStore eventStore = new EventStore();
 
-
-	public void add(final ChannelEvent value)
-	{
-	  for (final EventStoreListener listener : listenerList) {
+	public void add(final ChannelEvent value) {
+		for (final EventStoreListener listener : listenerList) {
 			listener.eventTriggered(value.getChannel(), value.getData());
 		}
 	}
 
-	public static EventStore get()
-	{
+	public static EventStore get() {
 		return eventStore;
 	}
 
 	/**
-	 * Adds a listener to this list which will be notified whenever the list is modified
-	 * @param listener the listener to add
+	 * Adds a listener to this list which will be notified whenever the list is
+	 * modified
+	 * 
+	 * @param listener
+	 *            the listener to add
 	 */
-	public void addEventStoreListener(final EventStoreListener listener)
-	{
+	public void addEventStoreListener(final EventStoreListener listener) {
 		listenerList.add(listener);
 	}
 }
