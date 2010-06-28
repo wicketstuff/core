@@ -48,7 +48,8 @@ class EventStore
 		}
 	}
 
-	public static EventStore get(){
+	public static EventStore get()
+	{
 		return eventStore;
 	}
 
