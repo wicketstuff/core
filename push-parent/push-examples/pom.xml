@@ -31,7 +31,7 @@
     <dependency>
       <groupId>org.wicketstuff</groupId>
       <artifactId>push</artifactId>
-      <version>1.4-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
   
