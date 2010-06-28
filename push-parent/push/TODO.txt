@@ -8,3 +8,7 @@
 
 . Think about optimizing the communication mechanisms so less requests are 
   issued on the client side.   
+  
+  
+. Offer a plugable replacement for AjaxPollingBehaviour.
+. Offer a CometD Updatable Model.
