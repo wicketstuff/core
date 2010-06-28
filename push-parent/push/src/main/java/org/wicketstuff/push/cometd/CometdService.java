@@ -11,9 +11,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.cometd.bayeux.Channel;
 import org.cometd.bayeux.server.BayeuxServer;
 import org.cometd.bayeux.server.ServerChannel;
-import org.cometd.bayeux.server.ServerMessage;
 import org.cometd.bayeux.server.ServerSession;
-import org.cometd.bayeux.server.ServerSession.MessageListener;
 import org.cometd.bayeux.server.ServerSession.RemoveListener;
 import org.wicketstuff.push.ChannelEvent;
 import org.wicketstuff.push.IChannelListener;
@@ -42,15 +40,23 @@ import org.wicketstuff.push.IChannelService;
  */
 public class CometdService implements IChannelService {
 
-	private final class RemovalForwardingListener implements MessageListener {
+	private final class RemovalForwardingListener implements ServerChannel.SubscriptionListener {
 
-		public boolean onMessage(final ServerSession fromClient,
-				final ServerSession toClient, final ServerMessage msg) {
-			final String channel = (String) msg.get("subscription");
-			if (removalListeners.containsKey(channel)) {
-				fromClient.addListener(removalListeners.get(channel));
+		@Override
+		public void subscribed(ServerSession session, ServerChannel channel) {
+			final String channelId = channel.getId();
+			if (removalListeners.containsKey(channelId)) {
+				session.addListener(removalListeners.get(channel));
 			}
-			return true;
+			
+		}
+
+		@Override
+		public void unsubscribed(ServerSession session, ServerChannel channel) {
+			final String channelId = channel.getId();
+			if (removalListeners.containsKey(channelId)) {
+				session.removeListener(removalListeners.get(channel));
+			}
 		}
 	}
 
@@ -91,7 +97,6 @@ public class CometdService implements IChannelService {
 
 	final WebApplication _application;
 	private BayeuxServer _bayeux;
-	private ServerSession serviceClient;
 	private boolean listeningToConnect;
 
 	public CometdService(final WebApplication application) {
@@ -114,17 +119,14 @@ public class CometdService implements IChannelService {
 	 * @param sess
 	 *            Wicket Session you wish to associate with the listener.
 	 */
-	public void addChannelRemoveListener(final String chnl,
-			final RemoveListener listener, final Session sess) {
+	public void addChannelRemoveListener(final String channelId, final RemoveListener listener, final Session sess) {
+		
 		if (!listeningToConnect) {
-			// getBayeux().getChannel(Channel.META_SUBSCRIBE).subscribe(serviceClient);
-			Object serverChannel = getBayeux().getChannel(
-					Channel.META_SUBSCRIBE);
-			// serverChannel.subscribe(serviceClient);
-			serviceClient.addListener(new RemovalForwardingListener());
+			final ServerChannel serverChannel = getBayeux().getChannel(Channel.META_SUBSCRIBE);
+			serverChannel.addListener(new RemovalForwardingListener());
 			listeningToConnect = true;
 		}
-		removalListeners.put("/" + chnl, new RemovalListener(listener, sess));
+		removalListeners.put(channelId, new RemovalListener(listener, sess));
 	}
 
 	/**
@@ -169,19 +171,8 @@ public class CometdService implements IChannelService {
 	 * Initializes the Jetty CometD Bayeux Service to be used.
 	 */
 	private void initBayeux() {
-		final String cfgType = _application.getConfigurationType();
 		_bayeux = (BayeuxServer) _application.getServletContext().getAttribute(
 				BayeuxServer.ATTRIBUTE);
-
-		/*
-		 * if (_bayeux instanceof AbstractBayeux &&
-		 * Application.DEVELOPMENT.equalsIgnoreCase(cfgType)) {
-		 * ((AbstractBayeux) _bayeux).setLogLevel(2); }
-		 * 
-		 * if (_bayeux instanceof ContinuationBayeux) { ((ContinuationBayeux)
-		 * _bayeux).setJSONCommented(true); }
-		 */
-		serviceClient = _bayeux.getSession(BAYEUX_CLIENT_PREFIX);
 	}
 
 	public Application getApplication() {
