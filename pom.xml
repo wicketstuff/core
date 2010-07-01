@@ -323,6 +323,8 @@
 	<properties>
 		<wicket.version>1.4-SNAPSHOT</wicket.version>
 		<jetty.version>6.1.22</jetty.version>
+
+    		<eclipse.jetty.version>7.1.4.v20100610</eclipse.jetty.version>
 		<lucene.version>2.4.1</lucene.version>
         <slf4j.version>1.5.11</slf4j.version>
 	</properties>

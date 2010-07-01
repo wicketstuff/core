@@ -39,7 +39,6 @@
   </modules>
 
   <properties>
-    <jetty.version>7.1.4.v20100610</jetty.version>
     <cometd.version>2.0.0.RC2</cometd.version>
   </properties>
 
