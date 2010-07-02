@@ -436,12 +436,7 @@
 						6.1.14 is the latest version in central -->
 				<version>6.1.14</version>
 			</dependency>
-			<dependency>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>cometd-client</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
-
+			
 			<!-- COMMONS -->
 			<dependency>
 				<groupId>org.apache.commons</groupId>
