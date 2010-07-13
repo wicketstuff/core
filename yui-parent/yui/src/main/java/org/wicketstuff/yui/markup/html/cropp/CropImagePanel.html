@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns:wicket>
+<body>
+
+	<wicket:panel>
+		<div class="yui-skin-sam brix-admin" wicket:id="wmc">
+			<div wicket:id="panel"></div>
+		</div>
+	</wicket:panel>
+
+	<wicket:fragment wicket:id="upload">
+		<form wicket:id="form">
+			<div class="brix-feedback" wicket:id="feedback"></div>
+			<fieldset>
+				<table class="brix-property-edit">
+					<tr>
+						<td class="brix-property-label"><wicket:message key="file"/></td>
+						<td class="brix-property-value"><input wicket:id="fileUploadField" type="file"/></td>
+					</tr>
+					<tr>
+						<td class="brix-property-label"><wicket:message key="resultImageSize"/></td>
+						<td class="brix-property-value"><input wicket:id="resultSize" type="text"/></td>
+					</tr>
+					<tr>
+						<td class="brix-property-label"><wicket:message key="resultImageSizeNoChange"/></td>
+						<td class="brix-property-value"><input wicket:id="resultImageSizeNoChange" type="checkbox"/></td>
+					</tr>
+				</table>
+			</fieldset>
+			<div class="brix-reference-editor-buttons">
+				<div class="brix-buttons-right">
+					<div class="brix-buttons-right1">
+						<a class="brix-button" wicket:id="submit"><wicket:message key="apply"/></a>
+						<a class="brix-button" wicket:id="cancel" ><wicket:message key="cancel"/></a>
+					</div>
+				</div>
+			</div>
+		</form>
+	</wicket:fragment>
+
+	<wicket:fragment wicket:id="crop">
+		<img  wicket:id="img" />
+		<div wicket:id="cropperImage"></div>
+	</wicket:fragment>
+
+</body>
+</html>
