@@ -11,6 +11,7 @@ import org.apache.wicket.Request;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.wicketstuff.jwicket.IStyleResolver;
 import org.wicketstuff.jwicket.JQueryCssResourceReference;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
@@ -31,7 +32,8 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavascriptResourceReference uiDatepickerJs = new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker.min.js");
+	public static final JQueryJavascriptResourceReference uiDatepickerJs    = new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker.min.js");
+	public static final JQueryJavascriptResourceReference uiDatepickerJs_de = new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker-de.js");
 
 	protected JsMap options = new JsMap();
 
@@ -85,6 +87,8 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 				try {
 					java.sql.Date date = new java.sql.Date(df.parse(selectedDate).getTime());
 					onSelect(target, date, specialKeys);
+					if (component instanceof FormComponent<?>)
+						((FormComponent<?>)component).inputChanged();
 				} catch (Exception e) {
 					onSelect(target, (java.sql.Date)null, specialKeys);
 				}
@@ -97,6 +101,9 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 			}
 			else if (eventType == EventType.BEFORE_SHOW_DAY) {
 				onBeforeShowDay(target, request.getParameter("date"));
+			}
+			else if (eventType == EventType.BEFORE_SHOW) {
+				onBeforeShow(target);
 			}
 		}
 	}
@@ -281,6 +288,19 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 	public DatePicker setDateFormat(final AjaxRequestTarget target, final String value) {
 		setDateFormat(value);
 		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','dateFormat','" + value + "');");
+		return this;
+	}
+
+	
+	
+	public DatePicker setDate(final AjaxRequestTarget target, final Date date) {
+		Locale locale = Session.get().getLocale();
+		DateFormat df;
+		if (locale != null)
+			df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+		else
+			df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('setDate','" + df.format(date) + "');");
 		return this;
 	}
 
@@ -735,6 +755,25 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 	
 	
 	
+	private String cssClass = null;
+	
+	/** If you want en individual style for a DatePicker you may set this style with this method.
+	 * The DatePicker the gets sourrounded with a &lt;div class="..."&gt;.
+	 * Normally a DatePicker element looks like
+<pre>
+&lt;div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ....&gt;...&lt;/div&gt;
+</pre>
+ 	 * If you set a cssClass the DatePicket looks like
+<pre>
+&lt;div class="cssClass"&gt;&lt;div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ....&gt;...&lt;/div&gt;&lt;/div&gt;
+</pre>
+	 * 
+	 * @param cssClass your custom css class
+	 */
+	public void setCssClass(final String cssClass) {
+		this.cssClass = cssClass;
+	}
+	
 	
 	
 	
@@ -802,8 +841,8 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 
 	private boolean onBeforeShowDayNotificationWanted = false;
 	/**
-	 * If set to {@code true}, the callback-Method {@link #onBeforeShowDayNotificationWanted }
-	 * is called for every day that gets displayes in the datepicker popup.
+	 * If set to {@code true}, the callback-Method {@link #onBeforeShowDay(AjaxRequestTarget, String)}
+	 * is called for every day that gets displayed in the datepicker popup.
 	 *
 	 * See the jquery-ui documentation for detailed information
 	 * @param value {@code true} or {@code false}.
@@ -811,6 +850,21 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 	 */
 	public DatePicker setWantOnBeforeShowDayNotification(final boolean value) {
 		onBeforeShowDayNotificationWanted = value;
+		return this;
+	}
+
+
+
+	private boolean onBeforeShowNotificationWanted = false;
+	/**
+	 * If set to {@code true}, the callback-Method {@link #onBeforeShowDay(AjaxRequestTarget, String)}
+	 * is called before the DatePicker gets displayed.
+	 *
+	 * See the jquery-ui documentation for detailed information
+	 * @return this object
+	 */
+	public DatePicker setWantOnBeforeShowNotificationWanted(final boolean value) {
+		onBeforeShowNotificationWanted = value;
 		return this;
 	}
 
@@ -825,6 +879,17 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 
 	@Override
 	protected JsBuilder getJsBuilder() {
+		if (onBeforeShowNotificationWanted)
+			options.put(EventType.BEFORE_SHOW.eventName,
+				new JsFunction("function(dateText,inst) { wicketAjaxGet('" +
+								this.getCallbackUrl() +
+								"&" + EventType.IDENTIFIER + "=" + EventType.BEFORE_SHOW +
+								"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
+								");}"));
+		else
+			options.remove(EventType.BEFORE_SHOW.getEventName());
+
+
 		if (onSelectNotificationWanted)
 			options.put(EventType.ON_SELECT.eventName,
 				new JsFunction("function(dateText,inst) { wicketAjaxGet('" +
@@ -913,11 +978,20 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 		builder.append(options.toString(rawOptions));
 		builder.append("}");
 		builder.append(")");
+		
+		
+		if (cssClass != null) {
+			builder.append(";jQuery('#ui-datepicker-div').wrap('<div class=\"");
+			builder.append(cssClass);
+			builder.append("\" />')");
+		}
 
 
 		return builder;
 	}
 
+
+	protected void onBeforeShow(final AjaxRequestTarget target) {}
 
 	/**
 	 * If you have set {@link #setWantOnSelectNotification(boolean)} to {@code true}

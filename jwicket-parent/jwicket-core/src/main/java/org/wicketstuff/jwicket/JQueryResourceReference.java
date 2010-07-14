@@ -3,6 +3,9 @@ package org.wicketstuff.jwicket;
 
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.markup.html.PackageResource;
+import org.apache.wicket.util.time.Time;
+import org.apache.wicket.util.watch.IModifiable;
 
 
 /**	Base class for all Header contributing resource references.
@@ -32,18 +35,36 @@ import org.apache.wicket.WicketRuntimeException;
  *  {@link JQueryResourceReferenceType#NOT_OVERRIDABLE} with your own version
  *  this will lead to a {@link WicketRuntimeException}.
  */
-public class JQueryResourceReference extends ResourceReference {
+public class JQueryResourceReference extends ResourceReference implements IModifiable {
 
 	private static final long serialVersionUID = 1L;
 
 
+	private String id = null;
+
 	public JQueryResourceReference(final Class<?> scope, final String name) {
-		this(scope, name, JQueryResourceReferenceType.OVERRIDABLE);
+		this(scope, name, (String)null);
+	}
+
+	public JQueryResourceReference(final Class<?> scope, final String name, final String id) {
+		this(scope, name, id, JQueryResourceReferenceType.OVERRIDABLE);
 	}
 
 	public JQueryResourceReference(final Class<?> scope, final String name, final JQueryResourceReferenceType type) {
+		this(scope, name, null, type);
+	}
+
+	public JQueryResourceReference(final Class<?> scope, final String name, final String id, final JQueryResourceReferenceType type) {
 		super(scope, name);
 		this.type = type;
+		this.id = id;
+	}
+	
+	public boolean hasId() {
+		return this.id != null;
+	}
+	public String getId() {
+		return this.id;
 	}
 
 	private final JQueryResourceReferenceType type;
@@ -56,4 +77,11 @@ public class JQueryResourceReference extends ResourceReference {
 	public boolean isOverridable() {
 		return getType() == JQueryResourceReferenceType.OVERRIDABLE;
 	}
+	
+	
+	@Override
+	public Time lastModifiedTime() {
+		return Time.milliseconds(0L);
+	}
+	
 }

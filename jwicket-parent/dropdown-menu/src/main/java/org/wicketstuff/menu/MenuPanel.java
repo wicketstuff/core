@@ -14,7 +14,6 @@ import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.util.value.ValueMap;
 import org.wicketstuff.jwicket.BgIframeBehavior;
 
 

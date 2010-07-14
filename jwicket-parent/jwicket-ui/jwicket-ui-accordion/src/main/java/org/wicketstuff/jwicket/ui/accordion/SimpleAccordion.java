@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 
@@ -22,7 +23,7 @@ public class SimpleAccordion<T extends Serializable> extends AbstractAccordion<T
 	}
 
 
-	protected Component getHeader(final String id, final IModel<T> t) {
+	protected Component getHeader(final String id, final IModel<T> t, final int index) {
 		if (t != null)
 			return new Label(id, String.valueOf(t.getObject()));
 		else
@@ -30,7 +31,7 @@ public class SimpleAccordion<T extends Serializable> extends AbstractAccordion<T
 	}
 
 
-	protected Component getContent(final String id, final IModel<T> t) {
+	protected Component getContent(final String id, final IModel<T> t, final int index) {
 		if (t != null)
 			return new Label(id, String.valueOf(t.getObject()));
 		else
@@ -41,7 +42,25 @@ public class SimpleAccordion<T extends Serializable> extends AbstractAccordion<T
 
 	@Override
 	protected AccordionBehavior initAccordionBehavior() {
-		return new AccordionBehavior();
+		return new AccordionBehavior() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			protected void onExpand(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand, final int index) {
+				SimpleAccordion.this.onExpand(target, headerToExpand, contentToExpand, index);
+			}
+			@Override
+			protected void onCollapse(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand, final int index) {
+				SimpleAccordion.this.onCollapse(target, headerToExpand, contentToExpand, index);
+			}
+		};
 	}
+
+
+	@Override
+	protected void onExpand(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand, final int index) {}
+
+
+	@Override
+	protected void onCollapse(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand, final int index) {}
 
 }
