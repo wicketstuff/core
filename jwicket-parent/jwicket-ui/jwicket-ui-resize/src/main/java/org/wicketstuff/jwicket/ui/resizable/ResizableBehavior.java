@@ -23,7 +23,8 @@ import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	private static final long serialVersionUID = 1L;
-	private static final JQueryJavascriptResourceReference uiResizableJs = new JQueryJavascriptResourceReference(ResizableBehavior.class, "jquery.ui.resizable.min.js");
+
+	public static final JQueryJavascriptResourceReference uiResizableJs = new JQueryJavascriptResourceReference(ResizableBehavior.class, "jquery.ui.resizable.min.js");
 
 	protected JsMap options = new JsMap();
 

@@ -8,9 +8,10 @@ public class Scale extends AbstractJqueryUiEffect {
 
 	private static final long serialVersionUID = 1L;
 
+	public static final JQueryJavascriptResourceReference jQueryUiEffectsScaleJs = new JQueryJavascriptResourceReference(Scale.class, "jquery.effects.scale.min.js");
 
 	public Scale() {
-		super(new JQueryJavascriptResourceReference(Scale.class, "jquery.effects.scale.min.js"));
+		super(jQueryUiEffectsScaleJs);
 	}
 
 

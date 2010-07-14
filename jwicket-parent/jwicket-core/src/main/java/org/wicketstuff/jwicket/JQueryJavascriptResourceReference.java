@@ -13,11 +13,19 @@ public class JQueryJavascriptResourceReference extends JQueryResourceReference {
 
 
 	public JQueryJavascriptResourceReference(final Class<?> scope, final String name) {
-		this(scope, name, JQueryResourceReferenceType.OVERRIDABLE);
+		this(scope, name, (String)null);
+	}
+
+	public JQueryJavascriptResourceReference(final Class<?> scope, final String name, final String id) {
+		this(scope, name, id, JQueryResourceReferenceType.OVERRIDABLE);
 	}
 
 	public JQueryJavascriptResourceReference(final Class<?> scope, final String name, final JQueryResourceReferenceType type) {
-		super(scope, name, type);
+		this(scope, name, null, type);
+	}
+
+	public JQueryJavascriptResourceReference(final Class<?> scope, final String name, final String id, final JQueryResourceReferenceType type) {
+		super(scope, name, id, type);
 	}
 
 	
@@ -25,8 +33,7 @@ public class JQueryJavascriptResourceReference extends JQueryResourceReference {
 	/**	Copy of {@link JavascriptResourceReference} from Apache Wicket 1.4.7
 	 */
 	@Override
-	protected Resource newResource()
-	{
+	protected Resource newResource() {
 		PackageResource packageResource = JavascriptPackageResource.newPackageResource(getScope(),
 			getName(), getLocale(), getStyle());
 		if (packageResource != null)

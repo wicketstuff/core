@@ -57,43 +57,33 @@ public class JQueryHeaderContributor extends AbstractBehavior {
 	public void renderHead(IHeaderResponse response) {
 		super.renderHead(response);
 
-		/*
-		if (ieVersion < 0) {
-			ClientInfo ci = WebSession.get().getClientInfo();
-			if (ci instanceof WebClientInfo) {
-				WebClientInfo wci = (WebClientInfo)ci;
-				ClientProperties cp = wci.getProperties();
-				if (cp.isBrowserInternetExplorer()) {
-					ieVersion = cp.getBrowserVersionMajor();
-				}
-				else
-					ieVersion = 0;
-			}
-		}
-		*/
-
 		if (userProvidedResourceReferences.size() == 0) {
 			// No user provided Resources, use internal resources
 			addJavascriptReference(response, jQueryCoreJs);
 			response.renderJavascript("jQuery.noConflict();", "noConflict");
 
-			if (baseLibrary != null)
+			if (baseLibrary != null) {
 				addJavascriptReference(response, baseLibrary);
+			}
 			if (requiredLibraries != null)
-				for (JQueryJavascriptResourceReference requiredLibrary : requiredLibraries)
+				for (JQueryJavascriptResourceReference requiredLibrary : requiredLibraries) {
 					addJavascriptReference(response, requiredLibrary);
+				}
 		}
 		else {
 			// Userdefined resources, use them but also use the NOT_OVERRIDABLE internal resources
-			for (JavascriptResourceReference userLibrary : userProvidedResourceReferences)
+			for (JavascriptResourceReference userLibrary : userProvidedResourceReferences) {
 				addJavascriptReference(response, userLibrary);
+			}
 
-			if (baseLibrary != null && baseLibrary.getType() == JQueryResourceReferenceType.NOT_OVERRIDABLE)
+			if (baseLibrary != null && baseLibrary.getType() == JQueryResourceReferenceType.NOT_OVERRIDABLE) {
 				addJavascriptReference(response, baseLibrary);
+			}
 			if (requiredLibraries != null)
 				for (JQueryJavascriptResourceReference requiredLibrary : requiredLibraries)
-					if (requiredLibrary.getType() == JQueryResourceReferenceType.NOT_OVERRIDABLE)
+					if (requiredLibrary.getType() == JQueryResourceReferenceType.NOT_OVERRIDABLE) {
 						addJavascriptReference(response, requiredLibrary);
+					}
 		}
 	}
 

@@ -25,7 +25,8 @@ public abstract class LazyAccordion<T extends Serializable> extends AbstractAcco
 		
 		getAccordionBehavior().setAutoHeight(false);
 		getAccordionBehavior().setCollapsible(true);
-		getAccordionBehavior().setActive(-1);
+		// set the pre-expanded item to none (number greater than the size, -1 won't work on IE7)
+		getAccordionBehavior().setActive(list.getObject()==null?0:list.getObject().size()+1);
 	}
 
 
@@ -34,7 +35,7 @@ public abstract class LazyAccordion<T extends Serializable> extends AbstractAcco
 		return new AccordionBehavior() {
 			private static final long serialVersionUID = 1L;
 			@Override
-			protected void onExpand(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand) {
+			protected void onExpand(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand, final int index) {
 				Component contentAnchor = ((WebMarkupContainer)contentToExpand).get("contentAnchor");
 				if (contentAnchor != null) {
 					Component content = ((WebMarkupContainer)contentAnchor).get("content");
@@ -43,18 +44,24 @@ public abstract class LazyAccordion<T extends Serializable> extends AbstractAcco
 						// Currently there is only a placeholder for the content. Replace the
 						// Placeholder with real content
 						ModelParkingLot modelParkingLot = (ModelParkingLot)content;
-						((WebMarkupContainer)contentAnchor).addOrReplace(getLazyContent("content", modelParkingLot.getModel()));
+						((WebMarkupContainer)contentAnchor).addOrReplace(getLazyContent("content", modelParkingLot.getModel(), index));
 						target.addComponent(contentAnchor);
 					}
 					// else: this was already expanded before
 				}
+				LazyAccordion.this.onExpand(target, headerToExpand, contentToExpand, index);
+			}
+
+			@Override
+			protected void onCollapse(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand, final int index) {
+				LazyAccordion.this.onCollapse(target, headerToExpand, contentToExpand, index);
 			}
 		};
 	}
 
 
 
-	protected Component getHeader(final String id, final IModel<T> t) {
+	protected Component getHeader(final String id, final IModel<T> t, final int tindex) {
 		if (t != null)
 			return new Label(id, String.valueOf(t.getObject()));
 		else
@@ -62,12 +69,12 @@ public abstract class LazyAccordion<T extends Serializable> extends AbstractAcco
 	}
 
 
-	protected Component getContent(final String id, final IModel<T> t) {
+	protected Component getContent(final String id, final IModel<T> t, final int tindex) {
 		return new ModelParkingLot(id, t); // parking lot for the model
 	}
 
 
-	protected abstract Component getLazyContent(final String id, final IModel<T> t);
+	protected abstract Component getLazyContent(final String id, final IModel<T> t, final int tindex);
 
 
 
@@ -83,4 +90,13 @@ public abstract class LazyAccordion<T extends Serializable> extends AbstractAcco
 			return (IModel<T>)getDefaultModel();
 		}
 	}
+
+
+	@Override
+	protected void onExpand(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand, final int index) {}
+
+
+	@Override
+	protected void onCollapse(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand, final int index) {}
+
 }

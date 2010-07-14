@@ -96,9 +96,11 @@ public abstract class AbstractJqueryUiEffect extends JQueryHeaderContributor  {
 	private static final long serialVersionUID = 1L;
 
 	private static long nextId = 0;
+	
+	public static final JQueryJavascriptResourceReference jQueryUiEffectsCoreJs = new JQueryJavascriptResourceReference(AbstractJqueryUiEffect.class, "jquery.effects.core.min.js");
 
 	public AbstractJqueryUiEffect(final JQueryJavascriptResourceReference... requiredLibraries) {
-		super(new JQueryJavascriptResourceReference(AbstractJqueryUiEffect.class, "jquery.effects.core.min.js"), requiredLibraries);
+		super(jQueryUiEffectsCoreJs, requiredLibraries);
 	}
 
 

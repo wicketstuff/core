@@ -30,7 +30,6 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 			addCssResources(getCssResources());
 	}
 
-	
 
 
 	/**
@@ -85,6 +84,14 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 		return this;
 	}
 
+
+
+	private int currentExpandedIndex = -1;
+	public int getCurrentExpandedIndex() {
+		return this.currentExpandedIndex;
+	}
+	
+
 	/**
 	 * Handles the event processing during resizing.
 	 */
@@ -99,14 +106,33 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 			String oldHeader = "";
 			String newContent = "";
 			String oldContent = "";
+			String active = "";
 
 			newHeader = request.getParameter("newHeader");
 			oldHeader = request.getParameter("oldHeader");
 			newContent = request.getParameter("newContent");
 			oldContent = request.getParameter("oldContent");
+			active = request.getParameter("active");
 
+			int activeIndex = -1;
+			try {
+				activeIndex = Integer.parseInt(active);
+			} catch (Exception e) {
+				activeIndex = -1;
+			}
 			
+
 			if (eventType == EventType.CHANGE) {
+				if (oldContent != null && oldHeader != null) {
+					ComponentFinder finder = new ComponentFinder(oldHeader);
+					component.getPage().visitChildren(finder);
+					Component oldHeaderComponent = finder.getFoundComponent();
+					finder = new ComponentFinder(oldContent);
+					component.getPage().visitChildren(finder);
+					Component oldContentComponent = finder.getFoundComponent();
+					onCollapse(target, oldHeaderComponent, oldContentComponent, currentExpandedIndex);
+				}
+
 				if (newContent != null && newHeader != null) {
 					ComponentFinder finder = new ComponentFinder(newHeader);
 					component.getPage().visitChildren(finder);
@@ -116,20 +142,13 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 					Component newContentComponent = finder.getFoundComponent();
 
 					if (newHeaderComponent != null && newContentComponent != null)
-						onExpand(target, newHeaderComponent, newContentComponent);
+						onExpand(target, newHeaderComponent, newContentComponent, activeIndex);
+					currentExpandedIndex = activeIndex;
 				}
-			
-				if (oldContent != null && oldHeader != null) {
-					ComponentFinder finder = new ComponentFinder(oldHeader);
-					component.getPage().visitChildren(finder);
-					Component oldHeaderComponent = finder.getFoundComponent();
-					finder = new ComponentFinder(oldContent);
-					component.getPage().visitChildren(finder);
-					Component oldContentComponent = finder.getFoundComponent();
-					onCollapse(target, oldHeaderComponent, oldContentComponent);
-				}
+				else
+					currentExpandedIndex = -1;
+					
 			}
-
 		}
 	}
 
@@ -138,12 +157,15 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 	@Override
 	protected JsBuilder getJsBuilder() {
 		options.put(EventType.CHANGE.eventName,
-			new JsFunction("function(ev,ui) { wicketAjaxGet('" +
+			new JsFunction("function(ev,ui) {" +
+							"var active=jQuery('#" + getComponent().getMarkupId() + "').accordion('option', 'active');" +
+							"wicketAjaxGet('" +
 							this.getCallbackUrl() +
 							"&newHeader='+jQuery(ui.newHeader).attr('id')" +
 							"+'&oldHeader='+jQuery(ui.oldHeader).attr('id')" +
 							"+'&newContent='+jQuery(ui.newContent).attr('id')" +
 							"+'&oldContent='+jQuery(ui.oldContent).attr('id')" +
+							"+'&active='+active" +
 							"+'&" + EventType.IDENTIFIER + "=" + EventType.CHANGE +
 							"'" +
 							"); }"));
@@ -207,9 +229,9 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 
 
 
-	protected void onExpand(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand) { }
+	protected void onExpand(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand, final int index) { }
 
 
-	protected void onCollapse(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand) { }
+	protected void onCollapse(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand, final int index) { }
 
 }

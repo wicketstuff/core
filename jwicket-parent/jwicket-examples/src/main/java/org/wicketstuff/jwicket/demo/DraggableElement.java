@@ -34,7 +34,6 @@ public class DraggableElement extends GenericPanel<String>  {
 	public DraggableElement(final String id, final IModel<String> model) {
 		super(id, model);
 
-System.out.println("DraggableElement: model = " + model + "/" + model.getObject());
 
 		dragger = new DraggableBehavior();
 		dragger.setRevert(DraggableBehavior.DragRevertMode.ALWAYS);
@@ -96,7 +95,6 @@ dragger
 
 		public DraggableLink(String id, IModel<String> model) {
 			super(id, model);
-			System.out.println("DraggableLink: model = " + model);
 		}
 
 		@Override

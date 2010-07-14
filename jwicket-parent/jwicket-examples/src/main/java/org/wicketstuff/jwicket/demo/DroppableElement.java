@@ -7,7 +7,6 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.jwicket.SpecialKey;
 import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.tooltip.BeautyTips;
 import org.wicketstuff.jwicket.ui.dragdrop.DraggablesAcceptedByDroppable;
@@ -92,12 +91,6 @@ public class DroppableElement extends GenericPanel<String>  {
 			target.addComponent(l);
 			dropped = true;
 			effects.fire(target, droppable);
-			
-System.out.println("////////// onDrop: specialKeys = " + specialKeys);
-if (specialKeys.is(SpecialKey.SHIFT))
-	System.out.println("Es ist die SHIFT-Taste gedrückt");
-if (specialKeys.is(SpecialKey.SHIFT, SpecialKey.CTRL))
-	System.out.println("Es ist die SHIFT- und die CONTROL-Taste gedrückt");
 		}
 
 		public void onActivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {

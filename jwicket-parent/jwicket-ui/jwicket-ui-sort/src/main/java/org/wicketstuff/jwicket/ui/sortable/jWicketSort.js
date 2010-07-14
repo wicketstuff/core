@@ -1,7 +1,7 @@
 /**
- * JQuery SpecialKeys for jWicket
- * @version 1.1
- * 
+ * jwicket functions for ui-sort
+ *
+ * @version 1.2
  */
 
 (function($) {

@@ -24,7 +24,7 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 	private static final long serialVersionUID = 1L;
 
 	private static final String DROPPED_COMPONENTID_IDENTIFIER = "wsjqDroppedComponent";
-	private static final JQueryJavascriptResourceReference uiDroppableJs = new JQueryJavascriptResourceReference(DraggableBehavior.class, "jquery.ui.droppable.min.js");
+	public static final JQueryJavascriptResourceReference uiDroppableJs = new JQueryJavascriptResourceReference(DraggableBehavior.class, "jquery.ui.droppable.min.js");
 
 	private JsMap options = new JsMap();
 

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -66,7 +67,7 @@ public abstract class AbstractAccordion<T extends Serializable> extends Panel {
 			protected void populateItem(final ListItem<T> item) {
 				WebMarkupContainer headerAnchor = new WebMarkupContainer("headerAnchor");
 				headerAnchor.setOutputMarkupId(true);
-				headerAnchor.add(getHeader("header", item.getModel()).setOutputMarkupId(true));					
+				headerAnchor.add(getHeader("header", item.getModel(), item.getIndex()).setOutputMarkupId(true));					
 				item.add(headerAnchor);
 
 				WebMarkupContainer jQueryContentAnchor = new WebMarkupContainer("jQueryContentAnchor");
@@ -75,7 +76,7 @@ public abstract class AbstractAccordion<T extends Serializable> extends Panel {
 
 				WebMarkupContainer contentAnchor = new WebMarkupContainer("contentAnchor");
 				contentAnchor.setOutputMarkupId(true);
-				contentAnchor.add(getContent("content", item.getModel()).setOutputMarkupId(true));					
+				contentAnchor.add(getContent("content", item.getModel(), item.getIndex()).setOutputMarkupId(true));					
 				jQueryContentAnchor.add(contentAnchor);
 
 				item.setRenderBodyOnly(true);
@@ -104,9 +105,20 @@ public abstract class AbstractAccordion<T extends Serializable> extends Panel {
 	}
 
 
-	protected abstract Component getHeader(final String id, final IModel<T> t);
+	protected abstract Component getHeader(final String id, final IModel<T> t, final int index);
 
 
-	protected abstract Component getContent(final String id, final IModel<T> t);
+	protected abstract Component getContent(final String id, final IModel<T> t, final int index);
+
+
+	protected abstract void onExpand(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand, final int index);
+
+
+	protected abstract void onCollapse(final AjaxRequestTarget target, final Component headerToExpand, final Component contentToExpand, final int index);
+
+	
+	public int getCurrentExpandedIndex() {
+		return getAccordionBehavior().getCurrentExpandedIndex();
+	}
 
 }

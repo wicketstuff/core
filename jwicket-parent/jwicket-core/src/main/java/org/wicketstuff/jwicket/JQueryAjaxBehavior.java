@@ -151,12 +151,19 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 		}
 	}
 
+	
 	private void addJavascriptReference(IHeaderResponse response, JQueryResourceReference resource) {
 		if (!response.wasRendered(resource)) {
-			if (resource instanceof org.wicketstuff.jwicket.JQueryJavascriptResourceReference)
-				response.renderJavascriptReference(resource);
-			else
+			if (resource instanceof org.wicketstuff.jwicket.JQueryJavascriptResourceReference) {
+				if (resource.hasId()) {
+					response.renderJavascriptReference(resource, resource.getId());
+				}
+				else
+					response.renderJavascriptReference(resource);
+			}
+			else {
 				response.renderCSSReference(resource);
+			}
 			response.markRendered(resource);
 		}
 	}
@@ -168,31 +175,18 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 	public void renderHead(IHeaderResponse response) {
 		super.renderHead(response);
 
-		/*
-		if (ieVersion < 0) {
-			ClientInfo ci = WebSession.get().getClientInfo();
-			if (ci instanceof WebClientInfo) {
-				WebClientInfo wci = (WebClientInfo)ci;
-				ClientProperties cp = wci.getProperties();
-				if (cp.isBrowserInternetExplorer()) {
-					ieVersion = cp.getBrowserVersionMajor();
-				}
-				else
-					ieVersion = 0;
-			}
-		}
-		*/
-
 		if (userProvidedResourceReferences.size() == 0) {
 			// No user provided Resources, use internal resources
 			addJavascriptReference(response, JQueryHeaderContributor.jQueryCoreJs);
 			response.renderJavascript("jQuery.noConflict();", "noConflict");
 
-			if (baseLibrary != null)
+			if (baseLibrary != null) {
 				addJavascriptReference(response, baseLibrary);
+			}
 			if (requiredLibraries != null)
-				for (JQueryResourceReference requiredLibrary : requiredLibraries)
+				for (JQueryResourceReference requiredLibrary : requiredLibraries) {
 					addJavascriptReference(response, requiredLibrary);
+				}
 		}
 		else {
 			// Userdefined resources, use them but also use the NOT_OVERRIDABLE internal resources
