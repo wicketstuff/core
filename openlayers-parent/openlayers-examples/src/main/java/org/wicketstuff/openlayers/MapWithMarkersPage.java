@@ -22,7 +22,7 @@ public class MapWithMarkersPage extends WebPage {
 	 */
 	public MapWithMarkersPage(final PageParameters parameters) {
 
-		OpenLayersMap openLayersMap = new OpenLayersMap("map");
+		OpenLayersMap openLayersMap = new OpenLayersMap("map", true);
 
 		Marker marker = new Marker(new LonLat(50, 50));
 		openLayersMap.addOverlay(marker);

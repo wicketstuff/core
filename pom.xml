@@ -325,6 +325,8 @@
 		<jetty.version>6.1.22</jetty.version>
 		<lucene.version>2.4.1</lucene.version>
         <slf4j.version>1.5.8</slf4j.version>
+        <!-- should make the build portable -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>

@@ -65,7 +65,7 @@ public class WMSGetFeatureInfo extends AbstractControl {
 			parameters.put("eventListeners", "{getfeatureinfo: function(evt) {"+onEventJavascript.getObject()+"}}");
 		
 		// is special as it requires an explicit activation.
-		return super.getJSadd(map, parameters) + "\n" + super.getJSinvoke(map, ".activate()");
+		return super.getJSadd(map, parameters) + "\n" + super.getJSinvoke(map, "activate()");
 	}
 	
 

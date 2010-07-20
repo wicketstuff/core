@@ -24,12 +24,10 @@ import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.api.layer.WMS;
 import org.wicketstuff.openlayers.js.JSUtils;
-import org.wicketstuff.openlayers.proxy.WFSProxyBehaviour;
+import org.wicketstuff.openlayers.proxy.WFSProxyBehavior;
 
 /**
- * @author Michael O'Cleirigh (michael.ocleirigh@rivulet.ca)
- * 
- * The WFS GetFeature command allows a <i>propertyName</i> parameter that can be used to adjust which columns are returned
+ * @author mocleiri a <i>propertyName</i> parameter that can be used to adjust which columns are returned
  * by the request.
  * 
  * The default OpenLayers implementation does not support this as it needs the spatial data for the selection of a specific feature.
@@ -48,7 +46,7 @@ public class GetSpecificFeature extends AbstractControl {
 	
 	private Map<String, String> parameters = new LinkedHashMap<String, String>();
 
-	private final WFSProxyBehaviour wfsProxy;
+	private final WFSProxyBehavior wfsProxy;
 
 	private final String wfsURL;
 
@@ -63,7 +61,7 @@ public class GetSpecificFeature extends AbstractControl {
 	 * @param srsNumber the EPSG number.
 	 * @param the property to be included in the response. (typically this is a a primary key or unique id for the feature)
 	 */
-	public GetSpecificFeature(WMS layer, WFSProxyBehaviour wfsProxy, AbstractAjaxBehavior featureSelectionBehaviour, String wfsURL, String featureTypePrefix, String featureTypeUrl, String featureTypeName, int srsNumber, String propertyName) {
+	public GetSpecificFeature(WMS layer, WFSProxyBehavior wfsProxy, AbstractAjaxBehavior featureSelectionBehaviour, String wfsURL, String featureTypePrefix, String featureTypeUrl, String featureTypeName, int srsNumber, String propertyName) {
 		super("GetSpecificFeature", false);
 		this.wfsProxy = wfsProxy;
 		this.featureSelectionBehaviour = featureSelectionBehaviour;

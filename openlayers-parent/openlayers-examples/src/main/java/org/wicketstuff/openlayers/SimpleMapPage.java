@@ -20,6 +20,6 @@ public class SimpleMapPage extends WebPage {
 	 */
 	public SimpleMapPage(final PageParameters parameters) {
 
-		add(new OpenLayersMap("map"));
+		add(new OpenLayersMap("map", true));
 	}
 }

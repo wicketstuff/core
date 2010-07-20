@@ -40,7 +40,7 @@ public class SimpleGoogleMapPage extends WebPage {
 		Bounds boundsExtend = new Bounds(new LonLat(12.91, 55.52),
 				new LonLat(13.29, 55.73));
 		mapOptions.put("maxExtent", boundsExtend.getJSconstructor());
-		OpenLayersMap map = new OpenLayersMap("map", layers, mapOptions);
+		OpenLayersMap map = new OpenLayersMap("map", true, layers, mapOptions);
 		map.setCenter(new LonLat(10.2, 48.9), 13);
 		add(map);
 	}

@@ -22,7 +22,7 @@ public class MapWithMarkersAndPopupsPage extends WebPage {
 	 */
 	public MapWithMarkersAndPopupsPage(final PageParameters parameters) {
 
-		OpenLayersMap openLayersMap = new OpenLayersMap("map");
+		OpenLayersMap openLayersMap = new OpenLayersMap("map", true);
 
 		Marker marker = new Marker(new LonLat(50, 50), new PopupPanel(
 				"Hello Marker 1"));
