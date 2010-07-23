@@ -26,11 +26,6 @@ class PropertyValidator<T> implements INullAcceptingValidator<T>, Serializable
 
     public void validate(final IValidatable<T> validatable)
     {
-    	// skip, if propertyExpression is empty
-
-    	if (this.propertyExpression==null || this.propertyExpression.trim().length()==0)
-    	  return;
-
         final T value = validatable.getValue();
 
         final Set<?> violations = JSR303Validation.getValidator().validateValue(this.beanClass,

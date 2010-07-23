@@ -48,7 +48,7 @@ public class JSR303Validation
 
         // geez. they screwed it up.
         // http://opensource.atlassian.com/projects/hibernate/browse/HV-306
-        Locale.setDefault(Session.get().getLocale());
+        // fixed in 4.1.0.beta2 ... Locale.setDefault(Session.get().getLocale());
 
         final ValidatorFactory validationFactory = configuration.messageInterpolator(
                 new WicketSessionLocaleMessageInterpolator(configuration.getDefaultMessageInterpolator()))
