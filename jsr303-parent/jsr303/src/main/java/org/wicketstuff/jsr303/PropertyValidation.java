@@ -4,8 +4,8 @@ import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.IFormVisitorParticipant;
 import org.apache.wicket.markup.html.form.FormComponent.IVisitor;
+import org.apache.wicket.markup.html.form.IFormVisitorParticipant;
 import org.apache.wicket.model.AbstractPropertyModel;
 import org.apache.wicket.model.IModel;
 
@@ -17,6 +17,7 @@ import org.apache.wicket.model.IModel;
 @SuppressWarnings("unchecked")
 public class PropertyValidation extends AbstractBehavior
 {
+
     private static final long serialVersionUID = 1L;
 
     class JSR303ValidatorFormComponentVisitor implements IVisitor
@@ -32,7 +33,8 @@ public class PropertyValidation extends AbstractBehavior
                     if (model instanceof AbstractPropertyModel<?>)
                     {
                         final AbstractPropertyModel<?> pm = (AbstractPropertyModel<?>) model;
-                        fc.add(new PropertyValidator(pm));
+                        PropertyValidator validator = new PropertyValidator(pm);
+                        fc.add(validator);
                     }
                 }
             }
