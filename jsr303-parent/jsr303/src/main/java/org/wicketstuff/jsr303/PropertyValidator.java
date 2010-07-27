@@ -20,7 +20,7 @@ import org.wicketstuff.jsr303.util.Assert;
 @SuppressWarnings("rawtypes")
 public class PropertyValidator<T> extends AbstractBehavior
 {
-    public class Exclude extends AbstractBehavior
+    public static class Exclude extends AbstractBehavior
     {
         private static final long serialVersionUID = 1L;
     }
