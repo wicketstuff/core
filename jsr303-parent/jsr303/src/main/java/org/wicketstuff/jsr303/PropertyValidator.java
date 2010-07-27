@@ -6,7 +6,6 @@ import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.behavior.IBehavior;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -18,33 +17,27 @@ import org.slf4j.LoggerFactory;
 import org.wicketstuff.jsr303.util.Assert;
 
 @SuppressWarnings("rawtypes")
-public class PropertyValidator<T> extends AbstractBehavior
+public class PropertyValidator<T> implements INullAcceptingValidator<T>, Serializable
 {
     public static class Exclude extends AbstractBehavior
     {
         private static final long serialVersionUID = 1L;
     }
 
-    class Validator implements INullAcceptingValidator<T>, Serializable
+    public void validate(final IValidatable<T> validatable)
     {
-        private static final long serialVersionUID = 1L;
+        // skip, if propertyExpression is empty
+        if (propertyExpression == null || propertyExpression.trim().length() == 0) return;
 
-        public void validate(final IValidatable<T> validatable)
+        // skip, if marked as excluded
+        if (hasExclusionBehaviour()) return;
+
+        final T value = validatable.getValue();
+
+        final Set<?> violations = JSR303Validation.getValidator().validateValue(beanClass, propertyExpression, value);
+        for (final Object v : violations)
         {
-            // skip, if propertyExpression is empty
-            if (propertyExpression == null || propertyExpression.trim().length() == 0) return;
-
-            // skip, if marked as excluded
-            if (hasExclusionBehaviour()) return;
-
-            final T value = validatable.getValue();
-
-            final Set<?> violations = JSR303Validation.getValidator().validateValue(beanClass, propertyExpression,
-                    value);
-            for (final Object v : violations)
-            {
-                validatable.error(new ViolationErrorBuilder.Property((ConstraintViolation) v).createError());
-            }
+            validatable.error(new ViolationErrorBuilder.Property((ConstraintViolation) v).createError());
         }
     }
 
@@ -53,10 +46,11 @@ public class PropertyValidator<T> extends AbstractBehavior
     private final Class<?> beanClass;
     private final String propertyExpression;
 
-    private FormComponent fc;
+    private final FormComponent<T> fc;
 
-    public PropertyValidator(final AbstractPropertyModel<?> apm)
+    public PropertyValidator(final AbstractPropertyModel<?> apm, FormComponent<T> componentToApplyTo)
     {
+        this.fc = componentToApplyTo;
         Assert.parameterNotNull(apm, "apm");
         this.beanClass = apm.getTarget().getClass();
         this.propertyExpression = apm.getPropertyExpression();
@@ -76,20 +70,6 @@ public class PropertyValidator<T> extends AbstractBehavior
         return false;
     }
 
-    @Override
-    public void bind(Component component)
-    {
-        super.bind(component);
-        if (component instanceof FormComponent)
-        {
-
-            FormComponent fc = (FormComponent) component;
-            this.fc = fc;
-
-            fc.add(new Validator());
-
-        }
-    }
     private static transient volatile Logger _transient_logger = LoggerFactory.getLogger(PropertyValidator.class);
 
     public static final Logger log()
