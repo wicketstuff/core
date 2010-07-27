@@ -33,7 +33,7 @@ public class PropertyValidation extends AbstractBehavior
                     if (model instanceof AbstractPropertyModel<?>)
                     {
                         final AbstractPropertyModel<?> pm = (AbstractPropertyModel<?>) model;
-                        PropertyValidator validator = new PropertyValidator(pm);
+                        PropertyValidator validator = new PropertyValidator(pm, fc);
                         fc.add(validator);
                     }
                 }
@@ -45,7 +45,7 @@ public class PropertyValidation extends AbstractBehavior
     private boolean assigned = false;
 
     @Override
-    public synchronized void onRendered(final Component context)
+    public synchronized void beforeRender(Component context)
     {
         if (!assigned)
         {
@@ -64,7 +64,7 @@ public class PropertyValidation extends AbstractBehavior
                     if (m instanceof AbstractPropertyModel<?>)
                     {
                         final AbstractPropertyModel<?> apm = (AbstractPropertyModel<?>) m;
-                        fc.add(new PropertyValidator(apm));
+                        fc.add(new PropertyValidator(apm, fc));
                     }
                     else
                     {
@@ -77,7 +77,7 @@ public class PropertyValidation extends AbstractBehavior
                 }
             }
         }
-        super.onRendered(context);
+        super.beforeRender(context);
     }
 
 }
