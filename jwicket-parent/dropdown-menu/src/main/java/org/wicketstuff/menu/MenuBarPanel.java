@@ -353,8 +353,8 @@ public class MenuBarPanel extends Panel implements IStyleResolver {
 	}
 
 
-
-	@Override
+	// mocleiri: removed for java 5 compatibility
+//	@Override
 	public JQueryCssResourceReference[] getCssResources() {
 		return CSS;
 	}

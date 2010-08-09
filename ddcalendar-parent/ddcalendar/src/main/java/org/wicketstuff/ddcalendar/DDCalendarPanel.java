@@ -62,16 +62,17 @@ public abstract class DDCalendarPanel<T extends CalendarEvent> extends Panel {
 		itemListContainer.add(new YuiDDListView<T>("eventList", new IModel<List<T>>() {
 					private static final long serialVersionUID = 1L;
 		
-					@Override
+					// mocleiri: removed for java 5 compatibility
+//					@Override
 					public List<T> getObject() {
 						return getItems();
 					}
-		
-					@Override
+					// mocleiri: removed for java 5 compatibility
+//					@Override
 					public void setObject(List<T> object) {
 					}
-		
-					@Override
+					// mocleiri: removed for java 5 compatibility
+//					@Override
 					public void detach() {
 					}
 				}) {

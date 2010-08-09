@@ -86,14 +86,16 @@ public class TestPage extends WebPage {
 		// Link to Homepage
 		itemsForMenu1.add(new IMenuLink() {
 			private static final long serialVersionUID = 1L;
-			@Override
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public Component getDisplayComponent(String id) {
 				//return new Label(id, "Home");
 				return new Image(id, new ResourceReference(TestPage.class, "P_orange_81x81.gif"))
 						.add(new SimpleAttributeModifier("alt", ""))
 					;
 			}
-			@Override
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public AbstractLink getLink(String id) {
 				return new BookmarkablePageLink<Void>(id, Application.get().getHomePage());
 			}
@@ -102,11 +104,13 @@ public class TestPage extends WebPage {
 		// Link to Apache Wicket
 		itemsForMenu1.add(new IMenuLink() {
 			private static final long serialVersionUID = 1L;
-			@Override
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public Component getDisplayComponent(String id) {
 				return new Label(id, "Apache Wicket");
 			}
-			@Override
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public AbstractLink getLink(String id) {
 				return new ExternalLink(id, "http://www.wicketframework.org");
 			}
@@ -115,11 +119,13 @@ public class TestPage extends WebPage {
 		// Link to Wicketstuff
 		itemsForMenu1.add(new IMenuLink() {
 			private static final long serialVersionUID = 1L;
-			@Override
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public Component getDisplayComponent(String id) {
 				return new Label(id, "Wicketstuff");
 			}
-			@Override
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public AbstractLink getLink(String id) {
 				return new ExternalLink(id, "http://www.wicketstuff.org");
 			}
@@ -128,11 +134,13 @@ public class TestPage extends WebPage {
 		// Disabled Link to nowhere
 		itemsForMenu1.add(new IMenuLink() {
 			private static final long serialVersionUID = 1L;
-			@Override
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public Component getDisplayComponent(String id) {
 				return new Label(id, "Nowhere");
 			}
-			@Override
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public AbstractLink getLink(String id) {
 				ExternalLink link = new ExternalLink(id, "http://www.nowhere.somewhere");
 				link.setEnabled(false);
@@ -154,11 +162,13 @@ public class TestPage extends WebPage {
 			private static final long serialVersionUID = 1L;
 			private boolean isEnabled = true;
 			private Model<String> labelModel = new Model<String>("disable drag");
-			@Override
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public Component getDisplayComponent(String id) {
 				return new Label(id, labelModel);
 			}
-			@Override
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public AbstractLink getLink(String id) {
 				return new AjaxFallbackLink<Void>(id) {
 					private static final long serialVersionUID = 1L;
@@ -196,11 +206,13 @@ public class TestPage extends WebPage {
 			private static final long serialVersionUID = 1L;
 			private boolean isEnabled = true;
 			private Model<String> labelModel = new Model<String>("disable drop");
-			@Override
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public Component getDisplayComponent(String id) {
 				return new Label(id, labelModel);
 			}
-			@Override
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public AbstractLink getLink(String id) {
 				return new AjaxFallbackLink<Void>(id) {
 					private static final long serialVersionUID = 1L;
@@ -236,11 +248,13 @@ public class TestPage extends WebPage {
 			private static final long serialVersionUID = 1L;
 			private boolean isEnabled = true;
 			private Model<String> labelModel = new Model<String>("disable resize");
-			@Override
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public Component getDisplayComponent(String id) {
 				return new Label(id, labelModel);
 			}
-			@Override
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public AbstractLink getLink(String id) {
 				return new AjaxFallbackLink<Void>(id) {
 					private static final long serialVersionUID = 1L;
@@ -271,11 +285,14 @@ public class TestPage extends WebPage {
 		menu2.addMenuItem(new IMenuLink() {
 			private static final long serialVersionUID = 1L;
 			private Model<String> labelModel = new Model<String>("show animations");
-			@Override
+			
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public Component getDisplayComponent(String id) {
 				return new Label(id, labelModel);
 			}
-			@Override
+		// mocleiri: removed for java 5 compatibility
+//			@Override
 			public AbstractLink getLink(String id) {
 				return new AjaxFallbackLink<Void>(id) {
 					private static final long serialVersionUID = 1L;

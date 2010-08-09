@@ -70,7 +70,7 @@
 				<repository>
 					<id>hibernate-releases</id>
 					<name>hibernate releases</name>
-            		<url>http://repository.jboss.org/maven2</url>
+            		<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
 					<releases><enabled>true</enabled></releases>
 
 				</repository>

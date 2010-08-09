@@ -32,17 +32,17 @@ public class EventPanel<T extends CalendarEvent> extends Panel {
 	public EventPanel(final String id, final WicketCalendar<T> parent, final CalendarEvent event, final int hourHeight, final boolean removable) {
 		super(id, new IModel<CalendarEvent>() {
 			private static final long serialVersionUID = 1L;
-			
-			@Override
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public CalendarEvent getObject() {
 				return event;
 			}
-
-			@Override
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public void setObject(CalendarEvent object) {
 			}
-
-			@Override
+			// mocleiri: removed for java 5 compatibility
+//			@Override
 			public void detach() {
 			}
 		});
