@@ -108,9 +108,9 @@
 			<artifactId>commons-collections</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>jazzyplugin</groupId>
-			<artifactId>jazzyplugin</artifactId>
-			<version>0.5.2</version>
+			<groupId>net.sf.jazzy</groupId>
+			<artifactId>jazzy</artifactId>
+			<version>0.5.2-rtext-1.4.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.json</groupId>
