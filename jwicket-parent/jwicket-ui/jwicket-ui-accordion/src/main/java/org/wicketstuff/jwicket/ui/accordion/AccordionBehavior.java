@@ -217,7 +217,8 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 
 
 
-	@Override
+	// mocleiri: removed for java 5 compatibility
+//	@Override
 	public JQueryCssResourceReference[] getCssResources() {
 		return new JQueryCssResourceReference[] {
 			AbstractJqueryUiEmbeddedBehavior.jQueryUiCss,
