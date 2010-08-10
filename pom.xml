@@ -16,52 +16,9 @@
 	</description>
 
 	<url>http://wicketstuff.org</url>
-	<modules>
-		<module>scala-extensions-parent</module>
-		<module>annotation</module>
-		<module>calendarviews-parent</module>
-		<module>client-and-server-validation</module>
-		<module>datatable-autocomplete-parent</module>
-		<module>gmap2-parent</module>
-		<module>googlecharts-parent</module>
-		<module>inmethod-grid-parent</module>
-		<module>input-events-parent</module>
-		<module>javaee-inject-parent</module>
-		<module>jslibraries</module>
-		<module>jquery-parent</module>
-		<module>jsr303-parent</module>
-		<module>misc</module>
-		<module>minis-parent</module>
-		<module>objectautocomplete-parent</module>
-		<module>openlayers-parent</module>
-		<module>phonebook</module>
-		<module>prototype</module>
-		<module>scriptaculous-parent</module>
-		<module>simile-timeline-parent</module>
-		<module>tinymce-parent</module>
-		<module>yui-parent</module>
-		<module>push-parent</module>
-		<module>artwork-parent</module>
-		<module>yav-parent</module>
-		<module>plugin</module>
-		<!--commented out until org.apache.commons:commons-proxy:jar:1.1-SNAPSHOT is available -->
-		<!--see http://www.nabble.com/Wicketstuff-core...-td23105708.html#a23106385 -->
-		<!-- <module>syringe</module> -->
-		<module>ki-security</module>
-		<module>sitemap-xml-parent</module>		
-		<module>multi-text-input-parent</module>
-		<module>shiro-security</module> 
-		<module>flot-parent</module>
-		<module>jwicket-parent</module>
-		<module>mbeanview-parent</module>
-		<module>ddcalendar-parent</module>
-		<module>fixed-feedback-panel</module>
-		<module>maven-support</module>
-		<module>theme-parent</module>
-		<module>wicket-html5-parent</module> 
-		<module>jasperreports-parent</module>
-  </modules>
 
+	<!-- mocleiri: moved modules definition into the build-java5-modules
+	and build-java6-modules profiles -->
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -184,7 +141,140 @@
 				</site>
 			</distributionManagement>
 		</profile>
+		<profile>
+			<id>build-java5-modules</id>
+			<activation>
+			<activeByDefault>true</activeByDefault>
+			</activation>
 
+				<modules>
+		<module>scala-extensions-parent</module>
+		<module>annotation</module>
+		<module>calendarviews-parent</module>
+		<module>client-and-server-validation</module>
+		<module>datatable-autocomplete-parent</module>
+		<module>gmap2-parent</module>
+		<module>googlecharts-parent</module>
+		<module>inmethod-grid-parent</module>
+		<module>input-events-parent</module>
+		<module>jslibraries</module>
+		<module>jquery-parent</module>
+		<module>jsr303-parent</module>
+		<module>misc</module>
+		<module>minis-parent</module>
+		<module>objectautocomplete-parent</module>
+		<module>openlayers-parent</module>
+		<module>phonebook</module>
+		<module>prototype</module>
+		<module>scriptaculous-parent</module>
+		<module>simile-timeline-parent</module>
+		<module>tinymce-parent</module>
+		<module>yui-parent</module>
+		<module>push-parent</module>
+		<module>artwork-parent</module>
+		<module>yav-parent</module>
+		<module>plugin</module>
+		<!--commented out until org.apache.commons:commons-proxy:jar:1.1-SNAPSHOT is available -->
+		<!--see http://www.nabble.com/Wicketstuff-core...-td23105708.html#a23106385 -->
+		<!-- <module>syringe</module> -->
+		<module>ki-security</module>
+		<module>sitemap-xml-parent</module>		
+		<module>multi-text-input-parent</module>
+		<module>shiro-security</module> 
+		<module>flot-parent</module>
+		<module>jwicket-parent</module>
+		<module>mbeanview-parent</module>
+		<module>ddcalendar-parent</module>
+		<module>fixed-feedback-panel</module>
+		<module>maven-support</module>
+		<module>theme-parent</module>
+		<module>wicket-html5-parent</module> 
+		<module>jasperreports-parent</module>
+  </modules>
+
+			<build>
+			<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>
+					<meminitial>128m</meminitial>
+					<maxmem>512m</maxmem>
+					<source>1.5</source>
+					<target>1.5</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		<!--		<plugin> -->
+				<!--
+         make sure our code doesn't have 1.6 dependencies except where
+we know it
+         see
+         * http://mojo.codehaus.org/animal-sniffer/index.html
+         * http://weblogs.java.net/blog/kohsuke/archive/2008/11/compiling_with.html
+       
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>animal-sniffer-maven-plugin</artifactId>
+        <version>1.5</version>
+        <configuration>
+          <signature>
+            <groupId>org.codehaus.mojo.signature</groupId>
+            <artifactId>java15</artifactId>
+            <version>1.0</version>
+          </signature>
+        </configuration>
+		    <executions>
+          <execution>
+            <id>check-java15-sun</id>
+            <phase>test</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <signature>
+                <groupId>org.codehaus.mojo.signature</groupId>
+                <artifactId>java15-sun</artifactId>
+                <version>1.0</version>
+              </signature>
+            </configuration>
+          </execution>
+        <executions>
+
+      </plugin>
+-->
+			</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>build-java6-modules</id>
+			<activation>
+			<activeByDefault>false</activeByDefault>
+			</activation>
+
+				<modules>
+		<module>javaee-inject-parent</module> 
+  </modules>
+
+			<build>
+			<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>
+					<meminitial>128m</meminitial>
+					<maxmem>512m</maxmem>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			</plugins>
+
+			</build>
+		</profile>
 		<profile>
 			<id>oss.sonatype.org-staged-release</id>
 			<!-- This is the profile to use for releasing into the staged
@@ -202,6 +292,7 @@
 
 			<build>
 				<plugins>
+
 			  <plugin>
 		        <groupId>org.apache.maven.plugins</groupId>
 		        <artifactId>maven-gpg-plugin</artifactId>
@@ -563,18 +654,6 @@
 			</testResource>
 		</testResources>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<fork>true</fork>
-					<meminitial>128m</meminitial>
-					<maxmem>512m</maxmem>
-					<source>1.5</source>
-					<target>1.5</target>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
 			<plugin>
 				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
