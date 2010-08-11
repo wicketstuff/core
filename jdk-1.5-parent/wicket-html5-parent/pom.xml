@@ -1,0 +1,171 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>jdk-1.5-parent</artifactId>
+        <groupId>org.wicketstuff</groupId>
+        <version>1.4.10-SNAPSHOT</version>
+    </parent>
+    <groupId>org.wicketstuff</groupId>
+    <artifactId>wicket-html5-parent</artifactId>
+    <packaging>pom</packaging>
+<!--    <version>1.0-SNAPSHOT</version> -->
+    <!-- TODO project name  -->
+    <name>Wicket HTML5 :: Parent</name>
+    <description></description>
+
+    <organization>
+        <name>Mystic Coders, LLC</name>
+        <url>http://www.mysticcoders.com</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Andrew Lombardi</name>
+            <email>andrew@mysticcoders.com</email>
+            <timezone>-8</timezone>
+        </developer>
+    </developers>
+
+    <modules>
+        <module>wicket-html5</module>
+        <module>wicket-html5-examples</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>org.wicketstuff</groupId>
+                <artifactId>wicket-html5</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!--  WICKET DEPENDENCIES 
+            <dependency>
+                <groupId>org.apache.wicket</groupId>
+                <artifactId>wicket</artifactId>
+                <version>${wicket.version}</version>
+            </dependency>
+-->
+            <!-- LOGGING DEPENDENCIES - LOG4J -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.5.11</version>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.14</version>
+            </dependency>
+
+            <!--  JUNIT DEPENDENCY FOR TESTING -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.8.1</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!--  JETTY DEPENDENCIES FOR TESTING  -->
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-util</artifactId>
+				<version>${eclipse.jetty.version}</version>
+				<scope>test</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-server</artifactId>
+				<version>${eclipse.jetty.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-webapp</artifactId>
+				<version>${eclipse.jetty.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-servlet</artifactId>
+				<version>${eclipse.jetty.version}</version>
+				<scope>test</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-websocket</artifactId>
+				<version>${eclipse.jetty.version}</version>
+				<scope>test</scope>
+			</dependency>
+			
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <resources>
+            <resource>
+                <filtering>false</filtering>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <filtering>false</filtering>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**</include>
+                </includes>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <filtering>false</filtering>
+                <directory>src/test/java</directory>
+                <includes>
+                    <include>**</include>
+                </includes>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </testResource>
+        </testResources>
+        <pluginManagement>
+        	<plugins>
+        		<plugin>
+        			<groupId>org.apache.maven.plugins</groupId>
+        			<artifactId>maven-eclipse-plugin</artifactId>
+        			<version>2.8</version>
+        			<configuration>
+						<downloadSources>true</downloadSources>
+					</configuration>
+        		</plugin>
+        		<plugin>
+        			<groupId>org.apache.maven.plugins</groupId>
+        			<artifactId>maven-compiler-plugin</artifactId>
+        			<version>2.1</version>
+   					<configuration>
+						<source>1.5</source>
+						<target>1.5</target>
+						<optimize>true</optimize>
+						<debug>true</debug>
+					</configuration>
+        		</plugin>
+			<!-- mocleiri: should be inherited from the parent
+        		<plugin>
+        			<groupId>org.mortbay.jetty</groupId>
+        			<artifactId>jetty-maven-plugin</artifactId>
+        			<version>${eclipse.jetty.version}</version>
+        		</plugin>
+			-->
+
+        	</plugins>
+        </pluginManagement>
+    </build>
+</project>

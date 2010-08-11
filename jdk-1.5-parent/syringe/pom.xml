@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>jdk-1.5-parent</artifactId>
+        <groupId>org.wicketstuff</groupId>
+        <version>1.4.8-SNAPSHOT</version>
+    </parent>
+    <groupId>org.wicketstuff</groupId>
+    <artifactId>wicket-syringe-parent</artifactId>
+    <packaging>pom</packaging>
+    <name>Wicket Syringe Parent</name>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <modules>
+        <module>syringe</module>
+        <module>spring</module>
+        <module>spring-example</module>
+        <module>guice</module>
+        <module>guice-example</module>
+        <module>webbeans</module>
+        <module>webbeans-example</module>
+    </modules>
+</project>

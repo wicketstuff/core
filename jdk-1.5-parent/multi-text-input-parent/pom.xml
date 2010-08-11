@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.wicketstuff</groupId>
+        <artifactId>jdk-1.5-parent</artifactId>
+        <version>1.4.10-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>multi-text-input-parent</artifactId>
+    <packaging>pom</packaging>
+
+    <name>Multi Text Input - Parent</name>
+    <description>
+        See the child project "multi-text-input" for a more complete description.  This
+        is the parent for the actual project and the examples.
+    </description>
+
+    <modules>
+        <module>multi-text-input</module>
+        <module>multi-text-input-examples</module>
+  </modules>
+
+    <developers>
+        <developer>
+            <id>ctataryn</id>
+            <name>Craig Tataryn</name>
+            <email>craiger@tataryn.net</email>
+            <url>http://www.basementcoders.com/</url>
+            <timezone>-6</timezone>
+            <organization>Onshore.ca -- Talent in your Timezone</organization>
+            <organizationUrl>http://www.onshore.ca</organizationUrl>
+        </developer>
+    </developers>
+
+    <dependencies>
+
+        <!-- LOGGING DEPENDENCIES - LOG4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!--  JUNIT DEPENDENCY FOR TESTING -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+<!--
+    <build>
+        <plugins>
+            <plugin>
+                
+            </plugin>
+        </plugins>
+    </build>
+-->
+<!--
+    <profiles>
+    </profiles>
+-->
+    <properties>
+        <wicket.version>1.4-rc2</wicket.version>
+    </properties>
+</project>

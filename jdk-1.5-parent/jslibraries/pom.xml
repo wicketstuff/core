@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>jdk-1.5-parent</artifactId>
+		<version>1.4.10-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>jslibraries</artifactId>
+	<packaging>jar</packaging>
+
+	<name>JSLibraries</name>
+	<description>
+		This project is simply a unified way of including common JS libraries
+		within Wicket so that you don't have to bundle them in your application,
+		and they aren't deployed with dozens of jars that may use them, but they
+		are deployed in only one.
+	</description>
+
+	<developers>
+		<developer>
+			<id>jthomerson</id>
+			<name>Jeremy Thomerson</name>
+			<email>jeremy@wickettraining.com</email>
+			<url>http://www.jeremythomerson.com</url>
+			<timezone>-6</timezone>
+			<organization>WicketTraining.com</organization>
+			<organizationUrl>http://www.wickettraining.com</organizationUrl>
+		</developer>
+	</developers>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>servlet-api-2.5</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<!-- plugin details internalized within a plugin because of changes needed for central sync up -->
+	<profiles>
+<profile>
+	<id>jslibraries-build</id>
+	<build>
+		<plugins>
+			<plugin>
+				<!-- USAGE: mvn license:check OR mvn license:format -->
+				<groupId>com.google.code.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<configuration>
+					<header>src/main/etc/header.txt</header>
+					<aggregate>true</aggregate>
+					<quiet>false</quiet>
+					<!--
+						Don´t know how to handle License headers correctly, talking back
+						to Jeremy
+					-->
+					<failIfMissing>false</failIfMissing>
+					<excludes>
+						<exclude>**/*.jpeg</exclude>
+						<exclude>**/*.swf</exclude>
+						<exclude>src/main/java/org/wicketstuff/jslibraries/js/*</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>maven-license-plugin-repo</id>
+			<name>Maven repository of maven-license-plugin releases</name>
+			<url>http://mc-repo.googlecode.com/svn/maven2/releases</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
+
+
+
+</profile>
+</profiles>
+</project>
