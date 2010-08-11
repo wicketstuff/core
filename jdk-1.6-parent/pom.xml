@@ -23,14 +23,20 @@
 	<build>
 	<plugins>
 	<plugin>
+		<inherited>true</inherited>
 		<groupId>org.apache.maven.plugins</groupId>
 		<artifactId>maven-compiler-plugin</artifactId>
 		<configuration>
 			<fork>true</fork>
+			<optimise>true</optimise>
+			<debug>true</debug>
+			<verbose>true</verbose>
 			<meminitial>128m</meminitial>
 			<maxmem>512m</maxmem>
 			<source>1.6</source>
 			<target>1.6</target>
+			<compilerVersion>1.6</compilerVersion>
+			<executable>${java6home}/bin/javac</executable>
 			<encoding>UTF-8</encoding>
 		</configuration>
 	</plugin>
