@@ -77,8 +77,10 @@
 			<maxmem>512m</maxmem>
 			<source>1.5</source>
 			<target>1.5</target>
+			<!--
 			<compilerVersion>1.5</compilerVersion>
 			<executable>${java5home}/bin/javac</executable>
+			-->
 			<encoding>UTF-8</encoding>
 		</configuration>
 	</plugin>
