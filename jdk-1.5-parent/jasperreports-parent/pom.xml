@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>jdk-1.5-parent</artifactId>
+		<version>1.4.10-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>jasperreports-parent</artifactId>
+	<packaging>pom</packaging>
+
+	<name>JasperReports Integration - parent</name>
+	<description>JasperReports integration components and resources for Wicket.</description>
+	<url>http://wicketstuff.org/confluence/display/STUFFWIKI/wicket-contrib-jasperreports</url>
+	<inceptionYear>2005</inceptionYear>
+
+	<organization>
+		<name>Wicket developers</name>
+		<url>http://wicket.apache.org</url>
+	</organization>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>scm:svn:${maven.scm.anonymous}@wicket-stuff.svn.sourceforge.net:/svnroot/wicket-stuff/trunk/wicketstuff-core/jasperreports-parent</connection>
+		<developerConnection>scm:svn:${maven.scm.user}@wicket-stuff.svn.sourceforge.net:/svnroot/wicket-stuff/trunk/wicketstuff-core/jasperreports-parent</developerConnection>
+		<url>http://wicket-stuff.svn.sourceforge.net/viewvc/wicket-stuff/trunk/wicketstuff-core/jasperreports-parent/</url>
+	</scm>
+
+	<mailingLists>
+		<mailingList>
+			<name>Wicket Announcements List</name>
+			<subscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-announce</subscribe>
+			<unsubscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-announce</unsubscribe>
+			<archive>http://sourceforge.net/mailarchive/forum.php?forum=wicket-announce</archive>
+		</mailingList>
+		<mailingList>
+			<name>Wicket User List</name>
+			<subscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-user</subscribe>
+			<unsubscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-user</unsubscribe>
+			<archive>http://sourceforge.net/mailarchive/forum.php?forum=wicket-user</archive>
+		</mailingList>
+		<mailingList>
+			<name>Wicket Development List</name>
+			<subscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-develop</subscribe>
+			<unsubscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-develop</unsubscribe>
+			<archive>http://sourceforge.net/mailarchive/forum.php?forum=wicket-develop</archive>
+		</mailingList>
+		<mailingList>
+			<name>Wicket CVS commit List</name>
+			<subscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-autocvs</subscribe>
+			<unsubscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-autocvs</unsubscribe>
+			<archive>http://sourceforge.net/mailarchive/forum.php?forum=wicket-autocvs</archive>
+		</mailingList>
+		<mailingList>
+			<name>Wicket automated builds List</name>
+			<subscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-builds</subscribe>
+			<unsubscribe>http://lists.sourceforge.net/mailman/listinfo/wicket-builds</unsubscribe>
+			<archive>http://sourceforge.net/mailarchive/forum.php?forum=wicket-builds</archive>
+		</mailingList>
+	</mailingLists>
+
+	<developers>
+		<developer>
+			<name>Eelco Hillenius</name>
+			<id>Eelco</id>
+			<email>eelco12 at users.sf.net</email>
+		</developer>
+		<developer>
+			<name>Rodolfo Hansen</name>
+			<id>kryptt</id>
+			<email>kryptt at gmail.com</email>
+		</developer>
+		<developer>
+			<name>Chuck Deal</name>
+			<id>cdeal</id>
+			<email>cdeal at users.sf.net</email>
+		</developer>
+	</developers>
+
+	<properties>
+		<jasperreports.version>3.5.3</jasperreports.version>
+	</properties>
+
+    <modules>
+    	<module>jasperreports</module>
+    	<module>jasperreports-examples</module>
+    </modules>
+
+	<dependencies>
+		<!-- TEST -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.5</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>commons-beanutils</groupId>
+				<artifactId>commons-beanutils</artifactId>
+				<version>1.8.0</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+				<version>3.2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-digester</groupId>
+				<artifactId>commons-digester</artifactId>
+				<version>1.8.1</version>
+			</dependency>
+			<dependency>
+				<groupId>jasperreports</groupId>
+				<artifactId>jasperreports</artifactId>
+				<version>${jasperreports.version}</version>
+			</dependency>
+
+			<!-- Provided -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>2.5</version>
+				<scope>provided</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptor>src/assembly/bin.xml</descriptor>
+					<finalName>${project.artifactId}-${project.version}</finalName>
+					<outputDirectory>target/distributions</outputDirectory>
+					<workDirectory>target/assembly/work</workDirectory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<minmemory>128m</minmemory>
+					<maxmemory>256m</maxmemory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<configuration>
+					<templateDirectory>file:src/site/template/</templateDirectory>
+					<template>wicket-site.vm</template>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>dependencies</report>
+							<report>project-team</report>
+							<report>mailing-list</report>
+							<report>issue-tracking</report>
+							<report>license</report>
+							<report>scm</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
+</project>

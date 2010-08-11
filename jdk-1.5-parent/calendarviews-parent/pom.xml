@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>jdk-1.5-parent</artifactId>
+		<version>1.4.10-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>calendarviews-parent</artifactId>
+	<packaging>pom</packaging>
+
+	<name>CalendarViews - Parent</name>
+	<description>
+		See the child project "calendarviews" for a more complete description.  This
+		is the parent for the actual project and the examples.
+	</description>
+
+	<modules>
+		<module>calendarviews</module>
+		<module>calendarviews-examples</module>
+	</modules>
+
+	<developers>
+		<developer>
+			<id>jthomerson</id>
+			<name>Jeremy Thomerson</name>
+			<email>jeremy@wickettraining.com</email>
+			<url>http://www.jeremythomerson.com</url>
+			<timezone>-6</timezone>
+			<organization>WicketTraining.com</organization>
+			<organizationUrl>http://www.wickettraining.com</organizationUrl>
+		</developer>
+	</developers>
+
+	<dependencies>
+		<!-- JODA TIME -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>1.5.2</version>
+		</dependency>
+
+		<!-- LOGGING DEPENDENCIES - LOG4J -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+            <scope>test</scope>
+		</dependency>
+
+		<!--  JUNIT DEPENDENCY FOR TESTING -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<!-- USAGE: mvn license:check OR mvn license:format -->
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<configuration>
+					<header>${header.location}</header>
+					<aggregate>true</aggregate>
+					<quiet>false</quiet>
+					<failIfMissing>${license-fail-if-missing}</failIfMissing>
+					<excludes>
+						<exclude>**/*.jpeg</exclude>
+						<exclude>**/*.swf</exclude>
+					</excludes>
+				</configuration>
+				<!--
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+				-->
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>bamboo</id>
+			<properties>
+				<license-fail-if-missing>false</license-fail-if-missing>
+			</properties>
+		</profile>
+		<profile>
+			<id>wickettraining.com-continuum</id>
+			<properties>
+				<license-fail-if-missing>false</license-fail-if-missing>
+			</properties>
+		</profile>
+	</profiles>
+	<properties>
+		<header.location>header.txt</header.location>
+		<jetty.version>6.1.4</jetty.version>
+		<license-fail-if-missing>true</license-fail-if-missing>
+	</properties>
+
+</project>

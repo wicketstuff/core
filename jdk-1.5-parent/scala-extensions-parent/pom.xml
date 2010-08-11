@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>jdk-1.5-parent</artifactId>
+		<version>1.4.10-SNAPSHOT</version>
+	</parent>
+	
+	<groupId>org.wicketstuff.scala</groupId>
+	<artifactId>scala-extensions-parent</artifactId>
+	<packaging>pom</packaging>
+	<name>Wicket-Scala Parent</name>
+
+	<description>Collection of modules relevant to developing Wicket with Scala, including core utilities and Wicket extensions, Scala language extensions, a sample project and an Archetype.</description>
+
+	<developers>
+		<developer>
+			<name>Antony Stubbs</name>
+			<email>antony.stubbs@gmail.com</email>
+			<url>antonystubbs.com</url>
+			<timezone>+12</timezone>
+		</developer>
+	</developers>
+
+	<modules>
+		<module>wicket-scala</module>
+		<module>wicket-scala-sample</module>
+		<module>wicket-scala-archetype</module>
+	</modules>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>2.7.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.scala-tools.testing</groupId>
+			<artifactId>scalatest</artifactId>
+			<version>0.9.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket</artifactId>
+			<version>${wicket.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-extensions</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<useSystemClassLoader>false</useSystemClassLoader>
+					<argLine>-Xmx512m</argLine>
+					<includes>
+						<include>**/*Test.java</include>
+						<include>**/*Unit.java</include>
+						<include>**/*Spec.java</include>
+						<include>**/*Specs.java</include>
+					</includes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.scala-tools</groupId>
+				<artifactId>maven-scala-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<phase>compile</phase>
+					</execution>
+
+					<execution>
+						<id>test-compile</id>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+						<phase>test-compile</phase>
+					</execution>
+
+					<execution>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+			</plugin>
+
+		</plugins>
+
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources
+				</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/scala</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.scala</exclude>
+				</excludes>
+			</resource>
+		</resources>
+	</build>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>scala</id>
+			<name>Scala Tools</name>
+			<url>http://scala-tools.org/repo-releases
+			</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<repositories>
+		<repository>
+			<id>scala</id>
+			<name>Scala Tools</name>
+			<url>http://scala-tools.org/repo-releases
+			</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+</project>
