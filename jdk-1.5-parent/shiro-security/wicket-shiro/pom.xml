@@ -23,7 +23,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicket-shiro-parent</artifactId>
-		<version>1.4.10-SNAPSHOT</version>
+		<version>1.4.11-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicket-shiro</artifactId>

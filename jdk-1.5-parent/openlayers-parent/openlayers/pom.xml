@@ -18,7 +18,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>openlayers-parent</artifactId>
-		<version>1.4.10-SNAPSHOT</version>
+		<version>1.4.11-SNAPSHOT</version>
 	</parent>
 	<artifactId>openlayers</artifactId>
 	<packaging>jar</packaging>

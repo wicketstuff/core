@@ -6,7 +6,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>1.4.10-SNAPSHOT</version>
+	<version>1.4.11-SNAPSHOT</version>
 
 	<name>WicketStuff Core Parent</name>
 	<description>
@@ -201,7 +201,13 @@
 
 		</profile>
 
-
+		<profile>
+			<id>next-version</id>
+			<modules>
+				<module>jdk-1.5-parent</module>
+				<module>jdk-1.6-parent</module>
+			</modules>
+		</profile>
 
 		<profile>
 			<!-- setup for using oss.sonatype.org to hold snapshots -->
@@ -285,7 +291,7 @@
 	</mailingLists>
 
 	<scm>
-		<url>https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/</url>
+		<url>https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk/wicketstuff-core</url>
 		<connection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk/wicketstuff-core</connection>
 	</scm>
 
