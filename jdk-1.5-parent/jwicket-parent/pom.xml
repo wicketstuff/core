@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>jdk-1.5-parent</artifactId>
-        <version>1.4.10-SNAPSHOT</version>
+        <version>1.4.11-SNAPSHOT</version>
     </parent>
 	
     <artifactId>jwicket-parent</artifactId>
