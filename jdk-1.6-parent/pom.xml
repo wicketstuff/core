@@ -18,6 +18,7 @@
 
 	<modules>
 		<module>javaee-inject-parent</module> 
+		<module>push-parent</module>
   	</modules>
 
 	<build>

@@ -251,6 +251,20 @@
 			</repository>
 			</repositories>
 
+	<pluginRepositories>
+		<pluginRepository>
+			<id>maven-plugin-repo</id>
+			<name>Maven plugin snapshots</name>
+			<url>https://repository.apache.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
+
 		</profile>
 
 	</profiles>

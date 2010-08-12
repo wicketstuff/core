@@ -39,7 +39,6 @@
 		<module>simile-timeline-parent</module>
 		<module>tinymce-parent</module>
 		<module>yui-parent</module>
-		<module>push-parent</module>
 		<module>artwork-parent</module>
 		<module>yav-parent</module>
 		<module>plugin</module>
