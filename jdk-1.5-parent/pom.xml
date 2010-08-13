@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-        <version>1.4.10-SNAPSHOT</version>
+        <version>1.4.10</version>
 	</parent>
 
 	<artifactId>jdk-1.5-parent</artifactId>
@@ -56,7 +56,6 @@
 		<module>fixed-feedback-panel</module>
 		<module>maven-support</module>
 		<module>theme-parent</module>
-		<module>wicket-html5-parent</module> 
 		<module>jasperreports-parent</module>
 	  </modules>
 

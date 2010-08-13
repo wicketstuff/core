@@ -6,7 +6,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>1.4.10-SNAPSHOT</version>
+	<version>1.4.10</version>
 
 	<name>WicketStuff Core Parent</name>
 	<description>
@@ -202,6 +202,19 @@
 		</profile>
 
 
+		 <!-- each jdk dir needs to be built seperately but for versions:set
+	         plugin it needs reachability so this profile can be used for
+			 that
+         purpose -->
+        <profile>
+            <id>next-version</id>
+            <modules>
+                <module>jdk-1.5-parent</module>
+                <module>jdk-1.6-parent</module>
+            </modules>
+       </profile>
+
+
 
 		<profile>
 			<!-- setup for using oss.sonatype.org to hold snapshots -->
@@ -285,12 +298,12 @@
 	</mailingLists>
 
 	<scm>
-		<url>https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/</url>
-		<connection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk/wicketstuff-core</connection>
+		<url>https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/tags/wicketstuff-core-1.4.10</url>
+		<connection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/tags/wicketstuff-core-1.4.10</connection>
 	</scm>
 
 	<properties>
-		<wicket.version>1.4-SNAPSHOT</wicket.version>
+		<wicket.version>1.4.10</wicket.version>
 		<jetty.version>6.1.22</jetty.version>
 
     		<eclipse.jetty.version>7.1.4.v20100610</eclipse.jetty.version>
