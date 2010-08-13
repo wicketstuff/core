@@ -40,7 +40,7 @@ public abstract class LazyAccordion<T extends Serializable> extends AbstractAcco
 				if (contentAnchor != null) {
 					Component content = ((WebMarkupContainer)contentAnchor).get("content");
 					// The Model is parked in the content
-					if (content != null && content instanceof LazyAccordion<?>.ModelParkingLot) {
+					if (content != null && content instanceof ModelParkingLot) {
 						// Currently there is only a placeholder for the content. Replace the
 						// Placeholder with real content
 						ModelParkingLot modelParkingLot = (ModelParkingLot)content;
@@ -70,7 +70,7 @@ public abstract class LazyAccordion<T extends Serializable> extends AbstractAcco
 
 
 	protected Component getContent(final String id, final IModel<T> t, final int tindex) {
-		return new ModelParkingLot(id, t); // parking lot for the model
+		return new ModelParkingLot<T>(id, t); // parking lot for the model
 	}
 
 
@@ -78,18 +78,6 @@ public abstract class LazyAccordion<T extends Serializable> extends AbstractAcco
 
 
 
-	private class ModelParkingLot extends WebMarkupContainer {
-		private static final long serialVersionUID = 1L;
-
-		public ModelParkingLot(final String id, final IModel<T> model) {
-			super(id, model);
-		}
-
-		@SuppressWarnings("unchecked")
-		public IModel<T> getModel() {
-			return (IModel<T>)getDefaultModel();
-		}
-	}
 
 
 	@Override

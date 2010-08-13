@@ -201,6 +201,9 @@
 
 		</profile>
 
+		<!-- each jdk dir needs to be built seperately but for versions:set
+		plugin it needs reachability so this profile can be used for that
+		purpose -->
 		<profile>
 			<id>next-version</id>
 			<modules>
