@@ -3,11 +3,11 @@
   <parent>
     <artifactId>datatable-autocomplete-parent</artifactId>
     <groupId>org.wicketstuff</groupId>
-    <version>1.4.11-SNAPSHOT</version>
+    <version>1.5-SNAPSHOT</version>
   </parent>
   <groupId>org.wicketstuff</groupId>
   <artifactId>datatable-autocomplete-test</artifactId>
-  <version>1.4.11-SNAPSHOT</version>
+  <version>1.5-SNAPSHOT</version>
   <name>DataTable Autocomplete Test</name>
   <description>Test code for visualizing a Trie.  Seperated so that projects can use the JUNG visualization against their actual production data</description>
   

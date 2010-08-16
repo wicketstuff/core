@@ -4,7 +4,7 @@
     <parent>
         <artifactId>jdk-1.6-parent</artifactId>
         <groupId>org.wicketstuff</groupId>
-        <version>1.4.11-SNAPSHOT</version>
+        <version>1.5-SNAPSHOT</version>
     </parent>
     <groupId>org.wicketstuff</groupId>
     <artifactId>wicket-html5-parent</artifactId>
