@@ -70,7 +70,7 @@ public abstract class LazyAccordion<T extends Serializable> extends AbstractAcco
 
 
 	protected Component getContent(final String id, final IModel<T> t, final int tindex) {
-		return new ModelParkingLot(id, t); // parking lot for the model
+		return new ModelParkingLot<T>(id, t); // parking lot for the model
 	}
 
 

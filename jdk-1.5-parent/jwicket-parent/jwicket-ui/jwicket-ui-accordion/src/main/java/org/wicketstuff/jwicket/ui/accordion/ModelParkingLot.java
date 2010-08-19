@@ -8,7 +8,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 
-public class ModelParkingLot extends WebMarkupContainer {
+public class ModelParkingLot<T> extends WebMarkupContainer {
 		private static final long serialVersionUID = 1L;
 
 		public ModelParkingLot(final String id, final IModel<T> model) {
