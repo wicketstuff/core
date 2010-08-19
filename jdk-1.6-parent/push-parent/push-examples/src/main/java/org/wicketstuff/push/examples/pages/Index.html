@@ -1,33 +1,31 @@
-<html>
-    <head>
-        <title>Contrib-Push-Examples</title>
-    </head>
-    <body>
-        <h1>Contrib Push examples overview</h1>
-        <p>This samples demonstrate some of the feature of wicket-contrib-push</p>
-        <p>
-        Since the communication mechanisms demonstrated int his examples showcase server initiated communication,
-        it is recommended to open the same example in two browser windows, and see the interactions
-        between them.
-        </p>
-        <p>Click a link to view an example page.</p>
-        
-      
-        <wicket:link>
-			<ul>
-		 		<li><a href="TestCometd.html">Basic Cometd tests</a></li>
-		 		<li><a href="FormSharedSample.html">Form Shared Sample</a></li>
-		 		<li><a href="WicketCometdChat.html">A chat using cometd pushing</a></li>
-		 		<li><a href="WicketTimerChat.html">A chat using simulated channel based on polling</a></li>
-			</ul>
-			
-			<em>Same implementation as chat with cometd, except the IChannelService implementation is a TimerChannelService instead of a CometdService</em>
-			<ul>
-		 		<li><a href="push/WicketTimerPushChat.html">A chat using simulated push based on polling</a></li>
-			</ul>
-		</wicket:link>
-       
-    </body>
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<head>
+<title>Contrib-Push-Examples</title>
+</head>
+<body>
+<h1>Contrib Push examples overview</h1>
+<p>This samples demonstrate some of the feature of wicket-contrib-push</p>
+<p>Since the communication mechanisms demonstrated int his examples showcase server
+initiated communication, it is recommended to open the same example in two browser windows, and
+see the interactions between them.</p>
+<p>Click a link to view an example page.</p>
+<wicket:link>
+  <ul>
+    <li><a href="TestCometd.html">Basic Cometd tests</a></li>
+    <li><a href="FormSharedSample.html">Form Shared Sample</a></li>
+    <li><a href="WicketCometdChat.html">A chat using cometd pushing</a></li>
+    <li><a href="WicketTimerChat.html">A chat using simulated channel based on polling</a></li>
+  </ul>
+
+  <em>Same implementation as chat with cometd, except the IChannelService implementation is
+  a TimerChannelService instead of a CometdService</em>
+  <ul>
+    <li><a href="push/WicketTimerPushChat.html">A chat using simulated push based on
+    polling</a></li>
+  </ul>
+</wicket:link>
+</body>
 </html>
-
-

@@ -26,94 +26,108 @@ import org.wicketstuff.push.IChannelTarget;
  * <p>
  * The whole example doesn't depend on which implementation is used, and show
  * easy it is to switch between implementations.
- * 
+ *
  * @author Vincent Demay
  * @author Xavier Hanin
  */
-public abstract class WicketAbstractChat extends ExamplePage {
-	private static final long serialVersionUID = 1L;
+public abstract class WicketAbstractChat extends ExamplePage
+{
+  private static final long serialVersionUID = 1L;
 
-	@SuppressWarnings("serial")
-	public WicketAbstractChat(final PageParameters parameters) {
-		final Message model = new Message();
+  @SuppressWarnings("serial")
+  public WicketAbstractChat(final PageParameters parameters)
+  {
+    final Message model = new Message();
 
-		final Form<Message> formChat = new Form<Message>("chatForm",
-				new CompoundPropertyModel<Message>(model));
+    final Form<Message> formChat = new Form<Message>("chatForm",
+        new CompoundPropertyModel<Message>(model));
 
-		final TextField<String> field = new TextField<String>("user");
-		field.setOutputMarkupId(false);
-		formChat.add(field);
+    final TextField<String> field = new TextField<String>("user");
+    field.setOutputMarkupId(false);
+    formChat.add(field);
 
-		final Label chat = new Label("chat");
-		chat.setOutputMarkupId(true);
-		getChannelService().addChannelListener(this, "chat",
-				new IChannelListener() {
-					public void onEvent(final String channel, final Map<String, String> datas, final IChannelTarget target) {
-						target.appendJavascript("document.getElementById('"	+ chat.getMarkupId() + "').innerHTML += '<br/>" + datas.get("message") + "'");
-					}
-				});
-		formChat.add(chat);
+    final Label chat = new Label("chat");
+    chat.setOutputMarkupId(true);
+    getChannelService().addChannelListener(this, "chat", new IChannelListener()
+    {
+      public void onEvent(final String channel,
+          final Map<String, String> datas, final IChannelTarget target)
+      {
+        target.appendJavascript("document.getElementById('"
+            + chat.getMarkupId() + "').innerHTML += '<br/>"
+            + datas.get("message") + "'");
+      }
+    });
+    formChat.add(chat);
 
-		final TextField<String> mess = new TextField<String>("message");
-		mess.setOutputMarkupId(true);
-		formChat.add(mess);
+    final TextField<String> mess = new TextField<String>("message");
+    mess.setOutputMarkupId(true);
+    formChat.add(mess);
 
-		formChat.add(new AjaxButton("send", formChat) {
-			private static final long serialVersionUID = 1L;
+    formChat.add(new AjaxButton("send", formChat)
+    {
+      private static final long serialVersionUID = 1L;
 
-			@Override
-			protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
-				// Update message
-				final String currentChat = ((Message) form.getModelObject())
-						.getUser()
-						+ " said "
-						+ ((Message) form.getModelObject()).getMessage();
-				// send an event to refesh the chat area
-				final ChannelEvent event = new ChannelEvent("chat");
-				event.addData("message", currentChat);
-				getChannelService().publish(event);
+      @Override
+      protected void onSubmit(final AjaxRequestTarget target, final Form<?> form)
+      {
+        // Update message
+        final String currentChat = ((Message) form.getModelObject()).getUser()
+            + " said " + ((Message) form.getModelObject()).getMessage();
+        // send an event to refesh the chat area
+        final ChannelEvent event = new ChannelEvent("chat");
+        event.addData("message", currentChat);
+        getChannelService().publish(event);
 
-				// clear message area add focus it
-				target.appendJavascript("document.getElementById('"
-						+ mess.getMarkupId() + "').value =''");
-				target.focusComponent(mess);
-			}
-		});
-		add(formChat);
-	}
+        // clear message area add focus it
+        target.appendJavascript("document.getElementById('"
+            + mess.getMarkupId() + "').value =''");
+        target.focusComponent(mess);
+      }
+    });
+    add(formChat);
+  }
 
-	protected abstract IChannelService getChannelService();
+  protected abstract IChannelService getChannelService();
 
-	private static class Message implements Serializable {
-		private static final long serialVersionUID = 1L;
+  @SuppressWarnings("unused")
+  private static class Message implements Serializable
+  {
+    private static final long serialVersionUID = 1L;
 
-		private String chat;
-		private String user;
-		private String message;
+    private String chat;
+    private String user;
+    private String message;
 
-		public String getMessage() {
-			return message;
-		}
+    public String getMessage()
+    {
+      return message;
+    }
 
-		public void setMessage(String message) {
-			this.message = message;
-		}
+    public void setMessage(final String message)
+    {
+      this.message = message;
+    }
 
-		public String getUser() {
-			return user;
-		}
+    public String getUser()
+    {
+      return user;
+    }
 
-		public void setUser(String user) {
-			this.user = user;
-		}
-		
-		public String getChat() {
-			return chat;
-		}
+    public void setUser(final String user)
+    {
+      this.user = user;
+    }
 
-		public void setChat(String chat) {
-			this.chat = chat;
-		}
+    public String getChat()
+    {
+      return chat;
+    }
 
-	}
+    public void setChat(final String chat)
+    {
+      this.chat = chat;
+    }
+
+  }
 }

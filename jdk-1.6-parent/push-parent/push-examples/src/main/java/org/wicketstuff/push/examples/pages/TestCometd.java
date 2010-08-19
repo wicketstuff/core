@@ -11,39 +11,45 @@ import org.wicketstuff.push.ChannelEvent;
 import org.wicketstuff.push.IChannelListener;
 import org.wicketstuff.push.IChannelTarget;
 
-public class TestCometd extends ExamplePage {
+public class TestCometd extends ExamplePage
+{
 
-	private static final String CH_ID = "myChannel";
+  private static final String CH_ID = "myChannel";
 
-	@SuppressWarnings("serial")
-	private final class PostListener implements IChannelListener {
-		@SuppressWarnings("unchecked")
-		public void onEvent(final String channel, final Map<String, String> datas, final IChannelTarget target) {
-			
-			field.setModel(new Model<String>("updated"));
-			target.addComponent(field);
-		}
-	}
+  @SuppressWarnings("serial")
+  private final class PostListener implements IChannelListener
+  {
+    public void onEvent(final String channel, final Map<String, String> datas,
+        final IChannelTarget target)
+    {
 
-	private final TextField<String> field;
-	private String val;
+      field.setModel(new Model<String>("updated"));
+      target.addComponent(field);
+    }
+  }
 
-	@SuppressWarnings("serial")
-	public TestCometd(final PageParameters parameters) {
-		
-		final AjaxLink<Void> link = new AjaxLink<Void>("link") {
+  private final TextField<String> field;
+  private String val;
 
-			@Override
-			public void onClick(final AjaxRequestTarget target) {
-				getCometdService().publish(new ChannelEvent(CH_ID));
-			}
+  @SuppressWarnings("serial")
+  public TestCometd(final PageParameters parameters)
+  {
 
-		};
-		add(link);
+    final AjaxLink<Void> link = new AjaxLink<Void>("link")
+    {
 
-		field = new TextField<String>("text", new Model<String>(val));
-		field.setOutputMarkupId(true);
-		getCometdService().addChannelListener(this, CH_ID, new PostListener());
-		add(field);
-	}
+      @Override
+      public void onClick(final AjaxRequestTarget target)
+      {
+        getCometdService().publish(new ChannelEvent(CH_ID));
+      }
+
+    };
+    add(link);
+
+    field = new TextField<String>("text", new Model<String>(val));
+    field.setOutputMarkupId(true);
+    getCometdService().addChannelListener(this, CH_ID, new PostListener());
+    add(field);
+  }
 }
