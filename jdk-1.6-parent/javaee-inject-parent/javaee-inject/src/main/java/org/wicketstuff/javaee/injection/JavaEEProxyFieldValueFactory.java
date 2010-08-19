@@ -24,11 +24,11 @@ import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.persistence.PersistenceUnit;
 import javax.servlet.http.HttpSession;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.injection.IFieldValueFactory;
-import org.apache.wicket.protocol.http.WebRequest;
+import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
 import org.apache.wicket.proxy.IProxyTargetLocator;
 import org.apache.wicket.proxy.LazyInitProxyFactory;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.wicketstuff.javaee.EntityManagerFactoryLocator;
 import org.wicketstuff.javaee.JavaEEBeanLocator;
 import org.wicketstuff.javaee.JndiObjectLocator;
@@ -65,6 +65,7 @@ public class JavaEEProxyFieldValueFactory implements IFieldValueFactory {
      * @see org.apache.wicket.injection.IFieldValueFactory#getFieldValue(java.lang.reflect.Field,
      *      java.lang.Object)
      */
+    @Override
     public Object getFieldValue(Field field, Object fieldOwner) {
         IProxyTargetLocator locator = getProxyTargetLocator(field);
         return getCachedProxy(field, locator);
@@ -73,6 +74,7 @@ public class JavaEEProxyFieldValueFactory implements IFieldValueFactory {
     /**
      * @see org.apache.wicket.injection.IFieldValueFactory#supportsField(java.lang.reflect.Field)
      */
+    @Override
     public boolean supportsField(Field field) {
         return field.isAnnotationPresent(EJB.class)
                 || field.isAnnotationPresent(Resource.class)
@@ -100,7 +102,7 @@ public class JavaEEProxyFieldValueFactory implements IFieldValueFactory {
                 && field.getAnnotation(EJB.class).description().equals("stateful")
                 || field.getType().isAnnotationPresent(Stateful.class))) {
             //creates a session if there wasn't already
-            HttpSession session = ((WebRequest) RequestCycle.get().getRequest()).getHttpServletRequest().getSession();
+            HttpSession session = ((ServletWebRequest) RequestCycle.get().getRequest()).getHttpServletRequest().getSession();
             //check if it's already cached
             Object retValue = session.getAttribute(type.getName());
             if (retValue == null) {
