@@ -1,6 +1,6 @@
 package org.wicketstuff.push.examples.pages;
 
-import org.apache.wicket.PageParameters;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.cometd.bayeux.server.ServerSession;
 import org.cometd.bayeux.server.ServerSession.RemoveListener;
 import org.wicketstuff.push.ChannelEvent;
@@ -15,7 +15,8 @@ public class WicketCometdChat extends WicketAbstractChat {
 		final CometdService s = (CometdService) getCometdService();
 		s.addChannelRemoveListener("chat", new RemoveListener () {
 
-	      public void removed(final ServerSession client, final boolean timeout) {
+	      @Override
+        public void removed(final ServerSession client, final boolean timeout) {
 	        final ChannelEvent event = new ChannelEvent("chat");
 	        event.addData("message", client.getId() + " just left");
 	        getChannelService().publish(event);

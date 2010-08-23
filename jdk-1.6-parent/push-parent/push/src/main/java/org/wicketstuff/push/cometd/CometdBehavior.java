@@ -3,9 +3,9 @@ package org.wicketstuff.push.cometd;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.protocol.http.WebRequestCycle;
+import org.apache.wicket.request.IRequestParameters;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.template.PackagedTextTemplate;
 import org.wicketstuff.push.IChannelListener;
 
@@ -42,12 +42,11 @@ public class CometdBehavior extends CometdAbstractBehavior {
 	@Override
 	protected final void respond(final AjaxRequestTarget target) {
 
-		final Map<String, String[]> map = ((WebRequestCycle) RequestCycle.get())
-				.getRequest().getParameterMap();
+		final IRequestParameters params = RequestCycle.get().getRequest().getRequestParameters();
 		final Map<String, String> eventAttribute = new HashMap<String, String>();
 
-		for (final Map.Entry<String, String[]> entry : map.entrySet()) {
-			eventAttribute.put(entry.getKey(), entry.getValue()[0]);
+		for (final String param : params.getParameterNames()) {
+			eventAttribute.put(param, params.getParameterValue(param).toString());
 		}
 
 		final CometdTarget cTarget = new CometdTarget(target);

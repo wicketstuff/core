@@ -3,13 +3,13 @@ package org.wicketstuff.push.examples.pages;
 import java.io.Serializable;
 import java.util.Map;
 
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.push.ChannelEvent;
 import org.wicketstuff.push.IChannelListener;
 import org.wicketstuff.push.IChannelService;
@@ -50,6 +50,7 @@ public abstract class WicketAbstractChat extends ExamplePage
     chat.setOutputMarkupId(true);
     getChannelService().addChannelListener(this, "chat", new IChannelListener()
     {
+      @Override
       public void onEvent(final String channel,
           final Map<String, String> datas, final IChannelTarget target)
       {
@@ -84,6 +85,12 @@ public abstract class WicketAbstractChat extends ExamplePage
             + mess.getMarkupId() + "').value =''");
         target.focusComponent(mess);
       }
+
+      @Override
+      protected void onError(final AjaxRequestTarget target, final Form<?> form)
+      {
+      }
+
     });
     add(formChat);
   }

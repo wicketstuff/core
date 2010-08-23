@@ -7,6 +7,7 @@ import java.util.WeakHashMap;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
+import org.apache.wicket.ThreadContext;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.cometd.bayeux.Channel;
@@ -73,19 +74,19 @@ public class CometdService implements IChannelService {
 			final boolean hasNoApp = !Application.exists();
 			final boolean hasNoSession = !Session.exists();
 			if (hasNoApp) {
-				Application.set(getApplication());
+				ThreadContext.setApplication(getApplication());
 			}
 			if (hasNoSession && sess != null) {
-				Session.set(sess);
+				ThreadContext.setSession(sess);
 			}
 
 			removeListener.removed(session, timeout);
 
 			if (hasNoApp) {
-				Application.unset();
+				ThreadContext.setApplication(null);
 			}
 			if (hasNoSession) {
-				Session.unset();
+				ThreadContext.setSession(null);
 			}
 		}
 	}

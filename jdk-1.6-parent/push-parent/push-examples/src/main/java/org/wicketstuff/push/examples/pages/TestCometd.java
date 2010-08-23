@@ -2,11 +2,11 @@ package org.wicketstuff.push.examples.pages;
 
 import java.util.Map;
 
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.push.ChannelEvent;
 import org.wicketstuff.push.IChannelListener;
 import org.wicketstuff.push.IChannelTarget;
@@ -19,6 +19,7 @@ public class TestCometd extends ExamplePage
   @SuppressWarnings("serial")
   private final class PostListener implements IChannelListener
   {
+    @Override
     public void onEvent(final String channel, final Map<String, String> datas,
         final IChannelTarget target)
     {

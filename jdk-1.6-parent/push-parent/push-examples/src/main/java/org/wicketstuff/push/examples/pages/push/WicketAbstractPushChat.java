@@ -1,12 +1,12 @@
 package org.wicketstuff.push.examples.pages.push;
 
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.push.IPushService;
 import org.wicketstuff.push.IPushTarget;
 import org.wicketstuff.push.examples.pages.ExamplePage;
@@ -53,7 +53,8 @@ public abstract class WicketAbstractPushChat extends ExamplePage {
 		formChat.add(chat);
 		final IPushTarget pushTarget = getPushService().installPush(this);
 		CHAT_ROOM.addListener(new ChatListener() {
-			public void onMessage(final Message msg) {
+			@Override
+      public void onMessage(final Message msg) {
 				if (pushTarget.isConnected()) {
 					pushTarget.appendJavascript("document.getElementById('" + chat.getMarkupId() + "').innerHTML += '" + msg + "<br/>'");
 					pushTarget.trigger();
@@ -77,6 +78,12 @@ public abstract class WicketAbstractPushChat extends ExamplePage {
 				target.appendJavascript("document.getElementById('" + mess.getMarkupId() + "').value =''");
 				target.focusComponent(mess);
 			}
+
+            @Override
+            protected void onError(final AjaxRequestTarget target, final Form<?> form)
+            {
+
+            }
 		});
 		add(formChat);
 	}

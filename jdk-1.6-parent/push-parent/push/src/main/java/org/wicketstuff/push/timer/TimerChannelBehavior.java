@@ -28,6 +28,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
+import org.apache.wicket.ThreadContext;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -48,16 +49,16 @@ import org.wicketstuff.push.IPushTarget;
  * A timeout can also be configured to indicate when the behavior should
  * consider the page has been disconnected. This is important to clean
  * appropriately the resources associated with the page.
- * 
+ *
  * @author Xavier Hanin
- * 
+ *
  * @see IChannelService
  * @see TimerChannelService
  * @see TimerPushService
  */
 public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private static final AtomicLong COUNTER = new AtomicLong();
@@ -101,11 +102,11 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 
 	/**
 	 * This class is used to store a list of delayed method calls.
-	 * 
+	 *
 	 * The method calls are actually calls to methods on
 	 * {@link AjaxRequestTarget}, which are invoked when the client polls the
 	 * server.
-	 * 
+	 *
 	 * @author Xavier Hanin
 	 */
 	private static class DelayedMethodCallList implements Serializable {
@@ -116,7 +117,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		/**
 		 * Used to store a method and its parameters to be later invoked on an
 		 * object.
-		 * 
+		 *
 		 * @author Xavier Hanin
 		 */
 		private class DelayedMethodCall implements Serializable {
@@ -134,7 +135,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 
 			/**
 			 * Construct.
-			 * 
+			 *
 			 * @param m
 			 *            the index of the method to be called
 			 * @param parameters
@@ -147,7 +148,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 
 			/**
 			 * Invokes the method with the parameters on the given object.
-			 * 
+			 *
 			 * @see java.lang.reflect.Method#invoke(Object, Object[])
 			 * @param o
 			 *            the object on which the method should be called
@@ -159,10 +160,10 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 					IllegalAccessException, InvocationTargetException {
 				final Application originalApplication = Application.get();
 				try {
-					Application.set(_application);
+				    ThreadContext.setApplication(_application);
 					methods[m].invoke(o, parameters);
 				} finally {
-					Application.set(originalApplication);
+				    ThreadContext.setApplication(originalApplication);
 				}
 			}
 		}
@@ -182,7 +183,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 
 		/**
 		 * Construct a copy of the given {@link DelayedMethodCallList}.
-		 * 
+		 *
 		 * @param dmcl
 		 */
 		public DelayedMethodCallList(final DelayedMethodCallList dmcl) {
@@ -192,7 +193,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 
 		/**
 		 * Add a {@link DelayedMethodCall} to the list
-		 * 
+		 *
 		 * @param m
 		 *            the index of the method to be later invoked
 		 * @param parameters
@@ -205,7 +206,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		/**
 		 * Invokes all the {@link DelayedMethodCall} in the list on the given
 		 * Object
-		 * 
+		 *
 		 * @see java.lang.reflect.Method#invoke(Object, Object[])
 		 * @param o
 		 *            the object on which delayed methods should be called
@@ -222,7 +223,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 
 		/**
 		 * Indicates if this list is empty or not
-		 * 
+		 *
 		 * @return true if this list is empty, false otherwise
 		 */
 		public boolean isEmpty() {
@@ -241,11 +242,11 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 	 * An {@link IPushTarget} implementation which enqueue
 	 * {@link DelayedMethodCallList}, also called triggers, for a
 	 * {@link TimerChannelBehavior} identified by its id.
-	 * 
+	 *
 	 * TimerPushTarget are thread safe, and can be used from any thread. Since
 	 * it is not serializable, it is not intended to be stored in a wicket
 	 * component.
-	 * 
+	 *
 	 * @author Xavier Hanin
 	 */
 	public static class TimerPushTarget implements IPushTarget {
@@ -280,7 +281,8 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		/**
 		 * @see IAjaxPushBehavior#addComponent(Component)
 		 */
-		public void addComponent(final Component component) {
+		@Override
+    public void addComponent(final Component component) {
 			synchronized (currentTrigger) {
 				currentTrigger.addCall(ADD_COMPONENT_METHOD,
 						new Object[] { component });
@@ -290,7 +292,8 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		/**
 		 * @see IAjaxPushBehavior#addComponent(Component, String)
 		 */
-		public void addComponent(final Component component,
+		@Override
+    public void addComponent(final Component component,
 				final String markupId) {
 			synchronized (currentTrigger) {
 				currentTrigger.addCall(ADD_COMPONENT_WITH_MARKUP_ID_METHOD,
@@ -301,7 +304,8 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		/**
 		 * @see IAjaxPushBehavior#appendJavascript(String)
 		 */
-		public void appendJavascript(final String javascript) {
+		@Override
+    public void appendJavascript(final String javascript) {
 			synchronized (currentTrigger) {
 				currentTrigger.addCall(APPEND_JAVASCRIPT_METHOD,
 						new Object[] { javascript });
@@ -311,7 +315,8 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		/**
 		 * @see IAjaxPushBehavior#focusComponent(Component)
 		 */
-		public void focusComponent(final Component component) {
+		@Override
+    public void focusComponent(final Component component) {
 			synchronized (currentTrigger) {
 				currentTrigger.addCall(FOCUS_COMPONENT_METHOD,
 						new Object[] { component });
@@ -321,7 +326,8 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		/**
 		 * @see IAjaxPushBehavior#prependJavascript(String)
 		 */
-		public void prependJavascript(final String javascript) {
+		@Override
+    public void prependJavascript(final String javascript) {
 			synchronized (currentTrigger) {
 				currentTrigger.addCall(PREPEND_JAVASCRIPT_METHOD,
 						new Object[] { javascript });
@@ -331,7 +337,8 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		/**
 		 * @see IAjaxPushBehavior#trigger()
 		 */
-		public void trigger() {
+		@Override
+    public void trigger() {
 			DelayedMethodCallList trigger = null;
 			synchronized (currentTrigger) {
 				if (currentTrigger.isEmpty()) {
@@ -346,14 +353,15 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 			}
 		}
 
-		public boolean isConnected() {
+		@Override
+    public boolean isConnected() {
 			return TimerChannelBehavior.isConnected(application, id, timeout);
 		}
 
 		/**
 		 * Methods used to access the triggers queued for the the behavior to
 		 * which this target corresponds.
-		 * 
+		 *
 		 * @return a List of triggers queued for the current component
 		 */
 		private List<DelayedMethodCallList> getTriggers() {
@@ -367,7 +375,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 	/**
 	 * Construct a TimerChannelBehavior which actually refreshes the clients by
 	 * polling the server for changes at the given duration.
-	 * 
+	 *
 	 * @param updateInterval
 	 *            the interval at which the server should be polled for changes
 	 */
@@ -378,7 +386,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 	/**
 	 * Construct a TimerChannelBehavior which actually refreshes the clients by
 	 * polling the server for changes at the given duration.
-	 * 
+	 *
 	 * @param updateInterval
 	 *            the interval at which the server should be polled for changes
 	 */
@@ -424,7 +432,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 
 	/**
 	 * Creates a new push target to which triggers can be sent
-	 * 
+	 *
 	 * @return an IPushTarget to which triggers can be sent in any thread.
 	 */
 	public IPushTarget newPushTarget() {
@@ -499,17 +507,17 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 
 	/**
 	 * Methods used to access the triggers queued for the behavior
-	 * 
+	 *
 	 * The implementation uses a Map stored in the application, where the
 	 * behavior id is the key, because these triggers cannot be stored in
 	 * component instance or the behavior itself, since they may be serialized
 	 * and deserialized.
-	 * 
+	 *
 	 * @param application
 	 *            the application in which the triggers are stored
 	 * @param id
 	 *            the id of the behavior
-	 * 
+	 *
 	 * @return a List of triggers queued for the component
 	 */
 	private static List<DelayedMethodCallList> getTriggers(
@@ -535,7 +543,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 	/**
 	 * Cleans the metadata (triggers, poll time) associated with a given
 	 * behavior id
-	 * 
+	 *
 	 * @param application
 	 *            the application in which the metadata are stored
 	 * @param id
@@ -600,7 +608,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 	 * one behavior is actually rendered on a page for the same updateInterval,
 	 * to optimize the number of requests. Therefore all timer channel behaviors
 	 * of the same page are redirected to the same id, using this method.
-	 * 
+	 *
 	 * @param application
 	 *            the wicket application to which the behavior belong
 	 * @param id
