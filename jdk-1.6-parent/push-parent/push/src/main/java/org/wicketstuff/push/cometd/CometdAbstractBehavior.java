@@ -1,31 +1,57 @@
 package org.wicketstuff.push.cometd;
 
 import java.io.InputStream;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.ResourceReference;
+import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.markup.parser.XmlPullParser;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.util.template.PackagedTextTemplate;
 import org.cometd.server.CometdServlet;
-import org.wicketstuff.push.dojo.AbstractRequireDojoBehavior;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This behavior will be asked by client side when it will receive a cometd
  * event associated with the kind of event
+ *
+ * There is currently no support for multiple cometd servlets. It is not possible to override which
+ * url to use via the {@link #getCometdServletPath()} overridable method. But two cometd instances
+ * canont be used simultaneously.
+ *
  */
-public abstract class CometdAbstractBehavior extends
-		AbstractRequireDojoBehavior {
+public abstract class CometdAbstractBehavior extends AbstractDefaultAjaxBehavior {
 	private static final long serialVersionUID = 1L;
 
-	// FIXME: put this in application scope, we may have several webapp using
-	// CometdBehavior in the same web container!
-	private final static String cometdServletPath = getCometdServletPath();
+	private static final Logger LOG = LoggerFactory.getLogger(CometdAbstractBehavior.class);
+
+	private static final String DEFAULT_COMETD_PATH = guessCometdServletPath();
+
+	private static final ResourceReference COMETD =
+	  new CompressedResourceReference(CometdAbstractBehavior.class, "org/cometd.js");
+	private static final ResourceReference COMETD_ACK =
+      new CompressedResourceReference(CometdAbstractBehavior.class, "org/cometd/AckExtension.js");
+	private static final ResourceReference COMETD_RELOAD =
+      new CompressedResourceReference(CometdAbstractBehavior.class, "org/cometd/ReloadExtension.js");
+	private static final ResourceReference COMETD_TIMESTAMP =
+      new CompressedResourceReference(CometdAbstractBehavior.class, "org/cometd/TimeStampExtension.js");
+	private static final ResourceReference COMETD_TIMESYNC =
+      new CompressedResourceReference(CometdAbstractBehavior.class, "org/cometd/TimeSyncExtension.js");
+
+	private static final PackagedTextTemplate INIT_TEMPLATE =
+      new PackagedTextTemplate(CometdAbstractBehavior.class, "Init.js");
+
+	private static final PackagedTextTemplate SUBSCRIBE_TEMPLATE =
+      new PackagedTextTemplate(CometdAbstractBehavior.class, "Subscribe.js");
 
 	private static short idex = 'a';
 
@@ -35,7 +61,7 @@ public abstract class CometdAbstractBehavior extends
 
 	/**
 	 * Construct a commetd Behavior
-	 * 
+	 *
 	 * @param channelId
 	 */
 	public CometdAbstractBehavior(final String channelId) {
@@ -44,21 +70,22 @@ public abstract class CometdAbstractBehavior extends
 		index = idex++;
 	}
 
-	@Override
-	public void setRequire(final Set<String> libs) {
-		libs.add("dojo._base");
-		libs.add("dojox.cometd");
-		libs.add("dojox.cometd.timestamp");
-		libs.add("dojox.cometd.timesync");
-	}
 
 	@Override
-	public void renderHead(final IHeaderResponse response) {
+    public void renderHead(final IHeaderResponse response) {
 		super.renderHead(response);
 		if (channelId == null) {
 			throw new IllegalArgumentException(
 					"ChannelId in a CometdBehavior can not be null");
 		}
+		response.renderJavascriptReference(COMETD);
+
+		//Add all extension...
+		response.renderJavascriptReference(COMETD_ACK);
+		response.renderJavascriptReference(COMETD_RELOAD);
+		response.renderJavascriptReference(COMETD_TIMESTAMP);
+		response.renderJavascriptReference(COMETD_TIMESYNC);
+
 		response.renderJavascript(getInitCometdScript(), "initCometd");
 		final String cometdInterceptorScript = getCometdInterceptorScript();
 		if (cometdInterceptorScript != null) {
@@ -80,7 +107,7 @@ public abstract class CometdAbstractBehavior extends
 	 * This script should contain an object <code>javascriptObject</code> having
 	 * a method <code>javascriptMethod</code>
 	 * </p>
-	 * 
+	 *
 	 * @return
 	 */
 	public abstract String getCometdInterceptorScript();
@@ -94,7 +121,7 @@ public abstract class CometdAbstractBehavior extends
 	 * objectInstance and one of its function, i.e,
 	 * <code>'MyObject','OneFunctionOfMyObject'</code>
 	 * </p>
-	 * 
+	 *
 	 * @return part of javascript (String) allowing to give code to execute when
 	 *         a cometd event is triggered in client side.
 	 */
@@ -102,11 +129,19 @@ public abstract class CometdAbstractBehavior extends
 
 	/**
 	 * Javascript allowing cometd to be initialized on commetd
-	 * 
+	 *
 	 * @return javascript to initialize cometd on client side
 	 */
 	protected final CharSequence getInitCometdScript() {
-		return "dojox.cometd.init('" + cometdServletPath + "')\n";
+	  final Map<String, Object> params = new HashMap<String, Object>();
+	  final String configurationType = Application.get().getConfigurationType();
+	  if (configurationType.equalsIgnoreCase(Application.DEVELOPMENT)) {
+	    params.put("logLevel", "debug");
+	  } else {
+	    params.put("logLevel", "error");
+	  }
+	  params.put("cometdServletPath", getCometdServletPath());
+	  return INIT_TEMPLATE.asString(params);
 	}
 
 	/**
@@ -117,27 +152,29 @@ public abstract class CometdAbstractBehavior extends
 	 * <p>
 	 * see also getCometdIntercepteur method and getPartialSubscriber method
 	 * </p>
-	 * 
+	 *
 	 * @return Javascript allowing cometd to subscribe to a channel and
 	 *         intercept event
 	 */
 	public final CharSequence getSubscriberScript() {
-		return "dojox.cometd.subscribe('/" + getChannelId() + "', "
-				+ getPartialSubscriber() + ");\n";
+	  final Map<String, Object> params = new HashMap<String, Object>();
+	  params.put("channelId", getChannelId());
+	  params.put("partialSubscriber", getPartialSubscriber());
+	  return SUBSCRIBE_TEMPLATE.asString(params);
 	}
 
 	/**
 	 * return the javascript to unsuscribe to th channel
-	 * 
+	 *
 	 * @return javascript to unsuscribe to the channel
 	 */
 	public final CharSequence getUnsuscribeScript() {
-		return "dojox.cometd.unsubscribe('/" + getChannelId() + "');\n";
+		return "Wicket.Push..cometd.unsubscribe('/" + getChannelId() + "');\n";
 	}
 
 	/**
 	 * get the channel where this behavior will wait for event
-	 * 
+	 *
 	 * @return channelId channel where this behavior will wait for event
 	 */
 	public String getChannelId() {
@@ -146,7 +183,7 @@ public abstract class CometdAbstractBehavior extends
 
 	/**
 	 * Set the channel where this behavior will wait for event
-	 * 
+	 *
 	 * @param channelId
 	 *            channel where this behavior will wait for event
 	 */
@@ -156,7 +193,7 @@ public abstract class CometdAbstractBehavior extends
 
 	/**
 	 * Returns the id string
-	 * 
+	 *
 	 * @return
 	 */
 	public final CharSequence getBehaviorMarkupId() {
@@ -164,17 +201,31 @@ public abstract class CometdAbstractBehavior extends
 		return sb.append(getChannelId()).append(index).toString();
 	}
 
+
+	/** Returns the behaviour's cometd servlet path.
+	 *
+	 * Uses the {@link #DEFAULT_COMETD_PATH} provided by {@link #guessCometdServletPath()}.
+	 * Override if you have an unusual setup.
+	 * @return the behaviour's cometd servlet path.
+	 */
+	public String getCometdServletPath() {
+	  return DEFAULT_COMETD_PATH;
+	}
+
 	/**
 	 * Parse the web.xml to find cometd context Path. This context path will be
 	 * cache for all the application
-	 * 
+	 *
 	 * @return commetd context path
 	 */
-	protected static String getCometdServletPath() {
+	private static String guessCometdServletPath() {
 		final ServletContext servletContext = ((WebApplication) Application
 				.get()).getServletContext();
 		final InputStream is = servletContext
 				.getResourceAsStream("/WEB-INF/web.xml");
+
+		//return path
+		String path;
 		/*
 		 * get the servlet name from class assignable to
 		 * org.mortbay.cometd.CometdServlet
@@ -270,15 +321,16 @@ public abstract class CometdAbstractBehavior extends
 						"Url pattern for cometd should start with / and finish with /*");
 			}
 
-			// Strip trailing '*' and leading '/'.
-			final String path = urlPattern
-					.substring(0, urlPattern.length() - 2);
-			// prefix with context path
-			return servletContext.getContextPath() + path;
+			// Strip trailing '/*'.
+			path = urlPattern.substring(0, urlPattern.length() - 2);
+
 		} catch (final Exception e) {
-			throw new WicketRuntimeException(
-					"Error finding filter cometd servlet in web.xml", e);
+			LOG.warn("Error finding filter cometd servlet in web.xml", e);
+			path = "/cometd";
+
 		}
+
+		return servletContext.getContextPath() + path;
 	}
 
 }

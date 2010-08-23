@@ -7,6 +7,7 @@ import java.util.WeakHashMap;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.cometd.bayeux.Channel;
 import org.cometd.bayeux.server.BayeuxServer;
@@ -153,6 +154,9 @@ public class CometdService implements IChannelService {
 		event.addData("proxy", "true");
 		final String channelId = "/" + event.getChannel();
 		final ServerChannel channel = getBayeux().getChannel(channelId);
+		if (channel == null) {
+		  throw new WicketRuntimeException("Channel '" + channelId + "' was not found");
+		}
 		channel.publish(null, event.getData(), event.getId());
 	}
 

@@ -39,7 +39,7 @@
   </modules>
 
   <properties>
-    <cometd.version>2.0.0.RC2</cometd.version>
+    <cometd.version>2.0.0</cometd.version>
   </properties>
 
 </project>
