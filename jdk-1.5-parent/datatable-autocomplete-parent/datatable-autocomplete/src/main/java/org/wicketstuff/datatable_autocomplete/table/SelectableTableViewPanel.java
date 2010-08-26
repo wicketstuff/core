@@ -1,12 +1,12 @@
 /*
- * 
+ *
  * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -27,17 +27,17 @@ import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandle
 
 /**
  * @author mocleiri
- * 
+ *
  *         Allows a table to be rendered where the rows are selectable
- * 
+ *
  * @param T the type of the object in the table row.  The type of the object returned from the dataprovidcer
  */
 public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPanel<T> {
 
 	private  DefaultSelectableTableViewPanelButtonProviderImpl createButtonProvider = new DefaultSelectableTableViewPanelButtonProviderImpl ("Create New", false, false);
-	private  DefaultSelectableTableViewPanelButtonProviderImpl editButtonProvider = new DefaultSelectableTableViewPanelButtonProviderImpl ("Edit Selected", true, true);	
+	private  DefaultSelectableTableViewPanelButtonProviderImpl editButtonProvider = new DefaultSelectableTableViewPanelButtonProviderImpl ("Edit Selected", true, true);
 	private  DefaultSelectableTableViewPanelButtonProviderImpl deleteButtonProvider = new DefaultSelectableTableViewPanelButtonProviderImpl ("Delete Selected", true, true);
-	
+
 	/**
 	 * @param id
 	 * @param css_reference
@@ -49,7 +49,7 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	 * @param selectedRowContextExtractor
 	 * @param rowsPerPage
 	 * @param showTableFeedbackPanel
-	 * @param selectionHandler 
+	 * @param selectionHandler
 	 */
 	public SelectableTableViewPanel(String id,
 			ResourceReference css_reference, String cssClassName,
@@ -58,13 +58,13 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 			boolean showTableFeedbackPanel, ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints) {
 
 		super(id, css_reference, cssClassName, displayEntityName, column, dataProvider,
-				 
+
 				showTableFeedbackPanel, selectionHandler, hints);
-		
+
 		setButtonProviderList (Arrays.asList(new ISelectableTableViewPanelButtonProvider[] {editButtonProvider, deleteButtonProvider, createButtonProvider}));
 	}
 
-	
+
 
 	/**
 	 * @param id
@@ -76,7 +76,7 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	 * @param buttonProviderList
 	 * @param selectedRowContextExtractor
 	 * @param rowsPerPage
-	 * @param selectionHandler 
+	 * @param selectionHandler
 	 */
 	public SelectableTableViewPanel(String id,
 			ResourceReference css_reference, String cssClassNamne,
@@ -102,7 +102,7 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	 * @param selectedRowContextExtractor
 	 * @param rowsPerPage
 	 * @param showTableFeedbackPanel
-	 * @param selectionHandler 
+	 * @param selectionHandler
 	 */
 	public SelectableTableViewPanel(String id,
 			ResourceReference css_reference, String cssClassName,
@@ -113,7 +113,21 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 		super(id, css_reference, cssClassName, displayEntityName, columns,
 				dataProvider,
 				showTableFeedbackPanel, selectionHandler, hints);
-		
+
+		setButtonProviderList (Arrays.asList(new ISelectableTableViewPanelButtonProvider[] {editButtonProvider, deleteButtonProvider, createButtonProvider}));
+	}
+
+	public SelectableTableViewPanel(String id,
+			ResourceReference css_reference, String cssClassName,
+			String displayEntityName, IColumn<?>[] columns,
+			boolean withRadioGroup,
+			ISortableDataProvider<T> dataProvider,
+			boolean showTableFeedbackPanel, ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints) {
+
+		super(id, css_reference, cssClassName, displayEntityName, columns, withRadioGroup,
+				dataProvider,
+				showTableFeedbackPanel, selectionHandler, hints);
+
 		setButtonProviderList (Arrays.asList(new ISelectableTableViewPanelButtonProvider[] {editButtonProvider, deleteButtonProvider, createButtonProvider}));
 	}
 
@@ -127,7 +141,7 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	 * @param buttonProviderList
 	 * @param selectedRowContextExtractor
 	 * @param rowsPerPage
-	 * @param selectionHandler 
+	 * @param selectionHandler
 	 */
 	public SelectableTableViewPanel(String id,
 			ResourceReference css_reference, String cssClassName,
@@ -150,14 +164,14 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	 * @param rowContextConverter
 	 * @param i
 	 * @param showTableFeedbackPanel
-	 * @param selectionHandler 
+	 * @param selectionHandler
 	 */
 	public SelectableTableViewPanel(String id, String title,
 			IColumn<?>[] columns,
 			ISortableDataProvider<T> sortableListDataProvider,
 		 boolean showTableFeedbackPanel, ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints) {
 
-		super(id, title, columns, sortableListDataProvider, 
+		super(id, title, columns, sortableListDataProvider,
 			 showTableFeedbackPanel, selectionHandler, hints);
 		setButtonProviderList (Arrays.asList(new ISelectableTableViewPanelButtonProvider[] {editButtonProvider, deleteButtonProvider, createButtonProvider}));
 	}
@@ -170,7 +184,7 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	 * @param buttonProviderList
 	 * @param selectedRowContextConverter
 	 * @param i
-	 * @param selectionHandler 
+	 * @param selectionHandler
 	 */
 	public SelectableTableViewPanel(String id, String displayEntityName,
 			IColumn<?>[] tableColumns,
@@ -179,28 +193,28 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 
 		super(id, displayEntityName, tableColumns, attributeFilterDataProvider,
 			 selectionHandler, hints);
-		
+
 		setButtonProviderList (Arrays.asList(new ISelectableTableViewPanelButtonProvider[] {editButtonProvider, deleteButtonProvider, createButtonProvider}));
 	}
 
 	public SelectableTableViewPanel(String string, String string2,
 			IColumn<?>[] tableColumns,
 			ISortableDataProvider<T> provider, IDTATableRenderingHints hints) {
-		
+
 		this (string, string2, tableColumns, provider, null, hints);
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long				serialVersionUID	= 1000109813724689754L;
 
 	private static final Logger			log					= LoggerFactory
 																		.getLogger(SelectableTableViewPanel.class);
-	
 
 
-	
+
+
 
 	/**
 	 * @param formOnSubmitAction
@@ -212,13 +226,13 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 
 	}
 
-	
+
 	public void setButtonCSSClass (String cssClass) {
 		this.createButtonProvider.setCssClassName(cssClass);
 		this.editButtonProvider.setCssClassName(cssClass);
 		this.deleteButtonProvider.setCssClassName(cssClass);
 	}
-	
+
 	/**
 	 * @param formOnSubmitAction
 	 */
@@ -228,8 +242,8 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 		deleteButtonProvider.setAction(formOnSubmitAction);
 
 	}
-	
-	
+
+
 
 	/**
 	 * @param formOnSubmitAction
@@ -248,6 +262,6 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 
 	}
 
-	
-	
+
+
 }
