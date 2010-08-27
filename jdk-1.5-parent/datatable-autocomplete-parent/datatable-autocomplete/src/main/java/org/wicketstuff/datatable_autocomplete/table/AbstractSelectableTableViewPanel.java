@@ -187,7 +187,7 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 
 		}
 
-		for (int i = 0; i < columnLength; i++) {
+		for (int i = 0; i < columns.length; i++) {
 
 			includingRadioColumns[i + radioColumnLength] = columns[i];
 		}
@@ -273,6 +273,15 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 
 		this(id, DEFAULT_CSS, "dta_data_table", displayEntityName,
 				tableColumns, attributeFilterDataProvider, selectionHandler, hints);
+	}
+//2011 added flag for radio button
+	public AbstractSelectableTableViewPanel(String id,
+			String displayEntityName, IColumn<?>[] tableColumns, boolean withRadioGroup,
+			ISortableDataProvider<T> attributeFilterDataProvider,
+			ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints) {
+
+		this(id, DEFAULT_CSS, "dta_data_table", displayEntityName,
+				tableColumns, withRadioGroup, attributeFilterDataProvider,  true, selectionHandler, hints);
 	}
 
 	/**
