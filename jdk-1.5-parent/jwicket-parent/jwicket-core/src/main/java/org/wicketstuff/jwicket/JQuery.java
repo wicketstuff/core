@@ -13,7 +13,7 @@ public class JQuery implements Serializable {
 
 	private static final int majorVersion = 0;
 	private static final int minorVersion = 6;
-	private static final int subVersion   = 1;
+	private static final int subVersion   = 2;
 
 	private static final String version = majorVersion + "." + minorVersion + "." + subVersion;
 

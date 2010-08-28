@@ -3,6 +3,7 @@ package org.wicketstuff.jwicket.ui.datepicker;
 
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -17,6 +18,7 @@ import org.wicketstuff.jwicket.JQueryCssResourceReference;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.JQuerySpeed;
 import org.wicketstuff.jwicket.JsMap;
+import org.wicketstuff.jwicket.JsScript;
 import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 
@@ -37,7 +39,6 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 
 	protected JsMap options = new JsMap();
 
-
 	public DatePicker() {
 		this(null);
 	}
@@ -48,10 +49,12 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 		);
 		addCssResources(getCssResources());
 
+
 		Locale locale = Session.get().getLocale();
-		if (locale != null)
+		if (locale != null) {
 			addUserProvidedResourceReferences(new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker-" + locale.getLanguage() + ".js"));
-		
+		}
+
 		if (icon != null)
 			setButtonImage(icon);
 		
@@ -73,8 +76,9 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 				onSelect(target, selectedDate, specialKeys);
 				Locale locale = Session.get().getLocale();
 				DateFormat df;
-				if (locale != null)
+				if (locale != null) {
 					df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+				}
 				else
 					df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
@@ -389,13 +393,17 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 		if (value == null)
 			options.remove("maxDate");
 		else {
+			// to avoid problems with different date formats, we use a JAvaScript Date object instead
 			Locale locale = Session.get().getLocale();
-			DateFormat df;
+			Calendar cal;
 			if (locale != null)
-				df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+				cal = Calendar.getInstance(locale);
 			else
-				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-			options.put("maxDate", df.format(value));
+				cal = Calendar.getInstance();
+			cal.setTime(value);
+
+			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+			options.put("maxDate", new JsScript(jsDate));
 		}
 		return this;
 	}
@@ -404,13 +412,17 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 		if (value == null)
 			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate',null);");
 		else {
+			// to avoid problems with different date formats, we use a JAvaScript Date object instead
 			Locale locale = Session.get().getLocale();
-			DateFormat df;
+			Calendar cal;
 			if (locale != null)
-				df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+				cal = Calendar.getInstance(locale);
 			else
-				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate','" + df.format(value) + "');");
+				cal = Calendar.getInstance();
+			cal.setTime(value);
+
+			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate'," + jsDate + ");");
 		}
 		return this;
 	}
@@ -419,13 +431,17 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 		if (value == null)
 			options.remove("maxDate");
 		else {
+			// to avoid problems with different date formats, we use a JAvaScript Date object instead
 			Locale locale = Session.get().getLocale();
-			DateFormat df;
+			Calendar cal;
 			if (locale != null)
-				df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+				cal = Calendar.getInstance(locale);
 			else
-				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-			options.put("maxDate", df.format(value));
+				cal = Calendar.getInstance();
+			cal.setTimeInMillis(value.getTime());
+
+			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+			options.put("maxDate", new JsScript(jsDate));
 		}
 		return this;
 	}
@@ -434,13 +450,17 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 		if (value == null)
 			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate',null);");
 		else {
+			// to avoid problems with different date formats, we use a JAvaScript Date object instead
 			Locale locale = Session.get().getLocale();
-			DateFormat df;
+			Calendar cal;
 			if (locale != null)
-				df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+				cal = Calendar.getInstance(locale);
 			else
-				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate','" + df.format(value) + "');");
+				cal = Calendar.getInstance();
+			cal.setTimeInMillis(value.getTime());
+
+			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate'," + jsDate + ");");
 		}
 		return this;
 	}
@@ -476,13 +496,17 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 		if (value == null)
 			options.remove("minDate");
 		else {
+			// to avoid problems with different date formats, we use a JAvaScript Date object instead
 			Locale locale = Session.get().getLocale();
-			DateFormat df;
+			Calendar cal;
 			if (locale != null)
-				df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+				cal = Calendar.getInstance(locale);
 			else
-				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-			options.put("minDate", df.format(value));
+				cal = Calendar.getInstance();
+			cal.setTime(value);
+
+			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+			options.put("minDate", new JsScript(jsDate));
 		}
 		return this;
 	}
@@ -491,13 +515,18 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 		if (value == null)
 			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate',null);");
 		else {
+			// to avoid problems with different date formats, we use a JAvaScript Date object instead
 			Locale locale = Session.get().getLocale();
-			DateFormat df;
+			Calendar cal;
 			if (locale != null)
-				df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+				cal = Calendar.getInstance(locale);
 			else
-				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate','" + df.format(value) + "');");
+				cal = Calendar.getInstance();
+			cal.setTime(value);
+
+			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+
+			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate'," + jsDate + ");");
 		}
 		return this;
 	}
@@ -506,13 +535,17 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 		if (value == null)
 			options.remove("minDate");
 		else {
+			// to avoid problems with different date formats, we use a JAvaScript Date object instead
 			Locale locale = Session.get().getLocale();
-			DateFormat df;
+			Calendar cal;
 			if (locale != null)
-				df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+				cal = Calendar.getInstance(locale);
 			else
-				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-			options.put("minDate", df.format(value));
+				cal = Calendar.getInstance();
+			cal.setTimeInMillis(value.getTime());
+
+			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+			options.put("minDate", new JsScript(jsDate));
 		}
 		return this;
 	}
@@ -521,13 +554,18 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 		if (value == null)
 			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate',null);");
 		else {
+			// to avoid problems with different date formats, we use a JAvaScript Date object instead
 			Locale locale = Session.get().getLocale();
-			DateFormat df;
+			Calendar cal;
 			if (locale != null)
-				df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+				cal = Calendar.getInstance(locale);
 			else
-				df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate','" + df.format(value) + "');");
+				cal = Calendar.getInstance();
+			cal.setTimeInMillis(value.getTime());
+
+			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+
+			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate'," + jsDate + ");");
 		}
 		return this;
 	}
@@ -985,7 +1023,6 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 			builder.append(cssClass);
 			builder.append("\" />')");
 		}
-
 
 		return builder;
 	}
