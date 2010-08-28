@@ -1203,8 +1203,8 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 	}
 
 
-	// mocleiri: removed for java 5 compatibility
-//	@Override
+
+	@Override
 	public JQueryCssResourceReference[] getCssResources() {
 		return new JQueryCssResourceReference[] {
 			AbstractJqueryUiEmbeddedBehavior.jQueryUiBaseCss,

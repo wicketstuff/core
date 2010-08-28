@@ -229,8 +229,8 @@ public class SortableBehavior extends AbstractJqueryUiEmbeddedBehavior implement
 	
 
 
-	// mocleiri: removed for java 5 compatibility
-//	@Override
+
+	@Override
 	public JQueryCssResourceReference[] getCssResources() {
 		return new JQueryCssResourceReference[] {
 			AbstractJqueryUiEmbeddedBehavior.jQueryUiCss,
