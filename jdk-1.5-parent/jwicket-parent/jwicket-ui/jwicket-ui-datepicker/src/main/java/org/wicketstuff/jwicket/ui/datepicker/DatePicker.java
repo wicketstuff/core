@@ -506,6 +506,7 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 			cal.setTime(value);
 
 			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+
 			options.put("minDate", new JsScript(jsDate));
 		}
 		return this;
@@ -545,6 +546,7 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 			cal.setTimeInMillis(value.getTime());
 
 			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+
 			options.put("minDate", new JsScript(jsDate));
 		}
 		return this;
