@@ -17,13 +17,6 @@
 			<email>pedrosans@gmail.com</email>
 		</developer>
 	</developers>
-	<dependencies>
-		<dependency>
-			<groupId>org.wicketstuff</groupId>
-			<artifactId>fixed-feedback-panel</artifactId>
-			<version>1.5-SNAPSHOT</version>
-		</dependency>
-	</dependencies>
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
