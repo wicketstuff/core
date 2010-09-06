@@ -53,7 +53,6 @@
 		<module>jwicket-parent</module>
 		<module>mbeanview-parent</module>
 		<module>ddcalendar-parent</module>
-		<module>fixed-feedback-panel</module>
 		<module>maven-support</module>
 		<module>theme-parent</module>
 		<module>jasperreports-parent</module>
