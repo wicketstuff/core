@@ -83,7 +83,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 			};
 			MBeanTree mBeansTree = new MBeanTree("mBeansTree", getTreeModel(reachMbeanServer));
 			add(mBeansTree);
-			add(new EmptyPanel("view"));
+			add(new EmptyPanel(VIEW_PANEL_ID).setOutputMarkupId(true));
 		}
 		catch (Exception e)
 		{
@@ -110,8 +110,10 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 		{
 			if (node instanceof MbeanNode)
 			{
-				MBeansPanel.this.replace(((MbeanNode)node).getView(VIEW_PANEL_ID));
-				setResponsePage(MBeansPanel.this.getPage());
+				Component newView = ((MbeanNode)node).getView(VIEW_PANEL_ID);
+				newView.setOutputMarkupId(true);
+				MBeansPanel.this.replace(newView);
+				target.addComponent(newView);
 			}
 		}
 
