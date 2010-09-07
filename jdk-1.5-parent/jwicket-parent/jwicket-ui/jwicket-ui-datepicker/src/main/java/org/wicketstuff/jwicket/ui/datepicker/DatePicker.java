@@ -11,6 +11,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.Request;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.Session;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.wicketstuff.jwicket.IStyleResolver;
@@ -79,22 +80,27 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 				if (locale != null) {
 					df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
 				}
-				else
+				else {
 					df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-
-				try {
-					onSelect(target, df.parse(selectedDate), specialKeys);
-				} catch (Exception e) {
-					onSelect(target, (java.util.Date)null, specialKeys);
 				}
 
+				Date parsedDate = null;
+				java.sql.Date parsedSqlDate = null;
 				try {
-					java.sql.Date date = new java.sql.Date(df.parse(selectedDate).getTime());
-					onSelect(target, date, specialKeys);
-					if (component instanceof FormComponent<?>)
-						((FormComponent<?>)component).inputChanged();
+					parsedDate = df.parse(selectedDate);
+					parsedSqlDate = new java.sql.Date(parsedDate.getTime());
 				} catch (Exception e) {
-					onSelect(target, (java.sql.Date)null, specialKeys);
+					throw new WicketRuntimeException("Error converting '" + selectedDate + "' to a Date object.", e);
+				}
+				if (parsedDate != null) {
+					onSelect(target, parsedDate, specialKeys);
+				}
+				if (parsedSqlDate != null) {
+					onSelect(target, parsedSqlDate, specialKeys);
+				}
+
+				if (component instanceof FormComponent<?>) {
+					((FormComponent<?>)component).inputChanged();
 				}
 			}
 			else if (eventType == EventType.ON_CLOSE) {
@@ -1044,7 +1050,9 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 
 	/**
 	 * If you have set {@link #setWantOnSelectNotification(boolean)} to {@code true}
-	 * this method is called after the user picked a date in the datepicker.
+	 * this method is called after the user picked a date in the datepicker. This method is called after
+	 * {@link #onSelect(AjaxRequestTarget, String, SpecialKeys) was called only if the picked date can be parsed into
+	 * a Java Date object.
 	 *
 	 * @param target the AjaxRequestTarget of the resize operation.
 	 * @param pickedDate The selected date as {@link java.util.Date}
@@ -1054,10 +1062,12 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 
 	/**
 	 * If you have set {@link #setWantOnSelectNotification(boolean)} to {@code true}
-	 * this method is called after the user picked a date in the datepicker.
+	 * this method is called after the user picked a date in the datepicker. This method is called after
+	 * {@link #onSelect(AjaxRequestTarget, String, SpecialKeys) was called only if the picked date can be parsed into
+	 * a Java Date object.
 	 *
 	 * @param target the AjaxRequestTarget of the resize operation.
-	 * @param pickedDate The selected date as {@link java.sql.Date}
+	 * @param pickedDate The selected date as {@link java.util.Date}
 	 * @param specialKeys the special keys that were pressed when the event occurs
 	 */
 	protected void onSelect(final AjaxRequestTarget target, final java.sql.Date pickedDate, final SpecialKeys specialKeys) {}
