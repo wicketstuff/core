@@ -45,7 +45,6 @@
 		<!--commented out until org.apache.commons:commons-proxy:jar:1.1-SNAPSHOT is available -->
 		<!--see http://www.nabble.com/Wicketstuff-core...-td23105708.html#a23106385 -->
 		<!-- <module>syringe</module> -->
-		<module>ki-security</module>
 		<module>sitemap-xml-parent</module>		
 		<module>multi-text-input-parent</module>
 		<module>shiro-security</module> 
