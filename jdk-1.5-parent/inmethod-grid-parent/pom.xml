@@ -334,17 +334,6 @@
 					<version>2.0-beta-5</version>
 				</plugin>
 				<plugin>
-					<groupId>org.mortbay.jetty</groupId>
-					<artifactId>maven-jetty-plugin</artifactId>
-					<version>6.1.1</version>
-					<configuration>
-						<scanIntervalSeconds>60</scanIntervalSeconds>
-						<webAppSourceDirectory>
-							src/main/webapp
-						</webAppSourceDirectory>
-					</configuration>
-				</plugin>
-				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>
 						maven-remote-resources-plugin
