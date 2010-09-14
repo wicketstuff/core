@@ -20,7 +20,7 @@
 	<parent>
 		<groupId>org.apache.wicket.wicket-security</groupId>
 		<artifactId>wasp-parent</artifactId>
-		<version>1.5-SNAPSHOT</version>
+		<version>1.4-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>swarm</artifactId>
