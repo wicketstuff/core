@@ -21,7 +21,7 @@
 		<module>flot-parent</module>
 		<module>googlecharts-parent</module>
 		<module>scala-extensions-parent</module>
-		<module>wicket-plugin</module>
+		<module>plugin</module>
 		<module>openlayers-parent</module>
 		
 		<!-- Modules below are commented until they can compile with wicket 1.5-SNAPSHOT -->
