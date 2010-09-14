@@ -45,7 +45,7 @@ public class SessionInvalidationTest extends WaspAbstractTestBase
 		mock.setupRequestAndResponse();
 		assertTrue(((WaspSession) mock.getWicketSession()).logoff(null));
 		mock.processRequestCycle();
-		assertNotSame(session, mock.getWicketSession());
+		assertTrue(session.isSessionInvalidated());
 		assertFalse(((WaspAuthorizationStrategy) mock.getWicketSession().getAuthorizationStrategy())
 			.isUserAuthenticated());
 
@@ -81,7 +81,7 @@ public class SessionInvalidationTest extends WaspAbstractTestBase
 		mock.setupRequestAndResponse();
 		((WaspSession) mock.getWicketSession()).logoff(null);
 		mock.processRequestCycle();
-		assertNotSame(session, mock.getWicketSession());
+		assertTrue(session.isSessionInvalidated());
 		assertFalse(((WaspAuthorizationStrategy) mock.getWicketSession().getAuthorizationStrategy())
 			.isUserAuthenticated());
 
