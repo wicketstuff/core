@@ -42,24 +42,26 @@ import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
- * Base class for every strategy. Checks Authorization and authentication at the
- * class, component and model levels.
+ * Base class for every strategy. Checks Authorization and authentication at the class,
+ * component and model levels.
  * 
  * @author marrink
  */
 public abstract class WaspAuthorizationStrategy implements IAuthorizationStrategy, Serializable
 {
 	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = LoggerFactory.getLogger(WaspAuthorizationStrategy.class);
+
 	/**
 	 * Key used to store the {@link IAuthorizationMessageSource} in the
 	 * {@link RequestCycle} metadata.
 	 */
 	protected static final AuthorizationErrorKey MESSAGE_KEY = new AuthorizationErrorKey();
 
-	private static final ThreadLocal resolver = new ThreadLocal();
+	private static final ThreadLocal<StrategyResolver> resolver =
+		new ThreadLocal<StrategyResolver>();
 
 	/**
 	 * Performs the actual authorization check on the component.
@@ -81,7 +83,7 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	 *            the action to check
 	 * @return true if authorized, false otherwise
 	 */
-	public abstract boolean isModelAuthorized(ISecureModel<?> model, Component component,
+	public abstract boolean isModelAuthorized(ISecureModel< ? > model, Component component,
 			WaspAction action);
 
 	/**
@@ -93,7 +95,7 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	 *            the action to check
 	 * @return true if authorized, false otherwise
 	 */
-	public abstract boolean isClassAuthorized(Class<?> clazz, WaspAction action);
+	public abstract boolean isClassAuthorized(Class< ? > clazz, WaspAction action);
 
 	/**
 	 * Performs the authentication check.
@@ -115,7 +117,7 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	 * 
 	 * @return true if the user is authenticated, false otherwise
 	 */
-	public abstract boolean isModelAuthenticated(IModel<?> model, Component component);
+	public abstract boolean isModelAuthenticated(IModel< ? > model, Component component);
 
 	/**
 	 * Performs the authentication check.
@@ -125,35 +127,34 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	 * 
 	 * @return true if the user is authenticated, false otherwise
 	 */
-	public abstract boolean isClassAuthenticated(Class<?> clazz);
+	public abstract boolean isClassAuthenticated(Class< ? > clazz);
 
 	/**
 	 * Checks if there is a user logged in at all. This will return true after a
 	 * successful {@link #login(Object)} and false after a successful
-	 * {@link #logoff(Object)}. Note that in a multi-login scenario this method
-	 * returns true until all successful logins are countered with a successful
-	 * logoff.
+	 * {@link #logoff(Object)}. Note that in a multi-login scenario this method returns
+	 * true until all successful logins are countered with a successful logoff.
 	 * 
 	 * @return true while a user is logged in, false otherwise
 	 */
 	public abstract boolean isUserAuthenticated();
 
 	/**
-	 * Attempts to log the user in. Note to implementations: It is generally
-	 * considered a bad idea to store the context if it contains sensitive data
-	 * (like a plaintext password).
+	 * Attempts to log the user in. Note to implementations: It is generally considered a
+	 * bad idea to store the context if it contains sensitive data (like a plaintext
+	 * password).
 	 * 
 	 * @param context
-	 *            a not further specified object that provides all the
-	 *            information to log the user on
+	 *            a not further specified object that provides all the information to log
+	 *            the user on
 	 * @throws LoginException
 	 *             if the login is unsuccessful
 	 */
 	public abstract void login(Object context) throws LoginException;
 
 	/**
-	 * Log the user off. With the help of a context implementations might
-	 * facilitate multi level login / logoff.
+	 * Log the user off. With the help of a context implementations might facilitate multi
+	 * level login / logoff.
 	 * 
 	 * @param context
 	 *            a not further specified object, might be null
@@ -190,13 +191,12 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 				}
 				return false;
 
-
 			}
-			IModel<?> model = component.getDefaultModel();
-			if (model instanceof ISecureModel<?>)
+			IModel< ? > model = component.getDefaultModel();
+			if (model instanceof ISecureModel< ? >)
 			{
-				if (((ISecureModel<?>)model).isAuthorized(component, getActionFactory().getAction(
-						action)))
+				if (((ISecureModel< ? >) model).isAuthorized(component, getActionFactory()
+					.getAction(action)))
 					return true;
 				IAuthorizationMessageSource message = getMessageSource();
 				if (message != null)
@@ -213,10 +213,9 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	}
 
 	/**
-	 * Logs a message indication an action was denied. The message is retrieved
-	 * through localization with the following resource
-	 * key:"authorization.denied" (no quotes). This method removes the
-	 * messagesource from the requestcycle.
+	 * Logs a message indication an action was denied. The message is retrieved through
+	 * localization with the following resource key:"authorization.denied" (no quotes).
+	 * This method removes the messagesource from the requestcycle.
 	 * 
 	 * @param message
 	 *            messagesource
@@ -228,19 +227,18 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	}
 
 	/**
-	 * Logs a message indication an action was denied. The message is retrieved
-	 * through localization with the specified resource key. Optionally the
-	 * message can be removed from the requestcycle, if it is not removed the
-	 * message might be processed multiple times (which might be what you want
-	 * if you want to use different resource keys). This invokes
-	 * {@link #logMessage(String, Map, IAuthorizationMessageSource)}
+	 * Logs a message indication an action was denied. The message is retrieved through
+	 * localization with the specified resource key. Optionally the message can be removed
+	 * from the requestcycle, if it is not removed the message might be processed multiple
+	 * times (which might be what you want if you want to use different resource keys).
+	 * This invokes {@link #logMessage(String, Map, IAuthorizationMessageSource)}
 	 * 
 	 * 
 	 * @param key
 	 *            the resource key to lookup the message
 	 * @param variables
-	 *            optional map containing additional variables that can be used
-	 *            during the message lookup
+	 *            optional map containing additional variables that can be used during the
+	 *            message lookup
 	 * @param message
 	 *            messagesource
 	 * @param remove
@@ -263,17 +261,17 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	}
 
 	/**
-	 * Logs a message indication an action was denied. The message is retrieved
-	 * through localization with the specified resource key. This default
-	 * implementation simply does something like <code>log.debug(...)</code>
-	 * Overwrite this method if you want for example wicket to print feedback
-	 * messages with something like <code>Session.get().error(...)</code>
+	 * Logs a message indication an action was denied. The message is retrieved through
+	 * localization with the specified resource key. This default implementation simply
+	 * does something like <code>log.debug(...)</code> Overwrite this method if you want
+	 * for example wicket to print feedback messages with something like
+	 * <code>Session.get().error(...)</code>
 	 * 
 	 * @param key
 	 *            the resource key for the message
 	 * @param variables
-	 *            optional map containing additional variables that can be used
-	 *            during message construction
+	 *            optional map containing additional variables that can be used during
+	 *            message construction
 	 * @param message
 	 *            the messagesource
 	 */
@@ -284,7 +282,6 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 		if (!Strings.isEmpty(msg))
 			log.debug(message.substitute(msg, variables));
 	}
-
 
 	/**
 	 * Removes the message from the {@link RequestCycle}'s metadata.
@@ -305,12 +302,11 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	}
 
 	/**
-	 * Retrieves the messagesource from the {@link RequestCycle}'s metadata.
-	 * optionally creating a new one if there is not already one.
+	 * Retrieves the messagesource from the {@link RequestCycle}'s metadata. optionally
+	 * creating a new one if there is not already one.
 	 * 
 	 * @param create
-	 * @return the messagesource or null if there is none and the create flag
-	 *         was false
+	 * @return the messagesource or null if there is none and the create flag was false
 	 */
 	protected final IAuthorizationMessageSource getMessageSource(boolean create)
 	{
@@ -326,8 +322,8 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	}
 
 	/**
-	 * Creates a new {@link IAuthorizationMessageSource}. Subclasses can
-	 * override this to return there own implementation.
+	 * Creates a new {@link IAuthorizationMessageSource}. Subclasses can override this to
+	 * return there own implementation.
 	 * 
 	 * @return a new IErrorMessageSource, never null
 	 */
@@ -337,11 +333,10 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	}
 
 	/**
-	 * Indicates if messages about denied actions should be logged. Default is
-	 * to use the slf4 log implementation checking if debug messages should be
-	 * printed. for example using log4j as the logging implementation for slf4j
-	 * logging could be turned on by putting the following line in your
-	 * log4.properties</br> <code>
+	 * Indicates if messages about denied actions should be logged. Default is to use the
+	 * slf4 log implementation checking if debug messages should be printed. for example
+	 * using log4j as the logging implementation for slf4j logging could be turned on by
+	 * putting the following line in your log4.properties</br> <code>
 	 * log4j.category.org.apache.wicket.security.strategies.WaspAuthorizationStrategy=DEBUG
 	 * </code>
 	 * 
@@ -353,20 +348,20 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	}
 
 	/**
-	 * We cannot assume everybody uses the here specified public methods to
-	 * store the securitycheck, so we check if the component is a
-	 * ISecureComponent and if so use the getSecurityCheck on the secure
-	 * component else we fall back to the SecureComponentHelper.
+	 * We cannot assume everybody uses the here specified public methods to store the
+	 * securitycheck, so we check if the component is a ISecureComponent and if so use the
+	 * getSecurityCheck on the secure component else we fall back to the
+	 * SecureComponentHelper.
 	 * 
 	 * @param component
-	 * @return the security check of the component or null if the component does
-	 *         not have one
+	 * @return the security check of the component or null if the component does not have
+	 *         one
 	 * @see SecureComponentHelper#getSecurityCheck(Component)
 	 */
 	protected final ISecurityCheck getSecurityCheck(Component component)
 	{
 		if (component instanceof ISecureComponent)
-			return ((ISecureComponent)component).getSecurityCheck();
+			return ((ISecureComponent) component).getSecurityCheck();
 		return SecureComponentHelper.getSecurityCheck(component);
 	}
 
@@ -377,21 +372,21 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	 */
 	protected final WaspActionFactory getActionFactory()
 	{
-		return ((WaspApplication)Application.get()).getActionFactory();
+		return ((WaspApplication) Application.get()).getActionFactory();
 	}
 
 	/**
 	 * Returns the WaspAuthorizationStrategy. This defaults to
-	 * {@link WaspSession#getAuthorizationStrategy()}, but a different
-	 * implementation can be registered via a {@link StrategyResolver}.
+	 * {@link WaspSession#getAuthorizationStrategy()}, but a different implementation can
+	 * be registered via a {@link StrategyResolver}.
 	 * 
 	 * @return
 	 */
 	public static WaspAuthorizationStrategy get()
 	{
-		StrategyResolver threadResolver = (StrategyResolver)resolver.get();
-		return threadResolver == null ? (WaspAuthorizationStrategy)((WaspSession)Session.get())
-				.getAuthorizationStrategy() : threadResolver.getStrategy();
+		StrategyResolver threadResolver = resolver.get();
+		return threadResolver == null ? (WaspAuthorizationStrategy) ((WaspSession) Session.get())
+			.getAuthorizationStrategy() : threadResolver.getStrategy();
 	}
 
 	/**

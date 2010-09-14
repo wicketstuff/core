@@ -19,7 +19,7 @@ package org.apache.wicket.security.swarm.checks;
 import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.checks.AbstractSecurityCheck;
 import org.apache.wicket.security.hive.authorization.permissions.DataPermission;
-import org.apache.wicket.security.swarm.strategies.SwarmStrategy;
+import org.apache.wicket.security.swarm.strategies.AbstractSwarmStrategy;
 
 /**
  * SecurityCheck that uses a {@link DataPermission}. For example <br/>
@@ -56,7 +56,7 @@ public class DataSecurityCheck extends AbstractSecurityCheck
 	public boolean isActionAuthorized(WaspAction action)
 	{
 		DataPermission permission = new DataPermission(getSecurityId(), action);
-		return ((SwarmStrategy) getStrategy()).hasPermission(permission);
+		return ((AbstractSwarmStrategy) getStrategy()).hasPermission(permission);
 	}
 
 	/**

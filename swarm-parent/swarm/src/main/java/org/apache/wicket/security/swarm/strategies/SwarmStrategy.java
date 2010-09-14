@@ -19,13 +19,10 @@ package org.apache.wicket.security.swarm.strategies;
 import java.util.Collections;
 import java.util.Set;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.components.ISecureComponent;
 import org.apache.wicket.security.components.ISecurePage;
-import org.apache.wicket.security.components.SecureComponentHelper;
 import org.apache.wicket.security.hive.Hive;
 import org.apache.wicket.security.hive.HiveMind;
 import org.apache.wicket.security.hive.authentication.LoginContainer;
@@ -33,14 +30,9 @@ import org.apache.wicket.security.hive.authentication.LoginContext;
 import org.apache.wicket.security.hive.authentication.Subject;
 import org.apache.wicket.security.hive.authorization.Permission;
 import org.apache.wicket.security.hive.authorization.Principal;
-import org.apache.wicket.security.hive.authorization.permissions.ComponentPermission;
-import org.apache.wicket.security.hive.authorization.permissions.DataPermission;
 import org.apache.wicket.security.log.IAuthorizationMessageSource;
-import org.apache.wicket.security.models.ISecureModel;
 import org.apache.wicket.security.strategies.ClassAuthorizationStrategy;
 import org.apache.wicket.security.strategies.SecurityException;
-import org.apache.wicket.security.swarm.actions.SwarmAction;
-import org.apache.wicket.security.swarm.models.SwarmModel;
 
 /**
  * Implementation of a {@link ClassAuthorizationStrategy}. It allows for both simple
@@ -48,7 +40,7 @@ import org.apache.wicket.security.swarm.models.SwarmModel;
  * 
  * @author marrink
  */
-public class SwarmStrategy extends ClassAuthorizationStrategy
+public class SwarmStrategy extends AbstractSwarmStrategy
 {
 
 	/**
@@ -60,8 +52,6 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	 * Key to the hive.
 	 */
 	private Object hiveQueen;
-
-	private LoginContainer loginContainer;
 
 	/**
 	 * Constructs a new strategy linked to the specified hive.
@@ -105,33 +95,6 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	}
 
 	/**
-	 * The currently logged in subject, note that at any time there is at most 1 subject
-	 * logged in.
-	 * 
-	 * @return the subject or null if no login has succeeded yet
-	 */
-	public Subject getSubject()
-	{
-		return loginContainer.getSubject();
-	}
-
-	/**
-	 * Performs the actual permission check at the {@link Hive}. This is equal to using
-	 * {@link #hasPermission(Permission, Subject)} with {@link #getSubject()}
-	 * 
-	 * @param permission
-	 *            the permission to verify
-	 * @return true if the subject has or implies the permission, false otherwise
-	 * @throws SecurityException
-	 *             if the permission is null
-	 * @see #hasPermission(Permission, Subject)
-	 */
-	public boolean hasPermission(Permission permission)
-	{
-		return hasPermission(permission, getSubject());
-	}
-
-	/**
 	 * Performs the actual permission check at the {@link Hive}.
 	 * 
 	 * @param permission
@@ -142,6 +105,7 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 	 * @throws SecurityException
 	 *             if the permission is null
 	 */
+	@Override
 	public boolean hasPermission(Permission permission, Subject subject)
 	{
 		if (permission == null)
@@ -183,97 +147,6 @@ public class SwarmStrategy extends ClassAuthorizationStrategy
 			source.addVariable("principals", principals);
 		else
 			source.addVariable("principals", Collections.EMPTY_SET);
-	}
-
-	/**
-	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isClassAuthenticated(java.lang.Class)
-	 */
-	@Override
-	public boolean isClassAuthenticated(Class< ? > clazz)
-	{
-		return loginContainer.isClassAuthenticated(clazz);
-	}
-
-	/**
-	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isClassAuthorized(java.lang.Class,
-	 *      org.apache.wicket.security.actions.WaspAction)
-	 */
-	@Override
-	public boolean isClassAuthorized(Class< ? > clazz, WaspAction action)
-	{
-		if (hasPermission(new ComponentPermission(SecureComponentHelper.alias(clazz), action)))
-			return true;
-		logMessage(getMessageSource());
-		return false;
-	}
-
-	/**
-	 * 
-	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isComponentAuthenticated(org.apache.wicket.Component)
-	 */
-	@Override
-	public boolean isComponentAuthenticated(Component component)
-	{
-		return loginContainer.isComponentAuthenticated(component);
-	}
-
-	/**
-	 * 
-	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isComponentAuthorized(org.apache.wicket.Component,
-	 *      org.apache.wicket.security.actions.WaspAction)
-	 */
-	@Override
-	public boolean isComponentAuthorized(Component component, WaspAction action)
-	{
-		if (hasPermission(new ComponentPermission(component, action)))
-			return true;
-		IAuthorizationMessageSource message = getMessageSource();
-		if (message != null)
-		{
-			message.setComponent(component);
-			logMessage(message);
-		}
-		return false;
-	}
-
-	/**
-	 * 
-	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isModelAuthenticated(org.apache.wicket.model.IModel,
-	 *      org.apache.wicket.Component)
-	 */
-	@Override
-	public boolean isModelAuthenticated(IModel< ? > model, Component component)
-	{
-		return loginContainer.isModelAuthenticated(model, component);
-	}
-
-	/**
-	 * Checks if some action is granted on the model. Although {@link SwarmModel}s are
-	 * preferred any {@link ISecureModel} can be used, in that case it uses the
-	 * {@link ISecureModel#toString()} method as the name of the {@link DataPermission}
-	 * 
-	 * @see org.apache.wicket.security.strategies.WaspAuthorizationStrategy#isModelAuthorized(ISecureModel,
-	 *      Component, WaspAction)
-	 */
-	@Override
-	public boolean isModelAuthorized(ISecureModel< ? > model, Component component, WaspAction action)
-	{
-		DataPermission permission;
-		if (model instanceof SwarmModel< ? >)
-			permission =
-				new DataPermission(component, (SwarmModel< ? >) model, (SwarmAction) action);
-		else
-			permission = new DataPermission(String.valueOf(model), action);
-		if (hasPermission(permission))
-			return true;
-		IAuthorizationMessageSource message = getMessageSource();
-		if (message != null)
-		{
-			message.setComponent(component);
-			logMessage(message);
-		}
-		return false;
-
 	}
 
 	/**
