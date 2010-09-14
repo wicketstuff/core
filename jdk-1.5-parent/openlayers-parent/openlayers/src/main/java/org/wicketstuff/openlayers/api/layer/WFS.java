@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.IClusterable;
-import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.openlayers.js.JSUtils;
 
 /**
@@ -109,16 +109,10 @@ public class WFS extends Layer implements IClusterable {
 		this.options = options;
 	}
 
-
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.wicketstuff.openlayers.api.layer.Layer#getHeaderContributors()
-	 */
 	@Override
-	public List<HeaderContributor> getHeaderContributors() {
-		return new LinkedList<HeaderContributor>();
+	protected void bindHeaderContributors(IHeaderResponse response) {
+		// mocleiri: implementation is intentionally empty
+		
 	}
 
 	/*

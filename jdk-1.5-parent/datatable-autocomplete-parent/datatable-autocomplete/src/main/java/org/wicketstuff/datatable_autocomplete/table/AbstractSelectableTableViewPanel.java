@@ -17,20 +17,21 @@ package org.wicketstuff.datatable_autocomplete.table;
 
 import java.util.List;
 
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
-import org.apache.wicket.markup.html.CSSPackageResource;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.markup.repeater.IItemReuseStrategy;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.radio.DTARadioGroup;
@@ -134,7 +135,7 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 	}
 
 	public AbstractSelectableTableViewPanel(String id,
-			ResourceReference css_reference, String cssClassName,
+			final ResourceReference css_reference, String cssClassName,
 			String displayEntityName, IColumn<?>[] columns,
 			ISortableDataProvider<T> dataProvider, 
 			boolean showTableFeedbackPanel,
@@ -144,7 +145,12 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 		this.dataProvider = dataProvider;
 		this.rowSelectionHandler = rowSelectionHandler;
 
-		add(CSSPackageResource.getHeaderContribution(css_reference));
+		add(new AbstractBehavior () {
+
+			@Override
+			public void renderHead(IHeaderResponse response) {
+				response.renderCSSReference(css_reference);
+			}});
 
 		Form form = new Form("viewForm");
 

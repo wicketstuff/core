@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+import org.apache.wicket.request.resource.JavascriptResourceReference;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.api.layer.WMS;
 import org.wicketstuff.openlayers.js.JSUtils;
@@ -87,9 +87,9 @@ public class GetSpecificFeature extends AbstractControl {
 	public String getJSadd(IOpenLayersMap map) {
 		
 		// the proxy only has the url after it is added to the containing page so we have to declare it here not in the constructor.
-		parameters.put("wfsUrl", JSUtils.getQuotedString(wfsProxy.getProxyUrl(true) + wfsURL));
+		parameters.put("wfsUrl", JSUtils.getQuotedString(wfsProxy.getProxyUrl() + wfsURL));
 		
-		parameters.put("featureSelectedCallback", JSUtils.getQuotedString(this.featureSelectionBehaviour.getCallbackUrl(true) + "&propertyValue="));
+		parameters.put("featureSelectedCallback", JSUtils.getQuotedString(this.featureSelectionBehaviour.getCallbackUrl() + "&propertyValue="));
 		
 		return super.getJSadd(map, "OpenLayers.Control.GetSpecificFeature", this.parameters) + "\n" + super.getJSinvoke(map, "activate()");
 	}

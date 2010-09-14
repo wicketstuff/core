@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.datatable_autocomplete.button;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxCallDecorator;
 import org.apache.wicket.ajax.IAjaxIndicatorAware;
@@ -84,15 +85,9 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * org.apache.wicket.ajax.calldecorator.AjaxCallDecorator#decorateScript
-		 * (java.lang.CharSequence)
-		 */
-		@Override
-		public CharSequence decorateScript(CharSequence script) {
+		@Override		
+		public CharSequence decorateScript(Component c, CharSequence script) {
+	
 
 			String preDecorator = decoratingStringModel.getObject();
 
@@ -198,6 +193,13 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 
 	}
 
+	@Override
+	protected void onError(AjaxRequestTarget target, Form<?> form) {
+		
+		if (submitAction != null)
+			submitAction.onError (target, form);
+		
+	}
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -284,6 +286,8 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 			log.debug("button called " + callCounter + " times");
 
 	}
+
+	
 
 	
 }

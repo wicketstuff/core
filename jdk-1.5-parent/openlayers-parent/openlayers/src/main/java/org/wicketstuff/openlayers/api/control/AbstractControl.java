@@ -19,9 +19,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.resource.JavascriptResourceReference;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.api.IJavascriptComponent;
 import org.wicketstuff.openlayers.api.layer.Layer;

@@ -35,8 +35,10 @@ public class WicketApplication extends WebApplication {
 
 	/*
 	 * The number of methods to load into the Trie index. 
+	 * 
+	 * try 12500 if you have enought memory (-Xmx512m should allow it)
 	 */
-	private static final int methodLimit = 125000;
+	private static final int methodLimit = 5000;
 
 
 	private static Logger log = LoggerFactory.getLogger(WicketApplication.class);

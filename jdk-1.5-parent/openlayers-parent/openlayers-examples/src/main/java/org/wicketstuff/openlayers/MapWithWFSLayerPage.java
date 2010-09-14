@@ -81,7 +81,7 @@ public class MapWithWFSLayerPage extends WebPage {
 			 */
 			@Override
 			protected String getJSinit() {
-				return "OpenLayers.ProxyHost='"+wfsProxy.getProxyUrl(true)+"';\n" + super.getJSinit();
+				return "OpenLayers.ProxyHost='"+wfsProxy.getProxyUrl()+"';\n" + super.getJSinit();
 			}};
 		
 		// this hides the mapers layer from the layer switcher

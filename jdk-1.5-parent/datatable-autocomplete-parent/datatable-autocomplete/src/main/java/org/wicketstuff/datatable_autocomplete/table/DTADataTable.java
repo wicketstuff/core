@@ -88,13 +88,14 @@ public class DTADataTable<T> extends DataTable<T> {
 		setOutputMarkupId(true);
 		setVersioned(false);
 		
-		if (hints.isPaginationEnabled())
-			addTopToolbar(new AjaxNavigationToolbar(this));
 		
-		addTopToolbar(new AjaxFallbackHeadersToolbar(this, dataProvider));
+		if (hints.isPaginationEnabled())
+			addTopToolbar(new AjaxNavigationToolbar("navigationToolbar", this));
+		
+		addTopToolbar(new AjaxFallbackHeadersToolbar("headerToolbar", this, dataProvider));
 		
 		if (hints.showNoRecordsToolbar())
-			addBottomToolbar(new NoRecordsToolbar(this));
+			addBottomToolbar(new NoRecordsToolbar("noRecordsToolbar", this));
 
 	}
 

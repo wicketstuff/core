@@ -17,44 +17,56 @@
 	</description>
 
 	<modules>
-		<module>scala-extensions-parent</module>
-		<module>annotation</module>
-		<module>calendarviews-parent</module>
-		<module>client-and-server-validation</module>
 		<module>datatable-autocomplete-parent</module>
-		<module>gmap2-parent</module>
+		<module>flot-parent</module>
 		<module>googlecharts-parent</module>
-		<module>inmethod-grid-parent</module>
-		<module>input-events-parent</module>
-		<module>jslibraries</module>
-		<module>jquery-parent</module>
-		<module>jsr303-parent</module>
-		<module>misc</module>
-		<module>minis-parent</module>
-		<module>objectautocomplete-parent</module>
+		<module>scala-extensions-parent</module>
+		<module>wicket-plugin</module>
 		<module>openlayers-parent</module>
-		<module>phonebook</module>
-		<module>prototype</module>
-		<module>scriptaculous-parent</module>
-		<module>simile-timeline-parent</module>
-		<module>tinymce-parent</module>
-		<module>yui-parent</module>
-		<module>artwork-parent</module>
-		<module>yav-parent</module>
-		<module>plugin</module>
+		
+		<!-- Modules below are commented until they can compile with wicket 1.5-SNAPSHOT -->
+	
+<!--		<module>annotation</module>-->
+<!--		<module>calendarviews-parent</module>-->
+<!--		<module>client-and-server-validation</module>-->
+	
+<!--		<module>gmap2-parent</module>-->
+		
+<!--		<module>inmethod-grid-parent</module>-->
+<!--		<module>input-events-parent</module>-->
+<!--		<module>jslibraries</module>-->
+<!--		<module>jquery-parent</module>-->
+<!--		<module>jsr303-parent</module>-->
+<!--		<module>misc</module>-->
+<!--		<module>minis-parent</module>-->
+<!--		<module>objectautocomplete-parent</module>-->
+
+<!--		<module>phonebook</module>-->
+<!--		<module>prototype</module>-->
+<!--		<module>scriptaculous-parent</module>-->
+<!--		<module>simile-timeline-parent</module>-->
+<!--		<module>tinymce-parent</module>-->
+<!--		<module>yui-parent</module>-->
+<!--		<module>artwork-parent</module>-->
+<!--		<module>yav-parent</module>-->
+<!--		<module>plugin</module>-->
+
 		<!--commented out until org.apache.commons:commons-proxy:jar:1.1-SNAPSHOT is available -->
 		<!--see http://www.nabble.com/Wicketstuff-core...-td23105708.html#a23106385 -->
 		<!-- <module>syringe</module> -->
-		<module>sitemap-xml-parent</module>		
-		<module>multi-text-input-parent</module>
-		<module>shiro-security</module> 
-		<module>flot-parent</module>
-		<module>jwicket-parent</module>
-		<module>mbeanview-parent</module>
-		<module>ddcalendar-parent</module>
-		<module>maven-support</module>
-		<module>theme-parent</module>
-		<module>jasperreports-parent</module>
+		
+<!--		<module>ki-security</module>-->
+<!--		<module>sitemap-xml-parent</module>		-->
+<!--		<module>multi-text-input-parent</module>-->
+<!--		<module>shiro-security</module> -->
+
+<!--		<module>jwicket-parent</module>-->
+<!--		<module>mbeanview-parent</module>-->
+<!--		<module>ddcalendar-parent</module>-->
+<!--		<module>maven-support</module>-->
+<!--		<module>theme-parent</module>-->
+<!--		<module>jasperreports-parent</module>-->
+
 	  </modules>
 
 	<build>

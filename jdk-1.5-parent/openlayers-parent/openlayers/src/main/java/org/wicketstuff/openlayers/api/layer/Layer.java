@@ -3,9 +3,9 @@ package org.wicketstuff.openlayers.api.layer;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.wicket.behavior.HeaderContributor;
-import org.apache.wicket.markup.html.IHeaderContributor;
-import org.apache.wicket.util.string.JavascriptUtils;
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.js.Constructor;
 import org.wicketstuff.openlayers.js.ObjectLiteral;
@@ -39,8 +39,20 @@ public abstract class Layer {
 						+ ")");
 	}
 
-	public abstract List<HeaderContributor> getHeaderContributors();
+	public final void bindHeaderContributors(Component c) {
+		c.add(new AbstractBehavior() {
 
+			@Override
+			public void renderHead(IHeaderResponse response) {
+				bindHeaderContributors(response);
+			}
+			
+			
+		});
+	}
+
+	protected abstract void bindHeaderContributors(IHeaderResponse response);
+	
 	public abstract String getJSconstructor();
 	
 	/**

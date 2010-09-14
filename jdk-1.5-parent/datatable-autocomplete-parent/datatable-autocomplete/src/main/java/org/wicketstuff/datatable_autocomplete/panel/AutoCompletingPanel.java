@@ -16,21 +16,22 @@
 package org.wicketstuff.datatable_autocomplete.panel;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.behavior.SimpleAttributeModifier;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.CSSPackageResource;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.markup.repeater.DefaultItemReuseStrategy;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandler;
 import org.wicketstuff.datatable_autocomplete.table.DTADataTable;
@@ -82,7 +83,12 @@ public class AutoCompletingPanel<T> extends Panel {
 
 		this.provider = aliasDataProvider;
 
-		add(CSSPackageResource.getHeaderContribution(CSS));
+		add(new AbstractBehavior() {
+
+			@Override
+			public void renderHead(IHeaderResponse response) {
+				response.renderCSSReference(CSS);
+			}}); 
 		
 		Component controlPanel = controlPanelProvider.getPanel(this, "controlPanel");
 		

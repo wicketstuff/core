@@ -1,8 +1,8 @@
 package org.wicketstuff.openlayers.event;
 
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.wicketstuff.openlayers.api.LonLat;
 
 public abstract class ClickEventListenerBehavior extends EventListenerBehavior {
@@ -21,8 +21,8 @@ public abstract class ClickEventListenerBehavior extends EventListenerBehavior {
 	@Override
 	protected void onEvent(AjaxRequestTarget target) {
 		Request request = RequestCycle.get().getRequest();
-		String lon = request.getParameter("lon");
-		String lat = request.getParameter("lat");
+		String lon = request.getRequestParameters().getParameterValue("lon").toString();
+		String lat = request.getRequestParameters().getParameterValue("lat").toString();
 		LonLat lonLat = new LonLat(Double.parseDouble(lon), Double
 				.parseDouble(lat));
 		onClick(lonLat, target);

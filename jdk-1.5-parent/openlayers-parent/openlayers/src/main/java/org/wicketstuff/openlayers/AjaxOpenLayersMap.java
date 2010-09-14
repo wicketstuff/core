@@ -20,16 +20,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.WicketAjaxReference;
-import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WicketEventReference;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.resource.JavascriptResourceReference;
 import org.wicketstuff.openlayers.api.Bounds;
 import org.wicketstuff.openlayers.api.IJavascriptComponent;
 import org.wicketstuff.openlayers.api.LonLat;
@@ -91,13 +91,15 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 				: features;
 		this.featureStyles = (featureStyles == null) ? new ArrayList<FeatureStyle>()
 				: featureStyles;
-		add(new HeaderContributor(new IHeaderContributor() {
+		add(new AbstractBehavior() {
+
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public void renderHead(IHeaderResponse response) {
 				response.renderOnDomReadyJavascript(getJSinit());
 			}
-		}));
+		});
 		for (Feature feature : this.features) {
 			getFeatureVector(feature.getDisplayInLayer());
 		}
@@ -470,9 +472,9 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		Request request = RequestCycle.get().getRequest();
 		// Attention: don't use setters as this will result in an endless
 		// AJAX request loop
-		center = LonLat.parseWithNames(request.getParameter("centerConverted"));
-		zoom = Integer.parseInt(request.getParameter("zoomConverted"));
-		bounds = Bounds.parseWithNames(request.getParameter("boundsConverted"));
+		center = LonLat.parseWithNames(request.getRequestParameters().getParameterValue("centerConverted").toString());
+		zoom = Integer.parseInt(request.getRequestParameters().getParameterValue("zoomConverted").toString());
+		bounds = Bounds.parseWithNames(request.getRequestParameters().getParameterValue("boundsConverted").toString());
 	}
 
 	public List<Layer> getLayers() {

@@ -20,17 +20,15 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.protocol.http.WebRequest;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.http.WebRequest;
 import org.wicketstuff.openlayers.api.Control;
 import org.wicketstuff.openlayers.api.LonLat;
 import org.wicketstuff.openlayers.api.control.GetSpecificFeature;
 import org.wicketstuff.openlayers.api.layer.Layer;
-import org.wicketstuff.openlayers.api.layer.Vector;
 import org.wicketstuff.openlayers.api.layer.WMS;
 import org.wicketstuff.openlayers.js.JSUtils;
 import org.wicketstuff.openlayers.proxy.WFSProxyBehavior;
@@ -88,7 +86,7 @@ public class MapWithGetSpecificFeaturePage extends WebPage {
 						
 						 WebRequest wr = (WebRequest) rc.getRequest();
 						
-						String state = wr.getParameter("propertyValue");
+						String state = wr.getRequestParameters().getParameterValue("propertyValue").toString();
 						
 						target.prependJavascript("alert('you selected state = "+state+");");
 								
@@ -118,7 +116,7 @@ public class MapWithGetSpecificFeaturePage extends WebPage {
 			@Override
 			protected String getJSinit() {
 				return "OpenLayers.ProxyHost='"
-						+ proxyBehaviour.getProxyUrl(true) + "';\n"
+						+ proxyBehaviour.getProxyUrl() + "';\n"
 						+ super.getJSinit();
 			}
 

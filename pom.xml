@@ -301,10 +301,13 @@
 	<properties>
 		<wicket.version>1.5-SNAPSHOT</wicket.version>
 		<jetty.version>6.1.22</jetty.version>
+		<idea.version>2.2</idea.version>
 
     		<eclipse.jetty.version>7.1.4.v20100610</eclipse.jetty.version>
 		<lucene.version>2.4.1</lucene.version>
         <slf4j.version>1.5.11</slf4j.version>
+         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
 	</properties>
 
 	<dependencies>
@@ -643,6 +646,10 @@
 					<groupId>org.mortbay.jetty</groupId>
 					<artifactId>maven-jetty-plugin</artifactId>
 					<version>${jetty.version}</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-idea-plugin</artifactId>
+					<version>${idea.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

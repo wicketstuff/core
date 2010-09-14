@@ -1,10 +1,10 @@
 package org.wicketstuff.openlayers.event;
 
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.OpenLayersMapUtils;
 
@@ -56,7 +56,7 @@ public abstract class DrawListenerBehavior extends AbstractDefaultAjaxBehavior {
 	 */
 	protected void onEvent(AjaxRequestTarget target) throws RuntimeException {
 		Request request = RequestCycle.get().getRequest();
-		String wkt = request.getParameter("wkt");
+		String wkt = request.getRequestParameters().getParameterValue("wkt").toString();
 
 		WKTReader wktReader = new WKTReader(OpenLayersMapUtils.getGeoFactory());
 

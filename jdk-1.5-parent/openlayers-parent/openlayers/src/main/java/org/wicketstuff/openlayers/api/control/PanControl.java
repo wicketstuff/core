@@ -1,10 +1,11 @@
 package org.wicketstuff.openlayers.api.control;
 
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 
 /**
@@ -16,13 +17,13 @@ import org.wicketstuff.openlayers.IOpenLayersMap;
 
 public class PanControl extends Panel {
 
-	private static ResourceReference PAN_UP = new ResourceReference(
+	private static ResourceReference PAN_UP = new PackageResourceReference(
 			PanControl.class, "north-mini.png");
-	private static ResourceReference PAN_LEFT = new ResourceReference(
+	private static ResourceReference PAN_LEFT = new PackageResourceReference(
 			PanControl.class, "west-mini.png");
-	private static ResourceReference PAN_RIGHT = new ResourceReference(
+	private static ResourceReference PAN_RIGHT = new PackageResourceReference(
 			PanControl.class, "east-mini.png");
-	private static ResourceReference PAN_DOWN = new ResourceReference(
+	private static ResourceReference PAN_DOWN = new PackageResourceReference(
 			PanControl.class, "south-mini.png");
 
 	private static int panoffset = 10;

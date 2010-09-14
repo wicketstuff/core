@@ -21,21 +21,17 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AbstractBehavior;
-import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.JavascriptPackageResource;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.resource.JavascriptResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.openlayers.api.Bounds;
@@ -283,7 +279,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	 * 
 	 */
 	protected OpenLayersMap(final String id,
-			final HeaderContributor headerContrib, List<Overlay> overlays,
+			final OpenLayersMapHeaderContributor headerContrib, List<Overlay> overlays,
 			List<Layer> defaultLayers, HashMap<String, String> options) {
 		this(id, headerContrib, overlays, new PopupListener(false) {
 			@Override
@@ -305,7 +301,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	 * @param overlays
 	 */
 	private OpenLayersMap(final String id,
-			final HeaderContributor headerContrib, List<Overlay> overlays,
+			final OpenLayersMapHeaderContributor headerContrib, List<Overlay> overlays,
 			PopupListener popupListener, List<Layer> defaultLayers,
 			HashMap<String, String> options) {
 		super(id);
@@ -321,13 +317,13 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 
 		add(headerContrib);
 		addHeaderContributorsForLayers(layers);
-		add(new HeaderContributor(new IHeaderContributor() {
+		add(new AbstractBehavior() {
 			private static final long serialVersionUID = 1L;
 
 			public void renderHead(IHeaderResponse response) {
 				response.renderOnDomReadyJavascript(getJSinit());
 			}
-		}));
+		});
 
 		setInfoWindow(new InfoWindow());
 		add(getInfoWindow());
@@ -339,9 +335,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 
 	private void addHeaderContributorsForLayers(List<Layer> layers) {
 		for (Layer layer : layers) {
-			for (HeaderContributor contributor : layer.getHeaderContributors()) {
-				add(contributor);
-			}
+			layer.bindHeaderContributors(this);
 		}
 	}
 
@@ -355,17 +349,29 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	public OpenLayersMap addControl(IJavascriptComponent control) {
 		controls.add(control);
 
-		JavascriptResourceReference[] jsReferences = control
+		final JavascriptResourceReference[] jsReferences = control
 				.getJSResourceReferences();
 
 		if (jsReferences != null && jsReferences.length > 0) {
 
-			for (int i = 0; i < jsReferences.length; i++) {
-				JavascriptResourceReference javascriptResourceReference = jsReferences[i];
+			add(new AbstractBehavior(){
 
-				add(JavascriptPackageResource
-						.getHeaderContribution(javascriptResourceReference));
-			}
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void renderHead(IHeaderResponse response) {
+			
+					for (int i = 0; i < jsReferences.length; i++) {
+						JavascriptResourceReference javascriptResourceReference = jsReferences[i];
+
+						response.renderJavascriptReference(javascriptResourceReference);
+					}
+				}});
+			
+			
 		}
 
 		AjaxRequestTarget target = AjaxRequestTarget.get();
@@ -743,10 +749,10 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 
 		// Attention: don't use setters as this will result in an endless
 		// AJAX request loop
-		center = LonLat.parseWithNames(request.getParameter("centerConverted"));
-		zoom = Integer.parseInt(request.getParameter("zoomConverted"));
-		bounds = Bounds.parseWithNames(request.getParameter("boundsConverted"));
-
+		center = LonLat.parseWithNames(request.getRequestParameters().getParameterValue("centerConverted").toString());
+		zoom = Integer.parseInt(request.getRequestParameters().getParameterValue("zoomConverted").toString());
+		bounds = Bounds.parseWithNames(request.getRequestParameters().getParameterValue("boundsConverted").toString());
+		
 		getInfoWindow().update(target);
 	}
 
@@ -758,12 +764,13 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 		return infoWindow;
 	}
 
+	
 	/**
 	 * @see org.apache.wicket.MarkupContainer#onRender(org.apache.wicket.markup.MarkupStream)
 	 */
 	@Override
-	protected void onRender(MarkupStream markupStream) {
-		super.onRender(markupStream);
+	protected void onRender() {
+		super.onRender();
 		if (Application.DEVELOPMENT.equalsIgnoreCase(Application.get()
 				.getConfigurationType())
 				&& !Application.get().getMarkupSettings().getStripWicketTags()) {

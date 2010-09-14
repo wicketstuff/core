@@ -19,8 +19,8 @@ import java.util.Map;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.IClusterable;
-import org.apache.wicket.Request;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.request.Request;
 import org.apache.wicket.util.time.Duration;
 
 

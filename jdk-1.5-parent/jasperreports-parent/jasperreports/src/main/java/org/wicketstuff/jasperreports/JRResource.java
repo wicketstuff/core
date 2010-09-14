@@ -24,13 +24,17 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.JRAbstractExporter;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.markup.html.DynamicWebResource;
-import org.apache.wicket.markup.html.WebResource;
-import org.apache.wicket.protocol.http.WebResponse;
+import org.apache.wicket.request.http.WebResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

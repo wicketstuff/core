@@ -1,14 +1,9 @@
 package org.wicketstuff.openlayers.api.layer;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-import org.apache.wicket.behavior.HeaderContributor;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.wicketstuff.openlayers.js.Constructor;
 import org.wicketstuff.openlayers.js.JSUtils;
 
 public class OSM extends Layer implements Serializable {
@@ -24,18 +19,12 @@ public class OSM extends Layer implements Serializable {
 		this.layer = layer;
 	}
 
+	
 	@Override
-	public List<HeaderContributor> getHeaderContributors() {
-		List<HeaderContributor> contributors = new ArrayList<HeaderContributor>();
-
-		contributors.add(new HeaderContributor(new IHeaderContributor() {
-			public void renderHead(IHeaderResponse response) {
+	protected void bindHeaderContributors(IHeaderResponse response) {
+		
 				response
 						.renderJavascriptReference("http://www.openstreetmap.org/openlayers/OpenStreetMap.js");
-			}
-		}));
-
-		return contributors;
 	}
 
 	public String getJSconstructor() {

@@ -32,6 +32,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.datatable_autocomplete.button.DTAAjaxFallbackButton;
+import org.wicketstuff.datatable_autocomplete.form.action.AbstractFormOnSubmitAction;
 import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;
 import org.wicketstuff.datatable_autocomplete.model.MarkupIDInStringModel;
 import org.wicketstuff.datatable_autocomplete.table.ISelectableTableViewPanelButtonProvider;
@@ -100,7 +101,8 @@ public class ButtonListView extends ListView<ISelectableTableViewPanelButtonProv
 		}
 
 			// if the tow is required then
-			buttonAction = new IFormOnSubmitAction() {
+			buttonAction = new AbstractFormOnSubmitAction() {
+			
 
 				/**
 				 * 

@@ -96,6 +96,8 @@ public final class TrieBuilder {
 		
 		for (String p : parts) {
 
+			p = p.replaceAll(";C", "");
+			
 			if (p.endsWith("rt.jar")) {
 				targetPart = p;
 				break;

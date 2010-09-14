@@ -18,16 +18,18 @@ package org.wicketstuff.datatable_autocomplete.behaviour;
 import java.util.List;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.Request;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.request.IRequestParameters;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketstuff.datatable_autocomplete.panel.AJAXAutoCompleteBehavior;
 import org.wicketstuff.datatable_autocomplete.panel.AbstractAutoCompleteDependencyProcessor;
 import org.wicketstuff.datatable_autocomplete.panel.AutoCompletingPanel;
-import org.wicketstuff.datatable_autocomplete.panel.AJAXAutoCompleteBehavior;
 
 /**
  * @author mocleiri
@@ -73,9 +75,11 @@ public class AutoCompletingBehavior extends AJAXAutoCompleteBehavior {
 		
 		public void onAjaxUpdate(Request request, AjaxRequestTarget target) {
 
-			String value = request.getParameter(callbackName);
+			IRequestParameters params = request.getRequestParameters();
+			
+			StringValue value = params.getParameterValue(callbackName);
 
-			textModel.setModelObject(value);
+			textModel.setModelObject(value.toString());
 
 			// enable since this is an ajax update
 			autoCompletingPanel.setInitialRenderDisabledMode(false);

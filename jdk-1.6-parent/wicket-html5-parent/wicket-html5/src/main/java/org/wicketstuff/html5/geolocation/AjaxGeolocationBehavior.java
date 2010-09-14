@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.interpolator.MapVariableInterpolator;
 import org.apache.wicket.util.template.PackagedTextTemplate;
 
@@ -23,8 +23,8 @@ public abstract class AjaxGeolocationBehavior extends AbstractDefaultAjaxBehavio
 	@Override
 	protected void respond(AjaxRequestTarget target) {
 		final Request request = RequestCycle.get().getRequest();
-        final String latitude = request.getParameter("lat");
-        final String longitude = request.getParameter("long");
+        final String latitude = request.getRequestParameters().getParameterValue("lat").toString();
+        final String longitude = request.getRequestParameters().getParameterValue("long").toString();
         onGeoAvailable(target, latitude, longitude);
 	}
 
@@ -42,7 +42,7 @@ public abstract class AjaxGeolocationBehavior extends AbstractDefaultAjaxBehavio
 	public void renderHead(final IHeaderResponse response) {
 		super.renderHead(response);
 
-		final CharSequence callbackUrl = getCallbackUrl(false);
+		final CharSequence callbackUrl = getCallbackUrl();
 		final String componentMarkupId = getComponent().getMarkupId();
 
 		final Map<String, String> variables = new HashMap<String, String>();

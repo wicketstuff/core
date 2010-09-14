@@ -18,10 +18,10 @@
 package org.wicketstuff.openlayers.event;
 
 
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.wicketstuff.openlayers.OpenLayersMap;
 import org.wicketstuff.openlayers.api.LonLat;
 import org.wicketstuff.openlayers.api.Marker;
@@ -73,7 +73,7 @@ public abstract class PopupListener extends AbstractDefaultAjaxBehavior {
 		Overlay overlay = null;
 		LonLat latLng = null;
 
-		String markerParameter = request.getParameter("marker");
+		String markerParameter = request.getRequestParameters().getParameterValue("marker").toString();
 		if (markerParameter != null) {
 			OpenLayersMap map=getOpenLayerMap();
 			for (Overlay ovl : map.getOverlays()) {
@@ -83,7 +83,7 @@ public abstract class PopupListener extends AbstractDefaultAjaxBehavior {
 				}
 			}
 		}
-		String markerEvent = request.getParameter("event");
+		String markerEvent = request.getRequestParameters().getParameterValue("event").toString();
 
 		if (wantEvents) {
 			// Translate from string to type!

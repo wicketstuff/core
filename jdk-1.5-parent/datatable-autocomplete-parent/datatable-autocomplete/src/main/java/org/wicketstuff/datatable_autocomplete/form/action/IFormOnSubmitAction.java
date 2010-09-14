@@ -30,6 +30,11 @@ import org.apache.wicket.markup.html.form.Form;
 public interface IFormOnSubmitAction<T> extends IClusterable {
 
 	public void onSubmit (AjaxRequestTarget target, Form<T> form);
+
+	/**
+	* Listener method invoked on form submit with errors
+	*/ 
+	public void onError(AjaxRequestTarget target, Form<?> form);
 	
 	
 }

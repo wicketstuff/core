@@ -17,9 +17,9 @@ package org.wicketstuff.datatable_autocomplete.table;
 
 import java.util.Arrays;
 
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;

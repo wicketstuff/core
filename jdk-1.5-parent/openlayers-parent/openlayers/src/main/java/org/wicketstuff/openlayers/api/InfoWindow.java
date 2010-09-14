@@ -1,10 +1,10 @@
 package org.wicketstuff.openlayers.api;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.wicketstuff.openlayers.OpenLayersMap;
 
 public class InfoWindow extends WebMarkupContainer {
@@ -28,7 +28,7 @@ public class InfoWindow extends WebMarkupContainer {
 	public void update(AjaxRequestTarget target) {
 		Request request = RequestCycle.get().getRequest();
 
-		if (Boolean.parseBoolean(request.getParameter("hidden"))) {
+		if (Boolean.parseBoolean(request.getRequestParameters().getParameterValue("hidden").toString())) {
 			// Attention: don't use close() as this might result in an
 			// endless AJAX request loop
 			marker = null;

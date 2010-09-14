@@ -99,7 +99,7 @@ public class MapWithWMSGetFeatureInfoPage extends WebPage {
 			@Override
 			protected String getJSinit() {
 				return "OpenLayers.ProxyHost='"
-						+ proxyBehaviour.getProxyUrl(true) + "';\n"
+						+ proxyBehaviour.getProxyUrl() + "';\n"
 						+ super.getJSinit();
 			}
 

@@ -16,9 +16,7 @@
 package org.wicketstuff.openlayers.api;
 
 import org.apache.wicket.IClusterable;
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
-import org.apache.wicket.util.template.JavaScriptTemplate;
+import org.apache.wicket.request.resource.JavascriptResourceReference;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 
 /**
@@ -26,7 +24,7 @@ import org.wicketstuff.openlayers.IOpenLayersMap;
  * 
  * Created as part of the Control conversion from an enumerated type to a class hierarchy.  
  * 
- * Only works for Control's right now but it might be possible 
+ * Only works for Control's right now but it might be possible to extend to other components
  *
  */
 public interface IJavascriptComponent extends IClusterable {

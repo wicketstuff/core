@@ -20,12 +20,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.util.StringUtils;
@@ -157,7 +157,7 @@ public class AJAXAutoCompleteBehavior extends
 		/*
 		 * Encode the callback script appending to the url the current client side value of the component values.
 		 */
-		CharSequence baseUrl = super.getCallbackUrl(onlyTargetActivePage);
+		CharSequence baseUrl = super.getCallbackUrl();
 
 		CharSequence callbackScript = baseUrl;
 
