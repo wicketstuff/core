@@ -17,6 +17,7 @@
 package org.wicketstuff.push.timer;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -84,14 +85,14 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 	static {
 		try {
 			methods = new Method[] {
-					AjaxRequestTarget.class.getMethod("addComponent",
-							new Class[] { Component.class }),
+					AjaxRequestTarget.class.getMethod("addComponent", 
+					        Array.newInstance(Component.class,0).getClass()),
 					AjaxRequestTarget.class.getMethod("addComponent",
 							new Class[] { Component.class, String.class }),
 					AjaxRequestTarget.class.getMethod("appendJavascript",
-							new Class[] { String.class }),
+							new Class[] { CharSequence.class }),
 					AjaxRequestTarget.class.getMethod("prependJavascript",
-							new Class[] { String.class }),
+							new Class[] { CharSequence.class }),
 					AjaxRequestTarget.class.getMethod("focusComponent",
 							new Class[] { Component.class }), };
 		} catch (final Exception e) {
