@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.wicket.IClusterable;
-import org.apache.wicket.util.lang.Objects;
+import org.apache.wicket.util.lang.WicketObjects;
 
 import com.inmethod.grid.IGridColumn;
 
@@ -256,7 +256,7 @@ public class ColumnsState implements IClusterable {
 	 * @return {@link ColumnsState} instance that is a deep copy of this instance
 	 */
 	public ColumnsState clone() {
-		return (ColumnsState) Objects.cloneObject(this);
+		return (ColumnsState) WicketObjects.cloneObject(this);
 	}
 
 	/**

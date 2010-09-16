@@ -4,10 +4,10 @@
 package com.inmethod.grid.common;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.Response;
 import org.apache.wicket.behavior.AbstractBehavior;
-import org.apache.wicket.protocol.http.WebRequest;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.util.string.JavascriptUtils;
 
 /**

@@ -5,18 +5,18 @@ import javax.swing.tree.TreeNode;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.IClusterable;
-import org.apache.wicket.IComponentBorder;
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.Response;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.border.MarkupComponentBorder;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 import com.inmethod.icon.Icon;
 import com.inmethod.icon.IconImage;
@@ -52,7 +52,7 @@ public abstract class TreePanel extends Panel {
 		// add junction link
 		Object node = getDefaultModelObject();
 		Component junctionLink = newJunctionLink(this, JUNCTION_LINK_ID, node);
-		junctionLink.setComponentBorder(new JunctionBorder(node, level));
+		junctionLink.add(new JunctionBorder(node, level));
 		add(junctionLink);
 
 		// add node component
@@ -67,7 +67,7 @@ public abstract class TreePanel extends Panel {
 				return getIcon() != null;
 			}
 		};
-		icon.setComponentBorder(IconBorder.INSTANCE);
+		icon.add(IconBorder.INSTANCE);
 		add(icon);		
 	}
 	
@@ -145,7 +145,7 @@ public abstract class TreePanel extends Panel {
 	 * 
 	 * @author Matej Knopp
 	 */
-	private static class IconBorder implements IComponentBorder {
+	private static class IconBorder extends MarkupComponentBorder {
 
 		private static final long serialVersionUID = 1L;
 
@@ -171,7 +171,7 @@ public abstract class TreePanel extends Panel {
 	 * 
 	 * @author Matej Knopp
 	 */
-	private static class JunctionBorder implements IComponentBorder {
+	private static class JunctionBorder extends MarkupComponentBorder {
 		private static final long serialVersionUID = 1L;
 
 		private final int level;
@@ -302,6 +302,11 @@ public abstract class TreePanel extends Panel {
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form form) {
 				callback.onClick(target);
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form) {
+				
 			}			
 		}.setDefaultFormProcessing(false);
 	}

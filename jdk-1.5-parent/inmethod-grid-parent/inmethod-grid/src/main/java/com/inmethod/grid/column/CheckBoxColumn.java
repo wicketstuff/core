@@ -11,7 +11,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.string.Strings;
+import org.apache.wicket.util.visit.IVisit;
+import org.apache.wicket.util.visit.IVisitor;
 
 import com.inmethod.grid.datagrid.DataGrid;
 import com.inmethod.grid.treegrid.TreeGrid;
@@ -147,11 +148,11 @@ public class CheckBoxColumn extends AbstractColumn {
 				@Override
 				protected void onEvent(AjaxRequestTarget target) {
 					// preserve the entered values in form components
-					Form form = getForm();
+					Form<?> form = getForm();
 					form
-							.visitFormComponentsPostOrder(new FormComponent.AbstractVisitor() {
-								public void onFormComponent(
-										final FormComponent formComponent) {
+							.visitFormComponentsPostOrder(new IVisitor<FormComponent<?>, Void>() {
+								public void component(FormComponent<?> formComponent,
+										IVisit<Void> visit) {
 									if (formComponent.isVisibleInHierarchy()) {
 										formComponent.inputChanged();
 									}
@@ -273,19 +274,19 @@ public class CheckBoxColumn extends AbstractColumn {
 				@Override
 				protected void onEvent(AjaxRequestTarget target) {
 					// preserve the entered values in form components
-					Form form = getForm();
+					Form<?> form = getForm();
 					form
-							.visitFormComponentsPostOrder(new FormComponent.AbstractVisitor() {
-								public void onFormComponent(
-										final FormComponent formComponent) {
+							.visitFormComponentsPostOrder(new IVisitor<FormComponent<?>, Void>() {
+								public void component(FormComponent<?> formComponent,
+										IVisit<Void> visit) {
 									if (formComponent.isVisibleInHierarchy()) {
 										formComponent.inputChanged();
 									}
 								}
 							});
 
-					boolean checked = Strings.toBoolean(getRequest()
-							.getParameter("checked"));
+					boolean checked = getRequest()
+							.getRequestParameters().getParameterValue("checked").toBoolean();
 					if (checked)
 						getGrid().selectAllVisibleItems();
 					else

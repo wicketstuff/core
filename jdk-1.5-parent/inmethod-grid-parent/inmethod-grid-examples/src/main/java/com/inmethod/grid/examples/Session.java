@@ -2,8 +2,8 @@ package com.inmethod.grid.examples;
 
 import java.util.Locale;
 
-import org.apache.wicket.Request;
 import org.apache.wicket.protocol.http.WebSession;
+import org.apache.wicket.request.Request;
 
 import com.inmethod.grid.examples.contact.Contact;
 import com.inmethod.grid.examples.contact.ContactsDatabase;

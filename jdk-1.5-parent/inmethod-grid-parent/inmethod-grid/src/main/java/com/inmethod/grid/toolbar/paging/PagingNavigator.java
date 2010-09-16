@@ -34,8 +34,8 @@ public class PagingNavigator extends AjaxPagingNavigator {
 	}
 
 	@Override
-	protected PagingNavigation newNavigation(IPageable pageable, IPagingLabelProvider labelProvider) {
-		PagingNavigation navigation = super.newNavigation(pageable, labelProvider);
+	protected PagingNavigation newNavigation(final String id, IPageable pageable, IPagingLabelProvider labelProvider) {
+		PagingNavigation navigation = super.newNavigation(id, pageable, labelProvider);
 		navigation.setViewSize(11);
 		return navigation;
 	}

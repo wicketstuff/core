@@ -9,7 +9,6 @@ import javax.swing.tree.TreeModel;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
-import org.apache.wicket.Response;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxCallDecorator;
@@ -26,13 +25,16 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.JavascriptResourceReference;
 import org.apache.wicket.util.string.JavascriptUtils;
 import org.apache.wicket.util.string.Strings;
+import org.apache.wicket.util.visit.IVisit;
+import org.apache.wicket.util.visit.IVisitor;
 
 import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.IGridSortState;
@@ -181,7 +183,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 		@Override
 		protected void respond(AjaxRequestTarget target) {
 			// get the columnState request parameter (set by javascript)
-			String state = getRequest().getParameter("columnState");
+			String state = getRequest().getRequestParameters().getParameterValue("columnState").toString();
 
 			// apply it to current state
 			columnState.updateColumnsState(state);
@@ -196,7 +198,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 		public CharSequence getCallbackScript() {
 			// this assumes presence of columnState variable in the surrounding
 			// javacript context
-			return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl(false) + "&columnState=' + columnState");
+			return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() + "&columnState=' + columnState");
 		}
 
 	};
@@ -693,16 +695,18 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 			protected void onEvent(AjaxRequestTarget target) {
 
 				// preserve the entered values in form components
-				Form form = getForm();
-				form.visitFormComponentsPostOrder(new FormComponent.AbstractVisitor() {
-					public void onFormComponent(final FormComponent formComponent) {
+				Form<?> form = getForm();
+				form.visitFormComponentsPostOrder(new IVisitor<FormComponent<?>, Void>() {
+
+					public void component(FormComponent<?> formComponent,
+							IVisit<Void> visit) {
 						if (formComponent.isVisibleInHierarchy()) {
 							formComponent.inputChanged();
 						}
 					}
 				});
 
-				String column = getRequest().getParameter("column");
+				String column = getRequest().getRequestParameters().getParameterValue("column").toString();
 
 				lastClickedColumn = column;
 
@@ -733,8 +737,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public CharSequence decorateScript(CharSequence script) {
-						return super.decorateScript("if (InMethod.XTable.canSelectRow(event)) { "
+					public CharSequence decorateScript(Component c, CharSequence script) {
+						return super.decorateScript(c, "if (InMethod.XTable.canSelectRow(event)) { "
 								+ "var col=(this.imxtClickedColumn || ''); this.imxtClickedColumn='';" + script
 								+ " }");
 					}

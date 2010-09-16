@@ -6,17 +6,17 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.Response;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 import com.inmethod.grid.IGridColumn;
-import com.inmethod.grid.IRenderable;
 import com.inmethod.grid.IGridSortState;
+import com.inmethod.grid.IRenderable;
 
 /**
  * Represents container of cell items in one row.
@@ -216,8 +216,10 @@ public abstract class AbstractGridRow extends WebMarkupContainer {
 	 * Renders the actual cell components (or {@link IRenderable} instances).
 	 */
 	@Override
-	protected void onRender(MarkupStream markupStream) {
+	protected void onRender() {
 
+		MarkupStream markupStream = getMarkupStream();
+		
 		final int markupStart = markupStream.getCurrentIndex();
 		Response response = RequestCycle.get().getResponse();
 
@@ -248,7 +250,7 @@ public abstract class AbstractGridRow extends WebMarkupContainer {
 					throw new IllegalStateException("Column ID has changed during rendering");
 				}
 				markupStream.setCurrentIndex(markupStart);
-				component.render(markupStream);
+				component.render();
 				rendered = true;
 			}
 

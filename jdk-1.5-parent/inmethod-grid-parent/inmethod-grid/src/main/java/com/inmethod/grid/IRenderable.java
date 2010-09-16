@@ -1,7 +1,7 @@
 package com.inmethod.grid;
 
-import org.apache.wicket.Response;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.Response;
 
 /**
  * Lightweight columns return an implementation of this interface to render cell output.

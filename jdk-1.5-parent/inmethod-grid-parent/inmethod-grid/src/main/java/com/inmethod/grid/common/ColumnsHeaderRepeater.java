@@ -7,11 +7,11 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.Response;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.Strings;
 
 import com.inmethod.grid.IGridColumn;
@@ -105,7 +105,9 @@ public abstract class ColumnsHeaderRepeater extends WebMarkupContainer {
 	}
 
 	@Override
-	protected void onRender(MarkupStream markupStream) {
+	protected void onRender() {
+		MarkupStream markupStream = getAssociatedMarkupStream(true);
+		
 		final int markupStart = markupStream.getCurrentIndex();
 		Response response = RequestCycle.get().getResponse();
 
@@ -139,7 +141,7 @@ public abstract class ColumnsHeaderRepeater extends WebMarkupContainer {
 				throw new IllegalStateException("Column ID has changed during rendering");
 			}
 			markupStream.setCurrentIndex(markupStart);
-			component.render(markupStream);
+			component.renderComponent();
 			rendered = true;
 
 			// render closing tag

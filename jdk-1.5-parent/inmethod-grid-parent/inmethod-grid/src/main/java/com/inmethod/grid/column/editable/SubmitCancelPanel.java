@@ -1,6 +1,5 @@
 package com.inmethod.grid.column.editable;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
@@ -9,6 +8,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.visit.IVisit;
+import org.apache.wicket.util.visit.IVisitor;
 
 import com.inmethod.grid.common.AbstractGrid;
 import com.inmethod.icon.Icon;
@@ -93,44 +94,42 @@ abstract class SubmitCancelPanel extends Panel {
 			final Boolean[] error = { false };
 			
 			// first iteration - validate components
-			gridRow.visitChildren(FormComponent.class, new IVisitor() {
-				public Object component(Component component) {
-
-					FormComponent formComponent = (FormComponent) component;
+			gridRow.visitChildren(FormComponent.class, new IVisitor<FormComponent<?>, Void>() {
+				public void component(FormComponent<?> formComponent, IVisit<Void> visit) {
+					
 					if (formComponentActive(formComponent)) {
 						formComponent.validate();
 						if (formComponent.isValid()) {
 							if (formComponent.processChildren()) {
-								return CONTINUE_TRAVERSAL;
+								return;
 							} else {
-								return CONTINUE_TRAVERSAL_BUT_DONT_GO_DEEPER;
+								visit.dontGoDeeper();
+								return;
 							}
 						} else {
 							error[0] = true;
-							return CONTINUE_TRAVERSAL_BUT_DONT_GO_DEEPER;
+							visit.dontGoDeeper();
 						}
 					}
-					return CONTINUE_TRAVERSAL_BUT_DONT_GO_DEEPER;
 				}
 			});
 
 			// second iteration - update models if the validation passed
 			if (error[0] == false) {
-				gridRow.visitChildren(FormComponent.class, new IVisitor() {
-					public Object component(Component component) {
+				gridRow.visitChildren(FormComponent.class, new IVisitor<FormComponent<?>, Void>() {
+					public void component(FormComponent<?> formComponent, IVisit<Void> visit) {
 
-						FormComponent formComponent = (FormComponent) component;
 						if (formComponentActive(formComponent)) {
 
 							formComponent.updateModel();
 
 							if (formComponent.processChildren()) {
-								return CONTINUE_TRAVERSAL;
+								return;
 							} else {
-								return CONTINUE_TRAVERSAL_BUT_DONT_GO_DEEPER;
+								visit.dontGoDeeper();
+								return;
 							}
 						}
-						return CONTINUE_TRAVERSAL_BUT_DONT_GO_DEEPER;
 					}
 				});
 				
@@ -139,6 +138,12 @@ abstract class SubmitCancelPanel extends Panel {
 				SubmitCancelPanel.this.onError(target);
 			}
 			
+			
+		}
+
+		@Override
+		protected void onError(AjaxRequestTarget target, Form<?> form) {
+			// TODO Auto-generated method stub
 			
 		}
 	};

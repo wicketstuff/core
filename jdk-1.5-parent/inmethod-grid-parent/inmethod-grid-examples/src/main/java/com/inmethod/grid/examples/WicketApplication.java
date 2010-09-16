@@ -1,10 +1,11 @@
 package com.inmethod.grid.examples;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.Request;
-import org.apache.wicket.Response;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.request.target.coding.HybridUrlCodingStrategy;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.mapper.MountedMapper;
 
 import com.inmethod.grid.examples.pages.datagrid.DataGridColumnPropertiesPage;
 import com.inmethod.grid.examples.pages.datagrid.DataGridSelectionPage;
@@ -33,19 +34,23 @@ public class WicketApplication extends WebApplication
 	
 	@Override
 	protected void init() {
-		mount(new HybridUrlCodingStrategy("/data-grid/simple", SimpleDataGridPage.class));
-		mount(new HybridUrlCodingStrategy("/data-grid/vertical-scrolling", VerticalScrollingDataGridPage.class));
-		mount(new HybridUrlCodingStrategy("/data-grid/item-selection", DataGridSelectionPage.class));
-		mount(new HybridUrlCodingStrategy("/data-grid/column-properties", DataGridColumnPropertiesPage.class));
-		mount(new HybridUrlCodingStrategy("/data-grid/editable", EditableDataGridPage.class));
-		mount(new HybridUrlCodingStrategy("/data-grid/editable-selection", EditableDataGridWithSelectionPage.class));
-		mount(new HybridUrlCodingStrategy("/data-grid/unknown-count", DataGridWithUnknownItemCount.class));
+		mount("/data-grid/simple", SimpleDataGridPage.class);
+		mount("/data-grid/vertical-scrolling", VerticalScrollingDataGridPage.class);
+		mount("/data-grid/item-selection", DataGridSelectionPage.class);
+		mount("/data-grid/column-properties", DataGridColumnPropertiesPage.class);
+		mount("/data-grid/editable", EditableDataGridPage.class);
+		mount("/data-grid/editable-selection", EditableDataGridWithSelectionPage.class);
+		mount("/data-grid/unknown-count", DataGridWithUnknownItemCount.class);
 		
-		mount(new HybridUrlCodingStrategy("/tree-grid/simple", SimpleTreeGridPage.class));
-		mount(new HybridUrlCodingStrategy("/tree-grid/vertical-scrolling", VerticalScrollingTreeGridPage.class));
-		mount(new HybridUrlCodingStrategy("/tree-grid/item-selection", TreeGridSelectionPage.class));
-		mount(new HybridUrlCodingStrategy("/tree-grid/column-properties", TreeGridColumnPropertiesPage.class));
-		mount(new HybridUrlCodingStrategy("/tree-grid/editable", EditableTreeGridPage.class));		
+		mount("/tree-grid/simple", SimpleTreeGridPage.class);
+		mount("/tree-grid/vertical-scrolling", VerticalScrollingTreeGridPage.class);
+		mount("/tree-grid/item-selection", TreeGridSelectionPage.class);
+		mount("/tree-grid/column-properties", TreeGridColumnPropertiesPage.class);
+		mount("/tree-grid/editable", EditableTreeGridPage.class);		
+	}
+	
+	private void mount(String mountPath, Class<? extends WebPage> pageClass) {
+		getRootRequestMapperAsCompound().add(new MountedMapper(mountPath, pageClass));
 	}
 	
 	/**

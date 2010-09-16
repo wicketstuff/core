@@ -1,7 +1,9 @@
 package com.inmethod.icon;
 
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  * Simple icon implementation that uses images in classpath or a {@link ResourceReference} as icon
@@ -34,7 +36,7 @@ public class PackageIcon implements Icon {
 	 *            Icon name relative to the <code>scope</code> class
 	 */
 	public PackageIcon(Class<?> scope, String name) {
-		this.reference = new ResourceReference(scope, name);
+		this.reference = new PackageResourceReference(scope, name);
 	}
 
 	/**
@@ -55,7 +57,7 @@ public class PackageIcon implements Icon {
 	 * {@inheritDoc}
 	 */
 	public CharSequence getUrl() {
-		return RequestCycle.get().urlFor(reference);
+		return RequestCycle.get().urlFor(new ResourceReferenceRequestHandler(reference));
 	}
 
 }
