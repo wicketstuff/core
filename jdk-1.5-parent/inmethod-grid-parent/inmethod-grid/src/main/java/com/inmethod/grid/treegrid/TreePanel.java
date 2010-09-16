@@ -47,8 +47,10 @@ public abstract class TreePanel extends Panel {
 	
 	private final int level;
 	
-	private void init()
-	{
+	@Override
+	protected void onInitialize() {
+		super.onInitialize();
+	
 		// add junction link
 		Object node = getDefaultModelObject();
 		Component junctionLink = newJunctionLink(this, JUNCTION_LINK_ID, node);
@@ -69,15 +71,6 @@ public abstract class TreePanel extends Panel {
 		};
 		icon.add(IconBorder.INSTANCE);
 		add(icon);		
-	}
-	
-	@Override
-	protected void onBeforeRender() {
-		if (!hasBeenRendered())
-		{
-			init();
-		}
-		super.onBeforeRender();
 	}
 
 	/**
@@ -204,7 +197,7 @@ public abstract class TreePanel extends Panel {
 			}
 
 			response.write("<td class=\"imxt-spacer\">");
-		}
+		}		
 	};
 
 	private TreeGridBody getTreeGridBody() {
