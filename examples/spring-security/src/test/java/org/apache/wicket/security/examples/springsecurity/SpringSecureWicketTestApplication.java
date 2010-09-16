@@ -29,9 +29,9 @@ import org.apache.wicket.security.hive.config.SwarmPolicyFileHiveFactory;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.apache.wicket.spring.test.ApplicationContextMock;
 import org.springframework.beans.factory.annotation.Required;
-import org.springframework.security.AuthenticationManager;
-import org.springframework.security.providers.ProviderManager;
-import org.springframework.security.providers.TestingAuthenticationProvider;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.TestingAuthenticationProvider;
 
 /**
  * WicketTestApplication for testing Spring Security and Wicket Security based

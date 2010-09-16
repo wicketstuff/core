@@ -5,10 +5,9 @@ import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.examples.springsecurity.SpringSecureWicketApplication;
 import org.apache.wicket.security.hive.authentication.LoginContext;
 import org.apache.wicket.security.hive.authentication.Subject;
-import org.springframework.security.Authentication;
-import org.springframework.security.AuthenticationManager;
-import org.springframework.security.SpringSecurityException;
-import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * A general purpose wrapper to authenticate a user with Swarm through Acegi. It does not
@@ -59,12 +58,6 @@ public final class SpringSecureLoginContext extends LoginContext
 					"AuthenticationManager is not available, check if your spring config contains a property for the authenticationManager in your wicketApplication bean.");
 			Authentication authResult = authenticationManager.authenticate(token);
 			setAuthentication(authResult);
-		}
-		catch (SpringSecurityException e)
-		{
-			setAuthentication(null);
-			throw new LoginException(e);
-
 		}
 
 		catch (RuntimeException e)

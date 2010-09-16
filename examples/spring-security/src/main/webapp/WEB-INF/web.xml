@@ -9,15 +9,11 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/applicationContext.xml</param-value>
     </context-param>
-    <!-- acegi filter-->
-    <filter>
-        <filter-name>Acegi HTTP Request Security Filter</filter-name>
-        <filter-class>org.springframework.security.util.FilterToBeanProxy</filter-class>
-        <init-param>
-            <param-name>targetClass</param-name>
-            <param-value>org.springframework.security.util.FilterChainProxy</param-value>
-        </init-param>
-    </filter>
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
     <!-- Spring Wicket app-->
     <filter>
         <filter-name>wicket-spring</filter-name>
@@ -32,10 +28,10 @@
         </init-param>
     </filter>
     <!-- Acegi filter first, only for /acegi urls -->
-    <filter-mapping>
-        <filter-name>Acegi HTTP Request Security Filter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
     <!-- regular mapping for spring wicket app -->
     <filter-mapping>
         <filter-name>wicket-spring</filter-name>

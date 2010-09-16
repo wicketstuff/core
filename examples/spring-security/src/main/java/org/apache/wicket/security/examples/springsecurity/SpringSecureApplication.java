@@ -1,7 +1,7 @@
 package org.apache.wicket.security.examples.springsecurity;
 
 import org.apache.wicket.security.WaspApplication;
-import org.springframework.security.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationManager;
 
 /**
  * Secure Application that uses spring-security to authenticate users.

@@ -17,14 +17,14 @@ import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.examples.springsecurity.security.SpringSecureLoginContext;
 import org.apache.wicket.security.hive.authentication.LoginContext;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.AuthenticationManager;
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
-import org.springframework.security.ui.AbstractProcessingFilter;
-import org.springframework.security.ui.webapp.AuthenticationProcessingFilter;
-import org.springframework.security.util.TextUtils;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.WebAttributes;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * @author Olger Warnier
@@ -44,7 +44,7 @@ public class LoginPage extends WebPage
 	// protected AuthenticationDetailsSource authenticationDetailsSource = new
 	// WebAuthenticationDetailsSource();
 
-	@SpringBean
+	@SpringBean(name = "authenticationManager")
 	AuthenticationManager authManager;
 
 	public LoginPage()
@@ -57,7 +57,8 @@ public class LoginPage extends WebPage
 		setStatelessHint(true);
 		HttpSession session = ((WebRequest) getRequest()).getHttpServletRequest().getSession();
 		Object lastUsername =
-			session.getAttribute(AuthenticationProcessingFilter.SPRING_SECURITY_LAST_USERNAME_KEY);
+			session
+				.getAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_LAST_USERNAME_KEY);
 		Model<String> userNameModel = null;
 		if (lastUsername != null && lastUsername instanceof String)
 		{
@@ -88,26 +89,12 @@ public class LoginPage extends WebPage
 				HttpSession httpSession =
 					((WebRequest) getRequest()).getHttpServletRequest().getSession();
 				httpSession.setAttribute(
-					AuthenticationProcessingFilter.SPRING_SECURITY_LAST_USERNAME_KEY, TextUtils
-						.escapeEntities(username));
+					UsernamePasswordAuthenticationFilter.SPRING_SECURITY_LAST_USERNAME_KEY, Strings
+						.escapeMarkup(username));
 
 				UsernamePasswordAuthenticationToken authRequest =
 					new UsernamePasswordAuthenticationToken(username, password
 						.getDefaultModelObjectAsString());
-				// authRequest.setDetails(authenticationDetailsSource.buildDetails(((WebRequest)getRequest()).getHttpServletRequest()));
-				/*
-				 * Authentication authResult; try { authResult =
-				 * authManager.authenticate(authRequest); } catch (AuthenticationException
-				 * failed) { // Authentication failed
-				 * //unsuccessfulAuthentication(request, response, failed);
-				 * SecurityContextHolder.getContext().setAuthentication(null);
-				 * session.setAttribute
-				 * (AuthenticationProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY,
-				 * failed); error(failed.getLocalizedMessage()); return; }
-				 * SecurityContextHolder.getContext().setAuthentication(authResult);
-				 * info("authentication succeeded"); LoginContext context = new
-				 * SpringSecureLoginContext(authResult);
-				 */
 
 				LoginContext context = new SpringSecureLoginContext(authRequest);
 				try
@@ -122,8 +109,7 @@ public class LoginPage extends WebPage
 					{
 						logger.debug("Authentication failed", e);
 						SecurityContextHolder.getContext().setAuthentication(null);
-						httpSession.setAttribute(
-							AbstractProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY, e);
+						httpSession.setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, e);
 						((WaspSession) getSession()).invalidateNow();
 					}
 					throw new RestartResponseAtInterceptPageException(Application.get()

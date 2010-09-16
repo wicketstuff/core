@@ -1,22 +1,23 @@
 package org.apache.wicket.security.examples.springsecurity.security;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.wicket.security.hive.authentication.DefaultSubject;
 import org.apache.wicket.security.hive.authorization.Principal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.Authentication;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * Subject that gets is principals from the authenticated user in the
- * {@link org.springframework.security.context.SecurityContextHolder}. This class is
- * converts all authorities to {@link SpringSecurePrincipal}s but could serve as a
- * template for your implementation. When Spring Security is configured with a UserDetails
- * service, the subject will contain the UserDetails object for later reference.
+ * {@link SecurityContextHolder}. This class is converts all authorities to
+ * {@link SpringSecurePrincipal}s but could serve as a template for your implementation.
+ * When Spring Security is configured with a UserDetails service, the subject will contain
+ * the UserDetails object for later reference.
  * 
  * @author marrink
  * @author Olger Warnier
@@ -35,13 +36,13 @@ public class SpringSecureSubject extends DefaultSubject
 	public SpringSecureSubject()
 	{
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		GrantedAuthority[] authorities = authentication.getAuthorities();
+		Collection<GrantedAuthority> authorities = authentication.getAuthorities();
 		if (authorities != null)
 		{
 			Principal principal;
-			for (int i = 0; i < authorities.length; i++)
+			for (GrantedAuthority curAuthority : authorities)
 			{
-				principal = convert(authorities[i]);
+				principal = convert(curAuthority);
 				if (principal != null)
 					addPrincipal(principal);
 			}
@@ -57,8 +58,7 @@ public class SpringSecureSubject extends DefaultSubject
 	}
 
 	/**
-	 * Converts a {@link org.springframework.security.GrantedAuthority} to a
-	 * {@link Principal}
+	 * Converts a {@link GrantedAuthority} to a {@link Principal}
 	 * 
 	 * @param authority
 	 * @return principal or null if the authority could not be converted

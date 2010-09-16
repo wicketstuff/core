@@ -45,9 +45,9 @@ import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.hive.authentication.LoginContext;
 import org.apache.wicket.util.lang.Objects;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.GrantedAuthorityImpl;
-import org.springframework.security.providers.TestingAuthenticationToken;
+import org.springframework.security.authentication.TestingAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
 
 /**
  * MockLoginPage creates a Spring Security logincontext based on the
