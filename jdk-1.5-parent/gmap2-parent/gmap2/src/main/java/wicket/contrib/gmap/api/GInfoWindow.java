@@ -1,11 +1,11 @@
 package wicket.contrib.gmap.api;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 import wicket.contrib.gmap.GMap2;
 
@@ -43,7 +43,7 @@ public class GInfoWindow extends WebMarkupContainer
 	{
 		Request request = RequestCycle.get().getRequest();
 
-		if (Boolean.parseBoolean(request.getParameter("infoWindow.hidden")))
+		if (request.getRequestParameters().getParameterValue("infoWindow.hidden").toBoolean())
 		{
 			// Attention: don't use close() as this might result in an
 			// endless AJAX request loop

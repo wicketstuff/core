@@ -1,6 +1,6 @@
 package wicket.contrib.examples.gmap.custompoint;
 
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 
 import wicket.contrib.examples.GMapExampleApplication;
 import wicket.contrib.examples.WicketExamplePage;
@@ -28,8 +28,8 @@ public class CustomPointPage extends WicketExamplePage
 		map.setCenter(new GLatLng(52.37649, 4.888573));
 		add(map);
 
-		GIcon icon = new GIcon(urlFor(new ResourceReference(CustomPointPage.class, "image.gif"))
-				.toString(), urlFor(new ResourceReference(CustomPointPage.class, "shadow.png"))
+		GIcon icon = new GIcon(urlFor(new PackageResourceReference(CustomPointPage.class, "image.gif"), null)
+				.toString(), urlFor(new PackageResourceReference(CustomPointPage.class, "shadow.png"), null)
 				.toString()).iconSize(new GSize(64, 64)).shadowSize(new GSize(64, 64)).iconAnchor(
 				new GPoint(19, 40)).infoWindowAnchor(new GPoint(9, 2)).infoShadowAnchor(
 				new GPoint(18, 25));

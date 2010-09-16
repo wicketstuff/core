@@ -19,8 +19,6 @@
 package wicket.contrib.examples.gmap.ggroundOverlay;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.HttpSessionStore;
-import org.apache.wicket.session.ISessionStore;
 
 import wicket.contrib.examples.GMapExampleApplication;
 
@@ -40,11 +38,5 @@ public class GGroundOverlayApplication extends GMapExampleApplication
 	public Class<? extends Page> getHomePage()
 	{
 		return GGroundOverlayPage.class;
-	}
-
-	@Override
-	protected ISessionStore newSessionStore()
-	{
-		return new HttpSessionStore(this);
 	}
 }

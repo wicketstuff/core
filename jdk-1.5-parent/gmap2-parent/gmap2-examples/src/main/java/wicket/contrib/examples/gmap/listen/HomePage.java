@@ -37,8 +37,6 @@ public class HomePage extends WicketExamplePage
 		final GMap2 map = new GMap2("map", GMapExampleApplication.get().getGoogleMapsAPIkey());
 		map.addControl(GControl.GLargeMapControl);
 		add(map);
-		moveEndBehavior = new MyMoveEndListener();
-		map.add(moveEndBehavior);
 		map.add(new LoadListener()
 		{
 			private static final long serialVersionUID = 1L;
@@ -49,6 +47,8 @@ public class HomePage extends WicketExamplePage
 				target.addComponent(boundsLabel);
 			}
 		});
+		moveEndBehavior = new MyMoveEndListener();
+		map.add(moveEndBehavior);
 
 		zoomLabel = new Label("zoom", new PropertyModel<Integer>(map, "zoom"));
 		zoomLabel.setOutputMarkupId(true);

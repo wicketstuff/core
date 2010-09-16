@@ -18,10 +18,10 @@
  */
 package wicket.contrib.examples.gmap.refreshpoint;
 
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.Response;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.time.Duration;
 
 import wicket.contrib.gmap.GMap2;

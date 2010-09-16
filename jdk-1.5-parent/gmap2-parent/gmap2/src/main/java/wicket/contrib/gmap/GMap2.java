@@ -23,18 +23,15 @@ import java.util.Set;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AbstractBehavior;
-import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.MarkupStream;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -129,15 +126,6 @@ public class GMap2 extends Panel implements GOverlayContainer
 		super(id);
 
 		add(headerContrib);
-		add(new HeaderContributor(new IHeaderContributor()
-		{
-			private static final long serialVersionUID = 1L;
-
-			public void renderHead(IHeaderResponse response)
-			{
-				response.renderOnDomReadyJavascript(getJSinit());
-			}
-		}));
 
 		infoWindow = new GInfoWindow();
 		add(infoWindow);
@@ -169,13 +157,21 @@ public class GMap2 extends Panel implements GOverlayContainer
 		}
 	}
 
+	
 	/**
-	 * @see org.apache.wicket.MarkupContainer#onRender(org.apache.wicket.markup.MarkupStream)
+	 * @see org.apache.wicket.Component#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
-	protected void onRender(MarkupStream markupStream)
-	{
-		super.onRender(markupStream);
+	public void renderHead(IHeaderResponse response) {
+		response.renderOnDomReadyJavascript(getJSinit());
+	}
+
+
+	/**
+	 * @see org.apache.wicket.Component#onBeforeRender()
+	 */
+	@Override
+	protected void onBeforeRender() {
 		if (Application.DEVELOPMENT.equalsIgnoreCase(Application.get().getConfigurationType())
 				&& !Application.get().getMarkupSettings().getStripWicketTags())
 		{
@@ -184,6 +180,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 					+ " Change to DEPLOYMENT mode  || turn on Wicket tags stripping." + " See:"
 					+ " http://www.nabble.com/Gmap2-problem-with-Firefox-3.0-to18137475.html.");
 		}
+		super.onBeforeRender();
 	}
 
 
@@ -550,7 +547,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 			return;
 		}
 
-		this.add(new HeaderContributor(new IHeaderContributor() {
+		this.add(new AbstractBehavior() {
 			private static final long serialVersionUID = 1L;
 
 			public void renderHead(IHeaderResponse response) {
@@ -574,7 +571,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 				response.renderOnDomReadyJavascript(buf.toString());
 			}
-		}));
+		});
 
 		// show the markers
 		if (showMarkersForPoints) {
@@ -646,10 +643,10 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 		// Attention: don't use setters as this will result in an endless
 		// AJAX request loop
-		bounds = GLatLngBounds.parse(request.getParameter("bounds"));
-		center = GLatLng.parse(request.getParameter("center"));
-		zoom = Integer.parseInt(request.getParameter("zoom"));
-		mapType = GMapType.valueOf(request.getParameter("currentMapType"));
+		bounds = GLatLngBounds.parse(request.getRequestParameters().getParameterValue("bounds").toString());
+		center = GLatLng.parse(request.getRequestParameters().getParameterValue("center").toString());
+		zoom = request.getRequestParameters().getParameterValue("zoom").toInt();
+		mapType = GMapType.valueOf(request.getRequestParameters().getParameterValue("currentMapType").toString());
 
 		infoWindow.update(target);
 	}
@@ -815,8 +812,8 @@ public class GMap2 extends Panel implements GOverlayContainer
 		{
 			Request request = RequestCycle.get().getRequest();
 
-			String overlayId = request.getParameter("overlay.overlayId");
-			String event = request.getParameter("overlay.event");
+			String overlayId = request.getRequestParameters().getParameterValue("overlay.overlayId").toString();
+			String event = request.getRequestParameters().getParameterValue("overlay.event").toString();
 			// TODO this is ugly
 			// the id's of the Overlays are unique within the ArrayList
 			// maybe we should change that collection
@@ -832,8 +829,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 		public Object getJSinit()
 		{
-			return GMap2.this.getJSinvoke("overlayListenerCallbackUrl = '" + this.getCallbackUrl()
-					+ "'");
+			return GMap2.this.getJSinvoke("overlayListenerCallbackUrl = '" + this.getCallbackUrl() + "'");
 		}
 	}
 }

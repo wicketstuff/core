@@ -18,9 +18,9 @@
  */
 package wicket.contrib.gmap.event;
 
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 import wicket.contrib.gmap.api.GLatLng;
 
@@ -29,6 +29,7 @@ import wicket.contrib.gmap.api.GLatLng;
  * href="http://www.google.com/apis/maps/documentation/reference.html#GMap2">GMap2</a>.
  */
 public abstract class DblClickListener extends GEventListenerBehavior {
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected String getEvent() {
@@ -41,7 +42,7 @@ public abstract class DblClickListener extends GEventListenerBehavior {
 
 		GLatLng latLng = null;
 
-		String latLngParameter = request.getParameter("argument1");
+		String latLngParameter = request.getRequestParameters().getParameterValue("argument1").toString();
 		if (latLngParameter != null) {
 			latLng = GLatLng.parse(latLngParameter);
 		}

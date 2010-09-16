@@ -1,15 +1,15 @@
 package wicket.contrib.examples.gmap.geocode;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.HttpSessionStore;
-import org.apache.wicket.session.ISessionStore;
 
 import wicket.contrib.examples.GMapExampleApplication;
 
 public class GeoCodeGMapApplication extends GMapExampleApplication
 {
-
-
+	private ServerGeocoder serverGeocoder = null;
+	
+	
 	/**
 	 * @see wicket.protocol.http.WebApplication#init()
 	 */
@@ -17,7 +17,16 @@ public class GeoCodeGMapApplication extends GMapExampleApplication
 	protected void init()
 	{
 		super.init();
+		
+		this.serverGeocoder = new ServerGeocoder(getGoogleMapsAPIkey());
 	}
+	
+	
+	public static GeoCodeGMapApplication get() {
+		return (GeoCodeGMapApplication)Application.get();
+	}
+	
+	
 
 	@Override
 	public Class<? extends Page> getHomePage()
@@ -25,9 +34,11 @@ public class GeoCodeGMapApplication extends GMapExampleApplication
 		return HomePage.class;
 	}
 
-	@Override
-	protected ISessionStore newSessionStore()
-	{
-		return new HttpSessionStore(this);
+
+	/**
+	 * @return the serverGeocoder
+	 */
+	public ServerGeocoder getServerGeocoder() {
+		return serverGeocoder;
 	}
 }

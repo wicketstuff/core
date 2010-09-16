@@ -2,8 +2,8 @@ package wicket.contrib.examples.gmap.refreshpoint;
 
 import java.util.Collections;
 
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.time.Duration;
 
 import wicket.contrib.examples.GMapExampleApplication;
@@ -71,8 +71,8 @@ public class RefreshPointPage extends WicketExamplePage
 
 	private GOverlay createOverlay(String title, GLatLng latLng, String image, String shadow)
 	{
-		GIcon icon = new GIcon(urlFor(new ResourceReference(RefreshPointPage.class, image))
-				.toString(), urlFor(new ResourceReference(RefreshPointPage.class, shadow))
+		GIcon icon = new GIcon(urlFor(new PackageResourceReference(RefreshPointPage.class, image), null)
+				.toString(), urlFor(new PackageResourceReference(RefreshPointPage.class, shadow), null)
 				.toString()).iconSize(new GSize(64, 64)).shadowSize(new GSize(64, 64)).iconAnchor(
 				new GPoint(19, 40)).infoWindowAnchor(new GPoint(9, 2)).infoShadowAnchor(
 				new GPoint(18, 25));

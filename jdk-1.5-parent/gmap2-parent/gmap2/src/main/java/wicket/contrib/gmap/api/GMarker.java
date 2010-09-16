@@ -15,9 +15,9 @@
  */
 package wicket.contrib.gmap.api;
 
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 import wicket.contrib.gmap.js.Constructor;
 
@@ -79,6 +79,6 @@ public class GMarker extends GOverlay
 	protected void updateOnAjaxCall(AjaxRequestTarget target, GEvent overlayEvent)
 	{
 		Request request = RequestCycle.get().getRequest();
-		this.latLng = GLatLng.parse(request.getParameter("overlay.latLng"));
+		this.latLng = GLatLng.parse(request.getRequestParameters().getParameterValue("overlay.latLng").toString());
 	}
 }

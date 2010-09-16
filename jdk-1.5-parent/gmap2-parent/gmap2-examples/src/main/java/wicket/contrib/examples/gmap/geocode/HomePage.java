@@ -32,8 +32,6 @@ public class HomePage extends WicketExamplePage
 
 	private final FeedbackPanel feedback;
 
-	private final ServerGeocoder geocoder = new ServerGeocoder(GMapExampleApplication.get()
-			.getGoogleMapsAPIkey());
 
 	public HomePage()
 	{
@@ -96,7 +94,7 @@ public class HomePage extends WicketExamplePage
 				{
 					String address = addressTextField.getDefaultModelObjectAsString();
 
-					GLatLng latLng = geocoder.findAddress(address);
+					GLatLng latLng = GeoCodeGMapApplication.get().getServerGeocoder().findAddress(address);
 
 					bottomMap.getInfoWindow().open(latLng,
 							new GInfoWindowTab(address, new Label(address, address)));
@@ -106,6 +104,15 @@ public class HomePage extends WicketExamplePage
 					target.appendJavascript("Unable to geocode (" + e.getMessage() + ")");
 				}
 			}
+
+			/**
+			 * @see org.apache.wicket.ajax.markup.html.form.AjaxButton#onError(org.apache.wicket.ajax.AjaxRequestTarget, org.apache.wicket.markup.html.form.Form)
+			 */
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form) {
+				target.appendJavascript("Unable to geocode (ajax button onError)");
+			}
+			
 		});
 	}
 }

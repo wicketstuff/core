@@ -30,7 +30,7 @@ else
 Wicket.geocoder = new WicketClientGeocoder();
 
 function WicketClientGeocoder(){
-    this.coder = new google.maps.ClientGeocoder();
+    this.coder = new GClientGeocoder();
     
     this.getLatLng = function(callBackUrl, addressId){
     
