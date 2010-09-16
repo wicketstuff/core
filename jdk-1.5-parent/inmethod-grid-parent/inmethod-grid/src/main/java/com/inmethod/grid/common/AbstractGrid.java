@@ -236,16 +236,21 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 		}
 		this.columnState = columnState;
 	}
+	
+	/* (non-Javadoc)
+	 * @see org.apache.wicket.Component#onInitialize()
+	 */
+	@Override
+	protected void onInitialize() {
+		super.onInitialize();
+
+		for (IGridColumn column : columns) {
+			column.setGrid(this);
+		}
+	}
 
 	@Override
 	protected void onBeforeRender() {
-		// if this is first time render provide grid reference to the columns
-		if (hasBeenRendered() == false) {
-			for (IGridColumn column : columns) {
-				column.setGrid(this);
-			}
-		}
-
 		setFlag(FLAG_RENDERING, true);
 
 		super.onBeforeRender();
