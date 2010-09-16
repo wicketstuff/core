@@ -106,7 +106,7 @@ public abstract class ColumnsHeaderRepeater extends WebMarkupContainer {
 
 	@Override
 	protected void onRender() {
-		MarkupStream markupStream = getAssociatedMarkupStream(true);
+		MarkupStream markupStream = getMarkupStream();
 		
 		final int markupStart = markupStream.getCurrentIndex();
 		Response response = RequestCycle.get().getResponse();
@@ -141,7 +141,7 @@ public abstract class ColumnsHeaderRepeater extends WebMarkupContainer {
 				throw new IllegalStateException("Column ID has changed during rendering");
 			}
 			markupStream.setCurrentIndex(markupStart);
-			component.renderComponent();
+			component.render();
 			rendered = true;
 
 			// render closing tag
