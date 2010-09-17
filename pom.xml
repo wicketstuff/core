@@ -6,7 +6,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>1.4.12-SNAPSHOT</version>
+	<version>1.4.12</version>
 
 	<name>WicketStuff Core Parent</name>
 	<description>
@@ -291,12 +291,12 @@
 	</mailingLists>
 
 	<scm>
-		<url>https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/branches/wicketstuff-core-1.4</url>
-		<connection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/branches/wicketstuff-core-1.4</connection>
+		<url>https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/tags/wicketstuff-core-1.4.12</url>
+		<connection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/tags/wicketstuff-core-1.4.12</connection>
 	</scm>
 
 	<properties>
-		<wicket.version>1.4-SNAPSHOT</wicket.version>
+		<wicket.version>1.4.12</wicket.version>
 		<jetty.version>6.1.22</jetty.version>
 
     		<eclipse.jetty.version>7.1.4.v20100610</eclipse.jetty.version>
