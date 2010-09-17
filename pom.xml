@@ -20,7 +20,7 @@
 	<groupId>org.apache.wicket.wicket-security</groupId>
 	<artifactId>wicket-security</artifactId>
 	<packaging>pom</packaging>
-	<version>1.4.1</version>
+	<version>1.4-SNAPSHOT</version>
 	<name>wicket-security</name>
 	<inceptionYear>2006</inceptionYear>
 	<description>Parent project for wicket security projects</description>
@@ -63,9 +63,9 @@
 		</repository>
 	</repositories>
 	<scm>
-		<connection>scm:svn:http://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/tags/wicket-security-1.4.1</connection>
-		<developerConnection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/tags/wicket-security-1.4.1</developerConnection>
-		<url>http://wicket-stuff.svn.sourceforge.net/viewvc/wicket-stuff/tags/wicket-security-1.4.1</url>
+		<connection>scm:svn:http://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk/wicket-security</connection>
+		<developerConnection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk/wicket-security</developerConnection>
+		<url>http://wicket-stuff.svn.sourceforge.net/viewvc/wicket-stuff/trunk/wicket-security</url>
 	</scm>
 	<!-- Developers -->
 	<developers>
