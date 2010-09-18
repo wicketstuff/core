@@ -24,15 +24,14 @@
 		<module>plugin</module>
 		<module>openlayers-parent</module>
 		<module>gmap2-parent</module>
-		
+		<module>inmethod-grid-parent</module>		
+
 		<!-- Modules below are commented until they can compile with wicket 1.5-SNAPSHOT -->
 	
 <!--		<module>annotation</module>-->
 <!--		<module>calendarviews-parent</module>-->
 <!--		<module>client-and-server-validation</module>-->
-	
-		
-<!--		<module>inmethod-grid-parent</module>-->
+
 <!--		<module>input-events-parent</module>-->
 <!--		<module>jslibraries</module>-->
 <!--		<module>jquery-parent</module>-->
