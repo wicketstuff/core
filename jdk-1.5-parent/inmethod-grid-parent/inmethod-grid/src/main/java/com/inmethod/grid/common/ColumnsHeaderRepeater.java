@@ -7,7 +7,9 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.IMarkupFragment;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.request.Response;
@@ -106,12 +108,9 @@ public abstract class ColumnsHeaderRepeater extends WebMarkupContainer {
 
 	@Override
 	protected void onRender() {
-		MarkupStream markupStream = getMarkupStream();
 		
-		final int markupStart = markupStream.getCurrentIndex();
 		Response response = RequestCycle.get().getResponse();
 
-		boolean rendered = false;
 		Collection<IGridColumn> columns = getActiveColumns();
 
 		for (IGridColumn column : columns) {
@@ -140,9 +139,9 @@ public abstract class ColumnsHeaderRepeater extends WebMarkupContainer {
 			if (component == null) {
 				throw new IllegalStateException("Column ID has changed during rendering");
 			}
-			markupStream.setCurrentIndex(markupStart);
+			IMarkupFragment componentMarkup = getParent().getParent().getMarkup();
+			component.setMarkup(componentMarkup);
 			component.render();
-			rendered = true;
 
 			// render closing tag
 			response.write("</div>");
@@ -152,11 +151,6 @@ public abstract class ColumnsHeaderRepeater extends WebMarkupContainer {
 				response.write("<a class=\"imxt-handle\" href=\"#\" onclick=\"return false\"></a>");
 			}
 			response.write("</div></th>");
-		}
-
-		// if no component was rendered just advance in the markup stream
-		if (rendered == false) {
-			markupStream.skipComponent();
 		}
 	}
 

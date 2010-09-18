@@ -11,7 +11,6 @@ import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.border.MarkupComponentBorder;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
@@ -138,21 +137,21 @@ public abstract class TreePanel extends Panel {
 	 * 
 	 * @author Matej Knopp
 	 */
-	private static class IconBorder extends MarkupComponentBorder {
+	private static class IconBorder extends AbstractBehavior {
 
 		private static final long serialVersionUID = 1L;
 
 		/**
 		 * {@inheritDoc}
 		 */
-		public void renderBefore(Component component) {
+		public void beforeRender(Component component) {
 			RequestCycle.get().getResponse().write("<td>");
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
-		public void renderAfter(Component component) {
+		public void onRendered(Component component) {
 			RequestCycle.get().getResponse().write("</td>");
 		}
 
@@ -164,7 +163,7 @@ public abstract class TreePanel extends Panel {
 	 * 
 	 * @author Matej Knopp
 	 */
-	private static class JunctionBorder extends MarkupComponentBorder {
+	private static class JunctionBorder extends AbstractBehavior {
 		private static final long serialVersionUID = 1L;
 
 		private final int level;
@@ -182,14 +181,14 @@ public abstract class TreePanel extends Panel {
 		/**
 		 * {@inheritDoc}
 		 */
-		public void renderAfter(Component component) {
+		public void onRendered(Component component) {
 			RequestCycle.get().getResponse().write("</td>");
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
-		public void renderBefore(Component component) {
+		public void beforeRender(Component component) {
 			Response response = RequestCycle.get().getResponse();
 
 			for (int i = level - 1; i >= 0; --i) {

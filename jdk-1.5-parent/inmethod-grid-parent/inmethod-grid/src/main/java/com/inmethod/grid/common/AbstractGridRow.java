@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.MarkupStream;
+import org.apache.wicket.markup.IMarkupFragment;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.Response;
@@ -218,12 +218,8 @@ public abstract class AbstractGridRow extends WebMarkupContainer {
 	@Override
 	protected void onRender() {
 
-		MarkupStream markupStream = getMarkupStream();
-		
-		final int markupStart = markupStream.getCurrentIndex();
 		Response response = RequestCycle.get().getResponse();
 
-		boolean rendered = false;
 		Collection<IGridColumn> columns = getActiveColumns();
 
 		int hide = 0;
@@ -249,21 +245,14 @@ public abstract class AbstractGridRow extends WebMarkupContainer {
 				if (component == null) {
 					throw new IllegalStateException("Column ID has changed during rendering");
 				}
-				markupStream.setCurrentIndex(markupStart);
+				IMarkupFragment componentMarkup = getMarkup();
+				component.setMarkup(componentMarkup);
 				component.render();
-				rendered = true;
 			}
 
 			response.write("</td>");
 			++i;
 		}
-		;
-
-		// if no component was rendered just advance in the markup stream
-		if (rendered == false) {
-			markupStream.skipComponent();
-		}
-
 	}
 
 	private String componentId(String columnId) {
