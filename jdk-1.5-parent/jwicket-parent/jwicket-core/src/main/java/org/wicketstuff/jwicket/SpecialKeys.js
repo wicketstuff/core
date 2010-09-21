@@ -26,7 +26,7 @@
 
 	jQuery.jWicketSpecialKeysIsPressed = function(key) {
 		key = $.trim(key).toLowerCase();
-		
+
 		if (keyname[key] != undefined)
 			return pressedKeys[keyname[key]];
 		else
@@ -47,6 +47,7 @@
 					pressed += ','+key;
 			}
 		}
+//console.log('jWicketSpecialKeysGetPressed = ' + pressed);
 
 		return pressed;
 	};
@@ -54,13 +55,19 @@
 
 	$(document).bind('keydown', function(e) {
 		pressedKeys[e.keyCode] = true;
-		//console.log('keydown = ' + jQuery.jWicketSpecialKeysGetPressed());
+//console.log('jWicketSpecialKeys: keyDown = ' + e.keyCode);
+//console.log('keyPressed: ' + jQuery.jWicketSpecialKeysGetPressed());
 	});
 
 	$(document).bind('keyup', function(e) {
 		pressedKeys[e.keyCode] = false;
 		delete pressedKeys[e.keyCode];
-		//console.log('keyup = ' + jQuery.jWicketSpecialKeysGetPressed());
+//console.log('jWicketSpecialKeys: keyUp = ' + e.keyCode);
+//console.log('keyPressed: ' + jQuery.jWicketSpecialKeysGetPressed());
 	});
 
 })(jQuery);
+
+
+
+

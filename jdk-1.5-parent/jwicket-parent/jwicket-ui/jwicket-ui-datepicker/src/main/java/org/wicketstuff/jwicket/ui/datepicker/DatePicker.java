@@ -120,6 +120,26 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 
 
 	/**	
+	 * Sets the 'buttonImageOnly' property for this DatePicker. Please consult the
+	 * jQuery documentation for a detailed description of this property.
+	 * @param value {@code true} or {@code false}.
+	 * @return this object
+	 */
+	public DatePicker setButtonImageOnly(final boolean value) {
+		if (!value)
+			options.remove("buttonImageOnly");
+		else
+			options.put("buttonImageOnly", value);
+		return this;
+	}
+	public DatePicker setButtonImageOnly(final AjaxRequestTarget target, final boolean value) {
+		setButtonImageOnly(value);
+		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','buttonImageOnly'," + value + ");");
+		return this;
+	}
+
+
+	/**	
 	 * Sets the 'autoSize' property for this DatePicker. Please consult the
 	 * jQuery documentation for a detailed description of this property.
 	 * @param value {@code true} or {@code false}.
@@ -135,6 +155,26 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 	public DatePicker setAutoSize(final AjaxRequestTarget target, final boolean value) {
 		setAutoSize(value);
 		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','autoSize'," + value + ");");
+		return this;
+	}
+
+
+	/**	
+	 * Sets the 'buttonText' property for this DatePicker. Please consult the
+	 * jQuery documentation for a detailed description of this property.
+	 * @param value The new buttonText or {@code null} to remove this option.
+	 * @return this object
+	 */
+	public DatePicker setButtonText(final String value) {
+		if (value == null)
+			options.remove("buttonText");
+		else
+			options.put("buttonText", value);
+		return this;
+	}
+	public DatePicker setButtonText(final AjaxRequestTarget target, final String value) {
+		setButtonText(value);
+		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','buttonText','" + value + "');");
 		return this;
 	}
 
