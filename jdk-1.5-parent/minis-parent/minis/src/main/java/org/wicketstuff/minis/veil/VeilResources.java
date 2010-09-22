@@ -17,11 +17,12 @@
 package org.wicketstuff.minis.veil;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+import org.apache.wicket.request.resource.JavascriptResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  * A behavior that includes all the necessary resources to use the veil on the
@@ -34,7 +35,7 @@ public class VeilResources extends AbstractBehavior implements IHeaderContributo
 	private static final ResourceReference JS = new JavascriptResourceReference(
 			VeilResources.class, "wicket-veil.js");
 
-	private static final ResourceReference CSS = new ResourceReference(VeilResources.class,
+	private static final ResourceReference CSS = new PackageResourceReference(VeilResources.class,
 			"wicket-veil.css");
 
 	/**

@@ -1,7 +1,7 @@
 package org.wicketstuff.minis;
 
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.minis.mootipbehavior.MootipBehaviour;
 import org.wicketstuff.minis.mootipbehavior.MootipPanel;
 import org.wicketstuff.minis.mootipbehavior.MootipSettings;

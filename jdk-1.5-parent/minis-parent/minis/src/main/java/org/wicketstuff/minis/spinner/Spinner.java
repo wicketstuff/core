@@ -17,16 +17,17 @@
 package org.wicketstuff.minis.spinner;
 
 import java.util.Iterator;
-import java.util.Properties;
 import java.util.Map.Entry;
+import java.util.Properties;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.Response;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.resource.JavascriptResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.string.JavascriptUtils;
 import org.apache.wicket.util.string.Strings;
 
@@ -44,7 +45,7 @@ public class Spinner extends AbstractBehavior
 
 	private static final ResourceReference JS = new JavascriptResourceReference(Spinner.class,
 			"spinner.js");
-	private static final ResourceReference CSS = new ResourceReference(Spinner.class, "spinner.css");
+	private static final ResourceReference CSS = new PackageResourceReference(Spinner.class, "spinner.css");
 
 	private Component component;
 

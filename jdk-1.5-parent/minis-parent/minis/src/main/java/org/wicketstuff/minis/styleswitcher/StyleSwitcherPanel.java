@@ -16,10 +16,11 @@
  */
 package org.wicketstuff.minis.styleswitcher;
 
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
+import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  * StyleSwitcherPanel
@@ -59,11 +60,11 @@ public class StyleSwitcherPanel extends Panel
 		add(switcher);
 
 		add(new StyleSwitcherLink("largelink", "large").add(new Image("large",
-				new ResourceReference(StyleSwitcher.class, "large.png"))));
+				new PackageResourceReference(StyleSwitcher.class, "large.png"))));
 		add(new StyleSwitcherLink("mediumlink", "medium").add(new Image("medium",
-				new ResourceReference(StyleSwitcher.class, "medium.png"))));
+				new PackageResourceReference(StyleSwitcher.class, "medium.png"))));
 		add(new StyleSwitcherLink("smalllink", "small").add(new Image("small",
-				new ResourceReference(StyleSwitcher.class, "small.png"))));
+				new PackageResourceReference(StyleSwitcher.class, "small.png"))));
 
 	}
 

@@ -16,14 +16,16 @@
  */
 package org.wicketstuff.minis.apanel;
 
+import java.util.Arrays;
+
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.IMarkupResourceStreamProvider;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.link.PageLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -34,8 +36,6 @@ import org.apache.wicket.util.tester.ITestPageSource;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Arrays;
 
 public class TestRenderers
 {
@@ -134,16 +134,17 @@ public class TestRenderers
 		final RepeatingView repeatingView = new RepeatingView("rw");
 		for (int i = 0; i < 3; i++)
 		{
-			final PageLink link = new PageLink(String.valueOf(i), RenderersTestPage.class);
+			final BookmarkablePageLink<RenderersTestPage> link 
+			= new BookmarkablePageLink<RenderersTestPage>(String.valueOf(i), RenderersTestPage.class);
 			link.add(new Label("label", "label" + i));
 			repeatingView.add(link);
 		}
 		page.getAPanel().add(repeatingView);
 		tester.startPage(new TestPageSource(page));
 
-		tester.assertComponent("aPanel:rw:0", PageLink.class);
-		tester.assertComponent("aPanel:rw:1", PageLink.class);
-		tester.assertComponent("aPanel:rw:2", PageLink.class);
+		tester.assertComponent("aPanel:rw:0", BookmarkablePageLink.class);
+		tester.assertComponent("aPanel:rw:1", BookmarkablePageLink.class);
+		tester.assertComponent("aPanel:rw:2", BookmarkablePageLink.class);
 		tester.assertLabel("aPanel:rw:0:label", "label0");
 		tester.assertLabel("aPanel:rw:1:label", "label1");
 		tester.assertLabel("aPanel:rw:2:label", "label2");

@@ -20,11 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.IClusterable;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.JavascriptResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  * StyleSwitcher
@@ -81,7 +82,7 @@ public class StyleSwitcher extends AbstractBehavior
 		{
 			StringBuilder link = new StringBuilder(128);
 			link.append("<link rel=\"alternate stylesheet\" type=\"text/css\" href=\"");
-			link.append(RequestCycle.get().urlFor(stylesheet.getReference()));
+			link.append(RequestCycle.get().urlFor(stylesheet.getReference(), new PageParameters()));
 			link.append("\" title=\"");
 			link.append(stylesheet.getTitle());
 			link.append("\"/>");

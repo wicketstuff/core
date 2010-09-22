@@ -1,9 +1,9 @@
 package org.wicketstuff.minis.mootipbehavior;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.Response;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.request.Response;
 
 
 /**
@@ -44,7 +44,7 @@ public class MootipAjaxListener extends AbstractDefaultAjaxBehavior
 		super.beforeRender(component);
 		Response response=component.getResponse();
 		String mootipPanelPlaceHolderId=MootipPanel.getMooTipContentId();
-		response.write("<script> function mootipAjax"+getEscapedComponentMarkupId()+"(callback) { \n var content='';wicketAjaxGet('"+getCallbackUrl(false)+"',\n function(){\n var tip=document.getElementById('"+mootipPanelPlaceHolderId+"').innerHTML;\n var callbackInside=callback;\n var runCallback=  callbackInside.pass(tip);\n runCallback();\n  }, null,null);\n}</script>");
+		response.write("<script> function mootipAjax"+getEscapedComponentMarkupId()+"(callback) { \n var content='';wicketAjaxGet('"+getCallbackUrl()+"',\n function(){\n var tip=document.getElementById('"+mootipPanelPlaceHolderId+"').innerHTML;\n var callbackInside=callback;\n var runCallback=  callbackInside.pass(tip);\n runCallback();\n  }, null,null);\n}</script>");
 	}
 	/**
 	 * Gets the escaped DOM id that the input will get attached to. All non word

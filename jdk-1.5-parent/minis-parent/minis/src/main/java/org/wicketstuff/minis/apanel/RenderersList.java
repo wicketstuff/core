@@ -27,6 +27,8 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.util.visit.IVisit;
+import org.apache.wicket.util.visit.IVisitor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -146,15 +148,14 @@ class RenderersList implements Serializable
 		{
 			final List<Component> componentsToRender = new ArrayList<Component>();
 
-			container.visitChildren(new Component.IVisitor()
-			{
-				public Object component(final Component component)
-				{
+			container.visitChildren(new IVisitor<Component, Void>() {
+
+				public void component(Component component, IVisit<Void> visit) {
 					componentsToRender.add(component);
-					return Component.IVisitor.CONTINUE_TRAVERSAL_BUT_DONT_GO_DEEPER;
+					visit.dontGoDeeper();
 				}
 			});
-
+			
 			return layout.renderComponents(componentsToRender);
 		}
 	}
@@ -204,13 +205,12 @@ class RenderersList implements Serializable
 		public CharSequence getMarkup(final RepeatingView component)
 		{
 			final String[] markup = new String[1];
-			component.visitChildren(new Component.IVisitor()
+			component.visitChildren(new IVisitor<Component, Void>()
 			{
-				public Object component(final Component component)
-				{
+				public void component(Component component, IVisit<Void> visit) {
 					final CharSequence c = layout.renderComponents(Collections.singletonList(component));
 					markup[0] = c.toString().replace(getIdAttribute(component), "%s");
-					return Component.IVisitor.STOP_TRAVERSAL;
+					visit.stop();
 				}
 			});
 

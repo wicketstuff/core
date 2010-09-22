@@ -24,7 +24,8 @@
 		<module>plugin</module>
 		<module>openlayers-parent</module>
 		<module>gmap2-parent</module>
-		<module>inmethod-grid-parent</module>		
+		<module>inmethod-grid-parent</module>
+		<module>minis-parent</module>
 
 		<!-- Modules below are commented until they can compile with wicket 1.5-SNAPSHOT -->
 	
@@ -37,7 +38,6 @@
 <!--		<module>jquery-parent</module>-->
 <!--		<module>jsr303-parent</module>-->
 <!--		<module>misc</module>-->
-<!--		<module>minis-parent</module>-->
 <!--		<module>objectautocomplete-parent</module>-->
 
 <!--		<module>phonebook</module>-->
