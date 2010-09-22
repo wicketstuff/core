@@ -26,6 +26,7 @@
 		<module>gmap2-parent</module>
 		<module>inmethod-grid-parent</module>
 		<module>minis-parent</module>
+		<module>phonebook</module>
 
 		<!-- Modules below are commented until they can compile with wicket 1.5-SNAPSHOT -->
 	
@@ -40,7 +41,6 @@
 <!--		<module>misc</module>-->
 <!--		<module>objectautocomplete-parent</module>-->
 
-<!--		<module>phonebook</module>-->
 <!--		<module>prototype</module>-->
 <!--		<module>scriptaculous-parent</module>-->
 <!--		<module>simile-timeline-parent</module>-->
