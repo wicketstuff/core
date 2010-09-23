@@ -16,11 +16,10 @@
  */
 package org.wicketstuff.shiro.wicket.page.store;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.SortedMap;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
@@ -49,8 +48,8 @@ public class PageCache implements IClusterable
 	private final Lock read = rwl.readLock();
 	private final Lock write = rwl.writeLock();
 
-	private final LinkedHashMap<PageKey, SerializedPageWrapper> pages = new LinkedHashMap<PageKey, SerializedPageWrapper>();
-	private final TreeMap<PageKey, Integer> pageKeys = new TreeMap<PageKey, Integer>();
+	private final LinkedHashMap<Integer, SerializedPageWrapper> pages = new LinkedHashMap<Integer, SerializedPageWrapper>();
+	private final TreeMap<Integer, Integer> pageKeys = new TreeMap<Integer, Integer>();
 
 	private final AtomicInteger id = new AtomicInteger(Integer.MIN_VALUE);
 
@@ -61,7 +60,7 @@ public class PageCache implements IClusterable
 		MAX_SIZE = maxSize;
 	}
 
-	public void storePages(final Collection<SerializedPageWrapper> pagesToAdd)
+	public void storePages(final SerializedPageWrapper wrapper)
 	{
 		write.lock();
 		try
@@ -69,29 +68,25 @@ public class PageCache implements IClusterable
 			// reduce size of page store to within set size if required
 			if (MAX_SIZE != SessionPageStore.DEFAULT_MAX_PAGES)
 			{
-				int numToRemove = pages.size() + pagesToAdd.size() - MAX_SIZE;
+				int numToRemove = pages.size() + 1 - MAX_SIZE;
 				if (numToRemove > 0)
 				{
-					final Iterator<Map.Entry<PageKey, SerializedPageWrapper>> iter = pages.entrySet()
+					final Iterator<Map.Entry<Integer, SerializedPageWrapper>> iter = pages.entrySet()
 						.iterator();
 					while (iter.hasNext() && numToRemove > 0)
 					{
-						final Map.Entry<PageKey, SerializedPageWrapper> entry = iter.next();
+						final Map.Entry<Integer, SerializedPageWrapper> entry = iter.next();
 						iter.remove();
 						pageKeys.remove(entry.getKey());
 						numToRemove--;
 					}
 				}
 			}
-			for (final SerializedPageWrapper wrapper : pagesToAdd)
-			{
-				final PageKey pageKey = new PageKey(wrapper.getPageId(),
-					wrapper.getVersionNumber(), wrapper.getAjaxVersionNumber());
-				// remove to preserve access order
-				pages.remove(pageKey);
-				pages.put(pageKey, wrapper);
-				pageKeys.put(pageKey, id.getAndIncrement());
-			}
+			final Integer pageKey = wrapper.getPageId();
+			// remove to preserve access order
+			pages.remove(pageKey);
+			pages.put(pageKey, wrapper);
+			pageKeys.put(pageKey, id.getAndIncrement());
 		}
 		finally
 		{
@@ -99,20 +94,12 @@ public class PageCache implements IClusterable
 		}
 	}
 
-	public boolean containsPage(final int pageId, final int pageVersion)
+	public boolean containsPage(final int pageId)
 	{
 		read.lock();
 		try
 		{
-			// make PageKeys for below and above this version
-			// this id and version but -1 for ajax
-			final PageKey below = new PageKey(pageId, pageVersion, -1);
-			// this id and version +1, -1 for ajax
-			final PageKey above = new PageKey(pageId, pageVersion + 1, -1);
-
-			final SortedMap<PageKey, Integer> thisPageAndVersion = pageKeys.subMap(below, above);
-
-			return !thisPageAndVersion.isEmpty();
+			return pageKeys.containsKey(pageId);
 		}
 		finally
 		{
@@ -120,57 +107,12 @@ public class PageCache implements IClusterable
 		}
 	}
 
-	public SerializedPageWrapper getPage(final int id, final int versionNumber,
-		final int ajaxVersionNumber)
+	public SerializedPageWrapper getPage(final int pageId)
 	{
 		read.lock();
 		try
 		{
-			SerializedPageWrapper sPage = null;
-			// just find the exact page version
-			if (versionNumber != -1 && ajaxVersionNumber != -1)
-			{
-				sPage = pages.get(new PageKey(id, versionNumber, ajaxVersionNumber));
-			}
-			// we need to find last recently stored page window - that is page at the end of the
-			// list
-			else if (versionNumber == -1)
-			{
-				final PageKey fromKey = new PageKey(id, -1, -1);
-				final PageKey toKey = new PageKey(id + 1, -1, -1);
-
-				SortedMap<PageKey, Integer> subMap = pageKeys.subMap(fromKey, toKey);
-
-				int max = -1;
-				PageKey maxPageKey = null;
-
-				for (Map.Entry<PageKey, Integer> entry : subMap.entrySet())
-				{
-					if (entry.getValue() > max)
-					{
-						max = entry.getValue();
-						maxPageKey = entry.getKey();
-					}
-				}
-				if (maxPageKey != null)
-				{
-					sPage = pages.get(maxPageKey);
-				}
-			}
-			else
-			{
-				// ajaxVersion is guaranteed to be -1 at this point -
-				// make a page key which will be straight after wanted
-				// PageKey, ie, version number is one after this one, ajax
-				// version number is -1, page id is the same
-				final PageKey toElement = new PageKey(id, versionNumber + 1, -1);
-				final SortedMap<PageKey, Integer> posiblePageKeys = pageKeys.headMap(toElement);
-				if (posiblePageKeys.size() > 0)
-				{
-					sPage = pages.get(posiblePageKeys.lastKey());
-				}
-			}
-			return sPage;
+			return pages.get(pageId);
 		}
 		finally
 		{
@@ -178,22 +120,12 @@ public class PageCache implements IClusterable
 		}
 	}
 
-	public void removePage(final int id)
+	public void removePage(final Integer pageId)
 	{
 		write.lock();
 		try
 		{
-			final Iterator<Map.Entry<PageKey, SerializedPageWrapper>> iter = pages.entrySet()
-				.iterator();
-			while (iter.hasNext())
-			{
-				final PageKey pKey = iter.next().getKey();
-				if (id == pKey.getPageId())
-				{
-					iter.remove();
-					pageKeys.remove(pKey);
-				}
-			}
+			pages.remove(pageId);
 		}
 		finally
 		{
@@ -205,7 +137,7 @@ public class PageCache implements IClusterable
 	public String toString()
 	{
 		final StringBuilder sb = new StringBuilder();
-		for (Map.Entry<PageKey, SerializedPageWrapper> entry : pages.entrySet())
+		for (Entry<Integer, SerializedPageWrapper> entry : pages.entrySet())
 		{
 			sb.append("\t").append(entry.getKey().toString()).append("\n");
 		}

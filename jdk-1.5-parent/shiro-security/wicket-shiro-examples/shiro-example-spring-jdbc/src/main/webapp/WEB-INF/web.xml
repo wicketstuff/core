@@ -27,7 +27,7 @@
 
     <filter>
         <filter-name>ShiroFilter</filter-name>
-        <filter-class>org.apache.shiro.spring.SpringShiroFilter</filter-class>
+        <filter-class>org.apache.shiro.spring.web.ShiroFilterFactoryBean$SpringShiroFilter</filter-class>
         <init-param>
            <param-name>config</param-name>
            <param-value>

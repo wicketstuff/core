@@ -28,23 +28,16 @@ public class SerializedPageWrapper implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
 
-	private final Serializable page;
-	private final String pageMapName;
+	private final byte[] page;
 	private final int pageId;
-	private final int versionNumber;
-	private final int ajaxVersionNumber;
 
-	public SerializedPageWrapper(Serializable page, int pageId, String pageMapName,
-		int versionNumber, int ajaxVersionNumber)
+	public SerializedPageWrapper(byte[] page, int pageId)
 	{
 		this.page = page;
 		this.pageId = pageId;
-		this.pageMapName = pageMapName;
-		this.versionNumber = versionNumber;
-		this.ajaxVersionNumber = ajaxVersionNumber;
 	}
 
-	public Serializable getPage()
+	public byte[] getPage()
 	{
 		return page;
 	}
@@ -52,20 +45,5 @@ public class SerializedPageWrapper implements IClusterable
 	public int getPageId()
 	{
 		return pageId;
-	}
-
-	public String getPageMapName()
-	{
-		return pageMapName;
-	}
-
-	public int getVersionNumber()
-	{
-		return versionNumber;
-	}
-
-	public int getAjaxVersionNumber()
-	{
-		return ajaxVersionNumber;
 	}
 }

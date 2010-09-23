@@ -33,10 +33,10 @@ public class ShiroConfigInfoPanel extends Panel
 	{
 	  super( id );
 	  
-	  IModel<?> model = new ShiroServletRequestModel();
+	  ShiroServletRequestModel shiroRequestModel = new ShiroServletRequestModel();
     WebMarkupContainer request = new WebMarkupContainer( "request",
-        new CompoundPropertyModel( model ) );
-    request.add( new Label("toString", model ));
+        new CompoundPropertyModel<ShiroServletRequestModel>( shiroRequestModel ) );
+    request.add( new Label("toString", shiroRequestModel ));
     request.add( new Label("class.name" ));
     request.add( new Label("RemoteUser" ));
     request.add( new Label("RequestedSessionId" ));
@@ -48,10 +48,10 @@ public class ShiroConfigInfoPanel extends Panel
     request.add( new Label("RequestedSessionIdValid" ));
     add( request );
     
-	  model = new ShiroSubjectModel();
+    ShiroSubjectModel shiroSubjectModel = new ShiroSubjectModel();
     WebMarkupContainer subject = new WebMarkupContainer( "subject",
-        new CompoundPropertyModel<SecurityManager>( model ) );
-    subject.add( new Label("toString", model ));
+        new CompoundPropertyModel<ShiroSubjectModel>(shiroSubjectModel) );
+    subject.add( new Label("toString", shiroSubjectModel));
     subject.add( new Label("class.name" ));
     subject.add( new Label("authenticated" ));
     subject.add( new Label("principal" ));

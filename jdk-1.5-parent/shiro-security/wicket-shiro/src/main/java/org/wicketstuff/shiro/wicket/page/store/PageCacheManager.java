@@ -16,11 +16,6 @@
  */
 package org.wicketstuff.shiro.wicket.page.store;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 import org.apache.wicket.IClusterable;
 
 /**
@@ -36,78 +31,18 @@ public class PageCacheManager implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
 
-	private final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
-	private final Lock read = rwl.readLock();
-	private final Lock write = rwl.writeLock();
-	private final Map<String, PageCache> caches = new HashMap<String, PageCache>();
+	private final PageCache cache;
 
 	private final int MAX_PAGES_PER_MAP;
 
 	public PageCacheManager(final int maxNumPagesPerMap)
 	{
 		MAX_PAGES_PER_MAP = maxNumPagesPerMap;
+		cache = new PageCache(MAX_PAGES_PER_MAP);
 	}
 
-	public PageCache getPageCache(final String name)
+	public PageCache getPageCache()
 	{
-		read.lock();
-		PageCache toReturn;
-		try
-		{
-			toReturn = caches.get(name);
-		}
-		finally
-		{
-			read.unlock();
-		}
-
-		if (toReturn == null)
-		{
-			// Create a new PageCache, but note that another thread might have added one while no
-			// lock was held,
-			// so we still have to obtain the lock
-			write.lock();
-			try
-			{
-				toReturn = new PageCache(MAX_PAGES_PER_MAP);
-				final PageCache old = caches.put(name, toReturn);
-				if (old != null)
-				{
-					// already exists, revert and use existing
-					toReturn = old;
-					caches.put(name, toReturn);
-				}
-			}
-			finally
-			{
-				write.unlock();
-			}
-		}
-		return toReturn;
-	}
-
-	public void removePageCache(final String name)
-	{
-		write.lock();
-		try
-		{
-			caches.remove(name);
-		}
-		finally
-		{
-			write.unlock();
-		}
-	}
-
-	@Override
-	public String toString()
-	{
-		final StringBuilder sb = new StringBuilder();
-		for (final Map.Entry<String, PageCache> entry : caches.entrySet())
-		{
-			sb.append("PageCache: ").append(entry.getKey()).append("\n");
-			sb.append(entry.getValue().toString());
-		}
-		return sb.toString();
+		return cache;
 	}
 }

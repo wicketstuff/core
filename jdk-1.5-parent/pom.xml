@@ -27,6 +27,7 @@
 		<module>inmethod-grid-parent</module>
 		<module>minis-parent</module>
 		<module>phonebook</module>
+		<module>shiro-security</module>
 
 		<!-- Modules below are commented until they can compile with wicket 1.5-SNAPSHOT -->
 	
@@ -57,7 +58,6 @@
 <!--		<module>ki-security</module>-->
 <!--		<module>sitemap-xml-parent</module>		-->
 <!--		<module>multi-text-input-parent</module>-->
-<!--		<module>shiro-security</module> -->
 
 <!--		<module>jwicket-parent</module>-->
 <!--		<module>mbeanview-parent</module>-->

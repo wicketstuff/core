@@ -16,15 +16,18 @@
  */
 package org.wicketstuff.shiro.wicket.page.store;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.io.Serializable;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.apache.wicket.Application;
 import org.apache.wicket.Page;
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.protocol.http.pagestore.AbstractPageStore;
+import org.apache.wicket.page.IManageablePage;
+import org.apache.wicket.pageStore.IPageStore;
+import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.lang.WicketObjects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +49,7 @@ import org.slf4j.LoggerFactory;
  * @author Les Hazlewood
  * @since Feb 13, 2009 4:25:12 PM
  */
-public class SessionPageStore extends AbstractPageStore {
+public class SessionPageStore implements IPageStore {
 
     private static final Logger log = LoggerFactory.getLogger(SessionPageStore.class);
     private static final String PAGE_MAP_SESSION_KEY = SessionPageStore.class.getName() + "_PAGE_CACHE_MANAGER_SESSION_KEY";
@@ -54,10 +57,11 @@ public class SessionPageStore extends AbstractPageStore {
     protected static final int DEFAULT_MAX_PAGES = -1;
 
     private final int MAX_PAGE_MAP_SIZE;
+    
+    private final String applicationName;
 
     public SessionPageStore() {
-        MAX_PAGE_MAP_SIZE = DEFAULT_MAX_PAGES;
-        log.info("Created SessionPageStore: unlimited number of pages allowed.");
+    	this(DEFAULT_MAX_PAGES);
     }
 
     public SessionPageStore(int maxPageMapSize) {
@@ -68,6 +72,7 @@ public class SessionPageStore extends AbstractPageStore {
             MAX_PAGE_MAP_SIZE = maxPageMapSize;
             log.info("Created SessionPageStore: [{}] maximum number of pages allowed.", maxPageMapSize);
         }
+        this.applicationName = Application.get().getName();
     }
 
     public int getMaxPageMapSize() {
@@ -107,23 +112,25 @@ public class SessionPageStore extends AbstractPageStore {
         //do nothing - session timeout will cleanup automatically
     }
 
-    public <T> Page getPage(String sessionId, String pageMapName, int id, int versionNumber, int ajaxVersionNumber) {
-        final SerializedPageWrapper wrapper = getPageCacheManager(sessionId).getPageCache(pageMapName).getPage(id, versionNumber, ajaxVersionNumber);
-        SerializedPage sPage = wrapper != null ? (SerializedPage) wrapper.getPage() : null;
-        return sPage != null ? deserializePage(sPage.getData(), versionNumber) : null;
+    public Page getPage(String sessionId, int pageId) {
+        final SerializedPageWrapper wrapper = getPageCacheManager(sessionId).getPageCache().getPage(pageId);
+        byte[] sPage = wrapper != null ? (byte[]) wrapper.getPage() : null;
+        return (Page) (sPage != null ? deserializePage(sPage) : null);
     }
 
+    protected IManageablePage deserializePage(final byte data[])
+	{
+		return (IManageablePage)WicketObjects.byteArrayToObject(data);
+	}
+    
     public void pageAccessed(String sessionId, Page page) {
         //nothing to do
     }
 
-    public void removePage(String sessionId, String pageMapName, int id) {
-        if (id == -1) {
-            log.debug("Removing page map [{}]", pageMapName);
-            getPageCacheManager(sessionId).removePageCache(pageMapName);
-        } else {
-            log.debug("Removing page with id [{}] from page map [{}]", id, pageMapName);
-            getPageCacheManager(sessionId).getPageCache(pageMapName).removePage(id);
+    public void removePage(String sessionId, int pageId) {
+        if (pageId != -1) {
+            log.debug("Removing page with id [{}]", pageId);
+            getPageCacheManager(sessionId).getPageCache().removePage(pageId);
         }
     }
 
@@ -137,27 +144,32 @@ public class SessionPageStore extends AbstractPageStore {
         return pcc;
     }
 
-    Collection<SerializedPageWrapper> wrap(Collection<SerializedPage> serializedPages) {
-        Collection<SerializedPageWrapper> wrappers = new ArrayList<SerializedPageWrapper>(serializedPages.size());
-        for (SerializedPage sPage : serializedPages) {
-            SerializedPageWrapper wrapper = new SerializedPageWrapper(sPage,
-                sPage.getPageId(), sPage.getPageMapName(), sPage.getVersionNumber(), sPage.getAjaxVersionNumber());
-            wrappers.add(wrapper);
-        }
-        return wrappers;
+    SerializedPageWrapper wrap(byte[] serializedPages, int pageId) {
+        
+    	SerializedPageWrapper wrapper = new SerializedPageWrapper(serializedPages, pageId);
+        return wrapper;
     }
 
-    protected Collection<SerializedPageWrapper> serialize(Page page) {
-        Collection<SerializedPage> serializedPages = serializePage(page);
-        return wrap(serializedPages);
+    protected SerializedPageWrapper serialize(String sessionId, IManageablePage page) {
+        byte[] serializedPage = serializePage(sessionId, page);
+        return wrap(serializedPage, page.getPageId());
     }
+    
+    protected byte[] serializePage(final String sessionId, final IManageablePage page)
+	{
+		Args.notNull(sessionId, "sessionId");
+		Args.notNull(page, "page");
 
-    public void storePage(String sessionId, Page page) {
-        Collection<SerializedPageWrapper> wrapped = serialize(page);
-        getPageCacheManager(sessionId).getPageCache(page.getPageMapName()).storePages(wrapped);
+		byte data[] = WicketObjects.objectToByteArray(page, applicationName);
+		return data;
+	}
+
+
+    public void storePage(String sessionId, IManageablePage page) {
+        SerializedPageWrapper wrapper = serialize(sessionId, page);
+        getPageCacheManager(sessionId).getPageCache().storePages(wrapper);
         if (log.isDebugEnabled()) {
             log.debug("storePage {}", page.toString());
-            log.debug(getPageCacheManager(sessionId).getPageCache(page.getPageMapName()).toString());
         }
     }
 
@@ -171,7 +183,35 @@ public class SessionPageStore extends AbstractPageStore {
         }
     }
 
-    public boolean containsPage(String sessionId, String pageMapName, int pageId, int pageVersion) {
-        return getPageCacheManager(sessionId).getPageCache(pageMapName).containsPage(pageId, pageVersion);
+    public boolean containsPage(String sessionId, int pageId) {
+        return getPageCacheManager(sessionId).getPageCache().containsPage(pageId);
     }
+
+	public Serializable prepareForSerialization(String sessionId, Object page) {
+		return null;
+	}
+
+	public Object restoreAfterSerialization(Serializable serializable) {
+		return null;
+	}
+
+	public IManageablePage convertToPage(Object page) {
+		if (page == null)
+		{
+			return null;
+		}
+		else if (page instanceof IManageablePage)
+		{
+			return (IManageablePage)page;
+		}
+		else if (page instanceof byte[])
+		{
+			IManageablePage deserializePage = deserializePage((byte[]) page);
+			return deserializePage;
+		}
+
+		String type = page != null ? page.getClass().getName() : null;
+		throw new IllegalArgumentException("Unknown object type " + type);
+
+	}
 }
