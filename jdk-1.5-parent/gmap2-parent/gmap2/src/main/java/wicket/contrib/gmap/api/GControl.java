@@ -25,7 +25,7 @@ import wicket.contrib.gmap.GMap2;
  */
 public enum GControl implements Serializable
 {
-	GSmallMapControl, GLargeMapControl, GSmallZoomControl, GScaleControl, GMapTypeControl;
+	GSmallMapControl, GLargeMapControl, GSmallZoomControl, GScaleControl, GMapTypeControl, GLargeMapControl3D, GSmallZoomControl3D;
 
 	public String getJSadd(GMap2 map)
 	{
