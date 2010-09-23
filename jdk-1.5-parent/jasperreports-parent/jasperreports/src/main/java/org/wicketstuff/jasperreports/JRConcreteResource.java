@@ -1,14 +1,14 @@
 /*
  * $Id: JRGenericResource.java 5335 2010-06-14 13:28:39Z cdeal $ $Revision:
  * 1.3 $ $Date: 2010-06-14 09:28:39 -0400 (Mon, 14 Jun 2010) $
- * 
+ *
  * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -27,15 +27,17 @@ import org.wicketstuff.jasperreports.handlers.IJRResourceHandler;
 
 /**
  * A concrete implementation of a JRResource that delegates the common methods to a handler
- * 
+ *
  * @author cdeal
  */
 public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource {
-	private H handler = null;
-	
+  private static final long serialVersionUID = 1L;
+
+  private H handler = null;
+
 	/**
 	 * Constructor for JRConcreteResource
-	 * 
+	 *
 	 * @param handler
 	 */
 	public JRConcreteResource(H handler) {
@@ -45,7 +47,7 @@ public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource
 
 	/**
 	 * Constructor for JRConcreteResource
-	 * 
+	 *
 	 * @param report
 	 * @param handler
 	 */
@@ -56,7 +58,7 @@ public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource
 
 	/**
 	 * Constructor for JRConcreteResource
-	 * 
+	 *
 	 * @param report
 	 * @param handler
 	 */
@@ -67,7 +69,7 @@ public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource
 
 	/**
 	 * Constructor for JRConcreteResource
-	 * 
+	 *
 	 * @param report
 	 * @param handler
 	 */
@@ -78,7 +80,7 @@ public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource
 
 	/**
 	 * Constructor for JRConcreteResource
-	 * 
+	 *
 	 * @param factory
 	 * @param handler
 	 */
