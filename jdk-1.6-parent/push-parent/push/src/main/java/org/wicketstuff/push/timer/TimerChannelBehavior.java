@@ -52,6 +52,7 @@ import org.wicketstuff.push.IPushTarget;
  * appropriately the resources associated with the page.
  *
  * @author Xavier Hanin
+ * @author Sebastian Thomschke fixed "There is no application attached to current thread"
  *
  * @see IChannelService
  * @see TimerChannelService
@@ -159,7 +160,8 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 			 */
 			public void invoke(final Object o) throws IllegalArgumentException,
 					IllegalAccessException, InvocationTargetException {
-				final Application originalApplication = Application.get();
+				final Application originalApplication =
+				  (Application.exists() ? Application.get() : null);
 				try {
 				    ThreadContext.setApplication(_application);
 					methods[m].invoke(o, parameters);
@@ -177,8 +179,8 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		/**
 		 * Construct.
 		 */
-		public DelayedMethodCallList() {
-			_application = Application.get();
+		public DelayedMethodCallList(final Application application) {
+			_application = application;
 			calls = new ArrayList<DelayedMethodCall>();
 		}
 
@@ -188,7 +190,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		 * @param dmcl
 		 */
 		public DelayedMethodCallList(final DelayedMethodCallList dmcl) {
-			_application = Application.get();
+			_application = dmcl._application;
 			calls = new ArrayList<DelayedMethodCall>(dmcl.calls);
 		}
 
@@ -255,7 +257,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		 * A trigger currently being constructed, waiting for a call to trigger
 		 * to go to the triggers list.
 		 */
-		private final DelayedMethodCallList currentTrigger = new DelayedMethodCallList();
+		private final DelayedMethodCallList currentTrigger;
 		/**
 		 * The Wicket Application in which this target is used
 		 */
@@ -277,6 +279,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 			this.application = application;
 			this.id = id;
 			this.timeout = timeout;
+			this.currentTrigger = new DelayedMethodCallList(application);
 		}
 
 		/**
