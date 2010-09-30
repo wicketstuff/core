@@ -164,7 +164,10 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 				    Application.set(_application);
 					methods[m].invoke(o, parameters);
 				} finally {
-					Application.set(originalApplication);
+          if (originalApplication == null)
+            Application.unset();
+          else
+  					Application.set(originalApplication);
 				}
 			}
 		}
