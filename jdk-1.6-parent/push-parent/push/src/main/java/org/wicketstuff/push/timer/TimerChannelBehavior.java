@@ -28,6 +28,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
+import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -112,7 +113,8 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 	private static class DelayedMethodCallList implements Serializable {
 		private static final long serialVersionUID = 1L;
 
-		private final Application _application;
+		private final Application application;
+		private final Session session;
 
 		/**
 		 * Used to store a method and its parameters to be later invoked on an
@@ -160,15 +162,21 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 					IllegalAccessException, InvocationTargetException {
 				final Application originalApplication =
 				  (Application.exists() ? Application.get() : null);
+				final Session originalSession =
+                  (Session.exists() ? Session.get() : null);
 				try {
-				    Application.set(_application);
+				    Application.set(application);
 					methods[m].invoke(o, parameters);
 				} finally {
-          if (originalApplication == null)
-            Application.unset();
-          else
-  					Application.set(originalApplication);
-				}
+                  if (originalApplication == null)
+                    Application.unset();
+                  else
+                    Application.set(originalApplication);
+  				if (originalSession == null)
+                    Session.unset();
+                  else
+                    Session.set(originalSession);
+                }
 			}
 		}
 
@@ -180,8 +188,9 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		/**
 		 * Construct.
 		 */
-		public DelayedMethodCallList(final Application application) {
-			_application = application;
+		public DelayedMethodCallList(final Application application, final Session session) {
+			this.application = application;
+			this.session = session;
 			calls = new ArrayList<DelayedMethodCall>();
 		}
 
@@ -191,7 +200,8 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		 * @param dmcl
 		 */
 		public DelayedMethodCallList(final DelayedMethodCallList dmcl) {
-			_application = dmcl._application;
+			application = dmcl.application;
+			session = dmcl.session;
 			calls = new ArrayList<DelayedMethodCall>(dmcl.calls);
 		}
 
@@ -260,10 +270,6 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		 */
 		private final DelayedMethodCallList currentTrigger;
 		/**
-		 * The Wicket Application in which this target is used
-		 */
-		private final Application application;
-		/**
 		 * The id of the behavior to which this target corresponds
 		 */
 		private final String id;
@@ -274,20 +280,19 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		 */
 		private final Duration timeout;
 
-		public TimerPushTarget(final Application application, final String id,
-				final Duration timeout) {
+		public TimerPushTarget(final Application application, final Session session,
+		    final String id, final Duration timeout) {
 			super();
-			this.application = application;
 			this.id = id;
 			this.timeout = timeout;
-			this.currentTrigger = new DelayedMethodCallList(application);
+			this.currentTrigger = new DelayedMethodCallList(application, session);
 		}
 
 		/**
 		 * @see IAjaxPushBehavior#addComponent(Component)
 		 */
 		@Override
-    public void addComponent(final Component component) {
+        public void addComponent(final Component component) {
 			synchronized (currentTrigger) {
 				currentTrigger.addCall(ADD_COMPONENT_METHOD,
 						new Object[] { component });
@@ -298,7 +303,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		 * @see IAjaxPushBehavior#addComponent(Component, String)
 		 */
 		@Override
-    public void addComponent(final Component component,
+        public void addComponent(final Component component,
 				final String markupId) {
 			synchronized (currentTrigger) {
 				currentTrigger.addCall(ADD_COMPONENT_WITH_MARKUP_ID_METHOD,
@@ -310,7 +315,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		 * @see IAjaxPushBehavior#appendJavascript(String)
 		 */
 		@Override
-    public void appendJavascript(final String javascript) {
+        public void appendJavascript(final String javascript) {
 			synchronized (currentTrigger) {
 				currentTrigger.addCall(APPEND_JAVASCRIPT_METHOD,
 						new Object[] { javascript });
@@ -321,7 +326,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		 * @see IAjaxPushBehavior#focusComponent(Component)
 		 */
 		@Override
-    public void focusComponent(final Component component) {
+        public void focusComponent(final Component component) {
 			synchronized (currentTrigger) {
 				currentTrigger.addCall(FOCUS_COMPONENT_METHOD,
 						new Object[] { component });
@@ -332,7 +337,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		 * @see IAjaxPushBehavior#prependJavascript(String)
 		 */
 		@Override
-    public void prependJavascript(final String javascript) {
+        public void prependJavascript(final String javascript) {
 			synchronized (currentTrigger) {
 				currentTrigger.addCall(PREPEND_JAVASCRIPT_METHOD,
 						new Object[] { javascript });
@@ -343,7 +348,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		 * @see IAjaxPushBehavior#trigger()
 		 */
 		@Override
-    public void trigger() {
+        public void trigger() {
 			DelayedMethodCallList trigger = null;
 			synchronized (currentTrigger) {
 				if (currentTrigger.isEmpty()) {
@@ -359,8 +364,8 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		}
 
 		@Override
-    public boolean isConnected() {
-			return TimerChannelBehavior.isConnected(application, id, timeout);
+        public boolean isConnected() {
+			return TimerChannelBehavior.isConnected(currentTrigger.application, id, timeout);
 		}
 
 		/**
@@ -370,7 +375,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		 * @return a List of triggers queued for the current component
 		 */
 		private List<DelayedMethodCallList> getTriggers() {
-			return TimerChannelBehavior.getTriggers(application, id);
+			return TimerChannelBehavior.getTriggers(currentTrigger.application, id);
 		}
 	}
 
@@ -441,7 +446,7 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 	 * @return an IPushTarget to which triggers can be sent in any thread.
 	 */
 	public IPushTarget newPushTarget() {
-		return new TimerPushTarget(Application.get(), id, timeout);
+		return new TimerPushTarget(Application.get(), Session.get(), id, timeout);
 	}
 
 	@Override
