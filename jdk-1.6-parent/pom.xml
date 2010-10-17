@@ -17,8 +17,9 @@
 	</description>
 
 	<modules>
-		<module>javaee-inject-parent</module> 
-		<module>push-parent</module>
+		<module>javaee-inject-parent</module>
+<!--		mocleiri: temporary until the new structure is done. -->
+<!--		<module>push-parent</module>-->
 		<module>wicket-html5-parent</module>
   	</modules>
 
