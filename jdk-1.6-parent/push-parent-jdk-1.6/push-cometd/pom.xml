@@ -4,7 +4,7 @@
   
 	<parent>
 		<groupId>org.wicketstuff</groupId>
-		<artifactId>push-parent</artifactId>
+		<artifactId>push-parent-jdk-1.6</artifactId>
 		<version>1.4.13-SNAPSHOT</version>
 	</parent>
 	

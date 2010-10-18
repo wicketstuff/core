@@ -18,8 +18,6 @@ package org.wicketstuff.push;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
-import org.wicketstuff.push.cometd.CometdService;
-import org.wicketstuff.push.timer.TimerChannelService;
 
 /**
  * A service providing channel based communication facility in wicket based applications.

@@ -291,7 +291,6 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		/**
 		 * @see IAjaxPushBehavior#addComponent(Component)
 		 */
-		@Override
         public void addComponent(final Component component) {
 			synchronized (currentTrigger) {
 				currentTrigger.addCall(ADD_COMPONENT_METHOD,
@@ -302,7 +301,6 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		/**
 		 * @see IAjaxPushBehavior#addComponent(Component, String)
 		 */
-		@Override
         public void addComponent(final Component component,
 				final String markupId) {
 			synchronized (currentTrigger) {
@@ -314,7 +312,6 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		/**
 		 * @see IAjaxPushBehavior#appendJavascript(String)
 		 */
-		@Override
         public void appendJavascript(final String javascript) {
 			synchronized (currentTrigger) {
 				currentTrigger.addCall(APPEND_JAVASCRIPT_METHOD,
@@ -325,7 +322,6 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		/**
 		 * @see IAjaxPushBehavior#focusComponent(Component)
 		 */
-		@Override
         public void focusComponent(final Component component) {
 			synchronized (currentTrigger) {
 				currentTrigger.addCall(FOCUS_COMPONENT_METHOD,
@@ -336,7 +332,6 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		/**
 		 * @see IAjaxPushBehavior#prependJavascript(String)
 		 */
-		@Override
         public void prependJavascript(final String javascript) {
 			synchronized (currentTrigger) {
 				currentTrigger.addCall(PREPEND_JAVASCRIPT_METHOD,
@@ -347,7 +342,6 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		/**
 		 * @see IAjaxPushBehavior#trigger()
 		 */
-		@Override
         public void trigger() {
 			DelayedMethodCallList trigger = null;
 			synchronized (currentTrigger) {
@@ -363,7 +357,6 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 			}
 		}
 
-		@Override
         public boolean isConnected() {
 			return TimerChannelBehavior.isConnected(currentTrigger.application, id, timeout);
 		}
@@ -407,7 +400,6 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		this.timeout = timeout;
 	}
 
-	@Override
 	protected void onBind() {
 		super.onBind();
 		touch(getComponent().getApplication(), id);
@@ -416,7 +408,6 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 	/**
 	 * @see AbstractAjaxTimerBehavior#onTimer(AjaxRequestTarget)
 	 */
-	@Override
 	protected void onTimer(final AjaxRequestTarget target) {
 		touch(getComponent().getApplication(), id);
 		final List<DelayedMethodCallList> triggers = getTriggers(getComponent()
@@ -449,7 +440,6 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		return new TimerPushTarget(Application.get(), Session.get(), id, timeout);
 	}
 
-	@Override
 	public void renderHead(final IHeaderResponse response) {
 		touch(getComponent().getApplication(), id);
 		final String timerChannelPageId = getComponent().getPage().getId()
@@ -703,7 +693,6 @@ public class TimerChannelBehavior extends AbstractAjaxTimerBehavior implements
 		}
 	}
 
-	@Override
 	public String toString() {
 		return "TimerChannelBehavior::" + id;
 	}
