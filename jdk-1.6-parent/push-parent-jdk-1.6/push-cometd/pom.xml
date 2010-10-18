@@ -8,11 +8,11 @@
 		<version>1.4.13-SNAPSHOT</version>
 	</parent>
 	
-	<artifactId>push</artifactId>
+	<artifactId>push-cometd</artifactId>
 	<packaging>jar</packaging>
 	
-	<name>Wicketstuff Push</name>
-	<description>An integration project for server side pushing in Wicket</description>
+	<name>Wicketstuff Push Cometd</name>
+	<description>An integration project for server side pushing in Wicket.  Due to the Java 6 only nature of the cometd artifacts the cometd integration is seperated from the jdk-1.5 push artifact.</description>
 	<url>http://wicket-stuff.sourceforge.net/wicket-contrib-cometd</url>
 	<dependencies>
 		
@@ -33,6 +33,12 @@
 			<groupId>org.cometd.java</groupId>
 			<artifactId>cometd-java-server</artifactId>
 			<version>${cometd.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>push</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 
 	</dependencies>

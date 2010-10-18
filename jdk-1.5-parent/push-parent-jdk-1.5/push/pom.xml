@@ -8,11 +8,11 @@
 		<version>1.4.13-SNAPSHOT</version>
 	</parent>
 	
-	<artifactId>push-core</artifactId>
+	<artifactId>push</artifactId>
 	<packaging>jar</packaging>
 	
 	<name>Wicketstuff Push</name>
-	<description>An integration project for server side pushing in Wicket</description>
+	<description>An integration project for server side pushing in Wicket.  Due to the cometd library depending on Java 6 the cometd implementation is in the push-cometd artifact instead.  We include the timer and dojo implementations.</description>
 	<url>http://wicket-stuff.sourceforge.net/wicket-contrib-cometd</url>
 	<dependencies>
 		

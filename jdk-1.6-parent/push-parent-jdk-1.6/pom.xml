@@ -7,7 +7,7 @@
     <version>1.4.13-SNAPSHOT</version>
   </parent>
   
-  <artifactId>push-parent</artifactId>
+  <artifactId>push-parent-jdk-1.6</artifactId>
   <packaging>pom</packaging>
 
   <name>Push - Parent</name>
@@ -34,7 +34,7 @@
   </developers>
 
   <modules>
-    <module>push</module>
+    <module>push-cometd</module>
     <module>push-examples</module>
   </modules>
 

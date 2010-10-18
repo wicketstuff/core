@@ -35,13 +35,7 @@
 
  
   <modules>
-    <module>push-core</module>
-    <module>push-timer</module>
-    <module>push-dojo</module>
+    <module>push</module>
   </modules>
  
-  <properties>
-    <cometd.version>2.0.0.RC2</cometd.version>
-  </properties>
-
 </project>
