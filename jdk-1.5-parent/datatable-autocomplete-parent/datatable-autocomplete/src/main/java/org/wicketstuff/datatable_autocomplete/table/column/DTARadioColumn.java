@@ -25,7 +25,7 @@ import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.datatable_autocomplete.radio.DTARadio;
+import org.wicketstuff.datatable_autocomplete.radio.DTARadioPanel;
 
 /**
  * @author mocleiri
@@ -63,13 +63,13 @@ public class DTARadioColumn<T> extends AbstractColumn<T> {
 	 */
 	public void populateItem(Item<ICellPopulator<T>> cellItem, String componentId, IModel<T> rowModel) {
 		
-		DTARadio<T> rd;
-		cellItem.add(rd = new DTARadio<T>(componentId, rowModel));
+		DTARadioPanel<T> rd;
+		cellItem.add(rd = new DTARadioPanel<T>(componentId, rowModel));
 		
 		rd.setOutputMarkupId(true);
 		
 		// should have a worst case size of visible page size.
-		radioList.add(rd);
+		radioList.add(rd.getRadio());
 
 	}
 
