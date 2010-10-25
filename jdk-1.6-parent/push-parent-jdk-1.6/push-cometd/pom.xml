@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+  
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>push-parent-jdk-1.6</artifactId>
+		<version>1.4.12.1-SNAPSHOT</version>
+	</parent>
+	
+	<artifactId>push-cometd</artifactId>
+	<packaging>jar</packaging>
+	
+	<name>Wicketstuff Push Cometd</name>
+	<description>An integration project for server side pushing in Wicket.  Due to the Java 6 only nature of the cometd artifacts the cometd integration is seperated from the jdk-1.5 push artifact.</description>
+	<url>http://wicket-stuff.sourceforge.net/wicket-contrib-cometd</url>
+	<dependencies>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.cometd.java</groupId>
+			<artifactId>cometd-java-client</artifactId>
+			<version>${cometd.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.cometd.java</groupId>
+			<artifactId>cometd-java-server</artifactId>
+			<version>${cometd.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>push</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+	</dependencies>
+
+</project>
