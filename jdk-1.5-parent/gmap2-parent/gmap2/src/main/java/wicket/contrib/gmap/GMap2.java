@@ -15,11 +15,7 @@
  */
 package wicket.contrib.gmap;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
@@ -82,6 +78,8 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	private final List<GOverlay> overlays = new ArrayList<GOverlay>();
 
+    private final List<GMapType> mapTypes = new ArrayList<GMapType>();
+    
 	private final WebMarkupContainer map;
 
 	private final GInfoWindow infoWindow;
@@ -147,6 +145,8 @@ public class GMap2 extends Panel implements GOverlayContainer
 		add(map);
 		overlayListener = new OverlayListener();
 		add(overlayListener);
+
+		mapTypes.addAll(Arrays.asList(GMapType.G_DEFAULT_MAP_TYPES));
 	}
 
 	/**
@@ -308,6 +308,36 @@ public class GMap2 extends Panel implements GOverlayContainer
 		return bounds;
 	}
 	
+    public GMap2 addMapType(GMapType mapType)
+    {
+        if (!mapTypes.contains(mapType))
+            mapTypes.add(mapType);
+        
+        if (AjaxRequestTarget.get() != null && findPage() != null)
+        {
+            AjaxRequestTarget.get().appendJavascript(mapType.getJSaddMapType(GMap2.this));
+        }
+        
+        return this;
+    }
+
+    public GMap2 removeMapType(GMapType mapType)
+    {
+        mapTypes.remove(mapType);
+        
+        if (AjaxRequestTarget.get() != null && findPage() != null)
+        {
+            AjaxRequestTarget.get().appendJavascript(mapType.getJSremoveMapType(GMap2.this));
+        }
+        
+        return this;
+    }
+    
+    public List<GMapType> getMapTypes()
+    {
+        return Collections.unmodifiableList(mapTypes);
+    }
+    	
 	public void enableGoogleBar(boolean enabled) {
 		if (this.googleBarEnabled != enabled)
 		{
@@ -487,6 +517,19 @@ public class GMap2 extends Panel implements GOverlayContainer
 			js.append(overlay.getJSadd());
 		}
 
+        // Add the map types
+        List<GMapType> defaultMapTypes = Arrays.asList(GMapType.G_DEFAULT_MAP_TYPES);
+        if (!mapTypes.equals(defaultMapTypes)) {
+            for (GMapType defaultMapType : defaultMapTypes) {
+                js.append(defaultMapType.getJSremoveMapType(this));
+            }
+            for (GMapType availableMapType : mapTypes)
+            {
+                js.append(availableMapType.getJSaddMapType(this));
+            }           
+        }
+        js.append(mapType.getJSsetMapType(this));
+		
 		js.append(infoWindow.getJSinit());
 
 		for (Object behavior : getBehaviors(GEventListenerBehavior.class))

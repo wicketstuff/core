@@ -172,6 +172,42 @@ function WicketMap2(id){
             case G_HYBRID_MAP:
                 return 'G_HYBRID_MAP';
                 break;
+            case G_AERIAL_MAP:
+            	return 'G_AERIAL_MAP';
+            	break;
+            case G_AERIAL_HYBRID_MAP:
+            	return 'G_AERIAL_HYBRID_MAP';
+            	break;
+            case G_PHYSICAL_MAP: 
+            	return 'G_PHYSICAL_MAP';
+            	break;
+            case G_MAPMAKER_NORMAL_MAP: 
+            	return 'G_MAPMAKER_NORMAL_MAP';
+            	break;
+            case G_MAPMAKER_HYBRID_MAP: 
+            	return 'G_MAPMAKER_HYBRID_MAP';
+            	break;
+            case G_MOON_ELEVATION_MAP: 
+            	return 'G_MOON_ELEVATION_MAP';
+            	break;
+            case G_MOON_VISIBLE_MAP: 
+            	return 'G_MOON_VISIBLE_MAP';
+            	break;
+            case G_MARS_ELEVATION_MAP: 
+            	return 'G_MARS_ELEVATION_MAP';
+            	break;
+            case G_MARS_VISIBLE_MAP: 
+            	return 'G_MARS_VISIBLE_MAP';
+            	break;
+            case G_MARS_INFRARED_MAP: 
+            	return 'G_MARS_INFRARED_MAP';
+            	break;
+            case G_SKY_VISIBLE_MAP:
+            	return 'G_SKY_VISIBLE_MAP';
+            	break;
+            case G_SATELLITE_3D_MAP:
+            	return 'G_SATELLITE_3D_MAP';
+            	break;            	
             default:
                 return 'unknown';
                 break;
@@ -180,6 +216,14 @@ function WicketMap2(id){
     
     this.setMapType = function(mapType){
         this.map.setMapType(mapType);
+    }
+    
+    this.addMapType = function(mapType){
+    	this.map.addMapType(mapType);
+    }
+    
+    this.removeMapType = function(mapType){
+    	this.map.removeMapType(mapType);
     }
     
     this.setZoom = function(level){
