@@ -87,7 +87,7 @@ public class HomePage extends WicketExamplePage
 								@Override
 								public void onEvent(AjaxRequestTarget target)
 								{
-									target.addComponent(repeaterParent);
+									target.add(repeaterParent);
 								}
 							};
 						}
@@ -99,12 +99,12 @@ public class HomePage extends WicketExamplePage
 					for (GOverlay myMarker : map.getOverlays())
 					{
 						final GOverlayPanel label = new GOverlayPanel(myMarker.getId(),
-								new CompoundPropertyModel<MyMarker>(myMarker));
+								new CompoundPropertyModel<MyMarker>(new Model<MyMarker>((MyMarker)myMarker)));
 						label.setOutputMarkupId(true);
 						rv.add(label);
 					}
 
-					target.addComponent(repeaterParent);
+					target.add(repeaterParent);
 				}
 			}
 		});
