@@ -91,7 +91,9 @@ delta_width:"35"
 paste:{
 paste_text_desc:"Sad\u0259 m\u0259tn kimi \u0259lav\u0259 et",
 paste_word_desc:"Word-d\u0259n \u0259lav\u0259 et",
-selectall_desc:"Ham\u0131s\u0131n\u0131 se\u00E7"
+selectall_desc:"Ham\u0131s\u0131n\u0131 se\u00E7",
+plaintext_mode_sticky:"Paste is now in plain text mode. Click again to toggle back to regular paste mode. After you paste something you will be returned to regular paste mode.",
+plaintext_mode:"Paste is now in plain text mode. Click again to toggle back to regular paste mode."
 },
 paste_dlg:{
 text_title:"P\u0259nc\u0259r\u0259y\u0259 m\u0259tn \u0259lav\u0259 etm\u0259k \u00FC\u00E7\u00FCn CTRL+V klavi\u015F birl\u0259\u015Fm\u0259sini istifad\u0259 edin.",
@@ -121,7 +123,9 @@ col:"S\u00FCtun",
 cell:"\u00D6z\u0259k"
 },
 autosave:{
-unload_msg:"\u018Fg\u0259r s\u0259hif\u0259d\u0259n gets\u0259niz b\u00FCt\u00FCn d\u0259yi\u015Fiklikl\u0259r itiril\u0259c\u0259k."
+unload_msg:"\u018Fg\u0259r s\u0259hif\u0259d\u0259n gets\u0259niz b\u00FCt\u00FCn d\u0259yi\u015Fiklikl\u0259r itiril\u0259c\u0259k.",
+restore_content:"Restore auto-saved content.",
+warning_message:"If you restore the saved content, you will lose all the content that is currently in the editor.\n\nAre you sure you want to restore the saved content?."
 },
 fullscreen:{
 desc:"Tamekran rejimini yand\u0131r/s\u00F6nd\u00FCr"
@@ -152,4 +156,16 @@ no_mpell:"X\u0259ta a\u015Fkar edilm\u0259di."
 },
 pagebreak:{
 desc:"S\u0259hif\u0259 b\u00F6l\u0259nini \u0259lav\u0259 et."
+},
+advlist:{
+types:"Types",
+def:"Default",
+lower_alpha:"Lower alpha",
+lower_greek:"Lower greek",
+lower_roman:"Lower roman",
+upper_alpha:"Upper alpha",
+upper_roman:"Upper roman",
+circle:"Circle",
+disc:"Disc",
+square:"Square"
 }}});

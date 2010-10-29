@@ -92,7 +92,9 @@ desc:"\u7F16\u8F91CSS\u6837\u5F0F\u8868\u5355"
 paste:{
 paste_text_desc:"\u4EE5\u7EAF\u6587\u672C\u8D34\u4E0A",
 paste_word_desc:"\u4ECEWord\u8D34\u4E0A",
-selectall_desc:"\u5168\u9009"
+selectall_desc:"\u5168\u9009",
+plaintext_mode_sticky:"Paste is now in plain text mode. Click again to toggle back to regular paste mode. After you paste something you will be returned to regular paste mode.",
+plaintext_mode:"Paste is now in plain text mode. Click again to toggle back to regular paste mode."
 },
 paste_dlg:{
 text_title:"\u5728\u952E\u76D8\u4E0A\u540C\u65F6\u6309\u4E0BCTRL\u548CV\u952E\uFF0C\u4EE5\u8D34\u4E0A\u6587\u5B57\u5230\u6B64\u89C6\u7A97\u3002 ",
@@ -128,7 +130,9 @@ merge_cells_delta_width:"40",
 merge_cells_delta_height:"40"
 },
 autosave:{
-unload_msg:"\u5982\u679C\u79BB\u5F00\u6B64\u9875\u9762\u5C06\u5BFC\u81F4\u6240\u505A\u7684\u66F4\u6539\u5168\u90E8\u4E22\u5931\u3002 "
+unload_msg:"\u5982\u679C\u79BB\u5F00\u6B64\u9875\u9762\u5C06\u5BFC\u81F4\u6240\u505A\u7684\u66F4\u6539\u5168\u90E8\u4E22\u5931\u3002 ",
+restore_content:"Restore auto-saved content.",
+warning_message:"If you restore the saved content, you will lose all the content that is currently in the editor.\n\nAre you sure you want to restore the saved content?."
 },
 fullscreen:{
 desc:"\u5F00\u5173\u5168\u5C4F\u6A21\u5F0F"
@@ -159,4 +163,16 @@ no_mpell:"\u672A\u53D1\u73B0\u62FC\u5199\u9519\u8BEF"
 },
 pagebreak:{
 desc:"\u63D2\u5165\u5206\u9875\u7B26\u53F7"
+},
+advlist:{
+types:"Types",
+def:"Default",
+lower_alpha:"Lower alpha",
+lower_greek:"Lower greek",
+lower_roman:"Lower roman",
+upper_alpha:"Upper alpha",
+upper_roman:"Upper roman",
+circle:"Circle",
+disc:"Disc",
+square:"Square"
 }}});

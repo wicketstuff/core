@@ -90,7 +90,9 @@ desc:"\u7F16\u8F91 CSS \u6837\u5F0F\u8868"
 paste:{
 paste_text_desc:"\u7C98\u8D34\u4E3A\u7EAF\u6587\u5B57",
 paste_word_desc:"\u7C98\u8D34\u4E3AWord\u683C\u5F0F",
-selectall_desc:"\u5168\u9009"
+selectall_desc:"\u5168\u9009",
+plaintext_mode_sticky:"Paste is now in plain text mode. Click again to toggle back to regular paste mode. After you paste something you will be returned to regular paste mode.",
+plaintext_mode:"Paste is now in plain text mode. Click again to toggle back to regular paste mode."
 },
 paste_dlg:{
 text_title:"\u5C06\u590D\u5236(CTRL + C)\u7684\u5185\u5BB9\u7C98\u8D34(CTRL + V)\u5230\u7A97\u53E3\u3002",
@@ -120,7 +122,9 @@ col:"\u5217",
 cell:"\u50A8\u5B58\u683C"
 },
 autosave:{
-unload_msg:"\u5982\u679C\u79BB\u5F00\u8BE5\u9875\u5C06\u5BFC\u81F4\u6240\u6709\u4FEE\u6539\u5168\u90E8\u4E22\u5931\u3002"
+unload_msg:"\u5982\u679C\u79BB\u5F00\u8BE5\u9875\u5C06\u5BFC\u81F4\u6240\u6709\u4FEE\u6539\u5168\u90E8\u4E22\u5931\u3002",
+restore_content:"Restore auto-saved content.",
+warning_message:"If you restore the saved content, you will lose all the content that is currently in the editor.\n\nAre you sure you want to restore the saved content?."
 },
 fullscreen:{
 desc:"\u5168\u5C4F\u6A21\u5F0F"
@@ -151,4 +155,16 @@ no_mpell:"\u65E0\u62FC\u5199\u9519\u8BEF"
 },
 pagebreak:{
 desc:"\u63D2\u5165\u5206\u9875\u7B26\u53F7"
+},
+advlist:{
+types:"Types",
+def:"Default",
+lower_alpha:"Lower alpha",
+lower_greek:"Lower greek",
+lower_roman:"Lower roman",
+upper_alpha:"Upper alpha",
+upper_roman:"Upper roman",
+circle:"Circle",
+disc:"Disc",
+square:"Square"
 }}});

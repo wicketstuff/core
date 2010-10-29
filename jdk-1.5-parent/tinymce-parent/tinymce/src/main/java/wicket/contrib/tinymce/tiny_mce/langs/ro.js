@@ -90,7 +90,9 @@ desc:"Editare CSS"
 paste:{
 paste_text_desc:"Lipire ca text simplu",
 paste_word_desc:"Lipire din Word",
-selectall_desc:"Selecteaz\u0103 tot"
+selectall_desc:"Selecteaz\u0103 tot",
+plaintext_mode_sticky:"Lipirea este acum \u00EEn modul text simplu. Ap\u0103sa\u0163i aici pentru comutarea la modul normal de lipire. Dup\u0103 ce ve\u0163i lipi ceva ve\u0163i reveni la modul normal de lipire.",
+plaintext_mode:"Lipirea este acum \u00EEn modul text simplu. Ap\u0103sa\u0163i din nou pentru comutarea la modul normal de lipire."
 },
 paste_dlg:{
 text_title:"Folosi\u0163i CTRL+V pentru a lipi \u00EEn aceast\u0103 zon\u0103.",
@@ -120,7 +122,9 @@ col:"Coloan\u0103",
 cell:"Celul\u0103"
 },
 autosave:{
-unload_msg:"Modific\u0103rile nu vor fi salvate."
+unload_msg:"Modific\u0103rile nu vor fi salvate.",
+restore_content:"Restaureaz\u0103 con\u0163inutul salvat automat.",
+warning_message:"Daca restaurati continutul salvat vei pierde tot continutul existent din editor.\n\nSigur doriti sa restaurati continutul salvat?."
 },
 fullscreen:{
 desc:"Mod ecran complet"
@@ -151,4 +155,16 @@ no_mpell:"Nu sunt gre\u015Feli."
 },
 pagebreak:{
 desc:"Insereaz\u0103 un separator de pagin\u0103"
+},
+advlist:{
+types:"Tipuri",
+def:"Implicit",
+lower_alpha:"Minuscule alfabetice",
+lower_greek:"Minuscule grece\u015Fti",
+lower_roman:"Minuscule romane",
+upper_alpha:"Majuscule alfabetice",
+upper_roman:"Majuscule romane",
+circle:"Cerc",
+disc:"Disc",
+square:"P\u0103trat"
 }}});

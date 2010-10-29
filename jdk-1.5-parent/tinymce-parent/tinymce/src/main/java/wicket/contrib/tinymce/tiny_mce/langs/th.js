@@ -25,8 +25,8 @@ full:"\u0E40\u0E15\u0E47\u0E21"
 insertdatetime:{
 date_fmt:"%Y-%m-%d",
 time_fmt:"%H:%M:%S",
-insertdate_desc:"Insert date",
-inserttime_desc:"Insert time",
+insertdate_desc:"\u0E41\u0E17\u0E23\u0E01\u0E27\u0E31\u0E19\u0E17\u0E35\u0E48",
+inserttime_desc:"\u0E41\u0E17\u0E23\u0E01\u0E40\u0E27\u0E25\u0E32",
 months_long:"\u0E21\u0E01\u0E23\u0E32\u0E04\u0E21,\u0E01\u0E38\u0E21\u0E20\u0E32\u0E1E\u0E31\u0E19\u0E18\u0E4C,\u0E21\u0E35\u0E19\u0E32\u0E04\u0E21,\u0E40\u0E21\u0E29\u0E32\u0E22\u0E19,\u0E1E\u0E24\u0E29\u0E20\u0E32\u0E04\u0E21,\u0E21\u0E34\u0E16\u0E38\u0E19\u0E32\u0E22\u0E19,\u0E01\u0E23\u0E01\u0E0E\u0E32\u0E04\u0E21,\u0E2A\u0E34\u0E07\u0E2B\u0E32\u0E04\u0E21,\u0E01\u0E31\u0E19\u0E22\u0E32\u0E22\u0E19,\u0E15\u0E38\u0E25\u0E32\u0E04\u0E21,\u0E1E\u0E24\u0E28\u0E08\u0E34\u0E01\u0E32\u0E22\u0E19,\u0E18\u0E31\u0E19\u0E27\u0E32\u0E04\u0E21",
 months_short:"\u0E21.\u0E04.,\u0E01.\u0E1E.,\u0E21\u0E35.\u0E04.,\u0E40\u0E21.\u0E22.,\u0E1E.\u0E04.,\u0E21\u0E34.\u0E22.,\u0E01.\u0E04.,\u0E2A.\u0E04.,\u0E01.\u0E22.,\u0E15.\u0E04.,\u0E1E.\u0E22.,\u0E18.\u0E04.",
 day_long:"\u0E27\u0E31\u0E19\u0E2D\u0E32\u0E17\u0E34\u0E15\u0E22\u0E4C,\u0E27\u0E31\u0E19\u0E08\u0E31\u0E19\u0E17\u0E23\u0E4C,\u0E27\u0E31\u0E19\u0E2D\u0E31\u0E07\u0E04\u0E32\u0E23,\u0E27\u0E31\u0E19\u0E1E\u0E38\u0E18,\u0E27\u0E31\u0E19\u0E1E\u0E24\u0E2B\u0E31\u0E2A\u0E1A\u0E14\u0E35,\u0E27\u0E31\u0E19\u0E28\u0E38\u0E01\u0E23\u0E4C,\u0E27\u0E31\u0E19\u0E40\u0E2A\u0E32\u0E23\u0E4C,\u0E2D\u0E32\u0E17\u0E34\u0E15\u0E22\u0E4C",
@@ -64,7 +64,7 @@ advhr:{
 advhr_desc:"\u0E40\u0E2A\u0E49\u0E19\u0E1A\u0E23\u0E23\u0E17\u0E31\u0E14"
 },
 emotions:{
-emotions_desc:"Emotions"
+emotions_desc:"\u0E44\u0E2D\u0E04\u0E2D\u0E19\u0E41\u0E2A\u0E14\u0E07\u0E2D\u0E32\u0E23\u0E21\u0E13\u0E4C"
 },
 searchreplace:{
 search_desc:"\u0E04\u0E49\u0E19\u0E2B\u0E32",
@@ -90,7 +90,9 @@ desc:"\u0E41\u0E01\u0E49\u0E44\u0E02 CSS"
 paste:{
 paste_text_desc:"\u0E27\u0E32\u0E07\u0E42\u0E14\u0E22\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E18\u0E23\u0E23\u0E21\u0E14\u0E32",
 paste_word_desc:"\u0E27\u0E32\u0E07\u0E08\u0E32\u0E01\u0E42\u0E1B\u0E23\u0E41\u0E01\u0E23\u0E21 Word",
-selectall_desc:"\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14"
+selectall_desc:"\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14",
+plaintext_mode_sticky:"Paste is now in plain text mode. Click again to toggle back to regular paste mode. After you paste something you will be returned to regular paste mode.",
+plaintext_mode:"Paste is now in plain text mode. Click again to toggle back to regular paste mode."
 },
 paste_dlg:{
 text_title:"Use CTRL+V on your keyboard to paste the text into the window.",
@@ -99,12 +101,12 @@ word_title:"Use CTRL+V on your keyboard to paste the text into the window."
 },
 table:{
 desc:"Inserts a new table",
-row_before_desc:"Insert row before",
-row_after_desc:"Insert row after",
-delete_row_desc:"Delete row",
-col_before_desc:"Insert column before",
-col_after_desc:"Insert column after",
-delete_col_desc:"Remove column",
+row_before_desc:"\u0E41\u0E17\u0E23\u0E01\u0E41\u0E16\u0E27\u0E08\u0E32\u0E01\u0E02\u0E49\u0E32\u0E07\u0E2B\u0E19\u0E49\u0E32",
+row_after_desc:"\u0E41\u0E17\u0E23\u0E01\u0E41\u0E16\u0E27\u0E08\u0E32\u0E01\u0E02\u0E49\u0E32\u0E07\u0E2B\u0E25\u0E31\u0E07",
+delete_row_desc:"\u0E25\u0E1A\u0E41\u0E16\u0E27",
+col_before_desc:"\u0E41\u0E17\u0E23\u0E01\u0E04\u0E2D\u0E25\u0E31\u0E21\u0E19\u0E4C\u0E08\u0E32\u0E01\u0E02\u0E49\u0E32\u0E07\u0E2B\u0E19\u0E49\u0E32",
+col_after_desc:"\u0E41\u0E17\u0E23\u0E01\u0E04\u0E2D\u0E25\u0E31\u0E21\u0E19\u0E4C\u0E08\u0E32\u0E01\u0E02\u0E49\u0E32\u0E07\u0E2B\u0E25\u0E31\u0E07",
+delete_col_desc:"\u0E25\u0E1A\u0E04\u0E2D\u0E25\u0E31\u0E21\u0E19\u0E4C",
 split_cells_desc:"Split merged table cells",
 merge_cells_desc:"Merge table cells",
 row_desc:"Table row properties",
@@ -114,13 +116,15 @@ paste_row_before_desc:"Paste table row before",
 paste_row_after_desc:"Paste table row after",
 cut_row_desc:"Cut table row",
 copy_row_desc:"Copy table row",
-del:"Delete table",
-row:"Row",
-col:"Column",
-cell:"Cell"
+del:"\u0E25\u0E1A\u0E15\u0E32\u0E23\u0E32\u0E07",
+row:"\u0E41\u0E16\u0E27",
+col:"\u0E04\u0E2D\u0E25\u0E31\u0E21\u0E19\u0E4C",
+cell:"\u0E40\u0E0B\u0E25\u0E25\u0E4C"
 },
 autosave:{
-unload_msg:"\u0E01\u0E32\u0E23\u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19\u0E41\u0E1B\u0E25\u0E07\u0E17\u0E35\u0E48\u0E04\u0E38\u0E13\u0E17\u0E33\u0E08\u0E30\u0E2B\u0E32\u0E22\u0E44\u0E1B\u0E2B\u0E32\u0E01\u0E04\u0E38\u0E13\u0E2D\u0E2D\u0E01\u0E08\u0E32\u0E01\u0E2B\u0E19\u0E49\u0E32\u0E19\u0E35\u0E49"
+unload_msg:"\u0E01\u0E32\u0E23\u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19\u0E41\u0E1B\u0E25\u0E07\u0E17\u0E35\u0E48\u0E04\u0E38\u0E13\u0E17\u0E33\u0E08\u0E30\u0E2B\u0E32\u0E22\u0E44\u0E1B\u0E2B\u0E32\u0E01\u0E04\u0E38\u0E13\u0E2D\u0E2D\u0E01\u0E08\u0E32\u0E01\u0E2B\u0E19\u0E49\u0E32\u0E19\u0E35\u0E49",
+restore_content:"Restore auto-saved content.",
+warning_message:"If you restore the saved content, you will lose all the content that is currently in the editor.\n\nAre you sure you want to restore the saved content?."
 },
 fullscreen:{
 desc:"\u0E2A\u0E25\u0E31\u0E1A\u0E44\u0E1B\u0E41\u0E2A\u0E14\u0E07\u0E41\u0E1A\u0E1A\u0E40\u0E15\u0E47\u0E21\u0E2B\u0E19\u0E49\u0E32"
@@ -151,4 +155,16 @@ no_mpell:"\u0E44\u0E21\u0E48\u0E1E\u0E1A\u0E23\u0E30\u0E1A\u0E1A\u0E2A\u0E30\u0E
 },
 pagebreak:{
 desc:"\u0E43\u0E2A\u0E48\u0E40\u0E2A\u0E49\u0E19\u0E41\u0E1A\u0E48\u0E07\u0E2B\u0E19\u0E49\u0E32"
+},
+advlist:{
+types:"Types",
+def:"Default",
+lower_alpha:"Lower alpha",
+lower_greek:"Lower greek",
+lower_roman:"Lower roman",
+upper_alpha:"Upper alpha",
+upper_roman:"Upper roman",
+circle:"Circle",
+disc:"Disc",
+square:"Square"
 }}});

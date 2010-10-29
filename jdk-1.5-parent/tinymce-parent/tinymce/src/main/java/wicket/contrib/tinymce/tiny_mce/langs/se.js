@@ -90,7 +90,9 @@ desc:"Redigera inline CSS"
 paste:{
 paste_text_desc:"Klistra in som text",
 paste_word_desc:"Klistra in fr\u00E5n Word",
-selectall_desc:"Markera allt"
+selectall_desc:"Markera allt",
+plaintext_mode_sticky:"Paste is now in plain text mode. Click again to toggle back to regular paste mode. After you paste something you will be returned to regular paste mode.",
+plaintext_mode:"Paste is now in plain text mode. Click again to toggle back to regular paste mode."
 },
 paste_dlg:{
 text_title:"Anv\u00E4nd ctrl-v p\u00E5 ditt tangentbord f\u00F6r att klistra in i detta f\u00F6nster.",
@@ -120,7 +122,9 @@ col:"Kolumn",
 cell:"Cell"
 },
 autosave:{
-unload_msg:"F\u00F6r\u00E4ndringarna du gjorde kommer att g\u00E5 f\u00F6rlorade om du v\u00E4ljer att l\u00E4mna denna sida."
+unload_msg:"F\u00F6r\u00E4ndringarna du gjorde kommer att g\u00E5 f\u00F6rlorade om du v\u00E4ljer att l\u00E4mna denna sida.",
+restore_content:"Restore auto-saved content.",
+warning_message:"If you restore the saved content, you will lose all the content that is currently in the editor.\n\nAre you sure you want to restore the saved content?."
 },
 fullscreen:{
 desc:"Sl\u00E5 av/p\u00E5 fullsk\u00E4rmsl\u00E4ge"
@@ -151,4 +155,16 @@ no_mpell:"Kunde inte finna n\u00E5gra felstavningar."
 },
 pagebreak:{
 desc:"Infoga sidbrytning"
+},
+advlist:{
+types:"Types",
+def:"Default",
+lower_alpha:"Lower alpha",
+lower_greek:"Lower greek",
+lower_roman:"Lower roman",
+upper_alpha:"Upper alpha",
+upper_roman:"Upper roman",
+circle:"Circle",
+disc:"Disc",
+square:"Square"
 }}});

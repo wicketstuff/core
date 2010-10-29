@@ -90,7 +90,9 @@ desc:"CSS-Styles \u0437\u0430\u0441\u0430\u0445"
 paste:{
 paste_text_desc:"\u042D\u043D\u0433\u0438\u0439\u043D \u0431\u0438\u0447\u0432\u044D\u0440\u044D\u044D\u0440 \u0431\u0443\u0443\u043B\u0433\u0430\u0445",
 paste_word_desc:"\u0425\u044D\u043B\u0431\u044D\u0440\u0436\u04AF\u04AF\u043B\u044D\u043B\u0442\u0442\u044D\u0439 \u0431\u0443\u0443\u043B\u0433\u0430\u0445 (Word-\u0441)",
-selectall_desc:"\u0411\u04AF\u0433\u0434\u0438\u0439\u0433 \u0441\u043E\u043D\u0433\u043E\u0445"
+selectall_desc:"\u0411\u04AF\u0433\u0434\u0438\u0439\u0433 \u0441\u043E\u043D\u0433\u043E\u0445",
+plaintext_mode_sticky:"Paste is now in plain text mode. Click again to toggle back to regular paste mode. After you paste something you will be returned to regular paste mode.",
+plaintext_mode:"Paste is now in plain text mode. Click again to toggle back to regular paste mode."
 },
 paste_dlg:{
 text_title:"\u0422\u0430 \u0431\u0438\u0447\u0432\u044D\u0440 \u043E\u0440\u0443\u0443\u043B\u0430\u0445\u044B\u0433 \u0445\u04AF\u0441\u0432\u044D\u043B Ctrl+V \u0434\u044D\u044D\u0440 \u0434\u0430\u0440\u043D\u0430 \u0443\u0443.",
@@ -120,7 +122,9 @@ col:"\u0411\u0430\u0433\u0430\u043D\u0430",
 cell:"\u041D\u04AF\u0434"
 },
 autosave:{
-unload_msg:"\u0425\u044D\u0440\u044D\u0432 \u0442\u0430 \u0445\u0443\u0443\u0434\u0441\u044B\u0433 \u043E\u0440\u0445\u0438\u0432\u043E\u043B \u0442\u0430\u043D\u044B \u04E9\u04E9\u0440\u0447\u043B\u04E9\u043B\u0442\u04AF\u04AF\u0434 \u0445\u0430\u044F\u0433\u0434\u0430\u043D\u0430."
+unload_msg:"\u0425\u044D\u0440\u044D\u0432 \u0442\u0430 \u0445\u0443\u0443\u0434\u0441\u044B\u0433 \u043E\u0440\u0445\u0438\u0432\u043E\u043B \u0442\u0430\u043D\u044B \u04E9\u04E9\u0440\u0447\u043B\u04E9\u043B\u0442\u04AF\u04AF\u0434 \u0445\u0430\u044F\u0433\u0434\u0430\u043D\u0430.",
+restore_content:"Restore auto-saved content.",
+warning_message:"If you restore the saved content, you will lose all the content that is currently in the editor.\n\nAre you sure you want to restore the saved content?."
 },
 fullscreen:{
 desc:"\u0414\u044D\u043B\u0433\u044D\u0446 \u0434\u04AF\u04AF\u0440\u044D\u043D"
@@ -151,4 +155,16 @@ no_mpell:"\u0414\u04AF\u0440\u043C\u0438\u0439\u043D \u0430\u043B\u0434\u0430\u0
 },
 pagebreak:{
 desc:"\u0425\u0443\u0443\u0434\u0430\u0441 \u0442\u0430\u0441\u043B\u0430\u043B\u0442 \u043E\u0440\u0443\u0443\u043B\u0430\u0445."
+},
+advlist:{
+types:"Types",
+def:"Default",
+lower_alpha:"Lower alpha",
+lower_greek:"Lower greek",
+lower_roman:"Lower roman",
+upper_alpha:"Upper alpha",
+upper_roman:"Upper roman",
+circle:"Circle",
+disc:"Disc",
+square:"Square"
 }}});

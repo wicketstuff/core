@@ -1,9 +1,9 @@
 tinyMCE.addI18n('sk.searchreplace_dlg',{
-searchnext_desc:"H\u013Eada\u0165 znova",
-notfound:"Vyh\u013Ead\u00E1vanie ukon\u010Den\u00E9. H\u013Eadan\u00FD text sa nena\u0161iel.",
+searchnext_desc:"H\u013Eada\u0165 \u010Falej",
+notfound:"H\u013Eadanie bolo dokon\u010Den\u00E9. H\u013Eadan\u00FD text nebol n\u00E1jden\u00FD.",
 search_title:"H\u013Eada\u0165",
 replace_title:"H\u013Eada\u0165 a nahradi\u0165",
-allreplaced:"V\u0161etky v\u00FDskyty textu boli zmenen\u00E9.",
+allreplaced:"V\u0161etky v\u00FDskyty boli nahraden\u00E9.",
 findwhat:"H\u013Eada\u0165 \u010Do",
 replacewith:"Nahradi\u0165 \u010D\u00EDm",
 direction:"Smer",
