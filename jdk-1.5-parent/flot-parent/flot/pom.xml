@@ -92,7 +92,4 @@
       <version>1.6</version>
     </dependency>
   </dependencies>
-  <properties>
-    <wicket.version>1.4-rc4</wicket.version>
-  </properties>
 </project>
