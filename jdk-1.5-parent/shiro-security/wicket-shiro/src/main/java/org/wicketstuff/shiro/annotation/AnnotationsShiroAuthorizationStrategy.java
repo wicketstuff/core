@@ -25,6 +25,7 @@ import org.apache.shiro.util.ThreadContext;
 import org.apache.wicket.Component;
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
+import org.apache.wicket.request.component.IRequestableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.shiro.ShiroAction;
@@ -37,7 +38,7 @@ public class AnnotationsShiroAuthorizationStrategy implements IAuthorizationStra
   /**
    * @see org.apache.wicket.authorization.IAuthorizationStrategy#isInstantiationAuthorized(java.lang.Class)
    */
-  public <T extends Component> boolean isInstantiationAuthorized( final Class<T> componentClass) 
+  public <T extends IRequestableComponent> boolean isInstantiationAuthorized( final Class<T> componentClass) 
   {
     Annotation fail = checkInvalidInstantiation( componentClass );
     if( fail != null ) {
@@ -48,7 +49,7 @@ public class AnnotationsShiroAuthorizationStrategy implements IAuthorizationStra
     return true;
   }
 
-  public <T extends Component> ShiroSecurityConstraint checkInvalidInstantiation( final Class<T> componentClass )
+  public <T extends IRequestableComponent> ShiroSecurityConstraint checkInvalidInstantiation( final Class<T> componentClass )
   {
     ShiroSecurityConstraint fail = checkInvalidInstantiation( componentClass.getAnnotations(), ShiroAction.INSTANTIATE );
     if( fail == null ) {
