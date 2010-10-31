@@ -27,6 +27,8 @@ import org.apache.wicket.util.string.Strings;
  */
 public class Veil extends VeilResources
 {
+	private static final long serialVersionUID = 1L;
+
 	private Component component;
 	private String cssClassName;
 
@@ -35,7 +37,7 @@ public class Veil extends VeilResources
 	 */
 	public Veil()
 	{
-
+		super();
 	}
 
 	/**
@@ -44,40 +46,38 @@ public class Veil extends VeilResources
 	 * @param cssClassName
 	 *            name of css class that will be used for the veil
 	 */
-	public Veil(String cssClassName)
+	public Veil(final String cssClassName)
 	{
 		if (!Strings.isEmpty(cssClassName))
-		{
 			this.cssClassName = cssClassName;
-		}
 
 	}
 
 	/**
 	 * @see org.wicketstuff.minis.veil.VeilResources#bind(org.apache.wicket.Component)
 	 */
-	public void bind(Component component)
+	@Override
+	public void bind(final Component component)
 	{
 		super.bind(component);
 		if (this.component != null)
-		{
 			throw new IllegalStateException(
-					"This behavior is already bound to component. An instance of this behavior cannot be reused between components. Bound component: "
-							+ this.component.toString());
-		}
+				"This behavior is already bound to component. An instance of this behavior cannot be reused between components. Bound component: " +
+					this.component.toString());
 		this.component = component;
 	}
 
 	private String getCssClassName()
 	{
-		return (cssClassName != null) ? cssClassName : VeilResources.DEFAULT_CSS_CLASS_NAME;
+		return cssClassName != null ? cssClassName : VeilResources.DEFAULT_CSS_CLASS_NAME;
 	}
 
 
 	/**
 	 * @see org.wicketstuff.minis.veil.VeilResources#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
-	public void renderHead(IHeaderResponse response)
+	@Override
+	public void renderHead(final IHeaderResponse response)
 	{
 		super.renderHead(response);
 		response.renderOnDomReadyJavascript(VeilResources.Javascript.show(component));

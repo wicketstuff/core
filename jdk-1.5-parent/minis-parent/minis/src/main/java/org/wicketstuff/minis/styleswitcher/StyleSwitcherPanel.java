@@ -20,14 +20,12 @@ import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.request.resource.CompressedResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  * StyleSwitcherPanel
  * 
- * An example of using {@link StyleSwitcher} with three
- * {@link StyleSwitcherLink} components to quickly switch between small, medium,
- * and large fonts by simply clicking an icon.
+ * An example of using {@link StyleSwitcher} with three {@link StyleSwitcherLink} components to
+ * quickly switch between small, medium, and large fonts by simply clicking an icon.
  * 
  * Inspired by Paul Sowden's A List Apart article "Altenative Style"
  * http://alistapart.com/stories/alternate/
@@ -36,36 +34,36 @@ import org.apache.wicket.request.resource.ResourceReference;
  */
 public class StyleSwitcherPanel extends Panel
 {
+	private static final long serialVersionUID = 1L;
 
 	private static final CompressedResourceReference SS_CSS_LARGE = new CompressedResourceReference(
-			StyleSwitcher.class, "large.css");
+		StyleSwitcher.class, "large.css");
 	private static final CompressedResourceReference SS_CSS_MEDIUM = new CompressedResourceReference(
-			StyleSwitcher.class, "medium.css");
+		StyleSwitcher.class, "medium.css");
 	private static final CompressedResourceReference SS_CSS_SMALL = new CompressedResourceReference(
-			StyleSwitcher.class, "small.css");
+		StyleSwitcher.class, "small.css");
 
 	/**
 	 * Constructor
 	 * 
 	 * @param id
 	 */
-	public StyleSwitcherPanel(String id)
+	public StyleSwitcherPanel(final String id)
 	{
 		super(id);
 
-		StyleSwitcher switcher = new StyleSwitcher();
+		final StyleSwitcher switcher = new StyleSwitcher();
 		switcher.addStylesheet("large", SS_CSS_LARGE);
 		switcher.addStylesheet("medium", SS_CSS_MEDIUM);
 		switcher.addStylesheet("small", SS_CSS_SMALL);
 		add(switcher);
 
 		add(new StyleSwitcherLink("largelink", "large").add(new Image("large",
-				new PackageResourceReference(StyleSwitcher.class, "large.png"))));
+			new PackageResourceReference(StyleSwitcher.class, "large.png"))));
 		add(new StyleSwitcherLink("mediumlink", "medium").add(new Image("medium",
-				new PackageResourceReference(StyleSwitcher.class, "medium.png"))));
+			new PackageResourceReference(StyleSwitcher.class, "medium.png"))));
 		add(new StyleSwitcherLink("smalllink", "small").add(new Image("small",
-				new PackageResourceReference(StyleSwitcher.class, "small.png"))));
+			new PackageResourceReference(StyleSwitcher.class, "small.png"))));
 
 	}
-
 }

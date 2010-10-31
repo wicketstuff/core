@@ -25,6 +25,8 @@ import org.apache.wicket.Component;
  */
 public class DisabledVeil extends Veil
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructor
 	 */
@@ -39,7 +41,7 @@ public class DisabledVeil extends Veil
 	 * @param cssClassName
 	 *            name of css class that will be used for the veil
 	 */
-	public DisabledVeil(String cssClassName)
+	public DisabledVeil(final String cssClassName)
 	{
 		super(cssClassName);
 	}
@@ -47,7 +49,8 @@ public class DisabledVeil extends Veil
 	/**
 	 * @see org.apache.wicket.behavior.AbstractBehavior#isEnabled(org.apache.wicket.Component)
 	 */
-	public boolean isEnabled(Component component)
+	@Override
+	public boolean isEnabled(final Component component)
 	{
 		return super.isEnabled(component) && component.isEnabled() && component.isEnableAllowed();
 	}

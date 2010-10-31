@@ -24,20 +24,20 @@ import org.apache.wicket.model.Model;
 /**
  * StyleSwitcherLink
  * 
- * Creates a {@link WebMarkupContainer} that adds an href attribute to a
- * javascript function that switches the active stylesheet. An instance of
- * {@link StyleSwitcher} must already be defined in order for the required
- * javascript to be included. When used in conjunction with
- * {@link StyleSwitcherLink}, it easy to switch active stylesheets with the
- * click of a link.
+ * Creates a {@link WebMarkupContainer} that adds an href attribute to a javascript function that
+ * switches the active stylesheet. An instance of {@link StyleSwitcher} must already be defined in
+ * order for the required javascript to be included. When used in conjunction with
+ * {@link StyleSwitcherLink}, it easy to switch active stylesheets with the click of a link.
  * 
  * Example:
  * 
- * <pre><code>
+ * <pre>
+ * <code>
  *  add(new StyleSwitcherLink(&quot;link&quot;, &quot;medium&quot;);
  *  
  *  &lt;a wicket:id=&quot;link&quot; href=&quot;#&quot;&gt;medium font size&lt;/a&gt;
- * </code></pre>
+ * </code>
+ * </pre>
  * 
  * Inspired by Paul Sowden's A List Apart article "Altenative Style"
  * http://alistapart.com/stories/alternate/
@@ -47,6 +47,7 @@ import org.apache.wicket.model.Model;
  */
 public class StyleSwitcherLink extends WebMarkupContainer
 {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Construct.
@@ -56,31 +57,33 @@ public class StyleSwitcherLink extends WebMarkupContainer
 	 * @param title
 	 *            The title of the stylesheet to make active
 	 */
-	public StyleSwitcherLink(String id, String title)
-	{
-		super(id, new Model(title));
-	}
-
-	/**
-	 * Construct.
-	 * 
-	 * @param id
-	 *            The wicket:id used in page markup
-	 * @param title
-	 *            The title of the stylesheet to make active
-	 */
-	public StyleSwitcherLink(String id, IModel title)
+	public StyleSwitcherLink(final String id, final IModel<?> title)
 	{
 		super(id, title);
 	}
 
+	/**
+	 * Construct.
+	 * 
+	 * @param id
+	 *            The wicket:id used in page markup
+	 * @param title
+	 *            The title of the stylesheet to make active
+	 */
+	public StyleSwitcherLink(final String id, final String title)
+	{
+		super(id, new Model<String>(title));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	protected void onComponentTag(ComponentTag tag)
+	protected void onComponentTag(final ComponentTag tag)
 	{
 		super.onComponentTag(tag);
 		final String title = getDefaultModelObjectAsString();
 		tag.put("href", "#");
 		tag.put("onclick", StyleSwitcher.Javascript.forActivatingStylesheet(title));
 	}
-
 }

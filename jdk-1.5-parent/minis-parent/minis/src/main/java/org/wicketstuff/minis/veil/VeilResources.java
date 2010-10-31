@@ -25,42 +25,12 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
 /**
- * A behavior that includes all the necessary resources to use the veil on the
- * client
+ * A behavior that includes all the necessary resources to use the veil on the client
  * 
  * @author ivaynberg
  */
 public class VeilResources extends AbstractBehavior implements IHeaderContributor
 {
-	private static final ResourceReference JS = new JavascriptResourceReference(
-			VeilResources.class, "wicket-veil.js");
-
-	private static final ResourceReference CSS = new PackageResourceReference(VeilResources.class,
-			"wicket-veil.css");
-
-	/**
-	 * Css name of wicket's default veil css class
-	 */
-	public static final String DEFAULT_CSS_CLASS_NAME = "wicket-veil";
-
-	/**
-	 * @see org.apache.wicket.behavior.AbstractBehavior#bind(org.apache.wicket.Component)
-	 */
-	public void bind(Component component)
-	{
-		super.bind(component);
-		component.setOutputMarkupId(true);
-	}
-
-	/**
-	 * @see org.apache.wicket.behavior.AbstractBehavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
-	 */
-	public void renderHead(IHeaderResponse response)
-	{
-		response.renderJavascriptReference(JS);
-		response.renderCSSReference(CSS);
-	}
-
 	/**
 	 * Javascript interface for the veil
 	 * 
@@ -69,81 +39,12 @@ public class VeilResources extends AbstractBehavior implements IHeaderContributo
 	public static class Javascript
 	{
 		/**
-		 * Block instantiation
-		 */
-		private Javascript()
-		{
-
-		}
-
-		/**
 		 * Javascript interface to the veil that is decoupled from wicket
 		 * 
 		 * @author ivaynberg
 		 */
 		public static class Generic
 		{
-			/**
-			 * Block instantiation
-			 */
-			private Generic()
-			{
-
-			}
-
-			/**
-			 * Generates javascript to show a veil over a tag
-			 * 
-			 * @param markupId
-			 *            markup id of tag that will be covered by veil
-			 * @param className
-			 *            css class name for veil
-			 * @return javascript
-			 */
-			public static String show(String markupId, String className)
-			{
-				return "Wicket.Veil.show('" + markupId + "', {className:'" + className + "'});";
-			}
-
-			/**
-			 * Generates javascript to show a veil over a tag
-			 * 
-			 * @param markupId
-			 *            markup id of tag that will be covered by veil
-			 * @return javascript
-			 */
-			public static String show(String markupId)
-			{
-				return show(markupId, DEFAULT_CSS_CLASS_NAME);
-			}
-
-			/**
-			 * Generates javascript to toggle a veil over a tag
-			 * 
-			 * @param markupId
-			 *            markup id of tag that will be covered by veil
-			 * @param className
-			 *            css class name for veil
-			 * @return javascript
-			 */
-			public static String toggle(String markupId, String className)
-			{
-				return "Wicket.Veil.toggle('" + markupId + "', {className:'" + className + "'});";
-			}
-
-			/**
-			 * Generates javascript to toggle a veil over a tag
-			 * 
-			 * @param markupId
-			 *            markup id of tag that will be covered by veil
-			 * @return javascript
-			 */
-
-			public static String toggle(String markupId)
-			{
-				return toggle(markupId, DEFAULT_CSS_CLASS_NAME);
-			}
-
 			/**
 			 * Generates javascript to hide a veil over a tag
 			 * 
@@ -153,62 +54,71 @@ public class VeilResources extends AbstractBehavior implements IHeaderContributo
 			 *            css class name for veil
 			 * @return javascript
 			 */
-			public static String hide(String markupId)
+			public static String hide(final String markupId)
 			{
 				return "Wicket.Veil.toggle('" + markupId + "');";
 			}
-		}
 
-		/**
-		 * Generates javascript to show a veil over a tag
-		 * 
-		 * @param component
-		 *            component that will be covered by veil
-		 * @param className
-		 *            css class name for veil
-		 * @return javascript
-		 */
-		public static String show(Component component, String className)
-		{
-			return Generic.show(component.getMarkupId(), className);
-		}
+			/**
+			 * Generates javascript to show a veil over a tag
+			 * 
+			 * @param markupId
+			 *            markup id of tag that will be covered by veil
+			 * @return javascript
+			 */
+			public static String show(final String markupId)
+			{
+				return show(markupId, DEFAULT_CSS_CLASS_NAME);
+			}
 
-		/**
-		 * Generates javascript to show a veil over a tag
-		 * 
-		 * @param component
-		 *            component that will be covered by veil
-		 * @return javascript
-		 */
-		public static String show(Component component)
-		{
-			return Generic.show(component.getMarkupId());
-		}
+			/**
+			 * Generates javascript to show a veil over a tag
+			 * 
+			 * @param markupId
+			 *            markup id of tag that will be covered by veil
+			 * @param className
+			 *            css class name for veil
+			 * @return javascript
+			 */
+			public static String show(final String markupId, final String className)
+			{
+				return "Wicket.Veil.show('" + markupId + "', {className:'" + className + "'});";
+			}
 
-		/**
-		 * Generates javascript to toggle a veil over a tag
-		 * 
-		 * @param component
-		 *            component that will be covered by veil
-		 * @param className
-		 *            css class name for veil
-		 * @return javascript
-		 */
-		public static String toggle(Component component, String className)
-		{
-			return Generic.toggle(component.getMarkupId(), className);
-		}
+			/**
+			 * Generates javascript to toggle a veil over a tag
+			 * 
+			 * @param markupId
+			 *            markup id of tag that will be covered by veil
+			 * @return javascript
+			 */
 
-		/**
-		 * Generates javascript to show a toggle over a tag
-		 * 
-		 * @param component
-		 *            component that will be covered by veil
-		 * @return javascript
-		 */
-		public static String toggle(Component component)
-		{
-			return Generic.toggle(component.getMarkupId());
+			public static String toggle(final String markupId)
+			{
+				return toggle(markupId, DEFAULT_CSS_CLASS_NAME);
+			}
+
+			/**
+			 * Generates javascript to toggle a veil over a tag
+			 * 
+			 * @param markupId
+			 *            markup id of tag that will be covered by veil
+			 * @param className
+			 *            css class name for veil
+			 * @return javascript
+			 */
+			public static String toggle(final String markupId, final String className)
+			{
+				return "Wicket.Veil.toggle('" + markupId + "', {className:'" + className + "'});";
+			}
+
+			/**
+			 * Block instantiation
+			 */
+			private Generic()
+			{
+
+			}
 		}
 
 		/**
@@ -220,12 +130,102 @@ public class VeilResources extends AbstractBehavior implements IHeaderContributo
 		 *            css class name for veil
 		 * @return javascript
 		 */
-		public static String hide(Component component)
+		public static String hide(final Component component)
 		{
 			return Generic.hide(component.getMarkupId());
 		}
 
+		/**
+		 * Generates javascript to show a veil over a tag
+		 * 
+		 * @param component
+		 *            component that will be covered by veil
+		 * @return javascript
+		 */
+		public static String show(final Component component)
+		{
+			return Generic.show(component.getMarkupId());
+		}
+
+		/**
+		 * Generates javascript to show a veil over a tag
+		 * 
+		 * @param component
+		 *            component that will be covered by veil
+		 * @param className
+		 *            css class name for veil
+		 * @return javascript
+		 */
+		public static String show(final Component component, final String className)
+		{
+			return Generic.show(component.getMarkupId(), className);
+		}
+
+		/**
+		 * Generates javascript to show a toggle over a tag
+		 * 
+		 * @param component
+		 *            component that will be covered by veil
+		 * @return javascript
+		 */
+		public static String toggle(final Component component)
+		{
+			return Generic.toggle(component.getMarkupId());
+		}
+
+		/**
+		 * Generates javascript to toggle a veil over a tag
+		 * 
+		 * @param component
+		 *            component that will be covered by veil
+		 * @param className
+		 *            css class name for veil
+		 * @return javascript
+		 */
+		public static String toggle(final Component component, final String className)
+		{
+			return Generic.toggle(component.getMarkupId(), className);
+		}
+
+		/**
+		 * Block instantiation
+		 */
+		private Javascript()
+		{
+
+		}
 	}
 
+	private static final long serialVersionUID = 1L;
 
+	private static final ResourceReference JS = new JavascriptResourceReference(
+		VeilResources.class, "wicket-veil.js");
+
+	private static final ResourceReference CSS = new PackageResourceReference(VeilResources.class,
+		"wicket-veil.css");
+
+	/**
+	 * Css name of wicket's default veil css class
+	 */
+	public static final String DEFAULT_CSS_CLASS_NAME = "wicket-veil";
+
+	/**
+	 * @see org.apache.wicket.behavior.AbstractBehavior#bind(org.apache.wicket.Component)
+	 */
+	@Override
+	public void bind(final Component component)
+	{
+		super.bind(component);
+		component.setOutputMarkupId(true);
+	}
+
+	/**
+	 * @see org.apache.wicket.behavior.AbstractBehavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+	 */
+	@Override
+	public void renderHead(final IHeaderResponse response)
+	{
+		response.renderJavascriptReference(JS);
+		response.renderCSSReference(CSS);
+	}
 }

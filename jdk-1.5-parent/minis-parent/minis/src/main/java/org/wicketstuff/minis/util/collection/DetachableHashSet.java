@@ -32,15 +32,19 @@ import org.wicketstuff.minis.util.IDetachCodec;
  */
 public class DetachableHashSet<T> extends DetachableSet<T>
 {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @param codec
 	 */
-	public DetachableHashSet(IDetachCodec<T> codec)
+	public DetachableHashSet(final IDetachCodec<T> codec)
 	{
 		super(codec);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected Collection<T> newAttachedStore()
 	{

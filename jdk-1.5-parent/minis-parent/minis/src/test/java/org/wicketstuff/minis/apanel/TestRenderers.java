@@ -37,9 +37,45 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
 
+@SuppressWarnings("rawtypes")
 public class TestRenderers
 {
+	private static class RenderersTestPage extends TestPage
+	{
+		private final APanel aPanel;
+
+		public RenderersTestPage()
+		{
+			super();
+			aPanel = new APanel("aPanel");
+			add(aPanel);
+		}
+
+		public APanel getAPanel()
+		{
+			return aPanel;
+		}
+	}
+
+	private static class TestPageSource implements ITestPageSource
+	{
+		private static final long serialVersionUID = 1L;
+
+		private final TestPage testPage;
+
+		public TestPageSource(final TestPage testPage)
+		{
+			this.testPage = testPage;
+		}
+
+		public Page getTestPage()
+		{
+			return testPage;
+		}
+	}
+
 	private WicketTester tester;
+
 	private RenderersTestPage page;
 
 	@Before
@@ -50,30 +86,27 @@ public class TestRenderers
 	}
 
 	@Test
-	public void testLabel()
+	public void testDefaultWebMarkupContainerWithMarkupRenderer()
 	{
-		page.getAPanel().add(new Label("label", "some text"));
-		tester.startPage(new TestPageSource(page));
-
-		tester.assertLabel("aPanel:label", "some text");
-	}
-
-	@Test
-	public void testLink()
-	{
-		final Link link = new Link("link")
+		class TestPanel extends Panel implements IMarkupResourceStreamProvider
 		{
-			public void onClick()
+			private static final long serialVersionUID = 1L;
+
+			public TestPanel(final String id)
 			{
-				// do nothing
+				super(id);
 			}
-		};
-		link.add(new Label("label", "some text"));
-		page.getAPanel().add(link);
+
+			public IResourceStream getMarkupResourceStream(final MarkupContainer container,
+				final Class containerClass)
+			{
+				return new StringBufferResourceStream().append("<wicket:panel></wicket:panel>");
+			}
+		}
+		page.getAPanel().add(new TestPanel("panel"));
 		tester.startPage(new TestPageSource(page));
 
-		tester.assertComponent("aPanel:link", Link.class);
-		tester.assertLabel("aPanel:link:label", "some text");
+		tester.assertComponent("aPanel:panel", TestPanel.class);
 	}
 
 	@Test
@@ -91,13 +124,47 @@ public class TestRenderers
 	}
 
 	@Test
+	public void testLabel()
+	{
+		page.getAPanel().add(new Label("label", "some text"));
+		tester.startPage(new TestPageSource(page));
+
+		tester.assertLabel("aPanel:label", "some text");
+	}
+
+	@Test
+	public void testLink()
+	{
+		final Link link = new Link("link")
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick()
+			{
+				// do nothing
+			}
+		};
+		link.add(new Label("label", "some text"));
+		page.getAPanel().add(link);
+		tester.startPage(new TestPageSource(page));
+
+		tester.assertComponent("aPanel:link", Link.class);
+		tester.assertLabel("aPanel:link:label", "some text");
+	}
+
+	@Test
 	public void testListView()
 	{
+		@SuppressWarnings("unchecked")
 		final ListView listView = new ListView("listView", Arrays.asList("a1", "2", "3"))
 		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
 			protected void populateItem(final ListItem item)
 			{
-				final String s = (String) item.getModelObject();
+				final String s = (String)item.getModelObject();
 				item.add(new Label("label", s));
 			}
 		};
@@ -134,8 +201,8 @@ public class TestRenderers
 		final RepeatingView repeatingView = new RepeatingView("rw");
 		for (int i = 0; i < 3; i++)
 		{
-			final BookmarkablePageLink<RenderersTestPage> link 
-			= new BookmarkablePageLink<RenderersTestPage>(String.valueOf(i), RenderersTestPage.class);
+			final BookmarkablePageLink<RenderersTestPage> link = new BookmarkablePageLink<RenderersTestPage>(
+				String.valueOf(i), RenderersTestPage.class);
 			link.add(new Label("label", "label" + i));
 			repeatingView.add(link);
 		}
@@ -148,58 +215,5 @@ public class TestRenderers
 		tester.assertLabel("aPanel:rw:0:label", "label0");
 		tester.assertLabel("aPanel:rw:1:label", "label1");
 		tester.assertLabel("aPanel:rw:2:label", "label2");
-	}
-
-	@Test
-	public void testDefaultWebMarkupContainerWithMarkupRenderer()
-	{
-		class TestPanel extends Panel implements IMarkupResourceStreamProvider
-		{
-			public TestPanel(String id)
-			{
-				super(id);
-			}
-
-			public IResourceStream getMarkupResourceStream(final MarkupContainer container, final Class containerClass)
-			{
-				return new StringBufferResourceStream().append("<wicket:panel></wicket:panel>");
-			}
-		}
-		page.getAPanel().add(new TestPanel("panel"));
-		tester.startPage(new TestPageSource(page));
-
-		tester.assertComponent("aPanel:panel", TestPanel.class);
-	}
-
-	private static class TestPageSource implements ITestPageSource
-	{
-		private final TestPage testPage;
-
-		public TestPageSource(final TestPage testPage)
-		{
-			this.testPage = testPage;
-		}
-
-		public Page getTestPage()
-		{
-			return testPage;
-		}
-	}
-
-	private static class RenderersTestPage extends TestPage
-	{
-		private final APanel aPanel;
-
-		public RenderersTestPage()
-		{
-			super();
-			aPanel = new APanel("aPanel");
-			add(aPanel);
-		}
-
-		public APanel getAPanel()
-		{
-			return aPanel;
-		}
 	}
 }

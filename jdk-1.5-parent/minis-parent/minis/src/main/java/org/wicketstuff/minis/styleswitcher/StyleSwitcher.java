@@ -30,9 +30,9 @@ import org.apache.wicket.request.resource.ResourceReference;
 /**
  * StyleSwitcher
  * 
- * Adds a set of alternate stylesheet links to the header with title attributes.
- * When used in conjunction with {@link StyleSwitcherLink}, it easy to switch
- * active stylesheets with the click of a link.
+ * Adds a set of alternate stylesheet links to the header with title attributes. When used in
+ * conjunction with {@link StyleSwitcherLink}, it easy to switch active stylesheets with the click
+ * of a link.
  * 
  * Inspired by Paul Sowden's A List Apart article "Altenative Style"
  * http://alistapart.com/stories/alternate/
@@ -42,12 +42,68 @@ import org.apache.wicket.request.resource.ResourceReference;
  */
 public class StyleSwitcher extends AbstractBehavior
 {
+	/**
+	 * Javascript access methods
+	 * 
+	 * @author Igor Vaynberg (ivaynberg at apache dot org)
+	 * 
+	 */
+	public static class Javascript
+	{
+		public static String forActivatingStylesheet(final String title)
+		{
+			return "StyleSwitcher.setActiveStyleSheet('" + title + "');";
+		}
+
+		private Javascript()
+		{
+		}
+	}
+
+	private static class TitledResourceReferenceTuple implements IClusterable
+	{
+		private static final long serialVersionUID = 1L;
+
+		private final String title;
+		private final ResourceReference reference;
+
+		/**
+		 * @param name
+		 * @param reference
+		 */
+		public TitledResourceReferenceTuple(final String name, final ResourceReference reference)
+		{
+			super();
+			title = name;
+			this.reference = reference;
+		}
+
+		/**
+		 * @return reference
+		 */
+		public ResourceReference getReference()
+		{
+			return reference;
+		}
+
+		/**
+		 * @return title
+		 */
+		public String getTitle()
+		{
+			return title;
+		}
+
+
+	}
+
+	private static final long serialVersionUID = 1L;
+
 
 	private static final ResourceReference SS_JS = new JavascriptResourceReference(
-			StyleSwitcher.class, "styleswitcher.js");
+		StyleSwitcher.class, "styleswitcher.js");
 
-	private List<TitledResourceReferenceTuple> stylesheets = new ArrayList<TitledResourceReferenceTuple>();
-
+	private final List<TitledResourceReferenceTuple> stylesheets = new ArrayList<TitledResourceReferenceTuple>();
 
 	/**
 	 * Construct.
@@ -65,22 +121,23 @@ public class StyleSwitcher extends AbstractBehavior
 	 * @param title
 	 *            Name of this stylesheet
 	 */
-	public void addStylesheet(String title, ResourceReference reference)
+	public void addStylesheet(final String title, final ResourceReference reference)
 	{
 		stylesheets.add(new TitledResourceReferenceTuple(title, reference));
 	}
+
 
 	/**
 	 * @see org.apache.wicket.behavior.AbstractBehavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
-	public void renderHead(IHeaderResponse response)
+	public void renderHead(final IHeaderResponse response)
 	{
 		response.renderJavascriptReference(SS_JS);
 
-		for (TitledResourceReferenceTuple stylesheet : stylesheets)
+		for (final TitledResourceReferenceTuple stylesheet : stylesheets)
 		{
-			StringBuilder link = new StringBuilder(128);
+			final StringBuilder link = new StringBuilder(128);
 			link.append("<link rel=\"alternate stylesheet\" type=\"text/css\" href=\"");
 			link.append(RequestCycle.get().urlFor(stylesheet.getReference(), new PageParameters()));
 			link.append("\" title=\"");
@@ -88,59 +145,5 @@ public class StyleSwitcher extends AbstractBehavior
 			link.append("\"/>");
 			response.renderString(link.toString());
 		}
-	}
-
-	/**
-	 * Javascript access methods
-	 * 
-	 * @author Igor Vaynberg (ivaynberg at apache dot org)
-	 * 
-	 */
-	public static class Javascript
-	{
-		private Javascript()
-		{
-		}
-
-		public static String forActivatingStylesheet(String title)
-		{
-			return "StyleSwitcher.setActiveStyleSheet('" + title + "');";
-		}
-	}
-
-
-	private static class TitledResourceReferenceTuple implements IClusterable
-	{
-		private String title;
-		private ResourceReference reference;
-
-		/**
-		 * @param name
-		 * @param reference
-		 */
-		public TitledResourceReferenceTuple(String name, ResourceReference reference)
-		{
-			super();
-			this.title = name;
-			this.reference = reference;
-		}
-
-		/**
-		 * @return title
-		 */
-		public String getTitle()
-		{
-			return title;
-		}
-
-		/**
-		 * @return reference
-		 */
-		public ResourceReference getReference()
-		{
-			return reference;
-		}
-
-
 	}
 }

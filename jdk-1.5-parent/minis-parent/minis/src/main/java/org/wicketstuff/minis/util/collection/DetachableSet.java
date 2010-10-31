@@ -33,45 +33,37 @@ import org.wicketstuff.minis.util.IDetachCodec;
  */
 public abstract class DetachableSet<T> extends AbstractDetachableCollection<T> implements Set<T>
 {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor
 	 * 
 	 * @param codec
-	 *            codec that will be used to transcode elements between attached
-	 *            and detached states
+	 *            codec that will be used to transcode elements between attached and detached states
 	 */
-	public DetachableSet(IDetachCodec<T> codec)
+	public DetachableSet(final IDetachCodec<T> codec)
 	{
 		super(codec);
 	}
 
 	/**
-	 * @see org.wicketstuff.minis.util.collection.AbstractDetachableCollection#getAttachedStore()
+	 * {@inheritDoc}
 	 */
-	public Set<T> getAttachedStore()
-	{
-		return (Set<T>)super.getAttachedStore();
-	}
-
-	/**
-	 * @see java.util.Collection#add(java.lang.Object)
-	 */
-	public boolean add(T e)
+	public boolean add(final T e)
 	{
 		return getAttachedStore().add(e);
 	}
 
 	/**
-	 * @see java.util.Collection#addAll(java.util.Collection)
+	 * {@inheritDoc}
 	 */
-	public boolean addAll(Collection<? extends T> c)
+	public boolean addAll(final Collection<? extends T> c)
 	{
 		return getAttachedStore().addAll(c);
 	}
 
 	/**
-	 * @see java.util.Collection#clear()
+	 * {@inheritDoc}
 	 */
 	public void clear()
 	{
@@ -79,23 +71,32 @@ public abstract class DetachableSet<T> extends AbstractDetachableCollection<T> i
 	}
 
 	/**
-	 * @see java.util.Collection#contains(java.lang.Object)
+	 * {@inheritDoc}
 	 */
-	public boolean contains(Object o)
+	public boolean contains(final Object o)
 	{
 		return getAttachedStore().contains(o);
 	}
 
 	/**
-	 * @see java.util.Collection#containsAll(java.util.Collection)
+	 * {@inheritDoc}
 	 */
-	public boolean containsAll(Collection<?> c)
+	public boolean containsAll(final Collection<?> c)
 	{
 		return getAttachedStore().containsAll(c);
 	}
 
 	/**
-	 * @see java.util.Collection#isEmpty()
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Set<T> getAttachedStore()
+	{
+		return (Set<T>)super.getAttachedStore();
+	}
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public boolean isEmpty()
 	{
@@ -104,7 +105,7 @@ public abstract class DetachableSet<T> extends AbstractDetachableCollection<T> i
 	}
 
 	/**
-	 * @see java.util.Collection#iterator()
+	 * {@inheritDoc}
 	 */
 	public Iterator<T> iterator()
 	{
@@ -112,33 +113,33 @@ public abstract class DetachableSet<T> extends AbstractDetachableCollection<T> i
 	}
 
 	/**
-	 * @see java.util.Collection#remove(java.lang.Object)
+	 * {@inheritDoc}
 	 */
-	public boolean remove(Object o)
+	public boolean remove(final Object o)
 	{
 
 		return getAttachedStore().remove(o);
 	}
 
 	/**
-	 * @see java.util.Collection#removeAll(java.util.Collection)
+	 * {@inheritDoc}
 	 */
-	public boolean removeAll(Collection<?> c)
+	public boolean removeAll(final Collection<?> c)
 	{
 
 		return getAttachedStore().removeAll(c);
 	}
 
 	/**
-	 * @see java.util.Collection#retainAll(java.util.Collection)
+	 * {@inheritDoc}
 	 */
-	public boolean retainAll(Collection<?> c)
+	public boolean retainAll(final Collection<?> c)
 	{
 		return getAttachedStore().retainAll(c);
 	}
 
 	/**
-	 * @see java.util.Collection#size()
+	 * {@inheritDoc}
 	 */
 	public int size()
 	{
@@ -147,7 +148,7 @@ public abstract class DetachableSet<T> extends AbstractDetachableCollection<T> i
 	}
 
 	/**
-	 * @see java.util.Collection#toArray()
+	 * {@inheritDoc}
 	 */
 	public Object[] toArray()
 	{
@@ -156,12 +157,11 @@ public abstract class DetachableSet<T> extends AbstractDetachableCollection<T> i
 	}
 
 	/**
-	 * @see java.util.Collection#toArray(T[])
+	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("hiding")
-	public <T> T[] toArray(T[] a)
+	public <T> T[] toArray(final T[] a)
 	{
-
 		return getAttachedStore().toArray(a);
 	}
 

@@ -23,22 +23,43 @@ import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.StringBufferResourceStream;
 
 /**
- * Panel that generates markup for added components, so that it doesn't need to
- * have a markup file.
+ * Panel that generates markup for added components, so that it doesn't need to have a markup file.
  * <p>
- * Components of type {@link org.apache.wicket.markup.html.WebMarkupContainer}
- * added to a panel will have their own layout.
+ * Components of type {@link org.apache.wicket.markup.html.WebMarkupContainer} added to a panel will
+ * have their own layout.
  */
 public class APanel extends Panel implements IMarkupResourceStreamProvider
 {
+	private static final class APanelRenderer extends
+		RenderersList.BaseWebMarkupContainerRenderer<APanel>
+	{
+		private static final long serialVersionUID = 1L;
+
+		public APanelRenderer(final ILayout layout)
+		{
+			super(layout);
+		}
+
+		public Class<APanel> getComponentClass()
+		{
+			return APanel.class;
+		}
+
+		public CharSequence getMarkup(final APanel component)
+		{
+			return String.format("<wicket:panel>%s</wicket:panel>", getBodyMarkup(component));
+		}
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	private final APanelRenderer thisPanelRenderer;
 
 	/**
 	 * Constructor.
-	 *
-	 * @param id id
+	 * 
+	 * @param id
+	 *            id
 	 */
 	public APanel(final String id)
 	{
@@ -47,9 +68,11 @@ public class APanel extends Panel implements IMarkupResourceStreamProvider
 
 	/**
 	 * Constructor.
-	 *
-	 * @param id	 id
-	 * @param layout layout to be used for components arrangement in this panel
+	 * 
+	 * @param id
+	 *            id
+	 * @param layout
+	 *            layout to be used for components arrangement in this panel
 	 */
 	public APanel(final String id, final ILayout layout)
 	{
@@ -58,47 +81,17 @@ public class APanel extends Panel implements IMarkupResourceStreamProvider
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public IResourceStream getMarkupResourceStream(final MarkupContainer container,
-												   final Class containerClass)
+		final Class<?> containerClass)
 	{
 		if (container != this)
-		{
-			throw new IllegalArgumentException("Conatainer " + container + " must be instance " + this);
-		}
+			throw new IllegalArgumentException("Container " + container + " must be instance " +
+				this);
 
 		final StringBufferResourceStream resourceStream = new StringBufferResourceStream();
-		resourceStream.append(thisPanelRenderer.getMarkup((APanel) container));
+		resourceStream.append(thisPanelRenderer.getMarkup((APanel)container));
 		return resourceStream;
-	}
-
-	private static final class APanelRenderer extends RenderersList.BaseWebMarkupContainerRenderer<APanel>
-	{
-		private static final long serialVersionUID = 1L;
-
-		/**
-		 * @param layout
-		 */
-		public APanelRenderer(final ILayout layout)
-		{
-			super(layout);
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		public CharSequence getMarkup(final APanel component)
-		{
-			return String.format("<wicket:panel>%s</wicket:panel>", getBodyMarkup(component));
-		}
-
-		/**
-		 * @inheritDoc
-		 */
-		public Class<APanel> getComponentClass()
-		{
-			return APanel.class;
-		}
 	}
 }

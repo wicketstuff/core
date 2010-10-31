@@ -24,19 +24,19 @@ import org.apache.wicket.model.IDetachable;
 import org.wicketstuff.minis.util.IDetachCodec;
 
 /**
- * A collection that can be coverted between attached and detached state via
- * calls to {@link #attach()} and {@link #detach()}. Elements are converted
- * between the two states using the specified {@link IDetachCodec}.
+ * A collection that can be coverted between attached and detached state via calls to
+ * {@link #attach()} and {@link #detach()}. Elements are converted between the two states using the
+ * specified {@link IDetachCodec}.
  * 
- * This collection allows the use of real objects, and yet has the convinience
- * of a small session footprint.
+ * This collection allows the use of real objects, and yet has the convinience of a small session
+ * footprint.
  * 
- * If the collection is detached, invocation of any method from
- * {@link Collection} will cause this collection to be attached.
+ * If the collection is detached, invocation of any method from {@link Collection} will cause this
+ * collection to be attached.
  * 
- * NOTICE: During the conversion to either state N method calls are invoked on
- * the {@link IDetachCodec}, one for each element in the collection. This can
- * cause a performance problem in certain situations.
+ * NOTICE: During the conversion to either state N method calls are invoked on the
+ * {@link IDetachCodec}, one for each element in the collection. This can cause a performance
+ * problem in certain situations.
  * 
  * Example
  * 
@@ -83,11 +83,13 @@ import org.wicketstuff.minis.util.IDetachCodec;
  * @param <T>
  */
 public abstract class AbstractDetachableCollection<T>
-		implements
-			Collection<T>,
-			IDetachable,
-			Serializable
+	implements
+		Collection<T>,
+		IDetachable,
+		Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	private final IDetachCodec<T> codec;
 	private transient boolean attached = false;
 	private Serializable[] detachedStore;
@@ -97,22 +99,19 @@ public abstract class AbstractDetachableCollection<T>
 	 * Constructor
 	 * 
 	 * @param codec
-	 *            codec that will be used to transcode elements between attached
-	 *            and detached states
+	 *            codec that will be used to transcode elements between attached and detached states
 	 */
-	public AbstractDetachableCollection(IDetachCodec<T> codec)
+	public AbstractDetachableCollection(final IDetachCodec<T> codec)
 	{
 		if (codec == null)
-		{
 			throw new IllegalArgumentException("Argument `codec` cannot be null");
-		}
 		this.codec = codec;
 	}
 
 
 	/**
-	 * Converts the collection into its attached state. If the collection is
-	 * already attached this is a noop.
+	 * Converts the collection into its attached state. If the collection is already attached this
+	 * is a noop.
 	 */
 	public final void attach()
 	{
@@ -120,21 +119,19 @@ public abstract class AbstractDetachableCollection<T>
 		{
 			attachedStore = newAttachedStore();
 			if (detachedStore != null)
-			{
-				for (Serializable detached : detachedStore)
+				for (final Serializable detached : detachedStore)
 				{
-					T object = codec.attach(detached);
+					final T object = codec.attach(detached);
 					attachedStore.add(object);
 				}
-			}
 			attached = true;
 			detachedStore = null;
 		}
 	}
 
 	/**
-	 * Converts the collection into a detached state. If the collection is
-	 * already detached this is a noop.
+	 * Converts the collection into a detached state. If the collection is already detached this is
+	 * a noop.
 	 */
 	public final void detach()
 	{
@@ -144,10 +141,8 @@ public abstract class AbstractDetachableCollection<T>
 			{
 				detachedStore = new Serializable[attachedStore.size()];
 				int idx = 0;
-				for (T object : attachedStore)
-				{
+				for (final T object : attachedStore)
 					detachedStore[idx++] = codec.detach(object);
-				}
 			}
 			attachedStore = null;
 			attached = false;
@@ -155,18 +150,49 @@ public abstract class AbstractDetachableCollection<T>
 	}
 
 	/**
-	 * Returns collection used to store elements in attached state. If this
-	 * collection is currently detached it will be attached.
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(final Object obj)
+	{
+		if (obj == this)
+			return true;
+		else if (obj == null)
+			return false;
+		else if (obj instanceof AbstractDetachableCollection)
+		{
+			final AbstractDetachableCollection<?> other = (AbstractDetachableCollection<?>)obj;
+			return getAttachedStore().equals(other.getAttachedStore());
+		}
+		else if (obj instanceof Collection)
+		{
+			final Collection<?> other = (Collection<?>)obj;
+			return other.equals(getAttachedStore());
+		}
+		else
+			return false;
+	}
+
+	/**
+	 * Returns collection used to store elements in attached state. If this collection is currently
+	 * detached it will be attached.
 	 * 
 	 * @return collection used to store elements in attached state
 	 */
 	protected Collection<T> getAttachedStore()
 	{
 		if (!attached)
-		{
 			attach();
-		}
 		return attachedStore;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode()
+	{
+		return getAttachedStore().hashCode();
 	}
 
 	/**
@@ -176,54 +202,13 @@ public abstract class AbstractDetachableCollection<T>
 	 */
 	protected abstract Collection<T> newAttachedStore();
 
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode()
-	{
-		return getAttachedStore().hashCode();
-	}
-
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (obj == this)
-		{
-			return true;
-		}
-		else if (obj == null)
-		{
-			return false;
-		}
-		else if (obj instanceof AbstractDetachableCollection)
-		{
-			final AbstractDetachableCollection other = (AbstractDetachableCollection)obj;
-			return getAttachedStore().equals(other.getAttachedStore());
-		}
-		else if (obj instanceof Collection)
-		{
-			final Collection other = (Collection)obj;
-			return other.equals(getAttachedStore());
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	private void writeObject(java.io.ObjectOutputStream out) throws IOException
+	private void writeObject(final java.io.ObjectOutputStream out) throws IOException
 	{
 		if (attached)
-		{
 			throw new IllegalStateException(
-					"Detachable collection `"
-							+ getClass().getName()
-							+ "` is being serialized in its attached state. detach() must be invoked before any serialization attempt.");
-		}
+				"Detachable collection `" +
+					getClass().getName() +
+					"` is being serialized in its attached state. detach() must be invoked before any serialization attempt.");
 		out.defaultWriteObject();
 	}
 

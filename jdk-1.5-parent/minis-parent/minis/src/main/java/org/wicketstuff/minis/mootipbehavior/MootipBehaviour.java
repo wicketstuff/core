@@ -28,24 +28,18 @@ import org.apache.wicket.util.template.PackagedTextTemplate;
 import org.apache.wicket.util.template.TextTemplate;
 
 /**
- * Mootip behavior, implements integration with this
- * http://www.uhleeka.com/dev/mootips/
+ * Mootip behavior, implements integration with this http://www.uhleeka.com/dev/mootips/
  * 
- * The component you add this behavior to will be the component which the
- * tooltip appears for
- * 
+ * The component you add this behavior to will be the component which the tooltip appears for
  * 
  * @author nino.martinez @ jayway.dk
- * 
  */
 public class MootipBehaviour extends AbstractBehavior
 {
 	private static final long serialVersionUID = 1L;
 
-	private MootipAjaxListener mootipAjaxListener = null;
-
 	private final TextTemplate mooTipTemplate = new PackagedTextTemplate(MootipBehaviour.class,
-			"MootipBehaviour.js");
+		"MootipBehaviour.js");
 
 	private MootipSettings mootipSettings = new MootipSettings();
 
@@ -62,10 +56,30 @@ public class MootipBehaviour extends AbstractBehavior
 
 	private boolean contributeCSS = true;
 
-	public boolean isAjax()
+	/**
+	 * Ajax ToolTip, retrieves the panel with an ajax call. Requests the panel on each tooltip
+	 * display
+	 * 
+	 * @param panel
+	 */
+	public MootipBehaviour(final MootipPanel panel)
 	{
-		return ajax;
+		ajax = true;
+		this.panel = panel;
 	}
+
+	/**
+	 * Ajax ToolTip, retrieves the panel with an ajax call. Requests the panel on each tooltip
+	 * display
+	 * 
+	 * @param panel
+	 */
+	public MootipBehaviour(final MootipPanel panel, final boolean contribute)
+	{
+		this(panel);
+		contributeCSS = contribute;
+	}
+
 
 	/**
 	 * simple tooltip, using title as tool tip it uses this syntax for splitting
@@ -74,19 +88,13 @@ public class MootipBehaviour extends AbstractBehavior
 	 * @param title
 	 * @param content
 	 */
-	public MootipBehaviour(String title, String content)
+	public MootipBehaviour(final String title, final String content)
 	{
 		addTitle = true;
 		this.content = content;
 		this.title = title;
 	}
 
-
-	public void setMootipSettings(MootipSettings mootipSettings)
-	{
-		this.mootipSettings = mootipSettings;
-	}
-
 	/**
 	 * simple tooltip, using title as tool tip it uses this syntax for splitting
 	 * <code> title='this will be title:this will be content'</code>
@@ -94,72 +102,39 @@ public class MootipBehaviour extends AbstractBehavior
 	 * @param title
 	 * @param content
 	 */
-	public MootipBehaviour(String title, String content, boolean contribute)
+	public MootipBehaviour(final String title, final String content, final boolean contribute)
 	{
 		this(title, content);
-		this.contributeCSS = contribute;
-	}
-
-
-	/**
-	 * Ajax ToolTip, retrieves the panel with an ajax call. Requests the panel
-	 * on each tooltip display
-	 * 
-	 * @param panel
-	 */
-	public MootipBehaviour(MootipPanel panel)
-	{
-		ajax = true;
-		this.panel = panel;
-	}
-
-
-	/**
-	 * Ajax ToolTip, retrieves the panel with an ajax call. Requests the panel
-	 * on each tooltip display
-	 * 
-	 * @param panel
-	 */
-	public MootipBehaviour(MootipPanel panel, boolean contribute)
-	{
-		this(panel);
-		this.contributeCSS = contribute;
+		contributeCSS = contribute;
 	}
 
 
 	@Override
-	public void bind(Component component)
+	public void bind(final Component component)
 	{
 		super.bind(component);
 		this.component = component;
 		this.component.setOutputMarkupId(true);
 		if (addTitle && !isAjax())
-		{
-			component.add(new AttributeModifier("title", true, new Model<String>(title + "::"
-					+ content)));
-		}
+			component.add(new AttributeModifier("title", true, new Model<String>(title + "::" +
+				content)));
 		if (isAjax())
 		{
-			mootipAjaxListener = new MootipAjaxListener(panel);
 			this.component.add(new MootipAjaxListener(panel));
 			component.add(new AttributeModifier("title", true, new Model<String>(
-					"CALLBACK:mootipAjax" + getEscapedComponentMarkupId() + "()")));
+				"CALLBACK:mootipAjax" + getEscapedComponentMarkupId() + "()")));
 		}
 
-
-		component.add(new AttributeModifier("class", true, new Model<String>("toolTipImg"
-				+ getEscapedComponentMarkupId())));
-
+		component.add(new AttributeModifier("class", true, new Model<String>("toolTipImg" +
+			getEscapedComponentMarkupId())));
 
 		component.setOutputMarkupId(true);
-
 	}
 
-
-	private String generateJS(TextTemplate textTemplate)
+	private String generateJS(final TextTemplate textTemplate)
 	{
-		HashMap<String, Object> variables = new HashMap<String, Object>();
-		String widgetId = getEscapedComponentMarkupId();
+		final HashMap<String, Object> variables = new HashMap<String, Object>();
+		final String widgetId = getEscapedComponentMarkupId();
 
 		variables.put("id", widgetId);
 		variables.put("widgetId", ".toolTipImg" + getEscapedComponentMarkupId());
@@ -170,29 +145,29 @@ public class MootipBehaviour extends AbstractBehavior
 		variables.put("showDelay", mootipSettings.getShowDelay());
 		variables.put("hideDelay", mootipSettings.getHideDelay());
 		variables.put("className", mootipSettings.getClassName());
-		variables.put("offsetX", Math.round( mootipSettings.getOffsets().getX()));
-		variables.put("offsetY",  Math.round(mootipSettings.getOffsets().getY()));
+		variables.put("offsetX", Math.round(mootipSettings.getOffsets().getX()));
+		variables.put("offsetY", Math.round(mootipSettings.getOffsets().getY()));
 		variables.put("fixed", mootipSettings.isFixed());
-
 
 		textTemplate.interpolate(variables);
 		return textTemplate.asString();
-
-
 	}
 
 	/**
-	 * Gets the escaped DOM id that the input will get attached to. All non word
-	 * characters (\W) will be removed from the string.
+	 * Gets the escaped DOM id that the input will get attached to. All non word characters (\W)
+	 * will be removed from the string.
 	 * 
 	 * @return The DOM id of the input - same as the component's markup id}
 	 */
 	protected final String getEscapedComponentMarkupId()
 	{
 		return component.getMarkupId().replaceAll("\\W", "");
-
 	}
 
+	public boolean isAjax()
+	{
+		return ajax;
+	}
 
 	/**
 	 * Add the required css and js files to the page
@@ -202,21 +177,21 @@ public class MootipBehaviour extends AbstractBehavior
 	 * @see org.apache.wicket.markup.html.IHeaderContributor#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
-	public void renderHead(IHeaderResponse response)
+	public void renderHead(final IHeaderResponse response)
 	{
-
 		response.renderJavascriptReference(new CompressedResourceReference(MootipBehaviour.class,
-				"mootools.v1.11.js"));
+			"mootools.v1.11.js"));
 		response.renderJavascriptReference(new CompressedResourceReference(MootipBehaviour.class,
-				"mootips.v1.11.js"));
+			"mootips.v1.11.js"));
 		if (contributeCSS)
-		{
-			response.renderCSSReference((new CompressedResourceReference(MootipBehaviour.class,
-					"tip.css")));
-		}
+			response.renderCSSReference(new CompressedResourceReference(MootipBehaviour.class,
+				"tip.css"));
 
 		response.renderOnLoadJavascript(generateJS(mooTipTemplate));
 	}
 
-
+	public void setMootipSettings(final MootipSettings mootipSettings)
+	{
+		this.mootipSettings = mootipSettings;
+	}
 }

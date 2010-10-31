@@ -17,7 +17,6 @@
 package org.wicketstuff.minis.reflection;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.wicket.Component;
@@ -52,150 +51,46 @@ import org.apache.wicket.util.string.AppendingStringBuffer;
  */
 public class ReflectionBehavior extends AbstractBehavior
 {
-	private static final long serialVersionUID = 1L;
-
-	/** The resource reference to the reflection.js file. */
-	public static final ResourceReference REFLECTION_JS = new JavascriptResourceReference(
-			ReflectionBehavior.class, "reflection.js");
-
-	/** The classname to add to the image to make it 'reflect'. */
-	private static final String REFLECTION_MARKER = "reflect";
-
-	/** CSS class marker for the opacity of the reflection. */
-	private static final String REFLECTION_OPACITY_MARKER = "ropacity";
-
-	/** CSS class marker for the height of the reflection. */
-	private static final String REFLECTION_HEIGHT_MARKER = "rheight";
-
-	/** The opacity of the reflection, ranges from 0 to 100. */
-	private Integer reflectionOpacity = null;
-
-	/** The percentage of the height of the reflection, ranges from 0 to 100. */
-	private Integer reflectionHeight = null;
-
-	/** List of components this behavior was added to. */
-	private List components = new ArrayList();
-
-	/**
-	 * Default constructor, creates a reflection using the default settings from
-	 * reflection.js.
-	 */
-	public ReflectionBehavior()
-	{
-	}
-
-	/**
-	 * Constructor
-	 * 
-	 * @param height
-	 *            see {@link #setReflectionHeight(Integer)}
-	 * @param opacity
-	 *            see {@link #setReflectionOpacity(Integer)}
-	 */
-	public ReflectionBehavior(Integer height, Integer opacity)
-	{
-		setReflectionHeight(height);
-		setReflectionOpacity(opacity);
-	}
-
-	/**
-	 * Binds the component to this behavior.
-	 * 
-	 * @see IBehavior#bind(Component)
-	 */
-	public void bind(Component component)
-	{
-		super.bind(component);
-		component.setOutputMarkupId(true);
-		components.add(component);
-	}
-
-	/**
-	 * Sets the reflection height. This is a percentage of the original image. A
-	 * height of 50 means that the reflection will be half the size of the
-	 * original image, increasing the image size to 150%. Set the value to null
-	 * to reset to the default value.
-	 * 
-	 * @param height
-	 *            the height of the reflection as a percentage of the original
-	 *            image, valid values range from 0 to 100.
-	 */
-	public void setReflectionHeight(Integer height)
-	{
-		this.reflectionHeight = height;
-	}
-
-	/**
-	 * Sets the opacity of the reflection.
-	 * 
-	 * @param opacity
-	 *            the opacity. Valid values range from 0 to 100.
-	 */
-	public void setReflectionOpacity(Integer opacity)
-	{
-		this.reflectionOpacity = opacity;
-	}
-
-	/**
-	 * Adds the reflection.js javascript to the page.
-	 * 
-	 * @see org.apache.wicket.behavior.AbstractBehavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
-	 */
-	public void renderHead(IHeaderResponse response)
-	{
-		super.renderHead(response);
-		response.renderJavascriptReference(REFLECTION_JS);
-
-		AppendingStringBuffer sb = new AppendingStringBuffer("");
-		for (Iterator iter = components.iterator(); iter.hasNext();)
-		{
-			Component component = (Component)iter.next();
-			if (component.isVisibleInHierarchy())
-			{
-				sb.append(Javascript.show(component.getMarkupId(), reflectionOpacity,
-						reflectionHeight));
-				sb.append("\n");
-			}
-		}
-		response.renderOnLoadJavascript(sb.toString());
-	}
-
 	/**
 	 * Container for javascript calls this behavior enables
 	 * 
 	 * @author ivaynberg
 	 * 
 	 */
-	public static class Javascript
+	public static final class Javascript
 	{
-
 		/**
-		 * Block instantiation
+		 * Gets the Javascript for removing a reflection from an image. You have to manually add the
+		 * REFLECTION_JS resource reference to your page if you use this script directly.
 		 * 
+		 * @param id
+		 *            the markup id of the image.
+		 * @return the script.
 		 */
-		private Javascript()
+		public static CharSequence hide(final String id)
 		{
-
+			final AppendingStringBuffer sb2 = new AppendingStringBuffer();
+			sb2.append("Reflection.remove(document.getElementById('");
+			sb2.append(id);
+			sb2.append("');");
+			return sb2;
 		}
 
 		/**
-		 * Gets the script that adds a reflection to an image. You have to
-		 * manually add the REFLECTION_JS resource reference to your page if you
-		 * use this script directly.
+		 * Gets the script that adds a reflection to an image. You have to manually add the
+		 * REFLECTION_JS resource reference to your page if you use this script directly.
 		 * 
 		 * @param id
 		 *            the markup id of the image
 		 * @param opacity
-		 *            the opacity of the reflection (may be null for default
-		 *            value)
+		 *            the opacity of the reflection (may be null for default value)
 		 * @param height
-		 *            the height of the reflection (may be null for default
-		 *            value)
+		 *            the height of the reflection (may be null for default value)
 		 * @return the script
 		 */
-		public static CharSequence show(String id, Integer opacity, Integer height)
+		public static CharSequence show(final String id, final Integer opacity, final Integer height)
 		{
-			AppendingStringBuffer sb2 = new AppendingStringBuffer();
+			final AppendingStringBuffer sb2 = new AppendingStringBuffer();
 			sb2.append("Reflection.add(document.getElementById('");
 			sb2.append(id);
 			sb2.append("'), { ");
@@ -215,22 +110,117 @@ public class ReflectionBehavior extends AbstractBehavior
 		}
 
 		/**
-		 * Gets the Javascript for removing a reflection from an image. You have
-		 * to manually add the REFLECTION_JS resource reference to your page if
-		 * you use this script directly.
-		 * 
-		 * @param id
-		 *            the markup id of the image.
-		 * @return the script.
+		 * Private constructor
 		 */
-		public static CharSequence hide(String id)
+		private Javascript()
 		{
-			AppendingStringBuffer sb2 = new AppendingStringBuffer();
-			sb2.append("Reflection.remove(document.getElementById('");
-			sb2.append(id);
-			sb2.append("');");
-			return sb2;
+			super();
 		}
+	}
 
+	private static final long serialVersionUID = 1L;
+
+	/** The resource reference to the reflection.js file. */
+	public static final ResourceReference REFLECTION_JS = new JavascriptResourceReference(
+		ReflectionBehavior.class, "reflection.js");
+
+	/** The classname to add to the image to make it 'reflect'. */
+	private static final String REFLECTION_MARKER = "reflect";
+
+	/** CSS class marker for the opacity of the reflection. */
+	private static final String REFLECTION_OPACITY_MARKER = "ropacity";
+
+	/** CSS class marker for the height of the reflection. */
+	private static final String REFLECTION_HEIGHT_MARKER = "rheight";
+
+	/** The opacity of the reflection, ranges from 0 to 100. */
+	private Integer reflectionOpacity = null;
+
+	/** The percentage of the height of the reflection, ranges from 0 to 100. */
+	private Integer reflectionHeight = null;
+
+	/** List of components this behavior was added to. */
+	private final List<Component> components = new ArrayList<Component>();
+
+	/**
+	 * Default constructor, creates a reflection using the default settings from reflection.js.
+	 */
+	public ReflectionBehavior()
+	{
+		super();
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param height
+	 *            see {@link #setReflectionHeight(Integer)}
+	 * @param opacity
+	 *            see {@link #setReflectionOpacity(Integer)}
+	 */
+	public ReflectionBehavior(final Integer height, final Integer opacity)
+	{
+		setReflectionHeight(height);
+		setReflectionOpacity(opacity);
+	}
+
+	/**
+	 * Binds the component to this behavior.
+	 * 
+	 * @see IBehavior#bind(Component)
+	 */
+	@Override
+	public void bind(final Component component)
+	{
+		super.bind(component);
+		component.setOutputMarkupId(true);
+		components.add(component);
+	}
+
+	/**
+	 * Adds the reflection.js javascript to the page.
+	 * 
+	 * @see org.apache.wicket.behavior.AbstractBehavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+	 */
+	@Override
+	public void renderHead(final IHeaderResponse response)
+	{
+		super.renderHead(response);
+		response.renderJavascriptReference(REFLECTION_JS);
+
+		final StringBuilder sb = new StringBuilder();
+		for (final Component component : components)
+			if (component.isVisibleInHierarchy())
+			{
+				sb.append(Javascript.show(component.getMarkupId(), reflectionOpacity,
+					reflectionHeight));
+				sb.append("\n");
+			}
+		response.renderOnLoadJavascript(sb.toString());
+	}
+
+	/**
+	 * Sets the reflection height. This is a percentage of the original image. A height of 50 means
+	 * that the reflection will be half the size of the original image, increasing the image size to
+	 * 150%. Set the value to null to reset to the default value.
+	 * 
+	 * @param height
+	 *            the height of the reflection as a percentage of the original image, valid values
+	 *            range from 0 to 100.
+	 */
+	public void setReflectionHeight(final Integer height)
+	{
+		reflectionHeight = height;
+	}
+
+	/**
+	 * Sets the opacity of the reflection.
+	 * 
+	 * @param opacity
+	 *            the opacity. Valid values range from 0 to 100.
+	 */
+	public void setReflectionOpacity(final Integer opacity)
+	{
+		reflectionOpacity = opacity;
 	}
 }
