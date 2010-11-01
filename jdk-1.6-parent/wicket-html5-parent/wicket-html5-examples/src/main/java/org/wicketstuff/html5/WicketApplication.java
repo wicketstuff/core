@@ -14,28 +14,34 @@ import org.wicketstuff.html5.media.audio.AudioDemo;
 import org.wicketstuff.html5.media.video.VideoDemo;
 
 /**
- *
+ * 
  * @author Andrew Lombardi
  */
-public class WicketApplication extends WebApplication {
+public class WicketApplication extends WebApplication
+{
 
-    /**
-     * Constructor
-     */
-    public WicketApplication() {
+	/**
+	 * Constructor
+	 */
+	public WicketApplication()
+	{
 
-    }
+	}
 
-    public Class<? extends Page> getHomePage() {
-        return HomePage.class;
-    }
+	@Override
+	public Class<? extends Page> getHomePage()
+	{
+		return HomePage.class;
+	}
 
-    protected void init() {
-        super.init();
+	@Override
+	protected void init()
+	{
+		super.init();
 
-        mountBookmarkablePage("/audio", AudioDemo.class);
-        mountBookmarkablePage("/video", VideoDemo.class);
-        mountBookmarkablePage("/geolocation", GeolocationDemo.class);
-        mountBookmarkablePage("/form/range", RangeTextFieldDemo.class);
-    }
+		mountPage("/audio", AudioDemo.class);
+		mountPage("/video", VideoDemo.class);
+		mountPage("/geolocation", GeolocationDemo.class);
+		mountPage("/form/range", RangeTextFieldDemo.class);
+	}
 }
