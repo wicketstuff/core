@@ -1,45 +1,64 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <artifactId>jdk-1.6-parent</artifactId>
-    <groupId>org.wicketstuff</groupId>
-    <version>1.5-SNAPSHOT</version>
-  </parent>
-  
-  <artifactId>push-parent</artifactId>
-  <packaging>pom</packaging>
+	<parent>
+		<artifactId>jdk-1.6-parent</artifactId>
+		<groupId>org.wicketstuff</groupId>
+		<version>1.5-SNAPSHOT</version>
+	</parent>
 
-  <name>Push - Parent</name>
-  <description>See the child project "push"for more information</description>
+	<artifactId>push-parent</artifactId>
+	<packaging>pom</packaging>
 
-  <developers>
-    <developer>
-      <id>rhansen</id>
-      <name>Rodolfo Hansen</name>
-      <email>rhansen@kindleit.net</email>
-      <url>http://rhansen.kindleit.net</url>
-      <timezone>-4</timezone>
-      <organization>Kindleit.net</organization>
-      <organizationUrl>http://www.kindleit.net</organizationUrl>
-    </developer>
-    <developer>
-      <name>Vincent Demay</name>
-      <id>vdemay</id>
-      <email>vdemay at users.sf.net</email>
-      <properties>
-        <status>Retired</status>
-      </properties>
-    </developer>
-  </developers>
+	<name>Push - Parent</name>
+	<description>See the child project "push"for more information</description>
 
-  <modules>
-    <module>push</module>
-    <module>push-examples</module>
-  </modules>
+	<developers>
+		<developer>
+			<id>rhansen</id>
+			<name>Rodolfo Hansen</name>
+			<email>rhansen@kindleit.net</email>
+			<timezone>-4</timezone>
+			<organization>KindleIT</organization>
+			<organizationUrl>http://www.kindleit.net</organizationUrl>
+		</developer>
+		<developer>
+			<id>sebthom</id>
+			<name>Sebastian Thomschke</name>
+			<email>sebthom@sf.net</email>
+			<timezone>1</timezone>
+			<organization>Freelancer</organization>
+			<organizationUrl>http://www.senthom.de</organizationUrl>
+		</developer>
+		<developer>
+			<name>Vincent Demay</name>
+			<id>vdemay</id>
+			<email>vdemay at users.sf.net</email>
+			<properties>
+				<status>Retired</status>
+			</properties>
+		</developer>
+	</developers>
 
-  <properties>
-    <cometd.version>2.0.0</cometd.version>
-  </properties>
+	<modules>
+		<module>push-core</module>
+		<module>push-cometd</module>
+		<module>push-timer</module>
+		<module>push-examples</module>
+	</modules>
+
+	<properties>
+		<cometd.version>2.0.0</cometd.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 
 </project>

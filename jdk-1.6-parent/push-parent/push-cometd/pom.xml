@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>push-parent</artifactId>
+		<groupId>org.wicketstuff</groupId>
+		<version>1.5-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>push-cometd</artifactId>
+	<packaging>jar</packaging>
+
+	<name>Wicketstuff Push - CometD</name>
+	<description>CometD (bayeux) implementation of Wicketstuff Push</description>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>push-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.cometd.java</groupId>
+			<artifactId>cometd-java-client</artifactId>
+			<version>${cometd.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.cometd.javascript</groupId>
+			<artifactId>cometd-javascript-common</artifactId>
+			<version>${cometd.version}</version>
+			<type>war</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.cometd.java</groupId>
+			<artifactId>cometd-java-server</artifactId>
+			<version>${cometd.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.0</version>
+				<executions>
+					<execution>
+						<id>unpack-cometd-javascript</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.cometd.javascript</groupId>
+									<artifactId>cometd-javascript-common</artifactId>
+									<version>${cometd.version}</version>
+									<type>war</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.outputDirectory}/org/wicketstuff/push/cometd</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+							<includes>**/*.js</includes>
+							<excludes>**/*.properties</excludes>
+							<excludes>**/*.xml</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

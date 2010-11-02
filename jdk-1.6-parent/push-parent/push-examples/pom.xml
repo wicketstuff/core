@@ -1,90 +1,104 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.wicketstuff</groupId>
-    <artifactId>push-parent</artifactId>
-    <version>1.5-SNAPSHOT</version>
-  </parent>
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>push-parent</artifactId>
+		<version>1.5-SNAPSHOT</version>
+	</parent>
 
-  <artifactId>push-examples</artifactId>
-  <packaging>war</packaging>
+	<artifactId>push-examples</artifactId>
+	<packaging>war</packaging>
 
-  <name>Wicket Contrib Cometd Examples</name>
-  <description>An integration project for the Ajax JavaScript library
-    Dojo. This project provides the basic AjaxHandler for DOJO processing
-    at the serverside, and Dojo/Wicket components.</description>
-  <url>http://wicket-stuff.sourceforge.net/wicket-contrib-dojo</url>
+	<name>Wicket Push Examples</name>
 
-  <dependencies>
+	<dependencies>
 
-	<dependency>
-		<groupId>org.eclipse.jetty</groupId>
-		<artifactId>jetty-util</artifactId>
-		<version>${eclipse.jetty.version}</version>
-	</dependency>
-	
-	<dependency>
-		<groupId>org.eclipse.jetty</groupId>
-		<artifactId>jetty-server</artifactId>
-		<version>${eclipse.jetty.version}</version>
-	</dependency>
-
-	<dependency>
-		<groupId>org.eclipse.jetty</groupId>
-		<artifactId>jetty-webapp</artifactId>
-		<version>${eclipse.jetty.version}</version>
-	</dependency>
-
-	<dependency>
-		<groupId>org.eclipse.jetty</groupId>
-		<artifactId>jetty-servlet</artifactId>
-		<version>${eclipse.jetty.version}</version>
-	</dependency>
-	
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>0.9.20</version>
-    </dependency>
-    <dependency>
-      <groupId>org.wicketstuff</groupId>
-      <artifactId>push</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <resources>
-      <resource>
-        <filtering>false</filtering>
-        <directory>src/main/java</directory>
-        <includes>
-          <include>**</include>
-        </includes>
-        <excludes>
-          <exclude>**/*.java</exclude>
-        </excludes>
-      </resource>
-    </resources>
-    <plugins>
-		<plugin>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>jetty-maven-plugin</artifactId>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-util</artifactId>
 			<version>${eclipse.jetty.version}</version>
-			<configuration>
-				<scanIntervalSeconds>10</scanIntervalSeconds>
-				<webAppConfig>
-					<contextPath>/</contextPath>
-				</webAppConfig>
-				<connectors>
-					<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-						<port>9090</port>
-						<maxIdleTime>60000</maxIdleTime>
-					</connector>
-				</connectors>
-			</configuration>
-		</plugin>
-	</plugins>
-  </build>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>${eclipse.jetty.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>${eclipse.jetty.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlet</artifactId>
+			<version>${eclipse.jetty.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>0.9.20</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>push-cometd</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>push-timer</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<inherited>true</inherited>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>${eclipse.jetty.version}</version>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<webAppConfig>
+						<contextPath>/</contextPath>
+					</webAppConfig>
+					<connectors>
+						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+							<port>9090</port>
+							<maxIdleTime>60000</maxIdleTime>
+						</connector>
+					</connectors>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
