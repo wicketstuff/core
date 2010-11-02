@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<head>
+<title>Wicket Push Chat Example</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Wicket Push Chat Example</h1>
+<h2 wicket:id="push-implementation-title">XYZ implementation</h2>
+<form wicket:id="chatForm">
+<table>
+  <tr>
+    <td colspan="2">
+    Chatroom: <span wicket:id="chatroomName" />
+    <div wicket:id="chatHistory"
+      style="border: 1px black solid; width: 500px; height: 300px; overflow: auto;"></div>
+    </td>
+  </tr>
+  <tr>
+    <td>Nickname</td>
+    <td><input type="text" wicket:id="user"></input></td>
+  </tr>
+  <tr>
+    <td>Message</td>
+    <td><input type="text" wicket:id="message"></input></td>
+  </tr>
+  <tr>
+    <td colspan="2"><input type="submit" value="Send message" wicket:id="send"></input></td>
+  </tr>
+</table>
+</form>
+</body>
+</html>
