@@ -8,7 +8,7 @@
 		<version>1.4.13-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>push-parent</artifactId>
+	<artifactId>push-parent-jdk-1.5</artifactId>
 	<packaging>pom</packaging>
 
 	<name>Push - Parent</name>
