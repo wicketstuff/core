@@ -1,0 +1,22 @@
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" >
+    <head><title>ListViewFormComponentReuseManager Test</title></head>
+    <body>
+    Add rows, enter values and move them around without submit the values via the submit button first.
+    <form wicket:id="rowsForm">
+    <button wicket:id="addRowButton">Add Row</button>
+    <table>
+	<tr wicket:id="rowsList">
+       <td>&nbsp;&nbsp;&nbsp;#<span wicket:id="index">1</span></td>
+       <td>Key: <input type="text" wicket:id="key" /></td>
+       <td>Value: <input type="text" wicket:id="value" /></td>
+       <td>
+       		<a href="#" wicket:id="removeRowLink">[X]</a>
+       		<a href="#" wicket:id="moveUpLink">[&uarr;]</a>
+       		<a href="#" wicket:id="moveDownLink">[&darr;]</a>
+       	</td>
+    </tr>
+    </table>
+    <input type="submit" value="Submit" />
+    </form>
+    </body>
+</html>
