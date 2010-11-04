@@ -50,5 +50,4 @@ public class DetachableHashSet<T> extends DetachableSet<T>
 	{
 		return new HashSet<T>();
 	}
-
 }

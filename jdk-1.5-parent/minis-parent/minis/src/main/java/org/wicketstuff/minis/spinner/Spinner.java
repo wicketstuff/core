@@ -152,7 +152,7 @@ public class Spinner extends AbstractBehavior
 	 */
 	private String propertiesToJavascriptArray(final Properties p)
 	{
-		final StringBuffer sb = new StringBuffer();
+		final StringBuilder sb = new StringBuilder();
 		for (final Iterator<Map.Entry<Object, Object>> it = p.entrySet().iterator(); it.hasNext();)
 		{
 			final Entry<Object, Object> entry = it.next();

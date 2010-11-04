@@ -7,7 +7,7 @@ import org.apache.wicket.request.Response;
 
 
 /**
- * Internal class used by MooTip integration, used for ajxax calls
+ * Internal class used by MooTip integration, used for AJAX calls
  * 
  * @author nino.martinez @ jayway.dk
  * 

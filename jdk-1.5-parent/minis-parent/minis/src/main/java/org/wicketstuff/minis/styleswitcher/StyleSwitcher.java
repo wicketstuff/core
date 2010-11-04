@@ -57,6 +57,7 @@ public class StyleSwitcher extends AbstractBehavior
 
 		private Javascript()
 		{
+			super();
 		}
 	}
 
@@ -93,12 +94,9 @@ public class StyleSwitcher extends AbstractBehavior
 		{
 			return title;
 		}
-
-
 	}
 
 	private static final long serialVersionUID = 1L;
-
 
 	private static final ResourceReference SS_JS = new JavascriptResourceReference(
 		StyleSwitcher.class, "styleswitcher.js");
@@ -111,6 +109,7 @@ public class StyleSwitcher extends AbstractBehavior
 	 */
 	public StyleSwitcher()
 	{
+		super();
 	}
 
 	/**
@@ -125,7 +124,6 @@ public class StyleSwitcher extends AbstractBehavior
 	{
 		stylesheets.add(new TitledResourceReferenceTuple(title, reference));
 	}
-
 
 	/**
 	 * @see org.apache.wicket.behavior.AbstractBehavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)

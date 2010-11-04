@@ -64,6 +64,5 @@ public class StyleSwitcherPanel extends Panel
 			new PackageResourceReference(StyleSwitcher.class, "medium.png"))));
 		add(new StyleSwitcherLink("smalllink", "small").add(new Image("small",
 			new PackageResourceReference(StyleSwitcher.class, "small.png"))));
-
 	}
 }

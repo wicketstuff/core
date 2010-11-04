@@ -24,11 +24,11 @@ import org.apache.wicket.model.IDetachable;
 import org.wicketstuff.minis.util.IDetachCodec;
 
 /**
- * A collection that can be coverted between attached and detached state via calls to
+ * A collection that can be converted between attached and detached state via calls to
  * {@link #attach()} and {@link #detach()}. Elements are converted between the two states using the
  * specified {@link IDetachCodec}.
  * 
- * This collection allows the use of real objects, and yet has the convinience of a small session
+ * This collection allows the use of real objects, and yet has the convenience of a small session
  * footprint.
  * 
  * If the collection is detached, invocation of any method from {@link Collection} will cause this
@@ -76,7 +76,6 @@ import org.wicketstuff.minis.util.IDetachCodec;
  *    }
  * 
  * </pre>
- * 
  * 
  * @author Igor Vaynberg (ivaynberg)
  * 
@@ -211,5 +210,4 @@ public abstract class AbstractDetachableCollection<T>
 					"` is being serialized in its attached state. detach() must be invoked before any serialization attempt.");
 		out.defaultWriteObject();
 	}
-
 }

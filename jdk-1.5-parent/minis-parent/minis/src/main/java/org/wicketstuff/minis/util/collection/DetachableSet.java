@@ -100,7 +100,6 @@ public abstract class DetachableSet<T> extends AbstractDetachableCollection<T> i
 	 */
 	public boolean isEmpty()
 	{
-
 		return getAttachedStore().isEmpty();
 	}
 
@@ -117,7 +116,6 @@ public abstract class DetachableSet<T> extends AbstractDetachableCollection<T> i
 	 */
 	public boolean remove(final Object o)
 	{
-
 		return getAttachedStore().remove(o);
 	}
 
@@ -126,7 +124,6 @@ public abstract class DetachableSet<T> extends AbstractDetachableCollection<T> i
 	 */
 	public boolean removeAll(final Collection<?> c)
 	{
-
 		return getAttachedStore().removeAll(c);
 	}
 
@@ -143,7 +140,6 @@ public abstract class DetachableSet<T> extends AbstractDetachableCollection<T> i
 	 */
 	public int size()
 	{
-
 		return getAttachedStore().size();
 	}
 
@@ -152,7 +148,6 @@ public abstract class DetachableSet<T> extends AbstractDetachableCollection<T> i
 	 */
 	public Object[] toArray()
 	{
-
 		return getAttachedStore().toArray();
 	}
 
@@ -164,6 +159,4 @@ public abstract class DetachableSet<T> extends AbstractDetachableCollection<T> i
 	{
 		return getAttachedStore().toArray(a);
 	}
-
-
 }

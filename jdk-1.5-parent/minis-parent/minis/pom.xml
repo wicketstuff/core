@@ -23,9 +23,15 @@
 			<id>nmwael</id>
 			<email>nino.martinez.wael@gmail.com</email>
 		</developer>
+		<developer>
+			<id>sebthom</id>
+			<name>Sebastian Thomschke</name>
+			<email>sebthom@sf.net</email>
+			<timezone>1</timezone>
+			<organization>Freelancer</organization>
+			<organizationUrl>http://www.sebthom.de/</organizationUrl>
+		</developer>
 	</developers>
-
-
 
 	<dependencies>
 		<dependency>
@@ -35,7 +41,5 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-
-
-
+	
 </project>
