@@ -16,9 +16,9 @@
  */
 package org.wicketstuff.minis.apanel;
 
-import org.apache.wicket.Component;
-
 import java.util.List;
+
+import org.apache.wicket.Component;
 
 /**
  * Layout that only concatenates markup for components.
@@ -38,13 +38,21 @@ public class FlowLayout implements ILayout
 
 	/**
 	 * Constructor.
-	 *
-	 * @param renderers list of renderers to customize component rendering in this
-	 *                  layout
+	 * 
+	 * @param renderers
+	 *            list of renderers to customize component rendering in this layout
 	 */
 	public FlowLayout(final List<IComponentRenderer<?>> renderers)
 	{
 		renderersList = new RenderersList(renderers);
+	}
+
+	protected void onAfterTag(final Component component, final StringBuilder stringBuilder)
+	{
+	}
+
+	protected void onBeforeTag(final Component component, final StringBuilder stringBuilder)
+	{
 	}
 
 	/**
@@ -54,10 +62,9 @@ public class FlowLayout implements ILayout
 	{
 		final StringBuilder stringBuilder = new StringBuilder();
 
-		for (Component component : components)
+		for (final Component component : components)
 		{
-			final IComponentRenderer<Component> componentRenderer = renderersList
-					.findRendererForClass(component.getClass());
+			final IComponentRenderer<Component> componentRenderer = renderersList.findRendererForClass(component.getClass());
 			final CharSequence markup = componentRenderer.getMarkup(component);
 
 			onBeforeTag(component, stringBuilder);
@@ -65,13 +72,5 @@ public class FlowLayout implements ILayout
 			onAfterTag(component, stringBuilder);
 		}
 		return stringBuilder;
-	}
-
-	protected void onBeforeTag(final Component component, final StringBuilder stringBuilder)
-	{
-	}
-
-	protected void onAfterTag(final Component component, final StringBuilder stringBuilder)
-	{
 	}
 }

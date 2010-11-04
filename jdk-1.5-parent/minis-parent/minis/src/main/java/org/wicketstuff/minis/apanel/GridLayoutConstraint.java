@@ -17,10 +17,12 @@
 package org.wicketstuff.minis.apanel;
 
 /**
- * Specifies position of a component for {@link org.wicketstuff.minis.apanel.GridLayout}
- * and optionally column/row span.
+ * Specifies position of a component for {@link org.wicketstuff.minis.apanel.GridLayout} and
+ * optionally column/row span.
  */
-public class GridLayoutConstraint extends ConstraintBehavior implements Comparable<GridLayoutConstraint>
+public class GridLayoutConstraint extends ConstraintBehavior
+	implements
+		Comparable<GridLayoutConstraint>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -35,14 +37,44 @@ public class GridLayoutConstraint extends ConstraintBehavior implements Comparab
 		this.row = row;
 	}
 
+	public int compareTo(final GridLayoutConstraint constraint)
+	{
+		if (getRow() > constraint.getRow())
+			return 1;
+		if (getRow() < constraint.getRow())
+			return -1;
+		if (getCol() > constraint.getCol())
+			return 1;
+		if (getCol() < constraint.getCol())
+			return -1;
+		return 0;
+	}
+
+	boolean contains(final int col, final int row)
+	{
+		return col >= getCol() && col < getCol() + getColSpan() && row >= getRow() &&
+			row < getRow() + getRowSpan();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(final Object o)
+	{
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+
+		final GridLayoutConstraint that = (GridLayoutConstraint)o;
+
+		return col == that.col && row == that.row;
+	}
+
 	public int getCol()
 	{
 		return col;
-	}
-
-	public int getRow()
-	{
-		return row;
 	}
 
 	public int getColSpan()
@@ -50,73 +82,17 @@ public class GridLayoutConstraint extends ConstraintBehavior implements Comparab
 		return colSpan;
 	}
 
+	public int getRow()
+	{
+		return row;
+	}
+
 	public int getRowSpan()
 	{
 		return rowSpan;
 	}
 
-	public GridLayoutConstraint setColSpan(final int colSpan)
-	{
-		if (colSpan < 1) throw new IllegalArgumentException("colspan can't be zero or negative : " + colSpan);
-
-		this.colSpan = colSpan;
-		return this;
-	}
-
-	public GridLayoutConstraint setRowSpan(final int rowSpan)
-	{
-		if (rowSpan < 1) throw new IllegalArgumentException("rowspan can't be zero or negative : " + rowSpan);
-
-		this.rowSpan = rowSpan;
-		return this;
-	}
-
-	boolean contains(final int col, final int row)
-	{
-		return ((col >= getCol() && col < getCol() + getColSpan()) &&
-				(row >= getRow() && row < getRow() + getRowSpan()));
-	}
-
-	boolean intersectsWith(final GridLayoutConstraint constraint)
-	{
-		for (int col = constraint.getCol(); col < constraint.getCol() + constraint.getColSpan(); col++)
-		{
-			for (int row = constraint.getRow(); row < constraint.getRow() + constraint.getRowSpan(); row++)
-			{
-				if (contains(col, row))
-				{
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
 	@Override
-	public String toString()
-	{
-		return String.format("[%s, %s, %s, %s]", col, row, colSpan, rowSpan);
-	}
-
-	public int compareTo(final GridLayoutConstraint constraint)
-	{
-		if (getRow() > constraint.getRow()) return 1;
-		if (getRow() < constraint.getRow()) return -1;
-		if (getCol() > constraint.getCol()) return 1;
-		if (getCol() < constraint.getCol()) return -1;
-		return 0;
-	}
-
-	public boolean equals(final Object o)
-	{
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		final GridLayoutConstraint that = (GridLayoutConstraint) o;
-
-		return col == that.col && row == that.row;
-	}
-
 	public int hashCode()
 	{
 		int result;
@@ -124,5 +100,40 @@ public class GridLayoutConstraint extends ConstraintBehavior implements Comparab
 		result = 31 * result + row;
 		return result;
 	}
+
+	boolean intersectsWith(final GridLayoutConstraint constraint)
+	{
+		for (int col = constraint.getCol(); col < constraint.getCol() + constraint.getColSpan(); col++)
+			for (int row = constraint.getRow(); row < constraint.getRow() + constraint.getRowSpan(); row++)
+				if (contains(col, row))
+					return true;
+		return false;
+	}
+
+	public GridLayoutConstraint setColSpan(final int colSpan)
+	{
+		if (colSpan < 1)
+			throw new IllegalArgumentException("colspan can't be zero or negative : " + colSpan);
+
+		this.colSpan = colSpan;
+		return this;
+	}
+
+	public GridLayoutConstraint setRowSpan(final int rowSpan)
+	{
+		if (rowSpan < 1)
+			throw new IllegalArgumentException("rowspan can't be zero or negative : " + rowSpan);
+
+		this.rowSpan = rowSpan;
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString()
+	{
+		return String.format("[%s, %s, %s, %s]", col, row, colSpan, rowSpan);
+	}
 }
-	
