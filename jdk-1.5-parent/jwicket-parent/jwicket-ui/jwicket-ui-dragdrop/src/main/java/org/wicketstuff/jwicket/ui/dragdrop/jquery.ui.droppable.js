@@ -1,5 +1,5 @@
 /*
- * jQuery UI Droppable 1.8.5
+ * jQuery UI Droppable 1.8.6
  *
  * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -13,12 +13,6 @@
  *	jquery.ui.mouse.js
  *	jquery.ui.draggable.js
  */
-
-
-function _blabla(d) {
-	return true;
-}
-
 (function( $, undefined ) {
 
 $.widget("ui.droppable", {
@@ -32,18 +26,14 @@ $.widget("ui.droppable", {
 		scope: 'default',
 		tolerance: 'intersect'
 	},
-	
-	
 	_create: function() {
 
 		var o = this.options, accept = o.accept;
 		this.isover = 0; this.isout = 1;
 
-//console.log('_create: accept = ' + ($.isFunction(accept) ? 'Funktion ' + accept : 'keine Funktion ' + accept));
-		this.accept = $.isFunction(accept) ? accept : _blabla ;
-//		this.accept = $.isFunction(accept) ? accept : function(d) {
-//			return d.is(accept);
-//		};
+		this.accept = $.isFunction(accept) ? accept : function(d) {
+			return d.is(accept);
+		};
 
 		//Store the droppable's proportions
 		this.proportions = { width: this.element[0].offsetWidth, height: this.element[0].offsetHeight };
@@ -157,7 +147,7 @@ $.widget("ui.droppable", {
 });
 
 $.extend($.ui.droppable, {
-	version: "1.8.5"
+	version: "1.8.6"
 });
 
 $.ui.intersect = function(draggable, droppable, toleranceMode) {

@@ -35,7 +35,7 @@ public class JQuery implements Serializable {
 	}
 
 
-	private static boolean debug = true;
+	private static boolean debug = false;
 	public static boolean isDebug() {
 		return JQuery.debug;
 	}
