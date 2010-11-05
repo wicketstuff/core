@@ -15,6 +15,7 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.wicketstuff.jwicket.IStyleResolver;
+import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryCssResourceReference;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.JQuerySpeed;
@@ -35,8 +36,14 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavascriptResourceReference uiDatepickerJs    = new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker.min.js");
-	public static final JQueryJavascriptResourceReference uiDatepickerJs_de = new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker-de.js");
+	public static final JQueryJavascriptResourceReference uiDatepickerJs
+		= JQuery.isDebug()
+		? new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker.js")
+		: new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker.min.js");
+	public static final JQueryJavascriptResourceReference uiDatepickerJs_de
+		= JQuery.isDebug()
+		? new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker-de.js")
+		:new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker-de.min.js");
 
 	protected JsMap options = new JsMap();
 
@@ -53,7 +60,10 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 
 		Locale locale = Session.get().getLocale();
 		if (locale != null) {
-			addUserProvidedResourceReferences(new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker-" + locale.getLanguage() + ".js"));
+			if (JQuery.isDebug())
+				addUserProvidedResourceReferences(new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker-" + locale.getLanguage() + ".js"));
+			else
+				addUserProvidedResourceReferences(new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker-" + locale.getLanguage() + ".min.js"));
 		}
 
 		if (icon != null)

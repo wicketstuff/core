@@ -9,6 +9,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.jwicket.ChildrenFinder;
 import org.wicketstuff.jwicket.ComponentFinder;
 import org.wicketstuff.jwicket.IStyleResolver;
+import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryCssResourceReference;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.JsMap;
@@ -21,7 +22,10 @@ public class SortableBehavior extends AbstractJqueryUiEmbeddedBehavior implement
 
 	private static final String CONNECT_WITH_OPTION = "connectWith";
 
-	public static final JQueryJavascriptResourceReference uiSortableJs = new JQueryJavascriptResourceReference(SortableBehavior.class, "jquery.ui.sortable.min.js");
+	public static final JQueryJavascriptResourceReference uiSortableJs
+		= JQuery.isDebug()
+		? new JQueryJavascriptResourceReference(SortableBehavior.class, "jquery.ui.sortable.js")
+		: new JQueryJavascriptResourceReference(SortableBehavior.class, "jquery.ui.sortable.min.js");
 	public static final JQueryJavascriptResourceReference jWicketSortJs = new JQueryJavascriptResourceReference(SortableBehavior.class, "jWicketSort.js");
 
 	protected JsMap options = new JsMap();

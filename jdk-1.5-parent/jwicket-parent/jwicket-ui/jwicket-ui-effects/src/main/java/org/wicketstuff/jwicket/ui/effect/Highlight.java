@@ -1,6 +1,7 @@
 package org.wicketstuff.jwicket.ui.effect;
 
 
+import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 
 
@@ -8,9 +9,13 @@ public class Highlight extends AbstractJqueryUiEffect {
 
 	private static final long serialVersionUID = 1L;
 
+	public static final JQueryJavascriptResourceReference jQueryUiEffectsHighlightJs
+		= JQuery.isDebug()
+		? new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.highlight.js")
+		: new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.highlight.min.js");
 
 	public Highlight() {
-		super(new JQueryJavascriptResourceReference(Highlight.class, "jquery.effects.highlight.min.js"));
+		super(jQueryUiEffectsHighlightJs);
 	}
 
 

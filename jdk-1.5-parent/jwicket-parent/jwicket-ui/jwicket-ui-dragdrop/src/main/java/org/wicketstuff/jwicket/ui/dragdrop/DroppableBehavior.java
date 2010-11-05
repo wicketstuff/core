@@ -6,6 +6,7 @@ import org.apache.wicket.Request;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.jwicket.ComponentFinder;
+import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.JsMap;
 import org.wicketstuff.jwicket.SpecialKeys;
@@ -24,7 +25,11 @@ public class DroppableBehavior extends AbstractDragDropBehavior {
 	private static final long serialVersionUID = 1L;
 
 	private static final String DROPPED_COMPONENTID_IDENTIFIER = "wsjqDroppedComponent";
-	public static final JQueryJavascriptResourceReference uiDroppableJs = new JQueryJavascriptResourceReference(DraggableBehavior.class, "jquery.ui.droppable.min.js");
+
+	public static final JQueryJavascriptResourceReference uiDroppableJs
+		= JQuery.isDebug()
+		? new JQueryJavascriptResourceReference(DraggableBehavior.class, "jquery.ui.droppable.js")
+		: new JQueryJavascriptResourceReference(DraggableBehavior.class, "jquery.ui.droppable.min.js");
 
 	private JsMap options = new JsMap();
 

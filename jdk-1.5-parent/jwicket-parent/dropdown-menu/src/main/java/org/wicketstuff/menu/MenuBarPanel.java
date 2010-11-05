@@ -320,10 +320,10 @@ public class MenuBarPanel extends Panel implements IStyleResolver {
 				else
 					item.setVisible(false);
 
-				if (browserIsIe56) {
+//				if (browserIsIe56) {
 					item.add(new SimpleAttributeModifier("onmouseover", "this.className+=' over';"));
 					item.add(new SimpleAttributeModifier("onmouseout", "this.className=this.className.replace(' over','');"));
-				}
+//				}
 				
 				item.setOutputMarkupId(true);
 				menu.setAssociatedComponent(item);

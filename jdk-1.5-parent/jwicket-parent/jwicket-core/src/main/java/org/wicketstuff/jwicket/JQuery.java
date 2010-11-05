@@ -13,7 +13,7 @@ public class JQuery implements Serializable {
 
 	private static final int majorVersion = 0;
 	private static final int minorVersion = 6;
-	private static final int subVersion   = 3;
+	private static final int subVersion   = 4;
 
 	private static final String version = majorVersion + "." + minorVersion + "." + subVersion;
 
@@ -34,4 +34,12 @@ public class JQuery implements Serializable {
 		return subVersion;
 	}
 
+
+	private static boolean debug = true;
+	public static boolean isDebug() {
+		return JQuery.debug;
+	}
+	public static void setDebug(final boolean value) {
+		JQuery.debug = value;
+	}
 }

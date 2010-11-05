@@ -8,6 +8,7 @@ import org.apache.wicket.Request;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.jwicket.ComponentFinder;
 import org.wicketstuff.jwicket.IStyleResolver;
+import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryCssResourceReference;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.JsMap;
@@ -18,7 +19,10 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavascriptResourceReference uiAccordionJs = new JQueryJavascriptResourceReference(AccordionBehavior.class, "jquery.ui.accordion.min.js");
+	public static final JQueryJavascriptResourceReference uiAccordionJs
+		= JQuery.isDebug()
+		? new JQueryJavascriptResourceReference(AccordionBehavior.class, "jquery.ui.accordion.js")
+		: new JQueryJavascriptResourceReference(AccordionBehavior.class, "jquery.ui.accordion.min.js");
 
 	protected JsMap options = new JsMap();
 
@@ -34,7 +38,7 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 
 	/**
 	 * Sets the 'autoHeight' property for this accordion. Please consult the
-	 * jquery documentation for a detailled description of this property.
+	 * jQuery documentation for a detailled description of this property.
 	 * @param value the autoHeight value
 	 * @return this object
 	 */

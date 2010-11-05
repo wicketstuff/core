@@ -1,4 +1,4 @@
-/* Aus autocomplete */
+/* From autocomplete */
 
 /*
  * jQuery UI Menu (not officially released)
@@ -7,9 +7,9 @@
  * it for the next release. You're welcome to give it a try anyway and give us feedback,
  * as long as you're okay with migrating your code later on. We can help with that, too.
  *
- * Copyright (c) 2010 AUTHORS.txt (http://jqueryui.com/about)
- * Dual licensed under the MIT (MIT-LICENSE.txt)
- * and GPL (GPL-LICENSE.txt) licenses.
+ * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
  *
  * http://docs.jquery.com/UI/Menu
  *
@@ -28,23 +28,25 @@ $.widget("ui.menu", {
 				role: "listbox",
 				"aria-activedescendant": "ui-active-menuitem"
 			})
-			.click(function(e) {
-				alert('click()');
+			.click(function( event ) {
+				if ( !$( event.target ).closest( ".ui-menu-item a" ).length ) {
+					return;
+				}
 				// temporary
-				e.preventDefault();
-				self.select();
+				event.preventDefault();
+				self.select( event );
 			});
 		this.refresh();
 	},
 	
 	refresh: function() {
 		var self = this;
-//alert('refresh: ' + this.element.attr("id"));
+
 		// don't refresh list items that are already adapted
 		var items = this.element.children("li:not(.ui-menu-item):has(a)")
 			.addClass("ui-menu-item")
 			.attr("role", "menuitem");
-//alert('items: ' + items.length);
+		
 		items.children("a")
 			.addClass("ui-corner-all")
 			.attr("tabindex", -1)
@@ -58,7 +60,6 @@ $.widget("ui.menu", {
 	},
 
 	activate: function( event, item ) {
-//		alert('activate()');
 		this.deactivate();
 		if (this.hasScroll()) {
 			var offset = item.offset().top - this.element.offset().top,
@@ -66,7 +67,7 @@ $.widget("ui.menu", {
 				elementHeight = this.element.height();
 			if (offset < 0) {
 				this.element.attr("scrollTop", scroll + offset);
-			} else if (offset > elementHeight) {
+			} else if (offset >= elementHeight) {
 				this.element.attr("scrollTop", scroll + offset - elementHeight + item.height());
 			}
 		}
@@ -89,19 +90,19 @@ $.widget("ui.menu", {
 	},
 
 	next: function(event) {
-		this.move("next", "li:first", event);
+		this.move("next", ".ui-menu-item:first", event);
 	},
 
 	previous: function(event) {
-		this.move("prev", "li:last", event);
+		this.move("prev", ".ui-menu-item:last", event);
 	},
 
 	first: function() {
-		return this.active && !this.active.prev().length;
+		return this.active && !this.active.prevAll(".ui-menu-item").length;
 	},
 
 	last: function() {
-		return this.active && !this.active.next().length;
+		return this.active && !this.active.nextAll(".ui-menu-item").length;
 	},
 
 	move: function(direction, edge, event) {
@@ -109,7 +110,7 @@ $.widget("ui.menu", {
 			this.activate(event, this.element.children(edge));
 			return;
 		}
-		var next = this.active[direction]();
+		var next = this.active[direction + "All"](".ui-menu-item").eq(0);
 		if (next.length) {
 			this.activate(event, next);
 		} else {
@@ -174,9 +175,8 @@ $.widget("ui.menu", {
 		return this.element.height() < this.element.attr("scrollHeight");
 	},
 
-	select: function() {
-		//alert('select: function()');
-		this._trigger("selected", null, { item: this.active });
+	select: function( event ) {
+		this._trigger("selected", event, { item: this.active });
 	}
 });
 
