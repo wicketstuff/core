@@ -20,6 +20,7 @@
 		<module>javaee-inject-parent</module> 
 		<module>push-parent</module>
 		<module>wicket-html5-parent</module>
+		<module>wicket-servlet3-parent</module>
   	</modules>
 
 	<build>
