@@ -168,4 +168,9 @@
         	</plugins>
         </pluginManagement>
     </build>
+
+	<properties>
+		<eclipse.jetty.version>8.0.0.M1</eclipse.jetty.version>
+	</properties>
+    
 </project>

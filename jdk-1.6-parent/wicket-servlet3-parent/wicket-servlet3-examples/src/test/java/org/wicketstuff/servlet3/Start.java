@@ -23,7 +23,7 @@ public class Start {
 
 		WebAppContext bb = new WebAppContext();
 		bb.setServer(server);
-		bb.setContextPath("/");
+		bb.setContextPath("/servlet3");
 		bb.setWar("src/main/webapp");
 
 		// START JMX SERVER

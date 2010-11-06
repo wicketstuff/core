@@ -24,6 +24,10 @@
 
    <dependencies>
       <!--  WICKET DEPENDENCIES -->
+		<dependency>
+         <groupId>org.wicketstuff</groupId>
+         <artifactId>wicket-servlet3</artifactId>
+      </dependency>	  
 
       <dependency>
          <groupId>org.apache.wicket</groupId>
