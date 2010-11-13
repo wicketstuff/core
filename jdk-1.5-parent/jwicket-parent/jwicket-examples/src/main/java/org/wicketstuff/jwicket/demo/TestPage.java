@@ -594,7 +594,6 @@ public class TestPage extends WebPage {
 		}
 		.setWantOnSelectNotification(true)
 		.setWantOnChangeMonthYearNotification(true)
-		.setWantOnBeforeShowDayNotification(true)
 		;
 		datePickerInput.add(datePicker);
 		datecontainer.add(datePickerInput);

@@ -3,7 +3,9 @@ package org.wicketstuff.jwicket.ui.datepicker;
 
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 
@@ -13,6 +15,7 @@ import org.apache.wicket.ResourceReference;
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.wicketstuff.jwicket.IStyleResolver;
 import org.wicketstuff.jwicket.JQuery;
@@ -45,6 +48,9 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 		? new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker-de.js")
 		:new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker-de.min.js");
 
+	public static final JQueryJavascriptResourceReference datePickerDefaultShowDayState = new JQueryJavascriptResourceReference(DatePicker.class, "datePickerDefaultShowDayState.js");
+
+
 	protected JsMap options = new JsMap();
 
 	public DatePicker() {
@@ -52,7 +58,7 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 	}
 
 	public DatePicker(final ResourceReference icon) {
-		super(	SpecialKeys.specialKeysJs,
+		super(	SpecialKeys.specialKeysJs, datePickerDefaultShowDayState,
 				uiDatepickerJs
 		);
 		addCssResources(getCssResources());
@@ -118,9 +124,6 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 			}
 			else if (eventType == EventType.ON_CHANGE_MONTH_YEAR) {
 				onChangeMonthYear(target, request.getParameter("year"), request.getParameter("month"), new SpecialKeys(request));
-			}
-			else if (eventType == EventType.BEFORE_SHOW_DAY) {
-				onBeforeShowDay(target, request.getParameter("date"));
 			}
 			else if (eventType == EventType.BEFORE_SHOW) {
 				onBeforeShow(target);
@@ -935,22 +938,6 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 
 
 
-	private boolean onBeforeShowDayNotificationWanted = false;
-	/**
-	 * If set to {@code true}, the callback-Method {@link #onBeforeShowDay(AjaxRequestTarget, String)}
-	 * is called for every day that gets displayed in the datepicker popup.
-	 *
-	 * See the jquery-ui documentation for detailed information
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setWantOnBeforeShowDayNotification(final boolean value) {
-		onBeforeShowDayNotificationWanted = value;
-		return this;
-	}
-
-
-
 	private boolean onBeforeShowNotificationWanted = false;
 	/**
 	 * If set to {@code true}, the callback-Method {@link #onBeforeShowDay(AjaxRequestTarget, String)}
@@ -1023,14 +1010,12 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 			options.remove(EventType.ON_CHANGE_MONTH_YEAR.getEventName());
 
 
-		if (onBeforeShowDayNotificationWanted)
+		if (showDayStates != null && showDayStates.size() > 0) {
 			options.put(EventType.BEFORE_SHOW_DAY.eventName,
-				new JsFunction("function(date) { wicketAjaxGet('" +
-								this.getCallbackUrl() +
-								"&date='+date" +
-								"+'&" + EventType.IDENTIFIER + "=" + EventType.BEFORE_SHOW_DAY +
-								"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-								");return new Array(true, '','');}"));
+				new JsFunction(	"function(date) {" +
+								"return " + getCheckFunctionName() + "(date);" +
+								"}"));
+		}
 		else
 			options.remove(EventType.BEFORE_SHOW_DAY.getEventName());
 
@@ -1143,25 +1128,229 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 	protected void onChangeMonthYear(final AjaxRequestTarget target, final String year, final String month, final SpecialKeys specialKeys) {}
 
 
-	/**
-	 * If you have set {@link #setWantOnBeforeShowDayNotification(boolean)} to {@code true}
-	 * this method is called for every day in the datepicker poup.
-	 * 
-	 * This doesn't make any sense at the moment.
+	
+	
+	
+	private Collection<ShowDay> showDayStates = null;
+
+	/** Add one more special treatment for a day. If you don't provide a {@link ShowDay} object for a day it is
+	 *	selectable by default.
+	 *	Use this method if you want a special treatment (selectable, CSS class oder tooltip text)
+	 *	for a day.
+	 *	You may call this method as often as you like. The state is added to the existing list of states.
+	 *	Do not provide different states for one day. The resulting behavior is not defined.
 	 *
-	 * @param target the AjaxRequestTarget of the resize operation.
-	 * @param specialKeys the special keys that were pressed when the event occurs
+	 *	@param state as specific treatment for one day.
 	 */
-	@Deprecated
-	protected String onBeforeShowDay(final AjaxRequestTarget target, final String date) {return "";	}
+	public void addShowDayState(final ShowDay state) {
+		if (showDayStates == null)
+			showDayStates = new ArrayList<DatePicker.ShowDay>(1);
+		showDayStates.add(state);
+		dayCheckerRendered = false;
+	}
+
+
+	/** Set the special treatments for multiple days at one. This removes all former definitons and
+	 *	replaces them with the new {@code states}.
+	 * 
+	 *	@param states A {@code Collection} of states.
+	 */
+	public void setShowDayStates(final Collection<ShowDay> states) {
+		this.showDayStates = states;
+		dayCheckerRendered = false;
+	}
+
+	
+	
+	/** This Class controls the visibility of a single day rectangle in the DatePicker popup and the
+	 *	ability to select this day and an optional text popup for a single day.
+	 */
+	public static class ShowDay implements Serializable {
+		private static final long serialVersionUID = 1L;
+
+		/** If the day corresponding to parameter {@code day} should be selectable, the parameter {@code selectable} should be set to
+		 *	{@code true}, if not it should be set to {@code false}.
+		 *
+		 *	@param date the day
+		 *	@param selectable {@code true} if the day should be selectable and {@code false} if the day sould net be selectable.
+		 */
+		public ShowDay(final Date date, final boolean selectable) {
+			this(date, selectable, "", "");
+		}
+
+
+		/** If the day corresponding to parameter {@code day} should be selectable, the parameter {@code selectable} should be set to
+		 *	{@code true}, if not it should be set to {@code false}. The CSS class of the day can be controlled
+		 *	with parameter {@code cssClass}.
+		 *
+		 *	@param date the day
+		 *	@param selectable {@code true} if the day should be selectable and {@code false} if the day sould net be selectable.
+		 *	@param cssClass regardless from {@code selectable} state of the day this CSS class is assigned to the day rectangle
+		 */
+		public ShowDay(final Date date, final boolean selectable, final String cssClass) {
+			this(date, selectable, cssClass, "");
+		}
+
+
+		/** If the day corresponding to parameter {@code day} should be selectable, the parameter {@code selectable} should be set to
+		 *	{@code true}, if not it should be set to {@code false}. The CSS class of the day can be controlled
+		 *	with parameter {@code cssClass}.
+		 *
+		 *	@param date the day
+		 *	@param selectable {@code true} if the day should be selectable and {@code false} if the day sould net be selectable.
+		 *	@param cssClass regardless from {@code selectable} state of the day this CSS class is assigned to the day rectangle
+		 *	@param tooltip a tooltip text to be shon wehn the mouse is placed over the given day
+		 */
+		public ShowDay(final Date date, final boolean selectable, final String cssClass, final String tooltip) {
+			setDate(date);
+			setSelectable(selectable);
+			setCssClass(cssClass);
+			setTooltip(tooltip);
+		}
+
+
+		private Date date;
+		public Date getDate() {
+			return this.date;
+		}
+		public void setDate(final Date value) {
+			this.date = value;
+		}
+
+
+		private boolean selectable;
+		public boolean isSelectable() {
+			return this.selectable;
+		}
+		public void setSelectable(final boolean value) {
+			this.selectable = value;
+		}
+
+
+		private String cssClass;
+		public String getCssClass() {
+			return this.cssClass;
+		}
+		public void setCssClass(final String value) {
+			this.cssClass = value;
+		}
+
+
+		private String tooltip;
+		public String getTooltip() {
+			return this.tooltip;
+		}
+		public void setTooltip(final String value) {
+			this.tooltip = value;
+		}
+
+
+		@Override
+		public String toString() {
+			return "ShowDay: selectable=" + isSelectable() + ", CSS class=" + getCssClass() + ", tooltip=" + getTooltip();
+		}
+	}
+
+	
+	private boolean dayCheckerRendered = false;
+
+	@Override
+	public void renderHead(final IHeaderResponse response) {
+		super.renderHead(response);
+		if (showDayStates != null && showDayStates.size() > 0 && ! dayCheckerRendered) {
+			//draggablesAcceptedByDroppable.renderJsDropAcceptFunction(response);
+			dayCheckerRendered = true;
+			
+			Calendar cal = Calendar.getInstance();
+			StringBuilder sb = new StringBuilder();
+			sb.append("var " + getCheckFunctionName()+"days = {");
+			boolean first = true;
+			for (ShowDay day : showDayStates) {
+				if (!first)
+					sb.append(",");
+				else
+					first = false;
+				cal.setTime(day.getDate());
+				
+				// Hash code for day
+				sb.append("'");
+				// Day
+				int numVal = cal.get(Calendar.DAY_OF_MONTH);
+				if (numVal < 10)
+					sb.append("0");
+				sb.append(numVal);
+				// Month
+				numVal = cal.get(Calendar.MONTH)+1;
+				if (numVal < 10)
+					sb.append("0");
+				sb.append(numVal);
+				// Year
+				numVal = cal.get(Calendar.YEAR);
+				if (numVal < 1000)
+					sb.append("0");
+				if (numVal < 100)
+					sb.append("0");
+				if (numVal < 10)
+					sb.append("0");
+				sb.append(numVal);
+				sb.append("':new Array(");
+				sb.append(day.isSelectable()?"true":"false");
+				sb.append(",'");
+				sb.append(day.getCssClass());
+				sb.append("','");
+				sb.append(day.getTooltip());
+				sb.append("')");
+			}
+			sb.append("};\n");
+
+			sb.append("var ");
+			sb.append(getCheckFunctionName());
+			sb.append(" = function(date) {\n");
+			sb.append("   var hash = '';\n");
+			// Day for hash
+			sb.append("   var intVal = date.getDate();\n");
+			sb.append("   if (intVal < 10)\n");
+			sb.append("      hash += '0';\n");
+			sb.append("   hash += intVal;\n");
+			// Month for Hash
+			sb.append("   intVal = date.getMonth()+1;\n");
+			sb.append("   if (intVal < 10)\n");
+			sb.append("      hash += '0';\n");
+			sb.append("   hash += intVal;\n");
+			// Year
+			sb.append("   intVal = date.getFullYear();\n");
+			sb.append("   if (intVal < 1000)\n");
+			sb.append("      hash += '0';\n");
+			sb.append("   if (intVal < 100)\n");
+			sb.append("      hash += '0';\n");
+			sb.append("   if (intVal < 10)\n");
+			sb.append("      hash += '0';\n");
+			sb.append("   hash += intVal;\n");
+			// retrieve the day from array
+			sb.append("   var found = ");
+			sb.append(getCheckFunctionName());
+			sb.append("days[hash];\n");
+			sb.append("   if (found != null)\n");
+			sb.append("      return found;\n");
+			sb.append("   else\n");
+			sb.append("      return datePickerDefaultShowDayState;\n");
+			sb.append("};");
+
+			response.renderJavascript(sb.toString(), getCheckFunctionName()+"ID");
+		}
+	}
+
+
+	private String getCheckFunctionName() {
+		return "jWicketCheckBeforeShowDayFor" + getComponent().getMarkupId();
+	}
 
 
 
-	
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Disable the datepicker
 	 *
