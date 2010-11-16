@@ -31,6 +31,10 @@ Release Notes - WicketStuff Core - Version 1.4.14:
 <artifactId>:
 <list of key changes or bugfixes included in this release>
 
+wicketstuff-minis:
+ - added org.wicketstuff.minis.util.ListViewFormComponentReuseManager
+ - added org.wicketstuff.minis.util.VersatileWebRequestCodingStrategy
+ 
 The plan is to release a 1.4.14.1 point release within one month from today.    If you commit code and/or want a release sooner let me know as one month is the worst case target.
 
 Regards, 

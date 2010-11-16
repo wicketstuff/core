@@ -33,7 +33,7 @@ import org.apache.wicket.markup.html.list.ListView;
  * 
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
-public class ListViewFormComponentReuseManager implements Serializable
+public final class ListViewFormComponentReuseManager implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
