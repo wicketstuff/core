@@ -27,7 +27,7 @@
     <artifactId>gae-initializer-parent</artifactId>
 	<packaging>pom</packaging>
 	
-    <name>Wicket GAE Initializer</name>
+    <name>GAE Initializer Parent</name>
     <description>
         A Wicket IInitializer which automatically setups Wicket application
         to be runable at Google AppEngine

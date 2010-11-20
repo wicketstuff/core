@@ -10,7 +10,7 @@
   <groupId>org.wicketstuff</groupId>
   <artifactId>gae-initializer-example</artifactId>
   <packaging>war</packaging>	
-  <name>Wicket GAE demo</name>
+  <name>GAE Initializer example</name>
   <description>Wicket1.5 on Google AppEngine</description>
 
   <pluginRepositories>
