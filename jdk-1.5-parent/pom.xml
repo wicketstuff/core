@@ -28,6 +28,7 @@
 		<module>minis-parent</module>
 		<module>phonebook</module>
 		<module>shiro-security</module>
+		<module>gae-initializer-parent</module>
 
 		<!-- Modules below are commented until they can compile with wicket 1.5-SNAPSHOT -->
 	
