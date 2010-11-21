@@ -31,6 +31,14 @@ Release Notes - WicketStuff Core - Version 1.5.0:
 <artifactId>:
 <list of key changes or bugfixes included in this release>
 
+gae-initializer:
+A new project in WicketStuff family.
+Putting gae-initializer.jar in the classpath of your application will automatically configure it so that it can run in Google AppEngine.
+The configuration includes:
+ - disable the resource polling
+ - set IObjectStreamFactory which doesn't extend Object(Input|Output)Streams
+ - set HttpSessionDataStore as a storage for the page history
+
 The plan is to release a 1.5.0.1 point release within one month from today.    If you commit code and/or want a release sooner let me know as one month is the worst case target.
 
 Regards, 
