@@ -26,6 +26,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.Component;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
@@ -234,8 +236,8 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	private String _renderInitScript()
 	{
 		final Map<String, Object> params = new HashMap<String, Object>();
-		final String configurationType = Application.get().getConfigurationType();
-		if (configurationType.equalsIgnoreCase(Application.DEVELOPMENT)) {
+		final RuntimeConfigurationType configurationType = Application.get().getConfigurationType();
+		if (configurationType.equals(RuntimeConfigurationType.DEVELOPMENT)) {
       params.put("logLevel", "info");
     } else {
       params.put("logLevel", "error");
@@ -296,9 +298,9 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void renderHead(final IHeaderResponse response)
+	public void renderHead(Component c, final IHeaderResponse response)
 	{
-		super.renderHead(response);
+		super.renderHead(c, response);
 
 		response.renderJavascriptReference(COMETD);
 

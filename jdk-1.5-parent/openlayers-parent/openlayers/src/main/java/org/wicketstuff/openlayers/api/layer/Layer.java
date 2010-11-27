@@ -43,7 +43,7 @@ public abstract class Layer {
 		c.add(new AbstractBehavior() {
 
 			@Override
-			public void renderHead(IHeaderResponse response) {
+			public void renderHead(Component c, IHeaderResponse response) {
 				bindHeaderContributors(response);
 			}
 			

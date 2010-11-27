@@ -1,5 +1,6 @@
 package org.wicketstuff.openlayers;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.WicketAjaxReference;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
@@ -48,7 +49,7 @@ public class OpenLayersMapHeaderContributor extends AbstractBehavior {
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
+	public void renderHead(Component c, IHeaderResponse response) {
 
 		String url = getURL(developmentMode, openLayersVersion);
 

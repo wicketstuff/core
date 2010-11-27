@@ -183,9 +183,9 @@ public class ReflectionBehavior extends AbstractBehavior
 	 * @see org.apache.wicket.behavior.AbstractBehavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
-	public void renderHead(final IHeaderResponse response)
+	public void renderHead(Component c, final IHeaderResponse response)
 	{
-		super.renderHead(response);
+		super.renderHead(c, response);
 		response.renderJavascriptReference(REFLECTION_JS);
 
 		final StringBuilder sb = new StringBuilder();

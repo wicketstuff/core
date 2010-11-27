@@ -86,7 +86,7 @@ public class AutoCompletingPanel<T> extends Panel {
 		add(new AbstractBehavior() {
 
 			@Override
-			public void renderHead(IHeaderResponse response) {
+			public void renderHead(Component c, IHeaderResponse response) {
 				response.renderCSSReference(CSS);
 			}}); 
 		

@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.ComponentTag;
@@ -362,7 +363,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void renderHead(IHeaderResponse response) {
+				public void renderHead(Component c, IHeaderResponse response) {
 			
 					for (int i = 0; i < jsReferences.length; i++) {
 						JavascriptResourceReference javascriptResourceReference = jsReferences[i];
@@ -771,8 +772,9 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	@Override
 	protected void onRender() {
 		super.onRender();
-		if (Application.DEVELOPMENT.equalsIgnoreCase(Application.get()
-				.getConfigurationType())
+		
+		RuntimeConfigurationType configurationType = Application.get().getConfigurationType();
+		if (configurationType.equals(RuntimeConfigurationType.DEVELOPMENT)
 				&& !Application.get().getMarkupSettings().getStripWicketTags()) {
 			log
 					.warn("Application is in DEVELOPMENT mode && Wicket tags are not stripped,"

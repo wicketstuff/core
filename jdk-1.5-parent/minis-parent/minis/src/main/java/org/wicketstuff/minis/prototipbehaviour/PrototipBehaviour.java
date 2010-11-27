@@ -86,7 +86,7 @@ public class PrototipBehaviour extends AbstractBehavior
 	 *  @see org.apache.wicket.markup.html.IHeaderContributor#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
-	public void renderHead(IHeaderResponse response)
+	public void renderHead(Component c, IHeaderResponse response)
 	{
 		if(onLoad)
 		{

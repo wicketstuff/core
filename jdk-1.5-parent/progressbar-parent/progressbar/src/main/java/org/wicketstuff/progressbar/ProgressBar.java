@@ -17,14 +17,17 @@
 package org.wicketstuff.progressbar;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.progressbar.support.DynamicAjaxSelfUpdatingTimerBehavior;
 
@@ -84,29 +87,71 @@ import org.wicketstuff.progressbar.support.DynamicAjaxSelfUpdatingTimerBehavior;
  */
 public class ProgressBar extends Panel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private int width = 400;
 
-	private static final ResourceReference CSS = new ResourceReference(
+	private static final ResourceReference CSS = new CompressedResourceReference(
 			ProgressBar.class, "ProgressBar.css");
+
+	
+	@Override
+	public void renderHead(IHeaderResponse response) {
+		super.renderHead(response);
+		
+		response.renderCSSReference(CSS);
+	}
+
+	
+	@Override
+	protected void onInitialize() {
+		super.onInitialize();
+		
+		if(getParent() != null) {
+			/*
+			 * Add the css to our parent incase the bar is not initially visible.
+			 */
+			getParent().add(new AbstractBehavior() {
+
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void renderHead(Component component,
+						IHeaderResponse response) {
+					super.renderHead(component, response);
+					response.renderCSSReference(CSS);
+				}
+				
+				
+			});
+		}
+	}
+
 
 	public ProgressBar(String id, ProgressionModel model) {
 		super(id, model);
 
 		// add CSS to parent to render the CSS even if the progress bar is initially
 		// invisible
-		HeaderContributor cssContributor = HeaderContributor.forCss(CSS);
-		if(getParent() != null) {
-			getParent().add(cssContributor);
-		} else {
-			add(cssContributor);
-		}
+		
 
 		add(new Label("label", getLabelModel(model)));
 		add(new Label("message", getMessageModel(model)));
 		add(new WebMarkupContainer("bar").add(new AttributeModifier("style",
-				true, new AbstractReadOnlyModel() {
+				true, new AbstractReadOnlyModel<String>() {
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
 					@Override
-					public Object getObject() {
+					public String getObject() {
 						ProgressionModel model = (ProgressionModel) getDefaultModel();
 						Progression progression = model.getProgression();
 
@@ -128,10 +173,15 @@ public class ProgressBar extends Panel {
 	 *
 	 * @return A model for the bar label
 	 */
-	protected AbstractReadOnlyModel getLabelModel(final ProgressionModel model) {
-		return new AbstractReadOnlyModel() {
+	protected AbstractReadOnlyModel<String> getLabelModel(final ProgressionModel model) {
+		return new AbstractReadOnlyModel<String>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			public Object getObject() {
+			public String getObject() {
 				Progression progression = model.getProgression();
 				return progression.getProgress() + "%";
 			}
@@ -148,10 +198,15 @@ public class ProgressBar extends Panel {
 	 *
 	 * @return A model for the bar message label
 	 */
-	protected IModel getMessageModel(final ProgressionModel model) {
-	    return new AbstractReadOnlyModel() {
+	protected IModel<String> getMessageModel(final ProgressionModel model) {
+	    return new AbstractReadOnlyModel<String>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			public Object getObject() {
+			public String getObject() {
 				return model.getProgression().getProgressMessage();
 			}
 	    };
@@ -168,6 +223,11 @@ public class ProgressBar extends Panel {
 		setVisible(true);
 		add(new DynamicAjaxSelfUpdatingTimerBehavior(
 				Duration.ONE_SECOND) {
+			/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onPostProcessTarget(AjaxRequestTarget target) {
 				ProgressionModel model = (ProgressionModel) getDefaultModel();
@@ -181,9 +241,9 @@ public class ProgressBar extends Panel {
 			}
 		});
 		if (getParent() != null) {
-			target.addComponent(getParent());
+			target.add(getParent());
 		} else {
-			target.addComponent(this);
+			target.add(this);
 		}
 	}
 

@@ -39,8 +39,8 @@ public abstract class AjaxGeolocationBehavior extends AbstractDefaultAjaxBehavio
 	}
 
 	@Override
-	public void renderHead(final IHeaderResponse response) {
-		super.renderHead(response);
+	public void renderHead(Component c, final IHeaderResponse response) {
+		super.renderHead(c, response);
 
 		final CharSequence callbackUrl = getCallbackUrl();
 		final String componentMarkupId = getComponent().getMarkupId();

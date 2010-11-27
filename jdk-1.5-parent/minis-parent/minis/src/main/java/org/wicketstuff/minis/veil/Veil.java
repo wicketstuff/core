@@ -77,9 +77,9 @@ public class Veil extends VeilResources
 	 * @see org.wicketstuff.minis.veil.VeilResources#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
-	public void renderHead(final IHeaderResponse response)
+	public void renderHead(Component c, final IHeaderResponse response)
 	{
-		super.renderHead(response);
+		super.renderHead(c, response);
 		response.renderOnDomReadyJavascript(VeilResources.Javascript.show(component));
 	}
 }

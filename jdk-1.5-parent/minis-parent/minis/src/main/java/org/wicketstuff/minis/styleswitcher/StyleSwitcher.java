@@ -19,6 +19,7 @@ package org.wicketstuff.minis.styleswitcher;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.IClusterable;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
@@ -129,7 +130,7 @@ public class StyleSwitcher extends AbstractBehavior
 	 * @see org.apache.wicket.behavior.AbstractBehavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
-	public void renderHead(final IHeaderResponse response)
+	public void renderHead(Component c, final IHeaderResponse response)
 	{
 		response.renderJavascriptReference(SS_JS);
 

@@ -1,5 +1,6 @@
 package wicket.contrib.gmap.api;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
@@ -36,8 +37,8 @@ public abstract class GClientGeocoder extends AjaxEventBehavior {
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
+	public void renderHead(Component c, IHeaderResponse response) {
+		super.renderHead(c, response);
 		headerContrib.renderHead(response);
 	}
 

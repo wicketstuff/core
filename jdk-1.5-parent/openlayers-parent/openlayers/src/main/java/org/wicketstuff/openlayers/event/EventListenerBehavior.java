@@ -17,6 +17,7 @@
  */
 package org.wicketstuff.openlayers.event;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
@@ -26,9 +27,9 @@ public abstract class EventListenerBehavior extends AbstractDefaultAjaxBehavior 
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
+	public void renderHead(Component c, IHeaderResponse response) {
 		// TODO Auto-generated method stub
-		super.renderHead(response);
+		super.renderHead(c, response);
 		response.renderOnDomReadyJavascript(getJSaddListener());
 	}
 

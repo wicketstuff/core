@@ -20,10 +20,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.WicketAjaxReference;
 import org.apache.wicket.behavior.AbstractBehavior;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WicketEventReference;
@@ -96,7 +96,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void renderHead(IHeaderResponse response) {
+			public void renderHead(Component c, IHeaderResponse response) {
 				response.renderOnDomReadyJavascript(getJSinit());
 			}
 		});

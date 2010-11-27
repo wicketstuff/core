@@ -192,7 +192,7 @@ public abstract class AbstractGridRow extends WebMarkupContainer {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public boolean isTemporary() {
+		public boolean isTemporary(Component c) {
 			return true;
 		}
 	};

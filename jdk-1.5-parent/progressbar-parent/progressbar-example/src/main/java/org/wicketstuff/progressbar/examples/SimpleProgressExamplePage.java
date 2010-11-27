@@ -97,6 +97,13 @@ public class SimpleProgressExamplePage extends PageSupport {
 				// disable button
 				setEnabled(false);
 			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form) {
+
+				target.prependJavascript("alert('Failed to update progress');");
+			}
+			
 		});
 		form.setOutputMarkupId(true);
 		add(form);

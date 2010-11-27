@@ -56,14 +56,15 @@ public class SpringTaskTests {
 		addDependenciesToContext(ctx);
 
 		tester = new WicketTester();
-		tester.getApplication().addComponentInstantiationListener(
+		tester.getApplication().getComponentInstantiationListeners().add(
 				new SpringComponentInjector(tester.getApplication(), ctx, true));
 
 		// add string resource loader
-		tester.getApplication().getResourceSettings().addStringResourceLoader(
-				new ComponentStringResourceLoader());
-		tester.getApplication().getResourceSettings().addStringResourceLoader(
-				new ClassStringResourceLoader(getClass()));
+		// TODO: make this work for 1.5
+//		tester.getApplication().getResourceSettings().addStringResourceLoader(
+//				new ComponentStringResourceLoader());
+//		tester.getApplication().getResourceSettings().addStringResourceLoader(
+//				new ClassStringResourceLoader(getClass()));
 	}
 
 	private static class SynchronousExecutor implements Executor {

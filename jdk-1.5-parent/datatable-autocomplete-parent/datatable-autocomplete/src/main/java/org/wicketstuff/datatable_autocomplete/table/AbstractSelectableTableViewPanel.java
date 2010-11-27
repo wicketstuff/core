@@ -17,6 +17,7 @@ package org.wicketstuff.datatable_autocomplete.table;
 
 import java.util.List;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AbstractBehavior;
@@ -148,7 +149,7 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 		add(new AbstractBehavior () {
 
 			@Override
-			public void renderHead(IHeaderResponse response) {
+			public void renderHead(Component c, IHeaderResponse response) {
 				response.renderCSSReference(css_reference);
 			}});
 

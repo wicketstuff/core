@@ -2,6 +2,7 @@ package org.wicketstuff.html5.markup.html.form;
 
 import java.io.Serializable;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
@@ -48,8 +49,8 @@ public class RangeTextFieldDemo extends BasePage {
 				target.addComponent(rangeLabel);
 			}
 			
-			public void renderHead(IHeaderResponse response) {
-				super.renderHead(response);
+			public void renderHead(Component c, IHeaderResponse response) {
+				super.renderHead(c, response);
 				// override Wicket.Form.serializeInput so that input[type=range] is serialized too
 				response.renderJavascriptReference(WICKET_AJAX_HTML5_JS);
 			}

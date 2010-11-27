@@ -101,6 +101,14 @@ public class TaskServiceProgressExamplePage extends PageSupport {
 				// disable button
 				setEnabled(false);
 			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form) {
+				
+				target.prependJavascript("alert('Failed to schedule task.');");
+				
+			}
+			
 		});
 		form.setOutputMarkupId(true);
 		add(form);

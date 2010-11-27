@@ -15,6 +15,7 @@
  */
 package org.wicketstuff.openlayers.event;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
@@ -25,8 +26,8 @@ public abstract class MoveEndListenerBehavior extends
 	private static final long serialVersionUID = -3369444402534250143L;
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
+	public void renderHead(Component c, IHeaderResponse response) {
+		super.renderHead(c, response);
 		response.renderOnDomReadyJavascript(getJSaddListener());
 	}
 

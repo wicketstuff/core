@@ -197,7 +197,7 @@ public class Spinner extends AbstractBehavior
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void renderHead(final IHeaderResponse response)
+	public void renderHead(Component c, final IHeaderResponse response)
 	{
 		response.renderJavascriptReference(JS);
 		response.renderCSSReference(CSS);

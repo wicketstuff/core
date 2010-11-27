@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AbstractBehavior;
@@ -172,7 +173,9 @@ public class GMap2 extends Panel implements GOverlayContainer
 	 */
 	@Override
 	protected void onBeforeRender() {
-		if (Application.DEVELOPMENT.equalsIgnoreCase(Application.get().getConfigurationType())
+		
+		RuntimeConfigurationType configurationType = Application.get().getConfigurationType();
+		if (configurationType.equals(RuntimeConfigurationType.DEVELOPMENT)
 				&& !Application.get().getMarkupSettings().getStripWicketTags())
 		{
 			log.warn("Application is in DEVELOPMENT mode && Wicket tags are not stripped,"

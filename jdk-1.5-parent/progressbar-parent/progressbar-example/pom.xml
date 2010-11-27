@@ -24,12 +24,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>wicketstuff-progressbar</artifactId>
+			<artifactId>progressbar</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>wicketstuff-progressbar-spring</artifactId>
+			<artifactId>progressbar-spring</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
