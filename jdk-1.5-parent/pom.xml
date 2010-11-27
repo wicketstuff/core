@@ -17,6 +17,7 @@
 	</description>
 
 	<modules>
+		<module>progressbar-parent</module>
 		<module>datatable-autocomplete-parent</module>
 		<module>flot-parent</module>
 		<module>googlecharts-parent</module>

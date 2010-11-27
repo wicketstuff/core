@@ -4,12 +4,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>jdk-1.5-parent</artifactId>
+		<version>1.5-SNAPSHOT</version>
+	</parent>
+	<artifactId>progressbar-parent</artifactId>
 
-	<groupId>org.wicketstuff</groupId>
-
-	<artifactId>wicketstuff-progressbar-parent</artifactId>
-
-	<version>1.4.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<url>http://wicketstuff.org/</url>
 	<inceptionYear>2007</inceptionYear>
@@ -22,86 +23,6 @@
 		<module>progressbar-example</module>
 	</modules>
 
-	<profiles>
-		<profile>
-			<id>bamboo</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<distributionManagement>
-				<snapshotRepository>
-					<id>repo</id>
-					<name>Local Bamboo/Tomcat repository</name>
-					<url>file:/home/wicket/tomcat/webapps/maven/repository/</url>
-					<uniqueVersion>false</uniqueVersion>
-				</snapshotRepository>
-				<repository>
-					<id>repo</id>
-					<name>Local Bamboo/Tomcat repository</name>
-					<url>file:/home/wicket/tomcat/webapps/maven/repository/</url>
-				</repository>
-			</distributionManagement>
-		</profile>
-	</profiles>
-
-	<licenses>
-		<!-- default license (to override if needed) -->
-		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-
-	<ciManagement>
-		<system>bamboo</system>
-		<url>http://wicketstuff.org/bamboo</url>
-	</ciManagement>
-	<issueManagement>
-		<system>jira</system>
-		<url>http://wicketstuff.org/jira</url>
-	</issueManagement>
-	<organization>
-		<name>Wicket Stuff</name>
-		<url>http://wicketuff.org/</url>
-	</organization>
-	<scm>
-		<connection>scm:svn:http://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk</connection>
-		<developerConnection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk</developerConnection>
-		<url>https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk</url>
-	</scm>
-
-	<!-- same as Wicket -->
-	<mailingLists>
-		<mailingList>
-			<name>Wicket Announcements List</name>
-			<post>announce@wicket.apache.org</post>
-			<subscribe>announce-subscribe@wicket.apache.org</subscribe>
-			<unsubscribe>announce-unsubscribe@wicket.apache.org</unsubscribe>
-			<archive>http://www.nabble.com/Wicket---Announce-f13975.html</archive>
-		</mailingList>
-		<mailingList>
-			<name>Wicket User List</name>
-			<post>users@wicket.apache.org</post>
-			<subscribe>users-subscribe@wicket.apache.org</subscribe>
-			<unsubscribe>users-unsubscribe@wicket.apache.org</unsubscribe>
-			<archive>http://www.nabble.com/Wicket---User-f13976.html</archive>
-		</mailingList>
-		<mailingList>
-			<name>Wicket Development List</name>
-			<post>dev@wicket.apache.org</post>
-			<subscribe>dev-subscribe@wicket.apache.org</subscribe>
-			<unsubscribe>dev-unsubscribe@wicket.apache.org</unsubscribe>
-			<archive>http://www.nabble.com/Wicket---Dev-f13977.html</archive>
-		</mailingList>
-		<mailingList>
-			<name>Wicket commit List</name>
-			<subscribe>commits-subscribe@wicket.apache.org</subscribe>
-			<unsubscribe>commits-unsubscribe@wicket.apache.org</unsubscribe>
-			<archive>http://mail-archives.apache.org/mod_mbox/wicket-commits/</archive>
-		</mailingList>
-	</mailingLists>
-
 	<developers>
 		<developer>
 			<name>Christopher Hlubek</name>
@@ -110,22 +31,10 @@
 		</developer>
 	</developers>
 
-	<repositories>
-		<repository>
-			<id>org.wicketstuff</id>
-			<name>Wicket Stuff Repository</name>
-			<url>http://wicketstuff.org/maven/repository</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-	</repositories>
-
 	<build>
 		<plugins>
+		<!--
+
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
@@ -144,6 +53,7 @@
                 	<forkMode>once</forkMode>
                 </configuration>
             </plugin>
+-->
 		</plugins>
 		<resources>
 			<!-- Copy properties, xml, html to classpath! -->
