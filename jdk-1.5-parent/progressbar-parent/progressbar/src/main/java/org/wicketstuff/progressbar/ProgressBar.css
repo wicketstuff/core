@@ -1,0 +1,34 @@
+div.wicketstuff-progressbar {
+	width: 400px;
+	height: 20px;
+	border: 1px solid #666666;
+	background: #AFAFAF url("gfx/grey-fade.gif");
+	position: relative;
+	overflow: hidden;
+}
+
+div.wicketstuff-progressbar span.label {
+	display: block;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	line-height: 20px;
+	color: white;
+	font-size: 11px;
+	font-weight: bold;
+	font-family: sans-serif;
+}
+
+div.wicketstuff-progressbar span.label span.message {
+	font-weight: normal;
+}
+
+div.wicketstuff-progressbar span.bar {
+	display: block;
+	height: 100%;
+	position: absolute;
+	background-image: url("gfx/pink-stripes.png");
+	background-color: #ED0A72;
+	background-position: top right;
+	border-right: 1px solid #ED0A72;
+}

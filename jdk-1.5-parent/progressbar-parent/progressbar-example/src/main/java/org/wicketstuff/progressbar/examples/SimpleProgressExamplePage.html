@@ -1,0 +1,23 @@
+<html xmlns:wicket="http://wicket.sourceforge.net/">
+<head>
+	<title>wicketstuff progress bar example</title>
+</head>
+<body>
+<wicket:extend>
+<h1>Simple progress bar example</h1>
+<h2>Active progress bar with Thread started in the page.</h2>
+<p>
+see <code>SimpleProgressExamplePage.java</code>
+</p>
+<form wicket:id="form">
+<fieldset>
+<legend>Example Form</legend>
+<p>No Input needed, just press submit for some heavy action.</p>
+<input wicket:id="submit" type="submit" value="Do something heavy..." />
+<br/><br/>
+<div wicket:id="bar">[Progress bar here]</div>
+</fieldset>
+</form>
+</wicket:extend>
+</body>
+</html>
