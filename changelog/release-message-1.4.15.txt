@@ -1,0 +1,40 @@
+Wicketstuff Developers:
+
+Please include in this file any content you would like to appear in the announce message regarding key changes for the 1.4.15 version.
+
+Please enter your content in the 'Release Notes' section below as this announce message will then be cut and paste into the release announce email.
+
+<start announce>
+
+Hello, 
+
+Following the release of wicket 1.4.15 I've cut a matching release for wicketstuff-core.
+
+The artifacts have been promoted and synced into the maven central repository.
+
+They can be retrieved like this:
+
+<dependency>
+<groupId>org.wicketstuff</groupId>
+<artifactId>some recently changed artifact</artifactId>
+<version>1.4.15</version>
+</dependency>
+
+The release tag is here: https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/tags/wicketstuff-core-1.4.15
+
+The new 1.4.15.1-SNAPSHOT stable branch is here: https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/branches/wicketstuff-core-1.4.15
+
+The new 1.4.15-SNAPSHOT  branch is here: https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/branches/wicketstuff-core-1.4
+
+Release Notes - WicketStuff Core - Version 1.4.15:
+
+<artifactId>:
+<list of key changes or bugfixes included in this release>
+
+The plan is to release a 1.4.15.1 point release within one month from today.    If you commit code and/or want a release sooner let me know as one month is the worst case target.
+
+Regards, 
+
+WicketStuff release developer
+
+</end announce>
