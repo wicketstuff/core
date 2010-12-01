@@ -24,8 +24,8 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
+import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -45,24 +45,10 @@ import org.apache.wicket.util.value.ValueMap;
  */
 public class LoginPanel extends Panel
 {
-	private static final long serialVersionUID = 1L;
-
-	/** True if the panel should display a remember-me checkbox */
-	private boolean includeRememberMe = true;
-
-	/** Field for password. */
-	private PasswordTextField password;
-
-	/** True if the user should be remembered via form persistence (cookies) */
-	private boolean rememberMe = true;
-
-	/** Field for user name. */
-	private TextField<String> username;
-
 	/**
 	 * Sign in form.
 	 */
-	public final class SignInForm extends Form<Void>
+	public final class SignInForm extends StatelessForm<Void>
 	{
 		private static final long serialVersionUID = 1L;
 
@@ -81,8 +67,10 @@ public class LoginPanel extends Panel
 
 			// Attach textfield components that edit properties map
 			// in lieu of a formal beans model
-			add(username = new TextField<String>("username", new PropertyModel<String>(properties, "username")));
-			add(password = new PasswordTextField("password", new PropertyModel<String>(properties, "password")));
+			add(username = new TextField<String>("username", new PropertyModel<String>(properties,
+				"username")));
+			add(password = new PasswordTextField("password", new PropertyModel<String>(properties,
+				"password")));
 
 			// MarkupContainer row for remember me checkbox
 			final WebMarkupContainer rememberMeRow = new WebMarkupContainer("rememberMeRow");
@@ -102,12 +90,24 @@ public class LoginPanel extends Panel
 		@Override
 		public final void onSubmit()
 		{
-			if (login(getUsername(), getPassword(), getRememberMe() ))
-			{
+			if (login(getUsername(), getPassword(), getRememberMe()))
 				onSignInSucceeded();
-			}
 		}
 	}
+
+	private static final long serialVersionUID = 1L;
+
+	/** True if the panel should display a remember-me checkbox */
+	private boolean includeRememberMe = true;
+
+	/** Field for password. */
+	private PasswordTextField password;
+
+	/** True if the user should be remembered via form persistence (cookies) */
+	private boolean rememberMe = true;
+
+	/** Field for user name. */
+	private TextField<String> username;
 
 	/**
 	 * @see org.apache.wicket.Component#Component(String)
@@ -129,12 +129,11 @@ public class LoginPanel extends Panel
 		super(id);
 
 		this.includeRememberMe = includeRememberMe;
-		if( !includeRememberMe ) {
-		  this.rememberMe = false;
-		}
+		if (!includeRememberMe)
+			rememberMe = false;
 
 		// Create feedback panel and add to page
-		add( new FeedbackPanel("feedback") );
+		add(new FeedbackPanel("feedback"));
 
 		// Add sign-in form to page, passing feedback panel as
 		// validation error handler
@@ -172,16 +171,6 @@ public class LoginPanel extends Panel
 	}
 
 	/**
-	 * Set model object for rememberMe checkbox
-	 * 
-	 * @param rememberMe
-	 */
-	public void setRememberMe(final boolean rememberMe)
-	{
-		this.rememberMe = rememberMe;
-	}
-
-	/**
 	 * Sign in user if possible.
 	 * 
 	 * @param username
@@ -190,36 +179,37 @@ public class LoginPanel extends Panel
 	 *            The password
 	 * @return True if signin was successful
 	 */
-  public boolean login(String username, String password, boolean rememberMe)
-  {
-    Subject currentUser = SecurityUtils.getSubject();
-    UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
-    try
-    {
-      currentUser.login(token);
-      return true;
+	public boolean login(final String username, final String password, final boolean rememberMe)
+	{
+		final Subject currentUser = SecurityUtils.getSubject();
+		final UsernamePasswordToken token = new UsernamePasswordToken(username, password,
+			rememberMe);
+		try
+		{
+			currentUser.login(token);
+			return true;
 
-      // the following exceptions are just a few you can catch and handle accordingly. See the
-      // AuthenticationException JavaDoc and its subclasses for more.
-    }
-    catch (IncorrectCredentialsException ice)
-    {
-      error("Password is incorrect.");
-    }
-    catch (UnknownAccountException uae)
-    {
-      error("There is no account with that username.");
-    }
-    catch (AuthenticationException ae)
-    {
-      error("Invalid username and/or password.");
-    }
-    catch( Exception ex ) {
-      error("Login failed");
-    }
-    return false;
-  }
-	
+			// the following exceptions are just a few you can catch and handle accordingly. See the
+			// AuthenticationException JavaDoc and its subclasses for more.
+		}
+		catch (final IncorrectCredentialsException ice)
+		{
+			error("Password is incorrect.");
+		}
+		catch (final UnknownAccountException uae)
+		{
+			error("There is no account with that username.");
+		}
+		catch (final AuthenticationException ae)
+		{
+			error("Invalid username and/or password.");
+		}
+		catch (final Exception ex)
+		{
+			error("Login failed");
+		}
+		return false;
+	}
 
 	protected void onSignInSucceeded()
 	{
@@ -227,9 +217,19 @@ public class LoginPanel extends Panel
 		// logged in, than continue to the original destination,
 		// otherwise to the Home page
 		if (!continueToOriginalDestination())
-		{
-			setResponsePage(getApplication().getSessionSettings().getPageFactory().newPage(
-				getApplication().getHomePage()));
-		}
+			setResponsePage(getApplication().getSessionSettings()
+				.getPageFactory()
+				.newPage(getApplication().getHomePage()));
+	}
+
+
+	/**
+	 * Set model object for rememberMe checkbox
+	 * 
+	 * @param rememberMe
+	 */
+	public void setRememberMe(final boolean rememberMe)
+	{
+		this.rememberMe = rememberMe;
 	}
 }
