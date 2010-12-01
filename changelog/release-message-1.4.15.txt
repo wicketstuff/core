@@ -31,6 +31,9 @@ Release Notes - WicketStuff Core - Version 1.4.15:
 <artifactId>:
 <list of key changes or bugfixes included in this release>
 
+wicket-shiro:
+	- org.wicketstuff.shiro.component.LoginPanel$SignInForm now extends StatelessForm instead of Form
+
 The plan is to release a 1.4.15.1 point release within one month from today.    If you commit code and/or want a release sooner let me know as one month is the worst case target.
 
 Regards, 
