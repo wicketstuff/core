@@ -33,6 +33,11 @@ Release Notes - WicketStuff Core - Version 1.4.15:
 
 wicket-shiro:
 	- org.wicketstuff.shiro.component.LoginPanel$SignInForm now extends StatelessForm instead of Form
+	- org.wicketstuff.shiro.component.LoginPanel.onSignInSucceeded now redirects to homepage using
+			setResponsePage(getApplication().getHomePage()) 
+		instead of
+		    setResponsePage(getApplication().getSessionSettings().getPageFactory().newPage(getApplication().getHomePage()))
+		    
 
 The plan is to release a 1.4.15.1 point release within one month from today.    If you commit code and/or want a release sooner let me know as one month is the worst case target.
 
