@@ -42,6 +42,7 @@ import org.apache.wicket.util.value.ValueMap;
  * @author Jonathan Locke
  * @author Juergen Donnerstag
  * @author Eelco Hillenius
+ * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
 public class LoginPanel extends Panel
 {
@@ -217,9 +218,7 @@ public class LoginPanel extends Panel
 		// logged in, than continue to the original destination,
 		// otherwise to the Home page
 		if (!continueToOriginalDestination())
-			setResponsePage(getApplication().getSessionSettings()
-				.getPageFactory()
-				.newPage(getApplication().getHomePage()));
+			setResponsePage(getApplication().getHomePage());
 	}
 
 
