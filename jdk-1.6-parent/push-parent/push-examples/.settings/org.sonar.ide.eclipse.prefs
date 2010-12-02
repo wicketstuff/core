@@ -1,0 +1,7 @@
+#Sun Oct 03 16:36:57 MDT 2010
+eclipse.preferences.version=1
+projectArtifactId=push-examples
+projectBranch=
+projectGroupId=org.wicketstuff
+sonarServerUrl=http\://sonar.kitsd.com\:8080
+version=1

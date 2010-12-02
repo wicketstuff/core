@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.cometd.bayeux.server.BayeuxServer;
 import org.cometd.bayeux.server.BayeuxServer.ChannelListener;
@@ -52,7 +52,7 @@ import org.wicketstuff.push.IPushService;
  * <p>
  * This mean that each time an event is published, a new connection is made to the server to get the
  * actual page update performed by the {@link IPushEventHandler}.
- * 
+ *
  * @author Xavier Hanin
  * @author Rodolfo Hansen
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
@@ -73,7 +73,8 @@ public class CometdPushService implements IPushService
 
 	private static Logger LOG = LoggerFactory.getLogger(CometdPushService.class);
 
-	private static final Map<WebApplication, CometdPushService> INSTANCES = new WeakHashMap<WebApplication, CometdPushService>();
+	private static final Map<WebApplication, CometdPushService> INSTANCES =
+	  new WeakHashMap<WebApplication, CometdPushService>();
 
 	public static CometdPushService get()
 	{
@@ -91,10 +92,13 @@ public class CometdPushService implements IPushService
 		return service;
 	}
 
-	private final ConcurrentMap<String, List<CometdPushChannel<?>>> _channelsByCometdChannelId = new ConcurrentHashMap<String, List<CometdPushChannel<?>>>();
-	private final ConcurrentMap<CometdPushChannel<?>, PushChannelState> _channelStates = new ConcurrentHashMap<CometdPushChannel<?>, PushChannelState>();
+	private final ConcurrentMap<String, List<CometdPushChannel<?>>> _channelsByCometdChannelId =
+	  new ConcurrentHashMap<String, List<CometdPushChannel<?>>>();
+	private final ConcurrentMap<CometdPushChannel<?>, PushChannelState> _channelStates =
+	  new ConcurrentHashMap<CometdPushChannel<?>, PushChannelState>();
 
-	private final Set<IPushChannelDisconnectedListener> _disconnectListeners = new CopyOnWriteArraySet<IPushChannelDisconnectedListener>();
+	private final Set<IPushChannelDisconnectedListener> _disconnectListeners =
+	  new CopyOnWriteArraySet<IPushChannelDisconnectedListener>();
 
 	private final WebApplication _application;
 
@@ -163,7 +167,7 @@ public class CometdPushService implements IPushService
 
 	private CometdPushBehavior _findPushBehaviour(final Component component)
 	{
-		for (final IBehavior behavior : component.getBehaviors())
+		for (final Behavior behavior : component.getBehaviors())
 			if (behavior instanceof CometdPushBehavior)
 				return (CometdPushBehavior)behavior;
 		return null;
@@ -350,4 +354,5 @@ public class CometdPushService implements IPushService
 		else
 			LOG.warn("Unsupported push channel type {}", pushChannel);
 	}
+
 }

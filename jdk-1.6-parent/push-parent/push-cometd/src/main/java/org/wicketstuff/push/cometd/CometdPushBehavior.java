@@ -26,7 +26,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.Component;
 import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -297,11 +296,8 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
-	public void renderHead(Component c, final IHeaderResponse response)
+	public void renderHead(final IHeaderResponse response)
 	{
-		super.renderHead(c, response);
-
 		response.renderJavascriptReference(COMETD);
 
 		// Add all extension...

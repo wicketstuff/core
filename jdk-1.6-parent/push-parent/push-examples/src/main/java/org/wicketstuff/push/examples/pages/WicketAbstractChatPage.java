@@ -20,7 +20,6 @@ import static org.wicketstuff.push.examples.ServiceLocator.getChatService;
 
 import java.text.SimpleDateFormat;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.behavior.AbstractBehavior;
@@ -180,9 +179,9 @@ public abstract class WicketAbstractChatPage extends WebPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void renderHead(Component c, final IHeaderResponse response)
+			public void renderHead(final IHeaderResponse response)
 			{
-				super.renderHead(c, response);
+				super.renderHead(response);
 				response.renderOnLoadJavascript("var chatHistory = document.getElementById('" +
 					chatHistoryField.getMarkupId() +
 					"'); chatHistory.scrollTop = chatHistory.scrollHeight;");

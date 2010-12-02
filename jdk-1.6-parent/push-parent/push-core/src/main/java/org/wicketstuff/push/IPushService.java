@@ -44,4 +44,5 @@ public interface IPushService
 	void removePushChannelDisconnectedListener(IPushChannelDisconnectedListener listener);
 
 	void uninstallPushChannel(final Component component, final IPushChannel<?> pushChannel);
+
 }

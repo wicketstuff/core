@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
@@ -110,11 +109,8 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 		return handlers.size();
 	}
 
-	@Override
-	public void renderHead(Component c, final IHeaderResponse response)
+	public void renderHead(final IHeaderResponse response)
 	{
-		super.renderHead(c, response);
-
 		// install an onunload handler
 		response.renderJavascript("history.navigationMode = 'compatible';",
 			"Opera onunload support");
