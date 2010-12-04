@@ -40,6 +40,12 @@ progressbar:
  - copied wicketstuff-progressbar from wicketstuff trunk into wicketstuff core.
  - changed the artifactId's from wicketstuff-progressbar-* to progressbar-* to fit into the wicketstuff-core naming convention.
 
+Release Notes - WicketStuff Core - Version 1.4.14.1:
+
+wicket-push-timer:
+ - the cleanup background task is now unloaded on application shutdown
+
+
 The plan is to release a 1.4.14.1 point release within one month from today.    If you commit code and/or want a release sooner let me know as one month is the worst case target.
 
 Regards, 

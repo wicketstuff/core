@@ -19,9 +19,7 @@ package org.wicketstuff.push.timer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -61,7 +59,7 @@ public class TimerPushService implements IPushService
 
 	private static final Logger LOG = LoggerFactory.getLogger(TimerPushService.class);
 
-	private static final Map<Application, TimerPushService> INSTANCES = new WeakHashMap<Application, TimerPushService>(
+	static final ConcurrentHashMap<Application, TimerPushService> INSTANCES = new ConcurrentHashMap<Application, TimerPushService>(
 		2);
 
 	public static TimerPushService get()
@@ -75,7 +73,17 @@ public class TimerPushService implements IPushService
 		if (service == null)
 		{
 			service = new TimerPushService();
-			INSTANCES.put(application, service);
+			final TimerPushService existingInstance = INSTANCES.putIfAbsent(application, service);
+
+			if (existingInstance == null)
+				/*
+				 * If this is the first instance of this service for the given application, then
+				 * schedule the cleanup task.
+				 */
+				service.setCleanupInterval(Duration.seconds(60));
+			else
+				// If it is not the first instance, throw it away.
+				service = existingInstance;
 		}
 		return service;
 	}
@@ -107,7 +115,7 @@ public class TimerPushService implements IPushService
 
 	private TimerPushService()
 	{
-		setCleanupInterval(Duration.seconds(60));
+		super();
 	}
 
 	private TimerPushBehavior _findPushBehaviour(final Component component)
@@ -188,6 +196,15 @@ public class TimerPushService implements IPushService
 		}
 		LOG.warn("Unsupported push channel type {}", pushChannel);
 		return false;
+	}
+
+	void onApplicationShutdown()
+	{
+		LOG.info("Shutting down timer push service...");
+		_cleanupFuture.cancel(false);
+		_cleanupFuture = null;
+		_cleanupExecutor.shutdown();
+		INSTANCES.remove(this);
 	}
 
 	void onDisconnect(final TimerPushChannel<?> pushChannel)
