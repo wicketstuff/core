@@ -47,7 +47,7 @@ import org.wicketstuff.push.PushDetachListener;
  */
 public class TimerPushService implements IPushService
 {
-	private static final class PushChannelState
+  private static final class PushChannelState
 	{
 		protected final TimerPushChannel<?> channel;
 		protected Time lastPolledAt = Time.now();
@@ -62,8 +62,8 @@ public class TimerPushService implements IPushService
 
 	private static final Logger LOG = LoggerFactory.getLogger(TimerPushService.class);
 
-	private static final Map<Application, TimerPushService> INSTANCES = new WeakHashMap<Application, TimerPushService>(
-		2);
+	private static final Map<Application, TimerPushService> INSTANCES =
+	  new WeakHashMap<Application, TimerPushService>(2);
 
 	public static TimerPushService get()
 	{
@@ -77,12 +77,30 @@ public class TimerPushService implements IPushService
 		{
 			service = new TimerPushService(application);
 			INSTANCES.put(application, service);
-			PushDetachListener.registerService(service, application);
 		}
 		return service;
 	}
 
-	private Application _application;
+	/**
+	 * Used to
+	 * @author Rodolfo Hansen
+	*/
+	private final class TimerPushDetachListener extends PushDetachListener
+	{
+	  private static final long serialVersionUID = 1L;
+
+	  private TimerPushDetachListener(Application app)
+	  {
+	    super(app);
+	  }
+
+	  @Override
+	  protected void destroyService()
+	  {
+	    _cleanupExecutor.shutdown();
+	  }
+	}
+
 	private Duration _defaultPollingInterval = Duration.seconds(2);
 	private Duration _maxTimeLag = Duration.seconds(10);
 
@@ -93,7 +111,6 @@ public class TimerPushService implements IPushService
 	private ScheduledFuture<?> _cleanupFuture = null;
 	private final Runnable _cleanupTask = new Runnable()
 	{
-		@Override
     public void run()
 		{
 			LOG.debug("Running timer push channel cleanup task...");
@@ -112,8 +129,9 @@ public class TimerPushService implements IPushService
 
 	private TimerPushService(Application app)
 	{
-	  this._application = app;
+	  app.getFrameworkSettings().setDetachListener(new TimerPushDetachListener(app));
 		setCleanupInterval(Duration.seconds(60));
+
 	}
 
 	private TimerPushBehavior _findPushBehaviour(final Component component)
@@ -132,7 +150,6 @@ public class TimerPushService implements IPushService
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
   public void addPushChannelDisconnectedListener(final IPushChannelDisconnectedListener listener)
 	{
 		_disconnectListeners.add(listener);
@@ -169,7 +186,6 @@ public class TimerPushService implements IPushService
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
   public <EventType> TimerPushChannel<EventType> installPushChannel(final Component component,
 		final IPushEventHandler<EventType> pushEventHandler)
 	{
@@ -179,7 +195,6 @@ public class TimerPushService implements IPushService
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
   public boolean isConnected(final IPushChannel<?> pushChannel)
 	{
 		if (pushChannel instanceof TimerPushChannel)
@@ -244,7 +259,6 @@ public class TimerPushService implements IPushService
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
   public <EventType> void publish(final IPushChannel<EventType> pushChannel, final EventType event)
 	{
 		if (pushChannel instanceof TimerPushChannel)
@@ -268,7 +282,6 @@ public class TimerPushService implements IPushService
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
   public void removePushChannelDisconnectedListener(
 		final IPushChannelDisconnectedListener listener)
 	{
@@ -303,7 +316,6 @@ public class TimerPushService implements IPushService
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
   public void uninstallPushChannel(final Component component, final IPushChannel<?> pushChannel)
 	{
 		if (pushChannel instanceof TimerPushChannel)
@@ -318,11 +330,4 @@ public class TimerPushService implements IPushService
 			LOG.warn("Unsupported push channel type {}", pushChannel);
 	}
 
-  @Override
-  public void destroy()
-  {
-    INSTANCES.remove(_application);
-    _cleanupExecutor.shutdown();
-    _application = null;
-  }
 }

@@ -45,6 +45,4 @@ public interface IPushService
 
 	void uninstallPushChannel(final Component component, final IPushChannel<?> pushChannel);
 
-	/** Called when the service needs to cleanup its resources. */
-  void destroy();
 }
