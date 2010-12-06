@@ -42,6 +42,7 @@ import org.wicketstuff.push.IPushChannel;
 import org.wicketstuff.push.IPushChannelDisconnectedListener;
 import org.wicketstuff.push.IPushEventHandler;
 import org.wicketstuff.push.IPushService;
+import org.wicketstuff.push.PushDetachListener;
 
 /**
  * Cometd based implementation of {@link IPushService}.
@@ -73,8 +74,7 @@ public class CometdPushService implements IPushService
 
 	private static Logger LOG = LoggerFactory.getLogger(CometdPushService.class);
 
-	private static final Map<WebApplication, CometdPushService> INSTANCES =
-	  new WeakHashMap<WebApplication, CometdPushService>();
+	private static final Map<WebApplication, CometdPushService> INSTANCES = new WeakHashMap<WebApplication, CometdPushService>();
 
 	public static CometdPushService get()
 	{
@@ -88,17 +88,15 @@ public class CometdPushService implements IPushService
 		{
 			service = new CometdPushService(application);
 			INSTANCES.put(application, service);
+			PushDetachListener.registerService(service, application);
 		}
 		return service;
 	}
 
-	private final ConcurrentMap<String, List<CometdPushChannel<?>>> _channelsByCometdChannelId =
-	  new ConcurrentHashMap<String, List<CometdPushChannel<?>>>();
-	private final ConcurrentMap<CometdPushChannel<?>, PushChannelState> _channelStates =
-	  new ConcurrentHashMap<CometdPushChannel<?>, PushChannelState>();
+	private final ConcurrentMap<String, List<CometdPushChannel<?>>> _channelsByCometdChannelId = new ConcurrentHashMap<String, List<CometdPushChannel<?>>>();
+	private final ConcurrentMap<CometdPushChannel<?>, PushChannelState> _channelStates = new ConcurrentHashMap<CometdPushChannel<?>, PushChannelState>();
 
-	private final Set<IPushChannelDisconnectedListener> _disconnectListeners =
-	  new CopyOnWriteArraySet<IPushChannelDisconnectedListener>();
+	private final Set<IPushChannelDisconnectedListener> _disconnectListeners = new CopyOnWriteArraySet<IPushChannelDisconnectedListener>();
 
 	private final WebApplication _application;
 
@@ -355,4 +353,13 @@ public class CometdPushService implements IPushService
 			LOG.warn("Unsupported push channel type {}", pushChannel);
 	}
 
+  @Override
+  public void destroy()
+  {
+    INSTANCES.remove(_application);
+    _channelsByCometdChannelId.clear();
+    _channelStates.clear();
+    _disconnectListeners.clear();
+    _bayeux = null;
+  }
 }
