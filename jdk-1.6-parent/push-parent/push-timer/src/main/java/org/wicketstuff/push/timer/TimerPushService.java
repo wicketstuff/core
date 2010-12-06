@@ -44,7 +44,7 @@ import org.wicketstuff.push.IPushService;
  */
 public class TimerPushService implements IPushService
 {
-  private static final class PushChannelState
+	private static final class PushChannelState
 	{
 		protected final TimerPushChannel<?> channel;
 		protected Time lastPolledAt = Time.now();
