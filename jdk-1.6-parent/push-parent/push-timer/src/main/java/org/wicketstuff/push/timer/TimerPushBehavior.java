@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
@@ -53,8 +52,9 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 	<EventType> TimerPushChannel<EventType> addPushChannel(
 		final IPushEventHandler<EventType> pushEventHandler, final Duration pollingInterval)
 	{
-		if (pollingInterval.lessThan(getUpdateInterval()))
-			setUpdateInterval(pollingInterval);
+		if (pollingInterval.lessThan(getUpdateInterval())) {
+      setUpdateInterval(pollingInterval);
+    }
 
 		final TimerPushChannel<EventType> channel = new TimerPushChannel<EventType>(pollingInterval);
 		handlers.put(channel, pushEventHandler);
@@ -71,15 +71,16 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 
 		final WebRequest request = (WebRequest)RequestCycle.get().getRequest();
 
-		if (request.getRequestParameters().getParameterValue("unload") != null)
-			// if the page is unloaded notify the pushService to disconnect all push channels
-			for (final TimerPushChannel<?> channel : handlers.keySet())
-				pushService.onDisconnect(channel);
-		else
-			// retrieve all collected events and process them
-			for (final Entry<TimerPushChannel, IPushEventHandler> entry : handlers.entrySet())
-				for (final Object event : pushService.pollEvents(entry.getKey()))
-					try
+		if (request.getRequestParameters().getParameterValue("unload") != null) {
+      // if the page is unloaded notify the pushService to disconnect all push channels
+			for (final TimerPushChannel<?> channel : handlers.keySet()) {
+        pushService.onDisconnect(channel);
+      }
+    } else {
+      // retrieve all collected events and process them
+			for (final Entry<TimerPushChannel, IPushEventHandler> entry : handlers.entrySet()) {
+        for (final Object event : pushService.pollEvents(entry.getKey())) {
+          try
 					{
 						entry.getValue().onEvent(target, event);
 					}
@@ -87,6 +88,9 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 					{
 						LOG.error("Failed while processing event", ex);
 					}
+        }
+      }
+    }
 	}
 
 	int removePushChannel(final IPushChannel<?> channel)
@@ -95,16 +99,17 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 
 		// adjust the polling interval based on the fastest remaining channel
 		Duration newPollingInterval = Duration.MAXIMUM;
-		for (final TimerPushChannel chan : handlers.keySet())
-			if (chan.getPollingInterval().lessThan(newPollingInterval))
-				newPollingInterval = chan.getPollingInterval();
+		for (final TimerPushChannel chan : handlers.keySet()) {
+      if (chan.getPollingInterval().lessThan(newPollingInterval)) {
+        newPollingInterval = chan.getPollingInterval();
+      }
+    }
 		setUpdateInterval(newPollingInterval);
 
 		return handlers.size();
 	}
 
-	@Override
-	public void renderHead(final Component c, final IHeaderResponse response)
+	public void renderHead(final IHeaderResponse response)
 	{
 		// install an onunload handler
 		response.renderJavascript("history.navigationMode = 'compatible';",
