@@ -19,7 +19,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.IClusterable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.markup.html.form.TextField;
@@ -200,7 +200,7 @@ public class AutoCompletingTextField<R> extends Panel {
 	 * 
 	 * @param beh
 	 */
-	public void addBehaviorToAutoCompletingTextField (IBehavior beh) {
+	public void addBehaviorToAutoCompletingTextField (Behavior beh) {
 		this.searchField.add(beh);
 	}
 	

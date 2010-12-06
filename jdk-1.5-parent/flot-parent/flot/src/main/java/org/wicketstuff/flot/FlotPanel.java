@@ -73,7 +73,7 @@ public class FlotPanel extends Panel {
 			{
 				super.onComponentTag(tag);
 				// always transform the tag to <span></span> so even labels defined as <span/> render
-				tag.setType(XmlTag.OPEN);
+				tag.setType(XmlTag.TagType.OPEN);
 			}
 		});
 	}

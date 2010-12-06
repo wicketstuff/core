@@ -26,7 +26,7 @@ import java.util.TreeMap;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.parser.XmlTag;
 
 /**
@@ -93,7 +93,7 @@ public class GridLayout implements ILayout
 
 	private static final Component EMPTY_CELL_COMPONENT = null;
 
-	private static XmlTag createXmlTag(final String name, final XmlTag.Type type)
+	private static XmlTag createXmlTag(final String name, final XmlTag.TagType type)
 	{
 		final XmlTag xmlTag = new XmlTag();
 		xmlTag.setType(type);
@@ -208,7 +208,7 @@ public class GridLayout implements ILayout
 
 	private GridLayoutConstraint getGridConstraint(final Component component)
 	{
-		for (final IBehavior behavior : component.getBehaviors())
+		for (final Behavior behavior : component.getBehaviors())
 			if (behavior instanceof GridLayoutConstraint)
 				return (GridLayoutConstraint)behavior;
 		return null;
@@ -282,12 +282,12 @@ public class GridLayout implements ILayout
 				stringBuilder.append("</tr>");
 			if (iterator.isNewRow() || iterator.isAtFirstConstraint())
 			{
-				final XmlTag xmlTag = createXmlTag("tr", XmlTag.OPEN);
+				final XmlTag xmlTag = createXmlTag("tr", XmlTag.TagType.OPEN);
 				onGridRow(xmlTag);
 				stringBuilder.append(xmlTag.toCharSequence());
 			}
 
-			final XmlTag xmlTag = createXmlTag("td", XmlTag.OPEN);
+			final XmlTag xmlTag = createXmlTag("td", XmlTag.TagType.OPEN);
 			onGridCell(component, xmlTag);
 			if (constraint.getColSpan() > 1)
 				xmlTag.put("colspan", constraint.getColSpan());

@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AbstractBehavior;
-import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.request.resource.JavascriptResourceReference;
@@ -49,7 +49,7 @@ import org.apache.wicket.util.string.AppendingStringBuffer;
  * 
  * @author Martijn Dashorst
  */
-public class ReflectionBehavior extends AbstractBehavior
+public class ReflectionBehavior extends Behavior
 {
 	/**
 	 * Container for javascript calls this behavior enables
@@ -167,7 +167,7 @@ public class ReflectionBehavior extends AbstractBehavior
 	/**
 	 * Binds the component to this behavior.
 	 * 
-	 * @see IBehavior#bind(Component)
+	 * @see Behavior#bind(Component)
 	 */
 	@Override
 	public void bind(final Component component)

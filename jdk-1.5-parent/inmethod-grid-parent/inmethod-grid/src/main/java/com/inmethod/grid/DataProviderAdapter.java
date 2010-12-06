@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLocator;
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 
@@ -58,11 +59,11 @@ public class DataProviderAdapter implements IDataSource {
 		}
 		for (int i = gridSortState.getColumns().size(); i > 0; --i) {
 			IGridSortState.ISortStateColumn column = gridSortState.getColumns().get(i - 1);
-			int dir = ISortState.NONE;
+			SortOrder dir = SortOrder.NONE;
 			if (column.getDirection() == IGridSortState.Direction.ASC) {
-				dir = ISortState.ASCENDING;
+				dir = SortOrder.ASCENDING;
 			} else if (column.getDirection() == IGridSortState.Direction.DESC) {
-				dir = ISortState.DESCENDING;
+				dir = SortOrder.DESCENDING;
 			}
 			dest.setPropertySortOrder(column.getPropertyName(), dir);
 		}

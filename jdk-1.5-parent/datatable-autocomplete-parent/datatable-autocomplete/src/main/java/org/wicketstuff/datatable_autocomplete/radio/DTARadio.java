@@ -64,7 +64,7 @@ public class DTARadio<T> extends Radio<T> {
 			
 			tag.setHasNoCloseTag(true);
 			
-			tag.setType(XmlTag.OPEN);
+			tag.setType(XmlTag.TagType.OPEN);
 			
 		}
 		
