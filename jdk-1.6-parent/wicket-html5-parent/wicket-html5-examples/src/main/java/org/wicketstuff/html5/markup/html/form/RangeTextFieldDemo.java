@@ -46,7 +46,7 @@ public class RangeTextFieldDemo extends BasePage {
 			@Override
 			protected void onUpdate(AjaxRequestTarget target) {
 				rangeLabel.setDefaultModelObject(pojo.range.toString());
-				target.addComponent(rangeLabel);
+				target.add(rangeLabel);
 			}
 			
 			public void renderHead(Component c, IHeaderResponse response) {

@@ -65,7 +65,7 @@ public class GeolocationDemo extends BasePage {
 				}
 				locations.addOrReplace(venues);
 				
-				target.addComponent(locations);
+				target.add(locations);
 			}
 		});
 		add(geoLocator);

@@ -6,7 +6,7 @@
  */
 package org.wicketstuff.html5;
 
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.resource.CompressedResourceReference;
 
@@ -14,7 +14,7 @@ import org.apache.wicket.request.resource.CompressedResourceReference;
  *
  * @author Andrew Lombardi
  */
-public class Html5UtilsBehavior extends AbstractBehavior {
+public class Html5UtilsBehavior extends Behavior {
 
 	private static final long serialVersionUID = 1L;
 
