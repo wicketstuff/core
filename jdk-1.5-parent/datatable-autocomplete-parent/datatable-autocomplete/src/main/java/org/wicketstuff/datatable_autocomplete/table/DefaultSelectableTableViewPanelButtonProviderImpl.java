@@ -17,7 +17,7 @@ package org.wicketstuff.datatable_autocomplete.table;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;
+import org.wicketstuff.datatable_autocomplete.form.action.IFormSubmitAction;
 
 
 /**
@@ -34,7 +34,7 @@ public class DefaultSelectableTableViewPanelButtonProviderImpl implements
 	private static final Logger	log	= LoggerFactory
 											.getLogger(DefaultSelectableTableViewPanelButtonProviderImpl.class);
 	private String	buttonLabelText;
-	private IFormOnSubmitAction<?>	action = null;
+	private IFormSubmitAction<?>	action = null;
 	private final boolean	clearSelectedRowOnAction;
 	private final boolean	requireSelectedRow;
 	private String cssClassName;
@@ -42,7 +42,7 @@ public class DefaultSelectableTableViewPanelButtonProviderImpl implements
 	/**
 	 * 
 	 */
-	public DefaultSelectableTableViewPanelButtonProviderImpl(String buttonLabelText, IFormOnSubmitAction<?> action, boolean clearSelectedRowOnAction, boolean requireSelectedRow) {
+	public DefaultSelectableTableViewPanelButtonProviderImpl(String buttonLabelText, IFormSubmitAction<?> action, boolean clearSelectedRowOnAction, boolean requireSelectedRow) {
 		this.buttonLabelText = buttonLabelText;
 		this.action = action;
 		this.clearSelectedRowOnAction = clearSelectedRowOnAction;
@@ -71,12 +71,12 @@ public class DefaultSelectableTableViewPanelButtonProviderImpl implements
 	/**
 	 * @param action the action to set
 	 */
-	public void setAction(IFormOnSubmitAction<?> action) {
+	public void setAction(IFormSubmitAction<?> action) {
 	
 		this.action = action;
 	}
 
-	public IFormOnSubmitAction<?> getButtonAction() {
+	public IFormSubmitAction<?> getButtonAction() {
 
 		return action;
 	}

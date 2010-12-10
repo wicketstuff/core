@@ -20,7 +20,7 @@ import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;
+import org.wicketstuff.datatable_autocomplete.form.action.IFormSubmitAction;
 
 
 /**
@@ -38,14 +38,14 @@ public class DTAButton extends Button implements DTAButtonProvider {
 
 	private static final Logger	log	= LoggerFactory.getLogger(DTAButton.class);
 	
-	private IFormOnSubmitAction	submitAction = null;
+	private IFormSubmitAction	submitAction = null;
 
 	
 	
 	/**
 	 * @param id
 	 */
-	public DTAButton(String id, String label, IFormOnSubmitAction submitAction) {
+	public DTAButton(String id, String label, IFormSubmitAction submitAction) {
 		
 		
 		super(id, new Model<String> (label));
@@ -100,7 +100,7 @@ public class DTAButton extends Button implements DTAButtonProvider {
 	/**
 	 * @param submitAction the submitAction to set
 	 */
-	public void setSubmitAction(IFormOnSubmitAction submitAction) {
+	public void setSubmitAction(IFormSubmitAction submitAction) {
 	
 		this.submitAction = submitAction;
 	}

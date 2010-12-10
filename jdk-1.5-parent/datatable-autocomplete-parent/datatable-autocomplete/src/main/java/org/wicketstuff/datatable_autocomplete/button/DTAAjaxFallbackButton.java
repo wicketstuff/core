@@ -27,7 +27,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;
+import org.wicketstuff.datatable_autocomplete.form.action.IFormSubmitAction;
 
 /**
  * @author mocleiri
@@ -53,7 +53,7 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 	private static final Logger					log							= LoggerFactory
 																					.getLogger(DTAAjaxFallbackButton.class);
 
-	private IFormOnSubmitAction				submitAction				= null;
+	private IFormSubmitAction				submitAction				= null;
 
 	private IAjaxCallDecorator					ajaxCallDecorator			= null;
 
@@ -124,7 +124,7 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 	 * @param id
 	 */
 	public DTAAjaxFallbackButton(String id, String label, Form form,
-			IFormOnSubmitAction submitAction) {
+			IFormSubmitAction submitAction) {
 
 		super(id, new Model(label), form);
 		this.form = form;
@@ -197,6 +197,21 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 			submitAction.onSubmit(target, form);
 
 	}
+	
+	
+
+	/* (non-Javadoc)
+	 * @see org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton#onError(org.apache.wicket.ajax.AjaxRequestTarget, org.apache.wicket.markup.html.form.Form)
+	 */
+	@Override
+	protected void onError(AjaxRequestTarget target, Form<?> form) {
+		
+			callCounter++;
+
+			if (submitAction != null)
+				submitAction.onError(target, form);
+
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -241,7 +256,7 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 	 * @param submitAction
 	 *            the submitAction to set
 	 */
-	public void setSubmitAction(IFormOnSubmitAction submitAction) {
+	public void setSubmitAction(IFormSubmitAction submitAction) {
 
 		this.submitAction = submitAction;
 	}

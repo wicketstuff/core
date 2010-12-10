@@ -32,7 +32,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.datatable_autocomplete.button.DTAAjaxFallbackButton;
-import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;
+import org.wicketstuff.datatable_autocomplete.form.action.IFormSubmitAction;
 import org.wicketstuff.datatable_autocomplete.model.MarkupIDInStringModel;
 import org.wicketstuff.datatable_autocomplete.table.ISelectableTableViewPanelButtonProvider;
 
@@ -84,7 +84,7 @@ public class ButtonListView extends ListView<ISelectableTableViewPanelButtonProv
 
 		final ISelectableTableViewPanelButtonProvider buttonProvider = item.getModelObject();
 		
-		IFormOnSubmitAction buttonAction = buttonProvider
+		IFormSubmitAction buttonAction = buttonProvider
 				.getButtonAction();
 
 		if (buttonAction == null) {
@@ -100,7 +100,7 @@ public class ButtonListView extends ListView<ISelectableTableViewPanelButtonProv
 		}
 
 			// if the tow is required then
-			buttonAction = new IFormOnSubmitAction() {
+			buttonAction = new IFormSubmitAction() {
 
 				/**
 				 * 
@@ -136,6 +136,18 @@ public class ButtonListView extends ListView<ISelectableTableViewPanelButtonProv
 					}
 
 				}
+
+
+				/* (non-Javadoc)
+				 * @see org.wicketstuff.datatable_autocomplete.form.action.IFormSubmitAction#onError(org.apache.wicket.ajax.AjaxRequestTarget, org.apache.wicket.markup.html.form.Form)
+				 */
+				public void onError(AjaxRequestTarget target, Form form) {
+					
+					buttonProvider.getButtonAction().onError(target, form);
+					
+				}
+				
+				
 
 			};
 

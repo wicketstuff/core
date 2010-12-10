@@ -22,7 +22,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;
+import org.wicketstuff.datatable_autocomplete.form.action.IFormSubmitAction;
 import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandler;
 
 /**
@@ -217,7 +217,7 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	 * @param formOnSubmitAction
 	 */
 	public void setEditOnSubmitAction(
-			final IFormOnSubmitAction<T> formOnSubmitAction) {
+			final IFormSubmitAction<T> formOnSubmitAction) {
 
 		editButtonProvider.setAction(formOnSubmitAction);
 
@@ -234,7 +234,7 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	 * @param formOnSubmitAction
 	 */
 	public void setDeleteOnSubmitAction(
-			final IFormOnSubmitAction<T> formOnSubmitAction) {
+			final IFormSubmitAction<T> formOnSubmitAction) {
 
 		deleteButtonProvider.setAction(formOnSubmitAction);
 
@@ -245,7 +245,7 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	/**
 	 * @param formOnSubmitAction
 	 */
-	public void setCreateOnSubmitAction(IFormOnSubmitAction<T> formOnSubmitAction) {
+	public void setCreateOnSubmitAction(IFormSubmitAction<T> formOnSubmitAction) {
 
 		createButtonProvider.setAction(formOnSubmitAction);
 	}

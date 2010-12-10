@@ -16,7 +16,7 @@
 package org.wicketstuff.datatable_autocomplete.table;
 
 import org.apache.wicket.IClusterable;
-import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;
+import org.wicketstuff.datatable_autocomplete.form.action.IFormSubmitAction;
 
 
 /**
@@ -35,7 +35,7 @@ public interface ISelectableTableViewPanelButtonProvider extends
 	 * 
 	 * @return the action to perform when this button is clicked.
 	 */
-	public IFormOnSubmitAction<?> getButtonAction();
+	public IFormSubmitAction<?> getButtonAction();
 
 	/**
 	 * 
