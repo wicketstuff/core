@@ -24,7 +24,7 @@ public class OSM extends Layer implements Serializable {
 	protected void bindHeaderContributors(IHeaderResponse response) {
 		
 				response
-						.renderJavascriptReference("http://www.openstreetmap.org/openlayers/OpenStreetMap.js");
+						.renderJavaScriptReference("http://www.openstreetmap.org/openlayers/OpenStreetMap.js");
 	}
 
 	public String getJSconstructor() {

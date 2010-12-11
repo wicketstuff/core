@@ -88,7 +88,7 @@ public class MapWithGetSpecificFeaturePage extends WebPage {
 						
 						String state = wr.getRequestParameters().getParameterValue("propertyValue").toString();
 						
-						target.prependJavascript("alert('you selected state = "+state+");");
+						target.prependJavaScript("alert('you selected state = "+state+");");
 								
 						
 					}

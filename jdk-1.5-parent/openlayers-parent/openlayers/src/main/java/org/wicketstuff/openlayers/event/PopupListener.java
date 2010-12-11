@@ -110,7 +110,7 @@ public abstract class PopupListener extends AbstractDefaultAjaxBehavior {
 				+ ".map.removePopup(" + mapId + ".popup);" + "		" + mapId
 				+ ".popup.destroy();" + "		" + mapId + ".popup = null;" + "}";
 
-		target.prependJavascript(jsToRun);
+		target.prependJavaScript(jsToRun);
 
 		// Currently only support clicking on markers!
 		getOpenLayerMap().getInfoWindow().getContent().replaceWith(
@@ -128,7 +128,7 @@ public abstract class PopupListener extends AbstractDefaultAjaxBehavior {
 				+ ".map.addPopup(" + mapId + ".popup);";
 
 		// open info window
-		target.appendJavascript(jsToRun);
+		target.appendJavaScript(jsToRun);
 	}
 
 	/**
@@ -142,7 +142,7 @@ public abstract class PopupListener extends AbstractDefaultAjaxBehavior {
 				+ ".map.removePopup(" + mapId + ".popup);" + "		" + mapId
 				+ ".popup.destroy();" + "		" + mapId + ".popup = null;" + "}";
 
-		target.appendJavascript(jsToRun);
+		target.appendJavaScript(jsToRun);
 	}
 
 	/**

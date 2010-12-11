@@ -16,7 +16,7 @@
 package org.wicketstuff.openlayers.api;
 
 import org.apache.wicket.IClusterable;
-import org.apache.wicket.request.resource.JavascriptResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 
 /**
@@ -60,6 +60,6 @@ public interface IJavascriptComponent extends IClusterable {
 	 * @return
 	 * 
 	 */
-	public JavascriptResourceReference[] getJSResourceReferences();
+	public JavaScriptResourceReference[] getJSResourceReferences();
 
 }

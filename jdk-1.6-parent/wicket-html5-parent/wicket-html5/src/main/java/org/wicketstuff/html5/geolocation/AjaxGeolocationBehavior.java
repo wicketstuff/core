@@ -51,6 +51,6 @@ public abstract class AjaxGeolocationBehavior extends AbstractDefaultAjaxBehavio
 
 		final String javascript = MapVariableInterpolator.interpolate(
 				GEOLOCATION_TMPL_JS.asString(), variables);
-		response.renderOnDomReadyJavascript(javascript);
+		response.renderOnDomReadyJavaScript(javascript);
 	}
 }

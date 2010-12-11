@@ -52,7 +52,7 @@ public class RangeTextFieldDemo extends BasePage {
 			public void renderHead(Component c, IHeaderResponse response) {
 				super.renderHead(c, response);
 				// override Wicket.Form.serializeInput so that input[type=range] is serialized too
-				response.renderJavascriptReference(WICKET_AJAX_HTML5_JS);
+				response.renderJavaScriptReference(WICKET_AJAX_HTML5_JS);
 			}
 		}.setThrottleDelay(Duration.milliseconds(500)));
 	}

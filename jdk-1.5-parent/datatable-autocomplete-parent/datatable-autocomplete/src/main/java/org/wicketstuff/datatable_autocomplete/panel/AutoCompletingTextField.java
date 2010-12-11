@@ -148,7 +148,7 @@ public class AutoCompletingTextField<R> extends Panel {
 				
 				String callbackScript = autoCompletingBehaviour.getCallbackScript(true).toString();
 				
-				target.prependJavascript(callbackScript);
+				target.prependJavaScript(callbackScript);
 				
 				
 				

@@ -24,6 +24,6 @@ public class Html5UtilsBehavior extends Behavior {
 	 * @see org.apache.wicket.markup.html.IHeaderContributor#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	public void renderHead(IHeaderResponse response) {
-        response.renderJavascriptReference(H5UTILS_JS);
+        response.renderJavaScriptReference(H5UTILS_JS);
 	}
 }

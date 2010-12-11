@@ -4,7 +4,7 @@ import org.apache.wicket.ajax.WicketAjaxReference;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WicketEventReference;
-import org.apache.wicket.request.resource.JavascriptResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
 /**
@@ -17,8 +17,8 @@ public class GMapHeaderContributor extends AbstractBehavior
 
 	// URL for Google Maps' API endpoint.
 	private static final String GMAP_API_URL = "http://www.google.com/jsapi?key=";
-	// We have some custom Javascript.
-	private static final ResourceReference WICKET_GMAP_JS = new JavascriptResourceReference(GMap2.class, "wicket-gmap.js");
+	// We have some custom JavaScript.
+	private static final ResourceReference WICKET_GMAP_JS = new JavaScriptResourceReference(GMap2.class, "wicket-gmap.js");
 	protected static final String GOOGLE_LOAD_MAPS = "google.load(\"maps\", \"2.x\");";
 
 	private final String gMapKey;
@@ -40,12 +40,12 @@ public class GMapHeaderContributor extends AbstractBehavior
 	 */
 	public void renderHead(IHeaderResponse response)
 	{
-		response.renderJavascriptReference(GMAP_API_URL + gMapKey);
-		response.renderJavascript(GOOGLE_LOAD_MAPS, GMapHeaderContributor.class.getName() + "_googleload");
-		response.renderJavascriptReference(WicketEventReference.INSTANCE);
-		response.renderJavascriptReference(WicketAjaxReference.INSTANCE);
-		response.renderJavascriptReference(WICKET_GMAP_JS);
+		response.renderJavaScriptReference(GMAP_API_URL + gMapKey);
+		response.renderJavaScript(GOOGLE_LOAD_MAPS, GMapHeaderContributor.class.getName() + "_googleload");
+		response.renderJavaScriptReference(WicketEventReference.INSTANCE);
+		response.renderJavaScriptReference(WicketAjaxReference.INSTANCE);
+		response.renderJavaScriptReference(WICKET_GMAP_JS);
 		// see: http://www.google.com/apis/maps/documentation/#Memory_Leaks
-		response.renderOnEventJavascript("window", "onUnload", "google.maps.Unload();");
+		response.renderOnEventJavaScript("window", "onUnload", "google.maps.Unload();");
 	}
 }

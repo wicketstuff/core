@@ -126,7 +126,7 @@ public abstract class GOverlay implements Serializable
 		// TODO
 		// && getParent().findPage() != null)
 		{
-			AjaxRequestTarget.get().appendJavascript(event.getJSadd(this));
+			AjaxRequestTarget.get().appendJavaScript(event.getJSadd(this));
 		}
 
 		return this;
@@ -157,7 +157,7 @@ public abstract class GOverlay implements Serializable
 		// TODO
 		// && findPage() != null)
 		{
-			AjaxRequestTarget.get().appendJavascript(event.getJSclear(this));
+			AjaxRequestTarget.get().appendJavaScript(event.getJSclear(this));
 		}
 
 		return this;

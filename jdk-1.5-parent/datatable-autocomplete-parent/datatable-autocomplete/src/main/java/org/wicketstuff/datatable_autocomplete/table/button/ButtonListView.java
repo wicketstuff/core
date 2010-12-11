@@ -116,7 +116,7 @@ public class ButtonListView extends ListView<ISelectableTableViewPanelButtonProv
 						
 						if (selectedContextField.getModelObject() == null) {
 							if (target != null) {
-								target.prependJavascript("alert ('A selected row is required.');");
+								target.prependJavaScript("alert ('A selected row is required.');");
 							}
 							else
 								error("A selected row is required.");

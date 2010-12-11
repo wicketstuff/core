@@ -30,7 +30,7 @@ public abstract class EventListenerBehavior extends AbstractDefaultAjaxBehavior 
 	public void renderHead(Component c, IHeaderResponse response) {
 		// TODO Auto-generated method stub
 		super.renderHead(c, response);
-		response.renderOnDomReadyJavascript(getJSaddListener());
+		response.renderOnDomReadyJavaScript(getJSaddListener());
 	}
 
 	@Override

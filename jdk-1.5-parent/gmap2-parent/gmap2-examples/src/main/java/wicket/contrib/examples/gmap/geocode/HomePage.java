@@ -101,7 +101,7 @@ public class HomePage extends WicketExamplePage
 				}
 				catch (IOException e)
 				{
-					target.appendJavascript("Unable to geocode (" + e.getMessage() + ")");
+					target.appendJavaScript("Unable to geocode (" + e.getMessage() + ")");
 				}
 			}
 
@@ -110,7 +110,7 @@ public class HomePage extends WicketExamplePage
 			 */
 			@Override
 			protected void onError(AjaxRequestTarget target, Form<?> form) {
-				target.appendJavascript("Unable to geocode (ajax button onError)");
+				target.appendJavaScript("Unable to geocode (ajax button onError)");
 			}
 			
 		});

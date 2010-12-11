@@ -93,7 +93,7 @@ public abstract class GMapAutoUpdatingBehavior extends AbstractDefaultAjaxBehavi
      */
     protected final void respond(final AjaxRequestTarget target) {
     	if(!stopped) {
-    		target.appendJavascript(getJsTimeoutCall(updateInterval));
+    		target.appendJavaScript(getJsTimeoutCall(updateInterval));
     	}
         onTimer(target, getGMap2());
     }

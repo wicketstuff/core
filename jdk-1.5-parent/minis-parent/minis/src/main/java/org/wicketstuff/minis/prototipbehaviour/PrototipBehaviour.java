@@ -90,11 +90,11 @@ public class PrototipBehaviour extends AbstractBehavior
 	{
 		if(onLoad)
 		{
-			response.renderOnLoadJavascript(toJavascript());
+			response.renderOnLoadJavaScript(toJavascript());
 		}
 		else
 		{
-			response.renderOnDomReadyJavascript(toJavascript());
+			response.renderOnDomReadyJavaScript(toJavascript());
 		}
 		if(!overrideHeaderContributor)
 		{
@@ -102,10 +102,10 @@ public class PrototipBehaviour extends AbstractBehavior
 			switch(selectedJsType)
 			{
 			case NORMAL:
-				response.renderJavascriptReference(new CompressedResourceReference(PrototipBehaviour.class, "prototip.js"));
+				response.renderJavaScriptReference(new CompressedResourceReference(PrototipBehaviour.class, "prototip.js"));
 				break;
 			case MIN:
-				response.renderJavascriptReference(new CompressedResourceReference(PrototipBehaviour.class, "prototip-min.js"));
+				response.renderJavaScriptReference(new CompressedResourceReference(PrototipBehaviour.class, "prototip-min.js"));
 				break;
 			}
 		}
@@ -133,7 +133,7 @@ public class PrototipBehaviour extends AbstractBehavior
 		{
 			StringBuilder removeJs = new StringBuilder();
 			removeJs.append("Tips.remove($('").append(source.getMarkupId()).append("'));");
-			target.appendJavascript(removeJs.toString());
+			target.appendJavaScript(removeJs.toString());
 		}
 	}
 
@@ -147,7 +147,7 @@ public class PrototipBehaviour extends AbstractBehavior
 		{
 			StringBuilder hideJs = new StringBuilder();
 			hideJs.append("Tips.hide($('").append(source.getMarkupId()).append("'));");
-			target.appendJavascript(hideJs.toString());
+			target.appendJavaScript(hideJs.toString());
 		}
 	}
 

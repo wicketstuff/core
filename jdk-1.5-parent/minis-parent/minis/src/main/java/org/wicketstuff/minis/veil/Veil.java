@@ -80,6 +80,6 @@ public class Veil extends VeilResources
 	public void renderHead(Component c, final IHeaderResponse response)
 	{
 		super.renderHead(c, response);
-		response.renderOnDomReadyJavascript(VeilResources.Javascript.show(component));
+		response.renderOnDomReadyJavaScript(VeilResources.Javascript.show(component));
 	}
 }

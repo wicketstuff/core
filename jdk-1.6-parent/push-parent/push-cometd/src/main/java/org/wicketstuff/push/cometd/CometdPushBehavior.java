@@ -298,17 +298,17 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	 */
 	public void renderHead(final IHeaderResponse response)
 	{
-		response.renderJavascriptReference(COMETD);
+		response.renderJavaScriptReference(COMETD);
 
 		// Add all extension...
-		response.renderJavascriptReference(COMETD_ACK);
-		response.renderJavascriptReference(COMETD_RELOAD);
-		response.renderJavascriptReference(COMETD_TIMESTAMP);
-		response.renderJavascriptReference(COMETD_TIMESYNC);
+		response.renderJavaScriptReference(COMETD_ACK);
+		response.renderJavaScriptReference(COMETD_RELOAD);
+		response.renderJavaScriptReference(COMETD_TIMESTAMP);
+		response.renderJavaScriptReference(COMETD_TIMESYNC);
 
-		response.renderJavascript(_renderInitScript(), "cometd-push-initialization");
-		response.renderJavascript(_renderEventHandlerScript(), null);
-		response.renderJavascript(_renderSubscribeScript(), null);
+		response.renderJavaScript(_renderInitScript(), "cometd-push-initialization");
+		response.renderJavaScript(_renderEventHandlerScript(), null);
+		response.renderJavaScript(_renderSubscribeScript(), null);
 	}
 
 	/**

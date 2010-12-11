@@ -31,7 +31,7 @@ public class GMap extends Layer implements Serializable {
 	protected void bindHeaderContributors(IHeaderResponse response) {
 		
 				response
-						.renderJavascriptReference("http://maps.google.com/maps?file=api&amp;v="
+						.renderJavaScriptReference("http://maps.google.com/maps?file=api&amp;v="
 								+ apiVersion + "&amp;key=" + apiKey);
 
 	}

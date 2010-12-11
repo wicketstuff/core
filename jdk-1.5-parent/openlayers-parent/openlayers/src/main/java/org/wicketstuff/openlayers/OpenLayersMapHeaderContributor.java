@@ -5,14 +5,14 @@ import org.apache.wicket.ajax.WicketAjaxReference;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WicketEventReference;
-import org.apache.wicket.request.resource.JavascriptResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
 public class OpenLayersMapHeaderContributor extends AbstractBehavior {
 	private static final long serialVersionUID = 1L;
 
-	// We have some custom Javascript.
-	private static final ResourceReference WICKET_OMAP_JS = new JavascriptResourceReference(
+	// We have some custom JavaScript.
+	private static final ResourceReference WICKET_OMAP_JS = new JavaScriptResourceReference(
 			OpenLayersMap.class, "wicket-openlayersmap.js");
 
 	private final boolean developmentMode;
@@ -53,10 +53,10 @@ public class OpenLayersMapHeaderContributor extends AbstractBehavior {
 
 		String url = getURL(developmentMode, openLayersVersion);
 
-		response.renderJavascriptReference(url);
-		response.renderJavascriptReference(WicketEventReference.INSTANCE);
-		response.renderJavascriptReference(WicketAjaxReference.INSTANCE);
-		response.renderJavascriptReference(WICKET_OMAP_JS);
+		response.renderJavaScriptReference(url);
+		response.renderJavaScriptReference(WicketEventReference.INSTANCE);
+		response.renderJavaScriptReference(WicketAjaxReference.INSTANCE);
+		response.renderJavaScriptReference(WICKET_OMAP_JS);
 
 	}
 

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.wicket.request.resource.JavascriptResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.event.OverlayListenerBehavior;
 
@@ -76,7 +76,7 @@ public abstract class Overlay implements IJavascriptComponent {
 	/* (non-Javadoc)
 	 * @see org.wicketstuff.openlayers.api.IJavascriptComponent#getJSResourceReference()
 	 */
-	public JavascriptResourceReference[] getJSResourceReferences() {
+	public JavaScriptResourceReference[] getJSResourceReferences() {
 		// intentionally not implemented.
 		return null;
 	}

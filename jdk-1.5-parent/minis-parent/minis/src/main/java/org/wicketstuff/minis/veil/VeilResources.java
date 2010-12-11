@@ -20,7 +20,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.request.resource.JavascriptResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
@@ -32,7 +32,7 @@ import org.apache.wicket.request.resource.ResourceReference;
 public class VeilResources extends AbstractBehavior 
 {
 	/**
-	 * Javascript interface for the veil
+	 * JavaScript interface for the veil
 	 * 
 	 * @author ivaynberg
 	 */
@@ -198,7 +198,7 @@ public class VeilResources extends AbstractBehavior
 
 	private static final long serialVersionUID = 1L;
 
-	private static final ResourceReference JS = new JavascriptResourceReference(
+	private static final ResourceReference JS = new JavaScriptResourceReference(
 		VeilResources.class, "wicket-veil.js");
 
 	private static final ResourceReference CSS = new PackageResourceReference(VeilResources.class,
@@ -225,7 +225,7 @@ public class VeilResources extends AbstractBehavior
 	@Override
 	public void renderHead(Component c, final IHeaderResponse response)
 	{
-		response.renderJavascriptReference(JS);
+		response.renderJavaScriptReference(JS);
 		response.renderCSSReference(CSS);
 	}
 

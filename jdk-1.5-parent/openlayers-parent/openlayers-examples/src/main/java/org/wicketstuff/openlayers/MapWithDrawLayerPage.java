@@ -48,7 +48,7 @@ public class MapWithDrawLayerPage extends WebPage {
 		openLayersMap.add(new DrawListenerBehavior(){@Override
 		protected void onDrawEnded(Geometry poly, AjaxRequestTarget target) {
 			
-			target.appendJavascript("alert('Got geom+"+poly.toText()+"');");
+			target.appendJavaScript("alert('Got geom+"+poly.toText()+"');");
 			
 		}});
 

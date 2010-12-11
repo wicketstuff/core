@@ -112,7 +112,7 @@ public class GInfoWindow extends WebMarkupContainer
 
 		if (AjaxRequestTarget.get() != null)
 		{
-			AjaxRequestTarget.get().appendJavascript(getJSopen(latLng, tabs));
+			AjaxRequestTarget.get().appendJavaScript(getJSopen(latLng, tabs));
 			AjaxRequestTarget.get().addComponent(this);
 		}
 
@@ -128,7 +128,7 @@ public class GInfoWindow extends WebMarkupContainer
 
 		if (AjaxRequestTarget.get() != null)
 		{
-			AjaxRequestTarget.get().appendJavascript(getJSopen(marker, tabs));
+			AjaxRequestTarget.get().appendJavaScript(getJSopen(marker, tabs));
 			AjaxRequestTarget.get().addComponent(this);
 		}
 
@@ -149,7 +149,7 @@ public class GInfoWindow extends WebMarkupContainer
 
 		if (AjaxRequestTarget.get() != null)
 		{
-			AjaxRequestTarget.get().appendJavascript(getJSclose());
+			AjaxRequestTarget.get().appendJavaScript(getJSclose());
 			AjaxRequestTarget.get().addComponent(this);
 		}
 	}

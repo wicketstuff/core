@@ -55,10 +55,10 @@ public class MapWithDrawLayerAndInteractionPage extends WebPage {
 			protected void onDrawEnded(Geometry poly, AjaxRequestTarget target) {
 				if(poly.covers(marker.getLonLat().getPoint()))
 				{
-				target.appendJavascript("alert('The geom you drew contained the marker');");
+				target.appendJavaScript("alert('The geom you drew contained the marker');");
 				}
 				else{
-					target.appendJavascript("alert('The geom you drew did not contain the marker');");	
+					target.appendJavaScript("alert('The geom you drew did not contain the marker');");	
 				}
 
 			}

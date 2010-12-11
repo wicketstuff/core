@@ -63,7 +63,7 @@ public class SimpleProgressExamplePage extends PageSupport {
 				// Hide progress bar after finish
 				setVisible(false);
 				// Add some JavaScript after finish
-				target.appendJavascript("alert('Task done!')");
+				target.appendJavaScript("alert('Task done!')");
 
 				// re-enable button
 				Component button = form.get("submit");
@@ -101,7 +101,7 @@ public class SimpleProgressExamplePage extends PageSupport {
 			@Override
 			protected void onError(AjaxRequestTarget target, Form<?> form) {
 
-				target.prependJavascript("alert('Failed to update progress');");
+				target.prependJavaScript("alert('Failed to update progress');");
 			}
 			
 		});

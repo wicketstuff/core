@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
-import org.apache.wicket.request.resource.JavascriptResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.api.layer.WMS;
 import org.wicketstuff.openlayers.js.JSUtils;
@@ -40,9 +40,9 @@ import org.wicketstuff.openlayers.proxy.WFSProxyBehavior;
  */
 public class GetSpecificFeature extends AbstractControl {
 
-	private static final JavascriptResourceReference GetSpecificFeature_js = new JavascriptResourceReference(GetSpecificFeature.class, "GetSpecificFeature.js");
+	private static final JavaScriptResourceReference GetSpecificFeature_js = new JavaScriptResourceReference(GetSpecificFeature.class, "GetSpecificFeature.js");
 
-	private static final JavascriptResourceReference GetSpecificFeatureFormat_js = new JavascriptResourceReference(GetSpecificFeature.class, "GetSpecificFeatureFormat.js");
+	private static final JavaScriptResourceReference GetSpecificFeatureFormat_js = new JavaScriptResourceReference(GetSpecificFeature.class, "GetSpecificFeatureFormat.js");
 	
 	private Map<String, String> parameters = new LinkedHashMap<String, String>();
 
@@ -100,8 +100,8 @@ public class GetSpecificFeature extends AbstractControl {
 	 * @see org.wicketstuff.openlayers.api.control.AbstractControl#getJSResourceReference()
 	 */
 	@Override
-	public JavascriptResourceReference[] getJSResourceReferences() {
-		return new JavascriptResourceReference[] {GetSpecificFeatureFormat_js, GetSpecificFeature_js}; 
+	public JavaScriptResourceReference[] getJSResourceReferences() {
+		return new JavaScriptResourceReference[] {GetSpecificFeatureFormat_js, GetSpecificFeature_js}; 
 	}
 
 	

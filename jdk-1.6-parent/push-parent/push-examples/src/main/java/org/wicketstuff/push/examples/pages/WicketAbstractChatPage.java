@@ -113,7 +113,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 				getChatService().getChatRoom(chatRoomName).sendAsync(user, message);
 
 				// clear message area add focus it
-				target.appendJavascript("document.getElementById('" + messageField.getMarkupId() +
+				target.appendJavaScript("document.getElementById('" + messageField.getMarkupId() +
 					"').value =''");
 				target.focusComponent(messageField);
 			}
@@ -183,7 +183,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 			public void renderHead(final Component component, final IHeaderResponse response)
 			{
 				super.renderHead(component, response);
-				response.renderOnLoadJavascript("var chatHistory = document.getElementById('" +
+				response.renderOnLoadJavaScript("var chatHistory = document.getElementById('" +
 					chatHistoryField.getMarkupId() +
 					"'); chatHistory.scrollTop = chatHistory.scrollHeight;");
 			}

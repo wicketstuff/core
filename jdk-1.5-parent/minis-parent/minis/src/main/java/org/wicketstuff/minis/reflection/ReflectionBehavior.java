@@ -24,7 +24,7 @@ import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.image.Image;
-import org.apache.wicket.request.resource.JavascriptResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 
@@ -121,7 +121,7 @@ public class ReflectionBehavior extends Behavior
 	private static final long serialVersionUID = 1L;
 
 	/** The resource reference to the reflection.js file. */
-	public static final ResourceReference REFLECTION_JS = new JavascriptResourceReference(
+	public static final ResourceReference REFLECTION_JS = new JavaScriptResourceReference(
 		ReflectionBehavior.class, "reflection.js");
 
 	/** The classname to add to the image to make it 'reflect'. */
@@ -186,7 +186,7 @@ public class ReflectionBehavior extends Behavior
 	public void renderHead(Component c, final IHeaderResponse response)
 	{
 		super.renderHead(c, response);
-		response.renderJavascriptReference(REFLECTION_JS);
+		response.renderJavaScriptReference(REFLECTION_JS);
 
 		final StringBuilder sb = new StringBuilder();
 		for (final Component component : components)
@@ -196,7 +196,7 @@ public class ReflectionBehavior extends Behavior
 					reflectionHeight));
 				sb.append("\n");
 			}
-		response.renderOnLoadJavascript(sb.toString());
+		response.renderOnLoadJavaScript(sb.toString());
 	}
 
 	/**

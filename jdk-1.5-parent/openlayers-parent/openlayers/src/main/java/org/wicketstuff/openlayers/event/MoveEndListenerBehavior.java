@@ -28,7 +28,7 @@ public abstract class MoveEndListenerBehavior extends
 	@Override
 	public void renderHead(Component c, IHeaderResponse response) {
 		super.renderHead(c, response);
-		response.renderOnDomReadyJavascript(getJSaddListener());
+		response.renderOnDomReadyJavaScript(getJSaddListener());
 	}
 
 	@Override

@@ -179,15 +179,15 @@ public class MootipBehaviour extends AbstractBehavior
 	@Override
 	public void renderHead(Component c, final IHeaderResponse response)
 	{
-		response.renderJavascriptReference(new CompressedResourceReference(MootipBehaviour.class,
+		response.renderJavaScriptReference(new CompressedResourceReference(MootipBehaviour.class,
 			"mootools.v1.11.js"));
-		response.renderJavascriptReference(new CompressedResourceReference(MootipBehaviour.class,
+		response.renderJavaScriptReference(new CompressedResourceReference(MootipBehaviour.class,
 			"mootips.v1.11.js"));
 		if (contributeCSS)
 			response.renderCSSReference(new CompressedResourceReference(MootipBehaviour.class,
 				"tip.css"));
 
-		response.renderOnLoadJavascript(generateJS(mooTipTemplate));
+		response.renderOnLoadJavaScript(generateJS(mooTipTemplate));
 	}
 
 	public void setMootipSettings(final MootipSettings mootipSettings)

@@ -21,7 +21,7 @@ import java.util.Map;
 
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.request.resource.JavascriptResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.api.IJavascriptComponent;
 import org.wicketstuff.openlayers.api.layer.Layer;
@@ -239,7 +239,7 @@ public class AbstractControl implements IJavascriptComponent {
 	/* (non-Javadoc)
 	 * @see org.wicketstuff.openlayers.api.IJavascriptComponent#getJSResourceReference()
 	 */
-	public JavascriptResourceReference[] getJSResourceReferences() {
+	public JavaScriptResourceReference[] getJSResourceReferences() {
 		// default is to not have any custom javascript for the control.
 		return null;
 	}

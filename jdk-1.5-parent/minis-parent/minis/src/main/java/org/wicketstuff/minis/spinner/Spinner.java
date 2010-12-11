@@ -26,10 +26,10 @@ import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.request.Response;
-import org.apache.wicket.request.resource.JavascriptResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.util.string.JavascriptUtils;
+import org.apache.wicket.util.string.JavaScriptUtils;
 import org.apache.wicket.util.string.Strings;
 
 /**
@@ -44,7 +44,7 @@ public class Spinner extends AbstractBehavior
 {
 	private static final long serialVersionUID = 1L;
 
-	private static final ResourceReference JS = new JavascriptResourceReference(Spinner.class,
+	private static final ResourceReference JS = new JavaScriptResourceReference(Spinner.class,
 		"spinner.js");
 	private static final ResourceReference CSS = new PackageResourceReference(Spinner.class,
 		"spinner.css");
@@ -143,7 +143,7 @@ public class Spinner extends AbstractBehavior
 	/**
 	 * Transforms a {@link Properties} instance into an associative javascript array. <br/>
 	 * TODO: this is copied from wicket-datetime/DatePicker and should be moved to
-	 * {@link JavascriptUtils}
+	 * {@link JavaScriptUtils}
 	 * 
 	 * @param p
 	 *            the {@link Properties} to process.
@@ -199,7 +199,7 @@ public class Spinner extends AbstractBehavior
 	@Override
 	public void renderHead(Component c, final IHeaderResponse response)
 	{
-		response.renderJavascriptReference(JS);
+		response.renderJavaScriptReference(JS);
 		response.renderCSSReference(CSS);
 		final Properties p = new Properties();
 		configure(p);
@@ -207,7 +207,7 @@ public class Spinner extends AbstractBehavior
 			: getSpinDownComponent().getMarkupId();
 		final String upId = getSpinUpComponent() == null ? getMarkupId() + "Up"
 			: getSpinUpComponent().getMarkupId();
-		response.renderOnDomReadyJavascript("new Wicket.Spinner('" + component.getMarkupId() +
+		response.renderOnDomReadyJavaScript("new Wicket.Spinner('" + component.getMarkupId() +
 			"', '" + upId + "', '" + downId + "', {" + propertiesToJavascriptArray(p) + "})");
 	}
 }

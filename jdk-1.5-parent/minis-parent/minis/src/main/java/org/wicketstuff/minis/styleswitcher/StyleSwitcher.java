@@ -25,7 +25,7 @@ import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.request.resource.JavascriptResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
 /**
@@ -44,7 +44,7 @@ import org.apache.wicket.request.resource.ResourceReference;
 public class StyleSwitcher extends AbstractBehavior
 {
 	/**
-	 * Javascript access methods
+	 * JavaScript access methods
 	 * 
 	 * @author Igor Vaynberg (ivaynberg at apache dot org)
 	 * 
@@ -99,7 +99,7 @@ public class StyleSwitcher extends AbstractBehavior
 
 	private static final long serialVersionUID = 1L;
 
-	private static final ResourceReference SS_JS = new JavascriptResourceReference(
+	private static final ResourceReference SS_JS = new JavaScriptResourceReference(
 		StyleSwitcher.class, "styleswitcher.js");
 
 	private final List<TitledResourceReferenceTuple> stylesheets = new ArrayList<TitledResourceReferenceTuple>();
@@ -132,7 +132,7 @@ public class StyleSwitcher extends AbstractBehavior
 	@Override
 	public void renderHead(Component c, final IHeaderResponse response)
 	{
-		response.renderJavascriptReference(SS_JS);
+		response.renderJavaScriptReference(SS_JS);
 
 		for (final TitledResourceReferenceTuple stylesheet : stylesheets)
 		{

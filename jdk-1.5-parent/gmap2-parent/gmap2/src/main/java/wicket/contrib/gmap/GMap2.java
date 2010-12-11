@@ -164,7 +164,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 	 */
 	@Override
 	public void renderHead(IHeaderResponse response) {
-		response.renderOnDomReadyJavascript(getJSinit());
+		response.renderOnDomReadyJavaScript(getJSinit());
 	}
 
 
@@ -200,7 +200,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 		if (AjaxRequestTarget.get() != null && findPage() != null)
 		{
-			AjaxRequestTarget.get().appendJavascript(control.getJSadd(GMap2.this));
+			AjaxRequestTarget.get().appendJavaScript(control.getJSadd(GMap2.this));
 		}
 
 		return this;
@@ -219,7 +219,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 		if (AjaxRequestTarget.get() != null && findPage() != null)
 		{
-			AjaxRequestTarget.get().appendJavascript(control.getJSremove(GMap2.this));
+			AjaxRequestTarget.get().appendJavaScript(control.getJSremove(GMap2.this));
 		}
 
 		return this;
@@ -239,7 +239,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 		if (AjaxRequestTarget.get() != null && findPage() != null)
 		{
-			AjaxRequestTarget.get().appendJavascript(overlay.getJSadd());
+			AjaxRequestTarget.get().appendJavaScript(overlay.getJSadd());
 		}
 
 		return this;
@@ -261,7 +261,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 		if (AjaxRequestTarget.get() != null && findPage() != null)
 		{
-			AjaxRequestTarget.get().appendJavascript(overlay.getJSremove());
+			AjaxRequestTarget.get().appendJavaScript(overlay.getJSremove());
 		}
 
 		overlay.setParent(null);
@@ -283,7 +283,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 		overlays.clear();
 		if (AjaxRequestTarget.get() != null && findPage() != null)
 		{
-			AjaxRequestTarget.get().appendJavascript(getJSinvoke("clearOverlays()"));
+			AjaxRequestTarget.get().appendJavaScript(getJSinvoke("clearOverlays()"));
 		}
 		return this;
 	}
@@ -315,7 +315,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 			if (AjaxRequestTarget.get() != null && findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavascript(getJSsetGoogleBarEnabled(enabled));
+				AjaxRequestTarget.get().appendJavaScript(getJSsetGoogleBarEnabled(enabled));
 			}
 		}
 	}
@@ -328,7 +328,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 			if (AjaxRequestTarget.get() != null && findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavascript(getJSsetDraggingEnabled(enabled));
+				AjaxRequestTarget.get().appendJavaScript(getJSsetDraggingEnabled(enabled));
 			}
 		}
 	}
@@ -346,7 +346,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 			if (AjaxRequestTarget.get() != null && findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavascript(getJSsetDoubleClickZoomEnabled(enabled));
+				AjaxRequestTarget.get().appendJavaScript(getJSsetDoubleClickZoomEnabled(enabled));
 			}
 		}
 	}
@@ -364,7 +364,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 			if (AjaxRequestTarget.get() != null && findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavascript(getJSsetScrollWheelZoomEnabled(enabled));
+				AjaxRequestTarget.get().appendJavaScript(getJSsetScrollWheelZoomEnabled(enabled));
 			}
 		}
 	}
@@ -387,7 +387,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 			if (AjaxRequestTarget.get() != null && findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavascript(mapType.getJSsetMapType(GMap2.this));
+				AjaxRequestTarget.get().appendJavaScript(mapType.getJSsetMapType(GMap2.this));
 			}
 		}
 	}
@@ -405,7 +405,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 			if (AjaxRequestTarget.get() != null && findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavascript(getJSsetZoom(zoom));
+				AjaxRequestTarget.get().appendJavaScript(getJSsetZoom(zoom));
 			}
 		}
 	}
@@ -424,7 +424,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 			if (AjaxRequestTarget.get() != null && findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavascript(getJSsetCenter(center));
+				AjaxRequestTarget.get().appendJavaScript(getJSsetCenter(center));
 			}
 		}
 	}
@@ -445,7 +445,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 			if (AjaxRequestTarget.get() != null && findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavascript(getJSpanTo(center));
+				AjaxRequestTarget.get().appendJavaScript(getJSpanTo(center));
 			}
 		}
 	}
@@ -572,7 +572,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 				// center in the middle of the bounds
 				buf.append("map.setCenter( bounds.getCenter() );\n");
 
-				response.renderOnDomReadyJavascript(buf.toString());
+				response.renderOnDomReadyJavaScript(buf.toString());
 			}
 		});
 

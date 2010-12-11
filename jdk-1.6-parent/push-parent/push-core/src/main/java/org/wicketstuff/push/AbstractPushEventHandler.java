@@ -44,7 +44,7 @@ public abstract class AbstractPushEventHandler<EventType> implements IPushEventH
 		// escape backslashes for JavaScript
 		final String escapedHTML = html.replaceAll("\\\\", "&#92;");
 
-		target.appendJavascript("" + //
+		target.appendJavaScript("" + //
 			"var target = document.getElementById('" + component.getMarkupId() + "');" + //
 			"target.innerHTML += '" + escapedHTML + "';" + //
 			"target.scrollTop = target.scrollHeight" //

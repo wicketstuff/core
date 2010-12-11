@@ -30,8 +30,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.resource.CompressedResourceReference;
-import org.apache.wicket.request.resource.JavascriptResourceReference;
-import org.apache.wicket.util.string.JavascriptUtils;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.util.string.JavaScriptUtils;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
@@ -405,7 +405,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param response
 	 */
 	private void renderInitializationJavascript(Response response) {
-		JavascriptUtils.writeOpenTag(response);
+		JavaScriptUtils.writeOpenTag(response);
 		response.write("(function() {\n");
 
 		// initialize the columns
@@ -438,7 +438,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 		response.write("InMethod.XTableManager.instance.register(\"" + getMarkupId()
 				+ "\", columns, submitStateCallback);\n");
 		response.write("})();\n");
-		JavascriptUtils.writeCloseTag(response);
+		JavaScriptUtils.writeCloseTag(response);
 	};
 
 	/**
@@ -537,13 +537,13 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 		}
 	}
 
-	private static final JavascriptResourceReference JS_YAHOO = new JavascriptResourceReference(AbstractGrid.class,
+	private static final JavaScriptResourceReference JS_YAHOO = new JavaScriptResourceReference(AbstractGrid.class,
 			"res/yahoo.js");
-	private static final JavascriptResourceReference JS_EVENT = new JavascriptResourceReference(AbstractGrid.class,
+	private static final JavaScriptResourceReference JS_EVENT = new JavaScriptResourceReference(AbstractGrid.class,
 			"res/event.js");
-	private static final JavascriptResourceReference JS_DOM = new JavascriptResourceReference(AbstractGrid.class,
+	private static final JavaScriptResourceReference JS_DOM = new JavaScriptResourceReference(AbstractGrid.class,
 			"res/dom.js");
-	private static final JavascriptResourceReference JS_SCRIPT = new JavascriptResourceReference(AbstractGrid.class,
+	private static final JavaScriptResourceReference JS_SCRIPT = new JavaScriptResourceReference(AbstractGrid.class,
 			"res/script.js");
 	private static final CompressedResourceReference CSS = new CompressedResourceReference(AbstractGrid.class,
 			"res/style.css");
@@ -552,12 +552,12 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * {@inheritDoc}
 	 */
 	public void renderHead(IHeaderResponse response) {
-		response.renderJavascriptReference(WicketEventReference.INSTANCE);
-		response.renderJavascriptReference(WicketAjaxReference.INSTANCE);
-		response.renderJavascriptReference(JS_YAHOO);
-		response.renderJavascriptReference(JS_EVENT);
-		response.renderJavascriptReference(JS_DOM);
-		response.renderJavascriptReference(JS_SCRIPT);
+		response.renderJavaScriptReference(WicketEventReference.INSTANCE);
+		response.renderJavaScriptReference(WicketAjaxReference.INSTANCE);
+		response.renderJavaScriptReference(JS_YAHOO);
+		response.renderJavaScriptReference(JS_EVENT);
+		response.renderJavaScriptReference(JS_DOM);
+		response.renderJavaScriptReference(JS_SCRIPT);
 		response.renderCSSReference(CSS);
 	}
 

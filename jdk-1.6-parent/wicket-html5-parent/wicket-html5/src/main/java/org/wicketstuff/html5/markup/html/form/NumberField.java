@@ -35,7 +35,7 @@ public class NumberField extends TextField<Double> {
 	protected void onInitialize() {
 		super.onInitialize();
 		
-//		if (MarkupUtil.isMarkupHtml5Compliant(this)) {
+		if (MarkupUtil.isMarkupHtml5Compliant(this)) {
 			
 			ValueMap attributes = getMarkupAttributes();
 			Double min = attributes.getAsDouble("min");
@@ -48,9 +48,9 @@ public class NumberField extends TextField<Double> {
 			if (max == null) {
 				max = Double.MAX_VALUE;
 			}
-			
+						
 			add(new RangeValidator<Double>(min, max));
-//		}
+		}
 	}
 
 	@Override

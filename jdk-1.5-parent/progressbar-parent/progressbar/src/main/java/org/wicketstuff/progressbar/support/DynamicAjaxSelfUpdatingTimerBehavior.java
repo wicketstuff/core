@@ -42,7 +42,7 @@ public class DynamicAjaxSelfUpdatingTimerBehavior extends
 		// dynamically start the self update!
 		if(AjaxRequestTarget.get() != null) {
 			AjaxRequestTarget target = AjaxRequestTarget.get();
-			target.appendJavascript(getJsTimeoutCall(getUpdateInterval()));
+			target.appendJavaScript(getJsTimeoutCall(getUpdateInterval()));
 		}
 	}
 
