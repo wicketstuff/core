@@ -48,11 +48,15 @@ public class PagingToolbar extends AbstractToolbar {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Important to prevent early initialization of QueryResult at
+	 * AbstractPageableView. The isVisible method can be called during an early
+	 * step in the form process and the QuertyResult initialization can fail if
+	 * it depend upon form components
 	 */
 	@Override
-	public boolean isVisible() {
-		return getDataGrid().getTotalRowCount() != 0;
+	protected void onConfigure()
+	{
+		super.onConfigure();
+		setVisible(getDataGrid().getTotalRowCount() != 0);
 	}
-
 }
