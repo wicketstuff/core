@@ -25,6 +25,7 @@ import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.IBehavior;
@@ -72,6 +73,8 @@ public class CometdPushService implements IPushService
 	}
 
 	private static Logger LOG = LoggerFactory.getLogger(CometdPushService.class);
+
+	private static final AtomicInteger channelIdx = new AtomicInteger();
 
 	private static final Map<WebApplication, CometdPushService> INSTANCES = new WeakHashMap<WebApplication, CometdPushService>();
 
@@ -237,15 +240,35 @@ public class CometdPushService implements IPushService
 	public <EventType> CometdPushChannel<EventType> installPushChannel(final Component component,
 		final IPushEventHandler<EventType> pushEventHandler)
 	{
+		return installPushChannel(component, createPushChannel((EventType) null, "push_channel_"), pushEventHandler);
+	}
+
+	@Override
+	public <EventType> CometdPushChannel<EventType> installPushChannel(final Component component,
+			final IPushChannel<EventType> pushChannel,
+			final IPushEventHandler<EventType> pushEventHandler)
+	{
+		if (!(pushChannel instanceof CometdPushChannel))
+		{
+			throw new IllegalArgumentException("Invalid Push channel. " + pushChannel);
+		}
+		CometdPushChannel<EventType> channel = (CometdPushChannel<EventType>)pushChannel;
 		CometdPushBehavior behavior = _findPushBehaviour(component);
 		if (behavior == null)
 		{
 			behavior = new CometdPushBehavior();
 			component.add(behavior);
 		}
-		final CometdPushChannel<EventType> pushChannel = behavior.addPushChannel(pushEventHandler);
-		_onConnect(pushChannel);
-		return pushChannel;
+		channel = behavior.addPushChannel(channel, pushEventHandler);
+		_onConnect(channel);
+		return channel;
+	}
+
+	@Override
+	public <EventType> CometdPushChannel<EventType> createPushChannel(final EventType event,
+			final String key)
+	{
+		return new CometdPushChannel<EventType>(key + channelIdx.incrementAndGet());
 	}
 
 	/**

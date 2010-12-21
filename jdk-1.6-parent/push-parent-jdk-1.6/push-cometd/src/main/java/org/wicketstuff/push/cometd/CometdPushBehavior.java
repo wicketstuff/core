@@ -248,8 +248,13 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	<EventType> CometdPushChannel<EventType> addPushChannel(
 		final IPushEventHandler<EventType> pushEventHandler)
 	{
-		final CometdPushChannel<EventType> channel = new CometdPushChannel<EventType>(
-			_cometdChannelId);
+	  return addPushChannel(new CometdPushChannel<EventType>(_cometdChannelId), pushEventHandler);
+	}
+
+  <EventType> CometdPushChannel<EventType> addPushChannel(
+    final CometdPushChannel<EventType> channel,
+    final IPushEventHandler<EventType> pushEventHandler)
+  {
 		_handlers.put(channel, pushEventHandler);
 		return channel;
 	}
