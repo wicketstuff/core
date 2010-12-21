@@ -38,8 +38,8 @@ public class CometdPushChannel<T> implements IPushChannel<T>
 		this.id = UUID.randomUUID();
 		cometdChannelEventId = id.toString().replaceAll("-", "");
 
-		toString = getClass().getName() + "[cometdChannelId=" + cometdChannelId +
-			";cometdChannelEventId=" + cometdChannelEventId + "]";
+		toString = getClass().getName() + "[cometdChannelId=" + cometdChannelId
+				+ ";cometdChannelEventId=" + cometdChannelEventId + "]";
 	}
 
 	/**

@@ -28,6 +28,7 @@ public class ApplicationShutdownListener implements IInitializer, IDestroyer
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void destroy(final Application application)
 	{
 		final TimerPushService service = TimerPushService.INSTANCES.get(application);
@@ -38,6 +39,7 @@ public class ApplicationShutdownListener implements IInitializer, IDestroyer
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void init(final Application application)
 	{
 

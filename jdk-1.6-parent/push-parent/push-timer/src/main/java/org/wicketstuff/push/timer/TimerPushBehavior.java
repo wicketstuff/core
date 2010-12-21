@@ -42,8 +42,8 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 
 	private static final Logger LOG = LoggerFactory.getLogger(TimerPushBehavior.class);
 
-	private final Map<TimerPushChannel, IPushEventHandler> handlers =
-		new HashMap<TimerPushChannel, IPushEventHandler>(2);
+	private final Map<TimerPushChannel, IPushEventHandler> handlers = new HashMap<TimerPushChannel, IPushEventHandler>(
+			2);
 
 	TimerPushBehavior(final Duration pollingInterval)
 	{
@@ -62,9 +62,7 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 	{
 		final Duration pollingInterval = channel.getPollingInterval();
 		if (pollingInterval.lessThan(getUpdateInterval()))
-		{
 			setUpdateInterval(pollingInterval);
-		}
 
 		handlers.put(channel, pushEventHandler);
 		return channel;
@@ -82,21 +80,14 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 		final WebRequest request = (WebRequest)RequestCycle.get().getRequest();
 
 		if (request.getRequestParameters().getParameterValue("unload") != null)
-		{
 			// if the page is unloaded notify the pushService to disconnect all
 			// push channels
 			for (final TimerPushChannel<?> channel : handlers.keySet())
-			{
 				pushService.onDisconnect(channel);
-			}
-		}
 		else
-		{
 			// retrieve all collected events and process them
 			for (final Entry<TimerPushChannel, IPushEventHandler> entry : handlers.entrySet())
-			{
 				for (final Object event : pushService.pollEvents(entry.getKey()))
-				{
 					try
 					{
 						entry.getValue().onEvent(target, event);
@@ -105,9 +96,6 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 					{
 						LOG.error("Failed while processing event", ex);
 					}
-				}
-			}
-		}
 	}
 
 	int removePushChannel(final IPushChannel<?> channel)
@@ -117,12 +105,8 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 		// adjust the polling interval based on the fastest remaining channel
 		Duration newPollingInterval = Duration.MAXIMUM;
 		for (final TimerPushChannel chan : handlers.keySet())
-		{
 			if (chan.getPollingInterval().lessThan(newPollingInterval))
-			{
 				newPollingInterval = chan.getPollingInterval();
-			}
-		}
 		setUpdateInterval(newPollingInterval);
 
 		return handlers.size();

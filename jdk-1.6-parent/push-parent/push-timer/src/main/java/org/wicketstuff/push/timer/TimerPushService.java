@@ -61,7 +61,7 @@ public class TimerPushService implements IPushService
 	private static final Logger LOG = LoggerFactory.getLogger(TimerPushService.class);
 
 	static final ConcurrentHashMap<Application, TimerPushService> INSTANCES = new ConcurrentHashMap<Application, TimerPushService>(
-		2);
+			2);
 
 	public static TimerPushService get()
 	{
@@ -76,16 +76,15 @@ public class TimerPushService implements IPushService
 			service = new TimerPushService();
 			final TimerPushService existingInstance = INSTANCES.putIfAbsent(application, service);
 
-			if (existingInstance == null) {
-        /*
-				 * If this is the first instance of this service for the given application, then
-				 * schedule the cleanup task.
+			if (existingInstance == null)
+				/*
+				 * If this is the first instance of this service for the given
+				 * application, then schedule the cleanup task.
 				 */
 				service.setCleanupInterval(Duration.seconds(60));
-      } else {
-        // If it is not the first instance, throw it away.
+			else
+				// If it is not the first instance, throw it away.
 				service = existingInstance;
-      }
 		}
 		return service;
 	}
@@ -106,13 +105,12 @@ public class TimerPushService implements IPushService
 			LOG.debug("Running timer push channel cleanup task...");
 			final Time now = Time.now();
 			int count = 0;
-			for (final PushChannelState state : _channelStates.values()) {
-        if (now.subtract(state.lastPolledAt).greaterThan(_maxTimeLag))
+			for (final PushChannelState state : _channelStates.values())
+				if (now.subtract(state.lastPolledAt).greaterThan(_maxTimeLag))
 				{
 					onDisconnect(state.channel);
 					count++;
 				}
-      }
 			LOG.debug("Cleaned up {} timer push channels.", count);
 		}
 	};
@@ -124,11 +122,9 @@ public class TimerPushService implements IPushService
 
 	private TimerPushBehavior _findPushBehaviour(final Component component)
 	{
-		for (final Behavior behavior : component.getBehaviors()) {
-      if (behavior instanceof TimerPushBehavior) {
-        return (TimerPushBehavior)behavior;
-      }
-    }
+		for (final Behavior behavior : component.getBehaviors())
+			if (behavior instanceof TimerPushBehavior)
+				return (TimerPushBehavior)behavior;
 		return null;
 	}
 
@@ -160,33 +156,33 @@ public class TimerPushService implements IPushService
 	 * {@inheritDoc}
 	 */
 	public <EventType> TimerPushChannel<EventType> installPush(final Component component,
-		final IPushEventHandler<EventType> pushEventHandler, final Duration pollingInterval)
+			final IPushEventHandler<EventType> pushEventHandler, final Duration pollingInterval)
 	{
 
-		return installPushChannel(component, new TimerPushChannel<EventType>(pollingInterval), pushEventHandler);
-		}
+		return installPushChannel(component, new TimerPushChannel<EventType>(pollingInterval),
+				pushEventHandler);
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public <EventType> TimerPushChannel<EventType> installPushChannel(final Component component,
-		final IPushEventHandler<EventType> pushEventHandler)
+			final IPushEventHandler<EventType> pushEventHandler)
 	{
-		return installPushChannel(component, new TimerPushChannel<EventType>(_defaultPollingInterval), pushEventHandler);
+		return installPushChannel(component, new TimerPushChannel<EventType>(
+				_defaultPollingInterval), pushEventHandler);
 	}
 
-  @Override
+	@Override
 	public <EventType> TimerPushChannel<EventType> installPushChannel(final Component component,
 			final IPushChannel<EventType> pushChannel,
 			final IPushEventHandler<EventType> pushEventHandler)
 	{
 		if (!(pushChannel instanceof TimerPushChannel))
-		{
 			throw new IllegalArgumentException("Invalid Push channel. " + pushChannel);
-		}
 
-		final TimerPushChannel<EventType> channel = (TimerPushChannel<EventType>) pushChannel;
+		final TimerPushChannel<EventType> channel = (TimerPushChannel<EventType>)pushChannel;
 		TimerPushBehavior behavior = _findPushBehaviour(component);
 		if (behavior == null)
 		{
@@ -196,23 +192,24 @@ public class TimerPushService implements IPushService
 
 		_onConnect(channel);
 		return channel;
-  }
+	}
 
-  @Override
-  public <EventType> IPushChannel<EventType> createPushChannel(final EventType event,
+	@Override
+	public <EventType> IPushChannel<EventType> createPushChannel(final EventType event,
 			final String key)
 	{
 		Duration pollingInterval = _defaultPollingInterval;
-		try {
+		try
+		{
 			if (key == null || key.isEmpty())
-			{
 				pollingInterval = Duration.valueOf(key);
-			}
-		} catch (final StringValueConversionException sce) {
+		}
+		catch (final StringValueConversionException sce)
+		{
 			LOG.debug("key wasn't a Duration", sce);
 		}
 		return new TimerPushChannel<EventType>(pollingInterval);
-  }
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -223,9 +220,8 @@ public class TimerPushService implements IPushService
 		if (pushChannel instanceof TimerPushChannel)
 		{
 			final PushChannelState state = _channelStates.get(pushChannel);
-			if (state == null) {
-        return false;
-      }
+			if (state == null)
+				return false;
 
 			if (Time.now().subtract(state.lastPolledAt).greaterThan(_maxTimeLag))
 			{
@@ -253,8 +249,8 @@ public class TimerPushService implements IPushService
 		{
 			LOG.debug("Timer push channel {} disconnected.", pushChannel);
 
-			for (final IPushChannelDisconnectedListener listener : _disconnectListeners) {
-        try
+			for (final IPushChannelDisconnectedListener listener : _disconnectListeners)
+				try
 				{
 					listener.onDisconnect(pushChannel);
 				}
@@ -262,7 +258,6 @@ public class TimerPushService implements IPushService
 				{
 					LOG.error("Failed to notify " + listener, ex);
 				}
-      }
 		}
 	}
 
@@ -279,9 +274,8 @@ public class TimerPushService implements IPushService
 
 		state.lastPolledAt = Time.now();
 
-		if (state.queuedEvents.size() == 0) {
-      return Collections.EMPTY_LIST;
-    }
+		if (state.queuedEvents.size() == 0)
+			return Collections.EMPTY_LIST;
 
 		synchronized (state.queuedEventsLock)
 		{
@@ -302,18 +296,17 @@ public class TimerPushService implements IPushService
 			if (isConnected(pushChannel))
 			{
 				final PushChannelState state = _channelStates.get(pushChannel);
-				if (state == null) {
-          return;
-        }
+				if (state == null)
+					return;
 
 				synchronized (state.queuedEventsLock)
 				{
 					state.queuedEvents.add(event);
 				}
 			}
-		} else {
-      LOG.warn("Unsupported push channel type {}", pushChannel);
-    }
+		}
+		else
+			LOG.warn("Unsupported push channel type {}", pushChannel);
 	}
 
 	/**
@@ -321,24 +314,24 @@ public class TimerPushService implements IPushService
 	 */
 	@Override
 	public void removePushChannelDisconnectedListener(
-		final IPushChannelDisconnectedListener listener)
+			final IPushChannelDisconnectedListener listener)
 	{
 		_disconnectListeners.remove(listener);
 	}
 
 	/**
-	 * Sets the interval in which the clean up task will be executed that removes information about
-	 * disconnected push channels. Default is 60 seconds.
+	 * Sets the interval in which the clean up task will be executed that
+	 * removes information about disconnected push channels. Default is 60
+	 * seconds.
 	 */
 	public void setCleanupInterval(final Duration interval)
 	{
 		synchronized (this)
 		{
-			if (_cleanupFuture != null) {
-        _cleanupFuture.cancel(false);
-      }
+			if (_cleanupFuture != null)
+				_cleanupFuture.cancel(false);
 			_cleanupFuture = _cleanupExecutor.scheduleAtFixedRate(_cleanupTask,
-				interval.getMilliseconds(), interval.getMilliseconds(), TimeUnit.MILLISECONDS);
+					interval.getMilliseconds(), interval.getMilliseconds(), TimeUnit.MILLISECONDS);
 		}
 	}
 
@@ -361,15 +354,13 @@ public class TimerPushService implements IPushService
 		if (pushChannel instanceof TimerPushChannel)
 		{
 			final TimerPushBehavior behavior = _findPushBehaviour(component);
-			if (behavior == null) {
-        return;
-      }
-			if (behavior.removePushChannel(pushChannel) == 0) {
-        component.remove(behavior);
-      }
-		} else {
-      LOG.warn("Unsupported push channel type {}", pushChannel);
-    }
+			if (behavior == null)
+				return;
+			if (behavior.removePushChannel(pushChannel) == 0)
+				component.remove(behavior);
+		}
+		else
+			LOG.warn("Unsupported push channel type {}", pushChannel);
 	}
 
 }

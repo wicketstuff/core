@@ -42,14 +42,15 @@ import org.wicketstuff.push.examples.chatservice.Message;
 /**
  * Examples of chat using {@link IChannelService}.
  * <p>
- * This example is abstract because it doesn't define which channel service implementation it uses.
+ * This example is abstract because it doesn't define which channel service
+ * implementation it uses.
  * <p>
- * Concrete subclasses only have to provide {@link #getChannelService()} implementation, returning
- * any IChannelService implementation.
+ * Concrete subclasses only have to provide {@link #getChannelService()}
+ * implementation, returning any IChannelService implementation.
  * <p>
- * The whole example doesn't depend on which implementation is used, and show easy it is to switch
- * between implementations.
- *
+ * The whole example doesn't depend on which implementation is used, and show
+ * easy it is to switch between implementations.
+ * 
  * @author Vincent Demay
  * @author Xavier Hanin
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
@@ -62,7 +63,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 	private String message;
 
 	public WicketAbstractChatPage(final PageParameters parameters,
-		final String pushImplementationTitle, final IPushService pushService)
+			final String pushImplementationTitle, final IPushService pushService)
 	{
 		super(parameters);
 
@@ -75,7 +76,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 		 * add form and fields
 		 */
 		final Form<Object> formChat = new Form<Object>("chatForm",
-			new CompoundPropertyModel<Object>(this));
+				new CompoundPropertyModel<Object>(this));
 		add(formChat);
 
 		// chat history field
@@ -113,8 +114,8 @@ public abstract class WicketAbstractChatPage extends WebPage
 				getChatService().getChatRoom(chatRoomName).sendAsync(user, message);
 
 				// clear message area add focus it
-				target.appendJavaScript("document.getElementById('" + messageField.getMarkupId() +
-					"').value =''");
+				target.appendJavaScript("document.getElementById('" + messageField.getMarkupId()
+						+ "').value =''");
 				target.focusComponent(messageField);
 			}
 		});
@@ -123,16 +124,16 @@ public abstract class WicketAbstractChatPage extends WebPage
 		 * install push channel
 		 */
 		final IPushChannel<Message> pushChannel = pushService.installPushChannel(this,
-			new AbstractPushEventHandler<Message>()
-			{
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void onEvent(final AjaxRequestTarget target, final Message message)
+				new AbstractPushEventHandler<Message>()
 				{
-					appendHTML(target, chatHistoryField, _renderMessage(message));
-				}
-			});
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void onEvent(final AjaxRequestTarget target, final Message message)
+					{
+						appendHTML(target, chatHistoryField, _renderMessage(message));
+					}
+				});
 
 		/*
 		 * connect to chat room
@@ -142,11 +143,10 @@ public abstract class WicketAbstractChatPage extends WebPage
 			@Override
 			public void onMessage(final Message msg)
 			{
-				if (pushService.isConnected(pushChannel)) {
-          pushService.publish(pushChannel, msg);
-        } else {
-          chatRoom.removeListener(this);
-        }
+				if (pushService.isConnected(pushChannel))
+					pushService.publish(pushChannel, msg);
+				else
+					chatRoom.removeListener(this);
 			}
 		});
 
@@ -154,9 +154,8 @@ public abstract class WicketAbstractChatPage extends WebPage
 		 * render chat history
 		 */
 		final StringBuilder sb = new StringBuilder();
-		for (final Message msg : chatRoom.getChatHistory()) {
-      sb.append(_renderMessage(msg));
-    }
+		for (final Message msg : chatRoom.getChatHistory())
+			sb.append(_renderMessage(msg));
 		chatHistoryField.setDefaultModelObject(sb);
 
 		/*
@@ -183,9 +182,9 @@ public abstract class WicketAbstractChatPage extends WebPage
 			public void renderHead(final Component component, final IHeaderResponse response)
 			{
 				super.renderHead(component, response);
-				response.renderOnLoadJavaScript("var chatHistory = document.getElementById('" +
-					chatHistoryField.getMarkupId() +
-					"'); chatHistory.scrollTop = chatHistory.scrollHeight;");
+				response.renderOnLoadJavaScript("var chatHistory = document.getElementById('"
+						+ chatHistoryField.getMarkupId()
+						+ "'); chatHistory.scrollTop = chatHistory.scrollHeight;");
 			}
 		});
 	}
@@ -195,8 +194,8 @@ public abstract class WicketAbstractChatPage extends WebPage
 		final String date = new SimpleDateFormat("h:mm a").format(msg.getDate());
 
 		return date + //
-			" <b>" + msg.getUser() + "</b>" + //
-			" said" + //
-			" <b>" + msg.getMessage() + "</b><br>";
+				" <b>" + msg.getUser() + "</b>" + //
+				" said" + //
+				" <b>" + msg.getMessage() + "</b><br>";
 	}
 }

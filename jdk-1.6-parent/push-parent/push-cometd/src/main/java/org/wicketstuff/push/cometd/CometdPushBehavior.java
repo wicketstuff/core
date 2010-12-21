@@ -43,13 +43,13 @@ import org.wicketstuff.push.IPushChannel;
 import org.wicketstuff.push.IPushEventHandler;
 
 /**
- * This behavior will be asked by client side when it will receive a cometd event associated with
- * the kind of event
- *
- * There is currently no support for multiple cometd servlets. It is not possible to override which
- * URL to use via the {@link #getCometdServletPath()} overridable method. But two cometd instances
- * cannot be used simultaneously.
- *
+ * This behavior will be asked by client side when it will receive a cometd
+ * event associated with the kind of event
+ * 
+ * There is currently no support for multiple cometd servlets. It is not
+ * possible to override which URL to use via the {@link #getCometdServletPath()}
+ * overridable method. But two cometd instances cannot be used simultaneously.
+ * 
  * @author Xavier Hanin
  * @author Rodolfo Hansen
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
@@ -64,36 +64,38 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	private static final String DEFAULT_COMETD_PATH = guessCometdServletPath();
 
 	private static final ResourceReference COMETD = new CompressedResourceReference(
-		CometdPushBehavior.class, "org/cometd.js");
+			CometdPushBehavior.class, "org/cometd.js");
 	private static final ResourceReference COMETD_ACK = new CompressedResourceReference(
-		CometdPushBehavior.class, "org/cometd/AckExtension.js");
+			CometdPushBehavior.class, "org/cometd/AckExtension.js");
 	private static final ResourceReference COMETD_RELOAD = new CompressedResourceReference(
-		CometdPushBehavior.class, "org/cometd/ReloadExtension.js");
+			CometdPushBehavior.class, "org/cometd/ReloadExtension.js");
 	private static final ResourceReference COMETD_TIMESTAMP = new CompressedResourceReference(
-		CometdPushBehavior.class, "org/cometd/TimeStampExtension.js");
+			CometdPushBehavior.class, "org/cometd/TimeStampExtension.js");
 	private static final ResourceReference COMETD_TIMESYNC = new CompressedResourceReference(
-		CometdPushBehavior.class, "org/cometd/TimeSyncExtension.js");
+			CometdPushBehavior.class, "org/cometd/TimeSyncExtension.js");
 
 	private static final PackagedTextTemplate TEMPLATE_INIT = new PackagedTextTemplate(
-		CometdPushBehavior.class, "CometdPushInit.js");
+			CometdPushBehavior.class, "CometdPushInit.js");
 	private static final PackagedTextTemplate TEMPLATE_EVENT_HANDLER = new PackagedTextTemplate(
-		CometdPushBehavior.class, "CometdPushEventHandlerTemplate.js");
+			CometdPushBehavior.class, "CometdPushEventHandlerTemplate.js");
 	private static final PackagedTextTemplate TEMPLATE_SUBSCRIBE = new PackagedTextTemplate(
-		CometdPushBehavior.class, "CometdPushSubscribeTemplate.js");
+			CometdPushBehavior.class, "CometdPushSubscribeTemplate.js");
 
 	/**
-	 * Parse the web.xml to find cometd context Path. This context path will be cache for all the
-	 * application
-	 *
+	 * Parse the web.xml to find cometd context Path. This context path will be
+	 * cache for all the application
+	 * 
 	 * @return cometd context path
 	 */
 	private static String guessCometdServletPath()
 	{
-		final ServletContext servletContext = ((WebApplication)Application.get()).getServletContext();
+		final ServletContext servletContext = ((WebApplication)Application.get())
+				.getServletContext();
 		final InputStream is = servletContext.getResourceAsStream("/WEB-INF/web.xml");
 
 		/*
-		 * get the servlet name from class assignable to org.mortbay.cometd.CometdServlet
+		 * get the servlet name from class assignable to
+		 * org.mortbay.cometd.CometdServlet
 		 */
 		try
 		{
@@ -105,57 +107,52 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 			{
 				XmlTag elem;
 				// go down until servlet is found
-				do {
-          elem = (XmlTag)parser.nextTag();
-        } while (elem != null && !(elem.getName().equals("servlet") && elem.isOpen()));
+				do
+					elem = (XmlTag)parser.nextTag();
+				while (elem != null && !(elem.getName().equals("servlet") && elem.isOpen()));
 
 				// stop if elem is null
-				if (elem == null) {
-          break;
-        }
+				if (elem == null)
+					break;
 
 				// get the servlet name for org.mortbay.cometd.CometdServlet
 				String servletName = null, servletClassName = null;
 				do
 				{
 					elem = (XmlTag)parser.nextTag();
-					if (elem.isOpen()) {
-            parser.setPositionMarker();
-          } else if (elem.isClose() && elem.getName().equals("servlet-name")) {
-            servletName = parser.getInputFromPositionMarker(elem.getPos()).toString();
-          } else if (elem.isClose() && elem.getName().equals("servlet-class")) {
-            servletClassName = parser.getInputFromPositionMarker(elem.getPos())
-							.toString();
-          }
+					if (elem.isOpen())
+						parser.setPositionMarker();
+					else if (elem.isClose() && elem.getName().equals("servlet-name"))
+						servletName = parser.getInputFromPositionMarker(elem.getPos()).toString();
+					else if (elem.isClose() && elem.getName().equals("servlet-class"))
+						servletClassName = parser.getInputFromPositionMarker(elem.getPos())
+								.toString();
 				}
-				while (servletClassName == null ||
-					!CometdServlet.class.isAssignableFrom(Class.forName(servletClassName)));
+				while (servletClassName == null
+						|| !CometdServlet.class.isAssignableFrom(Class.forName(servletClassName)));
 
-				if (servletName == null) {
-          break;
-        }
+				if (servletName == null)
+					break;
 
 				// go down until servlet-mapping is found
-				do {
-          elem = (XmlTag)parser.nextTag();
-        } while (elem != null && !(elem.getName().equals("servlet-mapping") && elem.isOpen()));
+				do
+					elem = (XmlTag)parser.nextTag();
+				while (elem != null && !(elem.getName().equals("servlet-mapping") && elem.isOpen()));
 
 				// stop if elem is null
-				if (elem == null) {
-          break;
-        }
+				if (elem == null)
+					break;
 
 				// get the servlet name for org.mortbay.cometd.CometdServlet
 				String servletNameMapping = null;
 				do
 				{
 					elem = (XmlTag)parser.nextTag();
-					if (elem.isOpen()) {
-            parser.setPositionMarker();
-          } else if (elem.isClose() && elem.getName().equals("servlet-name")) {
-            servletNameMapping = parser.getInputFromPositionMarker(elem.getPos())
-							.toString();
-          }
+					if (elem.isOpen())
+						parser.setPositionMarker();
+					else if (elem.isClose() && elem.getName().equals("servlet-name"))
+						servletNameMapping = parser.getInputFromPositionMarker(elem.getPos())
+								.toString();
 				}
 				while (!servletName.equals(servletNameMapping));
 
@@ -163,11 +160,10 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 				do
 				{
 					elem = (XmlTag)parser.nextTag();
-					if (elem.isOpen()) {
-            parser.setPositionMarker();
-          } else if (elem.isClose() && elem.getName().equals("url-pattern")) {
-            urlPattern = parser.getInputFromPositionMarker(elem.getPos()).toString();
-          }
+					if (elem.isOpen())
+						parser.setPositionMarker();
+					else if (elem.isClose() && elem.getName().equals("url-pattern"))
+						urlPattern = parser.getInputFromPositionMarker(elem.getPos()).toString();
 				}
 				while (urlPattern == null);
 
@@ -175,26 +171,24 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 				break;
 			}
 
-			if (urlPattern == null) {
-        throw new ServletException("Error searching for cometd Servlet");
-      }
+			if (urlPattern == null)
+				throw new ServletException("Error searching for cometd Servlet");
 
 			// Check for leading '/' and trailing '/*'.
-			if (!urlPattern.startsWith("/") || !urlPattern.endsWith("/*")) {
-        throw new ServletException(
-					"Url pattern for cometd should start with / and finish with /*");
-      }
+			if (!urlPattern.startsWith("/") || !urlPattern.endsWith("/*"))
+				throw new ServletException(
+						"Url pattern for cometd should start with / and finish with /*");
 
 			// Strip trailing '/*'.
-			return servletContext.getContextPath() +
-				urlPattern.substring(0, urlPattern.length() - 2);
+			return servletContext.getContextPath()
+					+ urlPattern.substring(0, urlPattern.length() - 2);
 
 		}
 		catch (final Exception ex)
 		{
 			final String path = servletContext.getContextPath() + "/cometd";
 			LOG.warn("Error finding filter cometd servlet in web.xml using default path " + path,
-				ex);
+					ex);
 			return path;
 		}
 	}
@@ -203,7 +197,7 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	private final String _cometdChannelIdWithoutSlash;
 
 	private final Map<CometdPushChannel, IPushEventHandler> _handlers = new HashMap<CometdPushChannel, IPushEventHandler>(
-		2);
+			2);
 
 	/**
 	 * Construct a cometd Behavior
@@ -215,8 +209,8 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	}
 
 	/**
-	 * @return JavaScript string containing the client side logic when a new event comes into the
-	 *         channel.
+	 * @return JavaScript string containing the client side logic when a new
+	 *         event comes into the channel.
 	 */
 	private String _renderEventHandlerScript()
 	{
@@ -229,24 +223,24 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 
 	/**
 	 * Javascript allowing cometd to be initialized on commetd
-	 *
+	 * 
 	 * @return javascript to initialize cometd on client side
 	 */
 	private String _renderInitScript()
 	{
 		final Map<String, Object> params = new HashMap<String, Object>();
 		final RuntimeConfigurationType configurationType = Application.get().getConfigurationType();
-		if (configurationType.equals(RuntimeConfigurationType.DEVELOPMENT)) {
-      params.put("logLevel", "info");
-    } else {
-      params.put("logLevel", "error");
-    }
+		if (configurationType.equals(RuntimeConfigurationType.DEVELOPMENT))
+			params.put("logLevel", "info");
+		else
+			params.put("logLevel", "error");
 		params.put("cometdServletPath", getCometdServletPath());
 		return TEMPLATE_INIT.asString(params);
 	}
 
 	/**
-	 * @return JavaScript to subscribe to a cometd channel and handle cometd events
+	 * @return JavaScript to subscribe to a cometd channel and handle cometd
+	 *         events
 	 */
 	private String _renderSubscribeScript()
 	{
@@ -256,22 +250,22 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	}
 
 	<EventType> CometdPushChannel<EventType> addPushChannel(
-		final IPushEventHandler<EventType> pushEventHandler)
+			final IPushEventHandler<EventType> pushEventHandler)
 	{
-	  return addPushChannel(new CometdPushChannel<EventType>(_cometdChannelId), pushEventHandler);
+		return addPushChannel(new CometdPushChannel<EventType>(_cometdChannelId), pushEventHandler);
 	}
 
 	<EventType> CometdPushChannel<EventType> addPushChannel(
-	    final CometdPushChannel<EventType> channel,
-	    final IPushEventHandler<EventType> pushEventHandler)
+			final CometdPushChannel<EventType> channel,
+			final IPushEventHandler<EventType> pushEventHandler)
 	{
-	    _handlers.put(channel, pushEventHandler);
-	    return channel;
-  }
+		_handlers.put(channel, pushEventHandler);
+		return channel;
+	}
 
 	/**
 	 * get the channel where this behavior will wait for event
-	 *
+	 * 
 	 * @return channelId channel where this behavior will wait for event
 	 */
 	public String getCometdChannelId()
@@ -281,10 +275,10 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 
 	/**
 	 * Returns the behaviour's cometd servlet path.
-	 *
-	 * Uses the {@link #DEFAULT_COMETD_PATH} provided by {@link #guessCometdServletPath()}. Override
-	 * if you have an unusual setup.
-	 *
+	 * 
+	 * Uses the {@link #DEFAULT_COMETD_PATH} provided by
+	 * {@link #guessCometdServletPath()}. Override if you have an unusual setup.
+	 * 
 	 * @return the behaviour's cometd servlet path.
 	 */
 	protected String getCometdServletPath()
@@ -325,9 +319,9 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 		final CometdPushService pushService = CometdPushService.get();
 
 		// retrieve all collected events and process them
-		for (final Entry<CometdPushChannel, IPushEventHandler> entry : _handlers.entrySet()) {
-      for (final Object event : pushService.pollEvents(entry.getKey())) {
-        try
+		for (final Entry<CometdPushChannel, IPushEventHandler> entry : _handlers.entrySet())
+			for (final Object event : pushService.pollEvents(entry.getKey()))
+				try
 				{
 					entry.getValue().onEvent(target, event);
 				}
@@ -335,7 +329,5 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 				{
 					LOG.error("Failed while processing event", ex);
 				}
-      }
-    }
 	}
 }

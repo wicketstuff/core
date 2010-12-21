@@ -40,15 +40,15 @@ public class TestCometdPage extends WebPage
 	{
 
 		final CometdPushChannel<String> pushChannel = CometdPushService.get().installPushChannel(
-			this, new AbstractPushEventHandler<String>()
-			{
-				@Override
-				public void onEvent(final AjaxRequestTarget target, final String event)
+				this, new AbstractPushEventHandler<String>()
 				{
-					field.setModel(new Model<String>("updated"));
-					target.addComponent(field);
-				}
-			});
+					@Override
+					public void onEvent(final AjaxRequestTarget target, final String event)
+					{
+						field.setModel(new Model<String>("updated"));
+						target.addComponent(field);
+					}
+				});
 
 		final AjaxLink<Void> link = new AjaxLink<Void>("link")
 		{

@@ -28,28 +28,27 @@ public abstract class AbstractPushEventHandler<EventType> implements IPushEventH
 	private static final long serialVersionUID = 1L;
 
 	protected void appendHTML(final AjaxRequestTarget target, final Label component,
-		final String html)
+			final String html)
 	{
-		if (html == null) {
-      return;
-    }
+		if (html == null)
+			return;
 
-		// update the component's model object for the case when the page is refreshed using F5
+		// update the component's model object for the case when the page is
+		// refreshed using F5
 		component.setEscapeModelStrings(false);
 		final IModel<?> model = component.getDefaultModel();
-		if (model == null) {
-      component.setDefaultModelObject(html);
-    } else {
-      component.setDefaultModelObject(model.toString() + html);
-    }
+		if (model == null)
+			component.setDefaultModelObject(html);
+		else
+			component.setDefaultModelObject(model.toString() + html);
 
 		// escape backslashes for JavaScript
 		final String escapedHTML = html.replaceAll("\\\\", "&#92;");
 
 		target.appendJavaScript("" + //
-			"var target = document.getElementById('" + component.getMarkupId() + "');" + //
-			"target.innerHTML += '" + escapedHTML + "';" + //
-			"target.scrollTop = target.scrollHeight" //
+				"var target = document.getElementById('" + component.getMarkupId() + "');" + //
+				"target.innerHTML += '" + escapedHTML + "';" + //
+				"target.scrollTop = target.scrollHeight" //
 		);
 	}
 }

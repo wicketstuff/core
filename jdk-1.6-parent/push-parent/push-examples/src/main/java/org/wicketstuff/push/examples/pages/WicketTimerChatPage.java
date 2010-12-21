@@ -17,7 +17,6 @@
 package org.wicketstuff.push.examples.pages;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.wicketstuff.push.examples.pages.WicketAbstractChatPage;
 import org.wicketstuff.push.timer.TimerPushService;
 
 
