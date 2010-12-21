@@ -30,16 +30,18 @@ public abstract class AbstractPushEventHandler<EventType> implements IPushEventH
 	protected void appendHTML(final AjaxRequestTarget target, final Label component,
 		final String html)
 	{
-		if (html == null)
-			return;
+		if (html == null) {
+      return;
+    }
 
 		// update the component's model object for the case when the page is refreshed using F5
 		component.setEscapeModelStrings(false);
 		final IModel<?> model = component.getDefaultModel();
-		if (model == null)
-			component.setDefaultModelObject(html);
-		else
-			component.setDefaultModelObject(model.toString() + html);
+		if (model == null) {
+      component.setDefaultModelObject(html);
+    } else {
+      component.setDefaultModelObject(model.toString() + html);
+    }
 
 		// escape backslashes for JavaScript
 		final String escapedHTML = html.replaceAll("\\\\", "&#92;");

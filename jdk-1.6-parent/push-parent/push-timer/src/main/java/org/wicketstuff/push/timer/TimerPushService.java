@@ -183,6 +183,19 @@ public class TimerPushService implements IPushService
 		return installPush(component, pushEventHandler, _defaultPollingInterval);
 	}
 
+  @Override
+  public <EventType> TimerPushChannel<EventType> installPushChannel(
+      final Component component, final IPushChannel<EventType> pushChannel,
+      final IPushEventHandler<EventType> pushEventHandler) {
+    return null;
+  }
+
+  @Override
+  public <EventType> IPushChannel<EventType> createPushChannel(final EventType event,
+      final String key) {
+    return new TimerPushChannel<EventType>(_defaultPollingInterval);
+  }
+
 	/**
 	 * {@inheritDoc}
 	 */

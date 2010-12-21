@@ -44,20 +44,25 @@ public class TimerPushChannel<EventType> implements IPushChannel<EventType>
 	@Override
 	public boolean equals(final Object obj)
 	{
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) {
+      return true;
+    }
+		if (obj == null) {
+      return false;
+    }
+		if (getClass() != obj.getClass()) {
+      return false;
+    }
 		final TimerPushChannel<?> other = (TimerPushChannel<?>)obj;
 		if (id == null)
 		{
-			if (other.id != null)
-				return false;
+			if (other.id != null) {
+        return false;
+      }
 		}
-		else if (!id.equals(other.id))
-			return false;
+		else if (!id.equals(other.id)) {
+      return false;
+    }
 		return true;
 	}
 

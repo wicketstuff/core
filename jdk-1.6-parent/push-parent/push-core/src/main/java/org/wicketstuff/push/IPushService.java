@@ -29,6 +29,13 @@ public interface IPushService
 	<EventType> IPushChannel<EventType> installPushChannel(final Component component,
 		final IPushEventHandler<EventType> pushEventHandler);
 
+	<EventType> IPushChannel<EventType> installPushChannel(final Component component,
+	  final IPushChannel<EventType> pushChannel,
+	  final IPushEventHandler<EventType> pushEventHandler);
+
+	<EventType> IPushChannel<EventType> createPushChannel(final EventType event,
+	  final String key);
+
 	/**
 	 * Determines if the client is still connected, otherwise clears all queued events.
 	 */
@@ -40,6 +47,7 @@ public interface IPushService
 	 * connected.
 	 */
 	<EventType> void publish(final IPushChannel<EventType> pushChannel, final EventType event);
+
 
 	void removePushChannelDisconnectedListener(IPushChannelDisconnectedListener listener);
 
