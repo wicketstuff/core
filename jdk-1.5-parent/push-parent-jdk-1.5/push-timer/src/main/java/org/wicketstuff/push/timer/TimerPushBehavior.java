@@ -52,10 +52,17 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 	<EventType> TimerPushChannel<EventType> addPushChannel(
 		final IPushEventHandler<EventType> pushEventHandler, final Duration pollingInterval)
 	{
+		return addPushChannel(pushEventHandler, new TimerPushChannel<EventType>(pollingInterval));
+	}
+
+	<EventType> TimerPushChannel<EventType> addPushChannel(
+			final IPushEventHandler<EventType> pushEventHandler,
+			final TimerPushChannel<EventType> channel)
+	{
+		final Duration pollingInterval = channel.getPollingInterval();
 		if (pollingInterval.lessThan(getUpdateInterval()))
 			setUpdateInterval(pollingInterval);
 
-		final TimerPushChannel<EventType> channel = new TimerPushChannel<EventType>(pollingInterval);
 		handlers.put(channel, pushEventHandler);
 		return channel;
 	}

@@ -30,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.util.string.StringValueConversionException;
 import org.apache.wicket.util.time.Duration;
 import org.apache.wicket.util.time.Time;
 import org.slf4j.Logger;
@@ -155,25 +156,55 @@ public class TimerPushService implements IPushService
 	public <EventType> TimerPushChannel<EventType> installPush(final Component component,
 		final IPushEventHandler<EventType> pushEventHandler, final Duration pollingInterval)
 	{
-		TimerPushBehavior behavior = _findPushBehaviour(component);
-		if (behavior == null)
-		{
-			behavior = new TimerPushBehavior(pollingInterval);
-			component.add(behavior);
-		}
-		final TimerPushChannel<EventType> pushChannel = behavior.addPushChannel(pushEventHandler,
-			pollingInterval);
-		_onConnect(pushChannel);
-		return pushChannel;
+
+		return installPushChannel(component, new TimerPushChannel<EventType>(pollingInterval), pushEventHandler);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public <EventType> TimerPushChannel<EventType> installPushChannel(final Component component,
 		final IPushEventHandler<EventType> pushEventHandler)
 	{
-		return installPush(component, pushEventHandler, _defaultPollingInterval);
+		return installPushChannel(component, new TimerPushChannel<EventType>(_defaultPollingInterval), pushEventHandler);
+	}
+
+	@Override
+	public <EventType> TimerPushChannel<EventType> installPushChannel(final Component component,
+			final IPushChannel<EventType> pushChannel,
+			final IPushEventHandler<EventType> pushEventHandler)
+	{
+		if (!(pushChannel instanceof TimerPushChannel))
+		{
+			throw new IllegalArgumentException("Invalid Push channel. " + pushChannel);
+		}
+
+		final TimerPushChannel<EventType> channel = (TimerPushChannel<EventType>) pushChannel;
+		TimerPushBehavior behavior = _findPushBehaviour(component);
+		if (behavior == null)
+		{
+			behavior = new TimerPushBehavior(channel.getPollingInterval());
+			component.add(behavior);
+		}
+
+		_onConnect(channel);
+		return channel;
+	}
+
+	public <EventType> IPushChannel<EventType> createPushChannel(final EventType event,
+			final String key)
+	{
+		Duration pollingInterval = _defaultPollingInterval;
+		try {
+			if (key == null || key.isEmpty())
+	{
+				pollingInterval = Duration.valueOf(key);
+			}
+		} catch (final StringValueConversionException sce) {
+			LOG.debug("key wasn't a Duration", sce);
+		}
+		return new TimerPushChannel<EventType>(pollingInterval);
 	}
 
 	/**
