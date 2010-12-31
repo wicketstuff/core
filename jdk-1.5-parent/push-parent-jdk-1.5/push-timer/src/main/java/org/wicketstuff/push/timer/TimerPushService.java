@@ -163,14 +163,12 @@ public class TimerPushService implements IPushService
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public <EventType> TimerPushChannel<EventType> installPushChannel(final Component component,
 		final IPushEventHandler<EventType> pushEventHandler)
 	{
 		return installPushChannel(component, new TimerPushChannel<EventType>(_defaultPollingInterval), pushEventHandler);
 	}
 
-	@Override
 	public <EventType> TimerPushChannel<EventType> installPushChannel(final Component component,
 			final IPushChannel<EventType> pushChannel,
 			final IPushEventHandler<EventType> pushEventHandler)
@@ -197,7 +195,7 @@ public class TimerPushService implements IPushService
 	{
 		Duration pollingInterval = _defaultPollingInterval;
 		try {
-			if (key == null || key.isEmpty())
+			if (key == null || key.length() == 0)
 	{
 				pollingInterval = Duration.valueOf(key);
 			}

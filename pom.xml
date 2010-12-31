@@ -193,7 +193,6 @@
 			      <id>sonatype-nexus-staging</id>
 			      <name>Nexus Release Repository</name>
 			      <url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-                  <uniqueVersion>false</uniqueVersion>
 
 			  </repository>
 
@@ -291,12 +290,12 @@
 	</mailingLists>
 
 	<scm>
-		<url>https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/branches/wicketstuff-core-1.4.14</url>
-		<connection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/branches/wicketstuff-core-1.4.14</connection>
+		<url>https://github.com/wicketstuff/core/tree/core-1.4.x</url>
+		<connection>scm:git:ssh://git@github.com:wicketstuff/core.git</connection>
 	</scm>
 
 	<properties>
-		<wicket.version>1.4.14</wicket.version>
+		<wicket.version>1.4-SNAPSHOT</wicket.version>
 		<jetty.version>6.1.22</jetty.version>
 
     		<eclipse.jetty.version>7.1.4.v20100610</eclipse.jetty.version>
