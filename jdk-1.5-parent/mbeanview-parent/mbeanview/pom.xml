@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>mbeanview-parent</artifactId>
-		<version>1.4.15-SNAPSHOT</version>
+		<version>1.4.15</version>
 	</parent>
 
 	<artifactId>mbeanview</artifactId>
