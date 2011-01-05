@@ -25,5 +25,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  */
 public interface IPushEventHandler<EventType> extends Serializable
 {
-	void onEvent(final AjaxRequestTarget target, final EventType event);
+	void onEvent(AjaxRequestTarget target, EventType event, IPushNode<EventType> node,
+		IPushEventContext<EventType> ctx);
 }

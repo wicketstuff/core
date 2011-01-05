@@ -40,6 +40,6 @@ public class ApplicationShutdownListener implements IInitializer, IDestroyer
 	 */
 	public void init(final Application application)
 	{
-
+		// nothing to do
 	}
 }

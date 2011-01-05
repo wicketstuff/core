@@ -16,12 +16,10 @@
  */
 package org.wicketstuff.push;
 
-import java.io.Serializable;
-
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
-public interface IPushChannel<EventType> extends Serializable
+public interface IPushNodeDisconnectedListener
 {
-	String getLabel();
+	void onDisconnect(IPushNode<?> pushChannel);
 }

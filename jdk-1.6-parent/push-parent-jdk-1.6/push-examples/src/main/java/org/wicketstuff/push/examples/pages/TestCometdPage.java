@@ -23,7 +23,9 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.push.AbstractPushEventHandler;
-import org.wicketstuff.push.cometd.CometdPushChannel;
+import org.wicketstuff.push.IPushEventContext;
+import org.wicketstuff.push.IPushNode;
+import org.wicketstuff.push.cometd.CometdPushNode;
 import org.wicketstuff.push.cometd.CometdPushService;
 
 /**
@@ -31,7 +33,6 @@ import org.wicketstuff.push.cometd.CometdPushService;
  */
 public class TestCometdPage extends WebPage
 {
-
 	private final TextField<String> field;
 	private String val;
 
@@ -39,11 +40,12 @@ public class TestCometdPage extends WebPage
 	public TestCometdPage(final PageParameters parameters)
 	{
 
-		final CometdPushChannel<String> pushChannel = CometdPushService.get().installPushChannel(
-			this, new AbstractPushEventHandler<String>()
+		final CometdPushNode<String> pushNode = CometdPushService.get().installNode(this,
+			new AbstractPushEventHandler<String>()
 			{
 				@Override
-				public void onEvent(final AjaxRequestTarget target, final String event)
+				public void onEvent(final AjaxRequestTarget target, final String event,
+					final IPushNode<String> node, final IPushEventContext<String> ctx)
 				{
 					field.setModel(new Model<String>("updated"));
 					target.addComponent(field);
@@ -52,13 +54,11 @@ public class TestCometdPage extends WebPage
 
 		final AjaxLink<Void> link = new AjaxLink<Void>("link")
 		{
-
 			@Override
 			public void onClick(final AjaxRequestTarget target)
 			{
-				CometdPushService.get().publish(pushChannel, val);
+				CometdPushService.get().publish(pushNode, val);
 			}
-
 		};
 		add(link);
 

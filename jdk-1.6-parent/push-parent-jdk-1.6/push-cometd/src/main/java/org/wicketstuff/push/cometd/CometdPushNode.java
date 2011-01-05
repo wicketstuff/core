@@ -18,12 +18,12 @@ package org.wicketstuff.push.cometd;
 
 import java.util.UUID;
 
-import org.wicketstuff.push.IPushChannel;
+import org.wicketstuff.push.IPushNode;
 
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
-public class CometdPushChannel<T> implements IPushChannel<T>
+public final class CometdPushNode<T> implements IPushNode<T>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,7 @@ public class CometdPushChannel<T> implements IPushChannel<T>
 	private final UUID id;
 	private final String toString;
 
-	CometdPushChannel(final String cometdChannelId)
+	CometdPushNode(final String cometdChannelId)
 	{
 		this.cometdChannelId = cometdChannelId;
 		this.id = UUID.randomUUID();
@@ -54,7 +54,7 @@ public class CometdPushChannel<T> implements IPushChannel<T>
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final CometdPushChannel<?> other = (CometdPushChannel<?>)obj;
+		final CometdPushNode<?> other = (CometdPushNode<?>)obj;
 		if (id == null)
 		{
 			if (other.id != null)

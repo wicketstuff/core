@@ -30,31 +30,32 @@ import java.util.concurrent.TimeUnit;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.IBehavior;
-import org.apache.wicket.util.string.StringValueConversionException;
 import org.apache.wicket.util.time.Duration;
 import org.apache.wicket.util.time.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketstuff.push.AbstractPushService;
 import org.wicketstuff.push.IPushChannel;
-import org.wicketstuff.push.IPushChannelDisconnectedListener;
 import org.wicketstuff.push.IPushEventHandler;
-import org.wicketstuff.push.IPushService;
+import org.wicketstuff.push.IPushNode;
+import org.wicketstuff.push.IPushNodeDisconnectedListener;
 
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
-public class TimerPushService implements IPushService
+public class TimerPushService extends AbstractPushService
 {
-	private static final class PushChannelState
+	private static final class PushNodeState<EventType>
 	{
-		protected final TimerPushChannel<?> channel;
+		protected final TimerPushNode<EventType> node;
 		protected Time lastPolledAt = Time.now();
-		protected List<Object> queuedEvents = new ArrayList<Object>(2);
+		protected List<TimerPushEventContext<EventType>> queuedEvents = new ArrayList<TimerPushEventContext<EventType>>(
+			2);
 		protected final Object queuedEventsLock = new Object();
 
-		protected PushChannelState(final TimerPushChannel<?> channel)
+		protected PushNodeState(final TimerPushNode<EventType> node)
 		{
-			this.channel = channel;
+			this.node = node;
 		}
 	}
 
@@ -92,8 +93,8 @@ public class TimerPushService implements IPushService
 	private Duration _defaultPollingInterval = Duration.seconds(2);
 	private Duration _maxTimeLag = Duration.seconds(10);
 
-	private final ConcurrentMap<TimerPushChannel<?>, PushChannelState> _channelStates = new ConcurrentHashMap<TimerPushChannel<?>, PushChannelState>();
-	private final Set<IPushChannelDisconnectedListener> _disconnectListeners = new CopyOnWriteArraySet<IPushChannelDisconnectedListener>();
+	private final ConcurrentMap<TimerPushNode<?>, PushNodeState<?>> _nodeStates = new ConcurrentHashMap<TimerPushNode<?>, PushNodeState<?>>();
+	private final Set<IPushNodeDisconnectedListener> _disconnectListeners = new CopyOnWriteArraySet<IPushNodeDisconnectedListener>();
 
 	private final ScheduledThreadPoolExecutor _cleanupExecutor = new ScheduledThreadPoolExecutor(1);
 	private ScheduledFuture<?> _cleanupFuture = null;
@@ -101,16 +102,16 @@ public class TimerPushService implements IPushService
 	{
 		public void run()
 		{
-			LOG.debug("Running timer push channel cleanup task...");
+			LOG.debug("Running timer push node cleanup task...");
 			final Time now = Time.now();
 			int count = 0;
-			for (final PushChannelState state : _channelStates.values())
+			for (final PushNodeState<?> state : _nodeStates.values())
 				if (now.subtract(state.lastPolledAt).greaterThan(_maxTimeLag))
 				{
-					onDisconnect(state.channel);
+					onDisconnect(state.node);
 					count++;
 				}
-			LOG.debug("Cleaned up {} timer push channels.", count);
+			LOG.debug("Cleaned up {} timer push nodes.", count);
 		}
 	};
 
@@ -127,15 +128,15 @@ public class TimerPushService implements IPushService
 		return null;
 	}
 
-	private void _onConnect(final TimerPushChannel<?> pushChannel)
+	private <EventType> void _onConnect(final TimerPushNode<EventType> node)
 	{
-		_channelStates.put(pushChannel, new PushChannelState(pushChannel));
+		_nodeStates.put(node, new PushNodeState<EventType>(node));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void addPushChannelDisconnectedListener(final IPushChannelDisconnectedListener listener)
+	public void addNodeDisconnectedListener(final IPushNodeDisconnectedListener listener)
 	{
 		_disconnectListeners.add(listener);
 	}
@@ -153,77 +154,45 @@ public class TimerPushService implements IPushService
 	/**
 	 * {@inheritDoc}
 	 */
-	public <EventType> TimerPushChannel<EventType> installPush(final Component component,
-		final IPushEventHandler<EventType> pushEventHandler, final Duration pollingInterval)
+	public <EventType> TimerPushNode<EventType> installNode(final Component component,
+		final IPushEventHandler<EventType> handler)
 	{
-
-		return installPushChannel(component, new TimerPushChannel<EventType>(pollingInterval), pushEventHandler);
+		return installNode(component, handler, _defaultPollingInterval);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public <EventType> TimerPushChannel<EventType> installPushChannel(final Component component,
-		final IPushEventHandler<EventType> pushEventHandler)
+	public <EventType> TimerPushNode<EventType> installNode(final Component component,
+		final IPushEventHandler<EventType> handler, final Duration pollingInterval)
 	{
-		return installPushChannel(component, new TimerPushChannel<EventType>(_defaultPollingInterval), pushEventHandler);
-	}
-
-	public <EventType> TimerPushChannel<EventType> installPushChannel(final Component component,
-			final IPushChannel<EventType> pushChannel,
-			final IPushEventHandler<EventType> pushEventHandler)
-	{
-		if (!(pushChannel instanceof TimerPushChannel))
-		{
-			throw new IllegalArgumentException("Invalid Push channel. " + pushChannel);
-		}
-
-		final TimerPushChannel<EventType> channel = (TimerPushChannel<EventType>) pushChannel;
 		TimerPushBehavior behavior = _findPushBehaviour(component);
 		if (behavior == null)
 		{
-			behavior = new TimerPushBehavior(channel.getPollingInterval());
+			behavior = new TimerPushBehavior(pollingInterval);
 			component.add(behavior);
 		}
-
-		_onConnect(channel);
-		return channel;
-	}
-
-	public <EventType> IPushChannel<EventType> createPushChannel(final EventType event,
-			final String key)
-	{
-		Duration pollingInterval = _defaultPollingInterval;
-		try {
-			if (key == null || key.length() == 0)
-	{
-				pollingInterval = Duration.valueOf(key);
-			}
-		} catch (final StringValueConversionException sce) {
-			LOG.debug("key wasn't a Duration", sce);
-		}
-		return new TimerPushChannel<EventType>(pollingInterval);
+		final TimerPushNode<EventType> node = behavior.addNode(handler, pollingInterval);
+		_onConnect(node);
+		return node;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean isConnected(final IPushChannel<?> pushChannel)
+	public boolean isConnected(final IPushNode<?> node)
 	{
-		if (pushChannel instanceof TimerPushChannel)
+		if (node instanceof TimerPushNode)
 		{
-			final PushChannelState state = _channelStates.get(pushChannel);
+			final PushNodeState<?> state = _nodeStates.get(node);
 			if (state == null)
 				return false;
 
 			if (Time.now().subtract(state.lastPolledAt).greaterThan(_maxTimeLag))
 			{
-				onDisconnect(state.channel);
+				onDisconnect(state.node);
 				return false;
 			}
 			return true;
 		}
-		LOG.warn("Unsupported push channel type {}", pushChannel);
+		LOG.warn("Unsupported push node type {}", node);
 		return false;
 	}
 
@@ -232,20 +201,22 @@ public class TimerPushService implements IPushService
 		LOG.info("Shutting down timer push service...");
 		_cleanupFuture.cancel(false);
 		_cleanupFuture = null;
-		_cleanupExecutor.shutdown();
+		_cleanupExecutor.shutdownNow();
 		INSTANCES.remove(this);
 	}
 
-	void onDisconnect(final TimerPushChannel<?> pushChannel)
+	void onDisconnect(final TimerPushNode<?> node)
 	{
-		if (_channelStates.remove(pushChannel) != null)
+		if (_nodeStates.remove(node) != null)
 		{
-			LOG.debug("Timer push channel {} disconnected.", pushChannel);
+			LOG.debug("Timer push node {} disconnected.", node);
 
-			for (final IPushChannelDisconnectedListener listener : _disconnectListeners)
+			disconnectFromAllChannels(node);
+
+			for (final IPushNodeDisconnectedListener listener : _disconnectListeners)
 				try
 				{
-					listener.onDisconnect(pushChannel);
+					listener.onDisconnect(node);
 				}
 				catch (final RuntimeException ex)
 				{
@@ -255,13 +226,14 @@ public class TimerPushService implements IPushService
 	}
 
 	@SuppressWarnings("unchecked")
-	<EventType> List<EventType> pollEvents(final TimerPushChannel<EventType> pushChannel)
+	<EventType> List<TimerPushEventContext<EventType>> pollEvents(
+		final TimerPushNode<EventType> node)
 	{
-		final PushChannelState state = _channelStates.get(pushChannel);
+		final PushNodeState<EventType> state = (PushNodeState<EventType>)_nodeStates.get(node);
 		if (state == null)
 		{
-			LOG.debug("Reconnecting push channel {}...", pushChannel);
-			_onConnect(pushChannel);
+			LOG.debug("Reconnecting push node {}...", node);
+			_onConnect(node);
 			return Collections.EMPTY_LIST;
 		}
 
@@ -272,8 +244,8 @@ public class TimerPushService implements IPushService
 
 		synchronized (state.queuedEventsLock)
 		{
-			final List<EventType> events = (List<EventType>)state.queuedEvents;
-			state.queuedEvents = new ArrayList<Object>(2);
+			final List<TimerPushEventContext<EventType>> events = state.queuedEvents;
+			state.queuedEvents = new ArrayList<TimerPushEventContext<EventType>>(2);
 			return events;
 		}
 	}
@@ -281,38 +253,71 @@ public class TimerPushService implements IPushService
 	/**
 	 * {@inheritDoc}
 	 */
-	public <EventType> void publish(final IPushChannel<EventType> pushChannel, final EventType event)
+	public <EventType> void publish(final IPushChannel<EventType> channel, final EventType event)
 	{
-		if (pushChannel instanceof TimerPushChannel)
-		{
-			if (isConnected(pushChannel))
-			{
-				final PushChannelState state = _channelStates.get(pushChannel);
-				if (state == null)
-					return;
+		if (channel == null)
+			throw new IllegalArgumentException("Argument [channel] must not be null");
 
-				synchronized (state.queuedEventsLock)
-				{
-					state.queuedEvents.add(event);
-				}
+		final Set<IPushNode<?>> pnodes = nodesByChannels.get(channel);
+		if (pnodes == null)
+			throw new IllegalArgumentException("Unknown channel " + channel);
+
+		final TimerPushEventContext<EventType> ctx = new TimerPushEventContext<EventType>(event,
+			channel, this);
+
+		// publish the event to all registered nodes
+		for (final IPushNode<?> pnode : pnodes)
+		{
+			@SuppressWarnings("unchecked")
+			final TimerPushNode<EventType> node = (TimerPushNode<EventType>)pnode;
+
+			if (isConnected(node))
+			{
+				@SuppressWarnings("unchecked")
+				final PushNodeState<EventType> state = (PushNodeState<EventType>)_nodeStates.get(node);
+				if (state != null)
+					synchronized (state.queuedEventsLock)
+					{
+						state.queuedEvents.add(ctx);
+					}
 			}
 		}
-		else
-			LOG.warn("Unsupported push channel type {}", pushChannel);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void removePushChannelDisconnectedListener(
-		final IPushChannelDisconnectedListener listener)
+	public <EventType> void publish(final IPushNode<EventType> node, final EventType event)
+	{
+		if (node instanceof TimerPushNode)
+		{
+			if (isConnected(node))
+			{
+				@SuppressWarnings("unchecked")
+				final PushNodeState<EventType> state = (PushNodeState<EventType>)_nodeStates.get(node);
+				if (state != null)
+					synchronized (state.queuedEventsLock)
+					{
+						state.queuedEvents.add(new TimerPushEventContext<EventType>(event, null,
+							this));
+					}
+			}
+		}
+		else
+			LOG.warn("Unsupported push node type {}", node);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void removeNodeDisconnectedListener(final IPushNodeDisconnectedListener listener)
 	{
 		_disconnectListeners.remove(listener);
 	}
 
 	/**
 	 * Sets the interval in which the clean up task will be executed that removes information about
-	 * disconnected push channels. Default is 60 seconds.
+	 * disconnected push nodes. Default is 60 seconds.
 	 */
 	public void setCleanupInterval(final Duration interval)
 	{
@@ -338,17 +343,17 @@ public class TimerPushService implements IPushService
 	/**
 	 * {@inheritDoc}
 	 */
-	public void uninstallPushChannel(final Component component, final IPushChannel<?> pushChannel)
+	public void uninstallNode(final Component component, final IPushNode<?> node)
 	{
-		if (pushChannel instanceof TimerPushChannel)
+		if (node instanceof TimerPushNode)
 		{
 			final TimerPushBehavior behavior = _findPushBehaviour(component);
 			if (behavior == null)
 				return;
-			if (behavior.removePushChannel(pushChannel) == 0)
+			if (behavior.removeNode(node) == 0)
 				component.remove(behavior);
 		}
 		else
-			LOG.warn("Unsupported push channel type {}", pushChannel);
+			LOG.warn("Unsupported push node type {}", node);
 	}
 }

@@ -14,28 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.push.timer;
+package org.wicketstuff.push;
 
 import java.util.UUID;
-
-import org.apache.wicket.util.time.Duration;
-import org.wicketstuff.push.IPushChannel;
 
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
-public class TimerPushChannel<EventType> implements IPushChannel<EventType>
+public final class PushChannel<EventType> implements IPushChannel<EventType>
 {
 	private static final long serialVersionUID = 1L;
 
 	private final UUID id = UUID.randomUUID();
-	private final Duration pollingInterval;
+	private final String label;
 	private final String toString;
 
-	TimerPushChannel(final Duration pollingInterval)
+	PushChannel(final String label)
 	{
-		this.pollingInterval = pollingInterval;
-		toString = getClass().getName() + "[id=" + id.toString() + "]";
+		this.label = label;
+		toString = getClass().getName() + "[id=" + id.toString() + ",label=" + label + "]";
 	}
 
 	/**
@@ -50,7 +47,7 @@ public class TimerPushChannel<EventType> implements IPushChannel<EventType>
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final TimerPushChannel<?> other = (TimerPushChannel<?>)obj;
+		final PushChannel<?> other = (PushChannel<?>)obj;
 		if (id == null)
 		{
 			if (other.id != null)
@@ -61,9 +58,12 @@ public class TimerPushChannel<EventType> implements IPushChannel<EventType>
 		return true;
 	}
 
-	public Duration getPollingInterval()
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getLabel()
 	{
-		return pollingInterval;
+		return label;
 	}
 
 	/**

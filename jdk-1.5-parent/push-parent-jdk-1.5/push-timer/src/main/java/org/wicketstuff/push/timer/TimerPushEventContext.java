@@ -14,14 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.push;
+package org.wicketstuff.push.timer;
 
-import java.io.Serializable;
+import org.wicketstuff.push.AbstractPushEventContext;
+import org.wicketstuff.push.IPushChannel;
 
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
-public interface IPushChannel<EventType> extends Serializable
+public final class TimerPushEventContext<EventType> extends AbstractPushEventContext<EventType>
 {
-	String getLabel();
+	private final TimerPushService pushService;
+
+	TimerPushEventContext(final EventType event, final IPushChannel<EventType> channel,
+		final TimerPushService pushService)
+	{
+		super(event, channel);
+		this.pushService = pushService;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public TimerPushService getService()
+	{
+		return pushService;
+	}
 }

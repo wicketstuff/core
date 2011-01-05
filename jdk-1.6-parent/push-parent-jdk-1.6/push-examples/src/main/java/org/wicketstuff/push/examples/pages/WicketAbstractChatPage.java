@@ -31,20 +31,18 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.wicketstuff.push.AbstractPushEventHandler;
-import org.wicketstuff.push.IPushChannel;
-import org.wicketstuff.push.IPushChannelDisconnectedListener;
+import org.wicketstuff.push.IPushEventContext;
+import org.wicketstuff.push.IPushNode;
+import org.wicketstuff.push.IPushNodeDisconnectedListener;
 import org.wicketstuff.push.IPushService;
 import org.wicketstuff.push.examples.chatservice.ChatRoom;
 import org.wicketstuff.push.examples.chatservice.IChatListener;
 import org.wicketstuff.push.examples.chatservice.Message;
 
 /**
- * Examples of chat using {@link IChannelService}.
+ * Examples of chat using {@link IPushService}.
  * <p>
- * This example is abstract because it doesn't define which channel service implementation it uses.
- * <p>
- * Concrete subclasses only have to provide {@link #getChannelService()} implementation, returning
- * any IChannelService implementation.
+ * This example is abstract because it doesn't define which push service implementation it uses.
  * <p>
  * The whole example doesn't depend on which implementation is used, and show easy it is to switch
  * between implementations.
@@ -119,15 +117,16 @@ public abstract class WicketAbstractChatPage extends WebPage
 		});
 
 		/*
-		 * install push channel
+		 * install push node
 		 */
-		final IPushChannel<Message> pushChannel = pushService.installPushChannel(this,
+		final IPushNode<Message> pushNode = pushService.installNode(this,
 			new AbstractPushEventHandler<Message>()
 			{
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void onEvent(final AjaxRequestTarget target, final Message message)
+				public void onEvent(final AjaxRequestTarget target, final Message message,
+					final IPushNode<Message> node, final IPushEventContext<Message> ctx)
 				{
 					appendHTML(target, chatHistoryField, _renderMessage(message));
 				}
@@ -141,8 +140,8 @@ public abstract class WicketAbstractChatPage extends WebPage
 			@Override
 			public void onMessage(final Message msg)
 			{
-				if (pushService.isConnected(pushChannel))
-					pushService.publish(pushChannel, msg);
+				if (pushService.isConnected(pushNode))
+					pushService.publish(pushNode, msg);
 				else
 					chatRoom.removeListener(this);
 			}
@@ -159,15 +158,15 @@ public abstract class WicketAbstractChatPage extends WebPage
 		/*
 		 * install disconnect listener
 		 */
-		pushService.addPushChannelDisconnectedListener(new IPushChannelDisconnectedListener()
+		pushService.addNodeDisconnectedListener(new IPushNodeDisconnectedListener()
 		{
 			@Override
-			public void onDisconnect(final IPushChannel<?> pChannel)
+			public void onDisconnect(final IPushNode<?> node)
 			{
-				if (pChannel.equals(pushChannel))
+				if (node.equals(pushNode))
 				{
 					chatRoom.sendAsync("<System>", "A USER JUST LEFT THE ROOM.");
-					pushService.removePushChannelDisconnectedListener(this);
+					pushService.removeNodeDisconnectedListener(this);
 				}
 			}
 		});

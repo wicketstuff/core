@@ -25,7 +25,6 @@ import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.IBehavior;
@@ -39,10 +38,13 @@ import org.cometd.bayeux.server.ServerChannel;
 import org.cometd.bayeux.server.ServerSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketstuff.push.AbstractPushService;
 import org.wicketstuff.push.IPushChannel;
-import org.wicketstuff.push.IPushChannelDisconnectedListener;
 import org.wicketstuff.push.IPushEventHandler;
+import org.wicketstuff.push.IPushNode;
+import org.wicketstuff.push.IPushNodeDisconnectedListener;
 import org.wicketstuff.push.IPushService;
+import org.wicketstuff.push.PushChannel;
 
 /**
  * Cometd based implementation of {@link IPushService}.
@@ -58,23 +60,23 @@ import org.wicketstuff.push.IPushService;
  * @author Rodolfo Hansen
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
-public class CometdPushService implements IPushService
+public class CometdPushService extends AbstractPushService
 {
-	private static final class PushChannelState
+	private static final class PushNodeState<EventType>
 	{
-		protected final CometdPushChannel<?> channel;
-		protected List<Object> queuedEvents = new ArrayList<Object>(2);
+		protected final CometdPushNode<EventType> node;
+
+		protected List<CometdPushEventContext<EventType>> queuedEvents = new ArrayList<CometdPushEventContext<EventType>>(
+			2);
 		protected final Object queuedEventsLock = new Object();
 
-		protected PushChannelState(final CometdPushChannel<?> channel)
+		protected PushNodeState(final CometdPushNode<EventType> node)
 		{
-			this.channel = channel;
+			this.node = node;
 		}
 	}
 
 	private static Logger LOG = LoggerFactory.getLogger(CometdPushService.class);
-
-	private static final AtomicInteger channelIdx = new AtomicInteger();
 
 	private static final Map<WebApplication, CometdPushService> INSTANCES = new WeakHashMap<WebApplication, CometdPushService>();
 
@@ -94,10 +96,10 @@ public class CometdPushService implements IPushService
 		return service;
 	}
 
-	private final ConcurrentMap<String, List<CometdPushChannel<?>>> _channelsByCometdChannelId = new ConcurrentHashMap<String, List<CometdPushChannel<?>>>();
-	private final ConcurrentMap<CometdPushChannel<?>, PushChannelState> _channelStates = new ConcurrentHashMap<CometdPushChannel<?>, PushChannelState>();
+	private final ConcurrentMap<String, List<CometdPushNode<?>>> _nodesByCometdChannelId = new ConcurrentHashMap<String, List<CometdPushNode<?>>>();
+	private final ConcurrentMap<CometdPushNode<?>, PushNodeState<?>> _nodeStates = new ConcurrentHashMap<CometdPushNode<?>, PushNodeState<?>>();
 
-	private final Set<IPushChannelDisconnectedListener> _disconnectListeners = new CopyOnWriteArraySet<IPushChannelDisconnectedListener>();
+	private final Set<IPushNodeDisconnectedListener> _disconnectListeners = new CopyOnWriteArraySet<IPushNodeDisconnectedListener>();
 
 	private final WebApplication _application;
 
@@ -156,10 +158,10 @@ public class CometdPushService implements IPushService
 			{
 				LOG.debug("Cometd channel unsubscribe. session={}, channel={}", session, channel);
 
-				final List<CometdPushChannel<?>> pushChannels = _channelsByCometdChannelId.remove(channel.getId());
-				if (pushChannels != null)
-					for (final CometdPushChannel<?> pushChannel : pushChannels)
-						_onDisconnect(pushChannel);
+				final List<CometdPushNode<?>> nodes = _nodesByCometdChannelId.remove(channel.getId());
+				if (nodes != null)
+					for (final CometdPushNode<?> node : nodes)
+						_onDisconnect(node);
 			}
 		});
 	}
@@ -181,41 +183,42 @@ public class CometdPushService implements IPushService
 		return _bayeux;
 	}
 
-	private ServerChannel _getBayeuxServerChannel(final CometdPushChannel<?> pushChannel)
+	private ServerChannel _getBayeuxServerChannel(final CometdPushNode<?> node)
 	{
-		return _getBayeuxServer().getChannel(pushChannel.getCometdChannelId());
+		return _getBayeuxServer().getChannel(node.getCometdChannelId());
 	}
 
-	private void _onConnect(final CometdPushChannel<?> pushChannel)
+	private <EventType> void _onConnect(final CometdPushNode<EventType> node)
 	{
-		_channelStates.put(pushChannel, new PushChannelState(pushChannel));
-		List<CometdPushChannel<?>> channels = _channelsByCometdChannelId.get(pushChannel.getCometdChannelId());
-		if (channels == null)
+		_nodeStates.put(node, new PushNodeState<EventType>(node));
+		List<CometdPushNode<?>> nodes = _nodesByCometdChannelId.get(node.getCometdChannelId());
+		if (nodes == null)
 		{
 			// create a new list
-			final List<CometdPushChannel<?>> newList = new ArrayList<CometdPushChannel<?>>(2);
+			final List<CometdPushNode<?>> newList = new ArrayList<CometdPushNode<?>>(2);
 
 			// put the list, a list object is returned in case it was put in the meantime
-			channels = _channelsByCometdChannelId.putIfAbsent(pushChannel.getCometdChannelId(),
-				newList);
+			nodes = _nodesByCometdChannelId.putIfAbsent(node.getCometdChannelId(), newList);
 
-			if (channels == null)
-				newList.add(pushChannel);
+			if (nodes == null)
+				newList.add(node);
 			else
-				channels.add(pushChannel);
+				nodes.add(node);
 		}
 	}
 
-	private void _onDisconnect(final CometdPushChannel<?> pushChannel)
+	private void _onDisconnect(final CometdPushNode<?> node)
 	{
-		if (_channelStates.remove(pushChannel) != null)
+		if (_nodeStates.remove(node) != null)
 		{
-			LOG.debug("Cometd push channel {} disconnected.", pushChannel);
+			LOG.debug("Cometd push node {} disconnected.", node);
 
-			for (final IPushChannelDisconnectedListener listener : _disconnectListeners)
+			disconnectFromAllChannels(node);
+
+			for (final IPushNodeDisconnectedListener listener : _disconnectListeners)
 				try
 				{
-					listener.onDisconnect(pushChannel);
+					listener.onDisconnect(node);
 				}
 				catch (final RuntimeException ex)
 				{
@@ -228,7 +231,7 @@ public class CometdPushService implements IPushService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addPushChannelDisconnectedListener(final IPushChannelDisconnectedListener listener)
+	public void addNodeDisconnectedListener(final IPushNodeDisconnectedListener listener)
 	{
 		_disconnectListeners.add(listener);
 	}
@@ -237,61 +240,42 @@ public class CometdPushService implements IPushService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <EventType> CometdPushChannel<EventType> installPushChannel(final Component component,
-		final IPushEventHandler<EventType> pushEventHandler)
+	public <EventType> CometdPushNode<EventType> installNode(final Component component,
+		final IPushEventHandler<EventType> handler)
 	{
-		return installPushChannel(component, createPushChannel((EventType) null, "push_channel_"), pushEventHandler);
-	}
-
-	@Override
-	public <EventType> CometdPushChannel<EventType> installPushChannel(final Component component,
-			final IPushChannel<EventType> pushChannel,
-			final IPushEventHandler<EventType> pushEventHandler)
-	{
-		if (!(pushChannel instanceof CometdPushChannel))
-		{
-			throw new IllegalArgumentException("Invalid Push channel. " + pushChannel);
-		}
-		CometdPushChannel<EventType> channel = (CometdPushChannel<EventType>)pushChannel;
 		CometdPushBehavior behavior = _findPushBehaviour(component);
 		if (behavior == null)
 		{
 			behavior = new CometdPushBehavior();
 			component.add(behavior);
 		}
-		channel = behavior.addPushChannel(channel, pushEventHandler);
-		_onConnect(channel);
-		return channel;
-	}
-
-	@Override
-	public <EventType> CometdPushChannel<EventType> createPushChannel(final EventType event,
-			final String key)
-	{
-		return new CometdPushChannel<EventType>(key + channelIdx.incrementAndGet());
+		final CometdPushNode<EventType> node = behavior.addNode(handler);
+		_onConnect(node);
+		return node;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isConnected(final IPushChannel<?> pushChannel)
+	public boolean isConnected(final IPushNode<?> node)
 	{
-		if (pushChannel instanceof CometdPushChannel)
-			return _getBayeuxServerChannel((CometdPushChannel<?>)pushChannel) != null;
+		if (node instanceof CometdPushNode)
+			return _getBayeuxServerChannel((CometdPushNode<?>)node) != null;
 
-		LOG.warn("Unsupported push channel type {}", pushChannel);
+		LOG.warn("Unsupported push node type {}", node);
 		return false;
 	}
 
 	@SuppressWarnings("unchecked")
-	<EventType> List<EventType> pollEvents(final CometdPushChannel<EventType> pushChannel)
+	<EventType> List<CometdPushEventContext<EventType>> pollEvents(
+		final CometdPushNode<EventType> node)
 	{
-		final PushChannelState state = _channelStates.get(pushChannel);
+		final PushNodeState<EventType> state = (PushNodeState<EventType>)_nodeStates.get(node);
 		if (state == null)
 		{
-			LOG.debug("Reconnecting push channel {}...", pushChannel);
-			_onConnect(pushChannel);
+			LOG.debug("Reconnecting push node {}...", node);
+			_onConnect(node);
 			return Collections.EMPTY_LIST;
 		}
 
@@ -300,58 +284,123 @@ public class CometdPushService implements IPushService
 
 		synchronized (state.queuedEventsLock)
 		{
-			final List<EventType> events = (List<EventType>)state.queuedEvents;
-			state.queuedEvents = new ArrayList<Object>(2);
+			final List<CometdPushEventContext<EventType>> events = state.queuedEvents;
+			state.queuedEvents = new ArrayList<CometdPushEventContext<EventType>>(2);
 			return events;
 		}
-	}
-
-	@Override
-	public <EventType> void publish(final IPushChannel<EventType> pushChannel, final EventType event)
-	{
-		if (pushChannel instanceof CometdPushChannel)
-		{
-			final ServerChannel channel = _getBayeuxServerChannel((CometdPushChannel<?>)pushChannel);
-			if (channel == null)
-				LOG.warn("No cometd channel found for {}", pushChannel);
-			else
-			{
-				final PushChannelState state = _channelStates.get(pushChannel);
-				if (state == null)
-					return;
-
-				synchronized (state.queuedEventsLock)
-				{
-					state.queuedEvents.add(event);
-				}
-
-				channel.publish(null, "pollEvents", state.channel.getCometdChannelEventId());
-			}
-		}
-		else
-			LOG.warn("Unsupported push channel type {}", pushChannel);
-	}
-
-	/**
-	 * Directly sends JavaScript code to the client via a cometd channel without an additional
-	 * Wicket AJAX request roundtrip.
-	 */
-	public <EventType> void publishJavascript(final CometdPushChannel<EventType> pushChannel,
-		final String javascript)
-	{
-		final ServerChannel channel = _getBayeuxServerChannel(pushChannel);
-		if (channel == null)
-			LOG.warn("No cometd channel found for {}", pushChannel);
-		else
-			channel.publish(null, "javascript:" + javascript, pushChannel.getCometdChannelEventId());
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removePushChannelDisconnectedListener(
-		final IPushChannelDisconnectedListener listener)
+	public <EventType> void publish(final IPushChannel<EventType> channel, final EventType event)
+	{
+		if (channel == null)
+			throw new IllegalArgumentException("Argument [channel] must not be null");
+
+		final Set<IPushNode<?>> pnodes = nodesByChannels.get(channel);
+		if (pnodes == null)
+			throw new IllegalArgumentException("Unknown channel " + channel);
+
+		final CometdPushEventContext<EventType> ctx = new CometdPushEventContext<EventType>(event,
+			channel, this);
+
+		// publish the event to all registered nodes
+		for (final IPushNode<?> pnode : pnodes)
+		{
+			@SuppressWarnings("unchecked")
+			final CometdPushNode<EventType> node = (CometdPushNode<EventType>)pnode;
+
+			final ServerChannel cchannel = _getBayeuxServerChannel(node);
+			if (cchannel == null)
+			{
+				LOG.warn("No cometd channel found for {}", node);
+				continue;
+			}
+
+			@SuppressWarnings("unchecked")
+			final PushNodeState<EventType> state = (PushNodeState<EventType>)_nodeStates.get(node);
+			if (state != null)
+			{
+				synchronized (state.queuedEventsLock)
+				{
+					state.queuedEvents.add(ctx);
+				}
+				cchannel.publish(null, "pollEvents", state.node.getCometdChannelEventId());
+			}
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <EventType> void publish(final IPushNode<EventType> node, final EventType event)
+	{
+		if (node instanceof CometdPushNode)
+		{
+			final ServerChannel cchannel = _getBayeuxServerChannel((CometdPushNode<?>)node);
+			if (cchannel == null)
+				LOG.warn("No cometd channel found for {}", node);
+			else
+			{
+				@SuppressWarnings("unchecked")
+				final PushNodeState<EventType> state = (PushNodeState<EventType>)_nodeStates.get(node);
+				if (state != null)
+				{
+					synchronized (state.queuedEventsLock)
+					{
+						state.queuedEvents.add(new CometdPushEventContext<EventType>(event, null,
+							this));
+					}
+					cchannel.publish(null, "pollEvents", state.node.getCometdChannelEventId());
+				}
+			}
+		}
+		else
+			LOG.warn("Unsupported push node type {}", node);
+	}
+
+	/**
+	 * Directly sends JavaScript code to the node via a cometd channel without an additional Wicket
+	 * AJAX request roundtrip.
+	 */
+	public <EventType> void publishJavascript(final CometdPushNode<EventType> node,
+		final String javascript)
+	{
+		final ServerChannel channel = _getBayeuxServerChannel(node);
+		if (channel == null)
+			LOG.warn("No cometd channel found for {}", node);
+		else
+			channel.publish(null, "javascript:" + javascript, node.getCometdChannelEventId());
+	}
+
+	/**
+	 * Directly sends JavaScript code to all nodes listeing to the given push channel via a cometd
+	 * channel without an additional Wicket AJAX request roundtrip.
+	 */
+	@SuppressWarnings("unchecked")
+	public <EventType> void publishJavascript(final PushChannel<EventType> channel,
+		final String javascript)
+	{
+		if (channel == null)
+			throw new IllegalArgumentException("Argument [channel] must not be null");
+
+		final Set<IPushNode<?>> pnodes = nodesByChannels.get(channel);
+		if (pnodes == null)
+			throw new IllegalArgumentException("Unknown channel " + channel);
+
+		// publish the event to all registered nodes
+		for (final IPushNode<?> node : pnodes)
+			publishJavascript((CometdPushNode<EventType>)node, javascript);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeNodeDisconnectedListener(final IPushNodeDisconnectedListener listener)
 	{
 		_disconnectListeners.remove(listener);
 	}
@@ -360,17 +409,17 @@ public class CometdPushService implements IPushService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void uninstallPushChannel(final Component component, final IPushChannel<?> pushChannel)
+	public void uninstallNode(final Component component, final IPushNode<?> node)
 	{
-		if (pushChannel instanceof CometdPushChannel)
+		if (node instanceof CometdPushNode)
 		{
 			final CometdPushBehavior behavior = _findPushBehaviour(component);
 			if (behavior == null)
 				return;
-			if (behavior.removePushChannel(pushChannel) == 0)
+			if (behavior.removePushChannel(node) == 0)
 				component.remove(behavior);
 		}
 		else
-			LOG.warn("Unsupported push channel type {}", pushChannel);
+			LOG.warn("Unsupported push node type {}", node);
 	}
 }

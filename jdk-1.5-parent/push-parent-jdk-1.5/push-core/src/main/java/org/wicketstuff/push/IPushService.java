@@ -1,6 +1,5 @@
 /*
- * Licensed to the Apache Softwimport org.apache.wicket.Component;
-e
+ * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
@@ -24,31 +23,49 @@ import org.apache.wicket.Component;
  */
 public interface IPushService
 {
-	void addPushChannelDisconnectedListener(IPushChannelDisconnectedListener listener);
-
-	<EventType> IPushChannel<EventType> installPushChannel(final Component component,
-		final IPushEventHandler<EventType> pushEventHandler);
-
-	<EventType> IPushChannel<EventType> installPushChannel(final Component component,
-	  final IPushChannel<EventType> pushChannel,
-	  final IPushEventHandler<EventType> pushEventHandler);
-
-	<EventType> IPushChannel<EventType> createPushChannel(final EventType event,
-	  final String key);
+	void addNodeDisconnectedListener(IPushNodeDisconnectedListener listener);
 
 	/**
-	 * Determines if the client is still connected, otherwise clears all queued events.
+	 * Connects the given push node to the given push channel
+	 * 
+	 * @throws IllegalArgumentException
+	 *             if <code>channel</code> is unknown
 	 */
-	boolean isConnected(final IPushChannel<?> pushChannel);
+	<EventType> void connectToChannel(IPushNode<EventType> node, IPushChannel<EventType> channel);
 
 	/**
-	 * Queues the given event for later processing by the associated
-	 * {@link AbstractPushEventHandler}. The method does nothing in case the client is no longer
-	 * connected.
+	 * Creates a new push channel with the given <code>label</code>.
+	 * 
+	 * @param label
+	 *            the label to associate with the new push channel. (may be null)
+	 *            <p>
+	 *            <b>Note:</b> The <code>label</code> has only informative purpose. Creating two
+	 *            push channels with the same label will not result in an error.
 	 */
-	<EventType> void publish(final IPushChannel<EventType> pushChannel, final EventType event);
+	<EventType> IPushChannel<EventType> createChannel(EventType event, String label);
 
-	void removePushChannelDisconnectedListener(IPushChannelDisconnectedListener listener);
+	<EventType> void disconnectFromChannel(IPushNode<EventType> node,
+		IPushChannel<EventType> channel);
 
-	void uninstallPushChannel(final Component component, final IPushChannel<?> pushChannel);
+	<EventType> IPushNode<EventType> installNode(Component component,
+		IPushEventHandler<EventType> handler);
+
+	/**
+	 * Determines if the node (client) is still connected, otherwise clears all queued events.
+	 */
+	boolean isConnected(IPushNode<?> node);
+
+	<EventType> void publish(IPushChannel<EventType> channel, EventType event);
+
+	/**
+	 * Queues the given event for later processing by the associated {@link IPushEventHandler}. The
+	 * method does nothing in case the node is no longer connected.
+	 */
+	<EventType> void publish(IPushNode<EventType> node, EventType event);
+
+	<EventType> void removeChannel(IPushChannel<EventType> channel);
+
+	void removeNodeDisconnectedListener(IPushNodeDisconnectedListener listener);
+
+	void uninstallNode(Component component, IPushNode<?> node);
 }

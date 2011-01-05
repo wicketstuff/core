@@ -18,6 +18,7 @@ package org.wicketstuff.push.cometd;
 
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
@@ -38,8 +39,8 @@ import org.apache.wicket.util.template.PackagedTextTemplate;
 import org.cometd.server.CometdServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.push.IPushChannel;
 import org.wicketstuff.push.IPushEventHandler;
+import org.wicketstuff.push.IPushNode;
 
 /**
  * This behavior will be asked by client side when it will receive a cometd event associated with
@@ -193,7 +194,7 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	private final String _cometdChannelId;
 	private final String _cometdChannelIdWithoutSlash;
 
-	private final Map<CometdPushChannel, IPushEventHandler> _handlers = new HashMap<CometdPushChannel, IPushEventHandler>(
+	private final Map<CometdPushNode, IPushEventHandler> _handlers = new HashMap<CometdPushNode, IPushEventHandler>(
 		2);
 
 	/**
@@ -245,16 +246,10 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 		return TEMPLATE_SUBSCRIBE.asString(params);
 	}
 
-	<EventType> CometdPushChannel<EventType> addPushChannel(
+	<EventType> CometdPushNode<EventType> addNode(
 		final IPushEventHandler<EventType> pushEventHandler)
 	{
-	  return addPushChannel(new CometdPushChannel<EventType>(_cometdChannelId), pushEventHandler);
-	}
-
-  <EventType> CometdPushChannel<EventType> addPushChannel(
-    final CometdPushChannel<EventType> channel,
-    final IPushEventHandler<EventType> pushEventHandler)
-  {
+		final CometdPushNode<EventType> channel = new CometdPushNode<EventType>(_cometdChannelId);
 		_handlers.put(channel, pushEventHandler);
 		return channel;
 	}
@@ -282,7 +277,7 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 		return DEFAULT_COMETD_PATH;
 	}
 
-	int removePushChannel(final IPushChannel<?> channel)
+	int removePushChannel(final IPushNode<?> channel)
 	{
 		_handlers.remove(channel);
 		return _handlers.size();
@@ -318,15 +313,23 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 		final CometdPushService pushService = CometdPushService.get();
 
 		// retrieve all collected events and process them
-		for (final Entry<CometdPushChannel, IPushEventHandler> entry : _handlers.entrySet())
-			for (final Object event : pushService.pollEvents(entry.getKey()))
+		for (final Entry<CometdPushNode, IPushEventHandler> entry : _handlers.entrySet())
+		{
+			final CometdPushNode node = entry.getKey();
+			for (final Iterator<CometdPushEventContext<?>> it = pushService.pollEvents(node)
+				.iterator(); it.hasNext();)
+			{
+				final CometdPushEventContext<?> ctx = it.next();
 				try
 				{
-					entry.getValue().onEvent(target, event);
+					entry.getValue().onEvent(target, ctx.getEvent(), node, ctx);
 				}
 				catch (final RuntimeException ex)
 				{
 					LOG.error("Failed while processing event", ex);
 				}
+
+			}
+		}
 	}
 }

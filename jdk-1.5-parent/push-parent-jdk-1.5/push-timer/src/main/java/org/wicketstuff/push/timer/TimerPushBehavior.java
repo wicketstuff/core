@@ -17,6 +17,7 @@
 package org.wicketstuff.push.timer;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -28,8 +29,8 @@ import org.apache.wicket.protocol.http.WebRequest;
 import org.apache.wicket.util.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.push.IPushChannel;
 import org.wicketstuff.push.IPushEventHandler;
+import org.wicketstuff.push.IPushNode;
 
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
@@ -41,7 +42,7 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 
 	private static final Logger LOG = LoggerFactory.getLogger(TimerPushBehavior.class);
 
-	private final Map<TimerPushChannel, IPushEventHandler> handlers = new HashMap<TimerPushChannel, IPushEventHandler>(
+	private final Map<TimerPushNode, IPushEventHandler> handlers = new HashMap<TimerPushNode, IPushEventHandler>(
 		2);
 
 	TimerPushBehavior(final Duration pollingInterval)
@@ -49,22 +50,15 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 		super(pollingInterval);
 	}
 
-	<EventType> TimerPushChannel<EventType> addPushChannel(
+	<EventType> TimerPushNode<EventType> addNode(
 		final IPushEventHandler<EventType> pushEventHandler, final Duration pollingInterval)
 	{
-		return addPushChannel(pushEventHandler, new TimerPushChannel<EventType>(pollingInterval));
-	}
-
-	<EventType> TimerPushChannel<EventType> addPushChannel(
-			final IPushEventHandler<EventType> pushEventHandler,
-			final TimerPushChannel<EventType> channel)
-	{
-		final Duration pollingInterval = channel.getPollingInterval();
 		if (pollingInterval.lessThan(getUpdateInterval()))
 			setUpdateInterval(pollingInterval);
 
-		handlers.put(channel, pushEventHandler);
-		return channel;
+		final TimerPushNode<EventType> node = new TimerPushNode<EventType>(pollingInterval);
+		handlers.put(node, pushEventHandler);
+		return node;
 	}
 
 	/**
@@ -78,33 +72,40 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 		final WebRequest request = (WebRequest)RequestCycle.get().getRequest();
 
 		if (request.getParameter("unload") != null)
-			// if the page is unloaded notify the pushService to disconnect all push channels
-			for (final TimerPushChannel<?> channel : handlers.keySet())
-				pushService.onDisconnect(channel);
+			// if the page is unloaded notify the pushService to disconnect all push nodes
+			for (final TimerPushNode<?> node : handlers.keySet())
+				pushService.onDisconnect(node);
 
 		else
 			// retrieve all collected events and process them
-			for (final Entry<TimerPushChannel, IPushEventHandler> entry : handlers.entrySet())
-				for (final Object event : pushService.pollEvents(entry.getKey()))
+			for (final Entry<TimerPushNode, IPushEventHandler> entry : handlers.entrySet())
+			{
+				final TimerPushNode node = entry.getKey();
+				for (final Iterator<TimerPushEventContext<?>> it = pushService.pollEvents(node)
+					.iterator(); it.hasNext();)
+				{
+					final TimerPushEventContext<?> ctx = it.next();
 					try
 					{
-						entry.getValue().onEvent(target, event);
+						entry.getValue().onEvent(target, ctx.getEvent(), node, ctx);
 					}
 					catch (final RuntimeException ex)
 					{
 						LOG.error("Failed while processing event", ex);
 					}
+				}
+			}
 	}
 
-	int removePushChannel(final IPushChannel<?> channel)
+	int removeNode(final IPushNode<?> node)
 	{
-		handlers.remove(channel);
+		handlers.remove(node);
 
-		// adjust the polling interval based on the fastest remaining channel
+		// adjust the polling interval based on the fastest remaining node
 		Duration newPollingInterval = Duration.MAXIMUM;
-		for (final TimerPushChannel chan : handlers.keySet())
-			if (chan.getPollingInterval().lessThan(newPollingInterval))
-				newPollingInterval = chan.getPollingInterval();
+		for (final TimerPushNode n : handlers.keySet())
+			if (n.getPollingInterval().lessThan(newPollingInterval))
+				newPollingInterval = n.getPollingInterval();
 		setUpdateInterval(newPollingInterval);
 
 		return handlers.size();

@@ -16,12 +16,23 @@
  */
 package org.wicketstuff.push;
 
-import java.io.Serializable;
-
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
-public interface IPushChannel<EventType> extends Serializable
+public interface IPushEventContext<EventType>
 {
-	String getLabel();
+	IPushChannel<EventType> getChannel();
+
+	EventType getEvent();
+
+	Object getProperty(Object key);
+
+	IPushService getService();
+
+	long getTimestamp();
+
+	/**
+	 * @return this
+	 */
+	IPushEventContext<EventType> setProperty(Object key, Object value);
 }
