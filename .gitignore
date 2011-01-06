@@ -1,4 +1,5 @@
 target
-*~
-/.settings
-/.project
+velocity.log
+.project
+.classpath
+.settings

@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.wicketstuff</groupId>
-		<artifactId>push-parent-jdk-1.6</artifactId>
-		<version>1.4.16-SNAPSHOT</version>
-	</parent>
+  <parent>
+    <groupId>org.wicketstuff</groupId>
+    <artifactId>push-parent-jdk-1.6</artifactId>
+    <version>1.4-SNAPSHOT</version>
+  </parent>
 
 	<artifactId>push-examples</artifactId>
 	<packaging>war</packaging>
