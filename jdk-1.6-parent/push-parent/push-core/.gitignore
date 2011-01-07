@@ -1,4 +1,4 @@
-/target
+/.classpath
 /.settings
 /.project
-/.classpath
+/target
