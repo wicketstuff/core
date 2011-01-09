@@ -12,7 +12,7 @@
 	<packaging>pom</packaging>
 
 	<name>Push - Parent</name>
-	<description>See the child project "push"for more information</description>
+	<description>See the child project "push-core" for more information</description>
 
 	<developers>
 		<developer>

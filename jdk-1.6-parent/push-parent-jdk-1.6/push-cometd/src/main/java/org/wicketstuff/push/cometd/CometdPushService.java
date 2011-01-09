@@ -416,7 +416,7 @@ public class CometdPushService extends AbstractPushService
 			final CometdPushBehavior behavior = _findPushBehaviour(component);
 			if (behavior == null)
 				return;
-			if (behavior.removePushChannel(node) == 0)
+			if (behavior.removeNode(node) == 0)
 				component.remove(behavior);
 		}
 		else

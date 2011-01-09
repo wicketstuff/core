@@ -179,6 +179,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 			public void renderHead(final IHeaderResponse response)
 			{
 				super.renderHead(response);
+
 				response.renderOnLoadJavascript("var chatHistory = document.getElementById('" +
 					chatHistoryField.getMarkupId() +
 					"'); chatHistory.scrollTop = chatHistory.scrollHeight;");

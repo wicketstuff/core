@@ -116,10 +116,13 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 	{
 		super.renderHead(response);
 
-		// install an onunload handler
-		response.renderJavascript("history.navigationMode = 'compatible';",
-			"Opera onunload support");
-		response.renderOnEventJavascript("window", "unload", "wicketAjaxGet('" +
-			getCallbackUrl().toString() + "&unload=1', function() { }, function() { });");
+		if (!isStopped())
+		{
+			// install an onunload handler
+			response.renderJavascript("history.navigationMode = 'compatible';",
+				"Opera onunload support");
+			response.renderOnEventJavascript("window", "unload", "wicketAjaxGet('" +
+				getCallbackUrl().toString() + "&unload=1', function() { }, function() { });");
+		}
 	}
 }

@@ -46,18 +46,6 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<optimise>true</optimise>
-					<debug>true</debug>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>2.0</version>
 				<executions>
@@ -84,7 +72,6 @@
 						</configuration>
 					</execution>
 				</executions>
-
 			</plugin>
 		</plugins>
 	</build>

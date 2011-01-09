@@ -249,9 +249,9 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	<EventType> CometdPushNode<EventType> addNode(
 		final IPushEventHandler<EventType> pushEventHandler)
 	{
-		final CometdPushNode<EventType> channel = new CometdPushNode<EventType>(_cometdChannelId);
-		_handlers.put(channel, pushEventHandler);
-		return channel;
+		final CometdPushNode<EventType> node = new CometdPushNode<EventType>(_cometdChannelId);
+		_handlers.put(node, pushEventHandler);
+		return node;
 	}
 
 	/**
@@ -277,9 +277,9 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 		return DEFAULT_COMETD_PATH;
 	}
 
-	int removePushChannel(final IPushNode<?> channel)
+	int removeNode(final IPushNode<?> node)
 	{
-		_handlers.remove(channel);
+		_handlers.remove(node);
 		return _handlers.size();
 	}
 
