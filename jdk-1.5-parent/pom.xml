@@ -1,11 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-        <version>1.5-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jdk-1.5-parent</artifactId>
@@ -30,102 +31,102 @@
 		<module>phonebook</module>
 		<module>shiro-security</module>
 		<module>gae-initializer-parent</module>
+		<module>push-parent-jdk-1.5</module>
 
 		<!-- Modules below are commented until they can compile with wicket 1.5-SNAPSHOT -->
-	
-<!--		<module>annotation</module>-->
-<!--		<module>calendarviews-parent</module>-->
-<!--		<module>client-and-server-validation</module>-->
 
-<!--		<module>input-events-parent</module>-->
-<!--		<module>jslibraries</module>-->
-<!--		<module>jquery-parent</module>-->
-<!--		<module>jsr303-parent</module>-->
-<!--		<module>misc</module>-->
-<!--		<module>objectautocomplete-parent</module>-->
+		<!-- <module>annotation</module> -->
+		<!-- <module>calendarviews-parent</module> -->
+		<!-- <module>client-and-server-validation</module> -->
 
-<!--		<module>prototype</module>-->
-<!--		<module>scriptaculous-parent</module>-->
-<!--		<module>simile-timeline-parent</module>-->
-<!--		<module>tinymce-parent</module>-->
-<!--		<module>yui-parent</module>-->
-<!--		<module>artwork-parent</module>-->
-<!--		<module>yav-parent</module>-->
-<!--		<module>plugin</module>-->
+		<!-- <module>input-events-parent</module> -->
+		<!-- <module>jslibraries</module> -->
+		<!-- <module>jquery-parent</module> -->
+		<!-- <module>jsr303-parent</module> -->
+		<!-- <module>misc</module> -->
+		<!-- <module>objectautocomplete-parent</module> -->
 
-		<!--commented out until org.apache.commons:commons-proxy:jar:1.1-SNAPSHOT is available -->
+		<!-- <module>prototype</module> -->
+		<!-- <module>scriptaculous-parent</module> -->
+		<!-- <module>simile-timeline-parent</module> -->
+		<!-- <module>tinymce-parent</module> -->
+		<!-- <module>yui-parent</module> -->
+		<!-- <module>artwork-parent</module> -->
+		<!-- <module>yav-parent</module> -->
+		<!-- <module>plugin</module> -->
+
+		<!--commented out until org.apache.commons:commons-proxy:jar:1.1-SNAPSHOT 
+			is available -->
 		<!--see http://www.nabble.com/Wicketstuff-core...-td23105708.html#a23106385 -->
 		<!-- <module>syringe</module> -->
-		
-<!--		<module>ki-security</module>-->
-<!--		<module>sitemap-xml-parent</module>		-->
-<!--		<module>multi-text-input-parent</module>-->
 
-<!--		<module>jwicket-parent</module>-->
-<!--		<module>mbeanview-parent</module>-->
-<!--		<module>ddcalendar-parent</module>-->
-<!--		<module>maven-support</module>-->
-<!--		<module>theme-parent</module>-->
-<!--		<module>jasperreports-parent</module>-->
+		<!-- <module>ki-security</module> -->
+		<!-- <module>sitemap-xml-parent</module> -->
+		<!-- <module>multi-text-input-parent</module> -->
 
-	  </modules>
+		<!-- <module>jwicket-parent</module> -->
+		<!-- <module>mbeanview-parent</module> -->
+		<!-- <module>ddcalendar-parent</module> -->
+		<!-- <module>maven-support</module> -->
+		<!-- <module>theme-parent</module> -->
+		<!-- <module>jasperreports-parent</module> -->
+
+	</modules>
 
 	<build>
-	<plugins>
-	<plugin>
-		<inherited>true</inherited>
-		<groupId>org.apache.maven.plugins</groupId>
-		<artifactId>maven-compiler-plugin</artifactId>
-		<version>2.3.1</version>
-		<configuration>
-			<fork>true</fork>
-			<verbose>true</verbose>
-			<optimise>true</optimise>
-			<debug>true</debug>
-			<meminitial>128m</meminitial>
-			<maxmem>512m</maxmem>
-			<source>1.5</source>
-			<target>1.5</target>
-			<!--
-			<compilerVersion>1.5</compilerVersion>
-			<executable>${java5home}/bin/javac</executable>
-			-->
-			<encoding>UTF-8</encoding>
-		</configuration>
-	</plugin>
+		<plugins>
+			<plugin>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<fork>true</fork>
+					<verbose>true</verbose>
+					<optimise>true</optimise>
+					<debug>true</debug>
+					<meminitial>128m</meminitial>
+					<maxmem>512m</maxmem>
+					<source>1.5</source>
+					<target>1.5</target>
+					<!--
+						<compilerVersion>1.5</compilerVersion>
+						<executable>${java5home}/bin/javac</executable>
+					-->
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
 
-	<plugin>
+			<plugin>
 
-		<inherited>true</inherited>
-		<groupId>org.apache.maven.plugins</groupId>
-		<artifactId>maven-help-plugin</artifactId>
-		<version>2.1.1</version>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-help-plugin</artifactId>
+				<version>2.1.1</version>
 
-	</plugin>
+			</plugin>
 
-	<plugin>
+			<plugin>
 
-		<inherited>true</inherited>
-	  <!--
-	           make sure our code doesn't have 1.6 dependencies except where
-			   we know it
-			            see
-		         * http://mojo.codehaus.org/animal-sniffer/index.html
-				          * http://weblogs.java.net/blog/kohsuke/archive/2008/11/compiling_with.html
-						          -->
-								          <groupId>org.codehaus.mojo</groupId>
-	          <artifactId>animal-sniffer-maven-plugin</artifactId>
-	          <version>1.5</version>
-	          <configuration>
-			            <signature>
-					            <groupId>org.codehaus.mojo.signature</groupId>
-					            <artifactId>java15</artifactId>
-					            <version>1.0</version>
-	   		            </signature>
-			   </configuration>
-		</plugin>
+				<inherited>true</inherited>
+				<!--
+					make sure our code doesn't have 1.6 dependencies except where we know it see
+					* http://mojo.codehaus.org/animal-sniffer/index.html
+					* http://weblogs.java.net/blog/kohsuke/archive/2008/11/compiling_with.html
+				-->
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>animal-sniffer-maven-plugin</artifactId>
+				<version>1.5</version>
+				<configuration>
+					<signature>
+						<groupId>org.codehaus.mojo.signature</groupId>
+						<artifactId>java15</artifactId>
+						<version>1.0</version>
+					</signature>
+				</configuration>
+			</plugin>
 
-	</plugins>
+		</plugins>
 	</build>
 
 </project>
