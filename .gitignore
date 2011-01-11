@@ -3,3 +3,5 @@ velocity.log
 .project
 .classpath
 .settings
+.externalToolBuilders
+*~

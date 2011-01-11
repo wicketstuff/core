@@ -143,6 +143,14 @@
 			<id>oss.sonatype.org-staged-release</id>
 			<!-- This is the profile to use for releasing into the staged release 
 				repo. We need to sign the artifacts. -->
+
+			<activation>
+			  <property>
+                          <name>performRelease</name>
+                          <value>true</value>
+                        </property>
+
+			</activation>
 			<build>
 				<plugins>
 
@@ -186,17 +194,19 @@
 			</distributionManagement>
 
 		</profile>
+		
+		<!-- mocleiri: this profile is used when we set the next version using the versions:set plugin goal.
+			        Normally the core artifact does not have any modules.   This is because we build each submodule
+				seperately and using a separate JDK.
+		-->	
 
-		<profile>
-			<id>all</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>jdk-1.5-parent</module>
-				<module>jdk-1.6-parent</module>
-			</modules>
-		</profile>
+                <profile>
+                        <id>next-version</id>
+                        <modules>
+                                <module>jdk-1.5-parent</module>
+                                <module>jdk-1.6-parent</module>
+                        </modules>
+                </profile>
 
 		<profile>
 			<!-- setup for using oss.sonatype.org to hold snapshots -->
@@ -231,13 +241,6 @@
 					<id>wicket-snapshots</id>
 					<name>Apache Wicket Snapshots</name>
 					<url>http://repository.apache.org/snapshots</url>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-				</repository>
-				<repository>
-					<id>wicket-snaps</id>
-					<url>http://wicketstuff.org/maven/repository</url>
 					<snapshots>
 						<enabled>true</enabled>
 					</snapshots>
@@ -676,14 +679,5 @@
 			</plugin>
 		</plugins>
 	</reporting>
-
-	<!-- Not allowed for central sync up these need to be included in via a 
-		profile. <repositories> <repository> <id>wicket-snaps</id> <url>http://wicketstuff.org/maven/repository</url> 
-		<snapshots> <enabled>true</enabled> </snapshots> <releases> <enabled>true</enabled> 
-		</releases> </repository> </repositories> <pluginRepositories> <pluginRepository> 
-		<id>maven-license-plugin-repo</id> <name>Maven repository of maven-license-plugin 
-		releases</name> <url>http://mc-repo.googlecode.com/svn/maven2/releases</url> 
-		<snapshots> <enabled>false</enabled> </snapshots> <releases> <enabled>true</enabled> 
-		</releases> </pluginRepository> </pluginRepositories> -->
 
 </project>
