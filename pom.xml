@@ -60,8 +60,8 @@
 	</developers>
 
 	<ciManagement>
-		<system>continuum</system>
-		<url>http://www.wickettraining.com/continuum</url>
+		<system>hudson</system>
+		<url>http://wicketstuff.org/hudson</url>
 	</ciManagement>
 
 	<distributionManagement>
@@ -266,8 +266,8 @@
 	</profiles>
 
 	<issueManagement>
-		<system>jira</system>
-		<url>http://wicketstuff.org/jira</url>
+		<system>github</system>
+		<url>https://github.com/wicketstuff/core/issues</url>
 	</issueManagement>
 
 	<mailingLists>
