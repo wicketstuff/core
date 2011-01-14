@@ -6,7 +6,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>1.4.7</version>
+	<version>1.4.7.1</version>
 
 	<name>WicketStuff Core Parent</name>
 	<description>
@@ -293,8 +293,8 @@
 	</profiles>
 
 	<issueManagement>
-		<system>jira</system>
-		<url>http://wicketstuff.org/jira</url>
+		<system>github</system>
+		<url>http://github.com/wicketstuff/core/issues</url>
 	</issueManagement>
 
 	<mailingLists>
@@ -308,8 +308,8 @@
 	</mailingLists>
 
 	<scm>
-		<url>https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/</url>
-		<connection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/tags/wicketstuff-core-1.4.7</connection>
+		<url>https://github.com/wicketstuff/core/commits/wicketstuff-core-1.4.7.1</url>
+                <connection>scm:git:ssh://git@github.com:wicketstuff/core.git</connection>
 	</scm>
 
 	<properties>
