@@ -34,4 +34,5 @@ public class GaeInitializer implements IInitializer {
 		application.getResourceSettings().setFileUploadCleaner(null);
 	}
 
+	public void destroy(Application application) {}
 }
