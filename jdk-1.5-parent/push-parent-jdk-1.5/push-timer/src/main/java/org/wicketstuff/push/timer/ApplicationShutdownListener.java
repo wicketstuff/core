@@ -17,13 +17,12 @@
 package org.wicketstuff.push.timer;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.IDestroyer;
 import org.apache.wicket.IInitializer;
 
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
-public class ApplicationShutdownListener implements IInitializer, IDestroyer
+public class ApplicationShutdownListener implements IInitializer
 {
 	/**
 	 * {@inheritDoc}
