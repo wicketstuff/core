@@ -151,7 +151,7 @@ public class Html5Media extends WebMarkupContainer {
      * @see org.apache.wicket.Component#onComponentTagBody(org.apache.wicket.markup.MarkupStream , ComponentTag)
      */
     @Override
-    protected void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag) {
+	public void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag) {
 
         List<MediaSource> sources = getSources();
 

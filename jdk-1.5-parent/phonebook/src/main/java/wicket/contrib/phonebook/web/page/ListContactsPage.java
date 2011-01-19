@@ -136,7 +136,7 @@ public class ListContactsPage extends BasePage {
 		// create the data table
 		users = new DefaultDataTable<Contact>("users", createColumns(),
 				dataProvider, 10);
-		users.addTopToolbar(new FilterToolbar("", users, form, dataProvider));
+		users.addTopToolbar(new FilterToolbar(users, form, dataProvider));
 		form.add(users);
 
 		add(form);

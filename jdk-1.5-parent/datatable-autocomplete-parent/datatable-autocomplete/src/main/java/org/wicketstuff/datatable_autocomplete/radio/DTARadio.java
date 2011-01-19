@@ -82,7 +82,7 @@ public class DTARadio<T> extends Radio<T> {
 	 * @see org.apache.wicket.MarkupContainer#onComponentTagBody(org.apache.wicket.markup.MarkupStream, org.apache.wicket.markup.ComponentTag)
 	 */
 	@Override
-	protected void onComponentTagBody(MarkupStream markupStream,
+	public void onComponentTagBody(MarkupStream markupStream,
 			ComponentTag openTag) {
 
 		openTag.setName("input");

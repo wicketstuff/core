@@ -15,6 +15,8 @@
  */
 package org.wicketstuff.datatable_autocomplete.table;
 
+import java.util.List;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.IClusterable;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackHeadersToolbar;
@@ -75,7 +77,7 @@ public class DTADataTable<T> extends DataTable<T> {
 	 * @param rowsPerPage
 	 */
 	public DTADataTable(String id, String cssClassName,
-			IColumn[] columns, ISortableDataProvider<T> dataProvider,
+			List<IColumn<T>> columns, ISortableDataProvider<T> dataProvider,
 			IDTATableRenderingHints hints) {
 
 		super(id, columns, dataProvider, hints.getPageSize());
@@ -90,12 +92,12 @@ public class DTADataTable<T> extends DataTable<T> {
 		
 		
 		if (hints.isPaginationEnabled())
-			addTopToolbar(new AjaxNavigationToolbar("navigationToolbar", this));
+			addTopToolbar(new AjaxNavigationToolbar(this));
 		
-		addTopToolbar(new AjaxFallbackHeadersToolbar("headerToolbar", this, dataProvider));
+		addTopToolbar(new AjaxFallbackHeadersToolbar(this, dataProvider));
 		
 		if (hints.showNoRecordsToolbar())
-			addBottomToolbar(new NoRecordsToolbar("noRecordsToolbar", this));
+			addBottomToolbar(new NoRecordsToolbar(this));
 
 	}
 
@@ -106,7 +108,7 @@ public class DTADataTable<T> extends DataTable<T> {
 	 * @param provider
 	 * @param i
 	 */
-	public DTADataTable(String id, IColumn[] tableColumns,
+	public DTADataTable(String id, List<IColumn<T>> tableColumns,
 			ISortableDataProvider<T> provider, IDTATableRenderingHints hints) {
 
 		this(id, "dta_data_table", tableColumns, provider, hints);
@@ -137,7 +139,7 @@ public class DTADataTable<T> extends DataTable<T> {
 	 * .wicket.markup.MarkupStream, org.apache.wicket.markup.ComponentTag)
 	 */
 	@Override
-	protected void onComponentTagBody(MarkupStream markupStream,
+	public void onComponentTagBody(MarkupStream markupStream,
 			ComponentTag openTag) {
 
 		// force the name of the tag to be table.

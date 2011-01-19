@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>jdk-1.5-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jasperreports-parent</artifactId>
@@ -30,12 +30,6 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-
-	<scm>
-		<connection>scm:svn:${maven.scm.anonymous}@wicket-stuff.svn.sourceforge.net:/svnroot/wicket-stuff/trunk/wicketstuff-core/jasperreports-parent</connection>
-		<developerConnection>scm:svn:${maven.scm.user}@wicket-stuff.svn.sourceforge.net:/svnroot/wicket-stuff/trunk/wicketstuff-core/jasperreports-parent</developerConnection>
-		<url>http://wicket-stuff.svn.sourceforge.net/viewvc/wicket-stuff/trunk/wicketstuff-core/jasperreports-parent/</url>
-	</scm>
 
 	<mailingLists>
 		<mailingList>

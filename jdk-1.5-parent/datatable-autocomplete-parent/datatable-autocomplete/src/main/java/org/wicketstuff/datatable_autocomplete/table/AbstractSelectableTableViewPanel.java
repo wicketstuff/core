@@ -15,6 +15,8 @@
  */
 package org.wicketstuff.datatable_autocomplete.table;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.Component;
@@ -158,20 +160,20 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 		radioGroup = new DTARadioGroup<T>("radioGroup", this.dataProvider
 				.model(null));
 
-		IColumn<?>[] includingRadioColumns = new IColumn[columns.length + 1];
+		List<IColumn<T>> includingRadioColumnList = new ArrayList<IColumn<T>>();
 
 		// TODO: allow customization of the radio column label
 		final DTARadioColumn<T> radioColumn = new DTARadioColumn<T>("");
 
-		includingRadioColumns[0] = radioColumn;
+		includingRadioColumnList.add (radioColumn);
 
 		for (int i = 0; i < columns.length; i++) {
 
-			includingRadioColumns[i + 1] = columns[i];
+			includingRadioColumnList.add ((IColumn<T>) columns[i]);
 		}
 
 		dataTable = new DTADataTable<T>("dataTable", cssClassName,
-				includingRadioColumns, dataProvider, hints);
+				includingRadioColumnList, dataProvider, hints);
 
 		
 		radioGroup.add(dataTable);

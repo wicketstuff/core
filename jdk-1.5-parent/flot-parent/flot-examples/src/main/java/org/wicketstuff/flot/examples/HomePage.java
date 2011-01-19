@@ -3,9 +3,9 @@ package org.wicketstuff.flot.examples;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.flot.Color;
 import org.wicketstuff.flot.DataSet;
 import org.wicketstuff.flot.FlotPanel;

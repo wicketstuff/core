@@ -18,9 +18,9 @@
 package org.wicketstuff.jasperreports;
 
 import org.apache.wicket.IResourceListener;
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebComponent;
+import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  * Component for embedding a jasper report in a page. This component must be

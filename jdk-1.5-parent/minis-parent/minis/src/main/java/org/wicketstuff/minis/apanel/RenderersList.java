@@ -24,7 +24,6 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.WebMarkupContainerWithAssociatedMarkup;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -131,21 +130,22 @@ class RenderersList implements Serializable
 		}
 	}
 
-	public static final class DefaultWebMarkupContainerWithMarkupRenderer extends
-		BaseWebMarkupContainerRenderer<WebMarkupContainerWithAssociatedMarkup>
-	{
-		private static final long serialVersionUID = 1L;
-
-		public Class<WebMarkupContainerWithAssociatedMarkup> getComponentClass()
-		{
-			return WebMarkupContainerWithAssociatedMarkup.class;
-		}
-
-		public CharSequence getMarkup(final WebMarkupContainerWithAssociatedMarkup component)
-		{
-			return String.format("<span %s></span>", getIdAttribute(component));
-		}
-	}
+	// mocleiri: does not seem compatible with 1.5
+//	public static final class DefaultWebMarkupContainerWithMarkupRenderer extends
+//		BaseWebMarkupContainerRenderer<WebMarkupContainerWithAssociatedMarkup>
+//	{
+//		private static final long serialVersionUID = 1L;
+//
+//		public Class<WebMarkupContainerWithAssociatedMarkup> getComponentClass()
+//		{
+//			return WebMarkupContainerWithAssociatedMarkup.class;
+//		}
+//
+//		public CharSequence getMarkup(final WebMarkupContainerWithAssociatedMarkup component)
+//		{
+//			return String.format("<span %s></span>", getIdAttribute(component));
+//		}
+//	}
 
 	@SuppressWarnings("rawtypes")
 	public static final class FormRenderer extends BaseWebMarkupContainerRenderer<Form>
@@ -272,7 +272,8 @@ class RenderersList implements Serializable
 		DEFAULT_RENDERERS.add(new RepeatingViewRenderer());
 		DEFAULT_RENDERERS.add(new FormRenderer());
 		DEFAULT_RENDERERS.add(new ButtonRenderer());
-		DEFAULT_RENDERERS.add(new DefaultWebMarkupContainerWithMarkupRenderer());
+//		mocleiri: TODO make 1.5 compatible.
+//		DEFAULT_RENDERERS.add(new DefaultWebMarkupContainerWithMarkupRenderer());
 		DEFAULT_RENDERERS.add(new DefaultWebMarkupContainerRenderer());
 		DEFAULT_RENDERERS.add(new DefaultRenderer());
 	}

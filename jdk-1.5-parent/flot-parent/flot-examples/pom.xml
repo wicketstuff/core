@@ -109,6 +109,5 @@
   </dependencies>
 
   <properties>
-    <wicket.version>1.4-rc4</wicket.version>
   </properties>
 </project>
