@@ -32,8 +32,7 @@
 		<module>shiro-security</module>
 		<module>gae-initializer-parent</module>
 		<module>push-parent-jdk-1.5</module>
-		<!-- mocleiri: changes are needed to make compatible with 1.5 -->
-		<!-- <module>jasperreports-parent</module> -->
+		<module>jasperreports-parent</module> 
 
 		<!-- Modules below are commented until they can compile with wicket 1.5-SNAPSHOT -->
 
