@@ -31,6 +31,7 @@ import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRGraphics2DExporter;
 import net.sf.jasperreports.engine.export.JRGraphics2DExporterParameter;
 
 import org.apache.wicket.WicketRuntimeException;
@@ -112,8 +113,11 @@ public final class JRImageResource extends JRResource
 	@Override
   public final JRAbstractExporter newExporter()
 	{
-		throw new UnsupportedOperationException(
-				"this method is not used in this implementation");
+		try {
+			return new JRGraphics2DExporter();
+		} catch (JRException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 

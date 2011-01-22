@@ -34,7 +34,7 @@ public class StartExamples {
 		WebAppContext context = new WebAppContext();
 		context.setServer(server);
 		context.setContextPath("/");
-		context.setWar("jasperreports-examples/src/main/webapp");
+		context.setWar("src/main/webapp");
 
 		server.addHandler(context);
 		try {
