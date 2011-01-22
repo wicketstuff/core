@@ -17,20 +17,43 @@ package org.wicketstuff.theme;
 
 import java.util.List;
 
-import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.html.IHeaderContributor;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 
-public abstract class WicketThemeBasePage extends WebPage
+public abstract class WicketThemeBasePage extends WebPage 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8601976301347808433L;
+
 	public WicketThemeBasePage()
 	{
-		List<HeaderContributor> headerContributors = getThemeFactory().getHeaderContributors();
-		for (HeaderContributor hc : headerContributors) add(hc);
+		
 		
 		add(new Label("title",getTitleModel()));
+		
+		add(new Behavior(){
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 3548799040289197907L;
+
+			@Override
+			public void renderHead(Component component, IHeaderResponse response) {
+				super.renderHead(component, response);
+				
+				getThemeFactory().renderHead(component, response);
+				
+			}});
 	}
+	
 	
 	protected abstract IModel<String> getTitleModel(); 
 	

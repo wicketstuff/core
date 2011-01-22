@@ -24,12 +24,13 @@ public class JSR303ExampleApplication extends WebApplication
     {
         super.init();
 
-        mountBookmarkablePage("/e1", Example1.class);
-        mountBookmarkablePage("/e2", Example2.class);
-        mountBookmarkablePage("/e3", Example3.class);
-        mountBookmarkablePage("/e4", Example4.class);
-        mountBookmarkablePage("/e5", Example5.class);
-        mountBookmarkablePage("/e6", Example6.class);
+        
+        mountPage("/e1", Example1.class);
+        mountPage("/e2", Example2.class);
+        mountPage("/e3", Example3.class);
+        mountPage("/e4", Example4.class);
+        mountPage("/e5", Example5.class);
+        mountPage("/e6", Example6.class);
 
     }
 

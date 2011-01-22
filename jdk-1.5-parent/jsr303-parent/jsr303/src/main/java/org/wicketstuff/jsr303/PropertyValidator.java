@@ -7,7 +7,7 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 
 import org.apache.wicket.behavior.AbstractBehavior;
-import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.AbstractPropertyModel;
 import org.apache.wicket.validation.INullAcceptingValidator;
@@ -58,8 +58,8 @@ public class PropertyValidator<T> implements INullAcceptingValidator<T>, Seriali
 
     private boolean hasExclusionBehaviour()
     {
-        List<IBehavior> behaviors = fc.getBehaviors();
-        for (IBehavior iBehavior : behaviors)
+        List<? extends Behavior> behaviors = fc.getBehaviors();
+        for (Behavior iBehavior : behaviors)
         {
             if (iBehavior instanceof PropertyValidator.Exclude)
             {

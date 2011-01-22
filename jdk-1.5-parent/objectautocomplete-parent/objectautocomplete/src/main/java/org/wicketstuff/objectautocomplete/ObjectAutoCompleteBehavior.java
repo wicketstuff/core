@@ -16,7 +16,11 @@
  */
 package org.wicketstuff.objectautocomplete;
 
-import org.apache.wicket.*;
+import java.io.Serializable;
+import java.util.Iterator;
+
+import org.apache.wicket.Application;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.WicketAjaxReference;
@@ -27,12 +31,12 @@ import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompleteR
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WicketEventReference;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
-import org.apache.wicket.protocol.http.WebResponse;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.http.WebResponse;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.settings.IDebugSettings;
-
-import java.io.Serializable;
-import java.util.Iterator;
+import org.apache.wicket.util.upload.RequestContext;
 
 /**
  * Behaviour for object auto completion using a slightly modified variant of
@@ -47,14 +51,14 @@ import java.util.Iterator;
  */
 public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior {
 
-    private static final ResourceReference OBJECTAUTOCOMPLETE_JS = new JavascriptResourceReference(
+    private static final ResourceReference OBJECTAUTOCOMPLETE_JS = new JavaScriptResourceReference(
             ObjectAutoCompleteBehavior.class, "wicketstuff-objectautocomplete.js");
     // Our version of 'wicket-autocomplete.js', with the patch from WICKET-1651
-    private static final ResourceReference AUTOCOMPLETE_OBJECTIFIED_JS = new JavascriptResourceReference(
+    private static final ResourceReference AUTOCOMPLETE_OBJECTIFIED_JS = new JavaScriptResourceReference(
             ObjectAutoCompleteBehavior.class, "wicketstuff-dropdown-list.js");
 
     // Reference to upstream JS, use this if the required patch has been applied. For now, unused.
-    private static final ResourceReference AUTOCOMPLETE_JS = new JavascriptResourceReference(
+    private static final ResourceReference AUTOCOMPLETE_JS = new JavaScriptResourceReference(
 		AutoCompleteBehavior.class, "wicket-autocomplete.js");
 
     // Element holding the object id as value
@@ -110,7 +114,7 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior 
      * @param response response to write to
      */
     @Override
-    public void renderHead(IHeaderResponse response) {
+    public void renderHead(Component c, IHeaderResponse response) {
         abstractDefaultAjaxBehaviour_renderHead(response);
         initHead(response);
     }
@@ -165,20 +169,20 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior 
     private void abstractDefaultAjaxBehaviour_renderHead(IHeaderResponse response) {
 		final IDebugSettings debugSettings = Application.get().getDebugSettings();
 
-		response.renderJavascriptReference(WicketEventReference.INSTANCE);
-		response.renderJavascriptReference(WicketAjaxReference.INSTANCE);
+		response.renderJavaScriptReference(WicketEventReference.INSTANCE);
+		response.renderJavaScriptReference(WicketAjaxReference.INSTANCE);
 
 		if (debugSettings.isAjaxDebugModeEnabled())
 		{
-            response.renderJavascriptReference(new JavascriptResourceReference(
+            response.renderJavaScriptReference(new JavaScriptResourceReference(
                     AbstractDefaultAjaxBehavior.class, "wicket-ajax-debug.js"));
-			response.renderJavascript("wicketAjaxDebugEnable=true;", "wicket-ajax-debug-enable");
+			response.renderJavaScript("wicketAjaxDebugEnable=true;", "wicket-ajax-debug-enable");
 		}
 
 		RequestContext context = RequestContext.get();
 		if (context.isPortletRequest())
 		{
-			response.renderJavascript("Wicket.portlet=true", "wicket-ajax-portlet-flag");
+			response.renderJavaScript("Wicket.portlet=true", "wicket-ajax-portlet-flag");
 		}
     }
 
@@ -189,12 +193,12 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior 
      */
     protected void initHead(IHeaderResponse response)
 	{
-		response.renderJavascriptReference(AUTOCOMPLETE_OBJECTIFIED_JS);
-		response.renderJavascriptReference(OBJECTAUTOCOMPLETE_JS);
+		response.renderJavaScriptReference(AUTOCOMPLETE_OBJECTIFIED_JS);
+		response.renderJavaScriptReference(OBJECTAUTOCOMPLETE_JS);
 		final String id = getComponent().getMarkupId();
         String initJS = String.format("new Wicketstuff.ObjectAutoComplete('%s','%s','%s',%s);", id,objectElement.getMarkupId(),
             getCallbackUrl(), getSettings());
-		response.renderOnDomReadyJavascript(initJS);
+		response.renderOnDomReadyJavaScript(initJS);
 	}
 
     @Override
@@ -215,8 +219,9 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior 
     @Override
     protected void respond(AjaxRequestTarget target) {
         RequestCycle requestCycle = RequestCycle.get();
-        boolean cancel = Boolean.valueOf(requestCycle.getRequest().getParameter("cancel")).booleanValue();
-        boolean force = Boolean.valueOf(requestCycle.getRequest().getParameter("force")).booleanValue();
+        boolean cancel = requestCycle.getRequest().getRequestParameters().getParameterValue("cancel").toBoolean();
+        boolean force = requestCycle.getRequest().getRequestParameters().getParameterValue("force").toBoolean();
+        
         if (cancelListener != null && cancel) {
             cancelListener.searchCanceled(target,force);
         } else {

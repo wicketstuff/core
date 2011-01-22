@@ -35,10 +35,12 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.set.ListOrderedSet;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.Session;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -404,7 +406,7 @@ public class TinyMCESettings implements Serializable {
 
 		if (contentCss != null)
 			buffer.append(",\n\t").append("content_css : \"").append(
-					RequestCycle.get().urlFor(contentCss)).append("\"");
+					RequestCycle.get().urlFor(contentCss, new PageParameters())).append("\"");
 
 		if (documentBaseUrl != null)
 			buffer.append(",\n\t").append("document_base_url : \"").append(
@@ -735,7 +737,7 @@ public class TinyMCESettings implements Serializable {
 
 	public static ResourceReference javaScriptReference() {
 		Application app = Application.get();
-		if (Application.DEVELOPMENT.equals(app.getConfigurationType()))
+		if (RuntimeConfigurationType.DEVELOPMENT.equals(app.getConfigurationType()))
 			return REFERENCE;
 		else
 			return REFERENCE_MIN;

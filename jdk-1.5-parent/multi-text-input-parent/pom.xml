@@ -56,20 +56,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-<!--
-    <build>
-        <plugins>
-            <plugin>
-                
-            </plugin>
-        </plugins>
-    </build>
--->
-<!--
-    <profiles>
-    </profiles>
--->
-    <properties>
-        <wicket.version>1.4-rc2</wicket.version>
-    </properties>
+    
 </project>

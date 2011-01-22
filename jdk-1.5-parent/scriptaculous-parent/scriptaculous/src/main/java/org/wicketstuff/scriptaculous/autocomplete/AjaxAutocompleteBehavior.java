@@ -18,10 +18,9 @@
  */
 package org.wicketstuff.scriptaculous.autocomplete;
 
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.request.target.basic.StringRequestTarget;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.wicketstuff.scriptaculous.Indicator;
 
 /**

@@ -19,14 +19,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.Response;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.template.PackagedTextTemplate;
 import org.apache.wicket.util.template.TextTemplate;
 import org.apache.wicket.util.value.IValueMap;
@@ -44,8 +43,7 @@ import wicket.contrib.input.events.key.KeyType;
  *         stars)
  * 
  */
-public class InputBehavior extends AbstractBehavior implements
-		IHeaderContributor {
+public class InputBehavior extends Behavior  {
 
 	private ResourceReference SHORTCUTS_JAVASCRIPT = new CompressedResourceReference(
 			InputBehavior.class, "shortcuts.js");
@@ -113,11 +111,11 @@ public class InputBehavior extends AbstractBehavior implements
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
-		response.renderJavascriptReference(SHORTCUTS_JAVASCRIPT);
+	public void renderHead(Component c, IHeaderResponse response) {
+		super.renderHead(c, response);
+		response.renderJavaScriptReference(SHORTCUTS_JAVASCRIPT);
 		if (!autoHook) {
-			response.renderOnLoadJavascript(generateString(shortcutJs));
+			response.renderOnLoadJavaScript(generateString(shortcutJs));
 		}
 	}
 

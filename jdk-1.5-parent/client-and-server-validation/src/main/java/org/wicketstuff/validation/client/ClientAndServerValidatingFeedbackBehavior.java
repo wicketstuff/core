@@ -21,6 +21,7 @@ package org.wicketstuff.validation.client;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.WicketAjaxReference;
 import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
@@ -33,7 +34,7 @@ import org.apache.wicket.markup.html.form.Form;
  * 
  * @author Jeremy Thomerson
  */
-public class ClientAndServerValidatingFeedbackBehavior extends AbstractBehavior {
+public class ClientAndServerValidatingFeedbackBehavior extends Behavior {
 
 	private static final long serialVersionUID = 1L;
 
@@ -59,14 +60,14 @@ public class ClientAndServerValidatingFeedbackBehavior extends AbstractBehavior 
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
-		response.renderJavascriptReference(WicketAjaxReference.INSTANCE);
+	public void renderHead(Component c, IHeaderResponse response) {
+		super.renderHead(c, response);
+		response.renderJavaScriptReference(WicketAjaxReference.INSTANCE);
 		
 		// add a trigger that will add our validation to the forms' onSubmit methods
 		String formID = mForm.getMarkupId();
 		String containerID = mContainer.getMarkupId();
-		response.renderOnLoadJavascript("ClientAndServerValidator.registerFeedbackContainerForForm('" + formID + "', '" + containerID + "');");
+		response.renderOnLoadJavaScript("ClientAndServerValidator.registerFeedbackContainerForForm('" + formID + "', '" + containerID + "');");
 	}
 
 }

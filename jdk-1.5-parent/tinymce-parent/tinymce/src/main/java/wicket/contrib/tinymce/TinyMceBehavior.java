@@ -22,13 +22,10 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.behavior.AbstractBehavior;
-import org.apache.wicket.markup.html.IHeaderContributor;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.protocol.http.WebRequest;
-import org.apache.wicket.protocol.http.WebResponse;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.http.WebRequest;
 
 import wicket.contrib.tinymce.settings.TinyMCESettings;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Mode;
@@ -36,7 +33,7 @@ import wicket.contrib.tinymce.settings.TinyMCESettings.Mode;
 /**
  * Renders a component (textarea) as WYSIWYG editor, using TinyMce.
  */
-public class TinyMceBehavior extends AbstractBehavior {
+public class TinyMceBehavior extends Behavior {
     private static final long serialVersionUID = 3L;
 
     private Component component;
@@ -50,8 +47,8 @@ public class TinyMceBehavior extends AbstractBehavior {
         this.settings = settings;
     }
 
-    public void renderHead(IHeaderResponse response) {
-        super.renderHead(response);
+    public void renderHead(Component c, IHeaderResponse response) {
+        super.renderHead(c, response);
         if (component == null)
             throw new IllegalStateException("TinyMceBehavior is not bound to a component");
 

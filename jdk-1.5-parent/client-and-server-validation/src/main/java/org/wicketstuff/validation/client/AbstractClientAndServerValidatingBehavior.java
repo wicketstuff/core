@@ -23,15 +23,14 @@ import java.util.Map;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.behavior.AbstractBehavior;
-import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.lang.Classes;
-import org.apache.wicket.util.string.JavascriptUtils;
+import org.apache.wicket.util.string.JavaScriptUtils;
 import org.apache.wicket.util.string.interpolator.MapVariableInterpolator;
 
 /**
@@ -40,7 +39,7 @@ import org.apache.wicket.util.string.interpolator.MapVariableInterpolator;
  * 
  * @author Jeremy Thomerson
  */
-public abstract class AbstractClientAndServerValidatingBehavior extends AbstractBehavior implements IBehavior, IHeaderContributor {
+public abstract class AbstractClientAndServerValidatingBehavior extends Behavior {
 	private static final long serialVersionUID = 1L;
 	
 	private FormComponent<?> mComponent;
@@ -72,15 +71,16 @@ public abstract class AbstractClientAndServerValidatingBehavior extends Abstract
 		}
 	}
 
+	
 	@Override
-	public final void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
+	public final void renderHead(Component c, IHeaderResponse response) {
+		super.renderHead(c, response);
 		
 		// add our validation javascript file
-		response.renderJavascriptReference(new ResourceReference(getClass(), "validation.js"));
+		response.renderJavaScriptReference(new PackageResourceReference(getClass(), "validation.js"));
 		
 		// add a trigger that will add our validation to the forms' onSubmit methods
-		response.renderOnLoadJavascript("ClientAndServerValidator.addFormOnloadEvents();");
+		response.renderOnLoadJavaScript("ClientAndServerValidator.addFormOnloadEvents();");
 
 		CharSequence formID = jsEscape(mForm.getMarkupId());
 		CharSequence compID = jsEscape(mComponent.getMarkupId());
@@ -92,12 +92,12 @@ public abstract class AbstractClientAndServerValidatingBehavior extends Abstract
 		
 		String validator = createValidatorConstructorJavaScript(formID, compID, escapedMessage); 
 		String js = "ClientAndServerValidator.registerValidator(" + validator + ");";
-		response.renderOnDomReadyJavascript(js.toString());
+		response.renderOnDomReadyJavaScript(js.toString());
 	}
 
 	protected final CharSequence jsEscape(CharSequence js) {
 		// TODO: this may need more escaping
-		return JavascriptUtils.escapeQuotes(js);
+		return JavaScriptUtils.escapeQuotes(js);
 	}
 
 	protected String createValidatorConstructorJavaScript(CharSequence formID, CharSequence compID, CharSequence escapedMessage) {

@@ -4,10 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.IResourceListener;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.Resource;
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
@@ -15,9 +13,12 @@ import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow.WindowClo
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.resource.AbstractResource;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
@@ -32,7 +33,7 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 
     private static final long serialVersionUID = -5848356532326545817L;
     private static final Logger log = LoggerFactory.getLogger(ImageUploadPanel.class);
-    private static final ResourceReference IMAGE_UPLOAD_JS_RESOURCE = new JavascriptResourceReference(ImageUploadPanel.class, "imageUpload.js");
+    private static final ResourceReference IMAGE_UPLOAD_JS_RESOURCE = new JavaScriptResourceReference(ImageUploadPanel.class, "imageUpload.js");
 
     private ModalWindow modalWindow;
     private ImageUploadBehavior imageUploadBehavior;
@@ -85,10 +86,10 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
         }
 
         @Override
-        public void renderHead(IHeaderResponse pResponse) {
+        public void renderHead(Component c, IHeaderResponse pResponse) {
             String script = getCallbackName() + " = function () { "
                     + getCallbackScript() + " }";
-            pResponse.renderOnDomReadyJavascript(script);
+            pResponse.renderOnDomReadyJavaScript(script);
             pResponse.renderJavascriptReference(IMAGE_UPLOAD_JS_RESOURCE);
         }
     }
@@ -103,7 +104,7 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
             return;
         }
         final String contentType = RequestCycle.get().getRequest().getParameter(ImageUploadHelper.IMAGE_CONTENT_TYPE);
-        Resource resource = new Resource() {
+        AbstractResource resource = new AbstractResource() {
             @Override
             public IResourceStream getResourceStream() {
                 FileInputStream inputStream = null;
@@ -115,6 +116,12 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
                 }
                 return new FileResourceStream(contentType, inputStream);
             }
+
+			@Override
+			protected ResourceResponse newResourceResponse(Attributes attributes) {
+				// TODO Auto-generated method stub
+				return null;
+			}
         };
         resource.onResourceRequested();
     }

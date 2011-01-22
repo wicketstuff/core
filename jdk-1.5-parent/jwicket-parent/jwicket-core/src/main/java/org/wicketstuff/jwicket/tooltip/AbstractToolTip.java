@@ -8,11 +8,12 @@ import java.util.Map;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.behavior.AbstractHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderContributor;
 
 
-public abstract class AbstractToolTip extends AbstractHeaderContributor {
+public abstract class AbstractToolTip extends AbstractBehavior {
 
 	private static final long serialVersionUID = 1L;
 

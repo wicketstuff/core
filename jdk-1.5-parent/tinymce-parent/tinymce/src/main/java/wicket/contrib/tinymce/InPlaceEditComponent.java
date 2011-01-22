@@ -27,10 +27,10 @@ import org.apache.wicket.model.Model;
 
 import wicket.contrib.tinymce.settings.Button;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
-import wicket.contrib.tinymce.settings.WicketSavePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Position;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Theme;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Toolbar;
+import wicket.contrib.tinymce.settings.WicketSavePlugin;
 
 public class InPlaceEditComponent extends AbstractTextComponent {
     private InPlaceSaveBehavior inPlaceSaveBehavior;
@@ -101,7 +101,7 @@ public class InPlaceEditComponent extends AbstractTextComponent {
         return getMarkupId();
     }
 
-    protected final void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag) {
+    public final void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag) {
         replaceComponentTagBody(markupStream, openTag, getValue());
     }
 

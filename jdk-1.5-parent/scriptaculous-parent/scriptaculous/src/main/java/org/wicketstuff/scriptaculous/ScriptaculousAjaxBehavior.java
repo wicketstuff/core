@@ -18,10 +18,11 @@
  */
 package org.wicketstuff.scriptaculous;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.wicketstuff.prototype.PrototypeResourceReference;
 
 /**
@@ -49,10 +50,10 @@ public abstract class ScriptaculousAjaxBehavior extends AbstractDefaultAjaxBehav
 		};
 	}
 
-	public void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
+	public void renderHead(Component c, IHeaderResponse response) {
+		super.renderHead(c, response);
 
-		response.renderJavascriptReference(PrototypeResourceReference.INSTANCE);
+		response.renderJavaScriptReference(PrototypeResourceReference.INSTANCE);
 		
 		addJavascriptReference(response, "builder.js");
 		addJavascriptReference(response, "effects.js");
@@ -61,6 +62,6 @@ public abstract class ScriptaculousAjaxBehavior extends AbstractDefaultAjaxBehav
 	}
 
 	private void addJavascriptReference(IHeaderResponse response, String resource) {
-		response.renderJavascriptReference(new JavascriptResourceReference(ScriptaculousAjaxBehavior.class, resource));
+		response.renderJavaScriptReference(new JavaScriptResourceReference(ScriptaculousAjaxBehavior.class, resource));
 	}
 }

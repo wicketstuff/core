@@ -19,28 +19,28 @@ package org.wicketstuff.multitextinput;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.IFormModelUpdateListener;
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IDetachable;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.ClientProperties;
 import org.apache.wicket.protocol.http.request.WebClientInfo;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.convert.ConversionException;
-import org.apache.wicket.util.convert.ConverterLocator;
 import org.apache.wicket.util.convert.IConverter;
 import org.apache.wicket.util.lang.Classes;
+import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.validation.IValidationError;
 import org.apache.wicket.validation.ValidationError;
@@ -158,7 +158,7 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
     }
 
     private static final long serialVersionUID = 1L;
-    final ClientProperties properties = ((WebClientInfo) getRequestCycle().getClientInfo()).getProperties();
+    final ClientProperties properties = ((WebClientInfo) getSession().getClientInfo()).getProperties();
 
     public MultiTextInput(String id, IModel<Collection<T>> model) {
         super(id, model);
@@ -253,16 +253,16 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
         final String id = tmpId;
 
         // add prototype
-        response.renderJavascriptReference(PrototypeResourceReference.INSTANCE);
+        response.renderJavaScriptReference(PrototypeResourceReference.INSTANCE);
         // add this components javascript
-        response.renderJavascriptReference(new ResourceReference(this.getClass(), "res/scripts/tag.js"));
+        response.renderJavaScriptReference(new PackageResourceReference(this.getClass(), "res/scripts/tag.js"));
         // add component css
         if (properties.isBrowserInternetExplorer()) {
-            response.renderCSSReference(new ResourceReference(this.getClass(), "res/stylesheets/tag-ie.css"));
+            response.renderCSSReference(new PackageResourceReference(this.getClass(), "res/stylesheets/tag-ie.css"));
         } else if (properties.isBrowserSafari()) {
-            response.renderCSSReference(new ResourceReference(this.getClass(), "res/stylesheets/tag-webkit.css"));
+            response.renderCSSReference(new PackageResourceReference(this.getClass(), "res/stylesheets/tag-webkit.css"));
         } else {
-            response.renderCSSReference(new ResourceReference(this.getClass(), "res/stylesheets/tag-moz.css"));
+            response.renderCSSReference(new PackageResourceReference(this.getClass(), "res/stylesheets/tag-moz.css"));
         }
 
         // render the javascript to setup the component
@@ -294,7 +294,7 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
         // merge the javascript from the properties file with the properties we
         // set above
         String js = new StringBuffer().append(getString("javascript.tagEntry", variablesModel)).toString();
-        response.renderOnDomReadyJavascript(js.toString());
+        response.renderOnDomReadyJavaScript(js.toString());
 
         super.renderHead(container);
     }
@@ -312,9 +312,17 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
         super.updateModel();
         // do one more step by setting our model with the removed items
         // in case the user of the component needs this convenience
-        String[] removed = getRequest().getParameters("removed_" + getInputName());
+        List<StringValue> removed = getRequest().getRequestParameters().getParameterValues("removed_" + getInputName());
         MultiTextInputModel<Collection<T>> model = (MultiTextInputModel<Collection<T>>) this.getModel();
-        model.setRemovedItems(convertInput(removed));
+        
+        // mocleiri: adapted for 1.5 but is untested.
+        String[] input = new String [removed.size()];
+        
+        for (int i = 0; i < removed.size(); i++) {
+			
+        	input[i] = removed.get(i).toString();
+		}
+        model.setRemovedItems(convertInput(input));
 
     }
 

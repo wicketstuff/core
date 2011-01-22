@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -16,6 +15,9 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.simile.timeline.json.JsonUtils;
 import org.wicketstuff.simile.timeline.model.BandInfoParameters;
 import org.wicketstuff.simile.timeline.model.BandInfoParameters.DateTime;
@@ -61,9 +63,9 @@ public class Timeline extends Panel implements IHeaderContributor {
 	}
 
 	private void init(String id, IModel model, List<BandInfoParameters> bandInfo) {
-		add(HeaderContributor
-				.forJavaScript(new ResourceReference(getClass(),
-						"./timeline_js/timeline-api.js?timeline-use-local-resources=true&bundle=true")));
+//		add(HeaderContributor
+//				.forJavaScript(new ResourceReference(getClass(),
+//						"./timeline_js/timeline-api.js?timeline-use-local-resources=true&bundle=true")));
 
 		WebMarkupContainer tl = new WebMarkupContainer("tl");
 		tl.setOutputMarkupId(true);
@@ -130,19 +132,24 @@ public class Timeline extends Panel implements IHeaderContributor {
 		return "timeLineLoad" + timelineMarkupId;
 	}
 
-	public void renderHead(IHeaderResponse response) {
+	public void renderHead(Component c, IHeaderResponse response) {
+		
+		response
+				.renderJavaScriptReference(new PackageResourceReference(getClass(),
+						"./timeline_js/timeline-api.js?timeline-use-local-resources=true&bundle=true"));
+		
 		StringBuffer parameters = new StringBuffer("");
 
 		parameters.append("Timeline_ajax_url='" + timelineUrl() + "';\n");
 
-		response.renderJavascript(parameters.toString(),
+		response.renderJavaScript(parameters.toString(),
 				TIMELINE_PARAMS_JAVASCRIPT);
-		response.renderOnLoadJavascript(getLoadScriptName() + "()");
+		response.renderOnLoadJavaScript(getLoadScriptName() + "()");
 	}
 
 	private String timelineUrl() {
 		return urlFor(
-				new ResourceReference(getClass(),
-						"timeline_ajax/simile-ajax-api.js")).toString();
+				new PackageResourceReference(getClass(),
+						"timeline_ajax/simile-ajax-api.js"), new PageParameters()).toString();
 	}
 }

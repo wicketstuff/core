@@ -4,10 +4,11 @@ import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.FormComponent.IVisitor;
 import org.apache.wicket.markup.html.form.IFormVisitorParticipant;
 import org.apache.wicket.model.AbstractPropertyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.visit.IVisit;
+import org.apache.wicket.util.visit.IVisitor;
 
 /**
  * Behavior to be added to either a FormComponent or Form. If used on a
@@ -20,13 +21,15 @@ public class PropertyValidation extends AbstractBehavior
 
     private static final long serialVersionUID = 1L;
 
-    class JSR303ValidatorFormComponentVisitor implements IVisitor
+    class JSR303ValidatorFormComponentVisitor implements IVisitor<Component, Void>
     {
-        public Object formComponent(final IFormVisitorParticipant formComponent)
-        {
-            if (formComponent instanceof FormComponent<?>)
+    	
+    	
+        public void component(Component component, IVisit<Void> visit) {
+			
+            if (component instanceof FormComponent<?>)
             {
-                final FormComponent<?> fc = (FormComponent<?>) formComponent;
+                final FormComponent<?> fc = (FormComponent<?>) component;
                 final IModel<?> model = fc.getModel();
                 if (model != null)
                 {
@@ -38,7 +41,6 @@ public class PropertyValidation extends AbstractBehavior
                     }
                 }
             }
-            return null;
         }
     }
 
@@ -53,7 +55,7 @@ public class PropertyValidation extends AbstractBehavior
             if (context instanceof Form<?>)
             {
                 final Form<?> form = (Form<?>) context;
-                form.visitFormComponents(new JSR303ValidatorFormComponentVisitor());
+                form.visitChildren(new JSR303ValidatorFormComponentVisitor());
             }
             else
             {

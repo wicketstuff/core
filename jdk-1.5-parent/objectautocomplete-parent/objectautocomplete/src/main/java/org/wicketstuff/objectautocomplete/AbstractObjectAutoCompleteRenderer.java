@@ -1,9 +1,9 @@
 package org.wicketstuff.objectautocomplete;
 
-import org.apache.wicket.util.lang.PropertyResolver;
-import org.apache.wicket.Response;
-
 import java.io.Serializable;
+
+import org.apache.wicket.request.Response;
+import org.apache.wicket.util.lang.PropertyResolver;
 
 /**
  * @author roland

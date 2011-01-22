@@ -1,24 +1,17 @@
 package org.wicketstuff.yav;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.apache.wicket.Application;
 import org.apache.wicket.Component;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.Response;
-import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
-import org.apache.wicket.util.convert.IConverter;
-import org.apache.wicket.util.convert.converters.DateConverter;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.value.IValueMap;
 import org.wicketstuff.yav.alerts.AlertType;
@@ -29,7 +22,7 @@ import org.wicketstuff.yav.alerts.AlertType;
  * 
  * @author Zenika
  */
-public class YavBehavior extends AbstractBehavior implements IHeaderContributor {
+public class YavBehavior extends Behavior {
 	private static final long serialVersionUID = 1L;
 
 	private AlertType alertType = AlertType.INNER_HTML;
@@ -58,8 +51,8 @@ public class YavBehavior extends AbstractBehavior implements IHeaderContributor 
 	 * .markup.html.IHeaderResponse)
 	 */
 	@Override
-	public void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
+	public void renderHead(Component c, IHeaderResponse response) {
+		super.renderHead(c, response);
 
 		response.renderCSSReference(new CompressedResourceReference(
 				YavBehavior.class, "style/yav-style.css"));
@@ -71,7 +64,7 @@ public class YavBehavior extends AbstractBehavior implements IHeaderContributor 
 		// Add an onload contributor that will call a function which is defined
 		// during onComponentTag method call which is processed after the head
 		// is rendered (warning, not compliant with XHTML 1.0 Strict DTD)
-		response.renderOnLoadJavascript("yavInit()");
+		response.renderOnLoadJavaScript("yavInit()");
 	}
 
 	/**
@@ -80,7 +73,7 @@ public class YavBehavior extends AbstractBehavior implements IHeaderContributor 
 	 */
 	private void addJavascriptReference(IHeaderResponse response,
 			String resource) {
-		response.renderJavascriptReference(new JavascriptResourceReference(
+		response.renderJavaScriptReference(new JavaScriptResourceReference(
 				YavBehavior.class, resource));
 	}
 
@@ -158,4 +151,6 @@ public class YavBehavior extends AbstractBehavior implements IHeaderContributor 
 	public void setAlertType(AlertType alertType) {
 		this.alertType = alertType;
 	}
+
+	
 }

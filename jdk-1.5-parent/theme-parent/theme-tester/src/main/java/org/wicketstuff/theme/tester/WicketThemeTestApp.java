@@ -16,6 +16,7 @@
 package org.wicketstuff.theme.tester;
 
 import org.apache.wicket.Page;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class WicketThemeTestApp extends WebApplication
 	{
 		super.init();
 		
-		if (DEVELOPMENT.equals(getConfigurationType()))
+		if (RuntimeConfigurationType.DEVELOPMENT.equals(getConfigurationType()))
 		{
 			_logger.error("Debug Mode");
 			getResourceSettings().setResourceStreamLocator(new MavenDevResourceStreamLocator());

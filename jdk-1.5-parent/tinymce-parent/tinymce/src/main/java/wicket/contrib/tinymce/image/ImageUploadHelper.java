@@ -1,12 +1,13 @@
 package wicket.contrib.tinymce.image;
 
 import java.io.File;
+
 import javax.servlet.ServletContext;
 
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.Strings;
 /**
  * Image upload handler responsible for images operations.
@@ -39,7 +40,7 @@ public class ImageUploadHelper {
     public static XmlTag createImageTag(ImageFileDescription pImageFileDescription, CharSequence pUrl) {
         XmlTag tag = new XmlTag();
         tag.setName("img");
-        tag.setType(XmlTag.OPEN_CLOSE);
+        tag.setType(XmlTag.TagType.OPEN_CLOSE);
         tag.put(IMAGE_FILE_NAME, pImageFileDescription.getName());
         StringBuilder sb = new StringBuilder(pUrl);
         sb.append("&").append(IMAGE_FILE_NAME).append("=").append(pImageFileDescription.getName());

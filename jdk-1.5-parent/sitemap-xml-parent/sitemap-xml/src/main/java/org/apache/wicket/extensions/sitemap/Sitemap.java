@@ -1,22 +1,23 @@
 package org.apache.wicket.extensions.sitemap;
 
-import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.markup.MarkupStream;
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.protocol.http.WebRequest;
-
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.markup.MarkupStream;
+import org.apache.wicket.markup.MarkupType;
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.request.http.WebRequest;
 
 abstract class Sitemap extends WebPage {
 
     @Override
-    public String getMarkupType() {
-        return "text/xml";
+    public MarkupType getMarkupType() {
+        return MarkupType.HTML_MARKUP_TYPE;
     }
 
     @Override
-    protected void onRender(final MarkupStream markupStream) {
+    protected void onRender() {
         PrintWriter writer = new PrintWriter(getResponse().getOutputStream());
         try {
             getFeed().writeFeed(writer);

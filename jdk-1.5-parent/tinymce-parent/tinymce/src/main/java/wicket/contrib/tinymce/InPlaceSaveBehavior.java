@@ -21,12 +21,12 @@ package wicket.contrib.tinymce;
 import java.util.UUID;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 import wicket.contrib.tinymce.settings.WicketSavePlugin;
 
@@ -53,7 +53,7 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
 
     protected final void respond(AjaxRequestTarget target) {
         Request request = RequestCycle.get().getRequest();
-        String newContent = request.getParameter(PARAM_HTMLCONT);
+        String newContent = request.getRequestParameters().getParameterValue(PARAM_HTMLCONT).toString();
         newContent = onSave(target, newContent);
         Component component = getComponent();
         IModel defaultModel = component.getDefaultModel();
@@ -102,12 +102,12 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
         return newContent;
     }
 
-    public void renderHead(IHeaderResponse response) {
-        super.renderHead(response);
+    public void renderHead(Component c, IHeaderResponse response) {
+        super.renderHead(c, response);
         // Don't pass an id, since every EditableComponent will have its own
         // submit script:
-        response.renderJavascript(createSaveScript(), null);
-        response.renderJavascript(createCancelScript(), null);
+        response.renderJavaScript(createSaveScript(), null);
+        response.renderJavaScript(createCancelScript(), null);
     }
 
     private final String createSaveScript() {
@@ -130,7 +130,7 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
 
     private final String getWicketPostScript() {
         return generateCallbackScript(
-                "wicketAjaxPost('" + getCallbackUrl(false) + "', Wicket.Form.encode('" + PARAM_HTMLCONT
+                "wicketAjaxPost('" + getCallbackUrl() + "', Wicket.Form.encode('" + PARAM_HTMLCONT
                         + "') + '=' + Wicket.Form.encode(content) + '&'").toString();
     }
 }
