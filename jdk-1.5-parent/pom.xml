@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>1.5-SNAPSHOT</version>
+		<version>1.5-RC1</version>
 	</parent>
 
 	<artifactId>jdk-1.5-parent</artifactId>
@@ -43,7 +43,7 @@
 		<module>maven-support</module> 
 		<module>plugin</module> 
 
-		<!-- Modules below are commented until they can compile with wicket 1.5-SNAPSHOT -->
+		<!-- Modules below are commented until they can compile with wicket 1.5-RC1 -->
 
 
 <!--		 <module>annotation</module> -->

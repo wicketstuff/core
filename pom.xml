@@ -6,7 +6,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>1.5-SNAPSHOT</version>
+	<version>1.5-RC1</version>
 
 	<name>WicketStuff Core Parent</name>
 	<description>
@@ -62,8 +62,8 @@
 	</developers>
 
 	<ciManagement>
-		<system>continuum</system>
-		<url>http://www.wickettraining.com/continuum</url>
+		<system>hudson</system>
+		<url>http://www.wicketstuff.org/hudson</url>
 	</ciManagement>
 
 	<distributionManagement>
@@ -279,8 +279,8 @@
 	</profiles>
 
 	<issueManagement>
-		<system>jira</system>
-		<url>http://wicketstuff.org/jira</url>
+		<system>github</system>
+		<url>https://github.com/wicketstuff/core/issues</url>
 	</issueManagement>
 
 	<mailingLists>
@@ -294,12 +294,12 @@
 	</mailingLists>
 
 	<scm>
-		<url>https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk/wicketstuff-core</url>
-		<connection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk/wicketstuff-core</connection>
+		<url>https://github.com/wicketstuff/core/tree/wicketstuff-core-1.5-RC1</url>
+		<connection>scm:git:ssh://git@github.com:wicketstuff/core.git</connection>
 	</scm>
 
 	<properties>
-		<wicket.version>1.5-SNAPSHOT</wicket.version>
+		<wicket.version>1.5-RC1</wicket.version>
 		<jetty.version>6.1.22</jetty.version>
 		<idea.version>2.2</idea.version>
 
