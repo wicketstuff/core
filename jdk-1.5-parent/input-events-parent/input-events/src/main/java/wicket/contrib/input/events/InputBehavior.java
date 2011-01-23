@@ -147,9 +147,9 @@ public class InputBehavior extends Behavior  {
 	}
 
 	@Override
-	public void onRendered(Component component) {
+	public void afterRender(Component component) {
 		// TODO Auto-generated method stub
-		super.onRendered(component);
+		super.afterRender(component);
 		if (autoHook) {
 			Response response = component.getResponse();
 			if (linkUnbound) {
