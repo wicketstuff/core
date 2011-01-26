@@ -58,6 +58,7 @@
 		<module>maven-support</module>
 		<module>theme-parent</module>
 		<module>jasperreports-parent</module>
+		<module>dojo-parent</module>
 	  </modules>
 
 	<build>

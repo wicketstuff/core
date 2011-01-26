@@ -4,10 +4,10 @@
 	<groupId>org.wicketstuff</groupId>
 	<parent>
 		<groupId>org.wicketstuff</groupId>
-		<artifactId>wicketstuff-dojo</artifactId>
+		<artifactId>dojo-parent</artifactId>
 		<version>1.4-SNAPSHOT</version>
 	</parent>
-	<artifactId>wicketstuff-dojo-resources-${dojo.profile}</artifactId>
+	<artifactId>dojo-resources-${dojo.profile}</artifactId>
 	<packaging>jar</packaging>
 	<version>1.4-SNAPSHOT</version>
 	<name>WicketStuff Dojo resources</name>
@@ -18,39 +18,6 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	<!--
-		Deployed with Teamcity:
-		http://wicketstuff.org/confluence/display/STUFFWIKI/Developer+Information
-	-->
-	<distributionManagement>
-		<snapshotRepository>
-			<id>repo</id>
-			<name>Local TeamCity/Tomcat repository</name>
-			<url> file:/home/wicket/tomcat/webapps/maven/repository/ </url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-		<repository>
-			<id>repo</id>
-			<name>Local TeamCity/Tomcat repository</name>
-			<url> file:/home/wicket/tomcat/webapps/maven/repository/ </url>
-		</repository>
-	</distributionManagement>
-	<ciManagement>
-		<system>TeamCity</system>
-		<url>http://wicketstuff.org/teamcity</url>
-	</ciManagement>
-	<repositories>
-		<repository>
-			<id>wicket-snaps</id>
-			<url>http://wicketstuff.org/maven/repository</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-	</repositories>
 	<profiles>
 		<profile>
 			<id>linux</id>
@@ -105,7 +72,7 @@
 								<property name="dojo.checkoutdir" value="${java.io.tmpdir}" />
 								<!-- working directory -->
 								<property name="dojo.pomdir"
-									value="${user.dir}/wicketstuff-dojo-resources" />
+									value="${user.dir}/dojo-resources" />
 								<echo
 									message="building dojo ${dojo.version} with ${dojo.profile} profile" />
                 				<!-- use ant to run buildDojo/build.xml -->

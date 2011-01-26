@@ -4,12 +4,11 @@
 	<groupId>org.wicketstuff</groupId>
 	<parent>
 		<groupId>org.wicketstuff</groupId>
-		<artifactId>wicketstuff-dojo</artifactId>
+		<artifactId>dojo-parent</artifactId>
 		<version>1.4-SNAPSHOT</version>
 	</parent>
-	<artifactId>wicketstuff-dojo-api</artifactId>
+	<artifactId>dojo-api</artifactId>
 	<packaging>jar</packaging>
-	<version>1.4-SNAPSHOT</version>
 	<name>WicketStuff Dojo API</name>
 	<licenses>
 		<license>
@@ -18,43 +17,10 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+
 	<properties>
-		<jetty.version>6.1.14</jetty.version>
-		<slf4j.version>1.5.11</slf4j.version>
-	</properties>
-	<!--
-		Deployed with Teamcity:
-		http://wicketstuff.org/confluence/display/STUFFWIKI/Developer+Information
-	-->
-	<distributionManagement>
-		<snapshotRepository>
-			<id>repo</id>
-			<name>Local TeamCity/Tomcat repository</name>
-			<url> file:/home/wicket/tomcat/webapps/maven/repository/ </url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-		<repository>
-			<id>repo</id>
-			<name>Local TeamCity/Tomcat repository</name>
-			<url> file:/home/wicket/tomcat/webapps/maven/repository/ </url>
-		</repository>
-	</distributionManagement>
-	<ciManagement>
-		<system>TeamCity</system>
-		<url>http://wicketstuff.org/teamcity</url>
-	</ciManagement>
-	<repositories>
-		<repository>
-			<id>wicket-snaps</id>
-			<url>http://wicketstuff.org/maven/repository</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-	</repositories>
+               <jetty.version>6.1.14</jetty.version>
+       </properties>
 	
 	<dependencies>
 		<dependency>
@@ -67,11 +33,6 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${slf4j.version}</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket</artifactId>
-			<version>${wicket.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
@@ -121,15 +82,5 @@
 				</excludes>
 			</testResource>
 		</testResources>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
-			</plugin>
-		</plugins>
 	</build>
 </project>
