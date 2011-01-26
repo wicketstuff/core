@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+  <properties>
+    <title>Wicket Contrib Dojo changes</title>
+    <author email="dashorst at users.sourceforge.net">Martijn Dashorst</author>
+  </properties>
+  <body>
+    <release version="0.1" date="2005-09-23" description="First release">
+      <action type="add" dev="Martijn Dashorst">Moved Dojo specific code out into seperate project (this one)</action>
+    </release>
+   <release version="0.3" date="2005-11-24" description="third release">
+      <action type="add" dev="Marco van de Haar">released 0.3 with decorator components, tooltip and validation components.</action>
+    </release>
+  </body>
+</document>

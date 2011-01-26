@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<document>
+	<properties>
+		<title>DojoFX tutorial 2: A simple Wiper menu</title>
+	</properties>
+
+	<meta
+		name="keyword"
+		content="wicket, example, web, j2ee, java, tutorial, dojo" />
+
+<body>
+<section name="A simple Wiper menu">
+	<p>
+		In the <a href="SimpleWiperTutorial.html" >previous tutorial</a> we showed you how easy it is to add a cool wiper effect to a Wicket component. 
+		That's nice and all but, why would you use a Wiper? 
+		That, of course, is the job of your creativity. 
+		We will give you and example of how you could use a Wiper in Wicket to make a sort of tree-menu.
+	</p>
+	<p>
+	We will make this simple wipeable menu consisting of simple WebMarkupContainers and Labels. 
+	We will render it all in a nice table with some style and, Well, something like this:
+	</p>
+	<img src="images/tree-wipe-animation.gif" alt="Wiper Menu" />
+	<p>If you click on a menu-item with a submenu, the submenu unfolds.</p>
+	<subsection name="MyPage.html">
+	<p>
+		We start by making a simple table-structured menu in our HTML file.
+	</p>
+	<source><![CDATA[
+	<table width="175" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+	    <td width="175"><img wicket:id="topimg" width="175" height="10"></td>
+	  </tr>
+	  <tr>
+	    <td bgcolor="#FF6600">
+	    	<div wicket:id="menuitem1" align="center">MenuItem 1 </div>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td bgcolor="#FF9966">
+	    	<div wicket:id="submenu1">
+		    	<div wicket:id="submenu11" align="center">submenu 1.1</div>
+	    	</div>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td bgcolor="#ff6600">
+	    	<div wicket:id="menuitem2" align="center">MenuItem 2 </div>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td bgcolor="#ff9966">
+	    <div wicket:id="submenu2">
+		    <div wicket:id="submenu21" align="center">submenu 2.1</div>
+		</div>
+		</td>
+	  </tr>
+	  <tr>
+	    <td bgcolor="#ff6600"><div wicket:id="menuitem3" align="center">MenuItem 3 </div></td>
+	  </tr>
+	
+	  <tr>
+	    <td bgcolor="#ff9966">
+		<div wicket:id="submenu3">
+		    <div wicket:id="submenu31" align="center">submenu 3.1</div>
+				<div wicket:id="submenu31x" style="background-color:#DDDDDD" >
+			    	<div wicket:id="submenu311" align="center">submenu 3.1.1</div>
+			    	<div wicket:id="submenu312" align="center">submenu 3.1.2</div>
+			    </div>
+	    	<div wicket:id="submenu32" align="center">submenu 3.2</div>
+		</div>
+	    </td>
+	  </tr>
+	   <tr>
+	    <td><img wicket:id="bottomimg" width="175" height="10"></td>
+	  </tr>
+	</table>
+	]]></source>
+	<p>
+	You can see a table with some rows and some DIV's which contain the menu-items and the submenus. 
+	The top and bottom TR's hold the top and bottom images. 
+	The menu structure is something like this:
+	
+	<table>
+	<tr><td>Menu Table</td></tr>
+	<tr><td>|__menuitem 1</td></tr>
+	<tr><td>|____submenu 1.1</td></tr>
+	<tr><td>|__menuitem 2</td></tr>
+	<tr><td>|____submenu 2.1</td></tr>
+	<tr><td>|__menuitem 3\n</td></tr>
+	<tr><td>|____submenu3.1</td></tr>
+	<tr><td>|_____submenu3.1.1</td></tr>
+	<tr><td>|_____submenu3.1.2</td></tr>
+	<tr><td>|____submenu3.2</td></tr>
+	</table>
+	</p>
+	</subsection>
+	<subsection name="MyPage.Java">
+	<p>
+	Normally a Label (or if you want to make it actually work, a Link) for every item in the menu would be enough. 
+	But we want to wipe the submenus, so just for extendibility, we will encapsulate every subemenu in a DIV tag. 
+	These will be WebMarkupContainers which will hold the Labels (or Links).
+	
+	MenuPage.java:
+	</p>
+	<source>
+	public class WiperTestPage extends WebPage{
+	
+	private Label menuItem1;
+	private Label menuItem2;
+	private Label menuItem3;
+	private WebMarkupContainer submenu1;
+	private WebMarkupContainer submenu2;
+	private WebMarkupContainer submenu3;
+	private WebMarkupContainer submenu31x;
+	
+	private Label submenu11;
+	private Label submenu21;
+	private Label submenu31;
+	private Label submenu32;
+	
+	private Label submenu311;
+	private Label submenu312;
+	
+	private int duration = 500;
+	
+	public MyTestPage(PageParameters parameters)
+	{
+	
+		add(new Image("topimg", new Model("menu-top.gif") ));	
+		add(menuItem1 = new Label("menuitem1", new Model("About")));
+		add(menuItem2 = new Label("menuitem2", new Model("Documentation")));
+		add(menuItem3 = new Label("menuitem3", new Model("Tutorials")));
+		
+		add(submenu1 = new WebMarkupContainer("submenu1"));
+		add(submenu2 = new WebMarkupContainer("submenu2"));
+		add(submenu3 = new WebMarkupContainer("submenu3"));
+	
+		submenu1.add(submenu11 = new Label("submenu11", new Model("About us")));
+		submenu2.add(submenu21 = new Label("submenu21", new Model("JavaDoc")));
+		submenu3.add(submenu31 = new Label("submenu31", new Model("Tutorial 1")));
+		submenu3.add(submenu32 = new Label("submenu32", new Model("Tutoral 2")));
+		submenu3.add(submenu31x = new WebMarkupContainer("submenu31x"));
+	
+		submenu31x.add(submenu311 = new Label("submenu311","Part 1. Basics"));
+		submenu31x.add(submenu312 = new Label("submenu312","Part 2. Bloody complicated"));
+	
+		add(new Image("bottomimg", new Model("menu-bottom.gif") ));
+	
+		submenu1.add(new FXOnClickWiper(duration, menuItem1));
+		submenu2.add(new FXOnClickWiper(duration, menuItem2));
+		submenu3.add(new FXOnClickWiper(duration, menuItem3));
+		submenu31x.add(new FXOnClickWiper(duration, submenu31));
+	}
+	
+	}
+	</source>
+	<p>
+	In our MyPage.java we find nothing more then a lot add() statements for the WebMarkupContainers and the labels. 
+	After adding all the components matching your HTML code, 
+	just add FXOnClickWipers to the components which you want to make wipeable (in our case, the submenu&#8217;s) 
+	and set the triggers to the parent menu item.
+	</p>
+	</subsection>
+	<subsection name="a finishing touch..">
+	<p>As finishing touch you can make some nice top and bottom pictures like in our example.<br/>
+	Et voila! A nice wiping tree-like menu is created.
+	</p>
+	</subsection>
+
+</section>
+</body>
+</document>

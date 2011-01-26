@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Wicket Dojo Contrib">
+  <bannerLeft>
+    <name>Wicket Stuff</name>
+    <src>images/projectLogo.png</src>
+    <alt>Wicket Dojo Contrib</alt>
+    <href>http://wicket-stuff.sourceforge.net/</href>
+  </bannerLeft>
+	<body>
+		<links>
+			<item name="Wicket 1.2" href="http://wicket.sf.net/wicket-1.2/index.html" />
+		</links>
+
+		<menu name="Wicket Contrib Dojo">
+			<item name="About" href="/Index.html" />
+			<item name="License" href="/license.html" />
+			<item name="Dependencies" href="/dependencies.html" />
+		</menu>
+		<menu name="Downloads">
+		</menu>
+		<menu name="Related projects">
+			<item name="Wicket" href="http://wicket.sourceforge.net/" />
+			<item name="Wicket Extensions" href="http://wicket.sourceforge.net/wicket-extensions/" />
+			<item name="Dojo" href="http://www.dojo-toolkit.org"/>
+		</menu>
+		<menu name="Documentation">
+			<item name="Javadoc" href="/apidocs/index.html" target="_blank" class="newwindow" />
+			<item name="LiveDemo" href="http://www.demay-fr.net:8080/Wicket-start/app"/>
+			<item name="Tutorial" href="/Tutorials.html" collapse="true">
+				<!--item name="Widgets">
+				</item>
+				<item name="Effects">
+					<item name="Highlighter" href="TutorialHighlighter.html"/>
+					<item name="Wiper" href="TutorialSimpleWiper.html"/>
+				</item>
+				<item name="Validation">
+					<item name="Part1" href="TutorialValidation1.html"/>
+					<item name="Part2" href="TutorialValidation2.html"/>
+				</item-->
+			</item>
+		</menu>
+		<menu name="Project info">
+			<item name="Wicket Stuff Home" href="http://wicket-stuff.sourceforge.net/index.html" />
+			<item name="SourceForge" href="http://sourceforge.net/projects/wicket-stuff" />
+			<item name="Issue tracker" href="/issue-tracking.html" />
+			<item name="Mailing list" href="/mail-lists.html" />
+		</menu>
+        <menu name="Development">
+            <item name="Developers" href="/team-list.html" />
+            <item name="SVN Access" href="/source-repository.html" />
+			<item name="Build Reports" href="/project-reports.html" collapse="true">
+                <item name="Unit Tests" href="/junit-report.html" />
+                <item name="Javadoc" href="/apidocs/index.html" target="_blank" class="newwindow" />
+            </item>
+        </menu>
+	</body>
+</project>

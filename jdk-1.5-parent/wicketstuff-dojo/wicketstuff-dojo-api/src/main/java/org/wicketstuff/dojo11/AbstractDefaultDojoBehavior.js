@@ -1,0 +1,1 @@
+var djConfig = {isDebug: ${debug}, parseOnLoad: true, baseUrl: '${baseUrl}', locale: '${locale}'};

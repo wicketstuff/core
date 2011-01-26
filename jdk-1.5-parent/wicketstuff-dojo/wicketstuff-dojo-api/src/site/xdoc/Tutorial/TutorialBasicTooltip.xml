@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<document>
+	<properties>
+		<title>Tooltip tutorial 1: A basic Tooltip</title>
+	</properties>
+
+	<meta
+		name="keyword"
+		content="wicket, example, web, j2ee, java, tutorial, dojo" />
+
+<body>
+<section name="A Basic Tooltip">
+	<p>
+		For part or our assignment to make a set of Ajax components we chose 
+		to make a Tooltip. We have to admit that it is not really Ajax, in fact it has 
+		nothing to do with Ajax, but it provides a good base to begin with. This is 
+		that our Tooltip is based on a Panel. This gives the advantage of full 
+		customization (i.e. the same as a normal panel would allow).
+
+	Now let us show you how to make a Tooltip in two simple steps.
+	</p>
+	
+        <subsection name="How to make a basic Tooltip with static HTML">
+        <p>
+
+	First of all, you would start out with checking out the CVS repository of wicket-stuff contrib.dojo, or download a release 
+	which has the
+	Tooltip.java and Tooltip.js (as we‘ve said in the introduction, it has nothing to do with Dojo or 
+	Ajax, but it is our workspace).
+
+	Step one: make a MyTooltip.java and MyTooltip.html as you would do when making a Panel. Make sure 
+	that MyTooltip.java extends TooltipPanel and has the necessary imports.
+	</p>
+	</subsection>
+	<subsection name="MyTooltip.java">
+
+
+
+	<source>Package... TODO : code has been changed
+	import wicket.contrib.markup.html.tooltip.Tooltip;
+	...
+
+	public class MyTooltip extends TooltipPanel
+	{
+
+	  //i want a default constructor with just a target and an id
+	  public MyTooltip(Component target)
+	  {
+
+	  super(target);
+	  add(new Label("label", "tooltip....!!!!"));
+	  add(new Image("dogimg", new Model("dog.gif")));
+	  }
+	}
+	</source>
+	</subsection>
+	<subsection name = "MyTooltip.html">
+	<source><![CDATA[
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<body>
+<wicket:panel>
+  <p style="border: 2px dotted #fc0; padding: 5px; background-color: rgb(255, 134, 20);">
+    <span wicket:id="label">jow</span>
+    <img wicket:id="dogimg"/><br/>
+    Here are some Tooltip contents for ya.<br />
+  </p>
+</wicket:panel>
+</body>
+</html>]]></source>
+</subsection>
+<subsection name="Add the tooltip">
+<p>
+Step two: Simply add a new MyTooltip to your page, and provide it with a target component like this:
+</p>
+<source>
+New Tooltip("id", new SimpleTooltip(label, "Help!"));
+</source>
+<p>And in YourPage.html simply add something like this:</p>
+<source><![CDATA[
+<span wicket:id="tooltip" >tooltip contents come here</span>]]>
+</source>
+
+ <p>When you hover over the target component (in this case the textfield) 
+ the Tooltip appears. As you can see we have added some custom style to our 
+ Tooltip paragraph. This is a wise thing to do because without any style, 
+ our Tooltip will render transparent. This can look cool when you use transparent 
+ image to shape your Tooltip, but mostly it‘s just annoying.
+
+And now you‘re finished ;)</p>
+<img src="images/basictooltip.jpg"/>
+<p>Note: In this example we have used a static Tooltip and the simple constructor. So the X and Y 
+offset are set to default values and there is no model attached. The Next tutorial will discuss 
+a dynamic Tooltip.</p>
+</subsection>
+
+
+</section>
+</body>
+</document>

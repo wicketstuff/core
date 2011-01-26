@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<document>
+	<properties>
+		<title>FXValidationAjaxHandler tutorial</title>
+	</properties>
+
+	<meta
+		name="keyword"
+		content="wicket, example, web, j2ee, java, tutorial, dojo" />
+
+<body>
+<section name="FXValidationAjaxHandler tutorial">
+<subsection name="What is it?">
+<p>
+FXValidationAjaxHandler, it's quite a name for a relatively simple handler class, 
+but you will have to forgive our lack of creativity on naming classes.
+</p>
+<p>
+So, what does it do? Well it combines 2 of Dojo's greatest features:
+<ul>
+    <li>The ability to make background server-calls (Ajax)</li>
+
+    <li> The ability to animate a components background color (highlighting).</li>
+</ul>
+Great, and that will be useful for....?
+</p>
+
+<p>
+In short, it binds the wicket validation process of the FormComponent to an event you can specify 
+(e.g. onblur, onchange) and highlights the Component based on the outcome of the validation 
+(valid or invalid).
+</p>
+</subsection>
+<subsection name="Make it work">
+<p>
+Enough with the theory, let's get pragmatic.
+</p>
+<p>
+To use this handler you need a Form with a Formcomponent that has at least 1 validator bound to it. 
+It will work with any type of wicket Validator, even custom ones. 
+Since a RequiredTextField already validates automatically (if component has been filled in), 
+this will also trigger our effect.
+</p>
+ 
+<p>
+Let's say you have a RequiredTextfield with a typeValidator which checks for integers and an 
+Integervalidator which checks if the entered value lies between 0 and 100:
+</p>
+<source>
+FormComponent tx;
+add(tx = new RequiredTextField("integerInRangeProperty", Integer.class).add(
+IntegerValidator.range(0, 100)));
+</source>
+<p>
+Then you simply add the handler to the TextField like this:
+</p>
+<source>
+tx.add(new FXValidationAjaxHandler("onblur"));
+</source>
+<p>
+This will trigger wicket validation (in this case: required, type and range) 
+to check the value you entered every onblur and it will highlight the textfield based 
+on the validation result. Since we used the default constructor (only takes an event name), 
+the default color is used when the value is invalid, and the component's CSS style background 
+color is used when the value is valid.
+</p>
+</subsection>
+<subsection name="Make it work ... your way">
+<p>
+By using different constructors you can specify different colors to which the component 
+should highlight when the value is valid or invalid.
+</p>
+
+<source>
+/* Default constructor which uses node's current
+background color when component is valid./
+public FXValidationAjaxHandler(String eventName)
+
+/**
+Constructor which sets default valid highlight color /
+public FXValidationAjaxHandler(String eventName, boolean colorValid)
+
+/**
+Constructor with custom invalid RGB values. /
+public FXValidationAjaxHandler(String eventName, int r, int g, int b)
+
+/**
+Constructor with custom invalid RGB values and valid RGB values./
+public FXValidationAjaxHandler(String eventName, int ir, int ig, int ib, int vr, int vg, int vb)
+</source>
+<p>
+Here is the screenshot of the handler in action in the example we discussed earlier. 
+In this case a single 'n' is entered and we move on to the next field. 
+The validation fails because 'n' is not a valid integer and the field turns red.
+</p>
+
+<img src="images/validator.gif" alt="validator"/>
+<p>
+If we had changed 'n' to a valid integer between 0 and 100 and we would have left the field again, 
+the field would change back to it's original background color.
+</p>
+</subsection>
+
+
+</section>
+</body>
+</document>
