@@ -31,12 +31,6 @@
 	
 	<dependencies>
 
-		<!--  WICKET DEPENDENCIES 
-		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket</artifactId>
-		</dependency>
-		-->
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

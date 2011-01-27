@@ -78,12 +78,7 @@
       <dependency>
       <groupId>org.wicketstuff</groupId>
       <artifactId>multi-text-input</artifactId>
-      <version>1.5-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.wicket</groupId>
-      <artifactId>wicket</artifactId>
-      <version>${wicket.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>

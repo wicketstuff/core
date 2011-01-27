@@ -33,12 +33,6 @@
     <dependencyManagement>
         <dependencies>
 
-			<dependency>
-                <groupId>org.apache.wicket</groupId>
-                <artifactId>wicket</artifactId>
-                <version>${wicket.version}</version>
-            </dependency>
-        
             <dependency>
                 <groupId>org.wicketstuff</groupId>
                 <artifactId>wicket-servlet3</artifactId>
