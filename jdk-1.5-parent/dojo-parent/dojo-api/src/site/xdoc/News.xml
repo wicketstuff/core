@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<document>
+	<properties>
+		<title>News archive</title>
+	</properties>
+	<meta name="keyword" content="wicket, wicket-stuff, web, j2ee, java, dojo" />
+	<body>
+		<section name="News Archive">
+			<p>
+				Here is an overview of all Wicket related news items posted on our
+				<a href="Index.html">front page</a>
+				.
+			</p>
+			<subsection name="January 5, 2007 - Wicket-Dojo is not dead a new release with a lot of improvement comes out">
+				<p>
+					After a year of hibernation, wicket contrib dojo awackes with a new release
+				</p>
+				<p>
+					This project has been started by 2 students (see the <a href="http://www.jroller.com/page/ruudmarco">weblog</a>). They are now working on others stuffs.
+					Now we are two co-workers working on it : 
+					<ul>
+						<li><a href="http://blog.caraldi.com/jbq/">Jean Baptiste Quenot</a></li>
+						<li><a href="http://www.demay-fr.net/blog/index.php/en">Vincent Demay</a></li>
+					</ul>
+					Special thanks to eelco and igor who allow us to work on this project.
+				</p>
+				<p>
+					The first new Version is now available with a lot of features.<br/>
+					More than Validation or effects from last release, now you can find widgets such has 
+					<ul>
+						<li>Suggestion List</li>
+						<li>Calendar</li>
+						<li>Drag and drop</li>
+						<li>and friends...</li>
+					</ul> 
+					Take a Look at the <a href="http://www.demay-fr.net:8080/Wicket-start/app">live exemple</a>.
+				</p>
+			</subsection>
+			<subsection name="January 4, 2006 - DojoAutoUpdateHandler, try it now!">
+				<p>
+					We have just finished our latest component. It is an Ajax auto update handler. Since it uses Wicket's beta functionality to render a singel component, you can currently only use it with the HEAD version of Wicket.
+					You can find the components when you checkout wicket-contrib-dojo from CVS.
+					We've included a tutorial in our tutorial section which should get you started right away!
+				</p>
+				
+			</subsection>
+			<subsection name="November 25, 2005 - Contrib-dojo v0.3 released!">
+				<p>
+					We are proud to announce that version 0.3 of our library has been released.
+					It now contains actual useable components. ;)
+					<ul>
+						<li>Fully customizable Tooltip Component (non-dojo)</li>
+						<li>DojoFX Component decorators</li>
+						<li>FXFeedbackIndicator component (non-dojo)</li>
+						<li>FXValidationAjaxHandler</li>
+					</ul>
+					Check-out our tutorial section or our Tutorials or our javadoc section for more info on the components.
+				</p>
+				
+			</subsection>
+			
+		</section>
+	</body>
+</document>
