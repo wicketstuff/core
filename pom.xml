@@ -62,8 +62,8 @@
 	</developers>
 
 	<ciManagement>
-		<system>continuum</system>
-		<url>http://www.wickettraining.com/continuum</url>
+		<system>hudson</system>
+		<url>http://www.wicketstuff.org/hudson</url>
 	</ciManagement>
 
 	<distributionManagement>
@@ -85,63 +85,6 @@
 
 	<profiles>
 		<profile>
-			<id>wicketstuff.org</id>
-			<distributionManagement>
-				<site>
-					<id>wicketstuff-org-site</id>
-					<url>scpexe://wicketstuff.org/tmp/wicketstuff-core-site</url>
-				</site>
-				<repository>
-					<id>wicketstuff-org-maven</id>
-					<url>scpexe://wicketstuff.org/home/wicket/tomcat/webapps/maven/repository</url>
-					<uniqueVersion>false</uniqueVersion>
-				</repository>
-				<snapshotRepository>
-					<id>wicketstuff-org-maven</id>
-					<url>scpexe://wicketstuff.org/home/wicket/tomcat/webapps/maven/repository</url>
-					<uniqueVersion>false</uniqueVersion>
-				</snapshotRepository>
-			</distributionManagement>
-		</profile>
-		<profile>
-			<id>bamboo</id>
-			<distributionManagement>
-				<snapshotRepository>
-					<id>repo</id>
-					<name>Local TeamCity/Tomcat repository</name>
-					<url>file:/home/wicket/tomcat/webapps/maven/repository/</url>
-					<uniqueVersion>false</uniqueVersion>
-				</snapshotRepository>
-				<repository>
-					<id>repo</id>
-					<name>Local TeamCity/Tomcat repository</name>
-					<url>file:/home/wicket/tomcat/webapps/maven/repository/</url>
-					<uniqueVersion>false</uniqueVersion>
-				</repository>
-			</distributionManagement>
-		</profile>
-		<profile>
-			<id>wickettraining.com-continuum</id>
-			<distributionManagement>
-				<snapshotRepository>
-					<id>snapshot-repo</id>
-					<name>Local Continuum Snapshot Repo</name>
-					<url>file:/usr/local/maven-continuum/snapshot-repo</url>
-					<uniqueVersion>false</uniqueVersion>
-				</snapshotRepository>
-				<repository>
-					<id>release-repo</id>
-					<name>Local Continuum Release Repo</name>
-					<url>file:/usr/local/maven-continuum/release-repo</url>
-				</repository>
-				<site>
-					<id>site-repo</id>
-					<name>Local Continuum Site Deployment Folder</name>
-					<url>file:/usr/local/maven-continuum/site-deployment</url>
-				</site>
-			</distributionManagement>
-		</profile>
-				<profile>
 			<id>oss.sonatype.org-staged-release</id>
 			<!-- This is the profile to use for releasing into the staged
 			release repo.  We need to sign the artifacts. -->	
@@ -250,14 +193,7 @@
 					<name>Apache Wicket Snapshots</name>
 					<url>http://repository.apache.org/snapshots</url>
 					<snapshots><enabled>true</enabled></snapshots>
-	</repository>
-			<repository>
-			<id>wicket-snaps</id>
-			<url>http://wicketstuff.org/maven/repository</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			</repository>
+				</repository>
 			</repositories>
 
 	<pluginRepositories>
@@ -279,8 +215,8 @@
 	</profiles>
 
 	<issueManagement>
-		<system>jira</system>
-		<url>http://wicketstuff.org/jira</url>
+		<system>github</system>
+		<url>https://github.com/wicketstuff/core/issues</url>
 	</issueManagement>
 
 	<mailingLists>
@@ -294,8 +230,8 @@
 	</mailingLists>
 
 	<scm>
-		<url>https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk/wicketstuff-core</url>
-		<connection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk/wicketstuff-core</connection>
+		<url>https://github.com/wicketstuff/core</url>
+		<connection>scm:git:ssh://git@github.com:wicketstuff/core.git</connection>
 	</scm>
 
 	<properties>
@@ -695,36 +631,5 @@
 			</plugin>
 		</plugins>
 	</reporting>
-
-	<!-- Not allowed for central sync up these need to be included in via a
-	profile.
-	<repositories>
-		<repository>
-			<id>wicket-snaps</id>
-			<url>http://wicketstuff.org/maven/repository</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>maven-license-plugin-repo</id>
-			<name>Maven repository of maven-license-plugin releases</name>
-			<url>http://mc-repo.googlecode.com/svn/maven2/releases</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</pluginRepository>
-	</pluginRepositories>
-
-		-->
-
+	
 </project>
