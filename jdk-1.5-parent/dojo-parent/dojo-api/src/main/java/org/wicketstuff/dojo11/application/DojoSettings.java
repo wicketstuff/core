@@ -27,12 +27,12 @@ import java.util.Properties;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Page;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.dojo11.AbstractDefaultDojoBehavior;
 import org.wicketstuff.dojo11.AbstractDefaultDojoBehavior.DojoModule;
@@ -86,7 +86,7 @@ public class DojoSettings implements IDojoSettings
 	 */
 	public DojoSettings configure() {
 		try {
-			_application.getSharedResources().putClassAlias(AbstractDefaultDojoBehavior.class, "dojo");
+			_application.getSharedResources().add(AbstractDefaultDojoBehavior.class, "dojo", null);
 			Properties dojoProperties = new Properties();
 			dojoProperties.load(ClassLoader.getSystemResourceAsStream("org/wicketstuff/dojo11/wicketstuff-dojo.properties"));
 			_dojoRelease = dojoProperties.getProperty("org.wicketstuff.dojo.release");

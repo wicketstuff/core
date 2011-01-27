@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.wicket.IClusterable;
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  * @author stf

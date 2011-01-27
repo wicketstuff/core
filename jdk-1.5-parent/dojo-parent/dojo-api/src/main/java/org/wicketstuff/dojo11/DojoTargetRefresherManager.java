@@ -23,10 +23,9 @@ import java.util.Map.Entry;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.AjaxRequestTarget.IJavascriptResponse;
+import org.apache.wicket.ajax.AjaxRequestTarget.IJavaScriptResponse;
 import org.apache.wicket.ajax.AjaxRequestTarget.IListener;
-import org.apache.wicket.protocol.http.WebRequest;
-import org.apache.wicket.protocol.http.WebRequestCycle;
+import org.apache.wicket.request.http.WebRequest;
 import org.wicketstuff.dojo11.application.IDojoRequest;
 
 /**
@@ -57,7 +56,7 @@ public class DojoTargetRefresherManager implements IListener
 	 * @see org.apache.wicket.ajax.AjaxRequestTarget.IListener#onAfterRespond(java.util.Map, org.apache.wicket.ajax.AjaxRequestTarget.IJavascriptResponse)
 	 */
 	@SuppressWarnings("unchecked")
-	public void onAfterRespond(Map map, IJavascriptResponse response)
+	public void onAfterRespond(Map map, IJavaScriptResponse response)
 	{
 		//we need to find all dojoWidget that should be reParsed
 		Iterator<Entry<String,Component>> it = dojoComponents.entrySet().iterator();
@@ -81,7 +80,7 @@ public class DojoTargetRefresherManager implements IListener
 		dojoComponents = real;
 
 		if (generateReParseJs()!=null){
-			response.addJavascript(requires + generateReParseJs());
+			response.addJavaScript(requires + generateReParseJs());
 		}
 	}
 
@@ -130,7 +129,10 @@ public class DojoTargetRefresherManager implements IListener
 	 */
 	public static DojoTargetRefresherManager get()
 	{
+		
+		
 		WebRequest request = (WebRequest) WebRequestCycle.get().getRequest();
+		
 		if (request instanceof IDojoRequest) {
 			return ((IDojoRequest) request).getDojoTargetRefresherManager(true);
 		} else {

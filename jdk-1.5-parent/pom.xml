@@ -47,6 +47,8 @@
 		<!-- Modules below are commented until they can compile with wicket 1.5-SNAPSHOT -->
 
 
+		<!-- <module>dojo-parent</module> -->
+
 <!--		 <module>annotation</module> -->
 <!-- calendar views depends on jslibraries -->
 <!--		 <module>calendarviews-parent</module> -->

@@ -17,7 +17,7 @@
 package org.wicketstuff.dojo11;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.RequestCycle;
+import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.ComponentTag;
@@ -87,10 +87,14 @@ public abstract class AbstractDojoWidgetBehavior extends AbstractRequireDojoBeha
 	 * @see org.wicketstuff.dojo11.AbstractRequireDojoBehavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
-	public void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
+	public void renderHead(
+			Component c, IHeaderResponse response) {
+		super.renderHead(c, response);
 		//Dojo auto parsing is disactivated so we declare here each widget we need to parse with dojo
-		if (!(RequestCycle.get().getRequestTarget() instanceof AjaxRequestTarget)) {
+		
+		AjaxRequestTarget target = AjaxRequestTarget.get();
+		
+		if (target != null) {
 			loadingPolicy.renderHead(response, getComponent());
 		}
 	}

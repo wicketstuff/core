@@ -21,7 +21,7 @@ import java.util.Locale;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.IClusterable;
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.dojo11.AbstractDefaultDojoBehavior.DojoModule;
 import org.wicketstuff.dojo11.skin.manager.DojoSkinManager;
 

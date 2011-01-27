@@ -5,11 +5,10 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>dojo-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 	<artifactId>dojo-resources-${dojo.profile}</artifactId>
 	<packaging>jar</packaging>
-	<version>1.4-SNAPSHOT</version>
 	<name>WicketStuff Dojo resources</name>
 	<licenses>
 		<license>
