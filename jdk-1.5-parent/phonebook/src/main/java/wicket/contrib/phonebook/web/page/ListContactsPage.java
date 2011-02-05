@@ -126,8 +126,6 @@ public class ListContactsPage extends BasePage {
 				users.setCurrentPage(0);
 			}
 		};
-
-		form.add(new HiddenField("focus-tracker", new Model()));
 		
 		form.add(new Button("delete-selected") {
 			@Override
@@ -145,7 +143,6 @@ public class ListContactsPage extends BasePage {
 				dataProvider, 10);
 		users.addTopToolbar(new FilterToolbar(users, form, dataProvider));
 		
-		form.add(new EmptyPanel("focus-restore"));
 		form.add(users);
 
 		add(form);
