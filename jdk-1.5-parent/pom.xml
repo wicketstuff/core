@@ -18,6 +18,7 @@
 	</description>
 
 	<modules>
+		<module>datatables-parent</module>
 		<module>progressbar-parent</module>
 		<module>datatable-autocomplete-parent</module>
 		<module>flot-parent</module>
