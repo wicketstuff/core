@@ -32,7 +32,9 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.GoAnd
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.TextFilteredPropertyColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
@@ -107,6 +109,9 @@ public class ListContactsPage extends BasePage {
 	 */
 	public ListContactsPage() {
 
+		super();
+		
+		
 		addCreateLink();
 
 		// set up data provider
@@ -122,6 +127,8 @@ public class ListContactsPage extends BasePage {
 			}
 		};
 
+		form.add(new HiddenField("focus-tracker", new Model()));
+		
 		form.add(new Button("delete-selected") {
 			@Override
 			public void onSubmit() {
@@ -137,6 +144,8 @@ public class ListContactsPage extends BasePage {
 		users = new DefaultDataTable<Contact>("users", createColumns(),
 				dataProvider, 10);
 		users.addTopToolbar(new FilterToolbar(users, form, dataProvider));
+		
+		form.add(new EmptyPanel("focus-restore"));
 		form.add(users);
 
 		add(form);
