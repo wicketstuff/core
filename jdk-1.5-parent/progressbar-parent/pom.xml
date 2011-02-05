@@ -55,39 +55,7 @@
             </plugin>
 -->
 		</plugins>
-		<resources>
-			<!-- Copy properties, xml, html to classpath! -->
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**/*.xml</include>
-					<include>**/*.properties</include>
-					<include>**/*.html</include>
-					<include>**/*.xhtml</include>
-					<include>**/*.css</include>
-					<include>**/*.gif</include>
-					<include>**/*.png</include>
-				</includes>
-			</resource>
-		</resources>
-		<testResources>
-			<testResource>
-				<directory>src/test/java</directory>
-				<includes>
-					<include>**/*.xml</include>
-					<include>**/*.properties</include>
-					<include>**/*.html</include>
-					<include>**/*.xhtml</include>
-					<include>**/*.css</include>
-				</includes>
-			</testResource>
-			<testResource>
-				<directory>src/test/resources</directory>
-				<includes>
-					<include>**/*</include>
-				</includes>
-			</testResource>
-		</testResources>
+		
 	</build>
 	<dependencies>
 		<dependency>

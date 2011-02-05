@@ -9,24 +9,7 @@
     <artifactId>javaee-inject-example-war</artifactId>
     <packaging>war</packaging>
     <name>JavaEE Inject - Example Web Module</name>
-    <build>
-        <resources>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/resources</directory>
-            </resource>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**</include>
-                </includes>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </resource>
-        </resources>
-    </build>
+   
     <dependencies>
         <dependency>
             <groupId>javax</groupId>

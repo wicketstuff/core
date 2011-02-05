@@ -15,6 +15,7 @@
  */
 package org.wicketstuff.datatable_autocomplete.panel;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.behavior.SimpleAttributeModifier;
@@ -28,6 +29,7 @@ import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.DefaultItemReuseStrategy;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.CompressedResourceReference;
@@ -85,6 +87,11 @@ public class AutoCompletingPanel<T> extends Panel {
 
 		add(new AbstractBehavior() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void renderHead(Component c, IHeaderResponse response) {
 				response.renderCSSReference(CSS);
@@ -120,6 +127,11 @@ public class AutoCompletingPanel<T> extends Panel {
 
 		add(closeButton = new Button("close_button", new Model("x")) {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onSubmit() {
 
@@ -130,9 +142,20 @@ public class AutoCompletingPanel<T> extends Panel {
 		setOutputMarkupId(true);
 		setOutputMarkupPlaceholderTag(true);
 
-		closeButton.add(new SimpleAttributeModifier("onclick",
-				"document.getElementById('" + this.getMarkupId()
-						+ "').style.display='none';"));
+		closeButton.add(new AttributeModifier("onclick", true, new AbstractReadOnlyModel<String>() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getObject() {
+				return "document.getElementById('" + AutoCompletingPanel.this.getMarkupId()	+ "').style.display='none';";
+			}
+			
+		}));
+				
 
 	}
 
