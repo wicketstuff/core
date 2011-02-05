@@ -536,7 +536,7 @@
 							<Implementation-Title>${project.name}</Implementation-Title>
 							<Implementation-Version>${project.version} ${buildNumber} - ${user.name}</Implementation-Version>
 							<SCM-Revision>${buildNumber}</SCM-Revision>
-							<SCM-url>${scm.url}</SCM-url>
+							<SCM-url>${project.scm.url}</SCM-url>
 						</manifestEntries>
 					</archive>
 				</configuration>
