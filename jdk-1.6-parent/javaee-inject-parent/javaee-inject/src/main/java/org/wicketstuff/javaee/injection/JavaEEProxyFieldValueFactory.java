@@ -23,6 +23,7 @@ import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.persistence.PersistenceUnit;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.wicket.injection.IFieldValueFactory;
 import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
@@ -102,7 +103,11 @@ public class JavaEEProxyFieldValueFactory implements IFieldValueFactory {
                 && field.getAnnotation(EJB.class).description().equals("stateful")
                 || field.getType().isAnnotationPresent(Stateful.class))) {
             //creates a session if there wasn't already
-            HttpSession session = ((ServletWebRequest) RequestCycle.get().getRequest()).getHttpServletRequest().getSession();
+        	
+        	HttpServletRequest httpServletRequest = (HttpServletRequest)RequestCycle.get().getRequest().getContainerRequest();
+        	
+        	HttpSession session = httpServletRequest.getSession();
+        	
             //check if it's already cached
             Object retValue = session.getAttribute(type.getName());
             if (retValue == null) {

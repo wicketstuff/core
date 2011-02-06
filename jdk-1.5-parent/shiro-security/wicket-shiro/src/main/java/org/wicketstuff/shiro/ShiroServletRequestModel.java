@@ -10,9 +10,14 @@ import org.apache.wicket.request.cycle.RequestCycle;
 public class ShiroServletRequestModel extends
 		LoadableDetachableModel<HttpServletRequest> {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected HttpServletRequest load() {
 		Request request = RequestCycle.get().getRequest();
-		return ((ServletWebRequest) request).getHttpServletRequest();
+		return (HttpServletRequest) request.getContainerRequest();
 	}
 }
