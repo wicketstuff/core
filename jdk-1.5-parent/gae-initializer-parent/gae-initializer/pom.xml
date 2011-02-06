@@ -5,7 +5,7 @@
   <parent>
     <artifactId>gae-initializer-parent</artifactId>
     <groupId>org.wicketstuff</groupId>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.5-RC1.1</version>
   </parent>
   <groupId>org.wicketstuff</groupId>
   <artifactId>gae-initializer</artifactId>
