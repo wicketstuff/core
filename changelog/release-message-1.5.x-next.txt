@@ -1,9 +1,3 @@
-Wicketstuff Developers:
-
-Please include in this file any content you would like to appear in the announce message regarding key changes in the next 1.5 release (either 1.5-RC2 or 1.5-RC1.1)
-
-Please enter your content in the 'Release Notes' section below as this announce message will then be cut and paste into the release announce email.
-
 <start announce>
 
 Hello, 
