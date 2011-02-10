@@ -19,7 +19,7 @@ class SForm[T](id:String, model:IModel[T] , onSubmitFunc: ⇒ Unit) extends Form
 
 }
 
-class SLabel(id:String, gtr: ⇒ String) extends Label[String](id, new Fodel(gtr, null)) {
+class SLabel(id:String, gtr: ⇒ String) extends Label(id, new Fodel(gtr, null)) {
   
   def print = println(gtr)
   
