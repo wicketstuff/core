@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5" metadata-complete="true">
+
+	<context-param>
+		<param-name>wicket.configuration</param-name>
+		<param-value>deployment</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- first app using @SpringBean and url "/bean" -->
+	<filter>
+		<filter-name>springBeanWicketApp</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.wicketstuff.springreference.examples.springbean.App</param-value>
+		</init-param>
+	</filter>
+
+	<!-- second app using SpringReference and url "/ref" -->
+	<filter>
+		<filter-name>springReferenceWicketApp</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.wicketstuff.springreference.examples.springreference.App</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springBeanWicketApp</filter-name>
+		<url-pattern>/bean/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>springReferenceWicketApp</filter-name>
+		<url-pattern>/ref/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+</web-app>
+

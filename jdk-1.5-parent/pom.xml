@@ -32,52 +32,53 @@
 		<module>shiro-security</module>
 		<module>gae-initializer-parent</module>
 		<module>push-parent-jdk-1.5</module>
-		<module>jasperreports-parent</module> 
-		<module>mbeanview-parent</module> 
-		<module>jsr303-parent</module> 
-		<module>client-and-server-validation</module> 
-		<module>multi-text-input-parent</module> 
-		<module>prototype</module> 
-		<module>simile-timeline-parent</module> 
-		<module>theme-parent</module> 
-		<module>yav-parent</module> 
-		<module>maven-support</module> 
-		<module>plugin</module> 
+		<module>jasperreports-parent</module>
+		<module>mbeanview-parent</module>
+		<module>jsr303-parent</module>
+		<module>client-and-server-validation</module>
+		<module>multi-text-input-parent</module>
+		<module>prototype</module>
+		<module>simile-timeline-parent</module>
+		<module>theme-parent</module>
+		<module>yav-parent</module>
+		<module>maven-support</module>
+		<module>plugin</module>
 		<module>input-events-parent</module>
+		<module>wicketstuff-springreference-parent</module>
 
 		<!-- Modules below are commented until they can compile with wicket 1.5-SNAPSHOT -->
 
 
 		<!-- <module>dojo-parent</module> -->
 
-<!--		 <module>annotation</module> -->
-<!-- calendar views depends on jslibraries -->
-<!--		 <module>calendarviews-parent</module> -->
-<!-- artwork-parent depends on jslibraries -->
-<!--		 <module>artwork-parent</module> -->		
+		<!-- <module>annotation</module> -->
+		<!-- calendar views depends on jslibraries -->
+		<!-- <module>calendarviews-parent</module> -->
+		<!-- artwork-parent depends on jslibraries -->
+		<!-- <module>artwork-parent</module> -->
 
-		 
-<!-- needs to change to new header contribution structure in 1.5		 -->
-<!--		 <module>jslibraries</module> -->
 
-		 
-<!--		 <module>misc</module> -->
-<!-- jquery depends on misc -->
-<!--		 <module>jquery-parent</module> -->
+		<!-- needs to change to new header contribution structure in 1.5 -->
+		<!-- <module>jslibraries</module> -->
 
-<!--		 <module>jwicket-parent</module> -->
 
-<!--		 <module>objectautocomplete-parent</module> -->
+		<!-- <module>misc</module> -->
+		<!-- jquery depends on misc -->
+		<!-- <module>jquery-parent</module> -->
 
-		
-<!-- mocleiri: has Irequesttarget usage that needs to be migrated.		-->
-<!--		 <module>scriptaculous-parent</module> -->
-		 
-<!--		 <module>tinymce-parent</module> -->
-<!--		 <module>yui-parent</module> -->
+		<!-- <module>jwicket-parent</module> -->
 
-	
-		
+		<!-- <module>objectautocomplete-parent</module> -->
+
+
+		<!-- mocleiri: has Irequesttarget usage that needs to be migrated. -->
+		<!-- <module>scriptaculous-parent</module> -->
+
+		<!-- <module>tinymce-parent</module> -->
+		<!-- <module>yui-parent</module> -->
+
+
+
 
 		<!--commented out until org.apache.commons:commons-proxy:jar:1.1-SNAPSHOT 
 			is available -->
@@ -85,15 +86,15 @@
 		<!-- <module>syringe</module> -->
 
 		<!-- <module>ki-security</module> -->
-<!--		 <module>sitemap-xml-parent</module> -->
-		
+		<!-- <module>sitemap-xml-parent</module> -->
 
 
-		 
-<!-- depends on yui		 -->
-<!--		 <module>ddcalendar-parent</module> -->
-		 
-		
+
+
+		<!-- depends on yui -->
+		<!-- <module>ddcalendar-parent</module> -->
+
+
 
 	</modules>
 
@@ -113,6 +114,8 @@
 					<maxmem>512m</maxmem>
 					<source>1.5</source>
 					<target>1.5</target>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
 					<!--
 						<compilerVersion>1.5</compilerVersion>
 						<executable>${java5home}/bin/javac</executable>
