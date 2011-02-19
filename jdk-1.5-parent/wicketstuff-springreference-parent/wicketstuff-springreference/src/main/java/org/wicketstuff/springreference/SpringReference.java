@@ -58,9 +58,10 @@ import org.apache.wicket.protocol.http.WebApplication;
  * This class is the solution.
  * </p>
  * <p>
- * Because this class does not need an <code>Injector</code>, does not use
- * dynamic proxies and looks up spring beans lazily, it should be slightly
- * faster. It also supports serializing as <code>&#64;SpringBean</code> does.
+ * Because this class does not need an
+ * <code>IComponentInstantiationListener</code>, does not use dynamic proxies
+ * and looks up spring beans lazily, it should be slightly faster. It also
+ * supports serializing as <code>&#64;SpringBean</code> does.
  * </p>
  * <p>
  * <b>Instances of this class use the {@link SpringReferenceSupporter} for bean
