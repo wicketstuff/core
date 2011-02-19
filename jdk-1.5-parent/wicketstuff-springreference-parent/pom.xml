@@ -19,6 +19,15 @@
 		webapp project.
 	</description>
 
+	<developers>
+		<developer>
+			<id>akiraly</id>
+			<name>Király Attila</name>
+			<email>kiralyattila.hu@gmail.com</email>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+
 	<modules>
 		<module>wicketstuff-springreference</module>
 		<module>wicketstuff-springreference-examples</module>

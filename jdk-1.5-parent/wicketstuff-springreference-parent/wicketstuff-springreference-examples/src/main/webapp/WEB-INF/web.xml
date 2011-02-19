@@ -3,6 +3,8 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5" metadata-complete="true">
 
+	<display-name>WicketStuff SpringReference - Example Web Application</display-name>
+
 	<context-param>
 		<param-name>wicket.configuration</param-name>
 		<param-value>deployment</param-value>
@@ -35,13 +37,11 @@
 	<filter-mapping>
 		<filter-name>springBeanWicketApp</filter-name>
 		<url-pattern>/bean/*</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 
 	<filter-mapping>
 		<filter-name>springReferenceWicketApp</filter-name>
 		<url-pattern>/ref/*</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 
 	<session-config>
