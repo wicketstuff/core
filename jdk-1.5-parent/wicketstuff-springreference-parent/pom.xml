@@ -16,7 +16,7 @@
 	<name>WicketStuff SpringReference - Parent</name>
 	<description>
 		Parent project for wicketstuff-springreference module and its example
-		webapp project.
+		webapp project. See wicketstuff-springreference for more info.
 	</description>
 
 	<developers>

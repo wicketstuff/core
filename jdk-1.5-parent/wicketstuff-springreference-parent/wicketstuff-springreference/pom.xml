@@ -16,7 +16,7 @@
 	<name>WicketStuff SpringReference</name>
 	<description>
 		This module can be used in cases when limited by @SpringBean. It can
-		used to complete or replace wicket-spring. See SpringReference class
+		be used to complete or replace wicket-spring. See SpringReference class
 		for more info.
 	</description>
 
