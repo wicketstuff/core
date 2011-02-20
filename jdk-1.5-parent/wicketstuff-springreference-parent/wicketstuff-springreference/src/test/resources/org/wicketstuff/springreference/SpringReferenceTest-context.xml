@@ -10,7 +10,7 @@
 	<bean class="org.wicketstuff.springreference.PrimaryService"
 		primary="true" />
 
-	<bean class="org.wicketstuff.springreference.ConstructorService"
+	<bean id="constructor" class="org.wicketstuff.springreference.ConstructorService"
 		factory-method="create" />
 
 </beans>

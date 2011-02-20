@@ -146,4 +146,9 @@ public class SpringReference<T> extends AbstractSpringReference<T> implements
 	protected SpringReferenceSupporter getSupporter() {
 		return SpringReferenceSupporter.get();
 	}
+
+	@Override
+	public SpringReference<T> clone() {
+		return (SpringReference<T>) super.clone();
+	}
 }

@@ -50,7 +50,8 @@ public abstract class AbstractSpringReferenceSupporter {
 	/**
 	 * Looks up the spring bean from a spring {@link ApplicationContext}. The
 	 * bean is set in the reference. If the name was not given for the reference
-	 * this method will fill that too.
+	 * this method will fill that too. Throws a {@link RuntimeException} if the
+	 * bean could not be found.
 	 * 
 	 * @param <T>
 	 *            type of the wrapped spring bean
