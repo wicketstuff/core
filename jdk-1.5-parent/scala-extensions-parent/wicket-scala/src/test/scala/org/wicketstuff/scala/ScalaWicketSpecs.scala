@@ -62,7 +62,7 @@ class ScalaWicketSpecs extends SpecificationWithJUnit with JUnit with ScalaTest 
       def takesAnJUList(list:java.util.List[Int]) = list
       val result = takesAnJUList(List(1,2,3))
       result.size mustBe 3
-      result.isInstanceOf[java.util.ArrayList[Int]] mustBe true
+      result.isInstanceOf[java.util.ArrayList[_]] mustBe true
     }
     "allow us to create a ListView out of a Scala List" in {
       import org.apache.wicket.markup.html.list._
