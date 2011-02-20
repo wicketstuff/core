@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><archetype-descriptor name="wicket-scala-sample">
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor name="wicket-scala-sample">
   <fileSets>
-    <fileSet encoding="UTF-8">
+    <fileSet filtered="true" encoding="UTF-8">
       <directory>project</directory>
       <includes>
         <include>**/*.properties</include>
@@ -12,7 +13,7 @@
       <includes>
         <include>**/*.java</include>
         <include>**/*.html</include>
-        <include>**/*.xml</include>
+        <include>**/*.properties.xml</include>
       </includes>
     </fileSet>
     <fileSet filtered="true" packaged="true" encoding="UTF-8">
@@ -20,7 +21,7 @@
       <includes>
         <include>**/*.scala</include>
         <include>**/*.html</include>
-        <include>**/*.xml</include>
+        <include>**/*.properties.xml</include>
       </includes>
     </fileSet>
     <fileSet filtered="true" encoding="UTF-8">
@@ -35,6 +36,7 @@
       <includes>
         <include>**/*.scala</include>
         <include>**/*.html</include>
+        <include>**/*.properties.xml</include>
       </includes>
     </fileSet>
     <fileSet filtered="true" encoding="UTF-8">
