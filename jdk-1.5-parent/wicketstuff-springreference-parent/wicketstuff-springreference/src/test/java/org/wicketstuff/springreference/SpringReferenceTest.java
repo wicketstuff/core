@@ -22,6 +22,7 @@ import java.io.ObjectOutputStream;
 import org.apache.wicket.Application;
 import org.apache.wicket.ThreadContext;
 import org.apache.wicket.mock.MockApplication;
+import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -111,6 +112,34 @@ public class SpringReferenceTest {
 		} catch (NoSuchBeanDefinitionException e) {
 			// expected, all ok.
 		}
+	}
+
+	@Test
+	public void cloneEqualityTest() {
+		SpringReference<ConstructorService> refClazzOnly = SpringReference
+				.of(ConstructorService.class);
+		SpringReference<ConstructorService> refNamed = SpringReference.of(
+				ConstructorService.class, "constructor");
+
+		SpringReference<ConstructorService> refClazzOnly2 = refClazzOnly
+				.clone();
+		SpringReference<ConstructorService> refNamed2 = refNamed.clone();
+
+		Assert.assertNotSame(refClazzOnly, refClazzOnly2);
+		Assert.assertNotSame(refNamed, refNamed2);
+
+		refClazzOnly.get();
+
+		Assert.assertThat(refClazzOnly,
+				CoreMatchers.not(CoreMatchers.equalTo(refNamed)));
+
+		refNamed.get();
+
+		Assert.assertEquals(refClazzOnly.hashCode(), refClazzOnly2.hashCode());
+		Assert.assertEquals(refNamed.hashCode(), refNamed2.hashCode());
+
+		Assert.assertEquals(refClazzOnly, refClazzOnly2);
+		Assert.assertEquals(refNamed, refNamed2);
 	}
 
 	protected <T extends AService> void testReference(

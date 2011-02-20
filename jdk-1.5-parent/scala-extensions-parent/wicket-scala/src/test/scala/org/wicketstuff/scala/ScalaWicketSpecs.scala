@@ -9,7 +9,7 @@ import org.specs.runner._
 /**
  * @author Antony Stubbs
  */
-class ScalaWicketSpecs extends Specification with JUnit with ScalaTest with ScalaWicket {
+class ScalaWicketSpecs extends SpecificationWithJUnit with JUnit with ScalaTest with ScalaWicket {
 
   "NullSafe operater" should {
     

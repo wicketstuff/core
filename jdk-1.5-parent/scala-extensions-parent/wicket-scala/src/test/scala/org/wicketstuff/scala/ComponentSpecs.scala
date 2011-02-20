@@ -14,7 +14,7 @@ import org.specs.runner._
  * 
  * @author Antony Stubbs
  */
-class ComponentSpecs extends Specification with JUnit with ScalaTest with ScalaWicket {
+class ComponentSpecs extends SpecificationWithJUnit with JUnit with ScalaTest with ScalaWicket {
 
   val tony = "Tony"
   val karyn = "Karyn"
