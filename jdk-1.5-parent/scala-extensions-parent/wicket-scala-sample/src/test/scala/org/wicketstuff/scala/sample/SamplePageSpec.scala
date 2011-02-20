@@ -4,7 +4,7 @@ import org.specs._
 import org.specs.runner._
 import org.apache.wicket.util.tester.WicketTester
 
-class SamplePageSpec extends SpecificationWithJUnit with JUnit with ScalaTest {
+class SamplePageSpec extends SpecificationWithJUnit with ScalaTest {
 
   "HomePage" should {
     "construct without error" in {

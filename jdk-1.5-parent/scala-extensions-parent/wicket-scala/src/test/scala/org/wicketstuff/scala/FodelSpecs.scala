@@ -10,7 +10,7 @@ import org.specs.runner._
  * @author Antony Stubbs
  */
 
-class FodelSpecs extends SpecificationWithJUnit with JUnit with ScalaTest {
+class FodelSpecs extends SpecificationWithJUnit with ScalaTest {
 
   val tony = "Tony"
   val karyn = "Karyn"
