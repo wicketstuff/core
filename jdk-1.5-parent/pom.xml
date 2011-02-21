@@ -105,7 +105,7 @@
 				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.1</version>
+				<version>2.3.2</version>
 				<configuration>
 					<fork>true</fork>
 					<verbose>true</verbose>
@@ -121,7 +121,6 @@
 						<compilerVersion>1.5</compilerVersion>
 						<executable>${java5home}/bin/javac</executable>
 					-->
-					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 
