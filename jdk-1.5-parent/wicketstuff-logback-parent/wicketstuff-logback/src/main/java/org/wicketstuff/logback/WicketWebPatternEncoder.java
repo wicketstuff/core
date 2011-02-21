@@ -17,7 +17,6 @@ import javax.servlet.Filter;
 
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
-import ch.qos.logback.classic.helpers.MDCInsertingServletFilter;
 
 /**
  * <p>
@@ -60,12 +59,13 @@ import ch.qos.logback.classic.helpers.MDCInsertingServletFilter;
  * </p>
  * <p>
  * There are similar solutions using {@link Filter}-s, MDC and NDC to solve the
- * same task (like logback's own {@link MDCInsertingServletFilter} or spring's
+ * same task (like logback's own MDCInsertingServletFilter or spring's
  * AbstractRequestLoggingFilter and its subclasses). The difference from those
- * is performance. Those filters are always collecting information for every
- * request however only a small portion of requests result in actual logging.
- * This solution only gets invoked when the logging event is indeed producing a
- * log message.
+ * is performance (and the amount of information provided). Those filters are
+ * always collecting information for every request however usually only a small
+ * portion of requests result in actual logging. This solution only gets invoked
+ * when the logging event is indeed producing a log message. It is on the
+ * "other side of the fence".
  * </p>
  * 
  * @author akiraly

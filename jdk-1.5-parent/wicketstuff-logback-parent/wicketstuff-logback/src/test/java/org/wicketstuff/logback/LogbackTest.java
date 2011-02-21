@@ -44,7 +44,7 @@ public class LogbackTest {
 				.getLogger(Logger.ROOT_LOGGER_NAME);
 
 		// if the cast or the assert fails the custom configuration of logback
-		// failed, WicketWebPatternEncoder bug
+		// failed, LogbackConfigListener bug
 		ByteArrayAppender<ILoggingEvent> appender = (ByteArrayAppender<ILoggingEvent>) logger
 				.getAppender("arrayAppender");
 		Assert.assertNotNull(appender);
