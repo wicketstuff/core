@@ -1,11 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-        <version>1.5-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jdk-1.6-parent</artifactId>
@@ -17,35 +19,28 @@
 	</description>
 
 	<modules>
-		<module>javaee-inject-parent</module> 
+		<module>javaee-inject-parent</module>
 		<module>push-parent-jdk-1.6</module>
 		<module>wicket-html5-parent</module>
 		<module>wicket-servlet3-parent</module>
-  	</modules>
+	</modules>
 
 	<build>
-	<plugins>
-	<plugin>
-		<inherited>true</inherited>
-		<groupId>org.apache.maven.plugins</groupId>
-		<artifactId>maven-compiler-plugin</artifactId>
-		<configuration>
-			<fork>true</fork>
-			<optimise>true</optimise>
-			<debug>true</debug>
-			<verbose>true</verbose>
-			<meminitial>128m</meminitial>
-			<maxmem>512m</maxmem>
-			<source>1.6</source>
-			<target>1.6</target>
-			<!--
-			<compilerVersion>1.6</compilerVersion>
-			<executable>${java6home}/bin/javac</executable>
-			-->
-			<encoding>UTF-8</encoding>
-		</configuration>
-	</plugin>
-	</plugins>
+		<plugins>
+			<plugin>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<!--
+						<compilerVersion>1.6</compilerVersion>
+						<executable>${java6home}/bin/javac</executable>
+					-->
+				</configuration>
+			</plugin>
+		</plugins>
 
 	</build>
 

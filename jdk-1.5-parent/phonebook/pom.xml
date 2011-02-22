@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -129,7 +130,7 @@
 	</dependencies>
 
 	<build>
-		
+
 		<plugins>
 			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -160,6 +161,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
+				<version>2.1.1</version>
 				<configuration>
 					<templateDirectory>
 						${basedir}/src/site/template/
@@ -174,13 +176,11 @@
 					<includes>
 						<include>**/*DoNotRunAnyTests.java</include>
 					</includes>
-                                        <!-- jthomerson: I changed the line above so that no
-                                                        tests would run.  This was to get TeamCity
-                                                        running where it would still fail if other projects
-                                                        had a test failure - we don't want all test failures
-                                                        to be ignored - but apparently this project does,
-                                                        so we're just turning off testing in it for now.
-                                        -->					
+					<!-- jthomerson: I changed the line above so that no tests would run. 
+						This was to get TeamCity running where it would still fail if other projects 
+						had a test failure - we don't want all test failures to be ignored - but 
+						apparently this project does, so we're just turning off testing in it for 
+						now. -->
 					<testFailureIgnore>true</testFailureIgnore>
 				</configuration>
 			</plugin>

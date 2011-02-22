@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -23,15 +24,16 @@
 	</developers>
 
 	<build>
-	        <plugins>
+		<plugins>
 			<plugin>
-				<groupId>net.sf.alchim</groupId>
+				<groupId>net.alchim31.maven</groupId>
 				<artifactId>yuicompressor-maven-plugin</artifactId>
+				<version>1.1</version>
 				<executions>
 					<execution>
 						<phase>process-resources</phase>
 						<goals>
-							<!--goal>jslint</goal-->
+							<!--goal>jslint</goal -->
 							<goal>compress</goal>
 						</goals>
 					</execution>
@@ -77,4 +79,3 @@
 		</dependency>
 	</dependencies>
 </project>
-

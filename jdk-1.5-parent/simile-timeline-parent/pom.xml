@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -38,15 +39,15 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-            <scope>test</scope>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-            <scope>test</scope>
+			<scope>test</scope>
 		</dependency>
 
-		<!--  JUNIT DEPENDENCY FOR TESTING -->
+		<!-- JUNIT DEPENDENCY FOR TESTING -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -58,8 +59,9 @@
 		<plugins>
 			<plugin>
 				<!-- USAGE: mvn license:check OR mvn license:format -->
-				<groupId>com.mathieucarbou.mojo</groupId>
+				<groupId>com.mycila.maven-license-plugin</groupId>
 				<artifactId>maven-license-plugin</artifactId>
+				<version>1.9.0</version>
 				<configuration>
 					<header>src/main/etc/header.txt</header>
 					<excludes>
@@ -70,16 +72,15 @@
 						<exclude>**/*.swf</exclude>
 					</excludes>
 				</configuration>
-				<!-- TODO - get this working again with new dir structure:
-				<executions>
+				<!-- TODO - get this working again with new dir structure: -->
+				<!--executions>
 					<execution>
 						<phase>test</phase>
 						<goals>
 							<goal>check</goal>
 						</goals>
 					</execution>
-				</executions>
-				-->
+				</executions-->
 			</plugin>
 		</plugins>
 	</build>

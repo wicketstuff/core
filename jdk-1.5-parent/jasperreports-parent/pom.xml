@@ -86,10 +86,10 @@
 		<jasperreports.version>3.5.3</jasperreports.version>
 	</properties>
 
-    <modules>
-    	<module>jasperreports</module>
-    	<module>jasperreports-examples</module>
-    </modules>
+	<modules>
+		<module>jasperreports</module>
+		<module>jasperreports-examples</module>
+	</modules>
 
 	<dependencies>
 		<!-- TEST -->
@@ -170,6 +170,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
+				<version>2.1.1</version>
 				<configuration>
 					<templateDirectory>file:src/site/template/</templateDirectory>
 					<template>wicket-site.vm</template>
