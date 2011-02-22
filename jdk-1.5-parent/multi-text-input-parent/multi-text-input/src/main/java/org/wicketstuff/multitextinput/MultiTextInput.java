@@ -267,7 +267,8 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
 
         // render the javascript to setup the component
         IModel variablesModel = new AbstractReadOnlyModel() {
-            public Map getObject() {
+            @Override
+			public Map getObject() {
                 Map<String, CharSequence> variables = new HashMap<String, CharSequence>(2);
                 variables.put("id", id);
                 StringBuffer arr = new StringBuffer();
@@ -308,7 +309,8 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
         }
     }
 
-    public void updateModel() {
+    @Override
+	public void updateModel() {
         super.updateModel();
         // do one more step by setting our model with the removed items
         // in case the user of the component needs this convenience

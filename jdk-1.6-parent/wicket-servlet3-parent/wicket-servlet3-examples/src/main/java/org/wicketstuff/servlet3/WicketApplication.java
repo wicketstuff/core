@@ -20,7 +20,8 @@ public class WicketApplication extends WebApplication
     /**
      * @see wicket.Application#getHomePage()
      */
-    public Class<? extends Page> getHomePage()
+    @Override
+	public Class<? extends Page> getHomePage()
     {
         return HomePage.class;
     }

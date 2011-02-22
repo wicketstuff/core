@@ -6,12 +6,12 @@
  */
 package org.wicketstuff.html5.media.video;
 
+import java.util.List;
+
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.model.IModel;
 import org.wicketstuff.html5.media.Html5Media;
 import org.wicketstuff.html5.media.MediaSource;
-
-import java.util.List;
 
 /**
  *
@@ -72,7 +72,8 @@ public class Html5Video extends Html5Media {
      *
      * @return the tag name for this html5 media
      */
-    protected String getTagName() {
+    @Override
+	protected String getTagName() {
         return "video";
     }
 

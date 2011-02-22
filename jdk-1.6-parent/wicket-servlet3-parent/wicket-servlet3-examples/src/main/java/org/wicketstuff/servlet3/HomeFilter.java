@@ -4,10 +4,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
-import javax.servlet.annotation.WebServlet;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @WebFilter(value = "/*", /* urlPatterns = "/*",*/ 
 		initParams = { 

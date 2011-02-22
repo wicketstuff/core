@@ -22,8 +22,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.wicketstuff.shiro.example.ExampleApplication;
 import org.wicketstuff.shiro.example.pages.LoginPage;
-import org.wicketstuff.shiro.example.sprhibnative.ExampleInfoPanel;
-import org.wicketstuff.shiro.example.sprhibnative.UserAuthHeader;
 
 public class ExampleHibernateApp extends ExampleApplication
 {

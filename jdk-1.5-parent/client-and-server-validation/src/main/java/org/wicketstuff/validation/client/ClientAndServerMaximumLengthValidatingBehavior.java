@@ -40,6 +40,7 @@ public class ClientAndServerMaximumLengthValidatingBehavior extends AbstractClie
 		mMax = max;
 	}
 
+	@Override
 	protected void addServerSideValidator(FormComponent component) {
 		component.add(StringValidator.maximumLength(mMax));
 	}

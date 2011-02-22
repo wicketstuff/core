@@ -18,13 +18,20 @@
  */
 package org.wicketstuff.shiro.example.sprhibnative.model;
 
+import java.util.Set;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.Index;
-
-import javax.persistence.*;
-import java.util.Set;
 
 /**
  * Model object that represents a security role.

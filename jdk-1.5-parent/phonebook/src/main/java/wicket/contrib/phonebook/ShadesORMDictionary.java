@@ -25,8 +25,11 @@ import hendrey.orm.RecordCandidate;
 import hendrey.shades.ORMDictionaryFactory;
 import hendrey.shades.QueryFactory;
 import hendrey.shades.tools.TableCreator;
+
 import java.sql.Connection;
+
 import javax.sql.DataSource;
+
 import org.springframework.beans.factory.InitializingBean;
 
 /**

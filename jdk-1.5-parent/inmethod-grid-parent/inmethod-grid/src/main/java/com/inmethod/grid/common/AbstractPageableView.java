@@ -8,9 +8,9 @@ import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.IModel;
 
 import com.inmethod.grid.IDataSource;
-import com.inmethod.grid.IGridSortState;
 import com.inmethod.grid.IDataSource.IQuery;
 import com.inmethod.grid.IDataSource.IQueryResult;
+import com.inmethod.grid.IGridSortState;
 
 /**
  * Wicket {@link org.apache.wicket.markup.repeater.AbstractPageableView} alternative that uses

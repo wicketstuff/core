@@ -15,17 +15,14 @@
  */
 package org.wicketstuff.datatable_autocomplete.table.button;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.Radio;
-import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
@@ -34,7 +31,6 @@ import org.apache.wicket.model.Model;
 import org.wicketstuff.datatable_autocomplete.button.DTAAjaxFallbackButton;
 import org.wicketstuff.datatable_autocomplete.form.action.AbstractFormOnSubmitAction;
 import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;
-import org.wicketstuff.datatable_autocomplete.model.MarkupIDInStringModel;
 import org.wicketstuff.datatable_autocomplete.table.ISelectableTableViewPanelButtonProvider;
 
 /**

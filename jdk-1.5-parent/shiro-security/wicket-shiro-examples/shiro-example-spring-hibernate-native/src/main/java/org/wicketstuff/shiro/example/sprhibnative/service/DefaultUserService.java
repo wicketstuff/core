@@ -27,7 +27,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.wicketstuff.shiro.example.sprhibnative.dao.UserDAO;
 import org.wicketstuff.shiro.example.sprhibnative.model.User;
-import org.wicketstuff.shiro.example.sprhibnative.service.UserService;
 
 /**
  * Default implementation of the {@link UserService} interface.  This service implements

@@ -1,7 +1,7 @@
 package org.wicketstuff.plugin;
 
-import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.Application;
+import org.apache.wicket.protocol.http.WebApplication;
 import org.wicketstuff.plugin.def.DefaultPluginRegistry;
 
 /**

@@ -15,8 +15,6 @@
  */
 package org.wicketstuff.flot;
 
-import org.apache.log4j.Logger;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +22,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.log4j.Logger;
 
 public class Series implements Serializable {
 	/** Required by {@link Serializable} */
@@ -55,6 +55,7 @@ public class Series implements Serializable {
 		return Collections.unmodifiableList(data);
 	}
 	
+	@Override
 	public String toString() {
 		StringBuffer str = new StringBuffer();
 		str.append("{data: [");

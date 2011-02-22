@@ -18,6 +18,7 @@ public class WicketApplication extends WebApplication {
 	/**
 	 * @see wicket.Application#getHomePage()
 	 */
+	@Override
 	public Class getHomePage() {
 		return HomePage.class;
 	}

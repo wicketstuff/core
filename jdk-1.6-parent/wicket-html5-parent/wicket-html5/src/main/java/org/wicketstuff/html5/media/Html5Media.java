@@ -6,6 +6,8 @@
  */
 package org.wicketstuff.html5.media;
 
+import java.util.List;
+
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -13,8 +15,6 @@ import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.wicketstuff.html5.Html5UtilsBehavior;
-
-import java.util.List;
 
 /**
  *

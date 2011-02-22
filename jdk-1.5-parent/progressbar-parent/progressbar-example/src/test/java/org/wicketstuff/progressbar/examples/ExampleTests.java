@@ -1,6 +1,7 @@
 package org.wicketstuff.progressbar.examples;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.util.tester.WicketTester;

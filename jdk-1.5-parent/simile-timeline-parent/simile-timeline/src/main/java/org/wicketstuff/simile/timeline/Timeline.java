@@ -17,7 +17,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.simile.timeline.json.JsonUtils;
 import org.wicketstuff.simile.timeline.model.BandInfoParameters;
 import org.wicketstuff.simile.timeline.model.BandInfoParameters.DateTime;

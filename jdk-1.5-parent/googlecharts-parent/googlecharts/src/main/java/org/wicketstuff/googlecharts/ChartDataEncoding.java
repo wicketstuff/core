@@ -10,7 +10,8 @@ public enum ChartDataEncoding {
 
     SIMPLE("s", "", ",") {
 
-        CharSequence convert(double value, double max) {
+        @Override
+		CharSequence convert(double value, double max) {
             if (value < 0) {
                 return "_";
             }
@@ -26,7 +27,8 @@ public enum ChartDataEncoding {
     },
     TEXT("t", ",", "|") {
 
-        CharSequence convert(double value, double max) {
+        @Override
+		CharSequence convert(double value, double max) {
             if (value < 0) {
                 value = -1;
             }
@@ -40,7 +42,8 @@ public enum ChartDataEncoding {
     },
     EXTENDED("e", "", ",") {
 
-        CharSequence convert(double value, double max) {
+        @Override
+		CharSequence convert(double value, double max) {
             if (value < 0) {
                 return "__";
             }

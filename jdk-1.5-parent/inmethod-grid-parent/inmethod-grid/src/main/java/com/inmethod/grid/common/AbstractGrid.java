@@ -551,6 +551,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void renderHead(IHeaderResponse response) {
 		response.renderJavaScriptReference(WicketEventReference.INSTANCE);
 		response.renderJavaScriptReference(WicketAjaxReference.INSTANCE);

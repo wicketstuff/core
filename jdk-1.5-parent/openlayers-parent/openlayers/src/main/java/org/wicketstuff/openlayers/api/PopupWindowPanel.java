@@ -1,7 +1,6 @@
 package org.wicketstuff.openlayers.api;
 
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.Component;
 
 /**
  * A popup for your marker, please extend this if you want poups..

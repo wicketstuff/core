@@ -15,10 +15,10 @@
  */
 package org.wicketstuff.flot;
 
-import org.joda.time.DateTime;
-
 import java.io.Serializable;
 import java.util.Locale;
+
+import org.joda.time.DateTime;
 
 public class DataSet implements Serializable {
 	/** Required by {@link Serializable} */
@@ -45,6 +45,7 @@ public class DataSet implements Serializable {
 		return y;
 	}
 	
+	@Override
 	public String toString() {
 		return String.format(Locale.US, "[%f, %f]", x, y);
 	}

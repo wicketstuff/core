@@ -34,6 +34,7 @@ public class ClientAndServerRequiredValidatingBehavior extends AbstractClientAnd
 		super(form);
 	}
 	
+	@Override
 	protected void addServerSideValidator(FormComponent component) {
 		component.setRequired(true);
 	}

@@ -18,9 +18,9 @@
  */
 package org.wicketstuff;
 
-import winstone.Launcher;
-
 import java.util.HashMap;
+
+import winstone.Launcher;
 
 /**
  * Seperate startup class for people that want to run the examples directly.

@@ -75,6 +75,7 @@ public class NoRecordsToolbar extends AbstractToolbar
 	 * 
 	 * @see org.apache.wicket.Component#isVisible()
 	 */
+	@Override
 	public boolean isVisible()
 	{
 		return getDataGrid().getTotalRowCount() == 0;

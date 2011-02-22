@@ -16,14 +16,16 @@
  */
 package org.wicketstuff.progressbar.spring;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.concurrent.Executor;
 
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.resource.loader.ClassStringResourceLoader;
-import org.apache.wicket.resource.loader.ComponentStringResourceLoader;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.apache.wicket.spring.test.ApplicationContextMock;
 import org.apache.wicket.util.tester.TestPanelSource;
@@ -33,9 +35,6 @@ import org.junit.Test;
 import org.wicketstuff.progressbar.ProgressBar;
 import org.wicketstuff.progressbar.Progression;
 import org.wicketstuff.progressbar.ProgressionModel;
-import org.wicketstuff.progressbar.spring.AsynchronousExecutor;
-import org.wicketstuff.progressbar.spring.Task;
-import org.wicketstuff.progressbar.spring.TaskService;
 import org.wicketstuff.progressbar.spring.Task.Message;
 
 

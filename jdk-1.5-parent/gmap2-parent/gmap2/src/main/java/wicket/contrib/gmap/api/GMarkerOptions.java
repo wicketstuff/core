@@ -112,6 +112,7 @@ public class GMarkerOptions implements GValue, Cloneable
 		return icon;
 	}
 	
+	@Override
 	public GMarkerOptions clone() {
 		try
 		{

@@ -1,6 +1,7 @@
 package org.wicketstuff.minis;
 
 import junit.framework.TestCase;
+
 import org.apache.wicket.util.tester.WicketTester;
 
 /**

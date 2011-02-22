@@ -31,6 +31,7 @@ public abstract class OverlayListenerBehavior extends EventListenerBehavior {
 		this.gOverlay = gOverlay;
 	}
 
+	@Override
 	public String getJSaddListener() {
 		return getOpenLayersMap().getJSinvoke(
 				"register('" + getEvent() + "', '"

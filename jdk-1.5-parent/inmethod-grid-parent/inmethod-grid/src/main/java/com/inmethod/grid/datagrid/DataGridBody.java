@@ -11,9 +11,9 @@ import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
 import org.apache.wicket.model.IModel;
 
 import com.inmethod.grid.IDataSource;
+import com.inmethod.grid.IDataSource.IQuery;
 import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.IGridSortState;
-import com.inmethod.grid.IDataSource.IQuery;
 import com.inmethod.grid.common.AbstractGridRow;
 import com.inmethod.grid.common.AbstractPageableView;
 import com.inmethod.grid.common.AttachPrelightBehavior;

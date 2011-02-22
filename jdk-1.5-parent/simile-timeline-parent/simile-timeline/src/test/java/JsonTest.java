@@ -5,7 +5,6 @@ import junit.framework.TestCase;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.wicketstuff.simile.timeline.Timeline;
 import org.wicketstuff.simile.timeline.json.JsonUtils;
 import org.wicketstuff.simile.timeline.model.BandInfoParameters;
 

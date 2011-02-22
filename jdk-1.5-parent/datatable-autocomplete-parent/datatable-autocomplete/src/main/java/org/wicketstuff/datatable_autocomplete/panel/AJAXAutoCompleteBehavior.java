@@ -190,6 +190,7 @@ public class AJAXAutoCompleteBehavior extends
 
 	}
 	
+	@Override
 	protected final void onComponentTag(final ComponentTag tag)
 	{
 

@@ -27,6 +27,7 @@ public class OSM extends Layer implements Serializable {
 						.renderJavaScriptReference("http://www.openstreetmap.org/openlayers/OpenStreetMap.js");
 	}
 
+	@Override
 	public String getJSconstructor() {
 		
 		String quotedName = JSUtils.getQuotedString(getName());

@@ -16,8 +16,6 @@
  */
 package org.wicketstuff.shiro.wicket.page.store;
 
-import java.io.Serializable;
-
 import org.apache.wicket.IClusterable;
 
 /**

@@ -17,9 +17,11 @@
 package org.wicketstuff.javaee.example.dao;
 
 import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.wicketstuff.javaee.example.model.Contact;
 
 /**
@@ -35,7 +37,8 @@ public class ContactDaoBean implements ContactDaoLocal {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
+    @Override
+	@SuppressWarnings("unchecked")
     public List<Contact> getContacts() {
         return em.createQuery("SELECT c FROM Contact c").getResultList();
     }
@@ -43,21 +46,24 @@ public class ContactDaoBean implements ContactDaoLocal {
     /**
      * {@inheritDoc}
      */
-    public Contact getContact(Long id) {
+    @Override
+	public Contact getContact(Long id) {
         return em.find(Contact.class, id);
     }
 
     /**
      * {@inheritDoc}
      */
-    public void addContact(String name, String email) {
+    @Override
+	public void addContact(String name, String email) {
         em.merge(new Contact(null, name, email));
     }
 
     /**
      * {@inheritDoc}
      */
-    public void remove(Contact modelObject) {
+    @Override
+	public void remove(Contact modelObject) {
         Contact managed = em.merge(modelObject);
         em.remove(managed);
         em.flush();

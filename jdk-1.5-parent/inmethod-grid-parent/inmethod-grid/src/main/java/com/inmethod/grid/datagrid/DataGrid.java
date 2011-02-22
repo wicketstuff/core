@@ -312,6 +312,7 @@ public class DataGrid extends AbstractGrid implements IPageable {
 	 * @param itemModel
 	 *            model used to access the item
 	 */
+	@Override
 	public void markItemDirty(IModel itemModel) {
 		if (dirtyItems != DIRTY_ALL) {
 			if (this.dirtyItems == null) {

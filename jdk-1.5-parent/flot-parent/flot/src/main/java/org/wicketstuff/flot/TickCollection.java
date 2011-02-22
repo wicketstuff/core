@@ -30,7 +30,8 @@ public class TickCollection implements Serializable {
         return Collections.unmodifiableList(tickDataSet);
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer sb = new StringBuffer();
         sb.append("[");
         for (TickDataSet t : tickDataSet) {

@@ -40,6 +40,7 @@ public class GMap extends Layer implements Serializable {
 	 * 
 	 */
 
+	@Override
 	public String getJSconstructor() {
 		
 		String options = super.getJSOptionsMap(this.options);

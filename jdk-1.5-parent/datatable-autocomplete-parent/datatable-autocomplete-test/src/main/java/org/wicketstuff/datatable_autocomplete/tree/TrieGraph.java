@@ -18,15 +18,10 @@ package org.wicketstuff.datatable_autocomplete.tree;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.wicketstuff.datatable_autocomplete.trie.ITrieNodeVisitor;
 import org.wicketstuff.datatable_autocomplete.trie.PatriciaTrie;
 import org.wicketstuff.datatable_autocomplete.trie.TrieNode;
 
-import edu.uci.ics.jung.algorithms.filters.KNeighborhoodFilter.EdgeType;
-import edu.uci.ics.jung.graph.AbstractTypedGraph;
 import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
-import edu.uci.ics.jung.graph.SparseMultigraph;
-import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 
 /**
  * @author mocleiri

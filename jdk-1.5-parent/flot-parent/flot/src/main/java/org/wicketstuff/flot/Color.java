@@ -67,6 +67,7 @@ public class Color implements Serializable {
 		return String.format("#%02X%02X%02X", (int)(r*255.0), (int)(g*255.0), (int)(b*255.0));
 	}
 	
+	@Override
 	public String toString() {
 		return String.format("rgb(%.1f, %.1f, %.1f), html(%s)", r, g, b, html());
 	}

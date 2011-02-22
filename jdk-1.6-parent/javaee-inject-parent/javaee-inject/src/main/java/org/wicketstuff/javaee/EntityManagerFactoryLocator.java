@@ -17,6 +17,7 @@
 package org.wicketstuff.javaee;
 
 import javax.persistence.Persistence;
+
 import org.apache.wicket.proxy.IProxyTargetLocator;
 
 /**
@@ -51,7 +52,8 @@ public class EntityManagerFactoryLocator implements IProxyTargetLocator {
     /**
      * @see org.apache.wicket.proxy.IProxyTargetLocator#locateProxyTarget()
      */
-    public Object locateProxyTarget() {
+    @Override
+	public Object locateProxyTarget() {
         return Persistence.createEntityManagerFactory(persistenceUnit);
     }
 
