@@ -103,9 +103,10 @@ public class TrieNode<C> implements Serializable {
 	private Long nodeID;
 
 	/**
-	 * @param context
+	 * @param parentNode
+	 * @param rootMatchedString
+	 * @param character
 	 * @param configuration
-	 * @param word
 	 */
 	public TrieNode(TrieNode<C> parentNode, String rootMatchedString,
 			String character, ITrieConfiguration<C> configuration) {
@@ -174,7 +175,7 @@ public class TrieNode<C> implements Serializable {
 	 * placed.
 	 * 
 	 * @param object
-	 * @return
+	 * @return the node that the word was finally attached to
 	 */
 	public TrieNode<C> index(C object) {
 
@@ -188,7 +189,7 @@ public class TrieNode<C> implements Serializable {
 	 * @param word
 	 * @param object
 	 * 
-	 * @return return the node that the word was finally attached to
+	 * @return the node that the word was finally attached to
 	 */
 	public TrieNode<C> index (String word, C object) {
 		
@@ -402,7 +403,7 @@ public class TrieNode<C> implements Serializable {
 	 * Traverses up the tree to the root to generate the word that this node
 	 * represents.
 	 * 
-	 * @return
+	 * @return generated word
 	 */
 	public String getWord() {
 
@@ -425,9 +426,9 @@ public class TrieNode<C> implements Serializable {
 	}
 
 	/**
+	 * @param wordList
+	 * @param filter
 	 * @param limit -1 if no limit or the value at which point the list should stop being filled in.
-	 * @param prefix
-	 * @return
 	 */
 	public void buildWordList(List<C> wordList, ITrieFilter<C> filter, int limit) {
 

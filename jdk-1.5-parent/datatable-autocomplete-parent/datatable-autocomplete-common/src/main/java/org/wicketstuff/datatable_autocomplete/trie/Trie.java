@@ -13,8 +13,7 @@ import org.apache.wicket.IClusterable;
 public interface Trie<C> extends IClusterable {
 
 	/**
-	 * @param streetName
-	 * @return
+	 * @param value
 	 */
 	public abstract void index(C value);
 
@@ -24,7 +23,7 @@ public interface Trie<C> extends IClusterable {
 	 * i.e. the ordered traversal of the subtree for the prefix given.
 	 * 
 	 * @param prefix
-	 * @return
+	 * @return reachable list of strings.
 	 */
 	public abstract List<C> getWordList(String prefix);
 	

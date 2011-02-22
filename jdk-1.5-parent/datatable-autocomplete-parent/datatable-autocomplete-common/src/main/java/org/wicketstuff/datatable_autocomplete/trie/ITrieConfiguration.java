@@ -32,7 +32,7 @@ public interface ITrieConfiguration<C> extends IClusterable {
 	 * Extract the word from the context given.
 	 * 
 	 * @param ctx
-	 * @return
+	 * @return the extracted word.
 	 */
 	public String getWord (C ctx);
 	

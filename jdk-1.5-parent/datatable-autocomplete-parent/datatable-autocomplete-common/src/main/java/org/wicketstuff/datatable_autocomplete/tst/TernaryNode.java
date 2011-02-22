@@ -211,8 +211,8 @@ public class TernaryNode<C> implements IClusterable {
 	 * Find all of the matches in the sub trie indicated and add them onto the
 	 * list.
 	 * 
-	 * @param root
 	 * @param wordList
+	 * @param limit
 	 * @param first true if we want to only include the equals first
 	 * 
 	 */

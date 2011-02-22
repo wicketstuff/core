@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  *         indexed object when the list of matching words (objects) is being
  *         computed.
  * 
- * @see http://en.wikipedia.org/wiki/Radix_tree
+ * @see <a href="http://en.wikipedia.org/wiki/Radix_tree">Radix tree</a>
  * 
  *      It is suited for quick retrieval of prefix matches over large static
  *      datasets (100,000 elements)
@@ -233,7 +233,7 @@ public class PatriciaTrie<C> implements IClusterable, Trie<C> {
 	
 
 	/**
-	 * @return
+	 * @return children of the root node.
 	 */
 	public int getChildren() {
 
@@ -301,7 +301,7 @@ public class PatriciaTrie<C> implements IClusterable, Trie<C> {
 	}
 
 	/**
-	 * @return
+	 * @return the set of strings that map to the next nodes of the root node.
 	 * @see org.wicketstuff.datatable_autocomplete.trie.TrieNode#getNextNodeCharacterSet()
 	 */
 	public Set<String> getNextNodeCharacterSet() {

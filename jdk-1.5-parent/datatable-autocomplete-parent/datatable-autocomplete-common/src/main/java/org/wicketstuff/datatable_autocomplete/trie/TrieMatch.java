@@ -43,8 +43,8 @@ public abstract class TrieMatch<Context> implements Serializable {
 	
 
 	/**
-	 * @param node
-	 * @param matchedPrefix
+	 * @param matched
+	 * @param type
 	 */
 	public TrieMatch(String matched, Type type, ITrieFilter<Context>filter) {
 

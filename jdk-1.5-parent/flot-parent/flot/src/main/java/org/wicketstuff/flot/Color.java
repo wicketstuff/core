@@ -82,7 +82,7 @@ public class Color implements Serializable {
 	 * @param min The minimum value of the range.
 	 * @param max The maximum value of the range.
 	 * @param value A value which has to be cropped.
-	 * @return
+	 * @return cropped value.
 	 */
 	private static float limit(float min, float max, float value) {
 		return (float)Math.max(0.0, Math.min(max, value));
@@ -93,7 +93,7 @@ public class Color implements Serializable {
 	 * @param fr The factor for red.
 	 * @param fg The factor for green.
 	 * @param fb The factor for blue.
-	 * @return
+	 * @return scaled copy.
 	 */
 	public Color scale(float fr, float fg, float fb) {
 		float r = limit(0, 1, this.r*fr);

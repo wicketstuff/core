@@ -26,7 +26,7 @@ import org.apache.wicket.IClusterable;
 public interface ITrieFilter<C> extends IClusterable {
 		/**
 		 * 
-		 * @param n
+		 * @param word
 		 * @return true if the indexed word should be visible.
 		 * 
 		 */
