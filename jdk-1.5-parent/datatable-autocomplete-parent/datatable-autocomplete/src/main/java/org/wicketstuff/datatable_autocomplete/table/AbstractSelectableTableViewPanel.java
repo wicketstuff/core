@@ -16,13 +16,12 @@
 package org.wicketstuff.datatable_autocomplete.table;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
@@ -148,7 +147,7 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 		this.dataProvider = dataProvider;
 		this.rowSelectionHandler = rowSelectionHandler;
 
-		add(new AbstractBehavior () {
+		add(new Behavior () {
 
 			@Override
 			public void renderHead(Component c, IHeaderResponse response) {

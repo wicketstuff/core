@@ -72,7 +72,7 @@ public class HomePage extends WicketExamplePage
 								@Override
 								public void onEvent(AjaxRequestTarget target)
 								{
-									target.addComponent(repeaterParent);
+									target.add(repeaterParent);
 								}
 							};
 						}
@@ -154,7 +154,7 @@ public class HomePage extends WicketExamplePage
 					{
 						overlay.addListener(GEvent.dragend, overlay.getDragendHandler());
 					}
-					target.addComponent(GOverlayPanel.this);
+					target.add(GOverlayPanel.this);
 				}
 
 			});
@@ -188,7 +188,7 @@ public class HomePage extends WicketExamplePage
 					{
 						overlay.addListener(GEvent.dblclick, overlay.getDblclickHandler());
 					}
-					target.addComponent(GOverlayPanel.this);
+					target.add(GOverlayPanel.this);
 				}
 
 			});

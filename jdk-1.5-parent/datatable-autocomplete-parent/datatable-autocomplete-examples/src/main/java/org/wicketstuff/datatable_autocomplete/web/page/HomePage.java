@@ -240,8 +240,8 @@ classNameFilterField = new TextField<String>("filter", new Model<String>(""));
 
 								selectedMethodModel.setObject(modelObject);
 								
-								target.addComponent(HomePage.this.field);
-								target.addComponent(HomePage.this.selectedMethodField);
+								target.add(HomePage.this.field);
+								target.add(HomePage.this.selectedMethodField);
 								
 								
 								
@@ -266,7 +266,7 @@ classNameFilterField = new TextField<String>("filter", new Model<String>(""));
 			protected void onUpdate(AjaxRequestTarget target) {
 				
 				if (target != null) {
-					target.addComponent(field);
+					target.add(field);
 				}
 				
 				

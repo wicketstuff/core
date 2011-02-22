@@ -2,10 +2,8 @@ package org.wicketstuff.yav;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.Response;
@@ -77,12 +75,8 @@ public class YavBehavior extends Behavior {
 				YavBehavior.class, resource));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.apache.wicket.behavior.AbstractBehavior#onComponentTag(org.apache
-	 * .wicket.Component, org.apache.wicket.markup.ComponentTag)
+	/* (non-Javadoc)
+	 * @see org.apache.wicket.behavior.Behavior#onComponentTag(org.apache.wicket.Component, org.apache.wicket.markup.ComponentTag)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override

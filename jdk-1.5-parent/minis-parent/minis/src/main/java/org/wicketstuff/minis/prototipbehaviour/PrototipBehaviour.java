@@ -18,7 +18,7 @@ package org.wicketstuff.minis.prototipbehaviour;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.resource.CompressedResourceReference;
 
@@ -33,7 +33,7 @@ import org.apache.wicket.request.resource.CompressedResourceReference;
  * @author Richard Wilkinson
  *
  */
-public class PrototipBehaviour extends AbstractBehavior
+public class PrototipBehaviour extends Behavior
 {
 	private static final long serialVersionUID = 1L;
 

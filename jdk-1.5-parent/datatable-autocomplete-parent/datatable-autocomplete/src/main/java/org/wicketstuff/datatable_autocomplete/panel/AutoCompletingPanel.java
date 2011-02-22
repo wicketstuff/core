@@ -17,8 +17,7 @@ package org.wicketstuff.datatable_autocomplete.panel;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.AbstractBehavior;
-import org.apache.wicket.behavior.SimpleAttributeModifier;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
@@ -85,7 +84,7 @@ public class AutoCompletingPanel<T> extends Panel {
 
 		this.provider = aliasDataProvider;
 
-		add(new AbstractBehavior() {
+		add(new Behavior() {
 
 			/**
 			 * 

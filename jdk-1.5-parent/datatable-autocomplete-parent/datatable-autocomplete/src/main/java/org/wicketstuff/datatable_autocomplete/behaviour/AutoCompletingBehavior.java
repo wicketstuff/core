@@ -87,7 +87,7 @@ public class AutoCompletingBehavior extends AJAXAutoCompleteBehavior {
 			// will be revaluated during rendering
 			autoCompletingPanel.setVisible(true);
 
-			target.addComponent(autoCompletingPanel);
+			target.add(autoCompletingPanel);
 
 		}
 

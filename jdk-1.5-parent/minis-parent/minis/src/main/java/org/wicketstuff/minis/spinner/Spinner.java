@@ -22,7 +22,7 @@ import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.request.Response;
@@ -40,7 +40,7 @@ import org.apache.wicket.util.string.Strings;
  * @author Gerolf Seitz
  * 
  */
-public class Spinner extends AbstractBehavior
+public class Spinner extends Behavior
 {
 	private static final long serialVersionUID = 1L;
 
@@ -131,7 +131,7 @@ public class Spinner extends AbstractBehavior
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void onRendered(final Component component)
+	public void afterRender(final Component component)
 	{
 		if (getSpinUpComponent() == null)
 		{

@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.IClusterable;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -41,7 +41,7 @@ import org.apache.wicket.request.resource.ResourceReference;
  * @author Tauren Mills (tauren)
  * @author Igor Vaynberg (ivaynberg at apache dot org)
  */
-public class StyleSwitcher extends AbstractBehavior
+public class StyleSwitcher extends Behavior
 {
 	/**
 	 * JavaScript access methods
@@ -127,7 +127,7 @@ public class StyleSwitcher extends AbstractBehavior
 	}
 
 	/**
-	 * @see org.apache.wicket.behavior.AbstractBehavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+	 * @see Behavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
 	public void renderHead(Component c, final IHeaderResponse response)

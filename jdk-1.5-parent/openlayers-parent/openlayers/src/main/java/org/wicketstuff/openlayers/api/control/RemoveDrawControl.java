@@ -1,8 +1,8 @@
 package org.wicketstuff.openlayers.api.control;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 
@@ -11,7 +11,7 @@ import org.wicketstuff.openlayers.IOpenLayersMap;
  * @author Nino Martinez Wael
  *
  */
-public class RemoveDrawControl extends AbstractBehavior {
+public class RemoveDrawControl extends Behavior {
 	
 	private IOpenLayersMap map;
 	public RemoveDrawControl(IOpenLayersMap map) {

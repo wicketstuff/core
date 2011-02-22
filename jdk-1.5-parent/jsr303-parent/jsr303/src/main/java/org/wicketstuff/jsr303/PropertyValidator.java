@@ -6,7 +6,6 @@ import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 
-import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.AbstractPropertyModel;
@@ -19,7 +18,7 @@ import org.wicketstuff.jsr303.util.Assert;
 @SuppressWarnings("rawtypes")
 public class PropertyValidator<T> implements INullAcceptingValidator<T>, Serializable
 {
-    public static class Exclude extends AbstractBehavior
+    public static class Exclude extends Behavior
     {
         private static final long serialVersionUID = 1L;
     }

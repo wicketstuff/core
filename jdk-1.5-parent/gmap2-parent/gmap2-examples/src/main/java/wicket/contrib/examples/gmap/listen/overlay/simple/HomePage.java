@@ -42,7 +42,7 @@ public class HomePage extends WicketExamplePage
 			@Override
 			public void onEvent(AjaxRequestTarget target)
 			{
-				target.addComponent(label);
+				target.add(label);
 			}
 		});
 		topMap.addOverlay(marker);

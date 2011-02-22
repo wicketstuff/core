@@ -39,7 +39,7 @@ public abstract class GClientGeocoder extends AjaxEventBehavior {
 	@Override
 	public void renderHead(Component c, IHeaderResponse response) {
 		super.renderHead(c, response);
-		headerContrib.renderHead(response);
+		headerContrib.renderHead(c, response);
 	}
 
 	@Override

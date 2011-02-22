@@ -80,7 +80,7 @@ public class TaskServiceProgressExamplePage extends PageSupport {
 				// re-enable button
 				Component button = form.get("submit");
 				button.setEnabled(true);
-				target.addComponent(button);
+				target.add(button);
 			}
 		});
 		// Hide progress bar initially

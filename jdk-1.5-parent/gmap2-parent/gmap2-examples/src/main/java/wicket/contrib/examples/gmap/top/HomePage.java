@@ -107,6 +107,6 @@ public class HomePage extends WicketExamplePage
 	private void markerSelected(AjaxRequestTarget target, GMarker marker)
 	{
 		markerLabel.setDefaultModelObject(marker);
-		target.addComponent(markerLabel);
+		target.add(markerLabel);
 	}
 }

@@ -44,7 +44,7 @@ public class HomePage extends WicketExamplePage
 			@Override
 			protected void onLoad(AjaxRequestTarget target)
 			{
-				target.addComponent(boundsLabel);
+				target.add(boundsLabel);
 			}
 		});
 		moveEndBehavior = new MyMoveEndListener();
@@ -130,8 +130,8 @@ public class HomePage extends WicketExamplePage
 					moveEndBehavior = new MyMoveEndListener();
 					map.add(moveEndBehavior);
 				}
-				target.addComponent(map);
-				target.addComponent(enabledLabel);
+				target.add(map);
+				target.add(enabledLabel);
 			}
 		});
 		add(enabledLabel);
@@ -144,8 +144,8 @@ public class HomePage extends WicketExamplePage
 		@Override
 		protected void onMoveEnd(AjaxRequestTarget target)
 		{
-			target.addComponent(zoomLabel);
-			target.addComponent(boundsLabel);
+			target.add(zoomLabel);
+			target.add(boundsLabel);
 		}
 	};
 }

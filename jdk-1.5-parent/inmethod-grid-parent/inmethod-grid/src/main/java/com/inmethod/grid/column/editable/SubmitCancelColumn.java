@@ -72,7 +72,7 @@ public class SubmitCancelColumn extends AbstractColumn {
 	
 	protected void onError(AjaxRequestTarget target, IModel rowModel, WebMarkupContainer rowComponent) {
 		// just update the row
-		target.addComponent(rowComponent);
+		target.add(rowComponent);
 	}
 	
 	protected void onSubmitted(AjaxRequestTarget target, IModel rowModel, WebMarkupContainer rowComponent) {

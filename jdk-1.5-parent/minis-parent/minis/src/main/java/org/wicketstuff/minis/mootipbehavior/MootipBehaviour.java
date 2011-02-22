@@ -20,7 +20,7 @@ import java.util.HashMap;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.CompressedResourceReference;
@@ -34,7 +34,7 @@ import org.apache.wicket.util.template.TextTemplate;
  * 
  * @author nino.martinez @ jayway.dk
  */
-public class MootipBehaviour extends AbstractBehavior
+public class MootipBehaviour extends Behavior
 {
 	private static final long serialVersionUID = 1L;
 

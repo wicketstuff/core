@@ -4,7 +4,7 @@
 package com.inmethod.grid.common;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebRequest;
@@ -16,17 +16,17 @@ import org.apache.wicket.util.string.JavaScriptUtils;
  * 
  * @author Matej Knopp
  */
-public final class AttachPrelightBehavior extends AbstractBehavior {
+public final class AttachPrelightBehavior extends Behavior {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void onRendered(Component component) {
+	public void afterRender(Component component) {
 		WebRequest request = (WebRequest) RequestCycle.get().getRequest();
 		Response response = RequestCycle.get().getResponse();
-		AbstractGrid grid = (AbstractGrid) component.findParent(AbstractGrid.class);
+		AbstractGrid grid = component.findParent(AbstractGrid.class);
 		if (request.isAjax() && !grid.isRendering()) {
 			JavaScriptUtils.writeOpenTag(response);
 			response.write("var e = Wicket.$('" + component.getMarkupId() + "');");

@@ -56,7 +56,7 @@ public class DataGridSelectionPage extends BaseExamplePage {
 				// when item selection changes the label showing selected items needs to be
 				// refreshed
 				AjaxRequestTarget target = AjaxRequestTarget.get();
-				target.addComponent(selectionLabel);
+				target.add(selectionLabel);
 			}
 		};
 		add(grid);

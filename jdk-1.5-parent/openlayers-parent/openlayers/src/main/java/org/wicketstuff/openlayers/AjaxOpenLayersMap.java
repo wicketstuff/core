@@ -23,7 +23,7 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.WicketAjaxReference;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WicketEventReference;
@@ -91,7 +91,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 				: features;
 		this.featureStyles = (featureStyles == null) ? new ArrayList<FeatureStyle>()
 				: featureStyles;
-		add(new AbstractBehavior() {
+		add(new Behavior() {
 
 			private static final long serialVersionUID = 1L;
 

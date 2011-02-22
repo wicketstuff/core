@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.tree.AbstractTree;
@@ -51,7 +51,7 @@ public abstract class TreeGridBody extends AbstractTree {
 			}
 		};
 		item.add(row);
-		item.add(new AbstractBehavior() {
+		item.add(new Behavior() {
 
 			private static final long serialVersionUID = 1L;
 
@@ -75,7 +75,7 @@ public abstract class TreeGridBody extends AbstractTree {
 			// can't refresh this component directly because of setRenderBodyOnly(true) that's set
 			// in
 			// constructor
-			target.addComponent(findParent(TreeGrid.class));
+			target.add(findParent(TreeGrid.class));
 		} else {
 			super.addComponent(target, component);
 		}
@@ -84,6 +84,7 @@ public abstract class TreeGridBody extends AbstractTree {
 	/**
 	 * @see org.apache.wicket.markup.html.tree.AbstractTree#isForceRebuildOnSelectionChange()
 	 */
+	@Override
 	protected boolean isForceRebuildOnSelectionChange() {
 		return false;
 	}

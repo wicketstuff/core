@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.js.Constructor;
@@ -40,7 +40,7 @@ public abstract class Layer {
 	}
 
 	public final void bindHeaderContributors(Component c) {
-		c.add(new AbstractBehavior() {
+		c.add(new Behavior() {
 
 			@Override
 			public void renderHead(Component c, IHeaderResponse response) {

@@ -88,7 +88,7 @@ public interface ITaskService {
 	 * Get the current progression of a task.
 	 *
 	 * @param taskId
-	 * @return
+	 * @return the current progression of a task.
 	 */
 	Progression getProgression(Long taskId);
 

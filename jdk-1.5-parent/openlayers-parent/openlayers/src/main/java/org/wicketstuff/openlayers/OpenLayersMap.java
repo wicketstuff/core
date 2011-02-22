@@ -24,9 +24,8 @@ import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -63,7 +62,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 	private static Logger log = LoggerFactory.getLogger(OpenLayersMap.class);
 	private String businessLogicProjection = null;
 
-	private abstract class JSMethodBehavior extends AbstractBehavior {
+	private abstract class JSMethodBehavior extends Behavior {
 
 		private static final long serialVersionUID = 1L;
 
@@ -76,7 +75,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 		protected abstract String getJSinvoke();
 
 		/**
-		 * @see org.apache.wicket.behavior.AbstractBehavior#onComponentTag(org.apache.wicket.Component,
+		 * @see Behavior#onComponentTag(org.apache.wicket.Component,
 		 *      org.apache.wicket.markup.ComponentTag)
 		 */
 		@Override
@@ -318,10 +317,11 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 
 		add(headerContrib);
 		addHeaderContributorsForLayers(layers);
-		add(new AbstractBehavior() {
+		add(new Behavior() {
 			private static final long serialVersionUID = 1L;
 
-			public void renderHead(IHeaderResponse response) {
+			@Override
+			public void renderHead(Component component, IHeaderResponse response) {
 				response.renderOnDomReadyJavaScript(getJSinit());
 			}
 		});
@@ -355,7 +355,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 
 		if (jsReferences != null && jsReferences.length > 0) {
 
-			add(new AbstractBehavior(){
+			add(new Behavior(){
 
 				/**
 				 * 

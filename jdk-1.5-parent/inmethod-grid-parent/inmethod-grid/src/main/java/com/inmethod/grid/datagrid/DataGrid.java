@@ -343,7 +343,7 @@ public class DataGrid extends AbstractGrid implements IPageable {
 	public void update() {
 		AjaxRequestTarget target = AjaxRequestTarget.get();
 		if (dirtyItems == DIRTY_ALL) {
-			target.addComponent(this);
+			target.add(this);
 		} else if (dirtyItems != null) {
 			WebMarkupContainer body = (WebMarkupContainer) get("form:bodyContainer:body:row");
 			if (body != null) {
@@ -351,7 +351,7 @@ public class DataGrid extends AbstractGrid implements IPageable {
 					Component component = (Component) i.next();
 					IModel model = component.getDefaultModel();
 					if (dirtyItems.contains(model)) {
-						target.addComponent(component);
+						target.add(component);
 					}
 				}
 			}

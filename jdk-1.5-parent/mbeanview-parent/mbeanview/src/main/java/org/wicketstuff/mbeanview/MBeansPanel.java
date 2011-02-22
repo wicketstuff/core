@@ -113,7 +113,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 				Component newView = ((MbeanNode)node).getView(VIEW_PANEL_ID);
 				newView.setOutputMarkupId(true);
 				MBeansPanel.this.replace(newView);
-				target.addComponent(newView);
+				target.add(newView);
 			}
 		}
 

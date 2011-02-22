@@ -116,7 +116,7 @@ public abstract class PopupListener extends AbstractDefaultAjaxBehavior {
 		getOpenLayerMap().getInfoWindow().getContent().replaceWith(
 				marker.getPopup());
 		getOpenLayerMap().getInfoWindow().setContent(marker.getPopup());
-		target.addComponent(marker.getPopup());
+		target.add(marker.getPopup());
 		jsToRun = mapId
 				+ ".popup = new OpenLayers.Popup('map', "
 				+ new LonLat(marker.getLonLat().getLng(), marker.getLonLat()

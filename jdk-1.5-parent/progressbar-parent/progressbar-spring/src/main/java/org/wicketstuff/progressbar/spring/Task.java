@@ -220,7 +220,7 @@ public class Task {
 
 	/**
 	 * Get generated messages
-	 * @return
+	 * @return generated messages
 	 */
 	public List<Message> getMessages() {
 		return messages ;

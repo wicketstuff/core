@@ -77,7 +77,7 @@ public class InfoWindow extends WebMarkupContainer {
 
 		if (AjaxRequestTarget.get() != null) {
 			AjaxRequestTarget.get().appendJavaScript(getJSopen(latLng));
-			AjaxRequestTarget.get().addComponent(this);
+			AjaxRequestTarget.get().add(this);
 		}
 
 		return this;
@@ -90,7 +90,7 @@ public class InfoWindow extends WebMarkupContainer {
 
 		if (AjaxRequestTarget.get() != null) {
 			AjaxRequestTarget.get().appendJavaScript(getJSopen(marker));
-			AjaxRequestTarget.get().addComponent(this);
+			AjaxRequestTarget.get().add(this);
 		}
 
 		return this;
@@ -106,7 +106,7 @@ public class InfoWindow extends WebMarkupContainer {
 
 		if (AjaxRequestTarget.get() != null) {
 			AjaxRequestTarget.get().appendJavaScript(getJSclose());
-			AjaxRequestTarget.get().addComponent(this);
+			AjaxRequestTarget.get().add(this);
 		}
 	}
 

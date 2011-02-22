@@ -31,8 +31,6 @@ import javax.management.ObjectName;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.event.Broadcast;
-import org.apache.wicket.event.IEventSink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -104,7 +102,7 @@ public class OperationsPanel extends Panel
 						if (returnObj == null)
 						{
 							item.info("Successful call");
-							target.addComponent(feedback);
+							target.add(feedback);
 						}
 					}
 				});

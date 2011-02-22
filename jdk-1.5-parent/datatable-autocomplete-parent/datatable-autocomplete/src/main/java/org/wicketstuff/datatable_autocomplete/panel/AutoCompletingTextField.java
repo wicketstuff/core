@@ -16,7 +16,6 @@
 package org.wicketstuff.datatable_autocomplete.panel;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.behavior.Behavior;

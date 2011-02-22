@@ -17,6 +17,7 @@
 package org.wicketstuff.minis.veil;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.behavior.Behavior;
 
 /**
  * Behavior that shows a veil over a component if it is not enabled
@@ -47,7 +48,7 @@ public class DisabledVeil extends Veil
 	}
 
 	/**
-	 * @see org.apache.wicket.behavior.AbstractBehavior#isEnabled(org.apache.wicket.Component)
+	 * @see Behavior#isEnabled(org.apache.wicket.Component)
 	 */
 	@Override
 	public boolean isEnabled(final Component component)

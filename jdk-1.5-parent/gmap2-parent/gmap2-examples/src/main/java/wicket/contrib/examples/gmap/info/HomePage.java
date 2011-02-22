@@ -66,7 +66,7 @@ public class HomePage extends WicketExamplePage
 			protected void onInfoWindowClose(AjaxRequestTarget target)
 			{
 				info("InfoWindow was closed");
-				target.addComponent(feedback);
+				target.add(feedback);
 			}
 		});
 		map.add(new InfoWindowOpenListener()
@@ -77,7 +77,7 @@ public class HomePage extends WicketExamplePage
 			protected void onInfoWindowOpen(AjaxRequestTarget target)
 			{
 				info("InfoWindow was opened");
-				target.addComponent(feedback);
+				target.add(feedback);
 			}
 		});
 		map.addControl(GControl.GSmallMapControl);

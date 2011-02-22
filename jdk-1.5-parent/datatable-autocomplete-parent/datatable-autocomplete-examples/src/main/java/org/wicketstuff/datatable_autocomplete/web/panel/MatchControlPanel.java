@@ -73,7 +73,7 @@ add(classNameFilterField);
 			protected void onUpdate(AjaxRequestTarget target) {
 				
 				if (target != null) {
-					target.addComponent(onChangeComponent);
+					target.add(onChangeComponent);
 				}
 				
 				

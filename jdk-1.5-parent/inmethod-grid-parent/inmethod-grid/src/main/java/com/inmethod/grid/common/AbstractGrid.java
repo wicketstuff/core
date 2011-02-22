@@ -15,7 +15,7 @@ import org.apache.wicket.ajax.IAjaxCallDecorator;
 import org.apache.wicket.ajax.WicketAjaxReference;
 import org.apache.wicket.ajax.calldecorator.AjaxCallDecorator;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
@@ -96,11 +96,11 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 		add(headerToolbarContainer = new RepeatingView("headerToolbarContainer"));
 
 		// renders the initialization javascript right after the grid itself
-		add(new AbstractBehavior() {
+		add(new Behavior() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onRendered(Component component) {
+			public void afterRender(Component component) {
 				renderInitializationJavascript(getResponse());
 			}
 		});
@@ -395,7 +395,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param target
 	 */
 	protected void onSortStateChanged(AjaxRequestTarget target) {
-		target.addComponent(this);
+		target.add(this);
 	}
 
 	/**

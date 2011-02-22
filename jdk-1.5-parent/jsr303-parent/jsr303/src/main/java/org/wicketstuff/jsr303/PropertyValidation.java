@@ -1,10 +1,9 @@
 package org.wicketstuff.jsr303;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.IFormVisitorParticipant;
 import org.apache.wicket.model.AbstractPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.visit.IVisit;
@@ -16,7 +15,7 @@ import org.apache.wicket.util.visit.IVisitor;
  * Form, this behavior will be added to all appropriate FormComponents.
  */
 @SuppressWarnings("unchecked")
-public class PropertyValidation extends AbstractBehavior
+public class PropertyValidation extends Behavior
 {
 
     private static final long serialVersionUID = 1L;

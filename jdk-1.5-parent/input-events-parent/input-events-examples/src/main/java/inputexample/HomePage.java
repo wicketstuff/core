@@ -78,7 +78,7 @@ public class HomePage extends WebPage {
 			@Override
 			protected void onEvent(AjaxRequestTarget target) {
 				labelModel.setObject("ajax was fired");
-				target.addComponent(label);
+				target.add(label);
 			}
 		});
 		button2.add(new InputBehavior(new KeyType[] { KeyType.c }));

@@ -26,7 +26,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -550,10 +550,11 @@ public class GMap2 extends Panel implements GOverlayContainer
 			return;
 		}
 
-		this.add(new AbstractBehavior() {
+		this.add(new Behavior() {
 			private static final long serialVersionUID = 1L;
 
-			public void renderHead(IHeaderResponse response) {
+			@Override
+			public void renderHead(Component component, IHeaderResponse response) {
 				StringBuffer buf = new StringBuffer();
 				buf.append("var bounds = new GLatLngBounds();\n");
 				buf.append("var map = " + GMap2.this.getJSinvoke("map"));
@@ -663,7 +664,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 		}
 	}
 
-	private abstract class JSMethodBehavior extends AbstractBehavior
+	private abstract class JSMethodBehavior extends Behavior
 	{
 
 		private static final long serialVersionUID = 1L;
@@ -676,7 +677,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 		}
 
 		/**
-		 * @see org.apache.wicket.behavior.AbstractBehavior#onComponentTag(org.apache.wicket.Component,
+		 * @see Behavior#onComponentTag(org.apache.wicket.Component,
 		 *      org.apache.wicket.markup.ComponentTag)
 		 */
 		@Override

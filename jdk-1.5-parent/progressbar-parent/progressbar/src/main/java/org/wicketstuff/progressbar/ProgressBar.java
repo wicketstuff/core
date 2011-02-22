@@ -19,7 +19,7 @@ package org.wicketstuff.progressbar;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -114,7 +114,7 @@ public class ProgressBar extends Panel {
 			/*
 			 * Add the css to our parent incase the bar is not initially visible.
 			 */
-			getParent().add(new AbstractBehavior() {
+			getParent().add(new Behavior() {
 
 				/**
 				 * 

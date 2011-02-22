@@ -17,8 +17,7 @@
 package org.wicketstuff.minis.veil;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.AbstractBehavior;
-import org.apache.wicket.markup.html.IHeaderContributor;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
@@ -29,7 +28,7 @@ import org.apache.wicket.request.resource.ResourceReference;
  * 
  * @author ivaynberg
  */
-public class VeilResources extends AbstractBehavior 
+public class VeilResources extends Behavior 
 {
 	/**
 	 * JavaScript interface for the veil
@@ -210,7 +209,7 @@ public class VeilResources extends AbstractBehavior
 	public static final String DEFAULT_CSS_CLASS_NAME = "wicket-veil";
 
 	/**
-	 * @see org.apache.wicket.behavior.AbstractBehavior#bind(org.apache.wicket.Component)
+	 * @see Behavior#bind(org.apache.wicket.Component)
 	 */
 	@Override
 	public void bind(final Component component)
@@ -220,7 +219,7 @@ public class VeilResources extends AbstractBehavior
 	}
 
 	/**
-	 * @see org.apache.wicket.behavior.AbstractBehavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+	 * @see Behavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
 	public void renderHead(Component c, final IHeaderResponse response)

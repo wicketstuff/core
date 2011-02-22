@@ -34,7 +34,7 @@ public class ManyPage extends WicketExamplePage
 
 				if (target != null)
 				{
-					target.addComponent(container);
+					target.add(container);
 				}
 			}
 		};
@@ -70,7 +70,7 @@ public class ManyPage extends WicketExamplePage
 
 				if (target != null)
 				{
-					target.addComponent(container);
+					target.add(container);
 				}
 			}
 		};

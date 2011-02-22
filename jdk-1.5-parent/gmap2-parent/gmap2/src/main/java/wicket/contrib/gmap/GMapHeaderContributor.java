@@ -1,7 +1,8 @@
 package wicket.contrib.gmap;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.WicketAjaxReference;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WicketEventReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
@@ -9,9 +10,9 @@ import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  * 
- * using a {@link AbstractBehavior} 
+ * using a {@link Behavior} 
  */
-public class GMapHeaderContributor extends AbstractBehavior
+public class GMapHeaderContributor extends Behavior
 {
 	private static final long serialVersionUID = 1L;
 
@@ -38,7 +39,8 @@ public class GMapHeaderContributor extends AbstractBehavior
 	 * 
 	 * @see org.apache.wicket.markup.html.IHeaderContributor#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
-	public void renderHead(IHeaderResponse response)
+	@Override
+	public void renderHead(Component component, IHeaderResponse response)
 	{
 		response.renderJavaScriptReference(GMAP_API_URL + gMapKey);
 		response.renderJavaScript(GOOGLE_LOAD_MAPS, GMapHeaderContributor.class.getName() + "_googleload");

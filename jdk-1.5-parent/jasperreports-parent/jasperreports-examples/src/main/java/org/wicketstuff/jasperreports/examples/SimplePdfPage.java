@@ -21,8 +21,9 @@ import javax.servlet.ServletContext;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.wicketstuff.jasperreports.EmbeddedJRReport;
-import org.wicketstuff.jasperreports.JRPdfResource;
+import org.wicketstuff.jasperreports.JRConcreteResource;
 import org.wicketstuff.jasperreports.JRResource;
+import org.wicketstuff.jasperreports.handlers.PdfResourceHandler;
 
 /**
  * Simple Jasper reports example with PDF output and a jasper reports panel..
@@ -39,13 +40,14 @@ public class SimplePdfPage extends WebPage {
 
 		final Map parameters = new HashMap();
 		parameters.put("BaseDir", new File(context.getRealPath("/reports")));
-		JRResource pdfResource = new JRPdfResource(reportFile).setReportParameters(parameters).setReportDataSource(new WebappDataSource());
+		JRResource pdfResource = new JRConcreteResource(reportFile, new PdfResourceHandler()).setReportParameters(parameters).setReportDataSource(new WebappDataSource());
 		add(new EmbeddedJRReport("report", pdfResource));
 	}
 
 	/**
-	 * @see wicket.Component#isVersioned()
+	 * @see org.apache.wicket.Component#isVersioned()
 	 */
+	@Override
 	public boolean isVersioned() {
 		return false;
 	}

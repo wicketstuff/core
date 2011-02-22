@@ -8,7 +8,7 @@ import org.apache.wicket.IClusterable;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
@@ -137,13 +137,14 @@ public abstract class TreePanel extends Panel {
 	 * 
 	 * @author Matej Knopp
 	 */
-	private static class IconBorder extends AbstractBehavior {
+	private static class IconBorder extends Behavior {
 
 		private static final long serialVersionUID = 1L;
 
 		/**
 		 * {@inheritDoc}
 		 */
+		@Override
 		public void beforeRender(Component component) {
 			RequestCycle.get().getResponse().write("<td>");
 		}
@@ -151,7 +152,8 @@ public abstract class TreePanel extends Panel {
 		/**
 		 * {@inheritDoc}
 		 */
-		public void onRendered(Component component) {
+		@Override
+		public void afterRender(Component component) {
 			RequestCycle.get().getResponse().write("</td>");
 		}
 
@@ -163,7 +165,7 @@ public abstract class TreePanel extends Panel {
 	 * 
 	 * @author Matej Knopp
 	 */
-	private static class JunctionBorder extends AbstractBehavior {
+	private static class JunctionBorder extends Behavior {
 		private static final long serialVersionUID = 1L;
 
 		private final int level;
@@ -181,13 +183,15 @@ public abstract class TreePanel extends Panel {
 		/**
 		 * {@inheritDoc}
 		 */
-		public void onRendered(Component component) {
+		@Override
+		public void afterRender(Component component) {
 			RequestCycle.get().getResponse().write("</td>");
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
+		@Override
 		public void beforeRender(Component component) {
 			Response response = RequestCycle.get().getResponse();
 
@@ -200,7 +204,7 @@ public abstract class TreePanel extends Panel {
 	};
 
 	private TreeGridBody getTreeGridBody() {
-		return (TreeGridBody) findParent(TreeGridBody.class);
+		return findParent(TreeGridBody.class);
 	};
 
 	/**
@@ -233,9 +237,10 @@ public abstract class TreePanel extends Panel {
 					getTreeGridBody().updateTree(target);
 				}
 			});
-			junctionLink.add(new AbstractBehavior() {
+			junctionLink.add(new Behavior() {
 				private static final long serialVersionUID = 1L;
 
+				@Override
 				public void onComponentTag(Component component, ComponentTag tag) {
 					if (getTreeGridBody().isNodeExpanded2(node)) {
 						tag.put("class", "imxt-junction-open");
@@ -251,6 +256,7 @@ public abstract class TreePanel extends Panel {
 				/**
 				 * @see org.apache.wicket.Component#onComponentTag(org.apache.wicket.markup.ComponentTag)
 				 */
+				@Override
 				protected void onComponentTag(ComponentTag tag) {
 					super.onComponentTag(tag);
 					tag.setName("span");

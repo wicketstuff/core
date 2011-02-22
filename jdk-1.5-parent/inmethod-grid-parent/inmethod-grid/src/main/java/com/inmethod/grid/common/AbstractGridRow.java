@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.IMarkupFragment;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -85,7 +85,7 @@ public abstract class AbstractGridRow extends WebMarkupContainer {
 	 */
 	private boolean isColumnBeingSorted(IGridColumn column) {
 		if (column.getSortProperty() != null) {
-			AbstractGrid dataGrid = (AbstractGrid) findParent(AbstractGrid.class);
+			AbstractGrid dataGrid = findParent(AbstractGrid.class);
 			IGridSortState sortState = dataGrid.getSortState();
 			return (sortState.getColumns().size() > 0 && sortState.getColumns().get(0).getPropertyName().equals(
 					column.getSortProperty()));
@@ -164,7 +164,7 @@ public abstract class AbstractGridRow extends WebMarkupContainer {
 	 * 
 	 * @author Matej Knopp
 	 */
-	private class InnerDivClassBehavior extends AbstractBehavior {
+	private class InnerDivClassBehavior extends Behavior {
 
 		private static final long serialVersionUID = 1L;
 

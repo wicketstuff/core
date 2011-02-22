@@ -16,7 +16,7 @@
  */
 package org.wicketstuff.minis.apanel;
 
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 
 /**
  * Contains information about how a component should be displayed in a layout. A
@@ -25,7 +25,7 @@ import org.apache.wicket.behavior.AbstractBehavior;
  * This class violates the idea of {@link org.apache.wicket.behavior.IBehavior}.
  * </p>
  */
-public class ConstraintBehavior extends AbstractBehavior
+public class ConstraintBehavior extends Behavior
 {
 	private static final long serialVersionUID = 1L;
 
