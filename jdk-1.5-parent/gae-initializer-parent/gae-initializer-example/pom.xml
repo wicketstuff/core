@@ -1,15 +1,18 @@
-<?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
     <artifactId>gae-initializer-parent</artifactId>
     <groupId>org.wicketstuff</groupId>
     <version>1.5-SNAPSHOT</version>
   </parent>
-  <groupId>org.wicketstuff</groupId>
+
   <artifactId>gae-initializer-example</artifactId>
   <packaging>war</packaging>	
+
   <name>GAE Initializer example</name>
   <description>Wicket1.5 on Google AppEngine</description>
 
@@ -31,7 +34,6 @@
 	</repositories>
 	
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!--
       Specify AppEngine version for your project. It should match SDK version pointed to
       by ${gae.home} property (Typically, one used by your Eclipse plug-in)
@@ -77,23 +79,12 @@
           <goals>gae:deploy</goals>
         </configuration>
       </plugin>
-
-      <!-- Java compiler version -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
-        <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
   
   <dependencies>
     <dependency>
-		<groupId>org.wicketstuff</groupId>
+		<groupId>${project.groupId}</groupId>
 		<artifactId>gae-initializer</artifactId>
 		<version>${project.version}</version>
     </dependency>
@@ -125,13 +116,11 @@
 	<dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.6.1</version>
     </dependency>
 
      <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>0.9.24</version>
     </dependency>
     
   </dependencies>

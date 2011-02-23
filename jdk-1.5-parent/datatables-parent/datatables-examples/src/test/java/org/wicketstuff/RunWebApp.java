@@ -28,7 +28,7 @@ import winstone.Launcher;
 public class RunWebApp {
 
     /**
-     * Main function, starts the jetty server.
+     * Main function, starts the winston server.
      *
      * @param args unused
      */

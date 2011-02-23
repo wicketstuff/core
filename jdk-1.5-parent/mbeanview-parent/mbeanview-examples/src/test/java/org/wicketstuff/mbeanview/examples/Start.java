@@ -1,9 +1,10 @@
 package org.wicketstuff.mbeanview.examples;
 
-import org.mortbay.jetty.Connector;
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.bio.SocketConnector;
-import org.mortbay.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.bio.SocketConnector;
+import org.eclipse.jetty.webapp.WebAppContext;
+
 
 public class Start {
 
@@ -28,7 +29,7 @@ public class Start {
 		// server.getContainer().addEventListener(mBeanContainer);
 		// mBeanContainer.start();
 		
-		server.addHandler(bb);
+		server.setHandler(bb);
 
 		try {
 			System.out.println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
