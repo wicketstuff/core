@@ -77,11 +77,6 @@
 						<artifactId>maven-source-plugin</artifactId>
 						<inherited>true</inherited>
 					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<inherited>true</inherited>
-					</plugin>
 				</plugins>
 			</build>
 		</profile>
@@ -215,11 +210,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<inherited>true</inherited>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-report-plugin</artifactId>
 				<inherited>true</inherited>
 			</plugin>
 			<plugin>
