@@ -56,6 +56,9 @@
 					</execution>
 				</executions>
 				<configuration>
+					<!-- these are 3rd party css + js files no need to see the warnings 
+						about them -->
+					<jswarn>false</jswarn>
 					<nosuffix>true</nosuffix>
 					<force>false</force>
 					<excludes>
