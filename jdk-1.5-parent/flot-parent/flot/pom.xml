@@ -13,7 +13,7 @@
 	<artifactId>flot</artifactId>
 	<packaging>jar</packaging>
 
-	<name>quickstart</name>
+	<name>Wicket Flot Integration</name>
 
 	<licenses>
 		<license>
@@ -35,7 +35,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>joda-time</groupId>

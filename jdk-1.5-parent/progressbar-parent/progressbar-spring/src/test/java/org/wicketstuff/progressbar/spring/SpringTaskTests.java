@@ -85,7 +85,7 @@ public class SpringTaskTests {
 
 	@Test
 	public void testTaskExecution() {
-		final Integer[] data = new Integer[]{0};
+		final int[] data = new int[]{0};
 		Task task = new Task() {
 			@Override
 			public void run() {

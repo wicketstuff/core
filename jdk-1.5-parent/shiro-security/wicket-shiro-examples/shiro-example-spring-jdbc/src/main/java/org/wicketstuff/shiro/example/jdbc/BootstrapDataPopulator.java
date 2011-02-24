@@ -81,13 +81,13 @@ public class BootstrapDataPopulator implements InitializingBean
 		// distinction, you would see this in practice:
 		// new Sha256Hash( <password>, <username> )
 		String query = "insert into users values ('user', '" +
-			new Sha256Hash("user", "user").toBase64() + "' )";
+			new Sha256Hash("user").toBase64() + "' )";
 		jdbcTemplate.execute(query);
 		log.debug("Created user.");
 
 		// password is 'admin' SHA hashed and base64 encoded:
 		query = "insert into users values ( 'admin', '" +
-			new Sha256Hash("admin", "admin").toBase64() + "' )";
+			new Sha256Hash("admin").toBase64() + "' )";
 		jdbcTemplate.execute(query);
 		log.debug("Created admin.");
 

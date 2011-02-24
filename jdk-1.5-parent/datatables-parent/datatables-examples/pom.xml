@@ -25,12 +25,10 @@
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
-            <version>2.4</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>0.9.17</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -39,7 +37,6 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.wicket</groupId>
@@ -56,8 +53,6 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.winstone</groupId>

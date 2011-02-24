@@ -42,33 +42,11 @@
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>1.0.0.GA</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>4.1.0.Final</version>
 		</dependency>
 	</dependencies>
-
-	<profiles>
-		<profile>
-			<id>jboss repo</id>
- 
-			<activation>
-			<activeByDefault>true</activeByDefault>
-			 </activation>
-			<repositories>
-				<repository>
-					<id>hibernate-releases</id>
-					<name>hibernate releases</name>
-            		<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
-					<releases><enabled>true</enabled></releases>
-
-				</repository>
-			</repositories>
-		</profile>
-	</profiles>
-
 </project>

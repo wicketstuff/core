@@ -65,7 +65,6 @@
 			<version>${project.version}</version>
 		</dependency>
 
-
 		<!--  JETTY DEPENDENCIES FOR TESTING  -->
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>

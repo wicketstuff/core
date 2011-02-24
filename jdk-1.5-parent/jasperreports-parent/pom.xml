@@ -82,10 +82,6 @@
 		</developer>
 	</developers>
 
-	<properties>
-		<jasperreports.version>3.5.3</jasperreports.version>
-	</properties>
-
 	<modules>
 		<module>jasperreports</module>
 		<module>jasperreports-examples</module>
@@ -96,34 +92,8 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>commons-beanutils</groupId>
-				<artifactId>commons-beanutils</artifactId>
-				<version>1.8.0</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-collections</groupId>
-				<artifactId>commons-collections</artifactId>
-				<version>3.2.1</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-digester</groupId>
-				<artifactId>commons-digester</artifactId>
-				<version>1.8.1</version>
-			</dependency>
-			<dependency>
-				<groupId>jasperreports</groupId>
-				<artifactId>jasperreports</artifactId>
-				<version>${jasperreports.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<build>
 		<plugins>

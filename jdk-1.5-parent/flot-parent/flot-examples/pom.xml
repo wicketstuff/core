@@ -13,7 +13,7 @@
 	<artifactId>flot-examples</artifactId>
 	<packaging>war</packaging>
 
-	<name>quickstart</name>
+	<name>Wicket Flot Integration - Examples</name>
 
 	<licenses>
 		<license>
@@ -32,7 +32,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
