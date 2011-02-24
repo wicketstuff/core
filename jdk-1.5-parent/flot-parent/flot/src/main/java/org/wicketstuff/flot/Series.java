@@ -23,13 +23,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Series implements Serializable {
 	/** Required by {@link Serializable} */
 	private static final long serialVersionUID = 1L;
 
-	private transient static final Logger logger = Logger.getLogger(Series.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Series.class);
 	
 	String label;
 	Color color;
@@ -81,7 +82,7 @@ public class Series implements Serializable {
 			str.append("}");
 		}
 		
-		logger.info("Series: "+str);
+		LOGGER.info("Series: "+str);
 		
 		return str.toString();
 	}

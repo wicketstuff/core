@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wicketstuff.progressbar.Progression;
 import org.wicketstuff.progressbar.spring.Task.Message;
 
@@ -38,7 +38,7 @@ import org.wicketstuff.progressbar.spring.Task.Message;
  */
 public class TaskService implements ITaskService {
 
-	private static final Log log = LogFactory.getLog(TaskService.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TaskService.class);
 
 	private final Executor executor;
 
@@ -52,7 +52,7 @@ public class TaskService implements ITaskService {
 
 	public synchronized Long schedule(Task task) {
 		Long taskId = nextTaskId();
-		log.debug("Scheduling task with ID: " + taskId);
+		LOGGER.debug("Scheduling task with ID: " + taskId);
 		tasks.put(taskId, task);
 		return taskId;
 	}
@@ -60,10 +60,10 @@ public class TaskService implements ITaskService {
 	public void start(Long taskId) {
 		Task task = getTask(taskId);
 		if(task != null) {
-			log.debug("Starting task with ID: " + taskId);
+			LOGGER.debug("Starting task with ID: " + taskId);
 			start(task);
 		} else {
-			log.warn("Task ID " + taskId + " not found");
+			LOGGER.warn("Task ID " + taskId + " not found");
 		}
 	}
 

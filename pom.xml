@@ -486,6 +486,11 @@
 				<version>2.1.7.597</version>
 			</dependency>
 			<dependency>
+				<groupId>com.vividsolutions</groupId>
+				<artifactId>jts</artifactId>
+				<version>1.8</version>
+			</dependency>
+			<dependency>
 				<groupId>jasperreports</groupId>
 				<artifactId>jasperreports</artifactId>
 				<version>3.5.3</version>

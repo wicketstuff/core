@@ -26,19 +26,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.model.IModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FlotPanel extends Panel {
 	/** Required by {@link Serializable} */
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger logger = Logger.getLogger(FlotPanel.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(FlotPanel.class);
 
 	private Map<String, Map<String, Object>> options = new HashMap<String, Map<String, Object>>();
     private boolean showTooltip = false;
@@ -86,7 +87,7 @@ public class FlotPanel extends Panel {
 		try {
 			final String str = getResourceContents(FlotPanel.class, "FlotPanel.js");
 			
-			logger.info(options);
+			LOGGER.info("{}", options);
 			
 			//final String options = "{ lines: { show: true }, points: { show: true }, selection: { mode: \"xy\" }, grid: { hoverable: true, clickable: true }, xaxis: { mode: 'time', min: 1243807200000, max: 1246312800000, timeformat: '%d.%m.%y' }, yaxis: { min: 0, max: 15 }}";
 			
