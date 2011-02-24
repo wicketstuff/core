@@ -79,12 +79,6 @@
 				</plugins>
 			</build>
 		</profile>
-		<profile>
-			<id>all</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-		</profile>
 	</profiles>
 
 	<inceptionYear>2007</inceptionYear>
@@ -165,26 +159,9 @@
 		</extensions>
 
 		<plugins>
-
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
-				<inherited>true</inherited>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<inherited>true</inherited>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<inherited>true</inherited>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
 				<inherited>true</inherited>
 			</plugin>
 			<plugin>

@@ -241,12 +241,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<idea.version>2.2</idea.version>
 		<hibernate.version>3.6.1.Final</hibernate.version>
+		<idea.version>2.2</idea.version>
 		<jetty.version>7.3.0.v20110203</jetty.version>
+		<shiro.version>1.1.0</shiro.version>
 		<slf4j.version>1.6.1</slf4j.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
-		<shiro.version>1.1.0</shiro.version>
 	</properties>
 
 	<dependencies>
@@ -298,21 +298,25 @@
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
 				<version>0.9.28</version>
+				<scope>runtime</scope>
 			</dependency>
 			<dependency>
 				<groupId>commons-logging</groupId>
 				<artifactId>commons-logging</artifactId>
 				<version>1.1.1</version>
+				<scope>runtime</scope>
 			</dependency>
 			<dependency>
 				<groupId>log4j</groupId>
 				<artifactId>log4j</artifactId>
 				<version>1.2.16</version>
+				<scope>runtime</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>jcl-over-slf4j</artifactId>
 				<version>${slf4j.version}</version>
+				<scope>runtime</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -323,11 +327,13 @@
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-log4j12</artifactId>
 				<version>${slf4j.version}</version>
+				<scope>runtime</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-simple</artifactId>
 				<version>${slf4j.version}</version>
+				<scope>runtime</scope>
 			</dependency>
 
 			<!-- TESTING / DEV -->
@@ -516,6 +522,11 @@
 				<artifactId>hsqldb</artifactId>
 				<version>2.0.0</version>
 				<scope>runtime</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>20090211</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

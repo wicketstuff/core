@@ -3,6 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>openlayers-parent</artifactId>
@@ -13,7 +14,6 @@
 	<packaging>war</packaging>
 
 	<name>Openlayers - Examples</name>
-
 
 	<licenses>
 		<license>
@@ -27,14 +27,12 @@
 		<dependency>
 			<groupId>com.vividsolutions</groupId>
 			<artifactId>jts</artifactId>
-			<version>1.8</version>
 		</dependency>
 
 		<!-- WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>openlayers</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
