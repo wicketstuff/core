@@ -30,7 +30,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.wicketstuff</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>minis</artifactId>
 			<version>${project.version}</version>
 		</dependency>

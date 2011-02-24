@@ -10,7 +10,6 @@
         <version>1.5-SNAPSHOT</version>
     </parent>
 
-
     <artifactId>wicket-html5-parent</artifactId>
     <packaging>pom</packaging>
 
