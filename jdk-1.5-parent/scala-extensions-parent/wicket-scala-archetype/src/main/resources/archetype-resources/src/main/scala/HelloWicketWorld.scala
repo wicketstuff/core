@@ -6,6 +6,7 @@ import org.apache.wicket.markup.html._
 import org.apache.wicket.markup.html.form._
 import org.apache.wicket.model.PropertyModel
 import org.apache.wicket.markup.html.basic.Label
+import org.apache.wicket.request.mapper.parameter.PageParameters
 
 import org.wicketstuff.scala._
 
@@ -13,7 +14,7 @@ class HelloWicketWorld extends WebApplication {
    def getHomePage = classOf[HomePage]
 }
 
-class HomePage extends WebPage with ScalaWicket {
+class HomePage(parameters: PageParameters) extends WebPage(parameters) with ScalaWicket {
   
   var name = "default"
   add(new Form("form"){
