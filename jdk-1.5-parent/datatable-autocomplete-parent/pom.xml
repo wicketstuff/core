@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -17,79 +18,33 @@
 		See the child project "datatable-autocomplete" for a more complete description.  This
 		is the parent for the actual project and the examples.
 	</description>
-	
+
 	<modules>
 		<module>datatable-autocomplete</module>
 		<module>datatable-autocomplete-common</module>
 		<module>datatable-autocomplete-examples</module>
 		<module>datatable-autocomplete-test</module>
 	</modules>
-	
+
 	<developers>
-	<developer><id>mocleiri</id><name>Michael O'Cleirigh</name></developer>
+		<developer>
+			<id>mocleiri</id>
+			<name>Michael O'Cleirigh</name>
+		</developer>
 	</developers>
 
-	<profiles>
-<profile>
-			<!-- setup for using oss.sonatype.org to hold snapshots -->
-			<!-- should be active for all sessions except where the release
-			plugin is being used.
-
-				We keep this in a profile since central sync up requires no
-				<repository> tags at the top level of the POM.
-			-->
-			<id>oss.sonatype.org-snapshots</id>
-
-
-			<activation>
-
-		        <property>
-        		  <name>!performRelease</name>
-		        </property>
-
-			</activation>
-
-			 <distributionManagement>
-        <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Sonatype Nexus Snapshots</name>
-            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
-             <uniqueVersion>false</uniqueVersion>
-        </snapshotRepository>
-    </distributionManagement>
-
-			<repositories>
-				<repository>
-					<id>nexus-snapshots</id>
-					<name>Sonatype Nexus Snapshots</name>
-            		<url>http://oss.sonatype.org/content/repositories/snapshots</url>
-					<snapshots><enabled>true</enabled></snapshots>
-
-				</repository>
-			</repositories>
-
-		</profile>
-
-	</profiles>
-
-	
 	<dependencyManagement>
-	<dependencies>
-	
-	
-	<dependency>
-	<groupId>org.wicketstuff</groupId>
-	<artifactId>datatable-autocomplete-common</artifactId>
-	<version>${project.version}</version>
-	</dependency>
-	<dependency>
-	<groupId>org.wicketstuff</groupId>
-	<artifactId>datatable-autocomplete</artifactId>
-	<version>${project.version}</version>
-	</dependency>
-	</dependencies>
+		<dependencies>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>datatable-autocomplete-common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>datatable-autocomplete</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
 	</dependencyManagement>
-	
-	
-
 </project>

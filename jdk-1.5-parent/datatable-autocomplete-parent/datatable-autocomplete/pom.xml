@@ -42,7 +42,7 @@
 	
   <dependencies>
   <dependency>
-  	<groupId>org.wicketstuff</groupId>
+  	<groupId>${project.groupId}</groupId>
   	<artifactId>datatable-autocomplete-common</artifactId>
   </dependency>
   

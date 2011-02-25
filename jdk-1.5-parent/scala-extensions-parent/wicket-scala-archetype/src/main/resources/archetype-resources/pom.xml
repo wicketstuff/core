@@ -56,7 +56,7 @@
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all-server</artifactId>
-			<version>${jetty.version}</version>
+			<version>${version.jetty}</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
@@ -108,7 +108,7 @@
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>7.3.0.v20110203</version>
+				<version>${version.jetty}</version>
 			</plugin>
 		</plugins>
 		
