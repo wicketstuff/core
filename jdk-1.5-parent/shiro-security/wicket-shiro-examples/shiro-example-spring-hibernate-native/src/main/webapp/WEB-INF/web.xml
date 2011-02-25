@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.4"
-         xmlns="http://java.sun.com/xml/ns/j2ee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
 
   <context-param>
     <param-name>configuration</param-name>
@@ -25,25 +24,6 @@
         <param-value>classpath:log4j.properties</param-value>
     </context-param>
 
-
-<filter>
-    <filter-name>ShiroFilter</filter-name>
-	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-</filter>
-
-...
-
-<!-- Make sure any request you want accessible to Shiro is filtered. /* catches all -->
-<!-- requests.  Usually this filter mapping is defined first (before all others) to -->
-<!-- ensure that Shiro works in subsequent filters in the filter chain:             -->
-<filter-mapping>
-    <filter-name>ShiroFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-</filter-mapping>
-
-
-
-
     <filter>
         <filter-name>HibernateFilter</filter-name>
         <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
@@ -51,15 +31,10 @@
     <filter>
         <filter-name>ShiroFilter</filter-name>
     	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-		<!-- SpringShiroFilter is deprecated and being removed with 1.0 release
-        <filter-class>org.apache.shiro.spring.SpringShiroFilter</filter-class> -->
-<!-- No need to include this, as spring handles it
-	    <init-param>
-           <param-name>config</param-name>
-           <param-value>
-               # config... should be handled by spring
-           </param-value>
-        </init-param> -->
+		<init-param>
+			<param-name>targetFilterLifecycle</param-name>
+			<param-value>true</param-value>
+		</init-param>
     </filter>
     <filter>
         <filter-name>WicketFilter</filter-name>
@@ -74,6 +49,9 @@
         <filter-name>HibernateFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+<!-- Make sure any request you want accessible to Shiro is filtered. /* catches all -->
+<!-- requests.  Usually this filter mapping is defined first (before all others) to -->
+<!-- ensure that Shiro works in subsequent filters in the filter chain:             -->
     <filter-mapping>
         <filter-name>ShiroFilter</filter-name>
         <url-pattern>/*</url-pattern>

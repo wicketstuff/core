@@ -57,6 +57,7 @@ public class WMS extends Layer implements Serializable {
 	 * name, url, options
 	 */
 
+	@Override
 	public String getJSconstructor() {
 		
 		String options = super.getJSOptionsMap(this.options);

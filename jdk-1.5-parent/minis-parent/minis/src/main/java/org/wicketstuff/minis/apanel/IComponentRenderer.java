@@ -16,9 +16,9 @@
  */
 package org.wicketstuff.minis.apanel;
 
-import org.apache.wicket.Component;
-
 import java.io.Serializable;
+
+import org.apache.wicket.Component;
 
 /** Renderer creates wicket markup for a component. */
 public interface IComponentRenderer<T extends Component> extends Serializable

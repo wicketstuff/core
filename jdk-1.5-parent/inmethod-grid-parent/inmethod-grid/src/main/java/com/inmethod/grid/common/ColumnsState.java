@@ -255,6 +255,7 @@ public class ColumnsState implements IClusterable {
 	 * Returns deep copy of the object.
 	 * @return {@link ColumnsState} instance that is a deep copy of this instance
 	 */
+	@Override
 	public ColumnsState clone() {
 		return (ColumnsState) WicketObjects.cloneObject(this);
 	}

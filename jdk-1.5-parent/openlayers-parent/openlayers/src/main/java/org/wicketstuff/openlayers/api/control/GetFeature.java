@@ -75,6 +75,7 @@ private final HashMap<String, String> parameters;
 	/* (non-Javadoc)
 	 * @see org.wicketstuff.openlayers.api.IJavascriptControl#getJSadd(org.wicketstuff.openlayers.IOpenLayersMap)
 	 */
+	@Override
 	public String getJSadd(IOpenLayersMap map) {
 		
 		// is special as it requires an explicit activation.

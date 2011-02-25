@@ -49,6 +49,7 @@ public class Contact implements IClusterable
 	/**
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString()
 	{
 		return "[Contact id=" + id + " firstName=" + firstName + " lastName=" + lastName +
@@ -59,6 +60,7 @@ public class Contact implements IClusterable
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (obj == this)

@@ -18,10 +18,10 @@
  */
 package org.wicketstuff.jasperreports.examples;
 
-import org.mortbay.jetty.Connector;
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.bio.SocketConnector;
-import org.mortbay.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.bio.SocketConnector;
+import org.eclipse.jetty.webapp.WebAppContext;
 
 
 public class StartExamples {
@@ -36,7 +36,7 @@ public class StartExamples {
 		context.setContextPath("/");
 		context.setWar("src/main/webapp");
 
-		server.addHandler(context);
+		server.setHandler(context);
 		try {
 			server.start();
 		} catch (Exception e) {

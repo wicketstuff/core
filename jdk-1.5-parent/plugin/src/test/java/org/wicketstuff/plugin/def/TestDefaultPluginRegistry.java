@@ -1,15 +1,16 @@
 package org.wicketstuff.plugin.def;
 
-import org.apache.wicket.WicketRuntimeException;
 import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
 
 import java.io.Externalizable;
 import java.io.Serializable;
 import java.util.HashSet;
+
+import org.apache.wicket.WicketRuntimeException;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 /**
  * @since 1.4

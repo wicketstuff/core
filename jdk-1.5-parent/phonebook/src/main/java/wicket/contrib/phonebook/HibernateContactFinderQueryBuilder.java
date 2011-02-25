@@ -21,8 +21,8 @@ package wicket.contrib.phonebook;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Hibernate;
-import org.hibernate.type.NullableType;
+import org.hibernate.type.AbstractSingleColumnStandardBasicType;
+import org.hibernate.type.StandardBasicTypes;
 
 
 /**
@@ -30,14 +30,14 @@ import org.hibernate.type.NullableType;
  */
 public class HibernateContactFinderQueryBuilder {
 	private List<String> parameters;
-	private List<NullableType> types;
+	private List<AbstractSingleColumnStandardBasicType<?>> types;
 	private boolean count;
 	private Contact filter = new Contact();
 	private QueryParam queryParam;
 
 	public String buildHql() {
 		parameters = new ArrayList<String>();
-		types = new ArrayList<NullableType>();
+		types = new ArrayList<AbstractSingleColumnStandardBasicType<?>>();
 		StringBuilder hql = new StringBuilder();
 		addCountClause(hql);
 		hql.append("from Contact target where 1=1 ");
@@ -61,7 +61,7 @@ public class HibernateContactFinderQueryBuilder {
 			hql.append(name);
 			hql.append(") like (?)");
 			parameters.add("%" + value.toUpperCase() + "%");
-			types.add(Hibernate.STRING);
+			types.add(StandardBasicTypes.STRING);
 		}
 	}
 
@@ -93,7 +93,7 @@ public class HibernateContactFinderQueryBuilder {
 		return parameters.toArray(new String[0]);
 	}
 
-	public NullableType[] getTypes() {
-		return types.toArray(new NullableType[0]);
+	public AbstractSingleColumnStandardBasicType<?>[] getTypes() {
+		return types.toArray(new AbstractSingleColumnStandardBasicType[types.size()]);
 	}
 }

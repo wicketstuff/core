@@ -1,8 +1,8 @@
 package org.wicketstuff.flot.examples;
 
 import junit.framework.TestCase;
+
 import org.apache.wicket.util.tester.WicketTester;
-import org.wicketstuff.flot.examples.WicketApplication;
 
 /**
  * Simple test using the WicketTester

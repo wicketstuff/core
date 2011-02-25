@@ -5,6 +5,7 @@ package org.wicketstuff.googlecharts.examples;
 
 import java.awt.Color;
 import java.awt.Dimension;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.wicketstuff.googlecharts.AbstractChartData;
 import org.wicketstuff.googlecharts.Chart;

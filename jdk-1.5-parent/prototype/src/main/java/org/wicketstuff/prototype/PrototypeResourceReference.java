@@ -2,7 +2,6 @@ package org.wicketstuff.prototype;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.request.resource.AbstractResource;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
 
 /**

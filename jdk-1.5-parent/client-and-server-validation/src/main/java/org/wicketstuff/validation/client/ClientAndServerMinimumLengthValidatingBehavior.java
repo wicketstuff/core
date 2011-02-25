@@ -40,6 +40,7 @@ public class ClientAndServerMinimumLengthValidatingBehavior extends AbstractClie
 		mMin = min;
 	}
 
+	@Override
 	protected void addServerSideValidator(FormComponent component) {
 		component.add(StringValidator.minimumLength(mMin));
 	}

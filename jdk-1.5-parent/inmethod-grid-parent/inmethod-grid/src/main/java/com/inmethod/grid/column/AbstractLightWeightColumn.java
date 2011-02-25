@@ -7,6 +7,7 @@ import org.apache.wicket.model.IModel;
 
 import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.IRenderable;
+import com.inmethod.grid.column.editable.EditablePropertyColumn;
 
 /**
  * Convenience implementation of {@link IGridColumn}. This class should be used as base for lightweight columns.

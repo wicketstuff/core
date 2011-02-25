@@ -50,7 +50,8 @@ public class ModuleJndiNamingStrategy implements IJndiNamingStrategy {
     /**
      * {@inheritDoc}
      */
-    public String calculateName(String ejbName, Class<?> ejbType) {
+    @Override
+	public String calculateName(String ejbName, Class<?> ejbType) {
         return "java:module/" + (ejbName == null ? ejbType.getName() : ejbName);
     }
 }

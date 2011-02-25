@@ -1,8 +1,5 @@
 package org.wicketstuff.plugin.def;
 
-import org.wicketstuff.plugin.PluginRegistry;
-import org.apache.wicket.WicketRuntimeException;
-
 import java.io.Externalizable;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -11,6 +8,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.wicket.WicketRuntimeException;
+import org.wicketstuff.plugin.PluginRegistry;
 
 /**
  * @version 1.4

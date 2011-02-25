@@ -65,6 +65,7 @@ public class AttributeValuesPanel extends Panel
 		form.add(new ListView("attributes", Arrays.asList(beanAttributeInfos))
 		{
 
+			@Override
 			protected void populateItem(ListItem item)
 			{
 				final MBeanAttributeInfo info = (MBeanAttributeInfo)item.getModelObject();

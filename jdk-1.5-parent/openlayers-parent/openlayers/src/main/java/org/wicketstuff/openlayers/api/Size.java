@@ -20,7 +20,6 @@ package org.wicketstuff.openlayers.api;
 
 import java.io.Serializable;
 
-import org.wicketstuff.openlayers.OpenLayersMap;
 import org.wicketstuff.openlayers.js.Constructor;
 
 /**

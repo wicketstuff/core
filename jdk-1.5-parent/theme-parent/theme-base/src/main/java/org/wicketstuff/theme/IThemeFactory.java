@@ -15,10 +15,7 @@
  */
 package org.wicketstuff.theme;
 
-import java.util.List;
-
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 
 public interface IThemeFactory

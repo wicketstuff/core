@@ -17,7 +17,9 @@
 package org.wicketstuff.javaee.example.dao;
 
 import java.util.List;
+
 import javax.ejb.Local;
+
 import org.wicketstuff.javaee.example.model.Contact;
 
 /**

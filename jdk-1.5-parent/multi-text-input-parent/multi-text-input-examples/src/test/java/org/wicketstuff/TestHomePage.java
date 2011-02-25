@@ -1,6 +1,7 @@
 package org.wicketstuff;
 
 import junit.framework.TestCase;
+
 import org.apache.wicket.util.tester.WicketTester;
 
 /**
@@ -9,7 +10,8 @@ import org.apache.wicket.util.tester.WicketTester;
 public class TestHomePage extends TestCase {
     private WicketTester tester;
 
-    public void setUp() {
+    @Override
+	public void setUp() {
         tester = new WicketTester(new WicketApplication());
     }
 

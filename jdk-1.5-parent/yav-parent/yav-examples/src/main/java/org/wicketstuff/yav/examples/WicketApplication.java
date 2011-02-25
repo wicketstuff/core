@@ -14,6 +14,7 @@ public class WicketApplication extends WebApplication {
 	public WicketApplication() {
 	}
 
+	@Override
 	protected void init() {
 		super.init();
 
@@ -23,6 +24,7 @@ public class WicketApplication extends WebApplication {
 	/**
 	 * @see wicket.Application#getHomePage()
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public Class getHomePage() {
 		return TestPage.class;

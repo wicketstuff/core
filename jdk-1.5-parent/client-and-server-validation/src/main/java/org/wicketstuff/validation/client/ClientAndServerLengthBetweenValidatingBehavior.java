@@ -42,6 +42,7 @@ public class ClientAndServerLengthBetweenValidatingBehavior extends AbstractClie
 		mMax = max;
 	}
 
+	@Override
 	protected void addServerSideValidator(FormComponent component) {
 		component.add(StringValidator.lengthBetween(mMin, mMax));
 	}

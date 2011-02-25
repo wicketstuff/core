@@ -18,8 +18,8 @@ package org.wicketstuff.mbeanview;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.management.MBeanAttributeInfo;
 import javax.management.MBeanParameterInfo;

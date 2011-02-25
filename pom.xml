@@ -227,17 +227,25 @@
 		<connection>scm:git:ssh://git@github.com:wicketstuff/core.git</connection>
 	</scm>
 
+	<repositories>
+		<repository>
+			<id>jboss-releases-repo</id>
+			<name>Hibernate releases repo</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
+		</repository>
+	</repositories>
+
 	<properties>
 		<wicket.version>1.5-SNAPSHOT</wicket.version>
-		<jetty.version>6.1.26</jetty.version>
-		<idea.version>2.2</idea.version>
 
-		<eclipse.jetty.version>7.3.0.v20110203</eclipse.jetty.version>
-		<lucene.version>2.4.1</lucene.version>
-		<slf4j.version>1.6.1</slf4j.version>
-		<spring.version>3.0.5.RELEASE</spring.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<hibernate.version>3.6.1.Final</hibernate.version>
+		<jetty.version>7.3.0.v20110203</jetty.version>
+		<shiro.version>1.1.0</shiro.version>
+		<slf4j.version>1.6.1</slf4j.version>
+		<spring.version>3.0.5.RELEASE</spring.version>
 	</properties>
 
 	<dependencies>
@@ -254,22 +262,22 @@
 				these versions of wicket-* and not specify their own version -->
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
-				<artifactId>wicket-extensions</artifactId>
-				<version>${wicket.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.wicket</groupId>
 				<artifactId>wicket-datetime</artifactId>
 				<version>${wicket.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
-				<artifactId>wicket-ioc</artifactId>
+				<artifactId>wicket-extensions</artifactId>
 				<version>${wicket.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
 				<artifactId>wicket-guice</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-ioc</artifactId>
 				<version>${wicket.version}</version>
 			</dependency>
 			<dependency>
@@ -286,6 +294,30 @@
 			<!-- The following can be used if wanted by other projects -->
 			<!-- LOGGING -->
 			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>0.9.28</version>
+				<scope>runtime</scope>
+			</dependency>
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>1.1.1</version>
+				<scope>runtime</scope>
+			</dependency>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>1.2.16</version>
+				<scope>runtime</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${slf4j.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
 				<version>${slf4j.version}</version>
@@ -294,29 +326,22 @@
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-log4j12</artifactId>
 				<version>${slf4j.version}</version>
+				<scope>runtime</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-simple</artifactId>
 				<version>${slf4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>jcl-over-slf4j</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>1.2.16</version>
-			</dependency>
-			<dependency>
-				<groupId>ch.qos.logback</groupId>
-				<artifactId>logback-classic</artifactId>
-				<version>0.9.28</version>
+				<scope>runtime</scope>
 			</dependency>
 
 			<!-- TESTING / DEV -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>2.5</version>
+				<scope>provided</scope>
+			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
@@ -324,60 +349,36 @@
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>net.sourceforge.jwebunit</groupId>
-				<artifactId>jwebunit-core</artifactId>
-				<version>2.2</version>
+				<groupId>org.easymock</groupId>
+				<artifactId>easymock</artifactId>
+				<version>3.0</version>
 				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>net.sourceforge.jwebunit</groupId>
-				<artifactId>jwebunit-htmlunit-plugin</artifactId>
-				<version>2.2</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-util</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-management</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>servlet-api-2.5</artifactId>
-				<!-- <version>${jetty.version}</version>
-					6.1.14 is the latest version in central -->
-				<version>6.1.14</version>
-			</dependency>
-			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>servlet-api</artifactId>
-				<version>2.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>test-jetty-servlet</artifactId>
-				<version>${eclipse.jetty.version}</version>
+				<version>${jetty.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.jetty.aggregate</groupId>
+				<artifactId>jetty-all-server</artifactId>
+				<version>${jetty.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.testng</groupId>
+				<artifactId>testng</artifactId>
+				<version>5.9</version>
+				<classifier>jdk15</classifier>
+				<scope>test</scope>
 			</dependency>
 
 			<!-- COMMONS -->
 			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-email</artifactId>
-				<version>1.1</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-lang</groupId>
-				<artifactId>commons-lang</artifactId>
-				<version>2.4</version>
+				<groupId>commons-beanutils</groupId>
+				<artifactId>commons-beanutils</artifactId>
+				<version>1.8.3</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-collections</groupId>
@@ -385,85 +386,146 @@
 				<version>3.2.1</version>
 			</dependency>
 			<dependency>
-				<groupId>commons-dbcp</groupId>
-				<artifactId>commons-dbcp</artifactId>
-				<version>20030825.184428</version>
+				<groupId>commons-digester</groupId>
+				<artifactId>commons-digester</artifactId>
+				<version>2.1</version>
 			</dependency>
 			<dependency>
-				<groupId>commons-dbutils</groupId>
-				<artifactId>commons-dbutils</artifactId>
-				<version>1.2</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-io</groupId>
-				<artifactId>commons-io</artifactId>
-				<version>1.4</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-codec</groupId>
-				<artifactId>commons-codec</artifactId>
-				<version>1.4</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-logging</groupId>
-				<artifactId>commons-logging</artifactId>
-				<version>1.1.1</version>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>2.6</version>
 			</dependency>
 
-			<!-- MIDDLE TIER -->
+			<!-- SPRING -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-test</artifactId>
 				<version>${spring.version}</version>
+				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-web</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
+
+			<!-- HIBERNATE -->
 			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-hibernate3</artifactId>
-				<version>2.0.8</version>
+				<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>1.0.0.GA</version>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.lucene</groupId>
-				<artifactId>lucene-core</artifactId>
-				<version>${lucene.version}</version>
+				<groupId>javassist</groupId>
+				<artifactId>javassist</artifactId>
+				<version>3.12.1.GA</version>
+				<scope>runtime</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.lucene</groupId>
-				<artifactId>lucene-misc</artifactId>
-				<version>${lucene.version}</version>
+				<groupId>javax.transaction</groupId>
+				<artifactId>jta</artifactId>
+				<version>1.1</version>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.lucene</groupId>
-				<artifactId>lucene-spellchecker</artifactId>
-				<version>${lucene.version}</version>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-entitymanager</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>4.1.0.Final</version>
 			</dependency>
 
-			<!-- SCHEDULING -->
+			<!-- APACHE SHIRO -->
 			<dependency>
-				<groupId>opensymphony</groupId>
-				<artifactId>quartz</artifactId>
-				<version>1.6.0</version>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-core</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-ehcache</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-spring</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-web</artifactId>
+				<version>${shiro.version}</version>
 			</dependency>
 
 			<!-- OTHER -->
 			<dependency>
-				<groupId>ognl</groupId>
-				<artifactId>ognl</artifactId>
-				<version>2.7.3</version>
+				<groupId>com.ibatis</groupId>
+				<artifactId>ibatis2-sqlmap</artifactId>
+				<version>2.1.7.597</version>
 			</dependency>
 			<dependency>
-				<groupId>org.freemarker</groupId>
-				<artifactId>freemarker</artifactId>
-				<version>2.3.15</version>
+				<groupId>com.vividsolutions</groupId>
+				<artifactId>jts</artifactId>
+				<version>1.8</version>
 			</dependency>
 			<dependency>
-				<groupId>rome</groupId>
-				<artifactId>rome</artifactId>
-				<version>0.9</version>
+				<groupId>jasperreports</groupId>
+				<artifactId>jasperreports</artifactId>
+				<version>3.5.3</version>
+			</dependency>
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>1.6.2</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sf.ehcache</groupId>
+				<artifactId>ehcache-core</artifactId>
+				<version>2.4.0</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sf.json-lib</groupId>
+				<artifactId>json-lib</artifactId>
+				<version>2.4</version>
+				<classifier>jdk15</classifier>
+			</dependency>
+			<dependency>
+				<groupId>net.sf.shadesdb</groupId>
+				<artifactId>shades</artifactId>
+				<version>0.0.5</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hsqldb</groupId>
+				<artifactId>hsqldb</artifactId>
+				<version>2.0.0</version>
+				<scope>runtime</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>20090211</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -503,16 +565,15 @@
 		</testResources>
 		<plugins>
 			<plugin>
-				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.7</version>
 				<configuration>
+					<detectOfflineLinks>false</detectOfflineLinks>
 					<minmemory>128m</minmemory>
 					<maxmemory>256m</maxmemory>
 					<notimestamp>true</notimestamp>
 					<quiet>true</quiet>
-					<detectOfflineLinks>false</detectOfflineLinks>
 					<links>
 						<link>http://download.oracle.com/javase/1.5.0/docs/api</link>
 						<link>http://download.oracle.com/javaee/5/api</link>
@@ -532,7 +593,6 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 				<version>2.1.2</version>
@@ -545,88 +605,100 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.3.1</version>
-				<configuration>
-					<archive>
-						<index>true</index>
-						<manifest>
-							<addDefaultSpecificationEntries>
-								true
-							</addDefaultSpecificationEntries>
-							<addDefaultImplementationEntries>
-								true
-							</addDefaultImplementationEntries>
-						</manifest>
-						<manifestEntries>
-							<Specification-Title>${project.name}</Specification-Title>
-							<Specification-Version>${project.version}</Specification-Version>
-							<Implementation-Title>${project.name}</Implementation-Title>
-							<Implementation-Version>${project.version} ${buildNumber} - ${user.name}</Implementation-Version>
-							<SCM-Revision>${buildNumber}</SCM-Revision>
-							<SCM-url>${project.scm.url}</SCM-url>
-						</manifestEntries>
-					</archive>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<includes>
-						<include>**/*Test.java</include>
-					</includes>
-					<testFailureIgnore>false</testFailureIgnore>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-report-plugin</artifactId>
-				<version>2.6</version>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.8</version>
-				<configuration>
-					<downloadSources>true</downloadSources>
-					<additionalProjectnatures>
-						<projectnature>wicketbench.wicketnature</projectnature>
-					</additionalProjectnatures>
-					<additionalBuildcommands>
-						<buildcommand>wicketbench.associatedMarkupAuditor</buildcommand>
-					</additionalBuildcommands>
-				</configuration>
-			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
 				<plugin>
-					<inherited>true</inherited>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>2.3.2</version>
 					<configuration>
-						<verbose>true</verbose>
-						<optimise>true</optimise>
 						<debug>true</debug>
-						<meminitial>128m</meminitial>
-						<maxmem>512m</maxmem>
+						<optimise>true</optimise>
 						<showDeprecation>true</showDeprecation>
 						<showWarnings>true</showWarnings>
+						<verbose>true</verbose>
 					</configuration>
 				</plugin>
 				<plugin>
-					<groupId>org.mortbay.jetty</groupId>
-					<artifactId>maven-jetty-plugin</artifactId>
-					<version>${jetty.version}</version>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-eclipse-plugin</artifactId>
+					<version>2.8</version>
+					<configuration>
+						<downloadSources>true</downloadSources>
+						<additionalProjectnatures>
+							<projectnature>wicketbench.wicketnature</projectnature>
+						</additionalProjectnatures>
+						<additionalBuildcommands>
+							<buildcommand>wicketbench.associatedMarkupAuditor</buildcommand>
+						</additionalBuildcommands>
+					</configuration>
 				</plugin>
 				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-help-plugin</artifactId>
+					<version>2.1.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-idea-plugin</artifactId>
-					<version>${idea.version}</version>
+					<version>2.2</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.3.1</version>
+					<configuration>
+						<archive>
+							<index>true</index>
+							<manifest>
+								<addDefaultSpecificationEntries>
+									true
+								</addDefaultSpecificationEntries>
+								<addDefaultImplementationEntries>
+									true
+								</addDefaultImplementationEntries>
+							</manifest>
+							<manifestEntries>
+								<Specification-Title>${project.name}</Specification-Title>
+								<Specification-Version>${project.version}</Specification-Version>
+								<Implementation-Title>${project.name}</Implementation-Title>
+								<Implementation-Version>${project.version} ${buildNumber} - ${user.name}</Implementation-Version>
+								<SCM-Revision>${buildNumber}</SCM-Revision>
+								<SCM-url>${project.scm.url}</SCM-url>
+							</manifestEntries>
+						</archive>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.6</version>
+					<configuration>
+						<includes>
+							<include>**/*Test.java</include>
+						</includes>
+						<testFailureIgnore>false</testFailureIgnore>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>animal-sniffer-maven-plugin</artifactId>
+					<version>1.6</version>
+					<executions>
+						<execution>
+							<id>animal-sniff-dependencies</id>
+							<phase>test</phase>
+							<goals>
+								<goal>check</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>jetty-maven-plugin</artifactId>
+					<version>${jetty.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

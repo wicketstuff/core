@@ -15,15 +15,11 @@
  */
 package org.wicketstuff.datatable_autocomplete.tree;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import org.wicketstuff.datatable_autocomplete.tst.TernaryNode;
 import org.wicketstuff.datatable_autocomplete.tst.TernaryNodeVisitor;
 import org.wicketstuff.datatable_autocomplete.tst.TernarySearchTrie;
 
 import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
-import edu.uci.ics.jung.graph.OrderedKAryTree;
 
 /**
  * @author mocleiri

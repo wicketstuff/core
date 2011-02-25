@@ -38,6 +38,7 @@ public class TickDataSet implements Serializable {
 		return label;
 	}
 
+	@Override
 	public String toString() {
 		return String.format(Locale.US, "[%f, \"%s\"]", x, label);
 	}

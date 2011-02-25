@@ -16,12 +16,10 @@
  */
 package org.wicketstuff.shiro.component;
 
-import org.apache.shiro.mgt.SecurityManager;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
 import org.wicketstuff.shiro.ShiroServletRequestModel;
 import org.wicketstuff.shiro.ShiroSubjectModel;
 

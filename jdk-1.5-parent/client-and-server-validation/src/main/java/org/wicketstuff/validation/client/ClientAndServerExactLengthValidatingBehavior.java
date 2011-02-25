@@ -20,7 +20,6 @@ package org.wicketstuff.validation.client;
 
 import java.util.Map;
 
-import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.validation.validator.StringValidator;
@@ -41,6 +40,7 @@ public class ClientAndServerExactLengthValidatingBehavior extends AbstractClient
 		mLength = length;
 	}
 
+	@Override
 	protected void addServerSideValidator(FormComponent component) {
 		component.add(StringValidator.exactLength(mLength));
 	}

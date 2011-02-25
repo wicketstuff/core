@@ -6,14 +6,13 @@
  */
 package org.wicketstuff.html5.media.video;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.wicketstuff.html5.BasePage;
 import org.wicketstuff.html5.media.MediaSource;
-import org.wicketstuff.html5.media.video.Html5Video;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -30,6 +29,7 @@ public class VideoDemo extends BasePage {
         IModel<List<MediaSource>> mediaSourceList = new AbstractReadOnlyModel<List<MediaSource>>() {
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public List<MediaSource> getObject() {
                 return mm;
             }

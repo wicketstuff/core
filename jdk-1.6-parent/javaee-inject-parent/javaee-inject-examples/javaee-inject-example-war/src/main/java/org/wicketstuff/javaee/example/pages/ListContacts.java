@@ -18,6 +18,7 @@ package org.wicketstuff.javaee.example.pages;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;

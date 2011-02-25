@@ -38,6 +38,7 @@ public class JasperReportsApplication extends WebApplication
 	/**
 	 * @see org.apache.wicket.protocol.http.WebApplication#init()
 	 */
+	@Override
 	protected void init()
 	{
 		getResourceSettings().setResourcePollFrequency(Duration.ONE_SECOND);
@@ -46,6 +47,7 @@ public class JasperReportsApplication extends WebApplication
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
+	@Override
 	public Class<? extends Page> getHomePage()
 	{
 		return Index.class;

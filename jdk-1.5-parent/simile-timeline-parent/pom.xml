@@ -51,7 +51,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -98,9 +97,4 @@
 			</releases>
 		</pluginRepository>
 	</pluginRepositories>
-
-	<properties>
-		<jetty.version>6.1.4</jetty.version>
-	</properties>
-
 </project>

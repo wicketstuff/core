@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,6 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.traversal.NodeFilter;
 
 /**
  * @author mocleiri
@@ -138,6 +136,7 @@ public class TrieNode<C> implements Serializable {
 		this.maxChildStringLength = maxChildStringLength;
 	}
 
+	@Override
 	public String toString() {
 
 		StringBuffer children = new StringBuffer();

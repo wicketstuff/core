@@ -19,14 +19,15 @@ package org.wicketstuff.javaee.injection;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.concurrent.ConcurrentHashMap;
+
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.persistence.PersistenceUnit;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.apache.wicket.injection.IFieldValueFactory;
-import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
 import org.apache.wicket.proxy.IProxyTargetLocator;
 import org.apache.wicket.proxy.LazyInitProxyFactory;
 import org.apache.wicket.request.cycle.RequestCycle;

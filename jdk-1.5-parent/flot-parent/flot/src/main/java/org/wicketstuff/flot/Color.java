@@ -18,14 +18,15 @@ package org.wicketstuff.flot;
 import java.io.Serializable;
 import java.util.Random;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Color implements Serializable {
 	/** Required by {@link Serializable} */
 	private static final long serialVersionUID = 1L;
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger.getLogger(Color.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Color.class);
 
 	public static final Color BLACK = new Color(0.0, 0.0, 0.0);
 	public static final Color WHITE = new Color(1.0, 1.0, 1.0);
@@ -67,6 +68,7 @@ public class Color implements Serializable {
 		return String.format("#%02X%02X%02X", (int)(r*255.0), (int)(g*255.0), (int)(b*255.0));
 	}
 	
+	@Override
 	public String toString() {
 		return String.format("rgb(%.1f, %.1f, %.1f), html(%s)", r, g, b, html());
 	}

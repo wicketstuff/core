@@ -207,6 +207,7 @@ public class TreeGrid extends AbstractGrid {
 	/**
 	 * During Ajax request updates the changed parts of tree.
 	 */
+	@Override
 	public final void update() {
 		getTree().updateTree(AjaxRequestTarget.get());
 	};

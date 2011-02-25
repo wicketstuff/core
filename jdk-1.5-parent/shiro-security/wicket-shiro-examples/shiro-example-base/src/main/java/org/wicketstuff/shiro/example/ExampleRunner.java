@@ -4,15 +4,15 @@ import java.lang.management.ManagementFactory;
 
 import javax.management.MBeanServer;
 
-import org.mortbay.jetty.Connector;
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.bio.SocketConnector;
-import org.mortbay.jetty.webapp.WebAppContext;
-import org.mortbay.management.MBeanContainer;
+import org.eclipse.jetty.jmx.MBeanContainer;
+import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.bio.SocketConnector;
+import org.eclipse.jetty.webapp.WebAppContext;
 
 public class ExampleRunner
 {
-	public static void run()
+	public static void run() throws Exception
 	{
 		Server server = new Server();
 		SocketConnector connector = new SocketConnector();
@@ -34,7 +34,7 @@ public class ExampleRunner
 		server.getContainer().addEventListener(mBeanContainer);
 		mBeanContainer.start();
 
-		server.addHandler(bb);
+		server.setHandler(bb);
 
 		try
 		{

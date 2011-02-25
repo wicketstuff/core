@@ -59,6 +59,7 @@ public class WMSGetFeatureInfo extends AbstractControl {
 	/* (non-Javadoc)
 	 * @see org.wicketstuff.openlayers.api.IJavascriptControl#getJSadd(org.wicketstuff.openlayers.IOpenLayersMap)
 	 */
+	@Override
 	public String getJSadd(IOpenLayersMap map) {
 		
 		if (onEventJavascript != null)

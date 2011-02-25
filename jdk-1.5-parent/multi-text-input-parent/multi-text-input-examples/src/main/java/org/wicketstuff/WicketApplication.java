@@ -18,7 +18,8 @@ public class WicketApplication extends WebApplication {
     /**
      * @see wicket.Application#getHomePage()
      */
-    public Class getHomePage() {
+    @Override
+	public Class getHomePage() {
         return MultiTextInputExamples.class;
     }
 

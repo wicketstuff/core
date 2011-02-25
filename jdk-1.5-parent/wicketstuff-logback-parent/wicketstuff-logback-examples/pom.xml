@@ -24,22 +24,16 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<!-- make sure we don't depend on logback directly in our web app code -->
-			<scope>runtime</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>wicketstuff-logback</artifactId>
 			<version>${project.version}</version>
+			<!-- we are referring the classes only in descriptors -->
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 </project>

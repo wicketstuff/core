@@ -16,10 +16,10 @@
  */
 package org.wicketstuff.minis.apanel;
 
-import org.apache.wicket.Component;
-
-import java.util.List;
 import java.io.Serializable;
+import java.util.List;
+
+import org.apache.wicket.Component;
 
 /**
  * Layout is responsible for creating wicket markup for a group of components.

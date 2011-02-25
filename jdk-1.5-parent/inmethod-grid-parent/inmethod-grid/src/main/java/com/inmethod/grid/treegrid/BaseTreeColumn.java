@@ -57,6 +57,7 @@ public abstract class BaseTreeColumn extends AbstractColumn {
 				return BaseTreeColumn.this.newNodeComponent(id, model);
 			}
 
+			@Override
 			protected Icon getIcon(IModel model) {
 				return BaseTreeColumn.this.getIcon(model);
 			}

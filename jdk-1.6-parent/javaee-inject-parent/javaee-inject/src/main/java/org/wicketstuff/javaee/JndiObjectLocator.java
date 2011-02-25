@@ -16,10 +16,11 @@
  */
 package org.wicketstuff.javaee;
 
-import org.apache.wicket.proxy.IProxyTargetLocator;
-import org.apache.wicket.util.lang.Objects;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import org.apache.wicket.proxy.IProxyTargetLocator;
+import org.apache.wicket.util.lang.Objects;
 
 /**
  * Implementation of {@link IProxyTargetLocator} to locate object using JNDI
@@ -59,7 +60,8 @@ public class JndiObjectLocator implements IProxyTargetLocator {
     /**
      * @see org.apache.wicket.proxy.IProxyTargetLocator#locateProxyTarget()
      */
-    public Object locateProxyTarget() {
+    @Override
+	public Object locateProxyTarget() {
         return lookup(beanName, beanType);
     }
 

@@ -22,6 +22,7 @@ public class GaeWicketApplication extends WebApplication implements GaeApplicati
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
+	@Override
 	public Class<HomePage> getHomePage()
 	{
 		return HomePage.class;

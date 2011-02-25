@@ -18,9 +18,9 @@
  */
 package org.wicketstuff;
 
-import winstone.Launcher;
-
 import java.util.HashMap;
+
+import winstone.Launcher;
 
 /**
  * Seperate startup class for people that want to run the examples directly.
@@ -28,7 +28,7 @@ import java.util.HashMap;
 public class RunWebApp {
 
     /**
-     * Main function, starts the jetty server.
+     * Main function, starts the winston server.
      *
      * @param args unused
      */

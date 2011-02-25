@@ -22,8 +22,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
-import org.wicketstuff.shiro.example.sprhibnative.dao.HibernateDao;
-import org.wicketstuff.shiro.example.sprhibnative.dao.UserDAO;
 import org.wicketstuff.shiro.example.sprhibnative.model.User;
 
 @Repository("userDAO")

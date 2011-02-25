@@ -91,7 +91,8 @@ public abstract class GMapAutoUpdatingBehavior extends AbstractDefaultAjaxBehavi
      * 
      * @see org.apache.wicket.ajax.AbstractDefaultAjaxBehavior#respond(org.apache.wicket.ajax.AjaxRequestTarget)
      */
-    protected final void respond(final AjaxRequestTarget target) {
+    @Override
+	protected final void respond(final AjaxRequestTarget target) {
     	if(!stopped) {
     		target.appendJavaScript(getJsTimeoutCall(updateInterval));
     	}

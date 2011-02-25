@@ -54,6 +54,7 @@ public class MavenDevResourceStreamLocator extends ResourceStreamLocator
 	final static String MAVEN_RESOURCE_PATH="src/main/resources/";
 	final static String MAVEN_JAVASOURCE_PATH="src/main/java/";
 	
+	@Override
 	public IResourceStream locate(final Class<?> clazz, final String path)
 	{
 		IResourceStream located=getFileSysResourceStream(MAVEN_RESOURCE_PATH,path);

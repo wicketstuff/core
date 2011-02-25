@@ -18,6 +18,7 @@ package org.wicketstuff.javaee;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
 import org.apache.wicket.proxy.IProxyTargetLocator;
 import org.apache.wicket.util.lang.Objects;
 import org.wicketstuff.javaee.naming.IJndiNamingStrategy;
@@ -102,7 +103,8 @@ public class JavaEEBeanLocator implements IProxyTargetLocator {
     /**
      * @see org.apache.wicket.proxy.IProxyTargetLocator#locateProxyTarget()
      */
-    public Object locateProxyTarget() {
+    @Override
+	public Object locateProxyTarget() {
         if (beanName != null && beanName.length() > 0) {
             return lookupEjb(beanName, beanType);
         } else {

@@ -58,6 +58,7 @@ public class DetachableContactModel extends LoadableDetachableModel
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
+	@Override
 	public int hashCode()
 	{
 		return new Long(id).hashCode();
@@ -69,6 +70,7 @@ public class DetachableContactModel extends LoadableDetachableModel
 	 * @see org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
+	@Override
 	public boolean equals(final Object obj)
 	{
 		if (obj == this)
@@ -90,6 +92,7 @@ public class DetachableContactModel extends LoadableDetachableModel
 	/**
 	 * @see org.apache.wicket.model.LoadableDetachableModel#load()
 	 */
+	@Override
 	protected Object load()
 	{
 		// loads contact from the database

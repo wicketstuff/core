@@ -1,16 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
 		<groupId>org.wicketstuff</groupId>
         <artifactId>jdk-1.6-parent</artifactId>
         <version>1.5-SNAPSHOT</version>
     </parent>
-    <groupId>org.wicketstuff</groupId>
+
     <artifactId>wicket-servlet3-parent</artifactId>
     <packaging>pom</packaging>
+
     <name>Wicket Servlet3 :: Parent</name>
-    <description></description>
 
     <organization>
         <name>WicketStuff</name>
@@ -32,29 +35,10 @@
 
     <dependencyManagement>
         <dependencies>
-
             <dependency>
-                <groupId>org.wicketstuff</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>wicket-servlet3</artifactId>
                 <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>1.5.11</version>
-            </dependency>
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>1.2.14</version>
-            </dependency>
-
-            <!--  JUNIT DEPENDENCY FOR TESTING -->
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.8.1</version>
-                <scope>test</scope>
             </dependency>
 
             <!--  JETTY DEPENDENCIES FOR TESTING  -->
@@ -97,27 +81,8 @@
 				<artifactId>servlet-api</artifactId>
 				<version>3.0.20100224</version>
 			</dependency>
-			
         </dependencies>
     </dependencyManagement>
-
-    <build>
-      
-        <pluginManagement>
-        	<plugins>
-        		<plugin>
-        			<groupId>org.apache.maven.plugins</groupId>
-        			<artifactId>maven-eclipse-plugin</artifactId>
-        			<version>2.8</version>
-        			<configuration>
-						<downloadSources>true</downloadSources>
-					</configuration>
-        		</plugin>
-        		
-
-        	</plugins>
-        </pluginManagement>
-    </build>
 
 	<properties>
 		<eclipse.jetty.version>8.0.0.M1</eclipse.jetty.version>

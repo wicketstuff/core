@@ -435,6 +435,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 		}
 	}
 
+	@Override
 	public void renderHead(IHeaderResponse res)
 	{
 		res.renderCSSReference(CSS);

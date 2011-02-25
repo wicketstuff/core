@@ -1,6 +1,7 @@
 package org.wicketstuff.openlayers;
 
 import junit.framework.TestCase;
+
 import org.apache.wicket.util.tester.WicketTester;
 
 /**
@@ -10,6 +11,7 @@ public class TestHomePage extends TestCase
 {
 	private WicketTester tester;
 
+	@Override
 	public void setUp()
 	{
 		tester = new WicketTester();
