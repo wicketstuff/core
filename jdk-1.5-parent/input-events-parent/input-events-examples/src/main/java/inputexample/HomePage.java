@@ -1,6 +1,5 @@
 package inputexample;
 
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -13,6 +12,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import wicket.contrib.input.events.EventType;
 import wicket.contrib.input.events.InputBehavior;
@@ -25,13 +25,9 @@ public class HomePage extends WebPage {
 
 	private static final long serialVersionUID = 1L;
 
+	// TODO Add any page properties or variables here
+
 	private int counter = 0;
-
-	private final AjaxButton refreshButton;
-
-	private final Button increaseButton;
-
-	private Form ajaxContainer;
 
 	/**
 	 * Constructor that is invoked when page is invoked without a session.
@@ -47,7 +43,7 @@ public class HomePage extends WebPage {
 
 		// TODO Add your page's components here
 
-		final IModel labelModel = new Model("nothing yet!");
+		final IModel<String> labelModel = new Model<String>("nothing yet!");
 		final Label label = new Label("id", labelModel);
 		label.setOutputMarkupId(true);
 		add(label);
@@ -81,7 +77,7 @@ public class HomePage extends WebPage {
 			@Override
 			protected void onEvent(AjaxRequestTarget target) {
 				labelModel.setObject("ajax was fired");
-				target.addComponent(label);
+				target.add(label);
 			}
 		});
 		button2.add(new InputBehavior(new KeyType[] { KeyType.c }));
@@ -104,7 +100,7 @@ public class HomePage extends WebPage {
 		link.add(new InputBehavior(new KeyType[] { KeyType.e }));
 		add(link);
 
-		ajaxContainer = new Form("ajaxContainer");
+		final Form<?> ajaxContainer = new Form("ajaxContainer");
 		add(ajaxContainer);
 
 		// Counter
@@ -114,13 +110,17 @@ public class HomePage extends WebPage {
 		ajaxContainer.add(counterLabel);
 
 		// Increase
-		increaseButton = new AjaxButton("increase") {
+		Button increaseButton = new AjaxButton("increase") {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onSubmit(AjaxRequestTarget target, Form form) {
+			public void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				counter++;
-				target.addComponent(counterLabel);
+				target.add(counterLabel);
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form) {
 			}
 		};
 		increaseButton.add(new InputBehavior(new KeyType[] { KeyType.Up },
@@ -128,30 +128,22 @@ public class HomePage extends WebPage {
 		ajaxContainer.add(increaseButton);
 
 		// Refresh
-		refreshButton = new AjaxButton("refresh") {
+		Button refreshButton = new AjaxButton("refresh") {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form form) {
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				if (target == null) {
 					throw new NullPointerException(
 							"This must be an AJAX request.");
 				}
-				target.addComponent(ajaxContainer);
+				target.add(ajaxContainer);
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form) {
 			}
 		};
 		ajaxContainer.add(refreshButton);
-	}
-
-	int getCounter() {
-		return counter;
-	}
-
-	AjaxButton getRefreshButton() {
-		return refreshButton;
-	}
-
-	Button getIncreaseButton() {
-		return increaseButton;
 	}
 }
