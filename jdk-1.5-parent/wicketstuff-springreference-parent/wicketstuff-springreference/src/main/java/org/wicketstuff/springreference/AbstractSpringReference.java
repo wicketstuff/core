@@ -69,10 +69,8 @@ public abstract class AbstractSpringReference<T> implements Serializable,
 	 *         bean could not be found.
 	 */
 	public T get() {
-		if (instance != null)
-			return instance;
-
-		getSupporter().findAndSetInstance(this);
+		if (instance == null)
+			getSupporter().findAndSetInstance(this);
 
 		return instance;
 	}
@@ -119,8 +117,6 @@ public abstract class AbstractSpringReference<T> implements Serializable,
 			return false;
 		if (clazzBasedOnlyLookup != other.clazzBasedOnlyLookup)
 			return false;
-		if (getSupporter() != other.getSupporter())
-			return false;
 		// name field only matters if not clazzBasedOnlyLookup
 		if (!clazzBasedOnlyLookup) {
 			if (name == null) {
@@ -129,6 +125,8 @@ public abstract class AbstractSpringReference<T> implements Serializable,
 			} else if (!name.equals(other.name))
 				return false;
 		}
+		if (getSupporter() != other.getSupporter())
+			return false;
 		return true;
 	}
 
