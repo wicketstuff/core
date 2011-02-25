@@ -365,7 +365,13 @@
 				<groupId>org.eclipse.jetty.aggregate</groupId>
 				<artifactId>jetty-all-server</artifactId>
 				<version>${jetty.version}</version>
-				<scope>provided</scope>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${spring.version}</version>
+				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.testng</groupId>
@@ -412,12 +418,6 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-orm</artifactId>
 				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-test</artifactId>
-				<version>${spring.version}</version>
-				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
