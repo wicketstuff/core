@@ -234,7 +234,7 @@
 	</mailingLists>
 
 	<scm>
-		<url>https://github.com/wicketstuff/core</url>
+		<url>https://github.com/wicketstuff/core/tree/wicketstuff-core-1.5-rc2</url>
 		<connection>scm:git:ssh://git@github.com:wicketstuff/core.git</connection>
 	</scm>
 
