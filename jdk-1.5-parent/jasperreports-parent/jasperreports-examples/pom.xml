@@ -69,6 +69,8 @@
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all-server</artifactId>
+			<!-- mocleiri: the example pages reference ServletContext so this is needed to compile in maven.  Eclipse cheats and lets the test scope satisfy the dependency -->
+			<scope>compile</scope>
 		</dependency>
 
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
