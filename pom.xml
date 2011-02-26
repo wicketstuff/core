@@ -259,7 +259,7 @@
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket</artifactId>
 			<version>${wicket.version}</version>
-			<packaging>pom</packaging>
+			<type>pom</type>
 		</dependency>
 	</dependencies>
 
