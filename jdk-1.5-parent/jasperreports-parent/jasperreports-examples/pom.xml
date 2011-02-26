@@ -20,9 +20,8 @@
 		<jasperreports.outputDirectory>${project.build.sourceDirectory}/../webapp/reports</jasperreports.outputDirectory>
 	</properties>
 
-	<build>
+	<!--build>
 		<plugins>
-<!-- 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jasperreports-maven-plugin</artifactId>
@@ -54,9 +53,8 @@
 					</dependency>
 				</dependencies>
 			</plugin>
- -->
- 		</plugins>
-	</build>
+		</plugins>
+	</build-->
 
 	<dependencies>
 		<dependency>
@@ -65,12 +63,15 @@
 			<version>${project.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+
 		<!--  JETTY DEPENDENCIES FOR TESTING  -->
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all-server</artifactId>
-			<!-- mocleiri: the example pages reference ServletContext so this is needed to compile in maven.  Eclipse cheats and lets the test scope satisfy the dependency -->
-			<scope>compile</scope>
 		</dependency>
 
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
