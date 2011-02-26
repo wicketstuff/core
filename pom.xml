@@ -75,12 +75,10 @@
 		<repository>
 			<id>localRepo</id>
 			<url>file:target/m2-repo</url>
-			<uniqueVersion>false</uniqueVersion>
 		</repository>
 		<snapshotRepository>
 			<id>localRepo</id>
 			<url>file:target/m2-snapshot-repo</url>
-			<uniqueVersion>false</uniqueVersion>
 		</snapshotRepository>
 	</distributionManagement>
 
@@ -133,7 +131,6 @@
 					<id>sonatype-nexus-staging</id>
 					<name>Nexus Release Repository</name>
 					<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-					<uniqueVersion>false</uniqueVersion>
 				</repository>
 			</distributionManagement>
 		</profile>
@@ -160,7 +157,6 @@
 					<id>sonatype-nexus-snapshots</id>
 					<name>Sonatype Nexus Snapshots</name>
 					<url>http://oss.sonatype.org/content/repositories/snapshots</url>
-					<uniqueVersion>false</uniqueVersion>
 				</snapshotRepository>
 			</distributionManagement>
 		</profile>
@@ -189,6 +185,21 @@
 						<enabled>true</enabled>
 					</snapshots>
 				</repository>
+				<repository>
+					<id>jboss-releases-repo</id>
+					<name>Hibernate releases repo</name>
+					<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+
+
+				</repository>
+
+
 			</repositories>
 
 			<pluginRepositories>
@@ -227,13 +238,7 @@
 		<connection>scm:git:ssh://git@github.com:wicketstuff/core.git</connection>
 	</scm>
 
-	<repositories>
-		<repository>
-			<id>jboss-releases-repo</id>
-			<name>Hibernate releases repo</name>
-			<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
-		</repository>
-	</repositories>
+	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
 		<wicket.version>1.5-SNAPSHOT</wicket.version>
@@ -252,8 +257,9 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket-core</artifactId>
+			<artifactId>wicket</artifactId>
 			<version>${wicket.version}</version>
+			<packaging>pom</packaging>
 		</dependency>
 	</dependencies>
 
