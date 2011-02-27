@@ -20,7 +20,7 @@ package wicket.contrib.phonebook;
 
 import junit.framework.TestCase;
 
-import org.hibernate.Hibernate;
+import org.hibernate.type.StandardBasicTypes;
 
 /**
  * @author Kare Nuorteva
@@ -61,28 +61,28 @@ public class HibernateContactFinderQueryBuilderTest extends TestCase {
 		filter.setFirstname("James");
 		assertTrue(builder.buildHql().endsWith("and upper(target.firstname) like (?)"));
 		assertEquals("%JAMES%", builder.getParameters()[0]);
-		assertEquals(Hibernate.STRING, builder.getTypes()[0]);
+		assertEquals(StandardBasicTypes.STRING, builder.getTypes()[0]);
 	}
 
 	public void testFiltersByLastName() throws Exception {
 		filter.setLastname("Bond");
 		assertTrue(builder.buildHql().endsWith("and upper(target.lastname) like (?)"));
 		assertEquals("%BOND%", builder.getParameters()[0]);
-		assertEquals(Hibernate.STRING, builder.getTypes()[0]);
+		assertEquals(StandardBasicTypes.STRING, builder.getTypes()[0]);
 	}
 
 	public void testFiltersByPhone() throws Exception {
 		filter.setPhone("+12345");
 		assertTrue(builder.buildHql().endsWith("and upper(target.phone) like (?)"));
 		assertEquals("%+12345%", builder.getParameters()[0]);
-		assertEquals(Hibernate.STRING, builder.getTypes()[0]);
+		assertEquals(StandardBasicTypes.STRING, builder.getTypes()[0]);
 	}
 
 	public void testFiltersByEmail() throws Exception {
 		filter.setEmail("james@bond.com");
 		assertTrue(builder.buildHql().endsWith("and upper(target.email) like (?)"));
 		assertEquals("%JAMES@BOND.COM%", builder.getParameters()[0]);
-		assertEquals(Hibernate.STRING, builder.getTypes()[0]);
+		assertEquals(StandardBasicTypes.STRING, builder.getTypes()[0]);
 	}
 
 	public void testOrdersAscendingByFirstName() throws Exception {

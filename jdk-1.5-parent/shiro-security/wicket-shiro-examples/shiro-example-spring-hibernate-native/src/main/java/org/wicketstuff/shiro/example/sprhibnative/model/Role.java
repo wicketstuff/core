@@ -22,6 +22,7 @@ import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -30,7 +31,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.Index;
 
 /**
@@ -88,7 +88,7 @@ public class Role {
         this.description = description;
     }
 
-    @CollectionOfElements
+    @ElementCollection
     @JoinTable(name="roles_permissions")
     @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
     public Set<String> getPermissions() {
