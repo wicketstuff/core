@@ -18,8 +18,6 @@ package org.wicketstuff.shiro.example.sprhib;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.wicketstuff.shiro.example.ExampleApplication;
 import org.wicketstuff.shiro.example.pages.LoginPage;
 
@@ -28,22 +26,17 @@ public class ExampleHibernateApp extends ExampleApplication
 	@Override
 	protected void init()
 	{
-		addComponentInstantiationListener(new SpringComponentInjector(this, context()));
+		getComponentInstantiationListeners().add(new SpringComponentInjector(this));
 
 		// do the standard stuff...
 		super.init();
-	}
-
-	public ApplicationContext context()
-	{
-		return WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
 	}
 
   @Override
   public Component getExampleInfoPanel(String id) {
     return new ExampleInfoPanel( id );
   }
-  
+
   @Override
 	public Component getAuthHeaderPanel(String id) {
 	  return new UserAuthHeader(id, LoginPage.class);
