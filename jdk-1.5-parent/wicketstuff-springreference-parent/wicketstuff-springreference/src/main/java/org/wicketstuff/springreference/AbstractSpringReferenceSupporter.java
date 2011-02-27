@@ -137,16 +137,24 @@ public abstract class AbstractSpringReferenceSupporter {
 			if (applicationContext instanceof ConfigurableApplicationContext) {
 				ConfigurableListableBeanFactory fact = ((ConfigurableApplicationContext) applicationContext)
 						.getBeanFactory();
+				List<String> autowireCandidates = new LinkedList<String>();
 				List<String> primaries = new LinkedList<String>();
 
 				for (String n : names) {
 					BeanDefinition beanDefinition = getBeanDefinition(fact, n);
-					if (beanDefinition != null && beanDefinition.isPrimary())
-						primaries.add(n);
+					if (beanDefinition != null
+							&& beanDefinition.isAutowireCandidate()) {
+						autowireCandidates.add(n);
+						if (beanDefinition.isPrimary())
+							primaries.add(n);
+					}
 				}
 
 				if (!primaries.isEmpty())
 					names = primaries.toArray(new String[primaries.size()]);
+				else if (!autowireCandidates.isEmpty())
+					names = autowireCandidates
+							.toArray(new String[autowireCandidates.size()]);
 			}
 
 			// still too many/too few candidates

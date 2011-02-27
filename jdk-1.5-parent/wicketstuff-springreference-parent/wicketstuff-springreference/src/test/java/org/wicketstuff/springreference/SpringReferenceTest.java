@@ -65,7 +65,7 @@ public class SpringReferenceTest {
 		SpringReference<ClassService> reference = SpringReference
 				.of(ClassService.class);
 
-		testReference(reference);
+		testReference(reference, 1);
 	}
 
 	@Test
@@ -73,7 +73,7 @@ public class SpringReferenceTest {
 		SpringReference<PrimaryService> reference = SpringReference.of(
 				PrimaryService.class, "named");
 
-		testReference(reference);
+		testReference(reference, 2);
 	}
 
 	@Test
@@ -81,7 +81,15 @@ public class SpringReferenceTest {
 		SpringReference<PrimaryService> reference = SpringReference
 				.of(PrimaryService.class);
 
-		testReference(reference);
+		testReference(reference, 3);
+	}
+
+	@Test
+	public void autowireTest() {
+		SpringReference<AutowireService> reference = SpringReference
+				.of(AutowireService.class);
+
+		testReference(reference, 6);
 	}
 
 	@Test
@@ -89,7 +97,7 @@ public class SpringReferenceTest {
 		SpringReference<ConstructorService> reference = SpringReference
 				.of(ConstructorService.class);
 
-		testReference(reference);
+		testReference(reference, 4);
 	}
 
 	@Test
@@ -97,7 +105,7 @@ public class SpringReferenceTest {
 		SpringReference<AService> reference = SpringReference.of(
 				AService.class, "named");
 
-		testReference(reference);
+		testReference(reference, 2);
 	}
 
 	@Test
@@ -106,7 +114,7 @@ public class SpringReferenceTest {
 				AService.class, "not-existing-bean-id");
 
 		try {
-			testReference(reference);
+			testReference(reference, -1);
 			// no exception?
 			throw new IllegalStateException("Not exsisting spring bean found.");
 		} catch (NoSuchBeanDefinitionException e) {
@@ -143,7 +151,7 @@ public class SpringReferenceTest {
 	}
 
 	protected <T extends AService> void testReference(
-			SpringReference<T> reference) {
+			SpringReference<T> reference, int expectedTreasure) {
 		Assert.assertNotNull(reference);
 		T service = reference.get();
 		Assert.assertNotNull(service);
@@ -154,7 +162,7 @@ public class SpringReferenceTest {
 		service = reference.get();
 		Assert.assertNotNull(service);
 
-		service.doStuff();
+		Assert.assertEquals(expectedTreasure, service.doStuff());
 	}
 
 	/**
