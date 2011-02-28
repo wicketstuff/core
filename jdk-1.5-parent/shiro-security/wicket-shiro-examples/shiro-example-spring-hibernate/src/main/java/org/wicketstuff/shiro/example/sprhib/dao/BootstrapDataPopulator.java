@@ -18,14 +18,14 @@
  */
 package org.wicketstuff.shiro.example.sprhib.dao;
 
+import javax.sql.DataSource;
+
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-
-import javax.sql.DataSource;
 
 /**
  * Loads sample data for the sample app since it's an in-memory database.
@@ -40,7 +40,7 @@ public class BootstrapDataPopulator implements InitializingBean {
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
-    
+
     // Session factory is only injected to ensure it is initialized before this runs
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
