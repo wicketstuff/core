@@ -36,7 +36,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * Tests for {@link SpringReference} and {@link SpringReferenceSupporter}.
- * 
+ *
  * @author akiraly
  */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -101,11 +101,19 @@ public class SpringReferenceTest {
 	}
 
 	@Test
-	public void subClassTest() {
+	public void subClass1Test() {
 		SpringReference<AService> reference = SpringReference.of(
 				AService.class, "named");
 
 		testReference(reference, 2);
+	}
+
+	@Test
+	public void subClass2Test() {
+		SpringReference<AService> reference = SpringReference
+				.of(AService.class);
+
+		testReference(reference, 3);
 	}
 
 	@Test
