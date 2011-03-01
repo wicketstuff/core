@@ -104,6 +104,14 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 
 	}
 
+	
+	/**
+	 * @param ajaxCallDecorator the ajaxCallDecorator to set
+	 */
+	protected final void setAjaxCallDecorator(IAjaxCallDecorator ajaxCallDecorator) {
+		this.ajaxCallDecorator = ajaxCallDecorator;
+	}
+
 	/**
 	 * @param actionDeterminesVisibility
 	 *            the actionDeterminesVisibility to set
@@ -283,6 +291,16 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 
 		return indicatorAppender.getMarkupId();
 
+	}
+
+	
+	/* (non-Javadoc)
+	 * @see org.apache.wicket.markup.html.form.Button#getOnClickScript()
+	 */
+	@Override
+	protected String getOnClickScript() {
+		// TODO Auto-generated method stub
+		return super.getOnClickScript();
 	}
 
 	/*

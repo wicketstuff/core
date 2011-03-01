@@ -17,6 +17,7 @@ package org.wicketstuff.datatable_autocomplete.button;
 
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +57,20 @@ public class DTAButton extends Button implements DTAButtonProvider {
 	public DTAButton(String id, String label) {
 
 		this (id, label, null);
+		
+	}
+	
+public DTAButton(String id, IModel<String> labelModel, IFormSubmitAction submitAction) {
+		
+		
+		super(id, labelModel);
+		this.submitAction = submitAction;
+		
+	}
+
+	public DTAButton(String id, IModel<String> labelModel) {
+
+		this (id, labelModel, null);
 		
 	}
 	
