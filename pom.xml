@@ -297,6 +297,10 @@
 		<eclipse.jetty.version>7.1.4.v20100610</eclipse.jetty.version>
 		<lucene.version>2.4.1</lucene.version>
 		<slf4j.version>1.5.11</slf4j.version>
+
+		<!-- needed for building the release artifacts -->
+		 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
 	</properties>
 	<dependencies>
 		<dependency>
