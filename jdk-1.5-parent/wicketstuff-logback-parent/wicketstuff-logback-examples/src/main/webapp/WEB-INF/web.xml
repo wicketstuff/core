@@ -16,6 +16,12 @@
 		<param-value>/WEB-INF/log-sc.xml</param-value>
 	</context-param>
 
+	<!-- Optional: make context path available in logback config with ${contextPath} -->
+	<context-param>
+		<param-name>logbackConfigContextPathKey</param-name>
+		<param-value>contextPath</param-value>
+	</context-param>
+
 	<listener>
 		<listener-class>org.wicketstuff.logback.LogbackConfigListener</listener-class>
 	</listener>

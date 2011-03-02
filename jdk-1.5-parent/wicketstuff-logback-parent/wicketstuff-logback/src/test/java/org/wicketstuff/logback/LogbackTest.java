@@ -1,5 +1,8 @@
 package org.wicketstuff.logback;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.wicket.mock.MockApplication;
 import org.apache.wicket.util.crypt.StringUtils;
 import org.apache.wicket.util.tester.WicketTester;
@@ -8,6 +11,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.classic.Logger;
@@ -15,20 +21,41 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 
 /**
  * Tests for {@link LogbackConfigListener} and {@link WicketWebPatternEncoder}.
- * 
+ *
  * @author akiraly
  */
+@RunWith(Parameterized.class)
 public class LogbackTest {
 	private ServletTester servletTester;
 	private WicketTester wicketTester;
+
+	private String contextPath;
+	private String logbackContextPath;
+
+	@Parameters
+	public static List<Object[]> parameters() {
+		return Arrays.asList(new Object[][] {
+				{ "", LogbackConfigListener.CONTEXT_PATH_ROOT_VAL },
+				{ "/", LogbackConfigListener.CONTEXT_PATH_ROOT_VAL },
+				{ "/l", "l" } });
+	}
+
+	public LogbackTest(String contextPath, String logbackContextPath) {
+		super();
+		this.contextPath = contextPath;
+		this.logbackContextPath = logbackContextPath;
+	}
 
 	@Before
 	public void before() throws Exception {
 		servletTester = new ServletTester();
 		servletTester.getContext().setInitParameter(
-				LogbackConfigListener.CONFIG_LOCATION_PARAM,
+				LogbackConfigListener.LOCATION_PARAM,
 				LogbackConfigListener.LOCATION_PREFIX_CLASSPATH
 						+ "logback-custom-config.xml");
+		servletTester.getContext().setInitParameter(
+				LogbackConfigListener.CONTEXT_PATH_KEY_PARAM, "contextPath");
+		servletTester.setContextPath(contextPath);
 		servletTester.addEventListener(new LogbackConfigListener());
 
 		servletTester.start();
@@ -46,7 +73,7 @@ public class LogbackTest {
 		// if the cast or the assert fails the custom configuration of logback
 		// failed, LogbackConfigListener bug
 		ByteArrayAppender<ILoggingEvent> appender = (ByteArrayAppender<ILoggingEvent>) logger
-				.getAppender("arrayAppender");
+				.getAppender("arrayAppender-" + logbackContextPath);
 		Assert.assertNotNull(appender);
 
 		appender.getOutputStream().reset();

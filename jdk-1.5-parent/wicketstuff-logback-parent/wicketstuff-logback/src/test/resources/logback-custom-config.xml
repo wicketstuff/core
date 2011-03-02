@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration>
 <configuration>
-	<appender name="arrayAppender" class="org.wicketstuff.logback.ByteArrayAppender">
+	<!-- ${contextPath} is not really needed here. Only used to showcase the 
+		functionality. It has more purpose for example in log file name. -->
+	<appender name="arrayAppender-${contextPath}" class="org.wicketstuff.logback.ByteArrayAppender">
 		<encoder class="org.wicketstuff.logback.WicketWebPatternEncoder">
 			<charset>UTF-8</charset>
 			<pattern>%web</pattern>
@@ -32,7 +34,7 @@
 	<logger name="org" level="warn" />
 
 	<root level="debug">
-		<appender-ref ref="arrayAppender" />
+		<appender-ref ref="arrayAppender-${contextPath}" />
 		<appender-ref ref="consoleAppender" />
 	</root>
 </configuration>
