@@ -246,7 +246,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<hibernate.version>3.6.1.Final</hibernate.version>
+		<hibernate.version>3.6.2.Final</hibernate.version>
 		<jetty.version>7.3.1.v20110307</jetty.version>
 		<sf-jung.version>2.0.1</sf-jung.version>
 		<shiro.version>1.1.0</shiro.version>
