@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration>
 <configuration>
-	<appender name="appender" class="ch.qos.logback.core.ConsoleAppender">
+	<appender name="appender-${contextPath}" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="org.wicketstuff.logback.WicketWebPatternEncoder">
 			<charset>UTF-8</charset>
 			<pattern>%d|%p|%t|%c{36}|%r|%web%n\t%caller{1}\t%m%n%xEx</pattern>
@@ -24,6 +24,6 @@
 	<logger name="org.wicketstuff.logback" level="info" />
 
 	<root level="debug">
-		<appender-ref ref="appender" />
+		<appender-ref ref="appender-${contextPath}" />
 	</root>
 </configuration>

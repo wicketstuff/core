@@ -21,7 +21,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 
 
 public class ExampleInfoPanel extends Panel
-{ 
+{
 	public ExampleInfoPanel(String id)
 	{
 	  super( id );

@@ -2,6 +2,7 @@ package inputexample;
 
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -10,6 +11,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import wicket.contrib.input.events.EventType;
@@ -24,6 +26,8 @@ public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
 
 	// TODO Add any page properties or variables here
+
+	private int counter = 0;
 
 	/**
 	 * Constructor that is invoked when page is invoked without a session.
@@ -112,5 +116,50 @@ public class HomePage extends WebPage {
 		link.add(new InputBehavior(new KeyType[] { KeyType.e }));
 		add(link);
 
+		final Form ajaxContainer = new Form("ajaxContainer");
+		add(ajaxContainer);
+
+		// Counter
+		final Label counterLabel = new Label("counter", new PropertyModel<Integer>(this,
+				"counter"));
+		counterLabel.setOutputMarkupId(true);
+		ajaxContainer.add(counterLabel);
+
+		// Increase
+		Button increaseButton = new AjaxButton("increase") {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onSubmit(AjaxRequestTarget target, Form<?> form) {
+				counter++;
+				target.add(counterLabel);
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form) {
+			}
+		};
+		increaseButton.add(new InputBehavior(new KeyType[] { KeyType.Up },
+				EventType.click));
+		ajaxContainer.add(increaseButton);
+
+		// Refresh
+		Button refreshButton = new AjaxButton("refresh") {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+				if (target == null) {
+					throw new NullPointerException(
+							"This must be an AJAX request.");
+				}
+				target.add(ajaxContainer);
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form) {
+			}
+		};
+		ajaxContainer.add(refreshButton);
 	}
 }

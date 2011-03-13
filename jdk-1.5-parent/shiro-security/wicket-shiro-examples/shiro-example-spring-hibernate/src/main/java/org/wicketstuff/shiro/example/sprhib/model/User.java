@@ -18,13 +18,21 @@
  */
 package org.wicketstuff.shiro.example.sprhib.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Index;
-
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Simple class that represents any User domain entity in any application.

@@ -14,6 +14,7 @@
 package org.wicketstuff.springreference;
 
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
 
 /**
  * <p>
@@ -29,10 +30,10 @@ import java.io.Serializable;
  * depend on wicket or spring-web. So in theory subclasses can be used in
  * non-wicket, non-web spring applications too.
  * </p>
- * 
+ *
  * @param <T>
  *            type of the wrapped spring bean
- * 
+ *
  * @author akiraly
  */
 public abstract class AbstractSpringReference<T> implements Serializable,
@@ -45,11 +46,11 @@ public abstract class AbstractSpringReference<T> implements Serializable,
 
 	private final boolean clazzBasedOnlyLookup;
 
-	private transient T instance;
+	private transient WeakReference<T> instanceRef;
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param clazz
 	 *            class of the wrapped spring bean, not null
 	 * @param name
@@ -64,15 +65,15 @@ public abstract class AbstractSpringReference<T> implements Serializable,
 	/**
 	 * Returns the referred spring bean. Lookup is made lazily on the first
 	 * call.
-	 * 
+	 *
 	 * @return referred spring bean or throws a {@link RuntimeException} if the
 	 *         bean could not be found.
 	 */
 	public T get() {
-		if (instance != null)
-			return instance;
-
-		getSupporter().findAndSetInstance(this);
+		WeakReference<T> ref = instanceRef;
+		T instance;
+		if (ref == null || (instance = ref.get()) == null)
+			instance = getSupporter().findAndSetInstance(this);
 
 		return instance;
 	}
@@ -119,8 +120,6 @@ public abstract class AbstractSpringReference<T> implements Serializable,
 			return false;
 		if (clazzBasedOnlyLookup != other.clazzBasedOnlyLookup)
 			return false;
-		if (getSupporter() != other.getSupporter())
-			return false;
 		// name field only matters if not clazzBasedOnlyLookup
 		if (!clazzBasedOnlyLookup) {
 			if (name == null) {
@@ -129,6 +128,8 @@ public abstract class AbstractSpringReference<T> implements Serializable,
 			} else if (!name.equals(other.name))
 				return false;
 		}
+		if (getSupporter() != other.getSupporter())
+			return false;
 		return true;
 	}
 
@@ -138,16 +139,16 @@ public abstract class AbstractSpringReference<T> implements Serializable,
 	protected abstract AbstractSpringReferenceSupporter getSupporter();
 
 	/**
-	 * @param instance
-	 *            spring bean
+	 * @param instanceRef
+	 *            weak reference to the spring bean
 	 */
-	protected void setInstance(T instance) {
-		this.instance = instance;
+	protected void setInstanceRef(WeakReference<T> instanceRef) {
+		this.instanceRef = instanceRef;
 	}
 
 	/**
 	 * Can change during lookup if it was not set originally.
-	 * 
+	 *
 	 * @return name of the spring bean, can be null
 	 */
 	protected String getName() {

@@ -39,11 +39,11 @@ import org.springframework.context.ConfigurableApplicationContext;
  * does not depend on wicket or spring-web. So in theory subclasses can be used
  * in non-wicket, non-web spring applications too.
  * </p>
- * 
+ *
  * @author akiraly
  */
 public abstract class AbstractSpringReferenceSupporter {
-	private final Map<String, WeakReference<Object>> singletonCache = new ConcurrentHashMap<String, WeakReference<Object>>();
+	private final Map<String, WeakReference<?>> singletonCache = new ConcurrentHashMap<String, WeakReference<?>>();
 
 	private final Map<String, String> beanNameCache = new ConcurrentHashMap<String, String>();
 
@@ -52,26 +52,27 @@ public abstract class AbstractSpringReferenceSupporter {
 	 * bean is set in the reference. If the name was not given for the reference
 	 * this method will fill that too. Throws a {@link RuntimeException} if the
 	 * bean could not be found.
-	 * 
+	 *
 	 * @param <T>
 	 *            type of the wrapped spring bean
 	 * @param ref
 	 *            reference where the instance will be set
+	 * @return loaded spring bean or throws a {@link RuntimeException} if
+	 *         loading failed.
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> void findAndSetInstance(AbstractSpringReference<T> ref) {
+	public <T> T findAndSetInstance(AbstractSpringReference<T> ref) {
 		T instance;
-		WeakReference<Object> instanceRef;
+		WeakReference<T> instanceRef;
 		String clazzName = ref.getClazz().getName();
 
 		// check cache with clazz name if clazzBasedOnlyLookup
 		if (ref.isClazzBasedOnlyLookup()) {
-			instanceRef = singletonCache.get(clazzName);
+			instanceRef = (WeakReference<T>) singletonCache.get(clazzName);
 
-			if (instanceRef != null
-					&& (instance = (T) instanceRef.get()) != null) {
-				ref.setInstance(instance);
-				return;
+			if (instanceRef != null && (instance = instanceRef.get()) != null) {
+				ref.setInstanceRef(instanceRef);
+				return instance;
 			}
 		}
 
@@ -84,15 +85,15 @@ public abstract class AbstractSpringReferenceSupporter {
 
 		// check cache with clazz and bean name
 		String singletonCacheKey = clazzName + " " + name;
-		instanceRef = singletonCache.get(singletonCacheKey);
+		instanceRef = (WeakReference<T>) singletonCache.get(singletonCacheKey);
 		boolean singleton = true;
-		if (instanceRef == null || (instance = (T) instanceRef.get()) == null) {
+		if (instanceRef == null || (instance = instanceRef.get()) == null) {
 			ApplicationContext applicationContext = getApplicationContext();
 			instance = applicationContext.getBean(name, ref.getClazz());
 			singleton = applicationContext.isSingleton(name);
 			// if singleton put into cache with clazz and bean name key
 			if (singleton) {
-				instanceRef = new WeakReference<Object>(instance);
+				instanceRef = new WeakReference<T>(instance);
 				singletonCache.put(singletonCacheKey, instanceRef);
 			}
 		}
@@ -102,14 +103,16 @@ public abstract class AbstractSpringReferenceSupporter {
 		if (ref.isClazzBasedOnlyLookup() && singleton)
 			singletonCache.put(clazzName, instanceRef);
 
-		ref.setInstance(instance);
+		ref.setInstanceRef(instanceRef);
+
+		return instance;
 	}
 
 	/**
 	 * Finds out the exact name for a spring bean. Used when only the class was
 	 * given by the user. If there is not exactly one candidate (even after
 	 * taking primary beans into account) an exception is thrown.
-	 * 
+	 *
 	 * @param <T>
 	 *            type of the wrapped spring bean
 	 * @param ref
@@ -137,16 +140,24 @@ public abstract class AbstractSpringReferenceSupporter {
 			if (applicationContext instanceof ConfigurableApplicationContext) {
 				ConfigurableListableBeanFactory fact = ((ConfigurableApplicationContext) applicationContext)
 						.getBeanFactory();
+				List<String> autowireCandidates = new LinkedList<String>();
 				List<String> primaries = new LinkedList<String>();
 
 				for (String n : names) {
 					BeanDefinition beanDefinition = getBeanDefinition(fact, n);
-					if (beanDefinition != null && beanDefinition.isPrimary())
-						primaries.add(n);
+					if (beanDefinition != null
+							&& beanDefinition.isAutowireCandidate()) {
+						autowireCandidates.add(n);
+						if (beanDefinition.isPrimary())
+							primaries.add(n);
+					}
 				}
 
 				if (!primaries.isEmpty())
 					names = primaries.toArray(new String[primaries.size()]);
+				else if (!autowireCandidates.isEmpty())
+					names = autowireCandidates
+							.toArray(new String[autowireCandidates.size()]);
 			}
 
 			// still too many/too few candidates
@@ -165,7 +176,7 @@ public abstract class AbstractSpringReferenceSupporter {
 
 	/**
 	 * Tries to get the {@link BeanDefinition} of a spring bean.
-	 * 
+	 *
 	 * @param fact
 	 *            spring bean factory
 	 * @param name

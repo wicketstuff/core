@@ -32,14 +32,14 @@ import org.wicketstuff.shiro.page.LogoutPage;
 
 public class UserAuthHeader extends Panel
 {
-	
+
 	@SpringBean(name = "userService")
 	private UserService userService;
 
 	public UserAuthHeader(String id, Class<? extends Page> loginPage)
 	{
 	  super( id );
-	  
+
 	  // Welcome with logout
 	  WebMarkupContainer welcome = new WebMarkupContainer( "welcome") {
 	    @Override
@@ -61,8 +61,8 @@ public class UserAuthHeader extends Panel
 	  }) );
 	  welcome.add( new BookmarkablePageLink<Void>( "link", LogoutPage.class ) );
 	  add( welcome );
-	  
-	  
+
+
 	  // Login
     WebMarkupContainer login = new WebMarkupContainer( "login") {
       @Override

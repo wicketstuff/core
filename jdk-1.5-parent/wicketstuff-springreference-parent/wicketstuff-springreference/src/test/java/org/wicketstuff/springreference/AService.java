@@ -20,11 +20,23 @@ public class AService {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(AService.class);
 
-	public final void doStuff() {
-		doInnerStuff();
+	private int treasure;
+
+	public final int doStuff() {
+		return doInnerStuff();
 	}
 
-	protected void doInnerStuff() {
-		LOGGER.info("yo");
+	protected int doInnerStuff() {
+		LOGGER.info("Yo pirate, your treasure is: {}", treasure);
+
+		return treasure;
+	}
+
+	public int getTreasure() {
+		return treasure;
+	}
+
+	public void setTreasure(int treasure) {
+		this.treasure = treasure;
 	}
 }

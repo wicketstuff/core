@@ -1,9 +1,4 @@
 /*
- * $Id: StartYuiExamples.java 3400 2005-12-09 07:43:38Z ivaynberg $
- * $Revision: 3400 $
- * $Date: 2005-12-09 15:43:38 +0800 (Fri, 09 Dec 2005) $
- *
- * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
@@ -18,30 +13,37 @@
  */
 package org.wicketstuff;
 
-import java.util.HashMap;
-
-import winstone.Launcher;
+import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.bio.SocketConnector;
+import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
  * Seperate startup class for people that want to run the examples directly.
  */
 public class RunWebApp {
+	/**
+	 * Main function, starts the jetty server.
+	 *
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		Server server = new Server();
+		SocketConnector connector = new SocketConnector();
+		connector.setPort(8080);
+		server.setConnectors(new Connector[] { connector });
 
-    /**
-     * Main function, starts the winston server.
-     *
-     * @param args unused
-     */
-    public static void main(String[] args) {
-        try {
-            HashMap<String, String> params = new HashMap<String, String>();
-            params.put("webroot", "src/main/webapp"); // or any other command line
-            // args, eg port
-            Launcher.initLogger(params);
-            new Launcher(params); // spawns threads (not daemon), so your application doesn't block
-        } catch (Exception exc) {
-            exc.printStackTrace();
-            System.exit(100);
-        }
-    }
+		WebAppContext context = new WebAppContext();
+		context.setServer(server);
+		context.setContextPath("/");
+		context.setWar("src/main/webapp");
+
+		server.setHandler(context);
+		try {
+			server.start();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+	}
 }
