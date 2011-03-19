@@ -19,6 +19,7 @@
 	</description>
 
 	<modules>
+		<module>mootools-meiomask-parent</module>
 		<module>client-and-server-validation</module>
 		<module>datatable-autocomplete-parent</module>
 		<module>datatables-parent</module>
