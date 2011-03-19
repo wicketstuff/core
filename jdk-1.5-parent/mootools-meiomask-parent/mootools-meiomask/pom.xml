@@ -13,7 +13,7 @@
 	<packaging>jar</packaging>
 
 	<name>Mootools MeioMask Plugin Integration</name>
-	<description>Mootools MeioMask Plugin Integration for Wicket</description>
+	<description>Mootools MeioMask Plugin Integration for Masking Text Input</description>
         
 	<developers>
 		<developer>
