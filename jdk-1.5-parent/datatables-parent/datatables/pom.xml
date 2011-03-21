@@ -1,0 +1,81 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>datatables-parent</artifactId>
+		<version>1.5-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>datatables</artifactId>
+	<packaging>jar</packaging>
+
+	<name>DataTables jQuery Plugin Integration</name>
+	<description>DataTables jQuery integration for Wicket</description>
+	<developers>
+		<developer>
+			<id>brunoborges</id>
+			<name>Bruno Borges</name>
+			<email>bruno.borges at gmail.com</email>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>yuicompressor-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<phase>process-resources</phase>
+						<goals>
+							<!--goal>jslint</goal -->
+							<goal>compress</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- these are 3rd party css + js files no need to see the warnings 
+						about them -->
+					<jswarn>false</jswarn>
+					<nosuffix>true</nosuffix>
+					<force>false</force>
+					<excludes>
+						<exclude>**/interface-*.js</exclude>
+						<exclude>**/*pack.js</exclude>
+						<exclude>**/compressed.css</exclude>
+						<exclude>**/crop.css</exclude>
+						<exclude>**/*.java</exclude>
+						<exclude>**/*.html</exclude>
+						<exclude>**/*.xml</exclude>
+						<exclude>**/*.properties</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-extensions</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<classifier>jdk15</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<classifier>jdk15</classifier>
+		</dependency>
+	</dependencies>
+</project>
