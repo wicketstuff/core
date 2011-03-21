@@ -25,6 +25,12 @@
 
 	<dependencies>
 		<dependency>
+	                <groupId>${project.groupId}</groupId>
+	                <artifactId>datatables</artifactId>
+        	        <version>${project.version}</version>
+	        </dependency>
+
+		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 		</dependency>
