@@ -19,6 +19,13 @@ package org.wicketstuff.console;
 import org.wicketstuff.console.engine.ClojureEngine;
 import org.wicketstuff.console.engine.IScriptEngine;
 
+/**
+ * Main panel to execute Clojure scripts.
+ * <p>
+ * Usage: see {@link AbstractScriptEnginePanel}
+ * 
+ * @author cretzel
+ */
 public class ClojureScriptEnginePanel extends AbstractScriptEnginePanel {
 
 	private static final long serialVersionUID = 1L;

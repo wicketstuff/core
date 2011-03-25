@@ -26,23 +26,40 @@ import java.util.Map;
 import clojure.lang.Compiler;
 import clojure.lang.RT;
 
+/**
+ * /** Executes Clojure code.
+ * <p>
+ * stdout and stderr are captured. Bindings are available to the Clojure code
+ * via public static methods {@link #getBinding(String)} and
+ * {@link #getBindings()}.
+ * 
+ * @author cretzel
+ * 
+ */
 public class ClojureEngine implements IScriptEngine {
 
-	// TODO maybe this should be global for all engines
-	public static Map<String, Object> _bindings;
+	private static Map<String, Object> _bindings;
 
+	/** Returns all bindings. */
 	public static Map<String, Object> getBindings() {
 		return _bindings;
 	}
 
+	/** Returns value bound to key @{code key}. */
 	public static Object getBinding(String key) {
 		return _bindings.get(key);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public synchronized IScriptExecutionResult execute(final String script) {
 		return execute(script, null);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public synchronized IScriptExecutionResult execute(final String script,
 			final Map<String, Object> bindings) {
 
