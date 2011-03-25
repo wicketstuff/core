@@ -19,6 +19,13 @@ package org.wicketstuff.console;
 import org.wicketstuff.console.engine.GroovyEngine;
 import org.wicketstuff.console.engine.IScriptEngine;
 
+/**
+ * Main panel to execute Groovy scripts.
+ * <p>
+ * Usage: see {@link AbstractScriptEnginePanel}
+ * 
+ * @author cretzel
+ */
 public class GroovyScriptEnginePanel extends AbstractScriptEnginePanel {
 
 	private static final long serialVersionUID = 1L;

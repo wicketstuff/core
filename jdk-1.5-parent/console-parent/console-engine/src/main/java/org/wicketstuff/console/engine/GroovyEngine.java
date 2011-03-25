@@ -22,39 +22,30 @@ import groovy.lang.GroovyShell;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
-import java.util.Collections;
 import java.util.Map;
 
+/**
+ * Executes Groovy scripts.
+ * <p>
+ * Executes Groovy scripts with {@link GroovyShell}. stdout and stderr are
+ * captured. Bindings are available in Groovy code simply by their names.
+ * 
+ * @author cretzel
+ */
 public class GroovyEngine implements IScriptEngine {
 
-	// TODO maybe this should be global for all engines
-	public static Map<String, Object> _bindings;
-
-	public static Map<String, Object> getBindings() {
-		return _bindings;
-	}
-
-	public static Object getBinding(String key) {
-		return _bindings.get(key);
-	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	public synchronized IScriptExecutionResult execute(final String script) {
 		return execute(script, null);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public synchronized IScriptExecutionResult execute(final String script,
 			final Map<String, Object> bindings) {
-
-		/*
-		 * put bindings into public static _bindings to be accessible by the
-		 * script via ClojureEngine#getBinding(). Not especially nice, but
-		 * should probably work for the most engines.
-		 */
-		if (bindings == null) {
-			_bindings = Collections.emptyMap();
-		} else {
-			_bindings = Collections.synchronizedMap(bindings);
-		}
 
 		Throwable exception = null;
 		String output = null;
@@ -66,7 +57,7 @@ public class GroovyEngine implements IScriptEngine {
 		final PrintStream newOut = new PrintStream(bout, false);
 		final OutputStreamWriter newRtOut = new OutputStreamWriter(newOut);
 
-		GroovyShell shell = new GroovyShell(new Binding(_bindings));
+		GroovyShell shell = new GroovyShell(new Binding(bindings));
 
 		try {
 			System.setOut(newOut);

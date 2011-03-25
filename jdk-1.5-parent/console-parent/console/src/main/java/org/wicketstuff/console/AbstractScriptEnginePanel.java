@@ -39,6 +39,19 @@ import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.console.engine.IScriptEngine;
 import org.wicketstuff.console.engine.IScriptExecutionResult;
 
+/**
+ * Abstract panel for executing Scripts.
+ * <p>
+ * Usage:
+ * <pre>add(new GroovyScriptEnginePanel(&quot;scriptPanel&quot;));</pre>
+ * 
+ * <pre>&lt;div wicket:id=&quot;scriptPanel&quot&gt;&lt;/div&gt;</pre>
+
+ * @see ClojureScriptEnginePanel
+ * @see GroovyScriptEnginePanel
+ * 
+ * @author cretzel
+ */
 public abstract class AbstractScriptEnginePanel extends Panel {
 
 	private final class ClearButton extends Button {

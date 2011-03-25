@@ -16,6 +16,13 @@
  */
 package org.wicketstuff.console.engine;
 
+/**
+ * Default implementation of {@link IScriptExecutionResult}.
+ * <p>
+ * {@link #isSuccess()} returns {@code true}, if there isn't any exception.
+ * 
+ * @author cretzel
+ */
 final class DefaultScriptExecutionResult implements IScriptExecutionResult {
 
 	private final String script;
