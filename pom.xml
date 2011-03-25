@@ -557,6 +557,16 @@
 				<version>0.0.5</version>
 			</dependency>
 			<dependency>
+				<groupId>org.clojure</groupId>
+				<artifactId>clojure</artifactId>
+				<version>1.2.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy</artifactId>
+				<version>1.7.8</version>
+			</dependency>
+			<dependency>
 				<groupId>org.hsqldb</groupId>
 				<artifactId>hsqldb</artifactId>
 				<version>2.0.0</version>
