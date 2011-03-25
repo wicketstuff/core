@@ -20,14 +20,14 @@ import com.inmethod.grid.common.AttachPrelightBehavior;
 
 /**
  * Contains data grid rows.
- * 
+ *
  * @author Matej Knopp
  */
 public abstract class DataGridBody extends Panel implements IPageable {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id
 	 *            component id
 	 */
@@ -127,7 +127,7 @@ public abstract class DataGridBody extends Panel implements IPageable {
 				}
 
 				public DataGrid getDataGrid() {
-					return (DataGrid) DataGridBody.this.findParent(DataGrid.class);
+					return DataGridBody.this.findParent(DataGrid.class);
 				}
 			};
 		}
@@ -158,13 +158,13 @@ public abstract class DataGridBody extends Panel implements IPageable {
 			protected RowItem(String id, int index, IModel model) {
 				super(id, index, model);
 			}
-			
+
 			@Override
 			protected void onComponentTag(ComponentTag tag) {
 
 				super.onComponentTag(tag);
-			
-				CharSequence klass = tag.getString("class");
+
+				CharSequence klass = tag.getAttribute("class");
 				if (klass == null) {
 					klass = "";
 				}
@@ -186,7 +186,7 @@ public abstract class DataGridBody extends Panel implements IPageable {
 				tag.put("class", klass);
 			}
 		};
-		
+
 		@Override
 		protected Item newItem(String id, final int index, final IModel model) {
 			Item item = new RowItem(id, index, model);
