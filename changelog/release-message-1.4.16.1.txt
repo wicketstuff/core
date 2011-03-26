@@ -1,0 +1,47 @@
+
+<start announce>
+
+Hello, 
+
+Following the release of wicket 1.4.16 I've cut a matching release for wicketstuff-core.
+
+The artifacts have been promoted and synced into the maven central repository.
+
+They can be retrieved like this:
+
+<dependency>
+<groupId>org.wicketstuff</groupId>
+<artifactId>some recently changed artifact</artifactId>
+<version>1.4.16</version>
+</dependency>
+
+The release tag is here: TODO
+
+A new stable branch core-1.4.16.x has been created with an initial pom version of 1.4.16.1-SNAPSHOT
+
+The core-1.4.x branch has been updated with a new pom version of 1.4.17-SNAPSHOT
+
+Release Notes - WicketStuff Core - Version 1.4.16:
+
+<artifactId>:
+<list of key changes or bugfixes included in this release>
+
+wicketstuff-push:
+  - introduced IPushEventContext
+  - introduced broad casting channels
+    -> renamed IPushChannel to IPushNode
+    -> added new IPushChannel interface representing a broadcasting channel
+    -> IPushService: an event can now either be send to a push node directly (1-1 communication) or to a broadcasting channel (1-n communication)
+
+console:
+  - Wicket Console is a new wicketstuff module
+  - provides components for executing dynamic languages code at runtime
+  - currently supported languages are Groovy and Clojure
+
+The plan is to release a 1.4.16.1 point release within one month from today.    If you commit code and/or want a release sooner let me know as one month is the worst case target.
+
+Regards, 
+
+WicketStuff release developer
+
+</end announce>

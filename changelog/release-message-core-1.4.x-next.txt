@@ -3,7 +3,11 @@
 
 Hello, 
 
-Following the release of wicket 1.4.16 I've cut a matching release for wicketstuff-core.
+Following the release of wicket 1.4.x I have created a matching wicketstuff-core release from the core-1.4.x branch.
+
+[or] 
+
+Following a request for a new release I have created a new point release of wicketstuff-core, version 1.4.x.y.  
 
 The artifacts have been promoted and synced into the maven central repository.
 
@@ -12,33 +16,23 @@ They can be retrieved like this:
 <dependency>
 <groupId>org.wicketstuff</groupId>
 <artifactId>some recently changed artifact</artifactId>
-<version>1.4.16</version>
+<version>1.4.x.y</version>
 </dependency>
 
-The release tag is here: TODO
+The release tag is here: https://github.com/wicketstuff/core/tree/wicketstuff-core-1.4.x.y
 
-A new stable branch core-1.4.16.x has been created with an initial pom version of 1.4.16.1-SNAPSHOT
+Issues can be reported here: https://github.com/wicketstuff/core/issues
 
-The core-1.4.x branch has been updated with a new pom version of 1.4.17-SNAPSHOT
+The Project Wiki is available here: https://github.com/wicketstuff/core/wiki
 
-Release Notes - WicketStuff Core - Version 1.4.16:
+
+Release Notes - WicketStuff Core - Version 1.4.x.y:
 
 <artifactId>:
 <list of key changes or bugfixes included in this release>
 
-wicketstuff-push:
-  - introduced IPushEventContext
-  - introduced broad casting channels
-    -> renamed IPushChannel to IPushNode
-    -> added new IPushChannel interface representing a broadcasting channel
-    -> IPushService: an event can now either be send to a push node directly (1-1 communication) or to a broadcasting channel (1-n communication)
 
-console:
-  - Wicket Console is a new wicketstuff module
-  - provides components for executing dynamic languages code at runtime
-  - currently supported languages are Groovy and Clojure
-
-The plan is to release a 1.4.16.1 point release within one month from today.    If you commit code and/or want a release sooner let me know as one month is the worst case target.
+The plan is to release a 1.4.x.y point release within one month from today.    If you commit code and/or want a release sooner let me know as one month is the worst case target.
 
 Regards, 
 
