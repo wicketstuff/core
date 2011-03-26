@@ -24,7 +24,7 @@ Release Notes - WicketStuff Core - Version 1.5-next:
 <list of key changes or bugfixes included in this release>
 
 console:
-  - Wicket Console is a new wicketstuff module
+  - new module Wicket Console
   - provides components for executing dynamic languages code at runtime
   - currently supported languages are Groovy and Clojure
 
