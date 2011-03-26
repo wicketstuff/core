@@ -1,12 +1,12 @@
 /*
- *
+ * 
  * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -32,15 +32,15 @@ import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandle
 
 /**
  * @author mocleiri
- *
+ * 
  *         R is the type used in the look up.
  */
 public class AutoCompletingTextField<R> extends Panel {
 
-
+	
 
 	/**
-	 *
+	 * 
 	 */
 	private static final long serialVersionUID = -5234331727415699325L;
 	private static final Logger log = LoggerFactory
@@ -53,7 +53,7 @@ public class AutoCompletingTextField<R> extends Panel {
 	private TextField<String> searchField;
 
 	/**
-	 *
+	 * 
 	 * @param id
 	 * @param searchFieldModel
 	 *            model that contains the prefix used in filtering the results.
@@ -82,7 +82,7 @@ public class AutoCompletingTextField<R> extends Panel {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param id
 	 * @param searchFieldModel
 	 *            model that contains the prefix used in filtering the results.
@@ -100,7 +100,7 @@ public class AutoCompletingTextField<R> extends Panel {
 	 * @param throttlingDelay
 	 *            Controls the number of miliseconds to wait after a keystroke
 	 *            before issuing the get request to the server.
-	 * @param renderingHints2
+	 * @param renderingHints2 
 	 */
 	public AutoCompletingTextField(String id, IModel<String> searchFieldModel,
 			IColumn<?>[] columns,
@@ -122,7 +122,7 @@ public class AutoCompletingTextField<R> extends Panel {
 				new Model<String>("off")));
 
 		autoCompletingPanel = new AutoCompletingPanel<R>("autoCompletingPanel",
-				searchField.getModel(), columns, provider,
+				searchField.getModel(), columns, provider, 
 				rowSelectionHandler, controlPanelProvider, renderingHints);
 
 		add(searchField);
@@ -131,11 +131,11 @@ public class AutoCompletingTextField<R> extends Panel {
 
 		searchField.add(autoCompletingBehaviour = new AutoCompletingBehavior(searchField,
 				autoCompletingPanel, throttlingDelay));
-
+		
 		add(new AjaxLink<Void>("showLink") {
 
 			/**
-			 *
+			 * 
 			 */
 			private static final long serialVersionUID = -5603196048089462726L;
 
@@ -144,22 +144,22 @@ public class AutoCompletingTextField<R> extends Panel {
 			 */
 			@Override
 			public void onClick(AjaxRequestTarget target) {
-
-				String callbackScript = autoCompletingBehaviour.getCallbackScript().toString();
-
+				
+				String callbackScript = autoCompletingBehaviour.getCallbackScript(true).toString();
+				
 				target.prependJavaScript(callbackScript);
-
-
-
+				
+				
+				
 			}
-
+			
 		});
 
 	}
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.apache.wicket.Component#onBeforeRender()
 	 */
 	@Override
@@ -173,8 +173,8 @@ public class AutoCompletingTextField<R> extends Panel {
 			else {
 				this.autoCompletingPanel.setInitialRenderDisabledMode(true);
 			}
-
-
+			
+			
 		} else {
 			// default to hide the autocomplete panel on no input.
 			this.autoCompletingPanel.setInitialRenderDisabledMode(true);
@@ -194,14 +194,14 @@ public class AutoCompletingTextField<R> extends Panel {
 
 	/**
 	 * Allows behaviours to be placed on the inner text field.
-	 *
-	 * This can be used to add an onblur action to push results to the server side.
-	 *
+	 * 
+	 * This can be used to add an onblur action to push results to the server side. 
+	 * 
 	 * @param beh
 	 */
 	public void addBehaviorToAutoCompletingTextField (Behavior beh) {
 		this.searchField.add(beh);
 	}
-
+	
 
 }
