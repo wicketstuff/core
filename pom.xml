@@ -7,7 +7,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>1.4-SNAPSHOT</version>
+	<version>1.4.16.1</version>
 
 	<name>WicketStuff Core Parent</name>
 	<description>
@@ -291,7 +291,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>1.4-SNAPSHOT</wicket.version>
+		<wicket.version>1.4.16</wicket.version>
 		<jetty.version>6.1.22</jetty.version>
 
 		<eclipse.jetty.version>7.1.4.v20100610</eclipse.jetty.version>
@@ -508,6 +508,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>${project.groupId}-${project.artifactId}-${project.version}</finalName>
 		<resources>
 			<resource>
 				<filtering>false</filtering>
