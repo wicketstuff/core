@@ -10,13 +10,13 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.interpolator.MapVariableInterpolator;
-import org.apache.wicket.util.template.PackageTextTemplate;
+import org.apache.wicket.util.template.PackagedTextTemplate;
 
 public abstract class AjaxGeolocationBehavior extends AbstractDefaultAjaxBehavior {
 
 	private static final long serialVersionUID = 1L;
 
-	private static PackageTextTemplate GEOLOCATION_TMPL_JS = new PackageTextTemplate(
+	private static PackagedTextTemplate GEOLOCATION_TMPL_JS = new PackagedTextTemplate(
 			AjaxGeolocationBehavior.class, "geolocation.js",
 			"application/javascript", "UTF-8");
 
