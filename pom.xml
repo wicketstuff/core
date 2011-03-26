@@ -152,6 +152,8 @@
 
 			</activation>
 			<build>
+				<finalName>${project.groupId}-${project.artifactId}-${project.version}.jar</finalName>
+
 				<plugins>
 
 					<plugin>
