@@ -24,21 +24,21 @@ import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.CompressedResourceReference;
-import org.apache.wicket.util.template.PackagedTextTemplate;
+import org.apache.wicket.util.template.PackageTextTemplate;
 import org.apache.wicket.util.template.TextTemplate;
 
 /**
  * Mootip behavior, implements integration with this http://www.uhleeka.com/dev/mootips/
- * 
+ *
  * The component you add this behavior to will be the component which the tooltip appears for
- * 
+ *
  * @author nino.martinez @ jayway.dk
  */
 public class MootipBehaviour extends Behavior
 {
 	private static final long serialVersionUID = 1L;
 
-	private final TextTemplate mooTipTemplate = new PackagedTextTemplate(MootipBehaviour.class,
+	private final TextTemplate mooTipTemplate = new PackageTextTemplate(MootipBehaviour.class,
 		"MootipBehaviour.js");
 
 	private MootipSettings mootipSettings = new MootipSettings();
@@ -59,7 +59,7 @@ public class MootipBehaviour extends Behavior
 	/**
 	 * Ajax ToolTip, retrieves the panel with an ajax call. Requests the panel on each tooltip
 	 * display
-	 * 
+	 *
 	 * @param panel
 	 */
 	public MootipBehaviour(final MootipPanel panel)
@@ -71,7 +71,7 @@ public class MootipBehaviour extends Behavior
 	/**
 	 * Ajax ToolTip, retrieves the panel with an ajax call. Requests the panel on each tooltip
 	 * display
-	 * 
+	 *
 	 * @param panel
 	 */
 	public MootipBehaviour(final MootipPanel panel, final boolean contribute)
@@ -84,7 +84,7 @@ public class MootipBehaviour extends Behavior
 	/**
 	 * simple tooltip, using title as tool tip it uses this syntax for splitting
 	 * <code> title='this will be title:this will be content'</code>
-	 * 
+	 *
 	 * @param title
 	 * @param content
 	 */
@@ -98,7 +98,7 @@ public class MootipBehaviour extends Behavior
 	/**
 	 * simple tooltip, using title as tool tip it uses this syntax for splitting
 	 * <code> title='this will be title:this will be content'</code>
-	 * 
+	 *
 	 * @param title
 	 * @param content
 	 */
@@ -156,7 +156,7 @@ public class MootipBehaviour extends Behavior
 	/**
 	 * Gets the escaped DOM id that the input will get attached to. All non word characters (\W)
 	 * will be removed from the string.
-	 * 
+	 *
 	 * @return The DOM id of the input - same as the component's markup id}
 	 */
 	protected final String getEscapedComponentMarkupId()
@@ -171,9 +171,9 @@ public class MootipBehaviour extends Behavior
 
 	/**
 	 * Add the required css and js files to the page
-	 * 
+	 *
 	 * Also add the javascript to create the tooltip
-	 * 
+	 *
 	 * @see org.apache.wicket.markup.html.IHeaderContributor#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override

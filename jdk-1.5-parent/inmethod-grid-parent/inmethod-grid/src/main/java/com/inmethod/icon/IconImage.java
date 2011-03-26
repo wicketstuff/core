@@ -9,9 +9,9 @@ import org.apache.wicket.model.Model;
  * Simple component that displays an icon. If the component is attached to an &lt;img&gt; tag, the
  * icon URL is passed as the <code>src</code> attribute, otherwise the icon is set by a CSS
  * background image property.
- * 
+ *
  * @author Matej Knopp
- * 
+ *
  */
 public class IconImage extends WebMarkupContainer {
 
@@ -19,7 +19,7 @@ public class IconImage extends WebMarkupContainer {
 
 	/**
 	 * Creates a new icon instance.
-	 * 
+	 *
 	 * @param id
 	 *            component id
 	 */
@@ -29,7 +29,7 @@ public class IconImage extends WebMarkupContainer {
 
 	/**
 	 * Creates a new icon instance.
-	 * 
+	 *
 	 * @param id
 	 *            component id
 	 * @param icon
@@ -40,7 +40,7 @@ public class IconImage extends WebMarkupContainer {
 
 	/**
 	 * Creates a a new icon instance.
-	 * 
+	 *
 	 * @param id
 	 *            component id
 	 * @param model
@@ -52,7 +52,7 @@ public class IconImage extends WebMarkupContainer {
 
 	/**
 	 * Returns the icon instance associated with this component.
-	 * 
+	 *
 	 * @return icon instance
 	 */
 	public Icon getIcon() {
@@ -76,7 +76,7 @@ public class IconImage extends WebMarkupContainer {
 			}
 
 		} else {
-			CharSequence style = tag.getString("style");
+			CharSequence style = tag.getAttribute("style");
 			if (style == null)
 				style = "";
 			else if (style.length() > 0)

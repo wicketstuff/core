@@ -20,7 +20,7 @@ import com.inmethod.grid.IRenderable;
 
 /**
  * Represents container of cell items in one row.
- * 
+ *
  * @author Matej Knopp
  */
 public abstract class AbstractGridRow extends WebMarkupContainer {
@@ -79,7 +79,7 @@ public abstract class AbstractGridRow extends WebMarkupContainer {
 	/**
 	 * Returns true if the column is currently being the one sorted with highest priority (i.e. the
 	 * most recent one the user clicked)
-	 * 
+	 *
 	 * @param column
 	 * @return
 	 */
@@ -96,7 +96,7 @@ public abstract class AbstractGridRow extends WebMarkupContainer {
 
 	/**
 	 * Renders the table cell opening tag.
-	 * 
+	 *
 	 * @param column
 	 * @param i
 	 *            column index in row
@@ -161,7 +161,7 @@ public abstract class AbstractGridRow extends WebMarkupContainer {
 	/**
 	 * Behavior that sets the css class attribute to of the actual cell component. This behavior is
 	 * temporary (only lasts during render) and it's re-added on every request in onBeforeRender.
-	 * 
+	 *
 	 * @author Matej Knopp
 	 */
 	private class InnerDivClassBehavior extends Behavior {
@@ -179,7 +179,7 @@ public abstract class AbstractGridRow extends WebMarkupContainer {
 		 */
 		@Override
 		public void onComponentTag(Component component, ComponentTag tag) {
-			CharSequence klass = tag.getString("class");
+			CharSequence klass = tag.getAttribute("class");
 			if (klass == null)
 				klass = "";
 			if (klass.length() > 0)
@@ -200,7 +200,7 @@ public abstract class AbstractGridRow extends WebMarkupContainer {
 	/**
 	 * Returns the css class of cell component (which is attached to the first div element inside
 	 * the &lt;td&gt;)
-	 * 
+	 *
 	 * @param column
 	 * @return
 	 */
@@ -226,7 +226,7 @@ public abstract class AbstractGridRow extends WebMarkupContainer {
 		int i = 0;
 		for (IGridColumn column : columns) {
 			hide = renderOpenTag(column, i, columns.size(), response, hide);
-			
+
 			if (column.isLightWeight(getDefaultModel())) {
 				// for lightweight columns get the renderable instance and render it
 				IRenderable renderable = column.newCell(getDefaultModel());

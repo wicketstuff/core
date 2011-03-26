@@ -19,7 +19,6 @@
 	</description>
 
 	<modules>
-		<module>mootools-meiomask-parent</module>
 		<module>client-and-server-validation</module>
 		<module>console-parent</module>
 		<module>datatable-autocomplete-parent</module>
@@ -35,6 +34,7 @@
 		<module>maven-support</module>
 		<module>mbeanview-parent</module>
 		<module>minis-parent</module>
+		<module>mootools-meiomask-parent</module>
 		<module>multi-text-input-parent</module>
 		<module>openlayers-parent</module>
 		<module>phonebook</module>

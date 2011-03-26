@@ -404,14 +404,14 @@
 				<version>2.1</version>
 			</dependency>
 			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.0.1</version>
+			</dependency>
+			<dependency>
 				<groupId>commons-lang</groupId>
 				<artifactId>commons-lang</artifactId>
 				<version>2.6</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-io</groupId>
-				<artifactId>commons-io</artifactId>
-				<version>1.4</version>
 			</dependency>
 
 
@@ -555,6 +555,16 @@
 				<groupId>net.sf.shadesdb</groupId>
 				<artifactId>shades</artifactId>
 				<version>0.0.5</version>
+			</dependency>
+			<dependency>
+				<groupId>org.clojure</groupId>
+				<artifactId>clojure</artifactId>
+				<version>1.2.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy</artifactId>
+				<version>1.7.8</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hsqldb</groupId>
