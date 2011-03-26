@@ -28,7 +28,7 @@ import java.util.concurrent.Executor;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.apache.wicket.spring.test.ApplicationContextMock;
-import org.apache.wicket.util.tester.ITestPanelSource;
+import org.apache.wicket.util.tester.TestPanelSource;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
@@ -176,7 +176,7 @@ public class SpringTaskTests {
 		final Long taskId = taskService.schedule(task);
 
 		@SuppressWarnings("unused")
-		Panel progressBar = tester.startPanel(new ITestPanelSource() {
+		Panel progressBar = tester.startPanel(new TestPanelSource() {
 			public Panel getTestPanel(String panelId) {
 				return new ProgressBar(panelId, new ProgressionModel() {
 					@Override

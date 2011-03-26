@@ -19,7 +19,7 @@ package org.wicketstuff.progressbar;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.util.tester.ITestPanelSource;
+import org.apache.wicket.util.tester.TestPanelSource;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Test;
 
@@ -58,7 +58,7 @@ public class ProgressBarTests {
 	public void testProgressBar() {
 		WicketTester wt = new WicketTester();
 		final DummyTask testProgressive = new DummyTask();
-		Panel progressBar = wt.startPanel(new ITestPanelSource() {
+		Panel progressBar = wt.startPanel(new TestPanelSource() {
 			public Panel getTestPanel(String panelId) {
 				return new ProgressBar(panelId, new ProgressionModel() {
 					@Override
@@ -79,7 +79,7 @@ public class ProgressBarTests {
 	public void testProgressBarMessage() {
 		WicketTester wt = new WicketTester();
 		final DummyTask testProgressive = new DummyTask();
-		wt.startPanel(new ITestPanelSource() {
+		wt.startPanel(new TestPanelSource() {
 			public Panel getTestPanel(String panelId) {
 				return new ProgressBar(panelId, new ProgressionModel() {
 					@Override
