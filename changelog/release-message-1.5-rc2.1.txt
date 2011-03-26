@@ -11,7 +11,7 @@ They can be retrieved like this:
 <dependency>
 <groupId>org.wicketstuff</groupId>
 <artifactId>some recently changed artifact</artifactId>
-<version>1.5-rcx</version>
+<version>1.5-RC1</version>
 </dependency>
 
 The release tag is here: https://github.com/wicketstuff/core/tree/wicketstuff-core-1.5-next
@@ -22,6 +22,11 @@ Release Notes - WicketStuff Core - Version 1.5-next:
 
 <artifactId>:
 <list of key changes or bugfixes included in this release>
+
+console:
+  - new module Wicket Console
+  - provides components for executing dynamic languages code at runtime
+  - currently supported languages are Groovy and Clojure
 
 
 The plan is to release again within one month from today.    If you commit code and/or want a release sooner let me know as one month is the worst case target.
