@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>SWF Board Test</title>
+</head>
+<body>
+
+<!-- <embed src="board.swf"
+    quality="high"
+    bgcolor="#665544"
+    width="421"
+    height="421"
+    id="flash-board"
+    name="flash-board"
+    align="middle"
+    allowScriptAccess="sameDomain"
+    type="application/x-shockwave-flash"
+    pluginspage="http://www.macromedia.com/go/getflashplayer" /> -->
+
+<div id="container"></div>
+
+<script type="text/javascript" src="../js/swfobject.js"></script>
+<script>
+function foobar() {
+    alert("foobar");
+}
+(function() {
+    var br;
+    window.eidogo = {};
+    eidogo.players = {};
+    eidogo.players['123123'] = {
+        callback: function(a) {
+            alert('callback: ' + a);
+        }
+    };
+    eidogo.delegate = function(pid, fn, x, y) {
+        // console.log(arguments);
+        br.renderStone({x: x, y: y}, "white");
+    }
+    
+    var so = new SWFObject("board.swf", "flash-board",
+        "421", "421", "8", "#665544");
+    so.addParam("allowScriptAccess", "sameDomain");
+    so.write("container");
+    
+    var elapsed = 0;
+    var initBoard = function() {
+        br = document.getElementById('flash-board');
+        if (elapsed > 1000) {
+            throw "Couldn't initalize board.";
+        }
+        if (!br || !br.init) {
+            setTimeout(arguments.callee, 10);
+            elapsed += 10;
+            return;
+        }
+        br.init('123123', 19);
+        br.renderStone({x: 3, y: 5}, 'white');
+        br.renderStone({x: 4, y: 5}, 'white');
+        br.renderStone({x: 5, y: 5}, 'white');
+        br.renderStone({x: 1, y: 1}, 'black');
+        br.renderStone({x: 1, y: 2}, 'black');
+        br.renderStone({x: 1, y: 3}, 'black');
+    }
+    initBoard();
+    
+})();
+</script>
+
+</body>
+</html>
