@@ -10,10 +10,10 @@
 		<artifactId>console-parent</artifactId>
 		<version>1.5-SNAPSHOT</version>
 	</parent>
-	
+
 	<artifactId>console</artifactId>
 	<packaging>jar</packaging>
-	
+
 	<name>Wicket Console</name>
 	<description>
 		Wicket Console allows to execute dynamic (scripting) languages at runtime
@@ -24,6 +24,10 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>console-engine</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-extensions</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

@@ -26,6 +26,7 @@ import org.apache.wicket.ajax.IAjaxIndicatorAware;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -33,6 +34,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.CompressedResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
@@ -43,10 +45,15 @@ import org.wicketstuff.console.engine.IScriptExecutionResult;
  * Abstract panel for executing Scripts.
  * <p>
  * Usage:
- * <pre>add(new GroovyScriptEnginePanel(&quot;scriptPanel&quot;));</pre>
  * 
- * <pre>&lt;div wicket:id=&quot;scriptPanel&quot&gt;&lt;/div&gt;</pre>
-
+ * <pre>
+ * add(new GroovyScriptEnginePanel(&quot;scriptPanel&quot;));
+ * </pre>
+ * 
+ * <pre>
+ * &lt;div wicket:id=&quot;scriptPanel&quot&gt;&lt;/div&gt;
+ * </pre>
+ * 
  * @see ClojureScriptEnginePanel
  * @see GroovyScriptEnginePanel
  * 
@@ -107,6 +114,7 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 	private String output;
 	private String returnValue;
 
+	private Label title;
 	private Form<Void> form;
 	private TextArea<String> inputTf;
 	private TextArea<String> outputTf;
@@ -114,8 +122,23 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 
 	private Image indicator;
 
+	private IModel<String> titleModel;
+
 	public AbstractScriptEnginePanel(final String id) {
 		super(id);
+		titleModel = Model.of("Wicket Console");
+
+		init();
+	}
+
+	public AbstractScriptEnginePanel(final String id, IModel<String> title) {
+		super(id);
+		this.titleModel = title;
+
+		init();
+	}
+
+	private void init() {
 		setDefaultModel(new CompoundPropertyModel<AbstractScriptEnginePanel>(
 				this));
 		initInput();
@@ -123,6 +146,8 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 	}
 
 	protected void initComponents() {
+		title = new Label("title", titleModel);
+		add(title);
 
 		form = new Form<Void>("form");
 		add(form);
@@ -217,6 +242,14 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 
 	public void setReturnValue(String returnValue) {
 		this.returnValue = returnValue;
+	}
+
+	@Override
+	public void detachModels() {
+		super.detachModels();
+		if (titleModel != null) {
+			titleModel.detach();
+		}
 	}
 
 }

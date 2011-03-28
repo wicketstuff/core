@@ -34,6 +34,8 @@ public class TestPageLinksPanel extends Panel {
 		add(r);
 		addLink(r, ClojureEngineTestPage.class);
 		addLink(r, GroovyEngineTestPage.class);
+		addLink(r, GroovyEngineWindowTestPage.class);
+		addLink(r, ClojureEngineWindowTestPage.class);
 
 	}
 

@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.console;
 
+import org.apache.wicket.model.IModel;
 import org.wicketstuff.console.engine.ClojureEngine;
 import org.wicketstuff.console.engine.IScriptEngine;
 
@@ -32,6 +33,10 @@ public class ClojureScriptEnginePanel extends AbstractScriptEnginePanel {
 
 	public ClojureScriptEnginePanel(String wicketId) {
 		super(wicketId);
+	}
+
+	public ClojureScriptEnginePanel(String id, IModel<String> title) {
+		super(id, title);
 	}
 
 	protected void initInput() {

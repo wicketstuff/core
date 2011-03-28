@@ -16,36 +16,35 @@
  */
 package org.wicketstuff.console;
 
-import org.apache.wicket.model.IModel;
-import org.wicketstuff.console.engine.GroovyEngine;
-import org.wicketstuff.console.engine.IScriptEngine;
+import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.model.Model;
 
 /**
- * Main panel to execute Groovy scripts.
- * <p>
- * Usage: see {@link AbstractScriptEnginePanel}
+ * A {@link ModalWindow} displaying a {@link GroovyScriptEnginePanel}.
  * 
  * @author cretzel
  */
-public class GroovyScriptEnginePanel extends AbstractScriptEnginePanel {
+public class GroovyScriptEngineWindow extends ModalWindow {
 
 	private static final long serialVersionUID = 1L;
+	private GroovyScriptEnginePanel enginePanel;
 
-	public GroovyScriptEnginePanel(String wicketId) {
-		super(wicketId);
+	public GroovyScriptEngineWindow(String id) {
+		super(id);
+
+		setTitle(Model.of("Wicket Console"));
+		setAutoSize(true);
+		setResizable(false);
+
+		enginePanel = new GroovyScriptEnginePanel(getContentId(), Model.of(""));
+		enginePanel.add(new AttributeAppender("style", Model.of("width:500px"),
+				";"));
+		setContent(enginePanel);
 	}
 
-	public GroovyScriptEnginePanel(String id, IModel<String> title) {
-		super(id, title);
-	}
-
-	protected void initInput() {
-		setInput("println application\n" + "println page\n"
-				+ "println component\n");
-	}
-
-	protected IScriptEngine newEngine() {
-		return new GroovyEngine();
+	public GroovyScriptEnginePanel getEnginePanel() {
+		return enginePanel;
 	}
 
 }

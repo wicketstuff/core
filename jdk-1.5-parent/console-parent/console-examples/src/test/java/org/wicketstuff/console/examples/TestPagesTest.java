@@ -19,8 +19,6 @@ package org.wicketstuff.console.examples;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
-import org.wicketstuff.console.examples.ClojureEngineTestPage;
-import org.wicketstuff.console.examples.WicketApplication;
 
 public class TestPagesTest {
 
@@ -39,10 +37,24 @@ public class TestPagesTest {
 	}
 
 	@Test
+	public void test_rendersSuccessfully_ClojureEngineWindowTestPage() {
+		tester.startPage(ClojureEngineWindowTestPage.class);
+
+		tester.assertRenderedPage(ClojureEngineWindowTestPage.class);
+	}
+
+	@Test
 	public void test_rendersSuccessfully_GroovyEngineTestPage() {
 		tester.startPage(GroovyEngineTestPage.class);
 
 		tester.assertRenderedPage(GroovyEngineTestPage.class);
+	}
+
+	@Test
+	public void test_rendersSuccessfully_GroovyEngineWindowTestPage() {
+		tester.startPage(GroovyEngineWindowTestPage.class);
+
+		tester.assertRenderedPage(GroovyEngineWindowTestPage.class);
 	}
 
 }
