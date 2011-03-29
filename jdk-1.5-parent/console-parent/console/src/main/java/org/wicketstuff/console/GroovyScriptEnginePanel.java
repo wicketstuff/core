@@ -34,11 +34,13 @@ public class GroovyScriptEnginePanel extends AbstractScriptEnginePanel {
 		super(wicketId);
 	}
 
+	@Override
 	protected void initInput() {
 		setInput("println application\n" + "println page\n"
 				+ "println component\n");
 	}
 
+	@Override
 	protected IScriptEngine newEngine() {
 		return new GroovyEngine();
 	}

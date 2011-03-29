@@ -34,6 +34,7 @@ public class ClojureScriptEnginePanel extends AbstractScriptEnginePanel {
 		super(wicketId);
 	}
 
+	@Override
 	protected void initInput() {
 		setInput("(import '(org.wicketstuff.console.engine ClojureEngine))\n"
 				+ "(let [bindings (ClojureEngine/getBindings)\n"
@@ -43,6 +44,7 @@ public class ClojureScriptEnginePanel extends AbstractScriptEnginePanel {
 				+ "  (println component))");
 	}
 
+	@Override
 	protected IScriptEngine newEngine() {
 		return new ClojureEngine();
 	}
