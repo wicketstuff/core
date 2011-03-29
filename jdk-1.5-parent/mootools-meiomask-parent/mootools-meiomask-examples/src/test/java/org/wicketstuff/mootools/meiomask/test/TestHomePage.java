@@ -1,10 +1,11 @@
 package org.wicketstuff.mootools.meiomask.test;
 
-import org.wicketstuff.mootools.meiomask.examples.HomePage;
-import org.wicketstuff.mootools.meiomask.examples.WicketApplication;
 import junit.framework.TestCase;
+
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
+import org.wicketstuff.mootools.meiomask.examples.HomePage;
+import org.wicketstuff.mootools.meiomask.examples.WicketApplication;
 
 /**
  * Simple test using the WicketTester

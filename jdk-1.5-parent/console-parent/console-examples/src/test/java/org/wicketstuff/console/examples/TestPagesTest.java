@@ -19,8 +19,6 @@ package org.wicketstuff.console.examples;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
-import org.wicketstuff.console.examples.ClojureEngineTestPage;
-import org.wicketstuff.console.examples.WicketApplication;
 
 public class TestPagesTest {
 

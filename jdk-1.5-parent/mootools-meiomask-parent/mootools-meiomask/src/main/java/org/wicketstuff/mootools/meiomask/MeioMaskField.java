@@ -15,15 +15,17 @@
  */
 package org.wicketstuff.mootools.meiomask;
 
-import org.wicketstuff.mootools.meiomask.behavior.MeioMaskBehavior;
 import java.text.ParseException;
+
 import javax.swing.text.MaskFormatter;
+
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketstuff.mootools.meiomask.behavior.MeioMaskBehavior;
 
 /**
  *

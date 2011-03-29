@@ -27,9 +27,6 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.wicketstuff.console.engine.ClojureEngine;
-import org.wicketstuff.console.engine.IScriptEngine;
-import org.wicketstuff.console.engine.IScriptExecutionResult;
 
 public class ClojureEngineTest {
 
