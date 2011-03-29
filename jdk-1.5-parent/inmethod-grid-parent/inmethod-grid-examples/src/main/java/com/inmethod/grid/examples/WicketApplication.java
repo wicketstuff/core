@@ -67,7 +67,7 @@ public class WicketApplication extends WebApplication
 	@Override
 	public Class<? extends Page> getHomePage()
 	{
-		return (Class<? extends Page>) SimpleDataGridPage.class;
+		return SimpleDataGridPage.class;
 	}
   
 }

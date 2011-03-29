@@ -402,6 +402,6 @@ public class DataGrid extends AbstractGrid implements IPageable {
 	 */
 	@Override
 	public WebMarkupContainer findParentRow(Component child) {	
-		return (WebMarkupContainer) child.findParent(DataGridBody.Data.RowItem.class);
+		return child.findParent(DataGridBody.Data.RowItem.class);
 	}
 }

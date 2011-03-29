@@ -87,7 +87,7 @@ public abstract class ColumnsHeaderRepeater extends WebMarkupContainer {
 	abstract protected void sortStateChanged(AjaxRequestTarget target);
 	
 	private GridSortState getSortState() {
-		return ((AbstractGrid) findParent(AbstractGrid.class)).getSortState();
+		return (findParent(AbstractGrid.class)).getSortState();
 	}
 
 	/**

@@ -135,7 +135,7 @@ public class InfoWindow extends WebMarkupContainer {
 	}
 
 	private OpenLayersMap getGMap2() {
-		return (OpenLayersMap) findParent(OpenLayersMap.class);
+		return findParent(OpenLayersMap.class);
 	}
 
 	public WebMarkupContainer getContent() {

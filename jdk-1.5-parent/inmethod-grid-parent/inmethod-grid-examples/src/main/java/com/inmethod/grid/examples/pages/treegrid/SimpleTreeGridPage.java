@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreeNode;
 
 import org.apache.wicket.model.Model;
 
@@ -41,7 +40,7 @@ public class SimpleTreeGridPage extends BaseExamplePage {
 		TreeGrid grid = new TreeGrid("grid", model, columns);
 		
 		// expand the root node
-		grid.getTreeState().expandNode((TreeNode) model.getRoot());
+		grid.getTreeState().expandNode(model.getRoot());
 		
 		add(grid);
 	}

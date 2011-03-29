@@ -111,7 +111,7 @@ public final class TrieBuilder {
 
 			while (entries.hasMoreElements()) {
 				
-				JarEntry jarEntry = (JarEntry) entries.nextElement();
+				JarEntry jarEntry = entries.nextElement();
 
 				if (!jarEntry.getName().contains(".class"))
 					continue;

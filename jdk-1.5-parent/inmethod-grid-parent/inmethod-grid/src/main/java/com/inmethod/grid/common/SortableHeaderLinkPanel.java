@@ -69,7 +69,7 @@ public abstract class SortableHeaderLinkPanel extends Panel {
 	}
 
 	private GridSortState getSortState() {
-		return ((AbstractGrid) findParent(AbstractGrid.class)).getSortState();
+		return (findParent(AbstractGrid.class)).getSortState();
 	}
 
 	/**

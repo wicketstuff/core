@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreeNode;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
@@ -70,7 +69,7 @@ public class TreeGridSelectionPage extends BaseExamplePage {
 		grid.setContentHeight(23, SizeUnit.EM);
 		
 		// expand the root node
-		grid.getTreeState().expandNode((TreeNode) model.getRoot());
+		grid.getTreeState().expandNode(model.getRoot());
 		
 		add(grid);
 		
