@@ -1,0 +1,165 @@
+(;FF[4]AP[Primiview:3.1]GM[1]SZ[19]GN[Gametree 1: properties]US[Arno Hollosi]
+
+(;B[pd]N[Moves, comments, annotations]
+C[Nodename set to: "Moves, comments, annotations"];W[dp]GW[1]
+C[Marked as "Good for White"];B[pp]GB[2]
+C[Marked as "Very good for Black"];W[dc]GW[2]
+C[Marked as "Very good for White"];B[pj]DM[1]
+C[Marked as "Even position"];W[ci]UC[1]
+C[Marked as "Unclear position"];B[jd]TE[1]
+C[Marked as "Tesuji" or "Good move"];W[jp]BM[2]
+C[Marked as "Very bad move"];B[gd]DO[]
+C[Marked as "Doubtful move"];W[de]IT[]
+C[Marked as "Interesting move"];B[jj];
+C[White "Pass" move]W[];
+C[Black "Pass" move]B[tt])
+
+(;AB[dd][de][df][dg][do:gq]
+  AW[jd][je][jf][jg][kn:lq][pn:pq]
+N[Setup]C[Black & white stones at the top are added as single stones.
+
+Black & white stones at the bottom are added using compressed point lists.]
+;AE[ep][fp][kn][lo][lq][pn:pq]
+C[AddEmpty
+
+Black stones & stones of left white group are erased in FF[3\] way.
+
+White stones at bottom right were erased using compressed point list.]
+;AB[pd]AW[pp]PL[B]C[Added two stones.
+
+Node marked with "Black to play".];PL[W]
+C[Node marked with "White to play"])
+
+(;AB[dd][de][df][dg][dh][di][dj][nj][ni][nh][nf][ne][nd][ij][ii][ih][hq]
+[gq][fq][eq][dr][ds][dq][dp][cp][bp][ap][iq][ir][is][bo][bn][an][ms][mr]
+AW[pd][pe][pf][pg][ph][pi][pj][fd][fe][ff][fh][fi][fj][kh][ki][kj][os][or]
+[oq][op][pp][qp][rp][sp][ro][rn][sn][nq][mq][lq][kq][kr][ks][fs][gs][gr]
+[er]N[Markup]C[Position set up without compressed point lists.]
+
+;TR[dd][de][df][ed][ee][ef][fd:ff]
+ MA[dh][di][dj][ej][ei][eh][fh:fj]
+ CR[nd][ne][nf][od][oe][of][pd:pf]
+ SQ[nh][ni][nj][oh][oi][oj][ph:pj]
+ SL[ih][ii][ij][jj][ji][jh][kh:kj]
+ TW[pq:ss][so][lr:ns]
+ TB[aq:cs][er:hs][ao]
+C[Markup at top partially using compressed point lists (for markup on white stones); listed clockwise, starting at upper left:
+- TR (triangle)
+- CR (circle)
+- SQ (square)
+- SL (selected points)
+- MA ('X')
+
+Markup at bottom: black & white territory (using compressed point lists)]
+;LB[dc:1][fc:2][nc:3][pc:4][dj:a][fj:b][nj:c]
+[pj:d][gs:ABCDEFGH][gr:ABCDEFG][gq:ABCDEF][gp:ABCDE][go:ABCD][gn:ABC][gm:AB]
+[mm:12][mn:123][mo:1234][mp:12345][mq:123456][mr:1234567][ms:12345678]
+C[Label (LB property)
+
+Top: 8 single char labels (1-4, a-d)
+
+Bottom: Labels up to 8 char length.]
+
+;DD[kq:os][dq:hs]
+AR[aa:sc][sa:ac][aa:sa][aa:ac][cd:cj]
+  [gd:md][fh:ij][kj:nh]
+LN[pj:pd][nf:ff][ih:fj][kh:nj]
+C[Arrows, lines and dimmed points.])
+
+(;B[qd]N[Style & text type]
+C[There are hard linebreaks & soft linebreaks.
+Soft linebreaks are linebreaks preceeded by '\\' like this one >o\
+k<. Hard line breaks are all other linebreaks.
+Soft linebreaks are converted to >nothing<, i.e. removed.
+
+Note that linebreaks are coded differently on different systems.
+
+Examples (>ok< shouldn't be split):
+
+linebreak 1 "\\n": >o\
+k<
+linebreak 2 "\\n\\r": >o\
+k<
+linebreak 3 "\\r\\n": >o\
+k<
+linebreak 4 "\\r": >o\k<]
+
+(;W[dd]N[W d16]C[Variation C is better.](;B[pp]N[B q4])
+(;B[dp]N[B d4])
+(;B[pq]N[B q3])
+(;B[oq]N[B p3])
+)
+(;W[dp]N[W d4])
+(;W[pp]N[W q4])
+(;W[cc]N[W c17])
+(;W[cq]N[W c3])
+(;W[qq]N[W r3])
+)
+
+(;B[qr]N[Time limits, captures & move numbers]
+BL[120.0]C[Black time left: 120 sec];W[rr]
+WL[300]C[White time left: 300 sec];B[rq]
+BL[105.6]OB[10]C[Black time left: 105.6 sec
+Black stones left (in this byo-yomi period): 10];W[qq]
+WL[200]OW[2]C[White time left: 200 sec
+White stones left: 2];B[sr]
+BL[87.00]OB[9]C[Black time left: 87 sec
+Black stones left: 9];W[qs]
+WL[13.20]OW[1]C[White time left: 13.2 sec
+White stones left: 1];B[rs]
+C[One white stone at s2 captured];W[ps];B[pr];W[or]
+MN[2]C[Set move number to 2];B[os]
+C[Two white stones captured
+(at q1 & r1)]
+;MN[112]W[pq]C[Set move number to 112];B[sq];W[rp];B[ps]
+;W[ns];B[ss];W[nr]
+;B[rr];W[sp];B[qs]C[Suicide move
+(all B stones get captured)])
+)
+
+(;FF[4]AP[Primiview:3.1]GM[1]SZ[19]C[Gametree 2: game-info
+
+Game-info properties are usually stored in the root node.
+If games are merged into a single game-tree, they are stored in the node\
+ where the game first becomes distinguishable from all other games in\
+ the tree.]
+;B[pd]
+(;PW[W. Hite]WR[6d]RO[2]RE[W+3.5]
+PB[B. Lack]BR[5d]PC[London]EV[Go Congress]W[dp]
+C[Game-info:
+Black: B. Lack, 5d
+White: W. Hite, 6d
+Place: London
+Event: Go Congress
+Round: 2
+Result: White wins by 3.5])
+(;PW[T. Suji]WR[7d]RO[1]RE[W+Resign]
+PB[B. Lack]BR[5d]PC[London]EV[Go Congress]W[cp]
+C[Game-info:
+Black: B. Lack, 5d
+White: T. Suji, 7d
+Place: London
+Event: Go Congress
+Round: 1
+Result: White wins by resignation])
+(;W[ep];B[pp]
+(;PW[S. Abaki]WR[1d]RO[3]RE[B+63.5]
+PB[B. Lack]BR[5d]PC[London]EV[Go Congress]W[ed]
+C[Game-info:
+Black: B. Lack, 5d
+White: S. Abaki, 1d
+Place: London
+Event: Go Congress
+Round: 3
+Result: Balck wins by 63.5])
+(;PW[A. Tari]WR[12k]KM[-59.5]RO[4]RE[B+R]
+PB[B. Lack]BR[5d]PC[London]EV[Go Congress]W[cd]
+C[Game-info:
+Black: B. Lack, 5d
+White: A. Tari, 12k
+Place: London
+Event: Go Congress
+Round: 4
+Komi: -59.5 points
+Result: Black wins by resignation])
+))
