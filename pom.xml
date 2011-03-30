@@ -63,9 +63,9 @@
 		</repository>
 	</repositories>
 	<scm>
-		<url>https://github.com/wicketstuff/sandbox</url>
-		<connection>git://github.com/wicketstuff/sandbox.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com:wicketstuff/sandbox.git</developerConnection>
+		<url>scm:git:git@github.com:wicketstuff/sandbox.git</url>
+		<connection>scm:git:git@github.com:wicketstuff/sandbox.git</connection>
+		<developerConnection>scm:git:git@github.com:wicketstuff/sandbox.git</developerConnection>
 	</scm>
 	<!-- Developers -->
 	<developers>
