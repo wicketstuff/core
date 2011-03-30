@@ -14,31 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.wicketstuff.console.templates;
 
-import java.util.Locale;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.convert.IConverter;
 
-import org.apache.wicket.util.convert.converter.AbstractConverter;
-import org.apache.wicket.util.string.Strings;
+final class LangLabel extends Label {
 
-final class LangConverter extends AbstractConverter<Lang> {
 	private static final long serialVersionUID = 1L;
 
-	public Lang convertToObject(final String value, final Locale locale) {
-		return Lang.valueOf(value);
+	LangLabel(final String id, final IModel<?> model) {
+		super(id, model);
 	}
 
 	@Override
-	public String convertToString(final Lang value, final Locale locale) {
-		if (value == null) {
-			return null;
-		} else {
-			return Strings.capitalize(value.name().toLowerCase());
-		}
+	@SuppressWarnings("unchecked")
+	public <C> IConverter<C> getConverter(final Class<C> type) {
+		return (IConverter<C>) new LangConverter();
 	}
 
-	@Override
-	protected Class<Lang> getTargetType() {
-		return Lang.class;
-	}
 }

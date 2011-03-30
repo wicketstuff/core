@@ -18,6 +18,15 @@ package org.wicketstuff.console.templates;
 
 import java.io.Serializable;
 
+/**
+ * Represents a single script template.
+ * <p>
+ * Script templates can be used to provide frequently used scripts. These script
+ * templates can than be provided to a {@link ScriptTemplateSelectionTablePanel}
+ * to make them accessible through the UI.
+ * 
+ * @author cretzel
+ */
 public class ScriptTemplate implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -26,7 +35,8 @@ public class ScriptTemplate implements Serializable {
 	public String script;
 	public Lang lang;
 
-	public ScriptTemplate(final String title, final String script, final Lang lang) {
+	public ScriptTemplate(final String title, final String script,
+			final Lang lang) {
 		this.title = title;
 		this.script = script;
 		this.lang = lang;

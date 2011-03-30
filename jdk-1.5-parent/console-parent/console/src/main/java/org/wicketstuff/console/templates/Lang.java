@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.console.templates;
 
+/** Supported Languages enum. */
 public enum Lang {
 
 	CLOJURE, GROOVY;

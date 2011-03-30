@@ -16,29 +16,26 @@
  */
 package org.wicketstuff.console.templates;
 
-import java.util.Locale;
+import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 
-import org.apache.wicket.util.convert.converter.AbstractConverter;
-import org.apache.wicket.util.string.Strings;
+final class LangColumn extends PropertyColumn<ScriptTemplate> {
 
-final class LangConverter extends AbstractConverter<Lang> {
 	private static final long serialVersionUID = 1L;
 
-	public Lang convertToObject(final String value, final Locale locale) {
-		return Lang.valueOf(value);
+	public LangColumn(final ScriptTemplateSelectionTablePanel tablePanel) {
+		super(Model.of("Language"), "lang");
 	}
 
 	@Override
-	public String convertToString(final Lang value, final Locale locale) {
-		if (value == null) {
-			return null;
-		} else {
-			return Strings.capitalize(value.name().toLowerCase());
-		}
-	}
-
-	@Override
-	protected Class<Lang> getTargetType() {
-		return Lang.class;
+	public void populateItem(final Item<ICellPopulator<ScriptTemplate>> item,
+			final String componentId, final IModel<ScriptTemplate> rowModel) {
+		final Label label = new LangLabel(componentId,
+				createLabelModel(rowModel));
+		item.add(label);
 	}
 }
