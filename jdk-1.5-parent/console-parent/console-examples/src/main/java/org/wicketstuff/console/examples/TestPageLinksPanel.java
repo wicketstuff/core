@@ -32,11 +32,12 @@ public class TestPageLinksPanel extends Panel {
 
 		RepeatingView r = new RepeatingView("testPageLinks");
 		add(r);
+		
 		addLink(r, ClojureEngineTestPage.class);
 		addLink(r, GroovyEngineTestPage.class);
 		addLink(r, GroovyEngineWindowTestPage.class);
 		addLink(r, ClojureEngineWindowTestPage.class);
-
+		addLink(r, ScriptTemplatesGroovyEngineTestPage.class);
 	}
 
 	private void addLink(RepeatingView r, Class<? extends Page> pageClass) {
