@@ -1,0 +1,19 @@
+(;GM[1]FF[4]CA[UTF-8]AP[CGoban:3]ST[2]
+RU[Japanese]SZ[19]KM[0.00]
+PW[White]PB[Black]AW[ed][hd][eg][hg]AB[fe][ge][ff][gf]
+;B[aa]
+(;W[ab]
+;B[ba]
+;W[bb]CR[eg][eh][ei]LB[ca:B][da:A][ef:1][ff:2][gf:3]TR[hd][id][jd][je]SQ[cd][dd][ed]C[what to do?]
+(;B[da]C[jump!]
+(;W[ca]TR[da]C[marked stone is stupid])
+(;W[cb]
+;B[ea]
+;W[ca]))
+(;B[ca]C[run!]
+;W[cb]
+;B[ea]
+;W[da])
+(;B[]C[give up!]
+;W[ca]))
+(;AE[ed][hd][fe][ge][ff][gf][eg][hg]))

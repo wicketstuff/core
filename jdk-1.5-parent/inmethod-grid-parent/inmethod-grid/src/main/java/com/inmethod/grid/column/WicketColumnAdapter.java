@@ -54,7 +54,7 @@ public class WicketColumnAdapter extends AbstractColumn {
 	public Component newCell(WebMarkupContainer parent, String componentId, IModel rowModel) {
 		Item item;
 		if (getGrid() instanceof DataGrid) {
-			item = (Item) parent.findParent(Item.class);
+			item = parent.findParent(Item.class);
 		} else {
 			item = new Item("temp", 0, rowModel);
 		}

@@ -68,7 +68,7 @@ public class LogbackTest {
 	public void test() {
 		// this is a logback Logger not an slf4j one
 		Logger logger = (Logger) LoggerFactory
-				.getLogger(Logger.ROOT_LOGGER_NAME);
+				.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME);
 
 		// if the cast or the assert fails the custom configuration of logback
 		// failed, LogbackConfigListener bug

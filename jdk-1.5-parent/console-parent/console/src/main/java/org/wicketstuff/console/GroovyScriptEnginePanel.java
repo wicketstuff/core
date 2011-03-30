@@ -31,19 +31,21 @@ public class GroovyScriptEnginePanel extends AbstractScriptEnginePanel {
 
 	private static final long serialVersionUID = 1L;
 
-	public GroovyScriptEnginePanel(String wicketId) {
+	public GroovyScriptEnginePanel(final String wicketId) {
 		super(wicketId);
 	}
 
-	public GroovyScriptEnginePanel(String id, IModel<String> title) {
+	public GroovyScriptEnginePanel(final String id, final IModel<String> title) {
 		super(id, title);
 	}
 
+	@Override
 	protected void initInput() {
 		setInput("println application\n" + "println page\n"
 				+ "println component\n");
 	}
 
+	@Override
 	protected IScriptEngine newEngine() {
 		return new GroovyEngine();
 	}

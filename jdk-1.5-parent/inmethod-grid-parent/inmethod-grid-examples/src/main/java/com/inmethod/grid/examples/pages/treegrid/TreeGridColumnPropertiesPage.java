@@ -84,7 +84,7 @@ public class TreeGridColumnPropertiesPage extends BaseExamplePage {
 		TreeGrid grid = new TreeGrid("grid", model, columns);
 
 		// expand the root node
-		grid.getTreeState().expandNode((TreeNode) model.getRoot());
+		grid.getTreeState().expandNode(model.getRoot());
 		grid.setContentHeight(23, SizeUnit.EM);
 
 		add(grid);

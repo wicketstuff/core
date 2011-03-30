@@ -143,7 +143,7 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 
 	public int size() {
 
-		String prefix = (String) fieldStringModel.getObject();
+		String prefix = fieldStringModel.getObject();
 
 		if (prefix == null) {
 			return 0;
@@ -196,7 +196,7 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 	 */
 	public Iterator<C> iterator(int first, int count) {
 
-		String prefix = (String) fieldStringModel.getObject();
+		String prefix = fieldStringModel.getObject();
 
 		if (prefix == null || currentListData == null)
 			return new LinkedList<C>().iterator();

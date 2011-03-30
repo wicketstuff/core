@@ -88,7 +88,7 @@ public class TestClassLoaderExtractor extends TestCase {
 
 		while (entries.hasMoreElements()) {
 			
-			JarEntry jarEntry = (JarEntry) entries.nextElement();
+			JarEntry jarEntry = entries.nextElement();
 
 			if (!jarEntry.getName().contains(".class"))
 				continue;

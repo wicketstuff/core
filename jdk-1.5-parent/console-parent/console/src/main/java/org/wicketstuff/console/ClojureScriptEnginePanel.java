@@ -31,14 +31,15 @@ public class ClojureScriptEnginePanel extends AbstractScriptEnginePanel {
 
 	private static final long serialVersionUID = 1L;
 
-	public ClojureScriptEnginePanel(String wicketId) {
+	public ClojureScriptEnginePanel(final String wicketId) {
 		super(wicketId);
 	}
 
-	public ClojureScriptEnginePanel(String id, IModel<String> title) {
+	public ClojureScriptEnginePanel(final String id, final IModel<String> title) {
 		super(id, title);
 	}
 
+	@Override
 	protected void initInput() {
 		setInput("(import '(org.wicketstuff.console.engine ClojureEngine))\n"
 				+ "(let [bindings (ClojureEngine/getBindings)\n"
@@ -48,6 +49,7 @@ public class ClojureScriptEnginePanel extends AbstractScriptEnginePanel {
 				+ "  (println component))");
 	}
 
+	@Override
 	protected IScriptEngine newEngine() {
 		return new ClojureEngine();
 	}

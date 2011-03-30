@@ -44,16 +44,16 @@ public class TestPage extends WebPage {
 		form.add(new RequiredTextField("typeBigDecimal"));
 		
 		form.add(new RequiredTextField("maxLengthString")
-				.add(StringValidator.MaximumLengthValidator.maximumLength(10)));
+				.add(StringValidator.maximumLength(10)));
 
 		form.add(new RequiredTextField("minLengthString")
-				.add(StringValidator.MaximumLengthValidator.minimumLength(10)));
+				.add(StringValidator.minimumLength(10)));
 
 		form.add(new RequiredTextField("exactLengthString")
-				.add(StringValidator.ExactLengthValidator.exactLength(10)));
+				.add(StringValidator.exactLength(10)));
 
 		form.add(new RequiredTextField("lengthBetweenString")
-				.add(StringValidator.LengthBetweenValidator.lengthBetween(10, 20)));
+				.add(StringValidator.lengthBetween(10, 20)));
 
 		form.add(new RequiredTextField("email")
 				.add(EmailAddressValidator.getInstance()));
