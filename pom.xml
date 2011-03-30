@@ -63,9 +63,9 @@
 		</repository>
 	</repositories>
 	<scm>
-		<connection>scm:svn:http://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk/wicket-security</connection>
-		<developerConnection>scm:svn:https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/trunk/wicket-security</developerConnection>
-		<url>http://wicket-stuff.svn.sourceforge.net/viewvc/wicket-stuff/trunk/wicket-security</url>
+		<url>https://github.com/wicketstuff/sandbox</url>
+		<connection>git://github.com/wicketstuff/sandbox.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:wicketstuff/sandbox.git</developerConnection>
 	</scm>
 	<!-- Developers -->
 	<developers>
