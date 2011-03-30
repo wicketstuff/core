@@ -63,8 +63,8 @@
 		</repository>
 	</repositories>
 	<scm>
-		<url>https://github.com/wicketstuff/sandbox</url>
-		<connection>scm:git:ssh://git@github.com:wicketstuff/sandbox.git</connection>
+		<url>git@github.com:dashorst/wicketstuff-security.git</url>
+		<connection>scm:git:git@github.com:dashorst/wicketstuff-security.git</connection>
 	</scm>
 	<!-- Developers -->
 	<developers>
