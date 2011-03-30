@@ -39,13 +39,13 @@
 				<snapshotRepository>
 					<id>wicketstuff</id>
 					<name>Wicket Stuff repository</name>
-					<url>scp://wicketstuff.org/home/wicket/tomcat/webapps/maven/repository/</url>
+					<url>scpexe://wicketstuff.org/home/wicket/tomcat/webapps/maven/repository/</url>
 					<uniqueVersion>false</uniqueVersion>
 				</snapshotRepository>
 				<repository>
 					<id>wicketstuff</id>
 					<name>Wicket Stuff repository</name>
-					<url>scp://wicketstuff.org/home/wicket/tomcat/webapps/maven/repository/</url>
+					<url>scpexe://wicketstuff.org/home/wicket/tomcat/webapps/maven/repository/</url>
 				</repository>
 			</distributionManagement>
 		</profile>
