@@ -16,9 +16,9 @@
  */
 package org.apache.wicket.security.hive;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.wicket.security.hive.authentication.Subject;
 import org.apache.wicket.security.hive.authorization.Permission;
@@ -36,21 +36,12 @@ public class SimpleCachingHive extends BasicHive
 {
 	private final WeakHashMap<Subject, Map<Permission, Boolean>> cache;
 
-	/**
-	 * Constructor.
-	 */
 	public SimpleCachingHive()
 	{
-		super();
 		// reasonable init cache size
 		cache = new WeakHashMap<Subject, Map<Permission, Boolean>>(50);
 	}
 
-	/**
-	 * 
-	 * @see org.apache.wicket.security.hive.BasicHive#cacheLookUp(org.apache.wicket.security.hive.authentication.Subject,
-	 *      org.apache.wicket.security.hive.authorization.Permission)
-	 */
 	@Override
 	protected Boolean cacheLookUp(Subject subject, Permission permission)
 	{
@@ -66,24 +57,23 @@ public class SimpleCachingHive extends BasicHive
 
 	}
 
-	/**
-	 * 
-	 * @see org.apache.wicket.security.hive.BasicHive#cacheResult(org.apache.wicket.security.hive.authentication.Subject,
-	 *      org.apache.wicket.security.hive.authorization.Permission, boolean)
-	 */
 	@Override
 	protected void cacheResult(Subject subject, Permission permission, boolean result)
 	{
 		if (subject == null || permission == null)
 			return;
 
-		// again no caching, does not matter much if we overwrite a new cache
 		Map<Permission, Boolean> resultMap = cache.get(subject);
 		if (resultMap == null)
 		{
-			resultMap = new HashMap<Permission, Boolean>();
+			// a bit of sync, concurrent puts can destroy the internals of a HashMap,
+			// causing never ending loops
+			resultMap = new ConcurrentHashMap<Permission, Boolean>();
 			resultMap.put(permission, result);
-			cache.put(subject, resultMap);
+			synchronized (cache)
+			{
+				cache.put(subject, resultMap);
+			}
 		}
 		else
 			resultMap.put(permission, result);
