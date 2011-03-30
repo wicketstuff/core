@@ -148,8 +148,7 @@ public class SecureLinkTest extends WaspAbstractTestBase
 		mock.assertRenderedPage(getHomePage());
 		mock.assertInvisible("sorry");
 		mock.assertVisible("link");
-		mock.clickLink("link", false);
-		mock.assertRenderedPage(AccessDeniedPage.class);
+		mock.assertDisabled("link");
 		// step five, add enable rights and click the link again.
 		authorized.put(SecureComponentHelper.alias(PageA.class), application.getActionFactory()
 			.getAction("access render enable"));

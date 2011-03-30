@@ -90,7 +90,7 @@ public class UsernamePasswordSignInPanel extends Panel
 	{
 		Map<String, WaspAction> authorized = new HashMap<String, WaspAction>();
 		authorized.put(SecureComponentHelper.alias(HomePage.class), getWaspApplication()
-			.getActionFactory().getAction("access render"));
+			.getActionFactory().getAction("access render enable"));
 		authorized.put(SecureComponentHelper.alias(PageB.class), getWaspApplication()
 			.getActionFactory().getAction("access render"));
 		authorized.put(SecureComponentHelper.alias(PageC.class), getWaspApplication()
