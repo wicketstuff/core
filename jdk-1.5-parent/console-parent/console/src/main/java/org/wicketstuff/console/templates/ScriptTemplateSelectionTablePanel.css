@@ -26,6 +26,7 @@
 .console-table h3 {
 	font-size: 13px;
 	font-family: Tahoma, Verdana, Arial, sans-serif;
+	margin:0px;
 }
 
 .console-table .table-container {
@@ -45,6 +46,7 @@
 .console-table table tr td {
 	padding-right: 10px;
 	white-space:nowrap;
+	font-family: Tahoma, Verdana, Arial, sans-serif;
 }
 
 .console-table table tr td a {

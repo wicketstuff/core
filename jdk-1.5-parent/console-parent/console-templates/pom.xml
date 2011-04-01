@@ -13,16 +13,12 @@
 	<artifactId>console-templates</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Wicket Console - Scripts</name>
+	<name>Wicket Console - Templates</name>
 	<description>
-		A collection of scripts for Wicket Console
+		Script templates for Wicket Console
 	</description>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.wicketstuff</groupId>
-			<artifactId>console</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

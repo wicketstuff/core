@@ -26,6 +26,7 @@
 .console h3 {
 	font-size: 13px;
 	font-family: Tahoma, Verdana, Arial, sans-serif;
+	margin:0px;
 }
 
 .console .input {
