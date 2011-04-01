@@ -92,7 +92,7 @@ public class ScriptTemplateSelectionTablePanel extends Panel {
 		add(table);
 	}
 
-	private List<IColumn<ScriptTemplate>> createColumns() {
+	protected List<IColumn<ScriptTemplate>> createColumns() {
 
 		final List<IColumn<ScriptTemplate>> columns = new ArrayList<IColumn<ScriptTemplate>>();
 		columns.add(new TitleColumn(this));

@@ -27,6 +27,7 @@
 	<modules>
 		<module>console-engine</module>
 		<module>console</module>
+		<module>console-templates</module>
 		<module>console-examples</module>
 	</modules>
 
@@ -40,6 +41,11 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>console-engine</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>console-scripts</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

@@ -16,11 +16,11 @@
  */
 .console-table {
 	background-color: #cccccc;
-	padding: 4px 10px 1px 4px;
+	padding: 4px 0px 1px 4px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border: 1px solid #555;
-	height: 418px;
+	height: 400px;
 }
 
 .console-table h3 {
@@ -28,16 +28,23 @@
 	font-family: Tahoma, Verdana, Arial, sans-serif;
 }
 
+.console-table .table-container {
+	height: 380px;
+	overflow-y: auto;
+	padding-right:18px;
+}
+
 .console-table table {
 	background-color: #ffffff;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
-	padding: 0px 10px 1px 0px;
+	padding: 0px 0px 1px 0px;
 	border: 1px solid #999;
 }
 
 .console-table table tr td {
 	padding-right: 10px;
+	white-space:nowrap;
 }
 
 .console-table table tr td a {

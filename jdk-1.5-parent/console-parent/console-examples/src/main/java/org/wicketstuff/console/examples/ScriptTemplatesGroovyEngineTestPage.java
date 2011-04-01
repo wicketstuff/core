@@ -16,15 +16,13 @@
  */
 package org.wicketstuff.console.examples;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.repeater.data.ListDataProvider;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.GroovyScriptEnginePanel;
+import org.wicketstuff.console.scripts.PackagedScriptTemplates;
 import org.wicketstuff.console.templates.Lang;
-import org.wicketstuff.console.templates.ScriptTemplate;
 import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
 
 public class ScriptTemplatesGroovyEngineTestPage extends WebPage {
@@ -32,32 +30,19 @@ public class ScriptTemplatesGroovyEngineTestPage extends WebPage {
 
 	public ScriptTemplatesGroovyEngineTestPage(final PageParameters params) {
 		super(params);
-
+		add(new Label("title", new ResourceModel("application.title")));
+		
 		final GroovyScriptEnginePanel enginePanel = new GroovyScriptEnginePanel(
 				"scriptPanel");
 		enginePanel.setOutputMarkupId(true);
 		add(enginePanel);
 
 		final ScriptTemplateSelectionTablePanel scriptTable = new ScriptTemplateSelectionTablePanel(
-				"templatesTable", enginePanel, dataProvider(), 10);
+				"templatesTable", enginePanel, PackagedScriptTemplates.packagedScriptTemplatesDataProvider(Lang.GROOVY),
+				100);
 		add(scriptTable);
 
 		add(new TestPageLinksPanel("links"));
-	}
-
-	private ListDataProvider<ScriptTemplate> dataProvider() {
-		return new ListDataProvider<ScriptTemplate>(scriptList());
-	}
-
-	private List<ScriptTemplate> scriptList() {
-		final List<ScriptTemplate> templates = new ArrayList<ScriptTemplate>();
-
-		templates.add(new ScriptTemplate("Hello World",
-				"println 'Hello World'", Lang.GROOVY));
-		templates.add(new ScriptTemplate("Component Hierarchy",
-				"def parent = component\nwhile(parent) {\n  println \"${parent.class.simpleName} [${parent.id}]\"\n  parent=parent.parent\n}", Lang.GROOVY));
-
-		return templates;
 	}
 
 }

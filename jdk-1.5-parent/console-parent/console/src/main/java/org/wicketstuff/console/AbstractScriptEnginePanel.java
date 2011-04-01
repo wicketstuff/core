@@ -64,7 +64,7 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 	private final class ClearButton extends Button {
 		private static final long serialVersionUID = 1L;
 
-		private ClearButton(String id) {
+		private ClearButton(final String id) {
 			super(id);
 		}
 
@@ -81,7 +81,7 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 	final class SubmitButton extends AjaxButton implements IAjaxIndicatorAware {
 		private static final long serialVersionUID = 1L;
 
-		private SubmitButton(String id, Form<?> form) {
+		private SubmitButton(final String id, final Form<?> form) {
 			super(id, form);
 		}
 
@@ -122,7 +122,7 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 
 	private Image indicator;
 
-	private IModel<String> titleModel;
+	private final IModel<String> titleModel;
 
 	public AbstractScriptEnginePanel(final String id) {
 		super(id);
@@ -131,7 +131,7 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 		init();
 	}
 
-	public AbstractScriptEnginePanel(final String id, IModel<String> title) {
+	public AbstractScriptEnginePanel(final String id, final IModel<String> title) {
 		super(id);
 		this.titleModel = title;
 
@@ -178,10 +178,10 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
+	public void renderHead(final IHeaderResponse response) {
 		super.renderHead(response);
 
-		ResourceReference css = getCSS();
+		final ResourceReference css = getCSS();
 		if (css != null) {
 			response.renderCSSReference(css);
 		}
@@ -213,7 +213,7 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 	protected abstract IScriptEngine newEngine();
 
 	protected Map<String, Object> newBindings() {
-		Map<String, Object> bindings = new HashMap<String, Object>();
+		final Map<String, Object> bindings = new HashMap<String, Object>();
 		bindings.put("application", Application.get());
 		bindings.put("page", getPage());
 		bindings.put("component", this);
@@ -224,7 +224,7 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 		return input;
 	}
 
-	public void setInput(String input) {
+	public void setInput(final String input) {
 		this.input = input;
 	}
 
@@ -232,7 +232,7 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 		return output;
 	}
 
-	public void setOutput(String output) {
+	public void setOutput(final String output) {
 		this.output = output;
 	}
 
@@ -240,8 +240,20 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 		return returnValue;
 	}
 
-	public void setReturnValue(String returnValue) {
+	public void setReturnValue(final String returnValue) {
 		this.returnValue = returnValue;
+	}
+
+	public TextArea<String> getInputTf() {
+		return inputTf;
+	}
+
+	public TextArea<String> getOutputTf() {
+		return outputTf;
+	}
+
+	public TextField<String> getReturnValueTf() {
+		return returnValueTf;
 	}
 
 	@Override
