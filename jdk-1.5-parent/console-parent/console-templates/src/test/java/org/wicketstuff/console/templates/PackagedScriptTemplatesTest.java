@@ -22,13 +22,11 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
 import java.io.File;
-import java.net.URL;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.wicketstuff.console.templates.Lang;
-import org.wicketstuff.console.templates.ScriptTemplate;
+import org.wicketstuff.console.engine.Lang;
 
 /**
  * Testing {@link PackagedScriptTemplates}.
@@ -44,36 +42,29 @@ public class PackagedScriptTemplatesTest {
 	}
 
 	@Test
-	public void test_urlToDir() throws Exception {
-		final File file = new File(".");
-		final URL url = file.toURI().toURL();
-		final File dir = PackagedScriptTemplates.urlToDir(url);
-
-		assertEquals(file.getAbsoluteFile(), dir.getAbsoluteFile());
-		assertTrue(dir.isDirectory());
+	public void test_getPackagedGroovyTemplates() throws Exception {
+		final List<ScriptTemplate> templates = PackagedScriptTemplates
+				.getPackagedScriptTemplates(Lang.GROOVY);
+		
+		assertEquals(15, templates.size());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void test_urlToDir_noDir() throws Exception {
-		final URL url = new File("./test.txt").toURI().toURL();
-
-		PackagedScriptTemplates.urlToDir(url);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void test_urlToDir_nullUrl() throws Exception {
-		final URL url = null;
-		PackagedScriptTemplates.urlToDir(url);
+	@Test
+	public void test_getPackagedClojureTemplates() throws Exception {
+		final List<ScriptTemplate> templates = PackagedScriptTemplates
+				.getPackagedScriptTemplates(Lang.CLOJURE);
+		
+		assertEquals(1, templates.size());
 	}
 
 	@Test
 	public void test_camelCaseSpace() throws Exception {
 		// Given
 		final String str = "GimmeSomeMo";
-		
+
 		// When
 		final String result = PackagedScriptTemplates.camelCaseSpace(str);
-		
+
 		// Then
 		assertEquals("Gimme Some Mo", result);
 	}
@@ -82,10 +73,10 @@ public class PackagedScriptTemplatesTest {
 	public void test_camelCaseSpace_Numbers() throws Exception {
 		// Given
 		final String str = "GimmeSome4Mo";
-		
+
 		// When
 		final String result = PackagedScriptTemplates.camelCaseSpace(str);
-		
+
 		// Then
 		assertEquals("Gimme Some4 Mo", result);
 	}
@@ -94,10 +85,11 @@ public class PackagedScriptTemplatesTest {
 	public void test_camelCaseSpaceFilename() throws Exception {
 		// Given
 		final String filename = "GimmeSomeMo.Mo.groovy";
-		
+
 		// When
-		final String result = PackagedScriptTemplates.camelCaseSpaceFilename(filename);
-		
+		final String result = PackagedScriptTemplates
+				.camelCaseSpaceFilename(filename);
+
 		// Then
 		assertEquals("Gimme Some Mo. Mo", result);
 	}
@@ -122,7 +114,8 @@ public class PackagedScriptTemplatesTest {
 	public void test_getPackagedTemplateFromFile() throws Exception {
 
 		// When
-		final List<ScriptTemplate> templates = PackagedScriptTemplates.getPackagedScriptTemplates(Lang.GROOVY);
+		final List<ScriptTemplate> templates = PackagedScriptTemplates
+				.getPackagedScriptTemplates(Lang.GROOVY);
 
 		// Then
 		assertTrue(templates.size() > 0);

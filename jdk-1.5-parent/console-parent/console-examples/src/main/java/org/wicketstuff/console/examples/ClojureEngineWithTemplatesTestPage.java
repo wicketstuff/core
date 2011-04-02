@@ -14,11 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console.templates;
+package org.wicketstuff.console.examples;
 
-/** Supported Languages enum. */
-public enum Lang {
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.wicketstuff.console.ClojureScriptEngineWithTemplatesPanel;
 
-	CLOJURE, GROOVY;
-	
+public class ClojureEngineWithTemplatesTestPage extends WebPage {
+	private static final long serialVersionUID = 1L;
+
+	public ClojureEngineWithTemplatesTestPage(final PageParameters params) {
+		super(params);
+		add(new Label("title", new ResourceModel("application.title")));
+
+		add(new ClojureScriptEngineWithTemplatesPanel("panel", null, null));
+
+		add(new TestPageLinksPanel("links"));
+	}
+
 }

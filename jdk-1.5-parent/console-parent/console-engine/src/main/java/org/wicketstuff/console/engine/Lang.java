@@ -14,22 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console;
+package org.wicketstuff.console.engine;
 
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.wicketstuff.console.engine.Lang;
+/** Supported Languages enum. */
+public enum Lang {
 
-/**
- * A {@link ModalWindow} displaying a {@link ClojureScriptEnginePanel}.
- * 
- * @author cretzel
- */
-public class ClojureScriptEngineWindow extends ScriptEngineWindow {
+	CLOJURE, GROOVY;
 
-	private static final long serialVersionUID = 1L;
-
-	public ClojureScriptEngineWindow(final String id) {
-		super(id, Lang.CLOJURE, null);
+	public String getFileExtension() {
+		switch (this) {
+		case CLOJURE:
+			return ".clj";
+		case GROOVY:
+			return ".groovy";
+		default:
+			throw new IllegalArgumentException();
+		}
 	}
-
 }

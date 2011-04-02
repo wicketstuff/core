@@ -20,28 +20,16 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.wicketstuff.console.GroovyScriptEnginePanel;
-import org.wicketstuff.console.templates.Lang;
-import org.wicketstuff.console.templates.PackagedScriptTemplates;
-import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
+import org.wicketstuff.console.GroovyScriptEngineWithTemplatesPanel;
 
-public class ScriptTemplatesGroovyEngineTestPage extends WebPage {
+public class GroovyEngineWithTemplatesTestPage extends WebPage {
 	private static final long serialVersionUID = 1L;
 
-	public ScriptTemplatesGroovyEngineTestPage(final PageParameters params) {
+	public GroovyEngineWithTemplatesTestPage(final PageParameters params) {
 		super(params);
 		add(new Label("title", new ResourceModel("application.title")));
 
-		final GroovyScriptEnginePanel enginePanel = new GroovyScriptEnginePanel(
-				"scriptPanel");
-		enginePanel.setOutputMarkupId(true);
-		add(enginePanel);
-
-		final ScriptTemplateSelectionTablePanel scriptTable = new ScriptTemplateSelectionTablePanel(
-				"templatesTable", enginePanel,
-				PackagedScriptTemplates
-						.packagedScriptTemplatesDataProvider(Lang.GROOVY), 100);
-		add(scriptTable);
+		add(new GroovyScriptEngineWithTemplatesPanel("panel", null, null));
 
 		add(new TestPageLinksPanel("links"));
 	}

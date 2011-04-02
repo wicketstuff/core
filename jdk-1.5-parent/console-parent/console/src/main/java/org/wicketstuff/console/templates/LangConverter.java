@@ -20,6 +20,7 @@ import java.util.Locale;
 
 import org.apache.wicket.util.convert.converter.AbstractConverter;
 import org.apache.wicket.util.string.Strings;
+import org.wicketstuff.console.engine.Lang;
 
 final class LangConverter extends AbstractConverter<Lang> {
 	private static final long serialVersionUID = 1L;

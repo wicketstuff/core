@@ -18,6 +18,8 @@ package org.wicketstuff.console.templates;
 
 import java.io.Serializable;
 
+import org.wicketstuff.console.engine.Lang;
+
 /**
  * Represents a single script template.
  * <p>

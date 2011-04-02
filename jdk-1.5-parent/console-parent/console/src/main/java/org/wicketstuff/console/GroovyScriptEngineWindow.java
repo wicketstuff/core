@@ -16,35 +16,20 @@
  */
 package org.wicketstuff.console;
 
-import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.model.Model;
+import org.wicketstuff.console.engine.Lang;
 
 /**
  * A {@link ModalWindow} displaying a {@link GroovyScriptEnginePanel}.
  * 
  * @author cretzel
  */
-public class GroovyScriptEngineWindow extends ModalWindow {
+public class GroovyScriptEngineWindow extends ScriptEngineWindow {
 
 	private static final long serialVersionUID = 1L;
-	private final GroovyScriptEnginePanel enginePanel;
 
 	public GroovyScriptEngineWindow(final String id) {
-		super(id);
-
-		setTitle(Model.of("Wicket Console"));
-		setAutoSize(true);
-		setResizable(false);
-
-		enginePanel = new GroovyScriptEnginePanel(getContentId(), Model.of(""));
-		enginePanel.add(new AttributeAppender("style", Model.of("width:500px"),
-				";"));
-		setContent(enginePanel);
-	}
-
-	public GroovyScriptEnginePanel getEnginePanel() {
-		return enginePanel;
+		super(id, Lang.GROOVY, null);
 	}
 
 }

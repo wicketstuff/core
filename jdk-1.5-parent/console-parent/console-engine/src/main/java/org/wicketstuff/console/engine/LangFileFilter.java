@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.wicketstuff.console.templates;
+package org.wicketstuff.console.engine;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -32,7 +32,7 @@ public class LangFileFilter implements FilenameFilter {
 	private final String suffix;
 
 	private LangFileFilter(final String ext) {
-		suffix = "." + ext;
+		suffix = ext;
 	}
 
 	public boolean accept(final File dir, final String name) {
@@ -53,7 +53,7 @@ public class LangFileFilter implements FilenameFilter {
 	public static class GroovyFileFilter extends LangFileFilter {
 
 		public GroovyFileFilter() {
-			super("groovy");
+			super(Lang.GROOVY.getFileExtension());
 		}
 
 	}
@@ -61,7 +61,7 @@ public class LangFileFilter implements FilenameFilter {
 	public static class ClojureFileFilter extends LangFileFilter {
 
 		public ClojureFileFilter() {
-			super("clj");
+			super(Lang.CLOJURE.getFileExtension());
 		}
 
 	}

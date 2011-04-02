@@ -38,8 +38,10 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.CompressedResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.wicketstuff.console.engine.Engines;
 import org.wicketstuff.console.engine.IScriptEngine;
 import org.wicketstuff.console.engine.IScriptExecutionResult;
+import org.wicketstuff.console.engine.Lang;
 
 /**
  * Abstract panel for executing Scripts.
@@ -59,7 +61,7 @@ import org.wicketstuff.console.engine.IScriptExecutionResult;
  * 
  * @author cretzel
  */
-public abstract class AbstractScriptEnginePanel extends Panel {
+public class ScriptEnginePanel extends Panel {
 
 	private final class ClearButton extends Button {
 		private static final long serialVersionUID = 1L;
@@ -105,10 +107,10 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 	private static final long serialVersionUID = 1L;
 
 	private static final ResourceReference CSS = new CompressedResourceReference(
-			AbstractScriptEnginePanel.class, "AbstractScriptEnginePanel.css");
+			ScriptEnginePanel.class, "ScriptEnginePanel.css");
 
 	private static final ResourceReference JS = new CompressedResourceReference(
-			AbstractScriptEnginePanel.class, "AbstractScriptEnginePanel.js");
+			ScriptEnginePanel.class, "ScriptEnginePanel.js");
 
 	private String input;
 	private String output;
@@ -124,24 +126,23 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 
 	private final IModel<String> titleModel;
 
-	public AbstractScriptEnginePanel(final String id) {
-		super(id);
-		titleModel = Model.of("Wicket Console");
+	private final Lang lang;
 
-		init();
+	public ScriptEnginePanel(final String id, final Lang lang) {
+		this(id, lang, null);
 	}
 
-	public AbstractScriptEnginePanel(final String id, final IModel<String> title) {
+	public ScriptEnginePanel(final String id, final Lang lang,
+			final IModel<String> title) {
 		super(id);
-		this.titleModel = title;
+		this.lang = lang;
+		this.titleModel = title != null ? title : Model.of("Wicket Console");
 
 		init();
 	}
 
 	private void init() {
-		setDefaultModel(new CompoundPropertyModel<AbstractScriptEnginePanel>(
-				this));
-		initInput();
+		setDefaultModel(new CompoundPropertyModel<ScriptEnginePanel>(this));
 		initComponents();
 	}
 
@@ -208,9 +209,9 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 		target.add(returnValueTf, outputTf);
 	}
 
-	protected abstract void initInput();
-
-	protected abstract IScriptEngine newEngine();
+	protected IScriptEngine newEngine() {
+		return Engines.create(lang);
+	}
 
 	protected Map<String, Object> newBindings() {
 		final Map<String, Object> bindings = new HashMap<String, Object>();
@@ -264,4 +265,16 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 		}
 	}
 
+	public static ScriptEnginePanel create(final String wicketId,
+			final Lang lang, final IModel<String> title) {
+		switch (lang) {
+		case GROOVY:
+			return new GroovyScriptEnginePanel(wicketId, title);
+		case CLOJURE:
+			return new ClojureScriptEnginePanel(wicketId, title);
+		default:
+			throw new UnsupportedOperationException("Unsupported language: "
+					+ lang);
+		}
+	}
 }

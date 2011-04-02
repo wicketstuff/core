@@ -19,6 +19,9 @@ package org.wicketstuff.console.templates;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,8 @@ import java.util.List;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.util.file.Files;
+import org.wicketstuff.console.engine.Lang;
+import org.wicketstuff.console.engine.LangFileFilter;
 
 /**
  * Provides a set of sample {@link ScriptTemplate}s.
@@ -38,6 +43,16 @@ import org.apache.wicket.util.file.Files;
 public class PackagedScriptTemplates {
 
 	private static final String SCRIPT_DIR_BASE = "org/wicketstuff/console/templates/";
+
+	private static final String[] PACKAGED_GROOVY_TEMPLATES = new String[] {
+			"HibernateCriteria", "HibernateHqlQuery", "HibernateSave",
+			"HibernateShowSql", "HibernateStatistics", "Log4j",
+			"MethodsAndFields", "ReadClasspathResource", "SystemProperties",
+			"WicketClearMarkupCache", "WicketClearPropertiesCache",
+			"WicketClientInfo", "WicketComponentHierarchy",
+			"WicketInvalidateSession", "WicketSize" };
+
+	private static final String[] PACKAGED_CLOJURE_TEMPLATES = new String[] { "MethodsAndFields" };
 
 	/**
 	 * Creates a data provider that returns all packaged templates for a given
@@ -62,10 +77,82 @@ public class PackagedScriptTemplates {
 	 */
 	public static List<ScriptTemplate> getPackagedScriptTemplates(
 			final Lang lang) {
-		final File dir = getPackagedScriptFilesDir(lang);
-		final List<ScriptTemplate> templates = readTemplatesFromDir(lang, dir);
+
+		final List<ScriptTemplate> templates = new ArrayList<ScriptTemplate>();
+
+		String[] templateNames = new String[0];
+
+		switch (lang) {
+		case GROOVY:
+			templateNames = PACKAGED_GROOVY_TEMPLATES;
+			break;
+		case CLOJURE:
+			templateNames = PACKAGED_CLOJURE_TEMPLATES;
+			break;
+		default:
+			break;
+		}
+
+		final ClassLoader cl = PackagedScriptTemplates.class.getClassLoader();
+		for (final String name : templateNames) {
+			final String scriptBase = SCRIPT_DIR_BASE
+					+ lang.name().toLowerCase() + "/";
+			final ScriptTemplate template = readTemplateFromClasspath(cl,
+					scriptBase, name, lang);
+			templates.add(template);
+		}
 
 		return templates;
+	}
+
+	/**
+	 * Read a source file from class path into a {@link ScriptTemplate}.
+	 * <p>
+	 * The file has to have an appropriate extension such as .groovy or .clj.
+	 * 
+	 * @param cl
+	 *            ClassLoader
+	 * @param path
+	 *            path on the class path
+	 * @param name
+	 *            name of the script (without file extension)
+	 * @param lang
+	 *            source language
+	 * @return a ScriptTemplate
+	 */
+	static ScriptTemplate readTemplateFromClasspath(final ClassLoader cl,
+			final String path, final String name, final Lang lang) {
+
+		final URL url = cl.getResource(path + name + lang.getFileExtension());
+
+		StringBuilder content;
+		try {
+			content = readUrl(url);
+		} catch (final IOException e) {
+			throw new RuntimeException(
+					String.format("Could not read class path file %s %s %s",
+							path, name, lang));
+		}
+
+		final ScriptTemplate template = new ScriptTemplate(
+				camelCaseSpace(name), content.toString(), lang);
+		return template;
+
+	}
+
+	private static StringBuilder readUrl(final URL url) throws IOException {
+
+		final InputStream is = url.openConnection().getInputStream();
+		final LineNumberReader r = new LineNumberReader(new InputStreamReader(
+				is));
+
+		final StringBuilder content = new StringBuilder();
+		String line = null;
+		while ((line = r.readLine()) != null) {
+			content.append(line).append("\n");
+		}
+
+		return content;
 	}
 
 	/**
@@ -161,38 +248,6 @@ public class PackagedScriptTemplates {
 		}
 
 		return result.toString();
-	}
-
-	private static File getPackagedScriptFilesDir(final Lang lang) {
-
-		final String scriptDirName = SCRIPT_DIR_BASE
-				+ lang.name().toLowerCase();
-
-		final URL url = PackagedScriptTemplates.class.getClassLoader()
-				.getResource(scriptDirName);
-		final File dir = urlToDir(url);
-
-		return dir;
-	}
-
-	static File urlToDir(final URL url) {
-		if (url == null) {
-			throw new IllegalArgumentException("URL is null");
-		}
-
-		final String dirName = url.getFile();
-		if ("".equals(dirName)) {
-			throw new IllegalArgumentException(
-					"URL does not denote a file name ");
-		}
-
-		final File dir = new File(dirName);
-		if (!dir.isDirectory()) {
-			throw new IllegalArgumentException(
-					"URL does not denote a directory " + dir.getAbsolutePath());
-		}
-
-		return dir;
 	}
 
 	static String readFile(final File file) {

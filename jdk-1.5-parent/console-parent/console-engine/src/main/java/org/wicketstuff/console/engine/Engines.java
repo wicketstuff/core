@@ -14,22 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console;
 
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.wicketstuff.console.engine.Lang;
+package org.wicketstuff.console.engine;
 
 /**
- * A {@link ModalWindow} displaying a {@link ClojureScriptEnginePanel}.
+ * A factory for {@link IScriptEngine}s.
  * 
  * @author cretzel
  */
-public class ClojureScriptEngineWindow extends ScriptEngineWindow {
+public class Engines {
 
-	private static final long serialVersionUID = 1L;
-
-	public ClojureScriptEngineWindow(final String id) {
-		super(id, Lang.CLOJURE, null);
+	public static IScriptEngine create(final Lang lang) {
+		switch (lang) {
+		case GROOVY:
+			return new GroovyEngine();
+		case CLOJURE:
+			return new ClojureEngine();
+		default:
+			throw new UnsupportedOperationException("Unsupported language: "
+					+ lang);
+		}
 	}
-
 }

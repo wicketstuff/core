@@ -17,19 +17,30 @@
 package org.wicketstuff.console;
 
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.model.IModel;
 import org.wicketstuff.console.engine.Lang;
+import org.wicketstuff.console.templates.ScriptTemplate;
 
 /**
- * A {@link ModalWindow} displaying a {@link ClojureScriptEnginePanel}.
+ * A {@link ModalWindow} displaying a
+ * {@link GroovyScriptEngineWithTemplatesPanel}.
  * 
  * @author cretzel
  */
-public class ClojureScriptEngineWindow extends ScriptEngineWindow {
+public class GroovyScriptEngineWithTemplatesWindow extends
+		ScriptEngineWithTemplatesWindow {
 
 	private static final long serialVersionUID = 1L;
 
-	public ClojureScriptEngineWindow(final String id) {
-		super(id, Lang.CLOJURE, null);
+	/**
+	 * @see ScriptEngineWithTemplatesWindow#ScriptEngineWithTemplatesWindow(String,
+	 *      Lang, org.apache.wicket.model.IModel)
+	 */
+	public GroovyScriptEngineWithTemplatesWindow(final String id,
+			final IModel<String> windowTitle,
+			final IDataProvider<ScriptTemplate> dataProvider) {
+		super(id, Lang.GROOVY, windowTitle, dataProvider);
 	}
 
 }

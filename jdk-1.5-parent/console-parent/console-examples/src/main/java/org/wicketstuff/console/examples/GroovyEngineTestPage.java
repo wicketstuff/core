@@ -19,7 +19,7 @@ package org.wicketstuff.console.examples;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.GroovyScriptEnginePanel;
-import org.wicketstuff.console.templates.Lang;
+import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.templates.PackagedScriptTemplates;
 import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
 

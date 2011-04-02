@@ -16,20 +16,38 @@
  */
 package org.wicketstuff.console;
 
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.model.IModel;
 import org.wicketstuff.console.engine.Lang;
+import org.wicketstuff.console.templates.ScriptTemplate;
+import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
 
 /**
- * A {@link ModalWindow} displaying a {@link ClojureScriptEnginePanel}.
+ * A combination {@link GroovyScriptEnginePanel} and
+ * {@link ScriptTemplateSelectionTablePanel}.
  * 
  * @author cretzel
  */
-public class ClojureScriptEngineWindow extends ScriptEngineWindow {
+public class GroovyScriptEngineWithTemplatesPanel extends
+		ScriptEnginePanelWithTemplates {
 
 	private static final long serialVersionUID = 1L;
 
-	public ClojureScriptEngineWindow(final String id) {
-		super(id, Lang.CLOJURE, null);
+	/**
+	 * Creates an instance using the given title and script template data
+	 * provider.
+	 * 
+	 * @param id
+	 *            id
+	 * @param title
+	 *            title, {@code null} for default
+	 * @param dataProvider
+	 *            data provider for script templates, {@code null} for default
+	 */
+	public GroovyScriptEngineWithTemplatesPanel(final String id,
+			final IModel<String> title,
+			final IDataProvider<ScriptTemplate> dataProvider) {
+		super(id, Lang.GROOVY, title, dataProvider);
 	}
 
 }

@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.console.examples;
 
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,6 +24,7 @@ import org.junit.Test;
 public class TestPagesTest {
 
 	private WicketTester tester;
+	private Class<? extends WebPage> clazz;
 
 	@Before
 	public void setUp() {
@@ -31,30 +33,60 @@ public class TestPagesTest {
 
 	@Test
 	public void test_rendersSuccessfully_ClojureEngineTestPage() {
-		tester.startPage(ClojureEngineTestPage.class);
-
-		tester.assertRenderedPage(ClojureEngineTestPage.class);
+		clazz = ClojureEngineTestPage.class;
+		tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
 	}
 
 	@Test
 	public void test_rendersSuccessfully_ClojureEngineWindowTestPage() {
-		tester.startPage(ClojureEngineWindowTestPage.class);
-
-		tester.assertRenderedPage(ClojureEngineWindowTestPage.class);
+		clazz = ClojureEngineWindowTestPage.class;
+		tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
 	}
 
 	@Test
 	public void test_rendersSuccessfully_GroovyEngineTestPage() {
-		tester.startPage(GroovyEngineTestPage.class);
-
-		tester.assertRenderedPage(GroovyEngineTestPage.class);
+		clazz = GroovyEngineTestPage.class;
+		tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
 	}
 
 	@Test
 	public void test_rendersSuccessfully_GroovyEngineWindowTestPage() {
-		tester.startPage(GroovyEngineWindowTestPage.class);
+		clazz = GroovyEngineWindowTestPage.class;
+		tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
+	}
 
-		tester.assertRenderedPage(GroovyEngineWindowTestPage.class);
+	@Test
+	public void test_rendersSuccessfully_ClojureEngineWithTemplatesTestPage() {
+		clazz = ClojureEngineWithTemplatesTestPage.class;
+		tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
+	}
+
+	@Test
+	public void test_rendersSuccessfully_GroovyEngineWithTemplatesTestPage() {
+		clazz = GroovyEngineWithTemplatesTestPage.class;
+		tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
+	}
+
+	@Test
+	public void test_rendersSuccessfully_GroovyEngineWithTemplatesWindowTestPage() {
+		clazz = GroovyEngineWithTemplatesWindowTestPage.class;
+		final GroovyEngineWithTemplatesWindowTestPage page = (GroovyEngineWithTemplatesWindowTestPage) tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
+		tester.clickLink(page.getOpenLink());
+	}
+
+	@Test
+	public void test_rendersSuccessfully_ClojureEngineWithTemplatesWindowTestPage() {
+		clazz = ClojureEngineWithTemplatesWindowTestPage.class;
+		final ClojureEngineWithTemplatesWindowTestPage page = (ClojureEngineWithTemplatesWindowTestPage) tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
+		tester.clickLink(page.getOpenLink());
 	}
 
 }

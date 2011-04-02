@@ -17,37 +17,29 @@
 package org.wicketstuff.console;
 
 import org.apache.wicket.model.IModel;
-import org.wicketstuff.console.engine.GroovyEngine;
-import org.wicketstuff.console.engine.IScriptEngine;
+import org.wicketstuff.console.engine.Lang;
 
 /**
  * Main panel to execute Groovy scripts.
- * <p>
- * Usage: see {@link AbstractScriptEnginePanel}
  * 
  * @author cretzel
  */
-public class GroovyScriptEnginePanel extends AbstractScriptEnginePanel {
+public class GroovyScriptEnginePanel extends ScriptEnginePanel {
 
 	private static final long serialVersionUID = 1L;
 
 	public GroovyScriptEnginePanel(final String wicketId) {
-		super(wicketId);
+		this(wicketId, null);
 	}
 
 	public GroovyScriptEnginePanel(final String id, final IModel<String> title) {
-		super(id, title);
+		super(id, Lang.GROOVY, title);
+		init();
 	}
 
-	@Override
-	protected void initInput() {
+	protected void init() {
 		setInput("println application\n" + "println page\n"
 				+ "println component\n");
-	}
-
-	@Override
-	protected IScriptEngine newEngine() {
-		return new GroovyEngine();
 	}
 
 }

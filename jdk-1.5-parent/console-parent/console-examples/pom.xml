@@ -15,11 +15,22 @@
 
 	<name>Wicket Console - Examples</name>
 	<description>Examples of Wicket Console</description>
-
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>console</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>console-templates</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>

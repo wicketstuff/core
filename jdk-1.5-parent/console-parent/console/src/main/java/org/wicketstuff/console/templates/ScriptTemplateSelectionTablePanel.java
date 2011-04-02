@@ -28,7 +28,7 @@ import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.resource.CompressedResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.wicketstuff.console.AbstractScriptEnginePanel;
+import org.wicketstuff.console.ScriptEnginePanel;
 
 /**
  * A table displaying {@link ScriptTemplate}s.
@@ -70,12 +70,12 @@ public class ScriptTemplateSelectionTablePanel extends Panel {
 			ScriptTemplateSelectionTablePanel.class,
 			ScriptTemplateSelectionTablePanel.class.getSimpleName() + ".css");
 
-	private final AbstractScriptEnginePanel enginePanel;
+	private final ScriptEnginePanel enginePanel;
 
 	private DataTable<ScriptTemplate> table;
 
 	public ScriptTemplateSelectionTablePanel(final String id,
-			final AbstractScriptEnginePanel enginePanel,
+			final ScriptEnginePanel enginePanel,
 			final IDataProvider<ScriptTemplate> dataProvider,
 			final int rowsPerPage) {
 		super(id);
@@ -117,7 +117,7 @@ public class ScriptTemplateSelectionTablePanel extends Panel {
 	}
 
 	private void checkEnginePanelOutputMarkupId(
-			final AbstractScriptEnginePanel enginePanel) {
+			final ScriptEnginePanel enginePanel) {
 		if (enginePanel != null) {
 			if (!enginePanel.getOutputMarkupId()) {
 				throw new IllegalStateException(
@@ -135,7 +135,7 @@ public class ScriptTemplateSelectionTablePanel extends Panel {
 
 		if (enginePanel != null) {
 			enginePanel.setInput(script);
-			target.add(enginePanel);
+			target.add(enginePanel.getInputTf());
 		}
 
 	}
