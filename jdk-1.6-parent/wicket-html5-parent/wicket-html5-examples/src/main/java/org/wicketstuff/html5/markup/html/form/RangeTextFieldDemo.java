@@ -20,7 +20,7 @@ public class RangeTextFieldDemo extends BasePage {
 		add(form);
 
 		RangeTextField<Double> rangeTextField = new RangeTextField<Double>(
-				"range", model);
+				"range", model, Double.class);
 		form.add(rangeTextField);
 
 		rangeTextField.setMinimum(1.4d);

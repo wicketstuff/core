@@ -22,7 +22,7 @@ public class NumberFieldDemo extends BasePage {
 
 		Model<Double> model = Model.of();
 		NumberTextField<Double> numberField = new NumberTextField<Double>(
-				"number", model);
+				"number", model, Double.class);
 		numberField.setRequired(false);
 		form.add(numberField);
 		numberField.setMinimum(4.0d);
