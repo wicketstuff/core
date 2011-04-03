@@ -26,6 +26,13 @@
             <email>andrew@mysticcoders.com</email>
             <timezone>-8</timezone>
         </developer>
+
+		<developer>
+			<id>akiraly</id>
+			<name>Király Attila</name>
+			<email>kiralyattila.hu@gmail.com</email>
+			<timezone>+1</timezone>
+		</developer>
     </developers>
 
     <modules>
