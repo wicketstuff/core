@@ -34,8 +34,36 @@ import org.apache.wicket.util.lang.Bytes;
  * client. This means that a lot of user time, network bandwidth and server cpu
  * time is wasted. Adding this behavior cures this problem for those users with
  * a FileApi supporting browsers. This class does not replace the standard
- * wicket size validation (this is only a convenience feature). It will be still
+ * wicket size validation (this is only a convenience feature). It will still be
  * done at upload.
+ * </p>
+ *
+ * <p>
+ * Usage is very simple (similar to an AjaxButton), just add it to the field and
+ * specify what should happen when validation passes or fails
+ *
+ * <pre>
+ * <code>
+ * final FileUploadField uploadField = new FileUploadField("file");
+ *
+ * // add our FileApi based size check, errors are reported trough a
+ * // feedback panel
+ * uploadField.add(new FileFieldSizeCheckBehaviour() {
+ * 	private static final long serialVersionUID = 7228537141239670625L;
+ *
+ * 	&#64;Override
+ * 	protected void onSubmit(AjaxRequestTarget target, FileList fileList) {
+ * 		target.add(feedback);
+ * 	}
+ *
+ * 	&#64;Override
+ * 	protected void onError(AjaxRequestTarget target, FileList fileList) {
+ * 		target.add(feedback);
+ * 	}
+ * });
+ * </code>
+ * </pre>
+ *
  * </p>
  *
  * @author akiraly
@@ -45,7 +73,7 @@ public abstract class FileFieldSizeCheckBehaviour extends
 	private static final long serialVersionUID = -3780833214149694593L;
 
 	/**
-	 * Copy of {@link Form}#UPLOAD_TOO_LARGE_RESOURCE_KEY
+	 * Copy of {@link Form}#UPLOAD_TOO_LARGE_RESOURCE_KEY field.
 	 */
 	private static final String UPLOAD_TOO_LARGE_RESOURCE_KEY = "uploadTooLarge";
 
@@ -115,7 +143,7 @@ public abstract class FileFieldSizeCheckBehaviour extends
 	 * @param target
 	 *            wicket object representing the ajax response, not-null
 	 * @param fileList
-	 *            list of files chosen in the upload field
+	 *            list of files chosen in the upload field, not-null
 	 */
 	protected void addErrorMsg(AjaxRequestTarget target, FileList fileList) {
 		FormComponent<?> component = getFormComponent();
@@ -135,7 +163,7 @@ public abstract class FileFieldSizeCheckBehaviour extends
 	 * @param target
 	 *            wicket object representing the ajax response, not-null
 	 * @param fileList
-	 *            list of files chosen in the upload field
+	 *            list of files chosen in the upload field, not-null
 	 */
 	protected abstract void onSubmit(AjaxRequestTarget target, FileList fileList);
 
@@ -145,7 +173,7 @@ public abstract class FileFieldSizeCheckBehaviour extends
 	 * @param target
 	 *            wicket object representing the ajax response, not-null
 	 * @param fileList
-	 *            list of files chosen in the upload field
+	 *            list of files chosen in the upload field, not-null
 	 */
 	protected abstract void onError(AjaxRequestTarget target, FileList fileList);
 

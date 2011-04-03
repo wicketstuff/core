@@ -112,9 +112,9 @@ public abstract class FileFieldChangeBehaviour extends AjaxEventBehavior {
 					.getParameterValue(prefix + "lastModifiedTime");
 			Calendar lastModifiedDate;
 			if (!lastModifiedTimeStr.isNull()) {
-				long lastModifyTime = lastModifiedTimeStr.toLong();
+				long lastModifiedTime = lastModifiedTimeStr.toLong();
 				lastModifiedDate = Calendar.getInstance();
-				lastModifiedDate.setTimeInMillis(lastModifyTime);
+				lastModifiedDate.setTimeInMillis(lastModifiedTime);
 			} else
 				lastModifiedDate = null;
 			fileList.set(fi, new Html5File(name, size, type, lastModifiedDate));
@@ -129,7 +129,7 @@ public abstract class FileFieldChangeBehaviour extends AjaxEventBehavior {
 	 * @param target
 	 *            wicket object representing the ajax response, not-null
 	 * @param fileList
-	 *            list of files chosen in the upload field
+	 *            list of files chosen in the upload field, not-null
 	 */
 	protected abstract void onEvent(AjaxRequestTarget target, FileList fileList);
 
