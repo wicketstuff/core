@@ -1,4 +1,5 @@
-<html xmlns:wicket="http://wicket.apache.org">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
 <wicket:extend>
 
 <section id="wrapper">
@@ -12,9 +13,10 @@
 			<input wicket:id="number" required type="number" min="3.0" max="10.0" onchange="console.log(this.value)" /><br/>
 			<input type="submit" value="Submit"/>
 		</form>
-		
-		<summary>Number is set to: <span wicket:id="numberLabel"></span></summary>
-		
+
+		<details>
+			<summary>Number is set to: <span wicket:id="numberLabel"></span></summary>
+		</details>
     </article>
 </section>
 

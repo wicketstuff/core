@@ -19,11 +19,12 @@ import org.wicketstuff.html5.media.MediaSource;
  * @author Andrew Lombardi
  */
 public class AudioDemo extends BasePage {
+	private static final long serialVersionUID = 8364098763780612520L;
 
-    public AudioDemo() {
+	public AudioDemo() {
         final List<MediaSource> mm = new ArrayList<MediaSource>();
-        mm.add(new MediaSource("/loser.wav"));
-        mm.add(new MediaSource("/loser.ogg"));
+        mm.add(new MediaSource("loser.wav"));
+        mm.add(new MediaSource("loser.ogg"));
 
         IModel<List<MediaSource>> mediaSourceList = new AbstractReadOnlyModel<List<MediaSource>>() {
 			private static final long serialVersionUID = 1L;
