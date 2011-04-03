@@ -45,7 +45,7 @@ public class PackagedScriptTemplatesTest {
 	public void test_getPackagedGroovyTemplates() throws Exception {
 		final List<ScriptTemplate> templates = PackagedScriptTemplates
 				.getPackagedScriptTemplates(Lang.GROOVY);
-		
+
 		assertEquals(15, templates.size());
 	}
 
@@ -53,7 +53,7 @@ public class PackagedScriptTemplatesTest {
 	public void test_getPackagedClojureTemplates() throws Exception {
 		final List<ScriptTemplate> templates = PackagedScriptTemplates
 				.getPackagedScriptTemplates(Lang.CLOJURE);
-		
+
 		assertEquals(1, templates.size());
 	}
 
@@ -108,6 +108,31 @@ public class PackagedScriptTemplatesTest {
 		// Then
 		assertNotNull(template);
 		assertEquals("println \"foo\"", template.script);
+	}
+
+	@Test
+	public void test_readTemplateFromClasspath() throws Exception {
+
+		// When
+		final ScriptTemplate template = PackagedScriptTemplates
+				.readTemplateFromClasspath(getClass().getClassLoader(),
+						TEST_SCRIPTS_BASE_DIR + "clojure/", "Test01",
+						Lang.CLOJURE);
+
+		// Then
+		assertNotNull(template);
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void test_readTemplateFromClasspath_NotFound() throws Exception {
+
+		// When
+		PackagedScriptTemplates.readTemplateFromClasspath(getClass()
+				.getClassLoader(), TEST_SCRIPTS_BASE_DIR + "clojure/",
+				"Test02", Lang.CLOJURE);
+
+		// Then RuntimeException
+
 	}
 
 	@Test

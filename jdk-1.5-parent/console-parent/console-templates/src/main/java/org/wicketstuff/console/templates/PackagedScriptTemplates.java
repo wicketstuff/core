@@ -123,7 +123,12 @@ public class PackagedScriptTemplates {
 	static ScriptTemplate readTemplateFromClasspath(final ClassLoader cl,
 			final String path, final String name, final Lang lang) {
 
-		final URL url = cl.getResource(path + name + lang.getFileExtension());
+		final String resourceName = path + name + lang.getFileExtension();
+		final URL url = cl.getResource(resourceName);
+		if (url == null) {
+			throw new RuntimeException("Classpath URL for " + resourceName
+					+ " not found");
+		}
 
 		StringBuilder content;
 		try {
@@ -137,7 +142,6 @@ public class PackagedScriptTemplates {
 		final ScriptTemplate template = new ScriptTemplate(
 				camelCaseSpace(name), content.toString(), lang);
 		return template;
-
 	}
 
 	private static StringBuilder readUrl(final URL url) throws IOException {
