@@ -33,14 +33,12 @@ import clojure.lang.Symbol;
 import clojure.lang.Var;
 
 /**
- * /** Executes Clojure code.
+ * Executes Clojure code.
  * <p>
- * stdout and stderr are captured. Bindings are available to the Clojure code
- * via public static methods {@link #getBinding(String)} and
- * {@link #getBindings()}.
+ * stdout and stderr are captured. Bindings are pushed into user namespace, so
+ * to access a binding named &quot;foo&quot; use &quot;user/foo&quot;. *
  * 
  * @author cretzel
- * 
  */
 public class ClojureEngine implements IScriptEngine {
 

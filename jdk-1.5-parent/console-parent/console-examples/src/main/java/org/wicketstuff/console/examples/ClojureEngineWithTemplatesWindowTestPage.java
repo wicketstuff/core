@@ -20,6 +20,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.ClojureScriptEngineWithTemplatesWindow;
 import org.wicketstuff.console.engine.Lang;
@@ -51,8 +52,9 @@ public class ClojureEngineWithTemplatesWindowTestPage extends WebPage {
 	public ClojureEngineWithTemplatesWindowTestPage(final PageParameters params) {
 		super(params);
 
-		final IDataProvider<ScriptTemplate> dataProvider = PackagedScriptTemplates
-				.packagedScriptTemplatesDataProvider(Lang.CLOJURE);
+		final IDataProvider<ScriptTemplate> dataProvider = new ListDataProvider<ScriptTemplate>(
+				PackagedScriptTemplates
+						.getPackagedScriptTemplates(Lang.CLOJURE));
 		add(window = new ClojureScriptEngineWithTemplatesWindow("window", null,
 				dataProvider));
 		openLink = new OpenLink("link", window);

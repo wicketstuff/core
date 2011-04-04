@@ -19,6 +19,7 @@ package org.wicketstuff.console;
 
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.model.IModel;
 import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.templates.PackagedScriptTemplates;
@@ -62,10 +63,24 @@ public class ScriptEnginePanelWithTemplates extends Panel {
 		this.dataProvider = dataProvider;
 
 		if (dataProvider == null) {
-			this.dataProvider = PackagedScriptTemplates
-					.packagedScriptTemplatesDataProvider(lang);
+			this.dataProvider = packagedScriptTemplatesDataProvider(lang);
 		}
 
+	}
+
+	/**
+	 * Creates a data provider that returns all packaged templates for a given
+	 * source language.
+	 * 
+	 * @param lang
+	 *            language
+	 * @return data provider
+	 * @see PackagedScriptTemplates#getPackagedScriptTemplates(Lang)
+	 */
+	public static IDataProvider<ScriptTemplate> packagedScriptTemplatesDataProvider(
+			final Lang lang) {
+		return new ListDataProvider<ScriptTemplate>(
+				PackagedScriptTemplates.getPackagedScriptTemplates(lang));
 	}
 
 	@Override
