@@ -25,7 +25,7 @@ public class WicketMessageBuilder {
 	public WicketMessageBuilder() {
 		this.index = 0;
 	}
-	
+
 	/**
 	 * @param component
 	 */
@@ -42,7 +42,7 @@ public class WicketMessageBuilder {
 	 * @return
 	 */
 	public String equalFieldMessage(FormComponent formComponent1, FormComponent formComponent2) {
-		return addToBuffer(		
+		return addToBuffer(
 				formComponent2.getId(),
 				"equal|$" + formComponent1.getId(),
 				escapeJavaScriptString(formatEqualFieldMessage(formComponent1, formComponent2, "EqualPasswordInputValidator")));
@@ -71,14 +71,14 @@ public class WicketMessageBuilder {
 	public String lengthBetweenMessage(Component component, LengthBetweenValidator lengthBetweenValidator) {
 		String minimum = String.valueOf(lengthBetweenValidator.getMinimum());
 		String maximum = String.valueOf(lengthBetweenValidator.getMaximum());
-		
+
 		// Add a rule for a minlength with a Yav custom message
 		// corresponding to the Wicket range message
 		String minMessage = addToBuffer(
 			component.getId(),
 			"minlength|" + minimum,
 			escapeJavaScriptString(formatRangeMessage(component, "NumberValidator.range", minimum, maximum)));
-		
+
 
 		// Add a rule for a maxlength with a Yav custom message
 		// corresponding to the Wicket range message
@@ -97,7 +97,7 @@ public class WicketMessageBuilder {
 	 */
 	public String exactLengthMessage(Component component, ExactLengthValidator exactLengthValidator) {
 		int length = exactLengthValidator.getLength();
-		
+
 		String minMessage = addToBuffer(
 			component.getId(),
 			"minlength|" + length,
@@ -107,7 +107,7 @@ public class WicketMessageBuilder {
 			component.getId(),
 			"maxlength|" + length,
 			escapeJavaScriptString(formatExactLengthMessage(component, "StringValidator.exact", length)));
-		
+
 		return minMessage + maxMessage;
 	}
 
@@ -167,7 +167,7 @@ public class WicketMessageBuilder {
 	 */
 	public String typeConverterDateMessage(FormComponent formComponent, String converterClassName) {
 		return addToBuffer(
-				formComponent.getId(), 
+				formComponent.getId(),
 				"date",
 				escapeJavaScriptString(formatTypeMessage(formComponent, converterClassName)));
 	}
@@ -179,7 +179,7 @@ public class WicketMessageBuilder {
 	 */
 	public String typeConverterIntegerMessage(FormComponent formComponent, String converterClassName) {
 		return addToBuffer(
-				formComponent.getId(), 
+				formComponent.getId(),
 				"integer",
 				escapeJavaScriptString(formatTypeMessage(formComponent, converterClassName)));
 	}
@@ -191,7 +191,7 @@ public class WicketMessageBuilder {
 	 */
 	public String typeConverterDecimalMessage(FormComponent formComponent, String converterClassName) {
 		return addToBuffer(
-				formComponent.getId(), 
+				formComponent.getId(),
 				"double",
 				escapeJavaScriptString(formatTypeMessage(formComponent, converterClassName)));
 	}
@@ -223,12 +223,12 @@ public class WicketMessageBuilder {
 	private String getWicketConverterMessage(FormComponent formComponent) {
 		Class clazz = formComponent.getType();
 		IConverter converter = formComponent.getConverter(clazz);
-		
+
 		String wicketMessage = getWicketMessage(formComponent, converter.getClass().getSimpleName());
 		if (wicketMessage == null || (wicketMessage.length() == 0)) {
 			wicketMessage = getWicketMessage(formComponent, "IConverter");
 		}
-		
+
 		return wicketMessage;
 	}
 
@@ -247,7 +247,6 @@ public class WicketMessageBuilder {
 	 * @param type
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	private String formatTypeMessage(FormComponent formComponent, String type) {
 		String customMessage = getWicketConverterMessage(formComponent);
 		customMessage = replaceInputAndLabelAndNameBy(customMessage, formComponent.getId());
@@ -354,7 +353,7 @@ public class WicketMessageBuilder {
 			return "rules[" + index++ + "]='" + componentId + "|" + rule + "|" + customMessage + "';\n";
 		}
 	}
-	
+
 	/**
 	 * @param componentId
 	 * @param rule
@@ -362,6 +361,6 @@ public class WicketMessageBuilder {
 	 */
 	private String addToBuffer(String componentId, String rule) {
 		return "rules[" + index++ + "]='" + componentId + "|" + rule + "';\n";
-		
+
 	}
 }

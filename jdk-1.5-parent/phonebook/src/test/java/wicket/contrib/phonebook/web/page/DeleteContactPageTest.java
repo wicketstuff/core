@@ -24,7 +24,6 @@ import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.util.tester.ITestPageSource;
 import org.apache.wicket.util.tester.WicketTester;
 
 import wicket.contrib.phonebook.Contact;
@@ -39,15 +38,13 @@ public class DeleteContactPageTest extends TestCase {
 	private PhonebookApplicationForTesting app;
 	private PhonebookFixture fixture;
 
-	private static final class MockDeleteContactPage implements ITestPageSource {
-		public Page getTestPage() {
-			Contact contact = new Contact();
-			contact.setId(99);
-			contact.setFirstname("Kare");
-			contact.setLastname("Nuorteva");
-			return new DeleteContactPage(new ListContactsPage(), new Model<Contact>(
-					contact));
-		}
+	private static final Page getTestPage() {
+		Contact contact = new Contact();
+		contact.setId(99);
+		contact.setFirstname("Kare");
+		contact.setLastname("Nuorteva");
+		return new DeleteContactPage(new ListContactsPage(),
+				new Model<Contact>(contact));
 	}
 
 	@Override
@@ -56,7 +53,7 @@ public class DeleteContactPageTest extends TestCase {
 		fixture = new PhonebookFixture();
 		fixture.addStubs(app.context);
 		wicket = new WicketTester(app);
-		wicket.startPage(new MockDeleteContactPage());
+		wicket.startPage(getTestPage());
 	}
 
 	public void testContainsRequiredComponents() throws Exception {
@@ -68,8 +65,7 @@ public class DeleteContactPageTest extends TestCase {
 		wicket.assertComponent("confirm", Link.class);
 		assertFalse(fixture.getContactData().isContactDaoDeleteCalled());
 		wicket.clickLink("confirm");
-		wicket
-				.assertInfoMessages(new String[] { "Contact Kare Nuorteva successfully deleted" });
+		wicket.assertInfoMessages(new String[] { "Contact Kare Nuorteva successfully deleted" });
 		assertTrue(fixture.getContactData().isContactDaoDeleteCalled());
 		wicket.assertRenderedPage(ListContactsPage.class);
 	}
@@ -77,8 +73,7 @@ public class DeleteContactPageTest extends TestCase {
 	public void testCancelLinkSetsInfoMessageAndForwardsBAck() throws Exception {
 		wicket.assertComponent("cancel", Link.class);
 		wicket.clickLink("cancel");
-		wicket
-				.assertInfoMessages(new String[] { "Deletion of contact Kare Nuorteva cancelled" });
+		wicket.assertInfoMessages(new String[] { "Deletion of contact Kare Nuorteva cancelled" });
 		wicket.assertRenderedPage(ListContactsPage.class);
 	}
 }

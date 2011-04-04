@@ -77,9 +77,9 @@ import org.wicketstuff.prototype.PrototypeResourceReference;
  * The only dependency the component has on the client side is the prototype
  * javascript library, which is included via the WicketStuff prototype include.
  * </p>
- * 
+ *
  * @author Craig Tataryn (craiger AT tataryn DOT net)
- * 
+ *
  * @param <T>
  *            underlying type of the objects which comprise the model's
  *            collection of items for the widget
@@ -92,9 +92,9 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
      * A Model which holds a collection of items for a MultiTextInput. Another
      * list of items is kept which holds the "removed" items (see:
      * {@link MultiTextInputModel#getRemovedItems()}) from the input.
-     * 
+     *
      * @author Craig Tataryn (craiger AT tataryn DOT net)
-     * 
+     *
      * @param <T>
      *            a collection type which holds values for a MultiTextInput
      */
@@ -110,7 +110,7 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
 
         /**
          * Returns a list of items removed from the {@link MultiTextInput}
-         * 
+         *
          * @return List of items removed {@link MultiTextInput}.
          */
         public T getRemovedItems() {
@@ -121,7 +121,7 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
          * Sets a list of items removed from the {@link MultiTextInput}. Users
          * may find this a convenience when having to update a database table
          * after form submission.
-         * 
+         *
          * @param removedItems
          */
         public void setRemovedItems(T removedItems) {
@@ -130,7 +130,7 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
 
         /**
          * Gets the items for this model
-         * 
+         *
          * @see IModel#getObject()
          */
         public T getObject() {
@@ -139,7 +139,7 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
 
         /**
          * Sets the items for this model
-         * 
+         *
          * @see IModel#setObject(Object)
          */
         public void setObject(T object) {
@@ -148,7 +148,7 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
 
         /**
          * Does nothing at the moment
-         * 
+         *
          * @see IDetachable#detach()
          */
         public void detach() {
@@ -166,7 +166,7 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
 
     /**
      * Allows the user to create a MultiTextInput using a simple Collection
-     * 
+     *
      * @param id
      *            of the component
      * @param items
@@ -179,7 +179,7 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
     /**
      * Allows the user to construct a MultTextInput using a collection of items
      * and a maximum number of characters allowable
-     * 
+     *
      * @param id
      *            of the component
      * @param items
@@ -202,7 +202,7 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
      * Constructs a MultiTextInput using a colletion of items and the type of
      * the underlying items in the model. This type is used to convert String
      * values from the user's input to the correct type used in the model
-     * 
+     *
      * @param id
      *            of the component
      * @param items
@@ -218,7 +218,7 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
 
     /**
      * Gets the maximum number of characters a user can type into the input
-     * 
+     *
      * @return
      */
     public int getInputLength() {
@@ -227,7 +227,7 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
 
     /**
      * Sets the maximum number of characters a user can type into the input
-     * 
+     *
      * @param inputLength
      */
     public void setInputLength(int inputLength) {
@@ -316,12 +316,12 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
         // in case the user of the component needs this convenience
         List<StringValue> removed = getRequest().getRequestParameters().getParameterValues("removed_" + getInputName());
         MultiTextInputModel<Collection<T>> model = (MultiTextInputModel<Collection<T>>) this.getModel();
-        
+
         // mocleiri: adapted for 1.5 but is untested.
         String[] input = new String [removed.size()];
-        
+
         for (int i = 0; i < removed.size(); i++) {
-			
+
         	input[i] = removed.get(i).toString();
 		}
         model.setRemovedItems(convertInput(input));
@@ -330,7 +330,7 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
 
     /**
      * Robbed from {@link FormComponent}
-     * 
+     *
      * @param e
      * @param error
      */
@@ -409,10 +409,9 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>> {
     }
 
     /**
-	 * 
+	 *
 	 */
     @Override
-    @SuppressWarnings("unchecked")
     protected void convertInput() {
         String[] inputs = getInputAsArray();
 

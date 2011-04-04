@@ -25,10 +25,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 import java.util.concurrent.Executor;
 
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.apache.wicket.spring.test.ApplicationContextMock;
-import org.apache.wicket.util.tester.ITestPanelSource;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,9 +35,7 @@ import org.wicketstuff.progressbar.Progression;
 import org.wicketstuff.progressbar.ProgressionModel;
 import org.wicketstuff.progressbar.spring.Task.Message;
 
-
 public class SpringTaskTests {
-
 
 	private WicketTester tester;
 
@@ -55,15 +51,17 @@ public class SpringTaskTests {
 		addDependenciesToContext(ctx);
 
 		tester = new WicketTester();
-		tester.getApplication().getComponentInstantiationListeners().add(
-				new SpringComponentInjector(tester.getApplication(), ctx, true));
+		tester.getApplication()
+				.getComponentInstantiationListeners()
+				.add(new SpringComponentInjector(tester.getApplication(), ctx,
+						true));
 
 		// add string resource loader
 		// TODO: make this work for 1.5
-//		tester.getApplication().getResourceSettings().addStringResourceLoader(
-//				new ComponentStringResourceLoader());
-//		tester.getApplication().getResourceSettings().addStringResourceLoader(
-//				new ClassStringResourceLoader(getClass()));
+		// tester.getApplication().getResourceSettings().addStringResourceLoader(
+		// new ComponentStringResourceLoader());
+		// tester.getApplication().getResourceSettings().addStringResourceLoader(
+		// new ClassStringResourceLoader(getClass()));
 	}
 
 	private static class SynchronousExecutor implements Executor {
@@ -85,14 +83,14 @@ public class SpringTaskTests {
 
 	@Test
 	public void testTaskExecution() {
-		final int[] data = new int[]{0};
+		final int[] data = new int[] { 0 };
 		Task task = new Task() {
 			@Override
 			public void run() {
-				for(int i = 0; i < 2; i++) {
+				for (int i = 0; i < 2; i++) {
 					data[0]++;
 					updateProgress(i, 2);
-					if(isCancelled()) {
+					if (isCancelled()) {
 						return;
 					}
 				}
@@ -100,7 +98,8 @@ public class SpringTaskTests {
 		};
 		assertEquals("Task progress initially 0", 0, task.getProgress());
 		Long taskId = taskService.schedule(task);
-		assertEquals("Task can be found by ID", task, taskService.getTask(taskId));
+		assertEquals("Task can be found by ID", task,
+				taskService.getTask(taskId));
 		taskService.start(taskId);
 		assertEquals("Task was executed", 2, data[0]);
 		assertEquals("Task progress is 100", 100, task.getProgress());
@@ -159,14 +158,14 @@ public class SpringTaskTests {
 	@Test
 	public void testProgressBar() {
 
-		final Integer[] data = new Integer[]{0};
+		final Integer[] data = new Integer[] { 0 };
 		Task task = new Task() {
 			@Override
 			public void run() {
-				for(int i = 0; i < 2; i++) {
+				for (int i = 0; i < 2; i++) {
 					data[0]++;
 					updateProgress(i, 2);
-					if(isCancelled()) {
+					if (isCancelled()) {
 						return;
 					}
 				}
@@ -175,17 +174,13 @@ public class SpringTaskTests {
 
 		final Long taskId = taskService.schedule(task);
 
-		@SuppressWarnings("unused")
-		Panel progressBar = tester.startPanel(new ITestPanelSource() {
-			public Panel getTestPanel(String panelId) {
-				return new ProgressBar(panelId, new ProgressionModel() {
+		tester.startComponent(new ProgressBar("panelId",
+				new ProgressionModel() {
 					@Override
 					protected Progression getProgression() {
 						return taskService.getProgression(taskId);
 					}
-				});
-			}
-		});
+				}), null);
 		tester.assertLabel("panel:label", "0%");
 
 		taskService.start(taskId);
@@ -195,7 +190,7 @@ public class SpringTaskTests {
 
 	@Test
 	public void testThreadPoolExecutor() throws InterruptedException {
-		final Boolean[] data = new Boolean[]{false};
+		final Boolean[] data = new Boolean[] { false };
 		AsynchronousExecutor executor = new AsynchronousExecutor();
 		executor.execute(new Runnable() {
 			public void run() {

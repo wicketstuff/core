@@ -19,7 +19,6 @@ package org.wicketstuff.progressbar;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.util.tester.ITestPanelSource;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Test;
 
@@ -27,12 +26,15 @@ public class ProgressBarTests {
 
 	private static class DummyTask {
 		private int progress;
+
 		void proceed(int percent) {
 			progress = percent;
 		}
+
 		public int getProgress() {
 			return progress;
 		}
+
 		public boolean isDone() {
 			return progress >= 100;
 		}
@@ -58,17 +60,14 @@ public class ProgressBarTests {
 	public void testProgressBar() {
 		WicketTester wt = new WicketTester();
 		final DummyTask testProgressive = new DummyTask();
-		Panel progressBar = wt.startPanel(new ITestPanelSource() {
-			public Panel getTestPanel(String panelId) {
-				return new ProgressBar(panelId, new ProgressionModel() {
-					@Override
-					protected Progression getProgression() {
-						return new Progression(testProgressive.getProgress());
-					}
-
-				});
+		Panel progressBar = new ProgressBar("panelId", new ProgressionModel() {
+			@Override
+			protected Progression getProgression() {
+				return new Progression(testProgressive.getProgress());
 			}
+
 		});
+		wt.startComponent(progressBar, null);
 		wt.assertLabel("panel:label", "0%");
 		testProgressive.proceed(50);
 		wt.assertLabel("panel:label", "50%");
@@ -79,18 +78,14 @@ public class ProgressBarTests {
 	public void testProgressBarMessage() {
 		WicketTester wt = new WicketTester();
 		final DummyTask testProgressive = new DummyTask();
-		wt.startPanel(new ITestPanelSource() {
-			public Panel getTestPanel(String panelId) {
-				return new ProgressBar(panelId, new ProgressionModel() {
-					@Override
-					protected Progression getProgression() {
-						return new Progression(testProgressive.getProgress(),
-								"Going for " + testProgressive.getProgress());
-					}
-
-				});
+		wt.startComponent(new ProgressBar("panelId", new ProgressionModel() {
+			@Override
+			protected Progression getProgression() {
+				return new Progression(testProgressive.getProgress(),
+						"Going for " + testProgressive.getProgress());
 			}
-		});
+
+		}), null);
 		wt.assertLabel("panel:message", "Going for 0");
 		testProgressive.proceed(75);
 		wt.assertLabel("panel:message", "Going for 75");
