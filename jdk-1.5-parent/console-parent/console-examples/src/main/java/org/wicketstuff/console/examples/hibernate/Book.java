@@ -41,6 +41,11 @@ public class Book {
 	public Book() {
 	}
 
+	public Book(final String title, final String author) {
+		this.title = title;
+		this.author = author;
+	}
+
 	public Long getId() {
 		return id;
 	}

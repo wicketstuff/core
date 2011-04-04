@@ -39,7 +39,13 @@ public class PackagedScriptTemplates {
 			"WicketClientInfo", "WicketComponentHierarchy",
 			"WicketInvalidateSession", "WicketSize" };
 
-	private static final String[] PACKAGED_CLOJURE_TEMPLATES = new String[] { "MethodsAndFields" };
+	private static final String[] PACKAGED_CLOJURE_TEMPLATES = new String[] {
+			"HibernateCriteria", "HibernateHqlQuery", "HibernateSave",
+			"HibernateShowSql", "HibernateStatistics", "Log4j",
+			"MethodsAndFields", "ReadClasspathResource", "SystemProperties",
+			"WicketClearMarkupCache", "WicketClearPropertiesCache",
+			"WicketClientInfo", "WicketComponentHierarchy",
+			"WicketInvalidateSession", "WicketSize" };
 
 	/**
 	 * Returns all packaged script templates for a given source language.
