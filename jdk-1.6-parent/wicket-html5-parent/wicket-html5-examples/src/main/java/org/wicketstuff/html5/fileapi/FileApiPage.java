@@ -9,7 +9,7 @@ import org.apache.wicket.util.lang.Bytes;
 import org.wicketstuff.html5.BasePage;
 
 /**
- * Example page for {@link FileFieldSizeCheckBehaviour}.
+ * Example page for {@link FileFieldSizeCheckBehavior}.
  *
  * @author akiraly
  */
@@ -29,7 +29,7 @@ public class FileApiPage extends BasePage {
 
 		// add our FileApi based size check, errors are reported trough the
 		// feedback
-		uploadField.add(new FileFieldSizeCheckBehaviour() {
+		uploadField.add(new FileFieldSizeCheckBehavior() {
 			private static final long serialVersionUID = 7228537141239670625L;
 
 			@Override

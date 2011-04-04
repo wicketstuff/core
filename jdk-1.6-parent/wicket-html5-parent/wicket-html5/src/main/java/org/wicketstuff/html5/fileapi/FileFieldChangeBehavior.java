@@ -35,11 +35,11 @@ import org.apache.wicket.util.string.StringValue;
  *
  * @author akiraly
  */
-public abstract class FileFieldChangeBehaviour extends AjaxEventBehavior {
+public abstract class FileFieldChangeBehavior extends AjaxEventBehavior {
 	private static final long serialVersionUID = -3716216245965207135L;
 
 	protected static final ResourceReference JAVASCRIPT_REF = new JavaScriptResourceReference(
-			FileFieldChangeBehaviour.class, "fileapi.js");
+			FileFieldChangeBehavior.class, "fileapi.js");
 
 	/**
 	 * Default maximum number of files that are processed from the ajax request:
@@ -53,7 +53,7 @@ public abstract class FileFieldChangeBehaviour extends AjaxEventBehavior {
 	 * Default constructor: the monitored event is "onchange" and maxNumOfFiles
 	 * is {@link #DEFAULT_MAX_NUM_OF_FILES}.
 	 */
-	public FileFieldChangeBehaviour() {
+	public FileFieldChangeBehavior() {
 		this(DEFAULT_MAX_NUM_OF_FILES);
 	}
 
@@ -64,7 +64,7 @@ public abstract class FileFieldChangeBehaviour extends AjaxEventBehavior {
 	 *            maximum number of files that are processed from the ajax
 	 *            request, non-negative
 	 */
-	public FileFieldChangeBehaviour(int maxNumOfFiles) {
+	public FileFieldChangeBehavior(int maxNumOfFiles) {
 		this("onchange", maxNumOfFiles);
 	}
 
@@ -77,7 +77,7 @@ public abstract class FileFieldChangeBehaviour extends AjaxEventBehavior {
 	 *            maximum number of files that are processed from the ajax
 	 *            request, non-negative
 	 */
-	protected FileFieldChangeBehaviour(String event, int maxNumOfFiles) {
+	protected FileFieldChangeBehavior(String event, int maxNumOfFiles) {
 		super(event);
 		this.maxNumOfFiles = maxNumOfFiles;
 	}

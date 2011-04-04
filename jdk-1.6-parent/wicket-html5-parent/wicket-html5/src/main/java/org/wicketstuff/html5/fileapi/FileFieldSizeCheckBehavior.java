@@ -68,8 +68,8 @@ import org.apache.wicket.util.lang.Bytes;
  *
  * @author akiraly
  */
-public abstract class FileFieldSizeCheckBehaviour extends
-		FileFieldChangeBehaviour {
+public abstract class FileFieldSizeCheckBehavior extends
+		FileFieldChangeBehavior {
 	private static final long serialVersionUID = -3780833214149694593L;
 
 	/**
@@ -80,7 +80,7 @@ public abstract class FileFieldSizeCheckBehaviour extends
 	/**
 	 * Default constructor. Calls same constructor in parent.
 	 */
-	public FileFieldSizeCheckBehaviour() {
+	public FileFieldSizeCheckBehavior() {
 	}
 
 	/**
@@ -90,11 +90,11 @@ public abstract class FileFieldSizeCheckBehaviour extends
 	 *            maximum number of files that are processed from the ajax
 	 *            request, non-negative
 	 */
-	public FileFieldSizeCheckBehaviour(int maxNumOfFiles) {
+	public FileFieldSizeCheckBehavior(int maxNumOfFiles) {
 		super(maxNumOfFiles);
 	}
 
-	protected FileFieldSizeCheckBehaviour(String event, int maxNumOfFiles) {
+	protected FileFieldSizeCheckBehavior(String event, int maxNumOfFiles) {
 		super(event, maxNumOfFiles);
 	}
 
