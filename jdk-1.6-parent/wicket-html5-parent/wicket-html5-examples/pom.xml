@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>wicket-html5-examples</artifactId>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>Wicket HTML5 :: Wicket-HTML5 Examples</name>
 	<description>

@@ -17,11 +17,9 @@
 package org.wicketstuff.minis.apanel;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.Page;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.util.resource.StringBufferResourceStream;
-import org.apache.wicket.util.tester.ITestPageSource;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Assert;
 import org.junit.Before;
@@ -59,23 +57,6 @@ public class TestLayouts
 		}
 	}
 
-	private static class TestPageSource implements ITestPageSource
-	{
-		private static final long serialVersionUID = 1L;
-
-		private final TestPage testPage;
-
-		public TestPageSource(final TestPage testPage)
-		{
-			this.testPage = testPage;
-		}
-
-		public Page getTestPage()
-		{
-			return testPage;
-		}
-	}
-
 	private WicketTester tester;
 
 	@Before
@@ -96,7 +77,7 @@ public class TestLayouts
 	@Test
 	public void testFlowLayout() throws Exception
 	{
-		final TestPageSource pageSource = new TestPageSource(new LayoutTestPage(new FlowLayout()
+		tester.startPage(new LayoutTestPage(new FlowLayout()
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -112,7 +93,6 @@ public class TestLayouts
 				stringBuilder.append("[");
 			}
 		}));
-		tester.startPage(pageSource);
 
 		testComponents();
 
@@ -151,8 +131,7 @@ public class TestLayouts
 	public void testGridLayout()
 	{
 		// layout size is for 6 components to test empty cells processing
-		final TestPageSource pageSource = new TestPageSource(new LayoutTestPage(
-			new GridLayout(2, 3))
+		tester.startPage(new LayoutTestPage(new GridLayout(2, 3))
 		{
 			@Override
 			protected void addConstraints()
@@ -163,7 +142,6 @@ public class TestLayouts
 				label4.add(new GridLayoutConstraint(1, 1));
 			}
 		});
-		tester.startPage(pageSource);
 
 		testComponents();
 
@@ -178,8 +156,7 @@ public class TestLayouts
 	@Test(expected = WicketRuntimeException.class)
 	public void testGridLayoutIntersectingConstraintsException()
 	{
-		final TestPageSource pageSource = new TestPageSource(new LayoutTestPage(
-			new GridLayout(3, 3))
+		tester.startPage(new LayoutTestPage(new GridLayout(3, 3))
 		{
 			@Override
 			protected void addConstraints()
@@ -188,7 +165,6 @@ public class TestLayouts
 				label2.add(new GridLayoutConstraint(1, 1));
 			}
 		});
-		tester.startPage(pageSource);
 
 		final APanel aPanel = (APanel)tester.getComponentFromLastRenderedPage("aPanel");
 		final StringBufferResourceStream resourceStream = (StringBufferResourceStream)aPanel.getMarkupResourceStream(
@@ -199,9 +175,7 @@ public class TestLayouts
 	@Test(expected = WicketRuntimeException.class)
 	public void testGridLayoutOutOfCellsException()
 	{
-		final TestPageSource pageSource = new TestPageSource(new LayoutTestPage(
-			new GridLayout(2, 1)));
-		tester.startPage(pageSource);
+		tester.startPage(new LayoutTestPage(new GridLayout(2, 1)));
 	}
 
 	/**
@@ -220,8 +194,7 @@ public class TestLayouts
 	@Test
 	public void testGridLayoutWithAutoConstraints()
 	{
-		final TestPageSource pageSource = new TestPageSource(new LayoutTestPage(
-			new GridLayout(2, 2))
+		tester.startPage(new LayoutTestPage(new GridLayout(2, 2))
 		{
 			@Override
 			protected void addConstraints()
@@ -232,7 +205,6 @@ public class TestLayouts
 // label3.add(new GridLayoutConstraint(1, 1)); // auto added
 			}
 		});
-		tester.startPage(pageSource);
 
 		testComponents();
 
@@ -262,8 +234,7 @@ public class TestLayouts
 	@Test
 	public void testGridLayoutWithSpan()
 	{
-		final TestPageSource pageSource = new TestPageSource(new LayoutTestPage(
-			new GridLayout(2, 3))
+		tester.startPage(new LayoutTestPage(new GridLayout(2, 3))
 		{
 			@Override
 			protected void addConstraints()
@@ -274,7 +245,6 @@ public class TestLayouts
 // label4.add(new GridLayoutConstraint(1, 2)); // auto added
 			}
 		});
-		tester.startPage(pageSource);
 
 		testComponents();
 

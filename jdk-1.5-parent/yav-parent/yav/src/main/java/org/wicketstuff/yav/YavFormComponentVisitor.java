@@ -36,7 +36,7 @@ import org.apache.wicket.validation.validator.StringValidator.MinimumLengthValid
 /**
  * Visitor used to check all the existing validators , and the type of the form
  * components to add the Yav Rules.
- * 
+ *
  * @author Zenika
  */
 public class YavFormComponentVisitor implements IVisitor<Component, Void> {
@@ -65,7 +65,7 @@ public class YavFormComponentVisitor implements IVisitor<Component, Void> {
 	/**
 	 * Constructor passing on the buffer to write out the script content about
 	 * the Yav rules from the browsing of the several Wicket Validators
-	 * 
+	 *
 	 * @param buffer
 	 */
 	@SuppressWarnings("unchecked")
@@ -107,7 +107,6 @@ public class YavFormComponentVisitor implements IVisitor<Component, Void> {
 	/**
 	 * @param formComponent
 	 */
-	@SuppressWarnings("unchecked")
 	private void verifyExistingValidatorOnComponent(FormComponent formComponent) {
 		for (IFormValidator formValidator : this.formValidators) {
 			if (EqualInputValidator.class.isAssignableFrom(formValidator
@@ -131,7 +130,7 @@ public class YavFormComponentVisitor implements IVisitor<Component, Void> {
 	 * Wicket chain, the Converter is used before some of the Validators (for
 	 * instance: Dates and Numbers) and if the conversion went well, it means
 	 * that the input is in the right format as it passed the conversion.
-	 * 
+	 *
 	 * @param converter
 	 * @param id
 	 */
@@ -170,11 +169,10 @@ public class YavFormComponentVisitor implements IVisitor<Component, Void> {
 	/**
 	 * Method to add Yav rules into the generated JavaScript concerning the
 	 * Validators available.
-	 * 
+	 *
 	 * @param validator
 	 * @param componentId
 	 */
-	@SuppressWarnings("unchecked")
 	private void addYavRuleOnValidator(IValidator validator, Component component) {
 		if (INullAcceptingValidator.class
 				.isAssignableFrom(validator.getClass())) {
@@ -245,7 +243,6 @@ public class YavFormComponentVisitor implements IVisitor<Component, Void> {
 	 * @param validator
 	 * @param component
 	 */
-	@SuppressWarnings("unchecked")
 	private void addYavRuleForMinMaxRangeValidatorType(IValidator validator,
 			Component component) {
 		if (RangeValidator.class.isAssignableFrom(validator.getClass())) {
@@ -262,7 +259,7 @@ public class YavFormComponentVisitor implements IVisitor<Component, Void> {
 	/**
 	 * Deal with StringValidators. includes: - length checks - email addresses -
 	 * regex
-	 * 
+	 *
 	 * @param validator
 	 * @param component
 	 * @param componentId

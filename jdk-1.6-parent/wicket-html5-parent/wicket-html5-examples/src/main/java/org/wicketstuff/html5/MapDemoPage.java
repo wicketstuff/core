@@ -11,4 +11,5 @@ package org.wicketstuff.html5;
  * @author Andrew Lombardi
  */
 public class MapDemoPage extends BasePage {
+	private static final long serialVersionUID = -8210381038041574508L;
 }

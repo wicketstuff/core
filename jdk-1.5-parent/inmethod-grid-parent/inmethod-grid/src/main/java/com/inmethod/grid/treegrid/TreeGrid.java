@@ -23,7 +23,7 @@ import com.inmethod.grid.common.AbstractGrid;
 
 /**
  * Advanced grid with a tree. Supports resizable and reorderable columns.
- * 
+ *
  * @author Matej Knopp
  */
 public class TreeGrid extends AbstractGrid {
@@ -32,7 +32,7 @@ public class TreeGrid extends AbstractGrid {
 
 	/**
 	 * Creates a new {@link TreeGrid} instance.
-	 * 
+	 *
 	 * @param id
 	 *            component id
 	 * @param model
@@ -172,7 +172,7 @@ public class TreeGrid extends AbstractGrid {
 
 	/**
 	 * Creates a new {@link TreeGrid} instance.
-	 * 
+	 *
 	 * @param id
 	 *            component id
 	 * @param model
@@ -188,7 +188,7 @@ public class TreeGrid extends AbstractGrid {
 
 	/**
 	 * Returns the inner tree of the {@link TreeGrid}.
-	 * 
+	 *
 	 * @return inner tree
 	 */
 	public AbstractTree getTree() {
@@ -197,7 +197,7 @@ public class TreeGrid extends AbstractGrid {
 
 	/**
 	 * Returns the tree state
-	 * 
+	 *
 	 * @return tree state
 	 */
 	public ITreeState getTreeState() {
@@ -215,10 +215,10 @@ public class TreeGrid extends AbstractGrid {
 	/**
 	 * Callback function called after user clicked on an junction link. The node
 	 * has already been expanded/collapsed (depending on previous status).
-	 * 
+	 *
 	 * @param target
 	 *            Request target - may be null on non-ajax call
-	 * 
+	 *
 	 * @param node
 	 *            Node for which this callback is relevant
 	 */
@@ -266,7 +266,6 @@ public class TreeGrid extends AbstractGrid {
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void resetSelectedItems() {
 		Collection<Object> nodes = getTreeState().getSelectedNodes();
@@ -342,7 +341,7 @@ public class TreeGrid extends AbstractGrid {
 	 * returns <code>true</code> if any of node parent is selected. On the
 	 * contrary, {@link ITreeState#getSelectedNodes()} only returns "top level"
 	 * selected nodes.
-	 * 
+	 *
 	 * @param autoSelectChildren
 	 */
 	public void setAutoSelectChildren(boolean autoSelectChildren) {
@@ -352,7 +351,7 @@ public class TreeGrid extends AbstractGrid {
 	/**
 	 * Returns whether children of selected nodes should be automatically
 	 * treated as selected node.
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isAutoSelectChildren() {

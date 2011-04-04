@@ -27,7 +27,6 @@ import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
-import org.apache.wicket.util.tester.ITestPageSource;
 import org.apache.wicket.util.tester.WicketTester;
 
 import wicket.contrib.phonebook.Contact;
@@ -42,15 +41,13 @@ public class EditContactPageTest extends TestCase {
 	private PhonebookApplicationForTesting app;
 	private PhonebookFixture fixture;
 
-	private final static class MockListContactsPage implements ITestPageSource {
-		public Page getTestPage() {
-			Contact contact = new Contact();
-			contact.setId(99);
-			contact.setFirstname("James");
-			contact.setLastname("Bond");
-			return new EditContactPage(new ListContactsPage(), new Model<Contact>(
-					contact));
-		}
+	private static final Page getTestPage() {
+		Contact contact = new Contact();
+		contact.setId(99);
+		contact.setFirstname("James");
+		contact.setLastname("Bond");
+		return new EditContactPage(new ListContactsPage(), new Model<Contact>(
+				contact));
 	}
 
 	@Override
@@ -59,14 +56,12 @@ public class EditContactPageTest extends TestCase {
 		fixture = new PhonebookFixture();
 		fixture.addStubs(app.context);
 		wicket = new WicketTester(app);
-		wicket.startPage(new MockListContactsPage());
+		wicket.startPage(getTestPage());
 	}
 
 	public void testContainsFormComponents() throws Exception {
 		wicket.assertComponent("contactForm", Form.class);
-		wicket
-				.assertComponent("contactForm:firstname",
-						RequiredTextField.class);
+		wicket.assertComponent("contactForm:firstname", RequiredTextField.class);
 		wicket.assertComponent("contactForm:lastname", RequiredTextField.class);
 		wicket.assertComponent("contactForm:phone", RequiredTextField.class);
 		wicket.assertComponent("contactForm:email", TextField.class);
@@ -89,8 +84,7 @@ public class EditContactPageTest extends TestCase {
 		assertFalse(fixture.getContactData().isContactDaoSaveCalled());
 		form.submit("save");
 		assertTrue(fixture.getContactData().isContactDaoSaveCalled());
-		wicket
-				.assertInfoMessages(new String[] { "Changes to contact James Bond saved successfully" });
+		wicket.assertInfoMessages(new String[] { "Changes to contact James Bond saved successfully" });
 		wicket.assertRenderedPage(ListContactsPage.class);
 	}
 }

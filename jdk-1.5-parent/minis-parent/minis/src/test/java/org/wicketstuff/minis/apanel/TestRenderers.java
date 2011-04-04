@@ -19,7 +19,6 @@ package org.wicketstuff.minis.apanel;
 import java.util.Arrays;
 
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.Page;
 import org.apache.wicket.markup.IMarkupResourceStreamProvider;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -32,7 +31,6 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.StringBufferResourceStream;
-import org.apache.wicket.util.tester.ITestPageSource;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,23 +52,6 @@ public class TestRenderers
 		public APanel getAPanel()
 		{
 			return aPanel;
-		}
-	}
-
-	private static class TestPageSource implements ITestPageSource
-	{
-		private static final long serialVersionUID = 1L;
-
-		private final TestPage testPage;
-
-		public TestPageSource(final TestPage testPage)
-		{
-			this.testPage = testPage;
-		}
-
-		public Page getTestPage()
-		{
-			return testPage;
 		}
 	}
 
@@ -104,7 +85,7 @@ public class TestRenderers
 			}
 		}
 		page.getAPanel().add(new TestPanel("panel"));
-		tester.startPage(new TestPageSource(page));
+		tester.startPage(page);
 
 		tester.assertComponent("aPanel:panel", TestPanel.class);
 	}
@@ -116,7 +97,7 @@ public class TestRenderers
 		form.add(new Label("label", "label on the form"));
 		form.add(new Button("button"));
 		page.getAPanel().add(form);
-		tester.startPage(new TestPageSource(page));
+		tester.startPage(page);
 
 		tester.assertComponent("aPanel:form", Form.class);
 		tester.assertLabel("aPanel:form:label", "label on the form");
@@ -127,7 +108,7 @@ public class TestRenderers
 	public void testLabel()
 	{
 		page.getAPanel().add(new Label("label", "some text"));
-		tester.startPage(new TestPageSource(page));
+		tester.startPage(page);
 
 		tester.assertLabel("aPanel:label", "some text");
 	}
@@ -147,7 +128,7 @@ public class TestRenderers
 		};
 		link.add(new Label("label", "some text"));
 		page.getAPanel().add(link);
-		tester.startPage(new TestPageSource(page));
+		tester.startPage(page);
 
 		tester.assertComponent("aPanel:link", Link.class);
 		tester.assertLabel("aPanel:link:label", "some text");
@@ -169,7 +150,7 @@ public class TestRenderers
 			}
 		};
 		page.getAPanel().add(listView);
-		tester.startPage(new TestPageSource(page));
+		tester.startPage(page);
 
 		tester.assertComponent("aPanel:listView", ListView.class);
 		tester.assertComponent("aPanel:listView:0", ListItem.class);
@@ -188,7 +169,7 @@ public class TestRenderers
 		repeatingView.add(new Label("2", "goodbye"));
 		repeatingView.add(new Label("3", "good morning"));
 		page.getAPanel().add(repeatingView);
-		tester.startPage(new TestPageSource(page));
+		tester.startPage(page);
 
 		tester.assertLabel("aPanel:rw:1", "hello");
 		tester.assertLabel("aPanel:rw:2", "goodbye");
@@ -207,7 +188,7 @@ public class TestRenderers
 			repeatingView.add(link);
 		}
 		page.getAPanel().add(repeatingView);
-		tester.startPage(new TestPageSource(page));
+		tester.startPage(page);
 
 		tester.assertComponent("aPanel:rw:0", BookmarkablePageLink.class);
 		tester.assertComponent("aPanel:rw:1", BookmarkablePageLink.class);

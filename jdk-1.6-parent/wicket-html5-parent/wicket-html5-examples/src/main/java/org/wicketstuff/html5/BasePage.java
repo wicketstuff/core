@@ -14,10 +14,12 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  * @author Andrew Lombardi
  */
 public class BasePage extends WebPage {
+	private static final long serialVersionUID = -8760857910495524644L;
 
-    public BasePage() {}
-    
-    public BasePage(PageParameters parameters) {
-    	super(parameters);
-    }
+	public BasePage() {
+	}
+
+	public BasePage(PageParameters parameters) {
+		super(parameters);
+	}
 }
