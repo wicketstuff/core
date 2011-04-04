@@ -14,33 +14,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console;
 
-import org.apache.wicket.model.IModel;
-import org.wicketstuff.console.engine.Lang;
+package org.wicketstuff.console.engine;
 
 /**
- * Main panel to execute Clojure scripts.
+ * Represents an exception during script engine execution.
+ * <p>
+ * This does not represent an exception thrown by the script itself, which would
+ * rather be included in the {@link IScriptExecutionResult}.
  * 
  * @author cretzel
+ * 
  */
-public class ClojureScriptEnginePanel extends ScriptEnginePanel {
+public class ScriptEngineException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public ClojureScriptEnginePanel(final String wicketId) {
-		this(wicketId, null);
-
+	public ScriptEngineException() {
+		super();
 	}
 
-	public ClojureScriptEnginePanel(final String id, final IModel<String> title) {
-		super(id, Lang.CLOJURE, title);
-		init();
+	public ScriptEngineException(final String message, final Throwable cause) {
+		super(message, cause);
 	}
 
-	protected void init() {
-		setInput("(println user/application)\n" + "(println user/page)\n"
-				+ "(println user/component)\n");
+	public ScriptEngineException(final String message) {
+		super(message);
+	}
+
+	public ScriptEngineException(final Throwable cause) {
+		super(cause);
 	}
 
 }

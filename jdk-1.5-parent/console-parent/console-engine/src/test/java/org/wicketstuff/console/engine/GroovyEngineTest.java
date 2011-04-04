@@ -28,13 +28,13 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ClojureEngineTest {
+public class GroovyEngineTest {
 
-	private ClojureEngine engine;
+	private GroovyEngine engine;
 
 	@Before
 	public void setup() {
-		engine = new ClojureEngine();
+		engine = new GroovyEngine();
 	}
 
 	@Test
@@ -92,7 +92,7 @@ public class ClojureEngineTest {
 	@Test
 	public void test_simple_output_sysout() throws Exception {
 		// Given
-		final String script = "(.print System/out 5)";
+		final String script = "System.out.print(\"5\")";
 
 		// When
 		final IScriptExecutionResult result = engine.execute(script);
@@ -108,7 +108,7 @@ public class ClojureEngineTest {
 	@Test
 	public void test_simple_output_rtout() throws Exception {
 		// Given
-		final String script = "(print 6)";
+		final String script = "print 6";
 
 		// When
 		final IScriptExecutionResult result = engine.execute(script);
@@ -122,10 +122,10 @@ public class ClojureEngineTest {
 	}
 
 	@Test
-	public void test_simple_defn() throws Exception {
+	public void test_simple_def() throws Exception {
 		// Given
-		final String script = "(defn fak [n]"
-				+ "(if (< n 1) 1 (* n (fak (dec n)))))" + "(print (fak 5))";
+		final String script = "def fak(n) {\n"
+				+ "if (n>1) n * fak(n-1) else 1}\n" + "print fak(5)";
 
 		// When
 		final IScriptExecutionResult result = engine.execute(script);
@@ -139,7 +139,7 @@ public class ClojureEngineTest {
 	@Test
 	public void test_simple_binding() throws Exception {
 		// Given
-		final String script = "user/x";
+		final String script = "x";
 		final Map<String, Object> bindings = new HashMap<String, Object>();
 		bindings.put("x", 5);
 
