@@ -48,7 +48,7 @@ public class PackagedScriptTemplatesTest {
 		final List<ScriptTemplate> templates = PackagedScriptTemplates
 				.getPackagedScriptTemplates(Lang.CLOJURE);
 
-		assertEquals(1, templates.size());
+		assertEquals(15, templates.size());
 	}
 
 }
