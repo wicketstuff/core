@@ -30,7 +30,7 @@ import org.wicketstuff.console.engine.Lang;
 
 /**
  * Testing {@link PackagedScriptTemplates}.
- * 
+ *
  * @author cretzel
  */
 public class PackagedScriptTemplatesTest {
@@ -99,7 +99,7 @@ public class PackagedScriptTemplatesTest {
 		// Given
 		final File file = new File(getClass().getClassLoader()
 				.getResource(TEST_SCRIPTS_BASE_DIR + "groovy/Test01.groovy")
-				.getFile());
+				.toURI());
 
 		// When
 		final ScriptTemplate template = PackagedScriptTemplates
