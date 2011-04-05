@@ -17,7 +17,9 @@
 
 package org.wicketstuff.console.templates;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,7 +28,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.util.file.Files;
 import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.engine.LangFileFilter;
 
@@ -189,7 +190,20 @@ public class ScriptTemplateUtils {
 
 	static String readFile(final File file) {
 		try {
-			return new String(Files.readBytes(file));
+			final BufferedInputStream bin = new BufferedInputStream(
+					new FileInputStream(file));
+
+			final StringBuilder builder = new StringBuilder();
+
+			int read = 0;
+			byte[] buffer = new byte[1024];
+			while ((read = bin.read(buffer)) != -1) {
+				final String str = new String(buffer, 0, read);
+				builder.append(str);
+				buffer = new byte[1024];
+			}
+
+			return builder.toString();
 		} catch (final IOException e) {
 			throw new RuntimeException("Could not read file " + file, e);
 		}
