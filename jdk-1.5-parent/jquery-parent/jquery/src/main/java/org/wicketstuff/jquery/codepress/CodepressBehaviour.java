@@ -1,8 +1,9 @@
 package org.wicketstuff.jquery.codepress;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
-
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 import org.wicketstuff.misc.behaviors.SimpleAttributeAppender;
 
@@ -12,7 +13,7 @@ import org.wicketstuff.misc.behaviors.SimpleAttributeAppender;
  *
  */
 public class CodepressBehaviour extends JQueryBehavior {
-    public static final CompressedResourceReference CODEPRESS_JS = new CompressedResourceReference(CodepressBehaviour.class, "jquery.codepress.js");
+    public static final ResourceReference CODEPRESS_JS = new PackageResourceReference(CodepressBehaviour.class, "jquery.codepress.js");
 
     private CodepressOptions options_;
     
@@ -26,9 +27,9 @@ public class CodepressBehaviour extends JQueryBehavior {
     }
     
     @Override
-    public void renderHead(IHeaderResponse response) {
-        super.renderHead(response);
-        response.renderJavascriptReference(CODEPRESS_JS);
+    public void renderHead(Component component, IHeaderResponse response) {
+        super.renderHead(component, response);
+        response.renderJavaScriptReference(CODEPRESS_JS);
     }
 
     @Override protected CharSequence getOnReadyScript() {

@@ -31,6 +31,7 @@
 		<module>inmethod-grid-parent</module>
 		<module>input-events-parent</module>
 		<module>jasperreports-parent</module>
+		<module>jquery-parent</module>
 		<module>jsr303-parent</module>
 		<module>maven-support</module>
 		<module>mbeanview-parent</module>
@@ -66,9 +67,6 @@
 
 		<!-- needs to change to new header contribution structure in 1.5 -->
 		<!-- <module>jslibraries</module> -->
-
-		<!-- jquery depends on misc -->
-		<!-- <module>jquery-parent</module> -->
 
 		<!-- <module>jwicket-parent</module> -->
 

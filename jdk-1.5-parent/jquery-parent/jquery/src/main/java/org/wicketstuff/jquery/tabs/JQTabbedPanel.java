@@ -19,16 +19,17 @@ package org.wicketstuff.jquery.tabs;
 
 import java.util.List;
 
-import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.extensions.markup.html.tabs.TabbedPanel;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 
 /**
@@ -95,8 +96,6 @@ public class JQTabbedPanel extends Panel {
 		this.options = options==null?"":options;
 		
 		add(new JQueryBehavior());
-		add(HeaderContributor.forCss(JQTabbedPanel.class, "jquery.tabs.css"));
-		add(HeaderContributor.forJavaScript(JQTabbedPanel.class, "jquery.tabs.pack.js"));
 		final WebMarkupContainer parent = new WebMarkupContainer("tabs");
 		parent.setOutputMarkupId(true);
 		add(parent);
@@ -122,7 +121,7 @@ public class JQTabbedPanel extends Panel {
 		
 		
 		for (int i=0; i<tabs.size(); i++) {
-			final Panel content = tabs.get(i).getPanel(TAB_PANEL_ID+i);
+			final WebMarkupContainer content = tabs.get(i).getPanel(TAB_PANEL_ID+i);
 			content.setOutputMarkupId(true);
 			contents.add(content);
 			WebMarkupContainer title = new WebMarkupContainer(TAB_PANEL_ID+"-title"+i);
@@ -154,6 +153,15 @@ public class JQTabbedPanel extends Panel {
 	 */
 	protected String getTabsOptions() {
 		return options;
+	}
+
+	@Override
+	public void renderHead(IHeaderResponse response) {
+		super.renderHead(response);
+	
+		response.renderCSSReference(new PackageResourceReference(JQTabbedPanel.class, "jquery.tabs.css"));
+		response.renderJavaScriptReference(new PackageResourceReference(JQTabbedPanel.class, "jquery.tabs.pack.js"));
+		
 	}
 
 }

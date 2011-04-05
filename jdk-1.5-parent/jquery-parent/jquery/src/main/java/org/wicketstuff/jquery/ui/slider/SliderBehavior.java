@@ -3,13 +3,14 @@ package org.wicketstuff.jquery.ui.slider;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.protocol.http.RequestUtils;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 import org.wicketstuff.jquery.ui.UIResources;
 
@@ -62,26 +63,20 @@ public class SliderBehavior extends JQueryBehavior {
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
+	public void renderHead(Component component, IHeaderResponse response) {
+		super.renderHead(component, response);
 		response.renderCSSReference(UIResources.FLORA_CSS);
 		response.renderCSSReference(UIResources.FLORA_SLIDER_CSS);
-		response.renderJavascriptReference(JQUERY_UI_JS);
-		response.renderJavascriptReference(UI_SLIDER_RESOURCE_REFERENCE);
-		response.renderJavascriptReference(WICKET_SLIDER_JS);
+		response.renderJavaScriptReference(JQUERY_UI_JS);
+		response.renderJavaScriptReference(UI_SLIDER_RESOURCE_REFERENCE);
+		response.renderJavaScriptReference(WICKET_SLIDER_JS);
 	}
 
 	@Override
 	protected void respond(AjaxRequestTarget target) {
 		final Request req = RequestCycle.get().getRequest();
-		final Map<String, String[]> params = new HashMap<String, String[]>();
-		RequestUtils.decodeUrlParameters(req.getQueryString(), params);
-		final String handleId = params.get("handleId") != null 
-			? params.get("handleId")[0] 
-			: null;
-		final int newValue = params.get("value") != null 
-			? Integer.parseInt(params.get("value")[0]) 
-			: -1;
+		final String handleId = req.getQueryParameters().getParameterValue("handleId").toString();
+		final int newValue = req.getQueryParameters().getParameterValue("value").toInt(-1);
 		getSlider().onChange(target, handleId, newValue);
 	}
 

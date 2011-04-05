@@ -1,13 +1,14 @@
 package org.wicketstuff.jquery.jgrowl;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.feedback.IFeedbackMessageFilter;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 import org.wicketstuff.jquery.Options;
 
@@ -113,9 +114,9 @@ public class JGrowlFeedbackPanel extends FeedbackPanel implements IHeaderContrib
 
 	public void renderHead(final IHeaderResponse response) {
 
-		response.renderCSSReference(new ResourceReference(JGrowlFeedbackPanel.class, "res/jquery.jgrowl.css"));
-		response.renderJavascriptReference(JQueryBehavior.JQUERY_JS);
-		response.renderJavascriptReference(new ResourceReference(JGrowlFeedbackPanel.class, "res/jquery.jgrowl.js"));	
+		response.renderCSSReference(new PackageResourceReference(JGrowlFeedbackPanel.class, "res/jquery.jgrowl.css"));
+		response.renderJavaScriptReference(JQueryBehavior.JQUERY_JS);
+		response.renderJavaScriptReference(new PackageResourceReference(JGrowlFeedbackPanel.class, "res/jquery.jgrowl.js"));	
 	}
 
 	public JGrowlFeedbackPanel setErrorMessageOptions(final Options errorOptions) {

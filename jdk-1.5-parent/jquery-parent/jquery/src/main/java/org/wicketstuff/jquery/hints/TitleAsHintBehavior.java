@@ -16,8 +16,10 @@
  */
 package org.wicketstuff.jquery.hints;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 
 /**
@@ -27,12 +29,12 @@ import org.wicketstuff.jquery.JQueryBehavior;
 @SuppressWarnings(value = "serial")
 public class TitleAsHintBehavior extends JQueryBehavior {
 
-    public static final CompressedResourceReference HINTS_JS = new CompressedResourceReference(TitleAsHintBehavior.class, "jquery.hints.js");
+    public static final ResourceReference HINTS_JS = new PackageResourceReference(TitleAsHintBehavior.class, "jquery.hints.js");
 
     @Override
-    public void renderHead(IHeaderResponse response) {
-        super.renderHead(response);
-        response.renderJavascriptReference(HINTS_JS);
+    public void renderHead(Component component, IHeaderResponse response) {
+        super.renderHead(component, response);
+        response.renderJavaScriptReference(HINTS_JS);
     }
     
     @Override

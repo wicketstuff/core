@@ -34,7 +34,7 @@ public class Page4Tabs extends PageSupport {
 		tabs.add(new AbstractTab(new Model("A")) {
 			@Override
 			public Panel getPanel(String panelId) {
-				return new TextPanel(panelId, new Model(
+				return new TextPanel(panelId, Model.of(
 						"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus nec leo. Duis ultricies. In id ipsum vitae ante fringilla" 
 						));
 			}
@@ -42,7 +42,7 @@ public class Page4Tabs extends PageSupport {
 		tabs.add(new AbstractTab(new Model("B")) {
 			@Override
 			public Panel getPanel(String panelId) {
-				return new TextPanel(panelId, new Model(
+				return new TextPanel(panelId, Model.of(
 						"volutpat. In pharetra. Ut ante. Vivamus tempus, leo a ullamcorper tincidunt, pede ipsum consectetuer nunc, at pellentesque"
 						));
 			}
@@ -50,7 +50,7 @@ public class Page4Tabs extends PageSupport {
 		tabs.add(new AbstractTab(new Model("C")) {
 			@Override
 			public Panel getPanel(String panelId) {
-				return new TextPanel(panelId, new Model(
+				return new TextPanel(panelId, Model.of(
 						"libero felis in metus. Pellentesque sollicitudin neque. Nulla facilisi. Sed hendrerit tempus orci. Aenean a nulla quis risus molestie vehicula."
 						));
 			}

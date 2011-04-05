@@ -1,12 +1,12 @@
 package org.wicketstuff.jquery.crop;
 
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.LoadableDetachableModel;
-import org.apache.wicket.util.template.TextTemplateHeaderContributor;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.util.template.PackageTextTemplate;
 
 /**
  * 
@@ -16,6 +16,7 @@ import java.util.Map;
 public class CroppableImage extends Panel {
 	private WebMarkupContainer container;
 	private WebMarkupContainer image;
+	private final Map<String, Object> vars;
 	
 	public CroppableImage(String id, CropBehaviour behaviour, final String imageUrl, final int width, final int height) {
 		super(id);
@@ -28,24 +29,31 @@ public class CroppableImage extends Panel {
 		image.setOutputMarkupId(true);
 		add(image);
 
-		LoadableDetachableModel vars = new LoadableDetachableModel() {
-			@Override protected Object load() {
-				Map vars = new HashMap();
-				vars.put("container", container.getMarkupId());
-				vars.put("image", image.getMarkupId());
-				vars.put("imageUrl", imageUrl);
-				vars.put("width", width);
-				vars.put("height", height);
-				vars.put("rwidth", width/2);
-				vars.put("rheight", height/2);
-				vars.put("cropBg", urlFor(CropBehaviour.CROP_BG));
-				return vars;
-			}
-		};
+		vars = new HashMap<String, Object>();
+		vars.put("container", container.getMarkupId());
+		vars.put("image", image.getMarkupId());
+		vars.put("imageUrl", imageUrl);
+		vars.put("width", width);
+		vars.put("height", height);
+		vars.put("rwidth", width/2);
+		vars.put("rheight", height/2);
+		vars.put("cropBg", urlFor(CropBehaviour.CROP_BG, null));
 	
-		add(TextTemplateHeaderContributor.forCss(CroppableImage.class, "crop.css", vars));
-
 		image.add(behaviour);
 	}
+
+	@Override
+	public void renderHead(IHeaderResponse response) {
+		super.renderHead(response);
+	
+		PackageTextTemplate template = new PackageTextTemplate(CroppableImage.class, "crop.css");
+		String css = template.interpolate(vars).asString();
+		
+		response.renderCSS(css, "croppable-image."+getMarkupId());
+
+
+	}
+	
+	
 
 }

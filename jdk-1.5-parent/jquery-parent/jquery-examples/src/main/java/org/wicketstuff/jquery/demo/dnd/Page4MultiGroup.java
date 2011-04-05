@@ -16,6 +16,8 @@
  */
 package org.wicketstuff.jquery.demo.dnd;
 
+import java.util.List;
+
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
@@ -24,8 +26,6 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.wicketstuff.jquery.demo.PageSupport;
 import org.wicketstuff.jquery.dnd.DnDSortableHandler;
-
-import java.util.List;
 
 @SuppressWarnings("serial")
 public class Page4MultiGroup extends PageSupport {

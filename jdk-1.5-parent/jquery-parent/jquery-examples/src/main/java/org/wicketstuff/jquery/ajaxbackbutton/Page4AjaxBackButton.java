@@ -27,7 +27,7 @@ public class Page4AjaxBackButton extends PageSupport {
 		/**
 		 * The hidden (CSS position) iframe which will capture the back/forward button clicks 
 		 */
-		final HistoryIFrame historyIFrame = new HistoryIFrame("historyIframe", getPageMap());
+		final HistoryIFrame historyIFrame = new HistoryIFrame("historyIframe");
 		add(historyIFrame);
 		
 		/**

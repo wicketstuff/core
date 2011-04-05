@@ -61,7 +61,7 @@ public class Page4SimpleList extends PageSupport {
                 feedback.info(msg);
                 if (target != null) {
                     // target is null in testcase
-                    target.addComponent(feedback);
+                    target.add(feedback);
                 }
                 // false = don't need to keep in sync component, markupId on serverside and client side
                 return false;
@@ -111,9 +111,9 @@ public class Page4SimpleList extends PageSupport {
         add(webList);
 
         // create items (add as children of the container)
-        webList.add(new ListView("myItem", dataList_) {
+        webList.add(new ListView<MyItem>("myItem", dataList_) {
             @Override
-            protected void populateItem(ListItem listitem) {
+            protected void populateItem(ListItem<MyItem> listitem) {
                 try {
                     listitem.add(new Label("myItemLabel", new PropertyModel(listitem.getModelObject(), "label")));
                     dnd.registerItem(listitem);

@@ -3,6 +3,7 @@ package org.wicketstuff.jquery.demo.dnd;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.util.tester.WicketTester;
@@ -34,8 +35,8 @@ public class Page4SimpleListTest {
 
         WebMarkupContainer webList = (WebMarkupContainer) page.get("myItemList");
         WebMarkupContainer list = (WebMarkupContainer) webList.get("myItem");
-        ArrayList<ListItem> items = new ArrayList<ListItem>();
-        for (Iterator<ListItem> it = (Iterator<ListItem>) list.iterator(); it.hasNext();) {
+        ArrayList<Component> items = new ArrayList<Component>();
+        for (Iterator<Component> it = list.iterator(); it.hasNext();) {
             items.add(it.next());
         }
 
@@ -60,10 +61,10 @@ public class Page4SimpleListTest {
         assertEquals(Page4SimpleList.dataList_.get(3), originalDataList.get(1));
 
         // but wicket component isn't updated (wicket always component use the current)
-        assertEquals(Page4SimpleList.dataList_.get(0), (MyItem)items.get(0).getModelObject());
-        assertEquals(Page4SimpleList.dataList_.get(1), (MyItem)items.get(1).getModelObject());
-        assertEquals(Page4SimpleList.dataList_.get(2), (MyItem)items.get(2).getModelObject());
-        assertEquals(Page4SimpleList.dataList_.get(3), (MyItem)items.get(3).getModelObject());
+        assertEquals(Page4SimpleList.dataList_.get(0), (MyItem)items.get(0).getDefaultModelObject());
+        assertEquals(Page4SimpleList.dataList_.get(1), (MyItem)items.get(1).getDefaultModelObject());
+        assertEquals(Page4SimpleList.dataList_.get(2), (MyItem)items.get(2).getDefaultModelObject());
+        assertEquals(Page4SimpleList.dataList_.get(3), (MyItem)items.get(3).getDefaultModelObject());
 
         dnd.onDnD(null, webList, 1, webList, 3);
 

@@ -22,78 +22,78 @@ import org.apache.wicket.ajax.IAjaxCallDecorator;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 
-public abstract class BlockingAjaxLink<T> extends AjaxLink<T> implements IHeaderContributor
-{
-  public static final CompressedResourceReference BLOCK_JS = new CompressedResourceReference(BlockingAjaxLink.class, "jquery.blockUI.js");
+public abstract class BlockingAjaxLink<T> extends AjaxLink<T> implements
+		IHeaderContributor {
+	public static final ResourceReference BLOCK_JS = new PackageResourceReference(
+			BlockingAjaxLink.class, "jquery.blockUI.js");
 
-  final BlockOptions options;
-  
-  public BlockingAjaxLink(final String id, BlockOptions options )
-	{
+	final BlockOptions options;
+
+	public BlockingAjaxLink(final String id, BlockOptions options) {
 		super(id, null);
 		this.options = options;
 	}
 
-  public BlockingAjaxLink(final String id, String message )
-  {
-    this(id, new BlockOptions().setMessage( message ) );
-  }
+	public BlockingAjaxLink(final String id, String message) {
+		this(id, new BlockOptions().setMessage(message));
+	}
 
-  public void renderHead(IHeaderResponse response) {
-    response.renderJavascriptReference(JQueryBehavior.JQUERY_JS);
-    response.renderJavascriptReference(BLOCK_JS);
-  }
-  
+	public void renderHead(IHeaderResponse response) {
+		response.renderJavaScriptReference(JQueryBehavior.JQUERY_JS);
+		response.renderJavaScriptReference(BLOCK_JS);
+	}
+
 	/**
 	 * Returns ajax call decorator that will be used to decorate the ajax call.
 	 * 
 	 * @return ajax call decorator
 	 */
-	protected IAjaxCallDecorator getAjaxCallDecorator()
-	{
+	protected IAjaxCallDecorator getAjaxCallDecorator() {
 		return new IAjaxCallDecorator() {
-      public CharSequence decorateScript(CharSequence script) {
-        StringBuilder js = new StringBuilder();
-        CharSequence sel = getBlockElementsSelector();
-        if( sel != null ) {
-          js.append( "$('" ).append( sel ).append( "').block( " );
-        }
-        else {
-          js.append( "$.blockUI( " );
-        }
-        return js.append( options.toString() ).append( " ); " ).append( script );
-      }
-      
-      public CharSequence decorateOnFailureScript(CharSequence script) {
-        return script;
-      }
+			private static final long serialVersionUID = 1L;
 
-      public CharSequence decorateOnSuccessScript(CharSequence script) {
-        return script;
-      }
+			public CharSequence decorateScript(Component component, CharSequence script) {
+				StringBuilder js = new StringBuilder();
+				CharSequence sel = getBlockElementsSelector();
+				if (sel != null) {
+					js.append("$('").append(sel).append("').block( ");
+				} else {
+					js.append("$.blockUI( ");
+				}
+				return js.append(options.toString()).append(" ); ")
+						.append(script);
+			}
+
+			public CharSequence decorateOnSuccessScript(Component component,
+					CharSequence script) {
+				return script;
+			}
+
+			public CharSequence decorateOnFailureScript(Component component,
+					CharSequence script) {
+				return script;
+			}
 		};
 	}
 
-	public CharSequence getBlockElementsSelector()
-	{
-	  return null;
+	public CharSequence getBlockElementsSelector() {
+		return null;
 	}
-	
-  final public void onClick(final AjaxRequestTarget target)
-  {
-    doClick( target );
 
-    CharSequence sel = getBlockElementsSelector();
-    if( sel != null ) {
-      target.appendJavascript( "$('"+sel+"').unblock(); " );
-    }
-    else {
-      target.appendJavascript( "$.unblockUI(); " );
-    }
-  }
-  
-  public abstract void doClick(final AjaxRequestTarget target);
+	final public void onClick(final AjaxRequestTarget target) {
+		doClick(target);
+
+		CharSequence sel = getBlockElementsSelector();
+		if (sel != null) {
+			target.appendJavaScript("$('" + sel + "').unblock(); ");
+		} else {
+			target.appendJavaScript("$.unblockUI(); ");
+		}
+	}
+
+	public abstract void doClick(final AjaxRequestTarget target);
 }

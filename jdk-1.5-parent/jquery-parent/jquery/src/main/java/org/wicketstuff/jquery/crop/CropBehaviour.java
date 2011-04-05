@@ -1,11 +1,12 @@
 package org.wicketstuff.jquery.crop;
 
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
-
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.FunctionString;
 import org.wicketstuff.jquery.JQueryBehavior;
 
@@ -15,9 +16,9 @@ import org.wicketstuff.jquery.JQueryBehavior;
  *
  */
 public class CropBehaviour extends JQueryBehavior {
-	public static final CompressedResourceReference IRESIZABLE_JS = new CompressedResourceReference(CropBehaviour.class, "iresizable.js");
-	public static final CompressedResourceReference IUTIL_JS = new CompressedResourceReference(CropBehaviour.class, "iutil.js");
-	public static final CompressedResourceReference CROP_BG = new CompressedResourceReference(CropBehaviour.class, "crop_bg.png");
+	public static final ResourceReference IRESIZABLE_JS = new PackageResourceReference(CropBehaviour.class, "iresizable.js");
+	public static final ResourceReference IUTIL_JS = new PackageResourceReference(CropBehaviour.class, "iutil.js");
+	public static final ResourceReference CROP_BG = new PackageResourceReference(CropBehaviour.class, "crop_bg.png");
 
 	private CropOptions options;
 
@@ -58,19 +59,22 @@ public class CropBehaviour extends JQueryBehavior {
 				+ "&left=' + " + c + ".css('left')");
 	}
 
-	@Override public void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
-		response.renderJavascriptReference(JQUERY_JS);
-		response.renderJavascriptReference(INTERFACE_JS);
-		response.renderJavascriptReference(IRESIZABLE_JS);
-		response.renderJavascriptReference(IUTIL_JS);
-		response.renderJavascript("function cropCallback() {\n" + getCallbackScript() + "\n}\n", "crop-init-for-" + getComponent().getMarkupId());
+	@Override public void renderHead(Component component, IHeaderResponse response) {
+		super.renderHead(component, response);
+		response.renderJavaScriptReference(JQUERY_JS);
+		response.renderJavaScriptReference(INTERFACE_JS);
+		response.renderJavaScriptReference(IRESIZABLE_JS);
+		response.renderJavaScriptReference(IUTIL_JS);
+		response.renderJavaScript("function cropCallback() {\n" + getCallbackScript() + "\n}\n", "crop-init-for-" + getComponent().getMarkupId());
 	}
 
 	@Override protected void respond(AjaxRequestTarget target) {
 		Request req = RequestCycle.get().getRequest();
-		onCropped(target, Integer.parseInt(req.getParameter("width")), Integer.parseInt(req.getParameter("height")),
-				Integer.parseInt(req.getParameter("top").replace("px", "")), Integer.parseInt(req.getParameter("left").replace("px", "")));
+		onCropped(target, 
+				req.getQueryParameters().getParameterValue("width").toInt(), 
+				req.getQueryParameters().getParameterValue("height").toInt(),
+				Integer.parseInt(req.getQueryParameters().getParameterValue("top").toString().replace("px", "")), 
+				Integer.parseInt(req.getQueryParameters().getParameterValue("left").toString().replace("px", "")));
 	}
 
 	public void onCropped(AjaxRequestTarget target, int width, int height, int top, int left) {

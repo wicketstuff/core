@@ -1,10 +1,10 @@
 package org.wicketstuff.jquery.resize;
 
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
-
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.wicketstuff.jquery.FunctionString;
 import org.wicketstuff.jquery.JQueryBehavior;
 /**
@@ -45,14 +45,16 @@ public class ResizeBehaviour extends JQueryBehavior {
 	}
 
     @Override
-    public void renderHead(IHeaderResponse response) {
-        super.renderHead(response);
-        response.renderJavascriptReference(JQueryBehavior.JQUERY_UI_JS);
+    public void renderHead(Component component, IHeaderResponse response) {
+        super.renderHead(component, response);
+        response.renderJavaScriptReference(JQueryBehavior.JQUERY_UI_JS);
     }
 
     @Override protected void respond(AjaxRequestTarget target) {
         Request req = RequestCycle.get().getRequest();
-    	onResizeStop(target, Integer.parseInt(req.getParameter("height")), Integer.parseInt(req.getParameter("width")));
+    	onResizeStop(target, 
+    			req.getQueryParameters().getParameterValue("height").toInt(), 
+    			req.getQueryParameters().getParameterValue("width").toInt());
     }
     
     public void onResizeStop(AjaxRequestTarget target, int height, int width) {

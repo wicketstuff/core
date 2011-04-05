@@ -1,8 +1,9 @@
 package org.wicketstuff.jquery.lightbox;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 
 /**
@@ -49,9 +50,9 @@ public class LightboxBehaviour extends JQueryBehavior {
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
-		response.renderJavascriptReference(getLightboxJs());
+	public void renderHead(Component component, IHeaderResponse response) {
+		super.renderHead(component, response);
+		response.renderJavaScriptReference(getLightboxJs());
 		response.renderCSSReference(getLightboxCss());
 	}
 

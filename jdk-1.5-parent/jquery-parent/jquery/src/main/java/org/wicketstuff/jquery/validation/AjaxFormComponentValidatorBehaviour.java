@@ -1,5 +1,6 @@
 package org.wicketstuff.jquery.validation;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
@@ -52,10 +53,10 @@ public class AjaxFormComponentValidatorBehaviour extends AjaxFormComponentUpdati
 	protected void onUpdate(AjaxRequestTarget target) {
 		if(errorDetected) {
 			// Remove the error-class on the surrounding element
-			target.appendJavascript("$('#" + getComponent().getMarkupId() + "').removeClass('" + ERROR_COMPONENT_CLASS + "');");
+			target.appendJavaScript("$('#" + getComponent().getMarkupId() + "').removeClass('" + ERROR_COMPONENT_CLASS + "');");
 
 			// Remove the previously added error-messages
-			target.appendJavascript(getRemovePreviousErrorsScript());
+			target.appendJavaScript(getRemovePreviousErrorsScript());
 		}
 	}
 
@@ -77,7 +78,7 @@ public class AjaxFormComponentValidatorBehaviour extends AjaxFormComponentUpdati
 	 */
 	protected void onError(AjaxRequestTarget target, RuntimeException e) {
 		super.onError(target, e);
-		target.appendJavascript(getErrorJavascript());
+		target.appendJavaScript(getErrorJavascript());
 		errorDetected = true;
 	}
 
@@ -131,8 +132,8 @@ public class AjaxFormComponentValidatorBehaviour extends AjaxFormComponentUpdati
 	 *
 	 * @param response
 	 */
-	public void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
-		response.renderJavascriptReference(JQueryBehavior.JQUERY_JS);
+	public void renderHead(Component component, IHeaderResponse response) {
+		super.renderHead(component, response);
+		response.renderJavaScriptReference(JQueryBehavior.JQUERY_JS);
 	}
 }

@@ -19,7 +19,7 @@ package org.wicketstuff.jquery.accordion;
 
 import java.util.Iterator;
 
-import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -27,6 +27,7 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 
 /**
@@ -96,8 +97,6 @@ public abstract class JQAccordion extends Panel {
 		this.options = options;
 		
 		add(new JQueryBehavior());
-		add(HeaderContributor.forCss(JQAccordion.class, "jquery.accordion.css"));
-		add(HeaderContributor.forJavaScript(JQAccordion.class, "jquery.accordion.pack.js"));
 
 		final WebMarkupContainer parent = new WebMarkupContainer("accordion");
 		parent.setOutputMarkupId(true);
@@ -124,6 +123,15 @@ public abstract class JQAccordion extends Panel {
 		}).setEscapeModelStrings(false));
 
 		parent.add(newRepeatingView("item"));
+	}
+
+	@Override
+	public void renderHead(IHeaderResponse response) {
+		super.renderHead(response);
+		
+
+		response.renderCSSReference(new PackageResourceReference(JQAccordion.class, "jquery.accordion.css"));
+		response.renderJavaScriptReference(new PackageResourceReference(JQAccordion.class, "jquery.accordion.pack.js"));
 	}
 
 	protected String getOptions() {

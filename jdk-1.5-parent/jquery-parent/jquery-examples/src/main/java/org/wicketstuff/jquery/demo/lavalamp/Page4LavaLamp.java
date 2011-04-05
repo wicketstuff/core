@@ -2,10 +2,10 @@ package org.wicketstuff.jquery.demo.lavalamp;
 
 import java.util.List;
 
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.demo.PageSupport;
 import org.wicketstuff.jquery.lavalamp.LavaLampMenuPanel;
 import org.wicketstuff.jquery.lavalamp.MenuItem;

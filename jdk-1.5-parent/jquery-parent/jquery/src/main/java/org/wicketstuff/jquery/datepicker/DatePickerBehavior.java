@@ -16,27 +16,27 @@
  */
 package org.wicketstuff.jquery.datepicker;
 
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.behavior.SimpleAttributeModifier;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
+import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.protocol.http.request.WebClientInfo;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.convert.IConverter;
-import org.apache.wicket.util.convert.converters.DateConverter;
+import org.apache.wicket.util.convert.converter.DateConverter;
 import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.jquery.JQueryBehavior;
 import org.wicketstuff.misc.behaviors.CompositeBehavior;
 import org.wicketstuff.misc.behaviors.SimpleAttributeAppender;
-
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Add support of the <a href="http://kelvinluck.com/assets/jquery/datePicker/v2/demo/">datePicker</a>.
@@ -47,9 +47,9 @@ import java.util.Map;
 @SuppressWarnings(value = "serial")
 public class DatePickerBehavior extends JQueryBehavior {
 
-    public static final ResourceReference DATE_JS = new CompressedResourceReference(DatePickerBehavior.class, "date.js");
-    public static final ResourceReference JQUERY_DATEPICKER_JS = new CompressedResourceReference(DatePickerBehavior.class, "jquery.datePicker.js");
-    public static final ResourceReference DATEPICKER_CSS = new CompressedResourceReference(DatePickerBehavior.class, "datePicker.css");
+    public static final ResourceReference DATE_JS = new PackageResourceReference(DatePickerBehavior.class, "date.js");
+    public static final ResourceReference JQUERY_DATEPICKER_JS = new PackageResourceReference(DatePickerBehavior.class, "jquery.datePicker.js");
+    public static final ResourceReference DATEPICKER_CSS = new PackageResourceReference(DatePickerBehavior.class, "datePicker.css");
     private DatePickerOptions options_;
     private String format_;
 	private boolean includeJquery = true;
@@ -80,15 +80,15 @@ public class DatePickerBehavior extends JQueryBehavior {
 //        }
 //    }
     @Override
-    public void renderHead(IHeaderResponse response) {
+    public void renderHead(Component component, IHeaderResponse response) {
 		if(includeJquery)
-			super.renderHead(response);
+			super.renderHead(component, response);
         response.renderCSSReference(DATEPICKER_CSS);
-        response.renderJavascriptReference(DATE_JS);
+        response.renderJavaScriptReference(DATE_JS);
 		try {
-            WebClientInfo info = (WebClientInfo) RequestCycle.get().getClientInfo();
+            WebClientInfo info = (WebClientInfo) WebSession.get().getClientInfo();
             if (info.getUserAgent().contains("MSIE")) {
-                response.renderJavascriptReference(JQUERY_BGIFRAME_JS);
+                response.renderJavaScriptReference(JQUERY_BGIFRAME_JS);
             }
         } catch (ClassCastException exc) {
             logger().info("can't find info about client", exc);
@@ -97,7 +97,7 @@ public class DatePickerBehavior extends JQueryBehavior {
         // if (ie) {
         // response.renderJavascriptReference(JQUERY_BGIFRAME_JS);
         // }
-        response.renderJavascriptReference(JQUERY_DATEPICKER_JS);
+        response.renderJavaScriptReference(JQUERY_DATEPICKER_JS);
         
         /* Support localized messages in the datepicker clientside */
         if(options_.dynamicLocalizedMessages) {
@@ -133,7 +133,7 @@ public class DatePickerBehavior extends JQueryBehavior {
 				lm.get("monthNames") + "' ];\n" +
 				lm.get("abbrMonthNames") + "' ];\n";
 			
-        	response.renderJavascript(locMess, "localization_override" + getComponent().getMarkupId());
+        	response.renderJavaScript(locMess, "localization_override" + getComponent().getMarkupId());
         }
     }
 
@@ -174,7 +174,7 @@ public class DatePickerBehavior extends JQueryBehavior {
         }
     }
 
-    public IBehavior getDatePickerStyle() {
+    public Behavior getDatePickerStyle() {
         return new CompositeBehavior(
             new SimpleAttributeAppender("class", "date-pick", " "),
             new SimpleAttributeModifier("size", String.valueOf(format_.length())),

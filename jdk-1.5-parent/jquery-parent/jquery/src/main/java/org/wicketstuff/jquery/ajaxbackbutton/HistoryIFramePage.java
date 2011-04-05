@@ -10,11 +10,13 @@ import org.wicketstuff.jquery.JQueryBehavior;
  */
 public class HistoryIFramePage extends WebPage implements IHeaderContributor {
 
+	private static final long serialVersionUID = 1L;
+
 	public HistoryIFramePage() {
 	}
 
 	public void renderHead(IHeaderResponse response) {
-		response.renderJavascriptReference(JQueryBehavior.JQUERY_JS);
+		response.renderJavaScriptReference(JQueryBehavior.JQUERY_JS);
 	}
 	
 }

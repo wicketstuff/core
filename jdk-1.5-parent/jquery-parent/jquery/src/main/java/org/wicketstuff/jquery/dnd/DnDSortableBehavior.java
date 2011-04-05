@@ -21,22 +21,23 @@ import java.util.HashMap;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.behavior.IBehaviorListener;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.util.template.PackagedTextTemplate;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.util.template.PackageTextTemplate;
 import org.wicketstuff.jquery.JQueryBehavior;
 import org.wicketstuff.jquery.Options;
 
 // TODO: disable callback to serverside if clientsideonly
 @SuppressWarnings("serial")
 public class DnDSortableBehavior extends JQueryBehavior implements IBehaviorListener {
-    public static final CompressedResourceReference DNDSORTABLEBEHAVIOR_JS = new CompressedResourceReference(DnDSortableBehavior.class, DnDSortableBehavior.class.getSimpleName() + ".js");
+    public static final ResourceReference DNDSORTABLEBEHAVIOR_JS = new PackageResourceReference(DnDSortableBehavior.class, DnDSortableBehavior.class.getSimpleName() + ".js");
 
 	protected Options options_;
 
@@ -75,10 +76,10 @@ public class DnDSortableBehavior extends JQueryBehavior implements IBehaviorList
     }
 
     @Override
-    public void renderHead(IHeaderResponse response) {
-        super.renderHead(response);
-        response.renderJavascriptReference(INTERFACE_JS);
-        response.renderJavascriptReference(DNDSORTABLEBEHAVIOR_JS);
+    public void renderHead(Component component, IHeaderResponse response) {
+        super.renderHead(component, response);
+        response.renderJavaScriptReference(INTERFACE_JS);
+        response.renderJavaScriptReference(DNDSORTABLEBEHAVIOR_JS);
 		response.renderString(getHead(false));
 	}
 
@@ -88,7 +89,7 @@ public class DnDSortableBehavior extends JQueryBehavior implements IBehaviorList
 
 	private CharSequence getHead(boolean rebind) {
         // load the css template we created form the res package
-        PackagedTextTemplate template = new PackagedTextTemplate(
+        PackageTextTemplate template = new PackageTextTemplate(
 				DnDSortableBehavior.class,
 				DnDSortableBehavior.class.getSimpleName() + (rebind ? "-rebind.tmpl" : "-head.tmpl")
 		);
@@ -150,10 +151,10 @@ public class DnDSortableBehavior extends JQueryBehavior implements IBehaviorList
             }
             onDnD(target,
                     //req.getParameter("itemId"),
-                    req.getParameter("srcContainerId"),
-                    Integer.parseInt(req.getParameter("srcPosition")),
-                    req.getParameter("destContainerId"),
-                    Integer.parseInt(req.getParameter("destPosition"))
+                    req.getQueryParameters().getParameterValue("srcContainerId").toString(),
+                    req.getQueryParameters().getParameterValue("srcPosition").toInt(),
+                    req.getQueryParameters().getParameterValue("destContainerId").toString(),
+                    req.getQueryParameters().getParameterValue("destPosition").toInt()
             );
         } catch (RuntimeException exc) {
             throw exc;
@@ -205,11 +206,11 @@ public class DnDSortableBehavior extends JQueryBehavior implements IBehaviorList
         if (updateContainers && (target != null)) {
             // target is null in testcase
             // (optional) if you need to keep in sync component, markupId on serverside and client side
-            target.addComponent(srcContainer);
+            target.add(srcContainer);
             if (srcContainer != destContainer) {
-                target.addComponent(destContainer);
+                target.add(destContainer);
             }
-            target.appendJavascript(getJSFunctionName4Start() + "();");
+            target.appendJavaScript(getJSFunctionName4Start() + "();");
         }
     }
 

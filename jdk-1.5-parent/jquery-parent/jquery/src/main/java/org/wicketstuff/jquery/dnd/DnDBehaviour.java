@@ -1,10 +1,11 @@
 package org.wicketstuff.jquery.dnd;
 
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.IBehaviorListener;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.wicketstuff.jquery.FunctionString;
 import org.wicketstuff.jquery.JQueryBehavior;
 import org.wicketstuff.jquery.Options;
@@ -49,12 +50,12 @@ public class DnDBehaviour extends JQueryBehavior implements IBehaviorListener {
 	}
 
 	@Override
-    public void renderHead(IHeaderResponse response) {
+    public void renderHead(Component component, IHeaderResponse response) {
 		droppableOptions.set("accept", dragSelector, false);
 		droppableOptions.set("drop", new FunctionString(getDropScript()));
 
-		response.renderJavascriptReference(JQueryBehavior.JQUERY_UI_JS);
-		super.renderHead(response);
+		response.renderJavaScriptReference(JQueryBehavior.JQUERY_UI_JS);
+		super.renderHead(component, response);
     }
 
 	public String getDropScript() {
@@ -65,7 +66,8 @@ public class DnDBehaviour extends JQueryBehavior implements IBehaviorListener {
 	public final void respond(AjaxRequestTarget target) {
 		Request req = RequestCycle.get().getRequest();
 
-		onDrop(req.getParameter("src"), req.getParameter("dest"), target);
+		onDrop(req.getQueryParameters().getParameterValue("src").toString(), 
+				req.getQueryParameters().getParameterValue("dest").toString(), target);
 	}
 
 	@Override

@@ -16,21 +16,17 @@
  */
 package org.wicketstuff.jquery.sparkline;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.IAjaxCallDecorator;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebComponent;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.resource.CompressedResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 
 public class Sparkline extends WebComponent implements IHeaderContributor
@@ -130,20 +126,20 @@ public class Sparkline extends WebComponent implements IHeaderContributor
   }
   
   public void renderHead(IHeaderResponse response) {
-    response.renderJavascriptReference(JQueryBehavior.JQUERY_JS);
-    response.renderJavascriptReference(SPARKLINE_JS);
+    response.renderJavaScriptReference(JQueryBehavior.JQUERY_JS);
+    response.renderJavaScriptReference(SPARKLINE_JS);
 
     if( writeJSOnReady ) {
       StringBuilder builder = new StringBuilder();
       builder.append("$(document).ready(function(){\n");
       builder.append(getSparklineJS());
       builder.append("\n});");
-      response.renderJavascript(builder, null );
+      response.renderJavaScript(builder, null );
     }
   }
 
   @Override
-  protected void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag)
+  public void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag)
   {
     replaceComponentTagBody(markupStream, openTag, "sparkline" );
   }
@@ -153,6 +149,6 @@ public class Sparkline extends WebComponent implements IHeaderContributor
   {
     super.onComponentTag(tag);
     // always transform the tag to <span></span> so even labels defined as <span/> render
-    tag.setType(XmlTag.OPEN);
+    tag.setType(XmlTag.TagType.OPEN);
   }
 }
