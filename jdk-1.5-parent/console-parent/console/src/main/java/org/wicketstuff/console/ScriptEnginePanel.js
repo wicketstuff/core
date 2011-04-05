@@ -19,7 +19,7 @@ function clearTextarea(id) {
 }
 
 // Set desired tab- defaults to four space softtab
-var tab = "    ";
+var tab = "  ";
 
 function doTab1() {
 	alert("foo");
@@ -39,10 +39,10 @@ function doTab(e) {
 	}
 
 	var t = evt.target;
+	
+	// Tab key - insert tab expansion
 	var ss = t.selectionStart;
 	var se = t.selectionEnd;
-
-	// Tab key - insert tab expansion
 	if (evt.keyCode == 9) {
 		evt.preventDefault();
 
@@ -100,3 +100,4 @@ function doTab(e) {
 		t.selectionStart = t.selectionEnd = ss + 4;
 	}
 }
+

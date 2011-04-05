@@ -28,6 +28,7 @@ import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.CSSPackageResource;
 import org.apache.wicket.markup.html.JavascriptPackageResource;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -36,29 +37,37 @@ import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.wicketstuff.console.engine.Engines;
 import org.wicketstuff.console.engine.IScriptEngine;
 import org.wicketstuff.console.engine.IScriptExecutionResult;
+import org.wicketstuff.console.engine.Lang;
 
 /**
  * Abstract panel for executing Scripts.
  * <p>
  * Usage:
- * <pre>add(new GroovyScriptEnginePanel(&quot;scriptPanel&quot;));</pre>
  * 
- * <pre>&lt;div wicket:id=&quot;scriptPanel&quot&gt;&lt;/div&gt;</pre>
-
+ * <pre>
+ * add(new GroovyScriptEnginePanel(&quot;scriptPanel&quot;));
+ * </pre>
+ * 
+ * <pre>
+ * &lt;div wicket:id=&quot;scriptPanel&quot&gt;&lt;/div&gt;
+ * </pre>
+ * 
  * @see ClojureScriptEnginePanel
  * @see GroovyScriptEnginePanel
  * 
  * @author cretzel
  */
-public abstract class AbstractScriptEnginePanel extends Panel {
+public class ScriptEnginePanel extends Panel {
 
 	private final class ClearButton extends Button {
 		private static final long serialVersionUID = 1L;
 
-		private ClearButton(String id) {
+		private ClearButton(final String id) {
 			super(id);
 		}
 
@@ -75,7 +84,7 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 	final class SubmitButton extends AjaxButton implements IAjaxIndicatorAware {
 		private static final long serialVersionUID = 1L;
 
-		private SubmitButton(String id, Form<?> form) {
+		private SubmitButton(final String id, final Form<?> form) {
 			super(id, form);
 		}
 
@@ -99,15 +108,16 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 	private static final long serialVersionUID = 1L;
 
 	private static final ResourceReference CSS = new CompressedResourceReference(
-			AbstractScriptEnginePanel.class, "AbstractScriptEnginePanel.css");
+			ScriptEnginePanel.class, "ScriptEnginePanel.css");
 
 	private static final ResourceReference JS = new CompressedResourceReference(
-			AbstractScriptEnginePanel.class, "AbstractScriptEnginePanel.js");
+			ScriptEnginePanel.class, "ScriptEnginePanel.js");
 
 	private String input;
 	private String output;
 	private String returnValue;
 
+	private Label title;
 	private Form<Void> form;
 	private TextArea<String> inputTf;
 	private TextArea<String> outputTf;
@@ -115,28 +125,46 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 
 	private Image indicator;
 
-	public AbstractScriptEnginePanel(final String id) {
-		super(id);
-		setDefaultModel(new CompoundPropertyModel<AbstractScriptEnginePanel>(
-				this));
-		initInput();
-		initComponents();
-		initCss();
-		initJavaScript();
+	private final IModel<String> titleModel;
+
+	private final Lang lang;
+
+	public ScriptEnginePanel(final String id, final Lang lang) {
+		this(id, lang, null);
 	}
 
-	private void initJavaScript() {
-		add(JavascriptPackageResource.getHeaderContribution(JS));
+	public ScriptEnginePanel(final String id, final Lang lang,
+			final IModel<String> title) {
+		super(id);
+		this.lang = lang;
+		this.titleModel = title != null ? title : Model.of("Wicket Console");
+
+		init();
+	}
+
+	private void init() {
+		setDefaultModel(new CompoundPropertyModel<ScriptEnginePanel>(this));
+
+		initCss();
+		initJs();
+
+		initComponents();
 	}
 
 	private void initCss() {
-		ResourceReference css = getCSS();
+		final ResourceReference css = getCSS();
 		if (css != null) {
 			add(CSSPackageResource.getHeaderContribution(css));
 		}
 	}
 
+	private void initJs() {
+		add(JavascriptPackageResource.getHeaderContribution(JS));
+	}
+
 	protected void initComponents() {
+		title = new Label("title", titleModel);
+		add(title);
 
 		form = new Form<Void>("form");
 		add(form);
@@ -186,12 +214,12 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 		target.addComponent(outputTf);
 	}
 
-	protected abstract void initInput();
-
-	protected abstract IScriptEngine newEngine();
+	protected IScriptEngine newEngine() {
+		return Engines.create(lang);
+	}
 
 	protected Map<String, Object> newBindings() {
-		Map<String, Object> bindings = new HashMap<String, Object>();
+		final Map<String, Object> bindings = new HashMap<String, Object>();
 		bindings.put("application", Application.get());
 		bindings.put("page", getPage());
 		bindings.put("component", this);
@@ -202,7 +230,7 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 		return input;
 	}
 
-	public void setInput(String input) {
+	public void setInput(final String input) {
 		this.input = input;
 	}
 
@@ -210,7 +238,7 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 		return output;
 	}
 
-	public void setOutput(String output) {
+	public void setOutput(final String output) {
 		this.output = output;
 	}
 
@@ -218,8 +246,40 @@ public abstract class AbstractScriptEnginePanel extends Panel {
 		return returnValue;
 	}
 
-	public void setReturnValue(String returnValue) {
+	public void setReturnValue(final String returnValue) {
 		this.returnValue = returnValue;
 	}
 
+	public TextArea<String> getInputTf() {
+		return inputTf;
+	}
+
+	public TextArea<String> getOutputTf() {
+		return outputTf;
+	}
+
+	public TextField<String> getReturnValueTf() {
+		return returnValueTf;
+	}
+
+	@Override
+	public void detachModels() {
+		super.detachModels();
+		if (titleModel != null) {
+			titleModel.detach();
+		}
+	}
+
+	public static ScriptEnginePanel create(final String wicketId,
+			final Lang lang, final IModel<String> title) {
+		switch (lang) {
+		case GROOVY:
+			return new GroovyScriptEnginePanel(wicketId, title);
+		case CLOJURE:
+			return new ClojureScriptEnginePanel(wicketId, title);
+		default:
+			throw new UnsupportedOperationException("Unsupported language: "
+					+ lang);
+		}
+	}
 }

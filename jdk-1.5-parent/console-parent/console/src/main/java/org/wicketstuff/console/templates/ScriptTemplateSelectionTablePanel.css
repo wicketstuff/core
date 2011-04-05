@@ -14,78 +14,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-.console {
+.console-table {
 	background-color: #cccccc;
-	padding: 4px 10px 1px 4px;
+	padding: 4px 0px 1px 4px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border: 1px solid #555;
+	height: 400px;
 }
 
-.console h3 {
+.console-table h3 {
 	font-size: 13px;
+	font-family: Tahoma, Verdana, Arial, sans-serif;
+	margin:0px;
+}
+
+.console-table .table-container {
+	height: 380px;
+	overflow-y: auto;
+	padding-right:18px;
+}
+
+.console-table table {
+	background-color: #ffffff;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	padding: 0px 0px 1px 0px;
+	border: 1px solid #999;
+}
+
+.console-table table tr td {
+	padding-right: 10px;
+	white-space:nowrap;
 	font-family: Tahoma, Verdana, Arial, sans-serif;
 }
 
-.console .input {
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
+.console-table table tr td a {
+	color: #555555;
 }
 
-.console .input textarea {
-	width: 100%;
-	height: 150px;
-	font-family: Courier New;
-	font-size:10pt;
-}
-
-.console .controls {
-	width: 100%;
-	background-color: #aabbcc;
-	padding: 4px 2px 2px 2px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border: 1px solid #999999;
-}
-
-.console .controls .indicator {
-	margin-top: 3px;
-}
-
-.console .result {
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-}
-
-.console .returnValue input[type='text'] {
-	width: 100%;
-	font-family: Courier New;
-	font-size:10pt;
-}
-
-.console .result .output textarea {
-	width: 100%;
-	height: 150px;
-	font-family: Courier New;
-	font-size:10pt;
-}
-
-.console .footer {
-	height: 22px;
-}
-
-.console .footer ul {
-	margin: -2px 0px;
-	padding: 0px;
-}
-
-.console .footer ul li {
-	margin: 0px;
-	padding: 0px;
-		font-size: 8pt;
-	color: #444444;
-	padding: 2px 4px;
-	margin-left: 4px;
-	background-color: #fff;
-	display:inline;
+.console-table table tr td span {
+	font-size: 10pt;
+	color: #555555;
 }

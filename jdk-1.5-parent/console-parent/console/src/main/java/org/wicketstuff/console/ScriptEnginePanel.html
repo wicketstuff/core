@@ -5,9 +5,9 @@
 <wicket:panel>
 
 <div class="console">
-	<h3>Wicket Console</h3>
+	<h3 wicket:id="title">Wicket Console</h3>
 	<div class="input">
-		<form wicket:id="form"><textarea wicket:id="input" onkeydown="return doTab(event);"></textarea></form>
+		<form wicket:id="form"><textarea wicket:id="input" wrap="off" onkeydown="return doTab(event);"></textarea></form>
 	</div>
 	<div class="controls">
 		<table border="0" width="100%" cellspacing="0" cellpadding="0">
@@ -24,10 +24,7 @@
 	</div>
 	<div class="result">
 		<div class="returnValue"><input wicket:id="returnValue" type="text"></div>
-		<div class="output"><textarea wicket:id="output"></textarea></div>
-	</div>
-	<div class="footer">
-		<ul><li>Execute: Alt+x</li><li>Clear: Alt+C</li></ul>
+		<div class="output"><textarea wicket:id="output" wrap="off"></textarea></div>
 	</div>
 </div>
 
