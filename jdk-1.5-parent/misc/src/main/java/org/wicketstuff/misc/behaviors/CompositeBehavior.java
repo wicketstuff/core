@@ -21,7 +21,6 @@ import java.util.Arrays;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 
 
@@ -51,37 +50,43 @@ public class CompositeBehavior extends Behavior {
         }
     }
 
-    public void onComponentTag(Component aComponent, ComponentTag aTag) {
+    @Override
+	public void onComponentTag(Component aComponent, ComponentTag aTag) {
         for (Behavior behavior: behaviors_) {
             behavior.onComponentTag(aComponent, aTag);
         }
     }
 
-    public void afterRender(Component arg0) {
+    @Override
+	public void afterRender(Component arg0) {
         for (Behavior behavior: behaviors_) {
             behavior.afterRender(arg0);
         }
     }
 
-    public void beforeRender(Component arg0) {
+    @Override
+	public void beforeRender(Component arg0) {
         for (Behavior behavior: behaviors_) {
             behavior.beforeRender(arg0);
         }
     }
 
-    public void bind(Component arg0) {
+    @Override
+	public void bind(Component arg0) {
         for (Behavior behavior: behaviors_) {
             behavior.bind(arg0);
         }
     }
 
-    public void detach(Component arg0) {
+    @Override
+	public void detach(Component arg0) {
         for (Behavior behavior: behaviors_) {
             behavior.detach(arg0);
         }
     }
 
-    public boolean getStatelessHint(Component arg0) {
+    @Override
+	public boolean getStatelessHint(Component arg0) {
         boolean back = true;
         for (Behavior behavior: behaviors_) {
             back = back && behavior.getStatelessHint(arg0);
@@ -89,7 +94,8 @@ public class CompositeBehavior extends Behavior {
         return back;
     }
 
-    public boolean isEnabled(Component arg0) {
+    @Override
+	public boolean isEnabled(Component arg0) {
         boolean back = true;
         for (Behavior behavior: behaviors_) {
             back = back && behavior.isEnabled(arg0);
@@ -97,7 +103,8 @@ public class CompositeBehavior extends Behavior {
         return back;
     }
 
-    public boolean isTemporary(Component component) {
+    @Override
+	public boolean isTemporary(Component component) {
         boolean back = true;
         for (Behavior behavior: behaviors_) {
             back = back && behavior.isTemporary(component);
@@ -105,11 +112,11 @@ public class CompositeBehavior extends Behavior {
         return back;
     }
 
-    public void renderHead(IHeaderResponse arg0) {
+    @Override
+    public void renderHead(Component component, IHeaderResponse response) {
+    	super.renderHead(component, response);
         for (Behavior behavior: behaviors_) {
-            if ( behavior instanceof IHeaderContributor) {
-                ((IHeaderContributor)behavior).renderHead(arg0);
-            }
+            behavior.renderHead(component, response);
         }
     }
 
