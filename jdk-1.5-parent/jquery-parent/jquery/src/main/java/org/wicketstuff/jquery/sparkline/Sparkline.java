@@ -125,7 +125,8 @@ public class Sparkline extends WebComponent implements IHeaderContributor
     return js;
   }
   
-  public void renderHead(IHeaderResponse response) {
+  @Override
+public void renderHead(IHeaderResponse response) {
     response.renderJavaScriptReference(JQueryBehavior.JQUERY_JS);
     response.renderJavaScriptReference(SPARKLINE_JS);
 

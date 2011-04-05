@@ -5,7 +5,6 @@ import java.util.Iterator;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.util.tester.WicketTester;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -13,7 +12,6 @@ import org.testng.annotations.Test;
 import org.wicketstuff.jquery.dnd.DnDSortableHandler;
 
 @Test
-@SuppressWarnings("serial")
 public class Page4SimpleListTest {
 
     private WicketTester tester_;
@@ -23,7 +21,6 @@ public class Page4SimpleListTest {
         tester_ = new WicketTester();
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testOnDnD() throws Exception {
         Page4SimpleList page = new Page4SimpleList();

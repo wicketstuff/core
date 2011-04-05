@@ -18,7 +18,6 @@ package org.wicketstuff.jquery.demo;
 
 import java.util.Date;
 
-import org.apache.wicket.Application;
 import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.Page;

@@ -15,6 +15,7 @@ public class HistoryIFramePage extends WebPage implements IHeaderContributor {
 	public HistoryIFramePage() {
 	}
 
+	@Override
 	public void renderHead(IHeaderResponse response) {
 		response.renderJavaScriptReference(JQueryBehavior.JQUERY_JS);
 	}

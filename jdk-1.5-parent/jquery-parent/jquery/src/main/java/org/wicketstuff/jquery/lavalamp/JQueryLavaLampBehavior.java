@@ -3,7 +3,6 @@ package org.wicketstuff.jquery.lavalamp;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.request.resource.CompressedResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;

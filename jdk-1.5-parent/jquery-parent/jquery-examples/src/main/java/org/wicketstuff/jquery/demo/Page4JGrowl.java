@@ -12,13 +12,13 @@ public class Page4JGrowl extends PageSupport {
 
 		final JGrowlFeedbackPanel feedback = new JGrowlFeedbackPanel("jgrowlFeedback");
 		add(feedback);
-		
-		final Options errorOptions = new Options(); 
+
+		final Options errorOptions = new Options();
 		errorOptions.set("header", "Error");
-		errorOptions.set("theme", "error"); 
+		errorOptions.set("theme", "error");
 		errorOptions.set("glue", "before");
 		feedback.setErrorMessageOptions(errorOptions);
-		
+
 		final Options infoOptions = new Options();
 		infoOptions.set("header", "Info");
 		infoOptions.set("theme", "info");
@@ -29,12 +29,12 @@ public class Page4JGrowl extends PageSupport {
 
 			@Override
 			public void onClick(final AjaxRequestTarget target) {
-				
+
 				error("An ERROR message");
-				
+
 				info("An INFO message");
-				
-				target.addComponent(feedback);
+
+				target.add(feedback);
 			}
 		};
 

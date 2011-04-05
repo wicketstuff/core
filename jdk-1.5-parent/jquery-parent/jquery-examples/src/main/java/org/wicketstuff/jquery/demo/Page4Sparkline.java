@@ -20,17 +20,17 @@ import org.wicketstuff.jquery.sparkline.SparklineWrapper;
 public class Page4Sparkline extends PageSupport {
 
 	public Page4Sparkline() {
-	  
+
 	  RepeatingView rv = new RepeatingView( "spot" );
 	  add( rv );
-	  
-	  
+
+
 	  WebMarkupContainer spot = new WebMarkupContainer( rv.newChildId() );
 	  Sparkline s = new Sparkline( "chart",  5,6,7,9,9,5,3,2,2,4,6,7 );
 	  spot.add( s );
 	  spot.add( new Label( "js", s.getSparklineJS().toString() ) );
 	  rv.add( spot );
-	  
+
 	  // BAR
 	  SparklineOptions options = new SparklineOptions( TYPE.bar );
 	  spot = new WebMarkupContainer( rv.newChildId() );
@@ -38,7 +38,7 @@ public class Page4Sparkline extends PageSupport {
     spot.add( s );
     spot.add( new Label( "js", s.getSparklineJS().toString() ) );
     rv.add( spot );
-    
+
     // TRISTATE
     options = new SparklineOptions( TYPE.tristate );
     spot = new WebMarkupContainer( rv.newChildId() );
@@ -46,7 +46,7 @@ public class Page4Sparkline extends PageSupport {
     spot.add( s );
     spot.add( new Label( "js", s.getSparklineJS().toString() ) );
     rv.add( spot );
-    
+
 
     // DISCRETE
     options = new SparklineOptions( TYPE.discrete );
@@ -55,7 +55,7 @@ public class Page4Sparkline extends PageSupport {
     spot.add( s );
     spot.add( new Label( "js", s.getSparklineJS().toString() ) );
     rv.add( spot );
-    
+
 
     // PIE
     options = new SparklineOptions( TYPE.pie );
@@ -64,7 +64,7 @@ public class Page4Sparkline extends PageSupport {
     spot.add( s );
     spot.add( new Label( "js", s.getSparklineJS().toString() ) );
     rv.add( spot );
-    
+
     //--------------------------------
     options = new SparklineOptions( TYPE.line );
     final LinkedList<Integer> values = new LinkedList<Integer>();
@@ -79,24 +79,24 @@ public class Page4Sparkline extends PageSupport {
       }
     }, options );
     final SparklineWrapper wrap = new SparklineWrapper( "animated", s );
-    wrap.setOutputMarkupId( true ); 
+    wrap.setOutputMarkupId( true );
     add( wrap );
-    
+
 
     // Refresh the view every second...
     add( new AbstractAjaxTimerBehavior(Duration.seconds(1))
     {
       Random rand = new Random();
-      
+
       @Override
       protected void onTimer(final AjaxRequestTarget target)
       {
-        int last = values.getLast() + ( rand.nextInt(10)-5 );        
+        int last = values.getLast() + ( rand.nextInt(10)-5 );
         values.addLast(last);
         if( values.size() > 100 ) {
           values.removeFirst();
         }
-        target.addComponent( wrap );
+        target.add( wrap );
       }
     });
 	}

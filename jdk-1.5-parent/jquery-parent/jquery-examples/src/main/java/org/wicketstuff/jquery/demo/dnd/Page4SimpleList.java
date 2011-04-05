@@ -16,6 +16,8 @@
  */
 package org.wicketstuff.jquery.demo.dnd;
 
+import java.util.List;
+
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -27,8 +29,6 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.wicketstuff.jquery.demo.PageSupport;
 import org.wicketstuff.jquery.dnd.DnDSortableHandler;
-
-import java.util.List;
 
 @SuppressWarnings("serial")
 public class Page4SimpleList extends PageSupport {

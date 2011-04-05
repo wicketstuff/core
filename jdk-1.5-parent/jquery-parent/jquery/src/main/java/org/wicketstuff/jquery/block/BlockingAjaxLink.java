@@ -42,6 +42,7 @@ public abstract class BlockingAjaxLink<T> extends AjaxLink<T> implements
 		this(id, new BlockOptions().setMessage(message));
 	}
 
+	@Override
 	public void renderHead(IHeaderResponse response) {
 		response.renderJavaScriptReference(JQueryBehavior.JQUERY_JS);
 		response.renderJavaScriptReference(BLOCK_JS);
@@ -52,6 +53,7 @@ public abstract class BlockingAjaxLink<T> extends AjaxLink<T> implements
 	 * 
 	 * @return ajax call decorator
 	 */
+	@Override
 	protected IAjaxCallDecorator getAjaxCallDecorator() {
 		return new IAjaxCallDecorator() {
 			private static final long serialVersionUID = 1L;
@@ -84,6 +86,7 @@ public abstract class BlockingAjaxLink<T> extends AjaxLink<T> implements
 		return null;
 	}
 
+	@Override
 	final public void onClick(final AjaxRequestTarget target) {
 		doClick(target);
 

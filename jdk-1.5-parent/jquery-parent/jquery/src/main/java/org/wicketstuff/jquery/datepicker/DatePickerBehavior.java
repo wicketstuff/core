@@ -86,7 +86,7 @@ public class DatePickerBehavior extends JQueryBehavior {
         response.renderCSSReference(DATEPICKER_CSS);
         response.renderJavaScriptReference(DATE_JS);
 		try {
-            WebClientInfo info = (WebClientInfo) WebSession.get().getClientInfo();
+            WebClientInfo info = WebSession.get().getClientInfo();
             if (info.getUserAgent().contains("MSIE")) {
                 response.renderJavaScriptReference(JQUERY_BGIFRAME_JS);
             }

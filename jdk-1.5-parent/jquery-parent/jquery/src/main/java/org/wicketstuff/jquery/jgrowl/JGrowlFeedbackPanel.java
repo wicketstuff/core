@@ -8,7 +8,6 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 import org.wicketstuff.jquery.Options;
 
@@ -112,6 +111,7 @@ public class JGrowlFeedbackPanel extends FeedbackPanel implements IHeaderContrib
 		return label;
 	}
 
+	@Override
 	public void renderHead(final IHeaderResponse response) {
 
 		response.renderCSSReference(new PackageResourceReference(JGrowlFeedbackPanel.class, "res/jquery.jgrowl.css"));

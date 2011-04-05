@@ -68,7 +68,7 @@ public class Page4MultiGroup extends PageSupport {
                 FeedbackPanel feedback = (FeedbackPanel) Page4MultiGroup.this.get("feedback");
                 feedback.info(msg);
                 if (target != null) {
-                    target.addComponent(feedback);
+                    target.add(feedback);
                 }
                 return false;
             }
@@ -76,11 +76,11 @@ public class Page4MultiGroup extends PageSupport {
             private void updateContainerHeader(AjaxRequestTarget target, MarkupContainer container, MyGroup group) {
                 Label itemCnt = (Label) container.getParent().get("itemCnt");
                 itemCnt.setDefaultModelObject(group.items.size());
-                target.addComponent(itemCnt);
+                target.add(itemCnt);
 
                 Label actionCnt = (Label) container.getParent().get("actionCnt");
                 actionCnt.setDefaultModelObject(actionCnt_);
-                target.addComponent(actionCnt);
+                target.add(actionCnt);
             }
         };
 

@@ -1,12 +1,8 @@
 package org.wicketstuff.jquery.ui.slider;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.protocol.http.RequestUtils;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.CompressedResourceReference;

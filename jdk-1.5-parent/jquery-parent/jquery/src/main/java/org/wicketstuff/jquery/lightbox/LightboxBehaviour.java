@@ -56,6 +56,7 @@ public class LightboxBehaviour extends JQueryBehavior {
 		response.renderCSSReference(getLightboxCss());
 	}
 
+	@Override
 	protected void onBind() {
 		getComponent().setOutputMarkupId(true);
 	}

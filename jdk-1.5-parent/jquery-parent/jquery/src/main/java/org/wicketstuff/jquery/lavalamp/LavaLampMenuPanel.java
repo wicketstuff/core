@@ -3,7 +3,6 @@ package org.wicketstuff.jquery.lavalamp;
 import java.util.List;
 
 import org.apache.wicket.behavior.AttributeAppender;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.list.ListItem;

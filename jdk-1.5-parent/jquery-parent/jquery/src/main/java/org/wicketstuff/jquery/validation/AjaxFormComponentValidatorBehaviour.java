@@ -1,5 +1,7 @@
 package org.wicketstuff.jquery.validation;
 
+import java.util.List;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -8,8 +10,6 @@ import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.jquery.JQueryBehavior;
-
-import java.util.List;
 
 /**
  *
@@ -50,6 +50,7 @@ public class AjaxFormComponentValidatorBehaviour extends AjaxFormComponentUpdati
 	 * markup containing any previous error-message.
 	 * @param target
 	 */
+	@Override
 	protected void onUpdate(AjaxRequestTarget target) {
 		if(errorDetected) {
 			// Remove the error-class on the surrounding element
@@ -76,6 +77,7 @@ public class AjaxFormComponentValidatorBehaviour extends AjaxFormComponentUpdati
 	 * @param target The AjaxRequestTarget you can add components to
 	 * @param e The exception if any
 	 */
+	@Override
 	protected void onError(AjaxRequestTarget target, RuntimeException e) {
 		super.onError(target, e);
 		target.appendJavaScript(getErrorJavascript());
@@ -132,6 +134,7 @@ public class AjaxFormComponentValidatorBehaviour extends AjaxFormComponentUpdati
 	 *
 	 * @param response
 	 */
+	@Override
 	public void renderHead(Component component, IHeaderResponse response) {
 		super.renderHead(component, response);
 		response.renderJavaScriptReference(JQueryBehavior.JQUERY_JS);

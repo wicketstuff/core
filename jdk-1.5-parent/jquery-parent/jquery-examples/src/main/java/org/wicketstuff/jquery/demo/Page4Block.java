@@ -45,7 +45,8 @@ public class Page4Block extends PageSupport {
         target.addChildren( getPage(), FeedbackPanel.class );
       }
       
-      public CharSequence getBlockElementsSelector() {
+      @Override
+	public CharSequence getBlockElementsSelector() {
         return "div.blockMe";
       }
     });
