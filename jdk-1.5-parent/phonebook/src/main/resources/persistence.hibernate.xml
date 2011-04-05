@@ -19,7 +19,7 @@
 				<prop key="hibernate.connection.pool_size">5</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.format_sql">true</prop>
-				<prop key="hibernate.cglib.use_reflection_optimizer">true</prop>
+				<prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
 				<prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</prop>
 				<prop key="hibernate.cache.use_query_cache">true</prop>
 			</props>

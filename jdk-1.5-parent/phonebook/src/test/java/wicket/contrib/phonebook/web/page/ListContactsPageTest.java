@@ -58,17 +58,17 @@ public class ListContactsPageTest extends TestCase {
 	}
 
 	public void testDeleteLinkOpensConfirmPage() throws Exception {
-		wicket.assertComponent("filter-form:users:rows:1:cells:2:cell:deleteLink",
+		wicket.assertComponent("filter-form:users:body:rows:1:cells:2:cell:deleteLink",
 				Link.class);
-		wicket.clickLink("filter-form:users:rows:1:cells:2:cell:deleteLink");
+		wicket.clickLink("filter-form:users:body:rows:1:cells:2:cell:deleteLink");
 		wicket.assertRenderedPage(DeleteContactPage.class);
 	}
 
 	public void testEditLinkOpensContactEditor() throws Exception {
 		wicket
-				.assertComponent("filter-form:users:rows:1:cells:2:cell:editLink",
+				.assertComponent("filter-form:users:body:rows:1:cells:2:cell:editLink",
 						Link.class);
-		wicket.clickLink("filter-form:users:rows:1:cells:2:cell:editLink");
+		wicket.clickLink("filter-form:users:body:rows:1:cells:2:cell:editLink");
 		wicket.assertRenderedPage(EditContactPage.class);
 	}
 }
