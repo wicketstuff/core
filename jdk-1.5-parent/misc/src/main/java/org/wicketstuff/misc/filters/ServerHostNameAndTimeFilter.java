@@ -18,10 +18,10 @@ package org.wicketstuff.misc.filters;
 
 import java.net.InetAddress;
 
-import org.apache.wicket.IResponseFilter;
-import org.apache.wicket.RequestCycle;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.response.filter.IResponseFilter;
 import org.apache.wicket.util.string.AppendingStringBuffer;
-import org.apache.wicket.util.string.JavascriptUtils;
+import org.apache.wicket.util.string.JavaScriptUtils;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.time.Duration;
 
@@ -69,14 +69,14 @@ public class ServerHostNameAndTimeFilter implements IResponseFilter {
         if (index != -1) {
             AppendingStringBuffer script = new AppendingStringBuffer(75);
             script.append("\n");
-            script.append(JavascriptUtils.SCRIPT_OPEN_TAG);
+            script.append(JavaScriptUtils.SCRIPT_OPEN_TAG);
             script.append("\n\twindow.defaultStatus='");
             script.append("Host: ");
             script.append(host);
             script.append(", handled in: ");
             script.append(Duration.milliseconds(timeTaken));
             script.append("';\n");
-            script.append(JavascriptUtils.SCRIPT_CLOSE_TAG);
+            script.append(JavaScriptUtils.SCRIPT_CLOSE_TAG);
             script.append("\n");
             responseBuffer.insert(index + 6, script);
         }

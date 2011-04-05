@@ -16,14 +16,14 @@
  */
 package org.wicketstuff.misc.widgets;
 
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 @SuppressWarnings("serial")
-public class BookmarkablePageLinkLabel extends BookmarkablePageLink {
+public class BookmarkablePageLinkLabel<T> extends BookmarkablePageLink<T> {
     private String label_;
 
     public BookmarkablePageLinkLabel(String id, Class<? extends WebPage> pageClass, String label) {
@@ -37,7 +37,7 @@ public class BookmarkablePageLinkLabel extends BookmarkablePageLink {
     }
 
     @Override
-    protected void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
+    public void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
         replaceComponentTagBody(markupStream, openTag, label_);
     }
 

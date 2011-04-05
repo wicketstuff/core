@@ -17,8 +17,9 @@
 package org.wicketstuff.misc.behaviors;
 
 import java.util.Arrays;
+
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
@@ -33,56 +34,56 @@ import org.apache.wicket.markup.html.IHeaderResponse;
  * @see http://cwiki.apache.org/WICKET/composite-behaviors.html
  */
 @SuppressWarnings("serial")
-public class CompositeBehavior implements IBehavior, IHeaderContributor {
-    private Iterable<IBehavior> behaviors_;
+public class CompositeBehavior extends Behavior {
+    private Iterable<Behavior> behaviors_;
 
-    public CompositeBehavior(IBehavior... behaviors) {
+    public CompositeBehavior(Behavior... behaviors) {
         this(Arrays.asList(behaviors));
     }
 
-    public CompositeBehavior(Iterable<IBehavior> behaviors) {
+    public CompositeBehavior(Iterable<Behavior> behaviors) {
         behaviors_ = behaviors;
     }
 
-    public void exception(Component aComponent, RuntimeException aException) {
-        for (IBehavior behavior: behaviors_) {
-            behavior.exception(aComponent, aException);
+    public void exception(Component component, RuntimeException aException) {
+        for (Behavior behavior: behaviors_) {
+            behavior.onException(component, aException);
         }
     }
 
     public void onComponentTag(Component aComponent, ComponentTag aTag) {
-        for (IBehavior behavior: behaviors_) {
+        for (Behavior behavior: behaviors_) {
             behavior.onComponentTag(aComponent, aTag);
         }
     }
 
     public void afterRender(Component arg0) {
-        for (IBehavior behavior: behaviors_) {
+        for (Behavior behavior: behaviors_) {
             behavior.afterRender(arg0);
         }
     }
 
     public void beforeRender(Component arg0) {
-        for (IBehavior behavior: behaviors_) {
+        for (Behavior behavior: behaviors_) {
             behavior.beforeRender(arg0);
         }
     }
 
     public void bind(Component arg0) {
-        for (IBehavior behavior: behaviors_) {
+        for (Behavior behavior: behaviors_) {
             behavior.bind(arg0);
         }
     }
 
     public void detach(Component arg0) {
-        for (IBehavior behavior: behaviors_) {
+        for (Behavior behavior: behaviors_) {
             behavior.detach(arg0);
         }
     }
 
     public boolean getStatelessHint(Component arg0) {
         boolean back = true;
-        for (IBehavior behavior: behaviors_) {
+        for (Behavior behavior: behaviors_) {
             back = back && behavior.getStatelessHint(arg0);
         }
         return back;
@@ -90,22 +91,22 @@ public class CompositeBehavior implements IBehavior, IHeaderContributor {
 
     public boolean isEnabled(Component arg0) {
         boolean back = true;
-        for (IBehavior behavior: behaviors_) {
+        for (Behavior behavior: behaviors_) {
             back = back && behavior.isEnabled(arg0);
         }
         return back;
     }
 
-    public boolean isTemporary() {
+    public boolean isTemporary(Component component) {
         boolean back = true;
-        for (IBehavior behavior: behaviors_) {
-            back = back && behavior.isTemporary();
+        for (Behavior behavior: behaviors_) {
+            back = back && behavior.isTemporary(component);
         }
         return back;
     }
 
     public void renderHead(IHeaderResponse arg0) {
-        for (IBehavior behavior: behaviors_) {
+        for (Behavior behavior: behaviors_) {
             if ( behavior instanceof IHeaderContributor) {
                 ((IHeaderContributor)behavior).renderHead(arg0);
             }

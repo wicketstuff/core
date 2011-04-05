@@ -18,14 +18,14 @@ package org.wicketstuff.misc.behaviors;
 
 import java.util.Arrays;
 
-import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.behavior.SimpleAttributeModifier;
 
 @SuppressWarnings("serial")
 public class OnClickBehavior extends CompositeBehavior {
 
     public OnClickBehavior(CharSequence url) {
-        super(Arrays.asList(new IBehavior[]{
+        super(Arrays.asList(new Behavior[]{
                 new SimpleAttributeModifier("class", "clickable"),
                 new SimpleAttributeModifier("onClick", "document.location.href='" + url + "';")
         }));

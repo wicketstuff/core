@@ -35,6 +35,7 @@
 		<module>maven-support</module>
 		<module>mbeanview-parent</module>
 		<module>minis-parent</module>
+		<module>misc</module>
 		<module>mootools-meiomask-parent</module>
 		<module>multi-text-input-parent</module>
 		<module>openlayers-parent</module>
@@ -66,8 +67,6 @@
 		<!-- needs to change to new header contribution structure in 1.5 -->
 		<!-- <module>jslibraries</module> -->
 
-
-		<!-- <module>misc</module> -->
 		<!-- jquery depends on misc -->
 		<!-- <module>jquery-parent</module> -->
 
