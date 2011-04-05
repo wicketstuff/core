@@ -26,9 +26,9 @@ package org.wicketstuff.console.engine;
  */
 public interface IScriptExecutionResult {
 
-	String getScript();
+    String getScript();
 
-	boolean isSuccess();
+    boolean isSuccess();
 
 	String getOutput();
 

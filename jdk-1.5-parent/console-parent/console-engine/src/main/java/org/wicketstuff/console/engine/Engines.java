@@ -24,13 +24,13 @@ package org.wicketstuff.console.engine;
  */
 public class Engines {
 
-	public static IScriptEngine create(final Lang lang) {
-		switch (lang) {
-		case GROOVY:
-			return new GroovyEngine();
-		case CLOJURE:
-			return new ClojureEngine();
-		default:
+    public static IScriptEngine create(final Lang lang) {
+        switch (lang) {
+        case GROOVY:
+            return new GroovyEngine();
+        case CLOJURE:
+            return new ClojureEngine();
+        default:
 			throw new UnsupportedOperationException("Unsupported language: "
 					+ lang);
 		}

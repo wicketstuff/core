@@ -26,10 +26,10 @@ import org.wicketstuff.console.engine.Lang;
  */
 public class GroovyScriptEngineWindow extends ScriptEngineWindow {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public GroovyScriptEngineWindow(final String id) {
-		super(id, Lang.GROOVY, null);
-	}
+    public GroovyScriptEngineWindow(final String id) {
+        super(id, Lang.GROOVY, null);
+    }
 
 }

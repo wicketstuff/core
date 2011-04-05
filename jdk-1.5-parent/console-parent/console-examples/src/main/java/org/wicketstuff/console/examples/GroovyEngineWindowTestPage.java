@@ -24,30 +24,30 @@ import org.wicketstuff.console.GroovyScriptEngineWindow;
 
 public class GroovyEngineWindowTestPage extends WebPage {
 
-	private static final class OpenLink extends AjaxLink<Void> {
-		private final GroovyScriptEngineWindow window;
-		private static final long serialVersionUID = 1L;
+    private static final class OpenLink extends AjaxLink<Void> {
+        private final GroovyScriptEngineWindow window;
+        private static final long serialVersionUID = 1L;
 
-		private OpenLink(String id, GroovyScriptEngineWindow window) {
-			super(id);
-			this.window = window;
-		}
+        private OpenLink(final String id, final GroovyScriptEngineWindow window) {
+            super(id);
+            this.window = window;
+        }
 
-		@Override
-		public void onClick(AjaxRequestTarget target) {
-			window.show(target);
-		}
-	}
+        @Override
+        public void onClick(final AjaxRequestTarget target) {
+            window.show(target);
+        }
+    }
 
-	private static final long serialVersionUID = 1L;
-	private GroovyScriptEngineWindow window;
+    private static final long serialVersionUID = 1L;
+    private GroovyScriptEngineWindow window;
 
-	public GroovyEngineWindowTestPage(PageParameters params) {
-		super(params);
+    public GroovyEngineWindowTestPage(final PageParameters params) {
+        super(params);
 
-		add(window = new GroovyScriptEngineWindow("window"));
-		add(new OpenLink("link", window));
-		add(new TestPageLinksPanel("links"));
-	}
+        add(window = new GroovyScriptEngineWindow("window"));
+        add(new OpenLink("link", window));
+        add(new TestPageLinksPanel("links"));
+    }
 
 }

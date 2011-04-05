@@ -33,45 +33,45 @@ import java.util.Map;
  */
 public class GroovyEngine implements IScriptEngine {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public synchronized IScriptExecutionResult execute(final String script) {
-		return execute(script, null);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public synchronized IScriptExecutionResult execute(final String script) {
+        return execute(script, null);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public synchronized IScriptExecutionResult execute(final String script,
-			final Map<String, Object> bindings) {
+    /**
+     * {@inheritDoc}
+     */
+    public synchronized IScriptExecutionResult execute(final String script,
+            final Map<String, Object> bindings) {
 
-		Throwable exception = null;
-		String output = null;
-		Object returnValue = null;
+        Throwable exception = null;
+        String output = null;
+        Object returnValue = null;
 
-		final PrintStream oldOut = System.out;
-		final PrintStream oldErr = System.err;
-		final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-		final PrintStream newOut = new PrintStream(bout, false);
+        final PrintStream oldOut = System.out;
+        final PrintStream oldErr = System.err;
+        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        final PrintStream newOut = new PrintStream(bout, false);
 
-		try {
-			System.setOut(newOut);
-			System.setErr(newOut);
+        try {
+            System.setOut(newOut);
+            System.setErr(newOut);
 
-			final GroovyShell shell = new GroovyShell(new Binding(bindings));
-			returnValue = shell.evaluate(script);
+            final GroovyShell shell = new GroovyShell(new Binding(bindings));
+            returnValue = shell.evaluate(script);
 
-		} catch (final Exception e) {
-			exception = e;
-		} finally {
-			System.setOut(oldOut);
-			System.setErr(oldErr);
-			output = bout.toString();
-		}
+        } catch (final Exception e) {
+            exception = e;
+        } finally {
+            System.setOut(oldOut);
+            System.setErr(oldErr);
+            output = bout.toString();
+        }
 
-		return new DefaultScriptExecutionResult(script, exception, output,
-				returnValue);
-	}
+        return new DefaultScriptExecutionResult(script, exception, output,
+                returnValue);
+    }
 
 }

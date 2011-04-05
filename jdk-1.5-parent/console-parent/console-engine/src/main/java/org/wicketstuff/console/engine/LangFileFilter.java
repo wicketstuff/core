@@ -29,7 +29,7 @@ import java.io.FilenameFilter;
  */
 public class LangFileFilter implements FilenameFilter {
 
-	private final String suffix;
+    private final String suffix;
 
 	private LangFileFilter(final String ext) {
 		suffix = ext;

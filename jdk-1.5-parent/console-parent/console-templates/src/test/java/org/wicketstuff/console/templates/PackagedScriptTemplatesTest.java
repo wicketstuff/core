@@ -31,14 +31,14 @@ import org.wicketstuff.console.engine.Lang;
  */
 public class PackagedScriptTemplatesTest {
 
-	@Before
-	public void setUp() throws Exception {
-	}
+    @Before
+    public void setUp() throws Exception {
+    }
 
-	@Test
-	public void test_getPackagedGroovyTemplates() throws Exception {
-		final List<ScriptTemplate> templates = PackagedScriptTemplates
-				.getPackagedScriptTemplates(Lang.GROOVY);
+    @Test
+    public void test_getPackagedGroovyTemplates() throws Exception {
+        final List<ScriptTemplate> templates = PackagedScriptTemplates
+                .getPackagedScriptTemplates(Lang.GROOVY);
 
 		assertEquals(15, templates.size());
 	}

@@ -22,32 +22,32 @@ import org.junit.Test;
 
 public class ComponentsRenderTest {
 
-	private WicketTester tester;
+    private WicketTester tester;
 
-	@Before
-	public void setUp() {
-		tester = new WicketTester();
-	}
+    @Before
+    public void setUp() {
+        tester = new WicketTester();
+    }
 
-	@Test
-	public void test_rendersSuccessfully() {
-		tester.startComponent(new GroovyScriptEnginePanel("foo"));
-		tester.startComponent(new GroovyScriptEngineWithTemplatesPanel("foo",
-				null, null));
-//		tester.startComponent(new GroovyScriptEngineWindow("foo"));
-//		tester.startComponent(new GroovyScriptEngineWithTemplatesWindow("foo",
-//				null, null));
+    @Test
+    public void test_rendersSuccessfully() {
+        tester.startComponent(new GroovyScriptEnginePanel("foo"));
+        tester.startComponent(new GroovyScriptEngineWithTemplatesPanel("foo",
+                null, null));
+        tester.startComponent(new GroovyScriptEngineWindow("foo"));
+        tester.startComponent(new GroovyScriptEngineWithTemplatesWindow("foo",
+                null, null));
 
-	}
+    }
 
-	@Test
-	public void test_rendersSuccessfully1() {
+    @Test
+    public void test_rendersSuccessfully1() {
 
-		tester.startComponent(new ClojureScriptEnginePanel("foo"));
-		tester.startComponent(new ClojureScriptEngineWindow("foo"));
-		tester.startComponent(new ClojureScriptEngineWithTemplatesPanel("foo",
-				null, null));
-		tester.startComponent(new ClojureScriptEngineWithTemplatesWindow("foo",
-				null, null));
-	}
+        tester.startComponent(new ClojureScriptEnginePanel("foo"));
+        tester.startComponent(new ClojureScriptEngineWindow("foo"));
+        tester.startComponent(new ClojureScriptEngineWithTemplatesPanel("foo",
+                null, null));
+        tester.startComponent(new ClojureScriptEngineWithTemplatesWindow("foo",
+                null, null));
+    }
 }

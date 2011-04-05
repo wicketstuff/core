@@ -26,20 +26,20 @@ import org.wicketstuff.console.engine.Lang;
  */
 public class GroovyScriptEnginePanel extends ScriptEnginePanel {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public GroovyScriptEnginePanel(final String wicketId) {
-		this(wicketId, null);
-	}
+    public GroovyScriptEnginePanel(final String wicketId) {
+        this(wicketId, null);
+    }
 
-	public GroovyScriptEnginePanel(final String id, final IModel<String> title) {
-		super(id, Lang.GROOVY, title);
-		init();
-	}
+    public GroovyScriptEnginePanel(final String id, final IModel<String> title) {
+        super(id, Lang.GROOVY, title);
+        init();
+    }
 
-	protected void init() {
-		setInput("println application\n" + "println page\n"
-				+ "println component\n");
-	}
+    protected void init() {
+        setInput("println application\n" + "println page\n"
+                + "println component\n");
+    }
 
 }

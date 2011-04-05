@@ -92,18 +92,18 @@ public class ScriptTemplatesUtilsTest {
 		assertEquals("println \"foo\"", template.script);
 	}
 
-	@Test
-	public void test_readTemplateFromClasspath() throws Exception {
+    @Test
+    public void test_readTemplateFromClasspath() throws Exception {
 
-		// When
-		final ScriptTemplate template = ScriptTemplateUtils
-				.readTemplateFromClasspath(getClass().getClassLoader(),
-						TEST_SCRIPTS_BASE_DIR + "clojure/", "Test01",
-						Lang.CLOJURE);
+        // When
+        final ScriptTemplate template = ScriptTemplateUtils
+                .readTemplateFromClasspath(getClass().getClassLoader(),
+                        TEST_SCRIPTS_BASE_DIR + "clojure/", "Test01",
+                        Lang.CLOJURE);
 
-		// Then
-		assertNotNull(template);
-	}
+        // Then
+        assertNotNull(template);
+    }
 
 	@Test(expected = RuntimeException.class)
 	public void test_readTemplateFromClasspath_NotFound() throws Exception {

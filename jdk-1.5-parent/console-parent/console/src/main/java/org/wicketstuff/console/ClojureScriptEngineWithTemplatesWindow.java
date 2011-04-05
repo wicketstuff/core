@@ -29,14 +29,14 @@ import org.wicketstuff.console.templates.ScriptTemplate;
  * @author cretzel
  */
 public class ClojureScriptEngineWithTemplatesWindow extends
-		ScriptEngineWithTemplatesWindow {
+        ScriptEngineWithTemplatesWindow {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public ClojureScriptEngineWithTemplatesWindow(final String id,
-			final IModel<String> windowTitle,
-			final IDataProvider<ScriptTemplate> dataProvider) {
-		super(id, Lang.CLOJURE, windowTitle, dataProvider);
-	}
-	
+    public ClojureScriptEngineWithTemplatesWindow(final String id,
+            final IModel<String> windowTitle,
+            final IDataProvider<ScriptTemplate> dataProvider) {
+        super(id, Lang.CLOJURE, windowTitle, dataProvider);
+    }
+
 }

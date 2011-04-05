@@ -22,16 +22,16 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.ClojureScriptEnginePanel;
 
 public class ClojureEngineTestPage extends WebPage {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public ClojureEngineTestPage(PageParameters params) {
-		super(params);
-		
-		add(new Label("version", getApplication().getFrameworkSettings()
-				.getVersion()));
-		// TODO Add your page's components here
-		add(new ClojureScriptEnginePanel("scriptPanel"));
+    public ClojureEngineTestPage(final PageParameters params) {
+        super(params);
 
-		add(new TestPageLinksPanel("links"));
-	}
+        add(new Label("version", getApplication().getFrameworkSettings()
+                .getVersion()));
+        // TODO Add your page's components here
+        add(new ClojureScriptEnginePanel("scriptPanel"));
+
+        add(new TestPageLinksPanel("links"));
+    }
 }

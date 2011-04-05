@@ -28,10 +28,10 @@ import org.apache.wicket.model.Model;
 
 final class TitleColumn extends PropertyColumn<ScriptTemplate> {
 
-	private final class TitleLink extends AjaxLink<ScriptTemplate> {
-		private static final long serialVersionUID = 1L;
+    private final class TitleLink extends AjaxLink<ScriptTemplate> {
+        private static final long serialVersionUID = 1L;
 
-		private TitleLink(final String id, final IModel<ScriptTemplate> model) {
+        private TitleLink(final String id, final IModel<ScriptTemplate> model) {
 			super(id, model);
 		}
 

@@ -29,25 +29,25 @@ import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
  * @author cretzel
  */
 public class ClojureScriptEngineWithTemplatesPanel extends
-		ScriptEnginePanelWithTemplates {
+        ScriptEnginePanelWithTemplates {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Creates an instance using the given title and script template data
-	 * provider.
-	 * 
-	 * @param id
-	 *            id
-	 * @param title
-	 *            title, {@code null} for default
-	 * @param dataProvider
-	 *            data provider for script templates, {@code null} for default
-	 */
-	public ClojureScriptEngineWithTemplatesPanel(final String id,
-			final IModel<String> title,
-			final IDataProvider<ScriptTemplate> dataProvider) {
-		super(id, Lang.CLOJURE, title, dataProvider);
-	}
+    /**
+     * Creates an instance using the given title and script template data
+     * provider.
+     * 
+     * @param id
+     *            id
+     * @param title
+     *            title, {@code null} for default
+     * @param dataProvider
+     *            data provider for script templates, {@code null} for default
+     */
+    public ClojureScriptEngineWithTemplatesPanel(final String id,
+            final IModel<String> title,
+            final IDataProvider<ScriptTemplate> dataProvider) {
+        super(id, Lang.CLOJURE, title, dataProvider);
+    }
 
 }

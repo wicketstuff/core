@@ -23,16 +23,16 @@ import org.apache.wicket.util.convert.IConverter;
 
 final class LangLabel extends Label {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	LangLabel(final String id, final IModel<?> model) {
-		super(id, model);
-	}
+    LangLabel(final String id, final IModel<?> model) {
+        super(id, model);
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public <C> IConverter<C> getConverter(final Class<C> type) {
-		return (IConverter<C>) new LangConverter();
-	}
+    @Override
+    @SuppressWarnings("unchecked")
+    public <C> IConverter<C> getConverter(final Class<C> type) {
+        return (IConverter<C>) new LangConverter();
+    }
 
 }

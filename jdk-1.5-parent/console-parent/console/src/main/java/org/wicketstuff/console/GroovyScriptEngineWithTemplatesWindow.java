@@ -29,18 +29,18 @@ import org.wicketstuff.console.templates.ScriptTemplate;
  * @author cretzel
  */
 public class GroovyScriptEngineWithTemplatesWindow extends
-		ScriptEngineWithTemplatesWindow {
+        ScriptEngineWithTemplatesWindow {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see ScriptEngineWithTemplatesWindow#ScriptEngineWithTemplatesWindow(String,
-	 *      Lang, org.apache.wicket.model.IModel)
-	 */
-	public GroovyScriptEngineWithTemplatesWindow(final String id,
-			final IModel<String> windowTitle,
-			final IDataProvider<ScriptTemplate> dataProvider) {
-		super(id, Lang.GROOVY, windowTitle, dataProvider);
-	}
+    /**
+     * @see ScriptEngineWithTemplatesWindow#ScriptEngineWithTemplatesWindow(String,
+     *      Lang, org.apache.wicket.model.IModel)
+     */
+    public GroovyScriptEngineWithTemplatesWindow(final String id,
+            final IModel<String> windowTitle,
+            final IDataProvider<ScriptTemplate> dataProvider) {
+        super(id, Lang.GROOVY, windowTitle, dataProvider);
+    }
 
 }

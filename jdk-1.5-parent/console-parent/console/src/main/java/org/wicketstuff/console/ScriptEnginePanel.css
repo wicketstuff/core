@@ -26,7 +26,7 @@
 .console h3 {
 	font-size: 13px;
 	font-family: Tahoma, Verdana, Arial, sans-serif;
-	margin:0px;
+	margin: 0px;
 }
 
 .console .input {
@@ -71,7 +71,6 @@
 	font-family: Courier New;
 	font-size: 10pt;
 }
-
 
 .console .shortcut {
 	font-size: 8pt;

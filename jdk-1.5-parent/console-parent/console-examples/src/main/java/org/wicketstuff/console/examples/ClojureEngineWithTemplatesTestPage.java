@@ -23,15 +23,15 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.ClojureScriptEngineWithTemplatesPanel;
 
 public class ClojureEngineWithTemplatesTestPage extends WebPage {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public ClojureEngineWithTemplatesTestPage(final PageParameters params) {
-		super(params);
-		add(new Label("title", new ResourceModel("application.title")));
+    public ClojureEngineWithTemplatesTestPage(final PageParameters params) {
+        super(params);
+        add(new Label("title", new ResourceModel("application.title")));
 
-		add(new ClojureScriptEngineWithTemplatesPanel("panel", null, null));
+        add(new ClojureScriptEngineWithTemplatesPanel("panel", null, null));
 
-		add(new TestPageLinksPanel("links"));
-	}
+        add(new TestPageLinksPanel("links"));
+    }
 
 }

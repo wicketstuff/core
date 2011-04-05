@@ -42,76 +42,76 @@ import clojure.lang.Var;
  */
 public class ClojureEngine implements IScriptEngine {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public synchronized IScriptExecutionResult execute(final String script) {
-		return execute(script, null);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public synchronized IScriptExecutionResult execute(final String script) {
+        return execute(script, null);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public synchronized IScriptExecutionResult execute(final String script,
-			final Map<String, Object> bindings) {
+    /**
+     * {@inheritDoc}
+     */
+    public synchronized IScriptExecutionResult execute(final String script,
+            final Map<String, Object> bindings) {
 
-		Throwable exception = null;
-		String output = null;
-		Object returnValue = null;
+        Throwable exception = null;
+        String output = null;
+        Object returnValue = null;
 
-		final PrintStream oldOut = System.out;
-		final PrintStream oldErr = System.err;
-		final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-		final PrintStream newOut = new PrintStream(bout, false);
-		final OutputStreamWriter newRtOut = new OutputStreamWriter(newOut);
+        final PrintStream oldOut = System.out;
+        final PrintStream oldErr = System.err;
+        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        final PrintStream newOut = new PrintStream(bout, false);
+        final OutputStreamWriter newRtOut = new OutputStreamWriter(newOut);
 
-		try {
-			System.setOut(newOut);
-			System.setErr(newOut);
+        try {
+            System.setOut(newOut);
+            System.setErr(newOut);
 
-			Associative mappings = PersistentHashMap.EMPTY;
-			mappings = mappings.assoc(RT.CURRENT_NS, RT.CURRENT_NS.get());
-			mappings = mappings.assoc(RT.OUT, newRtOut);
-			mappings = mappings.assoc(RT.ERR, newRtOut);
-			mappings = applyBindings(bindings, mappings);
-			Var.pushThreadBindings(mappings);
+            Associative mappings = PersistentHashMap.EMPTY;
+            mappings = mappings.assoc(RT.CURRENT_NS, RT.CURRENT_NS.get());
+            mappings = mappings.assoc(RT.OUT, newRtOut);
+            mappings = mappings.assoc(RT.ERR, newRtOut);
+            mappings = applyBindings(bindings, mappings);
+            Var.pushThreadBindings(mappings);
 
-			returnValue = Compiler.load(new StringReader(script));
-		} catch (final Exception e) {
-			exception = e;
-		} finally {
+            returnValue = Compiler.load(new StringReader(script));
+        } catch (final Exception e) {
+            exception = e;
+        } finally {
 
-			try {
-				Var.popThreadBindings();
-				newRtOut.flush();
-				newRtOut.close();
-				System.setOut(oldOut);
-				System.setErr(oldErr);
+            try {
+                Var.popThreadBindings();
+                newRtOut.flush();
+                newRtOut.close();
+                System.setOut(oldOut);
+                System.setErr(oldErr);
 
-				output = bout.toString();
-			} catch (final Exception e1) {
-				throw new ScriptEngineException(e1);
-			}
+                output = bout.toString();
+            } catch (final Exception e1) {
+                throw new ScriptEngineException(e1);
+            }
 
-		}
+        }
 
-		return new DefaultScriptExecutionResult(script, exception, output,
-				returnValue);
-	}
+        return new DefaultScriptExecutionResult(script, exception, output,
+                returnValue);
+    }
 
-	private Associative applyBindings(final Map<String, Object> bindings,
-			Associative mappings) {
-		if (bindings != null) {
-			final Set<Entry<String, Object>> entrySet = bindings.entrySet();
-			for (final Entry<String, Object> entry : entrySet) {
-				final Symbol symbol = Symbol.intern(entry.getKey());
-				final Namespace userNs = Namespace.findOrCreate(Symbol
-						.create("user".intern()));
-				final Var var = Var.intern(userNs, symbol);
-				mappings = mappings.assoc(var, entry.getValue());
-			}
-		}
-		return mappings;
-	}
+    private Associative applyBindings(final Map<String, Object> bindings,
+            Associative mappings) {
+        if (bindings != null) {
+            final Set<Entry<String, Object>> entrySet = bindings.entrySet();
+            for (final Entry<String, Object> entry : entrySet) {
+                final Symbol symbol = Symbol.intern(entry.getKey());
+                final Namespace userNs = Namespace.findOrCreate(Symbol
+                        .create("user".intern()));
+                final Var var = Var.intern(userNs, symbol);
+                mappings = mappings.assoc(var, entry.getValue());
+            }
+        }
+        return mappings;
+    }
 
 }

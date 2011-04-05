@@ -30,37 +30,37 @@ import org.junit.Test;
  */
 public class LangFileFilterTest {
 
-	private LangFileFilter groovyFileFilter;
-	private LangFileFilter clojureFileFilter;
+    private LangFileFilter groovyFileFilter;
+    private LangFileFilter clojureFileFilter;
 
-	@Before
-	public void setup() {
-		groovyFileFilter = LangFileFilter.create(Lang.GROOVY);
-		clojureFileFilter = LangFileFilter.create(Lang.CLOJURE);
-	}
+    @Before
+    public void setup() {
+        groovyFileFilter = LangFileFilter.create(Lang.GROOVY);
+        clojureFileFilter = LangFileFilter.create(Lang.CLOJURE);
+    }
 
-	@Test
-	public void test_accept_groovy() throws Exception {
+    @Test
+    public void test_accept_groovy() throws Exception {
 
-		assertTrue(groovyFileFilter.accept(null, "Main.groovy"));
-		assertTrue(groovyFileFilter.accept(null, "Main.GROOVY"));
-		assertTrue(groovyFileFilter.accept(null, "/home/files/Main.GROOVY"));
+        assertTrue(groovyFileFilter.accept(null, "Main.groovy"));
+        assertTrue(groovyFileFilter.accept(null, "Main.GROOVY"));
+        assertTrue(groovyFileFilter.accept(null, "/home/files/Main.GROOVY"));
 
-		assertFalse(groovyFileFilter.accept(null, "Main.clj"));
-		assertFalse(groovyFileFilter.accept(null, "Main.TXT"));
-		assertFalse(groovyFileFilter.accept(null, "/home/files/groovy"));
+        assertFalse(groovyFileFilter.accept(null, "Main.clj"));
+        assertFalse(groovyFileFilter.accept(null, "Main.TXT"));
+        assertFalse(groovyFileFilter.accept(null, "/home/files/groovy"));
 
-	}
+    }
 
-	@Test
-	public void test_accept_clojure() throws Exception {
-		assertTrue(clojureFileFilter.accept(null, "Main.clj"));
-		assertTrue(clojureFileFilter.accept(null, "Main.CLJ"));
-		assertTrue(clojureFileFilter.accept(null, "/home/files/Main.clj"));
+    @Test
+    public void test_accept_clojure() throws Exception {
+        assertTrue(clojureFileFilter.accept(null, "Main.clj"));
+        assertTrue(clojureFileFilter.accept(null, "Main.CLJ"));
+        assertTrue(clojureFileFilter.accept(null, "/home/files/Main.clj"));
 
-		assertFalse(clojureFileFilter.accept(null, "Main.groovy"));
-		assertFalse(clojureFileFilter.accept(null, "Main.TXT"));
-		assertFalse(clojureFileFilter.accept(null, "/home/files/clj"));
+        assertFalse(clojureFileFilter.accept(null, "Main.groovy"));
+        assertFalse(clojureFileFilter.accept(null, "Main.TXT"));
+        assertFalse(clojureFileFilter.accept(null, "/home/files/clj"));
 
-	}
+    }
 }

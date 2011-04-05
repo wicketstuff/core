@@ -49,7 +49,7 @@ import org.wicketstuff.console.ScriptEnginePanel;
  * add(enginePanel);
  * 
  * ScriptTemplateSelectionTablePanel scriptTable = new ScriptTemplateSelectionTablePanel(
- * 		&quot;templatesTable&quot;, enginePanel, dataProvider(), 10);
+ *         &quot;templatesTable&quot;, enginePanel, dataProvider(), 10);
  * add(scriptTable);
  * </pre>
  * 
@@ -64,80 +64,80 @@ import org.wicketstuff.console.ScriptEnginePanel;
  */
 public class ScriptTemplateSelectionTablePanel extends Panel {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private static final ResourceReference CSS = new CompressedResourceReference(
-			ScriptTemplateSelectionTablePanel.class,
-			ScriptTemplateSelectionTablePanel.class.getSimpleName() + ".css");
+    private static final ResourceReference CSS = new CompressedResourceReference(
+            ScriptTemplateSelectionTablePanel.class,
+            ScriptTemplateSelectionTablePanel.class.getSimpleName() + ".css");
 
-	private final ScriptEnginePanel enginePanel;
+    private final ScriptEnginePanel enginePanel;
 
-	private DataTable<ScriptTemplate> table;
+    private DataTable<ScriptTemplate> table;
 
-	public ScriptTemplateSelectionTablePanel(final String id,
-			final ScriptEnginePanel enginePanel,
-			final IDataProvider<ScriptTemplate> dataProvider,
-			final int rowsPerPage) {
-		super(id);
-		this.enginePanel = enginePanel;
-		checkEnginePanelOutputMarkupId(enginePanel);
+    public ScriptTemplateSelectionTablePanel(final String id,
+            final ScriptEnginePanel enginePanel,
+            final IDataProvider<ScriptTemplate> dataProvider,
+            final int rowsPerPage) {
+        super(id);
+        this.enginePanel = enginePanel;
+        checkEnginePanelOutputMarkupId(enginePanel);
 
-		init(dataProvider, rowsPerPage);
-	}
+        init(dataProvider, rowsPerPage);
+    }
 
-	private void init(final IDataProvider<ScriptTemplate> dataProvider,
-			final int rowsPerPage) {
-		table = new DataTable<ScriptTemplate>("table", createColumns(),
-				dataProvider, rowsPerPage);
-		add(table);
-	}
+    private void init(final IDataProvider<ScriptTemplate> dataProvider,
+            final int rowsPerPage) {
+        table = new DataTable<ScriptTemplate>("table", createColumns(),
+                dataProvider, rowsPerPage);
+        add(table);
+    }
 
-	protected List<IColumn<ScriptTemplate>> createColumns() {
+    protected List<IColumn<ScriptTemplate>> createColumns() {
 
-		final List<IColumn<ScriptTemplate>> columns = new ArrayList<IColumn<ScriptTemplate>>();
-		columns.add(new TitleColumn(this));
-		columns.add(new LangColumn(this));
+        final List<IColumn<ScriptTemplate>> columns = new ArrayList<IColumn<ScriptTemplate>>();
+        columns.add(new TitleColumn(this));
+        columns.add(new LangColumn(this));
 
-		return columns;
-	}
+        return columns;
+    }
 
-	@Override
-	public void renderHead(final IHeaderResponse response) {
-		super.renderHead(response);
+    @Override
+    public void renderHead(final IHeaderResponse response) {
+        super.renderHead(response);
 
-		final ResourceReference css = getCSS();
-		if (css != null) {
-			response.renderCSSReference(css);
-		}
+        final ResourceReference css = getCSS();
+        if (css != null) {
+            response.renderCSSReference(css);
+        }
 
-	}
+    }
 
-	protected ResourceReference getCSS() {
-		return CSS;
-	}
+    protected ResourceReference getCSS() {
+        return CSS;
+    }
 
-	private void checkEnginePanelOutputMarkupId(
-			final ScriptEnginePanel enginePanel) {
-		if (enginePanel != null) {
-			if (!enginePanel.getOutputMarkupId()) {
-				throw new IllegalStateException(
-						"Set enginePanel.setOutputMarkupId(true) to use "
-								+ "it with ScriptTemplateSelectionTablePanel");
-			}
-		}
-	}
+    private void checkEnginePanelOutputMarkupId(
+            final ScriptEnginePanel enginePanel) {
+        if (enginePanel != null) {
+            if (!enginePanel.getOutputMarkupId()) {
+                throw new IllegalStateException(
+                        "Set enginePanel.setOutputMarkupId(true) to use "
+                                + "it with ScriptTemplateSelectionTablePanel");
+            }
+        }
+    }
 
-	public void onScriptTemplateSelected(final IModel<ScriptTemplate> model,
-			final AjaxRequestTarget target) {
+    public void onScriptTemplateSelected(final IModel<ScriptTemplate> model,
+            final AjaxRequestTarget target) {
 
-		final ScriptTemplate template = model.getObject();
-		final String script = template.script;
+        final ScriptTemplate template = model.getObject();
+        final String script = template.script;
 
-		if (enginePanel != null) {
-			enginePanel.setInput(script);
-			target.add(enginePanel.getInputTf());
-		}
+        if (enginePanel != null) {
+            enginePanel.setInput(script);
+            target.add(enginePanel.getInputTf());
+        }
 
-	}
+    }
 
 }

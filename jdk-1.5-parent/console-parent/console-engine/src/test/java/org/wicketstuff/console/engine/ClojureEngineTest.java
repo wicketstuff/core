@@ -30,14 +30,14 @@ import org.junit.Test;
 
 public class ClojureEngineTest {
 
-	private ClojureEngine engine;
+    private ClojureEngine engine;
 
-	@Before
-	public void setup() {
-		engine = new ClojureEngine();
-	}
+    @Before
+    public void setup() {
+        engine = new ClojureEngine();
+    }
 
-	@Test
+    @Test
 	public void test_instanceof_engine() throws Exception {
 		assertTrue(engine instanceof IScriptEngine);
 	}
