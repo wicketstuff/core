@@ -28,7 +28,7 @@ import org.wicketstuff.console.engine.Lang;
 
 /**
  * Testing {@link ScriptTemplateUtils}.
- * 
+ *
  * @author cretzel
  */
 public class ScriptTemplatesUtilsTest {
@@ -81,7 +81,7 @@ public class ScriptTemplatesUtilsTest {
 		// Given
 		final File file = new File(getClass().getClassLoader()
 				.getResource(TEST_SCRIPTS_BASE_DIR + "groovy/Test01.groovy")
-				.getFile());
+				.toURI());
 
 		// When
 		final ScriptTemplate template = ScriptTemplateUtils
