@@ -25,39 +25,51 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.wicketstuff.shiro.page.LogoutPage;
 
-
-
 public class SimpleAuthHeader extends Panel
-{ 
-	public SimpleAuthHeader(String id, Class<? extends Page> loginPage)
+{
+	private static final long serialVersionUID = 1L;
+
+	public SimpleAuthHeader(final String id, final Class<? extends Page> loginPage)
 	{
-	  super( id );
-	  
-	  // Welcome with logout
-	  WebMarkupContainer welcome = new WebMarkupContainer( "welcome") {
-	    @Override
-      public boolean isVisible() {
-	      return SecurityUtils.getSubject().getPrincipal() != null;
-	    }
-	  };
-	  welcome.add( new Label( "name", new AbstractReadOnlyModel<String>() {
-      @Override
-      public String getObject() {
-        return SecurityUtils.getSubject().getPrincipal().toString(); // ??
-      }
-	  }) );
-	  welcome.add( new BookmarkablePageLink<Void>( "link", LogoutPage.class ) );
-	  add( welcome );
-	  
-	  
-	  // Login
-    WebMarkupContainer login = new WebMarkupContainer( "login") {
-      @Override
-      public boolean isVisible() {
-        return SecurityUtils.getSubject().getPrincipal() == null;
-      }
-    };
-    login.add( new BookmarkablePageLink<Void>( "link", loginPage ) );
-    add( login );
+		super(id);
+
+		// Welcome with logout
+		final WebMarkupContainer welcome = new WebMarkupContainer("welcome")
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isVisible()
+			{
+				return SecurityUtils.getSubject().getPrincipal() != null;
+			}
+		};
+		welcome.add(new Label("name", new AbstractReadOnlyModel<String>()
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getObject()
+			{
+				return SecurityUtils.getSubject().getPrincipal().toString(); // ??
+			}
+		}));
+		welcome.add(new BookmarkablePageLink<Void>("link", LogoutPage.class));
+		add(welcome);
+
+
+		// Login
+		final WebMarkupContainer login = new WebMarkupContainer("login")
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isVisible()
+			{
+				return SecurityUtils.getSubject().getPrincipal() == null;
+			}
+		};
+		login.add(new BookmarkablePageLink<Void>("link", loginPage));
+		add(login);
 	}
 }
