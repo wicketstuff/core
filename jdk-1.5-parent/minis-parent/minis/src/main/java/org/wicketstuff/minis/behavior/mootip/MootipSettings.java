@@ -1,4 +1,4 @@
-package org.wicketstuff.minis.mootipbehavior;
+package org.wicketstuff.minis.behavior.mootip;
 
 import java.awt.Point;
 import java.io.Serializable;

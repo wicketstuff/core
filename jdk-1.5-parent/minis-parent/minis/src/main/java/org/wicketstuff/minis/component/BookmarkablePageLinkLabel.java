@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.misc.widgets;
+package org.wicketstuff.minis.component;
 
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
@@ -23,22 +23,30 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 @SuppressWarnings("serial")
-public class BookmarkablePageLinkLabel<T> extends BookmarkablePageLink<T> {
-    private String label_;
+public class BookmarkablePageLinkLabel<T> extends BookmarkablePageLink<T>
+{
+	private final String label_;
 
-    public BookmarkablePageLinkLabel(String id, Class<? extends WebPage> pageClass, String label) {
-        super(id, pageClass);
-        label_ = label;
-    }
+	public BookmarkablePageLinkLabel(final String id, final Class<? extends WebPage> pageClass,
+		final PageParameters pp, final String label)
+	{
+		super(id, pageClass, pp);
+		label_ = label;
+	}
 
-    public BookmarkablePageLinkLabel(String id, Class<? extends WebPage> pageClass, PageParameters pp, String label) {
-        super(id, pageClass, pp);
-        label_ = label;
-    }
+	public BookmarkablePageLinkLabel(final String id, final Class<? extends WebPage> pageClass,
+		final String label)
+	{
+		super(id, pageClass);
+		label_ = label;
+	}
 
-    @Override
-    public void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
-        replaceComponentTagBody(markupStream, openTag, label_);
-    }
-
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag)
+	{
+		replaceComponentTagBody(markupStream, openTag, label_);
+	}
 }

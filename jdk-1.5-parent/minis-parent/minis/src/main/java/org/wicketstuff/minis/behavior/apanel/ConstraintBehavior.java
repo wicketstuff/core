@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.minis.apanel;
+package org.wicketstuff.minis.behavior.apanel;
 
 import org.apache.wicket.behavior.Behavior;
 
 /**
- * Contains information about how a component should be displayed in a layout. A
- * component should have only one constraint.
+ * Contains information about how a component should be displayed in a layout. A component should
+ * have only one constraint.
  * <p/>
  * This class violates the idea of {@link org.apache.wicket.behavior.IBehavior}.
  * </p>
@@ -28,5 +28,4 @@ import org.apache.wicket.behavior.Behavior;
 public class ConstraintBehavior extends Behavior
 {
 	private static final long serialVersionUID = 1L;
-
 }

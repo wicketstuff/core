@@ -14,14 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.minis.util.collection;
+package org.wicketstuff.minis.model.collection;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 
 import org.apache.wicket.model.IDetachable;
-import org.wicketstuff.minis.util.IDetachCodec;
+import org.wicketstuff.minis.model.IDetachCodec;
 
 /**
  * A collection that can be converted between attached and detached state via calls to

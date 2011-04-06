@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.minis.mootipbehavior;
+package org.wicketstuff.minis.behavior.mootip;
 
 import java.util.HashMap;
 

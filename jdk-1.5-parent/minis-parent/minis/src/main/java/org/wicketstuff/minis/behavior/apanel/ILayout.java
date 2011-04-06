@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.minis.apanel;
+package org.wicketstuff.minis.behavior.apanel;
 
 import java.io.Serializable;
 import java.util.List;
@@ -28,8 +28,9 @@ public interface ILayout extends Serializable
 {
 	/**
 	 * Creates wicket markup for components, adding markup specific for this layout.
-	 *
-	 * @param components components to render
+	 * 
+	 * @param components
+	 *            components to render
 	 * @return wicket markup
 	 */
 	CharSequence renderComponents(List<? extends Component> components);

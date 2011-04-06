@@ -14,21 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.misc.behaviors;
+package org.wicketstuff.minis.behavior;
 
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.util.time.Duration;
 
-@SuppressWarnings("serial")
-public class KeepAliveBehavior extends AbstractAjaxTimerBehavior {
-    public KeepAliveBehavior() {
-        super(Duration.minutes(10));
-    }
+public class KeepAliveBehavior extends AbstractAjaxTimerBehavior
+{
+	private static final long serialVersionUID = 1L;
 
-    @Override
-    protected void onTimer(AjaxRequestTarget target) {
-        // prevent wicket changing focus
-        target.focusComponent(null);
-    }
+	public KeepAliveBehavior()
+	{
+		super(Duration.minutes(10));
+	}
+
+	@Override
+	protected void onTimer(final AjaxRequestTarget target)
+	{
+		// prevent wicket changing focus
+		target.focusComponent(null);
+	}
 }

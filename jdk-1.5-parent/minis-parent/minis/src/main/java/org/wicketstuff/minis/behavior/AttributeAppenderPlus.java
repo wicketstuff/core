@@ -14,33 +14,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.misc.behaviors;
+package org.wicketstuff.minis.behavior;
 
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.Strings;
 
-@SuppressWarnings("serial")
-public class AttributeAppenderPlus extends AttributeAppender {
+/**
+ * @author David Bernard
+ * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
+ */
+public class AttributeAppenderPlus extends AttributeAppender
+{
+	private static final long serialVersionUID = 1L;
 
-    private String prefix_;
-    private String suffix_;
+	private final String prefix_;
+	private final String suffix_;
 
-    public AttributeAppenderPlus(String attribute, boolean addAttributeIfNotPresent, IModel appendModel, String separator, String prefix, String suffix) {
-        super(attribute, addAttributeIfNotPresent, appendModel, separator);
-        prefix_ = prefix;
-        suffix_ = suffix;
-    }
+	public AttributeAppenderPlus(final String attribute, final boolean addAttributeIfNotPresent,
+		final IModel<?> appendModel, final String separator, final String prefix,
+		final String suffix)
+	{
+		super(attribute, addAttributeIfNotPresent, appendModel, separator);
+		prefix_ = prefix;
+		suffix_ = suffix;
+	}
 
-    public AttributeAppenderPlus(String attribute, IModel appendModel, String separator, String prefix, String suffix) {
-        this(attribute, true, appendModel, separator, prefix, suffix);
-    }
+	public AttributeAppenderPlus(final String attribute, final IModel<?> appendModel,
+		final String separator, final String prefix, final String suffix)
+	{
+		this(attribute, true, appendModel, separator, prefix, suffix);
+	}
 
-    @Override
-    protected String newValue(String currentValue, String appendValue) {
-        if (!Strings.isEmpty(appendValue)) {
-            appendValue = prefix_ + appendValue + suffix_;
-        }
-        return super.newValue(currentValue, appendValue);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected String newValue(final String currentValue, final String appendValue)
+	{
+		return super.newValue(currentValue, Strings.isEmpty(appendValue) ? appendValue : prefix_ +
+			appendValue + suffix_);
+	}
 }

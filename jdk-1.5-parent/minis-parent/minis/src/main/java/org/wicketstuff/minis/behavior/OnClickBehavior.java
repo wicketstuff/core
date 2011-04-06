@@ -14,23 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.misc.behaviors;
+package org.wicketstuff.minis.behavior;
 
 import java.util.Arrays;
 
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.behavior.SimpleAttributeModifier;
 
-@SuppressWarnings("serial")
-public class OnClickBehavior extends CompositeBehavior {
+public class OnClickBehavior extends CompositeBehavior
+{
+	private static final long serialVersionUID = 1L;
 
-    public OnClickBehavior(CharSequence url) {
-        super(Arrays.asList(new Behavior[]{
-                new SimpleAttributeModifier("class", "clickable"),
-                new SimpleAttributeModifier("onClick", "document.location.href='" + url + "';")
-        }));
-    }
-    //onMouseOver="this.bgColor = '#C0C0C0'"
-    //onMouseOut
-
+	public OnClickBehavior(final CharSequence url)
+	{
+		super(Arrays.asList(new Behavior[] { new SimpleAttributeModifier("class", "clickable"),
+				new SimpleAttributeModifier("onClick", "document.location.href='" + url + "';") }));
+	}
+	// onMouseOver="this.bgColor = '#C0C0C0'"
+	// onMouseOut
 }

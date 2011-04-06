@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.minis.apanel;
+package org.wicketstuff.minis.behavior.apanel;
 
 import java.util.List;
 
@@ -56,7 +56,7 @@ public class FlowLayout implements ILayout
 	}
 
 	/**
-	 * @see org.wicketstuff.minis.apanel.ILayout#renderComponents(java.util.List)
+	 * @see org.wicketstuff.minis.behavior.apanel.ILayout#renderComponents(java.util.List)
 	 */
 	public CharSequence renderComponents(final List<? extends Component> components)
 	{

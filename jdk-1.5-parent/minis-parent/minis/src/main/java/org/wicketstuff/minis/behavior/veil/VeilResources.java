@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.minis.veil;
+package org.wicketstuff.minis.behavior.veil;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
@@ -28,7 +28,7 @@ import org.apache.wicket.request.resource.ResourceReference;
  * 
  * @author ivaynberg
  */
-public class VeilResources extends Behavior 
+public class VeilResources extends Behavior
 {
 	/**
 	 * JavaScript interface for the veil
@@ -222,7 +222,7 @@ public class VeilResources extends Behavior
 	 * @see Behavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
-	public void renderHead(Component c, final IHeaderResponse response)
+	public void renderHead(final Component c, final IHeaderResponse response)
 	{
 		response.renderJavaScriptReference(JS);
 		response.renderCSSReference(CSS);

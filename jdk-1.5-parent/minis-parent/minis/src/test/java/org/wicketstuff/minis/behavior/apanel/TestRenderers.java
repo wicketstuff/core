@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.minis.apanel;
+package org.wicketstuff.minis.behavior.apanel;
 
 import java.util.Arrays;
 
@@ -34,8 +34,9 @@ import org.apache.wicket.util.resource.StringBufferResourceStream;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
+import org.wicketstuff.minis.behavior.apanel.APanel;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({ "rawtypes", "serial" })
 public class TestRenderers
 {
 	private static class RenderersTestPage extends TestPage

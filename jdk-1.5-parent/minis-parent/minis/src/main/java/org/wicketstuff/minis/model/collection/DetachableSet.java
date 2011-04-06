@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.minis.util.collection;
+package org.wicketstuff.minis.model.collection;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.wicketstuff.minis.util.IDetachCodec;
+import org.wicketstuff.minis.model.IDetachCodec;
 
 /**
  * A set that can be converted between an attached and detached state.

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.misc.behaviors;
+package org.wicketstuff.minis.behavior;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.SimpleAttributeModifier;
@@ -22,33 +22,36 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.util.string.Strings;
 
 /**
- *
+ * 
  * @author dwayne
  */
-@SuppressWarnings("serial")
-public class SimpleAttributeAppender extends SimpleAttributeModifier {
+public class SimpleAttributeAppender extends SimpleAttributeModifier
+{
+	private static final long serialVersionUID = 1L;
 
-    private CharSequence separator_;
+	private final CharSequence separator_;
 
-    public SimpleAttributeAppender(String attribute, CharSequence value, CharSequence separator) {
-        super(attribute, value);
-        separator_ = separator;
-    }
+	public SimpleAttributeAppender(final String attribute, final CharSequence value,
+		final CharSequence separator)
+	{
+		super(attribute, value);
+		separator_ = separator;
+	}
 
-    /**
-     * @see org.apache.wicket.behavior.AbstractBehavior#onComponentTag(org.apache.wicket.Component,
-     *      org.apache.wicket.markup.ComponentTag)
-     */
-    @Override
-    public void onComponentTag(final Component component, final ComponentTag tag) {
-        if (isEnabled(component) && !Strings.isEmpty(getValue())) {
-            CharSequence newValue = tag.getAttributes().getString(getAttribute());
-            if (Strings.isEmpty(newValue)) {
-                newValue = getValue();
-            } else {
-                newValue = new StringBuilder(getValue()).append(separator_).append(newValue);
-            }
-            tag.getAttributes().put(getAttribute(), newValue);
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void onComponentTag(final Component component, final ComponentTag tag)
+	{
+		if (isEnabled(component) && !Strings.isEmpty(getValue()))
+		{
+			final String newValue = tag.getAttributes().getString(getAttribute());
+			tag.getAttributes().put(getAttribute(), //
+				Strings.isEmpty(newValue) ? //
+					getValue() : //
+					new StringBuilder(getValue()).append(separator_).append(newValue) //
+				);
+		}
+	}
 }

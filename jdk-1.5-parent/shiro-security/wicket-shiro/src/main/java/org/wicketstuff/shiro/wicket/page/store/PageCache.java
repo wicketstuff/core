@@ -42,7 +42,7 @@ public class PageCache implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger log = LoggerFactory.getLogger(PageCache.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PageCache.class);
 
 	private final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
 	private final Lock read = rwl.readLock();
@@ -58,40 +58,6 @@ public class PageCache implements IClusterable
 	public PageCache(final int maxSize)
 	{
 		MAX_SIZE = maxSize;
-	}
-
-	public void storePages(final SerializedPageWrapper wrapper)
-	{
-		write.lock();
-		try
-		{
-			// reduce size of page store to within set size if required
-			if (MAX_SIZE != SessionPageStore.DEFAULT_MAX_PAGES)
-			{
-				int numToRemove = pages.size() + 1 - MAX_SIZE;
-				if (numToRemove > 0)
-				{
-					final Iterator<Map.Entry<Integer, SerializedPageWrapper>> iter = pages.entrySet()
-						.iterator();
-					while (iter.hasNext() && numToRemove > 0)
-					{
-						final Map.Entry<Integer, SerializedPageWrapper> entry = iter.next();
-						iter.remove();
-						pageKeys.remove(entry.getKey());
-						numToRemove--;
-					}
-				}
-			}
-			final Integer pageKey = wrapper.getPageId();
-			// remove to preserve access order
-			pages.remove(pageKey);
-			pages.put(pageKey, wrapper);
-			pageKeys.put(pageKey, id.getAndIncrement());
-		}
-		finally
-		{
-			write.unlock();
-		}
 	}
 
 	public boolean containsPage(final int pageId)
@@ -133,19 +99,48 @@ public class PageCache implements IClusterable
 		}
 	}
 
+	public void storePages(final SerializedPageWrapper wrapper)
+	{
+		write.lock();
+		try
+		{
+			// reduce size of page store to within set size if required
+			if (MAX_SIZE != SessionPageStore.DEFAULT_MAX_PAGES)
+			{
+				int numToRemove = pages.size() + 1 - MAX_SIZE;
+				if (numToRemove > 0)
+				{
+					final Iterator<Map.Entry<Integer, SerializedPageWrapper>> iter = pages.entrySet()
+						.iterator();
+					while (iter.hasNext() && numToRemove > 0)
+					{
+						final Map.Entry<Integer, SerializedPageWrapper> entry = iter.next();
+						iter.remove();
+						pageKeys.remove(entry.getKey());
+						numToRemove--;
+					}
+				}
+			}
+			final Integer pageKey = wrapper.getPageId();
+			// remove to preserve access order
+			pages.remove(pageKey);
+			pages.put(pageKey, wrapper);
+			pageKeys.put(pageKey, id.getAndIncrement());
+		}
+		finally
+		{
+			write.unlock();
+		}
+	}
+
 	@Override
 	public String toString()
 	{
 		final StringBuilder sb = new StringBuilder();
-		for (Entry<Integer, SerializedPageWrapper> entry : pages.entrySet())
-		{
+		for (final Entry<Integer, SerializedPageWrapper> entry : pages.entrySet())
 			sb.append("\t").append(entry.getKey().toString()).append("\n");
-		}
-		if (log.isTraceEnabled())
-		{
+		if (LOG.isTraceEnabled())
 			sb.append("\tPageKeys TreeSet: ").append(pageKeys.toString());
-		}
 		return sb.toString();
 	}
-
 }

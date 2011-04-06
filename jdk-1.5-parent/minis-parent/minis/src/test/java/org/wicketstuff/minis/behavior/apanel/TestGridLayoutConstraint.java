@@ -14,10 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.minis.apanel;
+package org.wicketstuff.minis.behavior.apanel;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.wicketstuff.minis.behavior.apanel.GridLayoutConstraint;
 
 public class TestGridLayoutConstraint
 {

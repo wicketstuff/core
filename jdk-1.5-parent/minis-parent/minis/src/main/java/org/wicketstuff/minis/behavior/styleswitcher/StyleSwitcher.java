@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.minis.styleswitcher;
+package org.wicketstuff.minis.behavior.styleswitcher;
 
 import java.util.ArrayList;
 import java.util.List;

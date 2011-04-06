@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.minis.apanel;
+package org.wicketstuff.minis.behavior.apanel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -131,21 +131,21 @@ class RenderersList implements Serializable
 	}
 
 	// mocleiri: does not seem compatible with 1.5
-//	public static final class DefaultWebMarkupContainerWithMarkupRenderer extends
-//		BaseWebMarkupContainerRenderer<WebMarkupContainerWithAssociatedMarkup>
-//	{
-//		private static final long serialVersionUID = 1L;
+// public static final class DefaultWebMarkupContainerWithMarkupRenderer extends
+// BaseWebMarkupContainerRenderer<WebMarkupContainerWithAssociatedMarkup>
+// {
+// private static final long serialVersionUID = 1L;
 //
-//		public Class<WebMarkupContainerWithAssociatedMarkup> getComponentClass()
-//		{
-//			return WebMarkupContainerWithAssociatedMarkup.class;
-//		}
+// public Class<WebMarkupContainerWithAssociatedMarkup> getComponentClass()
+// {
+// return WebMarkupContainerWithAssociatedMarkup.class;
+// }
 //
-//		public CharSequence getMarkup(final WebMarkupContainerWithAssociatedMarkup component)
-//		{
-//			return String.format("<span %s></span>", getIdAttribute(component));
-//		}
-//	}
+// public CharSequence getMarkup(final WebMarkupContainerWithAssociatedMarkup component)
+// {
+// return String.format("<span %s></span>", getIdAttribute(component));
+// }
+// }
 
 	@SuppressWarnings("rawtypes")
 	public static final class FormRenderer extends BaseWebMarkupContainerRenderer<Form>
@@ -272,8 +272,8 @@ class RenderersList implements Serializable
 		DEFAULT_RENDERERS.add(new RepeatingViewRenderer());
 		DEFAULT_RENDERERS.add(new FormRenderer());
 		DEFAULT_RENDERERS.add(new ButtonRenderer());
-//		mocleiri: TODO make 1.5 compatible.
-//		DEFAULT_RENDERERS.add(new DefaultWebMarkupContainerWithMarkupRenderer());
+// mocleiri: TODO make 1.5 compatible.
+// DEFAULT_RENDERERS.add(new DefaultWebMarkupContainerWithMarkupRenderer());
 		DEFAULT_RENDERERS.add(new DefaultWebMarkupContainerRenderer());
 		DEFAULT_RENDERERS.add(new DefaultRenderer());
 	}
@@ -286,12 +286,12 @@ class RenderersList implements Serializable
 	/**
 	 * Note: unchecked cast is suppressed because this method is intended to return renderer that
 	 * should be used with {@link org.apache.wicket.Component} collections but
-	 * {@link org.wicketstuff.minis.apanel.IComponentRenderer#getMarkup(org.apache.wicket.Component)}
+	 * {@link org.wicketstuff.minis.behavior.apanel.IComponentRenderer#getMarkup(org.apache.wicket.Component)}
 	 * method can only handle certain subtype of {@link org.apache.wicket.Component}.
 	 * 
 	 * @param aClass
 	 *            class of the component
-	 * @return {@link org.wicketstuff.minis.apanel.IComponentRenderer} for specified component class
+	 * @return {@link org.wicketstuff.minis.behavior.apanel.IComponentRenderer} for specified component class
 	 */
 	@SuppressWarnings({ "unchecked" })
 	IComponentRenderer<Component> findRendererForClass(final Class<? extends Component> aClass)

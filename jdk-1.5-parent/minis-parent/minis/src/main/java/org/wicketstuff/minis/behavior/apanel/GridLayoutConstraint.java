@@ -14,10 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.minis.apanel;
+package org.wicketstuff.minis.behavior.apanel;
 
 /**
- * Specifies position of a component for {@link org.wicketstuff.minis.apanel.GridLayout} and
+ * Specifies position of a component for {@link org.wicketstuff.minis.behavior.apanel.GridLayout} and
  * optionally column/row span.
  */
 public class GridLayoutConstraint extends ConstraintBehavior

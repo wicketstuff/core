@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.minis.apanel;
+package org.wicketstuff.minis.behavior.apanel;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
@@ -24,7 +24,13 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.wicketstuff.minis.behavior.apanel.APanel;
+import org.wicketstuff.minis.behavior.apanel.FlowLayout;
+import org.wicketstuff.minis.behavior.apanel.GridLayout;
+import org.wicketstuff.minis.behavior.apanel.GridLayoutConstraint;
+import org.wicketstuff.minis.behavior.apanel.ILayout;
 
+@SuppressWarnings("serial")
 public class TestLayouts
 {
 	private static class LayoutTestPage extends TestPage

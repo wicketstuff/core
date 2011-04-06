@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.minis.apanel;
+package org.wicketstuff.minis.behavior.apanel;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,8 +31,8 @@ import org.apache.wicket.markup.parser.XmlTag;
 
 /**
  * GridLayout puts markup of components in &lt;table&gt;&lt;table/&gt; according to
- * {@link org.wicketstuff.minis.apanel.GridLayoutConstraint}s. Component without a constraint will
- * be added to the first empty cell. If there is no empty cells for the component
+ * {@link org.wicketstuff.minis.behavior.apanel.GridLayoutConstraint}s. Component without a
+ * constraint will be added to the first empty cell. If there is no empty cells for the component
  * WicketRuntimeException will be thrown.
  */
 public class GridLayout implements ILayout
@@ -108,7 +108,7 @@ public class GridLayout implements ILayout
 	/**
 	 * Holds constraints for components. It is sorted to write markup output in the right order.
 	 * 
-	 * @see org.wicketstuff.minis.apanel.GridLayoutConstraint#compareTo(GridLayoutConstraint)
+	 * @see org.wicketstuff.minis.behavior.apanel.GridLayoutConstraint#compareTo(GridLayoutConstraint)
 	 */
 	private final SortedMap<GridLayoutConstraint, Component> constraintsMap = new TreeMap<GridLayoutConstraint, Component>();
 
