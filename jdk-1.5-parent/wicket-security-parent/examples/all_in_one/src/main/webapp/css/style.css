@@ -1,0 +1,804 @@
+html,body {
+	height: 100%;
+}
+
+body {
+	background: #7095cd url('../img/layout/background.jpg') no-repeat;
+	color: #00224f;
+	height: 100%;
+}
+
+/* 
+* GENERAL LAYOUT ITEMS 
+* Contains general styles for all containers, bars, buttons, etc.
+* Use ID's (#) for all unique items, classes (.) for the rest.
+*/
+#container {
+	font-family: Trebuchet MS, Arial;
+	height: 100%;
+	min-height: 590px;
+	min-width: 1000px;
+	width: 100%;
+	font-size: 85%;
+	background: transparent;
+}
+
+#menubar {
+	width: 100%;
+	background: #bfdbff;
+	height: 24px;
+	text-align: left;
+}
+
+/* Style for topmenu */
+#topmenu,#topmenu ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	line-height: 1;
+}
+
+#topmenu a {
+	display: block;
+	width: 8em;
+	color: #000e56;
+	text-decoration: none;
+	padding-top: 4px;
+	padding-left: 5px;
+	height: 19px;
+	border-left: 1px solid #bfdbff;
+	border-right: 1px solid #bfdbff;
+	border-bottom: 1px solid #bfdbff;
+}
+
+#topmenu a:hover {
+	background: #e3efff;
+	border-left: 1px solid #74aef8;
+	border-right: 1px solid #ffffff;
+	border-bottom: 1px solid #74aef8;
+}
+
+#topmenu li {
+	float: left;
+	width: 8em;
+	padding-right: 5px;
+}
+
+#topmenu li ul {
+	position: absolute;
+	width: 10em;
+	z-index: 998;
+	left: -999em;
+	background: #bfdbff;
+	border-left: 1px solid #74aef8;
+	border-right: 1px solid #e3efff;
+	border-bottom: 1px solid #74aef8;
+	border-top: 1px solid #e3efff;
+}
+
+#topmenu li ul li a {
+	width: 9em;
+	margin-left: 2px;
+}
+
+#topmenu li:hover ul,#topmenu li.sfhover ul {
+	left: auto;
+}
+
+#actionbar {
+	clear: left;
+	width: 100%;
+	background: #b1d4ff url('../img/layout/actionbar.png') repeat-x;
+	height: 27px;
+	border-bottom: 1px solid #509eee;
+	text-align: left;
+}
+
+/* Style for actionmenu */
+#actionmenu,#actionmenu ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	line-height: 1;
+}
+
+#actionmenu a {
+	display: block;
+	width: 12em;
+	color: #000e56;
+	text-decoration: none;
+	padding-top: 5px;
+	padding-left: 5px;
+	height: 22px;
+	border-left: 1px solid #9ac6ff;
+}
+
+#actionmenu a:hover {
+	background: #ffd44d url('../img/layout/actionbutton.png') repeat-x;
+}
+
+#actionmenu li {
+	float: left;
+	width: 12em;
+	padding-right: 5px;
+}
+
+#actionmenu li ul {
+	position: absolute;
+	z-index: 999;
+	width: 12em;
+	left: -999em;
+	background: #bfdbff;
+	border-left: 1px solid #74aef8;
+	border-right: 1px solid #e3efff;
+	border-bottom: 1px solid #74aef8;
+	border-top: 1px solid #e3efff;
+}
+
+#actionmenu li ul li a {
+	width: 11em;
+	margin-left: 2px;
+}
+
+#actionmenu li:hover ul,#actionmenu li.sfhover ul {
+	left: auto;
+}
+
+#dropdown,#dropdowna {
+	background: url('../img/layout/dropdown.gif') no-repeat 3px 9px;
+	border-left: 0px !important;
+	width: 10px !important;
+}
+
+#actionmenu img {
+	float: left;
+	margin-right: 5px;
+}
+
+#content { /*height:85%;*/
+	text-align: left;
+	background: transparent;
+}
+
+#navcontent {
+	width: 166px;
+	height: 100%;
+	float: left;
+	padding-left: 2px;
+}
+
+#contentbox {
+	height: 100%;
+	overflow: auto;
+	/*min-width:600px; 
+	border-bottom:1px solid #6593cf; */
+	max-width: 1000px;
+	background: transparent;
+}
+
+.title {
+	border-left: 1px solid #6593cf;
+	border-right: 1px solid #6593cf;
+	background: #ffffff url('../img/layout/title.png') repeat-x;
+	margin-top: 2px;
+	color: #0974b8;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	padding-top: 8px;
+}
+
+#sideTitle {
+	height: 350px;
+	width: 164px;
+	border-bottom: 1px solid #6593cf;
+}
+
+#sideTitle div#leftBox {
+	text-align: left;
+	padding-top: 8px;
+	padding-left: 3px;
+	padding-right: 6px;
+	color: #002d68;
+	font-size: 90%;
+	font-weight: bold;
+}
+
+#centerTitle {
+	margin-left: 2px;
+	margin-right: 2px;
+	height: 20px;
+}
+
+#sidefiller {
+	background: #8ec9e6 url('../img/layout/sidefiller.png') no-repeat;
+	height: 300px;
+	width: 156px;
+	padding-top: 12px;
+	padding-left: 10px;
+}
+
+#sidefiller input {
+	background: #bfe8fa;
+	border: 1px solid #ffffff;
+	color: #064dab;
+	height: 15px;
+	font-size: 90%;
+	width: 124px;
+	float: left;
+}
+
+#sidefiller img {
+	float: left;
+	cursor: pointer;
+}
+
+#sidefiller a {
+	text-decoration: none;
+	color: #ffffff;
+}
+
+#sidefiller a:hover {
+	text-decoration: underline;
+	color: #064dab;
+}
+
+#buttoncontainer {
+	padding-top: 2px;
+	bottom: 23px;
+	position: inherit;
+	z-index: 10;
+	background: transparent;
+	border-bottom: 1px solid #6593cf;
+}
+
+a.menubutton {
+	width: 134px;
+	padding-left: 30px;
+	height: 23px;
+	padding-top: 9px;
+	background: #add1ff url('../img/layout/menubutton.png') repeat-x 0px 0px
+		;
+	border-left: 1px solid #6593cf;
+	border-right: 1px solid #6593cf;
+	display: block;
+	cursor: pointer;
+	font-size: 107%;
+	color: #245ca6;
+	text-decoration: none;
+}
+
+a.menubutton:hover {
+	background-position: 0px -32px;
+}
+
+a#disabledButton :hover {
+	background-position: 0px 0px;
+	cursor: default;
+}
+
+a.menubutton:active,#activeButton {
+	background-position: 0px -64px;
+	color: #000;
+}
+
+a#disabledButton {
+	color: gray;
+}
+
+#agendaBar,#dateBar,#dagBar,#searchBar {
+	height: 19px;
+	background: #b0d8f4 url('../img/layout/agendaview.png') repeat-x;
+	border-left: 1px solid #6593cf;
+	border-right: 1px solid #6593cf;
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+#viewForm {
+	float: left;
+}
+
+#viewOptForm {
+	float: right;
+	padding-right: 10px;
+}
+
+#agendaBar input {
+	margin-top: 3px;
+	margin-left: 10px;
+	margin-right: 5px;
+	float: left;
+}
+
+#agendaBar label {
+	margin-top: 2px;
+	float: left;
+	color: #0046a2;
+}
+
+#searchBar {
+	background: #b0d8f4 url('../img/layout/searchBar.png') repeat-x;
+	height: 21px;
+	border-bottom: 1px solid #6b8ec3;
+	padding-top: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#searchBar span {
+	float: left;
+	padding-right: 3px;
+	font-size: 10px;
+	padding-top: 1px;
+	color: #3a81e2;
+}
+
+#searchBar input {
+	background: #f3f8ff url('../img/layout/textbox.png') repeat-x;
+	font-size: 10px;
+	border: 1px solid #769ace;
+	color: #00224f;
+	font-family: Trebuchet MS, Arial;
+	margin-right: 10px;
+	float: left;
+}
+
+#searchBar select {
+	background: #f3f8ff url('../img/layout/textbox.png') repeat-x;
+	font-size: 10px;
+	border: 1px solid #769ace;
+	color: #00224f;
+	font-family: Trebuchet MS, Arial;
+	margin-right: 10px;
+	float: left;
+}
+
+#searchBar img {
+	float: right;
+	cursor: pointer;
+}
+
+#dateBar {
+	background: #bfdbff;
+	border-bottom: 1px solid #6b8ec3;
+	height: 22px;
+	padding-top: 5px;
+	padding-left: 10px;
+}
+
+#dateBar a {
+	display: block;
+	background: url('../img/layout/vorige.png') no-repeat;
+	width: 16px;
+	height: 16px;
+	float: left;
+	padding-right: 10px;
+}
+
+a#volgende {
+	background: url('../img/layout/volgende.png') no-repeat !important;
+}
+
+#dateBar th {
+	font-size: 115%;
+	color: #0d3b78;
+}
+
+#dagBar {
+	background: #518ad8 url('../img/layout/datebar.png') repeat-x;
+	border-bottom: 1px solid #6b8ec3;
+	height: 19px;
+}
+
+#agendaView { /*	border-left:1px solid #6593cf;
+	border-right:1px solid #6593cf;
+*/
+	margin-left: 2px;
+	margin-right: 2px;
+	min-height: 400px;
+	background: transparent;
+	padding-bottom: 22px;
+}
+
+#agendaView table {
+	width: 100%;
+	border-collapse: separate;
+}
+
+#agendaView th {
+	background: #518ad8 url('../img/layout/datebar.png') repeat-x;
+	border-bottom: 1px solid #6b8ec3;
+	padding-top: 1px;
+	height: 19px;
+	color: #ffffff;
+	font-size: 110%;
+	width: auto;
+	padding-left: 5px;
+}
+
+#agendaView th span {
+	min-width: 150px;
+	display: block;
+}
+
+#tijd {
+	padding-left: 5px;
+	width: 50px !important;
+}
+
+#agendaView tr {
+	height: 20px;
+}
+
+#agendaView tr.halfhour {
+	height: 20px;
+}
+
+#agendaView tr.halfhour td {
+	border-bottom: 1px solid #e4eefc;
+}
+
+#agendaView tr.outside {
+	background: #d0def3;
+}
+
+#agendaView thead tr {
+	height: 19px;
+}
+
+#agendaView td {
+	vertical-align: bottom;
+	border-bottom: 1px solid #a3bfe8;
+	border-right: 1px solid #1c60c5;
+	border-left: 1px solid #6198e8;
+}
+
+#agendaView th.activeday {
+	background: #ffda00 url('../img/layout/datebarActive.png') repeat-x;
+	color: #000;
+}
+
+#agendaView td.activeday {
+	border-right: 3px solid #ffda00;
+	border-left: 3px solid #ffda00;
+}
+
+#agendaView td:hover {
+	background: #fff19f;
+	border: 1px solid #ff9900;
+	border-top: 0px;
+}
+
+#searchView {
+	border-left: 1px solid #6593cf;
+	border-right: 1px solid #6593cf;
+	margin-left: 2px;
+	margin-right: 2px;
+	min-height: 400px;
+	background: #ffffff;
+	padding-bottom: 22px;
+}
+
+#searchView table {
+	margin-top: 10px;
+	width: 100%;
+	border-collapse: separate;
+	padding: 6px;
+}
+
+#searchView th {
+	color: #236fd3;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 10px;
+	border-bottom: 1px dashed #c2cad5;
+	padding-bottom: 2px;
+}
+
+#searchView td {
+	color: #00224f;
+	font-size: 11px;
+	border-bottom: 1px solid #f1f7ff;
+	padding-bottom: 2px;
+	padding-top: 2px;
+}
+
+#searchView tr:hover {
+	background: #d3e4fb;
+	cursor: pointer;
+}
+
+#searchView th:hover {
+	background: #77adf6;
+	color: #ffffff;
+}
+
+#searchView img {
+	margin-right: 3px;
+	float: left;
+}
+
+#searchView tfoot td {
+	color: #236fd3;
+	font-size: 10px;
+	padding-top: 15px;
+	border: 0px;
+	text-align: center;
+}
+
+#searchView tfoot tr,#searchView tfoot tr:hover {
+	background: #ffffff;
+	cursor: default;
+}
+
+#dataView {
+	border-left: 1px solid #6593cf;
+	border-right: 1px solid #6593cf;
+	margin-left: 2px;
+	margin-right: 2px;
+	min-height: 400px;
+	background: #ffffff;
+	padding-bottom: 22px;
+}
+
+#dataView table {
+	margin-top: 10px;
+	width: 400px;
+	border-collapse: separate;
+	padding: 6px;
+	float: left;
+	margin-right: 10px;
+}
+
+#dataView table#nowrap {
+	clear: left;
+}
+
+#dataView th {
+	color: #236fd3;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 12px;
+	border-bottom: 1px solid #c2cad5;
+	padding-bottom: 2px;
+}
+
+#dataView td {
+	width: auto;
+	padding: 2px;
+	color: #003378;
+}
+
+#dataView td input {
+	width: auto;
+	float: right;
+	border: 1px solid #c2cad5;
+	height: 16px;
+	color: #323232;
+}
+
+#dataView td#msg {
+	width: 20px;
+}
+
+.clear {
+	height: 1px;
+	clear: both;
+	overflow: hidden;
+}
+
+.afspraak {
+	height: 38px;
+	width: 151px;
+	border: 1px solid #6388bf;
+	background: #d2edf8;
+	position: absolute;
+	z-index: 999;
+	cursor: pointer;
+}
+
+#footer {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	height: 23px;
+	z-index: 15;
+	width: 100%;
+	background: #bad2ef url('../img/layout/footer.png') repeat-x;
+}
+
+/* LOGIN LAYOUT */
+#loginBox {
+	font-family: Trebuchet MS, Arial;
+	color: #0051bd;
+	background: url('../img/layout/loginscreen.png') no-repeat;
+	height: 384px;
+	width: 558px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.loginTitle {
+	height: 50px;
+	padding-top: 40px;
+	font-size: 110%;
+	font-weight: bold;
+}
+
+.loginFormBox {
+	position: relative;
+	height: 132px;
+	font-size: 90%;
+	color: #002d68;
+	text-align: left;
+	padding-left: 80px;
+}
+
+.loginFormBox td {
+	padding: 3px;
+	padding-right: 30px;
+}
+
+.loginFormBox td label {
+	font-size: 90%;
+}
+
+.loginFormBox input {
+	font-family: Trebuchet MS, Arial;
+	color: #002d68;
+	background: #8bbef7;
+	border: 1px solid #d0e7f2;
+	padding: 0px;
+	width: 200px;
+}
+
+.loginFormBox select {
+	font-family: Trebuchet MS, Arial;
+	color: #002d68;
+	background: #8bbef7;
+	border: 1px solid #d0e7f2;
+	padding: 0px;
+	width: 202px;
+}
+
+.loginFormBox input.submit {
+	width: auto;
+	height: auto;
+	border: none;
+}
+
+.loginFormBox img {
+	cursor: pointer;
+}
+
+input.checkbox {
+	width: auto;
+	border: 0px;
+	background: transparent;
+}
+
+.loginFooter {
+	font-family: Trebuchet MS, Arial;
+	color: #0a62d6;
+	font-size: 80%;
+	text-align: right;
+	padding-top: 32px;
+	padding-right: 40px;
+}
+
+.loginError {
+	background: url('../img/layout/loginErrBox.png') no-repeat;
+	height: 14px;
+	width: 460px;
+	margin-top: 2px;
+	margin-left: auto;
+	margin-right: auto;
+	color: #cd0000;
+	font-size: 70%;
+	padding-top: 4px;
+	overflow: hidden;
+}
+
+.error {
+	margin-top: 2px;
+	margin-left: auto;
+	margin-right: auto;
+	color: #cd0000;
+	font-size: 70%;
+	padding-top: 4px;
+}
+
+#feedbackpanel {
+	background: #fef78f url('../img/layout/feedbackpanel.png') repeat-x
+		bottom;
+	overflow: hidden;
+}
+
+#feedbackpanel span {
+	
+}
+
+div.tabpanel div.tab-row { /*  float:left;
+  width:100%;
+  background:#DAE0D2 url("tabs/bg.gif") repeat-x bottom;
+  line-height:normal; */
+	background: #bfdbff;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	line-height: 9px;
+	font-weight: bold;
+	text-align: center;
+	color: #534e4b;
+	padding: 3px 0px 0px 1px;
+	margin-left: 2px;
+	margin-right: 2px;
+	height: 22px;
+	border-bottom: 1px solid #918e8d;
+	border-left: 1px solid #4e71d4;
+	border-right: 1px solid #4e71d4;
+	/*overflow:hidden;*/
+}
+
+div.tabpanel div.tab-row ul {
+	margin: 0;
+	padding: 4px 0px 0;
+	list-style: none;
+}
+
+div.tabpanel div.tab-row li {
+	display: inline;
+}
+
+div.tabpanel div.tab-row a {
+	float: left;
+	background: url("../img/tabs/tab_left.gif") no-repeat left top;
+	margin-left: 2px;
+	padding: 0px 0px 0px 20px;
+	border-bottom: 1px solid #918e8d;
+	text-decoration: none;
+}
+
+div.tabpanel div.tab-row a span {
+	float: left;
+	display: block;
+	background: url("../img/tabs/tab_right.gif") no-repeat right top;
+	padding: 4px 40px 2px 20px;
+	color: #534e4b;
+	white-space: nowrap;
+}
+
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+div.tabpanel div.tab-row a span {
+	float: none;
+}
+
+/* End IE5-Mac hack */
+div.tabpanel div.tab-row li.selected a span {
+	background-position: 100% -38px;
+	padding-bottom: 2px;
+	color: #000000;
+}
+
+/*
+div.tabpanel div.tab-row li.selected a:visited, div.tabpanel div.tab-row li.selected a:link 
+{
+	background-position:0% -19px;
+} 
+
+div.tabpanel div.tab-row li.selected a:visited span, div.tabpanel div.tab-row li.selected a span
+{
+	background-position:100% -19px;
+}
+*/
+div.tabpanel div.tab-row li.selected {
+	background-position: 0 -38px;
+	border-width: 0;
+	border-bottom: 1px solid #FFFFFF;
+}
+
+div.tabpanel div.tab-row li.selected a {
+	background-position: 0 -38px;
+	border-width: 0;
+	border-bottom: 1px solid #FFFFFF;
+}

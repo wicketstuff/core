@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>Login to secure forms</title>
+
+</head>
+<body>
+
+<div id="loginBox">
+	<div class="loginTitle">
+		<div class="loginError" wicket:id="feedback">Username or password incorrect</div>
+	</div>
+    <p>Login with a user and password that are the same. If you use the user 'admin' (and the password 'admin')
+       the user get an additional principal that is configured in the hive with the permission to use the form (in full)
+    </p>
+	<form id="signInForm" method="post" wicket:id="signInForm">
+	<fieldset>
+	<table>
+		<tbody>
+			<tr>
+				<td>Username</td>
+				<td><input type="text" id="username" wicket:id="username" /></td>
+			</tr>
+			<tr>
+				<td>Password</td>
+				<td><input type="password" id="password" wicket:id="password" /></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="checkbox" class="checkbox" name="rememberme"
+					id="rememberme" wicket:id="rememberMe" /> <label for="rememberme">Remember me</label></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><button onclick="javascript:$('signInForm').submit();return false;" >Login</button></td>
+			</tr>
+		</tbody>
+	</table>
+	</fieldset>
+	</form>
+	<div class="loginFooter">Secure Forms Example - Powered by Swarm</div>
+</div>
+<div>Login as</div>
+<ul>
+<li><a href="#" onclick="doLogin('user','user');return false;">A regular user</a></li>
+</ul>
+</body>
+</html>
