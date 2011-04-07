@@ -22,7 +22,6 @@
     <version>1.5-SNAPSHOT</version>
   </parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicket-security-parent</artifactId>
 	<packaging>pom</packaging>
 	<name>wicket-security</name>
@@ -82,25 +81,25 @@
 			<!-- wicket-security dependencies -->
 			<dependency>
 				<groupId>org.wicketstuff</groupId>
-				<artifactId>wicomsec</artifactId>
+				<artifactId>wicket-security-wicomsec</artifactId>
 				<version>${project.version}</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.wicketstuff</groupId>
-				<artifactId>wasp</artifactId>
+				<artifactId>wicket-security-wasp</artifactId>
 				<version>${project.version}</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.wicketstuff</groupId>
-				<artifactId>hive</artifactId>
+				<artifactId>wicket-security-hive</artifactId>
 				<version>${project.version}</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.wicketstuff</groupId>
-				<artifactId>swarm</artifactId>
+				<artifactId>wicket-security-swarm</artifactId>
 				<version>${project.version}</version>
 				<scope>compile</scope>
 			</dependency>

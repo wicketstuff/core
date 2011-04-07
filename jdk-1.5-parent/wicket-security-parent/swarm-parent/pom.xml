@@ -23,7 +23,7 @@
 		<version>1.5-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>swarm-parent</artifactId>
+	<artifactId>wicket-security-swarm-parent</artifactId>
 	<packaging>pom</packaging>
 	<name>swarm-parent</name>
 	<description>Parent project for SWARM</description>

@@ -19,11 +19,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.wicketstuff</groupId>
-		<artifactId>wasp-parent</artifactId>
+		<artifactId>wicket-security-swarm-parent</artifactId>
 		<version>1.5-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>hive</artifactId>
+	<artifactId>wicket-security-hive</artifactId>
 	<packaging>jar</packaging>
 	<name>Hive</name>
 	<inceptionYear>2006</inceptionYear>
@@ -33,7 +33,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>wicomsec</artifactId>
+			<artifactId>wicket-security-wicomsec</artifactId>
 		</dependency>
 	</dependencies>
 	<build>

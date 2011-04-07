@@ -19,11 +19,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.wicketstuff</groupId>
-		<artifactId>wasp-parent</artifactId>
+		<artifactId>wicket-security-swarm-parent</artifactId>
 		<version>1.5-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>swarm</artifactId>
+	<artifactId>wicket-security-swarm</artifactId>
 	<packaging>jar</packaging>
 	<name>SWARM</name>
 	<inceptionYear>2006</inceptionYear>
@@ -58,11 +58,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>wasp</artifactId>
+			<artifactId>wicket-security-wasp</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>hive</artifactId>
+			<artifactId>wicket-security-hive</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

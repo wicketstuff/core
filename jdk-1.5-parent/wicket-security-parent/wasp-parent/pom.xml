@@ -23,7 +23,7 @@
 		<version>1.5-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>wasp-parent</artifactId>
+	<artifactId>wicket-security-wasp-parent</artifactId>
 	<packaging>pom</packaging>
 	<name>wasp-parent</name>
 	<description>Parent project for WASP</description>

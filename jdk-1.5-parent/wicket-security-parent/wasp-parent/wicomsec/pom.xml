@@ -19,11 +19,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.wicketstuff</groupId>
-		<artifactId>wasp-parent</artifactId>
+		<artifactId>wicket-security-wasp-parent</artifactId>
 		<version>1.5-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>wicomsec</artifactId>
+	<artifactId>wicket-security-wicomsec</artifactId>
 	<packaging>jar</packaging>
 	<name>Wicket Common Security</name>
 	<description>Library of common security related classes</description>
