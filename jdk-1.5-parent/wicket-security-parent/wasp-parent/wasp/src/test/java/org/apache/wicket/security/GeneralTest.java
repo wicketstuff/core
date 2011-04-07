@@ -46,7 +46,6 @@ import org.apache.wicket.security.strategies.ClassAuthorizationStrategy;
 import org.apache.wicket.security.strategies.SecurityException;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.TagTester;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -320,7 +319,6 @@ public class GeneralTest extends WaspAbstractTestBase
 	 * Test workings if we are not using a page strategy but a panel replace strategy.
 	 */
 	@Test
-	@Ignore("Strange, form.submit() clicks the link on HomePage")
 	public void testPanelReplacement()
 	{
 		try

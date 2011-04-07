@@ -17,8 +17,6 @@
 package org.apache.wicket.security.pages.container;
 
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.security.components.markup.html.panel.SecurePanel;
 import org.apache.wicket.security.pages.BasePage;
 
 /**
@@ -27,15 +25,10 @@ import org.apache.wicket.security.pages.BasePage;
  */
 public class HomePage extends BasePage
 {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	/** 
-	 * 
-	 */
+	private boolean securePanel = false;
+
 	public HomePage()
 	{
 		add(new InsecurePanel("panel"));
@@ -46,14 +39,12 @@ public class HomePage extends BasePage
 			@Override
 			public void onClick()
 			{
-				Panel panel = (Panel) HomePage.this.get("panel");
-				HomePage.this.remove(panel);
-				if (panel instanceof SecurePanel)
-					HomePage.this.add(new InsecurePanel("panel"));
+				if (securePanel)
+					HomePage.this.addOrReplace(new InsecurePanel("panel"));
 				else
-					HomePage.this.add(new MySecurePanel("panel"));
+					HomePage.this.addOrReplace(new MySecurePanel("panel"));
+				securePanel = !securePanel;
 			}
 		});
 	}
-
 }
