@@ -62,7 +62,7 @@ public class DetachableContactModel extends LoadableDetachableModel<Contact>
 	/**
 	 * Loads the contact from the database
 	 *
-	 * @see wicket.model.LoadableDetachableModel#load()
+	 * @see LoadableDetachableModel#load()
 	 */
 	@Override
 	protected Contact load()
