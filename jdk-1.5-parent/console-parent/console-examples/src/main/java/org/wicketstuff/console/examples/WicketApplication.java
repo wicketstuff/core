@@ -48,7 +48,7 @@ public class WicketApplication extends WebApplication {
                 .addAnnotatedClass(Book.class)
                 .setProperty("hibernate.dialect",
                         "org.hibernate.dialect.HSQLDialect")
-                .setProperty("hibernate.connection.driver_class	",
+                .setProperty("hibernate.connection.driver_class",
                         "org.hsqldb.jdbcDriver")
                 .setProperty("hibernate.connection.url",
                         "jdbc:hsqldb:mem:console")
