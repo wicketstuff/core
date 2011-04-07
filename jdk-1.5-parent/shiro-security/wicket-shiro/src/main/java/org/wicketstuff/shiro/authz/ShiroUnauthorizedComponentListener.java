@@ -54,7 +54,6 @@ public class ShiroUnauthorizedComponentListener
 		return page;
 	}
 
-
 	protected Class<? extends Page> addUnauthorizedMessagesAndGetPage(
 		final ShiroSecurityConstraint constraint, final Component component,
 		Class<? extends Page> page)
@@ -105,7 +104,6 @@ public class ShiroUnauthorizedComponentListener
 		// the unauthorized page
 		throw new RestartResponseException(page);
 	}
-
 
 	public void setAnnotationStrategy(final AnnotationsShiroAuthorizationStrategy annotationStrategy)
 	{

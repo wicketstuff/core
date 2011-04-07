@@ -41,6 +41,7 @@ import org.apache.wicket.util.value.ValueMap;
  * @author Jonathan Locke
  * @author Juergen Donnerstag
  * @author Eelco Hillenius
+ * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
 public class LoginPanel extends Panel
 {
