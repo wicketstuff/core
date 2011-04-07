@@ -18,7 +18,6 @@ package org.wicketstuff.minis.behavior.apanel;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.wicketstuff.minis.behavior.apanel.GridLayoutConstraint;
 
 public class TestGridLayoutConstraint
 {
