@@ -35,8 +35,8 @@ import org.apache.wicket.util.convert.IConverter;
 import org.apache.wicket.util.convert.converter.DateConverter;
 import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.jquery.JQueryBehavior;
-import org.wicketstuff.misc.behaviors.CompositeBehavior;
-import org.wicketstuff.misc.behaviors.SimpleAttributeAppender;
+import org.wicketstuff.minis.behavior.CompositeBehavior;
+import org.wicketstuff.minis.behavior.SimpleAttributeAppender;
 
 /**
  * Add support of the <a href="http://kelvinluck.com/assets/jquery/datePicker/v2/demo/">datePicker</a>.
@@ -98,7 +98,7 @@ public class DatePickerBehavior extends JQueryBehavior {
         // response.renderJavascriptReference(JQUERY_BGIFRAME_JS);
         // }
         response.renderJavaScriptReference(JQUERY_DATEPICKER_JS);
-        
+
         /* Support localized messages in the datepicker clientside */
         if(options_.dynamicLocalizedMessages) {
         	Map<String, StringBuilder> lm = new HashMap<String, StringBuilder>();
@@ -107,11 +107,11 @@ public class DatePickerBehavior extends JQueryBehavior {
     		lm.put("abbrDayNames", new StringBuilder("Date.abbrDayNames = ["));
     		lm.put("monthNames", new StringBuilder("Date.monthNames = ["));
     		lm.put("abbrMonthNames", new StringBuilder("Date.abbrMonthNames = ["));
-    		
+
         	for(int i = 1; i < 8; i++) {
         		lm.get("dayNames").append(" '" + Strings.capitalize(sdf.getDateFormatSymbols().getWeekdays()[i]));
         		lm.get("abbrDayNames").append(" '" + Strings.capitalize(sdf.getDateFormatSymbols().getShortWeekdays()[i]));
-        	
+
         		if(i < 7) {
         			lm.get("dayNames").append("',");
         			lm.get("abbrDayNames").append("',");
@@ -121,7 +121,7 @@ public class DatePickerBehavior extends JQueryBehavior {
         	for(int i = 0; i < 12; i++) {
 	    		lm.get("monthNames").append(" '" + Strings.capitalize(sdf.getDateFormatSymbols().getMonths()[i]));
 	    		lm.get("abbrMonthNames").append(" '" + Strings.capitalize(sdf.getDateFormatSymbols().getShortMonths()[i]));
-	    		
+
         		if(i < 11) {
         			lm.get("monthNames").append("',");
         			lm.get("abbrMonthNames").append("',");
@@ -132,7 +132,7 @@ public class DatePickerBehavior extends JQueryBehavior {
 				lm.get("abbrDayNames") + "' ];\n" +
 				lm.get("monthNames") + "' ];\n" +
 				lm.get("abbrMonthNames") + "' ];\n";
-			
+
         	response.renderJavaScript(locMess, "localization_override" + getComponent().getMarkupId());
         }
     }
@@ -153,21 +153,21 @@ public class DatePickerBehavior extends JQueryBehavior {
         Component component = getComponent();
         if (component instanceof TextField) {
             component.setOutputMarkupId(true);
-            
+
             if (component instanceof ITextFormatProvider) {
             	format_ = ((ITextFormatProvider) component).getTextFormat().toLowerCase();
             } else {
 	            TextField tf = (TextField) component;
 	            IConverter cnv = tf.getConverter(tf.getType());
 	            if ((cnv != null) && (DateConverter.class.isAssignableFrom(cnv.getClass()))) {
-	            	SimpleDateFormat sdf = (SimpleDateFormat) ((DateConverter) cnv).getDateFormat(component.getLocale()); 
+	            	SimpleDateFormat sdf = (SimpleDateFormat) ((DateConverter) cnv).getDateFormat(component.getLocale());
 	            	format_ = sdf.toPattern().toLowerCase();
 	            }
-	            
+
 //	            convertDateInOptions(cnv, "startDate", component.getLocale());
 //	            convertDateInOptions(cnv, "endDate", component.getLocale());
             }
-            
+
             component.add(getDatePickerStyle());
         } else {
         	throw new RuntimeException("DatePicketBehavior is intended to be attached to a TextField component!");
