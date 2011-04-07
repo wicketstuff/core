@@ -24,6 +24,12 @@
 			<email>nino.martinez.wael@gmail.com</email>
 		</developer>
 		<developer>
+			<id>david.bernard</id>
+			<name>David Bernard</name>
+			<email>dwayneb at users.sf.net</email>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
 			<id>sebthom</id>
 			<name>Sebastian Thomschke</name>
 			<email>sebthom@sf.net</email>

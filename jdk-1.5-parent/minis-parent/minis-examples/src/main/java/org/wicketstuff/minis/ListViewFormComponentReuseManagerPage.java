@@ -33,7 +33,7 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.wicketstuff.minis.util.ListViewFormComponentReuseManager;
+import org.wicketstuff.minis.component.ListViewFormComponentReuseManager;
 
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
