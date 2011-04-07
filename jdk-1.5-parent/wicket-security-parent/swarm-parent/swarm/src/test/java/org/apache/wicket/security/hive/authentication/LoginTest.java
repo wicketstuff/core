@@ -16,7 +16,7 @@
  */
 package org.apache.wicket.security.hive.authentication;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
@@ -24,13 +24,14 @@ import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.hive.authorization.SimplePrincipal;
 import org.apache.wicket.security.pages.VerySecurePage;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author marrink
  */
-public class LoginTest extends TestCase
+public class LoginTest
 {
 	private static final Logger log = LoggerFactory.getLogger(LoginTest.class);
 
@@ -39,6 +40,7 @@ public class LoginTest extends TestCase
 	 * {@link org.apache.wicket.security.hive.authentication.LoginContainer#login(org.apache.wicket.security.hive.authentication.LoginContext)}
 	 * .
 	 */
+	@Test
 	public void testLogin()
 	{
 		LoginContainer container = new LoginContainer();
@@ -66,9 +68,8 @@ public class LoginTest extends TestCase
 		try
 		{
 			WicketTester mock = new WicketTester();
-			mock.setupRequestAndResponse();
 			container.login(ctx);
-			mock.processRequestCycle();
+			mock.processRequest();
 			mock.destroy();
 
 		}
@@ -139,9 +140,8 @@ public class LoginTest extends TestCase
 		try
 		{
 			WicketTester mock = new WicketTester();
-			mock.setupRequestAndResponse();
 			container.login(ctx);
-			mock.processRequestCycle();
+			mock.processRequest();
 			mock.destroy();
 		}
 		catch (LoginException e)
@@ -160,6 +160,7 @@ public class LoginTest extends TestCase
 	 * {@link org.apache.wicket.security.hive.authentication.LoginContainer#logoff(org.apache.wicket.security.hive.authentication.LoginContext)}
 	 * .
 	 */
+	@Test
 	public void testLogoff()
 	{
 		LoginContainer container = new LoginContainer();
@@ -180,9 +181,8 @@ public class LoginTest extends TestCase
 		try
 		{
 			WicketTester mock = new WicketTester();
-			mock.setupRequestAndResponse();
 			container.login(ctx);
-			mock.processRequestCycle();
+			mock.processRequest();
 			mock.destroy();
 		}
 		catch (LoginException e)
@@ -192,9 +192,8 @@ public class LoginTest extends TestCase
 		}
 		assertNotNull(container.getSubject());
 		WicketTester mock = new WicketTester();
-		mock.setupRequestAndResponse();
 		container.logoff(ctx);
-		mock.processRequestCycle();
+		mock.processRequest();
 		mock.destroy();
 		assertNull(container.getSubject());
 	}
@@ -202,6 +201,7 @@ public class LoginTest extends TestCase
 	/**
 	 * Test method for multi login.
 	 */
+	@Test
 	public void testIsClassAuthenticated()
 	{
 		// for multilogin to work the least authenticating login should be at
@@ -212,18 +212,17 @@ public class LoginTest extends TestCase
 		try
 		{
 			WicketTester mock = new WicketTester();
-			mock.setupRequestAndResponse();
 			container.login(low);
 			assertFalse(container.isClassAuthenticated(VerySecurePage.class));
 			assertTrue(container.getSubject().getPrincipals()
 				.contains(new SimplePrincipal("basic")));
-			assertFalse(container.getSubject().getPrincipals().contains(
-				new SimplePrincipal("admin")));
+			assertFalse(container.getSubject().getPrincipals()
+				.contains(new SimplePrincipal("admin")));
 			container.login(high);
 			assertTrue(container.isClassAuthenticated(VerySecurePage.class));
 			assertTrue(container.getSubject().getPrincipals()
 				.contains(new SimplePrincipal("admin")));
-			mock.processRequestCycle();
+			mock.processRequest();
 			mock.destroy();
 		}
 		catch (LoginException e)
@@ -237,15 +236,15 @@ public class LoginTest extends TestCase
 	 * tests if the preventadditionallogin flag works as expected
 	 * 
 	 */
+	@Test
 	public void testPreventLogin()
 	{
 		LoginContainer container = new LoginContainer();
 		try
 		{
 			WicketTester mock = new WicketTester();
-			mock.setupRequestAndResponse();
 			container.login(new myContext());
-			mock.processRequestCycle();
+			mock.processRequest();
 			mock.destroy();
 		}
 		catch (LoginException e)
@@ -256,26 +255,23 @@ public class LoginTest extends TestCase
 		try
 		{
 			WicketTester mock = new WicketTester();
-			mock.setupRequestAndResponse();
 			container.login(new myContext());
 			fail("Should not be able to login");
-			mock.processRequestCycle();
+			mock.processRequest();
 			mock.destroy();
 		}
 		catch (LoginException e)
 		{
 		}
 		WicketTester mock = new WicketTester();
-		mock.setupRequestAndResponse();
 		container.logoff(new myContext());
-		mock.processRequestCycle();
+		mock.processRequest();
 		mock.destroy();
 		try
 		{
 			mock = new WicketTester();
-			mock.setupRequestAndResponse();
 			container.login(new myContext());
-			mock.processRequestCycle();
+			mock.processRequest();
 			mock.destroy();
 		}
 		catch (LoginException e)

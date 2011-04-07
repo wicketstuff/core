@@ -16,8 +16,8 @@
  */
 package org.apache.wicket.security.pages;
 
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.checks.ComponentSecurityCheck;
 import org.apache.wicket.security.checks.ISecurityCheck;

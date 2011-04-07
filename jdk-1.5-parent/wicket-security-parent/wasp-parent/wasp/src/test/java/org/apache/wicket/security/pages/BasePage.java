@@ -17,10 +17,10 @@
 package org.apache.wicket.security.pages;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.WaspWebApplication;
 

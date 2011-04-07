@@ -16,15 +16,15 @@
  */
 package org.apache.wicket.security;
 
+import static junit.framework.Assert.*;
+
 import java.net.MalformedURLException;
 
-import junit.framework.TestCase;
-
 import org.apache.wicket.Page;
-import org.apache.wicket.Request;
-import org.apache.wicket.Response;
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
 import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.hive.HiveMind;
 import org.apache.wicket.security.hive.authentication.PrimaryLoginContext;
@@ -34,13 +34,16 @@ import org.apache.wicket.security.pages.MockHomePage;
 import org.apache.wicket.security.pages.MockLoginPage;
 import org.apache.wicket.security.swarm.SwarmWebApplication;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author marrink
  */
-public class StackOverFlowTest extends TestCase
+public class StackOverFlowTest
 {
 	private final class MyWebApplication extends SwarmWebApplication
 	{
@@ -109,26 +112,23 @@ public class StackOverFlowTest extends TestCase
 	 */
 	protected WicketTester mock;
 
-	/**
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	@Override
-	protected void setUp()
+	@Before
+	public void setUp()
 	{
 		mock =
 			new WicketTester(application = new MyWebApplication(), "src/test/java/"
 				+ getClass().getPackage().getName().replace('.', '/'));
+		mock.setExposeExceptions(false);
 	}
 
 	/**
 	 * @see junit.framework.TestCase#tearDown()
 	 */
-	@Override
-	protected void tearDown()
+	@After
+	public void tearDown()
 	{
-		mock.setupRequestAndResponse();
-		mock.getWicketSession().invalidate();
-		mock.processRequestCycle();
+		mock.getSession().invalidate();
+		mock.processRequest();
 		mock.destroy();
 		mock = null;
 		application = null;
@@ -139,6 +139,7 @@ public class StackOverFlowTest extends TestCase
 	 * Test if automatically logging in in does not trigger a stackoverflow in
 	 * {@link Session#get()}.
 	 */
+	@Test
 	public void testStackoverflow()
 	{
 		try

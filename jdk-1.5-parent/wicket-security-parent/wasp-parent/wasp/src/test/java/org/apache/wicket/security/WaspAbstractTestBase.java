@@ -16,6 +16,8 @@
  */
 package org.apache.wicket.security;
 
+import static junit.framework.Assert.*;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +38,8 @@ import org.apache.wicket.security.strategies.StrategyFactory;
 import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.After;
+import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +49,7 @@ import org.slf4j.LoggerFactory;
  * @author marrink
  * @author Olger Warnier
  */
-public abstract class WaspAbstractTestBase extends TestCase
+public abstract class WaspAbstractTestBase
 {
 
 	protected static final Logger log = LoggerFactory.getLogger(GeneralTest.class);
@@ -63,8 +67,8 @@ public abstract class WaspAbstractTestBase extends TestCase
 	/**
 	 * @see TestCase#setUp()
 	 */
-	@Override
-	protected void setUp()
+	@Before
+	public void setUp()
 	{
 		mock = new WicketTester(application = new WaspWebApplication()
 		{
@@ -108,8 +112,9 @@ public abstract class WaspAbstractTestBase extends TestCase
 					 */
 					public WaspAction getAction(Class< ? extends WaspAction> waspActionClass)
 					{
-						return new StringAction(waspActionClass.getName().substring(
-							waspActionClass.getName().lastIndexOf('.') + 1).toLowerCase());
+						return new StringAction(waspActionClass.getName()
+							.substring(waspActionClass.getName().lastIndexOf('.') + 1)
+							.toLowerCase());
 					}
 
 					/**
@@ -183,18 +188,18 @@ public abstract class WaspAbstractTestBase extends TestCase
 				return strategyFactory;
 			}
 		}, "src/test/java/" + getClass().getPackage().getName().replace('.', '/'));
+		mock.setExposeExceptions(false);
 	}
 
 	/**
 	 * 
 	 * @see TestCase#tearDown()
 	 */
-	@Override
-	protected void tearDown()
+	@After
+	public void tearDown()
 	{
-		mock.setupRequestAndResponse();
-		mock.getWicketSession().invalidate();
-		mock.processRequestCycle();
+		mock.getSession().invalidate();
+		mock.processRequest();
 		mock.destroy();
 		mock = null;
 		application = null;
@@ -259,8 +264,7 @@ public abstract class WaspAbstractTestBase extends TestCase
 	 */
 	public void doLogin()
 	{
-		mock.setupRequestAndResponse();
-		mock.processRequestCycle();
+		mock.processRequest();
 		mock.assertRenderedPage(getLoginPage());
 		// assertTrue(Session.get().isTemporary()); does not work in test
 		FormTester form = mock.newFormTester("signInPanel:signInForm");
@@ -284,7 +288,7 @@ public abstract class WaspAbstractTestBase extends TestCase
 	{
 		try
 		{
-			((WaspSession) mock.getWicketSession()).login(authorized);
+			((WaspSession) mock.getSession()).login(authorized);
 		}
 		catch (LoginException e)
 		{
@@ -301,7 +305,7 @@ public abstract class WaspAbstractTestBase extends TestCase
 	 */
 	protected void logoff(Map<String, WaspAction> authorized)
 	{
-		((WaspSession) mock.getWicketSession()).logoff(authorized);
+		((WaspSession) mock.getSession()).logoff(authorized);
 	}
 
 	protected WicketTester getMock()

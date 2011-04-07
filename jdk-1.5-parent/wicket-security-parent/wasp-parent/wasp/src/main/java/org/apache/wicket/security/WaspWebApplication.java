@@ -17,16 +17,10 @@
 package org.apache.wicket.security;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.Page;
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.Response;
 import org.apache.wicket.Session;
-import org.apache.wicket.authorization.AuthorizationException;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.protocol.http.WebRequest;
-import org.apache.wicket.protocol.http.WebRequestCycle;
-import org.apache.wicket.protocol.http.WebResponse;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
 import org.apache.wicket.security.actions.ActionFactory;
 import org.apache.wicket.security.strategies.StrategyFactory;
 
@@ -69,9 +63,6 @@ public abstract class WaspWebApplication extends WebApplication implements WaspA
 	/**
 	 * Creates a new WaspSession. If you override this method make sure you return a
 	 * subclass of {@link WaspSession}.
-	 * 
-	 * @see org.apache.wicket.protocol.http.WebApplication#newSession(org.apache.wicket.Request,
-	 *      org.apache.wicket.Response)
 	 */
 	@Override
 	public Session newSession(Request request, Response response)
@@ -114,69 +105,5 @@ public abstract class WaspWebApplication extends WebApplication implements WaspA
 		ActionFactory factory2 = getActionFactory();
 		if (factory2 != null)
 			factory2.destroy();
-	}
-
-	/**
-	 * Override the newRequestCycle to return an accessdenied page instead of the wicket
-	 * default page that is returned for a InvalidUrlException. This override will return
-	 * the override page in the AbstractRequestCycleProcessor
-	 * 
-	 * @inheritdoc
-	 * 
-	 * @see org.apache.wicket.request.AbstractRequestCycleProcessor
-	 */
-	@Override
-	public RequestCycle newRequestCycle(final Request request, final Response response)
-	{
-		return new WebRequestCycle(this, (WebRequest) request, (WebResponse) response)
-		{
-
-			@Override
-			public Page onRuntimeException(Page page, RuntimeException e)
-			{
-				try
-				{
-					if (e instanceof AuthorizationException)
-					{
-
-						return getApplicationSettings().getAccessDeniedPage().newInstance();
-
-					}
-					Throwable t = e.getCause();
-					while (t != null)
-					{
-						if (t instanceof AuthorizationException)
-						{
-							try
-							{
-								return getApplicationSettings().getAccessDeniedPage().newInstance();
-							}
-							catch (InstantiationException e1)
-							{
-								super.onRuntimeException(page, new RuntimeException(
-									"Exception while creating access denied page", e1));
-							}
-							catch (IllegalAccessException e1)
-							{
-								super.onRuntimeException(page, new RuntimeException(
-									"Exception while creating access denied page", e1));
-							}
-						}
-						t = t.getCause();
-					}
-				}
-				catch (InstantiationException e1)
-				{
-					super.onRuntimeException(page, new RuntimeException(
-						"Exception while creating access denied page", e1));
-				}
-				catch (IllegalAccessException e1)
-				{
-					super.onRuntimeException(page, new RuntimeException(
-						"Exception while creating access denied page", e1));
-				}
-				return super.onRuntimeException(page, e);
-			}
-		};
 	}
 }

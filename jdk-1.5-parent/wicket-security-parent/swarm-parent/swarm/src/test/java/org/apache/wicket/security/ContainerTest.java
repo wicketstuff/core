@@ -16,14 +16,12 @@
  */
 package org.apache.wicket.security;
 
-import java.net.MalformedURLException;
+import static junit.framework.Assert.*;
 
-import junit.framework.TestCase;
+import java.net.MalformedURLException;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.protocol.http.WebRequestCycle;
-import org.apache.wicket.request.target.component.BookmarkablePageRequestTarget;
 import org.apache.wicket.security.hive.HiveMind;
 import org.apache.wicket.security.hive.config.PolicyFileHiveFactory;
 import org.apache.wicket.security.hive.config.SwarmPolicyFileHiveFactory;
@@ -34,13 +32,16 @@ import org.apache.wicket.security.swarm.SwarmWebApplication;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.TagTester;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author marrink
  */
-public class ContainerTest extends TestCase
+public class ContainerTest
 {
 	private static final Logger log = LoggerFactory.getLogger(ContainerTest.class);
 
@@ -54,11 +55,8 @@ public class ContainerTest extends TestCase
 	 */
 	protected WicketTester mock;
 
-	/**
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	@Override
-	protected void setUp()
+	@Before
+	public void setUp()
 	{
 		mock = new WicketTester(application = new SwarmWebApplication()
 		{
@@ -100,17 +98,14 @@ public class ContainerTest extends TestCase
 				return MockLoginPage.class;
 			}
 		}, "src/test/java/" + getClass().getPackage().getName().replace('.', '/'));
+		mock.setExposeExceptions(false);
 	}
 
-	/**
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	@Override
-	protected void tearDown()
+	@After
+	public void tearDown()
 	{
-		mock.setupRequestAndResponse();
-		mock.getWicketSession().invalidate();
-		mock.processRequestCycle();
+		mock.getSession().invalidate();
+		mock.processRequest();
 		mock.destroy();
 		mock = null;
 		application = null;
@@ -120,6 +115,7 @@ public class ContainerTest extends TestCase
 	/**
 	 * test inheriting permissions from the page.
 	 */
+	@Test
 	public void testPagePermissionInheritance()
 	{
 		mock.startPage(ContainerHomePage.class);
@@ -138,15 +134,16 @@ public class ContainerTest extends TestCase
 		if (tagTester == null)
 			return;
 		assertTrue(tagTester.hasAttribute("disabled"));
-		assertTrue(mock.getTagByWicketId("lvl1").getChild("name", "lvl1:txt1").hasAttribute(
-			"disabled"));
-		assertTrue(mock.getTagByWicketId("lvl1").getChild("name", "lvl1:lvl2:txt2").hasAttribute(
-			"disabled"));
+		assertTrue(mock.getTagByWicketId("lvl1").getChild("name", "lvl1:txt1")
+			.hasAttribute("disabled"));
+		assertTrue(mock.getTagByWicketId("lvl1").getChild("name", "lvl1:lvl2:txt2")
+			.hasAttribute("disabled"));
 	}
 
 	/**
 	 * test inheriting permissions from the 1st container.
 	 */
+	@Test
 	public void testContainerPermissionInheritance1()
 	{
 		mock.startPage(ContainerHomePage.class);
@@ -171,6 +168,7 @@ public class ContainerTest extends TestCase
 	/**
 	 * test inheriting permissions from the 2nd container.
 	 */
+	@Test
 	public void testContainerPermissionInheritance2()
 	{
 		mock.startPage(ContainerHomePage.class);
@@ -194,17 +192,10 @@ public class ContainerTest extends TestCase
 	/**
 	 * test inheriting permissions with different permissions.
 	 */
+	@Test
 	public void testContainerPermissionInheritance3()
 	{
-		// continueto originaldestination does not work if there is no url
-		// available, so we need to fake one here(testing only hack), fixed in
-		// wicket 1.3.4
-		mock.setupRequestAndResponse();
-		WebRequestCycle cycle = mock.createRequestCycle();
-		String url1 =
-			cycle.urlFor(new BookmarkablePageRequestTarget(ContainerPage2.class, null)).toString();
-		mock.getServletRequest().setURL("/ContainerTest$1/ContainerTest$1/" + url1);
-		mock.processRequestCycle();
+		mock.startPage(ContainerPage2.class);
 		mock.assertRenderedPage(MockLoginPage.class);
 		FormTester form = mock.newFormTester("form");
 		form.setValue("username", "container4");
@@ -217,6 +208,7 @@ public class ContainerTest extends TestCase
 	/**
 	 * test inheriting permissions with different permissions.
 	 */
+	@Test
 	public void testContainerPermissionInheritance4()
 	{
 		doContainerPermissionInheritance("container5");
@@ -227,15 +219,7 @@ public class ContainerTest extends TestCase
 	 */
 	private void doContainerPermissionInheritance(String username)
 	{
-		// continueto originaldestination does not work if there is no url
-		// available, so we need to fake one here(testing only hack), fixed in
-		// wicket 1.3.4
-		mock.setupRequestAndResponse();
-		WebRequestCycle cycle = mock.createRequestCycle();
-		String url1 =
-			cycle.urlFor(new BookmarkablePageRequestTarget(ContainerPage2.class, null)).toString();
-		mock.getServletRequest().setURL("/ContainerTest$1/ContainerTest$1/" + url1);
-		mock.processRequestCycle();
+		mock.startPage(ContainerPage2.class);
 		mock.assertRenderedPage(MockLoginPage.class);
 		FormTester form = mock.newFormTester("form");
 		form.setValue("username", username);
@@ -248,6 +232,7 @@ public class ContainerTest extends TestCase
 	/**
 	 * test inheriting permissions with different permissions.
 	 */
+	@Test
 	public void testContainerPermissionInheritance5()
 	{
 		doContainerPermissionInheritance("container6");
@@ -256,6 +241,7 @@ public class ContainerTest extends TestCase
 	/**
 	 * test inheriting permissions with different permissions.
 	 */
+	@Test
 	public void testContainerPermissionInheritance6()
 	{
 		doContainerPermissionInheritance("container7");

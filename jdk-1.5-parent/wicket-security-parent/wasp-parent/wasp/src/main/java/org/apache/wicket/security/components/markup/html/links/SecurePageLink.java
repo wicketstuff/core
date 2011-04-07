@@ -26,10 +26,10 @@ import org.apache.wicket.security.components.ISecureComponent;
 import org.apache.wicket.security.components.SecureComponentHelper;
 
 /**
- * Pagelink with visibility / clickability based on user rights. Requires render
- * rights to be visible, and enable rights to be clickable. This class is by
- * default outfitted with a {@link LinkSecurityCheck}, please see its
- * documentation on how to enable the alternative security check
+ * Pagelink with visibility / clickability based on user rights. Requires render rights to
+ * be visible, and enable rights to be clickable. This class is by default outfitted with
+ * a {@link LinkSecurityCheck}, please see its documentation on how to enable the
+ * alternative security check
  * 
  * @author marrink
  * @see LinkSecurityCheck
@@ -62,10 +62,10 @@ public class SecurePageLink<T> extends Link<T> implements ISecureComponent
 			public Page getPage()
 			{
 				// Create page using page factory
-				return getSession().getPageFactory().newPage(c);
+				return (Page) getSession().getPageFactory().newPage(c);
 			}
 
-			public Class<? extends Page> getPageIdentity()
+			public Class< ? extends Page> getPageIdentity()
 			{
 				return c;
 			}
@@ -85,8 +85,8 @@ public class SecurePageLink<T> extends Link<T> implements ISecureComponent
 
 	/**
 	 * Handles a link click by asking for a concrete Page instance through the
-	 * IPageLink.getPage() delayed linking interface. This call will normally
-	 * cause the destination page to be created.
+	 * IPageLink.getPage() delayed linking interface. This call will normally cause the
+	 * destination page to be created.
 	 * 
 	 * @see org.apache.wicket.markup.html.link.Link#onClick()
 	 */

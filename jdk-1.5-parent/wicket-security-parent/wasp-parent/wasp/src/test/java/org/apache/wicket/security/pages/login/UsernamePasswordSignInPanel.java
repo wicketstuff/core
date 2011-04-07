@@ -24,7 +24,6 @@ import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
@@ -110,10 +109,10 @@ public class UsernamePasswordSignInPanel extends Panel
 		authorized.put(SecureComponentHelper.alias(SecureForm.class), getWaspApplication()
 			.getActionFactory().getAction("access"));
 		// grant models rights Page D
-		authorized.put("model:modelcheck", getWaspApplication().getActionFactory().getAction(
-			"access render"));
-		authorized.put("model:bothcheck", getWaspApplication().getActionFactory().getAction(
-			"access render"));
+		authorized.put("model:modelcheck",
+			getWaspApplication().getActionFactory().getAction("access render"));
+		authorized.put("model:bothcheck",
+			getWaspApplication().getActionFactory().getAction("access render"));
 		// panels
 		authorized.put(SecureComponentHelper.alias(MySecurePanel.class), getWaspApplication()
 			.getActionFactory().getAction("access"));
@@ -170,7 +169,7 @@ public class UsernamePasswordSignInPanel extends Panel
 			super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
 
 			// only save username, not passwords
-			add(new TextField<String>("username").setPersistent(rememberMe));
+			add(new TextField<String>("username"));// .setPersistent(rememberMe));
 			add(new PasswordTextField("password"));
 			// MarkupContainer row for remember me checkbox
 			WebMarkupContainer rememberMeRow = new WebMarkupContainer("rememberMeRow");
@@ -190,7 +189,7 @@ public class UsernamePasswordSignInPanel extends Panel
 		{
 			if (!rememberMe)
 			{
-				getPage().removePersistedFormData(SignInForm.class, true);
+				// getPage().removePersistedFormData(SignInForm.class, true);
 			}
 
 			ValueMap values = getModelObject();
@@ -231,7 +230,7 @@ public class UsernamePasswordSignInPanel extends Panel
 		public void setRememberMe(boolean rememberMe)
 		{
 			this.rememberMe = rememberMe;
-			((FormComponent< ? >) get("username")).setPersistent(rememberMe);
+			// ((FormComponent< ? >) get("username")).setPersistent(rememberMe);
 		}
 	}
 }

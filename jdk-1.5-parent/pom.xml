@@ -49,6 +49,7 @@
 		<module>shiro-security</module>
 		<module>simile-timeline-parent</module>
 		<module>theme-parent</module>
+		<module>wicket-security-parent</module>
 		<module>wicketstuff-logback-parent</module>
 		<module>wicketstuff-springreference-parent</module>
 		<module>yav-parent</module>

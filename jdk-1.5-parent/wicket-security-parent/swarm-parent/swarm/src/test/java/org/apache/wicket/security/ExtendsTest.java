@@ -20,10 +20,10 @@ import java.net.MalformedURLException;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Page;
-import org.apache.wicket.Request;
-import org.apache.wicket.Response;
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
 import org.apache.wicket.security.actions.ActionFactory;
 import org.apache.wicket.security.actions.WaspActionFactory;
 import org.apache.wicket.security.hive.HiveMind;
@@ -76,9 +76,6 @@ public class ExtendsTest extends GeneralTest
 			return "test";
 		}
 
-		/**
-		 * Set up for the hive.
-		 */
 		protected void setUpHive()
 		{
 			PolicyFileHiveFactory factory = new SwarmPolicyFileHiveFactory(getActionFactory());
@@ -96,55 +93,33 @@ public class ExtendsTest extends GeneralTest
 			HiveMind.registerHive(getHiveKey(), factory);
 		}
 
-		/**
-		 * 
-		 * @see org.apache.wicket.Application#getHomePage()
-		 */
 		@Override
 		public Class< ? extends Page> getHomePage()
 		{
 			return MockHomePage.class;
 		}
 
-		/**
-		 * 
-		 * @see org.apache.wicket.security.WaspApplication#getLoginPage()
-		 */
 		public Class< ? extends Page> getLoginPage()
 		{
 			return MockLoginPage.class;
 		}
 
-		/**
-		 * 
-		 * @see org.apache.wicket.protocol.http.WebApplication#newSession(org.apache.wicket.Request,
-		 *      org.apache.wicket.Response)
-		 */
 		@Override
 		public Session newSession(Request request, Response response)
 		{
 			return new WaspSession(this, request);
 		}
 
-		/**
-		 * @see org.apache.wicket.security.WaspApplication#getActionFactory()
-		 */
 		public WaspActionFactory getActionFactory()
 		{
 			return actionFactory;
 		}
 
-		/**
-		 * @see org.apache.wicket.security.WaspApplication#getStrategyFactory()
-		 */
 		public StrategyFactory getStrategyFactory()
 		{
 			return strategyFactory;
 		}
 
-		/**
-		 * @see org.apache.wicket.security.WaspWebApplication#setupActionFactory()
-		 */
 		protected void setupActionFactory()
 		{
 			if (actionFactory == null)
@@ -154,9 +129,6 @@ public class ExtendsTest extends GeneralTest
 
 		}
 
-		/**
-		 * @see org.apache.wicket.security.WaspWebApplication#setupStrategyFactory()
-		 */
 		protected void setupStrategyFactory()
 		{
 			if (strategyFactory == null)
@@ -199,15 +171,13 @@ public class ExtendsTest extends GeneralTest
 
 	private static final Logger log = LoggerFactory.getLogger(ExtendsTest.class);
 
-	/**
-	 * @see junit.framework.TestCase#setUp()
-	 */
 	@Override
-	protected void setUp()
+	public void setUp()
 	{
 		mock =
 			new WicketTester(application = new TestApplication(), "src/test/java/"
 				+ getClass().getPackage().getName().replace('.', '/'));
+		mock.setExposeExceptions(false);
 	}
 
 }

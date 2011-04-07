@@ -14,6 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import java.util.Arrays;
+
 import org.apache.wicket.util.license.ApacheLicenseHeaderTestCase;
 
 /**
@@ -32,16 +34,7 @@ public class ApacheLicenceHeaderTest extends ApacheLicenseHeaderTestCase
 	{
 		// addHeaders = true;
 
-		htmlIgnore = new String[] {};
+		xmlIgnore = Arrays.asList("EclipseCodeFormat.xml", "codetemplates.xml");
 
-		cssIgnore = new String[] {};
-
-		xmlIgnore = new String[] {"EclipseCodeFormat.xml", "codetemplates.xml"};
-
-		javaIgnore = new String[] {};
-
-		javaScriptIgnore = new String[] {};
-
-		propertiesIgnore = new String[] {};
 	}
 }

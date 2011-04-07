@@ -17,8 +17,8 @@
 package org.apache.wicket.security.components.markup.html.links;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.checks.ISecurityCheck;
 import org.apache.wicket.security.checks.LinkSecurityCheck;
@@ -26,17 +26,16 @@ import org.apache.wicket.security.components.ISecureComponent;
 import org.apache.wicket.security.components.SecureComponentHelper;
 
 /**
- * BookmarkablePagelink with visibility / clickability based on user rights.
- * Requires render rights to be visible, and enable rights to be clickable. This
- * class is by default outfitted with a {@link LinkSecurityCheck}, please see
- * its documentation on how to enable the alternative security check
+ * BookmarkablePagelink with visibility / clickability based on user rights. Requires
+ * render rights to be visible, and enable rights to be clickable. This class is by
+ * default outfitted with a {@link LinkSecurityCheck}, please see its documentation on how
+ * to enable the alternative security check
  * 
  * @author marrink
  * @see LinkSecurityCheck
  */
-public class SecureBookmarkablePageLink<T> extends BookmarkablePageLink<T>
-		implements
-			ISecureComponent
+public class SecureBookmarkablePageLink<T> extends BookmarkablePageLink<T> implements
+		ISecureComponent
 {
 	private static final long serialVersionUID = 1L;
 
@@ -44,7 +43,7 @@ public class SecureBookmarkablePageLink<T> extends BookmarkablePageLink<T>
 	 * @param id
 	 * @param pageClass
 	 */
-	public SecureBookmarkablePageLink(String id, Class<? extends Page> pageClass)
+	public SecureBookmarkablePageLink(String id, Class< ? extends Page> pageClass)
 	{
 		super(id, pageClass);
 		setSecurityCheck(new LinkSecurityCheck(this, pageClass));
@@ -55,7 +54,7 @@ public class SecureBookmarkablePageLink<T> extends BookmarkablePageLink<T>
 	 * @param pageClass
 	 * @param parameters
 	 */
-	public SecureBookmarkablePageLink(String id, Class<? extends Page> pageClass,
+	public SecureBookmarkablePageLink(String id, Class< ? extends Page> pageClass,
 			PageParameters parameters)
 	{
 		super(id, pageClass, parameters);

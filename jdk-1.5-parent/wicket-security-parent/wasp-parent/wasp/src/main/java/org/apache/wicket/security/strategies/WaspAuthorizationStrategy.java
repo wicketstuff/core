@@ -21,11 +21,11 @@ import java.util.Map;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.Session;
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.security.WaspApplication;
 import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.actions.WaspAction;

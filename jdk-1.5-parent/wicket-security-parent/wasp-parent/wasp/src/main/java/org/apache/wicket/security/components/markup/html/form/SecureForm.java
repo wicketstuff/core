@@ -25,6 +25,8 @@ import org.apache.wicket.security.checks.ComponentSecurityCheck;
 import org.apache.wicket.security.checks.ISecurityCheck;
 import org.apache.wicket.security.components.ISecureComponent;
 import org.apache.wicket.security.components.SecureComponentHelper;
+import org.apache.wicket.util.visit.IVisit;
+import org.apache.wicket.util.visit.IVisitor;
 
 /**
  * A secure Form. if the form does not have sufficient enable rights it replaces the tag
@@ -143,12 +145,11 @@ public class SecureForm<T> extends Form<T> implements ISecureComponent
 		if (!isEnableAllowed())
 		{
 			// auto disable all children
-			visitChildren(new IVisitor<Component>()
+			visitChildren(new IVisitor<Component, Void>()
 			{
-				public Object component(Component component)
+				public void component(Component object, IVisit<Void> visit)
 				{
-					component.setEnabled(false);
-					return IVisitor.CONTINUE_TRAVERSAL;
+					object.setEnabled(false);
 				}
 			});
 			// TODO test if this works with listviews etc

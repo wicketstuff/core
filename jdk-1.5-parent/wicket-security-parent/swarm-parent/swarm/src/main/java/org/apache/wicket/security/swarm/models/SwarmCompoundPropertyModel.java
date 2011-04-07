@@ -37,7 +37,7 @@ public abstract class SwarmCompoundPropertyModel<T> extends SecureCompoundProper
 	 * 
 	 * @param object
 	 */
-	public SwarmCompoundPropertyModel(Object object)
+	public SwarmCompoundPropertyModel(T object)
 	{
 		super(object);
 	}

@@ -16,11 +16,10 @@
  */
 package org.apache.wicket.security;
 
-import org.apache.wicket.Request;
 import org.apache.wicket.Session;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
-import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WebSession;
+import org.apache.wicket.request.Request;
 import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
 
@@ -36,12 +35,6 @@ public class WaspSession extends WebSession
 
 	private WaspAuthorizationStrategy securityStrategy;
 
-	/**
-	 * @param application
-	 *            a {@link WebApplication}
-	 * @param request
-	 * @see WebSession#WebSession(WebApplication, Request)
-	 */
 	public WaspSession(WaspApplication application, Request request)
 	{
 		super(request);
@@ -129,7 +122,7 @@ public class WaspSession extends WebSession
 	 * @see org.apache.wicket.Session#detach()
 	 */
 	@Override
-	protected void detach()
+	public void detach()
 	{
 		if (isTemporary() && securityStrategy.isUserAuthenticated())
 			bind();

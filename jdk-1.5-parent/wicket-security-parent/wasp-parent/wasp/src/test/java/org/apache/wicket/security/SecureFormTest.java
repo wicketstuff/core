@@ -16,6 +16,8 @@
  */
 package org.apache.wicket.security;
 
+import static junit.framework.Assert.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +28,7 @@ import org.apache.wicket.security.components.markup.html.form.SecureForm;
 import org.apache.wicket.security.pages.secure.FormPage;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.TagTester;
+import org.junit.Test;
 
 /**
  * Test links
@@ -38,19 +41,21 @@ public class SecureFormTest extends WaspAbstractTestBase
 	/**
 	 * Test secure form component. Form is not available as a whole = invisible.
 	 */
+	@Test
 	public void testSecureFormInvisible()
 	{
 		doLogin();
 		mock.startPage(FormPage.class);
 		mock.assertRenderedPage(FormPage.class);
 		mock.assertInvisible("form");
-		mock.processRequestCycle();
+		mock.processRequest();
 	}
 
 	/**
 	 * Test secure form component. Form is visible but it is not possible to submit or
 	 * enter new values.
 	 */
+	@Test
 	public void testSecureFormVisibleDisabled()
 	{
 		doLogin();
@@ -82,6 +87,7 @@ public class SecureFormTest extends WaspAbstractTestBase
 	/**
 	 * Test secure form component. Form is available and able to process values.
 	 */
+	@Test
 	public void testSecureFormVisibleEnabled()
 	{
 		doLogin();

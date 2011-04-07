@@ -19,8 +19,6 @@ package org.apache.wicket.security.login.http;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.IPageMap;
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebPage;
@@ -28,8 +26,10 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.pages.AccessDeniedPage;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.protocol.http.WebRequest;
-import org.apache.wicket.protocol.http.WebResponse;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.http.WebRequest;
+import org.apache.wicket.request.http.WebResponse;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.security.WaspSession;
 import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
@@ -49,6 +49,8 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class HttpAuthenticationLoginPage extends WebPage
 {
+	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = LoggerFactory.getLogger(HttpAuthenticationLoginPage.class);
 
 	private boolean doAuthentication = false;
@@ -76,35 +78,12 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 	/**
 	 * Constructor.
 	 * 
-	 * @param pageMap
-	 * @see WebPage#WebPage(IPageMap)
-	 */
-	protected HttpAuthenticationLoginPage(IPageMap pageMap)
-	{
-		super(pageMap);
-	}
-
-	/**
-	 * Constructor.
-	 * 
 	 * @param parameters
 	 * @see WebPage#WebPage(PageParameters)
 	 */
 	protected HttpAuthenticationLoginPage(PageParameters parameters)
 	{
 		super(parameters);
-	}
-
-	/**
-	 * Constructor.
-	 * 
-	 * @param pageMap
-	 * @param model
-	 * @see WebPage#WebPage(IPageMap, IModel)
-	 */
-	protected HttpAuthenticationLoginPage(IPageMap pageMap, IModel< ? > model)
-	{
-		super(pageMap, model);
 	}
 
 	/**
@@ -116,11 +95,11 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 		super.configureResponse();
 		if (doAuthentication)
 		{
-			if (getWebRequestCycle().getResponse() instanceof WebResponse)
+			if (RequestCycle.get().getResponse() instanceof WebResponse)
 			{
-				WebResponse response = getWebRequestCycle().getWebResponse();
-				WebRequest request = getWebRequestCycle().getWebRequest();
-				String auth = request.getHttpServletRequest().getHeader("Authorization");
+				WebResponse response = (WebResponse) RequestCycle.get().getResponse();
+				WebRequest request = (WebRequest) RequestCycle.get().getRequest();
+				String auth = request.getHeader("Authorization");
 				if (Strings.isEmpty(auth))
 					requestAuthentication(request, response);
 				else
@@ -171,7 +150,7 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 	 */
 	protected void requestAuthentication(WebRequest request, WebResponse response)
 	{
-		response.getHttpServletResponse().setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		addBasicHeaders(request, response);
 		// add more "WWW-Authenticate" headers as required
 	}
@@ -184,8 +163,8 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 	 */
 	protected void addBasicHeaders(WebRequest request, WebResponse response)
 	{
-		response.getHttpServletResponse().addHeader("WWW-Authenticate",
-			"Basic realm=\"" + getRealm(request, response) + "\"");
+		response.setHeader("WWW-Authenticate", "Basic realm=\"" + getRealm(request, response)
+			+ "\"");
 	}
 
 	/**

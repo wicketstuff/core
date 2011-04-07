@@ -16,6 +16,8 @@
  */
 package org.apache.wicket.security.license;
 
+import java.util.Arrays;
+
 import org.apache.wicket.util.license.ApacheLicenseHeaderTestCase;
 
 /**
@@ -34,7 +36,7 @@ public class ApacheLicenceHeaderTest extends ApacheLicenseHeaderTestCase
 	{
 		// addHeaders = true;
 
-		htmlIgnore = new String[] {
+		htmlIgnore = Arrays.asList(
 		/*
 		 * .html in test is very test specific and a license header would confuse and make
 		 * it unclear what the test is about.
@@ -43,31 +45,29 @@ public class ApacheLicenceHeaderTest extends ApacheLicenseHeaderTestCase
 		/*
 		 * See NOTICE.txt
 		 */
-		"src/main/java/org/apache/wicket/util/diff",};
+		"src/main/java/org/apache/wicket/util/diff");
 
-		cssIgnore = new String[] {
+		cssIgnore = Arrays.asList(
 		/*
 		 * .css in test is very test specific and a license header would confuse and make
 		 * it unclear what the test is about.
 		 */
-		"src/test/java"};
+		"src/test/java");
 
-		xmlIgnore = new String[] {"EclipseCodeFormat.xml", "codetemplates.xml"};
+		xmlIgnore = Arrays.asList("EclipseCodeFormat.xml", "codetemplates.xml");
 
-		javaIgnore = new String[] {};
-
-		javaScriptIgnore = new String[] {
+		javaScriptIgnore = Arrays.asList(
 		/*
 		 * .js in test is very test specific and a license header would confuse and make
 		 * it unclear what the test is about.
 		 */
-		"src/test/java"};
+		"src/test/java");
 
-		propertiesIgnore = new String[] {
+		propertiesIgnore = Arrays.asList(
 		/*
 		 * .properties in test is very test specific and a license header would confuse
 		 * and make it unclear what the test is about.
 		 */
-		"src/test/java",};
+		"src/test/java");
 	}
 }

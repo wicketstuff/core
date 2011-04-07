@@ -85,7 +85,7 @@ public class SecureCompoundPropertyModel<T> extends CompoundPropertyModel<T> imp
 	 * 
 	 * @param object
 	 */
-	public SecureCompoundPropertyModel(Object object)
+	public SecureCompoundPropertyModel(T object)
 	{
 		super(object);
 	}

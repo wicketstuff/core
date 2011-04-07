@@ -23,8 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
+import org.apache.wicket.request.component.IRequestableComponent;
 import org.apache.wicket.security.actions.Access;
 import org.apache.wicket.security.checks.ClassSecurityCheck;
 import org.apache.wicket.security.checks.ISecurityCheck;
@@ -101,7 +101,7 @@ public abstract class ClassAuthorizationStrategy extends WaspAuthorizationStrate
 	 * 
 	 * @see IAuthorizationStrategy#isInstantiationAuthorized(java.lang.Class)
 	 */
-	public <T extends Component> boolean isInstantiationAuthorized(Class<T> c)
+	public <T extends IRequestableComponent> boolean isInstantiationAuthorized(Class<T> c)
 	{
 		if (c != null && secureClass.isAssignableFrom(c))
 		{
@@ -127,7 +127,7 @@ public abstract class ClassAuthorizationStrategy extends WaspAuthorizationStrate
 	 * @return an array containing all the {@link ISecurityCheck} of this class and all
 	 *         its super classes, or an array of length 0 if none is found.
 	 */
-	protected final ISecurityCheck[] getClassChecks(Class< ? extends Component> clazz)
+	protected final ISecurityCheck[] getClassChecks(Class< ? extends IRequestableComponent> clazz)
 	{
 		ISecurityCheck[] checks = cache.get(clazz);
 		if (checks != null)

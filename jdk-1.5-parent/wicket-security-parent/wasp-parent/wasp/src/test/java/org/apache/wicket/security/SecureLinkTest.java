@@ -16,14 +16,13 @@
  */
 package org.apache.wicket.security;
 
+import static junit.framework.Assert.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
-import org.apache.wicket.markup.html.pages.AccessDeniedPage;
-import org.apache.wicket.protocol.http.WebRequestCycle;
-import org.apache.wicket.request.target.component.BookmarkablePageRequestTarget;
 import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.checks.LinkSecurityCheck;
 import org.apache.wicket.security.components.ISecurePage;
@@ -34,6 +33,7 @@ import org.apache.wicket.security.pages.secure.HomePage;
 import org.apache.wicket.security.pages.secure.PageA;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.TagTester;
+import org.junit.Test;
 
 /**
  * Test links
@@ -47,6 +47,7 @@ public class SecureLinkTest extends WaspAbstractTestBase
 	 * Test a link that will allow people to replace panels / containers much like the
 	 * {@link ITab} from extensions
 	 */
+	@Test
 	public void testContainerLink()
 	{
 		// change to default behavior of ClassAuthorizationStrategy
@@ -54,14 +55,7 @@ public class SecureLinkTest extends WaspAbstractTestBase
 		setUp();
 		// continueto originaldestination does not work if there is no url
 		// available, so we need to fake one here(testing only hack)
-		mock.setupRequestAndResponse();
-		WebRequestCycle cycle = mock.createRequestCycle();
-		String url1 =
-			cycle.urlFor(new BookmarkablePageRequestTarget(SecureComponentPage.class, null))
-				.toString();
-		// the expected url is the base test
-		mock.getServletRequest().setURL("/WaspAbstractTestBase$1/WaspAbstractTestBase$1/" + url1);
-		mock.processRequestCycle();
+		mock.startPage(SecureComponentPage.class);
 		mock.assertRenderedPage(getLoginPage());
 		FormTester form = mock.newFormTester("signInPanel:signInForm");
 		form.setValue("username", "test");
@@ -73,9 +67,9 @@ public class SecureLinkTest extends WaspAbstractTestBase
 		// webmarkupcontainer
 		// need to arrange enable rights for webmarkupcontainer
 		Map<String, WaspAction> authorized = new HashMap<String, WaspAction>();
-		authorized.put(SecureComponentHelper
-			.alias(SecureComponentPage.MyReplacementContainer.class), application
-			.getActionFactory().getAction("access render enable"));
+		authorized.put(
+			SecureComponentHelper.alias(SecureComponentPage.MyReplacementContainer.class),
+			application.getActionFactory().getAction("access render enable"));
 		login(authorized);
 		mock.startPage(mock.getLastRenderedPage());
 		mock.assertRenderedPage(SecureComponentPage.class);
@@ -95,6 +89,7 @@ public class SecureLinkTest extends WaspAbstractTestBase
 	/**
 	 * Test visibility and clickability of a secure link.
 	 */
+	@Test
 	public void testLink()
 	{
 		// step zero, login and you will not see the PageA link (it has no
@@ -111,8 +106,8 @@ public class SecureLinkTest extends WaspAbstractTestBase
 		// step two, show the secure home page with a not clickable link to
 		// PageA (e.g. not a href)
 		Map<String, WaspAction> authorized = new HashMap<String, WaspAction>();
-		authorized.put(SecureComponentHelper.alias(link), application.getActionFactory().getAction(
-			"access render"));
+		authorized.put(SecureComponentHelper.alias(link),
+			application.getActionFactory().getAction("access render"));
 		login(authorized);
 		mock.startPage(lastPage);
 		mock.assertRenderedPage(getHomePage());
@@ -143,8 +138,7 @@ public class SecureLinkTest extends WaspAbstractTestBase
 		authorized.put(SecureComponentHelper.alias(PageA.class), application.getActionFactory()
 			.getAction("access render"));
 		login(authorized);
-		mock.setupRequestAndResponse();
-		mock.processRequestCycle();
+		mock.processRequest();
 		mock.assertRenderedPage(getHomePage());
 		mock.assertInvisible("sorry");
 		mock.assertVisible("link");

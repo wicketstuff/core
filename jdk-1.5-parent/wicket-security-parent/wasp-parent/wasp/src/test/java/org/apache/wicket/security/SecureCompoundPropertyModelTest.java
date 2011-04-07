@@ -16,6 +16,8 @@
  */
 package org.apache.wicket.security;
 
+import static junit.framework.Assert.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +26,7 @@ import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.models.SecureCompoundPropertyModel;
 import org.apache.wicket.security.pages.insecure.SecureModelPage;
 import org.apache.wicket.util.tester.TagTester;
+import org.junit.Test;
 
 /**
  * Test links
@@ -36,6 +39,7 @@ public class SecureCompoundPropertyModelTest extends WaspAbstractTestBase
 	/**
 	 * Test secure model.
 	 */
+	@Test
 	public void testSecureCompoundPropertyModelForRender()
 	{
 		doLogin();
@@ -71,6 +75,7 @@ public class SecureCompoundPropertyModelTest extends WaspAbstractTestBase
 		}
 	}
 
+	@Test
 	public void testSecureCompoundPropertyModelForEnable()
 	{
 		doLogin();

@@ -16,41 +16,36 @@
  */
 package org.apache.wicket.security.components;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.security.components.markup.html.form.SecureTextField;
 import org.apache.wicket.util.tester.WicketTester;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for {@link SecureComponentHelper}.
  * 
  * @author marrink
  */
-public class SecureComponentHelperTest extends TestCase
+public class SecureComponentHelperTest
 {
 	private WicketTester mock;
 
-	/**
-	 * 
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	@Override
-	protected void setUp()
+	@Before
+	public void setUp()
 	{
 		// a wicket application is required to use the page
 		mock = new WicketTester();
 	}
 
-	/**
-	 * 
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	@Override
-	protected void tearDown()
+	@After
+	public void tearDown()
 	{
 		mock.destroy();
 	}
@@ -58,6 +53,7 @@ public class SecureComponentHelperTest extends TestCase
 	/**
 	 * Test {@link SecureComponentHelper#containerAlias(MarkupContainer)}.
 	 */
+	@Test
 	public void testContainerAlias()
 	{
 		TestPage page = new TestPage();
@@ -88,6 +84,7 @@ public class SecureComponentHelperTest extends TestCase
 	/**
 	 * Test {@link SecureComponentHelper#containerAliasses(org.apache.wicket.Component)} .
 	 */
+	@Test
 	public void testContainerAliasses()
 	{
 		TestPage page = new TestPage();
@@ -148,6 +145,7 @@ public class SecureComponentHelperTest extends TestCase
 	/**
 	 * Test {@link SecureComponentHelper#alias(org.apache.wicket.Component)}.
 	 */
+	@Test
 	public void testAlias()
 	{
 		TestPage page = new TestPage();
@@ -165,7 +163,7 @@ public class SecureComponentHelperTest extends TestCase
 		assertEquals(TestPage.class.getName() + ":lvl2:lvl3:txt3", alias);
 	}
 
-	private static final class TestPage extends Page
+	private static final class TestPage extends WebPage
 	{
 		private static final long serialVersionUID = 1L;
 

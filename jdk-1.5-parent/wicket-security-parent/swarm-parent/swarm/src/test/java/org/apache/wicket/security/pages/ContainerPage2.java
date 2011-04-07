@@ -30,10 +30,8 @@ import org.apache.wicket.security.components.SecureWebPage;
  */
 public class ContainerPage2 extends SecureWebPage
 {
+	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Construct.
-	 */
 	public ContainerPage2()
 	{
 		add(new Label("label", "always visible"));
@@ -50,68 +48,37 @@ public class ContainerPage2 extends SecureWebPage
 	private static final class SecureMarkupContainer extends WebMarkupContainer implements
 			ISecureComponent
 	{
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 
-		/**
-		 * 
-		 * Construct.
-		 * 
-		 * @param id
-		 */
 		public SecureMarkupContainer(String id)
 		{
 			super(id);
 			setSecurityCheck(new ContainerSecurityCheck(this));
 		}
 
-		/**
-		 * 
-		 * @see org.apache.wicket.security.components.ISecureComponent#getSecurityCheck()
-		 */
 		public ISecurityCheck getSecurityCheck()
 		{
 			return SecureComponentHelper.getSecurityCheck(this);
 		}
 
-		/**
-		 * 
-		 * @see org.apache.wicket.security.components.ISecureComponent#isActionAuthorized(java.lang.String)
-		 */
 		public boolean isActionAuthorized(String waspAction)
 		{
 			return SecureComponentHelper.isActionAuthorized(this, waspAction);
 		}
 
-		/**
-		 * 
-		 * @see org.apache.wicket.security.components.ISecureComponent#isActionAuthorized(org.apache.wicket.security.actions.WaspAction)
-		 */
 		public boolean isActionAuthorized(WaspAction action)
 		{
 			return SecureComponentHelper.isActionAuthorized(this, action);
 		}
 
-		/**
-		 * 
-		 * @see org.apache.wicket.security.components.ISecureComponent#isAuthenticated()
-		 */
 		public boolean isAuthenticated()
 		{
 			return SecureComponentHelper.isAuthenticated(this);
 		}
 
-		/**
-		 * 
-		 * @see org.apache.wicket.security.components.ISecureComponent#setSecurityCheck(org.apache.wicket.security.checks.ISecurityCheck)
-		 */
 		public void setSecurityCheck(ISecurityCheck check)
 		{
 			SecureComponentHelper.setSecurityCheck(this, check);
 		}
-
 	}
-
 }

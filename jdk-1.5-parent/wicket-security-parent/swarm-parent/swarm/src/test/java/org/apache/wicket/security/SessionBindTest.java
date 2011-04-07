@@ -16,34 +16,31 @@
  */
 package org.apache.wicket.security;
 
+import static junit.framework.Assert.*;
+
 import java.net.MalformedURLException;
 
-import junit.framework.TestCase;
-
 import org.apache.wicket.Page;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.protocol.http.WebRequestCycle;
-import org.apache.wicket.request.target.component.BookmarkablePageRequestTarget;
-import org.apache.wicket.security.authentication.LoginException;
 import org.apache.wicket.security.hive.HiveMind;
-import org.apache.wicket.security.hive.authentication.PrimaryLoginContext;
 import org.apache.wicket.security.hive.config.PolicyFileHiveFactory;
 import org.apache.wicket.security.hive.config.SwarmPolicyFileHiveFactory;
 import org.apache.wicket.security.pages.MockHomePage;
 import org.apache.wicket.security.pages.MockLoginPage;
-import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
 import org.apache.wicket.security.swarm.SwarmWebApplication;
-import org.apache.wicket.util.tester.SwarmFormTester;
-import org.apache.wicket.util.tester.SwarmWicketTester;
+import org.apache.wicket.util.tester.FormTester;
+import org.apache.wicket.util.tester.WicketTester;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author marrink
  */
-public class SessionBindTest extends TestCase
+public class SessionBindTest
 {
 	private final class MyWebApplication extends SwarmWebApplication
 	{
@@ -95,29 +92,22 @@ public class SessionBindTest extends TestCase
 	/**
 	 * Handle to the mock environment.
 	 */
-	protected SwarmWicketTester mock;
+	protected WicketTester mock;
 
-	/**
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	@Override
-	protected void setUp()
+	@Before
+	public void setUp()
 	{
 		mock =
-			new SwarmWicketTester(application = new MyWebApplication(), "src/test/java/"
+			new WicketTester(application = new MyWebApplication(), "src/test/java/"
 				+ getClass().getPackage().getName().replace('.', '/'));
-
+		mock.setExposeExceptions(false);
 	}
 
-	/**
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	@Override
-	protected void tearDown()
+	@After
+	public void tearDown()
 	{
-		mock.setupRequestAndResponse();
-		mock.getWicketSession().invalidate();
-		mock.processRequestCycle();
+		mock.getSession().invalidate();
+		mock.processRequest();
 		mock.destroy();
 		mock = null;
 		application = null;
@@ -127,62 +117,17 @@ public class SessionBindTest extends TestCase
 	/**
 	 * Test if the session is correctly bound if we login through the session.
 	 */
+	@Test
 	public void testSessionLogin()
 	{
 		mock.startPage(MockLoginPage.class);
-		mock.setupRequestAndResponse();
-		assertTrue(mock.getWicketSession().isTemporary());
-		mock.processRequestCycle(MockLoginPage.class);
-		// loginpage, else the homepage will be used which will trigger a bind
-		// because a throw restartResponseAtInterceptPageexception will trigger
-		// a session.bind
-		SwarmFormTester form = mock.newFormTester("form");
+		assertTrue(mock.getSession().isTemporary());
+		mock.processRequest();
+		FormTester form = mock.newFormTester("form");
 		form.setValue("username", "test");
 		form.submit();
 		mock.assertRenderedPage(MockHomePage.class);
-		mock.setupRequestAndResponse();
 		assertFalse(Session.get().isTemporary());
-		mock.processRequestCycle(MockLoginPage.class);
-	}
-
-	/**
-	 * Test if the session is correctly bound even if we do not use the session to login.
-	 */
-	public void testStrategyLogin()
-	{
-		mock.startPage(MockLoginPage.class);
-		mock.setupRequestAndResponse();
-		assertTrue(mock.getWicketSession().isTemporary());
-		mock.processRequestCycle(MockLoginPage.class);
-		// loginpage, else the homepage will be used which will trigger a bind
-		// because a throw restartResponseAtInterceptPageexception will trigger
-		// a session.bind
-		mock.setupRequestAndResponse();
-		try
-		{
-			((WaspAuthorizationStrategy) mock.getWicketSession().getAuthorizationStrategy())
-				.login(new PrimaryLoginContext());
-		}
-		catch (LoginException e)
-		{
-			fail(e.getMessage());
-		}
-		// hack to prevent mock from throwing away the requestcycle with our
-		// subject
-		WebRequestCycle cycle = ((WebRequestCycle) RequestCycle.get());
-		assertNotNull(cycle);
-		try
-		{
-			cycle.request(new BookmarkablePageRequestTarget(MockLoginPage.class, null));
-		}
-		finally
-		{
-			cycle.getResponse().close();
-		}
-		mock.postProcessRequestCycle(cycle);
-		// mock.processRequestCycle(MockLoginPage.class);
-		mock.setupRequestAndResponse();
-		assertFalse(Session.get().isTemporary());
-		mock.processRequestCycle(MockLoginPage.class);
+		mock.processRequest();
 	}
 }
