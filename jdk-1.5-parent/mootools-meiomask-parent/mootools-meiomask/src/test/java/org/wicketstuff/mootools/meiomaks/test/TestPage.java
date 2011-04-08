@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 henrique.
+ * Copyright 2011 inaiat.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package org.wicketstuff.mootools.meiomaks.test;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.apache.wicket.markup.html.WebPage;
@@ -53,6 +54,15 @@ public class TestPage extends WebPage {
         form.add(new MeioMaskField<Date>("fixedDateUs", MaskType.FixedDateUs));
 
         form.add(new MeioMaskField<Integer>("reverseInteger", MaskType.ReverseInteger));
+        form.add(new MeioMaskField<BigDecimal>("reverseDecimal", MaskType.ReverseDecimal));
+        form.add(new MeioMaskField<BigDecimal>("reverseDecimalUs", MaskType.ReverseDecimalUs));
+        form.add(new MeioMaskField<BigDecimal>("reverseReais", MaskType.ReverseReais));
+        form.add(new MeioMaskField<BigDecimal>("reverseDollar", MaskType.ReverseDollar));       
+
+        form.add(new MeioMaskField<String>("regexpIp", MaskType.RegexpIp));       
+        form.add(new MeioMaskField<String>("regexpEmail", MaskType.RegexpEmail));       
+        
+        
     }
 
     private static class TestModel {
@@ -68,6 +78,13 @@ public class TestPage extends WebPage {
         private Date fixedDate;
         private Date fixedDateUs;
         private Integer reverseInteger;
+        private BigDecimal reverseDecimal;
+        private BigDecimal reverseDecimalUs;
+        private BigDecimal reverseReais;
+        private BigDecimal reverseDollar;
+        private String regexpIp;
+        private String regexpEmail;
+        
 
         /**
          * @return the fixed
@@ -178,7 +195,7 @@ public class TestPage extends WebPage {
          * @param fixedCC the fixedCC to set
          */
         public void setFixedCC(String fixedCc) {
-            this.fixedCc = fixedCc;
+            this.setFixedCc(fixedCc);
         }
 
         /**
@@ -221,6 +238,97 @@ public class TestPage extends WebPage {
          */
         public void setReverseInteger(Integer reverseInteger) {
             this.reverseInteger = reverseInteger;
+        }
+
+        /**
+         * @param fixedCc the fixedCc to set
+         */
+        public void setFixedCc(String fixedCc) {
+            this.fixedCc = fixedCc;
+        }
+
+        /**
+         * @return the reverseDecimal
+         */
+        public BigDecimal getReverseDecimal() {
+            return reverseDecimal;
+        }
+
+        /**
+         * @param reverseDecimal the reverseDecimal to set
+         */
+        public void setReverseDecimal(BigDecimal reverseDecimal) {
+            this.reverseDecimal = reverseDecimal;
+        }
+
+        /**
+         * @return the reverseDecimalUs
+         */
+        public BigDecimal getReverseDecimalUs() {
+            return reverseDecimalUs;
+        }
+
+        /**
+         * @param reverseDecimalUs the reverseDecimalUs to set
+         */
+        public void setReverseDecimalUs(BigDecimal reverseDecimalUs) {
+            this.reverseDecimalUs = reverseDecimalUs;
+        }
+
+        /**
+         * @return the reverseReais
+         */
+        public BigDecimal getReverseReais() {
+            return reverseReais;
+        }
+
+        /**
+         * @param reverseReais the reverseReais to set
+         */
+        public void setReverseReais(BigDecimal reverseReais) {
+            this.reverseReais = reverseReais;
+        }
+
+        /**
+         * @return the reverseDollar
+         */
+        public BigDecimal getReverseDollar() {
+            return reverseDollar;
+        }
+
+        /**
+         * @param reverseDollar the reverseDollar to set
+         */
+        public void setReverseDollar(BigDecimal reverseDollar) {
+            this.reverseDollar = reverseDollar;
+        }
+
+        /**
+         * @return the regexpIp
+         */
+        public String getRegexpIp() {
+            return regexpIp;
+        }
+
+        /**
+         * @param regexpIp the regexpIp to set
+         */
+        public void setRegexpIp(String regexpIp) {
+            this.regexpIp = regexpIp;
+        }
+
+        /**
+         * @return the regexpEmail
+         */
+        public String getRegexpEmail() {
+            return regexpEmail;
+        }
+
+        /**
+         * @param regexpEmail the regexpEmail to set
+         */
+        public void setRegexpEmail(String regexpEmail) {
+            this.regexpEmail = regexpEmail;
         }
     }
 }
