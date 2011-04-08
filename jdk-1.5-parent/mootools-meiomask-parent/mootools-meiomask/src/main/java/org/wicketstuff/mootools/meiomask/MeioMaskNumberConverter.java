@@ -24,8 +24,6 @@ import java.text.ParseException;
 import java.util.Locale;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.util.convert.converter.AbstractNumberConverter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *

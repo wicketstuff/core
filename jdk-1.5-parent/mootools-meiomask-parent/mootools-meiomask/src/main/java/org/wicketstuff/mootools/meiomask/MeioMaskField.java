@@ -135,6 +135,7 @@ public class MeioMaskField<T> extends TextField<T> {
     public <C> IConverter<C> getConverter(Class<C> type) {
         if (isNumberFormat(type)) {
             LOGGER.debug("Number Converter id: {}, type: {}", getId(),type.getName());
+            //This is provisory, I need specify one converter to each type.
             return new MeioMaskNumberConverter(type);
         } else {
             return super.getConverter(type);
