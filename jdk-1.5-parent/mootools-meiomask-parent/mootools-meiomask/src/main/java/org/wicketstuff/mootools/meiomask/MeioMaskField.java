@@ -16,6 +16,7 @@
 package org.wicketstuff.mootools.meiomask;
 
 import java.text.ParseException;
+import java.util.Date;
 
 import javax.swing.text.MaskFormatter;
 
@@ -23,6 +24,7 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
+import org.apache.wicket.util.convert.IConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.mootools.meiomask.behavior.MeioMaskBehavior;
@@ -35,6 +37,7 @@ public class MeioMaskField<T> extends TextField<T> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MeioMaskField.class);
     private final MaskFormatter maskFormatter = new MaskFormatter();
+    private final MaskType maskType;
 
     public MeioMaskField(String id, MaskType mask) {
         this(id,mask,(IModel<T>)null);
@@ -62,6 +65,7 @@ public class MeioMaskField<T> extends TextField<T> {
 
     public MeioMaskField(String id, MaskType mask, String options, IModel<T> model, boolean valueContainsLiteralCharacters,  Class<T> type) {
         super(id, model, type);
+        this.maskType = mask;
         LOGGER.debug("Initializing maskfield with id {} ...", id);
         LOGGER.debug("  Mask name: {}, mask: {}", mask.getMaskName(),mask.getMask());
         LOGGER.debug("  Options: {}",options);
@@ -86,8 +90,11 @@ public class MeioMaskField<T> extends TextField<T> {
     @Override
     public String getInput() {
         String input = super.getInput();
+        
+        boolean isUnmaskable = Date.class.isAssignableFrom(getType()) 
+                               || isNumberFormat(getType());
 
-        if (input.trim().length() == 0) {
+        if (input.trim().length() == 0 || isUnmaskable) {
             return input;
         } else {
             try {
@@ -123,4 +130,20 @@ public class MeioMaskField<T> extends TextField<T> {
     private ConversionException newConversionException(String value, Throwable cause) {
         return new ConversionException(cause).setResourceKey("PatternValidator").setVariable("input", value).setVariable("pattern", maskFormatter.getMask());
     }
+
+    @Override
+    public <C> IConverter<C> getConverter(Class<C> type) {
+        if (isNumberFormat(type)) {
+            LOGGER.debug("Number Converter id: {}, type: {}", getId(),type.getName());
+            return new MeioMaskNumberConverter(type);
+        } else {
+            return super.getConverter(type);
+        }
+    }
+    
+    protected boolean isNumberFormat(Class<?> type) {
+        return (Number.class.isAssignableFrom(type) && this.maskType.getMask()==null);
+    }
+    
+    
 }

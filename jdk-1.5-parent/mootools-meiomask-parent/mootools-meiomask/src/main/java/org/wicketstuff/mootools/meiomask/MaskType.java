@@ -34,13 +34,13 @@ public enum MaskType {
     FixedCep("fixed.cep", "#####-###"),
     FixedTime("fixed.time", "##:##"),
     FixedCc("fixed.cc", "#### #### #### ####"),
-    ReverseInteger("reverse.integer",""),
-    ReverseDecimal("reverse.decimal",""),
-    ReverseDecimalUs("reverse.decimal-us",""),
-    ReverseReais("reverse.reais",""),
-    ReverseDollar("reverse.dollar",""),
-    RegexpIp("regexp.ip",""),
-    RegexpEmail("regexp.email","");
+    ReverseInteger("reverse.integer",null),
+    ReverseDecimal("reverse.decimal",null),
+    ReverseDecimalUs("reverse.decimal-us",null),
+    ReverseReais("reverse.reais",null),
+    ReverseDollar("reverse.dollar",null),
+    RegexpIp("regexp.ip",null),
+    RegexpEmail("regexp.email",null);
     
     private String maskName;
     private String mask;

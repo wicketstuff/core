@@ -13,21 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.wicketstuff.mootools.meiomask.examples;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
  * @author inaiat
  */
 public class TestModel implements Serializable {
-    
+
     private String fixed;
     private String fixedPhone;
-    private Long fixedPhoneUs;
+    private String fixedPhoneUs;
     private String fixedCpf;
+    private String fixedCnpj;
+    private Long fixedCep;
+    private String fixedTime;
+    private String fixedCc;
+    private Date fixedDate;
+    private Date fixedDateUs;
+    
+    private Integer reverseInteger;
+
+    public Integer getReverseInteger() {
+        return reverseInteger;
+    }
+
+    public void setReverseInteger(Integer reverseInteger) {
+        this.reverseInteger = reverseInteger;
+    }
+
 
     /**
      * @return the fixed
@@ -74,15 +91,98 @@ public class TestModel implements Serializable {
     /**
      * @return the fixedPhoneUs
      */
-    public Long getFixedPhoneUs() {
+    public String getFixedPhoneUs() {
         return fixedPhoneUs;
     }
 
     /**
      * @param fixedPhoneUs the fixedPhoneUs to set
      */
-    public void setFixedPhoneUs(Long fixedPhoneUs) {
+    public void setFixedPhoneUs(String fixedPhoneUs) {
         this.fixedPhoneUs = fixedPhoneUs;
     }
 
+    /**
+     * @return the fixedCnpj
+     */
+    public String getFixedCnpj() {
+        return fixedCnpj;
+    }
+
+    /**
+     * @param fixedCnpj the fixedCnpj to set
+     */
+    public void setFixedCnpj(String fixedCnpj) {
+        this.fixedCnpj = fixedCnpj;
+    }
+
+    /**
+     * @return the fixedCep
+     */
+    public Long getFixedCep() {
+        return fixedCep;
+    }
+
+    /**
+     * @param fixedCep the fixedCep to set
+     */
+    public void setFixedCep(Long fixedCep) {
+        this.fixedCep = fixedCep;
+    }
+
+    /**
+     * @return the fixedTime
+     */
+    public String getFixedTime() {
+        return fixedTime;
+    }
+
+    /**
+     * @param fixedTime the fixedTime to set
+     */
+    public void setFixedTime(String fixedTime) {
+        this.fixedTime = fixedTime;
+    }
+
+    /**
+     * @return the fixedCC
+     */
+    public String getFixedCc() {
+        return fixedCc;
+    }
+
+    /**
+     * @param fixedCC the fixedCC to set
+     */
+    public void setFixedCC(String fixedCc) {
+        this.fixedCc = fixedCc;
+    }
+
+    /**
+     * @return the fixedDate
+     */
+    public Date getFixedDate() {
+        return fixedDate;
+    }
+
+    /**
+     * @param fixedDate the fixedDate to set
+     */
+    public void setFixedDate(Date fixedDate) {
+        this.fixedDate = fixedDate;
+    }
+
+    /**
+     * @return the fixedDateUs
+     */
+    public Date getFixedDateUs() {
+        return fixedDateUs;
+    }
+
+    /**
+     * @param fixedDateUs the fixedDateUs to set
+     */
+    public void setFixedDateUs(Date fixedDateUs) {
+        this.fixedDateUs = fixedDateUs;
+    }
 }
