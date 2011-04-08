@@ -15,8 +15,9 @@
  */
 package org.wicketstuff.mootools.meiomaks.test;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Locale;
+
 import org.apache.wicket.Session;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
@@ -61,7 +62,10 @@ public class MeioMaskTest {
         Session.get().setLocale(locale);
         formTester.setValue("fixedDate", "25/03/2011");
         formTester.submit();
-        tester.assertModelValue("form:fixedDate", new Date(1301022000000L));
+        Calendar expected = Calendar.getInstance();
+        expected.clear();
+        expected.set(2011, Calendar.MARCH, 25);
+        tester.assertModelValue("form:fixedDate", expected.getTime());
     }
 
     @Test
@@ -73,9 +77,12 @@ public class MeioMaskTest {
         Session.get().setLocale(locale);
         formTester.setValue("fixedDate", "03/25/2011");
         formTester.submit();
-        tester.assertModelValue("form:fixedDate", new Date(1301022000000L));
+        Calendar expected = Calendar.getInstance();
+        expected.clear();
+        expected.set(2011, Calendar.MARCH, 25);
+        tester.assertModelValue("form:fixedDate", expected.getTime());
     }
-    
+
     @Test
     public void reverseIntegerTest() {
         WicketTester tester = new WicketTester();
@@ -84,7 +91,7 @@ public class MeioMaskTest {
         Locale locale = new Locale("pt", "BR");
         Session.get().setLocale(locale);
         formTester.setValue("reverseInteger", "5.321");
-        formTester.submit();        
+        formTester.submit();
         tester.assertModelValue("form:reverseInteger", 5321);
     }
 }

@@ -16,6 +16,7 @@
 package org.wicketstuff.mootools.meiomaks.test;
 
 import java.util.Date;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -54,7 +55,7 @@ public class TestPage extends WebPage {
         form.add(new MeioMaskField<Integer>("reverseInteger", MaskType.ReverseInteger));
     }
 
-    private class TestModel {
+    private static class TestModel {
 
         private String fixed;
         private String fixedPhone;
