@@ -15,6 +15,7 @@
  */
 package org.wicketstuff.mootools.meiomask;
 
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -24,7 +25,6 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
-import org.apache.wicket.util.convert.IConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.mootools.meiomask.behavior.MeioMaskBehavior;
@@ -40,9 +40,9 @@ public class MeioMaskField<T> extends TextField<T> {
     private final MaskType maskType;
 
     public MeioMaskField(String id, MaskType mask) {
-        this(id,mask,(IModel<T>)null);
+        this(id, mask, (IModel<T>) null);
     }
-    
+
     public MeioMaskField(String id, MaskType mask, boolean valueContainsLiteralCharacters) {
         this(id, mask, null, null, valueContainsLiteralCharacters);
     }
@@ -63,14 +63,14 @@ public class MeioMaskField<T> extends TextField<T> {
         this(id, mask, options, model, valueContainsLiteralCharacters, null);
     }
 
-    public MeioMaskField(String id, MaskType mask, String options, IModel<T> model, boolean valueContainsLiteralCharacters,  Class<T> type) {
+    public MeioMaskField(String id, MaskType mask, String options, IModel<T> model, boolean valueContainsLiteralCharacters, Class<T> type) {
         super(id, model, type);
         this.maskType = mask;
         LOGGER.debug("Initializing maskfield with id {} ...", id);
-        LOGGER.debug("  Mask name: {}, mask: {}", mask.getMaskName(),mask.getMask());
-        LOGGER.debug("  Options: {}",options);
+        LOGGER.debug("  Mask name: {}, mask: {}", mask.getMaskName(), mask.getMask());
+        LOGGER.debug("  Options: {}", options);
         LOGGER.debug("  Type: {}", type);
-        LOGGER.debug("  ValueContainsLiteralCharacters: {}",valueContainsLiteralCharacters);
+        LOGGER.debug("  ValueContainsLiteralCharacters: {}", valueContainsLiteralCharacters);
         try {
             maskFormatter.setMask(mask.getMask());
             maskFormatter.setValueClass(String.class);
@@ -82,20 +82,25 @@ public class MeioMaskField<T> extends TextField<T> {
 
         add(new MeioMaskBehavior(mask, options));
         setOutputMarkupId(true);
-        
+
         LOGGER.debug("Maskfield {} initialized.", id);
     }
-
 
     @Override
     public String getInput() {
         String input = super.getInput();
-        
-        boolean isUnmaskable = Date.class.isAssignableFrom(getType()) 
-                               || isNumberFormat(getType());
 
-        if (input.trim().length() == 0 || isUnmaskable) {
+        if (input.trim().length() == 0 || Date.class.isAssignableFrom(getType())) {
             return input;
+        } else if (isNumberFormat(getType())) {
+            DecimalFormatSymbols formatSymbols = new DecimalFormatSymbols(getLocale());
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < input.length(); i++) {
+                if (input.charAt(i) != formatSymbols.getGroupingSeparator()) {
+                    builder.append(input.charAt(i));
+                }
+            }
+            return builder.toString();
         } else {
             try {
                 LOGGER.debug("Value to Converter {}", input);
@@ -131,20 +136,7 @@ public class MeioMaskField<T> extends TextField<T> {
         return new ConversionException(cause).setResourceKey("PatternValidator").setVariable("input", value).setVariable("pattern", maskFormatter.getMask());
     }
 
-    @Override
-    public <C> IConverter<C> getConverter(Class<C> type) {
-        if (isNumberFormat(type)) {
-            LOGGER.debug("Number Converter id: {}, type: {}", getId(),type.getName());
-            //This is provisory, I need specify one converter to each type.
-            return new MeioMaskNumberConverter(type);
-        } else {
-            return super.getConverter(type);
-        }
-    }
-    
     protected boolean isNumberFormat(Class<?> type) {
-        return (Number.class.isAssignableFrom(type) && this.maskType.getMask()==null);
+        return (Number.class.isAssignableFrom(type) && this.maskType.getMask() == null);
     }
-    
-    
 }
