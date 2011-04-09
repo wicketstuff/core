@@ -16,35 +16,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.calendarviews.exampleapp;
+package org.wicketstuff.jslibraries;
 
-import org.apache.wicket.protocol.http.WebApplication;
+import junit.framework.TestCase;
 
-/**
- * Application object for your web application. If you want to run this
- * application without deploying, run the Start class.
- * 
- * @see org.wicketstuff.calendarviews.exampleapp.StartCalendarsExamples#main(String[])
- * @author Jeremy Thomerson
- */
-public class ExampleCalendarApplication extends WebApplication {
-	/**
-	 * Constructor
-	 */
-	public ExampleCalendarApplication() {
+public class VersionTest extends TestCase {
+
+	public void testEquals() {
+		assertTrue(new Version(1,1).equals(new Version(1,1)));
+		assertTrue(new Version(2).equals(new Version(2)));
+		assertFalse(new Version(1,1).equals(new Version(1)));
+		assertFalse(new Version(1).equals(new Version(1,1)));
 	}
-
-	/**
-	 * @see org.apache.wicket.Application#getHomePage()
-	 */
-	public Class<HomePage> getHomePage() {
-		return HomePage.class;
-	}
-
-	@Override
-	protected void init() {
-		super.init();
-		
-		getDebugSettings().setComponentUseCheck(false);
+	
+	public void testMatches() throws Exception {
+		assertTrue(new Version(1,1).matches(new Version(1)));
+		assertTrue(new Version(1,1).matches(new Version(1,1)));
+		assertTrue(new Version(1,1,1).matches(new Version(1,1)));
+		assertTrue(new Version(1,1,1,1).matches(new Version(1,1)));
+		assertFalse(new Version(1,1).matches(new Version(1,1,1)));
+		assertFalse(new Version(1,1).matches(new Version(2)));
+		assertFalse(new Version(2).matches(new Version(1,1)));
 	}
 }

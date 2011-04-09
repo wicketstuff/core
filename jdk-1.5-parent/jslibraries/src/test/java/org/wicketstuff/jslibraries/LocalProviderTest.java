@@ -20,16 +20,11 @@ package org.wicketstuff.jslibraries;
 
 import java.io.IOException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.Set;
-
-import org.apache.wicket.behavior.HeaderContributor;
 
 import junit.framework.TestCase;
 
-
 public class LocalProviderTest extends TestCase {
-
 
 		public void testCDNs() throws Exception {
 			IterateAllRegistered(false);

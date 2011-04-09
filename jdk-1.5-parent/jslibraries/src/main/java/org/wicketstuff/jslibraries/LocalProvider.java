@@ -21,8 +21,8 @@ package org.wicketstuff.jslibraries;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.wicket.behavior.HeaderContributor;
-import org.apache.wicket.markup.html.JavascriptPackageResource;
+import org.apache.wicket.markup.html.IHeaderContributor;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.jslibraries.util.Assert;
 
 
@@ -57,14 +57,13 @@ public class LocalProvider implements Provider {
         localProductionSignifiers.put(Library.EXT_CORE, ".min");
     }
 
-    public HeaderContributor getHeaderContributor(
+    public IHeaderContributor getHeaderContributor(
             final VersionDescriptor versionDescriptor, boolean production) {
         
         Assert.parameterNotNull(versionDescriptor,
                 "versionDescriptor");
         
-        return JavascriptPackageResource.getHeaderContribution(JSReference
-                .getReference(versionDescriptor, production));
+        return new HeaderContributor(versionDescriptor, production);
     }
 
     String getLocalFileName(Library lib) {
@@ -84,4 +83,19 @@ public class LocalProvider implements Provider {
         return signifier;
     }
 
+    private static class HeaderContributor implements IHeaderContributor {
+    	private VersionDescriptor versionDescriptor;
+		private boolean production;
+
+    	public HeaderContributor(VersionDescriptor versionDescriptor,
+				boolean production) {
+			this.versionDescriptor = versionDescriptor;
+			this.production = production;
+		}
+
+		public void renderHead(IHeaderResponse response) {
+			response.renderJavaScriptReference(JSReference
+	                .getReference(versionDescriptor, production));
+    	}
+    }
 }

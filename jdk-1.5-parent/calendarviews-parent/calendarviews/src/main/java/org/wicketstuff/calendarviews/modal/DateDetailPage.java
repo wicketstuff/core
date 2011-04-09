@@ -22,7 +22,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.markup.html.CSSPackageResource;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -43,7 +43,6 @@ public class DateDetailPage extends WebPage {
 	}
 	
 	public DateDetailPage(IModel<DateMidnight> model, IModel<List<IEvent>> eventsModel, final IDateDetailPageEventLinkCreator linkCreator) {
-		add(CSSPackageResource.getHeaderContribution(BaseCalendarView.CALENDARS_CSS_REFERENCE));
 		add(new Label("title", new StringResourceModel("DateDetailPage.windowTitle", null, new Object[] { model.getObject().toDate() })));
 		add(new Label("inPageTitle", new StringResourceModel("DateDetailPage.inPageTitle", null, new Object[] { model.getObject().toDate() })));
 		add(new PropertyListView<IEvent>("list", eventsModel) {
@@ -69,5 +68,11 @@ public class DateDetailPage extends WebPage {
 			}
 		});
 	}
-	
+
+	@Override
+	public void renderHead(IHeaderResponse response) {
+		super.renderHead(response);
+
+		response.renderCSSReference(BaseCalendarView.CALENDARS_CSS_REFERENCE);		
+	}
 }

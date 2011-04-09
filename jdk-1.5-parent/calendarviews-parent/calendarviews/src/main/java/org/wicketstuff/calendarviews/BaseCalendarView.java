@@ -26,12 +26,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.markup.html.CSSPackageResource;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -43,7 +43,7 @@ import org.wicketstuff.calendarviews.util.Comparators;
 public abstract class BaseCalendarView extends Panel {
 
 	private static final long serialVersionUID = 1L;
-	public static final ResourceReference CALENDARS_CSS_REFERENCE = new ResourceReference(BaseCalendarView.class, "calendars.css");
+	public static final PackageResourceReference CALENDARS_CSS_REFERENCE = new PackageResourceReference(BaseCalendarView.class, "calendars.css");
 //	private static final Logger LOGGER = LoggerFactory.getLogger(BaseCalendarView.class);
 
 	private final Date mStartDate;
@@ -52,7 +52,7 @@ public abstract class BaseCalendarView extends Panel {
 
 	public BaseCalendarView(String id, Date startDate, Date endDate, IEventProvider eventProvider) {
 		super(id);
-		add(CSSPackageResource.getHeaderContribution(CALENDARS_CSS_REFERENCE));
+		
 		if (startDate == null || endDate == null || eventProvider == null) {
 			throw new IllegalArgumentException("no null parameters are allowed in this constructor");
 		}
@@ -61,6 +61,13 @@ public abstract class BaseCalendarView extends Panel {
 		mEventProvider = eventProvider;
 	}
 
+	@Override
+	public void renderHead(IHeaderResponse response) {
+		super.renderHead(response);
+		
+		response.renderCSSReference(CALENDARS_CSS_REFERENCE);
+	}
+	
 	/* Helper methods for subclasses */
 	protected final Map<DateMidnight, List<IEvent>> convertToMapByDay(Collection<? extends IEvent> allEvents) {
 		// TODO: this could probably use a much more efficient algorithm

@@ -21,16 +21,19 @@ package org.wicketstuff.calendarviews.exampleapp;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
 import org.apache.wicket.Page;
-import org.apache.wicket.PageParameters;
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.markup.html.CSSPackageResource;
+import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.string.JavascriptUtils;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.util.string.JavaScriptUtils;
 import org.joda.time.DateMidnight;
 import org.wicketstuff.calendarviews.LargeView;
 import org.wicketstuff.calendarviews.model.IEvent;
@@ -44,13 +47,13 @@ public class HomePage extends WebPage {
 	private static final String KEY_WEEKS = "0";
 //	private static final Logger LOGGER = LoggerFactory.getLogger(HomePage.class);
 	private static final long serialVersionUID = 1L;
-	public static final ResourceReference EXAMPLES_CSS_REFERENCE = new ResourceReference(HomePage.class, "examples.css");
+	public static final ResourceReference EXAMPLES_CSS_REFERENCE = new PackageResourceReference(HomePage.class, "examples.css");
 
 	public HomePage() {
 		this(0);
 	}
 	public HomePage(PageParameters params) {
-		this(params.getInt(KEY_WEEKS));
+		this(params.get(KEY_WEEKS).isNull() ? 0 : params.get(KEY_WEEKS).toInt());
 	}
 	
 	public HomePage(int weeks) {
@@ -64,7 +67,14 @@ public class HomePage extends WebPage {
 			@Override
 			protected Page createMoreDetailPage(IModel<DateMidnight> model, IModel<List<IEvent>> eventsModel) {
 				Page page = super.createMoreDetailPage(model, eventsModel);
-				page.add(CSSPackageResource.getHeaderContribution(EXAMPLES_CSS_REFERENCE));
+				page.add(new Behavior() {
+					@Override
+					public void renderHead(Component component,
+							IHeaderResponse response) {
+						
+						response.renderCSSReference(EXAMPLES_CSS_REFERENCE);
+					}
+				});
 				return page;
 			}
 			@Override
@@ -75,7 +85,7 @@ public class HomePage extends WebPage {
 
 					@Override
 					public String getObject() {
-						return "alert('" + JavascriptUtils.escapeQuotes(model.getObject().getTitle()) + "');";
+						return "alert('" + JavaScriptUtils.escapeQuotes(model.getObject().getTitle()) + "');";
 					}
 					
 				}));
@@ -83,10 +93,16 @@ public class HomePage extends WebPage {
 			}
 		});
 		
-		add(CSSPackageResource.getHeaderContribution(EXAMPLES_CSS_REFERENCE));
 		addLinks();
 	}
 
+	@Override
+	public void renderHead(IHeaderResponse response) {
+		super.renderHead(response);
+	
+		response.renderCSSReference(EXAMPLES_CSS_REFERENCE);
+	}
+	
 	private void addLinks() {
 		add(createLink("month", 0));
 		add(createLink("2weeks", 2));

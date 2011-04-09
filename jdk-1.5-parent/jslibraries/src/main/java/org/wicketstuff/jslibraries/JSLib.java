@@ -20,9 +20,7 @@ package org.wicketstuff.jslibraries;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.MetaDataKey;
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.behavior.HeaderContributor;
-import org.apache.wicket.markup.html.JavascriptPackageResource;
+import org.apache.wicket.markup.html.IHeaderContributor;
 import org.wicketstuff.jslibraries.util.Assert;
 import org.wicketstuff.jslibraries.util.WicketDeploymentState;
 
@@ -97,12 +95,21 @@ public class JSLib
 
     /**
      * @param versionDescriptor
+     * @return matching HeaderContributor from the first matching provider
+     */
+    public static IHeaderContributor getHeaderContribution(final VersionDescriptor versionDescriptor)
+    {
+        return getHeaderContribution(versionDescriptor, WicketDeploymentState.isProduction(), LocalProvider.DEFAULT);
+    }
+
+    /**
+     * @param versionDescriptor
      * @param providers
      *            list of alternative providers (might be ignored if
      *            setOverrideProviders was used)
      * @return matching HeaderContributor from the first matching provider
      */
-    public static HeaderContributor getHeaderContribution(final VersionDescriptor versionDescriptor,
+    public static IHeaderContributor getHeaderContribution(final VersionDescriptor versionDescriptor,
             final Provider... providers)
     {
         return getHeaderContribution(versionDescriptor, WicketDeploymentState.isProduction(), providers);
@@ -117,7 +124,7 @@ public class JSLib
      *            setOverrideProviders was used
      * @return matching HeaderContributor from the first matching provider
      */
-    public static HeaderContributor getHeaderContribution(final VersionDescriptor versionDescriptor,
+    public static IHeaderContributor getHeaderContribution(final VersionDescriptor versionDescriptor,
             final boolean production, final Provider... providers)
     {
 
@@ -131,7 +138,7 @@ public class JSLib
         {
             for (final Provider provider : prov)
             {
-                final HeaderContributor hc = provider.getHeaderContributor(versionDescriptor, production);
+                final IHeaderContributor hc = provider.getHeaderContributor(versionDescriptor, production);
                 if (hc != null)
                 {
                     return hc;
@@ -139,14 +146,6 @@ public class JSLib
             }
         }
 
-        final ResourceReference reference = JSReference.getReference(versionDescriptor, production);
-        if (reference != null)
-        {
-            return JavascriptPackageResource.getHeaderContribution(reference);
-        }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 }

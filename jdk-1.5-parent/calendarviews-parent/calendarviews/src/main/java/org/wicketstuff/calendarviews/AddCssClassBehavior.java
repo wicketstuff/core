@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.model.IModel;
 import org.wicketstuff.calendarviews.model.ICategorizedEvent;
@@ -36,7 +36,7 @@ import org.wicketstuff.calendarviews.util.StringUtil;
  *  
  * @author Jeremy Thomerson
  */
-public class AddCssClassBehavior extends AbstractBehavior {
+public class AddCssClassBehavior extends Behavior {
 	private static final String ATTRIBUTE_NAME = "class";
 
 	private static final long serialVersionUID = 1L;

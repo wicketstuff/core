@@ -27,14 +27,11 @@ import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.behavior.AbstractBehavior;
-import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow.PageCreator;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.JavascriptPackageResource;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -42,10 +39,10 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.GridView;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -55,14 +52,14 @@ import org.wicketstuff.calendarviews.modal.DateDetailPage;
 import org.wicketstuff.calendarviews.model.IEvent;
 import org.wicketstuff.calendarviews.model.IEventProvider;
 import org.wicketstuff.calendarviews.model.TimePeriod;
-import org.wicketstuff.jslibraries.JSReference;
+import org.wicketstuff.jslibraries.JSLib;
 import org.wicketstuff.jslibraries.Library;
 import org.wicketstuff.jslibraries.VersionDescriptor;
 
 /**
- * This is a larger view of a calendar, typically used for multiple weeks
- * or entire months.  It generates a month-style grid calendar with events
- * that can span multiple days and supports categorized events.<br />
+ * This is a larger view of a calendar, typically used for multiple weeks or
+ * entire months. It generates a month-style grid calendar with events that can
+ * span multiple days and supports categorized events.<br />
  * <br />
  * You could think of it as similar to the month view in Outlook or Google
  * calendar.
@@ -70,29 +67,35 @@ import org.wicketstuff.jslibraries.VersionDescriptor;
  * @author Jeremy Thomerson
  */
 public class LargeView extends FullWeekCalendarView {
-	
-	private static final VersionDescriptor JS_LIB_VERSION_DESCRIPTOR = VersionDescriptor.alwaysLatestOfVersion(Library.PROTOTYPE, 1, 6);
+
+	private static final VersionDescriptor JS_LIB_VERSION_DESCRIPTOR = VersionDescriptor
+			.alwaysLatestOfVersion(Library.PROTOTYPE, 1, 6);
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOGGER = LoggerFactory.getLogger(LargeView.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(LargeView.class);
+
+	public static final PackageResourceReference JS = new PackageResourceReference(
+			LargeView.class, "LargeView.js");
 
 	private final ModalWindow mDetailModal;
-	
+
 	public LargeView(String id, TimePeriod tp, IEventProvider eventProvider) {
 		this(id, tp.getStartDate(), tp.getEndDate(), eventProvider);
 	}
 
-	public LargeView(String id, Date startDate, Date endDate, IEventProvider eventProvider) {
+	public LargeView(String id, Date startDate, Date endDate,
+			IEventProvider eventProvider) {
 		super(id, startDate, endDate, eventProvider);
 
-		addJavascriptInitializers();
-		
+		setOutputMarkupId(true);
+
 		add(mDetailModal = new ModalWindow("detailModal"));
 		initializeDetailModalWindow(mDetailModal);
-		
+
 		IDataProvider<DateMidnight> dp = createDaysDataProvider();
 		Collection<? extends IEvent> allEvents = getEventProvider().getObject();
 		final Map<DateMidnight, List<IEvent>> mapOfEvents = convertToMapByDay(allEvents);
-		
+
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Data provider: " + dp);
 		}
@@ -100,7 +103,6 @@ public class LargeView extends FullWeekCalendarView {
 	}
 
 	protected final void initializeDetailModalWindow(ModalWindow modal) {
-		modal.setPageMapName("calendar-detail-modal");
 		modal.setCookieName("calendar-detail-modal");
 	}
 
@@ -108,46 +110,54 @@ public class LargeView extends FullWeekCalendarView {
 	protected final IRenderStrategy getRenderStrategy() {
 		return IRenderStrategy.FIRST_AND_FIRST_OF_ROW;
 	}
-	
-	private void addJavascriptInitializers() {
-		setOutputMarkupId(true);
-		add(JavascriptPackageResource.getHeaderContribution(JSReference.getReference(JS_LIB_VERSION_DESCRIPTOR)));
-		add(JavascriptPackageResource.getHeaderContribution(LargeView.class, "LargeView.js"));
-		add(new HeaderContributor(new IHeaderContributor() {
-			private static final long serialVersionUID = 1L;
 
-			public void renderHead(IHeaderResponse response) {
-				String calID = LargeView.this.getMarkupId();
-				response.renderOnDomReadyJavascript("LargeViewCalendar.initialize('" + calID + "');");
-			}
-		}));
+	@Override
+	public void renderHead(IHeaderResponse response) {
+		super.renderHead(response);
+
+		JSLib.getHeaderContribution(JS_LIB_VERSION_DESCRIPTOR).renderHead(
+				response);
+
+		response.renderJavaScriptReference(JS);
+
+		String calID = LargeView.this.getMarkupId();
+		response.renderOnDomReadyJavaScript("LargeViewCalendar.initialize('"
+				+ calID + "');");
 	}
 
-	protected final ListView<IEvent> createEventListView(String id, final IModel<DateMidnight> dateModel, final int cellsLeftInRow, IModel<List<IEvent>> model) {
+	protected final ListView<IEvent> createEventListView(String id,
+			final IModel<DateMidnight> dateModel, final int cellsLeftInRow,
+			IModel<List<IEvent>> model) {
 		return new ListView<IEvent>(id, model) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected void populateItem(final ListItem<IEvent> item) {
-				WebMarkupContainer link = createEventLink("link", item.getModel());
+				WebMarkupContainer link = createEventLink("link", item
+						.getModel());
 				link.add(createStartTimeLabel("startTime", item.getModel()));
-				link.add(new Label("title", new PropertyModel<String>(item.getModel(), "title")));
+				link.add(new Label("title", new PropertyModel<String>(item
+						.getModel(), "title")));
 				item.add(link);
-				
+
 				// things to decorate the item itself
-				item.add(new HowManyDaysClassBehavior(dateModel, cellsLeftInRow, item.getModel()));
+				item.add(new HowManyDaysClassBehavior(dateModel,
+						cellsLeftInRow, item.getModel()));
 				item.add(new AddCssClassBehavior(item.getModel()));
 			}
 
-			private Label createStartTimeLabel(String id, final IModel<IEvent> model) {
+			private Label createStartTimeLabel(String id,
+					final IModel<IEvent> model) {
 				return new Label(id, new LoadableDetachableModel<String>() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					protected String load() {
-						// TODO : make this implementation more internationalized... this one is too static
-						//			use dateformat or something
-						DateTime start = new DateTime(model.getObject().getStartTime());
+						// TODO : make this implementation more
+						// internationalized... this one is too static
+						// use dateformat or something
+						DateTime start = new DateTime(model.getObject()
+								.getStartTime());
 						StringBuffer sb = new StringBuffer();
 						int hr = start.getHourOfDay();
 						sb.append(hr > 12 ? hr - 12 : hr);
@@ -162,7 +172,7 @@ public class LargeView extends FullWeekCalendarView {
 						sb.append(hr > 12 ? 'p' : 'a');
 						return sb.toString();
 					}
-					
+
 				}) {
 					private static final long serialVersionUID = 1L;
 
@@ -177,15 +187,16 @@ public class LargeView extends FullWeekCalendarView {
 
 	private class LargeGridView extends GridView<DateMidnight> {
 		private static final long serialVersionUID = 1L;
-		
+
 		private Map<DateMidnight, List<IEvent>> mMapOfEvents;
 		private int mCounter;
-		
-		public LargeGridView(String id, IDataProvider<DateMidnight> dp, Map<DateMidnight, List<IEvent>> mapOfEvents) {
+
+		public LargeGridView(String id, IDataProvider<DateMidnight> dp,
+				Map<DateMidnight, List<IEvent>> mapOfEvents) {
 			super(id, dp);
 			mMapOfEvents = mapOfEvents;
 		}
-		
+
 		@Override
 		public int getColumns() {
 			return LargeView.this.getNumberOfColumns();
@@ -193,7 +204,8 @@ public class LargeView extends FullWeekCalendarView {
 
 		@Override
 		protected void populateEmptyItem(Item<DateMidnight> item) {
-			throw new UnsupportedOperationException("LargeView should not have any empty items");
+			throw new UnsupportedOperationException(
+					"LargeView should not have any empty items");
 		}
 
 		@Override
@@ -207,22 +219,24 @@ public class LargeView extends FullWeekCalendarView {
 				protected List<IEvent> load() {
 					return mMapOfEvents.get(item.getModelObject());
 				}
-				
+
 			};
-			Label dateHeader = new Label("date", new PropertyModel<Integer>(item.getModel(), "dayOfMonth"));
+			Label dateHeader = new Label("date", new PropertyModel<Integer>(
+					item.getModel(), "dayOfMonth"));
 			dateHeader.add(new AjaxEventBehavior("onclick") {
 				private static final long serialVersionUID = 1L;
 
 				@Override
 				protected void onEvent(AjaxRequestTarget target) {
-					LOGGER.debug("Show more events for: " + item.getModelObject());
+					LOGGER.debug("Show more events for: "
+							+ item.getModelObject());
 					onMoreLinkClicked(target, item.getModel(), eventsModel);
 				}
 			});
 			item.add(dateHeader);
-			item.add(createEventListView("events", item.getModel(), cellsLeft, eventsModel));
+			item.add(createEventListView("events", item.getModel(), cellsLeft,
+					eventsModel));
 		}
-		
 
 		@Override
 		protected void onDetach() {
@@ -230,12 +244,16 @@ public class LargeView extends FullWeekCalendarView {
 		}
 	}
 
-	protected void onMoreLinkClicked(AjaxRequestTarget target, IModel<DateMidnight> model, IModel<List<IEvent>> eventsModel) {
-		mDetailModal.setPageCreator(getDetailModalPageCreator(model, eventsModel));
+	protected void onMoreLinkClicked(AjaxRequestTarget target,
+			IModel<DateMidnight> model, IModel<List<IEvent>> eventsModel) {
+		mDetailModal.setPageCreator(getDetailModalPageCreator(model,
+				eventsModel));
 		mDetailModal.show(target);
 	}
-	
-	protected PageCreator getDetailModalPageCreator(final IModel<DateMidnight> model, final IModel<List<IEvent>> eventsModel) {
+
+	protected PageCreator getDetailModalPageCreator(
+			final IModel<DateMidnight> model,
+			final IModel<List<IEvent>> eventsModel) {
 		return new ModalWindow.PageCreator() {
 			private static final long serialVersionUID = 1L;
 
@@ -246,14 +264,17 @@ public class LargeView extends FullWeekCalendarView {
 		};
 	}
 
-	protected Page createMoreDetailPage(final IModel<DateMidnight> model, final IModel<List<IEvent>> eventsModel) {
-		return new DateDetailPage(model, eventsModel, new DateDetailPage.IDateDetailPageEventLinkCreator() {
-			private static final long serialVersionUID = 1L;
+	protected Page createMoreDetailPage(final IModel<DateMidnight> model,
+			final IModel<List<IEvent>> eventsModel) {
+		return new DateDetailPage(model, eventsModel,
+				new DateDetailPage.IDateDetailPageEventLinkCreator() {
+					private static final long serialVersionUID = 1L;
 
-			public WebMarkupContainer createEventLink(String id, IModel<IEvent> model) {
-				return LargeView.this.createEventLink(id, model);
-			}
-		});
+					public WebMarkupContainer createEventLink(String id,
+							IModel<IEvent> model) {
+						return LargeView.this.createEventLink(id, model);
+					}
+				});
 	}
 
 	protected WebMarkupContainer createEventLink(String id, IModel<IEvent> model) {
@@ -261,7 +282,8 @@ public class LargeView extends FullWeekCalendarView {
 	}
 
 	public static TimePeriod createWeeksViewDates(int weeks) {
-		// TODO add a similar method that allows an offset of weeks (i.e. 3 weeks, starting two weeks past today)
+		// TODO add a similar method that allows an offset of weeks (i.e. 3
+		// weeks, starting two weeks past today)
 		Date start = new Date();
 		Date end = new DateTime(start).plusWeeks(weeks - 1).toDate();
 		return new TimePeriod(start, end);
@@ -274,19 +296,21 @@ public class LargeView extends FullWeekCalendarView {
 	}
 
 	public static TimePeriod createMonthViewDates(int month, int year) {
-		Date start = new DateTime().dayOfMonth().setCopy(1).monthOfYear().setCopy(month).year().setCopy(year).toDate();
+		Date start = new DateTime().dayOfMonth().setCopy(1).monthOfYear()
+				.setCopy(month).year().setCopy(year).toDate();
 		Date end = new DateTime(start).plusMonths(1).minusDays(1).toDate();
 		return new TimePeriod(start, end);
 	}
 
-	private static class HowManyDaysClassBehavior extends AbstractBehavior {
+	private static class HowManyDaysClassBehavior extends Behavior {
 		private static final long serialVersionUID = 1L;
 
 		private int mDaysLeftInRow;
 		private IModel<DateMidnight> mDateModel;
 		private IModel<IEvent> mEventModel;
-		
-		public HowManyDaysClassBehavior(IModel<DateMidnight> dateModel, int daysLeftInRow, IModel<IEvent> model) {
+
+		public HowManyDaysClassBehavior(IModel<DateMidnight> dateModel,
+				int daysLeftInRow, IModel<IEvent> model) {
 			mDaysLeftInRow = daysLeftInRow;
 			mDateModel = dateModel;
 			mEventModel = model;
@@ -303,10 +327,11 @@ public class LargeView extends FullWeekCalendarView {
 				int days = Math.abs(Days.daysBetween(day, endTime).getDays());
 				numberOfDays = Math.min(days, mDaysLeftInRow) + 1;
 			}
-			// TODO: is it valid XHTML to just arbitrarily add attributes not defined
-			//			in the spec?  It sure makes it simple on the JS-side to access
-			//			additional data about the event needed for the client-side 
-			//			rendering.
+			// TODO: is it valid XHTML to just arbitrarily add attributes not
+			// defined
+			// in the spec? It sure makes it simple on the JS-side to access
+			// additional data about the event needed for the client-side
+			// rendering.
 			tag.put("days", numberOfDays);
 		}
 	}
