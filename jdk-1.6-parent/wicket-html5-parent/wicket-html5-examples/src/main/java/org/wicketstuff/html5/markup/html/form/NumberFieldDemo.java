@@ -26,6 +26,7 @@ public class NumberFieldDemo extends BasePage {
 		numberField.setRequired(false);
 		form.add(numberField);
 		numberField.setMinimum(4.0d);
+		numberField.setMaximum(10.0d);
 
 		add(new Label("numberLabel", model));
 	}
