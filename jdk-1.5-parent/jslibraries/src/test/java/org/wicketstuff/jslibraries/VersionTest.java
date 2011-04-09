@@ -30,6 +30,7 @@ public class VersionTest extends TestCase {
 	}
 	
 	public void testMatches() throws Exception {
+		assertTrue(new Version(1).matches(new Version()));
 		assertTrue(new Version(1,1).matches(new Version(1)));
 		assertTrue(new Version(1,1).matches(new Version(1,1)));
 		assertTrue(new Version(1,1,1).matches(new Version(1,1)));
