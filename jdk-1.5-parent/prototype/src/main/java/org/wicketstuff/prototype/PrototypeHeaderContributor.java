@@ -6,10 +6,11 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 
 /**
  * A contributor of a "prototype.js" script to a header of a page.
+ * 
+ * @deprecated
  */
 public final class PrototypeHeaderContributor extends Behavior {
 		
-
 	/**
 	 * 
 	 */

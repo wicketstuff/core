@@ -16,4 +16,11 @@
 		WicketStuff Prototype offers a standardized integration of the prototype javascript library.
 	</description>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>jslibraries</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 </project>
