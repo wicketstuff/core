@@ -1,6 +1,5 @@
 package org.wicketstuff.prototype;
 
-import org.apache.wicket.Application;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jslibraries.JSReference;
@@ -8,8 +7,7 @@ import org.wicketstuff.jslibraries.Library;
 import org.wicketstuff.jslibraries.VersionDescriptor;
 
 /**
- * The default resource for the prototype script if no other was installed on
- * the {@link Application}.
+ * The default resource for the prototype script.
  * 
  * @deprecated
  */
