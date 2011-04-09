@@ -15,6 +15,7 @@
  */
 package org.wicketstuff.mootools.meiomaks.test;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -51,6 +52,7 @@ public class MeioMaskTest {
         tester.assertModelValue("form:fixedCep", 21940480L);
         tester.assertModelValue("form:fixedTime", "1100");
         tester.assertModelValue("form:fixedCc", "1234123412341234");
+
     }
 
     @Test
@@ -93,5 +95,47 @@ public class MeioMaskTest {
         formTester.setValue("reverseInteger", "5.321");
         formTester.submit();
         tester.assertModelValue("form:reverseInteger", 5321);
+    }
+
+    @Test
+    public void reverseDecimalTest() {
+        WicketTester tester = new WicketTester();
+        tester.startPage(TestPage.class);
+        FormTester formTester = tester.newFormTester("form");
+        Locale locale = new Locale("pt", "BR");
+        Session.get().setLocale(locale);
+        formTester.setValue("reverseDecimal", "10.492,56");
+        formTester.setValue("reverseReais", "10.492,56");
+        formTester.submit();
+        tester.assertModelValue("form:reverseDecimal", BigDecimal.valueOf(10492.56).setScale(2));
+        tester.assertModelValue("form:reverseReais", BigDecimal.valueOf(10492.56).setScale(2));
+    }
+
+    @Test
+    public void reverseDecimalUsTest() {
+        WicketTester tester = new WicketTester();
+        tester.startPage(TestPage.class);
+        FormTester formTester = tester.newFormTester("form");
+        Locale locale = new Locale("en", "US");
+        Session.get().setLocale(locale);
+        formTester.setValue("reverseDecimalUs", "10,492.56");
+        formTester.setValue("reverseDollar", "10,492.56");
+        formTester.submit();
+        tester.assertModelValue("form:reverseDecimalUs", BigDecimal.valueOf(10492.56).setScale(2));
+        tester.assertModelValue("form:reverseDollar", BigDecimal.valueOf(10492.56).setScale(2));
+    }
+
+    @Test
+    public void regexTest() {
+        WicketTester tester = new WicketTester();
+        tester.startPage(TestPage.class);
+        FormTester formTester = tester.newFormTester("form");
+        Locale locale = new Locale("en", "US");
+        Session.get().setLocale(locale);
+        formTester.setValue("regexpIp", "192.168.1.1");
+        formTester.setValue("regexpEmail", "test@domain.com");
+        formTester.submit();
+        tester.assertModelValue("form:regexpIp", "192.168.1.1");
+        tester.assertModelValue("form:regexpEmail", "test@domain.com");
     }
 }

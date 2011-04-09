@@ -90,9 +90,10 @@ public class MeioMaskField<T> extends TextField<T> {
     public String getInput() {
         String input = super.getInput();
 
-        if (input.trim().length() == 0 || Date.class.isAssignableFrom(getType())) {
+        if (input.trim().length() == 0 || isUnMaskableTypes(getType(), this.maskType)) {
+            // Do nothing
             return input;
-        } else if (isNumberFormat(getType())) {
+        } else if (isNumberFormat(getType())) { // Remove special characters
             DecimalFormatSymbols formatSymbols = new DecimalFormatSymbols(getLocale());
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < input.length(); i++) {
@@ -101,7 +102,7 @@ public class MeioMaskField<T> extends TextField<T> {
                 }
             }
             return builder.toString();
-        } else {
+        } else { // Unmask values
             try {
                 LOGGER.debug("Value to Converter {}", input);
                 return (String) maskFormatter.stringToValue(input);
@@ -138,5 +139,9 @@ public class MeioMaskField<T> extends TextField<T> {
 
     protected boolean isNumberFormat(Class<?> type) {
         return (Number.class.isAssignableFrom(type) && this.maskType.getMask() == null);
+    }
+    
+    private boolean isUnMaskableTypes(Class<?> type, MaskType mask) {
+        return Date.class.isAssignableFrom(type) || mask == MaskType.RegexpEmail || mask == MaskType.RegexpIp;
     }
 }
