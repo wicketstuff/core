@@ -4,6 +4,8 @@ import org.apache.wicket.Application;
 import org.apache.wicket.request.resource.AbstractResource;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wicketstuff.jslibraries.JSLib;
 
 /**
@@ -12,6 +14,9 @@ import org.wicketstuff.jslibraries.JSLib;
  * @deprecated
  */
 public final class PrototypeResourceReference extends ResourceReference {
+
+	private static final Logger log = LoggerFactory
+			.getLogger(PrototypeResourceReference.class);
 
 	/**
 	 * Singleton instance of this reference.
@@ -41,6 +46,7 @@ public final class PrototypeResourceReference extends ResourceReference {
 	 */
 	public static void install(final Application application,
 			final AbstractResource resource) {
-		// does nothing
+		log
+				.warn("wicketstuff-prototype is deprecated: Change your dependency to wicketstuff-jslibraries if you want to provide your own prototype.js - see JSLib#setOverrideProviders()");
 	}
 }
