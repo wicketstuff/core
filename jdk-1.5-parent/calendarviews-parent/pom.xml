@@ -69,6 +69,7 @@
 				<!-- USAGE: mvn license:check OR mvn license:format -->
 				<groupId>com.mycila.maven-license-plugin</groupId>
 				<artifactId>maven-license-plugin</artifactId>
+				<version>1.9.0</version>
 				<configuration>
 					<header>${header.location}</header>
 					<aggregate>true</aggregate>

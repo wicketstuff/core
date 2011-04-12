@@ -19,6 +19,7 @@
 	</description>
 
 	<modules>
+		<module>calendarviews-parent</module>
 		<module>client-and-server-validation</module>
 		<module>console-parent</module>
 		<module>datatable-autocomplete-parent</module>
@@ -32,6 +33,7 @@
 		<module>input-events-parent</module>
 		<module>jasperreports-parent</module>
 		<module>jquery-parent</module>
+		<module>jslibraries</module>
 		<module>jsr303-parent</module>
 		<module>maven-support</module>
 		<module>mbeanview-parent</module>
@@ -42,6 +44,7 @@
 		<module>phonebook</module>
 		<module>plugin</module>
 		<module>progressbar-parent</module>
+		<module>prototype</module>
 		<module>push-parent-jdk-1.5</module>
 		<module>scala-extensions-parent</module>
 		<module>shiro-security</module>
@@ -51,9 +54,6 @@
 		<module>wicketstuff-logback-parent</module>
 		<module>wicketstuff-springreference-parent</module>
 		<module>yav-parent</module>
-		<module>jslibraries</module>
-		<module>prototype</module>
-		<module>calendarviews-parent</module>
 
 		<!-- Modules below are commented until they can compile with wicket 1.5-SNAPSHOT -->
 
