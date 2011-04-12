@@ -21,11 +21,10 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 
 /**
  * <p>
- * A {@link ClassicConverter} implementation that can produce web information
- * based on a {@link HttpServletRequest}. This class is abstract subclasses must
- * implement {@link #getRequest()}. If no request is available it produces an
- * empty string. This class does not depend on wicket so in theory subclasses
- * can be used in non-wicket web applications too.
+ * A {@link ClassicConverter} implementation that can produce web information based on a
+ * {@link HttpServletRequest}. This class is abstract subclasses must implement
+ * {@link #getRequest()}. If no request is available it produces an empty string. This class does
+ * not depend on wicket so in theory subclasses can be used in non-wicket web applications too.
  * </p>
  * <p>
  * Message format:
@@ -34,16 +33,17 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
  * 
  * @author akiraly
  */
-public abstract class AbstractWebFormattingConverter extends ClassicConverter {
+public abstract class AbstractWebFormattingConverter extends ClassicConverter
+{
 	/**
-	 * Used as request attribute key to cache web information String for a
-	 * request.
+	 * Used as request attribute key to cache web information String for a request.
 	 */
-	public static final String RA_WEB_INFO = AbstractWebFormattingConverter.class
-			.getName() + ".RA_WEB_INFO";
+	public static final String RA_WEB_INFO = AbstractWebFormattingConverter.class.getName() +
+		".RA_WEB_INFO";
 
 	@Override
-	public String convert(ILoggingEvent event) {
+	public String convert(ILoggingEvent event)
+	{
 		String webString = getWebString();
 		return webString == null ? "" : webString;
 	}
@@ -51,7 +51,8 @@ public abstract class AbstractWebFormattingConverter extends ClassicConverter {
 	/**
 	 * @return created web string or null if no request was available
 	 */
-	protected String getWebString() {
+	protected String getWebString()
+	{
 		HttpServletRequest request = getRequest();
 
 		if (request == null)
@@ -63,14 +64,11 @@ public abstract class AbstractWebFormattingConverter extends ClassicConverter {
 
 		HttpSession session = request.getSession(false);
 
-		String webString = request.getMethod() + " " + request.getRequestURL()
-				+ "?" + request.getQueryString() + " "
-				+ (session != null ? session.getId() : null) + " "
-				+ request.getRemoteUser() + " " + request.getRemoteAddr() + ":"
-				+ request.getRemotePort() + " " + request.getLocalAddr() + ":"
-				+ request.getLocalPort() + " "
-				+ request.getHeader("X-Forwarded-For") + " "
-				+ request.getHeader("User-Agent");
+		String webString = request.getMethod() + " " + request.getRequestURL() + "?" +
+			request.getQueryString() + " " + (session != null ? session.getId() : null) + " " +
+			request.getRemoteUser() + " " + request.getRemoteAddr() + ":" +
+			request.getRemotePort() + " " + request.getLocalAddr() + ":" + request.getLocalPort() +
+			" " + request.getHeader("X-Forwarded-For") + " " + request.getHeader("User-Agent");
 
 		request.setAttribute(RA_WEB_INFO, webString);
 

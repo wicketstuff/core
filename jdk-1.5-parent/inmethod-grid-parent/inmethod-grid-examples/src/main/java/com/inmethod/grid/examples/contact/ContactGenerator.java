@@ -91,9 +91,15 @@ public class ContactGenerator
 
 	private String generatePhoneNumber()
 	{
-		return new StringBuffer().append(rint(2, 9)).append(rint(0, 9)).append(rint(0, 9)).append(
-				"-555-").append(rint(1, 9)).append(rint(0, 9)).append(rint(0, 9))
-				.append(rint(0, 9)).toString();
+		return new StringBuffer().append(rint(2, 9))
+			.append(rint(0, 9))
+			.append(rint(0, 9))
+			.append("-555-")
+			.append(rint(1, 9))
+			.append(rint(0, 9))
+			.append(rint(0, 9))
+			.append(rint(0, 9))
+			.toString();
 	}
 
 	private int rint(int min, int max)

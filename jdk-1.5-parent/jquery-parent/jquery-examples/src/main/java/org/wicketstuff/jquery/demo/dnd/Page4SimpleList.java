@@ -31,98 +31,127 @@ import org.wicketstuff.jquery.demo.PageSupport;
 import org.wicketstuff.jquery.dnd.DnDSortableHandler;
 
 @SuppressWarnings("serial")
-public class Page4SimpleList extends PageSupport {
-    // Data (for demo purpose)
-    protected static List<MyItem> dataList_ = null;
+public class Page4SimpleList extends PageSupport
+{
+	// Data (for demo purpose)
+	protected static List<MyItem> dataList_ = null;
 
-    static {
-        try {
-            dataList_ = MyFactory.newMyItemList("simple", 4);
-        } catch (RuntimeException exc) {
-            throw exc;
-        } catch (Exception exc) {
-            throw new RuntimeException("wrap: " + exc.getMessage(), exc);
-        }
-    }
+	static
+	{
+		try
+		{
+			dataList_ = MyFactory.newMyItemList("simple", 4);
+		}
+		catch (RuntimeException exc)
+		{
+			throw exc;
+		}
+		catch (Exception exc)
+		{
+			throw new RuntimeException("wrap: " + exc.getMessage(), exc);
+		}
+	}
 
-    // Component
-    public Page4SimpleList() throws Exception {
-        // define the action on DnD
-        final DnDSortableHandler dnd = new DnDSortableHandler("dnd") {
-            @Override
-            public boolean onDnD(AjaxRequestTarget target, MarkupContainer srcContainer, int srcPos, MarkupContainer destContainer, int destPos) {
-                // apply modification on model
-                MyItem myItem = dataList_.remove(srcPos);
-                dataList_.add(destPos, myItem);
+	// Component
+	public Page4SimpleList() throws Exception
+	{
+		// define the action on DnD
+		final DnDSortableHandler dnd = new DnDSortableHandler("dnd")
+		{
+			@Override
+			public boolean onDnD(AjaxRequestTarget target, MarkupContainer srcContainer,
+				int srcPos, MarkupContainer destContainer, int destPos)
+			{
+				// apply modification on model
+				MyItem myItem = dataList_.remove(srcPos);
+				dataList_.add(destPos, myItem);
 
-                // update feedback message
-                String msg = String.format("move '%s' from %d to %d", myItem.label, srcPos, destPos);
-                FeedbackPanel feedback = (FeedbackPanel) Page4SimpleList.this.get("feedback");
-                feedback.info(msg);
-                if (target != null) {
-                    // target is null in testcase
-                    target.add(feedback);
-                }
-                // false = don't need to keep in sync component, markupId on serverside and client side
-                return false;
-            }
-        };
+				// update feedback message
+				String msg = String.format("move '%s' from %d to %d", myItem.label, srcPos, destPos);
+				FeedbackPanel feedback = (FeedbackPanel)Page4SimpleList.this.get("feedback");
+				feedback.info(msg);
+				if (target != null)
+				{
+					// target is null in testcase
+					target.add(feedback);
+				}
+				// false = don't need to keep in sync component, markupId on serverside and client
+// side
+				return false;
+			}
+		};
 
-        // add the DnD handler to the page
-        add(dnd);
-        add(new Link("start_dnd") {
-            @Override
-            protected CharSequence getOnClickScript(CharSequence url) {
-                return dnd.getJSFunctionName4Start() + "();";
-            }
+		// add the DnD handler to the page
+		add(dnd);
+		add(new Link("start_dnd")
+		{
+			@Override
+			protected CharSequence getOnClickScript(CharSequence url)
+			{
+				return dnd.getJSFunctionName4Start() + "();";
+			}
 
-            @Override
-            protected CharSequence getURL() {
-                return "#";
-            }
+			@Override
+			protected CharSequence getURL()
+			{
+				return "#";
+			}
 
-            @Override
-            public void onClick() {
-                throw new UnsupportedOperationException("NOT CALLABLE");
-            }
+			@Override
+			public void onClick()
+			{
+				throw new UnsupportedOperationException("NOT CALLABLE");
+			}
 
-        });
-        add(new Link("stop_dnd") {
-            @Override
-            protected CharSequence getOnClickScript(CharSequence url) {
-                return dnd.getJSFunctionName4Stop() + "();";
-            }
+		});
+		add(new Link("stop_dnd")
+		{
+			@Override
+			protected CharSequence getOnClickScript(CharSequence url)
+			{
+				return dnd.getJSFunctionName4Stop() + "();";
+			}
 
-            @Override
-            protected CharSequence getURL() {
-                return "#";
-            }
+			@Override
+			protected CharSequence getURL()
+			{
+				return "#";
+			}
 
-            @Override
-            public void onClick() {
-                throw new UnsupportedOperationException("NOT CALLABLE");
-            }
+			@Override
+			public void onClick()
+			{
+				throw new UnsupportedOperationException("NOT CALLABLE");
+			}
 
-        });
+		});
 
-        // create a container
-        WebMarkupContainer webList = new WebMarkupContainer("myItemList");
-        dnd.registerContainer(webList);
-        add(webList);
+		// create a container
+		WebMarkupContainer webList = new WebMarkupContainer("myItemList");
+		dnd.registerContainer(webList);
+		add(webList);
 
-        // create items (add as children of the container)
-        webList.add(new ListView<MyItem>("myItem", dataList_) {
-            @Override
-            protected void populateItem(ListItem<MyItem> listitem) {
-                try {
-                    listitem.add(new Label("myItemLabel", new PropertyModel(listitem.getModelObject(), "label")));
-                    dnd.registerItem(listitem);
-                } catch (RuntimeException exc) {
-                    throw exc;
-                } catch (Exception exc) {
-                    throw new RuntimeException("wrap: " + exc.getMessage(), exc);
-                }
-            }
-        });
-    }
+		// create items (add as children of the container)
+		webList.add(new ListView<MyItem>("myItem", dataList_)
+		{
+			@Override
+			protected void populateItem(ListItem<MyItem> listitem)
+			{
+				try
+				{
+					listitem.add(new Label("myItemLabel", new PropertyModel(
+						listitem.getModelObject(), "label")));
+					dnd.registerItem(listitem);
+				}
+				catch (RuntimeException exc)
+				{
+					throw exc;
+				}
+				catch (Exception exc)
+				{
+					throw new RuntimeException("wrap: " + exc.getMessage(), exc);
+				}
+			}
+		});
+	}
 }

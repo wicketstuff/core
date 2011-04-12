@@ -8,10 +8,12 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.html5.BasePage;
 
-public class NumberFieldDemo extends BasePage {
+public class NumberFieldDemo extends BasePage
+{
 	private static final long serialVersionUID = -1817876321582710022L;
 
-	public NumberFieldDemo(PageParameters parameters) {
+	public NumberFieldDemo(PageParameters parameters)
+	{
 		super(parameters);
 
 		FeedbackPanel feedback = new FeedbackPanel("feedback");
@@ -21,8 +23,8 @@ public class NumberFieldDemo extends BasePage {
 		add(form);
 
 		Model<Double> model = Model.of();
-		NumberTextField<Double> numberField = new NumberTextField<Double>(
-				"number", model, Double.class);
+		NumberTextField<Double> numberField = new NumberTextField<Double>("number", model,
+			Double.class);
 		numberField.setRequired(false);
 		form.add(numberField);
 		numberField.setMinimum(4.0d);

@@ -21,57 +21,67 @@ import java.io.Serializable;
 /**
  * 
  * @author Michael Würtinger (mwuertinger@users.sourceforge.net)
- *
+ * 
  */
-public class BarGraphType extends GraphType {
+public class BarGraphType extends GraphType
+{
 	/** Required by {@link Serializable} */
 	private static final long serialVersionUID = 1L;
 
-	public enum Align {LEFT, CENTER};
-	
+	public enum Align
+	{
+		LEFT, CENTER
+	};
+
 	private Double barWidth;
 	private Align align;
-	
-	public BarGraphType(Double lineWidth, Boolean fill, Color fillColor, Double barWidth, Align align) {
+
+	public BarGraphType(Double lineWidth, Boolean fill, Color fillColor, Double barWidth,
+		Align align)
+	{
 		super(lineWidth, fill, fillColor);
 		this.barWidth = barWidth;
 		this.align = align;
 	}
-	
+
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		StringBuffer str = new StringBuffer();
-		
+
 		str.append("bars: {");
-		
+
 		String superStr = super.toString();
-		
-		if(barWidth != null) {
+
+		if (barWidth != null)
+		{
 			str.append("barWidth: ");
 			str.append(barWidth);
-			if(align != null || superStr.length()>0)
+			if (align != null || superStr.length() > 0)
 				str.append(", ");
 		}
 
-		if(align != null) {
+		if (align != null)
+		{
 			str.append("align: ");
-			switch(align) {
-			case LEFT:
-				str.append("\"left\"");
-				break;
-			case CENTER:
-				str.append("\"center\"");
-				break;
+			switch (align)
+			{
+				case LEFT :
+					str.append("\"left\"");
+					break;
+				case CENTER :
+					str.append("\"center\"");
+					break;
 			}
-			
-			if(superStr.length()>0)
+
+			if (superStr.length() > 0)
 				str.append(", ");
 		}
-		
+
 		str.append(superStr);
-		
+
 		str.append("}");
-		
+
 		return str.toString();
 	}
 }

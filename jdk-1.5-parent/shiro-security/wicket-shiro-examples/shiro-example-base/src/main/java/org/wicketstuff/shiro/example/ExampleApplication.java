@@ -38,7 +38,7 @@ public abstract class ExampleApplication extends WebApplication
 	protected void init()
 	{
 		getMarkupSettings().setStripWicketTags(true);
-		
+
 		// Configure Shiro
 		AnnotationsShiroAuthorizationStrategy authz = new AnnotationsShiroAuthorizationStrategy();
 		getSecuritySettings().setAuthorizationStrategy(authz);
@@ -52,20 +52,20 @@ public abstract class ExampleApplication extends WebApplication
 		mountPage("auth", RequireAuthPage.class);
 	}
 
-	public abstract Component getExampleInfoPanel( String id );
+	public abstract Component getExampleInfoPanel(String id);
 
 	public abstract Component getAuthHeaderPanel(String id);
-  
+
 	@Override
 	public Class<? extends Page> getHomePage()
 	{
 		return IndexPage.class;
 	}
 
-//	@Override
-//	// You'll need to do this only if using Shiro enterprise/clustered Sessions:
-//	protected ISessionStore newSessionStore()
-//	{
-//		return new SecondLevelCacheSessionStore(this, new SessionPageStore(100));
-//	}
+// @Override
+// // You'll need to do this only if using Shiro enterprise/clustered Sessions:
+// protected ISessionStore newSessionStore()
+// {
+// return new SecondLevelCacheSessionStore(this, new SessionPageStore(100));
+// }
 }

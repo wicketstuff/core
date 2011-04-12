@@ -31,21 +31,18 @@ import wicket.contrib.phonebook.ContactDao;
 import wicket.contrib.phonebook.QueryParam;
 
 /**
- * note: it is important that the dao passed to the data provider be a proxy
- * from wicket-contrib-spring when used in non-testing environment. this is
- * because the dataprovider might get serialized for versioning or for
- * replication among the cluster and that would mean that the dao will also be
- * serialized. this is usually undesirable because the dao might have references
- * to other objects and thus might cause a lot more to be serialized then is
- * needed. wicket-contrib-spring provides proxies to fix just this, the proxy
- * only serializes information it needs to locate the dao when it is
- * deserialized instead of serializing the dao itself.
- *
+ * note: it is important that the dao passed to the data provider be a proxy from
+ * wicket-contrib-spring when used in non-testing environment. this is because the dataprovider
+ * might get serialized for versioning or for replication among the cluster and that would mean that
+ * the dao will also be serialized. this is usually undesirable because the dao might have
+ * references to other objects and thus might cause a lot more to be serialized then is needed.
+ * wicket-contrib-spring provides proxies to fix just this, the proxy only serializes information it
+ * needs to locate the dao when it is deserialized instead of serializing the dao itself.
+ * 
  * @author igor
  */
-public class ContactsDataProvider extends SortableDataProvider<Contact>
-		implements
-			IFilterStateLocator
+public class ContactsDataProvider extends SortableDataProvider<Contact> implements
+	IFilterStateLocator
 {
 
 	/** dao that will be used to retrieve the list of contacts */
@@ -81,7 +78,7 @@ public class ContactsDataProvider extends SortableDataProvider<Contact>
 
 	/**
 	 * Gets an iterator for the subset of contacts.
-	 *
+	 * 
 	 * @param first
 	 *            offset for the first row of data to retrieve
 	 * @param count
@@ -107,7 +104,7 @@ public class ContactsDataProvider extends SortableDataProvider<Contact>
 
 	/**
 	 * Gets total number of items in the collection.
-	 *
+	 * 
 	 * @return total item count
 	 */
 	public int size()
@@ -116,9 +113,9 @@ public class ContactsDataProvider extends SortableDataProvider<Contact>
 	}
 
 	/**
-	 * Converts the object in the collection to its model representation. A good
-	 * place to wrap the object in a detachable model.
-	 *
+	 * Converts the object in the collection to its model representation. A good place to wrap the
+	 * object in a detachable model.
+	 * 
 	 * @param object
 	 *            The object that needs to be wrapped
 	 * @return The model representation of the object

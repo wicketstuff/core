@@ -21,17 +21,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("serial")
-public class Options implements Serializable {
+public class Options implements Serializable
+{
 
 	protected Map<String, Object> options_ = new HashMap<String, Object>();
 
-	public Object get(String name) {
+	public Object get(String name)
+	{
 		return options_.get(name);
 	}
 
-	public Object get(String name, Object defaultValue) {
+	public Object get(String name, Object defaultValue)
+	{
 		Object back = options_.get(name);
-		if (back == null) {
+		if (back == null)
+		{
 			back = defaultValue;
 		}
 		return back;
@@ -39,29 +43,38 @@ public class Options implements Serializable {
 
 	/**
 	 * shortcut method, call set with overwrite = true.
-	 *
-	 * @param name  name of the option
-	 * @param value new value of the option (if null, then remove the option)
+	 * 
+	 * @param name
+	 *            name of the option
+	 * @param value
+	 *            new value of the option (if null, then remove the option)
 	 * @return this
 	 * @see #set(String,Object,boolean)
 	 */
-	public Options set(String name, Object value) {
+	public Options set(String name, Object value)
+	{
 		return set(name, value, true);
 	}
 
 	/**
 	 * set an option.
-	 *
-	 * @param name	  name of the option
-	 * @param value	 new value of the option (if null, then remove the option)
-	 * @param overwrite if false and the value is already set, then the option is unchanged
+	 * 
+	 * @param name
+	 *            name of the option
+	 * @param value
+	 *            new value of the option (if null, then remove the option)
+	 * @param overwrite
+	 *            if false and the value is already set, then the option is unchanged
 	 * @return this
 	 */
-	public Options set(String name, Object value, boolean overwrite) {
-		if (!overwrite && options_.containsKey(name)) {
+	public Options set(String name, Object value, boolean overwrite)
+	{
+		if (!overwrite && options_.containsKey(name))
+		{
 			return this;
 		}
-		if ((value == null) && options_.containsKey(name)) {
+		if ((value == null) && options_.containsKey(name))
+		{
 			options_.remove(name);
 		}
 		options_.put(name, value);
@@ -69,38 +82,45 @@ public class Options implements Serializable {
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return toString(false).toString();
 	}
 
-	public CharSequence toString(boolean asFragment) {
-		if (options_.isEmpty()) {
+	public CharSequence toString(boolean asFragment)
+	{
+		if (options_.isEmpty())
+		{
 			return "";
 		}
 		StringBuilder str = new StringBuilder();
-		if (!asFragment) {
+		if (!asFragment)
+		{
 			str.append("{\n");
 		}
-		for (Map.Entry<String, Object> entry : options_.entrySet()) {
-			str.append("\t'")
-					.append(escape(entry.getKey()))
-					.append("':");
+		for (Map.Entry<String, Object> entry : options_.entrySet())
+		{
+			str.append("\t'").append(escape(entry.getKey())).append("':");
 
 			// Don't surround function-strings in quotes
 			Object val = entry.getValue();
-			if (val instanceof FunctionString) {
+			if (val instanceof FunctionString)
+			{
 				str.append(val.toString());
-			} 
-			else if( (val instanceof Boolean) || (val instanceof Number) ) {
-        str.append(val.toString());
-      } 
-			else {
+			}
+			else if ((val instanceof Boolean) || (val instanceof Number))
+			{
+				str.append(val.toString());
+			}
+			else
+			{
 				str.append("'" + escape(val.toString()) + "'");
 			}
 
 			str.append(",\n");
 		}
-		if (!asFragment) {
+		if (!asFragment)
+		{
 			str.setLength(str.length() - 2);
 			str.append("\n}\n");
 		}
@@ -109,14 +129,18 @@ public class Options implements Serializable {
 
 	/**
 	 * Escapes any occurrence of '
+	 * 
 	 * @param input
 	 * @return escaped input
 	 */
-	private String escape(final String input) {
+	private String escape(final String input)
+	{
 		final StringBuilder output = new StringBuilder();
 
-		for (final char ch : input.toCharArray()) {
-			if (ch == '\'') {
+		for (final char ch : input.toCharArray())
+		{
+			if (ch == '\'')
+			{
 				output.append('\\');
 			}
 			output.append(ch);

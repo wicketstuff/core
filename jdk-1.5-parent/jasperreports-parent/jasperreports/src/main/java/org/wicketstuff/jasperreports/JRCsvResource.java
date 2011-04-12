@@ -34,8 +34,7 @@ import org.wicketstuff.jasperreports.handlers.CsvResourceHandler;
 public final class JRCsvResource extends JRConcreteResource<CsvResourceHandler>
 {
 	/**
-	 * Construct without a report. You must provide a report before you can use
-	 * this resource.
+	 * Construct without a report. You must provide a report before you can use this resource.
 	 */
 	public JRCsvResource()
 	{

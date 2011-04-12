@@ -20,16 +20,18 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
-public class PageSupport extends WebPage {
-	public PageSupport() {
-		add(new BookmarkablePageLink<Void>("simpleProgress",
-				SimpleProgressExamplePage.class));
+public class PageSupport extends WebPage
+{
+	public PageSupport()
+	{
+		add(new BookmarkablePageLink<Void>("simpleProgress", SimpleProgressExamplePage.class));
 		add(new BookmarkablePageLink<Void>("taskServiceProgress",
-				TaskServiceProgressExamplePage.class));
+			TaskServiceProgressExamplePage.class));
 		add(new FeedbackPanel("feedback"));
 	}
 
-	protected ExampleApplication getExampleApplication() {
-		return (ExampleApplication) getApplication();
+	protected ExampleApplication getExampleApplication()
+	{
+		return (ExampleApplication)getApplication();
 	}
 }

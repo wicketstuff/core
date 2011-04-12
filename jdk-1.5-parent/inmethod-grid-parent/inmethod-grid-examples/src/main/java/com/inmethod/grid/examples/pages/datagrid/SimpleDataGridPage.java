@@ -53,7 +53,7 @@ public class SimpleDataGridPage extends BaseExamplePage
 				try
 				{
 					IRequestHandler handler = new TableComponentAsXlsHandler(
-							grid.get("form:bodyContainer:body"), "example.xls");
+						grid.get("form:bodyContainer:body"), "example.xls");
 					RequestCycle.get().scheduleRequestHandlerAfterCurrent(handler);
 				}
 				catch (Exception e)

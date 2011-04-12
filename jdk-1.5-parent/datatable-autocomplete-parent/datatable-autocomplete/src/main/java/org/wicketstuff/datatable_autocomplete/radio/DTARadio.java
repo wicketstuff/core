@@ -26,20 +26,22 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author mocleiri
- *
+ * 
  */
-public class DTARadio<T> extends Radio<T> {
+public class DTARadio<T> extends Radio<T>
+{
 
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= -7457090902151030992L;
-	private static final Logger	log	= LoggerFactory.getLogger(DTARadio.class);
+	private static final long serialVersionUID = -7457090902151030992L;
+	private static final Logger log = LoggerFactory.getLogger(DTARadio.class);
 
 	/**
 	 * @param id
 	 */
-	public DTARadio(String id) {
+	public DTARadio(String id)
+	{
 
 		super(id);
 	}
@@ -48,52 +50,59 @@ public class DTARadio<T> extends Radio<T> {
 	 * @param id
 	 * @param model
 	 */
-	public DTARadio(String id, IModel<T> model) {
+	public DTARadio(String id, IModel<T> model)
+	{
 
 		super(id, model);
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see org.apache.wicket.markup.html.form.Radio#onComponentTag(org.apache.wicket.markup.ComponentTag)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.apache.wicket.markup.html.form.Radio#onComponentTag(org.apache.wicket.markup.ComponentTag
+	 * )
 	 */
 	@Override
-	protected void onComponentTag(ComponentTag tag) {
+	protected void onComponentTag(ComponentTag tag)
+	{
 
-		if (tag.isOpenClose()) {
-			
+		if (tag.isOpenClose())
+		{
+
 			tag.setHasNoCloseTag(true);
-			
+
 			tag.setType(XmlTag.TagType.OPEN);
-			
+
 		}
-		
+
 		tag.setName("input");
 		tag.getAttributes().put("type", "radio");
-		
-	
-		
+
+
 		// Default handling for component tag
 		super.onComponentTag(tag);
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.apache.wicket.MarkupContainer#onComponentTagBody(org.apache.wicket.markup.MarkupStream, org.apache.wicket.markup.ComponentTag)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.apache.wicket.MarkupContainer#onComponentTagBody(org.apache.wicket.markup.MarkupStream,
+	 * org.apache.wicket.markup.ComponentTag)
 	 */
 	@Override
-	public void onComponentTagBody(MarkupStream markupStream,
-			ComponentTag openTag) {
+	public void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag)
+	{
 
 		openTag.setName("input");
-		
-		
-	
-		
+
+
 		markupStream.next();
-		
+
 	}
-	
-	
+
 
 }

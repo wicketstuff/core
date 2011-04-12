@@ -34,8 +34,7 @@ import org.wicketstuff.jasperreports.handlers.TextResourceHandler;
 public final class JRTextResource extends JRConcreteResource<TextResourceHandler>
 {
 	/**
-	 * Construct without a report. You must provide a report before you can use
-	 * this resource.
+	 * Construct without a report. You must provide a report before you can use this resource.
 	 */
 	public JRTextResource()
 	{

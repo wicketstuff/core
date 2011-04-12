@@ -24,12 +24,14 @@ import org.wicketstuff.console.engine.Lang;
  * 
  * @author cretzel
  */
-public class ClojureScriptEngineWindow extends ScriptEngineWindow {
+public class ClojureScriptEngineWindow extends ScriptEngineWindow
+{
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public ClojureScriptEngineWindow(final String id) {
-        super(id, Lang.CLOJURE, null);
-    }
+	public ClojureScriptEngineWindow(final String id)
+	{
+		super(id, Lang.CLOJURE, null);
+	}
 
 }

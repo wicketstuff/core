@@ -26,7 +26,8 @@ import net.sf.jasperreports.engine.export.JRTextExporterParameter;
 /**
  * @author cdeal
  */
-public class TextResourceHandler implements IJRResourceHandler, Serializable {
+public class TextResourceHandler implements IJRResourceHandler, Serializable
+{
 	/**
 	 * an integer representing the page width in characters.
 	 */
@@ -55,7 +56,7 @@ public class TextResourceHandler implements IJRResourceHandler, Serializable {
 	 */
 	public void setPageHeight(int height)
 	{
-		this.pageHeight = height;
+		pageHeight = height;
 	}
 
 	/**
@@ -76,7 +77,7 @@ public class TextResourceHandler implements IJRResourceHandler, Serializable {
 	 */
 	public void setPageWidth(int width)
 	{
-		this.pageWidth = width;
+		pageWidth = width;
 	}
 
 	/**
@@ -86,8 +87,7 @@ public class TextResourceHandler implements IJRResourceHandler, Serializable {
 	{
 		JRTextExporter exporter = new JRTextExporter();
 		exporter.setParameter(JRTextExporterParameter.PAGE_WIDTH, new Integer(pageWidth));
-		exporter.setParameter(JRTextExporterParameter.PAGE_HEIGHT,
-				new Integer(pageHeight));
+		exporter.setParameter(JRTextExporterParameter.PAGE_HEIGHT, new Integer(pageHeight));
 		return exporter;
 	}
 

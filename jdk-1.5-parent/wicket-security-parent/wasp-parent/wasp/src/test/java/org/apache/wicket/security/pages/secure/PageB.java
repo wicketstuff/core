@@ -23,7 +23,6 @@ import org.apache.wicket.security.checks.ComponentSecurityCheck;
 import org.apache.wicket.security.components.SecureComponentHelper;
 import org.apache.wicket.security.pages.SecureTestPage;
 
-
 /**
  * @author marrink
  * 
@@ -42,10 +41,10 @@ public class PageB extends SecureTestPage
 	public PageB()
 	{
 		add(new Label("welcome", "Welcome Only logged in users can see this page"));
-		TextField<String> textField = new TextField<String>("secure", new Model<String>(
-				"secure textfield"));
+		TextField<String> textField =
+			new TextField<String>("secure", new Model<String>("secure textfield"));
 		add(SecureComponentHelper
-				.setSecurityCheck(textField, new ComponentSecurityCheck(textField)));
+			.setSecurityCheck(textField, new ComponentSecurityCheck(textField)));
 	}
 
 }

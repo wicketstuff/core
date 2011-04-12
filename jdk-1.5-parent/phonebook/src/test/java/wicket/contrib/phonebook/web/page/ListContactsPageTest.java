@@ -31,11 +31,13 @@ import wicket.contrib.phonebook.web.PhonebookFixture;
 /**
  * @author Kare Nuorteva
  */
-public class ListContactsPageTest extends TestCase {
+public class ListContactsPageTest extends TestCase
+{
 	private WicketTester wicket;
 
 	@Override
-	protected void setUp() throws Exception {
+	protected void setUp() throws Exception
+	{
 		PhonebookApplicationForTesting app = new PhonebookApplicationForTesting();
 		PhonebookFixture fixture = new PhonebookFixture();
 		fixture.addStubs(app.context);
@@ -44,30 +46,32 @@ public class ListContactsPageTest extends TestCase {
 		wicket.assertRenderedPage(ListContactsPage.class);
 	}
 
-	public void testContainsLinkToCreateContacs() throws Exception {
+	public void testContainsLinkToCreateContacs() throws Exception
+	{
 		wicket.clickLink("createLink");
 		wicket.assertRenderedPage(EditContactPage.class);
 	}
 
-	public void testContainsFilterForm() throws Exception {
+	public void testContainsFilterForm() throws Exception
+	{
 		wicket.assertComponent("filter-form", FilterForm.class);
 	}
 
-	public void testContainsUserList() throws Exception {
+	public void testContainsUserList() throws Exception
+	{
 		wicket.assertComponent("filter-form:users", DefaultDataTable.class);
 	}
 
-	public void testDeleteLinkOpensConfirmPage() throws Exception {
-		wicket.assertComponent("filter-form:users:body:rows:1:cells:2:cell:deleteLink",
-				Link.class);
+	public void testDeleteLinkOpensConfirmPage() throws Exception
+	{
+		wicket.assertComponent("filter-form:users:body:rows:1:cells:2:cell:deleteLink", Link.class);
 		wicket.clickLink("filter-form:users:body:rows:1:cells:2:cell:deleteLink");
 		wicket.assertRenderedPage(DeleteContactPage.class);
 	}
 
-	public void testEditLinkOpensContactEditor() throws Exception {
-		wicket
-				.assertComponent("filter-form:users:body:rows:1:cells:2:cell:editLink",
-						Link.class);
+	public void testEditLinkOpensContactEditor() throws Exception
+	{
+		wicket.assertComponent("filter-form:users:body:rows:1:cells:2:cell:editLink", Link.class);
 		wicket.clickLink("filter-form:users:body:rows:1:cells:2:cell:editLink");
 		wicket.assertRenderedPage(EditContactPage.class);
 	}

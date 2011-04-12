@@ -11,7 +11,8 @@ import org.apache.wicket.request.resource.ResourceReference;
  * 
  * @author Matej Knopp
  */
-public class PackageIcon implements Icon {
+public class PackageIcon implements Icon
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -23,7 +24,8 @@ public class PackageIcon implements Icon {
 	 * @param reference
 	 *            resource reference that can be used to get the icon
 	 */
-	public PackageIcon(ResourceReference reference) {
+	public PackageIcon(ResourceReference reference)
+	{
 		this.reference = reference;
 	}
 
@@ -35,28 +37,32 @@ public class PackageIcon implements Icon {
 	 * @param name
 	 *            Icon name relative to the <code>scope</code> class
 	 */
-	public PackageIcon(Class<?> scope, String name) {
-		this.reference = new PackageResourceReference(scope, name);
+	public PackageIcon(Class<?> scope, String name)
+	{
+		reference = new PackageResourceReference(scope, name);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public int getHeight() {
+	public int getHeight()
+	{
 		return -1;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public int getWidth() {
+	public int getWidth()
+	{
 		return -1;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public CharSequence getUrl() {
+	public CharSequence getUrl()
+	{
 		return RequestCycle.get().urlFor(new ResourceReferenceRequestHandler(reference));
 	}
 

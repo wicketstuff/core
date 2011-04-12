@@ -7,10 +7,12 @@ import org.apache.wicket.IClusterable;
 /**
  * 
  * @author mocleiri
- *
- * With the introduction of the TernarySearchTrie this interface was extracted to provide a common base between them.
+ * 
+ *         With the introduction of the TernarySearchTrie this interface was extracted to provide a
+ *         common base between them.
  */
-public interface Trie<C> extends IClusterable {
+public interface Trie<C> extends IClusterable
+{
 
 	/**
 	 * @param value
@@ -26,10 +28,10 @@ public interface Trie<C> extends IClusterable {
 	 * @return reachable list of strings.
 	 */
 	public abstract List<C> getWordList(String prefix);
-	
-	public abstract List<C>getWordList (String prefix, ITrieFilter<C>filter);
-	
-	public abstract List<C>getWordList (String prefix, ITrieFilter<C>filter, int limit);
+
+	public abstract List<C> getWordList(String prefix, ITrieFilter<C> filter);
+
+	public abstract List<C> getWordList(String prefix, ITrieFilter<C> filter, int limit);
 
 	public abstract List<C> getWordList(String prefix, int limit);
 
@@ -42,6 +44,6 @@ public interface Trie<C> extends IClusterable {
 	 * Invoked after the index process has completed.
 	 */
 	public abstract void postIndexing();
-	
+
 
 }

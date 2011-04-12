@@ -22,7 +22,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 
-public abstract class WicketThemeBasePage extends WebPage 
+public abstract class WicketThemeBasePage extends WebPage
 {
 	/**
 	 * 
@@ -31,11 +31,12 @@ public abstract class WicketThemeBasePage extends WebPage
 
 	public WicketThemeBasePage()
 	{
-		
-		
-		add(new Label("title",getTitleModel()));
-		
-		add(new Behavior(){
+
+
+		add(new Label("title", getTitleModel()));
+
+		add(new Behavior()
+		{
 
 			/**
 			 * 
@@ -43,16 +44,18 @@ public abstract class WicketThemeBasePage extends WebPage
 			private static final long serialVersionUID = 3548799040289197907L;
 
 			@Override
-			public void renderHead(Component component, IHeaderResponse response) {
+			public void renderHead(Component component, IHeaderResponse response)
+			{
 				super.renderHead(component, response);
-				
+
 				getThemeFactory().renderHead(component, response);
-				
-			}});
+
+			}
+		});
 	}
-	
-	
-	protected abstract IModel<String> getTitleModel(); 
-	
+
+
+	protected abstract IModel<String> getTitleModel();
+
 	protected abstract IThemeFactory getThemeFactory();
 }

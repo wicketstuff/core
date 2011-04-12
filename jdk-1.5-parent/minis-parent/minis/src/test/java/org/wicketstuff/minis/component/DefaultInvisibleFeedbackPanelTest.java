@@ -7,21 +7,23 @@ import org.junit.Test;
 
 /**
  * Tests for {@link DefaultInvisibleFeedbackPanel}.
- *
+ * 
  * @author akiraly
  */
-public class DefaultInvisibleFeedbackPanelTest {
+public class DefaultInvisibleFeedbackPanelTest
+{
 	private WicketTester tester = new WicketTester();
 
 	@After
-	public void after() {
+	public void after()
+	{
 		tester.destroy();
 	}
 
 	@Test
-	public void testVisibility() {
-		FeedbackPanel feedbackPanel = new DefaultInvisibleFeedbackPanel(
-				"foo");
+	public void testVisibility()
+	{
+		FeedbackPanel feedbackPanel = new DefaultInvisibleFeedbackPanel("foo");
 
 		tester.startComponent(feedbackPanel, null);
 		tester.assertInvisible("");

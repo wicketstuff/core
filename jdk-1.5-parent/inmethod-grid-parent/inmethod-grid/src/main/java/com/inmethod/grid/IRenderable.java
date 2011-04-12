@@ -9,7 +9,8 @@ import org.apache.wicket.request.Response;
  * @see IGridColumn#isLightWeight(IModel)
  * @author Matej Knopp
  */
-public interface IRenderable {
+public interface IRenderable
+{
 
 	/**
 	 * Renders the output for given cell model. The implementation must take care of proper escaping

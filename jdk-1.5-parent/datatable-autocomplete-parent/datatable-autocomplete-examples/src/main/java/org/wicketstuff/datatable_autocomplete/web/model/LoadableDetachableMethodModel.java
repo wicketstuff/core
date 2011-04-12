@@ -22,11 +22,11 @@ import java.util.LinkedList;
 import org.apache.wicket.model.IModel;
 
 /**
- * @author mocleirie so this model is used to load it back from
- *         the class loader as needed.
+ * @author mocleirie so this model is used to load it back from the class loader as needed.
  * 
  */
-public class LoadableDetachableMethodModel implements IModel<Method> {
+public class LoadableDetachableMethodModel implements IModel<Method>
+{
 
 	/**
 	 * 
@@ -44,86 +44,105 @@ public class LoadableDetachableMethodModel implements IModel<Method> {
 	/**
 	 * @param object
 	 */
-	public LoadableDetachableMethodModel(Method object) {
+	public LoadableDetachableMethodModel(Method object)
+	{
 
 		setObject(object);
-		
+
 	}
 
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.wicket.model.IModel#getObject()
 	 */
-	public Method getObject() {
-		
+	public Method getObject()
+	{
+
 		if (attached)
 			return transientMethod;
-		
-		else {
+
+		else
+		{
 			transientMethod = load();
 			attached = true;
-			
+
 			return transientMethod;
 		}
 	}
 
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.wicket.model.IModel#setObject(java.lang.Object)
 	 */
-	public void setObject(Method object) {
-		
-		this.attached = true;
-		this.transientMethod = object;
-		
-		if (object != null) {
-			this.className = object.getDeclaringClass().getName();
-			this.methodName = object.getName();
+	public void setObject(Method object)
+	{
+
+		attached = true;
+		transientMethod = object;
+
+		if (object != null)
+		{
+			className = object.getDeclaringClass().getName();
+			methodName = object.getName();
 
 
 		}
-		
+
 	}
 
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.wicket.model.IDetachable#detach()
 	 */
-	public void detach() {
-		
-		this.attached = false;
-		this.transientMethod = null;
-		
+	public void detach()
+	{
+
+		attached = false;
+		transientMethod = null;
+
 	}
 
 
-	private Method load() {
+	private Method load()
+	{
 
-		if (this.className == null)
+		if (className == null)
 			return null;
 
 		Method m = null;
 
-		try {
+		try
+		{
 
-			Class<?> clazz = ClassLoader.getSystemClassLoader().loadClass(
-					this.className);
+			Class<?> clazz = ClassLoader.getSystemClassLoader().loadClass(className);
 
 
-			for (Method method : clazz.getDeclaredMethods()) {
-				
-				if (method.getName().trim().equals(this.methodName.trim())) {
+			for (Method method : clazz.getDeclaredMethods())
+			{
+
+				if (method.getName().trim().equals(methodName.trim()))
+				{
 					m = method;
 					break;
 				}
 			}
 
 
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e)
+		{
 			e.printStackTrace();
 			// fall through
 
-		} catch (SecurityException e) {
+		}
+		catch (SecurityException e)
+		{
 			e.printStackTrace();
 			// fall through
 		}

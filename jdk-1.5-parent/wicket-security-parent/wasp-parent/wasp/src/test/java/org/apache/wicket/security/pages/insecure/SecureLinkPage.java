@@ -21,7 +21,6 @@ import org.apache.wicket.security.components.markup.html.links.SecurePageLink;
 import org.apache.wicket.security.pages.BasePage;
 import org.apache.wicket.security.pages.secure.HomePage;
 
-
 /**
  * @author marrink
  * 

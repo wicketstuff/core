@@ -33,7 +33,7 @@ public class RefreshPointPage extends WicketExamplePage
 		add(map);
 
 		GOverlay overlay = createOverlay("Amsterdam", new GLatLng(52.37649, 4.888573), "image.gif",
-				"shadow.png");
+			"shadow.png");
 
 		map.addOverlay(overlay);
 
@@ -50,18 +50,18 @@ public class RefreshPointPage extends WicketExamplePage
 				if (i % 3 == 0)
 				{
 					overlay = createOverlay("Amsterdam", new GLatLng(52.37649, 4.888573),
-							"image.gif", "shadow.png");
+						"image.gif", "shadow.png");
 					i = 0;
 				}
 				else if (i % 3 == 1)
 				{
 					overlay = createOverlay("Amsterdam", new GLatLng(52.37649, 4.888573),
-							"image2.gif", "shadow2.png");
+						"image2.gif", "shadow2.png");
 				}
 				else
 				{
 					overlay = createOverlay("Toulouse", new GLatLng(43.604363, 1.442951),
-							"image2.gif", "shadow2.png");
+						"image2.gif", "shadow2.png");
 				}
 				i++;
 				map.setOverlays(Collections.singletonList(overlay));
@@ -71,11 +71,13 @@ public class RefreshPointPage extends WicketExamplePage
 
 	private GOverlay createOverlay(String title, GLatLng latLng, String image, String shadow)
 	{
-		GIcon icon = new GIcon(urlFor(new PackageResourceReference(RefreshPointPage.class, image), null)
-				.toString(), urlFor(new PackageResourceReference(RefreshPointPage.class, shadow), null)
-				.toString()).iconSize(new GSize(64, 64)).shadowSize(new GSize(64, 64)).iconAnchor(
-				new GPoint(19, 40)).infoWindowAnchor(new GPoint(9, 2)).infoShadowAnchor(
-				new GPoint(18, 25));
+		GIcon icon = new GIcon(urlFor(new PackageResourceReference(RefreshPointPage.class, image),
+			null).toString(), urlFor(new PackageResourceReference(RefreshPointPage.class, shadow),
+			null).toString()).iconSize(new GSize(64, 64))
+			.shadowSize(new GSize(64, 64))
+			.iconAnchor(new GPoint(19, 40))
+			.infoWindowAnchor(new GPoint(9, 2))
+			.infoShadowAnchor(new GPoint(18, 25));
 		map.setCenter(latLng);
 		return new GMarker(latLng, new GMarkerOptions(title, icon));
 	}

@@ -24,9 +24,9 @@ import org.apache.wicket.markup.parser.XmlPullParser;
 import org.apache.wicket.markup.parser.XmlTag;
 
 /**
- * Function interface to access the component table data and set in the
- * {@link Cell}. A general purpose one is provided, but it can be customized by
- * setting {@link TableComponentAsXlsHandler#setCellExporter(CellExporter)}
+ * Function interface to access the component table data and set in the {@link Cell}. A general
+ * purpose one is provided, but it can be customized by setting
+ * {@link TableComponentAsXlsHandler#setCellExporter(CellExporter)}
  * 
  * @author Pedro Santos
  */
@@ -36,8 +36,7 @@ public interface CellExporter
 	 * @param tag
 	 *            <td>HTML tag
 	 * @param parser
-	 *            the {@link XmlPullParser} in use, can be useful to parse
-	 *            nested elements
+	 *            the {@link XmlPullParser} in use, can be useful to parse nested elements
 	 * @param cell
 	 *            the target cell, where the value needs to be set
 	 * @param tableComponent
@@ -45,5 +44,5 @@ public interface CellExporter
 	 * @throws ParseException
 	 */
 	public void exportCell(XmlTag tag, XmlPullParser parser, Cell cell, Component tableComponent)
-			throws ParseException;
+		throws ParseException;
 }

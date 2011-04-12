@@ -25,7 +25,8 @@ import net.sf.jasperreports.engine.export.JRCsvExporter;
 /**
  * @author cdeal
  */
-public class CsvResourceHandler implements IJRResourceHandler, Serializable {
+public class CsvResourceHandler implements IJRResourceHandler, Serializable
+{
 	/**
 	 * @see org.wicketstuff.jasperreports.handlers.IJRResourceHandler#newExporter()
 	 */

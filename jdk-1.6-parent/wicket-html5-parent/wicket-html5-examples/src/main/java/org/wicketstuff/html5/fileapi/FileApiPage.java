@@ -10,13 +10,15 @@ import org.wicketstuff.html5.BasePage;
 
 /**
  * Example page for {@link FileFieldSizeCheckBehavior}.
- *
+ * 
  * @author akiraly
  */
-public class FileApiPage extends BasePage {
+public class FileApiPage extends BasePage
+{
 	private static final long serialVersionUID = 8675190555621516422L;
 
-	public FileApiPage() {
+	public FileApiPage()
+	{
 		final FeedbackPanel feedback = new FeedbackPanel("feedback");
 		feedback.setOutputMarkupPlaceholderTag(true);
 		add(feedback);
@@ -29,16 +31,19 @@ public class FileApiPage extends BasePage {
 
 		// add our FileApi based size check, errors are reported trough the
 		// feedback
-		uploadField.add(new FileFieldSizeCheckBehavior() {
+		uploadField.add(new FileFieldSizeCheckBehavior()
+		{
 			private static final long serialVersionUID = 7228537141239670625L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, FileList fileList) {
+			protected void onSubmit(AjaxRequestTarget target, FileList fileList)
+			{
 				target.add(feedback);
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget target, FileList fileList) {
+			protected void onError(AjaxRequestTarget target, FileList fileList)
+			{
 				target.add(feedback);
 			}
 		});
@@ -46,18 +51,21 @@ public class FileApiPage extends BasePage {
 		form.add(uploadField);
 
 		// lets make this an ajax upload form, just for fun
-		form.add(new AjaxButton("submit") {
+		form.add(new AjaxButton("submit")
+		{
 			private static final long serialVersionUID = 468703108441902441L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			{
 				info("Victory! " + uploadField.getFileUploads());
 
 				target.add(feedback);
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form) {
+			protected void onError(AjaxRequestTarget target, Form<?> form)
+			{
 				target.add(feedback);
 			}
 		});

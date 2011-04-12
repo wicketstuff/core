@@ -24,40 +24,49 @@ import org.slf4j.LoggerFactory;
 /**
  * @author mocleiri
  * 
- * Used for sortable columns in a DTATable.  clicking on the link will toggle between sort ascending and sort descending.
- *
+ *         Used for sortable columns in a DTATable. clicking on the link will toggle between sort
+ *         ascending and sort descending.
+ * 
  */
-public abstract class DTAComparator<E> implements Comparator<E>, IClusterable {
+public abstract class DTAComparator<E> implements Comparator<E>, IClusterable
+{
 
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= -4782414530696776582L;
+	private static final long serialVersionUID = -4782414530696776582L;
 
-	private static final org.slf4j.Logger	log	= LoggerFactory.getLogger(DTAComparator.class);
+	private static final org.slf4j.Logger log = LoggerFactory.getLogger(DTAComparator.class);
 
 	private boolean ascending = true;
+
 	/**
 	 * 
 	 */
-	public DTAComparator(boolean ascending) {
-		this.ascending  = ascending;
+	public DTAComparator(boolean ascending)
+	{
+		this.ascending = ascending;
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 	 */
-	public final int compare(E o1, E o2) {
+	public final int compare(E o1, E o2)
+	{
 
-		if (ascending) {
-			return compareAscending (o1, o2);
+		if (ascending)
+		{
+			return compareAscending(o1, o2);
 		}
-		else { 
+		else
+		{
 			// switch the results since we want the opposite
-			
-			int test =  compareAscending(o1, o2);
-			
+
+			int test = compareAscending(o1, o2);
+
 			if (test >= 1)
 				return -1;
 			else if (test <= -1)
@@ -67,7 +76,7 @@ public abstract class DTAComparator<E> implements Comparator<E>, IClusterable {
 		}
 	}
 
-	
+
 	/**
 	 * @param o1
 	 * @param o2
@@ -75,5 +84,5 @@ public abstract class DTAComparator<E> implements Comparator<E>, IClusterable {
 	 */
 	protected abstract int compareAscending(E o1, E o2);
 
-	
+
 }

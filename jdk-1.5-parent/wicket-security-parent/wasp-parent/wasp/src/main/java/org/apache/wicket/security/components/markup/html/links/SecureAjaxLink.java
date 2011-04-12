@@ -26,8 +26,8 @@ import org.apache.wicket.security.components.ISecureComponent;
 import org.apache.wicket.security.components.SecureComponentHelper;
 
 /**
- * AjaxLink with visibility / clickability based on user rights. Requires render
- * rights to be visible, and enable rights to be clickable.
+ * AjaxLink with visibility / clickability based on user rights. Requires render rights to
+ * be visible, and enable rights to be clickable.
  * 
  * @author Olger Warnier
  */

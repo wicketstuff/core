@@ -31,10 +31,11 @@ import org.wicketstuff.datatable_autocomplete.web.page.HomePage;
  * @author mocleiri
  */
 
-public class WicketApplication extends WebApplication {
+public class WicketApplication extends WebApplication
+{
 
 	/*
-	 * The number of methods to load into the Trie index. 
+	 * The number of methods to load into the Trie index.
 	 * 
 	 * try 12500 if you have enought memory (-Xmx512m should allow it)
 	 */
@@ -42,46 +43,53 @@ public class WicketApplication extends WebApplication {
 
 
 	private static Logger log = LoggerFactory.getLogger(WicketApplication.class);
-	
-	
+
+
 	private static PatriciaTrie<Method> trie;
 
 	/**
 	 * 
 	 */
-	public WicketApplication() {
+	public WicketApplication()
+	{
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
 	@Override
-	public Class<? extends Page> getHomePage() {
+	public Class<? extends Page> getHomePage()
+	{
 		return HomePage.class;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.wicket.protocol.http.WebApplication#init()
 	 */
 	@Override
-	protected void init() {
+	protected void init()
+	{
 		super.init();
-		
+
 		TrieBuilder builder = new TrieBuilder();
-		
+
 		builder.buildTrie(methodLimit);
 
 		WicketApplication.trie = builder.getTrie();
-		
-		
+
+
 	}
 
-	public static PatriciaTrie<Method> getTrie() {
-		
+	public static PatriciaTrie<Method> getTrie()
+	{
+
 		return trie;
 	}
-	
-	
+
 
 }

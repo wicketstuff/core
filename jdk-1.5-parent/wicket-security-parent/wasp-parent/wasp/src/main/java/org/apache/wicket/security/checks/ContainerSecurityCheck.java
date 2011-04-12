@@ -76,7 +76,7 @@ public class ContainerSecurityCheck extends ComponentSecurityCheck
 			boolean enableAuthenticationCheck)
 	{
 		super(component, checkSecureModelIfExists);
-		this.enableAuthentication = enableAuthenticationCheck;
+		enableAuthentication = enableAuthenticationCheck;
 	}
 
 	/**

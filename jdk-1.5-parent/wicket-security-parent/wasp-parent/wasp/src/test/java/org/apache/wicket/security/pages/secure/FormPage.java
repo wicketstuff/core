@@ -25,7 +25,6 @@ import org.apache.wicket.security.components.markup.html.form.SecureForm;
 import org.apache.wicket.security.pages.SecureTestPage;
 import org.apache.wicket.util.value.ValueMap;
 
-
 /**
  * Page with a secure form and regular components.
  * 
@@ -46,8 +45,8 @@ public class FormPage extends SecureTestPage
 	public FormPage()
 	{
 		ValueMap map = new ValueMap("text=hello,area=foobar");
-		Form<ValueMap> form = new SecureForm<ValueMap>("form", new CompoundPropertyModel<ValueMap>(
-				map));
+		Form<ValueMap> form =
+			new SecureForm<ValueMap>("form", new CompoundPropertyModel<ValueMap>(map));
 		add(form);
 		form.add(new TextField<String>("text"));
 		form.add(new TextArea<String>("area"));

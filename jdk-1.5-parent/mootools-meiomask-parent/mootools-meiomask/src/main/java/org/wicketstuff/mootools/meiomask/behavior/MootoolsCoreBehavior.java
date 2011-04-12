@@ -23,29 +23,33 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
 /**
- *
+ * 
  * @author inaiat
  */
-public class MootoolsCoreBehavior extends Behavior {
+public class MootoolsCoreBehavior extends Behavior
+{
 
-    // create a reference to the base mootools javascript file.
-    // we use JavascriptResourceReference so that the included file will have its comments stripped and gzipped.
-    private static final ResourceReference MOOTOOLS_JS = new JavaScriptResourceReference(MootoolsCoreBehavior.class,
-            "res/mootools-core-1.3-full-nocompat-yc.js");
+	// create a reference to the base mootools javascript file.
+	// we use JavascriptResourceReference so that the included file will have its comments stripped
+// and gzipped.
+	private static final ResourceReference MOOTOOLS_JS = new JavaScriptResourceReference(
+		MootoolsCoreBehavior.class, "res/mootools-core-1.3-full-nocompat-yc.js");
 
-    /** helper method that hooks into mootools ondomready event */
-    protected String executeOnWindowDomReady(String script) {
-        StringBuilder builder = new StringBuilder(script.length() + 61);
-        builder.append("<script>window.addEvent('domready', function(){\n");
-        builder.append(script);
-        builder.append("\n});</script>");
-        return builder.toString();
-    }
+	/** helper method that hooks into mootools ondomready event */
+	protected String executeOnWindowDomReady(String script)
+	{
+		StringBuilder builder = new StringBuilder(script.length() + 61);
+		builder.append("<script>window.addEvent('domready', function(){\n");
+		builder.append(script);
+		builder.append("\n});</script>");
+		return builder.toString();
+	}
 
-    @Override
-    public void renderHead(Component component, IHeaderResponse response) {
-        super.renderHead(component, response);
-        response.renderJavaScriptReference(MOOTOOLS_JS);
-    }
+	@Override
+	public void renderHead(Component component, IHeaderResponse response)
+	{
+		super.renderHead(component, response);
+		response.renderJavaScriptReference(MOOTOOLS_JS);
+	}
 
 }

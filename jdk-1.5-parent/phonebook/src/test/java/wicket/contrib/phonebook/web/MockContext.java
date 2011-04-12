@@ -23,8 +23,10 @@ import org.apache.wicket.spring.test.ApplicationContextMock;
 /**
  * @author Kare Nuorteva
  */
-public class MockContext extends ApplicationContextMock {
+public class MockContext extends ApplicationContextMock
+{
 
-	public MockContext() {
+	public MockContext()
+	{
 	}
 }

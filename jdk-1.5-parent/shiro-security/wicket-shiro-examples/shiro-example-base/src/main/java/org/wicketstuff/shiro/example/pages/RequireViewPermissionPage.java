@@ -19,10 +19,7 @@ package org.wicketstuff.shiro.example.pages;
 import org.wicketstuff.shiro.ShiroConstraint;
 import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
 
-@ShiroSecurityConstraint( 
-  constraint   = ShiroConstraint.HasPermission, 
-  value        = "view"
-)
+@ShiroSecurityConstraint(constraint = ShiroConstraint.HasPermission, value = "view")
 public class RequireViewPermissionPage extends BasePage
 {
 

@@ -7,7 +7,8 @@ import org.wicketstuff.openlayers.api.Control;
 /**
  * Homepage
  */
-public class SimpleMapWithControlsPage extends WebPage {
+public class SimpleMapWithControlsPage extends WebPage
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -19,7 +20,8 @@ public class SimpleMapWithControlsPage extends WebPage {
 	 * @param parameters
 	 *            Page parameters
 	 */
-	public SimpleMapWithControlsPage(final PageParameters parameters) {
+	public SimpleMapWithControlsPage(final PageParameters parameters)
+	{
 		OpenLayersMap openLayersMap = new OpenLayersMap("map", true);
 		add(openLayersMap);
 		openLayersMap.getControls().add(Control.LayerSwitcher);

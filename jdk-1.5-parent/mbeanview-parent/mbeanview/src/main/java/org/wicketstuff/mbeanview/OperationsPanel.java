@@ -55,7 +55,7 @@ public class OperationsPanel extends Panel
 	private ModalWindow modalOutput;
 
 	public OperationsPanel(String id, final ObjectName objectName,
-			MBeanOperationInfo[] beanOperationInfos, final MbeanServerLocator beanServerLocator)
+		MBeanOperationInfo[] beanOperationInfos, final MbeanServerLocator beanServerLocator)
 	{
 		super(id);
 		this.beanServerLocator = beanServerLocator;
@@ -89,7 +89,7 @@ public class OperationsPanel extends Panel
 				}
 				item.add(new Label("return", returnLbl));
 				final ParameterRepeater parameterRepeater = new ParameterRepeater("parameters",
-						info.getSignature());
+					info.getSignature());
 				item.add(parameterRepeater);
 				final FeedbackPanel feedback = new ComponentFeedbackPanel("feedback", item);
 				feedback.setOutputMarkupId(true);
@@ -133,7 +133,7 @@ public class OperationsPanel extends Panel
 			try
 			{
 				returnObj = beanServerLocator.get().invoke(objectName, info.getName(),
-						parameterRepeater.getParams(), parameterRepeater.getSignatures());
+					parameterRepeater.getParams(), parameterRepeater.getSignatures());
 				onSuccessful(returnObj, target);
 			}
 			catch (Exception e)
@@ -157,7 +157,7 @@ public class OperationsPanel extends Panel
 		@Override
 		protected void onError(AjaxRequestTarget target, Form<?> form)
 		{
-			
+
 		}
 
 	}
@@ -189,8 +189,9 @@ public class OperationsPanel extends Panel
 			{
 				try
 				{
-					params[i] = DataUtil.getCompatibleData(parametersValues.get(
-							beanParameterInfos[i]).getObject(), beanParameterInfos[i]);
+					params[i] = DataUtil.getCompatibleData(
+						parametersValues.get(beanParameterInfos[i]).getObject(),
+						beanParameterInfos[i]);
 				}
 				catch (ClassNotFoundException e)
 				{

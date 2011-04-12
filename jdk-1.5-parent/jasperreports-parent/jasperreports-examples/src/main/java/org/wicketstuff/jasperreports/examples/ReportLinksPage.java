@@ -35,33 +35,46 @@ import org.wicketstuff.jasperreports.handlers.TextResourceHandler;
  * 
  * @author Eelco Hillenius
  */
-public class ReportLinksPage extends WebPage {
+public class ReportLinksPage extends WebPage
+{
 	/**
 	 * Constructor.
 	 */
-	public ReportLinksPage() {
-		ServletContext context = ((WebApplication) getApplication()).getServletContext();
+	public ReportLinksPage()
+	{
+		ServletContext context = ((WebApplication)getApplication()).getServletContext();
 		final File reportFile = new File(context.getRealPath("/reports/WebappReport.jasper"));
 
 		final Map parameters = new HashMap();
 		parameters.put("BaseDir", new File(context.getRealPath("/reports")));
 
-		JRResource pdfResource = new JRConcreteResource(reportFile, new PdfResourceHandler()).setReportParameters(parameters).setReportDataSource(new WebappDataSource());
+		JRResource pdfResource = new JRConcreteResource(reportFile, new PdfResourceHandler()).setReportParameters(
+			parameters)
+			.setReportDataSource(new WebappDataSource());
 		add(new ResourceLink("linkToPdf", pdfResource));
 
-		JRResource rtfResource = new JRConcreteResource(reportFile, new RtfResourceHandler()).setReportParameters(parameters).setReportDataSource(new WebappDataSource());
+		JRResource rtfResource = new JRConcreteResource(reportFile, new RtfResourceHandler()).setReportParameters(
+			parameters)
+			.setReportDataSource(new WebappDataSource());
 		add(new ResourceLink("linkToRtf", rtfResource));
 
-		JRResource htmlResource = new JRConcreteResource(reportFile, new HtmlResourceHandler()).setReportParameters(parameters).setReportDataSource(new WebappDataSource());
+		JRResource htmlResource = new JRConcreteResource(reportFile, new HtmlResourceHandler()).setReportParameters(
+			parameters)
+			.setReportDataSource(new WebappDataSource());
 		add(new ResourceLink("linkToHtml", htmlResource));
 
-		JRResource textResource = new JRConcreteResource(reportFile, new TextResourceHandler()).setReportParameters(parameters).setReportDataSource(new WebappDataSource());
+		JRResource textResource = new JRConcreteResource(reportFile, new TextResourceHandler()).setReportParameters(
+			parameters)
+			.setReportDataSource(new WebappDataSource());
 		add(new ResourceLink("linkToText", textResource));
 
-		JRResource imageResource = new JRImageResource(reportFile).setReportParameters(parameters).setReportDataSource(new WebappDataSource());
+		JRResource imageResource = new JRImageResource(reportFile).setReportParameters(parameters)
+			.setReportDataSource(new WebappDataSource());
 		add(new ResourceLink("linkToImage", imageResource));
 
-		JRResource csvResource = new JRConcreteResource(reportFile, new CsvResourceHandler()).setReportParameters(parameters).setReportDataSource(new WebappDataSource());
+		JRResource csvResource = new JRConcreteResource(reportFile, new CsvResourceHandler()).setReportParameters(
+			parameters)
+			.setReportDataSource(new WebappDataSource());
 		add(new ResourceLink("linkToCsv", csvResource));
 	}
 
@@ -69,7 +82,8 @@ public class ReportLinksPage extends WebPage {
 	 * @see org.apache.wicket.Component#isVersioned()
 	 */
 	@Override
-	public boolean isVersioned() {
+	public boolean isVersioned()
+	{
 		return false;
 	}
 }

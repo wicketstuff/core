@@ -1,10 +1,9 @@
 package org.wicketstuff.springreference.examples;
 
 /**
- * Example service used by {@link AbstractPrivatePage}. The special about this
- * class is the lack of public constructor. Instantiation is done with the
- * static {@link #create()} method. Dynamic proxies do not work with these kind
- * of classes.
+ * Example service used by {@link AbstractPrivatePage}. The special about this class is the lack of
+ * public constructor. Instantiation is done with the static {@link #create()} method. Dynamic
+ * proxies do not work with these kind of classes.
  * 
  * This class is instantiated in applicationContext.xml.
  * 
@@ -12,16 +11,20 @@ package org.wicketstuff.springreference.examples;
  * 
  * @author akiraly
  */
-public class PrivateService {
+public class PrivateService
+{
 
-	private PrivateService() {
+	private PrivateService()
+	{
 	}
 
-	public static PrivateService create() {
+	public static PrivateService create()
+	{
 		return new PrivateService();
 	}
 
-	public String getMessage() {
+	public String getMessage()
+	{
 		return "Message from " + getClass();
 	}
 }

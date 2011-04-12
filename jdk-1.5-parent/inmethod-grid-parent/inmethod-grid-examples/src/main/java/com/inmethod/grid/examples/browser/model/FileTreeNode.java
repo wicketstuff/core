@@ -8,73 +8,90 @@ import java.util.List;
 
 import javax.swing.tree.TreeNode;
 
-public class FileTreeNode implements TreeNode, Serializable {
+public class FileTreeNode implements TreeNode, Serializable
+{
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private FileEntry fileEntry;
 	private List<FileTreeNode> children = null;
 	private FileTreeNode parent;
-	
-	FileTreeNode(FileEntry fileEntry, FileTreeNode parent) {
+
+	FileTreeNode(FileEntry fileEntry, FileTreeNode parent)
+	{
 		this.fileEntry = fileEntry;
 		this.parent = parent;
 	}
-	
-	public FileEntry getFileEntry() {
+
+	public FileEntry getFileEntry()
+	{
 		return fileEntry;
 	}
-	
-	private void ensureChildrenLoaded() {
-		if (children == null) {
+
+	private void ensureChildrenLoaded()
+	{
+		if (children == null)
+		{
 			children = new ArrayList<FileTreeNode>();
-			
+
 			List<FileEntry> entries = fileEntry.getChildren();
-			for (FileEntry entry : entries) {
+			for (FileEntry entry : entries)
+			{
 				FileTreeNode node = new FileTreeNode(entry, this);
 				children.add(node);
 			}
 		}
 	}
-	
-	public Enumeration<FileTreeNode> children() {
+
+	public Enumeration<FileTreeNode> children()
+	{
 		ensureChildrenLoaded();
-		return new Enumeration<FileTreeNode>() {
+		return new Enumeration<FileTreeNode>()
+		{
 			Iterator<FileTreeNode> i = children.iterator();
-			
-			public boolean hasMoreElements() {
+
+			public boolean hasMoreElements()
+			{
 				return i.hasNext();
 			}
-			public FileTreeNode nextElement() {
+
+			public FileTreeNode nextElement()
+			{
 				return i.next();
 			}
 		};
 	}
 
-	public boolean getAllowsChildren() {
+	public boolean getAllowsChildren()
+	{
 		return fileEntry.isFolder();
 	}
 
-	public TreeNode getChildAt(int childIndex) {
+	public TreeNode getChildAt(int childIndex)
+	{
 		ensureChildrenLoaded();
-		return children.get(childIndex);		
+		return children.get(childIndex);
 	}
 
-	public int getChildCount() {
+	public int getChildCount()
+	{
 		ensureChildrenLoaded();
 		return children.size();
 	}
 
-	public int getIndex(TreeNode node) {
+	public int getIndex(TreeNode node)
+	{
 		ensureChildrenLoaded();
 		return children.indexOf(node);
 	}
 
-	public TreeNode getParent() {
+	public TreeNode getParent()
+	{
 		return parent;
 	}
 
-	public boolean isLeaf() {
+	public boolean isLeaf()
+	{
 		return fileEntry.isFolder() == false;
 	}
 

@@ -30,7 +30,8 @@ import wicket.contrib.gmap.api.GLatLng;
  * 
  * @author Thijs Vonk
  */
-public class Geocoder implements Serializable {
+public class Geocoder implements Serializable
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -53,15 +54,18 @@ public class Geocoder implements Serializable {
 	 * @throws IllegalArgumentException
 	 *             If the API key is <code>null</code>
 	 */
-	public Geocoder(String gMapKey) {
-		if (gMapKey == null) {
+	public Geocoder(String gMapKey)
+	{
+		if (gMapKey == null)
+		{
 			throw new IllegalArgumentException("API key cannot be null");
 		}
 
 		this.gMapKey = gMapKey;
 	}
 
-	public GLatLng decode(String response) throws GeocoderException {
+	public GLatLng decode(String response) throws GeocoderException
+	{
 
 		StringTokenizer gLatLng = new StringTokenizer(response, ",");
 
@@ -70,7 +74,8 @@ public class Geocoder implements Serializable {
 		String latitude = gLatLng.nextToken();
 		String longitude = gLatLng.nextToken();
 
-		if (Integer.parseInt(status) != GeocoderException.G_GEO_SUCCESS) {
+		if (Integer.parseInt(status) != GeocoderException.G_GEO_SUCCESS)
+		{
 			throw new GeocoderException(Integer.parseInt(status));
 		}
 
@@ -83,8 +88,10 @@ public class Geocoder implements Serializable {
 	 * @param address
 	 * @return
 	 */
-	public String encode(final String address) {
-		return "http://maps.google.com/maps/geo?q=" + urlEncode(address) + "&output=" + output + "&key=" + gMapKey;
+	public String encode(final String address)
+	{
+		return "http://maps.google.com/maps/geo?q=" + urlEncode(address) + "&output=" + output +
+			"&key=" + gMapKey;
 	}
 
 	/**
@@ -92,13 +99,18 @@ public class Geocoder implements Serializable {
 	 * @return
 	 * @throws IOException
 	 */
-	public GLatLng geocode(final String address) throws IOException {
+	public GLatLng geocode(final String address) throws IOException
+	{
 		InputStream is = invokeService(encode(address));
-		if (is != null) {
-			try {
+		if (is != null)
+		{
+			try
+			{
 				String content = org.apache.wicket.util.io.IOUtils.toString(is);
 				return decode(content);
-			} finally {
+			}
+			finally
+			{
 				is.close();
 			}
 		}
@@ -112,7 +124,8 @@ public class Geocoder implements Serializable {
 	 * @return
 	 * @throws IOException
 	 */
-	protected InputStream invokeService(final String address) throws IOException {
+	protected InputStream invokeService(final String address) throws IOException
+	{
 		URL url = new URL(address);
 		return url.openStream();
 	}
@@ -123,10 +136,14 @@ public class Geocoder implements Serializable {
 	 * @param value
 	 * @return
 	 */
-	private String urlEncode(final String value) {
-		try {
+	private String urlEncode(final String value)
+	{
+		try
+		{
 			return URLEncoder.encode(value, "UTF-8");
-		} catch (UnsupportedEncodingException ex) {
+		}
+		catch (UnsupportedEncodingException ex)
+		{
 			throw new RuntimeException(ex.getMessage());
 		}
 	}

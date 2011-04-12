@@ -92,7 +92,7 @@ public abstract class LoginContext
 			throw new IllegalArgumentException("0 is the lowest sort order allowed, not "
 				+ sortOrder);
 		this.sortOrder = sortOrder;
-		this.additionalLoginsPrevented = !allowAdditionalLogins;
+		additionalLoginsPrevented = !allowAdditionalLogins;
 	}
 
 	/**

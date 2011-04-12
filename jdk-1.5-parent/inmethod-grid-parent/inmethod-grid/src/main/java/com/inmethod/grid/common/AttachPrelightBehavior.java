@@ -16,18 +16,21 @@ import org.apache.wicket.util.string.JavaScriptUtils;
  * 
  * @author Matej Knopp
  */
-public final class AttachPrelightBehavior extends Behavior {
+public final class AttachPrelightBehavior extends Behavior
+{
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void afterRender(Component component) {
-		WebRequest request = (WebRequest) RequestCycle.get().getRequest();
+	public void afterRender(Component component)
+	{
+		WebRequest request = (WebRequest)RequestCycle.get().getRequest();
 		Response response = RequestCycle.get().getResponse();
 		AbstractGrid grid = component.findParent(AbstractGrid.class);
-		if (request.isAjax() && !grid.isRendering()) {
+		if (request.isAjax() && !grid.isRendering())
+		{
 			JavaScriptUtils.writeOpenTag(response);
 			response.write("var e = Wicket.$('" + component.getMarkupId() + "');");
 			response.write("var id = '" + grid.getMarkupId() + "';");

@@ -9,28 +9,32 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Tests for {@link FileFieldChangeBehavior} and
- * {@link FileFieldSizeCheckBehavior}.
- *
+ * Tests for {@link FileFieldChangeBehavior} and {@link FileFieldSizeCheckBehavior}.
+ * 
  * @author akiraly
  */
-public class FileFieldBehaviorTest {
+public class FileFieldBehaviorTest
+{
 	private final WicketTester tester = new WicketTester();
 
 	@After
-	public void after() {
+	public void after()
+	{
 		tester.destroy();
 	}
 
 	@Test
-	public void testServerSideParse() {
+	public void testServerSideParse()
+	{
 		TestPage page = new TestPage();
 
-		FileFieldChangeBehavior behavior = new FileFieldChangeBehavior() {
+		FileFieldChangeBehavior behavior = new FileFieldChangeBehavior()
+		{
 			private static final long serialVersionUID = 6582070615361579911L;
 
 			@Override
-			protected void onEvent(AjaxRequestTarget target, FileList fileList) {
+			protected void onEvent(AjaxRequestTarget target, FileList fileList)
+			{
 				Assert.assertNotNull(fileList);
 				Assert.assertEquals(2, fileList.getNumOfFiles());
 				Assert.assertEquals(4096, fileList.getSize());
@@ -39,8 +43,7 @@ public class FileFieldBehaviorTest {
 				Assert.assertEquals(2048, file.getSize());
 				Assert.assertEquals("text/plain", file.getType());
 				Assert.assertNotNull(file.getLastModifiedDate());
-				Assert.assertEquals(1302254582, file.getLastModifiedDate()
-						.getTimeInMillis());
+				Assert.assertEquals(1302254582, file.getLastModifiedDate().getTimeInMillis());
 			}
 		};
 		page.getField().add(behavior);
@@ -53,18 +56,22 @@ public class FileFieldBehaviorTest {
 	}
 
 	@Test
-	public void testSizeCheck() {
+	public void testSizeCheck()
+	{
 		TestPage page = new TestPage();
 
-		FileFieldChangeBehavior behavior = new FileFieldSizeCheckBehavior() {
+		FileFieldChangeBehavior behavior = new FileFieldSizeCheckBehavior()
+		{
 			private static final long serialVersionUID = 4191810142625675846L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, FileList fileList) {
+			protected void onSubmit(AjaxRequestTarget target, FileList fileList)
+			{
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget target, FileList fileList) {
+			protected void onError(AjaxRequestTarget target, FileList fileList)
+			{
 			}
 
 		};
@@ -80,11 +87,13 @@ public class FileFieldBehaviorTest {
 		addParams();
 		page.getForm().setMaxSize(Bytes.kilobytes(1));
 		tester.executeBehavior(behavior);
-		Assert.assertTrue(tester.getSession().getFeedbackMessages()
-				.hasErrorMessageFor(page.getField()));
+		Assert.assertTrue(tester.getSession()
+			.getFeedbackMessages()
+			.hasErrorMessageFor(page.getField()));
 	}
 
-	protected void addParams() {
+	protected void addParams()
+	{
 		MockRequestParameters params = tester.getRequest().getPostParameters();
 		params.addParameterValue("num", "2");
 		params.addParameterValue("file[0].name", "test.txt");

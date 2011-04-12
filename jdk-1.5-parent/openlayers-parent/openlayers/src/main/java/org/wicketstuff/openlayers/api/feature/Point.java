@@ -26,31 +26,36 @@ import com.vividsolutions.jts.geom.Coordinate;
  * @author Marin Mandradjiev (marinsm@hotmail.com)
  * 
  */
-public class Point extends Feature {
+public class Point extends Feature
+{
 	private static final long serialVersionUID = -4295187268790863039L;
 
-	public Point(Coordinate coordinate) {
+	public Point(Coordinate coordinate)
+	{
 		super();
 		getCoordinates().add(coordinate);
 	}
 
-	public Point(Coordinate coordinate, FeatureStyle featureStyle) {
+	public Point(Coordinate coordinate, FeatureStyle featureStyle)
+	{
 		super(featureStyle);
 		getCoordinates().add(coordinate);
 	}
 
-	public Point(Coordinate coordinate, IOpenLayersMap map) {
+	public Point(Coordinate coordinate, IOpenLayersMap map)
+	{
 		super(map);
 		getCoordinates().add(coordinate);
 	}
 
-	public Point(Coordinate coordinate, FeatureStyle featureStyle,
-			IOpenLayersMap map) {
+	public Point(Coordinate coordinate, FeatureStyle featureStyle, IOpenLayersMap map)
+	{
 		super(featureStyle, map);
 		getCoordinates().add(coordinate);
 	}
 
-	public void setCoordinate(Coordinate coordinate) {
+	public void setCoordinate(Coordinate coordinate)
+	{
 		if (getCoordinates() == null)
 			setCoordinates(new ArrayList<Coordinate>());
 		else
@@ -58,14 +63,15 @@ public class Point extends Feature {
 		getCoordinates().add(coordinate);
 	}
 
-	public Coordinate getCoordinate() {
-		return getCoordinates() != null && !getCoordinates().isEmpty() ? getCoordinates()
-				.get(0)
-				: null;
+	public Coordinate getCoordinate()
+	{
+		return getCoordinates() != null && !getCoordinates().isEmpty() ? getCoordinates().get(0)
+			: null;
 	}
 
 	@Override
-	protected String getType() {
+	protected String getType()
+	{
 		return null;
 	}
 }

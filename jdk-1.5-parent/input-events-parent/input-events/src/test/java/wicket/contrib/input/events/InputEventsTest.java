@@ -15,8 +15,10 @@
  */
 package wicket.contrib.input.events;
 
-public class InputEventsTest extends WicketTestCase {
-	public void testCorrectComponentBinding()  {
+public class InputEventsTest extends WicketTestCase
+{
+	public void testCorrectComponentBinding()
+	{
 		tester.startPage(Page.class);
 		tester.dumpPage();
 	}

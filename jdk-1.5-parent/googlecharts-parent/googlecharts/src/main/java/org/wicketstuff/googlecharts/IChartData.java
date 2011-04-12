@@ -8,11 +8,12 @@ import java.io.Serializable;
 /**
  * @author Daniel Spiewak
  */
-public interface IChartData extends Serializable {
+public interface IChartData extends Serializable
+{
 
-    public ChartDataEncoding getEncoding();
+	public ChartDataEncoding getEncoding();
 
-    public double[][] getData();
+	public double[][] getData();
 
-    public double getMax();
+	public double getMax();
 }

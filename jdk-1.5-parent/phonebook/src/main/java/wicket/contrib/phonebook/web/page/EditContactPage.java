@@ -36,11 +36,10 @@ import wicket.contrib.phonebook.Contact;
 import wicket.contrib.phonebook.ContactDao;
 
 /**
- * Edit the Contact. Display details if an existing contact, then persist them
- * if saved.
- *
+ * Edit the Contact. Display details if an existing contact, then persist them if saved.
+ * 
  * @author igor
- *
+ * 
  */
 public class EditContactPage extends BasePage
 {
@@ -49,10 +48,9 @@ public class EditContactPage extends BasePage
 	private ContactDao contactDao;
 
 	/**
-	 * Constructor. Create or edit the contact. Note that if you don't need the
-	 * page to be bookmarkable, you can use whatever constructor you need, such
-	 * as is done here.
-	 *
+	 * Constructor. Create or edit the contact. Note that if you don't need the page to be
+	 * bookmarkable, you can use whatever constructor you need, such as is done here.
+	 * 
 	 * @param backPage
 	 *            The page that the user was on before coming here
 	 * @param contactModel
@@ -64,14 +62,14 @@ public class EditContactPage extends BasePage
 
 		Contact contact = (Contact)contactModel.getObject();
 		Form<Contact> form = new Form<Contact>("contactForm", new CompoundPropertyModel<Contact>(
-				contact));
+			contact));
 		add(form);
 
 		form.add(newRequiredTextField("firstname", 32));
 		form.add(newRequiredTextField("lastname", 32));
 		form.add(newRequiredTextField("phone", 16));
 		form.add(new TextField<String>("email").add(StringValidator.maximumLength(128)).add(
-				EmailAddressValidator.getInstance()));
+			EmailAddressValidator.getInstance()));
 		form.add(new CancelButton());
 		form.add(new SaveButton());
 	}
@@ -98,7 +96,7 @@ public class EditContactPage extends BasePage
 		{
 			String msg = getLocalizer().getString("status.cancel", this);
 			getSession().info(msg);
-			setResponsePage(EditContactPage.this.backPage);
+			setResponsePage(backPage);
 		}
 	}
 
@@ -116,11 +114,11 @@ public class EditContactPage extends BasePage
 		{
 			Contact contact = (Contact)getForm().getModelObject();
 			contactDao.save(contact);
-			String msg = MapVariableInterpolator.interpolate(getLocalizer().getString(
-					"status.save", this), new MicroMap<String, String>("name", contact
-					.getFullName()));
+			String msg = MapVariableInterpolator.interpolate(
+				getLocalizer().getString("status.save", this), new MicroMap<String, String>("name",
+					contact.getFullName()));
 			getSession().info(msg);
-			setResponsePage(EditContactPage.this.backPage);
+			setResponsePage(backPage);
 		}
 	}
 }

@@ -11,20 +11,23 @@ import org.apache.wicket.util.template.PackageTextTemplate;
 /**
  * 
  * @author Edvin Syse <edvin@sysedata.no>
- *
+ * 
  */
-public class CroppableImage extends Panel {
+public class CroppableImage extends Panel
+{
 	private WebMarkupContainer container;
 	private WebMarkupContainer image;
 	private final Map<String, Object> vars;
-	
-	public CroppableImage(String id, CropBehaviour behaviour, final String imageUrl, final int width, final int height) {
+
+	public CroppableImage(String id, CropBehaviour behaviour, final String imageUrl,
+		final int width, final int height)
+	{
 		super(id);
 
 		container = new WebMarkupContainer("container");
 		container.setOutputMarkupId(true);
 		add(container);
-		
+
 		image = new WebMarkupContainer("image");
 		image.setOutputMarkupId(true);
 		add(image);
@@ -35,25 +38,25 @@ public class CroppableImage extends Panel {
 		vars.put("imageUrl", imageUrl);
 		vars.put("width", width);
 		vars.put("height", height);
-		vars.put("rwidth", width/2);
-		vars.put("rheight", height/2);
+		vars.put("rwidth", width / 2);
+		vars.put("rheight", height / 2);
 		vars.put("cropBg", urlFor(CropBehaviour.CROP_BG, null));
-	
+
 		image.add(behaviour);
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
+	public void renderHead(IHeaderResponse response)
+	{
 		super.renderHead(response);
-	
+
 		PackageTextTemplate template = new PackageTextTemplate(CroppableImage.class, "crop.css");
 		String css = template.interpolate(vars).asString();
-		
-		response.renderCSS(css, "croppable-image."+getMarkupId());
+
+		response.renderCSS(css, "croppable-image." + getMarkupId());
 
 
 	}
-	
-	
+
 
 }

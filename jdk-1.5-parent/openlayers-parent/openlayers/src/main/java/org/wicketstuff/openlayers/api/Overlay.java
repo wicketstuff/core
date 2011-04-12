@@ -26,18 +26,22 @@ import org.wicketstuff.openlayers.event.OverlayListenerBehavior;
 /**
  * Represents an Openlayers API's // legacy to be removed
  */
-public abstract class Overlay implements IJavascriptComponent {
+public abstract class Overlay implements IJavascriptComponent
+{
 	List<OverlayListenerBehavior> behaviors = new ArrayList<OverlayListenerBehavior>();
 
-	public Overlay addBehavior(OverlayListenerBehavior behavior) {
+	public Overlay addBehavior(OverlayListenerBehavior behavior)
+	{
 		behavior.setGOverlay(this);
 		behaviors.add(behavior);
 
 		return this;
 	}
 
-	public Overlay removeBehavior(OverlayListenerBehavior behavior) {
-		while (behaviors.contains(behavior)) {
+	public Overlay removeBehavior(OverlayListenerBehavior behavior)
+	{
+		while (behaviors.contains(behavior))
+		{
 			behaviors.remove(behavior);
 		}
 
@@ -45,13 +49,15 @@ public abstract class Overlay implements IJavascriptComponent {
 		return this;
 	}
 
-	public Overlay clearBehaviors() {
+	public Overlay clearBehaviors()
+	{
 		behaviors.clear();
 
 		return this;
 	}
 
-	public List<OverlayListenerBehavior> getBehaviors() {
+	public List<OverlayListenerBehavior> getBehaviors()
+	{
 		return Collections.unmodifiableList(behaviors);
 	}
 
@@ -59,29 +65,34 @@ public abstract class Overlay implements IJavascriptComponent {
 	{
 		return "overlay" + getId();
 	}
-	
-	public String getJSadd(IOpenLayersMap map) {
+
+	public String getJSadd(IOpenLayersMap map)
+	{
 		StringBuffer js = new StringBuffer();
-		js.append("var "+getOverlayJSVar()+" = " + getJSconstructor() + ";\n");
-		js.append(map.getJSinvoke("addOverlay('" + getId() + "', overlay"
-				+ getId() + ")"));
+		js.append("var " + getOverlayJSVar() + " = " + getJSconstructor() + ";\n");
+		js.append(map.getJSinvoke("addOverlay('" + getId() + "', overlay" + getId() + ")"));
 		return js.toString();
 	}
 
-	public String getJSremove(IOpenLayersMap map) {
+	public String getJSremove(IOpenLayersMap map)
+	{
 		return map.getJSinvoke("removeOverlay('" + getId() + "')");
 	}
 
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wicketstuff.openlayers.api.IJavascriptComponent#getJSResourceReference()
 	 */
-	public JavaScriptResourceReference[] getJSResourceReferences() {
+	public JavaScriptResourceReference[] getJSResourceReferences()
+	{
 		// intentionally not implemented.
 		return null;
 	}
 
-	public String getId() {
+	public String getId()
+	{
 		return String.valueOf(System.identityHashCode(this));
 	}
 

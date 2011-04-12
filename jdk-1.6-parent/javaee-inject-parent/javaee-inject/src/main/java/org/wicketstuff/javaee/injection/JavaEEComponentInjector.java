@@ -25,46 +25,52 @@ import org.wicketstuff.javaee.naming.IJndiNamingStrategy;
 import org.wicketstuff.javaee.naming.StandardJndiNamingStrategy;
 
 /**
- * This injection must be initialized in the Wicket WebApplication in order to
- * enable Java EE 5 resource injection in Wicket Pages Add the initialization in
- * WebApplication's init() method, e.g.
+ * This injection must be initialized in the Wicket WebApplication in order to enable Java EE 5
+ * resource injection in Wicket Pages Add the initialization in WebApplication's init() method, e.g.
  * <p/>
- * protected void init() { addComponentInstantiationListener(new
- * JavaEEComponentInjector(this)); }
- *
+ * protected void init() { addComponentInstantiationListener(new JavaEEComponentInjector(this)); }
+ * 
  * @author Filippo Diotalevi
  */
-public class JavaEEComponentInjector extends Injector implements IComponentInstantiationListener {
+public class JavaEEComponentInjector extends Injector implements IComponentInstantiationListener
+{
 
-    IFieldValueFactory factory = null;
+	IFieldValueFactory factory = null;
 
-    /**
-     * Constructor
-     *
-     * @param webapp wicket web application
-     */
-    public JavaEEComponentInjector(WebApplication webapp) {
-        this(webapp, new StandardJndiNamingStrategy());
-    }
+	/**
+	 * Constructor
+	 * 
+	 * @param webapp
+	 *            wicket web application
+	 */
+	public JavaEEComponentInjector(WebApplication webapp)
+	{
+		this(webapp, new StandardJndiNamingStrategy());
+	}
 
-    /**
-     * Constructor
-     *
-     * @param webapp   - wicket web application
-     * @param namingStrategy -  a jndi naming strategy to lookup ejb references
-     */
-    public JavaEEComponentInjector(WebApplication webapp, IJndiNamingStrategy namingStrategy) {
-        bind(webapp);
-        factory = new JavaEEProxyFieldValueFactory(namingStrategy);
-    }
+	/**
+	 * Constructor
+	 * 
+	 * @param webapp
+	 *            - wicket web application
+	 * @param namingStrategy
+	 *            - a jndi naming strategy to lookup ejb references
+	 */
+	public JavaEEComponentInjector(WebApplication webapp, IJndiNamingStrategy namingStrategy)
+	{
+		bind(webapp);
+		factory = new JavaEEProxyFieldValueFactory(namingStrategy);
+	}
 
-    @Override
-    public void inject(Object object) {
-        inject(object, factory);
-    }
+	@Override
+	public void inject(Object object)
+	{
+		inject(object, factory);
+	}
 
-    @Override
-    public void onInstantiation(Component component) {
-        inject(component);
-    }
+	@Override
+	public void onInstantiation(Component component)
+	{
+		inject(component);
+	}
 }

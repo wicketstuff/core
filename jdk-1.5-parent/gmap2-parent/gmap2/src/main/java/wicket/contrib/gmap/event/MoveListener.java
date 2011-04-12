@@ -30,7 +30,8 @@ public abstract class MoveListener extends GEventListenerBehavior
 {
 
 	@Override
-	protected String getEvent() {
+	protected String getEvent()
+	{
 		return "move";
 	}
 
@@ -43,8 +44,7 @@ public abstract class MoveListener extends GEventListenerBehavior
 
 	/**
 	 * Override this method to provide handling of a move.<br>
-	 * You can get the new center coordinates of the map by calling
-	 * {@link GMap2#getCenter()}.
+	 * You can get the new center coordinates of the map by calling {@link GMap2#getCenter()}.
 	 * 
 	 * @param target
 	 *            the target that initiated the move

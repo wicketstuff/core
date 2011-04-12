@@ -42,68 +42,86 @@ import org.wicketstuff.calendarviews.model.TimePeriod;
 /**
  * @author Jeremy Thomerson
  */
-public class HomePage extends WebPage {
+public class HomePage extends WebPage
+{
 
 	private static final String KEY_WEEKS = "0";
-//	private static final Logger LOGGER = LoggerFactory.getLogger(HomePage.class);
+// private static final Logger LOGGER = LoggerFactory.getLogger(HomePage.class);
 	private static final long serialVersionUID = 1L;
-	public static final ResourceReference EXAMPLES_CSS_REFERENCE = new PackageResourceReference(HomePage.class, "examples.css");
+	public static final ResourceReference EXAMPLES_CSS_REFERENCE = new PackageResourceReference(
+		HomePage.class, "examples.css");
 
-	public HomePage() {
+	public HomePage()
+	{
 		this(0);
 	}
-	public HomePage(PageParameters params) {
+
+	public HomePage(PageParameters params)
+	{
 		this(params.get(KEY_WEEKS).isNull() ? 0 : params.get(KEY_WEEKS).toInt());
 	}
-	
-	public HomePage(int weeks) {
+
+	public HomePage(int weeks)
+	{
 		TimePeriod tp = LargeView.createMonthViewDates();
-		if (weeks != 0) {
+		if (weeks != 0)
+		{
 			tp = LargeView.createWeeksViewDates(weeks);
 		}
-		add(new LargeView("large", tp, new PersistentRandomTestEventProvider()) {
+		add(new LargeView("large", tp, new PersistentRandomTestEventProvider())
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Page createMoreDetailPage(IModel<DateMidnight> model, IModel<List<IEvent>> eventsModel) {
+			protected Page createMoreDetailPage(IModel<DateMidnight> model,
+				IModel<List<IEvent>> eventsModel)
+			{
 				Page page = super.createMoreDetailPage(model, eventsModel);
-				page.add(new Behavior() {
+				page.add(new Behavior()
+				{
 					@Override
-					public void renderHead(Component component,
-							IHeaderResponse response) {
-						
+					public void renderHead(Component component, IHeaderResponse response)
+					{
+
 						response.renderCSSReference(EXAMPLES_CSS_REFERENCE);
 					}
 				});
 				return page;
 			}
+
 			@Override
-			protected WebMarkupContainer createEventLink(String id, final IModel<IEvent> model) {
+			protected WebMarkupContainer createEventLink(String id, final IModel<IEvent> model)
+			{
 				WebMarkupContainer wmc = new WebMarkupContainer(id);
-				wmc.add(new AttributeModifier("onclick", true, new AbstractReadOnlyModel<String>() {
+				wmc.add(new AttributeModifier("onclick", true, new AbstractReadOnlyModel<String>()
+				{
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public String getObject() {
-						return "alert('" + JavaScriptUtils.escapeQuotes(model.getObject().getTitle()) + "');";
+					public String getObject()
+					{
+						return "alert('" +
+							JavaScriptUtils.escapeQuotes(model.getObject().getTitle()) + "');";
 					}
-					
+
 				}));
 				return wmc;
 			}
 		});
-		
+
 		addLinks();
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
+	public void renderHead(IHeaderResponse response)
+	{
 		super.renderHead(response);
-	
+
 		response.renderCSSReference(EXAMPLES_CSS_REFERENCE);
 	}
-	
-	private void addLinks() {
+
+	private void addLinks()
+	{
 		add(createLink("month", 0));
 		add(createLink("2weeks", 2));
 		add(createLink("3weeks", 3));
@@ -111,25 +129,31 @@ public class HomePage extends WebPage {
 		add(createLink("5weeks", 5));
 		add(createLink("6weeks", 6));
 	}
-	
-	public static PageParameters createParameters(int weeks) {
+
+	public static PageParameters createParameters(int weeks)
+	{
 		PageParameters params = null;
-		if (weeks > 0) {
+		if (weeks > 0)
+		{
 			params = new PageParameters();
 			params.add(KEY_WEEKS, Integer.toString(weeks));
 		}
 		return params;
 	}
-	public static Link<Void> createLink(String id, final int weeks) {
-		return new Link<Void>(id) {
+
+	public static Link<Void> createLink(String id, final int weeks)
+	{
+		return new Link<Void>(id)
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onClick() {
+			public void onClick()
+			{
 				PersistentRandomTestEventProvider.clearEventsForFreshReload();
 				setResponsePage(HomePage.class, createParameters(weeks));
 			}
-			
+
 		};
 	}
 }

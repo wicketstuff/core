@@ -67,7 +67,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 	public static final String VIEW_PANEL_ID = "view";
 
 	private static final ResourceReference CSS = new PackageResourceReference(MBeansPanel.class,
-			"css/MBeansPanel.css");
+		"css/MBeansPanel.css");
 
 	public MBeansPanel(String id)
 	{
@@ -123,10 +123,9 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 			if (node instanceof DefaultMutableTreeNode)
 			{
 				DefaultMutableTreeNode mutableNode = (DefaultMutableTreeNode)node;
-				if (mutableNode.getChildCount() > 0
-						&& ((mutableNode.getChildAt(0) instanceof AttributeNode)
-								|| (mutableNode.getChildAt(0) instanceof OperationNode) || (mutableNode
-								.getChildAt(0) instanceof NotificationNode)))
+				if (mutableNode.getChildCount() > 0 &&
+					((mutableNode.getChildAt(0) instanceof AttributeNode) ||
+						(mutableNode.getChildAt(0) instanceof OperationNode) || (mutableNode.getChildAt(0) instanceof NotificationNode)))
 				{
 					return new EmptyPanel(id).add(new SimpleAttributeModifier("style", "width:0;"));
 				}
@@ -136,8 +135,8 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 	}
 
 	private TreeModel getTreeModel(MbeanServerLocator reachMbeanServer)
-			throws MalformedObjectNameException, NullPointerException, InstanceNotFoundException,
-			IntrospectionException, ReflectionException
+		throws MalformedObjectNameException, NullPointerException, InstanceNotFoundException,
+		IntrospectionException, ReflectionException
 	{
 		DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("root");
 		TreeModel model = new DefaultTreeModel(rootNode);
@@ -147,7 +146,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 			MbeanNode domainNode = new MbeanNode(domains[i]);
 			rootNode.add(domainNode);
 			Set<ObjectName> domainNames = reachMbeanServer.get().queryNames(null,
-					new ObjectName(domains[i] + ":*"));
+				new ObjectName(domains[i] + ":*"));
 			addDomainsCildrens(domainNode, DataUtil.parseToPropsSet(domainNames));
 			Enumeration<DefaultMutableTreeNode> enumeration = domainNode.postorderEnumeration();
 			Set<DefaultMutableTreeNode> nodes = new HashSet<DefaultMutableTreeNode>();
@@ -173,7 +172,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 						}
 					}
 					Set<ObjectInstance> mBeans = reachMbeanServer.get().queryMBeans(null,
-							new ObjectName(query));
+						new ObjectName(query));
 					if (mBeans.size() > 0)
 					{
 						for (Iterator it = mBeans.iterator(); it.hasNext();)
@@ -261,18 +260,18 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 
 		public MbeanNode(MbeanNode parent)
 		{
-			this.objectInstance = parent.objectInstance;
-			this.mBeanServerLocator = parent.mBeanServerLocator;
-			this.objectInstance = parent.objectInstance;
-			this.keyValue = parent.keyValue;
+			objectInstance = parent.objectInstance;
+			mBeanServerLocator = parent.mBeanServerLocator;
+			objectInstance = parent.objectInstance;
+			keyValue = parent.keyValue;
 		}
 
 		public void setObjectInstance(ObjectInstance objectInstance,
-				MbeanServerLocator reachMbeanServer) throws InstanceNotFoundException,
-				IntrospectionException, ReflectionException
+			MbeanServerLocator reachMbeanServer) throws InstanceNotFoundException,
+			IntrospectionException, ReflectionException
 		{
 			this.objectInstance = objectInstance;
-			this.mBeanServerLocator = reachMbeanServer;
+			mBeanServerLocator = reachMbeanServer;
 			MBeanInfo info = reachMbeanServer.get().getMBeanInfo(objectInstance.getObjectName());
 			MBeanAttributeInfo[] beanAttributeInfos = info.getAttributes();
 			MBeanOperationInfo[] beanOperationInfos = info.getOperations();
@@ -288,7 +287,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 			if (beanNotificationInfos.length > 0)
 			{
 				DefaultMutableTreeNode notificationsNode = new DefaultMutableTreeNode(
-						"Notification");
+					"Notification");
 				add(notificationsNode);
 				for (int i = 0; i < beanNotificationInfos.length; i++)
 				{
@@ -332,7 +331,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 		public Component getView(String id)
 		{
 			return new AttributeValuesPanel(id, objectInstance.getObjectName(), beanAttributeInfos,
-					mBeanServerLocator);
+				mBeanServerLocator);
 		}
 
 		@Override
@@ -349,14 +348,14 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 		public AttributeNode(MbeanNode parent, MBeanAttributeInfo mBeanAttributeInfo)
 		{
 			super(parent);
-			this.attributeInfo = mBeanAttributeInfo;
+			attributeInfo = mBeanAttributeInfo;
 		}
 
 		@Override
 		public Component getView(String wicketId)
 		{
 			return new AttributeValuesPanel(wicketId, objectInstance.getObjectName(),
-					new MBeanAttributeInfo[] { attributeInfo }, mBeanServerLocator);
+				new MBeanAttributeInfo[] { attributeInfo }, mBeanServerLocator);
 		}
 
 		@Override
@@ -384,7 +383,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 		public Component getView(String id)
 		{
 			return new OperationsPanel(id, objectInstance.getObjectName(), beanOperationInfos,
-					mBeanServerLocator);
+				mBeanServerLocator);
 		}
 
 		@Override
@@ -401,14 +400,14 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 		public OperationNode(OperationsNode parent, MBeanOperationInfo mBeanOperationInfo)
 		{
 			super(parent);
-			this.beanOperationInfo = mBeanOperationInfo;
+			beanOperationInfo = mBeanOperationInfo;
 		}
 
 		@Override
 		public Component getView(String wicketId)
 		{
 			return new OperationsPanel(wicketId, objectInstance.getObjectName(),
-					new MBeanOperationInfo[] { beanOperationInfo }, mBeanServerLocator);
+				new MBeanOperationInfo[] { beanOperationInfo }, mBeanServerLocator);
 		}
 
 		@Override
@@ -425,7 +424,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 		public NotificationNode(MbeanNode parent, MBeanNotificationInfo mBeanNotificationInfo)
 		{
 			super(parent);
-			this.beanNotificationInfo = mBeanNotificationInfo;
+			beanNotificationInfo = mBeanNotificationInfo;
 		}
 
 		@Override

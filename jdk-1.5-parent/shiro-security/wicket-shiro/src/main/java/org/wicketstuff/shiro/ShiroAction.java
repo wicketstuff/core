@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.shiro;
 
-public enum ShiroAction {
+public enum ShiroAction
+{
 	INSTANTIATE, RENDER, ENABLE
 }

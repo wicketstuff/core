@@ -22,7 +22,6 @@ import org.apache.wicket.security.components.SecureComponentHelper;
 import org.apache.wicket.security.components.markup.html.links.SecurePageLink;
 import org.apache.wicket.security.pages.SecureTestPage;
 
-
 /**
  * @author marrink
  * 
@@ -44,8 +43,8 @@ public class HomePage extends SecureTestPage
 		SecurePageLink<Void> securePageLink = new SecurePageLink<Void>("link", PageA.class);
 		add(securePageLink);
 		add(SecureComponentHelper.setSecurityCheck(new Label("sorry",
-				"you are not allowed to go to Page A"), new InverseSecurityCheck(securePageLink
-				.getSecurityCheck())));
+			"you are not allowed to go to Page A"),
+			new InverseSecurityCheck(securePageLink.getSecurityCheck())));
 	}
 
 }

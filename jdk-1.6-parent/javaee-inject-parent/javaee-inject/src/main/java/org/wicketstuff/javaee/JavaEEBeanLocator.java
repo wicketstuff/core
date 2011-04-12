@@ -24,111 +24,128 @@ import org.apache.wicket.util.lang.Objects;
 import org.wicketstuff.javaee.naming.IJndiNamingStrategy;
 
 /**
- * Implementation of {@link IProxyTargetLocator} to locate ejbs using Java EE 5
- * resource injection. To use this technique in a Wicket Page, annotate a
- * instance variable with
- *
+ * Implementation of {@link IProxyTargetLocator} to locate ejbs using Java EE 5 resource injection.
+ * To use this technique in a Wicket Page, annotate a instance variable with
+ * 
  * @author Filippo Diotalevi
  * @EJB, e.g.<br/>
- * <p/>
- * private
+ *       <p/>
+ *       private
  * @EJB(name="ejb/myejb") org.acme.MyEjb myejb
- * <p/>
- * If the 'name' attribute is specified, the
- * {@link JavaEEBeanLocator} will search in the JNDI
- * registry for an EJB named 'java:comp/env/&lt;name&gt;'
- * (in the example: 'java:comp/env/ejb/myejb')
- * <p/>
- * If the 'name' attribute is not specified the
- * {@link JavaEEBeanLocator} will search in the JNDI
- * registry for an EJB named
- * 'java:comp/env/&lt;complete-class-name-of-the-ejb&gt;'
- * (in the example: 'java:comp/env/com.acme.MyEjb)
+ *                        <p/>
+ *                        If the 'name' attribute is specified, the {@link JavaEEBeanLocator} will
+ *                        search in the JNDI registry for an EJB named 'java:comp/env/&lt;name&gt;'
+ *                        (in the example: 'java:comp/env/ejb/myejb')
+ *                        <p/>
+ *                        If the 'name' attribute is not specified the {@link JavaEEBeanLocator}
+ *                        will search in the JNDI registry for an EJB named
+ *                        'java:comp/env/&lt;complete-class-name-of-the-ejb&gt;' (in the example:
+ *                        'java:comp/env/com.acme.MyEjb)
  */
-public class JavaEEBeanLocator implements IProxyTargetLocator {
+public class JavaEEBeanLocator implements IProxyTargetLocator
+{
 
-    private String beanName;
-    private Class<?> beanType;
-    private IJndiNamingStrategy namingStrategy;
+	private String beanName;
+	private Class<?> beanType;
+	private IJndiNamingStrategy namingStrategy;
 
-    /**
-     * Constructor
-     *
-     * @param beanId   bean name
-     * @param beanType bean class
-     * @param namingStrategy - naming strategy
-     */
-    public JavaEEBeanLocator(String beanId, Class<?> beanType, IJndiNamingStrategy namingStrategy) {
-        if (beanType == null) {
-            throw new IllegalArgumentException("[beanType] argument cannot be null");
-        }
-        this.beanType = beanType;
-        this.beanName = beanId;
-        this.namingStrategy = namingStrategy;
-    }
+	/**
+	 * Constructor
+	 * 
+	 * @param beanId
+	 *            bean name
+	 * @param beanType
+	 *            bean class
+	 * @param namingStrategy
+	 *            - naming strategy
+	 */
+	public JavaEEBeanLocator(String beanId, Class<?> beanType, IJndiNamingStrategy namingStrategy)
+	{
+		if (beanType == null)
+		{
+			throw new IllegalArgumentException("[beanType] argument cannot be null");
+		}
+		this.beanType = beanType;
+		beanName = beanId;
+		this.namingStrategy = namingStrategy;
+	}
 
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof JavaEEBeanLocator) {
-            JavaEEBeanLocator other = (JavaEEBeanLocator) obj;
-            return beanType.equals(other.beanType)
-                    && Objects.equal(beanName, other.beanName);
-        }
-        return false;
-    }
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof JavaEEBeanLocator)
+		{
+			JavaEEBeanLocator other = (JavaEEBeanLocator)obj;
+			return beanType.equals(other.beanType) && Objects.equal(beanName, other.beanName);
+		}
+		return false;
+	}
 
-    public String getBeanName() {
-        return beanName;
-    }
+	public String getBeanName()
+	{
+		return beanName;
+	}
 
-    public Class<?> getBeanType() {
-        return beanType;
-    }
+	public Class<?> getBeanType()
+	{
+		return beanType;
+	}
 
-    /**
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        int hashcode = beanType.hashCode();
-        if (beanName != null) {
-            hashcode = hashcode + (127 * beanName.hashCode());
-        }
-        return hashcode;
-    }
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		int hashcode = beanType.hashCode();
+		if (beanName != null)
+		{
+			hashcode = hashcode + (127 * beanName.hashCode());
+		}
+		return hashcode;
+	}
 
-    /**
-     * @see org.apache.wicket.proxy.IProxyTargetLocator#locateProxyTarget()
-     */
-    @Override
-	public Object locateProxyTarget() {
-        if (beanName != null && beanName.length() > 0) {
-            return lookupEjb(beanName, beanType);
-        } else {
-            return lookupEjb(null, beanType);
-        }
-    }
+	/**
+	 * @see org.apache.wicket.proxy.IProxyTargetLocator#locateProxyTarget()
+	 */
+	@Override
+	public Object locateProxyTarget()
+	{
+		if (beanName != null && beanName.length() > 0)
+		{
+			return lookupEjb(beanName, beanType);
+		}
+		else
+		{
+			return lookupEjb(null, beanType);
+		}
+	}
 
-    private String calculateName(String name, Class<?> type) {
-        return namingStrategy.calculateName(name, type);
-    }
+	private String calculateName(String name, Class<?> type)
+	{
+		return namingStrategy.calculateName(name, type);
+	}
 
-    private Object lookupEjb(String name, Class<?> type) {
-        String lookupName = calculateName(name, type);
-        InitialContext ic;
-        try {
-            ic = new InitialContext();
-            return ic.lookup(lookupName);
-        } catch (NamingException e) {
-            String errorMessage = "Could not locate ejb of class [[" + type
-                    + "]] ";
-            if (name != null && name.length() > 0) {
-                errorMessage += "and name [[" + name + "]] ";
-            }
-            throw new RuntimeException(errorMessage, e);
-        }
-    }
+	private Object lookupEjb(String name, Class<?> type)
+	{
+		String lookupName = calculateName(name, type);
+		InitialContext ic;
+		try
+		{
+			ic = new InitialContext();
+			return ic.lookup(lookupName);
+		}
+		catch (NamingException e)
+		{
+			String errorMessage = "Could not locate ejb of class [[" + type + "]] ";
+			if (name != null && name.length() > 0)
+			{
+				errorMessage += "and name [[" + name + "]] ";
+			}
+			throw new RuntimeException(errorMessage, e);
+		}
+	}
 }

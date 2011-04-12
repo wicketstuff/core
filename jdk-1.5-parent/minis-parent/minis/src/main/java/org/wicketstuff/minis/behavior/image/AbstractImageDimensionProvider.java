@@ -6,19 +6,18 @@ import org.apache.wicket.markup.ComponentTag;
 
 /**
  * <p>
- * This behavior can be added to {@link Image} components to render width and
- * height attributes in the markup. The exact way to retrieve the dimension
- * information is left for the subclasses.
+ * This behavior can be added to {@link Image} components to render width and height attributes in
+ * the markup. The exact way to retrieve the dimension information is left for the subclasses.
  * <p>
- *
+ * 
  * <p>
- * Providing dimension information for <img /> elements makes page rendering
- * faster.
+ * Providing dimension information for <img /> elements makes page rendering faster.
  * </p>
- *
+ * 
  * @author akiraly
  */
-public abstract class AbstractImageDimensionProvider extends Behavior {
+public abstract class AbstractImageDimensionProvider extends Behavior
+{
 	private static final long serialVersionUID = 2659926396935426159L;
 
 	/**
@@ -33,20 +32,21 @@ public abstract class AbstractImageDimensionProvider extends Behavior {
 
 	/**
 	 * Getter.
-	 *
+	 * 
 	 * @return the width of the image
 	 */
 	public abstract String getWidth();
 
 	/**
 	 * Getter.
-	 *
+	 * 
 	 * @return the height of the image
 	 */
 	public abstract String getHeight();
 
 	@Override
-	public void onComponentTag(Component component, ComponentTag tag) {
+	public void onComponentTag(Component component, ComponentTag tag)
+	{
 		super.onComponentTag(component, tag);
 
 		tag.put(WIDTH, getWidth());

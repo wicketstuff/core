@@ -45,7 +45,7 @@ public class GMarker extends GOverlay
 	public GMarker(GLatLng gLatLng, GMarkerOptions options)
 	{
 		super();
-		this.latLng = gLatLng;
+		latLng = gLatLng;
 		this.options = options;
 	}
 
@@ -56,12 +56,12 @@ public class GMarker extends GOverlay
 
 	public void setLatLng(GLatLng gLatLng)
 	{
-		this.latLng = gLatLng;
+		latLng = gLatLng;
 	}
 
 	public GMarkerOptions getMarkerOptions()
 	{
-		return this.options;
+		return options;
 	}
 
 	@Override
@@ -79,6 +79,8 @@ public class GMarker extends GOverlay
 	protected void updateOnAjaxCall(AjaxRequestTarget target, GEvent overlayEvent)
 	{
 		Request request = RequestCycle.get().getRequest();
-		this.latLng = GLatLng.parse(request.getRequestParameters().getParameterValue("overlay.latLng").toString());
+		latLng = GLatLng.parse(request.getRequestParameters()
+			.getParameterValue("overlay.latLng")
+			.toString());
 	}
 }

@@ -8,60 +8,72 @@ import java.awt.Color;
 /**
  * @author Daniel Spiewak
  */
-public class ShapeMarker implements IShapeMarker {
+public class ShapeMarker implements IShapeMarker
+{
 
-    private static final long serialVersionUID = 1460707384284308604L;
-    private Color color;
-    private int index = -1;
-    private double point = -1;
-    private int size = -1;
-    private MarkerType type;
+	private static final long serialVersionUID = 1460707384284308604L;
+	private Color color;
+	private int index = -1;
+	private double point = -1;
+	private int size = -1;
+	private MarkerType type;
 
-    public ShapeMarker(MarkerType type, Color color, int index, double point, int size) {
-        this.type = type;
-        this.color = color;
-        this.index = index;
-        this.point = point;
-        this.size = size;
-    }
+	public ShapeMarker(MarkerType type, Color color, int index, double point, int size)
+	{
+		this.type = type;
+		this.color = color;
+		this.index = index;
+		this.point = point;
+		this.size = size;
+	}
 
-    public Color getColor() {
-        return color;
-    }
+	public Color getColor()
+	{
+		return color;
+	}
 
-    public int getIndex() {
-        return index;
-    }
+	public int getIndex()
+	{
+		return index;
+	}
 
-    public double getPoint() {
-        return point;
-    }
+	public double getPoint()
+	{
+		return point;
+	}
 
-    public int getSize() {
-        return size;
-    }
+	public int getSize()
+	{
+		return size;
+	}
 
-    public MarkerType getType() {
-        return type;
-    }
+	public MarkerType getType()
+	{
+		return type;
+	}
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
+	public void setColor(Color color)
+	{
+		this.color = color;
+	}
 
-    public void setIndex(int index) {
-        this.index = index;
-    }
+	public void setIndex(int index)
+	{
+		this.index = index;
+	}
 
-    public void setPoint(double point) {
-        this.point = point;
-    }
+	public void setPoint(double point)
+	{
+		this.point = point;
+	}
 
-    public void setSize(int size) {
-        this.size = size;
-    }
+	public void setSize(int size)
+	{
+		this.size = size;
+	}
 
-    public void setType(MarkerType type) {
-        this.type = type;
-    }
+	public void setType(MarkerType type)
+	{
+		this.type = type;
+	}
 }

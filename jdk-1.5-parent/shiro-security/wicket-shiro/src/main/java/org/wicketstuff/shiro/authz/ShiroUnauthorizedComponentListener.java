@@ -27,9 +27,8 @@ import org.apache.wicket.authorization.IUnauthorizedComponentInstantiationListen
 import org.wicketstuff.shiro.annotation.AnnotationsShiroAuthorizationStrategy;
 import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
 
-public class ShiroUnauthorizedComponentListener
-	implements
-		IUnauthorizedComponentInstantiationListener
+public class ShiroUnauthorizedComponentListener implements
+	IUnauthorizedComponentInstantiationListener
 {
 	private final Class<? extends Page> loginPage;
 	private final Class<? extends Page> unauthorizedPage;

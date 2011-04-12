@@ -23,31 +23,34 @@ import org.wicketstuff.progressbar.spring.ITaskService;
 import org.wicketstuff.progressbar.spring.TaskService;
 
 /**
- * Wicket application for progess bar examples. For illustration purposes, the
- * task service is stored in the application, this should certainly be done with
- * a spring context.
- *
- *
+ * Wicket application for progess bar examples. For illustration purposes, the task service is
+ * stored in the application, this should certainly be done with a spring context.
+ * 
+ * 
  * @author Christopher Hlubek (hlubek)
- *
+ * 
  */
-public class ExampleApplication extends WebApplication {
+public class ExampleApplication extends WebApplication
+{
 
 	private final ITaskService taskService;
 
 	/**
 	 *
 	 */
-	public ExampleApplication() {
+	public ExampleApplication()
+	{
 		taskService = new TaskService(new AsynchronousExecutor());
 	}
 
 	@Override
-	public Class<? extends WebPage> getHomePage() {
+	public Class<? extends WebPage> getHomePage()
+	{
 		return SimpleProgressExamplePage.class;
 	}
 
-	public synchronized ITaskService getTaskService() {
+	public synchronized ITaskService getTaskService()
+	{
 		return taskService;
 	}
 

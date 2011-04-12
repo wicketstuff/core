@@ -75,7 +75,7 @@ public class ListViewFormComponentReuseManagerPage extends WebPage
 			public void onClick()
 			{
 				IRequestHandler handler = new TableComponentAsXlsHandler(form.get("rowsList"),
-						"example.xls");
+					"example.xls");
 				RequestCycle.get().scheduleRequestHandlerAfterCurrent(handler);
 			}
 		});
@@ -95,9 +95,9 @@ public class ListViewFormComponentReuseManagerPage extends WebPage
 					}
 				}));
 				ListViewFormComponentReuseManager.addOrReuse(item, new RequiredTextField<String>(
-						"key", new PropertyModel<String>(row, "key")));
+					"key", new PropertyModel<String>(row, "key")));
 				ListViewFormComponentReuseManager.addOrReuse(item, new TextField<String>("value",
-						new PropertyModel<String>(row, "value")));
+					new PropertyModel<String>(row, "value")));
 
 				item.add(new SubmitLink("removeRowLink")
 				{

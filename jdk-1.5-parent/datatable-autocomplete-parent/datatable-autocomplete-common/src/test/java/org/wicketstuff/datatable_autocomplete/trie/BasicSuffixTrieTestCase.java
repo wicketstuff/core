@@ -30,7 +30,8 @@ import org.apache.commons.collections.CollectionUtils;
  * @author mocleiri
  */
 
-public class BasicSuffixTrieTestCase extends TestCase {
+public class BasicSuffixTrieTestCase extends TestCase
+{
 
 	private PatriciaTrie<String> trie;
 	private List<String> dataList;
@@ -41,51 +42,60 @@ public class BasicSuffixTrieTestCase extends TestCase {
 	/**
 	 * 
 	 */
-	public BasicSuffixTrieTestCase() {
+	public BasicSuffixTrieTestCase()
+	{
 		init();
 	}
 
 	/**
 	 * @param name
 	 */
-	public BasicSuffixTrieTestCase(String name) {
+	public BasicSuffixTrieTestCase(String name)
+	{
 		super(name);
 		init();
 	}
 
-	protected void init() {
+	protected void init()
+	{
 
-		this.trie = new PatriciaTrie<String>(new AbstractTrieConfiguration<String>() {
+		trie = new PatriciaTrie<String>(new AbstractTrieConfiguration<String>()
+		{
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration
+			 * #getWord(java.lang.Object)
+			 */
+			public String getWord(String ctx)
+			{
+				return ctx;
+			}
 
 			/*
 			 * (non-Javadoc)
 			 * 
 			 * @see
-			 * org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration
-			 * #getWord(java.lang.Object)
+			 * org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#isIndexCaseSensitive()
 			 */
-			public String getWord(String ctx) {
-				return ctx;
-			}
-
-			/* (non-Javadoc)
-			 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#isIndexCaseSensitive()
-			 */
-			public boolean isIndexCaseSensitive() {
+			public boolean isIndexCaseSensitive()
+			{
 				// default to no insensitivity
 				return false;
 			}
 
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#isSuffixTree()
 			 */
-			public boolean isSuffixTree() {
+			public boolean isSuffixTree()
+			{
 				// TODO Auto-generated method stub
 				return true;
 			}
-			
-			
-			
+
 
 		});
 
@@ -94,13 +104,14 @@ public class BasicSuffixTrieTestCase extends TestCase {
 		doubleZeroWordList = new ArrayList<String>();
 		oneWordList = new ArrayList<String>();
 
-		for (int i = 1000; i < 9999; i++) {
+		for (int i = 1000; i < 9999; i++)
+		{
 
 			String stringValue = String.valueOf(i);
 
 			if (stringValue.contains("00"))
 				doubleZeroWordList.add(stringValue);
-			
+
 			if (stringValue.contains("1"))
 				oneWordList.add(stringValue);
 
@@ -109,11 +120,11 @@ public class BasicSuffixTrieTestCase extends TestCase {
 		}
 
 		// for (char c = 'a'; c <= 'z'; c++) {
-		//			
+		//
 		// for (char b = 'a'; b <= 'z'; b++) {
-		//			
+		//
 		// String value = String.valueOf(c) + String.valueOf(b);
-		//				
+		//
 		// trie.index(value);
 		// dataList.add(value);
 		// }
@@ -124,7 +135,8 @@ public class BasicSuffixTrieTestCase extends TestCase {
 
 	}
 
-	public void testMissingValues() {
+	public void testMissingValues()
+	{
 
 		List<String> wordList = trie.getWordList("");
 
@@ -132,83 +144,84 @@ public class BasicSuffixTrieTestCase extends TestCase {
 
 	}
 
-	public void testAnyDoubleZeroMatch() {
+	public void testAnyDoubleZeroMatch()
+	{
 
 		List<String> wordList = trie.getWordList("00");
 
 		Collection<String> disjunction = CollectionUtils.disjunction(wordList, doubleZeroWordList);
-		
-		for (String string : disjunction) {
+
+		for (String string : disjunction)
+		{
 			System.out.println("extra = " + string);
 		}
-		
-	
-		
+
+
 		assertEquals(doubleZeroWordList.size(), wordList.size());
-		
-	
-		
-		
-		
+
+
 	}
-	
-	public void testAnyOneMatch () {
-		
+
+	public void testAnyOneMatch()
+	{
+
 		List<String> wordList = trie.getWordList("1");
 
 		Collection<String> disjunction = CollectionUtils.disjunction(wordList, oneWordList);
-		
-		for (String string : disjunction) {
+
+		for (String string : disjunction)
+		{
 			System.out.println("extra = " + string);
 		}
-		
-	
-		
+
+
 		assertEquals(oneWordList.size(), wordList.size());
-		
-		
+
+
 	}
 
 	// public void testContainsAll() {
-	//		
+	//
 	// for (char c = 'a'; c <= 'z'; c++) {
-	//			
+	//
 	// for (char b = 'a'; b <= 'z'; b++) {
-	//				
+	//
 	// List<String> wordList = trie.getWordList(String.valueOf(c) +
 	// String.valueOf(b));
 	// t
 	// assertTrue(wordList.size() == 1);
-	//				
+	//
 	// }
 	// }
 	// }
 
 	/**
-	 * Verify that all the words that were indexed into the Trie can be
-	 * retrieved.
+	 * Verify that all the words that were indexed into the Trie can be retrieved.
 	 */
-	public void testValueTrie() {
+	public void testValueTrie()
+	{
 
 		List<String> wordList = trie.getWordList("");
 
 		Collections.sort(wordList);
 		Collections.sort(dataList);
 
-		for (String source : dataList) {
+		for (String source : dataList)
+		{
 
-			if (!wordList.contains(source)) {
-				System.out
-						.println(source + " is not contained in the wordlist");
+			if (!wordList.contains(source))
+			{
+				System.out.println(source + " is not contained in the wordlist");
 			}
 
 		}
 
-		for (int i = 0; i < dataList.size(); i++) {
+		for (int i = 0; i < dataList.size(); i++)
+		{
 
 			// if (wordList.size() > i)
 			// log.info("["+i+"] index = " + wordList.get(i));
-			//			
+			//
 			// log.info("["+i+"] data = " + dataList.get(i));
 
 			String word = wordList.get(i);

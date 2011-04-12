@@ -9,10 +9,12 @@ import org.apache.wicket.protocol.http.WebApplication;
 /**
  * @author Daniel Spiewak
  */
-public class ChartsApplication extends WebApplication {
+public class ChartsApplication extends WebApplication
+{
 
-    @Override
-    public Class<? extends WebPage> getHomePage() {
-        return Home.class;
-    }
+	@Override
+	public Class<? extends WebPage> getHomePage()
+	{
+		return Home.class;
+	}
 }

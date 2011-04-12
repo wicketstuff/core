@@ -79,7 +79,7 @@ public class TestActionFactory implements ActionFactory
 	public TestActionFactory(Object key)
 	{
 		super();
-		this.factoryKey = key;
+		factoryKey = key;
 		Actions.registerActionFactory(key, this);
 		try
 		{

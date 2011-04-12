@@ -30,17 +30,21 @@ import org.wicketstuff.jasperreports.handlers.PdfResourceHandler;
  * 
  * @author Eelco Hillenius
  */
-public class SimplePdfPage extends WebPage {
+public class SimplePdfPage extends WebPage
+{
 	/**
 	 * Constructor.
 	 */
-	public SimplePdfPage() {
-		ServletContext context = ((WebApplication) getApplication()).getServletContext();
+	public SimplePdfPage()
+	{
+		ServletContext context = ((WebApplication)getApplication()).getServletContext();
 		final File reportFile = new File(context.getRealPath("/reports/WebappReport.jasper"));
 
 		final Map parameters = new HashMap();
 		parameters.put("BaseDir", new File(context.getRealPath("/reports")));
-		JRResource pdfResource = new JRConcreteResource(reportFile, new PdfResourceHandler()).setReportParameters(parameters).setReportDataSource(new WebappDataSource());
+		JRResource pdfResource = new JRConcreteResource(reportFile, new PdfResourceHandler()).setReportParameters(
+			parameters)
+			.setReportDataSource(new WebappDataSource());
 		add(new EmbeddedJRReport("report", pdfResource));
 	}
 
@@ -48,7 +52,8 @@ public class SimplePdfPage extends WebPage {
 	 * @see org.apache.wicket.Component#isVersioned()
 	 */
 	@Override
-	public boolean isVersioned() {
+	public boolean isVersioned()
+	{
 		return false;
 	}
 }

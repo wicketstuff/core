@@ -29,7 +29,6 @@ import org.wicketstuff.shiro.example.sprhib.service.UserService;
 import org.wicketstuff.shiro.page.LogoutPage;
 
 
-
 public class UserAuthHeader extends Panel
 {
 
@@ -38,39 +37,47 @@ public class UserAuthHeader extends Panel
 
 	public UserAuthHeader(String id, Class<? extends Page> loginPage)
 	{
-	  super( id );
+		super(id);
 
-	  // Welcome with logout
-	  WebMarkupContainer welcome = new WebMarkupContainer( "welcome") {
-	    @Override
-      public boolean isVisible() {
-	      return SecurityUtils.getSubject().getPrincipal() != null;
-	    }
-	  };
-	  welcome.add( new Label( "name", new AbstractReadOnlyModel<String>() {
-      @Override
-      public String getObject() {
-    	  User user = userService.getCurrentUser();
-    	  if (user != null) {
-    		  return user.getUsername();
-    	  }
-    	  else {
-    		  return "Unknown User";
-    	  }
-      }
-	  }) );
-	  welcome.add( new BookmarkablePageLink<Void>( "link", LogoutPage.class ) );
-	  add( welcome );
+		// Welcome with logout
+		WebMarkupContainer welcome = new WebMarkupContainer("welcome")
+		{
+			@Override
+			public boolean isVisible()
+			{
+				return SecurityUtils.getSubject().getPrincipal() != null;
+			}
+		};
+		welcome.add(new Label("name", new AbstractReadOnlyModel<String>()
+		{
+			@Override
+			public String getObject()
+			{
+				User user = userService.getCurrentUser();
+				if (user != null)
+				{
+					return user.getUsername();
+				}
+				else
+				{
+					return "Unknown User";
+				}
+			}
+		}));
+		welcome.add(new BookmarkablePageLink<Void>("link", LogoutPage.class));
+		add(welcome);
 
 
-	  // Login
-    WebMarkupContainer login = new WebMarkupContainer( "login") {
-      @Override
-      public boolean isVisible() {
-        return SecurityUtils.getSubject().getPrincipal() == null;
-      }
-    };
-    login.add( new BookmarkablePageLink<Void>( "link", loginPage ) );
-    add( login );
+		// Login
+		WebMarkupContainer login = new WebMarkupContainer("login")
+		{
+			@Override
+			public boolean isVisible()
+			{
+				return SecurityUtils.getSubject().getPrincipal() == null;
+			}
+		};
+		login.add(new BookmarkablePageLink<Void>("link", loginPage));
+		add(login);
 	}
 }

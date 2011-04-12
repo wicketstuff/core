@@ -63,7 +63,7 @@ public class TestAction extends AbstractWaspAction
 		this.key = key;
 		if (action < 0)
 			throw new IllegalArgumentException(action + " must be >= 0");
-		this.actions = action;
+		actions = action;
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class TestAction extends AbstractWaspAction
 	 */
 	public final boolean implies(int otherActions)
 	{
-		return ((this.actions & otherActions) == otherActions);
+		return ((actions & otherActions) == otherActions);
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class TestAction extends AbstractWaspAction
 	 */
 	public final WaspAction add(int otherActions)
 	{
-		return newInstance(this.actions | otherActions);
+		return newInstance(actions | otherActions);
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class TestAction extends AbstractWaspAction
 	public final TestAction remove(int otherActions)
 	{
 		if (implies(otherActions))
-			return newInstance(this.actions - otherActions);
+			return newInstance(actions - otherActions);
 		return this;
 	}
 

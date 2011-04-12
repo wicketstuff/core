@@ -34,8 +34,7 @@ import org.wicketstuff.jasperreports.handlers.PdfResourceHandler;
 public final class JRPdfResource extends JRConcreteResource<PdfResourceHandler>
 {
 	/**
-	 * Construct without a report. You must provide a report before you can use
-	 * this resource.
+	 * Construct without a report. You must provide a report before you can use this resource.
 	 */
 	public JRPdfResource()
 	{

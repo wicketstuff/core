@@ -42,15 +42,15 @@ import org.wicketstuff.datatable_autocomplete.table.SelectableTableViewPanel;
  * @author mocleiri
  * 
  */
-public class AutoCompletingPanel<T> extends Panel {
+public class AutoCompletingPanel<T> extends Panel
+{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6173248750432002480L;
 
-	private static final org.slf4j.Logger log = LoggerFactory
-			.getLogger(AutoCompletingPanel.class);
+	private static final org.slf4j.Logger log = LoggerFactory.getLogger(AutoCompletingPanel.class);
 
 	private SelectableTableViewPanel<T> viewPanel;
 
@@ -59,10 +59,10 @@ public class AutoCompletingPanel<T> extends Panel {
 	private boolean initialRenderMode = false;
 
 	private static final ResourceReference CSS = new CompressedResourceReference(
-			AutoCompletingPanel.class, "dta_auto_complete_overlay.css");
+		AutoCompletingPanel.class, "dta_auto_complete_overlay.css");
 
 	private static final ResourceReference TABLE_CSS = new CompressedResourceReference(
-			AutoCompletingPanel.class, "dta_autocomplete_table.css");
+		AutoCompletingPanel.class, "dta_autocomplete_table.css");
 
 	private Label theLabel;
 
@@ -72,10 +72,12 @@ public class AutoCompletingPanel<T> extends Panel {
 	 * @param id
 	 * @param ctx
 	 */
-	public AutoCompletingPanel(String id, IModel<String> fieldStringModel,
-			IColumn<?>[] columns, SortableDataProvider<T> aliasDataProvider,
-			ITableRowSelectionHandler<T> rowSelectionHandler, IAutocompleteControlPanelProvider controlPanelProvider,
-			IAutocompleteRenderingHints renderingHints) {
+	public AutoCompletingPanel(String id, IModel<String> fieldStringModel, IColumn<?>[] columns,
+		SortableDataProvider<T> aliasDataProvider,
+		ITableRowSelectionHandler<T> rowSelectionHandler,
+		IAutocompleteControlPanelProvider controlPanelProvider,
+		IAutocompleteRenderingHints renderingHints)
+	{
 
 		super(id, new Model());
 
@@ -84,7 +86,8 @@ public class AutoCompletingPanel<T> extends Panel {
 
 		this.provider = aliasDataProvider;
 
-		add(new Behavior() {
+		add(new Behavior()
+		{
 
 			/**
 			 * 
@@ -92,39 +95,44 @@ public class AutoCompletingPanel<T> extends Panel {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void renderHead(Component c, IHeaderResponse response) {
+			public void renderHead(Component c, IHeaderResponse response)
+			{
 				response.renderCSSReference(CSS);
-			}}); 
-		
+			}
+		});
+
 		Component controlPanel = controlPanelProvider.getPanel(this, "controlPanel");
-		
+
 		if (controlPanel == null)
 			controlPanel = new EmptyPanel("controlPanel");
-		
+
 		add(controlPanel);
 
-		viewPanel = new SelectableTableViewPanel<T>("view", TABLE_CSS,
-				"dta_data_table", "{title}", columns, aliasDataProvider,
-				 false, rowSelectionHandler, renderingHints);
+		viewPanel = new SelectableTableViewPanel<T>("view", TABLE_CSS, "dta_data_table", "{title}",
+			columns, aliasDataProvider, false, rowSelectionHandler, renderingHints);
 
 		DTADataTable<T> dataTable = viewPanel.getDataTable();
 
 		// redo the table on each update.
 		dataTable.setItemReuseStrategy(new DefaultItemReuseStrategy());
 
-//		dataTable.setDisableRowHighlight(true);
+// dataTable.setDisableRowHighlight(true);
 
 		add(viewPanel);
 
-		if (renderingHints.isVisibleOnZeroMatches()) {
+		if (renderingHints.isVisibleOnZeroMatches())
+		{
 			viewPanel.setHideIfNoResults(false);
-		} else {
+		}
+		else
+		{
 			viewPanel.setHideIfNoResults(true);
 		}
 
 		add(theLabel = new Label("label_close", "Close"));
 
-		add(closeButton = new Button("close_button", new Model("x")) {
+		add(closeButton = new Button("close_button", new Model("x"))
+		{
 
 			/**
 			 * 
@@ -132,7 +140,8 @@ public class AutoCompletingPanel<T> extends Panel {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onSubmit() {
+			public void onSubmit()
+			{
 
 				// does nothing since it is a client side only action.
 			}
@@ -141,7 +150,8 @@ public class AutoCompletingPanel<T> extends Panel {
 		setOutputMarkupId(true);
 		setOutputMarkupPlaceholderTag(true);
 
-		closeButton.add(new AttributeModifier("onclick", true, new AbstractReadOnlyModel<String>() {
+		closeButton.add(new AttributeModifier("onclick", true, new AbstractReadOnlyModel<String>()
+		{
 
 			/**
 			 * 
@@ -149,33 +159,38 @@ public class AutoCompletingPanel<T> extends Panel {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public String getObject() {
-				return "document.getElementById('" + AutoCompletingPanel.this.getMarkupId()	+ "').style.display='none';";
+			public String getObject()
+			{
+				return "document.getElementById('" + AutoCompletingPanel.this.getMarkupId() +
+					"').style.display='none';";
 			}
-			
+
 		}));
-				
+
 
 	}
 
 
-	public AutoCompletingPanel(String id, IModel<String> fieldStringModel,
-			int resultsToShow, IColumn<?>[] columns,
-			SortableDataProvider<T> dataProvider,
-			ITableRowSelectionHandler<T> rowSelectionHandler, IAutocompleteControlPanelProvider controlPanelProvider, boolean paginationEnabled) {
-		
-		this (id, fieldStringModel, columns,  dataProvider, rowSelectionHandler, controlPanelProvider, new DefaultAutocompleteRenderingHints(resultsToShow, paginationEnabled));
+	public AutoCompletingPanel(String id, IModel<String> fieldStringModel, int resultsToShow,
+		IColumn<?>[] columns, SortableDataProvider<T> dataProvider,
+		ITableRowSelectionHandler<T> rowSelectionHandler,
+		IAutocompleteControlPanelProvider controlPanelProvider, boolean paginationEnabled)
+	{
+
+		this(id, fieldStringModel, columns, dataProvider, rowSelectionHandler,
+			controlPanelProvider, new DefaultAutocompleteRenderingHints(resultsToShow,
+				paginationEnabled));
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.apache.wicket.markup.html.form.FormComponentPanel#onComponentTag(
+	 * @see org.apache.wicket.markup.html.form.FormComponentPanel#onComponentTag(
 	 * org.apache.wicket.markup.ComponentTag)
 	 */
 	@Override
-	protected void onComponentTag(ComponentTag tag) {
+	protected void onComponentTag(ComponentTag tag)
+	{
 
 		tag.put("class", "dta_wicket_ajax_panel_overlay");
 
@@ -183,11 +198,11 @@ public class AutoCompletingPanel<T> extends Panel {
 	}
 
 	/**
-	 * if value is true then on the inial non ajax rendering this component will
-	 * be invisible.
+	 * if value is true then on the inial non ajax rendering this component will be invisible.
 	 * 
 	 */
-	public void setInitialRenderDisabledMode(boolean value) {
+	public void setInitialRenderDisabledMode(boolean value)
+	{
 
 		this.initialRenderMode = value;
 
@@ -199,13 +214,16 @@ public class AutoCompletingPanel<T> extends Panel {
 	 * @see org.apache.wicket.Component#onBeforeRender()
 	 */
 	@Override
-	protected void onBeforeRender() {
+	protected void onBeforeRender()
+	{
 
-		if (!initialRenderMode) {
+		if (!initialRenderMode)
+		{
 			this.viewPanel.updateVisibility();
 			setVisible(this.viewPanel.isVisible());
 
-		} else
+		}
+		else
 			setVisible(false);
 
 		super.onBeforeRender();

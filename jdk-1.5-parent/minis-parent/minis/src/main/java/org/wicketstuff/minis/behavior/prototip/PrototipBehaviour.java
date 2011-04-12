@@ -31,7 +31,7 @@ import org.apache.wicket.request.resource.CompressedResourceReference;
  * 
  * 
  * @author Richard Wilkinson
- *
+ * 
  */
 public class PrototipBehaviour extends Behavior
 {
@@ -46,13 +46,14 @@ public class PrototipBehaviour extends Behavior
 	protected boolean onLoad = true;
 
 	/**
-	 * Made this static as it is very unlikely that you would want different versions of prototip.js across your site
+	 * Made this static as it is very unlikely that you would want different versions of prototip.js
+	 * across your site
 	 */
 	protected static JS_TYPE selectedJsType = JS_TYPE.MIN;
 
 	/**
-	 * Default constructor
-	 * If you use this then you must set either a string, or a component manually
+	 * Default constructor If you use this then you must set either a string, or a component
+	 * manually
 	 */
 	public PrototipBehaviour()
 	{
@@ -60,6 +61,7 @@ public class PrototipBehaviour extends Behavior
 
 	/**
 	 * Provide a simple string as a tooltip
+	 * 
 	 * @param tooltip
 	 */
 	public PrototipBehaviour(String tooltip)
@@ -69,26 +71,27 @@ public class PrototipBehaviour extends Behavior
 
 	/**
 	 * Provide a component to show as the tool tip (eg a panel)
+	 * 
 	 * @param panel
 	 */
 	public PrototipBehaviour(Component panel)
 	{
-		this.tooltipComponent = panel;
+		tooltipComponent = panel;
 		panel.setOutputMarkupId(true);
 	}
 
 	/**
-	 * Add the required css and js files to the page
-	 * Permission to distribute prototip files given by prototip creator Nick Stakenburg (http://www.nickstakenburg.com)
+	 * Add the required css and js files to the page Permission to distribute prototip files given
+	 * by prototip creator Nick Stakenburg (http://www.nickstakenburg.com)
 	 * 
 	 * Also add the javascript to create the tooltip
 	 * 
-	 *  @see org.apache.wicket.markup.html.IHeaderContributor#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+	 * @see org.apache.wicket.markup.html.IHeaderContributor#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
 	public void renderHead(Component c, IHeaderResponse response)
 	{
-		if(onLoad)
+		if (onLoad)
 		{
 			response.renderOnLoadJavaScript(toJavascript());
 		}
@@ -96,40 +99,45 @@ public class PrototipBehaviour extends Behavior
 		{
 			response.renderOnDomReadyJavaScript(toJavascript());
 		}
-		if(!overrideHeaderContributor)
+		if (!overrideHeaderContributor)
 		{
-			response.renderCSSReference(new CompressedResourceReference(PrototipBehaviour.class, "prototip.css"), "screen");
-			switch(selectedJsType)
+			response.renderCSSReference(new CompressedResourceReference(PrototipBehaviour.class,
+				"prototip.css"), "screen");
+			switch (selectedJsType)
 			{
-			case NORMAL:
-				response.renderJavaScriptReference(new CompressedResourceReference(PrototipBehaviour.class, "prototip.js"));
-				break;
-			case MIN:
-				response.renderJavaScriptReference(new CompressedResourceReference(PrototipBehaviour.class, "prototip-min.js"));
-				break;
+				case NORMAL :
+					response.renderJavaScriptReference(new CompressedResourceReference(
+						PrototipBehaviour.class, "prototip.js"));
+					break;
+				case MIN :
+					response.renderJavaScriptReference(new CompressedResourceReference(
+						PrototipBehaviour.class, "prototip-min.js"));
+					break;
 			}
 		}
 	}
 
 	/**
-	 * override bind so that the component you add this behavior to becomes the component the tooltip applies to
+	 * override bind so that the component you add this behavior to becomes the component the
+	 * tooltip applies to
 	 * 
 	 */
 	@Override
-	public void bind(Component component) 
+	public void bind(Component component)
 	{
 		super.bind(component);
-		this.source = component;
+		source = component;
 		source.setOutputMarkupId(true);
 	}
 
 	/**
 	 * Given an ajax request target, remove this tip from the page
+	 * 
 	 * @param target
 	 */
-	public void remove(AjaxRequestTarget target) 
+	public void remove(AjaxRequestTarget target)
 	{
-		if(source != null)
+		if (source != null)
 		{
 			StringBuilder removeJs = new StringBuilder();
 			removeJs.append("Tips.remove($('").append(source.getMarkupId()).append("'));");
@@ -139,9 +147,10 @@ public class PrototipBehaviour extends Behavior
 
 	/**
 	 * Given an ajax request target, hide this tip on the page
+	 * 
 	 * @param target
 	 */
-	public void hide(AjaxRequestTarget target )
+	public void hide(AjaxRequestTarget target)
 	{
 		if (source != null)
 		{
@@ -153,25 +162,34 @@ public class PrototipBehaviour extends Behavior
 
 	/**
 	 * Get string to add the prototip to the page
+	 * 
 	 * @return the String
 	 */
 	protected String toJavascript()
 	{
 		StringBuilder script = new StringBuilder();
 		String optionString = null;
-		if(settings != null)
+		if (settings != null)
 		{
 			optionString = settings.getOptionsString(title);
 		}
-		if(tooltip != null)
+		if (tooltip != null)
 		{
-			script.append("new Tip($('").append(source.getMarkupId()).append("'),'").append(tooltip).append("'");
+			script.append("new Tip($('")
+				.append(source.getMarkupId())
+				.append("'),'")
+				.append(tooltip)
+				.append("'");
 		}
 		else if (tooltipComponent != null)
 		{
-			script.append("new Tip($('").append(source.getMarkupId()).append("'),$('").append(tooltipComponent.getMarkupId()).append("')");
+			script.append("new Tip($('")
+				.append(source.getMarkupId())
+				.append("'),$('")
+				.append(tooltipComponent.getMarkupId())
+				.append("')");
 		}
-		if(optionString != null && !optionString.equals(""))
+		if (optionString != null && !optionString.equals(""))
 		{
 			script.append(", ").append(optionString);
 		}
@@ -182,15 +200,18 @@ public class PrototipBehaviour extends Behavior
 	/**
 	 * @return the source
 	 */
-	public Component getSource() {
+	public Component getSource()
+	{
 		return source;
 	}
 
 	/**
-	 * @param source the source to set
+	 * @param source
+	 *            the source to set
 	 * @return this object
 	 */
-	public PrototipBehaviour setSource(Component source) {
+	public PrototipBehaviour setSource(Component source)
+	{
 		this.source = source;
 		return this;
 	}
@@ -198,15 +219,18 @@ public class PrototipBehaviour extends Behavior
 	/**
 	 * @return the tooltip
 	 */
-	public String getTooltip() {
+	public String getTooltip()
+	{
 		return tooltip;
 	}
 
 	/**
-	 * @param tooltip the tooltip to set
+	 * @param tooltip
+	 *            the tooltip to set
 	 * @return this object
 	 */
-	public PrototipBehaviour setTooltip(String tooltip) {
+	public PrototipBehaviour setTooltip(String tooltip)
+	{
 		this.tooltip = tooltip;
 		tooltipComponent = null;
 		return this;
@@ -215,15 +239,18 @@ public class PrototipBehaviour extends Behavior
 	/**
 	 * @return the tooltip component
 	 */
-	public Component getTooltipComponent() {
+	public Component getTooltipComponent()
+	{
 		return tooltipComponent;
 	}
 
 	/**
-	 * @param panel the panel to set
+	 * @param panel
+	 *            the panel to set
 	 * @return this object
 	 */
-	public PrototipBehaviour setTooltipComponent(Component tooltipComponent) {
+	public PrototipBehaviour setTooltipComponent(Component tooltipComponent)
+	{
 		this.tooltipComponent = tooltipComponent;
 		this.tooltipComponent.setOutputMarkupId(true);
 		tooltip = null;
@@ -233,15 +260,18 @@ public class PrototipBehaviour extends Behavior
 	/**
 	 * @return the settings
 	 */
-	public PrototipSettings getSettings() {
+	public PrototipSettings getSettings()
+	{
 		return settings;
 	}
 
 	/**
-	 * @param settings the settings to set
+	 * @param settings
+	 *            the settings to set
 	 * @return this object
 	 */
-	public PrototipBehaviour setSettings(PrototipSettings settings) {
+	public PrototipBehaviour setSettings(PrototipSettings settings)
+	{
 		this.settings = settings;
 		return this;
 	}
@@ -249,16 +279,21 @@ public class PrototipBehaviour extends Behavior
 	/**
 	 * @return the overrideHeaderContributor
 	 */
-	public boolean isOverrideHeaderContributor() {
+	public boolean isOverrideHeaderContributor()
+	{
 		return overrideHeaderContributor;
 	}
 
 	/**
-	 * If you do not want this behavour to add the required javascript and css files to the header set this to true (default false)
-	 * @param overrideHeaderContributor the overrideHeaderContributor to set
+	 * If you do not want this behavour to add the required javascript and css files to the header
+	 * set this to true (default false)
+	 * 
+	 * @param overrideHeaderContributor
+	 *            the overrideHeaderContributor to set
 	 * @return this object
 	 */
-	public PrototipBehaviour setOverrideHeaderContributor(boolean overrideHeaderContributor) {
+	public PrototipBehaviour setOverrideHeaderContributor(boolean overrideHeaderContributor)
+	{
 		this.overrideHeaderContributor = overrideHeaderContributor;
 		return this;
 	}
@@ -272,7 +307,8 @@ public class PrototipBehaviour extends Behavior
 	}
 
 	/**
-	 * @param title the title to set
+	 * @param title
+	 *            the title to set
 	 * @return this object
 	 */
 	public PrototipBehaviour setTitle(String title)
@@ -284,40 +320,46 @@ public class PrototipBehaviour extends Behavior
 	/**
 	 * @return the selectedJsType
 	 */
-	public static JS_TYPE getSelectedJsType() {
+	public static JS_TYPE getSelectedJsType()
+	{
 		return selectedJsType;
 	}
 
 	/**
-	 * There are 3 different js files which can be included:
-	 * 	 a normal uncompressed one
-	 * 	 a minified one
-	 * 	 a minified and gziped one
-	 *
-	 *   To override the default (the minified one) set this parameter
-	 *   
-	 *   This is a static method and as such affects all PrototipBehaviour in the system,
-	 *    this is so that you do not have to set the type for every PrototipBehaviour that you use (which is tedious)
-	 *   
-	 * @param selectedJsType the selectedJsType to set
+	 * There are 3 different js files which can be included: a normal uncompressed one a minified
+	 * one a minified and gziped one
+	 * 
+	 * To override the default (the minified one) set this parameter
+	 * 
+	 * This is a static method and as such affects all PrototipBehaviour in the system, this is so
+	 * that you do not have to set the type for every PrototipBehaviour that you use (which is
+	 * tedious)
+	 * 
+	 * @param selectedJsType
+	 *            the selectedJsType to set
 	 */
-	public static void setSelectedJsType(JS_TYPE selectedJsType) {
+	public static void setSelectedJsType(JS_TYPE selectedJsType)
+	{
 		PrototipBehaviour.selectedJsType = selectedJsType;
 	}
 
 	/**
 	 * Is the javascript set to load 'onload' if false then it will be 'ondomready'
+	 * 
 	 * @return
 	 */
-	public boolean isOnLoad() {
+	public boolean isOnLoad()
+	{
 		return onLoad;
 	}
 
 	/**
 	 * Is the javascript set to load 'onload' if false then it will be 'ondomready'
+	 * 
 	 * @param onLoad
 	 */
-	public void setOnLoad(boolean onLoad) {
+	public void setOnLoad(boolean onLoad)
+	{
 		this.onLoad = onLoad;
 	}
 }

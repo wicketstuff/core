@@ -13,10 +13,11 @@ import org.wicketstuff.jslibraries.JSLib;
  * 
  * @deprecated
  */
-public final class PrototypeResourceReference extends ResourceReference {
+@Deprecated
+public final class PrototypeResourceReference extends ResourceReference
+{
 
-	private static final Logger log = LoggerFactory
-			.getLogger(PrototypeResourceReference.class);
+	private static final Logger log = LoggerFactory.getLogger(PrototypeResourceReference.class);
 
 	/**
 	 * Singleton instance of this reference.
@@ -28,12 +29,14 @@ public final class PrototypeResourceReference extends ResourceReference {
 	 */
 	public static final String NAME = "prototype.js";
 
-	private PrototypeResourceReference() {
+	private PrototypeResourceReference()
+	{
 		super(PrototypeResourceReference.class, NAME);
 	}
 
 	@Override
-	public IResource getResource() {
+	public IResource getResource()
+	{
 		return new DefaultPrototypeResource();
 	}
 
@@ -44,9 +47,9 @@ public final class PrototypeResourceReference extends ResourceReference {
 	 * @deprecated use
 	 *             {@link JSLib#setOverrideProviders(Application, org.wicketstuff.jslibraries.Provider...)}
 	 */
-	public static void install(final Application application,
-			final AbstractResource resource) {
-		log
-				.warn("wicketstuff-prototype is deprecated: Change your dependency to wicketstuff-jslibraries if you want to provide your own prototype.js - see JSLib#setOverrideProviders()");
+	@Deprecated
+	public static void install(final Application application, final AbstractResource resource)
+	{
+		log.warn("wicketstuff-prototype is deprecated: Change your dependency to wicketstuff-jslibraries if you want to provide your own prototype.js - see JSLib#setOverrideProviders()");
 	}
 }

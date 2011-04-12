@@ -35,14 +35,16 @@ import org.wicketstuff.progressbar.Progression;
 import org.wicketstuff.progressbar.ProgressionModel;
 import org.wicketstuff.progressbar.spring.Task.Message;
 
-public class SpringTaskTests {
+public class SpringTaskTests
+{
 
 	private WicketTester tester;
 
 	private TaskService taskService;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception
+	{
 		// setup dependencies
 		setUpDependencies();
 
@@ -52,9 +54,8 @@ public class SpringTaskTests {
 
 		tester = new WicketTester();
 		tester.getApplication()
-				.getComponentInstantiationListeners()
-				.add(new SpringComponentInjector(tester.getApplication(), ctx,
-						true));
+			.getComponentInstantiationListeners()
+			.add(new SpringComponentInjector(tester.getApplication(), ctx, true));
 
 		// add string resource loader
 		// TODO: make this work for 1.5
@@ -64,33 +65,42 @@ public class SpringTaskTests {
 		// new ClassStringResourceLoader(getClass()));
 	}
 
-	private static class SynchronousExecutor implements Executor {
+	private static class SynchronousExecutor implements Executor
+	{
 
-		public void execute(Runnable command) {
+		public void execute(Runnable command)
+		{
 			command.run();
 		}
 
 	}
 
-	private void setUpDependencies() {
+	private void setUpDependencies()
+	{
 		// set up task service with a dummy executor
 		taskService = new TaskService(new SynchronousExecutor());
 	}
 
-	private void addDependenciesToContext(ApplicationContextMock ctx) {
+	private void addDependenciesToContext(ApplicationContextMock ctx)
+	{
 		ctx.putBean("taskService", taskService);
 	}
 
 	@Test
-	public void testTaskExecution() {
+	public void testTaskExecution()
+	{
 		final int[] data = new int[] { 0 };
-		Task task = new Task() {
+		Task task = new Task()
+		{
 			@Override
-			public void run() {
-				for (int i = 0; i < 2; i++) {
+			public void run()
+			{
+				for (int i = 0; i < 2; i++)
+				{
 					data[0]++;
 					updateProgress(i, 2);
-					if (isCancelled()) {
+					if (isCancelled())
+					{
 						return;
 					}
 				}
@@ -98,17 +108,14 @@ public class SpringTaskTests {
 		};
 		assertEquals("Task progress initially 0", 0, task.getProgress());
 		Long taskId = taskService.schedule(task);
-		assertEquals("Task can be found by ID", task,
-				taskService.getTask(taskId));
+		assertEquals("Task can be found by ID", task, taskService.getTask(taskId));
 		taskService.start(taskId);
 		assertEquals("Task was executed", 2, data[0]);
 		assertEquals("Task progress is 100", 100, task.getProgress());
 		assertTrue("Task is done after finish", task.isDone());
-		assertNotNull("Task NOT removed from service after done",
-				taskService.getTask(taskId));
+		assertNotNull("Task NOT removed from service after done", taskService.getTask(taskId));
 		taskService.finish(taskId);
-		assertNull("Task removed from service with finish",
-				taskService.getTask(taskId));
+		assertNull("Task removed from service with finish", taskService.getTask(taskId));
 
 		data[0] = 0;
 		task.reset();
@@ -128,10 +135,13 @@ public class SpringTaskTests {
 	// TODO Task with error / exception
 
 	@Test
-	public void testTaskMessaging() {
-		Task task = new Task() {
+	public void testTaskMessaging()
+	{
+		Task task = new Task()
+		{
 			@Override
-			public void run() {
+			public void run()
+			{
 				error("error.message");
 				warn("warn.message");
 				info("info.message");
@@ -156,16 +166,21 @@ public class SpringTaskTests {
 	}
 
 	@Test
-	public void testProgressBar() {
+	public void testProgressBar()
+	{
 
 		final Integer[] data = new Integer[] { 0 };
-		Task task = new Task() {
+		Task task = new Task()
+		{
 			@Override
-			public void run() {
-				for (int i = 0; i < 2; i++) {
+			public void run()
+			{
+				for (int i = 0; i < 2; i++)
+				{
 					data[0]++;
 					updateProgress(i, 2);
-					if (isCancelled()) {
+					if (isCancelled())
+					{
 						return;
 					}
 				}
@@ -174,13 +189,14 @@ public class SpringTaskTests {
 
 		final Long taskId = taskService.schedule(task);
 
-		tester.startComponent(new ProgressBar("panelId",
-				new ProgressionModel() {
-					@Override
-					protected Progression getProgression() {
-						return taskService.getProgression(taskId);
-					}
-				}), null);
+		tester.startComponent(new ProgressBar("panelId", new ProgressionModel()
+		{
+			@Override
+			protected Progression getProgression()
+			{
+				return taskService.getProgression(taskId);
+			}
+		}), null);
 		tester.assertLabel("panel:label", "0%");
 
 		taskService.start(taskId);
@@ -189,11 +205,14 @@ public class SpringTaskTests {
 	}
 
 	@Test
-	public void testThreadPoolExecutor() throws InterruptedException {
+	public void testThreadPoolExecutor() throws InterruptedException
+	{
 		final Boolean[] data = new Boolean[] { false };
 		AsynchronousExecutor executor = new AsynchronousExecutor();
-		executor.execute(new Runnable() {
-			public void run() {
+		executor.execute(new Runnable()
+		{
+			public void run()
+			{
 				data[0] = true;
 			}
 		});

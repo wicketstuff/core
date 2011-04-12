@@ -25,9 +25,10 @@ public interface IComponentRenderer<T extends Component> extends Serializable
 {
 	/**
 	 * Creates wicket markup for a specified component.
-	 *
-	 * @param component component (generic parameter is used only 
-	 *                  for convenience of this method implementation)
+	 * 
+	 * @param component
+	 *            component (generic parameter is used only for convenience of this method
+	 *            implementation)
 	 * @return wicket markup
 	 */
 	CharSequence getMarkup(T component);

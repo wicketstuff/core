@@ -44,9 +44,9 @@ public class SillyRealm extends AuthorizingRealm
 	public SillyRealm()
 	{
 		log.info("constructor...");
-		
+
 		// Only do authentication once for each request
-		this.setCacheManager( new MemoryConstrainedCacheManager() );
+		setCacheManager(new MemoryConstrainedCacheManager());
 	}
 
 	/**
@@ -57,8 +57,7 @@ public class SillyRealm extends AuthorizingRealm
 	 * other credentials) in this method. The {@link org.apache.shiro.realm.AuthenticatingRealm
 	 * AuthenticatingRealm} superclass will do that automatically via the use of a configured
 	 * {@link org.apache.shiro.authc.credential.CredentialsMatcher CredentialsMatcher} (see this
-	 * example's corresponding <code>shiro.ini</code> file to see a configured credentials
-	 * matcher).
+	 * example's corresponding <code>shiro.ini</code> file to see a configured credentials matcher).
 	 * <p/>
 	 * All that is required is that the account information include directly the credentials found
 	 * in the EIS.
@@ -122,8 +121,9 @@ public class SillyRealm extends AuthorizingRealm
 
 		// get only the principals that this realm cares about:
 		Collection thisRealmPrincipals = principals.fromRealm(getName());
-		if( thisRealmPrincipals == null || thisRealmPrincipals.isEmpty() ) {
-		  return null;
+		if (thisRealmPrincipals == null || thisRealmPrincipals.isEmpty())
+		{
+			return null;
 		}
 
 		// note that the return value of 'getName()' here is whatever you specify it to be in

@@ -36,31 +36,42 @@ import org.wicketstuff.calendarviews.AddCssClassBehavior;
 import org.wicketstuff.calendarviews.BaseCalendarView;
 import org.wicketstuff.calendarviews.model.IEvent;
 
-public class DateDetailPage extends WebPage {
+public class DateDetailPage extends WebPage
+{
 
-	public static interface IDateDetailPageEventLinkCreator extends Serializable {
+	public static interface IDateDetailPageEventLinkCreator extends Serializable
+	{
 		WebMarkupContainer createEventLink(String id, IModel<IEvent> model);
 	}
-	
-	public DateDetailPage(IModel<DateMidnight> model, IModel<List<IEvent>> eventsModel, final IDateDetailPageEventLinkCreator linkCreator) {
-		add(new Label("title", new StringResourceModel("DateDetailPage.windowTitle", null, new Object[] { model.getObject().toDate() })));
-		add(new Label("inPageTitle", new StringResourceModel("DateDetailPage.inPageTitle", null, new Object[] { model.getObject().toDate() })));
-		add(new PropertyListView<IEvent>("list", eventsModel) {
+
+	public DateDetailPage(IModel<DateMidnight> model, IModel<List<IEvent>> eventsModel,
+		final IDateDetailPageEventLinkCreator linkCreator)
+	{
+		add(new Label("title", new StringResourceModel("DateDetailPage.windowTitle", null,
+			new Object[] { model.getObject().toDate() })));
+		add(new Label("inPageTitle", new StringResourceModel("DateDetailPage.inPageTitle", null,
+			new Object[] { model.getObject().toDate() })));
+		add(new PropertyListView<IEvent>("list", eventsModel)
+		{
 			private static final long serialVersionUID = 1L;
 			private int mCounter = 0;
+
 			@Override
-			protected void populateItem(ListItem<IEvent> item) {
+			protected void populateItem(ListItem<IEvent> item)
+			{
 				WebMarkupContainer link = linkCreator.createEventLink("link", item.getModel());
 				link.add(new Label("title").setRenderBodyOnly(true));
 				item.add(link);
 				item.add(new Label("startTime"));
 				item.add(new Label("endTime"));
-				
-				item.add(new AttributeModifier("class", true, new AbstractReadOnlyModel<String>() {
+
+				item.add(new AttributeModifier("class", true, new AbstractReadOnlyModel<String>()
+				{
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public String getObject() {
+					public String getObject()
+					{
 						return "row" + (mCounter++ % 2);
 					}
 				}));
@@ -70,9 +81,10 @@ public class DateDetailPage extends WebPage {
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
+	public void renderHead(IHeaderResponse response)
+	{
 		super.renderHead(response);
 
-		response.renderCSSReference(BaseCalendarView.CALENDARS_CSS_REFERENCE);		
+		response.renderCSSReference(BaseCalendarView.CALENDARS_CSS_REFERENCE);
 	}
 }

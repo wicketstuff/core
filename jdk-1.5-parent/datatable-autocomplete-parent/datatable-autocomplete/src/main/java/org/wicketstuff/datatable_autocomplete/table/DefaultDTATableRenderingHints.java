@@ -18,11 +18,12 @@ package org.wicketstuff.datatable_autocomplete.table;
 /**
  * @author mocleiri
  * 
- * Default implementation of the IDTATableRenderingHints interface.
+ *         Default implementation of the IDTATableRenderingHints interface.
  * 
- *
+ * 
  */
-public class DefaultDTATableRenderingHints implements IDTATableRenderingHints {
+public class DefaultDTATableRenderingHints implements IDTATableRenderingHints
+{
 
 	private final int pageSize;
 	private final boolean paginationEnabled;
@@ -30,30 +31,42 @@ public class DefaultDTATableRenderingHints implements IDTATableRenderingHints {
 	/**
 	 * 
 	 */
-	public DefaultDTATableRenderingHints(int pageSize, boolean paginationEnabled) {
+	public DefaultDTATableRenderingHints(int pageSize, boolean paginationEnabled)
+	{
 		this.pageSize = pageSize;
 		this.paginationEnabled = paginationEnabled;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wicketstuff.datatable_autocomplete.table.IDTATableRenderingHints#getPageSize()
 	 */
-	public int getPageSize() {
-		return this.pageSize;
+	public int getPageSize()
+	{
+		return pageSize;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wicketstuff.datatable_autocomplete.table.IDTATableRenderingHints#isPaginationEnabled()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.wicketstuff.datatable_autocomplete.table.IDTATableRenderingHints#isPaginationEnabled()
 	 */
-	public boolean isPaginationEnabled() {
-		return this.paginationEnabled;
+	public boolean isPaginationEnabled()
+	{
+		return paginationEnabled;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wicketstuff.datatable_autocomplete.table.IDTATableRenderingHints#showNoMatchToolbar()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.wicketstuff.datatable_autocomplete.table.IDTATableRenderingHints#showNoMatchToolbar()
 	 */
-	public boolean showNoRecordsToolbar() {
-		
+	public boolean showNoRecordsToolbar()
+	{
+
 		return true;
 	}
 

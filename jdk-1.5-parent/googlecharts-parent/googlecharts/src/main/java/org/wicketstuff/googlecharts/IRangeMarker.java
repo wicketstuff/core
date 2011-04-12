@@ -9,13 +9,14 @@ import java.io.Serializable;
 /**
  * @author Daniel Spiewak
  */
-public interface IRangeMarker extends Serializable {
+public interface IRangeMarker extends Serializable
+{
 
-    public RangeType getType();
+	public RangeType getType();
 
-    public Color getColor();
+	public Color getColor();
 
-    public double getStart();
+	public double getStart();
 
-    public double getEnd();
+	public double getEnd();
 }

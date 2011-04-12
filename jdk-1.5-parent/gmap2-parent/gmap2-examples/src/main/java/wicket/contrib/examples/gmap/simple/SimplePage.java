@@ -15,8 +15,7 @@ public class SimplePage extends WicketExamplePage
 
 	public SimplePage()
 	{
-		GMap2 map = new GMap2("map", GMapExampleApplication.get()
-				.getGoogleMapsAPIkey());
+		GMap2 map = new GMap2("map", GMapExampleApplication.get().getGoogleMapsAPIkey());
 		map.setCenter(new GLatLng(52.37649, 4.888573));
 		add(map);
 	}

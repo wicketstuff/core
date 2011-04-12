@@ -21,25 +21,28 @@ import org.apache.wicket.markup.html.form.Form;
 
 /**
  * @author mocleiri
- *
- * Base form on submit action.  The onError callback is part of the new 1.5 form event processing behaviour.
- * What needs to be implemented for our purposes is not yet determined.
+ * 
+ *         Base form on submit action. The onError callback is part of the new 1.5 form event
+ *         processing behaviour. What needs to be implemented for our purposes is not yet
+ *         determined.
  * 
  */
-public abstract class AbstractFormOnSubmitAction<T> implements IFormOnSubmitAction<T> {
+public abstract class AbstractFormOnSubmitAction<T> implements IFormOnSubmitAction<T>
+{
 
 	/**
 	 * 
 	 */
-	public AbstractFormOnSubmitAction() {
+	public AbstractFormOnSubmitAction()
+	{
 		// TODO Auto-generated constructor stub
 	}
 
-	public void onError(AjaxRequestTarget target, Form<?> form) {
+	public void onError(AjaxRequestTarget target, Form<?> form)
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
-}
 
+}

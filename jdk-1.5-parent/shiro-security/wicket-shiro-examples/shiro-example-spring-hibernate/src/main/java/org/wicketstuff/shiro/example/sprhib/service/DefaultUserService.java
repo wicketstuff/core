@@ -29,54 +29,65 @@ import org.wicketstuff.shiro.example.sprhib.dao.UserDAO;
 import org.wicketstuff.shiro.example.sprhib.model.User;
 
 /**
- * Default implementation of the {@link UserService} interface.  This service implements
- * operations related to User data.
+ * Default implementation of the {@link UserService} interface. This service implements operations
+ * related to User data.
  */
 @Transactional
 @Service("userService")
-public class DefaultUserService implements UserService {
+public class DefaultUserService implements UserService
+{
 
-    private UserDAO userDAO;
+	private UserDAO userDAO;
 
-    @Autowired
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
+	@Autowired
+	public void setUserDAO(UserDAO userDAO)
+	{
+		this.userDAO = userDAO;
+	}
 
-    public User getCurrentUser() {
-        Long id = (Long)SecurityUtils.getSubject().getPrincipal();
-        if ( id != null ) {
-            // they are either authenticated or remembered from a previous session,
-            // so return the user:
-            return getUser(id);
-        } else {
-            //not logged in or remembered:
-            return null;
-        }
-    }
+	public User getCurrentUser()
+	{
+		Long id = (Long)SecurityUtils.getSubject().getPrincipal();
+		if (id != null)
+		{
+			// they are either authenticated or remembered from a previous session,
+			// so return the user:
+			return getUser(id);
+		}
+		else
+		{
+			// not logged in or remembered:
+			return null;
+		}
+	}
 
-    public void createUser(String username, String email, String password) {
-        User user = new User();
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setPassword( new Sha256Hash(password).toHex() );
-        userDAO.createUser( user );
-    }
+	public void createUser(String username, String email, String password)
+	{
+		User user = new User();
+		user.setUsername(username);
+		user.setEmail(email);
+		user.setPassword(new Sha256Hash(password).toHex());
+		userDAO.createUser(user);
+	}
 
-    public List<User> getAllUsers() {
-        return userDAO.getAllUsers();
-    }
+	public List<User> getAllUsers()
+	{
+		return userDAO.getAllUsers();
+	}
 
-    public User getUser(Long userId) {
-        return userDAO.getUser(userId);
-    }
+	public User getUser(Long userId)
+	{
+		return userDAO.getUser(userId);
+	}
 
-    public void deleteUser(Long userId) {
-        userDAO.deleteUser( userId );
-    }
+	public void deleteUser(Long userId)
+	{
+		userDAO.deleteUser(userId);
+	}
 
-    public void updateUser(User user) {
-        userDAO.updateUser( user );
-    }
+	public void updateUser(User user)
+	{
+		userDAO.updateUser(user);
+	}
 
 }

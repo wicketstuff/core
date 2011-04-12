@@ -20,19 +20,20 @@ import org.apache.wicket.markup.html.form.Button;
 
 /**
  * @author mocleiri
- *
+ * 
  */
-public interface DTAButtonProvider {
-	
+public interface DTAButtonProvider
+{
+
 	public static final String BUTTON_ID = "button";
-	
+
 	/**
 	 * return a button with its id set as BUTTON_ID
 	 * 
 	 * @param id
 	 * @return the instantiated button.
 	 */
-	public Button getButton ();
-	
+	public Button getButton();
+
 
 }

@@ -9,19 +9,20 @@ import java.io.Serializable;
 /**
  * @author Daniel Spiewak
  */
-public interface IChartAxis extends Serializable {
+public interface IChartAxis extends Serializable
+{
 
-    public ChartAxisType getType();
+	public ChartAxisType getType();
 
-    public String[] getLabels();
+	public String[] getLabels();
 
-    public double[] getPositions();
+	public double[] getPositions();
 
-    public Range getRange();
+	public Range getRange();
 
-    public Color getColor();
+	public Color getColor();
 
-    public int getFontSize();
+	public int getFontSize();
 
-    public AxisAlignment getAlignment();
+	public AxisAlignment getAlignment();
 }

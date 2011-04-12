@@ -37,9 +37,8 @@ import org.apache.wicket.markup.parser.XmlTag;
  */
 public class GridLayout implements ILayout
 {
-	private static class GridConstraintIterator
-		implements
-			Iterator<Map.Entry<GridLayoutConstraint, Component>>
+	private static class GridConstraintIterator implements
+		Iterator<Map.Entry<GridLayoutConstraint, Component>>
 	{
 		private final Iterator<Map.Entry<GridLayoutConstraint, Component>> iterator;
 		private int currentRow = 0;

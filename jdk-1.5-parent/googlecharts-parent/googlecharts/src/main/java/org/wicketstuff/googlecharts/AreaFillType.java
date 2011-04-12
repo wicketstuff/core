@@ -6,17 +6,19 @@ package org.wicketstuff.googlecharts;
 /**
  * @author Daniel Spiewak
  */
-public enum AreaFillType {
+public enum AreaFillType
+{
 
-    BETWEEN("b"),
-    DOWN("B");
-    private final String rendering;
+	BETWEEN("b"), DOWN("B");
+	private final String rendering;
 
-    private AreaFillType(String rendering) {
-        this.rendering = rendering;
-    }
+	private AreaFillType(String rendering)
+	{
+		this.rendering = rendering;
+	}
 
-    public String getRendering() {
-        return rendering;
-    }
+	public String getRendering()
+	{
+		return rendering;
+	}
 }

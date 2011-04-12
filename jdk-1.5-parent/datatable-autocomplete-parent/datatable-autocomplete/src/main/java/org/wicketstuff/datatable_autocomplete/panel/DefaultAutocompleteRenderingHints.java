@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
- 
+
 package org.wicketstuff.datatable_autocomplete.panel;
 
 import org.wicketstuff.datatable_autocomplete.table.DefaultDTATableRenderingHints;
@@ -22,12 +22,13 @@ import org.wicketstuff.datatable_autocomplete.table.DefaultDTATableRenderingHint
 /**
  * @author mocleiri
  * 
- * Default implementation of the hints.
+ *         Default implementation of the hints.
  * 
- *
+ * 
  */
 public class DefaultAutocompleteRenderingHints extends DefaultDTATableRenderingHints implements
-		IAutocompleteRenderingHints {
+	IAutocompleteRenderingHints
+{
 
 	/**
 	 * 
@@ -38,29 +39,37 @@ public class DefaultAutocompleteRenderingHints extends DefaultDTATableRenderingH
 	 * @param pageSize
 	 * @param paginationEnabled
 	 */
-	public DefaultAutocompleteRenderingHints(int pageSize,
-			boolean paginationEnabled) {
+	public DefaultAutocompleteRenderingHints(int pageSize, boolean paginationEnabled)
+	{
 		super(pageSize, paginationEnabled);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wicketstuff.datatable_autocomplete.panel.IAutocompleteRenderingHints#isVisibleOnRender(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.wicketstuff.datatable_autocomplete.panel.IAutocompleteRenderingHints#isVisibleOnRender
+	 * (java.lang.String)
 	 */
-	public boolean isVisibleOnRender() {
-		// default is to be invisible on initial render. becoming visible only after the ajax requests are sent.
+	public boolean isVisibleOnRender()
+	{
+		// default is to be invisible on initial render. becoming visible only after the ajax
+// requests are sent.
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wicketstuff.datatable_autocomplete.panel.IAutocompleteRenderingHints#isVisibleOnZeroMatches()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.wicketstuff.datatable_autocomplete.panel.IAutocompleteRenderingHints#isVisibleOnZeroMatches
+	 * ()
 	 */
-	public boolean isVisibleOnZeroMatches() {
+	public boolean isVisibleOnZeroMatches()
+	{
 		// default is to be visible when there are zero matches.
 		return true;
 	}
 
-	
-
-	
 
 }

@@ -25,37 +25,44 @@ import org.wicketstuff.jquery.datepicker.DatePickerBehavior;
 import org.wicketstuff.jquery.datepicker.DatePickerOptions;
 
 @SuppressWarnings("serial")
-public class Page4DatePicker extends PageSupport {
+public class Page4DatePicker extends PageSupport
+{
 
 	private static final String DATE_PATTERN = "mm/dd/yyyy";
-	
+
 	protected Date date01;
-    protected Date date02;
+	protected Date date02;
 
-    public Page4DatePicker() throws Exception {
-        // note: a Converter for Date.class is registered (see DemoApplication) 
+	public Page4DatePicker() throws Exception
+	{
+		// note: a Converter for Date.class is registered (see DemoApplication)
 
-    	
-        final DateTextField date01TextField = new DateTextField("date01") {
-        	
-        	@Override
-        	public String getTextFormat() {
-        		return DATE_PATTERN;
-        	}
-        };
-        date01TextField.setMarkupId("date01");
-        DatePickerOptions datePickerOptions = new DatePickerOptions().clickInput(true).allowDateInPast(true, DATE_PATTERN);
-        date01TextField.add(new DatePickerBehavior(datePickerOptions));
 
-        final Form form = new Form("myForm", new CompoundPropertyModel(this)) {
-            @Override
-            protected void onSubmit() {
-                info("Date is set to :"  + date01);
-            }
-        };
-        
-        add(form);
-        
-        form.add(date01TextField);
-    }
+		final DateTextField date01TextField = new DateTextField("date01")
+		{
+
+			@Override
+			public String getTextFormat()
+			{
+				return DATE_PATTERN;
+			}
+		};
+		date01TextField.setMarkupId("date01");
+		DatePickerOptions datePickerOptions = new DatePickerOptions().clickInput(true)
+			.allowDateInPast(true, DATE_PATTERN);
+		date01TextField.add(new DatePickerBehavior(datePickerOptions));
+
+		final Form form = new Form("myForm", new CompoundPropertyModel(this))
+		{
+			@Override
+			protected void onSubmit()
+			{
+				info("Date is set to :" + date01);
+			}
+		};
+
+		add(form);
+
+		form.add(date01TextField);
+	}
 }

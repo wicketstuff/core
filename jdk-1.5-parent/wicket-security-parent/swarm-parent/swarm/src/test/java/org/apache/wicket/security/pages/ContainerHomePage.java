@@ -23,7 +23,6 @@ import org.apache.wicket.security.components.L1Container;
 import org.apache.wicket.security.components.SecureWebPage;
 import org.apache.wicket.security.components.markup.html.form.SecureTextField;
 
-
 /**
  * @author marrink
  */
@@ -49,7 +48,7 @@ public class ContainerHomePage extends SecureWebPage
 	 */
 	public boolean logoff(Object context)
 	{
-		return ((WaspSession)Session.get()).logoff(context);
+		return ((WaspSession) Session.get()).logoff(context);
 	}
 
 }

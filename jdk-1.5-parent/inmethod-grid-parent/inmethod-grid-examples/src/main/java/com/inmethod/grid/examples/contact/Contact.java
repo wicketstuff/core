@@ -53,7 +53,7 @@ public class Contact implements IClusterable
 	public String toString()
 	{
 		return "[Contact id=" + id + " firstName=" + firstName + " lastName=" + lastName +
-				" homePhone=" + homePhone + " cellPhone=" + cellPhone + "]";
+			" homePhone=" + homePhone + " cellPhone=" + cellPhone + "]";
 	}
 
 
@@ -75,9 +75,9 @@ public class Contact implements IClusterable
 		{
 			Contact other = (Contact)obj;
 			return other.getFirstName().equals(getFirstName()) &&
-					other.getLastName().equals(getLastName()) &&
-					other.getHomePhone().equals(getHomePhone()) &&
-					other.getCellPhone().equals(getCellPhone());
+				other.getLastName().equals(getLastName()) &&
+				other.getHomePhone().equals(getHomePhone()) &&
+				other.getCellPhone().equals(getCellPhone());
 
 		}
 		else

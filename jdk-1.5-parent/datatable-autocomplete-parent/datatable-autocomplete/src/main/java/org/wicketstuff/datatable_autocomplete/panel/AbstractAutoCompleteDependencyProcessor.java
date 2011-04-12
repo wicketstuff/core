@@ -27,64 +27,69 @@ import org.slf4j.LoggerFactory;
 /**
  * @author mocleiri
  * 
- * A base implementation for the autocomplete dependency processor.
+ *         A base implementation for the autocomplete dependency processor.
  * 
- * Note that extendors define the components to be updated
+ *         Note that extendors define the components to be updated
  */
 public abstract class AbstractAutoCompleteDependencyProcessor implements
-		AutoCompleteDependencyProcessor {
+	AutoCompleteDependencyProcessor
+{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7293448644441764951L;
-	private Duration	duration = null;
-	private Map<String, Component>	queryParameterToComponentMap;
+	private Duration duration = null;
+	private Map<String, Component> queryParameterToComponentMap;
 
 
 	/**
 	 * 
 	 */
-	public AbstractAutoCompleteDependencyProcessor(String[] names, Component[] components) {
+	public AbstractAutoCompleteDependencyProcessor(String[] names, Component[] components)
+	{
 
 		super();
-		
+
 		queryParameterToComponentMap = new LinkedHashMap<String, Component>();
-		
-		for (int i = 0; i < components.length; i++) {
+
+		for (int i = 0; i < components.length; i++)
+		{
 			String parameter = names[i];
 			Component component = components[i];
-			
+
 			// to guarantee that the markupid will be generated
 			component.setOutputMarkupId(true);
 			component.setOutputMarkupPlaceholderTag(true);
-			
+
 			queryParameterToComponentMap.put(parameter, component);
-			
+
 		}
-		
+
 	}
 
-	public AbstractAutoCompleteDependencyProcessor(String[] names, Component[] components, Duration duration) {
-		this (names, components);
+	public AbstractAutoCompleteDependencyProcessor(String[] names, Component[] components,
+		Duration duration)
+	{
+		this(names, components);
 		this.duration = duration;
 	}
-	
-	private static final Logger	log	= LoggerFactory
-											.getLogger(AbstractAutoCompleteDependencyProcessor.class);
 
-	
-	
-	public Map<String, Component> getQueryParameterToComponentMap() {
+	private static final Logger log = LoggerFactory.getLogger(AbstractAutoCompleteDependencyProcessor.class);
+
+
+	public Map<String, Component> getQueryParameterToComponentMap()
+	{
 
 		return queryParameterToComponentMap;
 	}
 
-	
-	public Duration getThrottingDuration() {
 
-		return duration ;
+	public Duration getThrottingDuration()
+	{
+
+		return duration;
 	}
 
-	
+
 }

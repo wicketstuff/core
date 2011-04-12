@@ -14,7 +14,8 @@ import com.inmethod.grid.IGridSortState;
  * 
  * @author Matej Knopp
  */
-public abstract class SortableHeaderLinkPanel extends Panel {
+public abstract class SortableHeaderLinkPanel extends Panel
+{
 
 	private final String sortProperty;
 
@@ -26,33 +27,42 @@ public abstract class SortableHeaderLinkPanel extends Panel {
 	 * @param sortProperty
 	 *            sort property that will be reported by the {@link IGridSortState}
 	 */
-	public SortableHeaderLinkPanel(String id, String sortProperty) {
+	public SortableHeaderLinkPanel(String id, String sortProperty)
+	{
 		super(id);
 
 		this.sortProperty = sortProperty;
 
-		add(new AjaxEventBehavior("onclick") {
+		add(new AjaxEventBehavior("onclick")
+		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onEvent(AjaxRequestTarget target) {
+			protected void onEvent(AjaxRequestTarget target)
+			{
 				// change the direction
 				IGridSortState.Direction direction = getSortDirection();
-				
-				if (direction == IGridSortState.Direction.ASC) {
+
+				if (direction == IGridSortState.Direction.ASC)
+				{
 					// if the direction is already ascending, switch it to descending
-					getSortState().setSortState(SortableHeaderLinkPanel.this.sortProperty, IGridSortState.Direction.DESC);
-				} else {
-					// otherwise set direction to ascending 
-					getSortState().setSortState(SortableHeaderLinkPanel.this.sortProperty, IGridSortState.Direction.ASC);
+					getSortState().setSortState(SortableHeaderLinkPanel.this.sortProperty,
+						IGridSortState.Direction.DESC);
+				}
+				else
+				{
+					// otherwise set direction to ascending
+					getSortState().setSortState(SortableHeaderLinkPanel.this.sortProperty,
+						IGridSortState.Direction.ASC);
 				}
 
 				sortStateChanged(target);
 			}
 
 			@Override
-			protected IAjaxCallDecorator getAjaxCallDecorator() {
+			protected IAjaxCallDecorator getAjaxCallDecorator()
+			{
 				return new CancelEventIfNoAjaxDecorator();
 			}
 		});
@@ -61,42 +71,58 @@ public abstract class SortableHeaderLinkPanel extends Panel {
 	abstract protected void sortStateChanged(AjaxRequestTarget target);
 
 	@Override
-	protected void onComponentTag(ComponentTag tag) {
+	protected void onComponentTag(ComponentTag tag)
+	{
 		super.onComponentTag(tag);
 		tag.setName("a");
 		tag.put("href", "#");
 		tag.put("class", getStyleClass());
 	}
 
-	private GridSortState getSortState() {
+	private GridSortState getSortState()
+	{
 		return (findParent(AbstractGrid.class)).getSortState();
 	}
 
 	/**
 	 * Returns the sort direction for this panel.
+	 * 
 	 * @return
 	 */
-	private IGridSortState.Direction getSortDirection() {
+	private IGridSortState.Direction getSortDirection()
+	{
 		IGridSortState state = getSortState();
-		// we are interested only in the column with highest priority and it must match this panel's sort property
-		if (state.getColumns().size() > 0 && state.getColumns().get(0).getPropertyName().equals(sortProperty)) {
+		// we are interested only in the column with highest priority and it must match this panel's
+// sort property
+		if (state.getColumns().size() > 0 &&
+			state.getColumns().get(0).getPropertyName().equals(sortProperty))
+		{
 			return state.getColumns().get(0).getDirection();
-		} else {
+		}
+		else
+		{
 			return null;
 		}
 	}
 
 	/**
 	 * Returns the CSS class for the link element depending on the sort state.
+	 * 
 	 * @return
 	 */
-	private String getStyleClass() {
+	private String getStyleClass()
+	{
 		IGridSortState.Direction direction = getSortDirection();
-		if (direction == IGridSortState.Direction.ASC) {
+		if (direction == IGridSortState.Direction.ASC)
+		{
 			return "imxt-sort-header imxt-sort-header-asc";
-		} else if (direction == IGridSortState.Direction.DESC) {
+		}
+		else if (direction == IGridSortState.Direction.DESC)
+		{
 			return "imxt-sort-header imxt-sort-header-desc";
-		} else {
+		}
+		else
+		{
 			return "imxt-sort-header imxt-sort-header-none";
 		}
 	};

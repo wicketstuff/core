@@ -113,7 +113,7 @@ public class ContactsDatabase
 			return (asc) ? lnameIdx : lnameDescIdx;
 		}
 		throw new RuntimeException("uknown sort option [" + prop +
-				"]. valid options: [firstName] , [lastName]");
+			"]. valid options: [firstName] , [lastName]");
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class ContactsDatabase
 		else
 		{
 			throw new IllegalArgumentException("contact [" + contact.getFirstName() +
-					"] is already persistent");
+				"] is already persistent");
 		}
 	}
 

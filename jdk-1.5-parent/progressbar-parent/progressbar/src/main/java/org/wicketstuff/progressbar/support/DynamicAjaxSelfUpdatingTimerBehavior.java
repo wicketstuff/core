@@ -21,26 +21,27 @@ import org.apache.wicket.ajax.AjaxSelfUpdatingTimerBehavior;
 import org.apache.wicket.util.time.Duration;
 
 /**
- * Extend the AjaxSelfUpdatingTimerBehavior to
- * enabled dynamic adding of the behavior. This requires
- * adding a javascript timeout if added in an
- * ajax request.
- *
+ * Extend the AjaxSelfUpdatingTimerBehavior to enabled dynamic adding of the behavior. This requires
+ * adding a javascript timeout if added in an ajax request.
+ * 
  * @author Christopher Hlubek (hlubek)
- *
+ * 
  */
-public class DynamicAjaxSelfUpdatingTimerBehavior extends
-		AjaxSelfUpdatingTimerBehavior {
+public class DynamicAjaxSelfUpdatingTimerBehavior extends AjaxSelfUpdatingTimerBehavior
+{
 
-	public DynamicAjaxSelfUpdatingTimerBehavior(Duration updateInterval) {
+	public DynamicAjaxSelfUpdatingTimerBehavior(Duration updateInterval)
+	{
 		super(updateInterval);
 	}
 
 	@Override
-	protected void onBind() {
+	protected void onBind()
+	{
 		super.onBind();
 		// dynamically start the self update!
-		if(AjaxRequestTarget.get() != null) {
+		if (AjaxRequestTarget.get() != null)
+		{
 			AjaxRequestTarget target = AjaxRequestTarget.get();
 			target.appendJavaScript(getJsTimeoutCall(getUpdateInterval()));
 		}

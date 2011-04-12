@@ -11,19 +11,22 @@ import org.wicketstuff.jslibraries.VersionDescriptor;
  * 
  * @deprecated
  */
-class DefaultPrototypeResource implements IResource {
+@Deprecated
+class DefaultPrototypeResource implements IResource
+{
 
 	private IResource resource;
 
-	public DefaultPrototypeResource() {
-		ResourceReference reference = JSReference
-				.getReference(VersionDescriptor.exactVersion(Library.PROTOTYPE,
-						1, 6, 0, 2));
+	public DefaultPrototypeResource()
+	{
+		ResourceReference reference = JSReference.getReference(VersionDescriptor.exactVersion(
+			Library.PROTOTYPE, 1, 6, 0, 2));
 
 		resource = reference.getResource();
 	}
 
-	public void respond(Attributes attributes) {
+	public void respond(Attributes attributes)
+	{
 		resource.respond(attributes);
 	}
 }

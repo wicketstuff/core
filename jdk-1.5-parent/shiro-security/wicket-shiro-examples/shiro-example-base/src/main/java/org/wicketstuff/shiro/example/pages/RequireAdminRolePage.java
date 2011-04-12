@@ -19,12 +19,7 @@ package org.wicketstuff.shiro.example.pages;
 import org.wicketstuff.shiro.ShiroConstraint;
 import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
 
-@ShiroSecurityConstraint( 
-  constraint   = ShiroConstraint.HasRole, 
-  value        = "admin",
-  loginMessage = "You must be logged in to view this page",
-  unauthorizedMessage = "You need to be an ADMIN"
-)
+@ShiroSecurityConstraint(constraint = ShiroConstraint.HasRole, value = "admin", loginMessage = "You must be logged in to view this page", unauthorizedMessage = "You need to be an ADMIN")
 public class RequireAdminRolePage extends BasePage
 {
 

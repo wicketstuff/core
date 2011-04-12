@@ -25,7 +25,8 @@ import net.sf.jasperreports.engine.export.JRHtmlExporter;
 /**
  * @author cdeal
  */
-public class HtmlResourceHandler implements IJRResourceHandler, Serializable {
+public class HtmlResourceHandler implements IJRResourceHandler, Serializable
+{
 	/**
 	 * @see org.wicketstuff.jasperreports.handlers.IJRResourceHandler#newExporter()
 	 */

@@ -13,11 +13,14 @@
  */
 package org.wicketstuff.springreference;
 
-public class ConstructorService extends AService {
-	private ConstructorService() {
+public class ConstructorService extends AService
+{
+	private ConstructorService()
+	{
 	}
 
-	public static ConstructorService create() {
+	public static ConstructorService create()
+	{
 		return new ConstructorService();
 	}
 }

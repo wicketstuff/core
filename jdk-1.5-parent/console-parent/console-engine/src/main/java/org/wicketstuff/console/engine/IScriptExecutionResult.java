@@ -19,16 +19,16 @@ package org.wicketstuff.console.engine;
 /**
  * Result of an {@link IScriptEngine} execution.
  * <p>
- * Contains the input script, the return value, the output, any exceptions and a
- * success flag.
+ * Contains the input script, the return value, the output, any exceptions and a success flag.
  * 
  * @author cretzel
  */
-public interface IScriptExecutionResult {
+public interface IScriptExecutionResult
+{
 
-    String getScript();
+	String getScript();
 
-    boolean isSuccess();
+	boolean isSuccess();
 
 	String getOutput();
 

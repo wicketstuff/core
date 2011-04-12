@@ -19,10 +19,11 @@ package org.wicketstuff.datatable_autocomplete.trie;
 /**
  * @author mocleiri
  * 
- * Provides a base configuration for a Trie<C>.  
- *
+ *         Provides a base configuration for a Trie<C>.
+ * 
  */
-public abstract class AbstractTrieConfiguration<C> implements ITrieConfiguration<C> {
+public abstract class AbstractTrieConfiguration<C> implements ITrieConfiguration<C>
+{
 
 	/**
 	 * 
@@ -32,8 +33,9 @@ public abstract class AbstractTrieConfiguration<C> implements ITrieConfiguration
 	/**
 	 * 
 	 */
-	public AbstractTrieConfiguration() {
-		
+	public AbstractTrieConfiguration()
+	{
+
 		defaultFilter = newTrieFilter();
 	}
 
@@ -41,52 +43,61 @@ public abstract class AbstractTrieConfiguration<C> implements ITrieConfiguration
 	 * 
 	 * @return the trie filter that will be used by default by the Trie.
 	 */
-	protected ITrieFilter<C> newTrieFilter() {
-		return new ITrieFilter<C>() {
+	protected ITrieFilter<C> newTrieFilter()
+	{
+		return new ITrieFilter<C>()
+		{
 
-			/* (non-Javadoc)
-			 * @see org.wicketstuff.datatable_autocomplete.trie.TrieFilter#isVisible(java.lang.Object)
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.wicketstuff.datatable_autocomplete.trie.TrieFilter#isVisible(java.lang.Object)
 			 */
-			public boolean isVisible(C word) {
+			public boolean isVisible(C word)
+			{
 				return true;
 			}
-			
+
 		};
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#createTrieNode()
 	 */
-	public TrieNode<C> createTrieNode(TrieNode<C> parent, String rootMatchedString, String nextCharacter) {
-		return new TrieNode<C>(parent, rootMatchedString, nextCharacter, 
-				this);
+	public TrieNode<C> createTrieNode(TrieNode<C> parent, String rootMatchedString,
+		String nextCharacter)
+	{
+		return new TrieNode<C>(parent, rootMatchedString, nextCharacter, this);
 	}
 
-	private final ITrieFilter<C>defaultFilter;
+	private final ITrieFilter<C> defaultFilter;
 	private Trie<C> containerTrie;
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#getDefaultFilter()
 	 */
-	public ITrieFilter<C> getDefaultFilter() {
-		
+	public ITrieFilter<C> getDefaultFilter()
+	{
+
 		return defaultFilter;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#setTrie(org.wicketstuff.datatable_autocomplete.trie.Trie)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#setTrie(org.wicketstuff.
+	 * datatable_autocomplete.trie.Trie)
 	 */
-	public void setTrie(Trie<C> containerTrie) {
+	public void setTrie(Trie<C> containerTrie)
+	{
 		this.containerTrie = containerTrie;
-		
+
 	}
 
-	
-	
-	
-	
-	
-	
-	
 
 }

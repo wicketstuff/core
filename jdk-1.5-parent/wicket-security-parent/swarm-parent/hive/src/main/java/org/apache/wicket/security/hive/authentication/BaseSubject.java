@@ -22,10 +22,9 @@ import java.util.Set;
 
 import org.apache.wicket.security.hive.authorization.Principal;
 
-
 /**
- * Default implementation of a Subject. Usable by both wicket applications and
- * other type of applications like soap.
+ * Default implementation of a Subject. Usable by both wicket applications and other type
+ * of applications like soap.
  * 
  * @author marrink
  * @see Subject
@@ -40,6 +39,7 @@ public class BaseSubject implements Subject
 	private boolean readOnly;
 
 	private Set<Principal> principals = new HashSet<Principal>(100);// guess
+
 	private Set<Principal> readOnlyPrincipals = Collections.unmodifiableSet(principals);
 
 	/**
@@ -63,15 +63,15 @@ public class BaseSubject implements Subject
 	 */
 	public final void setReadOnly()
 	{
-		this.readOnly = true;
+		readOnly = true;
 	}
 
 	/**
 	 * Adds a new principal to this subject.
 	 * 
 	 * @param principal
-	 * @return true if the principal was added, false if it wasn't for instance
-	 *         because the subject is readonly.
+	 * @return true if the principal was added, false if it wasn't for instance because
+	 *         the subject is readonly.
 	 */
 	public final boolean addPrincipal(Principal principal)
 	{

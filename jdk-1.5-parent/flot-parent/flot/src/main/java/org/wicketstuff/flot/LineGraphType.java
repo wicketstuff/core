@@ -17,22 +17,25 @@ package org.wicketstuff.flot;
 
 import java.io.Serializable;
 
-public class LineGraphType extends GraphType implements Serializable {
+public class LineGraphType extends GraphType implements Serializable
+{
 	/** Required by {@link Serializable} */
 	private static final long serialVersionUID = 1L;
 
-	public LineGraphType(Double lineWidth, Boolean fill, Color fillColor) {
+	public LineGraphType(Double lineWidth, Boolean fill, Color fillColor)
+	{
 		super(lineWidth, fill, fillColor);
 	}
-	
+
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		StringBuffer str = new StringBuffer();
-		
+
 		str.append("lines: {");
 		str.append(super.toString());
 		str.append("}");
-		
+
 		return str.toString();
 	}
 }

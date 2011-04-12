@@ -50,8 +50,7 @@ import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
  * Request handler that respond the specified table component as a XLS file.
  * </p>
  * <p>
- * An possible {@link Link} onClick method implementation seting this handler
- * could be:
+ * An possible {@link Link} onClick method implementation seting this handler could be:
  * </p>
  * <code>
  * public void onClick() {<br />
@@ -105,7 +104,7 @@ public class TableComponentAsXlsHandler implements IRequestHandler
 			resource.setFileName(filename);
 			resource.setContentDisposition(ContentDisposition.ATTACHMENT);
 			IResource.Attributes a = new IResource.Attributes(requestCycle.getRequest(),
-					requestCycle.getResponse());
+				requestCycle.getResponse());
 			resource.respond(a);
 		}
 		catch (Exception e)
@@ -116,7 +115,7 @@ public class TableComponentAsXlsHandler implements IRequestHandler
 
 	public void detach(IRequestCycle requestCycle)
 	{
-		this.tableComponent = null;
+		tableComponent = null;
 	}
 
 	protected Sheet createSheet()
@@ -130,7 +129,7 @@ public class TableComponentAsXlsHandler implements IRequestHandler
 	}
 
 	private final void parse(Sheet sheet) throws IOException, ResourceStreamNotFoundException,
-			ParseException
+		ParseException
 	{
 		try
 		{
@@ -152,7 +151,7 @@ public class TableComponentAsXlsHandler implements IRequestHandler
 	 * @throws ParseException
 	 */
 	protected void parseImplementation(Sheet sheet, CharSequence gridComponentMarkup)
-			throws IOException, ResourceStreamNotFoundException, ParseException
+		throws IOException, ResourceStreamNotFoundException, ParseException
 	{
 		XmlPullParser parser = new XmlPullParser();
 		parser.parse(gridComponentMarkup);
@@ -214,16 +213,16 @@ public class TableComponentAsXlsHandler implements IRequestHandler
 	private void afterParse()
 	{
 		tableComponent.getPage().endComponentRender(tableComponent);
-		Application.get().getComponentPreOnBeforeRenderListeners()
-				.remove(PathSetupListener.INSTANCE);
+		Application.get()
+			.getComponentPreOnBeforeRenderListeners()
+			.remove(PathSetupListener.INSTANCE);
 		RequestCycle.get().setResponse(originalResponse);
 		originalResponse = null;
 		mockResponse = null;
 	}
 
 	/**
-	 * We try to maintain a relation between the HTML tag and its Wicket
-	 * component.
+	 * We try to maintain a relation between the HTML tag and its Wicket component.
 	 */
 	private static class PathSetupListener implements IComponentOnBeforeRenderListener
 	{

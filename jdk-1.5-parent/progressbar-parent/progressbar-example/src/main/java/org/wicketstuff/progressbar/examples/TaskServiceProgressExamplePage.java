@@ -30,46 +30,59 @@ import org.wicketstuff.progressbar.spring.TaskProgressionModel;
  * <p>
  * Example of an active progress bar using the tasks service.
  * </p>
- *
+ * 
  * @author Christopher Hlubek (hlubek)
- *
+ * 
  */
-public class TaskServiceProgressExamplePage extends PageSupport {
+public class TaskServiceProgressExamplePage extends PageSupport
+{
 
-	private static class DummyTask extends Task {
+	private static class DummyTask extends Task
+	{
 		private final int iterations;
 
-		public DummyTask(int iterations) {
+		public DummyTask(int iterations)
+		{
 			this.iterations = iterations;
 		}
 
 		@Override
-		protected void run() {
-			for(int i = 0; i < iterations; i++) {
-				try {
+		protected void run()
+		{
+			for (int i = 0; i < iterations; i++)
+			{
+				try
+				{
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {
+				}
+				catch (InterruptedException e)
+				{
 				}
 				updateProgress(i, iterations);
-				if(isCancelled()) return;
+				if (isCancelled())
+					return;
 			}
 		}
 	}
 
-	public TaskServiceProgressExamplePage() {
+	public TaskServiceProgressExamplePage()
+	{
 		final Form form = new Form("form");
 		final ProgressBar bar;
-		final TaskProgressionModel progressionModel = new TaskProgressionModel() {
+		final TaskProgressionModel progressionModel = new TaskProgressionModel()
+		{
 			@Override
-			protected ITaskService getTaskService() {
+			protected ITaskService getTaskService()
+			{
 				return getExampleApplication().getTaskService();
 			}
 		};
-		form.add(bar = new ProgressBar("bar", progressionModel) {
+		form.add(bar = new ProgressBar("bar", progressionModel)
+		{
 			@Override
-			protected void onFinished(AjaxRequestTarget target) {
-				ITaskService taskService = getExampleApplication()
-						.getTaskService();
+			protected void onFinished(AjaxRequestTarget target)
+			{
+				ITaskService taskService = getExampleApplication().getTaskService();
 				// finish the task!
 				taskService.finish(progressionModel.getTaskId());
 				// Hide progress bar after finish
@@ -86,11 +99,12 @@ public class TaskServiceProgressExamplePage extends PageSupport {
 		// Hide progress bar initially
 		bar.setVisible(false);
 
-		form.add(new IndicatingAjaxButton("submit", form) {
+		form.add(new IndicatingAjaxButton("submit", form)
+		{
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form form) {
-				ITaskService taskService = getExampleApplication()
-						.getTaskService();
+			protected void onSubmit(AjaxRequestTarget target, Form form)
+			{
+				ITaskService taskService = getExampleApplication().getTaskService();
 				// Schedule and start a new task
 				Long taskId = taskService.scheduleAndStart(new DummyTask(60));
 				// Set taskId for model
@@ -103,12 +117,13 @@ public class TaskServiceProgressExamplePage extends PageSupport {
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form) {
-				
+			protected void onError(AjaxRequestTarget target, Form<?> form)
+			{
+
 				target.prependJavaScript("alert('Failed to schedule task.');");
-				
+
 			}
-			
+
 		});
 		form.setOutputMarkupId(true);
 		add(form);

@@ -5,7 +5,7 @@ package org.wicketstuff.plugin;
  */
 public interface PluginRegistry
 {
-    public void registerPlugin(Object plugin);
+	public void registerPlugin(Object plugin);
 
-    <T> T lookupPlugin(Class<T> pluginType);
+	<T> T lookupPlugin(Class<T> pluginType);
 }

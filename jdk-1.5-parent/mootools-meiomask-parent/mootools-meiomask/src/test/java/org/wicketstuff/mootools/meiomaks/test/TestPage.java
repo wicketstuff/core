@@ -27,308 +27,365 @@ import org.wicketstuff.mootools.meiomask.MaskType;
 import org.wicketstuff.mootools.meiomask.MeioMaskField;
 
 /**
- *
+ * 
  * @author inaiat
  */
 @Ignore
-public class TestPage extends WebPage {
+public class TestPage extends WebPage
+{
 
-    private static final long serialVersionUID = 1L;
-    private TestModel testModel = new TestModel();
+	private static final long serialVersionUID = 1L;
+	private TestModel testModel = new TestModel();
 
-    public TestPage() {
-        FeedbackPanel feedbackPanel = new FeedbackPanel("feedBack");
-        add(feedbackPanel);
+	public TestPage()
+	{
+		FeedbackPanel feedbackPanel = new FeedbackPanel("feedBack");
+		add(feedbackPanel);
 
-        Form<TestModel> form = new Form<TestModel>("form", new CompoundPropertyModel<TestModel>(testModel));
+		Form<TestModel> form = new Form<TestModel>("form", new CompoundPropertyModel<TestModel>(
+			testModel));
 
-        add(form);
-        form.add(new MeioMaskField<String>("fixedPhone", MaskType.FixedPhone));
-        form.add(new MeioMaskField<String>("fixedPhoneUs", MaskType.FixedPhoneUs));
-        form.add(new MeioMaskField<String>("fixedCpf", MaskType.FixedCpf));
-        form.add(new MeioMaskField<String>("fixedCnpj", MaskType.FixedCnpj));
-        form.add(new MeioMaskField<String>("fixedCep", MaskType.FixedCep));
-        form.add(new MeioMaskField<String>("fixedTime", MaskType.FixedTime));
-        form.add(new MeioMaskField<String>("fixedCc", MaskType.FixedCc));
-        form.add(new MeioMaskField<Date>("fixedDate", MaskType.FixedDate));
-        form.add(new MeioMaskField<Date>("fixedDateUs", MaskType.FixedDateUs));
+		add(form);
+		form.add(new MeioMaskField<String>("fixedPhone", MaskType.FixedPhone));
+		form.add(new MeioMaskField<String>("fixedPhoneUs", MaskType.FixedPhoneUs));
+		form.add(new MeioMaskField<String>("fixedCpf", MaskType.FixedCpf));
+		form.add(new MeioMaskField<String>("fixedCnpj", MaskType.FixedCnpj));
+		form.add(new MeioMaskField<String>("fixedCep", MaskType.FixedCep));
+		form.add(new MeioMaskField<String>("fixedTime", MaskType.FixedTime));
+		form.add(new MeioMaskField<String>("fixedCc", MaskType.FixedCc));
+		form.add(new MeioMaskField<Date>("fixedDate", MaskType.FixedDate));
+		form.add(new MeioMaskField<Date>("fixedDateUs", MaskType.FixedDateUs));
 
-        form.add(new MeioMaskField<Integer>("reverseInteger", MaskType.ReverseInteger));
-        form.add(new MeioMaskField<BigDecimal>("reverseDecimal", MaskType.ReverseDecimal));
-        form.add(new MeioMaskField<BigDecimal>("reverseDecimalUs", MaskType.ReverseDecimalUs));
-        form.add(new MeioMaskField<BigDecimal>("reverseReais", MaskType.ReverseReais));
-        form.add(new MeioMaskField<BigDecimal>("reverseDollar", MaskType.ReverseDollar));       
+		form.add(new MeioMaskField<Integer>("reverseInteger", MaskType.ReverseInteger));
+		form.add(new MeioMaskField<BigDecimal>("reverseDecimal", MaskType.ReverseDecimal));
+		form.add(new MeioMaskField<BigDecimal>("reverseDecimalUs", MaskType.ReverseDecimalUs));
+		form.add(new MeioMaskField<BigDecimal>("reverseReais", MaskType.ReverseReais));
+		form.add(new MeioMaskField<BigDecimal>("reverseDollar", MaskType.ReverseDollar));
 
-        form.add(new MeioMaskField<String>("regexpIp", MaskType.RegexpIp));       
-        form.add(new MeioMaskField<String>("regexpEmail", MaskType.RegexpEmail));       
-        
-        
-    }
+		form.add(new MeioMaskField<String>("regexpIp", MaskType.RegexpIp));
+		form.add(new MeioMaskField<String>("regexpEmail", MaskType.RegexpEmail));
 
-    private static class TestModel {
 
-        private String fixed;
-        private String fixedPhone;
-        private String fixedPhoneUs;
-        private String fixedCpf;
-        private String fixedCnpj;
-        private Long fixedCep;
-        private String fixedTime;
-        private String fixedCc;
-        private Date fixedDate;
-        private Date fixedDateUs;
-        private Integer reverseInteger;
-        private BigDecimal reverseDecimal;
-        private BigDecimal reverseDecimalUs;
-        private BigDecimal reverseReais;
-        private BigDecimal reverseDollar;
-        private String regexpIp;
-        private String regexpEmail;
-        
+	}
 
-        /**
-         * @return the fixed
-         */
-        public String getFixed() {
-            return fixed;
-        }
+	private static class TestModel
+	{
 
-        /**
-         * @param fixed the fixed to set
-         */
-        public void setFixed(String fixed) {
-            this.fixed = fixed;
-        }
+		private String fixed;
+		private String fixedPhone;
+		private String fixedPhoneUs;
+		private String fixedCpf;
+		private String fixedCnpj;
+		private Long fixedCep;
+		private String fixedTime;
+		private String fixedCc;
+		private Date fixedDate;
+		private Date fixedDateUs;
+		private Integer reverseInteger;
+		private BigDecimal reverseDecimal;
+		private BigDecimal reverseDecimalUs;
+		private BigDecimal reverseReais;
+		private BigDecimal reverseDollar;
+		private String regexpIp;
+		private String regexpEmail;
 
-        /**
-         * @return the fixedPhone
-         */
-        public String getFixedPhone() {
-            return fixedPhone;
-        }
 
-        /**
-         * @param fixedPhone the fixedPhone to set
-         */
-        public void setFixedPhone(String fixedPhone) {
-            this.fixedPhone = fixedPhone;
-        }
+		/**
+		 * @return the fixed
+		 */
+		public String getFixed()
+		{
+			return fixed;
+		}
 
-        /**
-         * @return the fixedCpf
-         */
-        public String getFixedCpf() {
-            return fixedCpf;
-        }
+		/**
+		 * @param fixed
+		 *            the fixed to set
+		 */
+		public void setFixed(String fixed)
+		{
+			this.fixed = fixed;
+		}
 
-        /**
-         * @param fixedCpf the fixedCpf to set
-         */
-        public void setFixedCpf(String fixedCpf) {
-            this.fixedCpf = fixedCpf;
-        }
+		/**
+		 * @return the fixedPhone
+		 */
+		public String getFixedPhone()
+		{
+			return fixedPhone;
+		}
 
-        /**
-         * @return the fixedPhoneUs
-         */
-        public String getFixedPhoneUs() {
-            return fixedPhoneUs;
-        }
+		/**
+		 * @param fixedPhone
+		 *            the fixedPhone to set
+		 */
+		public void setFixedPhone(String fixedPhone)
+		{
+			this.fixedPhone = fixedPhone;
+		}
 
-        /**
-         * @param fixedPhoneUs the fixedPhoneUs to set
-         */
-        public void setFixedPhoneUs(String fixedPhoneUs) {
-            this.fixedPhoneUs = fixedPhoneUs;
-        }
+		/**
+		 * @return the fixedCpf
+		 */
+		public String getFixedCpf()
+		{
+			return fixedCpf;
+		}
 
-        /**
-         * @return the fixedCnpj
-         */
-        public String getFixedCnpj() {
-            return fixedCnpj;
-        }
+		/**
+		 * @param fixedCpf
+		 *            the fixedCpf to set
+		 */
+		public void setFixedCpf(String fixedCpf)
+		{
+			this.fixedCpf = fixedCpf;
+		}
 
-        /**
-         * @param fixedCnpj the fixedCnpj to set
-         */
-        public void setFixedCnpj(String fixedCnpj) {
-            this.fixedCnpj = fixedCnpj;
-        }
+		/**
+		 * @return the fixedPhoneUs
+		 */
+		public String getFixedPhoneUs()
+		{
+			return fixedPhoneUs;
+		}
 
-        /**
-         * @return the fixedCep
-         */
-        public Long getFixedCep() {
-            return fixedCep;
-        }
+		/**
+		 * @param fixedPhoneUs
+		 *            the fixedPhoneUs to set
+		 */
+		public void setFixedPhoneUs(String fixedPhoneUs)
+		{
+			this.fixedPhoneUs = fixedPhoneUs;
+		}
 
-        /**
-         * @param fixedCep the fixedCep to set
-         */
-        public void setFixedCep(Long fixedCep) {
-            this.fixedCep = fixedCep;
-        }
+		/**
+		 * @return the fixedCnpj
+		 */
+		public String getFixedCnpj()
+		{
+			return fixedCnpj;
+		}
 
-        /**
-         * @return the fixedTime
-         */
-        public String getFixedTime() {
-            return fixedTime;
-        }
+		/**
+		 * @param fixedCnpj
+		 *            the fixedCnpj to set
+		 */
+		public void setFixedCnpj(String fixedCnpj)
+		{
+			this.fixedCnpj = fixedCnpj;
+		}
 
-        /**
-         * @param fixedTime the fixedTime to set
-         */
-        public void setFixedTime(String fixedTime) {
-            this.fixedTime = fixedTime;
-        }
+		/**
+		 * @return the fixedCep
+		 */
+		public Long getFixedCep()
+		{
+			return fixedCep;
+		}
 
-        /**
-         * @return the fixedCC
-         */
-        public String getFixedCc() {
-            return fixedCc;
-        }
+		/**
+		 * @param fixedCep
+		 *            the fixedCep to set
+		 */
+		public void setFixedCep(Long fixedCep)
+		{
+			this.fixedCep = fixedCep;
+		}
 
-        /**
-         * @param fixedCC the fixedCC to set
-         */
-        public void setFixedCC(String fixedCc) {
-            this.setFixedCc(fixedCc);
-        }
+		/**
+		 * @return the fixedTime
+		 */
+		public String getFixedTime()
+		{
+			return fixedTime;
+		}
 
-        /**
-         * @return the fixedDate
-         */
-        public Date getFixedDate() {
-            return fixedDate;
-        }
+		/**
+		 * @param fixedTime
+		 *            the fixedTime to set
+		 */
+		public void setFixedTime(String fixedTime)
+		{
+			this.fixedTime = fixedTime;
+		}
 
-        /**
-         * @param fixedDate the fixedDate to set
-         */
-        public void setFixedDate(Date fixedDate) {
-            this.fixedDate = fixedDate;
-        }
+		/**
+		 * @return the fixedCC
+		 */
+		public String getFixedCc()
+		{
+			return fixedCc;
+		}
 
-        /**
-         * @return the fixedDateUs
-         */
-        public Date getFixedDateUs() {
-            return fixedDateUs;
-        }
+		/**
+		 * @param fixedCC
+		 *            the fixedCC to set
+		 */
+		public void setFixedCC(String fixedCc)
+		{
+			setFixedCc(fixedCc);
+		}
 
-        /**
-         * @param fixedDateUs the fixedDateUs to set
-         */
-        public void setFixedDateUs(Date fixedDateUs) {
-            this.fixedDateUs = fixedDateUs;
-        }
+		/**
+		 * @return the fixedDate
+		 */
+		public Date getFixedDate()
+		{
+			return fixedDate;
+		}
 
-        /**
-         * @return the reverseInteger
-         */
-        public Integer getReverseInteger() {
-            return reverseInteger;
-        }
+		/**
+		 * @param fixedDate
+		 *            the fixedDate to set
+		 */
+		public void setFixedDate(Date fixedDate)
+		{
+			this.fixedDate = fixedDate;
+		}
 
-        /**
-         * @param reverseInteger the reverseInteger to set
-         */
-        public void setReverseInteger(Integer reverseInteger) {
-            this.reverseInteger = reverseInteger;
-        }
+		/**
+		 * @return the fixedDateUs
+		 */
+		public Date getFixedDateUs()
+		{
+			return fixedDateUs;
+		}
 
-        /**
-         * @param fixedCc the fixedCc to set
-         */
-        public void setFixedCc(String fixedCc) {
-            this.fixedCc = fixedCc;
-        }
+		/**
+		 * @param fixedDateUs
+		 *            the fixedDateUs to set
+		 */
+		public void setFixedDateUs(Date fixedDateUs)
+		{
+			this.fixedDateUs = fixedDateUs;
+		}
 
-        /**
-         * @return the reverseDecimal
-         */
-        public BigDecimal getReverseDecimal() {
-            return reverseDecimal;
-        }
+		/**
+		 * @return the reverseInteger
+		 */
+		public Integer getReverseInteger()
+		{
+			return reverseInteger;
+		}
 
-        /**
-         * @param reverseDecimal the reverseDecimal to set
-         */
-        public void setReverseDecimal(BigDecimal reverseDecimal) {
-            this.reverseDecimal = reverseDecimal;
-        }
+		/**
+		 * @param reverseInteger
+		 *            the reverseInteger to set
+		 */
+		public void setReverseInteger(Integer reverseInteger)
+		{
+			this.reverseInteger = reverseInteger;
+		}
 
-        /**
-         * @return the reverseDecimalUs
-         */
-        public BigDecimal getReverseDecimalUs() {
-            return reverseDecimalUs;
-        }
+		/**
+		 * @param fixedCc
+		 *            the fixedCc to set
+		 */
+		public void setFixedCc(String fixedCc)
+		{
+			this.fixedCc = fixedCc;
+		}
 
-        /**
-         * @param reverseDecimalUs the reverseDecimalUs to set
-         */
-        public void setReverseDecimalUs(BigDecimal reverseDecimalUs) {
-            this.reverseDecimalUs = reverseDecimalUs;
-        }
+		/**
+		 * @return the reverseDecimal
+		 */
+		public BigDecimal getReverseDecimal()
+		{
+			return reverseDecimal;
+		}
 
-        /**
-         * @return the reverseReais
-         */
-        public BigDecimal getReverseReais() {
-            return reverseReais;
-        }
+		/**
+		 * @param reverseDecimal
+		 *            the reverseDecimal to set
+		 */
+		public void setReverseDecimal(BigDecimal reverseDecimal)
+		{
+			this.reverseDecimal = reverseDecimal;
+		}
 
-        /**
-         * @param reverseReais the reverseReais to set
-         */
-        public void setReverseReais(BigDecimal reverseReais) {
-            this.reverseReais = reverseReais;
-        }
+		/**
+		 * @return the reverseDecimalUs
+		 */
+		public BigDecimal getReverseDecimalUs()
+		{
+			return reverseDecimalUs;
+		}
 
-        /**
-         * @return the reverseDollar
-         */
-        public BigDecimal getReverseDollar() {
-            return reverseDollar;
-        }
+		/**
+		 * @param reverseDecimalUs
+		 *            the reverseDecimalUs to set
+		 */
+		public void setReverseDecimalUs(BigDecimal reverseDecimalUs)
+		{
+			this.reverseDecimalUs = reverseDecimalUs;
+		}
 
-        /**
-         * @param reverseDollar the reverseDollar to set
-         */
-        public void setReverseDollar(BigDecimal reverseDollar) {
-            this.reverseDollar = reverseDollar;
-        }
+		/**
+		 * @return the reverseReais
+		 */
+		public BigDecimal getReverseReais()
+		{
+			return reverseReais;
+		}
 
-        /**
-         * @return the regexpIp
-         */
-        public String getRegexpIp() {
-            return regexpIp;
-        }
+		/**
+		 * @param reverseReais
+		 *            the reverseReais to set
+		 */
+		public void setReverseReais(BigDecimal reverseReais)
+		{
+			this.reverseReais = reverseReais;
+		}
 
-        /**
-         * @param regexpIp the regexpIp to set
-         */
-        public void setRegexpIp(String regexpIp) {
-            this.regexpIp = regexpIp;
-        }
+		/**
+		 * @return the reverseDollar
+		 */
+		public BigDecimal getReverseDollar()
+		{
+			return reverseDollar;
+		}
 
-        /**
-         * @return the regexpEmail
-         */
-        public String getRegexpEmail() {
-            return regexpEmail;
-        }
+		/**
+		 * @param reverseDollar
+		 *            the reverseDollar to set
+		 */
+		public void setReverseDollar(BigDecimal reverseDollar)
+		{
+			this.reverseDollar = reverseDollar;
+		}
 
-        /**
-         * @param regexpEmail the regexpEmail to set
-         */
-        public void setRegexpEmail(String regexpEmail) {
-            this.regexpEmail = regexpEmail;
-        }
-    }
+		/**
+		 * @return the regexpIp
+		 */
+		public String getRegexpIp()
+		{
+			return regexpIp;
+		}
+
+		/**
+		 * @param regexpIp
+		 *            the regexpIp to set
+		 */
+		public void setRegexpIp(String regexpIp)
+		{
+			this.regexpIp = regexpIp;
+		}
+
+		/**
+		 * @return the regexpEmail
+		 */
+		public String getRegexpEmail()
+		{
+			return regexpEmail;
+		}
+
+		/**
+		 * @param regexpEmail
+		 *            the regexpEmail to set
+		 */
+		public void setRegexpEmail(String regexpEmail)
+		{
+			this.regexpEmail = regexpEmail;
+		}
+	}
 }

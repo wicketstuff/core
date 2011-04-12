@@ -26,7 +26,6 @@ import org.apache.wicket.security.models.ISecureModel;
 import org.apache.wicket.security.pages.SecureTestPage;
 import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
 
-
 /**
  * @author marrink
  * 
@@ -54,7 +53,7 @@ public class PageD extends SecureTestPage
 		 */
 		private WaspAuthorizationStrategy getStrategy()
 		{
-			return ((WaspAuthorizationStrategy)getSecureSession().getAuthorizationStrategy());
+			return ((WaspAuthorizationStrategy) getSecureSession().getAuthorizationStrategy());
 		}
 
 		/**

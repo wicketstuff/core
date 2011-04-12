@@ -16,27 +16,31 @@ package org.wicketstuff.springreference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AService {
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(AService.class);
+public class AService
+{
+	private static final Logger LOGGER = LoggerFactory.getLogger(AService.class);
 
 	private int treasure;
 
-	public final int doStuff() {
+	public final int doStuff()
+	{
 		return doInnerStuff();
 	}
 
-	protected int doInnerStuff() {
+	protected int doInnerStuff()
+	{
 		LOGGER.info("Yo pirate, your treasure is: {}", treasure);
 
 		return treasure;
 	}
 
-	public int getTreasure() {
+	public int getTreasure()
+	{
 		return treasure;
 	}
 
-	public void setTreasure(int treasure) {
+	public void setTreasure(int treasure)
+	{
 		this.treasure = treasure;
 	}
 }

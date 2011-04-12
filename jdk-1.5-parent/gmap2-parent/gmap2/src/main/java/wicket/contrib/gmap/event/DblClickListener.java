@@ -28,22 +28,28 @@ import wicket.contrib.gmap.api.GLatLng;
  * See "dblclick" in the event section of <a
  * href="http://www.google.com/apis/maps/documentation/reference.html#GMap2">GMap2</a>.
  */
-public abstract class DblClickListener extends GEventListenerBehavior {
+public abstract class DblClickListener extends GEventListenerBehavior
+{
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected String getEvent() {
+	protected String getEvent()
+	{
 		return "dblclick";
 	}
 
 	@Override
-	protected final void onEvent(AjaxRequestTarget target) {
+	protected final void onEvent(AjaxRequestTarget target)
+	{
 		Request request = RequestCycle.get().getRequest();
 
 		GLatLng latLng = null;
 
-		String latLngParameter = request.getRequestParameters().getParameterValue("argument1").toString();
-		if (latLngParameter != null) {
+		String latLngParameter = request.getRequestParameters()
+			.getParameterValue("argument1")
+			.toString();
+		if (latLngParameter != null)
+		{
 			latLng = GLatLng.parse(latLngParameter);
 		}
 

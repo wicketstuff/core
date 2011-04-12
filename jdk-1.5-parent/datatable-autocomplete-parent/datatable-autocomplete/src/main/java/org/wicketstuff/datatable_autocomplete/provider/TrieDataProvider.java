@@ -35,14 +35,13 @@ import org.wicketstuff.datatable_autocomplete.trie.Trie;
 /**
  * @author mocleiri
  * 
- *         A SortableDataProvider connector which loads the data from the
- *         backing Trie<C>.
+ *         A SortableDataProvider connector which loads the data from the backing Trie<C>.
  * 
  */
-public class TrieDataProvider<C> extends SortableDataProvider<C> {
+public class TrieDataProvider<C> extends SortableDataProvider<C>
+{
 
-	private static final Logger log = LoggerFactory
-			.getLogger(TrieDataProvider.class);
+	private static final Logger log = LoggerFactory.getLogger(TrieDataProvider.class);
 
 	private static final long serialVersionUID = 6404076914195910834L;
 
@@ -68,7 +67,8 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 
 	private Map<Integer, Integer> resultLimitMap = new LinkedHashMap<Integer, Integer>();
 
-	protected IModel<String> getInputModel() {
+	protected IModel<String> getInputModel()
+	{
 
 		return fieldStringModel;
 	}
@@ -77,7 +77,8 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 	 * @param noResultsOnEmptyString
 	 *            the noResultsOnEmptyString to set
 	 */
-	public void setNoResultsOnEmptyString(boolean noResultsOnEmptyString) {
+	public void setNoResultsOnEmptyString(boolean noResultsOnEmptyString)
+	{
 
 		this.noResultsOnEmptyString = noResultsOnEmptyString;
 	}
@@ -86,7 +87,8 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 	 * @param matchAnyWhereInString
 	 *            the matchAnyWhereInString to set
 	 */
-	public void setMatchAnyWhereInString(boolean matchAnyWhereInString) {
+	public void setMatchAnyWhereInString(boolean matchAnyWhereInString)
+	{
 
 		this.matchAnyWhereInString = matchAnyWhereInString;
 	}
@@ -94,31 +96,33 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 	/**
 	 * @return the matchAnyWhereInString
 	 */
-	public boolean isMatchAnyWhereInString() {
+	public boolean isMatchAnyWhereInString()
+	{
 		return matchAnyWhereInString;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider
-	 * #detach()
+	 * @see org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider #detach()
 	 */
 	@Override
-	public void detach() {
+	public void detach()
+	{
 
 		/*
-		 * If we want to support selectable values then we need to make the list
-		 * last longer than just one rendered pass.
+		 * If we want to support selectable values then we need to make the list last longer than
+		 * just one rendered pass.
 		 */
 		clear();
 		super.detach();
 	}
 
-	public final void clear() {
+	public final void clear()
+	{
 
-		if (currentListData != null) {
+		if (currentListData != null)
+		{
 			currentListData.clear();
 			currentListData = null;
 		}
@@ -128,9 +132,9 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 	 * @param fieldStringModel
 	 * 
 	 */
-	public TrieDataProvider(ITrieProvider<C> trieProvider,
-			ITrieFilter<C> resultFilter, IModel<String> fieldStringModel,
-			IProviderSorter<C> sorter, IModelProvider<C> modelProvider) {
+	public TrieDataProvider(ITrieProvider<C> trieProvider, ITrieFilter<C> resultFilter,
+		IModel<String> fieldStringModel, IProviderSorter<C> sorter, IModelProvider<C> modelProvider)
+	{
 
 		super();
 		this.trieProvider = trieProvider;
@@ -141,23 +145,31 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 		this.modelProvider = modelProvider;
 	}
 
-	public int size() {
+	public int size()
+	{
 
 		String prefix = fieldStringModel.getObject();
 
-		if (prefix == null) {
+		if (prefix == null)
+		{
 			return 0;
-		} else if (noResultsOnEmptyString && prefix.length() == 0) {
+		}
+		else if (noResultsOnEmptyString && prefix.length() == 0)
+		{
 			// show no results since no input filter specified.
 			return 0;
-		} else {
+		}
+		else
+		{
 			// if no input is given any element in the entire trie is
 			// selectable.
-			if (currentListData == null) {
+			if (currentListData == null)
+			{
 
 				Trie<C> trie = trieProvider.provideTrie();
 
-				if (trie == null) {
+				if (trie == null)
+				{
 					log.warn("trie is unexpectantly null!");
 					currentListData = new LinkedList<C>();
 					return 0;
@@ -168,16 +180,16 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 
 				Integer limit = this.resultLimitMap.get(prefix.length());
 
-				if (limit == null) {
+				if (limit == null)
+				{
 					// no limit
-					currentListData = trie.getWordList(prefix,
-							this.trieResultFilter);
+					currentListData = trie.getWordList(prefix, this.trieResultFilter);
 
 				}
 
-				else {
-					currentListData = trie.getWordList(prefix,
-							this.trieResultFilter, limit);
+				else
+				{
+					currentListData = trie.getWordList(prefix, this.trieResultFilter, limit);
 
 				}
 
@@ -191,10 +203,10 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.apache.wicket.markup.repeater.data.IDataProvider#iterator(int,
-	 * int)
+	 * @see org.apache.wicket.markup.repeater.data.IDataProvider#iterator(int, int)
 	 */
-	public Iterator<C> iterator(int first, int count) {
+	public Iterator<C> iterator(int first, int count)
+	{
 
 		String prefix = fieldStringModel.getObject();
 
@@ -203,7 +215,8 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 
 		SortParam sort = super.getSort();
 
-		if (sort != null && this.currentListData.size() > 1) {
+		if (sort != null && this.currentListData.size() > 1)
+		{
 
 			Comparator<C> c = sorter.getComparatorForProperty(sort);
 
@@ -216,7 +229,8 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 
 		int last = DataProviderUtils.getLastIndex(size, first, count);
 
-		if (first > last) {
+		if (first > last)
+		{
 			log.warn("indexing problem");
 			last = DataProviderUtils.getLastIndex(size, first, count);
 		}
@@ -227,23 +241,23 @@ public class TrieDataProvider<C> extends SortableDataProvider<C> {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.apache.wicket.markup.repeater.data.IDataProvider#model(java.lang.
-	 * Object)
+	 * @see org.apache.wicket.markup.repeater.data.IDataProvider#model(java.lang. Object)
 	 */
-	public IModel<C> model(C object) {
+	public IModel<C> model(C object)
+	{
 
 		return modelProvider.model(object);
 	}
 
 	/**
-	 * Used to set the upper bounds on results returned based on the length of
-	 * the prefix being searched.
+	 * Used to set the upper bounds on results returned based on the length of the prefix being
+	 * searched.
 	 * 
 	 * @param resultMatchMap
 	 * 
 	 */
-	public void setMaxResultMap(Map<Integer, Integer> resultMatchMap) {
+	public void setMaxResultMap(Map<Integer, Integer> resultMatchMap)
+	{
 		this.resultLimitMap = resultMatchMap;
 
 	}

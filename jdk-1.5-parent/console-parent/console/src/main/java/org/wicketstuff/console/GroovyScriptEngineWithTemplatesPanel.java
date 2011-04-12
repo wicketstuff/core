@@ -23,31 +23,29 @@ import org.wicketstuff.console.templates.ScriptTemplate;
 import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
 
 /**
- * A combination {@link GroovyScriptEnginePanel} and
- * {@link ScriptTemplateSelectionTablePanel}.
+ * A combination {@link GroovyScriptEnginePanel} and {@link ScriptTemplateSelectionTablePanel}.
  * 
  * @author cretzel
  */
-public class GroovyScriptEngineWithTemplatesPanel extends
-        ScriptEnginePanelWithTemplates {
+public class GroovyScriptEngineWithTemplatesPanel extends ScriptEnginePanelWithTemplates
+{
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates an instance using the given title and script template data
-     * provider.
-     * 
-     * @param id
-     *            id
-     * @param title
-     *            title, {@code null} for default
-     * @param dataProvider
-     *            data provider for script templates, {@code null} for default
-     */
-    public GroovyScriptEngineWithTemplatesPanel(final String id,
-            final IModel<String> title,
-            final IDataProvider<ScriptTemplate> dataProvider) {
-        super(id, Lang.GROOVY, title, dataProvider);
-    }
+	/**
+	 * Creates an instance using the given title and script template data provider.
+	 * 
+	 * @param id
+	 *            id
+	 * @param title
+	 *            title, {@code null} for default
+	 * @param dataProvider
+	 *            data provider for script templates, {@code null} for default
+	 */
+	public GroovyScriptEngineWithTemplatesPanel(final String id, final IModel<String> title,
+		final IDataProvider<ScriptTemplate> dataProvider)
+	{
+		super(id, Lang.GROOVY, title, dataProvider);
+	}
 
 }

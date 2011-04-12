@@ -23,25 +23,29 @@ import java.util.Collection;
 import org.wicketstuff.calendarviews.model.IEvent;
 
 /**
- * For testing - allows you to use a set of random test data that won't change
- * with every page refresh or change.  Can be cleared upon request.
+ * For testing - allows you to use a set of random test data that won't change with every page
+ * refresh or change. Can be cleared upon request.
  * 
  * @author Jeremy Thomerson
  */
-public class PersistentRandomTestEventProvider extends RandomTestEventProvider {
+public class PersistentRandomTestEventProvider extends RandomTestEventProvider
+{
 
 	private static final long serialVersionUID = 1L;
 	private static Collection<? extends IEvent> STATIC_COLLECTION = null;
 
 	@Override
-	protected Collection<? extends IEvent> load() {
-		if (STATIC_COLLECTION == null) {
+	protected Collection<? extends IEvent> load()
+	{
+		if (STATIC_COLLECTION == null)
+		{
 			STATIC_COLLECTION = super.load();
 		}
 		return STATIC_COLLECTION;
 	}
-	
-	public static final void clearEventsForFreshReload() {
+
+	public static final void clearEventsForFreshReload()
+	{
 		STATIC_COLLECTION = null;
 	}
 }

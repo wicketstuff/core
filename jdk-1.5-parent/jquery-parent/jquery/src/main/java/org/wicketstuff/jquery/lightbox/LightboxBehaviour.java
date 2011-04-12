@@ -7,65 +7,80 @@ import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 
 /**
- *
- * Adds LightBox hehaviour to the selected component. The default
- * is to look for li's with anchors in them and create lightbox from
- * the href of the anchors. You can override this by using the
+ * 
+ * Adds LightBox hehaviour to the selected component. The default is to look for li's with anchors
+ * in them and create lightbox from the href of the anchors. You can override this by using the
  * constructor that takes the css selector as an argument
- *
+ * 
  * @author Edvin Syse <edvin@sysedata.no>
  * @created 2008-06-26
- *
+ * 
  */
-public class LightboxBehaviour extends JQueryBehavior {
-	private static final ResourceReference LIGHTBOX_JS = new CompressedResourceReference(LightboxBehaviour.class, "jquery.lightbox-0.5.js");
-	private static final ResourceReference LIGHTBOX_CSS = new CompressedResourceReference(LightboxBehaviour.class, "jquery.lightbox-0.5.css");
+public class LightboxBehaviour extends JQueryBehavior
+{
+	private static final ResourceReference LIGHTBOX_JS = new CompressedResourceReference(
+		LightboxBehaviour.class, "jquery.lightbox-0.5.js");
+	private static final ResourceReference LIGHTBOX_CSS = new CompressedResourceReference(
+		LightboxBehaviour.class, "jquery.lightbox-0.5.css");
 	private LightboxOptions options;
 	private String selector = "li a";
 
-	/* Default constructor, selects anchors inside an li as
-	 * default lightbox target. */
-	public LightboxBehaviour() {
+	/*
+	 * Default constructor, selects anchors inside an li as default lightbox target.
+	 */
+	public LightboxBehaviour()
+	{
 		options = new LightboxOptions();
 	}
 
-	/* Constructor that lets you override the css selector so you
-	*  can choose what to convert to a lightbox.
-	*/
-	public LightboxBehaviour(String selector) {
+	/*
+	 * Constructor that lets you override the css selector so you can choose what to convert to a
+	 * lightbox.
+	 */
+	public LightboxBehaviour(String selector)
+	{
 		this();
 		this.selector = selector;
 	}
 
-	public LightboxOptions getOptions() {
-		return this.options;
-	}
-	
-	@Override protected CharSequence getOnReadyScript() {
-		return "\t$('#" + getComponent().getMarkupId() + getSelector() + "').lightBox(" + options.toString(false) + ");";
+	public LightboxOptions getOptions()
+	{
+		return options;
 	}
 
-	public String getSelector() {
+	@Override
+	protected CharSequence getOnReadyScript()
+	{
+		return "\t$('#" + getComponent().getMarkupId() + getSelector() + "').lightBox(" +
+			options.toString(false) + ");";
+	}
+
+	public String getSelector()
+	{
 		return " " + selector;
 	}
 
 	@Override
-	public void renderHead(Component component, IHeaderResponse response) {
+	public void renderHead(Component component, IHeaderResponse response)
+	{
 		super.renderHead(component, response);
 		response.renderJavaScriptReference(getLightboxJs());
 		response.renderCSSReference(getLightboxCss());
 	}
 
 	@Override
-	protected void onBind() {
+	protected void onBind()
+	{
 		getComponent().setOutputMarkupId(true);
 	}
 
-	private ResourceReference getLightboxJs() {
+	private ResourceReference getLightboxJs()
+	{
 		return LIGHTBOX_JS;
 	}
 
-	public ResourceReference getLightboxCss() {
+	public ResourceReference getLightboxCss()
+	{
 		return LIGHTBOX_CSS;
 	}
 }

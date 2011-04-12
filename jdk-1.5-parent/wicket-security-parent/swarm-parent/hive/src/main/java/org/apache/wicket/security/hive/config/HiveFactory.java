@@ -20,9 +20,9 @@ import org.apache.wicket.security.hive.Hive;
 import org.apache.wicket.security.hive.HiveMind;
 
 /**
- * HiveFactory creates {@link Hive}s to be registered by the {@link HiveMind}.
- * For instance there could be Hives that read the system policy from a file,
- * while others read it from a database.
+ * HiveFactory creates {@link Hive}s to be registered by the {@link HiveMind}. For
+ * instance there could be Hives that read the system policy from a file, while others
+ * read it from a database.
  * 
  * @author marrink
  * 
@@ -30,9 +30,9 @@ import org.apache.wicket.security.hive.HiveMind;
 public interface HiveFactory
 {
 	/**
-	 * Creates a new Hive according to the configuration (if any) of this
-	 * factory. The factory is free to return null or throw an exception if an
-	 * unrecoverable problem arises.
+	 * Creates a new Hive according to the configuration (if any) of this factory. The
+	 * factory is free to return null or throw an exception if an unrecoverable problem
+	 * arises.
 	 * 
 	 * @return the new Hive.
 	 */

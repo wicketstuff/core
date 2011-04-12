@@ -12,26 +12,28 @@ import org.junit.Test;
 
 /**
  * Tests for {@link ImageDimensionProvider}.
- *
+ * 
  * @author akiraly
  */
-public class ImageDimensionProviderTest {
+public class ImageDimensionProviderTest
+{
 	private WicketTester tester = new WicketTester();
 
 	@After
-	public void after() {
+	public void after()
+	{
 		tester.destroy();
 	}
 
 	@Test
-	public void testDimensions() {
+	public void testDimensions()
+	{
 		Image image = new Image("foo", AbstractDefaultAjaxBehavior.INDICATOR);
 		ImageDimensionProvider dimensionProvider = new ImageDimensionProvider(
-				Integer.toString(200), Integer.toString(70));
+			Integer.toString(200), Integer.toString(70));
 		image.add(dimensionProvider);
 
-		IMarkupFragment markup = Markup.of("<div><img wicket:id=\""
-				+ image.getId() + "\" /></div>");
+		IMarkupFragment markup = Markup.of("<div><img wicket:id=\"" + image.getId() + "\" /></div>");
 
 		tester.startComponent(image, markup);
 
@@ -39,8 +41,8 @@ public class ImageDimensionProviderTest {
 
 		Assert.assertNotNull(tagTester);
 		Assert.assertEquals(dimensionProvider.getWidth(),
-				tagTester.getAttribute(AbstractImageDimensionProvider.WIDTH));
+			tagTester.getAttribute(AbstractImageDimensionProvider.WIDTH));
 		Assert.assertEquals(dimensionProvider.getHeight(),
-				tagTester.getAttribute(AbstractImageDimensionProvider.HEIGHT));
+			tagTester.getAttribute(AbstractImageDimensionProvider.HEIGHT));
 	}
 }

@@ -26,54 +26,61 @@ import org.apache.wicket.util.string.JavaScriptUtils;
 import org.wicketstuff.mootools.meiomask.MaskType;
 
 /**
- *
+ * 
  * @author inaiat
  */
-public class MeioMaskBehavior extends MootoolsMoreBehavior {
+public class MeioMaskBehavior extends MootoolsMoreBehavior
+{
 
-    private static final ResourceReference MEIO_MASK = new JavaScriptResourceReference(MeioMaskBehavior.class,
-            "res/meio-mask-min-2.0.1.js");
-    private final MaskType maskType;
-    private final String options;
+	private static final ResourceReference MEIO_MASK = new JavaScriptResourceReference(
+		MeioMaskBehavior.class, "res/meio-mask-min-2.0.1.js");
+	private final MaskType maskType;
+	private final String options;
 
-    public MeioMaskBehavior(MaskType type) {
-        this(type, null);
-    }
+	public MeioMaskBehavior(MaskType type)
+	{
+		this(type, null);
+	}
 
-    public MeioMaskBehavior(MaskType type, String options) {
-        this.maskType = type;
-        this.options = options;
-    }
+	public MeioMaskBehavior(MaskType type, String options)
+	{
+		maskType = type;
+		this.options = options;
+	}
 
-    @Override
-    public void renderHead(org.apache.wicket.Component component, IHeaderResponse response) {
-        super.renderHead(component, response);
-        response.renderJavaScriptReference(MEIO_MASK);
-    }
+	@Override
+	public void renderHead(org.apache.wicket.Component component, IHeaderResponse response)
+	{
+		super.renderHead(component, response);
+		response.renderJavaScriptReference(MEIO_MASK);
+	}
 
-    @Override
-    public void onComponentTag(org.apache.wicket.Component component, ComponentTag tag) {
-        super.onComponentTag(component, tag);
-        tag.put("data-meiomask", maskType.getMaskName());
+	@Override
+	public void onComponentTag(org.apache.wicket.Component component, ComponentTag tag)
+	{
+		super.onComponentTag(component, tag);
+		tag.put("data-meiomask", maskType.getMaskName());
 
-        if (options != null) {
-            tag.put("data-meiomask-options", options);
-        }
-    }
+		if (options != null)
+		{
+			tag.put("data-meiomask-options", options);
+		}
+	}
 
-    @Override
-    public void afterRender(Component component) {
-        super.afterRender(component);
-        Response response = component.getResponse();
-        response.write(JavaScriptUtils.SCRIPT_OPEN_TAG);
-        response.write("$('");
-        response.write(component.getMarkupId());
-        response.write("').meiomask($('");
-        response.write(component.getMarkupId());
-        response.write("').get('data-meiomask'), JSON.decode($('");
-        response.write(component.getMarkupId());
-        response.write("').get('data-meiomask-options')));");
-        response.write(JavaScriptUtils.SCRIPT_CLOSE_TAG);
-    }
-    
+	@Override
+	public void afterRender(Component component)
+	{
+		super.afterRender(component);
+		Response response = component.getResponse();
+		response.write(JavaScriptUtils.SCRIPT_OPEN_TAG);
+		response.write("$('");
+		response.write(component.getMarkupId());
+		response.write("').meiomask($('");
+		response.write(component.getMarkupId());
+		response.write("').get('data-meiomask'), JSON.decode($('");
+		response.write(component.getMarkupId());
+		response.write("').get('data-meiomask-options')));");
+		response.write(JavaScriptUtils.SCRIPT_CLOSE_TAG);
+	}
+
 }

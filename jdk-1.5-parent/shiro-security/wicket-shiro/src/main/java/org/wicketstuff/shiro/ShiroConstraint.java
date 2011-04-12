@@ -16,7 +16,8 @@
  */
 package org.wicketstuff.shiro;
 
-public enum ShiroConstraint {
+public enum ShiroConstraint
+{
 	HasRole, //
 	HasPermission, //
 	IsAuthenticated, // in this session

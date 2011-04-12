@@ -22,14 +22,12 @@ import org.apache.wicket.security.actions.WaspAction;
 import org.apache.wicket.security.checks.ISecurityCheck;
 import org.apache.wicket.security.strategies.WaspAuthorizationStrategy;
 
-
 /**
  * ISecureModel is much like ISecurityCheck in that it knows how to authorize or
  * authenticate a user. Usually they just redirect the call to the
- * {@link WaspAuthorizationStrategy}, but it is not unimaginable that models are
- * targeted at specific wasp implementations and take care of there
- * authentication or authorization themself. Note authentication should rarely
- * take place at the model level.
+ * {@link WaspAuthorizationStrategy}, but it is not unimaginable that models are targeted
+ * at specific wasp implementations and take care of there authentication or authorization
+ * themself. Note authentication should rarely take place at the model level.
  * 
  * @author marrink
  * @see WaspAuthorizationStrategy
@@ -41,11 +39,9 @@ public interface ISecureModel<T> extends IModel<T>
 	 * Checks if the component is authorized for this model.
 	 * 
 	 * @param component
-	 *            the (owning) component of the model, some models might allow
-	 *            null.
+	 *            the (owning) component of the model, some models might allow null.
 	 * @param action
-	 * @return true if the component is allowed to access this model, false
-	 *         otherwise
+	 * @return true if the component is allowed to access this model, false otherwise
 	 * @see WaspAuthorizationStrategy#isModelAuthorized(ISecureModel, Component,
 	 *      WaspAction)
 	 */
@@ -55,10 +51,8 @@ public interface ISecureModel<T> extends IModel<T>
 	 * Checks if the user is authenticated for this model.
 	 * 
 	 * @param component
-	 *            the (owning) component of the model, some models might allow
-	 *            null.
-	 * @return true if the user is authenticated for this model, false
-	 *         otherwise.
+	 *            the (owning) component of the model, some models might allow null.
+	 * @return true if the user is authenticated for this model, false otherwise.
 	 * @see WaspAuthorizationStrategy#isModelAuthenticated(IModel, Component)
 	 */
 	public boolean isAuthenticated(Component component);

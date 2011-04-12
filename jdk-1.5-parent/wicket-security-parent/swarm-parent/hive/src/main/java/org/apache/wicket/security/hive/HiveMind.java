@@ -21,12 +21,10 @@ import java.util.Map;
 
 import org.apache.wicket.security.hive.config.HiveFactory;
 
-
 /**
- * HiveMind maintains the collection of {@link Hive}s. There can only be one
- * HiveMind in each virtual machine. As the HiveMind is supposed to be created
- * and configured early during the lifetime of an application none of its
- * methods are synchronized.
+ * HiveMind maintains the collection of {@link Hive}s. There can only be one HiveMind in
+ * each virtual machine. As the HiveMind is supposed to be created and configured early
+ * during the lifetime of an application none of its methods are synchronized.
  * 
  * @author marrink
  */
@@ -58,9 +56,8 @@ public class HiveMind
 	}
 
 	/**
-	 * Registers a new Hive for anybody knowing the right key to be retrieved.
-	 * It is not possible to overwrite a registration without first
-	 * unregistering the previous Hive.
+	 * Registers a new Hive for anybody knowing the right key to be retrieved. It is not
+	 * possible to overwrite a registration without first unregistering the previous Hive.
 	 * 
 	 * @param queen
 	 *            the key to store the Hive with.
@@ -82,7 +79,7 @@ public class HiveMind
 		{
 			if (INSTANCE.hiveCollection.containsKey(queen))
 				throw new IllegalArgumentException(
-						"Another Hive is already registered with the following key: " + queen);
+					"Another Hive is already registered with the following key: " + queen);
 			Hive hive = factory.createHive();
 			if (hive == null)
 				throw new RuntimeException("Factory did not produce a Hive.");

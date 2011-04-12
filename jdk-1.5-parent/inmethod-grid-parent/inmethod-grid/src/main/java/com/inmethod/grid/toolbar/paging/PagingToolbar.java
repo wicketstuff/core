@@ -14,44 +14,49 @@ import com.inmethod.grid.toolbar.AbstractToolbar;
  * 
  * @author Matej Knopp
  */
-public class PagingToolbar extends AbstractToolbar {
+public class PagingToolbar extends AbstractToolbar
+{
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Returns the {@link DataGrid} to which this toolbar belongs.
+	 * 
 	 * @return data grid
 	 */
-	public DataGrid getDataGrid() {
-		return (DataGrid) super.getGrid();
+	public DataGrid getDataGrid()
+	{
+		return (DataGrid)super.getGrid();
 	}
 
 	/**
 	 * Constructor
 	 * 
 	 * @param grid
-	 * 		data grid
+	 *            data grid
 	 */
-	public PagingToolbar(DataGrid grid) {
+	public PagingToolbar(DataGrid grid)
+	{
 		super(grid, null);
 
 		add(newPagingNavigator("navigator"));
 		add(newNavigationLabel("navigationLabel"));
 	}
 
-	protected Component newNavigationLabel(String id) {
+	protected Component newNavigationLabel(String id)
+	{
 		return new NavigatorLabel(id, getDataGrid());
 	}
-	
-	protected Component newPagingNavigator(String id) {
+
+	protected Component newPagingNavigator(String id)
+	{
 		return new PagingNavigator(id, getDataGrid());
 	}
 
 	/**
-	 * Important to prevent early initialization of QueryResult at
-	 * AbstractPageableView. The isVisible method can be called during an early
-	 * step in the form process and the QuertyResult initialization can fail if
-	 * it depend upon form components
+	 * Important to prevent early initialization of QueryResult at AbstractPageableView. The
+	 * isVisible method can be called during an early step in the form process and the QuertyResult
+	 * initialization can fail if it depend upon form components
 	 */
 	@Override
 	protected void onConfigure()

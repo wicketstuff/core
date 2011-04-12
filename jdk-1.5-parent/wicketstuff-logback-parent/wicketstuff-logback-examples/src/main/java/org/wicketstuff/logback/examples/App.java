@@ -9,14 +9,17 @@ import org.apache.wicket.util.crypt.CharEncoding;
  * 
  * @author akiraly
  */
-public class App extends WebApplication {
+public class App extends WebApplication
+{
 	@Override
-	public Class<? extends Page> getHomePage() {
+	public Class<? extends Page> getHomePage()
+	{
 		return HomePage.class;
 	}
 
 	@Override
-	protected void init() {
+	protected void init()
+	{
 		super.init();
 
 		getMarkupSettings().setDefaultMarkupEncoding(CharEncoding.UTF_8);

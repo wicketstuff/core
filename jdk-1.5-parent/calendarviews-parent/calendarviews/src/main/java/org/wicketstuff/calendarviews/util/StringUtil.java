@@ -19,59 +19,69 @@
 package org.wicketstuff.calendarviews.util;
 
 /**
- * You shouldn't use this class - you should use commons-lang.  We only
- * use it internally to avoid having an extra dependency for the very few
- * things we need.
+ * You shouldn't use this class - you should use commons-lang. We only use it internally to avoid
+ * having an extra dependency for the very few things we need.
  * 
  * @author Jeremy Thomerson
  */
-public class StringUtil {
+public class StringUtil
+{
 
-    public static final String EMPTY = "";
+	public static final String EMPTY = "";
 
-    /**
-	 * @param string the string to test
+	/**
+	 * @param string
+	 *            the string to test
 	 * @return true if the string is null, 0 length, or 0 length after a trim()
 	 */
-	public static boolean isEmpty(String string) {
+	public static boolean isEmpty(String string)
+	{
 		return string == null || string.trim().length() == 0;
 	}
-	
-    public static String join(Object[] array, String separator) {
-        if (array == null) {
-            return null;
-        }
-        return join(array, separator, 0, array.length);
-    }
 
-    public static String join(Object[] array, String separator, int startIndex, int endIndex) {
-        if (array == null) {
-            return null;
-        }
-        if (separator == null) {
-            separator = EMPTY;
-        }
+	public static String join(Object[] array, String separator)
+	{
+		if (array == null)
+		{
+			return null;
+		}
+		return join(array, separator, 0, array.length);
+	}
 
-        // endIndex - startIndex > 0:   Len = NofStrings *(len(firstString) + len(separator))
-        //           (Assuming that all Strings are roughly equally long)
-        int bufSize = (endIndex - startIndex);
-        if (bufSize <= 0) {
-            return EMPTY;
-        }
+	public static String join(Object[] array, String separator, int startIndex, int endIndex)
+	{
+		if (array == null)
+		{
+			return null;
+		}
+		if (separator == null)
+		{
+			separator = EMPTY;
+		}
 
-        bufSize *= ((array[startIndex] == null ? 16 : array[startIndex].toString().length())
-                        + separator.length());
+		// endIndex - startIndex > 0: Len = NofStrings *(len(firstString) + len(separator))
+		// (Assuming that all Strings are roughly equally long)
+		int bufSize = (endIndex - startIndex);
+		if (bufSize <= 0)
+		{
+			return EMPTY;
+		}
 
-        StringBuffer buf = new StringBuffer(bufSize);
+		bufSize *= ((array[startIndex] == null ? 16 : array[startIndex].toString().length()) + separator.length());
 
-        for (int i = startIndex; i < endIndex; i++) {
-            if (i > startIndex) {
-                buf.append(separator);
-            }
-            if (array[i] != null) {
-                buf.append(array[i]);
-            }
-        }
-        return buf.toString();
-    }
+		StringBuffer buf = new StringBuffer(bufSize);
+
+		for (int i = startIndex; i < endIndex; i++)
+		{
+			if (i > startIndex)
+			{
+				buf.append(separator);
+			}
+			if (array[i] != null)
+			{
+				buf.append(array[i]);
+			}
+		}
+		return buf.toString();
+	}
 }

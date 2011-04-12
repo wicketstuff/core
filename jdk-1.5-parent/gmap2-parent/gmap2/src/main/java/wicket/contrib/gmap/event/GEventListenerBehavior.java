@@ -39,7 +39,7 @@ public abstract class GEventListenerBehavior extends AbstractDefaultAjaxBehavior
 	public String getJSaddListener()
 	{
 		return getGMap2().getJSinvoke(
-				"addListener('" + getEvent() + "', '" + getCallbackUrl() + "')");
+			"addListener('" + getEvent() + "', '" + getCallbackUrl() + "')");
 	}
 
 	protected final GMap2 getGMap2()
@@ -59,8 +59,8 @@ public abstract class GEventListenerBehavior extends AbstractDefaultAjaxBehavior
 	}
 
 	/**
-	 * Typically response parameters that are meant for this event are picket up
-	 * and made available for the further processing.
+	 * Typically response parameters that are meant for this event are picket up and made available
+	 * for the further processing.
 	 * 
 	 * @param target
 	 *            Target to add the Components, that need to be redrawn, to.

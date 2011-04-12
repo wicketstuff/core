@@ -26,7 +26,8 @@ import com.inmethod.grid.examples.pages.BaseExamplePage;
  * 
  * @author Matej Knopp
  */
-public class DataGridSelectionPage extends BaseExamplePage {
+public class DataGridSelectionPage extends BaseExamplePage
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -35,7 +36,8 @@ public class DataGridSelectionPage extends BaseExamplePage {
 	/**
 	 * Constructor.
 	 */
-	public DataGridSelectionPage() {
+	public DataGridSelectionPage()
+	{
 		List<IGridColumn> columns = new ArrayList<IGridColumn>();
 
 		columns.add(new CheckBoxColumn("checkBox"));
@@ -45,12 +47,14 @@ public class DataGridSelectionPage extends BaseExamplePage {
 		columns.add(new PropertyColumn(new ResourceModel("homePhone"), "homePhone"));
 		columns.add(new PropertyColumn(new ResourceModel("cellPhone"), "cellPhone"));
 
-		final DataGrid grid = new DefaultDataGrid("grid", new ContactDataSource(), columns) {
+		final DataGrid grid = new DefaultDataGrid("grid", new ContactDataSource(), columns)
+		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onItemSelectionChanged(IModel item, boolean newValue) {
+			public void onItemSelectionChanged(IModel item, boolean newValue)
+			{
 				super.onItemSelectionChanged(item, newValue);
 
 				// when item selection changes the label showing selected items needs to be
@@ -66,11 +70,13 @@ public class DataGridSelectionPage extends BaseExamplePage {
 		grid.setRowsPerPage(15);
 
 		// model for label that shows selected items
-		IModel selectedItemsModel = new Model() {
+		IModel selectedItemsModel = new Model()
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public Serializable getObject() {
+			public Serializable getObject()
+			{
 				return selectedItemsAsString(grid);
 			}
 		};
@@ -80,12 +86,15 @@ public class DataGridSelectionPage extends BaseExamplePage {
 		addOptionLinks(grid);
 	}
 
-	private String selectedItemsAsString(AbstractGrid grid) {
+	private String selectedItemsAsString(AbstractGrid grid)
+	{
 		StringBuilder res = new StringBuilder();
 		Collection<IModel> selected = grid.getSelectedItems();
-		for (IModel model : selected) {
-			Contact contact = (Contact) model.getObject();
-			if (res.length() > 0) {
+		for (IModel model : selected)
+		{
+			Contact contact = (Contact)model.getObject();
+			if (res.length() > 0)
+			{
 				res.append(", ");
 			}
 			res.append(contact.getFirstName());
@@ -95,64 +104,77 @@ public class DataGridSelectionPage extends BaseExamplePage {
 		return res.toString();
 	}
 
-	private void addOptionLinks(final DataGrid grid) {
+	private void addOptionLinks(final DataGrid grid)
+	{
 
-		add(new Link("cleanSelectionOnPageChangeOn") {
+		add(new Link("cleanSelectionOnPageChangeOn")
+		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onClick() {
+			public void onClick()
+			{
 				grid.setCleanSelectionOnPageChange(true);
 			}
 
 			@Override
-			public boolean isEnabled() {
+			public boolean isEnabled()
+			{
 				return !grid.isCleanSelectionOnPageChange();
 			}
 		});
 
-		add(new Link("cleanSelectionOnPageChangeOff") {
+		add(new Link("cleanSelectionOnPageChangeOff")
+		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onClick() {
+			public void onClick()
+			{
 				grid.setCleanSelectionOnPageChange(false);
 			}
 
 			@Override
-			public boolean isEnabled() {
+			public boolean isEnabled()
+			{
 				return grid.isCleanSelectionOnPageChange();
 			}
 		});
 
-		add(new Link("selectMultipleOn") {
+		add(new Link("selectMultipleOn")
+		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onClick() {
+			public void onClick()
+			{
 				grid.setAllowSelectMultiple(true);
 			}
 
 			@Override
-			public boolean isEnabled() {
+			public boolean isEnabled()
+			{
 				return !grid.isAllowSelectMultiple();
 			}
 		});
 
-		add(new Link("selectMultipleOff") {
+		add(new Link("selectMultipleOff")
+		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onClick() {
+			public void onClick()
+			{
 				grid.setAllowSelectMultiple(false);
 			}
 
 			@Override
-			public boolean isEnabled() {
+			public boolean isEnabled()
+			{
 				return grid.isAllowSelectMultiple();
 			}
 		});

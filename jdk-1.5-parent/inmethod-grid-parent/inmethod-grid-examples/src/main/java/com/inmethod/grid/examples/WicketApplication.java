@@ -24,16 +24,17 @@ import com.inmethod.grid.examples.pages.treegrid.VerticalScrollingTreeGridPage;
  *
  */
 public class WicketApplication extends WebApplication
-{    
-    /**
-     * Constructor
-     */
+{
+	/**
+	 * Constructor
+	 */
 	public WicketApplication()
 	{
 	}
-	
+
 	@Override
-	protected void init() {
+	protected void init()
+	{
 		mount("/data-grid/simple", SimpleDataGridPage.class);
 		mount("/data-grid/vertical-scrolling", VerticalScrollingDataGridPage.class);
 		mount("/data-grid/item-selection", DataGridSelectionPage.class);
@@ -41,26 +42,28 @@ public class WicketApplication extends WebApplication
 		mount("/data-grid/editable", EditableDataGridPage.class);
 		mount("/data-grid/editable-selection", EditableDataGridWithSelectionPage.class);
 		mount("/data-grid/unknown-count", DataGridWithUnknownItemCount.class);
-		
+
 		mount("/tree-grid/simple", SimpleTreeGridPage.class);
 		mount("/tree-grid/vertical-scrolling", VerticalScrollingTreeGridPage.class);
 		mount("/tree-grid/item-selection", TreeGridSelectionPage.class);
 		mount("/tree-grid/column-properties", TreeGridColumnPropertiesPage.class);
-		mount("/tree-grid/editable", EditableTreeGridPage.class);		
+		mount("/tree-grid/editable", EditableTreeGridPage.class);
 	}
-	
-	private void mount(String mountPath, Class<? extends WebPage> pageClass) {
+
+	private void mount(String mountPath, Class<? extends WebPage> pageClass)
+	{
 		getRootRequestMapperAsCompound().add(new MountedMapper(mountPath, pageClass));
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Session newSession(Request request, Response response) {
+	public Session newSession(Request request, Response response)
+	{
 		return new Session(request);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -69,5 +72,5 @@ public class WicketApplication extends WebApplication
 	{
 		return SimpleDataGridPage.class;
 	}
-  
+
 }

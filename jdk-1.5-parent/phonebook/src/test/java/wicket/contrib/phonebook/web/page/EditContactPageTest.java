@@ -36,22 +36,24 @@ import wicket.contrib.phonebook.web.PhonebookFixture;
 /**
  * @author Kare Nuorteva
  */
-public class EditContactPageTest extends TestCase {
+public class EditContactPageTest extends TestCase
+{
 	private WicketTester wicket;
 	private PhonebookApplicationForTesting app;
 	private PhonebookFixture fixture;
 
-	private static final Page getTestPage() {
+	private static final Page getTestPage()
+	{
 		Contact contact = new Contact();
 		contact.setId(99);
 		contact.setFirstname("James");
 		contact.setLastname("Bond");
-		return new EditContactPage(new ListContactsPage(), new Model<Contact>(
-				contact));
+		return new EditContactPage(new ListContactsPage(), new Model<Contact>(contact));
 	}
 
 	@Override
-	protected void setUp() throws Exception {
+	protected void setUp() throws Exception
+	{
 		app = new PhonebookApplicationForTesting();
 		fixture = new PhonebookFixture();
 		fixture.addStubs(app.context);
@@ -59,7 +61,8 @@ public class EditContactPageTest extends TestCase {
 		wicket.startPage(getTestPage());
 	}
 
-	public void testContainsFormComponents() throws Exception {
+	public void testContainsFormComponents() throws Exception
+	{
 		wicket.assertComponent("contactForm", Form.class);
 		wicket.assertComponent("contactForm:firstname", RequiredTextField.class);
 		wicket.assertComponent("contactForm:lastname", RequiredTextField.class);
@@ -69,15 +72,16 @@ public class EditContactPageTest extends TestCase {
 		wicket.assertComponent("contactForm:save", Button.class);
 	}
 
-	public void testCancelButtonsForwardsToBackPage() throws Exception {
+	public void testCancelButtonsForwardsToBackPage() throws Exception
+	{
 		FormTester form = wicket.newFormTester("contactForm");
 		form.submit("cancel");
 		wicket.assertInfoMessages(new String[] { "Edit cancelled" });
 		wicket.assertRenderedPage(ListContactsPage.class);
 	}
 
-	public void testSaveButtonStoresChangesAndForwardsToBackPage()
-			throws Exception {
+	public void testSaveButtonStoresChangesAndForwardsToBackPage() throws Exception
+	{
 		FormTester form = wicket.newFormTester("contactForm", true);
 		form.setValue("email", "james.bond@007.com");
 		form.setValue("phone", "007 123456");

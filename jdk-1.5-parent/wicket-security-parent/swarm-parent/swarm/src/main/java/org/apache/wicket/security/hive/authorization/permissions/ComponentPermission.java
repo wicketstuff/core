@@ -55,12 +55,12 @@ public class ComponentPermission extends ActionPermission
 		String[] aliasses = SecureComponentHelper.containerAliasses(component);
 		if (aliasses != null && aliasses.length > 0)
 		{
-			this.parents = new ArrayList<String[]>(aliasses.length);
+			parents = new ArrayList<String[]>(aliasses.length);
 			for (int i = 0; i < aliasses.length; i++)
-				this.parents.add(aliasses[i].split(SecureComponentHelper.PATH_SEPARATOR));
+				parents.add(aliasses[i].split(SecureComponentHelper.PATH_SEPARATOR));
 		}
 		else
-			this.parents = Collections.emptyList();
+			parents = Collections.emptyList();
 	}
 
 	/**

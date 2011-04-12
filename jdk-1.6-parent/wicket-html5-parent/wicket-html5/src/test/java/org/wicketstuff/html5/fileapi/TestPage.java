@@ -4,13 +4,15 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 
-public class TestPage extends WebPage {
+public class TestPage extends WebPage
+{
 	private static final long serialVersionUID = -8189892371317106568L;
 
 	private final Form<Void> form;
 	private final FileUploadField field;
 
-	public TestPage() {
+	public TestPage()
+	{
 		form = new Form<Void>("form");
 		add(form);
 
@@ -18,11 +20,13 @@ public class TestPage extends WebPage {
 		form.add(field);
 	}
 
-	public Form<Void> getForm() {
+	public Form<Void> getForm()
+	{
 		return form;
 	}
 
-	public FileUploadField getField() {
+	public FileUploadField getField()
+	{
 		return field;
 	}
 }

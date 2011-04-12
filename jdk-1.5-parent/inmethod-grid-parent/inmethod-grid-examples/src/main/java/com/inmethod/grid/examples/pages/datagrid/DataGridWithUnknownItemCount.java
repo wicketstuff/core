@@ -18,14 +18,16 @@ import com.inmethod.grid.examples.pages.BaseExamplePage;
  * 
  * @author Matej Knopp
  */
-public class DataGridWithUnknownItemCount extends BaseExamplePage {
+public class DataGridWithUnknownItemCount extends BaseExamplePage
+{
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Page constructor
 	 */
-	public DataGridWithUnknownItemCount() {
+	public DataGridWithUnknownItemCount()
+	{
 		List<IGridColumn> columns = new ArrayList<IGridColumn>();
 
 		columns.add(new PropertyColumn(new ResourceModel("id"), "id"));
@@ -34,7 +36,8 @@ public class DataGridWithUnknownItemCount extends BaseExamplePage {
 		columns.add(new PropertyColumn(new ResourceModel("homePhone"), "homePhone"));
 		columns.add(new PropertyColumn(new ResourceModel("cellPhone"), "cellPhone"));
 
-		DataGrid grid = new DefaultDataGrid("grid", new ContactDataSourceWithUnknownItemCount(), columns);
+		DataGrid grid = new DefaultDataGrid("grid", new ContactDataSourceWithUnknownItemCount(),
+			columns);
 		add(grid);
 
 		grid.setRowsPerPage(50);

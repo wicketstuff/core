@@ -16,22 +16,25 @@ import org.wicketstuff.html5.media.MediaSource;
  * 
  * @author Andrew Lombardi
  */
-public class Html5Audio extends Html5Media {
+public class Html5Audio extends Html5Media
+{
 
 	private static final long serialVersionUID = 1L;
 
-	public Html5Audio(String id, IModel<List<MediaSource>> model) {
-        super(id, model);
-    }
+	public Html5Audio(String id, IModel<List<MediaSource>> model)
+	{
+		super(id, model);
+	}
 
-    /**
-     * audio tag
-     *
-     * @return the tag name for this html5 media
-     */
-    @Override
-	protected String getTagName() {
-        return "audio";
-    }
+	/**
+	 * audio tag
+	 * 
+	 * @return the tag name for this html5 media
+	 */
+	@Override
+	protected String getTagName()
+	{
+		return "audio";
+	}
 
 }

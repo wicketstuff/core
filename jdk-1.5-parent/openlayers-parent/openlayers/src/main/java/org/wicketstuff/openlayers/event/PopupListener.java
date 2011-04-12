@@ -31,53 +31,67 @@ import org.wicketstuff.openlayers.api.Size;
 /**
  * event Listener
  */
-public abstract class PopupListener extends AbstractDefaultAjaxBehavior {
+public abstract class PopupListener extends AbstractDefaultAjaxBehavior
+{
 
 	private boolean wantEvents;
 
 	private OpenLayersMap openLayersMap;
 
-	public OpenLayersMap getOpenLayersMap() {
+	public OpenLayersMap getOpenLayersMap()
+	{
 		return openLayersMap;
 	}
 
-	public void setOpenLayersMap(OpenLayersMap openLayersMap) {
+	public void setOpenLayersMap(OpenLayersMap openLayersMap)
+	{
 		this.openLayersMap = openLayersMap;
 	}
 
-	public PopupListener(boolean wantEvents) {
+	public PopupListener(boolean wantEvents)
+	{
 		this.wantEvents = wantEvents;
 
 	}
 
 	@Override
-	protected void onBind() {
-		if (!(getComponent() instanceof OpenLayersMap)) {
+	protected void onBind()
+	{
+		if (!(getComponent() instanceof OpenLayersMap))
+		{
 			throw new IllegalArgumentException("must be bound to OpenlayersMap");
 		}
 	}
 
 	@Override
-	protected final void respond(AjaxRequestTarget target) {
+	protected final void respond(AjaxRequestTarget target)
+	{
 
 		onEvent(target);
 	}
 
-	protected final OpenLayersMap getOpenLayerMap() {
-		return (OpenLayersMap) getComponent();
+	protected final OpenLayersMap getOpenLayerMap()
+	{
+		return (OpenLayersMap)getComponent();
 	}
 
-	protected void onEvent(AjaxRequestTarget target) {
+	protected void onEvent(AjaxRequestTarget target)
+	{
 		Request request = RequestCycle.get().getRequest();
 
 		Overlay overlay = null;
 		LonLat latLng = null;
 
-		String markerParameter = request.getRequestParameters().getParameterValue("marker").toString();
-		if (markerParameter != null) {
-			OpenLayersMap map=getOpenLayerMap();
-			for (Overlay ovl : map.getOverlays()) {
-				if (ovl.getId().equals(markerParameter)) {
+		String markerParameter = request.getRequestParameters()
+			.getParameterValue("marker")
+			.toString();
+		if (markerParameter != null)
+		{
+			OpenLayersMap map = getOpenLayerMap();
+			for (Overlay ovl : map.getOverlays())
+			{
+				if (ovl.getId().equals(markerParameter))
+				{
 					overlay = ovl;
 					break;
 				}
@@ -85,16 +99,20 @@ public abstract class PopupListener extends AbstractDefaultAjaxBehavior {
 		}
 		String markerEvent = request.getRequestParameters().getParameterValue("event").toString();
 
-		if (wantEvents) {
+		if (wantEvents)
+		{
 			// Translate from string to type!
 			EventType eventType = EventType.valueOf(markerEvent);
 			onEvent(target, overlay, eventType);
-		} else {
+		}
+		else
+		{
 			onClick(target, overlay);
 		}
 	}
 
-	public String getCallBackForMarker(Marker marker) {
+	public String getCallBackForMarker(Marker marker)
+	{
 		return getCallbackUrl() + "&marker=" + marker.getId();
 
 	}
@@ -104,28 +122,24 @@ public abstract class PopupListener extends AbstractDefaultAjaxBehavior {
 	 * 
 	 * @param marker
 	 */
-	public void clickAndOpenPopup(Marker marker, AjaxRequestTarget target) {
+	public void clickAndOpenPopup(Marker marker, AjaxRequestTarget target)
+	{
 		String mapId = getOpenLayerMap().getJSInstance();
-		String jsToRun = "if (" + mapId + ".popup != null) {" + "		" + mapId
-				+ ".map.removePopup(" + mapId + ".popup);" + "		" + mapId
-				+ ".popup.destroy();" + "		" + mapId + ".popup = null;" + "}";
+		String jsToRun = "if (" + mapId + ".popup != null) {" + "		" + mapId + ".map.removePopup(" +
+			mapId + ".popup);" + "		" + mapId + ".popup.destroy();" + "		" + mapId +
+			".popup = null;" + "}";
 
 		target.prependJavaScript(jsToRun);
 
 		// Currently only support clicking on markers!
-		getOpenLayerMap().getInfoWindow().getContent().replaceWith(
-				marker.getPopup());
+		getOpenLayerMap().getInfoWindow().getContent().replaceWith(marker.getPopup());
 		getOpenLayerMap().getInfoWindow().setContent(marker.getPopup());
 		target.add(marker.getPopup());
-		jsToRun = mapId
-				+ ".popup = new OpenLayers.Popup('map', "
-				+ new LonLat(marker.getLonLat().getLng(), marker.getLonLat()
-						.getLat()) + ", "
-				+ new Size(195, 250).getJSconstructor()
-				+ ", document.getElementById(" + mapId
-				+ ".popupId).innerHTML, true);" + mapId
-				+ ".popup.setBackgroundColor('white');" + mapId
-				+ ".map.addPopup(" + mapId + ".popup);";
+		jsToRun = mapId + ".popup = new OpenLayers.Popup('map', " +
+			new LonLat(marker.getLonLat().getLng(), marker.getLonLat().getLat()) + ", " +
+			new Size(195, 250).getJSconstructor() + ", document.getElementById(" + mapId +
+			".popupId).innerHTML, true);" + mapId + ".popup.setBackgroundColor('white');" + mapId +
+			".map.addPopup(" + mapId + ".popup);";
 
 		// open info window
 		target.appendJavaScript(jsToRun);
@@ -136,39 +150,39 @@ public abstract class PopupListener extends AbstractDefaultAjaxBehavior {
 	 * 
 	 * @param target
 	 */
-	public void closePopup(AjaxRequestTarget target) {
+	public void closePopup(AjaxRequestTarget target)
+	{
 		String mapId = getOpenLayerMap().getJSInstance();
-		String jsToRun = "if (" + mapId + ".popup != null) {" + "		" + mapId
-				+ ".map.removePopup(" + mapId + ".popup);" + "		" + mapId
-				+ ".popup.destroy();" + "		" + mapId + ".popup = null;" + "}";
+		String jsToRun = "if (" + mapId + ".popup != null) {" + "		" + mapId + ".map.removePopup(" +
+			mapId + ".popup);" + "		" + mapId + ".popup.destroy();" + "		" + mapId +
+			".popup = null;" + "}";
 
 		target.appendJavaScript(jsToRun);
 	}
 
 	/**
-	 * Override this method to provide handling of a click on the marker. Only
-	 * passes onClick events
+	 * Override this method to provide handling of a click on the marker. Only passes onClick events
 	 * 
 	 * @param overlay
 	 *            The clicked overlay.
 	 * @param target
 	 *            The target that initiated the click.
 	 */
-	protected void onClick(AjaxRequestTarget target, Overlay overlay) {
+	protected void onClick(AjaxRequestTarget target, Overlay overlay)
+	{
 	};
 
 	/**
 	 * Override this method to provide handling of a event on the marker.
-	 * <Strong>Remember:</Strong>nullevent are passed by
-	 * popupMarkerInfoAttributeAppender
+	 * <Strong>Remember:</Strong>nullevent are passed by popupMarkerInfoAttributeAppender
 	 * 
 	 * @param overlay
 	 *            The clicked overlay.
 	 * @param target
 	 *            The target that initiated the click.
 	 */
-	protected void onEvent(AjaxRequestTarget target, Overlay overlay,
-			EventType event) {
+	protected void onEvent(AjaxRequestTarget target, Overlay overlay, EventType event)
+	{
 
 	};
 }

@@ -19,12 +19,13 @@ package org.wicketstuff.console.engine;
 import java.util.Map;
 
 /**
- * An {@link IScriptEngine} executes a script in a certain language and returns
- * the results of the execution as an {@link IScriptExecutionResult}.
+ * An {@link IScriptEngine} executes a script in a certain language and returns the results of the
+ * execution as an {@link IScriptExecutionResult}.
  * 
  * @author cretzel
  */
-public interface IScriptEngine {
+public interface IScriptEngine
+{
 
 	/**
 	 * Executes a script.

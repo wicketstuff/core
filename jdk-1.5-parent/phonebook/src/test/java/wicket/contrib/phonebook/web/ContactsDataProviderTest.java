@@ -32,20 +32,24 @@ import wicket.contrib.phonebook.QueryParam;
 /**
  * @author Kare Nuorteva
  */
-public class ContactsDataProviderTest extends TestCase {
+public class ContactsDataProviderTest extends TestCase
+{
 	private ContactDao dao;
 
 	@Override
-	protected void setUp() throws Exception {
+	protected void setUp() throws Exception
+	{
 		dao = EasyMock.createStrictMock(ContactDao.class);
 	}
 
 	@Override
-	protected void tearDown() throws Exception {
+	protected void tearDown() throws Exception
+	{
 		EasyMock.verify(dao);
 	}
 
-	public void testFind() throws Exception {
+	public void testFind() throws Exception
+	{
 		QueryParam qp = new QueryParam(0, 10, "foo", true);
 		Contact contact = createMockContext();
 		Iterator<Contact> expected = createContactResultList(contact);
@@ -58,14 +62,16 @@ public class ContactsDataProviderTest extends TestCase {
 		assertEquals(expected, result);
 	}
 
-	private Contact createMockContext() {
+	private Contact createMockContext()
+	{
 		Contact contact = new Contact();
 		contact.setFirstname("James");
 		contact.setLastname("Bond");
 		return contact;
 	}
 
-	private Iterator<Contact> createContactResultList(Contact contact) {
+	private Iterator<Contact> createContactResultList(Contact contact)
+	{
 		ArrayList<Contact> contacts = new ArrayList<Contact>();
 		contacts.add(contact);
 		Iterator<Contact> result = contacts.iterator();

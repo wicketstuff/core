@@ -22,12 +22,15 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
  * @author mocleiri
  * 
  */
-public interface ITableRowSelectionHandler<T> extends IClusterable {
+public interface ITableRowSelectionHandler<T> extends IClusterable
+{
 
 	/**
-	 * Implements a callback to allow the selection of the index'ed item from the current list to be handled.
+	 * Implements a callback to allow the selection of the index'ed item from the current list to be
+	 * handled.
 	 * 
 	 * The target should be updated accordingly
+	 * 
 	 * @param index
 	 * @param modelObject
 	 * @param target

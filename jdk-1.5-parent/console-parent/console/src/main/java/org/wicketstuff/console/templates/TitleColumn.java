@@ -26,19 +26,22 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-final class TitleColumn extends PropertyColumn<ScriptTemplate> {
+final class TitleColumn extends PropertyColumn<ScriptTemplate>
+{
 
-    private final class TitleLink extends AjaxLink<ScriptTemplate> {
-        private static final long serialVersionUID = 1L;
+	private final class TitleLink extends AjaxLink<ScriptTemplate>
+	{
+		private static final long serialVersionUID = 1L;
 
-        private TitleLink(final String id, final IModel<ScriptTemplate> model) {
+		private TitleLink(final String id, final IModel<ScriptTemplate> model)
+		{
 			super(id, model);
 		}
 
 		@Override
-		public void onClick(final AjaxRequestTarget target) {
-			TitleColumn.this.tablePanel.onScriptTemplateSelected(getModel(),
-					target);
+		public void onClick(final AjaxRequestTarget target)
+		{
+			tablePanel.onScriptTemplateSelected(getModel(), target);
 		}
 	}
 
@@ -46,21 +49,21 @@ final class TitleColumn extends PropertyColumn<ScriptTemplate> {
 
 	private final ScriptTemplateSelectionTablePanel tablePanel;
 
-	TitleColumn(
-			final ScriptTemplateSelectionTablePanel scriptTemplateSelectionTablePanel) {
+	TitleColumn(final ScriptTemplateSelectionTablePanel scriptTemplateSelectionTablePanel)
+	{
 		super(Model.of("Title"), "title");
 		tablePanel = scriptTemplateSelectionTablePanel;
 	}
 
 	@Override
 	public void populateItem(final Item<ICellPopulator<ScriptTemplate>> item,
-			final String componentId, final IModel<ScriptTemplate> rowModel) {
+		final String componentId, final IModel<ScriptTemplate> rowModel)
+	{
 
 		final AjaxLink<ScriptTemplate> link = new TitleLink("link", rowModel);
 		link.add(new Label("label", createLabelModel(rowModel)));
 
-		final Fragment fragment = new Fragment(componentId, "titleFragment",
-				tablePanel);
+		final Fragment fragment = new Fragment(componentId, "titleFragment", tablePanel);
 		fragment.add(link);
 		item.add(fragment);
 	}
