@@ -28,7 +28,8 @@ public abstract class InfoWindowOpenListener extends GEventListenerBehavior
 {
 
 	@Override
-	protected String getEvent() {
+	protected String getEvent()
+	{
 		return "infowindowopen";
 	}
 

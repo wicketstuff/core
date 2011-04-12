@@ -276,8 +276,8 @@ public class SwarmActionFactoryTest extends TestCase
 			assertEquals(bugsy, factory.getAction(BugsBunny.class));
 			assertTrue(factory.nextPowerOf2() == Integer.MAX_VALUE);
 			// overflow happens here
-			assertTrue(Integer.MAX_VALUE + "!=" + bugsy.actions(), Integer.MAX_VALUE == bugsy
-				.actions());
+			assertTrue(Integer.MAX_VALUE + "!=" + bugsy.actions(),
+				Integer.MAX_VALUE == bugsy.actions());
 			assertEquals(32, factory.getNumberOfRegisteredClasses());
 		}
 		catch (RegistrationException e)

@@ -18,7 +18,8 @@
  */
 package org.wicketstuff.jslibraries;
 
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jslibraries.util.Assert;
 import org.wicketstuff.jslibraries.util.WicketDeploymentState;
 
@@ -44,7 +45,7 @@ public class JSReference {
 		}
 		Library lib = versionDescriptor.getLibrary();
 		StringBuffer sb = createFileName(lib, version, production);
-		return new ResourceReference(JSReference.class, sb.toString());
+		return new PackageResourceReference(JSReference.class, sb.toString());
 	}
 
 	public static StringBuffer createFileName(Library lib, Version version,

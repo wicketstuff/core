@@ -8,7 +8,8 @@ import org.wicketstuff.openlayers.api.Marker;
 /**
  * Homepage
  */
-public class MapWithMarkersPage extends WebPage {
+public class MapWithMarkersPage extends WebPage
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -20,7 +21,8 @@ public class MapWithMarkersPage extends WebPage {
 	 * @param parameters
 	 *            Page parameters
 	 */
-	public MapWithMarkersPage(final PageParameters parameters) {
+	public MapWithMarkersPage(final PageParameters parameters)
+	{
 
 		OpenLayersMap openLayersMap = new OpenLayersMap("map", true);
 

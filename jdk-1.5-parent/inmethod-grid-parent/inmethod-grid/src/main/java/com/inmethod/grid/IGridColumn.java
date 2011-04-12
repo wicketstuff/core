@@ -14,7 +14,8 @@ import com.inmethod.grid.treegrid.TreeGrid;
  * 
  * @author Matej Knopp
  */
-public interface IGridColumn extends IDetachable {
+public interface IGridColumn extends IDetachable
+{
 
 	/**
 	 * Returns the column id. Each column must have a unique Id. The only allowed characters in a
@@ -50,15 +51,16 @@ public interface IGridColumn extends IDetachable {
 	 * 
 	 * @param parent
 	 *            Parent component. This is passed in only for convenience, the method
-	 *            implementation is <em>not</em> supposed to add the newly created component to
-	 *            the parent.
+	 *            implementation is <em>not</em> supposed to add the newly created component to the
+	 *            parent.
 	 * @param componentId
 	 *            required id of newly created components
 	 * @param rowModel
 	 *            model for given row
 	 * @return new cell component
 	 */
-	Component newCell(final WebMarkupContainer parent, final String componentId, final IModel rowModel);
+	Component newCell(final WebMarkupContainer parent, final String componentId,
+		final IModel rowModel);
 
 	/**
 	 * Creates a new {@link IRenderable} instance that is used to render to render the output of
@@ -171,22 +173,22 @@ public interface IGridColumn extends IDetachable {
 
 	/**
 	 * Determines the behavior when there is more text in cell than it fits in it. If the method
-	 * returns <code>true</code>, the text will be wrapped and row height increased. If the
-	 * method returns <code>false</code>, the remaining part of text will be hidden.
+	 * returns <code>true</code>, the text will be wrapped and row height increased. If the method
+	 * returns <code>false</code>, the remaining part of text will be hidden.
 	 * 
 	 * @return whether this colulmn's text should wrap or not
 	 */
 	public boolean getWrapText();
-	
+
 	/**
 	 * Allows to override default behavior when a row is clicked. Depending on grid settings the
 	 * default behavior can select the item. If this method returns <code>true</code> the default
 	 * behavior will be suppressed.
+	 * 
 	 * @param rowModel
-	 * 		Model for clicked row
-	 * @return
-	 * 		<code>true</code> if the default behavior when row is clicked should be supressed,
-	 *      <code>false</code> otherwise.
+	 *            Model for clicked row
+	 * @return <code>true</code> if the default behavior when row is clicked should be supressed,
+	 *         <code>false</code> otherwise.
 	 */
 	public boolean cellClicked(IModel rowModel);
 }

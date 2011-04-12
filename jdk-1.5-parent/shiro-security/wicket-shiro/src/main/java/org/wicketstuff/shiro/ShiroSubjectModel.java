@@ -28,6 +28,9 @@ public class ShiroSubjectModel extends AbstractReadOnlyModel<Subject>
 {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Subject getObject()
 	{

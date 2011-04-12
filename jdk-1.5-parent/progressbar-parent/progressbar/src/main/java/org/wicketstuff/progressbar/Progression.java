@@ -18,44 +18,48 @@ package org.wicketstuff.progressbar;
 
 
 /**
- * <p>The progress of a task is encapsulated as a <code>Progression</code> value
- * object. Currently the progress is only stored as an int percentage value (0 to 100) and
- * optionally a message describing the current task.</p>
- *
- * <p>This class has no dependency to Wicket and could be used in the service
- * layer.</p>
- *
+ * <p>
+ * The progress of a task is encapsulated as a <code>Progression</code> value object. Currently the
+ * progress is only stored as an int percentage value (0 to 100) and optionally a message describing
+ * the current task.
+ * </p>
+ * 
+ * <p>
+ * This class has no dependency to Wicket and could be used in the service layer.
+ * </p>
+ * 
  * @author Christopher Hlubek (hlubek)
- *
+ * 
  */
-public class Progression {
+public class Progression
+{
 	private final int progress;
 
 	private final String message;
 
 	/**
-	 * Create a new Progression value object
-	 * from a percentage progress value.
-	 *
+	 * Create a new Progression value object from a percentage progress value.
+	 * 
 	 * @param progress
 	 *            The progress in percent from 0 to 100, where 100 means done
 	 */
-	public Progression(int progress) {
+	public Progression(int progress)
+	{
 		this.progress = progress;
-		this.message = null;
+		message = null;
 	}
 
 	/**
-	 * Create a new Progression value object
-	 * from a percentage progress value and a message
+	 * Create a new Progression value object from a percentage progress value and a message
 	 * describing the current task
-	 *
+	 * 
 	 * @param progress
 	 *            The progress in percent from 0 to 100, where 100 means done
 	 * @param message
-     *            The message we'd like to show to end users
+	 *            The message we'd like to show to end users
 	 */
-	public Progression(int progress, String message) {
+	public Progression(int progress, String message)
+	{
 		this.progress = progress;
 		this.message = message;
 	}
@@ -63,15 +67,18 @@ public class Progression {
 	/**
 	 * @return true iff the progress is done
 	 */
-	public boolean isDone() {
+	public boolean isDone()
+	{
 		return progress >= 100;
 	}
 
-	public int getProgress() {
+	public int getProgress()
+	{
 		return progress;
 	}
 
-	public String getProgressMessage() {
+	public String getProgressMessage()
+	{
 		return message;
 	}
 }

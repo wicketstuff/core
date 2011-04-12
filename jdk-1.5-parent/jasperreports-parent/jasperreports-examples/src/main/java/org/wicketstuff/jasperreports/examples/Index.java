@@ -19,10 +19,12 @@ import org.apache.wicket.markup.html.WebPage;
  * 
  * @author Eelco Hillenius
  */
-public class Index extends WebPage {
+public class Index extends WebPage
+{
 	/**
 	 * Constructor
 	 */
-	public Index() {
+	public Index()
+	{
 	}
 }

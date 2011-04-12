@@ -26,28 +26,31 @@ import java.io.ObjectOutputStream;
 
 /**
  * @author mocleiri persist a built Trie<?> to disk.
- *
+ * 
  */
-public final class TrieUtils {
+public final class TrieUtils
+{
 
 	/**
 	 * 
 	 */
-	private TrieUtils() {
+	private TrieUtils()
+	{
 	}
 
 	/**
-	 * Save the Trie into the file named.  This can be useful since creating the Trie takes more memory than storing the simplified/compressed Patricia Trie.
+	 * Save the Trie into the file named. This can be useful since creating the Trie takes more
+	 * memory than storing the simplified/compressed Patricia Trie.
 	 * 
 	 * @param dataFile
 	 * @param trie
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public static void save(File dataFile, Trie<?>trie) throws FileNotFoundException, IOException {
+	public static void save(File dataFile, Trie<?> trie) throws FileNotFoundException, IOException
+	{
 
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(
-				dataFile, false));
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(dataFile, false));
 
 		oos.writeObject(trie);
 
@@ -65,23 +68,18 @@ public final class TrieUtils {
 	 * @throws ClassNotFoundException
 	 */
 	public static Trie<?> load(File dataFile) throws FileNotFoundException, IOException,
-			ClassNotFoundException {
+		ClassNotFoundException
+	{
 
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(
-				dataFile));
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(dataFile));
 
-		Trie<?> trie = (Trie<?>) ois.readObject();
+		Trie<?> trie = (Trie<?>)ois.readObject();
 
 		ois.close();
-		
+
 		return trie;
 
 	}
-	
-	
-	
-	
-	
-	
+
 
 }

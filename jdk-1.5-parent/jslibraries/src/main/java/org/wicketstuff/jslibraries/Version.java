@@ -36,7 +36,7 @@ public class Version implements Comparable<Version> {
 
 	public int compareTo(Version other) {
 		Assert.parameterNotNull(other, "other");
-		
+
 		for (int i = 0; i < mNumbers.length; i++) {
 			if (mNumbers[i] != other.mNumbers[i]) {
 				return mNumbers[i] - other.mNumbers[i];
@@ -48,6 +48,27 @@ public class Version implements Comparable<Version> {
 			}
 		}
 		return 0;
+	}
+
+	/**
+	 * A version matches another if it has equal or more numbers and all its
+	 * numbers equal those of the other.
+	 * 
+	 * @param other
+	 */
+	public boolean matches(Version other) {
+		Assert.parameterNotNull(other, "other");
+
+		if (other.mNumbers.length > this.mNumbers.length) {
+			return false;
+		}
+
+		for (int i = 0; i < other.mNumbers.length; i++) {
+			if (mNumbers[i] != other.mNumbers[i]) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -80,10 +101,11 @@ public class Version implements Comparable<Version> {
 	protected String renderVersionNumbers() {
 		StringBuffer sb = new StringBuffer();
 		for (int num : mNumbers) {
-			sb.append(num).append('.');
+			if (sb.length() > 0) {
+				sb.append('.');
+			}
+			sb.append(num);
 		}
-		sb.setLength(sb.length() - 1);
 		return sb.toString();
 	}
-
 }

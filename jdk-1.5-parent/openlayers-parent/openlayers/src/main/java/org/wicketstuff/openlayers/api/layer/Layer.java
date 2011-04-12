@@ -13,71 +13,77 @@ import org.wicketstuff.openlayers.js.ObjectLiteral;
 /**
  * 
  * @author Nino Martinez Wael (nino.martinez@jayway.dk)
- *
+ * 
  */
-public abstract class Layer {
+public abstract class Layer
+{
 	private String name;
-	
-	public String getName() {
+
+	public String getName()
+	{
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(String name)
+	{
 		this.name = name;
 	}
-	public String getId() {
+
+	public String getId()
+	{
 		return String.valueOf(System.identityHashCode(this));
 	}
 
-	public final String getJSAddLayer(IOpenLayersMap map) {
-		return "var layer"
-				+ getId()
-				+ " = "
-				+ getJSconstructor()
-				+ ";\n"
-				+ map.getJSinvoke("addLayer(layer" + getId() + ", " + getId()
-						+ ")");
+	public final String getJSAddLayer(IOpenLayersMap map)
+	{
+		return "var layer" + getId() + " = " + getJSconstructor() + ";\n" +
+			map.getJSinvoke("addLayer(layer" + getId() + ", " + getId() + ")");
 	}
 
-	public final void bindHeaderContributors(Component c) {
-		c.add(new Behavior() {
+	public final void bindHeaderContributors(Component c)
+	{
+		c.add(new Behavior()
+		{
 
 			@Override
-			public void renderHead(Component c, IHeaderResponse response) {
+			public void renderHead(Component c, IHeaderResponse response)
+			{
 				bindHeaderContributors(response);
 			}
-			
-			
+
+
 		});
 	}
 
 	protected abstract void bindHeaderContributors(IHeaderResponse response);
-	
+
 	public abstract String getJSconstructor();
-	
+
 	/**
 	 * A helper to build the { ... } options list from a map.
 	 * 
 	 * @param options
 	 * @return
 	 */
-	protected String getJSOptionsMap (Map<String, String>options) {
-		
+	protected String getJSOptionsMap(Map<String, String> options)
+	{
+
 		if (options == null || options.size() == 0)
 			return null;
 
 		ObjectLiteral builder = new ObjectLiteral();
-		
-		for (String key : options.keySet()) {
-		
+
+		for (String key : options.keySet())
+		{
+
 			builder.set(key, options.get(key));
-			
+
 		}
-		
+
 		return builder.toJS();
 	}
-	
-	
+
+
 	/**
 	 * A convience method for the common initialization case.
 	 * 
@@ -85,18 +91,20 @@ public abstract class Layer {
 	 * @param options
 	 * @return the contextualized contstructor for the layer.
 	 */
-	
-	
-	protected String getJSconstructor(String javascriptTypeName, List<String>parameterList) {
-		
+
+
+	protected String getJSconstructor(String javascriptTypeName, List<String> parameterList)
+	{
+
 		Constructor c = new Constructor(javascriptTypeName);
-		
-		for (String parameter : parameterList) {
-			
+
+		for (String parameter : parameterList)
+		{
+
 			c.add(parameter);
-			
+
 		}
-		
+
 		return c.toJS();
 	}
 }

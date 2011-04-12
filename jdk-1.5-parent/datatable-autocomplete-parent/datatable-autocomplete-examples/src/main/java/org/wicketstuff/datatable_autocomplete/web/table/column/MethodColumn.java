@@ -29,95 +29,120 @@ import org.apache.wicket.model.Model;
 /**
  * @author mocleiri
  * 
- * A Column that knows how to extract various attributes from the Method row model object.
- *
+ *         A Column that knows how to extract various attributes from the Method row model object.
+ * 
  */
-public class MethodColumn extends AbstractColumn<Method> {
+public class MethodColumn extends AbstractColumn<Method>
+{
 
 	private final MethodColumnType type;
 
 
-	public static enum MethodColumnType { METHOD_NAME, CLASS_NAME, PARAMETERS };
+	public static enum MethodColumnType
+	{
+		METHOD_NAME, CLASS_NAME, PARAMETERS
+	};
+
 	/**
 	 * @param displayModel
 	 */
-	public MethodColumn(IModel<String> displayModel, MethodColumnType type) {
+	public MethodColumn(IModel<String> displayModel, MethodColumnType type)
+	{
 		super(displayModel);
 		this.type = type;
 	}
 
-	public MethodColumn (String display, MethodColumnType type) {
-		this (new Model<String>(display), type);
+	public MethodColumn(String display, MethodColumnType type)
+	{
+		this(new Model<String>(display), type);
 	}
-	
 
-	/* (non-Javadoc)
-	 * @see org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator#populateItem(org.apache.wicket.markup.repeater.Item, java.lang.String, org.apache.wicket.model.IModel)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator#populateItem(org
+	 * .apache.wicket.markup.repeater.Item, java.lang.String, org.apache.wicket.model.IModel)
 	 */
-	public void populateItem(Item<ICellPopulator<Method>> cellItem, String componentId, final IModel<Method> rowModel) {
+	public void populateItem(Item<ICellPopulator<Method>> cellItem, String componentId,
+		final IModel<Method> rowModel)
+	{
 
-		cellItem.add(new Label (componentId, new AbstractReadOnlyModel<String>() {
+		cellItem.add(new Label(componentId, new AbstractReadOnlyModel<String>()
+		{
 
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 4014268651055132209L;
 
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see org.apache.wicket.model.AbstractReadOnlyModel#getObject()
 			 */
 			@Override
-			public String getObject() {
-				
-				Method m = rowModel.getObject();
-				
-				switch (MethodColumn.this.type) {
-				case CLASS_NAME:
-					
-					return m.getDeclaringClass().getName();
+			public String getObject()
+			{
 
-				case METHOD_NAME:
-					
-					return m.getName();
-					
-				case PARAMETERS:
-					
-					String name = m.toString();
-					
-					int startIndex = name.indexOf("(");
-					int endIndex = name.indexOf(")");
-					
-					// exclude the brackets
-					String parameters = name.substring(startIndex+1, endIndex);
-					
-					// add better comma spacing
-					parameters = parameters.replace(",", ", ");
-					
-					return parameters;
-				default:
-					return "";
+				Method m = rowModel.getObject();
+
+				switch (type)
+				{
+					case CLASS_NAME :
+
+						return m.getDeclaringClass().getName();
+
+					case METHOD_NAME :
+
+						return m.getName();
+
+					case PARAMETERS :
+
+						String name = m.toString();
+
+						int startIndex = name.indexOf("(");
+						int endIndex = name.indexOf(")");
+
+						// exclude the brackets
+						String parameters = name.substring(startIndex + 1, endIndex);
+
+						// add better comma spacing
+						parameters = parameters.replace(",", ", ");
+
+						return parameters;
+					default :
+						return "";
 				}
-				
+
 			}
-			
+
 		}));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn#getSortProperty()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn#getSortProperty()
 	 */
 	@Override
-	public String getSortProperty() {
+	public String getSortProperty()
+	{
 		return type.name();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn#isSortable()
 	 */
 	@Override
-	public boolean isSortable() {
+	public boolean isSortable()
+	{
 		return true;
 	}
 
-	
+
 }

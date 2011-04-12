@@ -16,30 +16,34 @@
  */
 package org.wicketstuff.minis.filter;
 
-import java.net.InetAddress;
+import static org.apache.wicket.util.string.JavaScriptUtils.SCRIPT_CLOSE_TAG;
+import static org.apache.wicket.util.string.JavaScriptUtils.SCRIPT_OPEN_TAG;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.response.filter.IResponseFilter;
 import org.apache.wicket.util.string.AppendingStringBuffer;
-import org.apache.wicket.util.string.JavaScriptUtils;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.time.Duration;
 
 /**
- * Displays server host name (combination of name, ipaddress and unique id, which is either based)
- * and time it took to handle the request in the browser's status bar like this:
+ * Displays an server identifier (combination of host name, IP address and unique id) and the time
+ * it took to handle the request in the browser's status bar like this:
  * <code>window.defaultStatus = 'Host: myhost/192.168.1.66/someid, handled in: 0.01s'</code>
  * 
  * @author eelco hillenius
  * @author David Bernard
+ * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
 public class ServerHostNameAndTimeFilter implements IResponseFilter
 {
 	private String host;
 
 	/**
-	 * Construct, trying system property 'examples.hostname' for the server id or else current time
-	 * milis.
+	 * Construct, trying system property 'hostid' for the server instance.
 	 */
 	public ServerHostNameAndTimeFilter() throws Exception
 	{
@@ -50,38 +54,51 @@ public class ServerHostNameAndTimeFilter implements IResponseFilter
 	 * Construct with an id.
 	 * 
 	 * @param hostId
-	 *            a unique id indentifying this server instance
+	 *            a unique id identifying this server instance
 	 */
-	public ServerHostNameAndTimeFilter(final String hostId) throws Exception
+	public ServerHostNameAndTimeFilter(final String hostId)
 	{
-		final InetAddress localMachine = InetAddress.getLocalHost();
-		final String hostName = localMachine.getHostName();
-		final String address = localMachine.getHostAddress();
-		host = (!Strings.isEmpty(hostName) ? hostName + "/" : "") + address + "/" + hostId;
-		if (Strings.isEmpty(hostId))
-			host = "<unknown>";
+		try
+		{
+			final InetAddress localMachine = InetAddress.getLocalHost();
+			host = localMachine.getHostName() + "/" + localMachine.getHostAddress() + "/" +
+				(Strings.isEmpty(hostId) ? "<unknown>" : hostId);
+		}
+		catch (final UnknownHostException ex)
+		{
+			throw new WicketRuntimeException(ex);
+		}
+	}
+
+	protected void addJavaScript(final AppendingStringBuffer sb)
+	{
+		sb.append("window.defaultStatus='");
+		addMessage(sb);
+		sb.append("'");
+	}
+
+	protected void addMessage(final AppendingStringBuffer sb)
+	{
+		final long timeTaken = System.currentTimeMillis() - RequestCycle.get().getStartTime();
+		sb.append("Host: ")
+			.append(host)
+			.append(", handled in: ")
+			.append(Duration.milliseconds(timeTaken));
 	}
 
 	/**
-	 * @see org.apache.wicket.IResponseFilter#filter(AppendingStringBuffer)
+	 * {@inheritDoc}
 	 */
 	public AppendingStringBuffer filter(final AppendingStringBuffer responseBuffer)
 	{
-		final int index = responseBuffer.indexOf("<head>");
-		final long timeTaken = System.currentTimeMillis() - RequestCycle.get().getStartTime();
+		final int index = responseBuffer.indexOf("</head>");
 		if (index != -1)
 		{
-			final AppendingStringBuffer script = new AppendingStringBuffer(75).append("\n")
-				.append(JavaScriptUtils.SCRIPT_OPEN_TAG)
-				.append("\n\twindow.defaultStatus='")
-				.append("Host: ")
-				.append(host)
-				.append(", handled in: ")
-				.append(Duration.milliseconds(timeTaken))
-				.append("';\n")
-				.append(JavaScriptUtils.SCRIPT_CLOSE_TAG)
-				.append("\n");
-			responseBuffer.insert(index + 6, script);
+			final AppendingStringBuffer script = new AppendingStringBuffer(75);
+			script.append("\n").append(SCRIPT_OPEN_TAG);
+			addJavaScript(script);
+			script.append(";").append(SCRIPT_CLOSE_TAG);
+			responseBuffer.insert(index, script);
 		}
 		return responseBuffer;
 	}

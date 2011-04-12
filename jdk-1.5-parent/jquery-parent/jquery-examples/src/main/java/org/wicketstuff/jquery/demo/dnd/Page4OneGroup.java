@@ -24,65 +24,80 @@ import org.wicketstuff.jquery.demo.PageSupport;
 import org.wicketstuff.jquery.dnd.DnDSortableHandler;
 
 @SuppressWarnings("serial")
-public class Page4OneGroup extends PageSupport {
-    // Data (for demo purpose)
-    private static MyGroup myGroup = null;
+public class Page4OneGroup extends PageSupport
+{
+	// Data (for demo purpose)
+	private static MyGroup myGroup = null;
 
-    static {
-        try {
-            myGroup = MyFactory.newMyGroup("one", 4);
-        } catch (RuntimeException exc) {
-            throw exc;
-        } catch (Exception exc) {
-            throw new RuntimeException("wrap: " + exc.getMessage(), exc);
-        }
-    }
+	static
+	{
+		try
+		{
+			myGroup = MyFactory.newMyGroup("one", 4);
+		}
+		catch (RuntimeException exc)
+		{
+			throw exc;
+		}
+		catch (Exception exc)
+		{
+			throw new RuntimeException("wrap: " + exc.getMessage(), exc);
+		}
+	}
 
-    // Component
-    public Page4OneGroup() throws Exception {
-        // define the action on DnD
-        final DnDSortableHandler dnd = new DnDSortableHandler("dnd") {
-            private int actionCnt_ = 0;
+	// Component
+	public Page4OneGroup() throws Exception
+	{
+		// define the action on DnD
+		final DnDSortableHandler dnd = new DnDSortableHandler("dnd")
+		{
+			private int actionCnt_ = 0;
 
-            @Override
-            public boolean onDnD(AjaxRequestTarget target, MarkupContainer srcContainer, int srcPos, MarkupContainer destContainer, int destPos) {
-                // apply modification on model
-                MyGroup srcGroup = (MyGroup) srcContainer.getDefaultModelObject();
-                MyGroup destGroup = (MyGroup) destContainer.getDefaultModelObject();
-                MyItem myItem = srcGroup.items.remove(srcPos);
-                destGroup.items.add(destPos, myItem);
+			@Override
+			public boolean onDnD(AjaxRequestTarget target, MarkupContainer srcContainer,
+				int srcPos, MarkupContainer destContainer, int destPos)
+			{
+				// apply modification on model
+				MyGroup srcGroup = (MyGroup)srcContainer.getDefaultModelObject();
+				MyGroup destGroup = (MyGroup)destContainer.getDefaultModelObject();
+				MyItem myItem = srcGroup.items.remove(srcPos);
+				destGroup.items.add(destPos, myItem);
 
-                // update sizes
-                actionCnt_++;
-                updateContainerHeader(target, srcContainer, srcGroup);
-                if (srcContainer != destContainer) {
-                    updateContainerHeader(target, destContainer, destGroup);
-                }
+				// update sizes
+				actionCnt_++;
+				updateContainerHeader(target, srcContainer, srcGroup);
+				if (srcContainer != destContainer)
+				{
+					updateContainerHeader(target, destContainer, destGroup);
+				}
 
-                // update feedback message
-                String msg = String.format("move '%s' from %d to %d", myItem.label, srcPos, destPos);
-                FeedbackPanel feedback = (FeedbackPanel) Page4OneGroup.this.get("feedback");
-                feedback.info(msg);
-                if (target != null) {
-                    target.add(feedback);
-                }
-                return false;
-            }
+				// update feedback message
+				String msg = String.format("move '%s' from %d to %d", myItem.label, srcPos, destPos);
+				FeedbackPanel feedback = (FeedbackPanel)Page4OneGroup.this.get("feedback");
+				feedback.info(msg);
+				if (target != null)
+				{
+					target.add(feedback);
+				}
+				return false;
+			}
 
-            private void updateContainerHeader(AjaxRequestTarget target, MarkupContainer container, MyGroup group) {
-                Label itemCnt = (Label) container.getParent().get("itemCnt");
-                itemCnt.setDefaultModelObject(group.items.size());
-                target.add(itemCnt);
+			private void updateContainerHeader(AjaxRequestTarget target, MarkupContainer container,
+				MyGroup group)
+			{
+				Label itemCnt = (Label)container.getParent().get("itemCnt");
+				itemCnt.setDefaultModelObject(group.items.size());
+				target.add(itemCnt);
 
-                Label actionCnt = (Label) container.getParent().get("actionCnt");
-                actionCnt.setDefaultModelObject(actionCnt_);
-                target.add(actionCnt);
-            }
-        };
+				Label actionCnt = (Label)container.getParent().get("actionCnt");
+				actionCnt.setDefaultModelObject(actionCnt_);
+				target.add(actionCnt);
+			}
+		};
 
-        // add the DnD handler to the page
-        add(dnd);
+		// add the DnD handler to the page
+		add(dnd);
 
-        add(new Panel4MyGroup("myGroup", myGroup, dnd));
-    }
+		add(new Panel4MyGroup("myGroup", myGroup, dnd));
+	}
 }

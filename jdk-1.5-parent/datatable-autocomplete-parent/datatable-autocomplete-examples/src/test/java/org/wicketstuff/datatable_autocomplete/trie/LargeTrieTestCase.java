@@ -31,12 +31,13 @@ import org.wicketstuff.datatable_autocomplete.data.TrieBuilder;
 /**
  * @author mocleiriilding properly.
  * 
- *         This done in the examples because of the availability of the
- *         TrieBuilder which can build a large dataset.
+ *         This done in the examples because of the availability of the TrieBuilder which can build
+ *         a large dataset.
  * 
  * 
  */
-public class LargeTrieTestCase extends TestCase {
+public class LargeTrieTestCase extends TestCase
+{
 
 	// note you will need to increase the heap size to run this example
 	private static final int TRIE_SIZE = 125000;
@@ -46,37 +47,42 @@ public class LargeTrieTestCase extends TestCase {
 	/**
 	 * 
 	 */
-	public LargeTrieTestCase() {
+	public LargeTrieTestCase()
+	{
 		super("LargeTrieTestCase");
 		init();
 	}
 
 	/*
 	 */
-	protected void init() {
+	protected void init()
+	{
 
 		builder = new TrieBuilder();
 
 		builder.buildTrie(TRIE_SIZE);
 
 		trie = builder.getTrie();
-		
+
 	}
 
-	private Comparator<Method> methodComparator = new Comparator<Method>() {
+	private Comparator<Method> methodComparator = new Comparator<Method>()
+	{
 
 		/*
 		 * (non-Javadoc)
 		 * 
 		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 		 */
-		public int compare(Method o1, Method o2) {
+		public int compare(Method o1, Method o2)
+		{
 			return o1.getName().compareTo(o2.getName());
 		}
 
 	};
 
-	public void testTrieStructure() {
+	public void testTrieStructure()
+	{
 
 		int total = 0;
 
@@ -85,7 +91,8 @@ public class LargeTrieTestCase extends TestCase {
 
 		Collections.sort(nextCharacterList);
 
-		for (String c : nextCharacterList) {
+		for (String c : nextCharacterList)
+		{
 
 			List<Method> wordList = trie.getWordList(c);
 
@@ -94,7 +101,8 @@ public class LargeTrieTestCase extends TestCase {
 			Collections.sort(wordList, methodComparator);
 			Collections.sort(indexedList, methodComparator);
 
-			for (int i = 0; i < wordList.size(); i++) {
+			for (int i = 0; i < wordList.size(); i++)
+			{
 
 				Method found = wordList.get(i);
 				Method indexed = wordList.get(i);
@@ -102,7 +110,8 @@ public class LargeTrieTestCase extends TestCase {
 				String foundString = found.toString();
 				String indexedString = indexed.toString();
 
-				if (!foundString.equals(indexedString)) {
+				if (!foundString.equals(indexedString))
+				{
 					System.out.println("found = " + found.toString());
 					System.out.println("as indexed = " + indexed.toString());
 				}
@@ -111,52 +120,56 @@ public class LargeTrieTestCase extends TestCase {
 
 			}
 
-			for (int i = wordList.size(); i < indexedList.size(); i++) {
+			for (int i = wordList.size(); i < indexedList.size(); i++)
+			{
 
 				System.out.println("found = NONE");
-				System.out.println("as indexed = "
-						+ indexedList.get(i).toString());
+				System.out.println("as indexed = " + indexedList.get(i).toString());
 
 			}
 
 			// get the list of elements that are not in the union of the two lists
 			Collection<Method> disjunctionList = CollectionUtils.disjunction(wordList, indexedList);
-			
-			for (Method method : disjunctionList) {
-				
+
+			for (Method method : disjunctionList)
+			{
+
 				System.out.println("missing = " + method.toString());
 			}
-			
+
 			assertEquals(wordList.size(), indexedList.size());
 
 		}
-		
+
 
 	}
 
-	public void testSpecificWords() {
+	public void testSpecificWords()
+	{
 
 		List<Method> wordList = trie.getWordList("assign");
 
-		for (Method method : wordList) {
+		for (Method method : wordList)
+		{
 
 			System.out.println("match = " + method.toString());
 		}
-		
+
 
 		System.out.println("assign matches " + wordList.size() + " methods.");
-		
+
 		wordList = trie.getWordList("access");
 
-		for (Method method : wordList) {
+		for (Method method : wordList)
+		{
 
 			System.out.println("match = " + method.toString());
 		}
-		
+
 		System.out.println("access matches " + wordList.size() + " methods.");
-		
+
 
 	}
 
-	
+
 }

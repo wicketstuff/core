@@ -80,7 +80,7 @@ public final class LoginContainer implements Serializable
 		subjects.put(key, mySubject);
 		logins.add(key);
 		Collections.sort(logins);
-		this.subject = new MultiSubject(logins, subjects);
+		subject = new MultiSubject(logins, subjects);
 	}
 
 	/**
@@ -220,7 +220,7 @@ public final class LoginContainer implements Serializable
 			// at all and then copy the list and map. because right now the
 			// principals don't change
 			this.keys = keys;
-			this.mySubjects = values;
+			mySubjects = values;
 			principals = new HashSet<Principal>(100);
 			for (Subject curSubject : values.values())
 			{
@@ -403,7 +403,7 @@ public final class LoginContainer implements Serializable
 		{
 			contextHash = context.hashCode();
 			preventsAdditionalLogin = context.preventsAdditionalLogins();
-			this.sortOrder = context.getSortOrder();
+			sortOrder = context.getSortOrder();
 			// guess size
 			toStringCache =
 				new AppendingStringBuffer(25).append("HashKey: ").append(contextHash)

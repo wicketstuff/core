@@ -31,11 +31,11 @@ public class Size implements Serializable
 
 	private float w;
 	private float h;
-	
+
 	public Size(float width, float height)
 	{
-		this.w = width;
-		this.h = height;
+		w = width;
+		h = height;
 	}
 
 	public float getWidth()
@@ -48,22 +48,27 @@ public class Size implements Serializable
 		return h;
 	}
 
-	public String getJSconstructor() {
-		Constructor constructor = new Constructor("OpenLayers.Size")
-				.add(w).add(h);
+	public String getJSconstructor()
+	{
+		Constructor constructor = new Constructor("OpenLayers.Size").add(w).add(h);
 		return constructor.toJS();
 	}
-	public String getId() {
-		return "size"+ String.valueOf(System.identityHashCode(this));
+
+	public String getId()
+	{
+		return "size" + String.valueOf(System.identityHashCode(this));
 	}
-/**
- * create size as a variable.. Possibly to add to icon
- * @param map
- * @return
- */
-	public String getJSadd() {
+
+	/**
+	 * create size as a variable.. Possibly to add to icon
+	 * 
+	 * @param map
+	 * @return
+	 */
+	public String getJSadd()
+	{
 		StringBuffer js = new StringBuffer();
-		js.append("var "+getId()+" = " + getJSconstructor() + ";\n");
+		js.append("var " + getId() + " = " + getJSconstructor() + ";\n");
 		return js.toString();
 	}
 

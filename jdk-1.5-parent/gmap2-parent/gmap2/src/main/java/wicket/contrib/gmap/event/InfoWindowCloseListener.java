@@ -28,7 +28,8 @@ public abstract class InfoWindowCloseListener extends GEventListenerBehavior
 {
 
 	@Override
-	protected String getEvent() {
+	protected String getEvent()
+	{
 		return "infowindowclose";
 	}
 

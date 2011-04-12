@@ -291,7 +291,8 @@ class RenderersList implements Serializable
 	 * 
 	 * @param aClass
 	 *            class of the component
-	 * @return {@link org.wicketstuff.minis.behavior.apanel.IComponentRenderer} for specified component class
+	 * @return {@link org.wicketstuff.minis.behavior.apanel.IComponentRenderer} for specified
+	 *         component class
 	 */
 	@SuppressWarnings({ "unchecked" })
 	IComponentRenderer<Component> findRendererForClass(final Class<? extends Component> aClass)

@@ -27,9 +27,8 @@ import org.apache.wicket.authorization.IUnauthorizedComponentInstantiationListen
 import org.wicketstuff.shiro.annotation.AnnotationsShiroAuthorizationStrategy;
 import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
 
-public class ShiroUnauthorizedComponentListener
-	implements
-		IUnauthorizedComponentInstantiationListener
+public class ShiroUnauthorizedComponentListener implements
+	IUnauthorizedComponentInstantiationListener
 {
 	private final Class<? extends Page> loginPage;
 	private final Class<? extends Page> unauthorizedPage;
@@ -53,7 +52,6 @@ public class ShiroUnauthorizedComponentListener
 			page = constraint.loginPage();
 		return page;
 	}
-
 
 	protected Class<? extends Page> addUnauthorizedMessagesAndGetPage(
 		final ShiroSecurityConstraint constraint, final Component component,
@@ -105,7 +103,6 @@ public class ShiroUnauthorizedComponentListener
 		// the unauthorized page
 		throw new RestartResponseException(page);
 	}
-
 
 	public void setAnnotationStrategy(final AnnotationsShiroAuthorizationStrategy annotationStrategy)
 	{

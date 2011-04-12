@@ -28,35 +28,41 @@ import org.wicketstuff.javaee.example.dao.ContactDaoLocal;
 import org.wicketstuff.javaee.example.model.Contact;
 
 /**
- *
+ * 
  * @author Filippo Diotalevi
  */
-public class ListContacts extends WebPage {
+public class ListContacts extends WebPage
+{
 
-    @EJB(name = "ContactDaoBean")
-    private ContactDaoLocal contactDao;
-    @Resource(name = "welcomeMessage")
-    private String welcome;
+	@EJB(name = "ContactDaoBean")
+	private ContactDaoLocal contactDao;
+	@Resource(name = "welcomeMessage")
+	private String welcome;
 
-    public ListContacts() {
+	public ListContacts()
+	{
 
-        add(new Label("welcomeMessage", welcome));
-        add(new ListView<Contact>("contacts", contactDao.getContacts()) {
+		add(new Label("welcomeMessage", welcome));
+		add(new ListView<Contact>("contacts", contactDao.getContacts())
+		{
 
-            @Override
-            protected void populateItem(final ListItem<Contact> item) {
-                Contact contact = item.getModelObject();
-                item.add(new Label("name", contact.getName()));
-                item.add(new Label("email", contact.getEmail()));
-                item.add(new Link<Contact>("delete", item.getModel()) {
+			@Override
+			protected void populateItem(final ListItem<Contact> item)
+			{
+				Contact contact = item.getModelObject();
+				item.add(new Label("name", contact.getName()));
+				item.add(new Label("email", contact.getEmail()));
+				item.add(new Link<Contact>("delete", item.getModel())
+				{
 
-                    @Override
-                    public void onClick() {
-                        contactDao.remove(item.getModelObject());
-                        setResponsePage(ListContacts.class);
-                    }
-                });
-            }
-        });
-    }
+					@Override
+					public void onClick()
+					{
+						contactDao.remove(item.getModelObject());
+						setResponsePage(ListContacts.class);
+					}
+				});
+			}
+		});
+	}
 }

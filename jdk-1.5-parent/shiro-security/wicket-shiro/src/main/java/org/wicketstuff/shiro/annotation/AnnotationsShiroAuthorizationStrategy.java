@@ -56,25 +56,29 @@ public class AnnotationsShiroAuthorizationStrategy implements IAuthorizationStra
 					final Subject subject = SecurityUtils.getSubject();
 					switch (constraint.constraint())
 					{
-						case HasRole : {
+						case HasRole :
+						{
 							if (!sm.hasRole(subject.getPrincipals(), constraint.value()))
 								return constraint;
 							break;
 						}
 
-						case HasPermission : {
+						case HasPermission :
+						{
 							if (!sm.isPermitted(subject.getPrincipals(), constraint.value()))
 								return constraint;
 							break;
 						}
 
-						case IsAuthenticated : {
+						case IsAuthenticated :
+						{
 							if (!subject.isAuthenticated())
 								return constraint;
 							break;
 						}
 
-						case LoggedIn : {
+						case LoggedIn :
+						{
 							if (subject.getPrincipal() == null)
 								return constraint;
 							break;

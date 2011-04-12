@@ -21,26 +21,29 @@ package wicket.contrib.gmap.js;
 public class Array
 {
 	private StringBuffer buffer = new StringBuffer("[");
-	
+
 	private boolean first = true;
-	
-	public Array add(Object value) {
-		if (!first) {
+
+	public Array add(Object value)
+	{
+		if (!first)
+		{
 			buffer.append(", ");
 		}
 		buffer.append(value);
-		
+
 		first = false;
 		return this;
 	}
 
-	public String toJS() {
+	public String toJS()
+	{
 		buffer.append("]");
-		
+
 		String string = buffer.toString();
-		
+
 		buffer.deleteCharAt(buffer.length() - 1);
-		
+
 		return string;
 	}
 }

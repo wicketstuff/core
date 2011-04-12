@@ -33,26 +33,25 @@ import org.wicketstuff.datatable_autocomplete.util.StringUtils;
 
 /**
  * @author mocleiri
- *
- *         Originally the intent was to use this to allow multiple fields to
- *         drive search for results.
- *
- *         However it has been modified so that it will work with just a single
- *         field.
- *
- *         The idea is that changes to the search field will be encoded onto the
- *         url which will then be processed accordingly without having to submit
- *         anything.
- *
- *
+ * 
+ *         Originally the intent was to use this to allow multiple fields to drive search for
+ *         results.
+ * 
+ *         However it has been modified so that it will work with just a single field.
+ * 
+ *         The idea is that changes to the search field will be encoded onto the url which will then
+ *         be processed accordingly without having to submit anything.
+ * 
+ * 
  */
-public class AJAXAutoCompleteBehavior extends
-		AjaxEventBehavior {
+public class AJAXAutoCompleteBehavior extends AjaxEventBehavior
+{
 
 	/**
 	 * @param event
 	 */
-	public AJAXAutoCompleteBehavior(String event) {
+	public AJAXAutoCompleteBehavior(String event)
+	{
 
 		super(event);
 
@@ -62,52 +61,49 @@ public class AJAXAutoCompleteBehavior extends
 	/**
 	 *
 	 */
-	private static final long	serialVersionUID	= -3314379544248117565L;
+	private static final long serialVersionUID = -3314379544248117565L;
 
-	private static final Logger	log					= LoggerFactory
-															.getLogger(AJAXAutoCompleteBehavior.class);
+	private static final Logger log = LoggerFactory.getLogger(AJAXAutoCompleteBehavior.class);
 
 
 	// controls how the dependencies are appended to the behaviour callback URL and then parsed
 	// on the server side within the behaviour processing action.
-	private AutoCompleteDependencyProcessor	dependencyProcessor;
+	private AutoCompleteDependencyProcessor dependencyProcessor;
 
 
 	/**
 		 *
 		 */
-	public AJAXAutoCompleteBehavior(String event,
-			AutoCompleteDependencyProcessor processor) {
+	public AJAXAutoCompleteBehavior(String event, AutoCompleteDependencyProcessor processor)
+	{
 
 		super(event);
-		this.dependencyProcessor = processor;
+		dependencyProcessor = processor;
 
 
 	}
 
 
-
-
 	/**
-	 * @param dependencyProcessor the dependencyProcessor to set
+	 * @param dependencyProcessor
+	 *            the dependencyProcessor to set
 	 */
-	protected void setDependencyProcessor(
-			AutoCompleteDependencyProcessor dependencyProcessor) {
+	protected void setDependencyProcessor(AutoCompleteDependencyProcessor dependencyProcessor)
+	{
 
 		this.dependencyProcessor = dependencyProcessor;
 	}
 
 
-
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see
-	 * org.apache.wicket.ajax.AjaxEventBehavior#onEvent(org.apache.wicket.ajax
+	 * 
+	 * @see org.apache.wicket.ajax.AjaxEventBehavior#onEvent(org.apache.wicket.ajax
 	 * .AjaxRequestTarget)
 	 */
 	@Override
-	protected final void onEvent(AjaxRequestTarget target) {
+	protected final void onEvent(AjaxRequestTarget target)
+	{
 
 		/*
 		 * First we apply any of the parameters to the data provider
@@ -122,36 +118,40 @@ public class AJAXAutoCompleteBehavior extends
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see
-	 * org.apache.wicket.ajax.AbstractDefaultAjaxBehavior#getFailureScript()
+	 * 
+	 * @see org.apache.wicket.ajax.AbstractDefaultAjaxBehavior#getFailureScript()
 	 */
 	@Override
-	protected CharSequence getFailureScript() {
+	protected CharSequence getFailureScript()
+	{
 
 		return "Wicket.Log.info ('on failure script');";
 	}
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see
-	 * org.apache.wicket.ajax.AbstractDefaultAjaxBehavior#getSuccessScript()
+	 * 
+	 * @see org.apache.wicket.ajax.AbstractDefaultAjaxBehavior#getSuccessScript()
 	 */
 	@Override
-	protected CharSequence getSuccessScript() {
+	protected CharSequence getSuccessScript()
+	{
 
 		return "Wicket.Log.info ('on success script');";
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.wicket.ajax.AbstractDefaultAjaxBehavior#getCallbackScript()
 	 */
 	@Override
-	protected final CharSequence getCallbackScript() {
+	protected final CharSequence getCallbackScript()
+	{
 
 		/*
-		 * Encode the callback script appending to the url the current client side value of the component values.
+		 * Encode the callback script appending to the url the current client side value of the
+		 * component values.
 		 */
 		CharSequence baseUrl = super.getCallbackUrl();
 
@@ -159,28 +159,26 @@ public class AJAXAutoCompleteBehavior extends
 
 		List<String> parameterList = new ArrayList<String>();
 
-		for (String parameter : dependencyProcessor
-				.getQueryParameterToComponentMap().keySet()) {
+		for (String parameter : dependencyProcessor.getQueryParameterToComponentMap().keySet())
+		{
 
-			Component c = dependencyProcessor.getQueryParameterToComponentMap()
-					.get(parameter);
+			Component c = dependencyProcessor.getQueryParameterToComponentMap().get(parameter);
 
-			String adjustedUrl = "&" + parameter + "='+Wicket.$('"
-					+ c.getMarkupId() + "').value";
+			String adjustedUrl = "&" + parameter + "='+Wicket.$('" + c.getMarkupId() + "').value";
 
 			parameterList.add(adjustedUrl);
 
 		}
 
 
-
-		callbackScript = StringUtils.join (new StringBuffer(callbackScript), parameterList, "+'").toString();
+		callbackScript = StringUtils.join(new StringBuffer(callbackScript), parameterList, "+'")
+			.toString();
 
 		String script = "wicketAjaxGet('" + callbackScript + ");";
 
 		if (dependencyProcessor.getThrottingDuration() != null)
-			return AbstractDefaultAjaxBehavior.throttleScript(script,
-					getComponent().getMarkupId(), dependencyProcessor.getThrottingDuration());
+			return AbstractDefaultAjaxBehavior.throttleScript(script, getComponent().getMarkupId(),
+				dependencyProcessor.getThrottingDuration());
 		else
 			return script;
 
@@ -197,25 +195,24 @@ public class AJAXAutoCompleteBehavior extends
 		if (myComponent.isEnabled() && myComponent.isEnableAllowed())
 		{
 
-			List<String>eventScripts = new LinkedList<String>();
+			List<String> eventScripts = new LinkedList<String>();
 
 			eventScripts.add(getEventHandler().toString());
 
-			addAdditionalJavaScript (eventScripts);
+			addAdditionalJavaScript(eventScripts);
 
 			tag.put(super.getEvent(), StringUtils.join(eventScripts, ";"));
 		}
 	}
 
 
-
-
 	/**
 	 * Allows subclasses to adjust the ordering of the scripts and to add in additional scripts.
-	 *
+	 * 
 	 * @param eventScripts
 	 */
-	protected void addAdditionalJavaScript(List<String> eventScripts) {
+	protected void addAdditionalJavaScript(List<String> eventScripts)
+	{
 
 
 	}

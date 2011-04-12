@@ -35,173 +35,235 @@ import java.util.List;
 import javax.sql.DataSource;
 
 /**
- *
+ * 
  * @author Geoffrey Rummens Hendrey
  */
-public class ShadesContactDao implements ContactDao {
+public class ShadesContactDao implements ContactDao
+{
 	private final ORMDictionary dict = ShadesORMDictionary.getInstance();
 	private final ORMapping orm = dict.getORM("CONTACT");
 	private final DatabaseSession dbSess = DatabaseSessionFactory.newSession(dict);
 	private DataSource dataSource;
 
 	/** Creates a new instance of ShadesContactDao */
-	public ShadesContactDao() {
+	public ShadesContactDao()
+	{
 		dbSess.printSQL(System.out);
 	}
 
-	public Contact load(long id) {
+	public Contact load(long id)
+	{
 		Connection con = null;
-		try {
+		try
+		{
 			con = dataSource.getConnection();
 			Query q = dict.getQuery("byId");
 			dbSess.setParameter("id", new Long(id));
-			return (Contact) dbSess.executeQuery(con, q).populateNext(
-					new Contact());
-		} catch (SQLException ex) {
+			return (Contact)dbSess.executeQuery(con, q).populateNext(new Contact());
+		}
+		catch (SQLException ex)
+		{
 			throw new RuntimeException(ex);
-		} finally {
-			try {
+		}
+		finally
+		{
+			try
+			{
 				// dbSess.clear();
 				con.close();
-			} catch (SQLException ex) {
+			}
+			catch (SQLException ex)
+			{
 				throw new RuntimeException(ex);
 			}
 		}
 
 	}
 
-	public Contact save(Contact contact) {
+	public Contact save(Contact contact)
+	{
 		Connection con = null;
-		try {
+		try
+		{
 			con = dataSource.getConnection();
 			System.out.println("saving Contact: " + contact);
 			Record[] loadedRecords = dbSess.getRecords(contact);
-			if (0 != loadedRecords.length) {
+			if (0 != loadedRecords.length)
+			{
 				dbSess.update(con, new Object[] { contact });
 				System.out.println("updated");
-			} else {
+			}
+			else
+			{
 				dbSess.insert(con, contact, new ORMapping[] { orm });
 				System.out.println("saved");
 			}
 			return contact;
-		} catch (SQLException ex) {
+		}
+		catch (SQLException ex)
+		{
 			throw new RuntimeException(ex);
-		} finally {
-			try {
+		}
+		finally
+		{
+			try
+			{
 				dbSess.clear();
 				con.close();
-			} catch (SQLException ex) {
+			}
+			catch (SQLException ex)
+			{
 				throw new RuntimeException(ex);
 			}
 		}
 	}
 
-	public void delete(long id) {
+	public void delete(long id)
+	{
 		Connection con = null;
-		try {
+		try
+		{
 			con = dataSource.getConnection();
 			dbSess.delete(con, dbSess.getRecords(load(id)));
-		} catch (SQLException ex) {
+		}
+		catch (SQLException ex)
+		{
 			throw new RuntimeException(ex);
-		} finally {
-			try {
+		}
+		finally
+		{
+			try
+			{
 				dbSess.clear();
 				con.close();
-			} catch (SQLException ex) {
+			}
+			catch (SQLException ex)
+			{
 				throw new RuntimeException(ex);
 			}
 		}
 	}
 
-	public Iterator<Contact> find(QueryParam qp, Contact filter) {
+	public Iterator<Contact> find(QueryParam qp, Contact filter)
+	{
 		System.out.println("looking for contacts like " + filter);
 		Query q = dict.getQuery("byOrderedResemblance");
-		ShadesORMDictionary.filterCandidate.resembles(filter, orm
-				.getColumnSet("nonKeyFields"));
+		ShadesORMDictionary.filterCandidate.resembles(filter, orm.getColumnSet("nonKeyFields"));
 		dbSess.setParameter("first", new Integer(qp.getFirst()));
 		dbSess.setParameter("count", new Integer(qp.getCount()));
 		q.clause("ORDER BY").enable(qp.hasSort());
 		dbSess.setParameter("order", qp.getSort());
-		if (qp.isSortAsc()) {
+		if (qp.isSortAsc())
+		{
 			dbSess.setParameter("direction", "ASC");
-		} else {
+		}
+		else
+		{
 			dbSess.setParameter("direction", "DESC");
 		}
 		/*
 		 * if(qp.hasSort()){ dbSess.setParameter("order", qp.getSort());
 		 * if(qp.isSortAsc())dbSess.setParameter("direction", "ASC"); else
 		 * dbSess.setParameter("direction", "DESC"); }else{ q.clause("ORDER
-		 * BY").disable(); //dbSess.setParameter("order","");
-		 * //dbSess.setParameter("direction", ""); }
+		 * BY").disable(); //dbSess.setParameter("order",""); //dbSess.setParameter("direction",
+		 * ""); }
 		 */
 		Connection con = null;
 		List<Contact> list = new ArrayList<Contact>();
-		try {
+		try
+		{
 			con = dataSource.getConnection();
 			dbSess.executeQuery(con, q).populateList(list, Contact.class);
 			System.out.println(list);
 			return list.iterator();
-		} catch (SQLException ex) {
+		}
+		catch (SQLException ex)
+		{
 			throw new RuntimeException(ex);
-		} finally {
-			try {
+		}
+		finally
+		{
+			try
+			{
 				dbSess.clear();
 				con.close();
-			} catch (SQLException ex) {
+			}
+			catch (SQLException ex)
+			{
 				throw new RuntimeException(ex);
 			}
 		}
 	}
 
-	public int count(Contact filter) {
+	public int count(Contact filter)
+	{
 		dbSess.clear();
 		Query q = dict.getQuery("byResemblance");
-		ShadesORMDictionary.filterCandidate.resembles(filter, orm
-				.getColumnSet("nonKeyFields"));
+		ShadesORMDictionary.filterCandidate.resembles(filter, orm.getColumnSet("nonKeyFields"));
 		Connection con = null;
-		try {
+		try
+		{
 			return dbSess.count(con = dataSource.getConnection(), q);
-		} catch (SQLException ex) {
+		}
+		catch (SQLException ex)
+		{
 			throw new RuntimeException(ex);
-		} finally {
-			try {
+		}
+		finally
+		{
+			try
+			{
 				con.close();
-			} catch (SQLException ex) {
+			}
+			catch (SQLException ex)
+			{
 				throw new RuntimeException(ex);
 			}
 		}
 	}
 
-	public List<String> getUniqueLastNames() {
+	public List<String> getUniqueLastNames()
+	{
 		Query q = dict.getQuery("selectDistinctLastnameOnly");
 		RecordSet rs;
 		Connection con = null;
-		try {
+		try
+		{
 			rs = dbSess.executeQuery(con = dataSource.getConnection(), q);
 			List<String> lastnames = new ArrayList<String>();
 			Contact c = new Contact();
-			while (rs.next()) {
+			while (rs.next())
+			{
 				rs.populate(c);
 				lastnames.add(c.getLastname());
 			}
 			return lastnames;
-		} catch (SQLException ex) {
+		}
+		catch (SQLException ex)
+		{
 			throw new RuntimeException(ex);
-		} finally {
-			try {
+		}
+		finally
+		{
+			try
+			{
 				dbSess.clear();
 				con.close();
-			} catch (SQLException ex) {
+			}
+			catch (SQLException ex)
+			{
 				throw new RuntimeException(ex);
 			}
 		}
 	}
 
-	public final void setDataSource(DataSource ds) {
-		this.dataSource = ds;
+	public final void setDataSource(DataSource ds)
+	{
+		dataSource = ds;
 	}
 
-	public final DataSource getDataSource() {
-		return this.dataSource;
+	public final DataSource getDataSource()
+	{
+		return dataSource;
 	}
 }

@@ -6,19 +6,22 @@ import org.apache.wicket.protocol.http.WebApplication;
 /**
  * @author Zenika
  */
-public class WicketApplication extends WebApplication {
-	
+public class WicketApplication extends WebApplication
+{
+
 	/**
 	 * Constructor
 	 */
-	public WicketApplication() {
+	public WicketApplication()
+	{
 	}
 
 	@Override
-	protected void init() {
+	protected void init()
+	{
 		super.init();
 
-		this.getRequestLoggerSettings().setRequestLoggerEnabled(true);
+		getRequestLoggerSettings().setRequestLoggerEnabled(true);
 	}
 
 	/**
@@ -26,8 +29,9 @@ public class WicketApplication extends WebApplication {
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public Class getHomePage() {
+	public Class getHomePage()
+	{
 		return TestPage.class;
 	}
-	
+
 }

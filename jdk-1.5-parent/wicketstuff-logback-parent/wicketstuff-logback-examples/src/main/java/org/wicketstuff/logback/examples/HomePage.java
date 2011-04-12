@@ -9,13 +9,14 @@ import org.slf4j.LoggerFactory;
  * 
  * @author akiraly
  */
-public class HomePage extends WebPage {
+public class HomePage extends WebPage
+{
 	private static final long serialVersionUID = 2696517689763106924L;
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(HomePage.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(HomePage.class);
 
-	public HomePage() {
+	public HomePage()
+	{
 		LOGGER.info("Logging is good - said the lumberjack.");
 	}
 }

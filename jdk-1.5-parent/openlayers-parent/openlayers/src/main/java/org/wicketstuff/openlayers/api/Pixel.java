@@ -33,64 +33,87 @@ public class Pixel implements Serializable
 
 	private int x;
 	private int y;
-	
-	private Size size=null;
-	
+
+	private Size size = null;
+
 	/**
 	 * calculates offset via size
+	 * 
 	 * @param size
 	 */
-	public Pixel(Size size) {
+	public Pixel(Size size)
+	{
 		super();
 		this.size = size;
 	}
 
-	public Size getSize() {
+	public Size getSize()
+	{
 		return size;
 	}
-	public void setSize(Size size) {
+
+	public void setSize(Size size)
+	{
 		this.size = size;
 	}
-	public int getX() {
+
+	public int getX()
+	{
 		return x;
 	}
-	public void setX(int x) {
+
+	public void setX(int x)
+	{
 		this.x = x;
 	}
-	public int getY() {
+
+	public int getY()
+	{
 		return y;
 	}
-	public void setY(int y) {
+
+	public void setY(int y)
+	{
 		this.y = y;
 	}
-	public Pixel(int x, int y) {
+
+	public Pixel(int x, int y)
+	{
 		super();
 		this.x = x;
 		this.y = y;
 	}
-	protected String getJSconstructor() {
-		if(size==null){
-		Constructor constructor = new Constructor("OpenLayers.Pixel")
-				.add(x).add(y);
-		return constructor.toJS();
-		}
-		else{
-			Constructor constructor = new Constructor("OpenLayers.Pixel")
-			.add("-"+size.getId()+".w/2").add("-"+size.getId()+".h");
+
+	protected String getJSconstructor()
+	{
+		if (size == null)
+		{
+			Constructor constructor = new Constructor("OpenLayers.Pixel").add(x).add(y);
 			return constructor.toJS();
-			
+		}
+		else
+		{
+			Constructor constructor = new Constructor("OpenLayers.Pixel").add(
+				"-" + size.getId() + ".w/2").add("-" + size.getId() + ".h");
+			return constructor.toJS();
+
 		}
 	}
-	public String getId() {
-		return "pixel"+ String.valueOf(System.identityHashCode(this));
+
+	public String getId()
+	{
+		return "pixel" + String.valueOf(System.identityHashCode(this));
 	}
-/**
- * create pixel as a variable.. Possibly to add to icon
- * @return
- */
-	public String getJSadd() {
+
+	/**
+	 * create pixel as a variable.. Possibly to add to icon
+	 * 
+	 * @return
+	 */
+	public String getJSadd()
+	{
 		StringBuffer js = new StringBuffer();
-		js.append("var "+getId()+" = " + getJSconstructor() + ";\n");
+		js.append("var " + getId() + " = " + getJSconstructor() + ";\n");
 		return js.toString();
 	}
 

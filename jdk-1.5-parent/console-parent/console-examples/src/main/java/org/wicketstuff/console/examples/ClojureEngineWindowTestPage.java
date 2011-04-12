@@ -22,32 +22,37 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.ClojureScriptEngineWindow;
 
-public class ClojureEngineWindowTestPage extends WebPage {
+public class ClojureEngineWindowTestPage extends WebPage
+{
 
-    private static final class OpenLink extends AjaxLink<Void> {
-        private final ClojureScriptEngineWindow window;
-        private static final long serialVersionUID = 1L;
+	private static final class OpenLink extends AjaxLink<Void>
+	{
+		private final ClojureScriptEngineWindow window;
+		private static final long serialVersionUID = 1L;
 
-        private OpenLink(final String id, final ClojureScriptEngineWindow window) {
-            super(id);
-            this.window = window;
-        }
+		private OpenLink(final String id, final ClojureScriptEngineWindow window)
+		{
+			super(id);
+			this.window = window;
+		}
 
-        @Override
-        public void onClick(final AjaxRequestTarget target) {
-            window.show(target);
-        }
-    }
+		@Override
+		public void onClick(final AjaxRequestTarget target)
+		{
+			window.show(target);
+		}
+	}
 
-    private static final long serialVersionUID = 1L;
-    private ClojureScriptEngineWindow window;
+	private static final long serialVersionUID = 1L;
+	private ClojureScriptEngineWindow window;
 
-    public ClojureEngineWindowTestPage(final PageParameters params) {
-        super(params);
+	public ClojureEngineWindowTestPage(final PageParameters params)
+	{
+		super(params);
 
-        add(window = new ClojureScriptEngineWindow("window"));
-        add(new OpenLink("link", window));
-        add(new TestPageLinksPanel("links"));
-    }
+		add(window = new ClojureScriptEngineWindow("window"));
+		add(new OpenLink("link", window));
+		add(new TestPageLinksPanel("links"));
+	}
 
 }

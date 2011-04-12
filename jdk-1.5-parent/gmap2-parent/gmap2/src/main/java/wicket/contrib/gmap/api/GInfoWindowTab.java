@@ -21,7 +21,8 @@ import wicket.contrib.gmap.js.Constructor;
 
 /**
  * Represents an Google Maps API's <a
- * href="http://www.google.com/apis/maps/documentation/reference.html#GInfoWindowTab">GInfoWindowTab</a>.
+ * href="http://www.google.com/apis/maps/documentation/reference.html#GInfoWindowTab"
+ * >GInfoWindowTab</a>.
  */
 public class GInfoWindowTab implements GValue
 {
@@ -73,7 +74,8 @@ public class GInfoWindowTab implements GValue
 	 */
 	public String getJSconstructor()
 	{
-		return new Constructor("GInfoWindowTab").addString(title).add(
-				"document.getElementById('" + content.getMarkupId() + "')").toJS();
+		return new Constructor("GInfoWindowTab").addString(title)
+			.add("document.getElementById('" + content.getMarkupId() + "')")
+			.toJS();
 	}
 }

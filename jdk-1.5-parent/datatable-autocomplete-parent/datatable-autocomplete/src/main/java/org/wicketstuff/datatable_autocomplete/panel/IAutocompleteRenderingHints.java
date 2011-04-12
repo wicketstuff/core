@@ -20,11 +20,12 @@ import org.wicketstuff.datatable_autocomplete.table.IDTATableRenderingHints;
 /**
  * @author mocleiri
  * 
- *         Provides hints to the AutoComplete components about what do do on the
- *         initial render, no match and no input cases.
+ *         Provides hints to the AutoComplete components about what do do on the initial render, no
+ *         match and no input cases.
  * 
  */
-public interface IAutocompleteRenderingHints extends IDTATableRenderingHints {
+public interface IAutocompleteRenderingHints extends IDTATableRenderingHints
+{
 
 	/**
 	 * @return true if the autocompleting panel should be visible.

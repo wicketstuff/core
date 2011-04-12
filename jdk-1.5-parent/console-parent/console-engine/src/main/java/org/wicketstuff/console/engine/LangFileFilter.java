@@ -27,40 +27,49 @@ import java.io.FilenameFilter;
  * 
  * @author cretzel
  */
-public class LangFileFilter implements FilenameFilter {
+public class LangFileFilter implements FilenameFilter
+{
 
-    private final String suffix;
+	private final String suffix;
 
-	private LangFileFilter(final String ext) {
+	private LangFileFilter(final String ext)
+	{
 		suffix = ext;
 	}
 
-	public boolean accept(final File dir, final String name) {
+	public boolean accept(final File dir, final String name)
+	{
 		return name.toLowerCase().endsWith(suffix);
 	}
 
-	public static LangFileFilter create(final Lang lang) {
-		switch (lang) {
-		case GROOVY:
-			return new GroovyFileFilter();
-		case CLOJURE:
-			return new ClojureFileFilter();
-		default:
-			throw new IllegalArgumentException("Lang " + lang + "not supported");
+	public static LangFileFilter create(final Lang lang)
+	{
+		switch (lang)
+		{
+			case GROOVY :
+				return new GroovyFileFilter();
+			case CLOJURE :
+				return new ClojureFileFilter();
+			default :
+				throw new IllegalArgumentException("Lang " + lang + "not supported");
 		}
 	}
 
-	public static class GroovyFileFilter extends LangFileFilter {
+	public static class GroovyFileFilter extends LangFileFilter
+	{
 
-		public GroovyFileFilter() {
+		public GroovyFileFilter()
+		{
 			super(Lang.GROOVY.getFileExtension());
 		}
 
 	}
 
-	public static class ClojureFileFilter extends LangFileFilter {
+	public static class ClojureFileFilter extends LangFileFilter
+	{
 
-		public ClojureFileFilter() {
+		public ClojureFileFilter()
+		{
 			super(Lang.CLOJURE.getFileExtension());
 		}
 

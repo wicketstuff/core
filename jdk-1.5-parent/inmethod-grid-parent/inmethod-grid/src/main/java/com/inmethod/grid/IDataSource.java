@@ -27,7 +27,7 @@ import org.apache.wicket.model.IModel;
  * 		public IModel model(Object object) {
  * 			return new DetachableUserModel(objecT);
  * 		}    
- * } 
+ * }
  * </pre>
  * 
  * An example of situation when the row count can't be determined. The pagination then only allows
@@ -58,12 +58,13 @@ import org.apache.wicket.model.IModel;
  * 
  * @author Matej Knopp
  */
-public interface IDataSource extends IDetachable, IClusterable {
+public interface IDataSource extends IDetachable, IClusterable
+{
 
 	/**
 	 * Implementation of this method should load subset of the data specified by
-	 * <code>query.getFrom()</code> and <code>query.getCount()</code>. Also if the total item
-	 * count can be determined, it should be passed to <code>result</code>.
+	 * <code>query.getFrom()</code> and <code>query.getCount()</code>. Also if the total item count
+	 * can be determined, it should be passed to <code>result</code>.
 	 * 
 	 * @param query
 	 *            Specified the amount and position of items to be queried
@@ -86,7 +87,8 @@ public interface IDataSource extends IDetachable, IClusterable {
 	 * 
 	 * @author Matej Knopp
 	 */
-	public interface IQuery {
+	public interface IQuery
+	{
 		/**
 		 * Returns the index of first item to be loaded
 		 * 
@@ -97,9 +99,8 @@ public interface IDataSource extends IDetachable, IClusterable {
 		/**
 		 * Returns the amount of items to be loaded. If the total amount is known (it was either set
 		 * by {@link IQueryResult#setTotalCount(int)} before calling this method or the previous
-		 * call to
-		 * {@link IDataSource#query(IDataSource.IQuery, IDataSource.IQueryResult)}
-		 * set {@link IQueryResult#NO_MORE_ITEMS} as total count), this method will return the exact
+		 * call to {@link IDataSource#query(IDataSource.IQuery, IDataSource.IQueryResult)} set
+		 * {@link IQueryResult#NO_MORE_ITEMS} as total count), this method will return the exact
 		 * amount of required rows. If the total amount of rows is not known, it will always return
 		 * the number of items per page.
 		 * 
@@ -136,7 +137,8 @@ public interface IDataSource extends IDetachable, IClusterable {
 	 * 
 	 * @author Matej Knopp
 	 */
-	public interface IQueryResult {
+	public interface IQueryResult
+	{
 		/**
 		 * Constant indicating that there are more items left.
 		 */

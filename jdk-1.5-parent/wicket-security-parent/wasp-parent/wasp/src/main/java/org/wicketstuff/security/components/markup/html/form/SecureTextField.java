@@ -26,10 +26,9 @@ import org.wicketstuff.security.components.SecureComponentHelper;
 import org.wicketstuff.security.models.ISecureModel;
 
 /**
- * Textfield which automatically switches between read and write mode based on
- * the user rights. By default it does not consider {@link ISecureModel}, unless
- * told to do so by either removing the securitycheck or by using the
- * specialized constructor.
+ * Textfield which automatically switches between read and write mode based on the user
+ * rights. By default it does not consider {@link ISecureModel}, unless told to do so by
+ * either removing the securitycheck or by using the specialized constructor.
  * 
  * @author marrink
  */
@@ -70,8 +69,7 @@ public class SecureTextField<T> extends TextField<T> implements ISecureComponent
 	 * @param id
 	 * @param model
 	 * @param checkModel
-	 *            tells the {@link ComponentSecurityCheck} to also check this
-	 *            model.
+	 *            tells the {@link ComponentSecurityCheck} to also check this model.
 	 */
 	public SecureTextField(String id, ISecureModel<T> model, boolean checkModel)
 	{
@@ -94,8 +92,7 @@ public class SecureTextField<T> extends TextField<T> implements ISecureComponent
 	 * @param id
 	 * @param model
 	 * @param checkModel
-	 *            tells the {@link ComponentSecurityCheck} to also check this
-	 *            model.
+	 *            tells the {@link ComponentSecurityCheck} to also check this model.
 	 * @param type
 	 */
 	public SecureTextField(String id, ISecureModel<T> model, boolean checkModel, Class<T> type)

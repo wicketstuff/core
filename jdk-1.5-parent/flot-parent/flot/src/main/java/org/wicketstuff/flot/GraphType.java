@@ -17,41 +17,47 @@ package org.wicketstuff.flot;
 
 import java.io.Serializable;
 
-public abstract class GraphType implements Serializable {
+public abstract class GraphType implements Serializable
+{
 	/** Required by {@link Serializable} */
 	private static final long serialVersionUID = 1L;
 
 	private Double lineWidth;
 	private Boolean fill;
 	private Color fillColor;
-	
-	public GraphType(Double lineWidth, Boolean fill, Color fillColor) {
+
+	public GraphType(Double lineWidth, Boolean fill, Color fillColor)
+	{
 		this.lineWidth = lineWidth;
 		this.fill = fill;
 		this.fillColor = fillColor;
 	}
-	
+
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		StringBuffer str = new StringBuffer();
-		
+
 		str.append("show: true");
-		
-		if(lineWidth != null) {
+
+		if (lineWidth != null)
+		{
 			str.append(", lineWidth: ");
 			str.append(lineWidth);
 		}
-		
-		if(fill != null) {
+
+		if (fill != null)
+		{
 			str.append(", fill: ");
 			str.append(fill);
 		}
-		
-		if(fillColor != null) {
+
+		if (fillColor != null)
+		{
 			str.append(", fillColor: ");
 			str.append(fillColor);
 		}
-		
+
 		return str.toString();
 	}
 }

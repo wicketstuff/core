@@ -30,14 +30,20 @@ import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandle
  * 
  *         Allows a table to be rendered where the rows are selectable
  * 
- * @param T the type of the object in the table row.  The type of the object returned from the dataprovidcer
+ * @param T
+ *            the type of the object in the table row. The type of the object returned from the
+ *            dataprovidcer
  */
-public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPanel<T> {
+public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPanel<T>
+{
 
-	private  DefaultSelectableTableViewPanelButtonProviderImpl createButtonProvider = new DefaultSelectableTableViewPanelButtonProviderImpl ("Create New", false, false);
-	private  DefaultSelectableTableViewPanelButtonProviderImpl editButtonProvider = new DefaultSelectableTableViewPanelButtonProviderImpl ("Edit Selected", true, true);	
-	private  DefaultSelectableTableViewPanelButtonProviderImpl deleteButtonProvider = new DefaultSelectableTableViewPanelButtonProviderImpl ("Delete Selected", true, true);
-	
+	private DefaultSelectableTableViewPanelButtonProviderImpl createButtonProvider = new DefaultSelectableTableViewPanelButtonProviderImpl(
+		"Create New", false, false);
+	private DefaultSelectableTableViewPanelButtonProviderImpl editButtonProvider = new DefaultSelectableTableViewPanelButtonProviderImpl(
+		"Edit Selected", true, true);
+	private DefaultSelectableTableViewPanelButtonProviderImpl deleteButtonProvider = new DefaultSelectableTableViewPanelButtonProviderImpl(
+		"Delete Selected", true, true);
+
 	/**
 	 * @param id
 	 * @param css_reference
@@ -49,22 +55,22 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	 * @param selectedRowContextExtractor
 	 * @param rowsPerPage
 	 * @param showTableFeedbackPanel
-	 * @param selectionHandler 
+	 * @param selectionHandler
 	 */
-	public SelectableTableViewPanel(String id,
-			ResourceReference css_reference, String cssClassName,
-			String displayEntityName, IColumn<?> column,
-			ISortableDataProvider<T> dataProvider,
-			boolean showTableFeedbackPanel, ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints) {
+	public SelectableTableViewPanel(String id, ResourceReference css_reference,
+		String cssClassName, String displayEntityName, IColumn<?> column,
+		ISortableDataProvider<T> dataProvider, boolean showTableFeedbackPanel,
+		ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints)
+	{
 
 		super(id, css_reference, cssClassName, displayEntityName, column, dataProvider,
-				 
-				showTableFeedbackPanel, selectionHandler, hints);
-		
-		setButtonProviderList (Arrays.asList(new ISelectableTableViewPanelButtonProvider[] {editButtonProvider, deleteButtonProvider, createButtonProvider}));
+
+		showTableFeedbackPanel, selectionHandler, hints);
+
+		setButtonProviderList(Arrays.asList(new ISelectableTableViewPanelButtonProvider[] {
+				editButtonProvider, deleteButtonProvider, createButtonProvider }));
 	}
 
-	
 
 	/**
 	 * @param id
@@ -76,19 +82,19 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	 * @param buttonProviderList
 	 * @param selectedRowContextExtractor
 	 * @param rowsPerPage
-	 * @param selectionHandler 
+	 * @param selectionHandler
 	 */
-	public SelectableTableViewPanel(String id,
-			ResourceReference css_reference, String cssClassNamne,
-			String displayEntityName, IColumn<?> column,
-			ISortableDataProvider<T> dataProvider,
-			ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints) {
+	public SelectableTableViewPanel(String id, ResourceReference css_reference,
+		String cssClassNamne, String displayEntityName, IColumn<?> column,
+		ISortableDataProvider<T> dataProvider, ITableRowSelectionHandler<T> selectionHandler,
+		IDTATableRenderingHints hints)
+	{
 
-		super(id, css_reference, cssClassNamne, displayEntityName, column,
-				dataProvider,
-				selectionHandler, hints);
+		super(id, css_reference, cssClassNamne, displayEntityName, column, dataProvider,
+			selectionHandler, hints);
 
-		setButtonProviderList (Arrays.asList(new ISelectableTableViewPanelButtonProvider[] {editButtonProvider, deleteButtonProvider, createButtonProvider}));
+		setButtonProviderList(Arrays.asList(new ISelectableTableViewPanelButtonProvider[] {
+				editButtonProvider, deleteButtonProvider, createButtonProvider }));
 	}
 
 	/**
@@ -102,19 +108,19 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	 * @param selectedRowContextExtractor
 	 * @param rowsPerPage
 	 * @param showTableFeedbackPanel
-	 * @param selectionHandler 
+	 * @param selectionHandler
 	 */
-	public SelectableTableViewPanel(String id,
-			ResourceReference css_reference, String cssClassName,
-			String displayEntityName, IColumn<?>[] columns,
-			ISortableDataProvider<T> dataProvider,
-			boolean showTableFeedbackPanel, ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints) {
+	public SelectableTableViewPanel(String id, ResourceReference css_reference,
+		String cssClassName, String displayEntityName, IColumn<?>[] columns,
+		ISortableDataProvider<T> dataProvider, boolean showTableFeedbackPanel,
+		ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints)
+	{
 
-		super(id, css_reference, cssClassName, displayEntityName, columns,
-				dataProvider,
-				showTableFeedbackPanel, selectionHandler, hints);
-		
-		setButtonProviderList (Arrays.asList(new ISelectableTableViewPanelButtonProvider[] {editButtonProvider, deleteButtonProvider, createButtonProvider}));
+		super(id, css_reference, cssClassName, displayEntityName, columns, dataProvider,
+			showTableFeedbackPanel, selectionHandler, hints);
+
+		setButtonProviderList(Arrays.asList(new ISelectableTableViewPanelButtonProvider[] {
+				editButtonProvider, deleteButtonProvider, createButtonProvider }));
 	}
 
 	/**
@@ -127,18 +133,18 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	 * @param buttonProviderList
 	 * @param selectedRowContextExtractor
 	 * @param rowsPerPage
-	 * @param selectionHandler 
+	 * @param selectionHandler
 	 */
-	public SelectableTableViewPanel(String id,
-			ResourceReference css_reference, String cssClassName,
-			String displayEntityName, IColumn<?>[] columns,
-			ISortableDataProvider<T> dataProvider,
-			ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints) {
+	public SelectableTableViewPanel(String id, ResourceReference css_reference,
+		String cssClassName, String displayEntityName, IColumn<?>[] columns,
+		ISortableDataProvider<T> dataProvider, ITableRowSelectionHandler<T> selectionHandler,
+		IDTATableRenderingHints hints)
+	{
 
-		super(id, css_reference, cssClassName, displayEntityName, columns,
-				dataProvider,
-				selectionHandler, hints);
-		setButtonProviderList (Arrays.asList(new ISelectableTableViewPanelButtonProvider[] {editButtonProvider, deleteButtonProvider, createButtonProvider}));
+		super(id, css_reference, cssClassName, displayEntityName, columns, dataProvider,
+			selectionHandler, hints);
+		setButtonProviderList(Arrays.asList(new ISelectableTableViewPanelButtonProvider[] {
+				editButtonProvider, deleteButtonProvider, createButtonProvider }));
 	}
 
 	/**
@@ -150,16 +156,17 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	 * @param rowContextConverter
 	 * @param i
 	 * @param showTableFeedbackPanel
-	 * @param selectionHandler 
+	 * @param selectionHandler
 	 */
-	public SelectableTableViewPanel(String id, String title,
-			IColumn<?>[] columns,
-			ISortableDataProvider<T> sortableListDataProvider,
-		 boolean showTableFeedbackPanel, ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints) {
+	public SelectableTableViewPanel(String id, String title, IColumn<?>[] columns,
+		ISortableDataProvider<T> sortableListDataProvider, boolean showTableFeedbackPanel,
+		ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints)
+	{
 
-		super(id, title, columns, sortableListDataProvider, 
-			 showTableFeedbackPanel, selectionHandler, hints);
-		setButtonProviderList (Arrays.asList(new ISelectableTableViewPanelButtonProvider[] {editButtonProvider, deleteButtonProvider, createButtonProvider}));
+		super(id, title, columns, sortableListDataProvider, showTableFeedbackPanel,
+			selectionHandler, hints);
+		setButtonProviderList(Arrays.asList(new ISelectableTableViewPanelButtonProvider[] {
+				editButtonProvider, deleteButtonProvider, createButtonProvider }));
 	}
 
 	/**
@@ -170,71 +177,69 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	 * @param buttonProviderList
 	 * @param selectedRowContextConverter
 	 * @param i
-	 * @param selectionHandler 
+	 * @param selectionHandler
 	 */
-	public SelectableTableViewPanel(String id, String displayEntityName,
-			IColumn<?>[] tableColumns,
-			ISortableDataProvider<T> attributeFilterDataProvider,
-	 ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints) {
+	public SelectableTableViewPanel(String id, String displayEntityName, IColumn<?>[] tableColumns,
+		ISortableDataProvider<T> attributeFilterDataProvider,
+		ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints)
+	{
 
-		super(id, displayEntityName, tableColumns, attributeFilterDataProvider,
-			 selectionHandler, hints);
-		
-		setButtonProviderList (Arrays.asList(new ISelectableTableViewPanelButtonProvider[] {editButtonProvider, deleteButtonProvider, createButtonProvider}));
+		super(id, displayEntityName, tableColumns, attributeFilterDataProvider, selectionHandler,
+			hints);
+
+		setButtonProviderList(Arrays.asList(new ISelectableTableViewPanelButtonProvider[] {
+				editButtonProvider, deleteButtonProvider, createButtonProvider }));
 	}
 
-	public SelectableTableViewPanel(String string, String string2,
-			IColumn<?>[] tableColumns,
-			ISortableDataProvider<T> provider, IDTATableRenderingHints hints) {
-		
-		this (string, string2, tableColumns, provider, null, hints);
+	public SelectableTableViewPanel(String string, String string2, IColumn<?>[] tableColumns,
+		ISortableDataProvider<T> provider, IDTATableRenderingHints hints)
+	{
+
+		this(string, string2, tableColumns, provider, null, hints);
 	}
 
 	/**
 	 * 
 	 */
-	private static final long				serialVersionUID	= 1000109813724689754L;
+	private static final long serialVersionUID = 1000109813724689754L;
 
-	private static final Logger			log					= LoggerFactory
-																		.getLogger(SelectableTableViewPanel.class);
-	
+	private static final Logger log = LoggerFactory.getLogger(SelectableTableViewPanel.class);
 
-
-	
 
 	/**
 	 * @param formOnSubmitAction
 	 */
-	public void setEditOnSubmitAction(
-			final IFormOnSubmitAction<T> formOnSubmitAction) {
+	public void setEditOnSubmitAction(final IFormOnSubmitAction<T> formOnSubmitAction)
+	{
 
 		editButtonProvider.setAction(formOnSubmitAction);
 
 	}
 
-	
-	public void setButtonCSSClass (String cssClass) {
+
+	public void setButtonCSSClass(String cssClass)
+	{
 		this.createButtonProvider.setCssClassName(cssClass);
 		this.editButtonProvider.setCssClassName(cssClass);
 		this.deleteButtonProvider.setCssClassName(cssClass);
 	}
-	
+
 	/**
 	 * @param formOnSubmitAction
 	 */
-	public void setDeleteOnSubmitAction(
-			final IFormOnSubmitAction<T> formOnSubmitAction) {
+	public void setDeleteOnSubmitAction(final IFormOnSubmitAction<T> formOnSubmitAction)
+	{
 
 		deleteButtonProvider.setAction(formOnSubmitAction);
 
 	}
-	
-	
+
 
 	/**
 	 * @param formOnSubmitAction
 	 */
-	public void setCreateOnSubmitAction(IFormOnSubmitAction<T> formOnSubmitAction) {
+	public void setCreateOnSubmitAction(IFormOnSubmitAction<T> formOnSubmitAction)
+	{
 
 		createButtonProvider.setAction(formOnSubmitAction);
 	}
@@ -242,12 +247,12 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	/**
 	 * @param actionLabel
 	 */
-	public void setEditButtonLabel(String actionLabel) {
+	public void setEditButtonLabel(String actionLabel)
+	{
 
 		editButtonProvider.setButtonLabelText(actionLabel);
 
 	}
 
-	
-	
+
 }

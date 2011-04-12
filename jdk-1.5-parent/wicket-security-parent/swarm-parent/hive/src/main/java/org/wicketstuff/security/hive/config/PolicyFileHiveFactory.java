@@ -90,8 +90,8 @@ public class PolicyFileHiveFactory implements HiveFactory
 
 	private Set<Reader> inputReaders;
 
-	private static final Pattern principalPattern =
-		Pattern.compile("\\s*(?:grant(?:\\s+principal\\s+([^\"]+)\\s+\"([^\"]+)\")?){1}\\s*");
+	private static final Pattern principalPattern = Pattern
+		.compile("\\s*(?:grant(?:\\s+principal\\s+([^\"]+)\\s+\"([^\"]+)\")?){1}\\s*");
 
 	private static final Pattern permissionPattern =
 		Pattern
@@ -99,10 +99,9 @@ public class PolicyFileHiveFactory implements HiveFactory
 
 	private static final Pattern aliasPattern = Pattern.compile("(\\$\\{[^\"\\{\\}\\$]+?\\})+?");
 
-	private static final Class< ? >[][] constructorArgs =
-		new Class[][] {new Class[] {String.class, WaspAction.class},
-			new Class[] {String.class, String.class},
-			new Class[] {String.class, ActionFactory.class}, new Class[] {String.class}};
+	private static final Class< ? >[][] constructorArgs = new Class[][] {
+		new Class[] {String.class, WaspAction.class}, new Class[] {String.class, String.class},
+		new Class[] {String.class, ActionFactory.class}, new Class[] {String.class}};
 
 	private Map<String, String> aliases = new HashMap<String, String>();
 
@@ -693,13 +692,13 @@ public class PolicyFileHiveFactory implements HiveFactory
 							}
 							catch (SecurityException e)
 							{
-								log.error("No valid constructor found for "
-									+ principalClass.getName(), e);
+								log.error(
+									"No valid constructor found for " + principalClass.getName(), e);
 							}
 							catch (NoSuchMethodException e)
 							{
-								log.error("No valid constructor found for "
-									+ principalClass.getName(), e);
+								log.error(
+									"No valid constructor found for " + principalClass.getName(), e);
 							}
 							if (constructor == null)
 							{
@@ -1208,7 +1207,7 @@ public class PolicyFileHiveFactory implements HiveFactory
 	 */
 	public final void useHiveCache(boolean useCache)
 	{
-		this.useHiveCache = useCache;
+		useHiveCache = useCache;
 	}
 
 	/**

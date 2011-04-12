@@ -28,38 +28,43 @@ import org.wicketstuff.jquery.ajaxbackbutton.Page4AjaxBackButton;
 import org.wicketstuff.jquery.demo.dnd.Page4ClientSideOnly;
 import org.wicketstuff.jquery.demo.ui.Page4Slider;
 
-public class DemoApplication extends WebApplication {
+public class DemoApplication extends WebApplication
+{
 
-    @Override
-    protected void init() {
-        getMarkupSettings().setStripWicketTags(true);
-        mountPackage("/samples", Page4Block.class);
-        mountPackage("/backbutton", Page4AjaxBackButton.class);
-        mountPackage("/samples/dnd", Page4ClientSideOnly.class);
-        mountPackage("/ui", Page4Slider.class);
-        super.init();
-        
-//        if (Application.DEVELOPMENT.equals(getConfigurationType())) {
-//        	getDebugSettings().setOutputMarkupContainerClassName(true);
-//        }
-    }
+	@Override
+	protected void init()
+	{
+		getMarkupSettings().setStripWicketTags(true);
+		mountPackage("/samples", Page4Block.class);
+		mountPackage("/backbutton", Page4AjaxBackButton.class);
+		mountPackage("/samples/dnd", Page4ClientSideOnly.class);
+		mountPackage("/ui", Page4Slider.class);
+		super.init();
 
-    @Override
-    public Class<? extends Page> getHomePage() {
-        return Page4ClientSideOnly.class;
-    }
+// if (Application.DEVELOPMENT.equals(getConfigurationType())) {
+// getDebugSettings().setOutputMarkupContainerClassName(true);
+// }
+	}
 
-    @Override
-    protected IConverterLocator newConverterLocator() {
-        ConverterLocator back = new ConverterLocator();
-        back.set(Date.class, new DateConverter());
-        return back;
-    }
-    
-    @Override
-    public RuntimeConfigurationType getConfigurationType() {
-    	return RuntimeConfigurationType.DEPLOYMENT;
-//    	return RuntimeConfigurationType.DEVELOPMENT;
-    }
+	@Override
+	public Class<? extends Page> getHomePage()
+	{
+		return Page4ClientSideOnly.class;
+	}
+
+	@Override
+	protected IConverterLocator newConverterLocator()
+	{
+		ConverterLocator back = new ConverterLocator();
+		back.set(Date.class, new DateConverter());
+		return back;
+	}
+
+	@Override
+	public RuntimeConfigurationType getConfigurationType()
+	{
+		return RuntimeConfigurationType.DEPLOYMENT;
+// return RuntimeConfigurationType.DEVELOPMENT;
+	}
 
 }

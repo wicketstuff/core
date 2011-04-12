@@ -25,9 +25,9 @@ import org.wicketstuff.security.components.ISecureContainer;
 import org.wicketstuff.security.components.SecureComponentHelper;
 
 /**
- * A standard secure panel. The {@link ISecurityCheck} checks if the class is
- * authorized / authenticated just like with pages. This is especially useful if
- * your strategy is to replace panels.
+ * A standard secure panel. The {@link ISecurityCheck} checks if the class is authorized /
+ * authenticated just like with pages. This is especially useful if your strategy is to
+ * replace panels.
  * 
  * @author marrink
  */
@@ -51,7 +51,7 @@ public class SecurePanel extends Panel implements ISecureContainer
 	/**
 	 * @see Panel#Panel(String, IModel)
 	 */
-	public SecurePanel(String id, IModel<?> model)
+	public SecurePanel(String id, IModel< ? > model)
 	{
 		super(id, model);
 		setSecurityCheck(new ContainerSecurityCheck(this));

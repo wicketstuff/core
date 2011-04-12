@@ -19,17 +19,18 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 
 /**
- * Implementation of {@link AbstractWebFormattingConverter} that uses wicket to
- * locate the current {@link HttpServletRequest} object in {@link #getRequest()}
- * method. Used by {@link WicketWebPatternEncoder}.
+ * Implementation of {@link AbstractWebFormattingConverter} that uses wicket to locate the current
+ * {@link HttpServletRequest} object in {@link #getRequest()} method. Used by
+ * {@link WicketWebPatternEncoder}.
  * 
  * @author akiraly
  */
-public class WicketWebFormattingConverter extends
-		AbstractWebFormattingConverter {
+public class WicketWebFormattingConverter extends AbstractWebFormattingConverter
+{
 
 	@Override
-	protected HttpServletRequest getRequest() {
+	protected HttpServletRequest getRequest()
+	{
 		RequestCycle cycle = RequestCycle.get();
 		if (cycle == null)
 			return null;
@@ -44,6 +45,6 @@ public class WicketWebFormattingConverter extends
 		if (!(containerRequest instanceof HttpServletRequest))
 			return null;
 
-		return (HttpServletRequest) containerRequest;
+		return (HttpServletRequest)containerRequest;
 	}
 }

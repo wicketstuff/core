@@ -23,24 +23,28 @@ import org.apache.wicket.model.Model;
 
 /**
  * @author mocleiri
- *
+ * 
  */
-public class DefaultModelProvider<C extends Serializable> implements IModelProvider<C> {
+public class DefaultModelProvider<C extends Serializable> implements IModelProvider<C>
+{
 
 	/**
 	 * 
 	 */
-	public DefaultModelProvider() {
+	public DefaultModelProvider()
+	{
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wicketstuff.datatable_autocomplete.provider.IModelProvider#model(java.lang.Object)
 	 */
-	public IModel<C> model(C obj) {
+	public IModel<C> model(C obj)
+	{
 		return new Model<C>(obj);
 	}
-	
-	
+
 
 }

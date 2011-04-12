@@ -22,7 +22,6 @@ import org.apache.wicket.util.value.ValueMap;
 import org.wicketstuff.security.models.SecureCompoundPropertyModel;
 import org.wicketstuff.security.pages.BasePage;
 
-
 /**
  * Page showing the use of a {@link SecureCompoundPropertyModel}.
  * 

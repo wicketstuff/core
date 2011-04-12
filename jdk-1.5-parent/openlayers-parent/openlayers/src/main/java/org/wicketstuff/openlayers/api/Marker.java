@@ -24,13 +24,13 @@ import org.wicketstuff.openlayers.event.EventType;
 import org.wicketstuff.openlayers.js.Constructor;
 
 /**
- * Represents an Openlayers API's
- * http://dev.openlayers.org/apidocs/files/OpenLayers/Marker-js.html
+ * Represents an Openlayers API's http://dev.openlayers.org/apidocs/files/OpenLayers/Marker-js.html
  */
-public class Marker extends Overlay {
+public class Marker extends Overlay
+{
 	private static final long serialVersionUID = 1L;
 
-	private EventType[] events = new EventType[] {};
+	private EventType[] events = new EventType[] { };
 
 	private Icon icon = null;
 
@@ -44,29 +44,34 @@ public class Marker extends Overlay {
 	 * @param gLatLng
 	 *            the point on the map where this marker will be anchored
 	 */
-	public Marker(LonLat gLatLng) {
-		this(gLatLng, new EventType[] {}, null);
+	public Marker(LonLat gLatLng)
+	{
+		this(gLatLng, new EventType[] { }, null);
 	}
 
-	public Marker(LonLat gLatLng, IOpenLayersMap map) {
-		this(gLatLng, new EventType[] {}, null);
+	public Marker(LonLat gLatLng, IOpenLayersMap map)
+	{
+		this(gLatLng, new EventType[] { }, null);
 		this.map = map;
 	}
 
-	public Marker(LonLat lonLat, EventType[] events, PopupWindowPanel popup) {
+	public Marker(LonLat lonLat, EventType[] events, PopupWindowPanel popup)
+	{
 		this(lonLat, popup, events, null);
 	}
 
-	public Marker(LonLat lonLat, EventType[] events) {
+	public Marker(LonLat lonLat, EventType[] events)
+	{
 		this(lonLat, events, null);
 	}
 
-	public Marker(LonLat gLatLng, PopupWindowPanel popup) {
+	public Marker(LonLat gLatLng, PopupWindowPanel popup)
+	{
 		this(gLatLng, null, popup);
 	}
 
-	public Marker(LonLat lonLat, PopupWindowPanel popup, EventType[] events,
-			Icon icon) {
+	public Marker(LonLat lonLat, PopupWindowPanel popup, EventType[] events, Icon icon)
+	{
 		super();
 		this.lonLat = lonLat;
 		this.popup = popup;
@@ -74,70 +79,82 @@ public class Marker extends Overlay {
 		this.events = events;
 	}
 
-	public Marker(LonLat lonLat, PopupWindowPanel popup, Icon icon) {
-		this(lonLat, popup, new EventType[] {}, icon);
+	public Marker(LonLat lonLat, PopupWindowPanel popup, Icon icon)
+	{
+		this(lonLat, popup, new EventType[] { }, icon);
 	}
 
-	public void addEvent(EventType evt) {
-		if (this.events == null) {
-			this.events = new EventType[] {};
+	public void addEvent(EventType evt)
+	{
+		if (events == null)
+		{
+			events = new EventType[] { };
 		}
 
-		List<EventType> eventList = new ArrayList<EventType>(Arrays
-				.asList(events));
+		List<EventType> eventList = new ArrayList<EventType>(Arrays.asList(events));
 		eventList.add(evt);
 
-		this.events = new EventType[eventList.size()];
-		eventList.toArray(this.events);
+		events = new EventType[eventList.size()];
+		eventList.toArray(events);
 	}
 
-	public EventType[] getEvents() {
+	public EventType[] getEvents()
+	{
 		return events;
 	}
 
-	public Icon getIcon() {
+	public Icon getIcon()
+	{
 		return icon;
 	}
 
 	@Override
-	protected String getJSconstructor() {
+	protected String getJSconstructor()
+	{
 		String transformation = "";
-		if (map != null && map.getBusinessLogicProjection() != null) {
-			transformation = ".transform(new OpenLayers.Projection(\""
-					+ map.getBusinessLogicProjection() + "\"), "
-					+ map.getJSinvokeNoLineEnd("map")
-					+ ".getProjectionObject())";
+		if (map != null && map.getBusinessLogicProjection() != null)
+		{
+			transformation = ".transform(new OpenLayers.Projection(\"" +
+				map.getBusinessLogicProjection() + "\"), " + map.getJSinvokeNoLineEnd("map") +
+				".getProjectionObject())";
 		}
-		Constructor constructor = new Constructor("OpenLayers.Marker")
-				.add(lonLat.getJSconstructor() + transformation);
-		if (icon != null) {
+		Constructor constructor = new Constructor("OpenLayers.Marker").add(lonLat.getJSconstructor() +
+			transformation);
+		if (icon != null)
+		{
 			constructor.add(icon.getId());
 		}
 
 		return constructor.toJS();
 	}
 
-	public LonLat getLonLat() {
+	public LonLat getLonLat()
+	{
 		return lonLat;
 	}
 
-	public PopupWindowPanel getPopup() {
+	public PopupWindowPanel getPopup()
+	{
 		return popup;
 	}
 
-	public void setIcon(Icon icon) {
+	public void setIcon(Icon icon)
+	{
 		this.icon = icon;
 	}
 
-	public void setLagLng(LonLat gLatLng) {
-		this.lonLat = gLatLng;
+	public void setLagLng(LonLat gLatLng)
+	{
+		lonLat = gLatLng;
 	}
 
-	public void setMap(IOpenLayersMap map) {
+	public void setMap(IOpenLayersMap map)
+	{
 		this.map = map;
 	}
 
-	public IOpenLayersMap getMap() {
+	public IOpenLayersMap getMap()
+	{
 		return map;
 	}
 }

@@ -19,10 +19,10 @@ public class TestHomePage extends TestCase
 
 	public void testRenderMyPage()
 	{
-		//start and render the test page
+		// start and render the test page
 		tester.startPage(HomePage.class);
 
-		//assert rendered page class
+		// assert rendered page class
 		tester.assertRenderedPage(HomePage.class);
 	}
 }

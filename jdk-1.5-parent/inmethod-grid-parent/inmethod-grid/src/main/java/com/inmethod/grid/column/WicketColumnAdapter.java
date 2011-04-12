@@ -29,7 +29,8 @@ import com.inmethod.grid.datagrid.DataGrid;
  * 
  * @author Matej Knopp
  */
-public class WicketColumnAdapter extends AbstractColumn {
+public class WicketColumnAdapter extends AbstractColumn
+{
 
 	private static final long serialVersionUID = 1L;
 	private final IColumn delegate;
@@ -42,20 +43,25 @@ public class WicketColumnAdapter extends AbstractColumn {
 	 * @param column
 	 *            {@link IColumn} implementation
 	 */
-	public WicketColumnAdapter(String columnId, IColumn column) {
+	public WicketColumnAdapter(String columnId, IColumn column)
+	{
 		super(columnId, null, null);
-		this.delegate = column;
+		delegate = column;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Component newCell(WebMarkupContainer parent, String componentId, IModel rowModel) {
+	public Component newCell(WebMarkupContainer parent, String componentId, IModel rowModel)
+	{
 		Item item;
-		if (getGrid() instanceof DataGrid) {
+		if (getGrid() instanceof DataGrid)
+		{
 			item = parent.findParent(Item.class);
-		} else {
+		}
+		else
+		{
 			item = new Item("temp", 0, rowModel);
 		}
 		delegate.populateItem(item, componentId, rowModel);
@@ -68,7 +74,8 @@ public class WicketColumnAdapter extends AbstractColumn {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Component newHeader(String componentId) {
+	public Component newHeader(String componentId)
+	{
 		return delegate.getHeader(componentId);
 	}
 
@@ -76,10 +83,14 @@ public class WicketColumnAdapter extends AbstractColumn {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCellCssClass(IModel rowModel, int rowNum) {
-		if (delegate instanceof IStyledColumn) {
-			return ((IStyledColumn) delegate).getCssClass();
-		} else {
+	public String getCellCssClass(IModel rowModel, int rowNum)
+	{
+		if (delegate instanceof IStyledColumn)
+		{
+			return ((IStyledColumn)delegate).getCssClass();
+		}
+		else
+		{
 			return null;
 		}
 	}
@@ -88,39 +99,46 @@ public class WicketColumnAdapter extends AbstractColumn {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getSortProperty() {
-		if (delegate.isSortable()) {
+	public String getSortProperty()
+	{
+		if (delegate.isSortable())
+		{
 			return delegate.getSortProperty();
-		} else {
+		}
+		else
+		{
 			return null;
 		}
 	}
 
 	/**
-	 * Returns the specified {@link IColumn} array as list of {@link WicketColumnAdapter}s that
-	 * can be given to an {@link AbstractGrid}. The column identifiers are generated.
+	 * Returns the specified {@link IColumn} array as list of {@link WicketColumnAdapter}s that can
+	 * be given to an {@link AbstractGrid}. The column identifiers are generated.
+	 * 
 	 * @param columns
-	 * 		array of {@link IColumn}s 
-	 * @return
-	 * 		list of {@link IGridColumn}s
+	 *            array of {@link IColumn}s
+	 * @return list of {@link IGridColumn}s
 	 */
-	public static List<IGridColumn> wrapColumns(IColumn columns[]) {
+	public static List<IGridColumn> wrapColumns(IColumn columns[])
+	{
 		return wrapColumns(Arrays.asList(columns));
 	}
 
-	
+
 	/**
-	 * Returns the specified {@link IColumn} list as list of {@link WicketColumnAdapter}s that
-	 * can be given to an {@link AbstractGrid}. The column identifiers are generated.
+	 * Returns the specified {@link IColumn} list as list of {@link WicketColumnAdapter}s that can
+	 * be given to an {@link AbstractGrid}. The column identifiers are generated.
+	 * 
 	 * @param columns
-	 * 		list of {@link IColumn}s 
-	 * @return
-	 * 		list of {@link IGridColumn}s
+	 *            list of {@link IColumn}s
+	 * @return list of {@link IGridColumn}s
 	 */
-	public static List<IGridColumn> wrapColumns(List<IColumn> columns) {
+	public static List<IGridColumn> wrapColumns(List<IColumn> columns)
+	{
 		List<IGridColumn> result = new ArrayList<IGridColumn>(columns.size());
 		int i = 0;
-		for (IColumn column : columns) {
+		for (IColumn column : columns)
+		{
 			result.add(new WicketColumnAdapter("column" + i++, column));
 		}
 		return result;

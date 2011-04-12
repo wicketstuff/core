@@ -21,27 +21,28 @@ import org.apache.wicket.IClusterable;
 /**
  * @author mocleiri
  * 
- * Provides the logic to create the string that is indexed from the actual object context.
+ *         Provides the logic to create the string that is indexed from the actual object context.
  * 
- * Can hint as to the 
- *
+ *         Can hint as to the
+ * 
  */
-public interface ITrieConfiguration<C> extends IClusterable {
-	
+public interface ITrieConfiguration<C> extends IClusterable
+{
+
 	/**
 	 * Extract the word from the context given.
 	 * 
 	 * @param ctx
 	 * @return the extracted word.
 	 */
-	public String getWord (C ctx);
-	
+	public String getWord(C ctx);
+
 	/**
 	 * Provides the default filter to be used when searching for a match.
 	 * 
 	 */
 	public ITrieFilter<C> getDefaultFilter();
-	
+
 	/**
 	 * 
 	 * If true then capitalized and lower case will be sorted separately.
@@ -52,23 +53,25 @@ public interface ITrieConfiguration<C> extends IClusterable {
 	 * 
 	 */
 	public boolean isIndexCaseSensitive();
-	
+
 
 	public TrieNode<C> createTrieNode(TrieNode<C> parent, String rootMatchedString,
-			String nextCharacter);
-	
+		String nextCharacter);
+
 	/**
 	 * A callback to let the instantiated trie to register with us.
+	 * 
 	 * @param containerTrie
 	 */
-	public void setTrie (Trie<C> containerTrie);
-	
-	
+	public void setTrie(Trie<C> containerTrie);
+
+
 	/**
 	 * 
-	 * @return true if the trie contains a suffix tree (used when the trie is built to make sure we build it right).
+	 * @return true if the trie contains a suffix tree (used when the trie is built to make sure we
+	 *         build it right).
 	 * 
 	 */
 	public boolean isSuffixTree();
-	
+
 }

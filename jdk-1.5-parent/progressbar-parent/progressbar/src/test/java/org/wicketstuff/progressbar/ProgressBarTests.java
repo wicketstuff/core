@@ -22,20 +22,25 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Test;
 
-public class ProgressBarTests {
+public class ProgressBarTests
+{
 
-	private static class DummyTask {
+	private static class DummyTask
+	{
 		private int progress;
 
-		void proceed(int percent) {
+		void proceed(int percent)
+		{
 			progress = percent;
 		}
 
-		public int getProgress() {
+		public int getProgress()
+		{
 			return progress;
 		}
 
-		public boolean isDone() {
+		public boolean isDone()
+		{
 			return progress >= 100;
 		}
 	}
@@ -48,21 +53,23 @@ public class ProgressBarTests {
 
 	/**
 	 * <p>
-	 * Test that the progress bar is correctly rendered and updated with the
-	 * progression model.
+	 * Test that the progress bar is correctly rendered and updated with the progression model.
 	 * </p>
-	 *
+	 * 
 	 * <p>
 	 * This test doesn't take the AJAX self update into account.
 	 * </p>
 	 */
 	@Test
-	public void testProgressBar() {
+	public void testProgressBar()
+	{
 		WicketTester wt = new WicketTester();
 		final DummyTask testProgressive = new DummyTask();
-		Panel progressBar = new ProgressBar("panelId", new ProgressionModel() {
+		Panel progressBar = new ProgressBar("panelId", new ProgressionModel()
+		{
 			@Override
-			protected Progression getProgression() {
+			protected Progression getProgression()
+			{
 				return new Progression(testProgressive.getProgress());
 			}
 
@@ -75,14 +82,17 @@ public class ProgressBarTests {
 	}
 
 	@Test
-	public void testProgressBarMessage() {
+	public void testProgressBarMessage()
+	{
 		WicketTester wt = new WicketTester();
 		final DummyTask testProgressive = new DummyTask();
-		wt.startComponent(new ProgressBar("panelId", new ProgressionModel() {
+		wt.startComponent(new ProgressBar("panelId", new ProgressionModel()
+		{
 			@Override
-			protected Progression getProgression() {
-				return new Progression(testProgressive.getProgress(),
-						"Going for " + testProgressive.getProgress());
+			protected Progression getProgression()
+			{
+				return new Progression(testProgressive.getProgress(), "Going for " +
+					testProgressive.getProgress());
 			}
 
 		}), null);

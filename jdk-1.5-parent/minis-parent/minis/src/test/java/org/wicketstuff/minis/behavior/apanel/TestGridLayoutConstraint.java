@@ -18,14 +18,14 @@ package org.wicketstuff.minis.behavior.apanel;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.wicketstuff.minis.behavior.apanel.GridLayoutConstraint;
 
 public class TestGridLayoutConstraint
 {
 	@Test
 	public void testContaining()
 	{
-		final GridLayoutConstraint constraint = new GridLayoutConstraint(1, 1).setColSpan(3).setRowSpan(3);
+		final GridLayoutConstraint constraint = new GridLayoutConstraint(1, 1).setColSpan(3)
+			.setRowSpan(3);
 		for (int col = 1; col < 4; col++)
 		{
 			for (int row = 1; row < 4; row++)
@@ -42,7 +42,8 @@ public class TestGridLayoutConstraint
 	@Test
 	public void testIntersection()
 	{
-		final GridLayoutConstraint constraint = new GridLayoutConstraint(1, 1).setColSpan(3).setRowSpan(3);
+		final GridLayoutConstraint constraint = new GridLayoutConstraint(1, 1).setColSpan(3)
+			.setRowSpan(3);
 		Assert.assertFalse(constraint.intersectsWith(new GridLayoutConstraint(0, 0)));
 		Assert.assertTrue(constraint.intersectsWith(new GridLayoutConstraint(1, 1)));
 		Assert.assertTrue(constraint.intersectsWith(new GridLayoutConstraint(2, 2)));

@@ -21,7 +21,6 @@ import org.wicketstuff.security.components.markup.html.links.SecurePageLink;
 import org.wicketstuff.security.pages.BasePage;
 import org.wicketstuff.security.pages.secure.HomePage;
 
-
 /**
  * @author marrink
  * 

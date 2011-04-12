@@ -80,7 +80,7 @@ public class SwarmActionFactory implements WaspActionFactory
 	public SwarmActionFactory(Object key)
 	{
 		super();
-		this.factoryKey = key;
+		factoryKey = key;
 		Actions.registerActionFactory(key, this);
 		try
 		{

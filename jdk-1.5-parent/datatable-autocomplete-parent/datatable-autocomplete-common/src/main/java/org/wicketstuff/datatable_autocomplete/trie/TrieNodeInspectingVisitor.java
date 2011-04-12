@@ -19,57 +19,57 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-
 /**
  * @author mocleiri
  * 
- * Used as part of the minimization procedure when compacting the Trie.
- *
+ *         Used as part of the minimization procedure when compacting the Trie.
+ * 
  */
-public class TrieNodeInspectingVisitor<Context> implements ITrieNodeVisitor<Context> {
+public class TrieNodeInspectingVisitor<Context> implements ITrieNodeVisitor<Context>
+{
 
-	private static final Logger	log	= LoggerFactory
-											.getLogger(TrieNodeInspectingVisitor.class);
-	
+	private static final Logger log = LoggerFactory.getLogger(TrieNodeInspectingVisitor.class);
 
 
-		int totalConsolidateable = 0;
-		
-		int totalNodes = 0;
-		
-		public void visit(TrieNode<Context> element) {
+	int totalConsolidateable = 0;
 
-			this.totalNodes++;
-			
-			if (element.getOrderedNodeList().size() == 1)
-				this.totalConsolidateable++;
-			
-		}
-		
-		/**
-		 * @return the totalConsolidateable
-		 */
-		public int getTotalConsolidateable() {
-		
-			return this.totalConsolidateable;
-		}
+	int totalNodes = 0;
 
-		
-		/**
-		 * @return the totalNodes
-		 */
-		public int getTotalNodes() {
-		
-			return this.totalNodes;
-		}
+	public void visit(TrieNode<Context> element)
+	{
 
-		public void reset() {
+		this.totalNodes++;
 
-			this.totalConsolidateable = 0;
-			this.totalNodes = 0;
-		}
-		
-		
-		
-		
+		if (element.getOrderedNodeList().size() == 1)
+			this.totalConsolidateable++;
+
+	}
+
+	/**
+	 * @return the totalConsolidateable
+	 */
+	public int getTotalConsolidateable()
+	{
+
+		return this.totalConsolidateable;
+	}
+
+
+	/**
+	 * @return the totalNodes
+	 */
+	public int getTotalNodes()
+	{
+
+		return this.totalNodes;
+	}
+
+	public void reset()
+	{
+
+		this.totalConsolidateable = 0;
+		this.totalNodes = 0;
+	}
+
+
 }

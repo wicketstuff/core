@@ -20,29 +20,34 @@ package org.wicketstuff.console.engine;
 /**
  * Represents an exception during script engine execution.
  * <p>
- * This does not represent an exception thrown by the script itself, which would
- * rather be included in the {@link IScriptExecutionResult}.
+ * This does not represent an exception thrown by the script itself, which would rather be included
+ * in the {@link IScriptExecutionResult}.
  * 
  * @author cretzel
  * 
  */
-public class ScriptEngineException extends RuntimeException {
+public class ScriptEngineException extends RuntimeException
+{
 
 	private static final long serialVersionUID = 1L;
 
-	public ScriptEngineException() {
+	public ScriptEngineException()
+	{
 		super();
 	}
 
-	public ScriptEngineException(final String message, final Throwable cause) {
+	public ScriptEngineException(final String message, final Throwable cause)
+	{
 		super(message, cause);
 	}
 
-	public ScriptEngineException(final String message) {
+	public ScriptEngineException(final String message)
+	{
 		super(message);
 	}
 
-	public ScriptEngineException(final Throwable cause) {
+	public ScriptEngineException(final Throwable cause)
+	{
 		super(cause);
 	}
 

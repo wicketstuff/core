@@ -8,8 +8,8 @@ import wicket.contrib.examples.GMapExampleApplication;
 public class GeoCodeGMapApplication extends GMapExampleApplication
 {
 	private ServerGeocoder serverGeocoder = null;
-	
-	
+
+
 	/**
 	 * @see wicket.protocol.http.WebApplication#init()
 	 */
@@ -17,16 +17,16 @@ public class GeoCodeGMapApplication extends GMapExampleApplication
 	protected void init()
 	{
 		super.init();
-		
-		this.serverGeocoder = new ServerGeocoder(getGoogleMapsAPIkey());
+
+		serverGeocoder = new ServerGeocoder(getGoogleMapsAPIkey());
 	}
-	
-	
-	public static GeoCodeGMapApplication get() {
+
+
+	public static GeoCodeGMapApplication get()
+	{
 		return (GeoCodeGMapApplication)Application.get();
 	}
-	
-	
+
 
 	@Override
 	public Class<? extends Page> getHomePage()
@@ -38,7 +38,8 @@ public class GeoCodeGMapApplication extends GMapExampleApplication
 	/**
 	 * @return the serverGeocoder
 	 */
-	public ServerGeocoder getServerGeocoder() {
+	public ServerGeocoder getServerGeocoder()
+	{
 		return serverGeocoder;
 	}
 }

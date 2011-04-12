@@ -21,36 +21,38 @@ import com.inmethod.grid.treegrid.TreeGrid;
  * 
  * @author Matej Knopp
  */
-public class EditableTreeGridPage extends BaseExamplePage {
+public class EditableTreeGridPage extends BaseExamplePage
+{
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor.
 	 */
-	public EditableTreeGridPage() {
+	public EditableTreeGridPage()
+	{
 		List<IGridColumn> columns = new ArrayList<IGridColumn>();
-		
+
 		columns.add(new SubmitCancelColumn("edit", new Model("Edit")));
 		columns.add(new EditablePropertyTreeColumn(new Model("Property 1"), "userObject.property1"));
 		columns.add(new EditablePropertyColumn(new Model("Property 2"), "userObject.property2"));
 		columns.add(new EditablePropertyColumn(new Model("Property 3"), "userObject.property3"));
 		columns.add(new EditablePropertyColumn(new Model("Property 4"), "userObject.property4"));
 		columns.add(new EditablePropertyColumn(new Model("Property 5"), "userObject.property5"));
-		columns.add(new EditablePropertyColumn(new Model("Property 6"), "userObject.property6"));		
-		
+		columns.add(new EditablePropertyColumn(new Model("Property 6"), "userObject.property6"));
+
 		TreeModel model = TreeModelFactory.createTreeModel();
 		TreeGrid grid = new TreeGrid("grid", model, columns);
-		
+
 		grid.setContentHeight(23, SizeUnit.EM);
 		grid.setAllowSelectMultiple(true);
 		grid.setClickRowToSelect(true);
 		grid.setClickRowToDeselect(false);
 		grid.setSelectToEdit(true);
-		
+
 		// expand the root node
 		grid.getTreeState().expandNode(model.getRoot());
-		
+
 		add(grid);
 	}
 

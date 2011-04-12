@@ -14,7 +14,8 @@ import javax.swing.tree.TreeModel;
  * 
  * @author Matej Knopp
  */
-public class TreeModelFactory {
+public class TreeModelFactory
+{
 	/**
 	 * Creates the model that feeds the tree.
 	 * 
@@ -80,15 +81,15 @@ public class TreeModelFactory {
 			Object o = i.next();
 			if (o instanceof List)
 			{
-				DefaultMutableTreeNode child = new DefaultMutableTreeNode(new TreeBean(
-						"subtree..."));
+				DefaultMutableTreeNode child = new DefaultMutableTreeNode(
+					new TreeBean("subtree..."));
 				parent.add(child);
 				add(child, (List<?>)o);
 			}
 			else
 			{
-				DefaultMutableTreeNode child = new DefaultMutableTreeNode(new TreeBean(o
-						.toString()));
+				DefaultMutableTreeNode child = new DefaultMutableTreeNode(
+					new TreeBean(o.toString()));
 				parent.add(child);
 			}
 		}
@@ -99,7 +100,8 @@ public class TreeModelFactory {
 	 * 
 	 * @return {@link TreeModel} instance.
 	 */
-	public static TreeModel createTreeModel() {
+	public static TreeModel createTreeModel()
+	{
 		return new TreeModelFactory().createTreeModelInternal();
 	}
 }

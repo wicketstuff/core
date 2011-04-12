@@ -17,56 +17,63 @@ import com.inmethod.grid.examples.contact.DetachableContactModel;
  * 
  * @author Matej Knopp
  */
-public class ContactDataSource implements IDataSource {
+public class ContactDataSource implements IDataSource
+{
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor.
 	 */
-	public ContactDataSource() {
-		
+	public ContactDataSource()
+	{
+
 	}
 
 	/**
 	 * {@inheritDoc}
-	 */	
-	public IModel model(Object object) {
+	 */
+	public IModel model(Object object)
+	{
 		return new DetachableContactModel((Contact)object);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void query(IQuery query, IQueryResult result) {
+	public void query(IQuery query, IQueryResult result)
+	{
 		ContactsDatabase database = DatabaseLocator.getDatabase();
-		
+
 		String sortProperty = null;
 		boolean sortAsc = true;
-		
+
 		// is there any sorting
-		if (query.getSortState().getColumns().size() > 0) {
-			// get the most relevant column 
+		if (query.getSortState().getColumns().size() > 0)
+		{
+			// get the most relevant column
 			ISortStateColumn state = query.getSortState().getColumns().get(0);
-			
+
 			// get the column sort properties
 			sortProperty = state.getPropertyName();
 			sortAsc = state.getDirection() == IGridSortState.Direction.ASC;
 		}
-		
+
 		// determine the total count
 		result.setTotalCount(database.getCount());
-		
+
 		// get the actual items
-		List<Contact> resultList = database.find(query.getFrom(), query.getCount(), sortProperty, sortAsc);
+		List<Contact> resultList = database.find(query.getFrom(), query.getCount(), sortProperty,
+			sortAsc);
 		result.setItems(resultList.iterator());
-		
+
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void detach() {
+	public void detach()
+	{
 
 	}
 

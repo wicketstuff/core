@@ -14,21 +14,27 @@
  * the License.
  */
 package org.wicketstuff.openlayers.event;
+
 /**
  * holds events
+ * 
  * @author Nino Martinez Wael (nino.martinez@jayway.dk)
- *
+ * 
  */
-public enum EventType {
-	click, dblclick, mousedown,mouseup, mouseenter,mouseleave, mousemove, mouseover, mouseout,nullEvent, featureselected, featureunselected;
-	
+public enum EventType
+{
+	click, dblclick, mousedown, mouseup, mouseenter, mouseleave, mousemove, mouseover, mouseout, nullEvent, featureselected, featureunselected;
+
 	private String eventType;
-	
-	private EventType() {
-		eventType=this.name();
-		
+
+	private EventType()
+	{
+		eventType = name();
+
 	}
-	public String getEvent() {
+
+	public String getEvent()
+	{
 		return eventType;
 	}
 

@@ -33,7 +33,8 @@ import org.wicketstuff.shiro.ShiroConstraint;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface ShiroSecurityConstraint {
+public @interface ShiroSecurityConstraint
+{
 
 	ShiroAction action() default ShiroAction.INSTANTIATE;
 

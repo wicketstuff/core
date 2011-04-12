@@ -26,32 +26,42 @@ import org.apache.wicket.model.PropertyModel;
 import org.wicketstuff.jquery.dnd.DnDSortableHandler;
 
 @SuppressWarnings("serial")
-public class Panel4MyGroup extends Panel{
+public class Panel4MyGroup extends Panel
+{
 
-    public Panel4MyGroup(String id, MyGroup myGroup, final DnDSortableHandler dnd) throws Exception {
-        super(id);
-        add(new Label("label", myGroup.label));
-        add(new Label("itemCnt", String.valueOf(myGroup.items.size())).setOutputMarkupId(true));
-        add(new Label("actionCnt", "0").setOutputMarkupId(true));
+	public Panel4MyGroup(String id, MyGroup myGroup, final DnDSortableHandler dnd) throws Exception
+	{
+		super(id);
+		add(new Label("label", myGroup.label));
+		add(new Label("itemCnt", String.valueOf(myGroup.items.size())).setOutputMarkupId(true));
+		add(new Label("actionCnt", "0").setOutputMarkupId(true));
 
-        // create a container
-        WebMarkupContainer container = new WebMarkupContainer("myItemContainer", new Model(myGroup));
-        dnd.registerContainer(container);
-        add(container);
+		// create a container
+		WebMarkupContainer container = new WebMarkupContainer("myItemContainer", new Model(myGroup));
+		dnd.registerContainer(container);
+		add(container);
 
-        // create items (add as children of the container)
-        container.add(new ListView("myItem", myGroup.items) {
-            @Override
-            protected void populateItem(ListItem listitem) {
-                try {
-                    listitem.add(new Label("myItemLabel", new PropertyModel(listitem.getModelObject(), "label")));
-                    dnd.registerItem(listitem);
-                } catch (RuntimeException exc) {
-                    throw exc;
-                } catch (Exception exc) {
-                    throw new RuntimeException("wrap: " + exc.getMessage(), exc);
-                }
-            }
-        });
-    }
+		// create items (add as children of the container)
+		container.add(new ListView("myItem", myGroup.items)
+		{
+			@Override
+			protected void populateItem(ListItem listitem)
+			{
+				try
+				{
+					listitem.add(new Label("myItemLabel", new PropertyModel(
+						listitem.getModelObject(), "label")));
+					dnd.registerItem(listitem);
+				}
+				catch (RuntimeException exc)
+				{
+					throw exc;
+				}
+				catch (Exception exc)
+				{
+					throw new RuntimeException("wrap: " + exc.getMessage(), exc);
+				}
+			}
+		});
+	}
 }

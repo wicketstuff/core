@@ -23,7 +23,6 @@ import org.wicketstuff.security.WaspSession;
 import org.wicketstuff.security.components.SecureWebPage;
 import org.wicketstuff.security.components.markup.html.links.SecurePageLink;
 
-
 /**
  * @author marrink
  */
@@ -57,7 +56,7 @@ public class MockHomePage extends SecureWebPage
 	 */
 	public boolean logoff(Object context)
 	{
-		return ((WaspSession)Session.get()).logoff(context);
+		return ((WaspSession) Session.get()).logoff(context);
 	}
 
 }

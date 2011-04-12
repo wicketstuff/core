@@ -14,11 +14,12 @@ import com.inmethod.grid.treegrid.TreeGrid;
 import com.inmethod.icon.Icon;
 
 /**
- * Base class for {@link TreeGrid} column that contains the actual tree. 
+ * Base class for {@link TreeGrid} column that contains the actual tree.
  * 
  * @author Matej Knopp
  */
-public abstract class AbstractTreeColumn extends BaseTreeColumn {
+public abstract class AbstractTreeColumn extends BaseTreeColumn
+{
 
 	/**
 	 * Creates instance with specified column id, header model and sort property.
@@ -31,7 +32,8 @@ public abstract class AbstractTreeColumn extends BaseTreeColumn {
 	 *            optional string that will be returned by {@link ISortState} to indicate that the
 	 *            column is being sorted
 	 */
-	public AbstractTreeColumn(String columnId, IModel headerModel, String sortProperty) {
+	public AbstractTreeColumn(String columnId, IModel headerModel, String sortProperty)
+	{
 		super(columnId, headerModel, sortProperty);
 	}
 
@@ -43,7 +45,8 @@ public abstract class AbstractTreeColumn extends BaseTreeColumn {
 	 * @param headerModel
 	 *            model for column title
 	 */
-	public AbstractTreeColumn(String columnId, IModel headerModel) {
+	public AbstractTreeColumn(String columnId, IModel headerModel)
+	{
 		super(columnId, headerModel);
 	}
 
@@ -51,18 +54,24 @@ public abstract class AbstractTreeColumn extends BaseTreeColumn {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected Icon getIcon(IModel model) {
-		TreeModel treeModel = (TreeModel) getTreeGrid().getTree().getDefaultModelObject();
+	protected Icon getIcon(IModel model)
+	{
+		TreeModel treeModel = (TreeModel)getTreeGrid().getTree().getDefaultModelObject();
 		Object node = model.getObject();
-		if (treeModel.isLeaf(node)) {
+		if (treeModel.isLeaf(node))
+		{
 			return Icons.ITEM;
-		} else if (getTreeGrid().getTreeState().isNodeExpanded(node)) {
-			return Icons.FOLDER_OPEN;			
-		} else {
+		}
+		else if (getTreeGrid().getTreeState().isNodeExpanded(node))
+		{
+			return Icons.FOLDER_OPEN;
+		}
+		else
+		{
 			return Icons.FOLDER_CLOSED;
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -73,15 +82,17 @@ public abstract class AbstractTreeColumn extends BaseTreeColumn {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final Component newCell(WebMarkupContainer parent, String componentId, IModel rowModel) {
+	public final Component newCell(WebMarkupContainer parent, String componentId, IModel rowModel)
+	{
 		return super.newCell(parent, componentId, rowModel);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final IRenderable newCell(IModel rowModel) {	
+	public final IRenderable newCell(IModel rowModel)
+	{
 		return super.newCell(rowModel);
 	}
 }

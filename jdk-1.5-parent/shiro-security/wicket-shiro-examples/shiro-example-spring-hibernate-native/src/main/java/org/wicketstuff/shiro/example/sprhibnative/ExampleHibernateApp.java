@@ -39,14 +39,16 @@ public class ExampleHibernateApp extends ExampleApplication
 		return WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
 	}
 
-  @Override
-  public Component getExampleInfoPanel(String id) {
-    return new ExampleInfoPanel( id );
-  }
-  
-  @Override
-	public Component getAuthHeaderPanel(String id) {
-	  return new UserAuthHeader(id, LoginPage.class);
+	@Override
+	public Component getExampleInfoPanel(String id)
+	{
+		return new ExampleInfoPanel(id);
+	}
+
+	@Override
+	public Component getAuthHeaderPanel(String id)
+	{
+		return new UserAuthHeader(id, LoginPage.class);
 	}
 
 }

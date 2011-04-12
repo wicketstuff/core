@@ -46,7 +46,7 @@ public class L1Container extends Panel
 	 * @param id
 	 * @param model
 	 */
-	public L1Container(String id, IModel<?> model)
+	public L1Container(String id, IModel< ? > model)
 	{
 		super(id, model);
 		SecureComponentHelper.setSecurityCheck(this, new ContainerSecurityCheck(this));

@@ -22,12 +22,11 @@ import org.wicketstuff.security.strategies.WaspAuthorizationStrategy;
 
 /**
  * In addition to Subjects, WicketSubjects play an important part in multi-login
- * scenario's as they define what they authenticate. For example one subject
- * might authenticate all subclasses of BasicSecurePage where another might
- * authenticate all subclasses of AdvancedSecurePage. Effectively requiring a
- * user to login twice if both type of pages are to be visited. If a Wicket
- * application encounters a regular Subject, that subject authenticates
- * everything.
+ * scenario's as they define what they authenticate. For example one subject might
+ * authenticate all subclasses of BasicSecurePage where another might authenticate all
+ * subclasses of AdvancedSecurePage. Effectively requiring a user to login twice if both
+ * type of pages are to be visited. If a Wicket application encounters a regular Subject,
+ * that subject authenticates everything.
  * 
  * @author marrink
  */
@@ -40,7 +39,7 @@ public interface WicketSubject extends Subject
 	 * @return true if the class is authenticated, false otherwise.
 	 * @see WaspAuthorizationStrategy#isClassAuthenticated(Class)
 	 */
-	public abstract boolean isClassAuthenticated(Class<?> class1);
+	public abstract boolean isClassAuthenticated(Class< ? > class1);
 
 	/**
 	 * Performs the authentication check on a component.
@@ -59,5 +58,5 @@ public interface WicketSubject extends Subject
 	 * @return true if the model is authenticated, false otherwise
 	 * @see WaspAuthorizationStrategy#isModelAuthenticated(IModel, Component)
 	 */
-	public abstract boolean isModelAuthenticated(IModel<?> model, Component component);
+	public abstract boolean isModelAuthenticated(IModel< ? > model, Component component);
 }

@@ -27,47 +27,57 @@ import org.wicketstuff.javaee.example.dao.ContactDaoLocal;
 import org.wicketstuff.javaee.example.model.Contact;
 
 /**
- *
+ * 
  * @author Filippo Diotalevi
  */
-public class InsertContact extends WebPage {
+public class InsertContact extends WebPage
+{
 
-    private Form<Contact> insertForm;
-    private String name;
-    private String email;
-    @EJB(name = "ContactDaoBean")
-    private ContactDaoLocal contactDao;
+	private Form<Contact> insertForm;
+	private String name;
+	private String email;
+	@EJB(name = "ContactDaoBean")
+	private ContactDaoLocal contactDao;
 
-    public InsertContact() {
-        add(new FeedbackPanel("feedback"));
+	public InsertContact()
+	{
+		add(new FeedbackPanel("feedback"));
 
-        insertForm = new Form<Contact>("insertForm") {
+		insertForm = new Form<Contact>("insertForm")
+		{
 
-            @Override
-            protected void onSubmit() {
-                contactDao.addContact(name, email);
-                setResponsePage(ListContacts.class);
-            }
-        };
+			@Override
+			protected void onSubmit()
+			{
+				contactDao.addContact(name, email);
+				setResponsePage(ListContacts.class);
+			}
+		};
 
-        insertForm.add(new RequiredTextField<String>("name", new PropertyModel<String>(this, "name")));
-        insertForm.add(new RequiredTextField<String>("email", new PropertyModel<String>(this, "email")));
-        add(insertForm);
-    }
+		insertForm.add(new RequiredTextField<String>("name",
+			new PropertyModel<String>(this, "name")));
+		insertForm.add(new RequiredTextField<String>("email", new PropertyModel<String>(this,
+			"email")));
+		add(insertForm);
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail()
+	{
+		return email;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setEmail(String email)
+	{
+		this.email = email;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName()
+	{
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name)
+	{
+		this.name = name;
+	}
 }

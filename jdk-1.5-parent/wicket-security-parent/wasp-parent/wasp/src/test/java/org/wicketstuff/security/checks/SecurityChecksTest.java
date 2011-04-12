@@ -126,8 +126,8 @@ public class SecurityChecksTest
 		public BogusCheck(boolean flag)
 		{
 			super();
-			this.authorized = flag;
-			this.authenticated = flag;
+			authorized = flag;
+			authenticated = flag;
 		}
 
 		/**

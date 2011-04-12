@@ -35,5 +35,5 @@ public class DatabaseLocator
 	public static ContactsDatabase getDatabase()
 	{
 		return ((Session)WebSession.get()).getDatabase();
-	}	
+	}
 }

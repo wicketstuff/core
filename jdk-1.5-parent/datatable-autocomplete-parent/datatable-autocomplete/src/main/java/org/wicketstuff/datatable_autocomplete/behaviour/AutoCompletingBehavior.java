@@ -35,48 +35,48 @@ import org.wicketstuff.datatable_autocomplete.panel.AutoCompletingPanel;
  * @author mocleiri
  * 
  */
-public class AutoCompletingBehavior extends AJAXAutoCompleteBehavior {
+public class AutoCompletingBehavior extends AJAXAutoCompleteBehavior
+{
 
 	/**
 	 * 
 	 */
-	private static final long		serialVersionUID	= 7722548233439995560L;
-	private static final Logger		log					= LoggerFactory
-																.getLogger(AutoCompletingBehavior.class);
-	private TextField<String>				textModel;
-	private final HiddenField<?>	selectedContextField;
+	private static final long serialVersionUID = 7722548233439995560L;
+	private static final Logger log = LoggerFactory.getLogger(AutoCompletingBehavior.class);
+	private TextField<String> textModel;
+	private final HiddenField<?> selectedContextField;
 
-	private class AutoCompletingDependencyProcessor extends
-			AbstractAutoCompleteDependencyProcessor {
+	private class AutoCompletingDependencyProcessor extends AbstractAutoCompleteDependencyProcessor
+	{
 
 		/**
 		 * 
 		 */
-		private static final long				serialVersionUID	= 5497206492287083574L;
-		private final AutoCompletingPanel<?>	autoCompletingPanel;
+		private static final long serialVersionUID = 5497206492287083574L;
+		private final AutoCompletingPanel<?> autoCompletingPanel;
 
-		private final String					callbackName;
+		private final String callbackName;
 
 		/**
 		 * @param names
 		 * @param components
 		 * @param duration
 		 */
-		public AutoCompletingDependencyProcessor(String callbackName,
-				TextField<?> textField,
-				AutoCompletingPanel<?> autoCompletingPanel, Duration duration) {
+		public AutoCompletingDependencyProcessor(String callbackName, TextField<?> textField,
+			AutoCompletingPanel<?> autoCompletingPanel, Duration duration)
+		{
 
-			super(new String[] { callbackName }, new Component[] { textField },
-					duration);
+			super(new String[] { callbackName }, new Component[] { textField }, duration);
 			this.callbackName = callbackName;
 			this.autoCompletingPanel = autoCompletingPanel;
 		}
 
-		
-		public void onAjaxUpdate(Request request, AjaxRequestTarget target) {
+
+		public void onAjaxUpdate(Request request, AjaxRequestTarget target)
+		{
 
 			IRequestParameters params = request.getRequestParameters();
-			
+
 			StringValue value = params.getParameterValue(callbackName);
 
 			textModel.setModelObject(value.toString());
@@ -94,53 +94,51 @@ public class AutoCompletingBehavior extends AJAXAutoCompleteBehavior {
 	};
 
 	/**
-	 * A special behaviour to generate a GET request for changes to the
-	 * textComponent provided.
+	 * A special behaviour to generate a GET request for changes to the textComponent provided.
 	 * 
 	 * @param selectedContextField
 	 *            the field where the id value of the selected row is placed
 	 * @param textComponent
-	 *            the component whose value is updated on the request (this
-	 *            behavoir should be added to textComponent).
+	 *            the component whose value is updated on the request (this behavoir should be added
+	 *            to textComponent).
 	 * @param referenceAutoCompletingPanel
-	 *            the completing panel that needs to be updated when the
-	 *            textfield value changes.
+	 *            the completing panel that needs to be updated when the textfield value changes.
 	 * @param milisecondDurationBetweenRequests
-	 *            the number of mmiliseconds that must elapse before a
-	 *            subsequent get request will be sent from the client.
+	 *            the number of mmiliseconds that must elapse before a subsequent get request will
+	 *            be sent from the client.
 	 */
 	public AutoCompletingBehavior(HiddenField<?> selectedContextField,
-			TextField<String> textComponent,
-			AutoCompletingPanel<?> referenceAutoCompletingPanel,
-			long milisecondDurationBetweenRequests) {
+		TextField<String> textComponent, AutoCompletingPanel<?> referenceAutoCompletingPanel,
+		long milisecondDurationBetweenRequests)
+	{
 
 		super("onkeyup");
 		this.selectedContextField = selectedContextField;
 
-		this.textModel = textComponent;
+		textModel = textComponent;
 
-		super.setDependencyProcessor(new AutoCompletingDependencyProcessor(
-				"value", textComponent, referenceAutoCompletingPanel, Duration
-						.milliseconds(milisecondDurationBetweenRequests)));
+		super.setDependencyProcessor(new AutoCompletingDependencyProcessor("value", textComponent,
+			referenceAutoCompletingPanel, Duration.milliseconds(milisecondDurationBetweenRequests)));
 
 	}
 
 	public AutoCompletingBehavior(TextField<String> textComponent,
-			AutoCompletingPanel<?> referenceAutoCompletingPanel,
-			long milisecondDurationBetweenRequests) {
+		AutoCompletingPanel<?> referenceAutoCompletingPanel, long milisecondDurationBetweenRequests)
+	{
 
-		this(null, textComponent, referenceAutoCompletingPanel,
-				milisecondDurationBetweenRequests);
+		this(null, textComponent, referenceAutoCompletingPanel, milisecondDurationBetweenRequests);
 
 	}
 
 	@Override
-	protected void addAdditionalJavaScript(List<String> eventScripts) {
+	protected void addAdditionalJavaScript(List<String> eventScripts)
+	{
 
-		if (selectedContextField != null) {
+		if (selectedContextField != null)
+		{
 			// add in the clear script to be the first part of the element.
-			eventScripts.add(0, "Wicket.$("
-					+ selectedContextField.getMarkupId() + ").value='CLEAR'");
+			eventScripts.add(0, "Wicket.$(" + selectedContextField.getMarkupId() +
+				").value='CLEAR'");
 		}
 
 	}

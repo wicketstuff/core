@@ -30,18 +30,20 @@ import com.inmethod.grid.treegrid.TreeGrid;
  * 
  * @author Matej Knopp
  */
-public class TreeGridSelectionPage extends BaseExamplePage {
+public class TreeGridSelectionPage extends BaseExamplePage
+{
 
 	private static final long serialVersionUID = 1L;
 
 	private Label selectionLabel;
-	
+
 	/**
 	 * Constructor.
 	 */
-	public TreeGridSelectionPage() {
+	public TreeGridSelectionPage()
+	{
 		List<IGridColumn> columns = new ArrayList<IGridColumn>();
-		
+
 		columns.add(new CheckBoxColumn("checkBox"));
 		columns.add(new PropertyTreeColumn(new Model("Property 1"), "userObject.property1"));
 		columns.add(new PropertyColumn(new Model("Property 2"), "userObject.property2"));
@@ -49,88 +51,104 @@ public class TreeGridSelectionPage extends BaseExamplePage {
 		columns.add(new PropertyColumn(new Model("Property 4"), "userObject.property4"));
 		columns.add(new PropertyColumn(new Model("Property 5"), "userObject.property5"));
 		columns.add(new PropertyColumn(new Model("Property 6"), "userObject.property6"));
-		
+
 		TreeModel model = TreeModelFactory.createTreeModel();
-		final TreeGrid grid = new TreeGrid("grid", model, columns) {
+		final TreeGrid grid = new TreeGrid("grid", model, columns)
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onItemSelectionChanged(IModel item, boolean newValue) {
+			public void onItemSelectionChanged(IModel item, boolean newValue)
+			{
 				super.onItemSelectionChanged(item, newValue);
-				
+
 				// refresh the selection label when an item gets selected/deselected.
 				AjaxRequestTarget target = AjaxRequestTarget.get();
 				target.add(selectionLabel);
 			}
 		};
-		
+
 		grid.setAllowSelectMultiple(true);
 		grid.setClickRowToSelect(true);
 		grid.setContentHeight(23, SizeUnit.EM);
-		
+
 		// expand the root node
 		grid.getTreeState().expandNode(model.getRoot());
-		
+
 		add(grid);
-		
-		IModel selectedItemsModel = new Model() {
+
+		IModel selectedItemsModel = new Model()
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public Serializable getObject() {
+			public Serializable getObject()
+			{
 				return selectedItemsAsString(grid);
 			}
 		};
 		add(selectionLabel = new Label("currentSelection", selectedItemsModel));
 		selectionLabel.setOutputMarkupId(true);
-		
+
 		addOptionLinks(grid);
 	}
 
-	private String selectedItemsAsString(AbstractGrid grid) {
+	private String selectedItemsAsString(AbstractGrid grid)
+	{
 		StringBuilder res = new StringBuilder();
 		Collection<IModel> selected = grid.getSelectedItems();
-		for (IModel model : selected) {
-			DefaultMutableTreeNode node = (DefaultMutableTreeNode) model.getObject();
+		for (IModel model : selected)
+		{
+			DefaultMutableTreeNode node = (DefaultMutableTreeNode)model.getObject();
 			TreeBean bean = (TreeBean)node.getUserObject();
-			if (res.length() > 0) {
+			if (res.length() > 0)
+			{
 				res.append(", ");
 			}
 			res.append(bean.getProperty1());
 		}
-		return res.toString();		
+		return res.toString();
 	}
-	
-	private void addOptionLinks(final TreeGrid grid) {	
-		
-		add(new Link("selectMultipleOn") {
+
+	private void addOptionLinks(final TreeGrid grid)
+	{
+
+		add(new Link("selectMultipleOn")
+		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onClick() {
+			public void onClick()
+			{
 				grid.setAllowSelectMultiple(true);
 			}
+
 			@Override
-			public boolean isEnabled() {
+			public boolean isEnabled()
+			{
 				return !grid.isAllowSelectMultiple();
 			}
 		});
-		
-		add(new Link("selectMultipleOff") {
+
+		add(new Link("selectMultipleOff")
+		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onClick() {
+			public void onClick()
+			{
 				grid.setAllowSelectMultiple(false);
 			}
+
 			@Override
-			public boolean isEnabled() {
+			public boolean isEnabled()
+			{
 				return grid.isAllowSelectMultiple();
 			}
-		});		
+		});
 
 	}
-	
+
 }

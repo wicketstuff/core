@@ -22,7 +22,8 @@ import net.sf.jasperreports.engine.JRAbstractExporter;
 /**
  * @author cdeal
  */
-public interface IJRResourceHandler {
+public interface IJRResourceHandler
+{
 	/**
 	 * @see org.wicketstuff.jasperreports.JRResource#getContentType()
 	 */

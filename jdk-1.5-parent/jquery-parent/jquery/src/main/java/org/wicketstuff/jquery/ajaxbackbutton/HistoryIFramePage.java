@@ -8,16 +8,19 @@ import org.wicketstuff.jquery.JQueryBehavior;
 /**
  * @author martin-g
  */
-public class HistoryIFramePage extends WebPage implements IHeaderContributor {
+public class HistoryIFramePage extends WebPage implements IHeaderContributor
+{
 
 	private static final long serialVersionUID = 1L;
 
-	public HistoryIFramePage() {
+	public HistoryIFramePage()
+	{
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
+	public void renderHead(IHeaderResponse response)
+	{
 		response.renderJavaScriptReference(JQueryBehavior.JQUERY_JS);
 	}
-	
+
 }

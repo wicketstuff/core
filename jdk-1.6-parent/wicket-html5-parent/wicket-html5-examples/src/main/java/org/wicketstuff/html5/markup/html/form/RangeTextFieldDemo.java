@@ -9,18 +9,20 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.html5.BasePage;
 
-public class RangeTextFieldDemo extends BasePage {
+public class RangeTextFieldDemo extends BasePage
+{
 	private static final long serialVersionUID = -5715148572580111439L;
 
-	public RangeTextFieldDemo() {
+	public RangeTextFieldDemo()
+	{
 
 		Model<Double> model = Model.of(2.3d);
 
 		Form<Void> form = new Form<Void>("form");
 		add(form);
 
-		RangeTextField<Double> rangeTextField = new RangeTextField<Double>(
-				"range", model, Double.class);
+		RangeTextField<Double> rangeTextField = new RangeTextField<Double>("range", model,
+			Double.class);
 		form.add(rangeTextField);
 
 		rangeTextField.setMinimum(1.4d);
@@ -30,11 +32,13 @@ public class RangeTextFieldDemo extends BasePage {
 		rangeLabel.setOutputMarkupId(true);
 		add(rangeLabel);
 
-		rangeTextField.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+		rangeTextField.add(new AjaxFormComponentUpdatingBehavior("onchange")
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onUpdate(AjaxRequestTarget target) {
+			protected void onUpdate(AjaxRequestTarget target)
+			{
 				target.add(rangeLabel);
 			}
 		}.setThrottleDelay(Duration.milliseconds(500)));

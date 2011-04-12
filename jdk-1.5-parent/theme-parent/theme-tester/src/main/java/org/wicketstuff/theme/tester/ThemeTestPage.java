@@ -27,22 +27,22 @@ public class ThemeTestPage extends WicketThemeBasePage
 	public ThemeTestPage()
 	{
 		add(new FeedbackPanel("feedback"));
-		
-		for (int i=0;i<2;i++)
+
+		for (int i = 0; i < 2; i++)
 		{
-			info("Info "+i);
-			warn("Warn "+i);
-			error("Error "+i);
+			info("Info " + i);
+			warn("Warn " + i);
+			error("Error " + i);
 		}
-		
+
 	}
-	
+
 	@Override
 	protected IModel<String> getTitleModel()
 	{
 		return Model.of("Theme Test");
 	}
-	
+
 	@Override
 	protected IThemeFactory getThemeFactory()
 	{

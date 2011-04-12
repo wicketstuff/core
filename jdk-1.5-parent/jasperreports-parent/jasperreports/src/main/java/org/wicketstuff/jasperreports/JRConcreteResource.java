@@ -30,15 +30,17 @@ import org.wicketstuff.jasperreports.handlers.IJRResourceHandler;
  * 
  * @author cdeal
  */
-public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource {
+public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource
+{
 	private H handler = null;
-	
+
 	/**
 	 * Constructor for JRConcreteResource
 	 * 
 	 * @param handler
 	 */
-	public JRConcreteResource(H handler) {
+	public JRConcreteResource(H handler)
+	{
 		super();
 		setHandler(handler);
 	}
@@ -49,7 +51,8 @@ public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource
 	 * @param report
 	 * @param handler
 	 */
-	public JRConcreteResource(InputStream report, H handler) {
+	public JRConcreteResource(InputStream report, H handler)
+	{
 		super(report);
 		setHandler(handler);
 	}
@@ -60,7 +63,8 @@ public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource
 	 * @param report
 	 * @param handler
 	 */
-	public JRConcreteResource(URL report, H handler) {
+	public JRConcreteResource(URL report, H handler)
+	{
 		super(report);
 		setHandler(handler);
 	}
@@ -71,7 +75,8 @@ public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource
 	 * @param report
 	 * @param handler
 	 */
-	public JRConcreteResource(File report, H handler) {
+	public JRConcreteResource(File report, H handler)
+	{
 		super(report);
 		setHandler(handler);
 	}
@@ -82,7 +87,8 @@ public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource
 	 * @param factory
 	 * @param handler
 	 */
-	public JRConcreteResource(IJasperReportFactory factory, H handler) {
+	public JRConcreteResource(IJasperReportFactory factory, H handler)
+	{
 		super(factory);
 		setHandler(handler);
 	}
@@ -91,7 +97,8 @@ public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource
 	 * @see org.wicketstuff.jasperreports.JRResource#getContentType()
 	 */
 	@Override
-	public final String getContentType() {
+	public final String getContentType()
+	{
 		return handler.getContentType();
 	}
 
@@ -99,7 +106,8 @@ public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource
 	 * @see org.wicketstuff.jasperreports.JRResource#getExtension()
 	 */
 	@Override
-	public final String getExtension() {
+	public final String getExtension()
+	{
 		return handler.getExtension();
 	}
 
@@ -107,22 +115,27 @@ public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource
 	 * @see org.wicketstuff.jasperreports.JRResource#newExporter()
 	 */
 	@Override
-	public final JRAbstractExporter newExporter() {
+	public final JRAbstractExporter newExporter()
+	{
 		return handler.newExporter();
 	}
 
 	/**
 	 * @return Returns the handler.
 	 */
-	public final H getHandler() {
+	public final H getHandler()
+	{
 		return handler;
 	}
 
 	/**
-	 * @param handler The handler to set.
+	 * @param handler
+	 *            The handler to set.
 	 */
-	public final void setHandler(H handler) {
-		if (handler == null) {
+	public final void setHandler(H handler)
+	{
+		if (handler == null)
+		{
 			throw new IllegalArgumentException("handler is reuqired!");
 		}
 		this.handler = handler;

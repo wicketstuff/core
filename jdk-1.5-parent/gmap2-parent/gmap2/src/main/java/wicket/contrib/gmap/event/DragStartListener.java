@@ -28,7 +28,8 @@ public abstract class DragStartListener extends GEventListenerBehavior
 {
 
 	@Override
-	protected String getEvent() {
+	protected String getEvent()
+	{
 		return "dragstart";
 	}
 

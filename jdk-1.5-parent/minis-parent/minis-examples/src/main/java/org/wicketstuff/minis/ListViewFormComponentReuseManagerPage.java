@@ -28,12 +28,16 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.IRequestHandler;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.minis.component.ListViewFormComponentReuseManager;
+import org.wicketstuff.minis.component.excel.TableComponentAsXlsHandler;
 
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
@@ -57,7 +61,6 @@ public class ListViewFormComponentReuseManagerPage extends WebPage
 	{
 		final Form<List<Row>> form = new Form<List<Row>>("rowsForm");
 		add(form);
-
 		form.add(new Button("addRowButton")
 		{
 			@Override
@@ -66,7 +69,16 @@ public class ListViewFormComponentReuseManagerPage extends WebPage
 				rows.add(new Row());
 			}
 		}.setDefaultFormProcessing(false));
-
+		form.add(new Link<Void>("exportToExcel")
+		{
+			@Override
+			public void onClick()
+			{
+				IRequestHandler handler = new TableComponentAsXlsHandler(form.get("rowsList"),
+					"example.xls");
+				RequestCycle.get().scheduleRequestHandlerAfterCurrent(handler);
+			}
+		});
 		form.add(new ListView<Row>("rowsList", new PropertyModel<List<Row>>(this, "rows"))
 		{
 			@Override
@@ -82,8 +94,8 @@ public class ListViewFormComponentReuseManagerPage extends WebPage
 						return item.getIndex() + 1;
 					}
 				}));
-				ListViewFormComponentReuseManager.addOrReuse(item, new RequiredTextField<String>("key",
-					new PropertyModel<String>(row, "key")));
+				ListViewFormComponentReuseManager.addOrReuse(item, new RequiredTextField<String>(
+					"key", new PropertyModel<String>(row, "key")));
 				ListViewFormComponentReuseManager.addOrReuse(item, new TextField<String>("value",
 					new PropertyModel<String>(row, "value")));
 

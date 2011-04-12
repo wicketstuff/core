@@ -20,19 +20,18 @@ import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.panel.Panel;
 
 /**
- * {@link ITab} which uses the class of the panel to check for sufficient
- * rights. This component is to be used with a {@link SecureTabbedPanel} since
- * it does not do anything by itself.
+ * {@link ITab} which uses the class of the panel to check for sufficient rights. This
+ * component is to be used with a {@link SecureTabbedPanel} since it does not do anything
+ * by itself.
  * 
  * @author marrink
  */
 public interface ISecureTab extends ITab
 {
 	/**
-	 * Quick access to the class of the panel returned in
-	 * {@link ITab#getPanel(String)}.
+	 * Quick access to the class of the panel returned in {@link ITab#getPanel(String)}.
 	 * 
 	 * @return the class
 	 */
-	public Class<? extends Panel> getPanel();
+	public Class< ? extends Panel> getPanel();
 }

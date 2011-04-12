@@ -37,22 +37,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class BootstrapDataPopulator implements InitializingBean
 {
 
-	private static final String CREATE_TABLES 
-	  = "create table users (\n"
-		+ "    username varchar(255) primary key,\n" 
-		+ "    password varchar(255) not null\n"
-		+ ");\n" + "\n" 
-		+ "create table roles (\n" 
-		+ "    role_name varchar(255) primary key\n"
-		+ ");\n" + "\n" 
-		+ "create table user_roles (\n" 
-		+ "    username varchar(255) not null,\n"
+	private static final String CREATE_TABLES = "create table users (\n"
+		+ "    username varchar(255) primary key,\n" + "    password varchar(255) not null\n"
+		+ ");\n" + "\n" + "create table roles (\n" + "    role_name varchar(255) primary key\n"
+		+ ");\n" + "\n" + "create table user_roles (\n" + "    username varchar(255) not null,\n"
 		+ "    role_name varchar(255) not null,\n"
 		+ "    constraint user_roles_uq unique ( username, role_name )\n" + ");\n" + "\n"
-		+ "create table roles_permissions (\n" 
-		+ "    role_name varchar(255) not null,\n"
-		+ "    permission varchar(255) not null,\n" 
-		+ "    primary key (role_name, permission)\n"
+		+ "create table roles_permissions (\n" + "    role_name varchar(255) not null,\n"
+		+ "    permission varchar(255) not null,\n" + "    primary key (role_name, permission)\n"
 		+ ");";
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BootstrapDataPopulator.class);
@@ -80,14 +72,14 @@ public class BootstrapDataPopulator implements InitializingBean
 		// clarify the
 		// distinction, you would see this in practice:
 		// new Sha256Hash( <password>, <username> )
-		String query = "insert into users values ('user', '" +
-			new Sha256Hash("user").toBase64() + "' )";
+		String query = "insert into users values ('user', '" + new Sha256Hash("user").toBase64() +
+			"' )";
 		jdbcTemplate.execute(query);
 		LOGGER.debug("Created user.");
 
 		// password is 'admin' SHA hashed and base64 encoded:
-		query = "insert into users values ( 'admin', '" +
-			new Sha256Hash("admin").toBase64() + "' )";
+		query = "insert into users values ( 'admin', '" + new Sha256Hash("admin").toBase64() +
+			"' )";
 		jdbcTemplate.execute(query);
 		LOGGER.debug("Created admin.");
 

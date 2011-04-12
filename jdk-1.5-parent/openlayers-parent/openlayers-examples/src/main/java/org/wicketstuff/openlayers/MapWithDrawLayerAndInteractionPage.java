@@ -29,7 +29,8 @@ import com.vividsolutions.jts.geom.Geometry;
 /**
  * Homepage
  */
-public class MapWithDrawLayerAndInteractionPage extends WebPage {
+public class MapWithDrawLayerAndInteractionPage extends WebPage
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -41,29 +42,32 @@ public class MapWithDrawLayerAndInteractionPage extends WebPage {
 	 * @param parameters
 	 *            Page parameters
 	 */
-	public MapWithDrawLayerAndInteractionPage(final PageParameters parameters) {
+	public MapWithDrawLayerAndInteractionPage(final PageParameters parameters)
+	{
 
 		OpenLayersMap openLayersMap = new OpenLayersMap("map", true);
 		add(openLayersMap);
 
-		final Marker marker = new Marker(new LonLat(50, 50), new PopupPanel(
-				"Hello Marker 1"));
+		final Marker marker = new Marker(new LonLat(50, 50), new PopupPanel("Hello Marker 1"));
 		openLayersMap.addOverlay(marker);
 
-		openLayersMap.add(new DrawListenerBehavior() {
+		openLayersMap.add(new DrawListenerBehavior()
+		{
 			@Override
-			protected void onDrawEnded(Geometry poly, AjaxRequestTarget target) {
-				if(poly.covers(marker.getLonLat().getPoint()))
+			protected void onDrawEnded(Geometry poly, AjaxRequestTarget target)
+			{
+				if (poly.covers(marker.getLonLat().getPoint()))
 				{
-				target.appendJavaScript("alert('The geom you drew contained the marker');");
+					target.appendJavaScript("alert('The geom you drew contained the marker');");
 				}
-				else{
-					target.appendJavaScript("alert('The geom you drew did not contain the marker');");	
+				else
+				{
+					target.appendJavaScript("alert('The geom you drew did not contain the marker');");
 				}
 
 			}
 		});
-		WebMarkupContainer removeDiv=new WebMarkupContainer("removeDiv");
+		WebMarkupContainer removeDiv = new WebMarkupContainer("removeDiv");
 		removeDiv.add(new RemoveDrawControl(openLayersMap));
 		add(removeDiv);
 

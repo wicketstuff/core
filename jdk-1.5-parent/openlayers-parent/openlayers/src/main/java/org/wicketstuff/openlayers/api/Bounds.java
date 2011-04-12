@@ -21,7 +21,8 @@ import org.wicketstuff.openlayers.js.Constructor;
 
 /**
  */
-public class Bounds implements Value {
+public class Bounds implements Value
+{
 	/**
 	 * Default serialVersionUID.
 	 */
@@ -36,86 +37,106 @@ public class Bounds implements Value {
 	 * @param sw
 	 * @param ne
 	 */
-	public Bounds(LonLat sw, LonLat ne) {
+	public Bounds(LonLat sw, LonLat ne)
+	{
 		this.sw = sw;
 		this.ne = ne;
 	}
 
-	public LonLat getSW() {
+	public LonLat getSW()
+	{
 		return sw;
 	}
 
-	public LonLat getNE() {
+	public LonLat getNE()
+	{
 		return ne;
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return getJSconstructor();
 	}
 
 	/**
 	 * @see Value.contrib.gmap.api.GValue#getJSconstructor()
 	 */
-	public String getJSconstructor() {
-		return new Constructor("OpenLayers.Bounds").add(sw.getLng()).add(
-				sw.getLat()).add(ne.getLng()).add(ne.getLat()).toJS();
+	public String getJSconstructor()
+	{
+		return new Constructor("OpenLayers.Bounds").add(sw.getLng())
+			.add(sw.getLat())
+			.add(ne.getLng())
+			.add(ne.getLat())
+			.toJS();
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		return sw.hashCode() ^ ne.hashCode();
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof Bounds) {
-			Bounds t = (Bounds) obj;
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof Bounds)
+		{
+			Bounds t = (Bounds)obj;
 			return t.sw.equals(sw) && t.ne.equals(ne);
 		}
 		return false;
 	}
 
 	/**
-	 * ((37.34068368469045, -122.48519897460936), (37.72184917678752,
-	 * -121.79855346679686))
+	 * ((37.34068368469045, -122.48519897460936), (37.72184917678752, -121.79855346679686))
 	 */
-	public static Bounds parse(String value) {
+	public static Bounds parse(String value)
+	{
 		StringTokenizer tokenizer;
-		try {
+		try
+		{
 			tokenizer = new StringTokenizer(value, "(, )");
-		} catch (NullPointerException e) {
+		}
+		catch (NullPointerException e)
+		{
 			return null;
 		}
-		if (tokenizer.countTokens() != 4) {
+		if (tokenizer.countTokens() != 4)
+		{
 			return null;
 		}
 
-		LonLat sw = new LonLat(Float.valueOf(tokenizer.nextToken()), Float
-				.valueOf(tokenizer.nextToken()));
-		LonLat ne = new LonLat(Float.valueOf(tokenizer.nextToken()), Float
-				.valueOf(tokenizer.nextToken()));
+		LonLat sw = new LonLat(Float.valueOf(tokenizer.nextToken()),
+			Float.valueOf(tokenizer.nextToken()));
+		LonLat ne = new LonLat(Float.valueOf(tokenizer.nextToken()),
+			Float.valueOf(tokenizer.nextToken()));
 		return new Bounds(sw, ne);
 	}
 
 	/**
-	 * left-bottom=(37.34068368469045, -122.48519897460936)
-	 * right-top=(37.72184917678752, -121.79855346679686)
+	 * left-bottom=(37.34068368469045, -122.48519897460936) right-top=(37.72184917678752,
+	 * -121.79855346679686)
 	 */
-	public static Bounds parseWithNames(String value) {
-		try {
+	public static Bounds parseWithNames(String value)
+	{
+		try
+		{
 			StringTokenizer tokenizer = new StringTokenizer(value, "(, )");
-			if (tokenizer.countTokens() != 6) {
+			if (tokenizer.countTokens() != 6)
+			{
 				return null;
 			}
 			tokenizer.nextToken();
-			LonLat sw = new LonLat(Float.valueOf(tokenizer.nextToken()), Float
-					.valueOf(tokenizer.nextToken()));
+			LonLat sw = new LonLat(Float.valueOf(tokenizer.nextToken()),
+				Float.valueOf(tokenizer.nextToken()));
 			tokenizer.nextToken();
-			LonLat ne = new LonLat(Float.valueOf(tokenizer.nextToken()), Float
-					.valueOf(tokenizer.nextToken()));
+			LonLat ne = new LonLat(Float.valueOf(tokenizer.nextToken()),
+				Float.valueOf(tokenizer.nextToken()));
 			return new Bounds(sw, ne);
-		} catch (NullPointerException e) {
+		}
+		catch (NullPointerException e)
+		{
 			return null;
 		}
 	}

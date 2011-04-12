@@ -18,7 +18,7 @@
  */
 package org.wicketstuff.jslibraries;
 
-import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.markup.html.IHeaderContributor;
 
 /**
  * A Provider is an optional means of overriding the HeaderContributor created
@@ -40,7 +40,7 @@ public interface Provider {
 	 * @return HeaderContributor to be added to component, or null if
 	 *         unavailable
 	 */
-	public HeaderContributor getHeaderContributor(
+	public IHeaderContributor getHeaderContributor(
 			VersionDescriptor versionDescriptor, boolean productionHint);
 
 }

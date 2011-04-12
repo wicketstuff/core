@@ -24,11 +24,10 @@ import wicket.contrib.phonebook.Contact;
 import wicket.contrib.phonebook.ContactDao;
 
 /**
- * Detachable, read-only Contact model. Ensures that memory used to load the
- * contact details is immediately freed rather than held in the session.
- * Typically used by <tt>List</tt>-type pages, where multiple elements are
- * loaded at a time.
- *
+ * Detachable, read-only Contact model. Ensures that memory used to load the contact details is
+ * immediately freed rather than held in the session. Typically used by <tt>List</tt>-type pages,
+ * where multiple elements are loaded at a time.
+ * 
  * @author ivaynberg
  */
 public class DetachableContactModel extends LoadableDetachableModel<Contact>
@@ -39,30 +38,29 @@ public class DetachableContactModel extends LoadableDetachableModel<Contact>
 	private final long id;
 
 	/**
-	 * dao reference - must be a wicket-wrapped proxy, holding onto a reference
-	 * to the real dao will cause its serialization into session or a
-	 * not-serializable exception when the servlet container serializes the
-	 * session.
+	 * dao reference - must be a wicket-wrapped proxy, holding onto a reference to the real dao will
+	 * cause its serialization into session or a not-serializable exception when the servlet
+	 * container serializes the session.
 	 */
 	private final ContactDao dao;
 
 	/**
 	 * Constructor
-	 *
+	 * 
 	 * @param contact
 	 * @param dao
 	 */
 	public DetachableContactModel(Contact contact, ContactDao dao)
 	{
 		super(contact);
-		this.id = contact.getId();
+		id = contact.getId();
 		this.dao = dao;
 	}
 
 	/**
 	 * Loads the contact from the database
-	 *
-	 * @see wicket.model.LoadableDetachableModel#load()
+	 * 
+	 * @see LoadableDetachableModel#load()
 	 */
 	@Override
 	protected Contact load()

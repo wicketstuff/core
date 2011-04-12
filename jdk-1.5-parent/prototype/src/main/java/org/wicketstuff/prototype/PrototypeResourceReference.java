@@ -2,15 +2,22 @@ package org.wicketstuff.prototype;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.request.resource.AbstractResource;
-import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.IResource;
+import org.apache.wicket.request.resource.ResourceReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wicketstuff.jslibraries.JSLib;
 
 /**
- * A reference to the "prototype.js" script.<br>
- * Uses a default resource if no other was specified via
- * {@link #install(Application, Resource)}.
+ * A reference to the "prototype.js" script.
+ * 
+ * @deprecated
  */
-public final class PrototypeResourceReference extends
-		PackageResourceReference {
+@Deprecated
+public final class PrototypeResourceReference extends ResourceReference
+{
+
+	private static final Logger log = LoggerFactory.getLogger(PrototypeResourceReference.class);
 
 	/**
 	 * Singleton instance of this reference.
@@ -22,37 +29,27 @@ public final class PrototypeResourceReference extends
 	 */
 	public static final String NAME = "prototype.js";
 
-	private PrototypeResourceReference() {
+	private PrototypeResourceReference()
+	{
 		super(PrototypeResourceReference.class, NAME);
 	}
 
-	
-	// mocleiri: not sure how to convert this so I didn't.  There are no examples to check with.
-	
-//	/**
-//	 * Use a {@link DefaultPrototypeResource} if no resource was installed on
-//	 * the {@link Application}.
-//	 * 
-//	 * @see #install(Application, Resource)
-//	 */
-//	@Override
-//	protected Resource newResource() {
-//		return new DefaultPrototypeResource();
-//	}
+	@Override
+	public IResource getResource()
+	{
+		return new DefaultPrototypeResource();
+	}
 
 	/**
 	 * Install the given resource to be used for the prototypes script. <br>
-	 * This method has to be called before any component was rendered, e.g. in
-	 * {@link Application#init()}.
+	 * Note: This method does nothing.
 	 * 
-	 * @param application
-	 *            the application to install the resource on
-	 * @param resource
-	 *            the prototypes script resource
+	 * @deprecated use
+	 *             {@link JSLib#setOverrideProviders(Application, org.wicketstuff.jslibraries.Provider...)}
 	 */
-	public static void install(final Application application,
-			final AbstractResource resource) {
-		application.getSharedResources().add(PrototypeResourceReference.class,
-				NAME, null, null, null, resource);
+	@Deprecated
+	public static void install(final Application application, final AbstractResource resource)
+	{
+		log.warn("wicketstuff-prototype is deprecated: Change your dependency to wicketstuff-jslibraries if you want to provide your own prototype.js - see JSLib#setOverrideProviders()");
 	}
 }

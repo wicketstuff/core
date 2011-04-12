@@ -35,57 +35,71 @@ import org.wicketstuff.datatable_autocomplete.trie.TrieNodeInspectingVisitor;
 
 /**
  * @author mocleirihe boot class path for the rt.jar and then loading X methods where X is large.
- *
+ * 
  */
-public final class TrieBuilder {
+public final class TrieBuilder
+{
 
 	private static final Logger log = LoggerFactory.getLogger(TrieBuilder.class);
-	
+
 	// holds the count of first charcter to count
-	private Map<String, List<Method>>map = new LinkedHashMap<String, List<Method>>();
+	private Map<String, List<Method>> map = new LinkedHashMap<String, List<Method>>();
 
 	private PatriciaTrie<Method> trie;
-	
+
 	/**
 	 * 
 	 */
-	public TrieBuilder() {
-		trie = new PatriciaTrie<Method>(new AbstractTrieConfiguration<Method>() {
+	public TrieBuilder()
+	{
+		trie = new PatriciaTrie<Method>(new AbstractTrieConfiguration<Method>()
+		{
 
-			/* (non-Javadoc)
-			 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#getWord(java.lang.Object)
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#getWord(java.lang.
+			 * Object)
 			 */
-			public String getWord(Method ctx) {
-				
+			public String getWord(Method ctx)
+			{
+
 				return ctx.getName();
 			}
 
-			/* (non-Javadoc)
-			 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#isIndexCaseSensitive()
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#isIndexCaseSensitive()
 			 */
-			public boolean isIndexCaseSensitive() {
+			public boolean isIndexCaseSensitive()
+			{
 				// default to not distinuishing between the case of the strings in the index.
 				return false;
 			}
 
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see org.wicketstuff.datatable_autocomplete.trie.ITrieConfiguration#isSuffixTree()
 			 */
-			public boolean isSuffixTree() {
+			public boolean isSuffixTree()
+			{
 				// TODO Auto-generated method stub
 				return false;
 			}
-			
-			
-			
+
+
 		});
 	}
-	
-	
 
-	public void buildTrie (int maxElements) {
-		
-		
+
+	public void buildTrie(int maxElements)
+	{
+
+
 		String path = System.getProperty("sun.boot.class.path");
 
 		String[] parts = path.split(":");
@@ -93,37 +107,41 @@ public final class TrieBuilder {
 		String targetPart = null;
 
 		int addedElements = 0;
-		
-		for (String p : parts) {
+
+		for (String p : parts)
+		{
 
 			p = p.replaceAll(";C", "");
-			
-			if (p.endsWith("rt.jar")) {
+
+			if (p.endsWith("rt.jar"))
+			{
 				targetPart = p;
 				break;
 			}
 		}
 
-		try {
+		try
+		{
 			JarFile jar = new JarFile(targetPart);
-			
+
 			Enumeration<JarEntry> entries = jar.entries();
 
-			while (entries.hasMoreElements()) {
-				
+			while (entries.hasMoreElements())
+			{
+
 				JarEntry jarEntry = entries.nextElement();
 
 				if (!jarEntry.getName().contains(".class"))
 					continue;
-				
+
 				Class clazz;
 
-				try {
+				try
+				{
 
-					String className = jarEntry.getName().replace("/", ".")
-							.replace(".class", "");
+					String className = jarEntry.getName().replace("/", ".").replace(".class", "");
 
-//					System.out.println(className);
+// System.out.println(className);
 
 					ClassLoader.getSystemClassLoader().loadClass(className);
 
@@ -131,79 +149,89 @@ public final class TrieBuilder {
 
 					Method[] m = clazz.getDeclaredMethods();
 
-									
-					for (Method method : m) {
+
+					for (Method method : m)
+					{
 
 						if (!Modifier.isPublic(method.getModifiers()))
 							continue; // skip non public methods
-						
+
 						trie.index(method);
-						
+
 						addedElements++;
-						
+
 						String firstCharacter = method.getName().substring(0, 1);
-						
-						List<Method> methodList = this.map.get(firstCharacter);
-						
-						if (methodList == null) {
+
+						List<Method> methodList = map.get(firstCharacter);
+
+						if (methodList == null)
+						{
 							methodList = new LinkedList<Method>();
-							this.map.put(firstCharacter, methodList);
+							map.put(firstCharacter, methodList);
 						}
-						
+
 						methodList.add(method);
-						
-						if (addedElements >= maxElements) {
-							
-							log.info ("indexed " + addedElements + " elements.");
+
+						if (addedElements >= maxElements)
+						{
+
+							log.info("indexed " + addedElements + " elements.");
 							trie.simplifyIndex();
 							return;
 						}
-						
-//						System.out.println(clazz.getCanonicalName() + " "
-//								+ method.getName() + " ( " + parameterList + " )");
+
+// System.out.println(clazz.getCanonicalName() + " "
+// + method.getName() + " ( " + parameterList + " )");
 					}
 
-				} catch (ClassNotFoundException e) {
+				}
+				catch (ClassNotFoundException e)
+				{
 					// continue
 				}
 
 			}
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		}
+		catch (SecurityException e)
+		{
 			e.printStackTrace();
 		}
-		
-		log.info ("indexed " + addedElements + " elements.");
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		log.info("indexed " + addedElements + " elements.");
 		// compact the trie.
-		
+
 		TrieNodeInspectingVisitor<Method> visitor = new TrieNodeInspectingVisitor<Method>();
-		
+
 		trie.visit(visitor);
-		
+
 		log.info("total trie nodes = " + visitor.getTotalNodes());
-		
+
 		log.info("total consolidateable = " + visitor.getTotalConsolidateable());
-		
+
 		trie.simplifyIndex();
-		
+
 		visitor.reset();
-		
+
 		trie.visit(visitor);
-		
+
 		log.info("total trie nodes = " + visitor.getTotalNodes());
-		
-		
-		
+
+
 	}
 
-	public List<Method> getListForFirstCharacter (String character) {
-		
-		return this.map.get(character);
-			
+	public List<Method> getListForFirstCharacter(String character)
+	{
+
+		return map.get(character);
+
 	}
 
-	public PatriciaTrie<Method> getTrie() {
+	public PatriciaTrie<Method> getTrie()
+	{
 		return trie;
 	}
 }

@@ -34,8 +34,7 @@ import org.wicketstuff.jasperreports.handlers.RtfResourceHandler;
 public final class JRRtfResource extends JRConcreteResource<RtfResourceHandler>
 {
 	/**
-	 * Construct without a report. You must provide a report before you can use
-	 * this resource.
+	 * Construct without a report. You must provide a report before you can use this resource.
 	 */
 	public JRRtfResource()
 	{

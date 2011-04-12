@@ -34,8 +34,7 @@ import org.wicketstuff.jasperreports.handlers.HtmlResourceHandler;
 public final class JRHtmlResource extends JRConcreteResource<HtmlResourceHandler>
 {
 	/**
-	 * Construct without a report. You must provide a report before you can use
-	 * this resource.
+	 * Construct without a report. You must provide a report before you can use this resource.
 	 */
 	public JRHtmlResource()
 	{

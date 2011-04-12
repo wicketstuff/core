@@ -20,11 +20,10 @@ import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 
 /**
  * <p>
- * Extends {@link PatternLayoutEncoder} with a new formatting converter: "web".
- * By using this encoder and the "%web" placeholder in the pattern wicket apps
- * can produce web information (method, url, session id, ...) in their log
- * messages. If there is no request information available the placeholder is
- * replaced with an empty string in the final message.
+ * Extends {@link PatternLayoutEncoder} with a new formatting converter: "web". By using this
+ * encoder and the "%web" placeholder in the pattern wicket apps can produce web information
+ * (method, url, session id, ...) in their log messages. If there is no request information
+ * available the placeholder is replaced with an empty string in the final message.
  * </p>
  * <p>
  * Example logback configuration:
@@ -53,26 +52,24 @@ import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
  * </code>
  * </pre>
  * 
- * The full message format is available in the javadoc of
- * {@link AbstractWebFormattingConverter}.
+ * The full message format is available in the javadoc of {@link AbstractWebFormattingConverter}.
  * 
  * </p>
  * <p>
- * There are similar solutions using {@link Filter}-s, MDC and NDC to solve the
- * same task (like logback's own MDCInsertingServletFilter or spring's
- * AbstractRequestLoggingFilter and its subclasses). The difference from those
- * is performance (and the amount of information provided). Those filters are
- * always collecting information for every request however usually only a small
- * portion of requests result in actual logging. This solution only gets invoked
- * when the logging event is indeed producing a log message. It is on the
- * "other side of the fence".
+ * There are similar solutions using {@link Filter}-s, MDC and NDC to solve the same task (like
+ * logback's own MDCInsertingServletFilter or spring's AbstractRequestLoggingFilter and its
+ * subclasses). The difference from those is performance (and the amount of information provided).
+ * Those filters are always collecting information for every request however usually only a small
+ * portion of requests result in actual logging. This solution only gets invoked when the logging
+ * event is indeed producing a log message. It is on the "other side of the fence".
  * </p>
  * 
  * @author akiraly
  */
-public class WicketWebPatternEncoder extends PatternLayoutEncoder {
-	static {
-		PatternLayout.defaultConverterMap.put("web",
-				WicketWebFormattingConverter.class.getName());
+public class WicketWebPatternEncoder extends PatternLayoutEncoder
+{
+	static
+	{
+		PatternLayout.defaultConverterMap.put("web", WicketWebFormattingConverter.class.getName());
 	}
 }

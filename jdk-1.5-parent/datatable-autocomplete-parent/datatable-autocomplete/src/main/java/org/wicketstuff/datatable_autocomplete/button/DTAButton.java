@@ -26,96 +26,105 @@ import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;
 /**
  * @author mocleiri
  * 
- * Data Table Autocomplete button that extends the standard wicket button to support IOnFormSubmitAction actions.
- *
+ *         Data Table Autocomplete button that extends the standard wicket button to support
+ *         IOnFormSubmitAction actions.
+ * 
  */
-public class DTAButton extends Button implements DTAButtonProvider {
+public class DTAButton extends Button implements DTAButtonProvider
+{
 
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 1829825558587963971L;
+	private static final long serialVersionUID = 1829825558587963971L;
 
-	private static final Logger	log	= LoggerFactory.getLogger(DTAButton.class);
-	
-	private IFormOnSubmitAction	submitAction = null;
+	private static final Logger log = LoggerFactory.getLogger(DTAButton.class);
 
-	
-	
+	private IFormOnSubmitAction submitAction = null;
+
+
 	/**
 	 * @param id
 	 */
-	public DTAButton(String id, String label, IFormOnSubmitAction submitAction) {
-		
-		
-		super(id, new Model<String> (label));
+	public DTAButton(String id, String label, IFormOnSubmitAction submitAction)
+	{
+
+
+		super(id, new Model<String>(label));
 		this.submitAction = submitAction;
-		
+
 	}
 
-	public DTAButton(String id, String label) {
+	public DTAButton(String id, String label)
+	{
 
-		this (id, label, null);
-		
+		this(id, label, null);
+
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.apache.wicket.markup.html.form.Button#onComponentTag(org.apache.wicket.markup.ComponentTag)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.apache.wicket.markup.html.form.Button#onComponentTag(org.apache.wicket.markup.ComponentTag
+	 * )
 	 */
 	@Override
-	protected void onComponentTag(ComponentTag tag) {
+	protected void onComponentTag(ComponentTag tag)
+	{
 
 		// this allows the button to be used in a repeater
 		tag.setName("input");
 		tag.setHasNoCloseTag(true);
-		
-		
-		
+
+
 		super.onComponentTag(tag);
-		
+
 		tag.getAttributes().put("type", "submit");
 	}
 
 
-	
-
-	
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.wicket.markup.html.form.Button#onSubmit()
 	 */
 	@Override
-	public void onSubmit() {
+	public void onSubmit()
+	{
 
-		
-		
+
 		if (submitAction != null)
 			submitAction.onSubmit(null, getForm());
-			
-		
+
 
 	}
-	
-	
+
+
 	/**
-	 * @param submitAction the submitAction to set
+	 * @param submitAction
+	 *            the submitAction to set
 	 */
-	public void setSubmitAction(IFormOnSubmitAction submitAction) {
-	
+	public void setSubmitAction(IFormOnSubmitAction submitAction)
+	{
+
 		this.submitAction = submitAction;
 	}
 
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.wicket.Component#onBeforeRender()
 	 */
 	@Override
-	protected void onBeforeRender() {
-		
+	protected void onBeforeRender()
+	{
+
 		/*
 		 * Defaults to hidden if there is no action defined.
 		 */
-		if (this.submitAction == null)
+		if (submitAction == null)
 			setVisible(false);
 		else
 			setVisible(true);
@@ -123,22 +132,18 @@ public class DTAButton extends Button implements DTAButtonProvider {
 		super.onBeforeRender();
 	}
 
-	public Button getButton() {
+	public Button getButton()
+	{
 
-		if (!getId().equals(DTAButtonProvider.BUTTON_ID)) {
+		if (!getId().equals(DTAButtonProvider.BUTTON_ID))
+		{
 			// this is a problem
-			throw new RuntimeException ("ID of button ("+getId()+" != DTAButtonProvider.BUTTON_ID");
+			throw new RuntimeException("ID of button (" + getId() +
+				" != DTAButtonProvider.BUTTON_ID");
 		}
-		
+
 		return this;
 	}
 
-	
-	
-	
-	
-	
-	
 
-	
 }

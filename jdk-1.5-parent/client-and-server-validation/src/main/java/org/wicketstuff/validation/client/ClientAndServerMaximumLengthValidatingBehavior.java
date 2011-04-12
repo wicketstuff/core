@@ -29,43 +29,52 @@ import org.apache.wicket.validation.validator.StringValidator;
  * 
  * @author Jeremy Thomerson
  */
-public class ClientAndServerMaximumLengthValidatingBehavior extends AbstractClientAndServerValidatingBehavior {
+public class ClientAndServerMaximumLengthValidatingBehavior extends
+	AbstractClientAndServerValidatingBehavior
+{
 
 	private static final long serialVersionUID = 1L;
 
 	private final int mMax;
-	
-	public ClientAndServerMaximumLengthValidatingBehavior(Form<?> form, int max) {
+
+	public ClientAndServerMaximumLengthValidatingBehavior(Form<?> form, int max)
+	{
 		super(form);
 		mMax = max;
 	}
 
 	@Override
-	protected void addServerSideValidator(FormComponent component) {
+	protected void addServerSideValidator(FormComponent component)
+	{
 		component.add(StringValidator.maximumLength(mMax));
 	}
-	
+
 	@Override
-	protected String createValidatorConstructorJavaScript(CharSequence formID, CharSequence compID, CharSequence escapedMessage) {
+	protected String createValidatorConstructorJavaScript(CharSequence formID, CharSequence compID,
+		CharSequence escapedMessage)
+	{
 		String js = super.createValidatorConstructorJavaScript(formID, compID, escapedMessage);
 		js = js + ".setMaximumLength(" + mMax + ")";
 		return js;
 	}
-	
+
 	@Override
-	protected Map<String, Object> variablesMap(Form<?> form, FormComponent<?> component) {
+	protected Map<String, Object> variablesMap(Form<?> form, FormComponent<?> component)
+	{
 		Map<String, Object> map = super.variablesMap(form, component);
 		map.put("maximum", mMax);
 		return map;
 	}
-	
+
 	@Override
-	protected String getResourceKey() {
+	protected String getResourceKey()
+	{
 		return "StringValidator.maximum";
 	}
-	
+
 	@Override
-	protected String getValidatorJSClassName() {
+	protected String getValidatorJSClassName()
+	{
 		return "StringMaximumLengthValidator";
 	}
 

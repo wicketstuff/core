@@ -5,9 +5,11 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.bio.SocketConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-public class RunWebApp {
+public class RunWebApp
+{
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception
+	{
 		Server server = new Server();
 		SocketConnector connector = new SocketConnector();
 		connector.setPort(8080);
@@ -19,9 +21,12 @@ public class RunWebApp {
 		context.setWar("src/main/webapp");
 
 		server.setHandler(context);
-		try {
+		try
+		{
 			server.start();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			throw new RuntimeException(e);
 		}
 	}

@@ -25,12 +25,12 @@ import org.wicketstuff.maven.MavenDevResourceStreamLocator;
 public class WicketThemeTestApp extends WebApplication
 {
 	private static final Logger _logger = LoggerFactory.getLogger(WicketThemeTestApp.class);
-	
+
 	@Override
 	protected void init()
 	{
 		super.init();
-		
+
 		if (RuntimeConfigurationType.DEVELOPMENT.equals(getConfigurationType()))
 		{
 			_logger.error("Debug Mode");
@@ -41,7 +41,7 @@ public class WicketThemeTestApp extends WebApplication
 			_logger.error("NO Debug Mode");
 		}
 	}
-	
+
 	@Override
 	public Class<? extends Page> getHomePage()
 	{

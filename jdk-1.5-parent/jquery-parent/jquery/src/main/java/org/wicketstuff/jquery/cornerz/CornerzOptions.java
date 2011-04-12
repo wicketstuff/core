@@ -23,31 +23,37 @@ import org.wicketstuff.jquery.Options;
  * @author Edvin Syse <edvin@sysedata.no>
  * 
  */
-public class CornerzOptions extends Options {
+public class CornerzOptions extends Options
+{
 
-	public CornerzOptions radius(int radius) {
+	public CornerzOptions radius(int radius)
+	{
 		set("radius", radius);
 		return this;
 	}
-	
-	public CornerzOptions borderWidth(int borderWidth) {
+
+	public CornerzOptions borderWidth(int borderWidth)
+	{
 		set("borderWidth", borderWidth);
 		return this;
 	}
-	
-	public CornerzOptions background(String background) {
+
+	public CornerzOptions background(String background)
+	{
 		set("background", background);
 		return this;
 	}
-	
-	public CornerzOptions borderColor(String borderColor) {
+
+	public CornerzOptions borderColor(String borderColor)
+	{
 		set("borderColor", borderColor);
 		return this;
 	}
-	
-	public CornerzOptions corners(String corners) {
+
+	public CornerzOptions corners(String corners)
+	{
 		set("corners", corners);
 		return this;
 	}
-	
+
 }

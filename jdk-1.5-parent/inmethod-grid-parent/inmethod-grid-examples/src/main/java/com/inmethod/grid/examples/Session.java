@@ -9,36 +9,42 @@ import com.inmethod.grid.examples.contact.Contact;
 import com.inmethod.grid.examples.contact.ContactsDatabase;
 
 /**
- * Wicket {@link org.apache.wicket.Session} subclass that keeps a {@link ContactsDatabase}. This is necessary
- * so that when user edits a {@link Contact} the change is isolated from other users.
+ * Wicket {@link org.apache.wicket.Session} subclass that keeps a {@link ContactsDatabase}. This is
+ * necessary so that when user edits a {@link Contact} the change is isolated from other users.
  * 
  * @author Matej Knopp
  * 
  */
-public class Session extends WebSession {
+public class Session extends WebSession
+{
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor.
+	 * 
 	 * @param request
 	 */
-	public Session(Request request) {
+	public Session(Request request)
+	{
 		super(request);
 	}
 
 	/**
 	 * Returns the {@link ContactsDatabase}.
+	 * 
 	 * @return {@link ContactsDatabase} instance.
 	 */
-	public ContactsDatabase getDatabase() {
+	public ContactsDatabase getDatabase()
+	{
 		return database;
 	}
 
 	private ContactsDatabase database = new ContactsDatabase(330);
-	
+
 	@Override
-	public Locale getLocale() {
+	public Locale getLocale()
+	{
 		return Locale.ENGLISH;
 	}
 

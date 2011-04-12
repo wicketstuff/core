@@ -16,29 +16,34 @@ import com.inmethod.icon.Icon;
 /**
  * INTERNAL
  * <p>
- * Base class for column containing the actual tree in {@link TreeGrid}. Users should not subclass this
- * class directly. Rather than that the {@link AbstractTreeColumn} class should be used.
- *
+ * Base class for column containing the actual tree in {@link TreeGrid}. Users should not subclass
+ * this class directly. Rather than that the {@link AbstractTreeColumn} class should be used.
+ * 
  * @author Matej Knopp
  */
-public abstract class BaseTreeColumn extends AbstractColumn {
+public abstract class BaseTreeColumn extends AbstractColumn
+{
 
 	/**
 	 * Constructor.
+	 * 
 	 * @param columnId
 	 * @param headerModel
 	 * @param sortProperty
 	 */
-	public BaseTreeColumn(String columnId, IModel headerModel, String sortProperty) {
+	public BaseTreeColumn(String columnId, IModel headerModel, String sortProperty)
+	{
 		super(columnId, headerModel, sortProperty);
 	}
 
 	/**
 	 * Constructor.
+	 * 
 	 * @param columnId
 	 * @param headerModel
 	 */
-	public BaseTreeColumn(String columnId, IModel headerModel) {
+	public BaseTreeColumn(String columnId, IModel headerModel)
+	{
 		super(columnId, headerModel);
 	}
 
@@ -46,24 +51,29 @@ public abstract class BaseTreeColumn extends AbstractColumn {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Component newCell(WebMarkupContainer parent, String componentId, IModel rowModel) {
-		AbstractTreeGridRow row = (AbstractTreeGridRow) parent;
-		return new TreePanel(componentId, rowModel, row.getLevel()) {
+	public Component newCell(WebMarkupContainer parent, String componentId, IModel rowModel)
+	{
+		AbstractTreeGridRow row = (AbstractTreeGridRow)parent;
+		return new TreePanel(componentId, rowModel, row.getLevel())
+		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Component newNodeComponent(String id, IModel model) {
+			protected Component newNodeComponent(String id, IModel model)
+			{
 				return BaseTreeColumn.this.newNodeComponent(id, model);
 			}
 
 			@Override
-			protected Icon getIcon(IModel model) {
+			protected Icon getIcon(IModel model)
+			{
 				return BaseTreeColumn.this.getIcon(model);
 			}
 
 			@Override
-			protected void onJunctionLinkClicked(AjaxRequestTarget target, Object node) {
+			protected void onJunctionLinkClicked(AjaxRequestTarget target, Object node)
+			{
 				getTreeGrid().onJunctionLinkClicked(target, node);
 			}
 		};
@@ -92,22 +102,28 @@ public abstract class BaseTreeColumn extends AbstractColumn {
 
 	/**
 	 * Returns the {@link TreeGrid} this column belongs to.
+	 * 
 	 * @return {@link TreeGrid} this column belongs to.
 	 */
-	public TreeGrid getTreeGrid() {
-		return (TreeGrid) getGrid();
+	public TreeGrid getTreeGrid()
+	{
+		return (TreeGrid)getGrid();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setGrid(AbstractGrid grid) {
-		if (getTreeGrid() != null && getTreeGrid() != grid) {
-			throw new IllegalStateException("One BaseTreeColumn can not be used with multiple TreeGrid instances");
+	public void setGrid(AbstractGrid grid)
+	{
+		if (getTreeGrid() != null && getTreeGrid() != grid)
+		{
+			throw new IllegalStateException(
+				"One BaseTreeColumn can not be used with multiple TreeGrid instances");
 		}
 
-		if (grid instanceof TreeGrid == false) {
+		if (grid instanceof TreeGrid == false)
+		{
 			throw new IllegalStateException("BaseTreeColumn can only be added to a TreeGrid.");
 		}
 		super.setGrid(grid);

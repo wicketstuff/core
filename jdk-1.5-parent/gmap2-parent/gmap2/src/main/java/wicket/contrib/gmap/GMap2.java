@@ -47,13 +47,11 @@ import wicket.contrib.gmap.api.GOverlay;
 import wicket.contrib.gmap.event.GEventListenerBehavior;
 
 /**
- * Wicket component to embed <a href="http://maps.google.com">Google Maps</a>
- * into your pages.
+ * Wicket component to embed <a href="http://maps.google.com">Google Maps</a> into your pages.
  * <p>
- * The Google Maps API requires an API key to use it. You will need to generate
- * one for each deployment context you have. See the <a
- * href="http://www.google.com/apis/maps/signup.html">Google Maps API sign up
- * page</a> for more information.
+ * The Google Maps API requires an API key to use it. You will need to generate one for each
+ * deployment context you have. See the <a href="http://www.google.com/apis/maps/signup.html">Google
+ * Maps API sign up page</a> for more information.
  */
 public class GMap2 extends Panel implements GOverlayContainer
 {
@@ -65,7 +63,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 	private GLatLng center = new GLatLng(37.4419, -122.1419);
 
 	private boolean googleBarEnabled = false;
-	
+
 	private boolean draggingEnabled = true;
 
 	private boolean doubleClickZoomEnabled = false;
@@ -90,7 +88,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Construct.
-	 *
+	 * 
 	 * @param id
 	 * @param gMapKey
 	 *            Google gmap API KEY
@@ -102,13 +100,13 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Construct.
-	 *
+	 * 
 	 * @param id
 	 * @param gMapKey
 	 *            Google gmap API KEY
 	 * @param overlays
-	 * @deprecated The usage is discouraged. Use this(String, String) instead
-	 *             and add the overlays later on.
+	 * @deprecated The usage is discouraged. Use this(String, String) instead and add the overlays
+	 *             later on.
 	 */
 	@Deprecated
 	public GMap2(final String id, final String gMapKey, List<GOverlay> overlays)
@@ -118,7 +116,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Construct.
-	 *
+	 * 
 	 * @param id
 	 * @param headerContrib
 	 */
@@ -140,12 +138,12 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Construct.
-	 *
+	 * 
 	 * @param id
 	 * @param headerContrib
 	 * @param overlays
-	 * @deprecated The usage is discouraged. Use this(String, String) instead
-	 *             and add the overlays later on.
+	 * @deprecated The usage is discouraged. Use this(String, String) instead and add the overlays
+	 *             later on.
 	 */
 	@Deprecated
 	public GMap2(final String id, final GMapHeaderContributor headerContrib, List<GOverlay> overlays)
@@ -158,12 +156,13 @@ public class GMap2 extends Panel implements GOverlayContainer
 		}
 	}
 
-	
+
 	/**
 	 * @see org.apache.wicket.Component#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
-	public void renderHead(IHeaderResponse response) {
+	public void renderHead(IHeaderResponse response)
+	{
 		response.renderOnDomReadyJavaScript(getJSinit());
 	}
 
@@ -172,16 +171,17 @@ public class GMap2 extends Panel implements GOverlayContainer
 	 * @see org.apache.wicket.Component#onBeforeRender()
 	 */
 	@Override
-	protected void onBeforeRender() {
-		
+	protected void onBeforeRender()
+	{
+
 		RuntimeConfigurationType configurationType = Application.get().getConfigurationType();
-		if (configurationType.equals(RuntimeConfigurationType.DEVELOPMENT)
-				&& !Application.get().getMarkupSettings().getStripWicketTags())
+		if (configurationType.equals(RuntimeConfigurationType.DEVELOPMENT) &&
+			!Application.get().getMarkupSettings().getStripWicketTags())
 		{
 			log.warn("Application is in DEVELOPMENT mode && Wicket tags are not stripped,"
-					+ " Firefox 3.0 will not render the GMap."
-					+ " Change to DEPLOYMENT mode  || turn on Wicket tags stripping." + " See:"
-					+ " http://www.nabble.com/Gmap2-problem-with-Firefox-3.0-to18137475.html.");
+				+ " Firefox 3.0 will not render the GMap."
+				+ " Change to DEPLOYMENT mode  || turn on Wicket tags stripping." + " See:"
+				+ " http://www.nabble.com/Gmap2-problem-with-Firefox-3.0-to18137475.html.");
 		}
 		super.onBeforeRender();
 	}
@@ -189,7 +189,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Add a control.
-	 *
+	 * 
 	 * @param control
 	 *            control to add
 	 * @return This
@@ -208,7 +208,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Remove a control.
-	 *
+	 * 
 	 * @param control
 	 *            control to remove
 	 * @return This
@@ -227,7 +227,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Add an overlay.
-	 *
+	 * 
 	 * @param overlay
 	 *            overlay to add
 	 * @return This
@@ -247,7 +247,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Remove an overlay.
-	 *
+	 * 
 	 * @param overlay
 	 *            overlay to remove
 	 * @return This
@@ -271,7 +271,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Clear all overlays.
-	 *
+	 * 
 	 * @return This
 	 */
 	public GMap2 removeAllOverlays()
@@ -307,9 +307,10 @@ public class GMap2 extends Panel implements GOverlayContainer
 	{
 		return bounds;
 	}
-	
-	public void enableGoogleBar(boolean enabled) {
-		if (this.googleBarEnabled != enabled)
+
+	public void enableGoogleBar(boolean enabled)
+	{
+		if (googleBarEnabled != enabled)
 		{
 			googleBarEnabled = enabled;
 
@@ -322,7 +323,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	public void setDraggingEnabled(boolean enabled)
 	{
-		if (this.draggingEnabled != enabled)
+		if (draggingEnabled != enabled)
 		{
 			draggingEnabled = enabled;
 
@@ -340,7 +341,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	public void setDoubleClickZoomEnabled(boolean enabled)
 	{
-		if (this.doubleClickZoomEnabled != enabled)
+		if (doubleClickZoomEnabled != enabled)
 		{
 			doubleClickZoomEnabled = enabled;
 
@@ -358,7 +359,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	public void setScrollWheelZoomEnabled(boolean enabled)
 	{
-		if (this.scrollWheelZoomEnabled != enabled)
+		if (scrollWheelZoomEnabled != enabled)
 		{
 			scrollWheelZoomEnabled = enabled;
 
@@ -399,9 +400,9 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	public void setZoom(int level)
 	{
-		if (this.zoom != level)
+		if (zoom != level)
 		{
-			this.zoom = level;
+			zoom = level;
 
 			if (AjaxRequestTarget.get() != null && findPage() != null)
 			{
@@ -412,7 +413,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 	/**
 	 * Set the center.
-	 *
+	 * 
 	 * @param center
 	 *            center to set
 	 */
@@ -430,10 +431,9 @@ public class GMap2 extends Panel implements GOverlayContainer
 	}
 
 	/**
-	 * Changes the center point of the map to the given point. If the point is
-	 * already visible in the current map view, change the center in a smooth
-	 * animation.
-	 *
+	 * Changes the center point of the map to the given point. If the point is already visible in
+	 * the current map view, change the center in a smooth animation.
+	 * 
 	 * @param center
 	 *            the new center of the map
 	 */
@@ -456,9 +456,9 @@ public class GMap2 extends Panel implements GOverlayContainer
 	}
 
 	/**
-	 * Generates the JavaScript used to instantiate this GMap2 as an JavaScript
-	 * class on the client side.
-	 *
+	 * Generates the JavaScript used to instantiate this GMap2 as an JavaScript class on the client
+	 * side.
+	 * 
 	 * @return The generated JavaScript
 	 */
 	private String getJSinit()
@@ -499,9 +499,8 @@ public class GMap2 extends Panel implements GOverlayContainer
 	}
 
 	/**
-	 * Convenience method for generating a JavaScript call on this GMap2 with
-	 * the given invocation.
-	 *
+	 * Convenience method for generating a JavaScript call on this GMap2 with the given invocation.
+	 * 
 	 * @param invocation
 	 *            The JavaScript call to invoke on this GMap2.
 	 * @return The generated JavaScript.
@@ -515,60 +514,64 @@ public class GMap2 extends Panel implements GOverlayContainer
 	/**
 	 * @see #fitMarkers(List, boolean, double)
 	 */
-	public void fitMarkers(final List<GLatLng> markersToShow) {
+	public void fitMarkers(final List<GLatLng> markersToShow)
+	{
 		fitMarkers(markersToShow, false, 0.0);
 	}
-	
+
 	/**
 	 * @see #fitMarkers(List, boolean, double)
 	 */
-	public void fitMarkers(final List<GLatLng> markersToShow, boolean showMarkersForPoints) {
+	public void fitMarkers(final List<GLatLng> markersToShow, boolean showMarkersForPoints)
+	{
 		fitMarkers(markersToShow, showMarkersForPoints, 0.0);
 	}
 
 	/**
 	 * <p>
-	 * Makes the map zoom out and centre around all the GLatLng points in
-	 * markersToShow.
+	 * Makes the map zoom out and centre around all the GLatLng points in markersToShow.
 	 * <p>
 	 * Big ups to Doug Leeper for the code.
-	 *
-	 * @see <a href=
-	 *      "http://www.nabble.com/Re%3A-initial-GMap2-bounds-question-p19886673.html"
+	 * 
+	 * @see <a href= "http://www.nabble.com/Re%3A-initial-GMap2-bounds-question-p19886673.html"
 	 *      >Doug's Nabble post</a>
 	 * @param markersToShow
 	 *            the points to centre around.
 	 * @param showMarkersForPoints
-	 *            if true, will also add basic markers to the map for each point
-	 *            focused on. Just a simple convenience method - you will probably
-	 *            want to turn this off so that you can show more information
-	 *            with each marker when clicked etc.
+	 *            if true, will also add basic markers to the map for each point focused on. Just a
+	 *            simple convenience method - you will probably want to turn this off so that you
+	 *            can show more information with each marker when clicked etc.
 	 */
-	public void fitMarkers(final List<GLatLng> markersToShow, boolean showMarkersForPoints, final double zoomAdjustment) {
-		if (markersToShow.isEmpty()) {
+	public void fitMarkers(final List<GLatLng> markersToShow, boolean showMarkersForPoints,
+		final double zoomAdjustment)
+	{
+		if (markersToShow.isEmpty())
+		{
 			log.warn("Empty list provided to GMap2.fitMarkers method.");
 			return;
 		}
 
-		this.add(new Behavior() {
+		this.add(new Behavior()
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void renderHead(Component component, IHeaderResponse response) {
+			public void renderHead(Component component, IHeaderResponse response)
+			{
 				StringBuffer buf = new StringBuffer();
 				buf.append("var bounds = new GLatLngBounds();\n");
 				buf.append("var map = " + GMap2.this.getJSinvoke("map"));
 
 				// Ask google maps to keep extending the bounds to include each
 				// point
-				for (GLatLng point : markersToShow) {
-					buf.append("bounds.extend( " + point.getJSconstructor()
-							+ " );\n");
+				for (GLatLng point : markersToShow)
+				{
+					buf.append("bounds.extend( " + point.getJSconstructor() + " );\n");
 				}
 
 				// set the zoom level that shows the bounds
-				buf.append("map.setZoom( map.getBoundsZoomLevel(bounds) + "
-						+ zoomAdjustment + ");\n");
+				buf.append("map.setZoom( map.getBoundsZoomLevel(bounds) + " + zoomAdjustment +
+					");\n");
 
 				// center in the middle of the bounds
 				buf.append("map.setCenter( bounds.getCenter() );\n");
@@ -578,9 +581,11 @@ public class GMap2 extends Panel implements GOverlayContainer
 		});
 
 		// show the markers
-		if (showMarkersForPoints) {
-			for (GLatLng location : markersToShow) {
-				this.addOverlay(new GMarker(location));
+		if (showMarkersForPoints)
+		{
+			for (GLatLng location : markersToShow)
+			{
+				addOverlay(new GMarker(location));
 			}
 		}
 	}
@@ -647,10 +652,16 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 		// Attention: don't use setters as this will result in an endless
 		// AJAX request loop
-		bounds = GLatLngBounds.parse(request.getRequestParameters().getParameterValue("bounds").toString());
-		center = GLatLng.parse(request.getRequestParameters().getParameterValue("center").toString());
+		bounds = GLatLngBounds.parse(request.getRequestParameters()
+			.getParameterValue("bounds")
+			.toString());
+		center = GLatLng.parse(request.getRequestParameters()
+			.getParameterValue("center")
+			.toString());
 		zoom = request.getRequestParameters().getParameterValue("zoom").toInt();
-		mapType = GMapType.valueOf(request.getRequestParameters().getParameterValue("currentMapType").toString());
+		mapType = GMapType.valueOf(request.getRequestParameters()
+			.getParameterValue("currentMapType")
+			.toString());
 
 		infoWindow.update(target);
 	}
@@ -816,8 +827,12 @@ public class GMap2 extends Panel implements GOverlayContainer
 		{
 			Request request = RequestCycle.get().getRequest();
 
-			String overlayId = request.getRequestParameters().getParameterValue("overlay.overlayId").toString();
-			String event = request.getRequestParameters().getParameterValue("overlay.event").toString();
+			String overlayId = request.getRequestParameters()
+				.getParameterValue("overlay.overlayId")
+				.toString();
+			String event = request.getRequestParameters()
+				.getParameterValue("overlay.event")
+				.toString();
 			// TODO this is ugly
 			// the id's of the Overlays are unique within the ArrayList
 			// maybe we should change that collection
@@ -833,7 +848,8 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 		public Object getJSinit()
 		{
-			return GMap2.this.getJSinvoke("overlayListenerCallbackUrl = '" + this.getCallbackUrl() + "'");
+			return getJSinvoke("overlayListenerCallbackUrl = '" + getCallbackUrl() +
+				"'");
 		}
 	}
 }

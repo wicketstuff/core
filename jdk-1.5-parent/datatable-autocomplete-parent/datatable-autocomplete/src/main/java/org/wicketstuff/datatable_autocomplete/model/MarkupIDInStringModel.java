@@ -28,102 +28,119 @@ import org.slf4j.LoggerFactory;
 /**
  * @author mocleiri
  * 
- * Used for situations like rendering javascript method calls where we need the markupid for the component.
+ *         Used for situations like rendering javascript method calls where we need the markupid for
+ *         the component.
  * 
- * The markupid is not available until the component is on a page so we need the model to defer the question until rendering time which by
- * definition the context will exist.
- *
+ *         The markupid is not available until the component is on a page so we need the model to
+ *         defer the question until rendering time which by definition the context will exist.
+ * 
  */
-public class MarkupIDInStringModel implements IModel<String> {
+public class MarkupIDInStringModel implements IModel<String>
+{
 
 	/**
 	 * 
 	 */
-	private static final long	serialVersionUID	= 548831417478329002L;
+	private static final long serialVersionUID = 548831417478329002L;
 
-	private static final Logger	log	= LoggerFactory
-											.getLogger(MarkupIDInStringModel.class);
-	
+	private static final Logger log = LoggerFactory.getLogger(MarkupIDInStringModel.class);
+
 	/**
 	 * Used by child classes to define the markupid placeholder in their attached template
 	 */
-	public static final String	MARKUP_ID_TAG	= ":markupID:";
-	
-	private final String	template;
-	private final Component	target;
-	private final Map<String, IModel<? extends Serializable>>	templateArgMap;
+	public static final String MARKUP_ID_TAG = ":markupID:";
 
-	
+	private final String template;
+	private final Component target;
+	private final Map<String, IModel<? extends Serializable>> templateArgMap;
+
+
 	/**
 	 * 
 	 */
-	public MarkupIDInStringModel(String template, Component target, Map<String, IModel<? extends Serializable>>templateArgMap) {
+	public MarkupIDInStringModel(String template, Component target,
+		Map<String, IModel<? extends Serializable>> templateArgMap)
+	{
 		super();
 		this.template = template;
 		this.target = target;
 		this.templateArgMap = templateArgMap;
-		
+
 		target.setOutputMarkupId(true);
 
 	}
-	
-	public MarkupIDInStringModel (String template, Component target) {
-		this (template, target, new LinkedHashMap<String, IModel<? extends Serializable>>());
-	
-	}
-	
-	protected void storeTemplateArgument (String alias, IModel<? extends Serializable> valueModel) {
-		this.templateArgMap.put(alias, valueModel);
+
+	public MarkupIDInStringModel(String template, Component target)
+	{
+		this(template, target, new LinkedHashMap<String, IModel<? extends Serializable>>());
+
 	}
 
-	/* (non-Javadoc)
+	protected void storeTemplateArgument(String alias, IModel<? extends Serializable> valueModel)
+	{
+		templateArgMap.put(alias, valueModel);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.wicket.model.IModel#getObject()
 	 */
-	public final String getObject() {
+	public final String getObject()
+	{
 
 		/*
-		 * Render the string using the template and replacing the content as dictated by the parameters.
+		 * Render the string using the template and replacing the content as dictated by the
+		 * parameters.
 		 */
-		
+
 		String renderedMarkupIDString = template;
-		
+
 		if (target != null)
-			renderedMarkupIDString = renderedMarkupIDString.replaceAll(MARKUP_ID_TAG, target.getMarkupId());
-		
-		for (String id : templateArgMap.keySet()) {
-			
+			renderedMarkupIDString = renderedMarkupIDString.replaceAll(MARKUP_ID_TAG,
+				target.getMarkupId());
+
+		for (String id : templateArgMap.keySet())
+		{
+
 			IModel<? extends Serializable> replacement = templateArgMap.get(id);
-			
+
 			String replacementValue = null;
-			
+
 			if (replacement == null || replacement.getObject() == null)
 				replacementValue = "";
 			else
 				replacementValue = replacement.getObject().toString();
-			
+
 			renderedMarkupIDString = renderedMarkupIDString.replaceAll(id, replacementValue);
 		}
-		
+
 		return renderedMarkupIDString;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.wicket.model.IModel#setObject(java.lang.Object)
 	 */
-	public void setObject(String object) {
+	public void setObject(String object)
+	{
 
 		// does nothing
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.wicket.model.IDetachable#detach()
 	 */
-	public void detach() {
+	public void detach()
+	{
 
 		// does nothing
 
 	}
 
-	
+
 }

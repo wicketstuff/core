@@ -42,8 +42,10 @@ import org.apache.wicket.util.string.JavaScriptUtils;
  * Page.java :
  * 
  * <pre>
- * public class Page extends WebPage {
- * 	public Page() {
+ * public class Page extends WebPage
+ * {
+ * 	public Page()
+ * 	{
  * 		add(new Eidogo(&quot;eidogo&quot;));
  * 	}
  * }
@@ -57,17 +59,18 @@ import org.apache.wicket.util.string.JavaScriptUtils;
  * 
  * @author Isammoc
  */
-public class Eidogo extends WebComponent implements IHeaderContributor {
+public class Eidogo extends WebComponent implements IHeaderContributor
+{
 
 	/** */
 	private static final long serialVersionUID = 1L;
 
 	/** Reference to the javascript resource. */
-	private static final ResourceReference JS = new JavaScriptResourceReference(
-			Eidogo.class, "js/all.compressed.js");
+	private static final ResourceReference JS = new JavaScriptResourceReference(Eidogo.class,
+		"js/all.compressed.js");
 	/** Reference to the CSS resource. */
-	private static final ResourceReference CSS = new PackageResourceReference(
-			Eidogo.class, "css/player.css");
+	private static final ResourceReference CSS = new PackageResourceReference(Eidogo.class,
+		"css/player.css");
 
 	/** <code>true</code> to show comments in the player. */
 	private boolean showComments;
@@ -101,7 +104,8 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 	 * 
 	 * @author Isammoc
 	 */
-	public enum Theme {
+	public enum Theme
+	{
 		/** Standard theme. */
 		STANDARD("standard");
 		/** The value in the JSon. */
@@ -113,7 +117,8 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 		 * @param value
 		 *            Value to store.
 		 */
-		private Theme(String value) {
+		private Theme(String value)
+		{
 			this.value = value;
 		}
 
@@ -123,8 +128,9 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 		 * @return the JSon value
 		 */
 		@Override
-		public String toString() {
-			return this.value;
+		public String toString()
+		{
+			return value;
 		}
 	}
 
@@ -133,44 +139,38 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 	 * 
 	 * @author Isammoc
 	 */
-	public enum Mode {
+	public enum Mode
+	{
 		/** Play mode. Allows user to play the game. */
 		PLAY("play"),
 		/**
-		 * Add black stone mode. Allows user to add as many black stones as
-		 * (s)he wants.
+		 * Add black stone mode. Allows user to add as many black stones as (s)he wants.
 		 */
 		ADD_BLACK("add_b"),
 		/**
-		 * Add white stone mode. Allows user to add as many white stones as
-		 * (s)he wants.
+		 * Add white stone mode. Allows user to add as many white stones as (s)he wants.
 		 */
 		ADD_WHITE("add_w"),
 		/** Region mode. Allows user to mark a region. */
 		REGION("region"),
 		/**
-		 * Triangle mode. Allows user to mark stone and/or intersection with a
-		 * triangle.
+		 * Triangle mode. Allows user to mark stone and/or intersection with a triangle.
 		 */
 		TRIANGLE("tr"),
 		/**
-		 * Square mode. Allows user to mark stone and/or intersection with a
-		 * square.
+		 * Square mode. Allows user to mark stone and/or intersection with a square.
 		 */
 		SQUARE("sq"),
 		/**
-		 * Circle mode. Allows user to mark stone and/or intersection with a
-		 * circle.
+		 * Circle mode. Allows user to mark stone and/or intersection with a circle.
 		 */
 		CIRCLE("cr"),
 		/**
-		 * Label mode. Allows user to mark stone and/or intersection with a
-		 * letter.
+		 * Label mode. Allows user to mark stone and/or intersection with a letter.
 		 */
 		LABEL("label"),
 		/**
-		 * Number mode. Allows user to mark stone and/or intersection with a
-		 * number.
+		 * Number mode. Allows user to mark stone and/or intersection with a number.
 		 */
 		NUMBER("number"),
 		/** Score mode. Allows user to view score. */
@@ -185,7 +185,8 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 		 * @param value
 		 *            The JSon value to store.
 		 */
-		private Mode(String value) {
+		private Mode(String value)
+		{
 			this.value = value;
 		}
 
@@ -195,8 +196,9 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 		 * @return the JSon value
 		 */
 		@Override
-		public String toString() {
-			return this.value;
+		public String toString()
+		{
+			return value;
 		}
 	}
 
@@ -206,7 +208,8 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 	 * @param id
 	 *            Wicket ID of the component
 	 */
-	public Eidogo(String id) {
+	public Eidogo(String id)
+	{
 		this(id, null);
 	}
 
@@ -218,20 +221,21 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 	 * @param sgfUrl
 	 *            URL to the SGF file
 	 */
-	public Eidogo(String id, String sgfUrl) {
+	public Eidogo(String id, String sgfUrl)
+	{
 		super(id);
 		this.sgfUrl = sgfUrl;
 	}
 
 	/**
-	 * Renders links to the needed javascript and the CSS in the head of
-	 * response.
+	 * Renders links to the needed javascript and the CSS in the head of response.
 	 * 
 	 * @param response
 	 *            The header response to contribute to.
 	 */
 	@Override
-	public void renderHead(IHeaderResponse response) {
+	public void renderHead(IHeaderResponse response)
+	{
 		response.renderJavaScriptReference(JS);
 		response.renderCSSReference(CSS);
 		super.renderHead(response);
@@ -241,10 +245,12 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 	 * Checks that component tag is a &lt;div&gt; and adds a markup id.
 	 */
 	@Override
-	protected void onComponentTag(ComponentTag tag) {
+	protected void onComponentTag(ComponentTag tag)
+	{
 		checkComponentTag(tag, "div");
-		this.setOutputMarkupId(true);
-		if (tag.isOpenClose()) {
+		setOutputMarkupId(true);
+		if (tag.isOpenClose())
+		{
 			tag.setType(XmlTag.TagType.OPEN);
 		}
 		super.onComponentTag(tag);
@@ -254,30 +260,26 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 	 * Renders a javascript component to create the player.
 	 */
 	@Override
-	public void onComponentTagBody(MarkupStream markupStream,
-			ComponentTag openTag) {
+	public void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag)
+	{
 		super.onComponentTagBody(markupStream, openTag);
 		replaceComponentTagBody(markupStream, openTag, null);
 		JavaScriptUtils.writeJavaScript(getResponse(),
-				"new eidogo.Player({container:\"" + getMarkupId()
-						+ "\",theme:\"" + theme + "\"," + "sgfUrl:\""
-						+ getResponse().encodeURL(sgfUrl) + "\","
-						+ "loadPath:[0, 0]" + ",mode:\"" + mode + "\","
-						+ "showComments:" + showComments + ","
-						+ "showPlayerInfo:" + showPlayerInfo + ","
-						+ "showGameInfo:" + showGameInfo + "," + "showTools:"
-						+ showTools + "," + "showOptions:" + showOptions + ","
-						+ "markCurrent:" + markCurrent + ","
-						+ "markVariations:" + markVariation + "," + "markNext:"
-						+ markNext + "," + "enableShortcuts:" + enableShortcuts
-						+ "," + "problemMode:" + problemMode + "});");
+			"new eidogo.Player({container:\"" + getMarkupId() + "\",theme:\"" + theme + "\"," +
+				"sgfUrl:\"" + getResponse().encodeURL(sgfUrl) + "\"," + "loadPath:[0, 0]" +
+				",mode:\"" + mode + "\"," + "showComments:" + showComments + "," +
+				"showPlayerInfo:" + showPlayerInfo + "," + "showGameInfo:" + showGameInfo + "," +
+				"showTools:" + showTools + "," + "showOptions:" + showOptions + "," +
+				"markCurrent:" + markCurrent + "," + "markVariations:" + markVariation + "," +
+				"markNext:" + markNext + "," + "enableShortcuts:" + enableShortcuts + "," +
+				"problemMode:" + problemMode + "});");
 	}
 
 	/**
-	 * @return <code>true</code> if comments must be shown, <code>false</code>
-	 *         otherwise.
+	 * @return <code>true</code> if comments must be shown, <code>false</code> otherwise.
 	 */
-	public boolean isShowComments() {
+	public boolean isShowComments()
+	{
 		return showComments;
 	}
 
@@ -285,18 +287,18 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 	 * Set the visibility of the comments.
 	 * 
 	 * @param showComments
-	 *            <code>true</code> if comments must be shown,
-	 *            <code>false</code> otherwise.
+	 *            <code>true</code> if comments must be shown, <code>false</code> otherwise.
 	 */
-	public void setShowComments(boolean showComments) {
+	public void setShowComments(boolean showComments)
+	{
 		this.showComments = showComments;
 	}
 
 	/**
-	 * @return <code>true</code> if players information must be shown,
-	 *         <code>false</code> otherwise
+	 * @return <code>true</code> if players information must be shown, <code>false</code> otherwise
 	 */
-	public boolean isShowPlayerInfo() {
+	public boolean isShowPlayerInfo()
+	{
 		return showPlayerInfo;
 	}
 
@@ -304,18 +306,19 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 	 * Set the visibility of players information.
 	 * 
 	 * @param showPlayerInfo
-	 *            <code>true</code> if players information must be shown,
-	 *            <code>false</code> otherwise
+	 *            <code>true</code> if players information must be shown, <code>false</code>
+	 *            otherwise
 	 */
-	public void setShowPlayerInfo(boolean showPlayerInfo) {
+	public void setShowPlayerInfo(boolean showPlayerInfo)
+	{
 		this.showPlayerInfo = showPlayerInfo;
 	}
 
 	/**
-	 * @return <code>true</code> if game information must be shown,
-	 *         <code>false</code> otherwise
+	 * @return <code>true</code> if game information must be shown, <code>false</code> otherwise
 	 */
-	public boolean isShowGameInfo() {
+	public boolean isShowGameInfo()
+	{
 		return showGameInfo;
 	}
 
@@ -323,18 +326,18 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 	 * Set the visibility of game information.
 	 * 
 	 * @param showGameInfo
-	 *            <code>true</code> if game information must be shown,
-	 *            <code>false</code> otherwise
+	 *            <code>true</code> if game information must be shown, <code>false</code> otherwise
 	 */
-	public void setShowGameInfo(boolean showGameInfo) {
+	public void setShowGameInfo(boolean showGameInfo)
+	{
 		this.showGameInfo = showGameInfo;
 	}
 
 	/**
-	 * @return <code>true</code> if tools must be shown, <code>false</code>
-	 *         otherwise
+	 * @return <code>true</code> if tools must be shown, <code>false</code> otherwise
 	 */
-	public boolean isShowTools() {
+	public boolean isShowTools()
+	{
 		return showTools;
 	}
 
@@ -342,18 +345,18 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 	 * Set the visibility of the tools.
 	 * 
 	 * @param showTools
-	 *            <code>true</code> if tools must be shown, <code>false</code>
-	 *            otherwise
+	 *            <code>true</code> if tools must be shown, <code>false</code> otherwise
 	 */
-	public void setShowTools(boolean showTools) {
+	public void setShowTools(boolean showTools)
+	{
 		this.showTools = showTools;
 	}
 
 	/**
-	 * @return <code>true</code> if options must be shown, <code>false</code>
-	 *         otherwise
+	 * @return <code>true</code> if options must be shown, <code>false</code> otherwise
 	 */
-	public boolean isShowOtions() {
+	public boolean isShowOtions()
+	{
 		return showOptions;
 	}
 
@@ -361,18 +364,18 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 	 * Set the visibility of the options.
 	 * 
 	 * @param showOtions
-	 *            <code>true</code> if options must be shown, <code>false</code>
-	 *            otherwise
+	 *            <code>true</code> if options must be shown, <code>false</code> otherwise
 	 */
-	public void setShowOtions(boolean showOtions) {
-		this.showOptions = showOtions;
+	public void setShowOtions(boolean showOtions)
+	{
+		showOptions = showOtions;
 	}
 
 	/**
-	 * @return <code>true</code> if current stone must be marked,
-	 *         <code>false</code> otherwise
+	 * @return <code>true</code> if current stone must be marked, <code>false</code> otherwise
 	 */
-	public boolean isMarkCurrent() {
+	public boolean isMarkCurrent()
+	{
 		return markCurrent;
 	}
 
@@ -380,18 +383,18 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 	 * Set the visibility of the mark on the last played stone.
 	 * 
 	 * @param markCurrent
-	 *            <code>true</code> if current stone must be marked,
-	 *            <code>false</code> otherwise
+	 *            <code>true</code> if current stone must be marked, <code>false</code> otherwise
 	 */
-	public void setMarkCurrent(boolean markCurrent) {
+	public void setMarkCurrent(boolean markCurrent)
+	{
 		this.markCurrent = markCurrent;
 	}
 
 	/**
-	 * @return <code>true</code> if variation positions must be marked,
-	 *         <code>false</code> otherwise
+	 * @return <code>true</code> if variation positions must be marked, <code>false</code> otherwise
 	 */
-	public boolean isMarkVariation() {
+	public boolean isMarkVariation()
+	{
 		return markVariation;
 	}
 
@@ -399,18 +402,19 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 	 * Enable or disable the mark on variation positions.
 	 * 
 	 * @param markVariation
-	 *            <code>true</code> if variation positions must be marked,
-	 *            <code>false</code> otherwise
+	 *            <code>true</code> if variation positions must be marked, <code>false</code>
+	 *            otherwise
 	 */
-	public void setMarkVariation(boolean markVariation) {
+	public void setMarkVariation(boolean markVariation)
+	{
 		this.markVariation = markVariation;
 	}
 
 	/**
-	 * @return <code>true</code> if the next position must be marked,
-	 *         <code>false</code> otherwise
+	 * @return <code>true</code> if the next position must be marked, <code>false</code> otherwise
 	 */
-	public boolean isMarkNext() {
+	public boolean isMarkNext()
+	{
 		return markNext;
 	}
 
@@ -418,18 +422,19 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 	 * Enable or disable the mark on the position of the next move.
 	 * 
 	 * @param markNext
-	 *            <code>true</code> if the next position must be marked,
-	 *            <code>false</code> otherwise
+	 *            <code>true</code> if the next position must be marked, <code>false</code>
+	 *            otherwise
 	 */
-	public void setMarkNext(boolean markNext) {
+	public void setMarkNext(boolean markNext)
+	{
 		this.markNext = markNext;
 	}
 
 	/**
-	 * @return <code>true</code> if shortcuts are enabled, <code>false</code>
-	 *         otherwise
+	 * @return <code>true</code> if shortcuts are enabled, <code>false</code> otherwise
 	 */
-	public boolean isEnableShortcuts() {
+	public boolean isEnableShortcuts()
+	{
 		return enableShortcuts;
 	}
 
@@ -437,18 +442,18 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 	 * Enable or disable the keyboard shortcuts.
 	 * 
 	 * @param enableShortcuts
-	 *            <code>true</code> if shortcuts are enabled, <code>false</code>
-	 *            otherwise
+	 *            <code>true</code> if shortcuts are enabled, <code>false</code> otherwise
 	 */
-	public void setEnableShortcuts(boolean enableShortcuts) {
+	public void setEnableShortcuts(boolean enableShortcuts)
+	{
 		this.enableShortcuts = enableShortcuts;
 	}
 
 	/**
-	 * @return <code>true</code> if eidogo player is in problem mode,
-	 *         <code>false</code> otherwise
+	 * @return <code>true</code> if eidogo player is in problem mode, <code>false</code> otherwise
 	 */
-	public boolean isProblemMode() {
+	public boolean isProblemMode()
+	{
 		return problemMode;
 	}
 
@@ -456,10 +461,11 @@ public class Eidogo extends WebComponent implements IHeaderContributor {
 	 * Enable or disable problem mode
 	 * 
 	 * @param problemMode
-	 *            <code>true</code> if eidogo player is in problem mode,
-	 *            <code>false</code> otherwise
+	 *            <code>true</code> if eidogo player is in problem mode, <code>false</code>
+	 *            otherwise
 	 */
-	public void setProblemMode(boolean problemMode) {
+	public void setProblemMode(boolean problemMode)
+	{
 		this.problemMode = problemMode;
 	}
 }

@@ -19,10 +19,9 @@ package org.wicketstuff.minis.model;
 import java.io.Serializable;
 
 /**
- * A codec used to convert an object between its attached and detached
- * representations. Detached representation should be something small so it is
- * suitable for storage inside session. For example, in a database entity the
- * detached state would be the primary key of that entity.
+ * A codec used to convert an object between its attached and detached representations. Detached
+ * representation should be something small so it is suitable for storage inside session. For
+ * example, in a database entity the detached state would be the primary key of that entity.
  * 
  * @author Igor Vaynberg (ivaynberg)
  * 
@@ -39,13 +38,11 @@ public interface IDetachCodec<T>
 	Serializable detach(T object);
 
 	/**
-	 * Converts an object into its attached representation. Usually the returned
-	 * object is equal to the object that was passed into
-	 * {@link #detach(Object)} method to obtain the detached state.
+	 * Converts an object into its attached representation. Usually the returned object is equal to
+	 * the object that was passed into {@link #detach(Object)} method to obtain the detached state.
 	 * 
 	 * @param detached
-	 *            detached representation obtained via a previous call to
-	 *            {@link #detach(Object)}
+	 *            detached representation obtained via a previous call to {@link #detach(Object)}
 	 * @return attached representation
 	 */
 	T attach(Serializable detached);

@@ -36,7 +36,7 @@ public class NoRecordsToolbar extends AbstractToolbar
 	private static final long serialVersionUID = 1L;
 
 	private static final IModel DEFAULT_MESSAGE_MODEL = new ResourceModel(
-			"datagrid.no-records-found", "No Records Found");
+		"datagrid.no-records-found", "No Records Found");
 
 	/**
 	 * Constructor
@@ -58,18 +58,20 @@ public class NoRecordsToolbar extends AbstractToolbar
 	public NoRecordsToolbar(final DataGrid grid, IModel messageModel)
 	{
 		super(grid, null);
-	
+
 		add(new Label("msg", messageModel));
 	}
-	
+
 	/**
 	 * Returns the {@link DataGrid} instance this toolbar belongs to.
+	 * 
 	 * @return {@link DataGrid} instance this toolbar belongs to.
 	 */
-	public DataGrid getDataGrid() {
-		return (DataGrid) super.getGrid();
+	public DataGrid getDataGrid()
+	{
+		return (DataGrid)super.getGrid();
 	}
-	
+
 	/**
 	 * Only shows this toolbar when there are no rows
 	 * 

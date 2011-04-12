@@ -81,11 +81,8 @@ import org.wicketstuff.minis.model.IDetachCodec;
  * 
  * @param <T>
  */
-public abstract class AbstractDetachableCollection<T>
-	implements
-		Collection<T>,
-		IDetachable,
-		Serializable
+public abstract class AbstractDetachableCollection<T> implements Collection<T>, IDetachable,
+	Serializable
 {
 	private static final long serialVersionUID = 1L;
 

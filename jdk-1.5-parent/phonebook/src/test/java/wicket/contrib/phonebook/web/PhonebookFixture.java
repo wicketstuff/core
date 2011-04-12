@@ -23,25 +23,25 @@ import wicket.contrib.phonebook.Contact;
 /**
  * @author Kare Nuorteva
  */
-public class PhonebookFixture {
-	private static final String[] FIRSTNAMES = new String[] { "Jacob", "Emily",
-			"Michael", "Sarah", "Matthew", "Brianna", "Nicholas", "Samantha",
-			"Christopher", "Hailey", "Abner", "Abby", "Joshua", "Douglas",
-			"Jack", "Keith", "Gerald", "Samuel", "Willie", "Larry", "Jose",
-			"Timothy", "Sandra", "Kathleen", "Pamela", "Virginia", "Debra",
-			"Maria", "Linda" };
+public class PhonebookFixture
+{
+	private static final String[] FIRSTNAMES = new String[] { "Jacob", "Emily", "Michael", "Sarah",
+			"Matthew", "Brianna", "Nicholas", "Samantha", "Christopher", "Hailey", "Abner", "Abby",
+			"Joshua", "Douglas", "Jack", "Keith", "Gerald", "Samuel", "Willie", "Larry", "Jose",
+			"Timothy", "Sandra", "Kathleen", "Pamela", "Virginia", "Debra", "Maria", "Linda" };
 
-	private static final String[] LASTNAMES = { "Smiith", "Johnson",
-			"Williams", "Jones", "Brown", "Donahue", "Bailey", "Rose", "Allen",
-			"Black", "Davis", "Clark", "Hall", "Lee", "Baker", "Gonzalez",
-			"Nelson", "Moore", "Wilson", "Graham", "Fisher", "Cruz", "Ortiz",
+	private static final String[] LASTNAMES = { "Smiith", "Johnson", "Williams", "Jones", "Brown",
+			"Donahue", "Bailey", "Rose", "Allen", "Black", "Davis", "Clark", "Hall", "Lee",
+			"Baker", "Gonzalez", "Nelson", "Moore", "Wilson", "Graham", "Fisher", "Cruz", "Ortiz",
 			"Gomez", "Murray" };
 
 	private final ContactData contactData = new ContactData();
 
-	public void addStubs(MockContext context) {
+	public void addStubs(MockContext context)
+	{
 		context.putBean("contactDao", contactData.getContactDao());
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 30; i++)
+		{
 			Contact contact = new Contact();
 			contact.setFirstname(randomString(FIRSTNAMES));
 			contact.setLastname(randomString(LASTNAMES));
@@ -51,29 +51,38 @@ public class PhonebookFixture {
 		}
 	}
 
-	private String createEmail(Contact contact) {
-		String email = contact.getFirstname() + "@" + contact.getLastname()
-				+ ".com";
+	private String createEmail(Contact contact)
+	{
+		String email = contact.getFirstname() + "@" + contact.getLastname() + ".com";
 		email = email.toLowerCase();
 		return email;
 	}
 
-	private String randomString(String[] choices) {
+	private String randomString(String[] choices)
+	{
 		return choices[randomInt(0, choices.length)];
 	}
 
-	private String generatePhoneNumber() {
-		return new StringBuilder().append(randomInt(2, 9)).append(
-				randomInt(0, 9)).append(randomInt(0, 9)).append("-555-")
-				.append(randomInt(1, 9)).append(randomInt(0, 9)).append(
-						randomInt(0, 9)).append(randomInt(0, 9)).toString();
+	private String generatePhoneNumber()
+	{
+		return new StringBuilder().append(randomInt(2, 9))
+			.append(randomInt(0, 9))
+			.append(randomInt(0, 9))
+			.append("-555-")
+			.append(randomInt(1, 9))
+			.append(randomInt(0, 9))
+			.append(randomInt(0, 9))
+			.append(randomInt(0, 9))
+			.toString();
 	}
 
-	private int randomInt(int min, int max) {
-		return (int) (Math.random() * (max - min) + min);
+	private int randomInt(int min, int max)
+	{
+		return (int)(Math.random() * (max - min) + min);
 	}
 
-	public ContactData getContactData() {
+	public ContactData getContactData()
+	{
 		return contactData;
 	}
 }

@@ -19,12 +19,13 @@ package org.wicketstuff.datatables.demo;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 
-public class DemoApplication extends WebApplication {
+public class DemoApplication extends WebApplication
+{
 
-    @Override
-    public Class<? extends Page> getHomePage() {
-        return HomePage.class;
-    }
+	@Override
+	public Class<? extends Page> getHomePage()
+	{
+		return HomePage.class;
+	}
 
 }
-

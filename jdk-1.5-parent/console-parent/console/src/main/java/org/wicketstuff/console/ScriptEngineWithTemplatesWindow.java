@@ -29,60 +29,60 @@ import org.wicketstuff.console.templates.ScriptTemplate;
  * 
  * @author cretzel
  */
-public abstract class ScriptEngineWithTemplatesWindow extends ModalWindow {
+public abstract class ScriptEngineWithTemplatesWindow extends ModalWindow
+{
 
-    private static final long serialVersionUID = 1L;
-    private final Lang lang;
-    private ScriptEnginePanelWithTemplates enginePanelWithTemplates;
-    private final IDataProvider<ScriptTemplate> dataProvider;
+	private static final long serialVersionUID = 1L;
+	private final Lang lang;
+	private ScriptEnginePanelWithTemplates enginePanelWithTemplates;
+	private final IDataProvider<ScriptTemplate> dataProvider;
 
-    /**
-     * Constructor.
-     * 
-     * @param id
-     *            id
-     * @param lang
-     *            source language
-     * @param windowTitle
-     *            window title, may be {@code null} for default
-     * @param dataProvider
-     *            data provider for script templates, may be {@code null} for
-     *            default
-     */
-    public ScriptEngineWithTemplatesWindow(final String id, final Lang lang,
-            final IModel<String> windowTitle,
-            final IDataProvider<ScriptTemplate> dataProvider) {
-        super(id);
-        this.lang = lang;
-        this.dataProvider = dataProvider;
+	/**
+	 * Constructor.
+	 * 
+	 * @param id
+	 *            id
+	 * @param lang
+	 *            source language
+	 * @param windowTitle
+	 *            window title, may be {@code null} for default
+	 * @param dataProvider
+	 *            data provider for script templates, may be {@code null} for default
+	 */
+	public ScriptEngineWithTemplatesWindow(final String id, final Lang lang,
+		final IModel<String> windowTitle, final IDataProvider<ScriptTemplate> dataProvider)
+	{
+		super(id);
+		this.lang = lang;
+		this.dataProvider = dataProvider;
 
-        setTitle(windowTitle != null ? windowTitle : Model.of("Wicket Console"));
-        setAutoSize(true);
-        setResizable(false);
+		setTitle(windowTitle != null ? windowTitle : Model.of("Wicket Console"));
+		setAutoSize(true);
+		setResizable(false);
 
-    }
+	}
 
-    @Override
-    protected void onInitialize() {
-        super.onInitialize();
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
 
-        enginePanelWithTemplates = newEnginePanelWithTemplates(getContentId(),
-                lang);
-        setContent(enginePanelWithTemplates);
-    }
+		enginePanelWithTemplates = newEnginePanelWithTemplates(getContentId(), lang);
+		setContent(enginePanelWithTemplates);
+	}
 
-    /**
-     * Creates a new engine panel with templates, override to customize.
-     * 
-     * @param wicketId
-     *            id
-     * @return a script engine panel
-     */
-    protected ScriptEnginePanelWithTemplates newEnginePanelWithTemplates(
-            final String wicketId, final Lang lang) {
+	/**
+	 * Creates a new engine panel with templates, override to customize.
+	 * 
+	 * @param wicketId
+	 *            id
+	 * @return a script engine panel
+	 */
+	protected ScriptEnginePanelWithTemplates newEnginePanelWithTemplates(final String wicketId,
+		final Lang lang)
+	{
 
-        return new ScriptEnginePanelWithTemplates(wicketId, lang, Model.of(""),
-                dataProvider);
-    }
+		return new ScriptEnginePanelWithTemplates(wicketId, lang, Model.of(""), dataProvider);
+	}
 
 }

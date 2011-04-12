@@ -23,25 +23,27 @@ import org.wicketstuff.eidogo.Eidogo;
 /**
  * Homepage to test Wicket-EidoGo player functionalities.
  */
-public class ExampleHomePage extends WebPage {
+public class ExampleHomePage extends WebPage
+{
 
 	private static final long serialVersionUID = 1L;
 
 
-    /**
+	/**
 	 * Constructor that is invoked when page is invoked without a session.
 	 * 
 	 * @param parameters
 	 *            Page parameters
 	 */
-    public ExampleHomePage(final PageParameters parameters) {
-        // Add an example of eidogo player.
-        Eidogo eidogo = new Eidogo("eidogo", "/sgf/example.sgf");
+	public ExampleHomePage(final PageParameters parameters)
+	{
+		// Add an example of eidogo player.
+		Eidogo eidogo = new Eidogo("eidogo", "/sgf/example.sgf");
 		add(eidogo);
 		eidogo.setShowComments(true);
 		eidogo.setShowGameInfo(true);
 		eidogo.setShowOtions(true);
 		eidogo.setShowPlayerInfo(true);
 		eidogo.setShowTools(true);
-    }
+	}
 }

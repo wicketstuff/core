@@ -19,29 +19,31 @@ import com.inmethod.grid.treegrid.TreeGrid;
  * 
  * @author Matej Knopp
  */
-public class SimpleTreeGridPage extends BaseExamplePage {
+public class SimpleTreeGridPage extends BaseExamplePage
+{
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor.
 	 */
-	public SimpleTreeGridPage() {
+	public SimpleTreeGridPage()
+	{
 		List<IGridColumn> columns = new ArrayList<IGridColumn>();
-		
+
 		columns.add(new PropertyTreeColumn(new Model("Property 1"), "userObject.property1"));
 		columns.add(new PropertyColumn(new Model("Property 2"), "userObject.property2"));
 		columns.add(new PropertyColumn(new Model("Property 3"), "userObject.property3"));
 		columns.add(new PropertyColumn(new Model("Property 4"), "userObject.property4"));
 		columns.add(new PropertyColumn(new Model("Property 5"), "userObject.property5"));
 		columns.add(new PropertyColumn(new Model("Property 6"), "userObject.property6"));
-		
+
 		TreeModel model = TreeModelFactory.createTreeModel();
 		TreeGrid grid = new TreeGrid("grid", model, columns);
-		
+
 		// expand the root node
 		grid.getTreeState().expandNode(model.getRoot());
-		
+
 		add(grid);
 	}
 

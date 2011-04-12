@@ -30,50 +30,59 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Book")
-public class Book {
+public class Book
+{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String title;
-    private String author;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	private String title;
+	private String author;
 
-    public Book() {
-    }
+	public Book()
+	{
+	}
 
-    public Book(final String title, final String author) {
-        this.title = title;
-        this.author = author;
-    }
+	public Book(final String title, final String author)
+	{
+		this.title = title;
+		this.author = author;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId()
+	{
+		return id;
+	}
 
-    public void setId(final Long id) {
-        this.id = id;
-    }
+	public void setId(final Long id)
+	{
+		this.id = id;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getTitle()
+	{
+		return title;
+	}
 
-    public void setTitle(final String title) {
-        this.title = title;
-    }
+	public void setTitle(final String title)
+	{
+		this.title = title;
+	}
 
-    public String getAuthor() {
-        return author;
-    }
+	public String getAuthor()
+	{
+		return author;
+	}
 
-    public void setAuthor(final String author) {
-        this.author = author;
-    }
+	public void setAuthor(final String author)
+	{
+		this.author = author;
+	}
 
-    @Override
-    public String toString() {
-        return "Book [id=" + id + ", title=" + title + ", author=" + author
-                + "]";
-    }
+	@Override
+	public String toString()
+	{
+		return "Book [id=" + id + ", title=" + title + ", author=" + author + "]";
+	}
 
 }

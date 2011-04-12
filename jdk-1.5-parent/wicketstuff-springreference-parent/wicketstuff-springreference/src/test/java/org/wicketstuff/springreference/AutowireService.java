@@ -1,5 +1,6 @@
 package org.wicketstuff.springreference;
 
-public class AutowireService extends AService {
+public class AutowireService extends AService
+{
 
 }

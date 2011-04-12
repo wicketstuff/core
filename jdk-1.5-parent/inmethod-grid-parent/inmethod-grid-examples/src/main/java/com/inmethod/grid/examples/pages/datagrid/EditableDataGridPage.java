@@ -22,47 +22,55 @@ import com.inmethod.grid.examples.pages.BaseExamplePage;
  * 
  * @author Matej Knopp
  */
-public class EditableDataGridPage extends BaseExamplePage {
+public class EditableDataGridPage extends BaseExamplePage
+{
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor.
 	 */
-	public EditableDataGridPage() {
+	public EditableDataGridPage()
+	{
 		List<IGridColumn> columns = new ArrayList<IGridColumn>();
-		
+
 		Form form = new Form("form");
 		add(form);
-		
+
 		columns.add(new PropertyColumn(new ResourceModel("id"), "id"));
-		columns.add(new EditablePropertyColumn(new ResourceModel("firstName"), "firstName", "firstName") {
-			
+		columns.add(new EditablePropertyColumn(new ResourceModel("firstName"), "firstName",
+			"firstName")
+		{
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void addValidators(FormComponent component) {
+			protected void addValidators(FormComponent component)
+			{
 				component.setRequired(true);
 			}
 		});
-		columns.add(new EditablePropertyColumn(new ResourceModel("lastName"), "lastName", "lastName") {
+		columns.add(new EditablePropertyColumn(new ResourceModel("lastName"), "lastName",
+			"lastName")
+		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void addValidators(FormComponent component) {
+			protected void addValidators(FormComponent component)
+			{
 				component.setRequired(true);
 			}
 		});
 		columns.add(new EditablePropertyColumn(new ResourceModel("homePhone"), "homePhone"));
 		columns.add(new EditablePropertyColumn(new ResourceModel("cellPhone"), "cellPhone"));
 		columns.add(new SubmitCancelColumn("esd", new Model("Edit")));
-		
+
 		DataGrid grid = new DefaultDataGrid("grid", new ContactDataSource(), columns);
 		form.add(grid);
-		
+
 		grid.setAllowSelectMultiple(true);
-		
+
 		grid.setSelectToEdit(true);
 		grid.setClickRowToSelect(true);
 		grid.setClickRowToDeselect(false);

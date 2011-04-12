@@ -21,13 +21,15 @@ import org.eclipse.jetty.webapp.WebAppContext;
 /**
  * Seperate startup class for people that want to run the examples directly.
  */
-public class RunWebApp {
+public class RunWebApp
+{
 	/**
 	 * Main function, starts the jetty server.
-	 *
+	 * 
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		Server server = new Server();
 		SocketConnector connector = new SocketConnector();
 		connector.setPort(8080);
@@ -39,9 +41,12 @@ public class RunWebApp {
 		context.setWar("src/main/webapp");
 
 		server.setHandler(context);
-		try {
+		try
+		{
 			server.start();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			throw new RuntimeException(e);
 		}
 

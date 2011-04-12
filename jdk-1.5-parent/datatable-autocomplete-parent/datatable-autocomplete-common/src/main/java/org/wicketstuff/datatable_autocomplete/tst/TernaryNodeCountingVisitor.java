@@ -28,78 +28,90 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author mocleiri
- *
+ * 
  */
-public class TernaryNodeCountingVisitor<C> implements TernaryNodeVisitor<C> {
+public class TernaryNodeCountingVisitor<C> implements TernaryNodeVisitor<C>
+{
 
 	private static final Logger log = LoggerFactory.getLogger(TernaryNodeCountingVisitor.class);
-	
+
 	/**
 	 * 
 	 */
-	public TernaryNodeCountingVisitor() {
+	public TernaryNodeCountingVisitor()
+	{
 		// TODO Auto-generated constructor stub
 	}
 
 
-		private Map<String, AtomicLong>nodeCountMap = new LinkedHashMap<String, AtomicLong>();
-		
-		
-		/* (non-Javadoc)
-		 * @see org.wicketstuff.datatable_autocomplete.tst.TernaryNodeVisitor#visit(org.wicketstuff.datatable_autocomplete.tst.TernaryNode)
-		 */
-		public void visit(TernaryNode<C> node) {
-			
-			AtomicLong nodeCounter = nodeCountMap.get(node.getCharacter());
-			
-			if (nodeCounter == null) {
-				nodeCounter = new AtomicLong();
-				nodeCountMap.put(node.getCharacter(), nodeCounter);
-				
-			}
-			
-			nodeCounter.addAndGet(1L);
-			
-			
+	private Map<String, AtomicLong> nodeCountMap = new LinkedHashMap<String, AtomicLong>();
+
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.wicketstuff.datatable_autocomplete.tst.TernaryNodeVisitor#visit(org.wicketstuff.
+	 * datatable_autocomplete.tst.TernaryNode)
+	 */
+	public void visit(TernaryNode<C> node)
+	{
+
+		AtomicLong nodeCounter = nodeCountMap.get(node.getCharacter());
+
+		if (nodeCounter == null)
+		{
+			nodeCounter = new AtomicLong();
+			nodeCountMap.put(node.getCharacter(), nodeCounter);
+
 		}
 
-		/* (non-Javadoc)
-		 * @see org.wicketstuff.datatable_autocomplete.tst.TernaryNodeVisitor#postVisit()
-		 */
-		public void postVisit() {
-			
-			List<String>keyList = new LinkedList<String>();
-			
-			keyList.addAll(nodeCountMap.keySet());
-			
-			Collections.sort(keyList);
-			
-			AtomicLong overallNodeCounter = new AtomicLong();
-			
-			
-			for (String character : keyList) {
-			
-				AtomicLong counter = nodeCountMap.get(character);
-				
-				overallNodeCounter.addAndGet(counter.longValue());
-				
-				log.info(" [ "+character+" ] = " + counter.longValue());
-				
-			}
-			
-			log.info("overall node count = " + overallNodeCounter.longValue());
-			
-			
+		nodeCounter.addAndGet(1L);
+
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.wicketstuff.datatable_autocomplete.tst.TernaryNodeVisitor#postVisit()
+	 */
+	public void postVisit()
+	{
+
+		List<String> keyList = new LinkedList<String>();
+
+		keyList.addAll(nodeCountMap.keySet());
+
+		Collections.sort(keyList);
+
+		AtomicLong overallNodeCounter = new AtomicLong();
+
+
+		for (String character : keyList)
+		{
+
+			AtomicLong counter = nodeCountMap.get(character);
+
+			overallNodeCounter.addAndGet(counter.longValue());
+
+			log.info(" [ " + character + " ] = " + counter.longValue());
+
 		}
 
-		/* (non-Javadoc)
-		 * @see org.wicketstuff.datatable_autocomplete.tst.TernaryNodeVisitor#preVisit()
-		 */
-		public void preVisit() {
-			
-		}
-		
-		
-		
-	
+		log.info("overall node count = " + overallNodeCounter.longValue());
+
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.wicketstuff.datatable_autocomplete.tst.TernaryNodeVisitor#preVisit()
+	 */
+	public void preVisit()
+	{
+
+	}
+
+
 }

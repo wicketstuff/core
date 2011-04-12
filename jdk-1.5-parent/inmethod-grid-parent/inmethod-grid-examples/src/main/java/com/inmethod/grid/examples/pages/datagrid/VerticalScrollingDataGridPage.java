@@ -17,14 +17,16 @@ import com.inmethod.grid.examples.pages.BaseExamplePage;
  * 
  * @author Matej Knopp
  */
-public class VerticalScrollingDataGridPage extends BaseExamplePage {
+public class VerticalScrollingDataGridPage extends BaseExamplePage
+{
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor.
 	 */
-	public VerticalScrollingDataGridPage() {
+	public VerticalScrollingDataGridPage()
+	{
 		List<IGridColumn> columns = new ArrayList<IGridColumn>();
 
 		columns.add(new PropertyColumn(new ResourceModel("id"), "id"));
@@ -35,7 +37,7 @@ public class VerticalScrollingDataGridPage extends BaseExamplePage {
 
 		DataGrid grid = new DefaultDataGrid("grid", new ContactDataSource(), columns);
 		add(grid);
-		
+
 		grid.setRowsPerPage(30);
 		grid.setContentHeight(25, SizeUnit.EM);
 	}

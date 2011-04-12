@@ -10,7 +10,8 @@ import org.wicketstuff.minis.behavior.mootip.MootipSettings;
 /**
  * Homepage
  */
-public class MooTipPage extends HomePage {
+public class MooTipPage extends HomePage
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,26 +23,25 @@ public class MooTipPage extends HomePage {
 	 * @param parameters
 	 *            Page parameters
 	 */
-	public MooTipPage(final PageParameters parameters) {
+	public MooTipPage(final PageParameters parameters)
+	{
 		super(parameters);
 		// Add the simplest type of label
-		add(new Label("tooltip01", "this is tool tip 01")
-				.add(new MootipBehaviour(
-						"This is my tool tip",
-						"I can be very long and even have formatting like <br /> and be <strong>strong</strong>")));
+		add(new Label("tooltip01", "this is tool tip 01").add(new MootipBehaviour(
+			"This is my tool tip",
+			"I can be very long and even have formatting like <br /> and be <strong>strong</strong>")));
 
-		//add mootippanelajaxplaceholder:
-		
+		// add mootippanelajaxplaceholder:
+
 		add(new MootipPanel());
-		
-		
-		MootipSettings mooSettings=new MootipSettings();
+
+
+		MootipSettings mooSettings = new MootipSettings();
 		mooSettings.setEvalAlways(true);
-		MootipBehaviour behaviour=new MootipBehaviour(new MooPanel());
+		MootipBehaviour behaviour = new MootipBehaviour(new MooPanel());
 		behaviour.setMootipSettings(mooSettings);
-		
-		add(new Label("tooltip02", "this is tool tip 02")
-				.add(behaviour));
+
+		add(new Label("tooltip02", "this is tool tip 02").add(behaviour));
 
 	}
 }

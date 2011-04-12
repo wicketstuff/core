@@ -23,39 +23,46 @@ package org.wicketstuff.console.engine;
  * 
  * @author cretzel
  */
-final class DefaultScriptExecutionResult implements IScriptExecutionResult {
+final class DefaultScriptExecutionResult implements IScriptExecutionResult
+{
 
-    private final String script;
-    private final Throwable exception;
-    private final String output;
-    private final Object returnValue;
+	private final String script;
+	private final Throwable exception;
+	private final String output;
+	private final Object returnValue;
 
-    public DefaultScriptExecutionResult(final String script, final Throwable exception,
-            final String output, final Object returnValue) {
-        this.script = script;
-        this.exception = exception;
-        this.output = output;
-        this.returnValue = returnValue;
-    }
+	public DefaultScriptExecutionResult(final String script, final Throwable exception,
+		final String output, final Object returnValue)
+	{
+		this.script = script;
+		this.exception = exception;
+		this.output = output;
+		this.returnValue = returnValue;
+	}
 
-    public String getScript() {
-        return script;
-    }
+	public String getScript()
+	{
+		return script;
+	}
 
-    public boolean isSuccess() {
-        return exception == null;
-    }
+	public boolean isSuccess()
+	{
+		return exception == null;
+	}
 
-    public Throwable getException() {
-        return exception;
-    }
+	public Throwable getException()
+	{
+		return exception;
+	}
 
-    public String getOutput() {
-        return output;
-    }
+	public String getOutput()
+	{
+		return output;
+	}
 
-    public Object getReturnValue() {
-        return returnValue;
-    }
+	public Object getReturnValue()
+	{
+		return returnValue;
+	}
 
 }

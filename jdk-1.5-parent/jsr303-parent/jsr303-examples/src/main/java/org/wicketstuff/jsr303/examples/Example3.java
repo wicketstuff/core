@@ -17,32 +17,32 @@ import org.wicketstuff.jsr303.PropertyValidation;
 
 public class Example3 extends WebPage
 {
-    static class Data implements Serializable
-    {
-        @Email
-        String email;
+	static class Data implements Serializable
+	{
+		@Email
+		String email;
 
-        @Range(min = 18, max = 99)
-        int age;
-    }
+		@Range(min = 18, max = 99)
+		int age;
+	}
 
-    private final Data dummy = new Data();
+	private final Data dummy = new Data();
 
-    public Example3()
-    {
-        final Form form = new Form("form", new CompoundPropertyModel(this.dummy));
-        add(form);
-        add(new FeedbackPanel("fb"));
-        add(new WebMarkupContainer("message")
-        {
-            @Override
-            public boolean isVisible()
-            {
-                return form.isSubmitted() && (!form.hasError());
-            }
-        });
-        form.add(new PropertyValidation());
-        form.add(new TextField("email"));
-        form.add(new TextField("age"));
-    }
+	public Example3()
+	{
+		final Form form = new Form("form", new CompoundPropertyModel(dummy));
+		add(form);
+		add(new FeedbackPanel("fb"));
+		add(new WebMarkupContainer("message")
+		{
+			@Override
+			public boolean isVisible()
+			{
+				return form.isSubmitted() && (!form.hasError());
+			}
+		});
+		form.add(new PropertyValidation());
+		form.add(new TextField("email"));
+		form.add(new TextField("age"));
+	}
 }

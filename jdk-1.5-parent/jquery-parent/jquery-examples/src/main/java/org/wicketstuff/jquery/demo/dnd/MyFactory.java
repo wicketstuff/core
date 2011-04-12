@@ -19,35 +19,44 @@ package org.wicketstuff.jquery.demo.dnd;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyFactory {
+public class MyFactory
+{
 
-    public static MyItem newMyItem(String base) throws Exception {
-        MyItem back = new MyItem();
-        back.label = "label of " + base;
-        back.description = "description of " + base + "\norem ipsum dolor sit amet, consectetuer adipiscing elit";
-        return back;
-    }
+	public static MyItem newMyItem(String base) throws Exception
+	{
+		MyItem back = new MyItem();
+		back.label = "label of " + base;
+		back.description = "description of " + base +
+			"\norem ipsum dolor sit amet, consectetuer adipiscing elit";
+		return back;
+	}
 
-    public static List<MyItem> newMyItemList(String base, int length) throws Exception {
-        ArrayList<MyItem> back = new ArrayList<MyItem>(length);
-        for(int i = 0; i < length; i++) {
-            back.add(newMyItem(base + " " + i));
-        }
-        return back;
-    }
+	public static List<MyItem> newMyItemList(String base, int length) throws Exception
+	{
+		ArrayList<MyItem> back = new ArrayList<MyItem>(length);
+		for (int i = 0; i < length; i++)
+		{
+			back.add(newMyItem(base + " " + i));
+		}
+		return back;
+	}
 
-    public static MyGroup newMyGroup(String base, int length) throws Exception {
-        MyGroup back = new MyGroup();
-        back.label = "label of " + base;
-        back.items = newMyItemList(base + "Item", length);
-        return back;
-    }
+	public static MyGroup newMyGroup(String base, int length) throws Exception
+	{
+		MyGroup back = new MyGroup();
+		back.label = "label of " + base;
+		back.items = newMyItemList(base + "Item", length);
+		return back;
+	}
 
-    public static List<MyGroup> newMyGroupList(String base, int length, int nbItemPerGroup) throws Exception {
-        ArrayList<MyGroup> back = new ArrayList<MyGroup>(length);
-        for(int i = 0; i < length; i++) {
-            back.add(newMyGroup(base + " " + i, nbItemPerGroup));
-        }
-        return back;
-    }
+	public static List<MyGroup> newMyGroupList(String base, int length, int nbItemPerGroup)
+		throws Exception
+	{
+		ArrayList<MyGroup> back = new ArrayList<MyGroup>(length);
+		for (int i = 0; i < length; i++)
+		{
+			back.add(newMyGroup(base + " " + i, nbItemPerGroup));
+		}
+		return back;
+	}
 }

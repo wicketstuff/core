@@ -17,12 +17,14 @@ import org.wicketstuff.yav.YavBehavior;
 
 /**
  * @author Zenika
- *
+ * 
  */
-public class TestPage extends WebPage {
+public class TestPage extends WebPage
+{
 
 	@SuppressWarnings("unchecked")
-	public TestPage() {
+	public TestPage()
+	{
 		super();
 
 		ValidationTestBean validationTestBean = new ValidationTestBean();
@@ -34,32 +36,27 @@ public class TestPage extends WebPage {
 		form.add(new YavBehavior());
 
 		form.add(new RequiredTextField("typeDate1"));
-		
+
 		form.add(new RequiredTextField("typeDate2"));
-		
+
 		form.add(new RequiredTextField("typeInt"));
-		
+
 		form.add(new RequiredTextField("typeDecimal"));
 
 		form.add(new RequiredTextField("typeBigDecimal"));
-		
-		form.add(new RequiredTextField("maxLengthString")
-				.add(StringValidator.maximumLength(10)));
 
-		form.add(new RequiredTextField("minLengthString")
-				.add(StringValidator.minimumLength(10)));
+		form.add(new RequiredTextField("maxLengthString").add(StringValidator.maximumLength(10)));
 
-		form.add(new RequiredTextField("exactLengthString")
-				.add(StringValidator.exactLength(10)));
+		form.add(new RequiredTextField("minLengthString").add(StringValidator.minimumLength(10)));
 
-		form.add(new RequiredTextField("lengthBetweenString")
-				.add(StringValidator.lengthBetween(10, 20)));
+		form.add(new RequiredTextField("exactLengthString").add(StringValidator.exactLength(10)));
 
-		form.add(new RequiredTextField("email")
-				.add(EmailAddressValidator.getInstance()));
+		form.add(new RequiredTextField("lengthBetweenString").add(StringValidator.lengthBetween(10,
+			20)));
 
-		form.add(new RequiredTextField("pattern", new Model())
-				.add(new PatternValidator(".*\\.com")));
+		form.add(new RequiredTextField("email").add(EmailAddressValidator.getInstance()));
+
+		form.add(new RequiredTextField("pattern", new Model()).add(new PatternValidator(".*\\.com")));
 
 		FormComponent formComponent1 = new RequiredTextField("dateOfBirth1");
 		FormComponent formComponent2 = new RequiredTextField("dateOfBirth2");
@@ -67,8 +64,7 @@ public class TestPage extends WebPage {
 		form.add(formComponent2);
 		form.add(new EqualInputValidator(formComponent1, formComponent2));
 
-		form.add(new RequiredTextField("rangeLong", Long.class)
-				.add(new RangeValidator(10L, 20L)));
+		form.add(new RequiredTextField("rangeLong", Long.class).add(new RangeValidator(10L, 20L)));
 
 		// Seems not to be supported by Yav yet
 		// form.add(new RequiredTextField("minInt").add(new MinimumValidator(10)));
@@ -76,11 +72,13 @@ public class TestPage extends WebPage {
 		// Seems not to be supported by Yav yet
 		// form.add(new RequiredTextField("maxInt").add(new MaximumValidator(100)));
 
-		form.add(new Button("submit") {
+		form.add(new Button("submit")
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onSubmit() {
+			public void onSubmit()
+			{
 				System.out.println(getForm().getModelObject());
 			}
 		});

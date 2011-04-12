@@ -6,37 +6,45 @@ package org.wicketstuff.googlecharts;
 /**
  * @author Daniel Spiewak
  */
-public abstract class AbstractChartData implements IChartData {
+public abstract class AbstractChartData implements IChartData
+{
 
-    private ChartDataEncoding encoding;
-    private double max;
+	private ChartDataEncoding encoding;
+	private double max;
 
-    public AbstractChartData() {
-        this(62);
-    }
+	public AbstractChartData()
+	{
+		this(62);
+	}
 
-    public AbstractChartData(double max) {
-        this(ChartDataEncoding.SIMPLE, max);
-    }
+	public AbstractChartData(double max)
+	{
+		this(ChartDataEncoding.SIMPLE, max);
+	}
 
-    public AbstractChartData(ChartDataEncoding encoding, double max) {
-        this.encoding = encoding;
-        this.max = max;
-    }
+	public AbstractChartData(ChartDataEncoding encoding, double max)
+	{
+		this.encoding = encoding;
+		this.max = max;
+	}
 
-    public ChartDataEncoding getEncoding() {
-        return encoding;
-    }
+	public ChartDataEncoding getEncoding()
+	{
+		return encoding;
+	}
 
-    public double getMax() {
-        return max;
-    }
+	public double getMax()
+	{
+		return max;
+	}
 
-    public void setEncoding(ChartDataEncoding encoding) {
-        this.encoding = encoding;
-    }
+	public void setEncoding(ChartDataEncoding encoding)
+	{
+		this.encoding = encoding;
+	}
 
-    public void setMax(double max) {
-        this.max = max;
-    }
+	public void setMax(double max)
+	{
+		this.max = max;
+	}
 }

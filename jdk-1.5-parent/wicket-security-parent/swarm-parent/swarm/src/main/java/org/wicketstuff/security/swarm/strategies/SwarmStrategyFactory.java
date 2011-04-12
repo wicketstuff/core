@@ -30,13 +30,13 @@ import org.wicketstuff.security.strategies.WaspAuthorizationStrategy;
  */
 public class SwarmStrategyFactory implements StrategyFactory
 {
-	private final Class<? extends ISecureComponent> secureClass;
+	private final Class< ? extends ISecureComponent> secureClass;
 
 	private Object hiveQueen;
 
 	/**
-	 * Constructs a new factory. All the strategies will require
-	 * {@link ISecurePage}s to have access rights.
+	 * Constructs a new factory. All the strategies will require {@link ISecurePage}s to
+	 * have access rights.
 	 * 
 	 * @param hiveQueen
 	 *            the key to get the {@link Hive}
@@ -50,12 +50,11 @@ public class SwarmStrategyFactory implements StrategyFactory
 	 * Constructs a new factory.
 	 * 
 	 * @param secureClass
-	 *            instances of this class will be required to have access
-	 *            rights.
+	 *            instances of this class will be required to have access rights.
 	 * @param hiveQueen
 	 *            hiveQueen the key to get the {@link Hive}
 	 */
-	public SwarmStrategyFactory(Class<? extends ISecureComponent> secureClass, Object hiveQueen)
+	public SwarmStrategyFactory(Class< ? extends ISecureComponent> secureClass, Object hiveQueen)
 	{
 		this.secureClass = secureClass;
 		this.hiveQueen = hiveQueen;
@@ -93,12 +92,12 @@ public class SwarmStrategyFactory implements StrategyFactory
 	}
 
 	/**
-	 * All instance of this class will be required to have
-	 * {@link ComponentPermission} with at least the access action.
+	 * All instance of this class will be required to have {@link ComponentPermission}
+	 * with at least the access action.
 	 * 
 	 * @return the class required to have instantiation rights
 	 */
-	protected final Class<? extends ISecureComponent> getSecureClass()
+	protected final Class< ? extends ISecureComponent> getSecureClass()
 	{
 		return secureClass;
 	}

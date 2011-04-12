@@ -20,13 +20,14 @@ package org.wicketstuff.datatable_autocomplete.trie;
 /**
  * @author mocleiri
  * 
- * Provides a way to visit each TrieNode in a Trie<C>.  Typically used to visit a specific subtree of and expand 
- * out the ordered list of words.
+ *         Provides a way to visit each TrieNode in a Trie<C>. Typically used to visit a specific
+ *         subtree of and expand out the ordered list of words.
  * 
  */
 
-public interface ITrieNodeVisitor<C> {
-	
-	public void visit (TrieNode<C> node);
+public interface ITrieNodeVisitor<C>
+{
+
+	public void visit(TrieNode<C> node);
 
 }

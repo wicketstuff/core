@@ -21,7 +21,6 @@ import org.apache.wicket.model.Model;
 import org.wicketstuff.security.components.markup.html.form.SecureTextField;
 import org.wicketstuff.security.pages.SecureTestPage;
 
-
 /**
  * @author marrink
  * 

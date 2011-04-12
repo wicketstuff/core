@@ -33,7 +33,6 @@ import org.wicketstuff.security.models.ISecureModel;
 import org.wicketstuff.security.strategies.SecurityException;
 import org.wicketstuff.security.strategies.WaspAuthorizationStrategy;
 
-
 /**
  * Utility class for secure components.
  * 
@@ -56,8 +55,8 @@ public final class SecureComponentHelper
 	public static final String PATH_SEPARATOR = "" + Component.PATH_SEPARATOR;
 
 	/**
-	 * The security check placed on the component or null. This uses the
-	 * metadata of a component to store or retrieve the {@link ISecurityCheck}.
+	 * The security check placed on the component or null. This uses the metadata of a
+	 * component to store or retrieve the {@link ISecurityCheck}.
 	 * 
 	 * @param component
 	 *            if null, null will be returned
@@ -71,8 +70,8 @@ public final class SecureComponentHelper
 	}
 
 	/**
-	 * Places a security check on a component. This uses the metadata of a
-	 * component to store or retrieve the {@link ISecurityCheck}.
+	 * Places a security check on a component. This uses the metadata of a component to
+	 * store or retrieve the {@link ISecurityCheck}.
 	 * 
 	 * @param component
 	 * @param securityCheck
@@ -87,11 +86,10 @@ public final class SecureComponentHelper
 	}
 
 	/**
-	 * We cannot assume everybody uses the here specified public methods to
-	 * store the {@link ISecurityCheck}, so we check if the component is a
-	 * {@link ISecureComponent} and if so use the
-	 * {@link ISecureComponent#getSecurityCheck()} on the secure component else
-	 * we fall back to the metadata.
+	 * We cannot assume everybody uses the here specified public methods to store the
+	 * {@link ISecurityCheck}, so we check if the component is a {@link ISecureComponent}
+	 * and if so use the {@link ISecureComponent#getSecurityCheck()} on the secure
+	 * component else we fall back to the metadata.
 	 * 
 	 * @param component
 	 * @return the security check or null if the component does not have one.
@@ -99,7 +97,7 @@ public final class SecureComponentHelper
 	private static ISecurityCheck saveGetSecurityCheck(Component component)
 	{
 		if (component instanceof ISecureComponent)
-			return ((ISecureComponent)component).getSecurityCheck();
+			return ((ISecureComponent) component).getSecurityCheck();
 		return getSecurityCheck(component);
 	}
 
@@ -111,7 +109,7 @@ public final class SecureComponentHelper
 	 */
 	public static boolean hasSecureModel(Component component)
 	{
-		return component != null && component.getDefaultModel() instanceof ISecureModel<?>;
+		return component != null && component.getDefaultModel() instanceof ISecureModel< ? >;
 	}
 
 	/**
@@ -126,7 +124,7 @@ public final class SecureComponentHelper
 		Application application = Application.get();
 		if (application instanceof WaspApplication)
 		{
-			WaspApplication app = (WaspApplication)application;
+			WaspApplication app = (WaspApplication) application;
 			return app.getActionFactory();
 		}
 		throw new WicketRuntimeException(application + " is not a " + WaspApplication.class);
@@ -139,24 +137,22 @@ public final class SecureComponentHelper
 	 * @throws WicketRuntimeException
 	 *             if a {@link WaspSession} is not found
 	 * @throws ClassCastException
-	 *             if the session does not contain a
-	 *             {@link WaspAuthorizationStrategy}
+	 *             if the session does not contain a {@link WaspAuthorizationStrategy}
 	 */
 	private static WaspAuthorizationStrategy getStrategy()
 	{
 		Session session = Session.get();
 		if (session instanceof WaspSession)
-			return (WaspAuthorizationStrategy)session.getAuthorizationStrategy();
+			return (WaspAuthorizationStrategy) session.getAuthorizationStrategy();
 		throw new WicketRuntimeException(session + " is not a " + WaspSession.class);
 	}
 
 	/**
-	 * Default implementation for
-	 * {@link ISecureComponent#isActionAuthorized(String)} and
+	 * Default implementation for {@link ISecureComponent#isActionAuthorized(String)} and
 	 * {@link WaspAuthorizationStrategy#isActionAuthorized(Component, org.apache.wicket.authorization.Action)}
-	 * . First tries to use the {@link ISecurityCheck} from the component if
-	 * that is not available it tries the {@link ISecureModel} if neither is
-	 * present the action is authorized on the component.
+	 * . First tries to use the {@link ISecurityCheck} from the component if that is not
+	 * available it tries the {@link ISecureModel} if neither is present the action is
+	 * authorized on the component.
 	 * 
 	 * @param component
 	 *            the component to check
@@ -176,18 +172,18 @@ public final class SecureComponentHelper
 		if (check != null)
 			return check.isActionAuthorized(getActionFactory().getAction(action));
 		if (hasSecureModel(component))
-			return ((ISecureModel<?>)component.getDefaultModel()).isAuthorized(component,
-					getActionFactory().getAction(action));
+			return ((ISecureModel< ? >) component.getDefaultModel()).isAuthorized(component,
+				getActionFactory().getAction(action));
 		return true;
 	}
 
 	/**
-	 * Default implementation for
-	 * {@link ISecureComponent#isActionAuthorized(WaspAction)} and
+	 * Default implementation for {@link ISecureComponent#isActionAuthorized(WaspAction)}
+	 * and
 	 * {@link WaspAuthorizationStrategy#isActionAuthorized(Component, org.apache.wicket.authorization.Action)}
-	 * . First tries to use the {@link ISecurityCheck} from the component if
-	 * that is not available it tries the {@link ISecureModel} if neither is
-	 * present the action is authorized on the component.
+	 * . First tries to use the {@link ISecurityCheck} from the component if that is not
+	 * available it tries the {@link ISecureModel} if neither is present the action is
+	 * authorized on the component.
 	 * 
 	 * @param component
 	 *            the component to check
@@ -207,15 +203,15 @@ public final class SecureComponentHelper
 		if (check != null)
 			return check.isActionAuthorized(action);
 		if (hasSecureModel(component))
-			return ((ISecureModel<?>)component.getDefaultModel()).isAuthorized(component, action);
+			return ((ISecureModel< ? >) component.getDefaultModel())
+				.isAuthorized(component, action);
 		return true;
 	}
 
 	/**
-	 * Default implementation for {@link ISecureComponent#isAuthenticated()}.
-	 * First tries to use the {@link ISecurityCheck} from the component if that
-	 * is not available it tries the {@link ISecureModel} if neither is present
-	 * the user is authenticated if
+	 * Default implementation for {@link ISecureComponent#isAuthenticated()}. First tries
+	 * to use the {@link ISecurityCheck} from the component if that is not available it
+	 * tries the {@link ISecureModel} if neither is present the user is authenticated if
 	 * {@link WaspAuthorizationStrategy#isUserAuthenticated()} returns true.
 	 * 
 	 * @param component
@@ -232,21 +228,20 @@ public final class SecureComponentHelper
 		if (check != null)
 			return check.isAuthenticated();
 		if (hasSecureModel(component))
-			return ((ISecureModel<?>)component.getDefaultModel()).isAuthenticated(component);
+			return ((ISecureModel< ? >) component.getDefaultModel()).isAuthenticated(component);
 		return getStrategy().isUserAuthenticated();
 	}
 
 	/**
-	 * Builds a 'unique' name for the component. The name is based on the page
-	 * class alias and the relative path to the page (if not a page itself).
-	 * Note that although it is unlikely, it is not impossible for two
-	 * components to have the same alias.
+	 * Builds a 'unique' name for the component. The name is based on the page class alias
+	 * and the relative path to the page (if not a page itself). Note that although it is
+	 * unlikely, it is not impossible for two components to have the same alias.
 	 * 
 	 * @param component
 	 * @return an alias.
 	 * @throws SecurityException
-	 *             if the component is null, or if the page of the component is
-	 *             not available.
+	 *             if the component is null, or if the page of the component is not
+	 *             available.
 	 */
 	public static String alias(Component component)
 	{
@@ -275,7 +270,7 @@ public final class SecureComponentHelper
 	 * @param class1
 	 * @return an alias
 	 */
-	public static String alias(Class<?> class1)
+	public static String alias(Class< ? > class1)
 	{
 		if (class1 == null)
 			throw new SecurityException("Specified class is null");
@@ -305,8 +300,8 @@ public final class SecureComponentHelper
 	}
 
 	/**
-	 * Builds a set of aliases for this component. Each alias can be used as
-	 * name in Permission.
+	 * Builds a set of aliases for this component. Each alias can be used as name in
+	 * Permission.
 	 * 
 	 * @param component
 	 * @return an array with aliases for this component
@@ -317,7 +312,7 @@ public final class SecureComponentHelper
 			throw new SecurityException("specified component is null");
 		MarkupContainer parent = null;
 		if (component instanceof MarkupContainer)
-			parent = (MarkupContainer)component;
+			parent = (MarkupContainer) component;
 		else
 			parent = component.getParent();
 		if (parent == null)

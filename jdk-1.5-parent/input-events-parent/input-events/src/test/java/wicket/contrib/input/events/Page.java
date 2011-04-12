@@ -28,60 +28,71 @@ import wicket.contrib.input.events.key.KeyType;
  * the License.
  */
 
-public class Page extends WebPage {
+public class Page extends WebPage
+{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public Page() {
+	public Page()
+	{
 		Label label = new Label("id");
 		add(label);
-		Button button = new Button("button") {
+		Button button = new Button("button")
+		{
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onSubmit() {
+			public void onSubmit()
+			{
 				warn("you clicked me!");
 			}
 		};
-		button.add(new AjaxEventBehavior("onClick") {
+		button.add(new AjaxEventBehavior("onClick")
+		{
 			@Override
-			protected void onEvent(AjaxRequestTarget target) {
+			protected void onEvent(AjaxRequestTarget target)
+			{
 				// TODO Auto-generated method stub
 
 			}
 		});
-		button.add(new InputBehavior(new KeyType[] { KeyType.b },
-				EventType.click));
+		button.add(new InputBehavior(new KeyType[] { KeyType.b }, EventType.click));
 		add(button);
 
-		Button button2 = new Button("button2") {
+		Button button2 = new Button("button2")
+		{
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onSubmit() {
+			public void onSubmit()
+			{
 				warn("you clicked me!");
 			}
 		};
-		button2.add(new AjaxEventBehavior("onClick") {
+		button2.add(new AjaxEventBehavior("onClick")
+		{
 			@Override
-			protected void onEvent(AjaxRequestTarget target) {
+			protected void onEvent(AjaxRequestTarget target)
+			{
 				// TODO Auto-generated method stub
 
 			}
 		});
 		button2.add(new InputBehavior(new KeyType[] { KeyType.a }));
 		add(button2);
-		Link link = new Link("link") {
+		Link link = new Link("link")
+		{
 			@Override
-			public void onClick() {
+			public void onClick()
+			{
 
 			}
 		};

@@ -27,7 +27,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
 public class DetachableContactModel extends LoadableDetachableModel
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private long id;
 
 	protected ContactsDatabase getContactsDB()
@@ -84,7 +84,7 @@ public class DetachableContactModel extends LoadableDetachableModel
 		else if (obj instanceof DetachableContactModel)
 		{
 			DetachableContactModel other = (DetachableContactModel)obj;
-			return other.id == this.id;
+			return other.id == id;
 		}
 		return false;
 	}

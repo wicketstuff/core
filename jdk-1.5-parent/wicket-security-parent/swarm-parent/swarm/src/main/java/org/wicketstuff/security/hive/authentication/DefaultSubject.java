@@ -19,11 +19,10 @@ package org.wicketstuff.security.hive.authentication;
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 
-
 /**
- * Default implementation of a Subject.Targeted for wicket applications. By
- * default it authenticates all classes, components and models. This makes it an
- * ideal candidate for single login applications.
+ * Default implementation of a Subject.Targeted for wicket applications. By default it
+ * authenticates all classes, components and models. This makes it an ideal candidate for
+ * single login applications.
  * 
  * @author marrink
  * @see WicketSubject
@@ -35,7 +34,7 @@ public class DefaultSubject extends BaseSubject implements WicketSubject
 	/**
 	 * @see org.wicketstuff.security.hive.authentication.WicketSubject#isClassAuthenticated(java.lang.Class)
 	 */
-	public boolean isClassAuthenticated(Class<?> class1)
+	public boolean isClassAuthenticated(Class< ? > class1)
 	{
 		return true;
 	}
@@ -52,7 +51,7 @@ public class DefaultSubject extends BaseSubject implements WicketSubject
 	 * @see org.wicketstuff.security.hive.authentication.WicketSubject#isModelAuthenticated(org.apache.wicket.model.IModel,
 	 *      org.apache.wicket.Component)
 	 */
-	public boolean isModelAuthenticated(IModel<?> model, Component component)
+	public boolean isModelAuthenticated(IModel< ? > model, Component component)
 	{
 		return true;
 	}

@@ -27,36 +27,44 @@ import org.apache.wicket.model.Model;
 import org.wicketstuff.jquery.tabs.JQTabbedPanel;
 
 @SuppressWarnings("serial")
-public class Page4Tabs extends PageSupport {
-    public Page4Tabs() throws Exception {
-        super();
+public class Page4Tabs extends PageSupport
+{
+	public Page4Tabs() throws Exception
+	{
+		super();
 		List<ITab> tabs = new ArrayList<ITab>();
-		tabs.add(new AbstractTab(new Model("A")) {
+		tabs.add(new AbstractTab(new Model("A"))
+		{
 			@Override
-			public Panel getPanel(String panelId) {
-				return new TextPanel(panelId, Model.of(
-						"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus nec leo. Duis ultricies. In id ipsum vitae ante fringilla" 
-						));
+			public Panel getPanel(String panelId)
+			{
+				return new TextPanel(
+					panelId,
+					Model.of("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus nec leo. Duis ultricies. In id ipsum vitae ante fringilla"));
 			}
 		});
-		tabs.add(new AbstractTab(new Model("B")) {
+		tabs.add(new AbstractTab(new Model("B"))
+		{
 			@Override
-			public Panel getPanel(String panelId) {
-				return new TextPanel(panelId, Model.of(
-						"volutpat. In pharetra. Ut ante. Vivamus tempus, leo a ullamcorper tincidunt, pede ipsum consectetuer nunc, at pellentesque"
-						));
+			public Panel getPanel(String panelId)
+			{
+				return new TextPanel(
+					panelId,
+					Model.of("volutpat. In pharetra. Ut ante. Vivamus tempus, leo a ullamcorper tincidunt, pede ipsum consectetuer nunc, at pellentesque"));
 			}
 		});
-		tabs.add(new AbstractTab(new Model("C")) {
+		tabs.add(new AbstractTab(new Model("C"))
+		{
 			@Override
-			public Panel getPanel(String panelId) {
-				return new TextPanel(panelId, Model.of(
-						"libero felis in metus. Pellentesque sollicitudin neque. Nulla facilisi. Sed hendrerit tempus orci. Aenean a nulla quis risus molestie vehicula."
-						));
+			public Panel getPanel(String panelId)
+			{
+				return new TextPanel(
+					panelId,
+					Model.of("libero felis in metus. Pellentesque sollicitudin neque. Nulla facilisi. Sed hendrerit tempus orci. Aenean a nulla quis risus molestie vehicula."));
 			}
 		});
 		add(new TabbedPanel("tabs1", tabs));
 		add(new JQTabbedPanel("tabs2", tabs));
 		add(new JQTabbedPanel("tabs3", tabs, "{ fxFade: true }"));
-    }
+	}
 }

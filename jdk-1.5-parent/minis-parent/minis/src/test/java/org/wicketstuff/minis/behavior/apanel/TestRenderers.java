@@ -34,7 +34,6 @@ import org.apache.wicket.util.resource.StringBufferResourceStream;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
-import org.wicketstuff.minis.behavior.apanel.APanel;
 
 @SuppressWarnings({ "rawtypes", "serial" })
 public class TestRenderers

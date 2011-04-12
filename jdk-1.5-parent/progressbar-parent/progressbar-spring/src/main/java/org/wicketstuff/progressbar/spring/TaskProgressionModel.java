@@ -20,43 +20,49 @@ import org.wicketstuff.progressbar.Progression;
 import org.wicketstuff.progressbar.ProgressionModel;
 
 /**
- * Use this as a model for a ProgressBar, if
- * tasks are submitted to the task service. The current progress is
- * fetched from the task service.
- *
+ * Use this as a model for a ProgressBar, if tasks are submitted to the task service. The current
+ * progress is fetched from the task service.
+ * 
  * After scheduling a task, set the taskId.
- *
+ * 
  * @author Christopher Hlubek (hlubek)
- *
+ * 
  */
-public class TaskProgressionModel extends ProgressionModel {
+public class TaskProgressionModel extends ProgressionModel
+{
 
 	private final ITaskService taskService;
 
 	private Long taskId;
 
-	public TaskProgressionModel(ITaskService taskService) {
+	public TaskProgressionModel(ITaskService taskService)
+	{
 		this.taskService = taskService;
 	}
 
-	public TaskProgressionModel() {
+	public TaskProgressionModel()
+	{
 		this(null);
 	}
 
 	@Override
-	protected Progression getProgression() {
+	protected Progression getProgression()
+	{
 		return getTaskService().getProgression(taskId);
 	}
 
-	public Long getTaskId() {
+	public Long getTaskId()
+	{
 		return taskId;
 	}
 
-	public void setTaskId(Long taskId) {
+	public void setTaskId(Long taskId)
+	{
 		this.taskId = taskId;
 	}
 
-	protected ITaskService getTaskService() {
+	protected ITaskService getTaskService()
+	{
 		return taskService;
 	}
 

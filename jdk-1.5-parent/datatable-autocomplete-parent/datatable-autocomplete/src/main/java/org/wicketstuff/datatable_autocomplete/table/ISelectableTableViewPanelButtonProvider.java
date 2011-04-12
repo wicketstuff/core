@@ -28,8 +28,8 @@ import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;
  *         We default to ajaxfallback buttons.
  * 
  */
-public interface ISelectableTableViewPanelButtonProvider extends
-		IClusterable {
+public interface ISelectableTableViewPanelButtonProvider extends IClusterable
+{
 
 	/**
 	 * 
@@ -50,7 +50,7 @@ public interface ISelectableTableViewPanelButtonProvider extends
 	 * @return non null if there is a class atribute that should be written on the button.
 	 */
 	public String getCSSClassName();
-	
+
 	/**
 	 * 
 	 * @return if a selected row is a precondition to this action.
@@ -58,11 +58,9 @@ public interface ISelectableTableViewPanelButtonProvider extends
 	public boolean isSelectedRowRequired();
 
 	/**
-	 * @return true if the selected row should be cleared as a result of
-	 *         clicking on the button.
+	 * @return true if the selected row should be cleared as a result of clicking on the button.
 	 */
 	public boolean isClearSelectedRowOnAction();
-	
-	
+
 
 }

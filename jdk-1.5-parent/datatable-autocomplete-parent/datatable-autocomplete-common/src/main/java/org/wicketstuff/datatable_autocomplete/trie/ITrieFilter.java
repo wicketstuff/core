@@ -18,17 +18,17 @@ package org.wicketstuff.datatable_autocomplete.trie;
 import org.apache.wicket.IClusterable;
 
 
-
 /**
  * @author mocleiri
- *
+ * 
  */
-public interface ITrieFilter<C> extends IClusterable {
-		/**
-		 * 
-		 * @param word
-		 * @return true if the indexed word should be visible.
-		 * 
-		 */
-		public boolean isVisible (C word);
+public interface ITrieFilter<C> extends IClusterable
+{
+	/**
+	 * 
+	 * @param word
+	 * @return true if the indexed word should be visible.
+	 * 
+	 */
+	public boolean isVisible(C word);
 }

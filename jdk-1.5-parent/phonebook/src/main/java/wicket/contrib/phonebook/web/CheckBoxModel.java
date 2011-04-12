@@ -26,9 +26,9 @@ import org.apache.wicket.model.IModel;
 
 /**
  * A model for checkboxes that represent a more-than-one-selection.
- *
+ * 
  * @author ivaynberg
- *
+ * 
  */
 public class CheckBoxModel extends AbstractCheckBoxModel
 {
@@ -37,13 +37,11 @@ public class CheckBoxModel extends AbstractCheckBoxModel
 
 	/**
 	 * Constructor
-	 *
+	 * 
 	 * @param selection
-	 *            model that contains a collection of tokens which will
-	 *            represent selection state
+	 *            model that contains a collection of tokens which will represent selection state
 	 * @param token
-	 *            token whose presense in the collection represents a selection
-	 *            state
+	 *            token whose presense in the collection represents a selection state
 	 */
 	public CheckBoxModel(IModel<Collection<Serializable>> selection, Serializable token)
 	{

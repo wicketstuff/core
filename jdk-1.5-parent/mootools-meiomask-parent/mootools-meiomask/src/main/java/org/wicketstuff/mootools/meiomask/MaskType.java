@@ -19,46 +19,42 @@ package org.wicketstuff.mootools.meiomask;
 import org.wicketstuff.mootools.meiomask.behavior.MeioMaskBehavior;
 
 /**
- *
+ * 
  * @author inaiat
  */
-public enum MaskType {
+public enum MaskType
+{
 
-    Fixed("fixed", ""),
-    FixedPhone("fixed.phone", "(##) ####-####"),
-    FixedPhoneUs("fixed.phone-us", "(###) ###-####"),
-    FixedCpf("fixed.cpf", "###.###.###-##"),
-    FixedCnpj("fixed.cnpj", "##.###.###/####-##"),
-    FixedDate("fixed.date", "##/##/####"),
-    FixedDateUs("fixed.date-us", "##/##/####"),
-    FixedCep("fixed.cep", "#####-###"),
-    FixedTime("fixed.time", "##:##"),
-    FixedCc("fixed.cc", "#### #### #### ####"),
-    ReverseInteger("reverse.integer",""),
-    ReverseDecimal("reverse.decimal",""),
-    ReverseDecimalUs("reverse.decimal-us",""),
-    ReverseReais("reverse.reais",""),
-    ReverseDollar("reverse.dollar",""),
-    RegexpIp("regexp.ip",""),
-    RegexpEmail("regexp.email","");
-    
-    private String maskName;
-    private String mask;
+	FixedPhone("fixed.phone", "(##) ####-####"), FixedPhoneUs("fixed.phone-us", "(###) ###-####"), FixedCpf(
+		"fixed.cpf", "###.###.###-##"), FixedCnpj("fixed.cnpj", "##.###.###/####-##"), FixedDate(
+		"fixed.date", "##/##/####"), FixedDateUs("fixed.date-us", "##/##/####"), FixedCep(
+		"fixed.cep", "#####-###"), FixedTime("fixed.time", "##:##"), FixedCc("fixed.cc",
+		"#### #### #### ####"), ReverseInteger("reverse.integer", null), ReverseDecimal(
+		"reverse.decimal", null), ReverseDecimalUs("reverse.decimal-us", null), ReverseReais(
+		"reverse.reais", null), ReverseDollar("reverse.dollar", null), RegexpIp("regexp.ip", null), RegexpEmail(
+		"regexp.email", null);
 
-    private MaskType(String maskName, String mask) {
-        this.maskName = maskName;
-        this.mask = mask;
-    }
+	private String maskName;
+	private String mask;
 
-    public String getMaskName() {
-        return maskName;
-    }
-    
-    public String getMask() {
-        return mask;
-    }
+	private MaskType(String maskName, String mask)
+	{
+		this.maskName = maskName;
+		this.mask = mask;
+	}
 
-    public MeioMaskBehavior ofBehavior() {
-        return new MeioMaskBehavior(this);
-    }
+	public String getMaskName()
+	{
+		return maskName;
+	}
+
+	public String getMask()
+	{
+		return mask;
+	}
+
+	public MeioMaskBehavior ofBehavior()
+	{
+		return new MeioMaskBehavior(this);
+	}
 }

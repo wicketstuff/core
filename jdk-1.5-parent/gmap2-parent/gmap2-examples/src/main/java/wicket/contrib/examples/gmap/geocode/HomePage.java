@@ -40,7 +40,7 @@ public class HomePage extends WicketExamplePage
 		add(feedback);
 
 		final GMap2 bottomMap = new GMap2("bottomPanel", new GMapHeaderContributor(
-				GMapExampleApplication.get().getGoogleMapsAPIkey()));
+			GMapExampleApplication.get().getGoogleMapsAPIkey()));
 		bottomMap.setOutputMarkupId(true);
 		bottomMap.setMapType(GMapType.G_SATELLITE_MAP);
 		bottomMap.addControl(GControl.GSmallMapControl);
@@ -50,25 +50,25 @@ public class HomePage extends WicketExamplePage
 		add(geocodeForm);
 
 		final TextField<String> addressTextField = new TextField<String>("address",
-				new Model<String>(""));
+			new Model<String>(""));
 		geocodeForm.add(addressTextField);
 
 		Button button = new Button("client");
 		// Using GClientGeocoder the geocoding request
 		// is performed on the client using JavaScript
 		button.add(new GClientGeocoder("onclick", addressTextField, GMapExampleApplication.get()
-				.getGoogleMapsAPIkey())
+			.getGoogleMapsAPIkey())
 		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onGeoCode(AjaxRequestTarget target, int status, String address,
-					GLatLng latLng)
+				GLatLng latLng)
 			{
 				if (status == GeocoderException.G_GEO_SUCCESS)
 				{
 					bottomMap.getInfoWindow().open(latLng,
-							new GInfoWindowTab(address, new Label(address, address)));
+						new GInfoWindowTab(address, new Label(address, address)));
 				}
 				else
 				{
@@ -94,10 +94,12 @@ public class HomePage extends WicketExamplePage
 				{
 					String address = addressTextField.getDefaultModelObjectAsString();
 
-					GLatLng latLng = GeoCodeGMapApplication.get().getServerGeocoder().findAddress(address);
+					GLatLng latLng = GeoCodeGMapApplication.get()
+						.getServerGeocoder()
+						.findAddress(address);
 
 					bottomMap.getInfoWindow().open(latLng,
-							new GInfoWindowTab(address, new Label(address, address)));
+						new GInfoWindowTab(address, new Label(address, address)));
 				}
 				catch (IOException e)
 				{
@@ -106,13 +108,15 @@ public class HomePage extends WicketExamplePage
 			}
 
 			/**
-			 * @see org.apache.wicket.ajax.markup.html.form.AjaxButton#onError(org.apache.wicket.ajax.AjaxRequestTarget, org.apache.wicket.markup.html.form.Form)
+			 * @see org.apache.wicket.ajax.markup.html.form.AjaxButton#onError(org.apache.wicket.ajax.AjaxRequestTarget,
+			 *      org.apache.wicket.markup.html.form.Form)
 			 */
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form) {
+			protected void onError(AjaxRequestTarget target, Form<?> form)
+			{
 				target.appendJavaScript("Unable to geocode (ajax button onError)");
 			}
-			
+
 		});
 	}
 }

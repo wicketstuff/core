@@ -7,15 +7,14 @@ import net.sf.json.JSONObject;
 import org.apache.wicket.IClusterable;
 
 /**
- * An integration of JQuery UI Slider widget
- * (http://docs.jquery.com/UI/Slider/slider)
+ * An integration of JQuery UI Slider widget (http://docs.jquery.com/UI/Slider/slider)
  * 
- * A Java representation of Slider's options
- * (http://docs.jquery.com/UI/Slider/slider#options)
+ * A Java representation of Slider's options (http://docs.jquery.com/UI/Slider/slider#options)
  * 
  * @author Martin Grigorov <martingrigorov @ users.sf.net>
  */
-public class SliderOptions implements IClusterable {
+public class SliderOptions implements IClusterable
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -41,91 +40,105 @@ public class SliderOptions implements IClusterable {
 
 	private transient final JSONObject json;
 
-	public SliderOptions() {
-		this.json = new JSONObject();
+	public SliderOptions()
+	{
+		json = new JSONObject();
 	}
 
-	public SliderOptions setStepping(final Integer stepping) {
+	public SliderOptions setStepping(final Integer stepping)
+	{
 		json.put(STEPPING, stepping);
 		return this;
 	}
 
-	public Integer getStepping() {
-		return (Integer) json.get(STEPPING);
+	public Integer getStepping()
+	{
+		return (Integer)json.get(STEPPING);
 	}
 
-	public SliderOptions setMin(final Integer min) {
+	public SliderOptions setMin(final Integer min)
+	{
 		json.put(MIN, min);
 		return this;
 	}
 
-	public Integer getMin() {
-		return (Integer) json.get(MIN);
+	public Integer getMin()
+	{
+		return (Integer)json.get(MIN);
 	}
 
-	public SliderOptions setMax(final Integer max) {
+	public SliderOptions setMax(final Integer max)
+	{
 		json.put(MAX, max);
 		return this;
 	}
 
-	public Integer getMax() {
-		return (Integer) json.get(MAX);
+	public Integer getMax()
+	{
+		return (Integer)json.get(MAX);
 	}
 
-	public SliderOptions setRange(final Boolean range) {
+	public SliderOptions setRange(final Boolean range)
+	{
 		json.put(RANGE, range);
 		return this;
 	}
 
-	public Boolean getRange() {
-		return (Boolean) json.get(RANGE);
+	public Boolean getRange()
+	{
+		return (Boolean)json.get(RANGE);
 	}
 
-	public SliderOptions setAnimate(final Boolean animate) {
+	public SliderOptions setAnimate(final Boolean animate)
+	{
 		json.put(ANIMATE, animate);
 		return this;
 	}
 
-	public Boolean getAnimate() {
-		return (Boolean) json.get(ANIMATE);
+	public Boolean getAnimate()
+	{
+		return (Boolean)json.get(ANIMATE);
 	}
 
-	public SliderOptions setOnChange(final String body,
-			final String... parametersNames) {
+	public SliderOptions setOnChange(final String body, final String... parametersNames)
+	{
 		putFunction(CHANGE, body, parametersNames);
 		return this;
 	}
 
-	public SliderOptions setOnStart(final String body,
-			final String... parametersNames) {
+	public SliderOptions setOnStart(final String body, final String... parametersNames)
+	{
 		putFunction(START, body, parametersNames);
 		return this;
 	}
 
-	public SliderOptions setOnStop(final String body,
-			final String... parametersNames) {
+	public SliderOptions setOnStop(final String body, final String... parametersNames)
+	{
 		putFunction(STOP, body, parametersNames);
 		return this;
 	}
 
-	public SliderOptions setOnSlide(final String body,
-			final String... parametersNames) {
+	public SliderOptions setOnSlide(final String body, final String... parametersNames)
+	{
 		putFunction(SLIDE, body, parametersNames);
 		return this;
 	}
 
-	public JSONFunction getOnChange() {
+	public JSONFunction getOnChange()
+	{
 
-		return (JSONFunction) json.get(CHANGE);
+		return (JSONFunction)json.get(CHANGE);
 	}
 
-	public SliderOptions setHandles(
-			final SliderHandleOptions... handlesSettings) {
+	public SliderOptions setHandles(final SliderHandleOptions... handlesSettings)
+	{
 
-		if (handlesSettings != null && handlesSettings.length > 0) {
+		if (handlesSettings != null && handlesSettings.length > 0)
+		{
 			final JSONArray handlesArray = new JSONArray();
 
-			for (final SliderHandleOptions sliderHandleSettings : handlesSettings) {
+			for (final SliderHandleOptions sliderHandleSettings : handlesSettings)
+			{
 				handlesArray.add(sliderHandleSettings.getJSON());
 			}
 
@@ -135,18 +148,22 @@ public class SliderOptions implements IClusterable {
 		return this;
 	}
 
-	public String toJSON() {
+	public String toJSON()
+	{
 		return json.toString();
 	}
 
-	private void putFunction(final String keyName, final String body,
-			final String[] parametersNames) {
+	private void putFunction(final String keyName, final String body, final String[] parametersNames)
+	{
 
 		final JSONFunction function;
 
-		if (parametersNames != null && parametersNames.length > 0) {
+		if (parametersNames != null && parametersNames.length > 0)
+		{
 			function = new JSONFunction(parametersNames, body);
-		} else {
+		}
+		else
+		{
 			function = new JSONFunction(body);
 		}
 

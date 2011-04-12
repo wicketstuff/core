@@ -24,16 +24,17 @@ import org.apache.wicket.extensions.markup.html.repeater.util.SortParam;
 /**
  * @author mocleiri
  * 
- * Defines how a trie list data can be sorted
+ *         Defines how a trie list data can be sorted
  */
-public interface IProviderSorter<C> extends IClusterable {
+public interface IProviderSorter<C> extends IClusterable
+{
 
 	/**
-	 * @param sort the string value of the Model for C Type.name
+	 * @param sort
+	 *            the string value of the Model for C Type.name
 	 * @return the comparator for sorting a list of C by the property name given.
 	 */
 	Comparator<C> getComparatorForProperty(SortParam sort);
-	
-	
+
 
 }

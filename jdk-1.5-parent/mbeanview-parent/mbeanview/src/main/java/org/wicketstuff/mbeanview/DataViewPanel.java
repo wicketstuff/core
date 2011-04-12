@@ -29,39 +29,55 @@ import org.apache.wicket.markup.html.panel.Panel;
  * @author Pedro Henrique Oliveira dos Santos
  * 
  */
-public class DataViewPanel extends Panel {
-    private static final String OUTPUT_ID = "output";
+public class DataViewPanel extends Panel
+{
+	private static final String OUTPUT_ID = "output";
 
-    public DataViewPanel(String id, Object param) {
-	super(id);
-	List contents = null;
-	if (param == null) {
-	    //
-	} else if (param instanceof List) {
-	    contents = (List) param;
-	} else if (param.getClass().isArray()) {
-	    int lenght = Array.getLength(param);
-	    if (lenght > 0) {
-		contents = new ArrayList();
-		for (int i = 0; i < lenght; i++) {
-		    contents.add(Array.get(param, i));
+	public DataViewPanel(String id, Object param)
+	{
+		super(id);
+		List contents = null;
+		if (param == null)
+		{
+			//
 		}
-	    }
-	} else {
-	    contents = new ArrayList();
-	    contents.add(param);
+		else if (param instanceof List)
+		{
+			contents = (List)param;
+		}
+		else if (param.getClass().isArray())
+		{
+			int lenght = Array.getLength(param);
+			if (lenght > 0)
+			{
+				contents = new ArrayList();
+				for (int i = 0; i < lenght; i++)
+				{
+					contents.add(Array.get(param, i));
+				}
+			}
+		}
+		else
+		{
+			contents = new ArrayList();
+			contents.add(param);
+		}
+		ListView contentsRepeater = new ListView("contents", contents)
+		{
+			@Override
+			protected void populateItem(ListItem item)
+			{
+				Object value = item.getModelObject();
+				if (value == null || (value instanceof String) || value.getClass().isPrimitive())
+				{
+					item.add(new Label(OUTPUT_ID, value == null ? null : value.toString()));
+				}
+				else
+				{
+					item.add(new ObjectViewPanel(OUTPUT_ID, value));
+				}
+			}
+		};
+		add(contentsRepeater);
 	}
-	ListView contentsRepeater = new ListView("contents", contents) {
-	    @Override
-	    protected void populateItem(ListItem item) {
-		Object value = item.getModelObject();
-		if (value == null || (value instanceof String) || value.getClass().isPrimitive()) {
-		    item.add(new Label(OUTPUT_ID, value == null ? null : value.toString()));
-		} else {
-		    item.add(new ObjectViewPanel(OUTPUT_ID, value));
-		}
-	    }
-	};
-	add(contentsRepeater);
-    }
 }

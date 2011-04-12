@@ -21,7 +21,6 @@
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicket-security-wasp-parent</artifactId>
 		<version>1.5-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>wicket-security-wicomsec</artifactId>
 	<packaging>jar</packaging>

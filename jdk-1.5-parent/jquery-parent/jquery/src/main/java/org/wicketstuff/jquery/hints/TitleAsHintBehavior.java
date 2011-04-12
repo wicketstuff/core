@@ -23,22 +23,26 @@ import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 
 /**
- *
+ * 
  * @author dwayne
  */
 @SuppressWarnings(value = "serial")
-public class TitleAsHintBehavior extends JQueryBehavior {
+public class TitleAsHintBehavior extends JQueryBehavior
+{
 
-    public static final ResourceReference HINTS_JS = new PackageResourceReference(TitleAsHintBehavior.class, "jquery.hints.js");
+	public static final ResourceReference HINTS_JS = new PackageResourceReference(
+		TitleAsHintBehavior.class, "jquery.hints.js");
 
-    @Override
-    public void renderHead(Component component, IHeaderResponse response) {
-        super.renderHead(component, response);
-        response.renderJavaScriptReference(HINTS_JS);
-    }
-    
-    @Override
-    protected CharSequence getOnReadyScript() {
-        return "$('input:text').hint();";
-    }
+	@Override
+	public void renderHead(Component component, IHeaderResponse response)
+	{
+		super.renderHead(component, response);
+		response.renderJavaScriptReference(HINTS_JS);
+	}
+
+	@Override
+	protected CharSequence getOnReadyScript()
+	{
+		return "$('input:text').hint();";
+	}
 }
