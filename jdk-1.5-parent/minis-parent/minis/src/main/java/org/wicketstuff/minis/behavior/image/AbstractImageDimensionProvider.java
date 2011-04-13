@@ -3,6 +3,7 @@ package org.wicketstuff.minis.behavior.image;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.html.image.Image;
 
 /**
  * <p>

@@ -7,7 +7,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.wicketstuff.minis.component.excel.TableComponentAsXlsHandler;
+import org.wicketstuff.poi.excel.TableComponentAsXlsHandler;
 
 import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.column.PropertyColumn;

@@ -1,30 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<groupId>org.wicketstuff</groupId>
-		<artifactId>inmethod-grid-parent</artifactId>
+		<artifactId>wicket-poi-parent</artifactId>
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>inmethod-grid-examples</artifactId>
+	<artifactId>wicket-poi-examples</artifactId>
 	<packaging>war</packaging>
 
-	<name>InMethod Grid Examples</name>
-	<description>Advanced grid components for Apache Wicket - Example Application</description>
+	<name>WicketStuff POI - Example Web Application</name>
 
 	<dependencies>
 		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>inmethod-grid</artifactId>
+			<artifactId>minis</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>wicket-poi</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
 		</dependency>
 	</dependencies>
 </project>

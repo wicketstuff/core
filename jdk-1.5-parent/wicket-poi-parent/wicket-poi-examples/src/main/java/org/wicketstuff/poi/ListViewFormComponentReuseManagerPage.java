@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.minis;
+package org.wicketstuff.poi;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.minis.component.ListViewFormComponentReuseManager;
-import org.wicketstuff.minis.component.excel.TableComponentAsXlsHandler;
+import org.wicketstuff.poi.excel.TableComponentAsXlsHandler;
 
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>

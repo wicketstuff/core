@@ -557,6 +557,11 @@
 				<version>0.0.5</version>
 			</dependency>
 			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>3.8-beta2</version>
+			</dependency>
+			<dependency>
 				<groupId>org.clojure</groupId>
 				<artifactId>clojure</artifactId>
 				<version>1.2.0</version>

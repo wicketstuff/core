@@ -45,11 +45,6 @@
 			<artifactId>slf4j-simple</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>3.8-beta1</version>
-		</dependency>
 	</dependencies>
 	
 </project>
