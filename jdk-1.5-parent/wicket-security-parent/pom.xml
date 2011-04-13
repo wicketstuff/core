@@ -16,11 +16,11 @@
    limitations under the License.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <parent>
-    <artifactId>jdk-1.5-parent</artifactId>
-    <groupId>org.wicketstuff</groupId>
-    <version>1.5-SNAPSHOT</version>
-  </parent>
+	<parent>
+		<artifactId>jdk-1.5-parent</artifactId>
+		<groupId>org.wicketstuff</groupId>
+		<version>1.5-SNAPSHOT</version>
+	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>wicket-security-parent</artifactId>
 	<packaging>pom</packaging>
@@ -80,22 +80,19 @@
 		<dependencies>
 			<!-- wicket-security dependencies -->
 			<dependency>
-				<groupId>org.wicketstuff</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>wicket-security-wicomsec</artifactId>
 				<version>${project.version}</version>
-				<scope>compile</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.wicketstuff</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>wicket-security-wasp</artifactId>
 				<version>${project.version}</version>
-				<scope>compile</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.wicketstuff</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>wicket-security-hive</artifactId>
 				<version>${project.version}</version>
-				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.wicketstuff</groupId>
@@ -128,7 +125,9 @@
 	<modules>
 		<module>wasp-parent</module>
 		<module>swarm-parent</module>
-		<!--		<module>examples</module>
-		<module>archetypes/swarm-quickstart</module> -->
+		<!--
+			<module>examples</module>
+			<module>archetypes/swarm-quickstart</module>
+		-->
 	</modules>
 </project>
