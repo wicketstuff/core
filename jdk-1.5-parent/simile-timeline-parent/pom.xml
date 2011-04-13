@@ -54,47 +54,17 @@
 		</dependency>
 	</dependencies>
 
-	<build>
+	<!-- 2011.04.13. akiraly: keeping it disabled because license checking fails. 
+		The header.txt is not existing. -->
+	<!--build>
 		<plugins>
 			<plugin>
-				<!-- USAGE: mvn license:check OR mvn license:format -->
 				<groupId>com.mycila.maven-license-plugin</groupId>
 				<artifactId>maven-license-plugin</artifactId>
-				<version>1.9.0</version>
 				<configuration>
 					<header>src/main/etc/header.txt</header>
-					<excludes>
-						<exclude>**/*.gif</exclude>
-						<exclude>**/*.jpg</exclude>
-						<exclude>**/*.jpeg</exclude>
-						<exclude>**/*.ico</exclude>
-						<exclude>**/*.swf</exclude>
-					</excludes>
 				</configuration>
-				<!-- TODO - get this working again with new dir structure: -->
-				<!--executions>
-					<execution>
-						<phase>test</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions-->
 			</plugin>
 		</plugins>
-	</build>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>maven-license-plugin-release</id>
-			<name>Maven repository of com.mathieucarbou.mojo (maven-license-plugin) releases</name>
-			<url>http://mc-repo.googlecode.com/svn/maven2/releases</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</pluginRepository>
-	</pluginRepositories>
+	</build-->
 </project>

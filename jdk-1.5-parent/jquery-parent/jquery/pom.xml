@@ -33,37 +33,10 @@
 	</developers>
 
 	<build>
-	        <plugins>
+		<plugins>
 			<plugin>
 				<groupId>net.alchim31.maven</groupId>
 				<artifactId>yuicompressor-maven-plugin</artifactId>
-				<version>1.1</version>
-				<executions>
-					<execution>
-						<phase>process-resources</phase>
-						<goals>
-							<!--goal>jslint</goal-->
-							<goal>compress</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<!-- these are 3rd party css + js files no need to see the warnings 
-						about them -->
-					<jswarn>false</jswarn>
-					<nosuffix>true</nosuffix>
-					<force>false</force>
-					<excludes>
-						<exclude>**/interface-*.js</exclude>
-						<exclude>**/*pack.js</exclude>
-						<exclude>**/compressed.css</exclude>
-						<exclude>**/crop.css</exclude>
-						<exclude>**/*.java</exclude>
-						<exclude>**/*.html</exclude>
-						<exclude>**/*.xml</exclude>
-						<exclude>**/*.properties</exclude>
-					</excludes>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>

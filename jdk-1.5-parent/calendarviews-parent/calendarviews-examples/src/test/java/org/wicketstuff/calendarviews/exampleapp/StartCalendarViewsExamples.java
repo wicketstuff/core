@@ -18,10 +18,10 @@
  */
 package org.wicketstuff.calendarviews.exampleapp;
 
-import org.mortbay.jetty.Connector;
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.bio.SocketConnector;
-import org.mortbay.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.bio.SocketConnector;
+import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
  * @author Jeremy Thomerson
@@ -51,7 +51,7 @@ public class StartCalendarViewsExamples
 		// server.getContainer().addEventListener(mBeanContainer);
 		// mBeanContainer.start();
 
-		server.addHandler(bb);
+		server.setHandler(bb);
 
 		try
 		{

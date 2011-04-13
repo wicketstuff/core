@@ -22,9 +22,9 @@
 			<artifactId>inmethod-grid</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.wicketstuff</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>minis</artifactId>
-			<version>1.5-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>

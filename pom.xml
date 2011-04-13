@@ -653,6 +653,61 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
+					<groupId>com.mycila.maven-license-plugin</groupId>
+					<artifactId>maven-license-plugin</artifactId>
+					<version>1.9.0</version>
+					<configuration>
+						<aggregate>true</aggregate>
+						<quiet>false</quiet>
+						<failIfMissing>true</failIfMissing>
+						<excludes>
+							<exclude>**/*.gif</exclude>
+							<exclude>**/*.jpg</exclude>
+							<exclude>**/*.jpeg</exclude>
+							<exclude>**/*.ico</exclude>
+							<exclude>**/*.swf</exclude>
+						</excludes>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>check</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>net.alchim31.maven</groupId>
+					<artifactId>yuicompressor-maven-plugin</artifactId>
+					<version>1.1</version>
+					<executions>
+						<execution>
+							<phase>process-resources</phase>
+							<goals>
+								<!--goal>jslint</goal -->
+								<goal>compress</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<!-- these are 3rd party css + js files no need to see the warnings about 
+							them -->
+						<jswarn>false</jswarn>
+						<nosuffix>true</nosuffix>
+						<force>false</force>
+						<excludes>
+							<exclude>**/interface-*.js</exclude>
+							<exclude>**/*pack.js</exclude>
+							<exclude>**/compressed.css</exclude>
+							<exclude>**/crop.css</exclude>
+							<exclude>**/*.java</exclude>
+							<exclude>**/*.html</exclude>
+							<exclude>**/*.xml</exclude>
+							<exclude>**/*.properties</exclude>
+						</excludes>
+					</configuration>
+				</plugin>
+				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>2.3.2</version>
