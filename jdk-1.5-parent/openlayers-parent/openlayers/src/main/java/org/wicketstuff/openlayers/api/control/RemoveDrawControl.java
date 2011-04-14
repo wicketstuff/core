@@ -27,7 +27,7 @@ public class RemoveDrawControl extends Behavior
 	public void bind(Component component)
 	{
 		super.bind(component);
-		component.add(new AttributeAppender("onclick", new Model(
-			map.getJSinvokeNoLineEnd("removeDrawFeature()")), ";"));
+		component.add(new AttributeAppender("onclick",
+			Model.of(map.getJSinvokeNoLineEnd("removeDrawFeature()")), ";"));
 	}
 }

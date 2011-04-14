@@ -42,7 +42,7 @@ import wicket.contrib.phonebook.QueryParam;
  * @author igor
  */
 public class ContactsDataProvider extends SortableDataProvider<Contact> implements
-	IFilterStateLocator
+	IFilterStateLocator<Contact>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -60,14 +60,14 @@ public class ContactsDataProvider extends SortableDataProvider<Contact> implemen
 		this.queryParam = queryParam;
 	}
 
-	public Object getFilterState()
+	public Contact getFilterState()
 	{
 		return filter;
 	}
 
-	public void setFilterState(Object state)
+	public void setFilterState(Contact state)
 	{
-		filter = (Contact)state;
+		filter = state;
 	}
 
 	public ContactsDataProvider(ContactDao dao)

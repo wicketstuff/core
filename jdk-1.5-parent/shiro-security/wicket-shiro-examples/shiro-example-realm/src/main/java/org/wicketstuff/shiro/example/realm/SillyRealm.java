@@ -120,7 +120,8 @@ public class SillyRealm extends AuthorizingRealm
 		// simulate a call to an underlying data store:
 
 		// get only the principals that this realm cares about:
-		Collection thisRealmPrincipals = principals.fromRealm(getName());
+		@SuppressWarnings("unchecked")
+		Collection<String> thisRealmPrincipals = principals.fromRealm(getName());
 		if (thisRealmPrincipals == null || thisRealmPrincipals.isEmpty())
 		{
 			return null;
@@ -136,7 +137,7 @@ public class SillyRealm extends AuthorizingRealm
 		// user logged-in and that method in this simple example has only one principal - a username
 		// - we can safely
 		// assume the only element in this collection is that username.
-		String username = (String)thisRealmPrincipals.iterator().next();
+		String username = thisRealmPrincipals.iterator().next();
 
 		// call the underlying EIS for the account data:
 		return getAccount(username);

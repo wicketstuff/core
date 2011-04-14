@@ -22,7 +22,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Test;
 
-public class ProgressBarTests
+public class ProgressBarTest
 {
 
 	private static class DummyTask
@@ -37,11 +37,6 @@ public class ProgressBarTests
 		public int getProgress()
 		{
 			return progress;
-		}
-
-		public boolean isDone()
-		{
-			return progress >= 100;
 		}
 	}
 
@@ -77,9 +72,9 @@ public class ProgressBarTests
 
 		});
 		wt.startComponent(progressBar, null);
-		wt.assertLabel("panel:label", "0%");
+		wt.assertLabel("label", "0%");
 		testProgressive.proceed(50);
-		wt.assertLabel("panel:label", "50%");
+		wt.assertLabel("label", "50%");
 		assertTrue(progressBar.getOutputMarkupId());
 	}
 
@@ -100,9 +95,9 @@ public class ProgressBarTests
 			}
 
 		}), null);
-		wt.assertLabel("panel:message", "Going for 0");
+		wt.assertLabel("message", "Going for 0");
 		testProgressive.proceed(75);
-		wt.assertLabel("panel:message", "Going for 75");
+		wt.assertLabel("message", "Going for 75");
 	}
 
 }

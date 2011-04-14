@@ -85,8 +85,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 
 	/**
 	 * Test method for
-	 * {@link org.wicketstuff.security.hive.config.PolicyFileHiveFactory#createHive()}.
-	 * using url's
+	 * {@link org.wicketstuff.security.hive.config.PolicyFileHiveFactory#createHive()}. using url's
 	 */
 	public void testCreateHive()
 	{
@@ -97,8 +96,8 @@ public class PolicyFileHiveFactoryTest extends TestCase
 
 	/**
 	 * Test method for
-	 * {@link org.wicketstuff.security.hive.config.PolicyFileHiveFactory#createHive()}.
-	 * using streams
+	 * {@link org.wicketstuff.security.hive.config.PolicyFileHiveFactory#createHive()}. using
+	 * streams
 	 */
 	public void testCreateHive2()
 	{
@@ -124,8 +123,8 @@ public class PolicyFileHiveFactoryTest extends TestCase
 
 	/**
 	 * Test method for
-	 * {@link org.wicketstuff.security.hive.config.PolicyFileHiveFactory#createHive()}.
-	 * using readers
+	 * {@link org.wicketstuff.security.hive.config.PolicyFileHiveFactory#createHive()}. using
+	 * readers
 	 */
 	public void testCreateHive3()
 	{
@@ -204,7 +203,6 @@ public class PolicyFileHiveFactoryTest extends TestCase
 	/**
 	 * Test if the regex used in the factory is OK.
 	 */
-	@SuppressWarnings("null")
 	public void testRegExPrincipalPattern()
 	{
 		Pattern principalPattern = null;
@@ -212,7 +210,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 		{
 			Field field = PolicyFileHiveFactory.class.getDeclaredField("principalPattern");
 			field.setAccessible(true);
-			principalPattern = (Pattern) field.get(null);
+			principalPattern = (Pattern)field.get(null);
 		}
 		catch (IllegalArgumentException e)
 		{
@@ -264,7 +262,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 		{
 			Field field = PolicyFileHiveFactory.class.getDeclaredField("permissionPattern");
 			field.setAccessible(true);
-			permissionPattern = (Pattern) field.get(null);
+			permissionPattern = (Pattern)field.get(null);
 			assertTrue(permissionPattern.matcher(
 				"permission org.apache.wicket.TestPrincipal \"test\", \"render\";").matches());
 			assertTrue(permissionPattern.matcher(
@@ -335,7 +333,7 @@ public class PolicyFileHiveFactoryTest extends TestCase
 		{
 			Field field = PolicyFileHiveFactory.class.getDeclaredField("aliasPattern");
 			field.setAccessible(true);
-			aliasPattern = (Pattern) field.get(null);
+			aliasPattern = (Pattern)field.get(null);
 			assertFalse(aliasPattern.matcher("no alias used whatsoever").find());
 			Matcher m = aliasPattern.matcher("foo${bar}");
 			assertTrue(m.find());
@@ -394,15 +392,13 @@ public class PolicyFileHiveFactoryTest extends TestCase
 	{
 		try
 		{
-			Method method =
-				PolicyFileHiveFactory.class.getDeclaredMethod("resolveAliases",
-					new Class[] {String.class});
+			Method method = PolicyFileHiveFactory.class.getDeclaredMethod("resolveAliases",
+				new Class[] { String.class });
 			method.setAccessible(true);
-			PolicyFileHiveFactory factory =
-				new PolicyFileHiveFactory(Actions.getActionFactory(KEY));
+			PolicyFileHiveFactory factory = new PolicyFileHiveFactory(Actions.getActionFactory(KEY));
 			factory.setAlias("foo", "foo");
 			factory.setAlias("foobar", "foobar");
-			String result = (String) method.invoke(factory, new Object[] {"${${foo}bar}"});
+			String result = (String)method.invoke(factory, new Object[] { "${${foo}bar}" });
 			fail("Unable to detect nested aliases: " + result);
 
 		}
@@ -440,15 +436,13 @@ public class PolicyFileHiveFactoryTest extends TestCase
 	{
 		try
 		{
-			Method method =
-				PolicyFileHiveFactory.class.getDeclaredMethod("resolveAliases",
-					new Class[] {String.class});
+			Method method = PolicyFileHiveFactory.class.getDeclaredMethod("resolveAliases",
+				new Class[] { String.class });
 			method.setAccessible(true);
-			PolicyFileHiveFactory factory =
-				new PolicyFileHiveFactory(Actions.getActionFactory(KEY));
+			PolicyFileHiveFactory factory = new PolicyFileHiveFactory(Actions.getActionFactory(KEY));
 			factory.setAlias("foo", "foo");
 			factory.setAlias("foobar", "foobar");
-			String result = (String) method.invoke(factory, new Object[] {"${${foo}"});
+			String result = (String)method.invoke(factory, new Object[] { "${${foo}" });
 			fail("Unable to detect nested aliases: " + result);
 
 		}

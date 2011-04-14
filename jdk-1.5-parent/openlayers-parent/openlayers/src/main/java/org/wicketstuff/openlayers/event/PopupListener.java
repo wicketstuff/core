@@ -82,7 +82,6 @@ public abstract class PopupListener extends AbstractDefaultAjaxBehavior
 		Request request = RequestCycle.get().getRequest();
 
 		Overlay overlay = null;
-		LonLat latLng = null;
 
 		String markerParameter = request.getRequestParameters()
 			.getParameterValue("marker")

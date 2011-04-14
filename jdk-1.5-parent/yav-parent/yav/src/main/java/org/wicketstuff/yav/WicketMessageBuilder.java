@@ -42,7 +42,7 @@ public class WicketMessageBuilder
 	 * @param formComponent2
 	 * @return
 	 */
-	public String equalFieldMessage(FormComponent formComponent1, FormComponent formComponent2)
+	public String equalFieldMessage(FormComponent<?> formComponent1, FormComponent<?> formComponent2)
 	{
 		return addToBuffer(
 			formComponent2.getId(),
@@ -56,7 +56,7 @@ public class WicketMessageBuilder
 	 * @param rangeValidator
 	 * @return
 	 */
-	public String rangeMessage(Component component, RangeValidator rangeValidator)
+	public String rangeMessage(Component component, RangeValidator<?> rangeValidator)
 	{
 		String minValue = rangeValidator.getMinimum().toString();
 		String maxValue = rangeValidator.getMaximum().toString();
@@ -180,7 +180,7 @@ public class WicketMessageBuilder
 	 * @param converterClassName
 	 * @return
 	 */
-	public String typeConverterDateMessage(FormComponent formComponent, String converterClassName)
+	public String typeConverterDateMessage(FormComponent<?> formComponent, String converterClassName)
 	{
 		return addToBuffer(formComponent.getId(), "date",
 			escapeJavaScriptString(formatTypeMessage(formComponent, converterClassName)));
@@ -191,7 +191,8 @@ public class WicketMessageBuilder
 	 * @param converterClassName
 	 * @return
 	 */
-	public String typeConverterIntegerMessage(FormComponent formComponent, String converterClassName)
+	public String typeConverterIntegerMessage(FormComponent<?> formComponent,
+		String converterClassName)
 	{
 		return addToBuffer(formComponent.getId(), "integer",
 			escapeJavaScriptString(formatTypeMessage(formComponent, converterClassName)));
@@ -202,7 +203,8 @@ public class WicketMessageBuilder
 	 * @param converterClassName
 	 * @return
 	 */
-	public String typeConverterDecimalMessage(FormComponent formComponent, String converterClassName)
+	public String typeConverterDecimalMessage(FormComponent<?> formComponent,
+		String converterClassName)
 	{
 		return addToBuffer(formComponent.getId(), "double",
 			escapeJavaScriptString(formatTypeMessage(formComponent, converterClassName)));
@@ -238,14 +240,13 @@ public class WicketMessageBuilder
 	 * @param formComponent
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	private String getWicketConverterMessage(FormComponent formComponent)
+	private String getWicketConverterMessage(FormComponent<?> formComponent)
 	{
-		Class clazz = formComponent.getType();
-		IConverter converter = formComponent.getConverter(clazz);
+		Class<?> clazz = formComponent.getType();
+		IConverter<?> converter = formComponent.getConverter(clazz);
 
 		String wicketMessage = getWicketMessage(formComponent, converter.getClass().getSimpleName());
-		if (wicketMessage == null || (wicketMessage.length() == 0))
+		if (wicketMessage == null || wicketMessage.length() == 0)
 		{
 			wicketMessage = getWicketMessage(formComponent, "IConverter");
 		}
@@ -270,7 +271,7 @@ public class WicketMessageBuilder
 	 * @param type
 	 * @return
 	 */
-	private String formatTypeMessage(FormComponent formComponent, String type)
+	private String formatTypeMessage(FormComponent<?> formComponent, String type)
 	{
 		String customMessage = getWicketConverterMessage(formComponent);
 		customMessage = replaceInputAndLabelAndNameBy(customMessage, formComponent.getId());

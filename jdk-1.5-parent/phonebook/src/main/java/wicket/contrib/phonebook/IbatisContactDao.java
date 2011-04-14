@@ -84,14 +84,14 @@ public class IbatisContactDao extends SqlMapClientDaoSupport implements ContactD
 	 * 
 	 * @return The results of the query as an Iterator.
 	 */
-	@SuppressWarnings("unchecked")
 	public Iterator<Contact> find(final QueryParam qp, Contact filter)
 	{
 		Map<String, String> map = createMap(filter);
 		map.put("sort", qp.getSort());
 		map.put("sortasc", (qp.isSortAsc() ? " asc" : " desc"));
-		List list = getSqlMapClientTemplate().queryForList("getContactList", map, qp.getFirst(),
-			qp.getCount());
+		@SuppressWarnings("unchecked")
+		List<Contact> list = getSqlMapClientTemplate().queryForList("getContactList", map,
+			qp.getFirst(), qp.getCount());
 		return list.listIterator();
 	}
 

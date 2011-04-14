@@ -69,7 +69,7 @@ public class TaskServiceProgressExamplePage extends PageSupport
 
 	public TaskServiceProgressExamplePage()
 	{
-		final Form form = new Form("form");
+		final Form<Void> form = new Form<Void>("form");
 		final ProgressBar bar;
 		final TaskProgressionModel progressionModel = new TaskProgressionModel()
 		{
@@ -110,7 +110,7 @@ public class TaskServiceProgressExamplePage extends PageSupport
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form form)
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				ITaskService taskService = getExampleApplication().getTaskService();
 				// Schedule and start a new task

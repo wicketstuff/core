@@ -59,8 +59,6 @@ public class WFSProxyBehavior extends AbstractAjaxBehavior
 
 	private static final Logger log = LoggerFactory.getLogger(WFSProxyBehavior.class);
 
-	private String wmsURL;
-
 	/**
 	 * 
 	 */

@@ -84,7 +84,6 @@ public class YavBehavior extends Behavior
 	 * @see org.apache.wicket.behavior.Behavior#onComponentTag(org.apache.wicket.Component,
 	 * org.apache.wicket.markup.ComponentTag)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void onComponentTag(Component component, ComponentTag tag)
 	{
@@ -95,7 +94,7 @@ public class YavBehavior extends Behavior
 			throw new WicketRuntimeException("This behavior is only applicable on a Form component");
 		}
 
-		Form form = (Form)component;
+		Form<?> form = (Form<?>)component;
 
 		// Retrieve and set form name
 		String formName = verifyFormName(form, tag);
@@ -128,7 +127,7 @@ public class YavBehavior extends Behavior
 	 * @param tag
 	 * @return
 	 */
-	private String verifyFormName(Form form, ComponentTag tag)
+	private String verifyFormName(Form<?> form, ComponentTag tag)
 	{
 		IValueMap attributes = tag.getAttributes();
 		String value = attributes.getString("name");

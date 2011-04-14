@@ -28,8 +28,7 @@ public class WicketApplication extends WebApplication
 	 * @see wicket.Application#getHomePage()
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
-	public Class getHomePage()
+	public Class<TestPage> getHomePage()
 	{
 		return TestPage.class;
 	}

@@ -19,13 +19,13 @@ public class PopupMarkerInfoAttributeAppender extends AttributeAppender
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final IModel appendModel;
+	private final IModel<String> appendModel;
 
 	public PopupMarkerInfoAttributeAppender(String attribute, String separator, Marker marker,
 		OpenLayersMap map)
 	{
-		super(attribute, new Model(), separator);
-		appendModel = getReplaceModel();
+		super(attribute, new Model<String>(), separator);
+		appendModel = (IModel<String>)getReplaceModel();
 		String markerId = marker.getId();
 		String callBackUrl = map.getCallbackListener().getCallBackForMarker(marker);
 

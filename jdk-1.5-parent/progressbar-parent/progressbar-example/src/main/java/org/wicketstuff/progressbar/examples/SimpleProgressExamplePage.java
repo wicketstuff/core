@@ -52,7 +52,7 @@ public class SimpleProgressExamplePage extends PageSupport
 
 	public SimpleProgressExamplePage()
 	{
-		final Form form = new Form("form");
+		final Form<Void> form = new Form<Void>("form");
 		final ProgressBar bar;
 		form.add(bar = new ProgressBar("bar", new ProgressionModel()
 		{
@@ -90,7 +90,7 @@ public class SimpleProgressExamplePage extends PageSupport
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form form)
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				// Start the progress bar, will set visibility to true
 				bar.start(target);

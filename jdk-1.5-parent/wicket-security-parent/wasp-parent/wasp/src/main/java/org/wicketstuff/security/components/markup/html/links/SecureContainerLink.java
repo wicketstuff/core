@@ -29,13 +29,13 @@ import org.wicketstuff.security.components.ISecureComponent;
 import org.wicketstuff.security.components.SecureComponentHelper;
 
 /**
- * A secure link to handle panel replacements or any other type of {@link MarkupContainer}
- * s. It is also usable as a link to switch between 2 or more panels. Security is enforced
- * on the replacing class, not on the panel. This means that the panels do not need to be
- * {@link ISecureComponent}s, but are allowed to be if so desired. The link however will
- * only show up if the user has the {@link Enable} action for the class of the replacement
- * panel. Please consult your implementation on how to do that. This link is typically
- * placed as a child on the parent of the panel it is supposed to replace. Like so:<br/>
+ * A secure link to handle panel replacements or any other type of {@link MarkupContainer} s. It is
+ * also usable as a link to switch between 2 or more panels. Security is enforced on the replacing
+ * class, not on the panel. This means that the panels do not need to be {@link ISecureComponent}s,
+ * but are allowed to be if so desired. The link however will only show up if the user has the
+ * {@link Enable} action for the class of the replacement panel. Please consult your implementation
+ * on how to do that. This link is typically placed as a child on the parent of the panel it is
+ * supposed to replace. Like so:<br/>
  * <code>
  * MarkupContainer parent=new WebMarkupContainer("parent);
  * parent.add(new FirstPanel("replaceMe",new Model("hello"));
@@ -51,7 +51,7 @@ public abstract class SecureContainerLink<T> extends Link<T> implements ISecureC
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Class< ? extends MarkupContainer> replacementClass;
+	private Class<? extends MarkupContainer> replacementClass;
 
 	private MarkupContainer containerParent;
 
@@ -63,15 +63,14 @@ public abstract class SecureContainerLink<T> extends Link<T> implements ISecureC
 	 * @param id
 	 *            id of the link
 	 * @param replacementPanel
-	 *            the class of the container replacing the component on the supplied
-	 *            parent
+	 *            the class of the container replacing the component on the supplied parent
 	 * @param parentOfReplaceablePanel
 	 *            the parent component where the replacement needs to take place
 	 * @param panelId
 	 *            the id of the component to be replaced
 	 */
-	public SecureContainerLink(String id, Class< ? extends MarkupContainer> replacementPanel,
-			MarkupContainer parentOfReplaceablePanel, String panelId)
+	public SecureContainerLink(String id, Class<? extends MarkupContainer> replacementPanel,
+		MarkupContainer parentOfReplaceablePanel, String panelId)
 	{
 		this(id, null, replacementPanel, parentOfReplaceablePanel, panelId);
 
@@ -85,16 +84,15 @@ public abstract class SecureContainerLink<T> extends Link<T> implements ISecureC
 	 * @param object
 	 *            model of the link
 	 * @param replacementPanel
-	 *            the class of the container replacing the component on the supplied
-	 *            parent
+	 *            the class of the container replacing the component on the supplied parent
 	 * @param parentOfReplaceablePanel
 	 *            the parent component where the replacement needs to take place
 	 * @param panelId
 	 *            the id of the component to be replaced
 	 */
 	public SecureContainerLink(String id, IModel<T> object,
-			Class< ? extends MarkupContainer> replacementPanel,
-			MarkupContainer parentOfReplaceablePanel, String panelId)
+		Class<? extends MarkupContainer> replacementPanel,
+		MarkupContainer parentOfReplaceablePanel, String panelId)
 	{
 		super(id, object);
 		setReplacementClass(replacementPanel);
@@ -119,26 +117,26 @@ public abstract class SecureContainerLink<T> extends Link<T> implements ISecureC
 	{
 		Component replaceMe = getComponentToBeReplaced();
 		if (replaceMe == null)
-			throw new WicketRuntimeException("unable to find child with id: " + containerId
-				+ " on parent: " + containerParent);
-		Class< ? extends MarkupContainer> myReplacementClass = getReplacementClass();
+			throw new WicketRuntimeException("unable to find child with id: " + containerId +
+				" on parent: " + containerParent);
+		Class<? extends MarkupContainer> myReplacementClass = getReplacementClass();
 		MarkupContainer replacement = getReplacementFor(replaceMe, containerId, myReplacementClass);
 		if (replacement == null)
 			return; // do nothing
 		if (!containerId.equals(replacement.getId()))
-			throw new WicketRuntimeException("The replacement does not have the specified id: "
-				+ containerId + ", but id: " + replacement.getId());
+			throw new WicketRuntimeException("The replacement does not have the specified id: " +
+				containerId + ", but id: " + replacement.getId());
 		if (myReplacementClass.isAssignableFrom(replacement.getClass()))
 			containerParent.replace(replacement);
 		else
-			throw new WicketRuntimeException("The replacement for " + containerId + " on "
-				+ containerParent + " is not assignable from " + myReplacementClass);
+			throw new WicketRuntimeException("The replacement for " + containerId + " on " +
+				containerParent + " is not assignable from " + myReplacementClass);
 
 	}
 
 	/**
-	 * The component, usually a MarkupContainer or subclass, that will be replaced by the
-	 * output from {@link #getReplacementFor(Component, String, Class)}.
+	 * The component, usually a MarkupContainer or subclass, that will be replaced by the output
+	 * from {@link #getReplacementFor(Component, String, Class)}.
 	 * 
 	 * @return the component or null if the id specified at the constructor is bogus.
 	 */
@@ -148,13 +146,12 @@ public abstract class SecureContainerLink<T> extends Link<T> implements ISecureC
 	}
 
 	/**
-	 * Creates a replacement for a component. although the component to be replaced does
-	 * not need to be a {@link MarkupContainer} it typically is. The replacement however
-	 * does need to be a MarkupContainer, more specifically a (sub)class of
-	 * replacementClass. Implementation may choose at this point to do the next
-	 * replacement with a different class by using {@link #setReplacementClass(Class)} in
-	 * order to create a switch like behavior. The intention of this method is thus to
-	 * create the new panel, for example:<br/>
+	 * Creates a replacement for a component. although the component to be replaced does not need to
+	 * be a {@link MarkupContainer} it typically is. The replacement however does need to be a
+	 * MarkupContainer, more specifically a (sub)class of replacementClass. Implementation may
+	 * choose at this point to do the next replacement with a different class by using
+	 * {@link #setReplacementClass(Class)} in order to create a switch like behavior. The intention
+	 * of this method is thus to create the new panel, for example:<br/>
 	 * <code>
 	 * protected MarkupContainer getReplacementFor(Component current, String id,
 	 * 		Class replacementClass)
@@ -167,9 +164,9 @@ public abstract class SecureContainerLink<T> extends Link<T> implements ISecureC
 	 * 			return new MyPanel(id, current.getModel());
 	 * 		}
 	 * 	}
-	 * </code> Or if this link should switch between panels and is situated somewhere
-	 * higher in the component hierarchy as these panels it is supposed to switch you
-	 * could do something like this: <br/>
+	 * </code> Or if this link should switch between panels and is situated somewhere higher in the
+	 * component hierarchy as these panels it is supposed to switch you could do something like
+	 * this: <br/>
 	 * <code>
 	 * protected MarkupContainer getReplacementFor(Component current, String id,
 	 * 		Class replacementClass)
@@ -200,15 +197,14 @@ public abstract class SecureContainerLink<T> extends Link<T> implements ISecureC
 	 * @return a new replacement or null if the original component is not to be replaced
 	 * @see #setReplacementClass(Class)
 	 */
-	@SuppressWarnings("hiding")
 	protected abstract MarkupContainer getReplacementFor(Component current, String id,
-			Class< ? extends MarkupContainer> replacementClass);
+		Class<? extends MarkupContainer> replacementClass);
 
 	/**
-	 * Generates the securitycheck for this link. by default this is a
-	 * {@link LinkSecurityCheck} but implementations may choose to override this. Note
-	 * that the returned LinkSecurityCheck should not be placed in alternative rendering
-	 * mode as this will completely change the intended behavior.
+	 * Generates the securitycheck for this link. by default this is a {@link LinkSecurityCheck} but
+	 * implementations may choose to override this. Note that the returned LinkSecurityCheck should
+	 * not be placed in alternative rendering mode as this will completely change the intended
+	 * behavior.
 	 * 
 	 * @return the securitycheck for this link or null if no security is to be enforced
 	 */
@@ -267,14 +263,14 @@ public abstract class SecureContainerLink<T> extends Link<T> implements ISecureC
 	 * 
 	 * @return replacementClass
 	 */
-	protected final Class< ? extends MarkupContainer> getReplacementClass()
+	protected final Class<? extends MarkupContainer> getReplacementClass()
 	{
 		return replacementClass;
 	}
 
 	/**
-	 * Sets replacementClass. Note by changing the replacement class a new securitycheck
-	 * is automatically created.
+	 * Sets replacementClass. Note by changing the replacement class a new securitycheck is
+	 * automatically created.
 	 * 
 	 * @param replacementClass
 	 *            replacementClass
@@ -282,7 +278,7 @@ public abstract class SecureContainerLink<T> extends Link<T> implements ISecureC
 	 * @throws WicketRuntimeException
 	 *             if the class is null or not a {@link MarkupContainer}
 	 */
-	protected final void setReplacementClass(Class< ? extends MarkupContainer> replacementClass)
+	protected final void setReplacementClass(Class<? extends MarkupContainer> replacementClass)
 	{
 		if (replacementClass == null)
 			throw new WicketRuntimeException("replacementClass cannot be null");

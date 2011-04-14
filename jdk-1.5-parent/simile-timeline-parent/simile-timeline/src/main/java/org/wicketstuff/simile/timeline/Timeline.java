@@ -36,9 +36,9 @@ public class Timeline extends Panel implements IHeaderContributor
 	private String timelineMarkupId;
 	private String timelineDataId;
 
-	public Timeline(String id, IModel model)
+	public Timeline(String id, IModel<TimelineModel> model)
 	{
-		super(id, new CompoundPropertyModel(model));
+		super(id, new CompoundPropertyModel<TimelineModel>(model));
 
 		List<BandInfoParameters> bandInfo = new ArrayList<BandInfoParameters>();
 
@@ -56,13 +56,13 @@ public class Timeline extends Panel implements IHeaderContributor
 		init(id, model, bandInfo);
 	}
 
-	public Timeline(String id, IModel model, List<BandInfoParameters> bandInfo)
+	public Timeline(String id, IModel<TimelineModel> model, List<BandInfoParameters> bandInfo)
 	{
-		super(id, new CompoundPropertyModel(model));
+		super(id, new CompoundPropertyModel<TimelineModel>(model));
 		init(id, model, bandInfo);
 	}
 
-	private void init(String id, IModel model, List<BandInfoParameters> bandInfo)
+	private void init(String id, IModel<?> model, List<BandInfoParameters> bandInfo)
 	{
 // add(HeaderContributor
 // .forJavaScript(new ResourceReference(getClass(),
@@ -76,7 +76,7 @@ public class Timeline extends Panel implements IHeaderContributor
 
 		WebMarkupContainer timelineData = new WebMarkupContainer("timelineData");
 		timelineData.setOutputMarkupId(true);
-		timelineData.add(new ListView("events")
+		timelineData.add(new ListView<ITimelineEvent>("events")
 		{
 
 			/**
@@ -85,22 +85,22 @@ public class Timeline extends Panel implements IHeaderContributor
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void populateItem(ListItem item)
+			protected void populateItem(ListItem<ITimelineEvent> item)
 			{
-				item.add(new AttributeModifier("title", true, new PropertyModel(item.getModel(),
-					"title")));
-				item.add(new AttributeModifier("start", true, new PropertyModel(item.getModel(),
-					"startFormatted")));
-				item.add(new AttributeModifier("end", true, new PropertyModel(item.getModel(),
-					"endFormatted")));
-				item.add(new AttributeModifier("link", true, new PropertyModel(item.getModel(),
-					"link")));
-				item.add(new AttributeModifier("isDuration", true, new PropertyModel(
+				item.add(new AttributeModifier("title", true, new PropertyModel<String>(
+					item.getModel(), "title")));
+				item.add(new AttributeModifier("start", true, new PropertyModel<String>(
+					item.getModel(), "startFormatted")));
+				item.add(new AttributeModifier("end", true, new PropertyModel<String>(
+					item.getModel(), "endFormatted")));
+				item.add(new AttributeModifier("link", true, new PropertyModel<String>(
+					item.getModel(), "link")));
+				item.add(new AttributeModifier("isDuration", true, new PropertyModel<Boolean>(
 					item.getModel(), "isDuration")));
-				item.add(new AttributeModifier("color", true, new PropertyModel(item.getModel(),
-					"color")));
+				item.add(new AttributeModifier("color", true, new PropertyModel<String>(
+					item.getModel(), "color")));
 
-				Label child = new Label("text", new PropertyModel(item.getModel(), "text"));
+				Label child = new Label("text", new PropertyModel<String>(item.getModel(), "text"));
 				child.setRenderBodyOnly(true);
 				child.setEscapeModelStrings(false);
 				item.add(child);

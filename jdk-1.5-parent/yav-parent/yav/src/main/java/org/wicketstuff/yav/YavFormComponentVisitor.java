@@ -7,14 +7,12 @@ import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.IFormVisitorParticipant;
 import org.apache.wicket.markup.html.form.validation.EqualInputValidator;
 import org.apache.wicket.markup.html.form.validation.IFormValidator;
 import org.apache.wicket.util.convert.IConverter;
@@ -39,7 +37,7 @@ import org.apache.wicket.validation.validator.StringValidator.MinimumLengthValid
  * 
  * @author Zenika
  */
-public class YavFormComponentVisitor implements IVisitor<Component, Void>
+public class YavFormComponentVisitor implements IVisitor<FormComponent<?>, Void>
 {
 
 	/**
@@ -69,60 +67,47 @@ public class YavFormComponentVisitor implements IVisitor<Component, Void>
 	 * 
 	 * @param buffer
 	 */
-	@SuppressWarnings("unchecked")
-	public YavFormComponentVisitor(AppendingStringBuffer buffer, Form parentForm)
+	public YavFormComponentVisitor(AppendingStringBuffer buffer, Form<?> parentForm)
 	{
 		formValidators = parentForm.getFormValidators();
 		messageBuilder = new WicketMessageBuilder();
 		this.buffer = buffer;
 	}
 
-	public void component(Component c, IVisit<Void> visit)
+	public void component(FormComponent<?> component, IVisit<Void> visit)
 	{
-
-		if (c instanceof IFormVisitorParticipant)
+		if (component.isRequired())
 		{
-
-			if (FormComponent.class.isAssignableFrom(c.getClass()))
-			{
-				FormComponent component = (FormComponent)c;
-
-				if (component.isRequired())
-				{
-					buffer.append(messageBuilder.requiredMessage(component));
-				}
-
-				// Add a Yav rule for some converters (type validation instead
-				// of
-				// value validation), one type per field
-				addYavRuleOnConverter(component);
-
-				// Iterate over all the validators and add a Yav Rule
-				List<IValidator> validators = component.getValidators();
-				for (IValidator validator : validators)
-				{
-					addYavRuleOnValidator(validator, component);
-				}
-
-				// Check if this form component is included in a FormValidator
-				verifyExistingValidatorOnComponent(component);
-			}
+			buffer.append(messageBuilder.requiredMessage(component));
 		}
 
+		// Add a Yav rule for some converters (type validation instead
+		// of
+		// value validation), one type per field
+		addYavRuleOnConverter(component);
+
+		// Iterate over all the validators and add a Yav Rule
+		for (IValidator<?> validator : component.getValidators())
+		{
+			addYavRuleOnValidator(validator, component);
+		}
+
+		// Check if this form component is included in a FormValidator
+		verifyExistingValidatorOnComponent(component);
 	}
 
 	/**
 	 * @param formComponent
 	 */
-	private void verifyExistingValidatorOnComponent(FormComponent formComponent)
+	private void verifyExistingValidatorOnComponent(FormComponent<?> formComponent)
 	{
 		for (IFormValidator formValidator : formValidators)
 		{
 			if (EqualInputValidator.class.isAssignableFrom(formValidator.getClass()))
 			{
-				FormComponent[] dependentFormComponents = formValidator.getDependentFormComponents();
-				final FormComponent formComponent1 = dependentFormComponents[0];
-				final FormComponent formComponent2 = dependentFormComponents[1];
+				FormComponent<?>[] dependentFormComponents = formValidator.getDependentFormComponents();
+				final FormComponent<?> formComponent1 = dependentFormComponents[0];
+				final FormComponent<?> formComponent2 = dependentFormComponents[1];
 
 				if (formComponent2.equals(formComponent))
 				{
@@ -141,9 +126,9 @@ public class YavFormComponentVisitor implements IVisitor<Component, Void>
 	 * @param converter
 	 * @param id
 	 */
-	private void addYavRuleOnConverter(FormComponent formComponent)
+	private void addYavRuleOnConverter(FormComponent<?> formComponent)
 	{
-		Class clazz = formComponent.getType();
+		Class<?> clazz = formComponent.getType();
 
 		if (clazz == null)
 			return;
@@ -181,14 +166,14 @@ public class YavFormComponentVisitor implements IVisitor<Component, Void>
 	 * @param validator
 	 * @param componentId
 	 */
-	private void addYavRuleOnValidator(IValidator validator, Component component)
+	private void addYavRuleOnValidator(IValidator<?> validator, Component component)
 	{
 		if (INullAcceptingValidator.class.isAssignableFrom(validator.getClass()))
 		{
 
 			if (StringValidator.class.isAssignableFrom(validator.getClass()))
 			{
-				addYavRuleForStringValidatorType(validator, component);
+				addYavRuleForStringValidatorType((StringValidator)validator, component);
 			}
 			else
 			{
@@ -236,7 +221,9 @@ public class YavFormComponentVisitor implements IVisitor<Component, Void>
 	{
 		if (!addedDateInfo)
 		{
-			IConverter converter = Application.get().getConverterLocator().getConverter(Date.class);
+			IConverter<Date> converter = Application.get()
+				.getConverterLocator()
+				.getConverter(Date.class);
 
 			if (DateConverter.class.isAssignableFrom(converter.getClass()))
 			{
@@ -263,11 +250,11 @@ public class YavFormComponentVisitor implements IVisitor<Component, Void>
 	 * @param validator
 	 * @param component
 	 */
-	private void addYavRuleForMinMaxRangeValidatorType(IValidator validator, Component component)
+	private void addYavRuleForMinMaxRangeValidatorType(IValidator<?> validator, Component component)
 	{
 		if (RangeValidator.class.isAssignableFrom(validator.getClass()))
 		{
-			RangeValidator rangeValidator = (RangeValidator)validator;
+			RangeValidator<?> rangeValidator = (RangeValidator<?>)validator;
 
 			if (Number.class.isAssignableFrom(rangeValidator.getMinimum().getClass()))
 			{
@@ -283,7 +270,7 @@ public class YavFormComponentVisitor implements IVisitor<Component, Void>
 	 * @param component
 	 * @param componentId
 	 */
-	private void addYavRuleForStringValidatorType(IValidator validator, Component component)
+	private void addYavRuleForStringValidatorType(StringValidator validator, Component component)
 	{
 		if (ExactLengthValidator.class.isAssignableFrom(validator.getClass()))
 		{

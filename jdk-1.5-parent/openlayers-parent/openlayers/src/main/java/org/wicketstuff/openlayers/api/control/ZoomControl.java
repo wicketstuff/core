@@ -28,13 +28,13 @@ public class ZoomControl extends Panel
 	{
 		super(id);
 		Image zoomIn = new Image("zoomIn", zoomInResource);
-		zoomIn.add(new AttributeAppender("onClick",
-			new Model(map.getJSinvokeNoLineEnd("zoomIn()")), ";"));
+		zoomIn.add(new AttributeAppender("onClick", Model.of(map.getJSinvokeNoLineEnd("zoomIn()")),
+			";"));
 		add(zoomIn);
 
 		Image zoomOut = new Image("zoomOut", zoomOutResource);
-		zoomOut.add(new AttributeAppender("onClick", new Model(
-			map.getJSinvokeNoLineEnd("zoomOut()")), ";"));
+		zoomOut.add(new AttributeAppender("onClick",
+			Model.of(map.getJSinvokeNoLineEnd("zoomOut()")), ";"));
 		add(zoomOut);
 
 	}

@@ -66,26 +66,26 @@ public class PanControl extends Panel
 	{
 		super(id);
 		Image panUp = new Image("panUp", panUpResource);
-		panUp.add(new AttributeAppender("onClick", new Model(
-			map.getJSinvokeNoLineEnd("panDirection(0,-" + panOffset + ")")), ";"));
+		panUp.add(new AttributeAppender("onClick",
+			Model.of(map.getJSinvokeNoLineEnd("panDirection(0,-" + panOffset + ")")), ";"));
 		add(panUp);
 
 		Image panLeft = new Image("panLeft", panLeftResource);
-		panLeft.add(new AttributeAppender("onClick", new Model(
-			map.getJSinvokeNoLineEnd("panDirection(-" + panOffset + ",0)")), ";"));
+		panLeft.add(new AttributeAppender("onClick",
+			Model.of(map.getJSinvokeNoLineEnd("panDirection(-" + panOffset + ",0)")), ";"));
 
 		add(panLeft);
 
 		Image panRight = new Image("panRight", panRightResource);
-		panRight.add(new AttributeAppender("onClick", new Model(
-			map.getJSinvokeNoLineEnd("panDirection(" + panOffset + ",0)")), ";"));
+		panRight.add(new AttributeAppender("onClick",
+			Model.of(map.getJSinvokeNoLineEnd("panDirection(" + panOffset + ",0)")), ";"));
 
 		add(panRight);
 
 		Image panDown = new Image("panDown", panDownResource);
 
-		panDown.add(new AttributeAppender("onClick", new Model(
-			map.getJSinvokeNoLineEnd("panDirection(0," + panOffset + ")")), ";"));
+		panDown.add(new AttributeAppender("onClick",
+			Model.of(map.getJSinvokeNoLineEnd("panDirection(0," + panOffset + ")")), ";"));
 
 		add(panDown);
 

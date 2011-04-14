@@ -33,7 +33,7 @@ public class LayerSwitcherControl extends Panel
 		WebMarkupContainer link = new WebMarkupContainer("link");
 // link.add(new AttributeAppender("onClick",new
 // Model(map.getJSinvokeNoLineEnd("toggleLayer("+layerId+")")),";"));
-		link.add(new AttributeAppender("href", new Model("javascript:" +
+		link.add(new AttributeAppender("href", Model.of("javascript:" +
 			map.getJSinvokeNoLineEnd("toggleLayer(" + layerId + ")")), ";"));
 
 		link.add(new Label("layerName", "Markers"));
@@ -43,36 +43,29 @@ public class LayerSwitcherControl extends Panel
 
 	}
 
-	private class Toggler extends ListView
+	private class Toggler extends ListView<Layer>
 	{
 		private static final long serialVersionUID = 1L;
 		private IOpenLayersMap omap;
 
-		public Toggler(String id, List list, final IOpenLayersMap omap)
+		public Toggler(String id, List<Layer> list, final IOpenLayersMap omap)
 		{
 			super(id, list);
 			this.omap = omap;
 		}
 
 		@Override
-		protected void populateItem(ListItem item)
+		protected void populateItem(ListItem<Layer> item)
 		{
-			Object toBeToggled = item.getModelObject();
-			String id = "";
-			String name = "";
-			if (Layer.class.isAssignableFrom(toBeToggled.getClass()))
-			{
-				Layer overlay = (Layer)toBeToggled;
-				id = overlay.getId();
-				name = overlay.getName();
-			}
+			Layer overlay = item.getModelObject();
+
 			WebMarkupContainer link = new WebMarkupContainer("link");
 // link.add(new AttributeAppender("onClick",new
 // Model(omap.getJSinvokeNoLineEnd("toggleLayer("+id+")")),";"));
-			link.add(new AttributeAppender("href", new Model("javascript:" +
-				omap.getJSinvokeNoLineEnd("toggleLayer(" + id + ")")), ";"));
+			link.add(new AttributeAppender("href", Model.of("javascript:" +
+				omap.getJSinvokeNoLineEnd("toggleLayer(" + overlay.getId() + ")")), ";"));
 
-			link.add(new Label("layerName", name));
+			link.add(new Label("layerName", overlay.getName()));
 
 			item.add(link);
 

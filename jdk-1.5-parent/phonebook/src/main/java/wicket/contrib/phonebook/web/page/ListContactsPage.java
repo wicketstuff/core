@@ -136,7 +136,7 @@ public class ListContactsPage extends BasePage
 		ContactsDataProvider dataProvider = new ContactsDataProvider(dao);
 
 		// create the form used to contain all filter components
-		final FilterForm form = new FilterForm("filter-form", dataProvider)
+		final FilterForm<Contact> form = new FilterForm<Contact>("filter-form", dataProvider)
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -182,9 +182,9 @@ public class ListContactsPage extends BasePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Serializable getModelObjectToken(IModel model)
+			protected Serializable getModelObjectToken(IModel<Contact> model)
 			{
-				return ((Contact)model.getObject()).getId();
+				return model.getObject().getId();
 			}
 
 		});
@@ -228,7 +228,7 @@ public class ListContactsPage extends BasePage
 			private static final long serialVersionUID = 1L;
 
 			// return the go-and-clear filter for the filter toolbar
-			public Component getFilter(String componentId, FilterForm form)
+			public Component getFilter(String componentId, FilterForm<?> form)
 			{
 				return new GoAndClearFilter(componentId, form, new ResourceModel("filter"),
 					new ResourceModel("clear"));

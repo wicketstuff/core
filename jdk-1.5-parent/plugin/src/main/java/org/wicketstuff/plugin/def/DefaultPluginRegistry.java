@@ -59,8 +59,8 @@ public class DefaultPluginRegistry implements PluginRegistry
 
 	public void registerPlugin(Object plugin)
 	{
-		final List<Class> allClasses = getAllClasses(plugin.getClass());
-		for (Class c : allClasses)
+		final List<Class<?>> allClasses = getAllClasses(plugin.getClass());
+		for (Class<?> c : allClasses)
 		{
 			List<Object> plugins = pluginMap.get(c);
 			if (plugins == null)
@@ -90,7 +90,7 @@ public class DefaultPluginRegistry implements PluginRegistry
 // Other Methods
 // **********************************************************************************************************************
 
-	private void enqueue(Class c, LinkedList<Class<?>> queue)
+	private void enqueue(Class<?> c, LinkedList<Class<?>> queue)
 	{
 		if (c != null && !stopClasses.contains(c))
 		{
@@ -98,24 +98,24 @@ public class DefaultPluginRegistry implements PluginRegistry
 		}
 	}
 
-	protected void enqueueAncestors(Class c, LinkedList<Class<?>> queue)
+	protected void enqueueAncestors(Class<?> c, LinkedList<Class<?>> queue)
 	{
-		for (Class i : c.getInterfaces())
+		for (Class<?> i : c.getInterfaces())
 		{
 			enqueue(i, queue);
 		}
 		enqueue(c.getSuperclass(), queue);
 	}
 
-	public List<Class> getAllClasses(Class cls)
+	public List<Class<?>> getAllClasses(Class<?> cls)
 	{
 		final LinkedList<Class<?>> queue = new LinkedList<Class<?>>();
-		final List<Class> list = new LinkedList<Class>();
-		final Set<Class> set = new HashSet<Class>();
+		final List<Class<?>> list = new LinkedList<Class<?>>();
+		final Set<Class<?>> set = new HashSet<Class<?>>();
 		queue.add(cls);
 		while (!queue.isEmpty())
 		{
-			Class c = queue.removeFirst();
+			Class<?> c = queue.removeFirst();
 			if (!set.contains(c))
 			{
 				list.add(c);
