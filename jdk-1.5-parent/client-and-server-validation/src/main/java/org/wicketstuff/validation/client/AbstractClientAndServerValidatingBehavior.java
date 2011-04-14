@@ -38,11 +38,11 @@ import org.apache.wicket.util.string.interpolator.MapVariableInterpolator;
  * 
  * @author Jeremy Thomerson
  */
-public abstract class AbstractClientAndServerValidatingBehavior extends Behavior
+public abstract class AbstractClientAndServerValidatingBehavior<T> extends Behavior
 {
 	private static final long serialVersionUID = 1L;
 
-	private FormComponent<?> mComponent;
+	private FormComponent<T> mComponent;
 	private Form<?> mForm;
 
 	public AbstractClientAndServerValidatingBehavior(Form<?> form)
@@ -55,12 +55,13 @@ public abstract class AbstractClientAndServerValidatingBehavior extends Behavior
 		mForm = form;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public final void bind(Component component)
 	{
 		super.bind(component);
 		checkComponentIsFormComponent(component);
-		mComponent = (FormComponent<?>)component;
+		mComponent = (FormComponent<T>)component;
 
 		addServerSideValidator(mComponent);
 
@@ -71,7 +72,7 @@ public abstract class AbstractClientAndServerValidatingBehavior extends Behavior
 
 	protected final void checkComponentIsFormComponent(Component component)
 	{
-		if ((component instanceof FormComponent) == false)
+		if (component instanceof FormComponent == false)
 		{
 			throw new IllegalArgumentException("This behavior [" + Classes.simpleName(getClass()) +
 				"] can only be added to a FormComponent");
@@ -126,7 +127,7 @@ public abstract class AbstractClientAndServerValidatingBehavior extends Behavior
 		return Classes.simpleName(getClass());
 	}
 
-	protected Map<String, Object> variablesMap(Form<?> form, FormComponent<?> component)
+	protected Map<String, Object> variablesMap(Form<?> form, FormComponent<T> component)
 	{
 		Map<String, Object> vars = new HashMap<String, Object>();
 		vars.put("form", form.getMarkupId());
@@ -143,6 +144,6 @@ public abstract class AbstractClientAndServerValidatingBehavior extends Behavior
 		return Classes.simpleName(getClass());
 	}
 
-	protected abstract void addServerSideValidator(FormComponent component);
+	protected abstract void addServerSideValidator(FormComponent<T> component);
 
 }

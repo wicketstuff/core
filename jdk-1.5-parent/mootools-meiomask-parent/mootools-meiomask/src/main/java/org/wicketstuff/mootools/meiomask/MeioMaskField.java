@@ -36,6 +36,7 @@ import org.wicketstuff.mootools.meiomask.behavior.MeioMaskBehavior;
 public class MeioMaskField<T> extends TextField<T>
 {
 
+	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(MeioMaskField.class);
 	private final MaskFormatter maskFormatter = new MaskFormatter();
 	private final MaskType maskType;

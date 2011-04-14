@@ -27,10 +27,14 @@ import org.wicketstuff.googlecharts.SolidFill;
 public class Home extends WebPage
 {
 
+	private static final long serialVersionUID = 1L;
+
 	public Home()
 	{
 		IChartData data = new AbstractChartData()
 		{
+
+			private static final long serialVersionUID = 1L;
 
 			public double[][] getData()
 			{
@@ -45,6 +49,8 @@ public class Home extends WebPage
 
 		data = new AbstractChartData()
 		{
+
+			private static final long serialVersionUID = 1L;
 
 			public double[][] getData()
 			{
@@ -66,6 +72,8 @@ public class Home extends WebPage
 
 		data = new AbstractChartData(ChartDataEncoding.TEXT, 100)
 		{
+
+			private static final long serialVersionUID = 1L;
 
 			public double[][] getData()
 			{
@@ -90,6 +98,8 @@ public class Home extends WebPage
 		data = new AbstractChartData()
 		{
 
+			private static final long serialVersionUID = 1L;
+
 			public double[][] getData()
 			{
 				return new double[][] { { 7, 4, 11, 11 }, { 22, 14, 17, 11 } };
@@ -104,6 +114,8 @@ public class Home extends WebPage
 		data = new AbstractChartData()
 		{
 
+			private static final long serialVersionUID = 1L;
+
 			public double[][] getData()
 			{
 				return new double[][] { { 34, 30, 38, 38, 41 } };
@@ -117,6 +129,8 @@ public class Home extends WebPage
 		data = new AbstractChartData(ChartDataEncoding.TEXT, 100)
 		{
 
+			private static final long serialVersionUID = 1L;
+
 			public double[][] getData()
 			{
 				return new double[][] { { 100, 80, 60, 30, 30, 30, 10 } };
@@ -129,6 +143,8 @@ public class Home extends WebPage
 
 		data = new AbstractChartData()
 		{
+
+			private static final long serialVersionUID = 1L;
 
 			public double[][] getData()
 			{
@@ -158,6 +174,8 @@ public class Home extends WebPage
 
 		data = new AbstractChartData(ChartDataEncoding.TEXT, 100)
 		{
+
+			private static final long serialVersionUID = 1L;
 
 			public double[][] getData()
 			{

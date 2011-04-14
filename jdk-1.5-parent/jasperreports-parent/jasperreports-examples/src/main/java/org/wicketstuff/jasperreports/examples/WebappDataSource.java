@@ -42,6 +42,8 @@ public class WebappDataSource implements Serializable, JRDataSource
 {
 
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 *
 	 */

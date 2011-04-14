@@ -21,6 +21,8 @@ import com.inmethod.icon.Icon;
 public abstract class AbstractTreeColumn extends BaseTreeColumn
 {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Creates instance with specified column id, header model and sort property.
 	 * 

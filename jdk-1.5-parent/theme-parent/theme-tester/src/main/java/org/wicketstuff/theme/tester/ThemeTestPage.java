@@ -24,6 +24,8 @@ import org.wicketstuff.theme.standard.ThemeFactory;
 
 public class ThemeTestPage extends WicketThemeBasePage
 {
+	private static final long serialVersionUID = 1L;
+
 	public ThemeTestPage()
 	{
 		add(new FeedbackPanel("feedback"));

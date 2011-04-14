@@ -15,6 +15,7 @@ import org.wicketstuff.jslibraries.VersionDescriptor;
 class DefaultPrototypeResource implements IResource
 {
 
+	private static final long serialVersionUID = 1L;
 	private IResource resource;
 
 	public DefaultPrototypeResource()

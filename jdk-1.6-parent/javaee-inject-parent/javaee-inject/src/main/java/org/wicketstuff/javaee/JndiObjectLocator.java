@@ -37,6 +37,7 @@ import org.apache.wicket.util.lang.Objects;
 public class JndiObjectLocator implements IProxyTargetLocator
 {
 
+	private static final long serialVersionUID = 1L;
 	private Class<?> beanType;
 	private String beanName;
 

@@ -29,6 +29,7 @@ import org.wicketstuff.openlayers.js.Constructor;
 public class Size implements Serializable
 {
 
+	private static final long serialVersionUID = 1L;
 	private float w;
 	private float h;
 

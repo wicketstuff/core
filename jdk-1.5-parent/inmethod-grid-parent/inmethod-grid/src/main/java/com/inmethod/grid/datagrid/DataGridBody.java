@@ -26,6 +26,8 @@ import com.inmethod.grid.common.AttachPrelightBehavior;
 public abstract class DataGridBody extends Panel implements IPageable
 {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructor
 	 * 

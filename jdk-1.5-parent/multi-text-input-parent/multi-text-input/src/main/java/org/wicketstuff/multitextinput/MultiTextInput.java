@@ -180,7 +180,7 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>>
 	 */
 	public MultiTextInput(String id, Collection<T> items)
 	{
-		super(id, new MultiTextInputModel(items));
+		super(id, new MultiTextInputModel<Collection<T>>(items));
 	}
 
 	/**
@@ -197,7 +197,7 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>>
 	 */
 	public MultiTextInput(String id, Collection<T> items, int inputLength)
 	{
-		super(id, new MultiTextInputModel(items));
+		super(id, new MultiTextInputModel<Collection<T>>(items));
 		this.inputLength = inputLength;
 	}
 
@@ -287,10 +287,12 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>>
 		}
 
 		// render the javascript to setup the component
-		IModel variablesModel = new AbstractReadOnlyModel()
+		IModel<Map<String, CharSequence>> variablesModel = new AbstractReadOnlyModel<Map<String, CharSequence>>()
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			public Map getObject()
+			public Map<String, CharSequence> getObject()
 			{
 				Map<String, CharSequence> variables = new HashMap<String, CharSequence>(2);
 				variables.put("id", id);
@@ -401,6 +403,8 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>>
 		{
 			for (String val : values)
 			{
+				// 2011.04.14. akiraly This cast does not seem okay
+				// casting String to T?
 				convertedValues.add((T)val);
 			}
 		}
@@ -433,7 +437,7 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>>
 		}
 		else
 		{
-			final IConverter converter = getConverter(getType());
+			final IConverter<Collection<T>> converter = getConverter(getType());
 			String curInput = "";
 			try
 			{
@@ -443,7 +447,9 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>>
 					for (String input : inputs)
 					{
 						curInput = input;
-						convertedInput.add(((T)converter.convertToObject(curInput, getLocale())));
+						// 2011.04.14. akiraly This cast does not seem okay
+						// converter returns Collection<T> which is cast to T?
+						convertedInput.add((T)converter.convertToObject(curInput, getLocale()));
 					}
 				}
 				return convertedInput;

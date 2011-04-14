@@ -17,7 +17,7 @@
 package org.wicketstuff.mbeanview;
 
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Hashtable;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -32,7 +32,7 @@ import javax.management.ObjectName;
 public class DataUtil
 {
 
-	public static Object tryParseToType(Object object, Class clazz)
+	public static Object tryParseToType(Object object, Class<?> clazz)
 	{
 		try
 		{
@@ -45,15 +45,15 @@ public class DataUtil
 		}
 	}
 
-	public static Class getClassFromInfo(MBeanAttributeInfo attributeInfo)
+	public static Class<?> getClassFromInfo(MBeanAttributeInfo attributeInfo)
 		throws ClassNotFoundException
 	{
 		return getClassFromInfo(attributeInfo.getType());
 	}
 
-	public static Class getClassFromInfo(String jmxType) throws ClassNotFoundException
+	public static Class<?> getClassFromInfo(String jmxType) throws ClassNotFoundException
 	{
-		Class clazz = null;
+		Class<?> clazz = null;
 		if ("boolean".equals(jmxType))
 		{
 			clazz = Boolean.class;
@@ -85,14 +85,15 @@ public class DataUtil
 
 	public static Set<Set<String>> parseToPropsSet(Set<ObjectName> domainNames)
 	{
-		Set result = new HashSet();
-		for (Iterator i = domainNames.iterator(); i.hasNext();)
+		Set<Set<String>> result = new HashSet<Set<String>>();
+		for (Object element : domainNames)
 		{
-			ObjectName names = (ObjectName)i.next();
+			ObjectName names = (ObjectName)element;
 			Set<String> propValue = new HashSet<String>();
-			for (Iterator it = names.getKeyPropertyList().entrySet().iterator(); it.hasNext();)
+			@SuppressWarnings("unchecked")
+			Hashtable<String, String> propertyList = names.getKeyPropertyList();
+			for (Entry<String, String> entry : propertyList.entrySet())
 			{
-				Entry<String, String> entry = (Entry<String, String>)it.next();
 				propValue.add(entry.getKey() + "=" + entry.getValue());
 			}
 			result.add(propValue);

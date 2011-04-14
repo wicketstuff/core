@@ -5,11 +5,11 @@ import javax.validation.ConstraintViolation;
 import org.apache.wicket.validation.ValidationError;
 import org.wicketstuff.jsr303.util.Assert;
 
-abstract class ViolationErrorBuilder
+abstract class ViolationErrorBuilder<T>
 {
-	static class Property extends ViolationErrorBuilder
+	static class Property<T> extends ViolationErrorBuilder<T>
 	{
-		public Property(final ConstraintViolation violation)
+		public Property(final ConstraintViolation<T> violation)
 		{
 			super(violation);
 		}
@@ -17,14 +17,14 @@ abstract class ViolationErrorBuilder
 		@Override
 		protected String render()
 		{
-			return JSR303Validation.getViolationMessageRenderer().renderPropertyViolation(
-				violation);
+			return JSR303Validation.getViolationMessageRenderer()
+				.renderPropertyViolation(violation);
 		}
 	}
-	static class Bean extends ViolationErrorBuilder
+	static class Bean<T> extends ViolationErrorBuilder<T>
 	{
 
-		public Bean(final ConstraintViolation violation)
+		public Bean(final ConstraintViolation<T> violation)
 		{
 			super(violation);
 		}
@@ -32,14 +32,13 @@ abstract class ViolationErrorBuilder
 		@Override
 		protected String render()
 		{
-			return JSR303Validation.getViolationMessageRenderer().renderBeanViolation(
-				violation);
+			return JSR303Validation.getViolationMessageRenderer().renderBeanViolation(violation);
 		}
 	}
 
-	protected final ConstraintViolation violation;
+	protected final ConstraintViolation<T> violation;
 
-	ViolationErrorBuilder(final ConstraintViolation violation)
+	ViolationErrorBuilder(final ConstraintViolation<T> violation)
 	{
 		Assert.parameterNotNull(violation, "violation");
 		this.violation = violation;

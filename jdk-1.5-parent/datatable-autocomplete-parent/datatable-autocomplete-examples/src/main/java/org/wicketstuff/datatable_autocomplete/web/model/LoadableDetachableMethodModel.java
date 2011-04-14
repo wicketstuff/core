@@ -17,7 +17,6 @@
 package org.wicketstuff.datatable_autocomplete.web.model;
 
 import java.lang.reflect.Method;
-import java.util.LinkedList;
 
 import org.apache.wicket.model.IModel;
 
@@ -35,7 +34,6 @@ public class LoadableDetachableMethodModel implements IModel<Method>
 
 	private String className = null;
 	private String methodName = null;
-	private LinkedList<String> methodParameterTypeList = new LinkedList<String>();
 
 	private transient Method transientMethod = null;
 

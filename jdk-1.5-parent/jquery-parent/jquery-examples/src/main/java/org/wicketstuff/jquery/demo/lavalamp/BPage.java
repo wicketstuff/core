@@ -8,6 +8,8 @@ import org.wicketstuff.jquery.lavalamp.LavaLampMenuPanel;
 public final class BPage extends WebPage
 {
 
+	private static final long serialVersionUID = 1L;
+
 	public BPage()
 	{
 		add(new LavaLampMenuPanel("lavalampMenu", Utils.newMenuListWithLinkStyles())

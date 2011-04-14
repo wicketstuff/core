@@ -16,6 +16,8 @@ import com.vividsolutions.jts.io.WKTReader;
 public abstract class DrawListenerBehavior extends AbstractDefaultAjaxBehavior
 {
 
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public void renderHead(Component c, IHeaderResponse response)
 	{

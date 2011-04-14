@@ -21,6 +21,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.management.MBeanFeatureInfo;
@@ -50,6 +51,7 @@ import org.apache.wicket.model.Model;
 public class OperationsPanel extends Panel
 {
 
+	private static final long serialVersionUID = 1L;
 	private MbeanServerLocator beanServerLocator;
 	private ObjectName objectName;
 	private ModalWindow modalOutput;
@@ -63,10 +65,12 @@ public class OperationsPanel extends Panel
 		add(modalOutput = new ModalWindow("modalOutput"));
 		modalOutput.setTitle("Operation result view.");
 		modalOutput.setCookieName("modalOutput");
-		Form form = new Form("form");
+		Form<Void> form = new Form<Void>("form");
 		add(form);
 		ListView operations = new ListView("operations", Arrays.asList(beanOperationInfos))
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void populateItem(final ListItem item)
 			{
@@ -96,6 +100,8 @@ public class OperationsPanel extends Panel
 				item.add(feedback);
 				item.add(new OperationButton("method", parameterRepeater, info)
 				{
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					protected void onSuccessful(Object returnObj, AjaxRequestTarget target)
 					{
@@ -115,19 +121,20 @@ public class OperationsPanel extends Panel
 
 	private abstract class OperationButton extends AjaxButton
 	{
+		private static final long serialVersionUID = 1L;
 		private ParameterRepeater parameterRepeater;
 		private MBeanFeatureInfo info;
 
 		public OperationButton(String id, ParameterRepeater parameterRepeater, MBeanFeatureInfo info)
 		{
 			super(id);
-			setModel(new Model(info.getName()));
+			setModel(Model.of(info.getName()));
 			this.parameterRepeater = parameterRepeater;
 			this.info = info;
 		}
 
 		@Override
-		protected void onSubmit(AjaxRequestTarget target, Form form)
+		protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 		{
 			Object returnObj = null;
 			try
@@ -138,12 +145,13 @@ public class OperationsPanel extends Panel
 			}
 			catch (Exception e)
 			{
-				returnObj = new ArrayList();
-				((ArrayList)returnObj).add(e.getMessage());
+				List<String> returnList = new ArrayList<String>();
+				returnList.add(e.getMessage());
 				StringWriter sw = new StringWriter();
 				PrintWriter pw = new PrintWriter(sw);
 				e.printStackTrace(pw);
-				((ArrayList)returnObj).add(sw.toString());
+				returnList.add(sw.toString());
+				returnObj = returnList;
 			}
 			if (returnObj != null)
 			{
@@ -164,6 +172,7 @@ public class OperationsPanel extends Panel
 
 	private class ParameterRepeater extends ListView
 	{
+		private static final long serialVersionUID = 1L;
 		private Map<MBeanParameterInfo, IModel> parametersValues = new HashMap<MBeanParameterInfo, IModel>();
 		private MBeanParameterInfo[] beanParameterInfos;
 

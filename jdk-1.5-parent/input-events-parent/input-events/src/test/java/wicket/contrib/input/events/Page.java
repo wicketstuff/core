@@ -54,6 +54,8 @@ public class Page extends WebPage
 		};
 		button.add(new AjaxEventBehavior("onClick")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onEvent(AjaxRequestTarget target)
 			{
@@ -79,6 +81,8 @@ public class Page extends WebPage
 		};
 		button2.add(new AjaxEventBehavior("onClick")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onEvent(AjaxRequestTarget target)
 			{
@@ -88,8 +92,10 @@ public class Page extends WebPage
 		});
 		button2.add(new InputBehavior(new KeyType[] { KeyType.a }));
 		add(button2);
-		Link link = new Link("link")
+		Link<Void> link = new Link<Void>("link")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onClick()
 			{

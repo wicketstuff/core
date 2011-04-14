@@ -10,6 +10,8 @@ import org.wicketstuff.jquery.Options;
 public class CropOptions extends Options
 {
 
+	private static final long serialVersionUID = 1L;
+
 	public CropOptions dragHandle(Boolean dragHandle)
 	{
 		if (dragHandle)

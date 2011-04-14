@@ -15,6 +15,7 @@ import org.wicketstuff.openlayers.IOpenLayersMap;
 public class RemoveDrawControl extends Behavior
 {
 
+	private static final long serialVersionUID = 1L;
 	private IOpenLayersMap map;
 
 	public RemoveDrawControl(IOpenLayersMap map)

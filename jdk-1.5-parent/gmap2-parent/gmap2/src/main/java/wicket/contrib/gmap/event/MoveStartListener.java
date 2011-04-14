@@ -29,6 +29,9 @@ import wicket.contrib.gmap.GMap2;
 public abstract class MoveStartListener extends GEventListenerBehavior
 {
 
+	private static final long serialVersionUID = 1L;
+
+
 	@Override
 	protected String getEvent()
 	{

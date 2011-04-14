@@ -58,6 +58,8 @@ import wicket.contrib.phonebook.web.ContactsDataProvider;
  */
 public class ListContactsPage extends BasePage
 {
+	private static final long serialVersionUID = 1L;
+
 	@SpringBean(name = "contactDao")
 	private ContactDao dao;
 
@@ -72,6 +74,8 @@ public class ListContactsPage extends BasePage
 	 */
 	private static class UserActionsPanel extends Panel
 	{
+		private static final long serialVersionUID = 1L;
+
 		public UserActionsPanel(String id, IModel<Contact> contactModel)
 		{
 			super(id);
@@ -84,6 +88,8 @@ public class ListContactsPage extends BasePage
 		{
 			add(new Link<Contact>("deleteLink", contactModel)
 			{
+				private static final long serialVersionUID = 1L;
+
 				/**
 				 * Go to the Delete page, passing this page and the id of the Contact involved.
 				 */
@@ -99,6 +105,8 @@ public class ListContactsPage extends BasePage
 		{
 			add(new Link<Contact>("editLink", contactModel)
 			{
+				private static final long serialVersionUID = 1L;
+
 				/**
 				 * Go to the Edit page, passing this page and the id of the Contact involved.
 				 */
@@ -141,6 +149,8 @@ public class ListContactsPage extends BasePage
 
 		form.add(new Button("delete-selected")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onSubmit()
 			{
@@ -169,6 +179,8 @@ public class ListContactsPage extends BasePage
 			"selectedContactIds"))
 		{
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected Serializable getModelObjectToken(IModel model)
 			{
@@ -182,6 +194,8 @@ public class ListContactsPage extends BasePage
 			new ResourceModel("last.name"), "lastname", "lastname",
 			new LoadableDetachableModel<List<? extends String>>()
 			{
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				protected List<String> load()
 				{
@@ -211,6 +225,8 @@ public class ListContactsPage extends BasePage
 	{
 		return new FilteredAbstractColumn<Contact>(new Model<String>(getString("actions")))
 		{
+			private static final long serialVersionUID = 1L;
+
 			// return the go-and-clear filter for the filter toolbar
 			public Component getFilter(String componentId, FilterForm form)
 			{
@@ -231,6 +247,8 @@ public class ListContactsPage extends BasePage
 	{
 		add(new Link<Void>("createLink")
 		{
+			private static final long serialVersionUID = 1L;
+
 			/**
 			 * Go to the Edit page when the link is clicked, passing an empty Contact details
 			 */

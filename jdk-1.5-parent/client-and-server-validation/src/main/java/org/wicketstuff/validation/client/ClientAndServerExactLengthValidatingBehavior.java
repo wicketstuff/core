@@ -30,7 +30,7 @@ import org.apache.wicket.validation.validator.StringValidator;
  * @author Jeremy Thomerson
  */
 public class ClientAndServerExactLengthValidatingBehavior extends
-	AbstractClientAndServerValidatingBehavior
+	AbstractClientAndServerValidatingBehavior<String>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -44,7 +44,7 @@ public class ClientAndServerExactLengthValidatingBehavior extends
 	}
 
 	@Override
-	protected void addServerSideValidator(FormComponent component)
+	protected void addServerSideValidator(FormComponent<String> component)
 	{
 		component.add(StringValidator.exactLength(mLength));
 	}
@@ -59,7 +59,7 @@ public class ClientAndServerExactLengthValidatingBehavior extends
 	}
 
 	@Override
-	protected Map<String, Object> variablesMap(Form<?> form, FormComponent<?> component)
+	protected Map<String, Object> variablesMap(Form<?> form, FormComponent<String> component)
 	{
 		Map<String, Object> map = super.variablesMap(form, component);
 		map.put("exact", mLength);

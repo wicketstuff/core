@@ -23,6 +23,8 @@ import com.inmethod.grid.column.editable.EditablePropertyColumn;
 public abstract class AbstractLightWeightColumn extends AbstractColumn
 {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Creates instance with specified column id, header model and sort property.
 	 * 

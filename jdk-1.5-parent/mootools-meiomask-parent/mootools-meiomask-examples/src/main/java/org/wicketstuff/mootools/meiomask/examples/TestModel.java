@@ -25,6 +25,7 @@ import java.util.Date;
 public class TestModel implements Serializable
 {
 
+	private static final long serialVersionUID = 1L;
 	private String fixed;
 	private String fixedPhone;
 	private String fixedPhoneUs;

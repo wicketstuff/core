@@ -53,6 +53,8 @@ public class MapWithDrawLayerAndInteractionPage extends WebPage
 
 		openLayersMap.add(new DrawListenerBehavior()
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onDrawEnded(Geometry poly, AjaxRequestTarget target)
 			{

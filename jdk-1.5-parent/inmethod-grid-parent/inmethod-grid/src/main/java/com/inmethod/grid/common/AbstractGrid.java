@@ -52,6 +52,8 @@ import com.inmethod.grid.treegrid.TreeGrid;
 public abstract class AbstractGrid extends Panel implements IHeaderContributor
 {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Creates new {@link AbstractGrid} instance
 	 * 

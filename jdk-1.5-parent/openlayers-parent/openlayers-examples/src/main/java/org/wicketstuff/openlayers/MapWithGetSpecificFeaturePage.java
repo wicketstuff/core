@@ -40,6 +40,8 @@ import org.wicketstuff.openlayers.proxy.WFSProxyBehavior;
 public class MapWithGetSpecificFeaturePage extends WebPage
 {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * 
 	 */
@@ -80,6 +82,8 @@ public class MapWithGetSpecificFeaturePage extends WebPage
 		final AbstractDefaultAjaxBehavior callbackBehaviour = new AbstractDefaultAjaxBehavior()
 		{
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void respond(AjaxRequestTarget target)
 			{
@@ -113,6 +117,8 @@ public class MapWithGetSpecificFeaturePage extends WebPage
 
 		OpenLayersMap map = new OpenLayersMap("map", true, layerList, mapOptions)
 		{
+
+			private static final long serialVersionUID = 1L;
 
 			/*
 			 * (non-Javadoc)

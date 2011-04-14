@@ -247,6 +247,8 @@ public class AbstractControl implements IJavascriptComponent
 		eventJavascript.add(new AbstractReadOnlyModel<String>()
 		{
 
+			private static final long serialVersionUID = 1L;
+
 			/*
 			 * (non-Javadoc)
 			 * 

@@ -37,6 +37,8 @@ import org.wicketstuff.progressbar.spring.TaskProgressionModel;
 public class TaskServiceProgressExamplePage extends PageSupport
 {
 
+	private static final long serialVersionUID = 1L;
+
 	private static class DummyTask extends Task
 	{
 		private final int iterations;
@@ -71,6 +73,8 @@ public class TaskServiceProgressExamplePage extends PageSupport
 		final ProgressBar bar;
 		final TaskProgressionModel progressionModel = new TaskProgressionModel()
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected ITaskService getTaskService()
 			{
@@ -79,6 +83,8 @@ public class TaskServiceProgressExamplePage extends PageSupport
 		};
 		form.add(bar = new ProgressBar("bar", progressionModel)
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onFinished(AjaxRequestTarget target)
 			{
@@ -101,6 +107,8 @@ public class TaskServiceProgressExamplePage extends PageSupport
 
 		form.add(new IndicatingAjaxButton("submit", form)
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form form)
 			{

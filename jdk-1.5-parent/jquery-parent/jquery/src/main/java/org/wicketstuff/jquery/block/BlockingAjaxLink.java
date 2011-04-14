@@ -28,6 +28,8 @@ import org.wicketstuff.jquery.JQueryBehavior;
 
 public abstract class BlockingAjaxLink<T> extends AjaxLink<T> implements IHeaderContributor
 {
+	private static final long serialVersionUID = 1L;
+
 	public static final ResourceReference BLOCK_JS = new PackageResourceReference(
 		BlockingAjaxLink.class, "jquery.blockUI.js");
 

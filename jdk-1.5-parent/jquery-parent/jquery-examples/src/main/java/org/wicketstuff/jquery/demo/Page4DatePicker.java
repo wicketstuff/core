@@ -52,7 +52,8 @@ public class Page4DatePicker extends PageSupport
 			.allowDateInPast(true, DATE_PATTERN);
 		date01TextField.add(new DatePickerBehavior(datePickerOptions));
 
-		final Form form = new Form("myForm", new CompoundPropertyModel(this))
+		final Form<Page4DatePicker> form = new Form<Page4DatePicker>("myForm",
+			new CompoundPropertyModel<Page4DatePicker>(this))
 		{
 			@Override
 			protected void onSubmit()

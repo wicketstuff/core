@@ -31,6 +31,8 @@ import org.wicketstuff.progressbar.ProgressionModel;
 public class TaskProgressionModel extends ProgressionModel
 {
 
+	private static final long serialVersionUID = 1L;
+
 	private final ITaskService taskService;
 
 	private Long taskId;

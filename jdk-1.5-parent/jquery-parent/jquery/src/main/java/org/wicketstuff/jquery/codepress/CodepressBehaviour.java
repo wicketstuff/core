@@ -14,6 +14,8 @@ import org.wicketstuff.minis.behavior.SimpleAttributeAppender;
  */
 public class CodepressBehaviour extends JQueryBehavior
 {
+	private static final long serialVersionUID = 1L;
+
 	public static final ResourceReference CODEPRESS_JS = new PackageResourceReference(
 		CodepressBehaviour.class, "jquery.codepress.js");
 

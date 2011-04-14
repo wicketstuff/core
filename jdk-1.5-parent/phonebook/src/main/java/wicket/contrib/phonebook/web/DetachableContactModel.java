@@ -32,6 +32,8 @@ import wicket.contrib.phonebook.ContactDao;
  */
 public class DetachableContactModel extends LoadableDetachableModel<Contact>
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * database identity of the contact
 	 */

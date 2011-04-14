@@ -26,6 +26,8 @@ import org.wicketstuff.jquery.Options;
 public class CornerzOptions extends Options
 {
 
+	private static final long serialVersionUID = 1L;
+
 	public CornerzOptions radius(int radius)
 	{
 		set("radius", radius);

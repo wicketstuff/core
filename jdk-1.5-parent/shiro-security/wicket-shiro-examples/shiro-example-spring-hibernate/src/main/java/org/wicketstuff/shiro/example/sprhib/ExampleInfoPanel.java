@@ -21,6 +21,8 @@ import org.apache.wicket.markup.html.panel.Panel;
 
 public class ExampleInfoPanel extends Panel
 {
+	private static final long serialVersionUID = 1L;
+
 	public ExampleInfoPanel(String id)
 	{
 		super(id);

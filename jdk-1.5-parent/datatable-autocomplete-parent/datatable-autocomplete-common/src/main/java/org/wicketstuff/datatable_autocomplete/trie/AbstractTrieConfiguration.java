@@ -48,6 +48,8 @@ public abstract class AbstractTrieConfiguration<C> implements ITrieConfiguration
 		return new ITrieFilter<C>()
 		{
 
+			private static final long serialVersionUID = 1L;
+
 			/*
 			 * (non-Javadoc)
 			 * 

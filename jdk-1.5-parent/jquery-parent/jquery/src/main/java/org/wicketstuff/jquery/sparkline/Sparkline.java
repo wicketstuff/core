@@ -31,6 +31,8 @@ import org.wicketstuff.jquery.JQueryBehavior;
 
 public class Sparkline extends WebComponent implements IHeaderContributor
 {
+	private static final long serialVersionUID = 1L;
+
 	public static final CompressedResourceReference SPARKLINE_JS = new CompressedResourceReference(
 		Sparkline.class, "jquery.sparkline-1.4.3.min.js");
 

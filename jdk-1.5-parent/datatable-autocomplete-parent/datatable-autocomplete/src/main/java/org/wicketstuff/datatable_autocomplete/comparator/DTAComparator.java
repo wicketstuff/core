@@ -18,7 +18,6 @@ package org.wicketstuff.datatable_autocomplete.comparator;
 import java.util.Comparator;
 
 import org.apache.wicket.IClusterable;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -35,8 +34,6 @@ public abstract class DTAComparator<E> implements Comparator<E>, IClusterable
 	 * 
 	 */
 	private static final long serialVersionUID = -4782414530696776582L;
-
-	private static final org.slf4j.Logger log = LoggerFactory.getLogger(DTAComparator.class);
 
 	private boolean ascending = true;
 

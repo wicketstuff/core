@@ -55,6 +55,8 @@ public final class TrieBuilder
 		trie = new PatriciaTrie<Method>(new AbstractTrieConfiguration<Method>()
 		{
 
+			private static final long serialVersionUID = 1L;
+
 			/*
 			 * (non-Javadoc)
 			 * 
@@ -134,7 +136,7 @@ public final class TrieBuilder
 				if (!jarEntry.getName().contains(".class"))
 					continue;
 
-				Class clazz;
+				Class<?> clazz;
 
 				try
 				{

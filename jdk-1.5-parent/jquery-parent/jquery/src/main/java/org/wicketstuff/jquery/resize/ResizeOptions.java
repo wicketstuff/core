@@ -9,6 +9,7 @@ import org.wicketstuff.jquery.Options;
  */
 public class ResizeOptions extends Options
 {
+	private static final long serialVersionUID = 1L;
 	public static final String ASPECTRATIO_PRESERVE = "preserve";
 
 	public ResizeOptions aspectRatio(String r)

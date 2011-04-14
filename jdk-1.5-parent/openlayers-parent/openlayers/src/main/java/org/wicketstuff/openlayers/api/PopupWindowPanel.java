@@ -11,6 +11,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 public class PopupWindowPanel extends Panel
 {
 
+	private static final long serialVersionUID = 1L;
 	private final static String markupId = "content";
 
 	public PopupWindowPanel()

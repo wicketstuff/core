@@ -5,6 +5,8 @@ import org.wicketstuff.jquery.Options;
 public class LightboxOptions extends Options
 {
 
+	private static final long serialVersionUID = 1L;
+
 	public LightboxOptions()
 	{
 		fixedNavigation(true);

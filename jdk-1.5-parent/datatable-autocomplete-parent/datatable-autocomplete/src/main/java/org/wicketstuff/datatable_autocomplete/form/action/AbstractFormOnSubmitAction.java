@@ -27,8 +27,10 @@ import org.apache.wicket.markup.html.form.Form;
  *         determined.
  * 
  */
-public abstract class AbstractFormOnSubmitAction<T> implements IFormOnSubmitAction<T>
+public abstract class AbstractFormOnSubmitAction implements IFormOnSubmitAction
 {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 

@@ -27,6 +27,7 @@ import org.wicketstuff.openlayers.js.Constructor;
  */
 public class Pixel implements Serializable
 {
+	private static final long serialVersionUID = 1L;
 	/**
 	 * 
 	 */

@@ -26,10 +26,10 @@ import org.apache.wicket.markup.html.form.Form;
  *         A way to implement the submission logic outside of the submitting component.
  * 
  */
-public interface IFormOnSubmitAction<T> extends IClusterable
+public interface IFormOnSubmitAction extends IClusterable
 {
 
-	public void onSubmit(AjaxRequestTarget target, Form<T> form);
+	public void onSubmit(AjaxRequestTarget target, Form<?> form);
 
 	/**
 	 * Listener method invoked on form submit with errors

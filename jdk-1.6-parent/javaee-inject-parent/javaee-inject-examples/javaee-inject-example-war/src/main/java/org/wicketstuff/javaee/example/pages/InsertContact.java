@@ -33,6 +33,7 @@ import org.wicketstuff.javaee.example.model.Contact;
 public class InsertContact extends WebPage
 {
 
+	private static final long serialVersionUID = 1L;
 	private Form<Contact> insertForm;
 	private String name;
 	private String email;
@@ -45,6 +46,8 @@ public class InsertContact extends WebPage
 
 		insertForm = new Form<Contact>("insertForm")
 		{
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected void onSubmit()

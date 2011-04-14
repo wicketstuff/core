@@ -28,6 +28,7 @@ import org.wicketstuff.jquery.JQueryBehavior;
  */
 public class AjaxFormComponentValidatorBehaviour extends AjaxFormComponentUpdatingBehavior
 {
+	private static final long serialVersionUID = 1L;
 	public static final String ERROR_COMPONENT_CLASS = "error";
 	public static final String ERROR_MESSAGE_CLASS = "error";
 	private boolean errorDetected;

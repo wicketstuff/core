@@ -31,6 +31,7 @@ import org.apache.wicket.markup.html.panel.Panel;
  */
 public class DataViewPanel extends Panel
 {
+	private static final long serialVersionUID = 1L;
 	private static final String OUTPUT_ID = "output";
 
 	public DataViewPanel(String id, Object param)
@@ -64,6 +65,8 @@ public class DataViewPanel extends Panel
 		}
 		ListView contentsRepeater = new ListView("contents", contents)
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void populateItem(ListItem item)
 			{

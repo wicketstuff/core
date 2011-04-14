@@ -21,8 +21,6 @@ import java.util.Map;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -42,8 +40,6 @@ public class MarkupIDInStringModel implements IModel<String>
 	 * 
 	 */
 	private static final long serialVersionUID = 548831417478329002L;
-
-	private static final Logger log = LoggerFactory.getLogger(MarkupIDInStringModel.class);
 
 	/**
 	 * Used by child classes to define the markupid placeholder in their attached template

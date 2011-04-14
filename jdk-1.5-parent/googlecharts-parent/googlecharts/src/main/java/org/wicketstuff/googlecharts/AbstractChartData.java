@@ -9,6 +9,7 @@ package org.wicketstuff.googlecharts;
 public abstract class AbstractChartData implements IChartData
 {
 
+	private static final long serialVersionUID = 1L;
 	private ChartDataEncoding encoding;
 	private double max;
 

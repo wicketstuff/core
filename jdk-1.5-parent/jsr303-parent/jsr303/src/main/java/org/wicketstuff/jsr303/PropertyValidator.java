@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.jsr303.util.Assert;
 
-@SuppressWarnings("rawtypes")
 public class PropertyValidator<T> implements INullAcceptingValidator<T>, Serializable
 {
 	public static class Exclude extends Behavior

@@ -21,8 +21,6 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.wicket.IClusterable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author mocleiri
@@ -56,8 +54,6 @@ public class PatriciaTrie<C> implements IClusterable, Trie<C>
 	 * 
 	 */
 	private static final long serialVersionUID = -6075870905379098868L;
-
-	private static final Logger log = LoggerFactory.getLogger(PatriciaTrie.class);
 
 	private TrieNode<C> root = null;
 

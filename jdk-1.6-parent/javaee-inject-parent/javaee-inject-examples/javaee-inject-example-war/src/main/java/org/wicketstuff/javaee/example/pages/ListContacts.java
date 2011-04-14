@@ -34,6 +34,7 @@ import org.wicketstuff.javaee.example.model.Contact;
 public class ListContacts extends WebPage
 {
 
+	private static final long serialVersionUID = 1L;
 	@EJB(name = "ContactDaoBean")
 	private ContactDaoLocal contactDao;
 	@Resource(name = "welcomeMessage")
@@ -46,6 +47,8 @@ public class ListContacts extends WebPage
 		add(new ListView<Contact>("contacts", contactDao.getContacts())
 		{
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void populateItem(final ListItem<Contact> item)
 			{
@@ -54,6 +57,8 @@ public class ListContacts extends WebPage
 				item.add(new Label("email", contact.getEmail()));
 				item.add(new Link<Contact>("delete", item.getModel())
 				{
+
+					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void onClick()

@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -60,6 +59,7 @@ import org.wicketstuff.datatable_autocomplete.web.table.column.MethodColumn.Meth
 public class HomePage extends WebPage
 {
 
+	private static final long serialVersionUID = 1L;
 
 	private TextField<String> classNameFilterField;
 
@@ -149,6 +149,8 @@ public class HomePage extends WebPage
 			new ITrieProvider<Method>()
 			{
 
+				private static final long serialVersionUID = 1L;
+
 				/*
 				 * (non-Javadoc)
 				 * 
@@ -161,6 +163,8 @@ public class HomePage extends WebPage
 
 			}, new ITrieFilter<Method>()
 			{
+
+				private static final long serialVersionUID = 1L;
 
 				/*
 				 * (non-Javadoc)
@@ -198,6 +202,8 @@ public class HomePage extends WebPage
 			stringModel, new IProviderSorter<Method>()
 			{
 
+				private static final long serialVersionUID = 1L;
+
 				/*
 				 * (non-Javadoc)
 				 * 
@@ -216,6 +222,8 @@ public class HomePage extends WebPage
 
 			}, new IModelProvider<Method>()
 			{
+
+				private static final long serialVersionUID = 1L;
 
 				/*
 				 * (non-Javadoc)
@@ -270,6 +278,8 @@ public class HomePage extends WebPage
 			}, new IAutocompleteControlPanelProvider()
 			{
 
+				private static final long serialVersionUID = 1L;
+
 				public Component getPanel(Component onChangeComponent, String controlPanelId)
 				{
 
@@ -282,6 +292,8 @@ public class HomePage extends WebPage
 
 		classNameFilterField.add(new AjaxFormComponentUpdatingBehavior("onchange")
 		{
+
+			private static final long serialVersionUID = 1L;
 
 			/*
 			 * (non-Javadoc)
@@ -316,6 +328,8 @@ public class HomePage extends WebPage
 		add(new Label("numberOfMethods", new AbstractReadOnlyModel<String>()
 		{
 
+			private static final long serialVersionUID = 1L;
+
 			/*
 			 * (non-Javadoc)
 			 * 
@@ -324,8 +338,6 @@ public class HomePage extends WebPage
 			@Override
 			public String getObject()
 			{
-
-				final AtomicInteger counter = new AtomicInteger(0);
 
 				return String.valueOf(WicketApplication.getTrie().size());
 
@@ -337,6 +349,8 @@ public class HomePage extends WebPage
 		Label freqLabel;
 		add(freqLabel = new Label("alphabetFrequency", new AbstractReadOnlyModel<String>()
 		{
+
+			private static final long serialVersionUID = 1L;
 
 			/*
 			 * (non-Javadoc)

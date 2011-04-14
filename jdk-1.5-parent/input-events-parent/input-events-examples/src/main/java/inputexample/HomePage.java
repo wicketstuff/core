@@ -49,8 +49,10 @@ public class HomePage extends WebPage
 		final Label label = new Label("id", labelModel);
 		label.setOutputMarkupId(true);
 		add(label);
-		Form form = new Form("form")
+		Form<Void> form = new Form<Void>("form")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onSubmit()
 			{
@@ -128,7 +130,7 @@ public class HomePage extends WebPage
 		link.add(new InputBehavior(new KeyType[] { KeyType.e }));
 		add(link);
 
-		final Form ajaxContainer = new Form("ajaxContainer");
+		final Form<Void> ajaxContainer = new Form<Void>("ajaxContainer");
 		add(ajaxContainer);
 
 		// Counter

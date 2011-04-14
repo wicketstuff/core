@@ -32,6 +32,7 @@ import org.wicketstuff.shiro.page.LogoutPage;
 public class UserAuthHeader extends Panel
 {
 
+	private static final long serialVersionUID = 1L;
 	@SpringBean(name = "userService")
 	private UserService userService;
 
@@ -42,6 +43,8 @@ public class UserAuthHeader extends Panel
 		// Welcome with logout
 		WebMarkupContainer welcome = new WebMarkupContainer("welcome")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isVisible()
 			{
@@ -50,6 +53,8 @@ public class UserAuthHeader extends Panel
 		};
 		welcome.add(new Label("name", new AbstractReadOnlyModel<String>()
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public String getObject()
 			{
@@ -71,6 +76,8 @@ public class UserAuthHeader extends Panel
 		// Login
 		WebMarkupContainer login = new WebMarkupContainer("login")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isVisible()
 			{

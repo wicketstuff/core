@@ -24,9 +24,9 @@ import org.apache.wicket.validation.IValidationError;
  */
 public class BeanValidator
 {
-	private final Form context;
+	private final Form<?> context;
 
-	public BeanValidator(final Form contextOrNull)
+	public BeanValidator(final Form<?> contextOrNull)
 	{
 		context = contextOrNull;
 	}
@@ -39,18 +39,17 @@ public class BeanValidator
 		}
 
 		JSR303Validation.getInstance();
-		final java.util.Set<?> s = JSR303Validation.getValidator().validate(e);
+		final Set<ConstraintViolation<U>> s = JSR303Validation.getValidator().validate(e);
 		if (s.isEmpty())
 		{
 			return true;
 		}
 
-		for (final Object v : s)
+		for (final ConstraintViolation<U> v : s)
 		{
-			final ConstraintViolation<?> violation = (ConstraintViolation<?>)v;
 			if (context != null)
 			{
-				final IValidationError ve = new ViolationErrorBuilder.Bean((ConstraintViolation)v).createError();
+				final IValidationError ve = new ViolationErrorBuilder.Bean<U>(v).createError();
 				context.error(new ValidationErrorFeedback(ve,
 					ve.getErrorMessage(new MessageSource())));
 			}

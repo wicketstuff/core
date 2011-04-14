@@ -78,6 +78,8 @@ public class TreeGrid extends AbstractGrid
 		return new DefaultTreeState()
 		{
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isNodeSelected(Object node)
 			{

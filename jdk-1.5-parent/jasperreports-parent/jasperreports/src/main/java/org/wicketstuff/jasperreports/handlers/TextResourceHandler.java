@@ -28,6 +28,8 @@ import net.sf.jasperreports.engine.export.JRTextExporterParameter;
  */
 public class TextResourceHandler implements IJRResourceHandler, Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * an integer representing the page width in characters.
 	 */

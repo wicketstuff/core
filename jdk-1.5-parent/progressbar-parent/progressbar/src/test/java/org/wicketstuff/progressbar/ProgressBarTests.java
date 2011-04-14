@@ -67,6 +67,8 @@ public class ProgressBarTests
 		final DummyTask testProgressive = new DummyTask();
 		Panel progressBar = new ProgressBar("panelId", new ProgressionModel()
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected Progression getProgression()
 			{
@@ -88,6 +90,8 @@ public class ProgressBarTests
 		final DummyTask testProgressive = new DummyTask();
 		wt.startComponent(new ProgressBar("panelId", new ProgressionModel()
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected Progression getProgression()
 			{

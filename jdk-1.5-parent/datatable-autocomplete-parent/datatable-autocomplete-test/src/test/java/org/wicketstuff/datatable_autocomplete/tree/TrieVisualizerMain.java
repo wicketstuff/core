@@ -25,6 +25,8 @@ public class TrieVisualizerMain
 			new AbstractTrieConfiguration<String>()
 			{
 
+				private static final long serialVersionUID = 1L;
+
 				/*
 				 * (non-Javadoc)
 				 * 
@@ -66,7 +68,7 @@ public class TrieVisualizerMain
 		trie.index("trip");
 
 
-		new TrieVisualizer("Patrcia Trie", trie, TrieVisualizerLayout.TREE);
+		new TrieVisualizer<String>("Patrcia Trie", trie, TrieVisualizerLayout.TREE);
 
 	}
 

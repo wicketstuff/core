@@ -73,6 +73,8 @@ public class JSLib {
 	}
 
 	private static final MetaDataKey<Provider[]> PROVIDER_KEY = new MetaDataKey<Provider[]>() {
+
+		private static final long serialVersionUID = 1L;
 	};
 
 	/**

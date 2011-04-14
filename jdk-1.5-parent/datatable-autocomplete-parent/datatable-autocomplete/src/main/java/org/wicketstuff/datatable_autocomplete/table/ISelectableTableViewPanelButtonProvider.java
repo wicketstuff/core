@@ -35,7 +35,7 @@ public interface ISelectableTableViewPanelButtonProvider extends IClusterable
 	 * 
 	 * @return the action to perform when this button is clicked.
 	 */
-	public IFormOnSubmitAction<?> getButtonAction();
+	public IFormOnSubmitAction getButtonAction();
 
 	/**
 	 * 

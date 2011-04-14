@@ -28,6 +28,8 @@ import org.apache.wicket.model.Model;
 public class DefaultModelProvider<C extends Serializable> implements IModelProvider<C>
 {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * 
 	 */

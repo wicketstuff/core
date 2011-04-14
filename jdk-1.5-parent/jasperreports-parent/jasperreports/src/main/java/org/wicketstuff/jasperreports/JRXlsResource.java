@@ -16,6 +16,8 @@ import org.wicketstuff.jasperreports.handlers.XlsResourceHandler;
 @Deprecated
 public final class JRXlsResource extends JRConcreteResource<XlsResourceHandler>
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Construct without a report. You must provide a report before you can use this resource.
 	 */

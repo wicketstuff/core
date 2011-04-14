@@ -27,6 +27,8 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 public abstract class ProgressionModel extends AbstractReadOnlyModel<Progression>
 {
 
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public final Progression getObject()
 	{

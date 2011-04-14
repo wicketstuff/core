@@ -24,6 +24,8 @@ package org.wicketstuff.javaee.naming;
 public class StandardJndiNamingStrategy implements IJndiNamingStrategy
 {
 
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public String calculateName(String ejbName, Class<?> ejbType)
 	{

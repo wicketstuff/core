@@ -306,6 +306,8 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	{
 		this(id, headerContrib, overlays, new PopupListener(false)
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onClick(AjaxRequestTarget target, Overlay overlay)
 			{

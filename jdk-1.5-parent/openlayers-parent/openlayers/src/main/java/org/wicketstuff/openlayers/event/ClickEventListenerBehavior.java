@@ -8,6 +8,8 @@ import org.wicketstuff.openlayers.api.LonLat;
 public abstract class ClickEventListenerBehavior extends EventListenerBehavior
 {
 
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public String getJSaddListener()
 	{

@@ -29,6 +29,8 @@ import org.wicketstuff.datatables.DemoDatatable;
 public class HomePage extends WebPage
 {
 
+	private static final long serialVersionUID = 1L;
+
 	public HomePage()
 	{
 		WebMarkupContainer table = new DemoDatatable("table");
@@ -42,6 +44,8 @@ public class HomePage extends WebPage
 
 		ListView<String[]> lv = new ListView<String[]>("rows", rows)
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void populateItem(ListItem<String[]> item)
 			{

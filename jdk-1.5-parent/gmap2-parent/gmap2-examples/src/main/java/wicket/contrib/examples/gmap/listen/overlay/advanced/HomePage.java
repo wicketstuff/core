@@ -204,6 +204,8 @@ public class HomePage extends WicketExamplePage
 	private static abstract class MyMarker extends GMarker
 	{
 
+		private static final long serialVersionUID = 1L;
+
 		public MyMarker(GLatLng latLng, GMarkerOptions options)
 		{
 			super(latLng, options);

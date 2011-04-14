@@ -18,6 +18,7 @@ import org.wicketstuff.jquery.JQueryBehavior;
  */
 public class LightboxBehaviour extends JQueryBehavior
 {
+	private static final long serialVersionUID = 1L;
 	private static final ResourceReference LIGHTBOX_JS = new CompressedResourceReference(
 		LightboxBehaviour.class, "jquery.lightbox-0.5.js");
 	private static final ResourceReference LIGHTBOX_CSS = new CompressedResourceReference(

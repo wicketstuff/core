@@ -43,6 +43,8 @@ import org.wicketstuff.openlayers.proxy.WFSProxyBehavior;
 public class MapWithWMSGetFeatureInfoPage extends WebPage
 {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * 
 	 */
@@ -92,6 +94,8 @@ public class MapWithWMSGetFeatureInfoPage extends WebPage
 
 		OpenLayersMap map = new OpenLayersMap("map", true, layerList, mapOptions)
 		{
+
+			private static final long serialVersionUID = 1L;
 
 			/*
 			 * (non-Javadoc)

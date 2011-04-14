@@ -68,7 +68,7 @@ public class TestPage extends WebPage
 
 	}
 
-	private static class TestModel
+	static class TestModel
 	{
 
 		private String fixed;

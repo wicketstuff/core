@@ -15,6 +15,7 @@ import org.wicketstuff.jquery.JQueryBehavior;
  */
 public class ResizeBehaviour extends JQueryBehavior
 {
+	private static final long serialVersionUID = 1L;
 	private ResizeOptions options;
 
 	public ResizeBehaviour()

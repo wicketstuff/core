@@ -18,6 +18,7 @@ import org.wicketstuff.openlayers.IOpenLayersMap;
 public class PanControl extends Panel
 {
 
+	private static final long serialVersionUID = 1L;
 	private static ResourceReference PAN_UP = new PackageResourceReference(PanControl.class,
 		"north-mini.png");
 	private static ResourceReference PAN_LEFT = new PackageResourceReference(PanControl.class,

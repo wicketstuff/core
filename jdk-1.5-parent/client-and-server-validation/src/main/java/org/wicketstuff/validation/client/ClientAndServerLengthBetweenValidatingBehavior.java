@@ -31,7 +31,7 @@ import org.apache.wicket.validation.validator.StringValidator;
  * @author Jeremy Thomerson
  */
 public class ClientAndServerLengthBetweenValidatingBehavior extends
-	AbstractClientAndServerValidatingBehavior
+	AbstractClientAndServerValidatingBehavior<String>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -47,7 +47,7 @@ public class ClientAndServerLengthBetweenValidatingBehavior extends
 	}
 
 	@Override
-	protected void addServerSideValidator(FormComponent component)
+	protected void addServerSideValidator(FormComponent<String> component)
 	{
 		component.add(StringValidator.lengthBetween(mMin, mMax));
 	}
@@ -62,7 +62,7 @@ public class ClientAndServerLengthBetweenValidatingBehavior extends
 	}
 
 	@Override
-	protected Map<String, Object> variablesMap(Form<?> form, FormComponent<?> component)
+	protected Map<String, Object> variablesMap(Form<?> form, FormComponent<String> component)
 	{
 		Map<String, Object> map = super.variablesMap(form, component);
 		map.put("minimum", mMin);

@@ -22,6 +22,7 @@ import org.wicketstuff.openlayers.api.Overlay;
 public abstract class OverlayListenerBehavior extends EventListenerBehavior
 {
 
+	private static final long serialVersionUID = 1L;
 	private Overlay gOverlay;
 
 	protected Overlay getGOverlay()

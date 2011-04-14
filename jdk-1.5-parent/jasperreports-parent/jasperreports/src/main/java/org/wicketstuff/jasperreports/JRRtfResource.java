@@ -33,6 +33,8 @@ import org.wicketstuff.jasperreports.handlers.RtfResourceHandler;
 @Deprecated
 public final class JRRtfResource extends JRConcreteResource<RtfResourceHandler>
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Construct without a report. You must provide a report before you can use this resource.
 	 */

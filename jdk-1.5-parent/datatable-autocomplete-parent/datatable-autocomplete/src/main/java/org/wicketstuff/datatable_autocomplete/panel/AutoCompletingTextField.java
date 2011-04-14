@@ -25,8 +25,6 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.behaviour.AutoCompletingBehavior;
 import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandler;
 
@@ -43,7 +41,7 @@ public class AutoCompletingTextField<R> extends Panel
 	 *
 	 */
 	private static final long serialVersionUID = -5234331727415699325L;
-	private static final Logger log = LoggerFactory.getLogger(AutoCompletingTextField.class);
+
 	private AutoCompletingPanel<R> autoCompletingPanel;
 
 	private final IAutocompleteRenderingHints renderingHints;
@@ -110,7 +108,7 @@ public class AutoCompletingTextField<R> extends Panel
 		// dummy model.
 		// we are a formcomponentpanel so that we are traversed during form
 		// submissions.
-		super(id, new Model());
+		super(id);
 		this.searchFieldModel = searchFieldModel;
 		this.renderingHints = renderingHints;
 

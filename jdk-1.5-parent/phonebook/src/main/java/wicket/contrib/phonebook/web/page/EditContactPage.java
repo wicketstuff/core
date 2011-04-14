@@ -43,6 +43,7 @@ import wicket.contrib.phonebook.ContactDao;
  */
 public class EditContactPage extends BasePage
 {
+	private static final long serialVersionUID = 1L;
 	private final Page backPage;
 	@SpringBean(name = "contactDao")
 	private ContactDao contactDao;

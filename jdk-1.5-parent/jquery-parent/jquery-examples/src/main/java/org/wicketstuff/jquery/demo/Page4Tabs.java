@@ -33,7 +33,7 @@ public class Page4Tabs extends PageSupport
 	{
 		super();
 		List<ITab> tabs = new ArrayList<ITab>();
-		tabs.add(new AbstractTab(new Model("A"))
+		tabs.add(new AbstractTab(Model.of("A"))
 		{
 			@Override
 			public Panel getPanel(String panelId)
@@ -43,7 +43,7 @@ public class Page4Tabs extends PageSupport
 					Model.of("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus nec leo. Duis ultricies. In id ipsum vitae ante fringilla"));
 			}
 		});
-		tabs.add(new AbstractTab(new Model("B"))
+		tabs.add(new AbstractTab(Model.of("B"))
 		{
 			@Override
 			public Panel getPanel(String panelId)
@@ -53,7 +53,7 @@ public class Page4Tabs extends PageSupport
 					Model.of("volutpat. In pharetra. Ut ante. Vivamus tempus, leo a ullamcorper tincidunt, pede ipsum consectetuer nunc, at pellentesque"));
 			}
 		});
-		tabs.add(new AbstractTab(new Model("C"))
+		tabs.add(new AbstractTab(Model.of("C"))
 		{
 			@Override
 			public Panel getPanel(String panelId)

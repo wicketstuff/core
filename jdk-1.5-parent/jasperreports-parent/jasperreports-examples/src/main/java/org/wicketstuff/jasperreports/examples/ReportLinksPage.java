@@ -37,6 +37,8 @@ import org.wicketstuff.jasperreports.handlers.TextResourceHandler;
  */
 public class ReportLinksPage extends WebPage
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructor.
 	 */
@@ -45,37 +47,37 @@ public class ReportLinksPage extends WebPage
 		ServletContext context = ((WebApplication)getApplication()).getServletContext();
 		final File reportFile = new File(context.getRealPath("/reports/WebappReport.jasper"));
 
-		final Map parameters = new HashMap();
+		final Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("BaseDir", new File(context.getRealPath("/reports")));
 
-		JRResource pdfResource = new JRConcreteResource(reportFile, new PdfResourceHandler()).setReportParameters(
-			parameters)
-			.setReportDataSource(new WebappDataSource());
-		add(new ResourceLink("linkToPdf", pdfResource));
+		JRResource pdfResource = new JRConcreteResource<PdfResourceHandler>(reportFile,
+			new PdfResourceHandler()).setReportParameters(parameters).setReportDataSource(
+			new WebappDataSource());
+		add(new ResourceLink<Void>("linkToPdf", pdfResource));
 
-		JRResource rtfResource = new JRConcreteResource(reportFile, new RtfResourceHandler()).setReportParameters(
-			parameters)
-			.setReportDataSource(new WebappDataSource());
-		add(new ResourceLink("linkToRtf", rtfResource));
+		JRResource rtfResource = new JRConcreteResource<RtfResourceHandler>(reportFile,
+			new RtfResourceHandler()).setReportParameters(parameters).setReportDataSource(
+			new WebappDataSource());
+		add(new ResourceLink<Void>("linkToRtf", rtfResource));
 
-		JRResource htmlResource = new JRConcreteResource(reportFile, new HtmlResourceHandler()).setReportParameters(
-			parameters)
-			.setReportDataSource(new WebappDataSource());
-		add(new ResourceLink("linkToHtml", htmlResource));
+		JRResource htmlResource = new JRConcreteResource<HtmlResourceHandler>(reportFile,
+			new HtmlResourceHandler()).setReportParameters(parameters).setReportDataSource(
+			new WebappDataSource());
+		add(new ResourceLink<Void>("linkToHtml", htmlResource));
 
-		JRResource textResource = new JRConcreteResource(reportFile, new TextResourceHandler()).setReportParameters(
-			parameters)
-			.setReportDataSource(new WebappDataSource());
-		add(new ResourceLink("linkToText", textResource));
+		JRResource textResource = new JRConcreteResource<TextResourceHandler>(reportFile,
+			new TextResourceHandler()).setReportParameters(parameters).setReportDataSource(
+			new WebappDataSource());
+		add(new ResourceLink<Void>("linkToText", textResource));
 
 		JRResource imageResource = new JRImageResource(reportFile).setReportParameters(parameters)
 			.setReportDataSource(new WebappDataSource());
-		add(new ResourceLink("linkToImage", imageResource));
+		add(new ResourceLink<Void>("linkToImage", imageResource));
 
-		JRResource csvResource = new JRConcreteResource(reportFile, new CsvResourceHandler()).setReportParameters(
-			parameters)
-			.setReportDataSource(new WebappDataSource());
-		add(new ResourceLink("linkToCsv", csvResource));
+		JRResource csvResource = new JRConcreteResource<CsvResourceHandler>(reportFile,
+			new CsvResourceHandler()).setReportParameters(parameters).setReportDataSource(
+			new WebappDataSource());
+		add(new ResourceLink<Void>("linkToCsv", csvResource));
 	}
 
 	/**

@@ -31,6 +31,7 @@ import javax.persistence.Id;
 public class Contact implements Serializable
 {
 
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;
 	private String email;

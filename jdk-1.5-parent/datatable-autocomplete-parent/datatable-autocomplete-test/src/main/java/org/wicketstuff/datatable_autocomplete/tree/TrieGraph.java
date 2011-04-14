@@ -30,6 +30,7 @@ import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
 public class TrieGraph<C> extends DirectedSparseMultigraph<TrieNode<C>, String>
 {
 
+	private static final long serialVersionUID = 1L;
 	private final AtomicLong counter = new AtomicLong();
 
 	/**

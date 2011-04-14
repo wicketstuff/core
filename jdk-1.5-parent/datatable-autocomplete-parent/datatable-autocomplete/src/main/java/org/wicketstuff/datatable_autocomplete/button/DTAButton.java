@@ -18,8 +18,6 @@ package org.wicketstuff.datatable_autocomplete.button;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.model.Model;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;
 
 
@@ -38,8 +36,6 @@ public class DTAButton extends Button implements DTAButtonProvider
 	 */
 	private static final long serialVersionUID = 1829825558587963971L;
 
-	private static final Logger log = LoggerFactory.getLogger(DTAButton.class);
-
 	private IFormOnSubmitAction submitAction = null;
 
 
@@ -50,7 +46,7 @@ public class DTAButton extends Button implements DTAButtonProvider
 	{
 
 
-		super(id, new Model<String>(label));
+		super(id, Model.of(label));
 		this.submitAction = submitAction;
 
 	}

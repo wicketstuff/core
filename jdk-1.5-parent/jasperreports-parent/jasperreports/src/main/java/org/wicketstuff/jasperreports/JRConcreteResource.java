@@ -32,6 +32,7 @@ import org.wicketstuff.jasperreports.handlers.IJRResourceHandler;
  */
 public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource
 {
+	private static final long serialVersionUID = 1L;
 	private H handler = null;
 
 	/**

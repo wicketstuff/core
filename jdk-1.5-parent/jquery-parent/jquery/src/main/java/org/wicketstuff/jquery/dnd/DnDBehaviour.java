@@ -16,6 +16,7 @@ import org.wicketstuff.jquery.Options;
  */
 public class DnDBehaviour extends JQueryBehavior implements IBehaviorListener
 {
+	private static final long serialVersionUID = 1L;
 	private Options droppableOptions;
 	private Options draggableOptions;
 	private String dropSelector;

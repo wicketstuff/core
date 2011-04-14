@@ -84,8 +84,6 @@ public class LargeTrieTestCase extends TestCase
 	public void testTrieStructure()
 	{
 
-		int total = 0;
-
 		List<String> nextCharacterList = new LinkedList<String>();
 		nextCharacterList.addAll(trie.getNextNodeCharacterSet());
 
@@ -129,6 +127,7 @@ public class LargeTrieTestCase extends TestCase
 			}
 
 			// get the list of elements that are not in the union of the two lists
+			@SuppressWarnings("unchecked")
 			Collection<Method> disjunctionList = CollectionUtils.disjunction(wordList, indexedList);
 
 			for (Method method : disjunctionList)

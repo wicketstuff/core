@@ -26,6 +26,8 @@ import org.apache.wicket.util.string.Strings;
  */
 public class WicketExamplePage extends WebPage
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructor
 	 */

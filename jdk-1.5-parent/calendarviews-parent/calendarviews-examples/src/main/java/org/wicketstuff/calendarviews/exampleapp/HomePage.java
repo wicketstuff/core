@@ -79,6 +79,8 @@ public class HomePage extends WebPage
 				Page page = super.createMoreDetailPage(model, eventsModel);
 				page.add(new Behavior()
 				{
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void renderHead(Component component, IHeaderResponse response)
 					{

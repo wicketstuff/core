@@ -145,6 +145,8 @@ public abstract class AbstractSelectableTableViewPanel<T> extends FormComponentP
 		add(new Behavior()
 		{
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void renderHead(Component c, IHeaderResponse response)
 			{

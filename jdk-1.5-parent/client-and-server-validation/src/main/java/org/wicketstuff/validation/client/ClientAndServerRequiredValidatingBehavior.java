@@ -26,8 +26,8 @@ import org.apache.wicket.markup.html.form.FormComponent;
  * 
  * @author Jeremy Thomerson
  */
-public class ClientAndServerRequiredValidatingBehavior extends
-	AbstractClientAndServerValidatingBehavior
+public class ClientAndServerRequiredValidatingBehavior<T> extends
+	AbstractClientAndServerValidatingBehavior<T>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -38,7 +38,7 @@ public class ClientAndServerRequiredValidatingBehavior extends
 	}
 
 	@Override
-	protected void addServerSideValidator(FormComponent component)
+	protected void addServerSideValidator(FormComponent<T> component)
 	{
 		component.setRequired(true);
 	}

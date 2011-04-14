@@ -28,6 +28,8 @@ public class HomePage extends WebPage
 			testModel))
 		{
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onSubmit()
 			{

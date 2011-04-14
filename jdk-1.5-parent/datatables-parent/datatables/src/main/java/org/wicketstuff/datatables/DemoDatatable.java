@@ -16,7 +16,7 @@ public class DemoDatatable extends WebMarkupContainer
 		super(id);
 		setOutputMarkupId(true);
 
-		add(new AttributeModifier("class", new Model("display")));
+		add(new AttributeModifier("class", Model.of("display")));
 	}
 
 	@Override

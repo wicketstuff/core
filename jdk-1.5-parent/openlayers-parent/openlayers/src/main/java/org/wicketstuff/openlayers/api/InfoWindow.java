@@ -10,6 +10,8 @@ import org.wicketstuff.openlayers.OpenLayersMap;
 public class InfoWindow extends WebMarkupContainer
 {
 
+	private static final long serialVersionUID = 1L;
+
 	private LonLat latLng;
 
 	private Marker marker;

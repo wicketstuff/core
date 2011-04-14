@@ -25,6 +25,8 @@ import org.wicketstuff.jquery.demo.PageSupport;
 public class Page4AjaxBackButton extends PageSupport
 {
 
+	private static final long serialVersionUID = 1L;
+
 	public Page4AjaxBackButton()
 	{
 

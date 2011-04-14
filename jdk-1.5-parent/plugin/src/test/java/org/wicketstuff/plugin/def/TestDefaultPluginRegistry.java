@@ -115,5 +115,7 @@ public class TestDefaultPluginRegistry
 
 	public static class PluginB extends PluginA implements IPlugin
 	{
+
+		private static final long serialVersionUID = 1L;
 	}
 }

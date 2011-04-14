@@ -59,6 +59,8 @@ public final class TernarySearchTrieBuilder
 		trie = new TernarySearchTrie<Method>(new AbstractTrieConfiguration<Method>()
 		{
 
+			private static final long serialVersionUID = 1L;
+
 			/*
 			 * (non-Javadoc)
 			 * 
@@ -135,7 +137,7 @@ public final class TernarySearchTrieBuilder
 				if (!jarEntry.getName().contains(".class"))
 					continue;
 
-				Class clazz;
+				Class<?> clazz;
 
 				try
 				{

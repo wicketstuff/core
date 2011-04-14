@@ -64,6 +64,8 @@ import org.apache.wicket.request.resource.ResourceReference;
  */
 public class MBeansPanel extends Panel implements IHeaderContributor
 {
+	private static final long serialVersionUID = 1L;
+
 	public static final String VIEW_PANEL_ID = "view";
 
 	private static final ResourceReference CSS = new PackageResourceReference(MBeansPanel.class,
@@ -76,6 +78,8 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 		{
 			MbeanServerLocator reachMbeanServer = new MbeanServerLocator()
 			{
+				private static final long serialVersionUID = 1L;
+
 				public MBeanServer get()
 				{
 					return ManagementFactory.getPlatformMBeanServer();
@@ -93,6 +97,8 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 
 	private class MBeanTree extends Tree
 	{
+		private static final long serialVersionUID = 1L;
+
 		public MBeanTree(String id, TreeModel model)
 		{
 			super(id, model);
@@ -241,6 +247,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 
 	private class MbeanNode extends DefaultMutableTreeNode
 	{
+		private static final long serialVersionUID = 1L;
 		protected ObjectInstance objectInstance;
 		protected MbeanServerLocator mBeanServerLocator;
 		protected String name;
@@ -315,6 +322,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 
 	private class AttributesNode extends MbeanNode
 	{
+		private static final long serialVersionUID = 1L;
 		private MBeanAttributeInfo[] beanAttributeInfos;
 
 		public AttributesNode(MbeanNode parent, MBeanAttributeInfo[] beanAttributeInfos)
@@ -343,6 +351,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 
 	private class AttributeNode extends MbeanNode
 	{
+		private static final long serialVersionUID = 1L;
 		private MBeanAttributeInfo attributeInfo;
 
 		public AttributeNode(MbeanNode parent, MBeanAttributeInfo mBeanAttributeInfo)
@@ -367,6 +376,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 
 	private class OperationsNode extends MbeanNode
 	{
+		private static final long serialVersionUID = 1L;
 		private MBeanOperationInfo[] beanOperationInfos;
 
 		public OperationsNode(MbeanNode parent, MBeanOperationInfo[] beanOperationInfos)
@@ -395,6 +405,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 
 	private class OperationNode extends MbeanNode
 	{
+		private static final long serialVersionUID = 1L;
 		private MBeanOperationInfo beanOperationInfo;
 
 		public OperationNode(OperationsNode parent, MBeanOperationInfo mBeanOperationInfo)
@@ -419,6 +430,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 
 	private class NotificationNode extends MbeanNode
 	{
+		private static final long serialVersionUID = 1L;
 		private MBeanNotificationInfo beanNotificationInfo;
 
 		public NotificationNode(MbeanNode parent, MBeanNotificationInfo mBeanNotificationInfo)

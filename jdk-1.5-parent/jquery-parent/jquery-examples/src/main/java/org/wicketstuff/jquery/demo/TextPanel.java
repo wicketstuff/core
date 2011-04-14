@@ -8,7 +8,7 @@ public class TextPanel extends Panel
 {
 	private static final long serialVersionUID = 1L;
 
-	public TextPanel(String id, IModel model)
+	public TextPanel(String id, IModel<?> model)
 	{
 		super(id, model);
 		add(new Label("label", model));

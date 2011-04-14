@@ -78,7 +78,8 @@ public abstract class WicketTestCase extends TestCase
 	 * @param filename
 	 * @throws Exception
 	 */
-	protected void executeTest(final Class pageClass, final String filename) throws Exception
+	protected void executeTest(final Class<? extends Page> pageClass, final String filename)
+		throws Exception
 	{
 		System.out.println("=== " + pageClass.getName() + " ===");
 		tester.startPage(pageClass);
@@ -94,7 +95,7 @@ public abstract class WicketTestCase extends TestCase
 	 * @param filename
 	 * @throws Exception
 	 */
-	protected void executedListener(final Class clazz, final Component component,
+	protected void executedListener(final Class<?> clazz, final Component component,
 		final String filename) throws Exception
 	{
 		assertNotNull(component);
@@ -113,7 +114,7 @@ public abstract class WicketTestCase extends TestCase
 	 * @param filename
 	 * @throws Exception
 	 */
-	protected void executedBehavior(final Class clazz, final AbstractAjaxBehavior behavior,
+	protected void executedBehavior(final Class<?> clazz, final AbstractAjaxBehavior behavior,
 		final String filename) throws Exception
 	{
 		assertNotNull(behavior);

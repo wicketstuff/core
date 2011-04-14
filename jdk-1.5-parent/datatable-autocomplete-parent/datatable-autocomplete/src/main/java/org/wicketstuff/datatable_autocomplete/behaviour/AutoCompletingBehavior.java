@@ -25,8 +25,6 @@ import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.time.Duration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.panel.AJAXAutoCompleteBehavior;
 import org.wicketstuff.datatable_autocomplete.panel.AbstractAutoCompleteDependencyProcessor;
 import org.wicketstuff.datatable_autocomplete.panel.AutoCompletingPanel;
@@ -42,7 +40,7 @@ public class AutoCompletingBehavior extends AJAXAutoCompleteBehavior
 	 * 
 	 */
 	private static final long serialVersionUID = 7722548233439995560L;
-	private static final Logger log = LoggerFactory.getLogger(AutoCompletingBehavior.class);
+
 	private TextField<String> textModel;
 	private final HiddenField<?> selectedContextField;
 

@@ -17,6 +17,8 @@ import org.wicketstuff.jslibraries.JSLib;
 public final class PrototypeResourceReference extends ResourceReference
 {
 
+	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = LoggerFactory.getLogger(PrototypeResourceReference.class);
 
 	/**

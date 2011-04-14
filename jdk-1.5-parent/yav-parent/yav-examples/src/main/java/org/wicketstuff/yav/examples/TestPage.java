@@ -22,6 +22,8 @@ import org.wicketstuff.yav.YavBehavior;
 public class TestPage extends WebPage
 {
 
+	private static final long serialVersionUID = 1L;
+
 	@SuppressWarnings("unchecked")
 	public TestPage()
 	{

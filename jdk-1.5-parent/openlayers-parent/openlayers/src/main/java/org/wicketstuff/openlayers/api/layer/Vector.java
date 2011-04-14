@@ -25,6 +25,7 @@ import org.wicketstuff.openlayers.js.JSUtils;
 public class Vector extends Layer implements Serializable
 {
 
+	private static final long serialVersionUID = 1L;
 	private HashMap<String, String> options = new HashMap<String, String>();
 
 	public Vector(String name)

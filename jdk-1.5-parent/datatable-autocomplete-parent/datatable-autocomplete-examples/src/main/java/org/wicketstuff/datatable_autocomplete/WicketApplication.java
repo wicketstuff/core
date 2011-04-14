@@ -20,8 +20,6 @@ import java.lang.reflect.Method;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.data.TrieBuilder;
 import org.wicketstuff.datatable_autocomplete.trie.PatriciaTrie;
 import org.wicketstuff.datatable_autocomplete.web.page.HomePage;
@@ -40,10 +38,6 @@ public class WicketApplication extends WebApplication
 	 * try 12500 if you have enought memory (-Xmx512m should allow it)
 	 */
 	private static final int methodLimit = 5000;
-
-
-	private static Logger log = LoggerFactory.getLogger(WicketApplication.class);
-
 
 	private static PatriciaTrie<Method> trie;
 

@@ -22,6 +22,8 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
 public class PageSupport extends WebPage
 {
+	private static final long serialVersionUID = 1L;
+
 	public PageSupport()
 	{
 		add(new BookmarkablePageLink<Void>("simpleProgress", SimpleProgressExamplePage.class));

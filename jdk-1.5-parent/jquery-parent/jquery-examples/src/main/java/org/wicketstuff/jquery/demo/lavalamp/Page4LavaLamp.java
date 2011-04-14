@@ -12,6 +12,8 @@ import org.wicketstuff.jquery.lavalamp.MenuItem;
 
 public final class Page4LavaLamp extends PageSupport
 {
+	private static final long serialVersionUID = 1L;
+
 	public Page4LavaLamp()
 	{
 		super();

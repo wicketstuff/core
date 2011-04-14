@@ -26,8 +26,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.util.StringUtils;
 
 
@@ -62,8 +60,6 @@ public class AJAXAutoCompleteBehavior extends AjaxEventBehavior
 	 *
 	 */
 	private static final long serialVersionUID = -3314379544248117565L;
-
-	private static final Logger log = LoggerFactory.getLogger(AJAXAutoCompleteBehavior.class);
 
 
 	// controls how the dependencies are appended to the behaviour callback URL and then parsed

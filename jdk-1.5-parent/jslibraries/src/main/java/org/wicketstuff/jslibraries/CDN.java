@@ -148,6 +148,7 @@ public enum CDN implements Provider {
 	public static final CDN[] ANY = values();
 
 	private static class HeaderContributor implements IHeaderContributor {
+		private static final long serialVersionUID = 1L;
 		private String url;
 		
 		public HeaderContributor(String url) {

@@ -22,6 +22,8 @@ import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
 @ShiroSecurityConstraint(constraint = ShiroConstraint.IsAuthenticated)
 public class RequireAuthPage extends BasePage
 {
+	private static final long serialVersionUID = 1L;
+
 	public RequireAuthPage()
 	{
 

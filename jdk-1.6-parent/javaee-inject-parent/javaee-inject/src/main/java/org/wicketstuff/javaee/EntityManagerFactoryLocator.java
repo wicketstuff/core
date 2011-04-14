@@ -35,6 +35,7 @@ import org.apache.wicket.proxy.IProxyTargetLocator;
 public class EntityManagerFactoryLocator implements IProxyTargetLocator
 {
 
+	private static final long serialVersionUID = 1L;
 	private String persistenceUnit;
 
 	/**

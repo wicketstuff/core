@@ -5,6 +5,8 @@ import org.wicketstuff.jquery.Options;
 
 public class SparklineOptions extends Options
 {
+	private static final long serialVersionUID = 1L;
+
 	public enum TYPE
 	{
 		line, bar, tristate, discrete, bullet, pie, box

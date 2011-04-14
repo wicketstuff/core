@@ -15,6 +15,7 @@ import com.inmethod.grid.column.AbstractColumn;
 public abstract class EditableCellPanel extends Panel
 {
 
+	private static final long serialVersionUID = 1L;
 	private final AbstractColumn column;
 
 	public EditableCellPanel(String id, AbstractColumn column, IModel rowModel)

@@ -17,8 +17,12 @@ import org.wicketstuff.jsr303.PropertyValidation;
 
 public class Example3 extends WebPage
 {
+	private static final long serialVersionUID = 1L;
+
 	static class Data implements Serializable
 	{
+		private static final long serialVersionUID = 1L;
+
 		@Email
 		String email;
 
@@ -30,19 +34,21 @@ public class Example3 extends WebPage
 
 	public Example3()
 	{
-		final Form form = new Form("form", new CompoundPropertyModel(dummy));
+		final Form<Data> form = new Form<Data>("form", new CompoundPropertyModel<Data>(dummy));
 		add(form);
 		add(new FeedbackPanel("fb"));
 		add(new WebMarkupContainer("message")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isVisible()
 			{
-				return form.isSubmitted() && (!form.hasError());
+				return form.isSubmitted() && !form.hasError();
 			}
 		});
 		form.add(new PropertyValidation());
-		form.add(new TextField("email"));
-		form.add(new TextField("age"));
+		form.add(new TextField<String>("email"));
+		form.add(new TextField<Integer>("age"));
 	}
 }

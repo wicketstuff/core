@@ -12,6 +12,9 @@ import org.wicketstuff.shiro.example.ExampleApplication;
  */
 public abstract class BasePage extends WebPage
 {
+	private static final long serialVersionUID = 1L;
+
+
 	/**
 	 * Constructor.
 	 */

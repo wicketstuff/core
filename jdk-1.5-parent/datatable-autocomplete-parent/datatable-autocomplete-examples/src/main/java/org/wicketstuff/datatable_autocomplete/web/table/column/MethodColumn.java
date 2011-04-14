@@ -35,6 +35,7 @@ import org.apache.wicket.model.Model;
 public class MethodColumn extends AbstractColumn<Method>
 {
 
+	private static final long serialVersionUID = 1L;
 	private final MethodColumnType type;
 
 

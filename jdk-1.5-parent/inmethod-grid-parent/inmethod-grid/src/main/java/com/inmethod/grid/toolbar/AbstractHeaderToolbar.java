@@ -22,6 +22,8 @@ import com.inmethod.grid.common.AbstractGrid;
 public abstract class AbstractHeaderToolbar extends AbstractToolbar
 {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructor
 	 * 

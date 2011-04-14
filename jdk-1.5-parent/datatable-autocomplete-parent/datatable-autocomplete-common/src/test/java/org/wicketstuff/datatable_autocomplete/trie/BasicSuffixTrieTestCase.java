@@ -62,6 +62,8 @@ public class BasicSuffixTrieTestCase extends TestCase
 		trie = new PatriciaTrie<String>(new AbstractTrieConfiguration<String>()
 		{
 
+			private static final long serialVersionUID = 1L;
+
 			/*
 			 * (non-Javadoc)
 			 * 
@@ -149,6 +151,7 @@ public class BasicSuffixTrieTestCase extends TestCase
 
 		List<String> wordList = trie.getWordList("00");
 
+		@SuppressWarnings("unchecked")
 		Collection<String> disjunction = CollectionUtils.disjunction(wordList, doubleZeroWordList);
 
 		for (String string : disjunction)
@@ -167,6 +170,7 @@ public class BasicSuffixTrieTestCase extends TestCase
 
 		List<String> wordList = trie.getWordList("1");
 
+		@SuppressWarnings("unchecked")
 		Collection<String> disjunction = CollectionUtils.disjunction(wordList, oneWordList);
 
 		for (String string : disjunction)

@@ -29,6 +29,8 @@ import org.wicketstuff.openlayers.api.control.AbstractControl;
 public class Control extends AbstractControl
 {
 
+	private static final long serialVersionUID = 1L;
+
 	public static final Control PanZoomBar = new Control("PanZoomBar", true);
 
 	public static final Control MouseToolbar = new Control("MouseToolbar", false);

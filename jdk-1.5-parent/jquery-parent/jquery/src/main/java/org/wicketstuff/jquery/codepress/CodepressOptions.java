@@ -9,6 +9,7 @@ import org.wicketstuff.jquery.Options;
  */
 public class CodepressOptions extends Options
 {
+	private static final long serialVersionUID = 1L;
 	private String fileType;
 	private boolean autoComplete;
 	private boolean lineNumbers;

@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
 public class TernaryNodeCountingVisitor<C> implements TernaryNodeVisitor<C>
 {
 
+	private static final long serialVersionUID = 1L;
 	private static final Logger log = LoggerFactory.getLogger(TernaryNodeCountingVisitor.class);
 
 	/**

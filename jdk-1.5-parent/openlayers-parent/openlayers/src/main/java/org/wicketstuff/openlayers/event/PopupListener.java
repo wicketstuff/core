@@ -34,6 +34,8 @@ import org.wicketstuff.openlayers.api.Size;
 public abstract class PopupListener extends AbstractDefaultAjaxBehavior
 {
 
+	private static final long serialVersionUID = 1L;
+
 	private boolean wantEvents;
 
 	private OpenLayersMap openLayersMap;

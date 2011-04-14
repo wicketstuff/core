@@ -60,7 +60,7 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements DTAButt
 
 	private IModel<String> preAjaxScriptModel = null;
 
-	private Form form = null;
+	private Form<?> form = null;
 
 	private boolean actionDeterminesVisibility = true;
 
@@ -122,11 +122,11 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements DTAButt
 	/**
 	 * @param id
 	 */
-	public DTAAjaxFallbackButton(String id, String label, Form form,
+	public DTAAjaxFallbackButton(String id, String label, Form<?> form,
 		IFormOnSubmitAction submitAction)
 	{
 
-		super(id, new Model(label), form);
+		super(id, Model.of(label), form);
 		this.form = form;
 		this.submitAction = submitAction;
 
@@ -134,7 +134,8 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements DTAButt
 
 	}
 
-	public DTAAjaxFallbackButton(String id, String label, Form form, IModel preAjaxScriptModel)
+	public DTAAjaxFallbackButton(String id, String label, Form<?> form,
+		IModel<String> preAjaxScriptModel)
 	{
 
 		this(id, label, form);
@@ -144,7 +145,7 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements DTAButt
 
 	}
 
-	public DTAAjaxFallbackButton(String id, IModel labelModel, Form form)
+	public DTAAjaxFallbackButton(String id, IModel<String> labelModel, Form<?> form)
 	{
 
 		super(id, labelModel, form);
@@ -152,10 +153,10 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements DTAButt
 		add(indicatorAppender);
 	}
 
-	public DTAAjaxFallbackButton(String id, String label, Form form)
+	public DTAAjaxFallbackButton(String id, String label, Form<?> form)
 	{
 
-		this(id, new Model(label), form);
+		this(id, Model.of(label), form);
 		add(indicatorAppender);
 	}
 
@@ -166,7 +167,7 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements DTAButt
 	 * @see org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton#getForm()
 	 */
 	@Override
-	public Form getForm()
+	public Form<?> getForm()
 	{
 
 		return form;
@@ -177,7 +178,7 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements DTAButt
 	 * @param form
 	 *            the form to set
 	 */
-	public void setForm(Form form)
+	public void setForm(Form<?> form)
 	{
 
 		this.form = form;
@@ -191,7 +192,7 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements DTAButt
 	 * .apache.wicket.ajax.AjaxRequestTarget, org.apache.wicket.markup.html.form.Form)
 	 */
 	@Override
-	protected final void onSubmit(AjaxRequestTarget target, Form form)
+	protected final void onSubmit(AjaxRequestTarget target, Form<?> form)
 	{
 
 		callCounter++;

@@ -15,6 +15,7 @@ import org.apache.wicket.util.template.PackageTextTemplate;
  */
 public class CroppableImage extends Panel
 {
+	private static final long serialVersionUID = 1L;
 	private WebMarkupContainer container;
 	private WebMarkupContainer image;
 	private final Map<String, Object> vars;

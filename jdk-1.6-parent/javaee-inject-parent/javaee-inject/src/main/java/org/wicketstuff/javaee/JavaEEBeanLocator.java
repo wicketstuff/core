@@ -45,6 +45,7 @@ import org.wicketstuff.javaee.naming.IJndiNamingStrategy;
 public class JavaEEBeanLocator implements IProxyTargetLocator
 {
 
+	private static final long serialVersionUID = 1L;
 	private String beanName;
 	private Class<?> beanType;
 	private IJndiNamingStrategy namingStrategy;

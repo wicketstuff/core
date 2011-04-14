@@ -17,6 +17,7 @@ import org.wicketstuff.jquery.JQueryBehavior;
  */
 public class CropBehaviour extends JQueryBehavior
 {
+	private static final long serialVersionUID = 1L;
 	public static final ResourceReference IRESIZABLE_JS = new PackageResourceReference(
 		CropBehaviour.class, "iresizable.js");
 	public static final ResourceReference IUTIL_JS = new PackageResourceReference(

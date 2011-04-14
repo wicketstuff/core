@@ -15,8 +15,6 @@
  */
 package org.wicketstuff.datatable_autocomplete.trie;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -27,9 +25,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrieNodeInspectingVisitor<Context> implements ITrieNodeVisitor<Context>
 {
-
-	private static final Logger log = LoggerFactory.getLogger(TrieNodeInspectingVisitor.class);
-
 
 	int totalConsolidateable = 0;
 

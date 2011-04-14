@@ -45,6 +45,8 @@ public class ContactsDataProvider extends SortableDataProvider<Contact> implemen
 	IFilterStateLocator
 {
 
+	private static final long serialVersionUID = 1L;
+
 	/** dao that will be used to retrieve the list of contacts */
 	private final ContactDao dao;
 

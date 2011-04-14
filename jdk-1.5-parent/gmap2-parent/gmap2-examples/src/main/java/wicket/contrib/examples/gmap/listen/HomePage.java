@@ -58,13 +58,14 @@ public class HomePage extends WicketExamplePage
 		{
 			private static final long serialVersionUID = 1L;
 
-			@SuppressWarnings("unchecked")
+
 			@Override
-			public IConverter getConverter(Class type)
+			public <C> IConverter<C> getConverter(Class<C> type)
 			{
 				if (GLatLngBounds.class.isAssignableFrom(type))
 				{
-					return new IConverter()
+					@SuppressWarnings("unchecked")
+					IConverter<C> converter = (IConverter<C>)new IConverter<GLatLngBounds>()
 					{
 						private static final long serialVersionUID = 1L;
 
@@ -73,9 +74,9 @@ public class HomePage extends WicketExamplePage
 							throw new UnsupportedOperationException();
 						}
 
-						public String convertToString(Object value, Locale locale)
+						public String convertToString(GLatLngBounds value, Locale locale)
 						{
-							GLatLngBounds bounds = (GLatLngBounds)value;
+							GLatLngBounds bounds = value;
 
 							StringBuffer buffer = new StringBuffer();
 							buffer.append("NE (");
@@ -90,6 +91,7 @@ public class HomePage extends WicketExamplePage
 							return buffer.toString();
 						}
 					};
+					return converter;
 				}
 				else
 				{

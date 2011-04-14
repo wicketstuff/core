@@ -29,6 +29,7 @@ import org.wicketstuff.jquery.JQueryBehavior;
  */
 public class CornerzBehaviour extends JQueryBehavior
 {
+	private static final long serialVersionUID = 1L;
 	public static final ResourceReference CORNERZ_JS = new PackageResourceReference(
 		CornerzBehaviour.class, "jquery.cornerz.js");
 	private CornerzOptions options_;

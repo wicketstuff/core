@@ -17,6 +17,8 @@ public class TSTVisualizerMain
 			new AbstractTrieConfiguration<String>()
 			{
 
+				private static final long serialVersionUID = 1L;
+
 				/*
 				 * (non-Javadoc)
 				 * 

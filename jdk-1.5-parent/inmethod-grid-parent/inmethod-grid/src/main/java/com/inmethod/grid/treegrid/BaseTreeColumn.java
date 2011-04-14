@@ -24,6 +24,8 @@ import com.inmethod.icon.Icon;
 public abstract class BaseTreeColumn extends AbstractColumn
 {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructor.
 	 * 

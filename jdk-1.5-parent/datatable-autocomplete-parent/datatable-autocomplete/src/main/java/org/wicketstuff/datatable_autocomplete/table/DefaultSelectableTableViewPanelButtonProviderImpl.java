@@ -34,7 +34,7 @@ public class DefaultSelectableTableViewPanelButtonProviderImpl implements
 	private static final long serialVersionUID = 3162806247349691580L;
 	private static final Logger log = LoggerFactory.getLogger(DefaultSelectableTableViewPanelButtonProviderImpl.class);
 	private String buttonLabelText;
-	private IFormOnSubmitAction<?> action = null;
+	private IFormOnSubmitAction action = null;
 	private final boolean clearSelectedRowOnAction;
 	private final boolean requireSelectedRow;
 	private String cssClassName;
@@ -43,7 +43,7 @@ public class DefaultSelectableTableViewPanelButtonProviderImpl implements
 	 * 
 	 */
 	public DefaultSelectableTableViewPanelButtonProviderImpl(String buttonLabelText,
-		IFormOnSubmitAction<?> action, boolean clearSelectedRowOnAction, boolean requireSelectedRow)
+		IFormOnSubmitAction action, boolean clearSelectedRowOnAction, boolean requireSelectedRow)
 	{
 		this.buttonLabelText = buttonLabelText;
 		this.action = action;
@@ -76,13 +76,13 @@ public class DefaultSelectableTableViewPanelButtonProviderImpl implements
 	 * @param action
 	 *            the action to set
 	 */
-	public void setAction(IFormOnSubmitAction<?> action)
+	public void setAction(IFormOnSubmitAction action)
 	{
 
 		this.action = action;
 	}
 
-	public IFormOnSubmitAction<?> getButtonAction()
+	public IFormOnSubmitAction getButtonAction()
 	{
 
 		return action;

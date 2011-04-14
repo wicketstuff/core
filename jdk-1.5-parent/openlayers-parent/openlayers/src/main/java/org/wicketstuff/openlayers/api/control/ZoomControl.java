@@ -11,6 +11,7 @@ import org.wicketstuff.openlayers.IOpenLayersMap;
 public class ZoomControl extends Panel
 {
 
+	private static final long serialVersionUID = 1L;
 	private static ResourceReference ZOOM_IN = new PackageResourceReference(ZoomControl.class,
 		"zoom-minus-mini.png");
 	private static ResourceReference ZOOM_OUT = new PackageResourceReference(ZoomControl.class,

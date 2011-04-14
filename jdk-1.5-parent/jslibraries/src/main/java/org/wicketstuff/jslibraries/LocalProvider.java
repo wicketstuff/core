@@ -84,7 +84,8 @@ public class LocalProvider implements Provider {
     }
 
     private static class HeaderContributor implements IHeaderContributor {
-    	private VersionDescriptor versionDescriptor;
+    	private static final long serialVersionUID = 1L;
+		private VersionDescriptor versionDescriptor;
 		private boolean production;
 
     	public HeaderContributor(VersionDescriptor versionDescriptor,

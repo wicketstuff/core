@@ -27,6 +27,7 @@ import org.apache.wicket.request.resource.ResourceReference;
 public class MootoolsMoreBehavior extends MootoolsCoreBehavior
 {
 
+	private static final long serialVersionUID = 1L;
 	// create a reference to the base mootools javascript file.
 	// we use JavascriptResourceReference so that the included file will have its comments stripped
 // and gzipped.

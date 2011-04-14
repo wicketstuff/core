@@ -39,6 +39,8 @@ import org.wicketstuff.datatable_autocomplete.provider.TrieDataProvider;
 public class MatchControlPanel extends Panel
 {
 
+	private static final long serialVersionUID = 1L;
+
 	private static final String SUBSTRING_MATCH = "SUBSTRING_MATCH";
 
 	private static final String PREFIX_MATCH = "PREFIX_MATCH";
@@ -66,6 +68,8 @@ public class MatchControlPanel extends Panel
 		classNameFilterField.add(new AjaxFormComponentUpdatingBehavior("onchange")
 		{
 
+			private static final long serialVersionUID = 1L;
+
 			/*
 			 * (non-Javadoc)
 			 * 
@@ -88,13 +92,14 @@ public class MatchControlPanel extends Panel
 
 		});
 
-		Form<?> form = new Form("settingsForm");
+		Form<Void> form = new Form<Void>("settingsForm");
 
 		form.add(classNameFilterField);
 
-		DropDownChoice<String> findMethodDDC;
-		form.add(findMethodDDC = new DropDownChoice<String>("findMethod", new IModel<String>()
+		form.add(new DropDownChoice<String>("findMethod", new IModel<String>()
 		{
+
+			private static final long serialVersionUID = 1L;
 
 			/*
 			 * This model toggles the substring to prefix string behaviour of the TrieDataProvider.
@@ -142,6 +147,8 @@ public class MatchControlPanel extends Panel
 			}
 		}, new ListModel<String>(Arrays.asList(PREFIX_MATCH, SUBSTRING_MATCH)))
 		{
+
+			private static final long serialVersionUID = 1L;
 
 			/*
 			 * (non-Javadoc)

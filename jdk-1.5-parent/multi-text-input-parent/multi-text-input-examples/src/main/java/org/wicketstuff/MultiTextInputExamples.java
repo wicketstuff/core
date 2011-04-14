@@ -17,6 +17,7 @@
 package org.wicketstuff;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -52,6 +53,8 @@ public class MultiTextInputExamples extends WebPage
 		final MultiTextInput<String> mtiAlpha = new MultiTextInput<String>("multiAlpha",
 			new ArrayList<String>()
 			{
+				private static final long serialVersionUID = 1L;
+
 				{
 					add("apple");
 					add("banana");
@@ -64,6 +67,8 @@ public class MultiTextInputExamples extends WebPage
 		final MultiTextInput<Integer> mtiInt = new MultiTextInput<Integer>("multiInt",
 			new ArrayList<Integer>()
 			{
+				private static final long serialVersionUID = 1L;
+
 				{
 					add(1);
 					add(10);
@@ -71,25 +76,27 @@ public class MultiTextInputExamples extends WebPage
 					add(1000);
 				}
 			}, Integer.class);
-		Form form = new Form("form")
+		Form<Void> form = new Form<Void>("form")
 		{
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected void onSubmit()
 			{
-				MultiTextInput.MultiTextInputModel model = (MultiTextInput.MultiTextInputModel)mtiAlpha.getModel();
+				MultiTextInput.MultiTextInputModel<Collection<String>> model = (MultiTextInput.MultiTextInputModel<Collection<String>>)mtiAlpha.getModel();
 				messageAlpha.setEscapeModelStrings(false);
 				messageAlpha.setDefaultModelObject("<strong>items:</strong> " +
 					Strings.escapeMarkup(model.getObject().toString()) +
 					"<br><strong>removed:</strong> " +
 					Strings.escapeMarkup(model.getRemovedItems().toString()));
 
-				model = (MultiTextInput.MultiTextInputModel)mtiInt.getModel();
+				MultiTextInput.MultiTextInputModel<Collection<Integer>> model2 = (MultiTextInput.MultiTextInputModel<Collection<Integer>>)mtiInt.getModel();
 				messageInt.setEscapeModelStrings(false);
 				messageInt.setDefaultModelObject("<strong>items:</strong> " +
-					Strings.escapeMarkup(model.getObject().toString()) +
+					Strings.escapeMarkup(model2.getObject().toString()) +
 					"<br><strong>removed:</strong> " +
-					Strings.escapeMarkup(model.getRemovedItems().toString()));
+					Strings.escapeMarkup(model2.getRemovedItems().toString()));
 
 				super.onSubmit();
 			}

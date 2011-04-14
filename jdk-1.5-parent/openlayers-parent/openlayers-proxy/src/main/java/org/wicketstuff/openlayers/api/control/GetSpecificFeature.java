@@ -43,6 +43,8 @@ import org.wicketstuff.openlayers.proxy.WFSProxyBehavior;
 public class GetSpecificFeature extends AbstractControl
 {
 
+	private static final long serialVersionUID = 1L;
+
 	private static final JavaScriptResourceReference GetSpecificFeature_js = new JavaScriptResourceReference(
 		GetSpecificFeature.class, "GetSpecificFeature.js");
 

@@ -41,6 +41,8 @@ import org.wicketstuff.progressbar.ProgressionModel;
 public class SimpleProgressExamplePage extends PageSupport
 {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * The current progress is stored here
 	 */
@@ -54,6 +56,8 @@ public class SimpleProgressExamplePage extends PageSupport
 		final ProgressBar bar;
 		form.add(bar = new ProgressBar("bar", new ProgressionModel()
 		{
+			private static final long serialVersionUID = 1L;
+
 			// Get current progress from page field
 			@Override
 			protected Progression getProgression()
@@ -62,6 +66,8 @@ public class SimpleProgressExamplePage extends PageSupport
 			}
 		})
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onFinished(AjaxRequestTarget target)
 			{
@@ -81,6 +87,8 @@ public class SimpleProgressExamplePage extends PageSupport
 
 		form.add(new IndicatingAjaxButton("submit", form)
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form form)
 			{

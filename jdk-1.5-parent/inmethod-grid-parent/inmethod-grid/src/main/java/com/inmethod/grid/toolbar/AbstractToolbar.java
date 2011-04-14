@@ -16,6 +16,7 @@ import com.inmethod.grid.common.AbstractGrid;
 public abstract class AbstractToolbar extends Panel
 {
 
+	private static final long serialVersionUID = 1L;
 	private final AbstractGrid grid;
 
 	/**

@@ -30,6 +30,8 @@ import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
 public class TSTGraph<C> extends DirectedSparseMultigraph<TernaryNode<C>, String>
 {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * @param order
 	 */
@@ -52,6 +54,8 @@ public class TSTGraph<C> extends DirectedSparseMultigraph<TernaryNode<C>, String
 
 		node.visit(new TernaryNodeVisitor<C>()
 		{
+
+			private static final long serialVersionUID = 1L;
 
 			/*
 			 * (non-Javadoc)

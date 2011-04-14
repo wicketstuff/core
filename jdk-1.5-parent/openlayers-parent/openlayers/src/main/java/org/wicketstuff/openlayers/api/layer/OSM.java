@@ -9,6 +9,8 @@ import org.wicketstuff.openlayers.js.JSUtils;
 public class OSM extends Layer implements Serializable
 {
 
+	private static final long serialVersionUID = 1L;
+
 	public static enum OSMLayer
 	{
 		Mapnik, TilesAtHome, CycleMap

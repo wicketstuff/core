@@ -20,8 +20,6 @@ import java.util.Arrays;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;
 import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandler;
 
@@ -203,13 +201,11 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	 */
 	private static final long serialVersionUID = 1000109813724689754L;
 
-	private static final Logger log = LoggerFactory.getLogger(SelectableTableViewPanel.class);
-
 
 	/**
 	 * @param formOnSubmitAction
 	 */
-	public void setEditOnSubmitAction(final IFormOnSubmitAction<T> formOnSubmitAction)
+	public void setEditOnSubmitAction(final IFormOnSubmitAction formOnSubmitAction)
 	{
 
 		editButtonProvider.setAction(formOnSubmitAction);
@@ -227,7 +223,7 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	/**
 	 * @param formOnSubmitAction
 	 */
-	public void setDeleteOnSubmitAction(final IFormOnSubmitAction<T> formOnSubmitAction)
+	public void setDeleteOnSubmitAction(final IFormOnSubmitAction formOnSubmitAction)
 	{
 
 		deleteButtonProvider.setAction(formOnSubmitAction);
@@ -238,7 +234,7 @@ public class SelectableTableViewPanel<T> extends AbstractSelectableTableViewPane
 	/**
 	 * @param formOnSubmitAction
 	 */
-	public void setCreateOnSubmitAction(IFormOnSubmitAction<T> formOnSubmitAction)
+	public void setCreateOnSubmitAction(IFormOnSubmitAction formOnSubmitAction)
 	{
 
 		createButtonProvider.setAction(formOnSubmitAction);

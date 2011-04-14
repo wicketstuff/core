@@ -44,6 +44,7 @@ import wicket.contrib.input.events.key.KeyType;
 public class InputBehavior extends Behavior
 {
 
+	private static final long serialVersionUID = 1L;
 	private ResourceReference SHORTCUTS_JAVASCRIPT = new CompressedResourceReference(
 		InputBehavior.class, "shortcuts.js");
 	private final KeyType[] keyCombo;

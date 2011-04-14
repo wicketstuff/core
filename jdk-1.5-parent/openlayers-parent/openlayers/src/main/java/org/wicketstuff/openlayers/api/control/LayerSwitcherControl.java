@@ -20,6 +20,8 @@ import org.wicketstuff.openlayers.api.layer.Layer;
 public class LayerSwitcherControl extends Panel
 {
 
+	private static final long serialVersionUID = 1L;
+
 	public LayerSwitcherControl(String id, IOpenLayersMap map)
 	{
 		super(id);
@@ -43,6 +45,7 @@ public class LayerSwitcherControl extends Panel
 
 	private class Toggler extends ListView
 	{
+		private static final long serialVersionUID = 1L;
 		private IOpenLayersMap omap;
 
 		public Toggler(String id, List list, final IOpenLayersMap omap)

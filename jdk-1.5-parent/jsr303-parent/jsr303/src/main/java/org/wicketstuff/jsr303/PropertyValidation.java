@@ -14,7 +14,6 @@ import org.apache.wicket.util.visit.IVisitor;
  * bound to an AbstractPropertyModel. When used on a Form, this behavior will be added to all
  * appropriate FormComponents.
  */
-@SuppressWarnings("unchecked")
 public class PropertyValidation extends Behavior
 {
 
@@ -59,7 +58,7 @@ public class PropertyValidation extends Behavior
 			}
 			else
 			{
-				if ((context instanceof FormComponent<?>))
+				if (context instanceof FormComponent<?>)
 				{
 					final FormComponent<?> fc = (FormComponent<?>)context;
 					final IModel<?> m = fc.getModel();

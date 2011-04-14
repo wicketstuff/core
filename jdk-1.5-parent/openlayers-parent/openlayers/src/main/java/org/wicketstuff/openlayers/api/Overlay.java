@@ -28,6 +28,7 @@ import org.wicketstuff.openlayers.event.OverlayListenerBehavior;
  */
 public abstract class Overlay implements IJavascriptComponent
 {
+	private static final long serialVersionUID = 1L;
 	List<OverlayListenerBehavior> behaviors = new ArrayList<OverlayListenerBehavior>();
 
 	public Overlay addBehavior(OverlayListenerBehavior behavior)

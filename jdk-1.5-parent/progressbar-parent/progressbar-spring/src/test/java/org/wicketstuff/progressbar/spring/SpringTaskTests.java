@@ -191,6 +191,8 @@ public class SpringTaskTests
 
 		tester.startComponent(new ProgressBar("panelId", new ProgressionModel()
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected Progression getProgression()
 			{

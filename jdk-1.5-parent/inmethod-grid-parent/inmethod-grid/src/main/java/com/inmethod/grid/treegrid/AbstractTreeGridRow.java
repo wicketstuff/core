@@ -12,6 +12,7 @@ import com.inmethod.grid.common.AbstractGridRow;
 public abstract class AbstractTreeGridRow extends AbstractGridRow
 {
 
+	private static final long serialVersionUID = 1L;
 	private final int level;
 
 	/**

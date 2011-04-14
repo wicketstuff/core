@@ -31,23 +31,24 @@ import org.wicketstuff.jquery.demo.ui.Page4Slider;
 
 public class PageSupport extends WebPage
 {
+	private static final long serialVersionUID = 1L;
 	private transient Logger logger_;
 
 	public PageSupport()
 	{
-		add(new BookmarkablePageLink("clientSideOnly", Page4ClientSideOnly.class));
-		add(new BookmarkablePageLink("simpleList", Page4SimpleList.class));
-		add(new BookmarkablePageLink("oneGroup", Page4OneGroup.class));
-		add(new BookmarkablePageLink("multiGroup", Page4MultiGroup.class));
-		add(new BookmarkablePageLink("accordion", Page4Accordion.class));
-		add(new BookmarkablePageLink("tabs", Page4Tabs.class));
-		add(new BookmarkablePageLink("datePicker", Page4DatePicker.class));
-		add(new BookmarkablePageLink("jgrowl", Page4JGrowl.class));
-		add(new BookmarkablePageLink("block", Page4Block.class));
-		add(new BookmarkablePageLink("sparkline", Page4Sparkline.class));
-		add(new BookmarkablePageLink("ajaxbackbutton", Page4AjaxBackButton.class));
-		add(new BookmarkablePageLink("uislider", Page4Slider.class));
-		add(new BookmarkablePageLink("lavalamp", Page4LavaLamp.class));
+		add(new BookmarkablePageLink<Void>("clientSideOnly", Page4ClientSideOnly.class));
+		add(new BookmarkablePageLink<Void>("simpleList", Page4SimpleList.class));
+		add(new BookmarkablePageLink<Void>("oneGroup", Page4OneGroup.class));
+		add(new BookmarkablePageLink<Void>("multiGroup", Page4MultiGroup.class));
+		add(new BookmarkablePageLink<Void>("accordion", Page4Accordion.class));
+		add(new BookmarkablePageLink<Void>("tabs", Page4Tabs.class));
+		add(new BookmarkablePageLink<Void>("datePicker", Page4DatePicker.class));
+		add(new BookmarkablePageLink<Void>("jgrowl", Page4JGrowl.class));
+		add(new BookmarkablePageLink<Void>("block", Page4Block.class));
+		add(new BookmarkablePageLink<Void>("sparkline", Page4Sparkline.class));
+		add(new BookmarkablePageLink<Void>("ajaxbackbutton", Page4AjaxBackButton.class));
+		add(new BookmarkablePageLink<Void>("uislider", Page4Slider.class));
+		add(new BookmarkablePageLink<Void>("lavalamp", Page4LavaLamp.class));
 
 		add(new FeedbackPanel("feedback").setOutputMarkupId(true));
 	}

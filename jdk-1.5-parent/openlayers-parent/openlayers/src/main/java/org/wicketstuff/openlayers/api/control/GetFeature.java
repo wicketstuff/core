@@ -32,6 +32,7 @@ import org.wicketstuff.openlayers.js.JSUtils;
 public class GetFeature extends AbstractControl
 {
 
+	private static final long serialVersionUID = 1L;
 	private final HashMap<String, String> parameters;
 
 	/**

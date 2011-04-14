@@ -23,6 +23,8 @@ import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
 public class RequireViewPermissionPage extends BasePage
 {
 
+	private static final long serialVersionUID = 1L;
+
 	public RequireViewPermissionPage()
 	{
 

@@ -18,6 +18,8 @@ import org.wicketstuff.openlayers.api.layer.OSM.OSMLayer;
 public class SimpleOpenStreetMapPage extends WebPage
 {
 
+	private static final long serialVersionUID = 1L;
+
 	public SimpleOpenStreetMapPage()
 	{
 

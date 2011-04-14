@@ -28,6 +28,7 @@ import com.inmethod.icon.IconImage;
 public abstract class TreePanel extends Panel
 {
 
+	private static final long serialVersionUID = 1L;
 	private static final String JUNCTION_LINK_ID = "junctionLink";
 	private static final String NODE_COMPONENT_ID = "nodeComponent";
 

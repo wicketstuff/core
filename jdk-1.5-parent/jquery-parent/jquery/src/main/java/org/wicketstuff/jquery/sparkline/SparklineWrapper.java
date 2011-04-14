@@ -7,6 +7,7 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 
 public class SparklineWrapper extends Panel
 {
+	private static final long serialVersionUID = 1L;
 	public static final String SPARKID = "sparkline";
 
 	/**
@@ -22,6 +23,8 @@ public class SparklineWrapper extends Panel
 		this.add(line);
 		this.add(new Label("js", new AbstractReadOnlyModel<CharSequence>()
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public CharSequence getObject()
 			{

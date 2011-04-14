@@ -37,6 +37,7 @@ import org.wicketstuff.datatable_autocomplete.trie.Trie;
 public class TernarySearchTrie<C> implements Trie<C>
 {
 
+	private static final long serialVersionUID = 472990287147515130L;
 	private TernaryNode<C> root = null;
 	private final ITrieConfiguration<C> configuration;
 

@@ -32,6 +32,7 @@ import org.apache.wicket.model.IModel;
  */
 public class CheckBoxModel extends AbstractCheckBoxModel
 {
+	private static final long serialVersionUID = 1L;
 	private final IModel<Collection<Serializable>> selection;
 	private final Serializable token;
 

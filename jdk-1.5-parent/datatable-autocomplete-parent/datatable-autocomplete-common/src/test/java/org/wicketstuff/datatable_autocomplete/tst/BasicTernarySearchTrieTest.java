@@ -48,6 +48,8 @@ public class BasicTernarySearchTrieTest extends TestCase
 			new AbstractTrieConfiguration<String>()
 			{
 
+				private static final long serialVersionUID = 1L;
+
 				/*
 				 * (non-Javadoc)
 				 * 
@@ -94,7 +96,7 @@ public class BasicTernarySearchTrieTest extends TestCase
 		trie.index("transit");
 		trie.index("survey");
 
-		trie.visit(new TernaryNodeCountingVisitor());
+		trie.visit(new TernaryNodeCountingVisitor<String>());
 
 		log.info("prefix = 'hou'");
 
@@ -127,6 +129,8 @@ public class BasicTernarySearchTrieTest extends TestCase
 		TernarySearchTrie<String> trie = new TernarySearchTrie<String>(
 			new AbstractTrieConfiguration<String>()
 			{
+
+				private static final long serialVersionUID = 1L;
 
 				/*
 				 * (non-Javadoc)
@@ -173,7 +177,7 @@ public class BasicTernarySearchTrieTest extends TestCase
 
 		trie.printTree();
 
-		trie.visit(new TernaryNodeCountingVisitor());
+		trie.visit(new TernaryNodeCountingVisitor<String>());
 
 		log.info("prefix = 'hou'");
 
@@ -206,6 +210,8 @@ public class BasicTernarySearchTrieTest extends TestCase
 		TernarySearchTrie<String> trie = new TernarySearchTrie<String>(
 			new AbstractTrieConfiguration<String>()
 			{
+
+				private static final long serialVersionUID = 1L;
 
 				/*
 				 * (non-Javadoc)
@@ -253,7 +259,7 @@ public class BasicTernarySearchTrieTest extends TestCase
 		trie.index("transit");
 		trie.index("survey");
 
-		trie.visit(new TernaryNodeCountingVisitor());
+		trie.visit(new TernaryNodeCountingVisitor<String>());
 
 		reportPrefix(trie, "o");
 

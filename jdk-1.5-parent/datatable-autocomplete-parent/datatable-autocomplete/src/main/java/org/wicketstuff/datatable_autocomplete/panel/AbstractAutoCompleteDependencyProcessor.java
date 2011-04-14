@@ -20,8 +20,6 @@ import java.util.Map;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.util.time.Duration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -74,8 +72,6 @@ public abstract class AbstractAutoCompleteDependencyProcessor implements
 		this(names, components);
 		this.duration = duration;
 	}
-
-	private static final Logger log = LoggerFactory.getLogger(AbstractAutoCompleteDependencyProcessor.class);
 
 
 	public Map<String, Component> getQueryParameterToComponentMap()

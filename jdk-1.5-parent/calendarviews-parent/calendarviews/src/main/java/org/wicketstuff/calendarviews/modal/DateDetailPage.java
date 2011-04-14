@@ -38,6 +38,7 @@ import org.wicketstuff.calendarviews.model.IEvent;
 
 public class DateDetailPage extends WebPage
 {
+	private static final long serialVersionUID = 1L;
 
 	public static interface IDateDetailPageEventLinkCreator extends Serializable
 	{
@@ -72,7 +73,7 @@ public class DateDetailPage extends WebPage
 					@Override
 					public String getObject()
 					{
-						return "row" + (mCounter++ % 2);
+						return "row" + mCounter++ % 2;
 					}
 				}));
 				item.add(new AddCssClassBehavior(item.getModel()));

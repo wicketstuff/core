@@ -19,8 +19,12 @@ import org.wicketstuff.jsr303.PropertyValidation;
 
 public class Example4 extends WebPage
 {
+	private static final long serialVersionUID = 1L;
+
 	static class Data implements Serializable
 	{
+		private static final long serialVersionUID = 1L;
+
 		@Valid
 		ValidatedBean validatableBean = new ValidatedBean();
 
@@ -28,12 +32,14 @@ public class Example4 extends WebPage
 	}
 	static class ValidatedBean implements Serializable
 	{
+		private static final long serialVersionUID = 1L;
 		@Email
 		@NotNull
 		String email;
 	}
 	static class NonValidatedBean implements Serializable
 	{
+		private static final long serialVersionUID = 1L;
 		@Email
 		@NotNull
 		String email;
@@ -43,21 +49,23 @@ public class Example4 extends WebPage
 
 	public Example4()
 	{
-		final Form form = new Form("form");
+		final Form<Void> form = new Form<Void>("form");
 		add(form);
 		add(new FeedbackPanel("fb"));
 		add(new WebMarkupContainer("message")
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isVisible()
 			{
-				return form.isSubmitted() && (!form.hasError());
+				return form.isSubmitted() && !form.hasError();
 			}
 		});
 		form.add(new PropertyValidation());
-		form.add(new TextField("email1", new PropertyModel<String>(dummy,
+		form.add(new TextField<String>("email1", new PropertyModel<String>(dummy,
 			"validatableBean.email")));
-		form.add(new TextField("email2", new PropertyModel<String>(dummy,
+		form.add(new TextField<String>("email2", new PropertyModel<String>(dummy,
 			"nonValidatableBean.email")));
 	}
 }

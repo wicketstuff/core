@@ -15,6 +15,7 @@ import org.wicketstuff.openlayers.js.JSUtils;
 public class WMS extends Layer implements Serializable
 {
 
+	private static final long serialVersionUID = 1L;
 	private String url;
 	/**
 	 * can be any of : layers: 'topp:AL_03C5E', styles: '', height: '750', width: '800', srs:

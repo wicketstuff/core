@@ -28,6 +28,8 @@ import org.wicketstuff.jquery.accordion.JQAccordion;
 public class Page4Accordion extends PageSupport
 {
 
+	private static final long serialVersionUID = 1L;
+
 	public Page4Accordion() throws Exception
 	{
 

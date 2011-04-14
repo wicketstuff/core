@@ -123,15 +123,6 @@ public class ReflectionBehavior extends Behavior
 	public static final ResourceReference REFLECTION_JS = new JavaScriptResourceReference(
 		ReflectionBehavior.class, "reflection.js");
 
-	/** The classname to add to the image to make it 'reflect'. */
-	private static final String REFLECTION_MARKER = "reflect";
-
-	/** CSS class marker for the opacity of the reflection. */
-	private static final String REFLECTION_OPACITY_MARKER = "ropacity";
-
-	/** CSS class marker for the height of the reflection. */
-	private static final String REFLECTION_HEIGHT_MARKER = "rheight";
-
 	/** The opacity of the reflection, ranges from 0 to 100. */
 	private Integer reflectionOpacity = null;
 

@@ -102,7 +102,7 @@ public class TestClassLoaderExtractor extends TestCase
 			if (!jarEntry.getName().contains(".class"))
 				continue;
 
-			Class clazz;
+			Class<?> clazz;
 
 			try
 			{

@@ -21,6 +21,8 @@ import org.wicketstuff.openlayers.js.ObjectLiteral;
 
 public class MarkerOptions implements Value
 {
+	private static final long serialVersionUID = 1L;
+
 	private String title;
 
 	private boolean clickable = true;

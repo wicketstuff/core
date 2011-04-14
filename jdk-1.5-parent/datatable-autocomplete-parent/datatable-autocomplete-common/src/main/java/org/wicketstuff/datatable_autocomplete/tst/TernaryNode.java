@@ -124,8 +124,6 @@ public class TernaryNode<C> implements IClusterable
 
 		int comparison = testCharacter.compareTo(this.character);
 
-		TernaryNode<C> node;
-
 		if (comparison < 0)
 		{
 
@@ -146,7 +144,7 @@ public class TernaryNode<C> implements IClusterable
 			greaterThanNode.index(word, value);
 
 		}
-		else if (level < (word.length() - 1))
+		else if (level < word.length() - 1)
 		{
 			// equals
 
@@ -314,18 +312,18 @@ public class TernaryNode<C> implements IClusterable
 //
 // }
 
-	private TernaryNode<C> initializeNode(TernaryNode<C> parent, String str, TernaryNode<C> node,
-		int level, boolean initialize)
-	{
-
-		if (node != null)
-			return node;
-		else if (initialize)
-			return new TernaryNode<C>(parent, level, str);
-		else
-			return null;
-
-	}
+// private TernaryNode<C> initializeNode(TernaryNode<C> parent, String str, TernaryNode<C> node,
+// int level, boolean initialize)
+// {
+//
+// if (node != null)
+// return node;
+// else if (initialize)
+// return new TernaryNode<C>(parent, level, str);
+// else
+// return null;
+//
+// }
 
 	public void visit(TernaryNodeVisitor<C> visitor)
 	{
@@ -371,8 +369,6 @@ public class TernaryNode<C> implements IClusterable
 
 		int comparison = testCharacter.compareTo(thisCharacter);
 
-		TernaryNode<C> node;
-
 		if (comparison < 0)
 		{
 
@@ -393,7 +389,7 @@ public class TernaryNode<C> implements IClusterable
 				return null;
 
 		}
-		else if (level < (prefix.length() - 1))
+		else if (level < prefix.length() - 1)
 		{
 			// equals
 

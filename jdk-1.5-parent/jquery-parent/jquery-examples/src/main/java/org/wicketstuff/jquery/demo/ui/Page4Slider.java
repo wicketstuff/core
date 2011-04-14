@@ -17,6 +17,8 @@ import org.wicketstuff.jquery.ui.slider.SliderOptions;
 public class Page4Slider extends PageSupport
 {
 
+	private static final long serialVersionUID = 1L;
+
 	public Page4Slider() throws Exception
 	{
 		super();

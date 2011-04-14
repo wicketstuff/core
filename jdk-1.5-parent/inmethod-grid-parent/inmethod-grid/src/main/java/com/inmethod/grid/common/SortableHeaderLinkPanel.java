@@ -17,6 +17,7 @@ import com.inmethod.grid.IGridSortState;
 public abstract class SortableHeaderLinkPanel extends Panel
 {
 
+	private static final long serialVersionUID = 1L;
 	private final String sortProperty;
 
 	/**

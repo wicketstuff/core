@@ -30,6 +30,8 @@ import org.apache.wicket.util.time.Duration;
 public class DynamicAjaxSelfUpdatingTimerBehavior extends AjaxSelfUpdatingTimerBehavior
 {
 
+	private static final long serialVersionUID = 1L;
+
 	public DynamicAjaxSelfUpdatingTimerBehavior(Duration updateInterval)
 	{
 		super(updateInterval);

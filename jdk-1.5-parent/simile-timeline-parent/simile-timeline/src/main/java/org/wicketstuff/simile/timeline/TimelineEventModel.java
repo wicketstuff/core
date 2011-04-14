@@ -6,6 +6,8 @@ import java.util.Date;
 
 public class TimelineEventModel implements ITimelineEvent
 {
+	private static final long serialVersionUID = 1L;
+
 	private final DateFormat dateFormat = new SimpleDateFormat("MMM dd yyyy");
 
 	private String title;

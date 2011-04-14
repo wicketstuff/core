@@ -43,6 +43,7 @@ import org.apache.wicket.util.resource.StringResourceStream;
  */
 public abstract class CheckBoxColumn<T> extends HeaderlessColumn<T>
 {
+	private static final long serialVersionUID = 1L;
 	private final IModel<Collection<Serializable>> selectionModel;
 
 	/**
@@ -80,6 +81,8 @@ public abstract class CheckBoxColumn<T> extends HeaderlessColumn<T>
 
 	private static class CheckBoxPanel extends Panel implements IMarkupResourceStreamProvider
 	{
+
+		private static final long serialVersionUID = 1L;
 
 		public CheckBoxPanel(String id, IModel<Collection<Serializable>> model, Serializable token)
 		{

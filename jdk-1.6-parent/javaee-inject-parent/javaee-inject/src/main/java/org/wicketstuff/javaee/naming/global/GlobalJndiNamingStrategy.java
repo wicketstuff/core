@@ -46,6 +46,7 @@ import org.wicketstuff.javaee.naming.IJndiNamingStrategy;
 public class GlobalJndiNamingStrategy implements IJndiNamingStrategy
 {
 
+	private static final long serialVersionUID = 1L;
 	private String baseName;
 
 	/**

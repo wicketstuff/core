@@ -25,6 +25,7 @@ package org.wicketstuff.datatable_autocomplete.table;
 public class DefaultDTATableRenderingHints implements IDTATableRenderingHints
 {
 
+	private static final long serialVersionUID = 1L;
 	private final int pageSize;
 	private final boolean paginationEnabled;
 

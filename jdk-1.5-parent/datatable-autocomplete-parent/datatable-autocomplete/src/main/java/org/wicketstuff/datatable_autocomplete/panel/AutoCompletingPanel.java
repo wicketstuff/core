@@ -33,7 +33,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.CompressedResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandler;
 import org.wicketstuff.datatable_autocomplete.table.DTADataTable;
 import org.wicketstuff.datatable_autocomplete.table.SelectableTableViewPanel;
@@ -49,8 +48,6 @@ public class AutoCompletingPanel<T> extends Panel
 	 * 
 	 */
 	private static final long serialVersionUID = -6173248750432002480L;
-
-	private static final org.slf4j.Logger log = LoggerFactory.getLogger(AutoCompletingPanel.class);
 
 	private SelectableTableViewPanel<T> viewPanel;
 
@@ -79,7 +76,7 @@ public class AutoCompletingPanel<T> extends Panel
 		IAutocompleteRenderingHints renderingHints)
 	{
 
-		super(id, new Model());
+		super(id);
 
 		// NOTE: trying to stop page serialization on each update.
 		setVersioned(false);
@@ -131,7 +128,7 @@ public class AutoCompletingPanel<T> extends Panel
 
 		add(theLabel = new Label("label_close", "Close"));
 
-		add(closeButton = new Button("close_button", new Model("x"))
+		add(closeButton = new Button("close_button", Model.of("x"))
 		{
 
 			/**

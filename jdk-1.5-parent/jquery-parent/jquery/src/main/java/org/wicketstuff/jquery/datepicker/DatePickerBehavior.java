@@ -188,9 +188,9 @@ public class DatePickerBehavior extends JQueryBehavior
 			}
 			else
 			{
-				TextField tf = (TextField)component;
-				IConverter cnv = tf.getConverter(tf.getType());
-				if ((cnv != null) && (DateConverter.class.isAssignableFrom(cnv.getClass())))
+				TextField<?> tf = (TextField<?>)component;
+				IConverter<?> cnv = tf.getConverter(tf.getType());
+				if (cnv != null && DateConverter.class.isAssignableFrom(cnv.getClass()))
 				{
 					SimpleDateFormat sdf = (SimpleDateFormat)((DateConverter)cnv).getDateFormat(component.getLocale());
 					format_ = sdf.toPattern().toLowerCase();
