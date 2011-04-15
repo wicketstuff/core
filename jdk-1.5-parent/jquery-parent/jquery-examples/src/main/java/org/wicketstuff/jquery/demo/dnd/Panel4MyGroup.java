@@ -37,19 +37,19 @@ public class Panel4MyGroup extends Panel
 		add(new Label("actionCnt", "0").setOutputMarkupId(true));
 
 		// create a container
-		WebMarkupContainer container = new WebMarkupContainer("myItemContainer", new Model(myGroup));
+		WebMarkupContainer container = new WebMarkupContainer("myItemContainer", Model.of(myGroup));
 		dnd.registerContainer(container);
 		add(container);
 
 		// create items (add as children of the container)
-		container.add(new ListView("myItem", myGroup.items)
+		container.add(new ListView<MyItem>("myItem", myGroup.items)
 		{
 			@Override
-			protected void populateItem(ListItem listitem)
+			protected void populateItem(ListItem<MyItem> listitem)
 			{
 				try
 				{
-					listitem.add(new Label("myItemLabel", new PropertyModel(
+					listitem.add(new Label("myItemLabel", new PropertyModel<String>(
 						listitem.getModelObject(), "label")));
 					dnd.registerItem(listitem);
 				}

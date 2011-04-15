@@ -16,6 +16,7 @@
  */
 package com.inmethod.grid.examples.contact;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -29,8 +30,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Igor Vaynberg
  * 
  */
-public class ContactsDatabase
+public class ContactsDatabase implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	private Map<Long, Contact> map = new ConcurrentHashMap<Long, Contact>();
 	private List<Contact> fnameIdx = new Vector<Contact>();
 	private List<Contact> lnameIdx = new Vector<Contact>();

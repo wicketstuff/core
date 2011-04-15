@@ -15,8 +15,6 @@
  */
 package org.wicketstuff.datatable_autocomplete.table;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;
 
 
@@ -32,7 +30,6 @@ public class DefaultSelectableTableViewPanelButtonProviderImpl implements
 	 * 
 	 */
 	private static final long serialVersionUID = 3162806247349691580L;
-	private static final Logger log = LoggerFactory.getLogger(DefaultSelectableTableViewPanelButtonProviderImpl.class);
 	private String buttonLabelText;
 	private IFormOnSubmitAction action = null;
 	private final boolean clearSelectedRowOnAction;

@@ -19,7 +19,7 @@ public class PropertyValidation extends Behavior
 
 	private static final long serialVersionUID = 1L;
 
-	class JSR303ValidatorFormComponentVisitor implements IVisitor<Component, Void>
+	static class JSR303ValidatorFormComponentVisitor implements IVisitor<Component, Void>
 	{
 
 
@@ -29,16 +29,7 @@ public class PropertyValidation extends Behavior
 			if (component instanceof FormComponent<?>)
 			{
 				final FormComponent<?> fc = (FormComponent<?>)component;
-				final IModel<?> model = fc.getModel();
-				if (model != null)
-				{
-					if (model instanceof AbstractPropertyModel<?>)
-					{
-						final AbstractPropertyModel<?> pm = (AbstractPropertyModel<?>)model;
-						PropertyValidator validator = new PropertyValidator(pm, fc);
-						fc.add(validator);
-					}
-				}
+				addValidator(fc, true);
 			}
 		}
 	}
@@ -61,17 +52,7 @@ public class PropertyValidation extends Behavior
 				if (context instanceof FormComponent<?>)
 				{
 					final FormComponent<?> fc = (FormComponent<?>)context;
-					final IModel<?> m = fc.getModel();
-					if (m instanceof AbstractPropertyModel<?>)
-					{
-						final AbstractPropertyModel<?> apm = (AbstractPropertyModel<?>)m;
-						fc.add(new PropertyValidator(apm, fc));
-					}
-					else
-					{
-						throw new IllegalArgumentException(
-							"Expected something that provides an AbstractPropertyModel");
-					}
+					addValidator(fc, false);
 				}
 				else
 				{
@@ -83,4 +64,22 @@ public class PropertyValidation extends Behavior
 		super.beforeRender(context);
 	}
 
+	private static <T> void addValidator(FormComponent<T> fc, boolean ignoreIncompatibleModel)
+	{
+		final IModel<T> model = fc.getModel();
+		if (model != null)
+		{
+			if (model instanceof AbstractPropertyModel<?>)
+			{
+				final AbstractPropertyModel<T> pm = (AbstractPropertyModel<T>)model;
+				PropertyValidator<T> validator = new PropertyValidator<T>(pm, fc);
+				fc.add(validator);
+			}
+			else if (!ignoreIncompatibleModel)
+			{
+				throw new IllegalArgumentException(
+					"Expected something that provides an AbstractPropertyModel");
+			}
+		}
+	}
 }

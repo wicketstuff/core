@@ -83,7 +83,7 @@ public class Page4SimpleList extends PageSupport
 
 		// add the DnD handler to the page
 		add(dnd);
-		add(new Link("start_dnd")
+		add(new Link<Void>("start_dnd")
 		{
 			@Override
 			protected CharSequence getOnClickScript(CharSequence url)
@@ -104,7 +104,7 @@ public class Page4SimpleList extends PageSupport
 			}
 
 		});
-		add(new Link("stop_dnd")
+		add(new Link<Void>("stop_dnd")
 		{
 			@Override
 			protected CharSequence getOnClickScript(CharSequence url)
@@ -139,7 +139,7 @@ public class Page4SimpleList extends PageSupport
 			{
 				try
 				{
-					listitem.add(new Label("myItemLabel", new PropertyModel(
+					listitem.add(new Label("myItemLabel", new PropertyModel<String>(
 						listitem.getModelObject(), "label")));
 					dnd.registerItem(listitem);
 				}

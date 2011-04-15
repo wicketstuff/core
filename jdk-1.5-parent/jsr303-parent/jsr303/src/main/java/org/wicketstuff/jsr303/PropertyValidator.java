@@ -38,8 +38,13 @@ public class PropertyValidator<T> implements INullAcceptingValidator<T>, Seriali
 			propertyExpression, value);
 		for (final Object v : violations)
 		{
-			validatable.error(new ViolationErrorBuilder.Property((ConstraintViolation)v).createError());
+			validatable.error(wrap((ConstraintViolation<?>)v).createError());
 		}
+	}
+
+	private <V> ViolationErrorBuilder.Property<V> wrap(ConstraintViolation<V> violation)
+	{
+		return new ViolationErrorBuilder.Property<V>(violation);
 	}
 
 	private static final long serialVersionUID = 1L;

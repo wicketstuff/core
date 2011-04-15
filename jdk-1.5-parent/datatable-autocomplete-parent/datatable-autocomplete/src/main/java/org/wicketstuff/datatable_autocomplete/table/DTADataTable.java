@@ -31,7 +31,6 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author mocleiri
@@ -42,8 +41,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DTADataTable<T> extends DataTable<T>
 {
-
-	private static final org.slf4j.Logger log = LoggerFactory.getLogger(DTADataTable.class);
 
 	public static interface DTADataTableItemModifier<T> extends IClusterable
 	{

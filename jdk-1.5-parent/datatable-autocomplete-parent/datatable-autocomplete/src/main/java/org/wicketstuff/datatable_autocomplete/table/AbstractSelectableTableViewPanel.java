@@ -31,11 +31,8 @@ import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.IItemReuseStrategy;
 import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.radio.DTARadioGroup;
 import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandler;
 import org.wicketstuff.datatable_autocomplete.table.DTADataTable.DTADataTableItemModifier;
@@ -53,8 +50,6 @@ public abstract class AbstractSelectableTableViewPanel<T> extends FormComponentP
 	 * 
 	 */
 	private static final long serialVersionUID = -4369026666390989926L;
-
-	private static final Logger log = LoggerFactory.getLogger(AbstractSelectableTableViewPanel.class);
 
 	private DTADataTable<T> dataTable;
 
@@ -138,7 +133,7 @@ public abstract class AbstractSelectableTableViewPanel<T> extends FormComponentP
 		ITableRowSelectionHandler<T> rowSelectionHandler, IDTATableRenderingHints hints)
 	{
 
-		super(id, new Model());
+		super(id);
 		this.dataProvider = dataProvider;
 		this.rowSelectionHandler = rowSelectionHandler;
 
@@ -154,7 +149,7 @@ public abstract class AbstractSelectableTableViewPanel<T> extends FormComponentP
 			}
 		});
 
-		Form form = new Form("viewForm");
+		Form<Void> form = new Form<Void>("viewForm");
 
 		radioGroup = new DTARadioGroup<T>("radioGroup", this.dataProvider.model(null));
 

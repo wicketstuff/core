@@ -76,7 +76,6 @@ public class ButtonListView extends ListView<ISelectableTableViewPanelButtonProv
 	 * @see org.apache.wicket.markup.html.list.ListView#populateItem(org.apache
 	 * .wicket.markup.html.list.ListItem)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void populateItem(ListItem<ISelectableTableViewPanelButtonProvider> item)
 	{
@@ -109,7 +108,7 @@ public class ButtonListView extends ListView<ISelectableTableViewPanelButtonProv
 			private static final long serialVersionUID = 5910571859628875165L;
 
 
-			public void onSubmit(AjaxRequestTarget target, Form form)
+			public void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 
 				if (buttonProvider.isSelectedRowRequired())
@@ -211,7 +210,7 @@ public class ButtonListView extends ListView<ISelectableTableViewPanelButtonProv
 
 	}
 
-	private IModel<String> createRadioRequireSelectedRowModel(final List<Radio> radioList)
+	private IModel<String> createRadioRequireSelectedRowModel(final List<Radio<?>> radioList)
 	{
 
 		return new LoadableDetachableModel<String>()
@@ -239,12 +238,12 @@ public class ButtonListView extends ListView<ISelectableTableViewPanelButtonProv
 				for (int i = 0; i < radioList.size(); i++)
 				{
 
-					Radio radio = radioList.get(i);
+					Radio<?> radio = radioList.get(i);
 
 					template.append("(Wicket.$('" + radio.getMarkupId(true) +
 						"').checked == false)");
 
-					if (i > 0 && (i < (radioList.size() - 1)))
+					if (i > 0 && i < radioList.size() - 1)
 					{
 						template.append(" and ");
 					}

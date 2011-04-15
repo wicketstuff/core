@@ -102,15 +102,14 @@ public class Page4MultiGroup extends PageSupport
 		// add the DnD handler to the page
 		add(dnd);
 
-		add(new ListView("myGroups", myGroups)
+		add(new ListView<MyGroup>("myGroups", myGroups)
 		{
 			@Override
-			protected void populateItem(ListItem listitem)
+			protected void populateItem(ListItem<MyGroup> listitem)
 			{
 				try
 				{
-					listitem.add(new Panel4MyGroup("myGroup", (MyGroup)listitem.getModelObject(),
-						dnd));
+					listitem.add(new Panel4MyGroup("myGroup", listitem.getModelObject(), dnd));
 				}
 				catch (RuntimeException exc)
 				{

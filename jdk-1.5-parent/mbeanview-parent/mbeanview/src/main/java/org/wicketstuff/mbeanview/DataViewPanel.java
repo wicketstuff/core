@@ -37,21 +37,21 @@ public class DataViewPanel extends Panel
 	public DataViewPanel(String id, Object param)
 	{
 		super(id);
-		List contents = null;
+		List<Object> contents = null;
 		if (param == null)
 		{
 			//
 		}
 		else if (param instanceof List)
 		{
-			contents = (List)param;
+			contents = (List<Object>)param;
 		}
 		else if (param.getClass().isArray())
 		{
 			int lenght = Array.getLength(param);
 			if (lenght > 0)
 			{
-				contents = new ArrayList();
+				contents = new ArrayList<Object>();
 				for (int i = 0; i < lenght; i++)
 				{
 					contents.add(Array.get(param, i));
@@ -60,24 +60,24 @@ public class DataViewPanel extends Panel
 		}
 		else
 		{
-			contents = new ArrayList();
+			contents = new ArrayList<Object>();
 			contents.add(param);
 		}
-		ListView contentsRepeater = new ListView("contents", contents)
+		ListView<Object> contentsRepeater = new ListView<Object>("contents", contents)
 		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void populateItem(ListItem item)
+			protected void populateItem(ListItem<Object> item)
 			{
 				Object value = item.getModelObject();
-				if (value == null || (value instanceof String) || value.getClass().isPrimitive())
+				if (value == null || value instanceof String || value.getClass().isPrimitive())
 				{
 					item.add(new Label(OUTPUT_ID, value == null ? null : value.toString()));
 				}
 				else
 				{
-					item.add(new ObjectViewPanel(OUTPUT_ID, value));
+					item.add(new ObjectViewPanel<Object>(OUTPUT_ID, value));
 				}
 			}
 		};

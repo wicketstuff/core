@@ -23,7 +23,6 @@ import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -130,8 +129,8 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 			{
 				DefaultMutableTreeNode mutableNode = (DefaultMutableTreeNode)node;
 				if (mutableNode.getChildCount() > 0 &&
-					((mutableNode.getChildAt(0) instanceof AttributeNode) ||
-						(mutableNode.getChildAt(0) instanceof OperationNode) || (mutableNode.getChildAt(0) instanceof NotificationNode)))
+					(mutableNode.getChildAt(0) instanceof AttributeNode ||
+						mutableNode.getChildAt(0) instanceof OperationNode || mutableNode.getChildAt(0) instanceof NotificationNode))
 				{
 					return new EmptyPanel(id).add(new SimpleAttributeModifier("style", "width:0;"));
 				}
@@ -147,12 +146,12 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 		DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("root");
 		TreeModel model = new DefaultTreeModel(rootNode);
 		String[] domains = reachMbeanServer.get().getDomains();
-		for (int i = 0; i < domains.length; i++)
+		for (String domain : domains)
 		{
-			MbeanNode domainNode = new MbeanNode(domains[i]);
+			MbeanNode domainNode = new MbeanNode(domain);
 			rootNode.add(domainNode);
 			Set<ObjectName> domainNames = reachMbeanServer.get().queryNames(null,
-				new ObjectName(domains[i] + ":*"));
+				new ObjectName(domain + ":*"));
 			addDomainsCildrens(domainNode, DataUtil.parseToPropsSet(domainNames));
 			Enumeration<DefaultMutableTreeNode> enumeration = domainNode.postorderEnumeration();
 			Set<DefaultMutableTreeNode> nodes = new HashSet<DefaultMutableTreeNode>();
@@ -162,7 +161,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 			}
 			for (DefaultMutableTreeNode node : nodes)
 			{
-				String query = domains[i] + ":";
+				String query = domain + ":";
 				TreeNode[] path = node.getPath();
 				if (path.length > 2)
 				{
@@ -181,9 +180,8 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 						new ObjectName(query));
 					if (mBeans.size() > 0)
 					{
-						for (Iterator it = mBeans.iterator(); it.hasNext();)
+						for (ObjectInstance objectInstance : mBeans)
 						{
-							ObjectInstance objectInstance = (ObjectInstance)it.next();
 							((MbeanNode)node).setObjectInstance(objectInstance, reachMbeanServer);
 						}
 					}
@@ -198,7 +196,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 		Map<String, Set<Set<String>>> parentProps = new HashMap<String, Set<Set<String>>>();
 		for (Set<String> names : domainNames)
 		{
-			List<String> namesList = new ArrayList(names);
+			List<String> namesList = new ArrayList<String>(names);
 			Collections.sort(namesList, new Comparator<String>()
 			{
 				public int compare(String o1, String o2)
@@ -235,9 +233,8 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 			}
 		}
 
-		for (Iterator i = parentProps.keySet().iterator(); i.hasNext();)
+		for (String parentProp : parentProps.keySet())
 		{
-			String parentProp = (String)i.next();
 			MbeanNode newNode = new MbeanNode(null, parentProp);
 			rootNode.add(newNode);
 			addDomainsCildrens(newNode, parentProps.get(parentProp));
@@ -296,9 +293,9 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 				DefaultMutableTreeNode notificationsNode = new DefaultMutableTreeNode(
 					"Notification");
 				add(notificationsNode);
-				for (int i = 0; i < beanNotificationInfos.length; i++)
+				for (MBeanNotificationInfo beanNotificationInfo : beanNotificationInfos)
 				{
-					notificationsNode.add(new NotificationNode(this, beanNotificationInfos[i]));
+					notificationsNode.add(new NotificationNode(this, beanNotificationInfo));
 				}
 			}
 		}
@@ -329,9 +326,9 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 		{
 			super(parent);
 			this.beanAttributeInfos = beanAttributeInfos;
-			for (int i = 0; i < beanAttributeInfos.length; i++)
+			for (MBeanAttributeInfo beanAttributeInfo : beanAttributeInfos)
 			{
-				add(new AttributeNode(this, beanAttributeInfos[i]));
+				add(new AttributeNode(this, beanAttributeInfo));
 			}
 		}
 
@@ -383,9 +380,9 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 		{
 			super(parent);
 			this.beanOperationInfos = beanOperationInfos;
-			for (int i = 0; i < beanOperationInfos.length; i++)
+			for (MBeanOperationInfo beanOperationInfo : beanOperationInfos)
 			{
-				add(new OperationNode(this, beanOperationInfos[i]));
+				add(new OperationNode(this, beanOperationInfo));
 			}
 		}
 

@@ -20,8 +20,6 @@ import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.form.Radio;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.model.IModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -35,7 +33,6 @@ public class DTARadio<T> extends Radio<T>
 	 * 
 	 */
 	private static final long serialVersionUID = -7457090902151030992L;
-	private static final Logger log = LoggerFactory.getLogger(DTARadio.class);
 
 	/**
 	 * @param id
