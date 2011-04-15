@@ -67,18 +67,19 @@ public class OperationsPanel extends Panel
 		modalOutput.setCookieName("modalOutput");
 		Form<Void> form = new Form<Void>("form");
 		add(form);
-		ListView operations = new ListView("operations", Arrays.asList(beanOperationInfos))
+		ListView<MBeanOperationInfo> operations = new ListView<MBeanOperationInfo>("operations",
+			Arrays.asList(beanOperationInfos))
 		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void populateItem(final ListItem item)
+			protected void populateItem(final ListItem<MBeanOperationInfo> item)
 			{
-				final MBeanOperationInfo info = (MBeanOperationInfo)item.getModelObject();
+				final MBeanOperationInfo info = item.getModelObject();
 				String returnLbl = info.getReturnType();
 				try
 				{
-					Class c = Class.forName(info.getReturnType());
+					Class<?> c = Class.forName(info.getReturnType());
 					if (c.isArray())
 					{
 						returnLbl = c.getComponentType().getSimpleName() + "[]";
@@ -170,7 +171,7 @@ public class OperationsPanel extends Panel
 
 	}
 
-	private class ParameterRepeater extends ListView
+	private class ParameterRepeater extends ListView<MBeanParameterInfo>
 	{
 		private static final long serialVersionUID = 1L;
 		private Map<MBeanParameterInfo, IModel> parametersValues = new HashMap<MBeanParameterInfo, IModel>();
@@ -183,9 +184,9 @@ public class OperationsPanel extends Panel
 		}
 
 		@Override
-		protected void populateItem(ListItem item)
+		protected void populateItem(ListItem<MBeanParameterInfo> item)
 		{
-			MBeanParameterInfo param = (MBeanParameterInfo)item.getModelObject();
+			MBeanParameterInfo param = item.getModelObject();
 			item.add(new Label("parameterName", param.getName()));
 			parametersValues.put(param, new Model());
 			item.add(new TextField("parameterValue", parametersValues.get(param)));
