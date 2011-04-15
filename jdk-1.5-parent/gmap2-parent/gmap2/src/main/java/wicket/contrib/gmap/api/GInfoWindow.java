@@ -108,7 +108,7 @@ public class GInfoWindow extends WebMarkupContainer
 		setTabs(tabs);
 
 		this.latLng = latLng;
-		this.marker = null;
+		marker = null;
 
 		if (AjaxRequestTarget.get() != null)
 		{
@@ -123,7 +123,7 @@ public class GInfoWindow extends WebMarkupContainer
 	{
 		setTabs(tabs);
 
-		this.latLng = null;
+		latLng = null;
 		this.marker = marker;
 
 		if (AjaxRequestTarget.get() != null)

@@ -26,23 +26,23 @@ import org.wicketstuff.console.templates.PackagedScriptTemplates;
 import org.wicketstuff.console.templates.ScriptTemplate;
 import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
 
-public class GroovyEngineTestPage extends WebPage {
-    private static final long serialVersionUID = 1L;
+public class GroovyEngineTestPage extends WebPage
+{
+	private static final long serialVersionUID = 1L;
 
-    public GroovyEngineTestPage(final PageParameters params) {
-        super(params);
+	public GroovyEngineTestPage(final PageParameters params)
+	{
+		super(params);
 
-        final GroovyScriptEnginePanel enginePanel = new GroovyScriptEnginePanel(
-                "scriptPanel");
-        enginePanel.setOutputMarkupId(true);
-        add(enginePanel);
+		final GroovyScriptEnginePanel enginePanel = new GroovyScriptEnginePanel("scriptPanel");
+		enginePanel.setOutputMarkupId(true);
+		add(enginePanel);
 
 		final IDataProvider<ScriptTemplate> dataProvider = new ListDataProvider<ScriptTemplate>(
-				PackagedScriptTemplates.getPackagedScriptTemplates(Lang.GROOVY));
+			PackagedScriptTemplates.getPackagedScriptTemplates(Lang.GROOVY));
 
 		final ScriptTemplateSelectionTablePanel scriptTable = new ScriptTemplateSelectionTablePanel(
-				"templatesTable", enginePanel,
-				dataProvider, 100);
+			"templatesTable", enginePanel, dataProvider, 100);
 		add(scriptTable);
 
 		add(new TestPageLinksPanel("links"));

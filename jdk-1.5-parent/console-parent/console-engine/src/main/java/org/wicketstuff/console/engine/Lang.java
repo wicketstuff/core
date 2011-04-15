@@ -17,18 +17,21 @@
 package org.wicketstuff.console.engine;
 
 /** Supported Languages enum. */
-public enum Lang {
+public enum Lang
+{
 
-    CLOJURE, GROOVY;
+	CLOJURE, GROOVY;
 
-    public String getFileExtension() {
-        switch (this) {
-        case CLOJURE:
-            return ".clj";
-		case GROOVY:
-			return ".groovy";
-		default:
-			throw new IllegalArgumentException();
+	public String getFileExtension()
+	{
+		switch (this)
+		{
+			case CLOJURE :
+				return ".clj";
+			case GROOVY :
+				return ".groovy";
+			default :
+				throw new IllegalArgumentException();
 		}
 	}
 }

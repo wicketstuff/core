@@ -6,19 +6,20 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.lang.Bytes;
 
 /**
- * Application object for your web application. If you want to run this application without deploying, run the Start class.
+ * Application object for your web application. If you want to run this application without
+ * deploying, run the Start class.
  * 
  * @see com.mycompany.Start#main(String[])
  */
 public class GaeWicketApplication extends WebApplication implements GaeApplication
-{    
-    /**
-     * Constructor
-     */
+{
+	/**
+	 * Constructor
+	 */
 	public GaeWicketApplication()
 	{
 	}
-	
+
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
@@ -31,8 +32,9 @@ public class GaeWicketApplication extends WebApplication implements GaeApplicati
 	/**
 	 * Setup custom eviction strategy for this application
 	 */
-	public DataStoreEvictionStrategy getEvictionStrategy() {
+	public DataStoreEvictionStrategy getEvictionStrategy()
+	{
 		return new MemorySizeEvictionStrategy(Bytes.megabytes(2));
 	}
-	
+
 }

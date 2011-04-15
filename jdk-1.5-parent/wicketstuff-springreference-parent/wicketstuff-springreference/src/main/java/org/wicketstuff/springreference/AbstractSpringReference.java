@@ -21,23 +21,22 @@ import java.lang.ref.WeakReference;
  * An abstract base class for referring spring beans.
  * </p>
  * <p>
- * This class supports serialization. The referred spring bean does not get
- * serialized, after deserialization it is looked up again on the first access.
+ * This class supports serialization. The referred spring bean does not get serialized, after
+ * deserialization it is looked up again on the first access.
  * </p>
  * <p>
- * Subclasses must implement the {@link #getSupporter()} method used to locate
- * the {@link AbstractSpringReferenceSupporter} object. This class does not
- * depend on wicket or spring-web. So in theory subclasses can be used in
- * non-wicket, non-web spring applications too.
+ * Subclasses must implement the {@link #getSupporter()} method used to locate the
+ * {@link AbstractSpringReferenceSupporter} object. This class does not depend on wicket or
+ * spring-web. So in theory subclasses can be used in non-wicket, non-web spring applications too.
  * </p>
- *
+ * 
  * @param <T>
  *            type of the wrapped spring bean
- *
+ * 
  * @author akiraly
  */
-public abstract class AbstractSpringReference<T> implements Serializable,
-		Cloneable {
+public abstract class AbstractSpringReference<T> implements Serializable, Cloneable
+{
 	private static final long serialVersionUID = 4097373492449915070L;
 
 	private final Class<T> clazz;
@@ -50,26 +49,27 @@ public abstract class AbstractSpringReference<T> implements Serializable,
 
 	/**
 	 * Constructor.
-	 *
+	 * 
 	 * @param clazz
 	 *            class of the wrapped spring bean, not null
 	 * @param name
 	 *            beanName of the wrapped spring bean, can be null
 	 */
-	protected AbstractSpringReference(Class<T> clazz, String name) {
+	protected AbstractSpringReference(Class<T> clazz, String name)
+	{
 		this.clazz = clazz;
 		this.name = name;
 		clazzBasedOnlyLookup = name == null;
 	}
 
 	/**
-	 * Returns the referred spring bean. Lookup is made lazily on the first
-	 * call.
-	 *
-	 * @return referred spring bean or throws a {@link RuntimeException} if the
-	 *         bean could not be found.
+	 * Returns the referred spring bean. Lookup is made lazily on the first call.
+	 * 
+	 * @return referred spring bean or throws a {@link RuntimeException} if the bean could not be
+	 *         found.
 	 */
-	public T get() {
+	public T get()
+	{
 		WeakReference<T> ref = instanceRef;
 		T instance;
 		if (ref == null || (instance = ref.get()) == null)
@@ -80,24 +80,28 @@ public abstract class AbstractSpringReference<T> implements Serializable,
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public AbstractSpringReference<T> clone() {
-		try {
-			return (AbstractSpringReference<T>) super.clone();
-		} catch (CloneNotSupportedException e) {
+	public AbstractSpringReference<T> clone()
+	{
+		try
+		{
+			return (AbstractSpringReference<T>)super.clone();
+		}
+		catch (CloneNotSupportedException e)
+		{
 			// should not happen
 			throw new IllegalStateException(e);
 		}
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((clazz == null) ? 0 : clazz.hashCode());
 		result = prime * result + (clazzBasedOnlyLookup ? 1231 : 1237);
 		AbstractSpringReferenceSupporter supporter = getSupporter();
-		result = prime * result
-				+ ((supporter == null) ? 0 : supporter.hashCode());
+		result = prime * result + ((supporter == null) ? 0 : supporter.hashCode());
 		// name field only matters if not clazzBasedOnlyLookup
 		if (!clazzBasedOnlyLookup)
 			result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -105,27 +109,33 @@ public abstract class AbstractSpringReference<T> implements Serializable,
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AbstractSpringReference<?> other = (AbstractSpringReference<?>) obj;
-		if (clazz == null) {
+		AbstractSpringReference<?> other = (AbstractSpringReference<?>)obj;
+		if (clazz == null)
+		{
 			if (other.clazz != null)
 				return false;
-		} else if (!clazz.equals(other.clazz))
+		}
+		else if (!clazz.equals(other.clazz))
 			return false;
 		if (clazzBasedOnlyLookup != other.clazzBasedOnlyLookup)
 			return false;
 		// name field only matters if not clazzBasedOnlyLookup
-		if (!clazzBasedOnlyLookup) {
-			if (name == null) {
+		if (!clazzBasedOnlyLookup)
+		{
+			if (name == null)
+			{
 				if (other.name != null)
 					return false;
-			} else if (!name.equals(other.name))
+			}
+			else if (!name.equals(other.name))
 				return false;
 		}
 		if (getSupporter() != other.getSupporter())
@@ -142,16 +152,18 @@ public abstract class AbstractSpringReference<T> implements Serializable,
 	 * @param instanceRef
 	 *            weak reference to the spring bean
 	 */
-	protected void setInstanceRef(WeakReference<T> instanceRef) {
+	protected void setInstanceRef(WeakReference<T> instanceRef)
+	{
 		this.instanceRef = instanceRef;
 	}
 
 	/**
 	 * Can change during lookup if it was not set originally.
-	 *
+	 * 
 	 * @return name of the spring bean, can be null
 	 */
-	protected String getName() {
+	protected String getName()
+	{
 		return name;
 	}
 
@@ -159,21 +171,24 @@ public abstract class AbstractSpringReference<T> implements Serializable,
 	 * @param name
 	 *            name of the spring bean
 	 */
-	protected void setName(String name) {
+	protected void setName(String name)
+	{
 		this.name = name;
 	}
 
 	/**
 	 * @return class of the spring bean
 	 */
-	protected Class<T> getClazz() {
+	protected Class<T> getClazz()
+	{
 		return clazz;
 	}
 
 	/**
 	 * @return true if the spring bean name was not given at construction time
 	 */
-	protected boolean isClazzBasedOnlyLookup() {
+	protected boolean isClazzBasedOnlyLookup()
+	{
 		return clazzBasedOnlyLookup;
 	}
 }

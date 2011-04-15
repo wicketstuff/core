@@ -24,10 +24,11 @@ import java.util.Set;
 /**
  * @author mocleiri
  * 
- * A match corresponding to an anywhere in the string search.
- *
+ *         A match corresponding to an anywhere in the string search.
+ * 
  */
-public class AnyWhereTrieMatch<C> extends TrieMatch<C> {
+public class AnyWhereTrieMatch<C> extends TrieMatch<C>
+{
 
 	/**
 	 * 
@@ -38,7 +39,9 @@ public class AnyWhereTrieMatch<C> extends TrieMatch<C> {
 	/**
 	 * @param matchingNodeList
 	 */
-	public AnyWhereTrieMatch(String matched, ITrieFilter<C>nodeFilter, Set<TrieNode<C>> matchingNodeList) {
+	public AnyWhereTrieMatch(String matched, ITrieFilter<C> nodeFilter,
+		Set<TrieNode<C>> matchingNodeList)
+	{
 		super(matched, Type.ANY_MATCH, nodeFilter);
 		this.nodeSet = matchingNodeList;
 	}
@@ -46,42 +49,46 @@ public class AnyWhereTrieMatch<C> extends TrieMatch<C> {
 	/**
 	 * @return the nodeSet
 	 */
-	public Set<TrieNode<C>> getNodeSet() {
+	public Set<TrieNode<C>> getNodeSet()
+	{
 		return nodeSet;
 	}
 
-	public void visit(ITrieNodeVisitor<C>visitor) {
-		
-		for (TrieNode<C> node : nodeSet) {
-			
+	public void visit(ITrieNodeVisitor<C> visitor)
+	{
+
+		for (TrieNode<C> node : nodeSet)
+		{
+
 			visitor.visit(node);
-			
+
 		}
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wicketstuff.datatable_autocomplete.trie.TrieMatch#getWordList()
 	 */
 	@Override
-	public List<C> getWordList(final int limit) {
-		
+	public List<C> getWordList(final int limit)
+	{
+
 		final List<C> dataList = new LinkedList<C>();
-		
-		for (TrieNode<C> node : nodeSet) {
-			
-			node.buildWordList(dataList, super.nodeFilter, limit); 
-			
+
+		for (TrieNode<C> node : nodeSet)
+		{
+
+			node.buildWordList(dataList, super.nodeFilter, limit);
+
 			if (dataList.size() == limit)
 				break;
 		}
-		
+
 		return dataList;
-		
+
 	}
-	
-	
-	
-	
+
 
 }

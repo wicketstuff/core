@@ -17,18 +17,21 @@ import org.wicketstuff.html5.media.audio.AudioDemo;
 import org.wicketstuff.html5.media.video.VideoDemo;
 
 /**
- *
+ * 
  * @author Andrew Lombardi
  */
-public class WicketApplication extends WebApplication {
+public class WicketApplication extends WebApplication
+{
 
 	@Override
-	public Class<? extends Page> getHomePage() {
+	public Class<? extends Page> getHomePage()
+	{
 		return HomePage.class;
 	}
 
 	@Override
-	protected void init() {
+	protected void init()
+	{
 		super.init();
 
 		getMarkupSettings().setDefaultMarkupEncoding(CharEncoding.UTF_8);

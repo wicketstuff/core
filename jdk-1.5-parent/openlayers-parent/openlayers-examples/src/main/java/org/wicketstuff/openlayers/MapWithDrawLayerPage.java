@@ -25,7 +25,8 @@ import com.vividsolutions.jts.geom.Geometry;
 /**
  * Homepage
  */
-public class MapWithDrawLayerPage extends WebPage {
+public class MapWithDrawLayerPage extends WebPage
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,20 +38,25 @@ public class MapWithDrawLayerPage extends WebPage {
 	 * @param parameters
 	 *            Page parameters
 	 */
-	public MapWithDrawLayerPage(
-			final PageParameters parameters) {
+	public MapWithDrawLayerPage(final PageParameters parameters)
+	{
 
 		OpenLayersMap openLayersMap = new OpenLayersMap("map", true);
 		add(openLayersMap);
-		
-		
 
-		openLayersMap.add(new DrawListenerBehavior(){@Override
-		protected void onDrawEnded(Geometry poly, AjaxRequestTarget target) {
-			
-			target.appendJavaScript("alert('Got geom+"+poly.toText()+"');");
-			
-		}});
+
+		openLayersMap.add(new DrawListenerBehavior()
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onDrawEnded(Geometry poly, AjaxRequestTarget target)
+			{
+
+				target.appendJavaScript("alert('Got geom+" + poly.toText() + "');");
+
+			}
+		});
 
 
 	}

@@ -27,9 +27,8 @@ import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
- * Seperate startup class for people that want to run the examples directly. Use
- * parameter -Dcom.sun.management.jmxremote to startup JMX (and e.g. connect
- * with jconsole).
+ * Seperate startup class for people that want to run the examples directly. Use parameter
+ * -Dcom.sun.management.jmxremote to startup JMX (and e.g. connect with jconsole).
  */
 public class Start
 {
@@ -38,7 +37,7 @@ public class Start
 	 * Main function, starts the jetty server.
 	 * 
 	 * @param args
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception
 	{

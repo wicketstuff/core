@@ -24,7 +24,8 @@ import org.wicketstuff.openlayers.api.LonLat;
 import org.wicketstuff.openlayers.api.Overlay;
 import org.wicketstuff.openlayers.api.layer.Layer;
 
-public interface IOpenLayersMap {
+public interface IOpenLayersMap
+{
 	public String getJSinvoke(String invocation);
 
 	public String getJSinvokeNoLineEnd(String invocation);

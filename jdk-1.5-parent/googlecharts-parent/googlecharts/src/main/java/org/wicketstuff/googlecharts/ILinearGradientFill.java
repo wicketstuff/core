@@ -8,11 +8,12 @@ import java.awt.Color;
 /**
  * @author Daniel Spiewak
  */
-public interface ILinearGradientFill extends IChartFill {
+public interface ILinearGradientFill extends IChartFill
+{
 
-    public int getAngle();
+	public int getAngle();
 
-    public Color[] getColors();
+	public Color[] getColors();
 
-    public double[] getOffsets();
+	public double[] getOffsets();
 }

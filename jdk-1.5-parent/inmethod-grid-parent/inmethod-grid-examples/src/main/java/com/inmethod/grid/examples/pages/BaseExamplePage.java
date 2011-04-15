@@ -7,15 +7,17 @@ import org.apache.wicket.markup.html.WebPage;
  * 
  * @author Matej Knopp
  */
-public class BaseExamplePage extends WebPage {
+public class BaseExamplePage extends WebPage
+{
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor.
 	 */
-	public BaseExamplePage() {
-		
+	public BaseExamplePage()
+	{
+
 	}
 
 }

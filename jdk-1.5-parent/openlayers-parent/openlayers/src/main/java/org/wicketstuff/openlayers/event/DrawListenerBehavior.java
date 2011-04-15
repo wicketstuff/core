@@ -13,63 +13,74 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 
-public abstract class DrawListenerBehavior extends AbstractDefaultAjaxBehavior {
+public abstract class DrawListenerBehavior extends AbstractDefaultAjaxBehavior
+{
+
+	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void renderHead(Component c, IHeaderResponse response) {
+	public void renderHead(Component c, IHeaderResponse response)
+	{
 		// TODO Auto-generated method stub
 		super.renderHead(c, response);
 		response.renderOnDomReadyJavaScript(getJSaddListener());
 	}
 
 	@Override
-	protected void onBind() {
-		if (!(getComponent() instanceof IOpenLayersMap)) {
-			throw new IllegalArgumentException(
-					"must be bound to Openlayers map");
+	protected void onBind()
+	{
+		if (!(getComponent() instanceof IOpenLayersMap))
+		{
+			throw new IllegalArgumentException("must be bound to Openlayers map");
 		}
 	}
 
-	public String getJSaddListener() {
-		return getOpenLayersMap().getJSinvoke(
-				"addDrawFeature('" + getCallbackUrl() + "')");
+	public String getJSaddListener()
+	{
+		return getOpenLayersMap().getJSinvoke("addDrawFeature('" + getCallbackUrl() + "')");
 	}
 
-	protected final IOpenLayersMap getOpenLayersMap() {
-		return (IOpenLayersMap) getComponent();
+	protected final IOpenLayersMap getOpenLayersMap()
+	{
+		return (IOpenLayersMap)getComponent();
 	}
 
 	/**
 	 * @see org.apache.wicket.ajax.AbstractDefaultAjaxBehavior#respond(org.apache.wicket.ajax.AjaxRequestTarget)
 	 */
 	@Override
-	protected final void respond(AjaxRequestTarget target) {
+	protected final void respond(AjaxRequestTarget target)
+	{
 		onEvent(target);
 	}
 
 	/**
-	 * Typically response parameters that are meant for this event are picket up
-	 * and made available for the further processing.
+	 * Typically response parameters that are meant for this event are picket up and made available
+	 * for the further processing.
 	 * 
 	 * @param target
 	 *            Target to add the Components, that need to be redrawn, to.
-	 * @throws RuntimeException 
+	 * @throws RuntimeException
 	 */
-	protected void onEvent(AjaxRequestTarget target) throws RuntimeException {
+	protected void onEvent(AjaxRequestTarget target) throws RuntimeException
+	{
 		Request request = RequestCycle.get().getRequest();
 		String wkt = request.getRequestParameters().getParameterValue("wkt").toString();
 
 		WKTReader wktReader = new WKTReader(OpenLayersMapUtils.getGeoFactory());
 
-		Geometry geom=null;
-		try {
+		Geometry geom = null;
+		try
+		{
 			geom = wktReader.read(wkt);
-		} catch (ParseException e) {
+		}
+		catch (ParseException e)
+		{
 			// TODO Auto-generated catch block
-			throw new RuntimeException("Could not parse wkt",e);
+			throw new RuntimeException("Could not parse wkt", e);
 		}
 
-		
+
 		onDrawEnded(geom, target);
 
 	}

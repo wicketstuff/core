@@ -20,6 +20,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 
+import com.inmethod.grid.IDataSource;
 import com.inmethod.grid.datagrid.DataGrid;
 
 /**
@@ -31,12 +32,12 @@ import com.inmethod.grid.datagrid.DataGrid;
  * @author Igor Vaynberg (ivaynberg)
  * @author Matej Knopp
  */
-public class NoRecordsToolbar extends AbstractToolbar
+public class NoRecordsToolbar<T> extends AbstractToolbar<IDataSource<T>, T>
 {
 	private static final long serialVersionUID = 1L;
 
-	private static final IModel DEFAULT_MESSAGE_MODEL = new ResourceModel(
-			"datagrid.no-records-found", "No Records Found");
+	private static final IModel<String> DEFAULT_MESSAGE_MODEL = new ResourceModel(
+		"datagrid.no-records-found", "No Records Found");
 
 	/**
 	 * Constructor
@@ -44,7 +45,7 @@ public class NoRecordsToolbar extends AbstractToolbar
 	 * @param table
 	 *            data table this toolbar will be attached to
 	 */
-	public NoRecordsToolbar(final DataGrid table)
+	public NoRecordsToolbar(final DataGrid<T> table)
 	{
 		this(table, DEFAULT_MESSAGE_MODEL);
 	}
@@ -55,21 +56,23 @@ public class NoRecordsToolbar extends AbstractToolbar
 	 * @param messageModel
 	 *            model that will be used to display the "no records found" message
 	 */
-	public NoRecordsToolbar(final DataGrid grid, IModel messageModel)
+	public NoRecordsToolbar(final DataGrid<T> grid, IModel<String> messageModel)
 	{
 		super(grid, null);
-	
+
 		add(new Label("msg", messageModel));
 	}
-	
+
 	/**
 	 * Returns the {@link DataGrid} instance this toolbar belongs to.
+	 * 
 	 * @return {@link DataGrid} instance this toolbar belongs to.
 	 */
-	public DataGrid getDataGrid() {
-		return (DataGrid) super.getGrid();
+	public DataGrid<T> getDataGrid()
+	{
+		return (DataGrid<T>)super.getGrid();
 	}
-	
+
 	/**
 	 * Only shows this toolbar when there are no rows
 	 * 

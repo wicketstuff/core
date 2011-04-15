@@ -9,7 +9,8 @@ import org.wicketstuff.simile.timeline.json.JsonUtils;
 import org.wicketstuff.simile.timeline.model.BandInfoParameters;
 
 
-public class JsonTest extends TestCase {
+public class JsonTest extends TestCase
+{
 	private static final Logger LOGGER = LoggerFactory.getLogger(JsonTest.class);
 
 	public void testGenerateJson()

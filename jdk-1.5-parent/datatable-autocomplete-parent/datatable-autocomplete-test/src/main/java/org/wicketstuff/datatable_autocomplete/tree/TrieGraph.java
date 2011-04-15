@@ -25,48 +25,43 @@ import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
 
 /**
  * @author mocleiri
- *
+ * 
  */
-public class TrieGraph<C> extends DirectedSparseMultigraph<TrieNode<C>, String> {
+public class TrieGraph<C> extends DirectedSparseMultigraph<TrieNode<C>, String>
+{
 
+	private static final long serialVersionUID = 1L;
 	private final AtomicLong counter = new AtomicLong();
-	
+
 	/**
 	 * @param order
 	 */
-	public TrieGraph(PatriciaTrie<C>trie) {
+	public TrieGraph(PatriciaTrie<C> trie)
+	{
 		super();
-		
+
 		addVertex(trie.getRoot());
-		
-		buildGraph (trie.getRoot());
-		
-		
-		
-		
-		
-		
-		
-		
+
+		buildGraph(trie.getRoot());
+
+
 	}
 
-	private void buildGraph(TrieNode<C> root) {
+	private void buildGraph(TrieNode<C> root)
+	{
 
 		List<TrieNode<C>> nodeList = root.getOrderedNodeList();
-		
-		for (TrieNode<C> trieNode : nodeList) {
-		
+
+		for (TrieNode<C> trieNode : nodeList)
+		{
+
 			addEdge(String.valueOf(counter.addAndGet(1)), root, trieNode);
-			
+
 			buildGraph(trieNode);
 		}
-		
-		
-	}
-	
-	
 
-	
-	
+
+	}
+
 
 }

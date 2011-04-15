@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Base class for jasper reports resources.
- *
+ * 
  * @author Eelco Hillenius
  * @author Matej Knopp
  * @author Luciano Montebove
@@ -65,9 +65,8 @@ public abstract class JRResource extends AbstractResource
 	private IJasperReportFactory jasperReportFactory;
 
 	/**
-	 * The compiled report this resource references. Made transient as we don't
-	 * want our report to be serialized while we can recreate it at other
-	 * servers at will using the factory.
+	 * The compiled report this resource references. Made transient as we don't want our report to
+	 * be serialized while we can recreate it at other servers at will using the factory.
 	 */
 	private transient JasperReport jasperReport;
 
@@ -82,16 +81,14 @@ public abstract class JRResource extends AbstractResource
 	private JRDataSource reportDataSource;
 
 	/**
-	 * When set, a header 'Content-Disposition: attachment;
-	 * filename="${fileName}"' will be added to the response, resulting in a
-	 * download dialog. No magical extensions are added, so you should make sure
-	 * the file has the extension you want yourself.
+	 * When set, a header 'Content-Disposition: attachment; filename="${fileName}"' will be added to
+	 * the response, resulting in a download dialog. No magical extensions are added, so you should
+	 * make sure the file has the extension you want yourself.
 	 */
 	private String fileName;
 
 	/**
-	 * Construct without a report. You must provide a report before you can use
-	 * this resource.
+	 * Construct without a report. You must provide a report before you can use this resource.
 	 */
 	public JRResource()
 	{
@@ -100,7 +97,7 @@ public abstract class JRResource extends AbstractResource
 
 	/**
 	 * Construct.
-	 *
+	 * 
 	 * @param report
 	 *            the report input stream
 	 */
@@ -110,7 +107,7 @@ public abstract class JRResource extends AbstractResource
 		{
 			public JasperReport newJasperReport() throws JRException
 			{
-				return (JasperReport) JRLoader.loadObject(report);
+				return (JasperReport)JRLoader.loadObject(report);
 			}
 
 			;
@@ -119,7 +116,7 @@ public abstract class JRResource extends AbstractResource
 
 	/**
 	 * Construct.
-	 *
+	 * 
 	 * @param report
 	 *            the report input stream
 	 */
@@ -129,7 +126,7 @@ public abstract class JRResource extends AbstractResource
 		{
 			public JasperReport newJasperReport() throws JRException
 			{
-				return (JasperReport) JRLoader.loadObject(report);
+				return (JasperReport)JRLoader.loadObject(report);
 			}
 
 			;
@@ -138,7 +135,7 @@ public abstract class JRResource extends AbstractResource
 
 	/**
 	 * Construct.
-	 *
+	 * 
 	 * @param report
 	 *            the report input stream
 	 */
@@ -148,7 +145,7 @@ public abstract class JRResource extends AbstractResource
 		{
 			public JasperReport newJasperReport() throws JRException
 			{
-				return (JasperReport) JRLoader.loadObject(report);
+				return (JasperReport)JRLoader.loadObject(report);
 			}
 
 			;
@@ -157,22 +154,21 @@ public abstract class JRResource extends AbstractResource
 
 	/**
 	 * Construct.
-	 *
+	 * 
 	 * @param factory
 	 *            report factory for lazy initialization
 	 */
 	public JRResource(IJasperReportFactory factory)
 	{
 		super();
-		this.jasperReportFactory = factory;
+		jasperReportFactory = factory;
 	}
 
 	/**
-	 * Gets jasperReport. This implementation uses an internal factory to lazily
-	 * create the report. After creation the report is cached (set as the
-	 * jasperReport property). Override this method in case you want to provide
-	 * some alternative creation/ caching scheme.
-	 *
+	 * Gets jasperReport. This implementation uses an internal factory to lazily create the report.
+	 * After creation the report is cached (set as the jasperReport property). Override this method
+	 * in case you want to provide some alternative creation/ caching scheme.
+	 * 
 	 * @return jasperReport
 	 */
 	public JasperReport getJasperReport()
@@ -194,44 +190,43 @@ public abstract class JRResource extends AbstractResource
 
 	/**
 	 * Sets {bjasperReport.
-	 *
+	 * 
 	 * @param report
 	 *            report
 	 */
 	public final void setJasperReport(JasperReport report)
 	{
-		this.jasperReport = report;
+		jasperReport = report;
 	}
 
 	/**
-	 * Gets the report parameters.
-	 * Returns a new copy of the reportParameters Map as JasperReports
+	 * Gets the report parameters. Returns a new copy of the reportParameters Map as JasperReports
 	 * modifies it with not serializable objects
-	 *
+	 * 
 	 * @return report parameters
 	 */
 	public Map<String, Object> getReportParameters()
 	{
-                return new HashMap<String, Object>(reportParameters);
+		return new HashMap<String, Object>(reportParameters);
 	}
 
 	/**
 	 * Sets the report parameters.
-	 *
+	 * 
 	 * @param params
 	 *            report parameters
-	 *
+	 * 
 	 * @return This
 	 */
 	public final JRResource setReportParameters(Map<String, Object> params)
 	{
-		this.reportParameters = params;
+		reportParameters = params;
 		return this;
 	}
 
 	/**
 	 * Gets the datasource if any for filling this report.
-	 *
+	 * 
 	 * @return the datasource if any for filling this report
 	 */
 	public JRDataSource getReportDataSource()
@@ -241,21 +236,21 @@ public abstract class JRResource extends AbstractResource
 
 	/**
 	 * Sets the datasource if any for filling this report.
-	 *
+	 * 
 	 * @param dataSource
 	 *            the datasource if any for filling this report
-	 *
+	 * 
 	 * @return This
 	 */
 	public JRResource setReportDataSource(JRDataSource dataSource)
 	{
-		this.reportDataSource = dataSource;
+		reportDataSource = dataSource;
 		return this;
 	}
 
 	/**
 	 * Gets the connection provider if any for filling this report.
-	 *
+	 * 
 	 * @return the connection provider if any for filling this report
 	 */
 	public IDatabaseConnectionProvider getConnectionProvider()
@@ -265,24 +260,24 @@ public abstract class JRResource extends AbstractResource
 
 	/**
 	 * Sets the connection provider if any for filling this report.
-	 *
+	 * 
 	 * @param provider
 	 *            the connection provider if any for filling this report
-	 *
+	 * 
 	 * @return This
 	 */
 	public final JRResource setConnectionProvider(IDatabaseConnectionProvider provider)
 	{
-		this.connectionProvider = provider;
+		connectionProvider = provider;
 		return this;
 	}
 
 	/**
 	 * Gets the file name. When set, a header 'Content-Disposition: attachment;
-	 * filename="${fileName}"' will be added to the response, resulting in a
-	 * download dialog. No magical extensions are added, so you should make sure
-	 * the file has the extension you want yourself.
-	 *
+	 * filename="${fileName}"' will be added to the response, resulting in a download dialog. No
+	 * magical extensions are added, so you should make sure the file has the extension you want
+	 * yourself.
+	 * 
 	 * @return the file name
 	 */
 	public String getFileName()
@@ -295,29 +290,27 @@ public abstract class JRResource extends AbstractResource
 	}
 
 	/**
-	 * Sets the file name. When set, a header 'Content-Disposition: attachment;
-	 * filename="${name}"' will be added to the response, resulting in a
-	 * download dialog. No magical extensions are added, so you should make sure
-	 * the file has the extension you want yourself.
-	 *
+	 * Sets the file name. When set, a header 'Content-Disposition: attachment; filename="${name}"'
+	 * will be added to the response, resulting in a download dialog. No magical extensions are
+	 * added, so you should make sure the file has the extension you want yourself.
+	 * 
 	 * @param name
 	 *            the file name
-	 *
+	 * 
 	 * @return This
 	 */
 	public final JRResource setFileName(String name)
 	{
-		this.fileName = name;
+		fileName = name;
 		return this;
 	}
 
 	/**
 	 * Called by getData to obtain an exporter instance.
-	 *
+	 * 
 	 * @return an exporter instance
 	 */
 	public abstract JRAbstractExporter newExporter();
-
 
 
 	/**
@@ -326,29 +319,30 @@ public abstract class JRResource extends AbstractResource
 	public abstract String getContentType();
 
 
-	/** The default is to return the content as an attachment.
-	 *
+	/**
+	 * The default is to return the content as an attachment.
+	 * 
 	 * @return The content disposition of the reports
 	 */
-	public ContentDisposition getContentDisposition() {
-	  return ContentDisposition.ATTACHMENT;
+	public ContentDisposition getContentDisposition()
+	{
+		return ContentDisposition.ATTACHMENT;
 	}
 
 
 	/**
-	 * Returns the extension for the resource's file. This string should not
-	 * contain the leading "."
-	 *
+	 * Returns the extension for the resource's file. This string should not contain the leading "."
+	 * 
 	 * @return The extension for the resource's file.
 	 */
 	public abstract String getExtension();
 
 	/**
-	 * Creates a new {@link JasperPrint} instance. This instance is specific for
-	 * this render, but it not yet designated for one output format only.
-	 *
+	 * Creates a new {@link JasperPrint} instance. This instance is specific for this render, but it
+	 * not yet designated for one output format only.
+	 * 
 	 * @return a new {@link JasperPrint} instance.
-	 *
+	 * 
 	 * @throws JRException
 	 */
 	protected JasperPrint newJasperPrint() throws JRException
@@ -370,11 +364,10 @@ public abstract class JRResource extends AbstractResource
 				if (provider == null)
 				{
 					throw new IllegalStateException(
-							"JasperReportsResources must either have a JRDataSource, "
-									+ "or a JDBC Connection provided");
+						"JasperReportsResources must either have a JRDataSource, "
+							+ "or a JDBC Connection provided");
 				}
-				jasperPrint = JasperFillManager
-						.fillReport(report, params, provider.get());
+				jasperPrint = JasperFillManager.fillReport(report, params, provider.get());
 			}
 			finally
 			{
@@ -390,60 +383,61 @@ public abstract class JRResource extends AbstractResource
 	@Override
 	protected ResourceResponse newResourceResponse(Attributes attributes)
 	{
-	  ResourceResponse resp = new ResourceResponse();
-	  resp.disableCaching();
-	  resp.setContentType(getContentType());
-	  resp.setFileName(getFileName());
-	  resp.setContentDisposition(getContentDisposition());
-	  if (resp.dataNeedsToBeWritten(attributes)) {
-	    resp.setWriteCallback(new WriteCallback()
-        {
+		ResourceResponse resp = new ResourceResponse();
+		resp.disableCaching();
+		resp.setContentType(getContentType());
+		resp.setFileName(getFileName());
+		resp.setContentDisposition(getContentDisposition());
+		if (resp.dataNeedsToBeWritten(attributes))
+		{
+			resp.setWriteCallback(new WriteCallback()
+			{
 
-          @Override
-          public void writeData(Attributes attributes)
-          {
-            try
-            {
-              long t1 = System.currentTimeMillis();
-              // get a print instance for exporting
-              JasperPrint print = newJasperPrint();
+				@Override
+				public void writeData(Attributes attributes)
+				{
+					try
+					{
+						long t1 = System.currentTimeMillis();
+						// get a print instance for exporting
+						JasperPrint print = newJasperPrint();
 
-              // get a fresh instance of an exporter for this report
-              JRAbstractExporter exporter = newExporter();
+						// get a fresh instance of an exporter for this report
+						JRAbstractExporter exporter = newExporter();
 
 
-              final byte[] data = getExporterData(print, exporter);
+						final byte[] data = getExporterData(print, exporter);
 
-              attributes.getResponse().write(data);
-              if (log.isDebugEnabled())
-              {
-                long t2 = System.currentTimeMillis();
-                log.debug("loaded report data; bytes: "
-                    + data.length + " in " + (t2 - t1) + " miliseconds");
-              }
-            }
-            catch (JRException e)
-            {
-              throw new WicketRuntimeException(e);
-            }
-          }
-        });
-	  }
-	  return resp;
+						attributes.getResponse().write(data);
+						if (log.isDebugEnabled())
+						{
+							long t2 = System.currentTimeMillis();
+							log.debug("loaded report data; bytes: " + data.length + " in " +
+								(t2 - t1) + " miliseconds");
+						}
+					}
+					catch (JRException e)
+					{
+						throw new WicketRuntimeException(e);
+					}
+				}
+			});
+		}
+		return resp;
 	}
 
-  protected byte[] getExporterData(JasperPrint print,
-      JRAbstractExporter exporter) throws JRException
-  {
-    // prepare a stream to trap the exporter's output
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
-    exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
+	protected byte[] getExporterData(JasperPrint print, JRAbstractExporter exporter)
+		throws JRException
+	{
+		// prepare a stream to trap the exporter's output
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+		exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
 
-    // execute the export and return the trapped result
-    exporter.exportReport();
+		// execute the export and return the trapped result
+		exporter.exportReport();
 
-    return baos.toByteArray();
-  }
+		return baos.toByteArray();
+	}
 
 }

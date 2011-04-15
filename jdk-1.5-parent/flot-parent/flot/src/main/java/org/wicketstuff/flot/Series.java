@@ -26,68 +26,78 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Series implements Serializable {
+public class Series implements Serializable
+{
 	/** Required by {@link Serializable} */
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Series.class);
-	
+
 	String label;
 	Color color;
 	Set<GraphType> graphTypes;
 	List<DataSet> data;
-	
-	public Series(List<DataSet> data, String label, Color color, Set<GraphType> graphTypes) {
+
+	public Series(List<DataSet> data, String label, Color color, Set<GraphType> graphTypes)
+	{
 		this.label = label;
 		this.color = color;
 		this.graphTypes = new HashSet<GraphType>(graphTypes);
 		this.data = new ArrayList<DataSet>(data);
 	}
-	
-	public Series(List<DataSet> data, String label, Color color, GraphType ... graphTypes) {
+
+	public Series(List<DataSet> data, String label, Color color, GraphType... graphTypes)
+	{
 		this(data, label, color, new HashSet<GraphType>(Arrays.asList(graphTypes)));
 	}
-	
-	public String getLabel() {
+
+	public String getLabel()
+	{
 		return label;
 	}
-	
-	public List<DataSet> getData() {
+
+	public List<DataSet> getData()
+	{
 		return Collections.unmodifiableList(data);
 	}
-	
+
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		StringBuffer str = new StringBuffer();
 		str.append("{data: [");
-		for(DataSet dataSet : getData()) {
+		for (DataSet dataSet : getData())
+		{
 			str.append(dataSet.toString());
 			str.append(", ");
 		}
 		// Remove last ", "
-		if(getData().size()>0)
-			str.setLength(str.length()-2);
-		str.append("], label: \""+getLabel()+"\", color: \""+color.html()+"\"");
-		
-		if(graphTypes.size()>0)
+		if (getData().size() > 0)
+			str.setLength(str.length() - 2);
+		str.append("], label: \"" + getLabel() + "\", color: \"" + color.html() + "\"");
+
+		if (graphTypes.size() > 0)
 			str.append(", ");
 
-		for(GraphType graphType : graphTypes) {
+		for (GraphType graphType : graphTypes)
+		{
 			str.append(graphType);
 			str.append(", ");
 		}
-		
-		if(graphTypes.size()>0) {
-			str.setLength(str.length()-2);
+
+		if (graphTypes.size() > 0)
+		{
+			str.setLength(str.length() - 2);
 			str.append("}");
 		}
-		
-		LOGGER.info("Series: "+str);
-		
+
+		LOGGER.info("Series: " + str);
+
 		return str.toString();
 	}
-	
-	public Series addDataSet(DataSet dataSet, Color color) {
+
+	public Series addDataSet(DataSet dataSet, Color color)
+	{
 		List<DataSet> newData = new ArrayList<DataSet>(data);
 		newData.add(dataSet);
 		return new Series(newData, label, color, graphTypes);

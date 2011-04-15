@@ -6,9 +6,11 @@ import org.wicketstuff.jquery.Options;
 import org.wicketstuff.jquery.jgrowl.JGrowlFeedbackPanel;
 
 @SuppressWarnings("serial")
-public class Page4JGrowl extends PageSupport {
+public class Page4JGrowl extends PageSupport
+{
 
-	public Page4JGrowl() {
+	public Page4JGrowl()
+	{
 
 		final JGrowlFeedbackPanel feedback = new JGrowlFeedbackPanel("jgrowlFeedback");
 		add(feedback);
@@ -25,10 +27,12 @@ public class Page4JGrowl extends PageSupport {
 		infoOptions.set("glue", "after");
 		feedback.setInfoMessageOptions(infoOptions);
 
-		final AjaxLink<Void> link = new AjaxLink<Void>("showButton") {
+		final AjaxLink<Void> link = new AjaxLink<Void>("showButton")
+		{
 
 			@Override
-			public void onClick(final AjaxRequestTarget target) {
+			public void onClick(final AjaxRequestTarget target)
+			{
 
 				error("An ERROR message");
 

@@ -18,19 +18,21 @@ package org.wicketstuff.openlayers.api;
 import org.wicketstuff.openlayers.api.control.AbstractControl;
 
 /**
- * Represents an OpenLayers
- * http://dev.openlayers.org/apidocs/files/OpenLayers/Control-js.html
+ * Represents an OpenLayers http://dev.openlayers.org/apidocs/files/OpenLayers/Control-js.html
  * 
- * These are the controls that take no context specific options in the constructor (the externalizable=true controls 
- * may include a div but this is not set by the caller).
+ * These are the controls that take no context specific options in the constructor (the
+ * externalizable=true controls may include a div but this is not set by the caller).
  * 
  * See @link {@link IJavascriptComponent} for the hierarchy
  * 
  */
-public class Control extends AbstractControl {
-	
+public class Control extends AbstractControl
+{
+
+	private static final long serialVersionUID = 1L;
+
 	public static final Control PanZoomBar = new Control("PanZoomBar", true);
-	
+
 	public static final Control MouseToolbar = new Control("MouseToolbar", false);
 	public static final Control LayerSwitcher = new Control("LayerSwitcher", true);
 	public static final Control Permalink = new Control("Permalink", true);
@@ -40,15 +42,15 @@ public class Control extends AbstractControl {
 	public static final Control PanZoom = new Control("PanZoom", false);
 	public static final Control Navigation = new Control("Navigation", false);
 	public static final Control ScaleLine = new Control("ScaleLine", false);
-	
+
 	/**
 	 * @param name
 	 * @param externalizable
 	 */
-	public Control(String name, boolean externalizable) {
+	public Control(String name, boolean externalizable)
+	{
 		super(name, externalizable);
 	}
-	
 
-	
+
 }

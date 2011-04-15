@@ -46,7 +46,7 @@ public class VersionDescriptorTest extends TestCase {
 		assertEquals(new Version(1, 5, 1, 2), VersionDescriptor.alwaysLatestOfVersion(Library.PROTOTYPE, 1, 5, 1).getVersion(LocalProvider.DEFAULT));
 		assertEquals(new Version(1, 6, 0), VersionDescriptor.exactVersion(Library.PROTOTYPE, 1, 6, 0).getVersion(LocalProvider.DEFAULT));
 		// this test will obviously fail every time we add a new PROTOTYPE version
-		assertEquals(new Version(1, 6, 0, 3), VersionDescriptor.alwaysLatest(Library.PROTOTYPE).getVersion(LocalProvider.DEFAULT));
+		assertEquals(new Version(1, 7), VersionDescriptor.alwaysLatest(Library.PROTOTYPE).getVersion(LocalProvider.DEFAULT));
 		
 	}
 }

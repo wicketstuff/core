@@ -27,25 +27,22 @@ import org.wicketstuff.console.engine.Lang;
  * 
  * @author cretzel
  */
-public class PackagedScriptTemplates {
+public class PackagedScriptTemplates
+{
 
 	private static final String SCRIPT_DIR_BASE = "org/wicketstuff/console/templates/";
 
-	private static final String[] PACKAGED_GROOVY_TEMPLATES = new String[] {
-			"HibernateCriteria", "HibernateHqlQuery", "HibernateSave",
-			"HibernateShowSql", "HibernateStatistics", "Log4j",
-			"MethodsAndFields", "ReadClasspathResource", "SystemProperties",
-			"WicketClearMarkupCache", "WicketClearPropertiesCache",
-			"WicketClientInfo", "WicketComponentHierarchy",
-			"WicketInvalidateSession", "WicketSize" };
+	private static final String[] PACKAGED_GROOVY_TEMPLATES = new String[] { "HibernateCriteria",
+			"HibernateHqlQuery", "HibernateSave", "HibernateShowSql", "HibernateStatistics",
+			"Log4j", "MethodsAndFields", "ReadClasspathResource", "SystemProperties",
+			"WicketClearMarkupCache", "WicketClearPropertiesCache", "WicketClientInfo",
+			"WicketComponentHierarchy", "WicketInvalidateSession", "WicketSize" };
 
-	private static final String[] PACKAGED_CLOJURE_TEMPLATES = new String[] {
-			"HibernateCriteria", "HibernateHqlQuery", "HibernateSave",
-			"HibernateShowSql", "HibernateStatistics", "Log4j",
-			"MethodsAndFields", "ReadClasspathResource", "SystemProperties",
-			"WicketClearMarkupCache", "WicketClearPropertiesCache",
-			"WicketClientInfo", "WicketComponentHierarchy",
-			"WicketInvalidateSession", "WicketSize" };
+	private static final String[] PACKAGED_CLOJURE_TEMPLATES = new String[] { "HibernateCriteria",
+			"HibernateHqlQuery", "HibernateSave", "HibernateShowSql", "HibernateStatistics",
+			"Log4j", "MethodsAndFields", "ReadClasspathResource", "SystemProperties",
+			"WicketClearMarkupCache", "WicketClearPropertiesCache", "WicketClientInfo",
+			"WicketComponentHierarchy", "WicketInvalidateSession", "WicketSize" };
 
 	/**
 	 * Returns all packaged script templates for a given source language.
@@ -54,30 +51,31 @@ public class PackagedScriptTemplates {
 	 *            language
 	 * @return List of {@link ScriptTemplate}s
 	 */
-	public static List<ScriptTemplate> getPackagedScriptTemplates(
-			final Lang lang) {
+	public static List<ScriptTemplate> getPackagedScriptTemplates(final Lang lang)
+	{
 
 		final List<ScriptTemplate> templates = new ArrayList<ScriptTemplate>();
 
 		String[] templateNames = new String[0];
 
-		switch (lang) {
-		case GROOVY:
-			templateNames = PACKAGED_GROOVY_TEMPLATES;
-			break;
-		case CLOJURE:
-			templateNames = PACKAGED_CLOJURE_TEMPLATES;
-			break;
-		default:
-			break;
+		switch (lang)
+		{
+			case GROOVY :
+				templateNames = PACKAGED_GROOVY_TEMPLATES;
+				break;
+			case CLOJURE :
+				templateNames = PACKAGED_CLOJURE_TEMPLATES;
+				break;
+			default :
+				break;
 		}
 
 		final ClassLoader cl = PackagedScriptTemplates.class.getClassLoader();
-		for (final String name : templateNames) {
-			final String scriptBase = SCRIPT_DIR_BASE
-					+ lang.name().toLowerCase() + "/";
-			final ScriptTemplate template = ScriptTemplateUtils
-					.readTemplateFromClasspath(cl, scriptBase, name, lang);
+		for (final String name : templateNames)
+		{
+			final String scriptBase = SCRIPT_DIR_BASE + lang.name().toLowerCase() + "/";
+			final ScriptTemplate template = ScriptTemplateUtils.readTemplateFromClasspath(cl,
+				scriptBase, name, lang);
 			templates.add(template);
 		}
 

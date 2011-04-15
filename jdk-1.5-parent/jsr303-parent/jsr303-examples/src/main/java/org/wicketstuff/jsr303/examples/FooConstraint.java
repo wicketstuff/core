@@ -14,16 +14,15 @@ import javax.validation.Payload;
 /**
  * @author doc
  */
-@Constraint(validatedBy =
-{ FooValidator.class })
+@Constraint(validatedBy = { FooValidator.class })
 @Retention(RetentionPolicy.RUNTIME)
-@Target(
-{ ElementType.TYPE })
-public @interface FooConstraint {
+@Target({ ElementType.TYPE })
+public @interface FooConstraint
+{
 
-    String message() default "{example.FooConstraint.notEqual}";
+	String message() default "{example.FooConstraint.notEqual}";
 
-    Class<?>[] groups() default {};
+	Class<?>[] groups() default { };
 
-    Class<? extends Payload>[] payload() default {};
+	Class<? extends Payload>[] payload() default { };
 }

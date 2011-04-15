@@ -28,32 +28,38 @@ import org.joda.time.PeriodType;
 /**
  * @author Jeremy Thomerson
  */
-public class DateMidnightIterator implements Iterator<DateMidnight> {
+public class DateMidnightIterator implements Iterator<DateMidnight>
+{
 
 	private DateTime mCurrent;
 	private final DateTime mEndDateTime;
-	
-	public DateMidnightIterator(DateTime start, DateTime end, int first, int count) {
+
+	public DateMidnightIterator(DateTime start, DateTime end, int first, int count)
+	{
 		mCurrent = start.plusDays(first);
 		mEndDateTime = mCurrent.plusDays(count);
 	}
 
-	public DateMidnightIterator(DateTime start, DateTime end) {
+	public DateMidnightIterator(DateTime start, DateTime end)
+	{
 		this(start, end, 0, new Period(start, end, PeriodType.days()).getDays() + 1);
 	}
 
-	public boolean hasNext() {
+	public boolean hasNext()
+	{
 		return mCurrent.isBefore(mEndDateTime);
 	}
 
-	public DateMidnight next() {
+	public DateMidnight next()
+	{
 		DateMidnight dm = new DateMidnight(mCurrent);
 		mCurrent = mCurrent.plusDays(1);
 		return dm;
 	}
 
-	public void remove() {
+	public void remove()
+	{
 		throw new UnsupportedOperationException("this should not be called");
 	}
-	
+
 }

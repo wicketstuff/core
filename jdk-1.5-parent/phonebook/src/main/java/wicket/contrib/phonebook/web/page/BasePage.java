@@ -24,14 +24,15 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 /**
  * Base page class used for phonebook web pages.
  * <p>
- * The markup of this files provides some common html as well as includes a
- * reference to the css file that all other pages inherit through wicket's
- * markup inheritance feature.
- *
+ * The markup of this files provides some common html as well as includes a reference to the css
+ * file that all other pages inherit through wicket's markup inheritance feature.
+ * 
  * @author igor
  */
 public class BasePage extends WebPage
 {
+	private static final long serialVersionUID = 1L;
+
 	public BasePage()
 	{
 		add(new FeedbackPanel("status"));

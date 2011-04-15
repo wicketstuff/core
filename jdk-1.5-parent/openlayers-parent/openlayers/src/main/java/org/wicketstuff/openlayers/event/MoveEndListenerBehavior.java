@@ -21,40 +21,44 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 
-public abstract class MoveEndListenerBehavior extends
-		AbstractDefaultAjaxBehavior {
+public abstract class MoveEndListenerBehavior extends AbstractDefaultAjaxBehavior
+{
 	private static final long serialVersionUID = -3369444402534250143L;
 
 	@Override
-	public void renderHead(Component c, IHeaderResponse response) {
+	public void renderHead(Component c, IHeaderResponse response)
+	{
 		super.renderHead(c, response);
 		response.renderOnDomReadyJavaScript(getJSaddListener());
 	}
 
 	@Override
-	protected void onBind() {
-		if (!(getComponent() instanceof IOpenLayersMap)) {
-			throw new IllegalArgumentException(
-					"must be bound to Openlayers map interface");
+	protected void onBind()
+	{
+		if (!(getComponent() instanceof IOpenLayersMap))
+		{
+			throw new IllegalArgumentException("must be bound to Openlayers map interface");
 		}
 	}
 
-	protected final IOpenLayersMap getOpenLayersMap() {
-		return (IOpenLayersMap) getComponent();
+	protected final IOpenLayersMap getOpenLayersMap()
+	{
+		return (IOpenLayersMap)getComponent();
 	}
 
 	/**
 	 * @see org.apache.wicket.ajax.AbstractDefaultAjaxBehavior#respond(org.apache.wicket.ajax.AjaxRequestTarget)
 	 */
 	@Override
-	protected final void respond(AjaxRequestTarget target) {
+	protected final void respond(AjaxRequestTarget target)
+	{
 		getOpenLayersMap().update(target);
 		onMoveEnd(target);
 	}
 
-	public String getJSaddListener() {
-		return getOpenLayersMap().getJSinvoke(
-				"addMoveEndListener('" + getCallbackUrl() + "')");
+	public String getJSaddListener()
+	{
+		return getOpenLayersMap().getJSinvoke("addMoveEndListener('" + getCallbackUrl() + "')");
 	}
 
 	protected abstract void onMoveEnd(AjaxRequestTarget target);

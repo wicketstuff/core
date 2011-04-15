@@ -24,25 +24,27 @@ import org.wicketstuff.theme.standard.ThemeFactory;
 
 public class ThemeTestPage extends WicketThemeBasePage
 {
+	private static final long serialVersionUID = 1L;
+
 	public ThemeTestPage()
 	{
 		add(new FeedbackPanel("feedback"));
-		
-		for (int i=0;i<2;i++)
+
+		for (int i = 0; i < 2; i++)
 		{
-			info("Info "+i);
-			warn("Warn "+i);
-			error("Error "+i);
+			info("Info " + i);
+			warn("Warn " + i);
+			error("Error " + i);
 		}
-		
+
 	}
-	
+
 	@Override
 	protected IModel<String> getTitleModel()
 	{
 		return Model.of("Theme Test");
 	}
-	
+
 	@Override
 	protected IThemeFactory getThemeFactory()
 	{

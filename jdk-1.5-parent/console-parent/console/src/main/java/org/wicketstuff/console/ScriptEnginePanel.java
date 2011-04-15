@@ -36,7 +36,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.console.engine.Engines;
 import org.wicketstuff.console.engine.IScriptEngine;
@@ -75,6 +75,7 @@ public class ScriptEnginePanel extends Panel {
             super.onInitialize();
             add(new AttributeAppender("onclick", Model.of("clearTextarea('"
                     + inputTf.getMarkupId() + "')"), ";"));
+
         }
 
     }
@@ -105,10 +106,10 @@ public class ScriptEnginePanel extends Panel {
 
     private static final long serialVersionUID = 1L;
 
-    private static final ResourceReference CSS = new CompressedResourceReference(
+    private static final ResourceReference CSS = new PackageResourceReference(
             ScriptEnginePanel.class, "ScriptEnginePanel.css");
 
-    private static final ResourceReference JS = new CompressedResourceReference(
+    private static final ResourceReference JS = new PackageResourceReference(
             ScriptEnginePanel.class, "ScriptEnginePanel.js");
 
     private String input;
@@ -135,7 +136,7 @@ public class ScriptEnginePanel extends Panel {
             final IModel<String> title) {
         super(id);
         this.lang = lang;
-        this.titleModel = title != null ? title : Model.of("Wicket Console");
+        titleModel = title != null ? title : Model.of("Wicket Console");
 
         init();
     }

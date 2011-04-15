@@ -7,20 +7,27 @@ import org.apache.wicket.model.Model;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 
 /**
- * Attaches itself to a element, and onclick removes the drawcontrol 
+ * Attaches itself to a element, and onclick removes the drawcontrol
+ * 
  * @author Nino Martinez Wael
- *
+ * 
  */
-public class RemoveDrawControl extends Behavior {
-	
+public class RemoveDrawControl extends Behavior
+{
+
+	private static final long serialVersionUID = 1L;
 	private IOpenLayersMap map;
-	public RemoveDrawControl(IOpenLayersMap map) {
-		this.map=map;
+
+	public RemoveDrawControl(IOpenLayersMap map)
+	{
+		this.map = map;
 	}
 
 	@Override
-	public void bind(Component component) {
+	public void bind(Component component)
+	{
 		super.bind(component);
-		component.add(new AttributeAppender("onclick",new Model(map.getJSinvokeNoLineEnd("removeDrawFeature()")),";"));
+		component.add(new AttributeAppender("onclick",
+			Model.of(map.getJSinvokeNoLineEnd("removeDrawFeature()")), ";"));
 	}
 }

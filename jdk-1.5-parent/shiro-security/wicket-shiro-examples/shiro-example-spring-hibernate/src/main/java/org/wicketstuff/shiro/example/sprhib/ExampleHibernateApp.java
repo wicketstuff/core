@@ -32,14 +32,16 @@ public class ExampleHibernateApp extends ExampleApplication
 		super.init();
 	}
 
-  @Override
-  public Component getExampleInfoPanel(String id) {
-    return new ExampleInfoPanel( id );
-  }
+	@Override
+	public Component getExampleInfoPanel(String id)
+	{
+		return new ExampleInfoPanel(id);
+	}
 
-  @Override
-	public Component getAuthHeaderPanel(String id) {
-	  return new UserAuthHeader(id, LoginPage.class);
+	@Override
+	public Component getAuthHeaderPanel(String id)
+	{
+		return new UserAuthHeader(id, LoginPage.class);
 	}
 
 }

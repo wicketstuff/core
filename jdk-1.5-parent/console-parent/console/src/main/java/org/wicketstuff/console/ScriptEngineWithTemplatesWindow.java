@@ -75,7 +75,6 @@ public abstract class ScriptEngineWithTemplatesWindow extends ModalWindow {
      */
     protected ScriptEnginePanelWithTemplates newEnginePanelWithTemplates(
             final String wicketId, final Lang lang) {
-
         return new ScriptEnginePanelWithTemplates(wicketId, lang, Model.of(""),
                 dataProvider);
     }

@@ -7,28 +7,32 @@ import org.wicketstuff.springreference.examples.AbstractFinalPage;
 import org.wicketstuff.springreference.examples.AbstractPrivatePage;
 
 /**
- * Class representing a wicket web application. This application uses
- * exclusively wicketstuff-springreference, {@link SpringReference} and
- * {@link SpringReferenceSupporter} for spring integration.
+ * Class representing a wicket web application. This application uses exclusively
+ * wicketstuff-springreference, {@link SpringReference} and {@link SpringReferenceSupporter} for
+ * spring integration.
  * 
  * @author akiraly
  */
-public class App extends AbstractApp {
+public class App extends AbstractApp
+{
 
 	@Override
-	protected void init() {
+	protected void init()
+	{
 		super.init();
 
 		SpringReferenceSupporter.register(this);
 	}
 
 	@Override
-	public Class<? extends AbstractFinalPage> getHomePage() {
+	public Class<? extends AbstractFinalPage> getHomePage()
+	{
 		return HomePage.class;
 	}
 
 	@Override
-	public Class<? extends AbstractPrivatePage> getPrivatePage() {
+	public Class<? extends AbstractPrivatePage> getPrivatePage()
+	{
 		return PrivatePage.class;
 	}
 }

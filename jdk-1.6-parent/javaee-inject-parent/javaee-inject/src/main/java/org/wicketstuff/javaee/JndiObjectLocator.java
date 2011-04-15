@@ -29,84 +29,102 @@ import org.apache.wicket.util.lang.Objects;
  * <p/>
  * private @Resource(name="referenceName") YouClass obj;
  * <p/>
- * The 'referenceName' attribute is mandatory, and refers to the name of the object as declared
- * in the web.xml file
- *
+ * The 'referenceName' attribute is mandatory, and refers to the name of the object as declared in
+ * the web.xml file
+ * 
  * @author Filippo Diotalevi
  */
-public class JndiObjectLocator implements IProxyTargetLocator {
+public class JndiObjectLocator implements IProxyTargetLocator
+{
 
-    private Class<?> beanType;
-    private String beanName;
+	private static final long serialVersionUID = 1L;
+	private Class<?> beanType;
+	private String beanName;
 
-    /**
-     * Constructor
-     *
-     * @param beanId   bean name
-     * @param beanType bean class
-     */
-    public JndiObjectLocator(String beanId, Class<?> beanType) {
-        if (beanType == null) {
-            throw new IllegalArgumentException("[beanType] argument cannot be null");
-        }
-        if (beanId == null) {
-            throw new IllegalArgumentException("[beanId] argument cannot be null");
-        }
+	/**
+	 * Constructor
+	 * 
+	 * @param beanId
+	 *            bean name
+	 * @param beanType
+	 *            bean class
+	 */
+	public JndiObjectLocator(String beanId, Class<?> beanType)
+	{
+		if (beanType == null)
+		{
+			throw new IllegalArgumentException("[beanType] argument cannot be null");
+		}
+		if (beanId == null)
+		{
+			throw new IllegalArgumentException("[beanId] argument cannot be null");
+		}
 
-        this.beanType = beanType;
-        this.beanName = beanId;
-    }
+		this.beanType = beanType;
+		beanName = beanId;
+	}
 
-    /**
-     * @see org.apache.wicket.proxy.IProxyTargetLocator#locateProxyTarget()
-     */
-    @Override
-	public Object locateProxyTarget() {
-        return lookup(beanName, beanType);
-    }
+	/**
+	 * @see org.apache.wicket.proxy.IProxyTargetLocator#locateProxyTarget()
+	 */
+	@Override
+	public Object locateProxyTarget()
+	{
+		return lookup(beanName, beanType);
+	}
 
-    private static Object lookup(String name, Class<?> type) {
-        String lookupName = "java:comp/env/" + name;
-        InitialContext ic;
-        try {
-            ic = new InitialContext();
-            return ic.lookup(lookupName);
-        } catch (NamingException e) {
-            String errorMessage = "Could not locate resource of class [[" + type + "]] and name [[" + name + "]] ";
-            throw new RuntimeException(errorMessage, e);
-        }
-    }
+	private static Object lookup(String name, Class<?> type)
+	{
+		String lookupName = "java:comp/env/" + name;
+		InitialContext ic;
+		try
+		{
+			ic = new InitialContext();
+			return ic.lookup(lookupName);
+		}
+		catch (NamingException e)
+		{
+			String errorMessage = "Could not locate resource of class [[" + type +
+				"]] and name [[" + name + "]] ";
+			throw new RuntimeException(errorMessage, e);
+		}
+	}
 
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof JndiObjectLocator) {
-            JndiObjectLocator other = (JndiObjectLocator) obj;
-            return beanType.equals(other.beanType)
-                    && Objects.equal(beanName, other.beanName);
-        }
-        return false;
-    }
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof JndiObjectLocator)
+		{
+			JndiObjectLocator other = (JndiObjectLocator)obj;
+			return beanType.equals(other.beanType) && Objects.equal(beanName, other.beanName);
+		}
+		return false;
+	}
 
-    /**
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        int hashcode = beanType.hashCode();
-        if (beanName != null) {
-            hashcode = hashcode + (127 * beanName.hashCode());
-        }
-        return hashcode;
-    }
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		int hashcode = beanType.hashCode();
+		if (beanName != null)
+		{
+			hashcode = hashcode + (127 * beanName.hashCode());
+		}
+		return hashcode;
+	}
 
-    public String getBeanName() {
-        return beanName;
-    }
+	public String getBeanName()
+	{
+		return beanName;
+	}
 
-    public Class<?> getBeanType() {
-        return beanType;
-    }
+	public Class<?> getBeanType()
+	{
+		return beanType;
+	}
 }

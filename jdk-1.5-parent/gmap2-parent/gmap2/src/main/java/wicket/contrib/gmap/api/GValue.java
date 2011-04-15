@@ -19,8 +19,7 @@ import java.io.Serializable;
 
 /**
  * Root class for all <em>Value Objects</em>.<br>
- * All implementations shall override {@link #equals(Object)} and
- * {@link #hashCode()}.
+ * All implementations shall override {@link #equals(Object)} and {@link #hashCode()}.
  */
 public interface GValue extends Serializable
 {

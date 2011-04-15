@@ -21,24 +21,28 @@ import java.util.List;
  * @author mocleiri
  * 
  */
-public final class StringUtils {
+public final class StringUtils
+{
 
 	/**
 	 * 
 	 */
-	private StringUtils() {
+	private StringUtils()
+	{
 		// TODO Auto-generated constructor stub
 	}
 
-	public static String join(List<String> c, String seperator) {
+	public static String join(List<String> c, String seperator)
+	{
 
 		return join(new StringBuffer(), c, seperator).toString();
 	}
-	
-	public static StringBuffer join(StringBuffer buf, List<String> c,
-			String seperator) {
 
-		for (int i = 0; i < c.size() - 1; i++) {
+	public static StringBuffer join(StringBuffer buf, List<String> c, String seperator)
+	{
+
+		for (int i = 0; i < c.size() - 1; i++)
+		{
 
 			String param = c.get(i);
 

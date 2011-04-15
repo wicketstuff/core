@@ -26,69 +26,65 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.ResourceReference;
 
 /**
- * Component for embedding a jasper report in a page. This component must be
- * attached to an &lt;object&gt; tag. If you don't want to embed the report, but
- * have a link to it instead, use {@link ResourceReference}.
- *
+ * Component for embedding a jasper report in a page. This component must be attached to an
+ * &lt;object&gt; tag. If you don't want to embed the report, but have a link to it instead, use
+ * {@link ResourceReference}.
+ * 
  * @author <a href="mailto:evanchooly@gmail.com">Justin Lee</a>
  */
-public final class EmbeddedJRReport extends WebComponent implements
-    IResourceListener
+public final class EmbeddedJRReport extends WebComponent implements IResourceListener
 {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private final JRResource resource;
+	private final JRResource resource;
 
-  /**
-   * Construcxt.
-   *
-   * @param componentID
-   *          component componentID
-   * @param resource
-   *          the resource
-   */
-  public EmbeddedJRReport(String componentID, JRResource resource)
-  {
-    super(componentID);
-    this.resource = resource;
-  }
+	/**
+	 * Construcxt.
+	 * 
+	 * @param componentID
+	 *            component componentID
+	 * @param resource
+	 *            the resource
+	 */
+	public EmbeddedJRReport(String componentID, JRResource resource)
+	{
+		super(componentID);
+		this.resource = resource;
+	}
 
-  /**
-   * @see org.apache.wicket.IResourceListener#onResourceRequested()
-   */
-  public void onResourceRequested()
-  {
-    PageParameters pageParams = null;
-    final Page page = findPage();
-    if (page != null)
-      pageParams = page.getPageParameters();
+	/**
+	 * @see org.apache.wicket.IResourceListener#onResourceRequested()
+	 */
+	public void onResourceRequested()
+	{
+		PageParameters pageParams = null;
+		final Page page = findPage();
+		if (page != null)
+			pageParams = page.getPageParameters();
 
-    ResourceRequestHandler reqh = new ResourceRequestHandler(resource,
-        pageParams);
+		ResourceRequestHandler reqh = new ResourceRequestHandler(resource, pageParams);
 
-    reqh.respond(getRequestCycle());
-  }
+		reqh.respond(getRequestCycle());
+	}
 
-  /**
-   * Make sure we work only with object tags
-   *
-   * @param tag
-   *          tag applied to component.
-   * @see org.apache.wicket.Component#onComponentTag(org.apache.wicket.markup.ComponentTag)
-   */
-  @Override
-  protected void onComponentTag(ComponentTag tag)
-  {
-    if (!"object".equalsIgnoreCase(tag.getName()))
-    {
-      findMarkupStream().throwMarkupException(
-          "Component " + getId()
-              + " must be applied to a tag of type 'object' not "
-              + tag.toUserDebugString());
-    }
-    tag.put("data", getResponse()
-        .encodeURL(urlFor(IResourceListener.INTERFACE)));
-    tag.put("type", resource.getContentType());
-    super.onComponentTag(tag);
-  }
+	/**
+	 * Make sure we work only with object tags
+	 * 
+	 * @param tag
+	 *            tag applied to component.
+	 * @see org.apache.wicket.Component#onComponentTag(org.apache.wicket.markup.ComponentTag)
+	 */
+	@Override
+	protected void onComponentTag(ComponentTag tag)
+	{
+		if (!"object".equalsIgnoreCase(tag.getName()))
+		{
+			findMarkupStream().throwMarkupException(
+				"Component " + getId() + " must be applied to a tag of type 'object' not " +
+					tag.toUserDebugString());
+		}
+		tag.put("data", getResponse().encodeURL(urlFor(IResourceListener.INTERFACE)));
+		tag.put("type", resource.getContentType());
+		super.onComponentTag(tag);
+	}
 }

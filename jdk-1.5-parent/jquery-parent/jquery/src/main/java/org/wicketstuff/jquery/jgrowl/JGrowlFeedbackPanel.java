@@ -12,21 +12,23 @@ import org.wicketstuff.jquery.JQueryBehavior;
 import org.wicketstuff.jquery.Options;
 
 /**
- * A feedback panel that shows feedback messages with JGrowl (http://www.stanlemon.net/projects/jgrowl.html)
+ * A feedback panel that shows feedback messages with JGrowl
+ * (http://www.stanlemon.net/projects/jgrowl.html)
  * 
  * @author martin-g
  */
 @SuppressWarnings("serial")
-public class JGrowlFeedbackPanel extends FeedbackPanel implements IHeaderContributor {
+public class JGrowlFeedbackPanel extends FeedbackPanel implements IHeaderContributor
+{
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * The settings for the different feedback levels
 	 * 
 	 * Full list of supported settings at: http://www.stanlemon.net/projects/jgrowl.html#options
 	 */
-	
+
 	private Options errorOptions;
 	private Options warningOptions;
 	private Options fatalOptions;
@@ -50,10 +52,10 @@ public class JGrowlFeedbackPanel extends FeedbackPanel implements IHeaderContrib
 	public JGrowlFeedbackPanel(final String id, IFeedbackMessageFilter filter)
 	{
 		super(id, filter);
-		
+
 		// this feedback panel is intended to be used in JavaScript environment (AJAX)
 		setOutputMarkupId(true);
-		
+
 		// needed to not escape apostrophes
 		setEscapeModelStrings(false);
 	}
@@ -76,76 +78,90 @@ public class JGrowlFeedbackPanel extends FeedbackPanel implements IHeaderContrib
 	@Override
 	protected Component newMessageDisplayComponent(final String id, final FeedbackMessage message)
 	{
-		final JGrowlFeedbackMessage jgrowlFeedbackMessage = new JGrowlFeedbackMessage(message) {
-			
+		final JGrowlFeedbackMessage jgrowlFeedbackMessage = new JGrowlFeedbackMessage(message)
+		{
+
 			@Override
-			protected Options newFatalOptions() {
+			protected Options newFatalOptions()
+			{
 				return fatalOptions;
 			}
-			
+
 			@Override
-			protected Options newErrorOptions() {
+			protected Options newErrorOptions()
+			{
 				return errorOptions;
 			}
-			
+
 			@Override
-			protected Options newWarningOptions() {
+			protected Options newWarningOptions()
+			{
 				return warningOptions;
 			}
-			
+
 			@Override
-			protected Options newInfoOptions() {
+			protected Options newInfoOptions()
+			{
 				return infoOptions;
 			}
-			
+
 			@Override
-			protected Options newDebugOptions() {
+			protected Options newDebugOptions()
+			{
 				return debugOptions;
 			}
 		};
-		
+
 		final String jgrowlJavaScript = jgrowlFeedbackMessage.toJavaScript();
-		
+
 		final Label label = new Label(id, jgrowlJavaScript);
 		label.setEscapeModelStrings(JGrowlFeedbackPanel.this.getEscapeModelStrings());
 		return label;
 	}
 
 	@Override
-	public void renderHead(final IHeaderResponse response) {
+	public void renderHead(final IHeaderResponse response)
+	{
 
-		response.renderCSSReference(new PackageResourceReference(JGrowlFeedbackPanel.class, "res/jquery.jgrowl.css"));
+		response.renderCSSReference(new PackageResourceReference(JGrowlFeedbackPanel.class,
+			"res/jquery.jgrowl.css"));
 		response.renderJavaScriptReference(JQueryBehavior.JQUERY_JS);
-		response.renderJavaScriptReference(new PackageResourceReference(JGrowlFeedbackPanel.class, "res/jquery.jgrowl.js"));	
+		response.renderJavaScriptReference(new PackageResourceReference(JGrowlFeedbackPanel.class,
+			"res/jquery.jgrowl.js"));
 	}
 
-	public JGrowlFeedbackPanel setErrorMessageOptions(final Options errorOptions) {
+	public JGrowlFeedbackPanel setErrorMessageOptions(final Options errorOptions)
+	{
 		this.errorOptions = errorOptions;
-		
+
 		return this;
 	}
-	
-	public JGrowlFeedbackPanel setFatalMessageOptions(final Options fatalOptions) {
+
+	public JGrowlFeedbackPanel setFatalMessageOptions(final Options fatalOptions)
+	{
 		this.fatalOptions = fatalOptions;
-		
+
 		return this;
 	}
-	
-	public JGrowlFeedbackPanel setWarningMessageOptions(final Options warningOptions) {
+
+	public JGrowlFeedbackPanel setWarningMessageOptions(final Options warningOptions)
+	{
 		this.warningOptions = warningOptions;
-		
+
 		return this;
 	}
-	
-	public JGrowlFeedbackPanel setInfoMessageOptions(final Options infoOptions) {
+
+	public JGrowlFeedbackPanel setInfoMessageOptions(final Options infoOptions)
+	{
 		this.infoOptions = infoOptions;
-		
+
 		return this;
 	}
-	
-	public JGrowlFeedbackPanel setDebugMessageOptions(final Options debugOptions) {
+
+	public JGrowlFeedbackPanel setDebugMessageOptions(final Options debugOptions)
+	{
 		this.debugOptions = debugOptions;
-		
+
 		return this;
 	}
 }

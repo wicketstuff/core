@@ -39,8 +39,8 @@ public class HomePage extends WicketExamplePage
 		feedback.setOutputMarkupId(true);
 		add(feedback);
 
-		map = new GMap2("bottomPanel", new GMapHeaderContributor(GMapExampleApplication
-				.get().getGoogleMapsAPIkey()));
+		map = new GMap2("bottomPanel", new GMapHeaderContributor(GMapExampleApplication.get()
+			.getGoogleMapsAPIkey()));
 		map.setOutputMarkupId(true);
 		map.setMapType(GMapType.G_SATELLITE_MAP);
 		map.setScrollWheelZoomEnabled(true);
@@ -82,8 +82,8 @@ public class HomePage extends WicketExamplePage
 		});
 		map.addControl(GControl.GSmallMapControl);
 		map.getInfoWindow().open(new GLatLng(37.5, -122.1),
-				new GInfoWindowTab("One", new HelloPanel()),
-				new GInfoWindowTab("Two", new HelloPanel()));
+			new GInfoWindowTab("One", new HelloPanel()),
+			new GInfoWindowTab("Two", new HelloPanel()));
 		add(map);
 
 		infoWindow = new Label("infoWindow", "openInfoWindow");

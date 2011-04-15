@@ -10,10 +10,13 @@ import com.inmethod.grid.toolbar.NoRecordsToolbar;
 import com.inmethod.grid.toolbar.paging.PagingToolbar;
 
 /**
- * Convenience implementation that adds {@link PagingToolbar} and {@link NoRecordsToolbar} to the grid.
+ * Convenience implementation that adds {@link PagingToolbar} and {@link NoRecordsToolbar} to the
+ * grid.
+ * 
  * @author Matej Knopp
  */
-public class DefaultDataGrid extends DataGrid {
+public class DefaultDataGrid<T> extends DataGrid<T>
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -27,7 +30,9 @@ public class DefaultDataGrid extends DataGrid {
 	 * @param columns
 	 *            list of grid columns
 	 */
-	public DefaultDataGrid(String id, IModel model, List<IGridColumn> columns) {
+	public DefaultDataGrid(String id, IModel<IDataSource<T>> model,
+		List<IGridColumn<IDataSource<T>, T>> columns)
+	{
 		super(id, model, columns);
 		init();
 	}
@@ -42,13 +47,16 @@ public class DefaultDataGrid extends DataGrid {
 	 * @param columns
 	 *            list of grid columns
 	 */
-	public DefaultDataGrid(String id, IDataSource dataSource, List<IGridColumn> columns) {
+	public DefaultDataGrid(String id, IDataSource<T> dataSource,
+		List<IGridColumn<IDataSource<T>, T>> columns)
+	{
 		super(id, dataSource, columns);
 		init();
 	}
-	
-	private void init() {
-		addBottomToolbar(new NoRecordsToolbar(this));
-		addBottomToolbar(new PagingToolbar(this));
+
+	private void init()
+	{
+		addBottomToolbar(new NoRecordsToolbar<T>(this));
+		addBottomToolbar(new PagingToolbar<T>(this));
 	}
 }

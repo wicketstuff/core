@@ -12,47 +12,63 @@ import org.apache.wicket.model.IModel;
 import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.column.AbstractColumn;
 
-public abstract class EditableCellPanel extends Panel {
+public abstract class EditableCellPanel<M, I, P> extends Panel
+{
 
-	private final AbstractColumn column;			
-	
-	public EditableCellPanel(String id, AbstractColumn column, IModel rowModel) {
+	private static final long serialVersionUID = 1L;
+	private final AbstractColumn<M, I> column;
+
+	public EditableCellPanel(String id, AbstractColumn<M, I> column, IModel<I> rowModel)
+	{
 		super(id, rowModel);
 		this.column = column;
 	}
-	
-	public AbstractColumn getColumn() {
+
+	public AbstractColumn<M, I> getColumn()
+	{
 		return column;
 	}
-	
+
 	@Override
-	protected void onBeforeRender() {		
+	protected void onBeforeRender()
+	{
 		super.onBeforeRender();
-		
+
 		AjaxRequestTarget target = AjaxRequestTarget.get();
-		
+
 		Component textField = get("textfield");
-		
-		if (target != null && isFocusTextField()) {
+
+		if (target != null && isFocusTextField())
+		{
 			target.focusComponent(textField);
-		}		
+		}
 	}
-	
-	protected boolean isFocusTextField() {
-		IGridColumn lastClickedColumn = getColumn().getGrid().getLastClickedColumn();				
-		if (lastClickedColumn == getColumn()) {
+
+	protected boolean isFocusTextField()
+	{
+		IGridColumn<M, I> lastClickedColumn = getColumn().getGrid().getLastClickedColumn();
+		if (lastClickedColumn == getColumn())
+		{
 			getColumn().getGrid().cleanLastClickedColumn();
 			return true;
-		} else {
+		}
+		else
+		{
 			return false;
 		}
 	}
-	
-	@Override
-	public boolean isVisible() {
-		return column.getGrid().isItemEdited(getDefaultModel());		
+
+	protected IModel<I> getDefaultRowModel()
+	{
+		return (IModel<I>)getDefaultModel();
 	}
-	
-	protected abstract FormComponent getEditComponent();
-	
+
+	@Override
+	public boolean isVisible()
+	{
+		return column.getGrid().isItemEdited(getDefaultRowModel());
+	}
+
+	protected abstract FormComponent<P> getEditComponent();
+
 }

@@ -23,46 +23,50 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 
-public abstract class EventListenerBehavior extends AbstractDefaultAjaxBehavior {
+public abstract class EventListenerBehavior extends AbstractDefaultAjaxBehavior
+{
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void renderHead(Component c, IHeaderResponse response) {
+	public void renderHead(Component c, IHeaderResponse response)
+	{
 		// TODO Auto-generated method stub
 		super.renderHead(c, response);
 		response.renderOnDomReadyJavaScript(getJSaddListener());
 	}
 
 	@Override
-	protected void onBind() {
-		if (!(getComponent() instanceof IOpenLayersMap)) {
-			throw new IllegalArgumentException(
-					"must be bound to Openlayers map");
+	protected void onBind()
+	{
+		if (!(getComponent() instanceof IOpenLayersMap))
+		{
+			throw new IllegalArgumentException("must be bound to Openlayers map");
 		}
 	}
 
-	public String getJSaddListener() {
-		return getOpenLayersMap()
-				.getJSinvoke(
-						"addListener('" + getEvent() + "', '"
-								+ getCallbackUrl() + "')");
+	public String getJSaddListener()
+	{
+		return getOpenLayersMap().getJSinvoke(
+			"addListener('" + getEvent() + "', '" + getCallbackUrl() + "')");
 	}
 
-	protected final IOpenLayersMap getOpenLayersMap() {
-		return (IOpenLayersMap) getComponent();
+	protected final IOpenLayersMap getOpenLayersMap()
+	{
+		return (IOpenLayersMap)getComponent();
 	}
 
 	/**
 	 * @see org.apache.wicket.ajax.AbstractDefaultAjaxBehavior#respond(org.apache.wicket.ajax.AjaxRequestTarget)
 	 */
 	@Override
-	protected final void respond(AjaxRequestTarget target) {
+	protected final void respond(AjaxRequestTarget target)
+	{
 		onEvent(target);
 	}
 
 	/**
-	 * Typically response parameters that are meant for this event are picket up
-	 * and made available for the further processing.
+	 * Typically response parameters that are meant for this event are picket up and made available
+	 * for the further processing.
 	 * 
 	 * @param target
 	 *            Target to add the Components, that need to be redrawn, to.

@@ -29,46 +29,54 @@ import org.apache.wicket.validation.validator.StringValidator;
  * 
  * @author Jeremy Thomerson
  */
-public class ClientAndServerExactLengthValidatingBehavior extends AbstractClientAndServerValidatingBehavior {
+public class ClientAndServerExactLengthValidatingBehavior extends
+	AbstractClientAndServerValidatingBehavior<String>
+{
 
 	private static final long serialVersionUID = 1L;
 
 	private final int mLength;
-	
-	public ClientAndServerExactLengthValidatingBehavior(Form<?> form, int length) {
+
+	public ClientAndServerExactLengthValidatingBehavior(Form<?> form, int length)
+	{
 		super(form);
 		mLength = length;
 	}
 
 	@Override
-	protected void addServerSideValidator(FormComponent component) {
+	protected void addServerSideValidator(FormComponent<String> component)
+	{
 		component.add(StringValidator.exactLength(mLength));
 	}
-	
+
 	@Override
-	protected String createValidatorConstructorJavaScript(CharSequence formID, CharSequence compID, CharSequence escapedMessage) {
+	protected String createValidatorConstructorJavaScript(CharSequence formID, CharSequence compID,
+		CharSequence escapedMessage)
+	{
 		String js = super.createValidatorConstructorJavaScript(formID, compID, escapedMessage);
 		js = js + ".setExactLength(" + mLength + ")";
 		return js;
 	}
-	
+
 	@Override
-	protected Map<String, Object> variablesMap(Form<?> form, FormComponent<?> component) {
+	protected Map<String, Object> variablesMap(Form<?> form, FormComponent<String> component)
+	{
 		Map<String, Object> map = super.variablesMap(form, component);
 		map.put("exact", mLength);
 		return map;
 	}
-	
+
 	@Override
-	protected String getResourceKey() {
+	protected String getResourceKey()
+	{
 		return "StringValidator.exact";
 	}
-	
+
 	@Override
-	protected String getValidatorJSClassName() {
+	protected String getValidatorJSClassName()
+	{
 		return "StringExactLengthValidator";
 	}
 
-	
 
 }

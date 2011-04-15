@@ -1,0 +1,17 @@
+grant
+{
+    // actually the login and HomePage are not SecureWebPage classes.
+    permission ${ComponentPermission} "org.apache.wicket.security.examples.springsecurity.LoginPage", "inherit, render, enable";
+    permission ${ComponentPermission} "org.apache.wicket.security.examples.springsecurity.HomePage", "inherit, render, enable";
+};
+
+grant principal org.apache.wicket.security.examples.springsecurity.security.SpringSecurePrincipal "ROLE_USER"
+{
+    permission ${ComponentPermission} "org.apache.wicket.security.examples.springsecurity.FirstSecurePage", "inherit, render, enable";
+};
+
+grant principal org.apache.wicket.security.examples.springsecurity.security.SpringSecurePrincipal "ROLE_ADMIN"
+{
+    permission ${ComponentPermission} "org.apache.wicket.security.examples.springsecurity.SecondSecurePage", "inherit, render, enable";
+    permission ${ComponentPermission} "org.apache.wicket.security.examples.springsecurity.FirstSecurePage:ajaxLink", "render, enable";
+};

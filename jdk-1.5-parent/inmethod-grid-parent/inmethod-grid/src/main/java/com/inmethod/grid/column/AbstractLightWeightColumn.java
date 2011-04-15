@@ -10,7 +10,8 @@ import com.inmethod.grid.IRenderable;
 import com.inmethod.grid.column.editable.EditablePropertyColumn;
 
 /**
- * Convenience implementation of {@link IGridColumn}. This class should be used as base for lightweight columns.
+ * Convenience implementation of {@link IGridColumn}. This class should be used as base for
+ * lightweight columns.
  * <p>
  * Contains getters and setters for most properties and takes care of the header component. The only
  * method necessary to implement is {@link #newCell(IModel)}.
@@ -19,7 +20,10 @@ import com.inmethod.grid.column.editable.EditablePropertyColumn;
  * @see EditablePropertyColumn
  * @author Matej Knopp
  */
-public abstract class AbstractLightWeightColumn extends AbstractColumn {
+public abstract class AbstractLightWeightColumn<M, I> extends AbstractColumn<M, I>
+{
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Creates instance with specified column id, header model and sort property.
@@ -32,7 +36,9 @@ public abstract class AbstractLightWeightColumn extends AbstractColumn {
 	 *            optional string that will be returned by {@link ISortState} to indicate that the
 	 *            column is being sorted
 	 */
-	public AbstractLightWeightColumn(String columnId, IModel headerModel, String sortProperty) {
+	public AbstractLightWeightColumn(String columnId, IModel<String> headerModel,
+		String sortProperty)
+	{
 		super(columnId, headerModel, sortProperty);
 	}
 
@@ -45,7 +51,8 @@ public abstract class AbstractLightWeightColumn extends AbstractColumn {
 	 *            model for column title
 	 */
 
-	public AbstractLightWeightColumn(String columnId, IModel headerModel) {
+	public AbstractLightWeightColumn(String columnId, IModel<String> headerModel)
+	{
 		super(columnId, headerModel);
 	}
 
@@ -53,7 +60,8 @@ public abstract class AbstractLightWeightColumn extends AbstractColumn {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isLightWeight(IModel rowModel) {
+	public boolean isLightWeight(IModel<I> rowModel)
+	{
 		return true;
 	}
 
@@ -61,13 +69,14 @@ public abstract class AbstractLightWeightColumn extends AbstractColumn {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public abstract IRenderable newCell(IModel rowModel);
+	public abstract IRenderable<I> newCell(IModel<I> rowModel);
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Component newCell(WebMarkupContainer parent, String componentId, IModel rowModel) {
+	public Component newCell(WebMarkupContainer parent, String componentId, IModel<I> rowModel)
+	{
 		return null;
 	}
 }

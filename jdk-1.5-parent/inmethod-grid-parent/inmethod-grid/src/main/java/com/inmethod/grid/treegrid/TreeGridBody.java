@@ -2,6 +2,9 @@ package com.inmethod.grid.treegrid;
 
 import java.util.Collection;
 
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeNode;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
@@ -19,7 +22,8 @@ import com.inmethod.grid.common.AttachPrelightBehavior;
  * 
  * @author Matej Knopp
  */
-public abstract class TreeGridBody extends AbstractTree {
+public abstract class TreeGridBody<T extends TreeModel, I extends TreeNode> extends AbstractTree
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,35 +34,44 @@ public abstract class TreeGridBody extends AbstractTree {
 	 *            component id
 	 * @param model
 	 */
-	public TreeGridBody(String id, IModel model) {
+	public TreeGridBody(String id, IModel<T> model)
+	{
 		super(id, model);
 		setRenderBodyOnly(true);
 	}
 
 	@Override
-	protected void populateTreeItem(final WebMarkupContainer item, int level) {
-		AbstractGridRow row = new AbstractTreeGridRow("item", item.getDefaultModel(), level) {
+	protected void populateTreeItem(final WebMarkupContainer item, int level)
+	{
+		AbstractGridRow<T, I> row = new AbstractTreeGridRow<T, I>("item",
+			(IModel<I>)item.getDefaultModel(), level)
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Collection<IGridColumn> getActiveColumns() {
+			protected Collection<IGridColumn<T, I>> getActiveColumns()
+			{
 				return TreeGridBody.this.getActiveColumns();
 			}
 
 			@Override
-			protected int getRowNumber() {
+			protected int getRowNumber()
+			{
 				return -1;
 			}
 		};
 		item.add(row);
-		item.add(new Behavior() {
+		item.add(new Behavior()
+		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onComponentTag(Component component, ComponentTag tag) {
+			public void onComponentTag(Component component, ComponentTag tag)
+			{
 				CharSequence klass = "imxt-want-prelight imxt-grid-row";
-				if (getTreeState().isNodeSelected(item.getDefaultModelObject())) {
+				if (getTreeState().isNodeSelected(item.getDefaultModelObject()))
+				{
 					klass = klass + " imxt-selected";
 				}
 				tag.put("class", klass);
@@ -70,13 +83,17 @@ public abstract class TreeGridBody extends AbstractTree {
 	}
 
 	@Override
-	protected void addComponent(AjaxRequestTarget target, Component component) {
-		if (component == this) {
+	protected void addComponent(AjaxRequestTarget target, Component component)
+	{
+		if (component == this)
+		{
 			// can't refresh this component directly because of setRenderBodyOnly(true) that's set
 			// in
 			// constructor
 			target.add(findParent(TreeGrid.class));
-		} else {
+		}
+		else
+		{
 			super.addComponent(target, component);
 		}
 	}
@@ -85,7 +102,8 @@ public abstract class TreeGridBody extends AbstractTree {
 	 * @see org.apache.wicket.markup.html.tree.AbstractTree#isForceRebuildOnSelectionChange()
 	 */
 	@Override
-	protected boolean isForceRebuildOnSelectionChange() {
+	protected boolean isForceRebuildOnSelectionChange()
+	{
 		return false;
 	}
 
@@ -93,8 +111,8 @@ public abstract class TreeGridBody extends AbstractTree {
 	{
 		return super.isNodeExpanded(object);
 	}
-	
-	protected abstract Collection<IGridColumn> getActiveColumns();
+
+	protected abstract Collection<IGridColumn<T, I>> getActiveColumns();
 
 	protected abstract void rowPopulated(WebMarkupContainer item);
 }

@@ -28,34 +28,38 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 /**
  * implements {@link ContactDao}.
- *
+ * 
  * @author igor
  */
-public class IbatisContactDao extends SqlMapClientDaoSupport implements
-		ContactDao {
+public class IbatisContactDao extends SqlMapClientDaoSupport implements ContactDao
+{
 
 	/**
 	 * Load a {@link Contact} from the DB, given it's <tt>id</tt> .
-	 *
+	 * 
 	 * @param id
 	 *            The id of the Contact to load.
 	 * @return Contact
 	 */
-	public Contact load(long id) throws DataAccessException {
-		return (Contact) getSqlMapClientTemplate().queryForObject("getContact",
-				new Long(id));
+	public Contact load(long id) throws DataAccessException
+	{
+		return (Contact)getSqlMapClientTemplate().queryForObject("getContact", new Long(id));
 	}
 
 	/**
 	 * Save the contact to the DB
-	 *
+	 * 
 	 * @param contact
 	 * @return persistent instance of contact
 	 */
-	public Contact save(Contact contact) {
-		if (contact.getId() == 0) {
+	public Contact save(Contact contact)
+	{
+		if (contact.getId() == 0)
+		{
 			getSqlMapClientTemplate().insert("insertContact", contact);
-		} else {
+		}
+		else
+		{
 			getSqlMapClientTemplate().update("updateContact", contact);
 		}
 		return contact;
@@ -63,42 +67,44 @@ public class IbatisContactDao extends SqlMapClientDaoSupport implements
 
 	/**
 	 * Delete a {@link Contact} from the DB, given it's <tt>id</tt>.
-	 *
+	 * 
 	 * @param id
 	 *            The id of the Contact to delete.
 	 */
-	public void delete(long id) {
+	public void delete(long id)
+	{
 		getSqlMapClientTemplate().delete("deleteContact", new Long(id));
 	}
 
 	/**
 	 * Query the DB, using the supplied query details.
-	 *
+	 * 
 	 * @param qp
 	 *            Query Paramaters to use.
-	 *
+	 * 
 	 * @return The results of the query as an Iterator.
 	 */
-	@SuppressWarnings("unchecked")
-	public Iterator<Contact> find(final QueryParam qp, Contact filter) {
+	public Iterator<Contact> find(final QueryParam qp, Contact filter)
+	{
 		Map<String, String> map = createMap(filter);
 		map.put("sort", qp.getSort());
 		map.put("sortasc", (qp.isSortAsc() ? " asc" : " desc"));
-		List list = getSqlMapClientTemplate().queryForList("getContactList",
-				map, qp.getFirst(), qp.getCount());
+		@SuppressWarnings("unchecked")
+		List<Contact> list = getSqlMapClientTemplate().queryForList("getContactList", map,
+			qp.getFirst(), qp.getCount());
 		return list.listIterator();
 	}
 
 	/**
 	 * Return the number of Configs in the DB.
-	 *
+	 * 
 	 * @return count
 	 */
-	public int count(Contact filter) {
+	public int count(Contact filter)
+	{
 		Map<String, String> map = createMap(filter);
 
-		Integer count = (Integer) getSqlMapClientTemplate().queryForObject(
-				"getContactCount", map);
+		Integer count = (Integer)getSqlMapClientTemplate().queryForObject("getContactCount", map);
 		return count.intValue();
 	}
 
@@ -106,32 +112,28 @@ public class IbatisContactDao extends SqlMapClientDaoSupport implements
 	 * Returns a list of unique last names
 	 */
 	@SuppressWarnings("unchecked")
-	public List<String> getUniqueLastNames() {
-		return getSqlMapClientTemplate().queryForList("getUniqueLastNames",
-				null);
+	public List<String> getUniqueLastNames()
+	{
+		return getSqlMapClientTemplate().queryForList("getUniqueLastNames", null);
 	}
 
 	/**
-	 *
+	 * 
 	 * @param filter
 	 * @return
 	 */
-	private Map<String, String> createMap(Contact filter) {
+	private Map<String, String> createMap(Contact filter)
+	{
 		String firstname = filter.getFirstname();
 		String lastname = filter.getLastname();
 		String email = filter.getEmail();
 		String phone = filter.getPhone();
 
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("firstname", firstname == null ? null : "%"
-				+ firstname.toUpperCase() + "%");
+		map.put("firstname", firstname == null ? null : "%" + firstname.toUpperCase() + "%");
 		map.put("lastname", lastname); // Selected via drop-down
-		map
-				.put("email", email == null ? null : "%" + email.toUpperCase()
-						+ "%");
-		map
-				.put("phone", phone == null ? null : "%" + phone.toUpperCase()
-						+ "%");
+		map.put("email", email == null ? null : "%" + email.toUpperCase() + "%");
+		map.put("phone", phone == null ? null : "%" + phone.toUpperCase() + "%");
 		return map;
 	}
 }

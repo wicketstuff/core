@@ -28,19 +28,22 @@ import org.wicketstuff.console.engine.Lang;
 
 /**
  * Testing {@link ScriptTemplateUtils}.
- *
+ * 
  * @author cretzel
  */
-public class ScriptTemplatesUtilsTest {
+public class ScriptTemplatesUtilsTest
+{
 
 	private static final String TEST_SCRIPTS_BASE_DIR = "org/wicketstuff/console/scripts/";
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception
+	{
 	}
 
 	@Test
-	public void test_camelCaseSpace() throws Exception {
+	public void test_camelCaseSpace() throws Exception
+	{
 		// Given
 		final String str = "GimmeSomeMo";
 
@@ -52,7 +55,8 @@ public class ScriptTemplatesUtilsTest {
 	}
 
 	@Test
-	public void test_camelCaseSpace_Numbers() throws Exception {
+	public void test_camelCaseSpace_Numbers() throws Exception
+	{
 		// Given
 		final String str = "GimmeSome4Mo";
 
@@ -64,54 +68,53 @@ public class ScriptTemplatesUtilsTest {
 	}
 
 	@Test
-	public void test_camelCaseSpaceFilename() throws Exception {
+	public void test_camelCaseSpaceFilename() throws Exception
+	{
 		// Given
 		final String filename = "GimmeSomeMo.Mo.groovy";
 
 		// When
-		final String result = ScriptTemplateUtils
-				.camelCaseSpaceFilename(filename);
+		final String result = ScriptTemplateUtils.camelCaseSpaceFilename(filename);
 
 		// Then
 		assertEquals("Gimme Some Mo. Mo", result);
 	}
 
 	@Test
-	public void test_readTemplateFromFile() throws Exception {
+	public void test_readTemplateFromFile() throws Exception
+	{
 		// Given
 		final File file = new File(getClass().getClassLoader()
-				.getResource(TEST_SCRIPTS_BASE_DIR + "groovy/Test01.groovy")
-				.toURI());
+			.getResource(TEST_SCRIPTS_BASE_DIR + "groovy/Test01.groovy")
+			.toURI());
 
 		// When
-		final ScriptTemplate template = ScriptTemplateUtils
-				.readTemplateFromFile(Lang.GROOVY, file);
+		final ScriptTemplate template = ScriptTemplateUtils.readTemplateFromFile(Lang.GROOVY, file);
 
 		// Then
 		assertNotNull(template);
 		assertEquals("println \"foo\"", template.script);
 	}
 
-    @Test
-    public void test_readTemplateFromClasspath() throws Exception {
-
-        // When
-        final ScriptTemplate template = ScriptTemplateUtils
-                .readTemplateFromClasspath(getClass().getClassLoader(),
-                        TEST_SCRIPTS_BASE_DIR + "clojure/", "Test01",
-                        Lang.CLOJURE);
-
-        // Then
-        assertNotNull(template);
-    }
-
-	@Test(expected = RuntimeException.class)
-	public void test_readTemplateFromClasspath_NotFound() throws Exception {
+	@Test
+	public void test_readTemplateFromClasspath() throws Exception
+	{
 
 		// When
-		ScriptTemplateUtils.readTemplateFromClasspath(getClass()
-				.getClassLoader(), TEST_SCRIPTS_BASE_DIR + "clojure/",
-				"Test02", Lang.CLOJURE);
+		final ScriptTemplate template = ScriptTemplateUtils.readTemplateFromClasspath(
+			getClass().getClassLoader(), TEST_SCRIPTS_BASE_DIR + "clojure/", "Test01", Lang.CLOJURE);
+
+		// Then
+		assertNotNull(template);
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void test_readTemplateFromClasspath_NotFound() throws Exception
+	{
+
+		// When
+		ScriptTemplateUtils.readTemplateFromClasspath(getClass().getClassLoader(),
+			TEST_SCRIPTS_BASE_DIR + "clojure/", "Test02", Lang.CLOJURE);
 
 		// Then RuntimeException
 

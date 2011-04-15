@@ -7,7 +7,8 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 /**
  * Homepage
  */
-public class HomePage extends WebPage {
+public class HomePage extends WebPage
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -19,11 +20,12 @@ public class HomePage extends WebPage {
 	 * @param parameters
 	 *            Page parameters
 	 */
-	public HomePage(final PageParameters parameters) {
+	public HomePage(final PageParameters parameters)
+	{
 
 		// Add the simplest type of label
 		add(new Label("message",
-				"If you see this message wicket is properly configured and running"));
+			"If you see this message wicket is properly configured and running"));
 
 	}
 }

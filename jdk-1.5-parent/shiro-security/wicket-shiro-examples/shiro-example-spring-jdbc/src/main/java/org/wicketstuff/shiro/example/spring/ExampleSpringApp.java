@@ -40,15 +40,17 @@ public class ExampleSpringApp extends ExampleApplication
 		return WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
 	}
 
-  @Override
-  public Component getExampleInfoPanel(String id) {
-//    return new Label(id, "woohoo!");
-    return new ExampleInfoPanel( id );
-  }
-  
-  @Override
-	public Component getAuthHeaderPanel(String id) {
-	  return new SimpleAuthHeader(id, LoginPage.class);
+	@Override
+	public Component getExampleInfoPanel(String id)
+	{
+// return new Label(id, "woohoo!");
+		return new ExampleInfoPanel(id);
+	}
+
+	@Override
+	public Component getAuthHeaderPanel(String id)
+	{
+		return new SimpleAuthHeader(id, LoginPage.class);
 	}
 
 }

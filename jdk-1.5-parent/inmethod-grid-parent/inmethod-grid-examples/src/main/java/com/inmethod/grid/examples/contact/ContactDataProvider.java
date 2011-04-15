@@ -28,7 +28,7 @@ import org.apache.wicket.model.IModel;
  * @author Igor Vaynberg
  * 
  */
-public class ContactDataProvider implements IDataProvider
+public class ContactDataProvider implements IDataProvider<Contact>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -63,9 +63,9 @@ public class ContactDataProvider implements IDataProvider
 	 * 
 	 * @see org.apache.wicket.markup.repeater.data.IDataProvider#model(java.lang.Object)
 	 */
-	public IModel model(Object object)
+	public IModel<Contact> model(Contact object)
 	{
-		return new DetachableContactModel((Contact)object);
+		return new DetachableContactModel(object);
 	}
 
 	/**

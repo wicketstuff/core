@@ -15,99 +15,107 @@
  */
 package org.wicketstuff.datatable_autocomplete.table;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;
 
 
 /**
  * @author mocleiri
- *
+ * 
  */
 public class DefaultSelectableTableViewPanelButtonProviderImpl implements
-		ISelectableTableViewPanelButtonProvider {
+	ISelectableTableViewPanelButtonProvider
+{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3162806247349691580L;
-	private static final Logger	log	= LoggerFactory
-											.getLogger(DefaultSelectableTableViewPanelButtonProviderImpl.class);
-	private String	buttonLabelText;
-	private IFormOnSubmitAction<?>	action = null;
-	private final boolean	clearSelectedRowOnAction;
-	private final boolean	requireSelectedRow;
+	private String buttonLabelText;
+	private IFormOnSubmitAction action = null;
+	private final boolean clearSelectedRowOnAction;
+	private final boolean requireSelectedRow;
 	private String cssClassName;
 
 	/**
 	 * 
 	 */
-	public DefaultSelectableTableViewPanelButtonProviderImpl(String buttonLabelText, IFormOnSubmitAction<?> action, boolean clearSelectedRowOnAction, boolean requireSelectedRow) {
+	public DefaultSelectableTableViewPanelButtonProviderImpl(String buttonLabelText,
+		IFormOnSubmitAction action, boolean clearSelectedRowOnAction, boolean requireSelectedRow)
+	{
 		this.buttonLabelText = buttonLabelText;
 		this.action = action;
 		this.clearSelectedRowOnAction = clearSelectedRowOnAction;
 		this.requireSelectedRow = requireSelectedRow;
 
 	}
-	
-	public DefaultSelectableTableViewPanelButtonProviderImpl(String buttonLabelText, boolean clearSelectedRowOnAction, boolean requireSelectedRow) {
+
+	public DefaultSelectableTableViewPanelButtonProviderImpl(String buttonLabelText,
+		boolean clearSelectedRowOnAction, boolean requireSelectedRow)
+	{
 		this.buttonLabelText = buttonLabelText;
 		this.clearSelectedRowOnAction = clearSelectedRowOnAction;
 		this.requireSelectedRow = requireSelectedRow;
 
 	}
 
-	
-	
-	
+
 	/**
-	 * @param buttonLabelText the buttonLabelText to set
+	 * @param buttonLabelText
+	 *            the buttonLabelText to set
 	 */
-	public void setButtonLabelText(String buttonLabelText) {
-	
+	public void setButtonLabelText(String buttonLabelText)
+	{
+
 		this.buttonLabelText = buttonLabelText;
 	}
 
 	/**
-	 * @param action the action to set
+	 * @param action
+	 *            the action to set
 	 */
-	public void setAction(IFormOnSubmitAction<?> action) {
-	
+	public void setAction(IFormOnSubmitAction action)
+	{
+
 		this.action = action;
 	}
 
-	public IFormOnSubmitAction<?> getButtonAction() {
+	public IFormOnSubmitAction getButtonAction()
+	{
 
 		return action;
 	}
 
-	public String getButtonLabelText(String displayEntityName) {
+	public String getButtonLabelText(String displayEntityName)
+	{
 
 		return buttonLabelText + " " + displayEntityName;
 	}
 
-	public boolean isClearSelectedRowOnAction() {
+	public boolean isClearSelectedRowOnAction()
+	{
 
 		return clearSelectedRowOnAction;
 	}
 
-	public boolean isSelectedRowRequired() {
+	public boolean isSelectedRowRequired()
+	{
 
 		return requireSelectedRow;
 	}
 
-	public String getCSSClassName() {
+	public String getCSSClassName()
+	{
 		return cssClassName;
 	}
 
 	/**
-	 * @param cssClassName the cssClassName to set
+	 * @param cssClassName
+	 *            the cssClassName to set
 	 */
-	public void setCssClassName(String cssClassName) {
+	public void setCssClassName(String cssClassName)
+	{
 		this.cssClassName = cssClassName;
 	}
-	
-	
-	
-	
+
+
 }

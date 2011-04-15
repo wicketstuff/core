@@ -23,10 +23,11 @@ import java.util.List;
 /**
  * @author mocleiri
  * 
- * A trie match using the prefix search.
- *
+ *         A trie match using the prefix search.
+ * 
  */
-public class PrefixTrieMatch<C> extends TrieMatch<C> {
+public class PrefixTrieMatch<C> extends TrieMatch<C>
+{
 
 	/**
 	 * 
@@ -34,37 +35,43 @@ public class PrefixTrieMatch<C> extends TrieMatch<C> {
 	private static final long serialVersionUID = 1L;
 	// the node that the prefix was matched to
 	private TrieNode<C> node;
-	
+
 	/**
 	 * @param node
 	 */
-	public PrefixTrieMatch(String matched, ITrieFilter<C>nodeFilter, TrieNode<C> node) {
+	public PrefixTrieMatch(String matched, ITrieFilter<C> nodeFilter, TrieNode<C> node)
+	{
 		super(matched, Type.PREFIX_MATCH, nodeFilter);
 		this.node = node;
 	}
 
-	
+
 	/**
 	 * @return the node
 	 */
-	public TrieNode<C> getNode() {
-	
+	public TrieNode<C> getNode()
+	{
+
 		return this.node;
 	}
 
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wicketstuff.datatable_autocomplete.trie.TrieMatch#getWordList(int)
 	 */
 	@Override
-	public List<C> getWordList(int limit) {
-		
-		List<C> wordList = new LinkedList<C>();;
-		
+	public List<C> getWordList(int limit)
+	{
+
+		List<C> wordList = new LinkedList<C>();
+		;
+
 		this.node.buildWordList(wordList, nodeFilter, limit);
-		
+
 		return wordList;
 	}
-	
-	
+
+
 }

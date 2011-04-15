@@ -21,7 +21,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 @SuppressWarnings("serial")
-public class MyGroup implements Serializable {
-    public String label;
-    public List<MyItem> items = new LinkedList<MyItem>();
+public class MyGroup implements Serializable
+{
+	public String label;
+	public List<MyItem> items = new LinkedList<MyItem>();
 }

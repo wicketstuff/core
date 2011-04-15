@@ -17,7 +17,7 @@
 package org.wicketstuff.mbeanview;
 
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Hashtable;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -27,56 +27,77 @@ import javax.management.ObjectName;
 
 /**
  * @author Pedro Henrique Oliveira dos Santos
- *
+ * 
  */
-public class DataUtil {
+public class DataUtil
+{
 
-    public static Object tryParseToType(Object object, Class clazz) {
-	try {
-	    return clazz.getConstructor(new Class[] { String.class })
-		    .newInstance(object.toString());
-	} catch (Exception e) {
-	    return object;
+	public static Object tryParseToType(Object object, Class<?> clazz)
+	{
+		try
+		{
+			return clazz.getConstructor(new Class[] { String.class })
+				.newInstance(object.toString());
+		}
+		catch (Exception e)
+		{
+			return object;
+		}
 	}
-    }
 
-    public static Class getClassFromInfo(MBeanAttributeInfo attributeInfo)
-	    throws ClassNotFoundException {
-	return getClassFromInfo(attributeInfo.getType());
-    }
-
-    public static Class getClassFromInfo(String jmxType) throws ClassNotFoundException {
-	Class clazz = null;
-	if ("boolean".equals(jmxType)) {
-	    clazz = Boolean.class;
-	} else if ("int".equals(jmxType)) {
-	    clazz = Integer.class;
-	} else if ("double".equals(jmxType)) {
-	    clazz = Double.class;
-	} else if ("long".equals(jmxType)) {
-	    clazz = Long.class;
-	} else {
-	    clazz = Class.forName(jmxType);
+	public static Class<?> getClassFromInfo(MBeanAttributeInfo attributeInfo)
+		throws ClassNotFoundException
+	{
+		return getClassFromInfo(attributeInfo.getType());
 	}
-	return clazz;
-    }
 
-    public static Object getCompatibleData(Object object, MBeanParameterInfo beanParameterInfo)
-	    throws ClassNotFoundException {
-	return tryParseToType(object, getClassFromInfo(beanParameterInfo.getType()));
-    }
+	public static Class<?> getClassFromInfo(String jmxType) throws ClassNotFoundException
+	{
+		Class<?> clazz = null;
+		if ("boolean".equals(jmxType))
+		{
+			clazz = Boolean.class;
+		}
+		else if ("int".equals(jmxType))
+		{
+			clazz = Integer.class;
+		}
+		else if ("double".equals(jmxType))
+		{
+			clazz = Double.class;
+		}
+		else if ("long".equals(jmxType))
+		{
+			clazz = Long.class;
+		}
+		else
+		{
+			clazz = Class.forName(jmxType);
+		}
+		return clazz;
+	}
 
-    public static Set<Set<String>> parseToPropsSet(Set<ObjectName> domainNames) {
-        Set result = new HashSet();
-        for (Iterator i = domainNames.iterator(); i.hasNext();) {
-            ObjectName names = (ObjectName) i.next();
-            Set<String> propValue = new HashSet<String>();
-            for (Iterator it = names.getKeyPropertyList().entrySet().iterator(); it.hasNext();) {
-        	Entry<String, String> entry = (Entry<String, String>) it.next();
-        	propValue.add(entry.getKey() + "=" + entry.getValue());
-            }
-            result.add(propValue);
-        }
-        return result;
-    }
+	public static Object getCompatibleData(Object object, MBeanParameterInfo beanParameterInfo)
+		throws ClassNotFoundException
+	{
+		return tryParseToType(object, getClassFromInfo(beanParameterInfo.getType()));
+	}
+
+	public static Set<Set<String>> parseToPropsSet(Set<ObjectName> domainNames)
+	{
+		Set<Set<String>> result = new HashSet<Set<String>>();
+		for (Object element : domainNames)
+		{
+			ObjectName names = (ObjectName)element;
+			Set<String> propValue = new HashSet<String>();
+			@SuppressWarnings("unchecked")
+			Hashtable<String, String> propertyList = names.getKeyPropertyList();
+			for (Entry<String, String> entry : propertyList.entrySet())
+			{
+				propValue.add(entry.getKey() + "=" + entry.getValue());
+			}
+			result.add(propValue);
+		}
+		return result;
+	}
 }

@@ -23,20 +23,17 @@ import org.wicketstuff.jslibraries.util.Assert;
 public class VersionDescriptor {
 
 	private final Library mLibrary;
-	private final Integer[] mVersions;
-	private final boolean mStopOnFirstMatch;
+	private final boolean mExact;
+	private Version mVersion;
 
-	private Version mMatch;
-
-	private VersionDescriptor(Library library, boolean stopOnFirstMatch,
-			Integer... versions) {
+	private VersionDescriptor(Library library, boolean exact, Version version) {
 
 		Assert.parameterNotNull(library, "library");
-		Assert.parameterNotNull(versions, "versions");
+		Assert.parameterNotNull(version, "version");
 
 		mLibrary = library;
-		mVersions = versions;
-		mStopOnFirstMatch = stopOnFirstMatch;
+		mVersion = version;
+		mExact = exact;
 	}
 
 	public Library getLibrary() {
@@ -46,59 +43,42 @@ public class VersionDescriptor {
 	public Version getVersion(final Provider provider) {
 		Assert.parameterNotNull(provider, "provider");
 
+		Version mMatch = null;
+
 		for (Version version : mLibrary.getVersions(provider)) {
-			if (matches(version)) {
-				mMatch = version;
-				if (mStopOnFirstMatch) {
+			if (mExact) {
+				if (version.equals(mVersion)) {
+					mMatch = version;
 					break;
+				}
+			} else {
+				if (version.matches(mVersion)) {
+					mMatch = version;
+					// continue to look for something better
 				}
 			}
 		}
+
 		return mMatch;
-	}
-
-	private boolean matches(Version version) {
-		Assert.parameterNotNull(version, "version");
-
-		if (mVersions.length > version.getNumbers().length) {
-			// we're more specific - don't match
-			return false;
-		}
-		for (int i = 0; i < mVersions.length; i++) {
-			if (mVersions[i] != null
-					&& !mVersions[i].equals(version.getNumbers()[i])) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 	public static VersionDescriptor alwaysLatest(Library lib) {
 		return alwaysLatestOfVersion(lib, new int[0]);
 	}
 
-	public static VersionDescriptor exactVersion(Library lib, int... version) {
+	public static VersionDescriptor exactVersion(Library lib, int... numbers) {
 
 		Assert.parameterNotNull(lib, "lib");
 
-		Integer[] nums = new Integer[version.length];
-		for (int i = 0; i < version.length; i++) {
-			nums[i] = version[i];
-		}
-		return new VersionDescriptor(lib, true, nums);
+		return new VersionDescriptor(lib, true, new Version(numbers));
 	}
 
 	public static VersionDescriptor alwaysLatestOfVersion(Library lib,
-			int... baseVersion) {
+			int... numbers) {
 
 		Assert.parameterNotNull(lib, "lib");
 
-		Integer[] nums = new Integer[lib
-				.getMaxVersionDepth(LocalProvider.DEFAULT)];
-		for (int i = 0; i < nums.length; i++) {
-			nums[i] = i < baseVersion.length ? baseVersion[i] : null;
-		}
-		return new VersionDescriptor(lib, false, nums);
+		return new VersionDescriptor(lib, false, new Version(numbers));
 	}
 
 	@Override
@@ -107,7 +87,6 @@ public class VersionDescriptor {
 		int result = 1;
 		result = prime * result
 				+ ((mLibrary == null) ? 0 : mLibrary.hashCode());
-		result = prime * result + ((mMatch == null) ? 0 : mMatch.hashCode());
 		return result;
 	}
 
@@ -128,13 +107,6 @@ public class VersionDescriptor {
 				return false;
 			}
 		} else if (!mLibrary.equals(other.mLibrary)) {
-			return false;
-		}
-		if (mMatch == null) {
-			if (other.mMatch != null) {
-				return false;
-			}
-		} else if (!mMatch.equals(other.mMatch)) {
 			return false;
 		}
 		return true;

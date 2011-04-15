@@ -70,21 +70,4 @@ public enum Library {
 		}
 		return sortedSet;
 	}
-
-	@Deprecated
-	public String getLibraryName() {
-		return LocalProvider.DEFAULT.getLocalFileName(this);
-	}
-
-	int getMaxVersionDepth(LocalProvider provider) {
-		Assert.parameterNotNull(provider, "provider");
-
-		int depth = 0;
-		for (Version version : getVersions(provider)) {
-			depth = version.getNumbers().length > depth ? version.getNumbers().length
-					: depth;
-		}
-		return depth;
-	}
-
 }

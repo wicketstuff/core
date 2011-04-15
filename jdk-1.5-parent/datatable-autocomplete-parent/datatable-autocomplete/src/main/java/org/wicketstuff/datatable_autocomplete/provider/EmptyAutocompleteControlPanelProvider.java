@@ -22,10 +22,11 @@ import org.wicketstuff.datatable_autocomplete.panel.IAutocompleteControlPanelPro
 
 /**
  * @author mocleiri
- *
+ * 
  */
-public class EmptyAutocompleteControlPanelProvider implements
-		IAutocompleteControlPanelProvider, IClusterable {
+public class EmptyAutocompleteControlPanelProvider implements IAutocompleteControlPanelProvider,
+	IClusterable
+{
 
 	/**
 	 * 
@@ -35,14 +36,20 @@ public class EmptyAutocompleteControlPanelProvider implements
 	/**
 	 * 
 	 */
-	public EmptyAutocompleteControlPanelProvider() {
+	public EmptyAutocompleteControlPanelProvider()
+	{
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wicketstuff.datatable_autocomplete.panel.IAutocompleteControlPanelProvider#getPanel(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.wicketstuff.datatable_autocomplete.panel.IAutocompleteControlPanelProvider#getPanel(java
+	 * .lang.String)
 	 */
-	public Component getPanel(Component updateOnChangeComponent, String controlPanelId) {
+	public Component getPanel(Component updateOnChangeComponent, String controlPanelId)
+	{
 		return new EmptyPanel(controlPanelId);
 	}
 

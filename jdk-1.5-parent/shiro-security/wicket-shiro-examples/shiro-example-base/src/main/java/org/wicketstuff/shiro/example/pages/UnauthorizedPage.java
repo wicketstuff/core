@@ -20,6 +20,8 @@ package org.wicketstuff.shiro.example.pages;
 public class UnauthorizedPage extends BasePage
 {
 
+	private static final long serialVersionUID = 1L;
+
 	public UnauthorizedPage()
 	{
 

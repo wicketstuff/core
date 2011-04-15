@@ -15,7 +15,8 @@ import com.inmethod.grid.IGridSortState;
  * 
  * @author Matej Knopp
  */
-public class GridSortState implements IGridSortState, IClusterable {
+public class GridSortState implements IGridSortState, IClusterable
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,7 +25,8 @@ public class GridSortState implements IGridSortState, IClusterable {
 	 * 
 	 * @author Matej Knopp
 	 */
-	private class SortStateColumn implements ISortStateColumn, IClusterable {
+	private class SortStateColumn implements ISortStateColumn, IClusterable
+	{
 
 		private static final long serialVersionUID = 1L;
 
@@ -32,7 +34,8 @@ public class GridSortState implements IGridSortState, IClusterable {
 
 		private final IGridSortState.Direction direction;
 
-		private SortStateColumn(String propertyName, IGridSortState.Direction direction) {
+		private SortStateColumn(String propertyName, IGridSortState.Direction direction)
+		{
 			this.propertyName = propertyName;
 			this.direction = direction;
 		}
@@ -40,14 +43,16 @@ public class GridSortState implements IGridSortState, IClusterable {
 		/**
 		 * {@inheritDoc}
 		 */
-		public String getPropertyName() {
+		public String getPropertyName()
+		{
 			return propertyName;
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
-		public IGridSortState.Direction getDirection() {
+		public IGridSortState.Direction getDirection()
+		{
 			return direction;
 		}
 
@@ -61,10 +66,13 @@ public class GridSortState implements IGridSortState, IClusterable {
 	 * @param propertyName
 	 * @return
 	 */
-	private int getSortStateColumnIndex(String propertyName) {
+	private int getSortStateColumnIndex(String propertyName)
+	{
 		int i = 0;
-		for (ISortStateColumn column : columns) {
-			if (column.getPropertyName().equals(propertyName)) {
+		for (ISortStateColumn column : columns)
+		{
+			if (column.getPropertyName().equals(propertyName))
+			{
 				return i;
 			}
 			++i;
@@ -75,7 +83,8 @@ public class GridSortState implements IGridSortState, IClusterable {
 	/**
 	 * Resets the entire sort state.
 	 */
-	public void clearSortState() {
+	public void clearSortState()
+	{
 		columns.clear();
 	}
 
@@ -84,7 +93,8 @@ public class GridSortState implements IGridSortState, IClusterable {
 	 * 
 	 * @param propertyName
 	 */
-	public void clearSortState(String propertyName) {
+	public void clearSortState(String propertyName)
+	{
 		setSortState(propertyName, null);
 	}
 
@@ -93,14 +103,18 @@ public class GridSortState implements IGridSortState, IClusterable {
 	 * such entry.
 	 * 
 	 * @param propertyName
-	 * @return {@link IGridSortState.ISortStateColumn} for given property or null if there is no such
-	 *         entry
+	 * @return {@link IGridSortState.ISortStateColumn} for given property or null if there is no
+	 *         such entry
 	 */
-	public IGridSortState.ISortStateColumn getSortStateForProperty(String propertyName) {
+	public IGridSortState.ISortStateColumn getSortStateForProperty(String propertyName)
+	{
 		int i = getSortStateColumnIndex(propertyName);
-		if (i != -1) {
+		if (i != -1)
+		{
 			return columns.get(i);
-		} else {
+		}
+		else
+		{
 			return null;
 		}
 	}
@@ -112,28 +126,34 @@ public class GridSortState implements IGridSortState, IClusterable {
 	 * @param direction
 	 * 
 	 */
-	public void setSortState(String propertyName, IGridSortState.Direction direction) {
+	public void setSortState(String propertyName, IGridSortState.Direction direction)
+	{
 
-		if (Strings.isEmpty(propertyName)) {
+		if (Strings.isEmpty(propertyName))
+		{
 			throw new IllegalArgumentException("'propertyName' must be a non-empty string.");
 		}
 
 		int index = getSortStateColumnIndex(propertyName);
-		if (index != -1) {
+		if (index != -1)
+		{
 			columns.remove(index);
 		}
 
-		if (direction != null) {
+		if (direction != null)
+		{
 			SortStateColumn column = new SortStateColumn(propertyName, direction);
 			columns.add(0, column);
 		}
 	};
-	
+
 	/**
 	 * Returns all {@link IGridSortState.ISortStateColumn} instances in this state.
+	 * 
 	 * @return all {@link IGridSortState.ISortStateColumn} instances in this state
 	 */
-	public List<ISortStateColumn> getColumns() {
+	public List<ISortStateColumn> getColumns()
+	{
 		return columns;
 	}
 }

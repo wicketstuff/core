@@ -27,8 +27,11 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 public abstract class InfoWindowCloseListener extends GEventListenerBehavior
 {
 
+	private static final long serialVersionUID = 1L;
+
 	@Override
-	protected String getEvent() {
+	protected String getEvent()
+	{
 		return "infowindowclose";
 	}
 

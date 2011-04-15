@@ -13,7 +13,8 @@ import wicket.contrib.gmap.GMapHeaderContributor;
 
 /**
  */
-public abstract class GClientGeocoder extends AjaxEventBehavior {
+public abstract class GClientGeocoder extends AjaxEventBehavior
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -27,37 +28,41 @@ public abstract class GClientGeocoder extends AjaxEventBehavior {
 	 * 
 	 * @param event
 	 */
-	public GClientGeocoder(String event, TextField<?> addressField, String key) {
+	public GClientGeocoder(String event, TextField<?> addressField, String key)
+	{
 		super(event);
 
 		this.addressField = addressField;
 		this.addressField.setOutputMarkupId(true);
 
-		this.headerContrib = new GMapHeaderContributor(key);
+		headerContrib = new GMapHeaderContributor(key);
 	}
 
 	@Override
-	public void renderHead(Component c, IHeaderResponse response) {
+	public void renderHead(Component c, IHeaderResponse response)
+	{
 		super.renderHead(c, response);
 		headerContrib.renderHead(c, response);
 	}
 
 	@Override
-	protected void onEvent(AjaxRequestTarget target) {
+	protected void onEvent(AjaxRequestTarget target)
+	{
 		Request request = RequestCycle.get().getRequest();
 
 		IRequestParameters parameters = request.getRequestParameters();
 		onGeoCode(target, parameters.getParameterValue("status").toInt(),
-				parameters.getParameterValue("address").toString(), 
-				GLatLng.parse(parameters.getParameterValue("point").toString()));
+			parameters.getParameterValue("address").toString(),
+			GLatLng.parse(parameters.getParameterValue("point").toString()));
 	}
 
-	public abstract void onGeoCode(AjaxRequestTarget target, int status,
-			String address, GLatLng latLng);
+	public abstract void onGeoCode(AjaxRequestTarget target, int status, String address,
+		GLatLng latLng);
 
 	@Override
-	protected CharSequence generateCallbackScript(CharSequence partialCall) {
-		return "Wicket.geocoder.getLatLng('" + getCallbackUrl() + "', '"
-				+ addressField.getMarkupId() + "');" + "return false;";
+	protected CharSequence generateCallbackScript(CharSequence partialCall)
+	{
+		return "Wicket.geocoder.getLatLng('" + getCallbackUrl() + "', '" +
+			addressField.getMarkupId() + "');" + "return false;";
 	}
 }

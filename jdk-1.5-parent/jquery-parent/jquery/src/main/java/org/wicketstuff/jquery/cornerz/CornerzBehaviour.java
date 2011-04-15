@@ -25,28 +25,37 @@ import org.wicketstuff.jquery.JQueryBehavior;
 /**
  * 
  * @author Edvin Syse <edvin@sysedata.no>
- *
+ * 
  */
-public class CornerzBehaviour extends JQueryBehavior {
-    public static final ResourceReference CORNERZ_JS = new PackageResourceReference(CornerzBehaviour.class, "jquery.cornerz.js");
-    private CornerzOptions options_;
-    
-    public CornerzBehaviour() {
-    	this(new CornerzOptions());
-	}
-    
-    public CornerzBehaviour(CornerzOptions options) {
-    	super();
-    	options_ = options != null ? options : new CornerzOptions();
-    }
-    
-    @Override
-    public void renderHead(Component component, IHeaderResponse response) {
-        super.renderHead(component, response);
-        response.renderJavaScriptReference(CORNERZ_JS);
-    }
+public class CornerzBehaviour extends JQueryBehavior
+{
+	private static final long serialVersionUID = 1L;
+	public static final ResourceReference CORNERZ_JS = new PackageResourceReference(
+		CornerzBehaviour.class, "jquery.cornerz.js");
+	private CornerzOptions options_;
 
-    @Override protected CharSequence getOnReadyScript() {
-    	return "\t$('#" + getComponent().getMarkupId() + "').cornerz(" + options_.toString(false) + ");";
-    }
+	public CornerzBehaviour()
+	{
+		this(new CornerzOptions());
+	}
+
+	public CornerzBehaviour(CornerzOptions options)
+	{
+		super();
+		options_ = options != null ? options : new CornerzOptions();
+	}
+
+	@Override
+	public void renderHead(Component component, IHeaderResponse response)
+	{
+		super.renderHead(component, response);
+		response.renderJavaScriptReference(CORNERZ_JS);
+	}
+
+	@Override
+	protected CharSequence getOnReadyScript()
+	{
+		return "\t$('#" + getComponent().getMarkupId() + "').cornerz(" + options_.toString(false) +
+			");";
+	}
 }

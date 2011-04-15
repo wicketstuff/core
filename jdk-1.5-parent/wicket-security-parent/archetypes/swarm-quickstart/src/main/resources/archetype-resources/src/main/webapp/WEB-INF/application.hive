@@ -1,0 +1,13 @@
+//anonymous principal granted to every authenticated user
+grant
+{
+	//typically the homepage (although secure) is available to all authenticated users
+	permission ${ComponentPermission} "${web}.SecureHomePage", "inherit, render";
+	permission ${ComponentPermission} "${web}.SecureHomePage", "enable";
+};
+//named principal only applies to users that possess this principal
+grant principal ${principal} "something"
+{
+	//grant permissions here, you can use ${ComponentPermission} and ${DataPermission}
+};
+//you can also create new "grant principal" blocks to get a more finegrained authorization

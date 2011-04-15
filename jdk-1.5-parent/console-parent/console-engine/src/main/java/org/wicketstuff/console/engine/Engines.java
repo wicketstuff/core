@@ -22,17 +22,19 @@ package org.wicketstuff.console.engine;
  * 
  * @author cretzel
  */
-public class Engines {
+public class Engines
+{
 
-    public static IScriptEngine create(final Lang lang) {
-        switch (lang) {
-        case GROOVY:
-            return new GroovyEngine();
-        case CLOJURE:
-            return new ClojureEngine();
-        default:
-			throw new UnsupportedOperationException("Unsupported language: "
-					+ lang);
+	public static IScriptEngine create(final Lang lang)
+	{
+		switch (lang)
+		{
+			case GROOVY :
+				return new GroovyEngine();
+			case CLOJURE :
+				return new ClojureEngine();
+			default :
+				throw new UnsupportedOperationException("Unsupported language: " + lang);
 		}
 	}
 }

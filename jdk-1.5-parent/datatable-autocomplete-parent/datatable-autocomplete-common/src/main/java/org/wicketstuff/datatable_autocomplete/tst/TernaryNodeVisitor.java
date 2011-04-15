@@ -20,13 +20,14 @@ import org.apache.wicket.IClusterable;
 
 /**
  * @author Michael O'Cleirigh (michael.ocleirigh@rivulet.ca)
- *
+ * 
  */
-public interface TernaryNodeVisitor<C> extends IClusterable {
+public interface TernaryNodeVisitor<C> extends IClusterable
+{
 
 	public void preVisit();
-	
-	public void visit (TernaryNode<C>node);
-	
+
+	public void visit(TernaryNode<C> node);
+
 	public void postVisit();
 }

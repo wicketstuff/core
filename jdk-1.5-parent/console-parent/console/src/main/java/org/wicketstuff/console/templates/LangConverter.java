@@ -22,24 +22,31 @@ import org.apache.wicket.util.convert.converter.AbstractConverter;
 import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.console.engine.Lang;
 
-final class LangConverter extends AbstractConverter<Lang> {
-    private static final long serialVersionUID = 1L;
+final class LangConverter extends AbstractConverter<Lang>
+{
+	private static final long serialVersionUID = 1L;
 
-    public Lang convertToObject(final String value, final Locale locale) {
-        return Lang.valueOf(value);
-    }
+	public Lang convertToObject(final String value, final Locale locale)
+	{
+		return Lang.valueOf(value);
+	}
 
-    @Override
-    public String convertToString(final Lang value, final Locale locale) {
-        if (value == null) {
-            return null;
-        } else {
-            return Strings.capitalize(value.name().toLowerCase());
-        }
-    }
+	@Override
+	public String convertToString(final Lang value, final Locale locale)
+	{
+		if (value == null)
+		{
+			return null;
+		}
+		else
+		{
+			return Strings.capitalize(value.name().toLowerCase());
+		}
+	}
 
-    @Override
-    protected Class<Lang> getTargetType() {
-        return Lang.class;
-    }
+	@Override
+	protected Class<Lang> getTargetType()
+	{
+		return Lang.class;
+	}
 }

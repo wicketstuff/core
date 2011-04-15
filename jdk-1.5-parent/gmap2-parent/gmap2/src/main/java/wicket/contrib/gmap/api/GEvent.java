@@ -20,7 +20,8 @@ package wicket.contrib.gmap.api;
 
 import java.io.Serializable;
 
-public enum GEvent implements Serializable {
+public enum GEvent implements Serializable
+{
 
 	click, dblclick, dragstart, dragend;
 
@@ -33,13 +34,13 @@ public enum GEvent implements Serializable {
 	public String getJSadd(GOverlay overlay)
 	{
 		return overlay.getParent().getJSinvoke(
-				"addOverlayListener('" + overlay.getId() + "', '" + name() + "')");
+			"addOverlayListener('" + overlay.getId() + "', '" + name() + "')");
 	}
 
 	public String getJSclear(GOverlay overlay)
 	{
 		return overlay.getParent().getJSinvoke(
-				"clearOverlayListeners('" + overlay.getId() + "', '" + name() + "')");
+			"clearOverlayListeners('" + overlay.getId() + "', '" + name() + "')");
 	}
 
 }

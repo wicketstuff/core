@@ -24,7 +24,8 @@ import org.wicketstuff.openlayers.IOpenLayersMap;
  * @author Marin Mandradjiev (marinsm@hotmail.com)
  * 
  */
-public class FeatureStyle implements Serializable {
+public class FeatureStyle implements Serializable
+{
 	private static final long serialVersionUID = 9080128798875425807L;
 
 	private final String extendDefaultStyleName;
@@ -66,44 +67,47 @@ public class FeatureStyle implements Serializable {
 	private String fontWeight = null;
 	private String display = null;
 
-	public FeatureStyle(String extendDefaultStyleName) {
+	public FeatureStyle(String extendDefaultStyleName)
+	{
 		this.extendDefaultStyleName = extendDefaultStyleName;
-		this.extendStyle = null;
+		extendStyle = null;
 	}
 
-	public FeatureStyle(FeatureStyle extendStyle) {
-		this.extendDefaultStyleName = null;
+	public FeatureStyle(FeatureStyle extendStyle)
+	{
+		extendDefaultStyleName = null;
 		this.extendStyle = extendStyle;
 	}
 
-	public String getId() {
+	public String getId()
+	{
 		return String.valueOf(System.identityHashCode(this));
 	}
 
-	private String convert(String name, Object object) {
-		if (object != null) {
-			return "layer_style" + getId() + "." + name + " = " + object
-					+ ";\n";
+	private String convert(String name, Object object)
+	{
+		if (object != null)
+		{
+			return "layer_style" + getId() + "." + name + " = " + object + ";\n";
 		}
 		return "";
 	}
 
-	private String convert(String name, String object) {
-		if (object != null) {
-			return "layer_style" + getId() + "." + name + " = '" + object
-					+ "';\n";
+	private String convert(String name, String object)
+	{
+		if (object != null)
+		{
+			return "layer_style" + getId() + "." + name + " = '" + object + "';\n";
 		}
 		return "";
 	}
 
-	public String getJSAddStyle(IOpenLayersMap map) {
+	public String getJSAddStyle(IOpenLayersMap map)
+	{
 		StringBuffer result = new StringBuffer();
-		result.append("var layer_style" + getId()
-				+ " = OpenLayers.Util.extend({}, ");
-		result
-				.append(extendDefaultStyleName != null ? "OpenLayers.Feature.Vector.style['"
-						+ extendDefaultStyleName + "']"
-						: extendStyle.getJSGetStyleNoLineEnd(map));
+		result.append("var layer_style" + getId() + " = OpenLayers.Util.extend({}, ");
+		result.append(extendDefaultStyleName != null ? "OpenLayers.Feature.Vector.style['" +
+			extendDefaultStyleName + "']" : extendStyle.getJSGetStyleNoLineEnd(map));
 		result.append(");\n");
 		result.append(convert("fill", fill));
 		result.append(convert("fillColor", fillColor));
@@ -128,8 +132,7 @@ public class FeatureStyle implements Serializable {
 		result.append(convert("graphicName", graphicName));
 		result.append(convert("graphicTitle", graphicTitle));
 		result.append(convert("backgroundGraphic", backgroundGraphic));
-		result.append(convert("backgroundGraphicZIndex",
-				backgroundGraphicZIndex));
+		result.append(convert("backgroundGraphicZIndex", backgroundGraphicZIndex));
 		result.append(convert("backgroundXOffset", backgroundXOffset));
 		result.append(convert("backgroundYOffset", backgroundYOffset));
 		result.append(convert("backgroundHeight", backgroundHeight));
@@ -141,300 +144,373 @@ public class FeatureStyle implements Serializable {
 		result.append(convert("fontSize", fontSize));
 		result.append(convert("fontWeight", fontWeight));
 		result.append(convert("display", display));
-		result.append(map.getJSinvoke("addFeatureStyle(layer_style" + getId()
-				+ ", " + getId() + ")"));
+		result.append(map.getJSinvoke("addFeatureStyle(layer_style" + getId() + ", " + getId() +
+			")"));
 		return result.toString();
 	}
 
-	public String getJSGetStyle(IOpenLayersMap map) {
+	public String getJSGetStyle(IOpenLayersMap map)
+	{
 		return map.getJSinvoke("getFeatureStyle(" + getId() + ")");
 	}
 
-	public String getJSGetStyleNoLineEnd(IOpenLayersMap map) {
+	public String getJSGetStyleNoLineEnd(IOpenLayersMap map)
+	{
 		return map.getJSinvokeNoLineEnd("getFeatureStyle(" + getId() + ")");
 	}
 
-	public String getJSRemoveStyle(IOpenLayersMap map) {
+	public String getJSRemoveStyle(IOpenLayersMap map)
+	{
 		return map.getJSinvoke("removeFeatureStyle(" + getId() + ")");
 	}
 
-	public void setFill(Boolean fill) {
+	public void setFill(Boolean fill)
+	{
 		this.fill = fill;
 	}
 
-	public Boolean getFill() {
+	public Boolean getFill()
+	{
 		return fill;
 	}
 
-	public void setFillColor(String fillColor) {
+	public void setFillColor(String fillColor)
+	{
 		this.fillColor = fillColor;
 	}
 
-	public String getFillColor() {
+	public String getFillColor()
+	{
 		return fillColor;
 	}
 
-	public void setFillOpacity(Double fillOpacity) {
+	public void setFillOpacity(Double fillOpacity)
+	{
 		this.fillOpacity = fillOpacity;
 	}
 
-	public Double getFillOpacity() {
+	public Double getFillOpacity()
+	{
 		return fillOpacity;
 	}
 
-	public void setStroke(Boolean stroke) {
+	public void setStroke(Boolean stroke)
+	{
 		this.stroke = stroke;
 	}
 
-	public Boolean getStroke() {
+	public Boolean getStroke()
+	{
 		return stroke;
 	}
 
-	public void setStrokeColor(String strokeColor) {
+	public void setStrokeColor(String strokeColor)
+	{
 		this.strokeColor = strokeColor;
 	}
 
-	public String getStrokeColor() {
+	public String getStrokeColor()
+	{
 		return strokeColor;
 	}
 
-	public void setStrokeOpacity(Double strokeOpacity) {
+	public void setStrokeOpacity(Double strokeOpacity)
+	{
 		this.strokeOpacity = strokeOpacity;
 	}
 
-	public Double getStrokeOpacity() {
+	public Double getStrokeOpacity()
+	{
 		return strokeOpacity;
 	}
 
-	public void setStrokeWidth(Double strokeWidth) {
+	public void setStrokeWidth(Double strokeWidth)
+	{
 		this.strokeWidth = strokeWidth;
 	}
 
-	public Double getStrokeWidth() {
+	public Double getStrokeWidth()
+	{
 		return strokeWidth;
 	}
 
-	public void setStrokeLinecap(String strokeLinecap) {
+	public void setStrokeLinecap(String strokeLinecap)
+	{
 		this.strokeLinecap = strokeLinecap;
 	}
 
-	public String getStrokeLinecap() {
+	public String getStrokeLinecap()
+	{
 		return strokeLinecap;
 	}
 
-	public void setStrokeDashstyle(String strokeDashstyle) {
+	public void setStrokeDashstyle(String strokeDashstyle)
+	{
 		this.strokeDashstyle = strokeDashstyle;
 	}
 
-	public String getStrokeDashstyle() {
+	public String getStrokeDashstyle()
+	{
 		return strokeDashstyle;
 	}
 
-	public void setGraphic(Boolean graphic) {
+	public void setGraphic(Boolean graphic)
+	{
 		this.graphic = graphic;
 	}
 
-	public Boolean getGraphic() {
+	public Boolean getGraphic()
+	{
 		return graphic;
 	}
 
-	public void setPointRadius(Double pointRadius) {
+	public void setPointRadius(Double pointRadius)
+	{
 		this.pointRadius = pointRadius;
 	}
 
-	public Double getPointRadius() {
+	public Double getPointRadius()
+	{
 		return pointRadius;
 	}
 
-	public void setPointerEvents(String pointerEvents) {
+	public void setPointerEvents(String pointerEvents)
+	{
 		this.pointerEvents = pointerEvents;
 	}
 
-	public String getPointerEvents() {
+	public String getPointerEvents()
+	{
 		return pointerEvents;
 	}
 
-	public void setCursor(String cursor) {
+	public void setCursor(String cursor)
+	{
 		this.cursor = cursor;
 	}
 
-	public String getCursor() {
+	public String getCursor()
+	{
 		return cursor;
 	}
 
-	public void setExternalGraphic(String externalGraphic) {
+	public void setExternalGraphic(String externalGraphic)
+	{
 		this.externalGraphic = externalGraphic;
 	}
 
-	public String getExternalGraphic() {
+	public String getExternalGraphic()
+	{
 		return externalGraphic;
 	}
 
-	public void setGraphicWidth(Double graphicWidth) {
+	public void setGraphicWidth(Double graphicWidth)
+	{
 		this.graphicWidth = graphicWidth;
 	}
 
-	public Double getGraphicWidth() {
+	public Double getGraphicWidth()
+	{
 		return graphicWidth;
 	}
 
-	public void setGraphicHeight(Double graphicHeight) {
+	public void setGraphicHeight(Double graphicHeight)
+	{
 		this.graphicHeight = graphicHeight;
 	}
 
-	public Double getGraphicHeight() {
+	public Double getGraphicHeight()
+	{
 		return graphicHeight;
 	}
 
-	public void setGraphicOpacity(Double graphicOpacity) {
+	public void setGraphicOpacity(Double graphicOpacity)
+	{
 		this.graphicOpacity = graphicOpacity;
 	}
 
-	public Double getGraphicOpacity() {
+	public Double getGraphicOpacity()
+	{
 		return graphicOpacity;
 	}
 
-	public void setGraphicXOffset(Double graphicXOffset) {
+	public void setGraphicXOffset(Double graphicXOffset)
+	{
 		this.graphicXOffset = graphicXOffset;
 	}
 
-	public Double getGraphicXOffset() {
+	public Double getGraphicXOffset()
+	{
 		return graphicXOffset;
 	}
 
-	public void setGraphicYOffset(Double graphicYOffset) {
+	public void setGraphicYOffset(Double graphicYOffset)
+	{
 		this.graphicYOffset = graphicYOffset;
 	}
 
-	public Double getGraphicYOffset() {
+	public Double getGraphicYOffset()
+	{
 		return graphicYOffset;
 	}
 
-	public void setGraphicZIndex(Double graphicZIndex) {
+	public void setGraphicZIndex(Double graphicZIndex)
+	{
 		this.graphicZIndex = graphicZIndex;
 	}
 
-	public Double getGraphicZIndex() {
+	public Double getGraphicZIndex()
+	{
 		return graphicZIndex;
 	}
 
-	public void setGraphicName(String graphicName) {
+	public void setGraphicName(String graphicName)
+	{
 		this.graphicName = graphicName;
 	}
 
-	public String getGraphicName() {
+	public String getGraphicName()
+	{
 		return graphicName;
 	}
 
-	public void setGraphicTitle(String graphicTitle) {
+	public void setGraphicTitle(String graphicTitle)
+	{
 		this.graphicTitle = graphicTitle;
 	}
 
-	public String getGraphicTitle() {
+	public String getGraphicTitle()
+	{
 		return graphicTitle;
 	}
 
-	public void setBackgroundGraphic(String backgroundGraphic) {
+	public void setBackgroundGraphic(String backgroundGraphic)
+	{
 		this.backgroundGraphic = backgroundGraphic;
 	}
 
-	public String getBackgroundGraphic() {
+	public String getBackgroundGraphic()
+	{
 		return backgroundGraphic;
 	}
 
-	public void setBackgroundGraphicZIndex(Double backgroundGraphicZIndex) {
+	public void setBackgroundGraphicZIndex(Double backgroundGraphicZIndex)
+	{
 		this.backgroundGraphicZIndex = backgroundGraphicZIndex;
 	}
 
-	public Double getBackgroundGraphicZIndex() {
+	public Double getBackgroundGraphicZIndex()
+	{
 		return backgroundGraphicZIndex;
 	}
 
-	public void setBackgroundXOffset(Double backgroundXOffset) {
+	public void setBackgroundXOffset(Double backgroundXOffset)
+	{
 		this.backgroundXOffset = backgroundXOffset;
 	}
 
-	public Double getBackgroundXOffset() {
+	public Double getBackgroundXOffset()
+	{
 		return backgroundXOffset;
 	}
 
-	public void setBackgroundYOffset(Double backgroundYOffset) {
+	public void setBackgroundYOffset(Double backgroundYOffset)
+	{
 		this.backgroundYOffset = backgroundYOffset;
 	}
 
-	public Double getBackgroundYOffset() {
+	public Double getBackgroundYOffset()
+	{
 		return backgroundYOffset;
 	}
 
-	public void setBackgroundHeight(Double backgroundHeight) {
+	public void setBackgroundHeight(Double backgroundHeight)
+	{
 		this.backgroundHeight = backgroundHeight;
 	}
 
-	public Double getBackgroundHeight() {
+	public Double getBackgroundHeight()
+	{
 		return backgroundHeight;
 	}
 
-	public void setBackgroundWidth(Double backgroundWidth) {
+	public void setBackgroundWidth(Double backgroundWidth)
+	{
 		this.backgroundWidth = backgroundWidth;
 	}
 
-	public Double getBackgroundWidth() {
+	public Double getBackgroundWidth()
+	{
 		return backgroundWidth;
 	}
 
-	public void setLabel(String label) {
+	public void setLabel(String label)
+	{
 		this.label = label;
 	}
 
-	public String getLabel() {
+	public String getLabel()
+	{
 		return label;
 	}
 
-	public void setLabelAlign(String labelAlign) {
+	public void setLabelAlign(String labelAlign)
+	{
 		this.labelAlign = labelAlign;
 	}
 
-	public String getLabelAlign() {
+	public String getLabelAlign()
+	{
 		return labelAlign;
 	}
 
-	public void setFontColor(String fontColor) {
+	public void setFontColor(String fontColor)
+	{
 		this.fontColor = fontColor;
 	}
 
-	public String getFontColor() {
+	public String getFontColor()
+	{
 		return fontColor;
 	}
 
-	public void setFontFamily(String fontFamily) {
+	public void setFontFamily(String fontFamily)
+	{
 		this.fontFamily = fontFamily;
 	}
 
-	public String getFontFamily() {
+	public String getFontFamily()
+	{
 		return fontFamily;
 	}
 
-	public void setFontSize(String fontSize) {
+	public void setFontSize(String fontSize)
+	{
 		this.fontSize = fontSize;
 	}
 
-	public String getFontSize() {
+	public String getFontSize()
+	{
 		return fontSize;
 	}
 
-	public void setFontWeight(String fontWeight) {
+	public void setFontWeight(String fontWeight)
+	{
 		this.fontWeight = fontWeight;
 	}
 
-	public String getFontWeight() {
+	public String getFontWeight()
+	{
 		return fontWeight;
 	}
 
-	public void setDisplay(String display) {
+	public void setDisplay(String display)
+	{
 		this.display = display;
 	}
 
-	public String getDisplay() {
+	public String getDisplay()
+	{
 		return display;
 	}
 }

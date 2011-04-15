@@ -17,6 +17,7 @@
 package org.wicketstuff;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -34,65 +35,81 @@ import org.wicketstuff.multitextinput.MultiTextInput;
  * 
  * @param <T>
  */
-public class MultiTextInputExamples extends WebPage {
+public class MultiTextInputExamples extends WebPage
+{
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Constructor that is invoked when page is invoked without a session.
-     * 
-     * @param parameters
-     *            Page parameters
-     */
-    public MultiTextInputExamples(final PageParameters parameters) {
+	/**
+	 * Constructor that is invoked when page is invoked without a session.
+	 * 
+	 * @param parameters
+	 *            Page parameters
+	 */
+	public MultiTextInputExamples(final PageParameters parameters)
+	{
 
-        final Label messageAlpha = new Label("messageAlpha", "");
-        final MultiTextInput<String> mtiAlpha = new MultiTextInput<String>("multiAlpha", new ArrayList<String>() {
-            {
-                add("apple");
-                add("banana");
-                add("<some markup>");
-                add("a quote '");
-                add("a double quote \"");
-            }
-        });
-        final Label messageInt = new Label("messageInt", "");
-        final MultiTextInput<Integer> mtiInt = new MultiTextInput<Integer>("multiInt", new ArrayList<Integer>() {
-            {
-                add(1);
-                add(10);
-                add(100);
-                add(1000);
-            }
-        }, Integer.class);
-        Form form = new Form("form") {
+		final Label messageAlpha = new Label("messageAlpha", "");
+		final MultiTextInput<String> mtiAlpha = new MultiTextInput<String>("multiAlpha",
+			new ArrayList<String>()
+			{
+				private static final long serialVersionUID = 1L;
 
-            @Override
-            protected void onSubmit() {
-                MultiTextInput.MultiTextInputModel model = (MultiTextInput.MultiTextInputModel) mtiAlpha.getModel();
-                messageAlpha.setEscapeModelStrings(false);
-                messageAlpha.setDefaultModelObject("<strong>items:</strong> "
-                        + Strings.escapeMarkup(model.getObject().toString()) + "<br><strong>removed:</strong> "
-                        + Strings.escapeMarkup(model.getRemovedItems().toString()));
+				{
+					add("apple");
+					add("banana");
+					add("<some markup>");
+					add("a quote '");
+					add("a double quote \"");
+				}
+			});
+		final Label messageInt = new Label("messageInt", "");
+		final MultiTextInput<Integer> mtiInt = new MultiTextInput<Integer>("multiInt",
+			new ArrayList<Integer>()
+			{
+				private static final long serialVersionUID = 1L;
 
-                model = (MultiTextInput.MultiTextInputModel) mtiInt.getModel();
-                messageInt.setEscapeModelStrings(false);
-                messageInt.setDefaultModelObject("<strong>items:</strong> "
-                        + Strings.escapeMarkup(model.getObject().toString()) + "<br><strong>removed:</strong> "
-                        + Strings.escapeMarkup(model.getRemovedItems().toString()));
+				{
+					add(1);
+					add(10);
+					add(100);
+					add(1000);
+				}
+			}, Integer.class);
+		Form<Void> form = new Form<Void>("form")
+		{
 
-                super.onSubmit();
-            }
+			private static final long serialVersionUID = 1L;
 
-        };
+			@Override
+			protected void onSubmit()
+			{
+				MultiTextInput.MultiTextInputModel<Collection<String>> model = (MultiTextInput.MultiTextInputModel<Collection<String>>)mtiAlpha.getModel();
+				messageAlpha.setEscapeModelStrings(false);
+				messageAlpha.setDefaultModelObject("<strong>items:</strong> " +
+					Strings.escapeMarkup(model.getObject().toString()) +
+					"<br><strong>removed:</strong> " +
+					Strings.escapeMarkup(model.getRemovedItems().toString()));
 
-        form.add(messageAlpha);
-        form.add(mtiAlpha);
-        form.add(messageInt);
-        form.add(mtiInt);
+				MultiTextInput.MultiTextInputModel<Collection<Integer>> model2 = (MultiTextInput.MultiTextInputModel<Collection<Integer>>)mtiInt.getModel();
+				messageInt.setEscapeModelStrings(false);
+				messageInt.setDefaultModelObject("<strong>items:</strong> " +
+					Strings.escapeMarkup(model2.getObject().toString()) +
+					"<br><strong>removed:</strong> " +
+					Strings.escapeMarkup(model2.getRemovedItems().toString()));
 
-        add(new FeedbackPanel("feedback"));
-        add(form);
+				super.onSubmit();
+			}
 
-    }
+		};
+
+		form.add(messageAlpha);
+		form.add(mtiAlpha);
+		form.add(messageInt);
+		form.add(mtiInt);
+
+		add(new FeedbackPanel("feedback"));
+		add(form);
+
+	}
 }

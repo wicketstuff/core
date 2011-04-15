@@ -25,50 +25,60 @@ import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.validation.validator.StringValidator;
 
 /**
- * Validates that the form component value has a length between the min and the max specified (inclusive).
+ * Validates that the form component value has a length between the min and the max specified
+ * (inclusive).
  * 
  * @author Jeremy Thomerson
  */
-public class ClientAndServerLengthBetweenValidatingBehavior extends AbstractClientAndServerValidatingBehavior {
+public class ClientAndServerLengthBetweenValidatingBehavior extends
+	AbstractClientAndServerValidatingBehavior<String>
+{
 
 	private static final long serialVersionUID = 1L;
 
 	private final int mMin;
 	private final int mMax;
-	
-	public ClientAndServerLengthBetweenValidatingBehavior(Form<?> form, int min, int max) {
+
+	public ClientAndServerLengthBetweenValidatingBehavior(Form<?> form, int min, int max)
+	{
 		super(form);
 		mMin = min;
 		mMax = max;
 	}
 
 	@Override
-	protected void addServerSideValidator(FormComponent component) {
+	protected void addServerSideValidator(FormComponent<String> component)
+	{
 		component.add(StringValidator.lengthBetween(mMin, mMax));
 	}
-	
+
 	@Override
-	protected String createValidatorConstructorJavaScript(CharSequence formID, CharSequence compID, CharSequence escapedMessage) {
+	protected String createValidatorConstructorJavaScript(CharSequence formID, CharSequence compID,
+		CharSequence escapedMessage)
+	{
 		String js = super.createValidatorConstructorJavaScript(formID, compID, escapedMessage);
 		js = js + ".setMinimumLength(" + mMin + ").setMaximumLength(" + mMax + ")";
 		return js;
 	}
-	
+
 	@Override
-	protected Map<String, Object> variablesMap(Form<?> form, FormComponent<?> component) {
+	protected Map<String, Object> variablesMap(Form<?> form, FormComponent<String> component)
+	{
 		Map<String, Object> map = super.variablesMap(form, component);
 		map.put("minimum", mMin);
 		map.put("maximum", mMax);
 		return map;
 	}
-	
+
 	@Override
-	protected String getResourceKey() {
+	protected String getResourceKey()
+	{
 		return "StringValidator.range";
 	}
-	
+
 	@Override
-	protected String getValidatorJSClassName() {
+	protected String getValidatorJSClassName()
+	{
 		return "StringLengthBetweenValidator";
 	}
 

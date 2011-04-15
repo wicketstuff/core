@@ -23,12 +23,15 @@ import org.wicketstuff.shiro.example.pages.LoginPage;
 
 public class RealmExampleApp extends ExampleApplication
 {
-  @Override
-  public Component getExampleInfoPanel(String id) {
-    return new ExampleInfoPanel( id );
-  }
-  @Override
-	public Component getAuthHeaderPanel(String id) {
-	  return new SimpleAuthHeader(id, LoginPage.class);
+	@Override
+	public Component getExampleInfoPanel(String id)
+	{
+		return new ExampleInfoPanel(id);
+	}
+
+	@Override
+	public Component getAuthHeaderPanel(String id)
+	{
+		return new SimpleAuthHeader(id, LoginPage.class);
 	}
 }

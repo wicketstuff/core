@@ -23,8 +23,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.wicket.behavior.HeaderContributor;
-import org.apache.wicket.markup.html.JavascriptPackageResource;
+import org.apache.wicket.markup.html.IHeaderContributor;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.jslibraries.util.Assert;
 
 public enum CDN implements Provider {
@@ -93,7 +93,7 @@ public enum CDN implements Provider {
 
 	protected abstract URL render(Library lib, Version v, boolean production);
 
-	public HeaderContributor getHeaderContributor(
+	public IHeaderContributor getHeaderContributor(
 			final VersionDescriptor versionDescriptor, boolean production) {
 
 		Assert.parameterNotNull(versionDescriptor, "versionDescriptor");
@@ -103,7 +103,7 @@ public enum CDN implements Provider {
 		if (lib.getVersions(this).contains(v)) {
 			URL url = render(lib, v, production);
 			if (url != null) {
-				return JavascriptPackageResource.getHeaderContribution(url
+				return new HeaderContributor(url
 						.toExternalForm());
 			}
 		}
@@ -147,4 +147,16 @@ public enum CDN implements Provider {
 
 	public static final CDN[] ANY = values();
 
+	private static class HeaderContributor implements IHeaderContributor {
+		private static final long serialVersionUID = 1L;
+		private String url;
+		
+		public HeaderContributor(String url) {
+			this.url = url;
+		}
+
+		public void renderHead(IHeaderResponse response) {
+			response.renderJavaScriptReference(url);
+		}
+	}
 }

@@ -22,43 +22,46 @@ import static junit.framework.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class DefaultScriptExecutionResultTest {
+public class DefaultScriptExecutionResultTest
+{
 
-    @Test
-    public void test_success() throws Exception {
+	@Test
+	public void test_success() throws Exception
+	{
 
-        // Given
-        final String script = "";
-        final Throwable exception = null;
-        final String output = "output";
-        final Object returnValue = null;
+		// Given
+		final String script = "";
+		final Throwable exception = null;
+		final String output = "output";
+		final Object returnValue = null;
 
-        // When
-        final DefaultScriptExecutionResult result = new DefaultScriptExecutionResult(
-                script, exception, output, returnValue);
+		// When
+		final DefaultScriptExecutionResult result = new DefaultScriptExecutionResult(script,
+			exception, output, returnValue);
 
-        // Then
-        assertTrue(result.isSuccess());
+		// Then
+		assertTrue(result.isSuccess());
 
-    }
+	}
 
-    @Test
-    public void test_simple_fail() throws Exception {
+	@Test
+	public void test_simple_fail() throws Exception
+	{
 
-        // Given
-        final String script = "";
-        final Throwable exception = new IllegalArgumentException("foo");
-        final String output = "output";
-        final Object returnValue = null;
+		// Given
+		final String script = "";
+		final Throwable exception = new IllegalArgumentException("foo");
+		final String output = "output";
+		final Object returnValue = null;
 
-        // When
-        final DefaultScriptExecutionResult result = new DefaultScriptExecutionResult(
-                script, exception, output, returnValue);
+		// When
+		final DefaultScriptExecutionResult result = new DefaultScriptExecutionResult(script,
+			exception, output, returnValue);
 
-        // Then
-        assertFalse(result.isSuccess());
-        assertSame(exception, result.getException());
+		// Then
+		assertFalse(result.isSuccess());
+		assertSame(exception, result.getException());
 
-    }
+	}
 
 }

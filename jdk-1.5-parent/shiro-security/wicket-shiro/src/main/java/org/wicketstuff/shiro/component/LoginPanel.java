@@ -32,7 +32,6 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.value.ValueMap;
 
-
 /**
  * Reusable user sign in panel with username and password as well as support for cookie persistence
  * of the both. When the SignInPanel's form is submitted, the method signIn(String, String) is
@@ -42,6 +41,7 @@ import org.apache.wicket.util.value.ValueMap;
  * @author Jonathan Locke
  * @author Juergen Donnerstag
  * @author Eelco Hillenius
+ * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
 public class LoginPanel extends Panel
 {

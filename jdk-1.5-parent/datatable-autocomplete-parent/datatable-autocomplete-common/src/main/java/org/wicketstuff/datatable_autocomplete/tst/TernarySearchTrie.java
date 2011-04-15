@@ -34,21 +34,25 @@ import org.wicketstuff.datatable_autocomplete.trie.Trie;
  * 
  * 
  */
-public class TernarySearchTrie<C> implements Trie<C> {
+public class TernarySearchTrie<C> implements Trie<C>
+{
 
+	private static final long serialVersionUID = 472990287147515130L;
 	private TernaryNode<C> root = null;
 	private final ITrieConfiguration<C> configuration;
 
 	/**
 	 * 
 	 */
-	public TernarySearchTrie(ITrieConfiguration<C> configuration) {
+	public TernarySearchTrie(ITrieConfiguration<C> configuration)
+	{
 
 		this.configuration = configuration;
 
 	}
 
-	public void index(C value) {
+	public void index(C value)
+	{
 
 		String word = this.configuration.getWord(value);
 
@@ -57,19 +61,21 @@ public class TernarySearchTrie<C> implements Trie<C> {
 
 		String firstLetter = word.substring(0, 1);
 
-		if (root == null) {
+		if (root == null)
+		{
 
 			root = new TernaryNode<C>(null, 0, firstLetter);
 
 		}
 
-	
-			root.index(word, value);
-	
+
+		root.index(word, value);
+
 
 	}
 
-	public List<C> getWordList(String prefix, int limit) {
+	public List<C> getWordList(String prefix, int limit)
+	{
 
 		List<C> wordList = new LinkedList<C>();
 
@@ -81,7 +87,8 @@ public class TernarySearchTrie<C> implements Trie<C> {
 		return wordList;
 	}
 
-	public List<C> getWordList(String prefix) {
+	public List<C> getWordList(String prefix)
+	{
 
 		return this.getWordList(prefix, -1);
 
@@ -90,11 +97,11 @@ public class TernarySearchTrie<C> implements Trie<C> {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.wicketstuff.datatable_autocomplete.trie.Trie#getWordList(java.lang
-	 * .String, org.wicketstuff.datatable_autocomplete.trie.ITrieFilter, int)
+	 * @see org.wicketstuff.datatable_autocomplete.trie.Trie#getWordList(java.lang .String,
+	 * org.wicketstuff.datatable_autocomplete.trie.ITrieFilter, int)
 	 */
-	public List<C> getWordList(String prefix, ITrieFilter<C> filter, int limit) {
+	public List<C> getWordList(String prefix, ITrieFilter<C> filter, int limit)
+	{
 		/*
 		 * TODO: add support for TrieFiltering
 		 */
@@ -104,18 +111,19 @@ public class TernarySearchTrie<C> implements Trie<C> {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.wicketstuff.datatable_autocomplete.trie.Trie#getWordList(java.lang
-	 * .String, org.wicketstuff.datatable_autocomplete.trie.ITrieFilter)
+	 * @see org.wicketstuff.datatable_autocomplete.trie.Trie#getWordList(java.lang .String,
+	 * org.wicketstuff.datatable_autocomplete.trie.ITrieFilter)
 	 */
-	public List<C> getWordList(String prefix, ITrieFilter<C> filter) {
+	public List<C> getWordList(String prefix, ITrieFilter<C> filter)
+	{
 		/*
 		 * TODO: add support for TrieFiltering
 		 */
 		return getWordList(prefix);
 	}
 
-	public void visit(TernaryNodeVisitor<C> visitor) {
+	public void visit(TernaryNodeVisitor<C> visitor)
+	{
 
 		visitor.preVisit();
 
@@ -126,11 +134,11 @@ public class TernarySearchTrie<C> implements Trie<C> {
 
 	/**
 	 * 
-	 * @return the Set<String> for the starting (level 0) characters in the
-	 *         index.
+	 * @return the Set<String> for the starting (level 0) characters in the index.
 	 * 
 	 */
-	public Set<String> getNextNodeCharacterSet() {
+	public Set<String> getNextNodeCharacterSet()
+	{
 
 		Set<String> levelZeroSet = new LinkedHashSet<String>();
 
@@ -144,7 +152,8 @@ public class TernarySearchTrie<C> implements Trie<C> {
 	 * 
 	 * @see org.wicketstuff.datatable_autocomplete.trie.Trie#postIndexing()
 	 */
-	public void postIndexing() {
+	public void postIndexing()
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -154,31 +163,32 @@ public class TernarySearchTrie<C> implements Trie<C> {
 	 * 
 	 * @see org.wicketstuff.datatable_autocomplete.trie.Trie#preIndexing()
 	 */
-	public void preIndexing() {
+	public void preIndexing()
+	{
 		// TODO Auto-generated method stub
 
 	}
-	
-	
+
 
 	/**
 	 * @return the root
 	 */
-	public TernaryNode<C> getRoot() {
+	public TernaryNode<C> getRoot()
+	{
 		return root;
 	}
 
-	public void printTree() {
-		
+	public void printTree()
+	{
+
 		/*
-		 * _N_
-		 *  | \
-		 *  
-		 *  build all down less than then level ordered from there. back up until an unrendered left is encountered.
+		 * _N_ | \
+		 * 
+		 * build all down less than then level ordered from there. back up until an unrendered left
+		 * is encountered.
 		 */
-		
-		
-		
+
+
 	}
 
 }

@@ -27,8 +27,7 @@ import wicket.contrib.gmap.GMap2;
 
 /**
  * Represents an Google Maps API's <a href=
- * "http://www.google.com/apis/maps/documentation/reference.html#GOverlay"
- * >GOverlay</a>.
+ * "http://www.google.com/apis/maps/documentation/reference.html#GOverlay" >GOverlay</a>.
  */
 public abstract class GOverlay implements Serializable
 {
@@ -42,7 +41,7 @@ public abstract class GOverlay implements Serializable
 	private GMap2 parent = null;
 
 	private final Map<GEvent, GEventHandler> events = new EnumMap<GEvent, GEventHandler>(
-			GEvent.class);
+		GEvent.class);
 
 	/**
 	 * Construct.
@@ -54,13 +53,13 @@ public abstract class GOverlay implements Serializable
 	}
 
 	/**
-	 * @return String representing the JavaScript add command for the
-	 *         corresponding JavaScript object.
+	 * @return String representing the JavaScript add command for the corresponding JavaScript
+	 *         object.
 	 */
 	public String getJSadd()
 	{
-		StringBuffer js = new StringBuffer(parent.getJSinvoke("addOverlay('" + getId() + "', "
-				+ getJSconstructor() + ")"));
+		StringBuffer js = new StringBuffer(parent.getJSinvoke("addOverlay('" + getId() + "', " +
+			getJSconstructor() + ")"));
 		// Add the Events
 		for (GEvent event : events.keySet())
 		{
@@ -70,8 +69,8 @@ public abstract class GOverlay implements Serializable
 	}
 
 	/**
-	 * @return String representing the JavaScript remove command for the
-	 *         corresponding JavaScript object.
+	 * @return String representing the JavaScript remove command for the corresponding JavaScript
+	 *         object.
 	 */
 	public String getJSremove()
 	{
@@ -94,8 +93,7 @@ public abstract class GOverlay implements Serializable
 	}
 
 	/**
-	 * Implement the needed JavaScript constructor for the corresponding
-	 * JavaScript object.
+	 * Implement the needed JavaScript constructor for the corresponding JavaScript object.
 	 * 
 	 * @return String representing the JavaScript constructor.
 	 */

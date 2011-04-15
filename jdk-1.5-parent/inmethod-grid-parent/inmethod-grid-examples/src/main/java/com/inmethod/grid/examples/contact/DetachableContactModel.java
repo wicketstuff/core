@@ -24,10 +24,10 @@ import org.apache.wicket.model.LoadableDetachableModel;
  * @author Igor Vaynberg
  * 
  */
-public class DetachableContactModel extends LoadableDetachableModel
+public class DetachableContactModel extends LoadableDetachableModel<Contact>
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private long id;
 
 	protected ContactsDatabase getContactsDB()
@@ -84,7 +84,7 @@ public class DetachableContactModel extends LoadableDetachableModel
 		else if (obj instanceof DetachableContactModel)
 		{
 			DetachableContactModel other = (DetachableContactModel)obj;
-			return other.id == this.id;
+			return other.id == id;
 		}
 		return false;
 	}
@@ -93,7 +93,7 @@ public class DetachableContactModel extends LoadableDetachableModel
 	 * @see org.apache.wicket.model.LoadableDetachableModel#load()
 	 */
 	@Override
-	protected Object load()
+	protected Contact load()
 	{
 		// loads contact from the database
 		return getContactsDB().get(id);

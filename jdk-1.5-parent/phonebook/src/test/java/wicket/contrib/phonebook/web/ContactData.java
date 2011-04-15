@@ -31,61 +31,76 @@ import wicket.contrib.phonebook.QueryParam;
 /**
  * @author Kare Nuorteva
  */
-public class ContactData {
+public class ContactData
+{
 	private final List<Contact> contacts = new ArrayList<Contact>();
 	private final MockContactDao contactDao = new MockContactDao();
 
-	public void newContact(Contact contact) {
+	public void newContact(Contact contact)
+	{
 		contacts.add(contact);
 	}
 
-	public ContactDao getContactDao() {
+	public ContactDao getContactDao()
+	{
 		return contactDao;
 	}
 
-	public boolean isContactDaoDeleteCalled() {
+	public boolean isContactDaoDeleteCalled()
+	{
 		return contactDao.deleteCalled;
 	}
 
-	public boolean isContactDaoSaveCalled() {
+	public boolean isContactDaoSaveCalled()
+	{
 		return contactDao.saveCalled;
 	}
 
-	private final class MockContactDao implements ContactDao {
+	private final class MockContactDao implements ContactDao
+	{
 		private boolean deleteCalled;
 		private boolean saveCalled;
 
-		public int count(Contact filter) {
+		public int count(Contact filter)
+		{
 			return contacts.size();
 		}
 
-		public void delete(long id) {
+		public void delete(long id)
+		{
 			deleteCalled = true;
 			contacts.remove(load(id));
 		}
 
-		public Iterator<Contact> find(QueryParam qp, Contact filter) {
+		public Iterator<Contact> find(QueryParam qp, Contact filter)
+		{
 			return contacts.iterator();
 		}
 
-		public List<String> getUniqueLastNames() {
+		public List<String> getUniqueLastNames()
+		{
 			Set<String> names = new HashSet<String>();
-			for (Contact contact : contacts) {
+			for (Contact contact : contacts)
+			{
 				names.add(contact.getLastname());
 			}
 			return new ArrayList<String>(names);
 		}
 
-		public Contact load(long id) {
-			for (Contact contact : contacts) {
-				if (contact.getId() == id) {
+		public Contact load(long id)
+		{
+			for (Contact contact : contacts)
+			{
+				if (contact.getId() == id)
+				{
 					return contact;
 				}
 			}
 			return null;
 		}
 
-		public Contact save(Contact contact) {
+		public Contact save(Contact contact)
+		{
 			saveCalled = true;
 			contacts.add(contact);
 			return contact;

@@ -18,29 +18,34 @@ import org.wicketstuff.jsr303.PropertyValidation;
 
 public class Example2 extends WebPage
 {
-    static class Data implements Serializable
-    {
-        @Email
-        @NotNull
-        String email = "";
-    }
+	private static final long serialVersionUID = 1L;
 
-    private final Data dummy = new Data();
+	static class Data implements Serializable
+	{
+		private static final long serialVersionUID = 1L;
+		@Email
+		@NotNull
+		String email = "";
+	}
 
-    public Example2()
-    {
-        final Form form = new Form("form");
-        add(form);
-        add(new FeedbackPanel("fb"));
-        add(new WebMarkupContainer("message")
-        {
-            @Override
-            public boolean isVisible()
-            {
-                return form.isSubmitted() && (!form.hasError());
-            }
-        });
-        form.add(new PropertyValidation());
-        form.add(new TextField("email", new PropertyModel<String>(this.dummy, "email")));
-    }
+	private final Data dummy = new Data();
+
+	public Example2()
+	{
+		final Form<Void> form = new Form<Void>("form");
+		add(form);
+		add(new FeedbackPanel("fb"));
+		add(new WebMarkupContainer("message")
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isVisible()
+			{
+				return form.isSubmitted() && !form.hasError();
+			}
+		});
+		form.add(new PropertyValidation());
+		form.add(new TextField<String>("email", new PropertyModel<String>(dummy, "email")));
+	}
 }

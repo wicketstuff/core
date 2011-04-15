@@ -26,24 +26,29 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 
-public abstract class BlockingAjaxLink<T> extends AjaxLink<T> implements
-		IHeaderContributor {
+public abstract class BlockingAjaxLink<T> extends AjaxLink<T> implements IHeaderContributor
+{
+	private static final long serialVersionUID = 1L;
+
 	public static final ResourceReference BLOCK_JS = new PackageResourceReference(
-			BlockingAjaxLink.class, "jquery.blockUI.js");
+		BlockingAjaxLink.class, "jquery.blockUI.js");
 
 	final BlockOptions options;
 
-	public BlockingAjaxLink(final String id, BlockOptions options) {
+	public BlockingAjaxLink(final String id, BlockOptions options)
+	{
 		super(id, null);
 		this.options = options;
 	}
 
-	public BlockingAjaxLink(final String id, String message) {
+	public BlockingAjaxLink(final String id, String message)
+	{
 		this(id, new BlockOptions().setMessage(message));
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
+	public void renderHead(IHeaderResponse response)
+	{
 		response.renderJavaScriptReference(JQueryBehavior.JQUERY_JS);
 		response.renderJavaScriptReference(BLOCK_JS);
 	}
@@ -54,46 +59,56 @@ public abstract class BlockingAjaxLink<T> extends AjaxLink<T> implements
 	 * @return ajax call decorator
 	 */
 	@Override
-	protected IAjaxCallDecorator getAjaxCallDecorator() {
-		return new IAjaxCallDecorator() {
+	protected IAjaxCallDecorator getAjaxCallDecorator()
+	{
+		return new IAjaxCallDecorator()
+		{
 			private static final long serialVersionUID = 1L;
 
-			public CharSequence decorateScript(Component component, CharSequence script) {
+			public CharSequence decorateScript(Component component, CharSequence script)
+			{
 				StringBuilder js = new StringBuilder();
 				CharSequence sel = getBlockElementsSelector();
-				if (sel != null) {
+				if (sel != null)
+				{
 					js.append("$('").append(sel).append("').block( ");
-				} else {
+				}
+				else
+				{
 					js.append("$.blockUI( ");
 				}
-				return js.append(options.toString()).append(" ); ")
-						.append(script);
+				return js.append(options.toString()).append(" ); ").append(script);
 			}
 
-			public CharSequence decorateOnSuccessScript(Component component,
-					CharSequence script) {
+			public CharSequence decorateOnSuccessScript(Component component, CharSequence script)
+			{
 				return script;
 			}
 
-			public CharSequence decorateOnFailureScript(Component component,
-					CharSequence script) {
+			public CharSequence decorateOnFailureScript(Component component, CharSequence script)
+			{
 				return script;
 			}
 		};
 	}
 
-	public CharSequence getBlockElementsSelector() {
+	public CharSequence getBlockElementsSelector()
+	{
 		return null;
 	}
 
 	@Override
-	final public void onClick(final AjaxRequestTarget target) {
+	final public void onClick(final AjaxRequestTarget target)
+	{
 		doClick(target);
 
 		CharSequence sel = getBlockElementsSelector();
-		if (sel != null) {
+		if (sel != null)
+		{
 			target.appendJavaScript("$('" + sel + "').unblock(); ");
-		} else {
+		}
+		else
+		{
 			target.appendJavaScript("$.unblockUI(); ");
 		}
 	}

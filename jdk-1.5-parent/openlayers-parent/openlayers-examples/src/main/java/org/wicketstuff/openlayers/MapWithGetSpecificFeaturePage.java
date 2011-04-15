@@ -35,78 +35,90 @@ import org.wicketstuff.openlayers.proxy.WFSProxyBehavior;
 
 /**
  * @author mocleiri
- *
+ * 
  */
-public class MapWithGetSpecificFeaturePage extends WebPage {
+public class MapWithGetSpecificFeaturePage extends WebPage
+{
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 
 	 */
-	public MapWithGetSpecificFeaturePage() {
-		
+	public MapWithGetSpecificFeaturePage()
+	{
+
 		super();
 		List<Layer> layerList = new LinkedList<Layer>();
-		
-//		 function init(){
-//	            OpenLayers.ProxyHost= "proxy.cgi?url=";
-//	            map = new OpenLayers.Map('map', {
-//	                controls: [
-//	                    new OpenLayers.Control.PanZoom(),
-//	                    new OpenLayers.Control.Permalink(),
-//	                    new OpenLayers.Control.Navigation()
-//	                ]
-//	            });
-//	            layer = new OpenLayers.Layer.WMS(
-//	                "States WMS/WFS",
-//	                "http://demo.opengeo.org/geoserver/ows",
-//	                {layers: 'topp:states', format: 'image/gif'}
-//	            );
-		
-				HashMap<String, String> options = new LinkedHashMap<String, String>();
-				
-				options.put("layers", JSUtils.getQuotedString("topp:states"));
-				options.put("format", JSUtils.getQuotedString("image/png8"));
-				options.put("srs", JSUtils.getQuotedString("EPSG:4326"));
-				
-				
 
-				
-				WMS layer = new WMS("States WMS/WFS", "http://demo.opengeo.org:80/geoserver/wms", options);
+// function init(){
+// OpenLayers.ProxyHost= "proxy.cgi?url=";
+// map = new OpenLayers.Map('map', {
+// controls: [
+// new OpenLayers.Control.PanZoom(),
+// new OpenLayers.Control.Permalink(),
+// new OpenLayers.Control.Navigation()
+// ]
+// });
+// layer = new OpenLayers.Layer.WMS(
+// "States WMS/WFS",
+// "http://demo.opengeo.org/geoserver/ows",
+// {layers: 'topp:states', format: 'image/gif'}
+// );
 
-				layerList.add(layer);
+		HashMap<String, String> options = new LinkedHashMap<String, String>();
 
-				final WFSProxyBehavior proxyBehaviour = new WFSProxyBehavior();
-				
-				final AbstractDefaultAjaxBehavior callbackBehaviour = new AbstractDefaultAjaxBehavior() {
-					
-					@Override
-					protected void respond(AjaxRequestTarget target) {
-						
-						RequestCycle rc = RequestCycle.get();
-						
-						 WebRequest wr = (WebRequest) rc.getRequest();
-						
-						String state = wr.getRequestParameters().getParameterValue("propertyValue").toString();
-						
-						target.prependJavaScript("alert('you selected state = "+state+");");
-								
-						
-					}
-				};
-				
-				GetSpecificFeature control = new GetSpecificFeature(layer, proxyBehaviour, callbackBehaviour, "http://demo.opengeo.org:80/geoserver/wms", "topp", "http://www.openplans.org/topp", "states", 4326, "STATE_NAME");
-				
+		options.put("layers", JSUtils.getQuotedString("topp:states"));
+		options.put("format", JSUtils.getQuotedString("image/png8"));
+		options.put("srs", JSUtils.getQuotedString("EPSG:4326"));
+
+
+		WMS layer = new WMS("States WMS/WFS", "http://demo.opengeo.org:80/geoserver/wms", options);
+
+		layerList.add(layer);
+
+		final WFSProxyBehavior proxyBehaviour = new WFSProxyBehavior();
+
+		final AbstractDefaultAjaxBehavior callbackBehaviour = new AbstractDefaultAjaxBehavior()
+		{
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void respond(AjaxRequestTarget target)
+			{
+
+				RequestCycle rc = RequestCycle.get();
+
+				WebRequest wr = (WebRequest)rc.getRequest();
+
+				String state = wr.getRequestParameters()
+					.getParameterValue("propertyValue")
+					.toString();
+
+				target.prependJavaScript("alert('you selected state = " + state + ");");
+
+
+			}
+		};
+
+		GetSpecificFeature control = new GetSpecificFeature(layer, proxyBehaviour,
+			callbackBehaviour, "http://demo.opengeo.org:80/geoserver/wms", "topp",
+			"http://www.openplans.org/topp", "states", 4326, "STATE_NAME");
+
 
 		HashMap<String, String> mapOptions = new LinkedHashMap<String, String>();
 
 		mapOptions.put("projection", JSUtils.getQuotedString("EPSG:4326"));
 		mapOptions.put("units", JSUtils.getQuotedString("degrees"));
-//		mapOptions.put("maxExtent",
-//				"new OpenLayers.Bounds(143.834,-43.648,148.479,-39.573)");
+// mapOptions.put("maxExtent",
+// "new OpenLayers.Bounds(143.834,-43.648,148.479,-39.573)");
 
-		
 
-		OpenLayersMap map = new OpenLayersMap("map", true, layerList, mapOptions) {
+		OpenLayersMap map = new OpenLayersMap("map", true, layerList, mapOptions)
+		{
+
+			private static final long serialVersionUID = 1L;
 
 			/*
 			 * (non-Javadoc)
@@ -114,10 +126,10 @@ public class MapWithGetSpecificFeaturePage extends WebPage {
 			 * @see org.wicketstuff.openlayers.OpenLayersMap#getJSinit()
 			 */
 			@Override
-			protected String getJSinit() {
-				return "OpenLayers.ProxyHost='"
-						+ proxyBehaviour.getProxyUrl() + "';\n"
-						+ super.getJSinit();
+			protected String getJSinit()
+			{
+				return "OpenLayers.ProxyHost='" + proxyBehaviour.getProxyUrl() + "';\n" +
+					super.getJSinit();
 			}
 
 		};
@@ -125,7 +137,7 @@ public class MapWithGetSpecificFeaturePage extends WebPage {
 		map.setCenter(LonLat.parse("-140.444336,25.115234,-44.438477,50.580078"));
 
 		map.setZoom(3);
-		
+
 
 		map.addControl(control);
 		map.addControl(Control.PanZoomBar);
@@ -134,11 +146,10 @@ public class MapWithGetSpecificFeaturePage extends WebPage {
 
 		map.add(proxyBehaviour);
 		map.add(callbackBehaviour);
-		
+
 		add(map);
-		
+
 	}
 
-	
 
 }

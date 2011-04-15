@@ -30,19 +30,18 @@ import org.apache.wicket.util.time.Duration;
  * 
  * 
  */
-public interface AutoCompleteDependencyProcessor extends IClusterable {
+public interface AutoCompleteDependencyProcessor extends IClusterable
+{
 
 	/**
 	 * 
-	 * @return the list of dependencies to push through with the get
-	 *         request.
+	 * @return the list of dependencies to push through with the get request.
 	 * 
 	 */
 	public Map<String, Component> getQueryParameterToComponentMap();
 
-	public void onAjaxUpdate(Request request,
-			AjaxRequestTarget target);
-	
+	public void onAjaxUpdate(Request request, AjaxRequestTarget target);
+
 	/**
 	 * 
 	 * @return the duration to throttle the request (null if no throttling should be performed)

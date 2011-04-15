@@ -29,22 +29,28 @@ import wicket.contrib.gmap.GMap2;
  * See "zoomend" in the event section of <a
  * href="http://www.google.com/apis/maps/documentation/reference.html#GMap2">GMap2</a>.
  */
-public abstract class ZoomEndListener extends GEventListenerBehavior {
+public abstract class ZoomEndListener extends GEventListenerBehavior
+{
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected String getEvent() {
+	protected String getEvent()
+	{
 		return "zoomend";
 	}
 
 	@Override
-	protected void onEvent(AjaxRequestTarget target) {
+	protected void onEvent(AjaxRequestTarget target)
+	{
 		Request request = RequestCycle.get().getRequest();
 		int oldLevel = 0;
 		int newLevel = 0;
-		StringValue oldZoomLevelParameter = request.getRequestParameters().getParameterValue("argument0");
-		StringValue newZoomLevelParameter = request.getRequestParameters().getParameterValue("argument1");
-		if (oldZoomLevelParameter.isNull() || newZoomLevelParameter.isNull()) {
+		StringValue oldZoomLevelParameter = request.getRequestParameters().getParameterValue(
+			"argument0");
+		StringValue newZoomLevelParameter = request.getRequestParameters().getParameterValue(
+			"argument1");
+		if (oldZoomLevelParameter.isNull() || newZoomLevelParameter.isNull())
+		{
 			return;
 		}
 		oldLevel = oldZoomLevelParameter.toInt();
@@ -54,13 +60,11 @@ public abstract class ZoomEndListener extends GEventListenerBehavior {
 
 	/**
 	 * Override this method to provide handling of a zoomEnd.<br>
-	 * You can get the new center coordinates of the map by calling
-	 * {@link GMap2#getCenter()}.
+	 * You can get the new center coordinates of the map by calling {@link GMap2#getCenter()}.
 	 * 
 	 * @param target
 	 *            the target that initiated the move
 	 */
-	protected abstract void onZoomEnd(AjaxRequestTarget target, int oldLevel,
-			int newLevel);
+	protected abstract void onZoomEnd(AjaxRequestTarget target, int oldLevel, int newLevel);
 
 }

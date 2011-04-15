@@ -23,7 +23,6 @@ import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -64,10 +63,12 @@ import org.apache.wicket.request.resource.ResourceReference;
  */
 public class MBeansPanel extends Panel implements IHeaderContributor
 {
+	private static final long serialVersionUID = 1L;
+
 	public static final String VIEW_PANEL_ID = "view";
 
 	private static final ResourceReference CSS = new PackageResourceReference(MBeansPanel.class,
-			"css/MBeansPanel.css");
+		"css/MBeansPanel.css");
 
 	public MBeansPanel(String id)
 	{
@@ -76,6 +77,8 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 		{
 			MbeanServerLocator reachMbeanServer = new MbeanServerLocator()
 			{
+				private static final long serialVersionUID = 1L;
+
 				public MBeanServer get()
 				{
 					return ManagementFactory.getPlatformMBeanServer();
@@ -93,6 +96,8 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 
 	private class MBeanTree extends Tree
 	{
+		private static final long serialVersionUID = 1L;
+
 		public MBeanTree(String id, TreeModel model)
 		{
 			super(id, model);
@@ -123,10 +128,9 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 			if (node instanceof DefaultMutableTreeNode)
 			{
 				DefaultMutableTreeNode mutableNode = (DefaultMutableTreeNode)node;
-				if (mutableNode.getChildCount() > 0
-						&& ((mutableNode.getChildAt(0) instanceof AttributeNode)
-								|| (mutableNode.getChildAt(0) instanceof OperationNode) || (mutableNode
-								.getChildAt(0) instanceof NotificationNode)))
+				if (mutableNode.getChildCount() > 0 &&
+					(mutableNode.getChildAt(0) instanceof AttributeNode ||
+						mutableNode.getChildAt(0) instanceof OperationNode || mutableNode.getChildAt(0) instanceof NotificationNode))
 				{
 					return new EmptyPanel(id).add(new SimpleAttributeModifier("style", "width:0;"));
 				}
@@ -136,18 +140,18 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 	}
 
 	private TreeModel getTreeModel(MbeanServerLocator reachMbeanServer)
-			throws MalformedObjectNameException, NullPointerException, InstanceNotFoundException,
-			IntrospectionException, ReflectionException
+		throws MalformedObjectNameException, NullPointerException, InstanceNotFoundException,
+		IntrospectionException, ReflectionException
 	{
 		DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("root");
 		TreeModel model = new DefaultTreeModel(rootNode);
 		String[] domains = reachMbeanServer.get().getDomains();
-		for (int i = 0; i < domains.length; i++)
+		for (String domain : domains)
 		{
-			MbeanNode domainNode = new MbeanNode(domains[i]);
+			MbeanNode domainNode = new MbeanNode(domain);
 			rootNode.add(domainNode);
 			Set<ObjectName> domainNames = reachMbeanServer.get().queryNames(null,
-					new ObjectName(domains[i] + ":*"));
+				new ObjectName(domain + ":*"));
 			addDomainsCildrens(domainNode, DataUtil.parseToPropsSet(domainNames));
 			Enumeration<DefaultMutableTreeNode> enumeration = domainNode.postorderEnumeration();
 			Set<DefaultMutableTreeNode> nodes = new HashSet<DefaultMutableTreeNode>();
@@ -157,7 +161,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 			}
 			for (DefaultMutableTreeNode node : nodes)
 			{
-				String query = domains[i] + ":";
+				String query = domain + ":";
 				TreeNode[] path = node.getPath();
 				if (path.length > 2)
 				{
@@ -173,12 +177,11 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 						}
 					}
 					Set<ObjectInstance> mBeans = reachMbeanServer.get().queryMBeans(null,
-							new ObjectName(query));
+						new ObjectName(query));
 					if (mBeans.size() > 0)
 					{
-						for (Iterator it = mBeans.iterator(); it.hasNext();)
+						for (ObjectInstance objectInstance : mBeans)
 						{
-							ObjectInstance objectInstance = (ObjectInstance)it.next();
 							((MbeanNode)node).setObjectInstance(objectInstance, reachMbeanServer);
 						}
 					}
@@ -193,7 +196,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 		Map<String, Set<Set<String>>> parentProps = new HashMap<String, Set<Set<String>>>();
 		for (Set<String> names : domainNames)
 		{
-			List<String> namesList = new ArrayList(names);
+			List<String> namesList = new ArrayList<String>(names);
 			Collections.sort(namesList, new Comparator<String>()
 			{
 				public int compare(String o1, String o2)
@@ -230,9 +233,8 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 			}
 		}
 
-		for (Iterator i = parentProps.keySet().iterator(); i.hasNext();)
+		for (String parentProp : parentProps.keySet())
 		{
-			String parentProp = (String)i.next();
 			MbeanNode newNode = new MbeanNode(null, parentProp);
 			rootNode.add(newNode);
 			addDomainsCildrens(newNode, parentProps.get(parentProp));
@@ -242,6 +244,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 
 	private class MbeanNode extends DefaultMutableTreeNode
 	{
+		private static final long serialVersionUID = 1L;
 		protected ObjectInstance objectInstance;
 		protected MbeanServerLocator mBeanServerLocator;
 		protected String name;
@@ -261,18 +264,18 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 
 		public MbeanNode(MbeanNode parent)
 		{
-			this.objectInstance = parent.objectInstance;
-			this.mBeanServerLocator = parent.mBeanServerLocator;
-			this.objectInstance = parent.objectInstance;
-			this.keyValue = parent.keyValue;
+			objectInstance = parent.objectInstance;
+			mBeanServerLocator = parent.mBeanServerLocator;
+			objectInstance = parent.objectInstance;
+			keyValue = parent.keyValue;
 		}
 
 		public void setObjectInstance(ObjectInstance objectInstance,
-				MbeanServerLocator reachMbeanServer) throws InstanceNotFoundException,
-				IntrospectionException, ReflectionException
+			MbeanServerLocator reachMbeanServer) throws InstanceNotFoundException,
+			IntrospectionException, ReflectionException
 		{
 			this.objectInstance = objectInstance;
-			this.mBeanServerLocator = reachMbeanServer;
+			mBeanServerLocator = reachMbeanServer;
 			MBeanInfo info = reachMbeanServer.get().getMBeanInfo(objectInstance.getObjectName());
 			MBeanAttributeInfo[] beanAttributeInfos = info.getAttributes();
 			MBeanOperationInfo[] beanOperationInfos = info.getOperations();
@@ -288,11 +291,11 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 			if (beanNotificationInfos.length > 0)
 			{
 				DefaultMutableTreeNode notificationsNode = new DefaultMutableTreeNode(
-						"Notification");
+					"Notification");
 				add(notificationsNode);
-				for (int i = 0; i < beanNotificationInfos.length; i++)
+				for (MBeanNotificationInfo beanNotificationInfo : beanNotificationInfos)
 				{
-					notificationsNode.add(new NotificationNode(this, beanNotificationInfos[i]));
+					notificationsNode.add(new NotificationNode(this, beanNotificationInfo));
 				}
 			}
 		}
@@ -316,15 +319,16 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 
 	private class AttributesNode extends MbeanNode
 	{
+		private static final long serialVersionUID = 1L;
 		private MBeanAttributeInfo[] beanAttributeInfos;
 
 		public AttributesNode(MbeanNode parent, MBeanAttributeInfo[] beanAttributeInfos)
 		{
 			super(parent);
 			this.beanAttributeInfos = beanAttributeInfos;
-			for (int i = 0; i < beanAttributeInfos.length; i++)
+			for (MBeanAttributeInfo beanAttributeInfo : beanAttributeInfos)
 			{
-				add(new AttributeNode(this, beanAttributeInfos[i]));
+				add(new AttributeNode(this, beanAttributeInfo));
 			}
 		}
 
@@ -332,7 +336,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 		public Component getView(String id)
 		{
 			return new AttributeValuesPanel(id, objectInstance.getObjectName(), beanAttributeInfos,
-					mBeanServerLocator);
+				mBeanServerLocator);
 		}
 
 		@Override
@@ -344,19 +348,20 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 
 	private class AttributeNode extends MbeanNode
 	{
+		private static final long serialVersionUID = 1L;
 		private MBeanAttributeInfo attributeInfo;
 
 		public AttributeNode(MbeanNode parent, MBeanAttributeInfo mBeanAttributeInfo)
 		{
 			super(parent);
-			this.attributeInfo = mBeanAttributeInfo;
+			attributeInfo = mBeanAttributeInfo;
 		}
 
 		@Override
 		public Component getView(String wicketId)
 		{
 			return new AttributeValuesPanel(wicketId, objectInstance.getObjectName(),
-					new MBeanAttributeInfo[] { attributeInfo }, mBeanServerLocator);
+				new MBeanAttributeInfo[] { attributeInfo }, mBeanServerLocator);
 		}
 
 		@Override
@@ -368,15 +373,16 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 
 	private class OperationsNode extends MbeanNode
 	{
+		private static final long serialVersionUID = 1L;
 		private MBeanOperationInfo[] beanOperationInfos;
 
 		public OperationsNode(MbeanNode parent, MBeanOperationInfo[] beanOperationInfos)
 		{
 			super(parent);
 			this.beanOperationInfos = beanOperationInfos;
-			for (int i = 0; i < beanOperationInfos.length; i++)
+			for (MBeanOperationInfo beanOperationInfo : beanOperationInfos)
 			{
-				add(new OperationNode(this, beanOperationInfos[i]));
+				add(new OperationNode(this, beanOperationInfo));
 			}
 		}
 
@@ -384,7 +390,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 		public Component getView(String id)
 		{
 			return new OperationsPanel(id, objectInstance.getObjectName(), beanOperationInfos,
-					mBeanServerLocator);
+				mBeanServerLocator);
 		}
 
 		@Override
@@ -396,19 +402,20 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 
 	private class OperationNode extends MbeanNode
 	{
+		private static final long serialVersionUID = 1L;
 		private MBeanOperationInfo beanOperationInfo;
 
 		public OperationNode(OperationsNode parent, MBeanOperationInfo mBeanOperationInfo)
 		{
 			super(parent);
-			this.beanOperationInfo = mBeanOperationInfo;
+			beanOperationInfo = mBeanOperationInfo;
 		}
 
 		@Override
 		public Component getView(String wicketId)
 		{
 			return new OperationsPanel(wicketId, objectInstance.getObjectName(),
-					new MBeanOperationInfo[] { beanOperationInfo }, mBeanServerLocator);
+				new MBeanOperationInfo[] { beanOperationInfo }, mBeanServerLocator);
 		}
 
 		@Override
@@ -420,12 +427,13 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 
 	private class NotificationNode extends MbeanNode
 	{
+		private static final long serialVersionUID = 1L;
 		private MBeanNotificationInfo beanNotificationInfo;
 
 		public NotificationNode(MbeanNode parent, MBeanNotificationInfo mBeanNotificationInfo)
 		{
 			super(parent);
-			this.beanNotificationInfo = mBeanNotificationInfo;
+			beanNotificationInfo = mBeanNotificationInfo;
 		}
 
 		@Override

@@ -14,7 +14,8 @@ import com.inmethod.grid.treegrid.TreeGrid;
  * 
  * @author Matej Knopp
  */
-public interface IGridColumn extends IDetachable {
+public interface IGridColumn<M, I> extends IDetachable
+{
 
 	/**
 	 * Returns the column id. Each column must have a unique Id. The only allowed characters in a
@@ -42,7 +43,7 @@ public interface IGridColumn extends IDetachable {
 	 *            model for given row
 	 * @return <code>true</code> if the cell is lightweight, <code>false</code> otherwise
 	 */
-	public boolean isLightWeight(IModel rowModel);
+	public boolean isLightWeight(IModel<I> rowModel);
 
 	/**
 	 * Creates a new cell component. This method is called for rows that are not lightweight (
@@ -50,15 +51,16 @@ public interface IGridColumn extends IDetachable {
 	 * 
 	 * @param parent
 	 *            Parent component. This is passed in only for convenience, the method
-	 *            implementation is <em>not</em> supposed to add the newly created component to
-	 *            the parent.
+	 *            implementation is <em>not</em> supposed to add the newly created component to the
+	 *            parent.
 	 * @param componentId
 	 *            required id of newly created components
 	 * @param rowModel
 	 *            model for given row
 	 * @return new cell component
 	 */
-	Component newCell(final WebMarkupContainer parent, final String componentId, final IModel rowModel);
+	Component newCell(final WebMarkupContainer parent, final String componentId,
+		final IModel<I> rowModel);
 
 	/**
 	 * Creates a new {@link IRenderable} instance that is used to render to render the output of
@@ -69,7 +71,7 @@ public interface IGridColumn extends IDetachable {
 	 *            model for given row
 	 * @return {@link IRenderable} instance
 	 */
-	IRenderable newCell(final IModel rowModel);
+	IRenderable<I> newCell(final IModel<I> rowModel);
 
 	/**
 	 * Result of this method determines whether the column is sortable and in case it is, also
@@ -147,7 +149,7 @@ public interface IGridColumn extends IDetachable {
 	 *            index of row for {@link DataGrid}, -1 for {@link TreeGrid}
 	 * @return cell style class or <code>null</code>
 	 */
-	public String getCellCssClass(final IModel rowModel, final int rowNum);
+	public String getCellCssClass(final IModel<I> rowModel, final int rowNum);
 
 	/**
 	 * Returns the spanning value for cell specified by rowModel. The cell can span over certain
@@ -158,7 +160,7 @@ public interface IGridColumn extends IDetachable {
 	 *            model for given row
 	 * @return colspan value
 	 */
-	public int getColSpan(IModel rowModel);
+	public int getColSpan(IModel<I> rowModel);
 
 	/**
 	 * Invoked before the first render of the grid. Column that need grid reference can implement
@@ -167,26 +169,26 @@ public interface IGridColumn extends IDetachable {
 	 * @param grid
 	 *            grid that contains this column
 	 */
-	public void setGrid(AbstractGrid grid);
+	public void setGrid(AbstractGrid<M, I> grid);
 
 	/**
 	 * Determines the behavior when there is more text in cell than it fits in it. If the method
-	 * returns <code>true</code>, the text will be wrapped and row height increased. If the
-	 * method returns <code>false</code>, the remaining part of text will be hidden.
+	 * returns <code>true</code>, the text will be wrapped and row height increased. If the method
+	 * returns <code>false</code>, the remaining part of text will be hidden.
 	 * 
 	 * @return whether this colulmn's text should wrap or not
 	 */
 	public boolean getWrapText();
-	
+
 	/**
 	 * Allows to override default behavior when a row is clicked. Depending on grid settings the
 	 * default behavior can select the item. If this method returns <code>true</code> the default
 	 * behavior will be suppressed.
+	 * 
 	 * @param rowModel
-	 * 		Model for clicked row
-	 * @return
-	 * 		<code>true</code> if the default behavior when row is clicked should be supressed,
-	 *      <code>false</code> otherwise.
+	 *            Model for clicked row
+	 * @return <code>true</code> if the default behavior when row is clicked should be supressed,
+	 *         <code>false</code> otherwise.
 	 */
-	public boolean cellClicked(IModel rowModel);
+	public boolean cellClicked(IModel<I> rowModel);
 }

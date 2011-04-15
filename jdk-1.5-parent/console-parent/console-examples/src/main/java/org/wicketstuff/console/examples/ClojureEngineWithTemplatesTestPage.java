@@ -29,7 +29,8 @@ public class ClojureEngineWithTemplatesTestPage extends WebPage {
         super(params);
         add(new Label("title", new ResourceModel("application.title")));
 
-        final ClojureScriptEngineWithTemplatesPanel panel = new ClojureScriptEngineWithTemplatesPanel("panel", null, null);
+        final ClojureScriptEngineWithTemplatesPanel panel = new ClojureScriptEngineWithTemplatesPanel(
+                "panel", null, null);
         add(panel);
 
         add(new TestPageLinksPanel("links"));

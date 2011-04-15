@@ -17,36 +17,40 @@ package org.wicketstuff.flot;
 
 import java.io.Serializable;
 
-public class PointsGraphType extends GraphType implements Serializable {
+public class PointsGraphType extends GraphType implements Serializable
+{
 	/** Required by {@link Serializable} */
 	private static final long serialVersionUID = 1L;
-   
+
 	private Double radius;
 
-	public PointsGraphType(Double lineWidth, Boolean fill, Color fillColor, Double radius) {
+	public PointsGraphType(Double lineWidth, Boolean fill, Color fillColor, Double radius)
+	{
 		super(lineWidth, fill, fillColor);
 		this.radius = radius;
 	}
-	
+
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		StringBuffer str = new StringBuffer();
-		
+
 		str.append("points: {");
-		
+
 		String superStr = super.toString();
-		
-		if(radius != null) {
+
+		if (radius != null)
+		{
 			str.append("radius: ");
 			str.append(radius);
-			if(superStr.length()>0)
+			if (superStr.length() > 0)
 				str.append(", ");
 		}
 
 		str.append(superStr);
-		
+
 		str.append("}");
-		
+
 		return str.toString();
 	}
 }

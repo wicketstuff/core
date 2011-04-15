@@ -28,21 +28,24 @@ import org.wicketstuff.progressbar.spring.Task.Message;
 
 
 /**
- * <p>Should be registered as SESSION scoped bean to prevent memory leaks with
- * unfinished tasks.</p>
- *
+ * <p>
+ * Should be registered as SESSION scoped bean to prevent memory leaks with unfinished tasks.
+ * </p>
+ * 
  * TODO automatic cleanup of tasks
- *
+ * 
  * @author Christopher Hlubek (hlubek)
- *
+ * 
  */
-public class TaskService implements ITaskService {
+public class TaskService implements ITaskService
+{
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TaskService.class);
 
 	private final Executor executor;
 
-	public TaskService(Executor executor) {
+	public TaskService(Executor executor)
+	{
 		this.executor = executor;
 	}
 
@@ -50,63 +53,76 @@ public class TaskService implements ITaskService {
 
 	private long nextTaskId = 0;
 
-	public synchronized Long schedule(Task task) {
+	public synchronized Long schedule(Task task)
+	{
 		Long taskId = nextTaskId();
 		LOGGER.debug("Scheduling task with ID: " + taskId);
 		tasks.put(taskId, task);
 		return taskId;
 	}
 
-	public void start(Long taskId) {
+	public void start(Long taskId)
+	{
 		Task task = getTask(taskId);
-		if(task != null) {
+		if (task != null)
+		{
 			LOGGER.debug("Starting task with ID: " + taskId);
 			start(task);
-		} else {
+		}
+		else
+		{
 			LOGGER.warn("Task ID " + taskId + " not found");
 		}
 	}
 
-	public void cancel(Long taskId) {
+	public void cancel(Long taskId)
+	{
 		Task task = getTask(taskId);
-		if(task != null) {
+		if (task != null)
+		{
 			task.cancel();
 		}
 	}
 
-	private void start(Task task) {
+	private void start(Task task)
+	{
 		executor.execute(task.getRunnable());
 	}
 
-	Task getTask(Long taskId) {
+	Task getTask(Long taskId)
+	{
 		return tasks.get(taskId);
 	}
 
 
-	private synchronized long nextTaskId() {
+	private synchronized long nextTaskId()
+	{
 		return nextTaskId++;
 	}
 
-	public Long scheduleAndStart(Task task) {
+	public Long scheduleAndStart(Task task)
+	{
 		Long taskId = schedule(task);
 		start(task);
 		return taskId;
 	}
 
-	public void finish(Long taskId) {
+	public void finish(Long taskId)
+	{
 		tasks.remove(taskId);
 	}
 
-	public Progression getProgression(Long taskId) {
+	public Progression getProgression(Long taskId)
+	{
 		Task task = getTask(taskId);
 		// HACK Need real finished setting in Progression
 		// FIXME we really don't know if task is null!
-		return (task == null || task.isDone()) ?
-				new Progression(100) :
-				new Progression(task.getProgress());
+		return (task == null || task.isDone()) ? new Progression(100) : new Progression(
+			task.getProgress());
 	}
 
-	public List<Message> getMessages(Long taskId) {
+	public List<Message> getMessages(Long taskId)
+	{
 		Task task = getTask(taskId);
 		// FIXME clone messages to prevent direct reference to task!
 		return task.getMessages();

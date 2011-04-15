@@ -21,50 +21,52 @@ import org.wicketstuff.simile.timeline.json.JsonUtils;
 import org.wicketstuff.simile.timeline.model.BandInfoParameters;
 import org.wicketstuff.simile.timeline.model.BandInfoParameters.DateTime;
 
-public class Timeline extends Panel implements IHeaderContributor {
+public class Timeline extends Panel implements IHeaderContributor
+{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final String TIMELINE_PARAMS_JAVASCRIPT = Timeline.class
-			.getName()
-			+ "PARAMS_JS";
+	private static final String TIMELINE_PARAMS_JAVASCRIPT = Timeline.class.getName() + "PARAMS_JS";
 
 	private transient JsonUtils jsonUtils = new JsonUtils();
-	
+
 	private String timelineMarkupId;
 	private String timelineDataId;
 
-	public Timeline(String id, IModel model) {
-		super(id, new CompoundPropertyModel(model));
+	public Timeline(String id, IModel<TimelineModel> model)
+	{
+		super(id, new CompoundPropertyModel<TimelineModel>(model));
 
 		List<BandInfoParameters> bandInfo = new ArrayList<BandInfoParameters>();
-		
+
 		BandInfoParameters upperBand = new BandInfoParameters();
 		upperBand.setIntervalPixels(70);
 		upperBand.setHighlight(true);
 		bandInfo.add(upperBand);
-		
+
 		BandInfoParameters lowerBand = new BandInfoParameters();
 		lowerBand.setIntervalUnit(DateTime.YEAR);
 		lowerBand.setIntervalPixels(200);
 		lowerBand.setWidth("200px");
 		bandInfo.add(lowerBand);
-		
+
 		init(id, model, bandInfo);
 	}
 
-	public Timeline(String id, IModel model, List<BandInfoParameters> bandInfo) {
-		super(id, new CompoundPropertyModel(model));
+	public Timeline(String id, IModel<TimelineModel> model, List<BandInfoParameters> bandInfo)
+	{
+		super(id, new CompoundPropertyModel<TimelineModel>(model));
 		init(id, model, bandInfo);
 	}
 
-	private void init(String id, IModel model, List<BandInfoParameters> bandInfo) {
-//		add(HeaderContributor
-//				.forJavaScript(new ResourceReference(getClass(),
-//						"./timeline_js/timeline-api.js?timeline-use-local-resources=true&bundle=true")));
+	private void init(String id, IModel<?> model, List<BandInfoParameters> bandInfo)
+	{
+// add(HeaderContributor
+// .forJavaScript(new ResourceReference(getClass(),
+// "./timeline_js/timeline-api.js?timeline-use-local-resources=true&bundle=true")));
 
 		WebMarkupContainer tl = new WebMarkupContainer("tl");
 		tl.setOutputMarkupId(true);
@@ -74,7 +76,8 @@ public class Timeline extends Panel implements IHeaderContributor {
 
 		WebMarkupContainer timelineData = new WebMarkupContainer("timelineData");
 		timelineData.setOutputMarkupId(true);
-		timelineData.add(new ListView("events") {
+		timelineData.add(new ListView<ITimelineEvent>("events")
+		{
 
 			/**
 			 * 
@@ -82,22 +85,22 @@ public class Timeline extends Panel implements IHeaderContributor {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void populateItem(ListItem item) {
-				item.add(new AttributeModifier("title", true,
-						new PropertyModel(item.getModel(), "title")));
-				item.add(new AttributeModifier("start", true,
-						new PropertyModel(item.getModel(), "startFormatted")));
-				item.add(new AttributeModifier("end", true, new PropertyModel(
-						item.getModel(), "endFormatted")));
-				item.add(new AttributeModifier("link", true, new PropertyModel(
-						item.getModel(), "link")));
-				item.add(new AttributeModifier("isDuration", true,
-						new PropertyModel(item.getModel(), "isDuration")));
-				item.add(new AttributeModifier("color", true,
-						new PropertyModel(item.getModel(), "color")));
+			protected void populateItem(ListItem<ITimelineEvent> item)
+			{
+				item.add(new AttributeModifier("title", true, new PropertyModel<String>(
+					item.getModel(), "title")));
+				item.add(new AttributeModifier("start", true, new PropertyModel<String>(
+					item.getModel(), "startFormatted")));
+				item.add(new AttributeModifier("end", true, new PropertyModel<String>(
+					item.getModel(), "endFormatted")));
+				item.add(new AttributeModifier("link", true, new PropertyModel<String>(
+					item.getModel(), "link")));
+				item.add(new AttributeModifier("isDuration", true, new PropertyModel<Boolean>(
+					item.getModel(), "isDuration")));
+				item.add(new AttributeModifier("color", true, new PropertyModel<String>(
+					item.getModel(), "color")));
 
-				Label child = new Label("text", new PropertyModel(item
-						.getModel(), "text"));
+				Label child = new Label("text", new PropertyModel<String>(item.getModel(), "text"));
 				child.setRenderBodyOnly(true);
 				child.setEscapeModelStrings(false);
 				item.add(child);
@@ -114,41 +117,38 @@ public class Timeline extends Panel implements IHeaderContributor {
 		loadScript.append("var theme = Timeline.ClassicTheme.create();\n");
 		loadScript.append("theme.event.bubble.width = 320;\n");
 		loadScript.append("theme.event.bubble.height = 220;\n");
-		loadScript
-				.append("theme.ether.backgroundColors[1] = theme.ether.backgroundColors[0];\n");
+		loadScript.append("theme.ether.backgroundColors[1] = theme.ether.backgroundColors[0];\n");
 		loadScript.append("var eventSource = new Timeline.DefaultEventSource(0);");
-		loadScript.append("timeLineOnLoad('" + timelineMarkupId + "', '"
-				+ timelineDataId + "', theme, eventSource, " + jsonUtils.convertBandInfos(bandInfo)
-				+ ");\n");
+		loadScript.append("timeLineOnLoad('" + timelineMarkupId + "', '" + timelineDataId +
+			"', theme, eventSource, " + jsonUtils.convertBandInfos(bandInfo) + ");\n");
 		loadScript.append("}");
-		
-		add(new Label("loadScript", loadScript.toString())
-				.setEscapeModelStrings(false));
+
+		add(new Label("loadScript", loadScript.toString()).setEscapeModelStrings(false));
 
 	}
 
-	private String getLoadScriptName() {
+	private String getLoadScriptName()
+	{
 		return "timeLineLoad" + timelineMarkupId;
 	}
 
-	public void renderHead(Component c, IHeaderResponse response) {
-		
-		response
-				.renderJavaScriptReference(new PackageResourceReference(getClass(),
-						"./timeline_js/timeline-api.js?timeline-use-local-resources=true&bundle=true"));
-		
+	public void renderHead(Component c, IHeaderResponse response)
+	{
+
+		response.renderJavaScriptReference(new PackageResourceReference(getClass(),
+			"./timeline_js/timeline-api.js?timeline-use-local-resources=true&bundle=true"));
+
 		StringBuffer parameters = new StringBuffer("");
 
 		parameters.append("Timeline_ajax_url='" + timelineUrl() + "';\n");
 
-		response.renderJavaScript(parameters.toString(),
-				TIMELINE_PARAMS_JAVASCRIPT);
+		response.renderJavaScript(parameters.toString(), TIMELINE_PARAMS_JAVASCRIPT);
 		response.renderOnLoadJavaScript(getLoadScriptName() + "()");
 	}
 
-	private String timelineUrl() {
-		return urlFor(
-				new PackageResourceReference(getClass(),
-						"timeline_ajax/simile-ajax-api.js"), new PageParameters()).toString();
+	private String timelineUrl()
+	{
+		return urlFor(new PackageResourceReference(getClass(), "timeline_ajax/simile-ajax-api.js"),
+			new PageParameters()).toString();
 	}
 }
