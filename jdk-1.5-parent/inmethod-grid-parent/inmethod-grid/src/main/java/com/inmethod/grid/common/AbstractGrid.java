@@ -29,8 +29,8 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.Response;
-import org.apache.wicket.request.resource.CompressedResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.string.JavaScriptUtils;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.visit.IVisit;
@@ -609,7 +609,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 		AbstractGrid.class, "res/dom.js");
 	private static final JavaScriptResourceReference JS_SCRIPT = new JavaScriptResourceReference(
 		AbstractGrid.class, "res/script.js");
-	private static final CompressedResourceReference CSS = new CompressedResourceReference(
+	private static final PackageResourceReference CSS = new PackageResourceReference(
 		AbstractGrid.class, "res/style.css");
 
 	/**
