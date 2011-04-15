@@ -24,7 +24,7 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.request.Response;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.template.PackageTextTemplate;
 import org.apache.wicket.util.template.TextTemplate;
@@ -45,7 +45,7 @@ public class InputBehavior extends Behavior
 {
 
 	private static final long serialVersionUID = 1L;
-	private ResourceReference SHORTCUTS_JAVASCRIPT = new CompressedResourceReference(
+	private ResourceReference SHORTCUTS_JAVASCRIPT = new PackageResourceReference(
 		InputBehavior.class, "shortcuts.js");
 	private final KeyType[] keyCombo;
 	private EventType eventType;

@@ -26,7 +26,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.progressbar.support.DynamicAjaxSelfUpdatingTimerBehavior;
@@ -96,7 +96,7 @@ public class ProgressBar extends Panel
 
 	private int width = 400;
 
-	private static final ResourceReference CSS = new CompressedResourceReference(ProgressBar.class,
+	private static final ResourceReference CSS = new PackageResourceReference(ProgressBar.class,
 		"ProgressBar.css");
 
 

@@ -31,7 +31,7 @@ import org.apache.wicket.markup.repeater.DefaultItemReuseStrategy;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandler;
 import org.wicketstuff.datatable_autocomplete.table.DTADataTable;
@@ -55,10 +55,10 @@ public class AutoCompletingPanel<T> extends Panel
 
 	private boolean initialRenderMode = false;
 
-	private static final ResourceReference CSS = new CompressedResourceReference(
+	private static final ResourceReference CSS = new PackageResourceReference(
 		AutoCompletingPanel.class, "dta_auto_complete_overlay.css");
 
-	private static final ResourceReference TABLE_CSS = new CompressedResourceReference(
+	private static final ResourceReference TABLE_CSS = new PackageResourceReference(
 		AutoCompletingPanel.class, "dta_autocomplete_table.css");
 
 	private Label theLabel;

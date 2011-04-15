@@ -9,7 +9,7 @@ package org.wicketstuff.html5;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 
 /**
  * 
@@ -20,7 +20,7 @@ public class Html5UtilsBehavior extends Behavior
 
 	private static final long serialVersionUID = 1L;
 
-	private static final CompressedResourceReference H5UTILS_JS = new CompressedResourceReference(
+	private static final PackageResourceReference H5UTILS_JS = new PackageResourceReference(
 		Html5UtilsBehavior.class, "h5utils.js");
 
 	/**

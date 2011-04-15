@@ -35,7 +35,7 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.parser.XmlPullParser;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.template.PackageTextTemplate;
 import org.cometd.server.CometdServlet;
@@ -65,15 +65,15 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 
 	private static final String DEFAULT_COMETD_PATH = guessCometdServletPath();
 
-	private static final ResourceReference COMETD = new CompressedResourceReference(
+	private static final ResourceReference COMETD = new PackageResourceReference(
 		CometdPushBehavior.class, "org/cometd.js");
-	private static final ResourceReference COMETD_ACK = new CompressedResourceReference(
+	private static final ResourceReference COMETD_ACK = new PackageResourceReference(
 		CometdPushBehavior.class, "org/cometd/AckExtension.js");
-	private static final ResourceReference COMETD_RELOAD = new CompressedResourceReference(
+	private static final ResourceReference COMETD_RELOAD = new PackageResourceReference(
 		CometdPushBehavior.class, "org/cometd/ReloadExtension.js");
-	private static final ResourceReference COMETD_TIMESTAMP = new CompressedResourceReference(
+	private static final ResourceReference COMETD_TIMESTAMP = new PackageResourceReference(
 		CometdPushBehavior.class, "org/cometd/TimeStampExtension.js");
-	private static final ResourceReference COMETD_TIMESYNC = new CompressedResourceReference(
+	private static final ResourceReference COMETD_TIMESYNC = new PackageResourceReference(
 		CometdPushBehavior.class, "org/cometd/TimeSyncExtension.js");
 
 	private static final PackageTextTemplate TEMPLATE_INIT = new PackageTextTemplate(

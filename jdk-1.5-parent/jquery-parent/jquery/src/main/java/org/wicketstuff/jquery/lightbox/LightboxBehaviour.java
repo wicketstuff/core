@@ -2,7 +2,7 @@ package org.wicketstuff.jquery.lightbox;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 
@@ -19,9 +19,9 @@ import org.wicketstuff.jquery.JQueryBehavior;
 public class LightboxBehaviour extends JQueryBehavior
 {
 	private static final long serialVersionUID = 1L;
-	private static final ResourceReference LIGHTBOX_JS = new CompressedResourceReference(
+	private static final ResourceReference LIGHTBOX_JS = new PackageResourceReference(
 		LightboxBehaviour.class, "jquery.lightbox-0.5.js");
-	private static final ResourceReference LIGHTBOX_CSS = new CompressedResourceReference(
+	private static final ResourceReference LIGHTBOX_CSS = new PackageResourceReference(
 		LightboxBehaviour.class, "jquery.lightbox-0.5.css");
 	private LightboxOptions options;
 	private String selector = "li a";

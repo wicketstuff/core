@@ -8,8 +8,8 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.resource.CompressedResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.value.IValueMap;
 import org.wicketstuff.yav.alerts.AlertType;
@@ -55,7 +55,7 @@ public class YavBehavior extends Behavior
 	{
 		super.renderHead(c, response);
 
-		response.renderCSSReference(new CompressedResourceReference(YavBehavior.class,
+		response.renderCSSReference(new PackageResourceReference(YavBehavior.class,
 			"style/yav-style.css"));
 
 		addJavascriptReference(response, "yav.js");

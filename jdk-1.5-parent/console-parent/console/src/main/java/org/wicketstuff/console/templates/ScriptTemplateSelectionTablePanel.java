@@ -26,7 +26,7 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.console.ScriptEnginePanel;
 
@@ -65,7 +65,7 @@ public class ScriptTemplateSelectionTablePanel extends Panel
 
 	private static final long serialVersionUID = 1L;
 
-	private static final ResourceReference CSS = new CompressedResourceReference(
+	private static final ResourceReference CSS = new PackageResourceReference(
 		ScriptTemplateSelectionTablePanel.class,
 		ScriptTemplateSelectionTablePanel.class.getSimpleName() + ".css");
 

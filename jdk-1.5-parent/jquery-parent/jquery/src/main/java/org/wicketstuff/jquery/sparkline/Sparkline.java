@@ -26,14 +26,14 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 
 public class Sparkline extends WebComponent implements IHeaderContributor
 {
 	private static final long serialVersionUID = 1L;
 
-	public static final CompressedResourceReference SPARKLINE_JS = new CompressedResourceReference(
+	public static final PackageResourceReference SPARKLINE_JS = new PackageResourceReference(
 		Sparkline.class, "jquery.sparkline-1.4.3.min.js");
 
 	final SparklineOptions options;

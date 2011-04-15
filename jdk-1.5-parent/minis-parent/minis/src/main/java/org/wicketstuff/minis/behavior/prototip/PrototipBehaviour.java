@@ -20,7 +20,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 
 /**
  * Prototip behavior
@@ -101,16 +101,16 @@ public class PrototipBehaviour extends Behavior
 		}
 		if (!overrideHeaderContributor)
 		{
-			response.renderCSSReference(new CompressedResourceReference(PrototipBehaviour.class,
+			response.renderCSSReference(new PackageResourceReference(PrototipBehaviour.class,
 				"prototip.css"), "screen");
 			switch (selectedJsType)
 			{
 				case NORMAL :
-					response.renderJavaScriptReference(new CompressedResourceReference(
+					response.renderJavaScriptReference(new PackageResourceReference(
 						PrototipBehaviour.class, "prototip.js"));
 					break;
 				case MIN :
-					response.renderJavaScriptReference(new CompressedResourceReference(
+					response.renderJavaScriptReference(new PackageResourceReference(
 						PrototipBehaviour.class, "prototip-min.js"));
 					break;
 			}

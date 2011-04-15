@@ -5,7 +5,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 import org.wicketstuff.jquery.ui.UIResources;
@@ -20,10 +20,10 @@ public class SliderBehavior extends JQueryBehavior
 
 	private static final long serialVersionUID = 1L;
 
-	private static final ResourceReference UI_SLIDER_RESOURCE_REFERENCE = new CompressedResourceReference(
+	private static final ResourceReference UI_SLIDER_RESOURCE_REFERENCE = new PackageResourceReference(
 		SliderBehavior.class, "ui.slider.js");
 
-	public static final ResourceReference WICKET_SLIDER_JS = new CompressedResourceReference(
+	public static final ResourceReference WICKET_SLIDER_JS = new PackageResourceReference(
 		SliderBehavior.class, "wicket-jquery.slider.js");
 
 	public SliderBehavior()

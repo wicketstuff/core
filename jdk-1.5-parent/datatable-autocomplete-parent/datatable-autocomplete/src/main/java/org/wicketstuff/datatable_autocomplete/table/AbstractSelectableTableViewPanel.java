@@ -32,7 +32,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.IItemReuseStrategy;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +64,7 @@ public abstract class AbstractSelectableTableViewPanel<T> extends FormComponentP
 
 	protected final ISortableDataProvider<T> dataProvider;
 
-	private static final ResourceReference DEFAULT_CSS = new CompressedResourceReference(
+	private static final ResourceReference DEFAULT_CSS = new PackageResourceReference(
 		DTADataTable.class, "dta_table.css");
 
 	protected ButtonListView buttonView;
@@ -165,10 +165,10 @@ public abstract class AbstractSelectableTableViewPanel<T> extends FormComponentP
 
 		includingRadioColumnList.add(radioColumn);
 
-		for (int i = 0; i < columns.length; i++)
+		for (IColumn<?> column : columns)
 		{
 
-			includingRadioColumnList.add((IColumn<T>)columns[i]);
+			includingRadioColumnList.add((IColumn<T>)column);
 		}
 
 		dataTable = new DTADataTable<T>("dataTable", cssClassName, includingRadioColumnList,

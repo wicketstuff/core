@@ -23,7 +23,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.template.PackageTextTemplate;
 import org.apache.wicket.util.template.TextTemplate;
 
@@ -179,12 +179,12 @@ public class MootipBehaviour extends Behavior
 	@Override
 	public void renderHead(Component c, final IHeaderResponse response)
 	{
-		response.renderJavaScriptReference(new CompressedResourceReference(MootipBehaviour.class,
+		response.renderJavaScriptReference(new PackageResourceReference(MootipBehaviour.class,
 			"mootools.v1.11.js"));
-		response.renderJavaScriptReference(new CompressedResourceReference(MootipBehaviour.class,
+		response.renderJavaScriptReference(new PackageResourceReference(MootipBehaviour.class,
 			"mootips.v1.11.js"));
 		if (contributeCSS)
-			response.renderCSSReference(new CompressedResourceReference(MootipBehaviour.class,
+			response.renderCSSReference(new PackageResourceReference(MootipBehaviour.class,
 				"tip.css"));
 
 		response.renderOnLoadJavaScript(generateJS(mooTipTemplate));

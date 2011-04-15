@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.demo.PageSupport;
 import org.wicketstuff.jquery.lavalamp.LavaLampMenuPanel;
@@ -36,7 +36,7 @@ public final class Page4LavaLamp extends PageSupport
 			@Override
 			protected ResourceReference getCssResourceReference()
 			{
-				return new CompressedResourceReference(Page4LavaLamp.class, "lavalamp.css");
+				return new PackageResourceReference(Page4LavaLamp.class, "lavalamp.css");
 			}
 		});
 	}

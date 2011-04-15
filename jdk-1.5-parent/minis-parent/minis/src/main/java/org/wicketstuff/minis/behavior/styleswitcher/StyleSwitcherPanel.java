@@ -18,7 +18,6 @@ package org.wicketstuff.minis.behavior.styleswitcher;
 
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.request.resource.CompressedResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
 
 /**
@@ -36,11 +35,11 @@ public class StyleSwitcherPanel extends Panel
 {
 	private static final long serialVersionUID = 1L;
 
-	private static final CompressedResourceReference SS_CSS_LARGE = new CompressedResourceReference(
+	private static final PackageResourceReference SS_CSS_LARGE = new PackageResourceReference(
 		StyleSwitcher.class, "large.css");
-	private static final CompressedResourceReference SS_CSS_MEDIUM = new CompressedResourceReference(
+	private static final PackageResourceReference SS_CSS_MEDIUM = new PackageResourceReference(
 		StyleSwitcher.class, "medium.css");
-	private static final CompressedResourceReference SS_CSS_SMALL = new CompressedResourceReference(
+	private static final PackageResourceReference SS_CSS_SMALL = new PackageResourceReference(
 		StyleSwitcher.class, "small.css");
 
 	/**

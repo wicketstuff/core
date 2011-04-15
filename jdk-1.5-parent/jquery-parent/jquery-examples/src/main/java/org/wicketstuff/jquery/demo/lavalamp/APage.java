@@ -1,7 +1,7 @@
 package org.wicketstuff.jquery.demo.lavalamp;
 
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.lavalamp.LavaLampMenuPanel;
 
@@ -18,7 +18,7 @@ public final class APage extends WebPage
 			@Override
 			protected ResourceReference getCssResourceReference()
 			{
-				return new CompressedResourceReference(APage.class, "apage.css");
+				return new PackageResourceReference(APage.class, "apage.css");
 			}
 		});
 	}
