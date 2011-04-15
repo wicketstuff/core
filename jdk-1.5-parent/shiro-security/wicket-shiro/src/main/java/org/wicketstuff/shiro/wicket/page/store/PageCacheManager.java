@@ -99,6 +99,9 @@ public class PageCacheManager implements IClusterable
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString()
 	{

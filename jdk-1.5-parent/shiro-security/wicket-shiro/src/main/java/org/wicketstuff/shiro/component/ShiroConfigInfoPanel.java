@@ -16,46 +16,44 @@
  */
 package org.wicketstuff.shiro.component;
 
-import org.apache.shiro.mgt.SecurityManager;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
 import org.wicketstuff.shiro.ShiroServletRequestModel;
 import org.wicketstuff.shiro.ShiroSubjectModel;
 
-
-
 public class ShiroConfigInfoPanel extends Panel
-{ 
-	public ShiroConfigInfoPanel(String id)
+{
+	private static final long serialVersionUID = 1L;
+
+	public ShiroConfigInfoPanel(final String id)
 	{
-	  super( id );
-	  
-	  IModel<?> model = new ShiroServletRequestModel();
-    WebMarkupContainer request = new WebMarkupContainer( "request",
-        new CompoundPropertyModel( model ) );
-    request.add( new Label("toString", model ));
-    request.add( new Label("class.name" ));
-    request.add( new Label("RemoteUser" ));
-    request.add( new Label("RequestedSessionId" ));
-    request.add( new Label("UserPrincipal" ));
-    request.add( new Label("HttpSessions" ));
-    request.add( new Label("RequestedSessionIdFromCookie" ));
-    request.add( new Label("RequestedSessionIdFromUrl" ));
-    request.add( new Label("RequestedSessionIdFromURL" ));
-    request.add( new Label("RequestedSessionIdValid" ));
-    add( request );
-    
-	  model = new ShiroSubjectModel();
-    WebMarkupContainer subject = new WebMarkupContainer( "subject",
-        new CompoundPropertyModel<SecurityManager>( model ) );
-    subject.add( new Label("toString", model ));
-    subject.add( new Label("class.name" ));
-    subject.add( new Label("authenticated" ));
-    subject.add( new Label("principal" ));
-    subject.add( new Label("session" ));
-    add( subject );
+		super(id);
+
+		final ShiroServletRequestModel shiroRequestModel = new ShiroServletRequestModel();
+		final WebMarkupContainer request = new WebMarkupContainer("request",
+			new CompoundPropertyModel<ShiroServletRequestModel>(shiroRequestModel));
+		request.add(new Label("toString", shiroRequestModel));
+		request.add(new Label("class.name"));
+		request.add(new Label("RemoteUser"));
+		request.add(new Label("RequestedSessionId"));
+		request.add(new Label("UserPrincipal"));
+		request.add(new Label("HttpSessions"));
+		request.add(new Label("RequestedSessionIdFromCookie"));
+		request.add(new Label("RequestedSessionIdFromUrl"));
+		request.add(new Label("RequestedSessionIdFromURL"));
+		request.add(new Label("RequestedSessionIdValid"));
+		add(request);
+
+		final ShiroSubjectModel shiroSubjectModel = new ShiroSubjectModel();
+		final WebMarkupContainer subject = new WebMarkupContainer("subject",
+			new CompoundPropertyModel<ShiroSubjectModel>(shiroSubjectModel));
+		subject.add(new Label("toString", shiroSubjectModel));
+		subject.add(new Label("class.name"));
+		subject.add(new Label("authenticated"));
+		subject.add(new Label("principal"));
+		subject.add(new Label("session"));
+		add(subject);
 	}
 }

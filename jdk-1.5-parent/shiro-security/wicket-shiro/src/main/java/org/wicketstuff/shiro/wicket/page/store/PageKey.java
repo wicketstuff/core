@@ -39,11 +39,65 @@ public class PageKey implements IClusterable, Comparable<PageKey>
 	private final int version;
 	private final int ajaxVersion;
 
-	public PageKey(int pageId, int version, int ajaxVersion)
+	public PageKey(final int pageId, final int version, final int ajaxVersion)
 	{
 		this.pageId = pageId;
 		this.version = version;
 		this.ajaxVersion = ajaxVersion;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Object clone()
+	{
+		PageKey clone;
+		try
+		{
+			clone = (PageKey)super.clone();
+		}
+		catch (final CloneNotSupportedException neverHappens)
+		{
+			// Should never happen since this class is Cloneable and a direct subclass of Object
+			throw new InternalError("Unable to clone object of type [" + getClass().getName() + "]");
+		}
+		return clone;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public int compareTo(final PageKey pk)
+	{
+		if (pageId != pk.pageId)
+			return pageId - pk.pageId;
+		else if (version != pk.version)
+			return version - pk.version;
+		else if (ajaxVersion != pk.ajaxVersion)
+			return ajaxVersion - pk.ajaxVersion;
+		return 0;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(final Object o)
+	{
+		if (o == this)
+			return true;
+		if (o instanceof PageKey)
+		{
+			final PageKey pk = (PageKey)o;
+			return pageId == pk.pageId && version == pk.version && ajaxVersion == pk.ajaxVersion;
+		}
+		return false;
+	}
+
+	public int getAjaxVersion()
+	{
+		return ajaxVersion;
 	}
 
 	public int getPageId()
@@ -56,61 +110,9 @@ public class PageKey implements IClusterable, Comparable<PageKey>
 		return version;
 	}
 
-	public int getAjaxVersion()
-	{
-		return ajaxVersion;
-	}
-
-	@SuppressWarnings( { "CloneDoesntDeclareCloneNotSupportedException" })
-	@Override
-	protected Object clone()
-	{
-		PageKey clone;
-		try
-		{
-			clone = (PageKey)super.clone();
-		}
-		catch (CloneNotSupportedException neverHappens)
-		{
-			// Should never happen since this class is Cloneable and a direct subclass of Object
-			throw new InternalError("Unable to clone object of type [" + getClass().getName() + "]");
-		}
-		return clone;
-	}
-
-	public int compareTo(PageKey pk)
-	{
-		if (pageId != pk.pageId)
-		{
-			return pageId - pk.pageId;
-		}
-		else if (version != pk.version)
-		{
-			return version - pk.version;
-		}
-		else if (ajaxVersion != pk.ajaxVersion)
-		{
-			return ajaxVersion - pk.ajaxVersion;
-		}
-		return 0;
-	}
-
-	@Override
-	public boolean equals(Object o)
-	{
-		if (o == this)
-		{
-			return true;
-		}
-		if (o instanceof PageKey)
-		{
-			PageKey pk = (PageKey)o;
-			return (pageId == pk.pageId) && (version == pk.version) &&
-				(ajaxVersion == pk.ajaxVersion);
-		}
-		return false;
-	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int hashCode()
 	{
@@ -120,12 +122,19 @@ public class PageKey implements IClusterable, Comparable<PageKey>
 		return result;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString()
 	{
-		StringBuilder sb = new StringBuilder(53);
-		sb.append("pageId: ").append(pageId).append(", version: ").append(version).append(
-			", ajaxVersion: ").append(ajaxVersion);
+		final StringBuilder sb = new StringBuilder(53);
+		sb.append("pageId: ")
+			.append(pageId)
+			.append(", version: ")
+			.append(version)
+			.append(", ajaxVersion: ")
+			.append(ajaxVersion);
 		return sb.toString();
 	}
 }

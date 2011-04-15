@@ -31,7 +31,9 @@ Release Notes - WicketStuff Core - Version 1.4.x.y:
 <artifactId>:
 <list of key changes or bugfixes included in this release>
 
-
+wicketstuff-minis:
+  - added ServerHostNameAndTimeFilter backport
+  
 The plan is to release a 1.4.x.y point release within one month from today.    If you commit code and/or want a release sooner let me know as one month is the worst case target.
 
 Regards, 

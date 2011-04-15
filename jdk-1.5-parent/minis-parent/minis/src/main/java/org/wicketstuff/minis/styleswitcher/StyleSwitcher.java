@@ -42,7 +42,7 @@ import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 public class StyleSwitcher extends AbstractBehavior
 {
 	/**
-	 * Javascript access methods
+	 * JavaScript access methods
 	 * 
 	 * @author Igor Vaynberg (ivaynberg at apache dot org)
 	 * 
@@ -67,31 +67,10 @@ public class StyleSwitcher extends AbstractBehavior
 		private final String title;
 		private final ResourceReference reference;
 
-		/**
-		 * @param name
-		 * @param reference
-		 */
-		public TitledResourceReferenceTuple(final String name, final ResourceReference reference)
+		public TitledResourceReferenceTuple(final String title, final ResourceReference reference)
 		{
-			super();
-			title = name;
+			this.title = title;
 			this.reference = reference;
-		}
-
-		/**
-		 * @return reference
-		 */
-		public ResourceReference getReference()
-		{
-			return reference;
-		}
-
-		/**
-		 * @return title
-		 */
-		public String getTitle()
-		{
-			return title;
 		}
 	}
 
@@ -101,15 +80,6 @@ public class StyleSwitcher extends AbstractBehavior
 		StyleSwitcher.class, "styleswitcher.js");
 
 	private final List<TitledResourceReferenceTuple> stylesheets = new ArrayList<TitledResourceReferenceTuple>();
-
-	/**
-	 * Construct.
-	 * 
-	 */
-	public StyleSwitcher()
-	{
-		super();
-	}
 
 	/**
 	 * Adds stylesheet to this stylesheet switcher
@@ -125,7 +95,7 @@ public class StyleSwitcher extends AbstractBehavior
 	}
 
 	/**
-	 * @see org.apache.wicket.behavior.AbstractBehavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void renderHead(final IHeaderResponse response)
@@ -133,14 +103,8 @@ public class StyleSwitcher extends AbstractBehavior
 		response.renderJavascriptReference(SS_JS);
 
 		for (final TitledResourceReferenceTuple stylesheet : stylesheets)
-		{
-			final StringBuilder link = new StringBuilder(128);
-			link.append("<link rel=\"alternate stylesheet\" type=\"text/css\" href=\"");
-			link.append(RequestCycle.get().urlFor(stylesheet.getReference()));
-			link.append("\" title=\"");
-			link.append(stylesheet.getTitle());
-			link.append("\"/>");
-			response.renderString(link.toString());
-		}
+			response.renderString("<link rel=\"alternate stylesheet\" type=\"text/css\" href=\"" +
+				RequestCycle.get().urlFor(stylesheet.reference, null) + "\" title=\"" +
+				stylesheet.title + "\"/>");
 	}
 }
