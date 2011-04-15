@@ -75,7 +75,6 @@ public class ScriptEnginePanel extends Panel {
             super.onInitialize();
             add(new AttributeAppender("onclick", Model.of("clearTextarea('"
                     + inputTf.getMarkupId() + "')"), ";"));
-
         }
 
     }

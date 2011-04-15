@@ -32,7 +32,7 @@ public abstract class ScriptEngineWindow extends ModalWindow {
 
     private static final long serialVersionUID = 1L;
     private final Lang lang;
-    private ScriptEnginePanel enginePanel;
+    private final ScriptEnginePanel enginePanel;
 
     /**
      * Constructor.
@@ -53,18 +53,15 @@ public abstract class ScriptEngineWindow extends ModalWindow {
         setAutoSize(true);
         setResizable(false);
 
-    }
-
-    @Override
-    protected void onInitialize() {
-        super.onInitialize();
-
         enginePanel = newEnginePanel(getContentId(), lang);
         setContent(enginePanel);
+
     }
 
     /**
      * Creates a new engine panel, override to customize.
+     * <p>
+     * Attention: This is called from the constructor.
      * 
      * @param wicketId
      *            id

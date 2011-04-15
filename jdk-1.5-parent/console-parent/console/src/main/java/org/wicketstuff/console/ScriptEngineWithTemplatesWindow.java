@@ -32,8 +32,7 @@ import org.wicketstuff.console.templates.ScriptTemplate;
 public abstract class ScriptEngineWithTemplatesWindow extends ModalWindow {
 
     private static final long serialVersionUID = 1L;
-    private final Lang lang;
-    private ScriptEnginePanelWithTemplates enginePanelWithTemplates;
+    private final ScriptEnginePanelWithTemplates enginePanelWithTemplates;
     private final IDataProvider<ScriptTemplate> dataProvider;
 
     /**
@@ -53,26 +52,22 @@ public abstract class ScriptEngineWithTemplatesWindow extends ModalWindow {
             final IModel<String> windowTitle,
             final IDataProvider<ScriptTemplate> dataProvider) {
         super(id);
-        this.lang = lang;
         this.dataProvider = dataProvider;
 
         setTitle(windowTitle != null ? windowTitle : Model.of("Wicket Console"));
         setAutoSize(true);
         setResizable(false);
 
-    }
-
-    @Override
-    protected void onInitialize() {
-        super.onInitialize();
-
         enginePanelWithTemplates = newEnginePanelWithTemplates(getContentId(),
                 lang);
         setContent(enginePanelWithTemplates);
+
     }
 
     /**
      * Creates a new engine panel with templates, override to customize.
+     * <p>
+     * Attention: This is called from the constructor.
      * 
      * @param wicketId
      *            id
