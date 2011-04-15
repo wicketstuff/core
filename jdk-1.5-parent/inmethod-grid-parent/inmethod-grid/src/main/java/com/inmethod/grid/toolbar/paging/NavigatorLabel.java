@@ -43,24 +43,25 @@ public class NavigatorLabel extends Label
 	 * @param table
 	 *            pageable view
 	 */
-	public NavigatorLabel(final String id, final DataGrid table)
+	public <T> NavigatorLabel(final String id, final DataGrid<T> table)
 	{
 		super(id);
-		setDefaultModel(new StringResourceModel("NavigatorLabel", this, new Model(
-			new LabelModelObject(table)), "Showing ${from} to ${to} of ${of}"));
+		setDefaultModel(new StringResourceModel("NavigatorLabel", this,
+			new Model<LabelModelObject<T>>(new LabelModelObject<T>(table)),
+			"Showing ${from} to ${to} of ${of}"));
 	}
 
-	private class LabelModelObject implements IClusterable
+	private class LabelModelObject<T> implements IClusterable
 	{
 		private static final long serialVersionUID = 1L;
-		private final DataGrid table;
+		private final DataGrid<T> table;
 
 		/**
 		 * Construct.
 		 * 
 		 * @param table
 		 */
-		public LabelModelObject(DataGrid table)
+		public LabelModelObject(DataGrid<T> table)
 		{
 			this.table = table;
 		}
@@ -83,7 +84,7 @@ public class NavigatorLabel extends Label
 			{
 				return 0;
 			}
-			return (table.getCurrentPage() * table.getRowsPerPage()) + 1;
+			return table.getCurrentPage() * table.getRowsPerPage() + 1;
 		}
 
 		/**

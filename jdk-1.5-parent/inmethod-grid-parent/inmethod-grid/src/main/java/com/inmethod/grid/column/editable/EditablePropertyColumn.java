@@ -16,7 +16,7 @@ import com.inmethod.grid.column.PropertyColumn;
  * @author Matej Knopp
  * 
  */
-public class EditablePropertyColumn extends PropertyColumn
+public class EditablePropertyColumn<M, I, P> extends PropertyColumn<M, I, P>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -34,8 +34,8 @@ public class EditablePropertyColumn extends PropertyColumn
 	 *            optional string that will be returned by {@link ISortState} to indicate that the
 	 *            column is being sorted
 	 */
-	public EditablePropertyColumn(String columnId, IModel headerModel, String propertyExpression,
-		String sortProperty)
+	public EditablePropertyColumn(String columnId, IModel<String> headerModel,
+		String propertyExpression, String sortProperty)
 	{
 		super(columnId, headerModel, propertyExpression, sortProperty);
 	}
@@ -50,7 +50,8 @@ public class EditablePropertyColumn extends PropertyColumn
 	 * @param propertyExpression
 	 *            property expression used to get the displayed value for row object
 	 */
-	public EditablePropertyColumn(String columnId, IModel headerModel, String propertyExpression)
+	public EditablePropertyColumn(String columnId, IModel<String> headerModel,
+		String propertyExpression)
 	{
 		super(columnId, headerModel, propertyExpression);
 	}
@@ -67,7 +68,8 @@ public class EditablePropertyColumn extends PropertyColumn
 	 *            optional string that will be returned by {@link ISortState} to indicate that the
 	 *            column is being sorted
 	 */
-	public EditablePropertyColumn(IModel headerModel, String propertyExpression, String sortProperty)
+	public EditablePropertyColumn(IModel<String> headerModel, String propertyExpression,
+		String sortProperty)
 	{
 		super(headerModel, propertyExpression, sortProperty);
 	}
@@ -81,7 +83,7 @@ public class EditablePropertyColumn extends PropertyColumn
 	 * @param propertyExpression
 	 *            property expression used to get the displayed value for row object
 	 */
-	public EditablePropertyColumn(IModel headerModel, String propertyExpression)
+	public EditablePropertyColumn(IModel<String> headerModel, String propertyExpression)
 	{
 		super(headerModel, propertyExpression);
 	}
@@ -90,33 +92,35 @@ public class EditablePropertyColumn extends PropertyColumn
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isLightWeight(IModel rowModel)
+	public boolean isLightWeight(IModel<I> rowModel)
 	{
 		// when the item is selected, we need a textField component, thus
 		// this method has to return false.
 		return !getGrid().isItemEdited(rowModel);
 	}
 
-	protected IModel getFieldModel(IModel rowModel)
+	protected IModel<P> getFieldModel(IModel<I> rowModel)
 	{
-		return new PropertyModel(rowModel, getPropertyExpression());
+		return new PropertyModel<P>(rowModel, getPropertyExpression());
 	}
 
-	protected EditableCellPanel newCellPanel(String componentId, IModel rowModel, IModel cellModel)
+	protected EditableCellPanel<M, I, P> newCellPanel(String componentId, IModel<I> rowModel,
+		IModel<P> cellModel)
 	{
-		return new TextFieldPanel(componentId, cellModel, rowModel, this);
+		return new TextFieldPanel<M, I, P>(componentId, cellModel, rowModel, this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Component newCell(WebMarkupContainer parent, String componentId, IModel rowModel)
+	public Component newCell(WebMarkupContainer parent, String componentId, IModel<I> rowModel)
 	{
 		// when this method is called, it means that the row is not lightweight, which in turn
 		// means the the row is selected (see implementation of #isLightWeight(IModel).
 
-		EditableCellPanel panel = newCellPanel(componentId, rowModel, getFieldModel(rowModel));
+		EditableCellPanel<M, I, P> panel = newCellPanel(componentId, rowModel,
+			getFieldModel(rowModel));
 		addValidators(panel.getEditComponent());
 		return panel;
 
@@ -124,7 +128,7 @@ public class EditablePropertyColumn extends PropertyColumn
 		// is called that only displays the item
 	}
 
-	protected void addValidators(FormComponent component)
+	protected void addValidators(FormComponent<P> component)
 	{
 
 	}
@@ -133,7 +137,7 @@ public class EditablePropertyColumn extends PropertyColumn
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCellCssClass(IModel rowModel, int rowNum)
+	public String getCellCssClass(IModel<I> rowModel, int rowNum)
 	{
 		String prelight = isClickToEdit() ? "imxt-want-prelight" : "";
 		// for selected items we don't want the default cell item padding because we need
@@ -149,9 +153,9 @@ public class EditablePropertyColumn extends PropertyColumn
 	}
 
 	@Override
-	public boolean cellClicked(IModel rowModel)
+	public boolean cellClicked(IModel<I> rowModel)
 	{
-		if (!isClickToEdit() || (getGrid().isClickRowToSelect() && getGrid().isSelectToEdit()))
+		if (!isClickToEdit() || getGrid().isClickRowToSelect() && getGrid().isSelectToEdit())
 		{
 			return false;
 		}

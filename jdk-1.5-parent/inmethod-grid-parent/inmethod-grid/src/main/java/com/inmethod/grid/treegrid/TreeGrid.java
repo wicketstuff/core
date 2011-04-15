@@ -3,10 +3,10 @@ package com.inmethod.grid.treegrid;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeNode;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -26,7 +26,8 @@ import com.inmethod.grid.common.AbstractGrid;
  * 
  * @author Matej Knopp
  */
-public class TreeGrid extends AbstractGrid
+public class TreeGrid<T extends TreeModel & Serializable, I extends TreeNode & Serializable>
+	extends AbstractGrid<T, I>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -41,18 +42,18 @@ public class TreeGrid extends AbstractGrid
 	 * @param columns
 	 *            list of {@link IGridColumn}s.
 	 */
-	public TreeGrid(String id, IModel model, List<IGridColumn> columns)
+	public TreeGrid(String id, IModel<T> model, List<IGridColumn<T, I>> columns)
 	{
 		super(id, model, columns);
 
 		WebMarkupContainer bodyContainer = (WebMarkupContainer)get("form:bodyContainer");
-		bodyContainer.add(body = new TreeGridBody("body", model)
+		bodyContainer.add(body = new TreeGridBody<T, I>("body", model)
 		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Collection<IGridColumn> getActiveColumns()
+			protected Collection<IGridColumn<T, I>> getActiveColumns()
 			{
 				return TreeGrid.this.getActiveColumns();
 			}
@@ -193,7 +194,7 @@ public class TreeGrid extends AbstractGrid
 		 */
 		public void nodeSelected(Object node)
 		{
-			onItemSelectionChanged(new Model((Serializable)node), true);
+			onItemSelectionChanged(new Model<I>((I)node), true);
 		}
 
 		/**
@@ -201,7 +202,7 @@ public class TreeGrid extends AbstractGrid
 		 */
 		public void nodeUnselected(Object node)
 		{
-			onItemSelectionChanged(new Model((Serializable)node), false);
+			onItemSelectionChanged(new Model<I>((I)node), false);
 		}
 	};
 
@@ -215,12 +216,12 @@ public class TreeGrid extends AbstractGrid
 	 * @param columns
 	 *            list of {@link IGridColumn}s.
 	 */
-	public TreeGrid(String id, TreeModel model, List<IGridColumn> columns)
+	public TreeGrid(String id, T model, List<IGridColumn<T, I>> columns)
 	{
-		this(id, new Model((Serializable)model), columns);
+		this(id, Model.of(model), columns);
 	}
 
-	private TreeGridBody body;
+	private TreeGridBody<T, I> body;
 
 	/**
 	 * Returns the inner tree of the {@link TreeGrid}.
@@ -268,15 +269,14 @@ public class TreeGrid extends AbstractGrid
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<IModel> getSelectedItems()
+	public Collection<IModel<I>> getSelectedItems()
 	{
 		Collection<Object> nodes = getTreeState().getSelectedNodes();
-		Collection<IModel> result = new ArrayList<IModel>(nodes.size());
+		Collection<IModel<I>> result = new ArrayList<IModel<I>>(nodes.size());
 		for (Object node : nodes)
 		{
-			result.add(new Model((Serializable)node));
+			result.add(new Model<I>((I)node));
 		}
 		return result;
 	}
@@ -303,7 +303,7 @@ public class TreeGrid extends AbstractGrid
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isItemSelected(IModel itemModel)
+	public boolean isItemSelected(IModel<I> itemModel)
 	{
 		return getTreeState().isNodeSelected(itemModel.getObject());
 	}
@@ -332,12 +332,12 @@ public class TreeGrid extends AbstractGrid
 		if (body != null)
 		{
 			boolean first = true;
-			for (Iterator<?> i = body.iterator(); i.hasNext();)
+			for (Object name : body)
 			{
-				Component component = (Component)i.next();
+				Component component = (Component)name;
 				if (getTree().isRootLess() == false || first == false)
 				{
-					selectItem(component.getDefaultModel(), true);
+					selectItem((IModel<I>)component.getDefaultModel(), true);
 				}
 				first = false;
 			}
@@ -346,7 +346,7 @@ public class TreeGrid extends AbstractGrid
 	}
 
 	@Override
-	protected WebMarkupContainer findRowComponent(IModel rowModel)
+	protected WebMarkupContainer findRowComponent(IModel<I> rowModel)
 	{
 		if (rowModel == null)
 		{
@@ -355,10 +355,10 @@ public class TreeGrid extends AbstractGrid
 		WebMarkupContainer body = (WebMarkupContainer)get("form:bodyContainer:body:i");
 		if (body != null)
 		{
-			for (Iterator<?> i = body.iterator(); i.hasNext();)
+			for (Object name : body)
 			{
-				Component component = (Component)i.next();
-				IModel model = component.getDefaultModel();
+				Component component = (Component)name;
+				IModel<?> model = component.getDefaultModel();
 				if (rowModel.equals(model))
 				{
 					return (WebMarkupContainer)component;
@@ -369,7 +369,7 @@ public class TreeGrid extends AbstractGrid
 	}
 
 	@Override
-	public void markItemDirty(IModel model)
+	public void markItemDirty(IModel<I> model)
 	{
 		Object node = model.getObject();
 		getTree().markNodeDirty(node);
@@ -379,7 +379,7 @@ public class TreeGrid extends AbstractGrid
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void selectItem(IModel itemModel, boolean selected)
+	public void selectItem(IModel<I> itemModel, boolean selected)
 	{
 		getTreeState().selectNode(itemModel.getObject(), selected);
 	}

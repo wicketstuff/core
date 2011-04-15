@@ -30,7 +30,7 @@ import com.inmethod.grid.treegrid.TreeGrid;
  * 
  * @author Matej Knopp
  */
-public class CheckBoxColumn extends AbstractColumn
+public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -52,7 +52,7 @@ public class CheckBoxColumn extends AbstractColumn
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Component newCell(WebMarkupContainer parent, String componentId, IModel rowModel)
+	public Component newCell(WebMarkupContainer parent, String componentId, IModel<I> rowModel)
 	{
 		return new BodyCheckBoxPanel(componentId, rowModel);
 	}
@@ -66,7 +66,7 @@ public class CheckBoxColumn extends AbstractColumn
 		return new HeadPanel(componentId);
 	}
 
-	private void processTag(ComponentTag tag, IModel model)
+	private void processTag(ComponentTag tag, IModel<I> model)
 	{
 		if (!isCheckBoxEnabled(model))
 		{
@@ -74,10 +74,11 @@ public class CheckBoxColumn extends AbstractColumn
 			tag.put("disabled", "disabled");
 
 		}
-		else if (getGrid() instanceof TreeGrid && ((TreeGrid)getGrid()).isAutoSelectChildren())
+		else if (getGrid() instanceof TreeGrid &&
+			((TreeGrid<?, ?>)getGrid()).isAutoSelectChildren())
 		{
 
-			TreeGrid grid = (TreeGrid)getGrid();
+			TreeGrid<?, ?> grid = (TreeGrid<?, ?>)getGrid();
 			Object parent = grid.getTree().getParentNode(model.getObject());
 			if (parent != null && grid.getTreeState().isNodeSelected(parent))
 			{
@@ -86,12 +87,12 @@ public class CheckBoxColumn extends AbstractColumn
 		}
 	}
 
-	protected boolean isCheckBoxEnabled(IModel model)
+	protected boolean isCheckBoxEnabled(IModel<I> model)
 	{
 		return true;
 	}
 
-	protected boolean isCheckBoxVisible(IModel model)
+	protected boolean isCheckBoxVisible(IModel<I> model)
 	{
 		return true;
 	}
@@ -106,7 +107,7 @@ public class CheckBoxColumn extends AbstractColumn
 
 		private static final long serialVersionUID = 1L;
 
-		private BodyCheckBoxPanel(String id, final IModel model)
+		private BodyCheckBoxPanel(String id, final IModel<I> model)
 		{
 			super(id, model);
 
@@ -124,7 +125,7 @@ public class CheckBoxColumn extends AbstractColumn
 						tag.put("checked", "checked");
 					}
 
-					IModel tooltipModel = getRowTooltipModel(model);
+					IModel<String> tooltipModel = getRowTooltipModel(model);
 					if (tooltipModel != null)
 					{
 						Object object = tooltipModel.getObject();
@@ -362,7 +363,7 @@ public class CheckBoxColumn extends AbstractColumn
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCellCssClass(IModel rowModel, int rowNum)
+	public String getCellCssClass(IModel<I> rowModel, int rowNum)
 	{
 		return "imxt-select";
 	}
@@ -380,7 +381,7 @@ public class CheckBoxColumn extends AbstractColumn
 	 *            model for item in given row
 	 * @return tooltip model or <code>null</code>
 	 */
-	protected IModel getRowTooltipModel(IModel itemModel)
+	protected IModel<String> getRowTooltipModel(IModel<I> itemModel)
 	{
 		return null;
 	}

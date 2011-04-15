@@ -38,7 +38,7 @@ public class IconImage extends WebMarkupContainer
 	 */
 	public IconImage(String id, Icon icon)
 	{
-		this(id, new Model(icon));
+		this(id, new Model<Icon>(icon));
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class IconImage extends WebMarkupContainer
 	 * @param model
 	 *            model used to obtain the {@link Icon} instance
 	 */
-	public IconImage(String id, IModel model)
+	public IconImage(String id, IModel<Icon> model)
 	{
 		super(id, model);
 	}

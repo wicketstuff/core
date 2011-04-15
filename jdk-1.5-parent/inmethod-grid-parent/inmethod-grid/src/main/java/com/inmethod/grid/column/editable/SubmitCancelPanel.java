@@ -15,19 +15,19 @@ import com.inmethod.grid.common.AbstractGrid;
 import com.inmethod.icon.Icon;
 import com.inmethod.icon.IconImage;
 
-abstract class SubmitCancelPanel extends Panel
+abstract class SubmitCancelPanel<M, I> extends Panel
 {
 
 	private static final long serialVersionUID = 1L;
 
-	private AbstractGrid getGrid()
+	private AbstractGrid<M, I> getGrid()
 	{
 		return grid;
 	}
 
-	private final AbstractGrid grid;
+	private final AbstractGrid<M, I> grid;
 
-	SubmitCancelPanel(String id, final IModel model, AbstractGrid grid)
+	SubmitCancelPanel(String id, final IModel<I> model, AbstractGrid<M, I> grid)
 	{
 		super(id);
 
@@ -49,7 +49,7 @@ abstract class SubmitCancelPanel extends Panel
 
 		submit.add(new IconImage("icon", getSubmitIcon()));
 
-		AjaxLink cancel = new AjaxLink("cancel")
+		AjaxLink<Void> cancel = new AjaxLink<Void>("cancel")
 		{
 
 			private static final long serialVersionUID = 1L;
@@ -93,14 +93,14 @@ abstract class SubmitCancelPanel extends Panel
 
 		private static final long serialVersionUID = 1L;
 
-		private boolean formComponentActive(FormComponent formComponent)
+		private boolean formComponentActive(FormComponent<?> formComponent)
 		{
 			return formComponent.isVisibleInHierarchy() && formComponent.isValid() &&
 				formComponent.isEnabled() && formComponent.isEnableAllowed();
 		}
 
 		@Override
-		protected void onSubmit(AjaxRequestTarget target, Form form)
+		protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 		{
 			WebMarkupContainer gridRow = getGrid().findParentRow(SubmitCancelPanel.this);
 			final Boolean[] error = { false };

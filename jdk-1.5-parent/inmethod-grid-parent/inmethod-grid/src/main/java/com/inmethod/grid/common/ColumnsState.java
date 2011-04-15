@@ -27,7 +27,7 @@ public class ColumnsState implements IClusterable
 	 * 
 	 * @author Matej Knopp
 	 */
-	public class Entry implements IClusterable
+	public static class Entry implements IClusterable
 	{
 
 		private static final long serialVersionUID = 1L;
@@ -107,11 +107,11 @@ public class ColumnsState implements IClusterable
 	 * 
 	 * @param columns
 	 */
-	public ColumnsState(Collection<IGridColumn> columns)
+	public <M, I> ColumnsState(Collection<IGridColumn<M, I>> columns)
 	{
 		stateArray = new Entry[columns.size()];
 		int i = 0;
-		for (IGridColumn column : columns)
+		for (IGridColumn<?, ?> column : columns)
 		{
 			stateArray[i] = new Entry(column.getId());
 			++i;
@@ -300,13 +300,13 @@ public class ColumnsState implements IClusterable
 	 * @param columns
 	 * @return
 	 */
-	boolean matches(Collection<IGridColumn> columns)
+	<M, I> boolean matches(Collection<IGridColumn<M, I>> columns)
 	{
 		if (stateArray.length != columns.size())
 		{
 			return false;
 		}
-		for (IGridColumn column : columns)
+		for (IGridColumn<?, ?> column : columns)
 		{
 			if (getEntryIndex(column.getId()) == -1)
 			{
@@ -360,9 +360,9 @@ public class ColumnsState implements IClusterable
 	 * @param columns
 	 * @return
 	 */
-	private IGridColumn getColumn(String id, Collection<IGridColumn> columns)
+	private <M, I> IGridColumn<M, I> getColumn(String id, Collection<IGridColumn<M, I>> columns)
 	{
-		for (IGridColumn column : columns)
+		for (IGridColumn<M, I> column : columns)
 		{
 			if (column.getId().equals(id))
 			{
@@ -380,14 +380,15 @@ public class ColumnsState implements IClusterable
 	 *            Collection to be filtered.
 	 * @return Collection of columns with visibility set to <code>true</code>.
 	 */
-	public Collection<IGridColumn> getVisibleColumns(Collection<IGridColumn> allColumns)
+	public <M, I> Collection<IGridColumn<M, I>> getVisibleColumns(
+		Collection<IGridColumn<M, I>> allColumns)
 	{
-		List<IGridColumn> result = new ArrayList<IGridColumn>();
+		List<IGridColumn<M, I>> result = new ArrayList<IGridColumn<M, I>>();
 		for (Entry state : stateArray)
 		{
 			if (state.isVisible())
 			{
-				IGridColumn column = getColumn(state.getColumnId(), allColumns);
+				IGridColumn<M, I> column = getColumn(state.getColumnId(), allColumns);
 				if (column != null)
 				{
 					result.add(column);

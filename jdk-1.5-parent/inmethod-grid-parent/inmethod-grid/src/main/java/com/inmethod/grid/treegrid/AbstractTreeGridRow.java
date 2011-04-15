@@ -9,7 +9,7 @@ import com.inmethod.grid.common.AbstractGridRow;
  * 
  * @author Matej Knopp
  */
-public abstract class AbstractTreeGridRow extends AbstractGridRow
+public abstract class AbstractTreeGridRow<M, I> extends AbstractGridRow<M, I>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -22,7 +22,7 @@ public abstract class AbstractTreeGridRow extends AbstractGridRow
 	 * @param model
 	 * @param level
 	 */
-	public AbstractTreeGridRow(String id, IModel model, int level)
+	public AbstractTreeGridRow(String id, IModel<I> model, int level)
 	{
 		super(id, model);
 		this.level = level;

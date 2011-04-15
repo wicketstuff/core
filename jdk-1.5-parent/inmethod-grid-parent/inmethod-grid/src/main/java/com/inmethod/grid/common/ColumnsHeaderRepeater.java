@@ -22,7 +22,7 @@ import com.inmethod.grid.IGridSortState;
  * 
  * @author Matej Knopp
  */
-public abstract class ColumnsHeaderRepeater extends WebMarkupContainer
+public abstract class ColumnsHeaderRepeater<M, I> extends WebMarkupContainer
 {
 
 	private static final long serialVersionUID = 1L;
@@ -56,7 +56,7 @@ public abstract class ColumnsHeaderRepeater extends WebMarkupContainer
 		}
 
 		// create components that might be needed
-		for (IGridColumn column : getActiveColumns())
+		for (IGridColumn<M, I> column : getActiveColumns())
 		{
 			String componentId = componentId(column.getId());
 
@@ -104,7 +104,7 @@ public abstract class ColumnsHeaderRepeater extends WebMarkupContainer
 
 	private GridSortState getSortState()
 	{
-		return (findParent(AbstractGrid.class)).getSortState();
+		return findParent(AbstractGrid.class).getSortState();
 	}
 
 	/**
@@ -112,7 +112,7 @@ public abstract class ColumnsHeaderRepeater extends WebMarkupContainer
 	 * 
 	 * @return
 	 */
-	private IGridSortState.Direction getSortDirection(IGridColumn column)
+	private IGridSortState.Direction getSortDirection(IGridColumn<M, I> column)
 	{
 		IGridSortState state = getSortState();
 		// we are interested only in the column with highest priority and it must match this panel's
@@ -134,9 +134,9 @@ public abstract class ColumnsHeaderRepeater extends WebMarkupContainer
 
 		Response response = RequestCycle.get().getResponse();
 
-		Collection<IGridColumn> columns = getActiveColumns();
+		Collection<IGridColumn<M, I>> columns = getActiveColumns();
 
-		for (IGridColumn column : columns)
+		for (IGridColumn<M, I> column : columns)
 		{
 			// render the table header opening tag with proper width
 			response.write("<th style=\"width:");
@@ -190,7 +190,7 @@ public abstract class ColumnsHeaderRepeater extends WebMarkupContainer
 	 */
 	private boolean isComponentNeeded(final String componentId)
 	{
-		for (IGridColumn column : getActiveColumns())
+		for (IGridColumn<M, I> column : getActiveColumns())
 		{
 			if (componentId(column.getId()).equals(componentId))
 			{
@@ -205,7 +205,7 @@ public abstract class ColumnsHeaderRepeater extends WebMarkupContainer
 		return columnId.replace(".", "-");
 	}
 
-	abstract Collection<IGridColumn> getActiveColumns();
+	abstract Collection<IGridColumn<M, I>> getActiveColumns();
 
-	abstract int getColumnWidth(IGridColumn column);
+	abstract int getColumnWidth(IGridColumn<M, I> column);
 }

@@ -25,7 +25,7 @@ import com.inmethod.grid.common.AbstractPageableView;
  * 
  * @author Matej Knopp
  */
-public class DataGrid extends AbstractGrid implements IPageable
+public class DataGrid<T> extends AbstractGrid<IDataSource<T>, T> implements IPageable
 {
 
 	private static final long serialVersionUID = 1L;
@@ -40,7 +40,8 @@ public class DataGrid extends AbstractGrid implements IPageable
 	 * @param columns
 	 *            list of grid columns
 	 */
-	public DataGrid(String id, IModel model, List<IGridColumn> columns)
+	public DataGrid(String id, IModel<IDataSource<T>> model,
+		List<IGridColumn<IDataSource<T>, T>> columns)
 	{
 		super(id, model, columns);
 		init();
@@ -56,12 +57,13 @@ public class DataGrid extends AbstractGrid implements IPageable
 	 * @param columns
 	 *            list of grid columns
 	 */
-	public DataGrid(String id, IDataSource dataSource, List<IGridColumn> columns)
+	public DataGrid(String id, IDataSource<T> dataSource,
+		List<IGridColumn<IDataSource<T>, T>> columns)
 	{
-		this(id, new Model(dataSource), columns);
+		this(id, Model.of(dataSource), columns);
 	}
 
-	private class Body extends DataGridBody
+	private class Body extends DataGridBody<T>
 	{
 
 		private static final long serialVersionUID = 1L;
@@ -72,13 +74,13 @@ public class DataGrid extends AbstractGrid implements IPageable
 		}
 
 		@Override
-		protected Collection<IGridColumn> getActiveColumns()
+		protected Collection<IGridColumn<IDataSource<T>, T>> getActiveColumns()
 		{
 			return DataGrid.this.getActiveColumns();
 		}
 
 		@Override
-		protected IDataSource getDataSource()
+		protected IDataSource<T> getDataSource()
 		{
 			return DataGrid.this.getDataSource();
 		}
@@ -96,7 +98,7 @@ public class DataGrid extends AbstractGrid implements IPageable
 		}
 
 		@Override
-		protected boolean isItemSelected(IModel itemModel)
+		protected boolean isItemSelected(IModel<T> itemModel)
 		{
 			return DataGrid.this.isItemSelected(itemModel);
 		}
@@ -114,9 +116,9 @@ public class DataGrid extends AbstractGrid implements IPageable
 	 * 
 	 * @return {@link IDataSource} instance
 	 */
-	public IDataSource getDataSource()
+	public IDataSource<T> getDataSource()
 	{
-		return ((IDataSource)getDefaultModelObject());
+		return (IDataSource<T>)getDefaultModelObject();
 	}
 
 	private int rowsPerPage = 20;
@@ -128,7 +130,7 @@ public class DataGrid extends AbstractGrid implements IPageable
 	 *            how many rows (max) should be displayed on one page
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public DataGrid setRowsPerPage(int rowsPerPage)
+	public DataGrid<T> setRowsPerPage(int rowsPerPage)
 	{
 		this.rowsPerPage = rowsPerPage;
 		return this;
@@ -209,13 +211,13 @@ public class DataGrid extends AbstractGrid implements IPageable
 		return getBody().getCurrentPageItemCount();
 	}
 
-	private final Set<IModel> selectedItems = new HashSet<IModel>();
+	private final Set<IModel<T>> selectedItems = new HashSet<IModel<T>>();
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Collection<IModel> getSelectedItems()
+	public Collection<IModel<T>> getSelectedItems()
 	{
 		return Collections.unmodifiableSet(selectedItems);
 	}
@@ -251,7 +253,7 @@ public class DataGrid extends AbstractGrid implements IPageable
 	 *            whether the current page change should deselect all selected items
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public DataGrid setCleanSelectionOnPageChange(boolean cleanSelectionOnPageChange)
+	public DataGrid<T> setCleanSelectionOnPageChange(boolean cleanSelectionOnPageChange)
 	{
 		this.cleanSelectionOnPageChange = cleanSelectionOnPageChange;
 		return this;
@@ -269,7 +271,7 @@ public class DataGrid extends AbstractGrid implements IPageable
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isItemSelected(IModel itemModel)
+	public boolean isItemSelected(IModel<T> itemModel)
 	{
 		return selectedItems.contains(itemModel);
 	}
@@ -281,9 +283,9 @@ public class DataGrid extends AbstractGrid implements IPageable
 	public void resetSelectedItems()
 	{
 		markAllItemsDirty();
-		Set<IModel> oldSelected = new HashSet<IModel>(selectedItems);
+		Set<IModel<T>> oldSelected = new HashSet<IModel<T>>(selectedItems);
 		selectedItems.clear();
-		for (IModel model : oldSelected)
+		for (IModel<T> model : oldSelected)
 		{
 			onItemSelectionChanged(model, false);
 		}
@@ -298,10 +300,10 @@ public class DataGrid extends AbstractGrid implements IPageable
 		WebMarkupContainer body = (WebMarkupContainer)get("form:bodyContainer:body:row");
 		if (body != null)
 		{
-			for (Iterator<?> i = body.iterator(); i.hasNext();)
+			for (Object name : body)
 			{
-				Component component = (Component)i.next();
-				IModel model = component.getDefaultModel();
+				Component component = (Component)name;
+				IModel<T> model = (IModel<T>)component.getDefaultModel();
 				selectItem(model, true);
 			}
 		}
@@ -312,7 +314,7 @@ public class DataGrid extends AbstractGrid implements IPageable
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected WebMarkupContainer findRowComponent(IModel rowModel)
+	protected WebMarkupContainer findRowComponent(IModel<T> rowModel)
 	{
 		if (rowModel == null)
 		{
@@ -321,10 +323,10 @@ public class DataGrid extends AbstractGrid implements IPageable
 		WebMarkupContainer body = (WebMarkupContainer)get("form:bodyContainer:body:row");
 		if (body != null)
 		{
-			for (Iterator<?> i = body.iterator(); i.hasNext();)
+			for (Object name : body)
 			{
-				Component component = (Component)i.next();
-				IModel model = component.getDefaultModel();
+				Component component = (Component)name;
+				IModel<T> model = (IModel<T>)component.getDefaultModel();
 				if (rowModel.equals(model))
 				{
 					return (WebMarkupContainer)component;
@@ -334,9 +336,9 @@ public class DataGrid extends AbstractGrid implements IPageable
 		return null;
 	}
 
-	private transient Set<IModel> dirtyItems = null;
+	private transient Set<IModel<T>> dirtyItems = null;
 
-	private static final Set<IModel> DIRTY_ALL = new HashSet<IModel>();
+	private transient boolean allDirty = false;
 
 	@Override
 	protected void onBeforeRender()
@@ -353,13 +355,13 @@ public class DataGrid extends AbstractGrid implements IPageable
 	 *            model used to access the item
 	 */
 	@Override
-	public void markItemDirty(IModel itemModel)
+	public void markItemDirty(IModel<T> itemModel)
 	{
-		if (dirtyItems != DIRTY_ALL)
+		if (!allDirty)
 		{
 			if (dirtyItems == null)
 			{
-				dirtyItems = new HashSet<IModel>();
+				dirtyItems = new HashSet<IModel<T>>();
 			}
 			dirtyItems.add(itemModel);
 		}
@@ -370,14 +372,15 @@ public class DataGrid extends AbstractGrid implements IPageable
 	 */
 	public void markAllItemsDirty()
 	{
-		dirtyItems = DIRTY_ALL;
+		allDirty = true;
+		dirtyItems = null;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void onItemSelectionChanged(IModel item, boolean newValue)
+	public void onItemSelectionChanged(IModel<T> item, boolean newValue)
 	{
 		markItemDirty(item);
 	}
@@ -389,7 +392,7 @@ public class DataGrid extends AbstractGrid implements IPageable
 	public void update()
 	{
 		AjaxRequestTarget target = AjaxRequestTarget.get();
-		if (dirtyItems == DIRTY_ALL)
+		if (allDirty)
 		{
 			target.add(this);
 		}
@@ -398,10 +401,10 @@ public class DataGrid extends AbstractGrid implements IPageable
 			WebMarkupContainer body = (WebMarkupContainer)get("form:bodyContainer:body:row");
 			if (body != null)
 			{
-				for (Iterator<?> i = body.iterator(); i.hasNext();)
+				for (Object name : body)
 				{
-					Component component = (Component)i.next();
-					IModel model = component.getDefaultModel();
+					Component component = (Component)name;
+					IModel<T> model = (IModel<T>)component.getDefaultModel();
 					if (dirtyItems.contains(model))
 					{
 						target.add(component);
@@ -416,13 +419,13 @@ public class DataGrid extends AbstractGrid implements IPageable
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void selectItem(IModel itemModel, boolean selected)
+	public void selectItem(IModel<T> itemModel, boolean selected)
 	{
 		if (isAllowSelectMultiple() == false && selectedItems.size() > 0)
 		{
-			for (Iterator<IModel> i = selectedItems.iterator(); i.hasNext();)
+			for (Iterator<IModel<T>> i = selectedItems.iterator(); i.hasNext();)
 			{
-				IModel current = i.next();
+				IModel<T> current = i.next();
 				if (current.equals(itemModel) == false)
 				{
 					i.remove();
@@ -448,13 +451,13 @@ public class DataGrid extends AbstractGrid implements IPageable
 	 * 
 	 * @author Matej Knopp
 	 */
-	public interface IGridQuery extends IDataSource.IQuery
+	public interface IGridQuery<T> extends IDataSource.IQuery
 	{
 
 		/**
 		 * @return data grid issuing the query
 		 */
-		public DataGrid getDataGrid();
+		public DataGrid<T> getDataGrid();
 	};
 
 	/**

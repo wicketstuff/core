@@ -12,17 +12,17 @@ import org.apache.wicket.model.IModel;
 import com.inmethod.grid.datagrid.DataGrid;
 
 /**
- * Adapter that allows using a wicke extension {@link IDataProvider} in a {@link DataGrid}. The
+ * Adapter that allows using a wicket extension {@link IDataProvider} in a {@link DataGrid}. The
  * adapter also supports sortable data providers.
  * 
  * @author Matej Knopp
  */
-public class DataProviderAdapter implements IDataSource
+public class DataProviderAdapter<T> implements IDataSource<T>
 {
 
 	private static final long serialVersionUID = 1L;
 
-	final IDataProvider dataProvider;
+	final IDataProvider<T> dataProvider;
 
 	/**
 	 * Creates a new {@link DataProviderAdapter} instance.
@@ -30,7 +30,7 @@ public class DataProviderAdapter implements IDataSource
 	 * @param dataProvider
 	 *            {@link IDataProvider} instance
 	 */
-	public DataProviderAdapter(IDataProvider dataProvider)
+	public DataProviderAdapter(IDataProvider<T> dataProvider)
 	{
 		this.dataProvider = dataProvider;
 	}
@@ -46,15 +46,15 @@ public class DataProviderAdapter implements IDataSource
 	/**
 	 * {@inheritDoc}
 	 */
-	public IModel model(Object object)
+	public IModel<T> model(T object)
 	{
 		return dataProvider.model(object);
 	}
 
-	private void setSortState(ISortState dest, DataGrid grid, IGridSortState gridSortState)
+	private void setSortState(ISortState dest, DataGrid<T> grid, IGridSortState gridSortState)
 	{
 		Set<String> unsortedColumns = new HashSet<String>(grid.getAllColumns().size());
-		for (IGridColumn column : grid.getAllColumns())
+		for (IGridColumn<IDataSource<T>, T> column : grid.getAllColumns())
 		{
 			if (column.getSortProperty() != null)
 			{
@@ -84,7 +84,7 @@ public class DataProviderAdapter implements IDataSource
 	/**
 	 * {@inheritDoc}
 	 */
-	public void query(IQuery query, IQueryResult result)
+	public void query(IQuery query, IQueryResult<T> result)
 	{
 		if (dataProvider instanceof ISortStateLocator)
 		{
@@ -95,7 +95,7 @@ public class DataProviderAdapter implements IDataSource
 			ISortState state = locator.getSortState();
 			if (state != null)
 			{
-				DataGrid grid = ((DataGrid.IGridQuery)query).getDataGrid();
+				DataGrid<T> grid = ((DataGrid.IGridQuery<T>)query).getDataGrid();
 				setSortState(state, grid, gridSortState);
 			}
 		}

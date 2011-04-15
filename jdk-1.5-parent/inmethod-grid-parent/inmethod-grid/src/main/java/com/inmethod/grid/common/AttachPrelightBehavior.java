@@ -28,7 +28,7 @@ public final class AttachPrelightBehavior extends Behavior
 	{
 		WebRequest request = (WebRequest)RequestCycle.get().getRequest();
 		Response response = RequestCycle.get().getResponse();
-		AbstractGrid grid = component.findParent(AbstractGrid.class);
+		AbstractGrid<?, ?> grid = component.findParent(AbstractGrid.class);
 		if (request.isAjax() && !grid.isRendering())
 		{
 			JavaScriptUtils.writeOpenTag(response);

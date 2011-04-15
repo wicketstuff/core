@@ -18,7 +18,7 @@ import com.inmethod.grid.IRenderable;
  * 
  * @author Matej Knopp
  */
-public class PropertyColumn extends AbstractLightWeightColumn
+public class PropertyColumn<M, I, P> extends AbstractLightWeightColumn<M, I>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -38,7 +38,7 @@ public class PropertyColumn extends AbstractLightWeightColumn
 	 *            optional string that will be returned by {@link ISortState} to indicate that the
 	 *            column is being sorted
 	 */
-	public PropertyColumn(String columnId, IModel headerModel, String propertyExpression,
+	public PropertyColumn(String columnId, IModel<String> headerModel, String propertyExpression,
 		String sortProperty)
 	{
 		super(columnId, headerModel, sortProperty);
@@ -55,7 +55,7 @@ public class PropertyColumn extends AbstractLightWeightColumn
 	 * @param propertyExpression
 	 *            property expression used to get the displayed value for row object
 	 */
-	public PropertyColumn(String columnId, IModel headerModel, String propertyExpression)
+	public PropertyColumn(String columnId, IModel<String> headerModel, String propertyExpression)
 	{
 		this(columnId, headerModel, propertyExpression, null);
 	}
@@ -72,7 +72,7 @@ public class PropertyColumn extends AbstractLightWeightColumn
 	 *            optional string that will be returned by {@link ISortState} to indicate that the
 	 *            column is being sorted
 	 */
-	public PropertyColumn(IModel headerModel, String propertyExpression, String sortProperty)
+	public PropertyColumn(IModel<String> headerModel, String propertyExpression, String sortProperty)
 	{
 		this(propertyExpression, headerModel, propertyExpression, sortProperty);
 	}
@@ -86,7 +86,7 @@ public class PropertyColumn extends AbstractLightWeightColumn
 	 * @param propertyExpression
 	 *            property expression used to get the displayed value for row object
 	 */
-	public PropertyColumn(IModel headerModel, String propertyExpression)
+	public PropertyColumn(IModel<String> headerModel, String propertyExpression)
 	{
 		this(propertyExpression, headerModel, propertyExpression);
 	}
@@ -100,7 +100,7 @@ public class PropertyColumn extends AbstractLightWeightColumn
 	 * @param escape
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public PropertyColumn setEscapeMarkup(boolean escape)
+	public PropertyColumn<M, I, P> setEscapeMarkup(boolean escape)
 	{
 		escapeMarkup = escape;
 		return this;
@@ -116,20 +116,20 @@ public class PropertyColumn extends AbstractLightWeightColumn
 		return escapeMarkup;
 	}
 
-	protected Object getProperty(Object object, String propertyExpression)
+	protected P getProperty(Object object, String propertyExpression)
 	{
-		return PropertyResolver.getValue(propertyExpression, object);
+		return (P)PropertyResolver.getValue(propertyExpression, object);
 	}
 
-	protected Object getModelObject(IModel rowModel)
+	protected I getModelObject(IModel<I> rowModel)
 	{
 		return rowModel.getObject();
 	}
 
-	private CharSequence getValue(IModel rowModel)
+	private CharSequence getValue(IModel<I> rowModel)
 	{
-		Object rowObject = getModelObject(rowModel);
-		Object property = null;
+		I rowObject = getModelObject(rowModel);
+		P property = null;
 		if (rowObject != null)
 		{
 			try
@@ -149,7 +149,7 @@ public class PropertyColumn extends AbstractLightWeightColumn
 		return string;
 	}
 
-	protected IConverter getConverter(Class<?> type)
+	protected <C> IConverter<C> getConverter(Class<C> type)
 	{
 		return Application.get().getConverterLocator().getConverter(type);
 	}
@@ -159,11 +159,13 @@ public class PropertyColumn extends AbstractLightWeightColumn
 		return Session.get().getLocale();
 	}
 
-	protected CharSequence convertToString(Object object)
+	protected <C> CharSequence convertToString(C object)
 	{
 		if (object != null)
 		{
-			IConverter converter = getConverter(object.getClass());
+			@SuppressWarnings("unchecked")
+			Class<C> cKlazz = (Class<C>)object.getClass();
+			IConverter<C> converter = getConverter(cKlazz);
 			return converter.convertToString(object, getLocale());
 		}
 		else
@@ -176,11 +178,11 @@ public class PropertyColumn extends AbstractLightWeightColumn
 	 * {@inheritDoc}
 	 */
 	@Override
-	public IRenderable newCell(IModel rowModel)
+	public IRenderable<I> newCell(IModel<I> rowModel)
 	{
-		return new IRenderable()
+		return new IRenderable<I>()
 		{
-			public void render(IModel rowModel, Response response)
+			public void render(IModel<I> rowModel, Response response)
 			{
 				CharSequence value = getValue(rowModel);
 				if (value != null)

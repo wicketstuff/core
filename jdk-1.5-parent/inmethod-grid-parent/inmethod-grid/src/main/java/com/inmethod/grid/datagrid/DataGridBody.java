@@ -23,7 +23,7 @@ import com.inmethod.grid.common.AttachPrelightBehavior;
  * 
  * @author Matej Knopp
  */
-public abstract class DataGridBody extends Panel implements IPageable
+public abstract class DataGridBody<T> extends Panel implements IPageable
 {
 
 	private static final long serialVersionUID = 1L;
@@ -42,15 +42,15 @@ public abstract class DataGridBody extends Panel implements IPageable
 		add(new Data("row"));
 	}
 
-	protected abstract IDataSource getDataSource();
+	protected abstract IDataSource<T> getDataSource();
 
 	protected abstract int getRowsPerPage();
 
 	protected abstract IGridSortState getSortState();
 
-	protected abstract Collection<IGridColumn> getActiveColumns();
+	protected abstract Collection<IGridColumn<IDataSource<T>, T>> getActiveColumns();
 
-	protected abstract boolean isItemSelected(IModel itemModel);
+	protected abstract boolean isItemSelected(IModel<T> itemModel);
 
 	protected abstract void rowPopulated(WebMarkupContainer rowItem);
 
@@ -93,7 +93,7 @@ public abstract class DataGridBody extends Panel implements IPageable
 		getData().setCurrentPage(page);
 	}
 
-	class Data extends AbstractPageableView
+	class Data extends AbstractPageableView<T>
 	{
 
 		private static final long serialVersionUID = 1L;
@@ -105,7 +105,7 @@ public abstract class DataGridBody extends Panel implements IPageable
 		}
 
 		@Override
-		protected IDataSource getDataSource()
+		protected IDataSource<T> getDataSource()
 		{
 			return DataGridBody.this.getDataSource();
 		}
@@ -125,7 +125,7 @@ public abstract class DataGridBody extends Panel implements IPageable
 		@Override
 		protected IQuery wrapQuery(final IQuery original)
 		{
-			return new DataGrid.IGridQuery()
+			return new DataGrid.IGridQuery<T>()
 			{
 				public int getCount()
 				{
@@ -147,7 +147,7 @@ public abstract class DataGridBody extends Panel implements IPageable
 					return original.getTotalCount();
 				}
 
-				public DataGrid getDataGrid()
+				public DataGrid<T> getDataGrid()
 				{
 					return DataGridBody.this.findParent(DataGrid.class);
 				}
@@ -155,14 +155,15 @@ public abstract class DataGridBody extends Panel implements IPageable
 		}
 
 		@Override
-		protected void populateItem(final Item item)
+		protected void populateItem(final Item<T> item)
 		{
-			item.add(new AbstractGridRow("item", item.getDefaultModel())
+			item.add(new AbstractGridRow<IDataSource<T>, T>("item",
+				(IModel<T>)item.getDefaultModel())
 			{
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				protected Collection<IGridColumn> getActiveColumns()
+				protected Collection<IGridColumn<IDataSource<T>, T>> getActiveColumns()
 				{
 					return DataGridBody.this.getActiveColumns();
 				}
@@ -177,12 +178,12 @@ public abstract class DataGridBody extends Panel implements IPageable
 			rowPopulated(item);
 		}
 
-		protected class RowItem extends Item
+		protected class RowItem extends Item<T>
 		{
 
 			private static final long serialVersionUID = 1L;
 
-			protected RowItem(String id, int index, IModel model)
+			protected RowItem(String id, int index, IModel<T> model)
 			{
 				super(id, index, model);
 			}
@@ -212,7 +213,7 @@ public abstract class DataGridBody extends Panel implements IPageable
 
 				klass = klass + " imxt-want-prelight imxt-grid-row";
 
-				if (isItemSelected(getDefaultModel()))
+				if (isItemSelected(getDefaultItemModel()))
 				{
 					klass = klass + " imxt-selected";
 				}
@@ -222,12 +223,16 @@ public abstract class DataGridBody extends Panel implements IPageable
 		};
 
 		@Override
-		protected Item newItem(String id, final int index, final IModel model)
+		protected Item<T> newItem(String id, final int index, final IModel<T> model)
 		{
-			Item item = new RowItem(id, index, model);
+			Item<T> item = new RowItem(id, index, model);
 			item.setOutputMarkupId(true);
 			return item;
 		}
 	};
 
+	protected IModel<T> getDefaultItemModel()
+	{
+		return (IModel<T>)getDefaultModel();
+	}
 }

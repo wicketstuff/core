@@ -9,7 +9,7 @@ import org.apache.wicket.request.Response;
  * @see IGridColumn#isLightWeight(IModel)
  * @author Matej Knopp
  */
-public interface IRenderable
+public interface IRenderable<T>
 {
 
 	/**
@@ -20,6 +20,6 @@ public interface IRenderable
 	 *            model for given row
 	 * @param response
 	 */
-	public void render(IModel rowModel, Response response);
+	public void render(IModel<T> rowModel, Response response);
 
 }

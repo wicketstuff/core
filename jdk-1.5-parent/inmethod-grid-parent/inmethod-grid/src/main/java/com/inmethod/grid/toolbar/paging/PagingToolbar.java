@@ -3,6 +3,7 @@ package com.inmethod.grid.toolbar.paging;
 import org.apache.wicket.Component;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 
+import com.inmethod.grid.IDataSource;
 import com.inmethod.grid.datagrid.DataGrid;
 import com.inmethod.grid.toolbar.AbstractToolbar;
 
@@ -14,7 +15,7 @@ import com.inmethod.grid.toolbar.AbstractToolbar;
  * 
  * @author Matej Knopp
  */
-public class PagingToolbar extends AbstractToolbar
+public class PagingToolbar<T> extends AbstractToolbar<IDataSource<T>, T>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -24,9 +25,9 @@ public class PagingToolbar extends AbstractToolbar
 	 * 
 	 * @return data grid
 	 */
-	public DataGrid getDataGrid()
+	public DataGrid<T> getDataGrid()
 	{
-		return (DataGrid)super.getGrid();
+		return (DataGrid<T>)super.getGrid();
 	}
 
 	/**
@@ -35,7 +36,7 @@ public class PagingToolbar extends AbstractToolbar
 	 * @param grid
 	 *            data grid
 	 */
-	public PagingToolbar(DataGrid grid)
+	public PagingToolbar(DataGrid<T> grid)
 	{
 		super(grid, null);
 

@@ -19,7 +19,7 @@ import com.inmethod.grid.common.AbstractGrid;
  * 
  * @author Matej Knopp
  */
-public abstract class AbstractHeaderToolbar extends AbstractToolbar
+public abstract class AbstractHeaderToolbar<M, I> extends AbstractToolbar<M, I>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -30,7 +30,7 @@ public abstract class AbstractHeaderToolbar extends AbstractToolbar
 	 * @param dataGrid
 	 * @param model
 	 */
-	public AbstractHeaderToolbar(AbstractGrid dataGrid, IModel model)
+	public AbstractHeaderToolbar(AbstractGrid<M, I> dataGrid, IModel<String> model)
 	{
 		super(dataGrid, model);
 	}

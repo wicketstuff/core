@@ -1,6 +1,5 @@
 package com.inmethod.grid.common;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -49,7 +48,7 @@ import com.inmethod.grid.treegrid.TreeGrid;
  * 
  * @author Matej Knopp
  */
-public abstract class AbstractGrid extends Panel implements IHeaderContributor
+public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContributor
 {
 
 	private static final long serialVersionUID = 1L;
@@ -61,7 +60,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 * @param model
 	 * @param columns
 	 */
-	public AbstractGrid(String id, IModel model, List<IGridColumn> columns)
+	public AbstractGrid(String id, IModel<M> model, List<IGridColumn<M, I>> columns)
 	{
 		super(id, model);
 
@@ -75,7 +74,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 
 		add(new Header("header"));
 
-		Form form = new Form("form");
+		Form<Void> form = new Form<Void>("form");
 		add(form);
 
 		WebMarkupContainer bodyContainer = new WebMarkupContainer("bodyContainer")
@@ -120,9 +119,9 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 		add(submitColumnStateBehavior);
 	}
 
-	public Form getForm()
+	public Form<Void> getForm()
 	{
-		return (Form)get("form");
+		return (Form<Void>)get("form");
 	};
 
 	/**
@@ -130,7 +129,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 * 
 	 * @param column
 	 */
-	protected void columnSanityCheck(IGridColumn column)
+	protected void columnSanityCheck(IGridColumn<M, I> column)
 	{
 		String id = column.getId();
 		if (Strings.isEmpty(id))
@@ -156,22 +155,22 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 * 
 	 * @param columns
 	 */
-	private void columnsSanityCheck(List<IGridColumn> columns)
+	private void columnsSanityCheck(List<IGridColumn<M, I>> columns)
 	{
 		for (int i = 0; i < columns.size(); ++i)
 		{
-			IGridColumn column = columns.get(i);
+			IGridColumn<M, I> column = columns.get(i);
 			columnSanityCheck(column);
 		}
 		for (int i = 0; i < columns.size(); ++i)
 		{
-			IGridColumn column = columns.get(i);
+			IGridColumn<M, I> column = columns.get(i);
 
 			for (int j = 0; j < columns.size(); ++j)
 			{
 				if (i != j)
 				{
-					IGridColumn otherColumn = columns.get(j);
+					IGridColumn<M, I> otherColumn = columns.get(j);
 					if (column.getId().equals(otherColumn.getId()))
 					{
 						throw new IllegalStateException("Each column must have unique id");
@@ -278,7 +277,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	{
 		super.onInitialize();
 
-		for (IGridColumn column : columns)
+		for (IGridColumn<M, I> column : columns)
 		{
 			column.setGrid(this);
 		}
@@ -315,7 +314,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 * @param toolbar
 	 * @param container
 	 */
-	private void addToolbar(AbstractToolbar toolbar, RepeatingView container)
+	private void addToolbar(AbstractToolbar<M, I> toolbar, RepeatingView container)
 	{
 		if (toolbar == null)
 		{
@@ -337,7 +336,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 * @param toolbar
 	 *            toolbar instance
 	 */
-	public void addTopToolbar(AbstractToolbar toolbar)
+	public void addTopToolbar(AbstractToolbar<M, I> toolbar)
 	{
 		addToolbar(toolbar, topToolbarContainer);
 	}
@@ -349,7 +348,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 * @param toolbar
 	 *            toolbar instance
 	 */
-	public void addBottomToolbar(AbstractToolbar toolbar)
+	public void addBottomToolbar(AbstractToolbar<M, I> toolbar)
 	{
 		addToolbar(toolbar, bottomToolbarContainer);
 	}
@@ -361,7 +360,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 * @param toolbar
 	 *            toolbar instance
 	 */
-	public void addHeaderToolbar(AbstractHeaderToolbar toolbar)
+	public void addHeaderToolbar(AbstractHeaderToolbar<M, I> toolbar)
 	{
 		addToolbar(toolbar, headerToolbarContainer);
 	}
@@ -379,7 +378,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 * 
 	 * @author Matej Knopp
 	 */
-	private class EmptyRowModel extends Model
+	private class EmptyRowModel extends Model<String>
 	{
 		private static final long serialVersionUID = 1L;
 
@@ -387,7 +386,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Serializable getObject()
+		public String getObject()
 		{
 			StringBuilder result = new StringBuilder();
 			for (int i = 0; i < getActiveColumns().size(); ++i)
@@ -404,7 +403,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 * @see ColumnsHeader
 	 * @author Matej Knopp
 	 */
-	private class Header extends ColumnsHeader
+	private class Header extends ColumnsHeader<M, I>
 	{
 
 		private static final long serialVersionUID = 1L;
@@ -415,13 +414,13 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 		}
 
 		@Override
-		Collection<IGridColumn> getActiveColumns()
+		Collection<IGridColumn<M, I>> getActiveColumns()
 		{
 			return AbstractGrid.this.getActiveColumns();
 		}
 
 		@Override
-		int getColumnWidth(IGridColumn column)
+		int getColumnWidth(IGridColumn<M, I> column)
 		{
 			int width = getColumnState().getColumnWidth(column.getId());
 			if (width != -1 && column.getSizeUnit() == SizeUnit.PX)
@@ -462,9 +461,9 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 
 		// initialize the columns
 		response.write("var columns = [\n");
-		Collection<IGridColumn> columns = getActiveColumns();
+		Collection<IGridColumn<M, I>> columns = getActiveColumns();
 		int i = 0;
-		for (IGridColumn column : columns)
+		for (IGridColumn<M, I> column : columns)
 		{
 			++i;
 			response.write("  {");
@@ -500,7 +499,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 * 
 	 * @return collection of currently visible columns
 	 */
-	public Collection<IGridColumn> getActiveColumns()
+	public Collection<IGridColumn<M, I>> getActiveColumns()
 	{
 		return getColumnState().getVisibleColumns(columns);
 	}
@@ -510,13 +509,13 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 * 
 	 * @return list of columns
 	 */
-	public List<IGridColumn> getAllColumns()
+	public List<IGridColumn<M, I>> getAllColumns()
 	{
 		return Collections.unmodifiableList(columns);
 	}
 
 	// contains all columns
-	private final List<IGridColumn> columns;
+	private final List<IGridColumn<M, I>> columns;
 
 	private GridSortState sortState = null;
 
@@ -635,7 +634,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 * @param selected
 	 *            <code>true</code> if the item should be selected, <code>false</code> otherwise.
 	 */
-	public abstract void selectItem(IModel itemModel, boolean selected);
+	public abstract void selectItem(IModel<I> itemModel, boolean selected);
 
 	/**
 	 * Marks all currently displayed items as selected. For {@link DataGrid} this selects all items
@@ -655,14 +654,14 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 *            item model
 	 * @return <code>true</code> if the item is selected, <code>false</code> otherwise
 	 */
-	public abstract boolean isItemSelected(IModel itemModel);
+	public abstract boolean isItemSelected(IModel<I> itemModel);
 
 	/**
 	 * Returns the collection of models of all currently selected items.
 	 * 
 	 * @return collection of models of currently selected items
 	 */
-	public abstract Collection<IModel> getSelectedItems();
+	public abstract Collection<IModel<I>> getSelectedItems();
 
 	/**
 	 * Sets whether user will be able to select more than one item.
@@ -705,16 +704,16 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 * @param newValue
 	 *            <code>true</code> if the item became selected, <code>false</code> otherwise.
 	 */
-	protected void onItemSelectionChanged(IModel item, boolean newValue)
+	protected void onItemSelectionChanged(IModel<I> item, boolean newValue)
 	{
 
 	}
 
 	private String lastClickedColumn = null;
 
-	public IGridColumn getLastClickedColumn()
+	public IGridColumn<M, I> getLastClickedColumn()
 	{
-		for (IGridColumn column : columns)
+		for (IGridColumn<M, I> column : columns)
 		{
 			if (column.getId().equals(lastClickedColumn))
 			{
@@ -786,9 +785,9 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 
 				lastClickedColumn = column;
 
-				IModel model = rowComponent.getDefaultModel();
+				IModel<I> model = (IModel<I>)rowComponent.getDefaultModel();
 
-				IGridColumn lastClickedColumn = getLastClickedColumn();
+				IGridColumn<M, I> lastClickedColumn = getLastClickedColumn();
 				if (lastClickedColumn != null)
 				{
 					if (onCellClicked(target, model, lastClickedColumn) == true)
@@ -833,12 +832,13 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 
 	}
 
-	protected boolean onCellClicked(AjaxRequestTarget target, IModel rowModel, IGridColumn column)
+	protected boolean onCellClicked(AjaxRequestTarget target, IModel<I> rowModel,
+		IGridColumn<M, I> column)
 	{
 		return false;
 	}
 
-	protected void onRowClicked(AjaxRequestTarget target, IModel rowModel)
+	protected void onRowClicked(AjaxRequestTarget target, IModel<I> rowModel)
 	{
 		if (isClickRowToSelect())
 		{
@@ -863,7 +863,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 *            <code>false</code> otherwise.
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public AbstractGrid setClickRowToSelect(boolean clickRowToSelect)
+	public AbstractGrid<M, I> setClickRowToSelect(boolean clickRowToSelect)
 	{
 		this.clickRowToSelect = clickRowToSelect;
 		return this;
@@ -968,7 +968,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 * @param rowModel
 	 * @return
 	 */
-	protected abstract WebMarkupContainer findRowComponent(IModel rowModel);
+	protected abstract WebMarkupContainer findRowComponent(IModel<I> rowModel);
 
 	/**
 	 * Marks the item from the given model as dirty. Dirty items are updated during Ajax requests
@@ -977,7 +977,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 * @param itemModel
 	 *            model used to access the item
 	 */
-	public abstract void markItemDirty(IModel model);
+	public abstract void markItemDirty(IModel<I> model);
 
 	private boolean selectToEdit = false;
 
@@ -1020,7 +1020,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 *            <code>true</code> if the row should be in editable mode, <code>false</code>
 	 *            otherwise.
 	 */
-	public void setItemEdit(IModel rowModel, boolean edit)
+	public void setItemEdit(IModel<I> rowModel, boolean edit)
 	{
 		if (isSelectToEdit())
 		{
@@ -1047,7 +1047,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor
 	 * @param rowModel
 	 * @return <code>true</code> if the row is in editable mode, <code>false</code> otherwise.
 	 */
-	public boolean isItemEdited(IModel rowModel)
+	public boolean isItemEdited(IModel<I> rowModel)
 	{
 		if (isSelectToEdit())
 		{

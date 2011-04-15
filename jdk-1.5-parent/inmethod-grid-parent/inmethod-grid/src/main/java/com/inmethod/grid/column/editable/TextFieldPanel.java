@@ -17,7 +17,7 @@ import com.inmethod.grid.column.AbstractColumn;
  * 
  * @author Matej Knopp
  */
-public class TextFieldPanel extends EditableCellPanel
+public class TextFieldPanel<M, I, P> extends EditableCellPanel<M, I, P>
 {
 
 	/**
@@ -30,11 +30,12 @@ public class TextFieldPanel extends EditableCellPanel
 	 * @param column
 	 *            column to which this panel belongs
 	 */
-	public TextFieldPanel(String id, final IModel model, IModel rowModel, AbstractColumn column)
+	public TextFieldPanel(String id, final IModel<P> model, IModel<I> rowModel,
+		AbstractColumn<M, I> column)
 	{
 		super(id, column, rowModel);
 
-		TextField tf = new TextField("textfield", model)
+		TextField<P> tf = new TextField<P>("textfield", model)
 		{
 
 			private static final long serialVersionUID = 1L;
@@ -61,9 +62,9 @@ public class TextFieldPanel extends EditableCellPanel
 	}
 
 	@Override
-	protected FormComponent getEditComponent()
+	protected FormComponent<P> getEditComponent()
 	{
-		return (FormComponent)get("textfield");
+		return (FormComponent<P>)get("textfield");
 	}
 
 	private static final long serialVersionUID = 1L;

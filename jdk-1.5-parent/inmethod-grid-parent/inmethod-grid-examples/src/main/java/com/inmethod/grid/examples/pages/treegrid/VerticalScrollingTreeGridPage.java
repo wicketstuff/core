@@ -3,7 +3,8 @@ package com.inmethod.grid.examples.pages.treegrid;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.tree.TreeModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 import org.apache.wicket.model.Model;
 
@@ -30,17 +31,24 @@ public class VerticalScrollingTreeGridPage extends BaseExamplePage
 	 */
 	public VerticalScrollingTreeGridPage()
 	{
-		List<IGridColumn> columns = new ArrayList<IGridColumn>();
+		List<IGridColumn<DefaultTreeModel, DefaultMutableTreeNode>> columns = new ArrayList<IGridColumn<DefaultTreeModel, DefaultMutableTreeNode>>();
 
-		columns.add(new PropertyTreeColumn(new Model("Property 1"), "userObject.property1"));
-		columns.add(new PropertyColumn(new Model("Property 2"), "userObject.property2"));
-		columns.add(new PropertyColumn(new Model("Property 3"), "userObject.property3"));
-		columns.add(new PropertyColumn(new Model("Property 4"), "userObject.property4"));
-		columns.add(new PropertyColumn(new Model("Property 5"), "userObject.property5"));
-		columns.add(new PropertyColumn(new Model("Property 6"), "userObject.property6"));
+		columns.add(new PropertyTreeColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 1"), "userObject.property1"));
+		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 2"), "userObject.property2"));
+		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 3"), "userObject.property3"));
+		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 4"), "userObject.property4"));
+		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 5"), "userObject.property5"));
+		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 6"), "userObject.property6"));
 
-		TreeModel model = TreeModelFactory.createTreeModel();
-		TreeGrid grid = new TreeGrid("grid", model, columns);
+		DefaultTreeModel model = TreeModelFactory.createTreeModel();
+		TreeGrid<DefaultTreeModel, DefaultMutableTreeNode> grid = new TreeGrid<DefaultTreeModel, DefaultMutableTreeNode>(
+			"grid", model, columns);
 
 		grid.setContentHeight(23, SizeUnit.EM);
 

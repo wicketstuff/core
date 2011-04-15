@@ -2,6 +2,9 @@ package com.inmethod.grid.treegrid;
 
 import java.util.Collection;
 
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeNode;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
@@ -19,7 +22,7 @@ import com.inmethod.grid.common.AttachPrelightBehavior;
  * 
  * @author Matej Knopp
  */
-public abstract class TreeGridBody extends AbstractTree
+public abstract class TreeGridBody<T extends TreeModel, I extends TreeNode> extends AbstractTree
 {
 
 	private static final long serialVersionUID = 1L;
@@ -31,7 +34,7 @@ public abstract class TreeGridBody extends AbstractTree
 	 *            component id
 	 * @param model
 	 */
-	public TreeGridBody(String id, IModel model)
+	public TreeGridBody(String id, IModel<T> model)
 	{
 		super(id, model);
 		setRenderBodyOnly(true);
@@ -40,12 +43,13 @@ public abstract class TreeGridBody extends AbstractTree
 	@Override
 	protected void populateTreeItem(final WebMarkupContainer item, int level)
 	{
-		AbstractGridRow row = new AbstractTreeGridRow("item", item.getDefaultModel(), level)
+		AbstractGridRow<T, I> row = new AbstractTreeGridRow<T, I>("item",
+			(IModel<I>)item.getDefaultModel(), level)
 		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Collection<IGridColumn> getActiveColumns()
+			protected Collection<IGridColumn<T, I>> getActiveColumns()
 			{
 				return TreeGridBody.this.getActiveColumns();
 			}
@@ -108,7 +112,7 @@ public abstract class TreeGridBody extends AbstractTree
 		return super.isNodeExpanded(object);
 	}
 
-	protected abstract Collection<IGridColumn> getActiveColumns();
+	protected abstract Collection<IGridColumn<T, I>> getActiveColumns();
 
 	protected abstract void rowPopulated(WebMarkupContainer item);
 }

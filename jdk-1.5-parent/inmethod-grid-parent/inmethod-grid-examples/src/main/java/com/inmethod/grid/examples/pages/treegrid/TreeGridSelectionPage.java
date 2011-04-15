@@ -1,12 +1,11 @@
 package com.inmethod.grid.examples.pages.treegrid;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeModel;
+import javax.swing.tree.DefaultTreeModel;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
@@ -19,7 +18,6 @@ import com.inmethod.grid.SizeUnit;
 import com.inmethod.grid.column.CheckBoxColumn;
 import com.inmethod.grid.column.PropertyColumn;
 import com.inmethod.grid.column.tree.PropertyTreeColumn;
-import com.inmethod.grid.common.AbstractGrid;
 import com.inmethod.grid.examples.pages.BaseExamplePage;
 import com.inmethod.grid.examples.tree.TreeBean;
 import com.inmethod.grid.examples.tree.TreeModelFactory;
@@ -42,23 +40,30 @@ public class TreeGridSelectionPage extends BaseExamplePage
 	 */
 	public TreeGridSelectionPage()
 	{
-		List<IGridColumn> columns = new ArrayList<IGridColumn>();
+		List<IGridColumn<DefaultTreeModel, DefaultMutableTreeNode>> columns = new ArrayList<IGridColumn<DefaultTreeModel, DefaultMutableTreeNode>>();
 
-		columns.add(new CheckBoxColumn("checkBox"));
-		columns.add(new PropertyTreeColumn(new Model("Property 1"), "userObject.property1"));
-		columns.add(new PropertyColumn(new Model("Property 2"), "userObject.property2"));
-		columns.add(new PropertyColumn(new Model("Property 3"), "userObject.property3"));
-		columns.add(new PropertyColumn(new Model("Property 4"), "userObject.property4"));
-		columns.add(new PropertyColumn(new Model("Property 5"), "userObject.property5"));
-		columns.add(new PropertyColumn(new Model("Property 6"), "userObject.property6"));
+		columns.add(new CheckBoxColumn<DefaultTreeModel, DefaultMutableTreeNode>("checkBox"));
+		columns.add(new PropertyTreeColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 1"), "userObject.property1"));
+		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 2"), "userObject.property2"));
+		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 3"), "userObject.property3"));
+		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 4"), "userObject.property4"));
+		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 5"), "userObject.property5"));
+		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 6"), "userObject.property6"));
 
-		TreeModel model = TreeModelFactory.createTreeModel();
-		final TreeGrid grid = new TreeGrid("grid", model, columns)
+		DefaultTreeModel model = TreeModelFactory.createTreeModel();
+		final TreeGrid<DefaultTreeModel, DefaultMutableTreeNode> grid = new TreeGrid<DefaultTreeModel, DefaultMutableTreeNode>(
+			"grid", model, columns)
 		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onItemSelectionChanged(IModel item, boolean newValue)
+			public void onItemSelectionChanged(IModel<DefaultMutableTreeNode> item, boolean newValue)
 			{
 				super.onItemSelectionChanged(item, newValue);
 
@@ -77,12 +82,12 @@ public class TreeGridSelectionPage extends BaseExamplePage
 
 		add(grid);
 
-		IModel selectedItemsModel = new Model()
+		IModel<String> selectedItemsModel = new Model<String>()
 		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public Serializable getObject()
+			public String getObject()
 			{
 				return selectedItemsAsString(grid);
 			}
@@ -93,13 +98,13 @@ public class TreeGridSelectionPage extends BaseExamplePage
 		addOptionLinks(grid);
 	}
 
-	private String selectedItemsAsString(AbstractGrid grid)
+	private String selectedItemsAsString(TreeGrid<DefaultTreeModel, DefaultMutableTreeNode> grid)
 	{
 		StringBuilder res = new StringBuilder();
-		Collection<IModel> selected = grid.getSelectedItems();
-		for (IModel model : selected)
+		Collection<IModel<DefaultMutableTreeNode>> selected = grid.getSelectedItems();
+		for (IModel<DefaultMutableTreeNode> model : selected)
 		{
-			DefaultMutableTreeNode node = (DefaultMutableTreeNode)model.getObject();
+			DefaultMutableTreeNode node = model.getObject();
 			TreeBean bean = (TreeBean)node.getUserObject();
 			if (res.length() > 0)
 			{
@@ -110,10 +115,10 @@ public class TreeGridSelectionPage extends BaseExamplePage
 		return res.toString();
 	}
 
-	private void addOptionLinks(final TreeGrid grid)
+	private void addOptionLinks(final TreeGrid<DefaultTreeModel, DefaultMutableTreeNode> grid)
 	{
 
-		add(new Link("selectMultipleOn")
+		add(new Link<Void>("selectMultipleOn")
 		{
 
 			private static final long serialVersionUID = 1L;
@@ -131,7 +136,7 @@ public class TreeGridSelectionPage extends BaseExamplePage
 			}
 		});
 
-		add(new Link("selectMultipleOff")
+		add(new Link<Void>("selectMultipleOff")
 		{
 
 			private static final long serialVersionUID = 1L;

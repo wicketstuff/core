@@ -1,6 +1,9 @@
 package com.inmethod.grid.treegrid;
 
 
+import java.io.Serializable;
+
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 
 import org.apache.wicket.Component;
@@ -21,7 +24,8 @@ import com.inmethod.icon.Icon;
  * 
  * @author Matej Knopp
  */
-public abstract class BaseTreeColumn extends AbstractColumn
+public abstract class BaseTreeColumn<T extends TreeModel & Serializable, I extends TreeNode & Serializable>
+	extends AbstractColumn<T, I>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -33,7 +37,7 @@ public abstract class BaseTreeColumn extends AbstractColumn
 	 * @param headerModel
 	 * @param sortProperty
 	 */
-	public BaseTreeColumn(String columnId, IModel headerModel, String sortProperty)
+	public BaseTreeColumn(String columnId, IModel<String> headerModel, String sortProperty)
 	{
 		super(columnId, headerModel, sortProperty);
 	}
@@ -44,7 +48,7 @@ public abstract class BaseTreeColumn extends AbstractColumn
 	 * @param columnId
 	 * @param headerModel
 	 */
-	public BaseTreeColumn(String columnId, IModel headerModel)
+	public BaseTreeColumn(String columnId, IModel<String> headerModel)
 	{
 		super(columnId, headerModel);
 	}
@@ -53,22 +57,22 @@ public abstract class BaseTreeColumn extends AbstractColumn
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Component newCell(WebMarkupContainer parent, String componentId, IModel rowModel)
+	public Component newCell(WebMarkupContainer parent, String componentId, IModel<I> rowModel)
 	{
-		AbstractTreeGridRow row = (AbstractTreeGridRow)parent;
-		return new TreePanel(componentId, rowModel, row.getLevel())
+		AbstractTreeGridRow<T, I> row = (AbstractTreeGridRow<T, I>)parent;
+		return new TreePanel<T, I>(componentId, rowModel, row.getLevel())
 		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Component newNodeComponent(String id, IModel model)
+			protected Component newNodeComponent(String id, IModel<I> model)
 			{
 				return BaseTreeColumn.this.newNodeComponent(id, model);
 			}
 
 			@Override
-			protected Icon getIcon(IModel model)
+			protected Icon getIcon(IModel<I> model)
 			{
 				return BaseTreeColumn.this.getIcon(model);
 			}
@@ -91,7 +95,7 @@ public abstract class BaseTreeColumn extends AbstractColumn
 	 * 
 	 * @return newly created component instance
 	 */
-	protected abstract Component newNodeComponent(String id, IModel model);
+	protected abstract Component newNodeComponent(String id, IModel<I> model);
 
 	/**
 	 * Returns the icon for given {@link TreeNode}.
@@ -100,23 +104,23 @@ public abstract class BaseTreeColumn extends AbstractColumn
 	 *            model used to access the {@link TreeNode}
 	 * @return icon instance or <code>null</code> if no icon should be displayed
 	 */
-	protected abstract Icon getIcon(IModel model);
+	protected abstract Icon getIcon(IModel<I> model);
 
 	/**
 	 * Returns the {@link TreeGrid} this column belongs to.
 	 * 
 	 * @return {@link TreeGrid} this column belongs to.
 	 */
-	public TreeGrid getTreeGrid()
+	public TreeGrid<T, I> getTreeGrid()
 	{
-		return (TreeGrid)getGrid();
+		return (TreeGrid<T, I>)getGrid();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setGrid(AbstractGrid grid)
+	public void setGrid(AbstractGrid<T, I> grid)
 	{
 		if (getTreeGrid() != null && getTreeGrid() != grid)
 		{

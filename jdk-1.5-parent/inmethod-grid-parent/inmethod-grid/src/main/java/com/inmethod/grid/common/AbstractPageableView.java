@@ -20,7 +20,7 @@ import com.inmethod.grid.IGridSortState;
  * 
  * @author Matej Knopp
  */
-public abstract class AbstractPageableView extends RefreshingView implements IPageable
+public abstract class AbstractPageableView<T> extends RefreshingView<T> implements IPageable
 {
 
 	private static final long serialVersionUID = 1L;
@@ -31,7 +31,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 	 * @param id
 	 * @param model
 	 */
-	public AbstractPageableView(String id, IModel model)
+	public AbstractPageableView(String id, IModel<T> model)
 	{
 		super(id, model);
 	}
@@ -137,7 +137,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 				count -= mod;
 
 				// get the actual page count
-				cachedPageCount = (count / rowsPerPage) + (mod > 0 ? 1 : 0);
+				cachedPageCount = count / rowsPerPage + (mod > 0 ? 1 : 0);
 			}
 		}
 		return cachedPageCount;
@@ -153,7 +153,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 	{
 
 		int pageCount = getPageCount();
-		if (page < 0 || (page >= pageCount && pageCount > 0))
+		if (page < 0 || page >= pageCount && pageCount > 0)
 		{
 			throw new IndexOutOfBoundsException("Argument page is out of bounds");
 		}
@@ -210,7 +210,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 			queryResult = new QueryResult();
 			Query query = new Query(queryResult);
 
-			IDataSource dataSource = getDataSource();
+			IDataSource<T> dataSource = getDataSource();
 
 			int oldItemCount = realItemCount;
 
@@ -351,8 +351,6 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 		{
 			throw new UnsupportedOperationException();
 		}
-
-		private static final EmptyIterator<?> INSTANCE = new EmptyIterator<Object>();
 	};
 
 	/**
@@ -360,21 +358,21 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 	 * 
 	 * @author Matej Knopp
 	 */
-	private class QueryResult implements IQueryResult
+	private class QueryResult implements IQueryResult<T>
 	{
 		// start with empty items
-		private Iterator<?> items = EmptyIterator.INSTANCE;
+		private Iterator<? extends T> items = new EmptyIterator<T>();
 
 		// and actual total count (could be UNKNOWN)
 		private int totalCount = realItemCount;
 
 		// process will put the actual item model's here
-		private ArrayList<IModel> itemCache = new ArrayList<IModel>();
+		private ArrayList<IModel<T>> itemCache = new ArrayList<IModel<T>>();
 
 		/**
 		 * @see IQueryResult#setItems(Iterator)
 		 */
-		public void setItems(Iterator<?> items)
+		public void setItems(Iterator<? extends T> items)
 		{
 			this.items = items;
 		}
@@ -393,7 +391,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 		 * 
 		 * @param source
 		 */
-		public void process(IDataSource source)
+		public void process(IDataSource<T> source)
 		{
 			// count the maximum number of items that should have been loaded
 			int max = getRowsPerPage();
@@ -448,7 +446,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 
 	protected abstract IGridSortState getSortState();
 
-	protected abstract IDataSource getDataSource();
+	protected abstract IDataSource<T> getDataSource();
 
 	protected abstract int getRowsPerPage();
 
@@ -456,7 +454,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 	 * @see RefreshingView#getItemModels()
 	 */
 	@Override
-	protected Iterator<IModel> getItemModels()
+	protected Iterator<IModel<T>> getItemModels()
 	{
 		initialize();
 		return queryResult.itemCache.iterator();
@@ -485,7 +483,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 	private int getCurrentPageFirstItem()
 	{
 		int rowsPerPage = getRowsPerPage();
-		return currentPageFirstItem - (currentPageFirstItem % rowsPerPage);
+		return currentPageFirstItem - currentPageFirstItem % rowsPerPage;
 	}
 
 }

@@ -25,7 +25,7 @@ import com.inmethod.icon.IconImage;
  * 
  * @author Matej Knopp
  */
-public abstract class TreePanel extends Panel
+public abstract class TreePanel<T extends TreeModel, I extends TreeNode> extends Panel
 {
 
 	private static final long serialVersionUID = 1L;
@@ -42,7 +42,7 @@ public abstract class TreePanel extends Panel
 	 * @param level
 	 *            node depth level
 	 */
-	public TreePanel(String id, final IModel model, int level)
+	public TreePanel(String id, final IModel<I> model, int level)
 	{
 		super(id, model);
 		this.level = level;
@@ -62,7 +62,7 @@ public abstract class TreePanel extends Panel
 		add(junctionLink);
 
 		// add node component
-		Component nodeComponent = newNodeComponent(NODE_COMPONENT_ID, getDefaultModel());
+		Component nodeComponent = newNodeComponent(NODE_COMPONENT_ID, getDefaultNodeModel());
 		add(nodeComponent);
 
 		IconImage icon = new IconImage("icon", new IconModel())
@@ -94,22 +94,22 @@ public abstract class TreePanel extends Panel
 	 * 
 	 * @author Matej Knopp
 	 */
-	private class IconModel implements IModel
+	private class IconModel implements IModel<Icon>
 	{
 		private static final long serialVersionUID = 1L;
 
 		/**
 		 * {@inheritDoc}
 		 */
-		public Object getObject()
+		public Icon getObject()
 		{
-			return getIcon(getDefaultModel());
+			return getIcon(getDefaultNodeModel());
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
-		public void setObject(Object object)
+		public void setObject(Icon object)
 		{
 			throw new UnsupportedOperationException();
 		}
@@ -129,7 +129,7 @@ public abstract class TreePanel extends Panel
 	 *            model for the TreeNode
 	 * @return icon instance or null
 	 */
-	protected abstract Icon getIcon(IModel model);
+	protected abstract Icon getIcon(IModel<I> model);
 
 	/**
 	 * Creates a new component for the given TreeNode.
@@ -140,7 +140,12 @@ public abstract class TreePanel extends Panel
 	 *            model that returns the node
 	 * @return component for node
 	 */
-	protected abstract Component newNodeComponent(String id, IModel model);
+	protected abstract Component newNodeComponent(String id, IModel<I> model);
+
+	protected IModel<I> getDefaultNodeModel()
+	{
+		return (IModel<I>)getDefaultModel();
+	}
 
 	/**
 	 * Very simple border that adds a proper <td></td> around an icon
@@ -221,7 +226,7 @@ public abstract class TreePanel extends Panel
 		}
 	};
 
-	private TreeGridBody getTreeGridBody()
+	private TreeGridBody<T, I> getTreeGridBody()
 	{
 		return findParent(TreeGridBody.class);
 	};
@@ -336,7 +341,7 @@ public abstract class TreePanel extends Panel
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form form)
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				callback.onClick(target);
 			}

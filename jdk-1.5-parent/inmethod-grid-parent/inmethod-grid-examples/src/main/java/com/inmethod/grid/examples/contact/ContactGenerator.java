@@ -80,8 +80,7 @@ public class ContactGenerator
 	 * @param collection
 	 * @param count
 	 */
-	@SuppressWarnings("unchecked")
-	public void generate(Collection collection, int count)
+	public void generate(Collection<Contact> collection, int count)
 	{
 		for (int i = 0; i < count; i++)
 		{

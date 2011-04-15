@@ -58,7 +58,7 @@ import org.apache.wicket.model.IModel;
  * 
  * @author Matej Knopp
  */
-public interface IDataSource extends IDetachable, IClusterable
+public interface IDataSource<T> extends IDetachable, IClusterable
 {
 
 	/**
@@ -71,7 +71,7 @@ public interface IDataSource extends IDetachable, IClusterable
 	 * @param result
 	 *            Allows to set the total item count and result items
 	 */
-	public void query(IQuery query, IQueryResult result);
+	public void query(IQuery query, IQueryResult<T> result);
 
 	/**
 	 * Allows wrapping the object in a model which will be set as model of the appropriate row. In
@@ -80,7 +80,7 @@ public interface IDataSource extends IDetachable, IClusterable
 	 * @param object
 	 * @return model that can be used to access the object
 	 */
-	public IModel model(Object object);
+	public IModel<T> model(T object);
 
 	/**
 	 * Specifies the subset of data to be loaded.
@@ -137,7 +137,7 @@ public interface IDataSource extends IDetachable, IClusterable
 	 * 
 	 * @author Matej Knopp
 	 */
-	public interface IQueryResult
+	public interface IQueryResult<T>
 	{
 		/**
 		 * Constant indicating that there are more items left.
@@ -170,6 +170,6 @@ public interface IDataSource extends IDetachable, IClusterable
 		 * @param items
 		 *            iterator able to iterate through the loaded items.
 		 */
-		public void setItems(Iterator<?> items);
+		public void setItems(Iterator<? extends T> items);
 	};
 }

@@ -10,12 +10,12 @@ import com.inmethod.grid.column.AbstractColumn;
 import com.inmethod.grid.common.Icons;
 import com.inmethod.icon.Icon;
 
-public class SubmitCancelColumn extends AbstractColumn
+public class SubmitCancelColumn<M, I> extends AbstractColumn<M, I>
 {
 
 	private static final long serialVersionUID = 1L;
 
-	public SubmitCancelColumn(String columnId, IModel headerModel)
+	public SubmitCancelColumn(String columnId, IModel<String> headerModel)
 	{
 		super(columnId, headerModel);
 
@@ -25,9 +25,9 @@ public class SubmitCancelColumn extends AbstractColumn
 	}
 
 	@Override
-	public Component newCell(WebMarkupContainer parent, String componentId, final IModel rowModel)
+	public Component newCell(WebMarkupContainer parent, String componentId, final IModel<I> rowModel)
 	{
-		return new SubmitCancelPanel(componentId, rowModel, getGrid())
+		return new SubmitCancelPanel<M, I>(componentId, rowModel, getGrid())
 		{
 
 			private static final long serialVersionUID = 1L;
@@ -79,21 +79,21 @@ public class SubmitCancelColumn extends AbstractColumn
 		return Icons.CANCEL;
 	}
 
-	protected void onCancel(AjaxRequestTarget target, IModel rowModel,
+	protected void onCancel(AjaxRequestTarget target, IModel<I> rowModel,
 		WebMarkupContainer rowComponent)
 	{
 		getGrid().setItemEdit(rowModel, false);
 		getGrid().update();
 	}
 
-	protected void onError(AjaxRequestTarget target, IModel rowModel,
+	protected void onError(AjaxRequestTarget target, IModel<I> rowModel,
 		WebMarkupContainer rowComponent)
 	{
 		// just update the row
 		target.add(rowComponent);
 	}
 
-	protected void onSubmitted(AjaxRequestTarget target, IModel rowModel,
+	protected void onSubmitted(AjaxRequestTarget target, IModel<I> rowModel,
 		WebMarkupContainer rowComponent)
 	{
 		getGrid().setItemEdit(rowModel, false);
@@ -101,7 +101,7 @@ public class SubmitCancelColumn extends AbstractColumn
 	}
 
 	@Override
-	public boolean cellClicked(IModel rowModel)
+	public boolean cellClicked(IModel<I> rowModel)
 	{
 		if (getGrid().isClickRowToSelect() && getGrid().isSelectToEdit())
 		{
@@ -116,7 +116,7 @@ public class SubmitCancelColumn extends AbstractColumn
 	}
 
 	@Override
-	public String getCellCssClass(IModel rowModel, int rowNum)
+	public String getCellCssClass(IModel<I> rowModel, int rowNum)
 	{
 		return getGrid().isItemEdited(rowModel) ? "imxt-edit" : "imxt-want-prelight imxt-edit";
 	}
