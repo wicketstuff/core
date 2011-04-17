@@ -3,11 +3,7 @@ package com.inmethod.grid.examples.pages.datagrid;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.ResourceModel;
-import org.apache.wicket.request.IRequestHandler;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.wicketstuff.poi.excel.TableComponentAsXlsHandler;
 
 import com.inmethod.grid.IDataSource;
 import com.inmethod.grid.IGridColumn;
@@ -49,28 +45,6 @@ public class SimpleDataGridPage extends BaseExamplePage
 			new ContactDataSource(), columns);
 
 		add(grid);
-
-		Link<Void> exportToExcel = new Link<Void>("exportToExcel")
-		{
-			/** */
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onClick()
-			{
-				try
-				{
-					IRequestHandler handler = new TableComponentAsXlsHandler(
-						grid.get("form:bodyContainer:body"), "example.xls");
-					RequestCycle.get().scheduleRequestHandlerAfterCurrent(handler);
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-		};
-		add(exportToExcel);
 	}
 
 }
