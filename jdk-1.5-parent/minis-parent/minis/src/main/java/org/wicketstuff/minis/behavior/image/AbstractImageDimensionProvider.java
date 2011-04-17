@@ -32,8 +32,13 @@ public abstract class AbstractImageDimensionProvider extends Behavior
 	public static final String HEIGHT = "height";
 
 	/**
-	 * Gets the image dimension.
+	 * Gets the image dimension. By default it is called by
+	 * {@link #onComponentTag(Component, ComponentTag)}.
 	 * 
+	 * @param component
+	 *            "the component that renders this tag currently"
+	 * @param tag
+	 *            "the tag that is rendered"
 	 * @return image dimension used for width and height, can be null
 	 */
 	protected abstract ImageDimension getImageDimension(Component component, ComponentTag tag);
