@@ -22,35 +22,33 @@ public abstract class AbstractImageDimensionProvider extends Behavior
 	private static final long serialVersionUID = 2659926396935426159L;
 
 	/**
-	 * "width" standard img attribute name
+	 * "width" standard html img attribute name
 	 */
 	public static final String WIDTH = "width";
 
 	/**
-	 * "height" standard img attribute name
+	 * "height" standard html img attribute name
 	 */
 	public static final String HEIGHT = "height";
 
 	/**
-	 * Getter.
+	 * Gets the image dimension.
 	 * 
-	 * @return the width of the image
+	 * @return image dimension used for width and height, can be null
 	 */
-	public abstract String getWidth();
-
-	/**
-	 * Getter.
-	 * 
-	 * @return the height of the image
-	 */
-	public abstract String getHeight();
+	protected abstract ImageDimension getImageDimension(Component component, ComponentTag tag);
 
 	@Override
 	public void onComponentTag(Component component, ComponentTag tag)
 	{
 		super.onComponentTag(component, tag);
 
-		tag.put(WIDTH, getWidth());
-		tag.put(HEIGHT, getHeight());
+		ImageDimension dimension = getImageDimension(component, tag);
+
+		if (dimension == null)
+			return;
+
+		tag.put(WIDTH, dimension.getWidth());
+		tag.put(HEIGHT, dimension.getHeight());
 	}
 }

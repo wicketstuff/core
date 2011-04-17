@@ -17,7 +17,7 @@ import org.junit.Test;
  */
 public class ImageDimensionProviderTest
 {
-	private WicketTester tester = new WicketTester();
+	private final WicketTester tester = new WicketTester();
 
 	@After
 	public void after()
@@ -29,8 +29,9 @@ public class ImageDimensionProviderTest
 	public void testDimensions()
 	{
 		Image image = new Image("foo", AbstractDefaultAjaxBehavior.INDICATOR);
-		ImageDimensionProvider dimensionProvider = new ImageDimensionProvider(
-			Integer.toString(200), Integer.toString(70));
+		int width = 200;
+		int height = 70;
+		ImageDimensionProvider dimensionProvider = new ImageDimensionProvider(width, height);
 		image.add(dimensionProvider);
 
 		IMarkupFragment markup = Markup.of("<div><img wicket:id=\"" + image.getId() + "\" /></div>");
@@ -40,9 +41,9 @@ public class ImageDimensionProviderTest
 		TagTester tagTester = tester.getTagByWicketId(image.getId());
 
 		Assert.assertNotNull(tagTester);
-		Assert.assertEquals(dimensionProvider.getWidth(),
+		Assert.assertEquals(Integer.toString(width),
 			tagTester.getAttribute(AbstractImageDimensionProvider.WIDTH));
-		Assert.assertEquals(dimensionProvider.getHeight(),
+		Assert.assertEquals(Integer.toString(height),
 			tagTester.getAttribute(AbstractImageDimensionProvider.HEIGHT));
 	}
 }

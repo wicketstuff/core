@@ -1,5 +1,8 @@
 package org.wicketstuff.minis.behavior.image;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.markup.ComponentTag;
+
 /**
  * Static implementation of {@link AbstractImageDimensionProvider}. Width and height information is
  * provided at object construction time.
@@ -10,9 +13,7 @@ public class ImageDimensionProvider extends AbstractImageDimensionProvider
 {
 	private static final long serialVersionUID = -5997818865070010585L;
 
-	private final String width;
-
-	private final String height;
+	private final ImageDimension dimension;
 
 	/**
 	 * Constructor.
@@ -22,22 +23,25 @@ public class ImageDimensionProvider extends AbstractImageDimensionProvider
 	 * @param height
 	 *            height of the image
 	 */
-	public ImageDimensionProvider(String width, String height)
+	public ImageDimensionProvider(int width, int height)
 	{
-		super();
-		this.width = width;
-		this.height = height;
+		this(new ImageDimension(Integer.toString(width), Integer.toString(height)));
+	}
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param dimension
+	 *            dimension of the image, can be null
+	 */
+	public ImageDimensionProvider(ImageDimension dimension)
+	{
+		this.dimension = dimension;
 	}
 
 	@Override
-	public final String getWidth()
+	protected ImageDimension getImageDimension(Component component, ComponentTag tag)
 	{
-		return width;
-	}
-
-	@Override
-	public final String getHeight()
-	{
-		return height;
+		return dimension;
 	}
 }
