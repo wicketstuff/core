@@ -29,7 +29,7 @@ import org.wicketstuff.poi.excel.TableComponentAsXlsHandler;
 /**
  * @author Pedro Santos
  */
-public class SimpleDataGridPageTest extends TestCase
+public class ListViewFormComponentReuseManagerPageTest extends TestCase
 {
 	public void testExportToExcel() throws IOException
 	{
