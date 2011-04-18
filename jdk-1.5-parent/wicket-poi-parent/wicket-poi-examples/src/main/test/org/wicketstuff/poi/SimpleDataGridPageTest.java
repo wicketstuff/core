@@ -35,24 +35,24 @@ import com.inmethod.grid.examples.pages.datagrid.SimpleDataGridPage;
 /**
  * @author Pedro Santos
  */
-public class SimpleDataGridPageTest extends TestCase {
-	public void testExportToExcel() throws IOException {
-		WicketTester tester = new WicketTester(
-				new com.inmethod.grid.examples.WicketApplication());
+public class SimpleDataGridPageTest extends TestCase
+{
+	public void testExportToExcel() throws IOException
+	{
+		WicketTester tester = new WicketTester(new com.inmethod.grid.examples.WicketApplication());
 		tester.startPage(TestPage.class);
-		tester.executeListener(tester.getLastRenderedPage(),
-				ILinkListener.INTERFACE);
-		assertTrue(tester.getLastResponse().getHeader("Content-Disposition")
-				.contains(".xls"));
-		openFileInResponse(tester);
+		tester.executeListener(tester.getLastRenderedPage(), ILinkListener.INTERFACE);
+		assertTrue(tester.getLastResponse().getHeader("Content-Disposition").contains(".xls"));
+		// openFileInResponse(tester);
 	}
 
-	public static class TestPage extends SimpleDataGridPage implements
-			ILinkListener {
+	public static class TestPage extends SimpleDataGridPage implements ILinkListener
+	{
 		/** */
 		private static final long serialVersionUID = 1L;
 
-		public void onLinkClicked() {
+		public void onLinkClicked()
+		{
 			IRequestHandler handler = new TableComponentAsXlsHandler(
 					get("grid:form:bodyContainer:body"), "example.xls");
 			RequestCycle.get().scheduleRequestHandlerAfterCurrent(handler);
@@ -67,8 +67,9 @@ public class SimpleDataGridPageTest extends TestCase {
 	 * @throws IOException
 	 * @throws FileNotFoundException
 	 */
-	public static void openFileInResponse(WicketTester tester)
-			throws IOException, FileNotFoundException {
+	public static void openFileInResponse(WicketTester tester) throws IOException,
+			FileNotFoundException
+	{
 		File f = new File(System.getProperty("user.home") + "\\test.xls");
 		f.delete();
 		f.createNewFile();
