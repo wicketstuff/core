@@ -16,10 +16,6 @@
  */
 package org.wicketstuff.poi;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import junit.framework.TestCase;
@@ -30,8 +26,6 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.tester.WicketTester;
 import org.wicketstuff.poi.excel.TableComponentAsXlsHandler;
 
-import com.inmethod.grid.examples.pages.datagrid.SimpleDataGridPage;
-
 /**
  * @author Pedro Santos
  */
@@ -39,44 +33,24 @@ public class SimpleDataGridPageTest extends TestCase
 {
 	public void testExportToExcel() throws IOException
 	{
-		WicketTester tester = new WicketTester(new com.inmethod.grid.examples.WicketApplication());
+		WicketTester tester = new WicketTester(new WicketApplication());
 		tester.startPage(TestPage.class);
 		tester.executeListener(tester.getLastRenderedPage(), ILinkListener.INTERFACE);
 		assertTrue(tester.getLastResponse().getHeader("Content-Disposition").contains(".xls"));
 		// openFileInResponse(tester);
 	}
 
-	public static class TestPage extends SimpleDataGridPage implements ILinkListener
+	public static class TestPage extends ListViewFormComponentReuseManagerPage implements
+		ILinkListener
 	{
-		/** */
 		private static final long serialVersionUID = 1L;
 
 		public void onLinkClicked()
 		{
-			IRequestHandler handler = new TableComponentAsXlsHandler(
-					get("grid:form:bodyContainer:body"), "example.xls");
+			IRequestHandler handler = new TableComponentAsXlsHandler(get("rowsForm:rowsList"),
+				"example.xls");
 			RequestCycle.get().scheduleRequestHandlerAfterCurrent(handler);
 		}
 
-	}
-
-	/**
-	 * Utility method for test
-	 * 
-	 * @param tester
-	 * @throws IOException
-	 * @throws FileNotFoundException
-	 */
-	public static void openFileInResponse(WicketTester tester) throws IOException,
-			FileNotFoundException
-	{
-		File f = new File(System.getProperty("user.home") + "\\test.xls");
-		f.delete();
-		f.createNewFile();
-		FileOutputStream out = new FileOutputStream(f);
-		out.write(tester.getLastResponse().getBinaryContent());
-		out.close();
-		Desktop d = Desktop.getDesktop();
-		d.open(f);
 	}
 }

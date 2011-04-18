@@ -35,7 +35,6 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.minis.component.ListViewFormComponentReuseManager;
 import org.wicketstuff.poi.excel.TableComponentAsXlsHandler;
 
@@ -50,6 +49,16 @@ public class ListViewFormComponentReuseManagerPage extends WebPage
 
 		public String key;
 		public Integer value;
+
+		public Row()
+		{
+		}
+
+		public Row(String key, Integer value)
+		{
+			this.key = key;
+			this.value = value;
+		}
 	}
 
 	private static final long serialVersionUID = 1L;
@@ -57,8 +66,10 @@ public class ListViewFormComponentReuseManagerPage extends WebPage
 	private final List<Row> rows = new ArrayList<Row>();
 
 	@SuppressWarnings("serial")
-	public ListViewFormComponentReuseManagerPage(final PageParameters parameters)
+	public ListViewFormComponentReuseManagerPage()
 	{
+		rows.add(new Row("foo", 0));
+		rows.add(new Row("bar", 1));
 		final Form<List<Row>> form = new Form<List<Row>>("rowsForm");
 		add(form);
 		form.add(new Button("addRowButton")
@@ -75,7 +86,7 @@ public class ListViewFormComponentReuseManagerPage extends WebPage
 			public void onClick()
 			{
 				IRequestHandler handler = new TableComponentAsXlsHandler(form.get("rowsList"),
-						"example.xls");
+					"example.xls");
 				RequestCycle.get().scheduleRequestHandlerAfterCurrent(handler);
 			}
 		});
@@ -95,9 +106,9 @@ public class ListViewFormComponentReuseManagerPage extends WebPage
 					}
 				}));
 				ListViewFormComponentReuseManager.addOrReuse(item, new RequiredTextField<String>(
-						"key", new PropertyModel<String>(row, "key")));
+					"key", new PropertyModel<String>(row, "key")));
 				ListViewFormComponentReuseManager.addOrReuse(item, new TextField<Integer>("value",
-						new PropertyModel<Integer>(row, "value")));
+					new PropertyModel<Integer>(row, "value")));
 
 				item.add(new SubmitLink("removeRowLink")
 				{
