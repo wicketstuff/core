@@ -23,6 +23,9 @@ import com.inmethod.grid.common.AbstractPageableView;
 /**
  * Advanced grid component. Supports resizable and reorderable columns.
  * 
+ * @param T
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
 public class DataGrid<T> extends AbstractGrid<IDataSource<T>, T> implements IPageable
@@ -300,9 +303,8 @@ public class DataGrid<T> extends AbstractGrid<IDataSource<T>, T> implements IPag
 		WebMarkupContainer body = (WebMarkupContainer)get("form:bodyContainer:body:row");
 		if (body != null)
 		{
-			for (Object name : body)
+			for (Component component : body)
 			{
-				Component component = (Component)name;
 				IModel<T> model = (IModel<T>)component.getDefaultModel();
 				selectItem(model, true);
 			}
@@ -323,9 +325,8 @@ public class DataGrid<T> extends AbstractGrid<IDataSource<T>, T> implements IPag
 		WebMarkupContainer body = (WebMarkupContainer)get("form:bodyContainer:body:row");
 		if (body != null)
 		{
-			for (Object name : body)
+			for (Component component : body)
 			{
-				Component component = (Component)name;
 				IModel<T> model = (IModel<T>)component.getDefaultModel();
 				if (rowModel.equals(model))
 				{
@@ -401,9 +402,8 @@ public class DataGrid<T> extends AbstractGrid<IDataSource<T>, T> implements IPag
 			WebMarkupContainer body = (WebMarkupContainer)get("form:bodyContainer:body:row");
 			if (body != null)
 			{
-				for (Object name : body)
+				for (Component component : body)
 				{
-					Component component = (Component)name;
 					IModel<T> model = (IModel<T>)component.getDefaultModel();
 					if (dirtyItems.contains(model))
 					{

@@ -17,6 +17,11 @@ import com.inmethod.grid.common.AbstractGrid;
  * 
  * as it's put directly inside a table row.
  * 
+ * @param <M>
+ *            grid model object type
+ * @param <I>
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
 public abstract class AbstractHeaderToolbar<M, I> extends AbstractToolbar<M, I>

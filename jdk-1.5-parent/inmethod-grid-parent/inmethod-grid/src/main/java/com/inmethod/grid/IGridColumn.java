@@ -12,6 +12,11 @@ import com.inmethod.grid.treegrid.TreeGrid;
 /**
  * Represents a column in a {@link DataGrid} or a {@link TreeGrid}.
  * 
+ * @param <M>
+ *            grid model object type
+ * @param <I>
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
 public interface IGridColumn<M, I> extends IDetachable

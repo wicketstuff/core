@@ -13,6 +13,9 @@ import com.inmethod.grid.toolbar.paging.PagingToolbar;
  * Convenience implementation that adds {@link PagingToolbar} and {@link NoRecordsToolbar} to the
  * grid.
  * 
+ * @param <T>
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
 public class DefaultDataGrid<T> extends DataGrid<T>

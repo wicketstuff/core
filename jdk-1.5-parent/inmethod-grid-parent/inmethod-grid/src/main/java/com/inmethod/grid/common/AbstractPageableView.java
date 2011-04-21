@@ -18,6 +18,9 @@ import com.inmethod.grid.IGridSortState;
  * {@link org.apache.wicket.markup.repeater.AbstractPageableView} this component allows paging
  * without knowing the total number of rows.
  * 
+ * @param <T>
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
 public abstract class AbstractPageableView<T> extends RefreshingView<T> implements IPageable
@@ -367,7 +370,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 		private int totalCount = realItemCount;
 
 		// process will put the actual item model's here
-		private ArrayList<IModel<T>> itemCache = new ArrayList<IModel<T>>();
+		private final ArrayList<IModel<T>> itemCache = new ArrayList<IModel<T>>();
 
 		/**
 		 * @see IQueryResult#setItems(Iterator)

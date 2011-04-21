@@ -21,6 +21,9 @@ import com.inmethod.grid.common.AttachPrelightBehavior;
 /**
  * Contains data grid rows.
  * 
+ * @param <T>
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
 public abstract class DataGridBody<T> extends Panel implements IPageable

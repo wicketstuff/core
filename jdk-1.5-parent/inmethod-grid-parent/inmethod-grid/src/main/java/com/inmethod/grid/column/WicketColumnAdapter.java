@@ -27,6 +27,11 @@ import com.inmethod.grid.datagrid.DataGrid;
  * it will probably not work properly with this adapter, as the parent instance this adapter uses is
  * only temporary.
  * 
+ * @param <M>
+ *            grid model object type
+ * @param <I>
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
 public class WicketColumnAdapter<M, I> extends AbstractColumn<M, I>

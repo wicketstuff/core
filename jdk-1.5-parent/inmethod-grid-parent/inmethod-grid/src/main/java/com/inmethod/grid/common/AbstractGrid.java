@@ -46,6 +46,11 @@ import com.inmethod.grid.treegrid.TreeGrid;
 /**
  * Provides common functionality for {@link DataGrid} and {@link TreeGrid}.
  * 
+ * @param <M>
+ *            grid model object type
+ * @param <I>
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
 public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContributor

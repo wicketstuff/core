@@ -24,6 +24,11 @@ import com.inmethod.grid.common.AbstractGrid;
 /**
  * Advanced grid with a tree. Supports resizable and reorderable columns.
  * 
+ * @param <T>
+ *            tree model object type
+ * @param <I>
+ *            node model object type
+ * 
  * @author Matej Knopp
  */
 public class TreeGrid<T extends TreeModel & Serializable, I extends TreeNode & Serializable>
@@ -332,9 +337,8 @@ public class TreeGrid<T extends TreeModel & Serializable, I extends TreeNode & S
 		if (body != null)
 		{
 			boolean first = true;
-			for (Object name : body)
+			for (Component component : body)
 			{
-				Component component = (Component)name;
 				if (getTree().isRootLess() == false || first == false)
 				{
 					selectItem((IModel<I>)component.getDefaultModel(), true);
@@ -355,9 +359,8 @@ public class TreeGrid<T extends TreeModel & Serializable, I extends TreeNode & S
 		WebMarkupContainer body = (WebMarkupContainer)get("form:bodyContainer:body:i");
 		if (body != null)
 		{
-			for (Object name : body)
+			for (Component component : body)
 			{
-				Component component = (Component)name;
 				IModel<?> model = component.getDefaultModel();
 				if (rowModel.equals(model))
 				{

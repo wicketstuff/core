@@ -21,6 +21,11 @@ import com.inmethod.grid.IRenderable;
 /**
  * Represents container of cell items in one row.
  * 
+ * @param <M>
+ *            grid model object type
+ * @param <I>
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
 public abstract class AbstractGridRow<M, I> extends WebMarkupContainer

@@ -19,6 +19,11 @@ import com.inmethod.icon.Icon;
 /**
  * Base class for {@link TreeGrid} column that contains the actual tree.
  * 
+ * @param <T>
+ *            tree model object type
+ * @param <I>
+ *            node model object type
+ * 
  * @author Matej Knopp
  */
 public abstract class AbstractTreeColumn<T extends TreeModel & Serializable, I extends TreeNode & Serializable>

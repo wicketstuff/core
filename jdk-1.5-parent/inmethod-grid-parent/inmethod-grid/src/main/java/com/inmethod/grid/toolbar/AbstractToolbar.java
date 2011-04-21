@@ -11,6 +11,11 @@ import com.inmethod.grid.common.AbstractGrid;
 /**
  * Base for toolbar classes.
  * 
+ * @param <M>
+ *            grid model object type
+ * @param <I>
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
 public abstract class AbstractToolbar<M, I> extends Panel

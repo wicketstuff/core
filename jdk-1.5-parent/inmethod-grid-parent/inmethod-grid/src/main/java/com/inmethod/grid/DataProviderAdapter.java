@@ -15,6 +15,9 @@ import com.inmethod.grid.datagrid.DataGrid;
  * Adapter that allows using a wicket extension {@link IDataProvider} in a {@link DataGrid}. The
  * adapter also supports sortable data providers.
  * 
+ * @param <T>
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
 public class DataProviderAdapter<T> implements IDataSource<T>

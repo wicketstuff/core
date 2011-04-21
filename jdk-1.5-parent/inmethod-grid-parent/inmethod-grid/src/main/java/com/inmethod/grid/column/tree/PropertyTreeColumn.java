@@ -15,6 +15,13 @@ import org.apache.wicket.model.PropertyModel;
  * Simple tree column that displays a property of {@link TreeNode} instance specified by the
  * property expression.
  * 
+ * @param <T>
+ *            tree model object type
+ * @param <I>
+ *            node model object type
+ * @param <P>
+ *            type of the property
+ * 
  * @see AbstractTreeColumn
  * @author Matej Knopp
  */

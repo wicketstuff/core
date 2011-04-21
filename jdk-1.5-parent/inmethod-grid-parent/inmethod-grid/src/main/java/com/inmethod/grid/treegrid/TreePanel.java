@@ -23,6 +23,11 @@ import com.inmethod.icon.IconImage;
 /**
  * Represents the content of a tree column cell.
  * 
+ * @param <T>
+ *            tree model object type
+ * @param <I>
+ *            node model object type
+ * 
  * @author Matej Knopp
  */
 public abstract class TreePanel<T extends TreeModel, I extends TreeNode> extends Panel

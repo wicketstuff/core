@@ -20,6 +20,11 @@ import com.inmethod.grid.IGridSortState;
 /**
  * Repeater that contains column header components.
  * 
+ * @param <M>
+ *            grid model object type
+ * @param <I>
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
 public abstract class ColumnsHeaderRepeater<M, I> extends WebMarkupContainer

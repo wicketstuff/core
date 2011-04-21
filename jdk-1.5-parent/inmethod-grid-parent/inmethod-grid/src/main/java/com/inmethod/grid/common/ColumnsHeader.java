@@ -10,6 +10,11 @@ import com.inmethod.grid.IGridColumn;
 /**
  * Panel that provides the markup for {@link ColumnsHeaderRepeater}.
  * 
+ * @param <M>
+ *            grid model object type
+ * @param <I>
+ *            row/item model object type
+ * 
  * @see ColumnsHeaderRepeater
  * @author Matej Knopp
  */

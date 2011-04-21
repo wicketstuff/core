@@ -111,7 +111,7 @@ public class ColumnsState implements IClusterable
 	{
 		stateArray = new Entry[columns.size()];
 		int i = 0;
-		for (IGridColumn<?, ?> column : columns)
+		for (IGridColumn<M, I> column : columns)
 		{
 			stateArray[i] = new Entry(column.getId());
 			++i;
@@ -306,7 +306,7 @@ public class ColumnsState implements IClusterable
 		{
 			return false;
 		}
-		for (IGridColumn<?, ?> column : columns)
+		for (IGridColumn<M, I> column : columns)
 		{
 			if (getEntryIndex(column.getId()) == -1)
 			{

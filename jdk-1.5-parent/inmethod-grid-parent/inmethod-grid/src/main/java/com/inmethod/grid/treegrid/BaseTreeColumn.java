@@ -22,6 +22,11 @@ import com.inmethod.icon.Icon;
  * Base class for column containing the actual tree in {@link TreeGrid}. Users should not subclass
  * this class directly. Rather than that the {@link AbstractTreeColumn} class should be used.
  * 
+ * @param <T>
+ *            tree model object type
+ * @param <I>
+ *            node model object type
+ * 
  * @author Matej Knopp
  */
 public abstract class BaseTreeColumn<T extends TreeModel & Serializable, I extends TreeNode & Serializable>

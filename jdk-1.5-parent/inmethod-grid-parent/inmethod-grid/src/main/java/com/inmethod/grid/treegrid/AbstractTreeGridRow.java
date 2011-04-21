@@ -7,6 +7,11 @@ import com.inmethod.grid.common.AbstractGridRow;
 /**
  * A row in tree grid.
  * 
+ * @param <M>
+ *            grid model object type
+ * @param <I>
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
 public abstract class AbstractTreeGridRow<M, I> extends AbstractGridRow<M, I>

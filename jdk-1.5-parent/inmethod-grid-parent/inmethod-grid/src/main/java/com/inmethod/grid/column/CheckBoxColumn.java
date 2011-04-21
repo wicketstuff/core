@@ -28,6 +28,11 @@ import com.inmethod.grid.treegrid.TreeGrid;
  * the header checkbox is deselected, it deselects all rows (on all pages). This is to ensure that
  * when user deselects one page, no invisible rows are left selected.
  * 
+ * @param <M>
+ *            grid model object type
+ * @param <I>
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
 public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>

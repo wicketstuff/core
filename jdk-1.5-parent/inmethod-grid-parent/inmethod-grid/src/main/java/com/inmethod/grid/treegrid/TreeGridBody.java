@@ -20,6 +20,11 @@ import com.inmethod.grid.common.AttachPrelightBehavior;
 /**
  * Body of {@link TreeGrid}. Contains the rows for tree nodes.
  * 
+ * @param <T>
+ *            tree model object type
+ * @param <I>
+ *            node model object type
+ * 
  * @author Matej Knopp
  */
 public abstract class TreeGridBody<T extends TreeModel, I extends TreeNode> extends AbstractTree

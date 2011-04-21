@@ -20,6 +20,11 @@ import com.inmethod.grid.common.AbstractGrid;
  * method necessary to implement is {@link #newCell(WebMarkupContainer, String, IModel)}.
  * <p>
  * 
+ * @param <M>
+ *            grid model object type
+ * @param <I>
+ *            row/item model object type
+ * 
  * @see AbstractLightWeightColumn
  * @author Matej Knopp
  */

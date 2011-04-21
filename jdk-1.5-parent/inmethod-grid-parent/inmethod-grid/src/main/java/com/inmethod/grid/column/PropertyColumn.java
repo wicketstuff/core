@@ -16,6 +16,13 @@ import com.inmethod.grid.IRenderable;
 /**
  * A lightweight column that displays a property of row object specified by an property expression.
  * 
+ * @param <M>
+ *            grid model object type
+ * @param <I>
+ *            row/item model object type
+ * @param <P>
+ *            type of the property
+ * 
  * @author Matej Knopp
  */
 public class PropertyColumn<M, I, P> extends AbstractLightWeightColumn<M, I>

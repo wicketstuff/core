@@ -6,6 +6,9 @@ import org.apache.wicket.request.Response;
 /**
  * Lightweight columns return an implementation of this interface to render cell output.
  * 
+ * @param <T>
+ *            row/item model object type
+ * 
  * @see IGridColumn#isLightWeight(IModel)
  * @author Matej Knopp
  */

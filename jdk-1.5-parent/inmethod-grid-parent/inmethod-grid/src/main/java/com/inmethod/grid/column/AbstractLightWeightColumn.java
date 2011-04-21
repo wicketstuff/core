@@ -17,6 +17,11 @@ import com.inmethod.grid.column.editable.EditablePropertyColumn;
  * method necessary to implement is {@link #newCell(IModel)}.
  * <p>
  * 
+ * @param <M>
+ *            grid model object type
+ * @param <I>
+ *            row/item model object type
+ * 
  * @see EditablePropertyColumn
  * @author Matej Knopp
  */

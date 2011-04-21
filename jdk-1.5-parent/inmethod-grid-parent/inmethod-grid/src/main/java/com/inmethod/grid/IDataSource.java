@@ -13,19 +13,19 @@ import org.apache.wicket.model.IModel;
  * An example of situation when the row count can be determined:
  * 
  * <pre>
- * IDataSource source = new IDataSource() {
- * 		public void query(IQuery query, IQueryResult result) {
+ * IDataSource&lt;User> source = new IDataSource&lt;User>() {
+ * 		public void query(IQuery query, IQueryResult&lt;User> result) {
  * 			
  * 			UserDao dao = DaoManager.getUserDao(); // code to get a DAO or service object
  * 			
  * 			result.setTotalCount(dao.getUserCount());
  * 			
- * 			Collection users = dao.getUsers(query.getFrom(), query.getCount());
+ * 			Collection&lt;User> users = dao.getUsers(query.getFrom(), query.getCount());
  * 			result.setItems(users.iterator());
  * 		} 
  * 
- * 		public IModel model(Object object) {
- * 			return new DetachableUserModel(objecT);
+ * 		public IModel&lt;User> model(User object) {
+ * 			return new DetachableUserModel(object);
  * 		}    
  * }
  * </pre>
@@ -35,13 +35,13 @@ import org.apache.wicket.model.IModel;
  * whether the next page should be available:
  * 
  * <pre>
- * IDataSource source = new IDataSource() {
- * 		public void query(IQuery query, IQueryResult result) {
+ * IDataSource&lt;User> source = new IDataSource&lt;User>() {
+ * 		public void query(IQuery query, IQueryResult&lt;User> result) {
  * 			
  * 			UserDao dao = DaoManager.getUserDao(); // code to get a DAO or service object
- * 			Collection users = dao.getUsers(query.getFrom(), query.getCount() + 1);
+ * 			Collection&lt;User> users = dao.getUsers(query.getFrom(), query.getCount() + 1);
  * 
- * 			if (user.size() &lt; query.getCount() + 1) {
+ * 			if (users.size() &lt; query.getCount() + 1) {
  * 				result.setTotalCount(IQueryResult.NO_MORE_ITEMS);
  * 			} else {
  * 				result.setTotalCount(IQueryResult.MORE_ITEMS);
@@ -50,11 +50,14 @@ import org.apache.wicket.model.IModel;
  * 			result.setItems(users.iterator());
  * 	}
  * 
- * 	public IModel model(Object object) {
- * 			return new DetachableUserModel(objecT);
+ * 	public IModel&lt;User> model(User object) {
+ * 			return new DetachableUserModel(object);
  * 		}  
  * }
  * </pre>
+ * 
+ * @param <T>
+ *            row/item model object type
  * 
  * @author Matej Knopp
  */
@@ -134,6 +137,9 @@ public interface IDataSource<T> extends IDetachable, IClusterable
 	/**
 	 * Used to pass the total row count and the loaded item to the caller of
 	 * {@link IDataSource#query(IDataSource.IQuery, IDataSource.IQueryResult)} method.
+	 * 
+	 * @param <T>
+	 *            row/item model object type
 	 * 
 	 * @author Matej Knopp
 	 */
