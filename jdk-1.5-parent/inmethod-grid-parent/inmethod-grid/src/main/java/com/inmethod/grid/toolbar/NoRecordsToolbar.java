@@ -29,7 +29,7 @@ import com.inmethod.grid.datagrid.DataGrid;
  * The message can be overridden by providing a resource with key
  * <code>datagrid.no-records-found</code>
  * 
- * @param T
+ * @param <T>
  *            row/item model object type
  * 
  * @author Igor Vaynberg (ivaynberg)

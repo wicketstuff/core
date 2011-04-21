@@ -23,7 +23,7 @@ import com.inmethod.grid.common.AbstractPageableView;
 /**
  * Advanced grid component. Supports resizable and reorderable columns.
  * 
- * @param T
+ * @param <T>
  *            row/item model object type
  * 
  * @author Matej Knopp
