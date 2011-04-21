@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>mootools-meiomask-parent</artifactId>
-        <version>1.4-SNAPSHOT</version>
+        <version>1.4.17.1</version>
     </parent>
 
     <artifactId>mootools-meiomask-examples</artifactId>
