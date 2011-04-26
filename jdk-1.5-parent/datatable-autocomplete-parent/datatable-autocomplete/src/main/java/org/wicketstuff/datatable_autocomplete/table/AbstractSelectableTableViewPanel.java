@@ -15,6 +15,7 @@
  */
 package org.wicketstuff.datatable_autocomplete.table;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.wicket.ResourceReference;
@@ -155,6 +156,7 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 			ITableRowSelectionHandler<T> rowSelectionHandler,
 			IDTATableRenderingHints hints) {
 
+		// intentionally don't declare a type.
 		super(id, new Model());
 		this.dataProvider = dataProvider;
 		this.rowSelectionHandler = rowSelectionHandler;
@@ -274,7 +276,6 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 		this(id, DEFAULT_CSS, "dta_data_table", displayEntityName,
 				tableColumns, attributeFilterDataProvider, selectionHandler, hints);
 	}
-//2011 added flag for radio button
 	public AbstractSelectableTableViewPanel(String id,
 			String displayEntityName, IColumn<?>[] tableColumns, boolean withRadioGroup,
 			ISortableDataProvider<T> attributeFilterDataProvider,
@@ -303,8 +304,22 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 
 	}
 
+	/**
+	 * 
+	 * @return the selected row from the table.
+	 * 
+	 */
 	public T getSelectedRow() {
 		return radioGroup.getModelObject();
+	}
+	
+	/**
+	 * 
+	 * @param selectedObject
+	 */
+	public void setSelectedRow (T selectedObject) {
+		
+		this.radioGroup.setModelObject(selectedObject);
 	}
 
 	/**
@@ -334,8 +349,58 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 
 		updateVisibility();
 
+		T modelObject = getModelObject();
+		
+		/*
+		 * If the model object is not null we will pre select the row for this item.
+		 */
+		this.radioGroup.setModelObject(modelObject);
+		
+		int currentPage = dataTable.getCurrentPage();
+		
+		int targetPage = findTargetPage (modelObject, dataTable.getRowsPerPage(), dataTable.getRowCount());
+		
+		if (currentPage != targetPage) {
+			// change to the page that contains the selected value
+			dataTable.setCurrentPage(targetPage);
+		}
+		
 		super.onBeforeRender();
 
+	}
+
+	/**
+	 * 
+	 * @param modelObject
+	 * @param i 
+	 * @return the page index for the model object.
+	 * 
+	 */
+	private int findTargetPage(T modelObject, int pageSize, int totalRows) {
+		
+		int count = 0;
+		int currentPage = 0;
+		
+		while (count < totalRows) {
+			
+		
+			Iterator<? extends T> iter = dataProvider.iterator(count, pageSize);
+			
+			while (iter.hasNext()) {
+				T t = (T) iter.next();
+				
+				if (t.equals(modelObject))
+					return currentPage;
+				
+				count++;
+			}
+			
+			currentPage++;
+			
+		}
+		
+		// no match
+		return -1;
 	}
 
 	/**
@@ -385,7 +450,7 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 
 		radioGroup.processInput();
 
-		super.convertInput();
+		setConvertedInput(radioGroup.getModelObject());
 
 
 	}
