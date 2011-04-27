@@ -368,7 +368,7 @@ public class MapLayer implements Serializable
 		return featureStyleList.keySet();
 	}
 
-	private class Feature2FeatureStyle implements Serializable
+	private static class Feature2FeatureStyle implements Serializable
 	{
 		private static final long serialVersionUID = 3495178735014944354L;
 

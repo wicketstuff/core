@@ -24,11 +24,10 @@ public class SliderHandleOptions implements IClusterable
 
 	private String cssStyle;
 
-	private transient final JSONObject json;
+	private transient final JSONObject json = new JSONObject();
 
 	public SliderHandleOptions(final String id, final Integer start)
 	{
-		json = new JSONObject();
 
 		setId(id);
 		setStart(start);

@@ -64,6 +64,8 @@ public abstract class BaseTreeColumn<T extends TreeModel & Serializable, I exten
 	@Override
 	public Component newCell(WebMarkupContainer parent, String componentId, IModel<I> rowModel)
 	{
+		if (!(parent instanceof AbstractTreeGridRow))
+			throw new IllegalArgumentException("Parent must be an " + AbstractTreeGridRow.class);
 		AbstractTreeGridRow<T, I> row = (AbstractTreeGridRow<T, I>)parent;
 		return new TreePanel<T, I>(componentId, rowModel, row.getLevel())
 		{

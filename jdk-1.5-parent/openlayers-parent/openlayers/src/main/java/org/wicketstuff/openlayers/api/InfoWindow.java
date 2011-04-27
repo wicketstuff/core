@@ -1,6 +1,5 @@
 package org.wicketstuff.openlayers.api;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.request.Request;
@@ -59,30 +58,6 @@ public class InfoWindow extends WebMarkupContainer
 		return "";
 	}
 
-	/**
-	 * Open an info window.
-	 * 
-	 * @param content
-	 *            content to open in info window
-	 * @return This
-	 */
-	public InfoWindow open(LonLat latLng, Component content)
-	{
-		return open(latLng, content);
-	}
-
-	/**
-	 * Open an info window.
-	 * 
-	 * @param content
-	 *            content to open in info window
-	 * @return This
-	 */
-	public InfoWindow open(Marker marker, Component content)
-	{
-		return open(marker, content);
-	}
-
 	public InfoWindow open(LonLat latLng)
 	{
 
@@ -115,7 +90,7 @@ public class InfoWindow extends WebMarkupContainer
 
 	public boolean isOpen()
 	{
-		return (latLng != null || marker != null);
+		return latLng != null || marker != null;
 	}
 
 	public void close()

@@ -75,10 +75,10 @@ public abstract class Layer
 
 		ObjectLiteral builder = new ObjectLiteral();
 
-		for (String key : options.keySet())
+		for (Map.Entry<String, String> entry : options.entrySet())
 		{
 
-			builder.set(key, options.get(key));
+			builder.set(entry.getKey(), entry.getValue());
 
 		}
 

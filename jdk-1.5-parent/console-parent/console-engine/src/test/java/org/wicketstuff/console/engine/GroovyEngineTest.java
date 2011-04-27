@@ -31,18 +31,12 @@ import org.junit.Test;
 public class GroovyEngineTest
 {
 
-	private GroovyEngine engine;
+	private IScriptEngine engine;
 
 	@Before
 	public void setup()
 	{
 		engine = new GroovyEngine();
-	}
-
-	@Test
-	public void test_instanceof_engine() throws Exception
-	{
-		assertTrue(engine instanceof IScriptEngine);
 	}
 
 	@Test

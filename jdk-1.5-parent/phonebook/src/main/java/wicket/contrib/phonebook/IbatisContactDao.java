@@ -43,7 +43,7 @@ public class IbatisContactDao extends SqlMapClientDaoSupport implements ContactD
 	 */
 	public Contact load(long id) throws DataAccessException
 	{
-		return (Contact)getSqlMapClientTemplate().queryForObject("getContact", new Long(id));
+		return (Contact)getSqlMapClientTemplate().queryForObject("getContact", Long.valueOf(id));
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class IbatisContactDao extends SqlMapClientDaoSupport implements ContactD
 	 */
 	public void delete(long id)
 	{
-		getSqlMapClientTemplate().delete("deleteContact", new Long(id));
+		getSqlMapClientTemplate().delete("deleteContact", Long.valueOf(id));
 	}
 
 	/**

@@ -45,7 +45,7 @@ public class InputBehavior extends Behavior
 {
 
 	private static final long serialVersionUID = 1L;
-	private ResourceReference SHORTCUTS_JAVASCRIPT = new PackageResourceReference(
+	private final ResourceReference SHORTCUTS_JAVASCRIPT = new PackageResourceReference(
 		InputBehavior.class, "shortcuts.js");
 	private final KeyType[] keyCombo;
 	private EventType eventType;
@@ -181,7 +181,7 @@ public class InputBehavior extends Behavior
 		HashMap<String, Object> variables = new HashMap<String, Object>();
 		String widgetId = getEscapedComponentMarkupId();
 
-		String keyComboString = "";
+		StringBuilder keyComboString = new StringBuilder();
 
 		boolean first = true;
 		for (KeyType keyType : keyCombo)
@@ -193,15 +193,15 @@ public class InputBehavior extends Behavior
 			else
 			{
 
-				keyComboString += "+";
+				keyComboString.append('+');
 			}
-			keyComboString += keyType.getKeyCode();
+			keyComboString.append(keyType.getKeyCode());
 		}
 		if (eventType != null)
 		{
 			variables.put("event", eventType.toString());
 		}
-		variables.put("keys", keyComboString);
+		variables.put("keys", keyComboString.toString());
 		variables.put("wicketComponentId", widgetId);
 
 		variables.put("disable_in_input", getDisable_in_input().toString());

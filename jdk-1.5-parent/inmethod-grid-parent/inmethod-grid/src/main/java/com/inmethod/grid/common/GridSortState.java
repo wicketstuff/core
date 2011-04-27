@@ -25,7 +25,7 @@ public class GridSortState implements IGridSortState, IClusterable
 	 * 
 	 * @author Matej Knopp
 	 */
-	private class SortStateColumn implements ISortStateColumn, IClusterable
+	private static class SortStateColumn implements ISortStateColumn, IClusterable
 	{
 
 		private static final long serialVersionUID = 1L;

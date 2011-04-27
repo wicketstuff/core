@@ -68,7 +68,7 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements DTAButt
 
 	private final AjaxIndicatorAppender indicatorAppender = new AjaxIndicatorAppender();
 
-	class DTAButtonAjaxCallDecorator extends AjaxCallDecorator
+	static class DTAButtonAjaxCallDecorator extends AjaxCallDecorator
 	{
 
 		/**

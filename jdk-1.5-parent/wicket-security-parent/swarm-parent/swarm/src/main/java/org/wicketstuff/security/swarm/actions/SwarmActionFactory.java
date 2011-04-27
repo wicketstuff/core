@@ -26,12 +26,21 @@ import org.apache.wicket.authorization.Action;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.security.actions.*;
+import org.wicketstuff.security.actions.Access;
+import org.wicketstuff.security.actions.ActionFactory;
+import org.wicketstuff.security.actions.Actions;
+import org.wicketstuff.security.actions.AllActions;
+import org.wicketstuff.security.actions.Enable;
+import org.wicketstuff.security.actions.Inherit;
+import org.wicketstuff.security.actions.RegistrationException;
+import org.wicketstuff.security.actions.Render;
+import org.wicketstuff.security.actions.WaspAction;
+import org.wicketstuff.security.actions.WaspActionFactory;
 
 /**
- * Default implementation of an action factory. It handles access, inherit, render and
- * enable actions. Because actions are immutable and in order to improve performance,
- * generated actions are cached.
+ * Default implementation of an action factory. It handles access, inherit, render and enable
+ * actions. Because actions are immutable and in order to improve performance, generated actions are
+ * cached.
  * 
  * @author marrink
  */
@@ -42,7 +51,7 @@ public class SwarmActionFactory implements WaspActionFactory
 	/**
 	 * Maximum power of 2 that can be used to assign to an action.
 	 */
-	protected static final int maxAssingableAction = (int) Math.pow(2, 30);
+	protected static final int maxAssingableAction = (int)Math.pow(2, 30);
 
 	/**
 	 * maps int's to Strings.
@@ -61,8 +70,7 @@ public class SwarmActionFactory implements WaspActionFactory
 	 */
 	private Map<Integer, SwarmAction> registeredIntActions = new HashMap<Integer, SwarmAction>();
 
-	private Map<Class< ? extends WaspAction>, SwarmAction> registeredClassActions =
-		new HashMap<Class< ? extends WaspAction>, SwarmAction>();
+	private Map<Class<? extends WaspAction>, SwarmAction> registeredClassActions = new HashMap<Class<? extends WaspAction>, SwarmAction>();
 
 	private int power = -1;
 
@@ -74,8 +82,7 @@ public class SwarmActionFactory implements WaspActionFactory
 	 * Registers the default actions: access, inherit, render and enable.
 	 * 
 	 * @param key
-	 *            using this key the factory registers itself to the {@link Actions}
-	 *            object.
+	 *            using this key the factory registers itself to the {@link Actions} object.
 	 */
 	public SwarmActionFactory(Object key)
 	{
@@ -170,12 +177,12 @@ public class SwarmActionFactory implements WaspActionFactory
 		if (ja == null)
 		{
 			if (actions > maxAction)
-				throw new IllegalArgumentException("Max value for actions = " + maxAction
-					+ ", you used " + actions);
+				throw new IllegalArgumentException("Max value for actions = " + maxAction +
+					", you used " + actions);
 			if (actions < 0)
 				throw new IllegalArgumentException("Min value for actions = 0, you used " + actions);
 			ja = new SwarmAction(actions, buildActionString(actions), getFactoryKey());
-			cacheAction(new Integer(actions), ja);
+			cacheAction(Integer.valueOf(actions), ja);
 		}
 		return ja;
 
@@ -208,8 +215,7 @@ public class SwarmActionFactory implements WaspActionFactory
 	 * 
 	 * @param action
 	 *            the internal value of the action
-	 * @return the registered string or null if no string value was registered for this
-	 *         action.
+	 * @return the registered string or null if no string value was registered for this action.
 	 */
 	protected final String valueOf(Integer action)
 	{
@@ -217,9 +223,9 @@ public class SwarmActionFactory implements WaspActionFactory
 	}
 
 	/**
-	 * Builds a logically ordered comma separated string of all the actions this
-	 * permission has. Based on the logical and of the supplied actions. Subclasses should
-	 * always return the same string (action order) for the same action.
+	 * Builds a logically ordered comma separated string of all the actions this permission has.
+	 * Based on the logical and of the supplied actions. Subclasses should always return the same
+	 * string (action order) for the same action.
 	 * 
 	 * @param actions
 	 *            the internal action value
@@ -252,7 +258,7 @@ public class SwarmActionFactory implements WaspActionFactory
 	protected final void appendActionString(AppendingStringBuffer buff, int actions, int waspAction)
 	{
 		if (implies(actions, waspAction))
-			buff.append(valueOf(new Integer(waspAction))).append(", ");
+			buff.append(valueOf(Integer.valueOf(waspAction))).append(", ");
 	}
 
 	/**
@@ -266,14 +272,13 @@ public class SwarmActionFactory implements WaspActionFactory
 	 */
 	protected final boolean implies(int actions, int action)
 	{
-		return ((actions & action) == action);
+		return (actions & action) == action;
 	}
 
 	/**
-	 * Parses a comma separated String containing actions. Access is the default and will
-	 * also be substituted for any empty or null String. using a string like 'render,
-	 * render' is pointless but does not brake anything. Order of the actions is also not
-	 * important.
+	 * Parses a comma separated String containing actions. Access is the default and will also be
+	 * substituted for any empty or null String. using a string like 'render, render' is pointless
+	 * but does not brake anything. Order of the actions is also not important.
 	 * 
 	 * @param actions
 	 * @return a logical and of the actions.
@@ -288,9 +293,9 @@ public class SwarmActionFactory implements WaspActionFactory
 			String[] actionz = actions.split(",");
 			String action = null;
 			Set<Integer> keys = stringValues.keySet();
-			for (int i = 0; i < actionz.length; i++)
+			for (String element : actionz)
 			{
-				action = actionz[i].trim();
+				action = element.trim();
 				if (action.equals(""))
 					break; // Access
 				if (action.equals("all"))
@@ -306,8 +311,8 @@ public class SwarmActionFactory implements WaspActionFactory
 					}
 				}
 				if (!found)
-					throw new IllegalArgumentException("Invalid action: " + action + " in: "
-						+ actions);
+					throw new IllegalArgumentException("Invalid action: " + action + " in: " +
+						actions);
 			}
 		}
 		return sum;
@@ -317,7 +322,7 @@ public class SwarmActionFactory implements WaspActionFactory
 	 * 
 	 * @see org.wicketstuff.security.actions.ActionFactory#getAction(java.lang.Class)
 	 */
-	public synchronized SwarmAction getAction(Class< ? extends WaspAction> waspActionClass)
+	public synchronized SwarmAction getAction(Class<? extends WaspAction> waspActionClass)
 	{
 		if (AllActions.class.isAssignableFrom(waspActionClass))
 		{
@@ -340,8 +345,8 @@ public class SwarmActionFactory implements WaspActionFactory
 	 * @see org.wicketstuff.security.actions.ActionFactory#register(java.lang.Class,
 	 *      java.lang.String)
 	 */
-	public synchronized SwarmAction register(Class< ? extends WaspAction> waspActionClass,
-			String name) throws RegistrationException
+	public synchronized SwarmAction register(Class<? extends WaspAction> waspActionClass,
+		String name) throws RegistrationException
 	{
 		if (AllActions.class.isAssignableFrom(waspActionClass))
 			throw new RegistrationException("Can not register 'all' actions");
@@ -360,8 +365,7 @@ public class SwarmActionFactory implements WaspActionFactory
 	}
 
 	/**
-	 * Returns the number of registered classes. By default there are 4 classes
-	 * registered.
+	 * Returns the number of registered classes. By default there are 4 classes registered.
 	 * 
 	 * @return the number of registered classes.
 	 */
@@ -378,12 +382,12 @@ public class SwarmActionFactory implements WaspActionFactory
 	 */
 	protected final int nextPowerOf2()
 	{
-		return (int) Math.pow(2, power);
+		return (int)Math.pow(2, power);
 	}
 
 	/**
-	 * Renames build in wicket actions to there wasp counterpart. more specifically it
-	 * converts the string to lowercase.
+	 * Renames build in wicket actions to there wasp counterpart. more specifically it converts the
+	 * string to lowercase.
 	 * 
 	 * @param name
 	 *            the name of the action
@@ -415,14 +419,14 @@ public class SwarmActionFactory implements WaspActionFactory
 	 * </code>
 	 * </pre>
 	 * 
-	 * Note all actions registered in this way must use nextPowerOf2() and then
-	 * immediately register the action to preserve consistency.
+	 * Note all actions registered in this way must use nextPowerOf2() and then immediately register
+	 * the action to preserve consistency.
 	 * 
 	 * @param waspActionClass
 	 *            the class under which to register the action
 	 * @param action
-	 *            the actual implementation (note that it does not need to implement the
-	 *            supplied waspActionClass)
+	 *            the actual implementation (note that it does not need to implement the supplied
+	 *            waspActionClass)
 	 * @return the action
 	 * @throws RegistrationException
 	 *             if the action can not be registered.
@@ -430,8 +434,8 @@ public class SwarmActionFactory implements WaspActionFactory
 	 * @see SwarmAction#SwarmAction(int, String, ActionFactory)
 	 * 
 	 */
-	protected final synchronized SwarmAction register(Class< ? extends WaspAction> waspActionClass,
-			SwarmAction action) throws RegistrationException
+	protected final synchronized SwarmAction register(Class<? extends WaspAction> waspActionClass,
+		SwarmAction action) throws RegistrationException
 	{
 		// sanity checks
 		if (AllActions.class.isAssignableFrom(waspActionClass))
@@ -441,15 +445,15 @@ public class SwarmActionFactory implements WaspActionFactory
 		int assignedPowerOf2 = nextPowerOf2();
 		if (assignedPowerOf2 > maxAssingableAction)
 			throw new RegistrationException(
-				"Unable to register an action with a base value greater then "
-					+ maxAssingableAction);
+				"Unable to register an action with a base value greater then " +
+					maxAssingableAction);
 		if (assignedPowerOf2 < 0)
 			throw new RegistrationException(assignedPowerOf2 + " is not a positive value");
 		// includes any implied actions
-		Integer powerOf2 = new Integer(action.actions());
+		Integer powerOf2 = Integer.valueOf(action.actions());
 		if (!implies(powerOf2.intValue(), assignedPowerOf2))
-			throw new RegistrationException("Unable to register action '" + action.getName()
-				+ "' with value " + powerOf2 + " expected " + assignedPowerOf2 + " or more.");
+			throw new RegistrationException("Unable to register action '" + action.getName() +
+				"' with value " + powerOf2 + " expected " + assignedPowerOf2 + " or more.");
 		// end of checks
 
 		stringValues.put(powerOf2, action.getName());
@@ -470,8 +474,8 @@ public class SwarmActionFactory implements WaspActionFactory
 	}
 
 	/**
-	 * Clears registration and cached values. After you destroy this factory you must not
-	 * use it again.
+	 * Clears registration and cached values. After you destroy this factory you must not use it
+	 * again.
 	 * 
 	 * @see org.wicketstuff.security.actions.ActionFactory#destroy()
 	 */
@@ -518,9 +522,9 @@ public class SwarmActionFactory implements WaspActionFactory
 		 *            a single action class to imply, not null
 		 */
 		public ImpliesOtherAction(String name, SwarmActionFactory factory,
-				Class< ? extends WaspAction> otherAction)
+			Class<? extends WaspAction> otherAction)
 		{
-			super(factory.nextPowerOf2() | (factory.getAction(otherAction)).actions(), name,
+			super(factory.nextPowerOf2() | factory.getAction(otherAction).actions(), name,
 				factory.getFactoryKey());
 		}
 
@@ -535,15 +539,15 @@ public class SwarmActionFactory implements WaspActionFactory
 		 *            any number of action classes to imply
 		 */
 		public ImpliesOtherAction(String name, SwarmActionFactory factory,
-				Class< ? extends WaspAction>... otherActions)
+			Class<? extends WaspAction>... otherActions)
 		{
-			super(factory.nextPowerOf2() | bitwiseOr(factory, otherActions), name, factory
-				.getFactoryKey());
+			super(factory.nextPowerOf2() | bitwiseOr(factory, otherActions), name,
+				factory.getFactoryKey());
 		}
 
 		/**
-		 * Creates a bitwise or of all the actions supplied. Note that all these classes
-		 * must already be registered.
+		 * Creates a bitwise or of all the actions supplied. Note that all these classes must
+		 * already be registered.
 		 * 
 		 * @param factory
 		 * @param otherActions
@@ -551,12 +555,12 @@ public class SwarmActionFactory implements WaspActionFactory
 		 * @return
 		 */
 		private static final int bitwiseOr(SwarmActionFactory factory,
-				Class< ? extends WaspAction>[] otherActions)
+			Class<? extends WaspAction>[] otherActions)
 		{
 			int result = 0;
 			if (otherActions != null)
 			{
-				for (Class< ? extends WaspAction> action : otherActions)
+				for (Class<? extends WaspAction> action : otherActions)
 				{
 					result = result | factory.getAction(action).actions();
 				}

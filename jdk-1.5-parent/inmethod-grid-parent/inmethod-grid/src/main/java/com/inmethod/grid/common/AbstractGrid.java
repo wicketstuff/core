@@ -771,7 +771,7 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 			{
 
 				// preserve the entered values in form components
-				Form<?> form = getForm();
+				Form<?> form = super.getForm();
 				form.visitFormComponentsPostOrder(new IVisitor<FormComponent<?>, Void>()
 				{
 

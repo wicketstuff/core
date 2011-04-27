@@ -18,16 +18,16 @@
 package org.wicketstuff.console.templates;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.LineNumberReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.util.io.IOUtils;
 import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.engine.LangFileFilter;
 
@@ -85,17 +85,22 @@ public class ScriptTemplateUtils
 	private static StringBuilder readUrl(final URL url) throws IOException
 	{
 
-		final InputStream is = url.openConnection().getInputStream();
-		final LineNumberReader r = new LineNumberReader(new InputStreamReader(is));
-
-		final StringBuilder content = new StringBuilder();
-		String line = null;
-		while ((line = r.readLine()) != null)
+		final BufferedReader r = new BufferedReader(new InputStreamReader(url.openStream()));
+		try
 		{
-			content.append(line).append("\n");
-		}
+			final StringBuilder content = new StringBuilder();
+			String line = null;
+			while ((line = r.readLine()) != null)
+			{
+				content.append(line).append("\n");
+			}
 
-		return content;
+			return content;
+		}
+		finally
+		{
+			r.close();
+		}
 	}
 
 	/**
@@ -204,18 +209,14 @@ public class ScriptTemplateUtils
 		{
 			final BufferedInputStream bin = new BufferedInputStream(new FileInputStream(file));
 
-			final StringBuilder builder = new StringBuilder();
-
-			int read = 0;
-			byte[] buffer = new byte[1024];
-			while ((read = bin.read(buffer)) != -1)
+			try
 			{
-				final String str = new String(buffer, 0, read);
-				builder.append(str);
-				buffer = new byte[1024];
+				return IOUtils.toString(bin);
 			}
-
-			return builder.toString();
+			finally
+			{
+				bin.close();
+			}
 		}
 		catch (final IOException e)
 		{

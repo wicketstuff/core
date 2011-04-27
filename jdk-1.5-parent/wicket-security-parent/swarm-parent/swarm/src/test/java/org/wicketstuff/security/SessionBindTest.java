@@ -16,7 +16,8 @@
  */
 package org.wicketstuff.security;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 import java.net.MalformedURLException;
 
@@ -42,7 +43,7 @@ import org.wicketstuff.security.swarm.SwarmWebApplication;
  */
 public class SessionBindTest
 {
-	private final class MyWebApplication extends SwarmWebApplication
+	private static final class MyWebApplication extends SwarmWebApplication
 	{
 		@Override
 		protected Object getHiveKey()
@@ -71,12 +72,12 @@ public class SessionBindTest
 		}
 
 		@Override
-		public Class< ? extends Page> getHomePage()
+		public Class<? extends Page> getHomePage()
 		{
 			return MockHomePage.class;
 		}
 
-		public Class< ? extends Page> getLoginPage()
+		public Class<? extends Page> getLoginPage()
 		{
 			return MockLoginPage.class;
 		}
@@ -97,9 +98,8 @@ public class SessionBindTest
 	@Before
 	public void setUp()
 	{
-		mock =
-			new WicketTester(application = new MyWebApplication(), "src/test/java/"
-				+ getClass().getPackage().getName().replace('.', '/'));
+		mock = new WicketTester(application = new MyWebApplication(), "src/test/java/" +
+			getClass().getPackage().getName().replace('.', '/'));
 		mock.setExposeExceptions(false);
 	}
 

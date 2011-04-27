@@ -161,7 +161,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 			}
 			for (DefaultMutableTreeNode node : nodes)
 			{
-				String query = domain + ":";
+				StringBuilder query = new StringBuilder(domain).append(':');
 				TreeNode[] path = node.getPath();
 				if (path.length > 2)
 				{
@@ -169,15 +169,15 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 					{
 						if (path[j] instanceof MbeanNode)
 						{
-							query += ((MbeanNode)path[j]).getKeyValue();
+							query.append(((MbeanNode)path[j]).getKeyValue());
 						}
 						if (j < path.length - 1)
 						{
-							query += ",";
+							query.append(',');
 						}
 					}
 					Set<ObjectInstance> mBeans = reachMbeanServer.get().queryMBeans(null,
-						new ObjectName(query));
+						new ObjectName(query.toString()));
 					if (mBeans.size() > 0)
 					{
 						for (ObjectInstance objectInstance : mBeans)
@@ -233,11 +233,11 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 			}
 		}
 
-		for (String parentProp : parentProps.keySet())
+		for (Map.Entry<String, Set<Set<String>>> entry : parentProps.entrySet())
 		{
-			MbeanNode newNode = new MbeanNode(null, parentProp);
+			MbeanNode newNode = new MbeanNode(null, entry.getKey());
 			rootNode.add(newNode);
-			addDomainsCildrens(newNode, parentProps.get(parentProp));
+			addDomainsCildrens(newNode, entry.getValue());
 		}
 
 	}
@@ -320,7 +320,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 	private class AttributesNode extends MbeanNode
 	{
 		private static final long serialVersionUID = 1L;
-		private MBeanAttributeInfo[] beanAttributeInfos;
+		private final MBeanAttributeInfo[] beanAttributeInfos;
 
 		public AttributesNode(MbeanNode parent, MBeanAttributeInfo[] beanAttributeInfos)
 		{
@@ -349,7 +349,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 	private class AttributeNode extends MbeanNode
 	{
 		private static final long serialVersionUID = 1L;
-		private MBeanAttributeInfo attributeInfo;
+		private final MBeanAttributeInfo attributeInfo;
 
 		public AttributeNode(MbeanNode parent, MBeanAttributeInfo mBeanAttributeInfo)
 		{
@@ -374,7 +374,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 	private class OperationsNode extends MbeanNode
 	{
 		private static final long serialVersionUID = 1L;
-		private MBeanOperationInfo[] beanOperationInfos;
+		private final MBeanOperationInfo[] beanOperationInfos;
 
 		public OperationsNode(MbeanNode parent, MBeanOperationInfo[] beanOperationInfos)
 		{
@@ -403,7 +403,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 	private class OperationNode extends MbeanNode
 	{
 		private static final long serialVersionUID = 1L;
-		private MBeanOperationInfo beanOperationInfo;
+		private final MBeanOperationInfo beanOperationInfo;
 
 		public OperationNode(OperationsNode parent, MBeanOperationInfo mBeanOperationInfo)
 		{
@@ -428,7 +428,7 @@ public class MBeansPanel extends Panel implements IHeaderContributor
 	private class NotificationNode extends MbeanNode
 	{
 		private static final long serialVersionUID = 1L;
-		private MBeanNotificationInfo beanNotificationInfo;
+		private final MBeanNotificationInfo beanNotificationInfo;
 
 		public NotificationNode(MbeanNode parent, MBeanNotificationInfo mBeanNotificationInfo)
 		{

@@ -88,8 +88,8 @@ public class TextResourceHandler implements IJRResourceHandler, Serializable
 	public JRAbstractExporter newExporter()
 	{
 		JRTextExporter exporter = new JRTextExporter();
-		exporter.setParameter(JRTextExporterParameter.PAGE_WIDTH, new Integer(pageWidth));
-		exporter.setParameter(JRTextExporterParameter.PAGE_HEIGHT, new Integer(pageHeight));
+		exporter.setParameter(JRTextExporterParameter.PAGE_WIDTH, Integer.valueOf(pageWidth));
+		exporter.setParameter(JRTextExporterParameter.PAGE_HEIGHT, Integer.valueOf(pageHeight));
 		return exporter;
 	}
 

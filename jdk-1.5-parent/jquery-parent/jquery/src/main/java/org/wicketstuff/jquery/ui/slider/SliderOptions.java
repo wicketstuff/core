@@ -38,12 +38,7 @@ public class SliderOptions implements IClusterable
 
 	private static final String SLIDE = "slide";
 
-	private transient final JSONObject json;
-
-	public SliderOptions()
-	{
-		json = new JSONObject();
-	}
+	private transient final JSONObject json = new JSONObject();
 
 	public SliderOptions setStepping(final Integer stepping)
 	{

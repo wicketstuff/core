@@ -17,7 +17,7 @@ import com.inmethod.grid.IGridColumn;
  * 
  * @author Matej Knopp
  */
-public class ColumnsState implements IClusterable
+public class ColumnsState implements IClusterable, Cloneable
 {
 
 	private static final long serialVersionUID = 1L;

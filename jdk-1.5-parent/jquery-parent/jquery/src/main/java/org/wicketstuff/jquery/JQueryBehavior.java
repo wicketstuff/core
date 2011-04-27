@@ -34,9 +34,9 @@ import org.slf4j.LoggerFactory;
  * @created 2007-08-08
  */
 // http://jquery.com/plugins for a list a jquery plugins
-@SuppressWarnings("serial")
 public class JQueryBehavior extends AbstractDefaultAjaxBehavior
 {
+	private static final long serialVersionUID = 1L;
 
 	// create a reference to the base javascript file.
 	// we use ResourceReference so that the included file will have
@@ -97,7 +97,7 @@ public class JQueryBehavior extends AbstractDefaultAjaxBehavior
 				}
 			}
 			CharSequence script = getOnReadyScript();
-			if ((script != null) && (script.length() > 0))
+			if (script != null && script.length() > 0)
 			{
 				StringBuilder builder = new StringBuilder();
 				builder.append("<script type=\"text/javascript\">\n$(document).ready(function(){\n");

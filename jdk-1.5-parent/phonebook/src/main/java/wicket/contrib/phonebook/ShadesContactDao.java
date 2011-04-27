@@ -58,7 +58,7 @@ public class ShadesContactDao implements ContactDao
 		{
 			con = dataSource.getConnection();
 			Query q = dict.getQuery("byId");
-			dbSess.setParameter("id", new Long(id));
+			dbSess.setParameter("id", Long.valueOf(id));
 			return (Contact)dbSess.executeQuery(con, q).populateNext(new Contact());
 		}
 		catch (SQLException ex)
@@ -149,8 +149,8 @@ public class ShadesContactDao implements ContactDao
 		System.out.println("looking for contacts like " + filter);
 		Query q = dict.getQuery("byOrderedResemblance");
 		ShadesORMDictionary.filterCandidate.resembles(filter, orm.getColumnSet("nonKeyFields"));
-		dbSess.setParameter("first", new Integer(qp.getFirst()));
-		dbSess.setParameter("count", new Integer(qp.getCount()));
+		dbSess.setParameter("first", Integer.valueOf(qp.getFirst()));
+		dbSess.setParameter("count", Integer.valueOf(qp.getCount()));
 		q.clause("ORDER BY").enable(qp.hasSort());
 		dbSess.setParameter("order", qp.getSort());
 		if (qp.isSortAsc())

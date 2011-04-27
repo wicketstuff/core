@@ -43,10 +43,10 @@ public class LayerSwitcherControl extends Panel
 
 	}
 
-	private class Toggler extends ListView<Layer>
+	private static class Toggler extends ListView<Layer>
 	{
 		private static final long serialVersionUID = 1L;
-		private IOpenLayersMap omap;
+		private final IOpenLayersMap omap;
 
 		public Toggler(String id, List<Layer> list, final IOpenLayersMap omap)
 		{

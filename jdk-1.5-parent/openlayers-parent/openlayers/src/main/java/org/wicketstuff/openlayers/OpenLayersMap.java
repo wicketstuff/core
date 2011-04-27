@@ -68,7 +68,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 		private static final long serialVersionUID = 1L;
 
-		private String attribute;
+		private final String attribute;
 
 		public JSMethodBehavior(final String attribute)
 		{
@@ -99,9 +99,9 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	{
 		private static final long serialVersionUID = 1L;
 
-		private int dx;
+		private final int dx;
 
-		private int dy;
+		private final int dy;
 
 		public PanDirectionBehavior(String event, final int dx, final int dy)
 		{
@@ -121,8 +121,8 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	{
 		private static final long serialVersionUID = 1L;
 
-		private LonLat gLatLng;
-		private Integer zoom;
+		private final LonLat gLatLng;
+		private final Integer zoom;
 
 		public SetCenterBehavior(String event, LonLat gLatLng, Integer zoom)
 		{
@@ -142,7 +142,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	{
 		private static final long serialVersionUID = 1L;
 
-		private Integer zoom;
+		private final Integer zoom;
 
 		public SetZoomBehavior(final String event, final Integer zoom)
 		{
@@ -198,7 +198,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	private static final LonLat DEFAULT_CENTER = new LonLat(37.4419, -122.1419);
 	private LonLat center = DEFAULT_CENTER;
 
-	private List<IJavascriptComponent> controls = new ArrayList<IJavascriptComponent>();
+	private final List<IJavascriptComponent> controls = new ArrayList<IJavascriptComponent>();
 
 	private boolean externalControls = false;
 
@@ -212,8 +212,8 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 	private List<Overlay> overlays = new ArrayList<Overlay>();
 
-	private static final Integer DEFAULT_ZOOM = 13;
-	private Integer zoom = DEFAULT_ZOOM;
+	private static final int DEFAULT_ZOOM = 13;
+	private int zoom = DEFAULT_ZOOM;
 
 	// determines if the marker layer will be visible in the
 	// OpenLayers.Control.LayerSwitcher
@@ -400,10 +400,8 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 				public void renderHead(Component c, IHeaderResponse response)
 				{
 
-					for (int i = 0; i < jsReferences.length; i++)
+					for (JavaScriptResourceReference javascriptResourceReference : jsReferences)
 					{
-						JavaScriptResourceReference javascriptResourceReference = jsReferences[i];
-
 						response.renderJavaScriptReference(javascriptResourceReference);
 					}
 				}
@@ -421,12 +419,10 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 			if (jsReferences != null && jsReferences.length > 0)
 			{
 
-				for (int i = 0; i < jsReferences.length; i++)
+				for (JavaScriptResourceReference javascriptResourceReference : jsReferences)
 				{
-					JavaScriptResourceReference javascriptResourceReference = jsReferences[i];
-
 					target.getHeaderResponse().renderJavaScriptReference(
-						(javascriptResourceReference));
+						javascriptResourceReference);
 				}
 			}
 
@@ -577,7 +573,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 		/*
 		 * If zoom and center are available then use them on the initial map rendering.
 		 */
-		if (!zoom.equals(DEFAULT_ZOOM))
+		if (zoom != DEFAULT_ZOOM)
 		{
 
 			if (!center.equals(DEFAULT_CENTER))

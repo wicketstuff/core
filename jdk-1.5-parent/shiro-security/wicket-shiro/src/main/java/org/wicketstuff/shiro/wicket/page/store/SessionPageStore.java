@@ -104,8 +104,7 @@ public class SessionPageStore implements IPageStore
 		if (page instanceof byte[])
 			return deserializePage((byte[])page);
 
-		final String type = page != null ? page.getClass().getName() : null;
-		throw new IllegalArgumentException("Unknown object type " + type);
+		throw new IllegalArgumentException("Unknown object type " + page.getClass().getName());
 
 	}
 

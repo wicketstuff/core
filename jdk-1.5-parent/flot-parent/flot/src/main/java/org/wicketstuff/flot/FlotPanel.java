@@ -24,7 +24,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
@@ -42,7 +41,7 @@ public class FlotPanel extends Panel
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(FlotPanel.class);
 
-	private Map<String, Map<String, Object>> options = new HashMap<String, Map<String, Object>>();
+	private final Map<String, Map<String, Object>> options = new HashMap<String, Map<String, Object>>();
 	private boolean showTooltip = false;
 
 	public FlotPanel(final String id, final IModel<List<Series>> model)
@@ -133,14 +132,19 @@ public class FlotPanel extends Panel
 
 		str.append("{");
 
-		Set<?> keySet = map.keySet();
+		boolean first = true;
 
-		for (Object key : keySet)
+		for (Map.Entry<?, ?> entry : map.entrySet())
 		{
-			str.append(key);
+			if (!first)
+				str.append(", ");
+			else
+				first = false;
+
+			str.append(entry.getKey());
 			str.append(": ");
 
-			Object value = map.get(key);
+			Object value = entry.getValue();
 
 			if (Map.class.isAssignableFrom(value.getClass()))
 				str.append(mapToString((Map<?, ?>)value));
@@ -154,12 +158,7 @@ public class FlotPanel extends Panel
 				if (valueIsString)
 					str.append("\"");
 			}
-
-			str.append(", ");
 		}
-
-		if (keySet.size() > 0)
-			str.setLength(str.length() - 2);
 
 		str.append("}");
 

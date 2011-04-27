@@ -16,7 +16,7 @@
  */
 package org.wicketstuff.security;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.fail;
 
 import java.net.MalformedURLException;
 
@@ -45,7 +45,7 @@ import org.wicketstuff.security.swarm.SwarmWebApplication;
  */
 public class StackOverFlowTest
 {
-	private final class MyWebApplication extends SwarmWebApplication
+	private static final class MyWebApplication extends SwarmWebApplication
 	{
 		@Override
 		protected Object getHiveKey()
@@ -74,12 +74,12 @@ public class StackOverFlowTest
 		}
 
 		@Override
-		public Class< ? extends Page> getHomePage()
+		public Class<? extends Page> getHomePage()
 		{
 			return MockHomePage.class;
 		}
 
-		public Class< ? extends Page> getLoginPage()
+		public Class<? extends Page> getLoginPage()
 		{
 			return MockLoginPage.class;
 		}
@@ -87,7 +87,7 @@ public class StackOverFlowTest
 		@Override
 		public Session newSession(Request request, Response response)
 		{
-			WaspSession session = (WaspSession) super.newSession(request, response);
+			WaspSession session = (WaspSession)super.newSession(request, response);
 			try
 			{
 				session.login(new PrimaryLoginContext());
@@ -115,9 +115,8 @@ public class StackOverFlowTest
 	@Before
 	public void setUp()
 	{
-		mock =
-			new WicketTester(application = new MyWebApplication(), "src/test/java/"
-				+ getClass().getPackage().getName().replace('.', '/'));
+		mock = new WicketTester(application = new MyWebApplication(), "src/test/java/" +
+			getClass().getPackage().getName().replace('.', '/'));
 		mock.setExposeExceptions(false);
 	}
 
@@ -136,8 +135,8 @@ public class StackOverFlowTest
 	}
 
 	/**
-	 * Test if automatically logging in in does not trigger a stackoverflow in
-	 * {@link Session#get()}.
+	 * Test if automatically logging in in does not trigger a stackoverflow in {@link Session#get()}
+	 * .
 	 */
 	@Test
 	public void testStackoverflow()

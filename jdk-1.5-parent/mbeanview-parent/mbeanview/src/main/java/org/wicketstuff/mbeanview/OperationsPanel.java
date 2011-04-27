@@ -52,8 +52,8 @@ public class OperationsPanel extends Panel
 {
 
 	private static final long serialVersionUID = 1L;
-	private MbeanServerLocator beanServerLocator;
-	private ObjectName objectName;
+	private final MbeanServerLocator beanServerLocator;
+	private final ObjectName objectName;
 	private ModalWindow modalOutput;
 
 	public OperationsPanel(String id, final ObjectName objectName,
@@ -123,8 +123,8 @@ public class OperationsPanel extends Panel
 	private abstract class OperationButton extends AjaxButton
 	{
 		private static final long serialVersionUID = 1L;
-		private ParameterRepeater parameterRepeater;
-		private MBeanFeatureInfo info;
+		private final ParameterRepeater parameterRepeater;
+		private final MBeanFeatureInfo info;
 
 		public OperationButton(String id, ParameterRepeater parameterRepeater, MBeanFeatureInfo info)
 		{
@@ -171,11 +171,11 @@ public class OperationsPanel extends Panel
 
 	}
 
-	private class ParameterRepeater extends ListView<MBeanParameterInfo>
+	private static class ParameterRepeater extends ListView<MBeanParameterInfo>
 	{
 		private static final long serialVersionUID = 1L;
-		private Map<MBeanParameterInfo, IModel> parametersValues = new HashMap<MBeanParameterInfo, IModel>();
-		private MBeanParameterInfo[] beanParameterInfos;
+		private final Map<MBeanParameterInfo, IModel<?>> parametersValues = new HashMap<MBeanParameterInfo, IModel<?>>();
+		private final MBeanParameterInfo[] beanParameterInfos;
 
 		public ParameterRepeater(String id, MBeanParameterInfo[] beanParameterInfos)
 		{

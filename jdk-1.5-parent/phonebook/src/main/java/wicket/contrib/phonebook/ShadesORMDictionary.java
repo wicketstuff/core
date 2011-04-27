@@ -27,6 +27,7 @@ import hendrey.shades.QueryFactory;
 import hendrey.shades.tools.TableCreator;
 
 import java.sql.Connection;
+import java.sql.Statement;
 
 import javax.sql.DataSource;
 
@@ -96,7 +97,15 @@ public class ShadesORMDictionary implements InitializingBean
 		{
 			String ddl = TableCreator.getDDL(dict);
 			c = dataSource.getConnection();
-			c.createStatement().execute(ddl);
+			Statement s = c.createStatement();
+			try
+			{
+				s.execute(ddl);
+			}
+			finally
+			{
+				s.close();
+			}
 			c.commit();
 		}
 		finally

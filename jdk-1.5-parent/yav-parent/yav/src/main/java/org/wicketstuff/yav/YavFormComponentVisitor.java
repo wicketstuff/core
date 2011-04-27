@@ -43,15 +43,15 @@ public class YavFormComponentVisitor implements IVisitor<FormComponent<?>, Void>
 	/**
 	 * The buffer to write the script out
 	 */
-	private AppendingStringBuffer buffer;
+	private final AppendingStringBuffer buffer;
 	/**
 	 * Form validators associated to the Form.
 	 */
-	private Collection<IFormValidator> formValidators;
+	private final Collection<IFormValidator> formValidators;
 	/**
 	 * Wicket Message formatting
 	 */
-	private WicketMessageBuilder messageBuilder;
+	private final WicketMessageBuilder messageBuilder;
 	/**
 	 * To add only once the Date specifics
 	 */
@@ -133,26 +133,22 @@ public class YavFormComponentVisitor implements IVisitor<FormComponent<?>, Void>
 		if (clazz == null)
 			return;
 
-		String className = clazz.getName();
-
-		if (className.equals(Date.class.getName()))
+		if (clazz.equals(Date.class))
 		{
 			overrideDateType(buffer);
 			buffer.append(messageBuilder.typeConverterDateMessage(formComponent,
 				clazz.getSimpleName()));
 		}
-		else if (className.equals(Integer.class.getName()) ||
-			className.equals(Integer.TYPE.getName()) || className.equals(Long.class.getName()) ||
-			className.equals(Long.TYPE.getClass()) || className.equals(Short.class.getName()) ||
-			className.equals(Short.TYPE.getClass()) || className.equals(BigInteger.class.getName()))
+		else if (clazz.equals(Integer.class) || clazz.equals(Integer.TYPE) ||
+			clazz.equals(Long.class) || clazz.equals(Long.TYPE) || clazz.equals(Short.class) ||
+			clazz.equals(Short.TYPE) || clazz.equals(BigInteger.class))
 		{
 			buffer.append(messageBuilder.typeConverterIntegerMessage(formComponent,
 				clazz.getSimpleName()));
 		}
-		else if (className.equals(Float.class.getName()) ||
-			className.equals(Float.TYPE.getClass()) || className.equals(Double.class.getName()) ||
-			className.equals(Double.TYPE.getClass()) ||
-			className.equals(BigDecimal.class.getName()))
+		else if (clazz.equals(Float.class) || clazz.equals(Float.TYPE) ||
+			clazz.equals(Double.class) || clazz.equals(Double.TYPE) ||
+			clazz.equals(BigDecimal.class))
 		{
 			overrideDecimalType(buffer);
 			buffer.append(messageBuilder.typeConverterDecimalMessage(formComponent,

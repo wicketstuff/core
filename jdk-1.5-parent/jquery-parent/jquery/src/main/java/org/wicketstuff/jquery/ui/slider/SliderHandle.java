@@ -28,7 +28,10 @@ public class SliderHandle extends Panel
 
 		final WebMarkupContainer handle = new WebMarkupContainer("sliderHandle");
 		handle.setOutputMarkupId(true);
-		handle.setMarkupId(handleSettings.getId());
+
+		if (handleSettings != null)
+			handle.setMarkupId(handleSettings.getId());
+
 		add(handle);
 
 		if (handleSettings != null)

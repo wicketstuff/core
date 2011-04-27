@@ -154,12 +154,12 @@ public class AttributeValuesPanel extends Panel
 		});
 	}
 
-	public class AttributeModel implements IModel<Object>
+	public static class AttributeModel implements IModel<Object>
 	{
 		private static final long serialVersionUID = 1L;
-		private MBeanAttributeInfo attributeInfo;
-		private MbeanServerLocator mbeanServerLocator;
-		private ObjectName objectName;
+		private final MBeanAttributeInfo attributeInfo;
+		private final MbeanServerLocator mbeanServerLocator;
+		private final ObjectName objectName;
 
 		public AttributeModel(MBeanAttributeInfo attributeInfo,
 			MbeanServerLocator mbeanServerLocator, ObjectName objectName)

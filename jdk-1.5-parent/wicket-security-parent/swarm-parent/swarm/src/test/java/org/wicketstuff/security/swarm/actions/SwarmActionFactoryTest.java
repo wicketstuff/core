@@ -24,7 +24,15 @@ import org.apache.wicket.Component;
 import org.apache.wicket.authorization.Action;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.security.actions.*;
+import org.wicketstuff.security.actions.Access;
+import org.wicketstuff.security.actions.ActionFactory;
+import org.wicketstuff.security.actions.Actions;
+import org.wicketstuff.security.actions.AllActions;
+import org.wicketstuff.security.actions.Enable;
+import org.wicketstuff.security.actions.Inherit;
+import org.wicketstuff.security.actions.RegistrationException;
+import org.wicketstuff.security.actions.Render;
+import org.wicketstuff.security.actions.WaspAction;
 
 /**
  * Tests for the {@link SwarmActionFactory}.
@@ -113,7 +121,7 @@ public class SwarmActionFactoryTest extends TestCase
 		assertNotNull(action);
 		assertEquals(factory.getAction(wicketAction.getName()), action);
 
-		assertNull(factory.getAction((Action) null));
+		assertNull(factory.getAction((Action)null));
 		assertNull(factory.getAction(new Action("foo")));
 	}
 
@@ -126,7 +134,7 @@ public class SwarmActionFactoryTest extends TestCase
 		WaspAction action = factory.getAction(Action.RENDER);
 		assertNotNull(action);
 		assertEquals(factory.getAction(Render.class), action);
-		assertEquals(factory.getAction(Access.class), factory.getAction((String) null));
+		assertEquals(factory.getAction(Access.class), factory.getAction((String)null));
 		assertEquals(factory.getAction(Access.class), factory.getAction(""));
 		try
 		{
@@ -156,10 +164,9 @@ public class SwarmActionFactoryTest extends TestCase
 		{
 			log.debug(e.getMessage());
 		}
-		String[] names =
-			new String[] {"access", "access, inherit", "access, render", "access, inherit, render",
-				"access", "access, inherit", "access, render, enable",
-				"access, inherit, render, enable"};
+		String[] names = new String[] { "access", "access, inherit", "access, render",
+				"access, inherit, render", "access", "access, inherit", "access, render, enable",
+				"access, inherit, render, enable" };
 		for (int i = 0; i < 8; i++)
 		{
 			action = factory.getAction(i);
@@ -435,7 +442,6 @@ public class SwarmActionFactoryTest extends TestCase
 
 	private static class Bugsy extends SwarmAction implements BugsBunny
 	{
-		private static final long serialVersionUID = 1L;
 
 		/**
 		 * Construct.
@@ -451,26 +457,26 @@ public class SwarmActionFactoryTest extends TestCase
 
 		private static int getIt(int initial, ActionFactory factory)
 		{
-			return initial | getAction(factory, MightyMouse.class)
-				| getAction(factory, Mouse.class) | getAction(factory, Dog.class)
-				| getAction(factory, Cat.class) | getAction(factory, We.class)
-				| getAction(factory, Them.class) | getAction(factory, Him.class)
-				| getAction(factory, You.class) | getAction(factory, Me.class)
-				| getAction(factory, Nothing.class) | getAction(factory, Everything.class)
-				| getAction(factory, Devil.class) | getAction(factory, God.class)
-				| getAction(factory, Demon.class) | getAction(factory, Angel.class)
-				| getAction(factory, Satanist.class) | getAction(factory, Pope.class)
-				| getAction(factory, Saint.class) | getAction(factory, Emperor.class)
-				| getAction(factory, Tiran.class) | getAction(factory, Queen.class)
-				| getAction(factory, King.class) | getAction(factory, Ace.class)
-				| getAction(factory, Root.class) | getAction(factory, Admin.class)
-				| getAction(factory, Hack.class) | getAction(factory, Enable.class)
-				| getAction(factory, Superman.class) | getAction(factory, Inherit.class);
+			return initial | getAction(factory, MightyMouse.class) |
+				getAction(factory, Mouse.class) | getAction(factory, Dog.class) |
+				getAction(factory, Cat.class) | getAction(factory, We.class) |
+				getAction(factory, Them.class) | getAction(factory, Him.class) |
+				getAction(factory, You.class) | getAction(factory, Me.class) |
+				getAction(factory, Nothing.class) | getAction(factory, Everything.class) |
+				getAction(factory, Devil.class) | getAction(factory, God.class) |
+				getAction(factory, Demon.class) | getAction(factory, Angel.class) |
+				getAction(factory, Satanist.class) | getAction(factory, Pope.class) |
+				getAction(factory, Saint.class) | getAction(factory, Emperor.class) |
+				getAction(factory, Tiran.class) | getAction(factory, Queen.class) |
+				getAction(factory, King.class) | getAction(factory, Ace.class) |
+				getAction(factory, Root.class) | getAction(factory, Admin.class) |
+				getAction(factory, Hack.class) | getAction(factory, Enable.class) |
+				getAction(factory, Superman.class) | getAction(factory, Inherit.class);
 		}
 
-		private static int getAction(ActionFactory factory, Class< ? extends WaspAction> action)
+		private static int getAction(ActionFactory factory, Class<? extends WaspAction> action)
 		{
-			return ((SwarmAction) factory.getAction(action)).actions();
+			return ((SwarmAction)factory.getAction(action)).actions();
 		}
 	}
 

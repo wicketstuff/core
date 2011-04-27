@@ -66,7 +66,7 @@ public class WFSProxyBehavior extends AbstractAjaxBehavior
 	{
 	}
 
-	class ProxyResponseTarget implements IRequestHandler
+	static class ProxyResponseTarget implements IRequestHandler
 	{
 
 		/*

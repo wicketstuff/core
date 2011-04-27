@@ -18,15 +18,20 @@
  */
 package org.wicketstuff.jslibraries;
 
+import java.io.Serializable;
+
 import org.wicketstuff.jslibraries.util.Assert;
 
-public class VersionDescriptor {
+public class VersionDescriptor implements Serializable
+{
+	private static final long serialVersionUID = 1L;
 
 	private final Library mLibrary;
 	private final boolean mExact;
-	private Version mVersion;
+	private final Version mVersion;
 
-	private VersionDescriptor(Library library, boolean exact, Version version) {
+	private VersionDescriptor(Library library, boolean exact, Version version)
+	{
 
 		Assert.parameterNotNull(library, "library");
 		Assert.parameterNotNull(version, "version");
@@ -36,23 +41,31 @@ public class VersionDescriptor {
 		mExact = exact;
 	}
 
-	public Library getLibrary() {
+	public Library getLibrary()
+	{
 		return mLibrary;
 	}
 
-	public Version getVersion(final Provider provider) {
+	public Version getVersion(final Provider provider)
+	{
 		Assert.parameterNotNull(provider, "provider");
 
 		Version mMatch = null;
 
-		for (Version version : mLibrary.getVersions(provider)) {
-			if (mExact) {
-				if (version.equals(mVersion)) {
+		for (Version version : mLibrary.getVersions(provider))
+		{
+			if (mExact)
+			{
+				if (version.equals(mVersion))
+				{
 					mMatch = version;
 					break;
 				}
-			} else {
-				if (version.matches(mVersion)) {
+			}
+			else
+			{
+				if (version.matches(mVersion))
+				{
 					mMatch = version;
 					// continue to look for something better
 				}
@@ -62,19 +75,21 @@ public class VersionDescriptor {
 		return mMatch;
 	}
 
-	public static VersionDescriptor alwaysLatest(Library lib) {
+	public static VersionDescriptor alwaysLatest(Library lib)
+	{
 		return alwaysLatestOfVersion(lib, new int[0]);
 	}
 
-	public static VersionDescriptor exactVersion(Library lib, int... numbers) {
+	public static VersionDescriptor exactVersion(Library lib, int... numbers)
+	{
 
 		Assert.parameterNotNull(lib, "lib");
 
 		return new VersionDescriptor(lib, true, new Version(numbers));
 	}
 
-	public static VersionDescriptor alwaysLatestOfVersion(Library lib,
-			int... numbers) {
+	public static VersionDescriptor alwaysLatestOfVersion(Library lib, int... numbers)
+	{
 
 		Assert.parameterNotNull(lib, "lib");
 
@@ -82,31 +97,39 @@ public class VersionDescriptor {
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((mLibrary == null) ? 0 : mLibrary.hashCode());
+		result = prime * result + (mLibrary == null ? 0 : mLibrary.hashCode());
 		return result;
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
+	public boolean equals(final Object obj)
+	{
+		if (this == obj)
+		{
 			return true;
 		}
-		if (obj == null) {
+		if (obj == null)
+		{
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass())
+		{
 			return false;
 		}
-		VersionDescriptor other = (VersionDescriptor) obj;
-		if (mLibrary == null) {
-			if (other.mLibrary != null) {
+		VersionDescriptor other = (VersionDescriptor)obj;
+		if (mLibrary == null)
+		{
+			if (other.mLibrary != null)
+			{
 				return false;
 			}
-		} else if (!mLibrary.equals(other.mLibrary)) {
+		}
+		else if (!mLibrary.equals(other.mLibrary))
+		{
 			return false;
 		}
 		return true;

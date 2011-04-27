@@ -15,6 +15,7 @@
  */
 package org.wicketstuff.mootools.meiomaks.test;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -35,7 +36,7 @@ public class TestPage extends WebPage
 {
 
 	private static final long serialVersionUID = 1L;
-	private TestModel testModel = new TestModel();
+	private final TestModel testModel = new TestModel();
 
 	public TestPage()
 	{
@@ -68,8 +69,9 @@ public class TestPage extends WebPage
 
 	}
 
-	static class TestModel
+	static class TestModel implements Serializable
 	{
+		private static final long serialVersionUID = 1L;
 
 		private String fixed;
 		private String fixedPhone;

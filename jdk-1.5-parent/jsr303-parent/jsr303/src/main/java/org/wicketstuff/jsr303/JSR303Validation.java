@@ -18,7 +18,7 @@ import org.wicketstuff.jsr303.util.Assert;
 
 public class JSR303Validation
 {
-	public class WicketSessionLocaleMessageInterpolator implements MessageInterpolator
+	public static class WicketSessionLocaleMessageInterpolator implements MessageInterpolator
 	{
 		private final MessageInterpolator delegate;
 

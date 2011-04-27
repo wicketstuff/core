@@ -161,9 +161,8 @@ public class TreeGrid<T extends TreeModel & Serializable, I extends TreeNode & S
 		};
 	};
 
-	private class TreeStateListener implements ITreeStateListener, Serializable
+	private class TreeStateListener implements ITreeStateListener
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		/**

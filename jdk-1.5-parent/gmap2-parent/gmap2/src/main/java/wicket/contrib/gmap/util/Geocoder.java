@@ -46,8 +46,6 @@ public class Geocoder implements Serializable
 
 	private final String gMapKey;
 
-	private final String output = OUTPUT_CSV;
-
 	/**
 	 * @param gMapKey
 	 *            Gmap API key
@@ -90,7 +88,7 @@ public class Geocoder implements Serializable
 	 */
 	public String encode(final String address)
 	{
-		return "http://maps.google.com/maps/geo?q=" + urlEncode(address) + "&output=" + output +
+		return "http://maps.google.com/maps/geo?q=" + urlEncode(address) + "&output=" + OUTPUT_CSV +
 			"&key=" + gMapKey;
 	}
 

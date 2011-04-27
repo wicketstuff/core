@@ -65,7 +65,7 @@ public class HibernateContactDao implements ContactDao
 	 */
 	public Contact load(long id)
 	{
-		return (Contact)getSession().get(Contact.class, new Long(id));
+		return (Contact)getSession().get(Contact.class, Long.valueOf(id));
 	}
 
 	/**

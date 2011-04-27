@@ -25,7 +25,7 @@ public class Html5Media extends WebMarkupContainer
 
 	private static final long serialVersionUID = 1L;
 
-	private IModel<List<MediaSource>> sources;
+	private final IModel<List<MediaSource>> sources;
 
 /*
  * public Html5Media(final String id) { this(id, new WildcardListModel<MediaSource>(new
@@ -46,8 +46,12 @@ public class Html5Media extends WebMarkupContainer
 	 */
 	public List<MediaSource> getSources()
 	{
-		List<MediaSource> sources = (this.sources != null) ? this.sources.getObject() : null;
-		if (sources == null)
+		List<MediaSource> sources;
+		if (this.sources != null)
+		{
+			sources = this.sources.getObject();
+		}
+		else
 		{
 			throw new NullPointerException(
 				"List of sources is null - Was the supplied 'Sources' model empty?");
