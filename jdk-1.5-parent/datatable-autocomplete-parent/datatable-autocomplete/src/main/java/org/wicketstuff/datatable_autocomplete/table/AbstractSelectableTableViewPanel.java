@@ -21,6 +21,7 @@ import java.util.List;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
@@ -31,6 +32,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.markup.repeater.IItemReuseStrategy;
 import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +44,7 @@ import org.wicketstuff.datatable_autocomplete.table.column.DTARadioColumn;
 
 /**
  * @author mocleiri
- *
+ * 
  */
 public abstract class AbstractSelectableTableViewPanel<T> extends
 		FormComponentPanel<T> {
@@ -74,11 +76,11 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 
 	/**
 	 * @param asList
-	 *
+	 * 
 	 *            Sets the list of button providers to use with the selectable
 	 *            table view @see
 	 *            {@link DefaultSelectableTableViewPanelButtonProviderImpl}
-	 *
+	 * 
 	 *            and {@link SelectableTableViewPanel} for examples
 	 */
 	public final void setButtonProviderList(
@@ -91,7 +93,8 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 			ResourceReference css_reference, String cssClassNamne,
 			String displayEntityName, IColumn<?> column,
 			ISortableDataProvider<T> dataProvider,
-			ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints) {
+			ITableRowSelectionHandler<T> selectionHandler,
+			IDTATableRenderingHints hints) {
 
 		this(id, css_reference, cssClassNamne, displayEntityName, column,
 				dataProvider, true, selectionHandler, hints);
@@ -102,11 +105,12 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 			String displayEntityName, IColumn<?> column,
 			ISortableDataProvider<T> dataProvider,
 			boolean showTableFeedbackPanel,
-			ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints) {
+			ITableRowSelectionHandler<T> selectionHandler,
+			IDTATableRenderingHints hints) {
 
 		this(id, css_reference, cssClassName, displayEntityName,
-				new IColumn[] { column }, dataProvider,
-				showTableFeedbackPanel, selectionHandler, hints);
+				new IColumn[] { column }, dataProvider, showTableFeedbackPanel,
+				selectionHandler, hints);
 	}
 
 	/**
@@ -128,7 +132,8 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 			ResourceReference css_reference, String cssClassName,
 			String displayEntityName, IColumn<?>[] columns,
 			ISortableDataProvider<T> dataProvider,
-			ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints) {
+			ITableRowSelectionHandler<T> selectionHandler,
+			IDTATableRenderingHints hints) {
 
 		this(id, css_reference, cssClassName, displayEntityName, columns,
 				dataProvider, true, selectionHandler, hints);
@@ -150,11 +155,10 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 	public AbstractSelectableTableViewPanel(String id,
 			ResourceReference css_reference, String cssClassName,
 			String displayEntityName, IColumn<?>[] columns,
-			boolean withRadioGroup,
-			ISortableDataProvider<T> dataProvider,
+			boolean withRadioGroup, ISortableDataProvider<T> dataProvider,
 			boolean showTableFeedbackPanel,
 			ITableRowSelectionHandler<T> rowSelectionHandler,
-			IDTATableRenderingHints hints) {
+			final IDTATableRenderingHints hints) {
 
 		// intentionally don't declare a type.
 		super(id, new Model());
@@ -165,14 +169,14 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 
 		Form form = new Form("viewForm");
 
-		radioGroup = new DTARadioGroup<T>("radioGroup", this.dataProvider
-				.model(null));
+		radioGroup = new DTARadioGroup<T>("radioGroup",
+				this.dataProvider.model(null));
 
 		int columnLength = columns.length;
 
-		int radioColumnLength = 0;//if there is no radio group, don't add it
+		int radioColumnLength = 0;// if there is no radio group, don't add it
 
-		if(withRadioGroup){
+		if (withRadioGroup) {
 
 			columnLength = columns.length + 1;
 
@@ -181,8 +185,8 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 
 		IColumn<?>[] includingRadioColumns = new IColumn[columnLength];
 
-		if(withRadioGroup){
-		// TODO: allow customization of the radio column label
+		if (withRadioGroup) {
+			// TODO: allow customization of the radio column label
 			final DTARadioColumn<T> radioColumn = new DTARadioColumn<T>("");
 
 			includingRadioColumns[0] = radioColumn;
@@ -197,7 +201,6 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 		dataTable = new DTADataTable<T>("dataTable", cssClassName,
 				includingRadioColumns, dataProvider, hints);
 
-
 		radioGroup.add(dataTable);
 
 		form.add(radioGroup);
@@ -206,8 +209,38 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 
 			private static final long serialVersionUID = 5144108737965241352L;
 
-
 			public void modifyRowItem(final Item<T> item) {
+
+				if (hints.highlightSelectedRow()) {
+					item.add(new AttributeAppender("class", true,
+							new AbstractReadOnlyModel<String>() {
+
+								private static final long serialVersionUID = 1L;
+
+								/*
+								 * (non-Javadoc)
+								 * 
+								 * @see
+								 * org.apache.wicket.model.AbstractReadOnlyModel
+								 * #getObject()
+								 */
+								@Override
+								public String getObject() {
+
+									T selectedObject = getSelectedRow();
+
+									T itemModelObject = item.getModelObject();
+
+									if (selectedObject != null
+											&& selectedObject
+													.equals(itemModelObject)) {
+										return "selected";
+									} else
+										return "";
+								}
+
+							}, " "));
+				}
 
 				if (AbstractSelectableTableViewPanel.this.rowSelectionHandler != null) {
 
@@ -228,26 +261,22 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 							 * Delegate to the row selection handler
 							 */
 							AbstractSelectableTableViewPanel.this.rowSelectionHandler
-									.handleSelection(index, selectedObject, target);
+									.handleSelection(index, selectedObject,
+											target);
 
 						}
 					});
 
-				} else {
-
-					// Intentionally does nothing.
 				}
+
 			}
 
 		});
 
-
-
-		buttonView = new ButtonListView("buttonView", form,
-				displayEntityName, radioGroup);
+		buttonView = new ButtonListView("buttonView", form, displayEntityName,
+				radioGroup);
 
 		form.add(buttonView);
-
 
 		FeedbackPanel feedbackPanel;
 		add(feedbackPanel = new FeedbackPanel("feedback"));
@@ -271,18 +300,24 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 	public AbstractSelectableTableViewPanel(String id,
 			String displayEntityName, IColumn<?>[] tableColumns,
 			ISortableDataProvider<T> attributeFilterDataProvider,
-			ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints) {
+			ITableRowSelectionHandler<T> selectionHandler,
+			IDTATableRenderingHints hints) {
 
 		this(id, DEFAULT_CSS, "dta_data_table", displayEntityName,
-				tableColumns, attributeFilterDataProvider, selectionHandler, hints);
+				tableColumns, attributeFilterDataProvider, selectionHandler,
+				hints);
 	}
+
 	public AbstractSelectableTableViewPanel(String id,
-			String displayEntityName, IColumn<?>[] tableColumns, boolean withRadioGroup,
+			String displayEntityName, IColumn<?>[] tableColumns,
+			boolean withRadioGroup,
 			ISortableDataProvider<T> attributeFilterDataProvider,
-			ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints) {
+			ITableRowSelectionHandler<T> selectionHandler,
+			IDTATableRenderingHints hints) {
 
 		this(id, DEFAULT_CSS, "dta_data_table", displayEntityName,
-				tableColumns, withRadioGroup, attributeFilterDataProvider,  true, selectionHandler, hints);
+				tableColumns, withRadioGroup, attributeFilterDataProvider,
+				true, selectionHandler, hints);
 	}
 
 	/**
@@ -297,10 +332,13 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 	public AbstractSelectableTableViewPanel(String id, String title,
 			IColumn<?>[] columns,
 			ISortableDataProvider<T> sortableListDataProvider,
-			boolean showTableFeedbackPanel, ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints) {
+			boolean showTableFeedbackPanel,
+			ITableRowSelectionHandler<T> selectionHandler,
+			IDTATableRenderingHints hints) {
 
 		this(id, DEFAULT_CSS, "dta_data_table", title, columns,
-				sortableListDataProvider, showTableFeedbackPanel, selectionHandler, hints);
+				sortableListDataProvider, showTableFeedbackPanel,
+				selectionHandler, hints);
 
 	}
 
@@ -312,13 +350,13 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 	public T getSelectedRow() {
 		return radioGroup.getModelObject();
 	}
-	
+
 	/**
 	 * 
 	 * @param selectedObject
 	 */
-	public void setSelectedRow (T selectedObject) {
-		
+	public void setSelectedRow(T selectedObject) {
+
 		this.radioGroup.setModelObject(selectedObject);
 	}
 
@@ -341,7 +379,7 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.apache.wicket.Component#onBeforeRender()
 	 */
 	@Override
@@ -350,21 +388,25 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 		updateVisibility();
 
 		T modelObject = getModelObject();
-		
+
 		/*
-		 * If the model object is not null we will pre select the row for this item.
+		 * If the model object is not null we will pre select the row for this
+		 * item.
 		 */
 		this.radioGroup.setModelObject(modelObject);
-		
-		int currentPage = dataTable.getCurrentPage();
-		
-		int targetPage = findTargetPage (modelObject, dataTable.getRowsPerPage(), dataTable.getRowCount());
-		
-		if (currentPage != targetPage) {
-			// change to the page that contains the selected value
-			dataTable.setCurrentPage(targetPage);
+
+		if (modelObject != null) {
+			int currentPage = dataTable.getCurrentPage();
+
+			int targetPage = findTargetPage(modelObject,
+					dataTable.getRowsPerPage(), dataTable.getRowCount());
+
+			if (currentPage != targetPage) {
+				// change to the page that contains the selected value
+				dataTable.setCurrentPage(targetPage);
+			}
 		}
-		
+
 		super.onBeforeRender();
 
 	}
@@ -372,46 +414,46 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 	/**
 	 * 
 	 * @param modelObject
-	 * @param i 
+	 * @param i
 	 * @return the page index for the model object.
 	 * 
 	 */
 	private int findTargetPage(T modelObject, int pageSize, int totalRows) {
-		
+
 		int count = 0;
 		int currentPage = 0;
-		
+
 		while (count < totalRows) {
-			
-		
+
 			Iterator<? extends T> iter = dataProvider.iterator(count, pageSize);
-			
+
 			while (iter.hasNext()) {
 				T t = (T) iter.next();
-				
+
 				if (t.equals(modelObject))
 					return currentPage;
-				
+
 				count++;
 			}
-			
+
 			currentPage++;
-			
+
 		}
-		
+
 		// no match
 		return -1;
 	}
 
 	/**
-	 * Normally a wicket component that is made invisible will never render again.  This will cause our
-	 * visibility to be updated and allow rendering to occur.
-	 *
-	 * This method is public because our visibility is used by the AutoCompletingPanel to determine its visibility.
-	 *
+	 * Normally a wicket component that is made invisible will never render
+	 * again. This will cause our visibility to be updated and allow rendering
+	 * to occur.
+	 * 
+	 * This method is public because our visibility is used by the
+	 * AutoCompletingPanel to determine its visibility.
+	 * 
 	 */
 	public void updateVisibility() {
-
 
 		if (this.hideIfNoResults && dataProvider.size() == 0) {
 
@@ -423,14 +465,14 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 
 	/**
 	 * does not highlight when a row is selected.
-	 *
+	 * 
 	 * @param disableRowHighlight
 	 */
 	public final void setDisableRowHighlight(boolean disableRowHighlight) {
 
 		// FIXME: find out how to disable the row highlight on the table.
 
-//		this.dataTable.setDisableRowHighlight(disableRowHighlight);
+		// this.dataTable.setDisableRowHighlight(disableRowHighlight);
 	}
 
 	/**
@@ -442,7 +484,9 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 		return dataTable.setItemReuseStrategy(strategy);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.wicket.markup.html.form.FormComponent#convertInput()
 	 */
 	@Override
@@ -452,8 +496,6 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 
 		setConvertedInput(radioGroup.getModelObject());
 
-
 	}
-
 
 }
