@@ -25,9 +25,10 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * <p>
- * Used by {@link SpringReference} to do the actual spring bean lookups. This must be registered in
- * the init() method of your wicket {@link Application} or {@link WebApplication} otherwise
- * {@link SpringReference} will not work.
+ * Used by {@link SpringReference} and {@link AbstractSpringDependencies} to do the actual spring
+ * bean lookups. This must be registered in the init() method of your wicket {@link Application} or
+ * {@link WebApplication} otherwise {@link SpringReference} and {@link AbstractSpringDependencies}
+ * will not work.
  * </p>
  * <p>
  * Example:

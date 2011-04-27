@@ -68,7 +68,8 @@ import org.apache.wicket.protocol.http.WebApplication;
  * for more information.</b>
  * </p>
  * <p>
- * Declaration:
+ * Declaration (you can declare it in your wicket components, models or your custom classes as
+ * well):
  * 
  * <pre>
  * <code>
