@@ -114,18 +114,14 @@ public abstract class AbstractSpringDependencies implements IClusterable, Clonea
 	@Override
 	public AbstractSpringDependencies clone()
 	{
-		AbstractSpringDependencies clone;
 		try
 		{
-			clone = (AbstractSpringDependencies)super.clone();
+			return (AbstractSpringDependencies)super.clone();
 		}
 		catch (CloneNotSupportedException e)
 		{
 			// should not happen
 			throw new IllegalStateException(e);
 		}
-
-		clone.init();
-		return clone;
 	}
 }
