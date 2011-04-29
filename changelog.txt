@@ -1,0 +1,14 @@
+Previously there was a changelog file where developers were encouraged to edit with the details of what they had committed.
+
+With the transition to git it is easy to get a quick summary be developer of the work done between two versions.
+
+e.g. git shortlog wicketstuff-core-1.5-rc2..wicketstuff-core-1.5-RC3
+will show the changes between these two tags in a format like:
+
+user.name (# of commits):
+	first line of first commit
+	first line of the second commit
+	...
+	first line of the nth commit
+
+Please use a suitable first line that will be informative to the user.  Think about including the module that the change relates.
