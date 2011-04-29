@@ -11,7 +11,6 @@ import java.util.List;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.wicketstuff.html5.Html5UtilsBehavior;
@@ -58,17 +57,6 @@ public class Html5Media extends WebMarkupContainer
 		}
 
 		return sources;
-	}
-
-	/**
-	 * Check the associated markup file for a wicket header tag
-	 * 
-	 * @see org.apache.wicket.Component#renderHead(org.apache.wicket.markup.html.internal.HtmlHeaderContainer)
-	 */
-	@Override
-	public void renderHead(HtmlHeaderContainer container)
-	{
-		super.renderHead(container);
 	}
 
 	/**

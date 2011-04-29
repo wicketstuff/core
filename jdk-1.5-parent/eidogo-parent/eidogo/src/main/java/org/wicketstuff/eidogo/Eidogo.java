@@ -18,7 +18,6 @@ package org.wicketstuff.eidogo;
 
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.parser.XmlTag;
@@ -59,7 +58,7 @@ import org.apache.wicket.util.string.JavaScriptUtils;
  * 
  * @author Isammoc
  */
-public class Eidogo extends WebComponent implements IHeaderContributor
+public class Eidogo extends WebComponent
 {
 
 	/** */
@@ -93,11 +92,11 @@ public class Eidogo extends WebComponent implements IHeaderContributor
 	/** <code>true</code> to enable problem mode. */
 	private boolean problemMode;
 	/** The theme to apply. */
-	private Theme theme = Theme.STANDARD;
+	private final Theme theme = Theme.STANDARD;
 	/** The current mode. */
-	private Mode mode = Mode.PLAY;
+	private final Mode mode = Mode.PLAY;
 	/** URL where to load SGF file. */
-	private String sgfUrl;
+	private final String sgfUrl;
 
 	/**
 	 * Possible theme.

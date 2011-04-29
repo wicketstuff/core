@@ -20,13 +20,12 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxCallDecorator;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 
-public abstract class BlockingAjaxLink<T> extends AjaxLink<T> implements IHeaderContributor
+public abstract class BlockingAjaxLink<T> extends AjaxLink<T>
 {
 	private static final long serialVersionUID = 1L;
 

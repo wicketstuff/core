@@ -38,8 +38,6 @@ public class GMapHeaderContributor extends Behavior
 	/**
 	 * see: <a href="http://www.google.com/apis/maps/documentation/#Memory_Leaks">IE memory leak
 	 * issues</a>
-	 * 
-	 * @see org.apache.wicket.markup.html.IHeaderContributor#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
 	public void renderHead(Component component, IHeaderResponse response)

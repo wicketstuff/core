@@ -26,45 +26,54 @@ import org.apache.wicket.markup.html.internal.HeaderResponse;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.util.tester.WicketTester;
 
-public class JSLibTest extends TestCase {
+public class JSLibTest extends TestCase
+{
 
-	public void testSettings() throws Exception {
+	public void testSettings() throws Exception
+	{
 		new WicketTester();
 
 		final StringBuffer sb = new StringBuffer(128);
 
-		IHeaderContributor hc = JSLib.getHeaderContribution(VersionDescriptor
-				.exactVersion(Library.JQUERY, 1, 3, 1), CDN.GOOGLE);
-		HeaderResponse mockResponse = new HeaderResponse() {
+		IHeaderContributor hc = JSLib.getHeaderContribution(
+			VersionDescriptor.exactVersion(Library.JQUERY, 1, 3, 1), CDN.GOOGLE);
+		HeaderResponse mockResponse = new HeaderResponse()
+		{
 
 			@Override
-			protected Response getRealResponse() {
+			protected Response getRealResponse()
+			{
 
-				return new Response() {
+				return new Response()
+				{
 
 					@Override
-					public void write(CharSequence arg0) {
+					public void write(CharSequence arg0)
+					{
 						sb.append(arg0);
 					}
 
 					@Override
-					public Object getContainerResponse() {
+					public Object getContainerResponse()
+					{
 						throw new UnsupportedOperationException();
 					}
 
 					@Override
-					public String encodeURL(CharSequence url) {
+					public String encodeURL(CharSequence url)
+					{
 						throw new UnsupportedOperationException();
 					}
 
 					@Override
-					public void write(byte[] array) {
+					public void write(byte[] array)
+					{
 						throw new UnsupportedOperationException();
 					}
 				};
 			}
 		};
-		hc.renderHead(mockResponse);
+		hc.renderHead(null, mockResponse);
 		String scriptTag = sb.toString();
 		assertTrue(scriptTag.contains("google")); // must be in as selected
 		assertFalse(scriptTag.contains("resources/org.wicketstuff.jsl"));
@@ -74,13 +83,12 @@ public class JSLibTest extends TestCase {
 		JSLib.setOverrideProviders(Application.get(), LocalProvider.DEFAULT);
 
 		// and retest
-		hc = JSLib.getHeaderContribution(VersionDescriptor.exactVersion(
-				Library.JQUERY, 1, 3, 1), CDN.GOOGLE);
+		hc = JSLib.getHeaderContribution(VersionDescriptor.exactVersion(Library.JQUERY, 1, 3, 1),
+			CDN.GOOGLE);
 
-		hc.renderHead(mockResponse);
+		hc.renderHead(null, mockResponse);
 		scriptTag = sb.toString();
-		assertTrue(scriptTag
-				.contains("wicket/resource/org.wicketstuff.jslibraries.JSReference/js/jquery-1.3.1.js"));
+		assertTrue(scriptTag.contains("wicket/resource/org.wicketstuff.jslibraries.JSReference/js/jquery-1.3.1.js"));
 	}
 
 }

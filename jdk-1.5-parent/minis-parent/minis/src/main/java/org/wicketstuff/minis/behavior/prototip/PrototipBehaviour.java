@@ -85,8 +85,6 @@ public class PrototipBehaviour extends Behavior
 	 * by prototip creator Nick Stakenburg (http://www.nickstakenburg.com)
 	 * 
 	 * Also add the javascript to create the tooltip
-	 * 
-	 * @see org.apache.wicket.markup.html.IHeaderContributor#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
 	public void renderHead(Component c, IHeaderResponse response)

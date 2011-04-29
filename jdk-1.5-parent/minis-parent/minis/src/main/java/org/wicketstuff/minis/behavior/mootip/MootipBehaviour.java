@@ -173,8 +173,6 @@ public class MootipBehaviour extends Behavior
 	 * Add the required css and js files to the page
 	 * 
 	 * Also add the javascript to create the tooltip
-	 * 
-	 * @see org.apache.wicket.markup.html.IHeaderContributor#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
 	public void renderHead(Component c, final IHeaderResponse response)

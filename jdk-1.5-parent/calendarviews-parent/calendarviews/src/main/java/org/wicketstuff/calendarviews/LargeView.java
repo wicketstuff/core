@@ -119,7 +119,7 @@ public class LargeView extends FullWeekCalendarView
 	{
 		super.renderHead(response);
 
-		JSLib.getHeaderContribution(JS_LIB_VERSION_DESCRIPTOR).renderHead(response);
+		JSLib.getHeaderContribution(JS_LIB_VERSION_DESCRIPTOR).renderHead(this, response);
 
 		response.renderJavaScriptReference(JS);
 
@@ -195,7 +195,7 @@ public class LargeView extends FullWeekCalendarView
 	{
 		private static final long serialVersionUID = 1L;
 
-		private Map<DateMidnight, List<IEvent>> mMapOfEvents;
+		private final Map<DateMidnight, List<IEvent>> mMapOfEvents;
 		private int mCounter;
 
 		public LargeGridView(String id, IDataProvider<DateMidnight> dp,
@@ -220,7 +220,7 @@ public class LargeView extends FullWeekCalendarView
 		@Override
 		protected void populateItem(final Item<DateMidnight> item)
 		{
-			int cell = (mCounter++ % getColumns()) + 1;
+			int cell = mCounter++ % getColumns() + 1;
 			int cellsLeft = getColumns() - cell;
 			final LoadableDetachableModel<List<IEvent>> eventsModel = new LoadableDetachableModel<List<IEvent>>()
 			{
@@ -332,9 +332,9 @@ public class LargeView extends FullWeekCalendarView
 	{
 		private static final long serialVersionUID = 1L;
 
-		private int mDaysLeftInRow;
-		private IModel<DateMidnight> mDateModel;
-		private IModel<IEvent> mEventModel;
+		private final int mDaysLeftInRow;
+		private final IModel<DateMidnight> mDateModel;
+		private final IModel<IEvent> mEventModel;
 
 		public HowManyDaysClassBehavior(IModel<DateMidnight> dateModel, int daysLeftInRow,
 			IModel<IEvent> model)
