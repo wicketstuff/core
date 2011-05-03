@@ -16,14 +16,6 @@
  */
 package org.wicketstuff.poi.excel;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import org.apache.wicket.util.tester.WicketTester;
-
 
 /**
  * @author Pedro Santos
@@ -38,16 +30,17 @@ public class PoiTestUtil
 	 * @throws IOException
 	 * @throws FileNotFoundException
 	 */
-	public static void openFileInResponse(WicketTester tester) throws IOException,
-			FileNotFoundException
-	{
-		File f = new File(System.getProperty("user.home") + "\\test.xls");
-		f.delete();
-		f.createNewFile();
-		FileOutputStream out = new FileOutputStream(f);
-		out.write(tester.getLastResponse().getBinaryContent());
-		out.close();
-		Desktop d = Desktop.getDesktop();
-		d.open(f);
-	}
+	// public static void openFileInResponse(WicketTester tester) throws
+	// IOException,
+	// FileNotFoundException
+	// {
+	// File f = new File(System.getProperty("user.home") + "\\test.xls");
+	// f.delete();
+	// f.createNewFile();
+	// FileOutputStream out = new FileOutputStream(f);
+	// out.write(tester.getLastResponse().getBinaryContent());
+	// out.close();
+	// Desktop d = Desktop.getDesktop();
+	// d.open(f);
+	// }
 }
