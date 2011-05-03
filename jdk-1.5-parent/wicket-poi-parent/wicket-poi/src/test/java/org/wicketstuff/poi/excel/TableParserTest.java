@@ -64,5 +64,14 @@ public class TableParserTest extends TestCase
 		assertEquals(2, sheet.getMergedRegion(2).getLastColumn());
 		assertEquals(6, sheet.getMergedRegion(2).getFirstRow());
 		assertEquals(6, sheet.getMergedRegion(2).getLastRow());
+		assertEquals("04/01/2000", sheet.getRow(3).getCell(2).getStringCellValue());
+		assertEquals("05/01/2000", sheet.getRow(4).getCell(2).getStringCellValue());
+		assertEquals("06/01/2000", sheet.getRow(5).getCell(2).getStringCellValue());
+		assertNull(sheet.getRow(6).getCell(2));
+		assertEquals("08/01/2000", sheet.getRow(7).getCell(2).getStringCellValue());
+		// tester.startResource(new ResourceStreamResource(new
+		// XlsStream(sheet.getWorkbook())));
+		// PoiTestUtil.openFileInResponse(tester);
+
 	}
 }

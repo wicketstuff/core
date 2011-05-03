@@ -39,7 +39,8 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
 
 /**
- * Parse a Wicket component and generates a {@link Sheet} based on its markup and component models.
+ * Parse a Wicket component and generates a {@link Sheet} based on its markup
+ * and component models.
  * 
  * @author Pedro Santos
  */
@@ -68,7 +69,7 @@ public class TableParser
 	 * @throws ParseException
 	 */
 	public void parse(Component tableComponent) throws IOException,
-		ResourceStreamNotFoundException, ParseException
+			ResourceStreamNotFoundException, ParseException
 	{
 		try
 		{
@@ -82,7 +83,7 @@ public class TableParser
 	}
 
 	private void doParse(CharSequence gridComponentMarkup, Component tableComponent)
-		throws IOException, ResourceStreamNotFoundException, ParseException
+			throws IOException, ResourceStreamNotFoundException, ParseException
 	{
 		XmlPullParser parser = new XmlPullParser();
 		parser.parse(gridComponentMarkup);
@@ -127,26 +128,28 @@ public class TableParser
 						index++;
 					}
 					colsToSpan = 0;
-					CharSequence rowSpan = tag.getAttribute("rowspan");
-					CharSequence colSpan = tag.getAttribute("colspan");
+					CharSequence rowspan = tag.getAttribute("rowspan");
+					CharSequence colspan = tag.getAttribute("colspan");
 					cell = row.createCell(index);
-					if (rowSpan != null || colSpan != null)
+					if (rowspan != null || colspan != null)
 					{
-						int rowsToSpan = rowSpan == null ? 1 : Integer.valueOf(rowSpan.toString());
-						if (rowsToSpan > 1)
+						int rowsToSpan = rowspan == null
+								? 0
+								: Integer.valueOf(rowspan.toString()) - 1;
+						if (rowsToSpan > 0)
 						{
-							rowsToSpanByColumn.put(index, rowsToSpan - 1);
+							rowsToSpanByColumn.put(index, rowsToSpan);
 						}
-						colsToSpan = colSpan == null ? 1 : Integer.valueOf(colSpan.toString());
+						colsToSpan = colspan == null ? 0 : Integer.valueOf(colspan.toString()) - 1;
 
-						int lastRowNum = row.getRowNum() + rowsToSpan - 1;
-						int lastColIndex = index + colsToSpan - 1;
+						int lastRowNum = row.getRowNum() + rowsToSpan;
+						int lastColIndex = index + colsToSpan;
 						targetSheet.addMergedRegion(new CellRangeAddress(//
-							row.getRowNum(), // first row (0-based)
-							lastRowNum, // last row (0-based)
-							index, // first column (0-based)
-							lastColIndex // last column (0-based)
-						));
+								row.getRowNum(), // first row (0-based)
+								lastRowNum, // last row (0-based)
+								index, // first column (0-based)
+								lastColIndex // last column (0-based)
+								));
 					}
 					cellExporter.exportCell(tag, parser, cell, tableComponent);
 				}
@@ -190,9 +193,8 @@ public class TableParser
 	private void afterParse(Component tableComponent)
 	{
 		tableComponent.getPage().endComponentRender(tableComponent);
-		Application.get()
-			.getComponentPreOnBeforeRenderListeners()
-			.remove(PathSetupListener.INSTANCE);
+		Application.get().getComponentPreOnBeforeRenderListeners()
+				.remove(PathSetupListener.INSTANCE);
 		RequestCycle.get().setResponse(originalResponse);
 		originalResponse = null;
 		cellExporter = null;
@@ -200,7 +202,8 @@ public class TableParser
 
 
 	/**
-	 * We try to maintain a relation between the HTML tag and its Wicket component.
+	 * We try to maintain a relation between the HTML tag and its Wicket
+	 * component.
 	 */
 	private static class PathSetupListener implements IComponentOnBeforeRenderListener
 	{
