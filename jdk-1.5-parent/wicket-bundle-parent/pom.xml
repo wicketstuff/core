@@ -4,12 +4,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <artifactId>jdk-1.5-parent</artifactId>
     <groupId>org.wicketstuff</groupId>
+    <artifactId>jdk-1.5-parent</artifactId>
     <version>1.5-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.wicketstuff</groupId>
   <artifactId>wicket-bundle-parent</artifactId>
 
   <packaging>pom</packaging>
