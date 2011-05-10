@@ -73,7 +73,7 @@ public class JSLibTest extends TestCase
 				};
 			}
 		};
-		hc.renderHead(null, mockResponse);
+		hc.renderHead(mockResponse);
 		String scriptTag = sb.toString();
 		assertTrue(scriptTag.contains("google")); // must be in as selected
 		assertFalse(scriptTag.contains("resources/org.wicketstuff.jsl"));
@@ -86,7 +86,7 @@ public class JSLibTest extends TestCase
 		hc = JSLib.getHeaderContribution(VersionDescriptor.exactVersion(Library.JQUERY, 1, 3, 1),
 			CDN.GOOGLE);
 
-		hc.renderHead(null, mockResponse);
+		hc.renderHead(mockResponse);
 		scriptTag = sb.toString();
 		assertTrue(scriptTag.contains("wicket/resource/org.wicketstuff.jslibraries.JSReference/js/jquery-1.3.1.js"));
 	}

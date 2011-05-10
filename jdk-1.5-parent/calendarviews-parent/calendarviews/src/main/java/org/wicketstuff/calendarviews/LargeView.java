@@ -119,7 +119,7 @@ public class LargeView extends FullWeekCalendarView
 	{
 		super.renderHead(response);
 
-		JSLib.getHeaderContribution(JS_LIB_VERSION_DESCRIPTOR).renderHead(this, response);
+		JSLib.getHeaderContribution(JS_LIB_VERSION_DESCRIPTOR).renderHead(response);
 
 		response.renderJavaScriptReference(JS);
 
