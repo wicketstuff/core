@@ -153,6 +153,24 @@
 				</plugins>
 			</build>
 
+			<repositories>
+				<repository>
+					<id>jboss-releases-repo</id>
+					<name>Hibernate releases repo</name>
+					<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+
+
+				</repository>
+
+
+			</repositories>
+
 			<distributionManagement>
 				<repository>
 					<id>sonatype-nexus-staging</id>
