@@ -21,6 +21,7 @@ package org.wicketstuff.jslibraries;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.jslibraries.util.Assert;
@@ -99,7 +100,7 @@ public class LocalProvider implements Provider
 			this.production = production;
 		}
 
-		public void renderHead(IHeaderResponse response)
+		public void renderHead(Component component, IHeaderResponse response)
 		{
 			response.renderJavaScriptReference(JSReference.getReference(versionDescriptor,
 				production));
