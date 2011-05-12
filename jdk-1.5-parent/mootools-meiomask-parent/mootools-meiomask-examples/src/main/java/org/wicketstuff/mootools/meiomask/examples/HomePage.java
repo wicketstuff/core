@@ -23,7 +23,9 @@ public class HomePage extends WebPage {
 
         Form<TestModel> form = new Form<TestModel>("form", new CompoundPropertyModel<TestModel>(testModel)) {
 
-            @Override
+			private static final long serialVersionUID = 884885352250614027L;
+
+			@Override
             protected void onSubmit() {
                 info("fixed-phone: " + getModelObject().getFixedPhone());
                 info("fixed-phone-us: " + getModelObject().getFixedPhoneUs());

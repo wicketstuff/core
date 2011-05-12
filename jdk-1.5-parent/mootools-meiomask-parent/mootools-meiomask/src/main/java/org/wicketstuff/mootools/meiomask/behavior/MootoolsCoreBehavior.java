@@ -28,7 +28,8 @@ import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
  */
 public class MootoolsCoreBehavior extends AbstractBehavior implements IBehavior {
 
-    // create a reference to the base mootools javascript file.
+	private static final long serialVersionUID = 8829211833784136634L;
+	// create a reference to the base mootools javascript file.
     // we use JavascriptResourceReference so that the included file will have its comments stripped and gzipped.
     private static final ResourceReference MOOTOOLS_JS = new JavascriptResourceReference(MootoolsCoreBehavior.class,
             "res/mootools-core-1.3-full-nocompat-yc.js");

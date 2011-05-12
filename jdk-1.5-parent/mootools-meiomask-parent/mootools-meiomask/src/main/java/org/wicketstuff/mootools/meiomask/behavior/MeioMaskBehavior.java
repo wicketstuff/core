@@ -31,7 +31,9 @@ import org.wicketstuff.mootools.meiomask.MaskType;
  */
 public class MeioMaskBehavior extends MootoolsMoreBehavior {
 
-    private static final ResourceReference MEIO_MASK = new JavascriptResourceReference(MeioMaskBehavior.class,
+	private static final long serialVersionUID = 5849853913862285246L;
+
+	private static final ResourceReference MEIO_MASK = new JavascriptResourceReference(MeioMaskBehavior.class,
             "res/meio-mask-min-2.0.1.js");
     private final MaskType maskType;
     private final String options;
