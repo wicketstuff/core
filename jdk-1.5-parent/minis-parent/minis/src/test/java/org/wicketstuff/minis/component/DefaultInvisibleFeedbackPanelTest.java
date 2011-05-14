@@ -12,7 +12,7 @@ import org.junit.Test;
  */
 public class DefaultInvisibleFeedbackPanelTest
 {
-	private WicketTester tester = new WicketTester();
+	private final WicketTester tester = new WicketTester();
 
 	@After
 	public void after()
@@ -25,7 +25,7 @@ public class DefaultInvisibleFeedbackPanelTest
 	{
 		FeedbackPanel feedbackPanel = new DefaultInvisibleFeedbackPanel("foo");
 
-		tester.startComponent(feedbackPanel, null);
+		tester.startComponentInPage(feedbackPanel, null);
 		tester.assertInvisible("");
 
 		tester.getSession().info("info");

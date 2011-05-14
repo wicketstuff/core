@@ -189,7 +189,7 @@ public class SpringTaskTests
 
 		final Long taskId = taskService.schedule(task);
 
-		tester.startComponent(new ProgressBar("panelId", new ProgressionModel()
+		tester.startComponentInPage(new ProgressBar("panelId", new ProgressionModel()
 		{
 			private static final long serialVersionUID = 1L;
 

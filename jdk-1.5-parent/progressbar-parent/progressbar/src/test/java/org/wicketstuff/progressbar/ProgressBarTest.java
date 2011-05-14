@@ -71,7 +71,7 @@ public class ProgressBarTest
 			}
 
 		});
-		wt.startComponent(progressBar, null);
+		wt.startComponentInPage(progressBar, null);
 		wt.assertLabel("label", "0%");
 		testProgressive.proceed(50);
 		wt.assertLabel("label", "50%");
@@ -83,7 +83,7 @@ public class ProgressBarTest
 	{
 		WicketTester wt = new WicketTester();
 		final DummyTask testProgressive = new DummyTask();
-		wt.startComponent(new ProgressBar("panelId", new ProgressionModel()
+		wt.startComponentInPage(new ProgressBar("panelId", new ProgressionModel()
 		{
 			private static final long serialVersionUID = 1L;
 
