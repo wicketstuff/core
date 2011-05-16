@@ -25,6 +25,7 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
+import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.mootools.meiomask.behavior.MeioMaskBehavior;
@@ -42,7 +43,8 @@ public class MeioMaskField<T> extends TextField<T>
 	private final MaskFormatter maskFormatter = new MaskFormatter();
 	private final MaskType maskType;
 	private final String mask;
-	private final String meioMaskOptions;
+
+	// private final String meioMaskOptions;
 
 	public MeioMaskField(String id, MaskType mask)
 	{
@@ -87,6 +89,7 @@ public class MeioMaskField<T> extends TextField<T>
 		super(id, model, type);
 		this.maskType = maskType;
 
+		String customOptions = buildCustomOptions(customMask, options);
 		if (MaskType.Fixed.equals(maskType))
 		{
 			if (customMask == null || customMask.isEmpty())
@@ -94,12 +97,10 @@ public class MeioMaskField<T> extends TextField<T>
 				throw new WicketRuntimeException("Fixed mask type requires a custom mask");
 			}
 			this.mask = customMask;
-			this.meioMaskOptions = buildCustomOptions(customMask);
 		}
 		else
 		{
 			this.mask = maskType.getMask();
-			this.meioMaskOptions = options;
 		}
 
 		LOGGER.debug("Initializing maskfield with id {} ...", id);
@@ -119,7 +120,7 @@ public class MeioMaskField<T> extends TextField<T>
 			throw new WicketRuntimeException(parseException);
 		}
 
-		add(new MeioMaskBehavior(maskType, options));
+		add(new MeioMaskBehavior(maskType, customOptions));
 		setOutputMarkupId(true);
 
 		LOGGER.debug("Maskfield {} initialized.", id);
@@ -211,31 +212,34 @@ public class MeioMaskField<T> extends TextField<T>
 		return value.replace("#", "9");
 	}
 
-	private String buildCustomOptions(String customMask)
+	private String buildCustomOptions(String customMask, String options)
 	{
-		String jsMask = new StringBuilder().append("mask: '")
-				.append(javaToJavaScriptMask(customMask)).append("'").toString();
 
-		String customOptions = null;
-
-		if (meioMaskOptions == null)
+		if (Strings.isEmpty(options) && Strings.isEmpty(customMask))
 		{
-			customOptions = new StringBuilder().append("{").append(jsMask).append("}").toString();
+			return null;
 		}
-		else
+
+		StringBuilder customOptions = new StringBuilder("{");
+
+		if ((customMask != null) && (!customMask.isEmpty()))
 		{
-			if (meioMaskOptions.contains("mask:"))
+			String jsMask = new StringBuilder().append("mask: '")
+					.append(javaToJavaScriptMask(customMask)).append("'").toString();
+			customOptions.append(jsMask);
+		}
+
+		if ((options != null) && (!options.isEmpty()))
+		{
+			if (customMask.length() > 1)
 			{
-				throw new WicketRuntimeException(
-						"Can't insert custom mask, mask must be empty in meiomask option");
+				customOptions.append(", ");
 			}
-			int lastIndex = customMask.lastIndexOf("}");
-			StringBuilder builder = new StringBuilder();
-			builder.append(customMask.substring(0, lastIndex - 1));
-			builder.append(jsMask);
-			builder.append("}");
+			customOptions.append(options);
 		}
 
-		return customOptions;
+		customOptions.append("}");
+
+		return customOptions.toString();
 	}
 }

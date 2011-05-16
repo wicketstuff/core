@@ -15,22 +15,22 @@ public class CustomMaskField<T> extends MeioMaskField<T>
 
 	public CustomMaskField(String id, String mask, boolean valueContainsLiteralCharacters)
 	{
-		this(id,mask,mask,null,valueContainsLiteralCharacters);
+		this(id, mask, null, null, valueContainsLiteralCharacters, null);
 	}
 
 	public CustomMaskField(String id, String mask, IModel<T> model)
 	{
-		this(id, mask, null, model);
+		this(id, mask, null, model, false, null);
 	}
 
 	public CustomMaskField(String id, String mask, String options)
 	{
-		this(id, mask, options, null, false);
+		this(id, mask, options, null, false, null);
 	}
 
 	public CustomMaskField(String id, String mask, String options, IModel<T> model)
 	{
-		this(id, mask, options, model, false);
+		this(id, mask, options, model, false, null);
 	}
 
 	public CustomMaskField(String id, String mask, String options, IModel<T> model,
