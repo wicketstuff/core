@@ -401,9 +401,15 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 			int targetPage = findTargetPage(modelObject,
 					dataTable.getRowsPerPage(), dataTable.getRowCount());
 
-			if (currentPage != targetPage) {
-				// change to the page that contains the selected value
-				dataTable.setCurrentPage(targetPage);
+			if (targetPage == -1) {
+				log.warn("Model Object exists but we can't find the page.  Check that you have implemented hashcode and equals for the Model Object("
+						+ modelObject + ")");
+				dataTable.setCurrentPage(0);
+			} else {
+				if (currentPage != targetPage) {
+					// change to the page that contains the selected value
+					dataTable.setCurrentPage(targetPage);
+				}
 			}
 		}
 
@@ -494,7 +500,9 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 
 		radioGroup.processInput();
 
-		setConvertedInput(radioGroup.getModelObject());
+		T object = radioGroup.getModelObject();
+
+		setConvertedInput(object);
 
 	}
 
