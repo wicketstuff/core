@@ -24,7 +24,8 @@ import org.wicketstuff.mootools.meiomask.behavior.MeioMaskBehavior;
  */
 public enum MaskType {
 
-    FixedPhone("fixed.phone", "(##) ####-####"),
+    Fixed("fixed"),
+	FixedPhone("fixed.phone", "(##) ####-####"),
     FixedPhoneUs("fixed.phone-us", "(###) ###-####"),
     FixedCpf("fixed.cpf", "###.###.###-##"),
     FixedCnpj("fixed.cnpj", "##.###.###/####-##"),
@@ -33,17 +34,21 @@ public enum MaskType {
     FixedCep("fixed.cep", "#####-###"),
     FixedTime("fixed.time", "##:##"),
     FixedCc("fixed.cc", "#### #### #### ####"),
-    ReverseInteger("reverse.integer",null),
-    ReverseDecimal("reverse.decimal",null),
-    ReverseDecimalUs("reverse.decimal-us",null),
-    ReverseReais("reverse.reais",null),
-    ReverseDollar("reverse.dollar",null),
-    RegexpIp("regexp.ip",null),
-    RegexpEmail("regexp.email",null);
+    ReverseInteger("reverse.integer"),
+    ReverseDecimal("reverse.decimal"),
+    ReverseDecimalUs("reverse.decimal-us"),
+    ReverseReais("reverse.reais"),
+    ReverseDollar("reverse.dollar"),
+    RegexpIp("regexp.ip"),
+    RegexpEmail("regexp.email");
     
     private String maskName;
     private String mask;
 
+    private MaskType(String maskName) {
+    	this(maskName,null);
+    }
+    
     private MaskType(String maskName, String mask) {
         this.maskName = maskName;
         this.mask = mask;

@@ -7,6 +7,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.util.time.Time;
+import org.wicketstuff.mootools.meiomask.CustomMaskField;
 import org.wicketstuff.mootools.meiomask.MaskType;
 import org.wicketstuff.mootools.meiomask.MeioMaskField;
 
@@ -23,9 +24,12 @@ public class HomePage extends WebPage {
 
         Form<TestModel> form = new Form<TestModel>("form", new CompoundPropertyModel<TestModel>(testModel)) {
 
-            @Override
+			private static final long serialVersionUID = 884885352250614027L;
+
+			@Override
             protected void onSubmit() {
-                info("fixed-phone: " + getModelObject().getFixedPhone());
+                info("custom: " + getModelObject().getFixed());
+				info("fixed-phone: " + getModelObject().getFixedPhone());
                 info("fixed-phone-us: " + getModelObject().getFixedPhoneUs());
                 info("fixed-cpf: " + getModelObject().getFixedCpf());
                 info("fixed-cnpj: " + getModelObject().getFixedCnpj());
@@ -39,6 +43,7 @@ public class HomePage extends WebPage {
 
         add(form);
 
+        form.add(new CustomMaskField<String>("fixed", "####-##-##","autoTab: true"));
         form.add(new MeioMaskField<String>("fixedPhone", MaskType.FixedPhone));
         form.add(new MeioMaskField<String>("fixedPhoneUs", MaskType.FixedPhoneUs));
         form.add(new MeioMaskField<String>("fixedCpf", MaskType.FixedCpf));

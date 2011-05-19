@@ -25,7 +25,8 @@ import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
  */
 public class MootoolsMoreBehavior extends MootoolsCoreBehavior {
 
-    // create a reference to the base mootools javascript file.
+	private static final long serialVersionUID = -523620975856861332L;
+	// create a reference to the base mootools javascript file.
     // we use JavascriptResourceReference so that the included file will have its comments stripped and gzipped.
     private static final ResourceReference MOOTOOLS_MORE_JS = new JavascriptResourceReference(MootoolsMoreBehavior.class,
             "res/mootools-more-1.3.0.1.js");

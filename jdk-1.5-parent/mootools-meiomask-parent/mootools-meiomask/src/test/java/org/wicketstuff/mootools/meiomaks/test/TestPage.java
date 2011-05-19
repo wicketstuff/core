@@ -23,6 +23,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.junit.Ignore;
+import org.wicketstuff.mootools.meiomask.CustomMaskField;
 import org.wicketstuff.mootools.meiomask.MaskType;
 import org.wicketstuff.mootools.meiomask.MeioMaskField;
 
@@ -43,6 +44,8 @@ public class TestPage extends WebPage {
         Form<TestModel> form = new Form<TestModel>("form", new CompoundPropertyModel<TestModel>(testModel));
 
         add(form);
+        
+        form.add(new CustomMaskField<String>("fixed","####-##-##"));
         form.add(new MeioMaskField<String>("fixedPhone", MaskType.FixedPhone));
         form.add(new MeioMaskField<String>("fixedPhoneUs", MaskType.FixedPhoneUs));
         form.add(new MeioMaskField<String>("fixedCpf", MaskType.FixedCpf));

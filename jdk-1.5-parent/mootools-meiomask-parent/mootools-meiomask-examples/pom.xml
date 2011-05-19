@@ -1,88 +1,93 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.wicketstuff</groupId>
-        <artifactId>mootools-meiomask-parent</artifactId>
-        <version>1.4-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>mootools-meiomask-parent</artifactId>
+		<version>1.4-SNAPSHOT</version>
+	</parent>
 
-    <artifactId>mootools-meiomask-examples</artifactId>
-    <packaging>war</packaging>
+	<artifactId>mootools-meiomask-examples</artifactId>
+	<packaging>war</packaging>
 
-    <name>Mootools MeioMask Plugin Integration - Examples</name>
-        
-    <developers>
-        <developer>
-            <id>inaiat</id>
-            <name>Inaiat Henrique</name>
-            <email>inaiat at gmail.com</email>
-            <timezone>-3</timezone>
-        </developer>
-    </developers>
+	<name>Mootools MeioMask Plugin Integration - Examples</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-extensions</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>mootools-meiomask</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+	<developers>
+		<developer>
+			<id>inaiat</id>
+			<name>Inaiat Henrique</name>
+			<email>inaiat at gmail.com</email>
+			<timezone>-3</timezone>
+		</developer>
+	</developers>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-        
-        <dependency>
-		<groupId>javax.servlet</groupId>
-		<artifactId>servlet-api</artifactId>
-		<version>2.5</version>
-		<scope>test</scope>
-	</dependency>
-	<dependency>
-		<groupId>org.eclipse.jetty.aggregate</groupId>
-		<artifactId>jetty-all-server</artifactId>
-		<version>7.3.1.v20110307</version>
-	</dependency>
-
-		
-		<!--  JETTY DEPENDENCIES FOR TESTING  
+	<dependencies>
 		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>jetty</artifactId>
-			<version>${jetty.version}</version>
-			<scope>provided</scope>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-extensions</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>jetty-util</artifactId>
-			<version>${jetty.version}</version>
-			<scope>provided</scope>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>mootools-meiomask</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>jetty-management</artifactId>
-			<version>${jetty.version}</version>
-			<scope>provided</scope>
+			<groupId>org.eclipse.jetty.aggregate</groupId>
+			<artifactId>jetty-all-server</artifactId>
+			<version>7.3.1.v20110307</version>
 		</dependency>
-		-->
-    </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-eclipse-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- JETTY DEPENDENCIES FOR TESTING <dependency> <groupId>org.mortbay.jetty</groupId> 
+			<artifactId>jetty</artifactId> <version>${jetty.version}</version> <scope>provided</scope> 
+			</dependency> <dependency> <groupId>org.mortbay.jetty</groupId> <artifactId>jetty-util</artifactId> 
+			<version>${jetty.version}</version> <scope>provided</scope> </dependency> 
+			<dependency> <groupId>org.mortbay.jetty</groupId> <artifactId>jetty-management</artifactId> 
+			<version>${jetty.version}</version> <scope>provided</scope> </dependency> -->
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

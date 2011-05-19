@@ -35,6 +35,7 @@ public class MeioMaskTest {
         WicketTester tester = new WicketTester();
         tester.startPage(TestPage.class);
         FormTester formTester = tester.newFormTester("form");
+        formTester.setValue("fixed", "2010-12-30");
         formTester.setValue("fixedPhone", "(12) 1234-1234");
         formTester.setValue("fixedPhoneUs", "(123) 123-1234");
         formTester.setValue("fixedCpf", "123.456.789-01");
@@ -45,6 +46,7 @@ public class MeioMaskTest {
 
         formTester.submit();
 
+        tester.assertModelValue("form:fixed", "20101230");
         tester.assertModelValue("form:fixedPhone", "1212341234");
         tester.assertModelValue("form:fixedPhoneUs", "1231231234");
         tester.assertModelValue("form:fixedCpf", "12345678901");
