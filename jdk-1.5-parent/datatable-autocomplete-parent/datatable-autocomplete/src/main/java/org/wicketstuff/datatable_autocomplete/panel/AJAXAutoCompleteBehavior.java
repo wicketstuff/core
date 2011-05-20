@@ -169,8 +169,8 @@ public class AJAXAutoCompleteBehavior extends
 			Component c = dependencyProcessor.getQueryParameterToComponentMap()
 					.get(parameter);
 
-			String adjustedUrl = "&" + parameter + "='+Wicket.$('"
-					+ c.getMarkupId() + "').value";
+			String adjustedUrl = "&" + parameter + "='+ encodeURIComponent (Wicket.$('"
+					+ c.getMarkupId() + "').value)";
 
 			parameterList.add(adjustedUrl);
 
