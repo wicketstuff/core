@@ -8,6 +8,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.time.Time;
+import org.wicketstuff.mootools.meiomask.CustomMaskField;
 import org.wicketstuff.mootools.meiomask.MaskType;
 import org.wicketstuff.mootools.meiomask.MeioMaskField;
 
@@ -33,6 +34,7 @@ public class HomePage extends WebPage
 			@Override
 			protected void onSubmit()
 			{
+				info("custom: " + getModelObject().getCustom());
 				info("fixed-phone: " + getModelObject().getFixedPhone());
 				info("fixed-phone-us: " + getModelObject().getFixedPhoneUs());
 				info("fixed-cpf: " + getModelObject().getFixedCpf());
@@ -47,6 +49,7 @@ public class HomePage extends WebPage
 
 		add(form);
 
+		form.add(new CustomMaskField<String>("custom", "####-##-##"));
 		form.add(new MeioMaskField<String>("fixedPhone", MaskType.FixedPhone));
 		form.add(new MeioMaskField<String>("fixedPhoneUs", MaskType.FixedPhoneUs));
 		form.add(new MeioMaskField<String>("fixedCpf", MaskType.FixedCpf));

@@ -36,55 +36,78 @@ import org.wicketstuff.mootools.meiomask.behavior.MeioMaskBehavior;
 public class MeioMaskField<T> extends TextField<T>
 {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7642353937250475850L;
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(MeioMaskField.class);
 	private final MaskFormatter maskFormatter = new MaskFormatter();
 	private final MaskType maskType;
+	private final String mask;
 
 	public MeioMaskField(String id, MaskType mask)
 	{
 		this(id, mask, (IModel<T>)null);
 	}
 
-	public MeioMaskField(String id, MaskType mask, boolean valueContainsLiteralCharacters)
+	public MeioMaskField(String id, MaskType maskType, boolean valueContainsLiteralCharacters)
 	{
-		this(id, mask, null, null, valueContainsLiteralCharacters);
+		this(id, maskType, null, null, valueContainsLiteralCharacters);
 	}
 
-	public MeioMaskField(String id, MaskType mask, IModel<T> model)
+	public MeioMaskField(String id, MaskType maskType, IModel<T> model)
 	{
-		this(id, mask, null, model, false);
+		this(id, maskType, null, model, false);
 	}
 
-	public MeioMaskField(String id, MaskType mask, String options)
+	public MeioMaskField(String id, MaskType maskType, String options)
 	{
-		this(id, mask, options, null, false);
+		this(id, maskType, options, null, false);
 	}
 
-	public MeioMaskField(String id, MaskType mask, String options, IModel<T> model)
+	public MeioMaskField(String id, MaskType maskType, String options, IModel<T> model)
 	{
-		this(id, mask, options, model, false);
+		this(id, maskType, options, model, false);
 	}
 
-	public MeioMaskField(String id, MaskType mask, String options, IModel<T> model,
-		boolean valueContainsLiteralCharacters)
+	public MeioMaskField(String id, MaskType maskType, String options, IModel<T> model,
+			boolean valueContainsLiteralCharacters)
 	{
-		this(id, mask, options, model, valueContainsLiteralCharacters, null);
+		this(id, maskType, options, model, valueContainsLiteralCharacters, null);
 	}
 
-	public MeioMaskField(String id, MaskType mask, String options, IModel<T> model,
-		boolean valueContainsLiteralCharacters, Class<T> type)
+	public MeioMaskField(String id, MaskType maskType, String options, IModel<T> model,
+			boolean valueContainsLiteralCharacters, Class<T> type)
+	{
+		this(id, maskType, options, model, valueContainsLiteralCharacters, type, null);
+	}
+
+	protected MeioMaskField(String id, MaskType maskType, String options, IModel<T> model,
+			boolean valueContainsLiteralCharacters, Class<T> type, String customMask)
 	{
 		super(id, model, type);
-		this.maskType = mask;
+		this.maskType = maskType;
+
+		String customOptions = buildCustomOptions(customMask, options);
+		if (MaskType.Fixed.equals(maskType))
+		{
+			if (customMask == null || isEmpty(customMask))
+			{
+				throw new WicketRuntimeException("Fixed mask type requires a custom mask");
+			}
+			this.mask = customMask;
+		}
+		else
+		{
+			this.mask = maskType.getMask();
+		}
+
 		LOGGER.debug("Initializing maskfield with id {} ...", id);
-		LOGGER.debug("  Mask name: {}, mask: {}", mask.getMaskName(), mask.getMask());
+		LOGGER.debug("  Mask name: {}, mask: {}", maskType.getMaskName(), this.mask);
 		LOGGER.debug("  Options: {}", options);
 		LOGGER.debug("  Type: {}", type);
 		LOGGER.debug("  ValueContainsLiteralCharacters: {}", valueContainsLiteralCharacters);
 		try
 		{
-			maskFormatter.setMask(mask.getMask());
+			maskFormatter.setMask(mask);
 			maskFormatter.setValueClass(String.class);
 			maskFormatter.setAllowsInvalid(true);
 			maskFormatter.setValueContainsLiteralCharacters(valueContainsLiteralCharacters);
@@ -94,7 +117,7 @@ public class MeioMaskField<T> extends TextField<T>
 			throw new WicketRuntimeException(parseException);
 		}
 
-		add(new MeioMaskBehavior(mask, options));
+		add(new MeioMaskBehavior(maskType, customOptions));
 		setOutputMarkupId(true);
 
 		LOGGER.debug("Maskfield {} initialized.", id);
@@ -181,4 +204,49 @@ public class MeioMaskField<T> extends TextField<T>
 		return Date.class.isAssignableFrom(type) || mask == MaskType.RegexpEmail ||
 			mask == MaskType.RegexpIp;
 	}
+	
+	private String javaToJavaScriptMask(String value)
+	{
+		return value.replace("#", "9");
+	}
+
+	private String buildCustomOptions(String customMask, String options)
+	{
+
+		if (isEmpty(options) && isEmpty(customMask))
+		{
+			return null;
+		}
+
+		StringBuilder customOptions = new StringBuilder("{");
+
+		if ((customMask != null) && (!isEmpty(customMask)))
+		{
+			String jsMask = new StringBuilder().append("mask: '")
+					.append(javaToJavaScriptMask(customMask)).append("'").toString();
+			customOptions.append(jsMask);
+		}
+
+		if ((options != null) && (!isEmpty(options)))
+		{
+			if (customMask.length() > 1)
+			{
+				customOptions.append(", ");
+			}
+			customOptions.append(options);
+		}
+
+		customOptions.append("}");
+
+		return customOptions.toString();
+	}
+	
+	// There are the same method at org.apache.wicket.util.String.Strings, 
+	// but I don't know if a good idea have this package on project dependencies.
+	private boolean isEmpty(final CharSequence string)
+	{
+		return (string == null) || (string.length() == 0) ||
+			(string.toString().trim().length() == 0);
+	}
+	
 }

@@ -26,7 +26,7 @@ public class TestModel implements Serializable
 {
 
 	private static final long serialVersionUID = 1L;
-	private String fixed;
+	private String custom;
 	private String fixedPhone;
 	private String fixedPhoneUs;
 	private String fixedCpf;
@@ -51,20 +51,20 @@ public class TestModel implements Serializable
 
 
 	/**
-	 * @return the fixed
+	 * @return the custom
 	 */
-	public String getFixed()
+	public String getCustom()
 	{
-		return fixed;
+		return custom;
 	}
 
 	/**
-	 * @param fixed
-	 *            the fixed to set
+	 * @param custom
+	 *            the custom to set
 	 */
-	public void setFixed(String fixed)
+	public void setCustom(String custom)
 	{
-		this.fixed = fixed;
+		this.custom = custom;
 	}
 
 	/**
