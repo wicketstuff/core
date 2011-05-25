@@ -31,8 +31,9 @@ public class GaePageManagerProvider extends DefaultPageManagerProvider
 	public IPageManager get(IPageManagerContext pageManagerContext)
 	{
 		IDataStore dataStore = new HttpSessionDataStore(pageManagerContext, evictionStrategy);
-		IPageStore pageStore = new DefaultPageStore(application.getName(), dataStore,
-			getCacheSize());
+
+		int cacheSize = application.getStoreSettings().getInmemoryCacheSize();
+		IPageStore pageStore = new DefaultPageStore(application.getName(), dataStore, cacheSize);
 		return new PersistentPageManager(application.getName(), pageStore, pageManagerContext);
 
 	}
