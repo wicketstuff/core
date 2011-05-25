@@ -25,7 +25,6 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
-import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.mootools.meiomask.behavior.MeioMaskBehavior;
@@ -43,8 +42,6 @@ public class MeioMaskField<T> extends TextField<T>
 	private final MaskFormatter maskFormatter = new MaskFormatter();
 	private final MaskType maskType;
 	private final String mask;
-
-	// private final String meioMaskOptions;
 
 	public MeioMaskField(String id, MaskType mask)
 	{
@@ -92,7 +89,7 @@ public class MeioMaskField<T> extends TextField<T>
 		String customOptions = buildCustomOptions(customMask, options);
 		if (MaskType.Fixed.equals(maskType))
 		{
-			if (customMask == null || customMask.isEmpty())
+			if (isEmpty(customMask))
 			{
 				throw new WicketRuntimeException("Fixed mask type requires a custom mask");
 			}
@@ -131,7 +128,7 @@ public class MeioMaskField<T> extends TextField<T>
 	{
 		String input = super.getInput();
 
-		if (input.trim().length() == 0 || isUnMaskableTypes(getType(), this.maskType))
+		if (isEmpty(input) || isUnMaskableTypes(getType(), this.maskType))
 		{
 			// Do nothing
 			return input;
@@ -174,7 +171,7 @@ public class MeioMaskField<T> extends TextField<T>
 	@Override
 	protected T convertValue(String[] value) throws ConversionException
 	{
-		if (value != null && value.length > 0 && mask != null && value[0].trim().length() > 0)
+		if (value != null && value.length > 0 && mask != null && (!isEmpty(value[0])))
 		{
 			try
 			{
@@ -215,21 +212,21 @@ public class MeioMaskField<T> extends TextField<T>
 	private String buildCustomOptions(String customMask, String options)
 	{
 
-		if (Strings.isEmpty(options) && Strings.isEmpty(customMask))
+		if (isEmpty(options) && isEmpty(customMask))
 		{
 			return null;
 		}
 
 		StringBuilder customOptions = new StringBuilder("{");
 
-		if ((customMask != null) && (!customMask.isEmpty()))
+		if (!isEmpty(customMask))
 		{
 			String jsMask = new StringBuilder().append("mask: '")
 					.append(javaToJavaScriptMask(customMask)).append("'").toString();
 			customOptions.append(jsMask);
 		}
 
-		if ((options != null) && (!options.isEmpty()))
+		if (!isEmpty(options))
 		{
 			if (customMask.length() > 1)
 			{
@@ -241,5 +238,13 @@ public class MeioMaskField<T> extends TextField<T>
 		customOptions.append("}");
 
 		return customOptions.toString();
+	}
+	
+	// There are the same method at org.apache.wicket.util.String.Strings, 
+	// but I don't know if a good idea have this package on project dependencies.
+	private boolean isEmpty(final CharSequence string)
+	{
+		return (string == null) || (string.length() == 0) ||
+			(string.toString().trim().length() == 0);
 	}
 }
