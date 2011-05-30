@@ -70,13 +70,16 @@ public class TinyMCESettings implements Serializable {
 	private Location statusbarLocation;
 	private Align toolbarAlign;
 	private Language language;
+	private EntityEncoding entityEncoding;
 	private boolean resizing = false;
 	private boolean horizontalResizing = true;
 	private boolean resizingUseCookie = true;
-	private boolean autoResize;
+	@Deprecated
+	private boolean autoResize = false;;
+	private boolean readOnly = false;
 
 	private Set<Plugin> plugins = new ListOrderedSet();
-	private List<Control> controls = new LinkedList();
+	private List<Control> controls = new LinkedList<Control>();
 	private Set<Button> disabledButtons = new ListOrderedSet();
 	private Map<Toolbar, List<Button>> toolbarButtons;
 	private Boolean convertUrls = null;
@@ -143,10 +146,17 @@ public class TinyMCESettings implements Serializable {
 		this.contentCss = contentCss;
 	}
 
+	@Deprecated
 	public boolean getAutoResize() {
 		return autoResize;
 	}
 
+	/**
+	 * Obsolete feature; replaced by autoResize plugin.
+	 * 
+	 * @param auto_resize
+	 */
+	@Deprecated
 	public void setAutoResize(boolean auto_resize) {
 		this.autoResize = auto_resize;
 	}
@@ -181,6 +191,22 @@ public class TinyMCESettings implements Serializable {
 
 	public Align getToolbarAlign() {
 		return toolbarAlign;
+	}
+	
+	public void setEntityEncoding(EntityEncoding entityEncoding) {
+		this.entityEncoding = entityEncoding;
+	}
+	
+	public EntityEncoding getEntityEncoding() {
+		return entityEncoding;
+	}
+	
+	public void setReadOnly (boolean readOnly) {
+		this.readOnly = readOnly;
+	}
+	
+	public boolean isReadOnly () {
+		return readOnly;
 	}
 
 	public void setResizing(boolean resizing) {
@@ -265,22 +291,8 @@ public class TinyMCESettings implements Serializable {
 	 * Add a default button to tinymce editor. These plugins are defined by
 	 * tinymce editor and are ready to use.
 	 * 
-	 * @param button
-	 *            - button to be added
-	 * @param toolbar
-	 *            - the toolbar where to add this button to
-	 * @param position
-	 *            - position of this button
-	 */
-	public void add(Button button, Toolbar toolbar, Position position) {
-		controls.add(new Control(button, toolbar, position));
-	}
-
-	/**
-	 * Allow users to add plugin button. Plugin buttons are defined by tinymce
-	 * plugins and these plugins have to be registered. Fortunately, when new
-	 * plugin button is added, the plugin that defines the button is
-	 * automatically registered within tinymce editor.
+	 * TODO: I'm not sure this works for anything except the fourth toolbar.
+	 * TODO: Why doesn't it interact with the 'toolbars' variable?
 	 * 
 	 * @param button
 	 *            - button to be added
@@ -289,6 +301,18 @@ public class TinyMCESettings implements Serializable {
 	 * @param position
 	 *            - position of this button
 	 */
+	public void add(Button button, Toolbar toolbar, Position position) {
+		if (button instanceof PluginButton)
+			register(((PluginButton) button).getPlugin());
+		controls.add(new Control(button, toolbar, position));
+	}
+
+	/**
+	 * Use {@link #add(Button, Toolbar, Position)} instead.  It will check for
+	 * and register Plugin Buttons
+	 * 
+	 */
+	@Deprecated
 	public void add(PluginButton button, Toolbar toolbar, Position position) {
 		register(button.getPlugin());
 		controls.add(new Control(button, toolbar, position));
@@ -308,6 +332,8 @@ public class TinyMCESettings implements Serializable {
 	 * This option can only be used when theme is set to advanced and when the
 	 * theme_advanced_layout_manager option is set to the default value of
 	 * "SimpleLayout".
+	 * 
+	 * TODO: Does this fail for the fourth toolbar?  Seems like it will.
 	 * 
 	 * @param toolbar
 	 *            the toolbar to define buttons for
@@ -354,7 +380,7 @@ public class TinyMCESettings implements Serializable {
 	}
 
 	// used in testing
-	Set getPlugins() {
+	Set<Plugin> getPlugins() {
 		return plugins;
 	}
 
@@ -401,6 +427,9 @@ public class TinyMCESettings implements Serializable {
 
 		if (autoResize)
 			buffer.append(",\n\tauto_resize : true");
+		
+		if (readOnly)
+			buffer.append(",\n\treadonly : true"); // Per Online Doc
 
 		if (contentCss != null)
 			buffer.append(",\n\t").append("content_css : \"").append(
@@ -409,6 +438,10 @@ public class TinyMCESettings implements Serializable {
 		if (documentBaseUrl != null)
 			buffer.append(",\n\t").append("document_base_url : \"").append(
 					documentBaseUrl).append("\"");
+		
+		if (entityEncoding != null)
+			buffer.append(",\n\t").append("entity_encoding : \"").append(
+					entityEncoding).append("\"");
 
 		if (Theme.advanced.equals(theme))
 			appendAdvancedSettings(buffer);
@@ -430,9 +463,9 @@ public class TinyMCESettings implements Serializable {
 			StringBuffer buffer) {
 		if (components.size() > 0) {
 			buffer.append(",\n\telements : \"");
-			Iterator iterator = components.iterator();
+			Iterator<Component> iterator = components.iterator();
 			while (iterator.hasNext()) {
-				Component component = (Component) iterator.next();
+				Component component = iterator.next();
 				buffer.append(component.getMarkupId());
 				if (iterator.hasNext())
 					buffer.append(", ");
@@ -445,9 +478,9 @@ public class TinyMCESettings implements Serializable {
 
 	private void appendPluginSettings(StringBuffer buffer) {
 		if (plugins.size() > 0) {
-			Iterator iterator = plugins.iterator();
+			Iterator<Plugin> iterator = plugins.iterator();
 			while (iterator.hasNext()) {
-				Plugin plugin = (Plugin) iterator.next();
+				Plugin plugin = iterator.next();
 				plugin.definePluginSettings(buffer);
 			}
 		}
@@ -457,9 +490,9 @@ public class TinyMCESettings implements Serializable {
 		StringBuffer loadPluginJavaScript = new StringBuffer();
 
 		if (plugins.size() > 0) {
-			Iterator iterator = plugins.iterator();
+			Iterator<Plugin> iterator = plugins.iterator();
 			while (iterator.hasNext()) {
-				Plugin plugin = (Plugin) iterator.next();
+				Plugin plugin = iterator.next();
 				String pluginPath = plugin.getPluginPath();
 
 				if (pluginPath != null && pluginPath.equals("") == false) {
@@ -484,9 +517,9 @@ public class TinyMCESettings implements Serializable {
 		StringBuffer buffer = new StringBuffer();
 
 		if (plugins.size() > 0) {
-			Iterator iterator = plugins.iterator();
+			Iterator<Plugin> iterator = plugins.iterator();
 			while (iterator.hasNext()) {
-				Plugin plugin = (Plugin) iterator.next();
+				Plugin plugin = iterator.next();
 				plugin.definePluginExtensions(buffer);
 			}
 		}
@@ -577,7 +610,7 @@ public class TinyMCESettings implements Serializable {
 	private void addButtons1_Before(StringBuffer buffer) {
 		ControlPredicate predicate = new ControlPredicate(Toolbar.first,
 				Position.before);
-		Collection result = CollectionUtils.select(controls, predicate);
+		Collection<Control> result = CollectionUtils.select(controls, predicate);
 		if (result.size() > 0) {
 			buffer.append(",\n\t").append(
 					"theme_advanced_buttons1_add_before : ").append("\"")
@@ -619,7 +652,7 @@ public class TinyMCESettings implements Serializable {
 	private void addButtons3_Before(StringBuffer buffer) {
 		ControlPredicate predicate = new ControlPredicate(Toolbar.third,
 				Position.before);
-		Collection result = CollectionUtils.select(controls, predicate);
+		Collection<?> result = CollectionUtils.select(controls, predicate);
 		if (result.size() > 0) {
 			buffer.append(",\n\t").append(
 					"theme_advanced_buttons3_add_before : ").append("\"")
@@ -630,7 +663,7 @@ public class TinyMCESettings implements Serializable {
 	private void addButtons3_After(StringBuffer buffer) {
 		ControlPredicate predicate = new ControlPredicate(Toolbar.third,
 				Position.after);
-		Collection result = CollectionUtils.select(controls, predicate);
+		Collection<?> result = CollectionUtils.select(controls, predicate);
 		if (result.size() > 0) {
 			buffer.append(",\n\t").append("theme_advanced_buttons3_add : ")
 					.append("\"").append(controlsAsString(result)).append("\"");
@@ -872,5 +905,26 @@ public class TinyMCESettings implements Serializable {
 		public Toolbar(String name) {
 			super(name);
 		}
+	}
+	
+	/**
+	 * Controls how entities/characters get processed by TinyMCE.  
+	 * 
+	 * <a href="http://tinymce.moxiecode.com/wiki.php/Configuration:entity_encoding">http://tinymce.moxiecode.com/wiki.php/Configuration:entity_encoding</a>
+	 * 
+	 * @author jbrookover
+	 * 
+	 */
+	public static class EntityEncoding extends Enum {
+
+		private static final long serialVersionUID = 1L;
+		
+		public static final EntityEncoding named = new EntityEncoding("named");
+		public static final EntityEncoding numeric = new EntityEncoding("numeric");
+		public static final EntityEncoding raw = new EntityEncoding("raw");
+		
+		protected EntityEncoding(String name) {
+			super(name);
+		}		
 	}
 }
