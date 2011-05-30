@@ -66,11 +66,20 @@ public class AutoCompletingPanel<T> extends Panel {
 
 	private Button closeButton;
 
+	
 	/**
 	 * @param id
 	 * @param ctx
 	 */
 	public AutoCompletingPanel(String id, IModel<String> fieldStringModel,
+			IColumn<?>[] columns, SortableDataProvider<T> aliasDataProvider,
+			ITableRowSelectionHandler<T> rowSelectionHandler, IAutocompleteControlPanelProvider controlPanelProvider,
+			IAutocompleteRenderingHints renderingHints) {
+
+		this (id, CSS, TABLE_CSS, fieldStringModel, columns, aliasDataProvider, rowSelectionHandler, controlPanelProvider, renderingHints);
+		
+	}
+	public AutoCompletingPanel(String id, ResourceReference panelCSS, ResourceReference tableCSS, IModel<String> fieldStringModel,
 			IColumn<?>[] columns, SortableDataProvider<T> aliasDataProvider,
 			ITableRowSelectionHandler<T> rowSelectionHandler, IAutocompleteControlPanelProvider controlPanelProvider,
 			IAutocompleteRenderingHints renderingHints) {
@@ -82,7 +91,7 @@ public class AutoCompletingPanel<T> extends Panel {
 
 		this.provider = aliasDataProvider;
 
-		add(CSSPackageResource.getHeaderContribution(CSS));
+		add(CSSPackageResource.getHeaderContribution(panelCSS));
 		
 		Component controlPanel = controlPanelProvider.getPanel(this, "controlPanel");
 		
@@ -91,7 +100,7 @@ public class AutoCompletingPanel<T> extends Panel {
 		
 		add(controlPanel);
 
-		viewPanel = new SelectableTableViewPanel<T>("view", TABLE_CSS,
+		viewPanel = new SelectableTableViewPanel<T>("view", tableCSS,
 				"dta_data_table", "{title}", columns, aliasDataProvider,
 				 false, rowSelectionHandler, renderingHints);
 

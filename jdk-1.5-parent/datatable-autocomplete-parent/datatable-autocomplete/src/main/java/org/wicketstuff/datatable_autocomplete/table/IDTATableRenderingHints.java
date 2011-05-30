@@ -39,4 +39,10 @@ public interface IDTATableRenderingHints extends IClusterable {
 	 * @return true if the no match tool bar should be shown in the table when there are no results.
 	 */
 	public boolean showNoRecordsToolbar();
+	
+	/**
+	 * 
+	 * @return true if the selected row should have a 'selected' class defined.
+	 */
+	public boolean highlightSelectedRow();
 }

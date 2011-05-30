@@ -23,9 +23,9 @@ import org.mortbay.jetty.webapp.WebAppContext;
 
 public class Start {
 
-	public static void main(String[] args) throws Exception {
-        Server server = new Server();
-        SocketConnector connector = new SocketConnector();
+	public static void main(final String[] args) throws Exception {
+        final Server server = new Server();
+        final SocketConnector connector = new SocketConnector();
 
         // Set some timeout options to make debugging easier.
         connector.setMaxIdleTime(1000 * 60 * 60);
@@ -33,7 +33,7 @@ public class Start {
         connector.setPort(8080);
         server.setConnectors(new Connector[] { connector });
 
-        WebAppContext bb = new WebAppContext();
+        final WebAppContext bb = new WebAppContext();
         bb.setServer(server);
         bb.setContextPath("/");
         bb.setWar("src/main/webapp");
@@ -56,7 +56,7 @@ public class Start {
             // }
             server.stop();
             server.join();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
             System.exit(100);
         }

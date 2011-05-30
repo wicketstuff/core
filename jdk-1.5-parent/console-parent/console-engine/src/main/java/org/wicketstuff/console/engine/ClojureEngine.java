@@ -20,35 +20,27 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.StringReader;
-import java.util.Collections;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
+import clojure.lang.Associative;
 import clojure.lang.Compiler;
+import clojure.lang.Namespace;
+import clojure.lang.PersistentHashMap;
 import clojure.lang.RT;
+import clojure.lang.Symbol;
+import clojure.lang.Var;
 
 /**
- * /** Executes Clojure code.
+ * Executes Clojure code.
  * <p>
- * stdout and stderr are captured. Bindings are available to the Clojure code
- * via public static methods {@link #getBinding(String)} and
- * {@link #getBindings()}.
+ * stdout and stderr are captured. Bindings are pushed into user namespace, so
+ * to access a binding named &quot;foo&quot; use &quot;user/foo&quot;. *
  * 
  * @author cretzel
- * 
  */
 public class ClojureEngine implements IScriptEngine {
-
-	private static Map<String, Object> _bindings;
-
-	/** Returns all bindings. */
-	public static Map<String, Object> getBindings() {
-		return _bindings;
-	}
-
-	/** Returns value bound to key @{code key}. */
-	public static Object getBinding(String key) {
-		return _bindings.get(key);
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -63,17 +55,6 @@ public class ClojureEngine implements IScriptEngine {
 	public synchronized IScriptExecutionResult execute(final String script,
 			final Map<String, Object> bindings) {
 
-		/*
-		 * put bindings into public static _bindings to be accessible by the
-		 * script via ClojureEngine#getBinding(). Not especially nice, but
-		 * should probably work for the most engines.
-		 */
-		if (bindings == null) {
-			_bindings = Collections.emptyMap();
-		} else {
-			_bindings = Collections.synchronizedMap(bindings);
-		}
-
 		Throwable exception = null;
 		String output = null;
 		Object returnValue = null;
@@ -83,30 +64,54 @@ public class ClojureEngine implements IScriptEngine {
 		final ByteArrayOutputStream bout = new ByteArrayOutputStream();
 		final PrintStream newOut = new PrintStream(bout, false);
 		final OutputStreamWriter newRtOut = new OutputStreamWriter(newOut);
-		final Object oldRtOut = RT.OUT.get();
 
 		try {
-			RT.OUT.doReset(newRtOut);
 			System.setOut(newOut);
 			System.setErr(newOut);
+
+			Associative mappings = PersistentHashMap.EMPTY;
+			mappings = mappings.assoc(RT.CURRENT_NS, RT.CURRENT_NS.get());
+			mappings = mappings.assoc(RT.OUT, newRtOut);
+			mappings = mappings.assoc(RT.ERR, newRtOut);
+			mappings = applyBindings(bindings, mappings);
+			Var.pushThreadBindings(mappings);
+
 			returnValue = Compiler.load(new StringReader(script));
 		} catch (final Exception e) {
 			exception = e;
 		} finally {
+
 			try {
-				RT.OUT.doReset(oldRtOut);
+				Var.popThreadBindings();
 				newRtOut.flush();
 				newRtOut.close();
+				System.setOut(oldOut);
+				System.setErr(oldErr);
+
+				output = bout.toString();
 			} catch (final Exception e1) {
-				exception = e1;
+				throw new ScriptEngineException(e1);
 			}
-			System.setOut(oldOut);
-			System.setErr(oldErr);
-			output = bout.toString();
+
 		}
 
 		return new DefaultScriptExecutionResult(script, exception, output,
 				returnValue);
+	}
+
+	private Associative applyBindings(final Map<String, Object> bindings,
+			Associative mappings) {
+		if (bindings != null) {
+			final Set<Entry<String, Object>> entrySet = bindings.entrySet();
+			for (final Entry<String, Object> entry : entrySet) {
+				final Symbol symbol = Symbol.intern(entry.getKey());
+				final Namespace userNs = Namespace.findOrCreate(Symbol
+						.create("user".intern()));
+				final Var var = Var.intern(userNs, symbol);
+				mappings = mappings.assoc(var, entry.getValue());
+			}
+		}
+		return mappings;
 	}
 
 }

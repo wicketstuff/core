@@ -24,15 +24,24 @@ package org.wicketstuff.datatable_autocomplete.table;
  */
 public class DefaultDTATableRenderingHints implements IDTATableRenderingHints {
 
+	private static final long serialVersionUID = 1L;
+	
 	private final int pageSize;
 	private final boolean paginationEnabled;
+	private final boolean highlightSelectedRow;
 
 	/**
 	 * 
 	 */
 	public DefaultDTATableRenderingHints(int pageSize, boolean paginationEnabled) {
+		
+		this (pageSize, paginationEnabled, false);
+	}
+	
+	public DefaultDTATableRenderingHints(int pageSize, boolean paginationEnabled, boolean highlightSelectedRow) {
 		this.pageSize = pageSize;
 		this.paginationEnabled = paginationEnabled;
+		this.highlightSelectedRow = highlightSelectedRow;
 	}
 
 	/* (non-Javadoc)
@@ -57,4 +66,12 @@ public class DefaultDTATableRenderingHints implements IDTATableRenderingHints {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.wicketstuff.datatable_autocomplete.table.IDTATableRenderingHints#highlightSelectedRow()
+	 */
+	public boolean highlightSelectedRow() {
+		return highlightSelectedRow;
+	}
+
+	
 }

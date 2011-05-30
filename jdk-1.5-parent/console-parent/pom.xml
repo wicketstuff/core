@@ -27,8 +27,17 @@
 	<modules>
 		<module>console-engine</module>
 		<module>console</module>
+		<module>console-templates</module>
 		<module>console-examples</module>
 	</modules>
+
+	<build>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
+	</build>
 
 	<dependencyManagement>
 		<dependencies>
@@ -42,7 +51,27 @@
 				<artifactId>console-engine</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>console-templates</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 		</dependencies>
+
 	</dependencyManagement>
+
+	<repositories>
+		<repository>
+			<id>jboss-releases-repo</id>
+			<name>Hibernate releases repo</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
 
 </project>

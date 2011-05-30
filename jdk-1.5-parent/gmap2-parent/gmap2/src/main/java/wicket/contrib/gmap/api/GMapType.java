@@ -24,10 +24,15 @@ import wicket.contrib.gmap.GMap2;
  * <a href="http://www.google.com/apis/maps/documentation/reference.html#GMapType">GMapType</a>.
  */
 public enum GMapType implements Serializable {
-	G_NORMAL_MAP, G_SATELLITE_MAP, G_HYBRID_MAP;
+	G_NORMAL_MAP, G_SATELLITE_MAP, G_HYBRID_MAP, G_AERIAL_MAP, G_AERIAL_HYBRID_MAP, G_PHYSICAL_MAP;
 
 	public String getJSsetMapType(GMap2 map)
 	{
 		return map.getJSinvoke("setMapType(" + name() + ")");
-	}	
+	}
+	
+	public String getJSaddMapType(GMap2 map)
+	{
+		return map.getJSinvoke("addMapType('" + name() + "'," + name() + ")");
+	}
 }

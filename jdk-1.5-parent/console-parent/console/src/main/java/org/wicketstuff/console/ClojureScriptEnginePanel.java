@@ -16,35 +16,30 @@
  */
 package org.wicketstuff.console;
 
-import org.wicketstuff.console.engine.ClojureEngine;
-import org.wicketstuff.console.engine.IScriptEngine;
+import org.apache.wicket.model.IModel;
+import org.wicketstuff.console.engine.Lang;
 
 /**
  * Main panel to execute Clojure scripts.
- * <p>
- * Usage: see {@link AbstractScriptEnginePanel}
  * 
  * @author cretzel
  */
-public class ClojureScriptEnginePanel extends AbstractScriptEnginePanel {
+public class ClojureScriptEnginePanel extends ScriptEnginePanel {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public ClojureScriptEnginePanel(String wicketId) {
-		super(wicketId);
-	}
+    public ClojureScriptEnginePanel(final String wicketId) {
+        this(wicketId, null);
+    }
 
-	protected void initInput() {
-		setInput("(import '(org.wicketstuff.console.engine ClojureEngine))\n"
-				+ "(let [bindings (ClojureEngine/getBindings)\n"
-				+ "      application (.get bindings \"application\")\n"
-				+ "      page (.get bindings \"page\")\n"
-				+ "      component (.get bindings \"component\")]\n"
-				+ "  (println component))");
-	}
+    public ClojureScriptEnginePanel(final String id, final IModel<String> title) {
+        super(id, Lang.CLOJURE, title);
+        init();
+    }
 
-	protected IScriptEngine newEngine() {
-		return new ClojureEngine();
-	}
+    protected void init() {
+        setInput("(println user/application)\n" + "(println user/page)\n"
+                + "(println user/component)\n");
+    }
 
 }

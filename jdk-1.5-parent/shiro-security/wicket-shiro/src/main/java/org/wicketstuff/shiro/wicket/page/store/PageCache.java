@@ -43,7 +43,7 @@ public class PageCache implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger log = LoggerFactory.getLogger(PageCache.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PageCache.class);
 
 	private final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
 	private final Lock read = rwl.readLock();
@@ -59,6 +59,98 @@ public class PageCache implements IClusterable
 	public PageCache(final int maxSize)
 	{
 		MAX_SIZE = maxSize;
+	}
+
+	public boolean containsPage(final int pageId, final int pageVersion)
+	{
+		read.lock();
+		try
+		{
+			// make PageKeys for below and above this version
+			// this id and version but -1 for ajax
+			final PageKey below = new PageKey(pageId, pageVersion, -1);
+			// this id and version +1, -1 for ajax
+			final PageKey above = new PageKey(pageId, pageVersion + 1, -1);
+
+			final SortedMap<PageKey, Integer> thisPageAndVersion = pageKeys.subMap(below, above);
+
+			return !thisPageAndVersion.isEmpty();
+		}
+		finally
+		{
+			read.unlock();
+		}
+	}
+
+	public SerializedPageWrapper getPage(final int id, final int versionNumber,
+		final int ajaxVersionNumber)
+	{
+		read.lock();
+		try
+		{
+			SerializedPageWrapper sPage = null;
+			// just find the exact page version
+			if (versionNumber != -1 && ajaxVersionNumber != -1)
+				sPage = pages.get(new PageKey(id, versionNumber, ajaxVersionNumber));
+			else if (versionNumber == -1)
+			{
+				final PageKey fromKey = new PageKey(id, -1, -1);
+				final PageKey toKey = new PageKey(id + 1, -1, -1);
+
+				final SortedMap<PageKey, Integer> subMap = pageKeys.subMap(fromKey, toKey);
+
+				int max = -1;
+				PageKey maxPageKey = null;
+
+				for (final Map.Entry<PageKey, Integer> entry : subMap.entrySet())
+					if (entry.getValue() > max)
+					{
+						max = entry.getValue();
+						maxPageKey = entry.getKey();
+					}
+				if (maxPageKey != null)
+					sPage = pages.get(maxPageKey);
+			}
+			else
+			{
+				// ajaxVersion is guaranteed to be -1 at this point -
+				// make a page key which will be straight after wanted
+				// PageKey, ie, version number is one after this one, ajax
+				// version number is -1, page id is the same
+				final PageKey toElement = new PageKey(id, versionNumber + 1, -1);
+				final SortedMap<PageKey, Integer> posiblePageKeys = pageKeys.headMap(toElement);
+				if (posiblePageKeys.size() > 0)
+					sPage = pages.get(posiblePageKeys.lastKey());
+			}
+			return sPage;
+		}
+		finally
+		{
+			read.unlock();
+		}
+	}
+
+	public void removePage(final int id)
+	{
+		write.lock();
+		try
+		{
+			final Iterator<Map.Entry<PageKey, SerializedPageWrapper>> iter = pages.entrySet()
+				.iterator();
+			while (iter.hasNext())
+			{
+				final PageKey pKey = iter.next().getKey();
+				if (id == pKey.getPageId())
+				{
+					iter.remove();
+					pageKeys.remove(pKey);
+				}
+			}
+		}
+		finally
+		{
+			write.unlock();
+		}
 	}
 
 	public void storePages(final Collection<SerializedPageWrapper> pagesToAdd)
@@ -99,120 +191,17 @@ public class PageCache implements IClusterable
 		}
 	}
 
-	public boolean containsPage(final int pageId, final int pageVersion)
-	{
-		read.lock();
-		try
-		{
-			// make PageKeys for below and above this version
-			// this id and version but -1 for ajax
-			final PageKey below = new PageKey(pageId, pageVersion, -1);
-			// this id and version +1, -1 for ajax
-			final PageKey above = new PageKey(pageId, pageVersion + 1, -1);
-
-			final SortedMap<PageKey, Integer> thisPageAndVersion = pageKeys.subMap(below, above);
-
-			return !thisPageAndVersion.isEmpty();
-		}
-		finally
-		{
-			read.unlock();
-		}
-	}
-
-	public SerializedPageWrapper getPage(final int id, final int versionNumber,
-		final int ajaxVersionNumber)
-	{
-		read.lock();
-		try
-		{
-			SerializedPageWrapper sPage = null;
-			// just find the exact page version
-			if (versionNumber != -1 && ajaxVersionNumber != -1)
-			{
-				sPage = pages.get(new PageKey(id, versionNumber, ajaxVersionNumber));
-			}
-			// we need to find last recently stored page window - that is page at the end of the
-			// list
-			else if (versionNumber == -1)
-			{
-				final PageKey fromKey = new PageKey(id, -1, -1);
-				final PageKey toKey = new PageKey(id + 1, -1, -1);
-
-				SortedMap<PageKey, Integer> subMap = pageKeys.subMap(fromKey, toKey);
-
-				int max = -1;
-				PageKey maxPageKey = null;
-
-				for (Map.Entry<PageKey, Integer> entry : subMap.entrySet())
-				{
-					if (entry.getValue() > max)
-					{
-						max = entry.getValue();
-						maxPageKey = entry.getKey();
-					}
-				}
-				if (maxPageKey != null)
-				{
-					sPage = pages.get(maxPageKey);
-				}
-			}
-			else
-			{
-				// ajaxVersion is guaranteed to be -1 at this point -
-				// make a page key which will be straight after wanted
-				// PageKey, ie, version number is one after this one, ajax
-				// version number is -1, page id is the same
-				final PageKey toElement = new PageKey(id, versionNumber + 1, -1);
-				final SortedMap<PageKey, Integer> posiblePageKeys = pageKeys.headMap(toElement);
-				if (posiblePageKeys.size() > 0)
-				{
-					sPage = pages.get(posiblePageKeys.lastKey());
-				}
-			}
-			return sPage;
-		}
-		finally
-		{
-			read.unlock();
-		}
-	}
-
-	public void removePage(final int id)
-	{
-		write.lock();
-		try
-		{
-			final Iterator<Map.Entry<PageKey, SerializedPageWrapper>> iter = pages.entrySet()
-				.iterator();
-			while (iter.hasNext())
-			{
-				final PageKey pKey = iter.next().getKey();
-				if (id == pKey.getPageId())
-				{
-					iter.remove();
-					pageKeys.remove(pKey);
-				}
-			}
-		}
-		finally
-		{
-			write.unlock();
-		}
-	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString()
 	{
 		final StringBuilder sb = new StringBuilder();
-		for (Map.Entry<PageKey, SerializedPageWrapper> entry : pages.entrySet())
-		{
+		for (final Map.Entry<PageKey, SerializedPageWrapper> entry : pages.entrySet())
 			sb.append("\t").append(entry.getKey().toString()).append("\n");
-		}
-		if (log.isTraceEnabled())
-		{
+		if (LOG.isTraceEnabled())
 			sb.append("\tPageKeys TreeSet: ").append(pageKeys.toString());
-		}
 		return sb.toString();
 	}
 

@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<wicket:head></wicket:head>
+
+<wicket:panel>
+
+<div class="console">
+	<h3 wicket:id="title">Wicket Console</h3>
+	<div class="input">
+		<form wicket:id="form"><textarea wicket:id="input" wrap="off" onkeydown="return doTab(event);"></textarea></form>
+	</div>
+	<div class="controls">
+		<table border="0" width="100%" cellspacing="0" cellpadding="0">
+			<tr>
+				<td>
+					<input wicket:id="submit" type="submit" value="Execute" accesskey="x"/>
+					<input wicket:id="clear" type="button" value="Clear" accesskey="c"/>
+				</td>
+				<td width="20">
+					<img wicket:id="indicator" class="indicator" style="display:none;"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="result">
+		<div class="returnValue"><input wicket:id="returnValue" type="text"></div>
+		<div class="output"><textarea wicket:id="output" wrap="off"></textarea></div>
+	</div>
+</div>
+
+</wicket:panel>

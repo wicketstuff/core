@@ -21,7 +21,6 @@ import static junit.framework.Assert.assertSame;
 import static junit.framework.Assert.assertTrue;
 
 import org.junit.Test;
-import org.wicketstuff.console.engine.DefaultScriptExecutionResult;
 
 
 public class DefaultScriptExecutionResultTest {

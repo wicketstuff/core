@@ -17,7 +17,6 @@
 package org.wicketstuff.minis.reflection;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.wicket.Component;
@@ -30,23 +29,23 @@ import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 
 /**
- * Behavior for adding reflections to an image. Uses reflection.js (v1.6),
- * licensed under a MIT license.
+ * Behavior for adding reflections to an image. Uses reflection.js (v1.6), licensed under a MIT
+ * license.
  * <p>
- * Add this behavior to your image to generate a reflection. You can change the
- * height and opacity of the reflection using the provided setters.
+ * Add this behavior to your image to generate a reflection. You can change the height and opacity
+ * of the reflection using the provided setters.
  * <p>
- * Ultimately the markup you attach this behavior to must be an image, but it
- * need not be a Wicket {@link Image} component, a markup container will
- * suffice, provided the tag is an img-tag.
+ * Ultimately the markup you attach this behavior to must be an image, but it need not be a Wicket
+ * {@link Image} component, a markup container will suffice, provided the tag is an img-tag.
  * <p>
- * You can also use this class to generate add and remove reflection scriptlets
- * for use in Ajax request targets or any other place you want. All you need to
- * do is ensure the reflection.js is added to the head of the document. You can
- * use the {@link #REFLECTION_JS} resource reference for that.
+ * You can also use this class to generate add and remove reflection scriptlets for use in Ajax
+ * request targets or any other place you want. All you need to do is ensure the reflection.js is
+ * added to the head of the document. You can use the {@link #REFLECTION_JS} resource reference for
+ * that.
  * <p>
  * The reflection.js library and more documentation can be found here <a
- * href="http://cow.neondragon.net/stuff/reflection/">http://cow.neondragon.net/stuff/reflection/</a>
+ * href="http://cow.neondragon.net/stuff/reflection/"
+ * >http://cow.neondragon.net/stuff/reflection/</a>
  * 
  * @author Martijn Dashorst
  */

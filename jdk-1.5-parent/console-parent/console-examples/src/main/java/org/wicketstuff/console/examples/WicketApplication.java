@@ -17,20 +17,24 @@
 package org.wicketstuff.console.examples;
 
 import org.apache.wicket.protocol.http.WebApplication;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.wicketstuff.console.examples.hibernate.Book;
 
 /**
- * Application object for your web application. If you want to run this application without deploying, run the Start class.
+ * Application object for your web application. If you want to run this
+ * application without deploying, run the Start class.
  * 
  * @see org.wicketstuff.console.examples.Start#main(String[])
  */
-public class WicketApplication extends WebApplication
-{    	
+public class WicketApplication extends WebApplication {
+	private SessionFactory sessionFactory;
+
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
 	@Override
-	public Class<ClojureEngineTestPage> getHomePage()
-	{
+	public Class<ClojureEngineTestPage> getHomePage() {
 		return ClojureEngineTestPage.class;
 	}
 
@@ -38,10 +42,25 @@ public class WicketApplication extends WebApplication
 	 * @see org.apache.wicket.Application#init()
 	 */
 	@Override
-	public void init()
-	{
+	public void init() {
 		super.init();
-
-		// add your configuration here
+		final Configuration cfg = new Configuration()
+				.addAnnotatedClass(Book.class)
+				.setProperty("hibernate.dialect",
+						"org.hibernate.dialect.HSQLDialect")
+				.setProperty("hibernate.connection.driver_class",
+						"org.hsqldb.jdbcDriver")
+				.setProperty("hibernate.connection.url",
+						"jdbc:hsqldb:mem:console")
+				.setProperty("hibernate.connection.username", "sa")
+				.setProperty("hibernate.connection.password", "")
+				.setProperty("hibernate.order_updates", "true")
+				.setProperty("hibernate.hbm2ddl.auto", "update");
+		sessionFactory = cfg.buildSessionFactory();
 	}
+
+	public SessionFactory getHibernateSessionFactory() {
+		return sessionFactory;
+	}
+
 }
