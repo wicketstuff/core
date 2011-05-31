@@ -44,6 +44,20 @@ public class AutoCompletingBehavior extends AJAXAutoCompleteBehavior {
 	private TextField<String>				textModel;
 	private final HiddenField<?>	selectedContextField;
 
+	
+	public interface IAutoCompletingResponseValidator {
+
+		/**
+		 * 
+		 * @param value
+		 * @param target
+		 * @return true if the value is valid. false and the error will be handled otherwise.
+		 */
+		boolean validate(String value, AjaxRequestTarget target);
+		
+		
+	};
+	
 	private class AutoCompletingDependencyProcessor extends
 			AbstractAutoCompleteDependencyProcessor {
 
@@ -54,6 +68,7 @@ public class AutoCompletingBehavior extends AJAXAutoCompleteBehavior {
 		private final AutoCompletingPanel<?>	autoCompletingPanel;
 
 		private final String					callbackName;
+		private final IAutoCompletingResponseValidator validator;
 
 		/**
 		 * @param names
@@ -62,19 +77,20 @@ public class AutoCompletingBehavior extends AJAXAutoCompleteBehavior {
 		 */
 		public AutoCompletingDependencyProcessor(String callbackName,
 				TextField<?> textField,
-				AutoCompletingPanel<?> autoCompletingPanel, Duration duration) {
+				AutoCompletingPanel<?> autoCompletingPanel, Duration duration, IAutoCompletingResponseValidator validator) {
 
 			super(new String[] { callbackName }, new Component[] { textField },
 					duration);
 			this.callbackName = callbackName;
 			this.autoCompletingPanel = autoCompletingPanel;
+			this.validator = validator;
 		}
 
 		
 		public void onAjaxUpdate(Request request, AjaxRequestTarget target) {
 
 			String value = request.getParameter(callbackName);
-
+			
 			textModel.setModelObject(value);
 
 			// enable since this is an ajax update
@@ -86,6 +102,19 @@ public class AutoCompletingBehavior extends AJAXAutoCompleteBehavior {
 			target.addComponent(autoCompletingPanel);
 
 		}
+
+
+		/* (non-Javadoc)
+		 * @see org.wicketstuff.datatable_autocomplete.panel.AutoCompleteDependencyProcessor#validate(org.apache.wicket.Request, org.apache.wicket.ajax.AjaxRequestTarget)
+		 */
+		public boolean validate(Request request, AjaxRequestTarget target) {
+			
+			String value = request.getParameter(callbackName);
+			
+			return validator.validate (value, target);
+		}
+		
+		
 
 	};
 
@@ -108,7 +137,7 @@ public class AutoCompletingBehavior extends AJAXAutoCompleteBehavior {
 	public AutoCompletingBehavior(HiddenField<?> selectedContextField,
 			TextField<String> textComponent,
 			AutoCompletingPanel<?> referenceAutoCompletingPanel,
-			long milisecondDurationBetweenRequests) {
+			long milisecondDurationBetweenRequests, IAutoCompletingResponseValidator validator) {
 
 		super("onkeyup");
 		this.selectedContextField = selectedContextField;
@@ -117,16 +146,17 @@ public class AutoCompletingBehavior extends AJAXAutoCompleteBehavior {
 
 		super.setDependencyProcessor(new AutoCompletingDependencyProcessor(
 				"value", textComponent, referenceAutoCompletingPanel, Duration
-						.milliseconds(milisecondDurationBetweenRequests)));
+						.milliseconds(milisecondDurationBetweenRequests), validator));
 
 	}
 
+	
 	public AutoCompletingBehavior(TextField<String> textComponent,
 			AutoCompletingPanel<?> referenceAutoCompletingPanel,
-			long milisecondDurationBetweenRequests) {
+			long milisecondDurationBetweenRequests, IAutoCompletingResponseValidator validator) {
 
 		this(null, textComponent, referenceAutoCompletingPanel,
-				milisecondDurationBetweenRequests);
+				milisecondDurationBetweenRequests, validator);
 
 	}
 

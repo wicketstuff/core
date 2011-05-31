@@ -45,7 +45,7 @@ public abstract class AbstractAutoCompleteDependencyProcessor implements
 	/**
 	 * 
 	 */
-	public AbstractAutoCompleteDependencyProcessor(String[] names, Component[] components) {
+	protected AbstractAutoCompleteDependencyProcessor(String[] names, Component[] components) {
 
 		super();
 		
