@@ -8,10 +8,10 @@
     <version>1.5-SNAPSHOT</version>
   </parent>
   
-  <artifactId>pageserializer-kryo</artifactId>
+  <artifactId>serializer-kryo</artifactId>
 
   <name>WicketStuff Kryo serializer</name>
-  <description>IPageSerializer based on http://code.google.com/p/kryo/</description>
+  <description>ISerializer based on http://code.google.com/p/kryo/</description>
 
   <properties>
     <kryo.version>1.04</kryo.version>
