@@ -4,7 +4,6 @@ import org.apache.wicket.Application;
 import org.apache.wicket.IInitializer;
 import org.apache.wicket.pageStore.memory.DataStoreEvictionStrategy;
 import org.apache.wicket.pageStore.memory.PageNumberEvictionStrategy;
-import org.apache.wicket.util.lang.WicketObjects;
 
 /**
  * A Wicket initializer that configures the application that way so it is possible to run it in
@@ -20,7 +19,7 @@ public class GaeInitializer implements IInitializer
 		application.getResourceSettings().setResourcePollFrequency(null);
 
 		// use plain JDK Object(Input|Output)Stream
-		WicketObjects.setObjectStreamFactory(new GaeObjectStreamFactory());
+		Application.get().getFrameworkSettings().setSerializer(new GaeObjectSerializer());
 
 		// save older version of pages in the HttpSession
 		final DataStoreEvictionStrategy evictionStrategy;
