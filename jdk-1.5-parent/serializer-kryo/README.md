@@ -23,6 +23,8 @@ it will be used to serialize any page for the IPageStore needs.
 
 It is based on [Kryo](http://code.google.com/p/kryo/) and [kryo-serializers](https://github.com/magro/kryo-serializers). 
 
-Note
+Notes
 ----
-serializer-kryo is not heavily tested so it may have need for more custom serializers for some of the Wicket classes. Let us know if you face a problem by creating an issue. Pull requests are more than welcome!
+* serializer-kryo is not heavily tested so it may have need for more custom serializers for some of the Wicket classes. Let us know if you face a problem by creating an issue. Pull requests are more than welcome!
+
+* serializer-kryo uses SUN/Oracle propriate APIs (sun.reflect.ReflectionFactory) and thus cannot be used on different JDKs.
