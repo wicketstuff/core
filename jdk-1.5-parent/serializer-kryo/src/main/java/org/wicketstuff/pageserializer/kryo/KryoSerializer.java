@@ -16,6 +16,8 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.serialize.ISerializer;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.Bytes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
@@ -44,6 +46,8 @@ import de.javakaffee.kryoserializers.cglib.CGLibProxySerializer;
  */
 public class KryoSerializer implements ISerializer {
 
+    private static final Logger LOG = LoggerFactory.getLogger(KryoSerializer.class);
+    
     /**
      * The size of the {@link ByteBuffer} that is used to hold the serialized page 
      */
@@ -60,6 +64,7 @@ public class KryoSerializer implements ISerializer {
     public KryoSerializer(final Bytes bufferSize) {
      
         this.bufferSize = Args.notNull(bufferSize, "bufferSize");
+        LOG.debug("Buffer size: ", bufferSize);
         
         kryo = new KryoReflectionFactorySupport();
         
@@ -67,6 +72,7 @@ public class KryoSerializer implements ISerializer {
     }
     
     public byte[] serialize(final Object object) {
+        LOG.debug("Going to serialize: ", object);
         ByteBuffer buffer = getBuffer();
         kryo.writeClassAndObject(buffer, object);
         return buffer.array();
@@ -75,6 +81,7 @@ public class KryoSerializer implements ISerializer {
     public Object deserialize(byte[] data) {
         ByteBuffer buffer = ByteBuffer.wrap(data);
         Object object = kryo.readClassAndObject(buffer);
+        LOG.debug("Deserialized: ", object);
         return object;
     }
 
