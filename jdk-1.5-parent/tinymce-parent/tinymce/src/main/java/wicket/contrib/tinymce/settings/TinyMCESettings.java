@@ -18,6 +18,7 @@
  */
 package wicket.contrib.tinymce.settings;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +39,8 @@ import org.apache.wicket.Component;
 import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.Session;
+import org.apache.wicket.markup.html.IHeaderContributor;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -766,6 +769,19 @@ public class TinyMCESettings implements Serializable {
 		}
 	}
 
+	/**
+	 * <p>
+	 * TinyMCE javascript resource.
+	 * </p>
+	 * <p>
+	 * <strong>Note</strong>: The TinyMCE source cannot be lazily loaded via ajax.  Therefore,
+	 * adding this in a {@link IHeaderContributor#renderHead(IHeaderResponse)} must be done
+	 * in a component that is not rendered via Ajax.  If you wish to load this via Ajax, you
+	 * can use the very hacky workaround {@link #lazyLoadTinyMCEResource(IHeaderResponse)}.
+	 * </p>
+	 * 
+	 * @return
+	 */
 	public static ResourceReference javaScriptReference() {
 		Application app = Application.get();
 		if (Application.DEVELOPMENT.equals(app.getConfigurationType()))
@@ -926,5 +942,45 @@ public class TinyMCESettings implements Serializable {
 		protected EntityEncoding(String name) {
 			super(name);
 		}		
+	}
+	
+	/**
+	 * <p>
+	 * Normally, TinyMCE cannot be natively loaded lazily; you must have the 'tiny_mce.js' script rendered
+	 * directly to your page instead of through an Ajax loaded component.  This method provides a workaround
+	 * similar to the one described on:
+	 * </p>
+	 * <pre>
+	 *   <a href="http://tinymce.moxiecode.com/forum/viewtopic.php?pid=66531#p66531">http://tinymce.moxiecode.com/forum/viewtopic.php?pid=66531#p66531</a>
+	 * </pre>
+	 * <p>
+	 * Presumably, before you encountered this method, you had:
+	 * </p>
+	 * <pre>
+	 *    public void renderHead(IHeaderResponse response) {
+	 *        response.renderJavascriptReference(TinyMCESettings.javaScriptReference());
+	 *    }
+	 * </pre>
+	 * <p>
+	 * in some component that resided on the page <strong>before</strong> the panel that loaded the
+	 * textarea (with TinyMCEBehavior) via ajax.  Now, that panel can simply call:
+	 * </p>
+	 * <pre>
+	 *    public void renderHead(IHeaderResponse response) {
+	 *        TinyMCESettings.lazyLoadTinyMCEResource(response);
+	 *    }
+	 * </pre>
+	 * 
+	 * TODO: This has not been extensively tested.
+	 * 
+	 * @param response
+	 */
+	public static void lazyLoadTinyMCEResource(IHeaderResponse response) {
+		
+		String url = RequestCycle.get().urlFor(TinyMCESettings.javaScriptReference()).toString();
+		String base = url.substring(0, url.lastIndexOf(File.separatorChar));
+		response.renderJavascript("window.tinyMCEPreInit = {base : '" + base + "', suffix : '', query : ''};", "tinyMceHackPreload");
+		response.renderJavascriptReference(TinyMCESettings.javaScriptReference());
+		response.renderJavascript("window.tinymce.dom.Event.domLoaded = true;", "tinyMceHackPostload");
 	}
 }

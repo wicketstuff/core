@@ -54,8 +54,10 @@ public class TinyMceBehavior extends AbstractBehavior {
             throw new IllegalStateException("TinyMceBehavior is not bound to a component");
 
         // TinyMce javascript:
-        response.renderJavascriptReference(TinyMCESettings.javaScriptReference());
-
+        if (mayRenderJavascriptDirect())
+        	response.renderJavascriptReference(TinyMCESettings.javaScriptReference());
+        else
+        	TinyMCESettings.lazyLoadTinyMCEResource(response);
         String renderOnDomReady = getRenderOnDomReadyJavascript(response);
         if (renderOnDomReady != null)
             response.renderOnDomReadyJavascript(renderOnDomReady);
