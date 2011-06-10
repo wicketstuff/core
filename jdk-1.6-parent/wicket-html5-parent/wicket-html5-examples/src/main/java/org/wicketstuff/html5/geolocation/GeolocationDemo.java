@@ -94,14 +94,21 @@ public class GeolocationDemo extends BasePage
 			final URL url = new URL(urlStr);
 			stream = url.openStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-			String line = "";
-			while (line != null)
+			try
 			{
-				line = reader.readLine();
-				if (line != null)
+				String line = "";
+				while (line != null)
 				{
-					sb.append(line);
+					line = reader.readLine();
+					if (line != null)
+					{
+						sb.append(line);
+					}
 				}
+			}
+			finally
+			{
+				reader.close();
 			}
 
 		}

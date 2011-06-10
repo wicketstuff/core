@@ -28,7 +28,7 @@ public class DetachableContactModel extends LoadableDetachableModel<Contact>
 {
 	private static final long serialVersionUID = 1L;
 
-	private long id;
+	private final long id;
 
 	protected ContactsDatabase getContactsDB()
 	{
@@ -61,7 +61,7 @@ public class DetachableContactModel extends LoadableDetachableModel<Contact>
 	@Override
 	public int hashCode()
 	{
-		return new Long(id).hashCode();
+		return Long.valueOf(id).hashCode();
 	}
 
 	/**

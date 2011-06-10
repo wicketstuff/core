@@ -34,11 +34,11 @@ public class ContactsDatabase implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	private Map<Long, Contact> map = new ConcurrentHashMap<Long, Contact>();
-	private List<Contact> fnameIdx = new Vector<Contact>();
-	private List<Contact> lnameIdx = new Vector<Contact>();
-	private List<Contact> fnameDescIdx = new Vector<Contact>();
-	private List<Contact> lnameDescIdx = new Vector<Contact>();
+	private final Map<Long, Contact> map = new ConcurrentHashMap<Long, Contact>();
+	private final List<Contact> fnameIdx = new Vector<Contact>();
+	private final List<Contact> lnameIdx = new Vector<Contact>();
+	private final List<Contact> fnameDescIdx = new Vector<Contact>();
+	private final List<Contact> lnameDescIdx = new Vector<Contact>();
 
 	/**
 	 * Constructor
@@ -63,7 +63,7 @@ public class ContactsDatabase implements Serializable
 	 */
 	public Contact get(long id)
 	{
-		Contact c = map.get(new Long(id));
+		Contact c = map.get(Long.valueOf(id));
 		if (c == null)
 		{
 			throw new RuntimeException("contact with id [" + id + "] not found in the database");
@@ -73,7 +73,7 @@ public class ContactsDatabase implements Serializable
 
 	protected void add(final Contact contact)
 	{
-		map.put(new Long(contact.getId()), contact);
+		map.put(Long.valueOf(contact.getId()), contact);
 		fnameIdx.add(contact);
 		lnameIdx.add(contact);
 		fnameDescIdx.add(contact);
@@ -152,7 +152,7 @@ public class ContactsDatabase implements Serializable
 	 */
 	public void delete(final Contact contact)
 	{
-		map.remove(new Long(contact.getId()));
+		map.remove(Long.valueOf(contact.getId()));
 
 		fnameIdx.remove(contact);
 		lnameIdx.remove(contact);

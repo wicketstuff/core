@@ -56,34 +56,57 @@ public class Contact implements IClusterable
 			" homePhone=" + homePhone + " cellPhone=" + cellPhone + "]";
 	}
 
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (cellPhone == null ? 0 : cellPhone.hashCode());
+		result = prime * result + (firstName == null ? 0 : firstName.hashCode());
+		result = prime * result + (homePhone == null ? 0 : homePhone.hashCode());
+		result = prime * result + (lastName == null ? 0 : lastName.hashCode());
+		return result;
+	}
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj)
 	{
-		if (obj == this)
-		{
+		if (this == obj)
 			return true;
-		}
 		if (obj == null)
-		{
 			return false;
-		}
-		if (obj instanceof Contact)
-		{
-			Contact other = (Contact)obj;
-			return other.getFirstName().equals(getFirstName()) &&
-				other.getLastName().equals(getLastName()) &&
-				other.getHomePhone().equals(getHomePhone()) &&
-				other.getCellPhone().equals(getCellPhone());
-
-		}
-		else
-		{
+		if (getClass() != obj.getClass())
 			return false;
+		Contact other = (Contact)obj;
+		if (cellPhone == null)
+		{
+			if (other.cellPhone != null)
+				return false;
 		}
+		else if (!cellPhone.equals(other.cellPhone))
+			return false;
+		if (firstName == null)
+		{
+			if (other.firstName != null)
+				return false;
+		}
+		else if (!firstName.equals(other.firstName))
+			return false;
+		if (homePhone == null)
+		{
+			if (other.homePhone != null)
+				return false;
+		}
+		else if (!homePhone.equals(other.homePhone))
+			return false;
+		if (lastName == null)
+		{
+			if (other.lastName != null)
+				return false;
+		}
+		else if (!lastName.equals(other.lastName))
+			return false;
+		return true;
 	}
 
 	/**
