@@ -27,7 +27,6 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.page.IManageablePage;
 import org.apache.wicket.pageStore.IPageStore;
 import org.apache.wicket.util.lang.Args;
-import org.apache.wicket.util.lang.WicketObjects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -110,7 +109,13 @@ public class SessionPageStore implements IPageStore
 
 	protected IManageablePage deserializePage(final byte data[])
 	{
-		return (IManageablePage)WicketObjects.byteArrayToObject(data);
+		// TODO: test this, Serializer replacing old
+		// WicketObjects.byteArrayToObject(data);
+		// call
+		return (IManageablePage)Application.get()
+			.getFrameworkSettings()
+			.getSerializer()
+			.deserialize(data);
 	}
 
 	/**
@@ -228,7 +233,13 @@ public class SessionPageStore implements IPageStore
 		Args.notNull(sessionId, "sessionId");
 		Args.notNull(page, "page");
 
-		final byte data[] = WicketObjects.objectToByteArray(page, applicationName);
+		// TODO: test this, Serializer replacing old
+		// WicketObjects.objectToByteArray(page, applicationName);
+		// call
+		final byte data[] = Application.get()
+			.getFrameworkSettings()
+			.getSerializer()
+			.serialize(page);
 		return data;
 	}
 
