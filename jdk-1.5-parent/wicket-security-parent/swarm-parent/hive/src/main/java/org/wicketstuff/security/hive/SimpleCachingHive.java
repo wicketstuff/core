@@ -24,11 +24,10 @@ import org.wicketstuff.security.hive.authentication.Subject;
 import org.wicketstuff.security.hive.authorization.Permission;
 
 /**
- * A very simple caching mechanism on top of {@link BasicHive}. If you want more control
- * over your cache you could for example use EHCache and extend BasicHive yourself. This
- * cache is cleared when a subject logs off but no guarantees are given that the cache
- * will not be cleared prematurely or how long it takes after a user logs off to clear the
- * cached results.
+ * A very simple caching mechanism on top of {@link BasicHive}. If you want more control over your
+ * cache you could for example use EHCache and extend BasicHive yourself. This cache is cleared when
+ * a subject logs off but no guarantees are given that the cache will not be cleared prematurely or
+ * how long it takes after a user logs off to clear the cached results.
  * 
  * @author marrink
  */

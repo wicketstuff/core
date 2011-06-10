@@ -56,7 +56,7 @@ public class MockHomePage extends SecureWebPage
 	 */
 	public boolean logoff(Object context)
 	{
-		return ((WaspSession) Session.get()).logoff(context);
+		return ((WaspSession)Session.get()).logoff(context);
 	}
 
 }

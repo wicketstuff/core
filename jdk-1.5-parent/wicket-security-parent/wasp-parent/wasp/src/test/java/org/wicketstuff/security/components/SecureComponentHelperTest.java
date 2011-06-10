@@ -16,7 +16,7 @@
  */
 package org.wicketstuff.security.components;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -60,25 +60,25 @@ public class SecureComponentHelperTest
 		String path = SecureComponentHelper.containerAlias(page);
 		assertEquals(TestPage.class.getName(), path);
 		// Fomcomponents are markupcontainers too
-		path = SecureComponentHelper.containerAlias((MarkupContainer) page.get("txt1"));
-		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ SecureTextField.class.getName(), path);
-		path = SecureComponentHelper.containerAlias((MarkupContainer) page.get("lvl2"));
-		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ TestPanel.class.getName(), path);
-		path = SecureComponentHelper.containerAlias((MarkupContainer) page.get("lvl2:txt2"));
-		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ SecureTextField.class.getName(), path);
-		path = SecureComponentHelper.containerAlias((MarkupContainer) page.get("lvl2:lvl3"));
-		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ WebMarkupContainer.class.getName(), path);
-		path = SecureComponentHelper.containerAlias((MarkupContainer) page.get("lvl2:lvl3:txt3"));
-		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ WebMarkupContainer.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ SecureTextField.class.getName(), path);
+		path = SecureComponentHelper.containerAlias((MarkupContainer)page.get("txt1"));
+		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			SecureTextField.class.getName(), path);
+		path = SecureComponentHelper.containerAlias((MarkupContainer)page.get("lvl2"));
+		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			TestPanel.class.getName(), path);
+		path = SecureComponentHelper.containerAlias((MarkupContainer)page.get("lvl2:txt2"));
+		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			SecureTextField.class.getName(), path);
+		path = SecureComponentHelper.containerAlias((MarkupContainer)page.get("lvl2:lvl3"));
+		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			WebMarkupContainer.class.getName(), path);
+		path = SecureComponentHelper.containerAlias((MarkupContainer)page.get("lvl2:lvl3:txt3"));
+		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			WebMarkupContainer.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			SecureTextField.class.getName(), path);
 	}
 
 	/**
@@ -93,49 +93,49 @@ public class SecureComponentHelperTest
 		assertEquals(TestPage.class.getName(), alias[0]);
 		alias = SecureComponentHelper.containerAliasses(page.get("txt1"));
 		assertEquals(3, alias.length);
-		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ SecureTextField.class.getName(), alias[0]);
+		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			SecureTextField.class.getName(), alias[0]);
 		assertEquals(TestPage.class.getName(), alias[1]);
 		assertEquals(SecureTextField.class.getName(), alias[2]);
 		alias = SecureComponentHelper.containerAliasses(page.get("lvl2"));
 		assertEquals(3, alias.length);
-		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ TestPanel.class.getName(), alias[0]);
+		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			TestPanel.class.getName(), alias[0]);
 		assertEquals(TestPage.class.getName(), alias[1]);
 		assertEquals(TestPanel.class.getName(), alias[2]);
 		alias = SecureComponentHelper.containerAliasses(page.get("lvl2:txt2"));
 		assertEquals(5, alias.length);
-		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ SecureTextField.class.getName(), alias[0]);
+		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			SecureTextField.class.getName(), alias[0]);
 		assertEquals(TestPage.class.getName(), alias[1]);
-		assertEquals(TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ SecureTextField.class.getName(), alias[2]);
+		assertEquals(TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			SecureTextField.class.getName(), alias[2]);
 		assertEquals(TestPanel.class.getName(), alias[3]);
 		assertEquals(SecureTextField.class.getName(), alias[4]);
 		alias = SecureComponentHelper.containerAliasses(page.get("lvl2:lvl3"));
 		assertEquals(5, alias.length);
-		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ WebMarkupContainer.class.getName(), alias[0]);
+		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			WebMarkupContainer.class.getName(), alias[0]);
 		assertEquals(TestPage.class.getName(), alias[1]);
-		assertEquals(TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ WebMarkupContainer.class.getName(), alias[2]);
+		assertEquals(TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			WebMarkupContainer.class.getName(), alias[2]);
 		assertEquals(TestPanel.class.getName(), alias[3]);
 		assertEquals(WebMarkupContainer.class.getName(), alias[4]);
 		alias = SecureComponentHelper.containerAliasses(page.get("lvl2:lvl3:txt3"));
 		assertEquals(7, alias.length);
-		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ WebMarkupContainer.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ SecureTextField.class.getName(), alias[0]);
+		assertEquals(TestPage.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			WebMarkupContainer.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			SecureTextField.class.getName(), alias[0]);
 		assertEquals(TestPage.class.getName(), alias[1]);
-		assertEquals(TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ WebMarkupContainer.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ SecureTextField.class.getName(), alias[2]);
+		assertEquals(TestPanel.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			WebMarkupContainer.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			SecureTextField.class.getName(), alias[2]);
 		assertEquals(TestPanel.class.getName(), alias[3]);
-		assertEquals(WebMarkupContainer.class.getName() + SecureComponentHelper.PATH_SEPARATOR
-			+ SecureTextField.class.getName(), alias[4]);
+		assertEquals(WebMarkupContainer.class.getName() + SecureComponentHelper.PATH_SEPARATOR +
+			SecureTextField.class.getName(), alias[4]);
 		assertEquals(WebMarkupContainer.class.getName(), alias[5]);
 		assertEquals(SecureTextField.class.getName(), alias[6]);
 		// TestPanel:WebMarkupContainer is also a valid alias

@@ -22,12 +22,12 @@ import java.util.Set;
 import org.wicketstuff.security.hive.authorization.Principal;
 
 /**
- * Subject represents (part of) an authenticated entity, such as an individual, a
- * corporation, or a login id. It can be decorated with certain rights ({@link Principal}
- * s). Most implementations will provide some means to add (and sometimes remove)
- * principals, however all must honor the readonly flag. {@link #setReadOnly()} is
- * automatically triggered after a login. Subjects are created by {@link LoginContext}s as
- * placeholder for the permissions of a user for the duration of the session.
+ * Subject represents (part of) an authenticated entity, such as an individual, a corporation, or a
+ * login id. It can be decorated with certain rights ({@link Principal} s). Most implementations
+ * will provide some means to add (and sometimes remove) principals, however all must honor the
+ * readonly flag. {@link #setReadOnly()} is automatically triggered after a login. Subjects are
+ * created by {@link LoginContext}s as placeholder for the permissions of a user for the duration of
+ * the session.
  * 
  * @author marrink
  */
@@ -48,9 +48,8 @@ public interface Subject extends Serializable
 	public boolean isReadOnly();
 
 	/**
-	 * Mark this subject as readonly. preventing principals to be added or removed. Note
-	 * this method is always called on a subject after it has been handed over to the
-	 * security layer.
+	 * Mark this subject as readonly. preventing principals to be added or removed. Note this method
+	 * is always called on a subject after it has been handed over to the security layer.
 	 */
 	public void setReadOnly();
 

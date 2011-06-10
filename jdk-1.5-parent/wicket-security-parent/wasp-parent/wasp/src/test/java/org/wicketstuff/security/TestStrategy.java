@@ -57,7 +57,7 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	/**
 	 * @param secureClass
 	 */
-	public TestStrategy(Class< ? extends ISecureComponent> secureClass)
+	public TestStrategy(Class<? extends ISecureComponent> secureClass)
 	{
 		super(secureClass);
 	}
@@ -77,7 +77,7 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	 * @see org.wicketstuff.security.strategies.WaspAuthorizationStrategy#isClassAuthenticated(java.lang.Class)
 	 */
 	@Override
-	public boolean isClassAuthenticated(Class< ? > clazz)
+	public boolean isClassAuthenticated(Class<?> clazz)
 	{
 		return loggedin;
 	}
@@ -88,7 +88,7 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	 *      org.wicketstuff.security.actions.WaspAction)
 	 */
 	@Override
-	public boolean isClassAuthorized(Class< ? > clazz, WaspAction action)
+	public boolean isClassAuthorized(Class<?> clazz, WaspAction action)
 	{
 		return isAuthorized(SecureComponentHelper.alias(clazz), action);
 	}
@@ -135,7 +135,7 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	 *      org.apache.wicket.Component)
 	 */
 	@Override
-	public boolean isModelAuthenticated(IModel< ? > model, Component component)
+	public boolean isModelAuthenticated(IModel<?> model, Component component)
 	{
 		return loggedin;
 	}
@@ -146,10 +146,10 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	 *      org.apache.wicket.Component, org.wicketstuff.security.actions.WaspAction)
 	 */
 	@Override
-	public boolean isModelAuthorized(ISecureModel< ? > model, Component component, WaspAction action)
+	public boolean isModelAuthorized(ISecureModel<?> model, Component component, WaspAction action)
 	{
-		return isAuthorized("model:"
-			+ (component instanceof Page ? component.getClass().getName() : component.getId()),
+		return isAuthorized("model:" +
+			(component instanceof Page ? component.getClass().getName() : component.getId()),
 			action);
 	}
 
@@ -161,10 +161,10 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	@SuppressWarnings("unchecked")
 	public void login(Object context) throws LoginException
 	{
-		if (context instanceof Map< ? , ? >)
+		if (context instanceof Map<?, ?>)
 		{
 			loggedin = true;
-			authorized.putAll((Map<String, WaspAction>) context);
+			authorized.putAll((Map<String, WaspAction>)context);
 		}
 		else
 			throw new LoginException(
@@ -179,9 +179,9 @@ public class TestStrategy extends ClassAuthorizationStrategy
 	@SuppressWarnings("unchecked")
 	public boolean logoff(Object context)
 	{
-		if (context instanceof Map< ? , ? >)
+		if (context instanceof Map<?, ?>)
 		{
-			Map<String, WaspAction> map = (Map<String, WaspAction>) context;
+			Map<String, WaspAction> map = (Map<String, WaspAction>)context;
 			Iterator<String> it = map.keySet().iterator();
 			while (it.hasNext())
 				authorized.remove(it.next());

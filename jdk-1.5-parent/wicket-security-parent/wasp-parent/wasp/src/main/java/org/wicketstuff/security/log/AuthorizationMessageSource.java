@@ -27,8 +27,8 @@ import org.apache.wicket.util.string.interpolator.MapVariableInterpolator;
 import org.apache.wicket.validation.IErrorMessageSource;
 
 /**
- * Default {@link IErrorMessageSource} to store variables which van be used in the message
- * to provide more detail.
+ * Default {@link IErrorMessageSource} to store variables which van be used in the message to
+ * provide more detail.
  * 
  * @author marrink
  */
@@ -55,8 +55,7 @@ public class AuthorizationMessageSource implements IAuthorizationMessageSource
 	}
 
 	/**
-	 * Constructs a new AuthorizationErrorMessageSource with the specified initial
-	 * variables
+	 * Constructs a new AuthorizationErrorMessageSource with the specified initial variables
 	 * 
 	 * @param vars
 	 *            initial variables
@@ -94,10 +93,11 @@ public class AuthorizationMessageSource implements IAuthorizationMessageSource
 	 *      java.util.Map)
 	 */
 	public final String substitute(String string, Map<String, Object> vars)
-			throws IllegalStateException
+		throws IllegalStateException
 	{
 		return new MapVariableInterpolator(string, mergeVariables(vars), Application.get()
-			.getResourceSettings().getThrowExceptionOnMissingResource()).toString();
+			.getResourceSettings()
+			.getThrowExceptionOnMissingResource()).toString();
 	}
 
 	/**
@@ -119,13 +119,12 @@ public class AuthorizationMessageSource implements IAuthorizationMessageSource
 	}
 
 	/**
-	 * Merges this variables with a new set of variables in a new {@link Map}. The extra
-	 * variables overwrite the pre-existing variables.
+	 * Merges this variables with a new set of variables in a new {@link Map}. The extra variables
+	 * overwrite the pre-existing variables.
 	 * 
 	 * @param map
 	 *            extra variables
-	 * @return new map containing both the internal variables and the extra variables from
-	 *         the map
+	 * @return new map containing both the internal variables and the extra variables from the map
 	 */
 	protected final Map<String, Object> mergeVariables(Map<String, Object> map)
 	{

@@ -53,7 +53,7 @@ public class PageD extends SecureTestPage
 		 */
 		private WaspAuthorizationStrategy getStrategy()
 		{
-			return ((WaspAuthorizationStrategy) getSecureSession().getAuthorizationStrategy());
+			return ((WaspAuthorizationStrategy)getSecureSession().getAuthorizationStrategy());
 		}
 
 		/**

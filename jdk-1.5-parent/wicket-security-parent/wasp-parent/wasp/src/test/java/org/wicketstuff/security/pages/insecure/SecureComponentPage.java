@@ -37,9 +37,8 @@ public class SecureComponentPage extends BasePage
 {
 
 	/**
-	 * Simple container. This is not an anonymous inner class of the
-	 * {@link SecureContainerLink} because that would make it an {@link ISecureComponent}
-	 * and we do not want that for this test.
+	 * Simple container. This is not an anonymous inner class of the {@link SecureContainerLink}
+	 * because that would make it an {@link ISecureComponent} and we do not want that for this test.
 	 * 
 	 * @author marrink
 	 */
@@ -93,7 +92,7 @@ public class SecureComponentPage extends BasePage
 
 			@Override
 			protected MarkupContainer getReplacementFor(Component current, String id,
-					Class< ? extends MarkupContainer> replacementClass)
+				Class<? extends MarkupContainer> replacementClass)
 			{
 				setVisible(false);
 				return new MyReplacementContainer(id);

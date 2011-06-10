@@ -19,8 +19,7 @@ package org.wicketstuff.security.hive.authentication;
 import org.wicketstuff.security.hive.authorization.Principal;
 
 /**
- * LoginContext which returns a subject containing the principal passed on to the
- * constructor.
+ * LoginContext which returns a subject containing the principal passed on to the constructor.
  * 
  * @author marrink
  */

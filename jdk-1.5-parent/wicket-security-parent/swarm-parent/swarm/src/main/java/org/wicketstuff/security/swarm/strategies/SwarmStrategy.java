@@ -35,8 +35,8 @@ import org.wicketstuff.security.strategies.ClassAuthorizationStrategy;
 import org.wicketstuff.security.strategies.SecurityException;
 
 /**
- * Implementation of a {@link ClassAuthorizationStrategy}. It allows for both simple
- * logins as well as multi level logins.
+ * Implementation of a {@link ClassAuthorizationStrategy}. It allows for both simple logins as well
+ * as multi level logins.
  * 
  * @author marrink
  */
@@ -72,7 +72,7 @@ public class SwarmStrategy extends AbstractSwarmStrategy
 	 * @param hiveQueen
 	 *            A key to retrieve the {@link Hive}
 	 */
-	public SwarmStrategy(Class< ? extends ISecureComponent> secureClass, Object hiveQueen)
+	public SwarmStrategy(Class<? extends ISecureComponent> secureClass, Object hiveQueen)
 	{
 		super(secureClass);
 		this.hiveQueen = hiveQueen;
@@ -118,12 +118,12 @@ public class SwarmStrategy extends AbstractSwarmStrategy
 	}
 
 	/**
-	 * Logs (if logging is enabled) which permission was denied for a subject. This method
-	 * does not log directly but prepares an {@link IAuthorizationMessageSource} for later
-	 * retrieval. The following variables are stored: "permission","actions", "subject"
-	 * and "principals" where principals is a collection of principals that contain the
-	 * permission and actions is a {@link String} representing all the {@link WaspAction}s
-	 * required. Note that the subject variable might be null.
+	 * Logs (if logging is enabled) which permission was denied for a subject. This method does not
+	 * log directly but prepares an {@link IAuthorizationMessageSource} for later retrieval. The
+	 * following variables are stored: "permission","actions", "subject" and "principals" where
+	 * principals is a collection of principals that contain the permission and actions is a
+	 * {@link String} representing all the {@link WaspAction}s required. Note that the subject
+	 * variable might be null.
 	 * 
 	 * @param permission
 	 *            permission that was denied.
@@ -159,15 +159,15 @@ public class SwarmStrategy extends AbstractSwarmStrategy
 	{
 		if (context instanceof LoginContext)
 		{
-			loginContainer.login((LoginContext) context);
+			loginContainer.login((LoginContext)context);
 		}
 		else
 			throw new SecurityException("Unable to process login with context: " + context);
 	}
 
 	/**
-	 * Loggs a user off. Note that the context must be an instance of {@link LoginContext}
-	 * and must be the same (or equal) to the logincontext used to log in.
+	 * Loggs a user off. Note that the context must be an instance of {@link LoginContext} and must
+	 * be the same (or equal) to the logincontext used to log in.
 	 * 
 	 * @see org.wicketstuff.security.strategies.WaspAuthorizationStrategy#logoff(Object)
 	 */
@@ -176,7 +176,7 @@ public class SwarmStrategy extends AbstractSwarmStrategy
 	{
 		if (context instanceof LoginContext)
 		{
-			return loginContainer.logoff((LoginContext) context);
+			return loginContainer.logoff((LoginContext)context);
 		}
 		throw new SecurityException("Unable to process logoff with context: " + context);
 	}

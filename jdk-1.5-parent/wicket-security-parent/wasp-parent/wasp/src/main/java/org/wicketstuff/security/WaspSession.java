@@ -24,8 +24,8 @@ import org.wicketstuff.security.authentication.LoginException;
 import org.wicketstuff.security.strategies.WaspAuthorizationStrategy;
 
 /**
- * Session for keeping the session scoped IAuthorizationStrategy and for providing easy
- * access to login, logoff and isAuthenticated.
+ * Session for keeping the session scoped IAuthorizationStrategy and for providing easy access to
+ * login, logoff and isAuthenticated.
  * 
  * @author marrink
  */
@@ -71,9 +71,9 @@ public class WaspSession extends WebSession
 	}
 
 	/**
-	 * Attempts to log off the current user. Even though this call Already handles dirty
-	 * flags. The {@link WaspAuthorizationStrategy} should also do the same as it is not
-	 * guaranteed that every logoff comes from the session.
+	 * Attempts to log off the current user. Even though this call Already handles dirty flags. The
+	 * {@link WaspAuthorizationStrategy} should also do the same as it is not guaranteed that every
+	 * logoff comes from the session.
 	 * 
 	 * @param context
 	 *            the context to use for logging off
@@ -105,8 +105,8 @@ public class WaspSession extends WebSession
 	}
 
 	/**
-	 * Cleans up the WaspAuthorizationStrategy before killing this session. If you
-	 * override this method you must call super.invalidateNow().
+	 * Cleans up the WaspAuthorizationStrategy before killing this session. If you override this
+	 * method you must call super.invalidateNow().
 	 * 
 	 * @see WebSession#invalidateNow()
 	 */

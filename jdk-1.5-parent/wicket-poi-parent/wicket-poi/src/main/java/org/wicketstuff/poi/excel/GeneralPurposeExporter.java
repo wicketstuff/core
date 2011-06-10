@@ -26,8 +26,8 @@ import org.apache.wicket.markup.parser.XmlPullParser;
 import org.apache.wicket.markup.parser.XmlTag;
 
 /**
- * Fist try to get the most nested component in the table data tag, if not
- * possible set the most nested value in markup as a {@link String}.
+ * Fist try to get the most nested component in the table data tag, if not possible set the most
+ * nested value in markup as a {@link String}.
  * 
  * @author Pedro Santos
  */
@@ -35,7 +35,7 @@ public class GeneralPurposeExporter implements CellExporter
 {
 
 	public void exportCell(XmlTag tag, XmlPullParser parser, Cell cell, Component gridComponent)
-			throws ParseException
+		throws ParseException
 	{
 		XmlTag firstMostNestedTag = tag;
 		// find the most inner tag value
@@ -50,12 +50,11 @@ public class GeneralPurposeExporter implements CellExporter
 				break;
 			}
 		}
-		CharSequence possibleComponentReference = firstMostNestedTag
-				.getAttribute(TableParser.OutputPathBehavior.PATH_ATTRIBUTE);
+		CharSequence possibleComponentReference = firstMostNestedTag.getAttribute(TableParser.OutputPathBehavior.PATH_ATTRIBUTE);
 		if (possibleComponentReference != null)
 		{
 			Component firstMostNestedComponent = gridComponent.getPage().get(
-					possibleComponentReference.toString());
+				possibleComponentReference.toString());
 			Object modelValue = firstMostNestedComponent.getDefaultModelObject();
 			if (modelValue != null)
 			{
@@ -93,8 +92,8 @@ public class GeneralPurposeExporter implements CellExporter
 		{
 			// simply set the first most nested tag value
 			String value = parser.getInput(
-					firstMostNestedTag.getPos() + firstMostNestedTag.getLength(), tag.getPos())
-					.toString();
+				firstMostNestedTag.getPos() + firstMostNestedTag.getLength(), tag.getPos())
+				.toString();
 			cell.setCellValue(value);
 		}
 	}

@@ -20,9 +20,8 @@ import org.wicketstuff.security.actions.WaspAction;
 
 /**
  * SecurityCheck that says you are authorized when in fact you are not and vice versa. The
- * authentication check always returns the correct result. This is convenient when you
- * want to display a component (like a message to the user) when the user is not
- * authorized.
+ * authentication check always returns the correct result. This is convenient when you want to
+ * display a component (like a message to the user) when the user is not authorized.
  * 
  * @author marrink
  */
@@ -33,8 +32,7 @@ public class InverseSecurityCheck implements ISecurityCheck
 	private ISecurityCheck wrapped;
 
 	/**
-	 * Constructs a new SecurityCheck that will invert the result from the provided
-	 * security check.
+	 * Constructs a new SecurityCheck that will invert the result from the provided security check.
 	 * 
 	 * @param wrapped
 	 */

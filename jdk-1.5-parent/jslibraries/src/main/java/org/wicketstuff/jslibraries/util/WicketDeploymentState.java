@@ -21,12 +21,14 @@ package org.wicketstuff.jslibraries.util;
 import org.apache.wicket.Application;
 import org.apache.wicket.RuntimeConfigurationType;
 
-public class WicketDeploymentState {
-	private WicketDeploymentState() {
+public class WicketDeploymentState
+{
+	private WicketDeploymentState()
+	{
 	}
 
-	public static boolean isProduction() {
-		return RuntimeConfigurationType.DEPLOYMENT == Application.get()
-				.getConfigurationType();
+	public static boolean isProduction()
+	{
+		return RuntimeConfigurationType.DEPLOYMENT == Application.get().getConfigurationType();
 	}
 }

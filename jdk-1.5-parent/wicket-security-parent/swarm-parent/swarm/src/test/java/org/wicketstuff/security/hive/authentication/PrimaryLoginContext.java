@@ -22,8 +22,7 @@ import org.wicketstuff.security.hive.authorization.SimplePrincipal;
 import org.wicketstuff.security.pages.HighSecurityPage;
 
 /**
- * A context for multi login, this context is used to grant the least amount of
- * permissions.
+ * A context for multi login, this context is used to grant the least amount of permissions.
  * 
  * @author marrink
  */
@@ -43,7 +42,7 @@ public final class PrimaryLoginContext extends LoginContext
 		 * @see org.wicketstuff.security.hive.authentication.DefaultSubject#isClassAuthenticated(java.lang.Class)
 		 */
 		@Override
-		public boolean isClassAuthenticated(Class< ? > class1)
+		public boolean isClassAuthenticated(Class<?> class1)
 		{
 			// for this test class authentication is enough
 			if (class1 == null)
@@ -67,7 +66,7 @@ public final class PrimaryLoginContext extends LoginContext
 		 *      org.apache.wicket.Component)
 		 */
 		@Override
-		public boolean isModelAuthenticated(IModel< ? > model, Component component)
+		public boolean isModelAuthenticated(IModel<?> model, Component component)
 		{
 			return true;
 		}

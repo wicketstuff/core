@@ -88,34 +88,34 @@ public class UsernamePasswordSignInPanel extends Panel
 	public boolean signIn(String username, String password)
 	{
 		Map<String, WaspAction> authorized = new HashMap<String, WaspAction>();
-		authorized.put(SecureComponentHelper.alias(HomePage.class), getWaspApplication()
-			.getActionFactory().getAction("access render enable"));
-		authorized.put(SecureComponentHelper.alias(PageB.class), getWaspApplication()
-			.getActionFactory().getAction("access render"));
-		authorized.put(SecureComponentHelper.alias(PageC.class), getWaspApplication()
-			.getActionFactory().getAction("access"));
-		authorized.put(SecureComponentHelper.alias(PageC2.class), getWaspApplication()
-			.getActionFactory().getAction("access render foo"));
-		authorized.put(SecureComponentHelper.alias(PageD.class), getWaspApplication()
-			.getActionFactory().getAction("access render"));
-		authorized.put(SecureComponentHelper.alias(FormPage.class), getWaspApplication()
-			.getActionFactory().getAction("access render"));
+		authorized.put(SecureComponentHelper.alias(HomePage.class),
+			getWaspApplication().getActionFactory().getAction("access render enable"));
+		authorized.put(SecureComponentHelper.alias(PageB.class),
+			getWaspApplication().getActionFactory().getAction("access render"));
+		authorized.put(SecureComponentHelper.alias(PageC.class),
+			getWaspApplication().getActionFactory().getAction("access"));
+		authorized.put(SecureComponentHelper.alias(PageC2.class),
+			getWaspApplication().getActionFactory().getAction("access render foo"));
+		authorized.put(SecureComponentHelper.alias(PageD.class),
+			getWaspApplication().getActionFactory().getAction("access render"));
+		authorized.put(SecureComponentHelper.alias(FormPage.class),
+			getWaspApplication().getActionFactory().getAction("access render"));
 		// because this test uses the ISecureComponent class as base class for
 		// instantiation checks we need to grant all ISecureComponents access
-		authorized.put(SecureComponentHelper.alias(SecurePageLink.class), getWaspApplication()
-			.getActionFactory().getAction("access"));
-		authorized.put(SecureComponentHelper.alias(SecureTextField.class), getWaspApplication()
-			.getActionFactory().getAction("access"));
-		authorized.put(SecureComponentHelper.alias(SecureForm.class), getWaspApplication()
-			.getActionFactory().getAction("access"));
+		authorized.put(SecureComponentHelper.alias(SecurePageLink.class),
+			getWaspApplication().getActionFactory().getAction("access"));
+		authorized.put(SecureComponentHelper.alias(SecureTextField.class),
+			getWaspApplication().getActionFactory().getAction("access"));
+		authorized.put(SecureComponentHelper.alias(SecureForm.class),
+			getWaspApplication().getActionFactory().getAction("access"));
 		// grant models rights Page D
 		authorized.put("model:modelcheck",
 			getWaspApplication().getActionFactory().getAction("access render"));
 		authorized.put("model:bothcheck",
 			getWaspApplication().getActionFactory().getAction("access render"));
 		// panels
-		authorized.put(SecureComponentHelper.alias(MySecurePanel.class), getWaspApplication()
-			.getActionFactory().getAction("access"));
+		authorized.put(SecureComponentHelper.alias(MySecurePanel.class),
+			getWaspApplication().getActionFactory().getAction("access"));
 		WaspSession session = getSecureSession();
 		try
 		{
@@ -136,7 +136,7 @@ public class UsernamePasswordSignInPanel extends Panel
 	 */
 	protected final WaspSession getSecureSession()
 	{
-		return (WaspSession) Session.get();
+		return (WaspSession)Session.get();
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class UsernamePasswordSignInPanel extends Panel
 	 */
 	protected final WaspWebApplication getWaspApplication()
 	{
-		return (WaspWebApplication) Application.get();
+		return (WaspWebApplication)Application.get();
 	}
 
 	/**

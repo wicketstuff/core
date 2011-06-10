@@ -28,8 +28,8 @@ import org.wicketstuff.security.checks.LinkSecurityCheck;
 import org.wicketstuff.security.components.SecureComponentHelper;
 
 /**
- * A Tab bar that hides the tabs if the user has insufficient rights to see the contents.
- * Note that tabs not implementing the {@link ISecureTab} interface will always show up.
+ * A Tab bar that hides the tabs if the user has insufficient rights to see the contents. Note that
+ * tabs not implementing the {@link ISecureTab} interface will always show up.
  * 
  * @author marrink
  */
@@ -58,14 +58,13 @@ public class SecureTabbedPanel extends TabbedPanel
 	/**
 	 * Adds an {@link ISecurityCheck} to {@link ISecureTab}s
 	 * 
-	 * @see org.apache.wicket.extensions.markup.html.tabs.TabbedPanel#newLink(java.lang.String,
-	 *      int)
+	 * @see org.apache.wicket.extensions.markup.html.tabs.TabbedPanel#newLink(java.lang.String, int)
 	 */
 	@Override
 	protected WebMarkupContainer newLink(String linkId, int index)
 	{
-		Link< ? > link = (Link< ? >) super.newLink(linkId, index);
-		Class< ? extends Panel> panelClass = getTabClass(index);
+		Link<?> link = (Link<?>)super.newLink(linkId, index);
+		Class<? extends Panel> panelClass = getTabClass(index);
 		// We are using a LinkSecurityCheck instead of a ContainerSecurityCheck
 		// because it operates on classes instead of instances.
 		if (panelClass != null)
@@ -83,11 +82,11 @@ public class SecureTabbedPanel extends TabbedPanel
 	 *            the index of the tab
 	 * @return the class or null if the tab at the index is not an ISecureTab
 	 */
-	protected Class< ? extends Panel> getTabClass(int tabIndex)
+	protected Class<? extends Panel> getTabClass(int tabIndex)
 	{
 		ITab tab = getTabs().get(tabIndex);
 		if (tab instanceof ISecureTab)
-			return ((ISecureTab) tab).getPanel();
+			return ((ISecureTab)tab).getPanel();
 		return null;
 	}
 }

@@ -21,36 +21,35 @@ import java.io.Serializable;
 import org.wicketstuff.security.hive.authorization.permissions.ActionPermission;
 
 /**
- * Abstract class for representing access to a system resource. All permissions have a
- * name (whose interpretation depends on the subclass), as well as abstract functions for
- * defining the semantics of the particular Permission subclass.
+ * Abstract class for representing access to a system resource. All permissions have a name (whose
+ * interpretation depends on the subclass), as well as abstract functions for defining the semantics
+ * of the particular Permission subclass.
  * 
  * <p>
- * Most Permission objects also include an "actions" list that tells the actions that are
- * permitted for the object. For example, for a <code>java.io.FilePermission</code>
- * object, the permission name is the pathname of a file (or directory), and the actions
- * list (such as "read, write") specifies which actions are granted for the specified file
- * (or for files in the specified directory). The actions list is optional for Permission
- * objects, such as <code>java.lang.RuntimePermission</code>, that don't need such a list;
- * you either have the named permission (such as "system.exit") or you don't. See
- * {@link ActionPermission}.
+ * Most Permission objects also include an "actions" list that tells the actions that are permitted
+ * for the object. For example, for a <code>java.io.FilePermission</code> object, the permission
+ * name is the pathname of a file (or directory), and the actions list (such as "read, write")
+ * specifies which actions are granted for the specified file (or for files in the specified
+ * directory). The actions list is optional for Permission objects, such as
+ * <code>java.lang.RuntimePermission</code>, that don't need such a list; you either have the named
+ * permission (such as "system.exit") or you don't. See {@link ActionPermission}.
  * 
  * <p>
- * An important method that must be implemented by each subclass is the
- * <code>implies</code> method to compare Permissions. Basically, "permission p1 implies
- * permission p2" means that if one is granted permission p1, one is naturally granted
- * permission p2. Thus, this is not an equality test, but rather more of a subset test.
+ * An important method that must be implemented by each subclass is the <code>implies</code> method
+ * to compare Permissions. Basically, "permission p1 implies permission p2" means that if one is
+ * granted permission p1, one is naturally granted permission p2. Thus, this is not an equality
+ * test, but rather more of a subset test.
  * 
  * <P>
- * Permission objects are similar to String objects in that they are immutable once they
- * have been created. Subclasses should not provide methods that can change the state of a
- * permission once it has been created.
+ * Permission objects are similar to String objects in that they are immutable once they have been
+ * created. Subclasses should not provide methods that can change the state of a permission once it
+ * has been created.
  * 
- * All permissions must at least have a public constructor accepting a String parameter
- * which will be used as name for the permission. Note that the {@link ActionPermission}
- * should also have a 2 argument constructor accepting a string as the name and a second
- * {@link org.wicketstuff.security.actions.WaspAction} parameter to indicate which
- * actions are allowed.
+ * All permissions must at least have a public constructor accepting a String parameter which will
+ * be used as name for the permission. Note that the {@link ActionPermission} should also have a 2
+ * argument constructor accepting a string as the name and a second
+ * {@link org.wicketstuff.security.actions.WaspAction} parameter to indicate which actions are
+ * allowed.
  * 
  * @author marrink
  * 
@@ -82,8 +81,8 @@ public abstract class Permission implements Serializable
 	/**
 	 * Checks two Permission objects for equality.
 	 * <P>
-	 * Do not use the <code>equals</code> method for making access control decisions; use
-	 * the <code>implies</code> method.
+	 * Do not use the <code>equals</code> method for making access control decisions; use the
+	 * <code>implies</code> method.
 	 * 
 	 * @param obj
 	 *            the object we are testing for equality with this object.
@@ -97,18 +96,17 @@ public abstract class Permission implements Serializable
 	/**
 	 * Returns the hash code value for this Permission object.
 	 * <P>
-	 * The required <code>hashCode</code> behavior for Permission Objects is the
-	 * following:
+	 * The required <code>hashCode</code> behavior for Permission Objects is the following:
 	 * <p>
 	 * <ul>
-	 * <li>Whenever it is invoked on the same Permission object more than once during an
-	 * execution of a Java application, the <code>hashCode</code> method must consistently
-	 * return the same integer. This integer need not remain consistent from one execution
-	 * of an application to another execution of the same application.
+	 * <li>Whenever it is invoked on the same Permission object more than once during an execution
+	 * of a Java application, the <code>hashCode</code> method must consistently return the same
+	 * integer. This integer need not remain consistent from one execution of an application to
+	 * another execution of the same application.
 	 * <p>
-	 * <li>If two Permission objects are equal according to the <code>equals</code>
-	 * method, then calling the <code>hashCode</code> method on each of the two Permission
-	 * objects must produce the same integer result.
+	 * <li>If two Permission objects are equal according to the <code>equals</code> method, then
+	 * calling the <code>hashCode</code> method on each of the two Permission objects must produce
+	 * the same integer result.
 	 * </ul>
 	 * 
 	 * @return a hash code value for this object.
@@ -118,10 +116,10 @@ public abstract class Permission implements Serializable
 	public abstract int hashCode();
 
 	/**
-	 * Returns the actions as a String. This is abstract so subclasses can defer creating
-	 * a String representation until one is needed. Subclasses should always return
-	 * actions in what they consider to be their canonical form. For example, two
-	 * FilePermission objects created via the following:
+	 * Returns the actions as a String. This is abstract so subclasses can defer creating a String
+	 * representation until one is needed. Subclasses should always return actions in what they
+	 * consider to be their canonical form. For example, two FilePermission objects created via the
+	 * following:
 	 * 
 	 * <pre>
 	 * perm1 = new FilePermission(p1, &quot;read,write&quot;);
@@ -139,8 +137,8 @@ public abstract class Permission implements Serializable
 	/**
 	 * Returns the name of this Permission. For example, in the case of a
 	 * 
-	 * <code>org.wicketstuff.security.hive.authorization.permissions.ComponentPermission</code>
-	 * , the name will be a component path.
+	 * <code>org.wicketstuff.security.hive.authorization.permissions.ComponentPermission</code> ,
+	 * the name will be a component path.
 	 * 
 	 * @return the name of this Permission.
 	 * 

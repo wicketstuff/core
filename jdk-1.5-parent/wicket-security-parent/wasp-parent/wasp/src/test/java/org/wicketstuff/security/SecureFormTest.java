@@ -16,7 +16,8 @@
  */
 package org.wicketstuff.security;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,16 +53,16 @@ public class SecureFormTest extends WaspAbstractTestBase
 	}
 
 	/**
-	 * Test secure form component. Form is visible but it is not possible to submit or
-	 * enter new values.
+	 * Test secure form component. Form is visible but it is not possible to submit or enter new
+	 * values.
 	 */
 	@Test
 	public void testSecureFormVisibleDisabled()
 	{
 		doLogin();
 		Map<String, WaspAction> authorized = new HashMap<String, WaspAction>();
-		authorized.put(SecureComponentHelper.alias(SecureForm.class), application
-			.getActionFactory().getAction("access render"));
+		authorized.put(SecureComponentHelper.alias(SecureForm.class),
+			application.getActionFactory().getAction("access render"));
 		login(authorized);
 		mock.startPage(FormPage.class);
 		mock.assertRenderedPage(FormPage.class);
@@ -92,8 +93,8 @@ public class SecureFormTest extends WaspAbstractTestBase
 	{
 		doLogin();
 		Map<String, WaspAction> authorized = new HashMap<String, WaspAction>();
-		authorized.put(SecureComponentHelper.alias(SecureForm.class), application
-			.getActionFactory().getAction("access render enable"));
+		authorized.put(SecureComponentHelper.alias(SecureForm.class),
+			application.getActionFactory().getAction("access render enable"));
 		authorized.put(SecureComponentHelper.alias(FormPage.class), application.getActionFactory()
 			.getAction("access render enable"));
 		login(authorized);

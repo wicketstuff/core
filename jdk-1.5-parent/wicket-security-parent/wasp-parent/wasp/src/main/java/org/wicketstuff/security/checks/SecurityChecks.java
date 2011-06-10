@@ -19,8 +19,8 @@ package org.wicketstuff.security.checks;
 import org.wicketstuff.security.actions.WaspAction;
 
 /**
- * Class for general security checks that combines security checks to work together. Note
- * that besides this way of chaining it is also possible wrap checks like this:</br>
+ * Class for general security checks that combines security checks to work together. Note that
+ * besides this way of chaining it is also possible wrap checks like this:</br>
  * 
  * <pre>
  * <code>
@@ -51,8 +51,8 @@ import org.wicketstuff.security.actions.WaspAction;
 public class SecurityChecks
 {
 	/**
-	 * Combines the checks in an <strong>and</strong> list of checks. This means: check1
-	 * and check2 and check3 and ...
+	 * Combines the checks in an <strong>and</strong> list of checks. This means: check1 and check2
+	 * and check3 and ...
 	 * 
 	 * @param checks
 	 *            the checks to combine into a single and check
@@ -64,8 +64,7 @@ public class SecurityChecks
 	}
 
 	/**
-	 * Combines the checks in an <strong>and</strong> list of checks. This means: check1
-	 * and check2.
+	 * Combines the checks in an <strong>and</strong> list of checks. This means: check1 and check2.
 	 * 
 	 * @param check1
 	 *            the first of 2 checks to combine into a single and check
@@ -75,12 +74,12 @@ public class SecurityChecks
 	 */
 	public static ISecurityCheck and(ISecurityCheck check1, ISecurityCheck check2)
 	{
-		return new AndSecurityCheck(new ISecurityCheck[] {check1, check2});
+		return new AndSecurityCheck(new ISecurityCheck[] { check1, check2 });
 	}
 
 	/**
-	 * Combines the checks in an <strong>or</strong> list of checks. This means: check1 or
-	 * check2 or check3 or ...
+	 * Combines the checks in an <strong>or</strong> list of checks. This means: check1 or check2 or
+	 * check3 or ...
 	 * 
 	 * @param checks
 	 *            the checks to combine into a single or check
@@ -92,8 +91,7 @@ public class SecurityChecks
 	}
 
 	/**
-	 * Combines the checks in an <strong>or</strong> list of checks. This means: check1 or
-	 * check2.
+	 * Combines the checks in an <strong>or</strong> list of checks. This means: check1 or check2.
 	 * 
 	 * @param check1
 	 *            the first of 2 checks to combine into a single or check
@@ -103,12 +101,12 @@ public class SecurityChecks
 	 */
 	public static ISecurityCheck or(ISecurityCheck check1, ISecurityCheck check2)
 	{
-		return new OrSecurityCheck(new ISecurityCheck[] {check1, check2});
+		return new OrSecurityCheck(new ISecurityCheck[] { check1, check2 });
 	}
 
 	/**
-	 * SecutiryCheck that provides an *and* security check combining several checks into a
-	 * single and.
+	 * SecutiryCheck that provides an *and* security check combining several checks into a single
+	 * and.
 	 */
 	private static class AndSecurityCheck extends AbstractSecurityCheck
 	{
@@ -125,8 +123,8 @@ public class SecurityChecks
 		}
 
 		/**
-		 * Tests each {@link ISecurityCheck} sequentially, returning false as soon as one
-		 * fails. Note that if no checks are present it will return true.
+		 * Tests each {@link ISecurityCheck} sequentially, returning false as soon as one fails.
+		 * Note that if no checks are present it will return true.
 		 * 
 		 * @see org.wicketstuff.security.checks.ISecurityCheck#isActionAuthorized(org.wicketstuff.security.actions.WaspAction)
 		 */
@@ -145,8 +143,8 @@ public class SecurityChecks
 		}
 
 		/**
-		 * Tests each {@link ISecurityCheck} sequentially, returning false as soon as one
-		 * fails. Note that if no checks are present it will return true.
+		 * Tests each {@link ISecurityCheck} sequentially, returning false as soon as one fails.
+		 * Note that if no checks are present it will return true.
 		 * 
 		 * @see org.wicketstuff.security.checks.ISecurityCheck#isAuthenticated()
 		 */
@@ -166,8 +164,8 @@ public class SecurityChecks
 	}
 
 	/**
-	 * SecutiryCheck that provides an <strong>or</strong> security check combining several
-	 * checks into a single or.
+	 * SecutiryCheck that provides an <strong>or</strong> security check combining several checks
+	 * into a single or.
 	 */
 	private static class OrSecurityCheck extends AbstractSecurityCheck
 	{
@@ -184,8 +182,8 @@ public class SecurityChecks
 		}
 
 		/**
-		 * Tests each {@link ISecurityCheck} sequentially, returning true as soon as one
-		 * succeeds. Note that if no checks are present it will return true.
+		 * Tests each {@link ISecurityCheck} sequentially, returning true as soon as one succeeds.
+		 * Note that if no checks are present it will return true.
 		 * 
 		 * @see org.wicketstuff.security.checks.ISecurityCheck#isActionAuthorized(org.wicketstuff.security.actions.WaspAction)
 		 */
@@ -208,8 +206,8 @@ public class SecurityChecks
 		}
 
 		/**
-		 * Tests each {@link ISecurityCheck} sequentially, returning true as soon as one
-		 * succeeds. Note that if no checks are present it will return true.
+		 * Tests each {@link ISecurityCheck} sequentially, returning true as soon as one succeeds.
+		 * Note that if no checks are present it will return true.
 		 * 
 		 * @see org.wicketstuff.security.checks.ISecurityCheck#isAuthenticated()
 		 */

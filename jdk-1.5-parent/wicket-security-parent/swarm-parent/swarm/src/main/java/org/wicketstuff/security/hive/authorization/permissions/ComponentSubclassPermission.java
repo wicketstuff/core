@@ -20,8 +20,8 @@ import org.apache.wicket.Component;
 import org.wicketstuff.security.actions.WaspAction;
 
 /**
- * Same as {@link ComponentPermission}, but also gives permission for subclasses of the
- * component class.
+ * Same as {@link ComponentPermission}, but also gives permission for subclasses of the component
+ * class.
  * 
  * @author papegaaij
  */
@@ -46,8 +46,8 @@ public class ComponentSubclassPermission extends ComponentPermission
 			return false;
 		for (int count = 0; count < path1.length; count++)
 		{
-			if ((count == 0 && !isSubclass(path1[0], path2[0]))
-				|| (count > 0 && !path1[count].equals(path2[count])))
+			if ((count == 0 && !isSubclass(path1[0], path2[0])) ||
+				(count > 0 && !path1[count].equals(path2[count])))
 				return false;
 		}
 		return true;
@@ -80,8 +80,8 @@ public class ComponentSubclassPermission extends ComponentPermission
 	{
 		try
 		{
-			Class< ? > class1 = Class.forName(classname1);
-			Class< ? > class2 = Class.forName(classname2);
+			Class<?> class1 = Class.forName(classname1);
+			Class<?> class2 = Class.forName(classname2);
 			return class2.isAssignableFrom(class1);
 		}
 		catch (ClassNotFoundException e)

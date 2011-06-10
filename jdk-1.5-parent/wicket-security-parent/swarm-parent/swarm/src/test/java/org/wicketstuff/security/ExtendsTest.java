@@ -40,10 +40,9 @@ import org.wicketstuff.security.swarm.actions.SwarmActionFactory;
 import org.wicketstuff.security.swarm.strategies.SwarmStrategyFactory;
 
 /**
- * Test if everything still works if we don't inherit from {@link SwarmWebApplication} but
- * simply implement all the required interfaces. This simply runs all the tests from
- * {@link GeneralTest} and if we don't get a {@link ClassCastException} or something like
- * that everything works OK.
+ * Test if everything still works if we don't inherit from {@link SwarmWebApplication} but simply
+ * implement all the required interfaces. This simply runs all the tests from {@link GeneralTest}
+ * and if we don't get a {@link ClassCastException} or something like that everything works OK.
  * 
  * @author marrink
  */
@@ -94,12 +93,12 @@ public class ExtendsTest extends GeneralTest
 		}
 
 		@Override
-		public Class< ? extends Page> getHomePage()
+		public Class<? extends Page> getHomePage()
 		{
 			return MockHomePage.class;
 		}
 
-		public Class< ? extends Page> getLoginPage()
+		public Class<? extends Page> getLoginPage()
 		{
 			return MockLoginPage.class;
 		}
@@ -138,8 +137,8 @@ public class ExtendsTest extends GeneralTest
 		}
 
 		/**
-		 * triggers the setup of the factories and the hive. Please remember to call
-		 * super.init() when you override this method.
+		 * triggers the setup of the factories and the hive. Please remember to call super.init()
+		 * when you override this method.
 		 * 
 		 * @see org.wicketstuff.security.WaspWebApplication#init()
 		 */
@@ -152,8 +151,8 @@ public class ExtendsTest extends GeneralTest
 		}
 
 		/**
-		 * Destroys the strategy factory and the action factory. In that order. If you
-		 * override this method you must call super.destroy().
+		 * Destroys the strategy factory and the action factory. In that order. If you override this
+		 * method you must call super.destroy().
 		 * 
 		 * @see Application#onDestroy()
 		 */
@@ -174,9 +173,8 @@ public class ExtendsTest extends GeneralTest
 	@Override
 	public void setUp()
 	{
-		mock =
-			new WicketTester(application = new TestApplication(), "src/test/java/"
-				+ getClass().getPackage().getName().replace('.', '/'));
+		mock = new WicketTester(application = new TestApplication(), "src/test/java/" +
+			getClass().getPackage().getName().replace('.', '/'));
 		mock.setExposeExceptions(false);
 	}
 

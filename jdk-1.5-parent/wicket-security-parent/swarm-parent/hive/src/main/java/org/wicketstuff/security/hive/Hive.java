@@ -24,15 +24,14 @@ import org.wicketstuff.security.hive.authorization.Permission;
 import org.wicketstuff.security.hive.authorization.Principal;
 
 /**
- * A Hive contains the security policy for the system, much like the {@link Policy} in
- * JAAS does. However where the Policy only has a single instance for each virtual
- * machine, multiple Hives are allowed per vm. Allowing for instance multiple web
- * applications to each have there own security policies or share one. In effect making a
- * hive a codebased policy. The {@link HiveMind} keeps a registry of hives based on keys,
- * everyone with the right key can access that hive, this allows you to choose if multiple
- * (different) webapps all share the same same hive or let each instance of an application
- * have there own hive. The key (sometimes referred to as the "queen", to stick with wasp
- * terminology ;)) can be any object. A good choice would be the application itself or if
+ * A Hive contains the security policy for the system, much like the {@link Policy} in JAAS does.
+ * However where the Policy only has a single instance for each virtual machine, multiple Hives are
+ * allowed per vm. Allowing for instance multiple web applications to each have there own security
+ * policies or share one. In effect making a hive a codebased policy. The {@link HiveMind} keeps a
+ * registry of hives based on keys, everyone with the right key can access that hive, this allows
+ * you to choose if multiple (different) webapps all share the same same hive or let each instance
+ * of an application have there own hive. The key (sometimes referred to as the "queen", to stick
+ * with wasp terminology ;)) can be any object. A good choice would be the application itself or if
  * it is a web application the contextname could be used.
  * 
  * @author marrink
@@ -56,8 +55,8 @@ public interface Hive
 	public boolean containsPermission(Permission permission);
 
 	/**
-	 * Checks if the subject has the exact permission, or if the permission is implied by
-	 * any of the subjects principals.
+	 * Checks if the subject has the exact permission, or if the permission is implied by any of the
+	 * subjects principals.
 	 * 
 	 * @param subject
 	 *            the (optional) subject
@@ -68,8 +67,8 @@ public interface Hive
 	public boolean hasPermission(Subject subject, Permission permission);
 
 	/**
-	 * Returns a set of {@link Principal}s, each containing this permission. Implementors
-	 * must not allow modifications to the set change the internal state of the hive.
+	 * Returns a set of {@link Principal}s, each containing this permission. Implementors must not
+	 * allow modifications to the set change the internal state of the hive.
 	 * 
 	 * @param permission
 	 * @return set, never null
@@ -77,8 +76,8 @@ public interface Hive
 	public Set<Principal> getPrincipals(Permission permission);
 
 	/**
-	 * Returns a set of {@link Permission}s, contained within the principal. Implementors
-	 * must not allow modifications to the set change the internal state of the hive.
+	 * Returns a set of {@link Permission}s, contained within the principal. Implementors must not
+	 * allow modifications to the set change the internal state of the hive.
 	 * 
 	 * @param principal
 	 * @return set, never null

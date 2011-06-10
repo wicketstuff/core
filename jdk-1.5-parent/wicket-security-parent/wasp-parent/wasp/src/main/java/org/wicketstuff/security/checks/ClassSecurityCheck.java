@@ -24,9 +24,9 @@ import org.wicketstuff.security.strategies.WaspAuthorizationStrategy;
 
 /**
  * Default instantiation check for any type of class. This is used by
- * {@link ClassAuthorizationStrategy} to test for instantiation rights. But you can use it
- * yourself to for any kind of action. Note that errorpages should not be outfitted with a
- * securitycheck such as this that checks for instantiation.
+ * {@link ClassAuthorizationStrategy} to test for instantiation rights. But you can use it yourself
+ * to for any kind of action. Note that errorpages should not be outfitted with a securitycheck such
+ * as this that checks for instantiation.
  * 
  * @author marrink
  * @see ClassAuthorizationStrategy
@@ -35,7 +35,7 @@ public class ClassSecurityCheck extends AbstractSecurityCheck
 {
 	private static final long serialVersionUID = 1L;
 
-	private Class< ? > clazz;
+	private Class<?> clazz;
 
 	/**
 	 * Constructs a new securitycheck for a class
@@ -45,7 +45,7 @@ public class ClassSecurityCheck extends AbstractSecurityCheck
 	 * @throws IllegalArgumentException
 	 *             if the clazz is null
 	 */
-	public ClassSecurityCheck(Class< ? > clazz)
+	public ClassSecurityCheck(Class<?> clazz)
 	{
 		this.clazz = clazz;
 		if (clazz == null)
@@ -57,16 +57,16 @@ public class ClassSecurityCheck extends AbstractSecurityCheck
 	 * 
 	 * @return Returns the class.
 	 */
-	public Class< ? > getClazz()
+	public Class<?> getClazz()
 	{
 		return clazz;
 	}
 
 	/**
 	 * Checks if the user is authorized for the action. special permission is given to the
-	 * loginpage, which is always authorized. If the user is not authenticated he is
-	 * redirected to the login page. Redirects the authorization check to the strategy if
-	 * the user is authenticated.
+	 * loginpage, which is always authorized. If the user is not authenticated he is redirected to
+	 * the login page. Redirects the authorization check to the strategy if the user is
+	 * authenticated.
 	 * 
 	 * @return true if the user is authenticated and authorized, false otherwise.
 	 * @see org.wicketstuff.security.checks.ISecurityCheck#isActionAuthorized(org.wicketstuff.security.actions.WaspAction)

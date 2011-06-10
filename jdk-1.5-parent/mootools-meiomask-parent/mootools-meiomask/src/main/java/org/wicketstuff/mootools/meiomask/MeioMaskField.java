@@ -69,19 +69,19 @@ public class MeioMaskField<T> extends TextField<T>
 	}
 
 	public MeioMaskField(String id, MaskType maskType, String options, IModel<T> model,
-			boolean valueContainsLiteralCharacters)
+		boolean valueContainsLiteralCharacters)
 	{
 		this(id, maskType, options, model, valueContainsLiteralCharacters, null);
 	}
 
 	public MeioMaskField(String id, MaskType maskType, String options, IModel<T> model,
-			boolean valueContainsLiteralCharacters, Class<T> type)
+		boolean valueContainsLiteralCharacters, Class<T> type)
 	{
 		this(id, maskType, options, model, valueContainsLiteralCharacters, type, null);
 	}
 
 	protected MeioMaskField(String id, MaskType maskType, String options, IModel<T> model,
-			boolean valueContainsLiteralCharacters, Class<T> type, String customMask)
+		boolean valueContainsLiteralCharacters, Class<T> type, String customMask)
 	{
 		super(id, model, type);
 		this.maskType = maskType;
@@ -204,7 +204,7 @@ public class MeioMaskField<T> extends TextField<T>
 		return Date.class.isAssignableFrom(type) || mask == MaskType.RegexpEmail ||
 			mask == MaskType.RegexpIp;
 	}
-	
+
 	private String javaToJavaScriptMask(String value)
 	{
 		return value.replace("#", "9");
@@ -223,7 +223,9 @@ public class MeioMaskField<T> extends TextField<T>
 		if ((customMask != null) && (!isEmpty(customMask)))
 		{
 			String jsMask = new StringBuilder().append("mask: '")
-					.append(javaToJavaScriptMask(customMask)).append("'").toString();
+				.append(javaToJavaScriptMask(customMask))
+				.append("'")
+				.toString();
 			customOptions.append(jsMask);
 		}
 
@@ -240,13 +242,13 @@ public class MeioMaskField<T> extends TextField<T>
 
 		return customOptions.toString();
 	}
-	
-	// There are the same method at org.apache.wicket.util.String.Strings, 
+
+	// There are the same method at org.apache.wicket.util.String.Strings,
 	// but I don't know if a good idea have this package on project dependencies.
 	private boolean isEmpty(final CharSequence string)
 	{
 		return (string == null) || (string.length() == 0) ||
 			(string.toString().trim().length() == 0);
 	}
-	
+
 }

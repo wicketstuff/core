@@ -25,8 +25,8 @@ import org.wicketstuff.security.components.ISecurePage;
 import org.wicketstuff.security.components.SecureComponentHelper;
 
 /**
- * Secure version of {@link BasePage}. This class only allows logged in users with
- * sufficient rights to access the page.
+ * Secure version of {@link BasePage}. This class only allows logged in users with sufficient rights
+ * to access the page.
  * 
  * @author marrink
  */
@@ -43,7 +43,7 @@ public class SecureTestPage extends BasePage implements ISecurePage
 	/**
 	 * @param model
 	 */
-	public SecureTestPage(IModel< ? > model)
+	public SecureTestPage(IModel<?> model)
 	{
 		super(model);
 		setSecurityCheck(new ComponentSecurityCheck(this));

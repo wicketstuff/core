@@ -16,7 +16,6 @@
 package org.wicketstuff.datatable_autocomplete.trie;
 
 
-
 /**
  * @author mocleiri
  * 

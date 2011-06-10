@@ -137,15 +137,13 @@ public class SwarmActionTest extends TestCase
 	public void testAddInt()
 	{
 		ActionFactory factory = Actions.getActionFactory(KEY);
-		SwarmAction action = (SwarmAction) factory.getAction(Render.class);
+		SwarmAction action = (SwarmAction)factory.getAction(Render.class);
 		assertEquals(2, action.actions());
-		SwarmAction action2 =
-			(SwarmAction) action.add(((SwarmAction) factory.getAction(Access.class)).actions());
+		SwarmAction action2 = (SwarmAction)action.add(((SwarmAction)factory.getAction(Access.class)).actions());
 		assertEquals(2, action.actions()); // check inmutability
 		assertEquals(2, action2.actions());
 		assertNotSame(action, action2);
-		SwarmAction action3 =
-			(SwarmAction) action.add(((SwarmAction) factory.getAction(Enable.class)).actions());
+		SwarmAction action3 = (SwarmAction)action.add(((SwarmAction)factory.getAction(Enable.class)).actions());
 		assertEquals(2, action.actions());
 		assertEquals(6, action3.actions());
 
@@ -157,7 +155,7 @@ public class SwarmActionTest extends TestCase
 	public void testAddWaspAction()
 	{
 		ActionFactory factory = Actions.getActionFactory(KEY);
-		SwarmAction action = (SwarmAction) factory.getAction(Render.class);
+		SwarmAction action = (SwarmAction)factory.getAction(Render.class);
 		assertEquals(2, action.actions());
 		SwarmAction action2 = action.add(factory.getAction(Access.class));
 		assertEquals(2, action.actions()); // check inmutability

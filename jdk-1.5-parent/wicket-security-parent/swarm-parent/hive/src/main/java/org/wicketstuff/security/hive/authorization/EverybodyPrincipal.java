@@ -19,10 +19,9 @@ package org.wicketstuff.security.hive.authorization;
 import org.wicketstuff.security.hive.authentication.Subject;
 
 /**
- * Principal used for permissions granted to everyone, regardless of an authenticated
- * subject. This is the principal used when you specify a grant statement without
- * principal in the policy file. You should not need to manually add this principal to
- * your {@link Subject}.
+ * Principal used for permissions granted to everyone, regardless of an authenticated subject. This
+ * is the principal used when you specify a grant statement without principal in the policy file.
+ * You should not need to manually add this principal to your {@link Subject}.
  * 
  * @author marrink
  * 

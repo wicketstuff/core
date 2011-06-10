@@ -20,23 +20,26 @@ package org.wicketstuff.jslibraries;
 
 import junit.framework.TestCase;
 
-public class VersionTest extends TestCase {
+public class VersionTest extends TestCase
+{
 
-	public void testEquals() {
-		assertTrue(new Version(1,1).equals(new Version(1,1)));
+	public void testEquals()
+	{
+		assertTrue(new Version(1, 1).equals(new Version(1, 1)));
 		assertTrue(new Version(2).equals(new Version(2)));
-		assertFalse(new Version(1,1).equals(new Version(1)));
-		assertFalse(new Version(1).equals(new Version(1,1)));
+		assertFalse(new Version(1, 1).equals(new Version(1)));
+		assertFalse(new Version(1).equals(new Version(1, 1)));
 	}
-	
-	public void testMatches() throws Exception {
+
+	public void testMatches() throws Exception
+	{
 		assertTrue(new Version(1).matches(new Version()));
-		assertTrue(new Version(1,1).matches(new Version(1)));
-		assertTrue(new Version(1,1).matches(new Version(1,1)));
-		assertTrue(new Version(1,1,1).matches(new Version(1,1)));
-		assertTrue(new Version(1,1,1,1).matches(new Version(1,1)));
-		assertFalse(new Version(1,1).matches(new Version(1,1,1)));
-		assertFalse(new Version(1,1).matches(new Version(2)));
-		assertFalse(new Version(2).matches(new Version(1,1)));
+		assertTrue(new Version(1, 1).matches(new Version(1)));
+		assertTrue(new Version(1, 1).matches(new Version(1, 1)));
+		assertTrue(new Version(1, 1, 1).matches(new Version(1, 1)));
+		assertTrue(new Version(1, 1, 1, 1).matches(new Version(1, 1)));
+		assertFalse(new Version(1, 1).matches(new Version(1, 1, 1)));
+		assertFalse(new Version(1, 1).matches(new Version(2)));
+		assertFalse(new Version(2).matches(new Version(1, 1)));
 	}
 }

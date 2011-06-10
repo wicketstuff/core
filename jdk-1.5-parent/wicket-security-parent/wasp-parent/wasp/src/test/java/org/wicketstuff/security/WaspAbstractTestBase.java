@@ -16,7 +16,8 @@
  */
 package org.wicketstuff.security;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.fail;
 
 import java.util.Collections;
 import java.util.List;
@@ -58,11 +59,11 @@ public abstract class WaspAbstractTestBase
 
 	protected WaspWebApplication application;
 
-	private Class< ? extends Page> homePage = HomePage.class;
+	private Class<? extends Page> homePage = HomePage.class;
 
-	private Class< ? extends Page> loginPage = LoginPage.class;
+	private Class<? extends Page> loginPage = LoginPage.class;
 
-	private Class< ? extends ISecureComponent> secureClass = ISecureComponent.class;
+	private Class<? extends ISecureComponent> secureClass = ISecureComponent.class;
 
 	/**
 	 * @see TestCase#setUp()
@@ -110,7 +111,7 @@ public abstract class WaspAbstractTestBase
 					 * 
 					 * @see org.wicketstuff.security.actions.ActionFactory#getAction(Class)
 					 */
-					public WaspAction getAction(Class< ? extends WaspAction> waspActionClass)
+					public WaspAction getAction(Class<? extends WaspAction> waspActionClass)
 					{
 						return new StringAction(waspActionClass.getName()
 							.substring(waspActionClass.getName().lastIndexOf('.') + 1)
@@ -119,11 +120,10 @@ public abstract class WaspAbstractTestBase
 
 					/**
 					 * 
-					 * @see org.wicketstuff.security.actions.ActionFactory#register(Class,
-					 *      String)
+					 * @see org.wicketstuff.security.actions.ActionFactory#register(Class, String)
 					 */
-					public WaspAction register(Class< ? extends WaspAction> waspActionClass,
-							String name) throws RegistrationException
+					public WaspAction register(Class<? extends WaspAction> waspActionClass,
+						String name) throws RegistrationException
 					{
 						throw new RegistrationException(
 							"this test factory does not allow registration");
@@ -168,7 +168,7 @@ public abstract class WaspAbstractTestBase
 			}
 
 			@Override
-			public Class< ? extends Page> getHomePage()
+			public Class<? extends Page> getHomePage()
 			{
 				return WaspAbstractTestBase.this.getHomePage();
 			}
@@ -178,7 +178,7 @@ public abstract class WaspAbstractTestBase
 				return actionFactory;
 			}
 
-			public Class< ? extends Page> getLoginPage()
+			public Class<? extends Page> getLoginPage()
 			{
 				return WaspAbstractTestBase.this.getLoginPage();
 			}
@@ -211,7 +211,7 @@ public abstract class WaspAbstractTestBase
 	/**
 	 * @return Returns the secureClass.
 	 */
-	public Class< ? extends ISecureComponent> getSecureClass()
+	public Class<? extends ISecureComponent> getSecureClass()
 	{
 		return secureClass;
 	}
@@ -220,7 +220,7 @@ public abstract class WaspAbstractTestBase
 	 * @param secureClass
 	 *            The secureClass to set.
 	 */
-	public void setSecureClass(Class< ? extends ISecureComponent> secureClass)
+	public void setSecureClass(Class<? extends ISecureComponent> secureClass)
 	{
 		this.secureClass = secureClass;
 	}
@@ -228,7 +228,7 @@ public abstract class WaspAbstractTestBase
 	/**
 	 * @return Returns the homePage.
 	 */
-	public Class< ? extends Page> getHomePage()
+	public Class<? extends Page> getHomePage()
 	{
 		return homePage;
 	}
@@ -237,7 +237,7 @@ public abstract class WaspAbstractTestBase
 	 * @param homePage
 	 *            The homePage to set.
 	 */
-	public void setHomePage(Class< ? extends Page> homePage)
+	public void setHomePage(Class<? extends Page> homePage)
 	{
 		this.homePage = homePage;
 	}
@@ -245,7 +245,7 @@ public abstract class WaspAbstractTestBase
 	/**
 	 * @return Returns the loginPage.
 	 */
-	public Class< ? extends Page> getLoginPage()
+	public Class<? extends Page> getLoginPage()
 	{
 		return loginPage;
 	}
@@ -254,7 +254,7 @@ public abstract class WaspAbstractTestBase
 	 * @param loginPage
 	 *            The loginPage to set.
 	 */
-	public void setLoginPage(Class< ? extends Page> loginPage)
+	public void setLoginPage(Class<? extends Page> loginPage)
 	{
 		this.loginPage = loginPage;
 	}
@@ -276,10 +276,9 @@ public abstract class WaspAbstractTestBase
 	}
 
 	/**
-	 * login through the session bypassing the loginpage. Note that the login page
-	 * automaticly grants access to the homepage, here you must do it yourself. Note these
-	 * rights are added to any existing ones replacing only if the class was already added
-	 * previously.
+	 * login through the session bypassing the loginpage. Note that the login page automaticly
+	 * grants access to the homepage, here you must do it yourself. Note these rights are added to
+	 * any existing ones replacing only if the class was already added previously.
 	 * 
 	 * @param authorized
 	 *            map containing classes and the actions the users has on them.
@@ -288,7 +287,7 @@ public abstract class WaspAbstractTestBase
 	{
 		try
 		{
-			((WaspSession) mock.getSession()).login(authorized);
+			((WaspSession)mock.getSession()).login(authorized);
 		}
 		catch (LoginException e)
 		{
@@ -298,14 +297,14 @@ public abstract class WaspAbstractTestBase
 	}
 
 	/**
-	 * Logoff. If a map is specified only a partial logoff is performed removing only
-	 * those rights in the map.
+	 * Logoff. If a map is specified only a partial logoff is performed removing only those rights
+	 * in the map.
 	 * 
 	 * @param authorized
 	 */
 	protected void logoff(Map<String, WaspAction> authorized)
 	{
-		((WaspSession) mock.getSession()).logoff(authorized);
+		((WaspSession)mock.getSession()).logoff(authorized);
 	}
 
 	protected WicketTester getMock()

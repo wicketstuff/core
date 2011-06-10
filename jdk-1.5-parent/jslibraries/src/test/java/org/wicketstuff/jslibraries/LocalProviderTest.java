@@ -24,33 +24,39 @@ import java.util.Set;
 
 import junit.framework.TestCase;
 
-public class LocalProviderTest extends TestCase {
+public class LocalProviderTest extends TestCase
+{
 
-		public void testCDNs() throws Exception {
-			IterateAllRegistered(false);
-			IterateAllRegistered(true);
-		}
+	public void testCDNs() throws Exception
+	{
+		IterateAllRegistered(false);
+		IterateAllRegistered(true);
+	}
 
-		private void IterateAllRegistered(boolean production) throws IOException {
+	private void IterateAllRegistered(boolean production) throws IOException
+	{
 
-			
-			Library[] libs = Library.values();
-			for (int i = 0; i < libs.length; i++) {
-				Library library = libs[i];
-				Set<Version> versions = library.getVersions(LocalProvider.DEFAULT);
-				for (Version v : versions) {
-					
-					VersionDescriptor vd = VersionDescriptor.exactVersion(library, v.getNumbers());
-					StringBuffer fn = JSReference.createFileName(library, vd.getVersion(LocalProvider.DEFAULT), production);
-					
-					URL resource = getClass().getResource(fn.toString());
-					System.out.println("checking file: "+fn);
-					assertNotNull(resource);
-					assertNotNull(resource.getContent());
-				}
 
+		Library[] libs = Library.values();
+		for (int i = 0; i < libs.length; i++)
+		{
+			Library library = libs[i];
+			Set<Version> versions = library.getVersions(LocalProvider.DEFAULT);
+			for (Version v : versions)
+			{
+
+				VersionDescriptor vd = VersionDescriptor.exactVersion(library, v.getNumbers());
+				StringBuffer fn = JSReference.createFileName(library,
+					vd.getVersion(LocalProvider.DEFAULT), production);
+
+				URL resource = getClass().getResource(fn.toString());
+				System.out.println("checking file: " + fn);
+				assertNotNull(resource);
+				assertNotNull(resource.getContent());
 			}
-		}
 
-		
+		}
+	}
+
+
 }

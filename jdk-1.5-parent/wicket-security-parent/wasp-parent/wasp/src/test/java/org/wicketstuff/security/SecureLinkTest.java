@@ -16,7 +16,10 @@
  */
 package org.wicketstuff.security;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertSame;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,8 +47,8 @@ public class SecureLinkTest extends WaspAbstractTestBase
 {
 
 	/**
-	 * Test a link that will allow people to replace panels / containers much like the
-	 * {@link ITab} from extensions
+	 * Test a link that will allow people to replace panels / containers much like the {@link ITab}
+	 * from extensions
 	 */
 	@Test
 	public void testContainerLink()
@@ -100,9 +103,8 @@ public class SecureLinkTest extends WaspAbstractTestBase
 		mock.assertVisible("sorry");
 		// step one, show the secure home page without a link to PageA
 		Page lastPage = mock.getLastRenderedPage();
-		SecurePageLink< ? > link = (SecurePageLink< ? >) lastPage.get("link");
-		LinkSecurityCheck linkcheck =
-			((LinkSecurityCheck) link.getSecurityCheck()).setUseAlternativeRenderCheck(true);
+		SecurePageLink<?> link = (SecurePageLink<?>)lastPage.get("link");
+		LinkSecurityCheck linkcheck = ((LinkSecurityCheck)link.getSecurityCheck()).setUseAlternativeRenderCheck(true);
 		// step two, show the secure home page with a not clickable link to
 		// PageA (e.g. not a href)
 		Map<String, WaspAction> authorized = new HashMap<String, WaspAction>();

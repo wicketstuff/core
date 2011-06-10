@@ -47,9 +47,9 @@ public abstract class WaspWebApplication extends WebApplication implements WaspA
 	}
 
 	/**
-	 * Initializes the actionfactory and the strategyfactory. If you override this method
-	 * you must either call super.init() or setup the actionfactory and the
-	 * strategyfactory yourself. In that order.
+	 * Initializes the actionfactory and the strategyfactory. If you override this method you must
+	 * either call super.init() or setup the actionfactory and the strategyfactory yourself. In that
+	 * order.
 	 * 
 	 * @see WebApplication#init()
 	 */
@@ -61,8 +61,8 @@ public abstract class WaspWebApplication extends WebApplication implements WaspA
 	}
 
 	/**
-	 * Creates a new WaspSession. If you override this method make sure you return a
-	 * subclass of {@link WaspSession}.
+	 * Creates a new WaspSession. If you override this method make sure you return a subclass of
+	 * {@link WaspSession}.
 	 */
 	@Override
 	public Session newSession(Request request, Response response)
@@ -71,8 +71,8 @@ public abstract class WaspWebApplication extends WebApplication implements WaspA
 	}
 
 	/**
-	 * Called by the {@link WaspWebApplication#init()}. use this to create and initialize
-	 * your factory. The factory created here should be returned when calling
+	 * Called by the {@link WaspWebApplication#init()}. use this to create and initialize your
+	 * factory. The factory created here should be returned when calling
 	 * {@link WaspApplication#getStrategyFactory()}.
 	 * 
 	 * @see WaspApplication#getStrategyFactory()
@@ -80,8 +80,8 @@ public abstract class WaspWebApplication extends WebApplication implements WaspA
 	protected abstract void setupStrategyFactory();
 
 	/**
-	 * Called by the {@link WaspWebApplication#init()}. use this to create and initialize
-	 * your factory. The factory created here should be returned when calling
+	 * Called by the {@link WaspWebApplication#init()}. use this to create and initialize your
+	 * factory. The factory created here should be returned when calling
 	 * {@link WaspApplication#getActionFactory()}.
 	 * 
 	 * @see WaspApplication#getActionFactory()
@@ -89,8 +89,8 @@ public abstract class WaspWebApplication extends WebApplication implements WaspA
 	protected abstract void setupActionFactory();
 
 	/**
-	 * Destroys the strategy factory and the action factory. In that order. If you
-	 * override this method you must call super.onDestroy().
+	 * Destroys the strategy factory and the action factory. In that order. If you override this
+	 * method you must call super.onDestroy().
 	 * 
 	 * @see Application#onDestroy()
 	 */

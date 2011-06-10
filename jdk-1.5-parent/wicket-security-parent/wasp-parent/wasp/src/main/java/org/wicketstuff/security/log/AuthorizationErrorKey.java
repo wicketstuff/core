@@ -19,11 +19,10 @@ package org.wicketstuff.security.log;
 import org.apache.wicket.MetaDataKey;
 
 /**
- * key to store {@link IAuthorizationMessageSource} in the request metadata. This object
- * is typically only available in the request after at some point is determined that the
- * authorization has failed. After that the IErrorMessageSource can be used to add extra
- * information to the error. This can then later be used to provide a detailed error
- * message.
+ * key to store {@link IAuthorizationMessageSource} in the request metadata. This object is
+ * typically only available in the request after at some point is determined that the authorization
+ * has failed. After that the IErrorMessageSource can be used to add extra information to the error.
+ * This can then later be used to provide a detailed error message.
  * 
  * @author marrink
  */

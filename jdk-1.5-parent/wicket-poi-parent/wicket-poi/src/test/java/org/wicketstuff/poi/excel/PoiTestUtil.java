@@ -23,8 +23,8 @@ package org.wicketstuff.poi.excel;
 public class PoiTestUtil
 {
 	/**
-	 * Utility method for test commented to be compiled by SDK 1.5, and to be
-	 * available be uncommented under developers test environment
+	 * Utility method for test commented to be compiled by SDK 1.5, and to be available be
+	 * uncommented under developers test environment
 	 * 
 	 * @param tester
 	 * @throws IOException

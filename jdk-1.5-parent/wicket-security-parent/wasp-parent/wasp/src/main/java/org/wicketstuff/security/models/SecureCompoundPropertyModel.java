@@ -32,9 +32,9 @@ import org.wicketstuff.security.actions.WaspAction;
 import org.wicketstuff.security.strategies.WaspAuthorizationStrategy;
 
 /**
- * A secure {@link CompoundPropertyModel}. Please note that this model does not enforce a
- * security on get or setObject as this is left to Wicket. Please provide an override on
- * the inner class {@link AttachedSecureCompoundPropertyModel} if you wish to do so
+ * A secure {@link CompoundPropertyModel}. Please note that this model does not enforce a security
+ * on get or setObject as this is left to Wicket. Please provide an override on the inner class
+ * {@link AttachedSecureCompoundPropertyModel} if you wish to do so
  * 
  * <pre>
  * <code>
@@ -48,18 +48,17 @@ import org.wicketstuff.security.strategies.WaspAuthorizationStrategy;
  * </code>
  * </pre>
  * 
- * and override {@link #wrapOnInheritance(Component)} to return your class. Also note that
- * Wicket by default only checks the setter and not the getter as that is generally
- * equivalent to the render check on the component. Note when setting this model on a page
- * the model is shared with every component on this page including the page itself,
- * failing to grant enough rights to the page will result in an {@link AccessDeniedPage}.
- * Failing the 2nd will result in Wicket complaining about missing components. Therefore
- * it is best to set this model on a {@link Panel} or {@link Form}.
+ * and override {@link #wrapOnInheritance(Component)} to return your class. Also note that Wicket by
+ * default only checks the setter and not the getter as that is generally equivalent to the render
+ * check on the component. Note when setting this model on a page the model is shared with every
+ * component on this page including the page itself, failing to grant enough rights to the page will
+ * result in an {@link AccessDeniedPage}. Failing the 2nd will result in Wicket complaining about
+ * missing components. Therefore it is best to set this model on a {@link Panel} or {@link Form}.
  * 
- * Notes for usage: When you have a model that enables the use of a form, note that you
- * need to enable the parent model if you want your form components enabled (like the
- * textfield). The code below shows (copied out the SecureCompoundPropertyModelTest) what
- * you need to set in order to get a form to work.
+ * Notes for usage: When you have a model that enables the use of a form, note that you need to
+ * enable the parent model if you want your form components enabled (like the textfield). The code
+ * below shows (copied out the SecureCompoundPropertyModelTest) what you need to set in order to get
+ * a form to work.
  * 
  * <pre>
  * <code>
@@ -72,7 +71,7 @@ import org.wicketstuff.security.strategies.WaspAuthorizationStrategy;
  * @author marrink
  */
 public class SecureCompoundPropertyModel<T> extends CompoundPropertyModel<T> implements
-		ISecureModel<T>
+	ISecureModel<T>
 {
 
 	/**
@@ -107,7 +106,7 @@ public class SecureCompoundPropertyModel<T> extends CompoundPropertyModel<T> imp
 	 */
 	protected final ActionFactory getActionFactory()
 	{
-		return ((WaspApplication) Application.get()).getActionFactory();
+		return ((WaspApplication)Application.get()).getActionFactory();
 	}
 
 	/**
@@ -148,14 +147,14 @@ public class SecureCompoundPropertyModel<T> extends CompoundPropertyModel<T> imp
 	}
 
 	/**
-	 * Component aware variation of the {@link SecureCompoundPropertyModel} that
-	 * components that inherit the model get. Copy of AttachedCompoundPropertyModel.
+	 * Component aware variation of the {@link SecureCompoundPropertyModel} that components that
+	 * inherit the model get. Copy of AttachedCompoundPropertyModel.
 	 * 
 	 * @author ivaynberg
 	 * @author marrink
 	 */
 	protected class AttachedSecureCompoundPropertyModel<Y> extends AbstractPropertyModel<Y>
-			implements IWrapModel<Y>, ISecureModel<Y>
+		implements IWrapModel<Y>, ISecureModel<Y>
 	{
 		private static final long serialVersionUID = 1L;
 
@@ -238,8 +237,8 @@ public class SecureCompoundPropertyModel<T> extends CompoundPropertyModel<T> imp
 		@Override
 		public String toString()
 		{
-			return SecureCompoundPropertyModel.this.toString() + ":"
-				+ (getOwner() != null ? getOwner().getId() : "null");
+			return SecureCompoundPropertyModel.this.toString() + ":" +
+				(getOwner() != null ? getOwner().getId() : "null");
 		}
 	}
 

@@ -66,7 +66,7 @@ public class TestPermission extends Permission
 			return false;
 		if (obj.getClass().equals(this.getClass()))
 		{
-			TestPermission other = (TestPermission) obj;
+			TestPermission other = (TestPermission)obj;
 			return other.getName().equals(getName()) && other.getActions().equals(getActions());
 		}
 		return false;
@@ -105,9 +105,9 @@ public class TestPermission extends Permission
 			return false;
 		if (permission.getClass().equals(this.getClass()))
 		{
-			TestPermission other = (TestPermission) permission;
-			return other.getName().equals(getName())
-				&& getActions().indexOf(other.getActions()) > -1;
+			TestPermission other = (TestPermission)permission;
+			return other.getName().equals(getName()) &&
+				getActions().indexOf(other.getActions()) > -1;
 		}
 		return false;
 	}

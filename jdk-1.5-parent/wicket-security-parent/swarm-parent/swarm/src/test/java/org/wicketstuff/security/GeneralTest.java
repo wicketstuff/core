@@ -16,7 +16,12 @@
  */
 package org.wicketstuff.security;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNotSame;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -98,12 +103,12 @@ public class GeneralTest
 			}
 
 			@Override
-			public Class< ? extends Page> getHomePage()
+			public Class<? extends Page> getHomePage()
 			{
 				return MockHomePage.class;
 			}
 
-			public Class< ? extends Page> getLoginPage()
+			public Class<? extends Page> getLoginPage()
 			{
 				return MockLoginPage.class;
 			}
@@ -140,7 +145,7 @@ public class GeneralTest
 		form.setValue("username", "test");
 		form.submit();
 		mock.assertRenderedPage(VerySecurePage.class);
-		assertTrue(((WaspSession) mock.getSession()).logoff(new SecondaryLoginContext()));
+		assertTrue(((WaspSession)mock.getSession()).logoff(new SecondaryLoginContext()));
 		mock.startPage(mock.getLastRenderedPage());
 		mock.assertRenderedPage(application.getApplicationSettings().getAccessDeniedPage());
 		// access denied because the page is already constructed
@@ -217,7 +222,7 @@ public class GeneralTest
 		Page lastRendered = mock.getLastRenderedPage();
 
 		// prepare serialization
-		WaspSession session = (WaspSession) mock.getSession();
+		WaspSession session = (WaspSession)mock.getSession();
 		assertNotNull(session);
 		assertFalse(session.isTemporary());
 		assertFalse(session.isSessionInvalidated());
@@ -226,9 +231,8 @@ public class GeneralTest
 			ByteArrayOutputStream bytes = new ByteArrayOutputStream(512 * 1024);
 			ObjectOutputStream stream = new ObjectOutputStream(bytes);
 			stream.writeObject(session);
-			WaspSession session2 =
-				(WaspSession) new ObjectInputStream(new ByteArrayInputStream(bytes.toByteArray()))
-					.readObject();
+			WaspSession session2 = (WaspSession)new ObjectInputStream(new ByteArrayInputStream(
+				bytes.toByteArray())).readObject();
 			assertNotNull(session2);
 			assertNotSame(session, session2);
 			// fake restore session from disk
@@ -247,7 +251,7 @@ public class GeneralTest
 			fail(e.getMessage());
 		}
 		// attempt logoff
-		WaspSession waspSession = ((WaspSession) mock.getSession());
+		WaspSession waspSession = ((WaspSession)mock.getSession());
 		assertNotSame(session, waspSession);
 		// instead of simulating a different jvm we can make sure the hashcode
 		// always stays the same

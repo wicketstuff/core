@@ -21,16 +21,14 @@ import org.apache.wicket.model.IModel;
 import org.wicketstuff.security.hive.authorization.SimplePrincipal;
 
 /**
- * A context for multi login, this context is used to grant the most amount of
- * permissions.
+ * A context for multi login, this context is used to grant the most amount of permissions.
  * 
  * @author marrink
  */
 public final class SecondaryLoginContext extends LoginContext
 {
 	/**
-	 * Subject for secondary logins. Note try not to serialize the logincontext with the
-	 * subject.
+	 * Subject for secondary logins. Note try not to serialize the logincontext with the subject.
 	 * 
 	 * @author marrink
 	 */
@@ -43,7 +41,7 @@ public final class SecondaryLoginContext extends LoginContext
 		 * @see org.wicketstuff.security.hive.authentication.DefaultSubject#isClassAuthenticated(java.lang.Class)
 		 */
 		@Override
-		public boolean isClassAuthenticated(Class< ? > class1)
+		public boolean isClassAuthenticated(Class<?> class1)
 		{
 			return true;
 			// we also could just return true if the class is a HighSecurityPage
@@ -67,7 +65,7 @@ public final class SecondaryLoginContext extends LoginContext
 		 *      org.apache.wicket.Component)
 		 */
 		@Override
-		public boolean isModelAuthenticated(IModel< ? > model, Component component)
+		public boolean isModelAuthenticated(IModel<?> model, Component component)
 		{
 			return true;
 		}
@@ -75,8 +73,8 @@ public final class SecondaryLoginContext extends LoginContext
 
 	/**
 	 * 
-	 * Constructor, set the sort order to 1 (above the sort order of the
-	 * {@link PrimaryLoginContext})
+	 * Constructor, set the sort order to 1 (above the sort order of the {@link PrimaryLoginContext}
+	 * )
 	 */
 	public SecondaryLoginContext()
 	{

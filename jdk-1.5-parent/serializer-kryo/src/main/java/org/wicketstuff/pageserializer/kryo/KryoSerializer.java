@@ -41,100 +41,111 @@ import de.javakaffee.kryoserializers.UnmodifiableCollectionsSerializer;
 import de.javakaffee.kryoserializers.cglib.CGLibProxySerializer;
 
 /**
- * An {@link IPageSerializer} based on <a href="http://code.google.com/p/kryo">kryo</a>
- * and <a href="https://github.com/magro/kryo-serializers">additional kryo serializers</a> 
+ * An {@link IPageSerializer} based on <a href="http://code.google.com/p/kryo">kryo</a> and <a
+ * href="https://github.com/magro/kryo-serializers">additional kryo serializers</a>
  */
-public class KryoSerializer implements ISerializer {
+public class KryoSerializer implements ISerializer
+{
 
-    private static final Logger LOG = LoggerFactory.getLogger(KryoSerializer.class);
-    
-    /**
-     * The size of the {@link ByteBuffer} that is used to hold the serialized page 
-     */
-    private static final Bytes DEFAULT_BUFFER_SIZE = Bytes.megabytes(10L);
-    
-    private final Bytes bufferSize;
-    
-    private final Kryo kryo;    
-    
-    public KryoSerializer() {
-        this(DEFAULT_BUFFER_SIZE);
-    }
-    
-    public KryoSerializer(final Bytes bufferSize) {
-     
-        this.bufferSize = Args.notNull(bufferSize, "bufferSize");
-        LOG.debug("Buffer size: ", bufferSize);
-        
-        kryo = new KryoReflectionFactorySupport();
-        
-        internalInit(kryo);
-    }
-    
-    public byte[] serialize(final Object object) {
-        LOG.debug("Going to serialize: ", object);
-        ByteBuffer buffer = getBuffer();
-        kryo.writeClassAndObject(buffer, object);
-        return buffer.array();
-    }
+	private static final Logger LOG = LoggerFactory.getLogger(KryoSerializer.class);
 
-    public Object deserialize(byte[] data) {
-        ByteBuffer buffer = ByteBuffer.wrap(data);
-        Object object = kryo.readClassAndObject(buffer);
-        LOG.debug("Deserialized: ", object);
-        return object;
-    }
+	/**
+	 * The size of the {@link ByteBuffer} that is used to hold the serialized page
+	 */
+	private static final Bytes DEFAULT_BUFFER_SIZE = Bytes.megabytes(10L);
 
-    private ByteBuffer getBuffer() {
-        return ByteBuffer.allocate((int) bufferSize.bytes());
-    }
+	private final Bytes bufferSize;
 
-    /**
-     * Configures {@link Kryo} with some custom {@link Serializer}s and registers
-     * some known Wicket classes which are known to be serialized sooner or later
-     * 
-     * @param kryo
-     *      the {@link Kryo} instance to configured
-     */
-    private void internalInit(final Kryo kryo) {
-      
-        kryo.register( Arrays.asList( "" ).getClass(), new ArraysAsListSerializer( kryo ) );
-        kryo.register( Class.class, new ClassSerializer( kryo ) );
-        kryo.register( Collections.EMPTY_LIST.getClass(), new CollectionsEmptyListSerializer() );
-        kryo.register( Collections.EMPTY_MAP.getClass(), new CollectionsEmptyMapSerializer() );
-        kryo.register( Collections.EMPTY_SET.getClass(), new CollectionsEmptySetSerializer() );
-        kryo.register( Collections.singletonList( "" ).getClass(), new CollectionsSingletonListSerializer( kryo ) );
-        kryo.register( Collections.singleton( "" ).getClass(), new CollectionsSingletonSetSerializer( kryo ) );
-        kryo.register( Collections.singletonMap( "", "" ).getClass(), new CollectionsSingletonMapSerializer( kryo ) );
-        kryo.register( Currency.class, new CurrencySerializer( kryo ) );
-        kryo.register( GregorianCalendar.class, new GregorianCalendarSerializer() );
-        kryo.register( InvocationHandler.class, new JdkProxySerializer( kryo ) );
-        kryo.register( StringBuffer.class, new StringBufferSerializer( kryo ) );
-        kryo.register( StringBuilder.class, new StringBuilderSerializer( kryo ) );
-        UnmodifiableCollectionsSerializer.registerSerializers( kryo );
-        SynchronizedCollectionsSerializer.registerSerializers( kryo );
-        kryo.register(CGLibProxySerializer.CGLibProxyMarker.class, new CGLibProxySerializer(kryo));
-        kryo.register(InvocationHandler.class, new JdkProxySerializer(kryo));
-        kryo.register(WicketChildListSerializer.CLASS, new WicketChildListSerializer(kryo));
-        
-        kryo.setRegistrationOptional(true);
-        kryo.register(Panel.class);
-        kryo.register(WebPage.class);
-        kryo.register(WebMarkupContainer.class);
-        kryo.register(Link.class);
-        kryo.register(Label.class);
-        kryo.register(ListView.class);
-        
-        init(kryo);
-    }
+	private final Kryo kryo;
 
-    /**
-     * A method which can be overridden by users to do more configuration
-     * 
-     * @param kryo
-     *      the {@link Kryo} instance to configure
-     */
-    protected void init(final Kryo kryo) {
-        
-    }
+	public KryoSerializer()
+	{
+		this(DEFAULT_BUFFER_SIZE);
+	}
+
+	public KryoSerializer(final Bytes bufferSize)
+	{
+
+		this.bufferSize = Args.notNull(bufferSize, "bufferSize");
+		LOG.debug("Buffer size: ", bufferSize);
+
+		kryo = new KryoReflectionFactorySupport();
+
+		internalInit(kryo);
+	}
+
+	public byte[] serialize(final Object object)
+	{
+		LOG.debug("Going to serialize: ", object);
+		ByteBuffer buffer = getBuffer();
+		kryo.writeClassAndObject(buffer, object);
+		return buffer.array();
+	}
+
+	public Object deserialize(byte[] data)
+	{
+		ByteBuffer buffer = ByteBuffer.wrap(data);
+		Object object = kryo.readClassAndObject(buffer);
+		LOG.debug("Deserialized: ", object);
+		return object;
+	}
+
+	private ByteBuffer getBuffer()
+	{
+		return ByteBuffer.allocate((int)bufferSize.bytes());
+	}
+
+	/**
+	 * Configures {@link Kryo} with some custom {@link Serializer}s and registers some known Wicket
+	 * classes which are known to be serialized sooner or later
+	 * 
+	 * @param kryo
+	 *            the {@link Kryo} instance to configured
+	 */
+	private void internalInit(final Kryo kryo)
+	{
+
+		kryo.register(Arrays.asList("").getClass(), new ArraysAsListSerializer(kryo));
+		kryo.register(Class.class, new ClassSerializer(kryo));
+		kryo.register(Collections.EMPTY_LIST.getClass(), new CollectionsEmptyListSerializer());
+		kryo.register(Collections.EMPTY_MAP.getClass(), new CollectionsEmptyMapSerializer());
+		kryo.register(Collections.EMPTY_SET.getClass(), new CollectionsEmptySetSerializer());
+		kryo.register(Collections.singletonList("").getClass(),
+			new CollectionsSingletonListSerializer(kryo));
+		kryo.register(Collections.singleton("").getClass(), new CollectionsSingletonSetSerializer(
+			kryo));
+		kryo.register(Collections.singletonMap("", "").getClass(),
+			new CollectionsSingletonMapSerializer(kryo));
+		kryo.register(Currency.class, new CurrencySerializer(kryo));
+		kryo.register(GregorianCalendar.class, new GregorianCalendarSerializer());
+		kryo.register(InvocationHandler.class, new JdkProxySerializer(kryo));
+		kryo.register(StringBuffer.class, new StringBufferSerializer(kryo));
+		kryo.register(StringBuilder.class, new StringBuilderSerializer(kryo));
+		UnmodifiableCollectionsSerializer.registerSerializers(kryo);
+		SynchronizedCollectionsSerializer.registerSerializers(kryo);
+		kryo.register(CGLibProxySerializer.CGLibProxyMarker.class, new CGLibProxySerializer(kryo));
+		kryo.register(InvocationHandler.class, new JdkProxySerializer(kryo));
+		kryo.register(WicketChildListSerializer.CLASS, new WicketChildListSerializer(kryo));
+
+		kryo.setRegistrationOptional(true);
+		kryo.register(Panel.class);
+		kryo.register(WebPage.class);
+		kryo.register(WebMarkupContainer.class);
+		kryo.register(Link.class);
+		kryo.register(Label.class);
+		kryo.register(ListView.class);
+
+		init(kryo);
+	}
+
+	/**
+	 * A method which can be overridden by users to do more configuration
+	 * 
+	 * @param kryo
+	 *            the {@link Kryo} instance to configure
+	 */
+	protected void init(final Kryo kryo)
+	{
+
+	}
 }

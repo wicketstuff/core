@@ -17,9 +17,9 @@
 package org.wicketstuff.security.strategies;
 
 /**
- * Factory to provide a strategy for each wicket session. Typically each sesion will hold
- * his own instance of a strategy, but some implementation may choose to provide one
- * instance for multiple sessions.
+ * Factory to provide a strategy for each wicket session. Typically each sesion will hold his own
+ * instance of a strategy, but some implementation may choose to provide one instance for multiple
+ * sessions.
  * 
  * @author marrink
  */

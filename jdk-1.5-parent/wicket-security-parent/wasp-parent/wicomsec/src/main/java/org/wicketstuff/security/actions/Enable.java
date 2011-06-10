@@ -17,10 +17,10 @@
 package org.wicketstuff.security.actions;
 
 /**
- * the right to enable a component. For {@link org.apache.wicket.markup.html.link.Link}
- * this means click on it, for a {@link org.apache.wicket.markup.html.form.Form} submit
- * it, for a {@link org.apache.wicket.markup.html.form.TextField} write to it, etc. Enable
- * must implie {@link Render}
+ * the right to enable a component. For {@link org.apache.wicket.markup.html.link.Link} this means
+ * click on it, for a {@link org.apache.wicket.markup.html.form.Form} submit it, for a
+ * {@link org.apache.wicket.markup.html.form.TextField} write to it, etc. Enable must implie
+ * {@link Render}
  * 
  * @author marrink
  * @see org.apache.wicket.authorization.Action#ENABLE

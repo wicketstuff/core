@@ -22,8 +22,7 @@ import org.apache.wicket.util.license.ApacheLicenseHeaderTestCase;
 
 /**
  * Test that the license headers are in place in this project. The tests are run from
- * {@link ApacheLicenseHeaderTestCase}, but you can add project specific tests here if
- * needed.
+ * {@link ApacheLicenseHeaderTestCase}, but you can add project specific tests here if needed.
  * 
  * @author Frank Bille Jensen (frankbille)
  */
@@ -38,8 +37,8 @@ public class ApacheLicenceHeaderTest extends ApacheLicenseHeaderTestCase
 
 		htmlIgnore = Arrays.asList(
 		/*
-		 * .html in test is very test specific and a license header would confuse and make
-		 * it unclear what the test is about.
+		 * .html in test is very test specific and a license header would confuse and make it
+		 * unclear what the test is about.
 		 */
 		"src/test/java",
 		/*
@@ -49,8 +48,8 @@ public class ApacheLicenceHeaderTest extends ApacheLicenseHeaderTestCase
 
 		cssIgnore = Arrays.asList(
 		/*
-		 * .css in test is very test specific and a license header would confuse and make
-		 * it unclear what the test is about.
+		 * .css in test is very test specific and a license header would confuse and make it unclear
+		 * what the test is about.
 		 */
 		"src/test/java");
 
@@ -58,15 +57,15 @@ public class ApacheLicenceHeaderTest extends ApacheLicenseHeaderTestCase
 
 		javaScriptIgnore = Arrays.asList(
 		/*
-		 * .js in test is very test specific and a license header would confuse and make
-		 * it unclear what the test is about.
+		 * .js in test is very test specific and a license header would confuse and make it unclear
+		 * what the test is about.
 		 */
 		"src/test/java");
 
 		propertiesIgnore = Arrays.asList(
 		/*
-		 * .properties in test is very test specific and a license header would confuse
-		 * and make it unclear what the test is about.
+		 * .properties in test is very test specific and a license header would confuse and make it
+		 * unclear what the test is about.
 		 */
 		"src/test/java");
 	}

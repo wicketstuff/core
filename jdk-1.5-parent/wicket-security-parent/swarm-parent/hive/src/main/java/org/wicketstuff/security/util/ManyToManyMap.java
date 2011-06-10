@@ -24,11 +24,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Maps keys to lists of values and values to lists of keys. The whole concept of key
- * value is a bit vague here because each value is also a key. Consider the following
- * example: A maps to B and C, B maps to D. get(A) would return B and C, get(B) would
- * return A and D, get(C) would return A, get(D) would return B. Each mapping is
- * bidirectional.
+ * Maps keys to lists of values and values to lists of keys. The whole concept of key value is a bit
+ * vague here because each value is also a key. Consider the following example: A maps to B and C, B
+ * maps to D. get(A) would return B and C, get(B) would return A and D, get(C) would return A,
+ * get(D) would return B. Each mapping is bidirectional.
  * 
  * @author marrink
  */
@@ -62,8 +61,8 @@ public class ManyToManyMap<L, R>
 	}
 
 	/**
-	 * Creates map with specified initial size and load factor. For more information about
-	 * these see {@link HashMap}
+	 * Creates map with specified initial size and load factor. For more information about these see
+	 * {@link HashMap}
 	 * 
 	 * @param initialCapacity
 	 * @param loadFactor
@@ -75,9 +74,9 @@ public class ManyToManyMap<L, R>
 	}
 
 	/**
-	 * Adds a key value mapping in this map. Since this maps many to many relations no
-	 * previous mappings will be overridden. The size of the map may or may not change
-	 * depending on whether both objects are already present or not
+	 * Adds a key value mapping in this map. Since this maps many to many relations no previous
+	 * mappings will be overridden. The size of the map may or may not change depending on whether
+	 * both objects are already present or not
 	 * 
 	 * @param left
 	 * @param right
@@ -103,8 +102,8 @@ public class ManyToManyMap<L, R>
 	}
 
 	/**
-	 * Removes a many to many mapping between two objects. The size of the map may or may
-	 * not change depending on on whether or not both objects have other mappings.
+	 * Removes a many to many mapping between two objects. The size of the map may or may not change
+	 * depending on on whether or not both objects have other mappings.
 	 * 
 	 * @param left
 	 *            left side of the mapping
@@ -133,8 +132,8 @@ public class ManyToManyMap<L, R>
 	}
 
 	/**
-	 * Remove all mappings for an object. The size of the map will at least decrease by
-	 * one (if the object is present) but possibly more.
+	 * Remove all mappings for an object. The size of the map will at least decrease by one (if the
+	 * object is present) but possibly more.
 	 * 
 	 * @param left
 	 *            the left side of the many to many mapping
@@ -157,8 +156,8 @@ public class ManyToManyMap<L, R>
 	}
 
 	/**
-	 * Remove all mappings for an object. The size of the map will at least decrease by
-	 * one (if the object is present) but possibly more.
+	 * Remove all mappings for an object. The size of the map will at least decrease by one (if the
+	 * object is present) but possibly more.
 	 * 
 	 * @param right
 	 *            the right side of the many to many mapping
@@ -290,8 +289,8 @@ public class ManyToManyMap<L, R>
 	}
 
 	/**
-	 * Returns an <tt>Iterator</tt> over every left hand mapping in this map. In no
-	 * particular order.
+	 * Returns an <tt>Iterator</tt> over every left hand mapping in this map. In no particular
+	 * order.
 	 * 
 	 * @return an iterator over this map
 	 */
@@ -301,8 +300,8 @@ public class ManyToManyMap<L, R>
 	}
 
 	/**
-	 * Returns an <tt>Iterator</tt> over every rightt hand mapping in this map. In no
-	 * particular order.
+	 * Returns an <tt>Iterator</tt> over every rightt hand mapping in this map. In no particular
+	 * order.
 	 * 
 	 * @return an iterator over this map
 	 */
@@ -317,11 +316,11 @@ public class ManyToManyMap<L, R>
 	@Override
 	public boolean equals(Object obj)
 	{
-		if (obj instanceof ManyToManyMap< ? , ? >)
+		if (obj instanceof ManyToManyMap<?, ?>)
 		{
-			ManyToManyMap< ? , ? > other = (ManyToManyMap< ? , ? >) obj;
-			return lToRMappings.equals(other.lToRMappings)
-				&& rToLMappings.equals(other.lToRMappings);
+			ManyToManyMap<?, ?> other = (ManyToManyMap<?, ?>)obj;
+			return lToRMappings.equals(other.lToRMappings) &&
+				rToLMappings.equals(other.lToRMappings);
 		}
 		return false;
 	}

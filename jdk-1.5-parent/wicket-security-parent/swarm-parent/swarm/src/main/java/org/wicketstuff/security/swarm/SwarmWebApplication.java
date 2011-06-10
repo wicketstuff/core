@@ -24,8 +24,8 @@ import org.wicketstuff.security.swarm.actions.SwarmActionFactory;
 import org.wicketstuff.security.swarm.strategies.SwarmStrategyFactory;
 
 /**
- * A default webapp. It sets up the strategy and action factories and triggers the hive
- * setup. but you must remember to call super in the init or do your own factory setups.
+ * A default webapp. It sets up the strategy and action factories and triggers the hive setup. but
+ * you must remember to call super in the init or do your own factory setups.
  * 
  * @author marrink
  */
@@ -87,8 +87,8 @@ public abstract class SwarmWebApplication extends WaspWebApplication
 	}
 
 	/**
-	 * triggers the setup of the factories and the hive. Please remember to call
-	 * super.init when you override this method.
+	 * triggers the setup of the factories and the hive. Please remember to call super.init when you
+	 * override this method.
 	 * 
 	 * @see org.wicketstuff.security.WaspWebApplication#init()
 	 */
@@ -106,10 +106,9 @@ public abstract class SwarmWebApplication extends WaspWebApplication
 	 * PolicyFileHiveFactory factory = new PolicyFileHiveFactory();
 	 * factory.addPolicyFile("/policy.hive");
 	 * HiveMind.registerHive(getHiveKey(), factory);
-	 * </code> Note that you must setup the actionfactory before you can setup the hive.
-	 * Note that the hive is not automatically unregistered since there is a chance you
-	 * want to share it with another webapp. If you want to unregister the hive please do
-	 * so in the {@link #onDestroy()}
+	 * </code> Note that you must setup the actionfactory before you can setup the hive. Note that
+	 * the hive is not automatically unregistered since there is a chance you want to share it with
+	 * another webapp. If you want to unregister the hive please do so in the {@link #onDestroy()}
 	 */
 	protected abstract void setUpHive();
 

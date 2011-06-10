@@ -19,10 +19,9 @@ package org.wicketstuff.security.hive.config;
 import org.wicketstuff.security.actions.ActionFactory;
 
 /**
- * Policyfile factory with some extra aliases for wicket specific permissions. By default
- * the following aliases are available ComponentPermission, DataPermission and
- * AllPermissions for org.wicketstuff.security.hive.authorization
- * .permissions.ComponentPermission,
+ * Policyfile factory with some extra aliases for wicket specific permissions. By default the
+ * following aliases are available ComponentPermission, DataPermission and AllPermissions for
+ * org.wicketstuff.security.hive.authorization .permissions.ComponentPermission,
  * org.wicketstuff.security.hive.authorization.permissions.DataPermission and
  * org.wicketstuff.security.hive.authorization.permissions.AllPermissions respectively.
  * 

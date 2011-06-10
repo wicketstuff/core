@@ -9,37 +9,46 @@ import org.apache.wicket.util.tester.WicketTester;
 /**
  * Test for {@link PrototypeHeaderContributor}.
  */
-public class PrototypeHeaderContributorTest extends TestCase {
+public class PrototypeHeaderContributorTest extends TestCase
+{
 
-	public void test() throws Exception {
+	public void test() throws Exception
+	{
 		new WicketTester();
 
 		final StringBuilder builder = new StringBuilder();
 
-		HeaderResponse mockResponse = new HeaderResponse() {
+		HeaderResponse mockResponse = new HeaderResponse()
+		{
 
 			@Override
-			protected Response getRealResponse() {
+			protected Response getRealResponse()
+			{
 
-				return new Response() {
+				return new Response()
+				{
 
 					@Override
-					public void write(CharSequence arg0) {
+					public void write(CharSequence arg0)
+					{
 						builder.append(arg0);
 					}
 
 					@Override
-					public Object getContainerResponse() {
+					public Object getContainerResponse()
+					{
 						throw new UnsupportedOperationException();
 					}
 
 					@Override
-					public String encodeURL(CharSequence url) {
+					public String encodeURL(CharSequence url)
+					{
 						throw new UnsupportedOperationException();
 					}
 
 					@Override
-					public void write(byte[] array) {
+					public void write(byte[] array)
+					{
 						throw new UnsupportedOperationException();
 					}
 				};
@@ -49,7 +58,7 @@ public class PrototypeHeaderContributorTest extends TestCase {
 		new PrototypeHeaderContributor().renderHead(null, mockResponse);
 
 		assertEquals(
-				"<script type=\"text/javascript\" src=\"wicket/resource/org.wicketstuff.prototype.PrototypeResourceReference/prototype.js\"></script>\n",
-				builder.toString());
+			"<script type=\"text/javascript\" src=\"wicket/resource/org.wicketstuff.prototype.PrototypeResourceReference/prototype.js\"></script>\n",
+			builder.toString());
 	}
 }

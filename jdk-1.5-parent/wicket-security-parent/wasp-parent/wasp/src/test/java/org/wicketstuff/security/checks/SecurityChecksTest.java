@@ -16,7 +16,7 @@
  */
 package org.wicketstuff.security.checks;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.wicketstuff.security.actions.WaspAction;
@@ -38,18 +38,19 @@ public class SecurityChecksTest
 		runCheck(SecurityChecks.and(null, null), true, true);
 		runCheck(SecurityChecks.and(null), true, true);
 		runCheck(SecurityChecks.and(new BogusCheck(true), null), true, true);
-		runCheck(SecurityChecks.and(new ISecurityCheck[] {new BogusCheck(true)}), true, true);
-		runCheck(SecurityChecks.and(new ISecurityCheck[] {new BogusCheck(true), null}), true, true);
+		runCheck(SecurityChecks.and(new ISecurityCheck[] { new BogusCheck(true) }), true, true);
+		runCheck(SecurityChecks.and(new ISecurityCheck[] { new BogusCheck(true), null }), true,
+			true);
 		runCheck(
-			SecurityChecks.and(new ISecurityCheck[] {new BogusCheck(true),
-				new BogusCheck(true, false)}), true, false);
+			SecurityChecks.and(new ISecurityCheck[] { new BogusCheck(true),
+					new BogusCheck(true, false) }), true, false);
 		runCheck(
-			SecurityChecks.and(new ISecurityCheck[] {new BogusCheck(true),
-				new BogusCheck(false, true)}), false, true);
+			SecurityChecks.and(new ISecurityCheck[] { new BogusCheck(true),
+					new BogusCheck(false, true) }), false, true);
 		runCheck(
-			SecurityChecks.and(new ISecurityCheck[] {new BogusCheck(true), null,
-				new BogusCheck(true), new BogusCheck(false)}), false, false);
-		runCheck(SecurityChecks.and(new ISecurityCheck[] {new BogusCheck(false)}), false, false);
+			SecurityChecks.and(new ISecurityCheck[] { new BogusCheck(true), null,
+					new BogusCheck(true), new BogusCheck(false) }), false, false);
+		runCheck(SecurityChecks.and(new ISecurityCheck[] { new BogusCheck(false) }), false, false);
 		runCheck(SecurityChecks.and(new BogusCheck(false), new BogusCheck(false)), false, false);
 	}
 
@@ -64,18 +65,18 @@ public class SecurityChecksTest
 		runCheck(SecurityChecks.or(null, null), true, true);
 		runCheck(SecurityChecks.or(null), true, true);
 		runCheck(SecurityChecks.or(new BogusCheck(true), null), true, true);
-		runCheck(SecurityChecks.or(new ISecurityCheck[] {new BogusCheck(true)}), true, true);
-		runCheck(SecurityChecks.or(new ISecurityCheck[] {new BogusCheck(true), null}), true, true);
+		runCheck(SecurityChecks.or(new ISecurityCheck[] { new BogusCheck(true) }), true, true);
+		runCheck(SecurityChecks.or(new ISecurityCheck[] { new BogusCheck(true), null }), true, true);
 		runCheck(
-			SecurityChecks.or(new ISecurityCheck[] {new BogusCheck(true),
-				new BogusCheck(true, false)}), true, true);
+			SecurityChecks.or(new ISecurityCheck[] { new BogusCheck(true),
+					new BogusCheck(true, false) }), true, true);
 		runCheck(
-			SecurityChecks.or(new ISecurityCheck[] {new BogusCheck(true),
-				new BogusCheck(false, true)}), true, true);
+			SecurityChecks.or(new ISecurityCheck[] { new BogusCheck(true),
+					new BogusCheck(false, true) }), true, true);
 		runCheck(
-			SecurityChecks.or(new ISecurityCheck[] {new BogusCheck(true), null,
-				new BogusCheck(true), new BogusCheck(false)}), true, true);
-		runCheck(SecurityChecks.or(new ISecurityCheck[] {new BogusCheck(false)}), false, false);
+			SecurityChecks.or(new ISecurityCheck[] { new BogusCheck(true), null,
+					new BogusCheck(true), new BogusCheck(false) }), true, true);
+		runCheck(SecurityChecks.or(new ISecurityCheck[] { new BogusCheck(false) }), false, false);
 		runCheck(SecurityChecks.or(new BogusCheck(false), new BogusCheck(false)), false, false);
 	}
 

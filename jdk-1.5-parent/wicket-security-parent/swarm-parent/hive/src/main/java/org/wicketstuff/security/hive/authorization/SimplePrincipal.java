@@ -19,10 +19,9 @@ package org.wicketstuff.security.hive.authorization;
 import org.wicketstuff.security.hive.authentication.Subject;
 
 /**
- * A very simple principal. It does not imply any subject on its own. This is only
- * provided as a convenience to get started. Developers are likely to build there own
- * principal and decorate it with jpa annotations to store / retrieve it from a database
- * where they are coupled to users.
+ * A very simple principal. It does not imply any subject on its own. This is only provided as a
+ * convenience to get started. Developers are likely to build there own principal and decorate it
+ * with jpa annotations to store / retrieve it from a database where they are coupled to users.
  * 
  * @author marrink
  */
@@ -87,7 +86,7 @@ public class SimplePrincipal implements Principal
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final SimplePrincipal other = (SimplePrincipal) obj;
+		final SimplePrincipal other = (SimplePrincipal)obj;
 		if (name == null)
 		{
 			if (other.name != null)

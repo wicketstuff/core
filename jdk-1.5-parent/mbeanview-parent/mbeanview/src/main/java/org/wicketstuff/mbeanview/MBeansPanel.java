@@ -67,7 +67,7 @@ public class MBeansPanel extends Panel
 	public static final String VIEW_PANEL_ID = "view";
 
 	private static final ResourceReference CSS = new PackageResourceReference(MBeansPanel.class,
-			"css/MBeansPanel.css");
+		"css/MBeansPanel.css");
 
 	public MBeansPanel(String id)
 	{
@@ -127,10 +127,9 @@ public class MBeansPanel extends Panel
 			if (node instanceof DefaultMutableTreeNode)
 			{
 				DefaultMutableTreeNode mutableNode = (DefaultMutableTreeNode)node;
-				if (mutableNode.getChildCount() > 0
-						&& (mutableNode.getChildAt(0) instanceof AttributeNode
-								|| mutableNode.getChildAt(0) instanceof OperationNode || mutableNode
-								.getChildAt(0) instanceof NotificationNode))
+				if (mutableNode.getChildCount() > 0 &&
+					(mutableNode.getChildAt(0) instanceof AttributeNode ||
+						mutableNode.getChildAt(0) instanceof OperationNode || mutableNode.getChildAt(0) instanceof NotificationNode))
 				{
 					return new EmptyPanel(id).add(new SimpleAttributeModifier("style", "width:0;"));
 				}
@@ -140,8 +139,8 @@ public class MBeansPanel extends Panel
 	}
 
 	private TreeModel getTreeModel(MbeanServerLocator reachMbeanServer)
-			throws MalformedObjectNameException, NullPointerException, InstanceNotFoundException,
-			IntrospectionException, ReflectionException
+		throws MalformedObjectNameException, NullPointerException, InstanceNotFoundException,
+		IntrospectionException, ReflectionException
 	{
 		DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("root");
 		TreeModel model = new DefaultTreeModel(rootNode);
@@ -153,7 +152,7 @@ public class MBeansPanel extends Panel
 
 			// expand the domain by querying its names
 			Set<ObjectName> domainNames = reachMbeanServer.get().queryNames(null,
-					new ObjectName(domain + ":*"));
+				new ObjectName(domain + ":*"));
 			addDomainsCildrens(domainNode, DataUtil.parseToPropsSet(domainNames));
 
 			// iterating domain names and to set their related objects instance
@@ -177,7 +176,7 @@ public class MBeansPanel extends Panel
 						}
 					}
 					Set<ObjectInstance> mBeans = reachMbeanServer.get().queryMBeans(null,
-							new ObjectName(query.toString()));
+						new ObjectName(query.toString()));
 					for (ObjectInstance objectInstance : mBeans)
 					{
 						((MbeanNode)node).setObjectInstance(objectInstance, reachMbeanServer);
@@ -273,8 +272,8 @@ public class MBeansPanel extends Panel
 		}
 
 		public void setObjectInstance(ObjectInstance objectInstance,
-				MbeanServerLocator reachMbeanServer) throws InstanceNotFoundException,
-				IntrospectionException, ReflectionException
+			MbeanServerLocator reachMbeanServer) throws InstanceNotFoundException,
+			IntrospectionException, ReflectionException
 		{
 			this.objectInstance = objectInstance;
 			mBeanServerLocator = reachMbeanServer;
@@ -293,7 +292,7 @@ public class MBeansPanel extends Panel
 			if (beanNotificationInfos.length > 0)
 			{
 				DefaultMutableTreeNode notificationsNode = new DefaultMutableTreeNode(
-						"Notification");
+					"Notification");
 				add(notificationsNode);
 				for (MBeanNotificationInfo beanNotificationInfo : beanNotificationInfos)
 				{
@@ -338,7 +337,7 @@ public class MBeansPanel extends Panel
 		public Component getView(String id)
 		{
 			return new AttributeValuesPanel(id, objectInstance.getObjectName(), beanAttributeInfos,
-					mBeanServerLocator);
+				mBeanServerLocator);
 		}
 
 		@Override
@@ -363,7 +362,7 @@ public class MBeansPanel extends Panel
 		public Component getView(String wicketId)
 		{
 			return new AttributeValuesPanel(wicketId, objectInstance.getObjectName(),
-					new MBeanAttributeInfo[] { attributeInfo }, mBeanServerLocator);
+				new MBeanAttributeInfo[] { attributeInfo }, mBeanServerLocator);
 		}
 
 		@Override
@@ -392,7 +391,7 @@ public class MBeansPanel extends Panel
 		public Component getView(String id)
 		{
 			return new OperationsPanel(id, objectInstance.getObjectName(), beanOperationInfos,
-					mBeanServerLocator);
+				mBeanServerLocator);
 		}
 
 		@Override
@@ -417,7 +416,7 @@ public class MBeansPanel extends Panel
 		public Component getView(String wicketId)
 		{
 			return new OperationsPanel(wicketId, objectInstance.getObjectName(),
-					new MBeanOperationInfo[] { beanOperationInfo }, mBeanServerLocator);
+				new MBeanOperationInfo[] { beanOperationInfo }, mBeanServerLocator);
 		}
 
 		@Override

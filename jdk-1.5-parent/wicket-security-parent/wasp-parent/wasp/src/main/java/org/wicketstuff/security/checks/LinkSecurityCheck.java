@@ -28,15 +28,14 @@ import org.wicketstuff.security.components.SecureComponentHelper;
 import org.wicketstuff.security.models.ISecureModel;
 
 /**
- * A security check designed for {@link Link}s. This check has 2 modes for the
- * {@link Render} action. In the regular mode the check behaves as a
- * {@link ClassSecurityCheck} meaning the user must have render rights for the target
- * class of the link, If not the link will not be rendered. In the alternative mode the
- * check behaves as a {@link ComponentSecurityCheck} (render action only) allowing the
- * link to be visible but disabled. Note that for all other actions this check behaves as
- * a ClassSecurityCheck (with option to check the model). Although the check was designed
- * to work on pages it now also works on any class. So {@link Panel} and the like may be
- * used as clickTarget
+ * A security check designed for {@link Link}s. This check has 2 modes for the {@link Render}
+ * action. In the regular mode the check behaves as a {@link ClassSecurityCheck} meaning the user
+ * must have render rights for the target class of the link, If not the link will not be rendered.
+ * In the alternative mode the check behaves as a {@link ComponentSecurityCheck} (render action
+ * only) allowing the link to be visible but disabled. Note that for all other actions this check
+ * behaves as a ClassSecurityCheck (with option to check the model). Although the check was designed
+ * to work on pages it now also works on any class. So {@link Panel} and the like may be used as
+ * clickTarget
  * 
  * @author marrink
  */
@@ -44,7 +43,7 @@ public class LinkSecurityCheck extends ComponentSecurityCheck
 {
 	private static final long serialVersionUID = 1L;
 
-	private final Class< ? > clickTarget;
+	private final Class<?> clickTarget;
 
 	private boolean useAlternativeRenderCheck = false;
 
@@ -52,15 +51,15 @@ public class LinkSecurityCheck extends ComponentSecurityCheck
 	 * Constructs a new check, the check uses the regular mode.
 	 * 
 	 * @param component
-	 *            the link, although any component may be used this should typically be a
-	 *            subclass of {@link AbstractLink}
+	 *            the link, although any component may be used this should typically be a subclass
+	 *            of {@link AbstractLink}
 	 * @param clickTarget
-	 *            the {@link Class} redirected to when clicking on the link. This could be
-	 *            a {@link Page} or a {@link Panel} or something completely different.
+	 *            the {@link Class} redirected to when clicking on the link. This could be a
+	 *            {@link Page} or a {@link Panel} or something completely different.
 	 * @throws IllegalArgumentException
 	 *             if clickTarget is null
 	 */
-	public LinkSecurityCheck(Component component, Class< ? > clickTarget)
+	public LinkSecurityCheck(Component component, Class<?> clickTarget)
 	{
 		super(component);
 		this.clickTarget = clickTarget;
@@ -74,16 +73,16 @@ public class LinkSecurityCheck extends ComponentSecurityCheck
 	 * @param component
 	 *            the link
 	 * @param clickTarget
-	 *            the {@link Class} redirected to when clicking on the link. This could be
-	 *            a {@link Page} or a {@link Panel} or something completely different.
+	 *            the {@link Class} redirected to when clicking on the link. This could be a
+	 *            {@link Page} or a {@link Panel} or something completely different.
 	 * 
 	 * @param checkSecureModelIfExists
 	 *            forces the model to be checked after this check is fired
 	 * @throws IllegalArgumentException
 	 *             if clickTarget is null
 	 */
-	public LinkSecurityCheck(AbstractLink component, Class< ? > clickTarget,
-			boolean checkSecureModelIfExists)
+	public LinkSecurityCheck(AbstractLink component, Class<?> clickTarget,
+		boolean checkSecureModelIfExists)
 	{
 		super(component, checkSecureModelIfExists);
 		this.clickTarget = clickTarget;
@@ -96,7 +95,7 @@ public class LinkSecurityCheck extends ComponentSecurityCheck
 	 * 
 	 * @return Returns the clickTarget.
 	 */
-	public final Class< ? > getClickTarget()
+	public final Class<?> getClickTarget()
 	{
 		return clickTarget;
 	}
@@ -107,15 +106,15 @@ public class LinkSecurityCheck extends ComponentSecurityCheck
 	@Override
 	public boolean isActionAuthorized(WaspAction action)
 	{
-		if (isUseAlternativeRenderCheck()
-			&& !action.implies(getActionFactory().getAction(Enable.class)))
+		if (isUseAlternativeRenderCheck() &&
+			!action.implies(getActionFactory().getAction(Enable.class)))
 			return super.isActionAuthorized(action);
 		// no authentication like in super since the regular instantiation
 		// checks will handle authentication
 		boolean result = getStrategy().isClassAuthorized(getClickTarget(), action);
 		if (result && checkSecureModel() && SecureComponentHelper.hasSecureModel(getComponent()))
-			return ((ISecureModel< ? >) getComponent().getDefaultModel()).isAuthorized(
-				getComponent(), action);
+			return ((ISecureModel<?>)getComponent().getDefaultModel()).isAuthorized(getComponent(),
+				action);
 		return result;
 
 	}
@@ -131,10 +130,10 @@ public class LinkSecurityCheck extends ComponentSecurityCheck
 	}
 
 	/**
-	 * Sets which mode to use. In regular mode this check behaves as a
-	 * {@link ClassSecurityCheck}, using the same check for render and enabled. In
-	 * alternative mode this check behaves as a {@link ComponentSecurityCheck} for render
-	 * actions and as a {@link ClassSecurityCheck} for enabled actions.
+	 * Sets which mode to use. In regular mode this check behaves as a {@link ClassSecurityCheck},
+	 * using the same check for render and enabled. In alternative mode this check behaves as a
+	 * {@link ComponentSecurityCheck} for render actions and as a {@link ClassSecurityCheck} for
+	 * enabled actions.
 	 * 
 	 * @param useAlternativeRenderCheck
 	 *            true, if you want to use the alternative mode.

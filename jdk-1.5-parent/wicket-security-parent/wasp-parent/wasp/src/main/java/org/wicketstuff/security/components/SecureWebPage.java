@@ -28,9 +28,9 @@ import org.wicketstuff.security.strategies.ClassAuthorizationStrategy;
 /**
  * Basic implementation of a SecureWebPage. Note that any check added to this page using
  * {@link #setSecurityCheck(ISecurityCheck)} is too late to be considered for
- * {@link IAuthorizationStrategy#isInstantiationAuthorized(Class)} so please check your
- * wasp implementation for details on how to do that. Or see
- * {@link ClassAuthorizationStrategy} for one way of doing it.
+ * {@link IAuthorizationStrategy#isInstantiationAuthorized(Class)} so please check your wasp
+ * implementation for details on how to do that. Or see {@link ClassAuthorizationStrategy} for one
+ * way of doing it.
  * 
  * @author marrink
  */
@@ -67,7 +67,7 @@ public class SecureWebPage extends WebPage implements ISecurePage
 	/**
 	 * @param model
 	 */
-	public SecureWebPage(IModel< ? > model)
+	public SecureWebPage(IModel<?> model)
 	{
 		super(model);
 		setSecurityCheck(new ComponentSecurityCheck(this));

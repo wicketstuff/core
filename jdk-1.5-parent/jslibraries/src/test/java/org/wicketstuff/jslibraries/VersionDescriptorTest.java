@@ -20,33 +20,48 @@ package org.wicketstuff.jslibraries;
 
 import junit.framework.TestCase;
 
-public class VersionDescriptorTest extends TestCase {
+public class VersionDescriptorTest extends TestCase
+{
 
-	public void testLatestOfVersionDescriptor() throws Exception {
+	public void testLatestOfVersionDescriptor() throws Exception
+	{
 		VersionDescriptor vd = VersionDescriptor.alwaysLatestOfVersion(Library.JQUERY, 1, 1);
 		assertEquals(new Version(1, 1, 4), vd.getVersion(LocalProvider.DEFAULT));
 	}
 
-	public void testExactVersionDescriptor() throws Exception {
+	public void testExactVersionDescriptor() throws Exception
+	{
 		VersionDescriptor vd = VersionDescriptor.exactVersion(Library.JQUERY, 1, 2);
 		assertEquals(new Version(1, 2), vd.getVersion(LocalProvider.DEFAULT));
-		
+
 		vd = VersionDescriptor.exactVersion(Library.JQUERY, 1, 2, 6);
 		assertEquals(new Version(1, 2, 6), vd.getVersion(LocalProvider.DEFAULT));
 	}
 
-	public void testAlwaysLatestDescriptor() throws Exception {
+	public void testAlwaysLatestDescriptor() throws Exception
+	{
 		// this test will obviously fail every time we add a new JQUERY version
 		VersionDescriptor vd = VersionDescriptor.alwaysLatest(Library.JQUERY);
 		assertEquals(new Version(1, 4, 2), vd.getVersion(LocalProvider.DEFAULT));
 	}
-	
-	public void testLibraryWithManyVersionDepths() throws Exception {
-		assertEquals(new Version(1, 5, 1, 2), VersionDescriptor.alwaysLatestOfVersion(Library.PROTOTYPE, 1, 5).getVersion(LocalProvider.DEFAULT));
-		assertEquals(new Version(1, 5, 1, 2), VersionDescriptor.alwaysLatestOfVersion(Library.PROTOTYPE, 1, 5, 1).getVersion(LocalProvider.DEFAULT));
-		assertEquals(new Version(1, 6, 0), VersionDescriptor.exactVersion(Library.PROTOTYPE, 1, 6, 0).getVersion(LocalProvider.DEFAULT));
+
+	public void testLibraryWithManyVersionDepths() throws Exception
+	{
+		assertEquals(
+			new Version(1, 5, 1, 2),
+			VersionDescriptor.alwaysLatestOfVersion(Library.PROTOTYPE, 1, 5).getVersion(
+				LocalProvider.DEFAULT));
+		assertEquals(
+			new Version(1, 5, 1, 2),
+			VersionDescriptor.alwaysLatestOfVersion(Library.PROTOTYPE, 1, 5, 1).getVersion(
+				LocalProvider.DEFAULT));
+		assertEquals(
+			new Version(1, 6, 0),
+			VersionDescriptor.exactVersion(Library.PROTOTYPE, 1, 6, 0).getVersion(
+				LocalProvider.DEFAULT));
 		// this test will obviously fail every time we add a new PROTOTYPE version
-		assertEquals(new Version(1, 7), VersionDescriptor.alwaysLatest(Library.PROTOTYPE).getVersion(LocalProvider.DEFAULT));
-		
+		assertEquals(new Version(1, 7), VersionDescriptor.alwaysLatest(Library.PROTOTYPE)
+			.getVersion(LocalProvider.DEFAULT));
+
 	}
 }

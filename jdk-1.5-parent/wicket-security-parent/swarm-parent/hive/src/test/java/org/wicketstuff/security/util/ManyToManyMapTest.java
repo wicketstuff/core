@@ -37,8 +37,7 @@ public class ManyToManyMapTest extends TestCase
 
 	/**
 	 * Test method for
-	 * {@link org.wicketstuff.security.util.ManyToManyMap#add(java.lang.Object, java.lang.Object)}
-	 * .
+	 * {@link org.wicketstuff.security.util.ManyToManyMap#add(java.lang.Object, java.lang.Object)} .
 	 */
 	public void testAdd()
 	{
@@ -98,8 +97,8 @@ public class ManyToManyMapTest extends TestCase
 
 	/**
 	 * Test method for
-	 * {@link org.wicketstuff.security.util.ManyToManyMap#removeAllMappingsForLeft(Object)}
-	 * and right.
+	 * {@link org.wicketstuff.security.util.ManyToManyMap#removeAllMappingsForLeft(Object)} and
+	 * right.
 	 */
 	public void testRemoveAllMappings()
 	{
@@ -121,8 +120,8 @@ public class ManyToManyMapTest extends TestCase
 	}
 
 	/**
-	 * Test method for
-	 * {@link org.wicketstuff.security.util.ManyToManyMap#getLeft(java.lang.Object)} .
+	 * Test method for {@link org.wicketstuff.security.util.ManyToManyMap#getLeft(java.lang.Object)}
+	 * .
 	 */
 	public void testGet()
 	{
@@ -151,8 +150,8 @@ public class ManyToManyMapTest extends TestCase
 
 	/**
 	 * Test method for
-	 * {@link org.wicketstuff.security.util.ManyToManyMap#numberOfmappingsForLeft(Object)}
-	 * and right.
+	 * {@link org.wicketstuff.security.util.ManyToManyMap#numberOfmappingsForLeft(Object)} and
+	 * right.
 	 */
 	public void testNumberOfmappings()
 	{
@@ -165,8 +164,7 @@ public class ManyToManyMapTest extends TestCase
 	}
 
 	/**
-	 * Test method for
-	 * {@link org.wicketstuff.security.util.ManyToManyMap#containsLeft(Object)} and
+	 * Test method for {@link org.wicketstuff.security.util.ManyToManyMap#containsLeft(Object)} and
 	 * right.
 	 */
 	public void testContains()

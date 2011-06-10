@@ -18,8 +18,8 @@ package org.wicketstuff.security.actions;
 
 /**
  * The right to render / read (from) the specified {@link org.apache.wicket.Component} /
- * {@link org.apache.wicket.model.IModel}. Components might use this to turn visible on or
- * off. Render implies {@link Access}
+ * {@link org.apache.wicket.model.IModel}. Components might use this to turn visible on or off.
+ * Render implies {@link Access}
  * 
  * @author marrink
  * @see org.apache.wicket.authorization.Action#RENDER

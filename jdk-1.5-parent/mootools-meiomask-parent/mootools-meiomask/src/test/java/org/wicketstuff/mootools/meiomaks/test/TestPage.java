@@ -48,7 +48,7 @@ public class TestPage extends WebPage
 			testModel));
 
 		add(form);
-		form.add(new CustomMaskField<String>("fixed","####-##-##"));
+		form.add(new CustomMaskField<String>("fixed", "####-##-##"));
 		form.add(new MeioMaskField<String>("fixedPhone", MaskType.FixedPhone));
 		form.add(new MeioMaskField<String>("fixedPhoneUs", MaskType.FixedPhoneUs));
 		form.add(new MeioMaskField<String>("fixedCpf", MaskType.FixedCpf));

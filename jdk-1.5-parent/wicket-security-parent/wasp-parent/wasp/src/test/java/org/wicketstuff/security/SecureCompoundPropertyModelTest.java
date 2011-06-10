@@ -16,7 +16,11 @@
  */
 package org.wicketstuff.security;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -104,8 +108,8 @@ public class SecureCompoundPropertyModelTest extends WaspAbstractTestBase
 		mock.assertRenderedPage(SecureModelPage.class);
 		tag = mock.getTagByWicketId("input");
 		assertTrue(tag.getAttributeIs("value", writings));
-		assertEquals(SecureCompoundPropertyModel.class.getName() + ":input", mock
-			.getComponentFromLastRenderedPage("input").getDefaultModel().toString());
+		assertEquals(SecureCompoundPropertyModel.class.getName() + ":input",
+			mock.getComponentFromLastRenderedPage("input").getDefaultModel().toString());
 
 	}
 

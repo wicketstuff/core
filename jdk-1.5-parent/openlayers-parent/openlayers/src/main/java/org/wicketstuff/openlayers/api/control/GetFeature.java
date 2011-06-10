@@ -68,8 +68,7 @@ public class GetFeature extends AbstractControl
 		parameters = new LinkedHashMap<String, String>();
 
 		// default to getting the protocol from the existing WMS layer.
-		parameters.put("protocol", "OpenLayers.Protocol.WFS.fromWMSLayer(wms" + layer.getId() +
-			")");
+		parameters.put("protocol", "OpenLayers.Protocol.WFS.fromWMSLayer(wms" + layer.getId() + ")");
 
 		parameters.put("box", String.valueOf(box));
 		parameters.put("hover", String.valueOf(hover));

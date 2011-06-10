@@ -44,7 +44,7 @@ public abstract class AbstractSwarmStrategy extends ClassAuthorizationStrategy
 	{
 	}
 
-	public AbstractSwarmStrategy(Class< ? extends ISecureComponent> secureClass)
+	public AbstractSwarmStrategy(Class<? extends ISecureComponent> secureClass)
 	{
 		super(secureClass);
 	}
@@ -52,8 +52,7 @@ public abstract class AbstractSwarmStrategy extends ClassAuthorizationStrategy
 	public abstract boolean hasPermission(Permission permission, Subject subject);
 
 	/**
-	 * The currently logged in subject, note that at any time there is at most 1 subject
-	 * logged in.
+	 * The currently logged in subject, note that at any time there is at most 1 subject logged in.
 	 * 
 	 * @return the subject or null if no login has succeeded yet
 	 */
@@ -82,7 +81,7 @@ public abstract class AbstractSwarmStrategy extends ClassAuthorizationStrategy
 	 * @see org.wicketstuff.security.strategies.WaspAuthorizationStrategy#isClassAuthenticated(java.lang.Class)
 	 */
 	@Override
-	public boolean isClassAuthenticated(Class< ? > clazz)
+	public boolean isClassAuthenticated(Class<?> clazz)
 	{
 		return loginContainer.isClassAuthenticated(clazz);
 	}
@@ -92,7 +91,7 @@ public abstract class AbstractSwarmStrategy extends ClassAuthorizationStrategy
 	 *      org.wicketstuff.security.actions.WaspAction)
 	 */
 	@Override
-	public boolean isClassAuthorized(Class< ? > clazz, WaspAction action)
+	public boolean isClassAuthorized(Class<?> clazz, WaspAction action)
 	{
 		if (hasPermission(new ComponentPermission(SecureComponentHelper.alias(clazz), action)))
 			return true;
@@ -135,26 +134,25 @@ public abstract class AbstractSwarmStrategy extends ClassAuthorizationStrategy
 	 *      org.apache.wicket.Component)
 	 */
 	@Override
-	public boolean isModelAuthenticated(IModel< ? > model, Component component)
+	public boolean isModelAuthenticated(IModel<?> model, Component component)
 	{
 		return loginContainer.isModelAuthenticated(model, component);
 	}
 
 	/**
-	 * Checks if some action is granted on the model. Although {@link SwarmModel}s are
-	 * preferred any {@link ISecureModel} can be used, in that case it uses the
-	 * {@link ISecureModel#toString()} method as the name of the {@link DataPermission}
+	 * Checks if some action is granted on the model. Although {@link SwarmModel}s are preferred any
+	 * {@link ISecureModel} can be used, in that case it uses the {@link ISecureModel#toString()}
+	 * method as the name of the {@link DataPermission}
 	 * 
 	 * @see org.wicketstuff.security.strategies.WaspAuthorizationStrategy#isModelAuthorized(ISecureModel,
 	 *      Component, WaspAction)
 	 */
 	@Override
-	public boolean isModelAuthorized(ISecureModel< ? > model, Component component, WaspAction action)
+	public boolean isModelAuthorized(ISecureModel<?> model, Component component, WaspAction action)
 	{
 		DataPermission permission;
-		if (model instanceof SwarmModel< ? >)
-			permission =
-				new DataPermission(component, (SwarmModel< ? >) model, (SwarmAction) action);
+		if (model instanceof SwarmModel<?>)
+			permission = new DataPermission(component, (SwarmModel<?>)model, (SwarmAction)action);
 		else
 			permission = new DataPermission(String.valueOf(model), action);
 		if (hasPermission(permission))

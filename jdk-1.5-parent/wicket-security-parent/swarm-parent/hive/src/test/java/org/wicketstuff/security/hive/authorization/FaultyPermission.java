@@ -18,8 +18,8 @@ package org.wicketstuff.security.hive.authorization;
 
 
 /**
- * Permission that does not follow the rule that all permissions must have at least a
- * constructor accepting a single String parameter.
+ * Permission that does not follow the rule that all permissions must have at least a constructor
+ * accepting a single String parameter.
  * 
  * @author marrink
  */
@@ -52,7 +52,7 @@ public class FaultyPermission extends Permission
 			return false;
 		if (obj.getClass().equals(this.getClass()))
 		{
-			FaultyPermission other = (FaultyPermission) obj;
+			FaultyPermission other = (FaultyPermission)obj;
 			return other.getName().equals(getName()) && other.getActions().equals(getActions());
 		}
 		return false;
@@ -91,9 +91,9 @@ public class FaultyPermission extends Permission
 			return false;
 		if (permission.getClass().equals(this.getClass()))
 		{
-			FaultyPermission other = (FaultyPermission) permission;
-			return other.getName().equals(getName())
-				&& getActions().indexOf(other.getActions()) > -1;
+			FaultyPermission other = (FaultyPermission)permission;
+			return other.getName().equals(getName()) &&
+				getActions().indexOf(other.getActions()) > -1;
 		}
 		return false;
 	}

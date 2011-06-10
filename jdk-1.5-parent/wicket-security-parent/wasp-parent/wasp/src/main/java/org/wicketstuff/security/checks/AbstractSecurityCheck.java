@@ -51,7 +51,7 @@ public abstract class AbstractSecurityCheck implements ISecurityCheck
 	 */
 	protected ActionFactory getActionFactory()
 	{
-		return ((WaspApplication) Application.get()).getActionFactory();
+		return ((WaspApplication)Application.get()).getActionFactory();
 	}
 
 	/**
@@ -71,15 +71,14 @@ public abstract class AbstractSecurityCheck implements ISecurityCheck
 	 * @return the login page
 	 * @see WaspApplication#getLoginPage()
 	 */
-	protected final Class< ? extends Page> getLoginPage()
+	protected final Class<? extends Page> getLoginPage()
 	{
-		return ((WaspApplication) Application.get()).getLoginPage();
+		return ((WaspApplication)Application.get()).getLoginPage();
 	}
 
 	/**
-	 * Shortcut to {@link ISecurityCheck#isActionAuthorized(WaspAction)} if you quickly
-	 * want to check an action. Note that this is the same as doing something like </br>
-	 * <code>
+	 * Shortcut to {@link ISecurityCheck#isActionAuthorized(WaspAction)} if you quickly want to
+	 * check an action. Note that this is the same as doing something like </br> <code>
 	 * check.isActionAuthorized(((WaspApplication)Application.get()).getActionFactory().getAction(Render.class));
 	 * </code>
 	 * 
@@ -88,11 +87,11 @@ public abstract class AbstractSecurityCheck implements ISecurityCheck
 	 * @throws WicketRuntimeException
 	 *             if the class is not an instance of {@link WaspAction}
 	 */
-	public boolean isActionAuthorized(Class< ? extends WaspAction> waspAction)
+	public boolean isActionAuthorized(Class<? extends WaspAction> waspAction)
 	{
 		if (!WaspAction.class.isAssignableFrom(waspAction))
-			throw new WicketRuntimeException("The class: " + waspAction + " is not a valid "
-				+ WaspAction.class);
+			throw new WicketRuntimeException("The class: " + waspAction + " is not a valid " +
+				WaspAction.class);
 		return isActionAuthorized(getActionFactory().getAction(waspAction));
 	}
 }

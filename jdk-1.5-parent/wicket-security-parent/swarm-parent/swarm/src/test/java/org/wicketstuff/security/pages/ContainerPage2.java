@@ -46,7 +46,7 @@ public class ContainerPage2 extends SecureWebPage
 	 * @author marrink
 	 */
 	private static final class SecureMarkupContainer extends WebMarkupContainer implements
-			ISecureComponent
+		ISecureComponent
 	{
 		private static final long serialVersionUID = 1L;
 

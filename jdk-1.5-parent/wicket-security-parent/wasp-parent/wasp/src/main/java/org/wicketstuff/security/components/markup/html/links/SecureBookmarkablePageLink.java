@@ -26,16 +26,16 @@ import org.wicketstuff.security.components.ISecureComponent;
 import org.wicketstuff.security.components.SecureComponentHelper;
 
 /**
- * BookmarkablePagelink with visibility / clickability based on user rights. Requires
- * render rights to be visible, and enable rights to be clickable. This class is by
- * default outfitted with a {@link LinkSecurityCheck}, please see its documentation on how
- * to enable the alternative security check
+ * BookmarkablePagelink with visibility / clickability based on user rights. Requires render rights
+ * to be visible, and enable rights to be clickable. This class is by default outfitted with a
+ * {@link LinkSecurityCheck}, please see its documentation on how to enable the alternative security
+ * check
  * 
  * @author marrink
  * @see LinkSecurityCheck
  */
 public class SecureBookmarkablePageLink<T> extends BookmarkablePageLink<T> implements
-		ISecureComponent
+	ISecureComponent
 {
 	private static final long serialVersionUID = 1L;
 
@@ -43,7 +43,7 @@ public class SecureBookmarkablePageLink<T> extends BookmarkablePageLink<T> imple
 	 * @param id
 	 * @param pageClass
 	 */
-	public SecureBookmarkablePageLink(String id, Class< ? extends Page> pageClass)
+	public SecureBookmarkablePageLink(String id, Class<? extends Page> pageClass)
 	{
 		super(id, pageClass);
 		setSecurityCheck(new LinkSecurityCheck(this, pageClass));
@@ -54,8 +54,8 @@ public class SecureBookmarkablePageLink<T> extends BookmarkablePageLink<T> imple
 	 * @param pageClass
 	 * @param parameters
 	 */
-	public SecureBookmarkablePageLink(String id, Class< ? extends Page> pageClass,
-			PageParameters parameters)
+	public SecureBookmarkablePageLink(String id, Class<? extends Page> pageClass,
+		PageParameters parameters)
 	{
 		super(id, pageClass, parameters);
 		setSecurityCheck(new LinkSecurityCheck(this, pageClass));

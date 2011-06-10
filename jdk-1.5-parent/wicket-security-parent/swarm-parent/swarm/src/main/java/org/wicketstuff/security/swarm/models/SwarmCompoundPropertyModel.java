@@ -21,14 +21,14 @@ import org.apache.wicket.model.IWrapModel;
 import org.wicketstuff.security.models.SecureCompoundPropertyModel;
 
 /**
- * Swarm version of {@link SecureCompoundPropertyModel}. Because of the wrappedmodel it
- * was not as easy as slapping an implements SwarmModel on this class, now it is as easy
- * as providing an implementation for {@link SwarmModel#getSecurityId(Component)}
+ * Swarm version of {@link SecureCompoundPropertyModel}. Because of the wrappedmodel it was not as
+ * easy as slapping an implements SwarmModel on this class, now it is as easy as providing an
+ * implementation for {@link SwarmModel#getSecurityId(Component)}
  * 
  * @author marrink
  */
 public abstract class SwarmCompoundPropertyModel<T> extends SecureCompoundPropertyModel<T>
-		implements SwarmModel<T>
+	implements SwarmModel<T>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -52,13 +52,13 @@ public abstract class SwarmCompoundPropertyModel<T> extends SecureCompoundProper
 	}
 
 	/**
-	 * A wrapping model delegating all security calls to the
-	 * {@link SwarmCompoundPropertyModel} instance.
+	 * A wrapping model delegating all security calls to the {@link SwarmCompoundPropertyModel}
+	 * instance.
 	 * 
 	 * @author marrink
 	 */
 	protected class AttachedSwarmCompoundPropertyModel<Y> extends
-			AttachedSecureCompoundPropertyModel<Y> implements SwarmModel<Y>
+		AttachedSecureCompoundPropertyModel<Y> implements SwarmModel<Y>
 	{
 		private static final long serialVersionUID = 1L;
 

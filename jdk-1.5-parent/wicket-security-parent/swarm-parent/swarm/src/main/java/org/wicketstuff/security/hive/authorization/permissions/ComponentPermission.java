@@ -79,8 +79,8 @@ public class ComponentPermission extends ActionPermission
 	}
 
 	/**
-	 * Overrides {@link ActionPermission#implies(Permission)} to also include inheritance
-	 * between several levels of parent containers. The same rules still apply
+	 * Overrides {@link ActionPermission#implies(Permission)} to also include inheritance between
+	 * several levels of parent containers. The same rules still apply
 	 * 
 	 * @see Permission#implies(Permission)
 	 */
@@ -89,10 +89,10 @@ public class ComponentPermission extends ActionPermission
 	{
 		if (permission instanceof ComponentPermission)
 		{
-			ComponentPermission other = (ComponentPermission) permission;
+			ComponentPermission other = (ComponentPermission)permission;
 			if (getAction().implies(getAction().getActionFactory().getAction(Inherit.class)))
-				return getAction().implies(other.getAction())
-					&& (implies(other.path, path) || impliesHierarchy(other));
+				return getAction().implies(other.getAction()) &&
+					(implies(other.path, path) || impliesHierarchy(other));
 			return getAction().implies(other.getAction()) && equals(other.path, path);
 		}
 		return false;

@@ -46,7 +46,7 @@ public class GaeObjectSerializer implements ISerializer
 		catch (Exception e)
 		{
 			log.error("Error serializing object " + object.getClass() + " [object=" + object + "]",
-					e);
+				e);
 		}
 		return null;
 	}

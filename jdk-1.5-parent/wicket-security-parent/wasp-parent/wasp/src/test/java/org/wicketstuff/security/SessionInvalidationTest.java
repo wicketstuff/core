@@ -16,7 +16,10 @@
  */
 package org.wicketstuff.security;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,11 +49,10 @@ public class SessionInvalidationTest extends WaspAbstractTestBase
 		Session session = Session.get();
 		assertNotNull(session);
 		assertEquals(session, mock.getSession());
-		assertTrue(((WaspSession) mock.getSession()).logoff(null));
+		assertTrue(((WaspSession)mock.getSession()).logoff(null));
 		mock.processRequest();
 		assertTrue(session.isSessionInvalidated());
-		assertFalse(((WaspAuthorizationStrategy) mock.getSession().getAuthorizationStrategy())
-			.isUserAuthenticated());
+		assertFalse(((WaspAuthorizationStrategy)mock.getSession().getAuthorizationStrategy()).isUserAuthenticated());
 
 	}
 
@@ -66,25 +68,22 @@ public class SessionInvalidationTest extends WaspAbstractTestBase
 		assertEquals(session, mock.getSession());
 
 		Map<String, WaspAction> authorized = new HashMap<String, WaspAction>();
-		authorized.put(SecureComponentHelper.alias(SecureForm.class), application
-			.getActionFactory().getAction("access render"));
+		authorized.put(SecureComponentHelper.alias(SecureForm.class),
+			application.getActionFactory().getAction("access render"));
 		login(authorized);
 		mock.processRequest();
-		assertTrue(((WaspAuthorizationStrategy) mock.getSession().getAuthorizationStrategy())
-			.isUserAuthenticated());
+		assertTrue(((WaspAuthorizationStrategy)mock.getSession().getAuthorizationStrategy()).isUserAuthenticated());
 		assertEquals(session, mock.getSession());
 		logoff(authorized);
 
 		mock.processRequest();
-		assertTrue(((WaspAuthorizationStrategy) mock.getSession().getAuthorizationStrategy())
-			.isUserAuthenticated());
+		assertTrue(((WaspAuthorizationStrategy)mock.getSession().getAuthorizationStrategy()).isUserAuthenticated());
 		assertEquals(session, mock.getSession());
 
-		((WaspSession) mock.getSession()).logoff(null);
+		((WaspSession)mock.getSession()).logoff(null);
 		mock.processRequest();
 		assertTrue(session.isSessionInvalidated());
-		assertFalse(((WaspAuthorizationStrategy) mock.getSession().getAuthorizationStrategy())
-			.isUserAuthenticated());
+		assertFalse(((WaspAuthorizationStrategy)mock.getSession().getAuthorizationStrategy()).isUserAuthenticated());
 
 	}
 

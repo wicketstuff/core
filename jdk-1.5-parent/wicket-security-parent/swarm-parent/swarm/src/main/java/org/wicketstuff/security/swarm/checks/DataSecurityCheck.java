@@ -39,8 +39,8 @@ public class DataSecurityCheck extends AbstractSecurityCheck
 	private final String securityId;
 
 	/**
-	 * Creates a check that will verify if the current user has a DataPermission with the
-	 * specified name.
+	 * Creates a check that will verify if the current user has a DataPermission with the specified
+	 * name.
 	 * 
 	 * @param securityId
 	 *            the name of the DataPermission in your policy file
@@ -56,7 +56,7 @@ public class DataSecurityCheck extends AbstractSecurityCheck
 	public boolean isActionAuthorized(WaspAction action)
 	{
 		DataPermission permission = new DataPermission(getSecurityId(), action);
-		return ((AbstractSwarmStrategy) getStrategy()).hasPermission(permission);
+		return ((AbstractSwarmStrategy)getStrategy()).hasPermission(permission);
 	}
 
 	/**

@@ -113,13 +113,11 @@ public class GetSpecificFeature extends AbstractControl
 // it here not in the constructor.
 		parameters.put("wfsUrl", JSUtils.getQuotedString(wfsProxy.getProxyUrl() + wfsURL));
 
-		parameters.put(
-			"featureSelectedCallback",
-			JSUtils.getQuotedString(featureSelectionBehaviour.getCallbackUrl() +
-				"&propertyValue="));
+		parameters.put("featureSelectedCallback",
+			JSUtils.getQuotedString(featureSelectionBehaviour.getCallbackUrl() + "&propertyValue="));
 
-		return super.getJSadd(map, "OpenLayers.Control.GetSpecificFeature", parameters) +
-			"\n" + super.getJSinvoke(map, "activate()");
+		return super.getJSadd(map, "OpenLayers.Control.GetSpecificFeature", parameters) + "\n" +
+			super.getJSinvoke(map, "activate()");
 	}
 
 

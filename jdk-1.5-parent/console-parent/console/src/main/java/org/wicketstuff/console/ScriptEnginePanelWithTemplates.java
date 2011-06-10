@@ -31,89 +31,92 @@ import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
  * 
  * @author cretzel
  */
-public class ScriptEnginePanelWithTemplates extends Panel {
+public class ScriptEnginePanelWithTemplates extends Panel
+{
 
-    private static final long serialVersionUID = 1L;
-    private final Lang lang;
-    private final ScriptEnginePanel enginePanel;
-    private final ScriptTemplateSelectionTablePanel selectionTable;
-    private IDataProvider<ScriptTemplate> dataProvider;
-    private final IModel<String> title;
+	private static final long serialVersionUID = 1L;
+	private final Lang lang;
+	private final ScriptEnginePanel enginePanel;
+	private final ScriptTemplateSelectionTablePanel selectionTable;
+	private IDataProvider<ScriptTemplate> dataProvider;
+	private final IModel<String> title;
 
-    /**
-     * Constructor.
-     * 
-     * @param id
-     *            id
-     * @param lang
-     *            source language
-     * @param title
-     *            title, may be {@code null} for default
-     * @param dataProvider
-     *            data provider for script templates, may be {@code null} for
-     *            default
-     */
-    public ScriptEnginePanelWithTemplates(final String id, final Lang lang,
-            final IModel<String> title,
-            final IDataProvider<ScriptTemplate> dataProvider) {
-        super(id);
+	/**
+	 * Constructor.
+	 * 
+	 * @param id
+	 *            id
+	 * @param lang
+	 *            source language
+	 * @param title
+	 *            title, may be {@code null} for default
+	 * @param dataProvider
+	 *            data provider for script templates, may be {@code null} for default
+	 */
+	public ScriptEnginePanelWithTemplates(final String id, final Lang lang,
+		final IModel<String> title, final IDataProvider<ScriptTemplate> dataProvider)
+	{
+		super(id);
 
-        this.lang = lang;
-        this.title = title;
-        this.dataProvider = dataProvider;
+		this.lang = lang;
+		this.title = title;
+		this.dataProvider = dataProvider;
 
-        if (dataProvider == null) {
-            this.dataProvider = packagedScriptTemplatesDataProvider(lang);
-        }
+		if (dataProvider == null)
+		{
+			this.dataProvider = packagedScriptTemplatesDataProvider(lang);
+		}
 
-        enginePanel = newEnginePanel();
-        enginePanel.setOutputMarkupId(true);
-        add(enginePanel);
+		enginePanel = newEnginePanel();
+		enginePanel.setOutputMarkupId(true);
+		add(enginePanel);
 
-        selectionTable = newSelectionTable("selectionPanel", enginePanel,
-                this.dataProvider);
-        add(selectionTable);
+		selectionTable = newSelectionTable("selectionPanel", enginePanel, this.dataProvider);
+		add(selectionTable);
 
-    }
+	}
 
-    private IDataProvider<ScriptTemplate> packagedScriptTemplatesDataProvider(
-            final Lang lang) {
-        return new ListDataProvider<ScriptTemplate>(
-                PackagedScriptTemplates.getPackagedScriptTemplates(lang));
-    }
+	private IDataProvider<ScriptTemplate> packagedScriptTemplatesDataProvider(final Lang lang)
+	{
+		return new ListDataProvider<ScriptTemplate>(
+			PackagedScriptTemplates.getPackagedScriptTemplates(lang));
+	}
 
-    /**
-     * Create the engine panel, override to customize.
-     * <p>
-     * Attention: This is called from the constructor.
-     */
-    protected ScriptEnginePanel newEnginePanel() {
-        return ScriptEnginePanel.create("enginePanel", lang, title);
-    }
+	/**
+	 * Create the engine panel, override to customize.
+	 * <p>
+	 * Attention: This is called from the constructor.
+	 */
+	protected ScriptEnginePanel newEnginePanel()
+	{
+		return ScriptEnginePanel.create("enginePanel", lang, title);
+	}
 
-    /**
-     * Create the selection table, override to customize.
-     * <p>
-     * Attention: This is called from the constructor.
-     */
-    protected ScriptTemplateSelectionTablePanel newSelectionTable(
-            final String wicketId, final ScriptEnginePanel enginePanel,
-            final IDataProvider<ScriptTemplate> dataProvider) {
+	/**
+	 * Create the selection table, override to customize.
+	 * <p>
+	 * Attention: This is called from the constructor.
+	 */
+	protected ScriptTemplateSelectionTablePanel newSelectionTable(final String wicketId,
+		final ScriptEnginePanel enginePanel, final IDataProvider<ScriptTemplate> dataProvider)
+	{
 
-        return new ScriptTemplateSelectionTablePanel(wicketId, enginePanel,
-                dataProvider, 100);
-    }
+		return new ScriptTemplateSelectionTablePanel(wicketId, enginePanel, dataProvider, 100);
+	}
 
-    public ScriptEnginePanel getEnginePanel() {
-        return enginePanel;
-    }
+	public ScriptEnginePanel getEnginePanel()
+	{
+		return enginePanel;
+	}
 
-    public ScriptTemplateSelectionTablePanel getSelectionTable() {
-        return selectionTable;
-    }
+	public ScriptTemplateSelectionTablePanel getSelectionTable()
+	{
+		return selectionTable;
+	}
 
-    public IDataProvider<ScriptTemplate> getDataProvider() {
-        return dataProvider;
-    }
+	public IDataProvider<ScriptTemplate> getDataProvider()
+	{
+		return dataProvider;
+	}
 
 }

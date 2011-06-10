@@ -848,8 +848,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 
 		public Object getJSinit()
 		{
-			return getJSinvoke("overlayListenerCallbackUrl = '" + getCallbackUrl() +
-				"'");
+			return getJSinvoke("overlayListenerCallbackUrl = '" + getCallbackUrl() + "'");
 		}
 	}
 }

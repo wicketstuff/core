@@ -23,31 +23,39 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serialize.FieldSerializer;
 
 /**
- * A reworked WicketChildListSerializerFactory from 
- * <a href="https://github.com/magro/memcached-session-manager">memcached-session-manager</a> 
- * project
+ * A reworked WicketChildListSerializerFactory from <a
+ * href="https://github.com/magro/memcached-session-manager">memcached-session-manager</a> project
  * 
  * @author <a href="mailto:martin.grotzke@javakaffee.de">Martin Grotzke</a>
  */
-public class WicketChildListSerializer extends FieldSerializer {
-    
-    
-    private static final String SERIALIZED_CLASS_NAME = MarkupContainer.class.getName() + "$ChildList";
-    public static Class<?> CLASS = null;
-    static {
-        try {
-            CLASS = Class.forName(SERIALIZED_CLASS_NAME, false, ISerializer.class.getClassLoader());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } 
-    }
-    
-    /**
-     * Creates a new instances.
-     * @param kryo the kryo instance that must be provided.
-     */
-    public WicketChildListSerializer( final Kryo kryo ) {
-        super(kryo, CLASS);
-    }
+public class WicketChildListSerializer extends FieldSerializer
+{
+
+
+	private static final String SERIALIZED_CLASS_NAME = MarkupContainer.class.getName() +
+		"$ChildList";
+	public static Class<?> CLASS = null;
+	static
+	{
+		try
+		{
+			CLASS = Class.forName(SERIALIZED_CLASS_NAME, false, ISerializer.class.getClassLoader());
+		}
+		catch (ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Creates a new instances.
+	 * 
+	 * @param kryo
+	 *            the kryo instance that must be provided.
+	 */
+	public WicketChildListSerializer(final Kryo kryo)
+	{
+		super(kryo, CLASS);
+	}
 
 }

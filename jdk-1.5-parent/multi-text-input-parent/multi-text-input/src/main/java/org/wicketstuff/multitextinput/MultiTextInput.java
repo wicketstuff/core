@@ -42,7 +42,6 @@ import org.apache.wicket.util.convert.IConverter;
 import org.apache.wicket.util.lang.Classes;
 import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.string.Strings;
-import org.apache.wicket.validation.IValidationError;
 import org.apache.wicket.validation.ValidationError;
 import org.wicketstuff.prototype.PrototypeResourceReference;
 
@@ -392,7 +391,7 @@ public class MultiTextInput<T> extends FormComponent<Collection<T>>
 			error.getVariables().putAll(variables);
 		}
 
-		error((IValidationError)error);
+		error(error);
 	}
 
 	@Override

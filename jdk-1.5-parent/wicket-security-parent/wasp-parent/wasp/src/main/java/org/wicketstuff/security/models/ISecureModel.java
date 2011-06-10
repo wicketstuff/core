@@ -23,11 +23,11 @@ import org.wicketstuff.security.checks.ISecurityCheck;
 import org.wicketstuff.security.strategies.WaspAuthorizationStrategy;
 
 /**
- * ISecureModel is much like ISecurityCheck in that it knows how to authorize or
- * authenticate a user. Usually they just redirect the call to the
- * {@link WaspAuthorizationStrategy}, but it is not unimaginable that models are targeted
- * at specific wasp implementations and take care of there authentication or authorization
- * themself. Note authentication should rarely take place at the model level.
+ * ISecureModel is much like ISecurityCheck in that it knows how to authorize or authenticate a
+ * user. Usually they just redirect the call to the {@link WaspAuthorizationStrategy}, but it is not
+ * unimaginable that models are targeted at specific wasp implementations and take care of there
+ * authentication or authorization themself. Note authentication should rarely take place at the
+ * model level.
  * 
  * @author marrink
  * @see WaspAuthorizationStrategy
@@ -42,8 +42,7 @@ public interface ISecureModel<T> extends IModel<T>
 	 *            the (owning) component of the model, some models might allow null.
 	 * @param action
 	 * @return true if the component is allowed to access this model, false otherwise
-	 * @see WaspAuthorizationStrategy#isModelAuthorized(ISecureModel, Component,
-	 *      WaspAction)
+	 * @see WaspAuthorizationStrategy#isModelAuthorized(ISecureModel, Component, WaspAction)
 	 */
 	public boolean isAuthorized(Component component, WaspAction action);
 

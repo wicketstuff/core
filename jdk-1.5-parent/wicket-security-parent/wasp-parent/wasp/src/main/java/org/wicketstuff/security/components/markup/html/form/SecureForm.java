@@ -29,10 +29,9 @@ import org.wicketstuff.security.components.ISecureComponent;
 import org.wicketstuff.security.components.SecureComponentHelper;
 
 /**
- * A secure Form. if the form does not have sufficient enable rights it replaces the tag
- * with a div to prevent clientside form submits Also it automaticly disables all
- * children. Other than that it behaves exactly like a regular {@link Form} with a
- * {@link ComponentSecurityCheck} attached.
+ * A secure Form. if the form does not have sufficient enable rights it replaces the tag with a div
+ * to prevent clientside form submits Also it automaticly disables all children. Other than that it
+ * behaves exactly like a regular {@link Form} with a {@link ComponentSecurityCheck} attached.
  * 
  * @author marrink
  */
@@ -104,8 +103,8 @@ public class SecureForm<T> extends Form<T> implements ISecureComponent
 	}
 
 	/**
-	 * Override to make sure the form can not be submitted clientside. Offcourse this does
-	 * not prevent fake urls send to the server.
+	 * Override to make sure the form can not be submitted clientside. Offcourse this does not
+	 * prevent fake urls send to the server.
 	 * 
 	 * @see org.apache.wicket.markup.html.form.Form#onComponentTag(org.apache.wicket.markup.ComponentTag)
 	 */

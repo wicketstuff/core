@@ -22,9 +22,9 @@ import java.util.Map;
 import org.wicketstuff.security.hive.config.HiveFactory;
 
 /**
- * HiveMind maintains the collection of {@link Hive}s. There can only be one HiveMind in
- * each virtual machine. As the HiveMind is supposed to be created and configured early
- * during the lifetime of an application none of its methods are synchronized.
+ * HiveMind maintains the collection of {@link Hive}s. There can only be one HiveMind in each
+ * virtual machine. As the HiveMind is supposed to be created and configured early during the
+ * lifetime of an application none of its methods are synchronized.
  * 
  * @author marrink
  */
@@ -56,8 +56,8 @@ public class HiveMind
 	}
 
 	/**
-	 * Registers a new Hive for anybody knowing the right key to be retrieved. It is not
-	 * possible to overwrite a registration without first unregistering the previous Hive.
+	 * Registers a new Hive for anybody knowing the right key to be retrieved. It is not possible to
+	 * overwrite a registration without first unregistering the previous Hive.
 	 * 
 	 * @param queen
 	 *            the key to store the Hive with.

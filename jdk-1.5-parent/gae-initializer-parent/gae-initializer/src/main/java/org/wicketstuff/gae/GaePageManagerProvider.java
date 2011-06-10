@@ -20,7 +20,7 @@ public class GaePageManagerProvider extends DefaultPageManagerProvider
 	private final DataStoreEvictionStrategy evictionStrategy;
 
 	public GaePageManagerProvider(Application application,
-			DataStoreEvictionStrategy evictionStrategy)
+		DataStoreEvictionStrategy evictionStrategy)
 	{
 		super(application);
 

@@ -29,8 +29,8 @@ import org.wicketstuff.security.hive.authorization.Principal;
 import org.wicketstuff.security.util.ManyToManyMap;
 
 /**
- * Basic implementation of a Hive. It contains basic add methods to facilitate factories.
- * It also might be locked after which no changes can be made to the hive.
+ * Basic implementation of a Hive. It contains basic add methods to facilitate factories. It also
+ * might be locked after which no changes can be made to the hive.
  * 
  * @author marrink
  */
@@ -59,8 +59,8 @@ public class BasicHive implements Hive
 	}
 
 	/**
-	 * Locks this hive. No changes are allowed anymore. After this {@link #isLocked()}
-	 * will return true;
+	 * Locks this hive. No changes are allowed anymore. After this {@link #isLocked()} will return
+	 * true;
 	 */
 	public final void lock()
 	{
@@ -98,8 +98,8 @@ public class BasicHive implements Hive
 		if (principal == null)
 			throw new IllegalArgumentException("A principal is required.");
 		if (permissions == null)
-			throw new IllegalArgumentException("At least one permission is required for principal "
-				+ principal);
+			throw new IllegalArgumentException(
+				"At least one permission is required for principal " + principal);
 		boolean debug = log.isDebugEnabled();
 		for (Permission next : permissions)
 		{
@@ -143,15 +143,15 @@ public class BasicHive implements Hive
 	}
 
 	/**
-	 * Allows subclasses to retrieve previously cached results and thus speed up the
-	 * check. By default null is returned, meaning no cached value
+	 * Allows subclasses to retrieve previously cached results and thus speed up the check. By
+	 * default null is returned, meaning no cached value
 	 * 
 	 * @param subject
 	 *            (optional) subject
 	 * @param permission
 	 *            the permission to check
-	 * @return null if there is no cached value, true if the permission is granted, false
-	 *         if the permission is denied
+	 * @return null if there is no cached value, true if the permission is granted, false if the
+	 *         permission is denied
 	 */
 	protected Boolean cacheLookUp(Subject subject, Permission permission)
 	{
@@ -159,8 +159,8 @@ public class BasicHive implements Hive
 	}
 
 	/**
-	 * Allows subclasses to cache the result of a check and thus speed up this check the
-	 * next time. By default this method does not have an implementation.
+	 * Allows subclasses to cache the result of a check and thus speed up this check the next time.
+	 * By default this method does not have an implementation.
 	 * 
 	 * @param subject
 	 *            (optional) subject
@@ -184,8 +184,8 @@ public class BasicHive implements Hive
 		if (cacheResult != null)
 		{
 			if (log.isDebugEnabled())
-				log.debug(subject + " has a cached match for " + permission + ", result "
-					+ cacheResult.booleanValue());
+				log.debug(subject + " has a cached match for " + permission + ", result " +
+					cacheResult.booleanValue());
 			return cacheResult.booleanValue();
 		}
 		if (hasPrincipal(subject, principals.getRight(permission)))
@@ -223,8 +223,7 @@ public class BasicHive implements Hive
 	 *            optional authenticated subject
 	 * @param principalSet
 	 *            set of principals
-	 * @return true if the subject has or implies at least one of the principals, false
-	 *         otherwise.
+	 * @return true if the subject has or implies at least one of the principals, false otherwise.
 	 */
 	private final boolean hasPrincipal(Subject subject, Set<Principal> principalSet)
 	{

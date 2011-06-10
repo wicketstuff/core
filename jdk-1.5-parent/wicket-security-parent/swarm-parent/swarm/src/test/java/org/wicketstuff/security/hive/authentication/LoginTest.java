@@ -16,7 +16,11 @@
  */
 package org.wicketstuff.security.hive.authentication;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
@@ -180,13 +184,16 @@ public class LoginTest
 			WicketTester mock = new WicketTester();
 			container.login(low);
 			assertFalse(container.isClassAuthenticated(VerySecurePage.class));
-			assertTrue(container.getSubject().getPrincipals()
+			assertTrue(container.getSubject()
+				.getPrincipals()
 				.contains(new SimplePrincipal("basic")));
-			assertFalse(container.getSubject().getPrincipals()
+			assertFalse(container.getSubject()
+				.getPrincipals()
 				.contains(new SimplePrincipal("admin")));
 			container.login(high);
 			assertTrue(container.isClassAuthenticated(VerySecurePage.class));
-			assertTrue(container.getSubject().getPrincipals()
+			assertTrue(container.getSubject()
+				.getPrincipals()
 				.contains(new SimplePrincipal("admin")));
 			mock.processRequest();
 			mock.destroy();
@@ -256,7 +263,7 @@ public class LoginTest
 		 * @see org.wicketstuff.security.hive.authentication.DefaultSubject#isClassAuthenticated(java.lang.Class)
 		 */
 		@Override
-		public boolean isClassAuthenticated(Class< ? > class1)
+		public boolean isClassAuthenticated(Class<?> class1)
 		{
 			return false;
 		}
@@ -277,7 +284,7 @@ public class LoginTest
 		 *      org.apache.wicket.Component)
 		 */
 		@Override
-		public boolean isModelAuthenticated(IModel< ? > model, Component component)
+		public boolean isModelAuthenticated(IModel<?> model, Component component)
 		{
 			return false;
 		}

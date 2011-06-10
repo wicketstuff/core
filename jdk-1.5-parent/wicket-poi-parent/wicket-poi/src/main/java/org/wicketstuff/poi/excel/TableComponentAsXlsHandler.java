@@ -32,8 +32,7 @@ import org.apache.wicket.request.resource.ResourceStreamResource;
  * Request handler that respond the specified table component as a XLS file.
  * </p>
  * <p>
- * An possible {@link Link} onClick method implementation seting this handler
- * could be:
+ * An possible {@link Link} onClick method implementation seting this handler could be:
  * </p>
  * <code>
  * public void onClick() {<br />
@@ -84,7 +83,7 @@ public class TableComponentAsXlsHandler implements IRequestHandler
 			resource.setFileName(filename);
 			resource.setContentDisposition(ContentDisposition.ATTACHMENT);
 			IResource.Attributes a = new IResource.Attributes(requestCycle.getRequest(),
-					requestCycle.getResponse());
+				requestCycle.getResponse());
 			resource.respond(a);
 		}
 		catch (Exception e)

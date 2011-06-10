@@ -21,31 +21,33 @@ public class KryoSerializerTest
 	}
 
 	@After
-    public void tearDown()
-    {
-        tester.destroy();
-    }
-	
+	public void tearDown()
+	{
+		tester.destroy();
+	}
+
 	@Test
 	public void homepageRendersSuccessfully()
 	{
-		//start and render the test page
+		// start and render the test page
 		HomePage page = tester.startPage(HomePage.class);
 
-		//assert rendered page class
+		// assert rendered page class
 		tester.assertRenderedPage(HomePage.class);
-		
+
 		ISerializer pageSerializer = tester.getApplication().getFrameworkSettings().getSerializer();
-		Assert.assertTrue("The configured IObjectSerializer is not instance of KryoSerializer! Type: " + pageSerializer.getClass(),
-		        pageSerializer instanceof KryoSerializer);
-		
+		Assert.assertTrue(
+			"The configured IObjectSerializer is not instance of KryoSerializer! Type: " +
+				pageSerializer.getClass(), pageSerializer instanceof KryoSerializer);
+
 		byte[] data = pageSerializer.serialize(page);
 		Assert.assertNotNull("The produced data should not be null!", data);
 		Assert.assertEquals("The produced data should not be null!", 10485760, data.length);
-		
+
 		Object object = pageSerializer.deserialize(data);
-		Assert.assertTrue("The deserialized page must be of type HomePage. Type: " + object.getClass(), 
-		        object instanceof HomePage);
-        
+		Assert.assertTrue(
+			"The deserialized page must be of type HomePage. Type: " + object.getClass(),
+			object instanceof HomePage);
+
 	}
 }

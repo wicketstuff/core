@@ -16,7 +16,7 @@
  */
 package org.wicketstuff.security;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertTrue;
 
 import java.net.MalformedURLException;
 
@@ -88,12 +88,12 @@ public class ContainerTest
 			}
 
 			@Override
-			public Class< ? extends Page> getHomePage()
+			public Class<? extends Page> getHomePage()
 			{
 				return ContainerHomePage.class;
 			}
 
-			public Class< ? extends Page> getLoginPage()
+			public Class<? extends Page> getLoginPage()
 			{
 				return MockLoginPage.class;
 			}
@@ -134,9 +134,11 @@ public class ContainerTest
 		if (tagTester == null)
 			return;
 		assertTrue(tagTester.hasAttribute("disabled"));
-		assertTrue(mock.getTagByWicketId("lvl1").getChild("name", "lvl1:txt1")
+		assertTrue(mock.getTagByWicketId("lvl1")
+			.getChild("name", "lvl1:txt1")
 			.hasAttribute("disabled"));
-		assertTrue(mock.getTagByWicketId("lvl1").getChild("name", "lvl1:lvl2:txt2")
+		assertTrue(mock.getTagByWicketId("lvl1")
+			.getChild("name", "lvl1:lvl2:txt2")
 			.hasAttribute("disabled"));
 	}
 

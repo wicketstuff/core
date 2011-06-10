@@ -25,10 +25,10 @@ import org.wicketstuff.security.actions.Render;
 import org.wicketstuff.security.actions.WaspAction;
 
 /**
- * Immutable {@link Action} class based on int values to speed up inheritance checking.
- * Each action is assigned a power of 2 int value. Bitwise or checks provide the imply
- * logic. These actions are instantiated by an {@link ActionFactory} which provides both
- * the name and the int value for the constructor.
+ * Immutable {@link Action} class based on int values to speed up inheritance checking. Each action
+ * is assigned a power of 2 int value. Bitwise or checks provide the imply logic. These actions are
+ * instantiated by an {@link ActionFactory} which provides both the name and the int value for the
+ * constructor.
  * 
  * @author marrink
  * @see Action
@@ -44,16 +44,16 @@ public class SwarmAction extends AbstractWaspAction
 	private final Object key;
 
 	/**
-	 * The default constructor for actions. Use it if your action does not inherit any
-	 * other actions (other then {@link Access}), like {@link Render}.
+	 * The default constructor for actions. Use it if your action does not inherit any other actions
+	 * (other then {@link Access}), like {@link Render}.
 	 * 
 	 * @param action
 	 *            a power of 2 which provides the base value for this action
 	 * @param name
 	 *            the name of the action
 	 * @param key
-	 *            the key used to register the owning {@link ActionFactory} with the
-	 *            {@link Actions} object
+	 *            the key used to register the owning {@link ActionFactory} with the {@link Actions}
+	 *            object
 	 */
 	protected SwarmAction(int action, String name, Object key)
 	{
@@ -87,8 +87,8 @@ public class SwarmAction extends AbstractWaspAction
 	}
 
 	/**
-	 * Any SwarmAction is equal to another if there 'actions' value is the same. In other
-	 * words the name of an action is not important.
+	 * Any SwarmAction is equal to another if there 'actions' value is the same. In other words the
+	 * name of an action is not important.
 	 * 
 	 * @see Object#equals(java.lang.Object)
 	 * @see #actions()
@@ -98,7 +98,7 @@ public class SwarmAction extends AbstractWaspAction
 	{
 		if (obj instanceof SwarmAction)
 		{
-			SwarmAction other = (SwarmAction) obj;
+			SwarmAction other = (SwarmAction)obj;
 			return other.actions() == actions;
 		}
 		return false;
@@ -125,12 +125,12 @@ public class SwarmAction extends AbstractWaspAction
 	 */
 	public final boolean implies(WaspAction other)
 	{
-		return other instanceof SwarmAction && implies(((SwarmAction) other).actions());
+		return other instanceof SwarmAction && implies(((SwarmAction)other).actions());
 	}
 
 	/**
-	 * Creates a new {@link WaspAction} containing both the specified actions and the
-	 * actions of this {@link WaspAction}. This method always returns a new SwarmAction.
+	 * Creates a new {@link WaspAction} containing both the specified actions and the actions of
+	 * this {@link WaspAction}. This method always returns a new SwarmAction.
 	 * 
 	 * @param otherActions
 	 *            the actions to add
@@ -142,8 +142,8 @@ public class SwarmAction extends AbstractWaspAction
 	}
 
 	/**
-	 * Creates a new {@link WaspAction} containing both the specified actions and the
-	 * actions of this {@link WaspAction}. This method always returns a new SwarmAction.
+	 * Creates a new {@link WaspAction} containing both the specified actions and the actions of
+	 * this {@link WaspAction}. This method always returns a new SwarmAction.
 	 * 
 	 * @param other
 	 *            the other action(s)
@@ -152,18 +152,17 @@ public class SwarmAction extends AbstractWaspAction
 	public final SwarmAction add(WaspAction other)
 	{
 		if (other instanceof SwarmAction)
-			return newInstance(actions | ((SwarmAction) other).actions());
+			return newInstance(actions | ((SwarmAction)other).actions());
 		throw new IllegalArgumentException("other must be a SwarmAction");
 	}
 
 	/**
-	 * Creates a new {@link WaspAction} with all the actions of this action except those
-	 * specified.
+	 * Creates a new {@link WaspAction} with all the actions of this action except those specified.
 	 * 
 	 * @param otherActions
 	 *            the actions to remove
-	 * @return a new WaspAction or this action if the specified actions were never part of
-	 *         this action.
+	 * @return a new WaspAction or this action if the specified actions were never part of this
+	 *         action.
 	 */
 	public final SwarmAction remove(int otherActions)
 	{
@@ -173,18 +172,17 @@ public class SwarmAction extends AbstractWaspAction
 	}
 
 	/**
-	 * Creates a new WaspAction with all the actions of this action except those
-	 * specified.
+	 * Creates a new WaspAction with all the actions of this action except those specified.
 	 * 
 	 * @param action
 	 *            the actions to remove
-	 * @return a new WaspAction or this action if the specified actions were never part of
-	 *         this action.
+	 * @return a new WaspAction or this action if the specified actions were never part of this
+	 *         action.
 	 */
 	public final WaspAction remove(WaspAction action)
 	{
 		if (action instanceof SwarmAction)
-			return remove(((SwarmAction) action).actions);
+			return remove(((SwarmAction)action).actions);
 		throw new IllegalArgumentException("action must be a SwarmAction");
 	}
 
@@ -197,7 +195,7 @@ public class SwarmAction extends AbstractWaspAction
 	 */
 	private SwarmAction newInstance(int myActions)
 	{
-		return ((SwarmActionFactory) getActionFactory()).getAction(myActions);
+		return ((SwarmActionFactory)getActionFactory()).getAction(myActions);
 	}
 
 	/**

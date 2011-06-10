@@ -41,8 +41,8 @@ public abstract class AbstractWaspAction implements WaspAction
 
 	/**
 	 * Small check to see if a string contains more then just whitespace. Copied from
-	 * {@link org.apache.wicket.util.string.Strings#isEmpty(CharSequence)} to keep this as
-	 * much separated as possible from wicket code
+	 * {@link org.apache.wicket.util.string.Strings#isEmpty(CharSequence)} to keep this as much
+	 * separated as possible from wicket code
 	 * 
 	 * @param string
 	 * @return
