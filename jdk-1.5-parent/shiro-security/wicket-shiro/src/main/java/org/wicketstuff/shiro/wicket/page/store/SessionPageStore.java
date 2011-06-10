@@ -61,8 +61,6 @@ public class SessionPageStore implements IPageStore
 
 	private final int MAX_PAGE_MAP_SIZE;
 
-	private final String applicationName;
-
 	public SessionPageStore()
 	{
 		this(DEFAULT_MAX_PAGES);
@@ -81,7 +79,6 @@ public class SessionPageStore implements IPageStore
 			LOG.info("Created SessionPageStore: [{}] maximum number of pages allowed.",
 				maxPageMapSize);
 		}
-		applicationName = Application.get().getName();
 	}
 
 	public boolean containsPage(final String sessionId, final int pageId)
