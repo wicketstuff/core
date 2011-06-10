@@ -147,12 +147,8 @@ public class AutoCompletingPanel<T> extends Panel
 		setOutputMarkupId(true);
 		setOutputMarkupPlaceholderTag(true);
 
-		closeButton.add(new AttributeModifier("onclick", true, new AbstractReadOnlyModel<String>()
+		closeButton.add(new AttributeModifier("onclick", new AbstractReadOnlyModel<String>()
 		{
-
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
 			@Override

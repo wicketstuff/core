@@ -77,7 +77,7 @@ final class Utils
 			}
 
 		};
-		link1.add(new AttributeAppender("class", true, new Model<String>("link1"), " "));
+		link1.add(new AttributeAppender("class", Model.of("link1"), " "));
 		Label label1 = new Label(MenuItem.CAPTION_ID, "One");
 		label1.setVisible(false);
 
@@ -123,7 +123,7 @@ final class Utils
 			}
 
 		};
-		link2.add(new AttributeAppender("class", true, new Model<String>("link2"), " "));
+		link2.add(new AttributeAppender("class", Model.of("link2"), " "));
 		Label label2 = new Label(MenuItem.CAPTION_ID, "One");
 		label2.setVisible(false);
 
@@ -139,7 +139,7 @@ final class Utils
 			}
 
 		};
-		link3.add(new AttributeAppender("class", true, new Model<String>("link3"), " "));
+		link3.add(new AttributeAppender("class", Model.of("link3"), " "));
 		Label label3 = new Label(MenuItem.CAPTION_ID, "One");
 		label3.setVisible(false);
 
@@ -156,7 +156,7 @@ final class Utils
 			}
 
 		};
-		link4.add(new AttributeAppender("class", true, new Model<String>("link4"), " "));
+		link4.add(new AttributeAppender("class", Model.of("link4"), " "));
 		Label label4 = new Label(MenuItem.CAPTION_ID, "One");
 		label4.setVisible(false);
 

@@ -27,7 +27,6 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
-import org.apache.wicket.model.Model;
 import org.wicketstuff.datatable_autocomplete.button.DTAAjaxFallbackButton;
 import org.wicketstuff.datatable_autocomplete.form.action.AbstractFormOnSubmitAction;
 import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;
@@ -52,7 +51,7 @@ public class ButtonListView extends ListView<ISelectableTableViewPanelButtonProv
 	private static final long serialVersionUID = 8897933872966515782L;
 	private final Form<?> form;
 	private final String displayEntityName;
-	private FormComponent<?> selectedContextField;
+	private final FormComponent<?> selectedContextField;
 
 	/**
 	 * @param id
@@ -203,7 +202,7 @@ public class ButtonListView extends ListView<ISelectableTableViewPanelButtonProv
 
 		if (cssClass != null)
 		{
-			button.add(new AttributeModifier("class", true, new Model<String>(cssClass)));
+			button.add(AttributeModifier.replace("class", cssClass));
 		}
 
 		item.add(button);

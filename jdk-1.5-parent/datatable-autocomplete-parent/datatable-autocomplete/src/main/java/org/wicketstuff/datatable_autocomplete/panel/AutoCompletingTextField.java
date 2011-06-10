@@ -24,7 +24,6 @@ import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvid
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.wicketstuff.datatable_autocomplete.behaviour.AutoCompletingBehavior;
 import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandler;
 
@@ -114,7 +113,7 @@ public class AutoCompletingTextField<R> extends Panel
 
 		searchField = new TextField<String>("searchField", searchFieldModel);
 
-		searchField.add(new AttributeModifier("autocomplete", true, new Model<String>("off")));
+		searchField.add(AttributeModifier.replace("autocomplete", "off"));
 
 		autoCompletingPanel = new AutoCompletingPanel<R>("autoCompletingPanel",
 			searchField.getModel(), columns, provider, rowSelectionHandler, controlPanelProvider,

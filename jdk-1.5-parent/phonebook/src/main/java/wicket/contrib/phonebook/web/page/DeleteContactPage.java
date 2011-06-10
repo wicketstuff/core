@@ -84,7 +84,7 @@ public class DeleteContactPage extends BasePage
 				setResponsePage(backPage);
 			}
 		};
-		confirmLink.add(new AttributeModifier("value", true, new ResourceModel("confirm")));
+		confirmLink.add(new AttributeModifier("value", new ResourceModel("confirm")));
 		add(confirmLink);
 	}
 
@@ -104,7 +104,7 @@ public class DeleteContactPage extends BasePage
 				setResponsePage(backPage);
 			}
 		};
-		cancelLink.add(new AttributeModifier("value", true, new ResourceModel("cancel")));
+		cancelLink.add(new AttributeModifier("value", new ResourceModel("cancel")));
 		add(cancelLink);
 	}
 

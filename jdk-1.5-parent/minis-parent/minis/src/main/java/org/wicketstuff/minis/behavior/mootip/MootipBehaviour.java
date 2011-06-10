@@ -22,7 +22,6 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.template.PackageTextTemplate;
 import org.apache.wicket.util.template.TextTemplate;
@@ -116,17 +115,16 @@ public class MootipBehaviour extends Behavior
 		this.component = component;
 		this.component.setOutputMarkupId(true);
 		if (addTitle && !isAjax())
-			component.add(new AttributeModifier("title", true, new Model<String>(title + "::" +
-				content)));
+			component.add(AttributeModifier.replace("title", title + "::" + content));
 		if (isAjax())
 		{
 			this.component.add(new MootipAjaxListener(panel));
-			component.add(new AttributeModifier("title", true, new Model<String>(
-				"CALLBACK:mootipAjax" + getEscapedComponentMarkupId() + "()")));
+			component.add(AttributeModifier.replace("title", "CALLBACK:mootipAjax" +
+				getEscapedComponentMarkupId() + "()"));
 		}
 
-		component.add(new AttributeModifier("class", true, new Model<String>("toolTipImg" +
-			getEscapedComponentMarkupId())));
+		component.add(AttributeModifier.replace("class", "toolTipImg" +
+			getEscapedComponentMarkupId()));
 
 		component.setOutputMarkupId(true);
 	}

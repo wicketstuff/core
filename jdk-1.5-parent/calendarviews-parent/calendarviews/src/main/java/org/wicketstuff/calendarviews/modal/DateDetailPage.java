@@ -66,7 +66,7 @@ public class DateDetailPage extends WebPage
 				item.add(new Label("startTime"));
 				item.add(new Label("endTime"));
 
-				item.add(new AttributeModifier("class", true, new AbstractReadOnlyModel<String>()
+				item.add(new AttributeModifier("class", new AbstractReadOnlyModel<String>()
 				{
 					private static final long serialVersionUID = 1L;
 

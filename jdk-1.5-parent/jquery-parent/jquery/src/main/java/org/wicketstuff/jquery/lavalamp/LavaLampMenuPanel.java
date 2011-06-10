@@ -38,7 +38,7 @@ public abstract class LavaLampMenuPanel extends Panel
 		add(new JQueryLavaLampBehavior());
 
 		final WebMarkupContainer listContainer = new WebMarkupContainer("list");
-		listContainer.add(new AttributeAppender("class", true, new Model<String>(UL_CSS_CLASS), " "));
+		listContainer.add(new AttributeAppender("class", Model.of(UL_CSS_CLASS), " "));
 		final ListView<MenuItem> lv = new ListView<MenuItem>("lavaLampMenu", linksModel)
 		{
 			@Override

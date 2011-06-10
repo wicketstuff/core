@@ -20,10 +20,10 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.behavior.SimpleAttributeModifier;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider;
 import org.apache.wicket.markup.html.form.TextField;
@@ -55,7 +55,7 @@ public class DatePickerBehavior extends JQueryBehavior
 		DatePickerBehavior.class, "jquery.datePicker.js");
 	public static final ResourceReference DATEPICKER_CSS = new PackageResourceReference(
 		DatePickerBehavior.class, "datePicker.css");
-	private DatePickerOptions options_;
+	private final DatePickerOptions options_;
 	private String format_;
 	private boolean includeJquery = true;
 
@@ -212,8 +212,8 @@ public class DatePickerBehavior extends JQueryBehavior
 	public Behavior getDatePickerStyle()
 	{
 		return new CompositeBehavior(new SimpleAttributeAppender("class", "date-pick", " "),
-			new SimpleAttributeModifier("size", String.valueOf(format_.length())),
-			new SimpleAttributeModifier("maxlength", String.valueOf(format_.length())),
-			new SimpleAttributeModifier("title", format_));
+			AttributeModifier.replace("size", String.valueOf(format_.length())),
+			AttributeModifier.replace("maxlength", String.valueOf(format_.length())),
+			AttributeModifier.replace("title", format_));
 	}
 }

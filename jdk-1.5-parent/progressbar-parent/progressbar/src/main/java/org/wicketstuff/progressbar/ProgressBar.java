@@ -150,7 +150,7 @@ public class ProgressBar extends Panel
 
 		add(new Label("label", getLabelModel(model)));
 		add(new Label("message", getMessageModel(model)));
-		add(new WebMarkupContainer("bar").add(new AttributeModifier("style", true,
+		add(new WebMarkupContainer("bar").add(new AttributeModifier("style",
 			new AbstractReadOnlyModel<String>()
 			{
 				/**

@@ -95,7 +95,7 @@ public class HomePage extends WebPage
 			protected WebMarkupContainer createEventLink(String id, final IModel<IEvent> model)
 			{
 				WebMarkupContainer wmc = new WebMarkupContainer(id);
-				wmc.add(new AttributeModifier("onclick", true, new AbstractReadOnlyModel<String>()
+				wmc.add(new AttributeModifier("onclick", new AbstractReadOnlyModel<String>()
 				{
 					private static final long serialVersionUID = 1L;
 

@@ -38,8 +38,7 @@ public class SliderHandle extends Panel
 		{
 			if (handleSettings.getStyle() != null)
 			{
-				handle.add(new AttributeAppender("style", true, new Model<String>(
-					handleSettings.getStyle()), " "));
+				handle.add(new AttributeAppender("style", Model.of(handleSettings.getStyle()), " "));
 			}
 		}
 	}

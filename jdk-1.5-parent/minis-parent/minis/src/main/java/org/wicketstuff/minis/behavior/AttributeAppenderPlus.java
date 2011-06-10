@@ -31,19 +31,12 @@ public class AttributeAppenderPlus extends AttributeAppender
 	private final String prefix_;
 	private final String suffix_;
 
-	public AttributeAppenderPlus(final String attribute, final boolean addAttributeIfNotPresent,
-		final IModel<?> appendModel, final String separator, final String prefix,
-		final String suffix)
-	{
-		super(attribute, addAttributeIfNotPresent, appendModel, separator);
-		prefix_ = prefix;
-		suffix_ = suffix;
-	}
-
 	public AttributeAppenderPlus(final String attribute, final IModel<?> appendModel,
 		final String separator, final String prefix, final String suffix)
 	{
-		this(attribute, true, appendModel, separator, prefix, suffix);
+		super(attribute, appendModel, separator);
+		prefix_ = prefix;
+		suffix_ = suffix;
 	}
 
 	/**

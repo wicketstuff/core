@@ -85,18 +85,18 @@ public class Timeline extends Panel
 			@Override
 			protected void populateItem(ListItem<ITimelineEvent> item)
 			{
-				item.add(new AttributeModifier("title", true, new PropertyModel<String>(
-					item.getModel(), "title")));
-				item.add(new AttributeModifier("start", true, new PropertyModel<String>(
-					item.getModel(), "startFormatted")));
-				item.add(new AttributeModifier("end", true, new PropertyModel<String>(
-					item.getModel(), "endFormatted")));
-				item.add(new AttributeModifier("link", true, new PropertyModel<String>(
-					item.getModel(), "link")));
-				item.add(new AttributeModifier("isDuration", true, new PropertyModel<Boolean>(
+				item.add(new AttributeModifier("title", new PropertyModel<String>(item.getModel(),
+					"title")));
+				item.add(new AttributeModifier("start", new PropertyModel<String>(item.getModel(),
+					"startFormatted")));
+				item.add(new AttributeModifier("end", new PropertyModel<String>(item.getModel(),
+					"endFormatted")));
+				item.add(new AttributeModifier("link", new PropertyModel<String>(item.getModel(),
+					"link")));
+				item.add(new AttributeModifier("isDuration", new PropertyModel<Boolean>(
 					item.getModel(), "isDuration")));
-				item.add(new AttributeModifier("color", true, new PropertyModel<String>(
-					item.getModel(), "color")));
+				item.add(new AttributeModifier("color", new PropertyModel<String>(item.getModel(),
+					"color")));
 
 				Label child = new Label("text", new PropertyModel<String>(item.getModel(), "text"));
 				child.setRenderBodyOnly(true);

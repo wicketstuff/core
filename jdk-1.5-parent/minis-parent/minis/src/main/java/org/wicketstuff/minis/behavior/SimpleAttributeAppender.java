@@ -22,9 +22,11 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.util.string.Strings;
 
 /**
+ * Deprecated, because superclass is deprecated too.
  * 
  * @author dwayne
  */
+@Deprecated
 public class SimpleAttributeAppender extends SimpleAttributeModifier
 {
 	private static final long serialVersionUID = 1L;

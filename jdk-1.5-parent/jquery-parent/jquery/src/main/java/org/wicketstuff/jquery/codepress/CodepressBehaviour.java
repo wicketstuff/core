@@ -19,7 +19,7 @@ public class CodepressBehaviour extends JQueryBehavior
 	public static final ResourceReference CODEPRESS_JS = new PackageResourceReference(
 		CodepressBehaviour.class, "jquery.codepress.js");
 
-	private CodepressOptions options_;
+	private final CodepressOptions options_;
 
 	public CodepressBehaviour()
 	{
