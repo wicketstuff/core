@@ -7,42 +7,28 @@
     <artifactId>jdk-1.5-parent</artifactId>
     <version>1.5-SNAPSHOT</version>
   </parent>
-  
+
   <artifactId>serializer-kryo</artifactId>
 
   <name>WicketStuff Kryo serializer</name>
   <description>ISerializer based on http://code.google.com/p/kryo/</description>
 
-  <properties>
-    <kryo.version>1.04</kryo.version>
-    <kryo-serializers.version>0.9</kryo-serializers.version>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.8.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.wicket</groupId>
-      <artifactId>wicket-core</artifactId>
-      <version>${wicket.version}</version>
     </dependency>
     <dependency>
       <groupId>com.googlecode</groupId>   
       <artifactId>kryo</artifactId>
-      <version>${kryo.version}</version>
     </dependency>
     <dependency>
       <groupId>de.javakaffee</groupId>
       <artifactId>kryo-serializers</artifactId>
-      <version>${kryo-serializers.version}</version>
     </dependency>
     <dependency>
-	  <groupId>org.eclipse.jetty.aggregate</groupId>
+      <groupId>org.eclipse.jetty.aggregate</groupId>
       <artifactId>jetty-all-server</artifactId>
-      <version>${jetty.version}</version>
-      <scope>provided</scope>
     </dependency>
   </dependencies>
 </project>

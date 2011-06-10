@@ -240,7 +240,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<hibernate.version>3.6.4.Final</hibernate.version>
-		<jetty.version>7.4.1.v20110513</jetty.version>
+		<jetty.version>7.4.2.v20110526</jetty.version>
 		<sf-jung.version>2.0.1</sf-jung.version>
 		<shiro.version>1.1.0</shiro.version>
 		<slf4j.version>1.6.1</slf4j.version>
@@ -296,7 +296,7 @@
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
-				<version>0.9.28</version>
+				<version>0.9.29</version>
 				<scope>runtime</scope>
 			</dependency>
 			<dependency>
@@ -510,6 +510,18 @@
 				<groupId>net.sf.jung</groupId>
 				<artifactId>jung-visualization</artifactId>
 				<version>${sf-jung.version}</version>
+			</dependency>
+
+			<!-- KYRO -->
+			<dependency>
+				<groupId>com.googlecode</groupId>   
+				<artifactId>kryo</artifactId>
+				<version>1.04</version>
+			</dependency>
+			<dependency>
+				<groupId>de.javakaffee</groupId>
+				<artifactId>kryo-serializers</artifactId>
+				<version>0.9</version>
 			</dependency>
 
 			<!-- OTHER -->
