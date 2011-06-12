@@ -512,7 +512,7 @@
 				<version>${sf-jung.version}</version>
 			</dependency>
 
-			<!-- KYRO -->
+			<!-- KRYO -->
 			<dependency>
 				<groupId>com.googlecode</groupId>   
 				<artifactId>kryo</artifactId>
