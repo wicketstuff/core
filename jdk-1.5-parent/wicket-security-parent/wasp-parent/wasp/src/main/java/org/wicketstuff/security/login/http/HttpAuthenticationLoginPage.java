@@ -86,38 +86,31 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 		super(parameters);
 	}
 
-	/**
-	 * @see org.apache.wicket.markup.html.WebPage#configureResponse()
-	 */
 	@Override
-	protected void configureResponse()
+	protected void configureResponse(final WebResponse response)
 	{
-		super.configureResponse();
+		super.configureResponse(response);
 		if (doAuthentication)
 		{
-			if (RequestCycle.get().getResponse() instanceof WebResponse)
+			WebRequest request = (WebRequest)RequestCycle.get().getRequest();
+			String auth = request.getHeader("Authorization");
+			if (Strings.isEmpty(auth))
+				requestAuthentication(request, response);
+			else
 			{
-				WebResponse response = (WebResponse)RequestCycle.get().getResponse();
-				WebRequest request = (WebRequest)RequestCycle.get().getRequest();
-				String auth = request.getHeader("Authorization");
-				if (Strings.isEmpty(auth))
+				int index = auth.indexOf(' ');
+				if (index < 1)
 					requestAuthentication(request, response);
-				else
+				String type = auth.substring(0, index);
+				try
 				{
-					int index = auth.indexOf(' ');
-					if (index < 1)
-						requestAuthentication(request, response);
-					String type = auth.substring(0, index);
-					try
-					{
-						handleAuthentication(request, response, type, auth.substring(index + 1));
-					}
-					catch (LoginException e)
-					{
-						log.error(type + " Http authentication failed", e);
-						error(e);
-						requestAuthentication(request, response);
-					}
+					handleAuthentication(request, response, type, auth.substring(index + 1));
+				}
+				catch (LoginException e)
+				{
+					log.error(type + " Http authentication failed", e);
+					error(e);
+					requestAuthentication(request, response);
 				}
 			}
 		}
