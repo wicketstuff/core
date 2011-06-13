@@ -1,87 +1,32 @@
 package org.wicketstuff.gae;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 
-import org.apache.wicket.serialize.ISerializer;
 import org.apache.wicket.serialize.java.JavaSerializer;
-import org.apache.wicket.util.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * use plain JDK Object(Input|Output)Stream
+ * Use plain JDK Object(Input|Output)Stream
  */
-public class GaeObjectSerializer implements ISerializer
+public class GaeObjectSerializer extends JavaSerializer
 {
-	private static final Logger log = LoggerFactory.getLogger(JavaSerializer.class);
-
-	public byte[] serialize(Object object)
+	public GaeObjectSerializer(String applicationKey)
 	{
-		try
-		{
-			final ByteArrayOutputStream out = new ByteArrayOutputStream();
-			ObjectOutputStream oos = null;
-			try
-			{
-				oos = new ObjectOutputStream(out);
-				oos.writeObject(object);
-			}
-			finally
-			{
-				try
-				{
-					IOUtils.close(oos);
-				}
-				finally
-				{
-					out.close();
-				}
-			}
-			return out.toByteArray();
-		}
-		catch (Exception e)
-		{
-			log.error("Error serializing object " + object.getClass() + " [object=" + object + "]",
-				e);
-		}
-		return null;
+		super(applicationKey);
 	}
 
-	public Object deserialize(byte[] data)
+	@Override
+	protected ObjectInputStream newObjectInputStream(InputStream in) throws IOException
 	{
-		try
-		{
-			final ByteArrayInputStream in = new ByteArrayInputStream(data);
-			ObjectInputStream ois = null;
-			try
-			{
-				ois = new ObjectInputStream(in);
-				return ois.readObject();
-			}
-			finally
-			{
-				try
-				{
-					IOUtils.close(ois);
-				}
-				finally
-				{
-					in.close();
-				}
-			}
-		}
-		catch (ClassNotFoundException e)
-		{
-			throw new RuntimeException("Could not deserialize object using GaeObjectSerializer", e);
-		}
-		catch (IOException e)
-		{
-			throw new RuntimeException("Could not deserialize object using GaeObjectSerializer", e);
-		}
+		return new ObjectInputStream(in);
 	}
 
+	@Override
+	protected ObjectOutputStream newObjectOutputStream(OutputStream out) throws IOException
+	{
+		return new ObjectOutputStream(out);
+	}
 }
