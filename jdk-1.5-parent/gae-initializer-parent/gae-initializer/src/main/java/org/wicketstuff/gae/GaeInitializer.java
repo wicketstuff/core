@@ -13,15 +13,15 @@ import org.apache.wicket.serialize.ISerializer;
 public class GaeInitializer implements IInitializer
 {
 
-	public void init(Application application)
+	public void init(final Application application)
 	{
 
 		// disable ModificationWatcher
 		application.getResourceSettings().setResourcePollFrequency(null);
 
 		// use plain JDK Object(Input|Output)Stream
-		ISerializer serializer = new GaeObjectSerializer(Application.get().getApplicationKey());
-		Application.get().getFrameworkSettings().setSerializer(serializer);
+		ISerializer serializer = new GaeObjectSerializer(application.getApplicationKey());
+		application.getFrameworkSettings().setSerializer(serializer);
 
 		// save older version of pages in the HttpSession
 		final DataStoreEvictionStrategy evictionStrategy;
