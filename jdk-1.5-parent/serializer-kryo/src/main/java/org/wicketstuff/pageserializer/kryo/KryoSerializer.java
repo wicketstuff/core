@@ -79,7 +79,10 @@ public class KryoSerializer implements ISerializer
 		LOG.debug("Going to serialize: ", object);
 		ByteBuffer buffer = getBuffer();
 		kryo.writeClassAndObject(buffer, object);
-		return buffer.array();
+		byte[] data = buffer.array();
+		buffer.clear();
+		buffer = null;
+		return data;
 	}
 
 	public Object deserialize(byte[] data)
