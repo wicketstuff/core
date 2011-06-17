@@ -16,7 +16,6 @@
 package org.wicketstuff.datatable_autocomplete.panel;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.behavior.IBehavior;
@@ -29,6 +28,7 @@ import org.apache.wicket.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.datatable_autocomplete.behaviour.AutoCompletingBehavior;
+import org.wicketstuff.datatable_autocomplete.behaviour.AutoCompletingBehavior.IAutoCompletingResponseValidator;
 import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandler;
 
 /**
@@ -131,7 +131,12 @@ public class AutoCompletingTextField<R> extends Panel {
 		add(autoCompletingPanel);
 
 		searchField.add(autoCompletingBehaviour = new AutoCompletingBehavior(searchField,
-				autoCompletingPanel, throttlingDelay));
+				autoCompletingPanel, throttlingDelay, new IAutoCompletingResponseValidator() {
+					
+					public boolean validate(String value, AjaxRequestTarget target) {
+						return true;
+					}
+				}));
 		
 		add(new AjaxLink<Void>("showLink") {
 

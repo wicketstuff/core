@@ -49,4 +49,15 @@ public interface AutoCompleteDependencyProcessor extends IClusterable {
 	 */
 	public Duration getThrottingDuration();
 
+	/**
+	 * 
+	 * Validate the request parameters.  For example disallow certain characters and setup a feedback message.
+	 * 
+	 * @param request
+	 * @param target
+	 * @return true if the reqest is valid.  
+	 * 
+	 */
+	public boolean validate(Request request, AjaxRequestTarget target);
+
 }
