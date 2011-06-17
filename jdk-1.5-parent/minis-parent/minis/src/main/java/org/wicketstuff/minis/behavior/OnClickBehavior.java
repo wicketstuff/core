@@ -18,8 +18,8 @@ package org.wicketstuff.minis.behavior;
 
 import java.util.Arrays;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.behavior.SimpleAttributeModifier;
 
 public class OnClickBehavior extends CompositeBehavior
 {
@@ -27,8 +27,8 @@ public class OnClickBehavior extends CompositeBehavior
 
 	public OnClickBehavior(final CharSequence url)
 	{
-		super(Arrays.asList(new Behavior[] { new SimpleAttributeModifier("class", "clickable"),
-				new SimpleAttributeModifier("onClick", "document.location.href='" + url + "';") }));
+		super(Arrays.asList(new Behavior[] { AttributeModifier.replace("class", "clickable"),
+				AttributeModifier.replace("onClick", "document.location.href='" + url + "';") }));
 	}
 	// onMouseOver="this.bgColor = '#C0C0C0'"
 	// onMouseOut

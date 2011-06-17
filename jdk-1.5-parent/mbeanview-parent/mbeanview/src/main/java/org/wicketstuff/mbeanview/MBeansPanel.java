@@ -43,10 +43,10 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.behavior.SimpleAttributeModifier;
 import org.apache.wicket.extensions.markup.html.tree.Tree;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
@@ -131,7 +131,7 @@ public class MBeansPanel extends Panel
 					(mutableNode.getChildAt(0) instanceof AttributeNode ||
 						mutableNode.getChildAt(0) instanceof OperationNode || mutableNode.getChildAt(0) instanceof NotificationNode))
 				{
-					return new EmptyPanel(id).add(new SimpleAttributeModifier("style", "width:0;"));
+					return new EmptyPanel(id).add(AttributeModifier.replace("style", "width:0;"));
 				}
 			}
 			return super.newNodeIcon(parent, id, node);
