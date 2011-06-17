@@ -77,7 +77,7 @@ public class KryoSerializer implements ISerializer
 	public byte[] serialize(final Object object)
 	{
 		LOG.debug("Going to serialize: ", object);
-		ByteBuffer buffer = getBuffer();
+		ByteBuffer buffer = getBuffer(object);
 		kryo.writeClassAndObject(buffer, object);
 		byte[] data;
 		if (buffer.hasArray()) {
@@ -109,7 +109,15 @@ public class KryoSerializer implements ISerializer
 		return object;
 	}
 
-	private ByteBuffer getBuffer()
+    /**
+     * Creates the buffer that will be used to serialize the {@code target}
+     * 
+     * @param target
+     *      the object that will be serialized. Can be used to decide dynamically what size to use
+     * @return
+     *      the buffer that will be used to serialize the {@code target}
+     */
+	protected ByteBuffer getBuffer(Object target)
 	{
 		return ByteBuffer.allocate((int)bufferSize.bytes());
 	}
