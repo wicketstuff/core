@@ -155,7 +155,7 @@ public class TinyMCESettings implements Serializable {
 	}
 
 	/**
-	 * Obsolete feature; replaced by autoResize plugin.
+	 * Obsolete feature; replaced by {@link AutoResizePlugin} in TinyMCE v.3.2.5
 	 * 
 	 * @param auto_resize
 	 */
