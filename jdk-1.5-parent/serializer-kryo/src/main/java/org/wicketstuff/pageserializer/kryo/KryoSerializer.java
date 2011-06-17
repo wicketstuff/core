@@ -79,17 +79,33 @@ public class KryoSerializer implements ISerializer
 		LOG.debug("Going to serialize: ", object);
 		ByteBuffer buffer = getBuffer();
 		kryo.writeClassAndObject(buffer, object);
-		byte[] data = buffer.array();
+		byte[] data;
+		if (buffer.hasArray()) {
+		    data = buffer.array();
+		} else {
+		    LOG.error("Kryo wasn't able to serialize: '{}'", object);
+		    data = new byte[0];
+		}
+	
+		// release the memory for the buffer
 		buffer.clear();
-		buffer = null;
-		return data;
-	}
+        buffer = null;
+        System.runFinalization();
+		
+        return data;
+	}	
 
-	public Object deserialize(byte[] data)
+    public Object deserialize(byte[] data)
 	{
 		ByteBuffer buffer = ByteBuffer.wrap(data);
 		Object object = kryo.readClassAndObject(buffer);
 		LOG.debug("Deserialized: ", object);
+
+		// release the memory for the buffer
+		buffer.clear();
+		buffer = null;
+		System.runFinalization();
+
 		return object;
 	}
 
