@@ -26,9 +26,9 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.Response;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.JavaScriptUtils;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.visit.IVisit;
@@ -106,15 +106,33 @@ public abstract class AbstractGrid<M, I> extends Panel
 		add(bottomToolbarContainer = new RepeatingView("bottomToolbarContainer"));
 		add(headerToolbarContainer = new RepeatingView("headerToolbarContainer"));
 
-		// renders the initialization javascript right after the grid itself
 		add(new Behavior()
 		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
+			public void renderHead(Component component, IHeaderResponse response)
+			{
+				super.renderHead(component, response);
+				// since javascript can be rendered at the tail
+				// of HTML document, do not initialize data grid
+				// component until "DOM ready" event.
+				if (!getWebRequest().isAjax())
+				{
+					response.renderOnDomReadyJavaScript(getInitializationJavascript(false));
+				}
+			}
+
+			@Override
 			public void afterRender(Component component)
 			{
-				renderInitializationJavascript(getResponse());
+				super.afterRender(component);
+				if (getWebRequest().isAjax())
+				{
+					// renders the initialization javascript right after the grid itself
+					getResponse().write(getInitializationJavascript(true));
+
+				}
 			}
 		});
 
@@ -453,49 +471,61 @@ public abstract class AbstractGrid<M, I> extends Panel
 	}
 
 	/**
-	 * Renders the javascript required to initialize the client state for this grid instance. Called
-	 * after every grid render.
+	 * Generates the javascript required to initialize the client state for this grid instance.
+	 * Called after every grid render.
 	 * 
-	 * @param response
+	 * @param wrapInHtmlScriptTag
+	 *            if true the generated js will be wrapped inside a script tag
+	 * @return generated javascript code
 	 */
-	private void renderInitializationJavascript(Response response)
+	private String getInitializationJavascript(boolean wrapInHtmlScriptTag)
 	{
-		JavaScriptUtils.writeOpenTag(response);
-		response.write("(function() {\n");
+		AppendingStringBuffer sb = new AppendingStringBuffer(128);
+		if (wrapInHtmlScriptTag)
+		{
+			sb.append(JavaScriptUtils.SCRIPT_OPEN_TAG);
+		}
+		sb.append("(function() {\n");
 
 		// initialize the columns
-		response.write("var columns = [\n");
+		sb.append("var columns = [\n");
 		Collection<IGridColumn<M, I>> columns = getActiveColumns();
 		int i = 0;
 		for (IGridColumn<M, I> column : columns)
 		{
 			++i;
-			response.write("  {");
-			response.write(" minSize: " + column.getMinSize());
-			response.write(", maxSize: " + column.getMaxSize());
-			response.write(", id: \"" + column.getId() + "\"");
-			response.write(", resizable: " + column.isResizable());
-			response.write(", reorderable: " + column.isReorderable());
-			response.write("  }");
+			sb.append("  {");
+			sb.append(" minSize: " + column.getMinSize());
+			sb.append(", maxSize: " + column.getMaxSize());
+			sb.append(", id: \"" + column.getId() + "\"");
+			sb.append(", resizable: " + column.isResizable());
+			sb.append(", reorderable: " + column.isReorderable());
+			sb.append("  }");
 			if (i != columns.size())
 			{
-				response.write(",");
+				sb.append(",");
 			}
-			response.write("\n");
+			sb.append("\n");
 		}
 		;
-		response.write("];\n");
+		sb.append("];\n");
 
 		// method that calls the proper listener when column state is changed
-		response.write("var submitStateCallback = function(columnState) { ");
-		response.write(submitColumnStateBehavior.getCallbackScript());
-		response.write(" }\n");
+		sb.append("var submitStateCallback = function(columnState) { ");
+		sb.append(submitColumnStateBehavior.getCallbackScript());
+		sb.append(" }\n");
 
 		// initialization
-		response.write("InMethod.XTableManager.instance.register(\"" + getMarkupId() +
+		sb.append("InMethod.XTableManager.instance.register(\"" + getMarkupId() +
 			"\", columns, submitStateCallback);\n");
-		response.write("})();\n");
-		JavaScriptUtils.writeCloseTag(response);
+		sb.append("})();\n");
+
+		if (wrapInHtmlScriptTag)
+		{
+			sb.append(JavaScriptUtils.SCRIPT_CLOSE_TAG);
+		}
+
+		return sb.toString();
 	};
 
 	/**

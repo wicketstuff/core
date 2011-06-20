@@ -414,7 +414,14 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 			{
 				// in case no items have been loaded
 				// this is to have the last page displayed in paging navigator
-				totalCount = getCurrentPageFirstItem() + 1;
+				if (totalCount == IQueryResult.NO_MORE_ITEMS)
+				{
+					totalCount = 0;
+				}
+				else
+				{
+					totalCount = getCurrentPageFirstItem() + 1;
+				}
 			}
 			else if (totalCount == IQueryResult.NO_MORE_ITEMS)
 			{
