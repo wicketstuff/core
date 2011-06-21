@@ -21,12 +21,14 @@ import com.inmethod.grid.common.AttachPrelightBehavior;
 /**
  * Contains data grid rows.
  * 
+ * @param <D>
+ *            datasource model object type = grid type
  * @param <T>
  *            row/item model object type
  * 
  * @author Matej Knopp
  */
-public abstract class DataGridBody<T> extends Panel implements IPageable
+public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel implements IPageable
 {
 
 	private static final long serialVersionUID = 1L;
@@ -45,13 +47,13 @@ public abstract class DataGridBody<T> extends Panel implements IPageable
 		add(new Data("row"));
 	}
 
-	protected abstract IDataSource<T> getDataSource();
+	protected abstract D getDataSource();
 
 	protected abstract int getRowsPerPage();
 
 	protected abstract IGridSortState getSortState();
 
-	protected abstract Collection<IGridColumn<IDataSource<T>, T>> getActiveColumns();
+	protected abstract Collection<IGridColumn<D, T>> getActiveColumns();
 
 	protected abstract boolean isItemSelected(IModel<T> itemModel);
 
@@ -108,7 +110,7 @@ public abstract class DataGridBody<T> extends Panel implements IPageable
 		}
 
 		@Override
-		protected IDataSource<T> getDataSource()
+		protected D getDataSource()
 		{
 			return DataGridBody.this.getDataSource();
 		}
@@ -128,7 +130,7 @@ public abstract class DataGridBody<T> extends Panel implements IPageable
 		@Override
 		protected IQuery wrapQuery(final IQuery original)
 		{
-			return new DataGrid.IGridQuery<T>()
+			return new DataGrid.IGridQuery<D, T>()
 			{
 				public int getCount()
 				{
@@ -150,7 +152,7 @@ public abstract class DataGridBody<T> extends Panel implements IPageable
 					return original.getTotalCount();
 				}
 
-				public DataGrid<T> getDataGrid()
+				public DataGrid<D, T> getDataGrid()
 				{
 					return DataGridBody.this.findParent(DataGrid.class);
 				}
@@ -160,13 +162,12 @@ public abstract class DataGridBody<T> extends Panel implements IPageable
 		@Override
 		protected void populateItem(final Item<T> item)
 		{
-			item.add(new AbstractGridRow<IDataSource<T>, T>("item",
-				(IModel<T>)item.getDefaultModel())
+			item.add(new AbstractGridRow<D, T>("item", (IModel<T>)item.getDefaultModel())
 			{
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				protected Collection<IGridColumn<IDataSource<T>, T>> getActiveColumns()
+				protected Collection<IGridColumn<D, T>> getActiveColumns()
 				{
 					return DataGridBody.this.getActiveColumns();
 				}

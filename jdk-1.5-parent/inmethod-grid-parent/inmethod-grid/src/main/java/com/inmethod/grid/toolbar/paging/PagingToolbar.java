@@ -13,9 +13,14 @@ import com.inmethod.grid.toolbar.AbstractToolbar;
  * 
  * This toolbar can only be added to {@link DataTable}
  * 
+ * @param <D>
+ *            datasource model object type = grid type
+ * @param <T>
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
-public class PagingToolbar<T> extends AbstractToolbar<IDataSource<T>, T>
+public class PagingToolbar<D extends IDataSource<T>, T> extends AbstractToolbar<D, T>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -25,9 +30,9 @@ public class PagingToolbar<T> extends AbstractToolbar<IDataSource<T>, T>
 	 * 
 	 * @return data grid
 	 */
-	public DataGrid<T> getDataGrid()
+	public DataGrid<D, T> getDataGrid()
 	{
-		return (DataGrid<T>)super.getGrid();
+		return (DataGrid<D, T>)super.getGrid();
 	}
 
 	/**
@@ -36,7 +41,7 @@ public class PagingToolbar<T> extends AbstractToolbar<IDataSource<T>, T>
 	 * @param grid
 	 *            data grid
 	 */
-	public PagingToolbar(DataGrid<T> grid)
+	public PagingToolbar(DataGrid<D, T> grid)
 	{
 		super(grid, null);
 

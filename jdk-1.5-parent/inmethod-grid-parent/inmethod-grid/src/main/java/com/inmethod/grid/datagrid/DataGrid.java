@@ -23,12 +23,14 @@ import com.inmethod.grid.common.AbstractPageableView;
 /**
  * Advanced grid component. Supports resizable and reorderable columns.
  * 
+ * @param <D>
+ *            datasource model object type = grid type
  * @param <T>
  *            row/item model object type
  * 
  * @author Matej Knopp
  */
-public class DataGrid<T> extends AbstractGrid<IDataSource<T>, T> implements IPageable
+public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> implements IPageable
 {
 
 	private static final long serialVersionUID = 1L;
@@ -43,8 +45,7 @@ public class DataGrid<T> extends AbstractGrid<IDataSource<T>, T> implements IPag
 	 * @param columns
 	 *            list of grid columns
 	 */
-	public DataGrid(String id, IModel<IDataSource<T>> model,
-		List<IGridColumn<IDataSource<T>, T>> columns)
+	public DataGrid(String id, IModel<D> model, List<IGridColumn<D, T>> columns)
 	{
 		super(id, model, columns);
 		init();
@@ -60,13 +61,12 @@ public class DataGrid<T> extends AbstractGrid<IDataSource<T>, T> implements IPag
 	 * @param columns
 	 *            list of grid columns
 	 */
-	public DataGrid(String id, IDataSource<T> dataSource,
-		List<IGridColumn<IDataSource<T>, T>> columns)
+	public DataGrid(String id, D dataSource, List<IGridColumn<D, T>> columns)
 	{
 		this(id, Model.of(dataSource), columns);
 	}
 
-	private class Body extends DataGridBody<T>
+	private class Body extends DataGridBody<D, T>
 	{
 
 		private static final long serialVersionUID = 1L;
@@ -77,13 +77,13 @@ public class DataGrid<T> extends AbstractGrid<IDataSource<T>, T> implements IPag
 		}
 
 		@Override
-		protected Collection<IGridColumn<IDataSource<T>, T>> getActiveColumns()
+		protected Collection<IGridColumn<D, T>> getActiveColumns()
 		{
 			return DataGrid.this.getActiveColumns();
 		}
 
 		@Override
-		protected IDataSource<T> getDataSource()
+		protected D getDataSource()
 		{
 			return DataGrid.this.getDataSource();
 		}
@@ -119,9 +119,9 @@ public class DataGrid<T> extends AbstractGrid<IDataSource<T>, T> implements IPag
 	 * 
 	 * @return {@link IDataSource} instance
 	 */
-	public IDataSource<T> getDataSource()
+	public D getDataSource()
 	{
-		return (IDataSource<T>)getDefaultModelObject();
+		return (D)getDefaultModelObject();
 	}
 
 	private int rowsPerPage = 20;
@@ -133,7 +133,7 @@ public class DataGrid<T> extends AbstractGrid<IDataSource<T>, T> implements IPag
 	 *            how many rows (max) should be displayed on one page
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public DataGrid<T> setRowsPerPage(int rowsPerPage)
+	public DataGrid<D, T> setRowsPerPage(int rowsPerPage)
 	{
 		this.rowsPerPage = rowsPerPage;
 		return this;
@@ -256,7 +256,7 @@ public class DataGrid<T> extends AbstractGrid<IDataSource<T>, T> implements IPag
 	 *            whether the current page change should deselect all selected items
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public DataGrid<T> setCleanSelectionOnPageChange(boolean cleanSelectionOnPageChange)
+	public DataGrid<D, T> setCleanSelectionOnPageChange(boolean cleanSelectionOnPageChange)
 	{
 		this.cleanSelectionOnPageChange = cleanSelectionOnPageChange;
 		return this;
@@ -451,13 +451,13 @@ public class DataGrid<T> extends AbstractGrid<IDataSource<T>, T> implements IPag
 	 * 
 	 * @author Matej Knopp
 	 */
-	public interface IGridQuery<T> extends IDataSource.IQuery
+	public interface IGridQuery<D extends IDataSource<T>, T> extends IDataSource.IQuery
 	{
 
 		/**
 		 * @return data grid issuing the query
 		 */
-		public DataGrid<T> getDataGrid();
+		public DataGrid<D, T> getDataGrid();
 	};
 
 	/**
