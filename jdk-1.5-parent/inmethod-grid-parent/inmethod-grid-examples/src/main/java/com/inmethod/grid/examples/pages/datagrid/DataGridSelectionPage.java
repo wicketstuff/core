@@ -51,8 +51,8 @@ public class DataGridSelectionPage extends BaseExamplePage
 		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String>(new ResourceModel(
 			"cellPhone"), "cellPhone"));
 
-		final DataGrid<Contact> grid = new DefaultDataGrid<Contact>("grid",
-			new ContactDataSource(), columns)
+		final DataGrid<IDataSource<Contact>, Contact> grid = new DefaultDataGrid<IDataSource<Contact>, Contact>(
+			"grid", new ContactDataSource(), columns)
 		{
 
 			private static final long serialVersionUID = 1L;
@@ -91,7 +91,7 @@ public class DataGridSelectionPage extends BaseExamplePage
 		addOptionLinks(grid);
 	}
 
-	private String selectedItemsAsString(DataGrid<Contact> grid)
+	private String selectedItemsAsString(DataGrid<IDataSource<Contact>, Contact> grid)
 	{
 		StringBuilder res = new StringBuilder();
 		Collection<IModel<Contact>> selected = grid.getSelectedItems();
@@ -109,7 +109,7 @@ public class DataGridSelectionPage extends BaseExamplePage
 		return res.toString();
 	}
 
-	private void addOptionLinks(final DataGrid<Contact> grid)
+	private void addOptionLinks(final DataGrid<IDataSource<Contact>, Contact> grid)
 	{
 
 		add(new Link<Void>("cleanSelectionOnPageChangeOn")

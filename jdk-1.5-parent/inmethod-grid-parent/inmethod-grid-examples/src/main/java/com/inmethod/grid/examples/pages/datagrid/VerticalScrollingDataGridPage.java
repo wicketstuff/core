@@ -42,8 +42,8 @@ public class VerticalScrollingDataGridPage extends BaseExamplePage
 		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String>(new ResourceModel(
 			"cellPhone"), "cellPhone"));
 
-		DataGrid<Contact> grid = new DefaultDataGrid<Contact>("grid", new ContactDataSource(),
-			columns);
+		DataGrid<IDataSource<Contact>, Contact> grid = new DefaultDataGrid<IDataSource<Contact>, Contact>(
+			"grid", new ContactDataSource(), columns);
 		add(grid);
 
 		grid.setRowsPerPage(30);

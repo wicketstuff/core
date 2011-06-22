@@ -21,6 +21,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 
+import com.inmethod.grid.IDataSource;
 import com.inmethod.grid.datagrid.DataGrid;
 
 /**
@@ -43,25 +44,25 @@ public class NavigatorLabel extends Label
 	 * @param table
 	 *            pageable view
 	 */
-	public <T> NavigatorLabel(final String id, final DataGrid<T> table)
+	public <D extends IDataSource<T>, T> NavigatorLabel(final String id, final DataGrid<D, T> table)
 	{
 		super(id);
 		setDefaultModel(new StringResourceModel("NavigatorLabel", this,
-			new Model<LabelModelObject<T>>(new LabelModelObject<T>(table)),
+			new Model<LabelModelObject<D, T>>(new LabelModelObject<D, T>(table)),
 			"Showing ${from} to ${to} of ${of}"));
 	}
 
-	private class LabelModelObject<T> implements IClusterable
+	private class LabelModelObject<D extends IDataSource<T>, T> implements IClusterable
 	{
 		private static final long serialVersionUID = 1L;
-		private final DataGrid<T> table;
+		private final DataGrid<D, T> table;
 
 		/**
 		 * Construct.
 		 * 
 		 * @param table
 		 */
-		public LabelModelObject(DataGrid<T> table)
+		public LabelModelObject(DataGrid<D, T> table)
 		{
 			this.table = table;
 		}

@@ -16,6 +16,12 @@ import org.apache.wicket.validation.validator.StringValidator.MaximumLengthValid
  */
 public class StringValidatorWithMaxLength
 {
+
+	/**
+	 * "maxlength" standard html input attribute name
+	 */
+	public static final String MAX_LENGTH = "maxlength";
+
 	/**
 	 * Adds a maxlength attribute to the tag.
 	 * 
@@ -28,7 +34,7 @@ public class StringValidatorWithMaxLength
 	 */
 	public static void addMaxLengthToTag(Component component, ComponentTag tag, int maxLength)
 	{
-		tag.put("maxlength", maxLength);
+		tag.put(MAX_LENGTH, maxLength);
 	}
 
 	/**
@@ -49,6 +55,8 @@ public class StringValidatorWithMaxLength
 			@Override
 			public void onComponentTag(Component component, ComponentTag tag)
 			{
+				super.onComponentTag(component, tag);
+
 				addMaxLengthToTag(component, tag, getLength());
 			}
 		};
@@ -69,7 +77,6 @@ public class StringValidatorWithMaxLength
 	{
 		return new LengthBetweenValidator(minimum, maximum)
 		{
-
 			private static final long serialVersionUID = 1L;
 
 			@Override

@@ -29,13 +29,15 @@ import com.inmethod.grid.datagrid.DataGrid;
  * The message can be overridden by providing a resource with key
  * <code>datagrid.no-records-found</code>
  * 
+ * @param <D>
+ *            datasource model object type = grid type
  * @param <T>
  *            row/item model object type
  * 
  * @author Igor Vaynberg (ivaynberg)
  * @author Matej Knopp
  */
-public class NoRecordsToolbar<T> extends AbstractToolbar<IDataSource<T>, T>
+public class NoRecordsToolbar<D extends IDataSource<T>, T> extends AbstractToolbar<D, T>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -48,7 +50,7 @@ public class NoRecordsToolbar<T> extends AbstractToolbar<IDataSource<T>, T>
 	 * @param table
 	 *            data table this toolbar will be attached to
 	 */
-	public NoRecordsToolbar(final DataGrid<T> table)
+	public NoRecordsToolbar(final DataGrid<D, T> table)
 	{
 		this(table, DEFAULT_MESSAGE_MODEL);
 	}
@@ -59,7 +61,7 @@ public class NoRecordsToolbar<T> extends AbstractToolbar<IDataSource<T>, T>
 	 * @param messageModel
 	 *            model that will be used to display the "no records found" message
 	 */
-	public NoRecordsToolbar(final DataGrid<T> grid, IModel<String> messageModel)
+	public NoRecordsToolbar(final DataGrid<D, T> grid, IModel<String> messageModel)
 	{
 		super(grid, null);
 
@@ -71,9 +73,9 @@ public class NoRecordsToolbar<T> extends AbstractToolbar<IDataSource<T>, T>
 	 * 
 	 * @return {@link DataGrid} instance this toolbar belongs to.
 	 */
-	public DataGrid<T> getDataGrid()
+	public DataGrid<D, T> getDataGrid()
 	{
-		return (DataGrid<T>)super.getGrid();
+		return (DataGrid<D, T>)super.getGrid();
 	}
 
 	/**

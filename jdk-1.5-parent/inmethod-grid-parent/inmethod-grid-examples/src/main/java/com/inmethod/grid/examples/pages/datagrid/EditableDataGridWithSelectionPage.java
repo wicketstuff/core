@@ -73,8 +73,8 @@ public class EditableDataGridWithSelectionPage extends BaseExamplePage
 			new ResourceModel("cellPhone"), "cellPhone"));
 		columns.add(new SubmitCancelColumn<IDataSource<Contact>, Contact>("esd", Model.of("Edit")));
 
-		DataGrid<Contact> grid = new DefaultDataGrid<Contact>("grid", new ContactDataSource(),
-			columns);
+		DataGrid<IDataSource<Contact>, Contact> grid = new DefaultDataGrid<IDataSource<Contact>, Contact>(
+			"grid", new ContactDataSource(), columns);
 		form.add(grid);
 
 		grid.setAllowSelectMultiple(true);
