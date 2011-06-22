@@ -99,7 +99,7 @@ public class DataProviderAdapter<T> implements IDataSource<T>
 			ISortState state = locator.getSortState();
 			if (state != null)
 			{
-				DataGrid<? extends IDataSource<T>, T> grid = ((DataGrid.IGridQuery<? extends IDataSource<T>, T>)query).getDataGrid();
+				DataGrid grid = ((DataGrid.IGridQuery)query).getDataGrid();
 				setSortState(state, grid, gridSortState);
 			}
 		}
