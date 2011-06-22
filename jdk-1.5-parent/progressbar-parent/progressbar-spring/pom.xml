@@ -8,7 +8,6 @@
 		<artifactId>progressbar-parent</artifactId>
 		<version>1.5-SNAPSHOT</version>
 	</parent>
-	<groupId>org.wicketstuff</groupId>
 	<artifactId>progressbar-spring</artifactId>
 	<description>TaskService for use with user submitted background tasks and the progress bar. Could be used with Spring or any other application framework.</description>
 
@@ -21,13 +20,11 @@
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-spring</artifactId>
-			<version>${wicket.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-ioc</artifactId>
-			<version>${wicket.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
