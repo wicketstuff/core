@@ -92,6 +92,10 @@ class ComponentSpecs extends SpecificationWithJUnit with ScalaTest with ScalaWic
       def fx = sf.onSubmit
       clickCountUpdatingFunction(fx)
     }
+    "pass model to a super-class" in {
+      val sf = new SForm("form", new Fodel[String]("test"), {})
+      sf.getModelObject mustEq "test"
+    }
   }
   "SListView component" should { doBefore{ new WicketTester() }
     "take a closure for the #populateItem method" in {

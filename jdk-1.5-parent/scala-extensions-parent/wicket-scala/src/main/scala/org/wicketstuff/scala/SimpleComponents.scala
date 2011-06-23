@@ -13,7 +13,7 @@ import org.apache.wicket.markup.html.link.Link
 import org.apache.wicket.markup.html.list.{ListView, ListItem, PropertyListView}
 import org.apache.wicket.model.{IModel, Model}
 
-class SForm[T](id:String, model:IModel[T] , onSubmitFunc: ⇒ Unit) extends Form[T](id) {
+class SForm[T](id:String, model:IModel[T] , onSubmitFunc: ⇒ Unit) extends Form[T](id, model:IModel[T]) {
 
   override def onSubmit = onSubmitFunc
 

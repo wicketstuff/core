@@ -106,7 +106,6 @@ public abstract class AbstractGrid<M, I> extends Panel
 		add(bottomToolbarContainer = new RepeatingView("bottomToolbarContainer"));
 		add(headerToolbarContainer = new RepeatingView("headerToolbarContainer"));
 
-		// renders the initialization javascript right after the grid itself
 		add(new Behavior()
 		{
 			private static final long serialVersionUID = 1L;
@@ -114,6 +113,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 			@Override
 			public void renderHead(Component component, IHeaderResponse response)
 			{
+				super.renderHead(component, response);
 				// since javascript can be rendered at the tail
 				// of HTML document, do not initialize data grid
 				// component until "DOM ready" event.
@@ -126,10 +126,12 @@ public abstract class AbstractGrid<M, I> extends Panel
 			@Override
 			public void afterRender(Component component)
 			{
+				super.afterRender(component);
 				if (getWebRequest().isAjax())
 				{
 					// renders the initialization javascript right after the grid itself
 					getResponse().write(getInitializationJavascript(true));
+
 				}
 			}
 
@@ -470,10 +472,12 @@ public abstract class AbstractGrid<M, I> extends Panel
 	}
 
 	/**
-	 * Renders the javascript required to initialize the client state for this grid instance. Called
-	 * after every grid render.
-	 *
-	 * @param response
+	 * Generates the javascript required to initialize the client state for this grid instance.
+	 * Called after every grid render.
+	 * 
+	 * @param wrapInHtmlScriptTag
+	 *            if true the generated js will be wrapped inside a script tag
+	 * @return generated javascript code
 	 */
 	private String getInitializationJavascript(boolean wrapInHtmlScriptTag)
 	{
@@ -516,12 +520,14 @@ public abstract class AbstractGrid<M, I> extends Panel
 		sb.append("InMethod.XTableManager.instance.register(\"" + getMarkupId() +
 			"\", columns, submitStateCallback);\n");
 		sb.append("})();\n");
+
 		if (wrapInHtmlScriptTag)
 		{
 			sb.append(JavaScriptUtils.SCRIPT_CLOSE_TAG);
 		}
+
 		return sb.toString();
-	}
+	};
 
 	/**
 	 * Returns collection of currently visible columns.

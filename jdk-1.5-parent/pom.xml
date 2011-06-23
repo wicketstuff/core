@@ -47,7 +47,6 @@
 		<module>prototype</module>
 		<module>push-parent-jdk-1.5</module>
 		<module>scala-extensions-parent</module>
-		<module>serializer-kryo</module>
 		<module>shiro-security</module>
 		<module>simile-timeline-parent</module>
 		<module>theme-parent</module>

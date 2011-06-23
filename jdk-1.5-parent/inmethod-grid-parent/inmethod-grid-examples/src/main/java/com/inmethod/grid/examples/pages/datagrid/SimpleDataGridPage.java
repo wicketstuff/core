@@ -41,8 +41,8 @@ public class SimpleDataGridPage extends BaseExamplePage
 		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String>(new ResourceModel(
 			"cellPhone"), "cellPhone"));
 
-		final DataGrid<Contact> grid = new DefaultDataGrid<Contact>("grid",
-			new ContactDataSource(), columns);
+		final DataGrid<IDataSource<Contact>, Contact> grid = new DefaultDataGrid<IDataSource<Contact>, Contact>(
+			"grid", new ContactDataSource(), columns);
 
 		add(grid);
 	}

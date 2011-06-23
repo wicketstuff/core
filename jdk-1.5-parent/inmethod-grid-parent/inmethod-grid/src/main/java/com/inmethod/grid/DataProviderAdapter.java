@@ -54,10 +54,11 @@ public class DataProviderAdapter<T> implements IDataSource<T>
 		return dataProvider.model(object);
 	}
 
-	private void setSortState(ISortState dest, DataGrid<T> grid, IGridSortState gridSortState)
+	private void setSortState(ISortState dest, DataGrid<? extends IDataSource<T>, T> grid,
+		IGridSortState gridSortState)
 	{
 		Set<String> unsortedColumns = new HashSet<String>(grid.getAllColumns().size());
-		for (IGridColumn<IDataSource<T>, T> column : grid.getAllColumns())
+		for (IGridColumn<? extends IDataSource<T>, T> column : grid.getAllColumns())
 		{
 			if (column.getSortProperty() != null)
 			{
@@ -98,7 +99,7 @@ public class DataProviderAdapter<T> implements IDataSource<T>
 			ISortState state = locator.getSortState();
 			if (state != null)
 			{
-				DataGrid<T> grid = ((DataGrid.IGridQuery<T>)query).getDataGrid();
+				DataGrid grid = ((DataGrid.IGridQuery)query).getDataGrid();
 				setSortState(state, grid, gridSortState);
 			}
 		}

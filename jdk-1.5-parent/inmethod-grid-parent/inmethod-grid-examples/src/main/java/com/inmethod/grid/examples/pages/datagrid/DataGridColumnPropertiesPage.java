@@ -76,8 +76,8 @@ public class DataGridColumnPropertiesPage extends BaseExamplePage
 			.setSizeUnit(SizeUnit.EM)
 			.setResizable(false));
 
-		DataGrid<Contact> grid = new DefaultDataGrid<Contact>("grid", new ContactDataSource(),
-			columns);
+		DataGrid<IDataSource<Contact>, Contact> grid = new DefaultDataGrid<IDataSource<Contact>, Contact>(
+			"grid", new ContactDataSource(), columns);
 		add(grid);
 
 		grid.setRowsPerPage(15);
