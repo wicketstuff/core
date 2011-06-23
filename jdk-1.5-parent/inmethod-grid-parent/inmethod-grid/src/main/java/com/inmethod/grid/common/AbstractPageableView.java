@@ -8,16 +8,16 @@ import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.IModel;
 
 import com.inmethod.grid.IDataSource;
-import com.inmethod.grid.IGridSortState;
 import com.inmethod.grid.IDataSource.IQuery;
 import com.inmethod.grid.IDataSource.IQueryResult;
+import com.inmethod.grid.IGridSortState;
 
 /**
  * Wicket {@link org.apache.wicket.markup.repeater.AbstractPageableView} alternative that uses
  * {@link IDataSource} as data source. Compared to Wicket
  * {@link org.apache.wicket.markup.repeater.AbstractPageableView} this component allows paging
  * without knowing the total number of rows.
- * 
+ *
  * @author Matej Knopp
  */
 public abstract class AbstractPageableView extends RefreshingView implements IPageable {
@@ -26,7 +26,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 
 	/**
 	 * Constructor,
-	 * 
+	 *
 	 * @param id
 	 * @param model
 	 */
@@ -36,7 +36,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param id
 	 */
 	public AbstractPageableView(String id) {
@@ -51,7 +51,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 	/**
 	 * Returns the total count of items (sum of count of items on all pages) or
 	 * {@link #UNKOWN_COUNT} in case the count can't be determined.
-	 * 
+	 *
 	 * @return total count of items or {@value #UNKOWN_COUNT}
 	 */
 	public int getTotalRowCount() {
@@ -62,7 +62,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 
 	/**
 	 * Returns the count of items on current page.
-	 * 
+	 *
 	 * @return count of items on current page
 	 */
 	public int getCurrentPageItemCount() {
@@ -74,7 +74,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 	/**
 	 * Returns the total number of items. If the underlying {@link IDataSource} supports reporting
 	 * total item count, the number of items is real, otherwise it's guessed.
-	 * 
+	 *
 	 * @return total number of items
 	 */
 	private int getItemCount() {
@@ -97,16 +97,16 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 	@Override
 	protected void onBeforeRender() {
 		cachedPageCount = -1;
-		
-		super.onBeforeRender();				
+
+		super.onBeforeRender();
 	}
-	
+
 	// we cache page count because paging navigator needs it even when items are not loaded
 	private int cachedPageCount = -1;
-	
+
 	/**
 	 * Gets the total number of pages this pageable object has.
-	 * 
+	 *
 	 * @return The total number of pages this pageable object has
 	 */
 	public int getPageCount() {
@@ -123,14 +123,14 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 
 				// get the actual page count
 				cachedPageCount = (count / rowsPerPage) + (mod > 0 ? 1 : 0);
-			}	
+			}
 		}
-		return cachedPageCount;		
+		return cachedPageCount;
 	}
 
 	/**
 	 * Sets the a page that should be rendered.
-	 * 
+	 *
 	 * @param page
 	 *            The page that should be rendered.
 	 */
@@ -174,7 +174,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 
 	/**
 	 * Allows to wrap created query.
-	 * 
+	 *
 	 * @param original
 	 * @return
 	 */
@@ -203,9 +203,9 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 			// check for situation when we didn't get any items, but we know the real count
 			// this is not a case when there are no items at all, just the case when there are no items on current page
 			// but possible items on previous pages
-			if (queryResult.itemCache.size() == 0 && realItemCount != UNKOWN_COUNT && 
+			if (queryResult.itemCache.size() == 0 && realItemCount != UNKOWN_COUNT &&
 				realItemCount != oldItemCount && realItemCount > 0) {
-				
+
 				// the data must have changed, the number of items has been reduced. try move to
 				// last page
 				int page = getPageCount() - 1;
@@ -289,9 +289,9 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 
 	/**
 	 * Convenience class representing an empty iterator
-	 * 
+	 *
 	 * @author Matej Knopp
-	 * 
+	 *
 	 * @param <T>
 	 */
 	private static class EmptyIterator<T> implements Iterator<T> {
@@ -321,7 +321,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 
 	/**
 	 * A {@link IQueryResult} implementation
-	 * 
+	 *
 	 * @author Matej Knopp
 	 */
 	private class QueryResult implements IQueryResult {
@@ -351,7 +351,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 		/**
 		 * Processes the result after the {@link IDataSource#query(IQuery, IQueryResult)} method is
 		 * executed,
-		 * 
+		 *
 		 * @param source
 		 */
 		public void process(IDataSource source) {
@@ -370,7 +370,14 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 			if (itemCache.size() == 0 && totalCount < 0) {
 				// in case no items have been loaded
 				// this is to have the last page displayed in paging navigator
-				totalCount = getCurrentPageFirstItem() + 1;
+				if (totalCount == IQueryResult.NO_MORE_ITEMS)
+				{
+					totalCount = 0;
+				}
+				else
+				{
+					totalCount = getCurrentPageFirstItem() + 1;
+				}
 			} else if (totalCount == IQueryResult.NO_MORE_ITEMS) {
 				// if the reported count was NO_MORE_RESULT, these are all items
 				// we can get, thus the totalCount can be counted properly
@@ -414,7 +421,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 
 	/**
 	 * Sets the item that determines the current page
-	 * 
+	 *
 	 * @param currentItem
 	 */
 	private void setCurrentPageFirstItem(int currentItem) {
