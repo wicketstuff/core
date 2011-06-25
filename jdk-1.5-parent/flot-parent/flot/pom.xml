@@ -7,7 +7,7 @@
 	<parent>
 		<artifactId>flot-parent</artifactId>
 		<groupId>org.wicketstuff</groupId>
-		<version>1.5-SNAPSHOT</version>
+		<version>1.5-RC5.1</version>
 	</parent>
 
 	<artifactId>flot</artifactId>
