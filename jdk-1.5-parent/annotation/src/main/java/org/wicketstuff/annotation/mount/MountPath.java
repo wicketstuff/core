@@ -19,23 +19,20 @@ package org.wicketstuff.annotation.mount;
 import java.lang.annotation.*;
 
 /**
- * Specify the primary and alternate paths to mount a Page.  If this annotation
- * is used by itself, the default encoding strategy is used (see
- * {@link org.wicketstuff.annotation.scan.AnnotatedMountScanner#getDefaultStrategy}).
+ * Specify the primary and alternate paths to mount a Page.
  *
- * <p>If you do not wish to use the default strategy, you also need to annotate the
- * page with an annotation that defines which strategy to use.  Those annotations are
- * annotated with {@link MountDefinition}.
- *
- * <p>A good example is {@link org.wicketstuff.annotation.strategy.MountMixedParam}.
+ * <p>If no value (or an empty string) is provided, the AnnotatedMountScanner class
+ * will resolve a value based on the page class (by default, <code>pageClass.getSimpleName()</code>).
  *
  * <p> The primary mount path is listed ahead of alternate paths in any list returned
  * by {@link org.wicketstuff.annotation.scan.AnnotatedMountScanner}.  This is done because
  * of the implementation of
  * {@link org.apache.wicket.protocol.http.request.WebRequestCodingStrategy#getMountEncoder(org.apache.wicket.IRequestTarget)}
- * getMountEncoder() returns the first mount that matches the given Page.  Thus, when determining which path to
- * mount a page on, it always picks the first one found.
+ * getMountEncoder() returns the first mount that matches the given Page.  Thus, 
+ * when determining which path to mount a page on, it always picks the first one
+ * found.
  * @author Doug Donohoe
+ * @author Ronald Tetsuo Miura
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -43,9 +40,10 @@ import java.lang.annotation.*;
 public @interface MountPath
 {
     /**
-     * @return primary mount path
+     * @return primary mount path. If no value (or an empty string) is provided, the AnnotatedMountScanner class
+     * will resolve a value based on the page class (by default, <code>pageClass.getSimpleName()</code>).
      */
-    String path();
+    String value() default "";
 
     /**
      * @return alternate mount paths
