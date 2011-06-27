@@ -17,12 +17,12 @@
 package org.wicketstuff.annotation.scan;
 
 import org.apache.wicket.*;
-import org.apache.wicket.request.target.coding.*;
+import org.apache.wicket.request.IRequestMapper;
+import org.apache.wicket.request.component.IRequestablePage;
+import org.apache.wicket.request.mapper.MountedMapper;
 import org.wicketstuff.config.*;
 import org.wicketstuff.annotation.mount.*;
 
-import java.lang.annotation.*;
-import java.lang.reflect.*;
 import java.util.*;
 
 /**
@@ -34,7 +34,7 @@ import java.util.*;
  * {@link MatchingResources}.  For example, the first package example above is turned into
  * "classpath*:/org/mycompany/wicket/pages/**&#47;*.class".
  *
- * <p>For each class that is annotated, an appropriate {@link IRequestTargetUrlCodingStrategy}
+ * <p>For each class that is annotated, an appropriate {@link IRequestMapper}
  * implementing class is created using the information in the {@link MountPath} annotation
  * and any supplemental annotations.  Each instance is added to the list to return.  Each item
  * in the returned list can then be mounted.
@@ -55,31 +55,36 @@ import java.util.*;
  * <p>Page classes annotation usage is as follows:
  *
  * <pre>
- *  &#64;MountPath(path = "hello")
+ *  &#64;MountPath
  *  private class HelloPage extends Page
  *  {
  *  }
  *
- *  &#64;MountPath(path = "dogs", alt = {"canines", "k9s"})
- *  &#64;MountMixedParam(parameterNames = {"dexter", "zorro"})
+ *  &#64;MountPath("hello")
+ *  private class HelloPage extends Page
+ *  {
+ *  }
+ *
+ *  &#64;MountPath(value = "dogs", alt = {"canines", "k9s"})
  *  private class DogsPage extends Page
  *  {
  *  }
  * </pre>
  *
- * <p>The first example will mount HelloPage to /hello using the default encoding strategy (as
- * returned by {@link #getDefaultStrategy} which is {@link BookmarkablePageRequestTargetUrlCodingStrategy}.
+ * <p>The first example will mount HelloPage to /HelloPage using the default mapper (as
+ * returned by {@link #getRequestMapper} which is {@link MountedMapper}.
  *
- * <p>The second example will mount DogsPage at "/dogs" (as the primary) and as "/canines" and "/k9s" as
- * alternates using the {@link MixedParamUrlCodingStrategy}.  Further, the second example specifies that
- * {"dexter", "zorro"} String array is to be passed to the constructor.  The value for the pageMapName
- * argument is null.
+ * <p>The second example will mount HelloPage to /hello using the default mapper (as
+ * returned by {@link #getRequestMapper} which is {@link MountedMapper}.
+ *
+ * <p>The third example will mount DogsPage at "/dogs" (as the primary) and as "/canines" and "/k9s" as
+ * alternates using the {@link MountedMapper}.
  *
  * @author Doug Donohoe
+ * @author Ronald Tetsuo Miura
  */
 public class AnnotatedMountScanner
 {
-    //private static Logger logger = LoggerFactory.getLogger(AnnotatedMountScanner.class);
 
     /**
      * Get the Spring search pattern given a package name or part of a package name
@@ -186,119 +191,43 @@ public class AnnotatedMountScanner
         MountPath mountPath = pageClass.getAnnotation(MountPath.class);
         if (mountPath == null) return;
 
-        // find first annotation that is annotated with @MountDefinition
-        Annotation pageSpecificMountDetails = null;
-        Class<? extends Annotation> mountStrategyAnnotationClass = null;
-        MountDefinition mountDefinition = null;
-        Annotation[] annos = pageClass.getAnnotations();
-        for (Annotation anno : annos)
+        String path = mountPath.value();
+        
+        // default if no explicit path is provided
+        if ("".equals(path))
         {
-            mountDefinition = anno.annotationType().getAnnotation(MountDefinition.class);
-            if (mountDefinition != null)
-            {
-                pageSpecificMountDetails = anno;
-                mountStrategyAnnotationClass = anno.getClass();
-                break;
-            }
+            path = getDefaultMountPath(pageClass);
         }
+        
+        list.add(getRequestMapper(path, pageClass));
 
-        // default if no @MountDefinition annotated annotation is available
-        if (pageSpecificMountDetails == null)
+        // alternates
+        for (String alt : mountPath.alt())
         {
-            // primary
-            list.add(getDefaultStrategy(mountPath.path(), pageClass));
-
-            // alternates
-            for (String alt : mountPath.alt())
-            {
-                list.add(getDefaultStrategy(alt, pageClass));
-            }
-            return;
-        }
-
-        // get the actual strategy we'll be creating
-        Class<? extends IRequestTargetUrlCodingStrategy> strategyClass = mountDefinition.strategyClass();
-
-        // need to determine the constructor - we support constructors that
-        // take a String (mount path) and a Class (page)
-        int STANDARD_ARGS = 2;
-        String[] argOrder = mountDefinition.argOrder();
-        Class<?>[] paramTypes = new Class<?>[argOrder.length + STANDARD_ARGS];
-        Object[] initArgs = new Object[paramTypes.length];
-
-        // deafult first two arguments - mount path and page class
-        paramTypes[0] = String.class;
-        paramTypes[1] = Class.class;
-        initArgs[0] = null; // provided below
-        initArgs[1] = pageClass;
-
-        // get remaining constructor args which match those specified by 'argOrder'
-        for (int i = 0; i < argOrder.length; i++)
-        {
-            int index = i + STANDARD_ARGS;
-            Method method = null;
-
-            try
-            {
-                method = mountStrategyAnnotationClass.getDeclaredMethod(argOrder[i]);
-                paramTypes[index] = method.getReturnType();
-                initArgs[index] = method.invoke(pageSpecificMountDetails);
-
-                // can't default an annotation to null, so use this as a workaround
-                if (initArgs[index].equals(MountDefinition.NULL)) initArgs[index] = null;
-            }
-            catch (NoSuchMethodException e)
-            {
-                throw new RuntimeException("argOrder[" + i + "] = " + argOrder[i] + " not found in annotation " +
-                                            mountStrategyAnnotationClass.getName(), e);
-            }
-            catch (Exception e)
-            {
-                throw new RuntimeException("Unable to invoke method " + method + " on annotation " +
-                                            pageSpecificMountDetails.getClass().getName(), e);
-            }
-        }
-
-        // get matching constructor
-        Constructor<? extends IRequestTargetUrlCodingStrategy> ctx = null;
-        try
-        {
-            ctx = strategyClass.getConstructor(paramTypes);
-        }
-        catch (NoSuchMethodException e)
-        {
-            throw new RuntimeException("No constructor matching parameters defined by 'argOrder' found for " +
-                                       strategyClass, e);
-        }
-
-        // create new instances
-        try
-        {
-            // primary mount path
-            initArgs[0] = mountPath.path();
-            list.add(ctx.newInstance(initArgs));
-
-            // alternate paths
-            for (String alt : mountPath.alt())
-            {
-                initArgs[0] = alt;
-                list.add(ctx.newInstance(initArgs));
-            }
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException("Unable to invoke constructor " + ctx + " for " + strategyClass, e);
+            list.add(getRequestMapper(alt, pageClass));
         }
     }
 
     /**
-     * Returns the default coding strategy given a mount path and class.
+     * Returns the default mapper given a mount path and class.
      * @param mountPath
      * @param pageClass
-     * @return {@link BookmarkablePageRequestTargetUrlCodingStrategy}
+     * @return {@link MountedMapper}
      */
-    public IRequestTargetUrlCodingStrategy getDefaultStrategy(String mountPath, Class<? extends Page> pageClass)
+    public IRequestMapper getRequestMapper(String mountPath, Class<? extends IRequestablePage> pageClass)
     {
-        return new BookmarkablePageRequestTargetUrlCodingStrategy(mountPath, pageClass, null);
+        return new MountedMapper(mountPath, pageClass);
+    }
+
+    /**
+     * Returns the default mount path for a given class (used if the path has 
+     * not been specified in the <code>@MountPath</code> annotation). By 
+     * default, this method returns the pageClass.getSimpleName().
+     * @param pageClass
+     * @return the default mount path for pageClass
+     */
+    public String getDefaultMountPath(Class<? extends IRequestablePage> pageClass)
+    {
+        return pageClass.getSimpleName();
     }
 }
