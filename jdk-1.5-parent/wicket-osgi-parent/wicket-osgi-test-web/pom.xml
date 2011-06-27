@@ -9,6 +9,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicket-osgi-test-web</artifactId>
 	<packaging>bundle</packaging>
+	<name>Wicket OSGi Test Web Application</name>
 	<version>1.5-SNAPSHOT</version>
 	<properties>
 	  <pax.debug>--vmOptions=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5900</pax.debug>

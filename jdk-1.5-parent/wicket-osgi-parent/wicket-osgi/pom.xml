@@ -8,6 +8,7 @@
   <groupId>org.wicketstuff</groupId>
   <artifactId>wicket-osgi</artifactId>
   <packaging>bundle</packaging>
+  <name>Wicket OSGi Integration</name>
   <version>1.5-SNAPSHOT</version>
   <dependencies>
     <dependency>

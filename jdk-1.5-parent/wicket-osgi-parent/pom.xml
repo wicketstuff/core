@@ -7,6 +7,7 @@
   </parent>
   <groupId>org.wicketstuff</groupId>
   <artifactId>wicket-osgi-parent</artifactId>
+  <name>Wicket OSGi Parent</name>
   <version>1.5-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
