@@ -24,12 +24,18 @@ import org.wicketstuff.osgi.test.library.model.Author;
 import org.wicketstuff.osgi.test.library.model.Book;
 
 
-public interface LibraryService extends Serializable {
-        
-    void fillLibrary();
-    List<Book> findBooksByAuthor(String lastName);
-    List<Book> findBooksByTitle(String title);
-    long getNumBooks();
-    long getNumAuthors();
-    void createAuthor(Author author);
+public interface LibraryService extends Serializable
+{
+
+	void fillLibrary();
+
+	List<Book> findBooksByAuthor(String lastName);
+
+	List<Book> findBooksByTitle(String title);
+
+	long getNumBooks();
+
+	long getNumAuthors();
+
+	void createAuthor(Author author);
 }
