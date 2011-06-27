@@ -17,19 +17,20 @@
 package org.wicketstuff.annotation.scan;
 
 import org.apache.wicket.protocol.http.*;
-import org.apache.wicket.request.target.coding.*;
+import org.apache.wicket.request.IRequestMapper;
 
 import java.util.*;
 
 /**
- * A list of {@link IRequestTargetUrlCodingStrategy}.
+ * A list of {@link IRequestMapper}.
  *
- * @author Doug Donohoe 
+ * @author Doug Donohoe
+ * @author Ronald Tetsuo Miura
  */
-public class AnnotatedMountList extends ArrayList<IRequestTargetUrlCodingStrategy>
+public class AnnotatedMountList extends ArrayList<IRequestMapper>
 {
     /**
-     * Iterate through list and call {@link WebApplication#mount(IRequestTargetUrlCodingStrategy)}
+     * Iterate through list and call {@link WebApplication#mount(IRequestMapper)}
      * for each item.
      * <p>
      * Typically called from {@link WebApplication#init()} method
@@ -38,7 +39,7 @@ public class AnnotatedMountList extends ArrayList<IRequestTargetUrlCodingStrateg
      */
     public void mount(WebApplication app)
     {
-        for (IRequestTargetUrlCodingStrategy strategy : this)
+        for (IRequestMapper strategy : this)
         {
             app.mount(strategy);
         }
