@@ -13,6 +13,7 @@
  */
 package org.wicketstuff.springreference;
 
-public class ClassService extends AService {
+public class ClassService extends AService
+{
 
 }

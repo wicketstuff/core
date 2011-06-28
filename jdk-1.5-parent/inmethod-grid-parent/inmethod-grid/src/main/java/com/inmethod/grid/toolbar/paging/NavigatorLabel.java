@@ -21,19 +21,21 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 
+import com.inmethod.grid.IDataSource;
 import com.inmethod.grid.datagrid.DataGrid;
 
 /**
  * Label that provides Showing x to y of z message given for a DataGrid. The message can be
- * overridden using the <code>NavigatorLabel</code> property key, the default message is used is
- * of the format <code>Showing ${from} to ${to} of ${of}</code>. The message can also be
- * configured pragmatically by setting it as the model object of the label.
+ * overridden using the <code>NavigatorLabel</code> property key, the default message is used is of
+ * the format <code>Showing ${from} to ${to} of ${of}</code>. The message can also be configured
+ * pragmatically by setting it as the model object of the label.
  * 
  * @author Igor Vaynberg (ivaynberg)
  * @author Matej Knopp
  * 
  */
-public class NavigatorLabel extends Label {
+public class NavigatorLabel extends Label
+{
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -42,29 +44,34 @@ public class NavigatorLabel extends Label {
 	 * @param table
 	 *            pageable view
 	 */
-	public NavigatorLabel(final String id, final DataGrid table) {
+	public <D extends IDataSource<T>, T> NavigatorLabel(final String id, final DataGrid<D, T> table)
+	{
 		super(id);
-		setDefaultModel(new StringResourceModel("NavigatorLabel", this, new Model(new LabelModelObject(table)),
-				"Showing ${from} to ${to} of ${of}"));
+		setDefaultModel(new StringResourceModel("NavigatorLabel", this,
+			new Model<LabelModelObject<D, T>>(new LabelModelObject<D, T>(table)),
+			"Showing ${from} to ${to} of ${of}"));
 	}
 
-	private class LabelModelObject implements IClusterable {
+	private class LabelModelObject<D extends IDataSource<T>, T> implements IClusterable
+	{
 		private static final long serialVersionUID = 1L;
-		private final DataGrid table;
+		private final DataGrid<D, T> table;
 
 		/**
 		 * Construct.
 		 * 
 		 * @param table
 		 */
-		public LabelModelObject(DataGrid table) {
+		public LabelModelObject(DataGrid<D, T> table)
+		{
 			this.table = table;
 		}
 
 		/**
 		 * @return "z" in "Showing x to y of z"
 		 */
-		public String getOf() {
+		public String getOf()
+		{
 			int total = table.getTotalRowCount();
 			return total != -1 ? "" + total : getString("unknown", null, "unknown");
 		}
@@ -72,20 +79,26 @@ public class NavigatorLabel extends Label {
 		/**
 		 * @return "x" in "Showing x to y of z"
 		 */
-		public int getFrom() {
-			if (table.getTotalRowCount() == 0) {
+		public int getFrom()
+		{
+			if (table.getTotalRowCount() == 0)
+			{
 				return 0;
 			}
-			return (table.getCurrentPage() * table.getRowsPerPage()) + 1;
+			return table.getCurrentPage() * table.getRowsPerPage() + 1;
 		}
 
 		/**
 		 * @return "y" in "Showing x to y of z"
 		 */
-		public int getTo() {
-			if (table.getTotalRowCount() == 0) {
+		public int getTo()
+		{
+			if (table.getTotalRowCount() == 0)
+			{
 				return 0;
-			} else {
+			}
+			else
+			{
 				int count = getFrom() + table.getCurrentPageItemCount() - 1;
 				return count;
 			}

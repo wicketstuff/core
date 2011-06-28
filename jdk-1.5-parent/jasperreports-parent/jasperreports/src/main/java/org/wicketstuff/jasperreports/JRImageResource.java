@@ -35,20 +35,15 @@ import net.sf.jasperreports.engine.export.JRGraphics2DExporter;
 import net.sf.jasperreports.engine.export.JRGraphics2DExporterParameter;
 
 import org.apache.wicket.WicketRuntimeException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Resource class for jasper reports PDF resources.
- *
+ * 
  * @author Eelco Hillenius
  */
 public final class JRImageResource extends JRResource
 {
-	/**
-	 * log.
-	 */
-	private static Logger log = LoggerFactory.getLogger(JRImageResource.class);
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Type of image (one of BufferedImage.TYPE_*).
@@ -66,8 +61,7 @@ public final class JRImageResource extends JRResource
 	private String format = "png";
 
 	/**
-	 * Construct without a report. You must provide a report before you can use
-	 * this resource.
+	 * Construct without a report. You must provide a report before you can use this resource.
 	 */
 	public JRImageResource()
 	{
@@ -76,7 +70,7 @@ public final class JRImageResource extends JRResource
 
 	/**
 	 * Construct.
-	 *
+	 * 
 	 * @param report
 	 *            the report input stream
 	 */
@@ -87,7 +81,7 @@ public final class JRImageResource extends JRResource
 
 	/**
 	 * Construct.
-	 *
+	 * 
 	 * @param report
 	 *            the report input stream
 	 */
@@ -98,7 +92,7 @@ public final class JRImageResource extends JRResource
 
 	/**
 	 * Construct.
-	 *
+	 * 
 	 * @param report
 	 *            the report input stream
 	 */
@@ -111,43 +105,44 @@ public final class JRImageResource extends JRResource
 	 * @see org.wicketstuff.jasperreports.JRResource#newExporter()
 	 */
 	@Override
-  public final JRAbstractExporter newExporter()
+	public final JRAbstractExporter newExporter()
 	{
-		try {
+		try
+		{
 			return new JRGraphics2DExporter();
-		} catch (JRException e) {
+		}
+		catch (JRException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}
 
 
 	@Override
-	protected byte[] getExporterData(JasperPrint print,
-	  JRAbstractExporter exporter) throws JRException
+	protected byte[] getExporterData(JasperPrint print, JRAbstractExporter exporter)
+		throws JRException
 	{
-	// prepare a stream to trap the exporter's output
-      ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
-      exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
+		// prepare a stream to trap the exporter's output
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+		exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
 
-      // create an image object
-      int width = (int) (print.getPageWidth() * getZoomRatio());
-      int height = (int) (print.getPageHeight() * getZoomRatio());
-      BufferedImage image = new BufferedImage(width, height, type);
-      exporter.setParameter(JRGraphics2DExporterParameter.GRAPHICS_2D, image
-              .getGraphics());
-      exporter.setParameter(JRGraphics2DExporterParameter.ZOOM_RATIO, new Float(
-              zoomRatio));
+		// create an image object
+		int width = (int)(print.getPageWidth() * getZoomRatio());
+		int height = (int)(print.getPageHeight() * getZoomRatio());
+		BufferedImage image = new BufferedImage(width, height, type);
+		exporter.setParameter(JRGraphics2DExporterParameter.GRAPHICS_2D, image.getGraphics());
+		exporter.setParameter(JRGraphics2DExporterParameter.ZOOM_RATIO, new Float(zoomRatio));
 
-      // execute the export and return the trapped result
-      exporter.exportReport();
-      return toImageData(image);
+		// execute the export and return the trapped result
+		exporter.exportReport();
+		return toImageData(image);
 	}
 
 	/**
 	 * @param image
 	 *            The image to turn into data
-	 *
+	 * 
 	 * @return The image data for this dynamic image
 	 */
 	protected byte[] toImageData(final BufferedImage image)
@@ -158,8 +153,7 @@ public final class JRImageResource extends JRResource
 			final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
 			// Get image writer for format
-			final ImageWriter writer = ImageIO.getImageWritersByFormatName(
-					format).next();
+			final ImageWriter writer = ImageIO.getImageWritersByFormatName(format).next();
 
 			// Write out image
 			writer.setOutput(ImageIO.createImageOutputStream(out));
@@ -170,8 +164,7 @@ public final class JRImageResource extends JRResource
 		}
 		catch (IOException e)
 		{
-			throw new WicketRuntimeException("Unable to convert dynamic image to stream",
-					e);
+			throw new WicketRuntimeException("Unable to convert dynamic image to stream", e);
 		}
 	}
 
@@ -179,14 +172,14 @@ public final class JRImageResource extends JRResource
 	 * @see org.wicketstuff.jasperreports.JRResource#getContentType()
 	 */
 	@Override
-  public String getContentType()
+	public String getContentType()
 	{
 		return "image/" + format;
 	}
 
 	/**
 	 * Gets the zoom ratio.
-	 *
+	 * 
 	 * @return the zoom ratio used for the export. The default value is 1
 	 */
 	public float getZoomRatio()
@@ -196,18 +189,18 @@ public final class JRImageResource extends JRResource
 
 	/**
 	 * Sets the zoom ratio.
-	 *
+	 * 
 	 * @param ratio
 	 *            the zoom ratio used for the export. The default value is 1
 	 */
 	public void setZoomRatio(float ratio)
 	{
-		this.zoomRatio = ratio;
+		zoomRatio = ratio;
 	}
 
 	/**
 	 * Gets the image type.
-	 *
+	 * 
 	 * @return the image type. The default value is 'png'
 	 */
 	public String getFormat()
@@ -217,7 +210,7 @@ public final class JRImageResource extends JRResource
 
 	/**
 	 * Sets the image type.
-	 *
+	 * 
 	 * @param format
 	 *            the image type. The default value is 'png'
 	 */
@@ -228,7 +221,7 @@ public final class JRImageResource extends JRResource
 
 	/**
 	 * Gets type of image (one of BufferedImage.TYPE_*).
-	 *
+	 * 
 	 * @return type of image
 	 */
 	public int getType()
@@ -238,7 +231,7 @@ public final class JRImageResource extends JRResource
 
 	/**
 	 * Sets type of image (one of BufferedImage.TYPE_*).
-	 *
+	 * 
 	 * @param type
 	 *            type of image
 	 */
@@ -251,7 +244,7 @@ public final class JRImageResource extends JRResource
 	 * @see org.wicketstuff.jasperreports.JRResource#getExtension()
 	 */
 	@Override
-  public String getExtension()
+	public String getExtension()
 	{
 		return getFormat();
 	}

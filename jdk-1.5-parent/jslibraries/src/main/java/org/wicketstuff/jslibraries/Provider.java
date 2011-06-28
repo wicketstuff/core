@@ -18,29 +18,27 @@
  */
 package org.wicketstuff.jslibraries;
 
-import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.markup.html.IHeaderContributor;
 
 /**
- * A Provider is an optional means of overriding the HeaderContributor created
- * by JSLib. <br/>
+ * A Provider is an optional means of overriding the HeaderContributor created by JSLib. <br/>
  * If you use <code>
- * JSLib.getHeaderContributor(versionDescriptor, provider[])</code> ,
- * these providers get the opportunity to provide a HeaderContributor first. If
- * it returns null, the requested lib will be served from the application
- * instead (if defined).
+ * JSLib.getHeaderContributor(versionDescriptor, provider[])</code> , these providers get the
+ * opportunity to provide a HeaderContributor first. If it returns null, the requested lib will be
+ * served from the application instead (if defined).
  * 
  * @author Uwe Schäfer, (uwe@codesmell.de)
  */
-public interface Provider {
+public interface Provider
+{
 
 	/**
 	 * @param versionDescriptor
 	 * @param productionHint
 	 *            if true, tries to use minimized version of script if available
-	 * @return HeaderContributor to be added to component, or null if
-	 *         unavailable
+	 * @return HeaderContributor to be added to component, or null if unavailable
 	 */
-	public HeaderContributor getHeaderContributor(
-			VersionDescriptor versionDescriptor, boolean productionHint);
+	public IHeaderContributor getHeaderContributor(VersionDescriptor versionDescriptor,
+		boolean productionHint);
 
 }

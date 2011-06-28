@@ -2,39 +2,43 @@ package com.inmethod.grid;
 
 /**
  * Represents a HTML size unit.
- *
+ * 
  * @author Matej Knopp
  */
-public enum SizeUnit {
-		
+public enum SizeUnit
+{
+
 	/**
 	 * CSS EM unit
 	 */
-	EM ("em"),
-	
+	EM("em"),
+
 	/**
 	 * CSS PX unit
 	 */
-	PX ("px"),
-	
+	PX("px"),
+
 	/**
 	 * CSS EX unit
 	 */
-	EX ("ex");
-	
+	EX("ex");
+
 	private final String value;
-	
-	SizeUnit(String value) {
+
+	SizeUnit(String value)
+	{
 		this.value = value;
 	}
-	
+
 	/**
 	 * Returns the string representation of the unit.
+	 * 
 	 * @return string representation of the unit
 	 */
-	public String getValue() {
+	public String getValue()
+	{
 		return value;
 	}
-	
-	
+
+
 };

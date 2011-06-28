@@ -23,23 +23,22 @@ import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.templates.ScriptTemplate;
 
 /**
- * A {@link ModalWindow} displaying a
- * {@link GroovyScriptEngineWithTemplatesPanel}.
+ * A {@link ModalWindow} displaying a {@link GroovyScriptEngineWithTemplatesPanel}.
  * 
  * @author cretzel
  */
-public class GroovyScriptEngineWithTemplatesWindow extends
-		ScriptEngineWithTemplatesWindow {
+public class GroovyScriptEngineWithTemplatesWindow extends ScriptEngineWithTemplatesWindow
+{
 
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see ScriptEngineWithTemplatesWindow#ScriptEngineWithTemplatesWindow(String,
-	 *      Lang, org.apache.wicket.model.IModel)
+	 * @see ScriptEngineWithTemplatesWindow#ScriptEngineWithTemplatesWindow(String, Lang,
+	 *      org.apache.wicket.model.IModel)
 	 */
-	public GroovyScriptEngineWithTemplatesWindow(final String id,
-			final IModel<String> windowTitle,
-			final IDataProvider<ScriptTemplate> dataProvider) {
+	public GroovyScriptEngineWithTemplatesWindow(final String id, final IModel<String> windowTitle,
+		final IDataProvider<ScriptTemplate> dataProvider)
+	{
 		super(id, Lang.GROOVY, windowTitle, dataProvider);
 	}
 

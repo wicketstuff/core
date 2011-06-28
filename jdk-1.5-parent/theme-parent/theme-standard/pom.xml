@@ -6,8 +6,12 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
+<<<<<<< HEAD
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-theme-standard</artifactId>
+=======
+	<artifactId>theme-standard</artifactId>
+>>>>>>> 1b8c5b3f32dc8c603f3e55bf25f431dcbc3782f0
 	<name>theme-standard</name>
 	<packaging>jar</packaging>
 	<description>Default Wicket Theme</description>

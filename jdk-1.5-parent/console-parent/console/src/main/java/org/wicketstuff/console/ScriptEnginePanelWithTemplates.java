@@ -19,6 +19,7 @@ package org.wicketstuff.console;
 
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.model.IModel;
 import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.templates.PackagedScriptTemplates;
@@ -30,12 +31,13 @@ import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
  * 
  * @author cretzel
  */
-public class ScriptEnginePanelWithTemplates extends Panel {
+public class ScriptEnginePanelWithTemplates extends Panel
+{
 
 	private static final long serialVersionUID = 1L;
 	private final Lang lang;
-	private ScriptEnginePanel enginePanel;
-	private ScriptTemplateSelectionTablePanel selectionTable;
+	private final ScriptEnginePanel enginePanel;
+	private final ScriptTemplateSelectionTablePanel selectionTable;
 	private IDataProvider<ScriptTemplate> dataProvider;
 	private final IModel<String> title;
 
@@ -49,62 +51,72 @@ public class ScriptEnginePanelWithTemplates extends Panel {
 	 * @param title
 	 *            title, may be {@code null} for default
 	 * @param dataProvider
-	 *            data provider for script templates, may be {@code null} for
-	 *            default
+	 *            data provider for script templates, may be {@code null} for default
 	 */
 	public ScriptEnginePanelWithTemplates(final String id, final Lang lang,
-			final IModel<String> title,
-			final IDataProvider<ScriptTemplate> dataProvider) {
+		final IModel<String> title, final IDataProvider<ScriptTemplate> dataProvider)
+	{
 		super(id);
 
 		this.lang = lang;
 		this.title = title;
 		this.dataProvider = dataProvider;
 
-		if (dataProvider == null) {
-			this.dataProvider = PackagedScriptTemplates
-					.packagedScriptTemplatesDataProvider(lang);
+		if (dataProvider == null)
+		{
+			this.dataProvider = packagedScriptTemplatesDataProvider(lang);
 		}
-
-	}
-
-	@Override
-	protected void onInitialize() {
-		super.onInitialize();
 
 		enginePanel = newEnginePanel();
 		enginePanel.setOutputMarkupId(true);
 		add(enginePanel);
 
-		selectionTable = newSelectionTable("selectionPanel", enginePanel,
-				dataProvider);
+		selectionTable = newSelectionTable("selectionPanel", enginePanel, this.dataProvider);
 		add(selectionTable);
+
+	}
+
+	private IDataProvider<ScriptTemplate> packagedScriptTemplatesDataProvider(final Lang lang)
+	{
+		return new ListDataProvider<ScriptTemplate>(
+			PackagedScriptTemplates.getPackagedScriptTemplates(lang));
 	}
 
 	/**
 	 * Create the engine panel, override to customize.
+	 * <p>
+	 * Attention: This is called from the constructor.
 	 */
-	protected ScriptEnginePanel newEnginePanel() {
+	protected ScriptEnginePanel newEnginePanel()
+	{
 		return ScriptEnginePanel.create("enginePanel", lang, title);
 	}
 
 	/**
 	 * Create the selection table, override to customize.
+	 * <p>
+	 * Attention: This is called from the constructor.
 	 */
-	protected ScriptTemplateSelectionTablePanel newSelectionTable(
-			final String wicketId, final ScriptEnginePanel enginePanel,
-			final IDataProvider<ScriptTemplate> dataProvider) {
+	protected ScriptTemplateSelectionTablePanel newSelectionTable(final String wicketId,
+		final ScriptEnginePanel enginePanel, final IDataProvider<ScriptTemplate> dataProvider)
+	{
 
-		return new ScriptTemplateSelectionTablePanel(wicketId, enginePanel,
-				dataProvider, 100);
+		return new ScriptTemplateSelectionTablePanel(wicketId, enginePanel, dataProvider, 100);
 	}
 
-	public ScriptEnginePanel getEnginePanel() {
+	public ScriptEnginePanel getEnginePanel()
+	{
 		return enginePanel;
 	}
 
-	public ScriptTemplateSelectionTablePanel getSelectionTable() {
+	public ScriptTemplateSelectionTablePanel getSelectionTable()
+	{
 		return selectionTable;
+	}
+
+	public IDataProvider<ScriptTemplate> getDataProvider()
+	{
+		return dataProvider;
 	}
 
 }

@@ -26,7 +26,8 @@ import com.vividsolutions.jts.geom.Point;
  * Represents an Open layers
  * http://dev.openlayers.org/apidocs/files/OpenLayers/BaseTypes/LonLat-js.html
  */
-public class LonLat implements Value {
+public class LonLat implements Value
+{
 	/**
 	 * Default serialVersionUID.
 	 */
@@ -39,65 +40,77 @@ public class LonLat implements Value {
 	 * @param lat
 	 * @param lng
 	 */
-	public LonLat(double lng, double lat) {
+	public LonLat(double lng, double lat)
+	{
 
-		this.point = OpenLayersMapUtils.createPoint(lng, lat);
+		point = OpenLayersMapUtils.createPoint(lng, lat);
 	}
 
-	public LonLat(Point point) {
+	public LonLat(Point point)
+	{
 		this.point = point;
 	}
 
-	public double getLat() {
+	public double getLat()
+	{
 		return point.getY();
 	}
 
-	public double getLng() {
+	public double getLng()
+	{
 		return point.getX();
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return getJSconstructor();
 	}
 
 	/**
 	 */
-	public String getJSconstructor() {
-		return new Constructor("OpenLayers.LonLat").add(getLng()).add(getLat())
-				.toJS();
+	public String getJSconstructor()
+	{
+		return new Constructor("OpenLayers.LonLat").add(getLng()).add(getLat()).toJS();
 	}
 
 	@Override
-	public int hashCode() {
-		return new Double(getLat()).hashCode()
-				^ new Double(getLng()).hashCode();
+	public int hashCode()
+	{
+		return new Double(getLat()).hashCode() ^ new Double(getLng()).hashCode();
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof LonLat) {
-			LonLat t = (LonLat) obj;
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof LonLat)
+		{
+			LonLat t = (LonLat)obj;
 			return t.getLat() == getLat() && t.getLng() == getLng();
 		}
 		return false;
 	}
 
-	public Point getPoint() {
+	public Point getPoint()
+	{
 		return point;
 	}
 
 	/**
 	 * (37.34068368469045, -122.48519897460936)
 	 */
-	public static LonLat parse(String value) {
-		try {
+	public static LonLat parse(String value)
+	{
+		try
+		{
 			StringTokenizer tokenizer = new StringTokenizer(value, "(, )");
 
 			float lat = Float.valueOf(tokenizer.nextToken());
 			float lng = Float.valueOf(tokenizer.nextToken());
 			return new LonLat(lat, lng);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return null;
 		}
 	}
@@ -105,23 +118,33 @@ public class LonLat implements Value {
 	/**
 	 * (lon=37.34068368469045, lat=-122.48519897460936)
 	 */
-	public static LonLat parseWithNames(String value) {
-		try {
+	public static LonLat parseWithNames(String value)
+	{
+		try
+		{
 			StringTokenizer tokenizer = new StringTokenizer(value, "(, )");
 			float lng = 0;
 			float lat = 0;
-			for (int i = 0; i < 2; i++) {
+			for (int i = 0; i < 2; i++)
+			{
 				String item = tokenizer.nextToken().toLowerCase();
-				if (item.startsWith("lon=")) {
+				if (item.startsWith("lon="))
+				{
 					lng = Float.parseFloat(item.substring(4));
-				} else if (item.startsWith("lat=")) {
+				}
+				else if (item.startsWith("lat="))
+				{
 					lat = Float.parseFloat(item.substring(4));
-				} else {
+				}
+				else
+				{
 					return null;
 				}
 			}
 			return new LonLat(lng, lat);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return null;
 		}
 	}

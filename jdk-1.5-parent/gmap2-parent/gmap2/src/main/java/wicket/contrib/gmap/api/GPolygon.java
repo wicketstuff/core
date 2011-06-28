@@ -36,7 +36,7 @@ public class GPolygon extends GOverlay
 	private final float fillOpacity;
 
 	public GPolygon(String strokeColor, int strokeWeight, float strokeOpacity, String fillColor,
-			float fillOpacity, GLatLng... gLatLngs)
+		float fillOpacity, GLatLng... gLatLngs)
 	{
 		super();
 

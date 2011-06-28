@@ -23,44 +23,49 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.wicket.behavior.HeaderContributor;
-import org.apache.wicket.markup.html.JavascriptPackageResource;
+import org.apache.wicket.markup.html.IHeaderContributor;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.jslibraries.util.Assert;
 
-public enum CDN implements Provider {
+public enum CDN implements Provider
+{
 
-	GOOGLE {
+	GOOGLE
+	{
 
 		private volatile Map<Library, GoogleRenderer> renderers;
 
-		public URL render(final Library lib, final Version version,
-				boolean production) {
+		@Override
+		public URL render(final Library lib, final Version version, boolean production)
+		{
 			Assert.parameterNotNull(lib, "lib");
 			Assert.parameterNotNull(version, "version");
 
-			if (renderers == null) {
+			if (renderers == null)
+			{
 				renderers = new HashMap<Library, GoogleRenderer>();
-				renderers.put(Library.JQUERY, new GoogleRenderer("jquery",
-						"jquery", ".js", ".min.js"));
-				renderers.put(Library.JQUERY_UI, new GoogleRenderer("jqueryui",
-						"jquery-ui", ".js", ".min.js"));
-				renderers.put(Library.MOOTOOLS_CORE, new GoogleRenderer(
-						"mootools", "mootools", ".js", "-yui-compressed.js"));
-				renderers.put(Library.PROTOTYPE, new GoogleRenderer(
-						"prototype", "prototype", ".js"));
-				renderers.put(Library.SCRIPTACULOUS, new GoogleRenderer(
-						"scriptaculous", "scriptaculous", ".js"));
-				renderers.put(Library.YUI, new GoogleRenderer("yui",
-						"build/yuiloader/yuiloader", ".js", "-min.js"));
-				renderers.put(Library.DOJO, new GoogleRenderer("dojo",
-						"dojo/dojo.xd.js", ".uncompressed.js", ""));
-				renderers.put(Library.SWFOBJECT, new GoogleRenderer(
-						"swfobject", "swfobject", "_src.js", ".js"));
-				renderers.put(Library.EXT_CORE, new GoogleRenderer("ext-core",
-						"ext-core", "-debug.js", ".js"));
+				renderers.put(Library.JQUERY, new GoogleRenderer("jquery", "jquery", ".js",
+					".min.js"));
+				renderers.put(Library.JQUERY_UI, new GoogleRenderer("jqueryui", "jquery-ui", ".js",
+					".min.js"));
+				renderers.put(Library.MOOTOOLS_CORE, new GoogleRenderer("mootools", "mootools",
+					".js", "-yui-compressed.js"));
+				renderers.put(Library.PROTOTYPE,
+					new GoogleRenderer("prototype", "prototype", ".js"));
+				renderers.put(Library.SCRIPTACULOUS, new GoogleRenderer("scriptaculous",
+					"scriptaculous", ".js"));
+				renderers.put(Library.YUI, new GoogleRenderer("yui", "build/yuiloader/yuiloader",
+					".js", "-min.js"));
+				renderers.put(Library.DOJO, new GoogleRenderer("dojo", "dojo/dojo.xd.js",
+					".uncompressed.js", ""));
+				renderers.put(Library.SWFOBJECT, new GoogleRenderer("swfobject", "swfobject",
+					"_src.js", ".js"));
+				renderers.put(Library.EXT_CORE, new GoogleRenderer("ext-core", "ext-core",
+					"-debug.js", ".js"));
 			}
 			URLRenderer r = renderers.get(lib);
-			if (r == null) {
+			if (r == null)
+			{
 				return null;
 			}
 			return r.render(lib, version, production);
@@ -68,22 +73,26 @@ public enum CDN implements Provider {
 	}
 
 	,
-	YAHOO {
+	YAHOO
+	{
 
 		@Override
-		public URL render(Library lib, Version version, boolean production) {
+		public URL render(Library lib, Version version, boolean production)
+		{
 			Assert.parameterNotNull(version, "version");
 			Assert.parameterNotNull(lib, "lib");
-			
-			if (lib == Library.YUI) {
+
+			if (lib == Library.YUI)
+			{
 				String sign = production ? "-min" : "";
-				try {
-					return new URL("http://yui.yahooapis.com/"
-							+ version.renderVersionNumbers()
-							+ "/build/yuiloader/yuiloader" + sign + ".js");
-				} catch (MalformedURLException e) {
-					throw new IllegalStateException(
-							"Construction of Yahoo-URL failed.",e);
+				try
+				{
+					return new URL("http://yui.yahooapis.com/" + version.renderVersionNumbers() +
+						"/build/yuiloader/yuiloader" + sign + ".js");
+				}
+				catch (MalformedURLException e)
+				{
+					throw new IllegalStateException("Construction of Yahoo-URL failed.", e);
 				}
 			}
 			return null;
@@ -93,53 +102,61 @@ public enum CDN implements Provider {
 
 	protected abstract URL render(Library lib, Version v, boolean production);
 
-	public HeaderContributor getHeaderContributor(
-			final VersionDescriptor versionDescriptor, boolean production) {
+	public IHeaderContributor getHeaderContributor(final VersionDescriptor versionDescriptor,
+		boolean production)
+	{
 
 		Assert.parameterNotNull(versionDescriptor, "versionDescriptor");
 
 		Library lib = versionDescriptor.getLibrary();
 		Version v = versionDescriptor.getVersion(this);
-		if (lib.getVersions(this).contains(v)) {
+		if (lib.getVersions(this).contains(v))
+		{
 			URL url = render(lib, v, production);
-			if (url != null) {
-				return JavascriptPackageResource.getHeaderContribution(url
-						.toExternalForm());
+			if (url != null)
+			{
+				return new HeaderContributor(url.toExternalForm());
 			}
 		}
 		return null;
 	}
 
-	static class GoogleRenderer implements URLRenderer {
+	static class GoogleRenderer implements URLRenderer
+	{
 		private static final String URL_PREFIX = "http://ajax.googleapis.com/ajax/libs/";
 		private final String path;
 		private final String file;
 		private final String suffix;
 		private final String productionSuffix;
 
-		private GoogleRenderer(final String path, final String file,
-				final String suffix, final String productionSuffix) {
+		private GoogleRenderer(final String path, final String file, final String suffix,
+			final String productionSuffix)
+		{
 			this.path = path;
 			this.file = file;
 			this.suffix = suffix;
 			this.productionSuffix = productionSuffix;
 		}
 
-		private GoogleRenderer(final String path, final String file,
-				final String suffix) {
+		private GoogleRenderer(final String path, final String file, final String suffix)
+		{
 			this(path, file, suffix, suffix);
 		}
 
-		public URL render(final Library lib, final Version v, boolean production) {
+		public URL render(final Library lib, final Version v, boolean production)
+		{
 			Assert.parameterNotNull(lib, "lib");
 			Assert.parameterNotNull(v, "v");
 
 			String version = v.renderVersionNumbers();
-			String spec = URL_PREFIX + path + "/" + version + "/" + file
-					+ (production ? productionSuffix : suffix);
-			try {
+			String spec = URL_PREFIX + path + "/" + version + "/" + file +
+				(production ? productionSuffix : suffix);
+			try
+			{
 				return new URL(spec);
-			} catch (MalformedURLException e) {
+			}
+			catch (MalformedURLException e)
+			{
 				throw new IllegalArgumentException(e);
 			}
 		}
@@ -147,4 +164,19 @@ public enum CDN implements Provider {
 
 	public static final CDN[] ANY = values();
 
+	private static class HeaderContributor implements IHeaderContributor
+	{
+		private static final long serialVersionUID = 1L;
+		private final String url;
+
+		public HeaderContributor(String url)
+		{
+			this.url = url;
+		}
+
+		public void renderHead(IHeaderResponse response)
+		{
+			response.renderJavaScriptReference(url);
+		}
+	}
 }

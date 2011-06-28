@@ -12,14 +12,16 @@ import org.wicketstuff.springreference.examples.FinalService;
  * 
  * @author akiraly
  */
-public class HomePage extends AbstractFinalPage {
+public class HomePage extends AbstractFinalPage
+{
 	private static final long serialVersionUID = 4697187546238788036L;
 
 	@SpringBean
 	private FinalService finalService;
 
 	@Override
-	public FinalService getFinalService() {
+	public FinalService getFinalService()
+	{
 		return finalService;
 	}
 }

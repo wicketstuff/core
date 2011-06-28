@@ -17,7 +17,8 @@ package wicket.contrib.gmap.util;
 
 import java.io.IOException;
 
-public class GeocoderException extends IOException {
+public class GeocoderException extends IOException
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -41,13 +42,15 @@ public class GeocoderException extends IOException {
 
 	private int status;
 
-	public GeocoderException(int status) {
+	public GeocoderException(int status)
+	{
 		super("Status " + status);
 
 		this.status = status;
 	}
 
-	public final int getStatus() {
+	public final int getStatus()
+	{
 		return status;
 	}
 }

@@ -24,8 +24,10 @@ import wicket.contrib.phonebook.web.page.ListContactsPage;
 /**
  * @author Kare Nuorteva
  */
-public class BasePhonebookApplicationTest extends TestCase {
-	public void testHomePageShouldListContacts() throws Exception {
+public class BasePhonebookApplicationTest extends TestCase
+{
+	public void testHomePageShouldListContacts() throws Exception
+	{
 		PhonebookApplicationForTesting app = new PhonebookApplicationForTesting();
 		assertEquals(ListContactsPage.class, app.getHomePage());
 	}

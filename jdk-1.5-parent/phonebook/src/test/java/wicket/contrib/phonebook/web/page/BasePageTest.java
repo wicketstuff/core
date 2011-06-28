@@ -28,10 +28,11 @@ import wicket.contrib.phonebook.web.PhonebookApplicationForTesting;
 /**
  * @author Kare Nuorteva
  */
-public class BasePageTest extends TestCase {
-	public void testContainsFeedbackPanel() throws Exception {
-		WicketTester wicket = new WicketTester(
-				new PhonebookApplicationForTesting());
+public class BasePageTest extends TestCase
+{
+	public void testContainsFeedbackPanel() throws Exception
+	{
+		WicketTester wicket = new WicketTester(new PhonebookApplicationForTesting());
 		wicket.startPage(BasePage.class);
 		wicket.assertComponent("status", FeedbackPanel.class);
 	}

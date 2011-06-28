@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>Spring Security integrated login</title>
+</head>
+<body>
+
+<div id="loginBox">
+    <form wicket:id="loginForm" action="j_acegi_security_check" method="POST">
+        <div class="loginTitle">Login to the Spring security integrated sample application
+            <div class="loginError" wicket:id="feedback"></div>
+        </div>
+        <p>user name
+            <input wicket:id="userName" name="j_username"/>
+        </p>
+        <p>password
+        <input wicket:id="password" name="j_password"/>
+        </p>
+        <p>
+            <input wicket:id="submit" type="submit" value="Logon"/>
+        </p>
+    </form>
+</div>
+</body>
+</html>

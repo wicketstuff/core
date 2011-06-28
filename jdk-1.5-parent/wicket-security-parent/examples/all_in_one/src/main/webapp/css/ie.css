@@ -1,0 +1,16 @@
+#agendaView table{
+	border-collapse:collapse;
+}
+	
+#agendaBar input{
+	margin-top:-1px;
+}
+
+#contentbox{
+	overflow:visible;
+}
+
+#loginBox{
+	background: transparent none;
+	filter:progid:DXimageTransform.Microsoft.AlphaimageLoader(src='img/layout/loginscreen.png', sizingMethod='scale'); 
+}

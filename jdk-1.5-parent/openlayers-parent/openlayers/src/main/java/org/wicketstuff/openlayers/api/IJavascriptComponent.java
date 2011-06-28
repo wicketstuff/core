@@ -22,14 +22,15 @@ import org.wicketstuff.openlayers.IOpenLayersMap;
 /**
  * @author mocleiri
  * 
- * Created as part of the Control conversion from an enumerated type to a class hierarchy.  
+ *         Created as part of the Control conversion from an enumerated type to a class hierarchy.
  * 
- * Only works for Control's right now but it might be possible to extend to other components
- *
+ *         Only works for Control's right now but it might be possible to extend to other components
+ * 
  */
-public interface IJavascriptComponent extends IClusterable {
+public interface IJavascriptComponent extends IClusterable
+{
 
-	
+
 	/**
 	 * 
 	 * @param map
@@ -43,19 +44,21 @@ public interface IJavascriptComponent extends IClusterable {
 	 * @return the rendered javascript to add this component to the map
 	 */
 	String getJSadd(IOpenLayersMap map);
-	
+
 	/**
-	 * Note: currently the naming of a component is related to the concrete class i.e. a WMS layer would be 'wms' + getId() like: 'wms123456'.
+	 * Note: currently the naming of a component is related to the concrete class i.e. a WMS layer
+	 * would be 'wms' + getId() like: 'wms123456'.
 	 * 
 	 * The id returned here is the number part not the layer identifier part.
 	 * 
-	 * @return the unique id for this component.  Used for naming purposes.
+	 * @return the unique id for this component. Used for naming purposes.
 	 * 
 	 */
 	public String getId();
 
 	/**
-	 * In some cases a javascript component will provide its own javascript resource.  This is used by the map to add in the references.
+	 * In some cases a javascript component will provide its own javascript resource. This is used
+	 * by the map to add in the references.
 	 * 
 	 * @return
 	 * 

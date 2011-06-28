@@ -12,7 +12,8 @@ import org.wicketstuff.springreference.examples.PrivateService;
  * 
  * @author akiraly
  */
-public class PrivatePage extends AbstractPrivatePage {
+public class PrivatePage extends AbstractPrivatePage
+{
 	private static final long serialVersionUID = -1409779948214620992L;
 
 	// this fails because PrivateService has only private constructor
@@ -20,7 +21,8 @@ public class PrivatePage extends AbstractPrivatePage {
 	private PrivateService privateService;
 
 	@Override
-	public PrivateService getPrivateService() {
+	public PrivateService getPrivateService()
+	{
 		return privateService;
 	}
 }

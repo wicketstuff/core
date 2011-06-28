@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.wicketstuff</groupId>
+    <artifactId>wicket-bundle-parent</artifactId>
+    <version>1.5-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>wicket-bundle</artifactId>
+  <name>Wicket Bundle</name>
+
+  <packaging>bundle</packaging>
+  
+  <description>
+	A module that creates a .jar from the classes in wicket, wicket-util and wicket-request modules in order
+  to create a valid OSGi bundle of the wicket framework.
+  </description>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.wicket</groupId>
+      <artifactId>wicket-core</artifactId>
+      <version>${wicket.version}</version>
+      <scope>provided</scope>
+      <classifier>sources</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.wicket</groupId>
+      <artifactId>wicket-util</artifactId>
+      <version>${wicket.version}</version>
+      <scope>provided</scope>
+      <classifier>sources</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.wicket</groupId>
+      <artifactId>wicket-request</artifactId>
+      <version>${wicket.version}</version>
+      <scope>provided</scope>
+      <classifier>sources</classifier>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptors>
+            <descriptor>src/assembly/sources.xml</descriptor>
+          </descriptors>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-sources</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Import-Package>junit.framework;resolution:=optional, *</Import-Package>
+            <Export-Package>org.apache.wicket.*;version=${project.version};-split-package:=merge-first</Export-Package>
+            <Embed-Dependency>*;scope=compile;type=!pom;classifier=!sources;inline=true</Embed-Dependency>
+            <Embed-Transitive>false</Embed-Transitive>
+            <_nouses>true</_nouses>
+            <_failok>true</_failok>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

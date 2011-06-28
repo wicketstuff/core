@@ -8,7 +8,8 @@ import java.awt.Color;
 /**
  * @author Daniel Spiewak
  */
-public interface ISolidFill extends IChartFill {
+public interface ISolidFill extends IChartFill
+{
 
-    public Color getColor();
+	public Color getColor();
 }

@@ -24,27 +24,27 @@ import org.wicketstuff.console.engine.Lang;
  * 
  * @author cretzel
  */
-public class ClojureScriptEnginePanel extends ScriptEnginePanel {
+public class ClojureScriptEnginePanel extends ScriptEnginePanel
+{
 
 	private static final long serialVersionUID = 1L;
 
-	public ClojureScriptEnginePanel(final String wicketId) {
+	public ClojureScriptEnginePanel(final String wicketId)
+	{
 		this(wicketId, null);
 
 	}
 
-	public ClojureScriptEnginePanel(final String id, final IModel<String> title) {
+	public ClojureScriptEnginePanel(final String id, final IModel<String> title)
+	{
 		super(id, Lang.CLOJURE, title);
 		init();
 	}
 
-	protected void init() {
-		setInput("(import '(org.wicketstuff.console.engine ClojureEngine))\n"
-				+ "(let [bindings (ClojureEngine/getBindings)\n"
-				+ "      application (.get bindings \"application\")\n"
-				+ "      page (.get bindings \"page\")\n"
-				+ "      component (.get bindings \"component\")]\n"
-				+ "  (println component))");
+	protected void init()
+	{
+		setInput("(println user/application)\n" + "(println user/page)\n"
+			+ "(println user/component)\n");
 	}
 
 }

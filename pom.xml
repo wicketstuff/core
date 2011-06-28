@@ -99,7 +99,34 @@
 
 			<build>
 				<plugins>
-
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.7</version>
+						<configuration>
+							<detectOfflineLinks>false</detectOfflineLinks>
+							<minmemory>128m</minmemory>
+							<maxmemory>256m</maxmemory>
+							<notimestamp>true</notimestamp>
+							<quiet>true</quiet>
+							<links>
+								<link>http://download.oracle.com/javase/1.5.0/docs/api</link>
+								<link>http://download.oracle.com/javaee/5/api</link>
+								<!-- TODO update to 1.5 when available -->
+								<link>http://wicket.apache.org/apidocs/1.4/</link>
+								<link>http://static.springsource.org/spring/docs/3.0.x/javadoc-api</link>
+								<link>http://logback.qos.ch/apidocs</link>
+							</links>
+						</configuration>
+						<executions>
+							<execution>
+								<id>attach-javadoc</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
@@ -168,14 +195,6 @@
 				</property>
 			</activation>
 			<repositories>
-				<repository>
-					<id>nexus-snapshots</id>
-					<name>Sonatype Nexus Snapshots</name>
-					<url>http://oss.sonatype.org/content/repositories/snapshots</url>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-				</repository>
 				<!-- for wicket snapshots -->
 				<repository>
 					<id>wicket-snapshots</id>
@@ -184,37 +203,11 @@
 					<snapshots>
 						<enabled>true</enabled>
 					</snapshots>
-				</repository>
-				<repository>
-					<id>jboss-releases-repo</id>
-					<name>Hibernate releases repo</name>
-					<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-
-
-				</repository>
-
-
-			</repositories>
-
-			<pluginRepositories>
-				<pluginRepository>
-					<id>maven-plugin-repo</id>
-					<name>Maven plugin snapshots</name>
-					<url>https://repository.apache.org/content/repositories/snapshots</url>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
 					<releases>
 						<enabled>false</enabled>
 					</releases>
-				</pluginRepository>
-			</pluginRepositories>
+				</repository>
+			</repositories>
 		</profile>
 	</profiles>
 
@@ -246,8 +239,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<hibernate.version>3.6.2.Final</hibernate.version>
-		<jetty.version>7.3.1.v20110307</jetty.version>
+		<hibernate.version>3.6.5.Final</hibernate.version>
+		<jetty.version>7.4.2.v20110526</jetty.version>
 		<sf-jung.version>2.0.1</sf-jung.version>
 		<shiro.version>1.1.0</shiro.version>
 		<slf4j.version>1.6.1</slf4j.version>
@@ -303,7 +296,7 @@
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
-				<version>0.9.28</version>
+				<version>0.9.29</version>
 				<scope>runtime</scope>
 			</dependency>
 			<dependency>
@@ -519,6 +512,18 @@
 				<version>${sf-jung.version}</version>
 			</dependency>
 
+			<!-- KRYO -->
+			<dependency>
+				<groupId>com.googlecode</groupId>
+				<artifactId>kryo</artifactId>
+				<version>1.04</version>
+			</dependency>
+			<dependency>
+				<groupId>de.javakaffee</groupId>
+				<artifactId>kryo-serializers</artifactId>
+				<version>0.9</version>
+			</dependency>
+
 			<!-- OTHER -->
 			<dependency>
 				<groupId>com.ibatis</groupId>
@@ -543,7 +548,7 @@
 			<dependency>
 				<groupId>net.sf.ehcache</groupId>
 				<artifactId>ehcache-core</artifactId>
-				<version>2.4.0</version>
+				<version>2.4.2</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sf.json-lib</groupId>
@@ -557,6 +562,16 @@
 				<version>0.0.5</version>
 			</dependency>
 			<dependency>
+				<groupId>org.apache.geronimo.specs</groupId>
+				<artifactId>geronimo-atinject_1.0_spec</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>3.8-beta2</version>
+			</dependency>
+			<dependency>
 				<groupId>org.clojure</groupId>
 				<artifactId>clojure</artifactId>
 				<version>1.2.0</version>
@@ -564,18 +579,24 @@
 			<dependency>
 				<groupId>org.codehaus.groovy</groupId>
 				<artifactId>groovy</artifactId>
-				<version>1.7.8</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hsqldb</groupId>
-				<artifactId>hsqldb</artifactId>
-				<version>2.0.0</version>
-				<scope>runtime</scope>
+				<version>1.8.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.json</groupId>
 				<artifactId>json</artifactId>
 				<version>20090211</version>
+			</dependency>
+			<dependency>
+				<groupId>org.osgi</groupId>
+				<artifactId>org.osgi.core</artifactId>
+				<version>4.2.0</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.osgi</groupId>
+				<artifactId>org.osgi.compendium</artifactId>
+				<version>4.2.0</version>
+				<scope>provided</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -616,34 +637,6 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-					<detectOfflineLinks>false</detectOfflineLinks>
-					<minmemory>128m</minmemory>
-					<maxmemory>256m</maxmemory>
-					<notimestamp>true</notimestamp>
-					<quiet>true</quiet>
-					<links>
-						<link>http://download.oracle.com/javase/1.5.0/docs/api</link>
-						<link>http://download.oracle.com/javaee/5/api</link>
-						<!-- TODO update to 1.5 when available -->
-						<link>http://wicket.apache.org/apidocs/1.4/</link>
-						<link>http://static.springsource.org/spring/docs/3.0.x/javadoc-api</link>
-						<link>http://logback.qos.ch/apidocs</link>
-					</links>
-				</configuration>
-				<executions>
-					<execution>
-						<id>attach-javadoc</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 				<version>2.1.2</version>
 				<executions>
@@ -658,6 +651,71 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>com.mycila.maven-license-plugin</groupId>
+					<artifactId>maven-license-plugin</artifactId>
+					<version>1.9.0</version>
+					<configuration>
+						<aggregate>true</aggregate>
+						<quiet>false</quiet>
+						<failIfMissing>true</failIfMissing>
+						<excludes>
+							<exclude>**/*.gif</exclude>
+							<exclude>**/*.jpg</exclude>
+							<exclude>**/*.jpeg</exclude>
+							<exclude>**/*.ico</exclude>
+							<exclude>**/*.swf</exclude>
+						</excludes>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>check</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>net.alchim31.maven</groupId>
+					<artifactId>yuicompressor-maven-plugin</artifactId>
+					<version>1.1</version>
+					<executions>
+						<execution>
+							<phase>process-resources</phase>
+							<goals>
+								<!--goal>jslint</goal -->
+								<goal>compress</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<!-- these are 3rd party css + js files no need to see the warnings about 
+							them -->
+						<jswarn>false</jswarn>
+						<nosuffix>true</nosuffix>
+						<force>false</force>
+						<excludes>
+							<exclude>**/interface-*.js</exclude>
+							<exclude>**/*pack.js</exclude>
+							<exclude>**/compressed.css</exclude>
+							<exclude>**/crop.css</exclude>
+							<exclude>**/*.java</exclude>
+							<exclude>**/*.html</exclude>
+							<exclude>**/*.xml</exclude>
+							<exclude>**/*.properties</exclude>
+						</excludes>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>2.3.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>2.2.1</version>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -749,6 +807,104 @@
 					<groupId>org.mortbay.jetty</groupId>
 					<artifactId>jetty-maven-plugin</artifactId>
 					<version>${jetty.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.ops4j</groupId>
+					<artifactId>maven-pax-plugin</artifactId>
+					<version>1.5</version>
+				</plugin>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											net.alchim31.maven
+										</groupId>
+										<artifactId>
+											yuicompressor-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.1,)
+										</versionRange>
+										<goals>
+											<goal>compress</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-dependency-plugin
+										</artifactId>
+										<versionRange>
+											[2.1,)
+										</versionRange>
+										<goals>
+											<goal>
+												unpack
+											</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-ear-plugin
+										</artifactId>
+										<versionRange>
+											[2.4.2,)
+										</versionRange>
+										<goals>
+											<goal>
+												generate-application-xml
+											</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.scala-tools
+										</groupId>
+										<artifactId>
+											maven-scala-plugin
+										</artifactId>
+										<versionRange>
+											[2.14.1,)
+										</versionRange>
+										<goals>
+											<goal>compile</goal>
+											<goal>testCompile</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>

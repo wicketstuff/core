@@ -14,14 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <!DOCTYPE html>
-<html>
+<html xmlns:wicket="http://wicket.apache.org">
     <head>
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
         <div>
+            <p><span wicket:id="feedBack"></span></p>
             <form wicket:id="form" action="#">
+            	<fieldset>
+                    <label>fixed</label>
+                    <input style="width: 200px" type="text" wicket:id="fixed" />
+                </fieldset>
                 <fieldset>
                     <label>fixed.phone Mask:</label>
                     <input style="width: 200px" type="text" wicket:id="fixedPhone" />
@@ -30,7 +35,62 @@ limitations under the License.
                     <label>fixed.phone-us Mask:</label>
                     <input style="width: 200px" type="text" wicket:id="fixedPhoneUs" />
                 </fieldset>
-                
+                <fieldset>
+                    <label>fixed.fixed.cpf Mask:</label>
+                    <input style="width: 200px" type="text" wicket:id="fixedCpf" />
+                </fieldset>
+                <fieldset>
+                    <label>fixed.cnpj Mask:</label>
+                    <input style="width: 200px" type="text" wicket:id="fixedCnpj" />
+                </fieldset>
+                <fieldset>
+                    <label>fixed.cep Mask:</label>
+                    <input style="width: 200px" type="text" wicket:id="fixedCep" />
+                </fieldset>
+                <fieldset>
+                    <label>fixed.time Mask:</label>
+                    <input style="width: 200px" type="text" wicket:id="fixedTime" />
+                </fieldset>
+                <fieldset>
+                    <label>fixed.cc Mask:</label>
+                    <input style="width: 200px" type="text" wicket:id="fixedCc" />
+                </fieldset>
+                <fieldset>
+                    <label>fixed.date Mask:</label>
+                    <input style="width: 200px" type="text" wicket:id="fixedDate" />
+                </fieldset>
+                <fieldset>
+                    <label>fixed.date-us Mask:</label>
+                    <input style="width: 200px" type="text" wicket:id="fixedDateUs" />
+                </fieldset>
+                <fieldset>
+                    <label>reverse.integer Mask:</label>
+                    <input style="width: 200px" type="text" wicket:id="reverseInteger" />
+                </fieldset>
+                <fieldset>
+                    <label>reverse.decimal</label>
+                    <input style="width: 200px" type="text" wicket:id="reverseDecimal" />
+                </fieldset>
+                <fieldset>
+                    <label>reverse.decimal-us</label>
+                    <input style="width: 200px" type="text" wicket:id="reverseDecimalUs" />
+                </fieldset>
+                <fieldset>
+                    <label>reverse.reais</label>
+                    <input style="width: 200px" type="text" wicket:id="reverseReais" />
+                </fieldset>
+                <fieldset>
+                    <label>reverse.dollar</label>
+                    <input style="width: 200px" type="text" wicket:id="reverseDollar" />
+                </fieldset>
+                <fieldset>
+                    <label>regexp.ip</label>
+                    <input style="width: 200px" type="text" wicket:id="regexpIp" />
+                </fieldset>
+                <fieldset>
+                    <label>regexp.email</label>
+                    <input style="width: 200px" type="text" wicket:id="regexpEmail" />
+                </fieldset>
             </form>
         </div>
     </body>

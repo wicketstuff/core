@@ -1,4 +1,5 @@
 package org.wicketstuff.simile.timeline.json;
+
 import net.sf.json.JSONFunction;
 
 /**
@@ -6,19 +7,22 @@ import net.sf.json.JSONFunction;
  * 
  * @author arnouten
  */
-public class JSONRawString extends JSONFunction {
+public class JSONRawString extends JSONFunction
+{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public JSONRawString(String text) {
+	public JSONRawString(String text)
+	{
 		super(text);
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return getText();
 	}
 }

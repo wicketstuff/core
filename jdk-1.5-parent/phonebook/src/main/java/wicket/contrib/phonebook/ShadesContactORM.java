@@ -23,41 +23,50 @@ import hendrey.shades.DefaultHsqlORMapping;
 /**
  * @author Geoffrey Rummens Hendrey
  */
-public class ShadesContactORM extends DefaultHsqlORMapping {
+public class ShadesContactORM extends DefaultHsqlORMapping
+{
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public String[] getColumnNames() {
+	public String[] getColumnNames()
+	{
 		return new String[] { "ID", "FIRSTNAME", "LASTNAME", "EMAIL", "PHONE" };
 	}
 
 	@Override
-	public String[] getColumnSet(String columnSetName) {
-		if (columnSetName.equalsIgnoreCase("NonKeyFields")) {
+	public String[] getColumnSet(String columnSetName)
+	{
+		if (columnSetName.equalsIgnoreCase("NonKeyFields"))
+		{
 			return new String[] { "FIRSTNAME", "LASTNAME", "EMAIL", "PHONE" };
-		} else {
-			throw new RuntimeException("unknown columnSetName: "
-					+ columnSetName);
+		}
+		else
+		{
+			throw new RuntimeException("unknown columnSetName: " + columnSetName);
 		}
 	}
 
 	@Override
-	public Class<?> getBeanClass() {
+	public Class<?> getBeanClass()
+	{
 		return Contact.class;
 	}
 
 	@Override
-	public boolean isGeneratedKey(String columnName) {
+	public boolean isGeneratedKey(String columnName)
+	{
 		return isIdentityColumn(columnName);
 	}
 
 	@Override
-	public boolean isIdentityColumn(String columnName) {
+	public boolean isIdentityColumn(String columnName)
+	{
 		return columnName.endsWith("ID");
 	}
 
 	@Override
-	public String[] getNonPojoColumns() {
-		return new String[] {};
+	public String[] getNonPojoColumns()
+	{
+		return new String[] { };
 	}
 }

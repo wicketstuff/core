@@ -20,21 +20,22 @@ import org.apache.wicket.IClusterable;
 import org.wicketstuff.datatable_autocomplete.trie.Trie;
 
 
-
 /**
  * @author mocleiri
  * 
- * A mechanism to supply a Trie<C> from either a static or non-serializable context.
+ *         A mechanism to supply a Trie<C> from either a static or non-serializable context.
  * 
- * Serializing the Trie<C> imposes a big performance penalty and needs to be avoided.  Using this interface is a good way to do so.
- *
+ *         Serializing the Trie<C> imposes a big performance penalty and needs to be avoided. Using
+ *         this interface is a good way to do so.
+ * 
  */
-public interface ITrieProvider<C> extends IClusterable {
-	
+public interface ITrieProvider<C> extends IClusterable
+{
+
 	/**
 	 * 
 	 * @return a Trie instance.
 	 */
-	public Trie<C>provideTrie();
+	public Trie<C> provideTrie();
 
 }

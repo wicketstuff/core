@@ -25,7 +25,10 @@ import net.sf.jasperreports.engine.export.JRXlsExporter;
 /**
  * @author cdeal
  */
-public class XlsResourceHandler implements IJRResourceHandler, Serializable {
+public class XlsResourceHandler implements IJRResourceHandler, Serializable
+{
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * @see org.wicketstuff.jasperreports.handlers.IJRResourceHandler#newExporter()
 	 */

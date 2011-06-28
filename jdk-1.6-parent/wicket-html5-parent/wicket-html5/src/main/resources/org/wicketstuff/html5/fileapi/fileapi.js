@@ -3,10 +3,11 @@ if (typeof Wicketstuff === "undefined")
 
 Wicketstuff.fileapi = {
 	supports : function(field) {
-		return field != null && typeof field.files === "object";
+		return field != null && typeof field.files === "object"
+				&& typeof field.files.length === "number";
 	},
 	fileFieldToPostBody : function(field) {
-		var result = "num=" + field.files.length;
+		var result = "num=" + wicketEncode(field.files.length);
 		for ( var fi = 0; fi < field.files.length; fi++) {
 			var prefix = "file[" + fi + "].";
 			var file = field.files[fi];

@@ -25,47 +25,52 @@ import javax.persistence.PersistenceContext;
 import org.wicketstuff.javaee.example.model.Contact;
 
 /**
- *
+ * 
  * @author Filippo Diotalevi
  */
 @Stateless
-public class ContactDaoBean implements ContactDaoLocal {
+public class ContactDaoBean implements ContactDaoLocal
+{
 
-    @PersistenceContext
-    private EntityManager em;
+	@PersistenceContext
+	private EntityManager em;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
-    public List<Contact> getContacts() {
-        return em.createQuery("SELECT c FROM Contact c").getResultList();
-    }
+	public List<Contact> getContacts()
+	{
+		return em.createQuery("SELECT c FROM Contact c").getResultList();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-	public Contact getContact(Long id) {
-        return em.find(Contact.class, id);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Contact getContact(Long id)
+	{
+		return em.find(Contact.class, id);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-	public void addContact(String name, String email) {
-        em.merge(new Contact(null, name, email));
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addContact(String name, String email)
+	{
+		em.merge(new Contact(null, name, email));
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-	public void remove(Contact modelObject) {
-        Contact managed = em.merge(modelObject);
-        em.remove(managed);
-        em.flush();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void remove(Contact modelObject)
+	{
+		Contact managed = em.merge(modelObject);
+		em.remove(managed);
+		em.flush();
+	}
 }

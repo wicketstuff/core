@@ -22,19 +22,23 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.GroovyScriptEngineWindow;
 
-public class GroovyEngineWindowTestPage extends WebPage {
+public class GroovyEngineWindowTestPage extends WebPage
+{
 
-	private static final class OpenLink extends AjaxLink<Void> {
+	private static final class OpenLink extends AjaxLink<Void>
+	{
 		private final GroovyScriptEngineWindow window;
 		private static final long serialVersionUID = 1L;
 
-		private OpenLink(String id, GroovyScriptEngineWindow window) {
+		private OpenLink(final String id, final GroovyScriptEngineWindow window)
+		{
 			super(id);
 			this.window = window;
 		}
 
 		@Override
-		public void onClick(AjaxRequestTarget target) {
+		public void onClick(final AjaxRequestTarget target)
+		{
 			window.show(target);
 		}
 	}
@@ -42,7 +46,8 @@ public class GroovyEngineWindowTestPage extends WebPage {
 	private static final long serialVersionUID = 1L;
 	private GroovyScriptEngineWindow window;
 
-	public GroovyEngineWindowTestPage(PageParameters params) {
+	public GroovyEngineWindowTestPage(final PageParameters params)
+	{
 		super(params);
 
 		add(window = new GroovyScriptEngineWindow("window"));

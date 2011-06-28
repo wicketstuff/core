@@ -15,7 +15,9 @@
  */
 package org.wicketstuff.mootools.meiomask;
 
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
+import java.util.Date;
 
 import javax.swing.text.MaskFormatter;
 
@@ -28,99 +30,225 @@ import org.slf4j.LoggerFactory;
 import org.wicketstuff.mootools.meiomask.behavior.MeioMaskBehavior;
 
 /**
- *
+ * 
  * @author inaiat
  */
-public class MeioMaskField<T> extends TextField<T> {
+public class MeioMaskField<T> extends TextField<T>
+{
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MeioMaskField.class);
-    private final MaskFormatter maskFormatter = new MaskFormatter();
+	private static final long serialVersionUID = 7642353937250475850L;
 
-    public MeioMaskField(String id, MaskType mask) {
-        this(id,mask,(IModel<T>)null);
-    }
-    
-    public MeioMaskField(String id, MaskType mask, boolean valueContainsLiteralCharacters) {
-        this(id, mask, null, null, valueContainsLiteralCharacters);
-    }
+	private static final Logger LOGGER = LoggerFactory.getLogger(MeioMaskField.class);
+	private final MaskFormatter maskFormatter = new MaskFormatter();
+	private final MaskType maskType;
+	private final String mask;
 
-    public MeioMaskField(String id, MaskType mask, IModel<T> model) {
-        this(id, mask, null, model, false);
-    }
+	public MeioMaskField(String id, MaskType mask)
+	{
+		this(id, mask, (IModel<T>)null);
+	}
 
-    public MeioMaskField(String id, MaskType mask, String options) {
-        this(id, mask, options, null, false);
-    }
+	public MeioMaskField(String id, MaskType maskType, boolean valueContainsLiteralCharacters)
+	{
+		this(id, maskType, null, null, valueContainsLiteralCharacters);
+	}
 
-    public MeioMaskField(String id, MaskType mask, String options, IModel<T> model) {
-        this(id, mask, options, model, false);
-    }
+	public MeioMaskField(String id, MaskType maskType, IModel<T> model)
+	{
+		this(id, maskType, null, model, false);
+	}
 
-    public MeioMaskField(String id, MaskType mask, String options, IModel<T> model, boolean valueContainsLiteralCharacters) {
-        this(id, mask, options, model, valueContainsLiteralCharacters, null);
-    }
+	public MeioMaskField(String id, MaskType maskType, String options)
+	{
+		this(id, maskType, options, null, false);
+	}
 
-    public MeioMaskField(String id, MaskType mask, String options, IModel<T> model, boolean valueContainsLiteralCharacters,  Class<T> type) {
-        super(id, model, type);
-        LOGGER.debug("Initializing maskfield with id {} ...", id);
-        LOGGER.debug("  Mask name: {}, mask: {}", mask.getMaskName(),mask.getMask());
-        LOGGER.debug("  Options: {}",options);
-        LOGGER.debug("  Type: {}", type);
-        LOGGER.debug("  ValueContainsLiteralCharacters: {}",valueContainsLiteralCharacters);
-        try {
-            maskFormatter.setMask(mask.getMask());
-            maskFormatter.setValueClass(String.class);
-            maskFormatter.setAllowsInvalid(true);
-            maskFormatter.setValueContainsLiteralCharacters(valueContainsLiteralCharacters);
-        } catch (ParseException parseException) {
-            throw new WicketRuntimeException(parseException);
-        }
+	public MeioMaskField(String id, MaskType maskType, String options, IModel<T> model)
+	{
+		this(id, maskType, options, model, false);
+	}
 
-        add(new MeioMaskBehavior(mask, options));
-        setOutputMarkupId(true);
-        
-        LOGGER.debug("Maskfield {} initialized.", id);
-    }
+	public MeioMaskField(String id, MaskType maskType, String options, IModel<T> model,
+		boolean valueContainsLiteralCharacters)
+	{
+		this(id, maskType, options, model, valueContainsLiteralCharacters, null);
+	}
 
+	public MeioMaskField(String id, MaskType maskType, String options, IModel<T> model,
+		boolean valueContainsLiteralCharacters, Class<T> type)
+	{
+		this(id, maskType, options, model, valueContainsLiteralCharacters, type, null);
+	}
 
-    @Override
-    public String getInput() {
-        String input = super.getInput();
+	protected MeioMaskField(String id, MaskType maskType, String options, IModel<T> model,
+		boolean valueContainsLiteralCharacters, Class<T> type, String customMask)
+	{
+		super(id, model, type);
+		this.maskType = maskType;
 
-        if (input.trim().length() == 0) {
-            return input;
-        } else {
-            try {
-                LOGGER.debug("Value to Converter {}", input);
-                return (String) maskFormatter.stringToValue(input);
-            } catch (ParseException ex) {
-                throw newConversionException(input, ex);
-            }
-        }
-    }
+		String customOptions = buildCustomOptions(customMask, options);
+		if (MaskType.Fixed.equals(maskType))
+		{
+			if (customMask == null || isEmpty(customMask))
+			{
+				throw new WicketRuntimeException("Fixed mask type requires a custom mask");
+			}
+			this.mask = customMask;
+		}
+		else
+		{
+			this.mask = maskType.getMask();
+		}
 
-    /**
-     * I don't know if this is a best place to convert mask (with String type), please if you
-     * find other way... talk to me
-     * @param value
-     * @return
-     * @throws ConversionException 
-     */
-    @Override
-    protected T convertValue(String[] value) throws ConversionException {
-        if (value != null && value.length > 0 && value[0].trim().length() > 0) {
-            try {
-                String valueToConverter = value[0];
-                LOGGER.debug("Value to Converter {}", valueToConverter);
-                value[0] = (String) maskFormatter.stringToValue(valueToConverter);
-            } catch (ParseException ex) {
-                throw newConversionException(value[0], ex);
-            }
-        }
-        return super.convertValue(value);
-    }
+		LOGGER.debug("Initializing maskfield with id {} ...", id);
+		LOGGER.debug("  Mask name: {}, mask: {}", maskType.getMaskName(), this.mask);
+		LOGGER.debug("  Options: {}", options);
+		LOGGER.debug("  Type: {}", type);
+		LOGGER.debug("  ValueContainsLiteralCharacters: {}", valueContainsLiteralCharacters);
+		try
+		{
+			maskFormatter.setMask(mask);
+			maskFormatter.setValueClass(String.class);
+			maskFormatter.setAllowsInvalid(true);
+			maskFormatter.setValueContainsLiteralCharacters(valueContainsLiteralCharacters);
+		}
+		catch (ParseException parseException)
+		{
+			throw new WicketRuntimeException(parseException);
+		}
 
-    private ConversionException newConversionException(String value, Throwable cause) {
-        return new ConversionException(cause).setResourceKey("PatternValidator").setVariable("input", value).setVariable("pattern", maskFormatter.getMask());
-    }
+		add(new MeioMaskBehavior(maskType, customOptions));
+		setOutputMarkupId(true);
+
+		LOGGER.debug("Maskfield {} initialized.", id);
+	}
+
+	@Override
+	public String getInput()
+	{
+		String input = super.getInput();
+
+		if (input.trim().length() == 0 || isUnMaskableTypes(getType(), this.maskType))
+		{
+			// Do nothing
+			return input;
+		}
+		else if (isNumberFormat(getType()))
+		{ // Remove special characters
+			DecimalFormatSymbols formatSymbols = new DecimalFormatSymbols(getLocale());
+			StringBuilder builder = new StringBuilder();
+			for (int i = 0; i < input.length(); i++)
+			{
+				if (input.charAt(i) != formatSymbols.getGroupingSeparator())
+				{
+					builder.append(input.charAt(i));
+				}
+			}
+			return builder.toString();
+		}
+		else
+		{ // Unmask values
+			try
+			{
+				LOGGER.debug("Value to Converter {}", input);
+				return (String)maskFormatter.stringToValue(input);
+			}
+			catch (ParseException ex)
+			{
+				throw newConversionException(input, ex);
+			}
+		}
+	}
+
+	/**
+	 * I don't know if this is a best place to convert mask (with String type), please if you find
+	 * other way... talk to me
+	 * 
+	 * @param value
+	 * @return
+	 * @throws ConversionException
+	 */
+	@Override
+	protected T convertValue(String[] value) throws ConversionException
+	{
+		if (value != null && value.length > 0 && value[0].trim().length() > 0)
+		{
+			try
+			{
+				String valueToConverter = value[0];
+				LOGGER.debug("Value to Converter {}", valueToConverter);
+				value[0] = (String)maskFormatter.stringToValue(valueToConverter);
+			}
+			catch (ParseException ex)
+			{
+				throw newConversionException(value[0], ex);
+			}
+		}
+		return super.convertValue(value);
+	}
+
+	private ConversionException newConversionException(String value, Throwable cause)
+	{
+		return new ConversionException(cause).setResourceKey("PatternValidator")
+			.setVariable("input", value)
+			.setVariable("pattern", maskFormatter.getMask());
+	}
+
+	protected boolean isNumberFormat(Class<?> type)
+	{
+		return (Number.class.isAssignableFrom(type) && this.maskType.getMask() == null);
+	}
+
+	private boolean isUnMaskableTypes(Class<?> type, MaskType mask)
+	{
+		return Date.class.isAssignableFrom(type) || mask == MaskType.RegexpEmail ||
+			mask == MaskType.RegexpIp;
+	}
+
+	private String javaToJavaScriptMask(String value)
+	{
+		return value.replace("#", "9");
+	}
+
+	private String buildCustomOptions(String customMask, String options)
+	{
+
+		if (isEmpty(options) && isEmpty(customMask))
+		{
+			return null;
+		}
+
+		StringBuilder customOptions = new StringBuilder("{");
+
+		if ((customMask != null) && (!isEmpty(customMask)))
+		{
+			String jsMask = new StringBuilder().append("mask: '")
+				.append(javaToJavaScriptMask(customMask))
+				.append("'")
+				.toString();
+			customOptions.append(jsMask);
+		}
+
+		if ((options != null) && (!isEmpty(options)))
+		{
+			if (customMask.length() > 1)
+			{
+				customOptions.append(", ");
+			}
+			customOptions.append(options);
+		}
+
+		customOptions.append("}");
+
+		return customOptions.toString();
+	}
+
+	// There are the same method at org.apache.wicket.util.String.Strings,
+	// but I don't know if a good idea have this package on project dependencies.
+	private boolean isEmpty(final CharSequence string)
+	{
+		return (string == null) || (string.length() == 0) ||
+			(string.toString().trim().length() == 0);
+	}
+
 }

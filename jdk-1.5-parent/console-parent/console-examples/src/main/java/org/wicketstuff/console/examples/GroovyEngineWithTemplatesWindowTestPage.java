@@ -20,26 +20,30 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.GroovyScriptEngineWithTemplatesWindow;
 import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.templates.PackagedScriptTemplates;
 import org.wicketstuff.console.templates.ScriptTemplate;
 
-public class GroovyEngineWithTemplatesWindowTestPage extends WebPage {
+public class GroovyEngineWithTemplatesWindowTestPage extends WebPage
+{
 
-	private static final class OpenLink extends AjaxLink<Void> {
+	private static final class OpenLink extends AjaxLink<Void>
+	{
 		private final GroovyScriptEngineWithTemplatesWindow window;
 		private static final long serialVersionUID = 1L;
 
-		private OpenLink(final String id,
-				final GroovyScriptEngineWithTemplatesWindow window) {
+		private OpenLink(final String id, final GroovyScriptEngineWithTemplatesWindow window)
+		{
 			super(id);
 			this.window = window;
 		}
 
 		@Override
-		public void onClick(final AjaxRequestTarget target) {
+		public void onClick(final AjaxRequestTarget target)
+		{
 			window.show(target);
 		}
 	}
@@ -48,19 +52,20 @@ public class GroovyEngineWithTemplatesWindowTestPage extends WebPage {
 	private GroovyScriptEngineWithTemplatesWindow window;
 	private final OpenLink openLink;
 
-	public GroovyEngineWithTemplatesWindowTestPage(final PageParameters params) {
+	public GroovyEngineWithTemplatesWindowTestPage(final PageParameters params)
+	{
 		super(params);
 
-		final IDataProvider<ScriptTemplate> dataProvider = PackagedScriptTemplates
-				.packagedScriptTemplatesDataProvider(Lang.GROOVY);
-		add(window = new GroovyScriptEngineWithTemplatesWindow("window", null,
-				dataProvider));
+		final IDataProvider<ScriptTemplate> dataProvider = new ListDataProvider<ScriptTemplate>(
+			PackagedScriptTemplates.getPackagedScriptTemplates(Lang.GROOVY));
+		add(window = new GroovyScriptEngineWithTemplatesWindow("window", null, dataProvider));
 		openLink = new OpenLink("link", window);
 		add(openLink);
 		add(new TestPageLinksPanel("links"));
 	}
 
-	public OpenLink getOpenLink() {
+	public OpenLink getOpenLink()
+	{
 		return openLink;
 	}
 

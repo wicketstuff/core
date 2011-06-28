@@ -22,8 +22,9 @@ import org.wicketstuff.theme.IThemeFactory;
 
 public class ThemeFactory implements IThemeFactory
 {
-	
-	public void renderHead(Component component, IHeaderResponse response) {
+
+	public void renderHead(Component component, IHeaderResponse response)
+	{
 
 		response.renderCSSReference(new PackageResourceReference(ThemeFactory.class, "standard.css"));
 	}

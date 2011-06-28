@@ -22,19 +22,23 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.ClojureScriptEngineWindow;
 
-public class ClojureEngineWindowTestPage extends WebPage {
+public class ClojureEngineWindowTestPage extends WebPage
+{
 
-	private static final class OpenLink extends AjaxLink<Void> {
+	private static final class OpenLink extends AjaxLink<Void>
+	{
 		private final ClojureScriptEngineWindow window;
 		private static final long serialVersionUID = 1L;
 
-		private OpenLink(String id, ClojureScriptEngineWindow window) {
+		private OpenLink(final String id, final ClojureScriptEngineWindow window)
+		{
 			super(id);
 			this.window = window;
 		}
 
 		@Override
-		public void onClick(AjaxRequestTarget target) {
+		public void onClick(final AjaxRequestTarget target)
+		{
 			window.show(target);
 		}
 	}
@@ -42,7 +46,8 @@ public class ClojureEngineWindowTestPage extends WebPage {
 	private static final long serialVersionUID = 1L;
 	private ClojureScriptEngineWindow window;
 
-	public ClojureEngineWindowTestPage(PageParameters params) {
+	public ClojureEngineWindowTestPage(final PageParameters params)
+	{
 		super(params);
 
 		add(window = new ClojureScriptEngineWindow("window"));

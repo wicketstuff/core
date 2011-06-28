@@ -1,10 +1,10 @@
-<html>
+<html xmlns:wicket="http://wicket.apache.org">
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
         <title>Apache Wicket meioMask - a Mootools Mask Plugin</title>
 
         <style type="text/css">
-            fieldset{ display: block; }
+            fieldset{ display: block; padding-left: 10px }
             label{ float: left; width: 200px; }
         </style>
     </head>
@@ -12,12 +12,17 @@
         <p>
             <span wicket:id="feedBack"></span>
         </p>
-        <h1>Fixed</h1>
-        <div class="content">
-            <form wicket:id="form" action="#">
+        <form wicket:id="form" action="#">
+
+            <p>
+                <input type="submit" value="Send" />
+            </p>
+
+            <h1>Fixed</h1>
+            <div class="content">
                 <fieldset>
-                    <label>fixed Mask:</label>
-                    <input id="fixed" style="width: 200px" type="text" />
+                    <label>Custom Mask:</label>
+                    <input wicket:id="custom" style="width: 200px" type="text" />
                 </fieldset>
                 <a id="change-mask" title="change mask" href="#">change mask</a>
                 <fieldset>
@@ -30,71 +35,58 @@
                 </fieldset>
                 <fieldset>
                     <label>fixed.cpf Mask:</label>
-                    <input style="width: 200px" type="text" id="fixedCpf" />
+                    <input style="width: 200px" type="text" wicket:id="fixedCpf" />
                 </fieldset>
                 <fieldset>
                     <label>fixed.cnpj Mask:</label>
-                    <input style="width: 200px" type="text" data-meiomask="fixed.cnpj" />
+                    <input style="width: 200px" type="text" wicket:id="fixedCnpj" />
                 </fieldset>
                 <fieldset>
                     <label>fixed.date Mask:</label>
-                    <input style="width: 200px" type="text" data-meiomask="fixed.date" />
-                </fieldset>
-                <fieldset>
-                    <label>fixed.date Mask:</label>
-                    <input style="width: 200px" type="text" data-meiomask="fixed.date" value="321312321" />
-                </fieldset>
-                <fieldset>
-                    <label>fixed.date-us Mask:</label>
-                    <input style="width: 200px" type="text" data-meiomask="fixed.date-us" />
-                </fieldset>
-                <fieldset>
-                    <label>fixed.date-us Mask:</label>
-                    <input style="width: 200px" type="text" data-meiomask="fixed.date-us" value="12122012" />
+                    <input style="width: 200px" type="text" wicket:id="fixedDate" />
                 </fieldset>
                 <fieldset>
                     <label>fixed.cep Mask:</label>
-                    <input style="width: 200px" type="text" data-meiomask="fixed.cep" />
+                    <input style="width: 200px" type="text" wicket:id="fixedCep" />
                 </fieldset>
                 <fieldset>
                     <label>fixed.time Mask:</label>
-                    <input style="width: 200px" type="text" data-meiomask="fixed.time" />
+                    <input style="width: 200px" type="text" wicket:id="fixedTime" />
                 </fieldset>
                 <fieldset>
                     <label>fixed.cc Mask:</label>
-                    <input style="width: 200px" type="text" data-meiomask="fixed.cc" />
+                    <input style="width: 200px" type="text" wicket:id="fixedCc" />
                 </fieldset>
-                <fieldset>
-                    <input type="submit" value="Send" />
-                </fieldset>
-            </form>
-        </div>
+            </div>
 
-        <h1>Reverse</h1>
-        <div class="content">
-            <form action="index_submit" method="get">
-                <fieldset>
-                    <label>reverse.integer Mask:</label>
-                    <input style="width: 200px" type="text" data-meiomask-options="{autoEmpty: true, autoTab: true}" data-meiomask="reverse.integer" />
-                </fieldset>
-                <fieldset>
-                    <label>reverse.decimal Mask:</label>
-                    <input style="width: 200px" type="text" data-meiomask-options="{autoEmpty: true}" data-meiomask="reverse.decimal" />
-                </fieldset>
-                <fieldset>
-                    <label>reverse.decimal-us Mask:</label>
-                    <input style="width: 200px" type="text" data-meiomask="reverse.decimal-us" />
-                </fieldset>
-                <fieldset>
-                    <label>reverse.reais Mask:</label>
-                    <input style="width: 200px" type="text" data-meiomask-options="{autoTab: true}" data-meiomask="reverse.reais" />
-                </fieldset>
-                <fieldset>
-                    <label>reverse.dollar Mask:</label>
-                    <input style="width: 200px" type="text" data-meiomask="reverse.dollar" />
-                </fieldset>                
-            </form>
-        </div>
+            <h1>Reverse</h1>
+            <div class="content">
+                <form action="index_submit" method="get">
+                    <fieldset>
+                        <label>reverse.integer Mask:</label>
+                        <input style="width: 200px" type="text" wicket:id="reverseInteger" />
+                    </fieldset>
+                    <fieldset>
+                        <label>reverse.decimal Mask:</label>
+                        <input style="width: 200px" type="text" data-meiomask-options="{autoEmpty: true}" data-meiomask="reverse.decimal" />
+                    </fieldset>
+                    <fieldset>
+                        <label>reverse.decimal-us Mask:</label>
+                        <input style="width: 200px" type="text" data-meiomask="reverse.decimal-us" />
+                    </fieldset>
+                    <fieldset>
+                        <label>reverse.reais Mask:</label>
+                        <input style="width: 200px" type="text" data-meiomask-options="{autoTab: true}" data-meiomask="reverse.reais" />
+                    </fieldset>
+                    <fieldset>
+                        <label>reverse.dollar Mask:</label>
+                        <input style="width: 200px" type="text" data-meiomask="reverse.dollar" />
+                    </fieldset>                
+                </form>
+            </div>
+
+        </form>
+
 
         <h1>Regexp</h1>
         <div class="content">

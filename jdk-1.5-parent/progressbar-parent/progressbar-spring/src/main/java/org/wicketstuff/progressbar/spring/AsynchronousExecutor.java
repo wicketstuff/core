@@ -23,24 +23,28 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Simple wrapper around java.util.concurrent Executors.
- *
- *
+ * 
+ * 
  * @author Christopher Hlubek (hlubek)
- *
+ * 
  */
-public class AsynchronousExecutor implements Executor {
+public class AsynchronousExecutor implements Executor
+{
 
 	private final ExecutorService executor;
 
-	public AsynchronousExecutor() {
+	public AsynchronousExecutor()
+	{
 		executor = Executors.newCachedThreadPool();
 	}
 
-	public void execute(Runnable command) {
+	public void execute(Runnable command)
+	{
 		executor.execute(command);
 	}
 
-	public void join() throws InterruptedException {
+	public void join() throws InterruptedException
+	{
 		executor.awaitTermination(1, TimeUnit.SECONDS);
 	}
 

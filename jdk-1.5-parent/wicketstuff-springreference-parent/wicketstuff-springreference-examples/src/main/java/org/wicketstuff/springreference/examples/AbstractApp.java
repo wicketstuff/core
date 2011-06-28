@@ -4,25 +4,26 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.crypt.CharEncoding;
 
 /**
- * Common {@link WebApplication} ancestor for the example applications. Every
- * application has two example pages: an {@link AbstractFinalPage} subclass that
- * also serves as home page and an {@link AbstractPrivatePage} subclass.
+ * Common {@link WebApplication} ancestor for the example applications. Every application has two
+ * example pages: an {@link AbstractFinalPage} subclass that also serves as home page and an
+ * {@link AbstractPrivatePage} subclass.
  * 
  * @author akiraly
  */
-public abstract class AbstractApp extends WebApplication {
+public abstract class AbstractApp extends WebApplication
+{
 
 	@Override
 	public abstract Class<? extends AbstractFinalPage> getHomePage();
 
 	/**
-	 * @return {@link AbstractPrivatePage} implementation used by this
-	 *         application
+	 * @return {@link AbstractPrivatePage} implementation used by this application
 	 */
 	public abstract Class<? extends AbstractPrivatePage> getPrivatePage();
 
 	@Override
-	protected void init() {
+	protected void init()
+	{
 		super.init();
 
 		getMarkupSettings().setDefaultMarkupEncoding(CharEncoding.UTF_8);
@@ -31,7 +32,8 @@ public abstract class AbstractApp extends WebApplication {
 	/**
 	 * @return current application instance
 	 */
-	public static AbstractApp get() {
-		return (AbstractApp) WebApplication.get();
+	public static AbstractApp get()
+	{
+		return (AbstractApp)WebApplication.get();
 	}
 }

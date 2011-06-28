@@ -25,33 +25,45 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.jquery.accordion.JQAccordion;
 
-public class Page4Accordion extends PageSupport {
+public class Page4Accordion extends PageSupport
+{
 
-	public Page4Accordion() throws Exception {
-    
+	private static final long serialVersionUID = 1L;
+
+	public Page4Accordion() throws Exception
+	{
+
 		super();
-		
-		add(new JQAccordion("accordion1") {
-		
+
+		add(new JQAccordion("accordion1")
+		{
+
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
-			protected Iterator<IModel<String>> getItemModels() {
-				return new ArrayIteratorAdapter<String>(new String[] {
-						"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus nec leo. Duis ultricies. In id ipsum vitae ante fringilla", 
-						"volutpat. In pharetra. Ut ante. Vivamus tempus, leo a ullamcorper tincidunt, pede ipsum consectetuer nunc, at pellentesque", 
-						"libero felis in metus. Pellentesque sollicitudin neque. Nulla facilisi. Sed hendrerit tempus orci. Aenean a nulla quis risus molestie vehicula."}) {
+			protected Iterator<IModel<String>> getItemModels()
+			{
+				return new ArrayIteratorAdapter<String>(
+					new String[] {
+							"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus nec leo. Duis ultricies. In id ipsum vitae ante fringilla",
+							"volutpat. In pharetra. Ut ante. Vivamus tempus, leo a ullamcorper tincidunt, pede ipsum consectetuer nunc, at pellentesque",
+							"libero felis in metus. Pellentesque sollicitudin neque. Nulla facilisi. Sed hendrerit tempus orci. Aenean a nulla quis risus molestie vehicula." })
+				{
 					@Override
-					protected IModel<String> model(String obj) {
+					protected IModel<String> model(String obj)
+					{
 						return new Model<String>(obj);
 					}
 				};
 			}
+
 			@Override
-			protected void populateItem(Item<String> item) {
-				item.add(new Label("title", item.getDefaultModelObjectAsString().substring(0, 15)+" ..."));
+			protected void populateItem(Item<String> item)
+			{
+				item.add(new Label("title", item.getDefaultModelObjectAsString().substring(0, 15) +
+					" ..."));
 				item.add(new Label("content", item.getDefaultModelObjectAsString()));
 			}
 		});
-    }
+	}
 }

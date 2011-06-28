@@ -17,10 +17,12 @@
 	<description>
 		This is a standard Servlet 2.5 + spring-web + wicket webapplication
 		serving as an example for wicketstuff-springreference class
-		SpringReference and SpringReferenceSupporter. The application holds 2
-		wicket application. One is using wicket-spring and @SpringBean the other
-		is using wicketstuff-springreference and SpringReference for spring
-		integration.
+		SpringReference, SpringReferenceSupporter and AbstractSpringDependencies.
+		The application holds 3 wicket application.
+		- first is using wicket-spring and @SpringBean
+		- second is using wicketstuff-springreference and SpringReference
+		- third is using wicketstuff-springreference and AbstractSpringDependencies
+		for spring integration.
 	</description>
 
 	<dependencies>

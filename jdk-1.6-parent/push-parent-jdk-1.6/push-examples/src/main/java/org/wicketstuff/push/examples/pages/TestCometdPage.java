@@ -33,6 +33,7 @@ import org.wicketstuff.push.cometd.CometdPushService;
  */
 public class TestCometdPage extends WebPage
 {
+	private static final long serialVersionUID = 1L;
 	private final TextField<String> field;
 	private String val;
 

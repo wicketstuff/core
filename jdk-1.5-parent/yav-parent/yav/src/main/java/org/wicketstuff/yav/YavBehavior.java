@@ -8,19 +8,20 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.resource.CompressedResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.value.IValueMap;
 import org.wicketstuff.yav.alerts.AlertType;
 
 /**
- * This is the main Behavior that contributes to the header with the appropriate JS files and builds the 
- * Yav rules.
+ * This is the main Behavior that contributes to the header with the appropriate JS files and builds
+ * the Yav rules.
  * 
  * @author Zenika
  */
-public class YavBehavior extends Behavior {
+public class YavBehavior extends Behavior
+{
 	private static final long serialVersionUID = 1L;
 
 	private AlertType alertType = AlertType.INNER_HTML;
@@ -28,7 +29,8 @@ public class YavBehavior extends Behavior {
 	/**
 	 * Default constructor
 	 */
-	public YavBehavior() {
+	public YavBehavior()
+	{
 		super();
 	}
 
@@ -37,23 +39,24 @@ public class YavBehavior extends Behavior {
 	 * 
 	 * @param alertType
 	 */
-	public YavBehavior(AlertType alertType) {
+	public YavBehavior(AlertType alertType)
+	{
 		this.alertType = alertType;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.apache.wicket.behavior.AbstractBehavior#renderHead(org.apache.wicket
+	 * @see org.apache.wicket.behavior.AbstractBehavior#renderHead(org.apache.wicket
 	 * .markup.html.IHeaderResponse)
 	 */
 	@Override
-	public void renderHead(Component c, IHeaderResponse response) {
+	public void renderHead(Component c, IHeaderResponse response)
+	{
 		super.renderHead(c, response);
 
-		response.renderCSSReference(new CompressedResourceReference(
-				YavBehavior.class, "style/yav-style.css"));
+		response.renderCSSReference(new PackageResourceReference(YavBehavior.class,
+			"style/yav-style.css"));
 
 		addJavascriptReference(response, "yav.js");
 		addJavascriptReference(response, "yav-config.js");
@@ -69,32 +72,34 @@ public class YavBehavior extends Behavior {
 	 * @param response
 	 * @param resource
 	 */
-	private void addJavascriptReference(IHeaderResponse response,
-			String resource) {
-		response.renderJavaScriptReference(new JavaScriptResourceReference(
-				YavBehavior.class, resource));
+	private void addJavascriptReference(IHeaderResponse response, String resource)
+	{
+		response.renderJavaScriptReference(new JavaScriptResourceReference(YavBehavior.class,
+			resource));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.apache.wicket.behavior.Behavior#onComponentTag(org.apache.wicket.Component, org.apache.wicket.markup.ComponentTag)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.apache.wicket.behavior.Behavior#onComponentTag(org.apache.wicket.Component,
+	 * org.apache.wicket.markup.ComponentTag)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public void onComponentTag(Component component, ComponentTag tag) {
+	public void onComponentTag(Component component, ComponentTag tag)
+	{
 		super.onComponentTag(component, tag);
 
-		if (!Form.class.isAssignableFrom(component.getClass())) {
-			throw new WicketRuntimeException(
-					"This behavior is only applicable on a Form component");
+		if (!Form.class.isAssignableFrom(component.getClass()))
+		{
+			throw new WicketRuntimeException("This behavior is only applicable on a Form component");
 		}
 
-		Form form = (Form) component;
+		Form<?> form = (Form<?>)component;
 
 		// Retrieve and set form name
 		String formName = verifyFormName(form, tag);
 
-		tag.put("onsubmit", "return yav.performCheck('" + formName
-				+ "', rules);");
+		tag.put("onsubmit", "return yav.performCheck('" + formName + "', rules);");
 
 		// Open the Yav script (inlined JavaScript)
 		AppendingStringBuffer buffer = new AppendingStringBuffer("<script>\n");
@@ -108,10 +113,10 @@ public class YavBehavior extends Behavior {
 		buffer.append("function yavInit() {\n");
 		buffer.append("    yav.init('" + formName + "', rules);\n");
 		buffer.append("}\n");
-	
+
 		// Close the Yav script
 		buffer.append("</script>\n");
-		
+
 		// Write the generated script into the response
 		Response response = RequestCycle.get().getResponse();
 		response.write(buffer.toString());
@@ -122,10 +127,12 @@ public class YavBehavior extends Behavior {
 	 * @param tag
 	 * @return
 	 */
-	private String verifyFormName(Form form, ComponentTag tag) {
+	private String verifyFormName(Form<?> form, ComponentTag tag)
+	{
 		IValueMap attributes = tag.getAttributes();
 		String value = attributes.getString("name");
-		if (value == null) {
+		if (value == null)
+		{
 			value = form.getId();
 			tag.put("name", value);
 		}
@@ -135,16 +142,18 @@ public class YavBehavior extends Behavior {
 	/**
 	 * @return
 	 */
-	public AlertType getAlertType() {
+	public AlertType getAlertType()
+	{
 		return alertType;
 	}
 
 	/**
 	 * @param alertType
 	 */
-	public void setAlertType(AlertType alertType) {
+	public void setAlertType(AlertType alertType)
+	{
 		this.alertType = alertType;
 	}
 
-	
+
 }

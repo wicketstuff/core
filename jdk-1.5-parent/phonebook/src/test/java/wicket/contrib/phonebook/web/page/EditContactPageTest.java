@@ -27,7 +27,6 @@ import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
-import org.apache.wicket.util.tester.ITestPageSource;
 import org.apache.wicket.util.tester.WicketTester;
 
 import wicket.contrib.phonebook.Contact;
@@ -37,36 +36,35 @@ import wicket.contrib.phonebook.web.PhonebookFixture;
 /**
  * @author Kare Nuorteva
  */
-public class EditContactPageTest extends TestCase {
+public class EditContactPageTest extends TestCase
+{
 	private WicketTester wicket;
 	private PhonebookApplicationForTesting app;
 	private PhonebookFixture fixture;
 
-	private final static class MockListContactsPage implements ITestPageSource {
-		public Page getTestPage() {
-			Contact contact = new Contact();
-			contact.setId(99);
-			contact.setFirstname("James");
-			contact.setLastname("Bond");
-			return new EditContactPage(new ListContactsPage(), new Model<Contact>(
-					contact));
-		}
+	private static final Page getTestPage()
+	{
+		Contact contact = new Contact();
+		contact.setId(99);
+		contact.setFirstname("James");
+		contact.setLastname("Bond");
+		return new EditContactPage(new ListContactsPage(), new Model<Contact>(contact));
 	}
 
 	@Override
-	protected void setUp() throws Exception {
+	protected void setUp() throws Exception
+	{
 		app = new PhonebookApplicationForTesting();
 		fixture = new PhonebookFixture();
 		fixture.addStubs(app.context);
 		wicket = new WicketTester(app);
-		wicket.startPage(new MockListContactsPage());
+		wicket.startPage(getTestPage());
 	}
 
-	public void testContainsFormComponents() throws Exception {
+	public void testContainsFormComponents() throws Exception
+	{
 		wicket.assertComponent("contactForm", Form.class);
-		wicket
-				.assertComponent("contactForm:firstname",
-						RequiredTextField.class);
+		wicket.assertComponent("contactForm:firstname", RequiredTextField.class);
 		wicket.assertComponent("contactForm:lastname", RequiredTextField.class);
 		wicket.assertComponent("contactForm:phone", RequiredTextField.class);
 		wicket.assertComponent("contactForm:email", TextField.class);
@@ -74,23 +72,23 @@ public class EditContactPageTest extends TestCase {
 		wicket.assertComponent("contactForm:save", Button.class);
 	}
 
-	public void testCancelButtonsForwardsToBackPage() throws Exception {
+	public void testCancelButtonsForwardsToBackPage() throws Exception
+	{
 		FormTester form = wicket.newFormTester("contactForm");
 		form.submit("cancel");
 		wicket.assertInfoMessages(new String[] { "Edit cancelled" });
 		wicket.assertRenderedPage(ListContactsPage.class);
 	}
 
-	public void testSaveButtonStoresChangesAndForwardsToBackPage()
-			throws Exception {
+	public void testSaveButtonStoresChangesAndForwardsToBackPage() throws Exception
+	{
 		FormTester form = wicket.newFormTester("contactForm", true);
 		form.setValue("email", "james.bond@007.com");
 		form.setValue("phone", "007 123456");
 		assertFalse(fixture.getContactData().isContactDaoSaveCalled());
 		form.submit("save");
 		assertTrue(fixture.getContactData().isContactDaoSaveCalled());
-		wicket
-				.assertInfoMessages(new String[] { "Changes to contact James Bond saved successfully" });
+		wicket.assertInfoMessages(new String[] { "Changes to contact James Bond saved successfully" });
 		wicket.assertRenderedPage(ListContactsPage.class);
 	}
 }

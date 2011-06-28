@@ -34,6 +34,16 @@
 		</init-param>
 	</filter>
 
+	<!-- third app using AbstractSpringDependencies and url "/deps" -->
+	<filter>
+		<filter-name>springDependenciesWicketApp</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>org.wicketstuff.springreference.examples.springdependencies.App</param-value>
+		</init-param>
+	</filter>
+
 	<filter-mapping>
 		<filter-name>springBeanWicketApp</filter-name>
 		<url-pattern>/bean/*</url-pattern>
@@ -42,6 +52,11 @@
 	<filter-mapping>
 		<filter-name>springReferenceWicketApp</filter-name>
 		<url-pattern>/ref/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>springDependenciesWicketApp</filter-name>
+		<url-pattern>/deps/*</url-pattern>
 	</filter-mapping>
 
 	<session-config>

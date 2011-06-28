@@ -24,20 +24,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.SessionFactoryUtils;
 
 /**
- * Convenience superclass for DAOs that contains annotations for injecting the session factory
- * and accessing the session.
+ * Convenience superclass for DAOs that contains annotations for injecting the session factory and
+ * accessing the session.
  */
-public abstract class HibernateDao {
+public abstract class HibernateDao
+{
 
-    private SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+	@Autowired
+	public void setSessionFactory(SessionFactory sessionFactory)
+	{
+		this.sessionFactory = sessionFactory;
+	}
 
-    public Session getSession() {
-        return SessionFactoryUtils.getSession(this.sessionFactory, true);
-    }    
+	public Session getSession()
+	{
+		return SessionFactoryUtils.getSession(sessionFactory, true);
+	}
 
 }

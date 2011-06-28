@@ -30,23 +30,26 @@ import org.wicketstuff.datatable_autocomplete.radio.DTARadio;
 /**
  * @author mocleiri
  * 
- * A radio for use where the table this column is added to is wrapped by a {@link RadioGroup}
- *
+ *         A radio for use where the table this column is added to is wrapped by a
+ *         {@link RadioGroup}
+ * 
  */
-public class DTARadioColumn<T> extends AbstractColumn<T> {
+public class DTARadioColumn<T> extends AbstractColumn<T>
+{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -24109845922068732L;
 
-	private List<Radio<T>>radioList = new LinkedList<Radio<T>>();
-	
-	
+	private List<Radio<T>> radioList = new LinkedList<Radio<T>>();
+
+
 	/**
 	 * @param displayModel
 	 */
-	public DTARadioColumn(IModel<String> displayModel) {
+	public DTARadioColumn(IModel<String> displayModel)
+	{
 		super(displayModel);
 		// TODO Auto-generated constructor stub
 	}
@@ -54,50 +57,61 @@ public class DTARadioColumn<T> extends AbstractColumn<T> {
 	/**
 	 * @param columnName
 	 */
-	public DTARadioColumn(String columnName) {
-		this (new Model<String>(columnName));
+	public DTARadioColumn(String columnName)
+	{
+		this(new Model<String>(columnName));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator#populateItem(org.apache.wicket.markup.repeater.Item, java.lang.String, org.apache.wicket.model.IModel)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator#populateItem(org
+	 * .apache.wicket.markup.repeater.Item, java.lang.String, org.apache.wicket.model.IModel)
 	 */
-	public void populateItem(Item<ICellPopulator<T>> cellItem, String componentId, IModel<T> rowModel) {
-		
+	public void populateItem(Item<ICellPopulator<T>> cellItem, String componentId,
+		IModel<T> rowModel)
+	{
+
 		DTARadio<T> rd;
 		cellItem.add(rd = new DTARadio<T>(componentId, rowModel));
-		
+
 		rd.setOutputMarkupId(true);
-		
+
 		// should have a worst case size of visible page size.
 		radioList.add(rd);
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn#detach()
 	 */
 	@Override
-	public void detach() {
+	public void detach()
+	{
 		super.detach();
-//		this.radioList.clear();
-		
+// this.radioList.clear();
+
 	}
-	
+
 	/**
-	 * Get the markupid for the radio representing a specific row.  Used to allow row onclick actions to trigger a radio selection DOM action.
+	 * Get the markupid for the radio representing a specific row. Used to allow row onclick actions
+	 * to trigger a radio selection DOM action.
 	 * 
 	 * @param index
-	 * @return the markup id for the radio for the row index given. 
+	 * @return the markup id for the radio for the row index given.
 	 */
-	public final String getRadioMarkupID (int index) {
+	public final String getRadioMarkupID(int index)
+	{
 		Radio<T> radio = radioList.get(index);
-		
+
 		if (radio == null)
 			return null;
 		else
 			return radio.getMarkupId();
 	}
-	
-	
+
 
 }

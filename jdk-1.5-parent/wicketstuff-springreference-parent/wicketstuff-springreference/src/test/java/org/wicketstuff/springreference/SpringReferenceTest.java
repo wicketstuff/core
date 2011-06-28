@@ -36,109 +36,116 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * Tests for {@link SpringReference} and {@link SpringReferenceSupporter}.
- *
+ * 
  * @author akiraly
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class SpringReferenceTest {
+public class SpringReferenceTest
+{
 
 	@Autowired
 	private ApplicationContext applicationContext;
 
 	@Before
-	public void before() {
+	public void before()
+	{
 		Application application = new MockApplication();
 		ThreadContext.setApplication(application);
 
-		SpringReferenceSupporter.register(application,
-				new SpringReferenceSupporter(applicationContext));
+		SpringReferenceSupporter.register(application, new SpringReferenceSupporter(
+			applicationContext));
 	}
 
 	@After
-	public void after() {
+	public void after()
+	{
 		ThreadContext.detach();
 	}
 
 	@Test
-	public void classOnlyTest() {
-		SpringReference<ClassService> reference = SpringReference
-				.of(ClassService.class);
+	public void classOnlyTest()
+	{
+		SpringReference<ClassService> reference = SpringReference.of(ClassService.class);
 
 		testReference(reference, 1);
 	}
 
 	@Test
-	public void nameAndClassTest() {
-		SpringReference<PrimaryService> reference = SpringReference.of(
-				PrimaryService.class, "named");
+	public void nameAndClassTest()
+	{
+		SpringReference<PrimaryService> reference = SpringReference.of(PrimaryService.class,
+			"named");
 
 		testReference(reference, 2);
 	}
 
 	@Test
-	public void primaryTest() {
-		SpringReference<PrimaryService> reference = SpringReference
-				.of(PrimaryService.class);
+	public void primaryTest()
+	{
+		SpringReference<PrimaryService> reference = SpringReference.of(PrimaryService.class);
 
 		testReference(reference, 3);
 	}
 
 	@Test
-	public void autowireTest() {
-		SpringReference<AutowireService> reference = SpringReference
-				.of(AutowireService.class);
+	public void autowireTest()
+	{
+		SpringReference<AutowireService> reference = SpringReference.of(AutowireService.class);
 
 		testReference(reference, 6);
 	}
 
 	@Test
-	public void constructorTest() {
-		SpringReference<ConstructorService> reference = SpringReference
-				.of(ConstructorService.class);
+	public void constructorTest()
+	{
+		SpringReference<ConstructorService> reference = SpringReference.of(ConstructorService.class);
 
 		testReference(reference, 4);
 	}
 
 	@Test
-	public void subClass1Test() {
-		SpringReference<AService> reference = SpringReference.of(
-				AService.class, "named");
+	public void subClass1Test()
+	{
+		SpringReference<AService> reference = SpringReference.of(AService.class, "named");
 
 		testReference(reference, 2);
 	}
 
 	@Test
-	public void subClass2Test() {
-		SpringReference<AService> reference = SpringReference
-				.of(AService.class);
+	public void subClass2Test()
+	{
+		SpringReference<AService> reference = SpringReference.of(AService.class);
 
 		testReference(reference, 3);
 	}
 
 	@Test
-	public void lazyTest() {
-		SpringReference<AService> reference = SpringReference.of(
-				AService.class, "not-existing-bean-id");
+	public void lazyTest()
+	{
+		SpringReference<AService> reference = SpringReference.of(AService.class,
+			"not-existing-bean-id");
 
-		try {
+		try
+		{
 			testReference(reference, -1);
 			// no exception?
 			throw new IllegalStateException("Not exsisting spring bean found.");
-		} catch (NoSuchBeanDefinitionException e) {
+		}
+		catch (NoSuchBeanDefinitionException e)
+		{
 			// expected, all ok.
 		}
 	}
 
 	@Test
-	public void cloneEqualityTest() {
-		SpringReference<ConstructorService> refClazzOnly = SpringReference
-				.of(ConstructorService.class);
-		SpringReference<ConstructorService> refNamed = SpringReference.of(
-				ConstructorService.class, "constructor");
+	public void cloneEqualityTest()
+	{
+		SpringReference<ConstructorService> refClazzOnly = SpringReference.of(ConstructorService.class);
+		SpringReference<ConstructorService> refNamed = SpringReference.of(ConstructorService.class,
+			"constructor");
 
-		SpringReference<ConstructorService> refClazzOnly2 = refClazzOnly
-				.clone();
+		SpringReference<ConstructorService> refClazzOnly2 = refClazzOnly.clone();
 		SpringReference<ConstructorService> refNamed2 = refNamed.clone();
 
 		Assert.assertNotSame(refClazzOnly, refClazzOnly2);
@@ -146,8 +153,7 @@ public class SpringReferenceTest {
 
 		refClazzOnly.get();
 
-		Assert.assertThat(refClazzOnly,
-				CoreMatchers.not(CoreMatchers.equalTo(refNamed)));
+		Assert.assertThat(refClazzOnly, CoreMatchers.not(CoreMatchers.equalTo(refNamed)));
 
 		refNamed.get();
 
@@ -158,8 +164,9 @@ public class SpringReferenceTest {
 		Assert.assertEquals(refNamed, refNamed2);
 	}
 
-	protected <T extends AService> void testReference(
-			SpringReference<T> reference, int expectedTreasure) {
+	protected <T extends AService> void testReference(SpringReference<T> reference,
+		int expectedTreasure)
+	{
 		Assert.assertNotNull(reference);
 		T service = reference.get();
 		Assert.assertNotNull(service);
@@ -176,37 +183,47 @@ public class SpringReferenceTest {
 	/**
 	 * Check serialization support.
 	 */
-	protected <T> SpringReference<T> writeRead(SpringReference<T> reference) {
-		try {
+	protected <T> SpringReference<T> writeRead(SpringReference<T> reference)
+	{
+		try
+		{
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ObjectOutputStream os = null;
-			try {
+			try
+			{
 				os = new ObjectOutputStream(baos);
 				os.writeObject(reference);
-			} finally {
+			}
+			finally
+			{
 				if (os != null)
 					os.close();
 				baos.close();
 			}
 
-			ByteArrayInputStream bais = new ByteArrayInputStream(
-					baos.toByteArray());
+			ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
 			ObjectInputStream is = null;
-			try {
+			try
+			{
 				is = new ObjectInputStream(bais);
 				@SuppressWarnings("unchecked")
-				SpringReference<T> result = (SpringReference<T>) is
-						.readObject();
+				SpringReference<T> result = (SpringReference<T>)is.readObject();
 				Assert.assertNotSame(reference, result);
 				return result;
-			} finally {
+			}
+			finally
+			{
 				if (is != null)
 					is.close();
 				bais.close();
 			}
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e)
+		{
 			throw new IllegalStateException("(De)Serialization failed.", e);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			throw new IllegalStateException("(De)Serialization failed.", e);
 		}
 	}

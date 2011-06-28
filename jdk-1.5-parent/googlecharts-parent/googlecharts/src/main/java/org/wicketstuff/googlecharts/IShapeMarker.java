@@ -9,15 +9,16 @@ import java.io.Serializable;
 /**
  * @author Daniel Spiewak
  */
-public interface IShapeMarker extends Serializable {
+public interface IShapeMarker extends Serializable
+{
 
-    public MarkerType getType();
+	public MarkerType getType();
 
-    public Color getColor();
+	public Color getColor();
 
-    public int getIndex();
+	public int getIndex();
 
-    public double getPoint();
+	public double getPoint();
 
-    public int getSize();
+	public int getSize();
 }

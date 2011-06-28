@@ -26,20 +26,18 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.console.ScriptEnginePanel;
 
 /**
  * A table displaying {@link ScriptTemplate}s.
  * <p>
- * Script templates can be used to represent frequently used scripts. Typically
- * such scripts would be stored in some kind of storage. A data provider on top
- * of this storage could then be used to provide these scripts as
- * {@link ScriptTemplate}s to this table, which displays them as a list. When a
- * script is selected this table copies it over to the attached
- * {@link AbstractScriptEnginePanel}'s input field so that the script can be
- * executed immediately.
+ * Script templates can be used to represent frequently used scripts. Typically such scripts would
+ * be stored in some kind of storage. A data provider on top of this storage could then be used to
+ * provide these scripts as {@link ScriptTemplate}s to this table, which displays them as a list.
+ * When a script is selected this table copies it over to the attached
+ * {@link AbstractScriptEnginePanel}'s input field so that the script can be executed immediately.
  * <p>
  * Example:
  * 
@@ -49,7 +47,7 @@ import org.wicketstuff.console.ScriptEnginePanel;
  * add(enginePanel);
  * 
  * ScriptTemplateSelectionTablePanel scriptTable = new ScriptTemplateSelectionTablePanel(
- * 		&quot;templatesTable&quot;, enginePanel, dataProvider(), 10);
+ * 	&quot;templatesTable&quot;, enginePanel, dataProvider(), 10);
  * add(scriptTable);
  * </pre>
  * 
@@ -62,22 +60,22 @@ import org.wicketstuff.console.ScriptEnginePanel;
  * 
  * @author cretzel
  */
-public class ScriptTemplateSelectionTablePanel extends Panel {
+public class ScriptTemplateSelectionTablePanel extends Panel
+{
 
 	private static final long serialVersionUID = 1L;
 
-	private static final ResourceReference CSS = new CompressedResourceReference(
-			ScriptTemplateSelectionTablePanel.class,
-			ScriptTemplateSelectionTablePanel.class.getSimpleName() + ".css");
+	private static final ResourceReference CSS = new PackageResourceReference(
+		ScriptTemplateSelectionTablePanel.class,
+		ScriptTemplateSelectionTablePanel.class.getSimpleName() + ".css");
 
 	private final ScriptEnginePanel enginePanel;
 
 	private DataTable<ScriptTemplate> table;
 
-	public ScriptTemplateSelectionTablePanel(final String id,
-			final ScriptEnginePanel enginePanel,
-			final IDataProvider<ScriptTemplate> dataProvider,
-			final int rowsPerPage) {
+	public ScriptTemplateSelectionTablePanel(final String id, final ScriptEnginePanel enginePanel,
+		final IDataProvider<ScriptTemplate> dataProvider, final int rowsPerPage)
+	{
 		super(id);
 		this.enginePanel = enginePanel;
 		checkEnginePanelOutputMarkupId(enginePanel);
@@ -85,14 +83,14 @@ public class ScriptTemplateSelectionTablePanel extends Panel {
 		init(dataProvider, rowsPerPage);
 	}
 
-	private void init(final IDataProvider<ScriptTemplate> dataProvider,
-			final int rowsPerPage) {
-		table = new DataTable<ScriptTemplate>("table", createColumns(),
-				dataProvider, rowsPerPage);
+	private void init(final IDataProvider<ScriptTemplate> dataProvider, final int rowsPerPage)
+	{
+		table = new DataTable<ScriptTemplate>("table", createColumns(), dataProvider, rowsPerPage);
 		add(table);
 	}
 
-	protected List<IColumn<ScriptTemplate>> createColumns() {
+	protected List<IColumn<ScriptTemplate>> createColumns()
+	{
 
 		final List<IColumn<ScriptTemplate>> columns = new ArrayList<IColumn<ScriptTemplate>>();
 		columns.add(new TitleColumn(this));
@@ -102,38 +100,44 @@ public class ScriptTemplateSelectionTablePanel extends Panel {
 	}
 
 	@Override
-	public void renderHead(final IHeaderResponse response) {
+	public void renderHead(final IHeaderResponse response)
+	{
 		super.renderHead(response);
 
 		final ResourceReference css = getCSS();
-		if (css != null) {
+		if (css != null)
+		{
 			response.renderCSSReference(css);
 		}
 
 	}
 
-	protected ResourceReference getCSS() {
+	protected ResourceReference getCSS()
+	{
 		return CSS;
 	}
 
-	private void checkEnginePanelOutputMarkupId(
-			final ScriptEnginePanel enginePanel) {
-		if (enginePanel != null) {
-			if (!enginePanel.getOutputMarkupId()) {
-				throw new IllegalStateException(
-						"Set enginePanel.setOutputMarkupId(true) to use "
-								+ "it with ScriptTemplateSelectionTablePanel");
+	private void checkEnginePanelOutputMarkupId(final ScriptEnginePanel enginePanel)
+	{
+		if (enginePanel != null)
+		{
+			if (!enginePanel.getOutputMarkupId())
+			{
+				throw new IllegalStateException("Set enginePanel.setOutputMarkupId(true) to use "
+					+ "it with ScriptTemplateSelectionTablePanel");
 			}
 		}
 	}
 
 	public void onScriptTemplateSelected(final IModel<ScriptTemplate> model,
-			final AjaxRequestTarget target) {
+		final AjaxRequestTarget target)
+	{
 
 		final ScriptTemplate template = model.getObject();
 		final String script = template.script;
 
-		if (enginePanel != null) {
+		if (enginePanel != null)
+		{
 			enginePanel.setInput(script);
 			target.add(enginePanel.getInputTf());
 		}

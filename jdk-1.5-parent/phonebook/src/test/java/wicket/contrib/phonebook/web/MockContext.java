@@ -23,8 +23,12 @@ import org.apache.wicket.spring.test.ApplicationContextMock;
 /**
  * @author Kare Nuorteva
  */
-public class MockContext extends ApplicationContextMock {
+public class MockContext extends ApplicationContextMock
+{
 
-	public MockContext() {
+	private static final long serialVersionUID = 1L;
+
+	public MockContext()
+	{
 	}
 }

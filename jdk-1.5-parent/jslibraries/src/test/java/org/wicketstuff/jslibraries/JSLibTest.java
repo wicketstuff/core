@@ -18,42 +18,57 @@
  */
 package org.wicketstuff.jslibraries;
 
-import java.io.OutputStream;
-
 import junit.framework.TestCase;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.Response;
-import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.internal.HeaderResponse;
+import org.apache.wicket.request.Response;
 import org.apache.wicket.util.tester.WicketTester;
 
+public class JSLibTest extends TestCase
+{
 
-public class JSLibTest extends TestCase {
-
-	public void testSettings() throws Exception {
+	public void testSettings() throws Exception
+	{
 		new WicketTester();
 
 		final StringBuffer sb = new StringBuffer(128);
 
-		HeaderContributor hc = JSLib.getHeaderContribution(VersionDescriptor
-				.exactVersion(Library.JQUERY, 1, 3, 1), CDN.GOOGLE);
-		HeaderResponse mockResponse = new HeaderResponse() {
+		IHeaderContributor hc = JSLib.getHeaderContribution(
+			VersionDescriptor.exactVersion(Library.JQUERY, 1, 3, 1), CDN.GOOGLE);
+		HeaderResponse mockResponse = new HeaderResponse()
+		{
 
 			@Override
-			protected Response getRealResponse() {
+			protected Response getRealResponse()
+			{
 
-				return new Response() {
+				return new Response()
+				{
 
 					@Override
-					public void write(CharSequence arg0) {
+					public void write(CharSequence arg0)
+					{
 						sb.append(arg0);
 					}
 
 					@Override
-					public OutputStream getOutputStream() {
-						// TODO Auto-generated method stub
-						return null;
+					public Object getContainerResponse()
+					{
+						throw new UnsupportedOperationException();
+					}
+
+					@Override
+					public String encodeURL(CharSequence url)
+					{
+						throw new UnsupportedOperationException();
+					}
+
+					@Override
+					public void write(byte[] array)
+					{
+						throw new UnsupportedOperationException();
 					}
 				};
 			}
@@ -63,18 +78,17 @@ public class JSLibTest extends TestCase {
 		assertTrue(scriptTag.contains("google")); // must be in as selected
 		assertFalse(scriptTag.contains("resources/org.wicketstuff.jsl"));
 		sb.setLength(0);
-		
+
 		// now set applicationwide setting to local only:
 		JSLib.setOverrideProviders(Application.get(), LocalProvider.DEFAULT);
-		
+
 		// and retest
-		hc = JSLib.getHeaderContribution(VersionDescriptor.exactVersion(
-				Library.JQUERY, 1, 3, 1), CDN.GOOGLE);
+		hc = JSLib.getHeaderContribution(VersionDescriptor.exactVersion(Library.JQUERY, 1, 3, 1),
+			CDN.GOOGLE);
 
 		hc.renderHead(mockResponse);
 		scriptTag = sb.toString();
-		assertFalse(scriptTag.contains("google"));
-		assertTrue(scriptTag.contains("resources/org.wicketstuff.jsl"));
+		assertTrue(scriptTag.contains("wicket/resource/org.wicketstuff.jslibraries.JSReference/js/jquery-1.3.1.js"));
 	}
 
 }

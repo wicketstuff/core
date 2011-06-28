@@ -10,7 +10,7 @@ import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  * 
- * using a {@link Behavior} 
+ * using a {@link Behavior}
  */
 public class GMapHeaderContributor extends Behavior
 {
@@ -19,12 +19,13 @@ public class GMapHeaderContributor extends Behavior
 	// URL for Google Maps' API endpoint.
 	private static final String GMAP_API_URL = "http://www.google.com/jsapi?key=";
 	// We have some custom JavaScript.
-	private static final ResourceReference WICKET_GMAP_JS = new JavaScriptResourceReference(GMap2.class, "wicket-gmap.js");
+	private static final ResourceReference WICKET_GMAP_JS = new JavaScriptResourceReference(
+		GMap2.class, "wicket-gmap.js");
 	protected static final String GOOGLE_LOAD_MAPS = "google.load(\"maps\", \"2.x\");";
 
 	private final String gMapKey;
-	
-	
+
+
 	/**
 	 * 
 	 * @param gMapKey
@@ -35,15 +36,15 @@ public class GMapHeaderContributor extends Behavior
 	}
 
 	/**
-	 * see: <a href="http://www.google.com/apis/maps/documentation/#Memory_Leaks">IE memory leak issues</a>
-	 * 
-	 * @see org.apache.wicket.markup.html.IHeaderContributor#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+	 * see: <a href="http://www.google.com/apis/maps/documentation/#Memory_Leaks">IE memory leak
+	 * issues</a>
 	 */
 	@Override
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		response.renderJavaScriptReference(GMAP_API_URL + gMapKey);
-		response.renderJavaScript(GOOGLE_LOAD_MAPS, GMapHeaderContributor.class.getName() + "_googleload");
+		response.renderJavaScript(GOOGLE_LOAD_MAPS, GMapHeaderContributor.class.getName() +
+			"_googleload");
 		response.renderJavaScriptReference(WicketEventReference.INSTANCE);
 		response.renderJavaScriptReference(WicketAjaxReference.INSTANCE);
 		response.renderJavaScriptReference(WICKET_GMAP_JS);

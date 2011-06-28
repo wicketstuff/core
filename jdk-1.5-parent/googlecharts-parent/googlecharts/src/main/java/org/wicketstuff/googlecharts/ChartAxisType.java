@@ -6,19 +6,19 @@ package org.wicketstuff.googlecharts;
 /**
  * @author Daniel Spiewak
  */
-public enum ChartAxisType {
+public enum ChartAxisType
+{
 
-    BOTTOM("x"),
-    TOP("t"),
-    LEFT("y"),
-    RIGHT("r");
-    private final String rendering;
+	BOTTOM("x"), TOP("t"), LEFT("y"), RIGHT("r");
+	private final String rendering;
 
-    private ChartAxisType(String rendering) {
-        this.rendering = rendering;
-    }
+	private ChartAxisType(String rendering)
+	{
+		this.rendering = rendering;
+	}
 
-    public String getRendering() {
-        return rendering;
-    }
+	public String getRendering()
+	{
+		return rendering;
+	}
 }

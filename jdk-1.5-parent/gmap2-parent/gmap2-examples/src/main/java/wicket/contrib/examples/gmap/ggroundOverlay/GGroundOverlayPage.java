@@ -33,16 +33,16 @@ public class GGroundOverlayPage extends WicketExamplePage
 
 	public GGroundOverlayPage()
 	{
-		map = new GMap2 ("map", GMapExampleApplication.get().getGoogleMapsAPIkey());
+		map = new GMap2("map", GMapExampleApplication.get().getGoogleMapsAPIkey());
 		map.setCenter(new GLatLng(40.740, -74.18));
 		map.setZoom(12);
 
 		// ground overlay
 
 		GLatLngBounds boundaries = new GLatLngBounds(new GLatLng(40.716216, -74.213393),
-				new GLatLng(40.765641, -74.139235));
+			new GLatLng(40.765641, -74.139235));
 		GGroundOverlay oldmap = new GGroundOverlay(
-				"http://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg", boundaries);
+			"http://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg", boundaries);
 		map.addOverlay(oldmap);
 		add(map);
 	}

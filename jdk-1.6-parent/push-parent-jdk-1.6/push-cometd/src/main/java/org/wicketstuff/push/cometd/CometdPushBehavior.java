@@ -35,7 +35,7 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.parser.XmlPullParser;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.template.PackageTextTemplate;
 import org.cometd.server.CometdServlet;
@@ -47,11 +47,11 @@ import org.wicketstuff.push.IPushNode;
 /**
  * This behavior will be asked by client side when it will receive a cometd event associated with
  * the kind of event
- *
+ * 
  * There is currently no support for multiple cometd servlets. It is not possible to override which
  * URL to use via the {@link #getCometdServletPath()} overridable method. But two cometd instances
  * cannot be used simultaneously.
- *
+ * 
  * @author Xavier Hanin
  * @author Rodolfo Hansen
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
@@ -65,15 +65,15 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 
 	private static final String DEFAULT_COMETD_PATH = guessCometdServletPath();
 
-	private static final ResourceReference COMETD = new CompressedResourceReference(
+	private static final ResourceReference COMETD = new PackageResourceReference(
 		CometdPushBehavior.class, "org/cometd.js");
-	private static final ResourceReference COMETD_ACK = new CompressedResourceReference(
+	private static final ResourceReference COMETD_ACK = new PackageResourceReference(
 		CometdPushBehavior.class, "org/cometd/AckExtension.js");
-	private static final ResourceReference COMETD_RELOAD = new CompressedResourceReference(
+	private static final ResourceReference COMETD_RELOAD = new PackageResourceReference(
 		CometdPushBehavior.class, "org/cometd/ReloadExtension.js");
-	private static final ResourceReference COMETD_TIMESTAMP = new CompressedResourceReference(
+	private static final ResourceReference COMETD_TIMESTAMP = new PackageResourceReference(
 		CometdPushBehavior.class, "org/cometd/TimeStampExtension.js");
-	private static final ResourceReference COMETD_TIMESYNC = new CompressedResourceReference(
+	private static final ResourceReference COMETD_TIMESYNC = new PackageResourceReference(
 		CometdPushBehavior.class, "org/cometd/TimeSyncExtension.js");
 
 	private static final PackageTextTemplate TEMPLATE_INIT = new PackageTextTemplate(
@@ -86,7 +86,7 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	/**
 	 * Parse the web.xml to find cometd context Path. This context path will be cache for all the
 	 * application
-	 *
+	 * 
 	 * @return cometd context path
 	 */
 	private static String guessCometdServletPath()
@@ -223,7 +223,7 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 
 	/**
 	 * Javascript allowing cometd to be initialized on commetd
-	 *
+	 * 
 	 * @return javascript to initialize cometd on client side
 	 */
 	private String _renderInitScript()
@@ -258,7 +258,7 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 
 	/**
 	 * get the channel where this behavior will wait for event
-	 *
+	 * 
 	 * @return channelId channel where this behavior will wait for event
 	 */
 	public String getCometdChannelId()
@@ -268,10 +268,10 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 
 	/**
 	 * Returns the behaviour's cometd servlet path.
-	 *
+	 * 
 	 * Uses the {@link #DEFAULT_COMETD_PATH} provided by {@link #guessCometdServletPath()}. Override
 	 * if you have an unusual setup.
-	 *
+	 * 
 	 * @return the behaviour's cometd servlet path.
 	 */
 	protected String getCometdServletPath()

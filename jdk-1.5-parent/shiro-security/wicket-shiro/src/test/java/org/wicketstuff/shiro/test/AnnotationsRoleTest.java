@@ -58,121 +58,123 @@ public class AnnotationsRoleTest extends TestCase
 	{
 		tester.destroy();
 	}
-	
+
 	public void testSomething()
 	{
-	  // TODO -- actually test something!
+		// TODO -- actually test something!
 	}
 
-//	/**
-//	 * @throws Exception
-//	 */
-//	public void testClear() throws Exception
-//	{
-//		tester.getApplication().getSecuritySettings().setAuthorizationStrategy(
-//			new RoleAuthorizationStrategy(new UserRolesAuthorizer("FOO")));
-//		tester.startPage(new ITestPageSource()
-//		{
-//			private static final long serialVersionUID = 1L;
+// /**
+// * @throws Exception
+// */
+// public void testClear() throws Exception
+// {
+// tester.getApplication().getSecuritySettings().setAuthorizationStrategy(
+// new RoleAuthorizationStrategy(new UserRolesAuthorizer("FOO")));
+// tester.startPage(new ITestPageSource()
+// {
+// private static final long serialVersionUID = 1L;
 //
-//			public Page getTestPage()
-//			{
-//				return new NormalPage();
-//			}
-//		});
-//		tester.assertRenderedPage(NormalPage.class);
-//	}
+// public Page getTestPage()
+// {
+// return new NormalPage();
+// }
+// });
+// tester.assertRenderedPage(NormalPage.class);
+// }
 //
-//	/**
-//	 * @throws Exception
-//	 */
-//	public void testAuthorized() throws Exception
-//	{
-//		WicketTester tester = new WicketTester();
-//		tester.getApplication().getSecuritySettings().setAuthorizationStrategy(
-//			new RoleAuthorizationStrategy(new UserRolesAuthorizer("ADMIN")));
-//		tester.startPage(new ITestPageSource()
-//		{
-//			private static final long serialVersionUID = 1L;
+// /**
+// * @throws Exception
+// */
+// public void testAuthorized() throws Exception
+// {
+// WicketTester tester = new WicketTester();
+// tester.getApplication().getSecuritySettings().setAuthorizationStrategy(
+// new RoleAuthorizationStrategy(new UserRolesAuthorizer("ADMIN")));
+// tester.startPage(new ITestPageSource()
+// {
+// private static final long serialVersionUID = 1L;
 //
-//			public Page getTestPage()
-//			{
-//				return new AdminPage();
-//			}
-//		});
-//		tester.assertRenderedPage(AdminPage.class);
-//	}
+// public Page getTestPage()
+// {
+// return new AdminPage();
+// }
+// });
+// tester.assertRenderedPage(AdminPage.class);
+// }
 //
-//	/**
-//	 * @throws Exception
-//	 */
-//	public void testNotAuthorized() throws Exception
-//	{
-//		WicketTester tester = new WicketTester();
-//		tester.getApplication().getSecuritySettings().setAuthorizationStrategy(
-//			new RoleAuthorizationStrategy(new UserRolesAuthorizer("USER")));
-//		final class Listener implements IUnauthorizedComponentInstantiationListener
-//		{
-//			private boolean eventReceived = false;
+// /**
+// * @throws Exception
+// */
+// public void testNotAuthorized() throws Exception
+// {
+// WicketTester tester = new WicketTester();
+// tester.getApplication().getSecuritySettings().setAuthorizationStrategy(
+// new RoleAuthorizationStrategy(new UserRolesAuthorizer("USER")));
+// final class Listener implements IUnauthorizedComponentInstantiationListener
+// {
+// private boolean eventReceived = false;
 //
-//			public void onUnauthorizedInstantiation(Component component)
-//			{
-//				eventReceived = true;
-//			}
-//		}
-//		Listener listener = new Listener();
-//		tester.getApplication()
-//			.getSecuritySettings()
-//			.setUnauthorizedComponentInstantiationListener(listener);
+// public void onUnauthorizedInstantiation(Component component)
+// {
+// eventReceived = true;
+// }
+// }
+// Listener listener = new Listener();
+// tester.getApplication()
+// .getSecuritySettings()
+// .setUnauthorizedComponentInstantiationListener(listener);
 //
-//		try
-//		{
-//			tester.startPage(new ITestPageSource()
-//			{
-//				private static final long serialVersionUID = 1L;
+// try
+// {
+// tester.startPage(new ITestPageSource()
+// {
+// private static final long serialVersionUID = 1L;
 //
-//				public Page getTestPage()
-//				{
-//					return new AdminPage();
-//				}
-//			});
-//			assertTrue("an authorization exception event should have been received",
-//				listener.eventReceived);
-//		}
-//		catch (Exception e)
-//		{
-//			if (!(e.getCause() instanceof InvocationTargetException && ((InvocationTargetException)e.getCause()).getTargetException() instanceof UnauthorizedInstantiationException))
-//			{
-//				throw e;
-//			}
-//		}
-//	}
+// public Page getTestPage()
+// {
+// return new AdminPage();
+// }
+// });
+// assertTrue("an authorization exception event should have been received",
+// listener.eventReceived);
+// }
+// catch (Exception e)
+// {
+// if (!(e.getCause() instanceof InvocationTargetException &&
+// ((InvocationTargetException)e.getCause()).getTargetException() instanceof
+// UnauthorizedInstantiationException))
+// {
+// throw e;
+// }
+// }
+// }
 //
-//	/**
-//	 * Authorizer class that uses the TS user and it's defined string[] roles.
-//	 */
-//	private static final class UserRolesAuthorizer implements IRoleCheckingStrategy, Serializable
-//	{
-//		private static final long serialVersionUID = 1L;
+// /**
+// * Authorizer class that uses the TS user and it's defined string[] roles.
+// */
+// private static final class UserRolesAuthorizer implements IRoleCheckingStrategy, Serializable
+// {
+// private static final long serialVersionUID = 1L;
 //
-//		private final Roles roles;
+// private final Roles roles;
 //
-//		/**
-//		 * Construct.
-//		 * 
-//		 * @param roles
-//		 */
-//		public UserRolesAuthorizer(String roles)
-//		{
-//			this.roles = new Roles(roles);
-//		}
+// /**
+// * Construct.
+// *
+// * @param roles
+// */
+// public UserRolesAuthorizer(String roles)
+// {
+// this.roles = new Roles(roles);
+// }
 //
-//		/**
-//		 * @see org.wicketstuff.ki.strategies.IRoleCheckingStrategy#hasAnyRole(Roles)
-//		 */
-//		public boolean hasAnyRole(Roles roles)
-//		{
-//			return this.roles.hasAnyRole(roles);
-//		}
-//	}
+// /**
+// * @see org.wicketstuff.ki.strategies.IRoleCheckingStrategy#hasAnyRole(Roles)
+// */
+// public boolean hasAnyRole(Roles roles)
+// {
+// return this.roles.hasAnyRole(roles);
+// }
+// }
 }

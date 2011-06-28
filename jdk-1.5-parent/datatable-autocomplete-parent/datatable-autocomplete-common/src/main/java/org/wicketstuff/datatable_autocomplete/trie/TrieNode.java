@@ -37,18 +37,18 @@ import org.slf4j.LoggerFactory;
  * 
  *         Contains the character(s) that are contained in this node.
  * 
- *         A map of next character(s) to TrieNode<C>'s and the count of the
- *         number of words in the subtree beneath this node.
+ *         A map of next character(s) to TrieNode<C>'s and the count of the number of words in the
+ *         subtree beneath this node.
  * 
  *         The C context object that is indexed by this node.
  * 
- *         The configuration object that provides the string version of an C
- *         object.
+ *         The configuration object that provides the string version of an C object.
  * 
  * 
  * 
  */
-public class TrieNode<C> implements Serializable {
+public class TrieNode<C> implements Serializable
+{
 
 	/**
 	 * 
@@ -57,9 +57,11 @@ public class TrieNode<C> implements Serializable {
 
 	private static final Logger log = LoggerFactory.getLogger(TrieNode.class);
 
-	private static final Comparator<TrieNode<?>> trieNodeComparator = new Comparator<TrieNode<?>>() {
+	private static final Comparator<TrieNode<?>> trieNodeComparator = new Comparator<TrieNode<?>>()
+	{
 
-		public int compare(TrieNode<?> o1, TrieNode<?> o2) {
+		public int compare(TrieNode<?> o1, TrieNode<?> o2)
+		{
 
 			return o1.getCharacter().compareTo(o2.getCharacter());
 
@@ -89,7 +91,7 @@ public class TrieNode<C> implements Serializable {
 	// i.e. index 0 matches the character.get(0) and index 1 matches the element
 	// that matches to character.get(0) + character.get(1)
 	private Map<Integer, List<C>> matchMap = new LinkedHashMap<Integer, List<C>>();
-	
+
 	// if the entire tree below this node was traversed this would be the length
 	// of the longest string formed.
 	// this is used when doing a 'superselect' match to know when a branch is
@@ -106,8 +108,9 @@ public class TrieNode<C> implements Serializable {
 	 * @param character
 	 * @param configuration
 	 */
-	public TrieNode(TrieNode<C> parentNode, String rootMatchedString,
-			String character, ITrieConfiguration<C> configuration) {
+	public TrieNode(TrieNode<C> parentNode, String rootMatchedString, String character,
+		ITrieConfiguration<C> configuration)
+	{
 
 		super();
 
@@ -122,7 +125,8 @@ public class TrieNode<C> implements Serializable {
 	/**
 	 * @return the maxChildStringLength
 	 */
-	public int getMaxChildStringLength() {
+	public int getMaxChildStringLength()
+	{
 
 		return this.maxChildStringLength;
 	}
@@ -131,19 +135,22 @@ public class TrieNode<C> implements Serializable {
 	 * @param maxChildStringLength
 	 *            the maxChildStringLength to set
 	 */
-	public void setMaxChildStringLength(int maxChildStringLength) {
+	public void setMaxChildStringLength(int maxChildStringLength)
+	{
 
 		this.maxChildStringLength = maxChildStringLength;
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 
 		StringBuffer children = new StringBuffer();
 
 		List<String> nodeList = new ArrayList<String>(this.nodeMap.keySet());
 
-		for (int i = 0; i < nodeList.size() - 1; i++) {
+		for (int i = 0; i < nodeList.size() - 1; i++)
+		{
 
 			String node = nodeList.get(i);
 			children.append(node);
@@ -154,15 +161,15 @@ public class TrieNode<C> implements Serializable {
 		if (nodeList.size() > 0)
 			children.append(nodeList.get(nodeList.size() - 1));
 
-		return "NODE [ matchedPrefix = '" + rootMatchedString
-				+ "', character ='" + getCharacter() + "', word = '"
-				+ getWord() + "', children = (" + children.toString() + ") ]";
+		return "NODE [ matchedPrefix = '" + rootMatchedString + "', character ='" + getCharacter() +
+			"', word = '" + getWord() + "', children = (" + children.toString() + ") ]";
 	}
 
 	/**
 	 * @return the character
 	 */
-	public String getCharacter() {
+	public String getCharacter()
+	{
 
 		return this.character;
 	}
@@ -170,19 +177,19 @@ public class TrieNode<C> implements Serializable {
 	/**
 	 * Add the word into the Trie index.
 	 * 
-	 * Recurses down the tree until all of the characters in word have been
-	 * placed.
+	 * Recurses down the tree until all of the characters in word have been placed.
 	 * 
 	 * @param object
 	 * @return the node that the word was finally attached to
 	 */
-	public TrieNode<C> index(C object) {
+	public TrieNode<C> index(C object)
+	{
 
 		String word = configuration.getWord(object);
-		
+
 		return index(word, object);
 	}
-	
+
 	/**
 	 * 
 	 * @param word
@@ -190,15 +197,17 @@ public class TrieNode<C> implements Serializable {
 	 * 
 	 * @return the node that the word was finally attached to
 	 */
-	public TrieNode<C> index (String word, C object) {
-		
+	public TrieNode<C> index(String word, C object)
+	{
+
 		if (!configuration.isIndexCaseSensitive())
 			word = word.toLowerCase();
-		
+
 		return index(word, object, 0);
 	}
 
-	public List<TrieNode<C>> getOrderedNodeList() {
+	public List<TrieNode<C>> getOrderedNodeList()
+	{
 
 		return this.orderedNodeList;
 
@@ -209,26 +218,26 @@ public class TrieNode<C> implements Serializable {
 	 * @param i
 	 * @return
 	 */
-	private TrieNode<C> index(String word, C context, int startingIndex) {
+	private TrieNode<C> index(String word, C context, int startingIndex)
+	{
 
-		
-		
-		
-		if (word.length() == startingIndex) {
+
+		if (word.length() == startingIndex)
+		{
 
 			/*
 			 * This is the node that matches the word.
 			 * 
 			 * First: make sure that this is the first match on this node.
 			 * 
-			 * Second: insert the object into the first slot in the matchMap.
-			 * Note: the index is always zero because we build an uncompressed
-			 * Trie first.
+			 * Second: insert the object into the first slot in the matchMap. Note: the index is
+			 * always zero because we build an uncompressed Trie first.
 			 */
 
 			List<C> matchList = this.matchMap.get(0);
 
-			if (matchList == null) {
+			if (matchList == null)
+			{
 				matchList = new ArrayList<C>();
 				this.matchMap.put(0, matchList);
 			}
@@ -237,16 +246,18 @@ public class TrieNode<C> implements Serializable {
 			matchList.add(context);
 
 			return this;
-		} else {
+		}
+		else
+		{
 
 			// use the character at the starting index to get the next node
 
-			String nextCharacter = word.substring(startingIndex,
-					startingIndex + 1);
+			String nextCharacter = word.substring(startingIndex, startingIndex + 1);
 
 			TrieNode<C> nextNode = nodeMap.get(nextCharacter);
 
-			if (nextNode == null) {
+			if (nextNode == null)
+			{
 
 				String matchedSubString = word.substring(0, startingIndex);
 
@@ -266,36 +277,37 @@ public class TrieNode<C> implements Serializable {
 	 * @param nextCharacter
 	 * @return
 	 */
-	protected TrieNode<C> newNode(TrieNode<C> parent, String rootMatchedString,
-			String nextCharacter) {
+	protected TrieNode<C> newNode(TrieNode<C> parent, String rootMatchedString, String nextCharacter)
+	{
 
 		return this.configuration.createTrieNode(parent, rootMatchedString, nextCharacter);
 	}
 
-	
 
 	/**
 	 * 
-	 * In the normal case there is a single path through the tree and we
-	 * identify the node that matches the prefix.
+	 * In the normal case there is a single path through the tree and we identify the node that
+	 * matches the prefix.
 	 * 
-	 * In the any case there will be many nodes since there are multiple paths
-	 * to a match.
+	 * In the any case there will be many nodes since there are multiple paths to a match.
 	 * 
 	 * @param matchingNodeList
 	 * @param substring
 	 */
-	private void findMatchingNodes(Set<TrieNode<C>> matchingNodeList, ITrieFilter<C>nodeFilter,
-			String substring) {
+	private void findMatchingNodes(Set<TrieNode<C>> matchingNodeList, ITrieFilter<C> nodeFilter,
+		String substring)
+	{
 
 		PrefixTrieMatch<C> match = find(substring, nodeFilter);
 
-		if (match != null) {
+		if (match != null)
+		{
 			TrieNode<C> node = match.getNode();
-			
+
 			matchingNodeList.add(node);
 			// guaranteed to match the subtree so just exit at this point.
-			// this will prevent matching the same words multiple times where the substring is small.
+			// this will prevent matching the same words multiple times where the substring is
+// small.
 			return;
 		}
 
@@ -303,11 +315,12 @@ public class TrieNode<C> implements Serializable {
 			return; // not enough length in the subtree to match the string so
 		// no need to look.
 
-		for (TrieNode<C> trieNode : this.orderedNodeList) {
+		for (TrieNode<C> trieNode : this.orderedNodeList)
+		{
 
 			trieNode.findMatchingNodes(matchingNodeList, nodeFilter, substring);
 			// match = trieNode.find(substring);
-			//			
+			//
 			// if (match != null)
 			// matchingNodeList.add (match.getNode());
 
@@ -315,16 +328,17 @@ public class TrieNode<C> implements Serializable {
 
 	}
 
-	
+
 	/*
 	 * Recursively finds the Node that corresponds to the prefix specificed.
 	 */
-	public PrefixTrieMatch<C> find(String key, ITrieFilter<C>nodeFilter) {
+	public PrefixTrieMatch<C> find(String key, ITrieFilter<C> nodeFilter)
+	{
 
 
 		if (!configuration.isIndexCaseSensitive())
 			key = key.toLowerCase();
-		
+
 		/*
 		 * Check the current character against the
 		 */
@@ -333,21 +347,28 @@ public class TrieNode<C> implements Serializable {
 
 		int characterLength = getCharacter().length();
 
-		if (keyLength == characterLength) {
+		if (keyLength == characterLength)
+		{
 
-			if (getCharacter().equals(key)) {
+			if (getCharacter().equals(key))
+			{
 				// match
 				return new PrefixTrieMatch<C>(getWord(), nodeFilter, this);
-			} else {
+			}
+			else
+			{
 				// no match
 				return null;
 			}
-		} else if (keyLength > characterLength) {
+		}
+		else if (keyLength > characterLength)
+		{
 
 			// compare the 'characterLength' substring of key
 			String subKey = key.substring(0, characterLength);
 
-			if (subKey.equals(getCharacter())) {
+			if (subKey.equals(getCharacter()))
+			{
 				// matches this node but we still need to compare against the
 				// child nodes.
 
@@ -364,28 +385,32 @@ public class TrieNode<C> implements Serializable {
 
 				return nextNode.find(newKey, nodeFilter);
 
-			} else {
+			}
+			else
+			{
 				return null;
 			}
 
-		} else {
+		}
+		else
+		{
 			// keyLength < characterLength
-			if (keyLength > 0 && characterLength > 1
-					&& getCharacter().contains(key)) {
+			if (keyLength > 0 && characterLength > 1 && getCharacter().contains(key))
+			{
 				return new PrefixTrieMatch<C>(getWord(), nodeFilter, this);
 			}
 			return null;
 
 		}
 
-		
 
 	}
 
 	/**
 	 * @return the parentNode
 	 */
-	public TrieNode<C> getParentNode() {
+	public TrieNode<C> getParentNode()
+	{
 
 		return this.parentNode;
 	}
@@ -393,70 +418,75 @@ public class TrieNode<C> implements Serializable {
 	/**
 	 * @return the totalMatches
 	 */
-	public int getTotalMatches() {
+	public int getTotalMatches()
+	{
 
 		return this.totalMatches;
 	}
 
 	/**
-	 * Traverses up the tree to the root to generate the word that this node
-	 * represents.
+	 * Traverses up the tree to the root to generate the word that this node represents.
 	 * 
 	 * @return generated word
 	 */
-	public String getWord() {
+	public String getWord()
+	{
 
 		return this.rootMatchedString + this.character;
-		
-//		StringBuffer buf = new StringBuffer();
+
+// StringBuffer buf = new StringBuffer();
 //
-//		TrieNode<C> currentNode = this;
+// TrieNode<C> currentNode = this;
 //
-//		while (currentNode != null) {
-//			buf.insert(0, currentNode.getCharacter());
+// while (currentNode != null) {
+// buf.insert(0, currentNode.getCharacter());
 //
-//			currentNode = currentNode.getParentNode();
-//		}
-//		
-//		if (buf.toString().equals(this.rootMatchedString + this.character)) {
-//			log.info("can remove the looping back to parent.");
-//		}
-//		return buf.toString();
+// currentNode = currentNode.getParentNode();
+// }
+//
+// if (buf.toString().equals(this.rootMatchedString + this.character)) {
+// log.info("can remove the looping back to parent.");
+// }
+// return buf.toString();
 	}
 
 	/**
 	 * @param wordList
 	 * @param filter
-	 * @param limit -1 if no limit or the value at which point the list should stop being filled in.
+	 * @param limit
+	 *            -1 if no limit or the value at which point the list should stop being filled in.
 	 */
-	public void buildWordList(List<C> wordList, ITrieFilter<C> filter, int limit) {
+	public void buildWordList(List<C> wordList, ITrieFilter<C> filter, int limit)
+	{
 
-//		if (this.orderedNodeList.size() == 0
-//				&& (filter == null || filter.isVisible(this))) {
-//			// can be null in certain cases where the match is to an empty Trie.
-//			addExistingContextToList(wordList, filter);
+// if (this.orderedNodeList.size() == 0
+// && (filter == null || filter.isVisible(this))) {
+// // can be null in certain cases where the match is to an empty Trie.
+// addExistingContextToList(wordList, filter);
 //
-//		} else {
+// } else {
 
-			log.debug(orderedNodeList.toString());
+		log.debug(orderedNodeList.toString());
 
-			addExistingContextToList(wordList, filter, limit);
-			
+		addExistingContextToList(wordList, filter, limit);
+
+		if (wordList.size() == limit)
+			return;
+
+		for (TrieNode<C> node : orderedNodeList)
+		{
+			node.buildWordList(wordList, filter, limit);
+
 			if (wordList.size() == limit)
 				return;
 
-			for (TrieNode<C> node : orderedNodeList) {
-				node.buildWordList(wordList, filter, limit);
-				
-				if (wordList.size() == limit)
-					return;
-				
-			}
-//		}
+		}
+// }
 
 	}
 
-	private void addExistingContextToList(List<C> wordList, ITrieFilter<C> filter, int limit) {
+	private void addExistingContextToList(List<C> wordList, ITrieFilter<C> filter, int limit)
+	{
 
 		List<Integer> keyList = new LinkedList<Integer>();
 
@@ -467,25 +497,28 @@ public class TrieNode<C> implements Serializable {
 		 */
 		Collections.sort(keyList);
 
-		for (Integer i : keyList) {
+		for (Integer i : keyList)
+		{
 
 			List<C> contextList = this.matchMap.get(i);
-			
+
 			// check with the filter to only include those with the proper
-			
-			for (C c : contextList) {
-				
-				if (filter.isVisible(c)) {
+
+			for (C c : contextList)
+			{
+
+				if (filter.isVisible(c))
+				{
 					wordList.add(c);
-					
+
 					if (wordList.size() == limit)
 						return;
 				}
-				
-				
+
+
 			}
 
-		
+
 		}
 	}
 
@@ -494,33 +527,36 @@ public class TrieNode<C> implements Serializable {
 	 * 
 	 * @param v
 	 */
-	public void visit(ITrieNodeVisitor<C> v) {
+	public void visit(ITrieNodeVisitor<C> v)
+	{
 
 		v.visit(this);
 
-		for (TrieNode<C> child : this.orderedNodeList) {
+		for (TrieNode<C> child : this.orderedNodeList)
+		{
 			child.visit(v);
 		}
 	}
 
 
-
 	/**
 	 * Called once all the keys have been added into the Trie.
 	 * 
-	 * This will compact the nodes so that there will be no single child nodes
-	 * which will help to reduce the memory usage.
+	 * This will compact the nodes so that there will be no single child nodes which will help to
+	 * reduce the memory usage.
 	 * 
 	 * 
 	 */
-	public void simplify() {
+	public void simplify()
+	{
 
 		Collections.sort(orderedNodeList, trieNodeComparator);
 
 		/*
 		 * simplify our children first.
 		 */
-		while (this.orderedNodeList.size() == 1) {
+		while (this.orderedNodeList.size() == 1)
+		{
 			// consolidate with the subnode
 			// remove the sub node and set us as the parent to their
 			// children.
@@ -530,7 +566,8 @@ public class TrieNode<C> implements Serializable {
 
 			String childCharacter = onlyChild.getCharacter();
 
-			for (int i = 0; i < childCharacter.length(); i++) {
+			for (int i = 0; i < childCharacter.length(); i++)
+			{
 
 				String c = childCharacter.substring(i, i + 1);
 
@@ -539,17 +576,19 @@ public class TrieNode<C> implements Serializable {
 
 				List<C> childContext = onlyChild.matchMap.get(i);
 
-				if (childContext != null && childContext.size() > 0) {
+				if (childContext != null && childContext.size() > 0)
+				{
 					int matchIndex = this.character.length() + i;
 
-					List<C>ourContext = this.matchMap.get(i);
-					
-					if (ourContext == null) {
+					List<C> ourContext = this.matchMap.get(i);
+
+					if (ourContext == null)
+					{
 						// insert the child context as our own.
-						this.matchMap
-						.put(Integer.valueOf(matchIndex), childContext);
+						this.matchMap.put(Integer.valueOf(matchIndex), childContext);
 					}
-					else {
+					else
+					{
 						// append the child context to our own
 						ourContext.addAll(childContext);
 					}
@@ -562,7 +601,8 @@ public class TrieNode<C> implements Serializable {
 
 			this.totalMatches += onlyChild.totalMatches;
 
-			for (TrieNode<C> n : orderedNodeList) {
+			for (TrieNode<C> n : orderedNodeList)
+			{
 
 				// adjust the parent reference
 				n.parentNode = this;
@@ -574,7 +614,8 @@ public class TrieNode<C> implements Serializable {
 		 * then simplify our children
 		 */
 
-		for (TrieNode<C> n : orderedNodeList) {
+		for (TrieNode<C> n : orderedNodeList)
+		{
 
 			n.simplify();
 
@@ -587,46 +628,51 @@ public class TrieNode<C> implements Serializable {
 	 * @return the set of strings that map to the next nodes.
 	 * 
 	 */
-	public Set<String> getNextNodeCharacterSet() {
+	public Set<String> getNextNodeCharacterSet()
+	{
 		return this.nodeMap.keySet();
 	}
 
-	public void setNodeID(Long nodeID) {
+	public void setNodeID(Long nodeID)
+	{
 		this.nodeID = nodeID;
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/**
 	 * @return the nodeID
 	 */
-	public Long getNodeID() {
+	public Long getNodeID()
+	{
 		return nodeID;
 	}
-	
+
 	/**
 	 * 
 	 * @return the ordered list of matches for this node
 	 */
-	public List<C>getOrderedMatchList() {
-		
-		List<C>matchList = new LinkedList<C>();
-		
-		List<Integer>keyList =  new ArrayList<Integer>();
-		
+	public List<C> getOrderedMatchList()
+	{
+
+		List<C> matchList = new LinkedList<C>();
+
+		List<Integer> keyList = new ArrayList<Integer>();
+
 		keyList.addAll(matchMap.keySet());
-		
+
 		Collections.sort(keyList);
-		
-		for (Integer key : keyList) {
-			
+
+		for (Integer key : keyList)
+		{
+
 			matchList.addAll(matchMap.get(key));
-			
+
 		}
-		
+
 		return matchList;
-		
+
 	}
-	
+
 
 }

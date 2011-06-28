@@ -17,7 +17,8 @@ import com.inmethod.grid.IGridColumn;
  * 
  * @author Matej Knopp
  */
-public class ColumnsState implements IClusterable {
+public class ColumnsState implements IClusterable, Cloneable
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,7 +27,8 @@ public class ColumnsState implements IClusterable {
 	 * 
 	 * @author Matej Knopp
 	 */
-	public class Entry implements IClusterable {
+	public static class Entry implements IClusterable
+	{
 
 		private static final long serialVersionUID = 1L;
 
@@ -39,7 +41,8 @@ public class ColumnsState implements IClusterable {
 		 * 
 		 * @param columnId
 		 */
-		public Entry(String columnId) {
+		public Entry(String columnId)
+		{
 			this.columnId = columnId;
 		}
 
@@ -49,7 +52,8 @@ public class ColumnsState implements IClusterable {
 		 * 
 		 * @return current column width
 		 */
-		public int getCurrentWidth() {
+		public int getCurrentWidth()
+		{
 			return currentWidth;
 		}
 
@@ -59,7 +63,8 @@ public class ColumnsState implements IClusterable {
 		 * 
 		 * @param currentWidth
 		 */
-		public void setCurrentWidth(int currentWidth) {
+		public void setCurrentWidth(int currentWidth)
+		{
 			this.currentWidth = currentWidth;
 		}
 
@@ -68,7 +73,8 @@ public class ColumnsState implements IClusterable {
 		 * 
 		 * @return <code>true</code> if the column is visible, <code>false</code> otherwise.
 		 */
-		public boolean isVisible() {
+		public boolean isVisible()
+		{
 			return visible;
 		}
 
@@ -77,7 +83,8 @@ public class ColumnsState implements IClusterable {
 		 * 
 		 * @param visible
 		 */
-		public void setVisible(boolean visible) {
+		public void setVisible(boolean visible)
+		{
 			this.visible = visible;
 		}
 
@@ -86,7 +93,8 @@ public class ColumnsState implements IClusterable {
 		 * 
 		 * @return column id
 		 */
-		public String getColumnId() {
+		public String getColumnId()
+		{
 			return columnId;
 		};
 	};
@@ -99,10 +107,12 @@ public class ColumnsState implements IClusterable {
 	 * 
 	 * @param columns
 	 */
-	public ColumnsState(Collection<IGridColumn> columns) {
+	public <M, I> ColumnsState(Collection<IGridColumn<M, I>> columns)
+	{
 		stateArray = new Entry[columns.size()];
 		int i = 0;
-		for (IGridColumn column : columns) {
+		for (IGridColumn<M, I> column : columns)
+		{
 			stateArray[i] = new Entry(column.getId());
 			++i;
 		}
@@ -114,8 +124,9 @@ public class ColumnsState implements IClusterable {
 	 * 
 	 * @param columnStates
 	 */
-	public ColumnsState(Entry[] columnStates) {
-		this.stateArray = columnStates;
+	public ColumnsState(Entry[] columnStates)
+	{
+		stateArray = columnStates;
 	}
 
 	/**
@@ -124,9 +135,12 @@ public class ColumnsState implements IClusterable {
 	 * @param id
 	 * @return
 	 */
-	private int getEntryIndex(String id) {
-		for (int i = 0; i < stateArray.length; ++i) {
-			if (stateArray[i].getColumnId().equals(id)) {
+	private int getEntryIndex(String id)
+	{
+		for (int i = 0; i < stateArray.length; ++i)
+		{
+			if (stateArray[i].getColumnId().equals(id))
+			{
 				return i;
 			}
 		}
@@ -141,7 +155,8 @@ public class ColumnsState implements IClusterable {
 	 *            column id
 	 * @return entry or null
 	 */
-	public Entry getEntry(String id) {
+	public Entry getEntry(String id)
+	{
 		int i = getEntryIndex(id);
 		return i != -1 ? stateArray[i] : null;
 	}
@@ -152,10 +167,13 @@ public class ColumnsState implements IClusterable {
 	 * @param id
 	 * @return
 	 */
-	private Entry getColumnStateChecked(String id) {
+	private Entry getColumnStateChecked(String id)
+	{
 		Entry state = getEntry(id);
-		if (state == null) {
-			throw new IllegalArgumentException("Column state for column with id '" + id + "' not found.");
+		if (state == null)
+		{
+			throw new IllegalArgumentException("Column state for column with id '" + id +
+				"' not found.");
 		}
 		return state;
 	}
@@ -168,7 +186,8 @@ public class ColumnsState implements IClusterable {
 	 * @param newWidth
 	 *            new width or -1 if initial column width should be used
 	 */
-	public void setColumnWidth(String id, int newWidth) {
+	public void setColumnWidth(String id, int newWidth)
+	{
 		Entry state = getColumnStateChecked(id);
 		state.setCurrentWidth(newWidth);
 	}
@@ -180,7 +199,8 @@ public class ColumnsState implements IClusterable {
 	 *            column id
 	 * @return column width or -1 if initial width should be used
 	 */
-	public int getColumnWidth(String id) {
+	public int getColumnWidth(String id)
+	{
 		Entry state = getColumnStateChecked(id);
 		return state.getCurrentWidth();
 	}
@@ -192,7 +212,8 @@ public class ColumnsState implements IClusterable {
 	 *            column id
 	 * @param newValue
 	 */
-	public void setColumnVisibility(String id, boolean newValue) {
+	public void setColumnVisibility(String id, boolean newValue)
+	{
 		Entry state = getColumnStateChecked(id);
 		state.setVisible(newValue);
 	}
@@ -204,7 +225,8 @@ public class ColumnsState implements IClusterable {
 	 *            column id
 	 * @return <code>true</code> if the column is visible, <code>false</code> otherwise
 	 */
-	public boolean getColumnVisibility(String id) {
+	public boolean getColumnVisibility(String id)
+	{
 		Entry state = getColumnStateChecked(id);
 		return state.isVisible();
 	}
@@ -214,7 +236,8 @@ public class ColumnsState implements IClusterable {
 	 * 
 	 * @return collection of {@link Entry} instances
 	 */
-	public Collection<Entry> getColumnStates() {
+	public Collection<Entry> getColumnStates()
+	{
 		return Arrays.asList(stateArray);
 	}
 
@@ -228,23 +251,32 @@ public class ColumnsState implements IClusterable {
 	 * @param newIndex
 	 *            new column index
 	 */
-	public void setColumnIndex(String id, int newIndex) {
+	public void setColumnIndex(String id, int newIndex)
+	{
 		int index = getEntryIndex(id);
-		if (index == -1) {
-			throw new IllegalArgumentException("Column state for column with id '" + id + "' not found.");
+		if (index == -1)
+		{
+			throw new IllegalArgumentException("Column state for column with id '" + id +
+				"' not found.");
 		}
-		if (newIndex < 0 || newIndex > stateArray.length - 1) {
+		if (newIndex < 0 || newIndex > stateArray.length - 1)
+		{
 			throw new IndexOutOfBoundsException("'newIndex' parameter is out of range.");
 		}
-		if (newIndex > index) {
+		if (newIndex > index)
+		{
 			Entry source = stateArray[index];
-			for (int i = index; i < newIndex; ++i) {
+			for (int i = index; i < newIndex; ++i)
+			{
 				stateArray[i] = stateArray[i + 1];
 			}
 			stateArray[newIndex] = source;
-		} else if (newIndex < index) {
+		}
+		else if (newIndex < index)
+		{
 			Entry source = stateArray[index];
-			for (int i = index; i > newIndex; --i) {
+			for (int i = index; i > newIndex; --i)
+			{
 				stateArray[i] = stateArray[i - 1];
 			}
 			stateArray[newIndex] = source;
@@ -253,11 +285,13 @@ public class ColumnsState implements IClusterable {
 
 	/**
 	 * Returns deep copy of the object.
+	 * 
 	 * @return {@link ColumnsState} instance that is a deep copy of this instance
 	 */
 	@Override
-	public ColumnsState clone() {
-		return (ColumnsState) WicketObjects.cloneObject(this);
+	public ColumnsState clone()
+	{
+		return (ColumnsState)WicketObjects.cloneObject(this);
 	}
 
 	/**
@@ -266,12 +300,16 @@ public class ColumnsState implements IClusterable {
 	 * @param columns
 	 * @return
 	 */
-	boolean matches(Collection<IGridColumn> columns) {
-		if (stateArray.length != columns.size()) {
+	<M, I> boolean matches(Collection<IGridColumn<M, I>> columns)
+	{
+		if (stateArray.length != columns.size())
+		{
 			return false;
 		}
-		for (IGridColumn column : columns) {
-			if (getEntryIndex(column.getId()) == -1) {
+		for (IGridColumn<M, I> column : columns)
+		{
+			if (getEntryIndex(column.getId()) == -1)
+			{
 				return false;
 			}
 		}
@@ -283,18 +321,22 @@ public class ColumnsState implements IClusterable {
 	 * 
 	 * @param state
 	 */
-	void updateColumnsState(String state) {
+	void updateColumnsState(String state)
+	{
 		// state is in format "columnId,width;columnId,width..."
 		// columns not specified in state will not be touched
 
 		List<Entry> entries = new ArrayList<Entry>();
 		Set<Integer> indices = new TreeSet<Integer>();
 		String segments[] = state.split(";");
-		for (String segment : segments) {
+		for (String segment : segments)
+		{
 			String parts[] = segment.split(",");
-			if (parts.length == 2) {
+			if (parts.length == 2)
+			{
 				int index = getEntryIndex(parts[0]);
-				if (index != -1) {
+				if (index != -1)
+				{
 					Entry entry = stateArray[index];
 					entry.setCurrentWidth(Integer.parseInt(parts[1]));
 					entries.add(entry);
@@ -304,7 +346,8 @@ public class ColumnsState implements IClusterable {
 		}
 
 		int i = 0;
-		for (Integer index : indices) {
+		for (Integer index : indices)
+		{
 			stateArray[index] = entries.get(i);
 			++i;
 		}
@@ -317,9 +360,12 @@ public class ColumnsState implements IClusterable {
 	 * @param columns
 	 * @return
 	 */
-	private IGridColumn getColumn(String id, Collection<IGridColumn> columns) {
-		for (IGridColumn column : columns) {
-			if (column.getId().equals(id)) {
+	private <M, I> IGridColumn<M, I> getColumn(String id, Collection<IGridColumn<M, I>> columns)
+	{
+		for (IGridColumn<M, I> column : columns)
+		{
+			if (column.getId().equals(id))
+			{
 				return column;
 			}
 		}
@@ -334,12 +380,17 @@ public class ColumnsState implements IClusterable {
 	 *            Collection to be filtered.
 	 * @return Collection of columns with visibility set to <code>true</code>.
 	 */
-	public Collection<IGridColumn> getVisibleColumns(Collection<IGridColumn> allColumns) {
-		List<IGridColumn> result = new ArrayList<IGridColumn>();
-		for (Entry state : stateArray) {
-			if (state.isVisible()) {
-				IGridColumn column = getColumn(state.getColumnId(), allColumns);
-				if (column != null) {
+	public <M, I> Collection<IGridColumn<M, I>> getVisibleColumns(
+		Collection<IGridColumn<M, I>> allColumns)
+	{
+		List<IGridColumn<M, I>> result = new ArrayList<IGridColumn<M, I>>();
+		for (Entry state : stateArray)
+		{
+			if (state.isVisible())
+			{
+				IGridColumn<M, I> column = getColumn(state.getColumnId(), allColumns);
+				if (column != null)
+				{
 					result.add(column);
 				}
 			}

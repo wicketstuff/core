@@ -13,68 +13,78 @@ import com.inmethod.grid.examples.contact.DatabaseLocator;
 import com.inmethod.grid.examples.contact.DetachableContactModel;
 
 /**
- * Simple DataSource that load contacts without knowing the actual item count. 
+ * Simple DataSource that load contacts without knowing the actual item count.
  * 
  * @author Matej Knopp
  */
-public class ContactDataSourceWithUnknownItemCount implements IDataSource {
+public class ContactDataSourceWithUnknownItemCount implements IDataSource<Contact>
+{
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor.
 	 */
-	public ContactDataSourceWithUnknownItemCount() {
-		
+	public ContactDataSourceWithUnknownItemCount()
+	{
+
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public IModel model(Object object) {
-		return new DetachableContactModel((Contact)object);
+	public IModel<Contact> model(Contact object)
+	{
+		return new DetachableContactModel(object);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void query(IQuery query, IQueryResult result) {
+	public void query(IQuery query, IQueryResult<Contact> result)
+	{
 		ContactsDatabase database = DatabaseLocator.getDatabase();
-		
+
 		String sortProperty = null;
 		boolean sortAsc = true;
-		
+
 		// is there any sorting
-		if (query.getSortState().getColumns().size() > 0) {
-			// get the most relevant column 
+		if (query.getSortState().getColumns().size() > 0)
+		{
+			// get the most relevant column
 			ISortStateColumn state = query.getSortState().getColumns().get(0);
-			
+
 			// get the column sort properties
 			sortProperty = state.getPropertyName();
 			sortAsc = state.getDirection() == IGridSortState.Direction.ASC;
 		}
-		
+
 		// since we don't know the actual item count we try to load one item more than requested
 		// if there are n+1 items we know there will be something on the next page
-		
+
 		// get the actual items
-		List<Contact> resultList = database.find(query.getFrom(), query.getCount() + 1, sortProperty, sortAsc);
+		List<Contact> resultList = database.find(query.getFrom(), query.getCount() + 1,
+			sortProperty, sortAsc);
 		result.setItems(resultList.iterator());
-		
-		if (resultList.size() == query.getCount() + 1) {
+
+		if (resultList.size() == query.getCount() + 1)
+		{
 			// if we managed to load n + 1 items (thus there will be another page)
 			result.setTotalCount(IQueryResult.MORE_ITEMS);
-		} else {
+		}
+		else
+		{
 			// no more items - this is the latest page
 			result.setTotalCount(IQueryResult.NO_MORE_ITEMS);
 		}
-		
+
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void detach() {
+	public void detach()
+	{
 
 	}
 

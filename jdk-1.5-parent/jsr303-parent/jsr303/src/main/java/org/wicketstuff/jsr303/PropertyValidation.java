@@ -10,75 +10,76 @@ import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 
 /**
- * Behavior to be added to either a FormComponent or Form. If used on a
- * FormComponent, it has to be bound to an AbstractPropertyModel. When used on a
- * Form, this behavior will be added to all appropriate FormComponents.
+ * Behavior to be added to either a FormComponent or Form. If used on a FormComponent, it has to be
+ * bound to an AbstractPropertyModel. When used on a Form, this behavior will be added to all
+ * appropriate FormComponents.
  */
-@SuppressWarnings("unchecked")
 public class PropertyValidation extends Behavior
 {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    class JSR303ValidatorFormComponentVisitor implements IVisitor<Component, Void>
-    {
-    	
-    	
-        public void component(Component component, IVisit<Void> visit) {
-			
-            if (component instanceof FormComponent<?>)
-            {
-                final FormComponent<?> fc = (FormComponent<?>) component;
-                final IModel<?> model = fc.getModel();
-                if (model != null)
-                {
-                    if (model instanceof AbstractPropertyModel<?>)
-                    {
-                        final AbstractPropertyModel<?> pm = (AbstractPropertyModel<?>) model;
-                        PropertyValidator validator = new PropertyValidator(pm, fc);
-                        fc.add(validator);
-                    }
-                }
-            }
-        }
-    }
+	static class JSR303ValidatorFormComponentVisitor implements IVisitor<Component, Void>
+	{
 
-    private boolean assigned = false;
 
-    @Override
-    public synchronized void beforeRender(Component context)
-    {
-        if (!assigned)
-        {
-            assigned = true;
-            if (context instanceof Form<?>)
-            {
-                final Form<?> form = (Form<?>) context;
-                form.visitChildren(new JSR303ValidatorFormComponentVisitor());
-            }
-            else
-            {
-                if ((context instanceof FormComponent<?>))
-                {
-                    final FormComponent<?> fc = (FormComponent<?>) context;
-                    final IModel<?> m = fc.getModel();
-                    if (m instanceof AbstractPropertyModel<?>)
-                    {
-                        final AbstractPropertyModel<?> apm = (AbstractPropertyModel<?>) m;
-                        fc.add(new PropertyValidator(apm, fc));
-                    }
-                    else
-                    {
-                        throw new IllegalArgumentException("Expected something that provides an AbstractPropertyModel");
-                    }
-                }
-                else
-                {
-                    throw new IllegalStateException("Can only be applied to Forms or FormComponents");
-                }
-            }
-        }
-        super.beforeRender(context);
-    }
+		public void component(Component component, IVisit<Void> visit)
+		{
 
+			if (component instanceof FormComponent<?>)
+			{
+				final FormComponent<?> fc = (FormComponent<?>)component;
+				addValidator(fc, true);
+			}
+		}
+	}
+
+	private boolean assigned = false;
+
+	@Override
+	public synchronized void beforeRender(Component context)
+	{
+		if (!assigned)
+		{
+			assigned = true;
+			if (context instanceof Form<?>)
+			{
+				final Form<?> form = (Form<?>)context;
+				form.visitChildren(new JSR303ValidatorFormComponentVisitor());
+			}
+			else
+			{
+				if (context instanceof FormComponent<?>)
+				{
+					final FormComponent<?> fc = (FormComponent<?>)context;
+					addValidator(fc, false);
+				}
+				else
+				{
+					throw new IllegalStateException(
+						"Can only be applied to Forms or FormComponents");
+				}
+			}
+		}
+		super.beforeRender(context);
+	}
+
+	private static <T> void addValidator(FormComponent<T> fc, boolean ignoreIncompatibleModel)
+	{
+		final IModel<T> model = fc.getModel();
+		if (model != null)
+		{
+			if (model instanceof AbstractPropertyModel<?>)
+			{
+				final AbstractPropertyModel<T> pm = (AbstractPropertyModel<T>)model;
+				PropertyValidator<T> validator = new PropertyValidator<T>(pm, fc);
+				fc.add(validator);
+			}
+			else if (!ignoreIncompatibleModel)
+			{
+				throw new IllegalArgumentException(
+					"Expected something that provides an AbstractPropertyModel");
+			}
+		}
+	}
 }

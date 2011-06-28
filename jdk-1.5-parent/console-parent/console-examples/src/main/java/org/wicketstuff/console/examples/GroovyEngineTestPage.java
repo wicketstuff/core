@@ -17,27 +17,32 @@
 package org.wicketstuff.console.examples;
 
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.GroovyScriptEnginePanel;
 import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.templates.PackagedScriptTemplates;
+import org.wicketstuff.console.templates.ScriptTemplate;
 import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
 
-public class GroovyEngineTestPage extends WebPage {
+public class GroovyEngineTestPage extends WebPage
+{
 	private static final long serialVersionUID = 1L;
 
-	public GroovyEngineTestPage(final PageParameters params) {
+	public GroovyEngineTestPage(final PageParameters params)
+	{
 		super(params);
 
-		final GroovyScriptEnginePanel enginePanel = new GroovyScriptEnginePanel(
-				"scriptPanel");
+		final GroovyScriptEnginePanel enginePanel = new GroovyScriptEnginePanel("scriptPanel");
 		enginePanel.setOutputMarkupId(true);
 		add(enginePanel);
 
+		final IDataProvider<ScriptTemplate> dataProvider = new ListDataProvider<ScriptTemplate>(
+			PackagedScriptTemplates.getPackagedScriptTemplates(Lang.GROOVY));
+
 		final ScriptTemplateSelectionTablePanel scriptTable = new ScriptTemplateSelectionTablePanel(
-				"templatesTable", enginePanel,
-				PackagedScriptTemplates
-						.packagedScriptTemplatesDataProvider(Lang.GROOVY), 100);
+			"templatesTable", enginePanel, dataProvider, 100);
 		add(scriptTable);
 
 		add(new TestPageLinksPanel("links"));

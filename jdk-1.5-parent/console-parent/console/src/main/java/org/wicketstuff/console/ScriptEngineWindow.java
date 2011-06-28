@@ -28,11 +28,12 @@ import org.wicketstuff.console.engine.Lang;
  * 
  * @author cretzel
  */
-public abstract class ScriptEngineWindow extends ModalWindow {
+public abstract class ScriptEngineWindow extends ModalWindow
+{
 
 	private static final long serialVersionUID = 1L;
 	private final Lang lang;
-	private ScriptEnginePanel enginePanel;
+	private final ScriptEnginePanel enginePanel;
 
 	/**
 	 * Constructor.
@@ -44,8 +45,8 @@ public abstract class ScriptEngineWindow extends ModalWindow {
 	 * @param windowTitle
 	 *            window title, may be {@code null} for default
 	 */
-	public ScriptEngineWindow(final String id, final Lang lang,
-			final IModel<String> windowTitle) {
+	public ScriptEngineWindow(final String id, final Lang lang, final IModel<String> windowTitle)
+	{
 		super(id);
 		this.lang = lang;
 
@@ -53,38 +54,36 @@ public abstract class ScriptEngineWindow extends ModalWindow {
 		setAutoSize(true);
 		setResizable(false);
 
-	}
-
-	@Override
-	protected void onInitialize() {
-		super.onInitialize();
-
 		enginePanel = newEnginePanel(getContentId(), lang);
 		setContent(enginePanel);
+
 	}
 
 	/**
 	 * Creates a new engine panel, override to customize.
+	 * <p>
+	 * Attention: This is called from the constructor.
 	 * 
 	 * @param wicketId
 	 *            id
 	 * @return a script engine panel
 	 */
-	protected ScriptEnginePanel newEnginePanel(final String wicketId,
-			final Lang lang) {
+	protected ScriptEnginePanel newEnginePanel(final String wicketId, final Lang lang)
+	{
 
-		final ScriptEnginePanel panel = ScriptEnginePanel.create(wicketId,
-				lang, Model.of(""));
+		final ScriptEnginePanel panel = ScriptEnginePanel.create(wicketId, lang, Model.of(""));
 		panel.add(new AttributeAppender("style", Model.of("width:500px"), ";"));
 
 		return panel;
 	}
 
-	public ScriptEnginePanel getEnginePanel() {
+	public ScriptEnginePanel getEnginePanel()
+	{
 		return enginePanel;
 	}
 
-	public Lang getLang() {
+	public Lang getLang()
+	{
 		return lang;
 	}
 

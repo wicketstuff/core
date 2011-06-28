@@ -15,98 +15,119 @@ import com.inmethod.grid.common.AbstractGrid;
 import com.inmethod.icon.Icon;
 import com.inmethod.icon.IconImage;
 
-abstract class SubmitCancelPanel extends Panel {
+abstract class SubmitCancelPanel<M, I> extends Panel
+{
 
 	private static final long serialVersionUID = 1L;
 
-	private AbstractGrid getGrid() {
+	private AbstractGrid<M, I> getGrid()
+	{
 		return grid;
 	}
 
-	private final AbstractGrid grid;
-	
-	SubmitCancelPanel(String id, final IModel model, AbstractGrid grid) {
+	private final AbstractGrid<M, I> grid;
+
+	SubmitCancelPanel(String id, final IModel<I> model, AbstractGrid<M, I> grid)
+	{
 		super(id);
-		
+
 		this.grid = grid;
 
-		AjaxSubmitLink submit = new SubmitLink("submit") {
+		AjaxSubmitLink submit = new SubmitLink("submit")
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public boolean isVisible() {
+			public boolean isVisible()
+			{
 				return getGrid().isItemEdited(model);
 			}
 		};
-				
+
 		submit.setDefaultFormProcessing(false);
 		add(submit);
-		
+
 		submit.add(new IconImage("icon", getSubmitIcon()));
-		
-		AjaxLink cancel = new AjaxLink("cancel") {
-			
+
+		AjaxLink<Void> cancel = new AjaxLink<Void>("cancel")
+		{
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onClick(AjaxRequestTarget target) {
+			public void onClick(AjaxRequestTarget target)
+			{
 				onCancel(target);
 			}
-	
+
 			@Override
-			public boolean isVisible() {
+			public boolean isVisible()
+			{
 				return getGrid().isItemEdited(model);
-			}			
+			}
 		};
-		
+
 		add(cancel);
-		
+
 		cancel.add(new IconImage("icon", getCancelIcon()));
-		
+
 	}
-	
+
 	protected abstract void onSubmitted(AjaxRequestTarget target);
 
 	protected abstract void onError(AjaxRequestTarget target);
 
 	protected abstract void onCancel(AjaxRequestTarget target);
-	
-	protected abstract Icon getSubmitIcon();
-	
-	protected abstract Icon getCancelIcon();
-	
-	private class SubmitLink extends AjaxSubmitLink {
 
-		public SubmitLink(String id) {
+	protected abstract Icon getSubmitIcon();
+
+	protected abstract Icon getCancelIcon();
+
+	private class SubmitLink extends AjaxSubmitLink
+	{
+
+		public SubmitLink(String id)
+		{
 			super(id, getGrid().getForm());
 		}
 
 		private static final long serialVersionUID = 1L;
 
-		private boolean formComponentActive(FormComponent formComponent) {
-			return formComponent.isVisibleInHierarchy() && formComponent.isValid() && formComponent.isEnabled()
-					&& formComponent.isEnableAllowed();
+		private boolean formComponentActive(FormComponent<?> formComponent)
+		{
+			return formComponent.isVisibleInHierarchy() && formComponent.isValid() &&
+				formComponent.isEnabled() && formComponent.isEnableAllowed();
 		}
 
 		@Override
-		protected void onSubmit(AjaxRequestTarget target, Form form) {
+		protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+		{
 			WebMarkupContainer gridRow = getGrid().findParentRow(SubmitCancelPanel.this);
 			final Boolean[] error = { false };
-			
+
 			// first iteration - validate components
-			gridRow.visitChildren(FormComponent.class, new IVisitor<FormComponent<?>, Void>() {
-				public void component(FormComponent<?> formComponent, IVisit<Void> visit) {
-					
-					if (formComponentActive(formComponent)) {
+			gridRow.visitChildren(FormComponent.class, new IVisitor<FormComponent<?>, Void>()
+			{
+				public void component(FormComponent<?> formComponent, IVisit<Void> visit)
+				{
+
+					if (formComponentActive(formComponent))
+					{
 						formComponent.validate();
-						if (formComponent.isValid()) {
-							if (formComponent.processChildren()) {
+						if (formComponent.isValid())
+						{
+							if (formComponent.processChildren())
+							{
 								return;
-							} else {
+							}
+							else
+							{
 								visit.dontGoDeeper();
 								return;
 							}
-						} else {
+						}
+						else
+						{
 							error[0] = true;
 							visit.dontGoDeeper();
 						}
@@ -115,38 +136,48 @@ abstract class SubmitCancelPanel extends Panel {
 			});
 
 			// second iteration - update models if the validation passed
-			if (error[0] == false) {
-				gridRow.visitChildren(FormComponent.class, new IVisitor<FormComponent<?>, Void>() {
-					public void component(FormComponent<?> formComponent, IVisit<Void> visit) {
+			if (error[0] == false)
+			{
+				gridRow.visitChildren(FormComponent.class, new IVisitor<FormComponent<?>, Void>()
+				{
+					public void component(FormComponent<?> formComponent, IVisit<Void> visit)
+					{
 
-						if (formComponentActive(formComponent)) {
+						if (formComponentActive(formComponent))
+						{
 
 							formComponent.updateModel();
 
-							if (formComponent.processChildren()) {
+							if (formComponent.processChildren())
+							{
 								return;
-							} else {
+							}
+							else
+							{
 								visit.dontGoDeeper();
 								return;
 							}
 						}
 					}
 				});
-				
+
 				onSubmitted(target);
-			} else {
+			}
+			else
+			{
 				SubmitCancelPanel.this.onError(target);
 			}
-			
-			
+
+
 		}
 
 		@Override
-		protected void onError(AjaxRequestTarget target, Form<?> form) {
+		protected void onError(AjaxRequestTarget target, Form<?> form)
+		{
 			// TODO Auto-generated method stub
-			
+
 		}
 	};
 
-	
+
 }

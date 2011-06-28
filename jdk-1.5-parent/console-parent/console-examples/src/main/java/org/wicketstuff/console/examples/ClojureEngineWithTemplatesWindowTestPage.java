@@ -20,26 +20,30 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.ClojureScriptEngineWithTemplatesWindow;
 import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.templates.PackagedScriptTemplates;
 import org.wicketstuff.console.templates.ScriptTemplate;
 
-public class ClojureEngineWithTemplatesWindowTestPage extends WebPage {
+public class ClojureEngineWithTemplatesWindowTestPage extends WebPage
+{
 
-	private static final class OpenLink extends AjaxLink<Void> {
+	private static final class OpenLink extends AjaxLink<Void>
+	{
 		private final ClojureScriptEngineWithTemplatesWindow window;
 		private static final long serialVersionUID = 1L;
 
-		private OpenLink(final String id,
-				final ClojureScriptEngineWithTemplatesWindow window) {
+		private OpenLink(final String id, final ClojureScriptEngineWithTemplatesWindow window)
+		{
 			super(id);
 			this.window = window;
 		}
 
 		@Override
-		public void onClick(final AjaxRequestTarget target) {
+		public void onClick(final AjaxRequestTarget target)
+		{
 			window.show(target);
 		}
 	}
@@ -48,19 +52,20 @@ public class ClojureEngineWithTemplatesWindowTestPage extends WebPage {
 	private ClojureScriptEngineWithTemplatesWindow window;
 	private final OpenLink openLink;
 
-	public ClojureEngineWithTemplatesWindowTestPage(final PageParameters params) {
+	public ClojureEngineWithTemplatesWindowTestPage(final PageParameters params)
+	{
 		super(params);
 
-		final IDataProvider<ScriptTemplate> dataProvider = PackagedScriptTemplates
-				.packagedScriptTemplatesDataProvider(Lang.CLOJURE);
-		add(window = new ClojureScriptEngineWithTemplatesWindow("window", null,
-				dataProvider));
+		final IDataProvider<ScriptTemplate> dataProvider = new ListDataProvider<ScriptTemplate>(
+			PackagedScriptTemplates.getPackagedScriptTemplates(Lang.CLOJURE));
+		add(window = new ClojureScriptEngineWithTemplatesWindow("window", null, dataProvider));
 		openLink = new OpenLink("link", window);
 		add(openLink);
 		add(new TestPageLinksPanel("links"));
 	}
 
-	public OpenLink getOpenLink() {
+	public OpenLink getOpenLink()
+	{
 		return openLink;
 	}
 

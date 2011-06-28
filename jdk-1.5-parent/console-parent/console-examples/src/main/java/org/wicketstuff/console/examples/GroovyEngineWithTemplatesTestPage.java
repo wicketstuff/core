@@ -22,10 +22,12 @@ import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.GroovyScriptEngineWithTemplatesPanel;
 
-public class GroovyEngineWithTemplatesTestPage extends WebPage {
+public class GroovyEngineWithTemplatesTestPage extends WebPage
+{
 	private static final long serialVersionUID = 1L;
 
-	public GroovyEngineWithTemplatesTestPage(final PageParameters params) {
+	public GroovyEngineWithTemplatesTestPage(final PageParameters params)
+	{
 		super(params);
 		add(new Label("title", new ResourceModel("application.title")));
 

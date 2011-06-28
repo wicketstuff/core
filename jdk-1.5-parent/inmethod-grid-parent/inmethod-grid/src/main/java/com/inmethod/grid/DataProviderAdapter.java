@@ -10,18 +10,23 @@ import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 
 import com.inmethod.grid.datagrid.DataGrid;
+import com.inmethod.grid.datagrid.DataGrid.IGridQuery;
 
 /**
- * Adapter that allows using a wicke extension {@link IDataProvider} in a {@link DataGrid}. The
+ * Adapter that allows using a wicket extension {@link IDataProvider} in a {@link DataGrid}. The
  * adapter also supports sortable data providers.
+ * 
+ * @param <T>
+ *            row/item model object type
  * 
  * @author Matej Knopp
  */
-public class DataProviderAdapter implements IDataSource {
+public class DataProviderAdapter<T> implements IDataSource<T>
+{
 
 	private static final long serialVersionUID = 1L;
 
-	final IDataProvider dataProvider;
+	final IDataProvider<T> dataProvider;
 
 	/**
 	 * Creates a new {@link DataProviderAdapter} instance.
@@ -29,40 +34,52 @@ public class DataProviderAdapter implements IDataSource {
 	 * @param dataProvider
 	 *            {@link IDataProvider} instance
 	 */
-	public DataProviderAdapter(IDataProvider dataProvider) {
+	public DataProviderAdapter(IDataProvider<T> dataProvider)
+	{
 		this.dataProvider = dataProvider;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void detach() {
+	public void detach()
+	{
 		dataProvider.detach();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public IModel model(Object object) {
+	public IModel<T> model(T object)
+	{
 		return dataProvider.model(object);
 	}
-	
-	private void setSortState(ISortState dest, DataGrid grid, IGridSortState gridSortState) {
+
+	private void setSortState(ISortState dest, DataGrid<? extends IDataSource<T>, T> grid,
+		IGridSortState gridSortState)
+	{
 		Set<String> unsortedColumns = new HashSet<String>(grid.getAllColumns().size());
-		for (IGridColumn column : grid.getAllColumns()) {
-			if (column.getSortProperty() != null) {
+		for (IGridColumn<? extends IDataSource<T>, T> column : grid.getAllColumns())
+		{
+			if (column.getSortProperty() != null)
+			{
 				unsortedColumns.add(column.getSortProperty());
 			}
 		}
-		for (IGridSortState.ISortStateColumn column : gridSortState.getColumns()) {
+		for (IGridSortState.ISortStateColumn column : gridSortState.getColumns())
+		{
 			unsortedColumns.remove(column.getPropertyName());
 		}
-		for (int i = gridSortState.getColumns().size(); i > 0; --i) {
+		for (int i = gridSortState.getColumns().size(); i > 0; --i)
+		{
 			IGridSortState.ISortStateColumn column = gridSortState.getColumns().get(i - 1);
 			SortOrder dir = SortOrder.NONE;
-			if (column.getDirection() == IGridSortState.Direction.ASC) {
+			if (column.getDirection() == IGridSortState.Direction.ASC)
+			{
 				dir = SortOrder.ASCENDING;
-			} else if (column.getDirection() == IGridSortState.Direction.DESC) {
+			}
+			else if (column.getDirection() == IGridSortState.Direction.DESC)
+			{
 				dir = SortOrder.DESCENDING;
 			}
 			dest.setPropertySortOrder(column.getPropertyName(), dir);
@@ -72,15 +89,19 @@ public class DataProviderAdapter implements IDataSource {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void query(IQuery query, IQueryResult result) {
-		if (dataProvider instanceof ISortStateLocator) {
-			ISortStateLocator locator = (ISortStateLocator) dataProvider;
+	public void query(IQuery query, IQueryResult<T> result)
+	{
+		if (dataProvider instanceof ISortStateLocator)
+		{
+			ISortStateLocator locator = (ISortStateLocator)dataProvider;
 
 			IGridSortState gridSortState = query.getSortState();
 
 			ISortState state = locator.getSortState();
-			if (state != null) {
-				DataGrid grid = ((DataGrid.IGridQuery) query).getDataGrid();
+			if (state != null)
+			{
+				DataGrid.IGridQuery<IDataSource<T>, T> gridQuery = (IGridQuery<IDataSource<T>, T>)query;
+				DataGrid<IDataSource<T>, T> grid = gridQuery.getDataGrid();
 				setSortState(state, grid, gridSortState);
 			}
 		}

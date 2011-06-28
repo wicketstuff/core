@@ -36,7 +36,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.console.engine.Engines;
 import org.wicketstuff.console.engine.IScriptEngine;
@@ -61,56 +61,63 @@ import org.wicketstuff.console.engine.Lang;
  * 
  * @author cretzel
  */
-public class ScriptEnginePanel extends Panel {
+public class ScriptEnginePanel extends Panel
+{
 
-	private final class ClearButton extends Button {
+	private final class ClearButton extends Button
+	{
 		private static final long serialVersionUID = 1L;
 
-		private ClearButton(final String id) {
+		private ClearButton(final String id)
+		{
 			super(id);
 		}
 
 		@Override
-		protected void onInitialize() {
+		protected void onInitialize()
+		{
 			super.onInitialize();
-			add(new AttributeAppender("onclick", Model.of("clearTextarea('"
-					+ inputTf.getMarkupId() + "')"), ";"));
+			add(new AttributeAppender("onclick", Model.of("clearTextarea('" +
+				inputTf.getMarkupId() + "')"), ";"));
 
 		}
 
 	}
 
-	final class SubmitButton extends AjaxButton implements IAjaxIndicatorAware {
+	final class SubmitButton extends AjaxButton implements IAjaxIndicatorAware
+	{
 		private static final long serialVersionUID = 1L;
 
-		private SubmitButton(final String id, final Form<?> form) {
+		private SubmitButton(final String id, final Form<?> form)
+		{
 			super(id, form);
 		}
 
 		@Override
-		protected void onSubmit(final AjaxRequestTarget target,
-				final Form<?> form) {
+		protected void onSubmit(final AjaxRequestTarget target, final Form<?> form)
+		{
 			process(target);
 		}
 
 		@Override
-		protected void onError(final AjaxRequestTarget target,
-				final Form<?> form) {
+		protected void onError(final AjaxRequestTarget target, final Form<?> form)
+		{
 
 		}
 
-		public String getAjaxIndicatorMarkupId() {
+		public String getAjaxIndicatorMarkupId()
+		{
 			return indicator.getMarkupId();
 		}
 	}
 
 	private static final long serialVersionUID = 1L;
 
-	private static final ResourceReference CSS = new CompressedResourceReference(
-			ScriptEnginePanel.class, "ScriptEnginePanel.css");
+	private static final ResourceReference CSS = new PackageResourceReference(
+		ScriptEnginePanel.class, "ScriptEnginePanel.css");
 
-	private static final ResourceReference JS = new CompressedResourceReference(
-			ScriptEnginePanel.class, "ScriptEnginePanel.js");
+	private static final ResourceReference JS = new PackageResourceReference(
+		ScriptEnginePanel.class, "ScriptEnginePanel.js");
 
 	private String input;
 	private String output;
@@ -128,25 +135,28 @@ public class ScriptEnginePanel extends Panel {
 
 	private final Lang lang;
 
-	public ScriptEnginePanel(final String id, final Lang lang) {
+	public ScriptEnginePanel(final String id, final Lang lang)
+	{
 		this(id, lang, null);
 	}
 
-	public ScriptEnginePanel(final String id, final Lang lang,
-			final IModel<String> title) {
+	public ScriptEnginePanel(final String id, final Lang lang, final IModel<String> title)
+	{
 		super(id);
 		this.lang = lang;
-		this.titleModel = title != null ? title : Model.of("Wicket Console");
+		titleModel = title != null ? title : Model.of("Wicket Console");
 
 		init();
 	}
 
-	private void init() {
+	private void init()
+	{
 		setDefaultModel(new CompoundPropertyModel<ScriptEnginePanel>(this));
 		initComponents();
 	}
 
-	protected void initComponents() {
+	protected void initComponents()
+	{
 		title = new Label("title", titleModel);
 		add(title);
 
@@ -160,8 +170,7 @@ public class ScriptEnginePanel extends Panel {
 		add(new SubmitButton("submit", form));
 		add(new ClearButton("clear"));
 
-		indicator = new Image("indicator",
-				AbstractDefaultAjaxBehavior.INDICATOR);
+		indicator = new Image("indicator", AbstractDefaultAjaxBehavior.INDICATOR);
 		indicator.setOutputMarkupId(true);
 		add(indicator);
 
@@ -174,46 +183,54 @@ public class ScriptEnginePanel extends Panel {
 		add(outputTf);
 	}
 
-	protected ResourceReference getCSS() {
+	protected ResourceReference getCSS()
+	{
 		return CSS;
 	}
 
 	@Override
-	public void renderHead(final IHeaderResponse response) {
+	public void renderHead(final IHeaderResponse response)
+	{
 		super.renderHead(response);
 
 		final ResourceReference css = getCSS();
-		if (css != null) {
+		if (css != null)
+		{
 			response.renderCSSReference(css);
 		}
 
 		response.renderJavaScriptReference(JS);
 	}
 
-	protected void process(final AjaxRequestTarget target) {
+	protected void process(final AjaxRequestTarget target)
+	{
 
 		final IScriptEngine engine = newEngine();
 		final Map<String, Object> bindings = newBindings();
 
 		final IScriptExecutionResult result = engine.execute(input, bindings);
 
-		if (result.isSuccess()) {
+		if (result.isSuccess())
+		{
 			returnValue = String.valueOf(result.getReturnValue());
 			output = result.getOutput();
-		} else {
+		}
+		else
+		{
 			returnValue = null;
-			output = String.format("%s\n\n%s", result.getOutput(),
-					result.getException());
+			output = String.format("%s\n\n%s", result.getOutput(), result.getException());
 		}
 
 		target.add(returnValueTf, outputTf);
 	}
 
-	protected IScriptEngine newEngine() {
+	protected IScriptEngine newEngine()
+	{
 		return Engines.create(lang);
 	}
 
-	protected Map<String, Object> newBindings() {
+	protected Map<String, Object> newBindings()
+	{
 		final Map<String, Object> bindings = new HashMap<String, Object>();
 		bindings.put("application", Application.get());
 		bindings.put("page", getPage());
@@ -221,60 +238,72 @@ public class ScriptEnginePanel extends Panel {
 		return bindings;
 	}
 
-	public String getInput() {
+	public String getInput()
+	{
 		return input;
 	}
 
-	public void setInput(final String input) {
+	public void setInput(final String input)
+	{
 		this.input = input;
 	}
 
-	public String getOutput() {
+	public String getOutput()
+	{
 		return output;
 	}
 
-	public void setOutput(final String output) {
+	public void setOutput(final String output)
+	{
 		this.output = output;
 	}
 
-	public String getReturnValue() {
+	public String getReturnValue()
+	{
 		return returnValue;
 	}
 
-	public void setReturnValue(final String returnValue) {
+	public void setReturnValue(final String returnValue)
+	{
 		this.returnValue = returnValue;
 	}
 
-	public TextArea<String> getInputTf() {
+	public TextArea<String> getInputTf()
+	{
 		return inputTf;
 	}
 
-	public TextArea<String> getOutputTf() {
+	public TextArea<String> getOutputTf()
+	{
 		return outputTf;
 	}
 
-	public TextField<String> getReturnValueTf() {
+	public TextField<String> getReturnValueTf()
+	{
 		return returnValueTf;
 	}
 
 	@Override
-	public void detachModels() {
+	public void detachModels()
+	{
 		super.detachModels();
-		if (titleModel != null) {
+		if (titleModel != null)
+		{
 			titleModel.detach();
 		}
 	}
 
-	public static ScriptEnginePanel create(final String wicketId,
-			final Lang lang, final IModel<String> title) {
-		switch (lang) {
-		case GROOVY:
-			return new GroovyScriptEnginePanel(wicketId, title);
-		case CLOJURE:
-			return new ClojureScriptEnginePanel(wicketId, title);
-		default:
-			throw new UnsupportedOperationException("Unsupported language: "
-					+ lang);
+	public static ScriptEnginePanel create(final String wicketId, final Lang lang,
+		final IModel<String> title)
+	{
+		switch (lang)
+		{
+			case GROOVY :
+				return new GroovyScriptEnginePanel(wicketId, title);
+			case CLOJURE :
+				return new ClojureScriptEnginePanel(wicketId, title);
+			default :
+				throw new UnsupportedOperationException("Unsupported language: " + lang);
 		}
 	}
 }

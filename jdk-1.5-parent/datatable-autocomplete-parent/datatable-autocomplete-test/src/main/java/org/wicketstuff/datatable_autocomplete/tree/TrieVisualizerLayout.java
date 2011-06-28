@@ -4,6 +4,7 @@ package org.wicketstuff.datatable_autocomplete.tree;
  * @author mocleiri
  * 
  */
-public enum TrieVisualizerLayout {
+public enum TrieVisualizerLayout
+{
 	TREE, DAG;
 }

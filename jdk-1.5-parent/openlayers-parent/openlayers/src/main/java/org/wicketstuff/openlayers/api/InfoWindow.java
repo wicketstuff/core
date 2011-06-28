@@ -1,13 +1,15 @@
 package org.wicketstuff.openlayers.api;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.wicketstuff.openlayers.OpenLayersMap;
 
-public class InfoWindow extends WebMarkupContainer {
+public class InfoWindow extends WebMarkupContainer
+{
+
+	private static final long serialVersionUID = 1L;
 
 	private LonLat latLng;
 
@@ -15,7 +17,8 @@ public class InfoWindow extends WebMarkupContainer {
 
 	private PopupWindowPanel content = new PopupWindowPanel();
 
-	public InfoWindow() {
+	public InfoWindow()
+	{
 		super("infoWindow");
 
 		setOutputMarkupId(true);
@@ -25,10 +28,14 @@ public class InfoWindow extends WebMarkupContainer {
 	/**
 	 * Update state from a request to an AJAX target.
 	 */
-	public void update(AjaxRequestTarget target) {
+	public void update(AjaxRequestTarget target)
+	{
 		Request request = RequestCycle.get().getRequest();
 
-		if (Boolean.parseBoolean(request.getRequestParameters().getParameterValue("hidden").toString())) {
+		if (Boolean.parseBoolean(request.getRequestParameters()
+			.getParameterValue("hidden")
+			.toString()))
+		{
 			// Attention: don't use close() as this might result in an
 			// endless AJAX request loop
 			marker = null;
@@ -36,46 +43,29 @@ public class InfoWindow extends WebMarkupContainer {
 		}
 	}
 
-	public final String getJSinit() {
-		if (latLng != null) {
+	public final String getJSinit()
+	{
+		if (latLng != null)
+		{
 			return getJSopen(latLng);
 		}
 
-		if (marker != null) {
+		if (marker != null)
+		{
 			return getJSopen(marker);
 		}
 
 		return "";
 	}
 
-	/**
-	 * Open an info window.
-	 * 
-	 * @param content
-	 *            content to open in info window
-	 * @return This
-	 */
-	public InfoWindow open(LonLat latLng, Component content) {
-		return open(latLng, content);
-	}
-
-	/**
-	 * Open an info window.
-	 * 
-	 * @param content
-	 *            content to open in info window
-	 * @return This
-	 */
-	public InfoWindow open(Marker marker, Component content) {
-		return open(marker, content);
-	}
-
-	public InfoWindow open(LonLat latLng) {
+	public InfoWindow open(LonLat latLng)
+	{
 
 		this.latLng = latLng;
-		this.marker = null;
+		marker = null;
 
-		if (AjaxRequestTarget.get() != null) {
+		if (AjaxRequestTarget.get() != null)
+		{
 			AjaxRequestTarget.get().appendJavaScript(getJSopen(latLng));
 			AjaxRequestTarget.get().add(this);
 		}
@@ -83,12 +73,14 @@ public class InfoWindow extends WebMarkupContainer {
 		return this;
 	}
 
-	public InfoWindow open(Marker marker) {
+	public InfoWindow open(Marker marker)
+	{
 
-		this.latLng = null;
+		latLng = null;
 		this.marker = marker;
 
-		if (AjaxRequestTarget.get() != null) {
+		if (AjaxRequestTarget.get() != null)
+		{
 			AjaxRequestTarget.get().appendJavaScript(getJSopen(marker));
 			AjaxRequestTarget.get().add(this);
 		}
@@ -96,21 +88,25 @@ public class InfoWindow extends WebMarkupContainer {
 		return this;
 	}
 
-	public boolean isOpen() {
-		return (latLng != null || marker != null);
+	public boolean isOpen()
+	{
+		return latLng != null || marker != null;
 	}
 
-	public void close() {
+	public void close()
+	{
 		marker = null;
 		latLng = null;
 
-		if (AjaxRequestTarget.get() != null) {
+		if (AjaxRequestTarget.get() != null)
+		{
 			AjaxRequestTarget.get().appendJavaScript(getJSclose());
 			AjaxRequestTarget.get().add(this);
 		}
 	}
 
-	private String getJSopen(LonLat latLng) {
+	private String getJSopen(LonLat latLng)
+	{
 		StringBuffer buffer = new StringBuffer();
 
 		buffer.append("openInfoWindowTabs(");
@@ -120,7 +116,8 @@ public class InfoWindow extends WebMarkupContainer {
 		return getGMap2().getJSinvoke(buffer.toString());
 	}
 
-	private String getJSopen(Marker marker) {
+	private String getJSopen(Marker marker)
+	{
 		StringBuffer buffer = new StringBuffer();
 
 		buffer.append("openMarkerInfoWindowTabs('");
@@ -130,21 +127,25 @@ public class InfoWindow extends WebMarkupContainer {
 		return getGMap2().getJSinvoke(buffer.toString());
 	}
 
-	private String getJSclose() {
+	private String getJSclose()
+	{
 		return getGMap2().getJSinvoke("closeInfoWindow()");
 	}
 
-	private OpenLayersMap getGMap2() {
+	private OpenLayersMap getGMap2()
+	{
 		return findParent(OpenLayersMap.class);
 	}
 
-	public WebMarkupContainer getContent() {
+	public WebMarkupContainer getContent()
+	{
 		return content;
 	}
 
-	public void setContent(PopupWindowPanel content) {
+	public void setContent(PopupWindowPanel content)
+	{
 		this.content = content;
 	}
-	
+
 
 }

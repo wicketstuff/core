@@ -22,14 +22,18 @@ import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.ClojureScriptEngineWithTemplatesPanel;
 
-public class ClojureEngineWithTemplatesTestPage extends WebPage {
+public class ClojureEngineWithTemplatesTestPage extends WebPage
+{
 	private static final long serialVersionUID = 1L;
 
-	public ClojureEngineWithTemplatesTestPage(final PageParameters params) {
+	public ClojureEngineWithTemplatesTestPage(final PageParameters params)
+	{
 		super(params);
 		add(new Label("title", new ResourceModel("application.title")));
 
-		add(new ClojureScriptEngineWithTemplatesPanel("panel", null, null));
+		final ClojureScriptEngineWithTemplatesPanel panel = new ClojureScriptEngineWithTemplatesPanel(
+			"panel", null, null);
+		add(panel);
 
 		add(new TestPageLinksPanel("links"));
 	}

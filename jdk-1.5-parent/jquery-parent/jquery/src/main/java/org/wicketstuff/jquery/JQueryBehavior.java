@@ -16,116 +16,146 @@
  */
 package org.wicketstuff.jquery;
 
+import java.util.regex.Pattern;
+
 import org.apache.wicket.Application;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.regex.Pattern;
-
 /**
- *
+ * 
  * @author David Bernard (dwayne)
  * @created 2007-08-08
  */
 // http://jquery.com/plugins for a list a jquery plugins
-@SuppressWarnings("serial")
-public class JQueryBehavior extends AbstractDefaultAjaxBehavior {
+public class JQueryBehavior extends AbstractDefaultAjaxBehavior
+{
+	private static final long serialVersionUID = 1L;
 
-    // create a reference to the base javascript file.
-    // we use CompressedResourceReference so that the included file will have
-    // its comments stripped and gzipped.
-    /**
-     *  ResourceReference for <a href="http://jquery.com">jquery-1.2.6</a> (include by default when you add the current Behavior).
-     */
-    public static final CompressedResourceReference JQUERY_JS = new CompressedResourceReference(JQueryBehavior.class, "jquery.js");
+	// create a reference to the base javascript file.
+	// we use ResourceReference so that the included file will have
+	// its comments stripped and gzipped.
+	/**
+	 * ResourceReference for <a href="http://jquery.com">jquery-1.2.6</a> (include by default when
+	 * you add the current Behavior).
+	 */
+	public static final ResourceReference JQUERY_JS = new PackageResourceReference(
+		JQueryBehavior.class, "jquery.js");
 
-    /**
-     *  ResourceReference for <a href="http://jquery.glyphix.com/">jquery.debug.js</a> (include by default if wicket's configuration is "development")
-     */
-    public static final CompressedResourceReference JQUERY_DEBUG_JS = new CompressedResourceReference(JQueryBehavior.class, "jquery.debug.js");
+	/**
+	 * ResourceReference for <a href="http://jquery.glyphix.com/">jquery.debug.js</a> (include by
+	 * default if wicket's configuration is "development")
+	 */
+	public static final ResourceReference JQUERY_DEBUG_JS = new PackageResourceReference(
+		JQueryBehavior.class, "jquery.debug.js");
 
-    /**
-     *  ResourceReference for <a href="http://interface.eyecon.ro">interface-1.2.js</a> (not include in reponse header)
-     */
-    public static final CompressedResourceReference INTERFACE_JS = new CompressedResourceReference(JQueryBehavior.class, "interface-1.2.js");
+	/**
+	 * ResourceReference for <a href="http://interface.eyecon.ro">interface-1.2.js</a> (not include
+	 * in reponse header)
+	 */
+	public static final ResourceReference INTERFACE_JS = new PackageResourceReference(
+		JQueryBehavior.class, "interface-1.2.js");
 
-    /**
-     *  ResourceReference for jquery.ui containing core, resizable, draggable, droppable, selectable <a href="http://ui.jquery.com">jquery-ui-personalized.js</a>
-     */
-    public static final CompressedResourceReference JQUERY_UI_JS = new CompressedResourceReference(JQueryBehavior.class, "jquery-ui-personalized.js");
+	/**
+	 * ResourceReference for jquery.ui containing core, resizable, draggable, droppable, selectable
+	 * <a href="http://ui.jquery.com">jquery-ui-personalized.js</a>
+	 */
+	public static final ResourceReference JQUERY_UI_JS = new PackageResourceReference(
+		JQueryBehavior.class, "jquery-ui-personalized.js");
 
-    /**
-     *  ResourceReference for <a href="http://jquery.com/plugins/project/bgiframe">jquery.bgiframe-2.1.1.js</a> (not include in reponse header)
-     */
-    public static final CompressedResourceReference JQUERY_BGIFRAME_JS = new CompressedResourceReference(JQueryBehavior.class, "jquery.bgiframe-2.1.1.js");
+	/**
+	 * ResourceReference for <a
+	 * href="http://jquery.com/plugins/project/bgiframe">jquery.bgiframe-2.1.1.js</a> (not include
+	 * in reponse header)
+	 */
+	public static final ResourceReference JQUERY_BGIFRAME_JS = new PackageResourceReference(
+		JQueryBehavior.class, "jquery.bgiframe-2.1.1.js");
 
-    public static final Pattern JQUERY_REGEXP = Pattern.compile(".*\\<.*script.*src=\".*jquery.*\\.js\"\\>.*", Pattern.DOTALL);
-    
-    private transient Logger logger_;
+	public static final Pattern JQUERY_REGEXP = Pattern.compile(
+		".*\\<.*script.*src=\".*jquery.*\\.js\"\\>.*", Pattern.DOTALL);
 
-    @Override
-    public void renderHead(IHeaderResponse response) {
-        try {
-            super.renderHead(response);
-            if(getIncludeJQueryJS(response)) {
-	            response.renderJavascriptReference(JQUERY_JS);
-	            if (Application.DEVELOPMENT.equals(Application.get().getConfigurationType())) {
-	                response.renderJavascriptReference(JQUERY_DEBUG_JS);
-	            }
-            }
-            CharSequence script = getOnReadyScript();
-            if ((script != null) && (script.length() > 0)) {
-                StringBuilder builder = new StringBuilder();
-                builder.append("<script type=\"text/javascript\">\n$(document).ready(function(){\n");
-                builder.append(script);
-                builder.append("\n});</script>");
-                response.renderString(builder.toString());
-            }
-        } catch (RuntimeException exc) {
-            throw exc;
-        } catch (Exception exc) {
-            throw new RuntimeException("wrap: " + exc.getMessage(), exc);
-        }
-    }
+	private transient Logger logger_;
 
-    /**
-     * to be overridden by subclass if you don't want to autodetect wether a jquery.js
-     * has already been added, and thus skip adding JQUERY_JS as a JavascriptReference.
-     * 
-     * You can either simply return false, or implement your own check to see if a 
-     * jquery.js reference has been added either as a HeaderContributor or in a
-     * <wicket:head> tag of some page in the hierarchy.
-     * 
-     * @param response The IHeaderResponse, containing the rendered headers until now
-     * @return true if you want renderHead to include the JQUERY_JS in the head.
-     */
-    public boolean getIncludeJQueryJS(IHeaderResponse response) {
-        return !JQUERY_REGEXP.matcher(response.getResponse().toString()).matches();
-    }
-    
-    /**
-     * to be override by subclass if need to run script when dom is ready.
-     * The returned script is wrapped by caller into &lt;script&gt; tag and the "$(document).ready(function(){...}"
-     *
-     * @return the script to execute when the dom is ready, or null (default)
-     */
-    protected CharSequence getOnReadyScript() {
-        return null;
-    }
+	@Override
+	public void renderHead(Component component, IHeaderResponse response)
+	{
+		try
+		{
+			super.renderHead(component, response);
+			if (getIncludeJQueryJS(response))
+			{
+				response.renderJavaScriptReference(JQUERY_JS);
+				if (Application.get().usesDevelopmentConfig())
+				{
+					response.renderJavaScriptReference(JQUERY_DEBUG_JS);
+				}
+			}
+			CharSequence script = getOnReadyScript();
+			if (script != null && script.length() > 0)
+			{
+				StringBuilder builder = new StringBuilder();
+				builder.append("<script type=\"text/javascript\">\n$(document).ready(function(){\n");
+				builder.append(script);
+				builder.append("\n});</script>");
+				response.renderString(builder.toString());
+			}
+		}
+		catch (RuntimeException exc)
+		{
+			throw exc;
+		}
+		catch (Exception exc)
+		{
+			throw new RuntimeException("wrap: " + exc.getMessage(), exc);
+		}
+	}
 
-    @Override
-    protected void respond(AjaxRequestTarget target) {
-        throw new UnsupportedOperationException("nothing to do");
-    }
+	/**
+	 * to be overridden by subclass if you don't want to autodetect wether a jquery.js has already
+	 * been added, and thus skip adding JQUERY_JS as a JavascriptReference.
+	 * 
+	 * You can either simply return false, or implement your own check to see if a jquery.js
+	 * reference has been added either as a HeaderContributor or in a <wicket:head> tag of some page
+	 * in the hierarchy.
+	 * 
+	 * @param response
+	 *            The IHeaderResponse, containing the rendered headers until now
+	 * @return true if you want renderHead to include the JQUERY_JS in the head.
+	 */
+	public boolean getIncludeJQueryJS(IHeaderResponse response)
+	{
+		return !JQUERY_REGEXP.matcher(response.getResponse().toString()).matches();
+	}
 
-    protected Logger logger() {
-        if (logger_ == null) {
-            logger_ = LoggerFactory.getLogger(this.getClass());
-        }
-        return logger_;
-    }
+	/**
+	 * to be override by subclass if need to run script when dom is ready. The returned script is
+	 * wrapped by caller into &lt;script&gt; tag and the "$(document).ready(function(){...}"
+	 * 
+	 * @return the script to execute when the dom is ready, or null (default)
+	 */
+	protected CharSequence getOnReadyScript()
+	{
+		return null;
+	}
+
+	@Override
+	protected void respond(AjaxRequestTarget target)
+	{
+		throw new UnsupportedOperationException("nothing to do");
+	}
+
+	protected Logger logger()
+	{
+		if (logger_ == null)
+		{
+			logger_ = LoggerFactory.getLogger(this.getClass());
+		}
+		return logger_;
+	}
 }

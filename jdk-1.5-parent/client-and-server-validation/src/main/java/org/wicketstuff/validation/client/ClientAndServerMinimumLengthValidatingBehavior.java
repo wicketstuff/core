@@ -25,47 +25,57 @@ import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.validation.validator.StringValidator;
 
 /**
- * Validates that the form component value has a length greater than or equal to the length specified.
+ * Validates that the form component value has a length greater than or equal to the length
+ * specified.
  * 
  * @author Jeremy Thomerson
  */
-public class ClientAndServerMinimumLengthValidatingBehavior extends AbstractClientAndServerValidatingBehavior {
+public class ClientAndServerMinimumLengthValidatingBehavior extends
+	AbstractClientAndServerValidatingBehavior<String>
+{
 
 	private static final long serialVersionUID = 1L;
 
 	private final int mMin;
-	
-	public ClientAndServerMinimumLengthValidatingBehavior(Form<?> form, int min) {
+
+	public ClientAndServerMinimumLengthValidatingBehavior(Form<?> form, int min)
+	{
 		super(form);
 		mMin = min;
 	}
 
 	@Override
-	protected void addServerSideValidator(FormComponent component) {
+	protected void addServerSideValidator(FormComponent<String> component)
+	{
 		component.add(StringValidator.minimumLength(mMin));
 	}
-	
+
 	@Override
-	protected String createValidatorConstructorJavaScript(CharSequence formID, CharSequence compID, CharSequence escapedMessage) {
+	protected String createValidatorConstructorJavaScript(CharSequence formID, CharSequence compID,
+		CharSequence escapedMessage)
+	{
 		String js = super.createValidatorConstructorJavaScript(formID, compID, escapedMessage);
 		js = js + ".setMinimumLength(" + mMin + ")";
 		return js;
 	}
-	
+
 	@Override
-	protected Map<String, Object> variablesMap(Form<?> form, FormComponent<?> component) {
+	protected Map<String, Object> variablesMap(Form<?> form, FormComponent<String> component)
+	{
 		Map<String, Object> map = super.variablesMap(form, component);
 		map.put("minimum", mMin);
 		return map;
 	}
-	
+
 	@Override
-	protected String getResourceKey() {
+	protected String getResourceKey()
+	{
 		return "StringValidator.minimum";
 	}
-	
+
 	@Override
-	protected String getValidatorJSClassName() {
+	protected String getValidatorJSClassName()
+	{
 		return "StringMinimumLengthValidator";
 	}
 

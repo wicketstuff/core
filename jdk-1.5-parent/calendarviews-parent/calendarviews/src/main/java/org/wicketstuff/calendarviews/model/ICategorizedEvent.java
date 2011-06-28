@@ -19,14 +19,15 @@
 package org.wicketstuff.calendarviews.model;
 
 /**
- * If your events fall into multiple categories, you can return implementations of
- * this anywhere you would normally return IEvent's (i.e. IEventProvider).  Then
- * the calendar will add the specified CSS class to each event.
+ * If your events fall into multiple categories, you can return implementations of this anywhere you
+ * would normally return IEvent's (i.e. IEventProvider). Then the calendar will add the specified
+ * CSS class to each event.
  * 
  * @author Jeremy Thomerson
  */
-public interface ICategorizedEvent extends IEvent {
+public interface ICategorizedEvent extends IEvent
+{
 
 	public String getCssClassForCategory();
-	
+
 }

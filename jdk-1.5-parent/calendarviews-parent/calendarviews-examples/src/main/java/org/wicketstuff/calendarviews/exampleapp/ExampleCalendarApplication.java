@@ -19,34 +19,37 @@
 package org.wicketstuff.calendarviews.exampleapp;
 
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.request.target.coding.IndexedParamUrlCodingStrategy;
 
 /**
- * Application object for your web application. If you want to run this
- * application without deploying, run the Start class.
+ * Application object for your web application. If you want to run this application without
+ * deploying, run the Start class.
  * 
  * @see org.wicketstuff.calendarviews.exampleapp.StartCalendarsExamples#main(String[])
  * @author Jeremy Thomerson
  */
-public class ExampleCalendarApplication extends WebApplication {
+public class ExampleCalendarApplication extends WebApplication
+{
 	/**
 	 * Constructor
 	 */
-	public ExampleCalendarApplication() {
+	public ExampleCalendarApplication()
+	{
 	}
 
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
-	public Class<HomePage> getHomePage() {
+	@Override
+	public Class<HomePage> getHomePage()
+	{
 		return HomePage.class;
 	}
 
 	@Override
-	protected void init() {
+	protected void init()
+	{
 		super.init();
-		
+
 		getDebugSettings().setComponentUseCheck(false);
-		mount(new IndexedParamUrlCodingStrategy("home", HomePage.class));
 	}
 }

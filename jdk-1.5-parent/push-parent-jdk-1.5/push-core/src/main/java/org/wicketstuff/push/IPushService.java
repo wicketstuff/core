@@ -42,7 +42,7 @@ public interface IPushService
 	 *            <b>Note:</b> The <code>label</code> has only informative purpose. Creating two
 	 *            push channels with the same label will not result in an error.
 	 */
-	<EventType> IPushChannel<EventType> createChannel(EventType event, String label);
+	<EventType> IPushChannel<EventType> createChannel(String label);
 
 	<EventType> void disconnectFromChannel(IPushNode<EventType> node,
 		IPushChannel<EventType> channel);

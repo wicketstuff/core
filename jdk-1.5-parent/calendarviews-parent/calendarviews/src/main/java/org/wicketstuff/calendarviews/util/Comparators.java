@@ -23,32 +23,41 @@ import java.util.Comparator;
 import org.wicketstuff.calendarviews.model.IEvent;
 
 /**
- * General utility holding comparators used within this library.  Not typically
- * useful or intended for use outside of CalendarViews.
+ * General utility holding comparators used within this library. Not typically useful or intended
+ * for use outside of CalendarViews.
  * 
  * @author Jeremy Thomerson
  */
-public abstract class Comparators {
-	
-	private Comparators() {
+public abstract class Comparators
+{
+
+	private Comparators()
+	{
 		// no-op hide-a-constructor
 	}
-	
-	public static final Comparator<IEvent> EVENT_START_DATE_ASC_COMPARATOR = new Comparator<IEvent>() {
 
-		public int compare(IEvent o1, IEvent o2) {
-			if (o1 == o2) {
+	public static final Comparator<IEvent> EVENT_START_DATE_ASC_COMPARATOR = new Comparator<IEvent>()
+	{
+
+		public int compare(IEvent o1, IEvent o2)
+		{
+			if (o1 == o2)
+			{
 				return 0;
-			} else if (o1 == null) {
+			}
+			else if (o1 == null)
+			{
 				return 1;
-			} else if (o2 == null) {
+			}
+			else if (o2 == null)
+			{
 				return -1;
 			}
 			// NOTE: we don't do null checks on o1.getStartTime() here because
-			//		a start time is required to be used.
+			// a start time is required to be used.
 			return o1.getStartTime().compareTo(o2.getStartTime());
 		}
-		
+
 	};
 
 }

@@ -23,20 +23,19 @@ import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.templates.ScriptTemplate;
 
 /**
- * A {@link ModalWindow} displaying a
- * {@link ClojureScriptEngineWithTemplatesPanel}.
+ * A {@link ModalWindow} displaying a {@link ClojureScriptEngineWithTemplatesPanel}.
  * 
  * @author cretzel
  */
-public class ClojureScriptEngineWithTemplatesWindow extends
-		ScriptEngineWithTemplatesWindow {
+public class ClojureScriptEngineWithTemplatesWindow extends ScriptEngineWithTemplatesWindow
+{
 
 	private static final long serialVersionUID = 1L;
 
 	public ClojureScriptEngineWithTemplatesWindow(final String id,
-			final IModel<String> windowTitle,
-			final IDataProvider<ScriptTemplate> dataProvider) {
+		final IModel<String> windowTitle, final IDataProvider<ScriptTemplate> dataProvider)
+	{
 		super(id, Lang.CLOJURE, windowTitle, dataProvider);
 	}
-	
+
 }

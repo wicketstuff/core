@@ -19,23 +19,54 @@
 package org.wicketstuff.calendarviews.model;
 
 /**
- * This is just an extension of <tt>BasicEvent</tt> that adds the
- * specified CSS class to events.
+ * This is just an extension of <tt>BasicEvent</tt> that adds the specified CSS class to events.
  * 
  * @see BasicEvent
  * @author Jeremy Thomerson
  */
-public class BasicCategorizedEvent extends BasicEvent implements ICategorizedEvent {
-
+public class BasicCategorizedEvent extends BasicEvent implements ICategorizedEvent
+{
 	private static final long serialVersionUID = 1L;
 
 	private String mCssClassForCategory;
 
-	public String getCssClassForCategory() {
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result +
+			(mCssClassForCategory == null ? 0 : mCssClassForCategory.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BasicCategorizedEvent other = (BasicCategorizedEvent)obj;
+		if (mCssClassForCategory == null)
+		{
+			if (other.mCssClassForCategory != null)
+				return false;
+		}
+		else if (!mCssClassForCategory.equals(other.mCssClassForCategory))
+			return false;
+		return true;
+	}
+
+	public String getCssClassForCategory()
+	{
 		return mCssClassForCategory;
 	}
 
-	public void setCssClassForCategory(String cssClassForCategory) {
+	public void setCssClassForCategory(String cssClassForCategory)
+	{
 		mCssClassForCategory = cssClassForCategory;
 	}
 

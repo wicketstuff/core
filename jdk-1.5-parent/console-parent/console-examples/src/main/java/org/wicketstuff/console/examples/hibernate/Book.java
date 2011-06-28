@@ -30,7 +30,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Book")
-public class Book {
+public class Book
+{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,37 +39,50 @@ public class Book {
 	private String title;
 	private String author;
 
-	public Book() {
+	public Book()
+	{
 	}
 
-	public Long getId() {
+	public Book(final String title, final String author)
+	{
+		this.title = title;
+		this.author = author;
+	}
+
+	public Long getId()
+	{
 		return id;
 	}
 
-	public void setId(final Long id) {
+	public void setId(final Long id)
+	{
 		this.id = id;
 	}
 
-	public String getTitle() {
+	public String getTitle()
+	{
 		return title;
 	}
 
-	public void setTitle(final String title) {
+	public void setTitle(final String title)
+	{
 		this.title = title;
 	}
 
-	public String getAuthor() {
+	public String getAuthor()
+	{
 		return author;
 	}
 
-	public void setAuthor(final String author) {
+	public void setAuthor(final String author)
+	{
 		this.author = author;
 	}
 
 	@Override
-	public String toString() {
-		return "Book [id=" + id + ", title=" + title + ", author=" + author
-				+ "]";
+	public String toString()
+	{
+		return "Book [id=" + id + ", title=" + title + ", author=" + author + "]";
 	}
 
 }

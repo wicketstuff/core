@@ -20,18 +20,16 @@ import org.apache.wicket.protocol.http.WebApplication;
 
 /**
  * <p>
- * This class together with {@link SpringReferenceSupporter} is an alternative
- * to wicket-spring's <code>&#64;SpringBean</code> and
- * <code>SpringComponentInjector</code> to integrate spring with wicket in a web
- * application.
+ * This class together with {@link SpringReferenceSupporter} is an alternative to wicket-spring's
+ * <code>&#64;SpringBean</code> and <code>SpringComponentInjector</code> to integrate spring with
+ * wicket in a web application.
  * </p>
  * <p>
- * Inspired by the concept of {@link Reference} classes and by the
- * implementation of <code>&#64;SpringBean</code> this class was made to
- * overcome the shortcomings of dynamic proxying classes (need for no-private
- * no-arg constructor, final methods not working in some cases, method
- * annotations lost). If you used <code>&#64;SpringBean</code> and ever saw
- * mysterious stack traces like:
+ * Inspired by the concept of {@link Reference} classes and by the implementation of
+ * <code>&#64;SpringBean</code> this class was made to overcome the shortcomings of dynamic proxying
+ * classes (need for no-private no-arg constructor, final methods not working in some cases, method
+ * annotations lost). If you used <code>&#64;SpringBean</code> and ever saw mysterious stack traces
+ * like:
  * 
  * <pre>
  * <code>
@@ -58,20 +56,20 @@ import org.apache.wicket.protocol.http.WebApplication;
  * This class is the solution.
  * </p>
  * <p>
- * Because this class does not need an
- * <code>IComponentInstantiationListener</code>, does not use dynamic proxies
- * and looks up spring beans lazily, it should be slightly faster. It also
- * supports serializing as <code>&#64;SpringBean</code> does.
+ * Because this class does not need an <code>IComponentInstantiationListener</code>, does not use
+ * dynamic proxies and looks up spring beans lazily, it should be slightly faster. It also supports
+ * serializing as <code>&#64;SpringBean</code> does.
  * </p>
  * <p>
- * <b>Instances of this class use the {@link SpringReferenceSupporter} for bean
- * lookup, so it must be registered in your wicket {@link WebApplication} init()
- * method (<code>SpringReferenceSupporter.register(this);</code>). Otherwise you
- * will get {@link NullPointerException} when calling {@link #get()}. See
- * {@link SpringReferenceSupporter} for more information.</b>
+ * <b>Instances of this class use the {@link SpringReferenceSupporter} for bean lookup, so it must
+ * be registered in your wicket {@link WebApplication} init() method (
+ * <code>SpringReferenceSupporter.register(this);</code>). Otherwise you will get
+ * {@link NullPointerException} when calling {@link #get()}. See {@link SpringReferenceSupporter}
+ * for more information.</b>
  * </p>
  * <p>
- * Declaration:
+ * Declaration (you can declare it in your wicket components, models or your custom classes as
+ * well):
  * 
  * <pre>
  * <code>
@@ -96,8 +94,8 @@ import org.apache.wicket.protocol.http.WebApplication;
  * 
  * @author akiraly
  */
-public class SpringReference<T> extends AbstractSpringReference<T> implements
-		IClusterable {
+public class SpringReference<T> extends AbstractSpringReference<T> implements IClusterable
+{
 	private static final long serialVersionUID = -1798985501215878818L;
 
 	/**
@@ -108,13 +106,14 @@ public class SpringReference<T> extends AbstractSpringReference<T> implements
 	 * @param name
 	 *            beanName of the wrapped spring bean, can be null
 	 */
-	public SpringReference(Class<T> clazz, String name) {
+	public SpringReference(Class<T> clazz, String name)
+	{
 		super(clazz, name);
 	}
 
 	/**
-	 * Creator method for easy usage. Use this if you only want to specify the
-	 * type of the spring bean.
+	 * Creator method for easy usage. Use this if you only want to specify the type of the spring
+	 * bean.
 	 * 
 	 * @param <T>
 	 *            type of the wrapped spring bean
@@ -122,13 +121,13 @@ public class SpringReference<T> extends AbstractSpringReference<T> implements
 	 *            class of the wrapped spring bean, not null
 	 * @return new SpringReference instance wrapping the spring bean
 	 */
-	public static <T> SpringReference<T> of(Class<T> clazz) {
+	public static <T> SpringReference<T> of(Class<T> clazz)
+	{
 		return of(clazz, null);
 	}
 
 	/**
-	 * Creator method for easy usage. Use this if need to specify a spring bean
-	 * by name too.
+	 * Creator method for easy usage. Use this if need to specify a spring bean by name too.
 	 * 
 	 * @param <T>
 	 *            type of the wrapped spring bean
@@ -138,17 +137,20 @@ public class SpringReference<T> extends AbstractSpringReference<T> implements
 	 *            name of the wrapped spring bean, can be null
 	 * @return new SpringReference instance wrapping the spring bean
 	 */
-	public static <T> SpringReference<T> of(Class<T> clazz, String name) {
+	public static <T> SpringReference<T> of(Class<T> clazz, String name)
+	{
 		return new SpringReference<T>(clazz, name);
 	}
 
 	@Override
-	protected SpringReferenceSupporter getSupporter() {
+	protected SpringReferenceSupporter getSupporter()
+	{
 		return SpringReferenceSupporter.get();
 	}
 
 	@Override
-	public SpringReference<T> clone() {
-		return (SpringReference<T>) super.clone();
+	public SpringReference<T> clone()
+	{
+		return (SpringReference<T>)super.clone();
 	}
 }

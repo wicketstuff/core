@@ -202,7 +202,6 @@ public class TimerPushService extends AbstractPushService
 		_cleanupFuture.cancel(false);
 		_cleanupFuture = null;
 		_cleanupExecutor.shutdownNow();
-		INSTANCES.remove(this);
 	}
 
 	void onDisconnect(final TimerPushNode<?> node)

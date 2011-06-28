@@ -24,6 +24,12 @@
 			<email>nino.martinez.wael@gmail.com</email>
 		</developer>
 		<developer>
+			<id>david.bernard</id>
+			<name>David Bernard</name>
+			<email>dwayneb at users.sf.net</email>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
 			<id>sebthom</id>
 			<name>Sebastian Thomschke</name>
 			<email>sebthom@sf.net</email>
@@ -35,9 +41,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<scope>provided</scope>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	

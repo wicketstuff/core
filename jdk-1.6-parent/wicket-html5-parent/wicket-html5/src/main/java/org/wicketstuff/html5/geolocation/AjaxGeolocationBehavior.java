@@ -12,26 +12,31 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.interpolator.MapVariableInterpolator;
 import org.apache.wicket.util.template.PackageTextTemplate;
 
-public abstract class AjaxGeolocationBehavior extends AbstractDefaultAjaxBehavior {
+public abstract class AjaxGeolocationBehavior extends AbstractDefaultAjaxBehavior
+{
 
 	private static final long serialVersionUID = 1L;
 
 	private static PackageTextTemplate GEOLOCATION_TMPL_JS = new PackageTextTemplate(
-			AjaxGeolocationBehavior.class, "geolocation.js",
-			"application/javascript", "UTF-8");
+		AjaxGeolocationBehavior.class, "geolocation.js", "application/javascript", "UTF-8");
 
 	@Override
-	protected void respond(AjaxRequestTarget target) {
+	protected void respond(AjaxRequestTarget target)
+	{
 		final Request request = RequestCycle.get().getRequest();
-        final String latitude = request.getRequestParameters().getParameterValue("lat").toString();
-        final String longitude = request.getRequestParameters().getParameterValue("long").toString();
-        onGeoAvailable(target, latitude, longitude);
+		final String latitude = request.getRequestParameters().getParameterValue("lat").toString();
+		final String longitude = request.getRequestParameters()
+			.getParameterValue("long")
+			.toString();
+		onGeoAvailable(target, latitude, longitude);
 	}
 
-	protected abstract void onGeoAvailable(AjaxRequestTarget target, String latitude, String longitude);
+	protected abstract void onGeoAvailable(AjaxRequestTarget target, String latitude,
+		String longitude);
 
 	@Override
-	protected void onBind() {
+	protected void onBind()
+	{
 		super.onBind();
 
 		final Component component = getComponent();
@@ -39,7 +44,8 @@ public abstract class AjaxGeolocationBehavior extends AbstractDefaultAjaxBehavio
 	}
 
 	@Override
-	public void renderHead(Component c, final IHeaderResponse response) {
+	public void renderHead(Component c, final IHeaderResponse response)
+	{
 		super.renderHead(c, response);
 
 		final CharSequence callbackUrl = getCallbackUrl();
@@ -50,7 +56,7 @@ public abstract class AjaxGeolocationBehavior extends AbstractDefaultAjaxBehavio
 		variables.put("callbackUrl", callbackUrl.toString());
 
 		final String javascript = MapVariableInterpolator.interpolate(
-				GEOLOCATION_TMPL_JS.asString(), variables);
+			GEOLOCATION_TMPL_JS.asString(), variables);
 		response.renderOnDomReadyJavaScript(javascript);
 	}
 }

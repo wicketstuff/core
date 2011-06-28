@@ -26,20 +26,29 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.wicketstuff.datatables.DemoDatatable;
 
-public class HomePage extends WebPage {
+public class HomePage extends WebPage
+{
 
-	public HomePage() {
+	private static final long serialVersionUID = 1L;
+
+	public HomePage()
+	{
 		WebMarkupContainer table = new DemoDatatable("table");
 		add(table);
 
 		List<String[]> rows = new ArrayList<String[]>();
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 50; i++)
+		{
 			rows.add(new String[] { "Foo" + i, "Bar" + i, "fizzbuzz" + i });
 		}
 
-		ListView<String[]> lv = new ListView<String[]>("rows", rows) {
+		ListView<String[]> lv = new ListView<String[]>("rows", rows)
+		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			protected void populateItem(ListItem<String[]> item) {
+			protected void populateItem(ListItem<String[]> item)
+			{
 				String[] row = item.getModelObject();
 
 				item.add(new Label("col1", row[0]));

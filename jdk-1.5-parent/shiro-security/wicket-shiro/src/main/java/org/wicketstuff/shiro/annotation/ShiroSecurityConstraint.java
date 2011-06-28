@@ -29,24 +29,26 @@ import org.apache.wicket.Page;
 import org.wicketstuff.shiro.ShiroAction;
 import org.wicketstuff.shiro.ShiroConstraint;
 
-
-@Target( ElementType.TYPE )
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface ShiroSecurityConstraint {
-  
-  ShiroAction action() default ShiroAction.INSTANTIATE; 
-  
-  ShiroConstraint constraint();  
-  String value() default "";
+public @interface ShiroSecurityConstraint
+{
 
-  // optional
-  String loginMessage() default "";         // goes to INFO
-  String unauthorizedMessage() default "";  // goes to ERROR
+	ShiroAction action() default ShiroAction.INSTANTIATE;
 
-  // optional
-  Class<? extends Page> loginPage() default Page.class;
-  Class<? extends Page> unauthorizedPage() default Page.class;
+	ShiroConstraint constraint();
+
+	// optional
+	String loginMessage() default ""; // goes to INFO
+
+	// optional
+	Class<? extends Page> loginPage() default Page.class;
+
+	String unauthorizedMessage() default ""; // goes to ERROR
+
+	Class<? extends Page> unauthorizedPage() default Page.class;
+
+	String value() default "";
 }
-

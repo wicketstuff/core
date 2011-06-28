@@ -21,22 +21,26 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
 /**
- *
+ * 
  * @author inaiat
  */
-public class MootoolsMoreBehavior extends MootoolsCoreBehavior {
+public class MootoolsMoreBehavior extends MootoolsCoreBehavior
+{
 
-    // create a reference to the base mootools javascript file.
-    // we use JavascriptResourceReference so that the included file will have its comments stripped and gzipped.
-    private static final ResourceReference MOOTOOLS_MORE_JS = new JavaScriptResourceReference(MootoolsMoreBehavior.class,
-            "res/mootools-more-1.3.0.1.js");
+	private static final long serialVersionUID = 1L;
+	// create a reference to the base mootools javascript file.
+	// we use JavascriptResourceReference so that the included file will have its comments stripped
+// and gzipped.
+	private static final ResourceReference MOOTOOLS_MORE_JS = new JavaScriptResourceReference(
+		MootoolsMoreBehavior.class, "res/mootools-more-1.3.0.1.js");
 
 
-    @Override
-    public void renderHead(Component component, IHeaderResponse response) {
-        super.renderHead(component, response);
-        response.renderJavaScriptReference(MOOTOOLS_MORE_JS);
-    }
-    
-    
+	@Override
+	public void renderHead(Component component, IHeaderResponse response)
+	{
+		super.renderHead(component, response);
+		response.renderJavaScriptReference(MOOTOOLS_MORE_JS);
+	}
+
+
 }

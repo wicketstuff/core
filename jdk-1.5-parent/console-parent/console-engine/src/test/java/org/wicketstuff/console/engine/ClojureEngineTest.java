@@ -28,24 +28,22 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ClojureEngineTest {
+public class ClojureEngineTest
+{
 
-	private ClojureEngine engine;
+	private IScriptEngine engine;
 
 	@Before
-	public void setup() {
+	public void setup()
+	{
 		engine = new ClojureEngine();
 	}
 
 	@Test
-	public void test_instanceof_engine() throws Exception {
-		assertTrue(engine instanceof IScriptEngine);
-	}
-
-	@Test
-	public void test_execute_emptyScript() throws Exception {
+	public void test_empty_script() throws Exception
+	{
 		// Given
-		final String script = "(ns foo.baz)";
+		final String script = "";
 
 		// When
 		final IScriptExecutionResult result = engine.execute(script);
@@ -58,7 +56,8 @@ public class ClojureEngineTest {
 	}
 
 	@Test
-	public void test_execute_exception_01() throws Exception {
+	public void test_execute_exception_01() throws Exception
+	{
 		// Given
 		final String script = "xxx";
 
@@ -75,22 +74,8 @@ public class ClojureEngineTest {
 	}
 
 	@Test
-	public void test_empty_script() throws Exception {
-		// Given
-		final String script = "";
-
-		// When
-		final IScriptExecutionResult result = engine.execute(script);
-
-		// Then
-		assertTrue(result.isSuccess());
-		assertNull(result.getException());
-		assertEquals("", result.getOutput());
-		assertNull(result.getReturnValue());
-	}
-
-	@Test
-	public void test_simple_returnValue() throws Exception {
+	public void test_simple_returnValue() throws Exception
+	{
 		// Given
 		final String script = "5";
 
@@ -105,7 +90,8 @@ public class ClojureEngineTest {
 	}
 
 	@Test
-	public void test_simple_output_sysout() throws Exception {
+	public void test_simple_output_sysout() throws Exception
+	{
 		// Given
 		final String script = "(.print System/out 5)";
 
@@ -121,7 +107,8 @@ public class ClojureEngineTest {
 	}
 
 	@Test
-	public void test_simple_output_rtout() throws Exception {
+	public void test_simple_output_rtout() throws Exception
+	{
 		// Given
 		final String script = "(print 6)";
 
@@ -137,10 +124,11 @@ public class ClojureEngineTest {
 	}
 
 	@Test
-	public void test_simple_defn() throws Exception {
+	public void test_simple_defn() throws Exception
+	{
 		// Given
-		final String script = "(defn fak [n]"
-				+ "(if (< n 1) 1 (* n (fak (dec n)))))" + "(print (fak 5))";
+		final String script = "(defn fak [n]" + "(if (< n 1) 1 (* n (fak (dec n)))))"
+			+ "(print (fak 5))";
 
 		// When
 		final IScriptExecutionResult result = engine.execute(script);
@@ -152,10 +140,11 @@ public class ClojureEngineTest {
 	}
 
 	@Test
-	public void test_simple_binding() throws Exception {
+	public void test_simple_binding() throws Exception
+	{
 		// Given
-		final String script = "(org.wicketstuff.console.engine.ClojureEngine/getBinding \"x\")";
-		Map<String, Object> bindings = new HashMap<String, Object>();
+		final String script = "user/x";
+		final Map<String, Object> bindings = new HashMap<String, Object>();
 		bindings.put("x", 5);
 
 		// When

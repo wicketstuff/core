@@ -33,9 +33,10 @@ import org.wicketstuff.jasperreports.handlers.HtmlResourceHandler;
 @Deprecated
 public final class JRHtmlResource extends JRConcreteResource<HtmlResourceHandler>
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
-	 * Construct without a report. You must provide a report before you can use
-	 * this resource.
+	 * Construct without a report. You must provide a report before you can use this resource.
 	 */
 	public JRHtmlResource()
 	{

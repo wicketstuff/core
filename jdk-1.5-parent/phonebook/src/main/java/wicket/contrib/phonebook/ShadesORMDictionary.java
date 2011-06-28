@@ -27,6 +27,7 @@ import hendrey.shades.QueryFactory;
 import hendrey.shades.tools.TableCreator;
 
 import java.sql.Connection;
+import java.sql.Statement;
 
 import javax.sql.DataSource;
 
@@ -35,17 +36,18 @@ import org.springframework.beans.factory.InitializingBean;
 /**
  * @author Geoffrey Rummens Hendrey
  */
-public class ShadesORMDictionary implements InitializingBean {
-	private static final ORMDictionary dict = ORMDictionaryFactory
-			.getInstance("phonebook-schema");
+public class ShadesORMDictionary implements InitializingBean
+{
+	private static final ORMDictionary dict = ORMDictionaryFactory.getInstance("phonebook-schema");
 	private DataSource dataSource; // required for table creation
 	/*
-	 * DAO can grab filterCandidate and call .resembles on the fly to
-	 * dynamically reconfigure the query
+	 * DAO can grab filterCandidate and call .resembles on the fly to dynamically reconfigure the
+	 * query
 	 */
 	static RecordCandidate filterCandidate;
 
-	static {
+	static
+	{
 		ORMapping orm = new ShadesContactORM();
 		dict.defineORMapping("CONTACT", orm);
 		defineQueryById(orm);
@@ -54,58 +56,76 @@ public class ShadesORMDictionary implements InitializingBean {
 		defineQueryforDistinctLastname(orm);
 	}
 
-	private static void defineQueryforDistinctLastname(ORMapping orm) {
-		Query q = QueryFactory
-				.newImmutableQuery("SELECT DISTINCT LASTNAME AS \"CONTACT.LASTNAME\" FROM CONTACT");
+	private static void defineQueryforDistinctLastname(ORMapping orm)
+	{
+		Query q = QueryFactory.newImmutableQuery("SELECT DISTINCT LASTNAME AS \"CONTACT.LASTNAME\" FROM CONTACT");
 		q.candidate(orm).setFetchColumns(new String[] { "LASTNAME" });
 		dict.defineQuery("selectDistinctLastnameOnly", q);
 	}
 
-	private static void defineQueryByResemblanceWithFilter(ORMapping orm) {
+	private static void defineQueryByResemblanceWithFilter(ORMapping orm)
+	{
 		Query q = QueryFactory.newQuery(dict);
 		filterCandidate = q.candidate(orm, "CONTACT");
-		q.clause("ORDER BY").append(
-				"${order} ${direction} LIMIT ${count} OFFSET ${first}");
+		q.clause("ORDER BY").append("${order} ${direction} LIMIT ${count} OFFSET ${first}");
 		dict.defineQuery("byOrderedResemblance", q);
 	}
 
-	private static void defineQueryByResemblance(ORMapping orm) {
+	private static void defineQueryByResemblance(ORMapping orm)
+	{
 		Query q = QueryFactory.newQuery(dict);
 		q.candidate(orm, "CONTACT");
 		dict.defineQuery("byResemblance", q);
 	}
 
-	private static void defineQueryById(ORMapping orm) {
+	private static void defineQueryById(ORMapping orm)
+	{
 		Query q = QueryFactory.newQuery(dict);
-		q.candidate(orm).where("ID=${id}", new String[] {});
+		q.candidate(orm).where("ID=${id}", new String[] { });
 		dict.defineQuery("byId", q);
 	}
 
-	public static ORMDictionary getInstance() {
+	public static ORMDictionary getInstance()
+	{
 		return dict; // return the static, configured ORMDictionary
 	}
 
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() throws Exception
+	{
 		Connection c = null;
-		try {
+		try
+		{
 			String ddl = TableCreator.getDDL(dict);
 			c = dataSource.getConnection();
-			c.createStatement().execute(ddl);
+			Statement s = c.createStatement();
+			try
+			{
+				s.execute(ddl);
+			}
+			finally
+			{
+				s.close();
+			}
 			c.commit();
-		} finally {
+		}
+		finally
+		{
 			c.close();
 		}
 	}
 
 	/** Creates a new instance of ShadesPhonebookORMDictionary */
-	private ShadesORMDictionary() {
+	private ShadesORMDictionary()
+	{
 	}
 
-	public DataSource getDataSource() {
+	public DataSource getDataSource()
+	{
 		return dataSource;
 	}
 
-	public void setDataSource(DataSource dataSource) {
+	public void setDataSource(DataSource dataSource)
+	{
 		this.dataSource = dataSource;
 	}
 

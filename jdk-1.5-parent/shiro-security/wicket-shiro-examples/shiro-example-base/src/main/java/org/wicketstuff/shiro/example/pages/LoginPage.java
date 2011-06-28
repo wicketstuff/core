@@ -8,6 +8,8 @@ import org.wicketstuff.shiro.component.LoginPanel;
  */
 public class LoginPage extends BasePage
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructor.
 	 */

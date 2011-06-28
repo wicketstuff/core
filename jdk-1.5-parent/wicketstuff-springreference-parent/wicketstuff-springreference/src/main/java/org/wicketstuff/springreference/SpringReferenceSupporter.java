@@ -25,9 +25,10 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * <p>
- * Used by {@link SpringReference} to do the actual spring bean lookups. This
- * must be registered in the init() method of your wicket {@link Application} or
- * {@link WebApplication} otherwise {@link SpringReference} will not work.
+ * Used by {@link SpringReference} and {@link AbstractSpringDependencies} to do the actual spring
+ * bean lookups. This must be registered in the init() method of your wicket {@link Application} or
+ * {@link WebApplication} otherwise {@link SpringReference} and {@link AbstractSpringDependencies}
+ * will not work.
  * </p>
  * <p>
  * Example:
@@ -57,9 +58,11 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  * @author akiraly
  * 
  */
-public class SpringReferenceSupporter extends AbstractSpringReferenceSupporter {
+public class SpringReferenceSupporter extends AbstractSpringReferenceSupporter
+{
 
-	private static MetaDataKey<SpringReferenceSupporter> LOCATOR_KEY = new MetaDataKey<SpringReferenceSupporter>() {
+	private static MetaDataKey<SpringReferenceSupporter> LOCATOR_KEY = new MetaDataKey<SpringReferenceSupporter>()
+	{
 		private static final long serialVersionUID = 5075847072788088007L;
 	};
 
@@ -71,45 +74,44 @@ public class SpringReferenceSupporter extends AbstractSpringReferenceSupporter {
 	 * @param applicationContext
 	 *            where the spring bean will be searched for, not null
 	 */
-	public SpringReferenceSupporter(ApplicationContext applicationContext) {
+	public SpringReferenceSupporter(ApplicationContext applicationContext)
+	{
 		Args.notNull(applicationContext, "applicationContext");
 
 		this.applicationContext = applicationContext;
 	}
 
 	/**
-	 * Creates and registers an instance of this class with the wicket web
-	 * application. Uses
-	 * {@link WebApplicationContextUtils#getRequiredWebApplicationContext(ServletContext)}
-	 * to get spring web application context. If more fine grained registration
-	 * is needed use {@link #register(Application, SpringReferenceSupporter)}.
-	 * If you want to use {@link SpringReference} you have to use one of the
-	 * register methods in your wicket applications init().
+	 * Creates and registers an instance of this class with the wicket web application. Uses
+	 * {@link WebApplicationContextUtils#getRequiredWebApplicationContext(ServletContext)} to get
+	 * spring web application context. If more fine grained registration is needed use
+	 * {@link #register(Application, SpringReferenceSupporter)}. If you want to use
+	 * {@link SpringReference} you have to use one of the register methods in your wicket
+	 * applications init().
 	 * 
 	 * @param application
 	 *            wicket web application, not null
 	 */
-	public static void register(WebApplication application) {
+	public static void register(WebApplication application)
+	{
 		Args.notNull(application, "application");
 
 		ServletContext servletContext = application.getServletContext();
-		WebApplicationContext applicationContext = WebApplicationContextUtils
-				.getRequiredWebApplicationContext(servletContext);
+		WebApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
 		register(application, new SpringReferenceSupporter(applicationContext));
 	}
 
 	/**
-	 * Registers the passed in supporter with the wicket application. This is
-	 * the more sophisticated variant of registration. Most users could go with
-	 * {@link #register(WebApplication)}.
+	 * Registers the passed in supporter with the wicket application. This is the more sophisticated
+	 * variant of registration. Most users could go with {@link #register(WebApplication)}.
 	 * 
 	 * @param application
 	 *            wicket application, not null
 	 * @param supporter
 	 *            spring reference supporter. Null value means removal.
 	 */
-	public static void register(Application application,
-			SpringReferenceSupporter supporter) {
+	public static void register(Application application, SpringReferenceSupporter supporter)
+	{
 		Args.notNull(application, "application");
 
 		application.setMetaData(LOCATOR_KEY, supporter);
@@ -118,12 +120,14 @@ public class SpringReferenceSupporter extends AbstractSpringReferenceSupporter {
 	/**
 	 * @return instance registered with the current threads wicket application
 	 */
-	protected static SpringReferenceSupporter get() {
+	protected static SpringReferenceSupporter get()
+	{
 		return Application.get().getMetaData(LOCATOR_KEY);
 	}
 
 	@Override
-	protected ApplicationContext getApplicationContext() {
+	protected ApplicationContext getApplicationContext()
+	{
 		return applicationContext;
 	}
 }

@@ -84,8 +84,7 @@ public class ChatRoom
 	}
 
 	/**
-	 * sends the chat message asynchronously (in a background thread) to all
-	 * listeners
+	 * sends the chat message asynchronously (in a background thread) to all listeners
 	 */
 	public void sendAsync(final String user, final String message)
 	{

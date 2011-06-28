@@ -9,7 +9,8 @@ import com.inmethod.grid.treegrid.TreeGrid;
  * 
  * @author Matej Knopp
  */
-public class TreeBean implements Serializable {
+public class TreeBean implements Serializable
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -171,5 +172,5 @@ public class TreeBean implements Serializable {
 		return getProperty1() + ", " + getProperty2() + ", " + getProperty3();
 	}
 
-	
+
 }

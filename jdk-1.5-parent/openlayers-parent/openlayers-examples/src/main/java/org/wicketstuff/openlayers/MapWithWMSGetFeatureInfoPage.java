@@ -33,63 +33,69 @@ import org.wicketstuff.openlayers.proxy.WFSProxyBehavior;
  * @author mocleiri
  * 
  *         To showcase the WMSGetFeatureInfo Control
- *         
- *         The javascript was copied from the openlayers.org examples and encoded using the Wicket Controls.
- *         
+ * 
+ *         The javascript was copied from the openlayers.org examples and encoded using the Wicket
+ *         Controls.
+ * 
  *         See this example: http://openlayers.org/dev/examples/getfeatureinfo-popup.html
  * 
  */
-public class MapWithWMSGetFeatureInfoPage extends WebPage {
+public class MapWithWMSGetFeatureInfoPage extends WebPage
+{
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 
 	 */
-	public MapWithWMSGetFeatureInfoPage() {
+	public MapWithWMSGetFeatureInfoPage()
+	{
 
 		List<Layer> layerList = new LinkedList<Layer>();
 
 		HashMap<String, String> politicalOptions = new LinkedHashMap<String, String>();
 
-		politicalOptions.put(JSUtils.getQuotedString("layers"), JSUtils
-				.getQuotedString("topp:tasmania_state_boundaries"));
+		politicalOptions.put(JSUtils.getQuotedString("layers"),
+			JSUtils.getQuotedString("topp:tasmania_state_boundaries"));
 		politicalOptions.put("transparent", "true");
 		politicalOptions.put("format", JSUtils.getQuotedString("image/png8"));
 
 		HashMap<String, String> extraOptions = new LinkedHashMap<String, String>();
 		extraOptions.put("isBaseLayer", "true");
-		
-		
-		WMS political = new WMS("State Boundaries",
-				"http://demo.opengeo.org/geoserver/wms", politicalOptions,
-				extraOptions);
+
+
+		WMS political = new WMS("State Boundaries", "http://demo.opengeo.org/geoserver/wms",
+			politicalOptions, extraOptions);
 
 		layerList.add(political);
 
-		
+
 		HashMap<String, String> roadOptions = new LinkedHashMap<String, String>();
 
-		roadOptions.put(JSUtils.getQuotedString("layers"), JSUtils
-				.getQuotedString("topp:tasmania_roads"));
+		roadOptions.put(JSUtils.getQuotedString("layers"),
+			JSUtils.getQuotedString("topp:tasmania_roads"));
 		roadOptions.put("transparent", "true");
 		roadOptions.put("format", JSUtils.getQuotedString("image/png8"));
 
 		HashMap<String, String> roadExtraOptions = new LinkedHashMap<String, String>();
 		roadExtraOptions.put("isBaseLayer", "false");
 
-		WMS roads = new WMS("Roads", "http://demo.opengeo.org/geoserver/wms",
-				roadOptions, roadExtraOptions);
+		WMS roads = new WMS("Roads", "http://demo.opengeo.org/geoserver/wms", roadOptions,
+			roadExtraOptions);
 
 		layerList.add(roads);
-		
+
 
 		HashMap<String, String> mapOptions = new LinkedHashMap<String, String>();
 
-		mapOptions.put("maxExtent",
-				"new OpenLayers.Bounds(143.834,-43.648,148.479,-39.573)");
+		mapOptions.put("maxExtent", "new OpenLayers.Bounds(143.834,-43.648,148.479,-39.573)");
 
 		final WFSProxyBehavior proxyBehaviour = new WFSProxyBehavior();
 
-		OpenLayersMap map = new OpenLayersMap("map", true, layerList, mapOptions) {
+		OpenLayersMap map = new OpenLayersMap("map", true, layerList, mapOptions)
+		{
+
+			private static final long serialVersionUID = 1L;
 
 			/*
 			 * (non-Javadoc)
@@ -97,38 +103,40 @@ public class MapWithWMSGetFeatureInfoPage extends WebPage {
 			 * @see org.wicketstuff.openlayers.OpenLayersMap#getJSinit()
 			 */
 			@Override
-			protected String getJSinit() {
-				return "OpenLayers.ProxyHost='"
-						+ proxyBehaviour.getProxyUrl() + "';\n"
-						+ super.getJSinit();
+			protected String getJSinit()
+			{
+				return "OpenLayers.ProxyHost='" + proxyBehaviour.getProxyUrl() + "';\n" +
+					super.getJSinit();
 			}
 
 		};
 
 		HashMap<String, String> parameterMap = new LinkedHashMap<String, String>();
 
-		parameterMap.put("url", JSUtils
-				.getQuotedString("http://demo.opengeo.org/geoserver/wms"));
+		parameterMap.put("url", JSUtils.getQuotedString("http://demo.opengeo.org/geoserver/wms"));
 		parameterMap.put("title", JSUtils.getQuotedString("Test"));
 		parameterMap.put("layers", "[wms" + roads.getId() + "]");
 		parameterMap.put("infoFormat", JSUtils.getQuotedString("text/html"));
 
-		
 
-		
-		WMSGetFeatureInfo getFeatureInfo = new WMSGetFeatureInfo(parameterMap, new AbstractReadOnlyModel<String>() {
+		WMSGetFeatureInfo getFeatureInfo = new WMSGetFeatureInfo(parameterMap,
+			new AbstractReadOnlyModel<String>()
+			{
 
-			private static final long serialVersionUID = -1330688574990681527L;
+				private static final long serialVersionUID = -1330688574990681527L;
 
-			/* (non-Javadoc)
-			 * @see org.apache.wicket.model.AbstractReadOnlyModel#getObject()
-			 */
-			@Override
-			public String getObject() {
-				return "alert('event = ' + event.text);";
-			}
-			
-		});
+				/*
+				 * (non-Javadoc)
+				 * 
+				 * @see org.apache.wicket.model.AbstractReadOnlyModel#getObject()
+				 */
+				@Override
+				public String getObject()
+				{
+					return "alert('event = ' + event.text);";
+				}
+
+			});
 
 		map.addControl(getFeatureInfo);
 		map.addControl(Control.PanZoomBar);

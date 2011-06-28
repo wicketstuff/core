@@ -18,31 +18,40 @@
  */
 package org.wicketstuff.jslibraries;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import org.wicketstuff.jslibraries.util.Assert;
 
-public class Version implements Comparable<Version> {
+public class Version implements Comparable<Version>, Serializable
+{
+	private static final long serialVersionUID = 1L;
 
 	private final int[] mNumbers;
 
-	public Version(int... numbers) {
+	public Version(int... numbers)
+	{
 		mNumbers = numbers;
 	}
 
-	public int[] getNumbers() {
+	public int[] getNumbers()
+	{
 		return mNumbers;
 	}
 
-	public int compareTo(Version other) {
+	public int compareTo(Version other)
+	{
 		Assert.parameterNotNull(other, "other");
-		
-		for (int i = 0; i < mNumbers.length; i++) {
-			if (mNumbers[i] != other.mNumbers[i]) {
+
+		for (int i = 0; i < mNumbers.length; i++)
+		{
+			if (mNumbers[i] != other.mNumbers[i])
+			{
 				return mNumbers[i] - other.mNumbers[i];
 			}
 			int next = i + 1;
-			if (next < mNumbers.length && next >= other.mNumbers.length) {
+			if (next < mNumbers.length && next >= other.mNumbers.length)
+			{
 				// i have another level and the other doesn't, so I come after
 				return +1;
 			}
@@ -50,13 +59,40 @@ public class Version implements Comparable<Version> {
 		return 0;
 	}
 
+	/**
+	 * A version matches another if it has equal or more numbers and all its numbers equal those of
+	 * the other.
+	 * 
+	 * @param other
+	 */
+	public boolean matches(Version other)
+	{
+		Assert.parameterNotNull(other, "other");
+
+		if (other.mNumbers.length > mNumbers.length)
+		{
+			return false;
+		}
+
+		for (int i = 0; i < other.mNumbers.length; i++)
+		{
+			if (mNumbers[i] != other.mNumbers[i])
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return 'v' + renderVersionNumbers();
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Arrays.hashCode(mNumbers);
@@ -64,26 +100,31 @@ public class Version implements Comparable<Version> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Version other = (Version) obj;
+		Version other = (Version)obj;
 		if (!Arrays.equals(mNumbers, other.mNumbers))
 			return false;
 		return true;
 	}
 
-	protected String renderVersionNumbers() {
+	protected String renderVersionNumbers()
+	{
 		StringBuffer sb = new StringBuffer();
-		for (int num : mNumbers) {
-			sb.append(num).append('.');
+		for (int num : mNumbers)
+		{
+			if (sb.length() > 0)
+			{
+				sb.append('.');
+			}
+			sb.append(num);
 		}
-		sb.setLength(sb.length() - 1);
 		return sb.toString();
 	}
-
 }

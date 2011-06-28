@@ -14,16 +14,18 @@ import org.wicketstuff.jquery.ui.slider.SliderOptions;
  * 
  * @author Martin Grigorov <martingrigorov @ users.sf.net>
  */
-public class Page4Slider extends PageSupport {
+public class Page4Slider extends PageSupport
+{
 
-	public Page4Slider() throws Exception {
+	private static final long serialVersionUID = 1L;
+
+	public Page4Slider() throws Exception
+	{
 		super();
 
-		final SliderHandleOptions sliderOneHandleSettings = new SliderHandleOptions(
-				"uno", 0);
+		final SliderHandleOptions sliderOneHandleSettings = new SliderHandleOptions("uno", 0);
 
-		final SliderHandleOptions sliderTwoHandleSettings = new SliderHandleOptions(
-				"dos", 50);
+		final SliderHandleOptions sliderTwoHandleSettings = new SliderHandleOptions("dos", 50);
 		sliderTwoHandleSettings.setStyle("left: 188px");
 
 		final SliderOptions sliderOptions = new SliderOptions();
@@ -39,12 +41,14 @@ public class Page4Slider extends PageSupport {
 		// sliderOptions.setOnChange("console.log('ui: ' + ui.toSource());", "e", "ui");
 
 		@SuppressWarnings("serial")
-		final Slider slider = new Slider("slider", sliderOptions, sliderOneHandleSettings, sliderTwoHandleSettings) {
+		final Slider slider = new Slider("slider", sliderOptions, sliderOneHandleSettings,
+			sliderTwoHandleSettings)
+		{
 
 			@Override
-			public void onChange(AjaxRequestTarget target, String handleId, int value) {
-				info(String.format("Handle with id '%s' changed its value to '%d'",
-						handleId, value));
+			public void onChange(AjaxRequestTarget target, String handleId, int value)
+			{
+				info(String.format("Handle with id '%s' changed its value to '%d'", handleId, value));
 				target.addChildren(getPage(), FeedbackPanel.class);
 			}
 

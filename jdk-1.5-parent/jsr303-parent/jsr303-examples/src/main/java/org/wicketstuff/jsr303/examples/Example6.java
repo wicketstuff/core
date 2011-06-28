@@ -18,59 +18,67 @@ import org.wicketstuff.jsr303.PropertyValidation;
 
 public class Example6 extends WebPage
 {
-    @FooConstraint
-    static class Data implements Serializable, FieldBundle
-    {
-        public String getField1()
-        {
-            return this.field1;
-        }
+	private static final long serialVersionUID = 1L;
 
-        public String getField2()
-        {
-            return this.field2;
-        }
+	@FooConstraint
+	static class Data implements Serializable, FieldBundle
+	{
+		private static final long serialVersionUID = 1L;
 
-        String field1;
-        @NotNull
-        String field2;
-    }
+		public String getField1()
+		{
+			return field1;
+		}
 
-    private final Data dummy = new Data();
+		public String getField2()
+		{
+			return field2;
+		}
 
-    public Example6()
-    {
-        final Form form = new Form("form", new CompoundPropertyModel(this.dummy))
-        {
-            @Override
-            protected void onSubmit()
-            {
-                super.onSubmit();
+		String field1;
+		@NotNull
+		String field2;
+	}
 
-                if (!new BeanValidator(this).isValid(Example6.this.dummy))
-                {
-                    // execute...
-                }
-                else
-                {
-                    // stay here...
-                }
-            }
-        };
+	private final Data dummy = new Data();
 
-        add(form);
-        form.add(new PropertyValidation());
-        add(new FeedbackPanel("fb"));
-        add(new WebMarkupContainer("message")
-        {
-            @Override
-            public boolean isVisible()
-            {
-                return form.isSubmitted() && (!form.hasError());
-            }
-        });
+	public Example6()
+	{
+		final Form<Data> form = new Form<Data>("form", new CompoundPropertyModel<Data>(dummy))
+		{
+			private static final long serialVersionUID = 1L;
 
-        form.add(new TextField("field1"));
-        form.add(new TextField("field2"));
-    }
+			@Override
+			protected void onSubmit()
+			{
+				super.onSubmit();
+
+				if (!new BeanValidator(this).isValid(dummy))
+				{
+					// execute...
+				}
+				else
+				{
+					// stay here...
+				}
+			}
+		};
+
+		add(form);
+		form.add(new PropertyValidation());
+		add(new FeedbackPanel("fb"));
+		add(new WebMarkupContainer("message")
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isVisible()
+			{
+				return form.isSubmitted() && !form.hasError();
+			}
+		});
+
+		form.add(new TextField<String>("field1"));
+		form.add(new TextField<String>("field2"));
+	}
 }

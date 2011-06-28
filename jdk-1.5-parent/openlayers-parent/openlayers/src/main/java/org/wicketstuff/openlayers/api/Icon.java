@@ -25,7 +25,8 @@ import org.wicketstuff.openlayers.js.Constructor;
 /**
  * http://dev.openlayers.org/apidocs/files/OpenLayers/Icon-js.html
  */
-public class Icon implements Serializable {
+public class Icon implements Serializable
+{
 	/**
 	 * 
 	 */
@@ -35,32 +36,39 @@ public class Icon implements Serializable {
 	private final Pixel offset;
 	private Size size = null;
 
-	public Size getSize() {
+	public Size getSize()
+	{
 		return size;
 	}
 
-	public void setSize(Size size) {
+	public void setSize(Size size)
+	{
 		this.size = size;
 	}
 
-	public Pixel getOffset() {
+	public Pixel getOffset()
+	{
 		return offset;
 	}
 
-	public Icon(String url, Pixel offset, Size shadowSize) {
+	public Icon(String url, Pixel offset, Size shadowSize)
+	{
 		super();
 		this.url = url;
 		this.offset = offset;
-		this.size = shadowSize;
+		size = shadowSize;
 	}
 
-	protected String getJSconstructor() {
-		Constructor constructor = new Constructor("OpenLayers.Icon").add("'"+url+"'")
-				.add(size.getId()).add(offset.getId());
+	protected String getJSconstructor()
+	{
+		Constructor constructor = new Constructor("OpenLayers.Icon").add("'" + url + "'")
+			.add(size.getId())
+			.add(offset.getId());
 		return constructor.toJS();
 	}
 
-	public String getId() {
+	public String getId()
+	{
 		return "icon" + String.valueOf(System.identityHashCode(this));
 	}
 
@@ -70,7 +78,8 @@ public class Icon implements Serializable {
 	 * @param map
 	 * @return
 	 */
-	public String getJSadd( ) {
+	public String getJSadd()
+	{
 		StringBuffer js = new StringBuffer();
 		js.append("var " + getId() + " = " + getJSconstructor() + ";\n");
 		return js.toString();

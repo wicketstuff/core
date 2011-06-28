@@ -52,23 +52,26 @@ import org.apache.wicket.model.Model;
 public class AttributeValuesPanel extends Panel
 {
 
+	private static final long serialVersionUID = 1L;
 	private ModalWindow modalOutput;
 
 	public AttributeValuesPanel(String id, final ObjectName objectName,
-			MBeanAttributeInfo[] beanAttributeInfos, final MbeanServerLocator mbeanServerLocator)
+		MBeanAttributeInfo[] beanAttributeInfos, final MbeanServerLocator mbeanServerLocator)
 	{
 		super(id);
 		add(modalOutput = new ModalWindow("modalOutput"));
 		modalOutput.setCookieName("modalOutput");
-		Form form = new Form("form");
+		Form<Void> form = new Form<Void>("form");
 		add(form);
-		form.add(new ListView("attributes", Arrays.asList(beanAttributeInfos))
+		form.add(new ListView<MBeanAttributeInfo>("attributes", Arrays.asList(beanAttributeInfos))
 		{
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			protected void populateItem(ListItem item)
+			protected void populateItem(ListItem<MBeanAttributeInfo> item)
 			{
-				final MBeanAttributeInfo info = (MBeanAttributeInfo)item.getModelObject();
+				final MBeanAttributeInfo info = item.getModelObject();
 				item.add(new Label("name", info.getName()));
 				try
 				{
@@ -79,7 +82,7 @@ public class AttributeValuesPanel extends Panel
 						try
 						{
 							value = mbeanServerLocator.get().getAttribute(objectName,
-									info.getName());
+								info.getName());
 						}
 						catch (RuntimeMBeanException e)
 						{
@@ -89,14 +92,17 @@ public class AttributeValuesPanel extends Panel
 							item.error(sw.toString());
 						}
 					}
-					AjaxLink link = null;
-					item.add(link = new AjaxLink("value", new Model((Serializable)value))
+					AjaxLink<Serializable> link = null;
+					item.add(link = new AjaxLink<Serializable>("value",
+						Model.of((Serializable)value))
 					{
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void onClick(AjaxRequestTarget target)
 						{
 							modalOutput.setContent(new DataViewPanel(modalOutput.getContentId(),
-									getModelObject()));
+								getModelObject()));
 							modalOutput.setTitle(info.getName());
 							modalOutput.show(target);
 						}
@@ -104,9 +110,8 @@ public class AttributeValuesPanel extends Panel
 						@Override
 						public boolean isEnabled()
 						{
-							return (getModelObject() instanceof Collection)
-									|| (getModelObject() != null && getModelObject().getClass()
-											.isArray());
+							return getModelObject() instanceof Collection ||
+								getModelObject() != null && getModelObject().getClass().isArray();
 						}
 
 						@Override
@@ -117,17 +122,21 @@ public class AttributeValuesPanel extends Panel
 
 					});
 					link.add(new Label("label", value == null ? null : value.toString()));
-					item.add(new TextField("editableValue", new AttributeModel(info,
-							mbeanServerLocator, objectName))
+					item.add(new TextField<Object>("editableValue", new AttributeModel(info,
+						mbeanServerLocator, objectName))
 					{
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public boolean isVisible()
 						{
 							return info.isWritable();
 						}
 					});
-					item.add(new Button("submit", new Model("Submit"))
+					item.add(new Button("submit", Model.of("Submit"))
 					{
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public boolean isVisible()
 						{
@@ -145,14 +154,15 @@ public class AttributeValuesPanel extends Panel
 		});
 	}
 
-	public class AttributeModel implements IModel
+	public static class AttributeModel implements IModel<Object>
 	{
-		private MBeanAttributeInfo attributeInfo;
-		private MbeanServerLocator mbeanServerLocator;
-		private ObjectName objectName;
+		private static final long serialVersionUID = 1L;
+		private final MBeanAttributeInfo attributeInfo;
+		private final MbeanServerLocator mbeanServerLocator;
+		private final ObjectName objectName;
 
 		public AttributeModel(MBeanAttributeInfo attributeInfo,
-				MbeanServerLocator mbeanServerLocator, ObjectName objectName)
+			MbeanServerLocator mbeanServerLocator, ObjectName objectName)
 		{
 			this.attributeInfo = attributeInfo;
 			this.mbeanServerLocator = mbeanServerLocator;
@@ -166,7 +176,7 @@ public class AttributeValuesPanel extends Panel
 				try
 				{
 					return mbeanServerLocator.get().getAttribute(objectName,
-							attributeInfo.getName());
+						attributeInfo.getName());
 				}
 				catch (AttributeNotFoundException e)
 				{
@@ -201,12 +211,11 @@ public class AttributeValuesPanel extends Panel
 				Object paramWithCorrectType = null;
 				if (object != null)
 				{
-					Class clazz = DataUtil.getClassFromInfo(attributeInfo);
+					Class<?> clazz = DataUtil.getClassFromInfo(attributeInfo);
 					paramWithCorrectType = DataUtil.tryParseToType(object, clazz);
 				}
-				attribute = new Attribute(attributeInfo.getName(), object == null
-						? null
-						: paramWithCorrectType);
+				attribute = new Attribute(attributeInfo.getName(), object == null ? null
+					: paramWithCorrectType);
 				mbeanServerLocator.get().setAttribute(objectName, attribute);
 			}
 			catch (Exception e)

@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>wicket-bundle-parent</artifactId>
+		<groupId>org.wicketstuff</groupId>
+		<version>1.5-SNAPSHOT</version>
+	</parent>
+	<artifactId>wicket-ioc-bundle</artifactId>
+	<packaging>bundle</packaging>
+	<name>Wicket IOC Bundle</name>
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-ioc</artifactId>
+		</dependency>
+	</dependencies>
+	<description>An OSGi-friendly version of the wicket-ioc module that does not use dynamic imports.</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Export-Package>org.apache.wicket.injection.*;version="${project.version}",
+							org.apache.wicket.proxy.*;version="${project.version}"
+						</Export-Package>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

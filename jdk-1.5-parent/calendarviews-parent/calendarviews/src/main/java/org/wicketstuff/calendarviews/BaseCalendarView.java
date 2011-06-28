@@ -26,12 +26,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.markup.html.CSSPackageResource;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -40,20 +40,24 @@ import org.wicketstuff.calendarviews.model.IEvent;
 import org.wicketstuff.calendarviews.model.IEventProvider;
 import org.wicketstuff.calendarviews.util.Comparators;
 
-public abstract class BaseCalendarView extends Panel {
+public abstract class BaseCalendarView extends Panel
+{
 
 	private static final long serialVersionUID = 1L;
-	public static final ResourceReference CALENDARS_CSS_REFERENCE = new ResourceReference(BaseCalendarView.class, "calendars.css");
-//	private static final Logger LOGGER = LoggerFactory.getLogger(BaseCalendarView.class);
+	public static final PackageResourceReference CALENDARS_CSS_REFERENCE = new PackageResourceReference(
+		BaseCalendarView.class, "calendars.css");
+// private static final Logger LOGGER = LoggerFactory.getLogger(BaseCalendarView.class);
 
 	private final Date mStartDate;
 	private final Date mEndDate;
 	private IEventProvider mEventProvider;
 
-	public BaseCalendarView(String id, Date startDate, Date endDate, IEventProvider eventProvider) {
+	public BaseCalendarView(String id, Date startDate, Date endDate, IEventProvider eventProvider)
+	{
 		super(id);
-		add(CSSPackageResource.getHeaderContribution(CALENDARS_CSS_REFERENCE));
-		if (startDate == null || endDate == null || eventProvider == null) {
+
+		if (startDate == null || endDate == null || eventProvider == null)
+		{
 			throw new IllegalArgumentException("no null parameters are allowed in this constructor");
 		}
 		mStartDate = startDate;
@@ -61,76 +65,107 @@ public abstract class BaseCalendarView extends Panel {
 		mEventProvider = eventProvider;
 	}
 
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.renderCSSReference(CALENDARS_CSS_REFERENCE);
+	}
+
 	/* Helper methods for subclasses */
-	protected final Map<DateMidnight, List<IEvent>> convertToMapByDay(Collection<? extends IEvent> allEvents) {
+	protected final Map<DateMidnight, List<IEvent>> convertToMapByDay(
+		Collection<? extends IEvent> allEvents)
+	{
 		// TODO: this could probably use a much more efficient algorithm
 		Map<DateMidnight, List<IEvent>> map = new HashMap<DateMidnight, List<IEvent>>();
-		for (IEvent event : allEvents) {
+		for (IEvent event : allEvents)
+		{
 			getRenderStrategy().mapEvent(map, event, this);
 		}
 		// now sort
-		for (List<IEvent> list : map.values()) {
+		for (List<IEvent> list : map.values())
+		{
 			Collections.sort(list, Comparators.EVENT_START_DATE_ASC_COMPARATOR);
 		}
 		return map;
 	}
 
-	protected IRenderStrategy getRenderStrategy() {
+	protected IRenderStrategy getRenderStrategy()
+	{
 		return IRenderStrategy.EVERY_DAY_OF_EVENT;
 	}
 
-	protected IDataProvider<DateMidnight> createDaysDataProvider(final DateTime start, final DateTime end, final Period period) {
-		return new IDataProvider<DateMidnight>() {
+	protected IDataProvider<DateMidnight> createDaysDataProvider(final DateTime start,
+		final DateTime end, final Period period)
+	{
+		return new IDataProvider<DateMidnight>()
+		{
 			private static final long serialVersionUID = 1L;
 
-			public Iterator<? extends DateMidnight> iterator(final int first, int count) {
+			public Iterator<? extends DateMidnight> iterator(final int first, int count)
+			{
 				return createDateMidnightIterator(start, end, first, count);
 			}
 
-			public IModel<DateMidnight> model(DateMidnight object) {
+			public IModel<DateMidnight> model(DateMidnight object)
+			{
 				return new Model<DateMidnight>(object);
 			}
 
-			public int size() {
+			public int size()
+			{
 				return period.getDays() + 1;
 			}
 
-			public void detach() {
+			public void detach()
+			{
 				// no-op
 			}
-			
+
 			@Override
-			public String toString() {
+			public String toString()
+			{
 				return "BaseCalendarView#DaysDataProvider [size: " + size() + "]";
 			}
 		};
 	}
 
-	protected Iterator<? extends DateMidnight> createDateMidnightIterator(DateTime start, DateTime end, int first, int count) {
+	protected Iterator<? extends DateMidnight> createDateMidnightIterator(DateTime start,
+		DateTime end, int first, int count)
+	{
 		return new DateMidnightIterator(start, end, first, count);
 	}
 
-	protected final int getNumberOfColumns() {
+	protected final int getNumberOfColumns()
+	{
 		return 7;
 	}
 
-	protected final int getLastDayOfWeek() {
+	protected final int getLastDayOfWeek()
+	{
 		return 6;
 	}
 
-	protected final int getFirstDayOfWeek() {
+	protected final int getFirstDayOfWeek()
+	{
 		return 7;
 	}
-	
+
 
 	/* Getters / Setters */
-	public final IEventProvider getEventProvider() {
+	public final IEventProvider getEventProvider()
+	{
 		return mEventProvider;
 	}
-	public final Date getStartDate() {
+
+	public final Date getStartDate()
+	{
 		return mStartDate;
 	}
-	public final Date getEndDate() {
+
+	public final Date getEndDate()
+	{
 		return mEndDate;
 	}
 }

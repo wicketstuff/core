@@ -33,100 +33,105 @@ import org.apache.wicket.util.string.StringValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class LogoutPage extends WebPage
 {
-  public static final String REDIRECTPAGE_PARAM = "redirectpage";
-  
-  static Logger log = LoggerFactory.getLogger( LogoutPage.class );
+	private static final long serialVersionUID = 1L;
 
-  /**
-   * Constructor. The page will immediately redirect to the given url.
-   *
-   * @param url
-   *            The url to redirect to
-   */
-  public LogoutPage(final CharSequence url)
-  {
-    doLogoutAndAddRedirect(url, getDelayTime());
-  }
+	private static final Logger LOG = LoggerFactory.getLogger(LogoutPage.class);
 
+	public static final String REDIRECTPAGE_PARAM = "redirectpage";
 
-  public LogoutPage( final PageParameters parameters ) {
-    StringValue page = parameters.get(REDIRECTPAGE_PARAM);
-    Class<? extends Page> pageClass;
-    if ( !page.isNull() ) {
-      try {
-        pageClass = (Class<? extends Page>)Class.forName(page.toString());
-      }
-      catch (ClassNotFoundException e) {
-        throw new RuntimeException(e);
-      }
-    }
-    else {
-      pageClass = getApplication().getHomePage();
-    }
+	/**
+	 * Constructor. The page will immediately redirect to the given url.
+	 * 
+	 * @param url
+	 *            The url to redirect to
+	 */
+	public LogoutPage(final CharSequence url)
+	{
+		doLogoutAndAddRedirect(url, getDelayTime());
+	}
 
 
-    this.setStatelessHint( true );
-    setResponsePage( pageClass );
+	public LogoutPage(final Class<? extends Page> pageClass)
+	{
+		doLogoutAndAddRedirect(urlFor(pageClass, null), getDelayTime());
+	}
 
-    // this should remove the cookie...
-    Subject subject = SecurityUtils.getSubject();
-    log.info( "logout: "+subject );
-    subject.logout();
-    Session.get().invalidateNow(); // invalidate the wicket session
-    return;
-  }
+	@SuppressWarnings("unchecked")
+	public LogoutPage(final PageParameters parameters)
+	{
+		final StringValue page = parameters.get(REDIRECTPAGE_PARAM);
+		Class<? extends Page> pageClass;
+		if (!page.isNull())
+			try
+			{
+				pageClass = (Class<? extends Page>)Class.forName(page.toString());
+			}
+			catch (final ClassNotFoundException e)
+			{
+				throw new RuntimeException(e);
+			}
+		else
+			pageClass = getApplication().getHomePage();
 
-  public LogoutPage( Class<? extends Page> pageClass ) {
-    doLogoutAndAddRedirect( urlFor(pageClass, null ), getDelayTime() );
-  }
+
+		setStatelessHint(true);
+		setResponsePage(pageClass);
+
+		// this should remove the cookie...
+		final Subject subject = SecurityUtils.getSubject();
+		LOG.info("logout: " + subject);
+		subject.logout();
+		Session.get().invalidateNow(); // invalidate the wicket session
+		return;
+	}
 
 
-  /**
-   * Constructor. The page will redirect to the given url after waiting for the given number of
-   * seconds.
-   *
-   * @param url
-   *            The url to redirect to
-   * @param waitBeforeRedirectInSeconds
-   *            The number of seconds the browser should wait before redirecting
-   */
-  private void doLogoutAndAddRedirect(final CharSequence url, final int waitBeforeRedirectInSeconds)
-  {
-    this.setStatelessHint( true );
+	/**
+	 * Constructor. The page will redirect to the given url after waiting for the given number of
+	 * seconds.
+	 * 
+	 * @param url
+	 *            The url to redirect to
+	 * @param waitBeforeRedirectInSeconds
+	 *            The number of seconds the browser should wait before redirecting
+	 */
+	private void doLogoutAndAddRedirect(final CharSequence url,
+		final int waitBeforeRedirectInSeconds)
+	{
+		setStatelessHint(true);
 
-    // this should remove the cookie...
-    Subject subject = SecurityUtils.getSubject();
-    log.info( "logout: "+subject );
-    subject.logout();
+		// this should remove the cookie...
+		final Subject subject = SecurityUtils.getSubject();
+		LOG.info("logout: " + subject);
+		subject.logout();
 
-    final WebMarkupContainer redirect = new WebMarkupContainer("redirect");
-    final String content = waitBeforeRedirectInSeconds + ";URL=" + url;
-    redirect.add(new AttributeModifier("content", new Model<String>(content)));
-    add(redirect);
+		final WebMarkupContainer redirect = new WebMarkupContainer("redirect");
+		final String content = waitBeforeRedirectInSeconds + ";URL=" + url;
+		redirect.add(new AttributeModifier("content", new Model<String>(content)));
+		add(redirect);
 
-    // invalidate the session
-    Session.get().invalidateNow(); // invalidate the wicket session
+		// invalidate the session
+		Session.get().invalidateNow(); // invalidate the wicket session
 
-    // HYMMMM
-    Cookie c = new Cookie( "rememberMe", "xxx" );
-    c.setMaxAge(0);
-    ((WebResponse)RequestCycle.get().getResponse()).addCookie( c );
-  }
+		// HYMMMM
+		final Cookie c = new Cookie("rememberMe", "xxx");
+		c.setMaxAge(0);
+		((WebResponse)RequestCycle.get().getResponse()).addCookie(c);
+	}
 
-  /**
-   * @see org.apache.wicket.Component#isVersioned()
-   */
-  @Override
-  public boolean isVersioned()
-  {
-    return false;
-  }
+	public int getDelayTime()
+	{
+		return 0;
+	}
 
-  public int getDelayTime()
-  {
-    return 0;
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isVersioned()
+	{
+		return false;
+	}
 }
