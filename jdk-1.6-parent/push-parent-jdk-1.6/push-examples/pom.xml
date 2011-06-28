@@ -23,7 +23,7 @@
 
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>push-cometd</artifactId>
+			<artifactId>wicketstuff-push-cometd</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

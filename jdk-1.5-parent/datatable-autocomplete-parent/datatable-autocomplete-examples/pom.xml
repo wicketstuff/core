@@ -21,7 +21,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>datatable-autocomplete</artifactId>
+			<artifactId>wicketstuff-datatable-autocomplete</artifactId>
 		</dependency>
 
 		<dependency>

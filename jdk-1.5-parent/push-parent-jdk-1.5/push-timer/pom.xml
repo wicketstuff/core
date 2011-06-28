@@ -17,7 +17,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>push-core</artifactId>
+			<artifactId>wicketstuff-push-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

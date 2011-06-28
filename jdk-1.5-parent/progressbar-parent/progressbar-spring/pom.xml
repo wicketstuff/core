@@ -8,18 +8,14 @@
 		<artifactId>progressbar-parent</artifactId>
 		<version>1.5-SNAPSHOT</version>
 	</parent>
-<<<<<<< HEAD
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-progressbar-spring</artifactId>
-=======
-	<artifactId>progressbar-spring</artifactId>
->>>>>>> 1b8c5b3f32dc8c603f3e55bf25f431dcbc3782f0
 	<description>TaskService for use with user submitted background tasks and the progress bar. Could be used with Spring or any other application framework.</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>progressbar</artifactId>
+			<artifactId>wicketstuff-progressbar</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

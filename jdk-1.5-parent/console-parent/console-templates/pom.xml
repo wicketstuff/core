@@ -21,7 +21,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>console-engine</artifactId>
+			<artifactId>wicketstuff-console-engine</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

@@ -39,7 +39,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>calendarviews</artifactId>
+			<artifactId>wicketstuff-calendarviews</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

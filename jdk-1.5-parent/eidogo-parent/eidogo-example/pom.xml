@@ -26,7 +26,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>wicket-eidogo</artifactId>
+			<artifactId>wicketstuff-eidogo</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

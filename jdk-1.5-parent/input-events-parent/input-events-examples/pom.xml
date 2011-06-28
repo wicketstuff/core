@@ -29,7 +29,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>input-events</artifactId>
+			<artifactId>wicketstuff-input-events</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

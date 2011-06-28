@@ -55,7 +55,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>jslibraries</artifactId>
+			<artifactId>wicketstuff-jslibraries</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
