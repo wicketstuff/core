@@ -7,14 +7,14 @@
         <version>1.4.8-SNAPSHOT</version>
     </parent>
     <groupId>org.wicketstuff</groupId>
-    <artifactId>wicket-syringe</artifactId>
+    <artifactId>wicketstuff-syringe</artifactId>
     <name>Wicket Syringe Core API</name>
     <description>A dependency injection framework for wicket</description>
     
     <dependencies>
         <dependency>
             <groupId>org.wicketstuff</groupId>
-            <artifactId>wicket-plugin</artifactId>
+            <artifactId>wicketstuff-plugin</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -26,7 +26,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>wicket-shiro</artifactId>
+	<artifactId>wicketstuff-shiro</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Apache Shiro Security for Wicket</name>

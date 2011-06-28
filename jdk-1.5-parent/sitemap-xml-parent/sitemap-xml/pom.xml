@@ -6,7 +6,7 @@
         <artifactId>sitemap-xml-parent</artifactId>
         <version>1.5-SNAPSHOT</version>
     </parent>
-    <name>sitemap-xml</name>
+    <name>wicketstuff-sitemap-xml</name>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>

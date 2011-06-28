@@ -8,7 +8,7 @@
       <version>1.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>objectautocomplete</artifactId>
+    <artifactId>wicketstuff-objectautocomplete</artifactId>
     <packaging>jar</packaging>
 
     <name>ObjectAutoComplete</name>

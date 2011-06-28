@@ -8,7 +8,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>jquery</artifactId>
+	<artifactId>wicketstuff-jquery</artifactId>
 	<packaging>jar</packaging>
 
 	<name>JQuery Integration</name>

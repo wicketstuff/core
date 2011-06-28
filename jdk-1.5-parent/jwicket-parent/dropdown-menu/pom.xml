@@ -9,7 +9,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>dropdown-menu</artifactId>
+	<artifactId>wicketstuff-dropdown-menu</artifactId>
 	<packaging>jar</packaging>
 
     <name>A simple dropdown menu for Apache Wicket</name>

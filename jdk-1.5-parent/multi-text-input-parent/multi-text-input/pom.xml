@@ -28,7 +28,7 @@
         <version>1.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>multi-text-input</artifactId>
+    <artifactId>wicketstuff-multi-text-input</artifactId>
     <packaging>jar</packaging>
 
     <name>Multi-Text Input</name>

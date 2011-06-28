@@ -8,7 +8,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>simile-timeline</artifactId>
+	<artifactId>wicketstuff-simile-timeline</artifactId>
 	<packaging>jar</packaging>
 	<name>Simile Timeline</name>
 	<description>Simile Timeline widget for Wicket</description>

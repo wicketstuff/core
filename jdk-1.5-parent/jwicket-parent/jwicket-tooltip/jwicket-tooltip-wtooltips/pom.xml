@@ -9,7 +9,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>jwicket-tooltip-wtooltips</artifactId>
+	<artifactId>wicketstuff-jwicket-tooltip-wtooltips</artifactId>
 	<packaging>jar</packaging>
 
     <name>jWicket: jQuery Wicket integration - toolstips.wtooltips</name>

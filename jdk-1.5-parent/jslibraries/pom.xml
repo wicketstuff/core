@@ -9,7 +9,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>jslibraries</artifactId>
+	<artifactId>wicketstuff-jslibraries</artifactId>
 	<packaging>jar</packaging>
 
 	<name>JSLibraries</name>

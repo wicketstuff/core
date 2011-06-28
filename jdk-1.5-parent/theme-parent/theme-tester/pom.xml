@@ -7,7 +7,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.wicketstuff</groupId>
-	<artifactId>theme-tester</artifactId>
+	<artifactId>wicketstuff-theme-tester</artifactId>
 	<name>theme-tester</name>
 	<packaging>jar</packaging>
 	<description>Default Wicket Theme</description>

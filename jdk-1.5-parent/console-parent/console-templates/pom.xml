@@ -10,7 +10,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>console-templates</artifactId>
+	<artifactId>wicketstuff-console-templates</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Wicket Console - Templates</name>

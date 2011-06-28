@@ -25,7 +25,7 @@
         <version>1.5-SNAPSHOT</version>
     </parent>
 	
-    <artifactId>jwicket-tooltip</artifactId>
+    <artifactId>wicketstuff-jwicket-tooltip</artifactId>
 	<packaging>pom</packaging>
 	
     <name>jWicket: jQuery Wicket integration - tooltips</name>

@@ -8,7 +8,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 	
-	<artifactId>scriptaculous</artifactId>
+	<artifactId>wicketstuff-scriptaculous</artifactId>
 	<name>Scriptaculous Integration</name>
 	<description>
 		<![CDATA[The Wicket Contrib Prototype project showcases one possible way to integrate the

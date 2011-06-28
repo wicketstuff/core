@@ -10,7 +10,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>phonebook</artifactId>
+	<artifactId>wicketstuff-phonebook</artifactId>
 	<packaging>war</packaging>
 
 	<name>Wicket Phonebook Example</name>

@@ -8,7 +8,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>push-timer</artifactId>
+	<artifactId>wicketstuff-push-timer</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Wicketstuff Push - Timer</name>

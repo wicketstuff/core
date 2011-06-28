@@ -8,7 +8,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>input-events</artifactId>
+	<artifactId>wicketstuff-input-events</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Input Events</name>

@@ -7,7 +7,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.wicketstuff</groupId>
-  <artifactId>maven-support</artifactId>
+  <artifactId>wicketstuff-maven-support</artifactId>
   <name>maven-support</name>
   <packaging>jar</packaging>
 </project>

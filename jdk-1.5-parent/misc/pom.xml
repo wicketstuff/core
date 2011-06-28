@@ -8,7 +8,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>misc</artifactId>
+	<artifactId>wicketstuff-misc</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Misc</name>

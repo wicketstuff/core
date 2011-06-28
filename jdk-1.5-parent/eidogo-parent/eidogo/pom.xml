@@ -10,7 +10,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>wicket-eidogo</artifactId>
+	<artifactId>wicketstuff-eidogo</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Wicket-EidoGo</name>

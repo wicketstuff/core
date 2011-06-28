@@ -23,7 +23,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>openlayers</artifactId>
+	<artifactId>wicketstuff-openlayers</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Openlayers</name>

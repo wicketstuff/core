@@ -9,7 +9,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>client-and-server-validation</artifactId>
+	<artifactId>wicketstuff-client-and-server-validation</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Client and Server Validation</name>

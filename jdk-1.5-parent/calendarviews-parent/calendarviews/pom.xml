@@ -28,7 +28,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>calendarviews</artifactId>
+	<artifactId>wicketstuff-calendarviews</artifactId>
 	<packaging>jar</packaging>
 
 	<name>CalendarViews</name>

@@ -24,7 +24,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>openlayers-proxy</artifactId>
+	<artifactId>wicketstuff-openlayers-proxy</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Openlayers - Proxy</name>

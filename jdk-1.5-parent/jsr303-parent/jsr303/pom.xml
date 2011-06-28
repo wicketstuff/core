@@ -24,7 +24,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>jsr303</artifactId>
+	<artifactId>wicketstuff-jsr303</artifactId>
 	<packaging>jar</packaging>
 
 	<name>JSR303</name>

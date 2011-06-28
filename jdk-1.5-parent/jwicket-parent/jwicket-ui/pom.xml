@@ -25,7 +25,7 @@
         <version>1.5-SNAPSHOT</version>
     </parent>
 	
-    <artifactId>jwicket-ui</artifactId>
+    <artifactId>wicketstuff-jwicket-ui</artifactId>
 	<packaging>pom</packaging>
 	
     <name>jWicket: jQuery Wicket integration - ui</name>

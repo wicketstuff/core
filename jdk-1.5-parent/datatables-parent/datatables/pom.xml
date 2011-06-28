@@ -9,7 +9,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>datatables</artifactId>
+	<artifactId>wicketstuff-datatables</artifactId>
 	<packaging>jar</packaging>
 
 	<name>DataTables jQuery Plugin Integration</name>
