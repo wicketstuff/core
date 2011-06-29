@@ -5,7 +5,8 @@
     <parent>
         <artifactId>wicket-syringe-parent</artifactId>
         <groupId>org.wicketstuff</groupId>
-        <version>1.4.8-SNAPSHOT</version>
+        <version>1.5-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>wicket-syringe-webbeans-example</artifactId>
     <packaging>war</packaging>

@@ -50,7 +50,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>prototype</artifactId>
+            <artifactId>wicketstuff-prototype</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

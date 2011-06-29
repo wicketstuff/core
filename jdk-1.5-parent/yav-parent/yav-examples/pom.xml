@@ -47,7 +47,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>yav</artifactId>
+			<artifactId>wicketstuff-yav</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

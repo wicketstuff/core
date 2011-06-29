@@ -73,8 +73,8 @@
 		</dependency>
 -->
 		<dependency>
-			<groupId>org.wicketstuff</groupId>
-			<artifactId>theme-base</artifactId>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>wicketstuff-theme-base</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
