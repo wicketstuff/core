@@ -32,7 +32,7 @@
 		<!-- WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>openlayers</artifactId>
+			<artifactId>wicketstuff-openlayers</artifactId>
 		</dependency>
 
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
@@ -59,7 +59,7 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>openlayers-proxy</artifactId>
+			<artifactId>wicketstuff-openlayers-proxy</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

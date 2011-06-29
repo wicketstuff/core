@@ -49,7 +49,7 @@
     <dependencies>
         <dependency>
             <groupId>org.wicketstuff</groupId>
-            <artifactId>scriptaculous</artifactId>
+            <artifactId>wicketstuff-scriptaculous</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

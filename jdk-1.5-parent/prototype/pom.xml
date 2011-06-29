@@ -19,7 +19,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>jslibraries</artifactId>
+			<artifactId>wicketstuff-jslibraries</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

@@ -44,8 +44,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.wicketstuff</groupId>
-			<artifactId>openlayers</artifactId>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>wicketstuff-openlayers</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

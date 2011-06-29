@@ -42,7 +42,7 @@
   <dependencies>
       <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>multi-text-input</artifactId>
+      <artifactId>wicketstuff-multi-text-input</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>

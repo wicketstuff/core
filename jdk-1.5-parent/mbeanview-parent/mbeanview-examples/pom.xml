@@ -21,7 +21,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>mbeanview</artifactId>
+			<artifactId>wicketstuff-mbeanview</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 				<!-- logging -->

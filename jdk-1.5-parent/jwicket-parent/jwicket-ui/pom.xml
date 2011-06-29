@@ -23,6 +23,7 @@
         <groupId>org.wicketstuff</groupId>
         <artifactId>jwicket-parent</artifactId>
         <version>1.5-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 	
     <artifactId>wicketstuff-jwicket-ui</artifactId>
@@ -57,7 +58,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jwicket-core</artifactId>
+            <artifactId>wicketstuff-jwicket-core</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

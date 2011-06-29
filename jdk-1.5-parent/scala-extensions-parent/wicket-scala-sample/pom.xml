@@ -16,7 +16,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.wicketstuff.scala</groupId>
-			<artifactId>wicket-scala</artifactId>
+			<artifactId>wicketstuff-scala</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
