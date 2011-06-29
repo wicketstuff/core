@@ -31,21 +31,17 @@ import org.wicketstuff.security.actions.WaspAction;
  */
 public class StringAction extends AbstractWaspAction
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
-	private Set<String> actions;
+	private final Set<String> actions;
 
 	StringAction(String name)
 	{
 		super(name);
 		actions = new HashSet<String>();
 		String[] names = name.split(" ");
-		for (int i = 0; i < names.length; i++)
+		for (String name2 : names)
 		{
-			actions.add(names[i].replace(',', ' ').trim());
+			actions.add(name2.replace(',', ' ').trim());
 		}
 	}
 

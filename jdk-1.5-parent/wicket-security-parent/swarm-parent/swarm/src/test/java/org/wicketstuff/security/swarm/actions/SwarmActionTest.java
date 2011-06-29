@@ -194,8 +194,6 @@ public class SwarmActionTest extends TestCase
 
 	private static class TestAction extends SwarmAction
 	{
-		private static final long serialVersionUID = 1L;
-
 		/**
 		 * Construct.
 		 * 
