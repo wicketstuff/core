@@ -22,7 +22,7 @@
 		<artifactId>wicket-security-swarm-parent</artifactId>
 		<version>1.5-SNAPSHOT</version>
 	</parent>
-	<artifactId>wicket-security-swarm</artifactId>
+	<artifactId>wicketstuff-security-swarm</artifactId>
 	<packaging>jar</packaging>
 	<name>SWARM</name>
 	<inceptionYear>2006</inceptionYear>
@@ -57,11 +57,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>wicket-security-wasp</artifactId>
+			<artifactId>wicketstuff-security-wasp</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>wicket-security-hive</artifactId>
+			<artifactId>wicketstuff-security-hive</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
