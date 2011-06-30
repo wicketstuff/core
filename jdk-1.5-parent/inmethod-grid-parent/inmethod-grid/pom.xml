@@ -10,7 +10,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>inmethod-grid</artifactId>
+	<artifactId>wicketstuff-inmethod-grid</artifactId>
 	<packaging>jar</packaging>
 
 	<name>InMethod Grid</name>

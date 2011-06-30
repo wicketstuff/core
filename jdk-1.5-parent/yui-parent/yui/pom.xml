@@ -8,7 +8,7 @@
         <version>1.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>yui</artifactId>
+    <artifactId>wicketstuff-yui</artifactId>
     <packaging>jar</packaging>
 
     <name>Wicket YUI Integration</name>

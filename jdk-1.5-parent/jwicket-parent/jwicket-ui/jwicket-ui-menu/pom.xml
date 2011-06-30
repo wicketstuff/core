@@ -9,7 +9,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>jwicket-ui-menu</artifactId>
+	<artifactId>wicketstuff-jwicket-ui-menu</artifactId>
 	<packaging>jar</packaging>
 
     <name>jWicket: jQuery Wicket integration - ui.menu</name>

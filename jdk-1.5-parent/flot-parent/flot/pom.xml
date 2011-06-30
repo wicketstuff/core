@@ -10,7 +10,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>flot</artifactId>
+	<artifactId>wicketstuff-flot</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Wicket Flot Integration</name>

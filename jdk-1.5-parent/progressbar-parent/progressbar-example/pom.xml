@@ -17,12 +17,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>progressbar</artifactId>
+			<artifactId>wicketstuff-progressbar</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>progressbar-spring</artifactId>
+			<artifactId>wicketstuff-progressbar-spring</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

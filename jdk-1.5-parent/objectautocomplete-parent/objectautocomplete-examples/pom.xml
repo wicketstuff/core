@@ -17,8 +17,8 @@
     <dependencies>
         <!--  WICKET DEPENDENCIES -->
         <dependency>
-            <groupId>org.wicketstuff</groupId>
-            <artifactId>objectautocomplete</artifactId>
+            <groupId>{project.groupId}</groupId>
+            <artifactId>wicketstuff-objectautocomplete</artifactId>
             <version>${project.version}</version>
         </dependency>
 

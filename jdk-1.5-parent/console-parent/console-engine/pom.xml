@@ -10,7 +10,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>console-engine</artifactId>
+	<artifactId>wicketstuff-console-engine</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Wicket Console - Engine</name>

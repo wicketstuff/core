@@ -26,7 +26,7 @@
 	<dependencies>
 		<dependency>
 	                <groupId>${project.groupId}</groupId>
-	                <artifactId>datatables</artifactId>
+	                <artifactId>wicketstuff-datatables</artifactId>
         	        <version>${project.version}</version>
 	        </dependency>
 

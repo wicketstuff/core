@@ -59,7 +59,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>jasperreports</artifactId>
+			<artifactId>wicketstuff-jasperreports</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

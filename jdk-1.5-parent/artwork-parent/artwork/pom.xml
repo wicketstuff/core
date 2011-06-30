@@ -7,7 +7,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.wicketstuff</groupId>
-	<artifactId>artwork</artifactId>
+	<artifactId>wicketstuff-artwork</artifactId>
 	<name>artwork</name>
 	<packaging>jar</packaging>
 	<description>Compnents that will make your </description>
@@ -55,7 +55,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>jslibraries</artifactId>
+			<artifactId>wicketstuff-jslibraries</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

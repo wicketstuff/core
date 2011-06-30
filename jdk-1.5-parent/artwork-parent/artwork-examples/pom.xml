@@ -21,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>org.wicketstuff</groupId>
-            <artifactId>artwork</artifactId>
+            <artifactId>wicketstuff-artwork</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

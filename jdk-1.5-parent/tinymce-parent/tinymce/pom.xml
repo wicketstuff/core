@@ -27,7 +27,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>tinymce</artifactId>
+	<artifactId>wicketstuff-tinymce</artifactId>
 	<packaging>jar</packaging>
 
 	<name>TinyMCE</name>

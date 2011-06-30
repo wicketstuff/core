@@ -22,7 +22,7 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>gmap2</artifactId>
+			<artifactId>wicketstuff-gmap2</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

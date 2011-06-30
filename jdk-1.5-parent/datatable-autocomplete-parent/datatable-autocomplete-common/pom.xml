@@ -5,7 +5,7 @@
     <version>1.5-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>datatable-autocomplete-common</artifactId>
+  <artifactId>wicketstuff-datatable-autocomplete-common</artifactId>
   <name>Datatable Autocomplete Common</name>
   
   <description>This module provides the Patricia Trie implementation.  It is seperated from the main datatable-autocomplete module to allow reuse in non wicket environments.</description>

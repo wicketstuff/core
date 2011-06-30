@@ -26,11 +26,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>console</artifactId>
+			<artifactId>wicketstuff-console</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>console-templates</artifactId>
+			<artifactId>wicketstuff-console-templates</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>

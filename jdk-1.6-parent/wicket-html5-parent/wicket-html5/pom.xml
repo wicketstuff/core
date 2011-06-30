@@ -10,7 +10,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>wicket-html5</artifactId>
+	<artifactId>wicketstuff-html5</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Wicket HTML5 :: Wicket-HTML5</name>

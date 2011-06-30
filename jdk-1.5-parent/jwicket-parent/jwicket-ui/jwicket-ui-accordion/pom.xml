@@ -9,7 +9,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>jwicket-ui-accordion</artifactId>
+	<artifactId>wicketstuff-jwicket-ui-accordion</artifactId>
 	<packaging>jar</packaging>
 
     <name>jWicket: jQuery Wicket integration - ui.sort</name>

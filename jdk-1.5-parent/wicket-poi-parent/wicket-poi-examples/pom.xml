@@ -18,12 +18,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>minis</artifactId>
+			<artifactId>wicketstuff-minis</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>wicket-poi</artifactId>
+			<artifactId>wicketstuff-poi</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

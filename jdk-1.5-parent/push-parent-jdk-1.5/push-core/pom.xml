@@ -8,7 +8,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>push-core</artifactId>
+	<artifactId>wicketstuff-push-core</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Wicketstuff Push - Core</name>

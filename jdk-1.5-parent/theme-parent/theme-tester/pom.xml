@@ -6,7 +6,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>theme-tester</artifactId>
+	<artifactId>wicketstuff-theme-tester</artifactId>
 	<name>theme-tester</name>
 	<packaging>jar</packaging>
 	<description>Default Wicket Theme</description>
@@ -80,12 +80,12 @@
 -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>theme-standard</artifactId>
+			<artifactId>wicketstuff-theme-standard</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>maven-support</artifactId>
+			<artifactId>wicketstuff-maven-support</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

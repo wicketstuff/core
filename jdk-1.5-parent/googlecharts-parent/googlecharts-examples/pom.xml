@@ -20,7 +20,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>googlecharts</artifactId>
+            <artifactId>wicketstuff-googlecharts</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

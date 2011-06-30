@@ -8,7 +8,7 @@
     <version>1.5-SNAPSHOT</version>
   </parent>
 
-  <artifactId>serializer-kryo</artifactId>
+  <artifactId>wicketstuff-serializer-kryo</artifactId>
 
   <name>WicketStuff Kryo serializer</name>
   <description>ISerializer based on http://code.google.com/p/kryo/</description>

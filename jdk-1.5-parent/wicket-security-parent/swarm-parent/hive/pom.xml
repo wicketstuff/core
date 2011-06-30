@@ -22,7 +22,7 @@
 		<artifactId>wicket-security-swarm-parent</artifactId>
 		<version>1.5-SNAPSHOT</version>
 	</parent>
-	<artifactId>wicket-security-hive</artifactId>
+	<artifactId>wicketstuff-security-hive</artifactId>
 	<packaging>jar</packaging>
 	<name>Hive</name>
 	<inceptionYear>2006</inceptionYear>
@@ -32,7 +32,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>wicket-security-wicomsec</artifactId>
+			<artifactId>wicketstuff-security-wicomsec</artifactId>
 		</dependency>
 	</dependencies>
 	<build>

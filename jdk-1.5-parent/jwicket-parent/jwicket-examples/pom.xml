@@ -36,49 +36,49 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jwicket-core</artifactId>
+            <artifactId>wicketstuff-jwicket-core</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jwicket-ui-dragdrop</artifactId>
+            <artifactId>wicketstuff-jwicket-ui-dragdrop</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jwicket-ui-resize</artifactId>
+            <artifactId>wicketstuff-jwicket-ui-resize</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jwicket-ui-effects</artifactId>
+            <artifactId>wicketstuff-jwicket-ui-effects</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jwicket-ui-datepicker</artifactId>
+            <artifactId>wicketstuff-jwicket-ui-datepicker</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jwicket-tooltip-walterzorn</artifactId>
+            <artifactId>wicketstuff-jwicket-tooltip-walterzorn</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jwicket-tooltip-beautytips</artifactId>
+            <artifactId>wicketstuff-jwicket-tooltip-beautytips</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jwicket-tooltip-wtooltips</artifactId>
+            <artifactId>wicketstuff-jwicket-tooltip-wtooltips</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>dropdown-menu</artifactId>
+            <artifactId>wicketstuff-dropdown-menu</artifactId>
             <version>${project.version}</version>
         </dependency>
         

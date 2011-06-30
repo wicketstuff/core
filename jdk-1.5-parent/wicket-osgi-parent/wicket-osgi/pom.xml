@@ -6,7 +6,7 @@
 		<groupId>org.wicketstuff</groupId>
 		<version>1.5-SNAPSHOT</version>
 	</parent>
-	<artifactId>wicket-osgi</artifactId>
+	<artifactId>wicketstuff-osgi</artifactId>
 	<packaging>bundle</packaging>
 	<name>Wicket OSGi Integration</name>
 	<dependencies>

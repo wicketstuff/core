@@ -9,7 +9,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>mootools-meiomask</artifactId>
+	<artifactId>wicketstuff-mootools-meiomask</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Mootools MeioMask Plugin Integration</name>

@@ -9,7 +9,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>jwicket-tooltip-beautytips</artifactId>
+	<artifactId>wicketstuff-jwicket-tooltip-beautytips</artifactId>
 	<packaging>jar</packaging>
 
     <name>jWicket: jQuery Wicket integration - toolstips.beautytips</name>

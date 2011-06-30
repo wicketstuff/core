@@ -85,7 +85,7 @@
   <dependencies>
     <dependency>
 		<groupId>${project.groupId}</groupId>
-		<artifactId>gae-initializer</artifactId>
+		<artifactId>wicketstuff-gae-initializer</artifactId>
 		<version>${project.version}</version>
     </dependency>
      <!--

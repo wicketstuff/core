@@ -7,7 +7,7 @@
     <version>1.5-SNAPSHOT</version>
   </parent>
 
-  <artifactId>wicket-bundle</artifactId>
+  <artifactId>wicketstuff-bundle</artifactId>
   <name>Wicket Bundle</name>
 
   <packaging>bundle</packaging>

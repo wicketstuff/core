@@ -10,7 +10,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>wicket-servlet3</artifactId>
+	<artifactId>wicketstuff-servlet3</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Wicket Servlet3</name>

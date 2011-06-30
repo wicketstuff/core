@@ -6,7 +6,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>theme-standard</artifactId>
+	<artifactId>wicketstuff-theme-standard</artifactId>
 	<name>theme-standard</name>
 	<packaging>jar</packaging>
 	<description>Default Wicket Theme</description>
@@ -72,8 +72,8 @@
 		</dependency>
 -->
 		<dependency>
-			<groupId>org.wicketstuff</groupId>
-			<artifactId>theme-base</artifactId>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>wicketstuff-theme-base</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

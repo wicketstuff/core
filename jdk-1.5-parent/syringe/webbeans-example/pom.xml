@@ -5,7 +5,7 @@
     <parent>
         <artifactId>wicket-syringe-parent</artifactId>
         <groupId>org.wicketstuff</groupId>
-        <version>1.4.8-SNAPSHOT</version>
+        <version>1.5-SNAPSHOT</version>
     </parent>
     <artifactId>wicket-syringe-webbeans-example</artifactId>
     <packaging>war</packaging>
@@ -41,8 +41,8 @@
             <artifactId>log4j</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wicketstuff</groupId>
-            <artifactId>wicket-syringe-webbeans</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wicketstuff-syringe-webbeans</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

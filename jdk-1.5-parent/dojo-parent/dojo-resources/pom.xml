@@ -7,7 +7,7 @@
 		<artifactId>dojo-parent</artifactId>
 		<version>1.5-SNAPSHOT</version>
 	</parent>
-	<artifactId>dojo-resources-${dojo.profile}</artifactId>
+	<artifactId>wicketstuff-dojo-resources-${dojo.profile}</artifactId>
 	<packaging>jar</packaging>
 	<name>WicketStuff Dojo resources</name>
 	<licenses>
