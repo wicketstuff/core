@@ -27,7 +27,7 @@
 		<!-- WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>wicket-servlet3</artifactId>
+			<artifactId>wicketstuff-servlet3</artifactId>
 		</dependency>
 
 		<dependency>

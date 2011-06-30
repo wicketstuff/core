@@ -29,7 +29,7 @@
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>push-timer</artifactId>
+			<artifactId>wicketstuff-push-timer</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
