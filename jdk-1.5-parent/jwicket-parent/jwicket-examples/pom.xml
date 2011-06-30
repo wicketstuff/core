@@ -6,7 +6,6 @@
         <groupId>org.wicketstuff</groupId>
         <artifactId>jwicket-parent</artifactId>
         <version>1.5-SNAPSHOT</version>
-	<relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>jwicket-examples</artifactId>
