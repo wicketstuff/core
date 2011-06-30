@@ -33,12 +33,9 @@ import java.util.Set;
  */
 public class ManyToManyMap<L, R>
 {
+	private final Map<L, Set<R>> lToRMappings;
 
-	private static final long serialVersionUID = 1L;
-
-	private Map<L, Set<R>> lToRMappings;
-
-	private Map<R, Set<L>> rToLMappings;
+	private final Map<R, Set<L>> rToLMappings;
 
 	/**
 	 * Creates map with default initial size and load factor.
@@ -331,7 +328,7 @@ public class ManyToManyMap<L, R>
 	@Override
 	public int hashCode()
 	{
-		return (7 * rToLMappings.hashCode()) ^ (37 * lToRMappings.hashCode()) + 1979;
+		return 7 * rToLMappings.hashCode() ^ 37 * lToRMappings.hashCode() + 1979;
 	}
 
 	/**

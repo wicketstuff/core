@@ -10,6 +10,7 @@ import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 
 import com.inmethod.grid.datagrid.DataGrid;
+import com.inmethod.grid.datagrid.DataGrid.IGridQuery;
 
 /**
  * Adapter that allows using a wicket extension {@link IDataProvider} in a {@link DataGrid}. The
@@ -99,7 +100,8 @@ public class DataProviderAdapter<T> implements IDataSource<T>
 			ISortState state = locator.getSortState();
 			if (state != null)
 			{
-				DataGrid grid = ((DataGrid.IGridQuery)query).getDataGrid();
+				DataGrid.IGridQuery<IDataSource<T>, T> gridQuery = (IGridQuery<IDataSource<T>, T>)query;
+				DataGrid<IDataSource<T>, T> grid = gridQuery.getDataGrid();
 				setSortState(state, grid, gridSortState);
 			}
 		}

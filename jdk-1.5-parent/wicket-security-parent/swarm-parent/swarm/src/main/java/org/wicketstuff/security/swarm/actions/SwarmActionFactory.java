@@ -509,8 +509,6 @@ public class SwarmActionFactory implements WaspActionFactory
 	 */
 	protected static class ImpliesOtherAction extends SwarmAction
 	{
-		private static final long serialVersionUID = 1L;
-
 		/**
 		 * the base action value
 		 * 

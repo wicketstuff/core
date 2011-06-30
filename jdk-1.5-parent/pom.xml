@@ -51,6 +51,7 @@
 		<module>simile-timeline-parent</module>
 		<module>theme-parent</module>
 		<module>wicket-bundle-parent</module>
+		<module>wicket-osgi-parent</module>
 		<module>wicket-poi-parent</module>
 		<module>wicket-security-parent</module>
 		<module>wicketstuff-logback-parent</module>

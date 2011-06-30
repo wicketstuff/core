@@ -508,8 +508,6 @@ public class TestActionFactory implements ActionFactory
 	 */
 	protected static class ImpliesOtherAction extends TestAction
 	{
-		private static final long serialVersionUID = 1L;
-
 		/**
 		 * @param actions
 		 *            the base action value
