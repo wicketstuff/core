@@ -5,16 +5,14 @@
         <artifactId>wicket-syringe-parent</artifactId>
         <groupId>org.wicketstuff</groupId>
         <version>1.5-SNAPSHOT</version>
-	<relativePath>../pom.xml</relativePath>
     </parent>
-    <groupId>org.wicketstuff</groupId>
     <artifactId>wicketstuff-syringe</artifactId>
     <name>Wicket Syringe Core API</name>
     <description>A dependency injection framework for wicket</description>
     
     <dependencies>
         <dependency>
-            <groupId>org.wicketstuff</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>wicketstuff-plugin</artifactId>
             <version>${project.version}</version>
         </dependency>
