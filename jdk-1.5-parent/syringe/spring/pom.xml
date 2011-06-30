@@ -5,13 +5,12 @@
         <artifactId>wicket-syringe-parent</artifactId>
         <groupId>org.wicketstuff</groupId>
         <version>1.5-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>wicketstuff-syringe-spring</artifactId>
     <name>Spring Syringe Plugin</name>
     <dependencies>
         <dependency>
-            <groupId>org.wicketstuff</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>wicketstuff-syringe</artifactId>
             <version>${project.version}</version>
         </dependency>
