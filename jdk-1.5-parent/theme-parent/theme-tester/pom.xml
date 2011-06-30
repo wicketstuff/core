@@ -6,7 +6,6 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-theme-tester</artifactId>
 	<name>theme-tester</name>
 	<packaging>jar</packaging>
