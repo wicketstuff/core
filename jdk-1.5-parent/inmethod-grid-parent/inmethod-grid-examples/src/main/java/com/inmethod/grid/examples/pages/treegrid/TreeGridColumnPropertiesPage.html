@@ -1,4 +1,4 @@
-<wicket:head>
+<wicket:head xmlns:wicket="http://wicket.apache.org">
 	<style type="text/css">
 		td.property2 {
 			color: red;
@@ -9,9 +9,8 @@
 		}
 	</style>
 </wicket:head>
-<wicket:extend>
-	<div wicket:id="grid">
-	</div>
+<wicket:extend xmlns:wicket="http://wicket.apache.org">
+	<div wicket:id="grid"></div>
 	<ul>
 		<li>Property 1 column is not reorderable, has colspan=6 for nodes with children and has custom initial, minimal and maximal size.</li>
 		<li>Property 2 is not resizable and has custom css class.</li>

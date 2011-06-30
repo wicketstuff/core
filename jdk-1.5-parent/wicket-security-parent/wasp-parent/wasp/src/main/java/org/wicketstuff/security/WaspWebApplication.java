@@ -32,12 +32,6 @@ import org.wicketstuff.security.strategies.StrategyFactory;
  */
 public abstract class WaspWebApplication extends WebApplication implements WaspApplication
 {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	/**
 	 * creates a new secure webapplication.
 	 */

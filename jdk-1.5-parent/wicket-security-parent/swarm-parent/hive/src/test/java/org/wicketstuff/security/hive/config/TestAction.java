@@ -36,7 +36,6 @@ import org.wicketstuff.security.actions.WaspAction;
  */
 public class TestAction extends AbstractWaspAction
 {
-	private static final long serialVersionUID = 1L;
 
 	private final int actions;
 
@@ -75,7 +74,7 @@ public class TestAction extends AbstractWaspAction
 	 */
 	public final boolean implies(int otherActions)
 	{
-		return ((actions & otherActions) == otherActions);
+		return (actions & otherActions) == otherActions;
 	}
 
 	/**

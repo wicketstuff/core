@@ -58,8 +58,6 @@ public class LoginTest
 		}
 		LoginContext ctx = new LoginContext(true)
 		{
-			private static final long serialVersionUID = 1L;
-
 			@Override
 			public Subject login()
 			{
@@ -136,12 +134,6 @@ public class LoginTest
 		LoginContainer container = new LoginContainer();
 		LoginContext ctx = new LoginContext()
 		{
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
 			@Override
 			public Subject login()
 			{
@@ -292,8 +284,6 @@ public class LoginTest
 
 	private static final class myContext extends LoginContext
 	{
-		private static final long serialVersionUID = 1L;
-
 		/**
 		 * @see org.wicketstuff.security.hive.authentication.LoginContext#login()
 		 */
