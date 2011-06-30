@@ -5,15 +5,14 @@
     <parent>
         <artifactId>wicket-syringe-parent</artifactId>
         <groupId>org.wicketstuff</groupId>
-        <version>1.4.8-SNAPSHOT</version>
+        <version>1.5-SNAPSHOT</version>
     </parent>
-    <groupId>org.wicketstuff</groupId>
-    <artifactId>wicket-syringe-webbeans</artifactId>
+    <artifactId>wicketstuff-syringe-webbeans</artifactId>
     <name>WebBeans Syringe Plugin</name>
     <dependencies>
         <dependency>
-            <groupId>org.wicketstuff</groupId>
-            <artifactId>wicket-syringe</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wicketstuff-syringe</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

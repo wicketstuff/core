@@ -8,7 +8,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>sample</artifactId>
+	<artifactId>wicketstuff-sample</artifactId>
 	<name>Wicket-Scala Samples</name>
 
 	<description>An example project demonstrating various uses of the WicketStuff-Scala-Extensions project.</description>
@@ -16,7 +16,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.wicketstuff.scala</groupId>
-			<artifactId>wicket-scala</artifactId>
+			<artifactId>wicketstuff-scala</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

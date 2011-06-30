@@ -9,7 +9,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>jwicket-ui-resize</artifactId>
+	<artifactId>wicketstuff-jwicket-ui-resize</artifactId>
 	<packaging>jar</packaging>
 
     <name>jWicket: jQuery Wicket integration - ui.resize</name>

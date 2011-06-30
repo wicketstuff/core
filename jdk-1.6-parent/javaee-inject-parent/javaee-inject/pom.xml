@@ -6,7 +6,7 @@
         <artifactId>javaee-inject-parent</artifactId>
         <version>1.5-SNAPSHOT</version>
     </parent>
-    <artifactId>javaee-inject</artifactId>
+    <artifactId>wicketstuff-javaee-inject</artifactId>
     <packaging>jar</packaging>
     <name>JavaEE Inject</name>
 

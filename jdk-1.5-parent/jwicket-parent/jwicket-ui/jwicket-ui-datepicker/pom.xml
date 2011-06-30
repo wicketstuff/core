@@ -9,7 +9,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>jwicket-ui-datepicker</artifactId>
+	<artifactId>wicketstuff-jwicket-ui-datepicker</artifactId>
 	<packaging>jar</packaging>
 
     <name>jWicket: jQuery Wicket integration - ui.datepicker</name>

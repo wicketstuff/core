@@ -51,7 +51,7 @@
 		<dependencies>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>inmethod-grid</artifactId>
+				<artifactId>wicketstuff-inmethod-grid</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

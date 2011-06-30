@@ -8,32 +8,40 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>wicketstuff-prototype</artifactId>
+	<artifactId>wicketstuff-misc</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Prototype Integration</name>
+	<name>Misc</name>
+	
 	<description>
-		WicketStuff Prototype offers a standardized integration of the prototype javascript library.
+		Miscellaneous really little stuff for Wicket.
 	</description>
+	
+	<developers>
+		<developer>
+			<id>david.bernard</id>
+			<name>David Bernard</name>
+			<email>dwayneb at users.sf.net</email>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
 
 	<dependencies>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>wicketstuff-jslibraries</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-extensions</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<scope>test</scope>
+			<version>2.5</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<classifier>jdk15</classifier>
+			<version>5.7</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

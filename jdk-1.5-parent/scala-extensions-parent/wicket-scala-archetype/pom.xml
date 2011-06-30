@@ -9,7 +9,7 @@
 	</parent>
 	
 	<packaging>maven-archetype</packaging>	
-	<artifactId>wicket-scala-archetype</artifactId>
+	<artifactId>wicketstuff-scala-archetype</artifactId>
 	<name>Wicket-Scala Archetype</name>
 	<description>Basic setup for a project that combines Scala and Wicket, 
 		depending on the Wicket-Scala project. Includes an example Specs 

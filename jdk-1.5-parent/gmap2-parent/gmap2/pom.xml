@@ -24,7 +24,7 @@ limitations under the License.
         <version>1.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>gmap2</artifactId>
+    <artifactId>wicketstuff-gmap2</artifactId>
     <packaging>jar</packaging>
     
     <name>GMap2</name>

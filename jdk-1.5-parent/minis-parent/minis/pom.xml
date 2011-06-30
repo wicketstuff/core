@@ -8,7 +8,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>minis</artifactId>
+	<artifactId>wicketstuff-minis</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Minis</name>

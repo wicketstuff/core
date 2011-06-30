@@ -35,22 +35,22 @@
 		<dependencies>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>console</artifactId>
+				<artifactId>wicketstuff-console</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>console-engine</artifactId>
+				<artifactId>wicketstuff-console-engine</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>console-scripts</artifactId>
+				<artifactId>wicketstuff-console-scripts</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>console-templates</artifactId>
+				<artifactId>wicketstuff-console-templates</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

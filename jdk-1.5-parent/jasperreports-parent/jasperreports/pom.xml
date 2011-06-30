@@ -9,7 +9,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 	
-	<artifactId>jasperreports</artifactId>
+	<artifactId>wicketstuff-jasperreports</artifactId>
 	<packaging>jar</packaging>
 	
 	<name>JasperReports Integration</name>

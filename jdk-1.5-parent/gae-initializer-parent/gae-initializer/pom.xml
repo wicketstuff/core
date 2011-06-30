@@ -10,7 +10,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>gae-initializer</artifactId>
+	<artifactId>wicketstuff-gae-initializer</artifactId>
 
 	<name>GAE Initializer</name>
 </project>

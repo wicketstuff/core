@@ -6,7 +6,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>mbeanview</artifactId>
+	<artifactId>wicketstuff-mbeanview</artifactId>
 	<packaging>jar</packaging>
 	<name>mbeanview</name>
 	<description>Jmx panel, to view and operate the applications mbeans</description>

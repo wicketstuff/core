@@ -23,13 +23,13 @@
 
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>push-cometd</artifactId>
+			<artifactId>wicketstuff-push-cometd</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>push-timer</artifactId>
+			<artifactId>wicketstuff-push-timer</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

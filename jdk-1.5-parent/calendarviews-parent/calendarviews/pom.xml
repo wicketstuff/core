@@ -28,7 +28,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>calendarviews</artifactId>
+	<artifactId>wicketstuff-calendarviews</artifactId>
 	<packaging>jar</packaging>
 
 	<name>CalendarViews</name>
@@ -42,7 +42,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>jslibraries</artifactId>
+			<artifactId>wicketstuff-jslibraries</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

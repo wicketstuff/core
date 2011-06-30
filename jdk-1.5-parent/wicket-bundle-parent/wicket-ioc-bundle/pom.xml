@@ -6,7 +6,7 @@
 		<groupId>org.wicketstuff</groupId>
 		<version>1.5-SNAPSHOT</version>
 	</parent>
-	<artifactId>wicket-ioc-bundle</artifactId>
+	<artifactId>wicketstuff-ioc-bundle</artifactId>
 	<packaging>bundle</packaging>
 	<name>Wicket IOC Bundle</name>
 	<dependencies>

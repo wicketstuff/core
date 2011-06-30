@@ -81,22 +81,22 @@
 			<!-- wicket-security dependencies -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>wicket-security-wicomsec</artifactId>
+				<artifactId>wicketstuff-security-wicomsec</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>wicket-security-wasp</artifactId>
+				<artifactId>wicketstuff-security-wasp</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>wicket-security-hive</artifactId>
+				<artifactId>wicketstuff-security-hive</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.wicketstuff</groupId>
-				<artifactId>wicket-security-swarm</artifactId>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>wicketstuff-security-swarm</artifactId>
 				<version>${project.version}</version>
 				<scope>compile</scope>
 			</dependency>

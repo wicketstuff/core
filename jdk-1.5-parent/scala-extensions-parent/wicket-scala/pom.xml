@@ -9,7 +9,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>wicket-scala</artifactId>
+	<artifactId>wicketstuff-scala</artifactId>
 	<name>Wicket-Scala</name>
 
 	<description>Collection of code relevant to developing Wicket with Scala, including core utilities, Wicket extensions, Wicket Components and Scala language extensions.</description>

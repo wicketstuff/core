@@ -9,6 +9,6 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>progressbar</artifactId>
+	<artifactId>wicketstuff-progressbar</artifactId>
 	<packaging>jar</packaging>
 </project>

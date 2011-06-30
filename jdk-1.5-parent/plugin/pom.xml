@@ -10,7 +10,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>wicket-plugin</artifactId>
+	<artifactId>wicketstuff-plugin</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Wicket Plugin Framework</name>

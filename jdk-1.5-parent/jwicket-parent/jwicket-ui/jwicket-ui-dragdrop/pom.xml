@@ -9,7 +9,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>jwicket-ui-dragdrop</artifactId>
+	<artifactId>wicketstuff-jwicket-ui-dragdrop</artifactId>
 	<packaging>jar</packaging>
 
     <name>jWicket: jQuery Wicket integration - ui-dragdrop</name>

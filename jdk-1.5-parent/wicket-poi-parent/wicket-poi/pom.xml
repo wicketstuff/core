@@ -10,7 +10,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>wicket-poi</artifactId>
+	<artifactId>wicketstuff-poi</artifactId>
 	<packaging>jar</packaging>
 
 	<name>WicketStuff POI</name>

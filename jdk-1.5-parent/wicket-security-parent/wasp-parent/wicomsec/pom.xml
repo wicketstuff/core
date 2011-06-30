@@ -22,7 +22,7 @@
 		<artifactId>wicket-security-wasp-parent</artifactId>
 		<version>1.5-SNAPSHOT</version>
 	</parent>
-	<artifactId>wicket-security-wicomsec</artifactId>
+	<artifactId>wicketstuff-security-wicomsec</artifactId>
 	<packaging>jar</packaging>
 	<name>Wicket Common Security</name>
 	<description>Library of common security related classes</description>

@@ -8,7 +8,7 @@
         <version>1.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>annotation</artifactId>
+    <artifactId>wicketstuff-annotation</artifactId>
     <packaging>jar</packaging>
 
     <name>Wicket Annotations</name>
