@@ -129,9 +129,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 				super.afterRender(component);
 				if (getWebRequest().isAjax())
 				{
-					// renders the initialization javascript right after the grid itself
-					getResponse().write(getInitializationJavascript(true));
-
+					AjaxRequestTarget.get().appendJavaScript(getInitializationJavascript(false));
 				}
 			}
 
@@ -474,7 +472,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	/**
 	 * Generates the javascript required to initialize the client state for this grid instance.
 	 * Called after every grid render.
-	 * 
+	 *
 	 * @param wrapInHtmlScriptTag
 	 *            if true the generated js will be wrapped inside a script tag
 	 * @return generated javascript code
