@@ -6,7 +6,6 @@
         <artifactId>wicket-syringe-parent</artifactId>
         <groupId>org.wicketstuff</groupId>
         <version>1.5-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>wicket-syringe-guice-example</artifactId>
     <packaging>war</packaging>
