@@ -29,7 +29,6 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.string.AppendingStringBuffer;
-import org.apache.wicket.util.string.JavaScriptUtils;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
@@ -119,7 +118,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 				// component until "DOM ready" event.
 				if (!getWebRequest().isAjax())
 				{
-					response.renderOnDomReadyJavaScript(getInitializationJavascript(false));
+					response.renderOnDomReadyJavaScript(getInitializationJavascript());
 				}
 			}
 
@@ -129,7 +128,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 				super.afterRender(component);
 				if (getWebRequest().isAjax())
 				{
-					AjaxRequestTarget.get().appendJavaScript(getInitializationJavascript(false));
+					AjaxRequestTarget.get().appendJavaScript(getInitializationJavascript());
 				}
 			}
 
@@ -473,17 +472,11 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 * Generates the javascript required to initialize the client state for this grid instance.
 	 * Called after every grid render.
 	 * 
-	 * @param wrapInHtmlScriptTag
-	 *            if true the generated js will be wrapped inside a script tag
 	 * @return generated javascript code
 	 */
-	private String getInitializationJavascript(boolean wrapInHtmlScriptTag)
+	private String getInitializationJavascript()
 	{
 		AppendingStringBuffer sb = new AppendingStringBuffer(128);
-		if (wrapInHtmlScriptTag)
-		{
-			sb.append(JavaScriptUtils.SCRIPT_OPEN_TAG);
-		}
 		sb.append("(function() {\n");
 
 		// initialize the columns
@@ -518,11 +511,6 @@ public abstract class AbstractGrid<M, I> extends Panel
 		sb.append("InMethod.XTableManager.instance.register(\"" + getMarkupId() +
 			"\", columns, submitStateCallback);\n");
 		sb.append("})();\n");
-
-		if (wrapInHtmlScriptTag)
-		{
-			sb.append(JavaScriptUtils.SCRIPT_CLOSE_TAG);
-		}
 
 		return sb.toString();
 	};
