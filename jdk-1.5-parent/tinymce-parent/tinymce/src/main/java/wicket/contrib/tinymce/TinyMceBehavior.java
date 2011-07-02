@@ -22,13 +22,10 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.Request;
 import org.apache.wicket.RequestCycle;
 import org.apache.wicket.behavior.AbstractBehavior;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.protocol.http.WebRequest;
-import org.apache.wicket.protocol.http.WebResponse;
 
 import wicket.contrib.tinymce.settings.TinyMCESettings;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Mode;
@@ -41,6 +38,7 @@ public class TinyMceBehavior extends AbstractBehavior {
 
     private Component component;
     private TinyMCESettings settings;
+    private boolean rendered = false;
 
     public TinyMceBehavior() {
         this(new TinyMCESettings());
@@ -56,8 +54,10 @@ public class TinyMceBehavior extends AbstractBehavior {
             throw new IllegalStateException("TinyMceBehavior is not bound to a component");
 
         // TinyMce javascript:
-        response.renderJavascriptReference(TinyMCESettings.javaScriptReference());
-
+        if (mayRenderJavascriptDirect())
+        	response.renderJavascriptReference(TinyMCESettings.javaScriptReference());
+        else
+        	TinyMCESettings.lazyLoadTinyMCEResource(response);
         String renderOnDomReady = getRenderOnDomReadyJavascript(response);
         if (renderOnDomReady != null)
             response.renderOnDomReadyJavascript(renderOnDomReady);
@@ -88,10 +88,28 @@ public class TinyMceBehavior extends AbstractBehavior {
     }
 
     protected String getAddTinyMceSettingsScript(Mode mode, Collection<Component> components) {
-        return "" //
-                + settings.getLoadPluginJavaScript() //
-                + " tinyMCE.init({" + settings.toJavaScript(mode, components) + " });\n" //
-                + settings.getAdditionalPluginJavaScript(); //
+    	
+    	StringBuilder script = new StringBuilder(128);
+
+		// If this behavior is run a second time, it means we're redrawing this component via
+		// an ajax call.  The tinyMCE javascript does not handle this scenario, so we must
+		// remove the old editor before initializing it again.
+		if (rendered) {
+			for(Component c : components) {
+				script.append("tinyMCE.remove(tinyMCE.get('");
+				script.append(c.getMarkupId());
+				script.append("'));\n");
+			}
+		}
+	
+		script.append(settings.getLoadPluginJavaScript());
+		script.append(" tinyMCE.init({");
+		script.append(settings.toJavaScript(mode, components));
+		script.append(" });\n");
+		script.append(settings.getAdditionalPluginJavaScript());
+		rendered = true;
+				
+		return script.toString();
     }
 
     public void bind(Component component) {
