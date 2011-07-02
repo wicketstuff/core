@@ -89,19 +89,23 @@ public class TinyMceBehavior extends AbstractBehavior {
 
     protected String getAddTinyMceSettingsScript(Mode mode, Collection<Component> components) {
     	
-    	StringBuffer script = new StringBuffer();
+    	StringBuilder script = new StringBuilder(128);
 
 		// If this behavior is run a second time, it means we're redrawing this component via
 		// an ajax call.  The tinyMCE javascript does not handle this scenario, so we must
 		// remove the old editor before initializing it again.
 		if (rendered) {
 			for(Component c : components) {
-				script.append("tinyMCE.remove(tinyMCE.get('" + c.getMarkupId() + "'));\n");
+				script.append("tinyMCE.remove(tinyMCE.get('");
+				script.append(c.getMarkupId());
+				script.append("'));\n");
 			}
 		}
 	
 		script.append(settings.getLoadPluginJavaScript());
-		script.append(" tinyMCE.init({" + settings.toJavaScript(mode, components) + " });\n");
+		script.append(" tinyMCE.init({");
+		script.append(settings.toJavaScript(mode, components));
+		script.append(" });\n");
 		script.append(settings.getAdditionalPluginJavaScript());
 		rendered = true;
 				

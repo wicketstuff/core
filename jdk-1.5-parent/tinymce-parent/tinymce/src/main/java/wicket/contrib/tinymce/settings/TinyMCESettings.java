@@ -77,8 +77,6 @@ public class TinyMCESettings implements Serializable {
 	private boolean resizing = false;
 	private boolean horizontalResizing = true;
 	private boolean resizingUseCookie = true;
-	@Deprecated
-	private boolean autoResize = false;;
 	private boolean readOnly = false;
 
 	private Set<Plugin> plugins = new ListOrderedSet();
@@ -149,11 +147,6 @@ public class TinyMCESettings implements Serializable {
 		this.contentCss = contentCss;
 	}
 
-	@Deprecated
-	public boolean getAutoResize() {
-		return autoResize;
-	}
-
 	/**
 	 * Obsolete feature; replaced by {@link AutoResizePlugin} in TinyMCE v.3.2.5
 	 * 
@@ -161,7 +154,7 @@ public class TinyMCESettings implements Serializable {
 	 */
 	@Deprecated
 	public void setAutoResize(boolean auto_resize) {
-		this.autoResize = auto_resize;
+		throw new UnsupportedOperationException("This feature was pushed to the AutoResizePlugin.");
 	}
 
 	public String getBlockFormats() {
@@ -428,9 +421,6 @@ public class TinyMCESettings implements Serializable {
 			buffer.append(",\n\t").append("remove_script_host : ").append(
 					removeScriptHost);
 
-		if (autoResize)
-			buffer.append(",\n\tauto_resize : true");
-		
 		if (readOnly)
 			buffer.append(",\n\treadonly : true"); // Per Online Doc
 
