@@ -63,6 +63,7 @@ public class CDNTest extends TestCase
 					final URLConnection c = render.openConnection();
 					final String type = c.getContentType();
 					System.out.println("checking URL: " + render.toExternalForm());
+					assertNotNull(type);
 					assertTrue(type.contains("javascript"));
 				}
 			}
