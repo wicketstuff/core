@@ -32,8 +32,12 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>wicketstuff-logback</artifactId>
 			<version>${project.version}</version>
-			<!-- we are referring the classes only in descriptors -->
-			<scope>runtime</scope>
+		</dependency>
+
+		<!--  JETTY DEPENDENCIES FOR TESTING  -->
+		<dependency>
+			<groupId>org.eclipse.jetty.aggregate</groupId>
+			<artifactId>jetty-all-server</artifactId>
 		</dependency>
 	</dependencies>
 </project>
