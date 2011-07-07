@@ -18,6 +18,7 @@ package org.wicketstuff.datatable_autocomplete.behaviour;
 import java.util.List;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.IClusterable;
 import org.apache.wicket.Request;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.HiddenField;
@@ -45,7 +46,7 @@ public class AutoCompletingBehavior extends AJAXAutoCompleteBehavior {
 	private final HiddenField<?>	selectedContextField;
 
 	
-	public interface IAutoCompletingResponseValidator {
+	public interface IAutoCompletingResponseValidator extends IClusterable {
 
 		/**
 		 * 
