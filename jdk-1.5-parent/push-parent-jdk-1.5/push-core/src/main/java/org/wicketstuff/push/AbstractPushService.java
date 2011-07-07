@@ -48,8 +48,7 @@ public abstract class AbstractPushService implements IPushService
 	/**
 	 * {@inheritDoc}
 	 */
-	public <EventType> IPushChannel<EventType> createChannel(final EventType event,
-		final String label)
+	public <EventType> IPushChannel<EventType> createChannel(final String label)
 	{
 		final PushChannel<EventType> channel = new PushChannel<EventType>(label);
 		nodesByChannels.put(channel, new CopyOnWriteArraySet<IPushNode<?>>());

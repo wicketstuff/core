@@ -9,7 +9,6 @@ import javax.swing.tree.TreeModel;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
-import org.apache.wicket.Response;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxCallDecorator;
@@ -31,6 +30,7 @@ import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.JavascriptUtils;
 import org.apache.wicket.util.string.Strings;
 
@@ -93,13 +93,31 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 		add(bottomToolbarContainer = new RepeatingView("bottomToolbarContainer"));
 		add(headerToolbarContainer = new RepeatingView("headerToolbarContainer"));
 
-		// renders the initialization javascript right after the grid itself
-		add(new AbstractBehavior() {
+		add(new AbstractBehavior()
+		{
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onRendered(Component component) {
-				renderInitializationJavascript(getResponse());
+			public void renderHead(IHeaderResponse response)
+			{
+				// since javascript can be rendered at the tail
+				// of HTML document, do not initialize data grid
+				// component until "DOM ready" event.
+				if (!getWebRequest().isAjax())
+				{
+					response.renderOnDomReadyJavascript(getInitializationJavascript(false));
+				}
+			}
+
+			@Override
+			public void onRendered(Component component)
+			{
+				if (getWebRequest().isAjax())
+				{
+					// renders the initialization javascript right after the grid itself
+					getResponse().write(getInitializationJavascript(true));
+				}
 			}
 		});
 
@@ -158,8 +176,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	}
 
 	/**
-	 * Invoked when client change the column state (e.g. resize or reorder a
-	 * column).
+	 * Invoked when client change the column state (e.g. resize or reorder a column).
 	 * 
 	 * @see #getColumnState()
 	 */
@@ -185,7 +202,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 
 			// apply it to current state
 			columnState.updateColumnsState(state);
-			
+
 			onColumnStateChanged();
 		}
 
@@ -217,9 +234,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	}
 
 	/**
-	 * Sets a new column state. The state must not be null and must match
-	 * current set of columns, i.e. for every column in grid there must be entry
-	 * in the given state.
+	 * Sets a new column state. The state must not be null and must match current set of columns,
+	 * i.e. for every column in grid there must be entry in the given state.
 	 * 
 	 * @see ColumnsState
 	 * @param columnState
@@ -306,8 +322,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	}
 
 	/**
-	 * Ads a toolbar to the header section (below the grid header, above the
-	 * actual data).
+	 * Ads a toolbar to the header section (below the grid header, above the actual data).
 	 * 
 	 * @see AbstractToolbar
 	 * @param toolbar
@@ -325,8 +340,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	static public final String INTERNAL_TOOLBAR_ITEM_ID = "item";
 
 	/**
-	 * Model for the markup of empty row (first data row that has zero height).
-	 * The empty row is needed for maintaining layout of the other rows.
+	 * Model for the markup of empty row (first data row that has zero height). The empty row is
+	 * needed for maintaining layout of the other rows.
 	 * 
 	 * @author Matej Knopp
 	 */
@@ -382,8 +397,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	};
 
 	/**
-	 * Invoked when sort state of this grid has changed (e.g. user clicked a
-	 * sortable column header). By default refreshes the grid.
+	 * Invoked when sort state of this grid has changed (e.g. user clicked a sortable column
+	 * header). By default refreshes the grid.
 	 * 
 	 * @param target
 	 */
@@ -392,47 +407,58 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	}
 
 	/**
-	 * Renders the javascript required to initialize the client state for this
-	 * grid instance. Called after every grid render.
+	 * Renders the javascript required to initialize the client state for this grid instance. Called
+	 * after every grid render.
 	 * 
 	 * @param response
 	 */
-	private void renderInitializationJavascript(Response response) {
-		JavascriptUtils.writeOpenTag(response);
-		response.write("(function() {\n");
+	private String getInitializationJavascript(boolean wrapInHtmlScriptTag)
+	{
+		AppendingStringBuffer sb = new AppendingStringBuffer(128);
+		if (wrapInHtmlScriptTag)
+		{
+			sb.append(JavascriptUtils.SCRIPT_OPEN_TAG);
+		}
+		sb.append("(function() {\n");
 
 		// initialize the columns
-		response.write("var columns = [\n");
+		sb.append("var columns = [\n");
 		Collection<IGridColumn> columns = getActiveColumns();
 		int i = 0;
-		for (IGridColumn column : columns) {
+		for (IGridColumn column : columns)
+		{
 			++i;
-			response.write("  {");
-			response.write(" minSize: " + column.getMinSize());
-			response.write(", maxSize: " + column.getMaxSize());
-			response.write(", id: \"" + column.getId() + "\"");
-			response.write(", resizable: " + column.isResizable());
-			response.write(", reorderable: " + column.isReorderable());
-			response.write("  }");
-			if (i != columns.size()) {
-				response.write(",");
+			sb.append("  {");
+			sb.append(" minSize: " + column.getMinSize());
+			sb.append(", maxSize: " + column.getMaxSize());
+			sb.append(", id: \"" + column.getId() + "\"");
+			sb.append(", resizable: " + column.isResizable());
+			sb.append(", reorderable: " + column.isReorderable());
+			sb.append("  }");
+			if (i != columns.size())
+			{
+				sb.append(",");
 			}
-			response.write("\n");
+			sb.append("\n");
 		}
 		;
-		response.write("];\n");
+		sb.append("];\n");
 
 		// method that calls the proper listener when column state is changed
-		response.write("var submitStateCallback = function(columnState) { ");
-		response.write(submitColumnStateBehavior.getCallbackScript());
-		response.write(" }\n");
+		sb.append("var submitStateCallback = function(columnState) { ");
+		sb.append(submitColumnStateBehavior.getCallbackScript());
+		sb.append(" }\n");
 
 		// initialization
-		response.write("InMethod.XTableManager.instance.register(\"" + getMarkupId()
-				+ "\", columns, submitStateCallback);\n");
-		response.write("})();\n");
-		JavascriptUtils.writeCloseTag(response);
-	};
+		sb.append("InMethod.XTableManager.instance.register(\"" + getMarkupId() +
+			"\", columns, submitStateCallback);\n");
+		sb.append("})();\n");
+		if (wrapInHtmlScriptTag)
+		{
+			sb.append(JavascriptUtils.SCRIPT_CLOSE_TAG);
+		}
+		return sb.toString();
+	}
 
 	/**
 	 * Returns collection of currently visible columns.
@@ -480,9 +506,9 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	private String theme = THEME_VISTA;
 
 	/**
-	 * Sets the grid theme. Grid theme is used as CSS style class for the grid.
-	 * The theme itself consist of a proper style definition in stylesheet. For
-	 * more information on custom theme creation see the custom theme example.
+	 * Sets the grid theme. Grid theme is used as CSS style class for the grid. The theme itself
+	 * consist of a proper style definition in stylesheet. For more information on custom theme
+	 * creation see the custom theme example.
 	 * 
 	 * @param theme
 	 *            theme identifier
@@ -560,8 +586,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param itemModel
 	 *            item model
 	 * @param selected
-	 *            <code>true</code> if the item should be selected,
-	 *            <code>false</code> otherwise.
+	 *            <code>true</code> if the item should be selected, <code>false</code> otherwise.
 	 */
 	public abstract void selectItem(IModel itemModel, boolean selected);
 
@@ -583,8 +608,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * 
 	 * @param itemModel
 	 *            item model
-	 * @return <code>true</code> if the item is selected, <code>false</code>
-	 *         otherwise
+	 * @return <code>true</code> if the item is selected, <code>false</code> otherwise
 	 */
 	public abstract boolean isItemSelected(IModel itemModel);
 
@@ -599,17 +623,16 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * Sets whether user will be able to select more than one item.
 	 * 
 	 * @param value
-	 *            <code>true</code> if the user will be able to select more
-	 *            than one item at a time, <code>false</code> otherwise
-	 *            (single selection mode).
+	 *            <code>true</code> if the user will be able to select more than one item at a time,
+	 *            <code>false</code> otherwise (single selection mode).
 	 */
 	public abstract void setAllowSelectMultiple(boolean value);
 
 	/**
 	 * Returns whether user will be able to select more than one item at a time.
 	 * 
-	 * @return <code>true</code> if multiple items can be selected at a time,
-	 *         <code>false</code> otherwise.
+	 * @return <code>true</code> if multiple items can be selected at a time, <code>false</code>
+	 *         otherwise.
 	 */
 	public abstract boolean isAllowSelectMultiple();
 
@@ -638,8 +661,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param item
 	 *            item model
 	 * @param newValue
-	 *            <code>true</code> if the item became selected,
-	 *            <code>false</code> otherwise.
+	 *            <code>true</code> if the item became selected, <code>false</code> otherwise.
 	 */
 	protected void onItemSelectionChanged(IModel item, boolean newValue) {
 
@@ -665,8 +687,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	}
 
 	/**
-	 * Called after a grid row has been populated. This method allows adding
-	 * behaviors to grid rows.
+	 * Called after a grid row has been populated. This method allows adding behaviors to grid rows.
 	 * 
 	 * @param rowComponent
 	 */
@@ -695,6 +716,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 				// preserve the entered values in form components
 				Form form = getForm();
 				form.visitFormComponentsPostOrder(new FormComponent.AbstractVisitor() {
+					@Override
 					public void onFormComponent(final FormComponent formComponent) {
 						if (formComponent.isVisibleInHierarchy()) {
 							formComponent.inputChanged();
@@ -709,13 +731,14 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 				IModel model = rowComponent.getDefaultModel();
 
 				IGridColumn lastClickedColumn = getLastClickedColumn();
-				if (lastClickedColumn != null) {					
+				if (lastClickedColumn != null)
+				{
 					if (onCellClicked(target, model, lastClickedColumn) == true) {
 						return;
 					}
 					if (lastClickedColumn.cellClicked(model) == true) {
 						return;
-					}					
+					}
 				}
 
 				onRowClicked(target, model);
@@ -743,7 +766,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 		});
 
 	}
-	
+
 	protected boolean onCellClicked(AjaxRequestTarget target, IModel rowModel, IGridColumn column) 	{
 		return false;
 	}
@@ -766,8 +789,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * 
 	 * @see #setClickRowToDeselect(boolean)
 	 * @param clickRowToSelect
-	 *            <code>true</code> if the row selection state should be
-	 *            changed upon a mouse click, <code>false</code> otherwise.
+	 *            <code>true</code> if the row selection state should be changed upon a mouse click,
+	 *            <code>false</code> otherwise.
 	 * @return <code>this</code> (useful for method chaining)
 	 */
 	public AbstractGrid setClickRowToSelect(boolean clickRowToSelect) {
@@ -778,8 +801,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	/**
 	 * Returns whether a click on grid row should select/deselect the row.
 	 * 
-	 * @return <code>true</code> if the row click should alter the row
-	 *         selection state, <code>false</code> otherwise.
+	 * @return <code>true</code> if the row click should alter the row selection state,
+	 *         <code>false</code> otherwise.
 	 */
 	public boolean isClickRowToSelect() {
 		return clickRowToSelect;
@@ -788,9 +811,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	private boolean clickRowToDeselect = true;
 
 	/**
-	 * Sets whether a click on selected grid row should deselect it. This only
-	 * applies when {@link #setClickRowToSelect(boolean)} is set to
-	 * <code>true</code>.
+	 * Sets whether a click on selected grid row should deselect it. This only applies when
+	 * {@link #setClickRowToSelect(boolean)} is set to <code>true</code>.
 	 * 
 	 * @param clickRowToDeselect
 	 *            whether clicking a selected row should deselect it
@@ -802,8 +824,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	/**
 	 * Returns whether clicking a selected row deselects it.
 	 * 
-	 * @return <code>true</code> if clicking a selected row deselects it,
-	 *         <code>false</code> otherwise.
+	 * @return <code>true</code> if clicking a selected row deselects it, <code>false</code>
+	 *         otherwise.
 	 */
 	public boolean isClickRowToDeselect() {
 		return clickRowToDeselect;
@@ -814,15 +836,13 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	private SizeUnit contentHeightSizeUnit;
 
 	/**
-	 * Sets the height of grid content. Content is the part of grid displaying
-	 * the actual data (rows), i.e. it doesn't cover the header part and
-	 * toolbars. When the actual content height is bigger than specified height,
-	 * a vertical scrollbar is displayed.
+	 * Sets the height of grid content. Content is the part of grid displaying the actual data
+	 * (rows), i.e. it doesn't cover the header part and toolbars. When the actual content height is
+	 * bigger than specified height, a vertical scrollbar is displayed.
 	 * 
 	 * @param contentHeight
-	 *            desired height of the content or <code>null</code> is the
-	 *            height should be determined by the actual height (no scrollbar
-	 *            displayed, defalt value)
+	 *            desired height of the content or <code>null</code> is the height should be
+	 *            determined by the actual height (no scrollbar displayed, defalt value)
 	 * @param contentSizeUnit
 	 *            size unit for the <code>contentHeight</code>
 	 */
@@ -838,8 +858,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	/**
 	 * Returns the content height.
 	 * 
-	 * @return content height or 0 if the content height should be determined by
-	 *         the actual content.
+	 * @return content height or 0 if the content height should be determined by the actual content.
 	 * @see #setContentHeight(Integer, SizeUnit)
 	 */
 	public int getContentHeight() {
@@ -872,8 +891,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	protected abstract WebMarkupContainer findRowComponent(IModel rowModel);
 
 	/**
-	 * Marks the item from the given model as dirty. Dirty items are updated
-	 * during Ajax requests when {@link AbstractGrid#update()} method is called.
+	 * Marks the item from the given model as dirty. Dirty items are updated during Ajax requests
+	 * when {@link AbstractGrid#update()} method is called.
 	 * 
 	 * @param itemModel
 	 *            model used to access the item
@@ -883,9 +902,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	private boolean selectToEdit = false;
 
 	/**
-	 * Determines whether selected items should also be editable. This should be
-	 * set to <code>false</code> when the grid is both selectable and editable
-	 * (independently).
+	 * Determines whether selected items should also be editable. This should be set to
+	 * <code>false</code> when the grid is both selectable and editable (independently).
 	 * 
 	 * @param selectToEdit
 	 *            whether selected rows should be editable
@@ -908,16 +926,16 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	};
 
 	/**
-	 * Sets the edit mode of the row. If selectToEdit is true, this is same as
-	 * calling {@link #selectItem(IModel, boolean)}.
+	 * Sets the edit mode of the row. If selectToEdit is true, this is same as calling
+	 * {@link #selectItem(IModel, boolean)}.
 	 * 
 	 * @see #setSelectToEdit(boolean)
 	 * 
 	 * @param rowModel
 	 *            row model
 	 * @param edit
-	 *            <code>true</code> if the row should be in editable mode,
-	 *            <code>false</code> otherwise.
+	 *            <code>true</code> if the row should be in editable mode, <code>false</code>
+	 *            otherwise.
 	 */
 	public void setItemEdit(IModel rowModel, boolean edit) {
 		if (isSelectToEdit()) {
@@ -938,8 +956,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * Returns whether the row is in editable mode.
 	 * 
 	 * @param rowModel
-	 * @return <code>true</code> if the row is in editable mode,
-	 *         <code>false</code> otherwise.
+	 * @return <code>true</code> if the row is in editable mode, <code>false</code> otherwise.
 	 */
 	public boolean isItemEdited(IModel rowModel) {
 		if (isSelectToEdit()) {
