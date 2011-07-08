@@ -16,11 +16,10 @@
  */
 package org.wicketstuff.console.examples;
 
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.ScalaScriptEnginePanel;
 
-public class ScalaEngineTestPage extends WebPage
+public class ScalaEngineTestPage extends ConsoleBasePage
 {
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +31,6 @@ public class ScalaEngineTestPage extends WebPage
 		enginePanel.setOutputMarkupId(true);
 		add(enginePanel);
 
-		add(new TestPageLinksPanel("links"));
 	}
 
 }

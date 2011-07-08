@@ -17,6 +17,7 @@
 package org.wicketstuff.console.examples;
 
 import org.apache.wicket.Page;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -51,10 +52,12 @@ public class TestPageLinksPanel extends Panel
 
 	private void addLink(final RepeatingView r, final Class<? extends Page> pageClass)
 	{
-		final BookmarkablePageLink<String> link1 = new BookmarkablePageLink<String>(r.newChildId(),
+		final WebMarkupContainer c = new WebMarkupContainer(r.newChildId());
+		final BookmarkablePageLink<String> link1 = new BookmarkablePageLink<String>("link",
 			pageClass);
 		link1.add(new Label("label", Model.of(pageClass.getSimpleName())));
-		r.add(link1);
+		c.add(link1);
+		r.add(c);
 	}
 
 }

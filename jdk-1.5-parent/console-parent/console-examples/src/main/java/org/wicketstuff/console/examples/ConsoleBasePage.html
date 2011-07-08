@@ -16,10 +16,29 @@
    limitations under the License.
 -->
 <html xmlns:wicket="http://wicket.apache.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>Wicket Console Examples</title>
+	<link href='http://fonts.googleapis.com/css?family=Terminal+Dosis+Light' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/css/style.css" type="text/css" media="screen" title="Stylesheet" />
+</head>
+
 <body>
-	<wicket:extend>
-		<div wicket:id="window"></div>
-		<a wicket:id="link">Open Clojure Engine</a>
-	</wicket:extend>
+	<div id="header">
+		<a href="/" style="text-decoration:none;"><h1>Wicket Console Examples</h1></a>
+	</div>
+	
+	<div id="main-wrapper">
+		<div id="main">
+			<wicket:child></wicket:child>
+		</div>
+	</div>
+
+		
+	<div id="footer">
+		<div wicket:id="feedback" class="feedback"></div>
+		<span wicket:id="links"></span>
+	</div>
 </body>
+
 </html>

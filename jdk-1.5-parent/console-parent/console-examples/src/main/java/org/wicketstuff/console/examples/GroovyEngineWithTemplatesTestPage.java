@@ -16,24 +16,15 @@
  */
 package org.wicketstuff.console.examples;
 
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.model.ResourceModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.GroovyScriptEngineWithTemplatesPanel;
 
-public class GroovyEngineWithTemplatesTestPage extends WebPage
+public class GroovyEngineWithTemplatesTestPage extends ConsoleBasePage
 {
 	private static final long serialVersionUID = 1L;
 
-	public GroovyEngineWithTemplatesTestPage(final PageParameters params)
+	public GroovyEngineWithTemplatesTestPage()
 	{
-		super(params);
-		add(new Label("title", new ResourceModel("application.title")));
-
 		add(new GroovyScriptEngineWithTemplatesPanel("panel", null, null));
-
-		add(new TestPageLinksPanel("links"));
 	}
 
 }

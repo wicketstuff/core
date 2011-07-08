@@ -18,11 +18,10 @@ package org.wicketstuff.console.examples;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.GroovyScriptEngineWindow;
 
-public class GroovyEngineWindowTestPage extends WebPage
+public class GroovyEngineWindowTestPage extends ConsoleBasePage
 {
 
 	private static final class OpenLink extends AjaxLink<Void>
@@ -52,7 +51,6 @@ public class GroovyEngineWindowTestPage extends WebPage
 
 		add(window = new GroovyScriptEngineWindow("window"));
 		add(new OpenLink("link", window));
-		add(new TestPageLinksPanel("links"));
 	}
 
 }

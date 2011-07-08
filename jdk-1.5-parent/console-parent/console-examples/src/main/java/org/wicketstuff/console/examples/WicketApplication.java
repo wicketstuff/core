@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.console.examples;
 
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -61,6 +62,12 @@ public class WicketApplication extends WebApplication
 	public SessionFactory getSessionFactory()
 	{
 		return sessionFactory;
+	}
+
+	@Override
+	public RuntimeConfigurationType getConfigurationType()
+	{
+		return RuntimeConfigurationType.DEPLOYMENT;
 	}
 
 }

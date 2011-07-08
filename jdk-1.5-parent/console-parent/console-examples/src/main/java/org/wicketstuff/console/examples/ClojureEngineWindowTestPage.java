@@ -18,11 +18,10 @@ package org.wicketstuff.console.examples;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.ClojureScriptEngineWindow;
 
-public class ClojureEngineWindowTestPage extends WebPage
+public class ClojureEngineWindowTestPage extends ConsoleBasePage
 {
 
 	private static final class OpenLink extends AjaxLink<Void>
@@ -52,7 +51,6 @@ public class ClojureEngineWindowTestPage extends WebPage
 
 		add(window = new ClojureScriptEngineWindow("window"));
 		add(new OpenLink("link", window));
-		add(new TestPageLinksPanel("links"));
 	}
 
 }

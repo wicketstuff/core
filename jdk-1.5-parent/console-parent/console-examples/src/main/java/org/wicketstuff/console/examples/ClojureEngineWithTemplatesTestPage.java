@@ -16,26 +16,21 @@
  */
 package org.wicketstuff.console.examples;
 
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.ClojureScriptEngineWithTemplatesPanel;
 
-public class ClojureEngineWithTemplatesTestPage extends WebPage
+public class ClojureEngineWithTemplatesTestPage extends ConsoleBasePage
 {
 	private static final long serialVersionUID = 1L;
 
 	public ClojureEngineWithTemplatesTestPage(final PageParameters params)
 	{
 		super(params);
-		add(new Label("title", new ResourceModel("application.title")));
 
 		final ClojureScriptEngineWithTemplatesPanel panel = new ClojureScriptEngineWithTemplatesPanel(
 			"panel", null, null);
 		add(panel);
 
-		add(new TestPageLinksPanel("links"));
 	}
 
 }
