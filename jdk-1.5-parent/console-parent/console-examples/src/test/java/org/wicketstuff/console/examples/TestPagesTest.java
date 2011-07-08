@@ -34,6 +34,14 @@ public class TestPagesTest
 	}
 
 	@Test
+	public void test_rendersSuccessfully_ScalaEngineTestPage()
+	{
+		clazz = ScalaEngineTestPage.class;
+		tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
+	}
+
+	@Test
 	public void test_rendersSuccessfully_ClojureEngineTestPage()
 	{
 		clazz = ClojureEngineTestPage.class;
