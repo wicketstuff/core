@@ -226,7 +226,7 @@ public class ScriptEnginePanel extends Panel
 
 	protected IScriptEngine newEngine()
 	{
-		return Engines.create(lang);
+		return Engines.getSingletonInstance(lang);
 	}
 
 	protected Map<String, Object> newBindings()

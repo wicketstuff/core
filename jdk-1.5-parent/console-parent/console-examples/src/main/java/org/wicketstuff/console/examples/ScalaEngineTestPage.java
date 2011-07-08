@@ -14,43 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.wicketstuff.console.examples;
 
-package org.wicketstuff.console.engine;
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.wicketstuff.console.ScalaScriptEnginePanel;
 
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * A factory for {@link IScriptEngine}s.
- * 
- * @author cretzel
- */
-public class Engines
+public class ScalaEngineTestPage extends WebPage
 {
+	private static final long serialVersionUID = 1L;
 
-	private static Map<Lang, IScriptEngine> singletons = new HashMap<Lang, IScriptEngine>();
-	
-	public static IScriptEngine getSingletonInstance(final Lang lang) {
-		
-		if (!singletons.containsKey(lang)) {
-			singletons.put(lang, create(lang));
-		}
-		
-		return singletons.get(lang);
-	}
-	
-	public static IScriptEngine create(final Lang lang)
+	public ScalaEngineTestPage(final PageParameters params)
 	{
-		switch (lang)
-		{
-			case GROOVY :
-				return new GroovyEngine();
-			case CLOJURE :
-				return new ClojureEngine();
-			case SCALA:
-				return new ScalaEngine();
-			default :
-				throw new UnsupportedOperationException("Unsupported language: " + lang);
-		}
+		super(params);
+
+		final ScalaScriptEnginePanel enginePanel = new ScalaScriptEnginePanel("scriptPanel");
+		enginePanel.setOutputMarkupId(true);
+		add(enginePanel);
+
+		add(new TestPageLinksPanel("links"));
 	}
+
 }

@@ -44,15 +44,7 @@ public class LangFileFilter implements FilenameFilter
 
 	public static LangFileFilter create(final Lang lang)
 	{
-		switch (lang)
-		{
-			case GROOVY :
-				return new GroovyFileFilter();
-			case CLOJURE :
-				return new ClojureFileFilter();
-			default :
-				throw new IllegalArgumentException("Lang " + lang + "not supported");
-		}
+		return new LangFileFilter(lang.getFileExtension());
 	}
 
 	public static class GroovyFileFilter extends LangFileFilter

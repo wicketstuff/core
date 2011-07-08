@@ -20,7 +20,7 @@ package org.wicketstuff.console.engine;
 public enum Lang
 {
 
-	CLOJURE, GROOVY;
+	CLOJURE, GROOVY, SCALA;
 
 	public String getFileExtension()
 	{
@@ -30,6 +30,8 @@ public enum Lang
 				return ".clj";
 			case GROOVY :
 				return ".groovy";
+			case SCALA :
+				return ".scala";
 			default :
 				throw new IllegalArgumentException();
 		}

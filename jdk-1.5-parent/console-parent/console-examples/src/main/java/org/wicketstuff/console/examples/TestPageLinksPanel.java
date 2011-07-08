@@ -44,6 +44,9 @@ public class TestPageLinksPanel extends Panel
 		addLink(r, ClojureEngineWindowTestPage.class);
 		addLink(r, ClojureEngineWithTemplatesTestPage.class);
 		addLink(r, ClojureEngineWithTemplatesWindowTestPage.class);
+
+		addLink(r, ScalaEngineTestPage.class);
+
 	}
 
 	private void addLink(final RepeatingView r, final Class<? extends Page> pageClass)
