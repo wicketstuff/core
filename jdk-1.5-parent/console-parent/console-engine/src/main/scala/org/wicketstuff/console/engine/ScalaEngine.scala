@@ -55,7 +55,12 @@ class ScalaEngine extends IScriptEngine {
       }
 
     } catch {
-      case ex: Exception => exception = ex
+      
+      case ex: Exception => {
+        exception = ex
+        ex.printStackTrace()
+      }
+      
     } finally {
       System.setOut(oldOut);
       System.setErr(oldErr);
