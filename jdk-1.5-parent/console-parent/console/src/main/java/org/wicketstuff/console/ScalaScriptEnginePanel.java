@@ -42,7 +42,8 @@ public class ScalaScriptEnginePanel extends ScriptEnginePanel
 
 	protected void init()
 	{
-		setInput("println(application)\n" + "println(page)\n" + "println(component)\n");
+		setInput("println(application)\n" + "println(page)\n"
+			+ "println(component)\n\nval $result = page.getSizeInBytes() >> 10\n");
 	}
 
 }

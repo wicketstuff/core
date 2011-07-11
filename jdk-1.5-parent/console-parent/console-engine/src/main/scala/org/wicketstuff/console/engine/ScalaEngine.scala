@@ -26,6 +26,10 @@ class ScalaEngine extends IScriptEngine {
 
   def interpret(script: String, bindings: Map[String, Object]): IScriptExecutionResult = {
 
+    if (script == null || script.trim().equals("")) {
+      return new DefaultScriptExecutionResult(script, null, "", null);
+    }
+    
     val oldOut: PrintStream = System.out
     val oldErr: PrintStream = System.err
     val bout: ByteArrayOutputStream = new ByteArrayOutputStream()
@@ -40,8 +44,9 @@ class ScalaEngine extends IScriptEngine {
       val it = bindings.entrySet.iterator
       while (it.hasNext) {
         val entry = it.next
-        interpreter.quietBind(NamedParam(entry.getKey, entry.getValue()))
+        interpreter.quietBind(NamedParam(entry.getKey, entry.getValue().getClass().getName, entry.getValue()))
       }
+      interpreter.quietBind(NamedParam("$result", null))
 
       System.setOut(newOut)
       System.setErr(newOut)
@@ -49,11 +54,12 @@ class ScalaEngine extends IScriptEngine {
       Console.setErr(newOut)
 
       result = interpreter.quietRun(script)
-
+      
       if (result != IR.Success) {
         throw new RuntimeException("Script execution failed")
       }
 
+      returnValue = interpreter.valueOfTerm("$result").getOrElse(null)
     } catch {
       
       case ex: Exception => {

@@ -36,7 +36,6 @@ public class ScalaEngineTest
 	@Before
 	public void setup()
 	{
-//		engine = new ScalaEngine();
 	}
 
 	@Test
@@ -50,8 +49,8 @@ public class ScalaEngineTest
 
 		// Then
 		final String output = result.getOutput();
-		assertFalse(result.isSuccess());
-		assertNotNull(result.getException());
+		assertTrue(result.isSuccess());
+		assertNull(result.getException());
 		assertEquals("", output);
 		assertNull(result.getReturnValue());
 	}
@@ -177,6 +176,22 @@ public class ScalaEngineTest
 	}
 
 	@Test
+	public void test_returnValue() throws Exception
+	{
+		// Given
+		final String script = "val $result = 42";
+
+		// When
+		final IScriptExecutionResult result = engine.execute(script);
+
+		// Then
+		assertTrue(result.isSuccess());
+		assertNull(result.getException());
+		assertEquals(42, result.getReturnValue());
+
+	}
+
+	@Test
 	public void test_simple_def() throws Exception
 	{
 		// Given
@@ -221,6 +236,22 @@ public class ScalaEngineTest
 
 		// Then
 		assertEquals("5", result.getOutput());
+
+	}
+
+	@Test
+	public void test_binding_types() throws Exception
+	{
+		// Given
+		final Map<String, Object> bindings = new HashMap<String, Object>();
+		bindings.put("x", new Integer(5));
+		final String script = "println(x.getClass().getName())\nprint(x.intValue())\n";
+
+		// When
+		final IScriptExecutionResult result = engine.execute(script, bindings);
+
+		// Then
+		assertEquals("java.lang.Integer\r\n5", result.getOutput());
 
 	}
 
