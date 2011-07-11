@@ -14,10 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console.examples;
+package org.wicketstuff.console.examples.scala;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.ScalaScriptEnginePanel;
+import org.wicketstuff.console.examples.ConsoleBasePage;
 
 public class ScalaEngineTestPage extends ConsoleBasePage
 {
