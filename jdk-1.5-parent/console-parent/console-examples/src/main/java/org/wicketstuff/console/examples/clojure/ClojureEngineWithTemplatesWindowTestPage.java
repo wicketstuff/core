@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console.examples;
+package org.wicketstuff.console.examples.clojure;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -23,6 +23,7 @@ import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.ClojureScriptEngineWithTemplatesWindow;
 import org.wicketstuff.console.engine.Lang;
+import org.wicketstuff.console.examples.ConsoleBasePage;
 import org.wicketstuff.console.templates.PackagedScriptTemplates;
 import org.wicketstuff.console.templates.ScriptTemplate;
 

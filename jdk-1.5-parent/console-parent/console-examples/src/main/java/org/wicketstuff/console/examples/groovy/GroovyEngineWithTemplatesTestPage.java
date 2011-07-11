@@ -14,9 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console.examples;
+package org.wicketstuff.console.examples.groovy;
 
 import org.wicketstuff.console.GroovyScriptEngineWithTemplatesPanel;
+import org.wicketstuff.console.examples.ConsoleBasePage;
 
 public class GroovyEngineWithTemplatesTestPage extends ConsoleBasePage
 {

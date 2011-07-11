@@ -23,7 +23,7 @@ import org.wicketstuff.console.templates.ScriptTemplate;
 import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
 
 /**
- * A combination {@link GroovyScriptEnginePanel} and {@link ScriptTemplateSelectionTablePanel}.
+ * A combination of {@link GroovyScriptEnginePanel} and {@link ScriptTemplateSelectionTablePanel}.
  * 
  * @author cretzel
  */

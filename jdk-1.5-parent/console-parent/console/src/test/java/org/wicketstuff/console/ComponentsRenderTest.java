@@ -32,7 +32,7 @@ public class ComponentsRenderTest
 	}
 
 	@Test
-	public void test_rendersSuccessfully()
+	public void test_rendersSuccessfully_Groovy()
 	{
 		tester.startComponent(new GroovyScriptEnginePanel("foo"));
 		tester.startComponent(new GroovyScriptEngineWithTemplatesPanel("foo", null, null));
@@ -42,7 +42,7 @@ public class ComponentsRenderTest
 	}
 
 	@Test
-	public void test_rendersSuccessfully1()
+	public void test_rendersSuccessfully_Clojure()
 	{
 
 		tester.startComponent(new ClojureScriptEnginePanel("foo"));
@@ -50,4 +50,15 @@ public class ComponentsRenderTest
 		tester.startComponent(new ClojureScriptEngineWithTemplatesPanel("foo", null, null));
 		tester.startComponent(new ClojureScriptEngineWithTemplatesWindow("foo", null, null));
 	}
+
+	@Test
+	public void test_rendersSuccessfully_Scala()
+	{
+
+		tester.startComponent(new ScalaScriptEnginePanel("foo"));
+		tester.startComponent(new ScalaScriptEngineWindow("foo"));
+		tester.startComponent(new ScalaScriptEngineWithTemplatesPanel("foo", null, null));
+		tester.startComponent(new ScalaScriptEngineWithTemplatesWindow("foo", null, null));
+	}
+
 }

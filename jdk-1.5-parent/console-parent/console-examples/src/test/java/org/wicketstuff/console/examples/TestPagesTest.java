@@ -20,6 +20,18 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
+import org.wicketstuff.console.examples.clojure.ClojureEngineTestPage;
+import org.wicketstuff.console.examples.clojure.ClojureEngineWindowTestPage;
+import org.wicketstuff.console.examples.clojure.ClojureEngineWithTemplatesTestPage;
+import org.wicketstuff.console.examples.clojure.ClojureEngineWithTemplatesWindowTestPage;
+import org.wicketstuff.console.examples.groovy.GroovyEngineTestPage;
+import org.wicketstuff.console.examples.groovy.GroovyEngineWindowTestPage;
+import org.wicketstuff.console.examples.groovy.GroovyEngineWithTemplatesTestPage;
+import org.wicketstuff.console.examples.groovy.GroovyEngineWithTemplatesWindowTestPage;
+import org.wicketstuff.console.examples.scala.ScalaEngineTestPage;
+import org.wicketstuff.console.examples.scala.ScalaEngineWindowTestPage;
+import org.wicketstuff.console.examples.scala.ScalaEngineWithTemplatesTestPage;
+import org.wicketstuff.console.examples.scala.ScalaEngineWithTemplatesWindowTestPage;
 
 public class TestPagesTest
 {
@@ -42,6 +54,37 @@ public class TestPagesTest
 	}
 
 	@Test
+	public void test_rendersSuccessfully_ScalaEngineWithTemplatesTestPage()
+	{
+		clazz = ScalaEngineWithTemplatesTestPage.class;
+		tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
+	}
+
+	@Test
+	public void test_rendersSuccessfully_ScalaEngineWindowTestPage()
+	{
+		clazz = ScalaEngineWindowTestPage.class;
+		tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
+
+		tester.clickLink("link");
+		tester.assertComponentOnAjaxResponse("window");
+
+	}
+
+	@Test
+	public void test_rendersSuccessfully_ScalaEngineWithTemplatesWindowTestPage()
+	{
+		clazz = ScalaEngineWithTemplatesWindowTestPage.class;
+		tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
+
+		tester.clickLink("link");
+		tester.assertComponentOnAjaxResponse("window");
+	}
+
+	@Test
 	public void test_rendersSuccessfully_ClojureEngineTestPage()
 	{
 		clazz = ClojureEngineTestPage.class;
@@ -55,6 +98,29 @@ public class TestPagesTest
 		clazz = ClojureEngineWindowTestPage.class;
 		tester.startPage(clazz);
 		tester.assertRenderedPage(clazz);
+
+		tester.clickLink("link");
+		tester.assertComponentOnAjaxResponse("window");
+	}
+
+
+	@Test
+	public void test_rendersSuccessfully_ClojureEngineWithTemplatesTestPage()
+	{
+		clazz = ClojureEngineWithTemplatesTestPage.class;
+		tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
+	}
+
+	@Test
+	public void test_rendersSuccessfully_ClojureEngineWithTemplatesWindowTestPage()
+	{
+		clazz = ClojureEngineWithTemplatesWindowTestPage.class;
+		final ClojureEngineWithTemplatesWindowTestPage page = (ClojureEngineWithTemplatesWindowTestPage)tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
+	
+		tester.clickLink(page.getOpenLink());
+		tester.assertComponentOnAjaxResponse("window");
 	}
 
 	@Test
@@ -71,14 +137,9 @@ public class TestPagesTest
 		clazz = GroovyEngineWindowTestPage.class;
 		tester.startPage(clazz);
 		tester.assertRenderedPage(clazz);
-	}
 
-	@Test
-	public void test_rendersSuccessfully_ClojureEngineWithTemplatesTestPage()
-	{
-		clazz = ClojureEngineWithTemplatesTestPage.class;
-		tester.startPage(clazz);
-		tester.assertRenderedPage(clazz);
+		tester.clickLink("link");
+		tester.assertComponentOnAjaxResponse("window");
 	}
 
 	@Test
@@ -95,16 +156,10 @@ public class TestPagesTest
 		clazz = GroovyEngineWithTemplatesWindowTestPage.class;
 		final GroovyEngineWithTemplatesWindowTestPage page = (GroovyEngineWithTemplatesWindowTestPage)tester.startPage(clazz);
 		tester.assertRenderedPage(clazz);
+		
 		tester.clickLink(page.getOpenLink());
+		tester.assertComponentOnAjaxResponse("window");
 	}
 
-	@Test
-	public void test_rendersSuccessfully_ClojureEngineWithTemplatesWindowTestPage()
-	{
-		clazz = ClojureEngineWithTemplatesWindowTestPage.class;
-		final ClojureEngineWithTemplatesWindowTestPage page = (ClojureEngineWithTemplatesWindowTestPage)tester.startPage(clazz);
-		tester.assertRenderedPage(clazz);
-		tester.clickLink(page.getOpenLink());
-	}
 
 }

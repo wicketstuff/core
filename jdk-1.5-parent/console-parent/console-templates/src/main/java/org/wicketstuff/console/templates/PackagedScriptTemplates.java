@@ -44,6 +44,8 @@ public class PackagedScriptTemplates
 			"WicketClearMarkupCache", "WicketClearPropertiesCache", "WicketClientInfo",
 			"WicketComponentHierarchy", "WicketInvalidateSession", "WicketSize" };
 
+	private static final String[] PACKAGED_SCALA_TEMPLATES = new String[] { };
+
 	/**
 	 * Returns all packaged script templates for a given source language.
 	 * 
@@ -65,6 +67,9 @@ public class PackagedScriptTemplates
 				break;
 			case CLOJURE :
 				templateNames = PACKAGED_CLOJURE_TEMPLATES;
+				break;
+			case SCALA :
+				templateNames = PACKAGED_SCALA_TEMPLATES;
 				break;
 			default :
 				break;

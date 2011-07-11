@@ -14,10 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console.examples;
+package org.wicketstuff.console.examples.clojure;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.ClojureScriptEnginePanel;
+import org.wicketstuff.console.examples.ConsoleBasePage;
 
 public class ClojureEngineTestPage extends ConsoleBasePage
 {

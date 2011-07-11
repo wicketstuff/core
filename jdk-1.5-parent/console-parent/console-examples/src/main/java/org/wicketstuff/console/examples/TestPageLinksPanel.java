@@ -23,6 +23,18 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
+import org.wicketstuff.console.examples.clojure.ClojureEngineTestPage;
+import org.wicketstuff.console.examples.clojure.ClojureEngineWindowTestPage;
+import org.wicketstuff.console.examples.clojure.ClojureEngineWithTemplatesTestPage;
+import org.wicketstuff.console.examples.clojure.ClojureEngineWithTemplatesWindowTestPage;
+import org.wicketstuff.console.examples.groovy.GroovyEngineTestPage;
+import org.wicketstuff.console.examples.groovy.GroovyEngineWindowTestPage;
+import org.wicketstuff.console.examples.groovy.GroovyEngineWithTemplatesTestPage;
+import org.wicketstuff.console.examples.groovy.GroovyEngineWithTemplatesWindowTestPage;
+import org.wicketstuff.console.examples.scala.ScalaEngineTestPage;
+import org.wicketstuff.console.examples.scala.ScalaEngineWindowTestPage;
+import org.wicketstuff.console.examples.scala.ScalaEngineWithTemplatesTestPage;
+import org.wicketstuff.console.examples.scala.ScalaEngineWithTemplatesWindowTestPage;
 
 public class TestPageLinksPanel extends Panel
 {
@@ -47,6 +59,9 @@ public class TestPageLinksPanel extends Panel
 		addLink(r, ClojureEngineWithTemplatesWindowTestPage.class);
 
 		addLink(r, ScalaEngineTestPage.class);
+		addLink(r, ScalaEngineWindowTestPage.class);
+		addLink(r, ScalaEngineWithTemplatesTestPage.class);
+		addLink(r, ScalaEngineWithTemplatesWindowTestPage.class);
 
 	}
 

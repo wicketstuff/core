@@ -20,6 +20,7 @@ import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.wicketstuff.console.examples.clojure.ClojureEngineTestPage;
 import org.wicketstuff.console.examples.hibernate.Book;
 
 /**

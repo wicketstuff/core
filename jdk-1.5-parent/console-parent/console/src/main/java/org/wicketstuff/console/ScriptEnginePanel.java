@@ -302,6 +302,8 @@ public class ScriptEnginePanel extends Panel
 				return new GroovyScriptEnginePanel(wicketId, title);
 			case CLOJURE :
 				return new ClojureScriptEnginePanel(wicketId, title);
+			case SCALA :
+				return new ScalaScriptEnginePanel(wicketId, title);
 			default :
 				throw new UnsupportedOperationException("Unsupported language: " + lang);
 		}
