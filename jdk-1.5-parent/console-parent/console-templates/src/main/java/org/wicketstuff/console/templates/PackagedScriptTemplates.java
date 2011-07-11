@@ -44,7 +44,7 @@ public class PackagedScriptTemplates
 			"WicketClearMarkupCache", "WicketClearPropertiesCache", "WicketClientInfo",
 			"WicketComponentHierarchy", "WicketInvalidateSession", "WicketSize" };
 
-	private static final String[] PACKAGED_SCALA_TEMPLATES = new String[] { };
+	private static final String[] PACKAGED_SCALA_TEMPLATES = new String[] { "HibernateCriteria" };
 
 	/**
 	 * Returns all packaged script templates for a given source language.
