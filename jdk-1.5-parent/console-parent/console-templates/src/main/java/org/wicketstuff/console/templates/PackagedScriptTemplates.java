@@ -38,13 +38,19 @@ public class PackagedScriptTemplates
 			"WicketClearMarkupCache", "WicketClearPropertiesCache", "WicketClientInfo",
 			"WicketComponentHierarchy", "WicketInvalidateSession", "WicketSize" };
 
-	private static final String[] PACKAGED_CLOJURE_TEMPLATES = new String[] { "HibernateCriteria",
-			"HibernateHqlQuery", "HibernateSave", "HibernateShowSql", "HibernateStatistics",
+	private static final String[] PACKAGED_CLOJURE_TEMPLATES = new String[] { "HibernateSave",
+			"HibernateCriteria", "HibernateHqlQuery", "HibernateShowSql", "HibernateStatistics",
 			"Log4j", "MethodsAndFields", "ReadClasspathResource", "SystemProperties",
 			"WicketClearMarkupCache", "WicketClearPropertiesCache", "WicketClientInfo",
 			"WicketComponentHierarchy", "WicketInvalidateSession", "WicketSize" };
 
 	private static final String[] PACKAGED_SCALA_TEMPLATES = new String[] { "HibernateCriteria" };
+
+	private static final String[] PACKAGED_JYTHON_TEMPLATES = new String[] { "HibernateSave",
+			"HibernateCriteria", "HibernateHqlQuery", "HibernateShowSql", "Log4j",
+			"MethodsAndFields", "SystemProperties", "WicketClearMarkupCache",
+			"WicketClearPropertiesCache", "WicketClientInfo", "WicketInvalidateSession",
+			"WicketSize" };
 
 	/**
 	 * Returns all packaged script templates for a given source language.
@@ -70,6 +76,9 @@ public class PackagedScriptTemplates
 				break;
 			case SCALA :
 				templateNames = PACKAGED_SCALA_TEMPLATES;
+				break;
+			case JYTHON :
+				templateNames = PACKAGED_JYTHON_TEMPLATES;
 				break;
 			default :
 				break;
