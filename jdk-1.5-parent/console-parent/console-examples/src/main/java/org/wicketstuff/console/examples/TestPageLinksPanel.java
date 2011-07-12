@@ -31,6 +31,10 @@ import org.wicketstuff.console.examples.groovy.GroovyEngineTestPage;
 import org.wicketstuff.console.examples.groovy.GroovyEngineWindowTestPage;
 import org.wicketstuff.console.examples.groovy.GroovyEngineWithTemplatesTestPage;
 import org.wicketstuff.console.examples.groovy.GroovyEngineWithTemplatesWindowTestPage;
+import org.wicketstuff.console.examples.jython.JythonEngineTestPage;
+import org.wicketstuff.console.examples.jython.JythonEngineWindowTestPage;
+import org.wicketstuff.console.examples.jython.JythonEngineWithTemplatesTestPage;
+import org.wicketstuff.console.examples.jython.JythonEngineWithTemplatesWindowTestPage;
 import org.wicketstuff.console.examples.scala.ScalaEngineTestPage;
 import org.wicketstuff.console.examples.scala.ScalaEngineWindowTestPage;
 import org.wicketstuff.console.examples.scala.ScalaEngineWithTemplatesTestPage;
@@ -62,6 +66,11 @@ public class TestPageLinksPanel extends Panel
 		addLink(r, ScalaEngineWindowTestPage.class);
 		addLink(r, ScalaEngineWithTemplatesTestPage.class);
 		addLink(r, ScalaEngineWithTemplatesWindowTestPage.class);
+
+		addLink(r, JythonEngineTestPage.class);
+		addLink(r, JythonEngineWindowTestPage.class);
+		addLink(r, JythonEngineWithTemplatesTestPage.class);
+		addLink(r, JythonEngineWithTemplatesWindowTestPage.class);
 
 	}
 

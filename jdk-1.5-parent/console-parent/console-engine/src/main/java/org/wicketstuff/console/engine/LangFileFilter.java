@@ -47,23 +47,5 @@ public class LangFileFilter implements FilenameFilter
 		return new LangFileFilter(lang.getFileExtension());
 	}
 
-	public static class GroovyFileFilter extends LangFileFilter
-	{
 
-		public GroovyFileFilter()
-		{
-			super(Lang.GROOVY.getFileExtension());
-		}
-
-	}
-
-	public static class ClojureFileFilter extends LangFileFilter
-	{
-
-		public ClojureFileFilter()
-		{
-			super(Lang.CLOJURE.getFileExtension());
-		}
-
-	}
 }

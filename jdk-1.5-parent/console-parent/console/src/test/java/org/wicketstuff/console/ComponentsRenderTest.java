@@ -61,4 +61,14 @@ public class ComponentsRenderTest
 		tester.startComponent(new ScalaScriptEngineWithTemplatesWindow("foo", null, null));
 	}
 
+	@Test
+	public void test_rendersSuccessfully_Jython()
+	{
+
+		tester.startComponent(new JythonScriptEnginePanel("foo"));
+		tester.startComponent(new JythonScriptEngineWindow("foo"));
+		tester.startComponent(new JythonScriptEngineWithTemplatesPanel("foo", null, null));
+		tester.startComponent(new JythonScriptEngineWithTemplatesWindow("foo", null, null));
+	}
+
 }

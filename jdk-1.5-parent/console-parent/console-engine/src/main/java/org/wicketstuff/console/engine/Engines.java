@@ -29,16 +29,18 @@ public class Engines
 {
 
 	private static Map<Lang, IScriptEngine> singletons = new HashMap<Lang, IScriptEngine>();
-	
-	public static IScriptEngine getSingletonInstance(final Lang lang) {
-		
-		if (!singletons.containsKey(lang)) {
+
+	public static IScriptEngine getSingletonInstance(final Lang lang)
+	{
+
+		if (!singletons.containsKey(lang))
+		{
 			singletons.put(lang, create(lang));
 		}
-		
+
 		return singletons.get(lang);
 	}
-	
+
 	public static IScriptEngine create(final Lang lang)
 	{
 		switch (lang)
@@ -47,8 +49,10 @@ public class Engines
 				return new GroovyEngine();
 			case CLOJURE :
 				return new ClojureEngine();
-			case SCALA:
+			case SCALA :
 				return new ScalaEngine();
+			case JYTHON :
+				return new JythonEngine();
 			default :
 				throw new UnsupportedOperationException("Unsupported language: " + lang);
 		}

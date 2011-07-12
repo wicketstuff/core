@@ -14,21 +14,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console.examples.groovy;
+package org.wicketstuff.console;
 
-import org.wicketstuff.console.GroovyScriptEnginePanel;
-import org.wicketstuff.console.examples.ConsoleBasePage;
+import org.apache.wicket.model.IModel;
+import org.wicketstuff.console.engine.Lang;
 
-public class GroovyEngineTestPage extends ConsoleBasePage
+/**
+ * Main panel to execute Jython scripts.
+ * 
+ * @author cretzel
+ */
+public class JythonScriptEnginePanel extends ScriptEnginePanel
 {
+
 	private static final long serialVersionUID = 1L;
 
-	public GroovyEngineTestPage()
+	public JythonScriptEnginePanel(final String wicketId)
 	{
+		this(wicketId, null);
+	}
 
-		final GroovyScriptEnginePanel enginePanel = new GroovyScriptEnginePanel("scriptPanel");
-		enginePanel.setOutputMarkupId(true);
-		add(enginePanel);
+	public JythonScriptEnginePanel(final String id, final IModel<String> title)
+	{
+		super(id, Lang.JYTHON, title);
+		init();
+	}
+
+	protected void init()
+	{
+		setInput("print application\nprint page\nprint component\n\nresult=component.getId()\n");
 	}
 
 }

@@ -28,6 +28,10 @@ import org.wicketstuff.console.examples.groovy.GroovyEngineTestPage;
 import org.wicketstuff.console.examples.groovy.GroovyEngineWindowTestPage;
 import org.wicketstuff.console.examples.groovy.GroovyEngineWithTemplatesTestPage;
 import org.wicketstuff.console.examples.groovy.GroovyEngineWithTemplatesWindowTestPage;
+import org.wicketstuff.console.examples.jython.JythonEngineTestPage;
+import org.wicketstuff.console.examples.jython.JythonEngineWindowTestPage;
+import org.wicketstuff.console.examples.jython.JythonEngineWithTemplatesTestPage;
+import org.wicketstuff.console.examples.jython.JythonEngineWithTemplatesWindowTestPage;
 import org.wicketstuff.console.examples.scala.ScalaEngineTestPage;
 import org.wicketstuff.console.examples.scala.ScalaEngineWindowTestPage;
 import org.wicketstuff.console.examples.scala.ScalaEngineWithTemplatesTestPage;
@@ -161,5 +165,43 @@ public class TestPagesTest
 		tester.assertComponentOnAjaxResponse("window");
 	}
 
+
+	@Test
+	public void test_rendersSuccessfully_JythonEngineTestPage()
+	{
+		clazz = JythonEngineTestPage.class;
+		tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
+	}
+
+	@Test
+	public void test_rendersSuccessfully_JythonEngineWindowTestPage()
+	{
+		clazz = JythonEngineWindowTestPage.class;
+		tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
+
+		tester.clickLink("link");
+		tester.assertComponentOnAjaxResponse("window");
+	}
+
+	@Test
+	public void test_rendersSuccessfully_JythonEngineWithTemplatesTestPage()
+	{
+		clazz = JythonEngineWithTemplatesTestPage.class;
+		tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
+	}
+
+	@Test
+	public void test_rendersSuccessfully_JythonEngineWithTemplatesWindowTestPage()
+	{
+		clazz = JythonEngineWithTemplatesWindowTestPage.class;
+		final JythonEngineWithTemplatesWindowTestPage page = (JythonEngineWithTemplatesWindowTestPage)tester.startPage(clazz);
+		tester.assertRenderedPage(clazz);
+		
+		tester.clickLink(page.getOpenLink());
+		tester.assertComponentOnAjaxResponse("window");
+	}
 
 }

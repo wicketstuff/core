@@ -304,6 +304,8 @@ public class ScriptEnginePanel extends Panel
 				return new ClojureScriptEnginePanel(wicketId, title);
 			case SCALA :
 				return new ScalaScriptEnginePanel(wicketId, title);
+			case JYTHON :
+				return new JythonScriptEnginePanel(wicketId, title);
 			default :
 				throw new UnsupportedOperationException("Unsupported language: " + lang);
 		}

@@ -14,21 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console.examples.groovy;
+package org.wicketstuff.console.examples.jython;
 
-import org.wicketstuff.console.GroovyScriptEnginePanel;
+import org.wicketstuff.console.JythonScriptEngineWithTemplatesPanel;
 import org.wicketstuff.console.examples.ConsoleBasePage;
 
-public class GroovyEngineTestPage extends ConsoleBasePage
+public class JythonEngineWithTemplatesTestPage extends ConsoleBasePage
 {
 	private static final long serialVersionUID = 1L;
 
-	public GroovyEngineTestPage()
+	public JythonEngineWithTemplatesTestPage()
 	{
-
-		final GroovyScriptEnginePanel enginePanel = new GroovyScriptEnginePanel("scriptPanel");
-		enginePanel.setOutputMarkupId(true);
-		add(enginePanel);
+		add(new JythonScriptEngineWithTemplatesPanel("panel", null, null));
 	}
 
 }
