@@ -34,7 +34,9 @@ import org.wicketstuff.datatable_autocomplete.trie.PatriciaTrie;
 import org.wicketstuff.datatable_autocomplete.trie.TrieNodeInspectingVisitor;
 
 /**
- * @author mocleirihe boot class path for the rt.jar and then loading X methods where X is large.
+ * @author mocleiri 
+ * 
+ * the boot class path for the rt.jar and then loading X methods where X is large.
  *
  */
 public final class TrieBuilder {

@@ -26,6 +26,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.NoRecordsToo
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.markup.repeater.OddEvenItem;
 import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -156,7 +157,7 @@ public class DTADataTable<T> extends DataTable<T> {
 	@Override
 	protected Item<T> newRowItem(String id, int index, IModel<T> model) {
 
-		Item<T> rowItem = super.newRowItem(id, index, model);
+		Item<T> rowItem = new OddEvenItem<T>(id, index, model);
 		
 		if (itemModifier != null) {
 			
