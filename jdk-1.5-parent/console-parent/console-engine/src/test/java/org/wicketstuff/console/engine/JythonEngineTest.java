@@ -31,12 +31,17 @@ import org.junit.Test;
 public class JythonEngineTest
 {
 
+	private static final String NEWLINE = System.getProperty("line.separator");
+	
 	private IScriptEngine engine;
 
 	@Before
 	public void setup()
 	{
 		engine = new JythonEngine();
+		
+		// First run somehow fails sometimes
+		engine.execute("");
 	}
 
 
@@ -44,7 +49,7 @@ public class JythonEngineTest
 	public void test_simple_output_sysout() throws Exception
 	{
 		// Given
-		final String script = "import java.lang.System\n" + "java.lang.System.out.println (\"4\") ";
+		final String script = "import java.lang.System\n" + "java.lang.System.out.print(\"4\") ";
 
 		// When
 		final IScriptExecutionResult result = engine.execute(script);
@@ -55,7 +60,7 @@ public class JythonEngineTest
 		assertTrue(result.isSuccess());
 		assertNull(exception);
 		assertNull(result.getReturnValue());
-		assertEquals("4\r\n", output);
+		assertEquals("4", output);
 	}
 
 	@Test
@@ -73,7 +78,7 @@ public class JythonEngineTest
 		assertTrue(result.isSuccess());
 		assertNull(exception);
 		assertNull(result.getReturnValue());
-		assertEquals("4\r\n", output);
+		assertEquals("4"+NEWLINE, output);
 	}
 
 

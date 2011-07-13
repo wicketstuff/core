@@ -30,6 +30,8 @@ import org.junit.Test;
 
 public class ScalaEngineTest
 {
+	private static final String NEWLINE = System.getProperty("line.separator");
+
 	public static ScalaEngine engine = new ScalaEngine();
 
 
@@ -69,24 +71,7 @@ public class ScalaEngineTest
 		assertNull(result.getException());
 		assertNull(result.getReturnValue());
 		final String output = result.getOutput();
-		assertEquals("foo\r\nbar\r\n", output);
-	}
-
-	@Test
-	public void test_println_2() throws Exception
-	{
-		// Given
-		final String script = "println(\"foo\")\nprintln(\"bar\")";
-
-		// When
-		final IScriptExecutionResult result = engine.execute(script);
-
-		// Then
-		assertTrue(result.isSuccess());
-		assertNull(result.getException());
-		assertNull(result.getReturnValue());
-		final String output = result.getOutput();
-		assertEquals("foo\r\nbar\r\n", output);
+		assertEquals("foo" + NEWLINE + "bar" + NEWLINE, output);
 	}
 
 	@Test
@@ -196,7 +181,7 @@ public class ScalaEngineTest
 	{
 		// Given
 		final String script = "def fak(n: Int): Int = {\n" + "if (n>1) n * fak(n-1) else 1\n}\n"
-			+ "System.out.println(fak(5))";
+			+ "System.out.print(fak(5))";
 
 		// When
 		final IScriptExecutionResult result = engine.execute(script);
@@ -204,7 +189,7 @@ public class ScalaEngineTest
 		// Then
 		assertNull(result.getReturnValue());
 		final String output = result.getOutput();
-		assertEquals("120\r\n", output);
+		assertEquals("120", output);
 	}
 
 	@Test
@@ -212,7 +197,7 @@ public class ScalaEngineTest
 	{
 		// Given
 		final String script = "class Foo {\n" + "val x:String = \"Foo\"\n" + "}\n" + "\n"
-			+ "val f = new Foo\n" + "System.out.println(f.x)\n";
+			+ "val f = new Foo\n" + "System.out.print(f.x)\n";
 
 		// When
 		final IScriptExecutionResult result = engine.execute(script);
@@ -220,7 +205,7 @@ public class ScalaEngineTest
 		// Then
 		assertNull(result.getReturnValue());
 		final String output = result.getOutput();
-		assertEquals("Foo\r\n", output);
+		assertEquals("Foo", output);
 	}
 
 	@Test
@@ -251,7 +236,7 @@ public class ScalaEngineTest
 		final IScriptExecutionResult result = engine.execute(script, bindings);
 
 		// Then
-		assertEquals("java.lang.Integer\r\n5", result.getOutput());
+		assertEquals("java.lang.Integer" + NEWLINE + "5", result.getOutput());
 
 	}
 
