@@ -52,7 +52,7 @@ public abstract class ScriptEngineWindow extends ModalWindow
 
 		setTitle(windowTitle != null ? windowTitle : Model.of("Wicket Console"));
 		setAutoSize(true);
-		setResizable(false);
+		setResizable(true);
 
 		enginePanel = newEnginePanel(getContentId(), lang);
 		setContent(enginePanel);

@@ -22,27 +22,33 @@
 <wicket:panel>
 
 <div class="console">
-	<h3 wicket:id="title">Wicket Console</h3>
-	<div class="input">
-		<form wicket:id="form"><textarea wicket:id="input" wrap="off" onkeydown="return doTab(event);"></textarea></form>
-	</div>
-	<div class="controls">
-		<table border="0" width="100%" cellspacing="0" cellpadding="0">
-			<tr>
-				<td>
+	<table border="0" width="100%" cellspacing="2" cellpadding="0">
+		<tr>
+			<td class="box" style="background-color:#555;">
+				<div class="title" wicket:id="title">Wicket Console</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="box">
+					<form wicket:id="form"><textarea wicket:id="input" wrap="off" onkeydown="return doTab(event);"></textarea></form>
+			</td>
+		</tr>
+		<tr>
+			<td class="controls">
 					<input wicket:id="submit" type="submit" value="Execute" accesskey="x"/>
 					<input wicket:id="clear" type="button" value="Clear" accesskey="c"/>
-				</td>
-				<td width="20">
-					<img wicket:id="indicator" class="indicator" style="display:none;"/>
-				</td>
-			</tr>
-		</table>
-	</div>
-	<div class="result">
-		<div class="returnValue"><input wicket:id="returnValue" type="text"></div>
-		<div class="output"><textarea wicket:id="output" wrap="off"></textarea></div>
-	</div>
+					<img wicket:id="indicator" class="indicator" style="display:none;" width="14"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="box" style="background-color:#89a;">
+				<div class="result">
+					<div class="returnValue"><input wicket:id="returnValue" type="text"></div>
+					<div class="output"><textarea wicket:id="output" wrap="off"></textarea></div>
+				</div>
+			</td>
+		</tr>
+	</table>
 </div>
 
 </wicket:panel>

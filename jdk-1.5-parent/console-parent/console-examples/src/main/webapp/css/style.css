@@ -35,9 +35,6 @@ h3 {
 	font-size: 10pt;
 	color: #444;
 	padding: 2px;
-	background-color: #eee;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 }
 
 h3 a {
@@ -98,6 +95,7 @@ body {
 }
 
 #main-wrapper {
+	text-align:center;
 	
 }
 
