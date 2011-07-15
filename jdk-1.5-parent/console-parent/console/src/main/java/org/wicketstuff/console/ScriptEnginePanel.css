@@ -86,7 +86,9 @@
 	font-family: Courier New;
 	font-size: 10pt;
 }
-
+.console .output textarea.error {
+	color: #f00;
+}
 .console .shortcut {
 	font-size: 8pt;
 	color: #444444;

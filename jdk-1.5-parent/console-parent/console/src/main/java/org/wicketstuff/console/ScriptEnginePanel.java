@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxIndicatorAware;
@@ -77,9 +78,17 @@ public class ScriptEnginePanel extends Panel
 		protected void onInitialize()
 		{
 			super.onInitialize();
-			add(new AttributeAppender("onclick", Model.of("clearTextarea('" +
-				inputTf.getMarkupId() + "')"), ";"));
 
+			addClearOnClick(inputTa);
+			addClearOnClick(outputTa);
+			addClearOnClick(returnValueTf);
+		}
+
+		private void addClearOnClick(final Component component)
+		{
+			final String markupId = component.getMarkupId();
+			final String clearJs = String.format("clearValue('%s')", markupId);
+			add(new AttributeAppender("onclick", Model.of(clearJs), ";"));
 		}
 
 	}
@@ -102,7 +111,6 @@ public class ScriptEnginePanel extends Panel
 		@Override
 		protected void onError(final AjaxRequestTarget target, final Form<?> form)
 		{
-
 		}
 
 		public String getAjaxIndicatorMarkupId()
@@ -122,17 +130,15 @@ public class ScriptEnginePanel extends Panel
 	private String input;
 	private String output;
 	private String returnValue;
+	private boolean success;
 
 	private Label title;
 	private Form<Void> form;
-	private TextArea<String> inputTf;
-	private TextArea<String> outputTf;
+	private TextArea<String> inputTa;
+	private OutputTextArea outputTa;
 	private TextField<String> returnValueTf;
 
 	private Image indicator;
-
-	private final IModel<String> titleModel;
-
 	private final Lang lang;
 
 	public ScriptEnginePanel(final String id, final Lang lang)
@@ -144,18 +150,18 @@ public class ScriptEnginePanel extends Panel
 	{
 		super(id);
 		this.lang = lang;
-		titleModel = title != null ? title : Model.of("Wicket Console");
+		final IModel<String> titleModel = title != null ? title : Model.of("Wicket Console");
 
-		init();
+		init(titleModel);
 	}
 
-	private void init()
+	private void init(final IModel<String> titleModel)
 	{
 		setDefaultModel(new CompoundPropertyModel<ScriptEnginePanel>(this));
-		initComponents();
+		initComponents(titleModel);
 	}
 
-	protected void initComponents()
+	protected void initComponents(final IModel<String> titleModel)
 	{
 		title = new Label("title", titleModel);
 		add(title);
@@ -163,9 +169,9 @@ public class ScriptEnginePanel extends Panel
 		form = new Form<Void>("form");
 		add(form);
 
-		inputTf = new TextArea<String>("input");
-		inputTf.setOutputMarkupId(true);
-		form.add(inputTf);
+		inputTa = new TextArea<String>("input");
+		inputTa.setOutputMarkupId(true);
+		form.add(inputTa);
 
 		add(new SubmitButton("submit", form));
 		add(new ClearButton("clear"));
@@ -178,9 +184,9 @@ public class ScriptEnginePanel extends Panel
 		returnValueTf.setOutputMarkupId(true);
 		add(returnValueTf);
 
-		outputTf = new TextArea<String>("output");
-		outputTf.setOutputMarkupId(true);
-		add(outputTf);
+		outputTa = new OutputTextArea("output", this);
+		outputTa.setOutputMarkupId(true);
+		add(outputTa);
 	}
 
 	protected ResourceReference getCSS()
@@ -214,14 +220,16 @@ public class ScriptEnginePanel extends Panel
 		{
 			returnValue = String.valueOf(result.getReturnValue());
 			output = result.getOutput();
+			success = true;
 		}
 		else
 		{
 			returnValue = null;
 			output = String.format("%s\n\n%s", result.getOutput(), result.getException());
+			success = false;
 		}
 
-		target.add(returnValueTf, outputTf);
+		target.add(returnValueTf, outputTa);
 	}
 
 	protected IScriptEngine newEngine()
@@ -236,6 +244,11 @@ public class ScriptEnginePanel extends Panel
 		bindings.put("page", getPage());
 		bindings.put("component", this);
 		return bindings;
+	}
+
+	public boolean isSuccess()
+	{
+		return success;
 	}
 
 	public String getInput()
@@ -270,27 +283,17 @@ public class ScriptEnginePanel extends Panel
 
 	public TextArea<String> getInputTf()
 	{
-		return inputTf;
+		return inputTa;
 	}
 
 	public TextArea<String> getOutputTf()
 	{
-		return outputTf;
+		return outputTa;
 	}
 
 	public TextField<String> getReturnValueTf()
 	{
 		return returnValueTf;
-	}
-
-	@Override
-	public void detachModels()
-	{
-		super.detachModels();
-		if (titleModel != null)
-		{
-			titleModel.detach();
-		}
 	}
 
 	public static ScriptEnginePanel create(final String wicketId, final Lang lang,
