@@ -34,9 +34,9 @@ public class PackagedScriptTemplates
 
 	private static final String[] PACKAGED_GROOVY_TEMPLATES = new String[] { "HibernateCriteria",
 			"HibernateHqlQuery", "HibernateSave", "HibernateShowSql", "HibernateStatistics",
-			"Log4j", "MethodsAndFields", "ReadClasspathResource", "SystemProperties",
-			"WicketClearMarkupCache", "WicketClearPropertiesCache", "WicketClientInfo",
-			"WicketComponentHierarchy", "WicketInvalidateSession", "WicketSize" };
+			"Hibernate2ndLevelCache", "Log4j", "MethodsAndFields", "ReadClasspathResource",
+			"SystemProperties", "WicketClearMarkupCache", "WicketClearPropertiesCache",
+			"WicketClientInfo", "WicketComponentHierarchy", "WicketInvalidateSession", "WicketSize" };
 
 	private static final String[] PACKAGED_CLOJURE_TEMPLATES = new String[] { "HibernateSave",
 			"HibernateCriteria", "HibernateHqlQuery", "HibernateShowSql", "HibernateStatistics",
