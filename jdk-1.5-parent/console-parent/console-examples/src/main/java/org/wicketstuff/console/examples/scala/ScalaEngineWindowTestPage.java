@@ -19,8 +19,8 @@ package org.wicketstuff.console.examples.scala;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.wicketstuff.console.ScalaScriptEngineWindow;
 import org.wicketstuff.console.examples.ConsoleBasePage;
+import org.wicketstuff.console.scala.ScalaScriptEngineWindow;
 
 public class ScalaEngineWindowTestPage extends ConsoleBasePage
 {

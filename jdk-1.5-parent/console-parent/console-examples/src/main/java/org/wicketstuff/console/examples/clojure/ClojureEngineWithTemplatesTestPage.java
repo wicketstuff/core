@@ -17,7 +17,7 @@
 package org.wicketstuff.console.examples.clojure;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.wicketstuff.console.ClojureScriptEngineWithTemplatesPanel;
+import org.wicketstuff.console.clojure.ClojureScriptEngineWithTemplatesPanel;
 import org.wicketstuff.console.examples.ConsoleBasePage;
 
 public class ClojureEngineWithTemplatesTestPage extends ConsoleBasePage

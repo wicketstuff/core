@@ -14,20 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console;
+package org.wicketstuff.console.clojure;
 
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
+import org.wicketstuff.console.ScriptEnginePanelWithTemplates;
 import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.templates.ScriptTemplate;
 import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
 
 /**
- * A combination of {@link JythonScriptEnginePanel} and {@link ScriptTemplateSelectionTablePanel}.
+ * A combination of {@link ClojureScriptEnginePanel} and {@link ScriptTemplateSelectionTablePanel}.
  * 
  * @author cretzel
  */
-public class JythonScriptEngineWithTemplatesPanel extends ScriptEnginePanelWithTemplates
+public class ClojureScriptEngineWithTemplatesPanel extends ScriptEnginePanelWithTemplates
 {
 
 	private static final long serialVersionUID = 1L;
@@ -42,10 +43,10 @@ public class JythonScriptEngineWithTemplatesPanel extends ScriptEnginePanelWithT
 	 * @param dataProvider
 	 *            data provider for script templates, {@code null} for default
 	 */
-	public JythonScriptEngineWithTemplatesPanel(final String id, final IModel<String> title,
+	public ClojureScriptEngineWithTemplatesPanel(final String id, final IModel<String> title,
 		final IDataProvider<ScriptTemplate> dataProvider)
 	{
-		super(id, Lang.JYTHON, title, dataProvider);
+		super(id, Lang.CLOJURE, title, dataProvider);
 	}
 
 }

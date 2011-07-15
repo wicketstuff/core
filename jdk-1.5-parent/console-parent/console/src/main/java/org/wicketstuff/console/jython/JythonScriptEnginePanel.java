@@ -14,24 +14,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console;
+package org.wicketstuff.console.jython;
 
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.model.IModel;
+import org.wicketstuff.console.ScriptEnginePanel;
 import org.wicketstuff.console.engine.Lang;
 
 /**
- * A {@link ModalWindow} displaying a {@link JythonScriptEnginePanel}.
+ * Main panel to execute Jython scripts.
  * 
  * @author cretzel
  */
-public class JythonScriptEngineWindow extends ScriptEngineWindow
+public class JythonScriptEnginePanel extends ScriptEnginePanel
 {
 
 	private static final long serialVersionUID = 1L;
 
-	public JythonScriptEngineWindow(final String id)
+	public JythonScriptEnginePanel(final String wicketId)
 	{
-		super(id, Lang.JYTHON, null);
+		this(wicketId, null);
+	}
+
+	public JythonScriptEnginePanel(final String id, final IModel<String> title)
+	{
+		super(id, Lang.JYTHON, title);
+		init();
+	}
+
+	protected void init()
+	{
+		setInput("print application\nprint page\nprint component\n\nresult=component.getId()\n");
 	}
 
 }

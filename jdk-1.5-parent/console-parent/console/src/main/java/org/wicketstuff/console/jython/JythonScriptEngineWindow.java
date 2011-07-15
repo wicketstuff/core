@@ -14,38 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console;
+package org.wicketstuff.console.jython;
 
-import org.apache.wicket.markup.repeater.data.IDataProvider;
-import org.apache.wicket.model.IModel;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.wicketstuff.console.ScriptEngineWindow;
 import org.wicketstuff.console.engine.Lang;
-import org.wicketstuff.console.templates.ScriptTemplate;
-import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
 
 /**
- * A combination of {@link ScalaScriptEnginePanel} and {@link ScriptTemplateSelectionTablePanel}.
+ * A {@link ModalWindow} displaying a {@link JythonScriptEnginePanel}.
  * 
  * @author cretzel
  */
-public class ScalaScriptEngineWithTemplatesPanel extends ScriptEnginePanelWithTemplates
+public class JythonScriptEngineWindow extends ScriptEngineWindow
 {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Creates an instance using the given title and script template data provider.
-	 * 
-	 * @param id
-	 *            id
-	 * @param title
-	 *            title, {@code null} for default
-	 * @param dataProvider
-	 *            data provider for script templates, {@code null} for default
-	 */
-	public ScalaScriptEngineWithTemplatesPanel(final String id, final IModel<String> title,
-		final IDataProvider<ScriptTemplate> dataProvider)
+	public JythonScriptEngineWindow(final String id)
 	{
-		super(id, Lang.SCALA, title, dataProvider);
+		super(id, Lang.JYTHON, null);
 	}
 
 }

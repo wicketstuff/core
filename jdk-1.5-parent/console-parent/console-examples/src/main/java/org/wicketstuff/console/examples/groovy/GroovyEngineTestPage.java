@@ -16,8 +16,8 @@
  */
 package org.wicketstuff.console.examples.groovy;
 
-import org.wicketstuff.console.GroovyScriptEnginePanel;
 import org.wicketstuff.console.examples.ConsoleBasePage;
+import org.wicketstuff.console.groovy.GroovyScriptEnginePanel;
 
 public class GroovyEngineTestPage extends ConsoleBasePage
 {

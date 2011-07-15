@@ -21,7 +21,7 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.wicketstuff.console.ClojureScriptEngineWithTemplatesWindow;
+import org.wicketstuff.console.clojure.ClojureScriptEngineWithTemplatesWindow;
 import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.examples.ConsoleBasePage;
 import org.wicketstuff.console.templates.PackagedScriptTemplates;

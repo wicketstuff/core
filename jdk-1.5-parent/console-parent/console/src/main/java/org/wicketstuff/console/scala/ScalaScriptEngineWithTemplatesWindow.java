@@ -14,24 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console;
+package org.wicketstuff.console.scala;
 
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.model.IModel;
+import org.wicketstuff.console.ScriptEngineWithTemplatesWindow;
 import org.wicketstuff.console.engine.Lang;
+import org.wicketstuff.console.templates.ScriptTemplate;
 
 /**
- * A {@link ModalWindow} displaying a {@link GroovyScriptEnginePanel}.
+ * A {@link ModalWindow} displaying a {@link ScalaScriptEngineWithTemplatesPanel}.
  * 
  * @author cretzel
  */
-public class GroovyScriptEngineWindow extends ScriptEngineWindow
+public class ScalaScriptEngineWithTemplatesWindow extends ScriptEngineWithTemplatesWindow
 {
 
 	private static final long serialVersionUID = 1L;
 
-	public GroovyScriptEngineWindow(final String id)
+	/**
+	 * @see ScriptEngineWithTemplatesWindow#ScriptEngineWithTemplatesWindow(String, Lang,
+	 *      org.apache.wicket.model.IModel)
+	 */
+	public ScalaScriptEngineWithTemplatesWindow(final String id, final IModel<String> windowTitle,
+		final IDataProvider<ScriptTemplate> dataProvider)
 	{
-		super(id, Lang.GROOVY, null);
+		super(id, Lang.SCALA, windowTitle, dataProvider);
 	}
 
 }

@@ -19,8 +19,8 @@ package org.wicketstuff.console.examples.jython;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.wicketstuff.console.JythonScriptEngineWindow;
 import org.wicketstuff.console.examples.ConsoleBasePage;
+import org.wicketstuff.console.jython.JythonScriptEngineWindow;
 
 public class JythonEngineWindowTestPage extends ConsoleBasePage
 {

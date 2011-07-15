@@ -14,36 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console;
+package org.wicketstuff.console.groovy;
 
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
+import org.wicketstuff.console.ScriptEngineWithTemplatesWindow;
 import org.wicketstuff.console.engine.Lang;
+import org.wicketstuff.console.templates.ScriptTemplate;
 
 /**
- * Main panel to execute Scala scripts.
+ * A {@link ModalWindow} displaying a {@link GroovyScriptEngineWithTemplatesPanel}.
  * 
  * @author cretzel
  */
-public class ScalaScriptEnginePanel extends ScriptEnginePanel
+public class GroovyScriptEngineWithTemplatesWindow extends ScriptEngineWithTemplatesWindow
 {
 
 	private static final long serialVersionUID = 1L;
 
-	public ScalaScriptEnginePanel(final String wicketId)
+	/**
+	 * @see ScriptEngineWithTemplatesWindow#ScriptEngineWithTemplatesWindow(String, Lang,
+	 *      org.apache.wicket.model.IModel)
+	 */
+	public GroovyScriptEngineWithTemplatesWindow(final String id, final IModel<String> windowTitle,
+		final IDataProvider<ScriptTemplate> dataProvider)
 	{
-		this(wicketId, null);
-	}
-
-	public ScalaScriptEnginePanel(final String id, final IModel<String> title)
-	{
-		super(id, Lang.SCALA, title);
-		init();
-	}
-
-	protected void init()
-	{
-		setInput("println(application)\n" + "println(page)\n"
-			+ "println(component)\n\nval $result = page.getSizeInBytes() >> 10\n");
+		super(id, Lang.GROOVY, windowTitle, dataProvider);
 	}
 
 }

@@ -17,8 +17,8 @@
 package org.wicketstuff.console.examples.scala;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.wicketstuff.console.ScalaScriptEnginePanel;
 import org.wicketstuff.console.examples.ConsoleBasePage;
+import org.wicketstuff.console.scala.ScalaScriptEnginePanel;
 
 public class ScalaEngineTestPage extends ConsoleBasePage
 {

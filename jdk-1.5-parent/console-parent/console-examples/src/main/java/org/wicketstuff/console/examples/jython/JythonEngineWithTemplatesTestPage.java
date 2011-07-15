@@ -16,8 +16,8 @@
  */
 package org.wicketstuff.console.examples.jython;
 
-import org.wicketstuff.console.JythonScriptEngineWithTemplatesPanel;
 import org.wicketstuff.console.examples.ConsoleBasePage;
+import org.wicketstuff.console.jython.JythonScriptEngineWithTemplatesPanel;
 
 public class JythonEngineWithTemplatesTestPage extends ConsoleBasePage
 {

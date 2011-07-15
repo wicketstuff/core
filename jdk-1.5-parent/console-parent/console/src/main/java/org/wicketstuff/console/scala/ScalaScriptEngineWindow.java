@@ -14,35 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console;
+package org.wicketstuff.console.scala;
 
-import org.apache.wicket.model.IModel;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.wicketstuff.console.ScriptEngineWindow;
 import org.wicketstuff.console.engine.Lang;
 
 /**
- * Main panel to execute Groovy scripts.
+ * A {@link ModalWindow} displaying a {@link ScalaScriptEnginePanel}.
  * 
  * @author cretzel
  */
-public class GroovyScriptEnginePanel extends ScriptEnginePanel
+public class ScalaScriptEngineWindow extends ScriptEngineWindow
 {
 
 	private static final long serialVersionUID = 1L;
 
-	public GroovyScriptEnginePanel(final String wicketId)
+	public ScalaScriptEngineWindow(final String id)
 	{
-		this(wicketId, null);
-	}
-
-	public GroovyScriptEnginePanel(final String id, final IModel<String> title)
-	{
-		super(id, Lang.GROOVY, title);
-		init();
-	}
-
-	protected void init()
-	{
-		setInput("println application\n" + "println page\n" + "println component\n");
+		super(id, Lang.SCALA, null);
 	}
 
 }

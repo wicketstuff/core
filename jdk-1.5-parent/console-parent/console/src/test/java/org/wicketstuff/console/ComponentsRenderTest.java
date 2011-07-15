@@ -19,6 +19,22 @@ package org.wicketstuff.console;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
+import org.wicketstuff.console.clojure.ClojureScriptEnginePanel;
+import org.wicketstuff.console.clojure.ClojureScriptEngineWindow;
+import org.wicketstuff.console.clojure.ClojureScriptEngineWithTemplatesPanel;
+import org.wicketstuff.console.clojure.ClojureScriptEngineWithTemplatesWindow;
+import org.wicketstuff.console.groovy.GroovyScriptEnginePanel;
+import org.wicketstuff.console.groovy.GroovyScriptEngineWindow;
+import org.wicketstuff.console.groovy.GroovyScriptEngineWithTemplatesPanel;
+import org.wicketstuff.console.groovy.GroovyScriptEngineWithTemplatesWindow;
+import org.wicketstuff.console.jython.JythonScriptEnginePanel;
+import org.wicketstuff.console.jython.JythonScriptEngineWindow;
+import org.wicketstuff.console.jython.JythonScriptEngineWithTemplatesPanel;
+import org.wicketstuff.console.jython.JythonScriptEngineWithTemplatesWindow;
+import org.wicketstuff.console.scala.ScalaScriptEnginePanel;
+import org.wicketstuff.console.scala.ScalaScriptEngineWindow;
+import org.wicketstuff.console.scala.ScalaScriptEngineWithTemplatesPanel;
+import org.wicketstuff.console.scala.ScalaScriptEngineWithTemplatesWindow;
 
 public class ComponentsRenderTest
 {

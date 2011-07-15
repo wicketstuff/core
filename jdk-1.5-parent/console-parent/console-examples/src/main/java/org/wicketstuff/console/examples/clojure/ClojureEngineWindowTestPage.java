@@ -19,7 +19,7 @@ package org.wicketstuff.console.examples.clojure;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.wicketstuff.console.ClojureScriptEngineWindow;
+import org.wicketstuff.console.clojure.ClojureScriptEngineWindow;
 import org.wicketstuff.console.examples.ConsoleBasePage;
 
 public class ClojureEngineWindowTestPage extends ConsoleBasePage

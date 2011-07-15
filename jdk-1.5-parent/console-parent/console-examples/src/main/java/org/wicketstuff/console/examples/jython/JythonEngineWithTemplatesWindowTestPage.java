@@ -20,9 +20,9 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
-import org.wicketstuff.console.JythonScriptEngineWithTemplatesWindow;
 import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.examples.ConsoleBasePage;
+import org.wicketstuff.console.jython.JythonScriptEngineWithTemplatesWindow;
 import org.wicketstuff.console.templates.PackagedScriptTemplates;
 import org.wicketstuff.console.templates.ScriptTemplate;
 

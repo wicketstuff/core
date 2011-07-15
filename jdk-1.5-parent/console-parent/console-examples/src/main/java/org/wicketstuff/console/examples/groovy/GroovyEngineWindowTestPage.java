@@ -19,8 +19,8 @@ package org.wicketstuff.console.examples.groovy;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.wicketstuff.console.GroovyScriptEngineWindow;
 import org.wicketstuff.console.examples.ConsoleBasePage;
+import org.wicketstuff.console.groovy.GroovyScriptEngineWindow;
 
 public class GroovyEngineWindowTestPage extends ConsoleBasePage
 {

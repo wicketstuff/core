@@ -14,38 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console;
+package org.wicketstuff.console.jython;
 
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
+import org.wicketstuff.console.ScriptEngineWithTemplatesWindow;
 import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.templates.ScriptTemplate;
-import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
 
 /**
- * A combination of {@link ClojureScriptEnginePanel} and {@link ScriptTemplateSelectionTablePanel}.
+ * A {@link ModalWindow} displaying a {@link JythonScriptEngineWithTemplatesPanel}.
  * 
  * @author cretzel
  */
-public class ClojureScriptEngineWithTemplatesPanel extends ScriptEnginePanelWithTemplates
+public class JythonScriptEngineWithTemplatesWindow extends ScriptEngineWithTemplatesWindow
 {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Creates an instance using the given title and script template data provider.
-	 * 
-	 * @param id
-	 *            id
-	 * @param title
-	 *            title, {@code null} for default
-	 * @param dataProvider
-	 *            data provider for script templates, {@code null} for default
+	 * @see ScriptEngineWithTemplatesWindow#ScriptEngineWithTemplatesWindow(String, Lang,
+	 *      org.apache.wicket.model.IModel)
 	 */
-	public ClojureScriptEngineWithTemplatesPanel(final String id, final IModel<String> title,
+	public JythonScriptEngineWithTemplatesWindow(final String id, final IModel<String> windowTitle,
 		final IDataProvider<ScriptTemplate> dataProvider)
 	{
-		super(id, Lang.CLOJURE, title, dataProvider);
+		super(id, Lang.JYTHON, windowTitle, dataProvider);
 	}
 
 }

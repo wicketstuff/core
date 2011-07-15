@@ -14,32 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console;
+package org.wicketstuff.console.jython;
 
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
+import org.wicketstuff.console.ScriptEnginePanelWithTemplates;
 import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.templates.ScriptTemplate;
+import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
 
 /**
- * A {@link ModalWindow} displaying a {@link GroovyScriptEngineWithTemplatesPanel}.
+ * A combination of {@link JythonScriptEnginePanel} and {@link ScriptTemplateSelectionTablePanel}.
  * 
  * @author cretzel
  */
-public class GroovyScriptEngineWithTemplatesWindow extends ScriptEngineWithTemplatesWindow
+public class JythonScriptEngineWithTemplatesPanel extends ScriptEnginePanelWithTemplates
 {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see ScriptEngineWithTemplatesWindow#ScriptEngineWithTemplatesWindow(String, Lang,
-	 *      org.apache.wicket.model.IModel)
+	 * Creates an instance using the given title and script template data provider.
+	 * 
+	 * @param id
+	 *            id
+	 * @param title
+	 *            title, {@code null} for default
+	 * @param dataProvider
+	 *            data provider for script templates, {@code null} for default
 	 */
-	public GroovyScriptEngineWithTemplatesWindow(final String id, final IModel<String> windowTitle,
+	public JythonScriptEngineWithTemplatesPanel(final String id, final IModel<String> title,
 		final IDataProvider<ScriptTemplate> dataProvider)
 	{
-		super(id, Lang.GROOVY, windowTitle, dataProvider);
+		super(id, Lang.JYTHON, title, dataProvider);
 	}
 
 }

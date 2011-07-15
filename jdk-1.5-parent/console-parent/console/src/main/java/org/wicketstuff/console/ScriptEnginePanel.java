@@ -39,10 +39,14 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.wicketstuff.console.clojure.ClojureScriptEnginePanel;
 import org.wicketstuff.console.engine.Engines;
 import org.wicketstuff.console.engine.IScriptEngine;
 import org.wicketstuff.console.engine.IScriptExecutionResult;
 import org.wicketstuff.console.engine.Lang;
+import org.wicketstuff.console.groovy.GroovyScriptEnginePanel;
+import org.wicketstuff.console.jython.JythonScriptEnginePanel;
+import org.wicketstuff.console.scala.ScalaScriptEnginePanel;
 
 /**
  * Abstract panel for executing Scripts.

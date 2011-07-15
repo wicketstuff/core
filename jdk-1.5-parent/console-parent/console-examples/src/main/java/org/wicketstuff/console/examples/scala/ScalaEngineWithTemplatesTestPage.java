@@ -16,8 +16,8 @@
  */
 package org.wicketstuff.console.examples.scala;
 
-import org.wicketstuff.console.ScalaScriptEngineWithTemplatesPanel;
 import org.wicketstuff.console.examples.ConsoleBasePage;
+import org.wicketstuff.console.scala.ScalaScriptEngineWithTemplatesPanel;
 
 public class ScalaEngineWithTemplatesTestPage extends ConsoleBasePage
 {

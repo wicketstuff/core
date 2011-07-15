@@ -14,9 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console;
+package org.wicketstuff.console.clojure;
 
 import org.apache.wicket.model.IModel;
+import org.wicketstuff.console.ScriptEnginePanel;
 import org.wicketstuff.console.engine.Lang;
 
 /**

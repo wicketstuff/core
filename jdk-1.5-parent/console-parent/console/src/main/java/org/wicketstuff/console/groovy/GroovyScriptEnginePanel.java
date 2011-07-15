@@ -14,35 +14,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console;
+package org.wicketstuff.console.groovy;
 
 import org.apache.wicket.model.IModel;
+import org.wicketstuff.console.ScriptEnginePanel;
 import org.wicketstuff.console.engine.Lang;
 
 /**
- * Main panel to execute Jython scripts.
+ * Main panel to execute Groovy scripts.
  * 
  * @author cretzel
  */
-public class JythonScriptEnginePanel extends ScriptEnginePanel
+public class GroovyScriptEnginePanel extends ScriptEnginePanel
 {
 
 	private static final long serialVersionUID = 1L;
 
-	public JythonScriptEnginePanel(final String wicketId)
+	public GroovyScriptEnginePanel(final String wicketId)
 	{
 		this(wicketId, null);
 	}
 
-	public JythonScriptEnginePanel(final String id, final IModel<String> title)
+	public GroovyScriptEnginePanel(final String id, final IModel<String> title)
 	{
-		super(id, Lang.JYTHON, title);
+		super(id, Lang.GROOVY, title);
 		init();
 	}
 
 	protected void init()
 	{
-		setInput("print application\nprint page\nprint component\n\nresult=component.getId()\n");
+		setInput("println application\n" + "println page\n" + "println component\n");
 	}
 
 }

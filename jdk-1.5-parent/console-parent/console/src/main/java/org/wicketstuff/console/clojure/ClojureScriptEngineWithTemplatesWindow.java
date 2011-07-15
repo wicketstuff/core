@@ -14,24 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console;
+package org.wicketstuff.console.clojure;
 
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.model.IModel;
+import org.wicketstuff.console.ScriptEngineWithTemplatesWindow;
 import org.wicketstuff.console.engine.Lang;
+import org.wicketstuff.console.templates.ScriptTemplate;
 
 /**
- * A {@link ModalWindow} displaying a {@link ScalaScriptEnginePanel}.
+ * A {@link ModalWindow} displaying a {@link ClojureScriptEngineWithTemplatesPanel}.
  * 
  * @author cretzel
  */
-public class ScalaScriptEngineWindow extends ScriptEngineWindow
+public class ClojureScriptEngineWithTemplatesWindow extends ScriptEngineWithTemplatesWindow
 {
 
 	private static final long serialVersionUID = 1L;
 
-	public ScalaScriptEngineWindow(final String id)
+	public ClojureScriptEngineWithTemplatesWindow(final String id,
+		final IModel<String> windowTitle, final IDataProvider<ScriptTemplate> dataProvider)
 	{
-		super(id, Lang.SCALA, null);
+		super(id, Lang.CLOJURE, windowTitle, dataProvider);
 	}
 
 }
