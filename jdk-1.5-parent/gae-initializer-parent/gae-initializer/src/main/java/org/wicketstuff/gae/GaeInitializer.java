@@ -7,8 +7,8 @@ import org.apache.wicket.pageStore.memory.PageNumberEvictionStrategy;
 import org.apache.wicket.serialize.ISerializer;
 
 /**
- * A Wicket initializer that configures the application that way so it is
- * possible to run it in Google AppEngine
+ * A Wicket initializer that configures the application that way so it is possible to run it in
+ * Google AppEngine
  */
 public class GaeInitializer implements IInitializer
 {
@@ -34,11 +34,10 @@ public class GaeInitializer implements IInitializer
 			evictionStrategy = new PageNumberEvictionStrategy(10);
 		}
 
-		application
-				.setPageManagerProvider(new GaePageManagerProvider(application, evictionStrategy));
+		application.setPageManagerProvider(new GaePageManagerProvider(application, evictionStrategy));
 
 		// disable file cleaning because it starts a new thread
-		application.getResourceSettings().setFileUploadCleaner(null);
+		application.getResourceSettings().setFileCleaner(null);
 	}
 
 	public void destroy(Application application)
