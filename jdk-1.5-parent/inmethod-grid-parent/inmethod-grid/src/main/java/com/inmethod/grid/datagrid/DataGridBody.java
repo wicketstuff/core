@@ -11,7 +11,6 @@ import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
 import org.apache.wicket.model.IModel;
 
 import com.inmethod.grid.IDataSource;
-import com.inmethod.grid.IDataSource.IQuery;
 import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.IGridSortState;
 import com.inmethod.grid.common.AbstractGridRow;
@@ -125,38 +124,6 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 		protected IGridSortState getSortState()
 		{
 			return DataGridBody.this.getSortState();
-		}
-
-		@Override
-		protected IQuery wrapQuery(final IQuery original)
-		{
-			return new DataGrid.IGridQuery<D, T>()
-			{
-				public int getCount()
-				{
-					return original.getCount();
-				}
-
-				public int getFrom()
-				{
-					return original.getFrom();
-				}
-
-				public IGridSortState getSortState()
-				{
-					return original.getSortState();
-				}
-
-				public int getTotalCount()
-				{
-					return original.getTotalCount();
-				}
-
-				public DataGrid<D, T> getDataGrid()
-				{
-					return DataGridBody.this.findParent(DataGrid.class);
-				}
-			};
 		}
 
 		@Override

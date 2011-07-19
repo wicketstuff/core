@@ -447,20 +447,6 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> im
 	}
 
 	/**
-	 * Extended query interface that makes it possible to obtain the {@link DataGrid} instance.
-	 * 
-	 * @author Matej Knopp
-	 */
-	public interface IGridQuery<D extends IDataSource<T>, T> extends IDataSource.IQuery
-	{
-
-		/**
-		 * @return data grid issuing the query
-		 */
-		public DataGrid<D, T> getDataGrid();
-	};
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
