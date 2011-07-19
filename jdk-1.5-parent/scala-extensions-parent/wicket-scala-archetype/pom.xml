@@ -36,6 +36,15 @@
 	</developers>
 	
 	<build>
+		<resources>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+		</resources>
 		<extensions>
 			<extension>
 				<groupId>org.apache.maven.archetype</groupId>
