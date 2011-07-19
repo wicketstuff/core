@@ -29,7 +29,7 @@ public class KryoSerializerTest
 	@Test
 	public void homepageRendersSuccessfully()
 	{
-		// start and render the test page
+	    // start and render the test page
 		HomePage page = tester.startPage(HomePage.class);
 
 		// assert rendered page class
@@ -42,7 +42,7 @@ public class KryoSerializerTest
 
 		byte[] data = pageSerializer.serialize(page);
 		Assert.assertNotNull("The produced data should not be null!", data);
-		Assert.assertEquals("The produced data should not be null!", 10485760, data.length);
+		Assert.assertEquals("The produced data should not be null!", 437, data.length);
 
 		Object object = pageSerializer.deserialize(data);
 		Assert.assertTrue(

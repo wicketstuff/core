@@ -552,7 +552,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	{
 		if (sortState == null)
 		{
-			sortState = new GridSortState();
+			sortState = new GridSortState(this);
 		}
 		return sortState;
 	};

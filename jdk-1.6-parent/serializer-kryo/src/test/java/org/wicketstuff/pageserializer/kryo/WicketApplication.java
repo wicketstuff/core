@@ -1,6 +1,9 @@
 package org.wicketstuff.pageserializer.kryo;
 
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.util.lang.Bytes;
+
+import com.esotericsoftware.kryo.Kryo;
 
 /**
  * Application object for your web application. If you want to run this application without
@@ -10,23 +13,23 @@ import org.apache.wicket.protocol.http.WebApplication;
  */
 public class WicketApplication extends WebApplication
 {
-	/**
-	 * @see org.apache.wicket.Application#getHomePage()
-	 */
 	@Override
 	public Class<HomePage> getHomePage()
 	{
 		return HomePage.class;
 	}
 
-	/**
-	 * @see org.apache.wicket.Application#init()
-	 */
 	@Override
 	public void init()
 	{
 		super.init();
 
-		getFrameworkSettings().setSerializer(new KryoSerializer());
+		getFrameworkSettings().setSerializer(new KryoSerializer(Bytes.bytes(500)) {
+
+		    @Override
+		    protected Kryo createKryo() {
+		        return new DebuggingKryo()/*.blacklist(Some.class)*/;
+		    }
+		});
 	}
 }

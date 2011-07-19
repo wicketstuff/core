@@ -60,6 +60,19 @@ public class GridSortState implements IGridSortState, IClusterable
 
 	private final List<ISortStateColumn> columns = new ArrayList<ISortStateColumn>();
 
+	private final AbstractGrid<?, ?> grid;
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param grid
+	 *            the related grid, not null
+	 */
+	public GridSortState(AbstractGrid<?, ?> grid)
+	{
+		this.grid = grid;
+	}
+
 	/**
 	 * Returns the index of {@link SortStateColumn} with given propertyName.
 	 * 
@@ -155,5 +168,10 @@ public class GridSortState implements IGridSortState, IClusterable
 	public List<ISortStateColumn> getColumns()
 	{
 		return columns;
+	}
+
+	public AbstractGrid<?, ?> getGrid()
+	{
+		return grid;
 	}
 }

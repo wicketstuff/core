@@ -39,11 +39,6 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>org.scala-lang</groupId>
-				<artifactId>scala-library</artifactId>
-				<version>2.8.1</version>
-			</dependency>
-			<dependency>
 				<groupId>org.scalatest</groupId>
 				<artifactId>scalatest</artifactId>
 				<version>1.3</version>
@@ -51,14 +46,26 @@
 			</dependency>
 			<dependency>
 				<groupId>org.scala-tools.testing</groupId>
-				<artifactId>specs_2.8.1</artifactId>
-				<version>1.6.7.2</version>
+				<artifactId>specs_2.9.0-1</artifactId>
+				<version>1.6.8</version>
 				<scope>test</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 	<build>
+		<resources>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/scala</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.scala</exclude>
+				</excludes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -77,93 +84,8 @@
 			<plugin>
 				<groupId>org.scala-tools</groupId>
 				<artifactId>maven-scala-plugin</artifactId>
-				<version>2.14.1</version>
-				<executions>
-					<execution>
-						<id>compile</id>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-						<phase>compile</phase>
-					</execution>
-
-					<execution>
-						<id>test-compile</id>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-						<phase>test-compile</phase>
-					</execution>
-
-					<execution>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
-
-		<resources>
-			<resource>
-				<directory>${basedir}/src/main/resources
-				</directory>
-				<includes>
-					<include>**/*</include>
-				</includes>
-			</resource>
-			<resource>
-				<filtering>false</filtering>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**</include>
-				</includes>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-			<resource>
-				<filtering>false</filtering>
-				<directory>src/main/scala</directory>
-				<includes>
-					<include>**</include>
-				</includes>
-				<excludes>
-					<exclude>**/*.scala</exclude>
-				</excludes>
-			</resource>
-		</resources>
 	</build>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>scala</id>
-			<name>Scala Tools</name>
-			<url>http://scala-tools.org/repo-releases
-			</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
-
-	<repositories>
-		<repository>
-			<id>scala</id>
-			<name>Scala Tools</name>
-			<url>http://scala-tools.org/repo-releases
-			</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
 
 </project>

@@ -41,7 +41,7 @@ import de.javakaffee.kryoserializers.UnmodifiableCollectionsSerializer;
 import de.javakaffee.kryoserializers.cglib.CGLibProxySerializer;
 
 /**
- * An {@link IPageSerializer} based on <a href="http://code.google.com/p/kryo">kryo</a> and <a
+ * An {@link ISerializer} based on <a href="http://code.google.com/p/kryo">kryo</a> and <a
  * href="https://github.com/magro/kryo-serializers">additional kryo serializers</a>
  */
 public class KryoSerializer implements ISerializer
@@ -67,24 +67,30 @@ public class KryoSerializer implements ISerializer
 	{
 
 		this.bufferSize = Args.notNull(bufferSize, "bufferSize");
-		LOG.debug("Buffer size: ", bufferSize);
+		LOG.debug("Buffer size: '{}'", bufferSize);
 
-		kryo = new KryoReflectionFactorySupport();
+		kryo = createKryo();
 
 		internalInit(kryo);
 	}
 
+	protected Kryo createKryo() {
+	    return new KryoReflectionFactorySupport();
+	}
+
 	public byte[] serialize(final Object object)
 	{
-		LOG.debug("Going to serialize: ", object);
+		LOG.debug("Going to serialize: '{}'", object);
 		ByteBuffer buffer = getBuffer(object);
 		kryo.writeClassAndObject(buffer, object);
 		byte[] data;
 		if (buffer.hasArray()) {
-		    data = buffer.array();
+		    data = new byte[buffer.position()];
+		    buffer.flip();
+		    buffer.get(data);
 		} else {
 		    LOG.error("Kryo wasn't able to serialize: '{}'", object);
-		    data = new byte[0];
+		    data = null;
 		}
 	
 		// release the memory for the buffer
@@ -99,7 +105,7 @@ public class KryoSerializer implements ISerializer
 	{
 		ByteBuffer buffer = ByteBuffer.wrap(data);
 		Object object = kryo.readClassAndObject(buffer);
-		LOG.debug("Deserialized: ", object);
+		LOG.debug("Deserialized: '{}'", object);
 
 		// release the memory for the buffer
 		buffer.clear();

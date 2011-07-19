@@ -9,12 +9,11 @@ import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 
-import com.inmethod.grid.datagrid.DataGrid;
-import com.inmethod.grid.datagrid.DataGrid.IGridQuery;
+import com.inmethod.grid.common.AbstractGrid;
 
 /**
- * Adapter that allows using a wicket extension {@link IDataProvider} in a {@link DataGrid}. The
- * adapter also supports sortable data providers.
+ * Adapter that allows using a wicket extension {@link IDataProvider} in an {@link AbstractGrid}.
+ * The adapter also supports sortable data providers.
  * 
  * @param <T>
  *            row/item model object type
@@ -55,11 +54,11 @@ public class DataProviderAdapter<T> implements IDataSource<T>
 		return dataProvider.model(object);
 	}
 
-	private void setSortState(ISortState dest, DataGrid<? extends IDataSource<T>, T> grid,
-		IGridSortState gridSortState)
+	private void setSortState(ISortState dest, IGridSortState gridSortState)
 	{
+		AbstractGrid<?, ?> grid = gridSortState.getGrid();
 		Set<String> unsortedColumns = new HashSet<String>(grid.getAllColumns().size());
-		for (IGridColumn<? extends IDataSource<T>, T> column : grid.getAllColumns())
+		for (IGridColumn<?, ?> column : grid.getAllColumns())
 		{
 			if (column.getSortProperty() != null)
 			{
@@ -100,9 +99,7 @@ public class DataProviderAdapter<T> implements IDataSource<T>
 			ISortState state = locator.getSortState();
 			if (state != null)
 			{
-				DataGrid.IGridQuery<IDataSource<T>, T> gridQuery = (IGridQuery<IDataSource<T>, T>)query;
-				DataGrid<IDataSource<T>, T> grid = gridQuery.getDataGrid();
-				setSortState(state, grid, gridSortState);
+				setSortState(state, gridSortState);
 			}
 		}
 

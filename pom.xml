@@ -548,7 +548,7 @@
 			<dependency>
 				<groupId>net.sf.ehcache</groupId>
 				<artifactId>ehcache-core</artifactId>
-				<version>2.4.2</version>
+				<version>2.4.3</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sf.json-lib</groupId>
@@ -597,6 +597,21 @@
 				<artifactId>org.osgi.compendium</artifactId>
 				<version>4.2.0</version>
 				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.python</groupId>
+				<artifactId>jython</artifactId>
+				<version>2.5.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.scala-lang</groupId>
+				<artifactId>scala-compiler</artifactId>
+				<version>2.9.0-1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.scala-lang</groupId>
+				<artifactId>scala-library</artifactId>
+				<version>2.9.0-1</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -813,6 +828,27 @@
 					<artifactId>maven-pax-plugin</artifactId>
 					<version>1.5</version>
 				</plugin>
+				<plugin>
+					<groupId>org.scala-tools</groupId>
+					<artifactId>maven-scala-plugin</artifactId>
+					<version>2.15.2</version>
+					<executions>
+						<execution>
+							<id>scala-compile-first</id>
+							<phase>process-resources</phase>
+							<goals>
+								<goal>compile</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>scala-test-compile</id>
+							<phase>process-test-resources</phase>
+							<goals>
+								<goal>testCompile</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
 				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
@@ -876,26 +912,6 @@
 											<goal>
 												generate-application-xml
 											</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.scala-tools
-										</groupId>
-										<artifactId>
-											maven-scala-plugin
-										</artifactId>
-										<versionRange>
-											[2.14.1,)
-										</versionRange>
-										<goals>
-											<goal>compile</goal>
-											<goal>testCompile</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>

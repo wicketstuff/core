@@ -25,7 +25,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.scala-tools.testing</groupId>
-			<artifactId>specs_2.8.1</artifactId>
+			<artifactId>specs_2.9.0-1</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.scalatest</groupId>
