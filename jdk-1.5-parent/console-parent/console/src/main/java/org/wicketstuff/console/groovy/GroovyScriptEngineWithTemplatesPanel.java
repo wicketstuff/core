@@ -17,9 +17,9 @@
 package org.wicketstuff.console.groovy;
 
 import org.apache.wicket.markup.repeater.data.IDataProvider;
-import org.apache.wicket.model.IModel;
 import org.wicketstuff.console.ScriptEnginePanelWithTemplates;
 import org.wicketstuff.console.engine.Lang;
+import org.wicketstuff.console.templates.IScriptTemplateStore;
 import org.wicketstuff.console.templates.ScriptTemplate;
 import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
 
@@ -33,20 +33,15 @@ public class GroovyScriptEngineWithTemplatesPanel extends ScriptEnginePanelWithT
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Creates an instance using the given title and script template data provider.
-	 * 
-	 * @param id
-	 *            id
-	 * @param title
-	 *            title, {@code null} for default
-	 * @param dataProvider
-	 *            data provider for script templates, {@code null} for default
-	 */
-	public GroovyScriptEngineWithTemplatesPanel(final String id, final IModel<String> title,
+	public GroovyScriptEngineWithTemplatesPanel(final String id,
 		final IDataProvider<ScriptTemplate> dataProvider)
 	{
-		super(id, Lang.GROOVY, title, dataProvider);
+		super(id, Lang.GROOVY, dataProvider);
+	}
+
+	public GroovyScriptEngineWithTemplatesPanel(final String id, final IScriptTemplateStore store)
+	{
+		super(id, Lang.GROOVY, store);
 	}
 
 }

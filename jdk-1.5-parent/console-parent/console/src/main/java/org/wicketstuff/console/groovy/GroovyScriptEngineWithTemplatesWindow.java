@@ -21,6 +21,7 @@ import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.wicketstuff.console.ScriptEngineWithTemplatesWindow;
 import org.wicketstuff.console.engine.Lang;
+import org.wicketstuff.console.templates.IScriptTemplateStore;
 import org.wicketstuff.console.templates.ScriptTemplate;
 
 /**
@@ -33,14 +34,16 @@ public class GroovyScriptEngineWithTemplatesWindow extends ScriptEngineWithTempl
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see ScriptEngineWithTemplatesWindow#ScriptEngineWithTemplatesWindow(String, Lang,
-	 *      org.apache.wicket.model.IModel)
-	 */
 	public GroovyScriptEngineWithTemplatesWindow(final String id, final IModel<String> windowTitle,
 		final IDataProvider<ScriptTemplate> dataProvider)
 	{
 		super(id, Lang.GROOVY, windowTitle, dataProvider);
+	}
+
+	public GroovyScriptEngineWithTemplatesWindow(final String id, final IModel<String> windowTitle,
+		final IScriptTemplateStore store)
+	{
+		super(id, Lang.GROOVY, windowTitle, store);
 	}
 
 }

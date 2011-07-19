@@ -16,9 +16,9 @@
  */
 package org.wicketstuff.console.jython;
 
-import org.apache.wicket.model.IModel;
 import org.wicketstuff.console.ScriptEnginePanel;
 import org.wicketstuff.console.engine.Lang;
+import org.wicketstuff.console.templates.IScriptTemplateStore;
 
 /**
  * Main panel to execute Jython scripts.
@@ -35,9 +35,9 @@ public class JythonScriptEnginePanel extends ScriptEnginePanel
 		this(wicketId, null);
 	}
 
-	public JythonScriptEnginePanel(final String id, final IModel<String> title)
+	public JythonScriptEnginePanel(final String id, final IScriptTemplateStore store)
 	{
-		super(id, Lang.JYTHON, title);
+		super(id, Lang.JYTHON, store);
 		init();
 	}
 

@@ -18,6 +18,7 @@ package org.wicketstuff.console.examples.jython;
 
 import org.wicketstuff.console.examples.ConsoleBasePage;
 import org.wicketstuff.console.jython.JythonScriptEngineWithTemplatesPanel;
+import org.wicketstuff.console.templates.PackagedScriptTemplates;
 
 public class JythonEngineWithTemplatesTestPage extends ConsoleBasePage
 {
@@ -25,7 +26,7 @@ public class JythonEngineWithTemplatesTestPage extends ConsoleBasePage
 
 	public JythonEngineWithTemplatesTestPage()
 	{
-		add(new JythonScriptEngineWithTemplatesPanel("panel", null, null));
+		add(new JythonScriptEngineWithTemplatesPanel("panel", new PackagedScriptTemplates()));
 	}
 
 }

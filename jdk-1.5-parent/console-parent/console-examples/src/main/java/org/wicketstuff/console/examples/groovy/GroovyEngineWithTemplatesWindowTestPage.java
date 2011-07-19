@@ -55,7 +55,7 @@ public class GroovyEngineWithTemplatesWindowTestPage extends ConsoleBasePage
 	{
 
 		final IDataProvider<ScriptTemplate> dataProvider = new ListDataProvider<ScriptTemplate>(
-			PackagedScriptTemplates.getPackagedScriptTemplates(Lang.GROOVY));
+			new PackagedScriptTemplates().findAll(Lang.GROOVY));
 		add(window = new GroovyScriptEngineWithTemplatesWindow("window", null, dataProvider));
 		openLink = new OpenLink("link", window);
 		add(openLink);

@@ -19,6 +19,7 @@ package org.wicketstuff.console.examples.clojure;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.console.clojure.ClojureScriptEngineWithTemplatesPanel;
 import org.wicketstuff.console.examples.ConsoleBasePage;
+import org.wicketstuff.console.templates.PackagedScriptTemplates;
 
 public class ClojureEngineWithTemplatesTestPage extends ConsoleBasePage
 {
@@ -29,7 +30,7 @@ public class ClojureEngineWithTemplatesTestPage extends ConsoleBasePage
 		super(params);
 
 		final ClojureScriptEngineWithTemplatesPanel panel = new ClojureScriptEngineWithTemplatesPanel(
-			"panel", null, null);
+			"panel", new PackagedScriptTemplates());
 		add(panel);
 
 	}

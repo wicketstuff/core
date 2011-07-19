@@ -22,13 +22,17 @@ import java.util.List;
 
 import org.wicketstuff.console.engine.Lang;
 
+import scala.actors.threadpool.Arrays;
+
 /**
  * Provides a set of packaged sample {@link ScriptTemplate}s.
  * 
  * @author cretzel
  */
-public class PackagedScriptTemplates
+public class PackagedScriptTemplates implements IScriptTemplateStore
 {
+
+	private static final long serialVersionUID = 1L;
 
 	private static final String SCRIPT_DIR_BASE = "org/wicketstuff/console/templates/";
 
@@ -59,11 +63,24 @@ public class PackagedScriptTemplates
 	 *            language
 	 * @return List of {@link ScriptTemplate}s
 	 */
-	public static List<ScriptTemplate> getPackagedScriptTemplates(final Lang lang)
+	public List<ScriptTemplate> findAll(final Lang lang)
 	{
 
 		final List<ScriptTemplate> templates = new ArrayList<ScriptTemplate>();
 
+		final String[] templateNames = templateNamesForLang(lang);
+
+		for (final String name : templateNames)
+		{
+			final ScriptTemplate template = getTemplate(lang, name);
+			templates.add(template);
+		}
+
+		return templates;
+	}
+
+	private String[] templateNamesForLang(final Lang lang)
+	{
 		String[] templateNames = new String[0];
 
 		switch (lang)
@@ -83,17 +100,54 @@ public class PackagedScriptTemplates
 			default :
 				break;
 		}
+		return templateNames;
+	}
 
+	public ScriptTemplate getById(final Long id)
+	{
+		return templateForId(id);
+	}
+
+	private ScriptTemplate getTemplate(final Lang lang, final String name)
+	{
 		final ClassLoader cl = PackagedScriptTemplates.class.getClassLoader();
-		for (final String name : templateNames)
-		{
-			final String scriptBase = SCRIPT_DIR_BASE + lang.name().toLowerCase() + "/";
-			final ScriptTemplate template = ScriptTemplateUtils.readTemplateFromClasspath(cl,
-				scriptBase, name, lang);
-			templates.add(template);
-		}
+		final String scriptBase = SCRIPT_DIR_BASE + lang.name().toLowerCase() + "/";
+		final ScriptTemplate template = ScriptTemplateUtils.readTemplateFromClasspath(cl,
+			scriptBase, name, lang);
+		template.id = idForTemplate(lang, name);
+		return template;
+	}
 
-		return templates;
+	private ScriptTemplate templateForId(final Long id)
+	{
+		final Lang lang = Lang.values()[(int)(id / 1000)];
+		final String name = templateNamesForLang(lang)[(int)(id % 1000)];
+
+		return getTemplate(lang, name);
+	}
+
+
+	private Long idForTemplate(final Lang lang, final String name)
+	{
+		final int major = lang.ordinal() * 1000;
+		final int minor = Arrays.asList(templateNamesForLang(lang)).indexOf(name);
+
+		return (long)(major + minor);
+	}
+
+
+	public void save(final ScriptTemplate t)
+	{
+		throw new UnsupportedOperationException("Save not supported. This is a read-only store.");
+	}
+
+	public boolean readOnly()
+	{
+		return true;
+	}
+
+	public void detach()
+	{
 	}
 
 }

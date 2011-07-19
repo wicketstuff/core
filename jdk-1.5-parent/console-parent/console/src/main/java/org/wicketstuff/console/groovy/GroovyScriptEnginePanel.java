@@ -16,9 +16,9 @@
  */
 package org.wicketstuff.console.groovy;
 
-import org.apache.wicket.model.IModel;
 import org.wicketstuff.console.ScriptEnginePanel;
 import org.wicketstuff.console.engine.Lang;
+import org.wicketstuff.console.templates.IScriptTemplateStore;
 
 /**
  * Main panel to execute Groovy scripts.
@@ -35,11 +35,12 @@ public class GroovyScriptEnginePanel extends ScriptEnginePanel
 		this(wicketId, null);
 	}
 
-	public GroovyScriptEnginePanel(final String id, final IModel<String> title)
+	public GroovyScriptEnginePanel(final String id, final IScriptTemplateStore store)
 	{
-		super(id, Lang.GROOVY, title);
+		super(id, Lang.GROOVY, store);
 		init();
 	}
+
 
 	protected void init()
 	{

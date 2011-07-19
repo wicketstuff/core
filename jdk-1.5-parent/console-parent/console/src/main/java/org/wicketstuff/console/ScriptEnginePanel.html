@@ -28,18 +28,26 @@
 				<div class="title" wicket:id="title">Wicket Console</div>
 			</td>
 		</tr>
+	</table>	
+		
+	<form wicket:id="form" style="padding:0px;margin:0px;">
+	<table border="0" width="100%" cellspacing="2" cellpadding="0">
 		<tr>
 			<td class="box">
-					<form wicket:id="form"><textarea wicket:id="input" wrap="off" onkeydown="return doTab(event);"></textarea></form>
+					<textarea wicket:id="input" wrap="off" onkeydown="return doTab(event);"></textarea>
 			</td>
 		</tr>
 		<tr>
-			<td class="controls">
-					<input wicket:id="submit" type="submit" value="Execute" accesskey="x"/>
-					<input wicket:id="clear" type="button" value="Clear" accesskey="c"/>
-					<img wicket:id="indicator" class="indicator" style="display:none;" width="14"/>
+			<td class="controls" style="white-space:nowrap;">
+				<input wicket:id="submit" type="submit" value="Execute" accesskey="x"/>
+				<input wicket:id="clear" type="button" value="Clear" accesskey="c"/>
+				<wicket:container wicket:id="storePanel"></wicket:container>
+				<img wicket:id="indicator" class="indicator" style="display:none;" width="14"/>
 			</td>
 		</tr>
+	</table>		
+	</form>
+	<table border="0" width="100%" cellspacing="2" cellpadding="0">
 		<tr>
 			<td class="box" style="background-color:#89a;">
 				<div class="result">

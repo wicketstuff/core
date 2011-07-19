@@ -22,7 +22,9 @@ import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.console.engine.Lang;
+import org.wicketstuff.console.templates.IScriptTemplateStore;
 import org.wicketstuff.console.templates.ScriptTemplate;
+import org.wicketstuff.console.templates.ScriptTemplateStoreDataProvider;
 
 /**
  * Base class for a {@link ModalWindow} cotaining a script engine panel.
@@ -36,18 +38,12 @@ public abstract class ScriptEngineWithTemplatesWindow extends ModalWindow
 	private final ScriptEnginePanelWithTemplates enginePanelWithTemplates;
 	private final IDataProvider<ScriptTemplate> dataProvider;
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param id
-	 *            id
-	 * @param lang
-	 *            source language
-	 * @param windowTitle
-	 *            window title, may be {@code null} for default
-	 * @param dataProvider
-	 *            data provider for script templates, may be {@code null} for default
-	 */
+	public ScriptEngineWithTemplatesWindow(final String id, final Lang lang,
+		final IModel<String> windowTitle, final IScriptTemplateStore store)
+	{
+		this(id, lang, windowTitle, new ScriptTemplateStoreDataProvider(store, lang));
+	}
+
 	public ScriptEngineWithTemplatesWindow(final String id, final Lang lang,
 		final IModel<String> windowTitle, final IDataProvider<ScriptTemplate> dataProvider)
 	{
@@ -55,7 +51,9 @@ public abstract class ScriptEngineWithTemplatesWindow extends ModalWindow
 		this.dataProvider = dataProvider;
 
 		setTitle(windowTitle != null ? windowTitle : Model.of("Wicket Console"));
-		setAutoSize(true);
+		// setAutoSize(true);
+		setInitialHeight(408);
+		setInitialWidth(728);
 		setResizable(false);
 
 		enginePanelWithTemplates = newEnginePanelWithTemplates(getContentId(), lang);
@@ -75,7 +73,7 @@ public abstract class ScriptEngineWithTemplatesWindow extends ModalWindow
 	protected ScriptEnginePanelWithTemplates newEnginePanelWithTemplates(final String wicketId,
 		final Lang lang)
 	{
-		return new ScriptEnginePanelWithTemplates(wicketId, lang, Model.of(""), dataProvider);
+		return new ScriptEnginePanelWithTemplates(wicketId, lang, dataProvider);
 	}
 
 }

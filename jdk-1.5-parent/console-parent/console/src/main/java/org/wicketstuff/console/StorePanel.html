@@ -18,16 +18,9 @@
 <html xmlns:wicket="http://wicket.apache.org">
 
 <wicket:panel>
-	<div class="console-table">
-		<div class="title">Templates</div>
-		<div class="table-container">
-			<table wicket:id="table" cellspacing="0" cellpadding="0" style="width:100%;"></table>
-		</div>
-	</div>
+	<span class="storePanel">
+		<input wicket:id="submit" type="submit" value="Save" accesskey="y"/>
+		<input wicket:id="title" type="text" value="Title">
+	</span>
 </wicket:panel>
-
-<wicket:fragment wicket:id="titleFragment">
-	<a wicket:id="link"><span wicket:id="label"></span></a>
-</wicket:fragment>
-
 </html>

@@ -55,7 +55,7 @@ public class ScalaEngineWithTemplatesWindowTestPage extends ConsoleBasePage
 	{
 
 		final IDataProvider<ScriptTemplate> dataProvider = new ListDataProvider<ScriptTemplate>(
-			PackagedScriptTemplates.getPackagedScriptTemplates(Lang.SCALA));
+			new PackagedScriptTemplates().findAll(Lang.SCALA));
 		add(window = new ScalaScriptEngineWithTemplatesWindow("window", null, dataProvider));
 		openLink = new OpenLink("link", window);
 		add(openLink);

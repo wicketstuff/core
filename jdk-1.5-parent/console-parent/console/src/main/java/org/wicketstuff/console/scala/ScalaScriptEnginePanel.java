@@ -16,9 +16,9 @@
  */
 package org.wicketstuff.console.scala;
 
-import org.apache.wicket.model.IModel;
 import org.wicketstuff.console.ScriptEnginePanel;
 import org.wicketstuff.console.engine.Lang;
+import org.wicketstuff.console.templates.IScriptTemplateStore;
 
 /**
  * Main panel to execute Scala scripts.
@@ -35,9 +35,9 @@ public class ScalaScriptEnginePanel extends ScriptEnginePanel
 		this(wicketId, null);
 	}
 
-	public ScalaScriptEnginePanel(final String id, final IModel<String> title)
+	public ScalaScriptEnginePanel(final String id, final IScriptTemplateStore store)
 	{
-		super(id, Lang.SCALA, title);
+		super(id, Lang.SCALA, store);
 		init();
 	}
 

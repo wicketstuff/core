@@ -17,9 +17,9 @@
 package org.wicketstuff.console.clojure;
 
 import org.apache.wicket.markup.repeater.data.IDataProvider;
-import org.apache.wicket.model.IModel;
 import org.wicketstuff.console.ScriptEnginePanelWithTemplates;
 import org.wicketstuff.console.engine.Lang;
+import org.wicketstuff.console.templates.IScriptTemplateStore;
 import org.wicketstuff.console.templates.ScriptTemplate;
 import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
 
@@ -33,20 +33,15 @@ public class ClojureScriptEngineWithTemplatesPanel extends ScriptEnginePanelWith
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Creates an instance using the given title and script template data provider.
-	 * 
-	 * @param id
-	 *            id
-	 * @param title
-	 *            title, {@code null} for default
-	 * @param dataProvider
-	 *            data provider for script templates, {@code null} for default
-	 */
-	public ClojureScriptEngineWithTemplatesPanel(final String id, final IModel<String> title,
+	public ClojureScriptEngineWithTemplatesPanel(final String id,
 		final IDataProvider<ScriptTemplate> dataProvider)
 	{
-		super(id, Lang.CLOJURE, title, dataProvider);
+		super(id, Lang.CLOJURE, dataProvider);
+	}
+
+	public ClojureScriptEngineWithTemplatesPanel(final String id, final IScriptTemplateStore store)
+	{
+		super(id, Lang.CLOJURE, store);
 	}
 
 }

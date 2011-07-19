@@ -38,17 +38,17 @@ public class PackagedScriptTemplatesTest
 	}
 
 	@Test
-	public void test_getPackagedGroovyTemplates() throws Exception
+	public void test_findAllPackagedGroovyTemplates() throws Exception
 	{
-		final List<ScriptTemplate> templates = PackagedScriptTemplates.getPackagedScriptTemplates(Lang.GROOVY);
+		final List<ScriptTemplate> templates = new PackagedScriptTemplates().findAll(Lang.GROOVY);
 
-		assertEquals(15, templates.size());
+		assertEquals(16, templates.size());
 	}
 
 	@Test
 	public void test_getPackagedClojureTemplates() throws Exception
 	{
-		final List<ScriptTemplate> templates = PackagedScriptTemplates.getPackagedScriptTemplates(Lang.CLOJURE);
+		final List<ScriptTemplate> templates = new PackagedScriptTemplates().findAll(Lang.CLOJURE);
 
 		assertEquals(15, templates.size());
 	}

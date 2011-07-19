@@ -17,9 +17,12 @@
 package org.wicketstuff.console.examples;
 
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.mock.MockApplication;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.wicketstuff.console.examples.clojure.ClojureEngineTestPage;
 import org.wicketstuff.console.examples.clojure.ClojureEngineWindowTestPage;
 import org.wicketstuff.console.examples.clojure.ClojureEngineWithTemplatesTestPage;
@@ -36,8 +39,10 @@ import org.wicketstuff.console.examples.scala.ScalaEngineTestPage;
 import org.wicketstuff.console.examples.scala.ScalaEngineWindowTestPage;
 import org.wicketstuff.console.examples.scala.ScalaEngineWithTemplatesTestPage;
 import org.wicketstuff.console.examples.scala.ScalaEngineWithTemplatesWindowTestPage;
+import org.wicketstuff.console.templates.PackagedScriptTemplates;
 
-public class TestPagesTest
+@ContextConfiguration(locations = { "classpath:root-context.xml" })
+public class TestPagesTest extends AbstractJUnit4SpringContextTests
 {
 
 	private WicketTester tester;
@@ -46,7 +51,7 @@ public class TestPagesTest
 	@Before
 	public void setUp()
 	{
-		tester = new WicketTester(new WicketApplication());
+		tester = new WicketTester(new MockApplication());
 	}
 
 	@Test
@@ -122,7 +127,7 @@ public class TestPagesTest
 		clazz = ClojureEngineWithTemplatesWindowTestPage.class;
 		final ClojureEngineWithTemplatesWindowTestPage page = (ClojureEngineWithTemplatesWindowTestPage)tester.startPage(clazz);
 		tester.assertRenderedPage(clazz);
-	
+
 		tester.clickLink(page.getOpenLink());
 		tester.assertComponentOnAjaxResponse("window");
 	}
@@ -149,9 +154,9 @@ public class TestPagesTest
 	@Test
 	public void test_rendersSuccessfully_GroovyEngineWithTemplatesTestPage()
 	{
-		clazz = GroovyEngineWithTemplatesTestPage.class;
-		tester.startPage(clazz);
-		tester.assertRenderedPage(clazz);
+		final GroovyEngineWithTemplatesTestPage page = new GroovyEngineWithTemplatesTestPage(new PackagedScriptTemplates());
+		tester.startPage(page);
+		tester.assertRenderedPage(GroovyEngineWithTemplatesTestPage.class);
 	}
 
 	@Test
@@ -160,7 +165,7 @@ public class TestPagesTest
 		clazz = GroovyEngineWithTemplatesWindowTestPage.class;
 		final GroovyEngineWithTemplatesWindowTestPage page = (GroovyEngineWithTemplatesWindowTestPage)tester.startPage(clazz);
 		tester.assertRenderedPage(clazz);
-		
+
 		tester.clickLink(page.getOpenLink());
 		tester.assertComponentOnAjaxResponse("window");
 	}
@@ -199,7 +204,7 @@ public class TestPagesTest
 		clazz = JythonEngineWithTemplatesWindowTestPage.class;
 		final JythonEngineWithTemplatesWindowTestPage page = (JythonEngineWithTemplatesWindowTestPage)tester.startPage(clazz);
 		tester.assertRenderedPage(clazz);
-		
+
 		tester.clickLink(page.getOpenLink());
 		tester.assertComponentOnAjaxResponse("window");
 	}

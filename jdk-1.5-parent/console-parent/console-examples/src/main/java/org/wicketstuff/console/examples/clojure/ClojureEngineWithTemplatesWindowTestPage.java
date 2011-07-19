@@ -57,7 +57,7 @@ public class ClojureEngineWithTemplatesWindowTestPage extends ConsoleBasePage
 		super(params);
 
 		final IDataProvider<ScriptTemplate> dataProvider = new ListDataProvider<ScriptTemplate>(
-			PackagedScriptTemplates.getPackagedScriptTemplates(Lang.CLOJURE));
+			new PackagedScriptTemplates().findAll(Lang.CLOJURE));
 		add(window = new ClojureScriptEngineWithTemplatesWindow("window", null, dataProvider));
 		openLink = new OpenLink("link", window);
 		add(openLink);

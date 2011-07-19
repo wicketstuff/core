@@ -35,6 +35,7 @@ import org.wicketstuff.console.scala.ScalaScriptEnginePanel;
 import org.wicketstuff.console.scala.ScalaScriptEngineWindow;
 import org.wicketstuff.console.scala.ScalaScriptEngineWithTemplatesPanel;
 import org.wicketstuff.console.scala.ScalaScriptEngineWithTemplatesWindow;
+import org.wicketstuff.console.templates.PackagedScriptTemplates;
 
 public class ComponentsRenderTest
 {
@@ -51,9 +52,11 @@ public class ComponentsRenderTest
 	public void test_rendersSuccessfully_Groovy()
 	{
 		tester.startComponent(new GroovyScriptEnginePanel("foo"));
-		tester.startComponent(new GroovyScriptEngineWithTemplatesPanel("foo", null, null));
+		tester.startComponent(new GroovyScriptEngineWithTemplatesPanel("foo",
+			new PackagedScriptTemplates()));
 		tester.startComponent(new GroovyScriptEngineWindow("foo"));
-		tester.startComponent(new GroovyScriptEngineWithTemplatesWindow("foo", null, null));
+		tester.startComponent(new GroovyScriptEngineWithTemplatesWindow("foo", null,
+			new PackagedScriptTemplates()));
 
 	}
 
@@ -63,8 +66,10 @@ public class ComponentsRenderTest
 
 		tester.startComponent(new ClojureScriptEnginePanel("foo"));
 		tester.startComponent(new ClojureScriptEngineWindow("foo"));
-		tester.startComponent(new ClojureScriptEngineWithTemplatesPanel("foo", null, null));
-		tester.startComponent(new ClojureScriptEngineWithTemplatesWindow("foo", null, null));
+		tester.startComponent(new ClojureScriptEngineWithTemplatesPanel("foo",
+			new PackagedScriptTemplates()));
+		tester.startComponent(new ClojureScriptEngineWithTemplatesWindow("foo", null,
+			new PackagedScriptTemplates()));
 	}
 
 	@Test
@@ -73,8 +78,10 @@ public class ComponentsRenderTest
 
 		tester.startComponent(new ScalaScriptEnginePanel("foo"));
 		tester.startComponent(new ScalaScriptEngineWindow("foo"));
-		tester.startComponent(new ScalaScriptEngineWithTemplatesPanel("foo", null, null));
-		tester.startComponent(new ScalaScriptEngineWithTemplatesWindow("foo", null, null));
+		tester.startComponent(new ScalaScriptEngineWithTemplatesPanel("foo",
+			new PackagedScriptTemplates()));
+		tester.startComponent(new ScalaScriptEngineWithTemplatesWindow("foo", null,
+			new PackagedScriptTemplates()));
 	}
 
 	@Test
@@ -83,8 +90,10 @@ public class ComponentsRenderTest
 
 		tester.startComponent(new JythonScriptEnginePanel("foo"));
 		tester.startComponent(new JythonScriptEngineWindow("foo"));
-		tester.startComponent(new JythonScriptEngineWithTemplatesPanel("foo", null, null));
-		tester.startComponent(new JythonScriptEngineWithTemplatesWindow("foo", null, null));
+		tester.startComponent(new JythonScriptEngineWithTemplatesPanel("foo",
+			new PackagedScriptTemplates()));
+		tester.startComponent(new JythonScriptEngineWithTemplatesWindow("foo", null,
+			new PackagedScriptTemplates()));
 	}
 
 }

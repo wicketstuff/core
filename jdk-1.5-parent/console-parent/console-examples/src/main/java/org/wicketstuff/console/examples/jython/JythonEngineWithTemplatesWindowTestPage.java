@@ -55,7 +55,7 @@ public class JythonEngineWithTemplatesWindowTestPage extends ConsoleBasePage
 	{
 
 		final IDataProvider<ScriptTemplate> dataProvider = new ListDataProvider<ScriptTemplate>(
-			PackagedScriptTemplates.getPackagedScriptTemplates(Lang.JYTHON));
+			new PackagedScriptTemplates().findAll(Lang.JYTHON));
 		add(window = new JythonScriptEngineWithTemplatesWindow("window", null, dataProvider));
 		openLink = new OpenLink("link", window);
 		add(openLink);

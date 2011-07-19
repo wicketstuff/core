@@ -14,38 +14,55 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console.clojure;
 
-import org.wicketstuff.console.ScriptEnginePanel;
+package org.wicketstuff.console.templates;
+
+import java.util.List;
+
+import org.apache.wicket.model.IDetachable;
 import org.wicketstuff.console.engine.Lang;
-import org.wicketstuff.console.templates.IScriptTemplateStore;
 
 /**
- * Main panel to execute Clojure scripts.
+ * A store for {@link ScriptTemplate}s.
+ * <p>
+ * This can be used to store and retrieve frequently used scripts in/from a persistent backend.
  * 
  * @author cretzel
+ * 
  */
-public class ClojureScriptEnginePanel extends ScriptEnginePanel
+public interface IScriptTemplateStore extends IDetachable
 {
 
-	private static final long serialVersionUID = 1L;
+	/**
+	 * Saves/Updates a script as a template in this store.
+	 * 
+	 * @param template
+	 *            the template
+	 * 
+	 */
+	void save(ScriptTemplate template);
 
-	public ClojureScriptEnginePanel(final String wicketId)
-	{
-		this(wicketId, null);
+	/**
+	 * Returns all language specific templates from this store.
+	 * 
+	 * @param lang
+	 *            Source language
+	 * @return all templates
+	 */
+	List<ScriptTemplate> findAll(Lang lang);
 
-	}
+	/**
+	 * @return
+	 */
+	boolean readOnly();
 
-	public ClojureScriptEnginePanel(final String id, final IScriptTemplateStore store)
-	{
-		super(id, Lang.CLOJURE, store);
-		init();
-	}
-
-	protected void init()
-	{
-		setInput("(println user/application)\n" + "(println user/page)\n"
-			+ "(println user/component)\n");
-	}
+	/**
+	 * Looks up a template by id
+	 * 
+	 * @param id
+	 *            template id
+	 * @return template with id {@code id}
+	 */
+	ScriptTemplate getById(Long id);
 
 }

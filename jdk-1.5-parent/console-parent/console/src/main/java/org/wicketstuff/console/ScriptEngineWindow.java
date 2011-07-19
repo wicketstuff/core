@@ -52,6 +52,7 @@ public abstract class ScriptEngineWindow extends ModalWindow
 
 		setTitle(windowTitle != null ? windowTitle : Model.of("Wicket Console"));
 		setAutoSize(true);
+		setInitialHeight(300);
 		setResizable(true);
 
 		enginePanel = newEnginePanel(getContentId(), lang);
@@ -71,7 +72,7 @@ public abstract class ScriptEngineWindow extends ModalWindow
 	protected ScriptEnginePanel newEnginePanel(final String wicketId, final Lang lang)
 	{
 
-		final ScriptEnginePanel panel = ScriptEnginePanel.create(wicketId, lang, Model.of(""));
+		final ScriptEnginePanel panel = ScriptEnginePanel.create(wicketId, lang);
 		panel.add(new AttributeAppender("style", Model.of("width:500px"), ";"));
 
 		return panel;

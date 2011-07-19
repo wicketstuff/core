@@ -47,6 +47,8 @@ import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.groovy.GroovyScriptEnginePanel;
 import org.wicketstuff.console.jython.JythonScriptEnginePanel;
 import org.wicketstuff.console.scala.ScalaScriptEnginePanel;
+import org.wicketstuff.console.templates.IScriptTemplateStore;
+import org.wicketstuff.console.templates.ScriptTemplate;
 
 /**
  * Abstract panel for executing Scripts.
@@ -136,7 +138,7 @@ public class ScriptEnginePanel extends Panel
 	private String returnValue;
 	private boolean success;
 
-	private Label title;
+	private Label titleLabel;
 	private Form<Void> form;
 	private TextArea<String> inputTa;
 	private OutputTextArea outputTa;
@@ -144,31 +146,36 @@ public class ScriptEnginePanel extends Panel
 
 	private Image indicator;
 	private final Lang lang;
+	private final IScriptTemplateStore store;
+
+	private SubmitButton submitButton;
 
 	public ScriptEnginePanel(final String id, final Lang lang)
 	{
 		this(id, lang, null);
 	}
 
-	public ScriptEnginePanel(final String id, final Lang lang, final IModel<String> title)
+
+	public ScriptEnginePanel(final String id, final Lang lang, final IScriptTemplateStore store)
 	{
 		super(id);
 		this.lang = lang;
-		final IModel<String> titleModel = title != null ? title : Model.of("Wicket Console");
+		this.store = store;
 
-		init(titleModel);
+		init();
 	}
 
-	private void init(final IModel<String> titleModel)
+	private void init()
 	{
 		setDefaultModel(new CompoundPropertyModel<ScriptEnginePanel>(this));
-		initComponents(titleModel);
+		initComponents();
 	}
 
-	protected void initComponents(final IModel<String> titleModel)
+	protected void initComponents()
 	{
-		title = new Label("title", titleModel);
-		add(title);
+
+		titleLabel = new Label("title", Model.of("Wicket Console"));
+		add(titleLabel);
 
 		form = new Form<Void>("form");
 		add(form);
@@ -177,12 +184,14 @@ public class ScriptEnginePanel extends Panel
 		inputTa.setOutputMarkupId(true);
 		form.add(inputTa);
 
-		add(new SubmitButton("submit", form));
-		add(new ClearButton("clear"));
+		submitButton = new SubmitButton("submit", form);
+		form.add(submitButton);
+		form.add(new ClearButton("clear"));
+		form.add(new StorePanel("storePanel", this));
 
 		indicator = new Image("indicator", AbstractDefaultAjaxBehavior.INDICATOR);
 		indicator.setOutputMarkupId(true);
-		add(indicator);
+		form.add(indicator);
 
 		returnValueTf = new TextField<String>("returnValue");
 		returnValueTf.setOutputMarkupId(true);
@@ -250,6 +259,11 @@ public class ScriptEnginePanel extends Panel
 		return bindings;
 	}
 
+	public void setTitle(final IModel<String> title)
+	{
+		titleLabel.setDefaultModel(title);
+	}
+
 	public boolean isSuccess()
 	{
 		return success;
@@ -300,21 +314,67 @@ public class ScriptEnginePanel extends Panel
 		return returnValueTf;
 	}
 
-	public static ScriptEnginePanel create(final String wicketId, final Lang lang,
-		final IModel<String> title)
+	public Form<Void> getForm()
 	{
+		return form;
+	}
+
+	public IScriptTemplateStore getStore()
+	{
+		return store;
+	}
+
+	public String getAjaxIndicatorMarkupId()
+	{
+		return indicator.getMarkupId();
+	}
+
+	public static ScriptEnginePanel create(final String wicketId, final Lang lang)
+	{
+		return create(wicketId, lang, null);
+	}
+
+	public static ScriptEnginePanel create(final String wicketId, final Lang lang,
+		final IScriptTemplateStore store)
+	{
+		ScriptEnginePanel enginePanel;
 		switch (lang)
 		{
 			case GROOVY :
-				return new GroovyScriptEnginePanel(wicketId, title);
+				enginePanel = new GroovyScriptEnginePanel(wicketId, store);
+				break;
 			case CLOJURE :
-				return new ClojureScriptEnginePanel(wicketId, title);
+				enginePanel = new ClojureScriptEnginePanel(wicketId, store);
+				break;
 			case SCALA :
-				return new ScalaScriptEnginePanel(wicketId, title);
+				enginePanel = new ScalaScriptEnginePanel(wicketId, store);
+				break;
 			case JYTHON :
-				return new JythonScriptEnginePanel(wicketId, title);
+				enginePanel = new JythonScriptEnginePanel(wicketId, store);
+				break;
 			default :
 				throw new UnsupportedOperationException("Unsupported language: " + lang);
 		}
+
+		return enginePanel;
+	}
+
+
+	/**
+	 * Stores the current script in the store.
+	 * 
+	 * @param target
+	 * 
+	 * @param scriptTitle
+	 *            Title
+	 */
+	public void storeScriptTemplate(final AjaxRequestTarget target, final String scriptTitle)
+	{
+		if (store == null)
+		{
+			throw new UnsupportedOperationException("There is no store attached");
+		}
+
+		store.save(new ScriptTemplate(scriptTitle, getInput(), lang));
 	}
 }

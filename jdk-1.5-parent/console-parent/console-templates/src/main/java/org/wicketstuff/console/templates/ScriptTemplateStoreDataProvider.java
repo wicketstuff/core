@@ -14,34 +14,62 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console.jython;
+
+package org.wicketstuff.console.templates;
+
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.wicket.markup.repeater.data.IDataProvider;
-import org.wicketstuff.console.ScriptEnginePanelWithTemplates;
+import org.apache.wicket.model.IModel;
 import org.wicketstuff.console.engine.Lang;
-import org.wicketstuff.console.templates.IScriptTemplateStore;
-import org.wicketstuff.console.templates.ScriptTemplate;
-import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
 
 /**
- * A combination of {@link JythonScriptEnginePanel} and {@link ScriptTemplateSelectionTablePanel}.
- * 
  * @author cretzel
+ * 
  */
-public class JythonScriptEngineWithTemplatesPanel extends ScriptEnginePanelWithTemplates
+public class ScriptTemplateStoreDataProvider implements IDataProvider<ScriptTemplate>
 {
-
 	private static final long serialVersionUID = 1L;
+	private final IScriptTemplateStore store;
+	private final Lang lang;
+	private List<ScriptTemplate> allTemplates;
 
-	public JythonScriptEngineWithTemplatesPanel(final String id,
-		final IDataProvider<ScriptTemplate> dataProvider)
+	public ScriptTemplateStoreDataProvider(final IScriptTemplateStore store, final Lang lang)
 	{
-		super(id, Lang.JYTHON, dataProvider);
+		this.store = store;
+		this.lang = lang;
 	}
 
-	public JythonScriptEngineWithTemplatesPanel(final String id, final IScriptTemplateStore store)
+
+	public Iterator<? extends ScriptTemplate> iterator(final int first, final int count)
 	{
-		super(id, Lang.JYTHON, store);
+		init();
+		return allTemplates.subList(first, first + count).iterator();
 	}
 
+	public int size()
+	{
+		init();
+		return allTemplates.size();
+	}
+
+	private void init()
+	{
+		if (allTemplates == null)
+		{
+			allTemplates = store.findAll(lang);
+		}
+
+	}
+
+	public IModel<ScriptTemplate> model(final ScriptTemplate template)
+	{
+		return new StoredScriptTemplateModel(store, template);
+	}
+
+	public void detach()
+	{
+		allTemplates = null;
+	}
 }

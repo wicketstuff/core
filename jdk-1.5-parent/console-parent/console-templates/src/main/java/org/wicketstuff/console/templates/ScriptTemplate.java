@@ -34,9 +34,18 @@ public class ScriptTemplate implements Serializable
 
 	private static final long serialVersionUID = 1L;
 
+	public Long id;
 	public String title;
 	public String script;
 	public Lang lang;
+
+	public ScriptTemplate(final Long id, final String title, final String script, final Lang lang)
+	{
+		this.id = id;
+		this.title = title;
+		this.script = script;
+		this.lang = lang;
+	}
 
 	public ScriptTemplate(final String title, final String script, final Lang lang)
 	{
@@ -44,5 +53,6 @@ public class ScriptTemplate implements Serializable
 		this.script = script;
 		this.lang = lang;
 	}
+
 
 }

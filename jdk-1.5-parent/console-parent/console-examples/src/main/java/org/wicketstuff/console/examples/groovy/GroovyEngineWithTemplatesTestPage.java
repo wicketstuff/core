@@ -17,7 +17,9 @@
 package org.wicketstuff.console.examples.groovy;
 
 import org.wicketstuff.console.examples.ConsoleBasePage;
+import org.wicketstuff.console.examples.hibernate.HibernateScriptTemplateStore;
 import org.wicketstuff.console.groovy.GroovyScriptEngineWithTemplatesPanel;
+import org.wicketstuff.console.templates.IScriptTemplateStore;
 
 public class GroovyEngineWithTemplatesTestPage extends ConsoleBasePage
 {
@@ -25,7 +27,12 @@ public class GroovyEngineWithTemplatesTestPage extends ConsoleBasePage
 
 	public GroovyEngineWithTemplatesTestPage()
 	{
-		add(new GroovyScriptEngineWithTemplatesPanel("panel", null, null));
+		this(new HibernateScriptTemplateStore());
+	}
+
+	public GroovyEngineWithTemplatesTestPage(final IScriptTemplateStore store)
+	{
+		add(new GroovyScriptEngineWithTemplatesPanel("panel", store));
 	}
 
 }

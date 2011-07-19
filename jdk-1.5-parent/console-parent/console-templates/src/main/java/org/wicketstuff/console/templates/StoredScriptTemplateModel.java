@@ -14,34 +14,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console.jython;
 
-import org.apache.wicket.markup.repeater.data.IDataProvider;
-import org.wicketstuff.console.ScriptEnginePanelWithTemplates;
-import org.wicketstuff.console.engine.Lang;
-import org.wicketstuff.console.templates.IScriptTemplateStore;
-import org.wicketstuff.console.templates.ScriptTemplate;
-import org.wicketstuff.console.templates.ScriptTemplateSelectionTablePanel;
+package org.wicketstuff.console.templates;
+
+import org.apache.wicket.model.LoadableDetachableModel;
 
 /**
- * A combination of {@link JythonScriptEnginePanel} and {@link ScriptTemplateSelectionTablePanel}.
+ * A {@link LoadableDetachableModel} for {@link ScriptTemplate}s from an
+ * {@link IScriptTemplateStore}.
  * 
  * @author cretzel
+ * 
  */
-public class JythonScriptEngineWithTemplatesPanel extends ScriptEnginePanelWithTemplates
+public class StoredScriptTemplateModel extends LoadableDetachableModel<ScriptTemplate>
 {
-
 	private static final long serialVersionUID = 1L;
 
-	public JythonScriptEngineWithTemplatesPanel(final String id,
-		final IDataProvider<ScriptTemplate> dataProvider)
+	private final IScriptTemplateStore store;
+	private final Long id;
+
+	public StoredScriptTemplateModel(final IScriptTemplateStore store, final Long id)
 	{
-		super(id, Lang.JYTHON, dataProvider);
+		this.store = store;
+		this.id = id;
 	}
 
-	public JythonScriptEngineWithTemplatesPanel(final String id, final IScriptTemplateStore store)
+	public StoredScriptTemplateModel(final IScriptTemplateStore store, final ScriptTemplate template)
 	{
-		super(id, Lang.JYTHON, store);
+		super(template);
+		this.store = store;
+		this.id = template.id;
+	}
+
+	@Override
+	protected ScriptTemplate load()
+	{
+		return store.getById(id);
 	}
 
 }
