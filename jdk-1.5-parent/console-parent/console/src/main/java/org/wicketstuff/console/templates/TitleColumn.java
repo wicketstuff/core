@@ -18,6 +18,7 @@ package org.wicketstuff.console.templates;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.basic.Label;
@@ -25,6 +26,7 @@ import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 
 final class TitleColumn extends PropertyColumn<ScriptTemplate>
 {
@@ -62,7 +64,8 @@ final class TitleColumn extends PropertyColumn<ScriptTemplate>
 
 		final AjaxLink<ScriptTemplate> link = new TitleLink("link", rowModel);
 		link.add(new Label("label", createLabelModel(rowModel)));
-
+		link.add(new AttributeAppender("title", new PropertyModel<String>(rowModel, "title")));
+		
 		final Fragment fragment = new Fragment(componentId, "titleFragment", tablePanel);
 		fragment.add(link);
 		item.add(fragment);

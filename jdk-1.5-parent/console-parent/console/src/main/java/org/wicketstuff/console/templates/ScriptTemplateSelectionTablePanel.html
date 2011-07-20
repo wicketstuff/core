@@ -27,7 +27,9 @@
 </wicket:panel>
 
 <wicket:fragment wicket:id="titleFragment">
-	<a wicket:id="link"><span wicket:id="label"></span></a>
+	<div style="width:120px;white-space:nowrap;overflow:hidden;">
+		<a wicket:id="link" style="white-space:nowrap;"><wicket:container wicket:id="label"/></a>
+	</div>
 </wicket:fragment>
 
 </html>

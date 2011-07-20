@@ -34,13 +34,13 @@ public interface IScriptTemplateStore extends IDetachable
 {
 
 	/**
-	 * Saves/Updates a script as a template in this store.
+	 * Looks up a template by id
 	 * 
-	 * @param template
-	 *            the template
-	 * 
+	 * @param id
+	 *            template id
+	 * @return template with id {@code id}
 	 */
-	void save(ScriptTemplate template);
+	ScriptTemplate getById(Long id);
 
 	/**
 	 * Returns all language specific templates from this store.
@@ -57,12 +57,33 @@ public interface IScriptTemplateStore extends IDetachable
 	boolean readOnly();
 
 	/**
-	 * Looks up a template by id
+	 * Saves/Updates a script as a template in this store.
+	 * 
+	 * @param template
+	 *            the template
+	 * @throws ReadOnlyStoreException
+	 *             when this operation is called on a read-only store
+	 */
+	void save(ScriptTemplate template) throws ReadOnlyStoreException;
+
+	/**
+	 * Delete a script from the store.
+	 * 
+	 * @param template
+	 *            template
+	 * @throws ReadOnlyStoreException
+	 *             when this operation is called on a read-only store
+	 */
+	void delete(ScriptTemplate template) throws ReadOnlyStoreException;
+
+	/**
+	 * Deletes a script from the store
 	 * 
 	 * @param id
-	 *            template id
-	 * @return template with id {@code id}
+	 *            id of the script to be deleted
+	 * @throws ReadOnlyStoreException
+	 *             when this operation is called on a read-only store
 	 */
-	ScriptTemplate getById(Long id);
+	void delete(Long id) throws ReadOnlyStoreException;
 
 }

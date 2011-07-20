@@ -24,7 +24,6 @@ import org.apache.wicket.model.Model;
 import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.templates.IScriptTemplateStore;
 import org.wicketstuff.console.templates.ScriptTemplate;
-import org.wicketstuff.console.templates.ScriptTemplateStoreDataProvider;
 
 /**
  * Base class for a {@link ModalWindow} cotaining a script engine panel.
@@ -35,21 +34,31 @@ public abstract class ScriptEngineWithTemplatesWindow extends ModalWindow
 {
 
 	private static final long serialVersionUID = 1L;
-	private final ScriptEnginePanelWithTemplates enginePanelWithTemplates;
+	private ScriptEnginePanelWithTemplates enginePanelWithTemplates;
 	private final IDataProvider<ScriptTemplate> dataProvider;
+	private final IScriptTemplateStore store;
 
 	public ScriptEngineWithTemplatesWindow(final String id, final Lang lang,
 		final IModel<String> windowTitle, final IScriptTemplateStore store)
 	{
-		this(id, lang, windowTitle, new ScriptTemplateStoreDataProvider(store, lang));
+		super(id);
+		this.store = store;
+		this.dataProvider = null;
+		init(lang, windowTitle);
 	}
 
 	public ScriptEngineWithTemplatesWindow(final String id, final Lang lang,
 		final IModel<String> windowTitle, final IDataProvider<ScriptTemplate> dataProvider)
 	{
 		super(id);
+		this.store = null;
 		this.dataProvider = dataProvider;
+		init(lang, windowTitle);
 
+	}
+
+	private void init(final Lang lang, final IModel<String> windowTitle)
+	{
 		setTitle(windowTitle != null ? windowTitle : Model.of("Wicket Console"));
 		// setAutoSize(true);
 		setInitialHeight(408);
@@ -58,7 +67,6 @@ public abstract class ScriptEngineWithTemplatesWindow extends ModalWindow
 
 		enginePanelWithTemplates = newEnginePanelWithTemplates(getContentId(), lang);
 		setContent(enginePanelWithTemplates);
-
 	}
 
 	/**
@@ -73,7 +81,14 @@ public abstract class ScriptEngineWithTemplatesWindow extends ModalWindow
 	protected ScriptEnginePanelWithTemplates newEnginePanelWithTemplates(final String wicketId,
 		final Lang lang)
 	{
-		return new ScriptEnginePanelWithTemplates(wicketId, lang, dataProvider);
+		if (store != null)
+		{
+			return new ScriptEnginePanelWithTemplates(wicketId, lang, store);
+		}
+		else
+		{
+			return new ScriptEnginePanelWithTemplates(wicketId, lang, dataProvider);
+		}
 	}
 
 }

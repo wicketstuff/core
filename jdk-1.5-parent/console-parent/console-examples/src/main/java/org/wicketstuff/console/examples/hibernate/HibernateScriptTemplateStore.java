@@ -24,6 +24,7 @@ import org.apache.wicket.injection.Injector;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.templates.IScriptTemplateStore;
+import org.wicketstuff.console.templates.ReadOnlyStoreException;
 import org.wicketstuff.console.templates.ScriptTemplate;
 
 /**
@@ -43,10 +44,6 @@ public class HibernateScriptTemplateStore implements IScriptTemplateStore
 		Injector.get().inject(this);
 	}
 
-	public void save(final ScriptTemplate t)
-	{
-		dao.save(PersistentScriptTemplate.fromScriptTemplate(t));
-	}
 
 	public ScriptTemplate getById(final Long id)
 	{
@@ -68,6 +65,21 @@ public class HibernateScriptTemplateStore implements IScriptTemplateStore
 		}
 
 		return result;
+	}
+
+	public void save(final ScriptTemplate t) throws ReadOnlyStoreException
+	{
+		dao.save(PersistentScriptTemplate.fromScriptTemplate(t));
+	}
+
+	public void delete(final ScriptTemplate template) throws ReadOnlyStoreException
+	{
+		delete(template.id);
+	}
+
+	public void delete(final Long id) throws ReadOnlyStoreException
+	{
+		dao.delete(id);
 	}
 
 	public boolean readOnly()

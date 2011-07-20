@@ -20,6 +20,7 @@ import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
@@ -31,6 +32,7 @@ import org.wicketstuff.console.examples.groovy.GroovyEngineTestPage;
 import org.wicketstuff.console.examples.groovy.GroovyEngineWindowTestPage;
 import org.wicketstuff.console.examples.groovy.GroovyEngineWithTemplatesTestPage;
 import org.wicketstuff.console.examples.groovy.GroovyEngineWithTemplatesWindowTestPage;
+import org.wicketstuff.console.examples.hibernate.HibernateScriptTemplateStore;
 import org.wicketstuff.console.examples.jython.JythonEngineTestPage;
 import org.wicketstuff.console.examples.jython.JythonEngineWindowTestPage;
 import org.wicketstuff.console.examples.jython.JythonEngineWithTemplatesTestPage;
@@ -54,8 +56,10 @@ public class TestPageLinksPanel extends Panel
 
 		addLink(r, GroovyEngineTestPage.class);
 		addLink(r, GroovyEngineWindowTestPage.class);
-		addLink(r, GroovyEngineWithTemplatesTestPage.class);
-		addLink(r, GroovyEngineWithTemplatesWindowTestPage.class);
+		// addLink(r, GroovyEngineWithTemplatesTestPage.class);
+		// addLink(r, GroovyEngineWithTemplatesWindowTestPage.class);
+		addGroovyEngineWithTemplatesTestPageHibernateLink(r);
+		addGroovyEngineWithTemplatesWindowTestPageHibernateLink(r);
 
 		addLink(r, ClojureEngineTestPage.class);
 		addLink(r, ClojureEngineWindowTestPage.class);
@@ -76,11 +80,55 @@ public class TestPageLinksPanel extends Panel
 
 	private void addLink(final RepeatingView r, final Class<? extends Page> pageClass)
 	{
-		final WebMarkupContainer c = new WebMarkupContainer(r.newChildId());
-		final BookmarkablePageLink<String> link1 = new BookmarkablePageLink<String>("link",
+		final BookmarkablePageLink<String> link = new BookmarkablePageLink<String>("link",
 			pageClass);
-		link1.add(new Label("label", Model.of(pageClass.getSimpleName())));
-		c.add(link1);
+		final String linkName = pageClass.getSimpleName();
+
+		addLink(r, link, linkName);
+	}
+
+	private void addGroovyEngineWithTemplatesTestPageHibernateLink(final RepeatingView r)
+	{
+		final Link<?> link = new Link<Void>("link")
+		{
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick()
+			{
+				setResponsePage(new GroovyEngineWithTemplatesTestPage(
+					new HibernateScriptTemplateStore()));
+			}
+
+		};
+		addLink(r, link, GroovyEngineWithTemplatesTestPage.class.getSimpleName());
+	}
+
+	private void addGroovyEngineWithTemplatesWindowTestPageHibernateLink(final RepeatingView r)
+	{
+		final Link<?> link = new Link<Void>("link")
+		{
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick()
+			{
+				setResponsePage(new GroovyEngineWithTemplatesWindowTestPage(
+					new HibernateScriptTemplateStore()));
+			}
+
+		};
+		addLink(r, link, GroovyEngineWithTemplatesWindowTestPage.class.getSimpleName());
+	}
+
+	private void addLink(final RepeatingView r, final Link<?> link, final String linkName)
+	{
+		final WebMarkupContainer c = new WebMarkupContainer(r.newChildId());
+		c.add(link);
+		link.add(new Label("label", Model.of(linkName)));
+
 		r.add(c);
 	}
 

@@ -36,7 +36,8 @@ public class PackagedScriptTemplates implements IScriptTemplateStore
 
 	private static final String SCRIPT_DIR_BASE = "org/wicketstuff/console/templates/";
 
-	private static final String[] PACKAGED_GROOVY_TEMPLATES = new String[] { "HibernateCriteria",
+	private static final String[] PACKAGED_GROOVY_TEMPLATES = new String[] { "ScriptStoreList",
+			"ScriptStoreSave", "ScriptStoreDelete", "ScriptStoreGet", "HibernateCriteria",
 			"HibernateHqlQuery", "HibernateSave", "HibernateShowSql", "HibernateStatistics",
 			"Hibernate2ndLevelCache", "Log4j", "MethodsAndFields", "ReadClasspathResource",
 			"SystemProperties", "WicketClearMarkupCache", "WicketClearPropertiesCache",
@@ -136,14 +137,25 @@ public class PackagedScriptTemplates implements IScriptTemplateStore
 	}
 
 
-	public void save(final ScriptTemplate t)
-	{
-		throw new UnsupportedOperationException("Save not supported. This is a read-only store.");
-	}
-
 	public boolean readOnly()
 	{
 		return true;
+	}
+
+	public void save(final ScriptTemplate t) throws ReadOnlyStoreException
+	{
+		throw new ReadOnlyStoreException("This is an internal read-only store");
+	}
+
+
+	public void delete(final ScriptTemplate template) throws ReadOnlyStoreException
+	{
+		throw new ReadOnlyStoreException("This is an internal read-only store");
+	}
+
+	public void delete(final Long id) throws ReadOnlyStoreException
+	{
+		throw new ReadOnlyStoreException("This is an internal read-only store");
 	}
 
 	public void detach()

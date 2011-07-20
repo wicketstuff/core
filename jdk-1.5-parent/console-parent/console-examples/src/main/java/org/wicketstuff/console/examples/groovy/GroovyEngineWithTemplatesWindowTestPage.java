@@ -18,13 +18,10 @@ package org.wicketstuff.console.examples.groovy;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.repeater.data.IDataProvider;
-import org.apache.wicket.markup.repeater.data.ListDataProvider;
-import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.examples.ConsoleBasePage;
 import org.wicketstuff.console.groovy.GroovyScriptEngineWithTemplatesWindow;
+import org.wicketstuff.console.templates.IScriptTemplateStore;
 import org.wicketstuff.console.templates.PackagedScriptTemplates;
-import org.wicketstuff.console.templates.ScriptTemplate;
 
 public class GroovyEngineWithTemplatesWindowTestPage extends ConsoleBasePage
 {
@@ -51,15 +48,20 @@ public class GroovyEngineWithTemplatesWindowTestPage extends ConsoleBasePage
 	private GroovyScriptEngineWithTemplatesWindow window;
 	private final OpenLink openLink;
 
+
 	public GroovyEngineWithTemplatesWindowTestPage()
 	{
+		this(new PackagedScriptTemplates());
+	}
 
-		final IDataProvider<ScriptTemplate> dataProvider = new ListDataProvider<ScriptTemplate>(
-			new PackagedScriptTemplates().findAll(Lang.GROOVY));
-		add(window = new GroovyScriptEngineWithTemplatesWindow("window", null, dataProvider));
+	public GroovyEngineWithTemplatesWindowTestPage(final IScriptTemplateStore store)
+	{
+
+		add(window = new GroovyScriptEngineWithTemplatesWindow("window", null, store));
 		openLink = new OpenLink("link", window);
 		add(openLink);
 	}
+
 
 	public OpenLink getOpenLink()
 	{

@@ -14,26 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.console.examples.groovy;
 
-import org.wicketstuff.console.examples.ConsoleBasePage;
-import org.wicketstuff.console.groovy.GroovyScriptEngineWithTemplatesPanel;
-import org.wicketstuff.console.templates.IScriptTemplateStore;
-import org.wicketstuff.console.templates.PackagedScriptTemplates;
+package org.wicketstuff.console.templates;
 
-public class GroovyEngineWithTemplatesTestPage extends ConsoleBasePage
+/**
+ * Thrown when a write operation is attempted on a read-only {@link IScriptTemplateStore}.
+ * 
+ * @see IScriptTemplateStore#readOnly()
+ * @author cretzel
+ * 
+ */
+public class ReadOnlyStoreException extends RuntimeException
 {
+
 	private static final long serialVersionUID = 1L;
 
-	public GroovyEngineWithTemplatesTestPage()
+	public ReadOnlyStoreException()
 	{
-		// this(new HibernateScriptTemplateStore());
-		this(new PackagedScriptTemplates());
+		super();
 	}
 
-	public GroovyEngineWithTemplatesTestPage(final IScriptTemplateStore store)
+	public ReadOnlyStoreException(final String message, final Throwable cause)
 	{
-		add(new GroovyScriptEngineWithTemplatesPanel("panel", store));
+		super(message, cause);
+	}
+
+	public ReadOnlyStoreException(final String message)
+	{
+		super(message);
+	}
+
+	public ReadOnlyStoreException(final Throwable cause)
+	{
+		super(cause);
 	}
 
 }

@@ -139,7 +139,7 @@ public class ScriptTemplateSelectionTablePanel extends Panel
 		if (enginePanel != null)
 		{
 			enginePanel.setInput(script);
-			target.add(enginePanel);
+			target.add(enginePanel.getInputTf());
 		}
 
 	}

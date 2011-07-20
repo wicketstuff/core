@@ -54,5 +54,11 @@ public class ScriptTemplate implements Serializable
 		this.lang = lang;
 	}
 
+	@Override
+	public String toString()
+	{
+		return "ScriptTemplate [id=" + id + ", title=" + title + ", lang=" + lang + "]";
+	}
+
 
 }

@@ -42,7 +42,7 @@ public class PackagedScriptTemplatesTest
 	{
 		final List<ScriptTemplate> templates = new PackagedScriptTemplates().findAll(Lang.GROOVY);
 
-		assertEquals(16, templates.size());
+		assertEquals(20, templates.size());
 	}
 
 	@Test

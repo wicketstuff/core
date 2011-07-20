@@ -59,4 +59,13 @@ public class HibernateScriptTemplateDao
 		return (PersistentScriptTemplate)sessionFactory.getCurrentSession().get(
 			PersistentScriptTemplate.class, id);
 	}
+
+	public void delete(final Long id)
+	{
+		final PersistentScriptTemplate template = get(id);
+		if (template != null)
+		{
+			sessionFactory.getCurrentSession().delete(template);
+		}
+	}
 }
