@@ -10,6 +10,7 @@
 
 	<context:annotation-config />
 	<context:component-scan base-package="org.wicketstuff.console.examples.hibernate" />
+	<context:component-scan base-package="org.wicketstuff.console.examples.service" />
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<bean id="wicketApplication" class="org.wicketstuff.console.examples.WicketApplication">

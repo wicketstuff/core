@@ -34,7 +34,7 @@ import org.wicketstuff.console.templates.ScriptTemplate;
  */
 @Repository
 @Transactional
-public class HibernateScriptTemplateDao
+public class HibernateScriptTemplateDao implements IHibernateScriptTemplateDao
 {
 
 	@Autowired

@@ -37,7 +37,7 @@ public class HibernateScriptTemplateStore implements IScriptTemplateStore
 	private static final long serialVersionUID = 1L;
 
 	@SpringBean
-	private HibernateScriptTemplateDao dao;
+	private IHibernateScriptTemplateDao dao;
 
 	public HibernateScriptTemplateStore()
 	{
