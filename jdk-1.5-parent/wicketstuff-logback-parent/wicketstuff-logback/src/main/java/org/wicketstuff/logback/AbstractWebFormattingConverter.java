@@ -22,7 +22,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 /**
  * <p>
  * A {@link ClassicConverter} implementation that can produce web information based on a
- * {@link HttpServletRequest}. This class is abstract subclasses must implement
+ * {@link HttpServletRequest}. This class is abstract, subclasses must implement
  * {@link #getRequest()}. If no request is available it produces an empty string. This class does
  * not depend on wicket so in theory subclasses can be used in non-wicket web applications too.
  * </p>

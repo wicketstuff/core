@@ -4,7 +4,7 @@
 	<!-- ${contextPath} is not really needed here. Only used to showcase the 
 		functionality. It has more purpose for example in log file name. -->
 	<appender name="arrayAppender-${contextPath}" class="org.wicketstuff.logback.ByteArrayAppender">
-		<encoder class="org.wicketstuff.logback.WicketWebPatternEncoder">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<charset>UTF-8</charset>
 			<pattern>%web</pattern>
 		</encoder>
@@ -14,7 +14,7 @@
 	</appender>
 
 	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder class="org.wicketstuff.logback.WicketWebPatternEncoder">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<charset>UTF-8</charset>
 			<pattern>%d|%p|%t|%c{36}|%r|%web%n\t%caller{1}\t%m%n%xEx</pattern>
 		</encoder>
