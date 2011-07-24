@@ -11,8 +11,8 @@
 	<name>Wicket OSGi Test Web Application</name>
 	<properties>
 		<pax.debug>--vmOptions=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5900</pax.debug>
-        <!-- Use -Dplatform=felix on the command line if desired -->
-        <platform>equinox</platform>
+		<!-- Use -Dplatform=felix on the command line if desired -->
+		<platform>equinox</platform>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -34,11 +34,10 @@
 			<groupId>org.apache.geronimo.specs</groupId>
 			<artifactId>geronimo-atinject_1.0_spec</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.6.1</version>
-        </dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -69,7 +68,7 @@
 						mvn:org.apache.aries/org.apache.aries.util/0.3,
 						mvn:org.apache.aries.proxy/org.apache.aries.proxy.api/0.3,
 						mvn:org.apache.aries.proxy/org.apache.aries.proxy.impl/0.3,
-                        mvn:org.apache.felix/org.apache.felix.webconsole/3.1.8,
+						mvn:org.apache.felix/org.apache.felix.webconsole/3.1.8,
 						mvn:net.sourceforge.cglib/com.springsource.net.sf.cglib/2.2.0,
 						mvn:org.apache.geronimo.specs/geronimo-atinject_1.0_spec/1.0,
 						mvn:org.slf4j/slf4j-api/1.6.1,
