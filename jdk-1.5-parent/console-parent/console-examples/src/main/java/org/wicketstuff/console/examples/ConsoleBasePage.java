@@ -7,11 +7,15 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.CssResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 
 public abstract class ConsoleBasePage extends WebPage
 {
 
 	private static final long serialVersionUID = 1L;
+	private static final ResourceReference CSS = new CssResourceReference(ConsoleBasePage.class,
+		ConsoleBasePage.class.getSimpleName() + ".css");
 
 	public ConsoleBasePage()
 	{
@@ -42,6 +46,8 @@ public abstract class ConsoleBasePage extends WebPage
 	public void renderHead(final IHeaderResponse response)
 	{
 		super.renderHead(response);
+
+		response.renderCSSReference(CSS);
 	}
 
 }
