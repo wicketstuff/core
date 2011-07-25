@@ -90,4 +90,22 @@
 			</plugin>
 		</plugins>
 	</build>
+    <profiles>
+        <profile>
+            <id>felix</id>
+            <activation>
+                <property>
+                    <name>felix</name>
+                </property>
+            </activation>
+            <dependencies>
+                <!-- adds a container console at http://localhost:8080/system/console -->
+                <dependency>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>org.apache.felix.webconsole</artifactId>
+                    <version>3.1.8</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>
