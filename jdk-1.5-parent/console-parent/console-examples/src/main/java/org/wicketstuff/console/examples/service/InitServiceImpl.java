@@ -20,8 +20,7 @@ package org.wicketstuff.console.examples.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +36,7 @@ import org.wicketstuff.console.templates.ScriptTemplate;
  * @author cretzel
  */
 @Service
-public class InitServiceImpl implements InitService
+public class InitServiceImpl implements InitService, InitializingBean
 {
 
 	private final IHibernateScriptTemplateDao hibernateDao;
@@ -48,11 +47,15 @@ public class InitServiceImpl implements InitService
 		this.hibernateDao = hibernateDao;
 	}
 
-	@PostConstruct
-	@Transactional
 	public void init()
 	{
 		transferPackagedScriptTemplatesToHibernate();
+	}
+
+	@Transactional
+	public void afterPropertiesSet() throws Exception
+	{
+		init();
 	}
 
 	/**
@@ -74,6 +77,7 @@ public class InitServiceImpl implements InitService
 			hibernateDao.save(pTemplate);
 		}
 	}
+
 
 
 }
