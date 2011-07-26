@@ -51,9 +51,9 @@ public class LogbackTest
 	public void before() throws Exception
 	{
 		servletTester = new ServletTester();
-		servletTester.getContext().setInitParameter(LogbackConfigListener.LOCATION_PARAM,
+		servletTester.getContext().setInitParameter(LogbackConfigListener.CONFIG_LOCATION_PARAM,
 			LogbackConfigListener.LOCATION_PREFIX_CLASSPATH + "logback-custom-config.xml");
-		servletTester.getContext().setInitParameter(LogbackConfigListener.CONTEXT_PATH_KEY_PARAM,
+		servletTester.getContext().setInitParameter(LogbackConfigListener.CONFIG_CONTEXT_PATH_KEY_PARAM,
 			"contextPath");
 		servletTester.setContextPath(contextPath);
 		servletTester.addEventListener(new LogbackConfigListener());

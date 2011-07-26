@@ -15,23 +15,6 @@
 
   <name>GAE Initializer example</name>
   <description>Wicket1.5 on Google AppEngine</description>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>maven-gae-plugin-repo</id>
-      <name>Maven Google App Engine Repository</name>
-      <url>http://maven-gae-plugin.googlecode.com/svn/repository/</url>
-    </pluginRepository>
-  </pluginRepositories>
-
-
-	<repositories>
-		<repository>
-			<id>maven-gae-plugin-repo</id>
-			<name>Maven Google App Engine Repository</name>
-			<url>http://maven-gae-plugin.googlecode.com/svn/repository</url>
-		</repository>
-	</repositories>
 	
   <properties>
     <!--

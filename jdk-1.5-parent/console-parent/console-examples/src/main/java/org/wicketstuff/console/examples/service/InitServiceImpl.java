@@ -78,6 +78,4 @@ public class InitServiceImpl implements InitService, InitializingBean
 		}
 	}
 
-
-
 }
