@@ -2,7 +2,5 @@
 .project
 target/
 .classpath
-.iml
-.ipr
-.iws
+*.i[mpw][lrs]
 META-INF
