@@ -1,42 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.wicketstuff</groupId>
-        <artifactId>inmethod-grid-parent</artifactId>
-        <version>1.5-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>inmethod-grid-parent</artifactId>
+		<version>1.5-SNAPSHOT</version>
+	</parent>
 
-    <artifactId>wicketstuff-inmethod-grid</artifactId>
-    <packaging>bundle</packaging>
+	<artifactId>wicketstuff-inmethod-grid</artifactId>
+	<packaging>bundle</packaging>
 
-    <name>InMethod Grid</name>
-    <description>Advanced grid components for Apache Wicket</description>
+	<name>InMethod Grid</name>
+	<description>Advanced grid components for Apache Wicket</description>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <version>2.1.0</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        
-                        <Export-Package>
-                            com.inmethod.grid, com.inmethod.grid.treegrid, com.inmethod.grid.column, com.inmethod.grid.column.editable, com.inmethod.grid.column.tree, com.inmethod.grid.common, com.inmethod.grid.datagrid
-                        </Export-Package>
-                        <Import-Package>javax.swing.tree, org.apache.wicket*
-                        </Import-Package>
-                        <Bundle-SymbolicName>${project.groupId}.${project.artifactId};singleton:=true
-                        </Bundle-SymbolicName>
-                        <Bundle-RequiredExecutionEnvironment>J2SE-1.5,JavaSE-1.6</Bundle-RequiredExecutionEnvironment>
-                    </instructions>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Export-Package>
+							com.inmethod.grid, com.inmethod.grid.treegrid, com.inmethod.grid.column,com.inmethod.grid.column.editable, com.inmethod.grid.column.tree,com.inmethod.grid.common, com.inmethod.grid.datagrid
+						</Export-Package>
+						<Import-Package>javax.swing.tree, org.apache.wicket*
+						</Import-Package>
+						<Bundle-SymbolicName>${project.groupId}.${project.artifactId};singleton:=true
+						</Bundle-SymbolicName>
+						<Bundle-RequiredExecutionEnvironment>J2SE-1.5,JavaSE-1.6</Bundle-RequiredExecutionEnvironment>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
