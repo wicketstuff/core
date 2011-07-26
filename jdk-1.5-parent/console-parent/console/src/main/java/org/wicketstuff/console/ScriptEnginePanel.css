@@ -32,6 +32,15 @@
 	margin: 0px;
 }
 
+.console .title-lang {
+	float:right;
+	font-size: 13px;
+	color:#999;
+	font-weight:bold;
+	font-family: Tahoma, Verdana, Arial, sans-serif;
+	margin-right: 10px;
+}
+
 .console .box {
 	width: 100%;
 	background-color: #aabbcc;

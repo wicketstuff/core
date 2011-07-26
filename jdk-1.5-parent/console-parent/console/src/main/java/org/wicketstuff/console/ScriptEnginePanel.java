@@ -48,6 +48,7 @@ import org.wicketstuff.console.groovy.GroovyScriptEnginePanel;
 import org.wicketstuff.console.jython.JythonScriptEnginePanel;
 import org.wicketstuff.console.scala.ScalaScriptEnginePanel;
 import org.wicketstuff.console.templates.IScriptTemplateStore;
+import org.wicketstuff.console.templates.LangLabel;
 import org.wicketstuff.console.templates.ScriptTemplate;
 
 /**
@@ -139,6 +140,7 @@ public class ScriptEnginePanel extends Panel
 	private boolean success;
 
 	private Label titleLabel;
+	private LangLabel titleLangLabel;
 	private Form<Void> form;
 	private TextArea<String> inputTa;
 	private OutputTextArea outputTa;
@@ -149,6 +151,7 @@ public class ScriptEnginePanel extends Panel
 	private final IScriptTemplateStore store;
 
 	private SubmitButton submitButton;
+
 
 	public ScriptEnginePanel(final String id, final Lang lang)
 	{
@@ -177,6 +180,9 @@ public class ScriptEnginePanel extends Panel
 		titleLabel = new Label("title", Model.of("Wicket Console"));
 		add(titleLabel);
 
+		titleLangLabel = new LangLabel("title-lang", Model.of(lang));
+		add(titleLangLabel);
+		
 		form = new Form<Void>("form");
 		add(form);
 

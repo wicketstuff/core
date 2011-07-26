@@ -21,12 +21,12 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
 
-final class LangLabel extends Label
+public class LangLabel extends Label
 {
 
 	private static final long serialVersionUID = 1L;
 
-	LangLabel(final String id, final IModel<?> model)
+	public LangLabel(final String id, final IModel<?> model)
 	{
 		super(id, model);
 	}

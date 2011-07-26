@@ -3,6 +3,7 @@ package org.wicketstuff.console.examples;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -37,6 +38,7 @@ public abstract class ConsoleBasePage extends WebPage
 
 	private void init()
 	{
+		add(new BookmarkablePageLink<Void>("homeLink", WicketApplication.get().getHomePage()));
 		add(new Label("title", Model.of(getClass().getSimpleName())));
 		add(new TestPageLinksPanel("links"));
 		add(new FeedbackPanel("feedback"));
