@@ -20,20 +20,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.IAjaxIndicatorAware;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -72,60 +69,6 @@ import org.wicketstuff.console.templates.ScriptTemplate;
 public class ScriptEnginePanel extends Panel
 {
 
-	private final class ClearButton extends Button
-	{
-		private static final long serialVersionUID = 1L;
-
-		private ClearButton(final String id)
-		{
-			super(id);
-		}
-
-		@Override
-		protected void onInitialize()
-		{
-			super.onInitialize();
-
-			addClearOnClick(inputTa);
-			addClearOnClick(outputTa);
-			addClearOnClick(returnValueTf);
-		}
-
-		private void addClearOnClick(final Component component)
-		{
-			final String markupId = component.getMarkupId();
-			final String clearJs = String.format("clearValue('%s')", markupId);
-			add(new AttributeAppender("onclick", Model.of(clearJs), ";"));
-		}
-
-	}
-
-	final class SubmitButton extends AjaxButton implements IAjaxIndicatorAware
-	{
-		private static final long serialVersionUID = 1L;
-
-		private SubmitButton(final String id, final Form<?> form)
-		{
-			super(id, form);
-		}
-
-		@Override
-		protected void onSubmit(final AjaxRequestTarget target, final Form<?> form)
-		{
-			process(target);
-		}
-
-		@Override
-		protected void onError(final AjaxRequestTarget target, final Form<?> form)
-		{
-		}
-
-		public String getAjaxIndicatorMarkupId()
-		{
-			return indicator.getMarkupId();
-		}
-	}
-
 	private static final long serialVersionUID = 1L;
 
 	private static final ResourceReference CSS = new PackageResourceReference(
@@ -150,8 +93,7 @@ public class ScriptEnginePanel extends Panel
 	private final Lang lang;
 	private final IScriptTemplateStore store;
 
-	private SubmitButton submitButton;
-
+	private RepeatingView controls;
 
 	public ScriptEnginePanel(final String id, final Lang lang)
 	{
@@ -182,7 +124,7 @@ public class ScriptEnginePanel extends Panel
 
 		titleLangLabel = new LangLabel("title-lang", Model.of(lang));
 		add(titleLangLabel);
-		
+
 		form = new Form<Void>("form");
 		add(form);
 
@@ -190,10 +132,10 @@ public class ScriptEnginePanel extends Panel
 		inputTa.setOutputMarkupId(true);
 		form.add(inputTa);
 
-		submitButton = new SubmitButton("submit", form);
-		form.add(submitButton);
-		form.add(new ClearButton("clear"));
-		form.add(new StorePanel("storePanel", this));
+		controls = new RepeatingView("controls");
+		form.add(controls);
+
+		addControls(controls);
 
 		indicator = new Image("indicator", AbstractDefaultAjaxBehavior.INDICATOR);
 		indicator.setOutputMarkupId(true);
@@ -206,6 +148,20 @@ public class ScriptEnginePanel extends Panel
 		outputTa = new OutputTextArea("output", this);
 		outputTa.setOutputMarkupId(true);
 		add(outputTa);
+	}
+
+
+	protected void addControls(final RepeatingView controls)
+	{
+		final Fragment submitfrag = new Fragment(controls.newChildId(), "submitFragment", this);
+		submitfrag.add(new SubmitButton("submit", this));
+		controls.add(submitfrag);
+
+		final Fragment clearfrag = new Fragment(controls.newChildId(), "clearFragment", this);
+		clearfrag.add(new ClearButton("clear", this));
+		controls.add(clearfrag);
+
+		controls.add(new StorePanel(controls.newChildId(), this));
 	}
 
 	protected ResourceReference getCSS()
@@ -227,7 +183,7 @@ public class ScriptEnginePanel extends Panel
 		response.renderJavaScriptReference(JS);
 	}
 
-	protected void process(final AjaxRequestTarget target)
+	public void process(final AjaxRequestTarget target)
 	{
 
 		final IScriptEngine engine = newEngine();
@@ -319,6 +275,12 @@ public class ScriptEnginePanel extends Panel
 	{
 		return returnValueTf;
 	}
+
+	Image getIndicator()
+	{
+		return indicator;
+	}
+
 
 	public Form<Void> getForm()
 	{

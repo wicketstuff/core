@@ -16,19 +16,55 @@
  */
 package org.wicketstuff.console.examples.groovy;
 
+import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.model.Model;
+import org.wicketstuff.console.engine.Lang;
 import org.wicketstuff.console.examples.ConsoleBasePage;
 import org.wicketstuff.console.groovy.GroovyScriptEnginePanel;
+import org.wicketstuff.console.templates.PackagedScriptTemplates;
+import org.wicketstuff.console.templates.ScriptTemplate;
+import org.wicketstuff.console.templates.StoredScriptTemplateModel;
 
 public class GroovyEngineTestPage extends ConsoleBasePage
 {
 	private static final long serialVersionUID = 1L;
+	private final PackagedScriptTemplates store;
 
 	public GroovyEngineTestPage()
 	{
+		store = new PackagedScriptTemplates();
 
-		final GroovyScriptEnginePanel enginePanel = new GroovyScriptEnginePanel("scriptPanel");
+		final GroovyScriptEnginePanel enginePanel = new GroovyScriptEnginePanel("scriptPanel")
+		{
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void addControls(final RepeatingView controls)
+			{
+				super.addControls(controls);
+
+				final Label label = new Label(controls.newChildId(), "Favorites:");
+				label.add(new AttributeAppender("style", Model.of("color:#ddd;")));
+				controls.add(label);
+
+				int i = 0;
+				for (final ScriptTemplate template : store.findAll(Lang.GROOVY))
+				{
+					final QuickAction action = new QuickAction(controls.newChildId(), this,
+						new StoredScriptTemplateModel(store, template), i++);
+					controls.add(action);
+
+				}
+			}
+
+		};
+		
 		enginePanel.setOutputMarkupId(true);
 		add(enginePanel);
 	}
+
 
 }

@@ -21,9 +21,9 @@ package org.wicketstuff.console;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxIndicatorAware;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.console.templates.IScriptTemplateStore;
 
@@ -32,7 +32,7 @@ import org.wicketstuff.console.templates.IScriptTemplateStore;
  * 
  * @author cretzel
  */
-class StorePanel extends ModalWindow
+class StorePanel extends Panel
 {
 
 	private class SubmitButton extends AjaxButton implements IAjaxIndicatorAware
@@ -86,7 +86,7 @@ class StorePanel extends ModalWindow
 	public void storeScriptTemplate(final AjaxRequestTarget target)
 	{
 		final String scriptTitle = title.getModelObject();
-		enginePanel.storeScriptTemplate(target, scriptTitle); 
+		enginePanel.storeScriptTemplate(target, scriptTitle);
 	}
 
 	@Override

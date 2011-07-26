@@ -35,14 +35,14 @@
 	<table border="0" width="100%" cellspacing="2" cellpadding="0">
 		<tr>
 			<td class="box">
-					<textarea wicket:id="input" wrap="off" onkeydown="return doTab(event);"></textarea>
+				<textarea wicket:id="input" wrap="off" onkeydown="return doTab(event);"></textarea>
 			</td>
 		</tr>
+	</table>
+	<table border="0" width="100%" cellspacing="2" cellpadding="0" class="controls">
 		<tr>
-			<td class="controls" style="white-space:nowrap;">
-				<input wicket:id="submit" type="submit" value="Execute" accesskey="x"/>
-				<input wicket:id="clear" type="button" value="Clear" accesskey="c"/>
-				<wicket:container wicket:id="storePanel"></wicket:container>
+			<td width="1" wicket:id="controls"></td>
+			<td width="auto">
 				<img wicket:id="indicator" class="indicator" style="display:none;" width="14"/>
 			</td>
 		</tr>
@@ -61,4 +61,12 @@
 </div>
 
 </wicket:panel>
+
+<wicket:fragment wicket:id="submitFragment">
+	<input wicket:id="submit" type="submit" value="Execute" accesskey="x"/>
+</wicket:fragment>
+<wicket:fragment wicket:id="clearFragment">
+	<input wicket:id="clear" type="button" value="Clear" accesskey="c"/>
+</wicket:fragment>
+
 </html>

@@ -75,7 +75,8 @@
 }
 
 .console .controls .storePanel {
-	margin-left:140px;	
+	/*margin-left:140px;*/
+	white-space:nowrap;	
 }
 
 .console .controls .indicator {
