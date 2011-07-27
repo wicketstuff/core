@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>wicket-bundle-parent</artifactId>
@@ -14,11 +14,11 @@
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-ioc</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>net.sourceforge.cglib</groupId>
-            <artifactId>com.springsource.net.sf.cglib</artifactId>
-            <version>2.2.0</version>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.servicemix.bundles</groupId>
+			<artifactId>org.apache.servicemix.bundles.cglib</artifactId>
+			<version>2.2_2</version>
+		</dependency>
 	</dependencies>
 	<description>An OSGi-friendly version of the wicket-ioc module that does not use dynamic imports.</description>
 	<build>
@@ -37,11 +37,4 @@
 			</plugin>
 		</plugins>
 	</build>
-    <repositories>
-        <repository>
-            <id>com.springsource.repository.bundles.external</id>
-            <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
-            <url>http://repository.springsource.com/maven/bundles/external</url>
-        </repository>
-    </repositories>
 </project>
