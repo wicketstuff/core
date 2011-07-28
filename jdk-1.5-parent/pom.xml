@@ -19,6 +19,7 @@
 	</description>
 
 	<modules>
+		<module>annotation</module>
 		<module>calendarviews-parent</module>
 		<module>client-and-server-validation</module>
 		<module>console-parent</module>
@@ -64,7 +65,6 @@
 
 		<!-- <module>dojo-parent</module> -->
 
-		<!-- <module>annotation</module> -->
 		<!-- artwork-parent depends on jslibraries -->
 		<!-- <module>artwork-parent</module> -->
 
