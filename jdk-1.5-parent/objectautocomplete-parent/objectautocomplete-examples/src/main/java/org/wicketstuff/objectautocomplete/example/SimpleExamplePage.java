@@ -29,76 +29,81 @@ import org.wicketstuff.objectautocomplete.ObjectAutoCompleteField;
 /**
  * Homepage
  */
-public class SimpleExamplePage extends BaseExamplePage<Car,Integer> {
+public class SimpleExamplePage extends BaseExamplePage<Car, Integer>
+{
 
 	private static final long serialVersionUID = 1L;
 
-    public SimpleExamplePage() {
-        super(new Model<Integer>());
-    }
+	public SimpleExamplePage()
+	{
+		super(new Model<Integer>());
+	}
 
-    @Override
-    List<Car> getAllChoices() {
-        return CarRepository.allCars();
-    }
+	@Override
+	List<Car> getAllChoices()
+	{
+		return CarRepository.allCars();
+	}
 
-    @Override
-    String getCodeSample() {
-        return "ObjectAutoCompleteBuilder<Car,Integer> builder =\n" +
-                "       new ObjectAutoCompleteBuilder<Car,Integer>(\n" +
-                "                new AutoCompletionChoicesProvider<Car>() {\n" +
-                "                    public Iterator<Car> getChoices(String input) {\n" +
-                "                       List<Car> ret = new ArrayList<Car>();\n" +
-                "                       for (Car car : CarRepository.allCars()) {\n" +
-                "                           if (car.getName().toLowerCase()\n" +
-                "                                  .startsWith(input.toLowerCase())) {\n" +
-                "                               ret.add(car);\n" +
-                "                            }\n" +
-                "                       }\n" +
-                "                      return ret.iterator();\n" +
-                "                  }\n" +
-                "               }\n" +
-                "       );\n" +
-                "ObjectAutoCompleteField acField = \n" +
-                "       builder.build(\"acField\", new Model<Integer>());\n" +
-                "form.add(acField);";
-    }
+	@Override
+	String getCodeSample()
+	{
+		return "ObjectAutoCompleteBuilder<Car,Integer> builder =\n"
+			+ "       new ObjectAutoCompleteBuilder<Car,Integer>(\n"
+			+ "                new AutoCompletionChoicesProvider<Car>() {\n"
+			+ "                    public Iterator<Car> getChoices(String input) {\n"
+			+ "                       List<Car> ret = new ArrayList<Car>();\n"
+			+ "                       for (Car car : CarRepository.allCars()) {\n"
+			+ "                           if (car.getName().toLowerCase()\n"
+			+ "                                  .startsWith(input.toLowerCase())) {\n"
+			+ "                               ret.add(car);\n" + "                            }\n"
+			+ "                       }\n" + "                      return ret.iterator();\n"
+			+ "                  }\n" + "               }\n" + "       );\n"
+			+ "ObjectAutoCompleteField acField = \n"
+			+ "       builder.build(\"acField\", new Model<Integer>());\n" + "form.add(acField);";
+	}
 
-    // Used for C&P in the string above
-    private void test() {
-        Form form = new Form("form");
-        ObjectAutoCompleteBuilder<Car,Integer> builder =
-                new ObjectAutoCompleteBuilder<Car,Integer>(
-                        new AutoCompletionChoicesProvider<Car>() {
-                            public Iterator<Car> getChoices(String input) {
-                                List<Car> ret = new ArrayList<Car>();
-                                for (Car car : CarRepository.allCars()) {
-                                    if (car.getName().toLowerCase()
-                                            .startsWith(input.toLowerCase())) {
-                                        ret.add(car);
-                                    }
-                                }
-                                return ret.iterator();
-                            }
-                        }
-                );
-        ObjectAutoCompleteField acField =
-                builder.build("acField", new Model<Integer>());
-        form.add(acField);
-    }
+	// Used for C&P in the string above
+	private void test()
+	{
+		Form<Void> form = new Form<Void>("form");
+		ObjectAutoCompleteBuilder<Car, Integer> builder = new ObjectAutoCompleteBuilder<Car, Integer>(
+			new AutoCompletionChoicesProvider<Car>()
+			{
+				private static final long serialVersionUID = 1L;
 
-    @Override
-    String getHtmlSample() {
-        return "<form wicket:id=\"form\">\n" +
-                " Brand: <input type=\"text\" wicket:id=\"acField\"/>\n" +
-                "</form>";
-    }
+				public Iterator<Car> getChoices(String input)
+				{
+					List<Car> ret = new ArrayList<Car>();
+					for (Car car : CarRepository.allCars())
+					{
+						if (car.getName().toLowerCase().startsWith(input.toLowerCase()))
+						{
+							ret.add(car);
+						}
+					}
+					return ret.iterator();
+				}
+			});
+		ObjectAutoCompleteField<Car, Integer> acField = builder.build("acField",
+			new Model<Integer>());
+		form.add(acField);
+	}
 
-    @Override
-    protected void addIfMatch(List<Car> pCars, Car pCar, String pInput) {
-        if (pCar.getName().toLowerCase().startsWith(pInput.toLowerCase())) {
-            pCars.add(pCar);
-        }
-    }
+	@Override
+	String getHtmlSample()
+	{
+		return "<form wicket:id=\"form\">\n"
+			+ " Brand: <input type=\"text\" wicket:id=\"acField\"/>\n" + "</form>";
+	}
+
+	@Override
+	protected void addIfMatch(List<Car> pCars, Car pCar, String pInput)
+	{
+		if (pCar.getName().toLowerCase().startsWith(pInput.toLowerCase()))
+		{
+			pCars.add(pCar);
+		}
+	}
 
 }
