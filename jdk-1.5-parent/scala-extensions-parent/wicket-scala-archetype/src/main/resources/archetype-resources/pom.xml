@@ -13,7 +13,7 @@
 		<version.wicketstuff>1.5-SNAPSHOT</version.wicketstuff>
 		<version.scalatest>1.3</version.scalatest>
 		<version.specs>1.6.8</version.specs>
-		<version.jetty>7.4.3.v20110701</version.jetty>
+		<version.jetty>7.4.5.v20110725</version.jetty>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
