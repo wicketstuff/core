@@ -9,7 +9,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>objectautocomplete-parent</artifactId>
+	<artifactId>wicketstuff-objectautocomplete-parent</artifactId>
 	<packaging>pom</packaging>
 
 	<name>ObjectAutoComplete - Parent</name>
