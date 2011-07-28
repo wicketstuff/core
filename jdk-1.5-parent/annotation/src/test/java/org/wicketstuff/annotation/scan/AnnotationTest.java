@@ -30,86 +30,102 @@ import org.wicketstuff.annotation.mount.MountPath;
  */
 public class AnnotationTest extends TestCase
 {
-    @MountPath
-    private static class DefaultMountPathPage extends Page {
-    }
+	@MountPath
+	private static class DefaultMountPathPage extends Page
+	{
+		private static final long serialVersionUID = 1L;
+	}
 
-    @MountPath(value = "mountPath")
-    private static class ExplicitMountPathPage extends Page {
-    }
+	@MountPath(value = "mountPath")
+	private static class ExplicitMountPathPage extends Page
+	{
+		private static final long serialVersionUID = 1L;
+	}
 
-    @MountPath(value = "primary", alt = { "alt1", "alt2" })
-    private static class AlternativePathsPage extends Page {
-    }
+	@MountPath(value = "primary", alt = { "alt1", "alt2" })
+	private static class AlternativePathsPage extends Page
+	{
+		private static final long serialVersionUID = 1L;
+	}
 
-    private class TestMountedMapper extends MountedMapper {
-        public final String mountPath;
-        public TestMountedMapper(String mountPath, Class<? extends IRequestablePage> pageClass) {
-            super(mountPath, pageClass);
-            this.mountPath = mountPath;
-        }
-    }
+	private class TestMountedMapper extends MountedMapper
+	{
+		public final String mountPath;
 
-    private class TestAnnotatedMountScanner extends AnnotatedMountScanner {
-        @Override
-        public IRequestMapper getRequestMapper(String mountPath, Class<? extends IRequestablePage> pageClass) {
-            return new TestMountedMapper(mountPath, pageClass);
-        }
-    }
+		public TestMountedMapper(String mountPath, Class<? extends IRequestablePage> pageClass)
+		{
+			super(mountPath, pageClass);
+			this.mountPath = mountPath;
+		}
+	}
 
-    private class CustomAnnotatedMountScanner extends TestAnnotatedMountScanner {
-        @Override
-        public String getDefaultMountPath(Class<? extends IRequestablePage> pageClass) {
-            return pageClass.getSimpleName().toLowerCase();
-        }
-    }
+	private class TestAnnotatedMountScanner extends AnnotatedMountScanner
+	{
+		@Override
+		public IRequestMapper getRequestMapper(String mountPath,
+			Class<? extends IRequestablePage> pageClass)
+		{
+			return new TestMountedMapper(mountPath, pageClass);
+		}
+	}
 
-    private TestAnnotatedMountScanner testScanner = new TestAnnotatedMountScanner();
-    private CustomAnnotatedMountScanner customScanner = new CustomAnnotatedMountScanner();
+	private class CustomAnnotatedMountScanner extends TestAnnotatedMountScanner
+	{
+		@Override
+		public String getDefaultMountPath(Class<? extends IRequestablePage> pageClass)
+		{
+			return pageClass.getSimpleName().toLowerCase();
+		}
+	}
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+	private TestAnnotatedMountScanner testScanner = new TestAnnotatedMountScanner();
+	private final CustomAnnotatedMountScanner customScanner = new CustomAnnotatedMountScanner();
 
-        testScanner = new TestAnnotatedMountScanner();
-    }
+	@Override
+	protected void setUp() throws Exception
+	{
+		super.setUp();
 
-    public void testDefaultMountPath()
-    {
-        AnnotatedMountList list = testScanner.scanClass(DefaultMountPathPage.class);
-        assertEquals(1, list.size());
-        assertEquals("DefaultMountPathPage", ((TestMountedMapper) list.get(0)).mountPath);
-    }
+		testScanner = new TestAnnotatedMountScanner();
+	}
 
-    public void testExplicitMountPath()
-    {
-        AnnotatedMountList list = testScanner.scanClass(ExplicitMountPathPage.class);
-        assertEquals(1, list.size());
-        assertEquals("mountPath", ((TestMountedMapper) list.get(0)).mountPath);
-    }
+	public void testDefaultMountPath()
+	{
+		AnnotatedMountList list = testScanner.scanClass(DefaultMountPathPage.class);
+		assertEquals(1, list.size());
+		assertEquals("DefaultMountPathPage", ((TestMountedMapper)list.get(0)).mountPath);
+	}
 
-    public void testAlternativePaths()
-    {
-        AnnotatedMountList list = testScanner.scanClass(ExplicitMountPathPage.class);
-        list = testScanner.scanClass(AlternativePathsPage.class);
-        assertEquals(3, list.size());
-        assertEquals("primary", ((TestMountedMapper) list.get(0)).mountPath);
-        assertEquals("alt1", ((TestMountedMapper) list.get(1)).mountPath);
-        assertEquals("alt2", ((TestMountedMapper) list.get(2)).mountPath);
-    }
+	public void testExplicitMountPath()
+	{
+		AnnotatedMountList list = testScanner.scanClass(ExplicitMountPathPage.class);
+		assertEquals(1, list.size());
+		assertEquals("mountPath", ((TestMountedMapper)list.get(0)).mountPath);
+	}
 
-    public void testPackageScan()
-    {
-        final int expectedCount = 5;
-        AnnotatedMountList list = testScanner.scanPackage(AnnotationTest.class.getPackage().getName());
-        assertEquals("Should have gotten " + expectedCount + " items", expectedCount, list.size());
-    }
+	public void testAlternativePaths()
+	{
+		AnnotatedMountList list = testScanner.scanClass(ExplicitMountPathPage.class);
+		list = testScanner.scanClass(AlternativePathsPage.class);
+		assertEquals(3, list.size());
+		assertEquals("primary", ((TestMountedMapper)list.get(0)).mountPath);
+		assertEquals("alt1", ((TestMountedMapper)list.get(1)).mountPath);
+		assertEquals("alt2", ((TestMountedMapper)list.get(2)).mountPath);
+	}
 
-    public void testCustomDefaultPath()
-    {
-        AnnotatedMountList list = customScanner.scanClass(DefaultMountPathPage.class);
-        assertEquals(1, list.size());
-        assertEquals("defaultmountpathpage", ((TestMountedMapper) list.get(0)).mountPath);
-    }
+	public void testPackageScan()
+	{
+		final int expectedCount = 5;
+		AnnotatedMountList list = testScanner.scanPackage(AnnotationTest.class.getPackage()
+			.getName());
+		assertEquals("Should have gotten " + expectedCount + " items", expectedCount, list.size());
+	}
+
+	public void testCustomDefaultPath()
+	{
+		AnnotatedMountList list = customScanner.scanClass(DefaultMountPathPage.class);
+		assertEquals(1, list.size());
+		assertEquals("defaultmountpathpage", ((TestMountedMapper)list.get(0)).mountPath);
+	}
 
 }

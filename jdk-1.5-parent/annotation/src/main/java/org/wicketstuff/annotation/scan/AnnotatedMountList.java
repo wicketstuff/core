@@ -16,32 +16,35 @@
  */
 package org.wicketstuff.annotation.scan;
 
-import org.apache.wicket.protocol.http.*;
-import org.apache.wicket.request.IRequestMapper;
+import java.util.ArrayList;
 
-import java.util.*;
+import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.IRequestMapper;
 
 /**
  * A list of {@link IRequestMapper}.
- *
+ * 
  * @author Doug Donohoe
  * @author Ronald Tetsuo Miura
  */
 public class AnnotatedMountList extends ArrayList<IRequestMapper>
 {
-    /**
-     * Iterate through list and call {@link WebApplication#mount(IRequestMapper)}
-     * for each item.
-     * <p>
-     * Typically called from {@link WebApplication#init()} method
-     * @param app The web application.
-     * @see AnnotatedMountScanner
-     */
-    public void mount(WebApplication app)
-    {
-        for (IRequestMapper strategy : this)
-        {
-            app.mount(strategy);
-        }
-    }
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Iterate through list and call {@link WebApplication#mount(IRequestMapper)} for each item.
+	 * <p>
+	 * Typically called from {@link WebApplication#init()} method
+	 * 
+	 * @param app
+	 *            The web application.
+	 * @see AnnotatedMountScanner
+	 */
+	public void mount(WebApplication app)
+	{
+		for (IRequestMapper strategy : this)
+		{
+			app.mount(strategy);
+		}
+	}
 }
