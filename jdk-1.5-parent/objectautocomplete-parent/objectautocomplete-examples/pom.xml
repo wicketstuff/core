@@ -8,7 +8,7 @@
       <version>1.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>objectautocomplete-examples</artifactId>
+    <artifactId>wicketstuff-objectautocomplete-examples</artifactId>
     <packaging>war</packaging>
 
     <name>ObjectAutoComplete - Examples</name>
