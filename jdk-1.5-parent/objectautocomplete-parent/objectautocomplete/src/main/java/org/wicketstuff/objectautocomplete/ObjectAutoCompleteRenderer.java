@@ -16,8 +16,8 @@
  */
 package org.wicketstuff.objectautocomplete;
 
-import org.apache.wicket.Response;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompleteRenderer;
+import org.apache.wicket.request.Response;
 
 /**
  * @author roland
@@ -27,11 +27,8 @@ public class ObjectAutoCompleteRenderer<O> extends AbstractObjectAutoCompleteRen
 
     private static final long serialVersionUID = 1L;
 
-    private static final IAutoCompleteRenderer INSTANCE = new ObjectAutoCompleteRenderer();
-
-    @SuppressWarnings("unchecked")
-    public static final <T> IAutoCompleteRenderer<T> instance() {
-        return INSTANCE;
+    public static final <O> IAutoCompleteRenderer<O> instance() {
+        return new ObjectAutoCompleteRenderer<O>();
     }
 
     /** {@inheritDoc} */
@@ -45,7 +42,7 @@ public class ObjectAutoCompleteRenderer<O> extends AbstractObjectAutoCompleteRen
 		response.write("<ul>");
 	}
 
-	public void renderFooter(Response response)
+	public void renderFooter(Response response, int renderedChoices)
 	{
 		response.write("</ul>");
 	}

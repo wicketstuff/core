@@ -1,9 +1,8 @@
 package org.wicketstuff.objectautocomplete;
 
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.protocol.http.WebResponse;
-
 import java.util.Iterator;
+
+import org.apache.wicket.request.http.WebResponse;
 
 /**
  * A renderer, which has complete access to the list of choices and which is free to create a (more structured)

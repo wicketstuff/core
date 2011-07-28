@@ -25,18 +25,18 @@ import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.WicketAjaxReference;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AbstractAutoCompleteBehavior;
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteBehavior;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteSettings;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompleteRenderer;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WicketEventReference;
+import org.apache.wicket.request.IRequestCycle;
+import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.settings.IDebugSettings;
-import org.apache.wicket.util.upload.RequestContext;
 
 /**
  * Behaviour for object auto completion using a slightly modified variant of
@@ -57,37 +57,33 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior 
     private static final ResourceReference AUTOCOMPLETE_OBJECTIFIED_JS = new JavaScriptResourceReference(
             ObjectAutoCompleteBehavior.class, "wicketstuff-dropdown-list.js");
 
-    // Reference to upstream JS, use this if the required patch has been applied. For now, unused.
-    private static final ResourceReference AUTOCOMPLETE_JS = new JavaScriptResourceReference(
-		AutoCompleteBehavior.class, "wicket-autocomplete.js");
-
     // Element holding the object id as value
-    private Component objectElement;
+    private final Component objectElement;
 
-    private ObjectAutoCompleteCancelListener cancelListener;
-    private AutoCompletionChoicesProvider<O> choicesProvider;
+    private final ObjectAutoCompleteCancelListener cancelListener;
+    private final AutoCompletionChoicesProvider<O> choicesProvider;
 
     // one of this renderer must be set with the response renderer taking precedence
-    private IAutoCompleteRenderer<O> renderer;
-    private ObjectAutoCompleteResponseRenderer<O> responseRenderer;
+    private final IAutoCompleteRenderer<O> renderer;
+    private final ObjectAutoCompleteResponseRenderer<O> responseRenderer;
 
     // =====================================================================================================
     // Specific configuration options:
 
     // tag name which indicates the possible choices (typically thhis is a "li")
-    private String choiceTagName;
+    private final String choiceTagName;
 
     // alignment of menu
-    private ObjectAutoCompleteBuilder.Alignment alignment;
+    private final ObjectAutoCompleteBuilder.Alignment alignment;
 
     // width of drop down
     private long width = 0;
 
     // delay for how long to wait for the update
-    private long delay;
+    private final long delay;
 
     // weether search should be triggered on paste event
-    private boolean searchOnPaste;
+    private final boolean searchOnPaste;
 
     <I extends Serializable> ObjectAutoCompleteBehavior(Component pObjectElement,ObjectAutoCompleteBuilder<O,I> pBuilder) {
         renderer = pBuilder.autoCompleteRenderer;
@@ -121,47 +117,44 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior 
 
     @Override
     protected void onRequest(final String input, RequestCycle requestCycle) {
-        IRequestTarget target = new IRequestTarget()
-		{
+        IRequestHandler target = new IRequestHandler() {
+            
+            public void respond(IRequestCycle requestCycle) {
 
-			public void respond(RequestCycle requestCycle)
-			{
-
-				WebResponse r = (WebResponse)requestCycle.getResponse();
+                WebResponse response = (WebResponse)requestCycle.getResponse();
 
 				// Determine encoding
 				final String encoding = Application.get()
 					.getRequestCycleSettings()
 					.getResponseRequestEncoding();
-				r.setCharacterEncoding(encoding);
-				r.setContentType("text/xml; charset=" + encoding);
+				response.setContentType("text/xml; charset=" + encoding);
 
 				// Make sure it is not cached by a
-				r.setHeader("Expires", "Mon, 26 Jul 1997 05:00:00 GMT");
-				r.setHeader("Cache-Control", "no-cache, must-revalidate");
-				r.setHeader("Pragma", "no-cache");
-
+				response.disableCaching();
+				
 				Iterator<O> comps = getChoices(input);
                 if (responseRenderer != null) {
                     // there is a dedicated renderer configured
-                    responseRenderer.onRequest(comps,r,input);
+                    responseRenderer.onRequest(comps,response,input);
                 } else {
-                    renderer.renderHeader(r);
+                    renderer.renderHeader(response);
+                    int renderedObjects = 0;
                     while (comps.hasNext())
                     {
                         final O comp = comps.next();
-                        renderer.render(comp, r, input);
+                        renderer.render(comp, response, input);
+                        renderedObjects++;
                     }
-                    renderer.renderFooter(r);
+                    renderer.renderFooter(response, renderedObjects);
                 }
             }
 
-			public void detach(RequestCycle requestCycle)
-			{
-			}
+            public void detach(IRequestCycle requestCycle) {
+                
+            }
 
 		};
-		requestCycle.setRequestTarget(target);
+		requestCycle.scheduleRequestHandlerAfterCurrent(target);
     }
 
     // Copied over from AbstractDefaultAjaxBehaviour.renderHead() until patch
@@ -177,12 +170,6 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior 
             response.renderJavaScriptReference(new JavaScriptResourceReference(
                     AbstractDefaultAjaxBehavior.class, "wicket-ajax-debug.js"));
 			response.renderJavaScript("wicketAjaxDebugEnable=true;", "wicket-ajax-debug-enable");
-		}
-
-		RequestContext context = RequestContext.get();
-		if (context.isPortletRequest())
-		{
-			response.renderJavaScript("Wicket.portlet=true", "wicket-ajax-portlet-flag");
 		}
     }
 

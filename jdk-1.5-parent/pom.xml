@@ -40,6 +40,7 @@
 		<module>minis-parent</module>
 		<module>mootools-meiomask-parent</module>
 		<module>multi-text-input-parent</module>
+		<module>objectautocomplete-parent</module>
 		<module>openlayers-parent</module>
 		<module>phonebook</module>
 		<module>plugin</module>
@@ -68,8 +69,6 @@
 		<!-- <module>artwork-parent</module> -->
 
 		<!-- <module>jwicket-parent</module> -->
-
-		<!-- <module>objectautocomplete-parent</module> -->
 
 
 		<!-- mocleiri: has Irequesttarget usage that needs to be migrated. -->

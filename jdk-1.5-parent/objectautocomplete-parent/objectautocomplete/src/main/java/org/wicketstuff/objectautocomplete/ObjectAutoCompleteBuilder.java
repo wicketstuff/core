@@ -1,16 +1,16 @@
 package org.wicketstuff.objectautocomplete;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.Resource;
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompleteRenderer;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.io.Serializable;
+
+import org.apache.wicket.Component;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompleteRenderer;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.IResource;
+import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  * Builder for initializing a {@link org.wicketstuff.objectautocomplete.ObjectAutoCompleteField} and
@@ -68,7 +68,7 @@ public class ObjectAutoCompleteBuilder<O,I extends Serializable> {
 
     // image resource or reference to use for button which switchs back
     // to editing the field
-    Resource imageResource;
+    IResource imageResource;
     ResourceReference imageResourceReference;
 
     // whether the field cannot be changed after the first selection
@@ -186,7 +186,7 @@ public class ObjectAutoCompleteBuilder<O,I extends Serializable> {
         return this;
     }
 
-    public ObjectAutoCompleteBuilder<O,I> searchLinkImage(Resource pImageResource) {
+    public ObjectAutoCompleteBuilder<O,I> searchLinkImage(IResource pImageResource) {
         this.imageResource = pImageResource;
         return this;
     }

@@ -16,18 +16,15 @@
  */
 package org.wicketstuff.objectautocomplete.example;
 
-import org.apache.wicket.markup.html.PackageResource;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.model.Model;
-import org.wicketstuff.objectautocomplete.ObjectAutoCompleteBuilder;
-import org.wicketstuff.objectautocomplete.AutoCompletionChoicesProvider;
-import org.wicketstuff.objectautocomplete.ObjectAutoCompleteField;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Arrays;
+
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.model.Model;
+import org.wicketstuff.objectautocomplete.AutoCompletionChoicesProvider;
+import org.wicketstuff.objectautocomplete.ObjectAutoCompleteBuilder;
+import org.wicketstuff.objectautocomplete.ObjectAutoCompleteField;
 
 /**
  * Delay examples

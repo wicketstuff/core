@@ -16,25 +16,36 @@
  */
 package org.wicketstuff.objectautocomplete;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
-import org.apache.wicket.behavior.SimpleAttributeModifier;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.image.Image;
-import org.apache.wicket.model.*;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.IWrapModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.value.IValueMap;
-
-import java.io.Serializable;
-import java.util.*;
 
 /**
  * Wicket component for selecting a single object of type T with an identifier of type I via
@@ -138,7 +149,7 @@ public class ObjectAutoCompleteField<O /* object */,I /* its id */ extends Seria
         };
         searchTextField.setOutputMarkupId(true);
         // this disables Firefox autocomplete
-        searchTextField.add(new SimpleAttributeModifier("autocomplete", "off"));
+        searchTextField.add(AttributeModifier.append("autocomplete", "off"));
 
         objectField = new HiddenField<I>("hiddenId",new PropertyModel<I>(this,"selectedObjectId"));
         objectField.setOutputMarkupId(true);
@@ -160,7 +171,7 @@ public class ObjectAutoCompleteField<O /* object */,I /* its id */ extends Seria
     protected IModel<I> initModel() {
         IModel model = super.initModel();
         if (model instanceof IWrapModel) {
-            IWrapModel iwModel = (IWrapModel) model;
+            IWrapModel<?> iwModel = (IWrapModel<?>) model;
             if (iwModel.getWrappedModel() instanceof CompoundPropertyModel) {
                 CompoundPropertyModel<I> cpModel =  (CompoundPropertyModel<I>) iwModel.getWrappedModel();
                 objectField.setModel(new PropertyModel<I>(cpModel,getId()));
@@ -192,18 +203,18 @@ public class ObjectAutoCompleteField<O /* object */,I /* its id */ extends Seria
         }
         objectReadOnlyComponent.setOutputMarkupId(true);
 
-        AjaxFallbackLink deleteLink = new AjaxFallbackLink("searchLink") {
+        AjaxFallbackLink<Void> deleteLink = new AjaxFallbackLink<Void>("searchLink") {
             @Override
             public void onClick(AjaxRequestTarget target) {
                 changeToSearchMode(target);
             }
         };
 
-        Component linkImage = new Image("searchLinkImage").setVisible(false);
+        Component linkImage = new WebComponent("searchLinkImage").setVisible(false);
         if (pBuilder.imageResource != null || pBuilder.imageResourceReference != null) {
             linkImage = pBuilder.imageResource != null ?
-                    new Image("searchLinkImage",pBuilder.imageResource) :
-                    new Image("searchLinkImage",pBuilder.imageResourceReference);
+                    new Image("searchLinkImage", pBuilder.imageResource) :
+                    new Image("searchLinkImage", pBuilder.imageResourceReference);
             deleteLink.add(new Label(ObjectAutoCompleteBuilder.SEARCH_LINK_PANEL_ID).setVisible(false));
         } else if (pBuilder.searchLinkContent != null) {
             deleteLink.add(pBuilder.searchLinkContent);
@@ -232,9 +243,9 @@ public class ObjectAutoCompleteField<O /* object */,I /* its id */ extends Seria
         selectedObjectId = null;
         ObjectAutoCompleteField.this.setModelObject(null);
         if (target != null) {
-            target.addComponent(ObjectAutoCompleteField.this);
+            target.add(ObjectAutoCompleteField.this);
             String id = searchTextField.getMarkupId();
-            target.appendJavascript(
+            target.appendJavaScript(
                     "wicketGet('" +id +"').focus();" +
                             "wicketGet('" + id + "').select();");
         }
@@ -255,10 +266,10 @@ public class ObjectAutoCompleteField<O /* object */,I /* its id */ extends Seria
                 searchTextField.setModelObject(backupText);
             }
             selectedObjectId = backupObjectId;
-            pTarget.addComponent(ObjectAutoCompleteField.this);
+            pTarget.add(ObjectAutoCompleteField.this);
         } else {
             clearSearchInput();
-            pTarget.addComponent(searchTextField);
+            pTarget.add(searchTextField);
         }
         notifyListeners(pTarget);
     }
@@ -335,7 +346,7 @@ public class ObjectAutoCompleteField<O /* object */,I /* its id */ extends Seria
         protected void onEvent(AjaxRequestTarget target) {
             objectField.processInput();
             searchTextField.processInput();
-            target.addComponent(ObjectAutoCompleteField.this);
+            target.add(ObjectAutoCompleteField.this);
             notifyListeners(target);
             if (clearInputOnSelection) {
                 clearSearchInput();
@@ -346,7 +357,7 @@ public class ObjectAutoCompleteField<O /* object */,I /* its id */ extends Seria
         protected CharSequence getEventHandler()
         {
             return generateCallbackScript(new AppendingStringBuffer("wicketAjaxPost('").append(
-                    getCallbackUrl(false)).append(
+                    getCallbackUrl()).append(
                     "', wicketSerialize(Wicket.$('" + searchTextField.getMarkupId() + "')) + " +
                             "wicketSerialize(Wicket.$('" + objectField.getMarkupId() + "'))"));
         }
