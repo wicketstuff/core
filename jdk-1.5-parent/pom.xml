@@ -39,6 +39,7 @@
 		<module>maven-support</module>
 		<module>mbeanview-parent</module>
 		<module>minis-parent</module>
+		<module>modalx-parent</module>
 		<module>mootools-meiomask-parent</module>
 		<module>multi-text-input-parent</module>
 		<module>objectautocomplete-parent</module>
