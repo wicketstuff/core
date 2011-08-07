@@ -62,6 +62,7 @@
 		<module>theme-parent</module>
 		<module>jasperreports-parent</module>
 		<module>dojo-parent</module>
+		<module>modalx-parent</module>
 	  </modules>
 
 	<build>
