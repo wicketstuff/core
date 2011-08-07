@@ -6,11 +6,11 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.PropertyModel;
+import org.wicketstuff.modalx.IWindowCloseListener;
+import org.wicketstuff.modalx.MessageBox;
+import org.wicketstuff.modalx.ModalFormPanel;
+import org.wicketstuff.modalx.optional.ModalXPage;
 
-import com.sas.ui.wicket.modal.IWindowCloseListener;
-import com.sas.ui.wicket.modal.MessageBox;
-import com.sas.ui.wicket.modal.ModalFormPanel;
-import com.sas.ui.wicket.modal.optional.ModalXPage;
 
 /**
  * Homepage - derive from convenience class ModalXPage

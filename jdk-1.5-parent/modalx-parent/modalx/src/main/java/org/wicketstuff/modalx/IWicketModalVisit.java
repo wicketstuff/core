@@ -4,16 +4,15 @@
 // -[Copyright]-
 
 /**
- * © 2006, 2009. Step Ahead Software Pty Ltd. All rights reserved.
+ * ï¿½ 2006, 2009. Step Ahead Software Pty Ltd. All rights reserved.
  * 
  * Source file created and managed by Javelin (TM) Step Ahead Software.
  * To maintain code and model synchronization you may directly edit code in method bodies
  * and any sections starting with the 'Keep_*' marker. Make all other changes via Javelin.
  * See http://stepaheadsoftware.com for more details.
  */
-package com.sas.ui.wicket.modal;
+package org.wicketstuff.modalx;
 
-import java.lang.*;
 
 
 // -[KeepBeforeClass]-

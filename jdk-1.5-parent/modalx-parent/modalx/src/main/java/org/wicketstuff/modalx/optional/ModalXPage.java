@@ -4,27 +4,27 @@
 // -[Copyright]-
 
 /**
- * © 2006, 2009. Step Ahead Software Pty Ltd. All rights reserved.
+ * ï¿½ 2006, 2009. Step Ahead Software Pty Ltd. All rights reserved.
  * 
  * Source file created and managed by Javelin (TM) Step Ahead Software.
  * To maintain code and model synchronization you may directly edit code in method bodies
  * and any sections starting with the 'Keep_*' marker. Make all other changes via Javelin.
  * See http://stepaheadsoftware.com for more details.
  */
-package com.sas.ui.wicket.modal.optional;
+package org.wicketstuff.modalx.optional;
 
 import java.lang.*;
-import com.sas.ui.wicket.modal.ModalMgr;
 import org.apache.wicket.markup.html.WebPage;
     
-import com.sas.ui.wicket.modal.IWicketModalVisit;
     
-import com.sas.ui.wicket.modal.ModalContentWindow;
 
 
 // -[KeepBeforeClass]-
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.util.string.StringValueConversionException;
+import org.wicketstuff.modalx.IWicketModalVisit;
+import org.wicketstuff.modalx.ModalContentWindow;
+import org.wicketstuff.modalx.ModalMgr;
 
 
 // -[Class]-

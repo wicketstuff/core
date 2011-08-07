@@ -1,4 +1,4 @@
-package com.sas.ui.modal.example;
+package org.wicketstuff.modalx.example;
 
 import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Server;

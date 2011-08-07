@@ -1,4 +1,4 @@
-package com.sas.ui.modal.example;
+package org.wicketstuff.modalx.example;
 
 import junit.framework.TestCase;
 import org.apache.wicket.util.tester.WicketTester;

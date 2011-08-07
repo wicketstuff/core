@@ -4,33 +4,20 @@
 // -[Copyright]-
 
 /**
- * © 2006, 2009. Step Ahead Software Pty Ltd. All rights reserved.
+ * ï¿½ 2006, 2009. Step Ahead Software Pty Ltd. All rights reserved.
  * 
  * Source file created and managed by Javelin (TM) Step Ahead Software.
  * To maintain code and model synchronization you may directly edit code in method bodies
  * and any sections starting with the 'Keep_*' marker. Make all other changes via Javelin.
  * See http://stepaheadsoftware.com for more details.
  */
-package com.sas.ui.wicket.modal;
+package org.wicketstuff.modalx;
 
-import com.sas.ui.wicket.modal.ModalContentPanel;
     
-import org.apache.wicket.markup.html.form.Form;
-
-// [Added by Code Injection Wizard: Log4J Logging Support]
-// Do not edit code injected by the wizard directly in the source file as
-// as it will be overwritten during subsequent updates. 
 import org.apache.log4j.Logger;
-
-
-// -[KeepBeforeClass]-
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.MarkupContainer;
-
-import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.Form;
 
 
 

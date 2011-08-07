@@ -5,11 +5,11 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.wicketstuff.modalx.IWindowCloseListener;
+import org.wicketstuff.modalx.MessageBox;
+import org.wicketstuff.modalx.ModalContentWindow;
+import org.wicketstuff.modalx.ModalFormPanel;
 
-import com.sas.ui.wicket.modal.IWindowCloseListener;
-import com.sas.ui.wicket.modal.MessageBox;
-import com.sas.ui.wicket.modal.ModalContentWindow;
-import com.sas.ui.wicket.modal.ModalFormPanel;
 
 /**
  * Created by IntelliJ IDEA.
