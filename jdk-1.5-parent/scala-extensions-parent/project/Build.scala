@@ -63,6 +63,7 @@ object WicketScalaParent extends Build
 			resolvers += "Apache Snapshots" at "http://repository.apache.org/snapshots",
 
 			libraryDependencies ++= Seq(
+				ScalaTestDep,
 				Specs1Dep,
 				ScalaCheckDep,
 				JUnitDep,
