@@ -19,7 +19,7 @@ import org.apache.wicket.util.string.StringValueConversionException;
 import org.wicketstuff.modalx.IWicketModalVisit;
 import org.wicketstuff.modalx.ModalContentWindow;
 import org.wicketstuff.modalx.ModalMgr;
-
+import org.apache.wicket.markup.html.form.Form;
 
 // -[Class]-
 
@@ -82,10 +82,12 @@ public ModalXPage(final PageParameters iParameters)
 	
 	for (int m = 0; m < MAX_MODALS; m++)
 	{
+		Form form = new Form("wrapperForm_" + m);
+		add(form);
 		ModalContentWindow modalWindow = new ModalContentWindow(this, "modalWindow_" + m, true);
 		modalWindow.setInitialWidth(600);
 		modalWindow.setInitialHeight(400);
-		add(modalWindow);
+		form.add(modalWindow);
 		modalContentWindows[m] = modalWindow;
 	}
 }
