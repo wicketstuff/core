@@ -340,14 +340,210 @@ var getFirstChild = function(parent, tagName) {
 	return null;
 }
 
+InMethod.CookieManager = Wicket.Class.create();
+
+InMethod.CookieManager.prototype = {
+		
+		cookieKey : "wicket-inmethod-grid-columns-state",
+
+		grid : null,
+		
+		initialize: function(grid){
+			
+			this.grid = grid;
+			
+			this.columns = this.getValues();
+			
+			if (this.columns.length > 0){
+
+				this.updateWidths();
+				this.updatePositions();
+				
+			}
+		},
+		
+		columns : null,
+
+		
+		/**
+		 *	Returns the specific piece of cookie for the grid 
+		 */
+		findGridString: function(remove) {
+			
+			var cookie = Wicket.Cookie.get(this.cookieKey);
+			
+			var entries = cookie != null ? cookie.split("|") : new Array();
+			
+			for (var i = 0; i < entries.length; ++i) {
+				if (entries[i].indexOf(this.grid.cookieId + "::") == 0) {
+					var string = entries[i];
+					if (remove) {
+						entries.splice(i, 1);					
+						Wicket.Cookie.set(this.cookieKey, entries.join("|"), this.cookieExp);
+											
+					}
+					return string;
+				}
+			}
+			return null;
+		},
+		
+		/**
+		 * Returns an array of objects with columns's values;  
+		 * 
+		 * @author Felipe Fedel Pinto
+		 */
+		getValues: function(){
+			var string = this.findGridString(false);
+			var columns =  new Array();
+			if (string != null) {
+				var array = string.split("::");
+				var aux = array[1].split(";");
+				
+				for (var i = 0; i < aux.length; i++){
+					
+					var values = aux[i].split(",");
+					
+					var column = new Object();
+					
+					column["id"] = values[0];
+					column["width"] = values[1];
+					columns.push(column);
+				}
+				return columns;
+			}
+			
+			return new Array();
+		},
+		
+		/**
+		 * Updates the columns' position based on cookie value
+		 * 
+		 * @author Felipe Fedel Pinto
+		 */
+		updatePositions : function(){
+			
+			for (var i = 0; i < this.columns.length; i++) {
+			
+				var gridColumns = getChildren(this.grid.getColumnsRow(), "TH");
+				
+				var columnToMoveIndex = 0;
+				
+				for (var j = 0; j < gridColumns.length; j++){
+					
+					if(this.columns[i].id == gridColumns[j].imxtId){
+						
+						columnToMoveIndex = j;
+						break;
+					}
+					
+				}
+				var delta = i - columnToMoveIndex;
+
+				if(delta < 0 || delta > 0){
+					this.grid.moveColumn(gridColumns[columnToMoveIndex], delta);
+				}
+			}
+				
+		},
+		
+		getWidth : function (columnId){
+			
+			for(var i = 0; i < this.columns.length; i++){
+				if (this.columns[i].id == columnId){
+					return this.columns[i]["width"];
+				}
+			}
+			
+			return 0;
+			
+		},
+
+		/**
+		 * Update the columns' width based on cookie value
+		 * 
+		 * @author Felipe Fedel Pinto
+		 */
+		updateWidths : function (){
+			
+			if(this.columns.length > 0){
+			
+				var gridColumns = getChildren(this.grid.getColumnsRow(), "TH");
+				
+				for(var i = 0; i < gridColumns.length; i++ ){
+					
+					var column = gridColumns[i];
+					while (column.tagName != "TH") {
+						column = column.parentNode;
+					}
+					
+					if(column.imxtId){
+						
+						var width = this.getWidth(gridColumns[i].imxtId);
+						column.style.width = width + "px";
+					}
+				}
+			
+			}
+			
+		},
+		
+		
+		/**
+		 * Save the new columns' state in cookie 
+		 * 
+		 * @author Felipe Fedel Pinto
+		 */
+		saveState : function (){
+			
+			this.findGridString(true);
+			
+			var columnState = this.grid.getColumnState();
+			
+			var cookie = this.grid.cookieId;
+			cookie += "::";
+			
+			var columns = columnState.split(";");
+			
+			var trashIndex = columns.length-2;
+			
+			columns.splice(trashIndex,2);
+			
+			cookie += columns.join(";");
+			
+			var rest = Wicket.Cookie.get(this.cookieKey);
+			
+			if (rest != null && rest != "") {
+				cookie += "|" + rest;
+			}
+			Wicket.Cookie.set(this.cookieKey, cookie, this.cookieExp);	
+			
+		}
+		
+}
+
+
 InMethod.XTable = Wicket.Class.create();
 
 InMethod.XTable.prototype = {
 	
-	initialize: function(id, columnsData, columnsStateCallback) {			
+	cookieId : null,
+		
+	cookieManager : null,	
+		
+	initialize: function(id, cookieId, columnsData, columnsStateCallback) {			
 		this.id = id;			
 		
+		if (cookieId.length > 0)
+			this.cookieId = cookieId;
+		
 		this.initColumns(columnsData);				
+		
+		if(this.cookieId != null){
+			if (this.cookieManager == null){
+				this.cookieManager = new InMethod.CookieManager(this);
+			}
+		}
 		
 		this.attachEventHandlers();
 		this.prevColumnWidths = null;					
@@ -893,7 +1089,10 @@ InMethod.XTable.prototype = {
 			window.setTimeout(this.updatePrelight.bind(this), 100);
 		else
 			this.updatePrelight();
-			
+		
+		if(this.cookieId != null)
+			this.cookieManager.saveState();
+		
 		this.updateInternal();
 		this.submitColumnState();
 	},
@@ -1081,6 +1280,9 @@ InMethod.XTable.prototype = {
 		this.hideArrows();
 		this.hideDragProxy();
 		this.updatePrelight();		
+		
+		if(this.cookieId != null)
+			this.cookieManager.saveState();
 		
 		if (submitState) {
 		 	this.submitColumnState();
@@ -1566,14 +1768,14 @@ InMethod.XTableManager.prototype = {
 		};
 	},
 	
-	register: function(id, columnsData, columnsStateCallback) {
+	register: function(id, cookieId, columnsData, columnsStateCallback) {
 		var existing = this.current[id];
 		if (existing == null) {
-			existing = new InMethod.XTable(id, columnsData, columnsStateCallback);
+			existing = new InMethod.XTable(id, cookieId, columnsData, columnsStateCallback);
 			this.current[id] = existing;
 		} else {
 			// update existing
-			existing.initialize(id, columnsData, columnsStateCallback);
+			existing.initialize(id, cookieId, columnsData, columnsStateCallback);
 		}
 	},
 	
@@ -1678,3 +1880,41 @@ InMethod.editKeyPress = function(element, event) {
 	}	
 };
 })();
+
+/**
+ * Convenience methods for getting and setting cookie values.
+ */
+Wicket.Cookie = {	
+
+	/**
+	 * Returns the value for cookie of given name.
+	 * @param {String} name - name of cookie
+	 */
+	get: function(name) {
+		if (document.cookie.length > 0) {
+			var start = document.cookie.indexOf (name + "=");
+  			if (start != -1) { 
+				start = start + name.length + 1;
+				end = document.cookie.indexOf(";", start);
+				if (end == -1) { 
+					end = document.cookie.length;
+				}
+				return unescape(document.cookie.substring(start,end))
+			}
+  		} else {
+			return null
+		}
+	},
+
+	/**
+	 * Sets the value for cookie of given name.
+	 * @param {Object} name - name of cookie
+	 * @param {Object} value - new value
+	 * @param {Object} expiredays - how long will the cookie be persisted
+	 */
+	set: function(name, value, expiredays) {
+		var exdate = new Date();
+		exdate.setDate(exdate.getDate() + expiredays);
+		document.cookie = name + "=" + escape(value) + ((expiredays==null) ? "" : ";expires="+exdate);
+	}
+};

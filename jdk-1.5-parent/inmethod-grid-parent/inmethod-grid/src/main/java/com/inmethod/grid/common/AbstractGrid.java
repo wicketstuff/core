@@ -467,7 +467,41 @@ public abstract class AbstractGrid<M, I> extends Panel
 	{
 		target.add(this);
 	}
-
+	
+	
+	private String cookieName = "";
+	
+	
+	/**
+	 * Sets the name of the cookie that is used to remember columns' state.
+	 * 
+	 * @param cookieName
+	 *            Name of the cookie
+	 * @return this
+	 */
+	public AbstractGrid<M, I> setCookieName(String cookieName){
+		
+		if ((cookieName != null) && cookieName.contains(",") && cookieName.contains("|") 
+				&& cookieName.contains(";") )
+		{
+			throw new IllegalArgumentException("Cookie name may not contain ',', ';' or '|' characters.");
+		}
+		
+		this.cookieName = cookieName;
+		
+		return this;
+	}
+	
+	
+	/**
+	 * Returns the name of cookie that is used to remember columns' state.
+	 * 
+	 * @return Name of the cookie
+	 */
+	public String getCookieName(){
+		return this.cookieName;
+	}
+	
 	/**
 	 * Generates the javascript required to initialize the client state for this grid instance.
 	 * Called after every grid render.
@@ -509,7 +543,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 
 		// initialization
 		sb.append("InMethod.XTableManager.instance.register(\"" + getMarkupId() +
-			"\", columns, submitStateCallback);\n");
+			"\", \"" + getCookieName() + "\", columns, submitStateCallback);\n");
 		sb.append("})();\n");
 
 		return sb.toString();
