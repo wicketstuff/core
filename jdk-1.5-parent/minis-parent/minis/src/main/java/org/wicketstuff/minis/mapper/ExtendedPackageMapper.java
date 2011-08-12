@@ -90,9 +90,9 @@ public class ExtendedPackageMapper extends AbstractMapper {
 	public Url mapHandler(IRequestHandler requestHandler) {
 		Url url = mountedMapper.mapHandler(requestHandler);
 
-		List<String> newUrlSegments = new ArrayList<String>(
-				mountedSegments.length);
 		if (url != null) {
+			List<String> newUrlSegments = new ArrayList<String>(
+					mountedSegments.length);
 			for (String segment : mountedSegments) {
 				String newSegment = segment;
 				String placeholder = getPlaceholder(segment);
