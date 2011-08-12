@@ -17,7 +17,9 @@ import org.apache.wicket.util.lang.PackageName;
 
 /**
  * <p>
- * Extended PackageMapper with Named Parameter and HomePage support.
+ * Extended PackageMapper with Named Parameter and HomePage support. Remember to
+ * add this mapper before anyone else, so it will have low priority against
+ * top-level, more important mappers.
  * </p>
  * 
  * <p>
@@ -39,8 +41,8 @@ import org.apache.wicket.util.lang.PackageName;
  * <ul>
  * <li>http://localhost:8080/john/static/admin -> renders Profile page</li>
  * <li>http://localhost:8080/john/static/admin/Profile -> renders Profile page</li>
- * <li>http://localhost:8080/john/static/admin/Groups -> renders Groups page present in
- * same package as <code>Profile</code></li>
+ * <li>http://localhost:8080/john/static/admin/Groups -> renders Groups page
+ * present in same package as <code>Profile</code></li>
  * </ul>
  * Parameters can be accessed as usual (PageParameters in constructor, for
  * example)
@@ -206,8 +208,48 @@ public class ExtendedPackageMapper extends AbstractMapper {
 		}
 	}
 
+	/**
+	 * Scores the compatibility of Request with this Mapper.
+	 * 
+	 * <ul>
+	 * <li>+1 for segments count equals mountedSegments+1 (page referenced)</li>
+	 * <li>+1 for segments count equals mountedSegments</li>
+	 * <li>+2+(score/2) for static segments</li>
+	 * </ul>
+	 */
 	public int getCompatibilityScore(Request request) {
-		return 0;
+		Url url = request.getUrl();
+		int score = 0;
+
+		List<String> urlSegs = url.getSegments();
+		int segmentsCount = urlSegs.size();
+
+		// path + Page
+		if (segmentsCount == mountedSegments.length + 1) {
+			score++;
+		}
+
+		// only path
+		if (segmentsCount == mountedSegments.length) {
+			score++;
+		}
+
+		// for each static segment matched, it will get 2 score + (scores / 2)
+		for (int i = 0; i < mountedSegments.length; i++) {
+			if (i == segmentsCount) {
+				break;
+			}
+
+			String mountedSegment = mountedSegments[i];
+			String urlSegment = urlSegs.get(i);
+			if (getPlaceholder(mountedSegment) == null
+					&& mountedSegment.equals(urlSegment)) {
+				// static
+				score = 2 + score + (score / 2);
+			}
+		}
+
+		return score;
 	}
 
 }
