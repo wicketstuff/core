@@ -294,12 +294,15 @@ class RenderersList implements Serializable
 	 * @return {@link org.wicketstuff.minis.behavior.apanel.IComponentRenderer} for specified
 	 *         component class
 	 */
-	@SuppressWarnings({ "unchecked" })
 	IComponentRenderer<Component> findRendererForClass(final Class<? extends Component> aClass)
 	{
 		for (final IComponentRenderer<?> componentRenderer : renderers)
 			if (componentRenderer.getComponentClass().isAssignableFrom(aClass))
-				return (IComponentRenderer<Component>)componentRenderer;
+			{
+				@SuppressWarnings("unchecked")
+				IComponentRenderer<Component> result = (IComponentRenderer<Component>)componentRenderer;
+				return result;
+			}
 		throw new WicketRuntimeException("Can't find renderer for class " + aClass);
 	}
 }
