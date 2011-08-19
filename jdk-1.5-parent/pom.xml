@@ -20,7 +20,7 @@
 
 	<modules>
 		<module>annotation</module>
-		<module>browserid</module>
+		<module>browserid-parent</module>
 		<module>calendarviews-parent</module>
 		<module>client-and-server-validation</module>
 		<module>console-parent</module>

@@ -9,7 +9,6 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<groupId>org.wicketstuff</groupId>
 	<artifactId>browserid</artifactId>
 	<name>BrowserId</name>
 	<description>An integration of Mozilla's BrowserId with Apache Wicket</description>
