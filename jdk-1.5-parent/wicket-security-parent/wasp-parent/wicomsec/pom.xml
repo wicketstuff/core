@@ -26,4 +26,11 @@
 	<packaging>jar</packaging>
 	<name>Wicket Common Security</name>
 	<description>Library of common security related classes</description>
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-util</artifactId>
+			<type>test-jar</type>
+		</dependency>
+	</dependencies>
 </project>
