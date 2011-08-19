@@ -4,3 +4,4 @@ target/
 .classpath
 *.i[mpw][lrs]
 META-INF
+.scala_dependencies
