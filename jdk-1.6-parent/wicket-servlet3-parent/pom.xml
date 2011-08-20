@@ -10,7 +10,7 @@
         <version>1.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>wicket-servlet3-parent</artifactId>
+    <artifactId>wicketstuff-servlet3-parent</artifactId>
     <packaging>pom</packaging>
 
     <name>Wicket Servlet3 :: Parent</name>
