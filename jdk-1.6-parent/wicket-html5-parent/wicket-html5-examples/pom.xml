@@ -6,11 +6,11 @@
 
 	<parent>
 		<groupId>org.wicketstuff</groupId>
-		<artifactId>wicket-html5-parent</artifactId>
+		<artifactId>wicketstuff-html5-parent</artifactId>
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>wicket-html5-examples</artifactId>
+	<artifactId>wicketstuff-html5-examples</artifactId>
 	<packaging>war</packaging>
 
 	<name>Wicket HTML5 :: Wicket-HTML5 Examples</name>
