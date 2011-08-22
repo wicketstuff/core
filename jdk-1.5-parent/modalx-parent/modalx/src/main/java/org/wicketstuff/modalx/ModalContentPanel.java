@@ -38,6 +38,10 @@ class ModalContentPanel extends Panel
 
 
 
+private static final long serialVersionUID = 1L;
+
+
+
 /**
  * The title to be shown in the ModalContentWindow's caption.
  */
@@ -151,6 +155,8 @@ public void show(AjaxRequestTarget target)
 		(
 			new ModalContentWindow.WindowClosedCallback()
 			{
+				private static final long serialVersionUID = 1L;
+
 				public void onClose(AjaxRequestTarget target)
 				{
 					ModalMgr modalMgr = modalContentWindow.getModalMgr();
@@ -168,6 +174,8 @@ public void show(AjaxRequestTarget target)
 		(
 			new ModalContentWindow.WindowClosedCallback()
 			{
+				private static final long serialVersionUID = 1L;
+
 				public void onClose(AjaxRequestTarget target)
 				{
 					ModalMgr modalMgr = modalContentWindow.getModalMgr();

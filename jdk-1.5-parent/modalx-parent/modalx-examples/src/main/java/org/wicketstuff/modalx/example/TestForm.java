@@ -21,7 +21,8 @@ import org.wicketstuff.modalx.ModalFormPanel;
 
 public class TestForm extends ModalFormPanel
 {
-    protected Person person;
+    private static final long serialVersionUID = 1L;
+	protected Person person;
 
 	/**
 	 * Constructs the object
@@ -49,6 +50,8 @@ public class TestForm extends ModalFormPanel
 
 		form.add(new AjaxLink<Void>("showMsgBox")
 		{
+			private static final long serialVersionUID = 1L;
+
 			public void onClick(AjaxRequestTarget target)
 			{
 				MessageBox.show
@@ -61,6 +64,8 @@ public class TestForm extends ModalFormPanel
 		});
 		form.add(new AjaxLink<Void>("showFormDefSource")
 		{
+			private static final long serialVersionUID = 1L;
+
 			public void onClick(AjaxRequestTarget target)
 			{
 				MessageBox.show
@@ -89,6 +94,8 @@ public class TestForm extends ModalFormPanel
 
 		form.add(new AjaxLink<Void>("showFormOpenSource")
 		{
+			private static final long serialVersionUID = 1L;
+
 			public void onClick(AjaxRequestTarget target)
 			{
 				MessageBox.show

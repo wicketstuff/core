@@ -28,7 +28,9 @@ import org.apache.wicket.request.resource.ResourceReference;
  * @author Chris Colman
  */
 public class ModalContentWindow extends ModalWindow {
-    // -[KeepWithinClass]-
+    private static final long serialVersionUID = 1L;
+
+	// -[KeepWithinClass]-
     public static ResourceReference CSS = new PackageResourceReference(
             ModalContentWindow.class, "css/modalx/ModalX.css");
 

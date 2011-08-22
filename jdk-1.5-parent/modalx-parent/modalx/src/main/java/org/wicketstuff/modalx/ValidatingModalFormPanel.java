@@ -41,6 +41,7 @@ class ValidatingModalFormPanel extends ModalFormPanel
 
 
 
+private static final long serialVersionUID = 1L;
 /**
  * Stores form components.
  */

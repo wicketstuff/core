@@ -42,6 +42,7 @@ import org.apache.wicket.markup.html.form.Button;
 public 
 class MessageBox extends ModalFormPanel
 {
+private static final long serialVersionUID = 1L;
 // -[KeepWithinClass]-
 public static final int MB_OK = 0;
 public static final int MB_OK_CANCEL = 1;
@@ -115,6 +116,8 @@ public void addControlComponents()
 		Button button = new Button("ok");
 		button.add(new AjaxEventBehavior("onclick")
 		{
+			private static final long serialVersionUID = 1L;
+
 			protected void onEvent(AjaxRequestTarget target)
 			{
 				setModalResult(MessageBox.MR_OK);
@@ -138,6 +141,8 @@ public void addControlComponents()
 		Button button = new Button("yes");
 		button.add(new AjaxEventBehavior("onclick")
 		{
+			private static final long serialVersionUID = 1L;
+
 			protected void onEvent(AjaxRequestTarget target)
 			{
 				setModalResult(MessageBox.MR_YES);
@@ -151,6 +156,8 @@ public void addControlComponents()
 		button = new Button("no");
 		button.add(new AjaxEventBehavior("onclick")
 		{
+			private static final long serialVersionUID = 1L;
+
 			protected void onEvent(AjaxRequestTarget target)
 			{
 				setModalResult(MessageBox.MR_NO);
@@ -178,6 +185,8 @@ public void addControlComponents()
 		Button button = new Button("cancel");
 		button.add(new AjaxEventBehavior("onclick")
 		{
+			private static final long serialVersionUID = 1L;
+
 			protected void onEvent(AjaxRequestTarget target)
 			{
 				setModalResult(MessageBox.MR_CANCEL);
