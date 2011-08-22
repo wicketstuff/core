@@ -14,7 +14,9 @@ import org.apache.wicket.request.resource.ResourceReference;
  */
 public class GuestPanel extends Panel {
 
-    private static final String BROWSER_ID_JS = "https://browserid.org/include.js";
+    private static final long serialVersionUID = 1L;
+
+	private static final String BROWSER_ID_JS = "https://browserid.org/include.js";
 
     private static final ResourceReference RED_ICON = new PackageResourceReference(GuestPanel.class, "sign_in_red.png");
     private static final ResourceReference BLUE_ICON = new PackageResourceReference(GuestPanel.class, "sign_in_blue.png");
@@ -44,7 +46,9 @@ public class GuestPanel extends Panel {
         Component signInImage = createSignInButton("signInImage");
         signInImage.add(new VerifyBehavior() {
 
-            @Override
+            private static final long serialVersionUID = 1L;
+
+			@Override
             protected void onSuccess(AjaxRequestTarget target) {
                 GuestPanel.this.onSuccess(target);
             }

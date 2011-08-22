@@ -11,6 +11,8 @@ import org.apache.wicket.util.lang.Args;
 public class SessionHelper {
 
     private static final MetaDataKey<BrowserId> KEY = new MetaDataKey<BrowserId>() {
+
+		private static final long serialVersionUID = 1L;
     };
 
     /**

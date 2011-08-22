@@ -8,7 +8,9 @@ import org.apache.wicket.model.PropertyModel;
 
 public class LoggedInPanel extends Panel {
 
-    public LoggedInPanel(String id) {
+    private static final long serialVersionUID = 1L;
+
+	public LoggedInPanel(String id) {
         super(id);
 
         BrowserId browserId = SessionHelper.getBrowserId(getSession());
@@ -19,7 +21,9 @@ public class LoggedInPanel extends Panel {
         add(new Label("emailLabel", new PropertyModel<String>(browserId, "email")));
         add(new AjaxLink<Void>("logoutLink") {
 
-            @Override
+            private static final long serialVersionUID = 1L;
+
+			@Override
             public void onClick(AjaxRequestTarget target) {
                 SessionHelper.logOut(getSession());
                 onLoggedOut(target);

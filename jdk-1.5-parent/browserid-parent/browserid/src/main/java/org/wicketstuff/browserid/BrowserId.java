@@ -10,7 +10,9 @@ import org.apache.wicket.util.string.Strings;
  */
 public class BrowserId implements Serializable {
 
-    public enum Status {
+    private static final long serialVersionUID = 1L;
+
+	public enum Status {
         OK,
         FAIL;
 

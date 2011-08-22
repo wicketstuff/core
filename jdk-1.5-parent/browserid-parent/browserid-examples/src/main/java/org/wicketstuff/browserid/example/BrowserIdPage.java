@@ -12,7 +12,9 @@ import org.wicketstuff.browserid.GuestPanel.Style;
  */
 public class BrowserIdPage extends WebPage {
 
-    public BrowserIdPage(final PageParameters parameters) {
+    private static final long serialVersionUID = 1L;
+
+	public BrowserIdPage(final PageParameters parameters) {
         super(parameters);
 
         add(new BrowserIdPanel("browserId", Style.GREEN));

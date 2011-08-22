@@ -27,7 +27,9 @@ import org.wicketstuff.browserid.BrowserId.Status;
  */
 public abstract class VerifyBehavior extends AbstractDefaultAjaxBehavior {
 
-    @Override
+    private static final long serialVersionUID = 1L;
+
+	@Override
     public void renderHead(final Component component, final IHeaderResponse response) {
         component.setOutputMarkupId(true);
         super.renderHead(component, response);

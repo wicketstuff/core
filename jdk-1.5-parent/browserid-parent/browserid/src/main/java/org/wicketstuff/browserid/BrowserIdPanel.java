@@ -12,7 +12,9 @@ import org.wicketstuff.browserid.GuestPanel.Style;
  */
 public class BrowserIdPanel extends Panel {
 
-    private static final String CONTENT_ID = "content";
+    private static final long serialVersionUID = 1L;
+
+	private static final String CONTENT_ID = "content";
 
     /**
      * The style of the default "Sign In" image button
@@ -47,7 +49,9 @@ public class BrowserIdPanel extends Panel {
     protected Component getGuestPanel(String componentId) {
         return new GuestPanel(componentId, style) {
 
-            @Override
+            private static final long serialVersionUID = 1L;
+
+			@Override
             protected void onSuccess(AjaxRequestTarget target) {
                 super.onSuccess(target);
 
@@ -67,7 +71,9 @@ public class BrowserIdPanel extends Panel {
     protected Component getLoggedInPanel(String componentId) {
         return new LoggedInPanel(componentId) {
 
-            @Override
+            private static final long serialVersionUID = 1L;
+
+			@Override
             protected void onLoggedOut(AjaxRequestTarget target) {
                 super.onLoggedOut(target);
                 target.add(BrowserIdPanel.this);
