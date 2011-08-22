@@ -29,7 +29,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket-util</artifactId>
+			<artifactId>wicket</artifactId>
 			<type>test-jar</type>
 		</dependency>
 	</dependencies>
