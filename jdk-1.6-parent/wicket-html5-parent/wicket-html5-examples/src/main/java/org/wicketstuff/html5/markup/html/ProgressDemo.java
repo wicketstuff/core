@@ -10,7 +10,9 @@ import org.wicketstuff.html5.BasePage;
 
 public class ProgressDemo extends BasePage {
 
-    private final int max = 200;
+    private static final long serialVersionUID = 1L;
+
+	private final int max = 200;
 
     private int current = 0;
 
@@ -23,7 +25,9 @@ public class ProgressDemo extends BasePage {
 
         progress.add(new AjaxSelfUpdatingTimerBehavior(Duration.seconds(1)) {
 
-            @Override
+            private static final long serialVersionUID = 1L;
+
+			@Override
             protected void onPostProcessTarget(final AjaxRequestTarget target)
             {
                 current += 10;

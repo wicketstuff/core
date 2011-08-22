@@ -12,7 +12,9 @@ import org.apache.wicket.model.IModel;
  */
 public class Progress extends WebMarkupContainer {
 
-    /**
+    private static final long serialVersionUID = 1L;
+
+	/**
      * The maximum allowed value for the progress.
      * <p>Only positive numbers are allowed.</p>
      */

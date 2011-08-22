@@ -92,6 +92,8 @@ public class ListenerExamplePage extends BaseExamplePage<Car, Integer>
 	{
 		return new AutoCompletionChoicesProvider<Car>()
 		{
+			private static final long serialVersionUID = 1L;
+
 			public Iterator<Car> getChoices(String input)
 			{
 				List<Car> ret = new ArrayList<Car>();
