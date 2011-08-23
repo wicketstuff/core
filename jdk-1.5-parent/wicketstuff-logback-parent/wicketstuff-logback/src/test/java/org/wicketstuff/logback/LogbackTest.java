@@ -53,8 +53,8 @@ public class LogbackTest
 		servletTester = new ServletTester();
 		servletTester.getContext().setInitParameter(LogbackConfigListener.CONFIG_LOCATION_PARAM,
 			LogbackConfigListener.LOCATION_PREFIX_CLASSPATH + "logback-custom-config.xml");
-		servletTester.getContext().setInitParameter(LogbackConfigListener.CONFIG_CONTEXT_PATH_KEY_PARAM,
-			"contextPath");
+		servletTester.getContext().setInitParameter(
+			LogbackConfigListener.CONFIG_CONTEXT_PATH_KEY_PARAM, "contextPath");
 		servletTester.setContextPath(contextPath);
 		servletTester.addEventListener(new LogbackConfigListener());
 

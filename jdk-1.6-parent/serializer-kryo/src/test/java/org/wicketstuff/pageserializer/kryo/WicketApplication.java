@@ -24,12 +24,14 @@ public class WicketApplication extends WebApplication
 	{
 		super.init();
 
-		getFrameworkSettings().setSerializer(new KryoSerializer(Bytes.bytes(500)) {
+		getFrameworkSettings().setSerializer(new KryoSerializer(Bytes.bytes(500))
+		{
 
-		    @Override
-		    protected Kryo createKryo() {
-		        return new DebuggingKryo()/*.blacklist(Some.class)*/;
-		    }
+			@Override
+			protected Kryo createKryo()
+			{
+				return new DebuggingKryo()/* .blacklist(Some.class) */;
+			}
 		});
 	}
 }

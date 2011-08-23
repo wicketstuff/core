@@ -74,34 +74,40 @@ public class KryoSerializer implements ISerializer
 		internalInit(kryo);
 	}
 
-	protected Kryo createKryo() {
-	    return new KryoReflectionFactorySupport();
+	protected Kryo createKryo()
+	{
+		return new KryoReflectionFactorySupport();
 	}
 
+	@Override
 	public byte[] serialize(final Object object)
 	{
 		LOG.debug("Going to serialize: '{}'", object);
 		ByteBuffer buffer = getBuffer(object);
 		kryo.writeClassAndObject(buffer, object);
 		byte[] data;
-		if (buffer.hasArray()) {
-		    data = new byte[buffer.position()];
-		    buffer.flip();
-		    buffer.get(data);
-		} else {
-		    LOG.error("Kryo wasn't able to serialize: '{}'", object);
-		    data = null;
+		if (buffer.hasArray())
+		{
+			data = new byte[buffer.position()];
+			buffer.flip();
+			buffer.get(data);
 		}
-	
+		else
+		{
+			LOG.error("Kryo wasn't able to serialize: '{}'", object);
+			data = null;
+		}
+
 		// release the memory for the buffer
 		buffer.clear();
-        buffer = null;
-        System.runFinalization();
-		
-        return data;
-	}	
+		buffer = null;
+		System.runFinalization();
 
-    public Object deserialize(byte[] data)
+		return data;
+	}
+
+	@Override
+	public Object deserialize(byte[] data)
 	{
 		ByteBuffer buffer = ByteBuffer.wrap(data);
 		Object object = kryo.readClassAndObject(buffer);
@@ -115,14 +121,14 @@ public class KryoSerializer implements ISerializer
 		return object;
 	}
 
-    /**
-     * Creates the buffer that will be used to serialize the {@code target}
-     * 
-     * @param target
-     *      the object that will be serialized. Can be used to decide dynamically what size to use
-     * @return
-     *      the buffer that will be used to serialize the {@code target}
-     */
+	/**
+	 * Creates the buffer that will be used to serialize the {@code target}
+	 * 
+	 * @param target
+	 *            the object that will be serialized. Can be used to decide dynamically what size to
+	 *            use
+	 * @return the buffer that will be used to serialize the {@code target}
+	 */
 	protected ByteBuffer getBuffer(Object target)
 	{
 		return ByteBuffer.allocate((int)bufferSize.bytes());

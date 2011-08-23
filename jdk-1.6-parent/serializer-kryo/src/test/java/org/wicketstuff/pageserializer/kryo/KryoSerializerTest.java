@@ -29,7 +29,7 @@ public class KryoSerializerTest
 	@Test
 	public void homepageRendersSuccessfully()
 	{
-	    // start and render the test page
+		// start and render the test page
 		HomePage page = tester.startPage(HomePage.class);
 
 		// assert rendered page class

@@ -43,7 +43,7 @@ public class StoredScriptTemplateModel extends LoadableDetachableModel<ScriptTem
 	{
 		super(template);
 		this.store = store;
-		this.id = template.id;
+		id = template.id;
 	}
 
 	@Override

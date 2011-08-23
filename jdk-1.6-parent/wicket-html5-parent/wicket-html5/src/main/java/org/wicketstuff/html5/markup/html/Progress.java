@@ -7,92 +7,105 @@ import org.apache.wicket.model.IModel;
 
 /**
  * Component representing HTMLElement {@literal progress}.
- *
+ * 
  * @see https://developer.mozilla.org/en/HTML/Element/progress
  */
-public class Progress extends WebMarkupContainer {
+public class Progress extends WebMarkupContainer
+{
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	/**
-     * The maximum allowed value for the progress.
-     * <p>Only positive numbers are allowed.</p>
-     */
-    private final IModel<? extends Number> max;
+	 * The maximum allowed value for the progress.
+	 * <p>
+	 * Only positive numbers are allowed.
+	 * </p>
+	 */
+	private final IModel<? extends Number> max;
 
-    /**
-     * The current value of the progress.
-     * <p>Only positive numbers are allowed, less than the {@link #max maximum} value.</p>
-     */
-    private final IModel<? extends Number> current;
+	/**
+	 * The current value of the progress.
+	 * <p>
+	 * Only positive numbers are allowed, less than the {@link #max maximum} value.
+	 * </p>
+	 */
+	private final IModel<? extends Number> current;
 
-    /**
-     * Construct.
-     *
-     * @param id
-     *      the component id
-     * @param current
-     *      the model that brings the current value
-     * @param max
-     *      the model that brings the maximum value
-     */
-    public Progress(String id, IModel<? extends Number> current, IModel<? extends Number> max) {
-        super(id);
+	/**
+	 * Construct.
+	 * 
+	 * @param id
+	 *            the component id
+	 * @param current
+	 *            the model that brings the current value
+	 * @param max
+	 *            the model that brings the maximum value
+	 */
+	public Progress(String id, IModel<? extends Number> current, IModel<? extends Number> max)
+	{
+		super(id);
 
-        this.current = current;
-        this.max = max;
-    }
+		this.current = current;
+		this.max = max;
+	}
 
-    @Override
-    protected void onComponentTag(final ComponentTag tag) {
-        super.onComponentTag(tag);
+	@Override
+	protected void onComponentTag(final ComponentTag tag)
+	{
+		super.onComponentTag(tag);
 
-        checkComponentTag(tag, "progress");
+		checkComponentTag(tag, "progress");
 
-        tag.put("value", String.valueOf(getValue()));
-        tag.put("max", String.valueOf(getMax()));
-    }
+		tag.put("value", String.valueOf(getValue()));
+		tag.put("max", String.valueOf(getMax()));
+	}
 
-    @Override
-    public void onComponentTagBody(MarkupStream markupStream,
-            ComponentTag openTag) {
-        replaceComponentTagBody(markupStream, openTag, getBody());
-    }
+	@Override
+	public void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag)
+	{
+		replaceComponentTagBody(markupStream, openTag, getBody());
+	}
 
-    /**
-     * @return the content of the tag's body
-     */
-    protected CharSequence getBody() {
+	/**
+	 * @return the content of the tag's body
+	 */
+	protected CharSequence getBody()
+	{
 
-        double currentValue = getValue().doubleValue();
-        double maxValue = getMax().doubleValue();
+		double currentValue = getValue().doubleValue();
+		double maxValue = getMax().doubleValue();
 
-        Double percentage = maxValue == 0d ? maxValue : ((currentValue / maxValue) * 100);
-        return percentage.intValue() + " %";
-    }
+		Double percentage = maxValue == 0d ? maxValue : ((currentValue / maxValue) * 100);
+		return percentage.intValue() + " %";
+	}
 
-    private Number getValue() {
-        Number value = current.getObject();
+	private Number getValue()
+	{
+		Number value = current.getObject();
 
-        if (value == null || value.doubleValue() < 0d) {
-            value = 0d;
-        }
+		if (value == null || value.doubleValue() < 0d)
+		{
+			value = 0d;
+		}
 
-        Number max = getMax();
-        if (value.doubleValue() > max.doubleValue()) {
-            value = max;
-        }
+		Number max = getMax();
+		if (value.doubleValue() > max.doubleValue())
+		{
+			value = max;
+		}
 
-        return value;
-    }
+		return value;
+	}
 
-    private Number getMax() {
-        Number maxValue = max.getObject();
+	private Number getMax()
+	{
+		Number maxValue = max.getObject();
 
-        if (maxValue == null || maxValue.doubleValue() < 0d) {
-            maxValue = 0d;
-        }
+		if (maxValue == null || maxValue.doubleValue() < 0d)
+		{
+			maxValue = 0d;
+		}
 
-        return maxValue;
-    }
+		return maxValue;
+	}
 }

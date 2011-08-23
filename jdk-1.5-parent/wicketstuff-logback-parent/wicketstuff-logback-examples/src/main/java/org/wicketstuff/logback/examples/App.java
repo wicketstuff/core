@@ -24,7 +24,7 @@ public class App extends WebApplication
 		super.init();
 
 		getMarkupSettings().setDefaultMarkupEncoding(CharEncoding.UTF_8);
-		
+
 		mountPage("logback/config", ConfiguratorPage.class);
 	}
 

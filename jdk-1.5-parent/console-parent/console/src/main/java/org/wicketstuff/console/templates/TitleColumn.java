@@ -65,7 +65,7 @@ final class TitleColumn extends PropertyColumn<ScriptTemplate>
 		final AjaxLink<ScriptTemplate> link = new TitleLink("link", rowModel);
 		link.add(new Label("label", createLabelModel(rowModel)));
 		link.add(new AttributeAppender("title", new PropertyModel<String>(rowModel, "title")));
-		
+
 		final Fragment fragment = new Fragment(componentId, "titleFragment", tablePanel);
 		fragment.add(link);
 		item.add(fragment);

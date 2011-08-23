@@ -45,10 +45,10 @@ public class ScriptEnginePanelWithTemplates extends Panel
 		final IDataProvider<ScriptTemplate> dataProvider)
 	{
 		super(id);
-		
+
 		this.lang = lang;
 		this.dataProvider = dataProvider;
-		this.store = null;
+		store = null;
 
 		init();
 	}
@@ -58,9 +58,9 @@ public class ScriptEnginePanelWithTemplates extends Panel
 		final IScriptTemplateStore store)
 	{
 		super(id);
-		
+
 		this.lang = lang;
-		this.dataProvider = new ScriptTemplateStoreDataProvider(store, lang);
+		dataProvider = new ScriptTemplateStoreDataProvider(store, lang);
 		this.store = store;
 
 		init();

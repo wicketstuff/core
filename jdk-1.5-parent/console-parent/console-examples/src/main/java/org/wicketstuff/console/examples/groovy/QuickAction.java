@@ -39,7 +39,7 @@ class QuickAction extends Label implements IAjaxIndicatorAware
 		super(id, Model.of(nr));
 		this.enginePanel = enginePanel;
 		this.model = model;
-		
+
 		add(new AttributeAppender("title", new PropertyModel<String>(model, "title")));
 		add(new AttributeAppender("class", Model.of("quickAction"), " "));
 		add(new QuickActionClickBehavior("onclick", enginePanel, model));

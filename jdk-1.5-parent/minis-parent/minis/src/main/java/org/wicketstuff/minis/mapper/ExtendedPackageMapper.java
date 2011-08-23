@@ -17,9 +17,8 @@ import org.apache.wicket.util.lang.PackageName;
 
 /**
  * <p>
- * Extended PackageMapper with Named Parameter and HomePage support. Remember to
- * add this mapper before anyone else, so it will have low priority against
- * top-level, more important mappers.
+ * Extended PackageMapper with Named Parameter and HomePage support. Remember to add this mapper
+ * before anyone else, so it will have low priority against top-level, more important mappers.
  * </p>
  * 
  * <p>
@@ -41,16 +40,16 @@ import org.apache.wicket.util.lang.PackageName;
  * <ul>
  * <li>http://localhost:8080/john/static/admin -> renders Profile page</li>
  * <li>http://localhost:8080/john/static/admin/Profile -> renders Profile page</li>
- * <li>http://localhost:8080/john/static/admin/Groups -> renders Groups page
- * present in same package as <code>Profile</code></li>
+ * <li>http://localhost:8080/john/static/admin/Groups -> renders Groups page present in same package
+ * as <code>Profile</code></li>
  * </ul>
- * Parameters can be accessed as usual (PageParameters in constructor, for
- * example)
+ * Parameters can be accessed as usual (PageParameters in constructor, for example)
  * </p>
  * 
  * @author Bruno Borges
  */
-public class ExtendedPackageMapper extends AbstractMapper {
+public class ExtendedPackageMapper extends AbstractMapper
+{
 
 	private MountMapper mountedMapper;
 	private String mountedPath;
@@ -60,43 +59,43 @@ public class ExtendedPackageMapper extends AbstractMapper {
 
 	/**
 	 * <p>
-	 * Construct an ExtendedPackageMapper for package of <code>homePage</code>
-	 * class, at <code>mountPath</code>. <code>homePage</code> is considered the
-	 * Home Page for this mounted path, in case the user does not indicate which
-	 * page to render.
+	 * Construct an ExtendedPackageMapper for package of <code>homePage</code> class, at
+	 * <code>mountPath</code>. <code>homePage</code> is considered the Home Page for this mounted
+	 * path, in case the user does not indicate which page to render.
 	 * </p>
 	 * 
 	 * <p>
-	 * Named parameters are optional and may be defined as the first mount
-	 * segment
+	 * Named parameters are optional and may be defined as the first mount segment
 	 * </p>
 	 * 
 	 * @param mountPath
 	 *            in the form of "${some}/path/with/${named}/parameters"
 	 * @param homePage
 	 */
-	public <P extends Page> ExtendedPackageMapper(String mountPath,
-			Class<P> homePage) {
-		this.homePageName = homePage.getSimpleName();
-		this.mountedPath = mountPath;
-		this.mountedSegments = getMountSegments(mountedPath);
+	public <P extends Page> ExtendedPackageMapper(String mountPath, Class<P> homePage)
+	{
+		homePageName = homePage.getSimpleName();
+		mountedPath = mountPath;
+		mountedSegments = getMountSegments(mountedPath);
 
 		PackageName pkgNameObj = PackageName.forClass(homePage);
 		packageName = pkgNameObj.getName();
-		mountedMapper = new MountMapper(packageName, new PackageMapper(
-				pkgNameObj));
+		mountedMapper = new MountMapper(packageName, new PackageMapper(pkgNameObj));
 	}
 
-	public Url mapHandler(IRequestHandler requestHandler) {
+	public Url mapHandler(IRequestHandler requestHandler)
+	{
 		Url url = mountedMapper.mapHandler(requestHandler);
 
-		if (url != null) {
-			List<String> newUrlSegments = new ArrayList<String>(
-					mountedSegments.length);
-			for (String segment : mountedSegments) {
+		if (url != null)
+		{
+			List<String> newUrlSegments = new ArrayList<String>(mountedSegments.length);
+			for (String segment : mountedSegments)
+			{
 				String newSegment = segment;
 				String placeholder = getPlaceholder(segment);
-				if (placeholder != null) {
+				if (placeholder != null)
+				{
 					// segment is parameter
 					// set it as Url segment and remove it from QueryParameters
 					newSegment = url.getQueryParameter(placeholder).getValue();
@@ -109,7 +108,8 @@ public class ExtendedPackageMapper extends AbstractMapper {
 			urlSegments.addAll(0, newUrlSegments);
 
 			int lastIndex = urlSegments.size() - 1;
-			if (urlSegments.get(lastIndex).equals(homePageName)) {
+			if (urlSegments.get(lastIndex).equals(homePageName))
+			{
 				urlSegments.remove(lastIndex);
 			}
 		}
@@ -117,36 +117,42 @@ public class ExtendedPackageMapper extends AbstractMapper {
 	}
 
 	/**
-	 * Override this to validate parameters. Return true if this Mapper should
-	 * handle the current request based on your busines slogic
+	 * Override this to validate parameters. Return true if this Mapper should handle the current
+	 * request based on your busines slogic
 	 * 
 	 * @param parameters
 	 * @return true if this Mapper will handle the request. default: true
 	 */
-	protected boolean validateParameters(PageParameters parameters) {
+	protected boolean validateParameters(PageParameters parameters)
+	{
 		return true;
 	}
 
-	public IRequestHandler mapRequest(Request request) {
+	public IRequestHandler mapRequest(Request request)
+	{
 		Url url = request.getUrl();
 
 		List<String> urlSegments = url.getSegments();
 		int countUrlSegments = urlSegments.size();
-		if (countUrlSegments < mountedSegments.length) {
+		if (countUrlSegments < mountedSegments.length)
+		{
 			return null;
 		}
 
 		PageParameters mountedParameters = new PageParameters();
 		int i = 0;
 		Iterator<String> urlSegmentsIterator = urlSegments.iterator();
-		for (String mountedSegment : mountedSegments) {
-			if (i == countUrlSegments) {
+		for (String mountedSegment : mountedSegments)
+		{
+			if (i == countUrlSegments)
+			{
 				break;
 			}
 
 			String urlSegmentValue = urlSegmentsIterator.next();
 			String name = getPlaceholder(mountedSegment);
-			if (name != null) {
+			if (name != null)
+			{
 				mountedParameters.add(name, urlSegmentValue);
 				url.setQueryParameter(name, urlSegmentValue);
 				urlSegmentsIterator.remove();
@@ -154,33 +160,43 @@ public class ExtendedPackageMapper extends AbstractMapper {
 			i++;
 		}
 
-		if (!validateParameters(mountedParameters)) {
+		if (!validateParameters(mountedParameters))
+		{
 			return null;
 		}
 
 		// replace with packageName segment so PackageMapper can do its magic
-		if (urlSegments.size() == 0) {
+		if (urlSegments.size() == 0)
+		{
 			urlSegments.add(packageName);
 			urlSegments.add(homePageName);
-		} else {
+		}
+		else
+		{
 			String lastSegment = urlSegments.get(urlSegments.size() - 1);
 
 			urlSegments.clear();
 			urlSegments.add(packageName);
-			if (isPackageClass(lastSegment)) {
+			if (isPackageClass(lastSegment))
+			{
 				urlSegments.add(lastSegment);
-			} else {
+			}
+			else
+			{
 				urlSegments.add(homePageName);
 			}
 		}
 
-		IRequestHandler mapRequest = mountedMapper.mapRequest(request
-				.cloneWithUrl(url));
-		if (mapRequest == null) {
+		IRequestHandler mapRequest = mountedMapper.mapRequest(request.cloneWithUrl(url));
+		if (mapRequest == null)
+		{
 			// try adding the homePage class
-			if (urlSegments.size() == 1) {
+			if (urlSegments.size() == 1)
+			{
 				urlSegments.add(homePageName);
-			} else {
+			}
+			else
+			{
 				urlSegments.set(1, homePageName);
 			}
 			mapRequest = mountedMapper.mapRequest(request.cloneWithUrl(url));
@@ -188,22 +204,30 @@ public class ExtendedPackageMapper extends AbstractMapper {
 		return mapRequest;
 	}
 
-	private boolean isPackageClass(String lastSegment) {
+	private boolean isPackageClass(String lastSegment)
+	{
 		String fqcn = packageName + '.' + lastSegment;
 		Class resolved = null;
-		try {
-			if (Application.exists()) {
-				resolved = (Class) Application.get().getApplicationSettings()
-						.getClassResolver().resolveClass(fqcn);
+		try
+		{
+			if (Application.exists())
+			{
+				resolved = Application.get()
+					.getApplicationSettings()
+					.getClassResolver()
+					.resolveClass(fqcn);
 			}
 
-			if (resolved == null) {
-				resolved = (Class) Class.forName(fqcn, false, Thread
-						.currentThread().getContextClassLoader());
+			if (resolved == null)
+			{
+				resolved = Class.forName(fqcn, false, Thread.currentThread()
+					.getContextClassLoader());
 			}
 
 			return true;
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return false;
 		}
 	}
@@ -217,7 +241,8 @@ public class ExtendedPackageMapper extends AbstractMapper {
 	 * <li>+2+(score/2) for static segments</li>
 	 * </ul>
 	 */
-	public int getCompatibilityScore(Request request) {
+	public int getCompatibilityScore(Request request)
+	{
 		Url url = request.getUrl();
 		int score = 0;
 
@@ -225,25 +250,29 @@ public class ExtendedPackageMapper extends AbstractMapper {
 		int segmentsCount = urlSegs.size();
 
 		// path + Page
-		if (segmentsCount == mountedSegments.length + 1) {
+		if (segmentsCount == mountedSegments.length + 1)
+		{
 			score++;
 		}
 
 		// only path
-		if (segmentsCount == mountedSegments.length) {
+		if (segmentsCount == mountedSegments.length)
+		{
 			score++;
 		}
 
 		// for each static segment matched, it will get 2 score + (scores / 2)
-		for (int i = 0; i < mountedSegments.length; i++) {
-			if (i == segmentsCount) {
+		for (int i = 0; i < mountedSegments.length; i++)
+		{
+			if (i == segmentsCount)
+			{
 				break;
 			}
 
 			String mountedSegment = mountedSegments[i];
 			String urlSegment = urlSegs.get(i);
-			if (getPlaceholder(mountedSegment) == null
-					&& mountedSegment.equals(urlSegment)) {
+			if (getPlaceholder(mountedSegment) == null && mountedSegment.equals(urlSegment))
+			{
 				// static
 				score = 2 + score + (score / 2);
 			}

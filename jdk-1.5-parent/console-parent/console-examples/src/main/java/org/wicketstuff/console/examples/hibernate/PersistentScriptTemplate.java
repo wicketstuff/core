@@ -53,7 +53,8 @@ public class PersistentScriptTemplate
 	{
 	}
 
-	public PersistentScriptTemplate(final Long id, final String title, final String script, final Lang lang)
+	public PersistentScriptTemplate(final Long id, final String title, final String script,
+		final Lang lang)
 	{
 		super();
 		this.id = id;

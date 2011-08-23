@@ -61,7 +61,7 @@ public class GroovyEngineTestPage extends ConsoleBasePage
 			}
 
 		};
-		
+
 		enginePanel.setOutputMarkupId(true);
 		add(enginePanel);
 	}

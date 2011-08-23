@@ -154,7 +154,8 @@ public class TestPagesTest extends AbstractJUnit4SpringContextTests
 	@Test
 	public void test_rendersSuccessfully_GroovyEngineWithTemplatesTestPage()
 	{
-		final GroovyEngineWithTemplatesTestPage page = new GroovyEngineWithTemplatesTestPage(new PackagedScriptTemplates());
+		final GroovyEngineWithTemplatesTestPage page = new GroovyEngineWithTemplatesTestPage(
+			new PackagedScriptTemplates());
 		tester.startPage(page);
 		tester.assertRenderedPage(GroovyEngineWithTemplatesTestPage.class);
 	}

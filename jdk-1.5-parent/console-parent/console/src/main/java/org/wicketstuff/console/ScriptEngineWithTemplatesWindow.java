@@ -43,7 +43,7 @@ public abstract class ScriptEngineWithTemplatesWindow extends ModalWindow
 	{
 		super(id);
 		this.store = store;
-		this.dataProvider = null;
+		dataProvider = null;
 		init(lang, windowTitle);
 	}
 
@@ -51,7 +51,7 @@ public abstract class ScriptEngineWithTemplatesWindow extends ModalWindow
 		final IModel<String> windowTitle, final IDataProvider<ScriptTemplate> dataProvider)
 	{
 		super(id);
-		this.store = null;
+		store = null;
 		this.dataProvider = dataProvider;
 		init(lang, windowTitle);
 

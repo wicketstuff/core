@@ -7,6 +7,7 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
@@ -38,7 +39,7 @@ public abstract class ConsoleBasePage extends WebPage
 
 	private void init()
 	{
-		add(new BookmarkablePageLink<Void>("homeLink", WicketApplication.get().getHomePage()));
+		add(new BookmarkablePageLink<Void>("homeLink", WebApplication.get().getHomePage()));
 		add(new Label("title", Model.of(getClass().getSimpleName())));
 		add(new TestPageLinksPanel("links"));
 		add(new FeedbackPanel("feedback"));

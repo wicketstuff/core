@@ -14,25 +14,19 @@
 package org.wicketstuff.modalx;
 
 
-
 // -[KeepBeforeClass]-
-import org.apache.wicket.markup.html.form.*;
-import org.wicketstuff.modalx.ModalFormPanel;
+import org.apache.wicket.markup.html.form.FormComponent;
 
 
 // -[Class]-
 
 /**
- * Class Name : ValidatingModalFormPanel
- * Diagram    : Wicket Generic Modal Windows
- * Project    : Echobase framework
- * Type       : concrete
- * Base class for all validating wicket forms.
+ * Class Name : ValidatingModalFormPanel Diagram : Wicket Generic Modal Windows Project : Echobase
+ * framework Type : concrete Base class for all validating wicket forms.
  * 
  * @author Chris Colman
  */
-public 
-class ValidatingModalFormPanel extends ModalFormPanel
+public class ValidatingModalFormPanel extends ModalFormPanel
 {
 // -[KeepWithinClass]-
 
@@ -40,37 +34,33 @@ class ValidatingModalFormPanel extends ModalFormPanel
 // -[Fields]-
 
 
-
-private static final long serialVersionUID = 1L;
-/**
- * Stores form components.
- */
-protected FormComponent<?>[] components;
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Stores form components.
+	 */
+	protected FormComponent<?>[] components;
 
 
 // -[Methods]-
 
 
+	/**
+	 * Returns components
+	 */
+	public FormComponent<?>[] getDependentFormComponents()
+	{
+		return components;
+	}
 
+	/**
+	 * Constructs the object
+	 */
+	public ValidatingModalFormPanel(ModalContentWindow iModalContentWindow,
+		IWindowCloseListener iWindowCloseListener)
+	{
+		super(iModalContentWindow, iWindowCloseListener);
 
-/**
- * Returns components
- */
-public FormComponent<?>[] getDependentFormComponents()
-{
-    return components;
+		components = new FormComponent<?>[1];
+	}
+
 }
-
-/**
- * Constructs the object
- */
-public ValidatingModalFormPanel(ModalContentWindow iModalContentWindow, IWindowCloseListener iWindowCloseListener)
-{
-	super(iModalContentWindow, iWindowCloseListener);
-	
-	components = new FormComponent<?>[1];
-}
-
-}
-
-

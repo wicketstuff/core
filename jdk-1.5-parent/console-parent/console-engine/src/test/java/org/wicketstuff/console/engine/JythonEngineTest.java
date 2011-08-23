@@ -32,14 +32,14 @@ public class JythonEngineTest
 {
 
 	private static final String NEWLINE = System.getProperty("line.separator");
-	
+
 	private IScriptEngine engine;
 
 	@Before
 	public void setup()
 	{
 		engine = new JythonEngine();
-		
+
 		// First run somehow fails sometimes
 		engine.execute("");
 	}
@@ -78,7 +78,7 @@ public class JythonEngineTest
 		assertTrue(result.isSuccess());
 		assertNull(exception);
 		assertNull(result.getReturnValue());
-		assertEquals("4"+NEWLINE, output);
+		assertEquals("4" + NEWLINE, output);
 	}
 
 
