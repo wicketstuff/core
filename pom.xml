@@ -252,6 +252,8 @@
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket</artifactId>
+			<version>${wicket.version}</version>
+			<type>pom</type>
 		</dependency>
 	</dependencies>
 
@@ -259,11 +261,6 @@
 		<dependencies>
 			<!-- In order for this project to work, all child projects need to use 
 				these versions of wicket-* and not specify their own version -->
-			<dependency>
-				<groupId>org.apache.wicket</groupId>
-				<artifactId>wicket</artifactId>
-				<version>${wicket.version}</version>
-			</dependency>
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
 				<artifactId>wicket-datetime</artifactId>
@@ -292,6 +289,11 @@
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
 				<artifactId>wicket-velocity</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-util</artifactId>
 				<version>${wicket.version}</version>
 			</dependency>
 			<dependency>
