@@ -87,7 +87,7 @@ public class MeioMaskField<T> extends TextField<T>
 		this.maskType = maskType;
 
 		String customOptions = buildCustomOptions(customMask, options);
-		if (MaskType.Fixed.equals(maskType))
+		if (MaskType.Custom.equals(maskType))
 		{
 			if (customMask == null || isEmpty(customMask))
 			{
@@ -133,7 +133,7 @@ public class MeioMaskField<T> extends TextField<T>
 			// Do nothing
 			return input;
 		}
-		else if (isNumberFormat(getType()))
+		else if (isNumberFormat(getType()) && (!this.maskType.equals(MaskType.Custom)))
 		{ // Remove special characters
 			DecimalFormatSymbols formatSymbols = new DecimalFormatSymbols(getLocale());
 			StringBuilder builder = new StringBuilder();
@@ -205,9 +205,14 @@ public class MeioMaskField<T> extends TextField<T>
 			mask == MaskType.RegexpIp;
 	}
 
+	/**
+	 * Convert java mask to meiomask pattern.
+	 * @param value Java mask.
+	 * @return meiomask pattern.
+	 */
 	private String javaToJavaScriptMask(String value)
 	{
-		return value.replace("#", "9");
+		return value.replace("#", "9").replace("U", "Z").replace("L", "z").replace("A", "@");
 	}
 
 	private String buildCustomOptions(String customMask, String options)

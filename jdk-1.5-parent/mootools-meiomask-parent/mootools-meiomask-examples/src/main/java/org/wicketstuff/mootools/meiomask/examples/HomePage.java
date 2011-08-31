@@ -35,6 +35,7 @@ public class HomePage extends WebPage
 			protected void onSubmit()
 			{
 				info("custom: " + getModelObject().getCustom());
+				info("custom2: " + getModelObject().getCustom2());
 				info("fixed-phone: " + getModelObject().getFixedPhone());
 				info("fixed-phone-us: " + getModelObject().getFixedPhoneUs());
 				info("fixed-cpf: " + getModelObject().getFixedCpf());
@@ -49,7 +50,8 @@ public class HomePage extends WebPage
 
 		add(form);
 
-		form.add(new CustomMaskField<String>("custom", "####-##-##"));
+		form.add(new CustomMaskField<String>("custom", "#### LL"));
+		form.add(new CustomMaskField<Integer>("custom2", "##:##"));
 		form.add(new MeioMaskField<String>("fixedPhone", MaskType.FixedPhone));
 		form.add(new MeioMaskField<String>("fixedPhoneUs", MaskType.FixedPhoneUs));
 		form.add(new MeioMaskField<String>("fixedCpf", MaskType.FixedCpf));

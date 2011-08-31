@@ -25,7 +25,7 @@ import org.wicketstuff.mootools.meiomask.behavior.MeioMaskBehavior;
 public enum MaskType
 {
 
-	Fixed("fixed"), FixedPhone("fixed.phone", "(##) ####-####"), FixedPhoneUs("fixed.phone-us",
+	Custom("fixed"), FixedPhone("fixed.phone", "(##) ####-####"), FixedPhoneUs("fixed.phone-us",
 		"(###) ###-####"), FixedCpf("fixed.cpf", "###.###.###-##"), FixedCnpj("fixed.cnpj",
 		"##.###.###/####-##"), FixedDate("fixed.date", "##/##/####"), FixedDateUs("fixed.date-us",
 		"##/##/####"), FixedCep("fixed.cep", "#####-###"), FixedTime("fixed.time", "##:##"), FixedCc(

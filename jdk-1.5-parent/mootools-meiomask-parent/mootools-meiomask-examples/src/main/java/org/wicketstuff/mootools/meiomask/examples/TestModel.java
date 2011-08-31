@@ -27,6 +27,7 @@ public class TestModel implements Serializable
 
 	private static final long serialVersionUID = 1L;
 	private String custom;
+	private Integer custom2;
 	private String fixedPhone;
 	private String fixedPhoneUs;
 	private String fixedCpf;
@@ -218,5 +219,15 @@ public class TestModel implements Serializable
 	public void setFixedDateUs(Date fixedDateUs)
 	{
 		this.fixedDateUs = fixedDateUs;
+	}
+
+	public void setCustom2(Integer custom2) 
+	{
+		this.custom2 = custom2;
+	}
+
+	public Integer getCustom2() 
+	{
+		return custom2;
 	}
 }
