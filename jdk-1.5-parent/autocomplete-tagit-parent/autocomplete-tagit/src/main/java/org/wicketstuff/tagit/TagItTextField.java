@@ -57,15 +57,27 @@ public abstract class TagItTextField<T> extends TextField<T> {
     {
         super(id, model, type);
         
-        add(new TagItAjaxBehavior<T>() {
+        add(newTagItAjaxBehavior());
+    }
+    
+    /**
+     * Creates the {@link TagItAjaxBehavior} that listens for the user's input.
+     * <p>
+     * Override this method you need to tweak the TagIt configuration.
+     * </p>
+     * 
+     * @return the ajax behavior that listens for the user's input. 
+     */
+    protected TagItAjaxBehavior<T> newTagItAjaxBehavior() {
+        return new TagItAjaxBehavior<T>() {
             
             @Override
             protected Iterable<T> getChoices(final String value) {
                 return TagItTextField.this.getChoices(value);
             }
-        });
+        };
     }
-    
+
     /**
      * Finds the possible choices for the provided input
      * 

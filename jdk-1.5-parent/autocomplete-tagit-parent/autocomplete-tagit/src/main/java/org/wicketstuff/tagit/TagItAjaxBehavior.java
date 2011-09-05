@@ -1,6 +1,5 @@
 package org.wicketstuff.tagit;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,13 +34,8 @@ public abstract class TagItAjaxBehavior<T> extends AbstractAjaxBehavior {
         IRequestParameters parameters = request.getQueryParameters();
         StringValue input = parameters.getParameterValue("term");
         
-        final Iterable<T> choices ;
-        if (input.isEmpty()) {
-            choices = Collections.emptyList();
-        } else {
-            choices = getChoices(input.toString());
-        }
-        
+        final Iterable<T> choices = getChoices(input.toString(""));
+
         String jsonArray = createJson(choices);
         
         requestCycle.scheduleRequestHandlerAfterCurrent(new TextRequestHandler("application/json", "UTF-8", jsonArray));
