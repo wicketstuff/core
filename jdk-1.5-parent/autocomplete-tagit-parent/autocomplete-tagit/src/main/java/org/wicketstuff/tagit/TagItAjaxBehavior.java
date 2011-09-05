@@ -11,6 +11,8 @@ import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.TextRequestHandler;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.template.PackageTextTemplate;
 import org.apache.wicket.util.template.TextTemplate;
@@ -19,6 +21,12 @@ import org.apache.wicket.util.template.TextTemplate;
  * The behavior that returns JSON response for the autocomplete widget.
  */
 public abstract class TagItAjaxBehavior<T> extends AbstractAjaxBehavior {
+    
+    private static final ResourceReference TAG_IT_JS = 
+            new PackageResourceReference(TagItAjaxBehavior.class, "res/tag-it.js");
+    
+    private static final ResourceReference TAG_IT_CSS = 
+            new PackageResourceReference(TagItAjaxBehavior.class, "res/jquery.tagit.css");
     
     public final void onRequest() {
         
@@ -73,7 +81,10 @@ public abstract class TagItAjaxBehavior<T> extends AbstractAjaxBehavior {
     @Override
     public void renderHead(final Component component, final IHeaderResponse response) {
         super.renderHead(component, response);
-                
+        
+        response.renderCSSReference(TAG_IT_CSS);
+        response.renderJavaScriptReference(TAG_IT_JS);
+        
         component.setOutputMarkupId(true);
         String id = component.getMarkupId();
 
@@ -94,6 +105,6 @@ public abstract class TagItAjaxBehavior<T> extends AbstractAjaxBehavior {
      * @return the JavaScript needed to "tagit" an input text field
      */
     protected TextTemplate getTagItConfig() {
-        return new PackageTextTemplate(TagItAjaxBehavior.class, "tag-it.tmpl.js");
+        return new PackageTextTemplate(TagItAjaxBehavior.class, "res/tag-it.tmpl.js");
     }
 }
