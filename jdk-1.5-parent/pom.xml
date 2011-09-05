@@ -32,6 +32,7 @@
 		<module>gae-initializer-parent</module>
 		<module>googlecharts-parent</module>
 		<module>gmap2-parent</module>
+		<module>htmlcompressor-parent</module>
 		<module>inmethod-grid-parent</module>
 		<module>input-events-parent</module>
 		<module>jasperreports-parent</module>
@@ -65,7 +66,6 @@
 
 		<!-- Modules below are commented until they can compile with wicket 1.5-SNAPSHOT -->
 
-
 		<!-- <module>dojo-parent</module> -->
 
 		<!-- artwork-parent depends on jslibraries -->
@@ -73,15 +73,11 @@
 
 		<!-- <module>jwicket-parent</module> -->
 
-
 		<!-- mocleiri: has Irequesttarget usage that needs to be migrated. -->
 		<!-- <module>scriptaculous-parent</module> -->
 
 		<!-- <module>tinymce-parent</module> -->
 		<!-- <module>yui-parent</module> -->
-
-
-
 
 		<!--commented out until org.apache.commons:commons-proxy:jar:1.1-SNAPSHOT 
 			is available -->
@@ -91,14 +87,8 @@
 		<!-- <module>ki-security</module> -->
 		<!-- <module>sitemap-xml-parent</module> -->
 
-
-
-
 		<!-- depends on yui -->
 		<!-- <module>ddcalendar-parent</module> -->
-
-
-
 	</modules>
 
 	<dependencyManagement>
@@ -153,5 +143,4 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
 </project>
