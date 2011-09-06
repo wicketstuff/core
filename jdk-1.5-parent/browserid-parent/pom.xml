@@ -10,7 +10,7 @@
 		<artifactId>jdk-1.5-parent</artifactId>
 		<version>1.5-SNAPSHOT</version>
 	</parent>
-	<artifactId>browserid-parent</artifactId>
+	<artifactId>wicketstuff-browserid-parent</artifactId>
 	<name>BrowserId Parent</name>
 
 	<packaging>pom</packaging>

@@ -10,7 +10,7 @@
 		<artifactId>jdk-1.5-parent</artifactId>
 		<version>1.5-SNAPSHOT</version>
 	</parent>
-	<artifactId>autocomplete-tagit-parent</artifactId>
+	<artifactId>wicketstuff-autocomplete-tagit-parent</artifactId>
 	<name>Autocomplete Tag It Parent</name>
 
 	<packaging>pom</packaging>

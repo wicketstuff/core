@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.wicketstuff</groupId>
-		<artifactId>browserid-parent</artifactId>
+		<artifactId>wicketstuff-browserid-parent</artifactId>
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>browserid-examples</artifactId>
+	<artifactId>wicketstuff-browserid-examples</artifactId>
 	<packaging>war</packaging>
 	<name>BrowserId Example</name>
 	<description>Example usage of WicketStuff BrowserId</description>
@@ -15,7 +15,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>browserid</artifactId>
+			<artifactId>wicketstuff-browserid</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 
