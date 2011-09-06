@@ -6,6 +6,46 @@ import org.apache.wicket.markup.parser.IXmlPullParser;
 import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
 
 /**
+ * <p>
+ * This markup factory can be used to compress (minify) html markup.
+ * </p>
+ * 
+ * <p>
+ * To use it do the followings in your wicket Application:
+ * </p>
+ * 
+ * <pre>
+ * <code>
+ * {@literal
+ * 	@Override
+ * 	protected void init()
+ * 	{
+ * 		super.init();
+ * 		getMarkupSettings().setMarkupFactory(new HtmlCompressingMarkupFactory());
+ * 	}
+ * }
+ * </code>
+ * </pre>
+ * 
+ * <p>
+ * Or if we want to preconfigure the compressor used:
+ * </p>
+ * 
+ * <pre>
+ * <code>
+ * {@literal
+ * 	@Override
+ * 	protected void init()
+ * 	{
+ * 		super.init();
+ * 		HtmlCompressor compressor = new HtmlCompressor();
+ * 		compressor.setPreserveLineBreaks(true);
+ * 		getMarkupSettings().setMarkupFactory(new HtmlCompressingMarkupFactory(compressor));
+ * 	}
+ * }
+ * </code>
+ * </pre>
+ * 
  * Overrides {@link #newXmlPullParser()} to use {@link HtmlCompressingXmlPullParser}.
  * 
  * @author akiraly
@@ -30,7 +70,12 @@ public class HtmlCompressingMarkupFactory extends MarkupFactory
 	 */
 	public HtmlCompressingMarkupFactory(HtmlCompressor compressor)
 	{
-		this.compressor = compressor != null ? compressor : new HtmlCompressor();
+		if (compressor == null)
+		{
+			compressor = new HtmlCompressor();
+			compressor.setRemoveIntertagSpaces(true);
+		}
+		this.compressor = compressor;
 	}
 
 	@Override

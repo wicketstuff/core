@@ -15,7 +15,7 @@ import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
 
 /**
  * {@link IXmlPullParser} implementation with the delegation pattern. Compresses the markup before
- * passing it to the delegated parser.
+ * passing it to the delegated parser. It is constructed by {@link HtmlCompressingMarkupFactory}.
  * 
  * @author akiraly
  */
@@ -55,9 +55,16 @@ public class HtmlCompressingXmlPullParser implements IXmlPullParser
 			markup = Streams.readString(inputStream, encoding);
 		else
 			markup = Streams.readString(inputStream);
+
 		String compressed = compressor.compress(markup);
 
-		delegate.parse(new ByteArrayInputStream(compressed.getBytes()), null);
+		byte[] bytes;
+		if (encoding != null)
+			bytes = compressed.getBytes(encoding);
+		else
+			bytes = compressed.getBytes();
+
+		delegate.parse(new ByteArrayInputStream(bytes), null);
 	}
 
 	public String getEncoding()

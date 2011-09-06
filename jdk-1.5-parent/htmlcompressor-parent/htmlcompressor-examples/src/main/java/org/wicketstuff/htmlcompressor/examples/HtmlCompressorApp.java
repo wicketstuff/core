@@ -4,11 +4,17 @@ import org.wicketstuff.htmlcompressor.HtmlCompressingMarkupFactory;
 
 public class HtmlCompressorApp extends AbstractApp
 {
-
 	@Override
 	protected void init()
 	{
 		super.init();
-		getMarkupSettings().setMarkupFactory(new HtmlCompressingMarkupFactory());
+		if (usesDeploymentConfig())
+		{
+			getMarkupSettings().setMarkupFactory(new HtmlCompressingMarkupFactory());
+			// if we want custom settings for our compressor we could do this instead:
+			// HtmlCompressor compressor = new HtmlCompressor();
+			// compressor.setPreserveLineBreaks(true);
+			// getMarkupSettings().setMarkupFactory(new HtmlCompressingMarkupFactory(compressor));
+		}
 	}
 }

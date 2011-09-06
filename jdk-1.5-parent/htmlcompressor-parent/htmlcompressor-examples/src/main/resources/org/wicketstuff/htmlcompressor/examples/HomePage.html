@@ -5,7 +5,26 @@
 		<title>WicketStuff Example Page</title>
 	</head>
 	<body>
-		Hi there!<br />
 		<p wicket:id="label"></p>
+		<div wicket:id="feedback"></div>
+		<!-- And this is our form... -->
+		<form wicket:id="form">
+			<ul>
+			<li>
+				Text field: <input wicket:id="field" type="text" />
+			</li>
+			<li>
+				Text area:<br />
+				<textarea wicket:id="area">
+				</textarea>
+			</li>
+			<li>
+				<input type="submit" />
+			</li>
+			</ul>
+		</form>
+		<pre>
+			This should be preserved.
+		</pre>
 	</body>
 </html>
