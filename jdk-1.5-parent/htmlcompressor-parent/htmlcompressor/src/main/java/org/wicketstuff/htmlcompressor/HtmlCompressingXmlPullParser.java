@@ -64,7 +64,7 @@ public class HtmlCompressingXmlPullParser implements IXmlPullParser
 		else
 			bytes = compressed.getBytes();
 
-		delegate.parse(new ByteArrayInputStream(bytes), null);
+		delegate.parse(new ByteArrayInputStream(bytes), encoding);
 	}
 
 	public String getEncoding()

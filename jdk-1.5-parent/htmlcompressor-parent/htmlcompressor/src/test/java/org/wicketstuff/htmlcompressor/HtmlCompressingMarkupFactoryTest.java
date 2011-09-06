@@ -66,7 +66,7 @@ public class HtmlCompressingMarkupFactoryTest
 			tester.startPage(TestPage.class);
 			tester.assertLabel("label", "Hello World!");
 			tester.assertVisible("label");
-			// tester.assertContains("€");
+			tester.assertContains("€");
 			return tester.getLastResponseAsString();
 		}
 		finally
