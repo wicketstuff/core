@@ -16,14 +16,12 @@ import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
  * 
  * <pre>
  * <code>
- * {@literal
- * 	@Override
+ * 	&#64;Override
  * 	protected void init()
  * 	{
  * 		super.init();
  * 		getMarkupSettings().setMarkupFactory(new HtmlCompressingMarkupFactory());
  * 	}
- * }
  * </code>
  * </pre>
  * 
@@ -33,8 +31,7 @@ import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
  * 
  * <pre>
  * <code>
- * {@literal
- * 	@Override
+ * 	&#64;Override
  * 	protected void init()
  * 	{
  * 		super.init();
@@ -42,7 +39,6 @@ import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
  * 		compressor.setPreserveLineBreaks(true);
  * 		getMarkupSettings().setMarkupFactory(new HtmlCompressingMarkupFactory(compressor));
  * 	}
- * }
  * </code>
  * </pre>
  * 

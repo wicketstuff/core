@@ -59,6 +59,13 @@ public class HtmlCompressingMarkupFactoryTest
 			notCompressed.length() > compressed.length());
 	}
 
+	/**
+	 * Renders test page does some tests on it and returns rendered response.
+	 * 
+	 * @param tester
+	 *            used or rendering, destroyed after render, not null
+	 * @return last response as string, not null
+	 */
 	private String renderAndDestroy(WicketTester tester)
 	{
 		try

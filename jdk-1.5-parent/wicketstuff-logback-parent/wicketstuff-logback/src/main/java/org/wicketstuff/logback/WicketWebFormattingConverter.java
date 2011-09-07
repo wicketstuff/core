@@ -32,7 +32,7 @@ import org.apache.wicket.request.cycle.RequestCycle;
  * <code>
  * {@literal
  * <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
- *     <encoder class="org.wicketstuff.logback.WicketWebPatternEncoder">
+ *     <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
  *         <charset>UTF-8</charset>
  *         <pattern>%d|%p|%t|%c{36}|%r|<b>%web</b>%n\t%caller{1}\t%m%n%xEx</pattern>
  *     </encoder>

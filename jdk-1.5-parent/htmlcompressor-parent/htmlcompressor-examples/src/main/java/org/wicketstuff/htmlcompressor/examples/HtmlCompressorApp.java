@@ -2,6 +2,11 @@ package org.wicketstuff.htmlcompressor.examples;
 
 import org.wicketstuff.htmlcompressor.HtmlCompressingMarkupFactory;
 
+/**
+ * Wicket app using htmlcompressor.
+ * 
+ * @author akiraly
+ */
 public class HtmlCompressorApp extends AbstractApp
 {
 	@Override

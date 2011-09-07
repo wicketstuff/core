@@ -7,6 +7,11 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
+/**
+ * A simple homepage with a basic form.
+ * 
+ * @author akiraly
+ */
 public class HomePage extends WebPage
 {
 	private static final long serialVersionUID = 1L;
