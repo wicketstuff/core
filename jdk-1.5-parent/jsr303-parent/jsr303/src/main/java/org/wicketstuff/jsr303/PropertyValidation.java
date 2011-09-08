@@ -37,7 +37,7 @@ public class PropertyValidation extends Behavior
 	private boolean assigned = false;
 
 	@Override
-	public synchronized void beforeRender(Component context)
+	public void onConfigure(Component context)
 	{
 		if (!assigned)
 		{
@@ -61,7 +61,7 @@ public class PropertyValidation extends Behavior
 				}
 			}
 		}
-		super.beforeRender(context);
+		super.onConfigure(context);
 	}
 
 	private static <T> void addValidator(FormComponent<T> fc, boolean ignoreIncompatibleModel)
