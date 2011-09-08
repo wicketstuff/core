@@ -20,29 +20,37 @@ public class TagItPage extends WebPage
 	{
 		super(parameters);
 
-		Form<Void> form = new Form<Void>("form") {
+		Form<Void> form = new Form<Void>("form")
+		{
 
-            @Override
-            protected void onSubmit() {
-                super.onSubmit();
-                
-                System.err.println("tagit: " + get("tagit").getDefaultModelObjectAsString());
-            }
-		    
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSubmit()
+			{
+				super.onSubmit();
+
+				System.err.println("tagit: " + get("tagit").getDefaultModelObjectAsString());
+			}
+
 		};
 		add(form);
-		
-		form.add(new TagItTextField<String>("tagit", Model.of("a1, a4")) {
 
-            @Override
-            protected Iterable<String> getChoices(String input) {
-                
-                System.err.println("> " + input.toString());
-                
-                return Arrays.asList("a1", "a2", "a3", "a4");
-            }
+		form.add(new TagItTextField<String>("tagit", Model.of("a1, a4"))
+		{
 
-        });
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected Iterable<String> getChoices(String input)
+			{
+
+				System.err.println("> " + input.toString());
+
+				return Arrays.asList("a1", "a2", "a3", "a4");
+			}
+
+		});
 
 	}
 }

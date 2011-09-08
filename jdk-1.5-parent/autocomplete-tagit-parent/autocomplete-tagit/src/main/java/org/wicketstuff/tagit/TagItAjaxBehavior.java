@@ -19,86 +19,96 @@ import org.apache.wicket.util.template.TextTemplate;
 /**
  * The behavior that returns JSON response for the autocomplete widget.
  */
-public abstract class TagItAjaxBehavior<T> extends AbstractAjaxBehavior {
-    
-    private static final ResourceReference TAG_IT_JS = 
-            new PackageResourceReference(TagItAjaxBehavior.class, "res/tag-it.js");
-    
-    private static final ResourceReference TAG_IT_CSS = 
-            new PackageResourceReference(TagItAjaxBehavior.class, "res/jquery.tagit.css");
-    
-    public final void onRequest() {
-        
-        RequestCycle requestCycle = getComponent().getRequestCycle();
-        Request request = requestCycle.getRequest();
-        IRequestParameters parameters = request.getQueryParameters();
-        StringValue input = parameters.getParameterValue("term");
-        
-        final Iterable<T> choices = getChoices(input.toString(""));
+public abstract class TagItAjaxBehavior<T> extends AbstractAjaxBehavior
+{
 
-        String jsonArray = createJson(choices);
-        
-        requestCycle.scheduleRequestHandlerAfterCurrent(new TextRequestHandler("application/json", "UTF-8", jsonArray));
-    }
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Serializes the returned choices into JSON array.
-     * 
-     * @param choices
-     *      the choices for the term
-     * @return JSON array with all choices
-     */
-    private String createJson(final Iterable<T> choices) {
+	private static final ResourceReference TAG_IT_JS = new PackageResourceReference(
+		TagItAjaxBehavior.class, "res/tag-it.js");
 
-        StringBuilder json = new StringBuilder();
-        json.append('[');
-        for (T choice : choices) {
-            if (json.length() > 1) {
-                json.append(',');
-            }
-            json.append('"').append(choice).append('"');
-        }
-        json.append(']');
-        
-        return json.toString();
-    }
+	private static final ResourceReference TAG_IT_CSS = new PackageResourceReference(
+		TagItAjaxBehavior.class, "res/jquery.tagit.css");
 
-    /**
-     * Finds the possible choices for the provided input
-     * 
-     * @param input
-     *      the term provided by the user.
-     * @return a collection of all possible choices for this input
-     */
-    protected abstract Iterable<T> getChoices(String input);
-    
-    @Override
-    public void renderHead(final Component component, final IHeaderResponse response) {
-        super.renderHead(component, response);
-        
-        response.renderCSSReference(TAG_IT_CSS);
-        response.renderJavaScriptReference(TAG_IT_JS);
-        
-        component.setOutputMarkupId(true);
-        String id = component.getMarkupId();
+	public final void onRequest()
+	{
 
-        TextTemplate tagItConfig = getTagItConfig();
-        
-        Map<String, CharSequence> variables = new HashMap<String, CharSequence>();
-        variables.put("componentId", id);
-        variables.put("callbackUrl", getCallbackUrl());
-        
-        String script = tagItConfig.asString(variables);
-        
-        response.renderOnDomReadyJavaScript(script);
-    }
+		RequestCycle requestCycle = getComponent().getRequestCycle();
+		Request request = requestCycle.getRequest();
+		IRequestParameters parameters = request.getQueryParameters();
+		StringValue input = parameters.getParameterValue("term");
 
-    /**
-     * Loads and populates the TagIt configuration
-     * 
-     * @return the JavaScript needed to "tagit" an input text field
-     */
-    protected TextTemplate getTagItConfig() {
-        return new PackageTextTemplate(TagItAjaxBehavior.class, "res/tag-it.tmpl.js");
-    }
+		final Iterable<T> choices = getChoices(input.toString(""));
+
+		String jsonArray = createJson(choices);
+
+		requestCycle.scheduleRequestHandlerAfterCurrent(new TextRequestHandler("application/json",
+			"UTF-8", jsonArray));
+	}
+
+	/**
+	 * Serializes the returned choices into JSON array.
+	 * 
+	 * @param choices
+	 *            the choices for the term
+	 * @return JSON array with all choices
+	 */
+	private String createJson(final Iterable<T> choices)
+	{
+
+		StringBuilder json = new StringBuilder();
+		json.append('[');
+		for (T choice : choices)
+		{
+			if (json.length() > 1)
+			{
+				json.append(',');
+			}
+			json.append('"').append(choice).append('"');
+		}
+		json.append(']');
+
+		return json.toString();
+	}
+
+	/**
+	 * Finds the possible choices for the provided input
+	 * 
+	 * @param input
+	 *            the term provided by the user.
+	 * @return a collection of all possible choices for this input
+	 */
+	protected abstract Iterable<T> getChoices(String input);
+
+	@Override
+	public void renderHead(final Component component, final IHeaderResponse response)
+	{
+		super.renderHead(component, response);
+
+		response.renderCSSReference(TAG_IT_CSS);
+		response.renderJavaScriptReference(TAG_IT_JS);
+
+		component.setOutputMarkupId(true);
+		String id = component.getMarkupId();
+
+		TextTemplate tagItConfig = getTagItConfig();
+
+		Map<String, CharSequence> variables = new HashMap<String, CharSequence>();
+		variables.put("componentId", id);
+		variables.put("callbackUrl", getCallbackUrl());
+
+		String script = tagItConfig.asString(variables);
+
+		response.renderOnDomReadyJavaScript(script);
+	}
+
+	/**
+	 * Loads and populates the TagIt configuration
+	 * 
+	 * @return the JavaScript needed to "tagit" an input text field
+	 */
+	protected TextTemplate getTagItConfig()
+	{
+		return new PackageTextTemplate(TagItAjaxBehavior.class, "res/tag-it.tmpl.js");
+	}
 }
