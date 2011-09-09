@@ -240,12 +240,12 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<hibernate.version>3.6.7.Final</hibernate.version>
-		<jetty.version>7.4.5.v20110725</jetty.version>
+		<jetty.version>7.5.1.v20110908</jetty.version>
 		<sf-jung.version>2.0.1</sf-jung.version>
 		<shiro.version>1.1.0</shiro.version>
-		<slf4j.version>1.6.1</slf4j.version>
+		<slf4j.version>1.6.2</slf4j.version>
 		<log4j.version>1.2.16</log4j.version>
-		<spring.version>3.0.5.RELEASE</spring.version>
+		<spring.version>3.0.6.RELEASE</spring.version>
 	</properties>
 
 	<dependencies>
@@ -358,7 +358,7 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.8.2</version>
+				<version>4.9</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
@@ -561,7 +561,7 @@
 			<dependency>
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time</artifactId>
-				<version>1.6.2</version>
+				<version>2.0</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sf.ehcache</groupId>
@@ -587,7 +587,7 @@
 			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi</artifactId>
-				<version>3.8-beta2</version>
+				<version>3.8-beta4</version>
 			</dependency>
 			<dependency>
 				<groupId>org.clojure</groupId>
@@ -597,7 +597,7 @@
 			<dependency>
 				<groupId>org.codehaus.groovy</groupId>
 				<artifactId>groovy</artifactId>
-				<version>1.8.0</version>
+				<version>1.8.2</version>
 			</dependency>
 			<dependency>
 				<groupId>org.json</groupId>
@@ -618,8 +618,8 @@
 			</dependency>
 			<dependency>
 				<groupId>org.python</groupId>
-				<artifactId>jython</artifactId>
-				<version>2.5.0</version>
+				<artifactId>jython-standalone</artifactId>
+				<version>2.5.2</version>
 			</dependency>
 			<dependency>
 				<groupId>org.scala-lang</groupId>
