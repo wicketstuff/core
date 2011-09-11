@@ -112,8 +112,7 @@
 							<links>
 								<link>http://download.oracle.com/javase/1.5.0/docs/api</link>
 								<link>http://download.oracle.com/javaee/5/api</link>
-								<!-- TODO update to 1.5 when available -->
-								<link>http://wicket.apache.org/apidocs/1.4/</link>
+								<link>http://wicket.apache.org/apidocs/1.5/</link>
 								<link>http://static.springsource.org/spring/docs/3.0.x/javadoc-api</link>
 								<link>http://logback.qos.ch/apidocs</link>
 							</links>
