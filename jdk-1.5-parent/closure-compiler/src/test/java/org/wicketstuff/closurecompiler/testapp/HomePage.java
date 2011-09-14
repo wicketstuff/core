@@ -21,7 +21,6 @@ public class HomePage extends WebPage
 	{
 		add(form("form"));
 		add(new FeedbackPanel("status"));
-		// TODO add source and compressed size stats to page
 	}
 
 	private Form<Void> form(String id)
@@ -51,6 +50,12 @@ public class HomePage extends WebPage
 
 	private String compress(String source) throws Exception
 	{
-		return new ClosureCompilerJavaScriptCompressor().compressSource(source);
+		final String compressed = new ClosureCompilerJavaScriptCompressor().compressSource(source);
+		final float ratio = (float)compressed.length() / (float)source.length() * 100.0f;
+
+		success(String.format("original=%d bytes, compressed=%d bytes (%.2f%%)",
+		                      source.length(), compressed.length(), ratio));
+
+		return compressed;
 	}
 }

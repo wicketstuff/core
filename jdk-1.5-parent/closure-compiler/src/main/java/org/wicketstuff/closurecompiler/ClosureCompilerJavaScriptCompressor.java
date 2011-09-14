@@ -21,20 +21,20 @@ public class ClosureCompilerJavaScriptCompressor implements IJavaScriptCompresso
 {
 	private static final Logger log = LoggerFactory.getLogger(ClosureCompilerJavaScriptCompressor.class);
 
-	public String compress(String jscode)
+	public String compress(String uncompressed)
 	{
 		try
 		{
-			return compressSource(jscode);
+			return compressSource(uncompressed);
 		}
 		catch (Exception e)
 		{
 			log.error(e.getMessage(), e);
-			return null;
+			return uncompressed;
 		}
 	}
 
-	public final String compressSource(String jscode) throws Exception
+	public final String compressSource(String uncompressed) throws Exception
 	{
 		final Compiler compiler = new Compiler();
 		final CompilerOptions options = new CompilerOptions();
@@ -48,13 +48,13 @@ public class ClosureCompilerJavaScriptCompressor implements IJavaScriptCompresso
 		// TODO integrate logging into slf4j
 
 		final JSSourceFile[] externs = new JSSourceFile[0];
-		final JSSourceFile[] input = new JSSourceFile[]{JSSourceFile.fromCode("custom", jscode)};
+		final JSSourceFile[] input = new JSSourceFile[]{JSSourceFile.fromCode("custom", uncompressed)};
 		Result result = compiler.compile(externs, input, options);
 
 		if (result.success == false)
 		{
 			// TODO better error reporting on compiler errors
-			return null;
+			return uncompressed;
 		}
 		// TODO report warnings etc. ?
 

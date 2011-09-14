@@ -20,3 +20,12 @@ div.compressed {
 .compressed textarea {
   background-color: #f0f0ff;
 }
+
+.feedbackPanelERROR {
+  color: red;
+}
+
+.feedbackPanelSUCCESS {
+  color: green;
+}
+
