@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Compressor Page</title>
+    <wicket:link>
+        <link rel="stylesheet" type="text/css" href="HomePage.css"/>
+    </wicket:link>
+</head>
+<body>
+    <form wicket:id="form">
+        <div class="uncompressed">
+            <label wicket:for="source">Paste uncompressed javascript source here...</label>
+            <textarea wicket:id="source"></textarea>
+            <input type="submit" value="Compress"/>
+        </div>
+        <div class="compressed">
+            <label>Compression result</label>
+            <textarea wicket:id="result" disabled></textarea>
+        </div>
+    </form>
+    <div wicket:id="status">[status]</div>
+</body>
+</html>
