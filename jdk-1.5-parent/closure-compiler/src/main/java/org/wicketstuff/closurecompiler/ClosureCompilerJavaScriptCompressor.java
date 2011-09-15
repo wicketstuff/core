@@ -31,7 +31,7 @@ public class ClosureCompilerJavaScriptCompressor implements IJavaScriptCompresso
 
 	public ClosureCompilerJavaScriptCompressor()
 	{
-		level = CompilationLevel.ADVANCED_OPTIMIZATIONS;
+		level = CompilationLevel.SIMPLE_OPTIMIZATIONS;
 	}
 
 	public CompilationLevel getLevel()
@@ -66,7 +66,15 @@ public class ClosureCompilerJavaScriptCompressor implements IJavaScriptCompresso
 		final Compiler compiler = new Compiler();
 		final CompilerOptions options = new CompilerOptions();
 		level.setOptionsForCompilationLevel(options);
-		     
+
+		// never remove unused stuff:
+		// this only would work when we had all javascript for the page bundled together
+		// also this will not work due to the dynamic rendering of javascript after page creation
+		options.removeUnusedVars = false;
+		options.removeUnusedLocalVars = false;
+		options.removeUnusedPrototypeProperties = false;
+		options.removeUnusedPrototypePropertiesInExterns = false;
+
 		// custom configuration options
 		configure(compiler, options, externs);
 

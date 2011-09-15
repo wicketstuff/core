@@ -1,8 +1,9 @@
 package org.wicketstuff.closurecompiler.testapp;
 
+import com.google.javascript.jscomp.CompilationLevel;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.request.mapper.HomePageMapper;
+import org.wicketstuff.closurecompiler.ClosureCompilerJavaScriptCompressor;
 
 public class ClosureCompilerApp extends WebApplication
 {
@@ -11,5 +12,14 @@ public class ClosureCompilerApp extends WebApplication
 	public Class<? extends Page> getHomePage()
 	{
 		return HomePage.class;
+	}
+
+	@Override
+	protected void init()
+	{
+		ClosureCompilerJavaScriptCompressor compressor = new ClosureCompilerJavaScriptCompressor();
+		// currently something goes wrong when using advanced and optimization is too aggressive
+		// compressor.setLevel(CompilationLevel.ADVANCED_OPTIMIZATIONS);
+		getResourceSettings().setJavaScriptCompressor(compressor);
 	}
 }
