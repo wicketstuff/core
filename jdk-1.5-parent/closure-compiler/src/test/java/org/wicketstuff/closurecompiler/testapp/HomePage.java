@@ -1,9 +1,16 @@
 package org.wicketstuff.closurecompiler.testapp;
 
+import java.util.Arrays;
+import java.util.List;
+
+import com.google.javascript.jscomp.CompilationLevel;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +23,14 @@ public class HomePage extends WebPage
 
 	private String source;
 	private String result;
+	private CompilationLevel level;
 
 	public HomePage()
 	{
 		add(form("form"));
 		add(new FeedbackPanel("status"));
+
+		level = CompilationLevel.ADVANCED_OPTIMIZATIONS;
 	}
 
 	private Form<Void> form(String id)
@@ -43,14 +53,55 @@ public class HomePage extends WebPage
 				}
 			}
 		};
-		form.add(new TextArea<String>("source", new PropertyModel<String>(this, "source")).setOutputMarkupId(true));
-		form.add(new TextArea<String>("result", new PropertyModel<String>(this, "result")).setOutputMarkupId(true));
+
+		// source text area
+		TextArea<String> sourceText = new TextArea<String>("source", new PropertyModel<String>(this, "source"));
+		sourceText.setOutputMarkupId(true);
+		sourceText.setRequired(true);
+		form.add(sourceText);
+
+		// compression result text area
+		TextArea<String> resultText = new TextArea<String>("result", new PropertyModel<String>(this, "result"));
+		resultText.setOutputMarkupId(true);
+		form.add(resultText);
+
+		// compression level
+		form.add(compressionLevel("level"));
+
 		return form;
+	}
+
+	private DropDownChoice<CompilationLevel> compressionLevel(String id)
+	{
+		final IModel<CompilationLevel> model = new PropertyModel<CompilationLevel>(this, "level");
+
+		final List<CompilationLevel> choices = Arrays.asList(CompilationLevel.values());
+
+		final IChoiceRenderer<CompilationLevel> renderer = new IChoiceRenderer<CompilationLevel>()
+		{
+			private static final long serialVersionUID = 1958044399469404529L;
+
+			public Object getDisplayValue(CompilationLevel object)
+			{
+				return object.name();
+			}
+
+			public String getIdValue(CompilationLevel object, int index)
+			{
+				return String.valueOf(object.ordinal());
+			}
+		};
+		DropDownChoice<CompilationLevel> choice = new DropDownChoice<CompilationLevel>(id, model, choices, renderer);
+		choice.setRequired(true);
+		return choice;
 	}
 
 	private String compress(String source) throws Exception
 	{
-		final String compressed = new ClosureCompilerJavaScriptCompressor().compressSource(source);
+		ClosureCompilerJavaScriptCompressor compressor = new ClosureCompilerJavaScriptCompressor();
+		compressor.setLevel(level);
+
+		final String compressed = compressor.compressSource(source);
 		final float ratio = (float)compressed.length() / (float)source.length() * 100.0f;
 
 		success(String.format("original=%d bytes, compressed=%d bytes (%.2f%%)",

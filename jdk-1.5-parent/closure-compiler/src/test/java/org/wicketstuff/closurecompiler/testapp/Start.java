@@ -21,7 +21,8 @@ import org.slf4j.LoggerFactory;
 public class Start
 {
 	private static final Logger log = LoggerFactory.getLogger(Start.class);
-	private static final RuntimeConfigurationType CONFIG = RuntimeConfigurationType.DEPLOYMENT;
+	//private static final RuntimeConfigurationType CONFIG = RuntimeConfigurationType.DEPLOYMENT;
+	private static final RuntimeConfigurationType CONFIG = RuntimeConfigurationType.DEVELOPMENT;
 
 	public static void main(String[] args) throws Exception
 	{
