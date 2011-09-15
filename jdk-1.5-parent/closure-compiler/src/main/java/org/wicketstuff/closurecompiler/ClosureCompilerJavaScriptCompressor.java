@@ -1,6 +1,7 @@
 package org.wicketstuff.closurecompiler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.javascript.jscomp.CommandLineRunner;
@@ -61,15 +62,14 @@ public class ClosureCompilerJavaScriptCompressor implements IJavaScriptCompresso
 		// environment for compilation
 		final List<JSSourceFile> externs = CommandLineRunner.getDefaultExterns();
 
+		// create compiler + options
 		final Compiler compiler = new Compiler();
 		final CompilerOptions options = new CompilerOptions();
 		level.setOptionsForCompilationLevel(options);
-
+		     
 		// custom configuration options
 		configure(compiler, options, externs);
 
-		// TODO figure out if this is the proper way of invoking the compiler
-		// TODO check if compiler instance creation is expensive and instances can / should be pooled
 		// TODO integrate logging into slf4j
 
 		// input sources
@@ -81,11 +81,8 @@ public class ClosureCompilerJavaScriptCompressor implements IJavaScriptCompresso
 
 		if (result.success == false)
 		{
-			// TODO better error reporting on compiler errors
-			return uncompressed;
+			throw new ClosureCompilationException(Arrays.asList(result.errors));
 		}
-		// TODO report warnings etc. ?
-
 		return compiler.toSource();
 	}
 

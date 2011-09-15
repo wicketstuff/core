@@ -1,6 +1,8 @@
 package org.wicketstuff.closurecompiler.testapp;
 
 import java.util.EnumSet;
+import java.util.logging.Handler;
+import java.util.logging.LogManager;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.RuntimeConfigurationType;
@@ -17,6 +19,7 @@ import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
 public class Start
 {
@@ -24,8 +27,23 @@ public class Start
 	//private static final RuntimeConfigurationType CONFIG = RuntimeConfigurationType.DEPLOYMENT;
 	private static final RuntimeConfigurationType CONFIG = RuntimeConfigurationType.DEVELOPMENT;
 
+	static
+	{
+		// redirect jcl to slf4j
+		final java.util.logging.Logger rootLogger = LogManager.getLogManager().getLogger("");
+		final Handler[] handlers = rootLogger.getHandlers();
+
+		for (Handler hander : handlers)
+		{
+			rootLogger.removeHandler(hander);
+		}
+
+		SLF4JBridgeHandler.install();
+	}
+
 	public static void main(String[] args) throws Exception
 	{
+
 		final Server server = new Server();
 		final SocketConnector connector = new SocketConnector();
 

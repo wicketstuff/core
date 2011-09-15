@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.google.javascript.jscomp.CompilationLevel;
+import com.google.javascript.jscomp.JSError;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
@@ -14,6 +15,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketstuff.closurecompiler.ClosureCompilationException;
 import org.wicketstuff.closurecompiler.ClosureCompilerJavaScriptCompressor;
 
 public class HomePage extends WebPage
@@ -45,6 +47,13 @@ public class HomePage extends WebPage
 				try
 				{
 					result = compress(source);
+				}
+				catch (ClosureCompilationException e)
+				{
+					for (JSError message : e.getErrors())
+					{
+						error(message.toString());
+					}
 				}
 				catch (Exception e)
 				{
