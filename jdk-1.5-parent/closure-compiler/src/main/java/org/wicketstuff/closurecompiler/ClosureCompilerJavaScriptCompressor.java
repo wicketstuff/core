@@ -58,20 +58,19 @@ public class ClosureCompilerJavaScriptCompressor implements IJavaScriptCompresso
 
 	public final String compressSource(String uncompressed) throws Exception
 	{
+		// environment for compilation
+		final List<JSSourceFile> externs = CommandLineRunner.getDefaultExterns();
+
 		final Compiler compiler = new Compiler();
 		final CompilerOptions options = new CompilerOptions();
 		level.setOptionsForCompilationLevel(options);
 
 		// custom configuration options
-		configure(compiler);
+		configure(compiler, options, externs);
 
 		// TODO figure out if this is the proper way of invoking the compiler
 		// TODO check if compiler instance creation is expensive and instances can / should be pooled
 		// TODO integrate logging into slf4j
-
-		// environment for compilation
-		final List<JSSourceFile> externs = new ArrayList<JSSourceFile>();
-//		final List<JSSourceFile> externs = CommandLineRunner.getDefaultExterns();
 
 		// input sources
 		final List<JSSourceFile> inputs = new ArrayList<JSSourceFile>();
@@ -90,7 +89,7 @@ public class ClosureCompilerJavaScriptCompressor implements IJavaScriptCompresso
 		return compiler.toSource();
 	}
 
-	protected void configure(Compiler compiler)
+	protected void configure(Compiler compiler, CompilerOptions options, List<JSSourceFile> externs)
 	{
 		// for overriding + configuring
 	}
