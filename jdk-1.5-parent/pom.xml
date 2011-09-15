@@ -25,6 +25,7 @@
 		<module>calendarviews-parent</module>
 		<module>client-and-server-validation</module>
 		<module>console-parent</module>
+		<module>closure-compiler</module>
 		<module>datatable-autocomplete-parent</module>
 		<module>datatables-parent</module>
 		<module>eidogo-parent</module>
