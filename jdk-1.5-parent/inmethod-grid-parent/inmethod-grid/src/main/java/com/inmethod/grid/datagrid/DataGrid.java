@@ -11,6 +11,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.navigation.paging.IPageable;
+import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
@@ -357,6 +358,21 @@ public class DataGrid extends AbstractGrid implements IPageable {
 			}
 		}
 		dirtyItems = null;
+	}
+	
+	/**
+	 * Insert the rowData into the grid
+	 * 
+	 * @param rowData
+	 * @return Item
+	 */
+	public Item insertRow(final Object rowData) {
+		Item insertRow = getBody().insertRow(getDataSource().model(rowData));
+		
+		markAllItemsDirty();
+		update();
+				
+		return insertRow;
 	}
 
 	/**

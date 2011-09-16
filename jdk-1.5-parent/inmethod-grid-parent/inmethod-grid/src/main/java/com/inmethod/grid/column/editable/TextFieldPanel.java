@@ -18,6 +18,34 @@ import com.inmethod.grid.column.AbstractColumn;
  * @author Matej Knopp
  */
 public class TextFieldPanel extends EditableCellPanel {
+	private static final String TEXTFIELD_ID = "textfield";
+
+	protected class DefaultTextField extends TextField {
+		private static final long serialVersionUID = 1L;
+
+		/**
+		 * Constructor for DefaultTextField
+		 * 
+		 * @param id
+		 * @param object
+		 */
+		protected DefaultTextField(String id, IModel object) {
+			super(id, object);
+		}
+
+		@Override
+		protected void onComponentTag(ComponentTag tag) {
+			super.onComponentTag(tag);
+			
+			if (isValid() == false) {
+				tag.put("class", "imxt-invalid");
+				FeedbackMessage message = getFeedbackMessage();
+				if (message != null) {
+					tag.put("title", message.getMessage().toString());
+				}
+			}
+		}
+	}
 
 	/**
 	 * Constructor
@@ -31,31 +59,26 @@ public class TextFieldPanel extends EditableCellPanel {
 	public TextFieldPanel(String id, final IModel model, IModel rowModel, AbstractColumn column) {
 		super(id, column, rowModel);
 		
-		TextField tf = new TextField("textfield", model) {
-			
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onComponentTag(ComponentTag tag) {
-				super.onComponentTag(tag);
-				
-				if (isValid() == false) {
-					tag.put("class", "imxt-invalid");
-					FeedbackMessage message = getFeedbackMessage();
-					if (message != null) {
-						tag.put("title", message.getMessage().toString());
-					}
-				}
-			}
-		};
+		TextField tf = newTextField(TEXTFIELD_ID, model);
 		tf.setOutputMarkupId(true);
 		tf.setLabel(column.getHeaderModel());
 		add(tf);		
 	}
+
+	/**
+	 * newTextField
+	 * 
+	 * @param id
+	 * @param model
+	 * @return TextField
+	 */
+	protected TextField newTextField(final String id, final IModel model) {
+		return new DefaultTextField(id, model);
+	}
 		
 	@Override
-	protected FormComponent getEditComponent() {
-		return (FormComponent) get("textfield");
+	public FormComponent getEditComponent() {
+		return (FormComponent) get(TEXTFIELD_ID);
 	}
 	
 	private static final long serialVersionUID = 1L;

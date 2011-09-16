@@ -30,15 +30,15 @@ public abstract class EditableCellPanel extends Panel {
 		super.onBeforeRender();
 		
 		AjaxRequestTarget target = AjaxRequestTarget.get();
-		
-		Component textField = get("textfield");
-		
-		if (target != null && isFocusTextField()) {
-			target.focusComponent(textField);
+		if (target != null && isFocusComponent()) {
+			target.focusComponent(getEditComponent());
 		}		
 	}
 	
-	protected boolean isFocusTextField() {
+	/**
+	 * @return true when the last clicked column is *this* column, false otherwise
+	 */
+	protected boolean isFocusComponent() {
 		IGridColumn lastClickedColumn = getColumn().getGrid().getLastClickedColumn();				
 		if (lastClickedColumn == getColumn()) {
 			getColumn().getGrid().cleanLastClickedColumn();
@@ -53,6 +53,6 @@ public abstract class EditableCellPanel extends Panel {
 		return column.getGrid().isItemEdited(getDefaultModel());		
 	}
 	
-	protected abstract FormComponent getEditComponent();
+	public abstract FormComponent getEditComponent();
 	
 }

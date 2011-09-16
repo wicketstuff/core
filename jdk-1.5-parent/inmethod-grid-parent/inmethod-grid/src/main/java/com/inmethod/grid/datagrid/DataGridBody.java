@@ -53,6 +53,12 @@ public abstract class DataGridBody extends Panel implements IPageable {
 	private Data getData() {
 		return (Data) get("row");
 	}
+	
+	protected Item insertRow(final IModel rowModel) {
+		Item item = getData().createItem(getCurrentPageItemCount() + 1, rowModel);
+		getData().add(item);
+		return item;
+	}
 
 	int getTotalRowCount() {
 		return getData().getTotalRowCount();
@@ -192,6 +198,18 @@ public abstract class DataGridBody extends Panel implements IPageable {
 			Item item = new RowItem(id, index, model);
 			item.setOutputMarkupId(true);
 			return item;
+		}
+		
+		/**
+		 * Create a new Item for this DataGrid.
+		 * NOTE: The item has not been added to the grid.
+		 * 
+		 * @param index
+		 * @param itemModel
+		 * @return Item
+		 */
+		protected Item createItem(final int index, final IModel itemModel) {
+			return newItemFactory().newItem(index, itemModel);
 		}
 	};
 
