@@ -26,11 +26,14 @@
 	</modules>
 	
 	<developers>
-	<developer><id>mocleiri</id><name>Michael O'Cleirigh</name></developer>
+    <developer>
+      <id>mocleiri</id>
+      <name>Michael O'Cleirigh</name>
+    </developer>
 	</developers>
 
 	<profiles>
-<profile>
+    <profile>
 			<!-- setup for using oss.sonatype.org to hold snapshots -->
 			<!-- should be active for all sessions except where the release
 			plugin is being used.
@@ -40,36 +43,32 @@
 			-->
 			<id>oss.sonatype.org-snapshots</id>
 
-
 			<activation>
-
-		        <property>
-        		  <name>!performRelease</name>
-		        </property>
-
+        <property>
+          <name>!performRelease</name>
+        </property>
 			</activation>
-
-			 <distributionManagement>
+      <!-- TODO: make this not run by default
+			<distributionManagement>
         <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Sonatype Nexus Snapshots</name>
-            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
-             <uniqueVersion>false</uniqueVersion>
+          <id>sonatype-nexus-snapshots</id>
+          <name>Sonatype Nexus Snapshots</name>
+          <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+          <uniqueVersion>false</uniqueVersion>
         </snapshotRepository>
-    </distributionManagement>
+      </distributionManagement>
+      -->
 
 			<repositories>
 				<repository>
 					<id>nexus-snapshots</id>
 					<name>Sonatype Nexus Snapshots</name>
-            		<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+          <url>http://oss.sonatype.org/content/repositories/snapshots</url>
 					<snapshots><enabled>true</enabled></snapshots>
-
 				</repository>
 			</repositories>
 
 		</profile>
-
 	</profiles>
 
 	
