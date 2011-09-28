@@ -47,12 +47,16 @@ public abstract class EditableCellPanel extends Panel {
 			return false;
 		}
 	}
-	
+
+  /** @return boolean indicating visibility determined
+   * by if the field has been edited or not
+   */
 	@Override
 	public boolean isVisible() {
 		return column.getGrid().isItemEdited(getDefaultModel());		
 	}
-	
+
+  //TODO: javadoc comment this
 	public abstract FormComponent getEditComponent();
 	
 }

@@ -53,9 +53,8 @@ public class CheckBoxColumn extends AbstractColumn {
 	 */
 	@Override
 	public Component newCell(WebMarkupContainer parent, String componentId,
-			IModel rowModel) {
-		return new BodyCheckBoxPanel(componentId, rowModel);
-	}
+			                     IModel rowModel)
+  { return new BodyCheckBoxPanel(componentId, rowModel); }
 
 	/**
 	 * {@inheritDoc}
@@ -67,9 +66,7 @@ public class CheckBoxColumn extends AbstractColumn {
 
 	private void processTag(ComponentTag tag, IModel model) {
 		if (!isCheckBoxEnabled(model)) {
-
 			tag.put("disabled", "disabled");
-
 		} else if (getGrid() instanceof TreeGrid				
 				&& ((TreeGrid) getGrid()).isAutoSelectChildren()) {
 			
@@ -81,13 +78,9 @@ public class CheckBoxColumn extends AbstractColumn {
 		}
 	}
 
-	protected boolean isCheckBoxEnabled(IModel model) {
-		return true;
-	}
+	protected boolean isCheckBoxEnabled(IModel model) { return true; }
 
-	protected boolean isCheckBoxVisible(IModel model) {
-		return true;
-	}
+	protected boolean isCheckBoxVisible(IModel model) { return true; }
 
 	/**
 	 * Panel with checkbox that selects/deselects given row

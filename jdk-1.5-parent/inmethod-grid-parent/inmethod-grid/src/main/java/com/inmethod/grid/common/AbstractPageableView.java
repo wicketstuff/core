@@ -172,6 +172,9 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 	 */
 	private transient QueryResult queryResult;
 
+  /** clears the queryResult so  the next use will be forced to re-initialize */
+  public void clearCache() { queryResult = null; }
+
 	/**
 	 * Allows to wrap created query.
 	 *
@@ -200,14 +203,16 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 			// process the QueryResult
 			queryResult.process(dataSource);
 
-			// check for situation when we didn't get any items, but we know the real count
-			// this is not a case when there are no items at all, just the case when there are no items on current page
+			// check for situation when we didn't get any items,
+			// but we know the real count
+			// this is not a case when there are no items at all,
+			// just the case when there are no items on current page
 			// but possible items on previous pages
 			if (queryResult.itemCache.size() == 0 && realItemCount != UNKOWN_COUNT &&
 				realItemCount != oldItemCount && realItemCount > 0) {
 
-				// the data must have changed, the number of items has been reduced. try move to
-				// last page
+				// the data must have changed, the number of items has been reduced.
+				// try move to the last page
 				int page = getPageCount() - 1;
 				if (page < 0) {
 					page = 0;
@@ -285,7 +290,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 		public int getTotalCount() {
 			return result.totalCount;
 		}
-	};
+	}
 
 	/**
 	 * Convenience class representing an empty iterator
@@ -317,7 +322,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 		}
 
 		private static final EmptyIterator<?> INSTANCE = new EmptyIterator<Object>();
-	};
+	}
 
 	/**
 	 * A {@link IQueryResult} implementation
@@ -393,7 +398,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
 				AbstractPageableView.this.realItemCount = totalCount;
 			}
 		}
-	};
+	}
 
 	/**
 	 * Cleanup

@@ -12,10 +12,10 @@
   <body>
 <wicket:panel>
 	<div style="padding-left: 1px; padding-right: 1px; border: 1px solid #88CFFF">
-		<input wicket:id="checkbox" onfocus="InMethod.setCursorPos(this, 0, this.value.length);"
+		<input wicket:id="checkbox" type="checkbox"
+           onfocus="InMethod.setCursorPos(this, 0, this.value.length);"
 		       onkeyup="return InMethod.editKeyUp(this, event);"
-		       onkeypress="return InMethod.editKeyPress(this, event);"
-           type="checkbox" />
+		       onkeypress="return InMethod.editKeyPress(this, event);" />
 	</div>
 </wicket:panel>
   </body>

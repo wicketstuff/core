@@ -12,12 +12,12 @@ import org.apache.wicket.model.PropertyModel;
 import com.inmethod.grid.column.PropertyColumn;
 
 /**
- * Property column that uses a {@link CheckboxFieldPanel} as cell component
+ * Property column that uses a {@link CheckBoxPanel} as cell component
  * when the item is selected.
- *  based on(read: copy-paste-modify) EditablePropetyColumn By Matej Knopp
- * @author Tom B.
+ *
+ * @author Tom Burton
  */
-public class CheckBoxPropertyColumn extends PropertyColumn
+public class CheckBoxPropertyColumn extends EditablePropertyColumn
 {
 	private static final long serialVersionUID = 1L;
 
@@ -88,70 +88,11 @@ public class CheckBoxPropertyColumn extends PropertyColumn
   {
 		super(headerModel, propertyExpression);
 	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
+
+  /** {@inheritDoc} */
 	@Override
-	public boolean isLightWeight(IModel rowModel)
-  {
-		// when the item is selected, we need a checkbox component,
-		// thus this method has to return false.
-		return !getGrid().isItemEdited(rowModel);
-	}
-	
-	protected IModel getFieldModel(IModel rowModel)
-  {	return new PropertyModel(rowModel, getPropertyExpression()); }
-	
-	protected EditableCellPanel newCellPanel(String componentId, IModel rowModel,
+  protected EditableCellPanel newCellPanel(String componentId, IModel rowModel,
                                            IModel cellModel)
   {	return new CheckBoxPanel(componentId, cellModel, rowModel, this); }
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Component newCell(WebMarkupContainer parent, String componentId, IModel rowModel)
-  {
-		// when this method is called, it means that the row is not lightweight, which in turn
-		// means the the row is selected (see implementation of #isLightWeight(IModel).
-		
-		EditableCellPanel panel = newCellPanel(componentId, rowModel, getFieldModel(rowModel));
-		addValidators(panel.getEditComponent());
-		return panel;
-		
-		// for lightweight rows (that are not selected) the lightweight #newCell(IModel) method
-		// is called that only displays the item 
-	}
-	
-	protected void addValidators(FormComponent component) { }
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getCellCssClass(IModel rowModel, int rowNum)
-  {
-		String prelight = isClickToEdit() ? "imxt-want-prelight" : "";
-		// for selected items we don't want the default cell item padding because we need
-		// to put a textfield in it, so the special "imxt-no-padding-cell" CSS class is used. 
-		if (getGrid().isItemEdited(rowModel)) {
-			return "imxt-no-padding-cell " + prelight + " imxt-edited-cell";
-		} else { return prelight; }
-	}
-	
-	@Override
-	public boolean cellClicked(IModel rowModel)
-  {
-		if (!isClickToEdit() || (getGrid().isClickRowToSelect() && getGrid().isSelectToEdit()))
-    { return false;	}
-    else
-    {
-			getGrid().setItemEdit(rowModel, true);
-			getGrid().update();
-			return true;
-		}
-	}
-	
-	protected boolean isClickToEdit() { return true; }
+
 }

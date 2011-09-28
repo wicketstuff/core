@@ -1,11 +1,7 @@
 package com.inmethod.grid.column.editable;
 
-/**
- * TODO: REWRITE TO PASS DateConverter instead
- */
-
-
 import org.apache.wicket.Component;
+import org.apache.wicket.datetime.DateConverter;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -15,17 +11,18 @@ import org.apache.wicket.model.PropertyModel;
 import com.inmethod.grid.column.PropertyColumn;
 
 /**
- * Property column that uses a {@link TextFieldPanel} as cell component
+ * Property column that uses a {@link DateTextFieldPanel} as cell component
  * when the item is selected.
- * @author Matej Knopp
  *
+ * @author Tom Burton
+ *
+ * TODO: rename to EditableDateColumn
  */
-public class DatePropertyColumn extends PropertyColumn {
+public class DatePropertyColumn extends EditablePropertyColumn {
 
 	private static final long serialVersionUID = 1L;
 
-  private boolean applyTimeZoneDifference = false;
-  private String dateStyle = null;
+  private DateConverter converter;
 
 	/**
 	 * Constructor.
@@ -39,14 +36,15 @@ public class DatePropertyColumn extends PropertyColumn {
 	 * @param sortProperty
 	 *            optional string that will be returned by {@link ISortState} to indicate that the
 	 *            column is being sorted
+   * @param dc
+   *            DateConverter to use to display a properly formatted date/time
 	 */
 	public DatePropertyColumn(String columnId, IModel headerModel,
                             String propertyExpression, String sortProperty,
-                            boolean applyTimeZoneDifference, String dateStyle)
+                            DateConverter dc)
   {
 		super(columnId, headerModel, propertyExpression, sortProperty);
-    this.applyTimeZoneDifference = applyTimeZoneDifference;
-    this.dateStyle = dateStyle;
+    converter = dc;
 	}
 
 	/**
@@ -58,14 +56,15 @@ public class DatePropertyColumn extends PropertyColumn {
 	 *            model for column header
 	 * @param propertyExpression
 	 *            property expression used to get the displayed value for row object
+   * @param dc
+   *            DateConverter to use to display a properly formatted date/time
 	 */
 	public DatePropertyColumn(String columnId, IModel headerModel,
                             String propertyExpression,
-                            boolean applyTimeZoneDifference, String dateStyle)
+                            DateConverter dc)
   {
 		super(columnId, headerModel, propertyExpression);
-    this.applyTimeZoneDifference = applyTimeZoneDifference;
-    this.dateStyle = dateStyle;
+    converter = dc;
 	}
 
 	/**
@@ -79,74 +78,18 @@ public class DatePropertyColumn extends PropertyColumn {
 	 * @param sortProperty
 	 *            optional string that will be returned by {@link ISortState} to indicate that the
 	 *            column is being sorted
+   * @param dc
+   *            DateConverter to use to display a properly formatted date/time
 	 */
 	public DatePropertyColumn(IModel headerModel, String propertyExpression,
                             String sortProperty,
-                            boolean applyTimeZoneDifference, String dateStyle)
+                            DateConverter dc)
   {
 		super(headerModel, propertyExpression, sortProperty);
-    this.applyTimeZoneDifference = applyTimeZoneDifference;
-    this.dateStyle = dateStyle;
-	}
-
-	/**
-	 * Constructor. The column id is omitted in this constructor, because the property expression is
-	 * used as column id.
-	 * 
-	 * @param headerModel
-	 *            model for column header
-	 * @param propertyExpression
-	 *            property expression used to get the displayed value for row object
-	 */
-	public DatePropertyColumn(IModel headerModel, String propertyExpression,
-                            boolean applyTimeZoneDifference, String dateStyle)
-  {
-		super(headerModel, propertyExpression);
-    this.applyTimeZoneDifference = applyTimeZoneDifference;
-    this.dateStyle = dateStyle;
+    converter = dc;
 	}
 
   /**
-	 * Constructor.
-	 *
-	 * @param columnId
-	 *            column identified (must be unique within the grid)
-	 * @param headerModel
-	 *            model for column header
-	 * @param propertyExpression
-	 *            property expression used to get the displayed value for row object
-	 * @param sortProperty
-	 *            optional string that will be returned by {@link ISortState} to indicate that the
-	 *            column is being sorted
-	 */
-	public DatePropertyColumn(String columnId, IModel headerModel,
-                            String propertyExpression, String sortProperty,
-                            boolean applyTimeZoneDifference)
-  {
-		super(columnId, headerModel, propertyExpression, sortProperty);
-    this.applyTimeZoneDifference = applyTimeZoneDifference;
-	}
-
-	/**
-	 * Constructor.
-	 *
-	 * @param columnId
-	 *            column identified (must be unique within the grid)
-	 * @param headerModel
-	 *            model for column header
-	 * @param propertyExpression
-	 *            property expression used to get the displayed value for row object
-	 */
-	public DatePropertyColumn(String columnId, IModel headerModel,
-                            String propertyExpression,
-                            boolean applyTimeZoneDifference)
-  {
-		super(columnId, headerModel, propertyExpression);
-    this.applyTimeZoneDifference = applyTimeZoneDifference;
-    this.dateStyle = dateStyle;
-	}
-
-	/**
 	 * Constructor. The column id is omitted in this constructor, because the property expression is
 	 * used as column id.
 	 *
@@ -154,184 +97,31 @@ public class DatePropertyColumn extends PropertyColumn {
 	 *            model for column header
 	 * @param propertyExpression
 	 *            property expression used to get the displayed value for row object
-	 * @param sortProperty
-	 *            optional string that will be returned by {@link ISortState} to indicate that the
-	 *            column is being sorted
+   * @param dc
+   *            DataConverter for how to properly display the Date/Time info
 	 */
 	public DatePropertyColumn(IModel headerModel, String propertyExpression,
-                            String sortProperty,
-                            boolean applyTimeZoneDifference)
-  {
-		super(headerModel, propertyExpression, sortProperty);
-    this.applyTimeZoneDifference = applyTimeZoneDifference;
-    this.dateStyle = dateStyle;
-	}
-
-	/**
-	 * Constructor. The column id is omitted in this constructor, because the property expression is
-	 * used as column id.
-	 *
-	 * @param headerModel
-	 *            model for column header
-	 * @param propertyExpression
-	 *            property expression used to get the displayed value for row object
-	 */
-	public DatePropertyColumn(IModel headerModel, String propertyExpression,
-                            boolean applyTimeZoneDifference)
+                            DateConverter dc)
   {
 		super(headerModel, propertyExpression);
-    this.applyTimeZoneDifference = applyTimeZoneDifference;
-    this.dateStyle = dateStyle;
+    converter = dc;
 	}
 
-  /**
-	 * Constructor.
-	 *
-	 * @param columnId
-	 *            column identified (must be unique within the grid)
-	 * @param headerModel
-	 *            model for column header
-	 * @param propertyExpression
-	 *            property expression used to get the displayed value for row object
-	 * @param sortProperty
-	 *            optional string that will be returned by {@link ISortState} to indicate that the
-	 *            column is being sorted
-	 */
-	public DatePropertyColumn(String columnId, IModel headerModel,
-                            String propertyExpression, String sortProperty)
-  {
-		super(columnId, headerModel, propertyExpression, sortProperty);
-    this.applyTimeZoneDifference = applyTimeZoneDifference;
-    this.dateStyle = dateStyle;
-	}
-
-	/**
-	 * Constructor.
-	 *
-	 * @param columnId
-	 *            column identified (must be unique within the grid)
-	 * @param headerModel
-	 *            model for column header
-	 * @param propertyExpression
-	 *            property expression used to get the displayed value for row object
-	 */
-	public DatePropertyColumn(String columnId, IModel headerModel,
-                            String propertyExpression)
-  {
-		super(columnId, headerModel, propertyExpression);
-    this.applyTimeZoneDifference = applyTimeZoneDifference;
-    this.dateStyle = dateStyle;
-	}
-
-	/**
-	 * Constructor. The column id is omitted in this constructor, because the property expression is
-	 * used as column id.
-	 *
-	 * @param headerModel
-	 *            model for column header
-	 * @param propertyExpression
-	 *            property expression used to get the displayed value for row object
-	 * @param sortProperty
-	 *            optional string that will be returned by {@link ISortState} to indicate that the
-	 *            column is being sorted
-	 */
-	public DatePropertyColumn(IModel headerModel, String propertyExpression,
-                            String sortProperty)
-  {
-		super(headerModel, propertyExpression, sortProperty);
-    this.applyTimeZoneDifference = applyTimeZoneDifference;
-    this.dateStyle = dateStyle;
-	}
-
-	/**
-	 * Constructor. The column id is omitted in this constructor, because the property expression is
-	 * used as column id.
-	 *
-	 * @param headerModel
-	 *            model for column header
-	 * @param propertyExpression
-	 *            property expression used to get the displayed value for row object
-	 */
-	public DatePropertyColumn(IModel headerModel, String propertyExpression)
-  {
-		super(headerModel, propertyExpression);
-    this.applyTimeZoneDifference = applyTimeZoneDifference;
-    this.dateStyle = dateStyle;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isLightWeight(IModel rowModel) {
-		// when the item is selected, we need a textField component, thus
-		// this method has to return false.
-		return !getGrid().isItemEdited(rowModel);
-	}
-	
-	protected IModel getFieldModel(IModel rowModel) {
-		return new PropertyModel(rowModel, getPropertyExpression());
-	}
-	
+  /** {@inheritDoc} */
+  @Override
 	protected EditableCellPanel newCellPanel(String componentId, IModel rowModel,
                                            IModel cellModel)
   {
 		return new DateTextFieldPanel(componentId, cellModel, rowModel, this,
-                                  applyTimeZoneDifference, dateStyle);
+                                  converter);
 	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Component newCell(WebMarkupContainer parent, String componentId,
-                           IModel rowModel)
+
+  /** {@inheritDoc} */
+  @Override
+  protected CharSequence convertToString(Object obj)
   {
-		// when this method is called, it means that the row is not lightweight, which in turn
-		// means the the row is selected (see implementation of #isLightWeight(IModel).
-		
-		EditableCellPanel panel = newCellPanel(componentId, rowModel,
-                                           getFieldModel(rowModel));
-		addValidators(panel.getEditComponent());
-		return panel;
-		
-		// for lightweight rows (that are not selected) the lightweight #newCell(IModel) method
-		// is called that only displays the item 
-	}
-	
-	protected void addValidators(FormComponent component) {
-		
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getCellCssClass(IModel rowModel, int rowNum)
-  {
-		String prelight = isClickToEdit() ? "imxt-want-prelight" : "";
-		// for selected items we don't want the default cell item padding because we need
-		// to put a textfield in it, so the special "imxt-no-padding-cell" CSS class is used. 
-		if (getGrid().isItemEdited(rowModel)) {
-			return "imxt-no-padding-cell " + prelight + " imxt-edited-cell";
-		} else {
-			return prelight;
-		}
-	}
-	
-	@Override
-	public boolean cellClicked(IModel rowModel)
-  {
-		if ( !isClickToEdit()
-      || (getGrid().isClickRowToSelect() && getGrid().isSelectToEdit()) )
-    { return false; }
-    else
-    {
-			getGrid().setItemEdit(rowModel, true);
-			getGrid().update();
-			return true;
-		}
-	}
-	
-	protected boolean isClickToEdit() { return true; }
+    if (null != obj) { return converter.convertToString(obj,getLocale()); }
+    else { return ""; }
+  }
+
 }

@@ -37,7 +37,7 @@ public class TextFieldPanel extends EditableCellPanel {
 		protected void onComponentTag(ComponentTag tag) {
 			super.onComponentTag(tag);
 			
-			if (isValid() == false) {
+			if (!isValid()) {
 				tag.put("class", "imxt-invalid");
 				FeedbackMessage message = getFeedbackMessage();
 				if (message != null) {

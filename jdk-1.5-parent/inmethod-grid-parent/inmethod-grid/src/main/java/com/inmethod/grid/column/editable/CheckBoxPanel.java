@@ -4,7 +4,6 @@ import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 
 import com.inmethod.grid.column.AbstractColumn;
@@ -12,22 +11,24 @@ import com.inmethod.grid.column.AbstractColumn;
 /**
  * Panel with a Checkbox that updates the property of the row immediately after
  * user leaves the field.
- * based on(read: copy-paste-modify) TextFieldPanel By Matej Knopp
- * @author Tom B.
+ * based on(read: copy-paste-modify) {@link TextFieldPanel} By Matej Knopp
+ * @author Tom Burton
  */
 public class CheckBoxPanel extends EditableCellPanel
 {
-	private static final String TEXTFIELD_ID = "checkbox";
+	private static final long serialVersionUID = 1L;
+
+  private static final String CheckBox_ID = "checkbox";
 
 	protected class DefaultCheckBox extends CheckBox
   {
 		private static final long serialVersionUID = 1L;
 
 		/**
-		 * Constructor for DefaultTextField
+		 * Constructor for DefaultCheckBox
 		 * 
-		 * @param id
-		 * @param object
+		 * @param id editable Field id
+		 * @param object model object being edited
 		 */
 		protected DefaultCheckBox(String id, IModel object) { super(id, object); }
 
@@ -36,7 +37,7 @@ public class CheckBoxPanel extends EditableCellPanel
     {
 			super.onComponentTag(tag);
 			
-			if (isValid() == false)
+			if (!isValid())
       {
 				tag.put("class", "imxt-invalid");
 				FeedbackMessage message = getFeedbackMessage();
@@ -52,6 +53,8 @@ public class CheckBoxPanel extends EditableCellPanel
 	 * 		component id
 	 * @param model
 	 * 		model for the field
+   * @param rowModel
+   *    model for the whole data row
 	 * @param column
 	 * 		column to which this panel belongs
 	 */
@@ -60,26 +63,22 @@ public class CheckBoxPanel extends EditableCellPanel
   {
 		super(id, column, rowModel);
 		
-		CheckBox cb = newCheckBox(TEXTFIELD_ID, model);
+		CheckBox cb = newCheckBox(CheckBox_ID, model);
 		cb.setOutputMarkupId(true);
 		cb.setLabel(column.getHeaderModel());
 		add(cb);
 	}
 
-	/**
-	 * newcheckBox
-	 * 
-	 * @param id
-	 * @param model
-	 * @return TextField
+	/** creates a new CheckBox to be added for editing
+	 *  @param id editable component Id
+	 *  @param model field model
+	 *  @return checkbox to display
 	 */
 	protected CheckBox newCheckBox(final String id, final IModel model)
   {	return new DefaultCheckBox(id, model); }
-		
+
+  /** @return the FormComponent for editing */
 	@Override
 	public FormComponent getEditComponent()
-  { return (FormComponent) get(TEXTFIELD_ID); }
-	
-	private static final long serialVersionUID = 1L;
-	
+  { return (FormComponent) get(CheckBox_ID); }
 }

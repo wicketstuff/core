@@ -1,5 +1,8 @@
 package com.inmethod.grid.column.editable;
 
+import java.util.Date;
+
+import org.apache.wicket.datetime.DateConverter;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -10,58 +13,64 @@ import org.apache.wicket.datetime.StyleDateConverter;
 import com.inmethod.grid.column.AbstractColumn;
 
 /**
- * Panel with a TextField that updates the property of the row immediately after
+ * Panel with a DateTextField that updates the property of the row immediately after
  * user leaves the field.
- * 
- * @author Matej Knopp
+ * Based on (Read: Copy-Paste Modify) {@link EditablePropertyColumn}
+ *
+ * @author Tom Burton
  */
 public class DateTextFieldPanel extends EditableCellPanel
 {
-	private static final String TEXTFIELD_ID = "textfield";
+	private static final long serialVersionUID = 1L;
+
+	private static final String DateTextField_ID = "dateTextField";
 
 	protected class DefaultDateTextField extends DateTextField
   {
 		private static final long serialVersionUID = 1L;
 
-		/**
-		 * Constructor for DefaultTextField
-		 * 
-		 * @param id
-		 * @param object
+		/** Constructor for DefaultDateTextField
+		 *  @param id component Id
+		 *  @param object model to be edited
 		 */
 		protected DefaultDateTextField(String id, IModel object)
     { super(id, object, new StyleDateConverter(false)); }
 
-    /**
-  	 * Constructor for DefaultTextField
-		 *
-		 * @param id
-		 * @param object
+    /** Constructor for DefaultDateTextField
+		 *  @param id component Id
+		 *  @param object model to be edited
+     *  @param dc DateConverter to use
+     *  @see DateTextField#DateTextField(String, IModel, DateConverter)
 		 */
-		protected DefaultDateTextField(String id, IModel object,
-                                   boolean applyTimeZoneDifference)
-    { super(id, object, new StyleDateConverter(applyTimeZoneDifference)); }
-    /**
-  	 * Constructor for DefaultTextField
-		 *
-		 * @param id
-		 * @param object
+		protected DefaultDateTextField(String id, IModel<Date> object,
+                                   DateConverter dc)
+    { super(id, object, dc); }
+
+    /** Constructor for DefaultDateTextField
+		 *  @param id component Id
+		 *  @param object model to be edited
+     *  @param applyTimeZoneDifference whether or not to apply the Time zone difference
+     *  @param dateStyle date style to use for date display
+     *  @see DateTextField#DateTextField(String, IModel, DateConverter)
 		 */
 		protected DefaultDateTextField(String id, IModel object,
                                    boolean applyTimeZoneDifference, String dateStyle)
     { super(id, object, new StyleDateConverter(dateStyle, applyTimeZoneDifference)); }
 
-		@Override
+		/** {@inheritDoc} */
+    @Override
 		protected void onComponentTag(ComponentTag tag)
     {
 			super.onComponentTag(tag);
 			
-			if (isValid() == false) {
+			if (!isValid())
+      {
 				tag.put("class", "imxt-invalid");
 				FeedbackMessage message = getFeedbackMessage();
-				if (message != null) {
-					tag.put("title", message.getMessage().toString());
-				}
+				if (message != null)
+        {
+          tag.put("title", message.getMessage().toString());
+        }
 			}
 		}
 	}
@@ -72,41 +81,42 @@ public class DateTextFieldPanel extends EditableCellPanel
 	 * 		component id
 	 * @param model
 	 * 		model for the field
+   * @param rowModel
+   *    model for the data row
 	 * @param column
 	 * 		column to which this panel belongs
+   * @param dc
+   *    Converter for the data to display
 	 */
 	public DateTextFieldPanel(String id, final IModel model, IModel rowModel,
                             AbstractColumn column,
-                            boolean applyTimeZoneDifference, String dateStyle)
+                            DateConverter dc)
   {
 		super(id, column, rowModel);
 		
-		DateTextField tf = newDateTextField(TEXTFIELD_ID, model,
-                                        applyTimeZoneDifference, dateStyle);
+		DateTextField tf = newDateTextField(DateTextField_ID, model, dc);
 		tf.setOutputMarkupId(true);
 		tf.setLabel(column.getHeaderModel());
 		add(tf);		
 	}
 
-	/**
-	 * newTextField
+	/** newDateTextField
 	 * 
-	 * @param id
-	 * @param model
-	 * @return TextField
+	 *  @param id component Id
+	 *  @param model model of the field to be edited
+   *  @param dc DateConverter
+   *  @see DateTextField#DateTextField(String, IModel, DateConverter)
+	 *  @return DateTextField
 	 */
 	protected DateTextField newDateTextField(final String id, final IModel model,
-                                           boolean applyTimeZoneDifference,
-                                           String dateStyle)
+                                           DateConverter dc)
   {
-		return new DefaultDateTextField(id, model,applyTimeZoneDifference,dateStyle);
+		return new DefaultDateTextField(id, model, dc);
 	}
-		
+
+
 	@Override
 	public FormComponent getEditComponent() {
-		return (FormComponent) get(TEXTFIELD_ID);
+		return (FormComponent) get(DateTextField_ID);
 	}
-	
-	private static final long serialVersionUID = 1L;
-	
 }
