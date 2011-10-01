@@ -24,7 +24,7 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 public class Start
 {
 	private static final Logger log = LoggerFactory.getLogger(Start.class);
-	//private static final RuntimeConfigurationType CONFIG = RuntimeConfigurationType.DEPLOYMENT;
+	// private static final RuntimeConfigurationType CONFIG = RuntimeConfigurationType.DEPLOYMENT;
 	private static final RuntimeConfigurationType CONFIG = RuntimeConfigurationType.DEVELOPMENT;
 
 	static
@@ -50,7 +50,7 @@ public class Start
 		connector.setMaxIdleTime(1000 * 60 * 60);
 		connector.setSoLingerTime(-1);
 		connector.setPort(8080);
-		server.setConnectors(new Connector[]{connector});
+		server.setConnectors(new Connector[] { connector });
 
 		server.setHandler(createApp());
 
@@ -72,7 +72,8 @@ public class Start
 		// wicket application
 		final FilterHolder wicket = new FilterHolder(WicketFilter.class);
 		wicket.setInitParameter(Application.CONFIGURATION, CONFIG.name());
-		wicket.setInitParameter(ContextParamWebApplicationFactory.APP_CLASS_PARAM, ClosureCompilerApp.class.getName());
+		wicket.setInitParameter(ContextParamWebApplicationFactory.APP_CLASS_PARAM,
+			ClosureCompilerApp.class.getName());
 		wicket.setInitParameter(WicketFilter.FILTER_MAPPING_PARAM, "/*");
 		root.addFilter(wicket, "/*", EnumSet.allOf(DispatcherType.class));
 

@@ -4,23 +4,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.wicket.javascript.IJavaScriptCompressor;
+import org.apache.wicket.util.lang.Args;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.javascript.jscomp.CommandLineRunner;
 import com.google.javascript.jscomp.CompilationLevel;
 import com.google.javascript.jscomp.Compiler;
 import com.google.javascript.jscomp.CompilerOptions;
 import com.google.javascript.jscomp.JSSourceFile;
 import com.google.javascript.jscomp.Result;
-import org.apache.wicket.javascript.IJavaScriptCompressor;
-import org.apache.wicket.util.lang.Args;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
+ * <p>
  * create a javascript compressor based on google's closure compiler.
  * </p>
- * due to the amount of cpu used by closure compiler the generated javascript
- * should definitely be cached, e.g. using resource caching in wicket 1.5.
- *
+ * due to the amount of cpu used by closure compiler the generated javascript should definitely be
+ * cached, e.g. using resource caching in wicket 1.5.
+ * 
  * @author Peter Ertl
  */
 public class ClosureCompilerJavaScriptCompressor implements IJavaScriptCompressor

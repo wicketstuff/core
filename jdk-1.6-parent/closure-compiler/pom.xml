@@ -6,11 +6,10 @@
 
   <parent>
     <groupId>org.wicketstuff</groupId>
-    <artifactId>jdk-1.5-parent</artifactId>
+    <artifactId>jdk-1.6-parent</artifactId>
     <version>1.5-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.wicketstuff</groupId>
   <artifactId>wicketstuff-closure-compiler</artifactId>
 
   <name>WicketStuff Closure Compiler Integration</name>
@@ -19,7 +18,6 @@
     <dependency>
       <groupId>com.google.javascript</groupId>
       <artifactId>closure-compiler</artifactId>
-      <version>r1352</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

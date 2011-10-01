@@ -548,6 +548,11 @@
 				<version>1.4</version>
 			</dependency>
 			<dependency>
+				<groupId>com.google.javascript</groupId>
+				<artifactId>closure-compiler</artifactId>
+				<version>r1352</version>
+			</dependency>
+			<dependency>
 				<groupId>com.ibatis</groupId>
 				<artifactId>ibatis2-sqlmap</artifactId>
 				<version>2.1.7.597</version>

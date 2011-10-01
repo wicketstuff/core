@@ -3,8 +3,6 @@ package org.wicketstuff.closurecompiler.testapp;
 import java.util.Arrays;
 import java.util.List;
 
-import com.google.javascript.jscomp.CompilationLevel;
-import com.google.javascript.jscomp.JSError;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
@@ -17,6 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.closurecompiler.ClosureCompilationException;
 import org.wicketstuff.closurecompiler.ClosureCompilerJavaScriptCompressor;
+
+import com.google.javascript.jscomp.CompilationLevel;
+import com.google.javascript.jscomp.JSError;
 
 public class HomePage extends WebPage
 {
@@ -64,13 +65,15 @@ public class HomePage extends WebPage
 		};
 
 		// source text area
-		TextArea<String> sourceText = new TextArea<String>("source", new PropertyModel<String>(this, "source"));
+		TextArea<String> sourceText = new TextArea<String>("source", new PropertyModel<String>(
+			this, "source"));
 		sourceText.setOutputMarkupId(true);
 		sourceText.setRequired(true);
 		form.add(sourceText);
 
 		// compression result text area
-		TextArea<String> resultText = new TextArea<String>("result", new PropertyModel<String>(this, "result"));
+		TextArea<String> resultText = new TextArea<String>("result", new PropertyModel<String>(
+			this, "result"));
 		resultText.setOutputMarkupId(true);
 		form.add(resultText);
 
@@ -100,7 +103,8 @@ public class HomePage extends WebPage
 				return String.valueOf(object.ordinal());
 			}
 		};
-		DropDownChoice<CompilationLevel> choice = new DropDownChoice<CompilationLevel>(id, model, choices, renderer);
+		DropDownChoice<CompilationLevel> choice = new DropDownChoice<CompilationLevel>(id, model,
+			choices, renderer);
 		choice.setRequired(true);
 		return choice;
 	}
@@ -113,8 +117,8 @@ public class HomePage extends WebPage
 		final String compressed = compressor.compressSource(source);
 		final float ratio = (float)compressed.length() / (float)source.length() * 100.0f;
 
-		success(String.format("original=%d bytes, compressed=%d bytes (%.2f%%)",
-		                      source.length(), compressed.length(), ratio));
+		success(String.format("original=%d bytes, compressed=%d bytes (%.2f%%)", source.length(),
+			compressed.length(), ratio));
 
 		return compressed;
 	}

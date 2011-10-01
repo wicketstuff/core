@@ -3,11 +3,13 @@ package org.wicketstuff.closurecompiler;
 import java.util.Collections;
 import java.util.List;
 
-import com.google.javascript.jscomp.JSError;
 import org.apache.wicket.util.lang.Args;
+
+import com.google.javascript.jscomp.JSError;
 
 public class ClosureCompilationException extends Exception
 {
+	private static final long serialVersionUID = 1L;
 	private final List<JSError> errors;
 
 	public ClosureCompilationException(List<JSError> errors)

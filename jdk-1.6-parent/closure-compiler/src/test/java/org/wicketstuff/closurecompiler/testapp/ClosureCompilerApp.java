@@ -1,6 +1,5 @@
 package org.wicketstuff.closurecompiler.testapp;
 
-import com.google.javascript.jscomp.CompilationLevel;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.wicketstuff.closurecompiler.ClosureCompilerJavaScriptCompressor;
