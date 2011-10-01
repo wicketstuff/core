@@ -63,7 +63,7 @@ public class TreeModelFactory
 		return convertToTreeModel(l1);
 	}
 
-	private DefaultTreeModel convertToTreeModel(List<Object> list)
+	private DefaultTreeModel convertToTreeModel(List<?> list)
 	{
 		DefaultTreeModel model = null;
 		DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(new TreeBean("Root"));
@@ -72,7 +72,7 @@ public class TreeModelFactory
 		return model;
 	}
 
-	private void add(DefaultMutableTreeNode parent, List<Object> sub)
+	private void add(DefaultMutableTreeNode parent, List<?> sub)
 	{
 		for (Object o : sub)
 		{
@@ -81,7 +81,7 @@ public class TreeModelFactory
 				DefaultMutableTreeNode child = new DefaultMutableTreeNode(
 					new TreeBean("subtree..."));
 				parent.add(child);
-				add(child, (List<Object>)o);
+				add(child, (List<?>)o);
 			}
 			else
 			{
