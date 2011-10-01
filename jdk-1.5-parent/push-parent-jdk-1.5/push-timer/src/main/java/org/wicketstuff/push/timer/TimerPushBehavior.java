@@ -72,7 +72,7 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 
 		final WebRequest request = (WebRequest)RequestCycle.get().getRequest();
 
-		if (request.getRequestParameters().getParameterValue("unload") != null)
+		if (!request.getRequestParameters().getParameterValue("unload").isNull())
 			// if the page is unloaded notify the pushService to disconnect all push nodes
 			for (final TimerPushNode<?> node : handlers.keySet())
 				pushService.onDisconnect(node);
