@@ -86,7 +86,7 @@ public class ClojureEngineTest
 		assertTrue(result.isSuccess());
 		assertNull(result.getException());
 		assertEquals("", result.getOutput());
-		assertEquals(5, result.getReturnValue());
+		assertEquals(5L, result.getReturnValue());
 	}
 
 	@Test
@@ -151,6 +151,7 @@ public class ClojureEngineTest
 		final IScriptExecutionResult result = engine.execute(script, bindings);
 
 		// Then
+		assertNull(result.getException());
 		assertEquals(5, result.getReturnValue());
 
 	}

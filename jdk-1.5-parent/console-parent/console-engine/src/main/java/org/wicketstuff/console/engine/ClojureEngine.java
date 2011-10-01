@@ -67,6 +67,7 @@ public class ClojureEngine implements IScriptEngine
 		final ByteArrayOutputStream bout = new ByteArrayOutputStream();
 		final PrintStream newOut = new PrintStream(bout, false);
 		final OutputStreamWriter newRtOut = new OutputStreamWriter(newOut);
+		boolean threadBindingPushed = false;
 
 		try
 		{
@@ -79,6 +80,7 @@ public class ClojureEngine implements IScriptEngine
 			mappings = mappings.assoc(RT.ERR, newRtOut);
 			mappings = applyBindings(bindings, mappings);
 			Var.pushThreadBindings(mappings);
+			threadBindingPushed = true;
 
 			returnValue = Compiler.load(new StringReader(script));
 		}
@@ -91,7 +93,10 @@ public class ClojureEngine implements IScriptEngine
 
 			try
 			{
-				Var.popThreadBindings();
+				if (threadBindingPushed)
+				{
+					Var.popThreadBindings();
+				}
 				newRtOut.flush();
 				newRtOut.close();
 				System.setOut(oldOut);
@@ -101,7 +106,18 @@ public class ClojureEngine implements IScriptEngine
 			}
 			catch (final Exception e1)
 			{
-				throw new ScriptEngineException(e1);
+				ScriptEngineException see;
+				if (exception == null)
+				{
+					see = new ScriptEngineException(e1);
+				}
+				else
+				{
+					see = new ScriptEngineException("Failed to handle original exception: " +
+						exception, e1);
+				}
+
+				throw see;
 			}
 
 		}
@@ -119,6 +135,7 @@ public class ClojureEngine implements IScriptEngine
 				final Symbol symbol = Symbol.intern(entry.getKey());
 				final Namespace userNs = Namespace.findOrCreate(Symbol.create("user".intern()));
 				final Var var = Var.intern(userNs, symbol);
+				var.setDynamic(true);
 				mappings = mappings.assoc(var, entry.getValue());
 			}
 		}
