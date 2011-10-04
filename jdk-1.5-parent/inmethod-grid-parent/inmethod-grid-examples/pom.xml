@@ -10,7 +10,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>inmethod-grid-examples</artifactId>
+	<artifactId>wicketstuff-inmethod-grid-examples</artifactId>
 	<packaging>war</packaging>
 
 	<name>InMethod Grid Examples</name>
