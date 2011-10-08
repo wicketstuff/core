@@ -23,7 +23,7 @@
   <parent>
     <artifactId>multi-text-input-parent</artifactId>
     <groupId>org.wicketstuff</groupId>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.5.1</version>
   </parent>
 
   <artifactId>multi-text-input-examples</artifactId>
