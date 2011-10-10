@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
+	<parent>
 		<groupId>org.wicketstuff</groupId>
-        <artifactId>jdk-1.6-parent</artifactId>
-        <version>1.5-SNAPSHOT</version>
-    </parent>
+		<artifactId>jdk-1.6-parent</artifactId>
+		<version>1.5-SNAPSHOT</version>
+	</parent>
 
-    <artifactId>wicketstuff-servlet3-parent</artifactId>
-    <packaging>pom</packaging>
+	<artifactId>wicketstuff-servlet3-parent</artifactId>
+	<packaging>pom</packaging>
 
-    <name>Wicket Servlet3 :: Parent</name>
+	<name>Wicket Servlet3 :: Parent</name>
 
-    <organization>
-        <name>WicketStuff</name>
-        <url>http://www.wicketstuff.org</url>
-    </organization>
+	<organization>
+		<name>WicketStuff</name>
+		<url>http://www.wicketstuff.org</url>
+	</organization>
 
-    <developers>
-        <developer>
-            <name>Martin Grigorov</name>
-            <email>mgrigorov - at - apache . org</email>
-            <timezone>+2</timezone>
-        </developer>
-    </developers>
+	<developers>
+		<developer>
+			<name>Martin Grigorov</name>
+			<email>mgrigorov - at - apache . org</email>
+			<timezone>+2</timezone>
+		</developer>
+	</developers>
 
-    <modules>
-        <module>wicket-servlet3</module>
-        <module>wicket-servlet3-examples</module>
-    </modules>
+	<modules>
+		<module>wicket-servlet3</module>
+		<module>wicket-servlet3-examples</module>
+	</modules>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>wicketstuff-servlet3</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>wicketstuff-servlet3</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
-            <!--  JETTY DEPENDENCIES FOR TESTING  -->
+			<!-- JETTY DEPENDENCIES FOR TESTING -->
 			<dependency>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-util</artifactId>
 				<version>${eclipse.jetty.version}</version>
 				<scope>test</scope>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-server</artifactId>
@@ -81,11 +81,11 @@
 				<artifactId>servlet-api</artifactId>
 				<version>3.0.20100224</version>
 			</dependency>
-        </dependencies>
-    </dependencyManagement>
+		</dependencies>
+	</dependencyManagement>
 
 	<properties>
-		<eclipse.jetty.version>8.0.1.v20110908</eclipse.jetty.version>
+		<eclipse.jetty.version>8.0.2.v20111006</eclipse.jetty.version>
 	</properties>
-    
+
 </project>

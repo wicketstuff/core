@@ -70,6 +70,7 @@ public class HtmlCompressingMarkupFactory extends MarkupFactory
 		{
 			compressor = new HtmlCompressor();
 			compressor.setRemoveIntertagSpaces(true);
+			compressor.setRemoveSurroundingSpaces(HtmlCompressor.BLOCK_TAGS_MIN);
 		}
 		this.compressor = compressor;
 	}
