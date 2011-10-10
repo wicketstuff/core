@@ -72,9 +72,9 @@ public class ProgressBarTest
 
 		});
 		wt.startComponentInPage(progressBar, null);
-		wt.assertLabel("label", "0%");
+		wt.assertLabel("panelId:label", "0%");
 		testProgressive.proceed(50);
-		wt.assertLabel("label", "50%");
+		wt.assertLabel("panelId:label", "50%");
 		assertTrue(progressBar.getOutputMarkupId());
 	}
 
@@ -95,9 +95,9 @@ public class ProgressBarTest
 			}
 
 		}), null);
-		wt.assertLabel("message", "Going for 0");
+		wt.assertLabel("panelId:message", "Going for 0");
 		testProgressive.proceed(75);
-		wt.assertLabel("message", "Going for 75");
+		wt.assertLabel("panelId:message", "Going for 75");
 	}
 
 }
