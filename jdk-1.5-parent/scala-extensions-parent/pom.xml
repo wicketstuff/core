@@ -84,6 +84,9 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<argLine>-Xmx512m</argLine>
+					<configuration>
+						<parallel>none</parallel>
+					</configuration>
 					<includes>
 						<include>**/*Test.java</include>
 						<include>**/*Unit.java</include>
@@ -98,5 +101,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
