@@ -90,7 +90,6 @@
 						<include>**/*Spec.java</include>
 						<include>**/*Specs.java</include>
 					</includes>
-					<parallel>none</parallel>
 				</configuration>
 			</plugin>
 			<plugin>
