@@ -84,15 +84,13 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<argLine>-Xmx512m</argLine>
-					<configuration>
-						<parallel>none</parallel>
-					</configuration>
 					<includes>
 						<include>**/*Test.java</include>
 						<include>**/*Unit.java</include>
 						<include>**/*Spec.java</include>
 						<include>**/*Specs.java</include>
 					</includes>
+					<parallel>none</parallel>
 				</configuration>
 			</plugin>
 			<plugin>
