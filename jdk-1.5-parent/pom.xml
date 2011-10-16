@@ -141,6 +141,7 @@
 								<target>1.5</target>
 								<compilerVersion>1.5</compilerVersion>
 								<executable>${env.JAVA_5_HOME}/bin/javac</executable>
+								<fork>true</fork>
 							</configuration>
 						</execution>
 						<!-- Will compile the modules using java 6 source to java 5 -->
@@ -149,7 +150,7 @@
 							<phase>process-sources</phase>
 							<goals><goal>compile</goal></goals>
 							<configuration>
-								<source>1.6</source>
+								<source>1.5</source>
 								<target>1.5</target>
 							</configuration>
 						</execution>
