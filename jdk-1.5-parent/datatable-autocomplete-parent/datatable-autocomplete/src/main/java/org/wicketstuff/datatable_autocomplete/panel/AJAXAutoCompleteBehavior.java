@@ -114,9 +114,12 @@ public class AJAXAutoCompleteBehavior extends
 		 */
 		Request request = RequestCycle.get().getRequest();
 
-		
-		// delegate the action to the processor.
-		dependencyProcessor.onAjaxUpdate(request, target);
+		if (dependencyProcessor.validate (request, target)) {
+
+			// delegate the action to the processor.
+			dependencyProcessor.onAjaxUpdate(request, target);
+
+		}
 
 	}
 
@@ -144,6 +147,18 @@ public class AJAXAutoCompleteBehavior extends
 		return "Wicket.Log.info ('on success script');";
 	}
 
+	
+	/* (non-Javadoc)
+	 * @see org.apache.wicket.ajax.AbstractDefaultAjaxBehavior#getPreconditionScript()
+	 */
+	@Override
+	protected CharSequence getPreconditionScript() {
+		return super.getPreconditionScript();
+	}
+
+
+
+
 	/*
 	 * (non-Javadoc)address=
 	 * 
@@ -169,8 +184,8 @@ public class AJAXAutoCompleteBehavior extends
 			Component c = dependencyProcessor.getQueryParameterToComponentMap()
 					.get(parameter);
 
-			String adjustedUrl = "&" + parameter + "='+Wicket.$('"
-					+ c.getMarkupId() + "').value";
+			String adjustedUrl = "&" + parameter + "='+ encodeURIComponent (Wicket.$('"
+					+ c.getMarkupId() + "').value)";
 
 			parameterList.add(adjustedUrl);
 

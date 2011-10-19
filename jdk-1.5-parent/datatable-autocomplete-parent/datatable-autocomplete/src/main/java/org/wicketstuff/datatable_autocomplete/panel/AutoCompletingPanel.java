@@ -56,10 +56,10 @@ public class AutoCompletingPanel<T> extends Panel {
 
 	private boolean initialRenderMode = false;
 
-	private static final ResourceReference CSS = new CompressedResourceReference(
+	public static final ResourceReference OVERLAY_CSS = new CompressedResourceReference(
 			AutoCompletingPanel.class, "dta_auto_complete_overlay.css");
 
-	private static final ResourceReference TABLE_CSS = new CompressedResourceReference(
+	public static final ResourceReference TABLE_CSS = new CompressedResourceReference(
 			AutoCompletingPanel.class, "dta_autocomplete_table.css");
 
 	private Label theLabel;
@@ -76,7 +76,7 @@ public class AutoCompletingPanel<T> extends Panel {
 			ITableRowSelectionHandler<T> rowSelectionHandler, IAutocompleteControlPanelProvider controlPanelProvider,
 			IAutocompleteRenderingHints renderingHints) {
 
-		this (id, CSS, TABLE_CSS, fieldStringModel, columns, aliasDataProvider, rowSelectionHandler, controlPanelProvider, renderingHints);
+		this (id, OVERLAY_CSS, TABLE_CSS, fieldStringModel, columns, aliasDataProvider, rowSelectionHandler, controlPanelProvider, renderingHints);
 		
 	}
 	public AutoCompletingPanel(String id, ResourceReference panelCSS, ResourceReference tableCSS, IModel<String> fieldStringModel,

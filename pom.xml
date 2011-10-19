@@ -64,6 +64,12 @@
 		<url>http://wicketstuff.org/hudson</url>
 	</ciManagement>
 
+
+	<modules>
+        	<module>jdk-1.5-parent</module>
+                <module>jdk-1.6-parent</module>
+        </modules>
+
 	<distributionManagement>
 		<site>
 			<id>local</id>
@@ -202,13 +208,6 @@
 				seperately and using a separate JDK.
 		-->	
 
-                <profile>
-                        <id>next-version</id>
-                        <modules>
-                                <module>jdk-1.5-parent</module>
-                                <module>jdk-1.6-parent</module>
-                        </modules>
-                </profile>
 
 		<profile>
 			<!-- setup for using oss.sonatype.org to hold snapshots -->
@@ -575,6 +574,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.2</version>
 				<configuration>
 					<archive>
 						<index>true</index>
