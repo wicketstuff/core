@@ -20,12 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
@@ -120,7 +115,7 @@ public class TimerPushService extends AbstractPushService
 		super();
 	}
 
-	private TimerPushBehavior _findPushBehaviour(final Component component)
+	public static TimerPushBehavior _findPushBehaviour(final Component component)
 	{
 		for (final Behavior behavior : component.getBehaviors())
 			if (behavior instanceof TimerPushBehavior)
@@ -350,7 +345,10 @@ public class TimerPushService extends AbstractPushService
 			if (behavior == null)
 				return;
 			if (behavior.removeNode(node) == 0)
-				component.remove(behavior);
+			{
+			  behavior.stop();
+			  component.remove(behavior);
+			}
 		}
 		else
 			LOG.warn("Unsupported push node type {}", node);
