@@ -2,6 +2,7 @@ package com.inmethod.grid.datagrid;
 
 import java.util.Collection;
 
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.navigation.paging.IPageable;
@@ -10,6 +11,7 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
 import org.apache.wicket.model.IModel;
 
+import com.inmethod.grid.IAppendableDataSource;
 import com.inmethod.grid.IDataSource;
 import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.IGridSortState;
@@ -17,6 +19,9 @@ import com.inmethod.grid.IDataSource.IQuery;
 import com.inmethod.grid.common.AbstractGridRow;
 import com.inmethod.grid.common.AbstractPageableView;
 import com.inmethod.grid.common.AttachPrelightBehavior;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sun.audio.AudioDataStream;
 
 /**
  * Contains data grid rows.
@@ -24,6 +29,7 @@ import com.inmethod.grid.common.AttachPrelightBehavior;
  * @author Matej Knopp
  */
 public abstract class DataGridBody extends Panel implements IPageable {
+  private static final Logger log = LoggerFactory.getLogger(DataGridBody.class);
 
 	/**
 	 * Constructor
@@ -53,10 +59,17 @@ public abstract class DataGridBody extends Panel implements IPageable {
 	private Data getData() {
 		return (Data) get("row");
 	}
+	
+	protected Item createItem(int index, final IModel rowModel)
+  { return getData().createItem(index,rowModel); }
 
 	int getTotalRowCount() {
 		return getData().getTotalRowCount();
 	}
+
+  void clearCache() {
+    getData().clearCache();
+  }
 
 	int getCurrentPageItemCount() {
 		return getData().getCurrentPageItemCount();
@@ -185,7 +198,7 @@ public abstract class DataGridBody extends Panel implements IPageable {
 
 				tag.put("class", klass);
 			}
-		};
+		}
 		
 		@Override
 		protected Item newItem(String id, final int index, final IModel model) {
@@ -193,6 +206,18 @@ public abstract class DataGridBody extends Panel implements IPageable {
 			item.setOutputMarkupId(true);
 			return item;
 		}
-	};
+		
+		/**
+		 * Create a new Item for this DataGrid.
+		 * NOTE: The item has not been added to the grid.
+		 * 
+		 * @param index row number for insertion
+		 * @param itemModel model of the data being inserted
+		 * @return Item item inserted
+		 */
+		public Item createItem(final int index, final IModel itemModel) {
+			return newItemFactory().newItem(index, itemModel);
+		}
+	}
 
 }

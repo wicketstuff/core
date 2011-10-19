@@ -1,6 +1,8 @@
 package com.inmethod.grid.common;
 
 import java.io.Serializable;
+import java.lang.Override;
+import java.lang.String;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -67,10 +69,10 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 
 		this.columns = columns;
 
-		add(new Header("header"));
+    Form form = new Form("form");
+ 		add(form);
 
-		Form form = new Form("form");
-		add(form);
+		form.add(new Header("header"));
 
 		WebMarkupContainer bodyContainer = new WebMarkupContainer("bodyContainer") {
 
@@ -87,15 +89,16 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 		form.add(bodyContainer);
 		bodyContainer.setOutputMarkupId(true);
 
-		bodyContainer.add(new Label("firstRow", new EmptyRowModel()).setEscapeModelStrings(false));
+		bodyContainer.add(new Label("firstRow", new EmptyRowModel())
+                 .setEscapeModelStrings(false));
 
-		add(topToolbarContainer = new RepeatingView("topToolbarContainer"));
-		add(bottomToolbarContainer = new RepeatingView("bottomToolbarContainer"));
-		add(headerToolbarContainer = new RepeatingView("headerToolbarContainer"));
+		form.add(topToolbarContainer = new RepeatingView("topToolbarContainer"));
+		form.add(bottomToolbarContainer = new RepeatingView("bottomToolbarContainer"));
+		form.add(headerToolbarContainer = new RepeatingView("headerToolbarContainer"));
 
+    // renders the initialization javascript right after the grid itself
 		add(new AbstractBehavior()
 		{
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -114,8 +117,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 			public void onRendered(Component component)
 			{
 				if (getWebRequest().isAjax())
-				{
-					// renders the initialization javascript right after the grid itself
+				{ // renders the initialization javascript right after the grid itself
 					getResponse().write(getInitializationJavascript(true));
 				}
 			}

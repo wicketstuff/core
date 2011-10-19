@@ -92,8 +92,20 @@ public class EditablePropertyColumn extends PropertyColumn {
 	protected IModel getFieldModel(IModel rowModel) {
 		return new PropertyModel(rowModel, getPropertyExpression());
 	}
-	
-	protected EditableCellPanel newCellPanel(String componentId, IModel rowModel, IModel cellModel) {
+
+  /** creates the actual editable version of the cell
+   *
+   * @param componentId
+   *         The non-null id of this component
+   * @param rowModel
+   *          model for given row
+   * @param cellModel
+   *          model for given cell
+   * @return {@link EditableCellPanel} containing a {@link FormComponent}
+   */
+  protected EditableCellPanel newCellPanel(String componentId, IModel rowModel,
+                                           IModel cellModel)
+  {
 		return new TextFieldPanel(componentId, cellModel, rowModel, this);
 	}
 	

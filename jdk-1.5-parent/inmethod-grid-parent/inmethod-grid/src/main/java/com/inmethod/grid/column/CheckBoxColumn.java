@@ -5,6 +5,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxCallDecorator;
 import org.apache.wicket.ajax.calldecorator.CancelEventIfNoAjaxDecorator;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
+import org.apache.wicket.behavior.IBehavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
@@ -52,9 +53,8 @@ public class CheckBoxColumn extends AbstractColumn {
 	 */
 	@Override
 	public Component newCell(WebMarkupContainer parent, String componentId,
-			IModel rowModel) {
-		return new BodyCheckBoxPanel(componentId, rowModel);
-	}
+			                     IModel rowModel)
+  { return new BodyCheckBoxPanel(componentId, rowModel); }
 
 	/**
 	 * {@inheritDoc}
@@ -66,9 +66,7 @@ public class CheckBoxColumn extends AbstractColumn {
 
 	private void processTag(ComponentTag tag, IModel model) {
 		if (!isCheckBoxEnabled(model)) {
-
 			tag.put("disabled", "disabled");
-
 		} else if (getGrid() instanceof TreeGrid				
 				&& ((TreeGrid) getGrid()).isAutoSelectChildren()) {
 			
@@ -80,13 +78,9 @@ public class CheckBoxColumn extends AbstractColumn {
 		}
 	}
 
-	protected boolean isCheckBoxEnabled(IModel model) {
-		return true;
-	}
+	protected boolean isCheckBoxEnabled(IModel model) { return true; }
 
-	protected boolean isCheckBoxVisible(IModel model) {
-		return true;
-	}
+	protected boolean isCheckBoxVisible(IModel model) { return true; }
 
 	/**
 	 * Panel with checkbox that selects/deselects given row
@@ -130,52 +124,59 @@ public class CheckBoxColumn extends AbstractColumn {
 			checkbox.setOutputMarkupId(true);
 			add(checkbox);
 
-			checkbox.add(new AjaxFormSubmitBehavior(getGrid().getForm(),
-					"onclick") {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				protected void onSubmit(AjaxRequestTarget target) {
-
-				}
-
-				@Override
-				protected void onError(AjaxRequestTarget target) {
-
-				}
-
-				@Override
-				protected void onEvent(AjaxRequestTarget target) {
-					// preserve the entered values in form components
-					Form form = getForm();
-					form
-							.visitFormComponentsPostOrder(new FormComponent.AbstractVisitor() {
-								public void onFormComponent(
-										final FormComponent formComponent) {
-									if (formComponent.isVisibleInHierarchy()) {
-										formComponent.inputChanged();
-									}
-								}
-							});
-
-					boolean selected = getGrid().isItemSelected(model);
-					getGrid().selectItem(model, !selected);
-					getGrid().update();
-				}
-
-				@Override
-				protected CharSequence getPreconditionScript() {
-					return "window.setTimeout(function(){this.checked=!this.checked}.bind(this),0);"
-							+ super.getPreconditionScript();
-				}
-
-				@Override
-				protected IAjaxCallDecorator getAjaxCallDecorator() {
-					return new CancelEventIfNoAjaxDecorator();
-				}
-			});
+			checkbox.add(newBodyBehavior(model));
 		}
 
+	}
+
+	/**
+	 * newBodyBehavior
+	 * 
+	 * @param model
+	 * @return IBehavior
+	 */
+	protected IBehavior newBodyBehavior(final IModel model) {
+		return new AjaxFormSubmitBehavior(getGrid().getForm(), "onclick") {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target) {
+
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target) {
+
+			}
+
+			@Override
+			protected void onEvent(AjaxRequestTarget target) {
+				// preserve the entered values in form components
+				Form form = getForm();
+				form.visitFormComponentsPostOrder(new FormComponent.AbstractVisitor() {
+					@Override
+					public void onFormComponent(final FormComponent formComponent) {
+						if (formComponent.isVisibleInHierarchy()) {
+							formComponent.inputChanged();
+						}
+					}
+				});
+
+				boolean selected = getGrid().isItemSelected(model);
+				getGrid().selectItem(model, !selected);
+				getGrid().update();
+			}
+
+			@Override
+			protected CharSequence getPreconditionScript() {
+				return "window.setTimeout(function(){this.checked=!this.checked}.bind(this),0);" + super.getPreconditionScript();
+			}
+
+			@Override
+			protected IAjaxCallDecorator getAjaxCallDecorator() {
+				return new CancelEventIfNoAjaxDecorator();
+			}
+		};
 	}
 
 	/**
@@ -226,7 +227,7 @@ public class CheckBoxColumn extends AbstractColumn {
 				}
 			});
 		}
-	};
+	}
 
 	/**
 	 * The actual panel with checkbox in column header
@@ -257,60 +258,67 @@ public class CheckBoxColumn extends AbstractColumn {
 			};
 			add(checkbox);
 
-			checkbox.add(new AjaxFormSubmitBehavior(getGrid().getForm(),
-					"onclick") {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				protected void onSubmit(AjaxRequestTarget target) {
-				}
-
-				@Override
-				protected void onError(AjaxRequestTarget target) {
-
-				}
-
-				@Override
-				protected void onEvent(AjaxRequestTarget target) {
-					// preserve the entered values in form components
-					Form form = getForm();
-					form
-							.visitFormComponentsPostOrder(new FormComponent.AbstractVisitor() {
-								public void onFormComponent(
-										final FormComponent formComponent) {
-									if (formComponent.isVisibleInHierarchy()) {
-										formComponent.inputChanged();
-									}
-								}
-							});
-
-					boolean checked = Strings.toBoolean(getRequest()
-							.getParameter("checked"));
-					if (checked)
-						getGrid().selectAllVisibleItems();
-					else
-						getGrid().resetSelectedItems();
-					getGrid().update();
-				}
-
-				@Override
-				public CharSequence getCallbackUrl() {
-					return super.getCallbackUrl() + "&checked='+this.checked+'";
-				}
-
-				@Override
-				protected CharSequence getPreconditionScript() {
-					return "window.setTimeout(function(){this.checked=!this.checked}.bind(this),0);"
-							+ super.getPreconditionScript();
-				}
-
-				@Override
-				protected IAjaxCallDecorator getAjaxCallDecorator() {
-					return new CancelEventIfNoAjaxDecorator();
-				}
-			});
+			checkbox.add(newHeadBehavior());
 		}
 
+	}
+
+	/**
+	 * newHeadBehavior
+	 * 
+	 * @return AjaxFormSubmitBehavior
+	 */
+	protected AjaxFormSubmitBehavior newHeadBehavior() {
+		return new AjaxFormSubmitBehavior(getGrid().getForm(), "onclick") {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target) {
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target) {
+
+			}
+
+			@Override
+			protected void onEvent(AjaxRequestTarget target) {
+				// preserve the entered values in form components
+				Form form = getForm();
+				form.visitFormComponentsPostOrder(new FormComponent.AbstractVisitor() {
+					@Override
+					public void onFormComponent(final FormComponent formComponent) {
+						if (formComponent.isVisibleInHierarchy()) {
+							formComponent.inputChanged();
+						}
+					}
+				});
+
+				boolean checked = Strings.toBoolean(getComponent().getRequest().getParameter("checked"));
+				if (checked) {
+					getGrid().selectAllVisibleItems();
+				}
+				else {
+					getGrid().resetSelectedItems();
+				}
+				getGrid().update();
+			}
+
+			@Override
+			public CharSequence getCallbackUrl() {
+				return super.getCallbackUrl() + "&checked='+this.checked+'";
+			}
+
+			@Override
+			protected CharSequence getPreconditionScript() {
+				return "window.setTimeout(function(){this.checked=!this.checked}.bind(this),0);" + super.getPreconditionScript();
+			}
+
+			@Override
+			protected IAjaxCallDecorator getAjaxCallDecorator() {
+				return new CancelEventIfNoAjaxDecorator();
+			}
+		};
 	}
 
 	/**

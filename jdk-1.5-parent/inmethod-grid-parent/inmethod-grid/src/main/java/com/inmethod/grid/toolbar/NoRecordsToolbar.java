@@ -58,7 +58,6 @@ public class NoRecordsToolbar extends AbstractToolbar
 	public NoRecordsToolbar(final DataGrid grid, IModel messageModel)
 	{
 		super(grid, null);
-	
 		add(new Label("msg", messageModel));
 	}
 	
