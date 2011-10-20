@@ -17,7 +17,7 @@
 package org.wicketstuff.push.timer;
 
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -30,6 +30,7 @@ import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.util.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketstuff.push.IPushEventContext;
 import org.wicketstuff.push.IPushEventHandler;
 import org.wicketstuff.push.IPushNode;
 
@@ -68,6 +69,12 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 	@Override
 	protected void onTimer(final AjaxRequestTarget target)
 	{
+		if (isStopped())
+		{
+			getComponent().remove(this);
+			return;
+		}
+
 		final TimerPushService pushService = TimerPushService.get(target.getPage().getApplication());
 
 		final WebRequest request = (WebRequest)RequestCycle.get().getRequest();
@@ -82,10 +89,7 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 			for (final Entry<TimerPushNode, IPushEventHandler> entry : handlers.entrySet())
 			{
 				final TimerPushNode node = entry.getKey();
-				for (final Iterator<TimerPushEventContext<?>> it = pushService.pollEvents(node)
-					.iterator(); it.hasNext();)
-				{
-					final TimerPushEventContext<?> ctx = it.next();
+				for (final IPushEventContext<?> ctx : (List<IPushEventContext<?>>)pushService.pollEvents(node))
 					try
 					{
 						entry.getValue().onEvent(target, ctx.getEvent(), node, ctx);
@@ -94,10 +98,12 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 					{
 						LOG.error("Failed while processing event", ex);
 					}
-				}
 			}
 	}
 
+	/**
+	 * @return the number of handlers after the removal
+	 */
 	int removeNode(final IPushNode<?> node)
 	{
 		handlers.remove(node);

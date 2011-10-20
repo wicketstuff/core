@@ -1,21 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE web-app
-      PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-      "http://java.sun.com/dtd/web-app_2_3.dtd">
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 
-<web-app>
-	<display-name>Wicket Contrib Cometd Examples</display-name>
+	<display-name>wicketstuff-push-examples</display-name>
 
-	<servlet>
-		<servlet-name>wicket-contrib-cometd-examples</servlet-name>
-		<servlet-class>org.apache.wicket.protocol.http.WicketServlet</servlet-class>
+	<filter>
+		<filter-name>wicket</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
 		<init-param>
 			<param-name>applicationClassName</param-name>
 			<param-value>org.wicketstuff.push.examples.ExampleApplication</param-value>
 		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
+	</filter>
 
+	<filter-mapping>
+		<filter-name>wicket</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 	<servlet>
 		<servlet-name>cometd</servlet-name>
 		<servlet-class>org.cometd.server.CometdServlet</servlet-class>
@@ -34,15 +36,9 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
-	<!-- Cometd -->
 	<servlet-mapping>
 		<servlet-name>cometd</servlet-name>
 		<url-pattern>/cometd/*</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>wicket-contrib-cometd-examples</servlet-name>
-		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 
 </web-app>

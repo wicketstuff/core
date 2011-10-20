@@ -58,6 +58,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 
 	private String user;
 	private String message;
+	private AjaxButton sendMessage;
 
 	public WicketAbstractChatPage(final PageParameters parameters,
 		final String pushImplementationTitle, final IPushService pushService)
@@ -94,7 +95,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 		formChat.add(messageField);
 
 		// send button
-		formChat.add(new AjaxButton("send", formChat)
+		formChat.add(sendMessage = new AjaxButton("send", formChat)
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -132,6 +133,26 @@ public abstract class WicketAbstractChatPage extends WebPage
 					appendHTML(target, chatHistoryField, _renderMessage(message));
 				}
 			});
+
+		// disconnect button
+		formChat.add(new AjaxButton("disconnect", formChat)
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onError(final AjaxRequestTarget target, final Form<?> form)
+			{
+				// nothing
+			}
+
+			@Override
+			protected void onSubmit(final AjaxRequestTarget target, final Form<?> form)
+			{
+				pushService.uninstallNode(WicketAbstractChatPage.this, pushNode);
+				target.add(setEnabled(false));
+				target.add(sendMessage.setEnabled(false));
+			}
+		});
 
 		/*
 		 * connect to chat room
