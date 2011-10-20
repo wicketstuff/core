@@ -10,7 +10,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>minis-examples</artifactId>
+	<artifactId>wicketstuff-minis-examples</artifactId>
 	<packaging>war</packaging>
 
 	<name>Minis - Examples</name>
