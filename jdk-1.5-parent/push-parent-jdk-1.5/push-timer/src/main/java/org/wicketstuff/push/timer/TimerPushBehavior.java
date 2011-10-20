@@ -98,6 +98,9 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 			}
 	}
 
+	/**
+	 * @return the number of handlers after the removal
+	 */
 	int removeNode(final IPushNode<?> node)
 	{
 		handlers.remove(node);

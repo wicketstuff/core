@@ -19,7 +19,6 @@ package org.wicketstuff.push.examples.pages;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.push.timer.TimerPushService;
 
-
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */

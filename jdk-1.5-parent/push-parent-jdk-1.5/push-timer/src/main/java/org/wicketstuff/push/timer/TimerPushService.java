@@ -159,6 +159,11 @@ public class TimerPushService extends AbstractPushService
 		final IPushEventHandler<EventType> handler, final Duration pollingInterval)
 	{
 		TimerPushBehavior behavior = _findPushBehaviour(component);
+		if (behavior != null && behavior.isStopped())
+		{
+			component.remove(behavior);
+			behavior = null;
+		}
 		if (behavior == null)
 		{
 			behavior = new TimerPushBehavior(pollingInterval);
@@ -345,10 +350,7 @@ public class TimerPushService extends AbstractPushService
 			if (behavior == null)
 				return;
 			if (behavior.removeNode(node) == 0)
-			{
-			  behavior.stop();
-			  component.remove(behavior);
-			}
+				behavior.stop();
 		}
 		else
 			LOG.warn("Unsupported push node type {}", node);
