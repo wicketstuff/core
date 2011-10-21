@@ -20,12 +20,6 @@
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>wicketstuff-push-cometd</artifactId>
 			<version>${project.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.eclipse.jetty</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 		<dependency>
