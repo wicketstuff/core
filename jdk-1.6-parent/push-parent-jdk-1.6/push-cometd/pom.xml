@@ -40,6 +40,12 @@
 			<artifactId>cometd-java-server</artifactId>
 			<version>${cometd.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.cometd.java</groupId>
+			<artifactId>cometd-websocket-jetty</artifactId>
+			<version>${cometd.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>

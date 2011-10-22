@@ -92,18 +92,25 @@ throw new SyntaxError('JSON.parse');};}}());
 
 if (!Wicket.Push.cometd){
   Wicket.Push.cometd = new org.cometd.Cometd();
-  if (window.WebSocket)
+
+  if (window.WebSocket) {
+    Wicket.Push.cometd.websocketEnabled = true
     Wicket.Push.cometd.registerTransport('websocket', new org.cometd.WebSocketTransport());
+  }
 
   Wicket.Push.cometd.registerTransport('long-polling', new Wicket.Push.LongPollingTransport());
+
   //TODO: Unsupported
   //Wicket.Push.cometd.registerTransport('callback-polling', new Wicket.Push.CallbackPollingTransport());
-  
+
   Wicket.Push.cometd.configure({
-    url: '${cometdServletPath}',
+    url: ( ( ${isServerWebSocketTransport} && window.WebSocket ) ? 
+    		(window.location.protocol == 'https:' ? 'wss://' : 'ws://') + window.location.host
+    		: ''
+    	 ) + '${cometdServletPath}',
     logLevel: '${logLevel}'
   });
-  
+
   Wicket.Event.addDomReadyEvent(function(){
     Wicket.Push.cometd.handshake();
   });

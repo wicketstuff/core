@@ -195,7 +195,7 @@ public class CometdPushService extends AbstractPushService
 		return null;
 	}
 
-	private synchronized final BayeuxServer _getBayeuxServer()
+	synchronized final BayeuxServer _getBayeuxServer()
 	{
 		if (_bayeux == null)
 			_bayeux = (BayeuxServer)_application.getServletContext().getAttribute(
