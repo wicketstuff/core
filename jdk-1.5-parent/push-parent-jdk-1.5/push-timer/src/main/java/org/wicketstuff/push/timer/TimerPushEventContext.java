@@ -22,7 +22,7 @@ import org.wicketstuff.push.IPushChannel;
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
-public final class TimerPushEventContext<EventType> extends AbstractPushEventContext<EventType>
+final class TimerPushEventContext<EventType> extends AbstractPushEventContext<EventType>
 {
 	private final TimerPushService pushService;
 

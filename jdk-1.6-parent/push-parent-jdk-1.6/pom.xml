@@ -47,7 +47,7 @@
 	</modules>
 
 	<properties>
-		<cometd.version>2.0.0</cometd.version>
+		<cometd.version>2.3.1</cometd.version>
 	</properties>
 
 	<dependencies>

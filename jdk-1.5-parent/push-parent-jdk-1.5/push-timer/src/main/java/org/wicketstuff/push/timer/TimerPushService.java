@@ -16,13 +16,13 @@
  */
 package org.wicketstuff.push.timer;
 
+import static java.util.Collections.EMPTY_LIST;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -30,39 +30,61 @@ import java.util.concurrent.TimeUnit;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.time.Duration;
 import org.apache.wicket.util.time.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.push.AbstractPushService;
+import org.wicketstuff.push.AbstractPushServiceRef;
 import org.wicketstuff.push.IPushChannel;
 import org.wicketstuff.push.IPushEventHandler;
 import org.wicketstuff.push.IPushNode;
 import org.wicketstuff.push.IPushNodeDisconnectedListener;
+import org.wicketstuff.push.IPushService;
+import org.wicketstuff.push.IPushServiceRef;
 
 /**
+ * AJAX timer based implementation of {@link IPushService}.
+ * <p>
+ * 
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
 public class TimerPushService extends AbstractPushService
 {
-	private static final class PushNodeState<EventType>
+	private final class PushNodeState<EventType>
 	{
-		protected final TimerPushNode<EventType> node;
-		protected Time lastPolledAt = Time.now();
-		protected List<TimerPushEventContext<EventType>> queuedEvents = new ArrayList<TimerPushEventContext<EventType>>(
+		final TimerPushNode<EventType> node;
+		Time lastPolledAt = Time.now();
+		List<TimerPushEventContext<EventType>> queuedEvents = new ArrayList<TimerPushEventContext<EventType>>(
 			2);
-		protected final Object queuedEventsLock = new Object();
 
-		protected PushNodeState(final TimerPushNode<EventType> node)
+		PushNodeState(final TimerPushNode<EventType> node)
 		{
 			this.node = node;
+		}
+
+		boolean isTimedOut()
+		{
+			return Time.now().subtract(lastPolledAt).greaterThan(_maxTimeLag);
 		}
 	}
 
 	private static final Logger LOG = LoggerFactory.getLogger(TimerPushService.class);
 
-	static final ConcurrentHashMap<Application, TimerPushService> INSTANCES = new ConcurrentHashMap<Application, TimerPushService>(
+	private static final ConcurrentHashMap<Application, TimerPushService> INSTANCES = new ConcurrentHashMap<Application, TimerPushService>(
 		2);
+
+	private static final IPushServiceRef<TimerPushService> PUSH_SERVICE_REF = new AbstractPushServiceRef<TimerPushService>()
+	{
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		protected TimerPushService lookupService()
+		{
+			return TimerPushService.get();
+		}
+	};
 
 	public static TimerPushService get()
 	{
@@ -71,6 +93,8 @@ public class TimerPushService extends AbstractPushService
 
 	public static TimerPushService get(final Application application)
 	{
+		Args.notNull(application, "application");
+
 		TimerPushService service = INSTANCES.get(application);
 		if (service == null)
 		{
@@ -90,26 +114,53 @@ public class TimerPushService extends AbstractPushService
 		return service;
 	}
 
+	/**
+	 * @return a serializable service reference
+	 */
+	public static IPushServiceRef<TimerPushService> getRef()
+	{
+		return PUSH_SERVICE_REF;
+	}
+
+	static void onApplicationShutdown(final Application application)
+	{
+		Args.notNull(application, "application");
+
+		final TimerPushService srv = INSTANCES.remove(application);
+		if (srv != null)
+		{
+			LOG.info("Shutting down {}...", srv);
+			synchronized (srv._cleanupExecutor)
+			{
+				srv._cleanupFuture.cancel(false);
+				srv._cleanupFuture = null;
+				srv._cleanupExecutor.shutdownNow();
+			}
+		}
+	}
+
 	private Duration _defaultPollingInterval = Duration.seconds(2);
+
 	private Duration _maxTimeLag = Duration.seconds(10);
 
 	private final ConcurrentMap<TimerPushNode<?>, PushNodeState<?>> _nodeStates = new ConcurrentHashMap<TimerPushNode<?>, PushNodeState<?>>();
-	private final Set<IPushNodeDisconnectedListener> _disconnectListeners = new CopyOnWriteArraySet<IPushNodeDisconnectedListener>();
-
 	private final ScheduledThreadPoolExecutor _cleanupExecutor = new ScheduledThreadPoolExecutor(1);
 	private ScheduledFuture<?> _cleanupFuture = null;
+
 	private final Runnable _cleanupTask = new Runnable()
 	{
 		public void run()
 		{
 			LOG.debug("Running timer push node cleanup task...");
-			final Time now = Time.now();
 			int count = 0;
 			for (final PushNodeState<?> state : _nodeStates.values())
-				if (now.subtract(state.lastPolledAt).greaterThan(_maxTimeLag))
+				synchronized (state)
 				{
-					onDisconnect(state.node);
-					count++;
+					if (state.isTimedOut())
+					{
+						onDisconnect(state.node);
+						count++;
+					}
 				}
 			LOG.debug("Cleaned up {} timer push nodes.", count);
 		}
@@ -131,14 +182,6 @@ public class TimerPushService extends AbstractPushService
 	private <EventType> void _onConnect(final TimerPushNode<EventType> node)
 	{
 		_nodeStates.put(node, new PushNodeState<EventType>(node));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void addNodeDisconnectedListener(final IPushNodeDisconnectedListener listener)
-	{
-		_disconnectListeners.add(listener);
 	}
 
 	public Duration getDefaultPollingInterval()
@@ -163,6 +206,10 @@ public class TimerPushService extends AbstractPushService
 	public <EventType> TimerPushNode<EventType> installNode(final Component component,
 		final IPushEventHandler<EventType> handler, final Duration pollingInterval)
 	{
+		Args.notNull(component, "component");
+		Args.notNull(handler, "handler");
+		Args.notNull(pollingInterval, "pollingInterval");
+
 		TimerPushBehavior behavior = _findPushBehaviour(component);
 		if (behavior != null && behavior.isStopped())
 		{
@@ -184,29 +231,26 @@ public class TimerPushService extends AbstractPushService
 	 */
 	public boolean isConnected(final IPushNode<?> node)
 	{
+		Args.notNull(node, "node");
+
 		if (node instanceof TimerPushNode)
 		{
 			final PushNodeState<?> state = _nodeStates.get(node);
 			if (state == null)
 				return false;
 
-			if (Time.now().subtract(state.lastPolledAt).greaterThan(_maxTimeLag))
+			synchronized (state)
 			{
-				onDisconnect(state.node);
-				return false;
+				if (state.isTimedOut())
+				{
+					onDisconnect(state.node);
+					return false;
+				}
 			}
 			return true;
 		}
 		LOG.warn("Unsupported push node type {}", node);
 		return false;
-	}
-
-	void onApplicationShutdown()
-	{
-		LOG.info("Shutting down timer push service...");
-		_cleanupFuture.cancel(false);
-		_cleanupFuture = null;
-		_cleanupExecutor.shutdownNow();
 	}
 
 	void onDisconnect(final TimerPushNode<?> node)
@@ -217,7 +261,7 @@ public class TimerPushService extends AbstractPushService
 
 			disconnectFromAllChannels(node);
 
-			for (final IPushNodeDisconnectedListener listener : _disconnectListeners)
+			for (final IPushNodeDisconnectedListener listener : disconnectListeners)
 				try
 				{
 					listener.onDisconnect(node);
@@ -238,16 +282,16 @@ public class TimerPushService extends AbstractPushService
 		{
 			LOG.debug("Reconnecting push node {}...", node);
 			_onConnect(node);
-			return Collections.EMPTY_LIST;
+			return EMPTY_LIST;
 		}
 
-		state.lastPolledAt = Time.now();
-
-		if (state.queuedEvents.size() == 0)
-			return Collections.EMPTY_LIST;
-
-		synchronized (state.queuedEventsLock)
+		synchronized (state)
 		{
+			state.lastPolledAt = Time.now();
+
+			if (state.queuedEvents.size() == 0)
+				return EMPTY_LIST;
+
 			final List<TimerPushEventContext<EventType>> events = state.queuedEvents;
 			state.queuedEvents = new ArrayList<TimerPushEventContext<EventType>>(2);
 			return events;
@@ -259,8 +303,7 @@ public class TimerPushService extends AbstractPushService
 	 */
 	public <EventType> void publish(final IPushChannel<EventType> channel, final EventType event)
 	{
-		if (channel == null)
-			throw new IllegalArgumentException("Argument [channel] must not be null");
+		Args.notNull(channel, "channel");
 
 		final Set<IPushNode<?>> pnodes = nodesByChannels.get(channel);
 		if (pnodes == null)
@@ -280,7 +323,7 @@ public class TimerPushService extends AbstractPushService
 				@SuppressWarnings("unchecked")
 				final PushNodeState<EventType> state = (PushNodeState<EventType>)_nodeStates.get(node);
 				if (state != null)
-					synchronized (state.queuedEventsLock)
+					synchronized (state)
 					{
 						state.queuedEvents.add(ctx);
 					}
@@ -293,6 +336,8 @@ public class TimerPushService extends AbstractPushService
 	 */
 	public <EventType> void publish(final IPushNode<EventType> node, final EventType event)
 	{
+		Args.notNull(node, "node");
+
 		if (node instanceof TimerPushNode)
 		{
 			if (isConnected(node))
@@ -300,7 +345,7 @@ public class TimerPushService extends AbstractPushService
 				@SuppressWarnings("unchecked")
 				final PushNodeState<EventType> state = (PushNodeState<EventType>)_nodeStates.get(node);
 				if (state != null)
-					synchronized (state.queuedEventsLock)
+					synchronized (state)
 					{
 						state.queuedEvents.add(new TimerPushEventContext<EventType>(event, null,
 							this));
@@ -312,35 +357,34 @@ public class TimerPushService extends AbstractPushService
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	public void removeNodeDisconnectedListener(final IPushNodeDisconnectedListener listener)
-	{
-		_disconnectListeners.remove(listener);
-	}
-
-	/**
 	 * Sets the interval in which the clean up task will be executed that removes information about
 	 * disconnected push nodes. Default is 60 seconds.
 	 */
 	public void setCleanupInterval(final Duration interval)
 	{
-		synchronized (this)
+		Args.notNull(interval, "interval");
+
+		synchronized (_cleanupExecutor)
 		{
 			if (_cleanupFuture != null)
 				_cleanupFuture.cancel(false);
-			_cleanupFuture = _cleanupExecutor.scheduleAtFixedRate(_cleanupTask,
-				interval.getMilliseconds(), interval.getMilliseconds(), TimeUnit.MILLISECONDS);
+			if (!_cleanupExecutor.isShutdown())
+				_cleanupFuture = _cleanupExecutor.scheduleAtFixedRate(_cleanupTask,
+					interval.getMilliseconds(), interval.getMilliseconds(), TimeUnit.MILLISECONDS);
 		}
 	}
 
 	public void setDefaultPollingInterval(final Duration defaultPollingInterval)
 	{
+		Args.notNull(defaultPollingInterval, "defaultPollingInterval");
+
 		_defaultPollingInterval = defaultPollingInterval;
 	}
 
 	public void setMaxTimeLag(final Duration maxTimeLag)
 	{
+		Args.notNull(maxTimeLag, "maxTimeLag");
+
 		_maxTimeLag = maxTimeLag;
 	}
 
@@ -349,6 +393,9 @@ public class TimerPushService extends AbstractPushService
 	 */
 	public void uninstallNode(final Component component, final IPushNode<?> node)
 	{
+		Args.notNull(component, "component");
+		Args.notNull(node, "node");
+
 		if (node instanceof TimerPushNode)
 		{
 			final TimerPushBehavior behavior = _findPushBehaviour(component);

@@ -28,6 +28,6 @@ public class WicketTimerChatPage extends WicketAbstractChatPage
 
 	public WicketTimerChatPage(final PageParameters parameters)
 	{
-		super(parameters, "wicket-push-timer implementation", TimerPushService.get());
+		super(parameters, "wicket-push-timer implementation", TimerPushService.getRef());
 	}
 }

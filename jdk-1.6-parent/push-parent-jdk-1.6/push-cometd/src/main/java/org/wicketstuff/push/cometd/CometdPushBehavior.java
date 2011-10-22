@@ -18,7 +18,7 @@ package org.wicketstuff.push.cometd;
 
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
@@ -312,16 +312,13 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	@Override
 	protected void respond(final AjaxRequestTarget target)
 	{
-		final CometdPushService pushService = CometdPushService.get();
+		final CometdPushService pushService = CometdPushService.get((WebApplication)getComponent().getApplication());
 
 		// retrieve all collected events and process them
 		for (final Entry<CometdPushNode, IPushEventHandler> entry : _handlers.entrySet())
 		{
 			final CometdPushNode node = entry.getKey();
-			for (final Iterator<CometdPushEventContext<?>> it = pushService.pollEvents(node)
-				.iterator(); it.hasNext();)
-			{
-				final CometdPushEventContext<?> ctx = it.next();
+			for (final CometdPushEventContext<?> ctx : (List<CometdPushEventContext<?>>)pushService.pollEvents(node))
 				try
 				{
 					entry.getValue().onEvent(target, ctx.getEvent(), node, ctx);
@@ -330,8 +327,6 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 				{
 					LOG.error("Failed while processing event", ex);
 				}
-
-			}
 		}
 	}
 }

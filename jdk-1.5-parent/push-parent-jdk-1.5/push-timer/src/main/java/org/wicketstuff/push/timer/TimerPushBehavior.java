@@ -118,6 +118,9 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 		return handlers.size();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void renderHead(final Component c, final IHeaderResponse response)
 	{
@@ -125,9 +128,9 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 
 		if (!isStopped())
 		{
-			// install an onunload handler
+			// install an on-unload handler
 			response.renderJavaScript("history.navigationMode = 'compatible';",
-				"Opera onunload support");
+				"Opera on-unload support");
 			response.renderOnEventJavaScript("window", "unload", "wicketAjaxGet('" +
 				getCallbackUrl().toString() + "&unload=1', function() { }, function() { });");
 		}

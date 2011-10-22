@@ -19,6 +19,8 @@ package org.wicketstuff.push;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.wicket.util.lang.Args;
+
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
@@ -57,7 +59,7 @@ public abstract class AbstractPushEventContext<EventType> implements IPushEventC
 	 */
 	public Object getProperty(final Object key)
 	{
-		return properties.get(key);
+		return properties.get(Args.notNull(key, "key"));
 	}
 
 	/**
@@ -73,7 +75,7 @@ public abstract class AbstractPushEventContext<EventType> implements IPushEventC
 	 */
 	public AbstractPushEventContext<EventType> setProperty(final Object key, final Object value)
 	{
-		properties.put(key, value);
+		properties.put(Args.notNull(key, "key"), value);
 		return this;
 	}
 }

@@ -24,7 +24,6 @@ import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
@@ -39,11 +38,13 @@ import org.cometd.bayeux.server.ServerSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.push.AbstractPushService;
+import org.wicketstuff.push.AbstractPushServiceRef;
 import org.wicketstuff.push.IPushChannel;
 import org.wicketstuff.push.IPushEventHandler;
 import org.wicketstuff.push.IPushNode;
 import org.wicketstuff.push.IPushNodeDisconnectedListener;
 import org.wicketstuff.push.IPushService;
+import org.wicketstuff.push.IPushServiceRef;
 import org.wicketstuff.push.PushChannel;
 
 /**
@@ -80,6 +81,17 @@ public class CometdPushService extends AbstractPushService
 
 	private static final Map<WebApplication, CometdPushService> INSTANCES = new WeakHashMap<WebApplication, CometdPushService>();
 
+	private static final IPushServiceRef<CometdPushService> PUSH_SERVICE_REF = new AbstractPushServiceRef<CometdPushService>()
+	{
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		protected CometdPushService lookupService()
+		{
+			return CometdPushService.get();
+		}
+	};
+
 	public static CometdPushService get()
 	{
 		return get(WebApplication.get());
@@ -87,19 +99,28 @@ public class CometdPushService extends AbstractPushService
 
 	public static CometdPushService get(final WebApplication application)
 	{
-		CometdPushService service = INSTANCES.get(application);
-		if (service == null)
+		synchronized (INSTANCES)
 		{
-			service = new CometdPushService(application);
-			INSTANCES.put(application, service);
+			CometdPushService service = INSTANCES.get(application);
+			if (service == null)
+			{
+				service = new CometdPushService(application);
+				INSTANCES.put(application, service);
+			}
+			return service;
 		}
-		return service;
+	}
+
+	/**
+	 * @return a serializable service reference
+	 */
+	public static IPushServiceRef<CometdPushService> getRef()
+	{
+		return PUSH_SERVICE_REF;
 	}
 
 	private final ConcurrentMap<String, List<CometdPushNode<?>>> _nodesByCometdChannelId = new ConcurrentHashMap<String, List<CometdPushNode<?>>>();
 	private final ConcurrentMap<CometdPushNode<?>, PushNodeState<?>> _nodeStates = new ConcurrentHashMap<CometdPushNode<?>, PushNodeState<?>>();
-
-	private final Set<IPushNodeDisconnectedListener> _disconnectListeners = new CopyOnWriteArraySet<IPushNodeDisconnectedListener>();
 
 	private final WebApplication _application;
 
@@ -215,7 +236,7 @@ public class CometdPushService extends AbstractPushService
 
 			disconnectFromAllChannels(node);
 
-			for (final IPushNodeDisconnectedListener listener : _disconnectListeners)
+			for (final IPushNodeDisconnectedListener listener : disconnectListeners)
 				try
 				{
 					listener.onDisconnect(node);
@@ -225,15 +246,6 @@ public class CometdPushService extends AbstractPushService
 					LOG.error("Failed to notify " + listener, ex);
 				}
 		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void addNodeDisconnectedListener(final IPushNodeDisconnectedListener listener)
-	{
-		_disconnectListeners.add(listener);
 	}
 
 	/**
@@ -394,15 +406,6 @@ public class CometdPushService extends AbstractPushService
 		// publish the event to all registered nodes
 		for (final IPushNode<?> node : pnodes)
 			publishJavascript((CometdPushNode<EventType>)node, javascript);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void removeNodeDisconnectedListener(final IPushNodeDisconnectedListener listener)
-	{
-		_disconnectListeners.remove(listener);
 	}
 
 	/**

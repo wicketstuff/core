@@ -14,31 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.push.cometd;
-
-import org.wicketstuff.push.AbstractPushEventContext;
-import org.wicketstuff.push.IPushChannel;
+package org.wicketstuff.push;
 
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
-final class CometdPushEventContext<EventType> extends AbstractPushEventContext<EventType>
+public abstract class AbstractPushServiceRef<T extends IPushService> implements IPushServiceRef<T>
 {
-	private final CometdPushService pushService;
+	private static final long serialVersionUID = 1L;
 
-	CometdPushEventContext(final EventType event, final IPushChannel<EventType> channel,
-		final CometdPushService pushService)
-	{
-		super(event, channel);
-		this.pushService = pushService;
-	}
+	private transient T service;
 
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
-	public CometdPushService getService()
+	public T get()
 	{
-		return pushService;
+		if (service == null)
+			service = lookupService();
+		return service;
 	}
+
+	protected abstract T lookupService();
 }

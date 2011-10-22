@@ -29,9 +29,7 @@ public class ApplicationShutdownListener implements IInitializer
 	 */
 	public void destroy(final Application application)
 	{
-		final TimerPushService service = TimerPushService.INSTANCES.remove(application);
-		if (service != null)
-			service.onApplicationShutdown();
+		TimerPushService.onApplicationShutdown(application);
 	}
 
 	/**

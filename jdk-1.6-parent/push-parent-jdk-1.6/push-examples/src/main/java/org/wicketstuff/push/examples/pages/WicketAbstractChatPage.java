@@ -36,6 +36,7 @@ import org.wicketstuff.push.IPushEventContext;
 import org.wicketstuff.push.IPushNode;
 import org.wicketstuff.push.IPushNodeDisconnectedListener;
 import org.wicketstuff.push.IPushService;
+import org.wicketstuff.push.IPushServiceRef;
 import org.wicketstuff.push.examples.chatservice.ChatRoom;
 import org.wicketstuff.push.examples.chatservice.IChatListener;
 import org.wicketstuff.push.examples.chatservice.Message;
@@ -61,7 +62,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 	private AjaxButton sendMessage;
 
 	public WicketAbstractChatPage(final PageParameters parameters,
-		final String pushImplementationTitle, final IPushService pushService)
+		final String pushImplementationTitle, final IPushServiceRef<?> pushServiceRef)
 	{
 		super(parameters);
 
@@ -121,7 +122,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 		/*
 		 * install push node
 		 */
-		final IPushNode<Message> pushNode = pushService.installNode(this,
+		final IPushNode<Message> pushNode = pushServiceRef.get().installNode(this,
 			new AbstractPushEventHandler<Message>()
 			{
 				private static final long serialVersionUID = 1L;
@@ -148,7 +149,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 			@Override
 			protected void onSubmit(final AjaxRequestTarget target, final Form<?> form)
 			{
-				pushService.uninstallNode(WicketAbstractChatPage.this, pushNode);
+				pushServiceRef.get().uninstallNode(WicketAbstractChatPage.this, pushNode);
 				target.add(setEnabled(false));
 				target.add(sendMessage.setEnabled(false));
 			}
@@ -162,8 +163,8 @@ public abstract class WicketAbstractChatPage extends WebPage
 			@Override
 			public void onMessage(final Message msg)
 			{
-				if (pushService.isConnected(pushNode))
-					pushService.publish(pushNode, msg);
+				if (pushServiceRef.get().isConnected(pushNode))
+					pushServiceRef.get().publish(pushNode, msg);
 				else
 					chatRoom.removeListener(this);
 			}
@@ -180,7 +181,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 		/*
 		 * install disconnect listener
 		 */
-		pushService.addNodeDisconnectedListener(new IPushNodeDisconnectedListener()
+		pushServiceRef.get().addNodeDisconnectedListener(new IPushNodeDisconnectedListener()
 		{
 			@Override
 			public void onDisconnect(final IPushNode<?> node)
@@ -188,7 +189,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 				if (node.equals(pushNode))
 				{
 					chatRoom.sendAsync("<System>", "A USER JUST LEFT THE ROOM.");
-					pushService.removeNodeDisconnectedListener(this);
+					pushServiceRef.get().removeNodeDisconnectedListener(this);
 				}
 			}
 		});

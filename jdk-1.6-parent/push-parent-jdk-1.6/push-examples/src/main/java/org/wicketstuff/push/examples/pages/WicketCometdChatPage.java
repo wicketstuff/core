@@ -28,6 +28,6 @@ public class WicketCometdChatPage extends WicketAbstractChatPage
 
 	public WicketCometdChatPage(final PageParameters parameters)
 	{
-		super(parameters, "wicket-push-cometd implementation", CometdPushService.get());
+		super(parameters, "wicket-push-cometd implementation", CometdPushService.getRef());
 	}
 }
