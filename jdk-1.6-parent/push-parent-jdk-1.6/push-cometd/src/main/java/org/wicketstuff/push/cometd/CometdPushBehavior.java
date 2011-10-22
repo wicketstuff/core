@@ -229,20 +229,12 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	private String _renderInitScript()
 	{
 		final Map<String, Object> params = new HashMap<String, Object>();
-
-		params.put("cometdServletPath", getCometdServletPath());
-
 		params.put("isServerWebSocketTransport", CometdPushService.get()
-			._getBayeuxServer()
-			.getAllowedTransports()
-			.contains("websocket"));
-
-		final RuntimeConfigurationType configurationType = Application.get().getConfigurationType();
-		if (configurationType.equals(RuntimeConfigurationType.DEVELOPMENT))
-			params.put("logLevel", "info");
-		else
-			params.put("logLevel", "error");
-
+			.isWebSocketTransportAvailable());
+		params.put("cometdServletPath", getCometdServletPath());
+		params.put("logLevel",
+			Application.get().getConfigurationType() == RuntimeConfigurationType.DEVELOPMENT
+				? "info" : "error");
 		return TEMPLATE_INIT.asString(params);
 	}
 

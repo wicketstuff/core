@@ -195,7 +195,7 @@ public class CometdPushService extends AbstractPushService
 		return null;
 	}
 
-	synchronized final BayeuxServer _getBayeuxServer()
+	private synchronized final BayeuxServer _getBayeuxServer()
 	{
 		if (_bayeux == null)
 			_bayeux = (BayeuxServer)_application.getServletContext().getAttribute(
@@ -277,6 +277,14 @@ public class CometdPushService extends AbstractPushService
 
 		LOG.warn("Unsupported push node type {}", node);
 		return false;
+	}
+
+	boolean isWebSocketTransportAvailable()
+	{
+		return CometdPushService.get()
+			._getBayeuxServer()
+			.getAllowedTransports()
+			.contains("websocket");
 	}
 
 	@SuppressWarnings("unchecked")
