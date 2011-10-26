@@ -1,4 +1,4 @@
-body, td, pre {
+body,td,pre {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 }
@@ -12,7 +12,6 @@ body {
 }
 
 /* MSIE specific */
-
 * html body {
 	scrollbar-3dlight-color: #F0F0EE;
 	scrollbar-arrow-color: #676662;
@@ -21,5 +20,5 @@ body {
 	scrollbar-face-color: #E0E0DD;
 	scrollbar-highlight-color: #F0F0EE;
 	scrollbar-shadow-color: #F0F0EE;
-	scrollbar-track-color: #F5F5F5;	
+	scrollbar-track-color: #F5F5F5;
 }

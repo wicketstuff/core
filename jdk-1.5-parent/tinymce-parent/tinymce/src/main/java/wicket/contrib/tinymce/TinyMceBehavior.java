@@ -53,15 +53,15 @@ public class TinyMceBehavior extends Behavior {
             throw new IllegalStateException("TinyMceBehavior is not bound to a component");
 
         // TinyMce javascript:
-        response.renderJavascriptReference(TinyMCESettings.javaScriptReference());
+        response.renderJavaScriptReference(TinyMCESettings.javaScriptReference());
 
         String renderOnDomReady = getRenderOnDomReadyJavascript(response);
         if (renderOnDomReady != null)
-            response.renderOnDomReadyJavascript(renderOnDomReady);
+            response.renderOnDomReadyJavaScript(renderOnDomReady);
 
         String renderJavaScript = getRenderJavascript(response);
         if (renderJavaScript != null)
-            response.renderJavascript(renderJavaScript, null);
+            response.renderJavaScript(renderJavaScript, null);
     }
 
     protected String getRenderOnDomReadyJavascript(IHeaderResponse response) {

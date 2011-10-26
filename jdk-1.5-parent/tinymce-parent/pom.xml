@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -8,10 +9,10 @@
 		<artifactId>jdk-1.5-parent</artifactId>
 		<version>1.5-SNAPSHOT</version>
 	</parent>
-		
+
 	<artifactId>tinymce-parent</artifactId>
 	<packaging>pom</packaging>
-	
+
 	<name>TinyMCE - Parent</name>
 	<description>
 		Adds support for WYSIWYG editing (using TinyMce) to Wicket
@@ -82,13 +83,14 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
+			<version>2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -118,33 +120,33 @@
 			<version>20080701</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.tomcat</groupId>
-		    <artifactId>servlet-api</artifactId>
-		    <version>6.0.16</version>
-		    <scope>provided</scope>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>6.0.16</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
 	<profiles>
 		<profile>
-		<id>for-jazzy-plugin</id>
-		<activation>
- <activeByDefault>true</activeByDefault>
-		</activation>
-		 <repositories>
+			<id>for-jazzy-plugin</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<repositories>
 
-		<repository>
-			<id>wicket-snaps</id>
-			<url>http://wicketstuff.org/maven/repository</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		 </repositories>
+				<repository>
+					<id>wicket-snaps</id>
+					<url>http://wicketstuff.org/maven/repository</url>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
 
-	</profile>
+		</profile>
 	</profiles>
 </project>

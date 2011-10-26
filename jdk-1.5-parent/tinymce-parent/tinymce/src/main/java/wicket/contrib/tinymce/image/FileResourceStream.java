@@ -2,6 +2,7 @@ package wicket.contrib.tinymce.image;
 
 import java.io.IOException;
 import java.io.InputStream;
+
 import org.apache.wicket.util.resource.AbstractResourceStream;
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
 

@@ -18,9 +18,8 @@
  */
 package wicket.contrib.tinymce.settings;
 
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.util.string.JavascriptUtils;
+import org.apache.wicket.util.string.JavaScriptUtils;
 
 import wicket.contrib.tinymce.InPlaceSaveBehavior;
 
@@ -55,6 +54,6 @@ public class WicketSavePlugin extends Plugin {
         super.definePluginSettings(buffer);
         buffer.append(",\n\tsave_onwicketsavecallback: '" + saveCallbackname + "'");
         buffer.append(",\n\tsave_onwicketcancelcallback: '" + cancelCallbackname + "'");
-        buffer.append(",\n\twicket_updating_mess: '" + JavascriptUtils.escapeQuotes(saveMessage.getString()) + "'");
+        buffer.append(",\n\twicket_updating_mess: '" + JavaScriptUtils.escapeQuotes(saveMessage.getString()) + "'");
     }
 }

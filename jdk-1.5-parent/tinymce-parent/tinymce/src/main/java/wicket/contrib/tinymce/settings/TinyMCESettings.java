@@ -39,7 +39,7 @@ import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.Session;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,12 +60,12 @@ public class TinyMCESettings implements Serializable {
 	private static final long serialVersionUID = 3L;
 	private static final Logger LOG = LoggerFactory
 			.getLogger(TinyMCESettings.class);
-	public static final ResourceReference REFERENCE = new CompressedResourceReference(
+	public static final ResourceReference REFERENCE = new JavaScriptResourceReference(
 			InPlaceEditBehavior.class, "tiny_mce/tiny_mce_src.js");
-	public static final ResourceReference REFERENCE_MIN = new CompressedResourceReference(
+	public static final ResourceReference REFERENCE_MIN = new JavaScriptResourceReference(
 			InPlaceEditBehavior.class, "tiny_mce/tiny_mce.js");
-	public static final Set<Language> languages = new HashSet<Language>(Arrays
-			.asList(Language.values()));
+	public static final Set<Language> languages = new HashSet<Language>(
+			Arrays.asList(Language.values()));
 
 	private Theme theme;
 	private Location toolbarLocation;
@@ -373,12 +373,12 @@ public class TinyMCESettings implements Serializable {
 
 		// language
 		if (language != null)
-			buffer.append(",\n\t").append("language : ").append("\"").append(
-					language.toString()).append("\"");
-		
-		//theme
-		buffer.append(",\n\t").append("theme : ").append("\"").append(
-				theme.getName()).append("\"");
+			buffer.append(",\n\t").append("language : ").append("\"")
+					.append(language.toString()).append("\"");
+
+		// theme
+		buffer.append(",\n\t").append("theme : ").append("\"")
+				.append(theme.getName()).append("\"");
 
 		// other settings
 		buffer.append(toJavaScript());
@@ -394,23 +394,25 @@ public class TinyMCESettings implements Serializable {
 					.append(convertUrls);
 
 		if (relativeUrls != null)
-			buffer.append(",\n\t").append("relative_urls : ").append(
-					relativeUrls);
+			buffer.append(",\n\t").append("relative_urls : ")
+					.append(relativeUrls);
 
 		if (removeScriptHost != null)
-			buffer.append(",\n\t").append("remove_script_host : ").append(
-					removeScriptHost);
+			buffer.append(",\n\t").append("remove_script_host : ")
+					.append(removeScriptHost);
 
 		if (autoResize)
 			buffer.append(",\n\tauto_resize : true");
 
 		if (contentCss != null)
-			buffer.append(",\n\t").append("content_css : \"").append(
-					RequestCycle.get().urlFor(contentCss, new PageParameters())).append("\"");
+			buffer.append(",\n\t")
+					.append("content_css : \"")
+					.append(RequestCycle.get().urlFor(contentCss,
+							new PageParameters())).append("\"");
 
 		if (documentBaseUrl != null)
-			buffer.append(",\n\t").append("document_base_url : \"").append(
-					documentBaseUrl).append("\"");
+			buffer.append(",\n\t").append("document_base_url : \"")
+					.append(documentBaseUrl).append("\"");
 
 		if (Theme.advanced.equals(theme))
 			appendAdvancedSettings(buffer);
@@ -441,8 +443,7 @@ public class TinyMCESettings implements Serializable {
 			}
 			buffer.append("\"");
 		} else
-			LOG
-					.warn("tinymce is set to \"exact\" mode but there are no components attached");
+			LOG.warn("tinymce is set to \"exact\" mode but there are no components attached");
 	}
 
 	private void appendPluginSettings(StringBuffer buffer) {
@@ -581,9 +582,9 @@ public class TinyMCESettings implements Serializable {
 				Position.before);
 		Collection result = CollectionUtils.select(controls, predicate);
 		if (result.size() > 0) {
-			buffer.append(",\n\t").append(
-					"theme_advanced_buttons1_add_before : ").append("\"")
-					.append(controlsAsString(result)).append("\"");
+			buffer.append(",\n\t")
+					.append("theme_advanced_buttons1_add_before : ")
+					.append("\"").append(controlsAsString(result)).append("\"");
 		}
 	}
 
@@ -602,9 +603,9 @@ public class TinyMCESettings implements Serializable {
 				Position.before);
 		Collection result = CollectionUtils.select(controls, predicate);
 		if (result.size() > 0) {
-			buffer.append(",\n\t").append(
-					"theme_advanced_buttons2_add_before: ").append("\"")
-					.append(controlsAsString(result)).append("\"");
+			buffer.append(",\n\t")
+					.append("theme_advanced_buttons2_add_before: ")
+					.append("\"").append(controlsAsString(result)).append("\"");
 		}
 	}
 
@@ -623,9 +624,9 @@ public class TinyMCESettings implements Serializable {
 				Position.before);
 		Collection result = CollectionUtils.select(controls, predicate);
 		if (result.size() > 0) {
-			buffer.append(",\n\t").append(
-					"theme_advanced_buttons3_add_before : ").append("\"")
-					.append(controlsAsString(result)).append("\"");
+			buffer.append(",\n\t")
+					.append("theme_advanced_buttons3_add_before : ")
+					.append("\"").append(controlsAsString(result)).append("\"");
 		}
 	}
 
@@ -644,23 +645,23 @@ public class TinyMCESettings implements Serializable {
 				Position.before);
 		Collection result = CollectionUtils.select(controls, predicate);
 		if (result.size() > 0) {
-			buffer.append(",\n\t").append("theme_advanced_buttons4 : ").append(
-					"\"").append(controlsAsString(result)).append("\"");
+			buffer.append(",\n\t").append("theme_advanced_buttons4 : ")
+					.append("\"").append(controlsAsString(result)).append("\"");
 		}
 
 		predicate = new ControlPredicate(Toolbar.fourth, Position.after);
 		result = CollectionUtils.select(controls, predicate);
 		if (result.size() > 0) {
-			buffer.append(",\n\t").append("theme_advanced_buttons4 : ").append(
-					"\"").append(controlsAsString(result)).append("\"");
+			buffer.append(",\n\t").append("theme_advanced_buttons4 : ")
+					.append("\"").append(controlsAsString(result)).append("\"");
 		}
 	}
 
 	void addDisabledButtons(StringBuffer buffer) {
 		if (disabledButtons.size() > 0) {
 			String value = enumAsString(disabledButtons);
-			buffer.append(",\n\t").append("theme_advanced_disable : ").append(
-					"\"").append(value).append("\"");
+			buffer.append(",\n\t").append("theme_advanced_disable : ")
+					.append("\"").append(value).append("\"");
 		}
 	}
 
@@ -708,8 +709,8 @@ public class TinyMCESettings implements Serializable {
 
 	void addBlockFormats(StringBuffer buffer) {
 		if (blockFormats != null)
-			buffer.append(",\n\ttheme_advanced_blockformats : \"").append(
-					blockFormats).append("\"");
+			buffer.append(",\n\ttheme_advanced_blockformats : \"")
+					.append(blockFormats).append("\"");
 	}
 
 	void addToolbarAlign(StringBuffer buffer) {
@@ -729,15 +730,17 @@ public class TinyMCESettings implements Serializable {
 
 	void addStatusbarLocation(StringBuffer buffer) {
 		if (statusbarLocation != null) {
-			buffer.append(",\n\t").append(
-					"theme_advanced_statusbar_location : ").append("\"")
-					.append(statusbarLocation.getName()).append("\"");
+			buffer.append(",\n\t")
+					.append("theme_advanced_statusbar_location : ")
+					.append("\"").append(statusbarLocation.getName())
+					.append("\"");
 		}
 	}
 
 	public static ResourceReference javaScriptReference() {
 		Application app = Application.get();
-		if (RuntimeConfigurationType.DEVELOPMENT.equals(app.getConfigurationType()))
+		if (RuntimeConfigurationType.DEVELOPMENT.equals(app
+				.getConfigurationType()))
 			return REFERENCE;
 		else
 			return REFERENCE_MIN;
