@@ -410,9 +410,17 @@ public class TinyMCESettings implements Serializable {
 					.append(RequestCycle.get().urlFor(contentCss,
 							new PageParameters())).append("\"");
 
-		if (documentBaseUrl != null)
+		if (documentBaseUrl != null){
 			buffer.append(",\n\t").append("document_base_url : \"")
 					.append(documentBaseUrl).append("\"");
+			
+			buffer.append(",\n\t").append("baseURL : \"")
+			.append(documentBaseUrl).append("\"");
+			buffer.append(",\n\t").append("base_url : \"")
+			.append(documentBaseUrl).append("\"");
+			buffer.append(",\n\t").append("base : \"")
+			.append(documentBaseUrl).append("\"");
+		}
 
 		if (Theme.advanced.equals(theme))
 			appendAdvancedSettings(buffer);

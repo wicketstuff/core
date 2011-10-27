@@ -20,11 +20,16 @@ package wicket.contrib.tinymce;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.request.IRequestHandler;
+import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 import org.apache.wicket.request.http.WebRequest;
 
 import wicket.contrib.tinymce.settings.TinyMCESettings;
@@ -33,80 +38,103 @@ import wicket.contrib.tinymce.settings.TinyMCESettings.Mode;
 /**
  * Renders a component (textarea) as WYSIWYG editor, using TinyMce.
  */
-public class TinyMceBehavior extends Behavior {
-    private static final long serialVersionUID = 3L;
+public class TinyMceBehavior extends Behavior
+{
+	private static final long serialVersionUID = 3L;
 
-    private Component component;
-    private TinyMCESettings settings;
+	private Component component;
+	private TinyMCESettings settings;
 
-    public TinyMceBehavior() {
-        this(new TinyMCESettings());
-    }
-
-    public TinyMceBehavior(TinyMCESettings settings) {
-        this.settings = settings;
-    }
-
-    public void renderHead(Component c, IHeaderResponse response) {
-        super.renderHead(c, response);
-        if (component == null)
-            throw new IllegalStateException("TinyMceBehavior is not bound to a component");
-
-        // TinyMce javascript:
-        response.renderJavaScriptReference(TinyMCESettings.javaScriptReference());
-
-        String renderOnDomReady = getRenderOnDomReadyJavascript(response);
-        if (renderOnDomReady != null)
-            response.renderOnDomReadyJavaScript(renderOnDomReady);
-
-        String renderJavaScript = getRenderJavascript(response);
-        if (renderJavaScript != null)
-            response.renderJavaScript(renderJavaScript, null);
-    }
-
-    protected String getRenderOnDomReadyJavascript(IHeaderResponse response) {
-        if (component == null)
-            throw new IllegalStateException("TinyMceBehavior is not bound to a component");
-        if (! mayRenderJavascriptDirect())
-            return getAddTinyMceSettingsScript(Mode.exact, Collections.singletonList(component));
-        return null;
-    }
-
-    private boolean mayRenderJavascriptDirect() {
-    	return RequestCycle.get().getRequest() instanceof WebRequest && !((WebRequest)RequestCycle.get().getRequest()).isAjax();
+	public TinyMceBehavior()
+	{
+		this(new TinyMCESettings());
 	}
 
-	protected String getRenderJavascript(IHeaderResponse response) {
-        if (component == null)
-            throw new IllegalStateException("TinyMceBehavior is not bound to a component");
-        if (mayRenderJavascriptDirect())
-            return getAddTinyMceSettingsScript(Mode.exact, Collections.singletonList(component));
-        return null;
-    }
+	public TinyMceBehavior(TinyMCESettings settings)
+	{
+		this.settings = settings;
+	}
 
-    protected String getAddTinyMceSettingsScript(Mode mode, Collection<Component> components) {
-        return "" //
-                + settings.getLoadPluginJavaScript() //
-                + " tinyMCE.init({" + settings.toJavaScript(mode, components) + " });\n" //
-                + settings.getAdditionalPluginJavaScript(); //
-    }
+	public void renderHead(Component c, IHeaderResponse response)
+	{
+		super.renderHead(c, response);
+		if (component == null)
+			throw new IllegalStateException("TinyMceBehavior is not bound to a component");
 
-    public void bind(Component component) {
-        if (this.component != null)
-            throw new IllegalStateException("TinyMceBehavior can not bind to more than one component");
-        super.bind(component);
-        if (isMarkupIdRequired())
-            component.setOutputMarkupId(true);
-        this.component = component;
-    }
+		ResourceReferenceRequestHandler handler = new ResourceReferenceRequestHandler(
+				TinyMCESettings.javaScriptReference(), null);
 
-    protected boolean isMarkupIdRequired() {
-        return true;
-    }
+		Url url = new Url();
+		List<String> segments = url.getSegments();
+		segments.add(Application.get().getMapperContext().getNamespace());
+		segments.add(Application.get().getMapperContext().getResourceIdentifier());
+		segments.add(handler.getResourceReference().getScope().getName());
+		settings.setDocumentBaseUrl(url.toString());
 
-    protected Component getComponent() {
-        return component;
-    }
-    
-    
+		// TinyMce javascript:
+		response.renderJavaScriptReference(TinyMCESettings.javaScriptReference());
+
+		String renderOnDomReady = getRenderOnDomReadyJavascript(response);
+		if (renderOnDomReady != null)
+			response.renderOnDomReadyJavaScript(renderOnDomReady);
+
+		String renderJavaScript = getRenderJavascript(response);
+		if (renderJavaScript != null)
+			response.renderJavaScript(renderJavaScript, null);
+	}
+
+	protected String getRenderOnDomReadyJavascript(IHeaderResponse response)
+	{
+		if (component == null)
+			throw new IllegalStateException("TinyMceBehavior is not bound to a component");
+		if (!mayRenderJavascriptDirect())
+			return getAddTinyMceSettingsScript(Mode.exact, Collections.singletonList(component));
+		return null;
+	}
+
+	private boolean mayRenderJavascriptDirect()
+	{
+		return RequestCycle.get().getRequest() instanceof WebRequest
+				&& !((WebRequest)RequestCycle.get().getRequest()).isAjax();
+	}
+
+	protected String getRenderJavascript(IHeaderResponse response)
+	{
+		if (component == null)
+			throw new IllegalStateException("TinyMceBehavior is not bound to a component");
+		if (mayRenderJavascriptDirect())
+			return getAddTinyMceSettingsScript(Mode.exact, Collections.singletonList(component));
+		return null;
+	}
+
+	protected String getAddTinyMceSettingsScript(Mode mode, Collection<Component> components)
+	{
+		return "" //
+				+ settings.getLoadPluginJavaScript() //
+				+ " tinyMCE.init({" + settings.toJavaScript(mode, components) + " });\n" //
+				+ settings.getAdditionalPluginJavaScript(); //
+	}
+
+	public void bind(Component component)
+	{
+		if (this.component != null)
+			throw new IllegalStateException(
+					"TinyMceBehavior can not bind to more than one component");
+		super.bind(component);
+		if (isMarkupIdRequired())
+			component.setOutputMarkupId(true);
+		this.component = component;
+	}
+
+	protected boolean isMarkupIdRequired()
+	{
+		return true;
+	}
+
+	protected Component getComponent()
+	{
+		return component;
+	}
+
+
 }
