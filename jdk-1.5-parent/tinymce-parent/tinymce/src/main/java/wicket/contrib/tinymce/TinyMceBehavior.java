@@ -72,7 +72,10 @@ public class TinyMceBehavior extends Behavior
 		settings.setDocumentBaseUrl(url.toString());
 
 		// TinyMce javascript:
-		response.renderJavaScriptReference(TinyMCESettings.javaScriptReference());
+		if (mayRenderJavascriptDirect())
+			response.renderJavaScriptReference(TinyMCESettings.javaScriptReference());
+		else
+			TinyMCESettings.lazyLoadTinyMCEResource(response);
 
 		String renderOnDomReady = getRenderOnDomReadyJavascript(response);
 		if (renderOnDomReady != null)
