@@ -56,6 +56,7 @@
 		<module>shiro-security</module>
 		<module>simile-timeline-parent</module>
 		<module>theme-parent</module>
+		<module>tinymce-parent</module>
 		<module>wicket-bundle-parent</module>
 		<module>wicket-osgi-parent</module>
 		<module>wicket-poi-parent</module>
