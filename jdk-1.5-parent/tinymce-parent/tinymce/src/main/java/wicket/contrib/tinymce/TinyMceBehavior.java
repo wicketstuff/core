@@ -81,19 +81,9 @@ public class TinyMceBehavior extends Behavior
 			TinyMCESettings.lazyLoadTinyMCEResource(response);
 		}
 
-		if (!mayRenderJavascriptDirect())
-		{
-			String renderOnDomReady = getAddTinyMceSettingsScript(Mode.exact,
-					Collections.singletonList(component));
-			response.renderOnDomReadyJavaScript(renderOnDomReady);
-		}
-
-		if (mayRenderJavascriptDirect())
-		{
-			String renderJavaScript = getAddTinyMceSettingsScript(Mode.exact,
-					Collections.singletonList(component));
-			response.renderJavaScript(renderJavaScript, null);
-		}
+		String renderOnDomReady = getAddTinyMceSettingsScript(Mode.exact,
+				Collections.singletonList(component));
+		response.renderOnDomReadyJavaScript(renderOnDomReady);
 	}
 
 
