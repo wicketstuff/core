@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.IAjaxRegionMarkupIdProvider;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.Url;
@@ -37,7 +38,7 @@ import wicket.contrib.tinymce.settings.TinyMCESettings.Mode;
 /**
  * Renders a component (textarea) as WYSIWYG editor, using TinyMce.
  */
-public class TinyMceBehavior extends Behavior
+public class TinyMceBehavior extends Behavior implements IAjaxRegionMarkupIdProvider
 {
 	private static final long serialVersionUID = 3L;
 
@@ -53,6 +54,19 @@ public class TinyMceBehavior extends Behavior
 	public TinyMceBehavior(TinyMCESettings settings)
 	{
 		this.settings = settings;
+	}
+
+	@Override
+	public void beforeRender(Component component)
+	{
+		component.getResponse().write(
+				String.format("<div id=\"%s\">", getAjaxRegionMarkupId(component)));
+	}
+
+	@Override
+	public void afterRender(Component component)
+	{
+		component.getResponse().write("</div>");
 	}
 
 	public void renderHead(Component c, IHeaderResponse response)
@@ -138,5 +152,8 @@ public class TinyMceBehavior extends Behavior
 		return component;
 	}
 
-
+	public String getAjaxRegionMarkupId(Component component)
+	{
+		return component.getMarkupId() + "_wrapper_component";
+	}
 }
