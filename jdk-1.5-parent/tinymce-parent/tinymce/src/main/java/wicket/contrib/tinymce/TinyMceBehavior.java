@@ -73,27 +73,29 @@ public class TinyMceBehavior extends Behavior
 
 		// TinyMce javascript:
 		if (mayRenderJavascriptDirect())
+		{
 			response.renderJavaScriptReference(TinyMCESettings.javaScriptReference());
+		}
 		else
+		{
 			TinyMCESettings.lazyLoadTinyMCEResource(response);
+		}
 
-		String renderOnDomReady = getRenderOnDomReadyJavascript(response);
-		if (renderOnDomReady != null)
-			response.renderOnDomReadyJavaScript(renderOnDomReady);
-
-		String renderJavaScript = getRenderJavascript(response);
-		if (renderJavaScript != null)
-			response.renderJavaScript(renderJavaScript, null);
-	}
-
-	protected String getRenderOnDomReadyJavascript(IHeaderResponse response)
-	{
-		if (component == null)
-			throw new IllegalStateException("TinyMceBehavior is not bound to a component");
 		if (!mayRenderJavascriptDirect())
-			return getAddTinyMceSettingsScript(Mode.exact, Collections.singletonList(component));
-		return null;
+		{
+			String renderOnDomReady = getAddTinyMceSettingsScript(Mode.exact,
+					Collections.singletonList(component));
+			response.renderOnDomReadyJavaScript(renderOnDomReady);
+		}
+
+		if (mayRenderJavascriptDirect())
+		{
+			String renderJavaScript = getAddTinyMceSettingsScript(Mode.exact,
+					Collections.singletonList(component));
+			response.renderJavaScript(renderJavaScript, null);
+		}
 	}
+
 
 	private boolean mayRenderJavascriptDirect()
 	{
@@ -101,14 +103,6 @@ public class TinyMceBehavior extends Behavior
 				&& !((WebRequest)RequestCycle.get().getRequest()).isAjax();
 	}
 
-	protected String getRenderJavascript(IHeaderResponse response)
-	{
-		if (component == null)
-			throw new IllegalStateException("TinyMceBehavior is not bound to a component");
-		if (mayRenderJavascriptDirect())
-			return getAddTinyMceSettingsScript(Mode.exact, Collections.singletonList(component));
-		return null;
-	}
 
 	protected String getAddTinyMceSettingsScript(Mode mode, Collection<Component> components)
 	{
