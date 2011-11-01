@@ -49,11 +49,11 @@ public class TinyMCEBasePage extends WicketExamplePage
 			{
 				setResponsePage(AjaxTinyMCEPage.class);
 			}
-			
+
 		});
 		add(new Link("inline")
 		{
-			
+
 			public void onClick()
 			{
 				setResponsePage(InlineTinyMCEPage.class);
@@ -61,7 +61,7 @@ public class TinyMCEBasePage extends WicketExamplePage
 		});
 		add(new Link("image")
 		{
-			
+
 			public void onClick()
 			{
 				setResponsePage(ImageUploadTinyMCEPage.class);

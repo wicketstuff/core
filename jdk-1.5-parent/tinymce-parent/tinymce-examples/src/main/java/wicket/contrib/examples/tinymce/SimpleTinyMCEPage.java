@@ -8,10 +8,12 @@ import wicket.contrib.tinymce.TinyMceBehavior;
 /**
  * @author Iulian-Corneliu COSTAN
  */
-public class SimpleTinyMCEPage extends TinyMCEBasePage {
+public class SimpleTinyMCEPage extends TinyMCEBasePage
+{
 	private static final long serialVersionUID = 1L;
 
-	public SimpleTinyMCEPage() {
+	public SimpleTinyMCEPage()
+	{
 		TextArea textArea = new TextArea("ta", new Model(TEXT));
 		textArea.add(new TinyMceBehavior());
 		add(textArea);
