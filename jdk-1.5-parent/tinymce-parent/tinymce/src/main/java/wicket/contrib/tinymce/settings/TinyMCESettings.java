@@ -922,7 +922,7 @@ public class TinyMCESettings implements Serializable
 	{
 		String url = RequestCycle.get().urlFor(TinyMCESettings.javaScriptReference(), null)
 				.toString();
-		String base = url.substring(0, url.lastIndexOf(File.separatorChar));
+		String base = url.substring(0, url.lastIndexOf("/"));
 		response.renderJavaScript("window.tinyMCEPreInit = {base : '" + base
 				+ "', suffix : '', query : ''};", "tinyMceHackPreload");
 		response.renderJavaScriptReference(TinyMCESettings.javaScriptReference());
