@@ -13,8 +13,17 @@ import org.apache.wicket.model.PropertyModel;
  */
 public abstract class AbstractFacebookPlugin extends WebMarkupContainer
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	protected class EnumModel extends AbstractReadOnlyModel<String>
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		private final IModel<? extends Enum<?>> model;
 
 		/**
