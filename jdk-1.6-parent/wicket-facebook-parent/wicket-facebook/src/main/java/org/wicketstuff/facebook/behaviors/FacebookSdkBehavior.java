@@ -11,6 +11,11 @@ import org.wicketstuff.facebook.FacebookAppCredentials;
  */
 public class FacebookSdkBehavior extends Behavior
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private final FacebookAppCredentials credentials;
 
 	/**

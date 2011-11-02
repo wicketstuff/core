@@ -12,6 +12,11 @@ import org.apache.wicket.model.PropertyModel;
  */
 public class LikeButton extends AbstractFacebookPlugin
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public enum LikeButtonAction
 	{
 		LIKE, RECOMMEND

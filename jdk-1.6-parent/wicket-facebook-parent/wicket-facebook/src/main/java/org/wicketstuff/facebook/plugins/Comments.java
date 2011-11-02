@@ -12,6 +12,11 @@ import org.apache.wicket.model.PropertyModel;
  */
 public class Comments extends AbstractFacebookPlugin
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int numPosts = 2;
 
 
