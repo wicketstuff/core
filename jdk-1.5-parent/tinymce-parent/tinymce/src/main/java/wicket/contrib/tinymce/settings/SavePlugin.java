@@ -18,8 +18,8 @@
 package wicket.contrib.tinymce.settings;
 
 /**
- * This plugin adds a save button to TinyMCE this save button will submit the
- * form that the editor is within.
+ * This plugin adds a save button to TinyMCE this save button will submit the form that the editor
+ * is within.
  * 
  * @author Iulian-Corneliu COSTAN
  */

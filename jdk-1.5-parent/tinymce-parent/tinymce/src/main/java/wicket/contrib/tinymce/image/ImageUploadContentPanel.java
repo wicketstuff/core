@@ -48,6 +48,8 @@ public class ImageUploadContentPanel extends Panel
 		form.add(fileUploadField);
 		form.add(new AjaxButton("uploadButton", form)
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void onSubmit(AjaxRequestTarget pTarget, Form<?> pForm)
 			{
@@ -91,7 +93,7 @@ public class ImageUploadContentPanel extends Panel
 	{
 		private static final long serialVersionUID = -8116224338791429342L;
 		public static final List<String> extensions = Arrays.asList("jpg", "gif", "jpeg", "png",
-				"bmp");
+			"bmp");
 
 		public void validate(IValidatable<List<FileUpload>> pValidatables)
 		{

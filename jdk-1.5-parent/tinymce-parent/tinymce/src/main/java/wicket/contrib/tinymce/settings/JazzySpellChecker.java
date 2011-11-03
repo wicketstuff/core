@@ -110,12 +110,13 @@ class JazzySpellChecker extends AbstractResource
 	// *
 	// * @see org.apache.wicket.Resource#configureResponse(Response response)
 	// */
+	@Override
 	protected ResourceResponse newResourceResponse(Attributes attributes)
 	{
 		buildResourceStream();
 		if (attributes.getResponse() instanceof WebResponse)
 			((WebResponse)attributes.getResponse()).setHeader("Cache-Control",
-					"no-cache, must-revalidate");
+				"no-cache, must-revalidate");
 		ResourceResponse resourceResponse = new ResourceResponse();
 		resourceResponse.setWriteCallback(new WriteCallback()
 		{
@@ -146,8 +147,7 @@ class JazzySpellChecker extends AbstractResource
 	// }
 
 	/**
-	 * Read the Request and construct an appropriate ResourceStream to respond
-	 * with.
+	 * Read the Request and construct an appropriate ResourceStream to respond with.
 	 */
 	public void buildResourceStream()
 	{
@@ -155,8 +155,7 @@ class JazzySpellChecker extends AbstractResource
 		String cmd = null, id = null;
 		JSONArray paramArray = null;
 
-		HttpServletRequest req = ((ServletWebRequest)RequestCycle.get().getRequest())
-				.getContainerRequest();
+		HttpServletRequest req = ((ServletWebRequest)RequestCycle.get().getRequest()).getContainerRequest();
 		BufferedReader reader = null;
 		try
 		{

@@ -18,8 +18,8 @@
 package wicket.contrib.tinymce.settings;
 
 /**
- * This plugin adds a preview button to TinyMCE, pressing the button opens a
- * popup showing the current content.
+ * This plugin adds a preview button to TinyMCE, pressing the button opens a popup showing the
+ * current content.
  * <p>
  * Note: Only basic functionality is implemented, more work is needed.
  * 

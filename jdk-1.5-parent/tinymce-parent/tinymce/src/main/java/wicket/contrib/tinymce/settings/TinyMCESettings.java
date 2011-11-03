@@ -18,7 +18,6 @@
  */
 package wicket.contrib.tinymce.settings;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,9 +48,8 @@ import org.slf4j.LoggerFactory;
 import wicket.contrib.tinymce.InPlaceEditBehavior;
 
 /**
- * Settings class for TinyMCE editor. User can add/remove buttons,
- * enable/disable resizing, change positions, orientation, alignment and much
- * more.
+ * Settings class for TinyMCE editor. User can add/remove buttons, enable/disable resizing, change
+ * positions, orientation, alignment and much more.
  * 
  * @author Iulian-Corneliu Costan (iulian.costan@gmail.com)
  * @author Frank Bille Jensen (fbille@avaleo.net)
@@ -63,11 +61,11 @@ public class TinyMCESettings implements Serializable
 	private static final long serialVersionUID = 3L;
 	private static final Logger LOG = LoggerFactory.getLogger(TinyMCESettings.class);
 	public static final ResourceReference REFERENCE = new JavaScriptResourceReference(
-			InPlaceEditBehavior.class, "tiny_mce/tiny_mce_src.js");
+		InPlaceEditBehavior.class, "tiny_mce/tiny_mce_src.js");
 	public static final ResourceReference REFERENCE_MIN = new JavaScriptResourceReference(
-			InPlaceEditBehavior.class, "tiny_mce/tiny_mce.js");
-	public static final Set<Language> languages = new HashSet<Language>(Arrays.asList(Language
-			.values()));
+		InPlaceEditBehavior.class, "tiny_mce/tiny_mce.js");
+	public static final Set<Language> languages = new HashSet<Language>(
+		Arrays.asList(Language.values()));
 
 	private Theme theme;
 	private Location toolbarLocation;
@@ -108,7 +106,7 @@ public class TinyMCESettings implements Serializable
 	public TinyMCESettings(Theme theme, Language lang)
 	{
 		this.theme = theme;
-		this.language = lang;
+		language = lang;
 	}
 
 	private static Language selectLang()
@@ -179,7 +177,7 @@ public class TinyMCESettings implements Serializable
 	@Deprecated
 	public void setAutoResize(boolean auto_resize)
 	{
-		this.autoResize = auto_resize;
+		autoResize = auto_resize;
 	}
 
 	public String getBlockFormats()
@@ -273,13 +271,12 @@ public class TinyMCESettings implements Serializable
 	}
 
 	/**
-	 * This option enables you to control if TinyMCE is to be clever and restore
-	 * urls to their original values. URLs are auto converted/messed up by
-	 * default since the built in browser logic works this way, there is no way
-	 * to get the real URL unless you store it away. If you set this option to
-	 * false it will try to keep these URLs intact. This option is set to true
-	 * by default that means URLs will be forced absolute or relative depending
-	 * on the state of relative_urls.
+	 * This option enables you to control if TinyMCE is to be clever and restore urls to their
+	 * original values. URLs are auto converted/messed up by default since the built in browser
+	 * logic works this way, there is no way to get the real URL unless you store it away. If you
+	 * set this option to false it will try to keep these URLs intact. This option is set to true by
+	 * default that means URLs will be forced absolute or relative depending on the state of
+	 * relative_urls.
 	 * 
 	 * @param convertUrls
 	 */
@@ -294,13 +291,12 @@ public class TinyMCESettings implements Serializable
 	}
 
 	/**
-	 * If this option is enabled the protocol and host part of the URLs returned
-	 * from the MCFileManager will be removed. This option is only used if the
-	 * relative_urls option is set to false. This option is set to true by
-	 * default.
+	 * If this option is enabled the protocol and host part of the URLs returned from the
+	 * MCFileManager will be removed. This option is only used if the relative_urls option is set to
+	 * false. This option is set to true by default.
 	 * 
-	 * URL:s will be returned in this format: "/somedir/somefile.htm" instead of
-	 * the default mode: "http://www.somesite.com/somedir/somefile.htm".
+	 * URL:s will be returned in this format: "/somedir/somefile.htm" instead of the default mode:
+	 * "http://www.somesite.com/somedir/somefile.htm".
 	 * 
 	 * @param removeScriptHost
 	 */
@@ -315,10 +311,9 @@ public class TinyMCESettings implements Serializable
 	}
 
 	/**
-	 * If this option is set to true, all URLs returned from the MCFileManager
-	 * will be relative from the specified document_base_url. If it's set to
-	 * false all URLs will be converted to absolute URLs. This option is set to
-	 * true by default.
+	 * If this option is set to true, all URLs returned from the MCFileManager will be relative from
+	 * the specified document_base_url. If it's set to false all URLs will be converted to absolute
+	 * URLs. This option is set to true by default.
 	 * 
 	 * @param relativeUrls
 	 */
@@ -333,11 +328,11 @@ public class TinyMCESettings implements Serializable
 	}
 
 	/**
-	 * Add a default button to tinymce editor. These plugins are defined by
-	 * tinymce editor and are ready to use.
+	 * Add a default button to tinymce editor. These plugins are defined by tinymce editor and are
+	 * ready to use.
 	 * 
-	 * TODO: I'm not sure this works for anything except the fourth toolbar.
-	 * TODO: Why doesn't it interact with the 'toolbars' variable?
+	 * TODO: I'm not sure this works for anything except the fourth toolbar. TODO: Why doesn't it
+	 * interact with the 'toolbars' variable?
 	 * 
 	 * @param button
 	 *            - button to be added
@@ -354,8 +349,8 @@ public class TinyMCESettings implements Serializable
 	}
 
 	/**
-	 * Use {@link #add(Button, Toolbar, Position)} instead. It will check for
-	 * and register Plugin Buttons
+	 * Use {@link #add(Button, Toolbar, Position)} instead. It will check for and register Plugin
+	 * Buttons
 	 * 
 	 */
 	@Deprecated
@@ -378,23 +373,22 @@ public class TinyMCESettings implements Serializable
 
 	/**
 	 * This option can only be used when theme is set to advanced and when the
-	 * theme_advanced_layout_manager option is set to the default value of
-	 * "SimpleLayout".
+	 * theme_advanced_layout_manager option is set to the default value of "SimpleLayout".
 	 * 
 	 * TODO: Does this fail for the fourth toolbar? Seems like it will.
 	 * 
 	 * @param toolbar
 	 *            the toolbar to define buttons for
 	 * @param buttons
-	 *            A list of buttons to show as that toolbar. An empty list will
-	 *            remove (make invisible) the toolbar in tinymce. Passing null
-	 *            will remove the setting for the toolbar.
+	 *            A list of buttons to show as that toolbar. An empty list will remove (make
+	 *            invisible) the toolbar in tinymce. Passing null will remove the setting for the
+	 *            toolbar.
 	 */
 	public void setToolbarButtons(Toolbar toolbar, List<Button> buttons)
 	{
 		if (!Theme.advanced.equals(theme))
 			throw new IllegalArgumentException(
-					"setToolbarButtons is only applicable for advanced theme");
+				"setToolbarButtons is only applicable for advanced theme");
 		if (toolbarButtons == null)
 			toolbarButtons = new HashMap<Toolbar, List<Button>>();
 		if (buttons == null)
@@ -406,8 +400,8 @@ public class TinyMCESettings implements Serializable
 	/**
 	 * @param toolbar
 	 *            The toolbar to return the defined buttons for
-	 * @return The buttons that should be shown for that toolbar (empty list for
-	 *         invisible toolbar, null for no settings for that toolbar)
+	 * @return The buttons that should be shown for that toolbar (empty list for invisible toolbar,
+	 *         null for no settings for that toolbar)
 	 */
 	public List<Button> getToolbarButtons(Toolbar toolbar)
 	{
@@ -418,10 +412,10 @@ public class TinyMCESettings implements Serializable
 	}
 
 	/**
-	 * Register a tinymce plugin. In order to reuse a existing plugin it has to
-	 * be registered before. Usually plugins are registered automatically when a
-	 * plugin button is added, but there are some plugins that contains no
-	 * buttons. This method is used to register those plugins. (eg AutoSave)
+	 * Register a tinymce plugin. In order to reuse a existing plugin it has to be registered
+	 * before. Usually plugins are registered automatically when a plugin button is added, but there
+	 * are some plugins that contains no buttons. This method is used to register those plugins. (eg
+	 * AutoSave)
 	 * 
 	 * @param plugin
 	 */
@@ -450,8 +444,11 @@ public class TinyMCESettings implements Serializable
 
 		// language
 		if (language != null)
-			buffer.append(",\n\t").append("language : ").append("\"").append(language.toString())
-					.append("\"");
+			buffer.append(",\n\t")
+				.append("language : ")
+				.append("\"")
+				.append(language.toString())
+				.append("\"");
 
 		// theme
 		buffer.append(",\n\t").append("theme : ").append("\"").append(theme.getName()).append("\"");
@@ -482,16 +479,22 @@ public class TinyMCESettings implements Serializable
 			buffer.append(",\n\treadonly : true"); // Per Online Doc
 
 		if (contentCss != null)
-			buffer.append(",\n\t").append("content_css : \"")
-					.append(RequestCycle.get().urlFor(contentCss, null)).append("\"");
+			buffer.append(",\n\t")
+				.append("content_css : \"")
+				.append(RequestCycle.get().urlFor(contentCss, null))
+				.append("\"");
 
 		if (documentBaseUrl != null)
-			buffer.append(",\n\t").append("document_base_url : \"").append(documentBaseUrl)
-					.append("\"");
+			buffer.append(",\n\t")
+				.append("document_base_url : \"")
+				.append(documentBaseUrl)
+				.append("\"");
 
 		if (entityEncoding != null)
-			buffer.append(",\n\t").append("entity_encoding : \"").append(entityEncoding)
-					.append("\"");
+			buffer.append(",\n\t")
+				.append("entity_encoding : \"")
+				.append(entityEncoding)
+				.append("\"");
 
 		if (Theme.advanced.equals(theme))
 			appendAdvancedSettings(buffer);
@@ -658,8 +661,11 @@ public class TinyMCESettings implements Serializable
 				Toolbar toolbar = getToolbar(i);
 				List<Button> buttons = toolbarButtons.get(toolbar);
 				if (buttons != null)
-					buffer.append(",\n\ttheme_advanced_buttons").append(i).append(" : \"")
-							.append(enumAsString(buttons)).append("\"");
+					buffer.append(",\n\ttheme_advanced_buttons")
+						.append(i)
+						.append(" : \"")
+						.append(enumAsString(buttons))
+						.append("\"");
 			}
 	}
 
@@ -682,8 +688,11 @@ public class TinyMCESettings implements Serializable
 		Collection<Control> result = CollectionUtils.select(controls, predicate);
 		if (result.size() > 0)
 		{
-			buffer.append(",\n\t").append("theme_advanced_buttons1_add_before : ").append("\"")
-					.append(controlsAsString(result)).append("\"");
+			buffer.append(",\n\t")
+				.append("theme_advanced_buttons1_add_before : ")
+				.append("\"")
+				.append(controlsAsString(result))
+				.append("\"");
 		}
 	}
 
@@ -693,8 +702,11 @@ public class TinyMCESettings implements Serializable
 		Collection result = CollectionUtils.select(controls, predicate);
 		if (result.size() > 0)
 		{
-			buffer.append(",\n\t").append("theme_advanced_buttons1_add : ").append("\"")
-					.append(controlsAsString(result)).append("\"");
+			buffer.append(",\n\t")
+				.append("theme_advanced_buttons1_add : ")
+				.append("\"")
+				.append(controlsAsString(result))
+				.append("\"");
 		}
 	}
 
@@ -704,8 +716,11 @@ public class TinyMCESettings implements Serializable
 		Collection result = CollectionUtils.select(controls, predicate);
 		if (result.size() > 0)
 		{
-			buffer.append(",\n\t").append("theme_advanced_buttons2_add_before: ").append("\"")
-					.append(controlsAsString(result)).append("\"");
+			buffer.append(",\n\t")
+				.append("theme_advanced_buttons2_add_before: ")
+				.append("\"")
+				.append(controlsAsString(result))
+				.append("\"");
 		}
 	}
 
@@ -715,8 +730,11 @@ public class TinyMCESettings implements Serializable
 		Collection result = CollectionUtils.select(controls, predicate);
 		if (result.size() > 0)
 		{
-			buffer.append(",\n\t").append("theme_advanced_buttons2_add : ").append("\"")
-					.append(controlsAsString(result)).append("\"");
+			buffer.append(",\n\t")
+				.append("theme_advanced_buttons2_add : ")
+				.append("\"")
+				.append(controlsAsString(result))
+				.append("\"");
 		}
 	}
 
@@ -726,8 +744,11 @@ public class TinyMCESettings implements Serializable
 		Collection<?> result = CollectionUtils.select(controls, predicate);
 		if (result.size() > 0)
 		{
-			buffer.append(",\n\t").append("theme_advanced_buttons3_add_before : ").append("\"")
-					.append(controlsAsString(result)).append("\"");
+			buffer.append(",\n\t")
+				.append("theme_advanced_buttons3_add_before : ")
+				.append("\"")
+				.append(controlsAsString(result))
+				.append("\"");
 		}
 	}
 
@@ -737,8 +758,11 @@ public class TinyMCESettings implements Serializable
 		Collection<?> result = CollectionUtils.select(controls, predicate);
 		if (result.size() > 0)
 		{
-			buffer.append(",\n\t").append("theme_advanced_buttons3_add : ").append("\"")
-					.append(controlsAsString(result)).append("\"");
+			buffer.append(",\n\t")
+				.append("theme_advanced_buttons3_add : ")
+				.append("\"")
+				.append(controlsAsString(result))
+				.append("\"");
 		}
 	}
 
@@ -748,16 +772,22 @@ public class TinyMCESettings implements Serializable
 		Collection result = CollectionUtils.select(controls, predicate);
 		if (result.size() > 0)
 		{
-			buffer.append(",\n\t").append("theme_advanced_buttons4 : ").append("\"")
-					.append(controlsAsString(result)).append("\"");
+			buffer.append(",\n\t")
+				.append("theme_advanced_buttons4 : ")
+				.append("\"")
+				.append(controlsAsString(result))
+				.append("\"");
 		}
 
 		predicate = new ControlPredicate(Toolbar.fourth, Position.after);
 		result = CollectionUtils.select(controls, predicate);
 		if (result.size() > 0)
 		{
-			buffer.append(",\n\t").append("theme_advanced_buttons4 : ").append("\"")
-					.append(controlsAsString(result)).append("\"");
+			buffer.append(",\n\t")
+				.append("theme_advanced_buttons4 : ")
+				.append("\"")
+				.append(controlsAsString(result))
+				.append("\"");
 		}
 	}
 
@@ -766,8 +796,11 @@ public class TinyMCESettings implements Serializable
 		if (disabledButtons.size() > 0)
 		{
 			String value = enumAsString(disabledButtons);
-			buffer.append(",\n\t").append("theme_advanced_disable : ").append("\"").append(value)
-					.append("\"");
+			buffer.append(",\n\t")
+				.append("theme_advanced_disable : ")
+				.append("\"")
+				.append(value)
+				.append("\"");
 		}
 	}
 
@@ -824,16 +857,20 @@ public class TinyMCESettings implements Serializable
 	void addBlockFormats(StringBuffer buffer)
 	{
 		if (blockFormats != null)
-			buffer.append(",\n\ttheme_advanced_blockformats : \"").append(blockFormats)
-					.append("\"");
+			buffer.append(",\n\ttheme_advanced_blockformats : \"")
+				.append(blockFormats)
+				.append("\"");
 	}
 
 	void addToolbarAlign(StringBuffer buffer)
 	{
 		if (toolbarAlign != null)
 		{
-			buffer.append(",\n\t").append("theme_advanced_toolbar_align : ").append("\"")
-					.append(toolbarAlign.getName()).append("\"");
+			buffer.append(",\n\t")
+				.append("theme_advanced_toolbar_align : ")
+				.append("\"")
+				.append(toolbarAlign.getName())
+				.append("\"");
 		}
 	}
 
@@ -841,8 +878,11 @@ public class TinyMCESettings implements Serializable
 	{
 		if (toolbarLocation != null)
 		{
-			buffer.append(",\n\t").append("theme_advanced_toolbar_location : ").append("\"")
-					.append(toolbarLocation.getName()).append("\"");
+			buffer.append(",\n\t")
+				.append("theme_advanced_toolbar_location : ")
+				.append("\"")
+				.append(toolbarLocation.getName())
+				.append("\"");
 		}
 	}
 
@@ -850,8 +890,11 @@ public class TinyMCESettings implements Serializable
 	{
 		if (statusbarLocation != null)
 		{
-			buffer.append(",\n\t").append("theme_advanced_statusbar_location : ").append("\"")
-					.append(statusbarLocation.getName()).append("\"");
+			buffer.append(",\n\t")
+				.append("theme_advanced_statusbar_location : ")
+				.append("\"")
+				.append(statusbarLocation.getName())
+				.append("\"");
 		}
 	}
 
@@ -860,12 +903,10 @@ public class TinyMCESettings implements Serializable
 	 * TinyMCE javascript resource.
 	 * </p>
 	 * <p>
-	 * <strong>Note</strong>: The TinyMCE source cannot be lazily loaded via
-	 * ajax. Therefore, adding this in a
-	 * {@link IHeaderContributor#renderHead(IHeaderResponse)} must be done in a
-	 * component that is not rendered via Ajax. If you wish to load this via
-	 * Ajax, you can use the very hacky workaround
-	 * {@link #lazyLoadTinyMCEResource(IHeaderResponse)}.
+	 * <strong>Note</strong>: The TinyMCE source cannot be lazily loaded via ajax. Therefore, adding
+	 * this in a {@link IHeaderContributor#renderHead(IHeaderResponse)} must be done in a component
+	 * that is not rendered via Ajax. If you wish to load this via Ajax, you can use the very hacky
+	 * workaround {@link #lazyLoadTinyMCEResource(IHeaderResponse)}.
 	 * </p>
 	 * 
 	 * @return
@@ -882,10 +923,9 @@ public class TinyMCESettings implements Serializable
 
 	/**
 	 * <p>
-	 * Normally, TinyMCE cannot be natively loaded lazily; you must have the
-	 * 'tiny_mce.js' script rendered directly to your page instead of through an
-	 * Ajax loaded component. This method provides a workaround similar to the
-	 * one described on:
+	 * Normally, TinyMCE cannot be natively loaded lazily; you must have the 'tiny_mce.js' script
+	 * rendered directly to your page instead of through an Ajax loaded component. This method
+	 * provides a workaround similar to the one described on:
 	 * </p>
 	 * 
 	 * <pre>
@@ -902,9 +942,8 @@ public class TinyMCESettings implements Serializable
 	 * }
 	 * </pre>
 	 * <p>
-	 * in some component that resided on the page <strong>before</strong> the
-	 * panel that loaded the textarea (with TinyMCEBehavior) via ajax. Now, that
-	 * panel can simply call:
+	 * in some component that resided on the page <strong>before</strong> the panel that loaded the
+	 * textarea (with TinyMCEBehavior) via ajax. Now, that panel can simply call:
 	 * </p>
 	 * 
 	 * <pre>
@@ -920,14 +959,15 @@ public class TinyMCESettings implements Serializable
 	 */
 	public static void lazyLoadTinyMCEResource(IHeaderResponse response)
 	{
-		String url = RequestCycle.get().urlFor(TinyMCESettings.javaScriptReference(), null)
-				.toString();
+		String url = RequestCycle.get()
+			.urlFor(TinyMCESettings.javaScriptReference(), null)
+			.toString();
 		String base = url.substring(0, url.lastIndexOf("/"));
-		response.renderJavaScript("window.tinyMCEPreInit = {base : '" + base
-				+ "', suffix : '', query : ''};", "tinyMceHackPreload");
+		response.renderJavaScript("window.tinyMCEPreInit = {base : '" + base +
+			"', suffix : '', query : ''};", "tinyMceHackPreload");
 		response.renderJavaScriptReference(TinyMCESettings.javaScriptReference());
 		response.renderJavaScript("window.tinymce.dom.Event.domLoaded = true;",
-				"tinyMceHackPostload");
+			"tinyMceHackPostload");
 	}
 
 	private class ControlPredicate implements Predicate
@@ -950,18 +990,16 @@ public class TinyMCESettings implements Serializable
 	}
 
 	/**
-	 * This class specifies how elements is to be converted into TinyMCE WYSIWYG
-	 * editor instances. This option can be set to any of the values below:
+	 * This class specifies how elements is to be converted into TinyMCE WYSIWYG editor instances.
+	 * This option can be set to any of the values below:
 	 * <ul>
-	 * <li>textareas - converts all textarea elements to editors when the page
-	 * loads.</li>
-	 * <li>exact - exact - Converts only explicit elements, these are listed in
-	 * the elements option.</li>
-	 * <li>specific_textares - Converts all textarea elements with the a
-	 * textarea_trigger attribute set to "true".</li>
+	 * <li>textareas - converts all textarea elements to editors when the page loads.</li>
+	 * <li>exact - exact - Converts only explicit elements, these are listed in the elements option.
+	 * </li>
+	 * <li>specific_textares - Converts all textarea elements with the a textarea_trigger attribute
+	 * set to "true".</li>
 	 * </ul>
-	 * At this moment, only <b>textareas</b> and <b>exacat</b> modes are
-	 * supported.
+	 * At this moment, only <b>textareas</b> and <b>exacat</b> modes are supported.
 	 */
 	public static class Mode extends Enum
 	{
@@ -979,18 +1017,17 @@ public class TinyMCESettings implements Serializable
 	/**
 	 * Language enum
 	 */
-	public static enum Language {
+	public static enum Language
+	{
 		ar, bg, bs, ca, ch, cs, da, de, el, en, es, et, fa, fi, fr, gl, he, hr, hu, ia, ii, is, it, ja, ko, lt, lv, mk, ms, nb, nl, nn, pl, pt, ro, ru, sc, se, si, sk, sl, sr, sv, tr, tt, tw, uk, vi, zh
 	}
 
 	/**
-	 * This class enables you to specify what theme to use when rendering the
-	 * TinyMCE WYSIWYG editor instances. Two themes are supported:
+	 * This class enables you to specify what theme to use when rendering the TinyMCE WYSIWYG editor
+	 * instances. Two themes are supported:
 	 * <ul>
-	 * <li>simple - This is the most simple theme for TinyMCE it contains only
-	 * the basic functions.</li>
-	 * <li>advanced - This theme enables users to add/remove buttons and panels
-	 * .</li>
+	 * <li>simple - This is the most simple theme for TinyMCE it contains only the basic functions.</li>
+	 * <li>advanced - This theme enables users to add/remove buttons and panels .</li>
 	 * </ul>
 	 */
 	public static class Theme extends Enum
@@ -1007,8 +1044,8 @@ public class TinyMCESettings implements Serializable
 	}
 
 	/**
-	 * This option enables you to specify where the toolbar should be located.
-	 * This value can be top or bottom.
+	 * This option enables you to specify where the toolbar should be located. This value can be top
+	 * or bottom.
 	 */
 	public static class Location extends Enum
 	{
@@ -1024,8 +1061,8 @@ public class TinyMCESettings implements Serializable
 	}
 
 	/**
-	 * This class enables you to specify the alignment of the controls. This
-	 * value can be left, right or center the default value is center.
+	 * This class enables you to specify the alignment of the controls. This value can be left,
+	 * right or center the default value is center.
 	 */
 	public static class Align extends Enum
 	{
@@ -1042,8 +1079,8 @@ public class TinyMCESettings implements Serializable
 	}
 
 	/**
-	 * This class specifies the position of new added control. It can be before
-	 * or after existing elements.
+	 * This class specifies the position of new added control. It can be before or after existing
+	 * elements.
 	 */
 	public static class Position extends Enum
 	{
@@ -1059,8 +1096,8 @@ public class TinyMCESettings implements Serializable
 	}
 
 	/**
-	 * This class specifices the toolbar to add specific control to. TinyMCE
-	 * editor defines three toolbars named: first, second, third.
+	 * This class specifices the toolbar to add specific control to. TinyMCE editor defines three
+	 * toolbars named: first, second, third.
 	 */
 	public static class Toolbar extends Enum
 	{
@@ -1080,8 +1117,7 @@ public class TinyMCESettings implements Serializable
 	/**
 	 * Controls how entities/characters get processed by TinyMCE.
 	 * 
-	 * <a href=
-	 * "http://tinymce.moxiecode.com/wiki.php/Configuration:entity_encoding"
+	 * <a href= "http://tinymce.moxiecode.com/wiki.php/Configuration:entity_encoding"
 	 * >http://tinymce.moxiecode.com/wiki.php/Configuration:entity_encoding</a>
 	 * 
 	 * @author jbrookover
