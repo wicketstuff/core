@@ -33,10 +33,6 @@
 		</license>
 	</licenses>
 
-	<issueManagement>
-		<url>http://wicketstuff.org/jira/browse/WCTINYMCE</url>
-	</issueManagement>
-
 	<mailingLists>
 		<mailingList>
 			<name>Wicket Announcements List</name>
@@ -117,36 +113,10 @@
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
-			<version>20080701</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.tomcat</groupId>
+			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>6.0.16</version>
-			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-
-	<profiles>
-		<profile>
-			<id>for-jazzy-plugin</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<repositories>
-
-				<repository>
-					<id>wicket-snaps</id>
-					<url>http://wicketstuff.org/maven/repository</url>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-			</repositories>
-
-		</profile>
-	</profiles>
 </project>
