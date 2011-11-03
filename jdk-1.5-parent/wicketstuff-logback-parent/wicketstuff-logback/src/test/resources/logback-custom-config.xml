@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration>
 <configuration>
+	<conversionRule conversionWord="web"
+		converterClass="org.wicketstuff.logback.WicketWebFormattingConverter" />
+
 	<!-- ${contextPath} is not really needed here. Only used to showcase the 
 		functionality. It has more purpose for example in log file name. -->
 	<appender name="arrayAppender-${contextPath}" class="org.wicketstuff.logback.ByteArrayAppender">
@@ -16,7 +19,7 @@
 	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<charset>UTF-8</charset>
-			<pattern>%d|%p|%t|%c{36}|%r|%web%n\t%caller{1}\t%m%n%xEx</pattern>
+			<pattern>%d|%p|%t|%c{36}|%r|%web%n\t%replace(%caller{1}){'Caller\+\d+\s+at\s+', ''}\t%m%n%xEx</pattern>
 		</encoder>
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>debug</level>

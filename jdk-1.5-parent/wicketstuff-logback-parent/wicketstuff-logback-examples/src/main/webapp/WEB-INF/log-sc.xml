@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration>
 <configuration>
+	<conversionRule conversionWord="web"
+		converterClass="org.wicketstuff.logback.WicketWebFormattingConverter" />
+
 	<appender name="appender-${contextPath}" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<charset>UTF-8</charset>
-			<pattern>%d|%p|%t|%c{36}|%r|%web%n\t%caller{1}\t%m%n%xEx</pattern>
+			<pattern>%d|%p|%t|%c{36}|%r|%web%n\t%replace(%caller{1}){'Caller\+\d+\s+at\s+', ''}\t%m%n%xEx</pattern>
 		</encoder>
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>debug</level>
