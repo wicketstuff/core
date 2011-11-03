@@ -18,13 +18,18 @@ public class LikeButtonPage extends WebPage
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 
+	 */
 	public LikeButtonPage()
 	{
 
 		add(new FacebookSdkBehavior());
 
 		// URL is needed because Facebook doesn't like localhost
-		final IModel<String> url = Model.of("https://github.com/tfreier");
+		final IModel<String> url = Model.of("http://wicketstuff.org");
 
 		final LikeButton likeButton = new LikeButton("likeButton", url);
 		likeButton.setLayoutStyle(LikeButtonLayoutStyle.BUTTON_COUNT);
