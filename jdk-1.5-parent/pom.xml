@@ -49,6 +49,7 @@
 		<module>openlayers-parent</module>
 		<module>phonebook</module>
 		<module>plugin</module>
+		<module>portlet-parent</module>
 		<module>progressbar-parent</module>
 		<module>prototype</module>
 		<module>push-parent-jdk-1.5</module>
