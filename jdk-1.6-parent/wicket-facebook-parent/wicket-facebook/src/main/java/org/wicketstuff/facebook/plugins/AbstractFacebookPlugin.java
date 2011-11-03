@@ -1,6 +1,7 @@
 package org.wicketstuff.facebook.plugins;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
@@ -13,11 +14,6 @@ import org.apache.wicket.model.PropertyModel;
  */
 public abstract class AbstractFacebookPlugin extends WebMarkupContainer
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	protected class EnumModel extends AbstractReadOnlyModel<String>
 	{
 		/**
@@ -52,6 +48,11 @@ public abstract class AbstractFacebookPlugin extends WebMarkupContainer
 
 	}
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private ColorScheme colorScheme;
 
 
@@ -74,8 +75,29 @@ public abstract class AbstractFacebookPlugin extends WebMarkupContainer
 		return colorScheme;
 	}
 
+	@Override
+	protected void onRender()
+	{
+		if (AjaxRequestTarget.get() != null && findPage() != null)
+		{
+			setOutputMarkupId(true);
+
+			final StringBuilder js = new StringBuilder();
+			js.append("FB.XFBML.parse(document.getElementById('");
+			js.append(getMarkupId());
+			js.append("'));");
+
+			AjaxRequestTarget.get().appendJavaScript(js.toString());
+		}
+
+		super.onRender();
+	}
+
+
 	public void setColorScheme(final ColorScheme colorScheme)
 	{
 		this.colorScheme = colorScheme;
 	}
+
+
 }
