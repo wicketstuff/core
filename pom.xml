@@ -228,11 +228,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<hibernate.version>3.6.7.Final</hibernate.version>
-		<jetty.version>7.5.3.v20111011</jetty.version>
+		<hibernate.version>3.6.8.Final</hibernate.version>
+		<jetty.version>7.5.4.v20111024</jetty.version>
 		<sf-jung.version>2.0.1</sf-jung.version>
 		<shiro.version>1.1.0</shiro.version>
-		<slf4j.version>1.6.2</slf4j.version>
+		<slf4j.version>1.6.4</slf4j.version>
 		<log4j.version>1.2.16</log4j.version>
 		<spring.version>3.0.6.RELEASE</spring.version>
 	</properties>
@@ -303,7 +303,7 @@
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
-				<version>0.9.30</version>
+				<version>1.0.0</version>
 				<scope>runtime</scope>
 			</dependency>
 			<dependency>
@@ -565,7 +565,7 @@
 			<dependency>
 				<groupId>net.sf.ehcache</groupId>
 				<artifactId>ehcache-core</artifactId>
-				<version>2.4.5</version>
+				<version>2.4.6</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sf.json-lib</groupId>
