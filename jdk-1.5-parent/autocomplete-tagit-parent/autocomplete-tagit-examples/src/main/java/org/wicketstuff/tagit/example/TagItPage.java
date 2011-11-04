@@ -30,7 +30,7 @@ public class TagItPage extends WebPage
 			{
 				super.onSubmit();
 
-				System.err.println("tagit: " + get("tagit").getDefaultModelObjectAsString());
+				System.err.println("submitted values: " + get("tagit").getDefaultModelObjectAsString());
 			}
 
 		};
@@ -42,10 +42,10 @@ public class TagItPage extends WebPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Iterable<String> getChoices(String input)
+			protected Iterable<String> getChoices(final String term)
 			{
 
-				System.err.println("> " + input.toString());
+				System.err.println("term> " + term);
 
 				return Arrays.asList("a1", "a2", "a3", "a4");
 			}
