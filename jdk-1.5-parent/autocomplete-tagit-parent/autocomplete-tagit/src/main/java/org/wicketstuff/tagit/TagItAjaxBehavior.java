@@ -32,7 +32,6 @@ public abstract class TagItAjaxBehavior<T> extends AbstractAjaxBehavior
 
 	public final void onRequest()
 	{
-
 		RequestCycle requestCycle = getComponent().getRequestCycle();
 		Request request = requestCycle.getRequest();
 		IRequestParameters parameters = request.getRequestParameters();
@@ -53,7 +52,7 @@ public abstract class TagItAjaxBehavior<T> extends AbstractAjaxBehavior
 	 *            the choices for the term
 	 * @return JSON array with all choices
 	 */
-	private String createJson(final Iterable<T> choices)
+	protected String createJson(final Iterable<T> choices)
 	{
 
 		StringBuilder json = new StringBuilder();
