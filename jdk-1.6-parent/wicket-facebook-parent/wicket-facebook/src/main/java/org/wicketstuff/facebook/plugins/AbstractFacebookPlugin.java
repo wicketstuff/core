@@ -85,7 +85,7 @@ public abstract class AbstractFacebookPlugin extends WebMarkupContainer
 			final StringBuilder js = new StringBuilder();
 			js.append("FB.XFBML.parse(document.getElementById('");
 			js.append(getMarkupId());
-			js.append("'));");
+			js.append("').parentNode);");
 
 			AjaxRequestTarget.get().appendJavaScript(js.toString());
 		}
