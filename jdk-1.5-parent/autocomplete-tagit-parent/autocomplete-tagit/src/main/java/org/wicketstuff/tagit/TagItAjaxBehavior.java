@@ -35,7 +35,7 @@ public abstract class TagItAjaxBehavior<T> extends AbstractAjaxBehavior
 
 		RequestCycle requestCycle = getComponent().getRequestCycle();
 		Request request = requestCycle.getRequest();
-		IRequestParameters parameters = request.getQueryParameters();
+		IRequestParameters parameters = request.getRequestParameters();
 		StringValue input = parameters.getParameterValue("term");
 
 		final Iterable<T> choices = getChoices(input.toString(""));
