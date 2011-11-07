@@ -20,7 +20,7 @@ package wicket.contrib.tinymce.settings;
 /**
  * This plugin makes all dialogs to open as floating DIV layers instead of popup windows.
  * Experimental plugin.
- *
+ * 
  * @author Iulian-Corneliu COSTAN
  */
 public class InlinepopupsPlugin extends Plugin
@@ -29,10 +29,11 @@ public class InlinepopupsPlugin extends Plugin
 
 	/**
 	 * Construct.
+	 * 
 	 * @param name
 	 */
 	public InlinepopupsPlugin(String name)
-    {
-        super(name);
-    }
+	{
+		super(name);
+	}
 }

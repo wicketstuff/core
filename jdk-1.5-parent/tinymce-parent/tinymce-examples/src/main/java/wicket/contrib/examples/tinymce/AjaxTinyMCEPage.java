@@ -22,6 +22,9 @@ public class AjaxTinyMCEPage extends TinyMCEBasePage
 
 		add(new AjaxLink<Void>("toggle")
 		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
 			public void onClick(AjaxRequestTarget target)
 			{
 				visible = !visible;

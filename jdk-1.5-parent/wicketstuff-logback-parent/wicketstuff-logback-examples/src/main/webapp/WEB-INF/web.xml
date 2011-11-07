@@ -10,7 +10,7 @@
 		<param-value>deployment</param-value>
 	</context-param>
 
-	<!-- Optional: using a web app resource to configure logback -->
+	<!-- Mandatory: using a web app resource to configure logback -->
 	<context-param>
 		<param-name>logbackConfigLocation</param-name>
 		<param-value>/WEB-INF/log-sc.xml</param-value>
@@ -22,8 +22,7 @@
 		<param-value>contextPath</param-value>
 	</context-param>
 
-	<!-- Adds converter for the %web conversion word to logback. If logbackConfigLocation 
-		was specified reconfigures logback with the custom config location -->
+	<!-- Mandatory: Reconfigures logback with the custom config location -->
 	<listener>
 		<listener-class>org.wicketstuff.logback.LogbackConfigListener</listener-class>
 	</listener>

@@ -25,6 +25,8 @@ import wicket.contrib.tinymce.settings.TinyMCESettings;
 public class WordTinyMCEPage extends TinyMCEBasePage
 {
 
+	private static final long serialVersionUID = 1L;
+
 	public WordTinyMCEPage()
 	{
 		TinyMCESettings settings = new TinyMCESettings(TinyMCESettings.Theme.advanced);
@@ -34,13 +36,13 @@ public class WordTinyMCEPage extends TinyMCEBasePage
 
 		// first toolbar
 		settings.add(Button.newdocument, TinyMCESettings.Toolbar.first,
-				TinyMCESettings.Position.before);
+			TinyMCESettings.Position.before);
 		settings.add(Button.separator, TinyMCESettings.Toolbar.first,
-				TinyMCESettings.Position.before);
+			TinyMCESettings.Position.before);
 		settings.add(Button.fontselect, TinyMCESettings.Toolbar.first,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 		settings.add(Button.fontsizeselect, TinyMCESettings.Toolbar.first,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 
 		// second toolbar
 		PastePlugin pastePlugin = new PastePlugin();
@@ -52,35 +54,35 @@ public class WordTinyMCEPage extends TinyMCEBasePage
 		settings.add(Button.cut, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
 		settings.add(Button.copy, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
 		settings.add(pastePlugin.getPasteButton(), TinyMCESettings.Toolbar.second,
-				TinyMCESettings.Position.before);
+			TinyMCESettings.Position.before);
 		settings.add(pastePlugin.getPasteTextButton(), TinyMCESettings.Toolbar.second,
-				TinyMCESettings.Position.before);
+			TinyMCESettings.Position.before);
 		settings.add(pastePlugin.getPasteWordButton(), TinyMCESettings.Toolbar.second,
-				TinyMCESettings.Position.before);
+			TinyMCESettings.Position.before);
 		settings.add(Button.separator, TinyMCESettings.Toolbar.second,
-				TinyMCESettings.Position.before);
+			TinyMCESettings.Position.before);
 		settings.add(searchReplacePlugin.getSearchButton(), TinyMCESettings.Toolbar.second,
-				TinyMCESettings.Position.before);
+			TinyMCESettings.Position.before);
 		settings.add(searchReplacePlugin.getReplaceButton(), TinyMCESettings.Toolbar.second,
-				TinyMCESettings.Position.before);
+			TinyMCESettings.Position.before);
 		settings.add(Button.separator, TinyMCESettings.Toolbar.second,
-				TinyMCESettings.Position.before);
+			TinyMCESettings.Position.before);
 		settings.add(Button.separator, TinyMCESettings.Toolbar.second,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 		settings.add(dateTimePlugin.getDateButton(), TinyMCESettings.Toolbar.second,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 		settings.add(dateTimePlugin.getTimeButton(), TinyMCESettings.Toolbar.second,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 		settings.add(Button.separator, TinyMCESettings.Toolbar.second,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 		settings.add(previewPlugin.getPreviewButton(), TinyMCESettings.Toolbar.second,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 		settings.add(Button.separator, TinyMCESettings.Toolbar.second,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 		settings.add(Button.forecolor, TinyMCESettings.Toolbar.second,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 		settings.add(Button.backcolor, TinyMCESettings.Toolbar.second,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 
 		// third toolbar
 		TablePlugin tablePlugin = new TablePlugin();
@@ -91,27 +93,27 @@ public class WordTinyMCEPage extends TinyMCEBasePage
 		FullScreenPlugin fullScreenPlugin = new FullScreenPlugin();
 		DirectionalityPlugin directionalityPlugin = new DirectionalityPlugin();
 		settings.add(tablePlugin.getTableControls(), TinyMCESettings.Toolbar.third,
-				TinyMCESettings.Position.before);
+			TinyMCESettings.Position.before);
 		settings.add(emotionsPlugin.getEmotionsButton(), TinyMCESettings.Toolbar.third,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 		settings.add(iespellPlugin.getIespellButton(), TinyMCESettings.Toolbar.third,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 		settings.add(mediaPlugin.getMediaButton(), TinyMCESettings.Toolbar.third,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 		settings.add(Button.separator, TinyMCESettings.Toolbar.third,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 		settings.add(printPlugin.getPrintButton(), TinyMCESettings.Toolbar.third,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 		settings.add(Button.separator, TinyMCESettings.Toolbar.third,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 		settings.add(directionalityPlugin.getLtrButton(), TinyMCESettings.Toolbar.third,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 		settings.add(directionalityPlugin.getRtlButton(), TinyMCESettings.Toolbar.third,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 		settings.add(Button.separator, TinyMCESettings.Toolbar.third,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 		settings.add(fullScreenPlugin.getFullscreenButton(), TinyMCESettings.Toolbar.third,
-				TinyMCESettings.Position.after);
+			TinyMCESettings.Position.after);
 
 		// other settings
 		settings.setToolbarAlign(TinyMCESettings.Align.left);
@@ -125,8 +127,8 @@ public class WordTinyMCEPage extends TinyMCEBasePage
 	}
 
 	private static final String TEXT = "<p>Some paragraph</p>" + "<p>Some other paragraph</p>"
-			+ "<p>Some <strong>element</strong>, this is to be editor 1. <br />"
-			+ "This editor instance has a 100% width to it. </p>"
-			+ "<p>Some paragraph. <a href=\"http://www.sourceforge.net/\">Some link</a></p>"
-			+ "<img src=\"logo.jpg\" border=\"0\" /><p>&nbsp;</p>";
+		+ "<p>Some <strong>element</strong>, this is to be editor 1. <br />"
+		+ "This editor instance has a 100% width to it. </p>"
+		+ "<p>Some paragraph. <a href=\"http://www.sourceforge.net/\">Some link</a></p>"
+		+ "<img src=\"logo.jpg\" border=\"0\" /><p>&nbsp;</p>";
 }

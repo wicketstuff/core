@@ -17,17 +17,15 @@ import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
-import org.apache.wicket.request.resource.AbstractResource;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Image upload panel which is responsible for showing image upload dialog and
- * its called when an image is requested.
+ * Image upload panel which is responsible for showing image upload dialog and its called when an
+ * image is requested.
  * 
  * @author Michal Letynski <mikel@mikel.pl>
  */
@@ -37,7 +35,7 @@ public class ImageUploadPanel extends Panel implements IResourceListener
 	private static final long serialVersionUID = -5848356532326545817L;
 	private static final Logger log = LoggerFactory.getLogger(ImageUploadPanel.class);
 	private static final ResourceReference IMAGE_UPLOAD_JS_RESOURCE = new JavaScriptResourceReference(
-			ImageUploadPanel.class, "imageUpload.js");
+		ImageUploadPanel.class, "imageUpload.js");
 
 	private ModalWindow modalWindow;
 	private ImageUploadBehavior imageUploadBehavior;
@@ -52,6 +50,8 @@ public class ImageUploadPanel extends Panel implements IResourceListener
 		modalWindow.setInitialWidth(350);
 		modalWindow.setWindowClosedCallback(new WindowClosedCallback()
 		{
+			private static final long serialVersionUID = 1L;
+
 			public void onClose(AjaxRequestTarget pTarget)
 			{
 				resetModalContent();
@@ -76,17 +76,19 @@ public class ImageUploadPanel extends Panel implements IResourceListener
 		protected void respond(AjaxRequestTarget pTarget)
 		{
 			ImageUploadContentPanel content = new ImageUploadContentPanel(
-					modalWindow.getContentId())
+				modalWindow.getContentId())
 			{
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void onImageUploaded(ImageFileDescription pImageFileDescription,
-						AjaxRequestTarget pTarget)
+					AjaxRequestTarget pTarget)
 				{
 					modalWindow.close(pTarget);
 					resetModalContent();
 					CharSequence url = ImageUploadPanel.this.urlFor(IResourceListener.INTERFACE);
 					XmlTag xmlImageTag = ImageUploadHelper.createImageTag(pImageFileDescription,
-							url);
+						url);
 					pTarget.appendJavaScript("putImage('" + xmlImageTag.toString() + "');");
 				}
 			};
@@ -115,22 +117,28 @@ public class ImageUploadPanel extends Panel implements IResourceListener
 	 */
 	public void onResourceRequested()
 	{
-		final String fileName = RequestCycle.get().getRequest().getQueryParameters()
-				.getParameterValue(ImageUploadHelper.IMAGE_FILE_NAME).toString();
+		final String fileName = RequestCycle.get()
+			.getRequest()
+			.getQueryParameters()
+			.getParameterValue(ImageUploadHelper.IMAGE_FILE_NAME)
+			.toString();
 		if (Strings.isEmpty(fileName))
 		{
 			log.warn("There is no file name of image");
 			return;
 		}
-		final String contentType = RequestCycle.get().getRequest().getQueryParameters()
-				.getParameterValue(ImageUploadHelper.IMAGE_CONTENT_TYPE).toString();
+		final String contentType = RequestCycle.get()
+			.getRequest()
+			.getQueryParameters()
+			.getParameterValue(ImageUploadHelper.IMAGE_CONTENT_TYPE)
+			.toString();
 
 
 		FileInputStream inputStream = null;
 		try
 		{
-			inputStream = new FileInputStream(ImageUploadHelper.getTemporaryDirPath()
-					+ File.separatorChar + fileName);
+			inputStream = new FileInputStream(ImageUploadHelper.getTemporaryDirPath() +
+				File.separatorChar + fileName);
 		}
 		catch (FileNotFoundException ex)
 		{
@@ -138,7 +146,7 @@ public class ImageUploadPanel extends Panel implements IResourceListener
 			throw new RuntimeException("Problem with getting image");
 		}
 		RequestCycle.get().scheduleRequestHandlerAfterCurrent(
-				new ResourceStreamRequestHandler(new FileResourceStream(contentType, inputStream)));
+			new ResourceStreamRequestHandler(new FileResourceStream(contentType, inputStream)));
 	}
 
 	/**

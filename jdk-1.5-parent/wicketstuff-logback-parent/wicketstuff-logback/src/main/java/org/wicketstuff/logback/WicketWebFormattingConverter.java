@@ -20,17 +20,23 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 
 /**
- * A custom logback conversion word converter. By registering this converter (trough
- * {@link LogbackConfigListener} or other means) and using the "%web" conversion word in the logback
- * encoder pattern wicket apps can produce web information (method, url, session id, ...) in their
- * log messages. If there is no request information available the placeholder is replaced with an
- * empty string in the final message. </p>
+ * <p>
+ * A custom logback conversion word converter. By registering this converter (through
+ * <code>&lt;conversionRule></code> element in logback config) and using the "%web" conversion word
+ * in the logback encoder pattern wicket apps can produce web information (method, url, session id,
+ * ...) in their log messages. If there is no request information available the placeholder is
+ * replaced with an empty string in the final message.
+ * </p>
+ * 
  * <p>
  * Example logback configuration:
  * 
  * <pre>
  * <code>
  * {@literal
+ * <conversionRule conversionWord="web"
+ *     converterClass="org.wicketstuff.logback.WicketWebFormattingConverter" />
+ * 
  * <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
  *     <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
  *         <charset>UTF-8</charset>
@@ -68,8 +74,8 @@ import org.apache.wicket.request.cycle.RequestCycle;
  * 
  * <p>
  * Implementation of {@link AbstractWebFormattingConverter} that uses wicket to locate the current
- * {@link HttpServletRequest} object in {@link #getRequest()} method. Registered by
- * {@link LogbackConfigListener}.
+ * {@link HttpServletRequest} object in {@link #getRequest()} method. Registerable through
+ * <code>&lt;conversionRule></code> element in logback config.
  * </p>
  * 
  * @author akiraly

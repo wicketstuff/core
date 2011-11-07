@@ -33,7 +33,7 @@ public class TinyMceRequestMapper extends AbstractMapper
 				if (TinyMceRequestMapper.class.getResource(path) != null)
 				{
 					JavaScriptPackageResource resource = new JavaScriptPackageResource(
-							TinyMceRequestMapper.class, path, null, null, null);
+						TinyMceRequestMapper.class, path, null, null, null);
 					return new ResourceRequestHandler(resource, null);
 				}
 			}

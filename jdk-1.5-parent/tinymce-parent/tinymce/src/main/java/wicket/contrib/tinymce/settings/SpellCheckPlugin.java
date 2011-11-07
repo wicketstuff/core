@@ -22,10 +22,9 @@ import org.apache.wicket.Application;
 import wicket.contrib.tinymce.TinyMceBehavior;
 
 /**
- * This plugin adds spellchecker functionality to TinyMCE by providing a new
- * button that performs an AJAX call to a backend wicket resource. The spell
- * checking is performed by the Jazzy spellchecker <a
- * href="http://jazzy.sourceforge.net/">Jazzy</a>.
+ * This plugin adds spellchecker functionality to TinyMCE by providing a new button that performs an
+ * AJAX call to a backend wicket resource. The spell checking is performed by the Jazzy spellchecker
+ * <a href="http://jazzy.sourceforge.net/">Jazzy</a>.
  * 
  * @author Iulian Costan (iulian.costan@gmail.com)
  */
@@ -34,8 +33,8 @@ public class SpellCheckPlugin extends Plugin
 	private static final long serialVersionUID = 1L;
 
 	private static final String resourceKey = "spellcheck_rpc";
-	private static final String resourceUrl = "resources/"
-			+ TinyMceBehavior.class.getCanonicalName() + "/" + resourceKey;
+	private static final String resourceUrl = "resources/" +
+		TinyMceBehavior.class.getCanonicalName() + "/" + resourceKey;
 
 	private PluginButton spellCheckButton;
 
@@ -49,8 +48,9 @@ public class SpellCheckPlugin extends Plugin
 		spellCheckButton = new PluginButton("spellchecker", this);
 
 		// add spellchecker resource
-		Application.get().getSharedResources()
-				.add(TinyMceBehavior.class, resourceKey, null, null, null, new JazzySpellChecker());
+		Application.get()
+			.getSharedResources()
+			.add(TinyMceBehavior.class, resourceKey, null, null, null, new JazzySpellChecker());
 	}
 
 	/**
@@ -61,6 +61,7 @@ public class SpellCheckPlugin extends Plugin
 		return spellCheckButton;
 	}
 
+	@Override
 	protected void definePluginSettings(StringBuffer buffer)
 	{
 		define(buffer, "spellchecker_languages", "+English=en");

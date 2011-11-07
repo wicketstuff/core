@@ -25,7 +25,7 @@ package wicket.contrib.tinymce.settings;
 public class SearchReplacePlugin extends Plugin
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private PluginButton searchButton;
 	private PluginButton replaceButton;
 

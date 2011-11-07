@@ -22,35 +22,44 @@ import java.io.Serializable;
 /**
  * @author Iulian-Corneliu COSTAN
  */
-public abstract class Enum implements Serializable {
-    private static final long serialVersionUID = 2L;
+public abstract class Enum implements Serializable
+{
+	private static final long serialVersionUID = 2L;
 
-    private String name;
+	private String name;
 
-    protected Enum(String name) {
-        if (name == null)
-            throw new IllegalArgumentException("name should not be null");
-        this.name = name;
-    }
+	protected Enum(String name)
+	{
+		if (name == null)
+			throw new IllegalArgumentException("name should not be null");
+		this.name = name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName()
+	{
+		return name;
+	}
 
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!(obj instanceof Enum))
-            return false;
-        Enum enm = (Enum)obj;
-        return enm.name.equals(name);
-    }
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Enum))
+			return false;
+		Enum enm = (Enum)obj;
+		return enm.name.equals(name);
+	}
 
-    public int hashCode() {
-        return name.hashCode();
-    }
+	@Override
+	public int hashCode()
+	{
+		return name.hashCode();
+	}
 
-    public String toString() {
-        return name.toString();
-    }
+	@Override
+	public String toString()
+	{
+		return name.toString();
+	}
 }

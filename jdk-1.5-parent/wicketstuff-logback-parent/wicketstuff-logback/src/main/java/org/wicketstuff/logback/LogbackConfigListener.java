@@ -16,8 +16,6 @@ package org.wicketstuff.logback;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -28,21 +26,14 @@ import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
-import ch.qos.logback.core.CoreConstants;
 import ch.qos.logback.core.joran.spi.JoranException;
 import ch.qos.logback.core.util.OptionHelper;
 import ch.qos.logback.core.util.StatusPrinter;
 
 /**
  * <p>
- * {@link ServletContextListener} that can be used in web applications to:
- * </p>
- * <ul>
- * <li>add new conversion word handler for "%web". See {@link WicketWebFormattingConverter} for more
- * info on this.</li>
- * <li>optionalliy define the location of the logback configuration and inject the context path into
- * the properties of logback</li>
- * </ul>
+ * {@link ServletContextListener} that can be used in web applications to define the location of the
+ * logback configuration and optionally to inject the context path into the properties of logback
  * 
  * <p>
  * Should be the first listener to configure logback before using it. Location is defined in the
@@ -52,21 +43,20 @@ import ch.qos.logback.core.util.StatusPrinter;
  * <pre>
  * <code>
  * {@literal
- * <!-- optional, needed if using a custom config location -->
+ * <!-- mandatory, sets the custom config location -->
  * <context-param>
  *     <param-name>logbackConfigLocation</param-name>
  *     <param-value>/WEB-INF/log-sc.xml</param-value>
  * </context-param>
  * 
- * <!-- optional, needed if config wants to use the context path,
- *      only used if "logbackConfigLocation" is also set -->
+ * <!-- optional, needed if config wants to use the context path -->
  * <context-param>
  *     <param-name>logbackConfigContextPathKey</param-name>
  *     <param-value>contextPath</param-value>
  * </context-param>
  * 
- * <!-- mandatory, adds %web handling and applies custom config location if
- *      logbackConfigLocation was specified -->
+ * <!-- mandatory, applies custom config location based on the value of
+ *      logbackConfigLocation -->
  * <listener>
  *     <listener-class>org.wicketstuff.logback.LogbackConfigListener</listener-class>
  * </listener>
@@ -130,43 +120,19 @@ public class LogbackConfigListener implements ServletContextListener
 
 		LoggerContext lc = (LoggerContext)ilc;
 
-		boolean configured = applyConfigLocation(sc, lc);
-
-		if (!configured)
-			addConversionRules(lc);
+		applyConfigLocation(sc, lc);
 	}
 
-	/**
-	 * Adds the custom conversion rules like "%web%" to the logback context.
-	 * 
-	 * @param lc
-	 *            logback context to be configured, not null
-	 */
-	protected void addConversionRules(LoggerContext lc)
-	{
-		@SuppressWarnings("unchecked")
-		Map<String, String> converterMap = (Map<String, String>)lc.getObject(CoreConstants.PATTERN_RULE_REGISTRY);
-
-		if (converterMap == null)
-		{
-			converterMap = new HashMap<String, String>();
-			lc.putObject(CoreConstants.PATTERN_RULE_REGISTRY, converterMap);
-		}
-
-		converterMap.put(WicketWebFormattingConverter.CONVERSION_WORD,
-			WicketWebFormattingConverter.class.getName());
-	}
 
 	/**
-	 * Configures logback if a custom config location was given in the web.xml.
+	 * Configures logback with the custom config location specified in the web.xml.
 	 * 
 	 * @param sc
 	 *            represents the webapp, not null
 	 * @param lc
 	 *            logback context to be configured, not null
-	 * @return true if custom configuration was done
 	 */
-	protected boolean applyConfigLocation(ServletContext sc, LoggerContext lc)
+	protected void applyConfigLocation(ServletContext sc, LoggerContext lc)
 	{
 		String contextPathKey = sc.getInitParameter(CONFIG_CONTEXT_PATH_KEY_PARAM);
 
@@ -182,7 +148,7 @@ public class LogbackConfigListener implements ServletContextListener
 			if (rawLocation != null)
 				sc.log("Can not configure logback. Location is null after substitution." +
 					" Maybe context param \"" + CONFIG_LOCATION_PARAM + "\" is not set correctly.");
-			return false;
+			return;
 		}
 
 		URL url = toUrl(sc, location);
@@ -193,7 +159,7 @@ public class LogbackConfigListener implements ServletContextListener
 				" config neither as servlet context-, nor as" +
 				" classpath-, nor as url-, nor as file system" + " resource. Config location = \"" +
 				location + "\".");
-			return false;
+			return;
 		}
 
 		sc.log("Configuring logback. Config location = \"" +
@@ -205,7 +171,7 @@ public class LogbackConfigListener implements ServletContextListener
 				? " Context path will be added to the logback properties with key = \"" +
 					contextPathKey + "\"." : ""));
 
-		return configureConfig(sc, lc, url, contextPathKey);
+		configureConfig(sc, lc, url, contextPathKey);
 	}
 
 	/**
@@ -220,21 +186,17 @@ public class LogbackConfigListener implements ServletContextListener
 	 * @param contextPathKey
 	 *            nullable, a not null value is the property name under which the webapp context
 	 *            path is stored
-	 * @return true if configuration went without exceptions
 	 */
-	protected boolean configureConfig(ServletContext sc, LoggerContext lc, URL location,
+	protected void configureConfig(ServletContext sc, LoggerContext lc, URL location,
 		String contextPathKey)
 	{
 		JoranConfigurator configurator = new JoranConfigurator();
 		configurator.setContext(lc);
 		lc.stop();
 
-		addConversionRules(lc);
-
 		if (contextPathKey != null)
 			lc.putProperty(contextPathKey, getContextPath(sc));
 
-		boolean success = true;
 		try
 		{
 			configurator.doConfigure(location);
@@ -242,11 +204,10 @@ public class LogbackConfigListener implements ServletContextListener
 		catch (JoranException e)
 		{
 			sc.log("Failed to configure logback.", e);
-			success = false;
 		}
 		StatusPrinter.printInCaseOfErrorsOrWarnings(lc);
 
-		return success;
+		return;
 	}
 
 	/**

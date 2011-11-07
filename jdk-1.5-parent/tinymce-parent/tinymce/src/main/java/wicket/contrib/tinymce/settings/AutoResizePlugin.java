@@ -1,8 +1,7 @@
 package wicket.contrib.tinymce.settings;
 
 /**
- * Enables the Auto Resize plugin, which automatically resizes the editor to the
- * content inside it.
+ * Enables the Auto Resize plugin, which automatically resizes the editor to the content inside it.
  * 
  * <a href="http://tinymce.moxiecode.com/wiki.php/Plugin:autoresize">http://
  * tinymce.moxiecode.com/wiki.php/Plugin:autoresize</a>
