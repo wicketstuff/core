@@ -1,6 +1,7 @@
 package org.wicketstuff.facebook.behaviors;
 
 /**
+ * fired when the user logs in
  * 
  * @author Till Freier
  * 

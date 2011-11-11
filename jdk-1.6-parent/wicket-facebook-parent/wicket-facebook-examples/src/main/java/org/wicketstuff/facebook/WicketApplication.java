@@ -1,4 +1,3 @@
-
 package org.wicketstuff.facebook;
 
 import org.apache.wicket.Page;

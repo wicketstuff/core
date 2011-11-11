@@ -30,7 +30,7 @@ public class LoginButton extends AbstractFacebookPlugin
 		{
 			final StringBuilder str = new StringBuilder();
 
-			for (FacebookPermission perm : permissions)
+			for (final FacebookPermission perm : permissions)
 				str.append(perm.name().toLowerCase()).append(',');
 
 			if (str.length() > 0)
@@ -50,7 +50,11 @@ public class LoginButton extends AbstractFacebookPlugin
 	private List<FacebookPermission> permissions = Collections.emptyList();
 	private boolean showFaces = false;
 
-	public LoginButton(String id)
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	public LoginButton(final String id)
 	{
 		super(id, "fb-login-button");
 
@@ -59,19 +63,34 @@ public class LoginButton extends AbstractFacebookPlugin
 		add(new AttributeModifier("data-perms", new PermissionsModel()));
 	}
 
-
-	public LoginButton(String id, FacebookPermission... permissions)
+	/**
+	 * By default the Login button prompts users for their public information. If your application
+	 * needs to access other parts of the user's profile that may be private, your application can
+	 * request extended permissions
+	 * 
+	 * @param id
+	 *            wicket-id
+	 * @param permissions
+	 */
+	public LoginButton(final String id, final FacebookPermission... permissions)
 	{
 		this(id);
 		this.permissions = Arrays.asList(permissions);
 	}
 
-
+	/**
+	 * @see #setMaxRows(int)
+	 * @return
+	 */
 	public int getMaxRows()
 	{
 		return maxRows;
 	}
 
+	/**
+	 * @see FacebookPermission
+	 * 
+	 */
 	public List<FacebookPermission> getPermissions()
 	{
 		return permissions;
@@ -82,17 +101,31 @@ public class LoginButton extends AbstractFacebookPlugin
 		return showFaces;
 	}
 
-	public void setMaxRows(int maxRows)
+	/**
+	 * the maximum number of rows of profile pictures to display. Default value: 1.
+	 * 
+	 * @param maxRows
+	 */
+	public void setMaxRows(final int maxRows)
 	{
 		this.maxRows = maxRows;
 	}
 
-	public void setPermissions(List<FacebookPermission> permissions)
+	/**
+	 * @see FacebookPermission
+	 * @param permissions
+	 */
+	public void setPermissions(final List<FacebookPermission> permissions)
 	{
 		this.permissions = permissions;
 	}
 
-	public void setShowFaces(boolean showFaces)
+	/**
+	 * 
+	 * @param showFaces
+	 *            whether to show faces underneath the Login button.
+	 */
+	public void setShowFaces(final boolean showFaces)
 	{
 		this.showFaces = showFaces;
 	}

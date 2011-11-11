@@ -8,85 +8,85 @@ package org.wicketstuff.facebook;
  */
 public enum FacebookPermission
 {
-	email,
-
-	user_about_me, friends_about_me,
-
-	user_activities, friends_activities,
-
-	user_birthday, friends_birthday,
-
-	user_checkins, friends_checkins,
-
-	user_education_history, friends_education_history,
-
-	user_events, friends_events,
-
-	user_groups, friends_groups,
-
-	user_hometown, friends_hometown,
-
-	user_interests, friends_interests,
-
-	user_likes, friends_likes,
-
-	user_location, friends_location,
-
-	user_notes, friends_notes,
-
-	user_online_presence, friends_online_presence,
-
-	user_photo_video_tags, friends_photo_video_tags,
-
-	user_photos, friends_photos,
-
-	user_questions, friends_questions,
-
-	user_relationships, friends_relationships,
-
-	user_relationship_details, friends_relationship_details,
-
-	user_religion_politics, friends_religion_politics,
-
-	user_status, friends_status,
-
-	user_videos, friends_videos,
-
-	user_website, friends_website,
-
-	user_work_history, friends_work_history,
-
-	publish_actions,
-
-	manage_pages,
-
-	read_friendlists,
-
-	read_insights,
-
-	read_mailbox,
-
-	read_requests,
-
-	read_stream,
-
-	xmpp_login,
-
 	ads_management,
 
-	create_event,
+	create_event, email,
 
-	manage_friendlists,
+	friends_about_me, friends_activities,
 
-	manage_notifications,
+	friends_birthday, friends_checkins,
 
-	offline_access,
+	friends_education_history, friends_events,
 
-	publish_checkins,
+	friends_groups, friends_hometown,
 
-	publish_stream,
+	friends_interests, friends_likes,
 
-	rsvp_event,
+	friends_location, friends_notes,
 
-	sms
+	friends_online_presence, friends_photo_video_tags,
+
+	friends_photos, friends_questions,
+
+	friends_relationship_details, friends_relationships,
+
+	friends_religion_politics, friends_status,
+
+	friends_videos, friends_website,
+
+	friends_work_history, manage_friendlists,
+
+	manage_notifications, manage_pages,
+
+	offline_access, publish_actions,
+
+	publish_checkins, publish_stream,
+
+	read_friendlists, read_insights,
+
+	read_mailbox, read_requests,
+
+	read_stream, rsvp_event,
+
+	sms, user_about_me,
+
+	user_activities, user_birthday,
+
+	user_checkins, user_education_history,
+
+	user_events, user_groups,
+
+	user_hometown,
+
+	user_interests,
+
+	user_likes,
+
+	user_location,
+
+	user_notes,
+
+	user_online_presence,
+
+	user_photo_video_tags,
+
+	user_photos,
+
+	user_questions,
+
+	user_relationship_details,
+
+	user_relationships,
+
+	user_religion_politics,
+
+	user_status,
+
+	user_videos,
+
+	user_website,
+
+	user_work_history,
+
+	xmpp_login
 }

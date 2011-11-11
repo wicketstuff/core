@@ -1,6 +1,7 @@
 package org.wicketstuff.facebook.behaviors;
 
 /**
+ * fired when the status changes
  * 
  * @author Till Freier
  * 

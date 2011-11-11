@@ -4,7 +4,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.request.IRequestParameters;
 
 /**
- * https://developers.facebook.com/docs/reference/javascript/FB.Event.subscribe/
+ * fired when the user logs out
  * 
  * @author Till Freier
  * 
@@ -23,7 +23,7 @@ public abstract class LogoutEventBehavior extends AbstractSubscribeBehavior
 		final String response)
 	{
 		final String status = parameters.getParameterValue(STATUS).toOptionalString();
-		
+
 		onLogout(target, status);
 	}
 

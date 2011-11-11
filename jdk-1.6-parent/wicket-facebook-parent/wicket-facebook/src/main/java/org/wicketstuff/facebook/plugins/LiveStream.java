@@ -21,7 +21,14 @@ public class LiveStream extends AbstractFacebookPlugin
 	private String viaAttributionUrl;
 	private String xid;
 
-	public LiveStream(String id, String facebookAppId)
+	/**
+	 * 
+	 * @param id
+	 *            wicket-id
+	 * @param facebookAppId
+	 *            your facebook application id
+	 */
+	public LiveStream(final String id, final String facebookAppId)
 	{
 		super(id, "fb-live-stream");
 
@@ -35,32 +42,61 @@ public class LiveStream extends AbstractFacebookPlugin
 			"viaAttributionUrl")));
 	}
 
+	/**
+	 * @see #setViaAttributionUrl(String)
+	 * @return
+	 */
 	public String getViaAttributionUrl()
 	{
 		return viaAttributionUrl;
 	}
 
+	/**
+	 * @see #getXid()
+	 * @return
+	 */
 	public String getXid()
 	{
 		return xid;
 	}
 
+	/**
+	 * @see #setAlwaysPostToFriends(boolean)
+	 * @return
+	 */
 	public boolean isAlwaysPostToFriends()
 	{
 		return alwaysPostToFriends;
 	}
 
-	public void setAlwaysPostToFriends(boolean alwaysPostToFriends)
+	/**
+	 * If set, all user posts will always go to their profile. This option should only be used when
+	 * users' posts are likely to make sense outside of the context of the event.
+	 * 
+	 * @param alwaysPostToFriends
+	 */
+	public void setAlwaysPostToFriends(final boolean alwaysPostToFriends)
 	{
 		this.alwaysPostToFriends = alwaysPostToFriends;
 	}
 
-	public void setViaAttributionUrl(String viaAttributionUrl)
+	/**
+	 * The URL that users are redirected to when they click on your app name on a status (if not
+	 * specified, your Connect URL is used).
+	 * 
+	 * @param viaAttributionUrl
+	 */
+	public void setViaAttributionUrl(final String viaAttributionUrl)
 	{
 		this.viaAttributionUrl = viaAttributionUrl;
 	}
 
-	public void setXid(String xid)
+	/**
+	 * If you have multiple live stream boxes on the same page, specify a unique `xid` for each.
+	 * 
+	 * @param xid
+	 */
+	public void setXid(final String xid)
 	{
 		this.xid = xid;
 	}

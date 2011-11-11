@@ -2,6 +2,7 @@ package org.wicketstuff.facebook.plugins;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
 /**
@@ -21,9 +22,12 @@ public class LikeBox extends AbstractFacebookPlugin
 	private boolean showHeader = true;
 	private boolean showStream = true;
 
-	// TODO font, border color
-
-	public LikeBox(String id)
+	/**
+	 * 
+	 * @param id
+	 *            wicket-id
+	 */
+	public LikeBox(final String id)
 	{
 		super(id, "fb-like-box");
 
@@ -36,43 +40,81 @@ public class LikeBox extends AbstractFacebookPlugin
 	 * 
 	 * @param id
 	 *            wicket-id
-	 * @param facebookUrl
-	 *            the URL to the facebook page (http://www.facebook.com/...)
+	 * @param facebookUrlModel
+	 *            model for the URL of the Facebook Page for this Like Box
 	 */
-	public LikeBox(String id, IModel<?> facebookUrl)
+	public LikeBox(final String id, final IModel<?> facebookUrlModel)
 	{
 		this(id);
 
-		if (facebookUrl != null)
-			add(new AttributeModifier("data-href", facebookUrl));
+		add(new AttributeModifier("data-href", facebookUrlModel));
 	}
 
+	/**
+	 * 
+	 * @param id
+	 *            wicket-id
+	 * @param facebookUrl
+	 *            the URL of the Facebook Page for this Like Box
+	 */
+	public LikeBox(final String id, final String facebookUrl)
+	{
+		this(id, Model.of(facebookUrl));
+	}
+
+	/**
+	 * @see #setShowFaces(boolean)
+	 * @return
+	 */
 	public boolean isShowFaces()
 	{
 		return showFaces;
 	}
 
+	/**
+	 * @see #setShowHeader(boolean)
+	 * @return
+	 */
 	public boolean isShowHeader()
 	{
 		return showHeader;
 	}
 
+	/**
+	 * @see #setShowStream(boolean)
+	 * @return
+	 */
 	public boolean isShowStream()
 	{
 		return showStream;
 	}
 
-	public void setShowFaces(boolean showFaces)
+	/**
+	 * 
+	 * @param showFaces
+	 *            whether or not to display profile photos in the plugin. Default value: true.
+	 */
+	public void setShowFaces(final boolean showFaces)
 	{
 		this.showFaces = showFaces;
 	}
 
-	public void setShowHeader(boolean showHeader)
+	/**
+	 * 
+	 * @param showHeader
+	 *            whether to display the Facebook header at the top of the plugin.
+	 */
+	public void setShowHeader(final boolean showHeader)
 	{
 		this.showHeader = showHeader;
 	}
 
-	public void setShowStream(boolean showStream)
+	/**
+	 * 
+	 * @param showStream
+	 *            whether to display a stream of the latest posts from the Page's wall
+	 */
+	public void setShowStream(final boolean showStream)
 	{
 		this.showStream = showStream;
 	}

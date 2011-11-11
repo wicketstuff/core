@@ -75,26 +75,6 @@ public class FacebookSdk extends WebMarkupContainer implements FacebookRootProvi
 		return true;
 	}
 
-	public void setOgProperty(final String property, final String value)
-	{
-		final StringBuilder sb = new StringBuilder(property.length() + 3);
-		sb.append("og:").append(property);
-
-		metaParams.put(sb.toString(), value);
-	}
-
-
-	public void setFbAdmins(final String... userId)
-	{
-		final StringBuilder admins = new StringBuilder();
-		for (final String id : userId)
-			admins.append(id).append(',');
-		if (admins.length() > 0)
-			admins.deleteCharAt(admins.length() - 1);
-
-		metaParams.put("fb:admins", admins.toString());
-	}
-
 	/**
 	 * 
 	 * {@inheritDoc}
@@ -124,5 +104,25 @@ public class FacebookSdk extends WebMarkupContainer implements FacebookRootProvi
 
 			response.renderString(sb.toString());
 		}
+	}
+
+
+	public void setFbAdmins(final String... userId)
+	{
+		final StringBuilder admins = new StringBuilder();
+		for (final String id : userId)
+			admins.append(id).append(',');
+		if (admins.length() > 0)
+			admins.deleteCharAt(admins.length() - 1);
+
+		metaParams.put("fb:admins", admins.toString());
+	}
+
+	public void setOgProperty(final String property, final String value)
+	{
+		final StringBuilder sb = new StringBuilder(property.length() + 3);
+		sb.append("og:").append(property);
+
+		metaParams.put(sb.toString(), value);
 	}
 }
