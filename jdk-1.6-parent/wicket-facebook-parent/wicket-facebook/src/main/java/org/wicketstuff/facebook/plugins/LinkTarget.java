@@ -1,10 +1,11 @@
 package org.wicketstuff.facebook.plugins;
 
 /**
+ * 
  * @author Till Freier
  * 
  */
-public enum ColorScheme
+public enum LinkTarget
 {
-	DARK, LIGHT
+	_BLANK, _PARENT, _TOP
 }

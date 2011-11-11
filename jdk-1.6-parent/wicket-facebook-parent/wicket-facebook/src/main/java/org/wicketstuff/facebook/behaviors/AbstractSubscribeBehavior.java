@@ -26,8 +26,8 @@ public abstract class AbstractSubscribeBehavior extends AbstractDefaultAjaxBehav
 {
 	private static final Logger log = LoggerFactory.getLogger(AbstractSubscribeBehavior.class);
 
-	private final List<String> parameters;
 	private final String event;
+	private final List<String> parameters;
 
 	/**
 	 * 
@@ -38,6 +38,18 @@ public abstract class AbstractSubscribeBehavior extends AbstractDefaultAjaxBehav
 	{
 		this.event = event;
 		this.parameters = Arrays.asList(parameters);
+	}
+
+
+	/**
+	 * @param component
+	 */
+	private void checkFacebookRoot(final Component component)
+	{
+		final ComponentHierarchyIterator visitChildren = component.getPage().visitChildren(
+			FacebookRootProvider.class);
+		if (!visitChildren.hasNext())
+			throw new MissingFacebookRootException();
 	}
 
 
@@ -70,16 +82,8 @@ public abstract class AbstractSubscribeBehavior extends AbstractDefaultAjaxBehav
 	}
 
 
-	/**
-	 * @param component
-	 */
-	public void checkFacebookRoot(final Component component)
-	{
-		final ComponentHierarchyIterator visitChildren = component.getPage().visitChildren(
-			FacebookRootProvider.class);
-		if (!visitChildren.hasNext())
-			throw new MissingFacebookRootException();
-	}
+	protected abstract void onEvent(AjaxRequestTarget target, IRequestParameters parameters,
+		String response);
 
 
 	/**
@@ -98,9 +102,4 @@ public abstract class AbstractSubscribeBehavior extends AbstractDefaultAjaxBehav
 		onEvent(target, requestParameters, requestParameters.getParameterValue("response")
 			.toOptionalString());
 	}
-
-
-
-	protected abstract void onEvent(AjaxRequestTarget target, IRequestParameters parameters,
-		String response);
 }
