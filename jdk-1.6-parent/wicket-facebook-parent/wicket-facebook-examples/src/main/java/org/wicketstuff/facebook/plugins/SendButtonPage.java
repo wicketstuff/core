@@ -2,7 +2,7 @@ package org.wicketstuff.facebook.plugins;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.facebook.behaviors.FacebookSdkBehavior;
+import org.wicketstuff.facebook.FacebookSdk;
 
 /**
  * 
@@ -22,7 +22,7 @@ public class SendButtonPage extends WebPage
 	 */
 	public SendButtonPage()
 	{
-		add(new FacebookSdkBehavior());
+		add(new FacebookSdk("fb-root"));
 
 		// fb doesn't like localhost
 		add(new SendButton("sendButton", Model.of("http://wicketstuff.org")));
