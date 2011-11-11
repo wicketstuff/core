@@ -10,8 +10,11 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.util.iterator.ComponentHierarchyIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketstuff.facebook.FacebookRootProvider;
+import org.wicketstuff.facebook.MissingFacebookRootException;
 
 /**
  * https://developers.facebook.com/docs/reference/javascript/FB.Event.subscribe/
@@ -46,6 +49,8 @@ public abstract class AbstractSubscribeBehavior extends AbstractDefaultAjaxBehav
 	{
 		super.renderHead(component, response);
 
+		checkFacebookRoot(component);
+
 		final StringBuilder js = new StringBuilder();
 		js.append("FB.Event.subscribe('").append(event).append("', function(response) { ");
 		js.append("wicketAjaxGet('");
@@ -66,6 +71,18 @@ public abstract class AbstractSubscribeBehavior extends AbstractDefaultAjaxBehav
 
 
 	/**
+	 * @param component
+	 */
+	public void checkFacebookRoot(final Component component)
+	{
+		final ComponentHierarchyIterator visitChildren = component.getPage().visitChildren(
+			FacebookRootProvider.class);
+		if (!visitChildren.hasNext())
+			throw new MissingFacebookRootException();
+	}
+
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -81,6 +98,7 @@ public abstract class AbstractSubscribeBehavior extends AbstractDefaultAjaxBehav
 		onEvent(target, requestParameters, requestParameters.getParameterValue("response")
 			.toOptionalString());
 	}
+
 
 
 	protected abstract void onEvent(AjaxRequestTarget target, IRequestParameters parameters,

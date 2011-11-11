@@ -6,7 +6,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.facebook.behaviors.FacebookSdkBehavior;
+import org.wicketstuff.facebook.FacebookSdk;
 
 /**
  * 
@@ -20,7 +20,7 @@ public class AjaxLikeBoxPage extends WebPage
 	 */
 	public AjaxLikeBoxPage()
 	{
-		add(new FacebookSdkBehavior());
+		add(new FacebookSdk("fb-root"));
 
 		final Model<String> urlModel = new Model<String>();
 

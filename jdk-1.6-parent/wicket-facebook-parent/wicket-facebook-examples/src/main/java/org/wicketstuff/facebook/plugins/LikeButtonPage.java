@@ -3,7 +3,7 @@ package org.wicketstuff.facebook.plugins;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.facebook.behaviors.FacebookSdkBehavior;
+import org.wicketstuff.facebook.FacebookSdk;
 import org.wicketstuff.facebook.plugins.LikeButton.LikeButtonAction;
 import org.wicketstuff.facebook.plugins.LikeButton.LikeButtonLayoutStyle;
 
@@ -25,8 +25,7 @@ public class LikeButtonPage extends WebPage
 	 */
 	public LikeButtonPage()
 	{
-
-		add(new FacebookSdkBehavior());
+		add(new FacebookSdk("fb-root"));
 
 		// URL is needed because Facebook doesn't like localhost
 		final IModel<String> url = Model.of("http://wicketstuff.org");

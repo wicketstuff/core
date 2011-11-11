@@ -6,6 +6,9 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.util.iterator.ComponentHierarchyIterator;
+import org.wicketstuff.facebook.FacebookRootProvider;
+import org.wicketstuff.facebook.MissingFacebookRootException;
 
 /**
  * 
@@ -78,6 +81,11 @@ public abstract class AbstractFacebookPlugin extends WebMarkupContainer
 	@Override
 	protected void onRender()
 	{
+		final ComponentHierarchyIterator visitChildren = getPage().visitChildren(
+			FacebookRootProvider.class);
+		if (!visitChildren.hasNext())
+			throw new MissingFacebookRootException();
+
 		if (AjaxRequestTarget.get() != null && findPage() != null)
 		{
 			setOutputMarkupId(true);

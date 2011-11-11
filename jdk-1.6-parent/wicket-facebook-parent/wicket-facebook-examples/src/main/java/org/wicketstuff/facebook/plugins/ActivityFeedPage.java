@@ -2,7 +2,7 @@ package org.wicketstuff.facebook.plugins;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.facebook.behaviors.FacebookSdkBehavior;
+import org.wicketstuff.facebook.FacebookSdk;
 
 public class ActivityFeedPage extends WebPage
 {
@@ -14,10 +14,10 @@ public class ActivityFeedPage extends WebPage
 
 	public ActivityFeedPage()
 	{
-		add(new FacebookSdkBehavior());
+		add(new FacebookSdk("fb-root"));
 
 		add(new ActivityFeed("feed", Model.of("localhost")));
 	}
 
-	
+
 }
