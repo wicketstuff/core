@@ -22,7 +22,7 @@ public class LoginButtonPage extends WebPage
 	 */
 	public LoginButtonPage()
 	{
-		add(new FacebookSdk("fb-root"));
+		add(new FacebookSdk("fb-root", "142662635778399"));
 
 		add(new LoginButton("loginButton", FacebookPermission.EMAIL));
 	}
