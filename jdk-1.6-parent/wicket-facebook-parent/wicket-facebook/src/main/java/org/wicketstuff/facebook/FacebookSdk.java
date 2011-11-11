@@ -1,5 +1,9 @@
 package org.wicketstuff.facebook;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
@@ -32,6 +36,8 @@ public class FacebookSdk extends WebMarkupContainer implements FacebookRootProvi
 {
 	private final String appId;
 
+	private final Map<String, String> metaParams = new HashMap<String, String>();
+
 	/**
 	 * @param id
 	 */
@@ -48,6 +54,7 @@ public class FacebookSdk extends WebMarkupContainer implements FacebookRootProvi
 		super(id);
 
 		this.appId = appId;
+		metaParams.put("fb:app_id", appId);
 	}
 
 	/**
@@ -66,6 +73,26 @@ public class FacebookSdk extends WebMarkupContainer implements FacebookRootProvi
 	public boolean isVisible()
 	{
 		return true;
+	}
+
+	public void setOgProperty(final String property, final String value)
+	{
+		final StringBuilder sb = new StringBuilder(property.length() + 3);
+		sb.append("og:").append(property);
+
+		metaParams.put(sb.toString(), value);
+	}
+
+
+	public void setFbAdmins(final String... userId)
+	{
+		final StringBuilder admins = new StringBuilder();
+		for (final String id : userId)
+			admins.append(id).append(',');
+		if (admins.length() > 0)
+			admins.deleteCharAt(admins.length() - 1);
+
+		metaParams.put("fb:admins", admins.toString());
 	}
 
 	/**
@@ -87,5 +114,15 @@ public class FacebookSdk extends WebMarkupContainer implements FacebookRootProvi
 		js.append("});");
 
 		response.renderOnDomReadyJavaScript(js.toString());
+
+		for (final Entry<String, String> entry : metaParams.entrySet())
+		{
+			final StringBuilder sb = new StringBuilder();
+			sb.append("<meta property=\"").append(entry.getKey()).append("\" ");
+			sb.append("content=\"").append(entry.getValue()).append("\" />");
+			sb.append('\n');
+
+			response.renderString(sb.toString());
+		}
 	}
 }

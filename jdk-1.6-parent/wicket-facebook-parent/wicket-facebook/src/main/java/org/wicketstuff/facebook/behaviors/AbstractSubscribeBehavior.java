@@ -66,7 +66,7 @@ public abstract class AbstractSubscribeBehavior extends AbstractDefaultAjaxBehav
 		js.append("}");
 		js.append(");");
 
-		response.renderOnDomReadyJavaScript(js.toString());
+		response.renderJavaScript(js.toString(), null);
 	}
 
 

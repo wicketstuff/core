@@ -24,6 +24,6 @@ public class FacepilePage extends WebPage
 	{
 		add(new FacebookSdk("fb-root"));
 
-		add(new Facepile("facepile", Model.of("http://wicketstuff.org")));
+		add(new Facepile("facepile", Model.of("http://localhost/")));
 	}
 }
