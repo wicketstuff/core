@@ -16,7 +16,8 @@ public class LoginEventPage extends WebPage
 	public LoginEventPage()
 	{
 		add(new FacebookSdk("fb-root", "149850315074596"));
-		add(new LoginButton("loginButton", FacebookPermission.EMAIL));
+		add(new LoginButton("loginButton", FacebookPermission.user_about_me,
+			FacebookPermission.friends_about_me));
 
 		final Model<String> responseModel = new Model<String>();
 		final MultiLineLabel responseLabel = new MultiLineLabel("response", responseModel);

@@ -24,6 +24,6 @@ public class LoginButtonPage extends WebPage
 	{
 		add(new FacebookSdk("fb-root", "142662635778399"));
 
-		add(new LoginButton("loginButton", FacebookPermission.EMAIL));
+		add(new LoginButton("loginButton", FacebookPermission.user_events));
 	}
 }
