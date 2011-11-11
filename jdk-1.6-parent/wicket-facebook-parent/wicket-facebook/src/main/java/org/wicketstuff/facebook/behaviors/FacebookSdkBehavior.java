@@ -3,7 +3,6 @@ package org.wicketstuff.facebook.behaviors;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.wicketstuff.facebook.FacebookAppCredentials;
 
 /**
  * @author Till Freier
@@ -16,15 +15,15 @@ public class FacebookSdkBehavior extends Behavior
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private final FacebookAppCredentials credentials;
+	private final String appId;
 
 	/**
 	 * @param credentials
 	 */
-	public FacebookSdkBehavior(final FacebookAppCredentials credentials)
+	public FacebookSdkBehavior(final String appId)
 	{
 		super();
-		this.credentials = credentials;
+		this.appId = appId;
 	}
 
 
@@ -40,12 +39,12 @@ public class FacebookSdkBehavior extends Behavior
 	@Override
 	public void renderHead(final Component component, final IHeaderResponse response)
 	{
-		response.renderJavaScriptReference("http://connect.facebook.net/en_US/all.js");
+		response.renderJavaScriptReference("//connect.facebook.net/en_US/all.js");
 
 		final StringBuilder js = new StringBuilder();
 		js.append("FB.init({");
-		if (credentials != null)
-			js.append("appId  : '").append(credentials.getAppId()).append("',");
+		if (appId != null)
+			js.append("appId  : '").append(appId).append("',");
 		js.append("status : true,");
 		js.append("cookie : true,");
 		js.append("xfbml  : true");

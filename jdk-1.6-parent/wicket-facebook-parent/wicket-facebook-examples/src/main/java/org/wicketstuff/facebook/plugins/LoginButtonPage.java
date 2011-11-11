@@ -1,7 +1,6 @@
 package org.wicketstuff.facebook.plugins;
 
 import org.apache.wicket.markup.html.WebPage;
-import org.wicketstuff.facebook.FacebookAppCredentials;
 import org.wicketstuff.facebook.FacebookPermission;
 import org.wicketstuff.facebook.behaviors.FacebookSdkBehavior;
 
@@ -23,9 +22,8 @@ public class LoginButtonPage extends WebPage
 	 */
 	public LoginButtonPage()
 	{
-		add(new FacebookSdkBehavior(new FacebookAppCredentials("142662635778399", "secret")));
+		add(new FacebookSdkBehavior("142662635778399"));
 
 		add(new LoginButton("loginButton", FacebookPermission.EMAIL));
 	}
-
 }
