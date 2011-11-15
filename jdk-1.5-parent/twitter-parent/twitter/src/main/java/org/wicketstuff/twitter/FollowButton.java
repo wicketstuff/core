@@ -1,9 +1,9 @@
 package org.wicketstuff.twitter;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
+import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
@@ -14,7 +14,7 @@ import org.apache.wicket.model.PropertyModel;
  * @author Till Freier
  * 
  */
-public class FollowButton extends MarkupContainer
+public class FollowButton extends WebComponent
 {
 	private boolean showFollowerCount = true;
 
