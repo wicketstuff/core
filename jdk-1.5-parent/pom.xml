@@ -91,6 +91,7 @@
 
 		<!-- depends on yui -->
 		<!-- <module>ddcalendar-parent</module> -->
+		<module>twitter-parent</module>
 	</modules>
 
 	<dependencyManagement>
