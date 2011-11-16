@@ -25,6 +25,7 @@
 		<module>serializer-kryo</module>
 		<module>wicket-html5-parent</module>
 		<module>wicket-servlet3-parent</module>
+		<module>wicket-facebook-parent</module>
 	</modules>
 
 	<build>

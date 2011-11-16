@@ -7,6 +7,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 	<artifactId>wicket-facebook-examples</artifactId>
+	<name>Wicket Facebook Examples</name>
 	<packaging>war</packaging>
 
 	<developers>

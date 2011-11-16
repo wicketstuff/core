@@ -7,6 +7,7 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 	<artifactId>wicket-facebook</artifactId>
+	<name>Wicket Facebook</name>
 	<developers>
 		<developer>
 			<name>Till Freier</name>
