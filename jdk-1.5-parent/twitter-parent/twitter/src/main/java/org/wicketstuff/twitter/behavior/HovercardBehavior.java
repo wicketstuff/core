@@ -5,7 +5,7 @@ package org.wicketstuff.twitter.behavior;
  * @author Till Freier
  * 
  */
-public class LinkifyBehavior extends AbstractAnywhereBehavior
+public class HovercardBehavior extends AbstractAnywhereBehavior
 {
 
 	/**
@@ -14,18 +14,20 @@ public class LinkifyBehavior extends AbstractAnywhereBehavior
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
-	 * @param apiKey
+	 * {@inheritDoc}
 	 */
-	public LinkifyBehavior(final String apiKey)
+	public HovercardBehavior(String apiKey)
 	{
 		super(apiKey);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected String getAnywhereMethod()
 	{
-		return "linkifyUsers()";
+		return "hovercards()";
 	}
 
 }

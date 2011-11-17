@@ -14,13 +14,17 @@ import org.apache.wicket.model.PropertyModel;
  */
 public class TweetButton extends WebComponent
 {
-	private final IModel<?> url;
-	private final IModel<?> via;
-	private final IModel<?> text;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private final IModel<?> countUrl;
 	private final IModel<?> related;
 	private final IModel<?> relatedSummery;
-	private final IModel<?> countUrl;
-
+	private final IModel<?> text;
+	private final IModel<?> url;
+	private final IModel<?> via;
 
 	/**
 	 * @param id
@@ -78,21 +82,6 @@ public class TweetButton extends WebComponent
 		initTweetButton();
 	}
 
-	private void initTweetButton()
-	{
-		add(new TwitterApiBehavior());
-
-		add(new AttributeModifier("class", "twitter-share-button"));
-		add(new AttributeModifier("data-url", url));
-		add(new AttributeModifier("data-via", via));
-		add(new AttributeModifier("data-text", text));
-		add(new AttributeModifier("data-counturl", countUrl));
-		add(new AttributeModifier("data-related", new PropertyModel<String>(this,
-			"relatedModelString")));
-
-		add(new AttributeModifier("href", "https://twitter.com/share"));
-	}
-
 	/**
 	 * creates the related field content
 	 * 
@@ -110,6 +99,21 @@ public class TweetButton extends WebComponent
 		sb.append(related.getObject()).append(':').append(relatedSummery.getObject());
 
 		return sb.toString();
+	}
+
+	private void initTweetButton()
+	{
+		add(new TwitterApiBehavior());
+
+		add(new AttributeModifier("class", "twitter-share-button"));
+		add(new AttributeModifier("data-url", url));
+		add(new AttributeModifier("data-via", via));
+		add(new AttributeModifier("data-text", text));
+		add(new AttributeModifier("data-counturl", countUrl));
+		add(new AttributeModifier("data-related", new PropertyModel<String>(this,
+			"relatedModelString")));
+
+		add(new AttributeModifier("href", "https://twitter.com/share"));
 	}
 
 }

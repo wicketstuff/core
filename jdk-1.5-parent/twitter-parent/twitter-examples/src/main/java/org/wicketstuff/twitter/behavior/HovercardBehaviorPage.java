@@ -8,7 +8,7 @@ import org.apache.wicket.markup.html.basic.Label;
  * @author Till Freier
  * 
  */
-public class LinkifyBehaviorPage extends WebPage
+public class HovercardBehaviorPage extends WebPage
 {
 
 	/**
@@ -16,13 +16,13 @@ public class LinkifyBehaviorPage extends WebPage
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
-	public LinkifyBehaviorPage()
+	public HovercardBehaviorPage()
 	{
-		final Label label = new Label("label", "This is a linkify test by @tfreier");
-		label.add(new LinkifyBehavior("RLVad4j5xse3QwL06eEg"));
+		super();
+
+
+		final Label label = new Label("label", "This is a hovercard test by @tfreier");
+		label.add(new HovercardBehavior("RLVad4j5xse3QwL06eEg"));
 
 		add(label);
 	}

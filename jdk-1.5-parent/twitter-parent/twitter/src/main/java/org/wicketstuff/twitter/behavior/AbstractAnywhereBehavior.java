@@ -12,16 +12,10 @@ import org.apache.wicket.markup.html.IHeaderResponse;
  */
 public abstract class AbstractAnywhereBehavior extends Behavior
 {
-	private final String jsApiUrl;
-
-
 	/**
 	 * 
 	 */
-	public AbstractAnywhereBehavior(final String apiKey)
-	{
-		jsApiUrl = createJsApiUrl(apiKey);
-	}
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @param apiKey
@@ -39,14 +33,22 @@ public abstract class AbstractAnywhereBehavior extends Behavior
 		return str;
 	}
 
-	@Override
-	public void renderHead(final Component component, final IHeaderResponse response)
+
+	private final String apiKey;
+
+	/**
+	 * 
+	 */
+	public AbstractAnywhereBehavior(final String apiKey)
 	{
-		super.renderHead(component, response);
+		this.apiKey = apiKey;
+	}
 
-		response.renderJavaScriptReference(jsApiUrl);
-
-		response.renderJavaScript(createAnywhereJs(component), null);
+	@Override
+	public void beforeRender(final Component component)
+	{
+		super.beforeRender(component);
+		component.setOutputMarkupId(true);
 	}
 
 	private String createAnywhereJs(final Component component)
@@ -63,10 +65,13 @@ public abstract class AbstractAnywhereBehavior extends Behavior
 	protected abstract String getAnywhereMethod();
 
 	@Override
-	public void beforeRender(final Component component)
+	public void renderHead(final Component component, final IHeaderResponse response)
 	{
-		super.beforeRender(component);
-		component.setOutputMarkupId(true);
+		super.renderHead(component, response);
+
+		response.renderJavaScriptReference(createJsApiUrl(apiKey));
+
+		response.renderJavaScript(createAnywhereJs(component), null);
 	}
 
 

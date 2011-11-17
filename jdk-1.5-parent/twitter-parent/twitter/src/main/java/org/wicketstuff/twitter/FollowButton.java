@@ -16,8 +16,25 @@ import org.apache.wicket.model.PropertyModel;
  */
 public class FollowButton extends WebComponent
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private boolean showFollowerCount = true;
 
+	/**
+	 * 
+	 * @param id
+	 * @param accountModel
+	 *            model for twitter login without '@'
+	 */
+	public FollowButton(final String id, final IModel<?> accountModel)
+	{
+		super(id, accountModel);
+
+		initFollowButton();
+	}
 
 	/**
 	 * 
@@ -31,17 +48,25 @@ public class FollowButton extends WebComponent
 		this(id, Model.of(account));
 	}
 
+	private CharSequence getInnerButtonString()
+	{
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Follow @");
+		sb.append(getDefaultModelObjectAsString());
+
+		return sb.toString();
+	}
+
 	/**
 	 * 
-	 * @param id
-	 * @param accountModel
-	 *            model for twitter login without '@'
+	 * @return the link to the twitter profile
 	 */
-	public FollowButton(final String id, final IModel<?> accountModel)
+	public String getTwitterUrl()
 	{
-		super(id, accountModel);
+		final StringBuilder url = new StringBuilder();
+		url.append("https://twitter.com/").append(getDefaultModelObjectAsString());
 
-		initFollowButton();
+		return url.toString();
 	}
 
 	private void initFollowButton()
@@ -64,17 +89,6 @@ public class FollowButton extends WebComponent
 	}
 
 	/**
-	 * By default, the User's followers count is displayed with the Follow Button.
-	 * 
-	 * @param showFollowerCount
-	 *            wheather the follower count should be shown
-	 */
-	public void setShowFollowerCount(final boolean showFollowerCount)
-	{
-		this.showFollowerCount = showFollowerCount;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -85,24 +99,14 @@ public class FollowButton extends WebComponent
 	}
 
 	/**
+	 * By default, the User's followers count is displayed with the Follow Button.
 	 * 
-	 * @return the link to the twitter profile
+	 * @param showFollowerCount
+	 *            weather the follower count should be shown
 	 */
-	public String getTwitterUrl()
+	public void setShowFollowerCount(final boolean showFollowerCount)
 	{
-		final StringBuilder url = new StringBuilder();
-		url.append("https://twitter.com/").append(getDefaultModelObjectAsString());
-
-		return url.toString();
-	}
-
-	private CharSequence getInnerButtonString()
-	{
-		final StringBuilder sb = new StringBuilder();
-		sb.append("Follow @");
-		sb.append(getDefaultModelObjectAsString());
-
-		return sb.toString();
+		this.showFollowerCount = showFollowerCount;
 	}
 
 }

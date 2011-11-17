@@ -8,21 +8,19 @@ import org.apache.wicket.markup.html.basic.Label;
  * @author Till Freier
  * 
  */
-public class LinkifyBehaviorPage extends WebPage
+public class FollowButtonBehaviorPage extends WebPage
 {
-
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
-	public LinkifyBehaviorPage()
+	public FollowButtonBehaviorPage()
 	{
-		final Label label = new Label("label", "This is a linkify test by @tfreier");
-		label.add(new LinkifyBehavior("RLVad4j5xse3QwL06eEg"));
+		super();
+
+		final Label label = new Label("label", "This is a FollowButton test by @tfreier");
+		label.add(new FollowButtonBehavior("RLVad4j5xse3QwL06eEg", "tfreier"));
 
 		add(label);
 	}
