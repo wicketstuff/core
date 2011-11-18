@@ -1,22 +1,2 @@
-Mootools MeioMask plugin Integration for Masking Text Input.
-
-Notice:
-        This component uses mootools-meio-mask plugin for masking text input. See at https://github.com/fabiomcosta/mootools-meio-mask]
-
-Example:
-public class HomePage extends WebPage {
-
-    private static final long serialVersionUID = 1L;
-    private TestModel testModel = new TestModel();
-
-    public HomePage() {
-
-        Form<TestModel> form = new Form<TestModel>("form", new CompoundPropertyModel<TestModel>(testModel));
-
-        form.add(new MeioMaskField<Long>("fixedPhoneUs", MaskType.FixedPhoneUs));
-        form.add(new MeioMaskField<String>("fixedPhone", MaskType.FixedPhone));
-
-        add(form);
-    }
-}
+This project provides a Java library for utilizing JqPlot Pure Javascript (http://www.jqplot.com/).
 
