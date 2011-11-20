@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>jdk-1.5-parent</artifactId>
-		<version>1.5-SNAPSHOT</version>
+		<version>6.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicketstuff-client-and-server-validation</artifactId>
