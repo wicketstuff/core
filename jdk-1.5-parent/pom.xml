@@ -17,6 +17,7 @@
 	</description>
 
 	<modules>
+		<module>jqplot-parent</module>
 		<module>mootools-meiomask-parent</module>
 		<module>progressbar-parent</module>
 		<module>push-parent-jdk-1.5</module>
