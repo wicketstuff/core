@@ -4,7 +4,7 @@
 	 xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	 version="2.4">
 
-	<display-name>meiomask-wicket</display-name>
+    <display-name>jqplot-wicket</display-name>
 
 	 <!--  
 	      There are three means to configure Wickets configuration mode and they are
@@ -16,19 +16,19 @@
 	      or "deployment". If no configuration is found, "development" is the default.
 	-->
 
-	<filter>
-		<filter-name>wicket.meiomask-wicket</filter-name>
- 		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
-		<init-param>
-			<param-name>applicationClassName</param-name>
-			<param-value>org.wicketstuff.jqplot.examples.WicketApplication</param-value>
- 		</init-param>
- 	</filter>
+    <filter>
+        <filter-name>jqplot.wicket</filter-name>
+        <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+        <init-param>
+            <param-name>applicationClassName</param-name>
+            <param-value>org.wicketstuff.jqplot.examples.WicketApplication</param-value>
+        </init-param>
+    </filter>
 
- <filter-mapping>
-  <filter-name>wicket.meiomask-wicket</filter-name>
-	<url-pattern>/*</url-pattern>
- </filter-mapping>
+    <filter-mapping>
+        <filter-name>jqplot.wicket</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 
 </web-app>
