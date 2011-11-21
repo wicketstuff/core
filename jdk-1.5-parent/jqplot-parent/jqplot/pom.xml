@@ -59,5 +59,16 @@
 			<version>2.5</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>br.com.digilabs.jqplot</groupId>
+			<artifactId>jqplot4java</artifactId>
+			<version>1.0.2-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
+	
+	<!-- <repositories>
+		<repository>
+		</repository>
+	</repositories>	
+	 -->
 </project>

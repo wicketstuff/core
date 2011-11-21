@@ -18,17 +18,19 @@ package org.wicketstuff.jqplot.behavior;
 import java.util.List;
 
 import org.apache.wicket.ResourceReference;
+import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 
-import br.digilabs.jqplot.JqPlotUtil;
-import br.digilabs.jqplot.chart.Chart;
+import br.com.digilabs.jqplot.JqPlotUtil;
+import br.com.digilabs.jqplot.chart.Chart;
+
 
 /**
  * 
  * @author inaiat
  */
-public class JqPlotBehavior extends JQueryBehavior
+public class JqPlotBehavior extends AbstractBehavior
 {
 
 	private static final long serialVersionUID = -8088313975214875631L;
