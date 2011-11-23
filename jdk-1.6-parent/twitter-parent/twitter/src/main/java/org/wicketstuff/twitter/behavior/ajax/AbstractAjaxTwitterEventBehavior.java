@@ -9,7 +9,7 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.twitter.TwitterApiBehavior;
+import org.wicketstuff.twitter.behavior.TwitterApiBehavior;
 
 /**
  * 

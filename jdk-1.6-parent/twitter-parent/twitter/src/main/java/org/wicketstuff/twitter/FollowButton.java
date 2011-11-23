@@ -7,6 +7,7 @@ import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.wicketstuff.twitter.behavior.TwitterApiBehavior;
 
 /**
  * https://dev.twitter.com/docs/follow-button
