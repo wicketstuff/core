@@ -17,8 +17,8 @@ import org.apache.wicket.request.resource.JavaScriptPackageResource;
  */
 public class TinyMceRequestMapper extends AbstractMapper
 {
-	private static final List<String> KNOWN_SEGMENTS = Arrays.asList(new String[] { "langs",
-			"themes", "plugins", "utils", "tiny_mce_popup.js", "tiny_mce_src.js", "tiny_mce.js" });
+	private static final List<String> KNOWN_SEGMENTS = Arrays.asList(new String[] { "themes",
+			"langs", "plugins", "utils", "tiny_mce_popup.js", "tiny_mce_src.js", "tiny_mce.js" });
 
 	public IRequestHandler mapRequest(Request request)
 	{
