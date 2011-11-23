@@ -5,37 +5,36 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.twitter.intents.TweetLink;
+import org.wicketstuff.twitter.intents.FollowLink;
 
 /**
  * @author Till Freier
  * 
  */
-public class AjaxTweetEventBehaviorPage extends WebPage
+public class AjaxFollowEventBehaviorPage extends WebPage
 {
 
-	public AjaxTweetEventBehaviorPage()
+	public AjaxFollowEventBehaviorPage()
 	{
 		super();
 
 		final IModel<String> responseModel = Model.of();
 
-		final TweetLink tweetLink = new TweetLink("tweetLink");
-		tweetLink.setInReplyTo("136565831483146241");
+		final FollowLink link = new FollowLink("link");
+		link.setScreenName("tfreier");
 
-
-		add(tweetLink);
+		add(link);
 
 		final Label label = new Label("resonse", responseModel);
 		label.setOutputMarkupId(true);
 		add(label);
 
-		add(new AjaxTweetEventBehavior()
+		add(new AjaxFollowEventBehavior()
 		{
 			@Override
 			protected void onEvent(final AjaxRequestTarget target, final Event event)
 			{
-				responseModel.setObject("tweeted");
+				responseModel.setObject("followed");
 				target.add(label);
 			}
 		});

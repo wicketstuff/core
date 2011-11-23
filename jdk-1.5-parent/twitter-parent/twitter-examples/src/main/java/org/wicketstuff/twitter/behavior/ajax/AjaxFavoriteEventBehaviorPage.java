@@ -5,37 +5,36 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.wicketstuff.twitter.intents.TweetLink;
+import org.wicketstuff.twitter.intents.FavoriteLink;
 
 /**
  * @author Till Freier
  * 
  */
-public class AjaxTweetEventBehaviorPage extends WebPage
+public class AjaxFavoriteEventBehaviorPage extends WebPage
 {
 
-	public AjaxTweetEventBehaviorPage()
+	public AjaxFavoriteEventBehaviorPage()
 	{
 		super();
 
 		final IModel<String> responseModel = Model.of();
 
-		final TweetLink tweetLink = new TweetLink("tweetLink");
-		tweetLink.setInReplyTo("136565831483146241");
+		final FavoriteLink link = new FavoriteLink("link");
+		link.setTweetId("136565831483146241");
 
-
-		add(tweetLink);
+		add(link);
 
 		final Label label = new Label("resonse", responseModel);
 		label.setOutputMarkupId(true);
 		add(label);
 
-		add(new AjaxTweetEventBehavior()
+		add(new AjaxFavoriteEventBehavior()
 		{
 			@Override
 			protected void onEvent(final AjaxRequestTarget target, final Event event)
 			{
-				responseModel.setObject("tweeted");
+				responseModel.setObject("retweeted");
 				target.add(label);
 			}
 		});
