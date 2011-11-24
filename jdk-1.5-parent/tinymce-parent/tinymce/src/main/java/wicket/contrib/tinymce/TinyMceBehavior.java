@@ -60,7 +60,7 @@ public class TinyMceBehavior extends Behavior implements IAjaxRegionMarkupIdProv
 	public void beforeRender(Component component)
 	{
 		component.getResponse().write(
-			String.format("<div id=\"%s\">", getAjaxRegionMarkupId(component)));
+				String.format("<div id=\"%s\">", getAjaxRegionMarkupId(component)));
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class TinyMceBehavior extends Behavior implements IAjaxRegionMarkupIdProv
 			throw new IllegalStateException("TinyMceBehavior is not bound to a component");
 
 		ResourceReferenceRequestHandler handler = new ResourceReferenceRequestHandler(
-			TinyMCESettings.javaScriptReference(), null);
+				TinyMCESettings.javaScriptReference(), null);
 
 		Url url = new Url();
 		List<String> segments = url.getSegments();
@@ -97,15 +97,15 @@ public class TinyMceBehavior extends Behavior implements IAjaxRegionMarkupIdProv
 		}
 
 		String renderOnDomReady = getAddTinyMceSettingsScript(Mode.exact,
-			Collections.singletonList(component));
+				Collections.singletonList(component));
 		response.renderOnDomReadyJavaScript(renderOnDomReady);
 	}
 
 
 	private boolean mayRenderJavascriptDirect()
 	{
-		return RequestCycle.get().getRequest() instanceof WebRequest &&
-			!((WebRequest)RequestCycle.get().getRequest()).isAjax();
+		return RequestCycle.get().getRequest() instanceof WebRequest
+				&& !((WebRequest)RequestCycle.get().getRequest()).isAjax();
 	}
 
 
@@ -120,7 +120,8 @@ public class TinyMceBehavior extends Behavior implements IAjaxRegionMarkupIdProv
 		{
 			for (Component c : components)
 			{
-				script.append("tinyMCE.remove(tinyMCE.get('" + c.getMarkupId() + "'));\n");
+				String tryToRemoveJS = "try{tinyMCE.remove(tinyMCE.get('%s'));}catch(e){}\n";
+				script.append(String.format(tryToRemoveJS, c.getMarkupId()));
 			}
 		}
 
@@ -137,7 +138,7 @@ public class TinyMceBehavior extends Behavior implements IAjaxRegionMarkupIdProv
 	{
 		if (this.component != null)
 			throw new IllegalStateException(
-				"TinyMceBehavior can not bind to more than one component");
+					"TinyMceBehavior can not bind to more than one component");
 		super.bind(component);
 		if (isMarkupIdRequired())
 			component.setOutputMarkupId(true);
