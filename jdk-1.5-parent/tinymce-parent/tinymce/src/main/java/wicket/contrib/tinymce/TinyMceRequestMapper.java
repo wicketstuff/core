@@ -17,15 +17,15 @@ import org.apache.wicket.request.resource.JavaScriptPackageResource;
  */
 public class TinyMceRequestMapper extends AbstractMapper
 {
-	private static final List<String> KNOWN_PREFIXS = Arrays.asList(new String[] { "langs",
-			"themes", "plugins", "utils", "tiny_mce_popup.js", "tiny_mce_src.js", "tiny_mce.js" });
+	private static final List<String> KNOWN_SEGMENTS = Arrays.asList(new String[] { "themes",
+			"langs", "plugins", "utils", "tiny_mce_popup.js", "tiny_mce_src.js", "tiny_mce.js" });
 
 	public IRequestHandler mapRequest(Request request)
 	{
 		String url = request.getUrl().toString();
 		List<String> segments = request.getUrl().getSegments();
 		String path = "tiny_mce/";
-		for (String prefix : KNOWN_PREFIXS)
+		for (String prefix : KNOWN_SEGMENTS)
 		{
 			if (segments.contains(prefix))
 			{
@@ -33,7 +33,7 @@ public class TinyMceRequestMapper extends AbstractMapper
 				if (TinyMceRequestMapper.class.getResource(path) != null)
 				{
 					JavaScriptPackageResource resource = new JavaScriptPackageResource(
-						TinyMceRequestMapper.class, path, null, null, null);
+							TinyMceRequestMapper.class, path, null, null, null);
 					return new ResourceRequestHandler(resource, null);
 				}
 			}
@@ -43,7 +43,7 @@ public class TinyMceRequestMapper extends AbstractMapper
 
 	public int getCompatibilityScore(Request request)
 	{
-		return 0;
+		return Integer.MAX_VALUE;
 	}
 
 	public Url mapHandler(IRequestHandler requestHandler)

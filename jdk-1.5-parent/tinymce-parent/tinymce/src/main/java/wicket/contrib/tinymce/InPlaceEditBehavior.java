@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.UUID;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderResponse;
@@ -31,8 +30,9 @@ import wicket.contrib.tinymce.settings.TinyMCESettings;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Mode;
 
 /**
- * This behavior adds in-place editing functionality to wicket components. In most cases you will
- * want to use {@link InPlaceEditComponent} instead of this class directly.
+ * This behavior adds in-place editing functionality to wicket components. In
+ * most cases you will want to use {@link InPlaceEditComponent} instead of this
+ * class directly.
  */
 public class InPlaceEditBehavior extends TinyMceBehavior
 {
@@ -40,16 +40,17 @@ public class InPlaceEditBehavior extends TinyMceBehavior
 	private String startEditorScriptName;
 
 	/**
-	 * Construct in-place-editing behavior to a component. It makes the content of the component
-	 * editable with a TinyMce WYSIWYG editor.
+	 * Construct in-place-editing behavior to a component. It makes the content
+	 * of the component editable with a TinyMce WYSIWYG editor.
 	 * 
 	 * @param settings
 	 *            TinyMceSettings for the editor when opened.
 	 * @param triggerComponent
-	 *            Component that will get an onclick event to make the component that this behavior
-	 *            is added to editable. Can be the editable component itself, but can also be
-	 *            another component, e.g. a button. If set to null, you will have to start the
-	 *            editable state via a call to the javascriptfunction with name:
+	 *            Component that will get an onclick event to make the component
+	 *            that this behavior is added to editable. Can be the editable
+	 *            component itself, but can also be another component, e.g. a
+	 *            button. If set to null, you will have to start the editable
+	 *            state via a call to the javascriptfunction with name:
 	 *            {@link #getStartEditorScriptName()}
 	 */
 	public InPlaceEditBehavior(TinyMCESettings settings, Component triggerComponent)
@@ -61,7 +62,7 @@ public class InPlaceEditBehavior extends TinyMceBehavior
 
 	private Behavior createTriggerBehavior()
 	{
-		return new AbstractBehavior()
+		return new Behavior()
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -82,20 +83,18 @@ public class InPlaceEditBehavior extends TinyMceBehavior
 	protected String getRenderJavascript(IHeaderResponse response)
 	{
 		return "" //
-			+
-			"function " + getStartEditorScriptName() +
-			"() {" //
-			+
-			getAddTinyMceSettingsScript(Mode.none, Collections.EMPTY_LIST) //
-			+ " tinyMCE.execCommand('mceAddControl',true,'" +
-			getComponent().getMarkupId(true) +
-			"');" //
-			+ "}";
+				+ "function " + getStartEditorScriptName()
+				+ "() {" //
+				+ getAddTinyMceSettingsScript(Mode.none, Collections.EMPTY_LIST) //
+				+ " tinyMCE.execCommand('mceAddControl',true,'"
+				+ getComponent().getMarkupId(true)
+				+ "');" //
+				+ "}";
 	}
 
 	/**
-	 * @return The name of the (no-argument) JavaScript that will replace the component that is
-	 *         bound to this behavior with a TinyMce editor.
+	 * @return The name of the (no-argument) JavaScript that will replace the
+	 *         component that is bound to this behavior with a TinyMce editor.
 	 */
 	public final String getStartEditorScriptName()
 	{
