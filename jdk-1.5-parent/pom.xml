@@ -51,7 +51,6 @@
 		<module>plugin</module>
 		<module>portlet-parent</module>
 		<module>progressbar-parent</module>
-		<module>prototype</module>
 		<module>push-parent-jdk-1.5</module>
 		<module>scala-extensions-parent</module>
 		<module>shiro-security</module>
