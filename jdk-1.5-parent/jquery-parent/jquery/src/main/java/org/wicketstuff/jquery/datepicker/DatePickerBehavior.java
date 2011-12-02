@@ -36,7 +36,6 @@ import org.apache.wicket.util.convert.converter.DateConverter;
 import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.jquery.JQueryBehavior;
 import org.wicketstuff.minis.behavior.CompositeBehavior;
-import org.wicketstuff.minis.behavior.SimpleAttributeAppender;
 
 /**
  * Add support of the <a
@@ -211,7 +210,7 @@ public class DatePickerBehavior extends JQueryBehavior
 
 	public Behavior getDatePickerStyle()
 	{
-		return new CompositeBehavior(new SimpleAttributeAppender("class", "date-pick", " "),
+		return new CompositeBehavior(AttributeModifier.append("class", "date-pick"),
 			AttributeModifier.replace("size", String.valueOf(format_.length())),
 			AttributeModifier.replace("maxlength", String.valueOf(format_.length())),
 			AttributeModifier.replace("title", format_));

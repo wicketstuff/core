@@ -10,15 +10,14 @@ import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.CoreLibrariesContributor;
 import org.apache.wicket.ajax.IAjaxCallDecorator;
-import org.apache.wicket.ajax.WicketAjaxReference;
 import org.apache.wicket.ajax.calldecorator.AjaxCallDecorator;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.WicketEventReference;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -638,8 +637,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{
-		response.renderJavaScriptReference(WicketEventReference.INSTANCE);
-		response.renderJavaScriptReference(WicketAjaxReference.INSTANCE);
+		CoreLibrariesContributor.contributeAjax(getApplication(), response);
 		response.renderJavaScriptReference(JS_YAHOO);
 		response.renderJavaScriptReference(JS_EVENT);
 		response.renderJavaScriptReference(JS_DOM);

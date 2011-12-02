@@ -48,7 +48,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 
 	protected abstract D getDataSource();
 
-	protected abstract int getRowsPerPage();
+	protected abstract long getRowsPerPage();
 
 	protected abstract IGridSortState getSortState();
 
@@ -63,12 +63,12 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 		return (Data)get("row");
 	}
 
-	int getTotalRowCount()
+	long getTotalRowCount()
 	{
 		return getData().getTotalRowCount();
 	}
 
-	int getCurrentPageItemCount()
+	long getCurrentPageItemCount()
 	{
 		return getData().getCurrentPageItemCount();
 	}
@@ -76,7 +76,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 	/**
 	 * {@inheritDoc}
 	 */
-	public int getCurrentPage()
+	public long getCurrentPage()
 	{
 		return getData().getCurrentPage();
 	}
@@ -84,7 +84,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 	/**
 	 * {@inheritDoc}
 	 */
-	public int getPageCount()
+	public long getPageCount()
 	{
 		return getData().getPageCount();
 	}
@@ -92,7 +92,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setCurrentPage(int page)
+	public void setCurrentPage(long page)
 	{
 		getData().setCurrentPage(page);
 	}
@@ -115,7 +115,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 		}
 
 		@Override
-		protected int getRowsPerPage()
+		protected long getRowsPerPage()
 		{
 			return DataGridBody.this.getRowsPerPage();
 		}

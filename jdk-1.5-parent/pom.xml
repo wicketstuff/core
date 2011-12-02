@@ -44,7 +44,9 @@
 		<module>minis-parent</module>
 		<module>modalx-parent</module>
 		<module>mootools-meiomask-parent</module>
+		<!-- disabled because wicketstuff-prototype is no more here
 		<module>multi-text-input-parent</module>
+		-->
 		<module>objectautocomplete-parent</module>
 		<module>openlayers-parent</module>
 		<module>phonebook</module>

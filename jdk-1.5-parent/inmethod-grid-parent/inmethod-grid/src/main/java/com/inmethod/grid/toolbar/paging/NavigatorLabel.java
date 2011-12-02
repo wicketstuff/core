@@ -72,14 +72,14 @@ public class NavigatorLabel extends Label
 		 */
 		public String getOf()
 		{
-			int total = table.getTotalRowCount();
+			long total = table.getTotalRowCount();
 			return total != -1 ? "" + total : getString("unknown", null, "unknown");
 		}
 
 		/**
 		 * @return "x" in "Showing x to y of z"
 		 */
-		public int getFrom()
+		public long getFrom()
 		{
 			if (table.getTotalRowCount() == 0)
 			{
@@ -91,7 +91,7 @@ public class NavigatorLabel extends Label
 		/**
 		 * @return "y" in "Showing x to y of z"
 		 */
-		public int getTo()
+		public long getTo()
 		{
 			if (table.getTotalRowCount() == 0)
 			{
@@ -99,7 +99,7 @@ public class NavigatorLabel extends Label
 			}
 			else
 			{
-				int count = getFrom() + table.getCurrentPageItemCount() - 1;
+				long count = getFrom() + table.getCurrentPageItemCount() - 1;
 				return count;
 			}
 		}

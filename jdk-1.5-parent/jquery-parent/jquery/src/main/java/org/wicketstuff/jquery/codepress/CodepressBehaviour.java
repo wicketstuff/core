@@ -1,11 +1,11 @@
 package org.wicketstuff.jquery.codepress;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
-import org.wicketstuff.minis.behavior.SimpleAttributeAppender;
 
 /**
  * 
@@ -62,7 +62,7 @@ public class CodepressBehaviour extends JQueryBehavior
 		if (!options_.isLineNumbers())
 			classes.append(" linenumbers-off");
 
-		getComponent().add(new SimpleAttributeAppender("class", classes.toString(), " "));
+		getComponent().add(AttributeModifier.append("class", classes.toString()));
 	}
 
 }
