@@ -70,6 +70,12 @@ public class JSLibTest extends TestCase
 					{
 						throw new UnsupportedOperationException();
 					}
+
+					@Override
+					public void write(byte[] array, int offset, int length)
+					{
+						throw new UnsupportedOperationException();
+					}
 				};
 			}
 		};
