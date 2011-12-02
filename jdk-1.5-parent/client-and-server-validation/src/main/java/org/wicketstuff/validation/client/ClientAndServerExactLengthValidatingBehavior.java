@@ -46,7 +46,7 @@ public class ClientAndServerExactLengthValidatingBehavior extends
 	@Override
 	protected void addServerSideValidator(FormComponent<String> component)
 	{
-		component.add(StringValidator.exactLength(mLength));
+		component.add(new StringValidator(mLength, mLength));
 	}
 
 	@Override

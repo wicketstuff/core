@@ -74,7 +74,7 @@ public abstract class AbstractClientAndServerValidatingBehavior<T> extends Behav
 	{
 		if (component instanceof FormComponent == false)
 		{
-			throw new IllegalArgumentException("This behavior [" + Classes.simpleName(getClass()) +
+			throw new IllegalArgumentException("This behavior [" + getClass().getSimpleName() +
 				"] can only be added to a FormComponent");
 		}
 	}
@@ -124,7 +124,7 @@ public abstract class AbstractClientAndServerValidatingBehavior<T> extends Behav
 
 	protected String getValidatorJSClassName()
 	{
-		return Classes.simpleName(getClass());
+		return getClass().getSimpleName();
 	}
 
 	protected Map<String, Object> variablesMap(Form<?> form, FormComponent<T> component)
@@ -141,7 +141,7 @@ public abstract class AbstractClientAndServerValidatingBehavior<T> extends Behav
 	 */
 	protected String getResourceKey()
 	{
-		return Classes.simpleName(getClass());
+		return getClass().getSimpleName();
 	}
 
 	protected abstract void addServerSideValidator(FormComponent<T> component);
