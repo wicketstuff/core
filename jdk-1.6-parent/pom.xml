@@ -26,7 +26,6 @@
 		<module>wicket-html5-parent</module>
 		<module>wicket-servlet3-parent</module>
 		<module>wicket-facebook-parent</module>
-		<module>twitter-parent</module>
 	</modules>
 
 	<build>

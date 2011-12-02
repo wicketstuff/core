@@ -1,4 +1,4 @@
-package org.wicketstuff.twitter.behavior;
+package org.wicketstuff.twitter;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
