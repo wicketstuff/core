@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>6.0-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jdk-1.5-parent</artifactId>
@@ -119,7 +119,7 @@
 				<configuration>
 					<signature>
 						<groupId>org.codehaus.mojo.signature</groupId>
-						<artifactId>java16</artifactId>
+						<artifactId>java15</artifactId>
 						<version>1.0</version>
 					</signature>
 				</configuration>
@@ -130,9 +130,43 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
+					<executions>
+						<!-- will compile the tests using the java 5 compiler -->
+						<execution>
+							<id>java-5-compile-tests</id>
+							<phase>compile</phase>
+							<goals>
+								<goal>testCompile</goal>
+							</goals>
+							<configuration>
+								<source>1.5</source>
+								<target>1.5</target>
+								<compilerVersion>1.5</compilerVersion>
+								<executable>${env.JAVA_5_HOME}/bin/javac</executable>
+								<fork>true</fork>
+							</configuration>
+						</execution>
+						<!-- Will compile the modules using java 6 source to java 5 
+							Due to how the java 6 compiler works this will allow java 6 ism's in the code
+							to be compiled back into java 5 compatible class files.
+						    -->
+						<execution>
+							<id>java-6-compile-to-java-5</id>
+							<phase>compile</phase>
+							<goals><goal>compile</goal></goals>
+							<configuration>
+								<source>1.5</source>
+								<target>1.5</target>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- run the tests using java 5 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
 					<configuration>
-						<source>1.6</source>
-						<target>1.6</target>
+						<jvm>${env.JAVA_5_HOME}/bin/java</jvm>
 					</configuration>
 				</plugin>
 			</plugins>

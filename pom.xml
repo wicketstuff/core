@@ -7,7 +7,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>6.0-SNAPSHOT</version>
+	<version>1.5-SNAPSHOT</version>
 
 	<name>WicketStuff Core Parent</name>
 	<description>
@@ -223,7 +223,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>6.0-SNAPSHOT</wicket.version>
+		<wicket.version>1.5-SNAPSHOT</wicket.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
