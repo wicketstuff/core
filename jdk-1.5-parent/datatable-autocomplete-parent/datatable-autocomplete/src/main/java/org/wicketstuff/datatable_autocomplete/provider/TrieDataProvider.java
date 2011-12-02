@@ -145,7 +145,7 @@ public class TrieDataProvider<C> extends SortableDataProvider<C>
 		this.modelProvider = modelProvider;
 	}
 
-	public int size()
+	public long size()
 	{
 
 		String prefix = fieldStringModel.getObject();
@@ -205,7 +205,7 @@ public class TrieDataProvider<C> extends SortableDataProvider<C>
 	 * 
 	 * @see org.apache.wicket.markup.repeater.data.IDataProvider#iterator(int, int)
 	 */
-	public Iterator<C> iterator(int first, int count)
+	public Iterator<C> iterator(long first, long count)
 	{
 
 		String prefix = fieldStringModel.getObject();
@@ -225,9 +225,9 @@ public class TrieDataProvider<C> extends SortableDataProvider<C>
 
 		}
 
-		int size = currentListData.size();
+		long size = currentListData.size();
 
-		int last = DataProviderUtils.getLastIndex(size, first, count);
+		long last = DataProviderUtils.getLastIndex(size, first, count);
 
 		if (first > last)
 		{
@@ -235,7 +235,7 @@ public class TrieDataProvider<C> extends SortableDataProvider<C>
 			last = DataProviderUtils.getLastIndex(size, first, count);
 		}
 
-		return currentListData.subList(first, last).iterator();
+		return currentListData.subList((int)first, (int)last).iterator();
 	}
 
 	/*
