@@ -146,7 +146,7 @@ public class HibernateContactDao implements ContactDao
 		query.setParameters(builder.getParameters(), builder.getTypes());
 		if (!count && qp != null)
 		{
-			query.setFirstResult(qp.getFirst()).setMaxResults(qp.getCount());
+			query.setFirstResult((int)qp.getFirst()).setMaxResults((int)qp.getCount());
 		}
 		return query;
 	}

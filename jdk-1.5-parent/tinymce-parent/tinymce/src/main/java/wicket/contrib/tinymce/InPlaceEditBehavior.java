@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.UUID;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderResponse;
@@ -61,7 +60,7 @@ public class InPlaceEditBehavior extends TinyMceBehavior
 
 	private Behavior createTriggerBehavior()
 	{
-		return new AbstractBehavior()
+		return new Behavior()
 		{
 			private static final long serialVersionUID = 1L;
 

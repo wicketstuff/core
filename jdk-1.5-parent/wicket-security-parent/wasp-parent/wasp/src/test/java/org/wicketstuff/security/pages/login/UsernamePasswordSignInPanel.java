@@ -198,10 +198,9 @@ public class UsernamePasswordSignInPanel extends Panel
 
 			if (signIn(username, password))
 			{
-				if (!getPage().continueToOriginalDestination())
-				{
-					setResponsePage(Application.get().getHomePage());
-				}
+				getPage().continueToOriginalDestination();
+				// or
+				setResponsePage(Application.get().getHomePage());
 			}
 			else
 			{

@@ -240,10 +240,11 @@ public abstract class HttpAuthenticationLoginPage extends WebPage
 		{
 			if (!isAuthenticated())
 				((WaspSession)session).login(loginContext);
-			if (!continueToOriginalDestination())
-			{
-				throw new RestartResponseAtInterceptPageException(Application.get().getHomePage());
-			}
+
+
+			continueToOriginalDestination();
+			// or
+			throw new RestartResponseAtInterceptPageException(Application.get().getHomePage());
 		}
 		else
 			log.error("Unable to find WaspSession");

@@ -87,9 +87,9 @@ public class ContactsDataProvider extends SortableDataProvider<Contact> implemen
 	 *            number of rows to retrieve
 	 * @return iterator capable of iterating over {first, first+count} contacts
 	 */
-	public Iterator<Contact> iterator(int first, int count)
+	public Iterator<Contact> iterator(long first, long count)
 	{
-		SortParam sp = getSort();
+		SortParam<String> sp = getSort();
 		if (queryParam == null)
 		{
 			queryParam = new QueryParam(first, count, sp.getProperty(), sp.isAscending());
@@ -109,7 +109,7 @@ public class ContactsDataProvider extends SortableDataProvider<Contact> implemen
 	 * 
 	 * @return total item count
 	 */
-	public int size()
+	public long size()
 	{
 		return dao.count(filter);
 	}

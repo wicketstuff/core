@@ -98,8 +98,9 @@ public class MockLoginPage extends WebPage
 				context = new CustomLoginContext(new SimplePrincipal(username));
 			}
 			((WaspSession)Session.get()).login(context);
-			if (!continueToOriginalDestination())
-				setResponsePage(Application.get().getHomePage());
+			continueToOriginalDestination();
+			// or
+			setResponsePage(Application.get().getHomePage());
 			return true;
 		}
 		catch (LoginException e)

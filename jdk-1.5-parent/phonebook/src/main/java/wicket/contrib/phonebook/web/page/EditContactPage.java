@@ -69,7 +69,7 @@ public class EditContactPage extends BasePage
 		form.add(newRequiredTextField("firstname", 32));
 		form.add(newRequiredTextField("lastname", 32));
 		form.add(newRequiredTextField("phone", 16));
-		form.add(new TextField<String>("email").add(StringValidator.maximumLength(128)).add(
+		form.add(new TextField<String>("email").add(new StringValidator(null, 128)).add(
 			EmailAddressValidator.getInstance()));
 		form.add(new CancelButton());
 		form.add(new SaveButton());
@@ -78,7 +78,7 @@ public class EditContactPage extends BasePage
 	private RequiredTextField<String> newRequiredTextField(String id, int maxLenght)
 	{
 		RequiredTextField<String> textField = new RequiredTextField<String>(id);
-		textField.add(StringValidator.maximumLength(maxLenght));
+		textField.add(new StringValidator(null, maxLenght));
 		return textField;
 	}
 
