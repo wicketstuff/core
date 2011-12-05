@@ -64,6 +64,7 @@
 		<module>jasperreports-parent</module>
 		<module>dojo-parent</module>
 		<module>modalx-parent</module>
+		<module>spring-webflow-parent</module>
 	  </modules>
 
 	<build>
