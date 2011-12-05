@@ -24,10 +24,10 @@ public final class DataProviderUtils
 	 */
 
 
-	public static int getLastIndex(int size, int first, int count)
+	public static long getLastIndex(long size, long first, long count)
 	{
 
-		int last = Math.min(size, first + count + 1);
+		long last = Math.min(size, first + count + 1);
 
 		return last;
 	}

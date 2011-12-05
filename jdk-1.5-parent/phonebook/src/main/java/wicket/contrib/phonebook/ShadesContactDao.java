@@ -149,8 +149,8 @@ public class ShadesContactDao implements ContactDao
 		System.out.println("looking for contacts like " + filter);
 		Query q = dict.getQuery("byOrderedResemblance");
 		ShadesORMDictionary.filterCandidate.resembles(filter, orm.getColumnSet("nonKeyFields"));
-		dbSess.setParameter("first", Integer.valueOf(qp.getFirst()));
-		dbSess.setParameter("count", Integer.valueOf(qp.getCount()));
+		dbSess.setParameter("first", Long.valueOf(qp.getFirst()));
+		dbSess.setParameter("count", Long.valueOf(qp.getCount()));
 		q.clause("ORDER BY").enable(qp.hasSort());
 		dbSess.setParameter("order", qp.getSort());
 		if (qp.isSortAsc())

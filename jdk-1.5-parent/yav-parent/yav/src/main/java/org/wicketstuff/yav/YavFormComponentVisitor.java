@@ -26,10 +26,6 @@ import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.RangeValidator;
 import org.apache.wicket.validation.validator.StringValidator;
-import org.apache.wicket.validation.validator.StringValidator.ExactLengthValidator;
-import org.apache.wicket.validation.validator.StringValidator.LengthBetweenValidator;
-import org.apache.wicket.validation.validator.StringValidator.MaximumLengthValidator;
-import org.apache.wicket.validation.validator.StringValidator.MinimumLengthValidator;
 
 /**
  * Visitor used to check all the existing validators , and the type of the form components to add

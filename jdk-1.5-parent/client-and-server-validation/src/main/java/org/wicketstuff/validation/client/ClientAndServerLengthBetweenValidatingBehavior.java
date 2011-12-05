@@ -49,7 +49,7 @@ public class ClientAndServerLengthBetweenValidatingBehavior extends
 	@Override
 	protected void addServerSideValidator(FormComponent<String> component)
 	{
-		component.add(StringValidator.lengthBetween(mMin, mMax));
+		component.add(new StringValidator(mMin, mMax));
 	}
 
 	@Override

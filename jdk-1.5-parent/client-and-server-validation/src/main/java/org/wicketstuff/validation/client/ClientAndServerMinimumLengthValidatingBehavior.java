@@ -47,7 +47,7 @@ public class ClientAndServerMinimumLengthValidatingBehavior extends
 	@Override
 	protected void addServerSideValidator(FormComponent<String> component)
 	{
-		component.add(StringValidator.minimumLength(mMin));
+		component.add(new StringValidator(mMin, null));
 	}
 
 	@Override

@@ -3,9 +3,6 @@ package org.wicketstuff.minis.behavior.validator;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.validation.validator.StringValidator;
-import org.apache.wicket.validation.validator.StringValidator.ExactLengthValidator;
-import org.apache.wicket.validation.validator.StringValidator.LengthBetweenValidator;
-import org.apache.wicket.validation.validator.StringValidator.MaximumLengthValidator;
 
 /**
  * Similar to {@link StringValidator}-s but these add maxlength attribute to the html tag. If you
@@ -46,9 +43,9 @@ public class StringValidatorWithMaxLength
 	 * 
 	 * @return the requested <code>StringValidator</code>
 	 */
-	public static StringValidator exactLength(int length)
+	public static StringValidator exactLength(final int length)
 	{
-		return new ExactLengthValidator(length)
+		return new StringValidator(length, length)
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -57,7 +54,7 @@ public class StringValidatorWithMaxLength
 			{
 				super.onComponentTag(component, tag);
 
-				addMaxLengthToTag(component, tag, getLength());
+				addMaxLengthToTag(component, tag, length);
 			}
 		};
 	}
@@ -75,7 +72,7 @@ public class StringValidatorWithMaxLength
 	 */
 	public static StringValidator lengthBetween(int minimum, int maximum)
 	{
-		return new LengthBetweenValidator(minimum, maximum)
+		return new StringValidator(minimum, maximum)
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -100,7 +97,7 @@ public class StringValidatorWithMaxLength
 	 */
 	public static StringValidator maximumLength(int maximum)
 	{
-		return new MaximumLengthValidator(maximum)
+		return new StringValidator(null, maximum)
 		{
 			private static final long serialVersionUID = 1L;
 

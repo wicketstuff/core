@@ -52,15 +52,15 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	/**
 	 * Constant for unknown count of rows.
 	 */
-	public static final int UNKOWN_COUNT = -1;
+	public static final long UNKNOWN_COUNT = -1;
 
 	/**
 	 * Returns the total count of items (sum of count of items on all pages) or
-	 * {@link #UNKOWN_COUNT} in case the count can't be determined.
+	 * {@link #UNKNOWN_COUNT} in case the count can't be determined.
 	 * 
-	 * @return total count of items or {@value #UNKOWN_COUNT}
+	 * @return total count of items or {@value #UNKNOWN_COUNT}
 	 */
-	public int getTotalRowCount()
+	public long getTotalRowCount()
 	{
 		initialize();
 
@@ -85,11 +85,11 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	 * 
 	 * @return total number of items
 	 */
-	private int getItemCount()
+	private long getItemCount()
 	{
 		initialize();
 
-		if (realItemCount == UNKOWN_COUNT)
+		if (realItemCount == UNKNOWN_COUNT)
 		{
 			return maxFirstItemReached + getRowsPerPage() + 1;
 		}
@@ -102,7 +102,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	/**
 	 * @return The current page that is or will be rendered.
 	 */
-	public int getCurrentPage()
+	public long getCurrentPage()
 	{
 		return getCurrentPageFirstItem() / getRowsPerPage();
 	}
@@ -116,18 +116,18 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	}
 
 	// we cache page count because paging navigator needs it even when items are not loaded
-	private int cachedPageCount = -1;
+	private long cachedPageCount = -1;
 
 	/**
 	 * Gets the total number of pages this pageable object has.
 	 * 
 	 * @return The total number of pages this pageable object has
 	 */
-	public int getPageCount()
+	public long getPageCount()
 	{
 		if (cachedPageCount == -1)
 		{
-			int count = getItemCount();
+			long count = getItemCount();
 			if (count == 0)
 			{
 				cachedPageCount = 0;
@@ -135,8 +135,8 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 			else
 			{
 				// if current item count is not dividable by the page size, subtract the mod
-				int rowsPerPage = getRowsPerPage();
-				int mod = count % rowsPerPage;
+				long rowsPerPage = getRowsPerPage();
+				long mod = count % rowsPerPage;
 				count -= mod;
 
 				// get the actual page count
@@ -152,16 +152,16 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	 * @param page
 	 *            The page that should be rendered.
 	 */
-	public void setCurrentPage(int page)
+	public void setCurrentPage(long page)
 	{
 
-		int pageCount = getPageCount();
+		long pageCount = getPageCount();
 		if (page < 0 || page >= pageCount && pageCount > 0)
 		{
 			throw new IndexOutOfBoundsException("Argument page is out of bounds");
 		}
 
-		int currentItem = getRowsPerPage() * page;
+		long currentItem = getRowsPerPage() * page;
 
 		setCurrentPageFirstItem(currentItem);
 
@@ -173,19 +173,19 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	 * We keep track of maximal first page item reached to be able to guess item count in case the
 	 * {@link IDataSource} can't provide the real count
 	 */
-	private int maxFirstItemReached;
+	private long maxFirstItemReached;
 
 	/**
 	 * The actual count of items. This is set by either passing actual count of items to
 	 * {@link IQueryResult#setTotalCount(int)}, or by passing the {@link IQueryResult#NO_MORE_ITEMS}
 	 * constant as item count.
 	 */
-	private int realItemCount = UNKOWN_COUNT;
+	private long realItemCount = UNKNOWN_COUNT;
 
 	/**
 	 * Index of the item which is at the beginning on current page
 	 */
-	private int currentPageFirstItem = 0;
+	private long currentPageFirstItem = 0;
 
 	/**
 	 * Cached query result for this request
@@ -215,7 +215,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 
 			IDataSource<T> dataSource = getDataSource();
 
-			int oldItemCount = realItemCount;
+			long oldItemCount = realItemCount;
 
 			// query for items
 			dataSource.query(wrapQuery(query), queryResult);
@@ -227,13 +227,13 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 			// this is not a case when there are no items at all, just the case when there are no
 // items on current page
 			// but possible items on previous pages
-			if (queryResult.itemCache.size() == 0 && realItemCount != UNKOWN_COUNT &&
+			if (queryResult.itemCache.size() == 0 && realItemCount != UNKNOWN_COUNT &&
 				realItemCount != oldItemCount && realItemCount > 0)
 			{
 
 				// the data must have changed, the number of items has been reduced. try move to
 				// last page
-				int page = getPageCount() - 1;
+				long page = getPageCount() - 1;
 				if (page < 0)
 				{
 					page = 0;
@@ -276,16 +276,16 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 		/**
 		 * {@inheritDoc}
 		 */
-		public int getCount()
+		public long getCount()
 		{
 
-			int totalCount = getTotalCount();
-			int rowsPerPage = getRowsPerPage();
+			long totalCount = getTotalCount();
+			long rowsPerPage = getRowsPerPage();
 
 			// we try to get the real count (user might have called
 			// IQueryResult.setTotalCount before calling getCount
-			final int count;
-			if (totalCount != UNKOWN_COUNT)
+			final long count;
+			if (totalCount != UNKNOWN_COUNT)
 			{
 				count = Math.min(totalCount - getFrom(), rowsPerPage);
 			}
@@ -300,7 +300,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 		/**
 		 * {@inheritDoc}
 		 */
-		public int getFrom()
+		public long getFrom()
 		{
 			return getCurrentPageFirstItem();
 		}
@@ -316,7 +316,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 		/**
 		 * {@inheritDoc}
 		 */
-		public int getTotalCount()
+		public long getTotalCount()
 		{
 			return result.totalCount;
 		}
@@ -367,7 +367,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 		private Iterator<? extends T> items = new EmptyIterator<T>();
 
 		// and actual total count (could be UNKNOWN)
-		private int totalCount = realItemCount;
+		private long totalCount = realItemCount;
 
 		// process will put the actual item model's here
 		private final ArrayList<IModel<T>> itemCache = new ArrayList<IModel<T>>();
@@ -383,7 +383,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 		/**
 		 * @see IQueryResult#setTotalCount(int)
 		 */
-		public void setTotalCount(int count)
+		public void setTotalCount(long count)
 		{
 			totalCount = count;
 		}
@@ -397,7 +397,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 		public void process(IDataSource<T> source)
 		{
 			// count the maximum number of items that should have been loaded
-			int max = getRowsPerPage();
+			long max = getRowsPerPage();
 			if (totalCount > 0)
 			{
 				max = Math.min(max, totalCount - getCurrentPageFirstItem());
@@ -431,7 +431,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 			}
 
 			if (totalCount == IQueryResult.MORE_ITEMS && getCurrentPage() != getPageCount() &&
-				realItemCount != UNKOWN_COUNT)
+				realItemCount != UNKNOWN_COUNT)
 			{
 				// if we know the real item count and the page shown is not last page, we
 				// don't allow MORE_ITEMS overwrite the real item count
@@ -458,7 +458,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 
 	protected abstract IDataSource<T> getDataSource();
 
-	protected abstract int getRowsPerPage();
+	protected abstract long getRowsPerPage();
 
 	/**
 	 * @see RefreshingView#getItemModels()
@@ -475,7 +475,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	 * 
 	 * @param currentItem
 	 */
-	private void setCurrentPageFirstItem(int currentItem)
+	private void setCurrentPageFirstItem(long currentItem)
 	{
 		if (currentPageFirstItem != currentItem)
 		{
@@ -490,9 +490,9 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 		}
 	}
 
-	private int getCurrentPageFirstItem()
+	private long getCurrentPageFirstItem()
 	{
-		int rowsPerPage = getRowsPerPage();
+		long rowsPerPage = getRowsPerPage();
 		return currentPageFirstItem - currentPageFirstItem % rowsPerPage;
 	}
 

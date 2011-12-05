@@ -97,7 +97,7 @@ public interface IDataSource<T> extends IDetachable, IClusterable
 		 * 
 		 * @return index of first item to be loaded
 		 */
-		public int getFrom();
+		public long getFrom();
 
 		/**
 		 * Returns the amount of items to be loaded. If the total amount is known (it was either set
@@ -110,12 +110,12 @@ public interface IDataSource<T> extends IDetachable, IClusterable
 		 * @return amount of required rows (might be items per page if the total amount of rows is
 		 *         not known)
 		 */
-		public int getCount();
+		public long getCount();
 
 		/**
 		 * Constant that represents unknown row count returned by {@link #getTotalCount()}
 		 */
-		public static final int UNKNOWN_TOTAL_COUNT = -1;
+		public static final long UNKNOWN_TOTAL_COUNT = -1L;
 
 		/**
 		 * Returns the total amount of rows or {@link #UNKNOWN_TOTAL_COUNT} if the amount of rows is
@@ -123,7 +123,7 @@ public interface IDataSource<T> extends IDetachable, IClusterable
 		 * 
 		 * @return total amount of rows
 		 */
-		public int getTotalCount();
+		public long getTotalCount();
 
 		/**
 		 * Returns the {@link IGridSortState} that can be used to determine which sortable columns
@@ -168,7 +168,7 @@ public interface IDataSource<T> extends IDetachable, IClusterable
 		 *            the total count of items
 		 */
 
-		public void setTotalCount(int count);
+		public void setTotalCount(long count);
 
 		/**
 		 * Sets the actual loaded items.

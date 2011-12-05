@@ -28,8 +28,8 @@ import java.io.Serializable;
 public class QueryParam implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	private int first;
-	private int count;
+	private long first;
+	private long count;
 	private String sort;
 	private boolean sortAsc;
 
@@ -41,7 +41,7 @@ public class QueryParam implements Serializable
 	 * @param count
 	 *            Number of elements to return.
 	 */
-	public QueryParam(int first, int count)
+	public QueryParam(long first, long count)
 	{
 		this(first, count, null, true);
 	}
@@ -58,7 +58,7 @@ public class QueryParam implements Serializable
 	 * @param sortAsc
 	 *            Sort ascending or descending.
 	 */
-	public QueryParam(int first, int count, String sort, boolean sortAsc)
+	public QueryParam(long first, long count, String sort, boolean sortAsc)
 	{
 		this.first = first;
 		this.count = count;
@@ -76,12 +76,12 @@ public class QueryParam implements Serializable
 		this.sortAsc = sortAsc;
 	}
 
-	public int getCount()
+	public long getCount()
 	{
 		return count;
 	}
 
-	public int getFirst()
+	public long getFirst()
 	{
 		return first;
 	}
@@ -101,12 +101,12 @@ public class QueryParam implements Serializable
 		return sort != null;
 	}
 
-	public void setFirst(int first)
+	public void setFirst(long first)
 	{
 		this.first = first;
 	}
 
-	public void setCount(int count)
+	public void setCount(long count)
 	{
 		this.count = count;
 	}

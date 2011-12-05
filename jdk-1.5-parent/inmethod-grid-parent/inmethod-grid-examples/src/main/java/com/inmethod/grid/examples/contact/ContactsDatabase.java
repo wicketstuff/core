@@ -46,7 +46,7 @@ public class ContactsDatabase implements Serializable
 	 * @param count
 	 *            number of contacts to generate at startup
 	 */
-	public ContactsDatabase(int count)
+	public ContactsDatabase(long count)
 	{
 		for (int i = 0; i < count; i++)
 		{
@@ -89,13 +89,13 @@ public class ContactsDatabase implements Serializable
 	 * @param sortAsc
 	 * @return list of contacts
 	 */
-	public List<Contact> find(int first, int count, String sortProperty, boolean sortAsc)
+	public List<Contact> find(long first, long count, String sortProperty, boolean sortAsc)
 	{
 		List<Contact> index = getIndex(sortProperty, sortAsc);
-		int last = first + count;
+		long last = first + count;
 		if (last > index.size())
 			last = index.size();
-		List<Contact> sublist = index.subList(first, last);
+		List<Contact> sublist = index.subList((int)first, (int)last);
 		return sublist;
 	}
 

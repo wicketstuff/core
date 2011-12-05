@@ -83,8 +83,10 @@ public class SecondaryLoginPage extends WebPage
 		{
 			LoginContext context = new SecondaryLoginContext();
 			((WaspSession)Session.get()).login(context);
-			if (!continueToOriginalDestination())
-				setResponsePage(Application.get().getHomePage());
+			continueToOriginalDestination();
+
+			// or
+			setResponsePage(Application.get().getHomePage());
 			return true;
 		}
 		catch (LoginException e)

@@ -46,7 +46,7 @@ public class ClientAndServerMaximumLengthValidatingBehavior extends
 	@Override
 	protected void addServerSideValidator(FormComponent<String> component)
 	{
-		component.add(StringValidator.maximumLength(mMax));
+		component.add(new StringValidator(null, mMax));
 	}
 
 	@Override

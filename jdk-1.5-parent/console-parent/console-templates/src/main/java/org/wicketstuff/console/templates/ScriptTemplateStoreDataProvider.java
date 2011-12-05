@@ -42,13 +42,13 @@ public class ScriptTemplateStoreDataProvider implements IDataProvider<ScriptTemp
 	}
 
 
-	public Iterator<? extends ScriptTemplate> iterator(final int first, final int count)
+	public Iterator<? extends ScriptTemplate> iterator(final long first, final long count)
 	{
 		init();
-		return allTemplates.subList(first, first + count).iterator();
+		return allTemplates.subList((int)first, (int)(first + count)).iterator();
 	}
 
-	public int size()
+	public long size()
 	{
 		init();
 		return allTemplates.size();

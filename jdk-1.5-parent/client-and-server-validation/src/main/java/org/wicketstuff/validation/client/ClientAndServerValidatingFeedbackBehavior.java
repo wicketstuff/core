@@ -19,7 +19,7 @@
 package org.wicketstuff.validation.client;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.WicketAjaxReference;
+import org.apache.wicket.ajax.CoreLibrariesContributor;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -68,7 +68,7 @@ public class ClientAndServerValidatingFeedbackBehavior extends Behavior
 	public void renderHead(Component c, IHeaderResponse response)
 	{
 		super.renderHead(c, response);
-		response.renderJavaScriptReference(WicketAjaxReference.INSTANCE);
+		CoreLibrariesContributor.contributeAjax(c.getApplication(), response);
 
 		// add a trigger that will add our validation to the forms' onSubmit methods
 		String formID = mForm.getMarkupId();

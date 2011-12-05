@@ -91,7 +91,7 @@ public class IbatisContactDao extends SqlMapClientDaoSupport implements ContactD
 		map.put("sortasc", (qp.isSortAsc() ? " asc" : " desc"));
 		@SuppressWarnings("unchecked")
 		List<Contact> list = getSqlMapClientTemplate().queryForList("getContactList", map,
-			qp.getFirst(), qp.getCount());
+				(int)qp.getFirst(), (int)qp.getCount());
 		return list.listIterator();
 	}
 

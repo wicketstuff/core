@@ -21,15 +21,13 @@ import java.util.Iterator;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.WicketAjaxReference;
+import org.apache.wicket.ajax.CoreLibrariesContributor;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AbstractAutoCompleteBehavior;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteSettings;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompleteRenderer;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.WicketEventReference;
 import org.apache.wicket.request.IRequestCycle;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -116,7 +114,7 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 	@Override
 	public void renderHead(Component c, IHeaderResponse response)
 	{
-		abstractDefaultAjaxBehaviour_renderHead(response);
+		abstractDefaultAjaxBehaviour_renderHead(c, response);
 		initHead(response);
 	}
 
@@ -171,19 +169,11 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 
 	// Copied over from AbstractDefaultAjaxBehaviour.renderHead() until patch
 	// in WICKET-1651 gets applied
-	private void abstractDefaultAjaxBehaviour_renderHead(IHeaderResponse response)
+	private void abstractDefaultAjaxBehaviour_renderHead(Component component, IHeaderResponse response)
 	{
 		final IDebugSettings debugSettings = Application.get().getDebugSettings();
 
-		response.renderJavaScriptReference(WicketEventReference.INSTANCE);
-		response.renderJavaScriptReference(WicketAjaxReference.INSTANCE);
-
-		if (debugSettings.isAjaxDebugModeEnabled())
-		{
-			response.renderJavaScriptReference(new JavaScriptResourceReference(
-				AbstractDefaultAjaxBehavior.class, "wicket-ajax-debug.js"));
-			response.renderJavaScript("wicketAjaxDebugEnable=true;", "wicket-ajax-debug-enable");
-		}
+		CoreLibrariesContributor.contributeAjax(component.getApplication(), response);
 	}
 
 	/**

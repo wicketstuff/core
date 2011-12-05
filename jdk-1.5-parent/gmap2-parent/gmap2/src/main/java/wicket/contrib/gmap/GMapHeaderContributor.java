@@ -1,10 +1,9 @@
 package wicket.contrib.gmap;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.WicketAjaxReference;
+import org.apache.wicket.ajax.CoreLibrariesContributor;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.WicketEventReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
@@ -45,8 +44,7 @@ public class GMapHeaderContributor extends Behavior
 		response.renderJavaScriptReference(GMAP_API_URL + gMapKey);
 		response.renderJavaScript(GOOGLE_LOAD_MAPS, GMapHeaderContributor.class.getName() +
 			"_googleload");
-		response.renderJavaScriptReference(WicketEventReference.INSTANCE);
-		response.renderJavaScriptReference(WicketAjaxReference.INSTANCE);
+		CoreLibrariesContributor.contributeAjax(component.getApplication(), response);
 		response.renderJavaScriptReference(WICKET_GMAP_JS);
 		// see: http://www.google.com/apis/maps/documentation/#Memory_Leaks
 		response.renderOnEventJavaScript("window", "onUnload", "google.maps.Unload();");

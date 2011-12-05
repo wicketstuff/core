@@ -20,13 +20,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.WicketAjaxReference;
+import org.apache.wicket.ajax.CoreLibrariesContributor;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.WicketEventReference;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
@@ -127,8 +127,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 		pathToOpenLayersJS = pathToOpenLayersJS + "OpenLayers.js";
 		response.renderJavaScriptReference(pathToOpenLayersJS);
 		// TODO Import all other JS files which will be used later on
-		response.renderJavaScriptReference(WicketEventReference.INSTANCE);
-		response.renderJavaScriptReference(WicketAjaxReference.INSTANCE);
+		CoreLibrariesContributor.contributeAjax(Application.get(), response);
 		response.renderJavaScriptReference(new JavaScriptResourceReference(AjaxOpenLayersMap.class,
 			"wicket-openlayersmap.js"));
 	}

@@ -89,7 +89,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> im
 		}
 
 		@Override
-		protected int getRowsPerPage()
+		protected long getRowsPerPage()
 		{
 			return DataGrid.this.getRowsPerPage();
 		}
@@ -124,7 +124,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> im
 		return (D)getDefaultModelObject();
 	}
 
-	private int rowsPerPage = 20;
+	private long rowsPerPage = 20;
 
 	/**
 	 * Sets the desired amount rows per page.
@@ -144,7 +144,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> im
 	 * 
 	 * @return count of rows per page
 	 */
-	public int getRowsPerPage()
+	public long getRowsPerPage()
 	{
 		return rowsPerPage;
 	}
@@ -161,11 +161,11 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> im
 
 	/**
 	 * Returns the total count of items (sum of count of items on all pages) or
-	 * {@link AbstractPageableView#UNKOWN_COUNT} in case the count can't be determined.
+	 * {@link AbstractPageableView#UNKNOWN_COUNT} in case the count can't be determined.
 	 * 
-	 * @return total count of items or {@value AbstractPageableView#UNKOWN_COUNT}
+	 * @return total count of items or {@value AbstractPageableView#UNKNOWN_COUNT}
 	 */
-	public int getTotalRowCount()
+	public long getTotalRowCount()
 	{
 		return getBody().getTotalRowCount();
 	}
@@ -173,7 +173,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> im
 	/**
 	 * @return The current page that is or will be rendered.
 	 */
-	public int getCurrentPage()
+	public long getCurrentPage()
 	{
 		return getBody().getCurrentPage();
 	}
@@ -183,7 +183,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> im
 	 * 
 	 * @return The total number of pages this pageable object has
 	 */
-	public int getPageCount()
+	public long getPageCount()
 	{
 		return getBody().getPageCount();
 	}
@@ -194,7 +194,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> im
 	 * @param page
 	 *            The page that should be rendered.
 	 */
-	public void setCurrentPage(int page)
+	public void setCurrentPage(long page)
 	{
 		if (getBody().getCurrentPage() != page)
 		{
@@ -209,7 +209,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> im
 	/**
 	 * @return the amount of items on current page.
 	 */
-	public int getCurrentPageItemCount()
+	public long getCurrentPageItemCount()
 	{
 		return getBody().getCurrentPageItemCount();
 	}

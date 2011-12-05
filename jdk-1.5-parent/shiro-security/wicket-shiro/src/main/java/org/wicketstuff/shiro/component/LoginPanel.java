@@ -216,8 +216,10 @@ public class LoginPanel extends Panel
 		// If login has been called because the user was not yet
 		// logged in, than continue to the original destination,
 		// otherwise to the Home page
-		if (!continueToOriginalDestination())
-			setResponsePage(getApplication().getHomePage());
+		continueToOriginalDestination();
+
+		// or
+		setResponsePage(getApplication().getHomePage());
 	}
 
 

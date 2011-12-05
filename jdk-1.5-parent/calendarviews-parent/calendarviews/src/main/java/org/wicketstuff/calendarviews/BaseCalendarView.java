@@ -103,9 +103,9 @@ public abstract class BaseCalendarView extends Panel
 		{
 			private static final long serialVersionUID = 1L;
 
-			public Iterator<? extends DateMidnight> iterator(final int first, int count)
+			public Iterator<? extends DateMidnight> iterator(final long first, long count)
 			{
-				return createDateMidnightIterator(start, end, first, count);
+				return createDateMidnightIterator(start, end, (int)first, (int)count);
 			}
 
 			public IModel<DateMidnight> model(DateMidnight object)
@@ -113,7 +113,7 @@ public abstract class BaseCalendarView extends Panel
 				return new Model<DateMidnight>(object);
 			}
 
-			public int size()
+			public long size()
 			{
 				return period.getDays() + 1;
 			}
