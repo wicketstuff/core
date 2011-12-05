@@ -29,13 +29,7 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>jqplot</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <scope>test</scope>
         </dependency>        
-        
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -49,13 +43,6 @@
             <artifactId>log4j</artifactId>
             <scope>runtime</scope>
         </dependency>
-
-		<!-- JETTY DEPENDENCIES FOR TESTING <dependency> <groupId>org.mortbay.jetty</groupId> 
-			<artifactId>jetty</artifactId> <version>${jetty.version}</version> <scope>provided</scope> 
-			</dependency> <dependency> <groupId>org.mortbay.jetty</groupId> <artifactId>jetty-util</artifactId> 
-			<version>${jetty.version}</version> <scope>provided</scope> </dependency> 
-			<dependency> <groupId>org.mortbay.jetty</groupId> <artifactId>jetty-management</artifactId> 
-			<version>${jetty.version}</version> <scope>provided</scope> </dependency> -->
     </dependencies>
     <build>
         <plugins>
