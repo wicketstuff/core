@@ -90,12 +90,12 @@
 					</signature>
 				</configuration>
 			</plugin>
-		</plugins>
-		<pluginManagement>
-			<plugins>
-				<plugin>
+
+		<plugin>
+				<inherited>true</inherited>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.3.2</version>
 					<executions>
 						<!-- will compile the tests using the java 5 compiler -->
 						<execution>
@@ -110,6 +110,8 @@
 								<compilerVersion>1.5</compilerVersion>
 								<executable>${env.JAVA_5_HOME}/bin/javac</executable>
 								<fork>true</fork>
+
+								<encoding>UTF-8</encoding>
 							</configuration>
 						</execution>
 						<!-- Will compile the modules using java 6 source to java 5 
@@ -123,21 +125,24 @@
 							<configuration>
 								<source>1.5</source>
 								<target>1.5</target>
+								<encoding>UTF-8</encoding>
 							</configuration>
 						</execution>
 					</executions>
 				</plugin>
 				<!-- run the tests using java 5 -->
 				<plugin>
+					<inherited>true</inherited>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.10</version>
 					<configuration>
 						<jvm>${env.JAVA_5_HOME}/bin/java</jvm>
 					</configuration>
 				</plugin>
 			</plugins>
-		</pluginManagement>
-
 	</build>
+
+
 
 </project>

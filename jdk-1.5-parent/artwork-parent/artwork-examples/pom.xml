@@ -45,16 +45,6 @@
         </testResources>
         <plugins>
             <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <inherited>true</inherited>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                    <optimize>true</optimize>
-                    <debug>true</debug>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>maven-jetty-plugin</artifactId>
             </plugin>
