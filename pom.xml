@@ -415,7 +415,6 @@
 				<version>2.6</version>
 			</dependency>
 
-
 			<!-- SPRING -->
 			<dependency>
 				<groupId>org.springframework</groupId>
