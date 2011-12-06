@@ -44,16 +44,12 @@
 		<module>minis-parent</module>
 		<module>modalx-parent</module>
 		<module>mootools-meiomask-parent</module>
-		<!-- disabled because wicketstuff-prototype is no more here
-		<module>multi-text-input-parent</module>
-		-->
 		<module>objectautocomplete-parent</module>
 		<module>openlayers-parent</module>
 		<module>phonebook</module>
 		<module>plugin</module>
 		<module>portlet-parent</module>
 		<module>progressbar-parent</module>
-		<module>push-parent-jdk-1.5</module>
 		<module>scala-extensions-parent</module>
 		<module>shiro-security</module>
 		<module>simile-timeline-parent</module>
@@ -69,7 +65,7 @@
 
 		<module>closure-compiler</module>
 		<module>javaee-inject-parent</module>
-		<module>push-parent-jdk-1.6</module>
+		<module>push-parent</module>
 		<module>serializer-kryo</module>
 		<module>wicket-html5-parent</module>
 		<module>wicket-servlet3-parent</module>
