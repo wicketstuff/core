@@ -85,6 +85,7 @@
 					know it see * http://mojo.codehaus.org/animal-sniffer/index.html * http://weblogs.java.net/blog/kohsuke/archive/2008/11/compiling_with.html -->
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>animal-sniffer-maven-plugin</artifactId>
+				<inherited>true</inherited>
 				<configuration>
 					<signature>
 						<groupId>org.codehaus.mojo.signature</groupId>
