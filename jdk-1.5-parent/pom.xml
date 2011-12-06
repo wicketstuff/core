@@ -17,6 +17,7 @@
 	</description>
 
 	<modules>
+		<module>jqplot-parent</module>
 		<module>mootools-meiomask-parent</module>
 		<module>progressbar-parent</module>
 		<module>push-parent-jdk-1.5</module>
@@ -63,6 +64,7 @@
 		<module>jasperreports-parent</module>
 		<module>dojo-parent</module>
 		<module>modalx-parent</module>
+		<module>spring-webflow-parent</module>
 	  </modules>
 
 	<build>
