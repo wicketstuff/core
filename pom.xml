@@ -237,9 +237,10 @@
 		<spring.version>3.0.6.RELEASE</spring.version>
 	</properties>
 
+	<!-- build contract is java 6 first then java 7 -->
 	<modules>
-		<module>jdk-1.5-parent</module>
 		<module>jdk-1.6-parent</module>
+		<module>jdk-1.7-parent</module>
 	</modules>
 
 	<dependencies>
