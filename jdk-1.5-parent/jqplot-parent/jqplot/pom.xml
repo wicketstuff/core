@@ -61,13 +61,9 @@
 		<dependency>
 			<groupId>br.com.digilabs.jqplot</groupId>
 			<artifactId>jqplot4java</artifactId>
-			<version>1.0.2-SNAPSHOT</version>
+			<version>1.2.0</version>
 		</dependency>
 	</dependencies>
-	
-	<!-- <repositories>
-		<repository>
-		</repository>
-	</repositories>	
-	 -->
+
+	<!-- <repositories> <repository> </repository> </repositories> -->
 </project>
