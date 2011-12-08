@@ -22,8 +22,8 @@ import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 
-import br.com.digilabs.jqplot.JqPlotUtil;
-import br.com.digilabs.jqplot.chart.Chart;
+import br.com.digilabs.jqplot.Chart;
+import br.com.digilabs.jqplot.JqPlotUtils;
 
 
 /**
@@ -48,7 +48,7 @@ public class JqPlotBehavior extends AbstractBehavior
 	{
 		this.chart = chart;
 		this.divId = divId;
-		this.resources = JqPlotUtil.retriveJavaScriptResources(chart);
+		this.resources = JqPlotUtils.retriveJavaScriptResources(chart);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class JqPlotBehavior extends AbstractBehavior
 		{
 			response.renderJavascriptReference(new ResourceReference(JqPlotBehavior.class, resource));
 		}
-		String json = JqPlotUtil.createJquery(chart, divId);
+		String json = JqPlotUtils.createJquery(chart, divId);
 		response.renderJavascript(json, null);
 
 	}

@@ -20,7 +20,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.wicketstuff.jqplot.behavior.JQueryBehavior;
 import org.wicketstuff.jqplot.behavior.JqPlotBehavior;
 
-import br.com.digilabs.jqplot.chart.Chart;
+import br.com.digilabs.jqplot.Chart;
 
 
 /**
