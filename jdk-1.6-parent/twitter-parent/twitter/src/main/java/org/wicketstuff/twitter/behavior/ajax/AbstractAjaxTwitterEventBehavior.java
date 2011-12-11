@@ -104,7 +104,7 @@ public abstract class AbstractAjaxTwitterEventBehavior extends AbstractDefaultAj
 		appendUrlParamter(js, urlVar, DATA_SCREEN_NAME);
 		appendUrlParamter(js, urlVar, DATA_USER_ID);
 
-		js.append("wicketAjaxGet(callbackUrl, function(){},function(){});\n");
+		js.append("Wicket.Ajax.get(callbackUrl, function(){},function(){});\n");
 		js.append("}");
 		js.append(");");
 
