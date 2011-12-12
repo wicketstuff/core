@@ -30,12 +30,12 @@ public abstract class Layer {
 	}
 
 	public final String getJSAddLayer(IOpenLayersMap map) {
-		return "var layer"
-				+ getId()
+		return "var "
+				+ getVariableName()
 				+ " = "
 				+ getJSconstructor()
 				+ ";\n"
-				+ map.getJSinvoke("addLayer(layer" + getId() + ", " + getId()
+				+ map.getJSinvoke("addLayer(" + getVariableName() + ", " + getId()
 						+ ")");
 	}
 
@@ -86,5 +86,14 @@ public abstract class Layer {
 		}
 		
 		return c.toJS();
+	}
+
+	/**
+	 * @return variable name to use for this id.
+	 */
+	public String getVariableName() {
+		String className = getClass().getCanonicalName();
+		
+		return className.toLowerCase() + getId();
 	}
 }
