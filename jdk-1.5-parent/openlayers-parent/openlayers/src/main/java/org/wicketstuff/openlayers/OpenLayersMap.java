@@ -476,43 +476,11 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 		}
 
 		for (Layer layer : layers) {
-			if (layer instanceof WMS) {
-				WMS wms = (WMS) layer;
-				js.append("var wms" + wms.getId() + " ="
-						+ wms.getJSconstructor() + ";\n");
-				js.append(getJSinvoke("addLayer(wms" + wms.getId() + ","
-						+ wms.getId() + ")"));
-			}
-			if (layer instanceof GMap) {
-				GMap gmap = (GMap) layer;
-				js.append("var gmap" + gmap.getId() + " ="
-						+ gmap.getJSconstructor() + ";\n");
-				js.append(getJSinvoke("addLayer(gmap" + gmap.getId() + ","
-						+ gmap.getId() + ")"));
-			}
-			if (layer instanceof OSM) {
-				OSM osm = (OSM) layer;
-				js.append("var osm" + osm.getId() + " ="
-						+ osm.getJSconstructor() + ";\n");
-				js.append(getJSinvoke("addLayer(osm" + osm.getId() + ","
-						+ osm.getId() + ")"));
-			}
-			if (layer instanceof WFS) {
-				WFS wfs = (WFS) layer;
-				js.append("var wfs" + wfs.getId() + " ="
-						+ wfs.getJSconstructor() + ";\n");
-				js.append(getJSinvoke("addLayer(wfs" + wfs.getId() + ","
-						+ wfs.getId() + ")"));
-
-			}
-			if (layer instanceof Vector) {
-				Vector vec = (Vector) layer;
-				js.append("var vec" + vec.getId() + " ="
-						+ vec.getJSconstructor() + ";\n");
-				js.append(getJSinvoke("addLayer(vec" + vec.getId() + ","
-						+ vec.getId() + ")"));
-
-			}
+			
+			String jsLayerAdd = layer.getJSAddLayer(this);
+			
+			js.append(jsLayerAdd);
+			
 		}
 		
 		/*
