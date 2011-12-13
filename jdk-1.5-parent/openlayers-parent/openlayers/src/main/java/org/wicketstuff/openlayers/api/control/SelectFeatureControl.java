@@ -1,10 +1,15 @@
 package org.wicketstuff.openlayers.api.control;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.wicketstuff.openlayers.IOpenLayersMap;
+import org.wicketstuff.openlayers.js.JSUtils;
 
 public class SelectFeatureControl extends AbstractControl {
+	
+	
+	
 	private static final long serialVersionUID = -3832954618666235621L;
 	private Map<String, String> parameters = null;
 
@@ -16,7 +21,69 @@ public class SelectFeatureControl extends AbstractControl {
 		super("SelectFeature", false);
 		this.parameters = parameters;
 	}
+	
+	public SelectFeatureControl (String vectorLayerVariableName, ISelectFeatureControlOptions options) {
+		super("SelectFeature", false);
+		
+		this.parameters = new LinkedHashMap<String, String>();
+		
+		
+		if (options.isBoxSelectionEnabled())
+			this.parameters.put("box", String.valueOf(Boolean.TRUE));
+		else
+			this.parameters.put("box", String.valueOf(Boolean.FALSE));
+		
+		if (options.isClickoutEnabled())
+			this.parameters.put("clickout", String.valueOf(Boolean.TRUE));
+		else
+			this.parameters.put("clickout", String.valueOf(Boolean.FALSE));
+		
+		if (options.isHighlightOnlyEnabled())
+			this.parameters.put("highlightOnly", String.valueOf(Boolean.TRUE));
+		else
+			this.parameters.put("highlightOnly", String.valueOf(Boolean.FALSE));
+		
+		if (options.isHoverEnabled())
+			this.parameters.put("hover", String.valueOf(Boolean.TRUE));
+		else
+			this.parameters.put("hover", String.valueOf(Boolean.FALSE));
+		
+		
+		if (options.isMultipleSelectEnabled())
+			this.parameters.put("multiple", String.valueOf(Boolean.TRUE));
+		else
+			this.parameters.put("multiple", String.valueOf(Boolean.FALSE));
+		
+		if (options.isToggleByMouseEnabled())
+			this.parameters.put("toggle", String.valueOf(Boolean.TRUE));
+		else
+			this.parameters.put("toggle", String.valueOf(Boolean.FALSE));
+		
+		String onSelectJavascript = options.getOnSelectFeatureJavascript();
+		
+		
+		if (onSelectJavascript != null)
+			this.parameters.put("onSelect", onSelectJavascript);
+		
+		String onUnselectJavascript = options.getOnUnselectFeatureJavascript();
+		
+		if (onUnselectJavascript != null)
+			this.parameters.put("onSelect", onUnselectJavascript);
+		
+		
+	}
+	
 
+//	new OpenLayers.Control.SelectFeature(
+//            vectors,
+//            {
+//                clickout: false, toggle: false,
+//                multiple: false, hover: false,
+//                toggleKey: "ctrlKey", // ctrl key removes from selection
+//                multipleKey: "shiftKey", // shift key adds to selection
+//                box: true
+//            }
+//        )
 	@Override
 	public String getJSadd(IOpenLayersMap map) {
 		if (parameters == null)
