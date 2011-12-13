@@ -34,7 +34,7 @@ public class Vector extends Layer implements Serializable {
 	}
 
 	public Vector(String name, HashMap<String, String> options) {
-		super();
+		super("vec");
 		setName(name);
 		this.options = options;
 	}

@@ -17,7 +17,19 @@ import org.wicketstuff.openlayers.js.ObjectLiteral;
  */
 public abstract class Layer {
 	private String name;
+	private final String baseVariableName;
 	
+	
+	/**
+	 * 
+	 */
+	protected Layer(String baseVariableName) {
+		super();
+		this.baseVariableName = baseVariableName;
+		
+		
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -92,8 +104,7 @@ public abstract class Layer {
 	 * @return variable name to use for this id.
 	 */
 	public String getVariableName() {
-		String className = getClass().getCanonicalName();
 		
-		return className.toLowerCase() + getId();
+		return baseVariableName + getId();
 	}
 }

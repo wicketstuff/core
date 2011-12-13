@@ -23,7 +23,7 @@ public class GMap extends Layer implements Serializable {
 
 	public GMap(String name, String apiKey, String apiVersion,
 			HashMap<String, String> options) {
-		super();
+		super("gmap");
 		this.apiKey = apiKey;
 		this.apiVersion = apiVersion;
 		this.options = options;

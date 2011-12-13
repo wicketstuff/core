@@ -47,7 +47,7 @@ public class WFS extends Layer implements IClusterable {
 	 */
 	public WFS(String name, String url, Map<String, String> params,
 			Map<String, String> options) {
-		super();
+		super("wfs");
 		this.url = url;
 		this.params = params;
 		this.options = options;
