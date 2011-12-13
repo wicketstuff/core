@@ -69,6 +69,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
 		
@@ -76,18 +77,38 @@
 
 	<build>
 		<plugins>
+
+			<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.3.2</version>
+					<configuration>
+							<properties combine.self="override">
+							
+
+								<source>1.5</source>
+								<target>1.5</target>
+								<encoding>UTF-8</encoding>
+							</properties>
+							</configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<useSystemClassLoader>false</useSystemClassLoader>
-					<argLine>-Xmx512m</argLine>
+						<properties combine.self="override">
+
+					 <useSystemClassLoader>false</useSystemClassLoader>
+                                         <argLine>-Xmx512m</argLine>
+
 					<includes>
 						<include>**/*Test.java</include>
 						<include>**/*Unit.java</include>
 						<include>**/*Spec.java</include>
 						<include>**/*Specs.java</include>
 					</includes>
+				</properties>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -99,19 +120,21 @@
 				<executions>
 					<execution>
 						<id>scala-compile-first</id>
-						<phase>process-resources</phase>
+						<phase>compile</phase>
 						<goals>
 							<goal>compile</goal>
 						</goals>
 					</execution>
 					<execution>
 						<id>scala-test-compile</id>
-						<phase>process-test-resources</phase>
+						<phase>compile</phase>
 						<goals>
 							<goal>testCompile</goal>
 						</goals>
 					</execution>
 				</executions>
+
+					
 			</plugin>
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
@@ -149,7 +172,8 @@
 				</excludes>
 			</resource>
 		</resources>
-	</build>
+
+		</build>
 
 	<pluginRepositories>
 		<pluginRepository>
