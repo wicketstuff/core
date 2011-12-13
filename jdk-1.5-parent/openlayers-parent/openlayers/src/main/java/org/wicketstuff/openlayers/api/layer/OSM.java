@@ -20,6 +20,7 @@ public class OSM extends Layer implements Serializable {
 	private OSMLayer layer;
 
 	public OSM(String name, OSMLayer layer) {
+		super("osm");
 		setName(name);
 		this.layer = layer;
 	}
