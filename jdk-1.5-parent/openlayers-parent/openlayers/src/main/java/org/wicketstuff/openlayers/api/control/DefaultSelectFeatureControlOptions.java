@@ -21,14 +21,12 @@ import org.slf4j.LoggerFactory;
  * @author mocleiri
  *
  */
-public abstract class AbstractSelectFeatureControlOptions implements
+public class DefaultSelectFeatureControlOptions implements
 		ISelectFeatureControlOptions {
 	private static final Logger log = LoggerFactory
-			.getLogger(AbstractSelectFeatureControlOptions.class);
+			.getLogger(DefaultSelectFeatureControlOptions.class);
 	private boolean multipleSelect;
-	private String multipleSelectKey;
 	private boolean clickout;
-	private String selectToggleKey;
 	private boolean hover;
 	private boolean highlightOnly;
 	private boolean boxSelection;
@@ -41,7 +39,7 @@ public abstract class AbstractSelectFeatureControlOptions implements
 	 * @param highlightOnly
 	 * @param boxSelection
 	 */
-	public AbstractSelectFeatureControlOptions(boolean multipleSelect,
+	public DefaultSelectFeatureControlOptions(boolean multipleSelect,
 			boolean clickout, boolean hover, boolean highlightOnly,
 			boolean boxSelection) {
 		super();
@@ -59,13 +57,7 @@ public abstract class AbstractSelectFeatureControlOptions implements
 		return multipleSelect;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wicketstuff.openlayers.api.control.ISelectFeatureControlOptions#getMultipleSelectKey()
-	 */
-	public String getMultipleSelectKey() {
-		return multipleSelectKey;
-	}
-
+	
 	/* (non-Javadoc)
 	 * @see org.wicketstuff.openlayers.api.control.ISelectFeatureControlOptions#isClickoutEnabled()
 	 */
@@ -79,13 +71,6 @@ public abstract class AbstractSelectFeatureControlOptions implements
 	public boolean isToggleByMouseEnabled() {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.wicketstuff.openlayers.api.control.ISelectFeatureControlOptions#getSelectionToggleKey()
-	 */
-	public String getSelectionToggleKey() {
-		return selectToggleKey;
 	}
 
 	/* (non-Javadoc)
@@ -109,13 +94,5 @@ public abstract class AbstractSelectFeatureControlOptions implements
 		return boxSelection;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wicketstuff.openlayers.api.control.ISelectFeatureControlOptions#getOnSelectFeatureJavascript()
-	 */
-	public abstract String getOnSelectFeatureJavascript();
 	
-	/* (non-Javadoc)
-	 * @see org.wicketstuff.openlayers.api.control.ISelectFeatureControlOptions#getOnUnselectFeatureJavascript()
-	 */
-	public abstract String getOnUnselectFeatureJavascript();
 }

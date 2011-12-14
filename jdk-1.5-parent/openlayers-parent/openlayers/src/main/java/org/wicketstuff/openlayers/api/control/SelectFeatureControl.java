@@ -1,14 +1,15 @@
 package org.wicketstuff.openlayers.api.control;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.wicketstuff.openlayers.IOpenLayersMap;
-import org.wicketstuff.openlayers.js.JSUtils;
+import org.wicketstuff.openlayers.api.layer.Layer;
+import org.wicketstuff.openlayers.api.layer.Vector;
+import org.wicketstuff.openlayers.js.Constructor;
 
 public class SelectFeatureControl extends AbstractControl {
-	
-	
 	
 	private static final long serialVersionUID = -3832954618666235621L;
 	private Map<String, String> parameters = null;
@@ -22,8 +23,10 @@ public class SelectFeatureControl extends AbstractControl {
 		this.parameters = parameters;
 	}
 	
-	public SelectFeatureControl (String vectorLayerVariableName, ISelectFeatureControlOptions options) {
+	public SelectFeatureControl (List<Layer>layers, ISelectFeatureControlOptions options) {
 		super("SelectFeature", false);
+		
+		this.setLayerList(layers);
 		
 		this.parameters = new LinkedHashMap<String, String>();
 		
@@ -59,22 +62,15 @@ public class SelectFeatureControl extends AbstractControl {
 		else
 			this.parameters.put("toggle", String.valueOf(Boolean.FALSE));
 		
-		String onSelectJavascript = options.getOnSelectFeatureJavascript();
-		
-		
-		if (onSelectJavascript != null)
-			this.parameters.put("onSelect", onSelectJavascript);
-		
-		String onUnselectJavascript = options.getOnUnselectFeatureJavascript();
-		
-		if (onUnselectJavascript != null)
-			this.parameters.put("onSelect", onUnselectJavascript);
-		
+		this.parameters.put("onSelect", "function (feature) {alert('onSelect');}");
+		this.parameters.put("onUnSelect", "function (feature) {alert('onUnSelect');}");
 		
 	}
 	
 
-//	new OpenLayers.Control.SelectFeature(
+	
+
+	//	new OpenLayers.Control.SelectFeature(
 //            vectors,
 //            {
 //                clickout: false, toggle: false,
@@ -86,10 +82,12 @@ public class SelectFeatureControl extends AbstractControl {
 //        )
 	@Override
 	public String getJSadd(IOpenLayersMap map) {
+		
 		if (parameters == null)
 			return super.getJSadd(map);
 		return super.getJSadd(map, parameters)
 				+ super.getJSinvoke(map, "activate()");
+		
 	}
 
 	public void setParameters(Map<String, String> parameters) {
