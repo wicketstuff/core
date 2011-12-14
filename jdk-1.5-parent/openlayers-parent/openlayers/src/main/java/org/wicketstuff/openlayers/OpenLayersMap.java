@@ -339,10 +339,18 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 
 	private void addHeaderContributorsForLayers(List<Layer> layers) {
 		for (Layer layer : layers) {
-			for (HeaderContributor contributor : layer.getHeaderContributors()) {
-				add(contributor);
-			}
+			addHeaderContributor (layer);
 		}
+	}
+
+	/**
+	 * @param layer
+	 */
+	private void addHeaderContributor(Layer layer) {
+		
+		for (HeaderContributor contributor : layer.getHeaderContributors()) {
+			add(contributor);
+		}		
 	}
 
 	/**
@@ -783,5 +791,17 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 		}
 		return getJSinvoke("setBusinessLogicProjection('"
 				+ businessLogicProjection + "')");
+	}
+
+	/**
+	 * Add a new layer to the map.
+	 * 
+	 * Default is to add at the end/top layer.
+	 * 
+	 */
+	public void addLayer(Layer layer) {
+		this.layers.add(layer);
+		
+		addHeaderContributor(layer);
 	}
 }
