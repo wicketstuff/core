@@ -66,6 +66,6 @@ public class Point extends Feature {
 
 	@Override
 	protected String getType() {
-		return null;
+		return  "OpenLayers.Geometry.Point";
 	}
 }
