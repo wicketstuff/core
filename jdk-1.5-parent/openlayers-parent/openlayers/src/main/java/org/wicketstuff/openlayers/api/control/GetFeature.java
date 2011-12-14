@@ -56,7 +56,7 @@ private final HashMap<String, String> parameters;
 		this.parameters = new LinkedHashMap<String, String>();
 		
 		// default to getting the protocol from the existing WMS layer.
-		this.parameters.put("protocol", "OpenLayers.Protocol.WFS.fromWMSLayer(wms"+layer.getId()+")");
+		this.parameters.put("protocol", "OpenLayers.Protocol.WFS.fromWMSLayer("+layer.getVariableName()+")");
 		
 		this.parameters.put("box", String.valueOf(box));
 		this.parameters.put("hover", String.valueOf(hover));

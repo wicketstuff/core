@@ -39,7 +39,7 @@ public abstract class Layer {
 		this.name = name;
 	}
 
-	public String getId() {
+	public final String getId() {
 		return String.valueOf(System.identityHashCode(this));
 	}
 
