@@ -1,4 +1,4 @@
-package code.webapp
+package org.wicketstuff.scala
 
 import scala.collection.JavaConversions.seqAsJavaList
 import org.apache.wicket.behavior.AttributeAppender
