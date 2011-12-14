@@ -37,13 +37,9 @@ public interface ISelectFeatureControlOptions {
 	
 	boolean isMultipleSelectEnabled();
 	
-	String getMultipleSelectKey();
-	
 	boolean isClickoutEnabled();
 	
 	boolean isToggleByMouseEnabled();
-	
-	public String getSelectionToggleKey();
 	
 	boolean isHoverEnabled();
 	
@@ -51,15 +47,5 @@ public interface ISelectFeatureControlOptions {
 	
 	boolean isBoxSelectionEnabled();
 	
-//	onSelect	{Function} Optional function to be called when a feature is selected.
-//	onUnselect	{Function} Optional function to be called when a feature is unselected.
-	
-	public String getOnSelectFeatureJavascript();
-	
-	public String getOnUnselectFeatureJavascript();
-	
-	// TODO: support feature handlers
-	// OpenLayers.Handler.Feature
-	// click, clickout, over, out, and dblclick.
 	
 }
