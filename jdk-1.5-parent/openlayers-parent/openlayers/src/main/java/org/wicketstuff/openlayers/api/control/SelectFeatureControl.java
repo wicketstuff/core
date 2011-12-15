@@ -61,10 +61,7 @@ public class SelectFeatureControl extends AbstractControl {
 			this.parameters.put("toggle", String.valueOf(Boolean.TRUE));
 		else
 			this.parameters.put("toggle", String.valueOf(Boolean.FALSE));
-		
-		this.parameters.put("onSelect", "function (feature) {alert('onSelect');}");
-		this.parameters.put("onUnSelect", "function (feature) {alert('onUnSelect');}");
-		
+				
 	}
 	
 
