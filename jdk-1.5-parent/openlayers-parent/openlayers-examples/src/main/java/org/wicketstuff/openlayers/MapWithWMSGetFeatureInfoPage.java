@@ -110,7 +110,7 @@ public class MapWithWMSGetFeatureInfoPage extends WebPage {
 		parameterMap.put("url", JSUtils
 				.getQuotedString("http://demo.opengeo.org/geoserver/wms"));
 		parameterMap.put("title", JSUtils.getQuotedString("Test"));
-		parameterMap.put("layers", "[wms" + roads.getId() + "]");
+		parameterMap.put("layers", "[" + roads.getVariableName() + "]");
 		parameterMap.put("infoFormat", JSUtils.getQuotedString("text/html"));
 
 		

@@ -139,11 +139,12 @@ public class AbstractControl implements IJavascriptComponent {
 		String id = getId();
 		
 		StringBuffer layers = new StringBuffer();
+		
 		if (layerList != null && !layerList.isEmpty()) {
 			layers.append("[");
 			for (Layer item: layerList) {
 				if (layers.length() > 1) layers.append(", ");
-				layers.append("layer" + item.getId());
+				layers.append(item.getVariableName());
 			}
 			layers.append("]");
 		}
