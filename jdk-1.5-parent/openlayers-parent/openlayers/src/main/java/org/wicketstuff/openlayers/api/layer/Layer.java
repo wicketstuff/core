@@ -77,7 +77,7 @@ public abstract class Layer {
 				
 				eventHandlerBuffer.append(" : ");
 				
-				eventHandlerBuffer.append("function (feature) {");
+				eventHandlerBuffer.append("function (e) {");
 				
 				eventHandlerBuffer.append(onEventHandlers.get(event));
 				
