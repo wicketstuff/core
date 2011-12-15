@@ -62,7 +62,7 @@ public class ArcGISRestLayer extends Layer implements Serializable {
 			layersString.append(layers.get(i));
 		}
 		
-		layerOptionsMap.put("layers", layersString.toString());
+		layerOptionsMap.put("layers", JSUtils.getQuotedString(layersString.toString()));
 		
 		layerOptionsMap.put("format", JSUtils.getQuotedString("png24"));
 		
