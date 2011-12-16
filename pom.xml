@@ -60,9 +60,10 @@
 	</developers>
 
 	<ciManagement>
-		<system>hudson</system>
-		<url>http://wicketstuff.org/hudson</url>
+		<system>jenkins</system>
+		<url>http://ci.wicketstuff.org</url>
 	</ciManagement>
+
 
 
 	<modules>
@@ -701,3 +702,4 @@
 	</reporting>
 
 </project>
+
