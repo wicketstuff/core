@@ -40,7 +40,6 @@ public abstract class AbstractSubscribeBehavior extends AbstractDefaultAjaxBehav
 		this.parameters = Arrays.asList(parameters);
 	}
 
-
 	/**
 	 * @param component
 	 */
@@ -52,6 +51,8 @@ public abstract class AbstractSubscribeBehavior extends AbstractDefaultAjaxBehav
 			throw new MissingFacebookRootException();
 	}
 
+	protected abstract void onEvent(AjaxRequestTarget target, IRequestParameters eventParameters,
+		String response);
 
 	/**
 	 * {@inheritDoc}
@@ -65,26 +66,20 @@ public abstract class AbstractSubscribeBehavior extends AbstractDefaultAjaxBehav
 
 		final StringBuilder js = new StringBuilder();
 		js.append("FB.Event.subscribe('").append(event).append("', function(response) { ");
-		js.append("wicketAjaxGet('");
-		js.append(getCallbackUrl());
+		js.append("var callback = '").append(getCallbackUrl()).append("'; ");
 		for (final String param : parameters)
-			js.append("&")
+			js.append("try{ callback += '&")
 				.append(param)
 				.append("='+")
-				.append("escape(response.")
+				.append("wicketEscape(response.")
 				.append(param)
-				.append(")+'");
-		js.append("&response='+escape(response), function(){},function(){});");
+				.append(");}catch(e){}");
+		js.append("Wicket.Ajax.get(callback+'&response='+escape(response), function(){},function(){});");
 		js.append("}");
 		js.append(");");
 
 		response.renderJavaScript(js.toString(), null);
 	}
-
-
-	protected abstract void onEvent(AjaxRequestTarget target, IRequestParameters parameters,
-		String response);
-
 
 	/**
 	 * {@inheritDoc}

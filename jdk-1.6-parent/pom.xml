@@ -19,13 +19,58 @@
 	</description>
 
 	<modules>
+		<module>annotation</module>
+		<module>autocomplete-tagit-parent</module>
+		<module>browserid-parent</module>
+		<module>calendarviews-parent</module>
+		<module>client-and-server-validation</module>
+		<module>console-parent</module>
+		<module>datatable-autocomplete-parent</module>
+		<module>datatables-parent</module>
+		<module>eidogo-parent</module>
+		<module>flot-parent</module>
+		<module>gae-initializer-parent</module>
+		<module>googlecharts-parent</module>
+		<module>gmap2-parent</module>
+		<module>htmlcompressor-parent</module>
+		<module>inmethod-grid-parent</module>
+		<module>input-events-parent</module>
+		<module>jasperreports-parent</module>
+		<module>jquery-parent</module>
+		<module>jslibraries</module>
+		<module>jsr303-parent</module>
+		<module>maven-support</module>
+		<module>mbeanview-parent</module>
+		<module>minis-parent</module>
+		<module>modalx-parent</module>
+		<module>mootools-meiomask-parent</module>
+		<module>objectautocomplete-parent</module>
+		<module>openlayers-parent</module>
+		<module>phonebook</module>
+		<module>plugin</module>
+		<module>portlet-parent</module>
+		<module>progressbar-parent</module>
+		<module>scala-extensions-parent</module>
+		<module>shiro-security</module>
+		<module>simile-timeline-parent</module>
+		<module>theme-parent</module>
+		<module>tinymce-parent</module>
+		<module>wicket-bundle-parent</module>
+		<module>wicket-osgi-parent</module>
+		<module>wicket-poi-parent</module>
+		<module>wicket-security-parent</module>
+		<module>wicketstuff-logback-parent</module>
+		<module>wicketstuff-springreference-parent</module>
+		<module>yav-parent</module>
+
 		<module>closure-compiler</module>
 		<module>javaee-inject-parent</module>
-		<module>push-parent-jdk-1.6</module>
+		<module>push-parent</module>
 		<module>serializer-kryo</module>
 		<module>wicket-html5-parent</module>
 		<module>wicket-servlet3-parent</module>
 		<module>wicket-facebook-parent</module>
+		<module>twitter-parent</module>
 	</modules>
 
 	<build>
@@ -46,5 +91,21 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	  <dependencyManagement>
+               <dependencies>
+                       <dependency>
+                               <groupId>commons-dbcp</groupId>
+                               <artifactId>commons-dbcp</artifactId>
+                               <version>1.3</version>
+                       </dependency>
+                       <dependency>
+                               <groupId>org.hsqldb</groupId>
+                               <artifactId>hsqldb</artifactId>
+                               <version>2.2.6</version>
+                               <scope>runtime</scope>
+                       </dependency>
+               </dependencies>
+       </dependencyManagement>
 
 </project>
