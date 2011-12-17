@@ -27,7 +27,6 @@
 		<module>client-and-server-validation</module>
 		<module>console-parent</module>
 		<module>datatable-autocomplete-parent</module>
-		<module>datatables-parent</module>
 		<module>eidogo-parent</module>
 		<module>gmap2-parent</module>
 		<module>googlecharts-parent</module>
