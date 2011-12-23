@@ -3,7 +3,9 @@ package org.wicketstuff.jquery.lavalamp;
 import java.util.List;
 
 import org.apache.wicket.behavior.AttributeAppender;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -56,9 +58,9 @@ public abstract class LavaLampMenuPanel extends Panel
 	{
 		super.renderHead(response);
 
-		response.renderJavaScriptReference(new PackageResourceReference(LavaLampMenuPanel.class,
-			"headlamp.js"));
-		response.renderCSSReference(getCssResourceReference());
+		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(LavaLampMenuPanel.class,
+			"headlamp.js")));
+		response.render(CssHeaderItem.forReference(getCssResourceReference()));
 	}
 
 	/**

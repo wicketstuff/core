@@ -6,7 +6,8 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -78,7 +79,7 @@ public abstract class AbstractSubscribeBehavior extends AbstractDefaultAjaxBehav
 		js.append("}");
 		js.append(");");
 
-		response.renderJavaScript(js.toString(), null);
+		response.render(JavaScriptHeaderItem.forScript(js.toString(), null));
 	}
 
 	/**

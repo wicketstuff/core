@@ -20,7 +20,8 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -105,7 +106,7 @@ public class ProgressBar extends Panel
 	{
 		super.renderHead(response);
 
-		response.renderCSSReference(CSS);
+		response.render(CssHeaderItem.forReference(CSS));
 	}
 
 
@@ -131,7 +132,7 @@ public class ProgressBar extends Panel
 				public void renderHead(Component component, IHeaderResponse response)
 				{
 					super.renderHead(component, response);
-					response.renderCSSReference(CSS);
+					response.render(CssHeaderItem.forReference(CSS));
 				}
 
 
@@ -252,7 +253,7 @@ public class ProgressBar extends Panel
 				if (progression.isDone())
 				{
 					// stop the self update
-					stop();
+					stop(target);
 					// do custom action
 					onFinished(target);
 				}

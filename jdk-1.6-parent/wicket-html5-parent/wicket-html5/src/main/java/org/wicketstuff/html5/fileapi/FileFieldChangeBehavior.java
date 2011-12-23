@@ -6,7 +6,8 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -86,7 +87,7 @@ public abstract class FileFieldChangeBehavior extends AjaxEventBehavior
 	{
 		super.renderHead(component, response);
 
-		response.renderJavaScriptReference(JAVASCRIPT_REF);
+		response.render(JavaScriptHeaderItem.forReference(JAVASCRIPT_REF));
 	}
 
 	@Override

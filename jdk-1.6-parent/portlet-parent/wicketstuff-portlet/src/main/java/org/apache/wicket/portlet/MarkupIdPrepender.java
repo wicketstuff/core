@@ -20,29 +20,34 @@ import org.apache.wicket.Component;
 import org.apache.wicket.application.IComponentInitializationListener;
 
 /**
- * If the markup id is not defined directly on the component tag, it prepends
- * the portlet namespace to the Wicket generated markup id.
+ * If the markup id is not defined directly on the component tag, it prepends the portlet namespace
+ * to the Wicket generated markup id.
  * 
  * @author Peter Pastrnak
  */
-public class MarkupIdPrepender implements IComponentInitializationListener {
+public class MarkupIdPrepender implements IComponentInitializationListener
+{
 	private String prefix;
 
-	public String getPrefix() {
-		if (prefix == null) {
+	public String getPrefix()
+	{
+		if (prefix == null)
+		{
 			prefix = ThreadPortletContext.getNamespace() + "_";
 		}
 		return prefix;
 	}
 
-	@Override
-	public void onInitialize(Component component) {
+	public void onInitialize(Component component)
+	{
 		boolean outputMarkupId = component.getOutputMarkupId();
-		if (outputMarkupId) {
+		if (outputMarkupId)
+		{
 			String markupId = component.getMarkupId();
 			String markupIdFromMarkup = component.getMarkupIdFromMarkup();
 
-			if (markupId != markupIdFromMarkup) {
+			if (markupId != markupIdFromMarkup)
+			{
 				component.setMarkupId(getPrefix() + markupId);
 			}
 		}

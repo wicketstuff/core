@@ -18,7 +18,8 @@ package org.wicketstuff.openlayers.event;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 
 public abstract class MoveEndListenerBehavior extends AbstractDefaultAjaxBehavior
@@ -29,7 +30,7 @@ public abstract class MoveEndListenerBehavior extends AbstractDefaultAjaxBehavio
 	public void renderHead(Component c, IHeaderResponse response)
 	{
 		super.renderHead(c, response);
-		response.renderOnDomReadyJavaScript(getJSaddListener());
+		response.render(OnDomReadyHeaderItem.forScript(getJSaddListener()));
 	}
 
 	@Override

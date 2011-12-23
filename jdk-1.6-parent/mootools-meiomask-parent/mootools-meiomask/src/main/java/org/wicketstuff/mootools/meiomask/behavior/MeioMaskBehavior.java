@@ -18,7 +18,8 @@ package org.wicketstuff.mootools.meiomask.behavior;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
@@ -53,7 +54,7 @@ public class MeioMaskBehavior extends MootoolsMoreBehavior
 	public void renderHead(org.apache.wicket.Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
-		response.renderJavaScriptReference(MEIO_MASK);
+		response.render(JavaScriptHeaderItem.forReference(MEIO_MASK));
 	}
 
 	@Override

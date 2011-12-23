@@ -3,7 +3,8 @@ package org.wicketstuff.openlayers.event;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.wicketstuff.openlayers.IOpenLayersMap;
@@ -23,7 +24,7 @@ public abstract class DrawListenerBehavior extends AbstractDefaultAjaxBehavior
 	{
 		// TODO Auto-generated method stub
 		super.renderHead(c, response);
-		response.renderOnDomReadyJavaScript(getJSaddListener());
+		response.render(OnDomReadyHeaderItem.forScript(getJSaddListener()));
 	}
 
 	@Override

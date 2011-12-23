@@ -21,7 +21,7 @@ import java.util.Arrays;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
 
 /**
  * Represents a composite behavior allowing the user to attach multiple behaviors to a component at

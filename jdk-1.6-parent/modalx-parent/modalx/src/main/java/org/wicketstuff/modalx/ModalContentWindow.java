@@ -13,7 +13,8 @@
 package org.wicketstuff.modalx;
 
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
@@ -60,7 +61,7 @@ public class ModalContentWindow extends ModalWindow
 	public void renderHead(IHeaderResponse response)
 	{
 		super.renderHead(response);
-		response.renderCSSReference(CSS);
+		response.render(CssHeaderItem.forReference(CSS));
 	}
 
 	/**

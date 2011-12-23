@@ -3,7 +3,8 @@ package org.wicketstuff.jquery.crop;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.util.template.PackageTextTemplate;
@@ -54,7 +55,7 @@ public class CroppableImage extends Panel
 		PackageTextTemplate template = new PackageTextTemplate(CroppableImage.class, "crop.css");
 		String css = template.interpolate(vars).asString();
 
-		response.renderCSS(css, "croppable-image." + getMarkupId());
+		response.render(CssHeaderItem.forCSS(css, "croppable-image." + getMarkupId()));
 
 
 	}

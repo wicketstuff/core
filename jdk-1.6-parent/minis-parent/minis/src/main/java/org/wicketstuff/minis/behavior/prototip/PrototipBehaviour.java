@@ -19,7 +19,11 @@ package org.wicketstuff.minis.behavior.prototip;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.head.OnLoadHeaderItem;
 import org.apache.wicket.request.resource.PackageResourceReference;
 
 /**
@@ -91,25 +95,25 @@ public class PrototipBehaviour extends Behavior
 	{
 		if (onLoad)
 		{
-			response.renderOnLoadJavaScript(toJavascript());
+			response.render(OnLoadHeaderItem.forScript(toJavascript()));
 		}
 		else
 		{
-			response.renderOnDomReadyJavaScript(toJavascript());
+			response.render(OnDomReadyHeaderItem.forScript(toJavascript()));
 		}
 		if (!overrideHeaderContributor)
 		{
-			response.renderCSSReference(new PackageResourceReference(PrototipBehaviour.class,
-				"prototip.css"), "screen");
+			response.render(CssHeaderItem.forReference(new PackageResourceReference(
+				PrototipBehaviour.class, "prototip.css"), "screen"));
 			switch (selectedJsType)
 			{
 				case NORMAL :
-					response.renderJavaScriptReference(new PackageResourceReference(
-						PrototipBehaviour.class, "prototip.js"));
+					response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(
+						PrototipBehaviour.class, "prototip.js")));
 					break;
 				case MIN :
-					response.renderJavaScriptReference(new PackageResourceReference(
-						PrototipBehaviour.class, "prototip-min.js"));
+					response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(
+						PrototipBehaviour.class, "prototip-min.js")));
 					break;
 			}
 		}

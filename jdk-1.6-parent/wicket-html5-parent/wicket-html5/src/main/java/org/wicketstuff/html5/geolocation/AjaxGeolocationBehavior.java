@@ -6,7 +6,8 @@ import java.util.Map;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.interpolator.MapVariableInterpolator;
@@ -57,6 +58,6 @@ public abstract class AjaxGeolocationBehavior extends AbstractDefaultAjaxBehavio
 
 		final String javascript = MapVariableInterpolator.interpolate(
 			GEOLOCATION_TMPL_JS.asString(), variables);
-		response.renderOnDomReadyJavaScript(javascript);
+		response.render(OnDomReadyHeaderItem.forScript(javascript));
 	}
 }

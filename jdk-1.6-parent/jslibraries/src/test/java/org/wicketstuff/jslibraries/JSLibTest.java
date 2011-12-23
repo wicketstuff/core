@@ -21,8 +21,8 @@ package org.wicketstuff.jslibraries;
 import junit.framework.TestCase;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.markup.head.internal.HeaderResponse;
 import org.apache.wicket.markup.html.IHeaderContributor;
-import org.apache.wicket.markup.html.internal.HeaderResponse;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.util.tester.WicketTester;
 

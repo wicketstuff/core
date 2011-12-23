@@ -18,7 +18,9 @@ package org.wicketstuff.eidogo;
 
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
@@ -235,8 +237,8 @@ public class Eidogo extends WebComponent
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{
-		response.renderJavaScriptReference(JS);
-		response.renderCSSReference(CSS);
+		response.render(JavaScriptHeaderItem.forReference(JS));
+		response.render(CssHeaderItem.forReference(CSS));
 		super.renderHead(response);
 	}
 

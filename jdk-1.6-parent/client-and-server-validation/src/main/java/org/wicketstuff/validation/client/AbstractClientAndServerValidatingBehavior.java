@@ -24,11 +24,13 @@ import java.util.Map;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.head.OnLoadHeaderItem;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.util.lang.Classes;
 import org.apache.wicket.util.string.JavaScriptUtils;
 import org.apache.wicket.util.string.interpolator.MapVariableInterpolator;
 
@@ -86,10 +88,11 @@ public abstract class AbstractClientAndServerValidatingBehavior<T> extends Behav
 		super.renderHead(c, response);
 
 		// add our validation javascript file
-		response.renderJavaScriptReference(new PackageResourceReference(getClass(), "validation.js"));
+		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(getClass(),
+			"validation.js")));
 
 		// add a trigger that will add our validation to the forms' onSubmit methods
-		response.renderOnLoadJavaScript("ClientAndServerValidator.addFormOnloadEvents();");
+		response.render(OnLoadHeaderItem.forScript("ClientAndServerValidator.addFormOnloadEvents();"));
 
 		CharSequence formID = jsEscape(mForm.getMarkupId());
 		CharSequence compID = jsEscape(mComponent.getMarkupId());
@@ -106,7 +109,7 @@ public abstract class AbstractClientAndServerValidatingBehavior<T> extends Behav
 
 		String validator = createValidatorConstructorJavaScript(formID, compID, escapedMessage);
 		String js = "ClientAndServerValidator.registerValidator(" + validator + ");";
-		response.renderOnDomReadyJavaScript(js.toString());
+		response.render(OnDomReadyHeaderItem.forScript(js));
 	}
 
 	protected final CharSequence jsEscape(CharSequence js)

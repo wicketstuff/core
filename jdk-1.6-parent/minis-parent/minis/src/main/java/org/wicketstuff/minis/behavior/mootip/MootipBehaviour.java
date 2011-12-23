@@ -21,7 +21,10 @@ import java.util.HashMap;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnLoadHeaderItem;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.template.PackageTextTemplate;
 import org.apache.wicket.util.template.TextTemplate;
@@ -175,15 +178,15 @@ public class MootipBehaviour extends Behavior
 	@Override
 	public void renderHead(Component c, final IHeaderResponse response)
 	{
-		response.renderJavaScriptReference(new PackageResourceReference(MootipBehaviour.class,
-			"mootools.v1.11.js"));
-		response.renderJavaScriptReference(new PackageResourceReference(MootipBehaviour.class,
-			"mootips.v1.11.js"));
+		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(
+			MootipBehaviour.class, "mootools.v1.11.js")));
+		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(
+			MootipBehaviour.class, "mootips.v1.11.js")));
 		if (contributeCSS)
-			response.renderCSSReference(new PackageResourceReference(MootipBehaviour.class,
-				"tip.css"));
+			response.render(CssHeaderItem.forReference(new PackageResourceReference(
+				MootipBehaviour.class, "tip.css")));
 
-		response.renderOnLoadJavaScript(generateJS(mooTipTemplate));
+		response.render(OnLoadHeaderItem.forScript(generateJS(mooTipTemplate)));
 	}
 
 	public void setMootipSettings(final MootipSettings mootipSettings)

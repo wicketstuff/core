@@ -2,7 +2,8 @@ package org.wicketstuff.twitter.behavior;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 
 /**
  * 
@@ -19,7 +20,7 @@ public class TwitterApiBehavior extends Behavior
 	{
 		super.renderHead(component, response);
 
-		response.renderJavaScriptReference(WIDGETS_JS);
+		response.render(JavaScriptHeaderItem.forUrl(WIDGETS_JS));
 	}
 
 }

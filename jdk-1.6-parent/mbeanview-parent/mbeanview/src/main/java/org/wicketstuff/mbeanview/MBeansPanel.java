@@ -48,7 +48,8 @@ import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tree.Tree;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.request.resource.PackageResourceReference;
@@ -447,7 +448,7 @@ public class MBeansPanel extends Panel
 	@Override
 	public void renderHead(IHeaderResponse res)
 	{
-		res.renderCSSReference(CSS);
+		res.render(CssHeaderItem.forReference(CSS));
 	}
 
 }

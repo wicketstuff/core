@@ -21,11 +21,13 @@ import java.util.Iterator;
 
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.resource.JQueryResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 
 public class Sparkline extends WebComponent
@@ -132,8 +134,8 @@ public class Sparkline extends WebComponent
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{
-		response.renderJavaScriptReference(JQueryBehavior.JQUERY_JS);
-		response.renderJavaScriptReference(SPARKLINE_JS);
+		response.render(JavaScriptHeaderItem.forReference(JQueryResourceReference.get()));
+		response.render(JavaScriptHeaderItem.forReference(SPARKLINE_JS));
 
 		if (writeJSOnReady)
 		{
@@ -141,7 +143,7 @@ public class Sparkline extends WebComponent
 			builder.append("$(document).ready(function(){\n");
 			builder.append(getSparklineJS());
 			builder.append("\n});");
-			response.renderJavaScript(builder, null);
+			response.render(JavaScriptHeaderItem.forScript(builder, null));
 		}
 	}
 

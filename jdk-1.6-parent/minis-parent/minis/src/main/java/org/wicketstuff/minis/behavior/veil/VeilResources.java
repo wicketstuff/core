@@ -18,7 +18,9 @@ package org.wicketstuff.minis.behavior.veil;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
@@ -224,8 +226,8 @@ public class VeilResources extends Behavior
 	@Override
 	public void renderHead(final Component c, final IHeaderResponse response)
 	{
-		response.renderJavaScriptReference(JS);
-		response.renderCSSReference(CSS);
+		response.render(JavaScriptHeaderItem.forReference(JS));
+		response.render(CssHeaderItem.forReference(CSS));
 	}
 
 }

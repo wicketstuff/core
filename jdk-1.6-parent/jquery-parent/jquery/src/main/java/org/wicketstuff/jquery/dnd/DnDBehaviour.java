@@ -3,7 +3,8 @@ package org.wicketstuff.jquery.dnd;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.IBehaviorListener;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.wicketstuff.jquery.FunctionString;
@@ -68,7 +69,7 @@ public class DnDBehaviour extends JQueryBehavior implements IBehaviorListener
 		droppableOptions.set("accept", dragSelector, false);
 		droppableOptions.set("drop", new FunctionString(getDropScript()));
 
-		response.renderJavaScriptReference(JQueryBehavior.JQUERY_UI_JS);
+		response.render(JavaScriptHeaderItem.forReference(JQueryBehavior.JQUERY_UI_JS));
 		super.renderHead(component, response);
 	}
 

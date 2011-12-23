@@ -2,7 +2,8 @@ package org.wicketstuff.jquery.codepress;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
@@ -36,7 +37,7 @@ public class CodepressBehaviour extends JQueryBehavior
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
-		response.renderJavaScriptReference(CODEPRESS_JS);
+		response.render(JavaScriptHeaderItem.forReference(CODEPRESS_JS));
 	}
 
 	@Override

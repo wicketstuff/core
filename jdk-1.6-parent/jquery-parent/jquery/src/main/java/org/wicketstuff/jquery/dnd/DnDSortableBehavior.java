@@ -24,7 +24,9 @@ import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.behavior.IBehaviorListener;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.StringHeaderItem;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -87,9 +89,9 @@ public class DnDSortableBehavior extends JQueryBehavior implements IBehaviorList
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
-		response.renderJavaScriptReference(INTERFACE_JS);
-		response.renderJavaScriptReference(DNDSORTABLEBEHAVIOR_JS);
-		response.renderString(getHead(false));
+		response.render(JavaScriptHeaderItem.forReference(INTERFACE_JS));
+		response.render(JavaScriptHeaderItem.forReference(DNDSORTABLEBEHAVIOR_JS));
+		response.render(StringHeaderItem.forString(getHead(false)));
 	}
 
 	public CharSequence getRebindScript()

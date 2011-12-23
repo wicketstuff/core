@@ -5,7 +5,10 @@ import java.util.Map;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -84,8 +87,8 @@ public abstract class TagItAjaxBehavior<T> extends AbstractAjaxBehavior
 	{
 		super.renderHead(component, response);
 
-		response.renderCSSReference(TAG_IT_CSS);
-		response.renderJavaScriptReference(TAG_IT_JS);
+		response.render(CssHeaderItem.forReference(TAG_IT_CSS));
+		response.render(JavaScriptHeaderItem.forReference(TAG_IT_JS));
 
 		component.setOutputMarkupId(true);
 		String id = component.getMarkupId();
@@ -98,7 +101,7 @@ public abstract class TagItAjaxBehavior<T> extends AbstractAjaxBehavior
 
 		String script = tagItConfig.asString(variables);
 
-		response.renderOnDomReadyJavaScript(script);
+		response.render(OnDomReadyHeaderItem.forScript(script));
 	}
 
 	/**

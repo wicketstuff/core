@@ -31,7 +31,8 @@ import org.apache.wicket.Component;
 import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.parser.XmlPullParser;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -293,17 +294,17 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	{
 		super.renderHead(c, response);
 
-		response.renderJavaScriptReference(COMETD);
+		response.render(JavaScriptHeaderItem.forReference(COMETD));
 
 		// Add all extension...
-		response.renderJavaScriptReference(COMETD_ACK);
-		response.renderJavaScriptReference(COMETD_RELOAD);
-		response.renderJavaScriptReference(COMETD_TIMESTAMP);
-		response.renderJavaScriptReference(COMETD_TIMESYNC);
+		response.render(JavaScriptHeaderItem.forReference(COMETD_ACK));
+		response.render(JavaScriptHeaderItem.forReference(COMETD_RELOAD));
+		response.render(JavaScriptHeaderItem.forReference(COMETD_TIMESTAMP));
+		response.render(JavaScriptHeaderItem.forReference(COMETD_TIMESYNC));
 
-		response.renderJavaScript(_renderInitScript(), "cometd-push-initialization");
-		response.renderJavaScript(_renderEventHandlerScript(), null);
-		response.renderJavaScript(_renderSubscribeScript(), null);
+		response.render(JavaScriptHeaderItem.forScript(_renderInitScript(), "cometd-push-initialization"));
+		response.render(JavaScriptHeaderItem.forScript(_renderEventHandlerScript(), null));
+		response.render(JavaScriptHeaderItem.forScript(_renderSubscribeScript(), null));
 	}
 
 	/**

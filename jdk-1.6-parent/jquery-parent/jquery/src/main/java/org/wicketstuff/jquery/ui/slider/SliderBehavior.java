@@ -2,7 +2,9 @@ package org.wicketstuff.jquery.ui.slider;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.PackageResourceReference;
@@ -64,11 +66,11 @@ public class SliderBehavior extends JQueryBehavior
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
-		response.renderCSSReference(UIResources.FLORA_CSS);
-		response.renderCSSReference(UIResources.FLORA_SLIDER_CSS);
-		response.renderJavaScriptReference(JQUERY_UI_JS);
-		response.renderJavaScriptReference(UI_SLIDER_RESOURCE_REFERENCE);
-		response.renderJavaScriptReference(WICKET_SLIDER_JS);
+		response.render(CssHeaderItem.forReference(UIResources.FLORA_CSS));
+		response.render(CssHeaderItem.forReference(UIResources.FLORA_SLIDER_CSS));
+		response.render(JavaScriptHeaderItem.forReference(JQUERY_UI_JS));
+		response.render(JavaScriptHeaderItem.forReference(UI_SLIDER_RESOURCE_REFERENCE));
+		response.render(JavaScriptHeaderItem.forReference(WICKET_SLIDER_JS));
 	}
 
 	@Override

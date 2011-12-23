@@ -23,7 +23,10 @@ import java.util.Properties;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
@@ -199,15 +202,16 @@ public class Spinner extends Behavior
 	@Override
 	public void renderHead(Component c, final IHeaderResponse response)
 	{
-		response.renderJavaScriptReference(JS);
-		response.renderCSSReference(CSS);
+		response.render(JavaScriptHeaderItem.forReference(JS));
+		response.render(CssHeaderItem.forReference(CSS));
 		final Properties p = new Properties();
 		configure(p);
 		final String downId = getSpinDownComponent() == null ? getMarkupId() + "Down"
 			: getSpinDownComponent().getMarkupId();
 		final String upId = getSpinUpComponent() == null ? getMarkupId() + "Up"
 			: getSpinUpComponent().getMarkupId();
-		response.renderOnDomReadyJavaScript("new Wicket.Spinner('" + component.getMarkupId() +
-			"', '" + upId + "', '" + downId + "', {" + propertiesToJavascriptArray(p) + "})");
+		response.render(OnDomReadyHeaderItem.forScript("new Wicket.Spinner('" +
+			component.getMarkupId() + "', '" + upId + "', '" + downId + "', {" +
+			propertiesToJavascriptArray(p) + "})"));
 	}
 }

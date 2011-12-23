@@ -16,7 +16,8 @@
 package org.wicketstuff.theme.standard;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.wicketstuff.theme.IThemeFactory;
 
@@ -26,6 +27,7 @@ public class ThemeFactory implements IThemeFactory
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 
-		response.renderCSSReference(new PackageResourceReference(ThemeFactory.class, "standard.css"));
+		response.render(CssHeaderItem.forReference(new PackageResourceReference(ThemeFactory.class,
+			"standard.css")));
 	}
 }

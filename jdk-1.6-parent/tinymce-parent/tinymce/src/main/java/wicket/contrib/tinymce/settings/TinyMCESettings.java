@@ -37,8 +37,9 @@ import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.Session;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.IHeaderContributor;
-import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
@@ -963,11 +964,11 @@ public class TinyMCESettings implements Serializable
 			.urlFor(TinyMCESettings.javaScriptReference(), null)
 			.toString();
 		String base = url.substring(0, url.lastIndexOf("/"));
-		response.renderJavaScript("window.tinyMCEPreInit = {base : '" + base +
-			"', suffix : '', query : ''};", "tinyMceHackPreload");
-		response.renderJavaScriptReference(TinyMCESettings.javaScriptReference());
-		response.renderJavaScript("window.tinymce.dom.Event.domLoaded = true;",
-			"tinyMceHackPostload");
+		response.render(JavaScriptHeaderItem.forScript("window.tinyMCEPreInit = {base : '" + base +
+			"', suffix : '', query : ''};", "tinyMceHackPreload"));
+		response.render(JavaScriptHeaderItem.forReference(TinyMCESettings.javaScriptReference()));
+		response.render(JavaScriptHeaderItem.forScript(
+			"window.tinymce.dom.Event.domLoaded = true;", "tinyMceHackPostload"));
 	}
 
 	private class ControlPredicate implements Predicate

@@ -25,7 +25,8 @@ import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -145,7 +146,7 @@ public abstract class AbstractSelectableTableViewPanel<T> extends FormComponentP
 			@Override
 			public void renderHead(Component c, IHeaderResponse response)
 			{
-				response.renderCSSReference(css_reference);
+				response.render(CssHeaderItem.forReference(css_reference));
 			}
 		});
 

@@ -3,7 +3,8 @@ package org.wicketstuff.browserid;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.request.resource.PackageResourceReference;
@@ -118,9 +119,8 @@ public class GuestPanel extends Panel
 	 */
 	protected void renderBrowserIdJavaScript(final IHeaderResponse response)
 	{
-		response.renderJavaScriptReference(BROWSER_ID_JS);
+		response.render(JavaScriptHeaderItem.forUrl(BROWSER_ID_JS));
 	}
-
 
 	/**
 	 * A callback called when the authentication is successful

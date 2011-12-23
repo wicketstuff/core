@@ -24,7 +24,8 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnLoadHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -203,9 +204,9 @@ public abstract class WicketAbstractChatPage extends WebPage
 			{
 				super.renderHead(component, response);
 
-				response.renderOnLoadJavaScript("var chatHistory = document.getElementById('" +
+				response.render(OnLoadHeaderItem.forScript("var chatHistory = document.getElementById('" +
 					chatHistoryField.getMarkupId() +
-					"'); chatHistory.scrollTop = chatHistory.scrollHeight;");
+					"'); chatHistory.scrollTop = chatHistory.scrollHeight;"));
 			}
 		});
 	}

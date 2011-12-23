@@ -21,7 +21,9 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnLoadHeaderItem;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
@@ -176,7 +178,7 @@ public class ReflectionBehavior extends Behavior
 	public void renderHead(Component c, final IHeaderResponse response)
 	{
 		super.renderHead(c, response);
-		response.renderJavaScriptReference(REFLECTION_JS);
+		response.render(JavaScriptHeaderItem.forReference(REFLECTION_JS));
 
 		final StringBuilder sb = new StringBuilder();
 		for (final Component component : components)
@@ -186,7 +188,7 @@ public class ReflectionBehavior extends Behavior
 					reflectionHeight));
 				sb.append("\n");
 			}
-		response.renderOnLoadJavaScript(sb.toString());
+		response.render(OnLoadHeaderItem.forScript(sb.toString()));
 	}
 
 	/**

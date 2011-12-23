@@ -22,9 +22,12 @@ import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.StringHeaderItem;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.resource.JQueryResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,8 +48,9 @@ public class JQueryBehavior extends AbstractDefaultAjaxBehavior
 	 * ResourceReference for <a href="http://jquery.com">jquery-1.2.6</a> (include by default when
 	 * you add the current Behavior).
 	 */
-	public static final ResourceReference JQUERY_JS = new PackageResourceReference(
-		JQueryBehavior.class, "jquery.js");
+	// public static final ResourceReference JQUERY_JS = new
+	// PackageResourceReference(
+	// JQueryBehavior.class, "jquery.js");
 
 	/**
 	 * ResourceReference for <a href="http://jquery.glyphix.com/">jquery.debug.js</a> (include by
@@ -70,9 +74,8 @@ public class JQueryBehavior extends AbstractDefaultAjaxBehavior
 		JQueryBehavior.class, "jquery-ui-personalized.js");
 
 	/**
-	 * ResourceReference for <a
-	 * href="http://jquery.com/plugins/project/bgiframe">jquery.bgiframe-2.1.1.js</a> (not include
-	 * in reponse header)
+	 * ResourceReference for <a href="http://jquery.com/plugins/project/bgiframe"
+	 * >jquery.bgiframe-2.1.1.js</a> (not include in reponse header)
 	 */
 	public static final ResourceReference JQUERY_BGIFRAME_JS = new PackageResourceReference(
 		JQueryBehavior.class, "jquery.bgiframe-2.1.1.js");
@@ -90,10 +93,10 @@ public class JQueryBehavior extends AbstractDefaultAjaxBehavior
 			super.renderHead(component, response);
 			if (getIncludeJQueryJS(response))
 			{
-				response.renderJavaScriptReference(JQUERY_JS);
+				response.render(JavaScriptHeaderItem.forReference(JQueryResourceReference.get()));
 				if (Application.get().usesDevelopmentConfig())
 				{
-					response.renderJavaScriptReference(JQUERY_DEBUG_JS);
+					response.render(JavaScriptHeaderItem.forReference(JQUERY_DEBUG_JS));
 				}
 			}
 			CharSequence script = getOnReadyScript();
@@ -103,7 +106,7 @@ public class JQueryBehavior extends AbstractDefaultAjaxBehavior
 				builder.append("<script type=\"text/javascript\">\n$(document).ready(function(){\n");
 				builder.append(script);
 				builder.append("\n});</script>");
-				response.renderString(builder.toString());
+				response.render(StringHeaderItem.forString(builder));
 			}
 		}
 		catch (RuntimeException exc)

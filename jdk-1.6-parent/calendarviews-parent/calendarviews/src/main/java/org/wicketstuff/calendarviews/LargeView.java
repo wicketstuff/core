@@ -31,7 +31,9 @@ import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow.PageCreator;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -121,10 +123,10 @@ public class LargeView extends FullWeekCalendarView
 
 		JSLib.getHeaderContribution(JS_LIB_VERSION_DESCRIPTOR).renderHead(response);
 
-		response.renderJavaScriptReference(JS);
+		response.render(JavaScriptHeaderItem.forReference(JS));
 
 		String calID = LargeView.this.getMarkupId();
-		response.renderOnDomReadyJavaScript("LargeViewCalendar.initialize('" + calID + "');");
+		response.render(OnDomReadyHeaderItem.forScript("LargeViewCalendar.initialize('" + calID + "');"));
 	}
 
 	protected final ListView<IEvent> createEventListView(String id,

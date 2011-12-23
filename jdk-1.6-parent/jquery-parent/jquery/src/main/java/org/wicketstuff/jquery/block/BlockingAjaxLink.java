@@ -20,9 +20,11 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxCallDecorator;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.resource.JQueryResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 
 public abstract class BlockingAjaxLink<T> extends AjaxLink<T>
@@ -48,8 +50,8 @@ public abstract class BlockingAjaxLink<T> extends AjaxLink<T>
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{
-		response.renderJavaScriptReference(JQueryBehavior.JQUERY_JS);
-		response.renderJavaScriptReference(BLOCK_JS);
+		response.render(JavaScriptHeaderItem.forReference(JQueryResourceReference.get()));
+		response.render(JavaScriptHeaderItem.forReference(BLOCK_JS));
 	}
 
 	/**

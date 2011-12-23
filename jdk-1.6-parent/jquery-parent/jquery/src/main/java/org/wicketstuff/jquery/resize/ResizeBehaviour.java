@@ -2,7 +2,8 @@ package org.wicketstuff.jquery.resize;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.wicketstuff.jquery.FunctionString;
@@ -56,7 +57,7 @@ public class ResizeBehaviour extends JQueryBehavior
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
-		response.renderJavaScriptReference(JQueryBehavior.JQUERY_UI_JS);
+		response.render(JavaScriptHeaderItem.forReference(JQueryBehavior.JQUERY_UI_JS));
 	}
 
 	@Override

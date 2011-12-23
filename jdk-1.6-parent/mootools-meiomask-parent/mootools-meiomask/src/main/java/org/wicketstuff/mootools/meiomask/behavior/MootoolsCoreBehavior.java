@@ -18,7 +18,8 @@ package org.wicketstuff.mootools.meiomask.behavior;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
@@ -50,7 +51,7 @@ public class MootoolsCoreBehavior extends Behavior
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
-		response.renderJavaScriptReference(MOOTOOLS_JS);
+		response.render(JavaScriptHeaderItem.forReference(MOOTOOLS_JS));
 	}
 
 }

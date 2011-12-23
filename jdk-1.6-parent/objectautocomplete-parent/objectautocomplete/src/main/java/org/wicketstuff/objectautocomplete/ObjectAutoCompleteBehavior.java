@@ -22,18 +22,20 @@ import java.util.Iterator;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.CoreLibrariesContributor;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AbstractAutoCompleteBehavior;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteSettings;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompleteRenderer;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.IRequestCycle;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.resource.CoreLibrariesContributor;
 import org.apache.wicket.settings.IDebugSettings;
 
 /**
@@ -184,12 +186,12 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 	 */
 	protected void initHead(IHeaderResponse response)
 	{
-		response.renderJavaScriptReference(AUTOCOMPLETE_OBJECTIFIED_JS);
-		response.renderJavaScriptReference(OBJECTAUTOCOMPLETE_JS);
+		response.render(JavaScriptHeaderItem.forReference(AUTOCOMPLETE_OBJECTIFIED_JS));
+		response.render(JavaScriptHeaderItem.forReference(OBJECTAUTOCOMPLETE_JS));
 		final String id = getComponent().getMarkupId();
 		String initJS = String.format("new Wicketstuff.ObjectAutoComplete('%s','%s','%s',%s);", id,
 			objectElement.getMarkupId(), getCallbackUrl(), getSettings());
-		response.renderOnDomReadyJavaScript(initJS);
+		response.render(OnDomReadyHeaderItem.forScript(initJS));
 	}
 
 	@Override

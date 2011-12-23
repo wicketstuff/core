@@ -22,7 +22,8 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
@@ -94,7 +95,7 @@ public class AutoCompletingPanel<T> extends Panel
 			@Override
 			public void renderHead(Component c, IHeaderResponse response)
 			{
-				response.renderCSSReference(CSS);
+				response.render(CssHeaderItem.forReference(CSS));
 			}
 		});
 

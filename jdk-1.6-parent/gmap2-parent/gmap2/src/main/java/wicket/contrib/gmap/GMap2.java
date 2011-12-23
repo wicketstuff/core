@@ -28,7 +28,8 @@ import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.request.Request;
@@ -156,16 +157,14 @@ public class GMap2 extends Panel implements GOverlayContainer
 		}
 	}
 
-
 	/**
 	 * @see org.apache.wicket.Component#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{
-		response.renderOnDomReadyJavaScript(getJSinit());
+		response.render(OnDomReadyHeaderItem.forScript(getJSinit()));
 	}
-
 
 	/**
 	 * @see org.apache.wicket.Component#onBeforeRender()
@@ -185,7 +184,6 @@ public class GMap2 extends Panel implements GOverlayContainer
 		}
 		super.onBeforeRender();
 	}
-
 
 	/**
 	 * Add a control.
@@ -494,7 +492,6 @@ public class GMap2 extends Panel implements GOverlayContainer
 			js.append(((GEventListenerBehavior)behavior).getJSaddListener());
 		}
 
-
 		return js.toString();
 	}
 
@@ -576,7 +573,7 @@ public class GMap2 extends Panel implements GOverlayContainer
 				// center in the middle of the bounds
 				buf.append("map.setCenter( bounds.getCenter() );\n");
 
-				response.renderOnDomReadyJavaScript(buf.toString());
+				response.render(OnDomReadyHeaderItem.forScript(buf.toString()));
 			}
 		});
 

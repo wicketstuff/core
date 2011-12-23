@@ -17,7 +17,8 @@
 package org.wicketstuff.minis.behavior.veil;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.util.string.Strings;
 
 /**
@@ -80,6 +81,6 @@ public class Veil extends VeilResources
 	public void renderHead(Component c, final IHeaderResponse response)
 	{
 		super.renderHead(c, response);
-		response.renderOnDomReadyJavaScript(VeilResources.Javascript.show(component));
+		response.render(OnDomReadyHeaderItem.forScript(VeilResources.Javascript.show(component)));
 	}
 }

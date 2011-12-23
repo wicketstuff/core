@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnLoadHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -134,15 +136,16 @@ public class Timeline extends Panel
 	public void renderHead(IHeaderResponse response)
 	{
 
-		response.renderJavaScriptReference(new PackageResourceReference(getClass(),
-			"./timeline_js/timeline-api.js?timeline-use-local-resources=true&bundle=true"));
+		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(getClass(),
+			"./timeline_js/timeline-api.js?timeline-use-local-resources=true&bundle=true")));
 
 		StringBuffer parameters = new StringBuffer("");
 
 		parameters.append("Timeline_ajax_url='" + timelineUrl() + "';\n");
 
-		response.renderJavaScript(parameters.toString(), TIMELINE_PARAMS_JAVASCRIPT);
-		response.renderOnLoadJavaScript(getLoadScriptName() + "()");
+		response.render(JavaScriptHeaderItem.forScript(parameters.toString(),
+			TIMELINE_PARAMS_JAVASCRIPT));
+		response.render(OnLoadHeaderItem.forScript(getLoadScriptName() + "()"));
 	}
 
 	private String timelineUrl()

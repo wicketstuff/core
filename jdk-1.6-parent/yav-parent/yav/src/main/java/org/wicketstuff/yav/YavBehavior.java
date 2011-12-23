@@ -4,7 +4,10 @@ import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnLoadHeaderItem;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -55,8 +58,8 @@ public class YavBehavior extends Behavior
 	{
 		super.renderHead(c, response);
 
-		response.renderCSSReference(new PackageResourceReference(YavBehavior.class,
-			"style/yav-style.css"));
+		response.render(CssHeaderItem.forReference(new PackageResourceReference(YavBehavior.class,
+			"style/yav-style.css")));
 
 		addJavascriptReference(response, "yav.js");
 		addJavascriptReference(response, "yav-config.js");
@@ -65,7 +68,7 @@ public class YavBehavior extends Behavior
 		// Add an onload contributor that will call a function which is defined
 		// during onComponentTag method call which is processed after the head
 		// is rendered (warning, not compliant with XHTML 1.0 Strict DTD)
-		response.renderOnLoadJavaScript("yavInit()");
+		response.render(OnLoadHeaderItem.forScript("yavInit()"));
 	}
 
 	/**
@@ -74,8 +77,8 @@ public class YavBehavior extends Behavior
 	 */
 	private void addJavascriptReference(IHeaderResponse response, String resource)
 	{
-		response.renderJavaScriptReference(new JavaScriptResourceReference(YavBehavior.class,
-			resource));
+		response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(
+			YavBehavior.class, resource)));
 	}
 
 	/*

@@ -1,11 +1,12 @@
 package org.wicketstuff.openlayers;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.CoreLibrariesContributor;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.resource.CoreLibrariesContributor;
 
 public class OpenLayersMapHeaderContributor extends Behavior
 {
@@ -57,9 +58,9 @@ public class OpenLayersMapHeaderContributor extends Behavior
 
 		String url = getURL(developmentMode, openLayersVersion);
 
-		response.renderJavaScriptReference(url);
+		response.render(JavaScriptHeaderItem.forUrl(url));
 		CoreLibrariesContributor.contributeAjax(c.getApplication(), response);
-		response.renderJavaScriptReference(WICKET_OMAP_JS);
+		response.render(JavaScriptHeaderItem.forReference(WICKET_OMAP_JS));
 
 	}
 

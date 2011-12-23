@@ -24,7 +24,9 @@ import java.util.Map.Entry;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnEventHeaderItem;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.util.time.Duration;
@@ -129,10 +131,10 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 		if (!isStopped())
 		{
 			// install an on-unload handler
-			response.renderJavaScript("history.navigationMode = 'compatible';",
-				"Opera on-unload support");
-			response.renderOnEventJavaScript("window", "unload", "wicketAjaxGet('" +
-				getCallbackUrl().toString() + "&unload=1', function() { }, function() { });");
+			response.render(JavaScriptHeaderItem.forScript(
+				"history.navigationMode = 'compatible';", "Opera on-unload support"));
+			response.render(OnEventHeaderItem.forScript("window", "unload", "Wicket.Ajax.get('" +
+				getCallbackUrl().toString() + "&unload=1', function() { }, function() { });"));
 		}
 	}
 }

@@ -22,7 +22,9 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.IClusterable;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.StringHeaderItem;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
@@ -101,11 +103,12 @@ public class StyleSwitcher extends Behavior
 	@Override
 	public void renderHead(final Component c, final IHeaderResponse response)
 	{
-		response.renderJavaScriptReference(SS_JS);
+		response.render(JavaScriptHeaderItem.forReference(SS_JS));
 
 		for (final TitledResourceReferenceTuple stylesheet : stylesheets)
-			response.renderString("<link rel=\"alternate stylesheet\" type=\"text/css\" href=\"" +
-				RequestCycle.get().urlFor(stylesheet.reference, null) + "\" title=\"" +
-				stylesheet.title + "\"/>");
+			response.render(StringHeaderItem.forString("<link rel=\"alternate stylesheet\" type=\"text/css\" href=\"" +
+				RequestCycle.get().urlFor(stylesheet.reference, null) +
+				"\" title=\"" +
+				stylesheet.title + "\"/>"));
 	}
 }

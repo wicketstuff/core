@@ -24,7 +24,9 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.protocol.http.WebSession;
@@ -93,14 +95,14 @@ public class DatePickerBehavior extends JQueryBehavior
 	{
 		if (includeJquery)
 			super.renderHead(component, response);
-		response.renderCSSReference(DATEPICKER_CSS);
-		response.renderJavaScriptReference(DATE_JS);
+		response.render(CssHeaderItem.forReference(DATEPICKER_CSS));
+		response.render(JavaScriptHeaderItem.forReference(DATE_JS));
 		try
 		{
 			WebClientInfo info = WebSession.get().getClientInfo();
 			if (info.getUserAgent().contains("MSIE"))
 			{
-				response.renderJavaScriptReference(JQUERY_BGIFRAME_JS);
+				response.render(JavaScriptHeaderItem.forReference(JQUERY_BGIFRAME_JS));
 			}
 		}
 		catch (ClassCastException exc)
@@ -111,7 +113,7 @@ public class DatePickerBehavior extends JQueryBehavior
 		// if (ie) {
 		// response.renderJavascriptReference(JQUERY_BGIFRAME_JS);
 		// }
-		response.renderJavaScriptReference(JQUERY_DATEPICKER_JS);
+		response.render(JavaScriptHeaderItem.forReference(JQUERY_DATEPICKER_JS));
 
 		/* Support localized messages in the datepicker clientside */
 		if (options_.dynamicLocalizedMessages)
@@ -154,8 +156,8 @@ public class DatePickerBehavior extends JQueryBehavior
 			String locMess = lm.get("dayNames").toString() + "' ];\n" + lm.get("abbrDayNames") +
 				"' ];\n" + lm.get("monthNames") + "' ];\n" + lm.get("abbrMonthNames") + "' ];\n";
 
-			response.renderJavaScript(locMess, "localization_override" +
-				getComponent().getMarkupId());
+			response.render(JavaScriptHeaderItem.forScript(locMess, "localization_override" +
+				getComponent().getMarkupId()));
 		}
 	}
 

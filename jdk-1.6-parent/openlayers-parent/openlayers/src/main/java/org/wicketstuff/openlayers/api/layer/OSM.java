@@ -3,7 +3,8 @@ package org.wicketstuff.openlayers.api.layer;
 import java.io.Serializable;
 import java.util.Arrays;
 
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.wicketstuff.openlayers.js.JSUtils;
 
 public class OSM extends Layer implements Serializable
@@ -29,7 +30,7 @@ public class OSM extends Layer implements Serializable
 	protected void bindHeaderContributors(IHeaderResponse response)
 	{
 
-		response.renderJavaScriptReference("http://www.openstreetmap.org/openlayers/OpenStreetMap.js");
+		response.render(JavaScriptHeaderItem.forUrl("http://www.openstreetmap.org/openlayers/OpenStreetMap.js"));
 	}
 
 	@Override

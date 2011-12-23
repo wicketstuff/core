@@ -19,7 +19,9 @@ package org.wicketstuff.jquery.accordion;
 
 import java.util.Iterator;
 
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -33,48 +35,46 @@ import org.wicketstuff.jquery.JQueryBehavior;
 /**
  * JQuery based implementation of client side accordion.
  * <p>
- * This component uses JQuery and the accordion plugin to create client side accordion. Being client
- * side, all content is rendered and sent to the client at first time.
+ * This component uses JQuery and the accordion plugin to create client side
+ * accordion. Being client side, all content is rendered and sent to the client
+ * at first time.
  * <p>
- * This component is abstract and must be subclassed similarly to {@link RefreshingView}. Each
- * accordion item to be populated must have two sub components: a 'title', and a 'content'. You can
- * use Label for these, or for complex content use a {@link Panel} or a {@link WebMarkupContainer}.
+ * This component is abstract and must be subclassed similarly to
+ * {@link RefreshingView}. Each accordion item to be populated must have two sub
+ * components: a 'title', and a 'content'. You can use Label for these, or for
+ * complex content use a {@link Panel} or a {@link WebMarkupContainer}.
  * 
  * <p>
  * Example:
  * 
  * <pre>
- * new JQAccordion(&quot;accordion1&quot;)
- * {
+ * new JQAccordion(&quot;accordion1&quot;) {
  * 	private static final long serialVersionUID = 1L;
  * 
- * 	protected Iterator getItemModels()
- * 	{
- * 		return new ArrayIteratorAdapter(new Object[] { &quot;A&quot;, &quot;B&quot;, &quot;C&quot; })
- * 		{
+ * 	protected Iterator getItemModels() {
+ * 		return new ArrayIteratorAdapter(new Object[] { &quot;A&quot;, &quot;B&quot;, &quot;C&quot; }) {
  * 
- * 			protected IModel model(Object obj)
- * 			{
- * 				return new Model((Serializable)obj);
+ * 			protected IModel model(Object obj) {
+ * 				return new Model((Serializable) obj);
  * 			}
  * 		};
  * 	}
  * 
- * 	protected void populateItem(Item item)
- * 	{
+ * 	protected void populateItem(Item item) {
  * 		item.add(new Label(&quot;title&quot;, item.getModel()));
- * 		item.add(new Label(&quot;content&quot;, item.getModelObjectAsString() + &quot; content&quot;));
+ * 		item.add(new Label(&quot;content&quot;, item.getModelObjectAsString()
+ * 				+ &quot; content&quot;));
  * 	}
  * }
  * </pre>
  * 
  * JQuery: http://jquery.com/ <br/>
- * Accordion: http://bassistance.de/jquery-plugins/jquery-plugin-accordion/ <br/>
+ * Accordion: http://bassistance.de/jquery-plugins/jquery-plugin-accordion/
+ * <br/>
  * 
  * @author Xavier Hanin
  */
-public abstract class JQAccordion extends Panel
-{
+public abstract class JQAccordion extends Panel {
 	private static final long serialVersionUID = 1L;
 
 	private String options;
@@ -85,25 +85,24 @@ public abstract class JQAccordion extends Panel
 	 * @param id
 	 *            the id of the component. Must not be <code>null</code>.
 	 */
-	public JQAccordion(String id)
-	{
+	public JQAccordion(String id) {
 		this(id, "");
 	}
 
 	/**
 	 * Constructs an accordion component with the given id and options.
 	 * <p>
-	 * See <a href="http://bassistance.de/jquery-plugins/jquery-plugin-accordion/">accordion plugin
-	 * documentation</a> for details about options.
+	 * See <a
+	 * href="http://bassistance.de/jquery-plugins/jquery-plugin-accordion/"
+	 * >accordion plugin documentation</a> for details about options.
 	 * 
 	 * @param id
 	 *            the id of the component. Must not be <code>null</code>.
 	 * @param options
-	 *            the options to use for the javascript accordion component. Must not be
-	 *            <code>null</code>.
+	 *            the options to use for the javascript accordion component.
+	 *            Must not be <code>null</code>.
 	 */
-	public JQAccordion(String id, String options)
-	{
+	public JQAccordion(String id, String options) {
 		super(id);
 		this.options = options;
 
@@ -114,26 +113,23 @@ public abstract class JQAccordion extends Panel
 		add(parent);
 
 		/*
-		 * we inject the script in the component body and not as a header contribution because the
-		 * script needs to be called each time the component is refreshed using wicket ajax support.
+		 * we inject the script in the component body and not as a header
+		 * contribution because the script needs to be called each time the
+		 * component is refreshed using wicket ajax support.
 		 */
-		add(new Label("script", new Model<String>()
-		{
+		add(new Label("script", new Model<String>() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public String getObject()
-			{
+			public String getObject() {
 				String options = getOptions().trim();
-				if (options.length() > 0)
-				{
+				if (options.length() > 0) {
 					options = "header: 'h3', " + options;
-				}
-				else
-				{
+				} else {
 					options = "header: 'h3'";
 				}
-				return "$('#" + parent.getMarkupId() + "').Accordion({" + options + "});";
+				return "$('#" + parent.getMarkupId() + "').Accordion({"
+						+ options + "});";
 			}
 		}).setEscapeModelStrings(false));
 
@@ -141,37 +137,32 @@ public abstract class JQAccordion extends Panel
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response)
-	{
+	public void renderHead(IHeaderResponse response) {
 		super.renderHead(response);
 
-
-		response.renderCSSReference(new PackageResourceReference(JQAccordion.class,
-			"jquery.accordion.css"));
-		response.renderJavaScriptReference(new PackageResourceReference(JQAccordion.class,
-			"jquery.accordion.pack.js"));
+		response.render(CssHeaderItem
+				.forReference(new PackageResourceReference(JQAccordion.class,
+						"jquery.accordion.css")));
+		response.render(JavaScriptHeaderItem
+				.forReference(new PackageResourceReference(JQAccordion.class,
+						"jquery.accordion.pack.js")));
 	}
 
-	protected String getOptions()
-	{
+	protected String getOptions() {
 		return options;
 	}
 
-	protected RefreshingView<String> newRepeatingView(String id)
-	{
-		return new RefreshingView<String>(id)
-		{
+	protected RefreshingView<String> newRepeatingView(String id) {
+		return new RefreshingView<String>(id) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Iterator<IModel<String>> getItemModels()
-			{
+			protected Iterator<IModel<String>> getItemModels() {
 				return JQAccordion.this.getItemModels();
 			}
 
 			@Override
-			protected void populateItem(Item<String> item)
-			{
+			protected void populateItem(Item<String> item) {
 				JQAccordion.this.populateItem(item);
 			}
 		};

@@ -10,13 +10,15 @@ import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.CoreLibrariesContributor;
 import org.apache.wicket.ajax.IAjaxCallDecorator;
 import org.apache.wicket.ajax.calldecorator.AjaxCallDecorator;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -27,6 +29,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.resource.CoreLibrariesContributor;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.visit.IVisit;
@@ -117,7 +120,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 				// component until "DOM ready" event.
 				if (!getWebRequest().isAjax())
 				{
-					response.renderOnDomReadyJavaScript(getInitializationJavascript());
+					response.render(OnDomReadyHeaderItem.forScript(getInitializationJavascript()));
 				}
 			}
 
@@ -638,11 +641,11 @@ public abstract class AbstractGrid<M, I> extends Panel
 	public void renderHead(IHeaderResponse response)
 	{
 		CoreLibrariesContributor.contributeAjax(getApplication(), response);
-		response.renderJavaScriptReference(JS_YAHOO);
-		response.renderJavaScriptReference(JS_EVENT);
-		response.renderJavaScriptReference(JS_DOM);
-		response.renderJavaScriptReference(JS_SCRIPT);
-		response.renderCSSReference(CSS);
+		response.render(JavaScriptHeaderItem.forReference(JS_YAHOO));
+		response.render(JavaScriptHeaderItem.forReference(JS_EVENT));
+		response.render(JavaScriptHeaderItem.forReference(JS_DOM));
+		response.render(JavaScriptHeaderItem.forReference(JS_SCRIPT));
+		response.render(CssHeaderItem.forReference(CSS));
 	}
 
 	/**

@@ -24,7 +24,8 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.Link;
@@ -46,7 +47,8 @@ public class HomePage extends WebPage
 {
 
 	private static final String KEY_WEEKS = "0";
-// private static final Logger LOGGER = LoggerFactory.getLogger(HomePage.class);
+	// private static final Logger LOGGER =
+	// LoggerFactory.getLogger(HomePage.class);
 	private static final long serialVersionUID = 1L;
 	public static final ResourceReference EXAMPLES_CSS_REFERENCE = new PackageResourceReference(
 		HomePage.class, "examples.css");
@@ -84,8 +86,7 @@ public class HomePage extends WebPage
 					@Override
 					public void renderHead(Component component, IHeaderResponse response)
 					{
-
-						response.renderCSSReference(EXAMPLES_CSS_REFERENCE);
+						response.render(CssHeaderItem.forReference(EXAMPLES_CSS_REFERENCE));
 					}
 				});
 				return page;
@@ -119,7 +120,7 @@ public class HomePage extends WebPage
 	{
 		super.renderHead(response);
 
-		response.renderCSSReference(EXAMPLES_CSS_REFERENCE);
+		response.render(CssHeaderItem.forReference(EXAMPLES_CSS_REFERENCE));
 	}
 
 	private void addLinks()

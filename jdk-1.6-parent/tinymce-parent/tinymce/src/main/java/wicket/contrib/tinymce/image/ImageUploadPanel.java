@@ -10,7 +10,9 @@ import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow.WindowClosedCallback;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.parser.XmlTag;
@@ -24,72 +26,67 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Image upload panel which is responsible for showing image upload dialog and its called when an
- * image is requested.
+ * Image upload panel which is responsible for showing image upload dialog and
+ * its called when an image is requested.
  * 
  * @author Michal Letynski <mikel@mikel.pl>
  */
-public class ImageUploadPanel extends Panel implements IResourceListener
-{
+public class ImageUploadPanel extends Panel implements IResourceListener {
 
 	private static final long serialVersionUID = -5848356532326545817L;
-	private static final Logger log = LoggerFactory.getLogger(ImageUploadPanel.class);
+	private static final Logger log = LoggerFactory
+			.getLogger(ImageUploadPanel.class);
 	private static final ResourceReference IMAGE_UPLOAD_JS_RESOURCE = new JavaScriptResourceReference(
-		ImageUploadPanel.class, "imageUpload.js");
+			ImageUploadPanel.class, "imageUpload.js");
 
 	private ModalWindow modalWindow;
 	private ImageUploadBehavior imageUploadBehavior;
 
-	public ImageUploadPanel(String pId)
-	{
+	public ImageUploadPanel(String pId) {
 		super(pId);
 		setOutputMarkupId(true);
 		add(modalWindow = new ModalWindow("imageUploadDialog"));
 		modalWindow.setTitle(new ResourceModel("title.label"));
 		modalWindow.setInitialHeight(100);
 		modalWindow.setInitialWidth(350);
-		modalWindow.setWindowClosedCallback(new WindowClosedCallback()
-		{
+		modalWindow.setWindowClosedCallback(new WindowClosedCallback() {
 			private static final long serialVersionUID = 1L;
 
-			public void onClose(AjaxRequestTarget pTarget)
-			{
+			public void onClose(AjaxRequestTarget pTarget) {
 				resetModalContent();
 			}
 		});
 		add(imageUploadBehavior = new ImageUploadBehavior());
 	}
 
-	public void resetModalContent()
-	{
+	public void resetModalContent() {
 		modalWindow.setContent(new EmptyPanel(modalWindow.getContentId()));
 	}
 
 	/**
 	 * Behavior responsible for showing application dialog.
 	 */
-	public class ImageUploadBehavior extends AbstractDefaultAjaxBehavior
-	{
+	public class ImageUploadBehavior extends AbstractDefaultAjaxBehavior {
 		private static final long serialVersionUID = 7786779421116467886L;
 
 		@Override
-		protected void respond(AjaxRequestTarget pTarget)
-		{
+		protected void respond(AjaxRequestTarget pTarget) {
 			ImageUploadContentPanel content = new ImageUploadContentPanel(
-				modalWindow.getContentId())
-			{
+					modalWindow.getContentId()) {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void onImageUploaded(ImageFileDescription pImageFileDescription,
-					AjaxRequestTarget pTarget)
-				{
+				public void onImageUploaded(
+						ImageFileDescription pImageFileDescription,
+						AjaxRequestTarget pTarget) {
 					modalWindow.close(pTarget);
 					resetModalContent();
-					CharSequence url = ImageUploadPanel.this.urlFor(IResourceListener.INTERFACE);
-					XmlTag xmlImageTag = ImageUploadHelper.createImageTag(pImageFileDescription,
-						url);
-					pTarget.appendJavaScript("putImage('" + xmlImageTag.toString() + "');");
+					CharSequence url = ImageUploadPanel.this
+							.urlFor(IResourceListener.INTERFACE);
+					XmlTag xmlImageTag = ImageUploadHelper.createImageTag(
+							pImageFileDescription, url);
+					pTarget.appendJavaScript("putImage('"
+							+ xmlImageTag.toString() + "');");
 				}
 			};
 			modalWindow.setContent(content);
@@ -98,62 +95,55 @@ public class ImageUploadPanel extends Panel implements IResourceListener
 			modalWindow.show(pTarget);
 		}
 
-		public String getCallbackName()
-		{
+		public String getCallbackName() {
 			return "showImageUploadDialog";
 		}
 
 		@Override
-		public void renderHead(Component c, IHeaderResponse pResponse)
-		{
-			String script = getCallbackName() + " = function () { " + getCallbackScript() + " }";
-			pResponse.renderOnDomReadyJavaScript(script);
-			pResponse.renderJavaScriptReference(IMAGE_UPLOAD_JS_RESOURCE);
+		public void renderHead(Component c, IHeaderResponse pResponse) {
+			String script = getCallbackName() + " = function () { "
+					+ getCallbackScript() + " }";
+			pResponse.render(OnDomReadyHeaderItem.forScript(script));
+			pResponse.render(JavaScriptHeaderItem
+					.forReference(IMAGE_UPLOAD_JS_RESOURCE));
 		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void onResourceRequested()
-	{
-		final String fileName = RequestCycle.get()
-			.getRequest()
-			.getQueryParameters()
-			.getParameterValue(ImageUploadHelper.IMAGE_FILE_NAME)
-			.toString();
-		if (Strings.isEmpty(fileName))
-		{
+	public void onResourceRequested() {
+		final String fileName = RequestCycle.get().getRequest()
+				.getQueryParameters()
+				.getParameterValue(ImageUploadHelper.IMAGE_FILE_NAME)
+				.toString();
+		if (Strings.isEmpty(fileName)) {
 			log.warn("There is no file name of image");
 			return;
 		}
-		final String contentType = RequestCycle.get()
-			.getRequest()
-			.getQueryParameters()
-			.getParameterValue(ImageUploadHelper.IMAGE_CONTENT_TYPE)
-			.toString();
-
+		final String contentType = RequestCycle.get().getRequest()
+				.getQueryParameters()
+				.getParameterValue(ImageUploadHelper.IMAGE_CONTENT_TYPE)
+				.toString();
 
 		FileInputStream inputStream = null;
-		try
-		{
-			inputStream = new FileInputStream(ImageUploadHelper.getTemporaryDirPath() +
-				File.separatorChar + fileName);
-		}
-		catch (FileNotFoundException ex)
-		{
+		try {
+			inputStream = new FileInputStream(
+					ImageUploadHelper.getTemporaryDirPath()
+							+ File.separatorChar + fileName);
+		} catch (FileNotFoundException ex) {
 			log.error("Problem with getting image - " + ex.getMessage(), ex);
 			throw new RuntimeException("Problem with getting image");
 		}
 		RequestCycle.get().scheduleRequestHandlerAfterCurrent(
-			new ResourceStreamRequestHandler(new FileResourceStream(contentType, inputStream)));
+				new ResourceStreamRequestHandler(new FileResourceStream(
+						contentType, inputStream)));
 	}
 
 	/**
 	 * @return the imageUploadBehavior
 	 */
-	public ImageUploadBehavior getImageUploadBehavior()
-	{
+	public ImageUploadBehavior getImageUploadBehavior() {
 		return imageUploadBehavior;
 	}
 }

@@ -16,7 +16,7 @@
 package org.wicketstuff.theme;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
 
 public interface IThemeFactory
 {

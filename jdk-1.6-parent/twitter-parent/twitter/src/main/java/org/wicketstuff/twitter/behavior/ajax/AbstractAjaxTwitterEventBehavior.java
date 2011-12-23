@@ -3,7 +3,8 @@ package org.wicketstuff.twitter.behavior.ajax;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -89,7 +90,7 @@ public abstract class AbstractAjaxTwitterEventBehavior extends AbstractDefaultAj
 	{
 		super.renderHead(component, response);
 
-		response.renderJavaScriptReference(TwitterApiBehavior.WIDGETS_JS);
+		response.render(JavaScriptHeaderItem.forUrl(TwitterApiBehavior.WIDGETS_JS));
 
 		final StringBuilder js = new StringBuilder();
 		js.append("twttr.events.bind('").append(eventId).append("', function(response) { \n");
@@ -108,7 +109,7 @@ public abstract class AbstractAjaxTwitterEventBehavior extends AbstractDefaultAj
 		js.append("}");
 		js.append(");");
 
-		response.renderJavaScript(js.toString(), null);
+		response.render(JavaScriptHeaderItem.forScript(js.toString(), null));
 
 	}
 

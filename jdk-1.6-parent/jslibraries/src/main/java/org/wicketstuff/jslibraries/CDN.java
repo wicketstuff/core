@@ -23,8 +23,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.IHeaderContributor;
-import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.jslibraries.util.Assert;
 
 public enum CDN implements Provider
@@ -176,7 +177,7 @@ public enum CDN implements Provider
 
 		public void renderHead(IHeaderResponse response)
 		{
-			response.renderJavaScriptReference(url);
+			response.render(JavaScriptHeaderItem.forUrl(url));
 		}
 	}
 }

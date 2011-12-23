@@ -2,11 +2,13 @@ package org.wicketstuff.jquery.crop;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.resource.JQueryResourceReference;
 import org.wicketstuff.jquery.FunctionString;
 import org.wicketstuff.jquery.JQueryBehavior;
 
@@ -81,12 +83,12 @@ public class CropBehaviour extends JQueryBehavior
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
-		response.renderJavaScriptReference(JQUERY_JS);
-		response.renderJavaScriptReference(INTERFACE_JS);
-		response.renderJavaScriptReference(IRESIZABLE_JS);
-		response.renderJavaScriptReference(IUTIL_JS);
-		response.renderJavaScript("function cropCallback() {\n" + getCallbackScript() + "\n}\n",
-			"crop-init-for-" + getComponent().getMarkupId());
+		response.render(JavaScriptHeaderItem.forReference(JQueryResourceReference.get()));
+		response.render(JavaScriptHeaderItem.forReference(INTERFACE_JS));
+		response.render(JavaScriptHeaderItem.forReference(IRESIZABLE_JS));
+		response.render(JavaScriptHeaderItem.forReference(IUTIL_JS));
+		response.render(JavaScriptHeaderItem.forScript("function cropCallback() {\n" + getCallbackScript() + "\n}\n",
+			"crop-init-for-" + getComponent().getMarkupId()));
 	}
 
 	@Override

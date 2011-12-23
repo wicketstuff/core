@@ -19,11 +19,12 @@
 package org.wicketstuff.validation.client;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.CoreLibrariesContributor;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnLoadHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.resource.CoreLibrariesContributor;
 
 /**
  * By adding this behavior to a feedback panel or other WebMarkupContainer, the client and server
@@ -73,8 +74,8 @@ public class ClientAndServerValidatingFeedbackBehavior extends Behavior
 		// add a trigger that will add our validation to the forms' onSubmit methods
 		String formID = mForm.getMarkupId();
 		String containerID = mContainer.getMarkupId();
-		response.renderOnLoadJavaScript("ClientAndServerValidator.registerFeedbackContainerForForm('" +
-			formID + "', '" + containerID + "');");
+		response.render(OnLoadHeaderItem.forScript("ClientAndServerValidator.registerFeedbackContainerForForm('" +
+			formID + "', '" + containerID + "');"));
 	}
 
 }

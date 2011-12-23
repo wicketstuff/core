@@ -3,9 +3,12 @@ package org.wicketstuff.jquery.ajaxbackbutton;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.resource.JQueryResourceReference;
 import org.apache.wicket.util.string.StringValue;
 import org.wicketstuff.jquery.JQueryBehavior;
 
@@ -29,18 +32,18 @@ public abstract class HistoryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	@Override
 	public void renderHead(final Component component, final IHeaderResponse response)
 	{
-		response.renderCSSReference(new PackageResourceReference(HistoryAjaxBehavior.class,
-			"res/history-manager-iframe.css"));
-		response.renderJavaScriptReference(JQueryBehavior.JQUERY_JS);
-		response.renderJavaScriptReference(new PackageResourceReference(HistoryAjaxBehavior.class,
-			"res/history-manager.js"));
+		response.render(CssHeaderItem.forReference(new PackageResourceReference(
+			HistoryAjaxBehavior.class, "res/history-manager-iframe.css")));
+		response.render(JavaScriptHeaderItem.forReference(JQueryResourceReference.get()));
+		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(
+			HistoryAjaxBehavior.class, "res/history-manager.js")));
 
 		/*
 		 * Save the callback URL to this behavior to call it on back/forward button clicks
 		 */
-		response.renderJavaScript("var notifyBackButton = function() { wicketAjaxGet('" +
-			getCallbackUrl() + ", null, null, function() {return true;}.bind(this)); }",
-			"history-manager-url");
+		response.render(JavaScriptHeaderItem.forScript(
+			"var notifyBackButton = function() { wicketAjaxGet('" + getCallbackUrl() +
+				", null, null, function() {return true;}.bind(this)); }", "history-manager-url"));
 	}
 
 	@Override

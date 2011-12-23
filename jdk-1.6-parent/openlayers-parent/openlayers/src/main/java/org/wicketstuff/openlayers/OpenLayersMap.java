@@ -26,7 +26,9 @@ import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.request.Request;
@@ -352,7 +354,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 			@Override
 			public void renderHead(Component component, IHeaderResponse response)
 			{
-				response.renderOnDomReadyJavaScript(getJSinit());
+				response.render(OnDomReadyHeaderItem.forScript(getJSinit()));
 			}
 		});
 
@@ -402,7 +404,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 					for (JavaScriptResourceReference javascriptResourceReference : jsReferences)
 					{
-						response.renderJavaScriptReference(javascriptResourceReference);
+						response.render(JavaScriptHeaderItem.forReference(javascriptResourceReference));
 					}
 				}
 			});
@@ -421,8 +423,8 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 				for (JavaScriptResourceReference javascriptResourceReference : jsReferences)
 				{
-					target.getHeaderResponse().renderJavaScriptReference(
-						javascriptResourceReference);
+					target.getHeaderResponse().render(JavaScriptHeaderItem.forReference(
+						javascriptResourceReference));
 				}
 			}
 

@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.wicketstuff.openlayers.js.JSUtils;
 
 public class GMap extends Layer implements Serializable
@@ -27,14 +28,11 @@ public class GMap extends Layer implements Serializable
 		setName(name);
 	}
 
-
 	@Override
 	protected void bindHeaderContributors(IHeaderResponse response)
 	{
-
-		response.renderJavaScriptReference("http://maps.google.com/maps?file=api&amp;v=" +
-			apiVersion + "&amp;key=" + apiKey);
-
+		response.render(JavaScriptHeaderItem.forUrl("http://maps.google.com/maps?file=api&amp;v=" +
+			apiVersion + "&amp;key=" + apiKey));
 	}
 
 	/*

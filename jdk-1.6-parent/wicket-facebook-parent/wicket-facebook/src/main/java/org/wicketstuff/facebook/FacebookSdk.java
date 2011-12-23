@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.head.StringHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
 /**
@@ -82,7 +85,7 @@ public class FacebookSdk extends WebMarkupContainer implements FacebookRootProvi
 	@Override
 	public void renderHead(final IHeaderResponse response)
 	{
-		response.renderJavaScriptReference("//connect.facebook.net/en_US/all.js");
+		response.render(JavaScriptHeaderItem.forUrl("//connect.facebook.net/en_US/all.js"));
 
 		final StringBuilder js = new StringBuilder();
 		js.append("FB.init({");
@@ -93,7 +96,7 @@ public class FacebookSdk extends WebMarkupContainer implements FacebookRootProvi
 		js.append("xfbml  : true");
 		js.append("});");
 
-		response.renderOnDomReadyJavaScript(js.toString());
+		response.render(OnDomReadyHeaderItem.forScript(js));
 
 		for (final Entry<String, String> entry : metaParams.entrySet())
 		{
@@ -102,10 +105,9 @@ public class FacebookSdk extends WebMarkupContainer implements FacebookRootProvi
 			sb.append("content=\"").append(entry.getValue()).append("\" />");
 			sb.append('\n');
 
-			response.renderString(sb.toString());
+			response.render(StringHeaderItem.forString(sb));
 		}
 	}
-
 
 	public void setFbAdmins(final String... userId)
 	{

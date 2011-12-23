@@ -1,7 +1,9 @@
 package org.wicketstuff.datatables;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.PackageResourceReference;
@@ -33,17 +35,17 @@ public class DemoDatatable extends WebMarkupContainer
 		js.append("	} );\n");
 		js.append("} );");
 
-		response.renderJavaScript(js, getId() + "_datatables");
+		response.render(JavaScriptHeaderItem.forScript(js, getId() + "_datatables"));
 	}
 
 	private void renderDemoCSS(IHeaderResponse response)
 	{
 		final Class<DemoDatatable> _ = DemoDatatable.class;
-		response.renderCSSReference(
-			new PackageResourceReference(_, "media/css/demo_table_jui.css"), "screen");
+		response.render(CssHeaderItem.forReference(new PackageResourceReference(_,
+			"media/css/demo_table_jui.css"), "screen"));
 
-		response.renderCSSReference(new PackageResourceReference(_, "media/css/" + getJUITheme() +
-			"/jquery-ui-1.8.10.custom.css"), "screen");
+		response.render(CssHeaderItem.forReference(new PackageResourceReference(_, "media/css/" +
+			getJUITheme() + "/jquery-ui-1.8.10.custom.css"), "screen"));
 	}
 
 	private String getJUITheme()
@@ -55,10 +57,10 @@ public class DemoDatatable extends WebMarkupContainer
 	{
 		final Class<DemoDatatable> _ = DemoDatatable.class;
 
-		response.renderJavaScriptReference(new PackageResourceReference(_, "media/js/jquery.js"));
-		response.renderJavaScriptReference(new PackageResourceReference(_,
-			"media/js/jquery.dataTables.min.js"));
-		response.renderJavaScriptReference(new PackageResourceReference(_,
-			"media/js/jquery-ui-1.8.10.custom.min.js"));
+		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(_, "media/js/jquery.js")));
+		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(_,
+			"media/js/jquery.dataTables.min.js")));
+		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(_,
+			"media/js/jquery-ui-1.8.10.custom.min.js")));
 	}
 }

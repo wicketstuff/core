@@ -37,7 +37,7 @@ public class ProgressDemo extends BasePage
 				current += 10;
 				if (current == max)
 				{
-					stop();
+					stop(target);
 				}
 			}
 		});

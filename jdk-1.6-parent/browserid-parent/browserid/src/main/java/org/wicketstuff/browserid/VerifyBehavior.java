@@ -11,7 +11,8 @@ import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.io.IOUtils;
@@ -43,7 +44,7 @@ public abstract class VerifyBehavior extends AbstractDefaultAjaxBehavior
 		final TextTemplate verifyTemplate = new PackageTextTemplate(VerifyBehavior.class,
 			"verify.js.tmpl");
 		String asString = verifyTemplate.asString(variables);
-		response.renderOnDomReadyJavaScript(asString);
+		response.render(OnDomReadyHeaderItem.forScript(asString));
 	}
 
 	@Override

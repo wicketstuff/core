@@ -23,13 +23,15 @@ import java.util.List;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.CoreLibrariesContributor;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.resource.CoreLibrariesContributor;
 import org.wicketstuff.openlayers.api.Bounds;
 import org.wicketstuff.openlayers.api.IJavascriptComponent;
 import org.wicketstuff.openlayers.api.LonLat;
@@ -101,7 +103,7 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 			@Override
 			public void renderHead(Component c, IHeaderResponse response)
 			{
-				response.renderOnDomReadyJavaScript(getJSinit());
+				response.render(OnDomReadyHeaderItem.forScript(getJSinit()));
 			}
 		});
 		for (Feature feature : this.features)
@@ -125,11 +127,11 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayers
 			}
 		}
 		pathToOpenLayersJS = pathToOpenLayersJS + "OpenLayers.js";
-		response.renderJavaScriptReference(pathToOpenLayersJS);
+		response.render(JavaScriptHeaderItem.forUrl(pathToOpenLayersJS));
 		// TODO Import all other JS files which will be used later on
 		CoreLibrariesContributor.contributeAjax(Application.get(), response);
-		response.renderJavaScriptReference(new JavaScriptResourceReference(AjaxOpenLayersMap.class,
-			"wicket-openlayersmap.js"));
+		response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(AjaxOpenLayersMap.class,
+			"wicket-openlayersmap.js")));
 	}
 
 	public void setExternalControls(boolean externalControls)

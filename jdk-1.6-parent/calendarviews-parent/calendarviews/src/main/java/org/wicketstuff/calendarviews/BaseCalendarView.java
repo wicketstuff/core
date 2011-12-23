@@ -26,7 +26,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
@@ -70,7 +71,7 @@ public abstract class BaseCalendarView extends Panel
 	{
 		super.renderHead(response);
 
-		response.renderCSSReference(CALENDARS_CSS_REFERENCE);
+		response.render(CssHeaderItem.forReference(CALENDARS_CSS_REFERENCE));
 	}
 
 	/* Helper methods for subclasses */

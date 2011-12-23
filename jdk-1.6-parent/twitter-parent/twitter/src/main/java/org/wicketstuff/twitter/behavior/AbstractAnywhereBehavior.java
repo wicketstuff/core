@@ -2,7 +2,8 @@ package org.wicketstuff.twitter.behavior;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 
 /**
  * https://dev.twitter.com/docs/anywhere/welcome
@@ -69,9 +70,9 @@ public abstract class AbstractAnywhereBehavior extends Behavior
 	{
 		super.renderHead(component, response);
 
-		response.renderJavaScriptReference(createJsApiUrl(apiKey));
+		response.render(JavaScriptHeaderItem.forUrl(createJsApiUrl(apiKey)));
 
-		response.renderJavaScript(createAnywhereJs(component), null);
+		response.render(JavaScriptHeaderItem.forScript(createAnywhereJs(component), null));
 	}
 
 

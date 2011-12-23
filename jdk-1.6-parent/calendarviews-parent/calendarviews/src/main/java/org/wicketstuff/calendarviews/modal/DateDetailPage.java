@@ -22,7 +22,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -86,6 +87,6 @@ public class DateDetailPage extends WebPage
 	{
 		super.renderHead(response);
 
-		response.renderCSSReference(BaseCalendarView.CALENDARS_CSS_REFERENCE);
+		response.render(CssHeaderItem.forReference(BaseCalendarView.CALENDARS_CSS_REFERENCE));
 	}
 }

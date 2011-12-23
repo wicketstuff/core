@@ -22,7 +22,9 @@ import java.util.List;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.extensions.markup.html.tabs.TabbedPanel;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.AbstractLink;
@@ -35,12 +37,12 @@ import org.wicketstuff.jquery.JQueryBehavior;
 /**
  * JQuery based implementation of client side tabbed panel.
  * <p>
- * This component JQuery and the plugin tabs to create client side tabs. Being client side, all tabs
- * will be rendered and sent to the client at first time, which can be useful in forms, for
- * instance.
+ * This component JQuery and the plugin tabs to create client side tabs. Being
+ * client side, all tabs will be rendered and sent to the client at first time,
+ * which can be useful in forms, for instance.
  * <p>
- * The API of this component is the same as {@link TabbedPanel}, and can thus be used as a drop in
- * replacement of {@link TabbedPanel}.
+ * The API of this component is the same as {@link TabbedPanel}, and can thus be
+ * used as a drop in replacement of {@link TabbedPanel}.
  * <p>
  * 
  * JQuery: http://jquery.com/ <br/>
@@ -50,8 +52,7 @@ import org.wicketstuff.jquery.JQueryBehavior;
  * @author Xavier Hanin
  * @see TabbedPanel
  */
-public class JQTabbedPanel extends Panel
-{
+public class JQTabbedPanel extends Panel {
 	private static final long serialVersionUID = 1L;
 	/**
 	 * id used for child panels
@@ -70,8 +71,7 @@ public class JQTabbedPanel extends Panel
 	 * @param tabs
 	 *            list of ITab objects used to represent tabs. Must not be null.
 	 */
-	public JQTabbedPanel(String id, List<ITab> tabs)
-	{
+	public JQTabbedPanel(String id, List<ITab> tabs) {
 		this(id, tabs, "");
 	}
 
@@ -80,8 +80,8 @@ public class JQTabbedPanel extends Panel
 	 * <p>
 	 * The options are used when initializing the tabs.
 	 * <p>
-	 * See <a href="http://stilbuero.de/jquery/tabs/">tabs documentation</a> for details on the
-	 * available options.
+	 * See <a href="http://stilbuero.de/jquery/tabs/">tabs documentation</a> for
+	 * details on the available options.
 	 * <p>
 	 * Some examples:<br/>
 	 * <code>{ fxSlide: true }</code><br/>
@@ -94,8 +94,7 @@ public class JQTabbedPanel extends Panel
 	 * @param options
 	 *            the options to use to init the tabs component. May be null.
 	 */
-	public JQTabbedPanel(String id, List<ITab> tabs, String options)
-	{
+	public JQTabbedPanel(String id, List<ITab> tabs, String options) {
 		super(id);
 		this.options = options == null ? "" : options;
 
@@ -105,17 +104,17 @@ public class JQTabbedPanel extends Panel
 		add(parent);
 
 		/*
-		 * we inject the script in the component body and not as a header contribution because the
-		 * script needs to be called each time the component is refreshed using wicket ajax support.
+		 * we inject the script in the component body and not as a header
+		 * contribution because the script needs to be called each time the
+		 * component is refreshed using wicket ajax support.
 		 */
-		add(new Label("script", new Model<String>()
-		{
+		add(new Label("script", new Model<String>() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public String getObject()
-			{
-				return "$('#" + parent.getMarkupId() + "').tabs(" + getTabsOptions() + ");";
+			public String getObject() {
+				return "$('#" + parent.getMarkupId() + "').tabs("
+						+ getTabsOptions() + ");";
 			}
 		}).setEscapeModelStrings(false));
 
@@ -124,21 +123,19 @@ public class JQTabbedPanel extends Panel
 		RepeatingView contents = new RepeatingView("content");
 		parent.add(contents);
 
-
-		for (int i = 0; i < tabs.size(); i++)
-		{
-			final WebMarkupContainer content = tabs.get(i).getPanel(TAB_PANEL_ID + i);
+		for (int i = 0; i < tabs.size(); i++) {
+			final WebMarkupContainer content = tabs.get(i).getPanel(
+					TAB_PANEL_ID + i);
 			content.setOutputMarkupId(true);
 			contents.add(content);
-			WebMarkupContainer title = new WebMarkupContainer(TAB_PANEL_ID + "-title" + i);
+			WebMarkupContainer title = new WebMarkupContainer(TAB_PANEL_ID
+					+ "-title" + i);
 			title.setOutputMarkupId(true);
-			title.add(new AbstractLink("link")
-			{
+			title.add(new AbstractLink("link") {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				protected void onComponentTag(ComponentTag tag)
-				{
+				protected void onComponentTag(ComponentTag tag) {
 					super.onComponentTag(tag);
 					tag.put("href", "#" + content.getMarkupId());
 				}
@@ -150,27 +147,28 @@ public class JQTabbedPanel extends Panel
 	/**
 	 * Returns the options to use when initializing the tabs.
 	 * <p>
-	 * See <a href="http://stilbuero.de/jquery/tabs/">tabs documentation</a> for details on the
-	 * available options.
+	 * See <a href="http://stilbuero.de/jquery/tabs/">tabs documentation</a> for
+	 * details on the available options.
 	 * <p>
-	 * Some examples: <code>{ fxSlide: true }</code> <code>{ fxFade: true, fxSpeed: 'fast' }</code>
+	 * Some examples: <code>{ fxSlide: true }</code>
+	 * <code>{ fxFade: true, fxSpeed: 'fast' }</code>
 	 * 
 	 * @return the options to use to init the tabs
 	 */
-	protected String getTabsOptions()
-	{
+	protected String getTabsOptions() {
 		return options;
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response)
-	{
+	public void renderHead(IHeaderResponse response) {
 		super.renderHead(response);
 
-		response.renderCSSReference(new PackageResourceReference(JQTabbedPanel.class,
-			"jquery.tabs.css"));
-		response.renderJavaScriptReference(new PackageResourceReference(JQTabbedPanel.class,
-			"jquery.tabs.pack.js"));
+		response.render(CssHeaderItem
+				.forReference(new PackageResourceReference(JQTabbedPanel.class,
+						"jquery.tabs.css")));
+		response.render(JavaScriptHeaderItem
+				.forReference(new PackageResourceReference(JQTabbedPanel.class,
+						"jquery.tabs.pack.js")));
 
 	}
 

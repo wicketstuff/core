@@ -26,7 +26,9 @@ import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.IAjaxRegionMarkupIdProvider;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
@@ -89,7 +91,7 @@ public class TinyMceBehavior extends Behavior implements IAjaxRegionMarkupIdProv
 		// TinyMce javascript:
 		if (mayRenderJavascriptDirect())
 		{
-			response.renderJavaScriptReference(TinyMCESettings.javaScriptReference());
+			response.render(JavaScriptHeaderItem.forReference(TinyMCESettings.javaScriptReference()));
 		}
 		else
 		{
@@ -98,7 +100,7 @@ public class TinyMceBehavior extends Behavior implements IAjaxRegionMarkupIdProv
 
 		String renderOnDomReady = getAddTinyMceSettingsScript(Mode.exact,
 				Collections.singletonList(component));
-		response.renderOnDomReadyJavaScript(renderOnDomReady);
+		response.render(OnDomReadyHeaderItem.forScript(renderOnDomReady));
 	}
 
 
