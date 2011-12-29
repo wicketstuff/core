@@ -1,6 +1,5 @@
 package com.inmethod.grid.toolbar;
 
-import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.form.Form;
@@ -27,14 +26,16 @@ public class AddRecordsToolbar extends AbstractToolbar
              new ResourceModel("datagrid.add-new-item", "Add New Item");
 
   private DataGrid grid;
-  private Object defaultObject;
+  private final Serializable defaultObject; //final makes sure the default doesn't change
 
-  public AddRecordsToolbar(DataGrid grid, IModel model, Object defaultObject)
+  public AddRecordsToolbar(DataGrid grid, IModel model,
+                           final Serializable defaultObject)
   {
     this(grid,model,defaultObject,ADD_BUTTON_MODEL);
   }
 
-  public AddRecordsToolbar(DataGrid datagrid, IModel model, Object defaultObject,
+  public AddRecordsToolbar(DataGrid datagrid, IModel model,
+                           final Serializable defaultObject,
                            IModel<String> labelModel)
   {
     super(datagrid, model);
@@ -77,10 +78,24 @@ public class AddRecordsToolbar extends AbstractToolbar
    *  new records to the table
    * @return the object to use for populating new rows of the data-view
    */
-  protected Object getNewData()
+  protected Serializable getNewData()
   {
     if ( defaultObject == null ) { log.error("ERROR: defaultObject is null"); }
-    return defaultObject;
+    Object obj;
+    ObjectOutputStream oos;
+    ByteArrayOutputStream byteArray;
+    try
+    {
+      oos = new ObjectOutputStream(byteArray = new ByteArrayOutputStream());
+      oos.writeObject(defaultObject);
+      ObjectInputStream ois =
+            new ObjectInputStream(new ByteArrayInputStream(byteArray.toByteArray()));
+      obj = ois.readObject();
+      return (Serializable)obj;
+    }
+    catch(IOException ioe) { } //error writing output stream
+    catch(ClassNotFoundException cnf ) {} //should never happen
+    return defaultObject; //returns on Error or not serializable
   }
 
 

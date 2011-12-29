@@ -16,4 +16,6 @@ public interface IAppendableDataSource extends IDataSource
    *  @param item Item to append to the end of the result data
    */
   public void InsertRow(int index, Object item);
+
+  public void DeleteRow(int index, Object item);
 }

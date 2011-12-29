@@ -1,15 +1,7 @@
 package com.inmethod.grid.column.editable;
 
-import java.lang.String;
-
-import org.apache.wicket.Component;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.PropertyModel;
-
-import com.inmethod.grid.column.PropertyColumn;
 
 /**
  * Property column that uses a {@link CheckBoxPanel} as cell component

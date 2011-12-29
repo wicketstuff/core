@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
-import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLocator;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
-
-import com.inmethod.grid.datagrid.DataGrid;
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,9 +37,13 @@ public class AppendableDataProviderAdapter
     appendIndex = index;
   }
 
-  /**
-	 * {@inheritDoc}
-	 */
+  public void DeleteRow(int index, Object item)
+  {
+    if ( null != items && _newItemCount > 0)
+    { if (items.remove(item)){ --_newItemCount; } }
+  }
+
+  /** {@inheritDoc} */
 	public void query(IQuery query, IQueryResult result)
   {
 		super.query(query, result);
@@ -55,6 +55,9 @@ public class AppendableDataProviderAdapter
       for ( Iterator it = dataProvider.iterator(query.getFrom(), query.getCount());
             it.hasNext(); )
       { AllItems.add(it.next()); }
+
+      //for(Object item : items ) { AllItems.add(item); }
+      //AllItems.addAll(items);
 
       try { AllItems.addAll(appendIndex,items); }
       catch( IndexOutOfBoundsException iob )

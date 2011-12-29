@@ -14,11 +14,11 @@ import com.inmethod.grid.common.AbstractGrid;
 import com.inmethod.icon.Icon;
 import com.inmethod.icon.IconImage;
 
-abstract class SubmitCancelPanel extends Panel {
+public abstract class SubmitCancelPanel extends Panel {
 
 	private static final long serialVersionUID = 1L;
 
-	private AbstractGrid getGrid() {
+	protected AbstractGrid getGrid() {
 		return grid;
 	}
 

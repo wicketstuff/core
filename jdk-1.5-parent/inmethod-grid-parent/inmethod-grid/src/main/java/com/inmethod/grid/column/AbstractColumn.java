@@ -26,7 +26,6 @@ import com.inmethod.grid.common.AbstractGrid;
  */
 public abstract class AbstractColumn implements IGridColumn
 {
-
     private static final long serialVersionUID = 1L;
 
     private final String columnId;

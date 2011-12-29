@@ -10,8 +10,10 @@ import org.apache.wicket.Component;
 import org.apache.wicket.RequestCycle;
 import org.apache.wicket.Response;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.util.string.Strings;
 
 import com.inmethod.grid.IGridColumn;
@@ -80,6 +82,12 @@ public abstract class ColumnsHeaderRepeater extends WebMarkupContainer {
 					add(panel);
 				}
 			}
+      if (column.getWrapText() )
+      {
+        get(componentId)
+          .add(new AttributeAppender("style",
+                                     Model.of("white-space: normal;"), "; "));
+      }
 		}
 		super.onBeforeRender();
 	}
@@ -117,7 +125,7 @@ public abstract class ColumnsHeaderRepeater extends WebMarkupContainer {
 			response.write("<th style=\"width:");
 			response.write("" + getColumnWidth(column));
 			response.write(column.getSizeUnit().getValue());
-			
+
 			// render the css classes
 			response.write("\" class=\"imxt-want-prelight");
 			if (!Strings.isEmpty(column.getHeaderCssClass())) {

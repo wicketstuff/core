@@ -3,16 +3,10 @@ package com.inmethod.grid.column.editable;
 
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.util.WildcardListModel;
-
-import com.inmethod.grid.column.PropertyColumn;
 
 /**
  * Property column that uses a {@link DropDownChoicePanel} as cell component
@@ -22,14 +16,14 @@ import com.inmethod.grid.column.PropertyColumn;
  *
  * //TODO: make generic
  */
-public class DropDownChoiceColumn extends EditablePropertyColumn
+public class DropDownChoiceColumn<T> extends EditablePropertyColumn
 {
 	private static final long serialVersionUID = 1L;
 
   /** following {@Link AbstractChoice}'s example
    *  and using {@link WildcardListModel} as default model*/
-  private IModel<? extends List> choicesModel;
-  private IChoiceRenderer choiceRenderer = null;
+  private IModel<? extends List<? extends T>> choicesModel;
+  private IChoiceRenderer<T> choiceRenderer = null;
 
 	/**
 	 * Constructor.
@@ -113,7 +107,7 @@ public class DropDownChoiceColumn extends EditablePropertyColumn
 	 */
 	public DropDownChoiceColumn(String columnId, IModel headerModel,
                               String propertyExpression, String sortProperty,
-                              IModel<? extends List> choices)
+                              IModel<? extends List<? extends T>> choices)
   {
 		super(columnId, headerModel, propertyExpression, sortProperty);
     choicesModel = choices;
@@ -134,7 +128,7 @@ public class DropDownChoiceColumn extends EditablePropertyColumn
 	 */
 	public DropDownChoiceColumn(String columnId, IModel headerModel,
                               String propertyExpression,
-                              IModel<? extends List<?>> choices) {
+                              IModel<? extends List<? extends T>> choices) {
 		super(columnId, headerModel, propertyExpression);
     choicesModel = choices;
 	}
@@ -156,7 +150,7 @@ public class DropDownChoiceColumn extends EditablePropertyColumn
 	 */
 	public DropDownChoiceColumn(IModel headerModel, String propertyExpression,
                               String sortProperty,
-                              IModel<? extends List> choices) {
+                              IModel<? extends List<? extends T>> choices) {
 		super(headerModel, propertyExpression, sortProperty);
     choicesModel = choices;
 	}
@@ -173,7 +167,7 @@ public class DropDownChoiceColumn extends EditablePropertyColumn
    *           The collection of choices in the drop down when the cell becomes editable
 	 */
 	public DropDownChoiceColumn(IModel headerModel, String propertyExpression,
-                              IModel<? extends List> choices) {
+                              IModel<? extends List<? extends T>> choices) {
 		super(headerModel, propertyExpression);
     choicesModel = choices;
 	}
@@ -197,8 +191,8 @@ public class DropDownChoiceColumn extends EditablePropertyColumn
 	 */
 	public DropDownChoiceColumn(String columnId, IModel headerModel,
                               String propertyExpression, String sortProperty,
-                              IModel<? extends List> choices,
-                              IChoiceRenderer renderer)
+                              IModel<? extends List<? extends T>> choices,
+                              IChoiceRenderer<T> renderer)
   {
 		super(columnId, headerModel, propertyExpression, sortProperty);
     choicesModel = choices;
@@ -222,8 +216,8 @@ public class DropDownChoiceColumn extends EditablePropertyColumn
 	 */
 	public DropDownChoiceColumn(String columnId, IModel headerModel,
                               String propertyExpression,
-                              IModel<? extends List<?>> choices,
-                              IChoiceRenderer renderer) {
+                              IModel<? extends List<? extends T>> choices,
+                              IChoiceRenderer<T> renderer) {
 		super(columnId, headerModel, propertyExpression);
     choicesModel = choices;
     choiceRenderer = renderer;
@@ -248,8 +242,8 @@ public class DropDownChoiceColumn extends EditablePropertyColumn
 	 */
 	public DropDownChoiceColumn(IModel headerModel, String propertyExpression,
                               String sortProperty,
-                              IModel<? extends List> choices,
-                              IChoiceRenderer renderer) {
+                              IModel<? extends List<? extends T>> choices,
+                              IChoiceRenderer<T> renderer) {
 		super(headerModel, propertyExpression, sortProperty);
     choicesModel = choices;
     choiceRenderer = renderer;
@@ -269,8 +263,8 @@ public class DropDownChoiceColumn extends EditablePropertyColumn
 	 *            The rendering engine
 	 */
 	public DropDownChoiceColumn(IModel headerModel, String propertyExpression,
-                              IModel<? extends List<?>> choices,
-                              IChoiceRenderer renderer) {
+                              IModel<? extends List<? extends T>> choices,
+                              IChoiceRenderer<T> renderer) {
 		super(headerModel, propertyExpression);
     choicesModel = choices;
     choiceRenderer = renderer;
@@ -463,18 +457,19 @@ public class DropDownChoiceColumn extends EditablePropertyColumn
                                            IModel cellModel)
   {
     return new DropDownChoicePanel(componentId, cellModel, rowModel, this,
-                                   choicesModel, choiceRenderer);
+                                     choicesModel, choiceRenderer);
   }
 
   /** {@inheritDoc} */
   @Override
   protected CharSequence convertToString(Object obj)
   {
-    if (null != obj)
+    if (null != obj && null != choiceRenderer)
     {
       return getConverter(obj.getClass())
-                .convertToString(choiceRenderer.getDisplayValue(obj),getLocale());
+                .convertToString(choiceRenderer.getDisplayValue((T)obj),getLocale());
     }
+    else if ( null != obj) { return super.convertToString(obj); }
     else { return ""; }
   }
 

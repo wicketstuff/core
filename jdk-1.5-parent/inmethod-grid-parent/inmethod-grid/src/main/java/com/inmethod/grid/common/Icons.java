@@ -28,6 +28,8 @@ public class Icons {
 	public static final Icon OK = new PackageIcon(Icons.class, "res/icons/16-em-check.png");
 	
 	public static final Icon CANCEL = new PackageIcon(Icons.class, "res/icons/16-em-cross.png");
+
+  public static final Icon DELETE = new PackageIcon(Icons.class, "res/icons/trashcan-delete.png");
 	
 	private Icons() {		
 	}
