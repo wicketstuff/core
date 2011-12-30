@@ -225,7 +225,7 @@ public class Chart extends WebComponent implements Serializable
 			return null;
 		}
 
-		StringBuilder back = new StringBuilder(barWidth);
+		StringBuilder back = new StringBuilder("" + barWidth);
 
 		if (groupSpacing >= 0)
 		{
