@@ -86,7 +86,7 @@
     <module>jdk-1.5-parent</module>
     <module>jdk-1.6-parent</module>
   </modules>
-	
+
 	<profiles>
 		<profile>
 			<id>wicketstuff.org</id>
@@ -710,4 +710,3 @@
 	</reporting>
 
 </project>
-
