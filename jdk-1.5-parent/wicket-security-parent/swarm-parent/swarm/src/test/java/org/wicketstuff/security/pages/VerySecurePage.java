@@ -49,6 +49,7 @@ public class VerySecurePage extends SecureWebPage implements HighSecurityPage
 		{
 			if (isAuthenticated())
 				return getStrategy().isClassAuthorized(getClazz(), action);
+			
 			throw new RestartResponseAtInterceptPageException(SecondaryLoginPage.class);
 		}
 	};
