@@ -940,6 +940,7 @@
 										<ignore></ignore>
 									</action>
 								</pluginExecution>
+								
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>
