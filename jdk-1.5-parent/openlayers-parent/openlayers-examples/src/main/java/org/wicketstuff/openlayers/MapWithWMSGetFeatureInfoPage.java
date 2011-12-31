@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.AbstractReadOnlyModel;
+
 import org.wicketstuff.openlayers.api.Control;
 import org.wicketstuff.openlayers.api.control.WMSGetFeatureInfo;
 import org.wicketstuff.openlayers.api.layer.Layer;
@@ -110,7 +111,7 @@ public class MapWithWMSGetFeatureInfoPage extends WebPage {
 		parameterMap.put("url", JSUtils
 				.getQuotedString("http://demo.opengeo.org/geoserver/wms"));
 		parameterMap.put("title", JSUtils.getQuotedString("Test"));
-		parameterMap.put("layers", "[wms" + roads.getId() + "]");
+		parameterMap.put("layers", "[" + roads.getVariableName() + "]");
 		parameterMap.put("infoFormat", JSUtils.getQuotedString("text/html"));
 
 		

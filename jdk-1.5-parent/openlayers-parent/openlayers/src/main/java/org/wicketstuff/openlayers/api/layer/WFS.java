@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.apache.wicket.IClusterable;
 import org.apache.wicket.behavior.HeaderContributor;
+
 import org.wicketstuff.openlayers.js.JSUtils;
 
 /**
@@ -47,7 +48,7 @@ public class WFS extends Layer implements IClusterable {
 	 */
 	public WFS(String name, String url, Map<String, String> params,
 			Map<String, String> options) {
-		super();
+		super("wfs");
 		this.url = url;
 		this.params = params;
 		this.options = options;

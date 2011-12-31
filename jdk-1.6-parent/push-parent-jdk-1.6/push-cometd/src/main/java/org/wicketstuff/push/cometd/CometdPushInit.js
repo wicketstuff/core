@@ -1,7 +1,8 @@
 if (!Wicket.Push){
   
 // Skip javascript json implementation if native browser version is available.
-if(!JSON){
+// if(!JSON) => breaks in IE with 'JSON' is undefined 
+if(!this.JSON){
 /*
  http://www.JSON.org/json2.js
  2010-08-25
@@ -11,7 +12,7 @@ if(!JSON){
  See http://www.JSON.org/js.html
  Compressed with JSMin via http://jscompress.com/
 */
-if(!this.JSON){this.JSON={};}
+JSON={};
 (function(){function f(n){return n<10?'0'+n:n;}
 if(typeof Date.prototype.toJSON!=='function'){Date.prototype.toJSON=function(key){return isFinite(this.valueOf())?this.getUTCFullYear()+'-'+
 f(this.getUTCMonth()+1)+'-'+

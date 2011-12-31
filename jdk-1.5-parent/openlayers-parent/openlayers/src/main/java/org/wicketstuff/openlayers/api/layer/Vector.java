@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.wicket.behavior.HeaderContributor;
-import org.wicketstuff.openlayers.js.Constructor;
+
 import org.wicketstuff.openlayers.js.JSUtils;
 
 public class Vector extends Layer implements Serializable {
@@ -34,7 +34,7 @@ public class Vector extends Layer implements Serializable {
 	}
 
 	public Vector(String name, HashMap<String, String> options) {
-		super();
+		super("vec");
 		setName(name);
 		this.options = options;
 	}

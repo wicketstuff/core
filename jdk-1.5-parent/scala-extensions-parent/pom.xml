@@ -51,11 +51,13 @@
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-extensions</artifactId>
+			<version>${wicket.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
 		</dependency>
 		
 		<dependency>
@@ -67,6 +69,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
 		
@@ -74,47 +77,64 @@
 
 	<build>
 		<plugins>
+
+			<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.3.2</version>
+					<configuration>
+							<properties combine.self="override">
+							
+
+								<source>1.5</source>
+								<target>1.5</target>
+								<encoding>UTF-8</encoding>
+							</properties>
+							</configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<useSystemClassLoader>false</useSystemClassLoader>
-					<argLine>-Xmx512m</argLine>
+						<properties combine.self="override">
+
+					 <useSystemClassLoader>false</useSystemClassLoader>
+                                         <argLine>-Xmx512m</argLine>
+
 					<includes>
 						<include>**/*Test.java</include>
 						<include>**/*Unit.java</include>
 						<include>**/*Spec.java</include>
 						<include>**/*Specs.java</include>
 					</includes>
+				</properties>
 				</configuration>
 			</plugin>
 			<plugin>
+				
+				<inherited>true</inherited>
 				<groupId>org.scala-tools</groupId>
 				<artifactId>maven-scala-plugin</artifactId>
+				<version>2.15.2</version>
 				<executions>
 					<execution>
-						<id>compile</id>
+						<id>scala-compile-first</id>
+						<phase>compile</phase>
 						<goals>
 							<goal>compile</goal>
 						</goals>
-						<phase>compile</phase>
 					</execution>
-
 					<execution>
-						<id>test-compile</id>
+						<id>scala-test-compile</id>
+						<phase>compile</phase>
 						<goals>
 							<goal>testCompile</goal>
 						</goals>
-						<phase>test-compile</phase>
-					</execution>
-
-					<execution>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
 					</execution>
 				</executions>
+
+					
 			</plugin>
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
@@ -152,7 +172,8 @@
 				</excludes>
 			</resource>
 		</resources>
-	</build>
+
+		</build>
 
 	<pluginRepositories>
 		<pluginRepository>

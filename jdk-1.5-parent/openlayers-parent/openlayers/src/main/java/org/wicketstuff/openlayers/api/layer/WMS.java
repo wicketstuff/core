@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.wicket.behavior.HeaderContributor;
+
 import org.wicketstuff.openlayers.js.JSUtils;
 
 /**
@@ -47,7 +48,7 @@ public class WMS extends Layer implements Serializable {
 	 * @param extraOptions things like baseLayer: need to be placed in extraOptions.
 	 */
 	public WMS(String name, String url, HashMap<String, String> options, HashMap<String, String>extraOptions) {
-		super();
+		super("wms");
 		this.extraOptions = extraOptions;
 		setName(name);
 		this.url = url;

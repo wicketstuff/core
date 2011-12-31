@@ -17,9 +17,8 @@ package org.wicketstuff.openlayers.api.feature;
 
 import java.util.ArrayList;
 
-import org.wicketstuff.openlayers.IOpenLayersMap;
-
 import com.vividsolutions.jts.geom.Coordinate;
+import org.wicketstuff.openlayers.IOpenLayersMap;
 
 /**
  * 
@@ -66,6 +65,6 @@ public class Point extends Feature {
 
 	@Override
 	protected String getType() {
-		return null;
+		return  "OpenLayers.Geometry.Point";
 	}
 }

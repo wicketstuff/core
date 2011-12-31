@@ -1,0 +1,44 @@
+<!--
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+    Contributed by United Services Automotive Association (USAA)
+
+-->
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<view-state id="Page1" view="org.wicketstuff.webflow.Page1">
+		<attribute name="progressBarText" value="Step 1" />
+		<attribute name="stepNumber" value="1" />
+		<transition on="next" to="Page2" history="discard" />
+	</view-state>
+
+	<view-state id="Page2" view="org.wicketstuff.webflow.Page2">
+		<attribute name="progressBarText" value="Step 2 - Tricky decision" />
+		<attribute name="stepNumber" value="2" />
+		<transition on="previous" to="Page1" />
+		<transition on="next" to="Page3" />
+	</view-state>
+
+	<end-state id="Page3" view="org.wicketstuff.webflow.Page3">
+		<attribute name="progressBarText" value="Step 3 - Done" />
+		<attribute name="stepNumber" value="3" />
+	</end-state>
+	
+	<global-transitions>
+		<transition on="progressBarStep1" to="Page1"/>
+	</global-transitions>
+</flow>	

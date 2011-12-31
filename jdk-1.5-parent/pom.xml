@@ -17,6 +17,7 @@
 	</description>
 
 	<modules>
+		<module>jqplot-parent</module>
 		<module>mootools-meiomask-parent</module>
 		<module>progressbar-parent</module>
 		<module>push-parent-jdk-1.5</module>
@@ -26,6 +27,7 @@
 		<module>client-and-server-validation</module>
 		<module>console-parent</module>
 		<module>datatable-autocomplete-parent</module>
+		<module>datatables-parent</module>
 		<module>eidogo-parent</module>
 		<module>gmap2-parent</module>
 		<module>googlecharts-parent</module>
@@ -63,31 +65,11 @@
 		<module>jasperreports-parent</module>
 		<module>dojo-parent</module>
 		<module>modalx-parent</module>
+		<module>spring-webflow-parent</module>
 	  </modules>
 
 	<build>
 	<plugins>
-	<plugin>
-		<inherited>true</inherited>
-		<groupId>org.apache.maven.plugins</groupId>
-		<artifactId>maven-compiler-plugin</artifactId>
-		<version>2.3.1</version>
-		<configuration>
-			<fork>true</fork>
-			<verbose>true</verbose>
-			<optimise>true</optimise>
-			<debug>true</debug>
-			<meminitial>128m</meminitial>
-			<maxmem>512m</maxmem>
-			<source>1.5</source>
-			<target>1.5</target>
-			<!--
-			<compilerVersion>1.5</compilerVersion>
-			<executable>${java5home}/bin/javac</executable>
-			-->
-			<encoding>UTF-8</encoding>
-		</configuration>
-	</plugin>
 
 	<plugin>
 
@@ -98,29 +80,74 @@
 
 	</plugin>
 
-	<plugin>
+			<plugin>
+				<!-- make sure our code doesn't have 1.6 dependencies except where we 
+					know it see * http://mojo.codehaus.org/animal-sniffer/index.html * http://weblogs.java.net/blog/kohsuke/archive/2008/11/compiling_with.html -->
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>animal-sniffer-maven-plugin</artifactId>
+				<version>1.7</version>				
+				<inherited>true</inherited>
+				<configuration>
+					<signature>
+						<groupId>org.codehaus.mojo.signature</groupId>
+						<artifactId>java15</artifactId>
+						<version>1.0</version>
+					</signature>
+				</configuration>
+			</plugin>
 
-		<inherited>true</inherited>
-	  <!--
-	           make sure our code doesn't have 1.6 dependencies except where
-			   we know it
-			            see
-		         * http://mojo.codehaus.org/animal-sniffer/index.html
-				          * http://weblogs.java.net/blog/kohsuke/archive/2008/11/compiling_with.html
-						          -->
-								          <groupId>org.codehaus.mojo</groupId>
-	          <artifactId>animal-sniffer-maven-plugin</artifactId>
-	          <version>1.5</version>
-	          <configuration>
-			            <signature>
-					            <groupId>org.codehaus.mojo.signature</groupId>
-					            <artifactId>java15</artifactId>
-					            <version>1.0</version>
-	   		            </signature>
-			   </configuration>
-		</plugin>
+		<plugin>
+				<inherited>true</inherited>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.3.2</version>
+					<executions>
+						<!-- will compile the tests using the java 5 compiler -->
+						<execution>
+							<id>java-5-compile-tests</id>
+							<phase>compile</phase>
+							<goals>
+								<goal>testCompile</goal>
+							</goals>
+							<configuration>
+								<source>1.5</source>
+								<target>1.5</target>
+								<compilerVersion>1.5</compilerVersion>
+								<executable>${env.JAVA_5_HOME}/bin/javac</executable>
+								<fork>true</fork>
 
-	</plugins>
+								<encoding>UTF-8</encoding>
+							</configuration>
+						</execution>
+						<!-- Will compile the modules using java 6 source to java 5 
+							Due to how the java 6 compiler works this will allow java 6 ism's in the code
+							to be compiled back into java 5 compatible class files.
+						    -->
+						<execution>
+							<id>java-6-compile-to-java-5</id>
+							<phase>compile</phase>
+							<goals><goal>compile</goal></goals>
+							<configuration>
+								<source>1.5</source>
+								<target>1.5</target>
+								<encoding>UTF-8</encoding>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- run the tests using java 5 -->
+				<plugin>
+					<inherited>true</inherited>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.10</version>
+					<configuration>
+						<jvm>${env.JAVA_5_HOME}/bin/java</jvm>
+					</configuration>
+				</plugin>
+			</plugins>
 	</build>
+
+
 
 </project>

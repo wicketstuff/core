@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.Request;
 import org.apache.wicket.RequestCycle;
@@ -36,19 +35,11 @@ import org.apache.wicket.markup.html.JavascriptPackageResource;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.openlayers.api.Bounds;
-import org.wicketstuff.openlayers.api.IJavascriptComponent;
-import org.wicketstuff.openlayers.api.InfoWindow;
-import org.wicketstuff.openlayers.api.LonLat;
-import org.wicketstuff.openlayers.api.Marker;
-import org.wicketstuff.openlayers.api.Overlay;
-import org.wicketstuff.openlayers.api.layer.GMap;
+import org.wicketstuff.openlayers.api.*;
 import org.wicketstuff.openlayers.api.layer.Layer;
-import org.wicketstuff.openlayers.api.layer.OSM;
-import org.wicketstuff.openlayers.api.layer.Vector;
-import org.wicketstuff.openlayers.api.layer.WFS;
 import org.wicketstuff.openlayers.api.layer.WMS;
 import org.wicketstuff.openlayers.event.EventType;
 import org.wicketstuff.openlayers.event.OverlayListenerBehavior;
@@ -339,10 +330,18 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 
 	private void addHeaderContributorsForLayers(List<Layer> layers) {
 		for (Layer layer : layers) {
-			for (HeaderContributor contributor : layer.getHeaderContributors()) {
-				add(contributor);
-			}
+			addHeaderContributor (layer);
 		}
+	}
+
+	/**
+	 * @param layer
+	 */
+	private void addHeaderContributor(Layer layer) {
+		
+		for (HeaderContributor contributor : layer.getHeaderContributors()) {
+			add(contributor);
+		}		
 	}
 
 	/**
@@ -476,43 +475,11 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 		}
 
 		for (Layer layer : layers) {
-			if (layer instanceof WMS) {
-				WMS wms = (WMS) layer;
-				js.append("var wms" + wms.getId() + " ="
-						+ wms.getJSconstructor() + ";\n");
-				js.append(getJSinvoke("addLayer(wms" + wms.getId() + ","
-						+ wms.getId() + ")"));
-			}
-			if (layer instanceof GMap) {
-				GMap gmap = (GMap) layer;
-				js.append("var gmap" + gmap.getId() + " ="
-						+ gmap.getJSconstructor() + ";\n");
-				js.append(getJSinvoke("addLayer(gmap" + gmap.getId() + ","
-						+ gmap.getId() + ")"));
-			}
-			if (layer instanceof OSM) {
-				OSM osm = (OSM) layer;
-				js.append("var osm" + osm.getId() + " ="
-						+ osm.getJSconstructor() + ";\n");
-				js.append(getJSinvoke("addLayer(osm" + osm.getId() + ","
-						+ osm.getId() + ")"));
-			}
-			if (layer instanceof WFS) {
-				WFS wfs = (WFS) layer;
-				js.append("var wfs" + wfs.getId() + " ="
-						+ wfs.getJSconstructor() + ";\n");
-				js.append(getJSinvoke("addLayer(wfs" + wfs.getId() + ","
-						+ wfs.getId() + ")"));
-
-			}
-			if (layer instanceof Vector) {
-				Vector vec = (Vector) layer;
-				js.append("var vec" + vec.getId() + " ="
-						+ vec.getJSconstructor() + ";\n");
-				js.append(getJSinvoke("addLayer(vec" + vec.getId() + ","
-						+ vec.getId() + ")"));
-
-			}
+			
+			String jsLayerAdd = layer.getJSAddLayer(this);
+			
+			js.append(jsLayerAdd);
+			
 		}
 		
 		/*
@@ -815,5 +782,17 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap {
 		}
 		return getJSinvoke("setBusinessLogicProjection('"
 				+ businessLogicProjection + "')");
+	}
+
+	/**
+	 * Add a new layer to the map.
+	 * 
+	 * Default is to add at the end/top layer.
+	 * 
+	 */
+	public void addLayer(Layer layer) {
+		this.layers.add(layer);
+		
+		addHeaderContributor(layer);
 	}
 }

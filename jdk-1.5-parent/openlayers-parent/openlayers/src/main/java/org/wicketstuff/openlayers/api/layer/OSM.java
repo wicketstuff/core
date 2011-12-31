@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.wicketstuff.openlayers.js.Constructor;
+
 import org.wicketstuff.openlayers.js.JSUtils;
 
 public class OSM extends Layer implements Serializable {
@@ -20,6 +20,7 @@ public class OSM extends Layer implements Serializable {
 	private OSMLayer layer;
 
 	public OSM(String name, OSMLayer layer) {
+		super("osm");
 		setName(name);
 		this.layer = layer;
 	}

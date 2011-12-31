@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
+
 import org.wicketstuff.openlayers.api.Control;
 import org.wicketstuff.openlayers.api.LonLat;
 import org.wicketstuff.openlayers.api.control.GetFeature;
@@ -142,11 +143,11 @@ public class MapUsingWFSGetFeaturePage extends WebPage {
 		
 
 			
-		control.registerJavascriptEvent(map, "featureselected", new Model<String>("vec" + select.getId() + ".addFeatures([evt.feature]);"));
-		control.registerJavascriptEvent(map, "featureunselected", new Model<String>("vec" + select.getId() + ".removeFeatures([evt.feature]);"));
+		control.registerJavascriptEvent(map, "featureselected", new Model<String>(select.getVariableName() + ".addFeatures([evt.feature]);"));
+		control.registerJavascriptEvent(map, "featureunselected", new Model<String>(select.getVariableName() + ".removeFeatures([evt.feature]);"));
 		
-		control.registerJavascriptEvent(map, "hoverfeature", new Model<String>("vec" + hover.getId() + ".addFeatures([evt.feature]);"));
-		control.registerJavascriptEvent(map, "outfeature", new Model<String>("vec" + hover.getId() + ".removeFeatures([evt.feature]);"));
+		control.registerJavascriptEvent(map, "hoverfeature", new Model<String>(hover.getVariableName() + ".addFeatures([evt.feature]);"));
+		control.registerJavascriptEvent(map, "outfeature", new Model<String>(hover.getVariableName() + ".removeFeatures([evt.feature]);"));
 
 		add(map);
 	}

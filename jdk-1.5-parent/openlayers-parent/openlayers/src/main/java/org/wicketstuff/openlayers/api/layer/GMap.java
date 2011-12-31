@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
+
 import org.wicketstuff.openlayers.js.JSUtils;
 
 public class GMap extends Layer implements Serializable {
@@ -23,7 +24,7 @@ public class GMap extends Layer implements Serializable {
 
 	public GMap(String name, String apiKey, String apiVersion,
 			HashMap<String, String> options) {
-		super();
+		super("gmap");
 		this.apiKey = apiKey;
 		this.apiVersion = apiVersion;
 		this.options = options;

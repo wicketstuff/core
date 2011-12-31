@@ -1,0 +1,64 @@
+<!--
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+    Contributed by United Services Automotive Association (USAA)
+
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:webflow="http://www.springframework.org/schema/webflow-config"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/webflow-config
+           http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd">		
+
+		<webflow:flow-registry id="flowRegistry" flow-builder-services="flowBuilderServices" >
+		    <webflow:flow-location path="/WEB-INF/config/ShortSimpleFlow.xml" id="ShortSimpleFlow"/>		
+		</webflow:flow-registry>
+		
+		<webflow:flow-builder-services id="flowBuilderServices" view-factory-creator="viewFactoryCreator" />
+		
+		<bean id="viewFactoryCreator" class="org.wicketstuff.webflow.view.WicketViewFactoryCreator" />
+				
+		<!-- bean id="viewRenderedListener" class="org.wicketstuff.webflow.listener.FullPageRefreshFlowExecutionListener"/ -->		
+		
+		<!-- bean id="flowExecutionListenerLoader" class="org.springframework.webflow.execution.factory.StaticFlowExecutionListenerLoader">
+			<constructor-arg ref="viewRenderedListener"/>
+		</bean -->
+	   
+		<bean name="flowConversationManager" class="org.wicketstuff.webflow.conversation.PageFlowConversationManager" />
+		
+		<bean name="flowExecutionFactory" class="org.springframework.webflow.engine.impl.FlowExecutionImplFactory">
+			<property name="executionKeyFactory" ref="flowExecutionRepository"/>
+			<!-- property name="executionListenerLoader" ref="flowExecutionListenerLoader"/ -->
+		</bean>
+		
+		<bean name="flowSnapshotFactory" class="org.springframework.webflow.execution.repository.snapshot.SerializedFlowExecutionSnapshotFactory">
+			<constructor-arg ref="flowExecutionFactory"/>
+			<constructor-arg ref="flowRegistry"/>
+		</bean>
+		
+		<bean name="flowExecutionRepository" class="org.springframework.webflow.execution.repository.impl.DefaultFlowExecutionRepository">
+			<constructor-arg ref="flowConversationManager"/>
+			<constructor-arg ref="flowSnapshotFactory"/>
+		</bean>		
+		
+		<bean name="flowExecutor" class="org.springframework.webflow.executor.FlowExecutorImpl">
+			<constructor-arg ref="flowRegistry"/>
+			<constructor-arg ref="flowExecutionFactory"/>
+			<constructor-arg ref="flowExecutionRepository"/>
+		</bean>		
+
+</beans>
