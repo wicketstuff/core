@@ -5,3 +5,6 @@ velocity.log
 .settings
 .externalToolBuilders
 *~
+*.iml
+*.ipr
+*.iws
