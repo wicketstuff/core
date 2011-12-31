@@ -21,7 +21,6 @@ package org.wicketstuff.webflow.components;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.model.IModel;
-
 import org.wicketstuff.webflow.FlowUtils;
 
 

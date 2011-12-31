@@ -22,7 +22,6 @@ import org.apache.wicket.Response;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.webflow.engine.builder.support.FlowBuilderServices;

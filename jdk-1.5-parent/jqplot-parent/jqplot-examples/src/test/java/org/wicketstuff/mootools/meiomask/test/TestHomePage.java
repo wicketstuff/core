@@ -1,8 +1,8 @@
 package org.wicketstuff.mootools.meiomask.test;
 
-import org.apache.wicket.util.tester.WicketTester;
-
 import junit.framework.TestCase;
+
+import org.apache.wicket.util.tester.WicketTester;
 import org.wicketstuff.jqplot.example.HomePage;
 import org.wicketstuff.jqplot.example.WicketApplication;
 

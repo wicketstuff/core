@@ -21,7 +21,11 @@ import java.util.Collection;
 import br.digilabs.jqplot.axis.Axis;
 import br.digilabs.jqplot.axis.XAxis;
 import br.digilabs.jqplot.axis.YAxis;
-import br.digilabs.jqplot.chart.elements.*;
+import br.digilabs.jqplot.chart.elements.Axes;
+import br.digilabs.jqplot.chart.elements.Legend;
+import br.digilabs.jqplot.chart.elements.Serie;
+import br.digilabs.jqplot.chart.elements.SeriesDefaults;
+import br.digilabs.jqplot.chart.elements.Title;
 
 /**
  *

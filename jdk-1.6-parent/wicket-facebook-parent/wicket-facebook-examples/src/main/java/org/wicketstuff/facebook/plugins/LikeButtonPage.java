@@ -3,7 +3,6 @@ package org.wicketstuff.facebook.plugins;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-
 import org.wicketstuff.facebook.FacebookSdk;
 import org.wicketstuff.facebook.plugins.LikeButton.LikeButtonAction;
 import org.wicketstuff.facebook.plugins.LikeButton.LikeButtonLayoutStyle;

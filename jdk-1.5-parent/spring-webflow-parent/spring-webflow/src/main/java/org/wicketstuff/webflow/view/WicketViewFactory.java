@@ -19,7 +19,6 @@
 package org.wicketstuff.webflow.view;
 
 import org.apache.wicket.Component;
-
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.execution.View;
 import org.springframework.webflow.execution.ViewFactory;

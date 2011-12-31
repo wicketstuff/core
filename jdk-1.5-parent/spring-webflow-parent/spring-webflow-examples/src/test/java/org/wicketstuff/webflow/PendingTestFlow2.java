@@ -19,8 +19,8 @@ import org.springframework.webflow.config.FlowDefinitionResource;
 import org.springframework.webflow.config.FlowDefinitionResourceFactory;
 import org.springframework.webflow.context.ExternalContext;
 import org.springframework.webflow.test.MockExternalContext;
-import org.springframework.webflow.test.execution
-    .AbstractXmlFlowExecutionTests;
+import org.springframework.webflow.test.MockFlowBuilderContext;
+import org.springframework.webflow.test.execution.AbstractXmlFlowExecutionTests;
 
 public class PendingTestFlow2 extends AbstractXmlFlowExecutionTests {
 	 

@@ -16,7 +16,6 @@
 package org.wicketstuff.webflow;
 
 import org.apache.wicket.util.tester.WicketTester;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;

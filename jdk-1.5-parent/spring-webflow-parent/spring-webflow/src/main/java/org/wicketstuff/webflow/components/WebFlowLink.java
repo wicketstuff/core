@@ -20,7 +20,6 @@ package org.wicketstuff.webflow.components;
 
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
-
 import org.wicketstuff.webflow.FlowUtils;
 
 

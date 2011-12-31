@@ -20,7 +20,6 @@ package org.wicketstuff.webflow.view;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.binding.convert.ConversionService;

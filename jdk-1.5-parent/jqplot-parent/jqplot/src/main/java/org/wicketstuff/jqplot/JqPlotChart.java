@@ -16,9 +16,9 @@
 package org.wicketstuff.jqplot;
 
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.wicketstuff.jqplot.behavior.JqPlotBehavior;
 
 import br.digilabs.jqplot.chart.Chart;
-import org.wicketstuff.jqplot.behavior.JqPlotBehavior;
 
 /**
  * 

@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.PropertyModel;
-
 import org.wicketstuff.facebook.FacebookPermission;
 
 /**

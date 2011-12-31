@@ -21,7 +21,6 @@ package org.wicketstuff.webflow.components;
 import org.apache.wicket.RequestCycle;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.model.IModel;
-
 import org.wicketstuff.webflow.controller.RequestTargetFactory;
 
 

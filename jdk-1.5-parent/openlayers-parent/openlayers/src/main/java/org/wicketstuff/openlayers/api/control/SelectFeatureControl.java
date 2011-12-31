@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.api.layer.Layer;
+import org.wicketstuff.openlayers.api.layer.Vector;
+import org.wicketstuff.openlayers.js.Constructor;
 
 public class SelectFeatureControl extends AbstractControl {
 	

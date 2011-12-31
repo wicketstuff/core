@@ -4,9 +4,11 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import br.digilabs.jqplot.chart.Chart;
 import br.digilabs.jqplot.chart.config.ChartConfiguration;
 import br.digilabs.jqplot.metadata.JqPlotPlugin;
+
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.enums.EnumConverter;

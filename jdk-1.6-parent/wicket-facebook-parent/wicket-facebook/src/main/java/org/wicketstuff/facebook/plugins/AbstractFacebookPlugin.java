@@ -7,7 +7,6 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.iterator.ComponentHierarchyIterator;
-
 import org.wicketstuff.facebook.FacebookRootProvider;
 import org.wicketstuff.facebook.MissingFacebookRootException;
 

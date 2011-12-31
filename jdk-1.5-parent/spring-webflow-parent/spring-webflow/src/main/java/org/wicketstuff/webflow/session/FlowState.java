@@ -26,7 +26,6 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
-
 import org.wicketstuff.webflow.controller.PageFlowController;
 import org.wicketstuff.webflow.conversation.PageFlowConversationContainer;
 public class FlowState<T> implements Serializable

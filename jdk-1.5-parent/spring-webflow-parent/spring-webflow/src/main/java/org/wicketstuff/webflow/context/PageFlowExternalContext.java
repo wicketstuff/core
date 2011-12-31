@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.markup.html.pages.RedirectPage;
-
 import org.springframework.webflow.context.servlet.ServletExternalContext;
 import org.wicketstuff.webflow.session.PageFlowSession;
 

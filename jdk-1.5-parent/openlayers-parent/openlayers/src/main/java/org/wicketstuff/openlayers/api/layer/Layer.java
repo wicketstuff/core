@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.behavior.HeaderContributor;
-
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.js.Constructor;
 import org.wicketstuff.openlayers.js.JSUtils;

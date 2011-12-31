@@ -30,9 +30,7 @@ import org.apache.wicket.PageParameters;
 import org.apache.wicket.RequestCycle;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.RequestParameters;
-import org.apache.wicket.request.target.component
-    .BookmarkablePageRequestTarget;
-
+import org.apache.wicket.request.target.component.BookmarkablePageRequestTarget;
 import org.wicketstuff.webflow.FlowUtils;
 import org.wicketstuff.webflow.PageFlowConstants;
 import org.wicketstuff.webflow.session.FlowState;

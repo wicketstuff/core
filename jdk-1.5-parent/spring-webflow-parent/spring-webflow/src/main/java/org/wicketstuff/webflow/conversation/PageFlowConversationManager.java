@@ -18,9 +18,12 @@
  *****************************************************************************/
 package org.wicketstuff.webflow.conversation;
 
-import org.springframework.webflow.conversation.*;
-import org.springframework.webflow.conversation.impl
-    .BadlyFormattedConversationIdException;
+import org.springframework.webflow.conversation.Conversation;
+import org.springframework.webflow.conversation.ConversationException;
+import org.springframework.webflow.conversation.ConversationId;
+import org.springframework.webflow.conversation.ConversationManager;
+import org.springframework.webflow.conversation.ConversationParameters;
+import org.springframework.webflow.conversation.impl.BadlyFormattedConversationIdException;
 import org.springframework.webflow.conversation.impl.SimpleConversationId;
 import org.wicketstuff.webflow.session.PageFlowSession;
 

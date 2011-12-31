@@ -1,7 +1,6 @@
 package org.wicketstuff.facebook.plugins;
 
 import org.apache.wicket.markup.html.WebPage;
-
 import org.wicketstuff.facebook.FacebookPermission;
 import org.wicketstuff.facebook.FacebookSdk;
 

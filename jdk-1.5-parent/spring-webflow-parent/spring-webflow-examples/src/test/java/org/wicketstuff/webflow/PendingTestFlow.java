@@ -15,13 +15,19 @@
  */
 package org.wicketstuff.webflow;
 
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+
 import org.junit.Test;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.webflow.config.FlowDefinitionResource;
 import org.springframework.webflow.config.FlowDefinitionResourceFactory;
 import org.springframework.webflow.test.MockExternalContext;
-import org.springframework.webflow.test.execution
-    .AbstractXmlFlowExecutionTests;
+import org.springframework.webflow.test.MockFlowBuilderContext;
+import org.springframework.webflow.test.execution.AbstractXmlFlowExecutionTests;
 
 public class PendingTestFlow extends AbstractXmlFlowExecutionTests {
 

@@ -17,7 +17,6 @@ package org.wicketstuff.webflow;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
-
 import org.wicketstuff.webflow.components.WebFlowLink;
 import org.wicketstuff.webflow.extras.ProgressBarLinksPanel;
 import org.wicketstuff.webflow.session.PageFlowSession;

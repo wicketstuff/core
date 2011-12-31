@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import org.apache.wicket.Component;
-
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 import org.springframework.webflow.execution.View;
