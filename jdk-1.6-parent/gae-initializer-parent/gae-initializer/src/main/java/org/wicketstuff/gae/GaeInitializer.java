@@ -2,7 +2,7 @@ package org.wicketstuff.gae;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.IInitializer;
-import org.apache.wicket.pageStore.memory.DataStoreEvictionStrategy;
+import org.apache.wicket.pageStore.memory.IDataStoreEvictionStrategy;
 import org.apache.wicket.pageStore.memory.PageNumberEvictionStrategy;
 import org.apache.wicket.serialize.ISerializer;
 
@@ -24,7 +24,7 @@ public class GaeInitializer implements IInitializer
 		application.getFrameworkSettings().setSerializer(serializer);
 
 		// save older version of pages in the HttpSession
-		final DataStoreEvictionStrategy evictionStrategy;
+		final IDataStoreEvictionStrategy evictionStrategy;
 		if (application instanceof GaeApplication)
 		{
 			evictionStrategy = ((GaeApplication)application).getEvictionStrategy();

@@ -8,8 +8,8 @@ import org.apache.wicket.page.PageStoreManager;
 import org.apache.wicket.pageStore.DefaultPageStore;
 import org.apache.wicket.pageStore.IDataStore;
 import org.apache.wicket.pageStore.IPageStore;
-import org.apache.wicket.pageStore.memory.DataStoreEvictionStrategy;
 import org.apache.wicket.pageStore.memory.HttpSessionDataStore;
+import org.apache.wicket.pageStore.memory.IDataStoreEvictionStrategy;
 import org.apache.wicket.serialize.ISerializer;
 
 public class GaePageManagerProvider extends DefaultPageManagerProvider
@@ -17,10 +17,10 @@ public class GaePageManagerProvider extends DefaultPageManagerProvider
 
 	private final Application application;
 
-	private final DataStoreEvictionStrategy evictionStrategy;
+	private final IDataStoreEvictionStrategy evictionStrategy;
 
 	public GaePageManagerProvider(Application application,
-		DataStoreEvictionStrategy evictionStrategy)
+		IDataStoreEvictionStrategy evictionStrategy)
 	{
 		super(application);
 
