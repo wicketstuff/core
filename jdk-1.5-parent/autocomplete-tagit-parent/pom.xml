@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>jdk-1.5-parent</artifactId>
-		<version>1.5-SNAPSHOT</version>
+		<version>1.5.3.1</version>
 	</parent>
 	<artifactId>wicketstuff-autocomplete-tagit-parent</artifactId>
 	<name>Autocomplete Tag It Parent</name>
