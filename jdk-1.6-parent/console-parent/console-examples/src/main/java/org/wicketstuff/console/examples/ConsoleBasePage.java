@@ -1,5 +1,6 @@
 package org.wicketstuff.console.examples;
 
+import org.apache.wicket.markup.head.CssReferenceHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -50,7 +51,7 @@ public abstract class ConsoleBasePage extends WebPage
 	{
 		super.renderHead(response);
 
-		response.renderCSSReference(CSS);
+		response.render(CssReferenceHeaderItem.forReference(CSS));
 	}
 
 }
