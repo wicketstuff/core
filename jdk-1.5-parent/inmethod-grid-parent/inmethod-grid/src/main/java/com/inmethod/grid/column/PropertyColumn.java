@@ -117,22 +117,18 @@ public class PropertyColumn extends AbstractLightWeightColumn
     /**
      * Returns whether the markup will be escaped.
      * 
-     * @return
-     *         <code>true</code. if the markup will be escaped, <code>false</code>
-     *         otherwise
+     * @return <code>true</code. if the markup will be escaped,
+     *         <code>false</code> otherwise
      */
-    public boolean isEscapeMarkup()
-    {
+    public boolean isEscapeMarkup() {
         return escapeMarkup;
     }
 
-    protected Object getProperty(Object object, String propertyExpression)
-    {
+    protected Object getProperty(Object object, String propertyExpression) {
         return PropertyResolver.getValue(propertyExpression, object);
     }
 
-    protected Object getModelObject(IModel rowModel)
-    {
+    protected Object getModelObject(IModel rowModel) {
         return rowModel.getObject();
     }
 
@@ -142,8 +138,7 @@ public class PropertyColumn extends AbstractLightWeightColumn
         Object property = null;
         if (rowObject != null)
         {
-            try
-            {
+            try {
                 property = getProperty(rowObject, getPropertyExpression());
             }
             catch (NullPointerException e)
@@ -152,21 +147,18 @@ public class PropertyColumn extends AbstractLightWeightColumn
             }
         }
         CharSequence string = convertToString(property);
-        if (isEscapeMarkup() && string != null)
-        {
+        if (isEscapeMarkup() && string != null) {
             string = Strings.escapeMarkup(string.toString());
         }
         return string;
     }
 
-    protected IConverter getConverter(Class<?> type)
-    {
+    protected IConverter getConverter(Class<?> type) {
         return Application.get().getConverterLocator().getConverter(type);
     }
 
-    protected Locale getLocale()
-    {
-        return Session.get().getLocale();
+    protected Locale getLocale() {
+      return Session.get().getLocale();
     }
 
     protected CharSequence convertToString(Object object)
@@ -176,10 +168,7 @@ public class PropertyColumn extends AbstractLightWeightColumn
             IConverter converter = getConverter(object.getClass());
             return converter.convertToString(object, getLocale());
         }
-        else
-        {
-            return "";
-        }
+        else { return ""; }
     }
 
     /**
@@ -188,13 +177,10 @@ public class PropertyColumn extends AbstractLightWeightColumn
     @Override
     public IRenderable newCell(IModel rowModel)
     {
-        return new IRenderable()
-        {
-            public void render(IModel rowModel, Response response)
-            {
+        return new IRenderable() {
+            public void render(IModel rowModel, Response response) {
                 CharSequence value = getValue(rowModel);
-                if (value != null)
-                {
+                if (value != null) {
                     response.write(value);
                 }
             }
@@ -206,8 +192,7 @@ public class PropertyColumn extends AbstractLightWeightColumn
      * 
      * @return property expression
      */
-    public String getPropertyExpression()
-    {
-        return propertyExpression;
+    public String getPropertyExpression() {
+      return propertyExpression;
     }
 }
