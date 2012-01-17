@@ -146,14 +146,8 @@ public class GeneralTest
 		form.submit();
 		mock.assertRenderedPage(VerySecurePage.class);
 		assertTrue(((WaspSession)mock.getSession()).logoff(new SecondaryLoginContext()));
-
-		mock.startPage(MockHomePage.class);
-		
 		mock.startPage(mock.getLastRenderedPage());
-		
-		// test that the transition didn't work.
-		mock.assertRenderedPage(MockHomePage.class);
-		
+		mock.assertRenderedPage(application.getApplicationSettings().getAccessDeniedPage());
 		// access denied because the page is already constructed
 	}
 
