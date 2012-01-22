@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-browserid-parent</artifactId>
-		<version>1.5-SNAPSHOT</version>
+		<version>1.5.4</version>
 	</parent>
 
 	<artifactId>wicketstuff-browserid-examples</artifactId>

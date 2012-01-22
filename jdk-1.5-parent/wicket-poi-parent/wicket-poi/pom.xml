@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicket-poi-parent</artifactId>
-		<version>1.5-SNAPSHOT</version>
+		<version>1.5.4</version>
 	</parent>
 
 	<artifactId>wicketstuff-poi</artifactId>
