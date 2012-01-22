@@ -294,7 +294,7 @@
 				<groupId>org.apache.wicket</groupId>
 				<artifactId>wicket</artifactId>
 				<version>${wicket.version}</version>
-				<type>test-jar</type>
+				<type>jar</type>
 				<scope>test</scope>
 			</dependency>
 
