@@ -8,9 +8,9 @@ import javax.swing.tree.TreeNode;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.extensions.markup.html.tree.AbstractTree;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.tree.AbstractTree;
 import org.apache.wicket.model.IModel;
 
 import com.inmethod.grid.IGridColumn;
