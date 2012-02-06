@@ -10,11 +10,11 @@ import javax.swing.tree.TreeNode;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.extensions.markup.html.tree.AbstractTree;
+import org.apache.wicket.extensions.markup.html.tree.DefaultTreeState;
+import org.apache.wicket.extensions.markup.html.tree.ITreeState;
+import org.apache.wicket.extensions.markup.html.tree.ITreeStateListener;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.tree.AbstractTree;
-import org.apache.wicket.markup.html.tree.DefaultTreeState;
-import org.apache.wicket.markup.html.tree.ITreeState;
-import org.apache.wicket.markup.html.tree.ITreeStateListener;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
@@ -253,7 +253,7 @@ public class TreeGrid<T extends TreeModel & Serializable, I extends TreeNode & S
 	@Override
 	public final void update()
 	{
-		getTree().updateTree(AjaxRequestTarget.get());
+		getTree().updateTree(getRequestCycle().find(AjaxRequestTarget.class));
 	};
 
 	/**

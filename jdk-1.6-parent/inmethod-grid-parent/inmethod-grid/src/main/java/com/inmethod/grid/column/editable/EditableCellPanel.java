@@ -8,6 +8,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.column.AbstractColumn;
@@ -34,7 +35,7 @@ public abstract class EditableCellPanel<M, I, P> extends Panel
 	{
 		super.onBeforeRender();
 
-		AjaxRequestTarget target = AjaxRequestTarget.get();
+		AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
 
 		Component textField = get("textfield");
 
