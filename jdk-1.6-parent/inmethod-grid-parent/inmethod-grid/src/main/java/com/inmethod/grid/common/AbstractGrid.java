@@ -128,12 +128,12 @@ public abstract class AbstractGrid<M, I> extends Panel
 			public void afterRender(Component component)
 			{
 				super.afterRender(component);
-				if (getWebRequest().isAjax())
-				{
-					AjaxRequestTarget.get().appendJavaScript(getInitializationJavascript());
+
+				AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
+				if (ajaxRequestTarget != null) {
+					ajaxRequestTarget.appendJavaScript(getInitializationJavascript());
 				}
 			}
-
 		});
 
 		columnState = new ColumnsState(columns);

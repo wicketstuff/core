@@ -66,7 +66,7 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
 		Component component = getComponent();
 		IModel defaultModel = component.getDefaultModel();
 		defaultModel.setObject(newContent);
-		target.addComponent(component);
+		target.add(component);
 	}
 
 	/**

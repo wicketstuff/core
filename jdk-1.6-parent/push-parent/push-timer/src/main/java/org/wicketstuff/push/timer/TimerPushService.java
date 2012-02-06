@@ -31,6 +31,7 @@ import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.time.Duration;
 import org.apache.wicket.util.time.Time;
@@ -403,7 +404,7 @@ public class TimerPushService extends AbstractPushService
 			if (behavior == null)
 				return;
 			if (behavior.removeNode(node) == 0)
-				behavior.stop(AjaxRequestTarget.get());
+				behavior.stop(RequestCycle.get().find(AjaxRequestTarget.class));
 		}
 		else
 			LOG.warn("Unsupported push node type {}", node);

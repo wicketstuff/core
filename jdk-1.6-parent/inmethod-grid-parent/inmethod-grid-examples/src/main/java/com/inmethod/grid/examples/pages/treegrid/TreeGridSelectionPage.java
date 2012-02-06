@@ -68,7 +68,7 @@ public class TreeGridSelectionPage extends BaseExamplePage
 				super.onItemSelectionChanged(item, newValue);
 
 				// refresh the selection label when an item gets selected/deselected.
-				AjaxRequestTarget target = AjaxRequestTarget.get();
+				AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
 				target.add(selectionLabel);
 			}
 		};
