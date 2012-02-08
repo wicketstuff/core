@@ -196,9 +196,13 @@ public class GMap2 extends Panel implements GOverlayContainer
 	{
 		controls.add(control);
 
-		if (AjaxRequestTarget.get() != null && findPage() != null)
+		if (findPage() != null)
 		{
-			AjaxRequestTarget.get().appendJavaScript(control.getJSadd(GMap2.this));
+			AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+			if (target != null)
+			{
+				target.appendJavaScript(control.getJSadd(GMap2.this));
+			}
 		}
 
 		return this;
@@ -215,9 +219,13 @@ public class GMap2 extends Panel implements GOverlayContainer
 	{
 		controls.remove(control);
 
-		if (AjaxRequestTarget.get() != null && findPage() != null)
+		if (findPage() != null)
 		{
-			AjaxRequestTarget.get().appendJavaScript(control.getJSremove(GMap2.this));
+			AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+			if (target != null)
+			{
+				target.appendJavaScript(control.getJSremove(GMap2.this));
+			}
 		}
 
 		return this;
@@ -235,9 +243,12 @@ public class GMap2 extends Panel implements GOverlayContainer
 		overlays.add(overlay);
 		overlay.setParent(this);
 
-		if (AjaxRequestTarget.get() != null && findPage() != null)
+		if (findPage() != null)
+		{		AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+		if (target != null)
 		{
-			AjaxRequestTarget.get().appendJavaScript(overlay.getJSadd());
+			target.appendJavaScript(overlay.getJSadd());
+		}
 		}
 
 		return this;
@@ -257,9 +268,13 @@ public class GMap2 extends Panel implements GOverlayContainer
 			overlays.remove(overlay);
 		}
 
-		if (AjaxRequestTarget.get() != null && findPage() != null)
+		if (findPage() != null)
 		{
-			AjaxRequestTarget.get().appendJavaScript(overlay.getJSremove());
+			AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+			if (target != null)
+			{
+				target.appendJavaScript(overlay.getJSremove());
+			}
 		}
 
 		overlay.setParent(null);
@@ -279,9 +294,13 @@ public class GMap2 extends Panel implements GOverlayContainer
 			overlay.setParent(null);
 		}
 		overlays.clear();
-		if (AjaxRequestTarget.get() != null && findPage() != null)
+		if (findPage() != null)
 		{
-			AjaxRequestTarget.get().appendJavaScript(getJSinvoke("clearOverlays()"));
+			AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+			if (target != null)
+			{
+				target.appendJavaScript(getJSinvoke("clearOverlays()"));
+			}
 		}
 		return this;
 	}
@@ -312,9 +331,13 @@ public class GMap2 extends Panel implements GOverlayContainer
 		{
 			googleBarEnabled = enabled;
 
-			if (AjaxRequestTarget.get() != null && findPage() != null)
+			if (findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavaScript(getJSsetGoogleBarEnabled(enabled));
+				AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+				if (target != null)
+				{
+					target.appendJavaScript(getJSsetGoogleBarEnabled(enabled));
+				}
 			}
 		}
 	}
@@ -325,9 +348,13 @@ public class GMap2 extends Panel implements GOverlayContainer
 		{
 			draggingEnabled = enabled;
 
-			if (AjaxRequestTarget.get() != null && findPage() != null)
+			if (findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavaScript(getJSsetDraggingEnabled(enabled));
+				AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+				if (target != null)
+				{
+					target.appendJavaScript(getJSsetDraggingEnabled(enabled));
+				}
 			}
 		}
 	}
@@ -343,9 +370,13 @@ public class GMap2 extends Panel implements GOverlayContainer
 		{
 			doubleClickZoomEnabled = enabled;
 
-			if (AjaxRequestTarget.get() != null && findPage() != null)
+			if (findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavaScript(getJSsetDoubleClickZoomEnabled(enabled));
+				AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+				if (target != null)
+				{
+					target.appendJavaScript(getJSsetDoubleClickZoomEnabled(enabled));
+				}
 			}
 		}
 	}
@@ -361,9 +392,13 @@ public class GMap2 extends Panel implements GOverlayContainer
 		{
 			scrollWheelZoomEnabled = enabled;
 
-			if (AjaxRequestTarget.get() != null && findPage() != null)
+			if (findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavaScript(getJSsetScrollWheelZoomEnabled(enabled));
+				AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+				if (target != null)
+				{
+					target.appendJavaScript(getJSsetScrollWheelZoomEnabled(enabled));
+				}
 			}
 		}
 	}
@@ -384,9 +419,13 @@ public class GMap2 extends Panel implements GOverlayContainer
 		{
 			this.mapType = mapType;
 
-			if (AjaxRequestTarget.get() != null && findPage() != null)
+			if (findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavaScript(mapType.getJSsetMapType(GMap2.this));
+				AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+				if (target != null)
+				{
+					target.appendJavaScript(mapType.getJSsetMapType(GMap2.this));
+				}
 			}
 		}
 	}
@@ -402,9 +441,13 @@ public class GMap2 extends Panel implements GOverlayContainer
 		{
 			zoom = level;
 
-			if (AjaxRequestTarget.get() != null && findPage() != null)
+			if (findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavaScript(getJSsetZoom(zoom));
+				AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+				if (target != null)
+				{
+					target.appendJavaScript(getJSsetZoom(zoom));
+				}
 			}
 		}
 	}
@@ -421,9 +464,13 @@ public class GMap2 extends Panel implements GOverlayContainer
 		{
 			this.center = center;
 
-			if (AjaxRequestTarget.get() != null && findPage() != null)
+			if (findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavaScript(getJSsetCenter(center));
+				AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+				if (target != null)
+				{
+					target.appendJavaScript(getJSsetCenter(center));
+				}
 			}
 		}
 	}
@@ -441,9 +488,13 @@ public class GMap2 extends Panel implements GOverlayContainer
 		{
 			this.center = center;
 
-			if (AjaxRequestTarget.get() != null && findPage() != null)
+			if (findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavaScript(getJSpanTo(center));
+				AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+				if (target != null)
+				{
+					target.appendJavaScript(getJSpanTo(center));
+				}
 			}
 		}
 	}

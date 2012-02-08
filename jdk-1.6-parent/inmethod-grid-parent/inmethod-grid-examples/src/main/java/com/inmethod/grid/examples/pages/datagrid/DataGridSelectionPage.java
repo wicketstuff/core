@@ -64,7 +64,7 @@ public class DataGridSelectionPage extends BaseExamplePage
 
 				// when item selection changes the label showing selected items needs to be
 				// refreshed
-				AjaxRequestTarget target = AjaxRequestTarget.get();
+				AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
 				target.add(selectionLabel);
 			}
 		};

@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 import wicket.contrib.gmap.GMap2;
 
@@ -120,11 +121,12 @@ public abstract class GOverlay implements Serializable
 	{
 		events.put(event, handler);
 
-		if (AjaxRequestTarget.get() != null)
 		// TODO
 		// && getParent().findPage() != null)
+		AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
+		if (target != null)
 		{
-			AjaxRequestTarget.get().appendJavaScript(event.getJSadd(this));
+			target.appendJavaScript(event.getJSadd(this));
 		}
 
 		return this;
@@ -151,11 +153,12 @@ public abstract class GOverlay implements Serializable
 	{
 		events.remove(event);
 
-		if (AjaxRequestTarget.get() != null)
 		// TODO
 		// && findPage() != null)
+		AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
+		if (target != null)
 		{
-			AjaxRequestTarget.get().appendJavaScript(event.getJSclear(this));
+			target.appendJavaScript(event.getJSclear(this));
 		}
 
 		return this;

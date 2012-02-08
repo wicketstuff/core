@@ -412,7 +412,7 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 
 		}
 
-		AjaxRequestTarget target = AjaxRequestTarget.get();
+		AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
 
 		if (target != null && findPage() != null)
 		{
@@ -447,11 +447,14 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 		{
 			add(behavior);
 		}
-		if (AjaxRequestTarget.get() != null && findPage() != null)
+		
+		if (findPage() != null)
 		{
+			AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
+			if (ajaxRequestTarget != null) {
 			String jsToRun = getJsOverlay(overlay);
-			AjaxRequestTarget.get().appendJavaScript(jsToRun);
-
+			ajaxRequestTarget.appendJavaScript(jsToRun);
+			}
 		}
 
 		return this;
@@ -472,9 +475,13 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 			}
 		}
 		overlays.clear();
-		if (AjaxRequestTarget.get() != null && findPage() != null)
+		
+		if (findPage() != null)
 		{
-			AjaxRequestTarget.get().appendJavaScript(getJSinvoke("clearOverlays()"));
+			AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
+			if (ajaxRequestTarget != null) {
+				ajaxRequestTarget.appendJavaScript(getJSinvoke("clearOverlays()"));
+			}
 		}
 		return this;
 	}
@@ -739,9 +746,12 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	{
 		controls.remove(control);
 
-		if (AjaxRequestTarget.get() != null && findPage() != null)
+		if (findPage() != null)
 		{
-			AjaxRequestTarget.get().appendJavaScript(control.getJSremove(OpenLayersMap.this));
+			AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
+			if (ajaxRequestTarget != null) {
+				ajaxRequestTarget.appendJavaScript(control.getJSremove(OpenLayersMap.this));
+			}
 		}
 
 		return this;
@@ -765,9 +775,12 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 			remove(behavior);
 		}
 
-		if (AjaxRequestTarget.get() != null && findPage() != null)
+		if (findPage() != null)
 		{
-			AjaxRequestTarget.get().appendJavaScript(overlay.getJSremove(OpenLayersMap.this));
+			AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
+			if (ajaxRequestTarget != null) {
+				ajaxRequestTarget.appendJavaScript(overlay.getJSremove(OpenLayersMap.this));
+			}
 		}
 
 		return this;
@@ -786,9 +799,12 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 			this.center = center;
 			this.zoom = zoom;
 
-			if (AjaxRequestTarget.get() != null && findPage() != null)
+			if (findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavaScript(getJSsetCenter(center, zoom));
+				AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
+				if (ajaxRequestTarget != null) {
+					ajaxRequestTarget.appendJavaScript(getJSsetCenter(center, zoom));
+				}
 			}
 		}
 	}
@@ -818,9 +834,12 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 		{
 			zoom = level;
 
-			if (AjaxRequestTarget.get() != null && findPage() != null)
+			if (findPage() != null)
 			{
-				AjaxRequestTarget.get().appendJavaScript(getJSsetZoom(zoom));
+				AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
+				if (ajaxRequestTarget != null) {
+					ajaxRequestTarget.appendJavaScript(getJSsetZoom(zoom));
+				}
 			}
 		}
 	}
@@ -904,9 +923,9 @@ public class OpenLayersMap extends Panel implements IOpenLayersMap
 	public void setBusinessLogicProjection(String businessLogicProjection)
 	{
 		this.businessLogicProjection = businessLogicProjection;
-		if (AjaxRequestTarget.get() != null)
-		{
-			AjaxRequestTarget.get().appendJavaScript(getJSSetBusinessLogicProjection());
+		AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
+		if (ajaxRequestTarget != null) {
+			ajaxRequestTarget.appendJavaScript(getJSSetBusinessLogicProjection());
 		}
 	}
 

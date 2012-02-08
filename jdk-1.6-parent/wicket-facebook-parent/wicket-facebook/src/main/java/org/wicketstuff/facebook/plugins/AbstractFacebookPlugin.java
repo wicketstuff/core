@@ -128,8 +128,11 @@ public abstract class AbstractFacebookPlugin extends WebMarkupContainer
 		if (!visitChildren.hasNext())
 			throw new MissingFacebookRootException();
 
-		if (AjaxRequestTarget.get() != null && findPage() != null)
+		if (findPage() != null)
 		{
+			AjaxRequestTarget target = getRequestCycle().find(AjaxRequestTarget.class);
+			if (target != null)
+			{
 			setOutputMarkupId(true);
 
 			final StringBuilder js = new StringBuilder();
@@ -137,7 +140,8 @@ public abstract class AbstractFacebookPlugin extends WebMarkupContainer
 			js.append(getMarkupId());
 			js.append("').parentNode);");
 
-			AjaxRequestTarget.get().appendJavaScript(js.toString());
+			target.appendJavaScript(js.toString());
+			}
 		}
 
 		super.onRender();

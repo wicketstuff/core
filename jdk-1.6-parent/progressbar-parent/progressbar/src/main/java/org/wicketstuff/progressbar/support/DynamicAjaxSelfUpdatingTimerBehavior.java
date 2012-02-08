@@ -18,6 +18,7 @@ package org.wicketstuff.progressbar.support;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.AjaxSelfUpdatingTimerBehavior;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.time.Duration;
 
 /**
@@ -42,10 +43,9 @@ public class DynamicAjaxSelfUpdatingTimerBehavior extends AjaxSelfUpdatingTimerB
 	{
 		super.onBind();
 		// dynamically start the self update!
-		if (AjaxRequestTarget.get() != null)
-		{
-			AjaxRequestTarget target = AjaxRequestTarget.get();
-			target.appendJavaScript(getJsTimeoutCall(getUpdateInterval()));
+		AjaxRequestTarget ajaxRequestTarget = RequestCycle.get().find(AjaxRequestTarget.class);
+		if (ajaxRequestTarget != null) {
+			ajaxRequestTarget.appendJavaScript(getJsTimeoutCall(getUpdateInterval()));
 		}
 	}
 
