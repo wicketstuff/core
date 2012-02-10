@@ -9,30 +9,34 @@ import com.inmethod.icon.Icon;
 import com.inmethod.icon.IconImage;
 
 /**
+ * Panel for the AddDeleteColumn displays: Add, Cancel, and Delete buttons
+ *
  * Created by IntelliJ IDEA.
- * User: tfburton
+ * User: Tom Burton
  * Date: 12/27/11
  * Time: 12:01 PM
  *
- * @author tfburton
- *         To change this template use File | Settings | File Templates.
+ * @author Tom Burton
  */
-public abstract class AddDeletePanel extends SubmitCancelPanel
+public abstract class AddDeletePanel<M, I> extends SubmitCancelPanel<M, I>
 {
-  protected AddDeletePanel(String id,final IModel model, AbstractGrid grid)
+  protected AddDeletePanel(String id, final IModel<I> model,
+                           AbstractGrid<M, I> grid)
   {
     super(id,model,grid);
-    AjaxLink cancel = new AjaxLink("delete") {
-			
+    AjaxLink<Void> cancel = new AjaxLink<Void>("delete")
+    {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onClick(AjaxRequestTarget target) {
+			public void onClick(AjaxRequestTarget target)
+      {
 				onDelete(target);
 			}
 	
 			@Override
-			public boolean isVisible() {
+			public boolean isVisible()
+      {
 				return getGrid().isItemEdited(model);
 			}			
 		};

@@ -138,7 +138,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T>
 				count -= mod;
 
 				// get the actual page count
-				cachedPageCount = count / rowsPerPage + (mod > 0 ? 1 : 0);
+				cachedPageCount = (count / rowsPerPage) + (mod > 0 ? 1 : 0);
 			}
 		}
 		return cachedPageCount;
@@ -152,7 +152,6 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T>
 	 */
 	public void setCurrentPage(long page)
 	{
-
 		long pageCount = getPageCount();
 		if (page < 0 || page >= pageCount && pageCount > 0)
 		{
@@ -229,8 +228,8 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T>
 			// this is not a case when there are no items at all,
 			// just the case when there are no items on current page
 			// but possible items on previous pages
-			if (queryResult.itemCache.size() == 0 && realItemCount != UNKNOWN_COUNT &&
-				realItemCount != oldItemCount && realItemCount > 0)
+			if ( queryResult.itemCache.size() == 0 && realItemCount != UNKNOWN_COUNT 
+        && realItemCount != oldItemCount && realItemCount > 0 )
 			{
 				// the data must have changed, the number of items has been reduced. 
 				// try move to the last page
@@ -364,6 +363,8 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T>
 	private class QueryResult implements IQueryResult<T>
 	{
 		// start with empty items
+    //TODO: wouldn't the Collections.Empty List constant be better ex follows? - Tom Burton(Raystorm)
+    //private Iterator<? extends T> altItems = Collections.<T>emptyList().iterator();
 		private Iterator<? extends T> items = new EmptyIterator<T>();
 
 		// and actual total count (could be UNKNOWN)
@@ -430,8 +431,8 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T>
 				totalCount = getCurrentPageFirstItem() + itemCache.size();
 			}
 
-			if (totalCount == IQueryResult.MORE_ITEMS && getCurrentPage() != getPageCount() &&
-				realItemCount != UNKNOWN_COUNT)
+			if ( totalCount == IQueryResult.MORE_ITEMS && getCurrentPage() != getPageCount() 
+        && realItemCount != UNKNOWN_COUNT )
 			{
 				// if we know the real item count and the page shown is not last page, we
 				// don't allow MORE_ITEMS overwrite the real item count

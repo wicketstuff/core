@@ -1,24 +1,21 @@
 package com.inmethod.grid.column;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.Response;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
-import com.inmethod.grid.IRenderable;
-
 /**
  * Created by IntelliJ IDEA.
- * User: tfburton
+ * User: Tom Burton
  * Date: 1/3/12
  * Time: 2:11 PM
  *
- * @author tfburton
+ * @author Tom Burton
  *         Panel for Displaying a Link in a cell.
  */
-public abstract class LinkPanel extends Panel //implements IRenderable
+public abstract class LinkPanel<M, I> extends Panel //implements IRenderable
 {
   private String label;
 
@@ -30,7 +27,7 @@ public abstract class LinkPanel extends Panel //implements IRenderable
   }
 
   /** @see Component#Component(String, IModel) */
-  public LinkPanel(String id, String Label, IModel model)
+  public LinkPanel(String id, String Label, IModel<I> model)
   {
     super(id, model);
     label = Label;
@@ -49,12 +46,12 @@ public abstract class LinkPanel extends Panel //implements IRenderable
    * the override.
    * </p>
    *
-   * @see Component#callOnBeforeRenderIfNotVisible()
+   * @ see Component#callOnBeforeRenderIfNotVisible()
    */
   @Override
   protected void onBeforeRender()
   {
-    this.add(new Link("link")
+    this.add(new Link<Void>("link")
                  {
                     /** Called when a link is clicked. */
                     @Override
@@ -72,8 +69,8 @@ public abstract class LinkPanel extends Panel //implements IRenderable
    * of proper escaping
    * (e.g. translating &lt; to &amp;lt;, etc.) where appropriate.
    *
-   * @param rowModel model for given row
-   * @param response
+   * @ param rowModel model for given row
+   * @ param response
    * /
   public void render(IModel rowModel, Response response)
   {
@@ -87,7 +84,7 @@ public abstract class LinkPanel extends Panel //implements IRenderable
   }
   */
 
+  /** override this function to do the actual work when a link is clicked. */
   public abstract void onClick(); // { }
-
 
 }

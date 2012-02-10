@@ -2,7 +2,6 @@ package com.inmethod.grid.datagrid;
 
 import java.util.Collection;
 
-import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.navigation.paging.IPageable;
@@ -11,18 +10,12 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
 import org.apache.wicket.model.IModel;
 
-import com.inmethod.grid.IAppendableDataSource;
 import com.inmethod.grid.IDataSource;
-import com.inmethod.grid.IDataSource.IQuery;
 import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.IGridSortState;
-import com.inmethod.grid.IDataSource.IQuery;
 import com.inmethod.grid.common.AbstractGridRow;
 import com.inmethod.grid.common.AbstractPageableView;
 import com.inmethod.grid.common.AttachPrelightBehavior;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import sun.audio.AudioDataStream;
 
 /**
  * Contains data grid rows.
@@ -69,8 +62,9 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 	{
 		return (Data)get("row");
 	}
-	
-	protected Item insertRow(final IModel rowModel) {
+  
+  protected Item insertRow(final IModel<T> rowModel) 
+  {
 		Item item = getData().createItem(getCurrentPageItemCount() + 1, rowModel);
 		getData().add(item);
 		return item;
@@ -80,9 +74,14 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
   { return getData().createItem(index, rowModel); }
 
 	long getTotalRowCount()
-	{
-		return getData().getTotalRowCount();
-	}
+	{	
+    return getData().getTotalRowCount(); 
+  }
+  
+  void clearCache() 
+  { 
+    getData().clearCache(); 
+  }
 
 	long getCurrentPageItemCount()
 	{
@@ -141,6 +140,39 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 			return DataGridBody.this.getSortState();
 		}
 
+		//TODO: Should wrapQuery be removed?
+    @Override
+		protected IDataSource.IQuery wrapQuery(final IDataSource.IQuery original) 
+    {
+			return new DataGrid.IGridQuery() 
+      {
+				public long getCount() 
+        {
+					return original.getCount();
+				}
+
+				public long getFrom() 
+        {
+					return original.getFrom();
+				}
+
+				public IGridSortState getSortState() 
+        {
+					return original.getSortState();
+				}
+
+				public long getTotalCount() 
+        {
+					return original.getTotalCount();
+				}
+
+				public DataGrid getDataGrid() 
+        {
+					return (DataGrid) DataGridBody.this.findParent(DataGrid.class);
+				}
+			};
+		}
+
 		@Override
 		protected void populateItem(final Item<T> item)
 		{
@@ -166,7 +198,6 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 
 		protected class RowItem extends Item<T>
 		{
-
 			private static final long serialVersionUID = 1L;
 
 			protected RowItem(String id, int index, IModel<T> model)
@@ -177,7 +208,6 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 			@Override
 			protected void onComponentTag(ComponentTag tag)
 			{
-
 				super.onComponentTag(tag);
 
 				CharSequence klass = tag.getAttribute("class");
@@ -186,7 +216,9 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 					klass = "";
 				}
 				if (klass.length() > 0)
-					klass = klass + " ";
+        {
+          klass = klass + " ";
+        }
 
 				if (getIndex() % 2 == 0)
 				{
@@ -207,7 +239,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 				tag.put("class", klass);
 			}
 		}
-
+		
 		@Override
 		protected Item<T> newItem(String id, final int index, final IModel<T> model)
 		{
@@ -220,9 +252,9 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 		 * Create a new Item for this DataGrid.
 		 * NOTE: The item has not been added to the grid.
 		 * 
-		 * @param index
-		 * @param itemModel
-		 * @return Item
+		 * @param index row number for insertion
+		 * @param itemModel model of the data being inserted
+		 * @return Item item inserted
 		 */
 		protected Item createItem(final int index, final IModel<T> itemModel)
     {	

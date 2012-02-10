@@ -313,7 +313,6 @@ public abstract class AbstractColumn<M, I> implements IGridColumn<M, I>
 	{
 		return new Label(componentId, getHeaderModel())
 		{
-
 			private static final long serialVersionUID = 1L;
 
 			@Override

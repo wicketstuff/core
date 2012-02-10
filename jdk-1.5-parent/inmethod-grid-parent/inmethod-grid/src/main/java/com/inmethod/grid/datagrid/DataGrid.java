@@ -1,11 +1,6 @@
 package com.inmethod.grid.datagrid;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
@@ -22,6 +17,8 @@ import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.IGridSortState;
 import com.inmethod.grid.common.AbstractGrid;
 import com.inmethod.grid.common.AbstractPageableView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Advanced grid component. Supports resizable and reorderable columns.
@@ -33,9 +30,11 @@ import com.inmethod.grid.common.AbstractPageableView;
  * 
  * @author Matej Knopp
  */
-public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> implements IPageable
+public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
+       implements IPageable
 {
 	private static final long serialVersionUID = 1L;
+  //private static final Logger log = LoggerFactory.getLogger(DataGrid.class);
 
 	/**
 	 * Crates a new {@link DataGrid} instance.
@@ -153,7 +152,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> im
 	private void init()
 	{
 		((WebMarkupContainer)get("form:bodyContainer")).add(new Body("body"));
-	};
+  }
 
 	private Body getBody()
 	{
@@ -424,28 +423,28 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> im
 	 */
 	public Item insertRow(final T rowData)
   {
-    IAppendableDataSource ADS;
-    try
-    { ADS = ((IAppendableDataSource)getDataSource()); }
-    catch (ClassCastException cce)
-    { //TODO: localize this string
-      log.error( "Error BAD Data Source type. "
-               + "IAppendableDataSource REQUIRED for addition");
-      throw new WicketRuntimeException("Error BAD Data Source type. "
-               + "IAppendableDataSource REQUIRED for addition",cce);
-    }
-    ADS.InsertRow(getCurrentPageItemCount(),rowData);
-    Item item = getBody().createItem(getCurrentPageItemCount(),
-                                     getDataSource().model(rowData));
+     IAppendableDataSource ADS;
+     try
+     { ADS = ((IAppendableDataSource)getDataSource()); }
+     catch (ClassCastException cce)
+     { //TODO: localize this string
+        //log.error( "Error BAD Data Source type. "
+        //         + "IAppendableDataSource REQUIRED for addition");
+        throw new WicketRuntimeException("Error BAD Data Source type. "
+                 + "IAppendableDataSource REQUIRED for addition",cce);
+     }
+     ADS.InsertRow(getCurrentPageItemCount(),rowData);
+     Item item = getBody().createItem(getCurrentPageItemCount(),
+                                      getDataSource().model(rowData));
 
-    //make sure the datagrid knows the rows need to be refreshed
-    getBody().clearCache(); //clears the cache, to make sure the data is reloaded
+     //make sure the datagrid knows the rows need to be refreshed
+     getBody().clearCache(); //clears the cache, to make sure the data is reloaded
 
-		//both of these functions are "cached"
-    markAllItemsDirty();
-		update();
+		 //both of these functions are "cached"
+     markAllItemsDirty();
+		 update();
 				
-		return item;
+		 return item;
 	}
 
 	/**

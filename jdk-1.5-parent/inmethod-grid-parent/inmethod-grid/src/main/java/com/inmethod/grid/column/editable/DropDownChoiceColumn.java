@@ -13,10 +13,8 @@ import org.apache.wicket.model.util.WildcardListModel;
  * when the item is selected.
  *
  * @author Tom Burton
- *
- * //TODO: make generic
  */
-public class DropDownChoiceColumn<T> extends EditablePropertyColumn
+public class DropDownChoiceColumn<M, I, T> extends EditablePropertyColumn<M, I, T>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -38,8 +36,9 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
 	 *            optional string that will be returned by {@link ISortState} to indicate that the
 	 *            column is being sorted
 	 */
-	public DropDownChoiceColumn(String columnId, IModel headerModel,
-                              String propertyExpression, String sortProperty) {
+	public DropDownChoiceColumn(String columnId, IModel<String> headerModel,
+                              String propertyExpression, String sortProperty)
+  {
 		super(columnId, headerModel, propertyExpression, sortProperty);
 	}
 
@@ -54,8 +53,9 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
 	 *            property expression used to get the displayed value for row
    *            object
 	 */
-	public DropDownChoiceColumn(String columnId, IModel headerModel,
-                              String propertyExpression) {
+	public DropDownChoiceColumn(String columnId, IModel<String> headerModel,
+                              String propertyExpression)
+  {
 		super(columnId, headerModel, propertyExpression);
 	}
 
@@ -72,8 +72,9 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
    *            to indicate that the
 	 *            column is being sorted
 	 */
-	public DropDownChoiceColumn(IModel headerModel, String propertyExpression,
-                              String sortProperty) {
+	public DropDownChoiceColumn(IModel<String> headerModel, String propertyExpression,
+                              String sortProperty)
+  {
 		super(headerModel, propertyExpression, sortProperty);
 	}
 
@@ -86,7 +87,8 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
 	 * @param propertyExpression
 	 *            property expression used to get the displayed value for row object
 	 */
-	public DropDownChoiceColumn(IModel headerModel, String propertyExpression) {
+	public DropDownChoiceColumn(IModel<String> headerModel, String propertyExpression)
+  {
 		super(headerModel, propertyExpression);
 	}
 
@@ -105,7 +107,7 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
    * @param choices
    *           The collection of choices in the drop down when the cell becomes editable
 	 */
-	public DropDownChoiceColumn(String columnId, IModel headerModel,
+	public DropDownChoiceColumn(String columnId, IModel<String> headerModel,
                               String propertyExpression, String sortProperty,
                               IModel<? extends List<? extends T>> choices)
   {
@@ -126,9 +128,10 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
    * @param choices
    *           The collection of choices in the drop down when the cell becomes editable
 	 */
-	public DropDownChoiceColumn(String columnId, IModel headerModel,
+	public DropDownChoiceColumn(String columnId, IModel<String> headerModel,
                               String propertyExpression,
-                              IModel<? extends List<? extends T>> choices) {
+                              IModel<? extends List<? extends T>> choices)
+  {
 		super(columnId, headerModel, propertyExpression);
     choicesModel = choices;
 	}
@@ -148,9 +151,10 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
    * @param choices
    *           The collection of choices in the drop down when the cell becomes editable
 	 */
-	public DropDownChoiceColumn(IModel headerModel, String propertyExpression,
+	public DropDownChoiceColumn(IModel<String> headerModel, String propertyExpression,
                               String sortProperty,
-                              IModel<? extends List<? extends T>> choices) {
+                              IModel<? extends List<? extends T>> choices)
+  {
 		super(headerModel, propertyExpression, sortProperty);
     choicesModel = choices;
 	}
@@ -166,8 +170,9 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
    * @param choices
    *           The collection of choices in the drop down when the cell becomes editable
 	 */
-	public DropDownChoiceColumn(IModel headerModel, String propertyExpression,
-                              IModel<? extends List<? extends T>> choices) {
+	public DropDownChoiceColumn(IModel<String> headerModel, String propertyExpression,
+                              IModel<? extends List<? extends T>> choices)
+  {
 		super(headerModel, propertyExpression);
     choicesModel = choices;
 	}
@@ -189,7 +194,7 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
 	 * @param renderer
 	 *            The rendering engine
 	 */
-	public DropDownChoiceColumn(String columnId, IModel headerModel,
+	public DropDownChoiceColumn(String columnId, IModel<String> headerModel,
                               String propertyExpression, String sortProperty,
                               IModel<? extends List<? extends T>> choices,
                               IChoiceRenderer<T> renderer)
@@ -214,10 +219,11 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
 	 * @param renderer
 	 *            The rendering engine
 	 */
-	public DropDownChoiceColumn(String columnId, IModel headerModel,
+	public DropDownChoiceColumn(String columnId, IModel<String> headerModel,
                               String propertyExpression,
                               IModel<? extends List<? extends T>> choices,
-                              IChoiceRenderer<T> renderer) {
+                              IChoiceRenderer<T> renderer)
+  {
 		super(columnId, headerModel, propertyExpression);
     choicesModel = choices;
     choiceRenderer = renderer;
@@ -240,10 +246,11 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
 	 * @param renderer
 	 *            The rendering engine
 	 */
-	public DropDownChoiceColumn(IModel headerModel, String propertyExpression,
+	public DropDownChoiceColumn(IModel<String> headerModel, String propertyExpression,
                               String sortProperty,
                               IModel<? extends List<? extends T>> choices,
-                              IChoiceRenderer<T> renderer) {
+                              IChoiceRenderer<T> renderer)
+  {
 		super(headerModel, propertyExpression, sortProperty);
     choicesModel = choices;
     choiceRenderer = renderer;
@@ -262,9 +269,10 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
 	 * @param renderer
 	 *            The rendering engine
 	 */
-	public DropDownChoiceColumn(IModel headerModel, String propertyExpression,
+	public DropDownChoiceColumn(IModel<String> headerModel, String propertyExpression,
                               IModel<? extends List<? extends T>> choices,
-                              IChoiceRenderer<T> renderer) {
+                              IChoiceRenderer<T> renderer)
+  {
 		super(headerModel, propertyExpression);
     choicesModel = choices;
     choiceRenderer = renderer;
@@ -285,9 +293,9 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
    * @param choices
    *           The collection of choices in the drop down when the cell becomes editable
      */
-  public DropDownChoiceColumn(String columnId, IModel headerModel,
+  public DropDownChoiceColumn(String columnId, IModel<String> headerModel,
                               String propertyExpression, String sortProperty,
-                              List choices)
+                              List<T> choices)
   {
     super(columnId, headerModel, propertyExpression, sortProperty);
     choicesModel = new WildcardListModel(choices);
@@ -306,9 +314,9 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
    * @param choices
    *           The collection of choices in the drop down when the cell becomes editable
    */
-  public DropDownChoiceColumn(String columnId, IModel headerModel,
-                              String propertyExpression,
-                              List<?> choices) {
+  public DropDownChoiceColumn(String columnId, IModel<String> headerModel,
+                              String propertyExpression, List<T> choices)
+  {
     super(columnId, headerModel, propertyExpression);
     choicesModel = new WildcardListModel(choices);
   }
@@ -328,9 +336,9 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
    * @param choices
    *           The collection of choices in the drop down when the cell becomes editable
    */
-  public DropDownChoiceColumn(IModel headerModel, String propertyExpression,
-                              String sortProperty,
-                              List choices)
+  public DropDownChoiceColumn(IModel<String> headerModel,
+                              String propertyExpression, String sortProperty,
+                              List<T> choices)
   {
     super(headerModel, propertyExpression, sortProperty);
     choicesModel = new WildcardListModel(choices);
@@ -347,8 +355,9 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
    * @param choices
    *           The collection of choices in the drop down when the cell becomes editable
    */
-  public DropDownChoiceColumn(IModel headerModel, String propertyExpression,
-                              List choices) {
+  public DropDownChoiceColumn(IModel<String> headerModel, String propertyExpression,
+                              List<T> choices)
+  {
     super(headerModel, propertyExpression);
     choicesModel = new WildcardListModel(choices);
   }
@@ -370,10 +379,9 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
    * @param renderer
    *           The renderer to use for displaying the data
    */
-  public DropDownChoiceColumn(String columnId, IModel headerModel,
+  public DropDownChoiceColumn(String columnId, IModel<String> headerModel,
                               String propertyExpression, String sortProperty,
-                              List choices,
-                              IChoiceRenderer renderer)
+                              List<T> choices, IChoiceRenderer<T> renderer)
   {
     super(columnId, headerModel, propertyExpression, sortProperty);
     choicesModel = new WildcardListModel(choices);
@@ -395,10 +403,11 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
 	 * @param renderer
 	 *            The rendering engine
    */
-  public DropDownChoiceColumn(String columnId, IModel headerModel,
+  public DropDownChoiceColumn(String columnId, IModel<String> headerModel,
                               String propertyExpression,
-                              List choices,
-                              IChoiceRenderer renderer) {
+                              List<T> choices,
+                              IChoiceRenderer<T> renderer)
+  {
     super(columnId, headerModel, propertyExpression);
     choicesModel = new WildcardListModel(choices);
     choiceRenderer = renderer;
@@ -421,10 +430,10 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
    * @param renderer
    *           The renderer to use for displaying the data
    */
-  public DropDownChoiceColumn(IModel headerModel, String propertyExpression,
+  public DropDownChoiceColumn(IModel<String> headerModel, String propertyExpression,
                               String sortProperty,
-                              List choices,
-                              IChoiceRenderer renderer) {
+                              List<T> choices, IChoiceRenderer<T> renderer)
+  {
     super(headerModel, propertyExpression, sortProperty);
     choicesModel = new WildcardListModel(choices);
     choiceRenderer = renderer;
@@ -443,8 +452,8 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
 	 * @param renderer
 	 *            The rendering engine
    */
-  public DropDownChoiceColumn(IModel headerModel, String propertyExpression,
-                              List choices, IChoiceRenderer renderer)
+  public DropDownChoiceColumn(IModel<String> headerModel, String propertyExpression,
+                              List<T> choices, IChoiceRenderer<T> renderer)
   {
     super(headerModel, propertyExpression);
     choicesModel = new WildcardListModel(choices);
@@ -453,21 +462,22 @@ public class DropDownChoiceColumn<T> extends EditablePropertyColumn
 
   /** {@inheritDoc} **/
   @Override
-  protected EditableCellPanel newCellPanel(String componentId, IModel rowModel,
-                                           IModel cellModel)
+  protected EditableCellPanel newCellPanel(String componentId, IModel<I> rowModel,
+                                           IModel<T> cellModel)
   {
     return new DropDownChoicePanel(componentId, cellModel, rowModel, this,
-                                     choicesModel, choiceRenderer);
+                                   choicesModel, choiceRenderer);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected CharSequence convertToString(Object obj)
+  protected <C> CharSequence convertToString(C obj)
   {
     if (null != obj && null != choiceRenderer)
     {
-      return getConverter(obj.getClass())
-                .convertToString(choiceRenderer.getDisplayValue((T)obj),getLocale());
+      return getConverter((Class<C>)obj.getClass())
+                .convertToString((C)choiceRenderer.getDisplayValue((T)obj),
+                                 getLocale());
     }
     else if ( null != obj) { return super.convertToString(obj); }
     else { return ""; }
