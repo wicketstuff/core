@@ -16,18 +16,19 @@ import com.inmethod.grid.IRenderable;
  *
  * @author Tom Burton
  */
-public abstract class LinkColumn extends AbstractColumn
+public abstract class LinkColumn<M, I> extends AbstractColumn<M, I>
 {
   private String propertyLabel;
 
-  public LinkColumn(String columnId, String propertyLabel, IModel headerModel)
+  public LinkColumn(String columnId, String propertyLabel,
+                    IModel<String> headerModel)
   {
     super(columnId, headerModel);
     this.propertyLabel = propertyLabel;
   }
 
-  public LinkColumn(String columnId, String propertyLabel, IModel headerModel,
-                    String sortProperty)
+  public LinkColumn(String columnId, String propertyLabel,
+                    IModel<String> headerModel, String sortProperty)
   {
     super(columnId, headerModel, sortProperty);
     this.propertyLabel = propertyLabel;
@@ -51,20 +52,18 @@ public abstract class LinkColumn extends AbstractColumn
   /** {@inheritDoc} */
   @Override
   public Component newCell(WebMarkupContainer parent, String componentId,
-                           final IModel rowModel)
+                           final IModel<I> rowModel)
   {
     //return new Link("link",rowModel);
-    return new LinkPanel(componentId,
-                         new PropertyModel(rowModel.getObject(),
-                                           getPropertyLabel())
-                                     .getTarget().toString(),
-                         rowModel)
+    return new LinkPanel<M, I>(componentId,
+                               new PropertyModel(rowModel.getObject(),
+                                                 getPropertyLabel())
+                                           .getTarget().toString(),
+                               rowModel)
                {
                   @Override
                   public void onClick()
-                  {
-                    LinkColumn.this.onClick(rowModel);
-                  }
+                  { LinkColumn.this.onClick(rowModel); }
                };
   }
 
@@ -74,5 +73,5 @@ public abstract class LinkColumn extends AbstractColumn
   { this.propertyLabel = propertyLabel; }
 
   //TODO: should this work Like Page link? instead?
-  public abstract void onClick(IModel rowModel);
+  public abstract void onClick(IModel<I> rowModel);
 }

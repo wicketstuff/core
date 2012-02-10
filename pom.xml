@@ -67,7 +67,8 @@
 		<url>http://ci.wicketstuff.org</url>
 	</ciManagement>
 
-	<distributionManagement>
+  <!--
+  <distributionManagement>
 		<site>
 			<id>localRepo</id>
 			<url>file:target/site</url>
@@ -81,6 +82,22 @@
 			<url>file:target/m2-snapshot-repo</url>
 		</snapshotRepository>
 	</distributionManagement>
+  -->
+  <!-- The Next section DOES NOT BELONG on GITHUB!! -->
+
+  <!-- REPO Server to "release" to -->
+  <distributionManagement>
+    <repository>
+      <id>DorCssAppTst02-Nexus</id>
+      <name>DorCssAppTst02-Nexus-releases</name>
+      <url>http://dorcssapptst02:8080/nexus/content/repositories/releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>DorCssAppTst02-Nexus</id>
+      <name>DorCssAppTst02-Nexus-snapshots</name>
+      <url>http://dorcssapptst02:8080/nexus/content/repositories/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
 
 	<profiles>
 		<profile>
@@ -999,4 +1016,5 @@
 			</plugin>
 		</plugins>
 	</reporting>
+
 </project>

@@ -16,10 +16,10 @@ import org.apache.wicket.markup.repeater.data.IDataProvider;
  *
  * TODO: make generic
  */
-public class AppendableDataProviderAdapter
-       extends DataProviderAdapter implements IAppendableDataSource
+public class AppendableDataProviderAdapter<T>
+       extends DataProviderAdapter<T> implements IAppendableDataSource<T>
 {
-  public AppendableDataProviderAdapter(IDataProvider dataProvider)
+  public AppendableDataProviderAdapter(IDataProvider<T> dataProvider)
   {
     super(dataProvider);
   }
@@ -29,7 +29,7 @@ public class AppendableDataProviderAdapter
   private int appendIndex;
   private List items = null;
 
-  public void InsertRow(int index, Object item)
+  public void InsertRow(int index, T item)
   {
     ++_newItemCount;
     if (null == items) { items = new ArrayList(); }
@@ -37,14 +37,14 @@ public class AppendableDataProviderAdapter
     appendIndex = index;
   }
 
-  public void DeleteRow(int index, Object item)
+  public void DeleteRow(int index, T item)
   {
     if ( null != items && _newItemCount > 0)
     { if (items.remove(item)){ --_newItemCount; } }
   }
 
   /** {@inheritDoc} */
-	public void query(IQuery query, IQueryResult result)
+	public void query(IQuery query, IQueryResult<T> result)
   {
 		super.query(query, result);
     if ( _newItemCount > 0 )

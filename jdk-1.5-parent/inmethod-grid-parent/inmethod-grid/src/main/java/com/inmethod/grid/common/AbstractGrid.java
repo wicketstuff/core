@@ -1090,7 +1090,6 @@ package com.inmethod.grid.common;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
 import javax.swing.tree.TreeModel;
 
 import org.apache.wicket.Component;
@@ -1140,7 +1139,6 @@ import com.inmethod.grid.treegrid.TreeGrid;
  */
 public abstract class AbstractGrid<M, I> extends Panel
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -1340,7 +1338,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 		{
 			return getCallbackFunction("columnState");
 		}
-	};
+	}
 
 	/**
 	 * Manages order, visibility and sizes of columns.
@@ -1403,6 +1401,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 		super.onBeforeRender();
 	}
 
+  //TODO: w/ the OnInitialize -> OnBeforeRender can FLAG_RENDERING be removed?
 	@Override
 	protected void onAfterRender()
 	{
@@ -1428,10 +1427,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 */
 	private void addToolbar(AbstractToolbar<M, I> toolbar, RepeatingView container)
 	{
-		if (toolbar == null)
-		{
-			throw new IllegalArgumentException("argument 'toolbar' cannot be null");
-		}
+    Args.notNull(toolbar, "toolbar");
 
 		// create a container item for the toolbar (required by repeating view)
 		WebMarkupContainer item = new WebMarkupContainer(container.newChildId());
@@ -1507,7 +1503,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 			}
 			return result.toString();
 		}
-	};
+	}
 
 	/**
 	 * Component that represents the grid header.
@@ -1535,9 +1531,9 @@ public abstract class AbstractGrid<M, I> extends Panel
 		{
 			int width = getColumnState().getColumnWidth(column.getId());
 			if (width != -1 && column.getSizeUnit() == SizeUnit.PX)
-				return width;
+      {	return width; }
 			else
-				return column.getInitialSize();
+      { return column.getInitialSize(); }
 		}
 
 		@Override
@@ -1851,9 +1847,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 */
 	protected void onRowPopulated(final WebMarkupContainer rowComponent)
 	{
-
-		if (disableRowClickNotifications())
-			return;
+		if (disableRowClickNotifications()) { return; }
 
 		rowComponent.add(new AjaxFormSubmitBehavior(getForm(), "click")
 		{
@@ -1873,8 +1867,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 
 			@Override
 			protected void onEvent(AjaxRequestTarget target)
-			{
-				// preserve the entered values in form components
+			{	// preserve the entered values in form components
 				Form<?> form = super.getForm();
 				form.visitFormComponentsPostOrder(new IVisitor<FormComponent<?>, Void>()
 				{
@@ -1924,17 +1917,37 @@ public abstract class AbstractGrid<M, I> extends Panel
 				JavaScriptPrecondition precondition = new JavaScriptPrecondition(precon);
 				attributes.getPreconditions().add(precondition);
 			}
-
-			@Override
-			public CharSequence getCallbackScript()
+      
+      @Override
+			public CharSequence getCallbackUrl()
 			{
 				return getCallbackFunction("col");
+			}
+
+			@Override
+			protected IAjaxCallDecorator getAjaxCallDecorator()
+			{
+				return new AjaxCallDecorator()
+				{
+
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public CharSequence decorateScript(Component c, CharSequence script)
+					{
+						return super.decorateScript(
+							c,
+							"if (InMethod.XTable.canSelectRow(event)) { " +
+								"var col=(this.imxtClickedColumn || ''); this.imxtClickedColumn='';" +
+								script + " }");
+					}
+				};
 			}
 		});
 	}
 
 	protected boolean onCellClicked(AjaxRequestTarget target, IModel<I> rowModel,
-		IGridColumn<M, I> column)
+		                              IGridColumn<M, I> column)
 	{
 		return false;
 	}
