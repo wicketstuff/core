@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.tree.TreeModel;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
@@ -28,6 +29,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.visit.IVisit;
@@ -51,9 +53,8 @@ import com.inmethod.grid.treegrid.TreeGrid;
  * 
  * @author Matej Knopp
  */
-public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContributor 
+public abstract class AbstractGrid<M, I> extends Panel
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -75,10 +76,10 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 
 		this.columns = columns;
 
-		add(new Header("header"));
+		//Form<Void> form = new Form<Void>("form");
+		//add(form);
 
-		Form<Void> form = new Form<Void>("form");
-		add(form);
+		add(new Header("header"));
 
 		WebMarkupContainer bodyContainer = new WebMarkupContainer("bodyContainer")
 		{
@@ -95,15 +96,35 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 				}
 			}
 		};
-		form.add(bodyContainer);
+		add(bodyContainer);
 		bodyContainer.setOutputMarkupId(true);
 
 		bodyContainer.add(new Label("firstRow", new EmptyRowModel())
                  .setEscapeModelStrings(false));
 
-		form.add(topToolbarContainer = new RepeatingView("topToolbarContainer"));
-		form.add(bottomToolbarContainer = new RepeatingView("bottomToolbarContainer"));
-		form.add(headerToolbarContainer = new RepeatingView("headerToolbarContainer"));
+    AttributeModifier colspan = new AttributeModifier("colspan",
+                                                      columns.size()+1);
+
+    WebMarkupContainer topToolbarHolder =
+       new WebMarkupContainer("topToolbarContainerHolder");
+    topToolbarHolder.add(colspan);
+		topToolbarHolder.add(topToolbarContainer = new RepeatingView("topToolbarContainer"));
+    add(topToolbarHolder);
+
+    //makes sure the bottom toolbar is as wide as the table.
+    WebMarkupContainer bottomToolbarHolder =
+       new WebMarkupContainer("bottomToolbarContainerHolder");
+    bottomToolbarHolder.add(colspan);
+    bottomToolbarContainer = new RepeatingView("bottomToolbarContainer");
+    bottomToolbarHolder.add(bottomToolbarContainer);
+    add(bottomToolbarHolder);
+
+    WebMarkupContainer headerToolbarHolder =
+       new WebMarkupContainer("headerToolbarContainerHolder");
+    headerToolbarHolder.add(colspan);
+    headerToolbarHolder.add(headerToolbarContainer =
+                                  new RepeatingView("headerToolbarContainer"));
+    add(headerToolbarHolder);
 
 		add(new Behavior()
 		{
@@ -131,7 +152,6 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 					AjaxRequestTarget.get().appendJavaScript(getInitializationJavascript());
 				}
 			}
-
 		});
 
 		columnState = new ColumnsState(columns);
@@ -142,7 +162,7 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 	public Form<Void> getForm()
 	{
 		return (Form<Void>)get("form");
-	};
+	}
 
 	/**
 	 * Checks whether the column is a valid grid column
@@ -219,7 +239,6 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 	 */
 	private class SubmitColumnStateBehavior extends AbstractDefaultAjaxBehavior
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -248,7 +267,7 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 				"&columnState=' + columnState");
 		}
 
-	};
+	}
 
 	/**
 	 * Manages order, visibility and sizes of columns.
@@ -337,10 +356,7 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 	 */
 	private void addToolbar(AbstractToolbar<M, I> toolbar, RepeatingView container)
 	{
-		if (toolbar == null)
-		{
-			throw new IllegalArgumentException("argument 'toolbar' cannot be null");
-		}
+    Args.notNull(container, "toolbar");
 
 		// create a container item for the toolbar (required by repeating view)
 		WebMarkupContainer item = new WebMarkupContainer(container.newChildId());
@@ -416,7 +432,7 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 			}
 			return result.toString();
 		}
-	};
+	}
 
 	/**
 	 * Component that represents the grid header.
@@ -426,7 +442,6 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 	 */
 	private class Header extends ColumnsHeader<M, I>
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		private Header(String id)
@@ -445,9 +460,9 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 		{
 			int width = getColumnState().getColumnWidth(column.getId());
 			if (width != -1 && column.getSizeUnit() == SizeUnit.PX)
-				return width;
+      {	return width; }
 			else
-				return column.getInitialSize();
+      { return column.getInitialSize(); }
 		}
 
 		@Override
@@ -456,7 +471,7 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 			onSortStateChanged(target);
 		}
 
-	};
+	}
 
 	/**
 	 * Invoked when sort state of this grid has changed (e.g. user clicked a sortable column
@@ -514,7 +529,7 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 		sb.append("})();\n");
 
 		return sb.toString();
-	};
+	}
 
 	/**
 	 * Returns collection of currently visible columns.
@@ -556,7 +571,7 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 			sortState = new GridSortState(this);
 		}
 		return sortState;
-	};
+	}
 
 	/**
 	 * Constant for the Vista theme (default).
@@ -622,16 +637,21 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 		}
 	}
 
-	private static final JavaScriptResourceReference JS_YAHOO = new JavaScriptResourceReference(
-		AbstractGrid.class, "res/yahoo.js");
-	private static final JavaScriptResourceReference JS_EVENT = new JavaScriptResourceReference(
-		AbstractGrid.class, "res/event.js");
-	private static final JavaScriptResourceReference JS_DOM = new JavaScriptResourceReference(
-		AbstractGrid.class, "res/dom.js");
-	private static final JavaScriptResourceReference JS_SCRIPT = new JavaScriptResourceReference(
-		AbstractGrid.class, "res/script.js");
-	private static final PackageResourceReference CSS = new PackageResourceReference(
-		AbstractGrid.class, "res/style.css");
+	private static final JavaScriptResourceReference JS_YAHOO =
+                           new JavaScriptResourceReference(AbstractGrid.class,
+                                                           "res/yahoo.js");
+	private static final JavaScriptResourceReference JS_EVENT =
+                           new JavaScriptResourceReference(AbstractGrid.class,
+                                                           "res/event.js");
+	private static final JavaScriptResourceReference JS_DOM =
+                           new JavaScriptResourceReference(AbstractGrid.class,
+                                                           "res/dom.js");
+	private static final JavaScriptResourceReference JS_SCRIPT =
+                           new JavaScriptResourceReference(AbstractGrid.class,
+                                                           "res/script.js");
+	private static final PackageResourceReference CSS =
+                              new PackageResourceReference(AbstractGrid.class,
+                                                           "res/style.css");
 
 	/**
 	 * {@inheritDoc}
@@ -748,7 +768,7 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 	public void cleanLastClickedColumn()
 	{
 		lastClickedColumn = null;
-	};
+	}
 
 	protected boolean disableRowClickNotifications()
 	{
@@ -762,13 +782,10 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 	 */
 	protected void onRowPopulated(final WebMarkupContainer rowComponent)
 	{
-
-		if (disableRowClickNotifications())
-			return;
+		if (disableRowClickNotifications()) { return; }
 
 		rowComponent.add(new AjaxFormSubmitBehavior(getForm(), "onclick")
 		{
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -785,8 +802,7 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 
 			@Override
 			protected void onEvent(AjaxRequestTarget target)
-			{
-				// preserve the entered values in form components
+			{	// preserve the entered values in form components
 				Form<?> form = super.getForm();
 				form.visitFormComponentsPostOrder(new IVisitor<FormComponent<?>, Void>()
 				{
@@ -853,7 +869,7 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 	}
 
 	protected boolean onCellClicked(AjaxRequestTarget target, IModel<I> rowModel,
-		IGridColumn<M, I> column)
+		                              IGridColumn<M, I> column)
 	{
 		return false;
 	}
@@ -994,7 +1010,7 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 	 * Marks the item from the given model as dirty. Dirty items are updated during Ajax requests
 	 * when {@link AbstractGrid#update()} method is called.
 	 * 
-	 * @param itemModel
+	 * @param model
 	 *            model used to access the item
 	 */
 	public abstract void markItemDirty(IModel<I> model);
@@ -1086,4 +1102,5 @@ public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContrib
 			}
 		}
 	}
+
 }

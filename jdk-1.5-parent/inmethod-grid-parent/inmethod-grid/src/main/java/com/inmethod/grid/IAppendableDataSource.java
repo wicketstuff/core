@@ -7,15 +7,14 @@ package com.inmethod.grid;
  * Time: 10:56 AM
  *
  * @author Tom B.
- * //TODO: make generic when the rest of the library is converted
  */
-public interface IAppendableDataSource extends IDataSource
+public interface IAppendableDataSource<T> extends IDataSource<T>
 {
   /** Function for appending an item to the end of the result data
    *  @param index the index value to insert the new Item into
    *  @param item Item to append to the end of the result data
    */
-  public void InsertRow(int index, Object item);
+  public void InsertRow(int index, T item);
 
-  public void DeleteRow(int index, Object item);
+  public void DeleteRow(int index, T item);
 }

@@ -30,7 +30,6 @@ import com.inmethod.grid.IRenderable;
  */
 public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -46,9 +45,7 @@ public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 
 	@Override
 	protected void onBeforeRender()
-	{
-		// make sure that the child component match currently active columns
-
+	{	// make sure that the child component match currently active columns
 		Collection<IGridColumn<M, I>> activeColumns = getActiveColumns();
 
 		// remove unneeded components
@@ -107,8 +104,9 @@ public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 		{
 			AbstractGrid<M, I> dataGrid = findParent(AbstractGrid.class);
 			IGridSortState sortState = dataGrid.getSortState();
-			return sortState.getColumns().size() > 0 &&
-				sortState.getColumns().get(0).getPropertyName().equals(column.getSortProperty());
+			return sortState.getColumns().size() > 0
+          && sortState.getColumns().get(0).getPropertyName()
+                      .equals(column.getSortProperty());
 		}
 		else
 		{
@@ -129,8 +127,8 @@ public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 	 *            set)
 	 * @return
 	 */
-	private int renderOpenTag(IGridColumn<M, I> column, int i, int columnsSize, Response response,
-		int hide)
+	private int renderOpenTag(IGridColumn<M, I> column, int i, int columnsSize,
+                            Response response, int hide)
 	{
 		int originalColspan = column.getColSpan(getDefaultRowModel());
 		int colspan = originalColspan;
@@ -146,8 +144,7 @@ public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 			response.write("<td");
 
 			int max = columnsSize - i;
-			if (colspan > max)
-				colspan = max;
+			if (colspan > max) { colspan = max; }
 			if (colspan > 1)
 			{
 				response.write(" colspan=\"" + colspan + "\"");
@@ -156,11 +153,8 @@ public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 		}
 
 		// render the css class
-
 		StringBuilder css = new StringBuilder();
-
 		css.append("imxt-cell");
-
 		String klass = column.getCellCssClass(getDefaultRowModel(), getRowNumber());
 
 		if (klass != null)
@@ -190,14 +184,14 @@ public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 	}
 
 	/**
-	 * Behavior that sets the css class attribute to of the actual cell component. This behavior is
-	 * temporary (only lasts during render) and it's re-added on every request in onBeforeRender.
+	 * Behavior that sets the css class attribute to of the actual cell component.
+   * This behavior is temporary (only lasts during render) and it's re-added on
+   * every request in onBeforeRender.
 	 * 
 	 * @author Matej Knopp
 	 */
 	private class InnerDivClassBehavior extends Behavior
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		private final IGridColumn<M, I> column;
@@ -214,10 +208,8 @@ public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 		public void onComponentTag(Component component, ComponentTag tag)
 		{
 			CharSequence klass = tag.getAttribute("class");
-			if (klass == null)
-				klass = "";
-			if (klass.length() > 0)
-				klass = klass + " ";
+			if (klass == null) { klass = ""; }
+			if (klass.length() > 0) { klass = klass + " "; }
 			klass = klass + getInnerDivClass(column);
 			tag.put("class", klass);
 		}
@@ -230,7 +222,7 @@ public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 		{
 			return true;
 		}
-	};
+	}
 
 	/**
 	 * Returns the css class of cell component (which is attached to the first div element inside
@@ -257,7 +249,6 @@ public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 	@Override
 	protected void onRender()
 	{
-
 		Response response = RequestCycle.get().getResponse();
 
 		Collection<IGridColumn<M, I>> columns = getActiveColumns();
@@ -269,8 +260,7 @@ public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 			hide = renderOpenTag(column, i, columns.size(), response, hide);
 
 			if (column.isLightWeight(getDefaultRowModel()))
-			{
-				// for lightweight columns get the renderable instance and render it
+			{	// for lightweight columns get the renderable instance and render it
 				IRenderable<I> renderable = column.newCell(getDefaultRowModel());
 				if (renderable == null)
 				{
@@ -284,8 +274,7 @@ public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 				response.write("</div>");
 			}
 			else
-			{
-				// for non-lightweight components get the actual component and render it
+			{	// for non-lightweight components get the actual component and render it
 				Component component = get(column.getId());
 				if (component == null)
 				{
@@ -318,7 +307,7 @@ public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 	 * @return
 	 */
 	private boolean isComponentNeeded(final String componentId,
-		Collection<IGridColumn<M, I>> activeColumns)
+		                                Collection<IGridColumn<M, I>> activeColumns)
 	{
 		for (IGridColumn<M, I> column : activeColumns)
 		{

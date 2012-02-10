@@ -27,7 +27,8 @@ import com.inmethod.grid.common.AttachPrelightBehavior;
  * 
  * @author Matej Knopp
  */
-public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel implements IPageable
+public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
+       implements IPageable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -70,11 +71,12 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 		return getData().getTotalRowCount();
 	}
 
-  void clearCache() {
+  void clearCache()
+  {
     getData().clearCache();
   }
 
-	int getCurrentPageItemCount()
+  int getCurrentPageItemCount()
 	{
 		return getData().getCurrentPageItemCount();
 	}
@@ -135,7 +137,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
     @Override
 		protected IDataSource.IQuery wrapQuery(final IDataSource.IQuery original) 
     {
-			return new DataGrid.IGridQuery() 
+			return new IDataSource.IQuery()
       {
 				public int getCount() 
         {
@@ -206,8 +208,10 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 				{
 					klass = "";
 				}
-				if (klass.length() > 0)
-					klass = klass + " ";
+				else if (klass.length() > 0)
+        {
+          klass = klass + " ";
+        }
 
 				if (getIndex() % 2 == 0)
 				{
@@ -227,7 +231,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 
 				tag.put("class", klass);
 			}
-		};
+		}
 
 		@Override
 		protected Item<T> newItem(String id, final int index, final IModel<T> model)
@@ -250,7 +254,9 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 			return newItemFactory().newItem(index, itemModel);
 		}    
 	}
-  
+
+  }
+
 	protected IModel<T> getDefaultItemModel()
 	{
 		return (IModel<T>)getDefaultModel();

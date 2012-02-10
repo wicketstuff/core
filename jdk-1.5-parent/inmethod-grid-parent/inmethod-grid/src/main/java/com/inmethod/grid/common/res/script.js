@@ -3,15 +3,13 @@
  * All rights reserved.
  */
 
-if (typeof(InMethod) == "undefined") {
-	InMethod = { };
-}
+if (typeof(InMethod) == "undefined") { InMethod = { }; }
 
 InMethod.util = YAHOO.util;
 InMethod.lang = YAHOO.lang;
 
-(function() {	
-	
+(function()
+{
 var E = InMethod.util.Event;
 var D = InMethod.util.Dom;
 var L = InMethod.lang;
@@ -27,13 +25,12 @@ var genIdCounter = 0;
  */
 var elementsWithListeners = new Array();
 
-var addListener = function(element, event, fn, obj, override) {
-	
+var addListener = function(element, event, fn, obj, override)
+{
 	E.addListener(element, event, fn, obj, override);
 	
-	if (element != document && element != window) {
-		elementsWithListeners.push(element);
-	}
+	if (element != document && element != window)
+  {	elementsWithListeners.push(element); }
 };
 
 // temporary array of elements being processed during purge
@@ -45,19 +42,16 @@ var purgedCount = 0;
 var purgeDebug = false;
 
 // periodically called to initiate the purging process
-var purgeInactiveListeners = function() {
-	
+var purgeInactiveListeners = function()
+{
 	// if purge is in progress don't do anything
-	if (beingPurged != null) {
-		return;
-	}
+	if (beingPurged != null) { return; }
 	
 	// the the elements
 	beingPurged = elementsWithListeners;
 	elementsWithListeners = new Array();
 	
-	if (purgeDebug)
-		Wicket.Log.info("Purge begin");
+	if (purgeDebug) { Wicket.Log.info("Purge begin"); }
 	
 	purgedCount = 0;
 	
@@ -82,29 +76,31 @@ var purge = function()
 			if (e != null)
 			{
 				++done;
-				if (!D.inDocument(e)) {
+				if (!D.inDocument(e))
+        {
 					E.purgeElement(e);
 					++purgedCount;
-				} else {
-					// element is still in document, return it
+				}
+        else
+        {	// element is still in document, return it
 					elementsWithListeners.push(e);
 				}
 				a[i] = null;
 			}			
 		}
 		
-		
 		if (i == a.length)
-		{
-			// we are done with purging
+		{	// we are done with purging
 			beingPurged = null;
 			
 			if (purgeDebug)
-				Wicket.Log.info("Purge End; purged: " + purgedCount + ", total: " + elementsWithListeners.length);
+      {
+        Wicket.Log.info("Purge End; purged: " + purgedCount
+                       + ", total: " + elementsWithListeners.length);
+      }
 		}		
 		else
-		{
-			// not yet done, continue after 50ms
+		{	// not yet done, continue after 50ms
 			window.setTimeout(purge, 50);
 		}
 	}
@@ -116,18 +112,20 @@ var purge = function()
 // map of elements with prelight
 var curPrelight = new Object();
  
-var mouseIn = function(ev, instance) {
+var mouseIn = function(ev, instance)
+{
 	var e = this;	
 
 	// if the old and new prelight are not related in any way make sure that
 	// the prelight is disabled on the old ones	
-	for (property in curPrelight) {		
+	for (property in curPrelight)
+  {
 		var id = curPrelight[property];
-		if (id) {
+		if (id)
+    {
 			var c = Wicket.$(id);
-			if (c != null && !D.isAncestor(e, c) && !D.isAncestor(c, e))  {
-				mouseOut.bind(c)(null, instance);
-			}
+			if (c != null && !D.isAncestor(e, c) && !D.isAncestor(c, e))
+      {	mouseOut.bind(c)(null, instance);	}
 		}
 	}
 	
@@ -137,7 +135,8 @@ var mouseIn = function(ev, instance) {
 	instance.updatePrelight(e);	
 };
 	
-var mouseOut = function(ev, instance) {
+var mouseOut = function(ev, instance)
+{
 	var e = this;
 	curPrelight[getElementId(e)] = null;	
 	e.imxtPrelight = false;
@@ -151,15 +150,16 @@ var ignorePrelight = function(element)
 	return !(element.tagName == "TR" && Wicket.Browser.isIELessThan7()) && hasClass(element, "imxt-grid-row");
 }
 
-var attachPrelight = function(elements, instance) {
-	
-	for (var i = 0; i < elements.length; ++i) {
+var attachPrelight = function(elements, instance)
+{
+	for (var i = 0; i < elements.length; ++i)
+  {
 		var element = elements[i];
 					
-		if (element.imxtPrelightAttached != true && !ignorePrelight(element)) {
-			if (curPrelight != null && curPrelight[getElementId(element)] != null) {
-				mouseIn.bind(element)(null, instance);
-			}			
+		if (element.imxtPrelightAttached != true && !ignorePrelight(element))
+    {
+			if (curPrelight != null && curPrelight[getElementId(element)] != null)
+      {	mouseIn.bind(element)(null, instance); }
 			addListener(element, "mouseover", mouseIn, instance, false);
 			addListener(element, "mouseout", mouseOut, instance, false);
 			element.imxtPrelightAttached = true;						
@@ -171,10 +171,12 @@ window.setInterval(purgeInactiveListeners, 10000);
 
 E.addListener(window, "unload", function() { elementsWithListeners = null; } );
 
-var getElementId = function(element) {
-	if (typeof(element.getAttribute("id")) == "string" && element.getAttribute("id").length > 0) {
-		return element.getAttribute("id");
-	} else {
+var getElementId = function(element)
+{
+	if (typeof(element.getAttribute("id")) == "string" && element.getAttribute("id").length > 0)
+  {	return element.getAttribute("id"); }
+  else
+  {
 		var id = "imxt-generated-id-" + (++genIdCounter);
 		element.setAttribute("id", id);
 		return id;
@@ -183,10 +185,10 @@ var getElementId = function(element) {
 
 InMethod.Drag = Wicket.Class.create();
 
-InMethod.Drag.prototype = {	
-	
-	initialize: function(element, onDragBegin, onDragEnd, onDrag, thisRef) {
-		
+InMethod.Drag.prototype =
+{
+	initialize: function(element, onDragBegin, onDragEnd, onDrag, thisRef)
+  {
 		this.elementId = getElementId(element);
 		this.onDragBegin = onDragBegin || empty;
 		this.onDrag = onDrag || empty; 
@@ -199,9 +201,10 @@ InMethod.Drag.prototype = {
 		element.imDrag = this;
 	},
 	
-	onMouseDown: function(e) {
-		if (typeof(e.ignore) == "undefined") {
-				
+	onMouseDown: function(e)
+  {
+		if (typeof(e.ignore) == "undefined")
+    {
 			E.stopEvent(e);			
 			this.lastMouseX = e.clientX;
 			this.lastMouseY = e.clientY;				
@@ -216,21 +219,19 @@ InMethod.Drag.prototype = {
 		return false;
 	},
 	
-	onMouseMove: function(e) {
+	onMouseMove: function(e)
+  {
 		E.stopEvent(e);
 		
 		// this happens sometimes in Safari 
-		if (e.clientX < 0 || e.clientY < 0) {
-			return;
-		}		
+		if (e.clientX < 0 || e.clientY < 0) {	return;	}
 
 		var deltaX = e.clientX - this.lastMouseX;
 		var deltaY = e.clientY - this.lastMouseY;
 				
 		var res = this.onDrag.bind(this.thisRef)(Wicket.$(this.elementId), deltaX, deltaY, e);
 			
-		if (res == null)
-			res = [0, 0];
+		if (res == null) { res = [0, 0]; }
 			
 		this.lastMouseX = e.clientX + res[0];
 		this.lastMouseY = e.clientY + res[1];
@@ -238,7 +239,8 @@ InMethod.Drag.prototype = {
 		return false;
 	},
 	
-	onMouseUp: function(e) {
+	onMouseUp: function(e)
+  {
 		E.stopEvent(e);
 		
 		// cleanup
@@ -251,11 +253,10 @@ InMethod.Drag.prototype = {
 		return false;
 	},
 	
-	onSelectStart: function(e) {
-		return false;
-	},
+	onSelectStart: function(e) { return false; },
 	
-	cleanUp: function() {
+	cleanUp: function()
+  {
 		E.removeListener(Wicket.$(this.elementId), "mousedown");
 		this.element = null;
 		this.onDragBegin = null;
@@ -270,85 +271,84 @@ var D = InMethod.util.Dom;
 var L = InMethod.lang;
 var colSpanRegex = /imxt-colspan-([\d]+)/;
 
-var nextSibling = function(element) {
-	return D.getNextSiblingBy(element, function(e) { return e.tagName == element.tagName; });
+var nextSibling = function(element)
+{
+	return D.getNextSiblingBy(element, function(e)
+  { return e.tagName == element.tagName; });
 };
 
-var prevSibling = function(element) {
-	return D.getPreviousSiblingBy(element, function(e) { return e.tagName == element.tagName; });
+var prevSibling = function(element)
+{
+	return D.getPreviousSiblingBy(element, function(e)
+  { return e.tagName == element.tagName; });
 };
 
-var hasClass = function(e, c) {
+var hasClass = function(e, c)
+{
 	return D.hasClass(e, c);
 };
 
-var addClass = function(e, c) {
+var addClass = function(e, c)
+{
 	D.addClass(e, c);
 };
 
-var removeClass = function(e, c) {
+var removeClass = function(e, c)
+{
 	D.removeClass(e, c);
 };
 
-var contains = function(array, value) {
-	for (var i = 0; i < array.length; ++i) {
-		if (array[i] == value) {
-			return true;
-		}
-	}
+var contains = function(array, value)
+{
+	for (var i = 0; i < array.length; ++i)
+  { if (array[i] == value) { return true;	}	}
 	return false;
 };
 
-var isEmpty = function(string) {
-	return !(L.isString(string) && string.length > 0);
-}
+var isEmpty = function(string)
+{	return !(L.isString(string) && string.length > 0); }
 
-
-var getChildren = function(parent, tagName) {
-	if (L.isArray(tagName)) {
-		return D.getChildrenBy(parent, function(node) { return contains(tagName, node.tagName); });
-	} else {
-		return D.getChildrenBy(parent, function(node) { return node.tagName == tagName; });
+var getChildren = function(parent, tagName)
+{
+	if (L.isArray(tagName))
+  {
+		return D.getChildrenBy(parent, function(node)
+    { return contains(tagName, node.tagName); });
+	}
+  else
+  {
+		return D.getChildrenBy(parent, function(node)
+    { return node.tagName == tagName; });
 	}	
 };
 
-var arrayEq = function(a1, a2) {
-	if (!L.isArray(a1) || !L.isArray(a2)) {
-		return false;
-	} 
-	if (a1 == a2) {
-		return true;
-	}
-	if (a1.length != a2.length) {
-		return false;
-	}
-	for (var i = 0; i < a1.length; ++i) {
-		if (a1[i] != a2[i]) {
-			return false;
-		}
-	}
+var arrayEq = function(a1, a2)
+{
+	if (!L.isArray(a1) || !L.isArray(a2)) {	return false;	}
+	if (a1 == a2) {	return true; }
+	if (a1.length != a2.length) {	return false;	}
+	for (var i = 0; i < a1.length; ++i) {	if (a1[i] != a2[i]) {	return false;	}	}
 	return true;
 };
 
-var getFirstChild = function(parent, tagName) {
-	for (var i = 0; i < parent.childNodes.length; ++i) {
+var getFirstChild = function(parent, tagName)
+{
+	for (var i = 0; i < parent.childNodes.length; ++i)
+  {
 		var c = parent.childNodes[i];
-		if (c && c.tagName == tagName) {
-			return c;
-		}
+		if (c && c.tagName == tagName) { return c; }
 	}
 	return null;
 }
 
 InMethod.XTable = Wicket.Class.create();
 
-InMethod.XTable.prototype = {
-	
-	initialize: function(id, columnsData, columnsStateCallback) {			
-		this.id = id;			
-		
-		this.initColumns(columnsData);				
-		
+InMethod.XTable.prototype =
+{
+	initialize: function(id, columnsData, columnsStateCallback)
+  {
+		this.id = id;
+		this.initColumns(columnsData);
 		this.attachEventHandlers();
 		this.prevColumnWidths = null;					
 		
@@ -362,30 +362,28 @@ InMethod.XTable.prototype = {
 		
 		// IE needs update called twice, otherwise the top right corner flashes or there is a horizontal 
 		// scrollbar where it shouldn't be
-		if (Wicket.Browser.isIE() && !Wicket.Browser.isIEQuirks()) {
-			var bodyContainer1 = this.getElement("div", "imxt-body-container1");
+		if (Wicket.Browser.isIE() && !Wicket.Browser.isIEQuirks())
+    {
+			var bodyContainer1 = this.getElement("*", "imxt-body-container1");
 			bodyContainer1.imxtOldOffsetWidth = null;
 			this.update();		
 		}
 						
-		if (Wicket.Browser.isIE()) {
-			addClass(Wicket.$(id), "imxt-ie");
-		} else if (Wicket.Browser.isGecko()) {
-			addClass(Wicket.$(id), "imxt-ff");
-		} else if (Wicket.Browser.isSafari()) {
-			addClass(Wicket.$(id), "imxt-safari");
-		}				
+		if (Wicket.Browser.isIE()) { addClass(Wicket.$(id), "imxt-ie");	}
+    else if (Wicket.Browser.isGecko()) { addClass(Wicket.$(id), "imxt-ff");	}
+    else if (Wicket.Browser.isSafari()) {	addClass(Wicket.$(id), "imxt-safari"); }
 		
 		this.updateSelectCheckBoxes();				
 		
 		this.initCells(this.getBodyTable());
-		
 	},
 	
-	initColumns: function(columnsData) {
+	initColumns: function(columnsData)
+  {
 		var r = this.getColumnsRow();
 		var ths = getChildren(r, "TH");
-		for (var i = 0; i < columnsData.length && i < ths.length; ++i) {
+		for (var i = 0; i < columnsData.length && i < ths.length; ++i)
+    {
 			var c = columnsData[i];
 			var th = ths[i];
 			th.imxtMinSize = c.minSize;
@@ -399,37 +397,29 @@ InMethod.XTable.prototype = {
 	/**
 	 * Returns the element that contains the XTable
 	 */
-	getTopContainer: function() {		
-		return Wicket.$(this.id);
-	},
+	getTopContainer: function() {	return Wicket.$(this.id);	},
 	
 	/**
 	 * Returns the table that contains header (part that doesn't scroll vertically, e.g. columns)
 	 */
-	getHeadTable: function() {
-		return this.getElement("table", "imxt-head");
-	},
+	//should this be thead?
+  getHeadTable: function() { return this.getElement("*", "imxt-head"); },
 
 	/**
 	 * Returns the table that contains the body (part that scrolls vertically)
 	 */	
-	getBodyTable: function() {
-		return this.getElement("table", "imxt-body");
-	},	
+	getBodyTable: function() { return this.getElement("*", "imxt-body"); },
 	
 	/**
 	 * Returns the elements that have specified tagName and css class.
 	 * Optionally root parameter can narrow the searching scope.
 	 */ 
-	getElements: function(tagName, className, root) {				
-		if (typeof(root) == "undefined")
-			root = this.getTopContainer();
+	getElements: function(tagName, className, root)
+  {
+		if (typeof(root) == "undefined") { root = this.getTopContainer(); }
 		
-		if (className == null) {
-			return root.getElementsByTagName(tagName);
-		} else {
-			return D.getElementsByClassName(className, tagName, root);
-		}		
+		if (className == null) { return root.getElementsByTagName(tagName); }
+    else { return D.getElementsByClassName(className, tagName, root);	}
 	},
 	
 	/**
@@ -444,53 +434,50 @@ InMethod.XTable.prototype = {
 	/**
 	 * Constructs cache id unique for this XTable.
 	 */
-	getCacheId: function(suffix) {
-		return "imxt-" + this.id + "-" + suffix;
-	},
+	getCacheId: function(suffix) { return "imxt-" + this.id + "-" + suffix;	},
 
 	/**
-	 * Returns element with specified id. If the element can't be found based on the id,
-	 * it calls getElementFunc to find the element and then either sets element id or
-	 * put a mapping to real id to idCache.
+	 * Returns element with specified id. If the element can't be found
+   * based on the id, it calls getElementFunc to find the element and
+   * then either sets element id or put a mapping to real id to idCache.
 	 */
-	getElementCached: function(id, getElementFunc) {
-		var actualId = this.idCache[id] || id;
-		
+	getElementCached: function(id, getElementFunc)
+  {
+    var actualId = this.idCache[id] || id;
 		var e = Wicket.$(actualId);
 				
-		if (e == null) {
-		
+		if (e == null)
+    {
 			e = getElementFunc();
 			actualId = e.getAttribute("id");
-									
 			
-			if (!isEmpty(actualId)) {
-				this.idCache[id] = actualId;
-			} else {
-				e.setAttribute("id", id);
-			}	
+			if (!isEmpty(actualId)) {	this.idCache[id] = actualId; }
+      else { e.setAttribute("id", id); }
 		}
 		
 		return e;
 	},	
 	
+	// update existing
 	/**
 	 * Returns element in this XTable with specified tagName and className,
 	 * optionally narrowing the search scope with the root parameter.
 	 */	
-	getElement: function(tagName, className, root) {
+	getElement: function(tagName, className, root)
+  {
 		var id = this.getCacheId(className);
-		return this.getElementCached(id, function() {
-			return this.getElements(tagName, className, root)[0];
-		}.bind(this));						
+		return this.getElementCached(id, function()
+    {	return this.getElements(tagName, className, root)[0];	}.bind(this));
 	},
 	
 	/**
 	 * Returns array of the TR elements inside the head table.
 	 */
-	getHeadRows: function() {
+	getHeadRows: function()
+  {
 		var id = this.getCacheId("head-first-row");
-		var firstRow = this.getElementCached(id, function() {
+		var firstRow = this.getElementCached(id, function()
+    {
 			var head = this.getHeadTable();
 			return head.getElementsByTagName("tr")[0];
 		}.bind(this));
@@ -501,9 +488,11 @@ InMethod.XTable.prototype = {
 	/**
 	 * Returns array of the TR elements inside the body table.
 	 */
-	getBodyRows: function() {
+	getBodyRows: function()
+  {
 		var id = this.getCacheId("body-first-row");
-		var firstRow = this.getElementCached(id, function() {
+		var firstRow = this.getElementCached(id, function()
+    {
 			var body = this.getBodyTable();
 			return body.getElementsByTagName("tr")[0];
 		}.bind(this));
@@ -514,27 +503,30 @@ InMethod.XTable.prototype = {
 	/**
 	 * Returns the TR element that contains column headers.
 	 */
-	getColumnsRow: function() {
+	getColumnsRow: function()
+  {
 		return this.getElement("tr", "imxt-columns", this.getHeadTable());
 	},
 	
-	updateSelectCheckBoxes: function() {
+	updateSelectCheckBoxes: function()
+  {
 		var head = this.getElements("input", "imxt-select", this.getHeadTable());		
 		
-		if (head.length > 0) {
+		if (head.length > 0)
+    {
 			var body = this.getElements("input", "imxt-select", this.getBodyTable());
-									
 			var selected = body.length > 0;
-			for (var i = 0; i < body.length; ++i) {
-				if (body[i].checked != true) {					
+			for (var i = 0; i < body.length; ++i)
+      {
+				if (body[i].checked != true)
+        {
 					selected = false;
 					break;
 				}
 			}
 									
-			for (var i = 0; i < head.length; ++i) {
-				head[i].checked = selected;
-			}
+			for (var i = 0; i < head.length; ++i)
+      {	head[i].checked = selected;	}
 		}
 	},
 	
@@ -542,43 +534,44 @@ InMethod.XTable.prototype = {
 	 * Returns array of column width strings.
 	 * E.g. ["100px", "300px", "250px"];
 	 */
-	getColumnWidths: function() {
+	getColumnWidths: function()
+  {
 		var row = this.getColumnsRow();
-
 		var ths = getChildren(row, "TH");
 		var res = new Array();
-		for (var i = 0; i < ths.length; ++i) {
-			res.push(ths[i].offsetWidth);
-		}
+		for (var i = 0; i < ths.length; ++i) { res.push(ths[i].offsetWidth); }
 		return res;
 	},
 	
 	/**
 	 * Updates the widths of columns in table body according to the headers 
 	 */
-	updateColumnWidths: function() {				
-		
-		var widths = this.getColumnWidths();		
+	updateColumnWidths: function()
+  {
+		var widths = this.getColumnWidths();
 								
 		var scroll;
 		 		
-		if (Wicket.Browser.isOpera()) {
+		if (Wicket.Browser.isOpera())
+    {
 			// for some reason opera doesn't preserve the scroll offset
-			bodyContainer1 = this.getElement("div", "imxt-body-container1");
+			bodyContainer1 = this.getElement("*", "imxt-body-container1");
 			scroll = bodyContainer1.scrollLeft;
 		}
 
-		if (arrayEq(this.prevColumnWidths, widths) == false) {		
-
+		if (arrayEq(this.prevColumnWidths, widths) == false)
+    {
 			var header = this.getColumnsRow(); 				
 			var rows = this.getBodyRows();
 										
-			if (rows.length > 0) {
+			if (rows.length > 0)
+      {
 				var first = rows[0];
 				var ths = getChildren(header, "TH");
 				var tds = getChildren(first, "TD");
 				
-				for (var i = 0; i < ths.length - 2; ++i) {
+				for (var i = 0; i < ths.length - 2; ++i)
+        {
 					var h = ths[i];
 					var r = tds[i];
 			
@@ -586,51 +579,54 @@ InMethod.XTable.prototype = {
 			
 					// opera fails to refresh the table properly, so we need to hide it and show
 					// after the width is set, that way it's refreshed properly
-					if (r.style.width != width) {
+					if (r.style.width != width)
+          {
 						if (Wicket.Browser.isOpera())						
-							this.getBodyTable().style.display = "none";
+            {	this.getBodyTable().style.display = "none"; }
 						
 						r.style.width = width;
 					}
 						
-					if (Wicket.Browser.isOpera()) {
-						this.getBodyTable().style.display = "";
-					}					
+					if (Wicket.Browser.isOpera())
+          {	this.getBodyTable().style.display = "";	}
 				}
 			}
 			
 			this.prevColumnWidths = widths;
 			
 			// When there is horizontal scrollbar present firefox flickers on ajax replacement.
-			// The reason is that when the table is rendered the data columns have zero size, thus the scrollbar is not visible.
-			// Only in updateColumnWidths the column sizes are set and the scrollbar is displayed. However, this is too late for
-			// firefox and in some cases in shifts the content after the table and immediately moves it back which results in nasty
-			// flicker. This fix creates a style rule for imxt-body-cotnainer2 that forces it to have width of body table, so the 
-			// scrollbar is immediately visible (if necessary) after ajax replacement.
-			if (Wicket.Browser.isGecko()) {
-				var c2 = this.getElement("div", "imxt-body-container2");
-				c2.style.width="auto"; // we want the stylesheet rule only applied on fresh replaced component
+			// The reason is that when the table is rendered the data columns have zero size,
+			// thus the scrollbar is not visible. Only in updateColumnWidths the column sizes
+			// are set and the scrollbar is displayed. However, this is too late for
+			// firefox and in some cases in shifts the content after the table
+			// and immediately moves it back which results in a nasty flicker.
+			// This fix creates a style rule for imxt-body-container2 that forces it
+			// to have the width of the body table, so the scrollbar is immediately visible
+			// (if necessary) after ajax replacement.
+			if (Wicket.Browser.isGecko())
+      {
+				var c2 = this.getElement("*", "imxt-body-container2");
+        // we want the stylesheet rule only applied on fresh replaced component
+				c2.style.width="auto";
 				var x = document.styleSheets[0];
-				if (this.cssRulePos != null) {				
-					x.deleteRule(this.cssRulePos);
-				}	
+				if (this.cssRulePos != null) { x.deleteRule(this.cssRulePos); }
 				this.cssRulePos = x.cssRules.length;			
 					
-				x.insertRule('div#' + this.id + ' div.imxt-body-container2 {width: ' + this.getBodyTable().offsetWidth + 'px}', this.cssRulePos)
+				x.insertRule('tbody#' + this.id
+                    + ' .imxt-body-container2 {width: ' + this.getBodyTable().offsetWidth + 'px}',
+                    this.cssRulePos);
 				
-				var c1 = this.getElement("div", "imxt-body-container1");
+				var c1 = this.getElement("*", "imxt-body-container1");
 				
 				// sometimes firefox displays "fake" horizontal scrollbar, this is a workaround
-				if (c1.scrollWidth <= c1.offsetWidth) {					
-					c1.style.overflowX = "hidden";
-				} else {
-					c1.style.overflowX = "scroll";
-				}
+				if (c1.scrollWidth <= c1.offsetWidth) { c1.style.overflowX = "hidden"; }
+        else { c1.style.overflowX = "scroll";	}
 			}			
 		} 
 		
-		if (Wicket.Browser.isOpera()) {
-			bodyContainer1 = this.getElement("div", "imxt-body-container1");
+		if (Wicket.Browser.isOpera())
+    {
+			bodyContainer1 = this.getElement("*", "imxt-body-container1");
 			bodyContainer1.scrollLeft = scroll;
 		}
 	},
@@ -638,25 +634,21 @@ InMethod.XTable.prototype = {
 	/**
 	 * Updates the table state 
 	 */
-	updateInternal: function(force) {
-		
+	updateInternal: function(force)
+  {
  		var topContainer = this.getTopContainer();
 		
-		if (topContainer == null) {
-			// the table was probably removed
-			return false;
-		}
+		if (topContainer == null) {	return false; } //the table was probably removed
 
 		var head = this.getHeadTable();
 		var body = this.getBodyTable();
 		
-  		var headContainer1 = this.getElement("div", "imxt-head-container1");
-  		var headContainer2 = this.getElement("div", "imxt-head-container2");
-  		var bodyContainer1 = this.getElement("div", "imxt-body-container1");  				  		
+    var headContainer1 = this.getElement("*", "imxt-head-container1");
+    var headContainer2 = this.getElement("*", "imxt-head-container2");
+    var bodyContainer1 = this.getElement("*", "imxt-body-container1");
 
-  		if (Wicket.Browser.isIE() || Wicket.Browser.isGecko()) {
-  			bodyContainer1.style.width = topContainer.offsetWidth + "px";
-  		}  		
+    if (Wicket.Browser.isIE() || Wicket.Browser.isGecko())
+    {	bodyContainer1.style.width = topContainer.offsetWidth + "px"; }
   		
 		var padding = (bodyContainer1.offsetWidth - bodyContainer1.clientWidth);
 
@@ -665,15 +657,16 @@ InMethod.XTable.prototype = {
 		
 		// sometimes newWidth is negative in IE, we have to ignore it		
 		if (Wicket.Browser.isIE() && newWidth > 0 && head.style.width != newWidth)
-			head.style.width = newWidth + "px"; 
-		else if (Wicket.Browser.isSafari()) {			
+    {	head.style.width = newWidth + "px"; }
+		else if (Wicket.Browser.isSafari())
+    {
 			var form = this.getElement("*", "imxt-form");			
-			var fieldset = this.getElement("fieldset", "imxt-fieldset", form);
+			var fieldset = this.getElement("*", "imxt-fieldset", form);
 			fieldset.style.width = form.offsetWidth + "px";
 		}		
 		
-		if (padding > 0) {
-			// compensate for scrollbar
+		if (padding > 0)
+    {	// compensate for scrollbar
 			var e = this.getElement("th", "imxt-padding-right", head);		
 			e.style.width = padding + "px";			
 		}
@@ -684,12 +677,11 @@ InMethod.XTable.prototype = {
  		
 		this.updatePreservedScrollOffsets(); 				
 
- 		
  		// scroll the header if body is scrolled
 		var scroll = bodyContainer1.scrollLeft;
 		
 		if (headContainer2.scrollLeft != scroll)
-			headContainer2.scrollLeft = scroll; 							
+    {	headContainer2.scrollLeft = scroll; }
 
 		this.fixIEStd();				
 
@@ -701,39 +693,40 @@ InMethod.XTable.prototype = {
 	 * After (ajax) refresh this updates the scroll offsets to match previous offset, so that the scrolling
 	 * position remains same after component update.
 	 */
-	updatePreservedScrollOffsets: function() {		
-	 	if (L.isNumber(this.updateScrollTop) ||
- 		    L.isNumber(this.updateScrollLeft)) {
- 		    
- 		    var bodyContainer1 = this.getElement("div", "imxt-body-container1");
- 		    
+	updatePreservedScrollOffsets: function()
+  {
+	 	if (L.isNumber(this.updateScrollTop) || L.isNumber(this.updateScrollLeft))
+    {
+ 		  var bodyContainer1 = this.getElement("*", "imxt-body-container1");
  			bodyContainer1.style.visibility="hidden"; 			
  			
- 			if (L.isNumber(this.updateScrollLeft)) {
+ 			if (L.isNumber(this.updateScrollLeft))
+      {
  				bodyContainer1.scrollLeft = this.lastScrollLeft;
  				this.updateScrollLeft = null;
  			}
  			
- 			if (L.isNumber(this.updateScrollTop)) { 			
+ 			if (L.isNumber(this.updateScrollTop))
+      {
  				bodyContainer1.scrollTop = this.updateScrollTop;
  				this.updateScrollTop = null;
  			}
  			
  			bodyContainer1.style.visibility="visible";
- 			
  			bodyContainer1.imxtOldOffsetWidth = null; 			 			
  		}
 	},
 	
-	fixIEStd: function() {
-		if (Wicket.Browser.isIE() && !Wicket.Browser.isIEQuirks()) {			
-		
-			var bodyContainer1 = this.getElement("div", "imxt-body-container1");
+	fixIEStd: function()
+  {
+		if (Wicket.Browser.isIE() && !Wicket.Browser.isIEQuirks())
+    {
+			var bodyContainer1 = this.getElement("*", "imxt-body-container1");
 		      		 		      				      		 		      		
-		    // IE in standard compliance mode fails to display the scrollbars properly
-		    // so we need to manually change the overflow mode		      		 		      	
-			if (this.dragging || bodyContainer1.imxtOldOffsetWidth != bodyContainer1.offsetWidth) {							
-			
+	    // IE in standard compliance mode fails to display the scrollbars properly
+		  // so we need to manually change the overflow mode
+			if (this.dragging || bodyContainer1.imxtOldOffsetWidth != bodyContainer1.offsetWidth)
+      {
 				var body = this.getBodyTable();
 			
 				// this forces IE to recalculate the width. setting to 1px "hides" the scrollbar
@@ -749,26 +742,26 @@ InMethod.XTable.prototype = {
 	/**
 	 * On IE 6 or IE7 quirks this sets the drag handles height same as parent (column) height 
 	 */
-	updateHandles: function(force) {
+	updateHandles: function(force)
+  {
 		// this is slow on IE so we only do it on every tenth update
-		
-		if (Wicket.Browser.isIELessThan7() || Wicket.Browser.isIEQuirks()) {
+		if (Wicket.Browser.isIELessThan7() || Wicket.Browser.isIEQuirks())
+    {
 			var c = this.counter || 0;
-			if (force)
-				c = 0;
+			if (force) { c = 0; }
 			
-			if (c == 0) {		
-				var header = this.getColumnsRow();				
+			if (c == 0)
+      {
+				var header = this.getColumnsRow();
 				
 				var handles = this.getElements("a", "imxt-handle", header);
-				for (var i = 0; i < handles.length; ++i) {
+				for (var i = 0; i < handles.length; ++i)
+        {
 					var h = handles[i];
 					h.style.height = h.parentNode.offsetHeight + "px";
-				}			
-				
-			} else if (c == 10) {
-				c = -1;
+				}
 			}
+      else if (c == 10) {	c = -1;	}
 			++c;
 			this.counter = c;
 		}
@@ -777,27 +770,29 @@ InMethod.XTable.prototype = {
 	/**
 	 * Updates the XTable. This is called during resizing, after column drag and also periodically.
 	 */
-	update: function(force) {
-		if (this.dragging == true) {
-			return true;
-		} else {
-			return this.updateInternal(force);
-		}
+	update: function(force)
+  {
+		if (this.dragging == true) { return true; }
+    else { return this.updateInternal(force);	}
 	},
 
-	getColumnMinSize: function(column) {
+	getColumnMinSize: function(column)
+  {
 		var res = column.imxtMinSize;
 		return L.isNumber(res) && res > 0 ? res : 20;
 	},
 	
-	getColumnMaxSize: function(column) {
+	getColumnMaxSize: function(column)
+  {
 		var res = column.imxtMaxSize;
 		return L.isNumber(res) && res > 0 ? res : -1;
 	},
 
-	getResizeProxy: function() {
+	getResizeProxy: function()
+  {
 		var e = Wicket.$("imxt-resize-proxy");
-		if (e == null) {
+		if (e == null)
+    {
 			e = document.createElement("div");
 			e.setAttribute("id", "imxt-resize-proxy");
 			document.body.appendChild(e);
@@ -805,27 +800,28 @@ InMethod.XTable.prototype = {
 		return e;
 	},
 	
-	showResizeProxy: function(column) {
-		var headContainer = this.getElement("div", "imxt-head-container");
-		var bodyContainer = this.getElement("div", "imxt-body-container1");
+	showResizeProxy: function(column)
+  {
+		var headContainer = this.getElement("*", "imxt-head-container");
+		var bodyContainer = this.getElement("*", "imxt-body-container1");
 		var columnPos = D.getXY(column);
 		var headContainerPos = D.getXY(headContainer);
 		var bodyContainerPos = D.getXY(bodyContainer);
 		
 		var proxy = this.getResizeProxy();
 		proxy.style.display = "";
-		proxy.style.height = (bodyContainer.offsetHeight + bodyContainerPos[1] - headContainerPos[1]) + "px";
+		proxy.style.height = (bodyContainer.offsetHeight + bodyContainerPos[1]
+                          - headContainerPos[1]) + "px";
 		
 		var top = headContainerPos[1];
-		if (Wicket.Browser.isIE()) { // weird IE bug
-			top = top - 2;
-		}
+		if (Wicket.Browser.isIE()) { top = top - 2; } // weird IE bug
 		proxy.style.top = top + "px";
 		
 		proxy.style.left = (columnPos[0] + column.imxtWidth - proxy.offsetWidth) + "px"; 			
 	},
 	
-	hideResizeProxy: function(column) {
+	hideResizeProxy: function(column)
+  {
 		var proxy = this.getResizeProxy();
 		proxy.style.display="none";
 	},
@@ -833,66 +829,58 @@ InMethod.XTable.prototype = {
 	/**
 	 * Called when column resizing handle dragging started.  
 	 */
-	handleDragBegin: function(handle) {
-		
+	handleDragBegin: function(handle)
+  {
 		Wicket.Focus.lastFocusId = null;
 		
 		this.dragging = true;		
 
 		var column = handle;
 		// find the column itself      			
-      	do {
-      		column = column.parentNode; 				
-      	} while (column.tagName != "TH");
-      	      
-      	// add the css dragging class 	      	      	      
-      	addClass(column, "imxt-dragging");
-      	addClass(this.getColumnsRow(), "imxt-dragging");
-    
-    	column.min = this.getColumnMinSize(column);
+    do { column = column.parentNode; } while (column.tagName != "TH");
+
+    // add the css dragging class
+    addClass(column, "imxt-dragging");
+    addClass(this.getColumnsRow(), "imxt-dragging");
+
+    column.min = this.getColumnMinSize(column);
 		column.max = this.getColumnMaxSize(column);	      
     
-    	column.imxtWidth = parseInt(column.style.width, 10);
-    	this.showResizeProxy(column);   				
+    column.imxtWidth = parseInt(column.style.width, 10);
+    this.showResizeProxy(column);
 	},
 	
 	/**
 	 * Called when column resizing handle dragging ended
 	 */
-	handleDragEnd: function(handle) {
+	handleDragEnd: function(handle)
+  {
 		this.dragging = false;
 		
 		this.hideResizeProxy();
 		
 		var column = handle;
-		do {
-      		column = column.parentNode; 				
-      	} while (column.tagName != "TH");
+		do { column = column.parentNode; } while (column.tagName != "TH");
 
-      	// opera has weird redrawing problems, to get over it we hide the handle and show 
-      	// it after setting the width	
-      	if (Wicket.Browser.isOpera()) {
-			column.style.display = "none";
-		} 
+    // opera has weird redrawing problems, to get over it we hide the handle and show
+    // it after setting the width
+    if (Wicket.Browser.isOpera()) { column.style.display = "none"; }
 		
 		column.style.width = column.imxtWidth + "px";
 		
-		if (Wicket.Browser.isOpera()) {
-    		column.style.display = ""; 
-    	} 
+		if (Wicket.Browser.isOpera()) { column.style.display = ""; }
 		
 		// remove the css classes
 		removeClass(column, "imxt-dragging");
 		removeClass(this.getColumnsRow(), "imxt-dragging");
 		
 		// fix for IE quirks mode (to force recalculating of table layout)
-		this.getElement("div", "imxt-body-container1").imxtOldOffsetWidth = null;
+		this.getElement("*", "imxt-body-container1").imxtOldOffsetWidth = null;
 		
 		// the prelight has not been updated during dragging, update it now
 		if (Wicket.Browser.isIE()) // flickers otherwise
-			window.setTimeout(this.updatePrelight.bind(this), 100);
-		else
-			this.updatePrelight();
+    {	window.setTimeout(this.updatePrelight.bind(this), 100); }
+		else { this.updatePrelight(); }
 			
 		this.updateInternal();
 		this.submitColumnState();
@@ -901,47 +889,49 @@ InMethod.XTable.prototype = {
 	/**
 	 * Called during a column handle dragging
 	 */
-	handleDrag: function(handle, dX, dY) {
+	handleDrag: function(handle, dX, dY)
+  {
 		var column = handle;
-      	do {
-      		column = column.parentNode; 				
-		} while (column.tagName != "TH");      							      		
+    do { column = column.parentNode; } while (column.tagName != "TH");
       	
 		var current = column.imxtWidth;
 		var newWidth = current + dX;
 		var delta = 0;
       			
-		if (column.min != -1 && newWidth < column.min) {
+		if (column.min != -1 && newWidth < column.min)
+    {
 			delta = column.min - newWidth;
 			newWidth = column.min;
-		} else if (column.max != -1 && newWidth > column.max) {		
+		}
+    else if (column.max != -1 && newWidth > column.max)
+    {
 			delta = column.max - newWidth;
 			newWidth = column.max;
 		}
       		      	
-      	column.imxtWidth = newWidth;
-      	this.showResizeProxy(column);
-      	
-      	return [delta, 0];		      			
+    column.imxtWidth = newWidth;
+    this.showResizeProxy(column);
+
+    return [delta, 0];
 	},
 	
-	handleDoubleClick: function(event, table) {
+	handleDoubleClick: function(event, table)
+  {
 		var column = this;
-		do {
-      		column = column.parentNode; 				
-      	} while (column.tagName != "TH");      	
+		do { column = column.parentNode; } while (column.tagName != "TH");
       	
-      	var min = table.getColumnMinSize(column)
-      	
-      	column.style.width = min + "px";
-      	table.updateInternal();
+    var min = table.getColumnMinSize(column)
+
+    column.style.width = min + "px";
+    table.updateInternal();
 		table.submitColumnState();
 	},
 	
 	/**
 	 * Returns the array of TH elements from the column row
 	 */
-	getColumns: function() {
+	getColumns: function()
+  {
 		var columnsRow = this.getColumnsRow();
 		return getChildren(columnsRow, "TH");
 	},
@@ -949,7 +939,8 @@ InMethod.XTable.prototype = {
 	/**
 	 * Returns array of handle links inside the columns row
 	 */
-	getHandles: function() {
+	getHandles: function()
+  {
 		var columns = this.getColumnsRow();
 		var handles = this.getElements("a", "imxt-handle", columns);
 		return handles;
@@ -958,10 +949,12 @@ InMethod.XTable.prototype = {
 	/**
 	 * Calback invoked when the body is scrolled.
 	 */
-	onScroll: function(event) {
-		var bodyContainer = this.getElement("div", "imxt-body-container1");
+	onScroll: function(event)
+  {
+		var bodyContainer = this.getElement("*", "imxt-body-container1");
 		// only update on horizontal scrolling
-		if (bodyContainer.scrollLeft != bodyContainer.imxtPrevScrollLeft) {
+		if (bodyContainer.scrollLeft != bodyContainer.imxtPrevScrollLeft)
+    {
 			this.update();
 			bodyContainer.imxtPrevScrollLeft = bodyContainer.scrollLeft;
 		}
@@ -973,25 +966,26 @@ InMethod.XTable.prototype = {
 	/**
 	 * Attach the various event handler to elements in this XTable.
 	 */
-	attachEventHandlers: function() {
-		
+	attachEventHandlers: function()
+  {
 		// 1 scroll handler
-		var bodyContainer = this.getElement("div", "imxt-body-container1");				
+		var bodyContainer = this.getElement("*", "imxt-body-container1");
 						
-		if (bodyContainer.imxtAttached != true) {
+		if (bodyContainer.imxtAttached != true)
+    {
 			addListener(bodyContainer, "scroll", this.onScroll, this, true);			
 			bodyContainer.imxtAttached = true;
-		}		
-		
+		}
 				
 		// 2 column resize handlers
 		var handles = this.getHandles();
 						
-		for (var i = 0; i < handles.length; ++i) {
-		
+		for (var i = 0; i < handles.length; ++i)
+    {
 			var h = handles[i];						
 			
-			if (h.imxtAttached != true) {				
+			if (h.imxtAttached != true)
+      {
 				new InMethod.Drag(h, this.handleDragBegin, this.handleDragEnd, 
 				                     this.handleDrag, this);
 				                     
@@ -1004,9 +998,11 @@ InMethod.XTable.prototype = {
 		// 3 columns reorder handlers		
 		var columns = getChildren(this.getColumnsRow(), "TH");
 		
-		for (var i = 0; i < columns.length; ++i) {
+		for (var i = 0; i < columns.length; ++i)
+    {
 			var c = columns[i];			
-			if (!hasClass(c, "imxt-padding") && c.imxtReorderable == true && c.imxtAttached != true) {
+			if (!hasClass(c, "imxt-padding") && c.imxtReorderable == true && c.imxtAttached != true)
+      {
 				new InMethod.Drag(c, this.columnDragBegin, this.columnDragEnd, this.columnDrag, this);								
 				c.imxtAttached = true;
 			}
@@ -1019,7 +1015,8 @@ InMethod.XTable.prototype = {
 	/**
 	 * Called when user starts to drag a column (reorder)
 	 */
-	columnDragBegin: function(column, event) {
+	columnDragBegin: function(column, event)
+  {
 		Wicket.Focus.lastFocusId = null;
 				
 		addClass(column, "imxt-dragging");
@@ -1034,8 +1031,8 @@ InMethod.XTable.prototype = {
 	/**
 	 * Called after user finished dragging a column (reorder)
 	 */
-	columnDragEnd: function(column) {		
-	
+	columnDragEnd: function(column)
+  {
 		this.cachedColumns = null;
 	
 		// targetColumn is array [column, position] where position is 0 or 1
@@ -1043,24 +1040,27 @@ InMethod.XTable.prototype = {
 		
 		var submitState = false;
 		
-		if (L.isArray(target)) {
-		
+		if (L.isArray(target))
+    {
 			// find the delta - how many columns right or left has the source
 			// column been moved 		
 			var delta = 0;
 			var c = column;
 			
 			// try moving left
-			do {
+			do
+      {
 				c = prevSibling(c);
 				--delta;
 			} while (c != null && c != target[0]);
 		
 			// if the column hasn't been found in left siblings, try moving right
-			if (c == null) {
+			if (c == null)
+      {
 			 	c = column;
 				delta = 0;
-				do {
+				do
+        {
 					c = nextSibling(c);
 					++delta;
 				} while (c != null && c != target[0]);
@@ -1068,7 +1068,8 @@ InMethod.XTable.prototype = {
 			}
 			
 			// if we found target column, do the actual reordering
-			if (c != null) {
+			if (c != null)
+      {
 				delta += target[1];
 				this.moveColumn(column, delta);
 				submitState = true;
@@ -1082,19 +1083,18 @@ InMethod.XTable.prototype = {
 		this.hideDragProxy();
 		this.updatePrelight();		
 		
-		if (submitState) {
-		 	this.submitColumnState();
-		}
-						
+		if (submitState) { this.submitColumnState(); }
 	},
 	
 	/**
 	 * Initializes the drag proxy. If the drag proxy doesn't exist yet, creates it. 
 	 * This method doesn't make the proxy visible. Proxy is made visible in updateDragProxy.
 	 */
-	initDragProxy: function(ev, column) {	
+	initDragProxy: function(ev, column)
+  {
 		var p = Wicket.$("imxt-drag-proxy");
-		if (p == null) {
+		if (p == null)
+    {
 			p = document.createElement("div");
 			document.body.appendChild(p);
 			p.setAttribute("id", "imxt-drag-proxy");
@@ -1119,17 +1119,20 @@ InMethod.XTable.prototype = {
 	/**
 	 * Moves the drag proxy to mouse cursor position.
 	 */
-	updateDragProxy: function(ev) {
+	updateDragProxy: function(ev)
+  {
 		var p = Wicket.$("imxt-drag-proxy");
 		p.style.display = "";
 			
-		D.setXY(p, [E.getPageX(ev) + this.dragProxyDX, E.getPageY(ev) + this.dragProxyDY]);				
+		D.setXY(p, [E.getPageX(ev) + this.dragProxyDX,
+                E.getPageY(ev) + this.dragProxyDY]);
 	},
 	
 	/**
 	 * Hides the drag proxy.
 	 */
-	hideDragProxy: function() {
+	hideDragProxy: function()
+  {
 		var p = Wicket.$("imxt-drag-proxy");
 		p.style.display = "none";
 	},
@@ -1138,9 +1141,11 @@ InMethod.XTable.prototype = {
 	 * Returns the arrow element with specified id (should be either 'imxt-arrow-down' or 'imxt-arrow-up').
 	 * If the arrow element doesn't exist, creates it.
 	 */
-	getArrow: function(id) {
+	getArrow: function(id)
+  {
 		var a = Wicket.$(id);
-		if (a == null) {
+		if (a == null)
+    {
 			a = document.createElement("a");
 			a.setAttribute("id", id);
 			document.body.appendChild(a);
@@ -1151,7 +1156,8 @@ InMethod.XTable.prototype = {
 	/**
 	 * Shows arrows (both up and down) at the specified position)
 	 */
-	showArrows: function(column, pos) {
+	showArrows: function(column, pos)
+  {
 		var a1 = this.getArrow("imxt-arrow-down");
 		var a2 = this.getArrow("imxt-arrow-up");
 		
@@ -1172,7 +1178,8 @@ InMethod.XTable.prototype = {
 	/**
 	 * Hides the arrows
 	 */
-	hideArrows: function() {
+	hideArrows: function()
+  {
 		var a1 = this.getArrow("imxt-arrow-down");
 		var a2 = this.getArrow("imxt-arrow-up");
 		a1.style.display = "none";
@@ -1180,21 +1187,21 @@ InMethod.XTable.prototype = {
 		this.targetColumn = null;
 	},
 	
-	columnAndPrevSiblingsNotReorderable: function(column) {
-		while (column != null) {
-			if (column.imxtReorderable == true) {
-				return false;
-			}
+	columnAndPrevSiblingsNotReorderable: function(column)
+  {
+		while (column != null)
+    {
+			if (column.imxtReorderable == true) {	return false;	}
 			column = prevSibling(column);
 		}
 		return true;
 	},
 	
-	columnAndNextSiblingsNotReorderable: function(column) {
-		while (column != null) {
-			if (column.imxtReorderable == true) {
-				return false;
-			}
+	columnAndNextSiblingsNotReorderable: function(column)
+  {
+		while (column != null)
+    {
+			if (column.imxtReorderable == true) {	return false;	}
 			column = nextSibling(column);
 		}
 		return true;
@@ -1203,10 +1210,11 @@ InMethod.XTable.prototype = {
 	/**
 	 * Invoked when user is dragging a column (reorder).
 	 */
-	columnDrag: function(column, dX, dY, event) {										
-					
+	columnDrag: function(column, dX, dY, event)
+  {
 		var columns = this.cachedColumns;
-		if (typeof(columns) == "undefined" || columns == null) {
+		if (typeof(columns) == "undefined" || columns == null)
+    {
 			columns = getChildren(this.getColumnsRow(), "TH");
 			this.cachedColumns = columns;
 		}
@@ -1216,75 +1224,73 @@ InMethod.XTable.prototype = {
 		
 		if (Math.abs(this.columnDragBeginY - y) < 10 &&
 		    Math.abs(this.columnDragBeginX - x) < 15 &&
-		    new Date().getTime() - this.columnDragBeginTime < 1000) {
-		    return;
-		}
+		    new Date().getTime() - this.columnDragBeginTime < 1000)
+    { return; }
 		
 		// find the column on cursor position
 		var c = null;
-		for (var i = 0; i < columns.length; ++i) {
+		for (var i = 0; i < columns.length; ++i)
+    {
 			cx = columns[i];
 			var pos = D.getXY(cx);
 			
-			if (x >= pos[0] && x < pos[0] + cx.offsetWidth) {
+			if (x >= pos[0] && x < pos[0] + cx.offsetWidth)
+      {
 			    c = cx;
 			    break;
 			}   
 		} 
 				
 		// if the column is a column other than the column being dragged
-		if (c != column && c != null) {		
-					
+		if (c != column && c != null)
+    {
 			// find if the cursor is in left or right half of column
 			var c_x = D.getX(c);
 			var x = E.getPageX(event) - c_x;
 			var w = c.offsetWidth;
 			var pos = x < w / 2 ? 0 : 1;				
 	
-			if ((pos == 0 && c == nextSibling(column)) ||
-			    (pos == 0 && this.columnAndPrevSiblingsNotReorderable(c)) ||
-			    (pos == 1 && !hasClass(nextSibling(c), "imxt-reorderable") && this.columnAndPrevSiblingsNotReorderable(c)) || 			    
-			    (pos == 1 && c == prevSibling(column)) ||			    
-			    (pos == 1 && this.columnAndNextSiblingsNotReorderable(c)) ||
-			    (pos == 0 && !hasClass(prevSibling(c), "imxt-reorderable") && this.columnAndNextSiblingsNotReorderable(c)) ||
-			    (pos == 1 && hasClass(c, "imxt-padding"))) {
-			    // the source column can't be dragged here
-				this.hideArrows();			    
-			} else {		
-				// this is a valid destination
-				this.showArrows(c, pos);						
+			if ( (pos == 0 && c == nextSibling(column))
+        || (pos == 0 && this.columnAndPrevSiblingsNotReorderable(c))
+        || (pos == 1 && !hasClass(nextSibling(c), "imxt-reorderable")
+          && this.columnAndPrevSiblingsNotReorderable(c))
+        || (pos == 1 && c == prevSibling(column))
+        || (pos == 1 && this.columnAndNextSiblingsNotReorderable(c))
+        || (pos == 0 && !hasClass(prevSibling(c), "imxt-reorderable")
+          && this.columnAndNextSiblingsNotReorderable(c))
+        || (pos == 1 && hasClass(c, "imxt-padding")))
+      {
+        // the source column can't be dragged here
+        this.hideArrows();
 			}
-		} else {
-			this.hideArrows();
-		}
+      else { this.showArrows(c, pos); } // this is a valid destination
+		} else { this.hideArrows(); }
 		
 		// move drag proxy to follow the cursor 
 		this.updateDragProxy(event);
 	},
 	
-	getOriginalColSpan: function(column) {
+	getOriginalColSpan: function(column)
+  {
 		var res = column.className.match(colSpanRegex);
-		if (res) {			
-			return parseInt(res[1], 10);
-		} else {
-			return 1;
-		}
+		if (res) { return parseInt(res[1], 10); }
+    else { return 1; }
 	},
 	
 	/**
 	 * Reorders the column according to the delta (positive or negative number)
 	 */
-	moveColumn: function(column, delta) {
-		while (column.tagName != "TH") {
-			column = column.parentNode;
-		}
+	moveColumn: function(column, delta)
+  {
+		while (column.tagName != "TH") { column = column.parentNode; }
 				
 		// bug in opera - we need to hide both tables during reordering, 
 		// otherwise the tables will not be refreshed afterwards
 		var bodyContainer1;
 		var scroll;
-		if (Wicket.Browser.isOpera()) {
-			bodyContainer1 = this.getElement("div", "imxt-body-container1");
+		if (Wicket.Browser.isOpera())
+    {
+			bodyContainer1 = this.getElement("*", "imxt-body-container1");
 			scroll = bodyContainer1.scrollLeft;
 			this.getHeadTable().style.display="none";
 			this.getBodyTable().style.display="none";								
@@ -1298,8 +1304,10 @@ InMethod.XTable.prototype = {
 		
 		// get the source column index
 		var index;
-		for (var i = 0; i < ths.length; ++i) {
-			if (ths[i] == column) {
+		for (var i = 0; i < ths.length; ++i)
+    {
+			if (ths[i] == column)
+      {
 				index = i;
 				break;
 			}
@@ -1307,21 +1315,24 @@ InMethod.XTable.prototype = {
 		
 		var other = ths[i + delta];		
 						
-		var fixSpans = function(cells) {
+		var fixSpans = function(cells)
+    {
 			var hide = 0;
 			
-			for (var i = 0; i < cells.length; ++i) {
+			for (var i = 0; i < cells.length; ++i)
+      {
 				var cell = cells[i];
 				var left = cells.length - i - 1;				
-				if (hide > 0) {
+				if (hide > 0)
+        {
 					cell.setAttribute("colSpan", 1);
 					cell.style.display = "none";
 					--hide;
-				} else {
+				}
+        else
+        {
 					var span = this.getOriginalColSpan(cell);
-					if (span > left) {
-						span = left;
-					}
+					if (span > left) { span = left;	}
 					hide = span - 1;
 					cell.style.display = "";
 					cell.setAttribute("colSpan", span > 0 ? span : 1);
@@ -1331,29 +1342,25 @@ InMethod.XTable.prototype = {
 		}.bind(this);
 						
 		// helper function that reorders columns in the given rows
-		var updateRows = function(rows, fixSpans) {			
-			for (var j = 0; j < rows.length; ++j) {
+		var updateRows = function(rows, fixSpans)
+    {
+			for (var j = 0; j < rows.length; ++j)
+      {
 				var row = rows[j];
 				var tds = getChildren(row, ["TD", "TH"]);
 				
 				var current = tds[i];
 				
-				if (typeof(current) == "undefined") {
-					continue;
-				}
+				if (typeof(current) == "undefined") {	continue;	}
 				
 				var index = i + delta;
-				if (delta > 0) {
-					++index;
-				}
+				if (delta > 0) { ++index;	}
 				
 				other = tds[index];		
 								
 				row.insertBefore(current, other);
 				
-				if (L.isFunction(fixSpans)) {
-					fixSpans(getChildren(row, ["TD", "TH"]));					
-				}
+				if (L.isFunction(fixSpans)) {	fixSpans(getChildren(row, ["TD", "TH"])); }
 			}
 		}.bind(this);
 		
@@ -1362,7 +1369,8 @@ InMethod.XTable.prototype = {
 		updateRows(this.getBodyRows(), fixSpans);
 				
 		// show the tables in opera
-		if (Wicket.Browser.isOpera()) {
+		if (Wicket.Browser.isOpera())
+    {
 			this.getHeadTable().style.display="";
 			this.getBodyTable().style.display="";			
 			bodyContainer1.scrollLeft = scroll;			
@@ -1370,7 +1378,6 @@ InMethod.XTable.prototype = {
 		
 		// we might have changed the layout
 		this.update(true);
-		
 	},
 		
 	/**
@@ -1378,7 +1385,8 @@ InMethod.XTable.prototype = {
 	 * onmouseover and onmouseout handlers on elements with "imxt-want-prelight" class set
 	 * that add and remove the imxt-prelight css class on element when mouse hovers it.
 	 */
-	attachPrelight: function() {
+	attachPrelight: function()
+  {
 		var elements = this.getElements("*", "imxt-want-prelight");
 	
 		attachPrelight(elements, this);
@@ -1391,16 +1399,17 @@ InMethod.XTable.prototype = {
 	 * If the specified element is undefined, the css class is updated on all elements with
 	 * "imxt-want-prelight" css class.
 	 */ 
-	updatePrelight: function(element) {		
-		if (this.dragging != true) {
-		 		
+	updatePrelight: function(element)
+  {
+		if (this.dragging != true)
+    {
 		 	var update = function(e) {
 		 		
 		 		var scrollLeft;
 		 		
 				if (Wicket.Browser.isOpera()) {
 					// for some reason opera doesn't preserve the scroll offset when changing/removing style
-					bodyContainer1 = this.getElement("div", "imxt-body-container1");					
+					bodyContainer1 = this.getElement("*", "imxt-body-container1");
 					scrollLeft = bodyContainer1.scrollLeft;
 					//e.style.visibility = "hidden";
 				}		 		
@@ -1413,20 +1422,18 @@ InMethod.XTable.prototype = {
 				
 				if (Wicket.Browser.isOpera()) {
 					//e.style.visibility = "";
-					bodyContainer1 = this.getElement("div", "imxt-body-container1");
+					bodyContainer1 = this.getElement("*", "imxt-body-container1");
 					bodyContainer1.scrollLeft = scrollLeft;
 				}
 				
 			}.bind(this);
-		 	
 		 		
-			if (typeof(element) != "undefined") {				
-				update(element);
-			} else {
-				var elements = this.getElements("*", "imxt-want-prelight", this.getHeadTable());
-				for (var i = 0; i < elements.length; ++i) {
-					update(elements[i]);
-				}
+			if (typeof(element) != "undefined") { update(element); }
+      else
+      {
+				var elements = this.getElements("*", "imxt-want-prelight",
+                                        this.getHeadTable());
+				for (var i = 0; i < elements.length; ++i) {	update(elements[i]); }
 			}
 		}				
 	},
@@ -1434,37 +1441,36 @@ InMethod.XTable.prototype = {
 	/**
 	 * Returns the state of columns (order and widths) represented as string.
 	 */
-	getColumnState: function() {
+	getColumnState: function()
+  {
 		var r = this.getColumnsRow();
 		var ths = getChildren(r, "TH");
 		var state = "";		
-		for (var i = 0; i < ths.length - 1; ++i) {
+		for (var i = 0; i < ths.length - 1; ++i)
+    {
 			var th = ths[i];
 			state += th.imxtId;
 			state += ",";
 			var width = th.style.width;
-			if (width.match(/[\d]+px/))
-				state += parseInt(th.style.width, 10);
-			else
-				state += "-1";
+			if (width.match(/[\d]+px/)) { state += parseInt(th.style.width, 10); }
+			else { state += "-1"; }
 			state += ";";
-		};
+		}
 		return state;
 	},
 	
-	submitColumnState: function() {
-		this.columnsStateCallback(this.getColumnState());
-	},
+	submitColumnState: function()
+  {	this.columnsStateCallback(this.getColumnState());	},
 	
 	/**
 	 * Needs to be called when a row was added or updated.
 	 */
-	rowUpdated: function(rowElement) {
+	rowUpdated: function(rowElement)
+  {
 		var elements = this.getElements("*", "imxt-want-prelight", rowElement);
 		
-		if (hasClass(rowElement, "imxt-want-prelight")) {
-			elements.push(rowElement);
-		}		
+		if (hasClass(rowElement, "imxt-want-prelight"))
+    { elements.push(rowElement); }
 
 		attachPrelight(elements, this);
 		
@@ -1472,41 +1478,41 @@ InMethod.XTable.prototype = {
 		this.initCells(rowElement);
 	},
 	
-	getCellId: function(cell) {
-		if (typeof(cell.imxtId) != "string") {
+	getCellId: function(cell)
+  {
+		if (typeof(cell.imxtId) != "string")
+    {
 			var index = 0;
 			var c = cell;
-			while ((c = prevSibling(c)) != null) {
-				++index;				
-			}
+			while ((c = prevSibling(c)) != null) { ++index; }
 			
 			var row = this.getColumnsRow();
 			var headerCells = getChildren(row, "TH");
 			
 			var headerCell = headerCells[index];
 			
-			if (typeof(headerCell.imxtId) == "string") {
-				cell.imxtId = headerCell.imxtId;
-			} else {
-				cell.imxtId = "";
-			}
-			
+			if (typeof(headerCell.imxtId) == "string")
+      { cell.imxtId = headerCell.imxtId; }
+      else { cell.imxtId = ""; }
 		} 
 		return cell.imxtId;
 	},
 	
-	initCellsEventHandler: function(event, table) {
+	initCellsEventHandler: function(event, table)
+  {
 		var cell = this;
 		cell.parentNode.imxtClickedColumn = table.getCellId(cell);		
 	},
 	
-	initCells: function(container) {
-		
+	initCells: function(container)
+  {
 		var elements = this.getElements("td", "imxt-cell", container);
 				
-		for (var i = 0; i < elements.length; ++i) {
+		for (var i = 0; i < elements.length; ++i)
+    {
 			var cell = elements[i];
-			if (cell.imxtInitialized != true) {
+			if (cell.imxtInitialized != true)
+      {
 				//var addListener = function(element, event, fn, obj, override) {				
 				addListener(cell, "click", this.initCellsEventHandler, this, false);
 				cell.imxtInitialized = true;
@@ -1516,107 +1522,108 @@ InMethod.XTable.prototype = {
 	}
 };
 
-InMethod.XTable.canSelectRow = function(event) {
+InMethod.XTable.canSelectRow = function(event)
+{
 	var e = Wicket.fixEvent(event);
 	var element = e.target ? e.target : e.srcElement;
 	
-	while (element != null && element != document.documentElement) {
+	while (element != null && element != document.documentElement)
+  {
 		var tn = element.tagName;
-		if (tn == "A" || tn == "INPUT" || tn == "SELECT" || tn == "BUTTON") {
-			return false;
-		}
+		if (tn == "A" || tn == "INPUT" || tn == "SELECT" || tn == "BUTTON")
+    {	return false;	}
 		element = element.parentNode;
 	}
-	
 	return true;
 };
 
 InMethod.XTableManager = Wicket.Class.create();
 
-InMethod.XTableManager.prototype = {
-
+InMethod.XTableManager.prototype =
+{
 	current: new Object(),
 
-	initialize: function() {
+	initialize: function()
+  {
 		var interval = 100;
-		if (Wicket.Browser.isIELessThan7()) {
-			interval = 500;
-		}
+		if (Wicket.Browser.isIELessThan7()) {	interval = 500;	}
 		window.setInterval(this.update.bind(this), interval);
 	},
 	
 	update: function() {						
 		for (var property in this.current) {
 			var table = this.current[property];
-			if (table != null) {
-				var res = table.update();
-				if (res != true) {
-					this.current[property] = null;
-				}
+			if (table != null)
+      {
+        var res = table.update();
+				if (res != true) { this.current[property] = null;	}
 			}
-		};
+		}
 	},
 	
-	updateTreeColumns: function() {
-		for (var property in this.current) {
+	updateTreeColumns: function()
+  {
+		for (var property in this.current)
+    {
 			var table = this.current[property];
-			if (table != null) {
-				table.updateTreeColumns();
-			}
-		};
+			if (table != null) { table.updateTreeColumns();	}
+		}
 	},
 	
-	register: function(id, columnsData, columnsStateCallback) {
+	register: function(id, columnsData, columnsStateCallback)
+  {
 		var existing = this.current[id];
-		if (existing == null) {
+		if (existing == null)
+    {
 			existing = new InMethod.XTable(id, columnsData, columnsStateCallback);
 			this.current[id] = existing;
-		} else {
-			// update existing
-			existing.initialize(id, columnsData, columnsStateCallback);
 		}
+    // update existing
+    else { existing.initialize(id, columnsData, columnsStateCallback); }
 	},
 	
-	
-	updateRow: function(id, row) {
+	updateRow: function(id, row)
+  {
 		var table = this.current[id];
-		if (table != null) {
-			table.rowUpdated(row);
-		}
+		if (table != null) { table.rowUpdated(row);	}
 	}
 };
 
-InMethod.XTableManager.instance = new InMethod.XTableManager(); 
+InMethod.XTableManager.instance = new InMethod.XTableManager();
 
-InMethod.setCursorPos = function(elm, begin, end) {
-    if (typeof elm.selectionStart != "undefined" && typeof elm.selectionEnd != "undefined")  {
+InMethod.setCursorPos = function(elm, begin, end)
+{
+    if ( typeof elm.selectionStart != "undefined"
+      && typeof elm.selectionEnd != "undefined")
+    {
         elm.setSelectionRange (begin, end);
         elm.focus ();
-    } else if (document.selection && document.selection.createRange) {
-        var range = elm.createTextRange ();
-        range.move ("character", begin);
-        range.moveEnd ("character", end - begin);
-        range.select ();
+    }
+    else if (document.selection && document.selection.createRange)
+    {
+      var range = elm.createTextRange ();
+      range.move ("character", begin);
+      range.moveEnd ("character", end - begin);
+      range.select ();
     }
 }
 
-function findParent(node, tagName)  {
-	return D.getAncestorBy(node, function(n) {
-		return n.tagName == tagName;
-	});
-}
+function findParent(node, tagName)
+{ return D.getAncestorBy(node, function(n) { return n.tagName == tagName; }); }
 
-onKeyEvent = function(element, event) {
-	
+onKeyEvent = function(element, event)
+{
 	var e = Wicket.fixEvent(event)
 	var key = event.keyCode;
 	
-	if (key == 13 || key == 27) {					
-		
-		if (key == 13 && Wicket.Browser.isSafari()) {
+	if (key == 13 || key == 27)
+  {
+		if (key == 13 && Wicket.Browser.isSafari())
+    {
 			// somewhat ugly fix but this is the only thing preventing safari from submitting the form on enter
 			var form = findParent(element, "FORM");
-			if (form != null) {				
+			if (form != null)
+      {
 				form.imxtOldOnSubmit = form.onsubmit;
 				form.onsubmit=function() { return false; };
 				window.setTimeout(function() { form.onsubmit = form.imxtOldOnSubmit; form.imxtOldOnSubmit = null;}, 100);
@@ -1625,56 +1632,43 @@ onKeyEvent = function(element, event) {
 		
 		var row = element;
 		
-		do {
-			row = findParent(row, "TR");		
-		} while (row != null && !hasClass(findParent(row, "TABLE"), "imxt-body"));
+		do { row = findParent(row, "TR"); }
+    while (row != null && !hasClass(findParent(row, "TABLE"), "imxt-body"));
 		
-		if (row != null) {
-		
+		if (row != null)
+    {
 			var elements;
-			if (key == 13) {
-				elements = D.getElementsByClassName("imxt-edit-submit", "A", row);
-			} else {
-				elements = D.getElementsByClassName("imxt-edit-cancel", "A", row);
-			}
+			if (key == 13)
+      {	elements = D.getElementsByClassName("imxt-edit-submit", "A", row); }
+      else { elements = D.getElementsByClassName("imxt-edit-cancel", "A", row); }
 			
-			if (elements != null && elements.length > 0) {
-				elements[0].onclick.bind(elements[0])();
-			}		
+			if (elements != null && elements.length > 0)
+      { elements[0].onclick.bind(elements[0])(); }
 		}		
 	}	
 };
 
-
-InMethod.editKeyUp = function(element, event) {
-		
-	if (!Wicket.Browser.isOpera() && !Wicket.Browser.isSafari()) {
-		onKeyEvent(element, event);
-	}
+InMethod.editKeyUp = function(element, event)
+{
+	if (!Wicket.Browser.isOpera() && !Wicket.Browser.isSafari())
+  { onKeyEvent(element, event); }
 	
 	var e = Wicket.fixEvent(event)
 	var key = event.keyCode;
 	
-	if (key == 13 || key == 27) {
-		return false;
-	} else {
-		return true;
-	}		
+	if (key == 13 || key == 27) { return false; }
+  else { return true; }
 };
 
-InMethod.editKeyPress = function(element, event) {
-	
-	if (Wicket.Browser.isOpera() || Wicket.Browser.isSafari()) {
-		return onKeyEvent(element, event);
-	}
+InMethod.editKeyPress = function(element, event)
+{
+	if (Wicket.Browser.isOpera() || Wicket.Browser.isSafari())
+  {	return onKeyEvent(element, event); }
 	
 	var e = Wicket.fixEvent(event)
 	var key = event.keyCode;
 	
-	if (key == 13 || key == 27) {
-		return false;
-	} else {
-		return true;
-	}	
+	if (key == 13 || key == 27) { return false; }
+  else { return true; }
 };
 })();

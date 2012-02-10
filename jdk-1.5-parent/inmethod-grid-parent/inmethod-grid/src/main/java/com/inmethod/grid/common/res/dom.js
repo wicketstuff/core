@@ -10,8 +10,9 @@ version: 2.7.0
  *
  */
 
-(function() {
-    YAHOO.env._id_counter = YAHOO.env._id_counter || 0;     // for use with generateId (global to save state if Dom is overwritten)
+(function()
+{   // for use with generateId (global to save state if Dom is overwritten)
+    YAHOO.env._id_counter = YAHOO.env._id_counter || 0;
 
         // internal shorthand
     var Y = YAHOO.util,

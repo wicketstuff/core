@@ -13,11 +13,13 @@
 	</parent>
 
 	<artifactId>wicketstuff-inmethod-grid</artifactId>
-	<packaging>bundle</packaging>
+	<!--<packaging>bundle</packaging>  THIS is for local only -->
+  <packaging>jar</packaging>
 
 	<name>InMethod Grid</name>
 	<description>Advanced grid components for Apache Wicket</description>
 
+  <!--
 	<build>
 		<plugins>
 			<plugin>
@@ -27,16 +29,22 @@
 				<configuration>
 					<instructions>
 						<Export-Package>
-							com.inmethod.grid, com.inmethod.grid.treegrid, com.inmethod.grid.column,com.inmethod.grid.column.editable, com.inmethod.grid.column.tree,com.inmethod.grid.common, com.inmethod.grid.datagrid
+							com.inmethod.grid, com.inmethod.grid.treegrid,
+              com.inmethod.grid.column,com.inmethod.grid.column.editable,
+              com.inmethod.grid.column.tree,com.inmethod.grid.common,
+              com.inmethod.grid.datagrid
 						</Export-Package>
-						<Import-Package>javax.swing.tree, org.apache.wicket*
-						</Import-Package>
-						<Bundle-SymbolicName>${project.groupId}.${project.artifactId};singleton:=true
+						<Import-Package>javax.swing.tree, org.apache.wicket*</Import-Package>
+						<Bundle-SymbolicName>
+              ${project.groupId}.${project.artifactId};singleton:=true
 						</Bundle-SymbolicName>
-						<Bundle-RequiredExecutionEnvironment>J2SE-1.5,JavaSE-1.6</Bundle-RequiredExecutionEnvironment>
+						<Bundle-RequiredExecutionEnvironment>
+              J2SE-1.5,JavaSE-1.6
+            </Bundle-RequiredExecutionEnvironment>
 					</instructions>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+  -->
 </project>

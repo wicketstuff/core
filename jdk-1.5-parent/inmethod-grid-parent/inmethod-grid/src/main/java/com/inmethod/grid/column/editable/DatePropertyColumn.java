@@ -1,5 +1,7 @@
 package com.inmethod.grid.column.editable;
 
+import java.util.Date;
+
 import org.apache.wicket.datetime.DateConverter;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
 import org.apache.wicket.model.IModel;
@@ -8,12 +10,17 @@ import org.apache.wicket.model.IModel;
  * Property column that uses a {@link DateTextFieldPanel} as cell component
  * when the item is selected.
  *
- * @author Tom Burton
+ * @param <M>
+ *            grid model object type
+ * @param <I>
+ *            row/item model object type
+ * @param <P>
+ *            type of the property (Must extend Java.util.Date)
  *
  * TODO: rename to EditableDateColumn
  */
-public class DatePropertyColumn extends EditablePropertyColumn {
-
+public class DatePropertyColumn<M, I> extends EditablePropertyColumn<M, I, Date>
+{
 	private static final long serialVersionUID = 1L;
 
   private DateConverter converter;
@@ -33,7 +40,7 @@ public class DatePropertyColumn extends EditablePropertyColumn {
    * @param dc
    *            DateConverter to use to display a properly formatted date/time
 	 */
-	public DatePropertyColumn(String columnId, IModel headerModel,
+	public DatePropertyColumn(String columnId, IModel<String> headerModel,
                             String propertyExpression, String sortProperty,
                             DateConverter dc)
   {
@@ -53,7 +60,7 @@ public class DatePropertyColumn extends EditablePropertyColumn {
    * @param dc
    *            DateConverter to use to display a properly formatted date/time
 	 */
-	public DatePropertyColumn(String columnId, IModel headerModel,
+	public DatePropertyColumn(String columnId, IModel<String> headerModel,
                             String propertyExpression,
                             DateConverter dc)
   {
@@ -75,9 +82,8 @@ public class DatePropertyColumn extends EditablePropertyColumn {
    * @param dc
    *            DateConverter to use to display a properly formatted date/time
 	 */
-	public DatePropertyColumn(IModel headerModel, String propertyExpression,
-                            String sortProperty,
-                            DateConverter dc)
+	public DatePropertyColumn(IModel<String> headerModel, String propertyExpression,
+                            String sortProperty, DateConverter dc)
   {
 		super(headerModel, propertyExpression, sortProperty);
     converter = dc;
@@ -94,7 +100,7 @@ public class DatePropertyColumn extends EditablePropertyColumn {
    * @param dc
    *            DataConverter for how to properly display the Date/Time info
 	 */
-	public DatePropertyColumn(IModel headerModel, String propertyExpression,
+	public DatePropertyColumn(IModel<String> headerModel, String propertyExpression,
                             DateConverter dc)
   {
 		super(headerModel, propertyExpression);
@@ -103,8 +109,8 @@ public class DatePropertyColumn extends EditablePropertyColumn {
 
   /** {@inheritDoc} */
   @Override
-	protected EditableCellPanel newCellPanel(String componentId, IModel rowModel,
-                                           IModel cellModel)
+	protected EditableCellPanel newCellPanel(String componentId, IModel<I> rowModel,
+                                           IModel<Date> cellModel)
   {
 		return new DateTextFieldPanel(componentId, cellModel, rowModel, this,
                                   converter);
@@ -112,9 +118,9 @@ public class DatePropertyColumn extends EditablePropertyColumn {
 
   /** {@inheritDoc} */
   @Override
-  protected CharSequence convertToString(Object obj)
+  protected <C> CharSequence convertToString(C date)
   {
-    if (null != obj) { return converter.convertToString(obj,getLocale()); }
+    if (null != date) { return converter.convertToString((Date)date, getLocale()); }
     else { return ""; }
   }
 

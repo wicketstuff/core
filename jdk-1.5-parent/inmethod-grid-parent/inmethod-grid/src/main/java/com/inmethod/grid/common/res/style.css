@@ -1,10 +1,12 @@
-div.imxt-container1 {
+div.imxt-container1
+{
 	overflow: hidden;
 	width: 100%;	
 }
 
 /* in case the grid is placed in another table make sure that it's all in table-layout:fixed */
-table.imxt-container-table {
+table.imxt-container-table
+{
 	table-layout:fixed; 
 	padding:0px;
 	margin:0px;
@@ -12,29 +14,33 @@ table.imxt-container-table {
 	width: 100%;
 }
 
-table.imxt-container-table tr.imxt-container-table {
+table.imxt-container-table tr.imxt-container-table
+{
 	margin: 0px;
 	padding: 0px;
 }
 
-table.imxt-container-table td.imxt-container-table {
+table.imxt-container-table td.imxt-container-table
+{
 	margin: 0px;
 	padding: 0px;
 	width: 100%;	
 }
 
-div.imxt-head-container2 {
+.imxt-head-container2
+{
 	overflow:scroll;
 }
 
-div.imxt-head-container2 {
+.imxt-head-container2
+{
 	overflow: hidden;
 	width: 100%;
 	position: relative;
 }
 
-table.imxt-head,
-table.imxt-body {
+.imxt-head, .imxt-body
+{
 	table-layout: fixed;
 	empty-cells: show;
 	border-collapse: collapse;
@@ -43,37 +49,40 @@ table.imxt-body {
 	padding: 0px;
 }
 
-table.imxt-head th a.imxt-sort-header {
+.imxt-head th a.imxt-sort-header
+{
 	display: block;
 	text-decoration: none;
 	overflow: hidden;
 }
 
-table.imxt-head th a.imxt-sort-header-asc div.imxt-sort-header1 {
+.imxt-head th a.imxt-sort-header-asc div.imxt-sort-header1
+{
 	background-image: url("img/sort_asc.gif");
 	background-repeat: no-repeat;
 	background-position: right;
 		
 }
 
-table.imxt-head th a.imxt-sort-header-desc div.imxt-sort-header1 {
+.imxt-head th a.imxt-sort-header-desc div.imxt-sort-header1
+{
 	background-image: url("img/sort_desc.gif");
 	background-repeat: no-repeat;
 	background-position: right;
-	
 }
 
-table.imxt-head th {	
+.imxt-head th
+{
     padding: 0px;
     margin: 0px;    
     cursor: default;    
 }
 
-table.imxt-head tr.imxt-columns th * {
+.imxt-head tr.imxt-columns th * {
 	white-space: nowrap;
 }
 
-table.imxt-head th a.imxt-handle {
+.imxt-head th a.imxt-handle {
 	position:absolute; 
 	width: 5px; 
 	height: 400px;         		
@@ -91,24 +100,24 @@ table.imxt-head th a.imxt-handle {
 	filter: alpha(opacity=0);	        
 }
 
-table.imxt-head tr.imxt-prelight a.imxt-handle {
+.imxt-head tr.imxt-prelight a.imxt-handle {
 	opacity: 0.05; 
 	filter: alpha(opacity=5); 	
 	
 }
-table.imxt-head tr.imxt-prelight th.imxt-prelight a.imxt-handle {
+.imxt-head tr.imxt-prelight th.imxt-prelight a.imxt-handle {
 /*	opacity: 0.2; 
 	filter: alpha(opacity=20); */ 		
 }
 
-table.imxt-head tr.imxt-prelight th a.imxt-handle:hover, 
-table.imxt-head tr.imxt-prelight th.imxt-dragging a.imxt-handle {
+.imxt-head tr.imxt-prelight th a.imxt-handle:hover,
+.imxt-head tr.imxt-prelight th.imxt-dragging a.imxt-handle {
 	opacity: 0.1; 
 	filter: alpha(opacity=10);	
 	
 }
 
-table.imxt-head tr.imxt-dragging * {
+.imxt-head tr.imxt-dragging * {
 	cursor: e-resize;
 }
 
@@ -121,32 +130,33 @@ td.imxt-padding {
 	width: 100%;
 }
 
-table.imxt-head th div.imxt-a {
+.imxt-head th div.imxt-a {
 	position: relative;	
 	overflow: hidden;
 }
 
-table.imxt-head th div.imxt-b {
+.imxt-head th div.imxt-b {
 	overflow: hidden;
 	width: 100%;
 }
 
-div.imxt-body-container1 {
+.imxt-body-container1 {
 	overflow: auto;
 }
 
-table.imxt-body td {
-	overflow: hidden;
-    padding: 0px;
-    margin: 0px;
+.imxt-body td
+{
+  overflow: hidden;
+  padding: 0px;
+  margin: 0px;
 }
 
-table.imxt-body tr.imxt-empty-row td {
+.imxt-body tr.imxt-empty-row td {
 	border-right: 1px none black;
 
 }
 
-table.imxt-body tr.imxt-empty-row * {			
+.imxt-body tr.imxt-empty-row * {
 	border-top-width: 0px !important;
 	border-bottom-width: 0px !important;	
 	padding: 0px !important;
@@ -282,7 +292,7 @@ img.imxt-tree-icon {
 	display: block;
 }
 
-table.imxt-head div.imxt-select-container {
+.imxt-head div.imxt-select-container {
 	text-align: center; 
 	padding-right: 0.2em; 
 	overflow: hidden; 
@@ -290,20 +300,20 @@ table.imxt-head div.imxt-select-container {
 	height: 1.2em;
 }
 
-table.imxt-body div.imxt-select-container {
+.imxt-body div.imxt-select-container {
 	text-align: center; 
 	padding-right: 0.2em;
 }
 
-div.imxt-ie table.imxt-head div.imxt-select-container1 {
+.imxt-ie .imxt-head div.imxt-select-container1 {
 	margin-top: -0.2em;
 }
 
-div.imxt-ff table.imxt-head div.imxt-select-container1 {
+.imxt-ff .imxt-head div.imxt-select-container1 {
 	margin-top: -0.1em;
 }
 
-.imxt-selectable table.imxt-body tr div {
+.imxt-selectable .imxt-body tr div {
 	cursor: default;
 }
 
@@ -406,20 +416,20 @@ div.imxt-vista {
 	border: 1px solid #ddd;
 }
 
-div.imxt-vista div.imxt-head-container {
+div.imxt-vista .imxt-head-container {
 	border-top: 1px solid white;
 	border-bottom: 1px solid #bbb;
 }
 
-div.imxt-vista div.imxt-head-container1 {
+div.imxt-vista .imxt-head-container1 {
 	background-color: #F7F8FA;
 }
 
-div.imxt-vista div.imxt-body-container1 {
+div.imxt-vista .imxt-body-container1 {
 	
 }
 
-div.imxt-vista table.imxt-head th div.imxt-a {
+div.imxt-vista .imxt-head th div.imxt-a {
 	padding-top: 0.2em;
 	padding-bottom: 0.2em;	
 	padding-left: 0.2em;
@@ -427,15 +437,15 @@ div.imxt-vista table.imxt-head th div.imxt-a {
 	text-align: left;
 }
 
-
-div.imxt-vista table.imxt-head tr.imxt-columns {
+div.imxt-vista .imxt-head tr.imxt-columns
+{
 	background-color: white;
 	background-repeat: repeat-x;
 	background-position: bottom;
 	background-image: url("img/vista-bg-grey.png");
 }
 
-div.imxt-vista table.imxt-head th {	
+div.imxt-vista .imxt-head th {
 	border-right: 1px solid #ddd;
 	background-position: bottom;
 	background-repeat: repeat-x; 	
@@ -443,63 +453,64 @@ div.imxt-vista table.imxt-head th {
 	color: black;		
 }
 
-div.imxt-vista table.imxt-head th a.imxt-sort-header {
+div.imxt-vista .imxt-head th a.imxt-sort-header {
 	color: black;
 }
 
-div.imxt-vista table.imxt-head th.imxt-prelight a.imxt-sort-header:hover {
+div.imxt-vista .imxt-head th.imxt-prelight a.imxt-sort-header:hover {
 	color: blue;	
 }
 
-div.imxt-vista table.imxt-head th.imxt-sorted {
+div.imxt-vista .imxt-head th.imxt-sorted {
 	background-color: #F2F9FC;	
 	background-image: url("img/vista-bg-blue1.png");	
 }
 
-div.imxt-vista table.imxt-head th.imxt-prelight {
+div.imxt-vista .imxt-head th.imxt-prelight {
 	background-color: #E3F7FF;
 	background-image: url("img/vista-bg-blue2.png");
 }
 
-
-
-div.imxt-vista table.imxt-head th.imxt-padding div.imxt-a {
+div.imxt-vista .imxt-head th.imxt-padding div.imxt-a {
 	border-right: none;
 }
 
 div.imxt-vista tr.imxt-odd {
 	background-color: #fbfbfb;
-	
 }
 
 div.imxt-vista tr.imxt-even td.imxt-sorted {
 	background-color: #f9f9f9;
 }
 
-div.imxt-vista tr.imxt-odd td.imxt-sorted {
+div.imxt-vista tr.imxt-odd td.imxt-sorted
+{
 	background-color: #f6f6f6;
 }
 
 div.imxt-vista tr.imxt-prelight td.imxt-cell,
-div.imxt-vista tr.imxt-prelight td.imxt-sorted {	
+div.imxt-vista tr.imxt-prelight td.imxt-sorted
+{
 	background-color: #EFFAFF
 }
 
 div.imxt-vista tr.imxt-grid-row:hover td.imxt-cell,
-div.imxt-vista tr.imxt-grid-row:hover td.imxt-sorted {	
+div.imxt-vista tr.imxt-grid-row:hover td.imxt-sorted
+{
 	background-color: #EFFAFF
 }
-
 
 div.imxt-vista tr.imxt-selected td.imxt-cell,
 div.imxt-vista tr.imxt-selected td.imxt-sorted,
 div.imxt-vista tr.imxt-selected:hover td.imxt-cell,
-div.imxt-vista tr.imxt-selected:hover td.imxt-sorted {
+div.imxt-vista tr.imxt-selected:hover td.imxt-sorted
+{
 	background-color: #DFF1FF;
 	border-bottom: 1px solid #f9f9f9;
 }
 
-div.imxt-vista td.imxt-cell {
+div.imxt-vista td.imxt-cell
+{
 	border-right: 1px solid #ddd;
 	padding-top: 0.1em;
 	padding-bottom: 0.1em;
@@ -507,30 +518,39 @@ div.imxt-vista td.imxt-cell {
 	border-bottom: 1px solid #eee;		
 }
 
-div.imxt-vista td.imxt-select {
+div.imxt-vista td.imxt-select
+{
 	padding-top: 0px;
 	padding-bottom: 0px;
 }
 
 div.imxt-vista tr.imxt-odd, 
-div.imxt-vista tr.imxt-even {
+div.imxt-vista tr.imxt-even
+{
 	
 }
 
-div.imxt-vista table.imxt-body td.imxt-prelight,
-div.imxt-vista table.imxt-body tr:hover td.imxt-prelight {
+div.imxt-vista .imxt-body td.imxt-prelight,
+div.imxt-vista .imxt-body tr:hover td.imxt-prelight
+{
 	background-color: #BFE4FF;
 }
 
-div.imxt-vista table.imxt-body td.imxt-edited-cell {
+div.imxt-vista .imxt-body td.imxt-edited-cell {
 	
 }
 
-div.imxt-vista table.imxt-body td.imxt-edited-cell input {
-	border-width: 0px; padding: 0px; margin:0px; width: 100%; background-color: white; display: block; float:left;
+div.imxt-vista .imxt-body td.imxt-edited-cell input {
+	border-width: 0px;
+  padding: 0px;
+  margin:0px;
+  width: 100%;
+  background-color: white;
+  display: block;
+  float:left;
 }
 
-div.imxt-vista table.imxt-body td.imxt-edited-cell input.imxt-invalid {
+div.imxt-vista .imxt-body td.imxt-edited-cell input.imxt-invalid {
 	background-color: #FFF2CC;
 }
 

@@ -1,8 +1,6 @@
 package com.inmethod.grid.common;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 
 import org.apache.wicket.markup.html.navigation.paging.IPageable;
@@ -25,7 +23,8 @@ import com.inmethod.grid.IGridSortState;
  * 
  * @author Matej Knopp
  */
-public abstract class AbstractPageableView<T> extends RefreshingView<T> implements IPageable
+public abstract class AbstractPageableView<T> extends RefreshingView<T>
+                                              implements IPageable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -193,6 +192,9 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	 */
 	private transient QueryResult queryResult;
 
+  /** clears the queryResult cache so the next use will be forced to re-initialize */
+  public void clearCache() { queryResult = null; }
+
 	/**
 	 * Allows to wrap created query.
 	 * 
@@ -321,7 +323,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 		{
 			return result.totalCount;
 		}
-	};
+	}
 
 	/**
 	 * Convenience class representing an empty iterator
@@ -355,7 +357,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 		{
 			throw new UnsupportedOperationException();
 		}
-	};
+	}
 
 	/**
 	 * A {@link IQueryResult} implementation
@@ -445,7 +447,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 				realItemCount = totalCount;
 			}
 		}
-	};
+	}
 
 	/**
 	 * Cleanup

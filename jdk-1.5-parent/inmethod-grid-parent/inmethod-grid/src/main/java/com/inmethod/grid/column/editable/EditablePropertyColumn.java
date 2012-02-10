@@ -18,7 +18,6 @@ import com.inmethod.grid.column.PropertyColumn;
  */
 public class EditablePropertyColumn<M, I, P> extends PropertyColumn<M, I, P>
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**

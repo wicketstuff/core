@@ -14,61 +14,71 @@ import com.inmethod.icon.Icon;
 
 /**
  * Created by IntelliJ IDEA.
- * User: tfburton
+ * User: Tom Burton
  * Date: 12/27/11
  * Time: 1:15 PM
  *
- * @author tfburton
+ * @author Tom Burton
  *         To change this template use File | Settings | File Templates.
  */
-public class AddDeleteColumn extends SubmitCancelColumn
+public class AddDeleteColumn<M, I> extends SubmitCancelColumn<M, I>
 {
-  public AddDeleteColumn(String columnId, IModel headerModel)
+  public AddDeleteColumn(String columnId, IModel<String> headerModel)
   {
     super(columnId, headerModel);
   }
 
   //TODO: check how much this idiom is used, look at refactoring
   @Override
-	public Component newCell(WebMarkupContainer parent, String componentId, final IModel rowModel) {
-		return new AddDeletePanel(componentId, rowModel, getGrid()) {
-
+	public Component newCell(WebMarkupContainer parent, String componentId,
+                           final IModel<I> rowModel)
+  {
+		return new AddDeletePanel<M, I>(componentId, rowModel, getGrid())
+    {
 			private static final long serialVersionUID = 1L;
 
-			private WebMarkupContainer getRowComponent() {
-				return getGrid().findParentRow(this);
-			};
+			private WebMarkupContainer getRowComponent()
+      {	return getGrid().findParentRow(this); };
 
 			@Override
-			protected void onCancel(AjaxRequestTarget target) {
+			protected void onCancel(AjaxRequestTarget target)
+      {
 				AddDeleteColumn.this.onCancel(target, rowModel, getRowComponent());
 			}
+
 			@Override
-			protected void onError(AjaxRequestTarget target) {
+			protected void onError(AjaxRequestTarget target)
+      {
 				AddDeleteColumn.this.onError(target, rowModel, getRowComponent());
 			}
+
 			@Override
-			protected void onSubmitted(AjaxRequestTarget target) {
+			protected void onSubmitted(AjaxRequestTarget target)
+      {
 				AddDeleteColumn.this.onSubmitted(target, rowModel, getRowComponent());
 			}
 
       @Override
-      protected void onDelete(AjaxRequestTarget target) {
+      protected void onDelete(AjaxRequestTarget target)
+      {
         AddDeleteColumn.this.onDelete(target,rowModel,getRowComponent());
       }
 
       @Override
-			protected Icon getSubmitIcon() {
+			protected Icon getSubmitIcon()
+      {
 				return AddDeleteColumn.this.getSubmitIcon();
 			}
 
 			@Override
-			protected Icon getCancelIcon() {
+			protected Icon getCancelIcon()
+      {
 				return AddDeleteColumn.this.getCancelIcon();
 			}
 
       @Override
-      protected Icon getDeleteIcon() {
+      protected Icon getDeleteIcon()
+      {
         return AddDeleteColumn.this.getDeleteIcon();
       }
     };
@@ -76,7 +86,8 @@ public class AddDeleteColumn extends SubmitCancelColumn
 
   protected Icon getDeleteIcon() { return Icons.DELETE; }
 
-  protected void onDelete(AjaxRequestTarget target, IModel rowModel, WebMarkupContainer rowComponent)
+  protected void onDelete(AjaxRequestTarget target, IModel<I> rowModel,
+                          WebMarkupContainer rowComponent)
   {
     AbstractGrid ag = getGrid(); //check for only record on page
     if ( ag instanceof DataGrid )

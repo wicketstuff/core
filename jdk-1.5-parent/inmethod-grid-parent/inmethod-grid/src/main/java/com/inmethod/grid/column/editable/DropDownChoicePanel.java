@@ -21,38 +21,44 @@ import com.inmethod.grid.column.AbstractColumn;
  * @author Tom Burton
  * TODO: make Generic
  */
-public class DropDownChoicePanel extends EditableCellPanel
+public class DropDownChoicePanel<M, I, P> extends EditableCellPanel<M, I, P>
 { //Does serialVersionUID really need to be explicitly set
 	private static final long serialVersionUID = 1L;
 
 	private static final String DropDownChoice_ID = "DropDownChoice";
 
-	protected class DefaultDropDownChoice extends DropDownChoice {
+	protected class DefaultDropDownChoice<P> extends DropDownChoice<P>
+  {
 		private static final long serialVersionUID = 1L;
 
 		/** {@inheritDoc} */
-		protected DefaultDropDownChoice(String id, IModel object, IModel<? extends List> choices)
+		protected DefaultDropDownChoice(String id, IModel<P> object,
+                                    IModel<? extends List<P>> choices)
     {
 			super(id, object, choices);
 		}
 
     /** {@inheritDoc} */
-		protected DefaultDropDownChoice(String id, IModel object,
-                                    IModel<? extends List> choices,
-                                    IChoiceRenderer renderer) {
+		protected DefaultDropDownChoice(String id, IModel<P> object,
+                                    IModel<? extends List<P>> choices,
+                                    IChoiceRenderer<P> renderer)
+    {
 			super(id, object, choices, renderer);
 		}
 
     /** {@inheritDoc} */
 		@Override
-		protected void onComponentTag(ComponentTag tag) {
+		protected void onComponentTag(ComponentTag tag)
+    {
 			super.onComponentTag(tag);
 
-			if (!isValid()) {
+			if (!isValid())
+      {
 				tag.put("class", "imxt-invalid");
 				FeedbackMessage message = getFeedbackMessage();
-				if (message != null) {
-					tag.put("title", message.getMessage().toString());
+				if (message != null)
+        {
+          tag.put("title", message.getMessage().toString());
 				}
 			}
 		}
@@ -73,10 +79,10 @@ public class DropDownChoicePanel extends EditableCellPanel
    * @param renderer
    *    how to display the data in the drop down
 	 */
-	public DropDownChoicePanel(String id, final IModel model, IModel rowModel,
+	public DropDownChoicePanel(String id, final IModel<P> model, IModel<I> rowModel,
                              AbstractColumn column,
-                             IModel<? extends List> choices,
-                             IChoiceRenderer renderer)
+                             IModel<? extends List<P>> choices,
+                             IChoiceRenderer<P> renderer)
   {
 		super(id, column, rowModel);
 		
@@ -96,8 +102,8 @@ public class DropDownChoicePanel extends EditableCellPanel
    *  @param choices options to display in the drop down
 	 *  @return  DropDownChoice FormComponent
 	 */
-	protected DropDownChoice newDropDownChoice(String id, IModel model,
-                                             IModel<? extends List> choices)
+	protected DropDownChoice newDropDownChoice(String id, IModel<P> model,
+                                             IModel<? extends List<P>> choices)
   {
 		return new DefaultDropDownChoice(id, model, choices);
 	}
@@ -109,16 +115,17 @@ public class DropDownChoicePanel extends EditableCellPanel
    *  @param renderer how to display the data
 	 *  @return  DropDownChoice FormComponent
 	 */
-	protected DropDownChoice newDropDownChoice(String id, IModel model,
-                                             IModel<? extends List> choices,
-                                             IChoiceRenderer renderer)
+	protected DropDownChoice newDropDownChoice(String id, IModel<P> model,
+                                             IModel<? extends List<P>> choices,
+                                             IChoiceRenderer<P> renderer)
   {
 		return new DefaultDropDownChoice(id, model, choices, renderer);
 	}
 
   /** {@inheritDoc} */
 	@Override
-	public FormComponent getEditComponent() {
+	public FormComponent getEditComponent()
+  {
 		return (FormComponent) get(DropDownChoice_ID);
 	}
 

@@ -1,19 +1,17 @@
 package com.inmethod.grid.datagrid;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.navigation.paging.IPageable;
+import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import com.inmethod.grid.IAppendableDataSource;
 import com.inmethod.grid.IDataSource;
 import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.IGridSortState;
@@ -30,10 +28,11 @@ import com.inmethod.grid.common.AbstractPageableView;
  * 
  * @author Matej Knopp
  */
-public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> implements IPageable
+public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
+       implements IPageable
 {
-
 	private static final long serialVersionUID = 1L;
+  //private static final Logger log = LoggerFactory.getLogger(DataGrid.class);
 
 	/**
 	 * Crates a new {@link DataGrid} instance.
@@ -68,7 +67,6 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> im
 
 	private class Body extends DataGridBody<D, T>
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		private Body(String id)
@@ -112,7 +110,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> im
 			onRowPopulated(rowItem);
 		}
 
-	};
+	}
 
 	/**
 	 * Returns the {@link IDataSource} instance this data grid uses to fetch the data.
@@ -151,12 +149,14 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> im
 
 	private void init()
 	{
-		((WebMarkupContainer)get("form:bodyContainer")).add(new Body("body"));
-	};
+		//((WebMarkupContainer)get("form:bodyContainer")).add(new Body("body"));
+    ((WebMarkupContainer)get("bodyContainer")).add(new Body("body"));
+	}
 
 	private Body getBody()
 	{
-		return (Body)get("form:bodyContainer:body");
+		//return (Body)get("form:bodyContainer:body");
+    return (Body)get("bodyContainer:body");
 	}
 
 	/**
@@ -415,6 +415,37 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> im
 		dirtyItems = null;
 	}
 
+  /**
+  * Insert the rowData into the grid
+  *
+  * @param rowData data to insert into the new row
+  * @return Item inserted Item
+  */
+  public Item insertRow(final T rowData)
+  {
+      IAppendableDataSource ADS;
+      try
+      { ADS = ((IAppendableDataSource)getDataSource()); }
+      catch (ClassCastException cce)
+      { //TODO: localize this string
+        //log.error( "Error BAD Data Source type. "
+        //         + "IAppendableDataSource REQUIRED for addition");
+        throw new WicketRuntimeException("Error BAD Data Source type. "
+                 + "IAppendableDataSource REQUIRED for addition",cce);
+      }
+      ADS.InsertRow(getCurrentPageItemCount(),rowData);
+      Item item = getBody().createItem(getCurrentPageItemCount(),
+                                       getDataSource().model(rowData));
+
+      //make sure the datagrid knows the rows need to be refreshed
+      getBody().clearCache(); //clears the cache, to make sure the data is reloaded
+
+//both of these functions are "cached"
+      markAllItemsDirty();
+      update();
+      return item;
+  }
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -454,4 +485,5 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T> im
 	{
 		return child.findParent(DataGridBody.Data.RowItem.class);
 	}
+
 }

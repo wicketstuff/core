@@ -32,7 +32,7 @@ public class Icons
 
   public static final Icon DELETE = new PackageIcon(Icons.class, "res/icons/trashcan-delete.png");
 	
-	private Icons() {		
+	private Icons()
 	{
 	}
 }
