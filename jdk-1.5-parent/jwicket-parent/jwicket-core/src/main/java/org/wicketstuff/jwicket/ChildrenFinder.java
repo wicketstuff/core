@@ -7,13 +7,14 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.Component.IVisitor;
+import org.apache.wicket.util.visit.IVisit;
+import org.apache.wicket.util.visit.IVisitor;
 
 
 /**
  * Find a page's child component by it's markup id
  */
-public class ChildrenFinder implements IVisitor<Component>, Serializable {
+public class ChildrenFinder implements IVisitor<Component, Void>, Serializable {
 	private static final long serialVersionUID = 1L;
 	private final String id;
 	private List<Component> found = new ArrayList<Component>();
@@ -22,15 +23,18 @@ public class ChildrenFinder implements IVisitor<Component>, Serializable {
 		this.id = id;
 	}
 
-	public Object component(Component component) {
+	
+	public void component(Component component, IVisit<Void> visit) {
+		
 		if (component.getParent().getMarkupId().equals(id)) {
 			this.found.add(component);
-			return IVisitor.STOP_TRAVERSAL;
+			visit.stop();
 		}
 		if (component instanceof MarkupContainer) {
-			return ((MarkupContainer)component).visitChildren(this);
+			// mocleiri: changed for 1.5 compatibility, not 100% sure it is equivalent to before.
+			((MarkupContainer)component).visitChildren(this);
+			visit.stop();
 		}
-		return IVisitor.CONTINUE_TRAVERSAL;
 	}
 
 	public List<Component> getFoundComponents() {

@@ -16,15 +16,15 @@
  */
 package org.wicketstuff.minis.filter;
 
-import static org.apache.wicket.util.string.JavascriptUtils.SCRIPT_CLOSE_TAG;
-import static org.apache.wicket.util.string.JavascriptUtils.SCRIPT_OPEN_TAG;
+import static org.apache.wicket.util.string.JavaScriptUtils.SCRIPT_CLOSE_TAG;
+import static org.apache.wicket.util.string.JavaScriptUtils.SCRIPT_OPEN_TAG;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import org.apache.wicket.IResponseFilter;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.response.filter.IResponseFilter;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.time.Duration;
@@ -45,7 +45,7 @@ public class ServerHostNameAndTimeFilter implements IResponseFilter
 	/**
 	 * Construct, trying system property 'hostid' for the server instance.
 	 */
-	public ServerHostNameAndTimeFilter()
+	public ServerHostNameAndTimeFilter() throws Exception
 	{
 		this(System.getProperty("hostid"));
 	}

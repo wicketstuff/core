@@ -17,21 +17,23 @@
  */
 package wicket.contrib.phonebook;
 
-import org.mortbay.jetty.Connector;
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.bio.SocketConnector;
-import org.mortbay.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.bio.SocketConnector;
+import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
  * Seperate startup class for people that want to run the examples directly.
  */
-public class StartPhonebook {
+public class StartPhonebook
+{
 	/**
 	 * Main function, starts the jetty server.
-	 *
+	 * 
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		Server server = new Server();
 		SocketConnector connector = new SocketConnector();
 		connector.setPort(8080);
@@ -42,10 +44,13 @@ public class StartPhonebook {
 		context.setContextPath("/phonebook");
 		context.setWar("src/main/webapp");
 
-		server.addHandler(context);
-		try {
+		server.setHandler(context);
+		try
+		{
 			server.start();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			throw new RuntimeException(e);
 		}
 

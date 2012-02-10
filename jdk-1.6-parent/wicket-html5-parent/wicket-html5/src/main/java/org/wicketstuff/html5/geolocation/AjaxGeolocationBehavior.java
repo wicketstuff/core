@@ -4,34 +4,39 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.interpolator.MapVariableInterpolator;
-import org.apache.wicket.util.template.PackagedTextTemplate;
+import org.apache.wicket.util.template.PackageTextTemplate;
 
-public abstract class AjaxGeolocationBehavior extends AbstractDefaultAjaxBehavior {
+public abstract class AjaxGeolocationBehavior extends AbstractDefaultAjaxBehavior
+{
 
 	private static final long serialVersionUID = 1L;
 
-	private static PackagedTextTemplate GEOLOCATION_TMPL_JS = new PackagedTextTemplate(
-			AjaxGeolocationBehavior.class, "geolocation.js",
-			"application/javascript", "UTF-8");
+	private static PackageTextTemplate GEOLOCATION_TMPL_JS = new PackageTextTemplate(
+		AjaxGeolocationBehavior.class, "geolocation.js", "application/javascript", "UTF-8");
 
 	@Override
-	protected void respond(AjaxRequestTarget target) {
+	protected void respond(AjaxRequestTarget target)
+	{
 		final Request request = RequestCycle.get().getRequest();
-        final String latitude = request.getParameter("lat");
-        final String longitude = request.getParameter("long");
-        onGeoAvailable(target, latitude, longitude);
+		final String latitude = request.getRequestParameters().getParameterValue("lat").toString();
+		final String longitude = request.getRequestParameters()
+			.getParameterValue("long")
+			.toString();
+		onGeoAvailable(target, latitude, longitude);
 	}
 
-	protected abstract void onGeoAvailable(AjaxRequestTarget target, String latitude, String longitude);
+	protected abstract void onGeoAvailable(AjaxRequestTarget target, String latitude,
+		String longitude);
 
 	@Override
-	protected void onBind() {
+	protected void onBind()
+	{
 		super.onBind();
 
 		final Component component = getComponent();
@@ -39,10 +44,11 @@ public abstract class AjaxGeolocationBehavior extends AbstractDefaultAjaxBehavio
 	}
 
 	@Override
-	public void renderHead(final IHeaderResponse response) {
-		super.renderHead(response);
+	public void renderHead(Component c, final IHeaderResponse response)
+	{
+		super.renderHead(c, response);
 
-		final CharSequence callbackUrl = getCallbackUrl(false);
+		final CharSequence callbackUrl = getCallbackUrl();
 		final String componentMarkupId = getComponent().getMarkupId();
 
 		final Map<String, String> variables = new HashMap<String, String>();
@@ -50,7 +56,7 @@ public abstract class AjaxGeolocationBehavior extends AbstractDefaultAjaxBehavio
 		variables.put("callbackUrl", callbackUrl.toString());
 
 		final String javascript = MapVariableInterpolator.interpolate(
-				GEOLOCATION_TMPL_JS.asString(), variables);
-		response.renderOnDomReadyJavascript(javascript);
+			GEOLOCATION_TMPL_JS.asString(), variables);
+		response.renderOnDomReadyJavaScript(javascript);
 	}
 }

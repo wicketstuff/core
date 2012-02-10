@@ -16,36 +16,36 @@
  */
 package org.wicketstuff.objectautocomplete;
 
-import org.apache.wicket.Response;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompleteRenderer;
+import org.apache.wicket.request.Response;
 
 /**
  * @author roland
  * @since May 20, 2008
  */
-public class ObjectAutoCompleteRenderer<O> extends AbstractObjectAutoCompleteRenderer<O> implements IAutoCompleteRenderer<O> {
+public class ObjectAutoCompleteRenderer<O> extends AbstractObjectAutoCompleteRenderer<O> implements
+	IAutoCompleteRenderer<O>
+{
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private static final IAutoCompleteRenderer INSTANCE = new ObjectAutoCompleteRenderer();
-
-    @SuppressWarnings("unchecked")
-    public static final <T> IAutoCompleteRenderer<T> instance() {
-        return INSTANCE;
-    }
-
-    /** {@inheritDoc} */
-    public void render(O object, Response response, String criteria)
+	public static final <O> IAutoCompleteRenderer<O> instance()
 	{
-        renderObject(object,response,criteria);
+		return new ObjectAutoCompleteRenderer<O>();
 	}
 
-    public void renderHeader(Response response)
+	/** {@inheritDoc} */
+	public void render(O object, Response response, String criteria)
+	{
+		renderObject(object, response, criteria);
+	}
+
+	public void renderHeader(Response response)
 	{
 		response.write("<ul>");
 	}
 
-	public void renderFooter(Response response)
+	public void renderFooter(Response response, int renderedChoices)
 	{
 		response.write("</ul>");
 	}

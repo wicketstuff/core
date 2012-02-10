@@ -23,25 +23,42 @@ import org.wicketstuff.console.engine.Lang;
 /**
  * Represents a single script template.
  * <p>
- * Script templates can be used to provide frequently used scripts. These script
- * templates can than be provided to a {@link ScriptTemplateSelectionTablePanel}
- * to make them accessible through the UI.
+ * Script templates can be used to provide frequently used scripts. These script templates can than
+ * be provided to a {@link ScriptTemplateSelectionTablePanel} to make them accessible through the
+ * UI.
  * 
  * @author cretzel
  */
-public class ScriptTemplate implements Serializable {
+public class ScriptTemplate implements Serializable
+{
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public String title;
-    public String script;
-    public Lang lang;
+	public Long id;
+	public String title;
+	public String script;
+	public Lang lang;
 
-    public ScriptTemplate(final String title, final String script,
-            final Lang lang) {
-        this.title = title;
-        this.script = script;
-        this.lang = lang;
-    }
+	public ScriptTemplate(final Long id, final String title, final String script, final Lang lang)
+	{
+		this.id = id;
+		this.title = title;
+		this.script = script;
+		this.lang = lang;
+	}
+
+	public ScriptTemplate(final String title, final String script, final Lang lang)
+	{
+		this.title = title;
+		this.script = script;
+		this.lang = lang;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "ScriptTemplate [id=" + id + ", title=" + title + ", lang=" + lang + "]";
+	}
+
 
 }

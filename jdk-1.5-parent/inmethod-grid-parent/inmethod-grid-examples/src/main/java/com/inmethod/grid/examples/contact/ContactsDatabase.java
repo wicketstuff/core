@@ -16,12 +16,13 @@
  */
 package com.inmethod.grid.examples.contact;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * simple database for contacts
@@ -29,14 +30,15 @@ import java.util.Map;
  * @author Igor Vaynberg
  * 
  */
-@SuppressWarnings("unchecked")
-public class ContactsDatabase
+public class ContactsDatabase implements Serializable
 {
-	private Map map = Collections.synchronizedMap(new HashMap());
-	private List fnameIdx = Collections.synchronizedList(new ArrayList());
-	private List lnameIdx = Collections.synchronizedList(new ArrayList());
-	private List fnameDescIdx = Collections.synchronizedList(new ArrayList());
-	private List lnameDescIdx = Collections.synchronizedList(new ArrayList());
+	private static final long serialVersionUID = 1L;
+
+	private final Map<Long, Contact> map = new ConcurrentHashMap<Long, Contact>();
+	private final List<Contact> fnameIdx = new Vector<Contact>();
+	private final List<Contact> lnameIdx = new Vector<Contact>();
+	private final List<Contact> fnameDescIdx = new Vector<Contact>();
+	private final List<Contact> lnameDescIdx = new Vector<Contact>();
 
 	/**
 	 * Constructor
@@ -61,7 +63,7 @@ public class ContactsDatabase
 	 */
 	public Contact get(long id)
 	{
-		Contact c = (Contact)map.get(new Long(id));
+		Contact c = map.get(Long.valueOf(id));
 		if (c == null)
 		{
 			throw new RuntimeException("contact with id [" + id + "] not found in the database");
@@ -71,7 +73,7 @@ public class ContactsDatabase
 
 	protected void add(final Contact contact)
 	{
-		map.put(new Long(contact.getId()), contact);
+		map.put(Long.valueOf(contact.getId()), contact);
 		fnameIdx.add(contact);
 		lnameIdx.add(contact);
 		fnameDescIdx.add(contact);
@@ -87,18 +89,17 @@ public class ContactsDatabase
 	 * @param sortAsc
 	 * @return list of contacts
 	 */
-	@SuppressWarnings("unchecked")
 	public List<Contact> find(int first, int count, String sortProperty, boolean sortAsc)
 	{
-		List index = getIndex(sortProperty, sortAsc);
+		List<Contact> index = getIndex(sortProperty, sortAsc);
 		int last = first + count;
 		if (last > index.size())
 			last = index.size();
-		List sublist = index.subList(first, last);
+		List<Contact> sublist = index.subList(first, last);
 		return sublist;
 	}
 
-	protected List getIndex(String prop, boolean asc)
+	protected List<Contact> getIndex(String prop, boolean asc)
 	{
 		if (prop == null)
 		{
@@ -106,14 +107,14 @@ public class ContactsDatabase
 		}
 		if (prop.equals("firstName"))
 		{
-			return (asc) ? fnameIdx : fnameDescIdx;
+			return asc ? fnameIdx : fnameDescIdx;
 		}
 		else if (prop.equals("lastName"))
 		{
-			return (asc) ? lnameIdx : lnameDescIdx;
+			return asc ? lnameIdx : lnameDescIdx;
 		}
 		throw new RuntimeException("uknown sort option [" + prop +
-				"]. valid options: [firstName] , [lastName]");
+			"]. valid options: [firstName] , [lastName]");
 	}
 
 	/**
@@ -140,7 +141,7 @@ public class ContactsDatabase
 		else
 		{
 			throw new IllegalArgumentException("contact [" + contact.getFirstName() +
-					"] is already persistent");
+				"] is already persistent");
 		}
 	}
 
@@ -151,7 +152,7 @@ public class ContactsDatabase
 	 */
 	public void delete(final Contact contact)
 	{
-		map.remove(new Long(contact.getId()));
+		map.remove(Long.valueOf(contact.getId()));
 
 		fnameIdx.remove(contact);
 		lnameIdx.remove(contact);
@@ -163,35 +164,35 @@ public class ContactsDatabase
 
 	private void updateIndices()
 	{
-		Collections.sort(fnameIdx, new Comparator()
+		Collections.sort(fnameIdx, new Comparator<Contact>()
 		{
-			public int compare(Object arg0, Object arg1)
+			public int compare(Contact arg0, Contact arg1)
 			{
-				return ((Contact)arg0).getFirstName().compareTo(((Contact)arg1).getFirstName());
+				return arg0.getFirstName().compareTo(arg1.getFirstName());
 			}
 		});
 
-		Collections.sort(lnameIdx, new Comparator()
+		Collections.sort(lnameIdx, new Comparator<Contact>()
 		{
-			public int compare(Object arg0, Object arg1)
+			public int compare(Contact arg0, Contact arg1)
 			{
-				return ((Contact)arg0).getLastName().compareTo(((Contact)arg1).getLastName());
+				return arg0.getLastName().compareTo(arg1.getLastName());
 			}
 		});
 
-		Collections.sort(fnameDescIdx, new Comparator()
+		Collections.sort(fnameDescIdx, new Comparator<Contact>()
 		{
-			public int compare(Object arg0, Object arg1)
+			public int compare(Contact arg0, Contact arg1)
 			{
-				return ((Contact)arg1).getFirstName().compareTo(((Contact)arg0).getFirstName());
+				return arg1.getFirstName().compareTo(arg0.getFirstName());
 			}
 		});
 
-		Collections.sort(lnameDescIdx, new Comparator()
+		Collections.sort(lnameDescIdx, new Comparator<Contact>()
 		{
-			public int compare(Object arg0, Object arg1)
+			public int compare(Contact arg0, Contact arg1)
 			{
-				return ((Contact)arg1).getLastName().compareTo(((Contact)arg0).getLastName());
+				return arg1.getLastName().compareTo(arg0.getLastName());
 			}
 		});
 

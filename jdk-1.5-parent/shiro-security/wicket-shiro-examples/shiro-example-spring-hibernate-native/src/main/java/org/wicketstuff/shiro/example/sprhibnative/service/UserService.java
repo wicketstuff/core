@@ -25,17 +25,18 @@ import org.wicketstuff.shiro.example.sprhibnative.model.User;
 /**
  * A service interface for accessing and modifying user data in the system.
  */
-public interface UserService {
+public interface UserService
+{
 
-    User getCurrentUser();
+	User getCurrentUser();
 
-    void createUser(String username, String email, String password);
+	void createUser(String username, String email, String password);
 
-    List<User> getAllUsers();
+	List<User> getAllUsers();
 
-    User getUser(Long userId);
+	User getUser(Long userId);
 
-    void deleteUser(Long userId);
+	void deleteUser(Long userId);
 
-    void updateUser(User user);
+	void updateUser(User user);
 }

@@ -3,11 +3,11 @@
 	<parent>
 		<artifactId>ddcalendar-parent</artifactId>
 		<groupId>org.wicketstuff</groupId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.wicketstuff</groupId>
-	<artifactId>ddcalendar</artifactId>
+	<artifactId>wicketstuff-ddcalendar</artifactId>
 	<packaging>jar</packaging>
 	<name>Drag and drop calendar</name>
 	<description></description>
@@ -19,59 +19,19 @@
 		</license>
 	</licenses>
 	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-			</resource>
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**</include>
-				</includes>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
-		<testResources>
-			<testResource>
-				<directory>src/test/java</directory>
-				<includes>
-					<include>**</include>
-				</includes>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</testResource>
-		</testResources>
+		
 		<plugins>
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-			</plugin>
 			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<configuration>
 					<downloadSources>true</downloadSources>
 				</configuration>
+				<inherited>true</inherited>
 			</plugin>
 		</plugins>
 	</build>
 
-	<!-- mocleiri: not allowed for central sync up
-	<repositories>
-		<repository>
-			<id>wicket-snaps</id>
-			<url>http://wicketstuff.org/maven/repository</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-	</repositories>
-	-->
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>

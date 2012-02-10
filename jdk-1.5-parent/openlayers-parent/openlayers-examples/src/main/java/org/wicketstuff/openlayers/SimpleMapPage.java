@@ -1,12 +1,13 @@
 package org.wicketstuff.openlayers;
 
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * Homepage
  */
-public class SimpleMapPage extends WebPage {
+public class SimpleMapPage extends WebPage
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -18,7 +19,8 @@ public class SimpleMapPage extends WebPage {
 	 * @param parameters
 	 *            Page parameters
 	 */
-	public SimpleMapPage(final PageParameters parameters) {
+	public SimpleMapPage(final PageParameters parameters)
+	{
 
 		add(new OpenLayersMap("map", true));
 	}

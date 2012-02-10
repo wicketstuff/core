@@ -20,21 +20,23 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.PrecisionModel;
 
-public final class OpenLayersMapUtils {
+public final class OpenLayersMapUtils
+{
 	/**
 	 * WGS84 (http://en.wikipedia.org/wiki/World_Geodetic_System#
 	 * A_new_World_Geodetic_System:_WGS_84)
 	 */
 	public static final int SRID = 4326;
 
-	private static GeometryFactory geometryFactory = new GeometryFactory(
-			new PrecisionModel(), SRID);
+	private static GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), SRID);
 
-	public static GeometryFactory getGeoFactory() {
+	public static GeometryFactory getGeoFactory()
+	{
 		return geometryFactory;
 	}
 
-	public static Point createPoint(double x, double y) {
+	public static Point createPoint(double x, double y)
+	{
 		Coordinate coordinate = new Coordinate(x, y);
 		return geometryFactory.createPoint(coordinate);
 	}

@@ -5,13 +5,14 @@ import java.io.Serializable;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.Component.IVisitor;
+import org.apache.wicket.util.visit.IVisit;
+import org.apache.wicket.util.visit.IVisitor;
 
 
 /**
  * Find a page's child component by it's markup id
  */
-public class ComponentFinder implements IVisitor<Component>, Serializable {
+public class ComponentFinder implements IVisitor<Component, Void>, Serializable {
 	private static final long serialVersionUID = 1L;
 	private final String id;
 	private Component found;
@@ -20,15 +21,18 @@ public class ComponentFinder implements IVisitor<Component>, Serializable {
 		this.id = id;
 	}
 
-	public Object component(Component component) {
+	
+	public void component(Component component, IVisit<Void> visit) {
+		
 		if (component.getMarkupId().equals(id)) {
 			this.found = component;
-			return IVisitor.STOP_TRAVERSAL;
+			visit.stop();
 		}
 		if (component instanceof MarkupContainer) {
-			return ((MarkupContainer)component).visitChildren(this);
+			((MarkupContainer)component).visitChildren(this);
+			
+			visit.stop();
 		}
-		return IVisitor.CONTINUE_TRAVERSAL;
 	}
 
 	public Component getFoundComponent() {

@@ -1,0 +1,5 @@
+A Wicket plugin (initializer) that when in the classpath will automatically
+setup the application so that it can work in Google AppEngine.
+
+By default uses PageNumberEvictionStrategy which will keep at most 10 pages in the history
+but your application can implement GaeApplication and provide custom eviction strategy

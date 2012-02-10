@@ -34,15 +34,15 @@ public class CustomMaskField<T> extends MeioMaskField<T>
 	}
 
 	public CustomMaskField(String id, String mask, String options, IModel<T> model,
-			boolean valueContainsLiteralCharacters)
+		boolean valueContainsLiteralCharacters)
 	{
 		this(id, mask, options, model, valueContainsLiteralCharacters, null);
 	}
 
 	public CustomMaskField(String id, String mask, String options, IModel<T> model,
-			boolean valueContainsLiteralCharacters, Class<T> type)
+		boolean valueContainsLiteralCharacters, Class<T> type)
 	{
-		super(id, MaskType.Fixed, options, model, valueContainsLiteralCharacters, type, mask);
+		super(id, MaskType.Custom, options, model, valueContainsLiteralCharacters, type, mask);
 	}
 
 

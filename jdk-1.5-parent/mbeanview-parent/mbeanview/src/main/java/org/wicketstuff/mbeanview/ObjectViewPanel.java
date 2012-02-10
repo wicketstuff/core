@@ -29,38 +29,51 @@ import org.apache.wicket.markup.html.panel.Panel;
  * @author Pedro Henrique Oliveira dos Santos
  * 
  */
-public class ObjectViewPanel extends Panel {
-	public static class PropValue implements Serializable {
+public class ObjectViewPanel<T> extends Panel
+{
+	private static final long serialVersionUID = 1L;
+
+	public static class PropValue implements Serializable
+	{
+		private static final long serialVersionUID = 1L;
 		String property;
 		Object value;
 	}
 
-	public ObjectViewPanel(String id, Object object) {
+	public ObjectViewPanel(String id, T object)
+	{
 		super(id);
 		add(new Label("className", object.getClass().getName()));
 		add(new Label("toString", object.toString()));
-		ArrayList properties = new ArrayList();
+		ArrayList<PropValue> properties = new ArrayList<PropValue>();
 		Method[] methods = object.getClass().getMethods();
-		for (int i = 0; i < methods.length; i++) {
-			if (methods[i].getName().startsWith("get")
-					&& methods[i].getParameterTypes().length == 0) {
+		for (Method method : methods)
+		{
+			if (method.getName().startsWith("get") && method.getParameterTypes().length == 0)
+			{
 				PropValue prop = new PropValue();
-				try {
-					prop.property = methods[i].getName();
-					prop.value = methods[i].invoke(object, (Object[]) null);
-				} catch (Exception e) {
+				try
+				{
+					prop.property = method.getName();
+					prop.value = method.invoke(object, (Object[])null);
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace();
 				}
 				properties.add(prop);
 			}
 		}
-		add(new ListView<PropValue>("properties", properties) {
+		add(new ListView<PropValue>("properties", properties)
+		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			protected void populateItem(ListItem<PropValue> item) {
+			protected void populateItem(ListItem<PropValue> item)
+			{
 				item.add(new Label("property", item.getModelObject().property));
-				item.add(new Label("value",
-						item.getModelObject().value == null ? null : item
-								.getModelObject().value.toString()));
+				item.add(new Label("value", item.getModelObject().value == null ? null
+					: item.getModelObject().value.toString()));
 			}
 		});
 	}

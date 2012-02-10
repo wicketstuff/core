@@ -21,23 +21,25 @@ package wicket.contrib.phonebook;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Hibernate;
-import org.hibernate.type.NullableType;
+import org.hibernate.type.AbstractSingleColumnStandardBasicType;
+import org.hibernate.type.StandardBasicTypes;
 
 
 /**
  * @author Kare Nuorteva
  */
-public class HibernateContactFinderQueryBuilder {
+public class HibernateContactFinderQueryBuilder
+{
 	private List<String> parameters;
-	private List<NullableType> types;
+	private List<AbstractSingleColumnStandardBasicType<?>> types;
 	private boolean count;
 	private Contact filter = new Contact();
 	private QueryParam queryParam;
 
-	public String buildHql() {
+	public String buildHql()
+	{
 		parameters = new ArrayList<String>();
-		types = new ArrayList<NullableType>();
+		types = new ArrayList<AbstractSingleColumnStandardBasicType<?>>();
 		StringBuilder hql = new StringBuilder();
 		addCountClause(hql);
 		hql.append("from Contact target where 1=1 ");
@@ -49,24 +51,30 @@ public class HibernateContactFinderQueryBuilder {
 		return hql.toString();
 	}
 
-	private void addCountClause(StringBuilder hql) {
-		if (count) {
+	private void addCountClause(StringBuilder hql)
+	{
+		if (count)
+		{
 			hql.append("select count(*) ");
 		}
 	}
 
-	private void addMatchingCondition(StringBuilder hql, String value, String name) {
-		if (value != null) {
+	private void addMatchingCondition(StringBuilder hql, String value, String name)
+	{
+		if (value != null)
+		{
 			hql.append("and upper(target.");
 			hql.append(name);
 			hql.append(") like (?)");
 			parameters.add("%" + value.toUpperCase() + "%");
-			types.add(Hibernate.STRING);
+			types.add(StandardBasicTypes.STRING);
 		}
 	}
 
-	private void addOrderByClause(StringBuilder hql) {
-		if (!count && queryParam != null && queryParam.hasSort()) {
+	private void addOrderByClause(StringBuilder hql)
+	{
+		if (!count && queryParam != null && queryParam.hasSort())
+		{
 			hql.append("order by upper(target.");
 			hql.append(queryParam.getSort());
 			hql.append(") ");
@@ -74,26 +82,32 @@ public class HibernateContactFinderQueryBuilder {
 		}
 	}
 
-	public void setQueryParam(QueryParam queryParam) {
+	public void setQueryParam(QueryParam queryParam)
+	{
 		this.queryParam = queryParam;
 	}
 
-	public void setFilter(Contact filter) {
-		if (filter == null) {
+	public void setFilter(Contact filter)
+	{
+		if (filter == null)
+		{
 			throw new IllegalArgumentException("Null value not allowed.");
 		}
 		this.filter = filter;
 	}
 
-	public void setCount(boolean count) {
+	public void setCount(boolean count)
+	{
 		this.count = count;
 	}
 
-	public String[] getParameters() {
+	public String[] getParameters()
+	{
 		return parameters.toArray(new String[0]);
 	}
 
-	public NullableType[] getTypes() {
-		return types.toArray(new NullableType[0]);
+	public AbstractSingleColumnStandardBasicType<?>[] getTypes()
+	{
+		return types.toArray(new AbstractSingleColumnStandardBasicType[types.size()]);
 	}
 }

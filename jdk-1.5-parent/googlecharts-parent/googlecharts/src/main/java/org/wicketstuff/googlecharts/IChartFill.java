@@ -8,5 +8,6 @@ import java.io.Serializable;
 /**
  * @author Daniel Spiewak
  */
-public interface IChartFill extends Serializable {
+public interface IChartFill extends Serializable
+{
 }

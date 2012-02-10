@@ -1,12 +1,12 @@
 /*
- *
+ * 
  * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,27 +15,24 @@
  */
 package org.wicketstuff.datatable_autocomplete.table;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
-import org.apache.wicket.markup.html.CSSPackageResource;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.markup.repeater.IItemReuseStrategy;
 import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.model.AbstractReadOnlyModel;
-import org.apache.wicket.model.Model;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.datatable_autocomplete.radio.DTARadioGroup;
 import org.wicketstuff.datatable_autocomplete.selection.ITableRowSelectionHandler;
 import org.wicketstuff.datatable_autocomplete.table.DTADataTable.DTADataTableItemModifier;
@@ -46,16 +43,13 @@ import org.wicketstuff.datatable_autocomplete.table.column.DTARadioColumn;
  * @author mocleiri
  * 
  */
-public abstract class AbstractSelectableTableViewPanel<T> extends
-		FormComponentPanel<T> {
+public abstract class AbstractSelectableTableViewPanel<T> extends FormComponentPanel<T>
+{
 
 	/**
-	 *
+	 * 
 	 */
 	private static final long serialVersionUID = -4369026666390989926L;
-
-	private static final Logger log = LoggerFactory
-			.getLogger(AbstractSelectableTableViewPanel.class);
 
 	private DTADataTable<T> dataTable;
 
@@ -65,8 +59,8 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 
 	protected final ISortableDataProvider<T> dataProvider;
 
-	private static final ResourceReference DEFAULT_CSS = new CompressedResourceReference(
-			DTADataTable.class, "dta_table.css");
+	private static final ResourceReference DEFAULT_CSS = new PackageResourceReference(
+		DTADataTable.class, "dta_table.css");
 
 	protected ButtonListView buttonView;
 
@@ -77,40 +71,35 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 	/**
 	 * @param asList
 	 * 
-	 *            Sets the list of button providers to use with the selectable
-	 *            table view @see
+	 *            Sets the list of button providers to use with the selectable table view @see
 	 *            {@link DefaultSelectableTableViewPanelButtonProviderImpl}
 	 * 
 	 *            and {@link SelectableTableViewPanel} for examples
 	 */
-	public final void setButtonProviderList(
-			List<ISelectableTableViewPanelButtonProvider> asList) {
+	public final void setButtonProviderList(List<ISelectableTableViewPanelButtonProvider> asList)
+	{
 
 		this.buttonView.setList(asList);
 	}
 
-	public AbstractSelectableTableViewPanel(String id,
-			ResourceReference css_reference, String cssClassNamne,
-			String displayEntityName, IColumn<?> column,
-			ISortableDataProvider<T> dataProvider,
-			ITableRowSelectionHandler<T> selectionHandler,
-			IDTATableRenderingHints hints) {
+	public AbstractSelectableTableViewPanel(String id, ResourceReference css_reference,
+		String cssClassNamne, String displayEntityName, IColumn<?> column,
+		ISortableDataProvider<T> dataProvider, ITableRowSelectionHandler<T> selectionHandler,
+		IDTATableRenderingHints hints)
+	{
 
-		this(id, css_reference, cssClassNamne, displayEntityName, column,
-				dataProvider, true, selectionHandler, hints);
+		this(id, css_reference, cssClassNamne, displayEntityName, column, dataProvider, true,
+			selectionHandler, hints);
 	}
 
-	public AbstractSelectableTableViewPanel(String id,
-			ResourceReference css_reference, String cssClassName,
-			String displayEntityName, IColumn<?> column,
-			ISortableDataProvider<T> dataProvider,
-			boolean showTableFeedbackPanel,
-			ITableRowSelectionHandler<T> selectionHandler,
-			IDTATableRenderingHints hints) {
+	public AbstractSelectableTableViewPanel(String id, ResourceReference css_reference,
+		String cssClassName, String displayEntityName, IColumn<?> column,
+		ISortableDataProvider<T> dataProvider, boolean showTableFeedbackPanel,
+		ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints)
+	{
 
-		this(id, css_reference, cssClassName, displayEntityName,
-				new IColumn[] { column }, dataProvider, showTableFeedbackPanel,
-				selectionHandler, hints);
+		this(id, css_reference, cssClassName, displayEntityName, new IColumn[] { column },
+			dataProvider, showTableFeedbackPanel, selectionHandler, hints);
 	}
 
 	/**
@@ -125,134 +114,89 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 	 * @param selectedRowContextExtractor
 	 * @param buttonProviderList
 	 * @param showTableFeedbackPanel
-	 *            true if the feedback panel should be visible; used in the
-	 *            nesteded components with many feedback panels situation.
+	 *            true if the feedback panel should be visible; used in the nesteded components with
+	 *            many feedback panels situation.
 	 */
-	public AbstractSelectableTableViewPanel(String id,
-			ResourceReference css_reference, String cssClassName,
-			String displayEntityName, IColumn<?>[] columns,
-			ISortableDataProvider<T> dataProvider,
-			ITableRowSelectionHandler<T> selectionHandler,
-			IDTATableRenderingHints hints) {
+	public AbstractSelectableTableViewPanel(String id, ResourceReference css_reference,
+		String cssClassName, String displayEntityName, IColumn<?>[] columns,
+		ISortableDataProvider<T> dataProvider, ITableRowSelectionHandler<T> selectionHandler,
+		IDTATableRenderingHints hints)
+	{
 
-		this(id, css_reference, cssClassName, displayEntityName, columns,
-				dataProvider, true, selectionHandler, hints);
+		this(id, css_reference, cssClassName, displayEntityName, columns, dataProvider, true,
+			selectionHandler, hints);
 	}
 
-	public AbstractSelectableTableViewPanel(String id,
-			ResourceReference css_reference, String cssClassName,
-			String displayEntityName, IColumn<?>[] columns,
-			ISortableDataProvider<T> dataProvider,
-			boolean showTableFeedbackPanel,
-			ITableRowSelectionHandler<T> rowSelectionHandler,
-			IDTATableRenderingHints hints) {
+	public AbstractSelectableTableViewPanel(String id, final ResourceReference css_reference,
+		String cssClassName, String displayEntityName, IColumn<?>[] columns,
+		ISortableDataProvider<T> dataProvider, boolean showTableFeedbackPanel,
+		ITableRowSelectionHandler<T> rowSelectionHandler, IDTATableRenderingHints hints)
+	{
 
-		this(id, css_reference, cssClassName, displayEntityName, columns, true,
-				dataProvider, showTableFeedbackPanel, rowSelectionHandler,
-				hints);
-	}
-
-	public AbstractSelectableTableViewPanel(String id,
-			ResourceReference css_reference, String cssClassName,
-			String displayEntityName, IColumn<?>[] columns,
-			boolean withRadioGroup, ISortableDataProvider<T> dataProvider,
-			boolean showTableFeedbackPanel,
-			ITableRowSelectionHandler<T> rowSelectionHandler,
-			final IDTATableRenderingHints hints) {
-
-		// intentionally don't declare a type.
-		super(id, new Model());
+		super(id);
 		this.dataProvider = dataProvider;
 		this.rowSelectionHandler = rowSelectionHandler;
 
-		add(CSSPackageResource.getHeaderContribution(css_reference));
+		add(new Behavior()
+		{
 
-		Form form = new Form("viewForm");
+			private static final long serialVersionUID = 1L;
 
-		radioGroup = new DTARadioGroup<T>("radioGroup",
-				this.dataProvider.model(null));
+			@Override
+			public void renderHead(Component c, IHeaderResponse response)
+			{
+				response.renderCSSReference(css_reference);
+			}
+		});
 
-		int columnLength = columns.length;
+		Form<Void> form = new Form<Void>("viewForm");
 
-		int radioColumnLength = 0;// if there is no radio group, don't add it
+		radioGroup = new DTARadioGroup<T>("radioGroup", this.dataProvider.model(null));
 
-		if (withRadioGroup) {
+		List<IColumn<T>> includingRadioColumnList = new ArrayList<IColumn<T>>();
 
-			columnLength = columns.length + 1;
+		// TODO: allow customization of the radio column label
+		final DTARadioColumn<T> radioColumn = new DTARadioColumn<T>("");
 
-			radioColumnLength = 1;
+		includingRadioColumnList.add(radioColumn);
+
+		for (IColumn<?> column : columns)
+		{
+
+			includingRadioColumnList.add((IColumn<T>)column);
 		}
 
-		IColumn<?>[] includingRadioColumns = new IColumn[columnLength];
+		dataTable = new DTADataTable<T>("dataTable", cssClassName, includingRadioColumnList,
+			dataProvider, hints);
 
-		if (withRadioGroup) {
-			// TODO: allow customization of the radio column label
-			final DTARadioColumn<T> radioColumn = new DTARadioColumn<T>("");
-
-			includingRadioColumns[0] = radioColumn;
-
-		}
-
-		for (int i = 0; i < columns.length; i++) {
-
-			includingRadioColumns[i + radioColumnLength] = columns[i];
-		}
-
-		dataTable = new DTADataTable<T>("dataTable", cssClassName,
-				includingRadioColumns, dataProvider, hints);
 
 		radioGroup.add(dataTable);
 
 		form.add(radioGroup);
 
-		dataTable.setItemModifier(new DTADataTableItemModifier<T>() {
+		dataTable.setItemModifier(new DTADataTableItemModifier<T>()
+		{
 
 			private static final long serialVersionUID = 5144108737965241352L;
 
-			public void modifyRowItem(final Item<T> item) {
 
-				if (hints.highlightSelectedRow()) {
-					item.add(new AttributeAppender("class", true,
-							new AbstractReadOnlyModel<String>() {
+			public void modifyRowItem(final Item<T> item)
+			{
 
-								private static final long serialVersionUID = 1L;
+				if (AbstractSelectableTableViewPanel.this.rowSelectionHandler != null)
+				{
 
-								/*
-								 * (non-Javadoc)
-								 * 
-								 * @see
-								 * org.apache.wicket.model.AbstractReadOnlyModel
-								 * #getObject()
-								 */
-								@Override
-								public String getObject() {
-
-									T selectedObject = getSelectedRow();
-
-									T itemModelObject = item.getModelObject();
-
-									if (selectedObject != null
-											&& selectedObject
-													.equals(itemModelObject)) {
-										return "selected";
-									} else
-										return "";
-								}
-
-							}, " "));
-				}
-
-				if (AbstractSelectableTableViewPanel.this.rowSelectionHandler != null) {
-
-					item.add(new AjaxEventBehavior("onclick") {
+					item.add(new AjaxEventBehavior("onclick")
+					{
 
 						/**
-						 *
+						 * 
 						 */
 						private static final long serialVersionUID = 2282163166444338308L;
 
 						@Override
-						protected void onEvent(AjaxRequestTarget target) {
+						protected void onEvent(AjaxRequestTarget target)
+						{
 
 							int index = item.getIndex();
 							T selectedObject = item.getModelObject();
@@ -260,23 +204,27 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 							/*
 							 * Delegate to the row selection handler
 							 */
-							AbstractSelectableTableViewPanel.this.rowSelectionHandler
-									.handleSelection(index, selectedObject,
-											target);
+							AbstractSelectableTableViewPanel.this.rowSelectionHandler.handleSelection(
+								index, selectedObject, target);
 
 						}
 					});
 
 				}
+				else
+				{
 
+					// Intentionally does nothing.
+				}
 			}
 
 		});
 
-		buttonView = new ButtonListView("buttonView", form, displayEntityName,
-				radioGroup);
+
+		buttonView = new ButtonListView("buttonView", form, displayEntityName, radioGroup);
 
 		form.add(buttonView);
+
 
 		FeedbackPanel feedbackPanel;
 		add(feedbackPanel = new FeedbackPanel("feedback"));
@@ -297,27 +245,13 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 	 * @param selectedRowContextConverter
 	 * @param i
 	 */
-	public AbstractSelectableTableViewPanel(String id,
-			String displayEntityName, IColumn<?>[] tableColumns,
-			ISortableDataProvider<T> attributeFilterDataProvider,
-			ITableRowSelectionHandler<T> selectionHandler,
-			IDTATableRenderingHints hints) {
+	public AbstractSelectableTableViewPanel(String id, String displayEntityName,
+		IColumn<?>[] tableColumns, ISortableDataProvider<T> attributeFilterDataProvider,
+		ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints)
+	{
 
-		this(id, DEFAULT_CSS, "dta_data_table", displayEntityName,
-				tableColumns, attributeFilterDataProvider, selectionHandler,
-				hints);
-	}
-
-	public AbstractSelectableTableViewPanel(String id,
-			String displayEntityName, IColumn<?>[] tableColumns,
-			boolean withRadioGroup,
-			ISortableDataProvider<T> attributeFilterDataProvider,
-			ITableRowSelectionHandler<T> selectionHandler,
-			IDTATableRenderingHints hints) {
-
-		this(id, DEFAULT_CSS, "dta_data_table", displayEntityName,
-				tableColumns, withRadioGroup, attributeFilterDataProvider,
-				true, selectionHandler, hints);
+		this(id, DEFAULT_CSS, "dta_data_table", displayEntityName, tableColumns,
+			attributeFilterDataProvider, selectionHandler, hints);
 	}
 
 	/**
@@ -329,42 +263,27 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 	 * @param i
 	 * @param b
 	 */
-	public AbstractSelectableTableViewPanel(String id, String title,
-			IColumn<?>[] columns,
-			ISortableDataProvider<T> sortableListDataProvider,
-			boolean showTableFeedbackPanel,
-			ITableRowSelectionHandler<T> selectionHandler,
-			IDTATableRenderingHints hints) {
+	public AbstractSelectableTableViewPanel(String id, String title, IColumn<?>[] columns,
+		ISortableDataProvider<T> sortableListDataProvider, boolean showTableFeedbackPanel,
+		ITableRowSelectionHandler<T> selectionHandler, IDTATableRenderingHints hints)
+	{
 
-		this(id, DEFAULT_CSS, "dta_data_table", title, columns,
-				sortableListDataProvider, showTableFeedbackPanel,
-				selectionHandler, hints);
+		this(id, DEFAULT_CSS, "dta_data_table", title, columns, sortableListDataProvider,
+			showTableFeedbackPanel, selectionHandler, hints);
 
 	}
 
-	/**
-	 * 
-	 * @return the selected row from the table.
-	 * 
-	 */
-	public T getSelectedRow() {
+	public T getSelectedRow()
+	{
 		return radioGroup.getModelObject();
-	}
-
-	/**
-	 * 
-	 * @param selectedObject
-	 */
-	public void setSelectedRow(T selectedObject) {
-
-		this.radioGroup.setModelObject(selectedObject);
 	}
 
 	/**
 	 * @param hideIfNoResults
 	 *            the hideIfNoResults to set
 	 */
-	public void setHideIfNoResults(boolean hideIfNoResults) {
+	public void setHideIfNoResults(boolean hideIfNoResults)
+	{
 
 		this.hideIfNoResults = hideIfNoResults;
 	}
@@ -372,7 +291,8 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 	/**
 	 * @return
 	 */
-	public final DTADataTable<T> getDataTable() {
+	public final DTADataTable<T> getDataTable()
+	{
 
 		return dataTable;
 	}
@@ -383,88 +303,33 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 	 * @see org.apache.wicket.Component#onBeforeRender()
 	 */
 	@Override
-	protected void onBeforeRender() {
+	protected void onBeforeRender()
+	{
 
 		updateVisibility();
-
-		T modelObject = getModelObject();
-
-		/*
-		 * If the model object is not null we will pre select the row for this
-		 * item.
-		 */
-		this.radioGroup.setModelObject(modelObject);
-
-		if (modelObject != null) {
-			int currentPage = dataTable.getCurrentPage();
-
-			int targetPage = findTargetPage(modelObject,
-					dataTable.getRowsPerPage(), dataTable.getRowCount());
-
-			if (targetPage == -1) {
-				log.warn("Model Object exists but we can't find the page.  Check that you have implemented hashcode and equals for the Model Object("
-						+ modelObject + ")");
-				dataTable.setCurrentPage(0);
-			} else {
-				if (currentPage != targetPage) {
-					// change to the page that contains the selected value
-					dataTable.setCurrentPage(targetPage);
-				}
-			}
-		}
 
 		super.onBeforeRender();
 
 	}
 
 	/**
+	 * Normally a wicket component that is made invisible will never render again. This will cause
+	 * our visibility to be updated and allow rendering to occur.
 	 * 
-	 * @param modelObject
-	 * @param i
-	 * @return the page index for the model object.
-	 * 
-	 */
-	private int findTargetPage(T modelObject, int pageSize, int totalRows) {
-
-		int count = 0;
-		int currentPage = 0;
-
-		while (count < totalRows) {
-
-			Iterator<? extends T> iter = dataProvider.iterator(count, pageSize);
-
-			while (iter.hasNext()) {
-				T t = (T) iter.next();
-
-				if (t.equals(modelObject))
-					return currentPage;
-
-				count++;
-			}
-
-			currentPage++;
-
-		}
-
-		// no match
-		return -1;
-	}
-
-	/**
-	 * Normally a wicket component that is made invisible will never render
-	 * again. This will cause our visibility to be updated and allow rendering
-	 * to occur.
-	 * 
-	 * This method is public because our visibility is used by the
-	 * AutoCompletingPanel to determine its visibility.
+	 * This method is public because our visibility is used by the AutoCompletingPanel to determine
+	 * its visibility.
 	 * 
 	 */
-	public void updateVisibility() {
+	public void updateVisibility()
+	{
 
-		if (this.hideIfNoResults && dataProvider.size() == 0) {
+
+		if (this.hideIfNoResults && dataProvider.size() == 0)
+		{
 
 			setVisible(false);
-		} else
+		}
+		else
 			setVisible(true);
 
 	}
@@ -474,11 +339,12 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 	 * 
 	 * @param disableRowHighlight
 	 */
-	public final void setDisableRowHighlight(boolean disableRowHighlight) {
+	public final void setDisableRowHighlight(boolean disableRowHighlight)
+	{
 
 		// FIXME: find out how to disable the row highlight on the table.
 
-		// this.dataTable.setDisableRowHighlight(disableRowHighlight);
+// this.dataTable.setDisableRowHighlight(disableRowHighlight);
 	}
 
 	/**
@@ -486,7 +352,8 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 	 * @return
 	 * @see org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable#setItemReuseStrategy(org.apache.wicket.markup.repeater.IItemReuseStrategy)
 	 */
-	public final DataTable<T> setItemReuseStrategy(IItemReuseStrategy strategy) {
+	public final DataTable<T> setItemReuseStrategy(IItemReuseStrategy strategy)
+	{
 		return dataTable.setItemReuseStrategy(strategy);
 	}
 
@@ -496,14 +363,15 @@ public abstract class AbstractSelectableTableViewPanel<T> extends
 	 * @see org.apache.wicket.markup.html.form.FormComponent#convertInput()
 	 */
 	@Override
-	protected void convertInput() {
+	protected void convertInput()
+	{
 
 		radioGroup.processInput();
 
-		T object = radioGroup.getModelObject();
+		super.convertInput();
 
-		setConvertedInput(object);
 
 	}
+
 
 }

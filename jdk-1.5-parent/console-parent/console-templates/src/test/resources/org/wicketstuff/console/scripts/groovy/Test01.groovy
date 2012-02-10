@@ -1,2 +1,1 @@
 println "foo"
-println "bar"

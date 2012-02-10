@@ -8,13 +8,14 @@ import java.io.Serializable;
 /**
  * @author Daniel Spiewak
  */
-public interface IChartGrid extends Serializable {
+public interface IChartGrid extends Serializable
+{
 
-    public double getXStepSize();
+	public double getXStepSize();
 
-    public double getYStepSize();
+	public double getYStepSize();
 
-    public int getSegmentLength();
+	public int getSegmentLength();
 
-    public int getBlankLength();
+	public int getBlankLength();
 }

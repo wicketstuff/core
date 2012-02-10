@@ -13,13 +13,13 @@ import org.apache.wicket.markup.html.link.Link
 import org.apache.wicket.markup.html.list.{ListView, ListItem, PropertyListView}
 import org.apache.wicket.model.{IModel, Model}
 
-class SForm[T](id:String, model:IModel[T] , onSubmitFunc: ⇒ Unit) extends Form[T](id) {
+class SForm[T](id:String, model:IModel[T] , onSubmitFunc: ⇒ Unit) extends Form[T](id, model:IModel[T]) {
 
   override def onSubmit = onSubmitFunc
 
 }
 
-class SLabel(id:String, gtr: ⇒ String) extends Label[String](id, new Fodel(gtr, null)) {
+class SLabel(id:String, gtr: ⇒ String) extends Label(id, new Fodel(gtr, null)) {
   
   def print = println(gtr)
   

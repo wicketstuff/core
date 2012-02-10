@@ -14,8 +14,7 @@ public class HomePage extends WicketExamplePage
 
 	public HomePage()
 	{
-		final GMap2 map = new GMap2("topPanel", GMapExampleApplication.get()
-				.getGoogleMapsAPIkey());
+		final GMap2 map = new GMap2("topPanel", GMapExampleApplication.get().getGoogleMapsAPIkey());
 		map.enableGoogleBar(true);
 		add(map);
 	}

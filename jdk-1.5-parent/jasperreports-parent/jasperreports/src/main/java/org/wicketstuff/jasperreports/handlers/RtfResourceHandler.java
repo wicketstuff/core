@@ -25,7 +25,10 @@ import net.sf.jasperreports.engine.export.JRRtfExporter;
 /**
  * @author cdeal
  */
-public class RtfResourceHandler implements IJRResourceHandler, Serializable {
+public class RtfResourceHandler implements IJRResourceHandler, Serializable
+{
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * @see org.wicketstuff.jasperreports.handlers.IJRResourceHandler#newExporter()
 	 */

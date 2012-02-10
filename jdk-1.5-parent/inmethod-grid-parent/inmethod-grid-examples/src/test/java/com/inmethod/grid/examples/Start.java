@@ -1,13 +1,15 @@
 package com.inmethod.grid.examples;
 
-import org.mortbay.jetty.Connector;
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.bio.SocketConnector;
-import org.mortbay.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.bio.SocketConnector;
+import org.eclipse.jetty.webapp.WebAppContext;
 
-public class Start {
+public class Start
+{
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception
+	{
 		Server server = new Server();
 		SocketConnector connector = new SocketConnector();
 		// Set some timeout options to make debugging easier.
@@ -21,24 +23,28 @@ public class Start {
 		bb.setContextPath("/");
 		bb.setWar("src/main/webapp");
 
-		
+
 		// START JMX SERVER
 		// MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
 		// MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
 		// server.getContainer().addEventListener(mBeanContainer);
 		// mBeanContainer.start();
-		
-		server.addHandler(bb);
 
-		try {
+		server.setHandler(bb);
+
+		try
+		{
 			System.out.println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
 			server.start();
-			while (System.in.available() == 0) {
+			while (System.in.available() == 0)
+			{
 				Thread.sleep(5000);
 			}
 			server.stop();
 			server.join();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 			System.exit(100);
 		}

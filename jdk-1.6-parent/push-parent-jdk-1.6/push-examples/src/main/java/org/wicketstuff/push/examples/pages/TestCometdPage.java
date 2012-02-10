@@ -16,12 +16,12 @@
  */
 package org.wicketstuff.push.examples.pages;
 
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.push.AbstractPushEventHandler;
 import org.wicketstuff.push.IPushEventContext;
 import org.wicketstuff.push.IPushNode;
@@ -33,6 +33,7 @@ import org.wicketstuff.push.cometd.CometdPushService;
  */
 public class TestCometdPage extends WebPage
 {
+	private static final long serialVersionUID = 1L;
 	private final TextField<String> field;
 	private String val;
 
@@ -48,7 +49,7 @@ public class TestCometdPage extends WebPage
 					final IPushNode<String> node, final IPushEventContext<String> ctx)
 				{
 					field.setModel(new Model<String>("updated"));
-					target.addComponent(field);
+					target.add(field);
 				}
 			});
 

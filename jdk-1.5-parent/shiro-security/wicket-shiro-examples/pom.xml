@@ -22,7 +22,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicket-shiro-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>wicket-shiro-examples</artifactId>
@@ -54,31 +54,18 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!--  JETTY DEPENDENCIES FOR TESTING  -->
 		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>jetty</artifactId>
+			<groupId>org.eclipse.jetty.aggregate</groupId>
+			<artifactId>jetty-all-server</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>jetty-util</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>jetty-management</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
 	</dependencies>
 
 	<modules>
 		<module>shiro-example-base</module>
 		<module>shiro-example-realm</module>
 		<module>shiro-example-spring-jdbc</module>
-		<!-- mocleiri: does not build since 1.4.8-SNAPSHOT -->
-	<!--	<module>shiro-example-spring-hibernate</module> -->
+		<module>shiro-example-spring-hibernate</module>
 		<module>shiro-example-spring-hibernate-native</module>
 	</modules>
 

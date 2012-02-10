@@ -8,6 +8,6 @@
                  Tralala, coder @ http://www.vbulletin.org
                  Matthew R Hanlon 
 
-	org.wicketstuff.minis.prototipbehaviour
+	org.wicketstuff.minis.behaviour.prototip
 	Contains prototip.js, prototip.css and relevent image files
 	Licenced under terms printed in prototip.js, author Nick Stakenburg, see http://www.nickstakenburg.com/projects/prototip/ 

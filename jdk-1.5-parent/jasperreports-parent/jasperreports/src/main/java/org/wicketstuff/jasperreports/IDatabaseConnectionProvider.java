@@ -33,8 +33,7 @@ public interface IDatabaseConnectionProvider extends Serializable
 	Connection get();
 
 	/**
-	 * Called when the report is generated and the connection can be
-	 * released again.
+	 * Called when the report is generated and the connection can be released again.
 	 */
 	void release();
 }

@@ -18,9 +18,9 @@
  */
 package wicket.contrib.gmap.event;
 
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 import wicket.contrib.gmap.api.GLatLng;
 import wicket.contrib.gmap.api.GOverlay;
@@ -29,32 +29,44 @@ import wicket.contrib.gmap.api.GOverlay;
  * See "click" in the event section of <a
  * href="http://www.google.com/apis/maps/documentation/reference.html#GMap2">GMap2</a>.
  */
-public abstract class ClickListener extends GEventListenerBehavior {
+public abstract class ClickListener extends GEventListenerBehavior
+{
+	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected String getEvent() {
+	protected String getEvent()
+	{
 		return "click";
 	}
 
 	@Override
-	protected void onEvent(AjaxRequestTarget target) {
+	protected void onEvent(AjaxRequestTarget target)
+	{
 		Request request = RequestCycle.get().getRequest();
 
 		GOverlay overlay = null;
 		GLatLng latLng = null;
 
-		String markerParameter = request.getParameter("argument0");
-		if (markerParameter != null) {
-			for (GOverlay ovl : getGMap2().getOverlays()) {
-				if (ovl.getId().equals(markerParameter)) {
+		String markerParameter = request.getRequestParameters()
+			.getParameterValue("argument0")
+			.toString();
+		if (markerParameter != null)
+		{
+			for (GOverlay ovl : getGMap2().getOverlays())
+			{
+				if (ovl.getId().equals(markerParameter))
+				{
 					overlay = ovl;
 					break;
 				}
 			}
 		}
 
-		String latLngParameter = request.getParameter("argument1");
-		if (latLngParameter != null) {
+		String latLngParameter = request.getRequestParameters()
+			.getParameterValue("argument1")
+			.toString();
+		if (latLngParameter != null)
+		{
 			latLng = GLatLng.parse(latLngParameter);
 		}
 
@@ -62,8 +74,7 @@ public abstract class ClickListener extends GEventListenerBehavior {
 	}
 
 	/**
-	 * Override this method to provide handling of a click on the map. See the
-	 * event section of <a
+	 * Override this method to provide handling of a click on the map. See the event section of <a
 	 * href="http://www.google.com/apis/maps/documentation/reference.html#GMap2">GMap2</a>.
 	 * 
 	 * @param latLng
@@ -73,6 +84,5 @@ public abstract class ClickListener extends GEventListenerBehavior {
 	 * @param target
 	 *            The target that initiated the click.
 	 */
-	protected abstract void onClick(AjaxRequestTarget target, GLatLng latLng,
-			GOverlay overlay);
+	protected abstract void onClick(AjaxRequestTarget target, GLatLng latLng, GOverlay overlay);
 }

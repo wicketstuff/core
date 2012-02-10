@@ -1,12 +1,14 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>simile-timeline-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>simile-timeline</artifactId>
+	<artifactId>wicketstuff-simile-timeline</artifactId>
 	<packaging>jar</packaging>
 	<name>Simile Timeline</name>
 	<description>Simile Timeline widget for Wicket</description>
@@ -18,67 +20,31 @@
 			<timezone>+1</timezone>
 		</developer>
 	</developers>
-	<repositories>
-		<repository>
-			<id>wicket-snaps</id>
-			<url>http://wicketstuff.org/maven/repository</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-	</repositories>
 	<build>
-        <plugins>
+		<plugins>
 			<plugin>
-				<groupId>net.sf.alchim</groupId>
+				<groupId>net.alchim31.maven</groupId>
 				<artifactId>yuicompressor-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>process-resources</phase>
-						<goals>
-							<!--goal>jslint</goal-->
-							<goal>compress</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<nosuffix>true</nosuffix>
-					<force>false</force>
-					<excludes>
-						<exclude>**/*.java</exclude>
-						<exclude>**/interface-*.js</exclude>
-						<exclude>**/*pack.js</exclude>
-						<exclude>**/compressed.css</exclude>
-						<exclude>**/crop.css</exclude>
-						<exclude>**/*.html</exclude>
-					</excludes>
-				</configuration>
 			</plugin>
-        </plugins>
-    </build>
+		</plugins>
+	</build>
 	<dependencies>
 
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib</artifactId>
-			<version>2.2.2</version>
 			<classifier>jdk15</classifier>
-			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <scope>test</scope>
-        </dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>

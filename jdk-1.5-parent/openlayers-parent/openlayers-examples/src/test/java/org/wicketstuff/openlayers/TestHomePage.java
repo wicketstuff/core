@@ -1,6 +1,7 @@
 package org.wicketstuff.openlayers;
 
 import junit.framework.TestCase;
+
 import org.apache.wicket.util.tester.WicketTester;
 
 /**
@@ -10,6 +11,7 @@ public class TestHomePage extends TestCase
 {
 	private WicketTester tester;
 
+	@Override
 	public void setUp()
 	{
 		tester = new WicketTester();
@@ -17,10 +19,10 @@ public class TestHomePage extends TestCase
 
 	public void testRenderMyPage()
 	{
-		//start and render the test page
+		// start and render the test page
 		tester.startPage(HomePage.class);
 
-		//assert rendered page class
+		// assert rendered page class
 		tester.assertRenderedPage(HomePage.class);
 	}
 }

@@ -1,35 +1,27 @@
 package org.wicketstuff.yav;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.apache.wicket.Application;
 import org.apache.wicket.Component;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.Response;
-import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
-import org.apache.wicket.util.convert.IConverter;
-import org.apache.wicket.util.convert.converters.DateConverter;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.value.IValueMap;
 import org.wicketstuff.yav.alerts.AlertType;
 
 /**
- * This is the main Behavior that contributes to the header with the appropriate JS files and builds the 
- * Yav rules.
+ * This is the main Behavior that contributes to the header with the appropriate JS files and builds
+ * the Yav rules.
  * 
  * @author Zenika
  */
-public class YavBehavior extends AbstractBehavior implements IHeaderContributor {
+public class YavBehavior extends Behavior
+{
 	private static final long serialVersionUID = 1L;
 
 	private AlertType alertType = AlertType.INNER_HTML;
@@ -37,7 +29,8 @@ public class YavBehavior extends AbstractBehavior implements IHeaderContributor 
 	/**
 	 * Default constructor
 	 */
-	public YavBehavior() {
+	public YavBehavior()
+	{
 		super();
 	}
 
@@ -46,23 +39,24 @@ public class YavBehavior extends AbstractBehavior implements IHeaderContributor 
 	 * 
 	 * @param alertType
 	 */
-	public YavBehavior(AlertType alertType) {
+	public YavBehavior(AlertType alertType)
+	{
 		this.alertType = alertType;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.apache.wicket.behavior.AbstractBehavior#renderHead(org.apache.wicket
+	 * @see org.apache.wicket.behavior.AbstractBehavior#renderHead(org.apache.wicket
 	 * .markup.html.IHeaderResponse)
 	 */
 	@Override
-	public void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
+	public void renderHead(Component c, IHeaderResponse response)
+	{
+		super.renderHead(c, response);
 
-		response.renderCSSReference(new CompressedResourceReference(
-				YavBehavior.class, "style/yav-style.css"));
+		response.renderCSSReference(new PackageResourceReference(YavBehavior.class,
+			"style/yav-style.css"));
 
 		addJavascriptReference(response, "yav.js");
 		addJavascriptReference(response, "yav-config.js");
@@ -71,43 +65,41 @@ public class YavBehavior extends AbstractBehavior implements IHeaderContributor 
 		// Add an onload contributor that will call a function which is defined
 		// during onComponentTag method call which is processed after the head
 		// is rendered (warning, not compliant with XHTML 1.0 Strict DTD)
-		response.renderOnLoadJavascript("yavInit()");
+		response.renderOnLoadJavaScript("yavInit()");
 	}
 
 	/**
 	 * @param response
 	 * @param resource
 	 */
-	private void addJavascriptReference(IHeaderResponse response,
-			String resource) {
-		response.renderJavascriptReference(new JavascriptResourceReference(
-				YavBehavior.class, resource));
+	private void addJavascriptReference(IHeaderResponse response, String resource)
+	{
+		response.renderJavaScriptReference(new JavaScriptResourceReference(YavBehavior.class,
+			resource));
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.apache.wicket.behavior.AbstractBehavior#onComponentTag(org.apache
-	 * .wicket.Component, org.apache.wicket.markup.ComponentTag)
+	 * @see org.apache.wicket.behavior.Behavior#onComponentTag(org.apache.wicket.Component,
+	 * org.apache.wicket.markup.ComponentTag)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public void onComponentTag(Component component, ComponentTag tag) {
+	public void onComponentTag(Component component, ComponentTag tag)
+	{
 		super.onComponentTag(component, tag);
 
-		if (!Form.class.isAssignableFrom(component.getClass())) {
-			throw new WicketRuntimeException(
-					"This behavior is only applicable on a Form component");
+		if (!Form.class.isAssignableFrom(component.getClass()))
+		{
+			throw new WicketRuntimeException("This behavior is only applicable on a Form component");
 		}
 
-		Form form = (Form) component;
+		Form<?> form = (Form<?>)component;
 
 		// Retrieve and set form name
 		String formName = verifyFormName(form, tag);
 
-		tag.put("onsubmit", "return yav.performCheck('" + formName
-				+ "', rules);");
+		tag.put("onsubmit", "return yav.performCheck('" + formName + "', rules);");
 
 		// Open the Yav script (inlined JavaScript)
 		AppendingStringBuffer buffer = new AppendingStringBuffer("<script>\n");
@@ -121,10 +113,10 @@ public class YavBehavior extends AbstractBehavior implements IHeaderContributor 
 		buffer.append("function yavInit() {\n");
 		buffer.append("    yav.init('" + formName + "', rules);\n");
 		buffer.append("}\n");
-	
+
 		// Close the Yav script
 		buffer.append("</script>\n");
-		
+
 		// Write the generated script into the response
 		Response response = RequestCycle.get().getResponse();
 		response.write(buffer.toString());
@@ -135,10 +127,12 @@ public class YavBehavior extends AbstractBehavior implements IHeaderContributor 
 	 * @param tag
 	 * @return
 	 */
-	private String verifyFormName(Form form, ComponentTag tag) {
+	private String verifyFormName(Form<?> form, ComponentTag tag)
+	{
 		IValueMap attributes = tag.getAttributes();
 		String value = attributes.getString("name");
-		if (value == null) {
+		if (value == null)
+		{
 			value = form.getId();
 			tag.put("name", value);
 		}
@@ -148,14 +142,18 @@ public class YavBehavior extends AbstractBehavior implements IHeaderContributor 
 	/**
 	 * @return
 	 */
-	public AlertType getAlertType() {
+	public AlertType getAlertType()
+	{
 		return alertType;
 	}
 
 	/**
 	 * @param alertType
 	 */
-	public void setAlertType(AlertType alertType) {
+	public void setAlertType(AlertType alertType)
+	{
 		this.alertType = alertType;
 	}
+
+
 }

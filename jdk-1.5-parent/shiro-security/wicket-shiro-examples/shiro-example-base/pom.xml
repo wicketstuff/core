@@ -16,27 +16,27 @@
    limitations under the License.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-      <groupId>org.wicketstuff</groupId>
-      <artifactId>wicket-shiro-examples</artifactId>
-			<version>1.4-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicket-shiro-examples</artifactId>
+		<version>1.5-SNAPSHOT</version>
+	</parent>
 
-    <artifactId>wicket-shiro-example-base</artifactId>
-    <packaging>jar</packaging>
+	<artifactId>wicket-shiro-example-base</artifactId>
+	<packaging>jar</packaging>
 
-    <name>Apache Shiro Security for Wicket - Example Base</name>
+	<name>Apache Shiro Security for Wicket - Example Base</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>wicket-shiro</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>wicketstuff-shiro</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 
 </project>

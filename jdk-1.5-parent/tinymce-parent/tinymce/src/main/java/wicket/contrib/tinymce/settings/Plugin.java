@@ -51,29 +51,30 @@ public abstract class Plugin extends wicket.contrib.tinymce.settings.Enum
 	}
 
 	/**
-	 * Override this in specific plugins if the plugin needs to be able to add
-	 * something to the javascript. Use this to define the javascript callback
-	 * functions if the plugin requires this (i.e. "paste_callback".
+	 * Override this in specific plugins if the plugin needs to be able to add something to the
+	 * javascript. Use this to define the javascript callback functions if the plugin requires this
+	 * (i.e. "paste_callback".
 	 * <p>
-	 * NOTE: This should NOT be used to configure settings for the plugin. The
-	 * output is added AFTER the tinyMCE.init().
+	 * NOTE: This should NOT be used to configure settings for the plugin. The output is added AFTER
+	 * the tinyMCE.init().
 	 * 
 	 * @param buffer
-	 *            The output buffer which the plugin should append to, if they
-	 *            have some additional javascript.
+	 *            The output buffer which the plugin should append to, if they have some additional
+	 *            javascript.
 	 */
 	protected void definePluginExtensions(StringBuffer buffer)
 	{
 		// do nothing;
 	}
-	
+
 	/**
 	 * Define configuration settings for this plugin.
 	 * <p>
-	 * I.e. the "paste" plugin can be configured with different settings such
-	 * as: "paste_callback" etc.
-	 * @param buffer 
-	 * 				buffer to append to
+	 * I.e. the "paste" plugin can be configured with different settings such as: "paste_callback"
+	 * etc.
+	 * 
+	 * @param buffer
+	 *            buffer to append to
 	 * @param settingKey
 	 *            The setting to set. I.e. "paste_callback"
 	 * @param value
@@ -81,19 +82,25 @@ public abstract class Plugin extends wicket.contrib.tinymce.settings.Enum
 	 */
 	protected void definePluginSettings(StringBuffer buffer)
 	{
-		// do nothting 
+		// do nothting
 	}
-	
-	protected void define(StringBuffer buffer, String key, String value) 
+
+	protected void define(StringBuffer buffer, String key, String value)
 	{
-		if (value != null) 
+		if (value != null)
 		{
-			buffer.append(",\n\t").append(key).append(" : ") .append("\"").append(value).append("\"");
+			buffer.append(",\n\t")
+				.append(key)
+				.append(" : ")
+				.append("\"")
+				.append(value)
+				.append("\"");
 		}
 	}
 
-    public void setPluginPath(String pluginPath) {
-        this.pluginPath = pluginPath;
-    }
+	public void setPluginPath(String pluginPath)
+	{
+		this.pluginPath = pluginPath;
+	}
 
 }

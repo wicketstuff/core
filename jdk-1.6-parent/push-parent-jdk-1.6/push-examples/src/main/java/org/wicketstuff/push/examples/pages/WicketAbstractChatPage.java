@@ -20,21 +20,23 @@ import static org.wicketstuff.push.examples.ServiceLocator.getChatService;
 
 import java.text.SimpleDateFormat;
 
-import org.apache.wicket.PageParameters;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.push.AbstractPushEventHandler;
 import org.wicketstuff.push.IPushEventContext;
 import org.wicketstuff.push.IPushNode;
 import org.wicketstuff.push.IPushNodeDisconnectedListener;
 import org.wicketstuff.push.IPushService;
+import org.wicketstuff.push.IPushServiceRef;
 import org.wicketstuff.push.examples.chatservice.ChatRoom;
 import org.wicketstuff.push.examples.chatservice.IChatListener;
 import org.wicketstuff.push.examples.chatservice.Message;
@@ -57,9 +59,10 @@ public abstract class WicketAbstractChatPage extends WebPage
 
 	private String user;
 	private String message;
+	private AjaxButton sendMessage;
 
 	public WicketAbstractChatPage(final PageParameters parameters,
-		final String pushImplementationTitle, final IPushService pushService)
+		final String pushImplementationTitle, final IPushServiceRef<?> pushServiceRef)
 	{
 		super(parameters);
 
@@ -93,7 +96,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 		formChat.add(messageField);
 
 		// send button
-		formChat.add(new AjaxButton("send", formChat)
+		formChat.add(sendMessage = new AjaxButton("send", formChat)
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -110,7 +113,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 				getChatService().getChatRoom(chatRoomName).sendAsync(user, message);
 
 				// clear message area add focus it
-				target.appendJavascript("document.getElementById('" + messageField.getMarkupId() +
+				target.appendJavaScript("document.getElementById('" + messageField.getMarkupId() +
 					"').value =''");
 				target.focusComponent(messageField);
 			}
@@ -119,7 +122,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 		/*
 		 * install push node
 		 */
-		final IPushNode<Message> pushNode = pushService.installNode(this,
+		final IPushNode<Message> pushNode = pushServiceRef.get().installNode(this,
 			new AbstractPushEventHandler<Message>()
 			{
 				private static final long serialVersionUID = 1L;
@@ -132,6 +135,26 @@ public abstract class WicketAbstractChatPage extends WebPage
 				}
 			});
 
+		// disconnect button
+		formChat.add(new AjaxButton("disconnect", formChat)
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onError(final AjaxRequestTarget target, final Form<?> form)
+			{
+				// nothing
+			}
+
+			@Override
+			protected void onSubmit(final AjaxRequestTarget target, final Form<?> form)
+			{
+				pushServiceRef.get().uninstallNode(WicketAbstractChatPage.this, pushNode);
+				target.add(setEnabled(false));
+				target.add(sendMessage.setEnabled(false));
+			}
+		});
+
 		/*
 		 * connect to chat room
 		 */
@@ -140,8 +163,8 @@ public abstract class WicketAbstractChatPage extends WebPage
 			@Override
 			public void onMessage(final Message msg)
 			{
-				if (pushService.isConnected(pushNode))
-					pushService.publish(pushNode, msg);
+				if (pushServiceRef.get().isConnected(pushNode))
+					pushServiceRef.get().publish(pushNode, msg);
 				else
 					chatRoom.removeListener(this);
 			}
@@ -158,7 +181,7 @@ public abstract class WicketAbstractChatPage extends WebPage
 		/*
 		 * install disconnect listener
 		 */
-		pushService.addNodeDisconnectedListener(new IPushNodeDisconnectedListener()
+		pushServiceRef.get().addNodeDisconnectedListener(new IPushNodeDisconnectedListener()
 		{
 			@Override
 			public void onDisconnect(final IPushNode<?> node)
@@ -166,21 +189,21 @@ public abstract class WicketAbstractChatPage extends WebPage
 				if (node.equals(pushNode))
 				{
 					chatRoom.sendAsync("<System>", "A USER JUST LEFT THE ROOM.");
-					pushService.removeNodeDisconnectedListener(this);
+					pushServiceRef.get().removeNodeDisconnectedListener(this);
 				}
 			}
 		});
 
-		add(new AbstractBehavior()
+		add(new Behavior()
 		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void renderHead(final IHeaderResponse response)
+			public void renderHead(final Component component, final IHeaderResponse response)
 			{
-				super.renderHead(response);
+				super.renderHead(component, response);
 
-				response.renderOnLoadJavascript("var chatHistory = document.getElementById('" +
+				response.renderOnLoadJavaScript("var chatHistory = document.getElementById('" +
 					chatHistoryField.getMarkupId() +
 					"'); chatHistory.scrollTop = chatHistory.scrollHeight;");
 			}

@@ -18,12 +18,17 @@ package org.wicketstuff.javaee.naming;
 
 /**
  * Standard naming strategy for ejbs
- *
+ * 
  * @author Filippo Diotalevi
  */
-public class StandardJndiNamingStrategy implements IJndiNamingStrategy {
+public class StandardJndiNamingStrategy implements IJndiNamingStrategy
+{
 
-    public String calculateName(String ejbName, Class<?> ejbType) {
-        return "java:comp/env/" + (ejbName == null ? ejbType.getName() : ejbName);
-    }
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	public String calculateName(String ejbName, Class<?> ejbType)
+	{
+		return "java:comp/env/" + (ejbName == null ? ejbType.getName() : ejbName);
+	}
 }

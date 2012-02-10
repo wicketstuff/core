@@ -20,11 +20,12 @@ import org.apache.wicket.model.IModel;
 
 /**
  * @author mocleiri
- *  
- * A Custom radio group that requires a valid selection.
- *
+ * 
+ *         A Custom radio group that requires a valid selection.
+ * 
  */
-public class DTARadioGroup<T> extends RadioGroup<T> {
+public class DTARadioGroup<T> extends RadioGroup<T>
+{
 
 	/**
 	 * 
@@ -34,7 +35,8 @@ public class DTARadioGroup<T> extends RadioGroup<T> {
 	/**
 	 * @param id
 	 */
-	public DTARadioGroup(String id) {
+	public DTARadioGroup(String id)
+	{
 		super(id);
 		// TODO Auto-generated constructor stub
 	}
@@ -43,20 +45,23 @@ public class DTARadioGroup<T> extends RadioGroup<T> {
 	 * @param id
 	 * @param model
 	 */
-	public DTARadioGroup(String id, IModel<T> model) {
+	public DTARadioGroup(String id, IModel<T> model)
+	{
 		super(id, model);
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.wicket.markup.html.form.FormComponent#isInputNullable()
 	 */
 	@Override
-	public boolean isInputNullable() {
+	public boolean isInputNullable()
+	{
 		// override the default
 		return false;
 	}
-	
-	
+
 
 }

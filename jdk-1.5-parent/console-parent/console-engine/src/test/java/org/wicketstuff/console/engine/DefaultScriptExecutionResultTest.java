@@ -22,22 +22,22 @@ import static junit.framework.Assert.assertTrue;
 
 import org.junit.Test;
 
+public class DefaultScriptExecutionResultTest
+{
 
-public class DefaultScriptExecutionResultTest {
-
-	
 	@Test
-	public void test_success() throws Exception {
+	public void test_success() throws Exception
+	{
 
 		// Given
-		String script = "";
-		Throwable exception = null;
-		String output = "output";
-		Object returnValue = null;
+		final String script = "";
+		final Throwable exception = null;
+		final String output = "output";
+		final Object returnValue = null;
 
 		// When
-		DefaultScriptExecutionResult result = new DefaultScriptExecutionResult(
-				script, exception, output, returnValue);
+		final DefaultScriptExecutionResult result = new DefaultScriptExecutionResult(script,
+			exception, output, returnValue);
 
 		// Then
 		assertTrue(result.isSuccess());
@@ -45,17 +45,18 @@ public class DefaultScriptExecutionResultTest {
 	}
 
 	@Test
-	public void test_simple_fail() throws Exception {
+	public void test_simple_fail() throws Exception
+	{
 
 		// Given
-		String script = "";
-		Throwable exception = new IllegalArgumentException("foo");
-		String output = "output";
-		Object returnValue = null;
+		final String script = "";
+		final Throwable exception = new IllegalArgumentException("foo");
+		final String output = "output";
+		final Object returnValue = null;
 
 		// When
-		DefaultScriptExecutionResult result = new DefaultScriptExecutionResult(
-				script, exception, output, returnValue);
+		final DefaultScriptExecutionResult result = new DefaultScriptExecutionResult(script,
+			exception, output, returnValue);
 
 		// Then
 		assertFalse(result.isSuccess());

@@ -18,10 +18,12 @@
  */
 package wicket.contrib.input.events.key;
 
-public enum KeyHookOn {
+public enum KeyHookOn
+{
 	keydown, keyup, keypress;
 
-	private KeyHookOn() {
+	private KeyHookOn()
+	{
 	}
 
 }

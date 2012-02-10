@@ -19,21 +19,27 @@ package org.wicketstuff.openlayers.event;
 
 import org.wicketstuff.openlayers.api.Overlay;
 
-public abstract class OverlayListenerBehavior extends EventListenerBehavior {
+public abstract class OverlayListenerBehavior extends EventListenerBehavior
+{
 
+	private static final long serialVersionUID = 1L;
 	private Overlay gOverlay;
 
-	protected Overlay getGOverlay() {
-		return this.gOverlay;
+	protected Overlay getGOverlay()
+	{
+		return gOverlay;
 	}
 
-	public void setGOverlay(Overlay gOverlay) {
+	public void setGOverlay(Overlay gOverlay)
+	{
 		this.gOverlay = gOverlay;
 	}
 
-	public String getJSaddListener() {
+	@Override
+	public String getJSaddListener()
+	{
 		return getOpenLayersMap().getJSinvoke(
-				"register('" + getEvent() + "', '"
-						+ gOverlay.getId() + "', '" + getCallbackUrl() + "')");
+			"register('" + getEvent() + "', '" + gOverlay.getId() + "', '" + getCallbackUrl() +
+				"')");
 	}
 }

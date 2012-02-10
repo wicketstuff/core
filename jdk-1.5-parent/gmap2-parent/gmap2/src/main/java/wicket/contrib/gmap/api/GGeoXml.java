@@ -43,12 +43,12 @@ public class GGeoXml extends GOverlay
 	@Override
 	public String getJSconstructor()
 	{
-		Constructor constructor = new Constructor("GGeoXml").add("'"+kmlFileUrl.toString()+"'");
+		Constructor constructor = new Constructor("GGeoXml").add("'" + kmlFileUrl.toString() + "'");
 		return constructor.toJS();
 	}
 
 	@Override
-	protected void updateOnAjaxCall(AjaxRequestTarget target,
-			GEvent overlayEvent) {
+	protected void updateOnAjaxCall(AjaxRequestTarget target, GEvent overlayEvent)
+	{
 	}
 }

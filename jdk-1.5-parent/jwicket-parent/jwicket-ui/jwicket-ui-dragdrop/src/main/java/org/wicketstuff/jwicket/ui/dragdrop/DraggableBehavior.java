@@ -6,6 +6,7 @@ import org.apache.wicket.Request;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.jwicket.CssCursor;
 import org.wicketstuff.jwicket.CssPosition;
+import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.JsMap;
 import org.wicketstuff.jwicket.JsOption;
@@ -22,7 +23,10 @@ import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 public class DraggableBehavior extends AbstractDragDropBehavior {
 
 	private static final long serialVersionUID = 1L;
-	public  static final JQueryJavascriptResourceReference jQueryUiDraggableJs = new JQueryJavascriptResourceReference(DraggableBehavior.class, "jquery.ui.draggable.min.js");
+	public  static final JQueryJavascriptResourceReference jQueryUiDraggableJs
+		= JQuery.isDebug()
+		? new JQueryJavascriptResourceReference(DraggableBehavior.class, "jquery.ui.draggable.js")
+		: new JQueryJavascriptResourceReference(DraggableBehavior.class, "jquery.ui.draggable.min.js");
 
 	private JsMap options = new JsMap();
 

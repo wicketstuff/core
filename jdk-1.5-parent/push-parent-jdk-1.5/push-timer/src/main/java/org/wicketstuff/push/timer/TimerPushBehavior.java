@@ -17,18 +17,20 @@
 package org.wicketstuff.push.timer;
 
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.wicket.RequestCycle;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.protocol.http.WebRequest;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.util.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketstuff.push.IPushEventContext;
 import org.wicketstuff.push.IPushEventHandler;
 import org.wicketstuff.push.IPushNode;
 
@@ -67,11 +69,17 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 	@Override
 	protected void onTimer(final AjaxRequestTarget target)
 	{
+		if (isStopped())
+		{
+			getComponent().remove(this);
+			return;
+		}
+
 		final TimerPushService pushService = TimerPushService.get(target.getPage().getApplication());
 
 		final WebRequest request = (WebRequest)RequestCycle.get().getRequest();
 
-		if (request.getParameter("unload") != null)
+		if (!request.getRequestParameters().getParameterValue("unload").isNull())
 			// if the page is unloaded notify the pushService to disconnect all push nodes
 			for (final TimerPushNode<?> node : handlers.keySet())
 				pushService.onDisconnect(node);
@@ -81,10 +89,7 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 			for (final Entry<TimerPushNode, IPushEventHandler> entry : handlers.entrySet())
 			{
 				final TimerPushNode node = entry.getKey();
-				for (final Iterator<TimerPushEventContext<?>> it = pushService.pollEvents(node)
-					.iterator(); it.hasNext();)
-				{
-					final TimerPushEventContext<?> ctx = it.next();
+				for (final IPushEventContext<?> ctx : (List<IPushEventContext<?>>)pushService.pollEvents(node))
 					try
 					{
 						entry.getValue().onEvent(target, ctx.getEvent(), node, ctx);
@@ -93,10 +98,12 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 					{
 						LOG.error("Failed while processing event", ex);
 					}
-				}
 			}
 	}
 
+	/**
+	 * @return the number of handlers after the removal
+	 */
 	int removeNode(final IPushNode<?> node)
 	{
 		handlers.remove(node);
@@ -111,17 +118,20 @@ public class TimerPushBehavior extends AbstractAjaxTimerBehavior
 		return handlers.size();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public void renderHead(final IHeaderResponse response)
+	public void renderHead(final Component c, final IHeaderResponse response)
 	{
-		super.renderHead(response);
+		super.renderHead(c, response);
 
 		if (!isStopped())
 		{
-			// install an onunload handler
-			response.renderJavascript("history.navigationMode = 'compatible';",
-				"Opera onunload support");
-			response.renderOnEventJavascript("window", "unload", "wicketAjaxGet('" +
+			// install an on-unload handler
+			response.renderJavaScript("history.navigationMode = 'compatible';",
+				"Opera on-unload support");
+			response.renderOnEventJavaScript("window", "unload", "wicketAjaxGet('" +
 				getCallbackUrl().toString() + "&unload=1', function() { }, function() { });");
 		}
 	}

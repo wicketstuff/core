@@ -17,65 +17,77 @@
 package org.wicketstuff.javaee;
 
 import javax.persistence.Persistence;
+
 import org.apache.wicket.proxy.IProxyTargetLocator;
 
 /**
- * Implementation of {@link IProxyTargetLocator} to locate Java EE 5
- * EntityManagerFactory
+ * Implementation of {@link IProxyTargetLocator} to locate Java EE 5 EntityManagerFactory
  * <p/>
  * To use this technique in a Wicket Page, just insert a line like<br/>
  * <p/>
  * private @PersistenceUnit(unitName="defaultPersistenceContext") EntityManagerFactory emf;
  * <p/>
- * The 'unitName' attribute is mandatory, and refers to the name of the persistence unit
- * you have declared in your persistence.xml file
- *
+ * The 'unitName' attribute is mandatory, and refers to the name of the persistence unit you have
+ * declared in your persistence.xml file
+ * 
  * @author Filippo Diotalevi
  */
-public class EntityManagerFactoryLocator implements IProxyTargetLocator {
+public class EntityManagerFactoryLocator implements IProxyTargetLocator
+{
 
-    private String persistenceUnit;
+	private static final long serialVersionUID = 1L;
+	private String persistenceUnit;
 
-    /**
-     * Constructor
-     *
-     * @param pUnit -  persistence unit
-     */
-    public EntityManagerFactoryLocator(String pUnit) {
-        if (pUnit == null) {
-            throw new IllegalArgumentException("You must always specify an attribute 'unitName' for annotation @PersistenceUnit.");
-        }
-        this.persistenceUnit = pUnit;
-    }
+	/**
+	 * Constructor
+	 * 
+	 * @param pUnit
+	 *            - persistence unit
+	 */
+	public EntityManagerFactoryLocator(String pUnit)
+	{
+		if (pUnit == null)
+		{
+			throw new IllegalArgumentException(
+				"You must always specify an attribute 'unitName' for annotation @PersistenceUnit.");
+		}
+		persistenceUnit = pUnit;
+	}
 
-    /**
-     * @see org.apache.wicket.proxy.IProxyTargetLocator#locateProxyTarget()
-     */
-    public Object locateProxyTarget() {
-        return Persistence.createEntityManagerFactory(persistenceUnit);
-    }
+	/**
+	 * @see org.apache.wicket.proxy.IProxyTargetLocator#locateProxyTarget()
+	 */
+	@Override
+	public Object locateProxyTarget()
+	{
+		return Persistence.createEntityManagerFactory(persistenceUnit);
+	}
 
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof EntityManagerFactoryLocator) {
-            EntityManagerFactoryLocator other = (EntityManagerFactoryLocator) obj;
-            return persistenceUnit.equals(other.persistenceUnit);
-        }
-        return false;
-    }
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof EntityManagerFactoryLocator)
+		{
+			EntityManagerFactoryLocator other = (EntityManagerFactoryLocator)obj;
+			return persistenceUnit.equals(other.persistenceUnit);
+		}
+		return false;
+	}
 
-    /**
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return persistenceUnit.hashCode();
-    }
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		return persistenceUnit.hashCode();
+	}
 
-    public String getPersistenceUnit() {
-        return persistenceUnit;
-    }
+	public String getPersistenceUnit()
+	{
+		return persistenceUnit;
+	}
 }

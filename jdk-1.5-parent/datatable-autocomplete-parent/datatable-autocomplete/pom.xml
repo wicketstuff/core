@@ -2,10 +2,10 @@
   <parent>
     <artifactId>datatable-autocomplete-parent</artifactId>
     <groupId>org.wicketstuff</groupId>
-    <version>1.4-SNAPSHOT</version>
+    <version>1.5-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>datatable-autocomplete</artifactId>
+  <artifactId>wicketstuff-datatable-autocomplete</artifactId>
   <name>Datatable Autocomplete</name>
   
   <packaging>jar</packaging>
@@ -42,8 +42,8 @@
 	
   <dependencies>
   <dependency>
-  	<groupId>org.wicketstuff</groupId>
-  	<artifactId>datatable-autocomplete-common</artifactId>
+  	<groupId>${project.groupId}</groupId>
+  	<artifactId>wicketstuff-datatable-autocomplete-common</artifactId>
   </dependency>
   
   <dependency>

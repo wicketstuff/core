@@ -2,7 +2,7 @@ Previously there was a changelog file where developers were encouraged to edit w
 
 With the transition to git it is easy to get a quick summary be developer of the work done between two versions.
 
-e.g. git shortlog wicketstuff-core-1.4.17..wicketstuff-core-1.4.17.1
+e.g. git shortlog wicketstuff-core-1.5-rc2..wicketstuff-core-1.5-RC3
 will show the changes between these two tags in a format like:
 
 user.name (# of commits):

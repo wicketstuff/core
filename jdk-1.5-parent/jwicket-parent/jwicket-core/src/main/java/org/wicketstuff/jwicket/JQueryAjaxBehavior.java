@@ -13,6 +13,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
 
 /**
@@ -144,9 +145,9 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 
 
 
-	private void addJavascriptReference(IHeaderResponse response, JavascriptResourceReference resource) {
+	private void addJavascriptReference(IHeaderResponse response, JavaScriptResourceReference resource) {
 		if (!response.wasRendered(resource)) {
-			response.renderJavascriptReference(resource);
+			response.renderJavaScriptReference(resource);
 			response.markRendered(resource);
 		}
 	}
@@ -156,10 +157,10 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 		if (!response.wasRendered(resource)) {
 			if (resource instanceof org.wicketstuff.jwicket.JQueryJavascriptResourceReference) {
 				if (resource.hasId()) {
-					response.renderJavascriptReference(resource, resource.getId());
+					response.renderJavaScriptReference(resource, resource.getId());
 				}
 				else
-					response.renderJavascriptReference(resource);
+					response.renderJavaScriptReference(resource);
 			}
 			else {
 				response.renderCSSReference(resource);

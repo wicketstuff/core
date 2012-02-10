@@ -34,111 +34,140 @@ import org.wicketstuff.datatable_autocomplete.provider.TrieDataProvider;
 
 /**
  * @author Michael O'Cleirigh (michael.ocleirigh@rivulet.ca)
- *
+ * 
  */
-public class MatchControlPanel extends Panel {
+public class MatchControlPanel extends Panel
+{
+
+	private static final long serialVersionUID = 1L;
 
 	private static final String SUBSTRING_MATCH = "SUBSTRING_MATCH";
 
 	private static final String PREFIX_MATCH = "PREFIX_MATCH";
-	
+
 	private TextField<String> classNameFilterField;
 
 	/**
 	 * @param id
-	 * @param methodProvider 
-	 * @param onChangeComponent 
+	 * @param methodProvider
+	 * @param onChangeComponent
 	 */
-	public MatchControlPanel(String id, final TrieDataProvider<Method> methodProvider, final Component onChangeComponent) {
+	public MatchControlPanel(String id, final TrieDataProvider<Method> methodProvider,
+		final Component onChangeComponent)
+	{
 		super(id);
-		
-classNameFilterField = new TextField<String>("filter", new Model<String>(""));
-		
-classNameFilterField = new TextField<String>("filter", new Model<String>(""));
+
+		classNameFilterField = new TextField<String>("filter", new Model<String>(""));
+
+		classNameFilterField = new TextField<String>("filter", new Model<String>(""));
 
 
+		add(classNameFilterField);
 
 
+		classNameFilterField.add(new AjaxFormComponentUpdatingBehavior("onchange")
+		{
 
+			private static final long serialVersionUID = 1L;
 
-add(classNameFilterField);
-		
-		
-		classNameFilterField.add(new AjaxFormComponentUpdatingBehavior("onchange") {
-
-			/* (non-Javadoc)
-			 * @see org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior#onUpdate(org.apache.wicket.ajax.AjaxRequestTarget)
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior#onUpdate(org.apache
+			 * .wicket.ajax.AjaxRequestTarget)
 			 */
 			@Override
-			protected void onUpdate(AjaxRequestTarget target) {
-				
-				if (target != null) {
-					target.addComponent(onChangeComponent);
+			protected void onUpdate(AjaxRequestTarget target)
+			{
+
+				if (target != null)
+				{
+					target.add(onChangeComponent);
 				}
-				
-				
+
+
 			}
-		
-			
+
+
 		});
-		
-	Form<?>form = new Form("settingsForm");
-		
+
+		Form<Void> form = new Form<Void>("settingsForm");
+
 		form.add(classNameFilterField);
-		
-		DropDownChoice<String> findMethodDDC;
-		form.add(findMethodDDC= new DropDownChoice<String>("findMethod", new IModel<String>() {
+
+		form.add(new DropDownChoice<String>("findMethod", new IModel<String>()
+		{
+
+			private static final long serialVersionUID = 1L;
 
 			/*
 			 * This model toggles the substring to prefix string behaviour of the TrieDataProvider.
-			 * 
 			 */
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see org.apache.wicket.model.IModel#getObject()
 			 */
-			public String getObject() {
-				
+			public String getObject()
+			{
+
 				if (methodProvider.isMatchAnyWhereInString())
 					return SUBSTRING_MATCH;
 				else
 					return PREFIX_MATCH;
-				
+
 			}
 
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see org.apache.wicket.model.IModel#setObject(java.lang.Object)
 			 */
-			public void setObject(String object) {
-				
+			public void setObject(String object)
+			{
+
 				if (object.equals(SUBSTRING_MATCH))
 					methodProvider.setMatchAnyWhereInString(true);
 				else
 					methodProvider.setMatchAnyWhereInString(false);
-				
+
 			}
 
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see org.apache.wicket.model.IDetachable#detach()
 			 */
-			public void detach() {
-				
-				// intentionally not implemented.
-				
-			}},  new ListModel<String>(Arrays.asList(PREFIX_MATCH, SUBSTRING_MATCH))) {
+			public void detach()
+			{
 
-				/* (non-Javadoc)
-				 * @see org.apache.wicket.markup.html.form.DropDownChoice#wantOnSelectionChangedNotifications()
-				 */
-				@Override
-				protected boolean wantOnSelectionChangedNotifications() {
-					// cause the change to be recorded when the ddc is changed.
-					return true;
-				}});
-	
+				// intentionally not implemented.
+
+			}
+		}, new ListModel<String>(Arrays.asList(PREFIX_MATCH, SUBSTRING_MATCH)))
+		{
+
+			private static final long serialVersionUID = 1L;
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.apache.wicket.markup.html.form.DropDownChoice#wantOnSelectionChangedNotifications
+			 * ()
+			 */
+			@Override
+			protected boolean wantOnSelectionChangedNotifications()
+			{
+				// cause the change to be recorded when the ddc is changed.
+				return true;
+			}
+		});
+
 		add(form);
-		
+
 	}
 
-	
-	
+
 }

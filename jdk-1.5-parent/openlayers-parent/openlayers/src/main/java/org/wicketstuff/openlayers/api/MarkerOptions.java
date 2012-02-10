@@ -21,16 +21,18 @@ import org.wicketstuff.openlayers.js.ObjectLiteral;
 
 public class MarkerOptions implements Value
 {
+	private static final long serialVersionUID = 1L;
+
 	private String title;
-	
+
 	private boolean clickable = true;
-	
+
 	private boolean draggable = false;
-	
+
 	private boolean bouncy = true;
-	
+
 	private boolean autoPan = false;
-	
+
 	private Icon icon = null;
 
 	public String getJSconstructor()
@@ -57,7 +59,7 @@ public class MarkerOptions implements Value
 		{
 			literal.set("autoPan", "true");
 		}
-		if(icon != null)
+		if (icon != null)
 		{
 			literal.set("icon", icon.getJSconstructor());
 		}
@@ -75,35 +77,43 @@ public class MarkerOptions implements Value
 		this.title = title;
 	}
 
-	public boolean isDraggable() {
+	public boolean isDraggable()
+	{
 		return draggable;
 	}
 
-	public void setDraggable(boolean draggable) {
+	public void setDraggable(boolean draggable)
+	{
 		this.draggable = draggable;
 	}
 
-	public boolean isClickable() {
+	public boolean isClickable()
+	{
 		return clickable;
 	}
 
-	public void setClickable(boolean clickable) {
+	public void setClickable(boolean clickable)
+	{
 		this.clickable = clickable;
 	}
 
-	public boolean isBouncy() {
+	public boolean isBouncy()
+	{
 		return bouncy;
 	}
 
-	public void setBouncy(boolean bouncy) {
+	public void setBouncy(boolean bouncy)
+	{
 		this.bouncy = bouncy;
 	}
 
-	public boolean isAutoPan() {
+	public boolean isAutoPan()
+	{
 		return autoPan;
 	}
 
-	public void setAutoPan(boolean autoPan) {
+	public void setAutoPan(boolean autoPan)
+	{
 		this.autoPan = autoPan;
 	}
 
@@ -111,7 +121,7 @@ public class MarkerOptions implements Value
 	{
 		this.icon = icon;
 	}
-	
+
 	public Icon getIcon()
 	{
 		return icon;

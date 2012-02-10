@@ -20,53 +20,61 @@ package org.wicketstuff.validation.client;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.WicketAjaxReference;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 
 /**
  * By adding this behavior to a feedback panel or other WebMarkupContainer, the client and server
- * validating engine will render the errors as if they were inserted into a feedback panel
- * rather than just using the default behavior, which is to use an alert message to notify the
- * user of the errors.
+ * validating engine will render the errors as if they were inserted into a feedback panel rather
+ * than just using the default behavior, which is to use an alert message to notify the user of the
+ * errors.
  * 
  * @author Jeremy Thomerson
  */
-public class ClientAndServerValidatingFeedbackBehavior extends AbstractBehavior {
+public class ClientAndServerValidatingFeedbackBehavior extends Behavior
+{
 
 	private static final long serialVersionUID = 1L;
 
 	private WebMarkupContainer mContainer;
 	private final Form<?> mForm;
-	
-	public ClientAndServerValidatingFeedbackBehavior(Form<?> form) {
+
+	public ClientAndServerValidatingFeedbackBehavior(Form<?> form)
+	{
 		mForm = form;
 	}
-	
+
 	@Override
-	public void bind(Component component) {
+	public void bind(Component component)
+	{
 		super.bind(component);
 		checkComponentIsWebMarkupContainer(component);
-		mContainer = (WebMarkupContainer) component;
+		mContainer = (WebMarkupContainer)component;
 		mContainer.setOutputMarkupId(true);
 	}
-	
-	protected final void checkComponentIsWebMarkupContainer(Component component) {
-		if ((component instanceof WebMarkupContainer) == false) {
-			throw new IllegalArgumentException("This behavior [" + getClass().getSimpleName() + "] can only be added to a WebMarkupContainer");
+
+	protected final void checkComponentIsWebMarkupContainer(Component component)
+	{
+		if ((component instanceof WebMarkupContainer) == false)
+		{
+			throw new IllegalArgumentException("This behavior [" + getClass().getSimpleName() +
+				"] can only be added to a WebMarkupContainer");
 		}
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
-		response.renderJavascriptReference(WicketAjaxReference.INSTANCE);
-		
+	public void renderHead(Component c, IHeaderResponse response)
+	{
+		super.renderHead(c, response);
+		response.renderJavaScriptReference(WicketAjaxReference.INSTANCE);
+
 		// add a trigger that will add our validation to the forms' onSubmit methods
 		String formID = mForm.getMarkupId();
 		String containerID = mContainer.getMarkupId();
-		response.renderOnLoadJavascript("ClientAndServerValidator.registerFeedbackContainerForForm('" + formID + "', '" + containerID + "');");
+		response.renderOnLoadJavaScript("ClientAndServerValidator.registerFeedbackContainerForForm('" +
+			formID + "', '" + containerID + "');");
 	}
 
 }

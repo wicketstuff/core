@@ -3,8 +3,8 @@ package com.inmethod.grid.examples.pages.treegrid;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreeNode;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 import org.apache.wicket.model.Model;
 
@@ -22,36 +22,45 @@ import com.inmethod.grid.treegrid.TreeGrid;
  * 
  * @author Matej Knopp
  */
-public class EditableTreeGridPage extends BaseExamplePage {
-
+public class EditableTreeGridPage extends BaseExamplePage
+{
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor.
 	 */
-	public EditableTreeGridPage() {
-		List<IGridColumn> columns = new ArrayList<IGridColumn>();
-		
-		columns.add(new SubmitCancelColumn("edit", new Model("Edit")));
-		columns.add(new EditablePropertyTreeColumn(new Model("Property 1"), "userObject.property1"));
-		columns.add(new EditablePropertyColumn(new Model("Property 2"), "userObject.property2"));
-		columns.add(new EditablePropertyColumn(new Model("Property 3"), "userObject.property3"));
-		columns.add(new EditablePropertyColumn(new Model("Property 4"), "userObject.property4"));
-		columns.add(new EditablePropertyColumn(new Model("Property 5"), "userObject.property5"));
-		columns.add(new EditablePropertyColumn(new Model("Property 6"), "userObject.property6"));		
-		
-		TreeModel model = TreeModelFactory.createTreeModel();
-		TreeGrid grid = new TreeGrid("grid", model, columns);
-		
+	public EditableTreeGridPage()
+	{
+		List<IGridColumn<DefaultTreeModel, DefaultMutableTreeNode>> columns = new ArrayList<IGridColumn<DefaultTreeModel, DefaultMutableTreeNode>>();
+
+		columns.add(new SubmitCancelColumn<DefaultTreeModel, DefaultMutableTreeNode>("edit",
+			Model.of("Edit")));
+		columns.add(new EditablePropertyTreeColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 1"), "userObject.property1"));
+		columns.add(new EditablePropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 2"), "userObject.property2"));
+		columns.add(new EditablePropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 3"), "userObject.property3"));
+		columns.add(new EditablePropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 4"), "userObject.property4"));
+		columns.add(new EditablePropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 5"), "userObject.property5"));
+		columns.add(new EditablePropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+			Model.of("Property 6"), "userObject.property6"));
+
+		DefaultTreeModel model = TreeModelFactory.createTreeModel();
+		TreeGrid<DefaultTreeModel, DefaultMutableTreeNode> grid = new TreeGrid<DefaultTreeModel, DefaultMutableTreeNode>(
+			"grid", model, columns);
+
 		grid.setContentHeight(23, SizeUnit.EM);
 		grid.setAllowSelectMultiple(true);
 		grid.setClickRowToSelect(true);
 		grid.setClickRowToDeselect(false);
 		grid.setSelectToEdit(true);
-		
+
 		// expand the root node
-		grid.getTreeState().expandNode((TreeNode) model.getRoot());
-		
+		grid.getTreeState().expandNode(model.getRoot());
+
 		add(grid);
 	}
 

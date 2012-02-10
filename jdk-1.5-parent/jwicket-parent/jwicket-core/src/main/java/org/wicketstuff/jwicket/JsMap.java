@@ -42,6 +42,9 @@ public class JsMap extends HashMap<String, Object> implements Serializable {
 				buffer.append(value);
 				buffer.append("'");
 			}
+			else if (value instanceof JsScript) {
+				buffer.append(value.toString());
+			}
 			else if (value instanceof JsOption[]) {
 				boolean firstOption = true;
 				buffer.append("{");

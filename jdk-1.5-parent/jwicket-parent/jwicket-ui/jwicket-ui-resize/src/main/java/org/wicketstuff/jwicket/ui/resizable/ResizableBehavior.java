@@ -7,6 +7,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.Request;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 import org.wicketstuff.jwicket.JsMap;
 import org.wicketstuff.jwicket.SpecialKeys;
@@ -24,7 +25,10 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavascriptResourceReference uiResizableJs = new JQueryJavascriptResourceReference(ResizableBehavior.class, "jquery.ui.resizable.min.js");
+	public static final JQueryJavascriptResourceReference uiResizableJs
+		= JQuery.isDebug()
+		? new JQueryJavascriptResourceReference(ResizableBehavior.class, "jquery.ui.resizable.js")
+		: new JQueryJavascriptResourceReference(ResizableBehavior.class, "jquery.ui.resizable.min.js");
 
 	protected JsMap options = new JsMap();
 
@@ -41,9 +45,17 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 	 */
 	@Override
 	protected void respond(final AjaxRequestTarget target) {
+//System.out.println("***** ResizableBehavior.respond");
+		
 		Component component = getComponent();
 		Request request;
 		if (component != null && (request = component.getRequest()) != null) {
+//System.out.println("\rrequest != null");
+//Map<String, String[]> parameterMap = request.getParameterMap();
+//for (String par : parameterMap.keySet()) {
+//	String parameter = request.getParameter(par);
+//	System.out.println("\t" + par + "='" + parameter + "'");
+//}
 			EventType eventType = EventType.stringToType(request.getParameter(EventType.IDENTIFIER));
 
 			int top = 0;
@@ -521,10 +533,10 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 			options.put(EventType.RESIZE_START.eventName,
 				new JsFunction("function(ev,ui) { wicketAjaxGet('" +
 								this.getCallbackUrl() +
-								"&height='+jQuery(ui.size).attr('height')" +
-								"+'&width='+jQuery(ui.size).attr('width')" +
-								"+'&top='+jQuery(ui.position).attr('top')" +
-								"+'&left='+jQuery(ui.position).attr('left')" +
+								"&height='+jQuery.data(ui.size, 'height')" +
+								"+'&width='+jQuery.data(ui.size, 'width')" +
+								"+'&top='+jQuery.data(ui.position, 'top')" +
+								"+'&left='+jQuery.data(ui.position, 'left')" +
 								"+'&" + EventType.IDENTIFIER + "=" + EventType.RESIZE_START +
 								"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
 								"); }"));
@@ -533,16 +545,17 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
 
 		options.put(EventType.RESIZE_END.eventName,
-				new JsFunction("function(ev,ui) { wicketAjaxGet('" +
+				new JsFunction("function(ev,ui) {"+
+								" wicketAjaxGet('" +
 								this.getCallbackUrl() +
-								"&height='+jQuery(ui.size).attr('height')" +
-								"+'&width='+jQuery(ui.size).attr('width')" +
-								"+'&top='+jQuery(ui.position).attr('top')" +
-								"+'&left='+jQuery(ui.position).attr('left')" +
-								"+'&originalHeight='+jQuery(ui.originalSize).attr('height')" +
-								"+'&originalWidth='+jQuery(ui.originalSize).attr('width')" +
-								"+'&originalTop='+jQuery(ui.originalPosition).attr('top')" +
-								"+'&originalLeft='+jQuery(ui.originalPosition).attr('left')" +
+								"&height='+jQuery.data(ui.size, 'height')" +
+								"+'&width='+jQuery.data(ui.size, 'width')" +
+								"+'&top='+jQuery.data(ui.position, 'top')" +
+								"+'&left='+jQuery.data(ui.position, 'left')" +
+								"+'&originalHeight='+jQuery.data(ui.originalSize, 'height')" +
+								"+'&originalWidth='+jQuery.data(ui.originalSize, 'width')" +
+								"+'&originalTop='+jQuery.data(ui.originalPosition, 'top')" +
+								"+'&originalLeft='+jQuery.data(ui.originalPosition, 'left')" +
 								"+'&" + EventType.IDENTIFIER + "=" + EventType.RESIZE_END +
 								"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
 								"); }"));
@@ -552,10 +565,10 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 			options.put(EventType.RESIZE.eventName,
 				new JsFunction("function(ev,ui) { wicketAjaxGet('" +
 								this.getCallbackUrl() +
-								"&height='+jQuery(ui.size).attr('height')" +
-								"+'&width='+jQuery(ui.size).attr('width')" +
-								"+'&top='+jQuery(ui.position).attr('top')" +
-								"+'&left='+jQuery(ui.position).attr('left')" +
+								"&height='+jQuery.data(ui.size, 'height')" +
+								"+'&width='+jQuery.data(ui.size, 'width')" +
+								"+'&top='+jQuery.data(ui.position, 'top')" +
+								"+'&left='+jQuery.data(ui.position, 'left')" +
 								"+'&" + EventType.IDENTIFIER + "=" + EventType.RESIZE +
 								"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
 								"); }"));

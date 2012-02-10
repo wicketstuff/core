@@ -22,26 +22,28 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * This is just a simple <tt>IEvent</tt> implementation, mostly used for
- * testing. You may use it as a wrapper in your own application if you would
- * like, but it is not necessary.
+ * This is just a simple <tt>IEvent</tt> implementation, mostly used for testing. You may use it as
+ * a wrapper in your own application if you would like, but it is not necessary.
  * 
  * @author Jeremy Thomerson
  */
-public class BasicEvent implements IEvent, Serializable {
-	
+public class BasicEvent implements IEvent, Serializable
+{
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private String mTitle;
 	private Date mEndTime;
 	private Date mStartTime;
 	private boolean mAllDayEvent;
 
-	public BasicEvent() {
+	public BasicEvent()
+	{
 		// no-op
 	}
-	
-	public BasicEvent(String title, Date endTime, Date startTime, boolean allDayEvent) {
+
+	public BasicEvent(String title, Date endTime, Date startTime, boolean allDayEvent)
+	{
 		super();
 		mTitle = title;
 		mEndTime = endTime;
@@ -49,76 +51,90 @@ public class BasicEvent implements IEvent, Serializable {
 		mAllDayEvent = allDayEvent;
 	}
 
-	public String getTitle() {
+	public String getTitle()
+	{
 		return mTitle;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(String title)
+	{
 		mTitle = title;
 	}
 
-	public Date getEndTime() {
+	public Date getEndTime()
+	{
 		return mEndTime;
 	}
 
-	public void setEndTime(Date endTime) {
+	public void setEndTime(Date endTime)
+	{
 		mEndTime = endTime;
 	}
 
-	public Date getStartTime() {
+	public Date getStartTime()
+	{
 		return mStartTime;
 	}
 
-	public void setStartTime(Date startTime) {
+	public void setStartTime(Date startTime)
+	{
 		mStartTime = startTime;
 	}
 
-	public boolean isAllDayEvent() {
+	public boolean isAllDayEvent()
+	{
 		return mAllDayEvent;
 	}
 
-	public void setAllDayEvent(boolean allDayEvent) {
+	public void setAllDayEvent(boolean allDayEvent)
+	{
 		mAllDayEvent = allDayEvent;
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (mAllDayEvent ? 1231 : 1237);
-		result = prime * result
-				+ ((mEndTime == null) ? 0 : mEndTime.hashCode());
-		result = prime * result
-				+ ((mStartTime == null) ? 0 : mStartTime.hashCode());
+		result = prime * result + ((mEndTime == null) ? 0 : mEndTime.hashCode());
+		result = prime * result + ((mStartTime == null) ? 0 : mStartTime.hashCode());
 		result = prime * result + ((mTitle == null) ? 0 : mTitle.hashCode());
 		return result;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BasicEvent other = (BasicEvent) obj;
+		BasicEvent other = (BasicEvent)obj;
 		if (mAllDayEvent != other.mAllDayEvent)
 			return false;
-		if (mEndTime == null) {
+		if (mEndTime == null)
+		{
 			if (other.mEndTime != null)
 				return false;
-		} else if (!mEndTime.equals(other.mEndTime))
+		}
+		else if (!mEndTime.equals(other.mEndTime))
 			return false;
-		if (mStartTime == null) {
+		if (mStartTime == null)
+		{
 			if (other.mStartTime != null)
 				return false;
-		} else if (!mStartTime.equals(other.mStartTime))
+		}
+		else if (!mStartTime.equals(other.mStartTime))
 			return false;
-		if (mTitle == null) {
+		if (mTitle == null)
+		{
 			if (other.mTitle != null)
 				return false;
-		} else if (!mTitle.equals(other.mTitle))
+		}
+		else if (!mTitle.equals(other.mTitle))
 			return false;
 		return true;
 	}

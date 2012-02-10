@@ -23,19 +23,21 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-final class LangColumn extends PropertyColumn<ScriptTemplate> {
+final class LangColumn extends PropertyColumn<ScriptTemplate>
+{
 
 	private static final long serialVersionUID = 1L;
 
-	public LangColumn(final ScriptTemplateSelectionTablePanel tablePanel) {
+	public LangColumn(final ScriptTemplateSelectionTablePanel tablePanel)
+	{
 		super(Model.of("Language"), "lang");
 	}
 
 	@Override
 	public void populateItem(final Item<ICellPopulator<ScriptTemplate>> item,
-			final String componentId, final IModel<ScriptTemplate> rowModel) {
-		final Label label = new LangLabel(componentId,
-				createLabelModel(rowModel));
+		final String componentId, final IModel<ScriptTemplate> rowModel)
+	{
+		final Label label = new LangLabel(componentId, createLabelModel(rowModel));
 		item.add(label);
 	}
 }

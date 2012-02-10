@@ -27,17 +27,19 @@ import java.util.TreeSet;
 
 import org.wicketstuff.jslibraries.util.Assert;
 
-public enum Library {
+public enum Library
+{
 
-	DOJO, EXT_CORE,JQUERY, JQUERY_UI, MOOTOOLS_CORE, MOOTOOLS_MORE, PROTOTYPE, SCRIPTACULOUS, SWFOBJECT, YUI;
+	DOJO, EXT_CORE, JQUERY, JQUERY_UI, MOOTOOLS_CORE, MOOTOOLS_MORE, PROTOTYPE, SCRIPTACULOUS, SWFOBJECT, YUI;
 
-	static {
-		new LibraryData();
+	static
+	{
+		LibraryData.registerLibs();
 	}
-	private Map<Provider, SortedSet<Version>> providerInfo = new HashMap<Provider, SortedSet<Version>>();
+	private final Map<Provider, SortedSet<Version>> providerInfo = new HashMap<Provider, SortedSet<Version>>();
 
-	static void register(final Library lib, final Provider provider,
-			final int[]... versions) {
+	static void register(final Library lib, final Provider provider, final int[]... versions)
+	{
 		Assert.parameterNotNull(lib, "lib");
 		Assert.parameterNotNull(provider, "provider");
 		Assert.parameterNotNull(versions, "versions");
@@ -45,46 +47,34 @@ public enum Library {
 		lib.register(provider, versions);
 	}
 
-	private void register(final Provider provider, final int[]... versions) {
+	private void register(final Provider provider, final int[]... versions)
+	{
 		Assert.parameterNotNull(provider, "provider");
 		Assert.parameterNotNull(versions, "versions");
 
 		SortedSet<Version> versionsAvailable = providerInfo.get(provider);
-		if (versionsAvailable == null) {
+		if (versionsAvailable == null)
+		{
 			versionsAvailable = new TreeSet<Version>();
 			providerInfo.put(provider, versionsAvailable);
 		}
-		for (int i = 0; i < versions.length; i++) {
-			Version v = new Version(versions[i]);
+		for (int[] version : versions)
+		{
+			Version v = new Version(version);
 			versionsAvailable.add(v);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public Set<Version> getVersions(final Provider provider) {
+	public Set<Version> getVersions(final Provider provider)
+	{
 		Assert.parameterNotNull(provider, "provider");
-		
+
 		SortedSet<Version> sortedSet = providerInfo.get(provider);
-		if (sortedSet == null) {
+		if (sortedSet == null)
+		{
 			return Collections.EMPTY_SET;
 		}
 		return sortedSet;
 	}
-
-	@Deprecated
-	public String getLibraryName() {
-		return LocalProvider.DEFAULT.getLocalFileName(this);
-	}
-
-	int getMaxVersionDepth(LocalProvider provider) {
-		Assert.parameterNotNull(provider, "provider");
-
-		int depth = 0;
-		for (Version version : getVersions(provider)) {
-			depth = version.getNumbers().length > depth ? version.getNumbers().length
-					: depth;
-		}
-		return depth;
-	}
-
 }

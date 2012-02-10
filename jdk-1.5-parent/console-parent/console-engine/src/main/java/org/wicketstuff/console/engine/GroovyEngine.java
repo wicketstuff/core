@@ -26,17 +26,19 @@ import java.util.Map;
 /**
  * Executes Groovy scripts.
  * <p>
- * Executes Groovy scripts with {@link GroovyShell}. stdout and stderr are
- * captured. Bindings are available in Groovy code simply by their names.
+ * Executes Groovy scripts with {@link GroovyShell}. stdout and stderr are captured. Bindings are
+ * available in Groovy code simply by their names.
  * 
  * @author cretzel
  */
-public class GroovyEngine implements IScriptEngine {
+public class GroovyEngine implements IScriptEngine
+{
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public synchronized IScriptExecutionResult execute(final String script) {
+	public synchronized IScriptExecutionResult execute(final String script)
+	{
 		return execute(script, null);
 	}
 
@@ -44,7 +46,8 @@ public class GroovyEngine implements IScriptEngine {
 	 * {@inheritDoc}
 	 */
 	public synchronized IScriptExecutionResult execute(final String script,
-			final Map<String, Object> bindings) {
+		final Map<String, Object> bindings)
+	{
 
 		Throwable exception = null;
 		String output = null;
@@ -55,23 +58,27 @@ public class GroovyEngine implements IScriptEngine {
 		final ByteArrayOutputStream bout = new ByteArrayOutputStream();
 		final PrintStream newOut = new PrintStream(bout, false);
 
-		try {
+		try
+		{
 			System.setOut(newOut);
 			System.setErr(newOut);
 
 			final GroovyShell shell = new GroovyShell(new Binding(bindings));
 			returnValue = shell.evaluate(script);
 
-		} catch (final Exception e) {
+		}
+		catch (final Exception e)
+		{
 			exception = e;
-		} finally {
+		}
+		finally
+		{
 			System.setOut(oldOut);
 			System.setErr(oldErr);
 			output = bout.toString();
 		}
 
-		return new DefaultScriptExecutionResult(script, exception, output,
-				returnValue);
+		return new DefaultScriptExecutionResult(script, exception, output, returnValue);
 	}
 
 }

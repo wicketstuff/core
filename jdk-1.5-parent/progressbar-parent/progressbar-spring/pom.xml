@@ -6,50 +6,31 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>progressbar-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
-	<groupId>org.wicketstuff</groupId>
-	<artifactId>progressbar-spring</artifactId>
+	<artifactId>wicketstuff-progressbar-spring</artifactId>
 	<description>TaskService for use with user submitted background tasks and the progress bar. Could be used with Spring or any other application framework.</description>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.wicketstuff</groupId>
-			<artifactId>progressbar</artifactId>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>wicketstuff-progressbar</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-spring</artifactId>
-			<version>${wicket.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-ioc</artifactId>
-			<version>${wicket.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring</artifactId>
-			<version>2.0.6</version>
+			<artifactId>spring-web</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>logkit</groupId>
-					<artifactId>logkit</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>avalon-framework</groupId>
-					<artifactId>avalon-framework</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 	</dependencies>
 </project>

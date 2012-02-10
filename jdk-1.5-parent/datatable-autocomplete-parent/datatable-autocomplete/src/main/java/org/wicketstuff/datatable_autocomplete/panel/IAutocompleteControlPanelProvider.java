@@ -21,13 +21,14 @@ import org.apache.wicket.IClusterable;
 /**
  * @author mocleiri
  * 
- * The autocomplete panel provides a space just above the results table where extra controls can be placed to finetune 
- * the operation of the autocompletion process.
+ *         The autocomplete panel provides a space just above the results table where extra controls
+ *         can be placed to finetune the operation of the autocompletion process.
  * 
- * This interface provides a way to create the component to use as the control panel.
- *
+ *         This interface provides a way to create the component to use as the control panel.
+ * 
  */
-public interface IAutocompleteControlPanelProvider extends IClusterable {
+public interface IAutocompleteControlPanelProvider extends IClusterable
+{
 
 	Component getPanel(Component container, String controlPanelId);
 

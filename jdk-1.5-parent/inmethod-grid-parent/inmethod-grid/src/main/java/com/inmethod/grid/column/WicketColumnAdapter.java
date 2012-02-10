@@ -27,12 +27,18 @@ import com.inmethod.grid.datagrid.DataGrid;
  * it will probably not work properly with this adapter, as the parent instance this adapter uses is
  * only temporary.
  * 
+ * @param <M>
+ *            grid model object type
+ * @param <I>
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
-public class WicketColumnAdapter extends AbstractColumn {
+public class WicketColumnAdapter<M, I> extends AbstractColumn<M, I>
+{
 
 	private static final long serialVersionUID = 1L;
-	private final IColumn delegate;
+	private final IColumn<I> delegate;
 
 	/**
 	 * Constructor
@@ -42,20 +48,26 @@ public class WicketColumnAdapter extends AbstractColumn {
 	 * @param column
 	 *            {@link IColumn} implementation
 	 */
-	public WicketColumnAdapter(String columnId, IColumn column) {
+	public WicketColumnAdapter(String columnId, IColumn<I> column)
+	{
 		super(columnId, null, null);
-		this.delegate = column;
+		delegate = column;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Component newCell(WebMarkupContainer parent, String componentId, IModel rowModel) {
-		Item item;
-		if (getGrid() instanceof DataGrid) {
-			item = (Item) parent.findParent(Item.class);
-		} else {
+	public Component newCell(WebMarkupContainer parent, String componentId, IModel<I> rowModel)
+	{
+		Item<ICellPopulator<I>> item;
+		if (getGrid() instanceof DataGrid)
+		{
+			item = parent.findParent(Item.class);
+		}
+		else
+		{
+			// TODO: is this ever invoked? Seems strange. akiraly
 			item = new Item("temp", 0, rowModel);
 		}
 		delegate.populateItem(item, componentId, rowModel);
@@ -68,7 +80,8 @@ public class WicketColumnAdapter extends AbstractColumn {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Component newHeader(String componentId) {
+	public Component newHeader(String componentId)
+	{
 		return delegate.getHeader(componentId);
 	}
 
@@ -76,10 +89,14 @@ public class WicketColumnAdapter extends AbstractColumn {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCellCssClass(IModel rowModel, int rowNum) {
-		if (delegate instanceof IStyledColumn) {
-			return ((IStyledColumn) delegate).getCssClass();
-		} else {
+	public String getCellCssClass(IModel<I> rowModel, int rowNum)
+	{
+		if (delegate instanceof IStyledColumn)
+		{
+			return ((IStyledColumn<I>)delegate).getCssClass();
+		}
+		else
+		{
 			return null;
 		}
 	}
@@ -88,40 +105,47 @@ public class WicketColumnAdapter extends AbstractColumn {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getSortProperty() {
-		if (delegate.isSortable()) {
+	public String getSortProperty()
+	{
+		if (delegate.isSortable())
+		{
 			return delegate.getSortProperty();
-		} else {
+		}
+		else
+		{
 			return null;
 		}
 	}
 
 	/**
-	 * Returns the specified {@link IColumn} array as list of {@link WicketColumnAdapter}s that
-	 * can be given to an {@link AbstractGrid}. The column identifiers are generated.
+	 * Returns the specified {@link IColumn} array as list of {@link WicketColumnAdapter}s that can
+	 * be given to an {@link AbstractGrid}. The column identifiers are generated.
+	 * 
 	 * @param columns
-	 * 		array of {@link IColumn}s 
-	 * @return
-	 * 		list of {@link IGridColumn}s
+	 *            array of {@link IColumn}s
+	 * @return list of {@link IGridColumn}s
 	 */
-	public static List<IGridColumn> wrapColumns(IColumn columns[]) {
+	public static <T, M, I> List<IGridColumn<M, I>> wrapColumns(IColumn<I> columns[])
+	{
 		return wrapColumns(Arrays.asList(columns));
 	}
 
-	
+
 	/**
-	 * Returns the specified {@link IColumn} list as list of {@link WicketColumnAdapter}s that
-	 * can be given to an {@link AbstractGrid}. The column identifiers are generated.
+	 * Returns the specified {@link IColumn} list as list of {@link WicketColumnAdapter}s that can
+	 * be given to an {@link AbstractGrid}. The column identifiers are generated.
+	 * 
 	 * @param columns
-	 * 		list of {@link IColumn}s 
-	 * @return
-	 * 		list of {@link IGridColumn}s
+	 *            list of {@link IColumn}s
+	 * @return list of {@link IGridColumn}s
 	 */
-	public static List<IGridColumn> wrapColumns(List<IColumn> columns) {
-		List<IGridColumn> result = new ArrayList<IGridColumn>(columns.size());
+	public static <M, I> List<IGridColumn<M, I>> wrapColumns(List<IColumn<I>> columns)
+	{
+		List<IGridColumn<M, I>> result = new ArrayList<IGridColumn<M, I>>(columns.size());
 		int i = 0;
-		for (IColumn column : columns) {
-			result.add(new WicketColumnAdapter("column" + i++, column));
+		for (IColumn<I> column : columns)
+		{
+			result.add(new WicketColumnAdapter<M, I>("column" + i++, column));
 		}
 		return result;
 	}

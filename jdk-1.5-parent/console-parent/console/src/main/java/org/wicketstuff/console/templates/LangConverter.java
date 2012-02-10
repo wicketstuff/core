@@ -18,30 +18,35 @@ package org.wicketstuff.console.templates;
 
 import java.util.Locale;
 
-import org.apache.wicket.util.convert.converters.AbstractConverter;
+import org.apache.wicket.util.convert.converter.AbstractConverter;
 import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.console.engine.Lang;
 
-final class LangConverter extends AbstractConverter {
+final class LangConverter extends AbstractConverter<Lang>
+{
 	private static final long serialVersionUID = 1L;
 
-	public Lang convertToObject(final String value, final Locale locale) {
+	public Lang convertToObject(final String value, final Locale locale)
+	{
 		return Lang.valueOf(value);
 	}
 
 	@Override
-	public String convertToString(final Object value, final Locale locale) {
-
-		if (value == null || !(value instanceof Lang)) {
+	public String convertToString(final Lang value, final Locale locale)
+	{
+		if (value == null)
+		{
 			return null;
-		} else {
-			Lang lang = (Lang) value;
-			return Strings.capitalize(lang.name().toLowerCase());
+		}
+		else
+		{
+			return Strings.capitalize(value.name().toLowerCase());
 		}
 	}
 
 	@Override
-	protected Class<Lang> getTargetType() {
+	protected Class<Lang> getTargetType()
+	{
 		return Lang.class;
 	}
 }

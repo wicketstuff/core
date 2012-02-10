@@ -9,14 +9,15 @@ import java.io.Serializable;
 /**
  * @author Daniel Spiewak
  */
-public interface IFillArea extends Serializable {
+public interface IFillArea extends Serializable
+{
 
-    public AreaFillType getType();
+	public AreaFillType getType();
 
-    public Color getColor();
+	public Color getColor();
 
-    public int getStartIndex();
+	public int getStartIndex();
 
-    // unnecessary if BOTTOM
-    public int getEndIndex();
+	// unnecessary if BOTTOM
+	public int getEndIndex();
 }

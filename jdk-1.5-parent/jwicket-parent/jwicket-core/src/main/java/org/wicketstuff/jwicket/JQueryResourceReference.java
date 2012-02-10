@@ -3,7 +3,6 @@ package org.wicketstuff.jwicket;
 
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.markup.html.PackageResource;
 import org.apache.wicket.util.time.Time;
 import org.apache.wicket.util.watch.IModifiable;
 

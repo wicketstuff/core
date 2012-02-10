@@ -1,0 +1,18 @@
+grant
+{
+	permission ${ComponentPermission} "${hp}", "inherit, render";
+	permission ${ComponentPermission} "${hp}", "enable";
+};
+grant principal org.apache.wicket.security.examples.authorization.MyPrincipal "basic"
+{
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.multilogin.pages.BankAccountBalancePage", "inherit, render";
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.multilogin.pages.BankAccountBalancePage", "enable";
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.multilogin.pages.InitiateTransferMoneyPage", "inherit, render";
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.multilogin.pages.InitiateTransferMoneyPage", "enable";
+};
+grant principal org.apache.wicket.security.examples.authorization.MyPrincipal "topsecret"
+{
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.pages.TopSecretPage", "access";
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.multilogin.pages.CommitTransferMoneyPage", "inherit, render";
+	permission ${ComponentPermission} "org.apache.wicket.security.examples.multilogin.pages.CommitTransferMoneyPage", "enable";
+};

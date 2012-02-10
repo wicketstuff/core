@@ -155,7 +155,7 @@ public class DraggablesAcceptedByDroppable implements Serializable {
 	 * @param response
 	 */
 	public void renderJsDropAcceptFunction(final IHeaderResponse response) {
-		if (acceptedNames != null && acceptedNames.size() > 0)
+		if (acceptedNames != null && acceptedNames.size() > 0) {
 			response.renderJavascript(
 				"var " + getJsAcceptCheckerFunctionName() + " = function(candidate) {\n" +
 				"	var accepted = " + getTypesAsJsSet() + ";\n" +
@@ -168,7 +168,8 @@ public class DraggablesAcceptedByDroppable implements Serializable {
 		    	,
 				id
 			);
-		else
+		}
+		else {
 			response.renderJavascript(
 				"var " + getJsAcceptCheckerFunctionName() + " = function(candidate) {\n" +
 		    	"	return false;" +
@@ -176,6 +177,7 @@ public class DraggablesAcceptedByDroppable implements Serializable {
 		    	,
 				id
 			);
+		}
 
 	}
 

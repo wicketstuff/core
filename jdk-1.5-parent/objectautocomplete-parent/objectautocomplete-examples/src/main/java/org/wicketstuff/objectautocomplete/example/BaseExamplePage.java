@@ -16,138 +16,158 @@
  */
 package org.wicketstuff.objectautocomplete.example;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.WebPage;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.util.lang.PropertyResolver;
 import org.wicketstuff.objectautocomplete.AutoCompletionChoicesProvider;
 import org.wicketstuff.objectautocomplete.ObjectAutoCompleteBuilder;
 import org.wicketstuff.objectautocomplete.ObjectAutoCompleteField;
-import org.wicketstuff.objectautocomplete.ObjectAutoCompleteRenderer;
-
-import java.io.Serializable;
-import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
 
 /**
  * @author roland
  * @since May 26, 2008
  */
-abstract public class BaseExamplePage<O extends Serializable,I extends Serializable>
-        extends WebPage implements AutoCompletionChoicesProvider<O> {
+abstract public class BaseExamplePage<O extends Serializable, I extends Serializable> extends
+	GenericWebPage<I> implements AutoCompletionChoicesProvider<O>
+{
+	private static final long serialVersionUID = 1L;
 
-    protected ObjectAutoCompleteField<O,I> acField;
+	protected ObjectAutoCompleteField<O, I> acField;
 
-    protected BaseExamplePage() {
-        this(new Model<I>());
-    }
+	protected BaseExamplePage()
+	{
+		this(new Model<I>());
+	}
 
-    public BaseExamplePage(IModel<I> pModel) {
-        super(pModel);
-        initExample();
-    }
+	public BaseExamplePage(IModel<I> pModel)
+	{
+		super(pModel);
+		initExample();
+	}
 
-    private void initExample() {
-        ObjectAutoCompleteBuilder<O,I> builder =
-                new ObjectAutoCompleteBuilder<O,I>(this);
-        initBuilder(builder);
+	private void initExample()
+	{
+		ObjectAutoCompleteBuilder<O, I> builder = new ObjectAutoCompleteBuilder<O, I>(this);
+		initBuilder(builder);
 
-        acField = builder.build("acField", getModel());
+		acField = builder.build("acField", getModel());
 
-        final Form form = new Form("form");
-        add(form);
-        form.add(acField);
-        form.add(new Label("acLabel",getAutoCompleteFieldLabel()));
+		final Form<Void> form = new Form<Void>("form");
+		add(form);
+		form.add(acField);
+		form.add(new Label("acLabel", getAutoCompleteFieldLabel()));
 
-        // Add code sample and list of sample data
-        add(new Label("acCodeSample",getCodeSample()));
-        add(new Label("acHtmlSample",getHtmlSample()));
+		// Add code sample and list of sample data
+		add(new Label("acCodeSample", getCodeSample()));
+		add(new Label("acHtmlSample", getHtmlSample()));
 
-        add(new DataView<O>("acData",new ListDataProvider<O>(getAllChoices())) {
-            @Override
-            protected void populateItem(Item<O> item) {
-                O object = item.getModelObject();
-                item.add(new Label("id",
-                        PropertyResolver.getValue(getIdProperty(),object).toString()));
-                item.add(new Label("name",
-                        PropertyResolver.getValue(getNameProperty(),object).toString()));
-            }
-        });
+		add(new DataView<O>("acData", new ListDataProvider<O>(getAllChoices()))
+		{
+			private static final long serialVersionUID = 1L;
 
-        WebMarkupContainer wac = new WebMarkupContainer("submitButtonPanel") {
-            public boolean isVisible() {
-                return needsFormButton();
-            }
-        };
-        Button submitButton = new Button("submitButton") {
-            public void onSubmit() {
-                System.out.println("Clicked");
-                super.onSubmit();
-            }
-        };
-        wac.add(submitButton);
-        form.add(wac);
-        add(new FeedbackPanel("feedbackPanel"));
-    }
+			@Override
+			protected void populateItem(Item<O> item)
+			{
+				O object = item.getModelObject();
+				item.add(new Label("id", PropertyResolver.getValue(getIdProperty(), object)
+					.toString()));
+				item.add(new Label("name", PropertyResolver.getValue(getNameProperty(), object)
+					.toString()));
+			}
+		});
 
-    protected boolean needsFormButton() {
-        return false;
-    }
-    /**
-     * Override to initialize the builder. Does nothing
-     * in this base class.
-     *
-     * @param pBuilder builder to initialize.
-     */
-    protected void initBuilder(ObjectAutoCompleteBuilder<O,I> pBuilder) {
-        // intentionally empty
-    }
+		WebMarkupContainer wac = new WebMarkupContainer("submitButtonPanel")
+		{
+			private static final long serialVersionUID = 1L;
 
-    protected String getAutoCompleteFieldLabel() {
-       return "Brand:";
-    }
+			@Override
+			public boolean isVisible()
+			{
+				return needsFormButton();
+			}
+		};
+		Button submitButton = new Button("submitButton")
+		{
+			private static final long serialVersionUID = 1L;
 
-    // id-property used for presenting the list of alternatives
-    protected  String getIdProperty() {
-        return "id";
-    }
+			@Override
+			public void onSubmit()
+			{
+				System.out.println("Clicked");
+				super.onSubmit();
+			}
+		};
+		wac.add(submitButton);
+		form.add(wac);
+		add(new FeedbackPanel("feedbackPanel"));
+	}
 
-    // name property used to present the list of alternatives
-    protected String getNameProperty() {
-        return "name";
-    }
+	protected boolean needsFormButton()
+	{
+		return false;
+	}
 
-    // used to get the list of all possible choices
-    abstract List<O> getAllChoices();
+	/**
+	 * Override to initialize the builder. Does nothing in this base class.
+	 * 
+	 * @param pBuilder
+	 *            builder to initialize.
+	 */
+	protected void initBuilder(ObjectAutoCompleteBuilder<O, I> pBuilder)
+	{
+		// intentionally empty
+	}
 
-    // a sample of the usage for this code
-    abstract String getCodeSample();
+	protected String getAutoCompleteFieldLabel()
+	{
+		return "Brand:";
+	}
 
-    // a HTML sample using this code
-    abstract String getHtmlSample();
+	// id-property used for presenting the list of alternatives
+	protected String getIdProperty()
+	{
+		return "id";
+	}
 
-    public IModel<I> getModel() {
-        return (IModel<I>) getDefaultModel();
-    }
+	// name property used to present the list of alternatives
+	protected String getNameProperty()
+	{
+		return "name";
+	}
 
-    public Iterator getChoices(String input) {
-        List<O> cars = getAllChoices();
-        List<O> ret = new ArrayList<O>();
-        for (O car : cars) {
-            addIfMatch(ret,car,input);
-        }
-        return ret.iterator();
-    }
+	// used to get the list of all possible choices
+	abstract List<O> getAllChoices();
 
-    abstract protected void addIfMatch(List<O> pList, O pElement, String pInput);
+	// a sample of the usage for this code
+	abstract String getCodeSample();
+
+	// a HTML sample using this code
+	abstract String getHtmlSample();
+
+	public Iterator<O> getChoices(String input)
+	{
+		List<O> cars = getAllChoices();
+		List<O> ret = new ArrayList<O>();
+		for (O car : cars)
+		{
+			addIfMatch(ret, car, input);
+		}
+		return ret.iterator();
+	}
+
+	abstract protected void addIfMatch(List<O> pList, O pElement, String pInput);
 }

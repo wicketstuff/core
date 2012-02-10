@@ -15,13 +15,14 @@
  */
 package org.wicketstuff.openlayers;
 
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * Homepage
  */
-public class HomePage extends WebPage {
+public class HomePage extends WebPage
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,6 +34,7 @@ public class HomePage extends WebPage {
 	 * @param parameters
 	 *            Page parameters
 	 */
-	public HomePage(final PageParameters parameters) {
+	public HomePage(final PageParameters parameters)
+	{
 	}
 }

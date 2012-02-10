@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <!DOCTYPE html>
-<html>
+<html xmlns:wicket="http://wicket.apache.org">
     <head>
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -23,10 +23,10 @@ limitations under the License.
         <div>
             <p><span wicket:id="feedBack"></span></p>
             <form wicket:id="form" action="#">
-                <fieldset>
+            	<fieldset>
                     <label>fixed</label>
                     <input style="width: 200px" type="text" wicket:id="fixed" />
-                </fieldset>            
+                </fieldset>
                 <fieldset>
                     <label>fixed.phone Mask:</label>
                     <input style="width: 200px" type="text" wicket:id="fixedPhone" />

@@ -29,8 +29,8 @@ public abstract class GMapExampleApplication extends WebApplication
 	private static final String GOOGLE_MAPS_API_KEY_PARAM = "GoogleMapsAPIkey";
 
 	/**
-	 * Covariant override for easy getting the current
-	 * {@link GMapExampleApplication} without having to cast it.
+	 * Covariant override for easy getting the current {@link GMapExampleApplication} without having
+	 * to cast it.
 	 */
 	public static GMapExampleApplication get()
 	{
@@ -39,8 +39,8 @@ public abstract class GMapExampleApplication extends WebApplication
 		if (webApplication instanceof GMapExampleApplication == false)
 		{
 			throw new WicketRuntimeException(
-					"The application attached to the current thread is not a "
-							+ GMapExampleApplication.class.getSimpleName());
+				"The application attached to the current thread is not a " +
+					GMapExampleApplication.class.getSimpleName());
 		}
 
 		return (GMapExampleApplication)webApplication;
@@ -58,18 +58,16 @@ public abstract class GMapExampleApplication extends WebApplication
 	}
 
 	/**
-	 * Gets the init parameter 'GoogleMapsAPIkey' of the filter, or throws a
-	 * WicketRuntimeException, if it is not set.
+	 * Gets the init parameter 'GoogleMapsAPIkey' of the filter, or throws a WicketRuntimeException,
+	 * if it is not set.
 	 * 
-	 * Pay attention at webapp deploy context, we need a different key for each
-	 * deploy context check <a
-	 * href="http://www.google.com/apis/maps/signup.html">Google Maps API - Sign
-	 * Up</a> for more info.
+	 * Pay attention at webapp deploy context, we need a different key for each deploy context check
+	 * <a href="http://www.google.com/apis/maps/signup.html">Google Maps API - Sign Up</a> for more
+	 * info.
 	 * 
-	 * Also the GClientGeocoder is pickier on this than the GMap2. Running on
-	 * 'localhost' GMap2 will ignore the key and the maps will show up, but
-	 * GClientGeocoder will not. So if the key doesn't match the url down to the
-	 * directory GClientGeocoder will not work.
+	 * Also the GClientGeocoder is pickier on this than the GMap2. Running on 'localhost' GMap2 will
+	 * ignore the key and the maps will show up, but GClientGeocoder will not. So if the key doesn't
+	 * match the url down to the directory GClientGeocoder will not work.
 	 * 
 	 * <pre>
 	 * [...]
@@ -88,7 +86,7 @@ public abstract class GMapExampleApplication extends WebApplication
 		if (googleMapsAPIkey == null)
 		{
 			throw new WicketRuntimeException("There is no Google Maps API key configured in the "
-					+ "deployment descriptor of this application.");
+				+ "deployment descriptor of this application.");
 		}
 		return googleMapsAPIkey;
 	}

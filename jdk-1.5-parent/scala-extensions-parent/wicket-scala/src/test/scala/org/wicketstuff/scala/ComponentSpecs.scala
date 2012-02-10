@@ -14,7 +14,7 @@ import org.specs.runner._
  * 
  * @author Antony Stubbs
  */
-class ComponentSpecs extends Specification with JUnit with ScalaTest with ScalaWicket {
+class ComponentSpecs extends SpecificationWithJUnit with ScalaTest with ScalaWicket {
 
   val tony = "Tony"
   val karyn = "Karyn"
@@ -91,6 +91,10 @@ class ComponentSpecs extends Specification with JUnit with ScalaTest with ScalaW
       val sf = new SForm("form", null, clickCount += 1) // null model
       def fx = sf.onSubmit
       clickCountUpdatingFunction(fx)
+    }
+    "pass model to a super-class" in {
+      val sf = new SForm("form", new Fodel[String]("test"), {})
+      sf.getModelObject mustEq "test"
     }
   }
   "SListView component" should { doBefore{ new WicketTester() }

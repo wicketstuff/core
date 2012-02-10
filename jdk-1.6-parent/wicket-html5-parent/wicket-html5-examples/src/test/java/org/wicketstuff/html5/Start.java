@@ -6,12 +6,14 @@ import org.eclipse.jetty.server.bio.SocketConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
- *
+ * 
  * @author Andrew Lombardi
  */
-public class Start {
+public class Start
+{
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception
+	{
 		Server server = new Server();
 		SocketConnector connector = new SocketConnector();
 
@@ -34,17 +36,20 @@ public class Start {
 
 		server.setHandler(bb);
 
-		try {
+		try
+		{
 			System.out.println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
 			server.start();
 			System.in.read();
 			System.out.println(">>> STOPPING EMBEDDED JETTY SERVER");
-            // while (System.in.available() == 0) {
-			//   Thread.sleep(5000);
+			// while (System.in.available() == 0) {
+			// Thread.sleep(5000);
 			// }
 			server.stop();
 			server.join();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 			System.exit(100);
 		}

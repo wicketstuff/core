@@ -28,22 +28,20 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-public class GroovyEngineTest {
+public class GroovyEngineTest
+{
 
-	private GroovyEngine engine;
+	private IScriptEngine engine;
 
 	@Before
-	public void setup() {
+	public void setup()
+	{
 		engine = new GroovyEngine();
 	}
 
 	@Test
-	public void test_instanceof_engine() throws Exception {
-		assertTrue(engine instanceof IScriptEngine);
-	}
-
-	@Test
-	public void test_empty_script() throws Exception {
+	public void test_empty_script() throws Exception
+	{
 		// Given
 		final String script = "";
 
@@ -58,7 +56,8 @@ public class GroovyEngineTest {
 	}
 
 	@Test
-	public void test_execute_exception_01() throws Exception {
+	public void test_execute_exception_01() throws Exception
+	{
 		// Given
 		final String script = "xxx";
 
@@ -75,7 +74,8 @@ public class GroovyEngineTest {
 	}
 
 	@Test
-	public void test_simple_returnValue() throws Exception {
+	public void test_simple_returnValue() throws Exception
+	{
 		// Given
 		final String script = "5";
 
@@ -90,7 +90,8 @@ public class GroovyEngineTest {
 	}
 
 	@Test
-	public void test_simple_output_sysout() throws Exception {
+	public void test_simple_output_sysout() throws Exception
+	{
 		// Given
 		final String script = "System.out.print(\"5\")";
 
@@ -106,7 +107,8 @@ public class GroovyEngineTest {
 	}
 
 	@Test
-	public void test_simple_output_rtout() throws Exception {
+	public void test_simple_output_rtout() throws Exception
+	{
 		// Given
 		final String script = "print 6";
 
@@ -122,10 +124,10 @@ public class GroovyEngineTest {
 	}
 
 	@Test
-	public void test_simple_def() throws Exception {
+	public void test_simple_def() throws Exception
+	{
 		// Given
-		final String script = "def fak(n) {\n"
-				+ "if (n>1) n * fak(n-1) else 1}\n" + "print fak(5)";
+		final String script = "def fak(n) {\n" + "if (n>1) n * fak(n-1) else 1}\n" + "print fak(5)";
 
 		// When
 		final IScriptExecutionResult result = engine.execute(script);
@@ -137,7 +139,8 @@ public class GroovyEngineTest {
 	}
 
 	@Test
-	public void test_simple_binding() throws Exception {
+	public void test_simple_binding() throws Exception
+	{
 		// Given
 		final String script = "x";
 		final Map<String, Object> bindings = new HashMap<String, Object>();

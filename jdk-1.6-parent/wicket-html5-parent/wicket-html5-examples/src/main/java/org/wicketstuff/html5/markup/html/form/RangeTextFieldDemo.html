@@ -1,4 +1,5 @@
-<html xmlns:wicket="http://wicket.apache.org">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
 <wicket:extend>
 
 <section id="wrapper">
@@ -8,14 +9,15 @@
     <article>
 		
 		<form wicket:id="form">
-			<input wicket:id="range" type="range" onchange="console.log(this.value)" />
+			<input wicket:id="range" type="range" onchange="console.log(this.value)" step="0.5" />
 		</form>
-		
-		<summary>Range is set to: <span wicket:id="rangeLabel"></span></summary>
-		
+
+		<details>
+			<summary>Range is set to: <span wicket:id="rangeLabel"></span></summary>
+		</details>
+
     </article>
 </section>
-
 
 </wicket:extend>
 </html>

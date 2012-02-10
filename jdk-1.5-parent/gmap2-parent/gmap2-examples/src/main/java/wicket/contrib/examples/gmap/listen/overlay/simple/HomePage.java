@@ -25,14 +25,13 @@ public class HomePage extends WicketExamplePage
 	public HomePage()
 	{
 		final GMap2 topMap = new GMap2("topPanel", GMapExampleApplication.get()
-				.getGoogleMapsAPIkey());
+			.getGoogleMapsAPIkey());
 		topMap.addControl(GControl.GLargeMapControl);
 		add(topMap);
 
 		GMarkerOptions options = new GMarkerOptions().draggable(true);
 		final GMarker marker = new GMarker(topMap.getCenter(), options);
-		final Label label = new Label("label", new PropertyModel<GLatLng>(marker,
-				"latLng"));
+		final Label label = new Label("label", new PropertyModel<GLatLng>(marker, "latLng"));
 		label.setOutputMarkupId(true);
 		add(label);
 		marker.addListener(GEvent.dragend, new GEventHandler()
@@ -42,7 +41,7 @@ public class HomePage extends WicketExamplePage
 			@Override
 			public void onEvent(AjaxRequestTarget target)
 			{
-				target.addComponent(label);
+				target.add(label);
 			}
 		});
 		topMap.addOverlay(marker);

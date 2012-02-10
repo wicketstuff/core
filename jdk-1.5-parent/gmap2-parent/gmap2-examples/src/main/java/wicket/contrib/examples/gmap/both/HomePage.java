@@ -35,7 +35,7 @@ public class HomePage extends WicketExamplePage
 			@Override
 			protected void onMapTypeChanged(AjaxRequestTarget target)
 			{
-				target.addComponent(mapTypeLabel);
+				target.add(mapTypeLabel);
 			}
 		});
 		mapTypeLabel = new Label("switchLabel", new PropertyModel<GMapType>(map, "mapType"));

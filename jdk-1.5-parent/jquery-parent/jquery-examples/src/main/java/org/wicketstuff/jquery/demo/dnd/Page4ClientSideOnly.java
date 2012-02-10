@@ -23,29 +23,29 @@ import org.wicketstuff.jquery.demo.PageSupport;
 import org.wicketstuff.jquery.dnd.DnDSortableHandler;
 
 @SuppressWarnings("serial")
-public class Page4ClientSideOnly extends PageSupport {
-    public Page4ClientSideOnly() throws Exception {
-        super();
-        add(new DnDSortableHandler("dnd0",
-                new Options()
-                        .set("accept", "groupItem")
-                        .set("containerclass", "groupWrapper")
-                //.set("helperclass", "sortHelper")
-                //.set("activeclass", "sortableactive")
-                //.set("hoverclass", "sortablehover")
-                //.set("handle", "div.itemHeader")
-                //.set("tolerance", "pointer")
-        ) {
-            @Override
-            public boolean onDnD(AjaxRequestTarget target, MarkupContainer srcContainer, int srcPos, MarkupContainer destContainer, int destPos) {
-                System.out.format("srcContainer=%s, srcPos=%s, destContainer=%s, destPos=%s\n",
-                        String.valueOf(srcContainer),
-                        String.valueOf(srcPos),
-                        String.valueOf(destContainer),
-                        String.valueOf(destPos)
-                );
-                return false;
-            }
-        });
-    }
+public class Page4ClientSideOnly extends PageSupport
+{
+	public Page4ClientSideOnly() throws Exception
+	{
+		super();
+		add(new DnDSortableHandler("dnd0", new Options().set("accept", "groupItem").set(
+			"containerclass", "groupWrapper")
+		// .set("helperclass", "sortHelper")
+		// .set("activeclass", "sortableactive")
+		// .set("hoverclass", "sortablehover")
+		// .set("handle", "div.itemHeader")
+		// .set("tolerance", "pointer")
+		)
+		{
+			@Override
+			public boolean onDnD(AjaxRequestTarget target, MarkupContainer srcContainer,
+				int srcPos, MarkupContainer destContainer, int destPos)
+			{
+				System.out.format("srcContainer=%s, srcPos=%s, destContainer=%s, destPos=%s\n",
+					String.valueOf(srcContainer), String.valueOf(srcPos),
+					String.valueOf(destContainer), String.valueOf(destPos));
+				return false;
+			}
+		});
+	}
 }

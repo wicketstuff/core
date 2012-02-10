@@ -1,5 +1,10 @@
 package com.inmethod.grid.column.editable;
 
+import java.io.Serializable;
+
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeNode;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
 import org.apache.wicket.markup.html.basic.Label;
@@ -15,8 +20,9 @@ import com.inmethod.grid.column.tree.PropertyTreeColumn;
  * 
  * @author Matej Knopp
  */
-public class EditablePropertyTreeColumn extends PropertyTreeColumn {
-
+public class EditablePropertyTreeColumn<T extends TreeModel & Serializable, I extends TreeNode & Serializable, P>
+	extends PropertyTreeColumn<T, I, P>
+{
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -32,8 +38,9 @@ public class EditablePropertyTreeColumn extends PropertyTreeColumn {
 	 *            optional string that will be returned by {@link ISortState} to indicate that the
 	 *            column is being sorted
 	 */
-	public EditablePropertyTreeColumn(String columnId, IModel headerModel, String propertyExpression,
-			String sortProperty) {
+	public EditablePropertyTreeColumn(String columnId, IModel<String> headerModel,
+		String propertyExpression, String sortProperty)
+	{
 		super(columnId, headerModel, propertyExpression, sortProperty);
 	}
 
@@ -47,7 +54,9 @@ public class EditablePropertyTreeColumn extends PropertyTreeColumn {
 	 * @param propertyExpression
 	 *            property expression used to get the displayed value for row object
 	 */
-	public EditablePropertyTreeColumn(String columnId, IModel headerModel, String propertyExpression) {
+	public EditablePropertyTreeColumn(String columnId, IModel<String> headerModel,
+		String propertyExpression)
+	{
 		super(columnId, headerModel, propertyExpression);
 	}
 
@@ -63,7 +72,9 @@ public class EditablePropertyTreeColumn extends PropertyTreeColumn {
 	 *            optional string that will be returned by {@link ISortState} to indicate that the
 	 *            column is being sorted
 	 */
-	public EditablePropertyTreeColumn(IModel headerModel, String propertyExpression, String sortProperty) {
+	public EditablePropertyTreeColumn(IModel<String> headerModel, String propertyExpression,
+		String sortProperty)
+	{
 		super(headerModel, propertyExpression, sortProperty);
 	}
 
@@ -76,7 +87,8 @@ public class EditablePropertyTreeColumn extends PropertyTreeColumn {
 	 * @param propertyExpression
 	 *            property expression used to get the displayed value for row object
 	 */
-	public EditablePropertyTreeColumn(IModel headerModel, String propertyExpression) {
+	public EditablePropertyTreeColumn(IModel<String> headerModel, String propertyExpression)
+	{
 		super(headerModel, propertyExpression);
 	}
 
@@ -84,7 +96,8 @@ public class EditablePropertyTreeColumn extends PropertyTreeColumn {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected Component newNodeComponent(String id, IModel model) {
+	protected Component newNodeComponent(String id, IModel<I> model)
+	{
 		return new NodePanel(id, model);
 	}
 
@@ -95,7 +108,8 @@ public class EditablePropertyTreeColumn extends PropertyTreeColumn {
 	 * @author Matej Knopp
 	 * 
 	 */
-	private class NodePanel extends Panel {
+	private class NodePanel extends Panel
+	{
 
 		private static final long serialVersionUID = 1L;
 
@@ -105,72 +119,93 @@ public class EditablePropertyTreeColumn extends PropertyTreeColumn {
 		 * @param id
 		 * @param rowModel
 		 */
-		public NodePanel(String id, final IModel rowModel) {
+		public NodePanel(String id, final IModel<I> rowModel)
+		{
 			super(id);
-			
-			add(new Label("label", new PropertyModel(rowModel, getPropertyExpression())) {
 
+			add(new Label("label", new PropertyModel<I>(rowModel, getPropertyExpression()))
+			{
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public boolean isVisible() {
-					return !getGrid().isItemEdited(rowModel);
+				public boolean isVisible()
+				{
+					return !getTreeGrid().isItemEdited(rowModel);
 				}
-				
+
 			});
-						
-			EditableCellPanel panel = newCellPanel("panel", rowModel, getFieldModel(rowModel));
+
+			EditableCellPanel<T, I, P> panel = newCellPanel("panel", rowModel,
+				getFieldModel(rowModel));
 			addValidators(panel.getEditComponent());
 			add(panel);
 		}
 
 	};
 
-	protected void addValidators(FormComponent component) {
+	protected void addValidators(FormComponent<P> component)
+	{
 
 	}
 
-	protected IModel getFieldModel(IModel rowModel) {
-		return new PropertyModel(rowModel, getPropertyExpression());
+	protected IModel<P> getFieldModel(IModel<I> rowModel)
+	{
+		return new PropertyModel<P>(rowModel, getPropertyExpression());
 	}
 
-	protected EditableCellPanel newCellPanel(String componentId, IModel rowModel, IModel cellModel) {
-		return new TextFieldPanel(componentId, cellModel, rowModel, this);
+	protected EditableCellPanel<T, I, P> newCellPanel(String componentId, IModel<I> rowModel,
+		IModel<P> cellModel)
+	{
+		return new TextFieldPanel<T, I, P>(componentId, cellModel, rowModel, this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCellCssClass(IModel rowModel, int rowNum) {
-		if (isClickToEdit()) {
-			if (getGrid().isItemEdited(rowModel)) {
+	public String getCellCssClass(IModel<I> rowModel, int rowNum)
+	{
+		if (isClickToEdit())
+		{
+			if (getGrid().isItemEdited(rowModel))
+			{
 				return "imxt-want-prelight imxt-edited-cell";
-			} else {
+			}
+			else
+			{
 				return "imxt-want-prelight";
 			}
-		} else {
-			if (getGrid().isItemEdited(rowModel)) {
+		}
+		else
+		{
+			if (getGrid().isItemEdited(rowModel))
+			{
 				return "imxt-edited-cell";
 			}
-			else {
+			else
+			{
 				return "";
 			}
 		}
 	}
-	
+
 	@Override
-	public boolean cellClicked(IModel rowModel) {		
-		if (!isClickToEdit() || (getGrid().isClickRowToSelect() && getGrid().isSelectToEdit())) {
+	public boolean cellClicked(IModel<I> rowModel)
+	{
+		if (!isClickToEdit() || getGrid().isClickRowToSelect() && getGrid().isSelectToEdit())
+		{
 			return false;
-		} else {
+		}
+		else
+		{
 			getGrid().setItemEdit(rowModel, true);
 			getGrid().update();
 			return true;
 		}
 	}
-	
-	protected boolean isClickToEdit() {
+
+	protected boolean isClickToEdit()
+	{
 		return true;
 	}
 }

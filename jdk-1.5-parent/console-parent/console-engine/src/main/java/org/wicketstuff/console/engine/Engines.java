@@ -17,22 +17,44 @@
 
 package org.wicketstuff.console.engine;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * A factory for {@link IScriptEngine}s.
  * 
  * @author cretzel
  */
-public class Engines {
+public class Engines
+{
 
-	public static IScriptEngine create(final Lang lang) {
-		switch (lang) {
-		case GROOVY:
-			return new GroovyEngine();
-		case CLOJURE:
-			return new ClojureEngine();
-		default:
-			throw new UnsupportedOperationException("Unsupported language: "
-					+ lang);
+	private static Map<Lang, IScriptEngine> singletons = new HashMap<Lang, IScriptEngine>();
+
+	public static IScriptEngine getSingletonInstance(final Lang lang)
+	{
+
+		if (!singletons.containsKey(lang))
+		{
+			singletons.put(lang, create(lang));
+		}
+
+		return singletons.get(lang);
+	}
+
+	public static IScriptEngine create(final Lang lang)
+	{
+		switch (lang)
+		{
+			case GROOVY :
+				return new GroovyEngine();
+			case CLOJURE :
+				return new ClojureEngine();
+			case SCALA :
+				return new ScalaEngine();
+			case JYTHON :
+				return new JythonEngine();
+			default :
+				throw new UnsupportedOperationException("Unsupported language: " + lang);
 		}
 	}
 }

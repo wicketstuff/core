@@ -1,7 +1,6 @@
 package com.inmethod.grid.examples.tree;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -14,24 +13,24 @@ import javax.swing.tree.TreeModel;
  * 
  * @author Matej Knopp
  */
-public class TreeModelFactory {
+public class TreeModelFactory
+{
 	/**
 	 * Creates the model that feeds the tree.
 	 * 
 	 * @return New instance of tree model.
 	 */
-	@SuppressWarnings("unchecked")
-	protected TreeModel createTreeModelInternal()
+	protected DefaultTreeModel createTreeModelInternal()
 	{
-		List l1 = new ArrayList();
+		List<Object> l1 = new ArrayList<Object>();
 		l1.add("test 1.1");
 		l1.add("test 1.2");
 		l1.add("test 1.3");
-		List l2 = new ArrayList();
+		List<Object> l2 = new ArrayList<Object>();
 		l2.add("test 2.1");
 		l2.add("test 2.2");
 		l2.add("test 2.3");
-		List l3 = new ArrayList();
+		List<Object> l3 = new ArrayList<Object>();
 		l3.add("test 3.1");
 		l3.add("test 3.2");
 		l3.add("test 3.3");
@@ -42,7 +41,7 @@ public class TreeModelFactory {
 		l2.add("test 2.5");
 		l2.add("test 2.6");
 
-		l3 = new ArrayList();
+		l3 = new ArrayList<Object>();
 		l3.add("test 3.1");
 		l3.add("test 3.2");
 		l3.add("test 3.3");
@@ -50,7 +49,7 @@ public class TreeModelFactory {
 
 		l1.add(l2);
 
-		l2 = new ArrayList();
+		l2 = new ArrayList<Object>();
 		l2.add("test 2.1");
 		l2.add("test 2.2");
 		l2.add("test 2.3");
@@ -64,9 +63,9 @@ public class TreeModelFactory {
 		return convertToTreeModel(l1);
 	}
 
-	private TreeModel convertToTreeModel(List<?> list)
+	private DefaultTreeModel convertToTreeModel(List<?> list)
 	{
-		TreeModel model = null;
+		DefaultTreeModel model = null;
 		DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(new TreeBean("Root"));
 		add(rootNode, list);
 		model = new DefaultTreeModel(rootNode);
@@ -75,20 +74,19 @@ public class TreeModelFactory {
 
 	private void add(DefaultMutableTreeNode parent, List<?> sub)
 	{
-		for (Iterator<?> i = sub.iterator(); i.hasNext();)
+		for (Object o : sub)
 		{
-			Object o = i.next();
 			if (o instanceof List)
 			{
-				DefaultMutableTreeNode child = new DefaultMutableTreeNode(new TreeBean(
-						"subtree..."));
+				DefaultMutableTreeNode child = new DefaultMutableTreeNode(
+					new TreeBean("subtree..."));
 				parent.add(child);
 				add(child, (List<?>)o);
 			}
 			else
 			{
-				DefaultMutableTreeNode child = new DefaultMutableTreeNode(new TreeBean(o
-						.toString()));
+				DefaultMutableTreeNode child = new DefaultMutableTreeNode(
+					new TreeBean(o.toString()));
 				parent.add(child);
 			}
 		}
@@ -99,7 +97,8 @@ public class TreeModelFactory {
 	 * 
 	 * @return {@link TreeModel} instance.
 	 */
-	public static TreeModel createTreeModel() {
+	public static DefaultTreeModel createTreeModel()
+	{
 		return new TreeModelFactory().createTreeModelInternal();
 	}
 }

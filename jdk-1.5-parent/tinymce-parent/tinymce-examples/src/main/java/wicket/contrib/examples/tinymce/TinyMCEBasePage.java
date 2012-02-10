@@ -1,10 +1,6 @@
 package wicket.contrib.examples.tinymce;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.panel.Panel;
 
 import wicket.contrib.examples.WicketExamplePage;
 
@@ -21,6 +17,9 @@ public class TinyMCEBasePage extends WicketExamplePage
 		add(new Link("simple")
 		{
 
+			private static final long serialVersionUID = 1L;
+
+			@Override
 			public void onClick()
 			{
 				setResponsePage(SimpleTinyMCEPage.class);
@@ -29,6 +28,9 @@ public class TinyMCEBasePage extends WicketExamplePage
 		add(new Link("full")
 		{
 
+			private static final long serialVersionUID = 1L;
+
+			@Override
 			public void onClick()
 			{
 				setResponsePage(FullFeaturedTinyMCEPage.class);
@@ -37,6 +39,9 @@ public class TinyMCEBasePage extends WicketExamplePage
 		add(new Link("word")
 		{
 
+			private static final long serialVersionUID = 1L;
+
+			@Override
 			public void onClick()
 			{
 				setResponsePage(WordTinyMCEPage.class);
@@ -45,15 +50,21 @@ public class TinyMCEBasePage extends WicketExamplePage
 		add(new Link("ajax")
 		{
 
+			private static final long serialVersionUID = 1L;
+
+			@Override
 			public void onClick()
 			{
 				setResponsePage(AjaxTinyMCEPage.class);
 			}
-			
+
 		});
 		add(new Link("inline")
 		{
-			
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
 			public void onClick()
 			{
 				setResponsePage(InlineTinyMCEPage.class);
@@ -61,7 +72,10 @@ public class TinyMCEBasePage extends WicketExamplePage
 		});
 		add(new Link("image")
 		{
-			
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
 			public void onClick()
 			{
 				setResponsePage(ImageUploadTinyMCEPage.class);

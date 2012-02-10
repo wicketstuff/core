@@ -27,60 +27,53 @@ import org.slf4j.LoggerFactory;
  * Get resources from maven project directory.
  * 
  * Usage:
- *
- * 	<code>
+ * 
+ * <code>
  * 	class MyApp extends WebApplication
  * 	{
- * 		@Override
- * 		protected void init()
- * 		{
- * 			...
- * 			if (DEVELOPMENT.equals(getConfigurationType()))
- * 			{
- * 				getResourceSettings().setResourceStreamLocator(new MavenDevResourceStreamLocator());
- * 			}
- * 			...
- * 		}
- * 	}
- * </code>
+ * 
+ * @Override protected void init() { ... if (DEVELOPMENT.equals(getConfigurationType())) {
+ *           getResourceSettings().setResourceStreamLocator(new MavenDevResourceStreamLocator()); }
+ *           ... } } </code>
  * 
  * @author mosmann
- *
+ * 
  */
 public class MavenDevResourceStreamLocator extends ResourceStreamLocator
 {
 	private static final Logger _logger = LoggerFactory.getLogger(MavenDevResourceStreamLocator.class);
-	
-	final static String MAVEN_RESOURCE_PATH="src/main/resources/";
-	final static String MAVEN_JAVASOURCE_PATH="src/main/java/";
-	
+
+	final static String MAVEN_RESOURCE_PATH = "src/main/resources/";
+	final static String MAVEN_JAVASOURCE_PATH = "src/main/java/";
+
+	@Override
 	public IResourceStream locate(final Class<?> clazz, final String path)
 	{
-		IResourceStream located=getFileSysResourceStream(MAVEN_RESOURCE_PATH,path);
-		if (located==null)
+		IResourceStream located = getFileSysResourceStream(MAVEN_RESOURCE_PATH, path);
+		if (located == null)
 		{
-			located=getFileSysResourceStream(MAVEN_JAVASOURCE_PATH,path);
+			located = getFileSysResourceStream(MAVEN_JAVASOURCE_PATH, path);
 		}
 		if (located != null)
 		{
-			_logger.info("Locate: {} in {} -> {}",new Object[] {clazz,path,located});
+			_logger.info("Locate: {} in {} -> {}", new Object[] { clazz, path, located });
 			return located;
 		}
-		located=super.locate(clazz, path);
-		_logger.info("Locate: {} in {} -> {}(Fallback)",new Object[] {clazz,path,located});		
+		located = super.locate(clazz, path);
+		_logger.info("Locate: {} in {} -> {}(Fallback)", new Object[] { clazz, path, located });
 		return located;
 	}
 
 	private static IResourceStream getFileSysResourceStream(String prefix, String path)
 	{
-		File f=new File(prefix+path);
+		File f = new File(prefix + path);
 		if ((f.exists()) && (f.isFile()))
 		{
 			return new FileResourceStream(f);
 		}
 		else
 		{
-			_logger.debug("Could not get File: {}",f.getAbsolutePath());
+			_logger.debug("Could not get File: {}", f.getAbsolutePath());
 		}
 		return null;
 	}

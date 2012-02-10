@@ -3,14 +3,12 @@ package org.wicketstuff.modalx.example;
 import java.io.Serializable;
 
 /**
- * Created by IntelliJ IDEA.
- * User: chrisc
- * Date: 2/08/11
- * Time: 10:29 AM
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: chrisc Date: 2/08/11 Time: 10:29 AM To change this template use
+ * File | Settings | File Templates.
  */
 public class Person implements Serializable
 {
+	private static final long serialVersionUID = 1L;
 	private String firstName;
 	private String lastName;
 	private String address1;

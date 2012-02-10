@@ -20,16 +20,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.WicketAjaxReference;
-import org.apache.wicket.behavior.HeaderContributor;
-import org.apache.wicket.markup.html.IHeaderContributor;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WicketEventReference;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.wicketstuff.openlayers.api.Bounds;
 import org.wicketstuff.openlayers.api.IJavascriptComponent;
 import org.wicketstuff.openlayers.api.LonLat;
@@ -47,8 +47,8 @@ import org.wicketstuff.openlayers.event.OverlayListenerBehavior;
  * @author Marin Mandradjiev (marinsm@hotmail.com)
  * 
  */
-public class AjaxOpenLayersMap extends WebMarkupContainer implements
-		IOpenLayersMap {
+public class AjaxOpenLayersMap extends WebMarkupContainer implements IOpenLayersMap
+{
 	private static final long serialVersionUID = 159201381315392564L;
 
 	private List<Layer> layers;
@@ -65,135 +65,161 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	private String businessLogicProjection = null;
 	private String markersLayerName = null;
 
-	public AjaxOpenLayersMap(final String id, final List<Layer> layers) {
+	public AjaxOpenLayersMap(final String id, final List<Layer> layers)
+	{
 		this(id, layers, null);
 	}
 
 	public AjaxOpenLayersMap(final String id, final List<Layer> layers,
-			final HashMap<String, String> options) {
+		final HashMap<String, String> options)
+	{
 		this(id, layers, options, null);
 	}
 
 	public AjaxOpenLayersMap(final String id, final List<Layer> layers,
-			final HashMap<String, String> options, final List<Feature> features) {
+		final HashMap<String, String> options, final List<Feature> features)
+	{
 		this(id, layers, options, features, null);
 	}
 
 	public AjaxOpenLayersMap(final String id, final List<Layer> layers,
-			final HashMap<String, String> options,
-			final List<Feature> features, final List<FeatureStyle> featureStyles) {
+		final HashMap<String, String> options, final List<Feature> features,
+		final List<FeatureStyle> featureStyles)
+	{
 		super(id);
 		setOutputMarkupId(true);
 		this.layers = (layers == null) ? new ArrayList<Layer>() : layers;
-		this.options = (options == null) ? new HashMap<String, String>()
-				: options;
-		this.features = (features == null) ? new ArrayList<Feature>()
-				: features;
+		this.options = (options == null) ? new HashMap<String, String>() : options;
+		this.features = (features == null) ? new ArrayList<Feature>() : features;
 		this.featureStyles = (featureStyles == null) ? new ArrayList<FeatureStyle>()
-				: featureStyles;
-		add(new HeaderContributor(new IHeaderContributor() {
+			: featureStyles;
+		add(new Behavior()
+		{
+
 			private static final long serialVersionUID = 1L;
 
-			public void renderHead(IHeaderResponse response) {
-				response.renderOnDomReadyJavascript(getJSinit());
+			@Override
+			public void renderHead(Component c, IHeaderResponse response)
+			{
+				response.renderOnDomReadyJavaScript(getJSinit());
 			}
-		}));
-		for (Feature feature : this.features) {
+		});
+		for (Feature feature : this.features)
+		{
 			getFeatureVector(feature.getDisplayInLayer());
 		}
 	}
 
-	public static void onPageRenderHead(IHeaderResponse response,
-			String pathToOpenLayersJS) {
-		if (pathToOpenLayersJS == null
-				|| pathToOpenLayersJS.trim().length() == 0) {
+	public static void onPageRenderHead(IHeaderResponse response, String pathToOpenLayersJS)
+	{
+		if (pathToOpenLayersJS == null || pathToOpenLayersJS.trim().length() == 0)
+		{
 			pathToOpenLayersJS = "http://openlayers.org/api/";
-		} else {
+		}
+		else
+		{
 			pathToOpenLayersJS = pathToOpenLayersJS.trim();
-			if (!pathToOpenLayersJS.endsWith("/")) {
+			if (!pathToOpenLayersJS.endsWith("/"))
+			{
 				pathToOpenLayersJS = pathToOpenLayersJS + "/";
 			}
 		}
 		pathToOpenLayersJS = pathToOpenLayersJS + "OpenLayers.js";
-		response.renderJavascriptReference(pathToOpenLayersJS);
+		response.renderJavaScriptReference(pathToOpenLayersJS);
 		// TODO Import all other JS files which will be used later on
-		response.renderJavascriptReference(WicketEventReference.INSTANCE);
-		response.renderJavascriptReference(WicketAjaxReference.INSTANCE);
-		response.renderJavascriptReference(new JavascriptResourceReference(
-				AjaxOpenLayersMap.class, "wicket-openlayersmap.js"));
+		response.renderJavaScriptReference(WicketEventReference.INSTANCE);
+		response.renderJavaScriptReference(WicketAjaxReference.INSTANCE);
+		response.renderJavaScriptReference(new JavaScriptResourceReference(AjaxOpenLayersMap.class,
+			"wicket-openlayersmap.js"));
 	}
 
-	public void setExternalControls(boolean externalControls) {
+	public void setExternalControls(boolean externalControls)
+	{
 		this.externalControls = externalControls;
 	}
 
-	public boolean isExternalControls() {
+	public boolean isExternalControls()
+	{
 		return externalControls;
 	}
 
-	public void setBounds(Bounds bounds) {
+	public void setBounds(Bounds bounds)
+	{
 		this.bounds = bounds;
 	}
 
-	public Bounds getBounds() {
+	public Bounds getBounds()
+	{
 		return bounds;
 	}
 
-	public void setCenter(LonLat center) {
+	public void setCenter(LonLat center)
+	{
 		this.center = center;
-		if (AjaxRequestTarget.get() != null) {
-			AjaxRequestTarget.get().appendJavascript(getJSSetCenter());
+		if (AjaxRequestTarget.get() != null)
+		{
+			AjaxRequestTarget.get().appendJavaScript(getJSSetCenter());
 		}
 	}
 
-	public LonLat getCenter() {
+	public LonLat getCenter()
+	{
 		return center;
 	}
 
-	public void setZoom(Integer zoom) {
+	public void setZoom(Integer zoom)
+	{
 		this.zoom = zoom;
-		if (AjaxRequestTarget.get() != null) {
-			AjaxRequestTarget.get().appendJavascript(getJSSetCenter());
+		if (AjaxRequestTarget.get() != null)
+		{
+			AjaxRequestTarget.get().appendJavaScript(getJSSetCenter());
 		}
 	}
 
-	public Integer getZoom() {
+	public Integer getZoom()
+	{
 		return zoom;
 	}
 
-	public void setCenter(LonLat center, Integer zoom) {
+	public void setCenter(LonLat center, Integer zoom)
+	{
 		this.center = center;
 		this.zoom = zoom;
-		if (AjaxRequestTarget.get() != null) {
-			AjaxRequestTarget.get().appendJavascript(getJSSetCenter());
+		if (AjaxRequestTarget.get() != null)
+		{
+			AjaxRequestTarget.get().appendJavaScript(getJSSetCenter());
 		}
 	}
 
-	private String getJSSetCenter() {
-		if (center == null) {
+	private String getJSSetCenter()
+	{
+		if (center == null)
+		{
 			return "";
 		}
 		String transformation = "";
-		if (getBusinessLogicProjection() != null) {
-			transformation = ".transform(new OpenLayers.Projection(\""
-					+ getBusinessLogicProjection() + "\"), "
-					+ getJSinvokeNoLineEnd("map") + ".getProjectionObject())";
+		if (getBusinessLogicProjection() != null)
+		{
+			transformation = ".transform(new OpenLayers.Projection(\"" +
+				getBusinessLogicProjection() + "\"), " + getJSinvokeNoLineEnd("map") +
+				".getProjectionObject())";
 		}
 
-		if (zoom == null) {
-			return getJSinvoke("setCenter(" + center.getJSconstructor()
-					+ transformation + ")");
+		if (zoom == null)
+		{
+			return getJSinvoke("setCenter(" + center.getJSconstructor() + transformation + ")");
 		}
-		return getJSinvoke("setCenter(" + center.getJSconstructor()
-				+ transformation + ", " + zoom.toString() + ")");
+		return getJSinvoke("setCenter(" + center.getJSconstructor() + transformation + ", " +
+			zoom.toString() + ")");
 	}
 
-	private String getJSSetBusinessLogicProjection() {
-		if (businessLogicProjection == null) {
+	private String getJSSetBusinessLogicProjection()
+	{
+		if (businessLogicProjection == null)
+		{
 			return getJSinvoke("setBusinessLogicProjection(null)");
 		}
-		return getJSinvoke("setBusinessLogicProjection('"
-				+ businessLogicProjection + "')");
+		return getJSinvoke("setBusinessLogicProjection('" + businessLogicProjection + "')");
 	}
 
 	/**
@@ -203,10 +229,12 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	 *            control to add
 	 * @return This
 	 */
-	public IOpenLayersMap addControl(IJavascriptComponent control) {
+	public IOpenLayersMap addControl(IJavascriptComponent control)
+	{
 		controls.add(control);
-		if (AjaxRequestTarget.get() != null) {
-			AjaxRequestTarget.get().appendJavascript(control.getJSadd(this));
+		if (AjaxRequestTarget.get() != null)
+		{
+			AjaxRequestTarget.get().appendJavaScript(control.getJSadd(this));
 		}
 		return this;
 	}
@@ -218,16 +246,20 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	 *            overlay to add
 	 * @return This
 	 */
-	public IOpenLayersMap addOverlay(Overlay overlay) {
+	public IOpenLayersMap addOverlay(Overlay overlay)
+	{
 		overlays.add(overlay);
-		if (overlay instanceof Marker) {
-			((Marker) overlay).setMap(this);
+		if (overlay instanceof Marker)
+		{
+			((Marker)overlay).setMap(this);
 		}
-		for (OverlayListenerBehavior behavior : overlay.getBehaviors()) {
+		for (OverlayListenerBehavior behavior : overlay.getBehaviors())
+		{
 			add(behavior);
 		}
-		if (AjaxRequestTarget.get() != null) {
-			AjaxRequestTarget.get().appendJavascript(getJsOverlay(overlay));
+		if (AjaxRequestTarget.get() != null)
+		{
+			AjaxRequestTarget.get().appendJavaScript(getJsOverlay(overlay));
 		}
 		return this;
 	}
@@ -239,10 +271,12 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	 *            layer to add
 	 * @return This
 	 */
-	public IOpenLayersMap addLayer(Layer layer) {
+	public IOpenLayersMap addLayer(Layer layer)
+	{
 		layers.add(layer);
-		if (AjaxRequestTarget.get() != null) {
-			AjaxRequestTarget.get().appendJavascript(layer.getJSAddLayer(this));
+		if (AjaxRequestTarget.get() != null)
+		{
+			AjaxRequestTarget.get().appendJavaScript(layer.getJSAddLayer(this));
 		}
 		return this;
 	}
@@ -254,13 +288,14 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	 *            feature to add
 	 * @return This
 	 */
-	public IOpenLayersMap addFeature(Feature feature) {
+	public IOpenLayersMap addFeature(Feature feature)
+	{
 		features.add(feature);
 		feature.setMap(this);
-		if (AjaxRequestTarget.get() != null) {
-			AjaxRequestTarget.get().appendJavascript(
-					feature.getJSAddFeature(this, getFeatureVector(feature
-							.getDisplayInLayer())));
+		if (AjaxRequestTarget.get() != null)
+		{
+			AjaxRequestTarget.get().appendJavaScript(
+				feature.getJSAddFeature(this, getFeatureVector(feature.getDisplayInLayer())));
 		}
 		return this;
 	}
@@ -272,22 +307,25 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	 *            featureStyle to add
 	 * @return This
 	 */
-	public IOpenLayersMap addFeatureStyle(FeatureStyle featureStyle) {
+	public IOpenLayersMap addFeatureStyle(FeatureStyle featureStyle)
+	{
 		featureStyles.add(featureStyle);
-		if (AjaxRequestTarget.get() != null) {
-			AjaxRequestTarget.get().appendJavascript(
-					featureStyle.getJSAddStyle(this));
+		if (AjaxRequestTarget.get() != null)
+		{
+			AjaxRequestTarget.get().appendJavaScript(featureStyle.getJSAddStyle(this));
 		}
 		return this;
 	}
 
-	public IOpenLayersMap removeFeatureStyle(FeatureStyle featureStyle) {
-		while (featureStyles.contains(featureStyle)) {
+	public IOpenLayersMap removeFeatureStyle(FeatureStyle featureStyle)
+	{
+		while (featureStyles.contains(featureStyle))
+		{
 			featureStyles.remove(featureStyle);
 		}
-		if (AjaxRequestTarget.get() != null) {
-			AjaxRequestTarget.get().appendJavascript(
-					featureStyle.getJSRemoveStyle(this));
+		if (AjaxRequestTarget.get() != null)
+		{
+			AjaxRequestTarget.get().appendJavaScript(featureStyle.getJSRemoveStyle(this));
 		}
 		return this;
 	}
@@ -297,113 +335,135 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	 * 
 	 * @return This
 	 */
-	public IOpenLayersMap clearOverlays() {
-		for (Overlay overlay : overlays) {
-			for (OverlayListenerBehavior behavior : overlay.getBehaviors()) {
+	public IOpenLayersMap clearOverlays()
+	{
+		for (Overlay overlay : overlays)
+		{
+			for (OverlayListenerBehavior behavior : overlay.getBehaviors())
+			{
 				remove(behavior);
 			}
 		}
 		overlays.clear();
-		if (AjaxRequestTarget.get() != null) {
-			AjaxRequestTarget.get().appendJavascript(
-					getJSinvoke("clearOverlays()"));
+		if (AjaxRequestTarget.get() != null)
+		{
+			AjaxRequestTarget.get().appendJavaScript(getJSinvoke("clearOverlays()"));
 		}
 		return this;
 	}
 
 	/**
-	 * Generates the JavaScript used to instantiate this AjaxOpenLayersMap as an
-	 * JavaScript class on the client side.
+	 * Generates the JavaScript used to instantiate this AjaxOpenLayersMap as an JavaScript class on
+	 * the client side.
 	 * 
 	 * @return The generated JavaScript
 	 */
-	protected String getJSinit() {
+	protected String getJSinit()
+	{
 		StringBuffer js = new StringBuffer();
-		String jsMarkersLayerName = getMarkersLayerName() == null ? ", null"
-				: ", '" + getMarkersLayerName() + "'";
-		if (options.size() > 0) {
+		String jsMarkersLayerName = getMarkersLayerName() == null ? ", null" : ", '" +
+			getMarkersLayerName() + "'";
+		if (options.size() > 0)
+		{
 			js.append("\nvar options = {");
 			boolean first = true;
-			for (String key : options.keySet()) {
-				if (first) {
+			for (String key : options.keySet())
+			{
+				if (first)
+				{
 					first = false;
-				} else {
+				}
+				else
+				{
 					js.append(",\n");
 				}
 				js.append(key + ":" + options.get(key));
 			}
 			js.append("};\n");
-			js.append("new WicketOMap('" + this.getMarkupId() + "', options"
-					+ jsMarkersLayerName + ", true);\n");
-		} else {
-			js.append("new WicketOMap('" + this.getMarkupId() + "', null"
-					+ jsMarkersLayerName + ", true);\n");
+			js.append("new WicketOMap('" + this.getMarkupId() + "', options" + jsMarkersLayerName +
+				", true);\n");
 		}
-		for (FeatureStyle featureStyle : featureStyles) {
+		else
+		{
+			js.append("new WicketOMap('" + this.getMarkupId() + "', null" + jsMarkersLayerName +
+				", true);\n");
+		}
+		for (FeatureStyle featureStyle : featureStyles)
+		{
 			js.append(featureStyle.getJSAddStyle(this));
 		}
 		// This will add all layers which are used in features
-		for (Feature feature : features) {
+		for (Feature feature : features)
+		{
 			getFeatureVector(feature.getDisplayInLayer());
 		}
-		for (Layer layer : getLayers()) {
+		for (Layer layer : getLayers())
+		{
 			js.append(layer.getJSAddLayer(this));
 		}
-		for (Feature feature : features) {
-			js.append(feature.getJSAddFeature(this, getFeatureVector(feature
-					.getDisplayInLayer())));
+		for (Feature feature : features)
+		{
+			js.append(feature.getJSAddFeature(this, getFeatureVector(feature.getDisplayInLayer())));
 		}
 		js.append(getJSSetCenter());
-		if (center == null || zoom == null) {
+		if (center == null || zoom == null)
+		{
 			js.append(getJSinvoke("zoomToMaxExtent()"));
 		}
-		for (IJavascriptComponent control : controls) {
+		for (IJavascriptComponent control : controls)
+		{
 			js.append(control.getJSadd(this));
 		}
 		// Add the overlays.
-		for (Overlay overlay : overlays) {
+		for (Overlay overlay : overlays)
+		{
 			js.append(getJsOverlay(overlay));
 		}
-		if (businessLogicProjection != null) {
+		if (businessLogicProjection != null)
+		{
 			js.append(getJSSetBusinessLogicProjection());
 		}
 		return js.toString();
 	}
 
 	/**
-	 * Convenience method for generating a JavaScript call on this
-	 * AjaxOpenLayersMap with the given invocation.
+	 * Convenience method for generating a JavaScript call on this AjaxOpenLayersMap with the given
+	 * invocation.
 	 * 
 	 * @param invocation
 	 *            The JavaScript call to invoke on this AjaxOpenLayersMap.
 	 * @return The generated JavaScript.
 	 */
-	public String getJSinvoke(String invocation) {
-		return "Wicket.omaps['" + this.getMarkupId() + "']." + invocation
-				+ ";\n";
+	public String getJSinvoke(String invocation)
+	{
+		return "Wicket.omaps['" + this.getMarkupId() + "']." + invocation + ";\n";
 	}
 
-	public String getJSinvokeNoLineEnd(String invocation) {
+	public String getJSinvokeNoLineEnd(String invocation)
+	{
 		return "Wicket.omaps['" + this.getMarkupId() + "']." + invocation;
 	}
 
-	private String getJsOverlay(Overlay overlay) {
+	private String getJsOverlay(Overlay overlay)
+	{
 		String jsToRun = overlay.getJSadd(this) + "\n";
-		if (overlay instanceof Marker) {
-			Marker marker = (Marker) overlay;
+		if (overlay instanceof Marker)
+		{
+			Marker marker = (Marker)overlay;
 			// if marker has popup and there are no events attached then attach
 			// default listener
-			if (marker.getPopup() != null
-					&& (marker.getEvents() == null || marker.getEvents().length == 0)) {
+			if (marker.getPopup() != null &&
+				(marker.getEvents() == null || marker.getEvents().length == 0))
+			{
 				// add mousedown listener!
 				marker.addEvent(EventType.mousedown);
 			}
 			// TODO add listeners
-			if (marker.getIcon() != null) {
+			if (marker.getIcon() != null)
+			{
 				// prepend icon stuff
-				jsToRun = marker.getIcon().getSize().getJSadd()
-						+ marker.getIcon().getOffset().getJSadd()
-						+ marker.getIcon().getJSadd() + jsToRun;
+				jsToRun = marker.getIcon().getSize().getJSadd() +
+					marker.getIcon().getOffset().getJSadd() + marker.getIcon().getJSadd() + jsToRun;
 			}
 		}
 		return jsToRun;
@@ -416,10 +476,12 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	 *            control to remove
 	 * @return This
 	 */
-	public IOpenLayersMap removeControl(IJavascriptComponent control) {
+	public IOpenLayersMap removeControl(IJavascriptComponent control)
+	{
 		controls.remove(control);
-		if (AjaxRequestTarget.get() != null) {
-			AjaxRequestTarget.get().appendJavascript(control.getJSremove(this));
+		if (AjaxRequestTarget.get() != null)
+		{
+			AjaxRequestTarget.get().appendJavaScript(control.getJSremove(this));
 		}
 		return this;
 	}
@@ -431,15 +493,19 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	 *            overlay to remove
 	 * @return This
 	 */
-	public IOpenLayersMap removeOverlay(Overlay overlay) {
-		while (overlays.contains(overlay)) {
+	public IOpenLayersMap removeOverlay(Overlay overlay)
+	{
+		while (overlays.contains(overlay))
+		{
 			overlays.remove(overlay);
 		}
-		for (OverlayListenerBehavior behavior : overlay.getBehaviors()) {
+		for (OverlayListenerBehavior behavior : overlay.getBehaviors())
+		{
 			remove(behavior);
 		}
-		if (AjaxRequestTarget.get() != null) {
-			AjaxRequestTarget.get().appendJavascript(overlay.getJSremove(this));
+		if (AjaxRequestTarget.get() != null)
+		{
+			AjaxRequestTarget.get().appendJavaScript(overlay.getJSremove(this));
 		}
 		return this;
 	}
@@ -451,14 +517,16 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	 *            feature to remove
 	 * @return This
 	 */
-	public IOpenLayersMap removeFeature(Feature feature) {
-		while (features.contains(feature)) {
+	public IOpenLayersMap removeFeature(Feature feature)
+	{
+		while (features.contains(feature))
+		{
 			features.remove(feature);
 		}
-		if (AjaxRequestTarget.get() != null) {
-			AjaxRequestTarget.get().appendJavascript(
-					feature.getJSRemoveFeature(this, getFeatureVector(feature
-							.getDisplayInLayer())));
+		if (AjaxRequestTarget.get() != null)
+		{
+			AjaxRequestTarget.get().appendJavaScript(
+				feature.getJSRemoveFeature(this, getFeatureVector(feature.getDisplayInLayer())));
 		}
 		return this;
 	}
@@ -466,57 +534,75 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 	/**
 	 * Update state from a request to an AJAX target.
 	 */
-	public void update(AjaxRequestTarget target) {
+	public void update(AjaxRequestTarget target)
+	{
 		Request request = RequestCycle.get().getRequest();
 		// Attention: don't use setters as this will result in an endless
 		// AJAX request loop
-		center = LonLat.parseWithNames(request.getParameter("centerConverted"));
-		zoom = Integer.parseInt(request.getParameter("zoomConverted"));
-		bounds = Bounds.parseWithNames(request.getParameter("boundsConverted"));
+		center = LonLat.parseWithNames(request.getRequestParameters()
+			.getParameterValue("centerConverted")
+			.toString());
+		zoom = Integer.parseInt(request.getRequestParameters()
+			.getParameterValue("zoomConverted")
+			.toString());
+		bounds = Bounds.parseWithNames(request.getRequestParameters()
+			.getParameterValue("boundsConverted")
+			.toString());
 	}
 
-	public List<Layer> getLayers() {
+	public List<Layer> getLayers()
+	{
 		return layers;
 	}
 
-	public List<IJavascriptComponent> getControls() {
+	public List<IJavascriptComponent> getControls()
+	{
 		return controls;
 	}
 
-	public String getJSInstance() {
+	public String getJSInstance()
+	{
 		return "Wicket.omaps['" + this.getMarkupId() + "']";
 	}
 
-	public List<Overlay> getOverlays() {
+	public List<Overlay> getOverlays()
+	{
 		return Collections.unmodifiableList(overlays);
 	}
 
-	public void setLayers(List<Layer> layers) {
+	public void setLayers(List<Layer> layers)
+	{
 		this.layers = layers;
 	}
 
-	public void setOverlays(List<Overlay> overlays) {
+	public void setOverlays(List<Overlay> overlays)
+	{
 		clearOverlays();
-		for (Overlay overlay : overlays) {
+		for (Overlay overlay : overlays)
+		{
 			addOverlay(overlay);
 		}
 	}
 
-	public void setBusinessLogicProjection(String businessLogicProjection) {
+	public void setBusinessLogicProjection(String businessLogicProjection)
+	{
 		this.businessLogicProjection = businessLogicProjection;
-		if (AjaxRequestTarget.get() != null) {
-			AjaxRequestTarget.get().appendJavascript(
-					getJSSetBusinessLogicProjection());
+		if (AjaxRequestTarget.get() != null)
+		{
+			AjaxRequestTarget.get().appendJavaScript(getJSSetBusinessLogicProjection());
 		}
 	}
 
-	public String getBusinessLogicProjection() {
+	public String getBusinessLogicProjection()
+	{
 		return businessLogicProjection;
 	}
 
-	public Vector getFeatureVector(String name) {
+	public Vector getFeatureVector(String name)
+	{
 		Vector vector = featureVectors.get(name);
-		if (vector == null) {
+		if (vector == null)
+		{
 			vector = new Vector(name == null ? "Default" : name);
 			addLayer(vector);
 			featureVectors.put(name, vector);
@@ -524,24 +610,30 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 		return vector;
 	}
 
-	public void setMarkersLayerName(String markersLayerName) {
+	public void setMarkersLayerName(String markersLayerName)
+	{
 		this.markersLayerName = markersLayerName;
 	}
 
-	public String getMarkersLayerName() {
+	public String getMarkersLayerName()
+	{
 		return markersLayerName;
 	}
 
-	public void setVisibleOnlyLayers(String... names) {
-		if (AjaxRequestTarget.get() != null) {
+	public void setVisibleOnlyLayers(String... names)
+	{
+		if (AjaxRequestTarget.get() != null)
+		{
 			List<String> invisibleNames = new ArrayList<String>();
 			invisibleNames.add(markersLayerName);
 			invisibleNames.addAll(featureVectors.keySet());
 			StringBuffer visibleLayers = new StringBuffer();
 			String layerId = null;
-			for (String name : names) {
+			for (String name : names)
+			{
 				layerId = findLayerId(name);
-				if (layerId != null) {
+				if (layerId != null)
+				{
 					if (visibleLayers.length() > 0)
 						visibleLayers.append(",");
 					visibleLayers.append(layerId);
@@ -549,34 +641,36 @@ public class AjaxOpenLayersMap extends WebMarkupContainer implements
 				invisibleNames.remove(name);
 			}
 			StringBuffer invisibleLayers = new StringBuffer();
-			for (String name : invisibleNames) {
+			for (String name : invisibleNames)
+			{
 				layerId = findLayerId(name);
-				if (layerId != null) {
+				if (layerId != null)
+				{
 					if (invisibleLayers.length() > 0)
 						invisibleLayers.append(",");
 					invisibleLayers.append(layerId);
 				}
 			}
-			AjaxRequestTarget.get().appendJavascript(
-					getJSinvoke("setLayersVisibility(["
-							+ visibleLayers.toString() + "], ["
-							+ invisibleLayers.toString() + "])"));
+			AjaxRequestTarget.get().appendJavaScript(
+				getJSinvoke("setLayersVisibility([" + visibleLayers.toString() + "], [" +
+					invisibleLayers.toString() + "])"));
 		}
 	}
 
-	public void toggleLayer(String name) {
+	public void toggleLayer(String name)
+	{
 		String layerId = findLayerId(name);
-		if (layerId != null && AjaxRequestTarget.get() != null) {
-			AjaxRequestTarget.get().appendJavascript(
-					getJSinvoke("toggleLayer(" + layerId + ")"));
+		if (layerId != null && AjaxRequestTarget.get() != null)
+		{
+			AjaxRequestTarget.get().appendJavaScript(getJSinvoke("toggleLayer(" + layerId + ")"));
 		}
 	}
 
-	private String findLayerId(String name) {
+	private String findLayerId(String name)
+	{
 		Vector vector = featureVectors.get(name);
 		if (vector != null)
 			return vector.getId();
-		return markersLayerName != null && markersLayerName.equals(name) ? "1"
-				: null;
+		return markersLayerName != null && markersLayerName.equals(name) ? "1" : null;
 	}
 }

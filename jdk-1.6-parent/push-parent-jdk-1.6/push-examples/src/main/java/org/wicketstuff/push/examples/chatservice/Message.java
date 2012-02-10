@@ -35,7 +35,7 @@ public class Message implements Serializable
 	{
 		this.user = user;
 		this.message = message;
-		this.chatroomName = chatroom;
+		chatroomName = chatroom;
 	}
 
 	public String getChatroomName()

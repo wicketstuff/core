@@ -57,8 +57,8 @@ public class HomePage extends WicketExamplePage
 					{
 						map.removeOverlay(map.getOverlays().get(0));
 					}
-					final MyMarker marker = new MyMarker(latLng, new GMarkerOptions()
-							.draggable(true))
+					final MyMarker marker = new MyMarker(latLng,
+						new GMarkerOptions().draggable(true))
 					{
 						private static final long serialVersionUID = 1L;
 
@@ -72,7 +72,7 @@ public class HomePage extends WicketExamplePage
 								@Override
 								public void onEvent(AjaxRequestTarget target)
 								{
-									target.addComponent(repeaterParent);
+									target.add(repeaterParent);
 								}
 							};
 						}
@@ -87,7 +87,7 @@ public class HomePage extends WicketExamplePage
 								@Override
 								public void onEvent(AjaxRequestTarget target)
 								{
-									target.addComponent(repeaterParent);
+									target.add(repeaterParent);
 								}
 							};
 						}
@@ -99,12 +99,13 @@ public class HomePage extends WicketExamplePage
 					for (GOverlay myMarker : map.getOverlays())
 					{
 						final GOverlayPanel label = new GOverlayPanel(myMarker.getId(),
-								new CompoundPropertyModel<MyMarker>(myMarker));
+							new CompoundPropertyModel<MyMarker>(new Model<MyMarker>(
+								(MyMarker)myMarker)));
 						label.setOutputMarkupId(true);
 						rv.add(label);
 					}
 
-					target.addComponent(repeaterParent);
+					target.add(repeaterParent);
 				}
 			}
 		});
@@ -154,7 +155,7 @@ public class HomePage extends WicketExamplePage
 					{
 						overlay.addListener(GEvent.dragend, overlay.getDragendHandler());
 					}
-					target.addComponent(GOverlayPanel.this);
+					target.add(GOverlayPanel.this);
 				}
 
 			});
@@ -168,7 +169,7 @@ public class HomePage extends WicketExamplePage
 				{
 
 					return ((GOverlay)getDefaultModelObject()).getListeners().containsKey(
-							GEvent.dblclick);
+						GEvent.dblclick);
 				}
 			});
 			dblclickLabel.add(new AjaxEventBehavior("onclick")
@@ -188,7 +189,7 @@ public class HomePage extends WicketExamplePage
 					{
 						overlay.addListener(GEvent.dblclick, overlay.getDblclickHandler());
 					}
-					target.addComponent(GOverlayPanel.this);
+					target.add(GOverlayPanel.this);
 				}
 
 			});
@@ -202,6 +203,8 @@ public class HomePage extends WicketExamplePage
 	 */
 	private static abstract class MyMarker extends GMarker
 	{
+
+		private static final long serialVersionUID = 1L;
 
 		public MyMarker(GLatLng latLng, GMarkerOptions options)
 		{

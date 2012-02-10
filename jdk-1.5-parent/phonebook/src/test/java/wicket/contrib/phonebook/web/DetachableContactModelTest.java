@@ -28,8 +28,10 @@ import wicket.contrib.phonebook.ContactDao;
 /**
  * @author Kare Nuorteva
  */
-public class DetachableContactModelTest extends TestCase {
-	public void testLoad() throws Exception {
+public class DetachableContactModelTest extends TestCase
+{
+	public void testLoad() throws Exception
+	{
 		ContactDao dao = EasyMock.createMock(ContactDao.class);
 		Contact expected = new Contact();
 		expected.setId(007);

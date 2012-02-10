@@ -22,13 +22,14 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Page;
-import org.apache.wicket.PageParameters;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.protocol.http.WebResponse;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.http.WebResponse;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.string.StringValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,12 +61,12 @@ public class LogoutPage extends WebPage
 	@SuppressWarnings("unchecked")
 	public LogoutPage(final PageParameters parameters)
 	{
-		final String page = parameters.getString(REDIRECTPAGE_PARAM);
+		final StringValue page = parameters.get(REDIRECTPAGE_PARAM);
 		Class<? extends Page> pageClass;
-		if (page != null)
+		if (!page.isNull())
 			try
 			{
-				pageClass = (Class<? extends Page>)Class.forName(page);
+				pageClass = (Class<? extends Page>)Class.forName(page.toString());
 			}
 			catch (final ClassNotFoundException e)
 			{

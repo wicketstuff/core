@@ -33,20 +33,21 @@ import wicket.contrib.phonebook.ContactDao;
 
 /**
  * Delete the Contact.
- *
+ * 
  * @author igor
  */
 public class DeleteContactPage extends BasePage
 {
+	private static final long serialVersionUID = 1L;
 	private final Page backPage;
 	@SpringBean(name = "contactDao")
 	private ContactDao contactDao;
 
 	/**
-	 * Constructor. Display the summary (names) before asking for confirmation.
-	 * Note that if you don't need the page to be bookmarkable, you can use
-	 * whatever constructor you need, such as is done here.
-	 *
+	 * Constructor. Display the summary (names) before asking for confirmation. Note that if you
+	 * don't need the page to be bookmarkable, you can use whatever constructor you need, such as is
+	 * done here.
+	 * 
 	 * @param backPage
 	 *            The page that the user was on before coming here
 	 * @param contact
@@ -64,9 +65,8 @@ public class DeleteContactPage extends BasePage
 	private void addConfimButton()
 	{
 		/*
-		 * notice in mark-up this link is attached to <input type='button'/>
-		 * tag, the link is smart enough to know to generate an onclick instead
-		 * of href
+		 * notice in mark-up this link is attached to <input type='button'/> tag, the link is smart
+		 * enough to know to generate an onclick instead of href
 		 */
 		Link<String> confirmLink = new Link<String>("confirm")
 		{
@@ -77,14 +77,14 @@ public class DeleteContactPage extends BasePage
 			{
 				final Contact deleted = getContact();
 				contactDao.delete(deleted.getId());
-				String msg = MapVariableInterpolator.interpolate(getLocalizer().getString(
-						"status.deleted", this), new MicroMap<String, String>("name", deleted
-						.getFullName()));
+				String msg = MapVariableInterpolator.interpolate(
+					getLocalizer().getString("status.deleted", this), new MicroMap<String, String>(
+						"name", deleted.getFullName()));
 				getSession().info(msg);
-				setResponsePage(DeleteContactPage.this.backPage);
+				setResponsePage(backPage);
 			}
 		};
-		confirmLink.add(new AttributeModifier("value", true, new ResourceModel("confirm")));
+		confirmLink.add(new AttributeModifier("value", new ResourceModel("confirm")));
 		add(confirmLink);
 	}
 
@@ -97,20 +97,20 @@ public class DeleteContactPage extends BasePage
 			@Override
 			public void onClick()
 			{
-				String msg = MapVariableInterpolator.interpolate(getLocalizer().getString(
-						"status.cancelled", this), new MicroMap<String, String>("name",
-						getContact().getFullName()));
+				String msg = MapVariableInterpolator.interpolate(
+					getLocalizer().getString("status.cancelled", this),
+					new MicroMap<String, String>("name", getContact().getFullName()));
 				getSession().info(msg);
-				setResponsePage(DeleteContactPage.this.backPage);
+				setResponsePage(backPage);
 			}
 		};
-		cancelLink.add(new AttributeModifier("value", true, new ResourceModel("cancel")));
+		cancelLink.add(new AttributeModifier("value", new ResourceModel("cancel")));
 		add(cancelLink);
 	}
 
 	/**
 	 * Type-safe way to retrieve the contact from the page's model
-	 *
+	 * 
 	 * @return <code>Contact</code> instance stored in model
 	 */
 	private Contact getContact()

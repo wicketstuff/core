@@ -16,7 +16,7 @@
  */
 package org.wicketstuff.push.examples.pages;
 
-import org.apache.wicket.PageParameters;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.push.cometd.CometdPushService;
 
 /**
@@ -28,6 +28,6 @@ public class WicketCometdChatPage extends WicketAbstractChatPage
 
 	public WicketCometdChatPage(final PageParameters parameters)
 	{
-		super(parameters, "wicket-push-cometd implementation", CometdPushService.get());
+		super(parameters, "wicket-push-cometd implementation", CometdPushService.getRef());
 	}
 }

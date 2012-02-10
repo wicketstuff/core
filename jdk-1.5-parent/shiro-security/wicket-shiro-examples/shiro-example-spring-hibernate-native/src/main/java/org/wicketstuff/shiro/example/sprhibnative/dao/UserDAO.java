@@ -25,17 +25,18 @@ import org.wicketstuff.shiro.example.sprhibnative.model.User;
 /**
  * Data Access Object for User related operations.
  */
-public interface UserDAO {
+public interface UserDAO
+{
 
-    User getUser(Long userId);
+	User getUser(Long userId);
 
-    User findUser(String username);
+	User findUser(String username);
 
-    void createUser(User user);
+	void createUser(User user);
 
-    List<User> getAllUsers();
+	List<User> getAllUsers();
 
-    void deleteUser(Long userId);
+	void deleteUser(Long userId);
 
-    void updateUser(User user);
+	void updateUser(User user);
 }

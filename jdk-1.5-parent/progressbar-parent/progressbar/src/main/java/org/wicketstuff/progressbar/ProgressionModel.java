@@ -19,23 +19,25 @@ package org.wicketstuff.progressbar;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 
 /**
- * Typed model that returns the current progress for
- * the ProgressBar component.
- *
+ * Typed model that returns the current progress for the ProgressBar component.
+ * 
  * @author Christopher Hlubek (hlubek)
- *
+ * 
  */
-public abstract class ProgressionModel extends AbstractReadOnlyModel<Progression> {
+public abstract class ProgressionModel extends AbstractReadOnlyModel<Progression>
+{
+
+	private static final long serialVersionUID = 1L;
 
 	@Override
-	public final Progression getObject() {
+	public final Progression getObject()
+	{
 		return getProgression();
 	}
 
 	/**
-	 * Return the progress in form of a Progression
-	 * value object.
-	 *
+	 * Return the progress in form of a Progression value object.
+	 * 
 	 * @return the progress
 	 */
 	protected abstract Progression getProgression();

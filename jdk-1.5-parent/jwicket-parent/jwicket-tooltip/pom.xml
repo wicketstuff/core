@@ -22,10 +22,11 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>jwicket-parent</artifactId>
-        <version>1.4-SNAPSHOT</version>
+        <version>1.5-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 	
-    <artifactId>jwicket-tooltip</artifactId>
+    <artifactId>wicketstuff-jwicket-tooltip</artifactId>
 	<packaging>pom</packaging>
 	
     <name>jWicket: jQuery Wicket integration - tooltips</name>
@@ -59,7 +60,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jwicket-core</artifactId>
+            <artifactId>wicketstuff-jwicket-core</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

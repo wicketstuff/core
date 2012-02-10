@@ -26,32 +26,37 @@ import com.vividsolutions.jts.geom.Coordinate;
  * @author Marin Mandradjiev (marinsm@hotmail.com)
  * 
  */
-public class LineString extends Feature {
+public class LineString extends Feature
+{
 	private static final long serialVersionUID = -5542486035161202325L;
 
-	public LineString(List<Coordinate> coordinates) {
+	public LineString(List<Coordinate> coordinates)
+	{
 		super();
 		setCoordinates(coordinates);
 	}
 
-	public LineString(List<Coordinate> coordinates, FeatureStyle featureStyle) {
+	public LineString(List<Coordinate> coordinates, FeatureStyle featureStyle)
+	{
 		super(featureStyle);
 		setCoordinates(coordinates);
 	}
 
-	public LineString(List<Coordinate> coordinates, IOpenLayersMap map) {
+	public LineString(List<Coordinate> coordinates, IOpenLayersMap map)
+	{
 		super(map);
 		setCoordinates(coordinates);
 	}
 
-	public LineString(List<Coordinate> coordinates, FeatureStyle featureStyle,
-			IOpenLayersMap map) {
+	public LineString(List<Coordinate> coordinates, FeatureStyle featureStyle, IOpenLayersMap map)
+	{
 		super(featureStyle, map);
 		setCoordinates(coordinates);
 	}
 
 	@Override
-	protected String getType() {
+	protected String getType()
+	{
 		return "OpenLayers.Geometry.LineString";
 	}
 }

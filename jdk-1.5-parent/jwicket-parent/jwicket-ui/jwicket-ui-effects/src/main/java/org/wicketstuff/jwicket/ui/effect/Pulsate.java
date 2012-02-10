@@ -1,6 +1,7 @@
 package org.wicketstuff.jwicket.ui.effect;
 
 
+import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 
 
@@ -8,9 +9,13 @@ public class Pulsate extends AbstractJqueryUiEffect {
 
 	private static final long serialVersionUID = 1L;
 
+	public static final JQueryJavascriptResourceReference jQueryUiEffectsPulsateJs
+		= JQuery.isDebug()
+		? new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.pulsate.js")
+		: new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.pulsate.min.js");
 
 	public Pulsate() {
-		super(new JQueryJavascriptResourceReference(Pulsate.class, "jquery.effects.pulsate.min.js"));
+		super(jQueryUiEffectsPulsateJs);
 	}
 
 

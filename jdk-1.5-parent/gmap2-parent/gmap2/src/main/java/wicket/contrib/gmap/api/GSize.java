@@ -31,7 +31,7 @@ public class GSize implements GValue
 	 * Default serialVersionUID.
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private float width;
 	private float height;
 
@@ -55,7 +55,7 @@ public class GSize implements GValue
 	{
 		return new Constructor("GSize").add(width).add(height).toJS();
 	}
-	
+
 	@Override
 	public int hashCode()
 	{

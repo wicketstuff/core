@@ -15,80 +15,94 @@
  */
 package org.wicketstuff.datatable_autocomplete.tree;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import org.wicketstuff.datatable_autocomplete.tst.TernaryNode;
 import org.wicketstuff.datatable_autocomplete.tst.TernaryNodeVisitor;
 import org.wicketstuff.datatable_autocomplete.tst.TernarySearchTrie;
 
 import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
-import edu.uci.ics.jung.graph.OrderedKAryTree;
 
 /**
  * @author mocleiri
  * 
- * A JUNG graph to represent the TernarySearchTrie
- *
+ *         A JUNG graph to represent the TernarySearchTrie
+ * 
  */
-public class TSTGraph<C> extends DirectedSparseMultigraph<TernaryNode<C>, String> {
+public class TSTGraph<C> extends DirectedSparseMultigraph<TernaryNode<C>, String>
+{
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @param order
 	 */
-	public TSTGraph(TernarySearchTrie<C>trie) {
+	public TSTGraph(TernarySearchTrie<C> trie)
+	{
 		super();
-		
+
 		TernaryNode<C> rootNode = trie.getRoot();
-		
+
 		addVertex(rootNode);
-		
-		
-		buildNode (rootNode);
-		
-		
-		
+
+
+		buildNode(rootNode);
+
+
 	}
 
-	private void buildNode(TernaryNode<C> node) {
-		
-		node.visit(new TernaryNodeVisitor<C>() {
+	private void buildNode(TernaryNode<C> node)
+	{
 
-			/* (non-Javadoc)
+		node.visit(new TernaryNodeVisitor<C>()
+		{
+
+			private static final long serialVersionUID = 1L;
+
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see org.wicketstuff.datatable_autocomplete.tst.TernaryNodeVisitor#postVisit()
 			 */
-			public void postVisit() {
+			public void postVisit()
+			{
 				// TODO Auto-generated method stub
-				
+
 			}
 
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see org.wicketstuff.datatable_autocomplete.tst.TernaryNodeVisitor#preVisit()
 			 */
-			public void preVisit() {
+			public void preVisit()
+			{
 				// TODO Auto-generated method stub
-				
+
 			}
 
-			/* (non-Javadoc)
-			 * @see org.wicketstuff.datatable_autocomplete.tst.TernaryNodeVisitor#visit(org.wicketstuff.datatable_autocomplete.tst.TernaryNode)
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.wicketstuff.datatable_autocomplete.tst.TernaryNodeVisitor#visit(org.wicketstuff
+			 * .datatable_autocomplete.tst.TernaryNode)
 			 */
-			public void visit(TernaryNode<C> node) {
-				
+			public void visit(TernaryNode<C> node)
+			{
+
 				TernaryNode<C> parent = node.getParentNode();
-				
-				if (parent != null) {
+
+				if (parent != null)
+				{
 					addEdge("", node.getParentNode(), node);
-				
-				
+
+
 				}
-				
+
 				node.visit(this);
 			}
-			
+
 		});
 	}
-	
-	
+
 
 }

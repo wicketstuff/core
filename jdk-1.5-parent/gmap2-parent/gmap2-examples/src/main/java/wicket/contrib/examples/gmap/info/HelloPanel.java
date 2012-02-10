@@ -19,7 +19,7 @@ public class HelloPanel extends Panel
 	public HelloPanel()
 	{
 		super("content" + i++);
-		
+
 		add(new Label("label", HelloPanel.this.getId()));
 	}
 }

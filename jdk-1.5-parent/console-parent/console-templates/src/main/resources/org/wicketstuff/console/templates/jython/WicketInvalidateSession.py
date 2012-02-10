@@ -1,0 +1,1 @@
+page.getSession().invalidate()

@@ -1,7 +1,7 @@
 package org.wicketstuff.scala
 
 import org.apache.wicket.markup.html.basic.Label
-import org.apache.wicket.model.PropertyModel
+import org.apache.wicket.model.{Model,PropertyModel}
 
 import org.specs._
 import org.specs.runner._
@@ -9,7 +9,7 @@ import org.specs.runner._
 /**
  * @author Antony Stubbs
  */
-class ScalaWicketSpecs extends Specification with JUnit with ScalaTest with ScalaWicket {
+class ScalaWicketSpecs extends SpecificationWithJUnit with ScalaTest with ScalaWicket {
 
   "NullSafe operater" should {
     
@@ -62,12 +62,12 @@ class ScalaWicketSpecs extends Specification with JUnit with ScalaTest with Scal
       def takesAnJUList(list:java.util.List[Int]) = list
       val result = takesAnJUList(List(1,2,3))
       result.size mustBe 3
-      result.isInstanceOf[java.util.ArrayList[Int]] mustBe true
+      result.isInstanceOf[java.util.ArrayList[_]] mustBe true
     }
     "allow us to create a ListView out of a Scala List" in {
       import org.apache.wicket.markup.html.list._
       val wt = new WicketTester
-      val lv = new ListView[Int]("myListView", List(1,2,3)) {
+      val lv = new ListView[Int]("myListView", Model.ofList(List(1,2,3))) {
         override def populateItem(li:ListItem[Int]) = println("o Hi!")
       }
       lv.getModelObject.size mustBe 3

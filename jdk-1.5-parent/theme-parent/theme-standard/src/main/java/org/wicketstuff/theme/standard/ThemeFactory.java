@@ -15,18 +15,17 @@
  */
 package org.wicketstuff.theme.standard;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.wicket.behavior.HeaderContributor;
-import org.apache.wicket.markup.html.CSSPackageResource;
+import org.apache.wicket.Component;
+import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.wicketstuff.theme.IThemeFactory;
 
 public class ThemeFactory implements IThemeFactory
 {
-	public List<HeaderContributor> getHeaderContributors()
+
+	public void renderHead(Component component, IHeaderResponse response)
 	{
-		return Arrays.asList(CSSPackageResource.getHeaderContribution(ThemeFactory.class, "standard.css"));
+
+		response.renderCSSReference(new PackageResourceReference(ThemeFactory.class, "standard.css"));
 	}
 }

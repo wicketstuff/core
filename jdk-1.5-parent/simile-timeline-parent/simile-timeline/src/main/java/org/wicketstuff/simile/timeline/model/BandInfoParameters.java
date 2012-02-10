@@ -2,11 +2,13 @@ package org.wicketstuff.simile.timeline.model;
 
 import java.util.Date;
 
-public class BandInfoParameters {
-	public enum DateTime {
+public class BandInfoParameters
+{
+	public enum DateTime
+	{
 		SECOND, MINUTE, HOUR, WEEK, DAY, MONTH, YEAR
 	}
-	
+
 	private String width = "100px";
 	private DateTime intervalUnit = DateTime.MONTH;
 	private Integer intervalPixels = 70;
@@ -17,65 +19,104 @@ public class BandInfoParameters {
 	private Integer syncWith = 0;
 	private boolean highlight = true;
 	private boolean overview = false;
-	
-	public Integer getIntervalPixels() {
+
+	public Integer getIntervalPixels()
+	{
 		return intervalPixels;
 	}
-	public void setIntervalPixels(Integer intervalPixels) {
+
+	public void setIntervalPixels(Integer intervalPixels)
+	{
 		this.intervalPixels = intervalPixels;
 	}
-	public String getWidth() {
+
+	public String getWidth()
+	{
 		return width;
 	}
-	public void setWidth(String width) {
+
+	public void setWidth(String width)
+	{
 		this.width = width;
 	}
-	public DateTime getIntervalUnit() {
+
+	public DateTime getIntervalUnit()
+	{
 		return intervalUnit;
 	}
-	public void setIntervalUnit(DateTime intervalUnit) {
+
+	public void setIntervalUnit(DateTime intervalUnit)
+	{
 		this.intervalUnit = intervalUnit;
 	}
-	public Date getDate() {
+
+	public Date getDate()
+	{
 		return date;
 	}
-	public void setDate(Date date) {
+
+	public void setDate(Date date)
+	{
 		this.date = date;
 	}
-	public boolean isShowEventText() {
+
+	public boolean isShowEventText()
+	{
 		return showEventText;
 	}
-	public void setShowEventText(boolean showEventText) {
+
+	public void setShowEventText(boolean showEventText)
+	{
 		this.showEventText = showEventText;
 	}
-	public RawString getTheme() {
+
+	public RawString getTheme()
+	{
 		return theme;
 	}
-	public void setTheme(RawString theme) {
+
+	public void setTheme(RawString theme)
+	{
 		this.theme = theme;
 	}
-	public RawString getEventSource() {
+
+	public RawString getEventSource()
+	{
 		return eventSource;
 	}
-	public void setEventSource(RawString eventSource) {
+
+	public void setEventSource(RawString eventSource)
+	{
 		this.eventSource = eventSource;
 	}
-	public boolean isHighlight() {
+
+	public boolean isHighlight()
+	{
 		return highlight;
 	}
-	public void setHighlight(boolean highlight) {
+
+	public void setHighlight(boolean highlight)
+	{
 		this.highlight = highlight;
 	}
-	public void setSyncWith(Integer syncWith) {
+
+	public void setSyncWith(Integer syncWith)
+	{
 		this.syncWith = syncWith;
 	}
-	public Integer getSyncWith() {
+
+	public Integer getSyncWith()
+	{
 		return syncWith;
 	}
-	public void setOverview(boolean overview) {
+
+	public void setOverview(boolean overview)
+	{
 		this.overview = overview;
 	}
-	public boolean isOverview() {
+
+	public boolean isOverview()
+	{
 		return overview;
 	}
 }

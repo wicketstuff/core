@@ -5,10 +5,10 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>push-parent-jdk-1.5</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>push-timer</artifactId>
+	<artifactId>wicketstuff-push-timer</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Wicketstuff Push - Timer</name>
@@ -17,7 +17,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>push-core</artifactId>
+			<artifactId>wicketstuff-push-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

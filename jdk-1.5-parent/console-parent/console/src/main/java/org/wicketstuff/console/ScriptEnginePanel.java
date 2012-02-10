@@ -20,29 +20,33 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.IAjaxIndicatorAware;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.behavior.AttributeAppender;
-import org.apache.wicket.markup.html.CSSPackageResource;
-import org.apache.wicket.markup.html.JavascriptPackageResource;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
+import org.wicketstuff.console.clojure.ClojureScriptEnginePanel;
 import org.wicketstuff.console.engine.Engines;
 import org.wicketstuff.console.engine.IScriptEngine;
 import org.wicketstuff.console.engine.IScriptExecutionResult;
 import org.wicketstuff.console.engine.Lang;
+import org.wicketstuff.console.groovy.GroovyScriptEnginePanel;
+import org.wicketstuff.console.jython.JythonScriptEnginePanel;
+import org.wicketstuff.console.scala.ScalaScriptEnginePanel;
+import org.wicketstuff.console.templates.IScriptTemplateStore;
+import org.wicketstuff.console.templates.LangLabel;
+import org.wicketstuff.console.templates.ScriptTemplate;
 
 /**
  * Abstract panel for executing Scripts.
@@ -62,163 +66,154 @@ import org.wicketstuff.console.engine.Lang;
  * 
  * @author cretzel
  */
-public class ScriptEnginePanel extends Panel {
-
-	private final class ClearButton extends Button {
-		private static final long serialVersionUID = 1L;
-
-		private ClearButton(final String id) {
-			super(id);
-		}
-
-		@Override
-		protected void onInitialize() {
-			super.onInitialize();
-			add(new AttributeAppender("onclick", Model.of("clearTextarea('"
-					+ inputTf.getMarkupId() + "')"), ";"));
-
-		}
-
-	}
-
-	final class SubmitButton extends AjaxButton implements IAjaxIndicatorAware {
-		private static final long serialVersionUID = 1L;
-
-		private SubmitButton(final String id, final Form<?> form) {
-			super(id, form);
-		}
-
-		@Override
-		protected void onSubmit(final AjaxRequestTarget target,
-				final Form<?> form) {
-			process(target);
-		}
-
-		@Override
-		protected void onError(final AjaxRequestTarget target,
-				final Form<?> form) {
-
-		}
-
-		public String getAjaxIndicatorMarkupId() {
-			return indicator.getMarkupId();
-		}
-	}
+public class ScriptEnginePanel extends Panel
+{
 
 	private static final long serialVersionUID = 1L;
 
-	private static final ResourceReference CSS = new CompressedResourceReference(
-			ScriptEnginePanel.class, "ScriptEnginePanel.css");
+	private static final ResourceReference CSS = new PackageResourceReference(
+		ScriptEnginePanel.class, "ScriptEnginePanel.css");
 
-	private static final ResourceReference JS = new CompressedResourceReference(
-			ScriptEnginePanel.class, "ScriptEnginePanel.js");
+	private static final ResourceReference JS = new PackageResourceReference(
+		ScriptEnginePanel.class, "ScriptEnginePanel.js");
 
 	private String input;
 	private String output;
 	private String returnValue;
+	private boolean success;
 
-	private Label title;
+	private Label titleLabel;
+	private LangLabel titleLangLabel;
 	private Form<Void> form;
-	private TextArea<String> inputTf;
-	private TextArea<String> outputTf;
+	private TextArea<String> inputTa;
+	private OutputTextArea outputTa;
 	private TextField<String> returnValueTf;
 
 	private Image indicator;
-
-	private final IModel<String> titleModel;
-
 	private final Lang lang;
+	private final IScriptTemplateStore store;
 
-	public ScriptEnginePanel(final String id, final Lang lang) {
+	private RepeatingView controls;
+
+	public ScriptEnginePanel(final String id, final Lang lang)
+	{
 		this(id, lang, null);
 	}
 
-	public ScriptEnginePanel(final String id, final Lang lang,
-			final IModel<String> title) {
+
+	public ScriptEnginePanel(final String id, final Lang lang, final IScriptTemplateStore store)
+	{
 		super(id);
 		this.lang = lang;
-		this.titleModel = title != null ? title : Model.of("Wicket Console");
+		this.store = store;
 
 		init();
 	}
 
-	private void init() {
+	private void init()
+	{
 		setDefaultModel(new CompoundPropertyModel<ScriptEnginePanel>(this));
-
-		initCss();
-		initJs();
-
 		initComponents();
 	}
 
-	private void initCss() {
-		final ResourceReference css = getCSS();
-		if (css != null) {
-			add(CSSPackageResource.getHeaderContribution(css));
-		}
-	}
+	protected void initComponents()
+	{
 
-	private void initJs() {
-		add(JavascriptPackageResource.getHeaderContribution(JS));
-	}
+		titleLabel = new Label("title", Model.of("Wicket Console"));
+		add(titleLabel);
 
-	protected void initComponents() {
-		title = new Label("title", titleModel);
-		add(title);
+		titleLangLabel = new LangLabel("title-lang", Model.of(lang));
+		add(titleLangLabel);
 
 		form = new Form<Void>("form");
 		add(form);
 
-		inputTf = new TextArea<String>("input");
-		inputTf.setOutputMarkupId(true);
-		form.add(inputTf);
+		inputTa = new TextArea<String>("input");
+		inputTa.setOutputMarkupId(true);
+		form.add(inputTa);
 
-		add(new SubmitButton("submit", form));
-		add(new ClearButton("clear"));
+		controls = new RepeatingView("controls");
+		form.add(controls);
 
-		indicator = new Image("indicator",
-				AbstractDefaultAjaxBehavior.INDICATOR);
+		addControls(controls);
+
+		indicator = new Image("indicator", AbstractDefaultAjaxBehavior.INDICATOR);
 		indicator.setOutputMarkupId(true);
-		add(indicator);
+		form.add(indicator);
 
 		returnValueTf = new TextField<String>("returnValue");
 		returnValueTf.setOutputMarkupId(true);
 		add(returnValueTf);
 
-		outputTf = new TextArea<String>("output");
-		outputTf.setOutputMarkupId(true);
-		add(outputTf);
+		outputTa = new OutputTextArea("output", this);
+		outputTa.setOutputMarkupId(true);
+		add(outputTa);
 	}
 
-	protected ResourceReference getCSS() {
+
+	protected void addControls(final RepeatingView controls)
+	{
+		final Fragment submitfrag = new Fragment(controls.newChildId(), "submitFragment", this);
+		submitfrag.add(new SubmitButton("submit", this));
+		controls.add(submitfrag);
+
+		final Fragment clearfrag = new Fragment(controls.newChildId(), "clearFragment", this);
+		clearfrag.add(new ClearButton("clear", this));
+		controls.add(clearfrag);
+
+		controls.add(new StorePanel(controls.newChildId(), this));
+	}
+
+	protected ResourceReference getCSS()
+	{
 		return CSS;
 	}
 
-	protected void process(final AjaxRequestTarget target) {
+	@Override
+	public void renderHead(final IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		final ResourceReference css = getCSS();
+		if (css != null)
+		{
+			response.renderCSSReference(css);
+		}
+
+		response.renderJavaScriptReference(JS);
+	}
+
+	public void process(final AjaxRequestTarget target)
+	{
 
 		final IScriptEngine engine = newEngine();
 		final Map<String, Object> bindings = newBindings();
 
 		final IScriptExecutionResult result = engine.execute(input, bindings);
 
-		if (result.isSuccess()) {
+		if (result.isSuccess())
+		{
 			returnValue = String.valueOf(result.getReturnValue());
 			output = result.getOutput();
-		} else {
+			success = true;
+		}
+		else
+		{
 			returnValue = null;
-			output = String.format("%s\n\n%s", result.getOutput(),
-					result.getException());
+			output = String.format("%s\n\n%s", result.getOutput(), result.getException());
+			success = false;
 		}
 
-		target.addComponent(returnValueTf);
-		target.addComponent(outputTf);
+		target.add(returnValueTf, outputTa);
 	}
 
-	protected IScriptEngine newEngine() {
-		return Engines.create(lang);
+	protected IScriptEngine newEngine()
+	{
+		return Engines.getSingletonInstance(lang);
 	}
 
-	protected Map<String, Object> newBindings() {
+	protected Map<String, Object> newBindings()
+	{
 		final Map<String, Object> bindings = new HashMap<String, Object>();
 		bindings.put("application", Application.get());
 		bindings.put("page", getPage());
@@ -226,60 +221,128 @@ public class ScriptEnginePanel extends Panel {
 		return bindings;
 	}
 
-	public String getInput() {
+	public void setTitle(final IModel<String> title)
+	{
+		titleLabel.setDefaultModel(title);
+	}
+
+	public boolean isSuccess()
+	{
+		return success;
+	}
+
+	public String getInput()
+	{
 		return input;
 	}
 
-	public void setInput(final String input) {
+	public void setInput(final String input)
+	{
 		this.input = input;
 	}
 
-	public String getOutput() {
+	public String getOutput()
+	{
 		return output;
 	}
 
-	public void setOutput(final String output) {
+	public void setOutput(final String output)
+	{
 		this.output = output;
 	}
 
-	public String getReturnValue() {
+	public String getReturnValue()
+	{
 		return returnValue;
 	}
 
-	public void setReturnValue(final String returnValue) {
+	public void setReturnValue(final String returnValue)
+	{
 		this.returnValue = returnValue;
 	}
 
-	public TextArea<String> getInputTf() {
-		return inputTf;
+	public TextArea<String> getInputTf()
+	{
+		return inputTa;
 	}
 
-	public TextArea<String> getOutputTf() {
-		return outputTf;
+	public TextArea<String> getOutputTf()
+	{
+		return outputTa;
 	}
 
-	public TextField<String> getReturnValueTf() {
+	public TextField<String> getReturnValueTf()
+	{
 		return returnValueTf;
 	}
 
-	@Override
-	public void detachModels() {
-		super.detachModels();
-		if (titleModel != null) {
-			titleModel.detach();
-		}
+	Image getIndicator()
+	{
+		return indicator;
 	}
 
-	public static ScriptEnginePanel create(final String wicketId,
-			final Lang lang, final IModel<String> title) {
-		switch (lang) {
-		case GROOVY:
-			return new GroovyScriptEnginePanel(wicketId, title);
-		case CLOJURE:
-			return new ClojureScriptEnginePanel(wicketId, title);
-		default:
-			throw new UnsupportedOperationException("Unsupported language: "
-					+ lang);
+
+	public Form<Void> getForm()
+	{
+		return form;
+	}
+
+	public IScriptTemplateStore getStore()
+	{
+		return store;
+	}
+
+	public String getAjaxIndicatorMarkupId()
+	{
+		return indicator.getMarkupId();
+	}
+
+	public static ScriptEnginePanel create(final String wicketId, final Lang lang)
+	{
+		return create(wicketId, lang, null);
+	}
+
+	public static ScriptEnginePanel create(final String wicketId, final Lang lang,
+		final IScriptTemplateStore store)
+	{
+		ScriptEnginePanel enginePanel;
+		switch (lang)
+		{
+			case GROOVY :
+				enginePanel = new GroovyScriptEnginePanel(wicketId, store);
+				break;
+			case CLOJURE :
+				enginePanel = new ClojureScriptEnginePanel(wicketId, store);
+				break;
+			case SCALA :
+				enginePanel = new ScalaScriptEnginePanel(wicketId, store);
+				break;
+			case JYTHON :
+				enginePanel = new JythonScriptEnginePanel(wicketId, store);
+				break;
+			default :
+				throw new UnsupportedOperationException("Unsupported language: " + lang);
 		}
+
+		return enginePanel;
+	}
+
+
+	/**
+	 * Stores the current script in the store.
+	 * 
+	 * @param target
+	 * 
+	 * @param scriptTitle
+	 *            Title
+	 */
+	public void storeScriptTemplate(final AjaxRequestTarget target, final String scriptTitle)
+	{
+		if (store == null)
+		{
+			throw new UnsupportedOperationException("There is no store attached");
+		}
+
+		store.save(new ScriptTemplate(scriptTitle, getInput(), lang));
 	}
 }

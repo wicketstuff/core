@@ -23,92 +23,112 @@ import java.util.Map;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.behavior.AbstractBehavior;
-import org.apache.wicket.behavior.IBehavior;
-import org.apache.wicket.markup.html.IHeaderContributor;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.lang.Classes;
-import org.apache.wicket.util.string.JavascriptUtils;
+import org.apache.wicket.util.string.JavaScriptUtils;
 import org.apache.wicket.util.string.interpolator.MapVariableInterpolator;
 
 /**
- * Abstract validating behavior that all ClientAndServer...Behaviors can extend to
- * provide the base functionality needed to validate on the client side where possible.
+ * Abstract validating behavior that all ClientAndServer...Behaviors can extend to provide the base
+ * functionality needed to validate on the client side where possible.
  * 
  * @author Jeremy Thomerson
  */
-public abstract class AbstractClientAndServerValidatingBehavior extends AbstractBehavior implements IBehavior, IHeaderContributor {
+public abstract class AbstractClientAndServerValidatingBehavior<T> extends Behavior
+{
 	private static final long serialVersionUID = 1L;
-	
-	private FormComponent<?> mComponent;
+
+	private FormComponent<T> mComponent;
 	private Form<?> mForm;
-	
-	public AbstractClientAndServerValidatingBehavior(Form<?> form) {
-		if (form == null) {
-			throw new IllegalArgumentException("ClientAndServer validating behaviors require a non-null form");
+
+	public AbstractClientAndServerValidatingBehavior(Form<?> form)
+	{
+		if (form == null)
+		{
+			throw new IllegalArgumentException(
+				"ClientAndServer validating behaviors require a non-null form");
 		}
 		mForm = form;
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	@Override
-	public final void bind(Component component) {
+	public final void bind(Component component)
+	{
 		super.bind(component);
 		checkComponentIsFormComponent(component);
-		mComponent = (FormComponent<?>) component;
+		mComponent = (FormComponent<T>)component;
 
 		addServerSideValidator(mComponent);
-		
+
 		// make sure that both IDs are rendered
 		mComponent.setOutputMarkupId(true);
 		mForm.setOutputMarkupId(true);
 	}
 
-	protected final void checkComponentIsFormComponent(Component component) {
-		if ((component instanceof FormComponent) == false) {
-			throw new IllegalArgumentException("This behavior [" + Classes.simpleName(getClass()) + "] can only be added to a FormComponent");
+	protected final void checkComponentIsFormComponent(Component component)
+	{
+		if (component instanceof FormComponent == false)
+		{
+			throw new IllegalArgumentException("This behavior [" + Classes.simpleName(getClass()) +
+				"] can only be added to a FormComponent");
 		}
 	}
 
+
 	@Override
-	public final void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
-		
+	public final void renderHead(Component c, IHeaderResponse response)
+	{
+		super.renderHead(c, response);
+
 		// add our validation javascript file
-		response.renderJavascriptReference(new ResourceReference(getClass(), "validation.js"));
-		
+		response.renderJavaScriptReference(new PackageResourceReference(getClass(), "validation.js"));
+
 		// add a trigger that will add our validation to the forms' onSubmit methods
-		response.renderOnLoadJavascript("ClientAndServerValidator.addFormOnloadEvents();");
+		response.renderOnLoadJavaScript("ClientAndServerValidator.addFormOnloadEvents();");
 
 		CharSequence formID = jsEscape(mForm.getMarkupId());
 		CharSequence compID = jsEscape(mComponent.getMarkupId());
-		String message = Application.get().getResourceSettings().getLocalizer().getString(getResourceKey(), mComponent);
+		String message = Application.get()
+			.getResourceSettings()
+			.getLocalizer()
+			.getString(getResourceKey(), mComponent);
 		Map<String, Object> vars = variablesMap(mForm, mComponent);
-		boolean thrExc = Application.get().getResourceSettings().getThrowExceptionOnMissingResource();
+		boolean thrExc = Application.get()
+			.getResourceSettings()
+			.getThrowExceptionOnMissingResource();
 		MapVariableInterpolator mvi = new MapVariableInterpolator(message, vars, thrExc);
 		CharSequence escapedMessage = jsEscape(mvi.toString());
-		
-		String validator = createValidatorConstructorJavaScript(formID, compID, escapedMessage); 
+
+		String validator = createValidatorConstructorJavaScript(formID, compID, escapedMessage);
 		String js = "ClientAndServerValidator.registerValidator(" + validator + ");";
-		response.renderOnDomReadyJavascript(js.toString());
+		response.renderOnDomReadyJavaScript(js.toString());
 	}
 
-	protected final CharSequence jsEscape(CharSequence js) {
+	protected final CharSequence jsEscape(CharSequence js)
+	{
 		// TODO: this may need more escaping
-		return JavascriptUtils.escapeQuotes(js);
+		return JavaScriptUtils.escapeQuotes(js);
 	}
 
-	protected String createValidatorConstructorJavaScript(CharSequence formID, CharSequence compID, CharSequence escapedMessage) {
-		return "new " + getValidatorJSClassName() + "('" + formID + "', '" + compID + "', '" + escapedMessage + "')";
+	protected String createValidatorConstructorJavaScript(CharSequence formID, CharSequence compID,
+		CharSequence escapedMessage)
+	{
+		return "new " + getValidatorJSClassName() + "('" + formID + "', '" + compID + "', '" +
+			escapedMessage + "')";
 	}
 
-	protected String getValidatorJSClassName() {
+	protected String getValidatorJSClassName()
+	{
 		return Classes.simpleName(getClass());
 	}
 
-	protected Map<String, Object> variablesMap(Form<?> form, FormComponent<?> component) {
+	protected Map<String, Object> variablesMap(Form<?> form, FormComponent<T> component)
+	{
 		Map<String, Object> vars = new HashMap<String, Object>();
 		vars.put("form", form.getMarkupId());
 		vars.put("label", component.getMarkupId());
@@ -119,10 +139,11 @@ public abstract class AbstractClientAndServerValidatingBehavior extends Abstract
 	/**
 	 * @return the resource key where the 'failed' message for this validator can be found
 	 */
-	protected String getResourceKey() {
+	protected String getResourceKey()
+	{
 		return Classes.simpleName(getClass());
 	}
 
-	protected abstract void addServerSideValidator(FormComponent component);
+	protected abstract void addServerSideValidator(FormComponent<T> component);
 
 }

@@ -6,10 +6,10 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>datatables-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>datatables</artifactId>
+	<artifactId>wicketstuff-datatables</artifactId>
 	<packaging>jar</packaging>
 
 	<name>DataTables jQuery Plugin Integration</name>
@@ -19,7 +19,7 @@
 			<id>brunoborges</id>
 			<name>Bruno Borges</name>
 			<email>bruno.borges at gmail.com</email>
-			<timezone>-3</timezone>
+			<timezone>+1</timezone>
 		</developer>
 	</developers>
 
@@ -28,33 +28,6 @@
 			<plugin>
 				<groupId>net.alchim31.maven</groupId>
 				<artifactId>yuicompressor-maven-plugin</artifactId>
-				<version>1.1</version>
-				<executions>
-					<execution>
-						<phase>process-resources</phase>
-						<goals>
-							<!--goal>jslint</goal -->
-							<goal>compress</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<!-- these are 3rd party css + js files no need to see the warnings 
-						about them -->
-					<jswarn>false</jswarn>
-					<nosuffix>true</nosuffix>
-					<force>false</force>
-					<excludes>
-						<exclude>**/interface-*.js</exclude>
-						<exclude>**/*pack.js</exclude>
-						<exclude>**/compressed.css</exclude>
-						<exclude>**/crop.css</exclude>
-						<exclude>**/*.java</exclude>
-						<exclude>**/*.html</exclude>
-						<exclude>**/*.xml</exclude>
-						<exclude>**/*.properties</exclude>
-					</excludes>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -70,13 +43,11 @@
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib</artifactId>
-			<version>2.4</version>
 			<classifier>jdk15</classifier>
 		</dependency>
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>5.9</version>
 			<classifier>jdk15</classifier>
 		</dependency>
 	</dependencies>

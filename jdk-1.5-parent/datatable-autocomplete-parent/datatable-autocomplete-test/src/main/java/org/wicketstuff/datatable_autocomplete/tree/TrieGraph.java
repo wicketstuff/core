@@ -18,60 +18,50 @@ package org.wicketstuff.datatable_autocomplete.tree;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.wicketstuff.datatable_autocomplete.trie.ITrieNodeVisitor;
 import org.wicketstuff.datatable_autocomplete.trie.PatriciaTrie;
 import org.wicketstuff.datatable_autocomplete.trie.TrieNode;
 
-import edu.uci.ics.jung.algorithms.filters.KNeighborhoodFilter.EdgeType;
-import edu.uci.ics.jung.graph.AbstractTypedGraph;
 import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
-import edu.uci.ics.jung.graph.SparseMultigraph;
-import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 
 /**
  * @author mocleiri
- *
+ * 
  */
-public class TrieGraph<C> extends DirectedSparseMultigraph<TrieNode<C>, String> {
+public class TrieGraph<C> extends DirectedSparseMultigraph<TrieNode<C>, String>
+{
 
+	private static final long serialVersionUID = 1L;
 	private final AtomicLong counter = new AtomicLong();
-	
+
 	/**
 	 * @param order
 	 */
-	public TrieGraph(PatriciaTrie<C>trie) {
+	public TrieGraph(PatriciaTrie<C> trie)
+	{
 		super();
-		
+
 		addVertex(trie.getRoot());
-		
-		buildGraph (trie.getRoot());
-		
-		
-		
-		
-		
-		
-		
-		
+
+		buildGraph(trie.getRoot());
+
+
 	}
 
-	private void buildGraph(TrieNode<C> root) {
+	private void buildGraph(TrieNode<C> root)
+	{
 
 		List<TrieNode<C>> nodeList = root.getOrderedNodeList();
-		
-		for (TrieNode<C> trieNode : nodeList) {
-		
+
+		for (TrieNode<C> trieNode : nodeList)
+		{
+
 			addEdge(String.valueOf(counter.addAndGet(1)), root, trieNode);
-			
+
 			buildGraph(trieNode);
 		}
-		
-		
-	}
-	
-	
 
-	
-	
+
+	}
+
 
 }

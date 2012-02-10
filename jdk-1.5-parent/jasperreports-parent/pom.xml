@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>jdk-1.5-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jasperreports-parent</artifactId>
@@ -30,12 +30,6 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-
-	<scm>
-		<connection>scm:svn:${maven.scm.anonymous}@wicket-stuff.svn.sourceforge.net:/svnroot/wicket-stuff/trunk/wicketstuff-core/jasperreports-parent</connection>
-		<developerConnection>scm:svn:${maven.scm.user}@wicket-stuff.svn.sourceforge.net:/svnroot/wicket-stuff/trunk/wicketstuff-core/jasperreports-parent</developerConnection>
-		<url>http://wicket-stuff.svn.sourceforge.net/viewvc/wicket-stuff/trunk/wicketstuff-core/jasperreports-parent/</url>
-	</scm>
 
 	<mailingLists>
 		<mailingList>
@@ -88,57 +82,18 @@
 		</developer>
 	</developers>
 
-	<properties>
-		<jasperreports.version>3.5.3</jasperreports.version>
-	</properties>
-
-    <modules>
-    	<module>jasperreports</module>
-    	<module>jasperreports-examples</module>
-    </modules>
+	<modules>
+		<module>jasperreports</module>
+		<module>jasperreports-examples</module>
+	</modules>
 
 	<dependencies>
 		<!-- TEST -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.5</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>commons-beanutils</groupId>
-				<artifactId>commons-beanutils</artifactId>
-				<version>1.8.0</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-collections</groupId>
-				<artifactId>commons-collections</artifactId>
-				<version>3.2.1</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-digester</groupId>
-				<artifactId>commons-digester</artifactId>
-				<version>1.8.1</version>
-			</dependency>
-			<dependency>
-				<groupId>jasperreports</groupId>
-				<artifactId>jasperreports</artifactId>
-				<version>${jasperreports.version}</version>
-			</dependency>
-
-			<!-- Provided -->
-			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>servlet-api</artifactId>
-				<version>2.5</version>
-				<scope>provided</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<build>
 		<plugins>
@@ -153,29 +108,9 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<inherited>true</inherited>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<minmemory>128m</minmemory>
-					<maxmemory>256m</maxmemory>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
+				<version>2.1.1</version>
 				<configuration>
 					<templateDirectory>file:src/site/template/</templateDirectory>
 					<template>wicket-site.vm</template>

@@ -21,14 +21,15 @@ import org.apache.wicket.model.IModel;
 
 /**
  * @author mocleiri
- *
+ * 
  */
-public interface IModelProvider<C> extends IClusterable {
+public interface IModelProvider<C> extends IClusterable
+{
 
 	/**
 	 * 
 	 * @param obj
-	 * @return create a new model for the object provided.  Typically a loadable detachable model.
+	 * @return create a new model for the object provided. Typically a loadable detachable model.
 	 */
-	public IModel<C>model (C obj);
+	public IModel<C> model(C obj);
 }

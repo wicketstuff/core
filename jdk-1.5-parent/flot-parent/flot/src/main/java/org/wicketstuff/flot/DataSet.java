@@ -15,37 +15,44 @@
  */
 package org.wicketstuff.flot;
 
-import org.joda.time.DateTime;
-
 import java.io.Serializable;
 import java.util.Locale;
 
-public class DataSet implements Serializable {
+import org.joda.time.DateTime;
+
+public class DataSet implements Serializable
+{
 	/** Required by {@link Serializable} */
 	private static final long serialVersionUID = 1L;
 
 	private double x;
 	private double y;
-	
-	public DataSet(double x, double y) {
+
+	public DataSet(double x, double y)
+	{
 		this.x = x;
 		this.y = y;
 	}
-	
-	public DataSet(DateTime time, double value) {
-		this.x = time.getMillis();
-		this.y = value;
+
+	public DataSet(DateTime time, double value)
+	{
+		x = time.getMillis();
+		y = value;
 	}
-	
-	public double getX() {
+
+	public double getX()
+	{
 		return x;
 	}
-	
-	public double getY() {
+
+	public double getY()
+	{
 		return y;
 	}
-	
-	public String toString() {
+
+	@Override
+	public String toString()
+	{
 		return String.format(Locale.US, "[%f, %f]", x, y);
 	}
 }

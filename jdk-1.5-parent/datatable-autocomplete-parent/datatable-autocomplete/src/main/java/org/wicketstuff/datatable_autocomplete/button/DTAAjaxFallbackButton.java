@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.datatable_autocomplete.button;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxCallDecorator;
 import org.apache.wicket.ajax.IAjaxIndicatorAware;
@@ -27,7 +28,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.datatable_autocomplete.form.action.IFormSubmitAction;
+import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;
 
 /**
  * @author mocleiri
@@ -36,63 +37,60 @@ import org.wicketstuff.datatable_autocomplete.form.action.IFormSubmitAction;
  * 
  *         It will only render if the action is defined.
  * 
- *         It also allows for appending an onclick string. useful for poping an
- *         alert is state is missing on the client side.
+ *         It also allows for appending an onclick string. useful for poping an alert is state is
+ *         missing on the client side.
  * 
  *         Will by default handle the refresh on the invoking form.
  * 
  */
-public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
-		DTAButtonProvider, IAjaxIndicatorAware {
+public class DTAAjaxFallbackButton extends AjaxFallbackButton implements DTAButtonProvider,
+	IAjaxIndicatorAware
+{
 
 	/**
 	 * 
 	 */
-	private static final long					serialVersionUID			= 1829825558587963971L;
+	private static final long serialVersionUID = 1829825558587963971L;
 
-	private static final Logger					log							= LoggerFactory
-																					.getLogger(DTAAjaxFallbackButton.class);
+	private static final Logger log = LoggerFactory.getLogger(DTAAjaxFallbackButton.class);
 
-	private IFormSubmitAction				submitAction				= null;
+	private IFormOnSubmitAction submitAction = null;
 
-	private IAjaxCallDecorator					ajaxCallDecorator			= null;
+	private IAjaxCallDecorator ajaxCallDecorator = null;
 
-	private IModel<String>								preAjaxScriptModel			= null;
+	private IModel<String> preAjaxScriptModel = null;
 
-	private Form								form						= null;
+	private Form<?> form = null;
 
-	private boolean								actionDeterminesVisibility	= true;
+	private boolean actionDeterminesVisibility = true;
 
-	private int									callCounter					= 0;
+	private int callCounter = 0;
 
-	private final AjaxIndicatorAppender	indicatorAppender			= new AjaxIndicatorAppender();
+	private final AjaxIndicatorAppender indicatorAppender = new AjaxIndicatorAppender();
 
-	class DTAButtonAjaxCallDecorator extends AjaxCallDecorator {
+	static class DTAButtonAjaxCallDecorator extends AjaxCallDecorator
+	{
 
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = -8601609694500314263L;
-		private final IModel<String>	decoratingStringModel;
+		private final IModel<String> decoratingStringModel;
 
 		/**
 		 * @param delegate
 		 */
-		public DTAButtonAjaxCallDecorator(IModel<String> decoratingStringModel) {
+		public DTAButtonAjaxCallDecorator(IModel<String> decoratingStringModel)
+		{
 
 			this.decoratingStringModel = decoratingStringModel;
 
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * org.apache.wicket.ajax.calldecorator.AjaxCallDecorator#decorateScript
-		 * (java.lang.CharSequence)
-		 */
 		@Override
-		public CharSequence decorateScript(CharSequence script) {
+		public CharSequence decorateScript(Component c, CharSequence script)
+		{
+
 
 			String preDecorator = decoratingStringModel.getObject();
 
@@ -104,26 +102,19 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 
 	}
 
-	
-	/**
-	 * @param ajaxCallDecorator the ajaxCallDecorator to set
-	 */
-	protected final void setAjaxCallDecorator(IAjaxCallDecorator ajaxCallDecorator) {
-		this.ajaxCallDecorator = ajaxCallDecorator;
-	}
-
 	/**
 	 * @param actionDeterminesVisibility
 	 *            the actionDeterminesVisibility to set
 	 * 
-	 *            Normally the existance of an action is used to control the
-	 *            visiblilty of the button.
+	 *            Normally the existance of an action is used to control the visiblilty of the
+	 *            button.
 	 * 
-	 *            setting this to true will have the default behaviour. Setting
-	 *            to false will allow visibilty to be controlled externally.
+	 *            setting this to true will have the default behaviour. Setting to false will allow
+	 *            visibilty to be controlled externally.
 	 * 
 	 */
-	public void setActionDeterminesVisibility(boolean actionDeterminesVisibility) {
+	public void setActionDeterminesVisibility(boolean actionDeterminesVisibility)
+	{
 
 		this.actionDeterminesVisibility = actionDeterminesVisibility;
 	}
@@ -131,10 +122,11 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 	/**
 	 * @param id
 	 */
-	public DTAAjaxFallbackButton(String id, String label, Form form,
-			IFormSubmitAction submitAction) {
+	public DTAAjaxFallbackButton(String id, String label, Form<?> form,
+		IFormOnSubmitAction submitAction)
+	{
 
-		super(id, new Model(label), form);
+		super(id, Model.of(label), form);
 		this.form = form;
 		this.submitAction = submitAction;
 
@@ -142,8 +134,9 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 
 	}
 
-	public DTAAjaxFallbackButton(String id, String label, Form form,
-			IModel preAjaxScriptModel) {
+	public DTAAjaxFallbackButton(String id, String label, Form<?> form,
+		IModel<String> preAjaxScriptModel)
+	{
 
 		this(id, label, form);
 		this.form = form;
@@ -152,29 +145,32 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 
 	}
 
-	public DTAAjaxFallbackButton(String id, IModel labelModel, Form form) {
+	public DTAAjaxFallbackButton(String id, IModel<String> labelModel, Form<?> form)
+	{
 
 		super(id, labelModel, form);
 		this.form = form;
 		add(indicatorAppender);
 	}
 
-	public DTAAjaxFallbackButton(String id, String label, Form form) {
+	public DTAAjaxFallbackButton(String id, String label, Form<?> form)
+	{
 
-		this(id, new Model(label), form);
+		this(id, Model.of(label), form);
 		add(indicatorAppender);
 	}
 
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton#getForm()
 	 */
 	@Override
-	public Form getForm() {
+	public Form<?> getForm()
+	{
 
-		return this.form;
+		return form;
 
 	}
 
@@ -182,7 +178,8 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 	 * @param form
 	 *            the form to set
 	 */
-	public void setForm(Form form) {
+	public void setForm(Form<?> form)
+	{
 
 		this.form = form;
 		this.form.setOutputMarkupId(true);
@@ -191,13 +188,12 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton#onSubmit(org
-	 * .apache.wicket.ajax.AjaxRequestTarget,
-	 * org.apache.wicket.markup.html.form.Form)
+	 * @see org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton#onSubmit(org
+	 * .apache.wicket.ajax.AjaxRequestTarget, org.apache.wicket.markup.html.form.Form)
 	 */
 	@Override
-	protected final void onSubmit(AjaxRequestTarget target, Form form) {
+	protected final void onSubmit(AjaxRequestTarget target, Form<?> form)
+	{
 
 		callCounter++;
 
@@ -205,38 +201,33 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 			submitAction.onSubmit(target, form);
 
 	}
-	
-	
 
-	/* (non-Javadoc)
-	 * @see org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton#onError(org.apache.wicket.ajax.AjaxRequestTarget, org.apache.wicket.markup.html.form.Form)
-	 */
 	@Override
-	protected void onError(AjaxRequestTarget target, Form<?> form) {
-		
-			callCounter++;
+	protected void onError(AjaxRequestTarget target, Form<?> form)
+	{
 
-			if (submitAction != null)
-				submitAction.onError(target, form);
+		if (submitAction != null)
+			submitAction.onError(target, form);
 
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @seeorg.apache.wicket.ajax.markup.html.form.AjaxFallbackButton#
-	 * getAjaxCallDecorator()
+	 * @seeorg.apache.wicket.ajax.markup.html.form.AjaxFallbackButton# getAjaxCallDecorator()
 	 */
 	@Override
-	protected IAjaxCallDecorator getAjaxCallDecorator() {
+	protected IAjaxCallDecorator getAjaxCallDecorator()
+	{
 
-		if (this.ajaxCallDecorator == null) {
-			if (this.preAjaxScriptModel != null) {
-				this.ajaxCallDecorator = new DTAButtonAjaxCallDecorator(
-						this.preAjaxScriptModel);
+		if (ajaxCallDecorator == null)
+		{
+			if (preAjaxScriptModel != null)
+			{
+				ajaxCallDecorator = new DTAButtonAjaxCallDecorator(preAjaxScriptModel);
 			}
 		}
-		return this.ajaxCallDecorator;
+		return ajaxCallDecorator;
 
 	}
 
@@ -246,16 +237,18 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 	 * @see org.apache.wicket.Component#onBeforeRender()
 	 */
 	@Override
-	protected void onBeforeRender() {
+	protected void onBeforeRender()
+	{
 
-		if (actionDeterminesVisibility) {
-			if (this.submitAction == null)
+		if (actionDeterminesVisibility)
+		{
+			if (submitAction == null)
 				setVisible(false);
 			else
 				setVisible(true);
 		}
 
-		this.callCounter = 0;
+		callCounter = 0;
 
 		super.onBeforeRender();
 	}
@@ -264,18 +257,21 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 	 * @param submitAction
 	 *            the submitAction to set
 	 */
-	public void setSubmitAction(IFormSubmitAction submitAction) {
+	public void setSubmitAction(IFormOnSubmitAction submitAction)
+	{
 
 		this.submitAction = submitAction;
 	}
 
 
-	public DTAAjaxFallbackButton getButton() {
+	public DTAAjaxFallbackButton getButton()
+	{
 
-		if (!getId().equals(DTAButtonProvider.BUTTON_ID)) {
+		if (!getId().equals(DTAButtonProvider.BUTTON_ID))
+		{
 			// this is a problem
-			throw new RuntimeException("ID of button (" + getId()
-					+ " != DTAButtonProvider.BUTTON_ID");
+			throw new RuntimeException("ID of button (" + getId() +
+				" != DTAButtonProvider.BUTTON_ID");
 		}
 
 		return this;
@@ -284,23 +280,13 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.apache.wicket.ajax.IAjaxIndicatorAware#getAjaxIndicatorMarkupId()
+	 * @see org.apache.wicket.ajax.IAjaxIndicatorAware#getAjaxIndicatorMarkupId()
 	 */
-	public String getAjaxIndicatorMarkupId() {
+	public String getAjaxIndicatorMarkupId()
+	{
 
 		return indicatorAppender.getMarkupId();
 
-	}
-
-	
-	/* (non-Javadoc)
-	 * @see org.apache.wicket.markup.html.form.Button#getOnClickScript()
-	 */
-	@Override
-	protected String getOnClickScript() {
-		// TODO Auto-generated method stub
-		return super.getOnClickScript();
 	}
 
 	/*
@@ -309,7 +295,8 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 	 * @see org.apache.wicket.markup.html.form.FormComponent#onDetach()
 	 */
 	@Override
-	protected void onDetach() {
+	protected void onDetach()
+	{
 
 		super.onDetach();
 
@@ -318,5 +305,5 @@ public class DTAAjaxFallbackButton extends AjaxFallbackButton implements
 
 	}
 
-	
+
 }

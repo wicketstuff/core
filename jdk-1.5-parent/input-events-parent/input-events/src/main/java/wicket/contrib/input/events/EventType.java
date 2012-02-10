@@ -14,21 +14,27 @@
  * the License.
  */
 package wicket.contrib.input.events;
+
 /**
  * holds events
+ * 
  * @author Nino Martinez Wael (nino.martinez@jayway.dk)
- *
+ * 
  */
-public enum EventType {
-	dbclick,click,focus,blur, change,submit, onclick;
-	
+public enum EventType
+{
+	dbclick, click, focus, blur, change, submit, onclick;
+
 	private String eventType;
-	
-	private EventType() {
-		eventType=this.name();
-		
+
+	private EventType()
+	{
+		eventType = name();
+
 	}
-	public String getEvent() {
+
+	public String getEvent()
+	{
 		return eventType;
 	}
 

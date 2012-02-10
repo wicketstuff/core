@@ -22,63 +22,64 @@ import org.wicketstuff.progressbar.Progression;
 import org.wicketstuff.progressbar.spring.Task.Message;
 
 /**
- *
- *
- *
- * The task should always be referenced with the taskId in the Wicket page, so
- * there is no public getTask(...) method!
- *
+ * 
+ * 
+ * 
+ * The task should always be referenced with the taskId in the Wicket page, so there is no public
+ * getTask(...) method!
+ * 
  * @author Christopher Hlubek (hlubek)
- *
+ * 
  */
-public interface ITaskService {
+public interface ITaskService
+{
 
 	/**
 	 * Schedules the task, but doesn't start!
-	 *
-	 * @param task The task to schedule
+	 * 
+	 * @param task
+	 *            The task to schedule
 	 * @return Generated ID of the task
 	 */
 	Long schedule(Task task);
 
 	/**
 	 * Start the task with given taskId
-	 *
+	 * 
 	 * @param taskId
 	 */
 	void start(Long taskId);
 
 	/**
-	 * Cancel the task with given taskId. The task itself is responsible for
-	 * stopping, so this should be considered as some type of "soft interrupt".
-	 *
+	 * Cancel the task with given taskId. The task itself is responsible for stopping, so this
+	 * should be considered as some type of "soft interrupt".
+	 * 
 	 * @param taskId
 	 */
 	void cancel(Long taskId);
 
 	/**
-	 * Cleanup the task with the given taskId and remove it from the task
-	 * service.
-	 *
+	 * Cleanup the task with the given taskId and remove it from the task service.
+	 * 
 	 * Should always be called to free the task and prevent memory leaks!
-	 *
-	 * Since this not really safe to do from a web page AJAX callback, you
-	 * should always register the TaskService as a SESSION bean.
-	 *
+	 * 
+	 * Since this not really safe to do from a web page AJAX callback, you should always register
+	 * the TaskService as a SESSION bean.
+	 * 
 	 * @param taskId
 	 */
 	void finish(Long taskId);
 
 	/**
 	 * Schedule and start a task.
-	 *
+	 * 
 	 * Equal to:
-	 *
+	 * 
 	 * <pre>
 	 * Long taskId = taskService.schedule(task);
 	 * taskService.start(taskId);
 	 * </pre>
-	 *
+	 * 
 	 * @param task
 	 * @return taskId for this Task
 	 */
@@ -86,9 +87,9 @@ public interface ITaskService {
 
 	/**
 	 * Get the current progression of a task.
-	 *
+	 * 
 	 * @param taskId
-	 * @return
+	 * @return the current progression of a task.
 	 */
 	Progression getProgression(Long taskId);
 

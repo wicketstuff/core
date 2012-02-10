@@ -5,12 +5,15 @@ package com.inmethod.grid;
 
 import java.util.List;
 
+import com.inmethod.grid.common.AbstractGrid;
+
 /**
  * Allows to query the sort state of a grid. Sort state determines by which properties and in what
- * direction the data should be sorted. This interface allows data to be sorted by multiple properties 
- * at the same time.
+ * direction the data should be sorted. This interface allows data to be sorted by multiple
+ * properties at the same time.
  * <p>
  * Example of use:
+ * 
  * <pre>
  *  IGridSortState state = ... // acquire sort state
  *  
@@ -28,19 +31,21 @@ import java.util.List;
  * 
  * @author Matej Knopp
  */
-public interface IGridSortState {
+public interface IGridSortState
+{
 
 	/**
 	 * The direction.
-	 *  
+	 * 
 	 * @author Matej Knopp
 	 */
-	enum Direction {
+	enum Direction
+	{
 		/**
 		 * Ascending direction
 		 */
-		ASC, 
-		
+		ASC,
+
 		/**
 		 * Descending direction
 		 */
@@ -52,7 +57,8 @@ public interface IGridSortState {
 	 * 
 	 * @author Matej Knopp
 	 */
-	public interface ISortStateColumn {
+	public interface ISortStateColumn
+	{
 		/**
 		 * Returns the property name
 		 * 
@@ -60,13 +66,19 @@ public interface IGridSortState {
 		 * @return property name
 		 */
 		public String getPropertyName();
-		
+
 		/**
-		 * Returns the direction in which this column should be sorted 
+		 * Returns the direction in which this column should be sorted
+		 * 
 		 * @return direction
 		 */
 		public IGridSortState.Direction getDirection();
 	};
+
+	/**
+	 * @return the related grid, not null
+	 */
+	public AbstractGrid<?, ?> getGrid();
 
 	/**
 	 * Returns the sort state values for various columns sorted by column priority. Columns with

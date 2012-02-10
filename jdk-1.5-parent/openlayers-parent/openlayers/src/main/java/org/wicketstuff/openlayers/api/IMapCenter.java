@@ -23,7 +23,8 @@ import java.io.Serializable;
  * @author Marin Mandradjiev (marinsm@hotmail.com)
  * 
  */
-public interface IMapCenter extends Serializable {
+public interface IMapCenter extends Serializable
+{
 
 	public Double getLatitude();
 

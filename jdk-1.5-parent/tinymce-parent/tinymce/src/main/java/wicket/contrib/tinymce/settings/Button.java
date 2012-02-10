@@ -23,7 +23,7 @@ package wicket.contrib.tinymce.settings;
  * <li>default button - these buttons are defined in TinyMCESettings class.</li>
  * <li>plugin button - these buttons are defined by individual plugins.</li>
  * </ul>
- *
+ * 
  * @author Iulian-Corneliu COSTAN
  */
 public class Button extends wicket.contrib.tinymce.settings.Enum
@@ -61,7 +61,7 @@ public class Button extends wicket.contrib.tinymce.settings.Enum
 	public static final Button sup = new Button("sup");
 	public static final Button charmap = new Button("charmap");
 	public static final Button separator = new Button("separator");
-	
+
 	// others buttons added by plugins
 	public static final Button newdocument = new Button("newdocument");
 	public static final Button cut = new Button("cut");
@@ -73,7 +73,7 @@ public class Button extends wicket.contrib.tinymce.settings.Enum
 
 
 	protected Button(String name)
-    {
-        super(name);
-    }
+	{
+		super(name);
+	}
 }

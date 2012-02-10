@@ -1,22 +1,21 @@
 /*body {*/
-	/*background-color: white;*/
-	/*background-image: url('wicket-logo.png');*/
-	/*background-repeat: no-repeat;*/
-	/*background-attachment: fixed;*/
-	/*background-position: 96% 96%;*/
-	/*color: #6F6F6F;*/
-	/*font-family: 'Lucida Sans', 'Helvetica', 'Sans-serif', 'sans';*/
-	/*font-size: 9pt;*/
-	/*line-height: 1.8em;*/
-	/*padding: 10px 10px 10px 10px;*/
-	/*margin: 10px 10px 10px 10px;*/
+/*background-color: white;*/
+/*background-image: url('wicket-logo.png');*/
+/*background-repeat: no-repeat;*/
+/*background-attachment: fixed;*/
+/*background-position: 96% 96%;*/
+/*color: #6F6F6F;*/
+/*font-family: 'Lucida Sans', 'Helvetica', 'Sans-serif', 'sans';*/
+/*font-size: 9pt;*/
+/*line-height: 1.8em;*/
+/*padding: 10px 10px 10px 10px;*/
+/*margin: 10px 10px 10px 10px;*/
 /*}*/
-
 h1,h2,h3,h4,h5,h6,h7,h8 {
 	color: #E9601A;
 }
 
-#extitle, #wicket-extitle {
+#extitle,#wicket-extitle {
 	font-size: 12pt;
 	font-weight: bold;
 	color: #E9601A;
@@ -104,87 +103,77 @@ a.none {
 #wicket-inputForm label.non {
 	display: inline !important;
 }
-<!-- css style for TabPanel,thanks Wouter -->
-<!-- TODO clean up stuff that is not used by TabPanel-->
-#wicket-tab
-{
-	float:left;
-}
-#navigation
-{
-	float:left;
-	width:100%;
-	background:#DAE0D2 url("bg_blue.gif") repeat-x bottom;
-	font-size:100%;
-	line-height:normal;
+
+<!--
+css style for TabPanel,thanks Wouter --><!--TODO clean up stuff that is not used by TabPanel-->#wicket-tab
+	{
+	float: left;
 }
 
-#navigation ul
-{
-	margin:0;
-	padding:10px 10px 0;
-	list-style:none;
+#navigation {
+	float: left;
+	width: 100%;
+	background: #DAE0D2 url("bg_blue.gif") repeat-x bottom;
+	font-size: 100%;
+	line-height: normal;
 }
 
-#navigation li
-{
-	margin:0;
-	padding:0;
+#navigation ul {
+	margin: 0;
+	padding: 10px 10px 0;
+	list-style: none;
+}
+
+#navigation li {
+	margin: 0;
+	padding: 0;
 	display: inline;
 }
 
-#navigation a
-{
-	float:left;
-	background:url("left_both_blue.gif") no-repeat left top;
-	margin:0;
-	padding:0 0 0 9px;
-	border-bottom:1px solid #765;
-	text-decoration:none;
+#navigation a {
+	float: left;
+	background: url("left_both_blue.gif") no-repeat left top;
+	margin: 0;
+	padding: 0 0 0 9px;
+	border-bottom: 1px solid #765;
+	text-decoration: none;
 }
 
-#navigation a span
-{
-	float:left;
-	display:block;
-	background:url("right_both_blue.gif") no-repeat right top;
-	padding:5px 15px 4px 6px;
-	color:#444444;
+#navigation a span {
+	float: left;
+	display: block;
+	background: url("right_both_blue.gif") no-repeat right top;
+	padding: 5px 15px 4px 6px;
+	color: #444444;
 }
 
-#navigation a span
-{
-	float:none;
+#navigation a span {
+	float: none;
 }
 
-#navigation a:hover span
-{
-	color:#333;
-}
-#navigation .active
-{
-	background-position:0 -150px;
-	border-width:0;
+#navigation a:hover span {
+	color: #333;
 }
 
-#navigation .active span
-{
-	background-position:100% -150px;
-	padding-bottom:5px;
-	color:#333;
+#navigation .active {
+	background-position: 0 -150px;
+	border-width: 0;
 }
 
-#navigation a:hover
-{
-	background-position:0% -150px;
+#navigation .active span {
+	background-position: 100% -150px;
+	padding-bottom: 5px;
+	color: #333;
 }
 
-#navigation a:hover span
-{
-	background-position:100% -150px;
+#navigation a:hover {
+	background-position: 0% -150px;
 }
 
-#nestedExampleTree
-{
+#navigation a:hover span {
+	background-position: 100% -150px;
+}
+
+#nestedExampleTree {
 	width: 300px;
 }

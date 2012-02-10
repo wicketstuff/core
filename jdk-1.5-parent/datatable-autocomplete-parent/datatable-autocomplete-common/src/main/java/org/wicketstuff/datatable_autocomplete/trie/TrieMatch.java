@@ -19,34 +19,37 @@ import java.io.Serializable;
 import java.util.List;
 
 
-
 /**
  * @author mocleiri
  * 
- * Represents a match of a string into a Trie
- *
+ *         Represents a match of a string into a Trie
+ * 
  */
-public abstract class TrieMatch<Context> implements Serializable {
+public abstract class TrieMatch<Context> implements Serializable
+{
 
-	private static final long	serialVersionUID	= -6521672186761294453L;
+	private static final long serialVersionUID = -6521672186761294453L;
 
-	public static enum Type { PREFIX_MATCH, ANY_MATCH };
-	
+	public static enum Type
+	{
+		PREFIX_MATCH, ANY_MATCH
+	};
+
 	private Type type;
 	private final String matched;
-	
+
 	protected ITrieFilter<Context> nodeFilter;
-	
-	
-	public abstract List<Context>getWordList(int limit);
-	
-	
+
+
+	public abstract List<Context> getWordList(int limit);
+
 
 	/**
-	 * @param node
-	 * @param matchedPrefix
+	 * @param matched
+	 * @param type
 	 */
-	public TrieMatch(String matched, Type type, ITrieFilter<Context>filter) {
+	public TrieMatch(String matched, Type type, ITrieFilter<Context> filter)
+	{
 
 		super();
 		this.matched = matched;
@@ -55,25 +58,4 @@ public abstract class TrieMatch<Context> implements Serializable {
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-	
-
-	
-
-
-
-	
-	
-	
-	
 }

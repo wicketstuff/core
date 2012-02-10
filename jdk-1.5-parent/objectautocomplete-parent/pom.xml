@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>jdk-1.5-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>objectautocomplete-parent</artifactId>
+	<artifactId>wicketstuff-objectautocomplete-parent</artifactId>
 	<packaging>pom</packaging>
 
 	<name>ObjectAutoComplete - Parent</name>
@@ -35,26 +36,4 @@
 			<email>wicketstuff-objectautoselect@tichny.org</email>
 		</developer>
 	</developers>
-
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-idea-plugin</artifactId>
-				<configuration>
-					<downloadSources>true</downloadSources>
-					<linkModules>true</linkModules>
-					<jdkLevel>1.5</jdkLevel>
-				</configuration>
-			</plugin>
-		</plugins>
-
-		<extensions>
-			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-ftp</artifactId>
-				<version>1.0-beta-2</version>
-			</extension>
-		</extensions>
-	</build>
-
 </project>

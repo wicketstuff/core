@@ -24,11 +24,12 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 /**
  * @author gwyeva1
  */
-public class IbatisTableCreator extends SqlMapClientDaoSupport implements
-		InitializingBean {
+public class IbatisTableCreator extends SqlMapClientDaoSupport implements InitializingBean
+{
 
 	@Override
-	protected void initDao() throws Exception {
+	protected void initDao() throws Exception
+	{
 		super.initDao();
 		getSqlMapClientTemplate().insert("createTable", null);
 	}

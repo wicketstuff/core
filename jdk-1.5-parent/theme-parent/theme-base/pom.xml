@@ -3,11 +3,10 @@
 	<parent>
 		<artifactId>theme-parent</artifactId>
 		<groupId>org.wicketstuff</groupId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.wicketstuff</groupId>
-	<artifactId>theme-base</artifactId>
+	<artifactId>wicketstuff-theme-base</artifactId>
 	<name>theme-base</name>
 	<packaging>jar</packaging>
 	<description>Wicket Theme Base</description>

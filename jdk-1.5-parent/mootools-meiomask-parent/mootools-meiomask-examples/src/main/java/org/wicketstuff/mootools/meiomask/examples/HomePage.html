@@ -1,4 +1,4 @@
-<html>
+<html xmlns:wicket="http://wicket.apache.org">
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
         <title>Apache Wicket meioMask - a Mootools Mask Plugin</title>
@@ -21,10 +21,14 @@
             <h1>Fixed</h1>
             <div class="content">
                 <fieldset>
-                    <label>fixed Mask:</label>
-                    <input wicket:id="fixed" style="width: 200px" type="text" />
+                    <label>Custom Mask (Ex.: 0350 ml):</label>
+                    <input wicket:id="custom" style="width: 200px" type="text" />
                 </fieldset>
                 <a id="change-mask" title="change mask" href="#">change mask</a>
+                <fieldset>
+                    <label>Custom Mask 2: (Ex: 10:20)</label>
+                    <input wicket:id="custom2" style="width: 200px" type="text" />
+                </fieldset>
                 <fieldset>
                     <label>fixed.phone Mask:</label>
                     <input style="width: 200px" type="text" wicket:id="fixedPhone" />

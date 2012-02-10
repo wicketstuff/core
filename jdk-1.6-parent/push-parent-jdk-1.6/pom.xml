@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>jdk-1.6-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>push-parent-jdk-1.6</artifactId>
@@ -47,15 +47,13 @@
 	</modules>
 
 	<properties>
-		<cometd.version>2.1.1</cometd.version>
+		<cometd.version>2.4.0.RC1</cometd.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 

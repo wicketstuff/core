@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:wicket="http://wicket.apache.org">
+	<head>
+		<wicket:head>
+			<meta charset="UTF-8" />
+			<title>Wicketstuff Html5 FileApi Example</title>
+		</wicket:head>
+	</head>
+	<body>
+		<wicket:extend>
+			Select one or more files larger than 1 KB to trigger an ajax file size check.
+			<div wicket:id="feedback"></div>
+			<form wicket:id="form">
+				<ul>
+					<li>
+						Chose one or more files:
+						<input wicket:id="file" type="file" multiple="multiple" />
+					</li>
+					<li><input wicket:id="submit" type="submit" /></li>
+				</ul>
+			</form>
+		</wicket:extend>
+	</body>
+</html>

@@ -18,123 +18,118 @@
  */
 package org.wicketstuff.jslibraries;
 
+import java.io.Serializable;
+
 import org.wicketstuff.jslibraries.util.Assert;
 
-public class VersionDescriptor {
+public class VersionDescriptor implements Serializable
+{
+	private static final long serialVersionUID = 1L;
 
 	private final Library mLibrary;
-	private final Integer[] mVersions;
-	private final boolean mStopOnFirstMatch;
+	private final boolean mExact;
+	private final Version mVersion;
 
-	private Version mMatch;
-
-	private VersionDescriptor(Library library, boolean stopOnFirstMatch,
-			Integer... versions) {
+	private VersionDescriptor(Library library, boolean exact, Version version)
+	{
 
 		Assert.parameterNotNull(library, "library");
-		Assert.parameterNotNull(versions, "versions");
+		Assert.parameterNotNull(version, "version");
 
 		mLibrary = library;
-		mVersions = versions;
-		mStopOnFirstMatch = stopOnFirstMatch;
+		mVersion = version;
+		mExact = exact;
 	}
 
-	public Library getLibrary() {
+	public Library getLibrary()
+	{
 		return mLibrary;
 	}
 
-	public Version getVersion(final Provider provider) {
+	public Version getVersion(final Provider provider)
+	{
 		Assert.parameterNotNull(provider, "provider");
 
-		for (Version version : mLibrary.getVersions(provider)) {
-			if (matches(version)) {
-				mMatch = version;
-				if (mStopOnFirstMatch) {
+		Version mMatch = null;
+
+		for (Version version : mLibrary.getVersions(provider))
+		{
+			if (mExact)
+			{
+				if (version.equals(mVersion))
+				{
+					mMatch = version;
 					break;
 				}
 			}
+			else
+			{
+				if (version.matches(mVersion))
+				{
+					mMatch = version;
+					// continue to look for something better
+				}
+			}
 		}
+
 		return mMatch;
 	}
 
-	private boolean matches(Version version) {
-		Assert.parameterNotNull(version, "version");
-
-		if (mVersions.length > version.getNumbers().length) {
-			// we're more specific - don't match
-			return false;
-		}
-		for (int i = 0; i < mVersions.length; i++) {
-			if (mVersions[i] != null
-					&& !mVersions[i].equals(version.getNumbers()[i])) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	public static VersionDescriptor alwaysLatest(Library lib) {
+	public static VersionDescriptor alwaysLatest(Library lib)
+	{
 		return alwaysLatestOfVersion(lib, new int[0]);
 	}
 
-	public static VersionDescriptor exactVersion(Library lib, int... version) {
+	public static VersionDescriptor exactVersion(Library lib, int... numbers)
+	{
 
 		Assert.parameterNotNull(lib, "lib");
 
-		Integer[] nums = new Integer[version.length];
-		for (int i = 0; i < version.length; i++) {
-			nums[i] = version[i];
-		}
-		return new VersionDescriptor(lib, true, nums);
+		return new VersionDescriptor(lib, true, new Version(numbers));
 	}
 
-	public static VersionDescriptor alwaysLatestOfVersion(Library lib,
-			int... baseVersion) {
+	public static VersionDescriptor alwaysLatestOfVersion(Library lib, int... numbers)
+	{
 
 		Assert.parameterNotNull(lib, "lib");
 
-		Integer[] nums = new Integer[lib
-				.getMaxVersionDepth(LocalProvider.DEFAULT)];
-		for (int i = 0; i < nums.length; i++) {
-			nums[i] = i < baseVersion.length ? baseVersion[i] : null;
-		}
-		return new VersionDescriptor(lib, false, nums);
+		return new VersionDescriptor(lib, false, new Version(numbers));
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((mLibrary == null) ? 0 : mLibrary.hashCode());
-		result = prime * result + ((mMatch == null) ? 0 : mMatch.hashCode());
+		result = prime * result + (mLibrary == null ? 0 : mLibrary.hashCode());
 		return result;
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
+	public boolean equals(final Object obj)
+	{
+		if (this == obj)
+		{
 			return true;
 		}
-		if (obj == null) {
+		if (obj == null)
+		{
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass())
+		{
 			return false;
 		}
-		VersionDescriptor other = (VersionDescriptor) obj;
-		if (mLibrary == null) {
-			if (other.mLibrary != null) {
+		VersionDescriptor other = (VersionDescriptor)obj;
+		if (mLibrary == null)
+		{
+			if (other.mLibrary != null)
+			{
 				return false;
 			}
-		} else if (!mLibrary.equals(other.mLibrary)) {
-			return false;
 		}
-		if (mMatch == null) {
-			if (other.mMatch != null) {
-				return false;
-			}
-		} else if (!mMatch.equals(other.mMatch)) {
+		else if (!mLibrary.equals(other.mLibrary))
+		{
 			return false;
 		}
 		return true;

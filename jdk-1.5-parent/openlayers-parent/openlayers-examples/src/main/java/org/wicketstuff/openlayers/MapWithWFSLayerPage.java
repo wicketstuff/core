@@ -32,68 +32,83 @@ import org.wicketstuff.openlayers.proxy.WFSProxyBehavior;
 
 /**
  * @author mocleiri
- *
- * Shows how a WFS layer can be used.
  * 
- * Created from this example: http://openlayers.org/dev/examples/wfs.html
+ *         Shows how a WFS layer can be used.
+ * 
+ *         Created from this example: http://openlayers.org/dev/examples/wfs.html
  * 
  */
-public class MapWithWFSLayerPage extends WebPage {
+public class MapWithWFSLayerPage extends WebPage
+{
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 
 	 */
-	public MapWithWFSLayerPage() {
+	public MapWithWFSLayerPage()
+	{
 		super();
-		
-		List<Layer>layerList = new LinkedList<Layer>();
+
+		List<Layer> layerList = new LinkedList<Layer>();
 		HashMap<String, String> backgroundLayerOptions = new LinkedHashMap<String, String>();
-		
+
 		backgroundLayerOptions.put("layers", JSUtils.getQuotedString("basic"));
-		
+
 		HashMap<String, String> extraOptions = new LinkedHashMap<String, String>();
-		
+
 		extraOptions.put("isBaseLayer", "true");
-		
-		WMS backgroundLayer = new WMS("OpenLayers WMS",  "http://labs.metacarta.com/wms/vmap0", backgroundLayerOptions, extraOptions);
-		
+
+		WMS backgroundLayer = new WMS("OpenLayers WMS", "http://labs.metacarta.com/wms/vmap0",
+			backgroundLayerOptions, extraOptions);
+
 		layerList.add(backgroundLayer);
-		
+
 		Map<String, String> wfsLayerOptions = new LinkedHashMap<String, String>();
-		
+
 		wfsLayerOptions.put("typeName", JSUtils.getQuotedString("OWLS"));
 		wfsLayerOptions.put("maxFeatures", "10");
-		
-		Map<String, String> wfsLayerExtraOptions = new LinkedHashMap<String, String>();
-		
-		wfsLayerExtraOptions.put("featureClass", "OpenLayers.Feature.WFS");
-		
-		WFS wfsLayer = new WFS("Owl Survey", "http://www.bsc-eoc.org/cgi-bin/bsc_ows.asp?", wfsLayerOptions, wfsLayerExtraOptions);
-		
-		layerList.add(wfsLayer);
-		
-		final WFSProxyBehavior wfsProxy = new WFSProxyBehavior();
-		
-		OpenLayersMap map = new OpenLayersMap("map", true, layerList, new LinkedHashMap<String, String>()) {
 
-			/* (non-Javadoc)
+		Map<String, String> wfsLayerExtraOptions = new LinkedHashMap<String, String>();
+
+		wfsLayerExtraOptions.put("featureClass", "OpenLayers.Feature.WFS");
+
+		WFS wfsLayer = new WFS("Owl Survey", "http://www.bsc-eoc.org/cgi-bin/bsc_ows.asp?",
+			wfsLayerOptions, wfsLayerExtraOptions);
+
+		layerList.add(wfsLayer);
+
+		final WFSProxyBehavior wfsProxy = new WFSProxyBehavior();
+
+		OpenLayersMap map = new OpenLayersMap("map", true, layerList,
+			new LinkedHashMap<String, String>())
+		{
+
+			private static final long serialVersionUID = 1L;
+
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see org.wicketstuff.openlayers.OpenLayersMap#getJSinit()
 			 */
 			@Override
-			protected String getJSinit() {
-				return "OpenLayers.ProxyHost='"+wfsProxy.getProxyUrl(true)+"';\n" + super.getJSinit();
-			}};
-		
+			protected String getJSinit()
+			{
+				return "OpenLayers.ProxyHost='" + wfsProxy.getProxyUrl() + "';\n" +
+					super.getJSinit();
+			}
+		};
+
 		// this hides the mapers layer from the layer switcher
 		map.setShowMarkersInLayerSwitcher(false);
-		
+
 		map.addControl(Control.LayerSwitcher);
-		
+
 		map.setCenter(LonLat.parse("-100, 60"), 3);
-		
+
 		map.add(wfsProxy);
-		add(map); 
-		
+		add(map);
+
 	}
 
 

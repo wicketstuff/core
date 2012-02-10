@@ -17,7 +17,7 @@
 /*
  * Wicket Map2
  *
- * @author Martin Funk 
+ * @author Martin Funk
  */
 // Wicket Namespace
 var Wicket;
@@ -30,7 +30,7 @@ else
 Wicket.geocoder = new WicketClientGeocoder();
 
 function WicketClientGeocoder(){
-    this.coder = new google.maps.ClientGeocoder();
+    this.coder = new GClientGeocoder();
     
     this.getLatLng = function(callBackUrl, addressId){
     
@@ -66,7 +66,7 @@ function WicketMap2(id){
     this.map = new google.maps.Map2(document.getElementById(id));
     this.controls = {};
     this.overlays = {};
-    this.mapTypes = {};
+    
     this.onEvent = function(callBack, params){
         params['center'] = this.map.getCenter();
         params['bounds'] = this.map.getBounds();
@@ -172,15 +172,6 @@ function WicketMap2(id){
             case G_HYBRID_MAP:
                 return 'G_HYBRID_MAP';
                 break;
-            case G_AERIAL_MAP:
-                return 'G_AERIAL_MAP';
-                break;
-            case G_AERIAL_HYBRID_MAP:
-                return 'G_AERIAL_HYBRID_MAP';
-                break;
-            case G_PHYSICAL_MAP:
-                return 'G_PHYSICAL_MAP';
-                break;
             default:
                 return 'unknown';
                 break;
@@ -190,13 +181,6 @@ function WicketMap2(id){
     this.setMapType = function(mapType){
         this.map.setMapType(mapType);
     }
-    
-    this.addMapType = function(mapTypeId, mapType){
-        this.mapTypes[mapTypeId] = mapType;
-    	this.map.addMapType(mapType);
-    }
-    
-    
     
     this.setZoom = function(level){
         this.map.setZoom(level);

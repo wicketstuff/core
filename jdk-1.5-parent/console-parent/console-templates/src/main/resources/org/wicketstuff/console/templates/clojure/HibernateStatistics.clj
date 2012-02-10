@@ -1,4 +1,4 @@
-(let [sf (.getHibernateSessionFactory user/application)
+(let [sf (.getSessionFactory user/application)
       stats (.getStatistics sf)]
   (.setStatisticsEnabled stats true)
   (doseq [stat (.split (.toString stats) ",")]

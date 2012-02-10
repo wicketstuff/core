@@ -18,7 +18,7 @@ package org.wicketstuff.push.cometd;
 
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
@@ -27,15 +27,17 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.Component;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.markup.parser.XmlPullParser;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.template.PackagedTextTemplate;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.util.template.PackageTextTemplate;
 import org.cometd.server.CometdServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,22 +65,22 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 
 	private static final String DEFAULT_COMETD_PATH = guessCometdServletPath();
 
-	private static final ResourceReference COMETD = new CompressedResourceReference(
+	private static final ResourceReference COMETD = new PackageResourceReference(
 		CometdPushBehavior.class, "org/cometd.js");
-	private static final ResourceReference COMETD_ACK = new CompressedResourceReference(
+	private static final ResourceReference COMETD_ACK = new PackageResourceReference(
 		CometdPushBehavior.class, "org/cometd/AckExtension.js");
-	private static final ResourceReference COMETD_RELOAD = new CompressedResourceReference(
+	private static final ResourceReference COMETD_RELOAD = new PackageResourceReference(
 		CometdPushBehavior.class, "org/cometd/ReloadExtension.js");
-	private static final ResourceReference COMETD_TIMESTAMP = new CompressedResourceReference(
+	private static final ResourceReference COMETD_TIMESTAMP = new PackageResourceReference(
 		CometdPushBehavior.class, "org/cometd/TimeStampExtension.js");
-	private static final ResourceReference COMETD_TIMESYNC = new CompressedResourceReference(
+	private static final ResourceReference COMETD_TIMESYNC = new PackageResourceReference(
 		CometdPushBehavior.class, "org/cometd/TimeSyncExtension.js");
 
-	private static final PackagedTextTemplate TEMPLATE_INIT = new PackagedTextTemplate(
+	private static final PackageTextTemplate TEMPLATE_INIT = new PackageTextTemplate(
 		CometdPushBehavior.class, "CometdPushInit.js");
-	private static final PackagedTextTemplate TEMPLATE_EVENT_HANDLER = new PackagedTextTemplate(
+	private static final PackageTextTemplate TEMPLATE_EVENT_HANDLER = new PackageTextTemplate(
 		CometdPushBehavior.class, "CometdPushEventHandlerTemplate.js");
-	private static final PackagedTextTemplate TEMPLATE_SUBSCRIBE = new PackagedTextTemplate(
+	private static final PackageTextTemplate TEMPLATE_SUBSCRIBE = new PackageTextTemplate(
 		CometdPushBehavior.class, "CometdPushSubscribeTemplate.js");
 
 	/**
@@ -106,7 +108,7 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 				XmlTag elem;
 				// go down until servlet is found
 				do
-					elem = (XmlTag)parser.nextTag();
+					elem = parser.nextTag();
 				while (elem != null && !(elem.getName().equals("servlet") && elem.isOpen()));
 
 				// stop if elem is null
@@ -117,7 +119,7 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 				String servletName = null, servletClassName = null;
 				do
 				{
-					elem = (XmlTag)parser.nextTag();
+					elem = parser.nextTag();
 					if (elem.isOpen())
 						parser.setPositionMarker();
 					else if (elem.isClose() && elem.getName().equals("servlet-name"))
@@ -134,7 +136,7 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 
 				// go down until servlet-mapping is found
 				do
-					elem = (XmlTag)parser.nextTag();
+					elem = parser.nextTag();
 				while (elem != null && !(elem.getName().equals("servlet-mapping") && elem.isOpen()));
 
 				// stop if elem is null
@@ -145,7 +147,7 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 				String servletNameMapping = null;
 				do
 				{
-					elem = (XmlTag)parser.nextTag();
+					elem = parser.nextTag();
 					if (elem.isOpen())
 						parser.setPositionMarker();
 					else if (elem.isClose() && elem.getName().equals("servlet-name"))
@@ -157,7 +159,7 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 				// and the urlPattern
 				do
 				{
-					elem = (XmlTag)parser.nextTag();
+					elem = parser.nextTag();
 					if (elem.isOpen())
 						parser.setPositionMarker();
 					else if (elem.isClose() && elem.getName().equals("url-pattern"))
@@ -227,12 +229,12 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	private String _renderInitScript()
 	{
 		final Map<String, Object> params = new HashMap<String, Object>();
-		final String configurationType = Application.get().getConfigurationType();
-		if (configurationType.equalsIgnoreCase(Application.DEVELOPMENT))
-			params.put("logLevel", "info");
-		else
-			params.put("logLevel", "error");
+		params.put("isServerWebSocketTransport", CometdPushService.get()
+			.isWebSocketTransportAvailable());
 		params.put("cometdServletPath", getCometdServletPath());
+		params.put("logLevel",
+			Application.get().getConfigurationType() == RuntimeConfigurationType.DEVELOPMENT
+				? "info" : "error");
 		return TEMPLATE_INIT.asString(params);
 	}
 
@@ -287,21 +289,21 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void renderHead(final IHeaderResponse response)
+	public void renderHead(final Component c, final IHeaderResponse response)
 	{
-		super.renderHead(response);
+		super.renderHead(c, response);
 
-		response.renderJavascriptReference(COMETD);
+		response.renderJavaScriptReference(COMETD);
 
 		// Add all extension...
-		response.renderJavascriptReference(COMETD_ACK);
-		response.renderJavascriptReference(COMETD_RELOAD);
-		response.renderJavascriptReference(COMETD_TIMESTAMP);
-		response.renderJavascriptReference(COMETD_TIMESYNC);
+		response.renderJavaScriptReference(COMETD_ACK);
+		response.renderJavaScriptReference(COMETD_RELOAD);
+		response.renderJavaScriptReference(COMETD_TIMESTAMP);
+		response.renderJavaScriptReference(COMETD_TIMESYNC);
 
-		response.renderJavascript(_renderInitScript(), "cometd-push-initialization");
-		response.renderJavascript(_renderEventHandlerScript(), null);
-		response.renderJavascript(_renderSubscribeScript(), null);
+		response.renderJavaScript(_renderInitScript(), "cometd-push-initialization");
+		response.renderJavaScript(_renderEventHandlerScript(), null);
+		response.renderJavaScript(_renderSubscribeScript(), null);
 	}
 
 	/**
@@ -316,10 +318,7 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 		for (final Entry<CometdPushNode, IPushEventHandler> entry : _handlers.entrySet())
 		{
 			final CometdPushNode node = entry.getKey();
-			for (final Iterator<CometdPushEventContext<?>> it = pushService.pollEvents(node)
-				.iterator(); it.hasNext();)
-			{
-				final CometdPushEventContext<?> ctx = it.next();
+			for (final CometdPushEventContext<?> ctx : (List<CometdPushEventContext<?>>)pushService.pollEvents(node))
 				try
 				{
 					entry.getValue().onEvent(target, ctx.getEvent(), node, ctx);
@@ -328,8 +327,6 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 				{
 					LOG.error("Failed while processing event", ex);
 				}
-
-			}
 		}
 	}
 }

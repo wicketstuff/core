@@ -15,28 +15,29 @@
  */
 package org.wicketstuff.jqplot.behavior;
 
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  * 
  * @author inaiat
  */
-public class JQueryBehavior extends AbstractBehavior
+public class JQueryBehavior extends Behavior
 {
 
 	private static final long serialVersionUID = -4595769182088437234L;
 
-	private static final ResourceReference JQUERY_JS = new JavascriptResourceReference(
+	private static final ResourceReference JQUERY_JS = new JavaScriptResourceReference(
 			JqPlotBehavior.class, "jquery.min.js");
 
 	@Override
-	public void renderHead(IHeaderResponse response)
+	public void renderHead(Component component, IHeaderResponse response)
 	{
-		super.renderHead(response);
-		response.renderJavascriptReference(JQUERY_JS);
+		super.renderHead(component, response);
+		response.renderJavaScriptReference(JQUERY_JS);
 	}
 
 

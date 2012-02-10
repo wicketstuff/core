@@ -18,8 +18,8 @@
 package wicket.contrib.tinymce.settings;
 
 /**
- * This plugin adds directionality icons to TinyMCE that enables TinyMCE to
- * better handle languages that is written from right to left.
+ * This plugin adds directionality icons to TinyMCE that enables TinyMCE to better handle languages
+ * that is written from right to left.
  * 
  * @author Iulian-Corneliu COSTAN
  */

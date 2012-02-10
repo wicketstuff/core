@@ -16,15 +16,17 @@
  */
 package org.wicketstuff.shiro.wicket.page.store;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.io.Serializable;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.apache.wicket.Application;
 import org.apache.wicket.Page;
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.protocol.http.pagestore.AbstractPageStore;
+import org.apache.wicket.page.IManageablePage;
+import org.apache.wicket.pageStore.IPageStore;
+import org.apache.wicket.util.lang.Args;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,10 +51,9 @@ import org.slf4j.LoggerFactory;
  * @author Les Hazlewood
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
-public class SessionPageStore extends AbstractPageStore
+public class SessionPageStore implements IPageStore
 {
 	private static final Logger LOG = LoggerFactory.getLogger(SessionPageStore.class);
-
 	private static final String PAGE_MAP_SESSION_KEY = SessionPageStore.class.getName() +
 		"_PAGE_CACHE_MANAGER_SESSION_KEY";
 
@@ -62,8 +63,7 @@ public class SessionPageStore extends AbstractPageStore
 
 	public SessionPageStore()
 	{
-		MAX_PAGE_MAP_SIZE = DEFAULT_MAX_PAGES;
-		LOG.info("Created SessionPageStore: unlimited number of pages allowed.");
+		this(DEFAULT_MAX_PAGES);
 	}
 
 	public SessionPageStore(final int maxPageMapSize)
@@ -81,14 +81,38 @@ public class SessionPageStore extends AbstractPageStore
 		}
 	}
 
+	public boolean containsPage(final String sessionId, final int pageId)
+	{
+		return getPageCacheManager(sessionId).getPageCache().containsPage(pageId);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean containsPage(final String sessionId, final String pageMapName, final int pageId,
-		final int pageVersion)
+	public IManageablePage convertToPage(final Object page)
 	{
-		return getPageCacheManager(sessionId).getPageCache(pageMapName).containsPage(pageId,
-			pageVersion);
+		if (page == null)
+			return null;
+
+		if (page instanceof IManageablePage)
+			return (IManageablePage)page;
+
+		if (page instanceof byte[])
+			return deserializePage((byte[])page);
+
+		throw new IllegalArgumentException("Unknown object type " + page.getClass().getName());
+
+	}
+
+	protected IManageablePage deserializePage(final byte data[])
+	{
+		// TODO: test this, Serializer replacing old
+		// WicketObjects.byteArrayToObject(data);
+		// call
+		return (IManageablePage)Application.get()
+			.getFrameworkSettings()
+			.getSerializer()
+			.deserialize(data);
 	}
 
 	/**
@@ -107,13 +131,12 @@ public class SessionPageStore extends AbstractPageStore
 	/**
 	 * {@inheritDoc}
 	 */
-	public <T> Page getPage(final String sessionId, final String pageMapName, final int id,
-		final int versionNumber, final int ajaxVersionNumber)
+	public Page getPage(final String sessionId, final int pageId)
 	{
-		final SerializedPageWrapper wrapper = getPageCacheManager(sessionId).getPageCache(
-			pageMapName).getPage(id, versionNumber, ajaxVersionNumber);
-		final SerializedPage sPage = wrapper != null ? (SerializedPage)wrapper.getPage() : null;
-		return sPage != null ? deserializePage(sPage.getData(), versionNumber) : null;
+		final SerializedPageWrapper wrapper = getPageCacheManager(sessionId).getPageCache()
+			.getPage(pageId);
+		final byte[] sPage = wrapper != null ? (byte[])wrapper.getPage() : null;
+		return (Page)(sPage != null ? deserializePage(sPage) : null);
 	}
 
 	protected PageCacheManager getPageCacheManager(final String sessionId)
@@ -141,21 +164,16 @@ public class SessionPageStore extends AbstractPageStore
 			 * this should _always_ be the same. If not, something is seriously wrong:
 			 */
 			if (session != null && sessionId != null && !sessionId.equals(session.getId()))
-			{
-				final String msg = "The specified Wicket sessionId [" +
-					sessionId +
-					"] is not the same as JSecurity's " +
-					"current Subject Session with id [" +
-					session.getId() +
-					"], indicating the Wicket request's " +
-					"session is not the same as JSecurity's current Subject Session.  The two must always be " +
-					"equal when using the " +
-					getClass().getName() +
-					" implementation.  If you're seeing this " +
-					"exception, ensure you have configured JSecurity to use Enterprise Sessions and not " +
-					"(the default) HTTP-only Sessions.";
-				throw new WicketRuntimeException(msg);
-			}
+				throw new WicketRuntimeException(
+					"The specified Wicket sessionId [" +
+						sessionId +
+						"] is not the same as Shiro's current Subject Session with id [" +
+						session.getId() +
+						"], indicating the Wicket request's session is not the same as Shiro's current Subject Session. " +
+						"The two must always be equal when using the " +
+						getClass().getName() +
+						" implementation. " +
+						"If you're seeing this exception, ensure you have configured Shiro to use Enterprise Sessions and not (the default) HTTP-only Sessions.");
 		}
 		return session;
 	}
@@ -168,9 +186,6 @@ public class SessionPageStore extends AbstractPageStore
 		return session;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public void pageAccessed(final String sessionId, final Page page)
 	{
 		// nothing to do
@@ -179,38 +194,61 @@ public class SessionPageStore extends AbstractPageStore
 	/**
 	 * {@inheritDoc}
 	 */
-	public void removePage(final String sessionId, final String pageMapName, final int id)
+	public Serializable prepareForSerialization(final String sessionId, final Object page)
 	{
-		if (id == -1)
-		{
-			LOG.debug("Removing page map [{}]", pageMapName);
-			getPageCacheManager(sessionId).removePageCache(pageMapName);
-		}
-		else
-		{
-			LOG.debug("Removing page with id [{}] from page map [{}]", id, pageMapName);
-			getPageCacheManager(sessionId).getPageCache(pageMapName).removePage(id);
-		}
-	}
-
-	protected Collection<SerializedPageWrapper> serialize(final Page page)
-	{
-		final Collection<SerializedPage> serializedPages = serializePage(page);
-		return wrap(serializedPages);
+		return null;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void storePage(final String sessionId, final Page page)
+	public void removePage(final String sessionId, final int pageId)
 	{
-		final Collection<SerializedPageWrapper> wrapped = serialize(page);
-		getPageCacheManager(sessionId).getPageCache(page.getPageMapName()).storePages(wrapped);
-		if (LOG.isDebugEnabled())
+		if (pageId != -1)
 		{
-			LOG.debug("storePage {}", page.toString());
-			LOG.debug(getPageCacheManager(sessionId).getPageCache(page.getPageMapName()).toString());
+			LOG.debug("Removing page with id [{}]", pageId);
+			getPageCacheManager(sessionId).getPageCache().removePage(pageId);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object restoreAfterSerialization(final Serializable serializable)
+	{
+		return null;
+	}
+
+	protected SerializedPageWrapper serialize(final String sessionId, final IManageablePage page)
+	{
+		final byte[] serializedPage = serializePage(sessionId, page);
+		return wrap(serializedPage, page.getPageId());
+	}
+
+	protected byte[] serializePage(final String sessionId, final IManageablePage page)
+	{
+		Args.notNull(sessionId, "sessionId");
+		Args.notNull(page, "page");
+
+		// TODO: test this, Serializer replacing old
+		// WicketObjects.objectToByteArray(page, applicationName);
+		// call
+		final byte data[] = Application.get()
+			.getFrameworkSettings()
+			.getSerializer()
+			.serialize(page);
+		return data;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void storePage(final String sessionId, final IManageablePage page)
+	{
+		final SerializedPageWrapper wrapper = serialize(sessionId, page);
+		getPageCacheManager(sessionId).getPageCache().storePages(wrapper);
+		if (LOG.isDebugEnabled())
+			LOG.debug("storePage {}", page.toString());
 	}
 
 	/**
@@ -227,17 +265,9 @@ public class SessionPageStore extends AbstractPageStore
 		}
 	}
 
-	Collection<SerializedPageWrapper> wrap(final Collection<SerializedPage> serializedPages)
+	SerializedPageWrapper wrap(final byte[] serializedPages, final int pageId)
 	{
-		final Collection<SerializedPageWrapper> wrappers = new ArrayList<SerializedPageWrapper>(
-			serializedPages.size());
-		for (final SerializedPage sPage : serializedPages)
-		{
-			final SerializedPageWrapper wrapper = new SerializedPageWrapper(sPage,
-				sPage.getPageId(), sPage.getPageMapName(), sPage.getVersionNumber(),
-				sPage.getAjaxVersionNumber());
-			wrappers.add(wrapper);
-		}
-		return wrappers;
+		final SerializedPageWrapper wrapper = new SerializedPageWrapper(serializedPages, pageId);
+		return wrapper;
 	}
 }

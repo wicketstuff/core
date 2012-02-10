@@ -16,143 +16,146 @@
  */
 package org.wicketstuff.jquery.sparkline;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.IAjaxCallDecorator;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebComponent;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.wicketstuff.jquery.JQueryBehavior;
 
-public class Sparkline extends WebComponent implements IHeaderContributor
+public class Sparkline extends WebComponent
 {
-  public static final CompressedResourceReference SPARKLINE_JS 
-    = new CompressedResourceReference(Sparkline.class, "jquery.sparkline-1.4.3.min.js");
+	private static final long serialVersionUID = 1L;
 
-  final SparklineOptions options;
-  final IModel<Collection<Integer>> model;
-  final CharSequence values;
-  boolean writeJSOnReady = true; 
-  
-  public Sparkline(final String id, 
-      IModel<Collection<Integer>> values, 
-      SparklineOptions options )
+	public static final PackageResourceReference SPARKLINE_JS = new PackageResourceReference(
+		Sparkline.class, "jquery.sparkline-1.4.3.min.js");
+
+	final SparklineOptions options;
+	final IModel<Collection<Integer>> model;
+	final CharSequence values;
+	boolean writeJSOnReady = true;
+
+	public Sparkline(final String id, IModel<Collection<Integer>> values, SparklineOptions options)
 	{
 		super(id);
-		this.setOutputMarkupId(true);
-		this.model = values;
+		setOutputMarkupId(true);
+		model = values;
 		this.values = null;
 		this.options = options;
 	}
 
-  public Sparkline(final String id, 
-      Collection<Integer> values, 
-      SparklineOptions options )
-  {
-    super(id);
-    this.setOutputMarkupId(true);
-    this.model = null;
-    this.values = values.toString();
-    this.options = options;
-  }
+	public Sparkline(final String id, Collection<Integer> values, SparklineOptions options)
+	{
+		super(id);
+		setOutputMarkupId(true);
+		model = null;
+		this.values = values.toString();
+		this.options = options;
+	}
 
-  public Sparkline(final String id, 
-      SparklineOptions options,
-      int ... values )
-  {
-    super(id);
-    this.setOutputMarkupId(true);
-    this.model = null;
-    this.options = options;
+	public Sparkline(final String id, SparklineOptions options, int... values)
+	{
+		super(id);
+		setOutputMarkupId(true);
+		model = null;
+		this.options = options;
 
-    StringBuilder v = new StringBuilder();
-    v.append( '[' );
-    for( int i=0; i<values.length; i++ ) {
-      if( i > 0 ) {
-        v.append(',');
-      }
-      v.append( values[i] );
-    }
-    v.append( ']' );
-    this.values = v;
-  }
+		StringBuilder v = new StringBuilder();
+		v.append('[');
+		for (int i = 0; i < values.length; i++)
+		{
+			if (i > 0)
+			{
+				v.append(',');
+			}
+			v.append(values[i]);
+		}
+		v.append(']');
+		this.values = v;
+	}
 
-  public Sparkline(final String id, 
-      int ... values )
-  {
-    this(id, null, values );
-  }
+	public Sparkline(final String id, int... values)
+	{
+		this(id, null, values);
+	}
 
-  //---------------------------------------------------------------
-  //---------------------------------------------------------------
+	// ---------------------------------------------------------------
+	// ---------------------------------------------------------------
 
-  public boolean isWriteJSOnReady() {
-    return writeJSOnReady;
-  }
+	public boolean isWriteJSOnReady()
+	{
+		return writeJSOnReady;
+	}
 
-  public Sparkline setWriteJSOnReady(boolean writeJSOnReady) {
-    this.writeJSOnReady = writeJSOnReady;
-    return this;
-  }
+	public Sparkline setWriteJSOnReady(boolean writeJSOnReady)
+	{
+		this.writeJSOnReady = writeJSOnReady;
+		return this;
+	}
 
-  public CharSequence getSparklineJS() {
-    StringBuilder js = new StringBuilder();
-    js.append( "$('#" ).append( this.getMarkupId() ).append( "' ).sparkline( " );
-    if( model != null ) {
-      Collection<Integer> vals = model.getObject();
-      js.append( '[' );
-      Iterator<Integer> iter = vals.iterator();
-      while( iter.hasNext() ) {
-        js.append( iter.next() );
-        if( iter.hasNext() ) {
-          js.append( ',' );
-        }
-      }
-      js.append( ']' );
-    }
-    else {
-      js.append( values );
-    }
-    if( options != null ) {
-      js.append( ", " ).append( options.toString(false) );
-    }
-    js.append( " );" );
-    return js;
-  }
-  
-  public void renderHead(IHeaderResponse response) {
-    response.renderJavascriptReference(JQueryBehavior.JQUERY_JS);
-    response.renderJavascriptReference(SPARKLINE_JS);
+	public CharSequence getSparklineJS()
+	{
+		StringBuilder js = new StringBuilder();
+		js.append("$('#").append(this.getMarkupId()).append("' ).sparkline( ");
+		if (model != null)
+		{
+			Collection<Integer> vals = model.getObject();
+			js.append('[');
+			Iterator<Integer> iter = vals.iterator();
+			while (iter.hasNext())
+			{
+				js.append(iter.next());
+				if (iter.hasNext())
+				{
+					js.append(',');
+				}
+			}
+			js.append(']');
+		}
+		else
+		{
+			js.append(values);
+		}
+		if (options != null)
+		{
+			js.append(", ").append(options.toString(false));
+		}
+		js.append(" );");
+		return js;
+	}
 
-    if( writeJSOnReady ) {
-      StringBuilder builder = new StringBuilder();
-      builder.append("$(document).ready(function(){\n");
-      builder.append(getSparklineJS());
-      builder.append("\n});");
-      response.renderJavascript(builder, null );
-    }
-  }
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		response.renderJavaScriptReference(JQueryBehavior.JQUERY_JS);
+		response.renderJavaScriptReference(SPARKLINE_JS);
 
-  @Override
-  protected void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag)
-  {
-    replaceComponentTagBody(markupStream, openTag, "sparkline" );
-  }
+		if (writeJSOnReady)
+		{
+			StringBuilder builder = new StringBuilder();
+			builder.append("$(document).ready(function(){\n");
+			builder.append(getSparklineJS());
+			builder.append("\n});");
+			response.renderJavaScript(builder, null);
+		}
+	}
 
-  @Override
-  protected void onComponentTag(ComponentTag tag)
-  {
-    super.onComponentTag(tag);
-    // always transform the tag to <span></span> so even labels defined as <span/> render
-    tag.setType(XmlTag.OPEN);
-  }
+	@Override
+	public void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag)
+	{
+		replaceComponentTagBody(markupStream, openTag, "sparkline");
+	}
+
+	@Override
+	protected void onComponentTag(ComponentTag tag)
+	{
+		super.onComponentTag(tag);
+		// always transform the tag to <span></span> so even labels defined as <span/> render
+		tag.setType(XmlTag.TagType.OPEN);
+	}
 }

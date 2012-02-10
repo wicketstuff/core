@@ -21,116 +21,138 @@ package wicket.contrib.tinymce;
 import java.util.UUID;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 import wicket.contrib.tinymce.settings.WicketSavePlugin;
 
 /**
- * This behavior adds saving functionality to an editor for in-place editing of content. In most cases you will want to
- * use {@link InPlaceEditComponent} instead of this class directly.
+ * This behavior adds saving functionality to an editor for in-place editing of content. In most
+ * cases you will want to use {@link InPlaceEditComponent} instead of this class directly.
  */
-public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
-    private static final String PARAM_HTMLCONT = "htmlcont";
-    private String saveEditorScriptName;
-    private String cancelEditorScriptName;
-    private String additionalJavaScript;
+public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior
+{
+	private static final long serialVersionUID = 1L;
+	private static final String PARAM_HTMLCONT = "htmlcont";
+	private String saveEditorScriptName;
+	private String cancelEditorScriptName;
+	private String additionalJavaScript;
 
-    public InPlaceSaveBehavior() {}
+	public InPlaceSaveBehavior()
+	{
+	}
 
-    /**
-     * @param additionalJavaScript
-     *            Additional javascript code that will be appended to the save and cancel callback functions. You can
-     *            use this to e.g. show or hide buttons based on the state of the in-place-edit component.
-     */
-    public void setAdditionalJavaScript(String additionalJavaScript) {
-        this.additionalJavaScript = additionalJavaScript;
-    }
+	/**
+	 * @param additionalJavaScript
+	 *            Additional javascript code that will be appended to the save and cancel callback
+	 *            functions. You can use this to e.g. show or hide buttons based on the state of the
+	 *            in-place-edit component.
+	 */
+	public void setAdditionalJavaScript(String additionalJavaScript)
+	{
+		this.additionalJavaScript = additionalJavaScript;
+	}
 
-    protected final void respond(AjaxRequestTarget target) {
-        Request request = RequestCycle.get().getRequest();
-        String newContent = request.getParameter(PARAM_HTMLCONT);
-        newContent = onSave(target, newContent);
-        Component component = getComponent();
-        IModel defaultModel = component.getDefaultModel();
-        defaultModel.setObject(newContent);
-        target.addComponent(component);
-    }
+	@Override
+	protected final void respond(AjaxRequestTarget target)
+	{
+		Request request = RequestCycle.get().getRequest();
+		String newContent = request.getRequestParameters()
+			.getParameterValue(PARAM_HTMLCONT)
+			.toString();
+		newContent = onSave(target, newContent);
+		Component component = getComponent();
+		IModel defaultModel = component.getDefaultModel();
+		defaultModel.setObject(newContent);
+		target.addComponent(component);
+	}
 
-    /**
-     * Returns the name of the JavaScript function that handles the save event. (Replace the editor with the saved
-     * content in the original component).
-     * 
-     * @return Name of the javascript function, used by WicketSave plugin, see {@link WicketSavePlugin}
-     */
-    public final String getSaveCallbackName() {
-        if (saveEditorScriptName == null) {
-            String uuid = UUID.randomUUID().toString().replace('-', '_');
-            saveEditorScriptName = "savemce_" + uuid;
-        }
-        return saveEditorScriptName;
-    }
+	/**
+	 * Returns the name of the JavaScript function that handles the save event. (Replace the editor
+	 * with the saved content in the original component).
+	 * 
+	 * @return Name of the javascript function, used by WicketSave plugin, see
+	 *         {@link WicketSavePlugin}
+	 */
+	public final String getSaveCallbackName()
+	{
+		if (saveEditorScriptName == null)
+		{
+			String uuid = UUID.randomUUID().toString().replace('-', '_');
+			saveEditorScriptName = "savemce_" + uuid;
+		}
+		return saveEditorScriptName;
+	}
 
-    public final String getCancelCallbackName() {
-        if (cancelEditorScriptName == null) {
-            String uuid = UUID.randomUUID().toString().replace('-', '_');
-            cancelEditorScriptName = "cancelmce_" + uuid;
-        }
-        return cancelEditorScriptName;
-    }
+	public final String getCancelCallbackName()
+	{
+		if (cancelEditorScriptName == null)
+		{
+			String uuid = UUID.randomUUID().toString().replace('-', '_');
+			cancelEditorScriptName = "cancelmce_" + uuid;
+		}
+		return cancelEditorScriptName;
+	}
 
-    public Component getTheComponent() {
-        Component result = getComponent();
-        if (result == null)
-            throw new IllegalArgumentException("save behavior not yet bound to a component");
-        return result;
-    }
+	public Component getTheComponent()
+	{
+		Component result = getComponent();
+		if (result == null)
+			throw new IllegalArgumentException("save behavior not yet bound to a component");
+		return result;
+	}
 
-    /**
-     * This method gets called before the new content as received from the TinyMce editor is pushed to the website.
-     * Override it to add additional processing to the content.
-     * 
-     * @param newContent
-     *            The content as received from the editor.
-     * @return The content that will be pushed back to your website.
-     */
-    protected String onSave(AjaxRequestTarget target, String newContent) {
-        return newContent;
-    }
+	/**
+	 * This method gets called before the new content as received from the TinyMce editor is pushed
+	 * to the website. Override it to add additional processing to the content.
+	 * 
+	 * @param newContent
+	 *            The content as received from the editor.
+	 * @return The content that will be pushed back to your website.
+	 */
+	protected String onSave(AjaxRequestTarget target, String newContent)
+	{
+		return newContent;
+	}
 
-    public void renderHead(IHeaderResponse response) {
-        super.renderHead(response);
-        // Don't pass an id, since every EditableComponent will have its own
-        // submit script:
-        response.renderJavascript(createSaveScript(), null);
-        response.renderJavascript(createCancelScript(), null);
-    }
+	@Override
+	public void renderHead(Component c, IHeaderResponse response)
+	{
+		super.renderHead(c, response);
+		// Don't pass an id, since every EditableComponent will have its own
+		// submit script:
+		response.renderJavaScript(createSaveScript(), null);
+		response.renderJavaScript(createCancelScript(), null);
+	}
 
-    private final String createSaveScript() {
-        String callback = getWicketPostScript();
-        String markupId = getComponent().getMarkupId();
-        return "function " + getSaveCallbackName() + "(inst) {\n" //
-                + " var content = inst.getContent();\n" //
-                + " inst.setContent(inst.settings.wicket_updating_mess);\n" //
-                + " tinyMCE.execCommand('mceRemoveControl',false,'" + markupId + "');\n" //
-                + " " + callback + "\n" //
-                + (additionalJavaScript == null ? "" : (additionalJavaScript + "\n"))//
-                + "}";
-    }
+	private final String createSaveScript()
+	{
+		String callback = getWicketPostScript();
+		String markupId = getComponent().getMarkupId();
+		return "function " + getSaveCallbackName() + "(inst) {\n" //
+			+ " var content = inst.getContent();\n" //
+			+ " inst.setContent(inst.settings.wicket_updating_mess);\n" //
+			+ " tinyMCE.execCommand('mceRemoveControl',false,'" + markupId + "');\n" //
+			+ " " + callback + "\n" //
+			+ (additionalJavaScript == null ? "" : (additionalJavaScript + "\n"))//
+			+ "}";
+	}
 
-    private final String createCancelScript() {
-        return "function " + getCancelCallbackName() + "(inst) {\n" //
-                + (additionalJavaScript == null ? "" : (additionalJavaScript + "\n"))//
-                + "}";
-    }
+	private final String createCancelScript()
+	{
+		return "function " + getCancelCallbackName() + "(inst) {\n" //
+			+ (additionalJavaScript == null ? "" : (additionalJavaScript + "\n"))//
+			+ "}";
+	}
 
-    private final String getWicketPostScript() {
-        return generateCallbackScript(
-                "wicketAjaxPost('" + getCallbackUrl(false) + "', Wicket.Form.encode('" + PARAM_HTMLCONT
-                        + "') + '=' + Wicket.Form.encode(content) + '&'").toString();
-    }
+	private final String getWicketPostScript()
+	{
+		return generateCallbackScript(
+			"wicketAjaxPost('" + getCallbackUrl() + "', Wicket.Form.encode('" + PARAM_HTMLCONT +
+				"') + '=' + Wicket.Form.encode(content) + '&'").toString();
+	}
 }

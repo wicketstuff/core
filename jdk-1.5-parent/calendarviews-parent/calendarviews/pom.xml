@@ -25,10 +25,10 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>calendarviews-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>calendarviews</artifactId>
+	<artifactId>wicketstuff-calendarviews</artifactId>
 	<packaging>jar</packaging>
 
 	<name>CalendarViews</name>
@@ -38,13 +38,11 @@
 		events and schedules.  NOTE: these are not kin to the datepicker style components for use
 		in forms - these are for displaying calendars of data, not receiving date input.
 	</description>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>jslibraries</artifactId>
-			<!-- changed to work with oss.sonatype.org maven repo
-			<version>1.4-SNAPSHOT</version> -->
+			<artifactId>wicketstuff-jslibraries</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

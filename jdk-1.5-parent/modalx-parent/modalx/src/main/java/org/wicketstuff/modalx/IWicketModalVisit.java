@@ -14,23 +14,19 @@
 package org.wicketstuff.modalx;
 
 
-
 // -[KeepBeforeClass]-
 
 
 // -[Class]-
 
 /**
- * Class Name : IWicketModalVisit
- * Diagram    : Wicket Generic Modal Windows
- * Project    : Echobase framework
- * Type       : interface
- * Interface implemented by instances used for tracking user visits on a site.
+ * Class Name : IWicketModalVisit Diagram : Wicket Generic Modal Windows Project : Echobase
+ * framework Type : interface Interface implemented by instances used for tracking user visits on a
+ * site.
  * 
  * @author Chris Colman
  */
-public abstract 
-interface IWicketModalVisit
+public abstract interface IWicketModalVisit
 {
 // -[KeepWithinClass]-
 
@@ -41,5 +37,3 @@ interface IWicketModalVisit
 // -[Methods]-
 
 }
-
-

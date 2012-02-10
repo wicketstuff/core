@@ -27,19 +27,21 @@ import org.wicketstuff.progressbar.ProgressionModel;
 
 /**
  * <p>
- * Simple example of an active progress bar without using a dedicated Spring
- * task service.
+ * Simple example of an active progress bar without using a dedicated Spring task service.
  * </p>
- *
+ * 
  * <p>
- * The progress is stored directly in the page and the task is started in a new
- * thread (this is not suited for production!).
+ * The progress is stored directly in the page and the task is started in a new thread (this is not
+ * suited for production!).
  * </p>
- *
+ * 
  * @author Christopher Hlubek (hlubek)
- *
+ * 
  */
-public class SimpleProgressExamplePage extends PageSupport {
+public class SimpleProgressExamplePage extends PageSupport
+{
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The current progress is stored here
@@ -48,45 +50,65 @@ public class SimpleProgressExamplePage extends PageSupport {
 
 	int item = 0;
 
-	public SimpleProgressExamplePage() {
-		final Form form = new Form("form");
+	public SimpleProgressExamplePage()
+	{
+		final Form<Void> form = new Form<Void>("form");
 		final ProgressBar bar;
-		form.add(bar = new ProgressBar("bar", new ProgressionModel() {
+		form.add(bar = new ProgressBar("bar", new ProgressionModel()
+		{
+			private static final long serialVersionUID = 1L;
+
 			// Get current progress from page field
 			@Override
-			protected Progression getProgression() {
+			protected Progression getProgression()
+			{
 				return new Progression(progress, "Item " + item);
 			}
-		}) {
+		})
+		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			protected void onFinished(AjaxRequestTarget target) {
+			protected void onFinished(AjaxRequestTarget target)
+			{
 				// Hide progress bar after finish
 				setVisible(false);
 				// Add some JavaScript after finish
-				target.appendJavascript("alert('Task done!')");
+				target.appendJavaScript("alert('Task done!')");
 
 				// re-enable button
 				Component button = form.get("submit");
 				button.setEnabled(true);
-				target.addComponent(button);
+				target.add(button);
 			}
 		});
 		// Hide progress bar initially
 		bar.setVisible(false);
 
-		form.add(new IndicatingAjaxButton("submit", form) {
+		form.add(new IndicatingAjaxButton("submit", form)
+		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form form) {
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			{
 				// Start the progress bar, will set visibility to true
 				bar.start(target);
 				// Thread holds reference to page :(
-				new Thread() {
+				new Thread()
+				{
 					@Override
-					public void run() {
-						for(int i = 0; i <= 50; i++) {
-							try {
+					public void run()
+					{
+						for (int i = 0; i <= 50; i++)
+						{
+							try
+							{
 								Thread.sleep(400);
-							} catch (InterruptedException e) { }
+							}
+							catch (InterruptedException e)
+							{
+							}
 							item = i;
 							progress = i * 2;
 						}
@@ -97,6 +119,14 @@ public class SimpleProgressExamplePage extends PageSupport {
 				// disable button
 				setEnabled(false);
 			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form)
+			{
+
+				target.prependJavaScript("alert('Failed to update progress');");
+			}
+
 		});
 		form.setOutputMarkupId(true);
 		add(form);

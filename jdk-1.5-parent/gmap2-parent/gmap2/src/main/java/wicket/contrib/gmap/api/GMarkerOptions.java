@@ -26,17 +26,17 @@ public class GMarkerOptions implements GValue, Cloneable
 	 * Default serialVersionUID.
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private String title;
-	
+
 	private boolean clickable = true;
-	
+
 	private boolean draggable = false;
-	
+
 	private boolean bouncy = true;
-	
+
 	private boolean autoPan = false;
-	
+
 	private GIcon icon = null;
 
 	public GMarkerOptions()
@@ -78,7 +78,7 @@ public class GMarkerOptions implements GValue, Cloneable
 		{
 			literal.set("autoPan", "true");
 		}
-		if(icon != null)
+		if (icon != null)
 		{
 			literal.set("icon", icon.getJSconstructor());
 		}
@@ -91,19 +91,23 @@ public class GMarkerOptions implements GValue, Cloneable
 		return title;
 	}
 
-	public boolean isDraggable() {
+	public boolean isDraggable()
+	{
 		return draggable;
 	}
 
-	public boolean isClickable() {
+	public boolean isClickable()
+	{
 		return clickable;
 	}
 
-	public boolean isBouncy() {
+	public boolean isBouncy()
+	{
 		return bouncy;
 	}
 
-	public boolean isAutoPan() {
+	public boolean isAutoPan()
+	{
 		return autoPan;
 	}
 
@@ -111,8 +115,10 @@ public class GMarkerOptions implements GValue, Cloneable
 	{
 		return icon;
 	}
-	
-	public GMarkerOptions clone() {
+
+	@Override
+	public GMarkerOptions clone()
+	{
 		try
 		{
 			return (GMarkerOptions)super.clone();
@@ -122,31 +128,35 @@ public class GMarkerOptions implements GValue, Cloneable
 			throw new Error(e);
 		}
 	}
-	
-	public GMarkerOptions clickable(boolean clickable) {
+
+	public GMarkerOptions clickable(boolean clickable)
+	{
 		GMarkerOptions clone = clone();
 		clone.clickable = clickable;
 		return clone;
 	}
-	
-	public GMarkerOptions draggable(boolean draggable) {
+
+	public GMarkerOptions draggable(boolean draggable)
+	{
 		GMarkerOptions clone = clone();
 		clone.draggable = draggable;
 		return clone;
 	}
-	
-	public GMarkerOptions autoPan(boolean autoPan) {
+
+	public GMarkerOptions autoPan(boolean autoPan)
+	{
 		GMarkerOptions clone = clone();
 		clone.autoPan = autoPan;
 		return clone;
 	}
-	
-	public GMarkerOptions bouncy(boolean bouncy) {
+
+	public GMarkerOptions bouncy(boolean bouncy)
+	{
 		GMarkerOptions clone = clone();
 		clone.bouncy = bouncy;
 		return clone;
 	}
-	
+
 	@Override
 	public int hashCode()
 	{

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>jqplot-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jqplot</artifactId>
@@ -56,8 +56,14 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>br.com.digilabs.jqplot</groupId>
+			<artifactId>jqplot4java</artifactId>
+			<version>1.2.0</version>
+		</dependency>
 	</dependencies>
+
+	<!-- <repositories> <repository> </repository> </repositories> -->
 </project>

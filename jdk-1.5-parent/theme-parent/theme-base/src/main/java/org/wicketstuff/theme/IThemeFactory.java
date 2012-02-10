@@ -15,11 +15,10 @@
  */
 package org.wicketstuff.theme;
 
-import java.util.List;
-
-import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.Component;
+import org.apache.wicket.markup.html.IHeaderResponse;
 
 public interface IThemeFactory
 {
-	public List<HeaderContributor> getHeaderContributors();
+	public void renderHead(Component component, IHeaderResponse response);
 }

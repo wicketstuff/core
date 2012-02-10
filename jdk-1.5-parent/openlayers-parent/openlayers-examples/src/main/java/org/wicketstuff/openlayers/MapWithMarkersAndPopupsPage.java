@@ -1,14 +1,15 @@
 package org.wicketstuff.openlayers;
 
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.openlayers.api.LonLat;
 import org.wicketstuff.openlayers.api.Marker;
 
 /**
  * Homepage
  */
-public class MapWithMarkersAndPopupsPage extends WebPage {
+public class MapWithMarkersAndPopupsPage extends WebPage
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -20,16 +21,15 @@ public class MapWithMarkersAndPopupsPage extends WebPage {
 	 * @param parameters
 	 *            Page parameters
 	 */
-	public MapWithMarkersAndPopupsPage(final PageParameters parameters) {
+	public MapWithMarkersAndPopupsPage(final PageParameters parameters)
+	{
 
 		OpenLayersMap openLayersMap = new OpenLayersMap("map", true);
 
-		Marker marker = new Marker(new LonLat(50, 50), new PopupPanel(
-				"Hello Marker 1"));
+		Marker marker = new Marker(new LonLat(50, 50), new PopupPanel("Hello Marker 1"));
 		openLayersMap.addOverlay(marker);
 
-		marker = new Marker(new LonLat(100, 50), new PopupPanel(
-				"Hello Marker 2"));
+		marker = new Marker(new LonLat(100, 50), new PopupPanel("Hello Marker 2"));
 		openLayersMap.addOverlay(marker);
 
 		add(openLayersMap);

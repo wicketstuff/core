@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>jdk-1.5-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>console-parent</artifactId>
@@ -31,47 +31,28 @@
 		<module>console-examples</module>
 	</modules>
 
-	<build>
-		<testResources>
-			<testResource>
-				<directory>src/test/resources</directory>
-			</testResource>
-		</testResources>
-	</build>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>console</artifactId>
+				<artifactId>wicketstuff-console</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>console-engine</artifactId>
+				<artifactId>wicketstuff-console-engine</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>console-templates</artifactId>
+				<artifactId>wicketstuff-console-scripts</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>wicketstuff-console-templates</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
-
 	</dependencyManagement>
-
-	<repositories>
-		<repository>
-			<id>jboss-releases-repo</id>
-			<name>Hibernate releases repo</name>
-			<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-	</repositories>
-
 </project>

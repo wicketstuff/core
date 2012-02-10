@@ -20,12 +20,25 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import org.apache.wicket.util.lang.Args;
+
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
 public abstract class AbstractPushService implements IPushService
 {
 	protected final ConcurrentHashMap<IPushChannel<?>, CopyOnWriteArraySet<IPushNode<?>>> nodesByChannels = new ConcurrentHashMap<IPushChannel<?>, CopyOnWriteArraySet<IPushNode<?>>>();
+	protected final Set<IPushNodeDisconnectedListener> disconnectListeners = new CopyOnWriteArraySet<IPushNodeDisconnectedListener>();
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void addNodeDisconnectedListener(final IPushNodeDisconnectedListener listener)
+	{
+		Args.notNull(listener, "listener");
+
+		disconnectListeners.add(listener);
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -33,10 +46,8 @@ public abstract class AbstractPushService implements IPushService
 	public <EventType> void connectToChannel(final IPushNode<EventType> node,
 		final IPushChannel<EventType> channel)
 	{
-		if (node == null)
-			throw new IllegalArgumentException("Argument [node] must not be null");
-		if (channel == null)
-			throw new IllegalArgumentException("Argument [channel] must not be null");
+		Args.notNull(node, "node");
+		Args.notNull(channel, "channel");
 
 		final Set<IPushNode<?>> pnodes = nodesByChannels.get(channel);
 		if (pnodes == null)
@@ -57,6 +68,8 @@ public abstract class AbstractPushService implements IPushService
 
 	protected void disconnectFromAllChannels(final IPushNode<?> node)
 	{
+		Args.notNull(node, "node");
+
 		for (final Set<IPushNode<?>> pnodes : nodesByChannels.values())
 			pnodes.remove(node);
 	}
@@ -67,10 +80,8 @@ public abstract class AbstractPushService implements IPushService
 	public <EventType> void disconnectFromChannel(final IPushNode<EventType> node,
 		final IPushChannel<EventType> channel)
 	{
-		if (node == null)
-			throw new IllegalArgumentException("Argument [node] must not be null");
-		if (channel == null)
-			throw new IllegalArgumentException("Argument [channel] must not be null");
+		Args.notNull(node, "node");
+		Args.notNull(channel, "channel");
 
 		final Set<IPushNode<?>> pnodes = nodesByChannels.get(channel);
 		if (pnodes == null)
@@ -84,9 +95,18 @@ public abstract class AbstractPushService implements IPushService
 	 */
 	public <EventType> void removeChannel(final IPushChannel<EventType> channel)
 	{
-		if (channel == null)
-			throw new IllegalArgumentException("Argument [channel] must not be null");
+		Args.notNull(channel, "channel");
 
 		nodesByChannels.remove(channel);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void removeNodeDisconnectedListener(final IPushNodeDisconnectedListener listener)
+	{
+		Args.notNull(listener, "listener");
+
+		disconnectListeners.remove(listener);
 	}
 }

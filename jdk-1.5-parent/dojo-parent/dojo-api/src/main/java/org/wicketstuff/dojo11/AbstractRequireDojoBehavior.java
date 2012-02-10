@@ -19,9 +19,10 @@ package org.wicketstuff.dojo11;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import org.apache.wicket.RequestCycle;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 /**
  * <p>
@@ -61,12 +62,12 @@ public abstract class AbstractRequireDojoBehavior extends AbstractDefaultDojoBeh
 	 * TODO : is there a way to put all dojo.require at the same place on the rendered page??????
 	 * @see org.wicketstuff.dojo11.AbstractDefaultDojoBehavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
-	public void renderHead(IHeaderResponse response) {
-		super.renderHead(response);
+	public void renderHead(Component c, IHeaderResponse response) {
+		super.renderHead(c, response);
 		StringBuffer require = getRequire();
 
 		//render dojo.require
-		response.renderJavascript(require, AbstractRequireDojoBehavior.class.getName());
+		response.renderJavaScript(require, AbstractRequireDojoBehavior.class.getName());
 	}
 	
 	/**
@@ -105,8 +106,9 @@ public abstract class AbstractRequireDojoBehavior extends AbstractDefaultDojoBeh
 		
 		// if a Dojo Widget is rerender needs to run some javascript to refresh
 		// it. TargetRefresherManager contains top level dojo widgets
-		if (RequestCycle.get().getRequestTarget() instanceof AjaxRequestTarget) {
-			AjaxRequestTarget target = (AjaxRequestTarget) RequestCycle.get().getRequestTarget();
+		AjaxRequestTarget target = AjaxRequestTarget.get();
+		
+		if (target != null) {
 			//and register listener
 			DojoTargetRefresherManager mgr = DojoTargetRefresherManager.get();
 			mgr.addComponent(getComponent());

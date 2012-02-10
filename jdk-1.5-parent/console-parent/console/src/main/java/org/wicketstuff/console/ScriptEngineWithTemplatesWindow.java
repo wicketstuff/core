@@ -22,6 +22,7 @@ import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.console.engine.Lang;
+import org.wicketstuff.console.templates.IScriptTemplateStore;
 import org.wicketstuff.console.templates.ScriptTemplate;
 
 /**
@@ -29,59 +30,65 @@ import org.wicketstuff.console.templates.ScriptTemplate;
  * 
  * @author cretzel
  */
-public abstract class ScriptEngineWithTemplatesWindow extends ModalWindow {
+public abstract class ScriptEngineWithTemplatesWindow extends ModalWindow
+{
 
-    private static final long serialVersionUID = 1L;
-    private final Lang lang;
-    private final ScriptEnginePanelWithTemplates enginePanelWithTemplates;
-    private final IDataProvider<ScriptTemplate> dataProvider;
+	private static final long serialVersionUID = 1L;
+	private ScriptEnginePanelWithTemplates enginePanelWithTemplates;
+	private final IDataProvider<ScriptTemplate> dataProvider;
+	private final IScriptTemplateStore store;
 
-    /**
-     * Constructor.
-     * 
-     * @param id
-     *            id
-     * @param lang
-     *            source language
-     * @param windowTitle
-     *            window title, may be {@code null} for default
-     * @param dataProvider
-     *            data provider for script templates, may be {@code null} for
-     *            default
-     */
-    public ScriptEngineWithTemplatesWindow(final String id, final Lang lang,
-            final IModel<String> windowTitle,
-            final IDataProvider<ScriptTemplate> dataProvider) {
-        super(id);
-        this.lang = lang;
-        this.dataProvider = dataProvider;
+	public ScriptEngineWithTemplatesWindow(final String id, final Lang lang,
+		final IModel<String> windowTitle, final IScriptTemplateStore store)
+	{
+		super(id);
+		this.store = store;
+		dataProvider = null;
+		init(lang, windowTitle);
+	}
 
-        setTitle(windowTitle != null ? windowTitle : Model.of("Wicket Console"));
-        setResizable(false);
-        setInitialWidth(800);
-        setInitialHeight(408);
+	public ScriptEngineWithTemplatesWindow(final String id, final Lang lang,
+		final IModel<String> windowTitle, final IDataProvider<ScriptTemplate> dataProvider)
+	{
+		super(id);
+		store = null;
+		this.dataProvider = dataProvider;
+		init(lang, windowTitle);
 
-        enginePanelWithTemplates = newEnginePanelWithTemplates(getContentId(),
-                lang);
-        setContent(enginePanelWithTemplates);
-    }
+	}
 
-    /**
-     * Creates a new engine panel with templates, override to customize.
-     * <p>
-     * Attention: This is called from the constructor.
-     * 
-     * @param wicketId
-     *            id
-     * @return a script engine panel
-     */
-    protected ScriptEnginePanelWithTemplates newEnginePanelWithTemplates(
-            final String wicketId, final Lang lang) {
+	private void init(final Lang lang, final IModel<String> windowTitle)
+	{
+		setTitle(windowTitle != null ? windowTitle : Model.of("Wicket Console"));
+		// setAutoSize(true);
+		setInitialHeight(408);
+		setInitialWidth(728);
+		setResizable(false);
 
-        final ScriptEnginePanelWithTemplates panelWithTemplates = new ScriptEnginePanelWithTemplates(
-                wicketId, lang, Model.of(""), dataProvider);
+		enginePanelWithTemplates = newEnginePanelWithTemplates(getContentId(), lang);
+		setContent(enginePanelWithTemplates);
+	}
 
-        return panelWithTemplates;
-    }
+	/**
+	 * Creates a new engine panel with templates, override to customize.
+	 * <p>
+	 * Attention: This is called from the constructor.
+	 * 
+	 * @param wicketId
+	 *            id
+	 * @return a script engine panel
+	 */
+	protected ScriptEnginePanelWithTemplates newEnginePanelWithTemplates(final String wicketId,
+		final Lang lang)
+	{
+		if (store != null)
+		{
+			return new ScriptEnginePanelWithTemplates(wicketId, lang, store);
+		}
+		else
+		{
+			return new ScriptEnginePanelWithTemplates(wicketId, lang, dataProvider);
+		}
+	}
 
 }

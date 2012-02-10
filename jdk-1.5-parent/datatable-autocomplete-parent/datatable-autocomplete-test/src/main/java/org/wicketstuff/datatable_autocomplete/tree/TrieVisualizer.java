@@ -39,7 +39,8 @@ import edu.uci.ics.jung.visualization.renderers.Renderer.VertexLabel.Position;
  * 
  * 
  */
-public class TrieVisualizer<T> {
+public class TrieVisualizer<T>
+{
 
 	private TrieGraph<T> graph;
 
@@ -48,44 +49,46 @@ public class TrieVisualizer<T> {
 	 * @param graph
 	 * 
 	 */
-	public TrieVisualizer(String title, TrieGraph<T> graph,
-			TrieVisualizerLayout layoutType) {
+	public TrieVisualizer(String title, TrieGraph<T> graph, TrieVisualizerLayout layoutType)
+	{
 
 		this.graph = graph;
 
 		// The Layout<V, E> is parameterized by the vertex and edge types
 
 		Layout<TrieNode<T>, String> layout = null;
-		
-		switch (layoutType) {
-		case TREE:
-			layout = new TreeLayout<TrieNode<T>, String>(
+
+		switch (layoutType)
+		{
+			case TREE :
+				layout = new TreeLayout<TrieNode<T>, String>(
 					new DelegateForest<TrieNode<T>, String>(graph));
-			break;
-			
-		case DAG:
-			layout = new DAGLayout<TrieNode<T>, String>(graph);
-			break;
+				break;
+
+			case DAG :
+				layout = new DAGLayout<TrieNode<T>, String>(graph);
+				break;
 		}
-		
-		
+
+
 		// layout.setSize(new Dimension(300,300)); // sets the initial size of
 		// the space
 		// The BasicVisualizationServer<V,E> is parameterized by the edge types
 		VisualizationViewer<TrieNode<T>, String> vv = new VisualizationViewer<TrieNode<T>, String>(
-				layout);
+			layout);
 		vv.setPreferredSize(new Dimension(350, 350)); // Sets the viewing area
 														// size
 
 		vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
 
-		vv.getRenderContext().setVertexLabelTransformer(
-				new Transformer<TrieNode<T>, String>() {
+		vv.getRenderContext().setVertexLabelTransformer(new Transformer<TrieNode<T>, String>()
+		{
 
-					public String transform(TrieNode<T> node) {
-						return node.getCharacter();
-					}
-				});
+			public String transform(TrieNode<T> node)
+			{
+				return node.getCharacter();
+			}
+		});
 
 		// Create a graph mouse and add it to the visualization component
 		DefaultModalGraphMouse<TrieNode<T>, String> gm = new DefaultModalGraphMouse<TrieNode<T>, String>();
@@ -99,7 +102,8 @@ public class TrieVisualizer<T> {
 		frame.setVisible(true);
 	}
 
-	public TrieVisualizer(String title, PatriciaTrie<T> trie, TrieVisualizerLayout layoutType) {
+	public TrieVisualizer(String title, PatriciaTrie<T> trie, TrieVisualizerLayout layoutType)
+	{
 		this(title, new TrieGraph<T>(trie), layoutType);
 	}
 

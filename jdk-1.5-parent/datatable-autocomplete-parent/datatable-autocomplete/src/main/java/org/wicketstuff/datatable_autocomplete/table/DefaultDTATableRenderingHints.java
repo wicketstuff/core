@@ -18,60 +18,57 @@ package org.wicketstuff.datatable_autocomplete.table;
 /**
  * @author mocleiri
  * 
- * Default implementation of the IDTATableRenderingHints interface.
+ *         Default implementation of the IDTATableRenderingHints interface.
  * 
- *
+ * 
  */
-public class DefaultDTATableRenderingHints implements IDTATableRenderingHints {
+public class DefaultDTATableRenderingHints implements IDTATableRenderingHints
+{
 
 	private static final long serialVersionUID = 1L;
-	
 	private final int pageSize;
 	private final boolean paginationEnabled;
-	private final boolean highlightSelectedRow;
 
 	/**
 	 * 
 	 */
-	public DefaultDTATableRenderingHints(int pageSize, boolean paginationEnabled) {
-		
-		this (pageSize, paginationEnabled, false);
-	}
-	
-	public DefaultDTATableRenderingHints(int pageSize, boolean paginationEnabled, boolean highlightSelectedRow) {
+	public DefaultDTATableRenderingHints(int pageSize, boolean paginationEnabled)
+	{
 		this.pageSize = pageSize;
 		this.paginationEnabled = paginationEnabled;
-		this.highlightSelectedRow = highlightSelectedRow;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wicketstuff.datatable_autocomplete.table.IDTATableRenderingHints#getPageSize()
 	 */
-	public int getPageSize() {
-		return this.pageSize;
+	public int getPageSize()
+	{
+		return pageSize;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wicketstuff.datatable_autocomplete.table.IDTATableRenderingHints#isPaginationEnabled()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.wicketstuff.datatable_autocomplete.table.IDTATableRenderingHints#isPaginationEnabled()
 	 */
-	public boolean isPaginationEnabled() {
-		return this.paginationEnabled;
+	public boolean isPaginationEnabled()
+	{
+		return paginationEnabled;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wicketstuff.datatable_autocomplete.table.IDTATableRenderingHints#showNoMatchToolbar()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.wicketstuff.datatable_autocomplete.table.IDTATableRenderingHints#showNoMatchToolbar()
 	 */
-	public boolean showNoRecordsToolbar() {
-		
+	public boolean showNoRecordsToolbar()
+	{
+
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wicketstuff.datatable_autocomplete.table.IDTATableRenderingHints#highlightSelectedRow()
-	 */
-	public boolean highlightSelectedRow() {
-		return highlightSelectedRow;
-	}
-
-	
 }

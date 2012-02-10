@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>jdk-1.5-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>calendarviews-parent</artifactId>
@@ -36,30 +36,25 @@
 	</developers>
 
 	<dependencies>
-		<!-- JODA TIME -->
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
-			<version>1.5.2</version>
 		</dependency>
-
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-            <scope>test</scope>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-            <scope>test</scope>
+			<scope>test</scope>
 		</dependency>
 
-		<!--  JUNIT DEPENDENCY FOR TESTING -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -71,45 +66,13 @@
 				<artifactId>maven-license-plugin</artifactId>
 				<configuration>
 					<header>${header.location}</header>
-					<aggregate>true</aggregate>
-					<quiet>false</quiet>
-					<failIfMissing>${license-fail-if-missing}</failIfMissing>
-					<excludes>
-						<exclude>**/*.jpeg</exclude>
-						<exclude>**/*.swf</exclude>
-					</excludes>
 				</configuration>
-				<!--
-				<executions>
-					<execution>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-				-->
 			</plugin>
 		</plugins>
 	</build>
 
-	<profiles>
-		<profile>
-			<id>bamboo</id>
-			<properties>
-				<license-fail-if-missing>false</license-fail-if-missing>
-			</properties>
-		</profile>
-		<profile>
-			<id>wickettraining.com-continuum</id>
-			<properties>
-				<license-fail-if-missing>false</license-fail-if-missing>
-			</properties>
-		</profile>
-	</profiles>
 	<properties>
 		<header.location>header.txt</header.location>
-		<jetty.version>6.1.4</jetty.version>
-		<license-fail-if-missing>true</license-fail-if-missing>
 	</properties>
 
 </project>

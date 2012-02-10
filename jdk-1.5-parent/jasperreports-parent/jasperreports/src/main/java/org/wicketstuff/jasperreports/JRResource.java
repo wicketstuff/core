@@ -1,14 +1,14 @@
 /*
  * $Id$ $Revision:
  * 1.4 $ $Date$
- * 
+ *
  * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -17,20 +17,25 @@
  */
 package org.wicketstuff.jasperreports;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.JRAbstractExporter;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.markup.html.DynamicWebResource;
-import org.apache.wicket.markup.html.WebResource;
-import org.apache.wicket.protocol.http.WebResponse;
+import org.apache.wicket.request.resource.AbstractResource;
+import org.apache.wicket.request.resource.ContentDisposition;
+import org.apache.wicket.util.io.ByteArrayOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +46,8 @@ import org.slf4j.LoggerFactory;
  * @author Matej Knopp
  * @author Luciano Montebove
  */
-public abstract class JRResource extends DynamicWebResource
+@SuppressWarnings("serial")
+public abstract class JRResource extends AbstractResource
 {
 	/**
 	 * logger.
@@ -59,16 +65,15 @@ public abstract class JRResource extends DynamicWebResource
 	private IJasperReportFactory jasperReportFactory;
 
 	/**
-	 * The compiled report this resource references. Made transient as we don't
-	 * want our report to be serialized while we can recreate it at other
-	 * servers at will using the factory.
+	 * The compiled report this resource references. Made transient as we don't want our report to
+	 * be serialized while we can recreate it at other servers at will using the factory.
 	 */
 	private transient JasperReport jasperReport;
 
 	/**
 	 * the report parameters.
 	 */
-	private Map reportParameters;
+	private Map<String, Object> reportParameters;
 
 	/**
 	 * the datasource if any for filling this report.
@@ -76,21 +81,18 @@ public abstract class JRResource extends DynamicWebResource
 	private JRDataSource reportDataSource;
 
 	/**
-	 * When set, a header 'Content-Disposition: attachment;
-	 * filename="${fileName}"' will be added to the response, resulting in a
-	 * download dialog. No magical extensions are added, so you should make sure
-	 * the file has the extension you want yourself.
+	 * When set, a header 'Content-Disposition: attachment; filename="${fileName}"' will be added to
+	 * the response, resulting in a download dialog. No magical extensions are added, so you should
+	 * make sure the file has the extension you want yourself.
 	 */
 	private String fileName;
 
 	/**
-	 * Construct without a report. You must provide a report before you can use
-	 * this resource.
+	 * Construct without a report. You must provide a report before you can use this resource.
 	 */
 	public JRResource()
 	{
 		super();
-		setCacheable(false);
 	}
 
 	/**
@@ -105,7 +107,7 @@ public abstract class JRResource extends DynamicWebResource
 		{
 			public JasperReport newJasperReport() throws JRException
 			{
-				return (JasperReport) JRLoader.loadObject(report);
+				return (JasperReport)JRLoader.loadObject(report);
 			}
 
 			;
@@ -124,7 +126,7 @@ public abstract class JRResource extends DynamicWebResource
 		{
 			public JasperReport newJasperReport() throws JRException
 			{
-				return (JasperReport) JRLoader.loadObject(report);
+				return (JasperReport)JRLoader.loadObject(report);
 			}
 
 			;
@@ -143,7 +145,7 @@ public abstract class JRResource extends DynamicWebResource
 		{
 			public JasperReport newJasperReport() throws JRException
 			{
-				return (JasperReport) JRLoader.loadObject(report);
+				return (JasperReport)JRLoader.loadObject(report);
 			}
 
 			;
@@ -159,15 +161,13 @@ public abstract class JRResource extends DynamicWebResource
 	public JRResource(IJasperReportFactory factory)
 	{
 		super();
-		setCacheable(false);
-		this.jasperReportFactory = factory;
+		jasperReportFactory = factory;
 	}
 
 	/**
-	 * Gets jasperReport. This implementation uses an internal factory to lazily
-	 * create the report. After creation the report is cached (set as the
-	 * jasperReport property). Override this method in case you want to provide
-	 * some alternative creation/ caching scheme.
+	 * Gets jasperReport. This implementation uses an internal factory to lazily create the report.
+	 * After creation the report is cached (set as the jasperReport property). Override this method
+	 * in case you want to provide some alternative creation/ caching scheme.
 	 * 
 	 * @return jasperReport
 	 */
@@ -196,19 +196,18 @@ public abstract class JRResource extends DynamicWebResource
 	 */
 	public final void setJasperReport(JasperReport report)
 	{
-		this.jasperReport = report;
+		jasperReport = report;
 	}
 
 	/**
-	 * Gets the report parameters.
-	 * Returns a new copy of the reportParameters Map as JasperReports
+	 * Gets the report parameters. Returns a new copy of the reportParameters Map as JasperReports
 	 * modifies it with not serializable objects
 	 * 
 	 * @return report parameters
 	 */
-	public Map getReportParameters()
+	public Map<String, Object> getReportParameters()
 	{
-                return new HashMap(reportParameters);
+		return new HashMap<String, Object>(reportParameters);
 	}
 
 	/**
@@ -219,9 +218,9 @@ public abstract class JRResource extends DynamicWebResource
 	 * 
 	 * @return This
 	 */
-	public final JRResource setReportParameters(Map params)
+	public final JRResource setReportParameters(Map<String, Object> params)
 	{
-		this.reportParameters = params;
+		reportParameters = params;
 		return this;
 	}
 
@@ -245,7 +244,7 @@ public abstract class JRResource extends DynamicWebResource
 	 */
 	public JRResource setReportDataSource(JRDataSource dataSource)
 	{
-		this.reportDataSource = dataSource;
+		reportDataSource = dataSource;
 		return this;
 	}
 
@@ -269,15 +268,15 @@ public abstract class JRResource extends DynamicWebResource
 	 */
 	public final JRResource setConnectionProvider(IDatabaseConnectionProvider provider)
 	{
-		this.connectionProvider = provider;
+		connectionProvider = provider;
 		return this;
 	}
 
 	/**
 	 * Gets the file name. When set, a header 'Content-Disposition: attachment;
-	 * filename="${fileName}"' will be added to the response, resulting in a
-	 * download dialog. No magical extensions are added, so you should make sure
-	 * the file has the extension you want yourself.
+	 * filename="${fileName}"' will be added to the response, resulting in a download dialog. No
+	 * magical extensions are added, so you should make sure the file has the extension you want
+	 * yourself.
 	 * 
 	 * @return the file name
 	 */
@@ -291,10 +290,9 @@ public abstract class JRResource extends DynamicWebResource
 	}
 
 	/**
-	 * Sets the file name. When set, a header 'Content-Disposition: attachment;
-	 * filename="${name}"' will be added to the response, resulting in a
-	 * download dialog. No magical extensions are added, so you should make sure
-	 * the file has the extension you want yourself.
+	 * Sets the file name. When set, a header 'Content-Disposition: attachment; filename="${name}"'
+	 * will be added to the response, resulting in a download dialog. No magical extensions are
+	 * added, so you should make sure the file has the extension you want yourself.
 	 * 
 	 * @param name
 	 *            the file name
@@ -303,7 +301,7 @@ public abstract class JRResource extends DynamicWebResource
 	 */
 	public final JRResource setFileName(String name)
 	{
-		this.fileName = name;
+		fileName = name;
 		return this;
 	}
 
@@ -314,79 +312,34 @@ public abstract class JRResource extends DynamicWebResource
 	 */
 	public abstract JRAbstractExporter newExporter();
 
-	/**
-	 * Gets the binary data by getting a new instance of JasperPrint and an
-	 * exporter for generating the output.
-	 * 
-	 * @return the binary data
-	 * 
-	 * @see DynamicWebResource#getResourceState()
-	 */
-	protected ResourceState getResourceState()
-	{
-		try
-		{
-			long t1 = System.currentTimeMillis();
-			// get a print instance for exporting
-			JasperPrint print = newJasperPrint();
-
-			// get a fresh instance of an exporter for this report
-			JRAbstractExporter exporter = newExporter();
-
-			// prepare a stream to trap the exporter's output
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
-			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
-
-			// execute the export and return the trapped result
-			exporter.exportReport();
-			final byte[] data = baos.toByteArray();
-			if (log.isDebugEnabled())
-			{
-				long t2 = System.currentTimeMillis();
-				log.debug("loaded report data; bytes: "
-						+ data.length + " in " + (t2 - t1) + " miliseconds");
-			}
-			return new ResourceState()
-			{
-				public int getLength()
-				{
-					return data.length;
-				}
-
-				public byte[] getData()
-				{
-					return data;
-				}
-
-				public String getContentType()
-				{
-					return JRResource.this.getContentType();
-				}
-			};
-		}
-		catch (JRException e)
-		{
-			throw new WicketRuntimeException(e);
-		}
-	}
 
 	/**
 	 * @return The content type of the reports
 	 */
 	public abstract String getContentType();
 
+
 	/**
-	 * Returns the extension for the resource's file. This string should not
-	 * contain the leading "."
+	 * The default is to return the content as an attachment.
+	 * 
+	 * @return The content disposition of the reports
+	 */
+	public ContentDisposition getContentDisposition()
+	{
+		return ContentDisposition.ATTACHMENT;
+	}
+
+
+	/**
+	 * Returns the extension for the resource's file. This string should not contain the leading "."
 	 * 
 	 * @return The extension for the resource's file.
 	 */
 	public abstract String getExtension();
 
 	/**
-	 * Creates a new {@link JasperPrint} instance. This instance is specific for
-	 * this render, but it not yet designated for one output format only.
+	 * Creates a new {@link JasperPrint} instance. This instance is specific for this render, but it
+	 * not yet designated for one output format only.
 	 * 
 	 * @return a new {@link JasperPrint} instance.
 	 * 
@@ -396,7 +349,7 @@ public abstract class JRResource extends DynamicWebResource
 	{
 		final JasperPrint jasperPrint;
 		JasperReport report = getJasperReport();
-		Map params = getReportParameters();
+		Map<String, Object> params = getReportParameters();
 		JRDataSource dataSource = getReportDataSource();
 		if (dataSource != null)
 		{
@@ -411,11 +364,10 @@ public abstract class JRResource extends DynamicWebResource
 				if (provider == null)
 				{
 					throw new IllegalStateException(
-							"JasperReportsResources must either have a JRDataSource, "
-									+ "or a JDBC Connection provided");
+						"JasperReportsResources must either have a JRDataSource, "
+							+ "or a JDBC Connection provided");
 				}
-				jasperPrint = JasperFillManager
-						.fillReport(report, params, provider.get());
+				jasperPrint = JasperFillManager.fillReport(report, params, provider.get());
 			}
 			finally
 			{
@@ -428,18 +380,64 @@ public abstract class JRResource extends DynamicWebResource
 		return jasperPrint;
 	}
 
-	/**
-	 * @see WebResource#setHeaders(WebResponse)
-	 */
-	protected void setHeaders(WebResponse response)
+	@Override
+	protected ResourceResponse newResourceResponse(Attributes attributes)
 	{
-		super.setHeaders(response);
-		String name = getFileName();
-		if (name != null)
+		ResourceResponse resp = new ResourceResponse();
+		resp.disableCaching();
+		resp.setContentType(getContentType());
+		resp.setFileName(getFileName());
+		resp.setContentDisposition(getContentDisposition());
+		if (resp.dataNeedsToBeWritten(attributes))
 		{
-			response.setHeader("Content-Disposition", "attachment; filename=\""
-					+ name + "\"");
+			resp.setWriteCallback(new WriteCallback()
+			{
 
+				@Override
+				public void writeData(Attributes attributes)
+				{
+					try
+					{
+						long t1 = System.currentTimeMillis();
+						// get a print instance for exporting
+						JasperPrint print = newJasperPrint();
+
+						// get a fresh instance of an exporter for this report
+						JRAbstractExporter exporter = newExporter();
+
+
+						final byte[] data = getExporterData(print, exporter);
+
+						attributes.getResponse().write(data);
+						if (log.isDebugEnabled())
+						{
+							long t2 = System.currentTimeMillis();
+							log.debug("loaded report data; bytes: " + data.length + " in " +
+								(t2 - t1) + " miliseconds");
+						}
+					}
+					catch (JRException e)
+					{
+						throw new WicketRuntimeException(e);
+					}
+				}
+			});
 		}
+		return resp;
 	}
+
+	protected byte[] getExporterData(JasperPrint print, JRAbstractExporter exporter)
+		throws JRException
+	{
+		// prepare a stream to trap the exporter's output
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+		exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
+
+		// execute the export and return the trapped result
+		exporter.exportReport();
+
+		return baos.toByteArray();
+	}
+
 }

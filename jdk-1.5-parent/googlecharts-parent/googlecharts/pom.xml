@@ -4,9 +4,9 @@
     <parent>
         <groupId>org.wicketstuff</groupId>
         <artifactId>googlecharts-parent</artifactId>
-        <version>1.4-SNAPSHOT</version>
+        <version>1.5-SNAPSHOT</version>
     </parent>
-    <artifactId>googlecharts</artifactId>
+    <artifactId>wicketstuff-googlecharts</artifactId>
     <packaging>jar</packaging>
     <name>Google Charts</name>
 

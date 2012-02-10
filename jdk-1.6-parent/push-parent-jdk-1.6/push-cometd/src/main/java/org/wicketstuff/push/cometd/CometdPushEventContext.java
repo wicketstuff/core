@@ -22,7 +22,7 @@ import org.wicketstuff.push.IPushChannel;
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
  */
-public final class CometdPushEventContext<EventType> extends AbstractPushEventContext<EventType>
+final class CometdPushEventContext<EventType> extends AbstractPushEventContext<EventType>
 {
 	private final CometdPushService pushService;
 

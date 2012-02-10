@@ -15,6 +15,8 @@
  */
 package org.wicketstuff.datatable_autocomplete.table;
 
+import java.util.List;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.IClusterable;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackHeadersToolbar;
@@ -26,48 +28,42 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.NoRecordsToo
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.markup.repeater.OddEvenItem;
 import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author mocleiri
  * 
- *         Almost an exact copy of the wicket AjaxFallbackDefaultDataTable except that we have control over when the pagination toolbar is added.
- *         
+ *         Almost an exact copy of the wicket AjaxFallbackDefaultDataTable except that we have
+ *         control over when the pagination toolbar is added.
+ * 
  */
-public class DTADataTable<T> extends DataTable<T> {
+public class DTADataTable<T> extends DataTable<T>
+{
 
-	private static final org.slf4j.Logger						log								= LoggerFactory
-																							.getLogger(DTADataTable.class);
+	public static interface DTADataTableItemModifier<T> extends IClusterable
+	{
 
-	public static interface DTADataTableItemModifier<T> extends IClusterable {
-		
 		/**
-		 * Allows the row item to be modified when it is created.  Typcially used for on row click listeners.
+		 * Allows the row item to be modified when it is created. Typcially used for on row click
+		 * listeners.
 		 * 
 		 * @param item
 		 */
-		public void modifyRowItem (Item<T> item);
-		
-		
+		public void modifyRowItem(Item<T> item);
+
+
 	}
+
 	/**
 	 * 
 	 */
-	private static final long						serialVersionUID				= -1878257266564660026L;
-	
-	
+	private static final long serialVersionUID = -1878257266564660026L;
 
-	private DTADataTableItemModifier<T>	itemModifier;
 
-	
-	
+	private DTADataTableItemModifier<T> itemModifier;
 
-	
-	
 
 	/**
 	 * @param id
@@ -75,9 +71,9 @@ public class DTADataTable<T> extends DataTable<T> {
 	 * @param dataProvider
 	 * @param rowsPerPage
 	 */
-	public DTADataTable(String id, String cssClassName,
-			IColumn[] columns, ISortableDataProvider<T> dataProvider,
-			IDTATableRenderingHints hints) {
+	public DTADataTable(String id, String cssClassName, List<IColumn<T>> columns,
+		ISortableDataProvider<T> dataProvider, IDTATableRenderingHints hints)
+	{
 
 		super(id, columns, dataProvider, hints.getPageSize());
 
@@ -85,15 +81,16 @@ public class DTADataTable<T> extends DataTable<T> {
 
 		// set the table class
 		add(new AttributeModifier("class", new Model<String>(cssClassName)));
-		
+
 		setOutputMarkupId(true);
 		setVersioned(false);
-		
+
+
 		if (hints.isPaginationEnabled())
 			addTopToolbar(new AjaxNavigationToolbar(this));
-		
+
 		addTopToolbar(new AjaxFallbackHeadersToolbar(this, dataProvider));
-		
+
 		if (hints.showNoRecordsToolbar())
 			addBottomToolbar(new NoRecordsToolbar(this));
 
@@ -106,8 +103,9 @@ public class DTADataTable<T> extends DataTable<T> {
 	 * @param provider
 	 * @param i
 	 */
-	public DTADataTable(String id, IColumn[] tableColumns,
-			ISortableDataProvider<T> provider, IDTATableRenderingHints hints) {
+	public DTADataTable(String id, List<IColumn<T>> tableColumns,
+		ISortableDataProvider<T> provider, IDTATableRenderingHints hints)
+	{
 
 		this(id, "dta_data_table", tableColumns, provider, hints);
 	}
@@ -115,12 +113,12 @@ public class DTADataTable<T> extends DataTable<T> {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.apache.wicket.markup.html.panel.Panel#onComponentTag(org.apache.wicket
+	 * @see org.apache.wicket.markup.html.panel.Panel#onComponentTag(org.apache.wicket
 	 * .markup.ComponentTag)
 	 */
 	@Override
-	protected void onComponentTag(ComponentTag tag) {
+	protected void onComponentTag(ComponentTag tag)
+	{
 
 		// force the name of the tag to be table.
 		// this allows us to use this component on a span or div tag.
@@ -132,13 +130,12 @@ public class DTADataTable<T> extends DataTable<T> {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.apache.wicket.markup.html.panel.Panel#onComponentTagBody(org.apache
+	 * @see org.apache.wicket.markup.html.panel.Panel#onComponentTagBody(org.apache
 	 * .wicket.markup.MarkupStream, org.apache.wicket.markup.ComponentTag)
 	 */
 	@Override
-	protected void onComponentTagBody(MarkupStream markupStream,
-			ComponentTag openTag) {
+	public void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag)
+	{
 
 		// force the name of the tag to be table.
 		// this allows us to use this component on a span or div tag.
@@ -150,33 +147,34 @@ public class DTADataTable<T> extends DataTable<T> {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable
+	 * @see org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable
 	 * #newRowItem(java.lang.String, int, org.apache.wicket.model.IModel)
 	 */
 	@Override
-	protected Item<T> newRowItem(String id, int index, IModel<T> model) {
+	protected Item<T> newRowItem(String id, int index, IModel<T> model)
+	{
 
-		Item<T> rowItem = new OddEvenItem<T>(id, index, model);
-		
-		if (itemModifier != null) {
-			
+		Item<T> rowItem = super.newRowItem(id, index, model);
+
+		if (itemModifier != null)
+		{
+
 			// optionally modify the 'row' item.
 			// a good place to put onclick listeners.
 			itemModifier.modifyRowItem(rowItem);
-			
+
 		}
-		
+
 
 		return rowItem;
 	}
 
-	
 
 	/**
 	 * Set the item modifier.
 	 */
-	public final void setItemModifier(DTADataTableItemModifier<T> itemModifier) {
+	public final void setItemModifier(DTADataTableItemModifier<T> itemModifier)
+	{
 		this.itemModifier = itemModifier;
 
 	}

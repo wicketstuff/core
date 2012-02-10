@@ -15,10 +15,13 @@
  */
 package org.wicketstuff.jqplot;
 
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.wicketstuff.jqplot.behavior.JQueryBehavior;
 import org.wicketstuff.jqplot.behavior.JqPlotBehavior;
 
-import br.digilabs.jqplot.chart.Chart;
+import br.com.digilabs.jqplot.Chart;
+
 
 /**
  * 
@@ -33,8 +36,17 @@ public class JqPlotChart extends WebMarkupContainer
 	{
 		super(id);
 		setOutputMarkupId(true);
+		add(getJqueryBehavior());
 		add(new JqPlotBehavior(chart, getMarkupId()));
 	}
-
+	
+	/**
+	 * Override this method to use your jquery library.
+	 * 
+	 * @return Behavior of JQuery (that include jquery.js)
+	 */	
+	public Behavior getJqueryBehavior() {
+		return new JQueryBehavior();
+	}
 
 }

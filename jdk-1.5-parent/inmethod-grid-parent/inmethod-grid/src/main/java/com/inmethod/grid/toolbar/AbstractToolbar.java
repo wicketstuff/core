@@ -9,20 +9,29 @@ import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.common.AbstractGrid;
 
 /**
- * Base for toolbar classes. 
+ * Base for toolbar classes.
+ * 
+ * @param <M>
+ *            grid model object type
+ * @param <I>
+ *            row/item model object type
  * 
  * @author Matej Knopp
  */
-public abstract class AbstractToolbar extends Panel {
+public abstract class AbstractToolbar<M, I> extends Panel
+{
+	private static final long serialVersionUID = 1L;
+  
+	private final AbstractGrid<M, I> grid;
 
-	private final AbstractGrid grid;
-	
 	/**
 	 * Constructor
+	 * 
 	 * @param grid
 	 * @param model
 	 */
-	public AbstractToolbar(AbstractGrid grid, IModel model) {
+	public AbstractToolbar(AbstractGrid<M, I> grid, IModel<String> model)
+	{
 		super(AbstractGrid.INTERNAL_TOOLBAR_ITEM_ID, model);
 		setRenderBodyOnly(true);
 		this.grid = grid;
@@ -30,17 +39,21 @@ public abstract class AbstractToolbar extends Panel {
 
 	/**
 	 * Returns the collection of currently displayed columns in grid.
+	 * 
 	 * @return collection of active columns.
 	 */
-	public Collection<IGridColumn> getActiveColumns() {
+	public Collection<IGridColumn<M, I>> getActiveColumns()
+	{
 		return grid.getActiveColumns();
 	}
-	
+
 	/**
 	 * Returns the grid this toolbar belongs to.
+	 * 
 	 * @return grid this toolbar belongs to
 	 */
-	public AbstractGrid getGrid() {
+	public AbstractGrid<M, I> getGrid()
+	{
 		return grid;
 	}
 }

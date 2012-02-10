@@ -23,50 +23,51 @@ import junit.framework.TestCase;
 public class CDNTest extends TestCase
 {
 
-    @Override
-    protected void setUp() throws Exception
-    {
-        super.setUp();
-    }
+	@Override
+	protected void setUp() throws Exception
+	{
+		super.setUp();
+	}
 
-    @Override
-    protected void tearDown() throws Exception
-    {
-        super.tearDown();
-    }
+	@Override
+	protected void tearDown() throws Exception
+	{
+		super.tearDown();
+	}
 
-    public void testCDNs() throws Exception
-    {
+	public void testCDNs() throws Exception
+	{
 
-        IterateAllRegistered(false);
-        IterateAllRegistered(true);
+		IterateAllRegistered(false);
+		IterateAllRegistered(true);
 
-    }
+	}
 
-    private void IterateAllRegistered(final boolean production) throws IOException
-    {
+	private void IterateAllRegistered(final boolean production) throws IOException
+	{
 
-        final CDN[] cdns = CDN.values();
-        for (int j = 0; j < cdns.length; j++)
-        {
-            final CDN cdn = cdns[j];
+		final CDN[] cdns = CDN.values();
+		for (int j = 0; j < cdns.length; j++)
+		{
+			final CDN cdn = cdns[j];
 
-            final Library[] libs = Library.values();
-            for (int i = 0; i < libs.length; i++)
-            {
-                final Library library = libs[i];
-                final Set<Version> versions = library.getVersions(cdn);
-                for (final Version v : versions)
-                {
-                    final URL render = cdn.render(library, v, production);
-                    // test if something comes back
-                    final URLConnection c = render.openConnection();
-                    final String type = c.getContentType();
-                    System.out.println("checking URL: " + render.toExternalForm());
-                    assertTrue(type.contains("javascript"));
-                }
-            }
-        }
-    }
+			final Library[] libs = Library.values();
+			for (int i = 0; i < libs.length; i++)
+			{
+				final Library library = libs[i];
+				final Set<Version> versions = library.getVersions(cdn);
+				for (final Version v : versions)
+				{
+					final URL render = cdn.render(library, v, production);
+					// test if something comes back
+					final URLConnection c = render.openConnection();
+					final String type = c.getContentType();
+					System.out.println("checking URL: " + render.toExternalForm());
+					assertNotNull(type);
+					assertTrue(type.contains("javascript"));
+				}
+			}
+		}
+	}
 
 }

@@ -20,16 +20,15 @@ import java.lang.management.ManagementFactory;
 
 import javax.management.MBeanServer;
 
-import org.mortbay.jetty.Connector;
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.nio.SelectChannelConnector;
-import org.mortbay.jetty.webapp.WebAppContext;
-import org.mortbay.management.MBeanContainer;
+import org.eclipse.jetty.jmx.MBeanContainer;
+import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.nio.SelectChannelConnector;
+import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
- * Seperate startup class for people that want to run the examples directly. Use
- * parameter -Dcom.sun.management.jmxremote to startup JMX (and e.g. connect
- * with jconsole).
+ * Seperate startup class for people that want to run the examples directly. Use parameter
+ * -Dcom.sun.management.jmxremote to startup JMX (and e.g. connect with jconsole).
  */
 public class Start
 {
@@ -38,8 +37,9 @@ public class Start
 	 * Main function, starts the jetty server.
 	 * 
 	 * @param args
+	 * @throws Exception
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 		Server server = new Server();
 		SelectChannelConnector connector = new SelectChannelConnector();
@@ -49,7 +49,7 @@ public class Start
 		WebAppContext web = new WebAppContext();
 		web.setContextPath("/wicket-contrib-gmap2-examples");
 		web.setWar("src/main/webapp");
-		server.addHandler(web);
+		server.setHandler(web);
 
 		MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
 		MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);

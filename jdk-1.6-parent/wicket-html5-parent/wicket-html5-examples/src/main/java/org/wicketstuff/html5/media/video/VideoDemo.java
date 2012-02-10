@@ -6,47 +6,55 @@
  */
 package org.wicketstuff.html5.media.video;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.wicketstuff.html5.BasePage;
 import org.wicketstuff.html5.media.MediaSource;
-import org.wicketstuff.html5.media.video.Html5Video;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- *
+ * 
  * @author Andrew Lombardi
  */
-public class VideoDemo extends BasePage {
+public class VideoDemo extends BasePage
+{
+	private static final long serialVersionUID = 2714864573881855901L;
 
-    public VideoDemo() {
+	public VideoDemo()
+	{
 
-        final List<MediaSource> mm = new ArrayList<MediaSource>();
-        mm.add(new MediaSource("/dizzy.mp4", "video/mp4"));
-        mm.add(new MediaSource("/dizzy.ogv", "video/ogg"));
+		final List<MediaSource> mm = new ArrayList<MediaSource>();
+		mm.add(new MediaSource("dizzy.mp4", "video/mp4"));
+		mm.add(new MediaSource("dizzy.ogv", "video/ogg"));
 
-        IModel<List<MediaSource>> mediaSourceList = new AbstractReadOnlyModel<List<MediaSource>>() {
-			private static final long serialVersionUID = 1L;
-
-			public List<MediaSource> getObject() {
-                return mm;
-            }
-        };
-
-        add(new Html5Video("dizzy", mediaSourceList) {
+		IModel<List<MediaSource>> mediaSourceList = new AbstractReadOnlyModel<List<MediaSource>>()
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-            protected boolean isControls() {
-                return true;
-            }
+			public List<MediaSource> getObject()
+			{
+				return mm;
+			}
+		};
 
-            @Override
-            protected boolean isAutoPlay() {
-                return true;
-            }
-        });
-    }
+		add(new Html5Video("dizzy", mediaSourceList)
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected boolean isControls()
+			{
+				return true;
+			}
+
+			@Override
+			protected boolean isAutoPlay()
+			{
+				return true;
+			}
+		});
+	}
 }

@@ -1,14 +1,14 @@
 /*
  * $Id: JRGenericResource.java 5335 2010-06-14 13:28:39Z cdeal $ $Revision:
  * 1.3 $ $Date: 2010-06-14 09:28:39 -0400 (Mon, 14 Jun 2010) $
- *
+ * 
  * ==============================================================================
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -27,64 +27,69 @@ import org.wicketstuff.jasperreports.handlers.IJRResourceHandler;
 
 /**
  * A concrete implementation of a JRResource that delegates the common methods to a handler
- *
+ * 
  * @author cdeal
  */
-public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource {
-  private static final long serialVersionUID = 1L;
-
-  private H handler = null;
+public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource
+{
+	private static final long serialVersionUID = 1L;
+	private H handler = null;
 
 	/**
 	 * Constructor for JRConcreteResource
-	 *
+	 * 
 	 * @param handler
 	 */
-	public JRConcreteResource(H handler) {
+	public JRConcreteResource(H handler)
+	{
 		super();
 		setHandler(handler);
 	}
 
 	/**
 	 * Constructor for JRConcreteResource
-	 *
+	 * 
 	 * @param report
 	 * @param handler
 	 */
-	public JRConcreteResource(InputStream report, H handler) {
+	public JRConcreteResource(InputStream report, H handler)
+	{
 		super(report);
 		setHandler(handler);
 	}
 
 	/**
 	 * Constructor for JRConcreteResource
-	 *
+	 * 
 	 * @param report
 	 * @param handler
 	 */
-	public JRConcreteResource(URL report, H handler) {
+	public JRConcreteResource(URL report, H handler)
+	{
 		super(report);
 		setHandler(handler);
 	}
 
 	/**
 	 * Constructor for JRConcreteResource
-	 *
+	 * 
 	 * @param report
 	 * @param handler
 	 */
-	public JRConcreteResource(File report, H handler) {
+	public JRConcreteResource(File report, H handler)
+	{
 		super(report);
 		setHandler(handler);
 	}
 
 	/**
 	 * Constructor for JRConcreteResource
-	 *
+	 * 
 	 * @param factory
 	 * @param handler
 	 */
-	public JRConcreteResource(IJasperReportFactory factory, H handler) {
+	public JRConcreteResource(IJasperReportFactory factory, H handler)
+	{
 		super(factory);
 		setHandler(handler);
 	}
@@ -93,7 +98,8 @@ public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource
 	 * @see org.wicketstuff.jasperreports.JRResource#getContentType()
 	 */
 	@Override
-	public final String getContentType() {
+	public final String getContentType()
+	{
 		return handler.getContentType();
 	}
 
@@ -101,7 +107,8 @@ public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource
 	 * @see org.wicketstuff.jasperreports.JRResource#getExtension()
 	 */
 	@Override
-	public final String getExtension() {
+	public final String getExtension()
+	{
 		return handler.getExtension();
 	}
 
@@ -109,22 +116,27 @@ public class JRConcreteResource<H extends IJRResourceHandler> extends JRResource
 	 * @see org.wicketstuff.jasperreports.JRResource#newExporter()
 	 */
 	@Override
-	public final JRAbstractExporter newExporter() {
+	public final JRAbstractExporter newExporter()
+	{
 		return handler.newExporter();
 	}
 
 	/**
 	 * @return Returns the handler.
 	 */
-	public final H getHandler() {
+	public final H getHandler()
+	{
 		return handler;
 	}
 
 	/**
-	 * @param handler The handler to set.
+	 * @param handler
+	 *            The handler to set.
 	 */
-	public final void setHandler(H handler) {
-		if (handler == null) {
+	public final void setHandler(H handler)
+	{
+		if (handler == null)
+		{
 			throw new IllegalArgumentException("handler is reuqired!");
 		}
 		this.handler = handler;

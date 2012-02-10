@@ -25,7 +25,10 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 /**
  * @author cdeal
  */
-public class PdfResourceHandler implements IJRResourceHandler, Serializable {
+public class PdfResourceHandler implements IJRResourceHandler, Serializable
+{
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * @see org.wicketstuff.jasperreports.handlers.IJRResourceHandler#newExporter()
 	 */

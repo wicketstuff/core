@@ -33,9 +33,10 @@ import org.wicketstuff.jasperreports.handlers.PdfResourceHandler;
 @Deprecated
 public final class JRPdfResource extends JRConcreteResource<PdfResourceHandler>
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
-	 * Construct without a report. You must provide a report before you can use
-	 * this resource.
+	 * Construct without a report. You must provide a report before you can use this resource.
 	 */
 	public JRPdfResource()
 	{

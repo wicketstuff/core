@@ -26,32 +26,37 @@ import com.vividsolutions.jts.geom.Coordinate;
  * @author Marin Mandradjiev (marinsm@hotmail.com)
  * 
  */
-public class Polygon extends Feature {
+public class Polygon extends Feature
+{
 	private static final long serialVersionUID = 2381878612322151640L;
 
-	public Polygon(List<Coordinate> coordinates) {
+	public Polygon(List<Coordinate> coordinates)
+	{
 		super();
 		setCoordinates(coordinates);
 	}
 
-	public Polygon(List<Coordinate> coordinates, FeatureStyle featureStyle) {
+	public Polygon(List<Coordinate> coordinates, FeatureStyle featureStyle)
+	{
 		super(featureStyle);
 		setCoordinates(coordinates);
 	}
 
-	public Polygon(List<Coordinate> coordinates, IOpenLayersMap map) {
+	public Polygon(List<Coordinate> coordinates, IOpenLayersMap map)
+	{
 		super(map);
 		setCoordinates(coordinates);
 	}
 
-	public Polygon(List<Coordinate> coordinates, FeatureStyle featureStyle,
-			IOpenLayersMap map) {
+	public Polygon(List<Coordinate> coordinates, FeatureStyle featureStyle, IOpenLayersMap map)
+	{
 		super(featureStyle, map);
 		setCoordinates(coordinates);
 	}
 
 	@Override
-	protected String getType() {
+	protected String getType()
+	{
 		return "OpenLayers.Geometry.LinearRing";
 	}
 }

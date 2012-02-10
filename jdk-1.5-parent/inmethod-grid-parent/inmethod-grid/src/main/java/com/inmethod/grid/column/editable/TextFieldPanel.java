@@ -12,75 +12,61 @@ import org.apache.wicket.model.IModel;
 import com.inmethod.grid.column.AbstractColumn;
 
 /**
- * Panel with a TextField that updates the property of the row immediately after
- * user leaves the field.
+ * Panel with a TextField that updates the property of the row immediately after user leaves the
+ * field.
+ *
+ * TODO: Javadoc what are M, I, and P?
  * 
  * @author Matej Knopp
  */
-public class TextFieldPanel extends EditableCellPanel {
-	private static final String TEXTFIELD_ID = "textfield";
-
-	protected class DefaultTextField extends TextField {
-		private static final long serialVersionUID = 1L;
-
-		/**
-		 * Constructor for DefaultTextField
-		 * 
-		 * @param id
-		 * @param object
-		 */
-		protected DefaultTextField(String id, IModel object) {
-			super(id, object);
-		}
-
-		@Override
-		protected void onComponentTag(ComponentTag tag) {
-			super.onComponentTag(tag);
-			
-			if (!isValid()) {
-				tag.put("class", "imxt-invalid");
-				FeedbackMessage message = getFeedbackMessage();
-				if (message != null) {
-					tag.put("title", message.getMessage().toString());
-				}
-			}
-		}
-	}
-
-	/**
+public class TextFieldPanel<M, I, P> extends EditableCellPanel<M, I, P>
+{
+  private static final long serialVersionUID = 1L;
+  
+  /**
 	 * Constructor
-	 * @param id
-	 * 		component id
-	 * @param model
-	 * 		model for the field
-	 * @param column
-	 * 		column to which this panel belongs
-	 */
-	public TextFieldPanel(String id, final IModel model, IModel rowModel, AbstractColumn column) {
-		super(id, column, rowModel);
-		
-		TextField tf = newTextField(TEXTFIELD_ID, model);
-		tf.setOutputMarkupId(true);
-		tf.setLabel(column.getHeaderModel());
-		add(tf);		
-	}
-
-	/**
-	 * newTextField
 	 * 
 	 * @param id
+	 *            component id
 	 * @param model
-	 * @return TextField
+	 *            model for the field
+	 * @param column
+	 *            column to which this panel belongs
 	 */
-	protected TextField newTextField(final String id, final IModel model) {
-		return new DefaultTextField(id, model);
+	public TextFieldPanel(String id, final IModel<P> model, IModel<I> rowModel,
+		AbstractColumn<M, I> column)
+	{
+		super(id, column, rowModel);
+
+		TextField<P> tf = new TextField<P>("textfield", model)
+		{
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onComponentTag(ComponentTag tag)
+			{
+				super.onComponentTag(tag);
+
+				if (isValid() == false)
+				{
+					tag.put("class", "imxt-invalid");
+					FeedbackMessage message = getFeedbackMessage();
+					if (message != null)
+					{
+						tag.put("title", message.getMessage().toString());
+					}
+				}
+			}
+		};
+		tf.setOutputMarkupId(true);
+		tf.setLabel(column.getHeaderModel());
+		add(tf);
 	}
-		
+
 	@Override
-	public FormComponent getEditComponent() {
-		return (FormComponent) get(TEXTFIELD_ID);
+	protected FormComponent<P> getEditComponent()
+	{
+		return (FormComponent<P>)get("textfield");
 	}
-	
-	private static final long serialVersionUID = 1L;
-	
+  	
 }

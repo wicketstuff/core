@@ -1,5 +1,8 @@
 package org.wicketstuff.yav.examples;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -17,58 +20,58 @@ import org.wicketstuff.yav.YavBehavior;
 
 /**
  * @author Zenika
- *
+ * 
  */
-public class TestPage extends WebPage {
+public class TestPage extends WebPage
+{
 
-	@SuppressWarnings("unchecked")
-	public TestPage() {
+	private static final long serialVersionUID = 1L;
+
+	public TestPage()
+	{
 		super();
 
 		ValidationTestBean validationTestBean = new ValidationTestBean();
 
 		// Add form to the page
-		Form form = new Form("exampleForm", new CompoundPropertyModel(validationTestBean));
+		Form<ValidationTestBean> form = new Form<ValidationTestBean>("exampleForm",
+			new CompoundPropertyModel<ValidationTestBean>(validationTestBean));
 		add(form);
 
 		form.add(new YavBehavior());
 
-		form.add(new RequiredTextField("typeDate1"));
-		
-		form.add(new RequiredTextField("typeDate2"));
-		
-		form.add(new RequiredTextField("typeInt"));
-		
-		form.add(new RequiredTextField("typeDecimal"));
+		form.add(new RequiredTextField<Date>("typeDate1"));
 
-		form.add(new RequiredTextField("typeBigDecimal"));
-		
-		form.add(new RequiredTextField("maxLengthString")
-				.add(StringValidator.MaximumLengthValidator.maximumLength(10)));
+		form.add(new RequiredTextField<Date>("typeDate2"));
 
-		form.add(new RequiredTextField("minLengthString")
-				.add(StringValidator.MaximumLengthValidator.minimumLength(10)));
+		form.add(new RequiredTextField<Integer>("typeInt"));
 
-		form.add(new RequiredTextField("exactLengthString")
-				.add(StringValidator.ExactLengthValidator.exactLength(10)));
+		form.add(new RequiredTextField<Float>("typeDecimal"));
 
-		form.add(new RequiredTextField("lengthBetweenString")
-				.add(StringValidator.LengthBetweenValidator.lengthBetween(10, 20)));
+		form.add(new RequiredTextField<BigDecimal>("typeBigDecimal"));
 
-		form.add(new RequiredTextField("email")
-				.add(EmailAddressValidator.getInstance()));
+		form.add(new RequiredTextField<String>("maxLengthString").add(StringValidator.maximumLength(10)));
 
-		form.add(new RequiredTextField("pattern", new Model())
-				.add(new PatternValidator(".*\\.com")));
+		form.add(new RequiredTextField<String>("minLengthString").add(StringValidator.minimumLength(10)));
 
-		FormComponent formComponent1 = new RequiredTextField("dateOfBirth1");
-		FormComponent formComponent2 = new RequiredTextField("dateOfBirth2");
+		form.add(new RequiredTextField<String>("exactLengthString").add(StringValidator.exactLength(10)));
+
+		form.add(new RequiredTextField<String>("lengthBetweenString").add(StringValidator.lengthBetween(
+			10, 20)));
+
+		form.add(new RequiredTextField<String>("email").add(EmailAddressValidator.getInstance()));
+
+		form.add(new RequiredTextField<String>("pattern", new Model<String>()).add(new PatternValidator(
+			".*\\.com")));
+
+		FormComponent<Date> formComponent1 = new RequiredTextField<Date>("dateOfBirth1");
+		FormComponent<Date> formComponent2 = new RequiredTextField<Date>("dateOfBirth2");
 		form.add(formComponent1);
 		form.add(formComponent2);
 		form.add(new EqualInputValidator(formComponent1, formComponent2));
 
-		form.add(new RequiredTextField("rangeLong", Long.class)
-				.add(new RangeValidator(10L, 20L)));
+		form.add(new RequiredTextField<Long>("rangeLong", Long.class).add(new RangeValidator<Long>(
+			10L, 20L)));
 
 		// Seems not to be supported by Yav yet
 		// form.add(new RequiredTextField("minInt").add(new MinimumValidator(10)));
@@ -76,11 +79,13 @@ public class TestPage extends WebPage {
 		// Seems not to be supported by Yav yet
 		// form.add(new RequiredTextField("maxInt").add(new MaximumValidator(100)));
 
-		form.add(new Button("submit") {
+		form.add(new Button("submit")
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onSubmit() {
+			public void onSubmit()
+			{
 				System.out.println(getForm().getModelObject());
 			}
 		});

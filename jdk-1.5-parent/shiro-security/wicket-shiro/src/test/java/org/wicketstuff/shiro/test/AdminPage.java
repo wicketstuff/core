@@ -23,10 +23,7 @@ import org.wicketstuff.shiro.annotation.ShiroSecurityConstraint;
 /**
  * Test page that should only be available for role ADMIN.
  */
-@ShiroSecurityConstraint( 
-  constraint = ShiroConstraint.HasPermission, 
-  value      = "something:print" 
-)
+@ShiroSecurityConstraint(constraint = ShiroConstraint.HasPermission, value = "something:print")
 public class AdminPage extends WebPage
 {
 	private static final long serialVersionUID = 1L;

@@ -4,11 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.Response;
-import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.scriptaculous.JavascriptBuilder;
 import org.wicketstuff.scriptaculous.ScriptaculousAjaxBehavior;
 
@@ -35,8 +39,24 @@ public abstract class AbstractAutocompleteBehavior extends ScriptaculousAjaxBeha
 
 		getComponent().setOutputMarkupId(true);
 		getComponent().add(new AttributeModifier("autocomplete", new Model<String>("off")));
-		getComponent().add(HeaderContributor.forCss(getCss(), "screen"));
+		
 	}
+
+	
+	@Override
+	public void renderHead(Component c, IHeaderResponse response) {
+		super.renderHead(c, response);
+		
+		response.renderCSSReference(getCss(), "screen");
+	}
+
+
+	@Override
+	protected void respond(AjaxRequestTarget arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 	/**
 	 * render a placeholder div for the autocomplete results.
@@ -70,7 +90,7 @@ public abstract class AbstractAutocompleteBehavior extends ScriptaculousAjaxBeha
 	 */
 	protected ResourceReference getCss()
 	{
-		return new ResourceReference(AbstractAutocompleteBehavior.class, "style.css");
+		return new PackageResourceReference(AbstractAutocompleteBehavior.class, "style.css");
 	}
 
 	/**

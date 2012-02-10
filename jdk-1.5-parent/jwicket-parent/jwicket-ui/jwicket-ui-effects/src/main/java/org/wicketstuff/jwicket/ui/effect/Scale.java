@@ -1,6 +1,7 @@
 package org.wicketstuff.jwicket.ui.effect;
 
 
+import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
 
 
@@ -8,7 +9,10 @@ public class Scale extends AbstractJqueryUiEffect {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavascriptResourceReference jQueryUiEffectsScaleJs = new JQueryJavascriptResourceReference(Scale.class, "jquery.effects.scale.min.js");
+	public static final JQueryJavascriptResourceReference jQueryUiEffectsScaleJs
+		= JQuery.isDebug()
+		? new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.scale.js")
+		: new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.scale.min.js");
 
 	public Scale() {
 		super(jQueryUiEffectsScaleJs);

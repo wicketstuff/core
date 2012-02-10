@@ -20,7 +20,6 @@ public class Menu extends AbstractJqueryUiEmbeddedBehavior {
 
 	private static final long serialVersionUID = 1L;
 
-//	public static final JQueryJavascriptResourceReference uiMenuJs = new JQueryJavascriptResourceReference(Menu.class, "jquery.ui.autocomplete.min.js");
 	public static final JQueryJavascriptResourceReference uiMenuJs = new JQueryJavascriptResourceReference(Menu.class, "menu.js");
 
 	private JsMap options = new JsMap();

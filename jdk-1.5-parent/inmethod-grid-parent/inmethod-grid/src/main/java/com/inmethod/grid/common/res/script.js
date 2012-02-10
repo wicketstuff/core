@@ -969,13 +969,6 @@ InMethod.XTable.prototype = {
 		this.lastScrollLeft = bodyContainer.scrollLeft;
 		this.lastScrollTop = bodyContainer.scrollTop;		
 	},
-	
-	/**
-	 * Callback invoked when the window is resized. 
-	 */
-	onResize: function(event) {
-		this.update();
-	},
 			
 	/**
 	 * Attach the various event handler to elements in this XTable.
@@ -986,8 +979,7 @@ InMethod.XTable.prototype = {
 		var bodyContainer = this.getElement("div", "imxt-body-container1");				
 						
 		if (bodyContainer.imxtAttached != true) {
-			addListener(bodyContainer, "scroll", this.onScroll, this, true);
-			addListener(window, "resize", this.onResize, this, true);
+			addListener(bodyContainer, "scroll", this.onScroll, this, true);			
 			bodyContainer.imxtAttached = true;
 		}		
 		
@@ -1547,13 +1539,8 @@ InMethod.XTableManager.prototype = {
 
 	initialize: function() {
 		var interval = 100;
-		if (Wicket.Browser.isIE()) {
-			/* 
-			 * IE takes longer to run the update method, because IE sucks.
-			 * Increase the interval to make sure the browser still has mostly
-			 * idle CPU time.
-			 */
-			interval = 2500; 
+		if (Wicket.Browser.isIELessThan7()) {
+			interval = 500;
 		}
 		window.setInterval(this.update.bind(this), interval);
 	},

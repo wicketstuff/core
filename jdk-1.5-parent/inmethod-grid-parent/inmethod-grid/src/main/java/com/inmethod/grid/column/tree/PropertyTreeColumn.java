@@ -1,5 +1,8 @@
 package com.inmethod.grid.column.tree;
 
+import java.io.Serializable;
+
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 
 import org.apache.wicket.Component;
@@ -12,10 +15,19 @@ import org.apache.wicket.model.PropertyModel;
  * Simple tree column that displays a property of {@link TreeNode} instance specified by the
  * property expression.
  * 
+ * @param <T>
+ *            tree model object type
+ * @param <I>
+ *            node model object type
+ * @param <P>
+ *            type of the property
+ * 
  * @see AbstractTreeColumn
  * @author Matej Knopp
  */
-public class PropertyTreeColumn extends AbstractTreeColumn {
+public class PropertyTreeColumn<T extends TreeModel & Serializable, I extends TreeNode & Serializable, P>
+	extends AbstractTreeColumn<T, I>
+{
 
 	private static final long serialVersionUID = 1L;
 	private final String propertyExpression;
@@ -33,7 +45,9 @@ public class PropertyTreeColumn extends AbstractTreeColumn {
 	 *            optional string that will be returned by {@link ISortState} to indicate that the
 	 *            column is being sorted
 	 */
-	public PropertyTreeColumn(String columnId, IModel headerModel, String propertyExpression, String sortProperty) {
+	public PropertyTreeColumn(String columnId, IModel<String> headerModel,
+		String propertyExpression, String sortProperty)
+	{
 		super(columnId, headerModel, sortProperty);
 		this.propertyExpression = propertyExpression;
 	}
@@ -48,7 +62,8 @@ public class PropertyTreeColumn extends AbstractTreeColumn {
 	 * @param propertyExpression
 	 *            property expression used to get the displayed value for row object
 	 */
-	public PropertyTreeColumn(String columnId, IModel headerModel, String propertyExpression) {
+	public PropertyTreeColumn(String columnId, IModel<String> headerModel, String propertyExpression)
+	{
 		this(columnId, headerModel, propertyExpression, null);
 	}
 
@@ -64,7 +79,9 @@ public class PropertyTreeColumn extends AbstractTreeColumn {
 	 *            optional string that will be returned by {@link ISortState} to indicate that the
 	 *            column is being sorted
 	 */
-	public PropertyTreeColumn(IModel headerModel, String propertyExpression, String sortProperty) {
+	public PropertyTreeColumn(IModel<String> headerModel, String propertyExpression,
+		String sortProperty)
+	{
 		this(propertyExpression, headerModel, propertyExpression, sortProperty);
 	}
 
@@ -77,7 +94,8 @@ public class PropertyTreeColumn extends AbstractTreeColumn {
 	 * @param propertyExpression
 	 *            property expression used to get the displayed value for row object
 	 */
-	public PropertyTreeColumn(IModel headerModel, String propertyExpression) {
+	public PropertyTreeColumn(IModel<String> headerModel, String propertyExpression)
+	{
 		this(propertyExpression, headerModel, propertyExpression);
 	}
 
@@ -85,8 +103,9 @@ public class PropertyTreeColumn extends AbstractTreeColumn {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected Component newNodeComponent(String id, IModel model) {
-		return new Label(id, new PropertyModel(model, getPropertyExpression()));
+	protected Component newNodeComponent(String id, IModel<I> model)
+	{
+		return new Label(id, new PropertyModel<P>(model, getPropertyExpression()));
 	}
 
 	/**
@@ -94,7 +113,8 @@ public class PropertyTreeColumn extends AbstractTreeColumn {
 	 * 
 	 * @return property expression.
 	 */
-	protected String getPropertyExpression() {
+	protected String getPropertyExpression()
+	{
 		return propertyExpression;
 	}
 

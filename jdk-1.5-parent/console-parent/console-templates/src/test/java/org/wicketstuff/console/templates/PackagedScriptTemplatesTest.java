@@ -29,24 +29,26 @@ import org.wicketstuff.console.engine.Lang;
  * 
  * @author cretzel
  */
-public class PackagedScriptTemplatesTest {
+public class PackagedScriptTemplatesTest
+{
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception
+	{
 	}
 
 	@Test
-	public void test_getPackagedGroovyTemplates() throws Exception {
-		final List<ScriptTemplate> templates = PackagedScriptTemplates
-				.getPackagedScriptTemplates(Lang.GROOVY);
+	public void test_findAllPackagedGroovyTemplates() throws Exception
+	{
+		final List<ScriptTemplate> templates = new PackagedScriptTemplates().findAll(Lang.GROOVY);
 
-		assertEquals(15, templates.size());
+		assertEquals(20, templates.size());
 	}
 
 	@Test
-	public void test_getPackagedClojureTemplates() throws Exception {
-		final List<ScriptTemplate> templates = PackagedScriptTemplates
-				.getPackagedScriptTemplates(Lang.CLOJURE);
+	public void test_getPackagedClojureTemplates() throws Exception
+	{
+		final List<ScriptTemplate> templates = new PackagedScriptTemplates().findAll(Lang.CLOJURE);
 
 		assertEquals(15, templates.size());
 	}

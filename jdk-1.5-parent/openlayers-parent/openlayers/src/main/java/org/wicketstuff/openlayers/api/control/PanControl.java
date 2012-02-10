@@ -1,10 +1,11 @@
 package org.wicketstuff.openlayers.api.control;
 
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 
 /**
@@ -14,16 +15,18 @@ import org.wicketstuff.openlayers.IOpenLayersMap;
  * 
  */
 
-public class PanControl extends Panel {
+public class PanControl extends Panel
+{
 
-	private static ResourceReference PAN_UP = new ResourceReference(
-			PanControl.class, "north-mini.png");
-	private static ResourceReference PAN_LEFT = new ResourceReference(
-			PanControl.class, "west-mini.png");
-	private static ResourceReference PAN_RIGHT = new ResourceReference(
-			PanControl.class, "east-mini.png");
-	private static ResourceReference PAN_DOWN = new ResourceReference(
-			PanControl.class, "south-mini.png");
+	private static final long serialVersionUID = 1L;
+	private static ResourceReference PAN_UP = new PackageResourceReference(PanControl.class,
+		"north-mini.png");
+	private static ResourceReference PAN_LEFT = new PackageResourceReference(PanControl.class,
+		"west-mini.png");
+	private static ResourceReference PAN_RIGHT = new PackageResourceReference(PanControl.class,
+		"east-mini.png");
+	private static ResourceReference PAN_DOWN = new PackageResourceReference(PanControl.class,
+		"south-mini.png");
 
 	private static int panoffset = 10;
 
@@ -33,12 +36,14 @@ public class PanControl extends Panel {
 	 * @param id
 	 * @param map
 	 */
-	public PanControl(String id, IOpenLayersMap map) {
+	public PanControl(String id, IOpenLayersMap map)
+	{
 		this(id, map, panoffset);
 
 	}
 
-	public PanControl(String id, IOpenLayersMap map, int panOffset) {
+	public PanControl(String id, IOpenLayersMap map, int panOffset)
+	{
 		this(id, map, panOffset, PAN_UP, PAN_LEFT, PAN_RIGHT, PAN_DOWN);
 
 	}
@@ -56,35 +61,31 @@ public class PanControl extends Panel {
 	 * @param panDownResource
 	 */
 	public PanControl(String id, IOpenLayersMap map, int panOffset,
-			ResourceReference panUpResource, ResourceReference panLeftResource,
-			ResourceReference panRightResource,
-			ResourceReference panDownResource) {
+		ResourceReference panUpResource, ResourceReference panLeftResource,
+		ResourceReference panRightResource, ResourceReference panDownResource)
+	{
 		super(id);
 		Image panUp = new Image("panUp", panUpResource);
-		panUp.add(new AttributeAppender("onClick", new Model(map
-				.getJSinvokeNoLineEnd("panDirection(0,-" + panOffset + ")")),
-				";"));
+		panUp.add(new AttributeAppender("onClick",
+			Model.of(map.getJSinvokeNoLineEnd("panDirection(0,-" + panOffset + ")")), ";"));
 		add(panUp);
 
 		Image panLeft = new Image("panLeft", panLeftResource);
-		panLeft.add(new AttributeAppender("onClick", new Model(map
-				.getJSinvokeNoLineEnd("panDirection(-" + panOffset + ",0)")),
-				";"));
+		panLeft.add(new AttributeAppender("onClick",
+			Model.of(map.getJSinvokeNoLineEnd("panDirection(-" + panOffset + ",0)")), ";"));
 
 		add(panLeft);
 
 		Image panRight = new Image("panRight", panRightResource);
-		panRight.add(new AttributeAppender("onClick", new Model(map
-				.getJSinvokeNoLineEnd("panDirection(" + panOffset + ",0)")),
-				";"));
+		panRight.add(new AttributeAppender("onClick",
+			Model.of(map.getJSinvokeNoLineEnd("panDirection(" + panOffset + ",0)")), ";"));
 
 		add(panRight);
 
 		Image panDown = new Image("panDown", panDownResource);
 
-		panDown.add(new AttributeAppender("onClick", new Model(map
-				.getJSinvokeNoLineEnd("panDirection(0," + panOffset + ")")),
-				";"));
+		panDown.add(new AttributeAppender("onClick",
+			Model.of(map.getJSinvokeNoLineEnd("panDirection(0," + panOffset + ")")), ";"));
 
 		add(panDown);
 

@@ -10,39 +10,40 @@ import java.io.Serializable;
 /**
  * @author Daniel Spiewak
  */
-public interface IChartProvider extends Serializable {
+public interface IChartProvider extends Serializable
+{
 
-    public Dimension getSize();
+	public Dimension getSize();
 
-    public IChartData getData();
+	public IChartData getData();
 
-    public ChartType getType();
+	public ChartType getType();
 
-    public int getBarWidth();
+	public int getBarWidth();
 
-    public int getBarGroupSpacing();
+	public int getBarGroupSpacing();
 
-    public String getTitle();
+	public String getTitle();
 
-    public String[] getLegend();
+	public String[] getLegend();
 
-    public Color[] getColors();
+	public Color[] getColors();
 
-    public IChartFill getChartFill();
+	public IChartFill getChartFill();
 
-    public IChartFill getBackgroundFill();
+	public IChartFill getBackgroundFill();
 
-    public String[] getPieLabels();
+	public String[] getPieLabels();
 
-    public IChartAxis[] getAxes();
+	public IChartAxis[] getAxes();
 
-    public ILineStyle[] getLineStyles();
+	public ILineStyle[] getLineStyles();
 
-    public IChartGrid getGrid();
+	public IChartGrid getGrid();
 
-    public IShapeMarker[] getShapeMarkers();
+	public IShapeMarker[] getShapeMarkers();
 
-    public IRangeMarker[] getRangeMarkers();
+	public IRangeMarker[] getRangeMarkers();
 
-    public IFillArea[] getFillAreas();
+	public IFillArea[] getFillAreas();
 }

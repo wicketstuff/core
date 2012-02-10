@@ -22,12 +22,16 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.wicket.Application;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.Component;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.CompressedResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.collections.MiniMap;
 import org.wicketstuff.dojo11.application.DojoSettings;
 import org.wicketstuff.dojo11.application.IDojoApplication;
@@ -71,9 +75,9 @@ public abstract class AbstractDefaultDojoBehavior extends AbstractDefaultAjaxBeh
 	/**
 	 * @see org.apache.wicket.ajax.AbstractDefaultAjaxBehavior#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
 	 */
-	public void renderHead(IHeaderResponse response)
+	public void renderHead(Component c, IHeaderResponse response)
 	{
-		super.renderHead(response);
+		super.renderHead(c, response);
 		
 		IDojoSettings dojoSettings = ((IDojoApplication)Application.get()).getDojoSettings();
 		List<ResourceReference> dojoResourceReferences = dojoSettings.getDojoResourceReferences();
@@ -82,7 +86,7 @@ public abstract class AbstractDefaultDojoBehavior extends AbstractDefaultAjaxBeh
 		
 		for (ResourceReference r : dojoResourceReferences)
 		{
-			response.renderJavascriptReference(r);
+			response.renderJavaScriptReference(r);
 		}
 
 		registerDojoModulePathes(response, getDojoModules());
@@ -92,10 +96,10 @@ public abstract class AbstractDefaultDojoBehavior extends AbstractDefaultAjaxBeh
 	{	
 		DojoPackagedTextTemplate template = new DojoPackagedTextTemplate(AbstractDefaultDojoBehavior.class, AbstractDefaultDojoBehavior.class.getSimpleName()+".js");
 		MiniMap map = new MiniMap(3);
-		map.put("debug", Application.DEVELOPMENT.equals(Application.get().getConfigurationType()));
+		map.put("debug", RuntimeConfigurationType.DEVELOPMENT.equals(Application.get().getConfigurationType()));
 		map.put("baseUrl", DojoSettings.get().getDojoBaseUrl());
 		map.put("locale", ((IDojoApplication)Application.get()).getDojoSettings().getDefaultLocale().toString().replace('_', '-'));
-		response.renderJavascript(template.asString(map), template.getStaticKey());
+		response.renderJavaScript(template.asString(map), template.getStaticKey());
 	}
 	
 	/**
@@ -109,13 +113,13 @@ public abstract class AbstractDefaultDojoBehavior extends AbstractDefaultAjaxBeh
 			for (DojoModule module : modules) {
 				registerDojoModulePath(buf, module);
 			}
-			response.renderJavascript(buf.toString(), DOJO_MODULES_ID + "module");
+			response.renderJavaScript(buf.toString(), DOJO_MODULES_ID + "module");
 		}
 	}
 	
 	private void registerDojoModulePath(StringBuilder javascript, DojoModule module) {
 		ResourceReference dojoReference = getDojoResourceReference();
-		String dojoUrl = RequestCycle.get().urlFor(dojoReference).toString();
+		String dojoUrl = RequestCycle.get().urlFor(dojoReference, new PageParameters()).toString();
 		
 		//FIXME : investigate on url resolving : http://81.17.46.170:8090/jira/browse/DOJO-67
 		
@@ -148,8 +152,8 @@ public abstract class AbstractDefaultDojoBehavior extends AbstractDefaultAjaxBeh
 			url += "../";
 		}
 		
-		ResourceReference moduleReference = new ResourceReference(module.getScope(), module.getPath());
-		String moduleUrl = RequestCycle.get().urlFor(moduleReference).toString();
+		ResourceReference moduleReference = new PackageResourceReference(module.getScope(), module.getPath());
+		String moduleUrl = RequestCycle.get().urlFor(moduleReference, new PageParameters()).toString();
 		url = url + moduleUrl;
 		//remove / at the end if exists
 		if (url.charAt(url.length()-1) == '/'){

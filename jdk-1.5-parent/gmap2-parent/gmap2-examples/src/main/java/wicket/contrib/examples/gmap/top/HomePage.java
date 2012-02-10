@@ -37,7 +37,7 @@ public class HomePage extends WicketExamplePage
 		add(feedback);
 
 		final GMap2 topMap = new GMap2("topPanel", GMapExampleApplication.get()
-				.getGoogleMapsAPIkey());
+			.getGoogleMapsAPIkey());
 		topMap.setDoubleClickZoomEnabled(true);
 		topMap.add(new ClickListener()
 		{
@@ -83,9 +83,9 @@ public class HomePage extends WicketExamplePage
 				{
 					GLatLng point = marker.getLatLng();
 
-					GMarker random = new GMarker(new GLatLng(point.getLat()
-							* (0.9995 + Math.random() / 1000), point.getLng()
-							* (0.9995 + Math.random() / 1000)));
+					GMarker random = new GMarker(new GLatLng(point.getLat() *
+						(0.9995 + Math.random() / 1000), point.getLng() *
+						(0.9995 + Math.random() / 1000)));
 
 					topMap.addOverlay(random);
 				}
@@ -107,6 +107,6 @@ public class HomePage extends WicketExamplePage
 	private void markerSelected(AjaxRequestTarget target, GMarker marker)
 	{
 		markerLabel.setDefaultModelObject(marker);
-		target.addComponent(markerLabel);
+		target.add(markerLabel);
 	}
 }

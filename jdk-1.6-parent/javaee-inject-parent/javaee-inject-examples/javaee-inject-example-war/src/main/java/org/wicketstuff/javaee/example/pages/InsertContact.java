@@ -17,6 +17,7 @@
 package org.wicketstuff.javaee.example.pages;
 
 import javax.ejb.EJB;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
@@ -26,47 +27,60 @@ import org.wicketstuff.javaee.example.dao.ContactDaoLocal;
 import org.wicketstuff.javaee.example.model.Contact;
 
 /**
- *
+ * 
  * @author Filippo Diotalevi
  */
-public class InsertContact extends WebPage {
+public class InsertContact extends WebPage
+{
 
-    private Form<Contact> insertForm;
-    private String name;
-    private String email;
-    @EJB(name = "ContactDaoBean")
-    private ContactDaoLocal contactDao;
+	private static final long serialVersionUID = 1L;
+	private Form<Contact> insertForm;
+	private String name;
+	private String email;
+	@EJB(name = "ContactDaoBean")
+	private ContactDaoLocal contactDao;
 
-    public InsertContact() {
-        add(new FeedbackPanel("feedback"));
+	public InsertContact()
+	{
+		add(new FeedbackPanel("feedback"));
 
-        insertForm = new Form<Contact>("insertForm") {
+		insertForm = new Form<Contact>("insertForm")
+		{
 
-            @Override
-            protected void onSubmit() {
-                contactDao.addContact(name, email);
-                setResponsePage(ListContacts.class);
-            }
-        };
+			private static final long serialVersionUID = 1L;
 
-        insertForm.add(new RequiredTextField<String>("name", new PropertyModel<String>(this, "name")));
-        insertForm.add(new RequiredTextField<String>("email", new PropertyModel<String>(this, "email")));
-        add(insertForm);
-    }
+			@Override
+			protected void onSubmit()
+			{
+				contactDao.addContact(name, email);
+				setResponsePage(ListContacts.class);
+			}
+		};
 
-    public String getEmail() {
-        return email;
-    }
+		insertForm.add(new RequiredTextField<String>("name",
+			new PropertyModel<String>(this, "name")));
+		insertForm.add(new RequiredTextField<String>("email", new PropertyModel<String>(this,
+			"email")));
+		add(insertForm);
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getEmail()
+	{
+		return email;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setEmail(String email)
+	{
+		this.email = email;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
 }

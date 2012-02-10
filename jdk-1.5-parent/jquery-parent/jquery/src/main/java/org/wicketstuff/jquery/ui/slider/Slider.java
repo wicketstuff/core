@@ -5,19 +5,20 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 
 /**
- * An integration of JQuery UI Slider widget
- * (http://docs.jquery.com/UI/Slider/slider)
+ * An integration of JQuery UI Slider widget (http://docs.jquery.com/UI/Slider/slider)
  * 
  * @author Martin Grigorov <martingrigorov @ users.sf.net>
  */
-public abstract class Slider extends Panel {
+public abstract class Slider extends Panel
+{
 
 	private static final long serialVersionUID = 1L;
 
 	private final SliderOptions sliderOptions;
 
 	public Slider(final String wid, final SliderOptions sliderOptions,
-			final SliderHandleOptions... sliderHandlesOptions) {
+		final SliderHandleOptions... sliderHandlesOptions)
+	{
 		super(wid);
 
 		setOutputMarkupId(true);
@@ -30,18 +31,22 @@ public abstract class Slider extends Panel {
 		sliderHandles.setRenderBodyOnly(true);
 		add(sliderHandles);
 
-		if (sliderHandlesOptions != null && sliderHandlesOptions.length > 0) {
+		if (sliderHandlesOptions != null && sliderHandlesOptions.length > 0)
+		{
 
-			for (int i = 0; i < sliderHandlesOptions.length; i++) {
+			for (int i = 0; i < sliderHandlesOptions.length; i++)
+			{
 
 				final SliderHandleOptions sliderHandleSettings = sliderHandlesOptions[i];
 
-				final SliderHandle sliderHandle = new SliderHandle(
-						sliderHandles.newChildId(), sliderHandleSettings);
+				final SliderHandle sliderHandle = new SliderHandle(sliderHandles.newChildId(),
+					sliderHandleSettings);
 
 				sliderHandles.add(sliderHandle);
 			}
-		} else {
+		}
+		else
+		{
 			final SliderHandle sliderHandle = new SliderHandle("handle");
 			sliderHandles.add(sliderHandle);
 		}
@@ -49,13 +54,13 @@ public abstract class Slider extends Panel {
 		add(new SliderBehavior());
 	}
 
-	public SliderOptions getOptions() {
+	public SliderOptions getOptions()
+	{
 		return sliderOptions != null ? sliderOptions : new SliderOptions();
 	}
 
 	/**
-	 * A callback method which will be called when any of the handles change its
-	 * value
+	 * A callback method which will be called when any of the handles change its value
 	 * 
 	 * @param target
 	 *            the current request target
@@ -64,7 +69,7 @@ public abstract class Slider extends Panel {
 	 * @param newValue
 	 *            the value of this handle
 	 */
-	public abstract void onChange(final AjaxRequestTarget target,
-			final String handleId, final int newValue);
+	public abstract void onChange(final AjaxRequestTarget target, final String handleId,
+		final int newValue);
 
 }

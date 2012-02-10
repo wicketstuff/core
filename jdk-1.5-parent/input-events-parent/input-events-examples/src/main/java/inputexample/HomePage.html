@@ -1,4 +1,4 @@
-<html>
+<html xmlns:wicket="http://wicket.apache.org">
 	<head>
 		<title>Wicket Quickstart Archetype Homepage</title>
 	</head>
@@ -27,6 +27,20 @@
 
 		<a href="#" wicket:id="link">Click here!</a>
 
+		<p>
+			<form wicket:id="ajaxContainer">
+				<fieldset>
+					<legend>Ajax updates InputBehavior:</legend>
+					<ol>
+						<li>Press "Refresh" to rerender the InputBehavior.</li>
+						<li>Press the "Up" key to check its funtionality.</li>
+					</ol>
+					Event Counter: <label wicket:id="counter"></label><br />
+					<button wicket:id="increase" value="+1">Increase</button>
+					<button wicket:id="refresh" value="AJAX Refresh">Refresh</button>
+				</fieldset>
+			</form>
+		</p>
 	</body>
 </html>
 

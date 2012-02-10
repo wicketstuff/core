@@ -20,37 +20,45 @@ import java.io.Serializable;
 
 /**
  * Sample domain object
- *
+ * 
  * @author roland
  * @since May 23, 2008
  */
-public class Car implements Serializable {
-    int id;
-    String name;
+public class Car implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	int id;
+	String name;
 
-    Car(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+	Car(int id, String name)
+	{
+		this.id = id;
+		this.name = name;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public int getId()
+	{
+		return id;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setId(int id)
+	{
+		this.id = id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName()
+	{
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name)
+	{
+		this.name = name;
+	}
 
-    @Override
-    public String toString() {
-        return name;
-    }
+	@Override
+	public String toString()
+	{
+		return name;
+	}
 }

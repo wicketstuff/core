@@ -19,30 +19,26 @@ import org.apache.wicket.IClusterable;
 
 /**
  * @author mocleiri
- *
+ * 
  */
-public interface IDTATableRenderingHints extends IClusterable {
+public interface IDTATableRenderingHints extends IClusterable
+{
 	/**
 	 * 
 	 * @return true if the results table should use AJAX pagination.
 	 */
 	public boolean isPaginationEnabled();
-	
+
 	/**
 	 * 
-	 * @return the number of rows per page.  If isPaginationEnabled() returns false then only 1 page is shown.
-	 */  
-	public int getPageSize(); 
-	
+	 * @return the number of rows per page. If isPaginationEnabled() returns false then only 1 page
+	 *         is shown.
+	 */
+	public int getPageSize();
+
 	/**
 	 * 
 	 * @return true if the no match tool bar should be shown in the table when there are no results.
 	 */
 	public boolean showNoRecordsToolbar();
-	
-	/**
-	 * 
-	 * @return true if the selected row should have a 'selected' class defined.
-	 */
-	public boolean highlightSelectedRow();
 }

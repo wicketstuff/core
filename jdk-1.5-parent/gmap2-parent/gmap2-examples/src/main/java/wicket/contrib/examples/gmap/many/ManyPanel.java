@@ -11,6 +11,8 @@ import wicket.contrib.gmap.api.GMapType;
 public abstract class ManyPanel extends Panel
 {
 
+	private static final long serialVersionUID = 1L;
+
 	final GMap2 gMap;
 
 	private WebMarkupContainer n, ne, e, se, s, sw, w, nw;

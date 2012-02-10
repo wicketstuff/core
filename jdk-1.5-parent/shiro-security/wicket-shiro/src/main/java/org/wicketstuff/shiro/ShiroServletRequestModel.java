@@ -18,9 +18,8 @@ package org.wicketstuff.shiro;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.model.LoadableDetachableModel;
-import org.apache.wicket.protocol.http.WebRequestCycle;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 public class ShiroServletRequestModel extends LoadableDetachableModel<HttpServletRequest>
 {
@@ -32,6 +31,6 @@ public class ShiroServletRequestModel extends LoadableDetachableModel<HttpServle
 	@Override
 	protected HttpServletRequest load()
 	{
-		return ((WebRequestCycle)RequestCycle.get()).getWebRequest().getHttpServletRequest();
+		return (HttpServletRequest)RequestCycle.get().getRequest().getContainerRequest();
 	}
 }

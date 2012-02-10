@@ -8,15 +8,16 @@ import org.apache.wicket.protocol.http.WebApplication;
 public class TinyMCEExampleApplication extends WebApplication
 {
 
-    public TinyMCEExampleApplication()
-    {
-    }
+	public TinyMCEExampleApplication()
+	{
+	}
 
-    /**
-     * @see wicket.Application#getHomePage()
-     */
-    public Class getHomePage()
-    {
-        return TinyMCEBasePage.class;
-    }
+	/**
+	 * @see wicket.Application#getHomePage()
+	 */
+	@Override
+	public Class getHomePage()
+	{
+		return TinyMCEBasePage.class;
+	}
 }

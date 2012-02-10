@@ -5,18 +5,17 @@ import javax.swing.tree.TreeNode;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.IClusterable;
-import org.apache.wicket.IComponentBorder;
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.Response;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 import com.inmethod.icon.Icon;
 import com.inmethod.icon.IconImage;
@@ -24,60 +23,65 @@ import com.inmethod.icon.IconImage;
 /**
  * Represents the content of a tree column cell.
  * 
+ * @param <T>
+ *            tree model object type
+ * @param <I>
+ *            node model object type
+ * 
  * @author Matej Knopp
  */
-public abstract class TreePanel extends Panel {
-
+public abstract class TreePanel<T extends TreeModel, I extends TreeNode> extends Panel
+{
+	private static final long serialVersionUID = 1L;
+  
 	private static final String JUNCTION_LINK_ID = "junctionLink";
 	private static final String NODE_COMPONENT_ID = "nodeComponent";
 
 	/**
 	 * Constructor.
+	 * 
 	 * @param id
-	 * 		component id
+	 *            component id
 	 * @param model
-	 * 		model to access the {@link TreeNode} 
+	 *            model to access the {@link TreeNode}
 	 * @param level
-	 * 		node depth level
-	 */	
-	public TreePanel(String id, final IModel model, int level) {
+	 *            node depth level
+	 */
+	public TreePanel(String id, final IModel<I> model, int level)
+	{
 		super(id, model);
 		this.level = level;
 	}
-	
+
 	private final int level;
-	
-	private void init()
+
+	@Override
+	protected void onInitialize()
 	{
+		super.onInitialize();
+
 		// add junction link
 		Object node = getDefaultModelObject();
 		Component junctionLink = newJunctionLink(this, JUNCTION_LINK_ID, node);
-		junctionLink.setComponentBorder(new JunctionBorder(node, level));
+		junctionLink.add(new JunctionBorder(node, level));
 		add(junctionLink);
 
 		// add node component
-		Component nodeComponent = newNodeComponent(NODE_COMPONENT_ID, getDefaultModel());
+		Component nodeComponent = newNodeComponent(NODE_COMPONENT_ID, getDefaultNodeModel());
 		add(nodeComponent);
 
-		IconImage icon = new IconImage("icon", new IconModel()) {
+		IconImage icon = new IconImage("icon", new IconModel())
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public boolean isVisible() {
+			public boolean isVisible()
+			{
 				return getIcon() != null;
 			}
 		};
-		icon.setComponentBorder(IconBorder.INSTANCE);
-		add(icon);		
-	}
-	
-	@Override
-	protected void onBeforeRender() {
-		if (!hasBeenRendered())
-		{
-			init();
-		}
-		super.onBeforeRender();
+		icon.add(IconBorder.INSTANCE);
+		add(icon);
 	}
 
 	/**
@@ -85,8 +89,9 @@ public abstract class TreePanel extends Panel {
 	 * 
 	 * @return icon component
 	 */
-	public IconImage getIconComponent() {
-		return (IconImage) get("icon");
+	public IconImage getIconComponent()
+	{
+		return (IconImage)get("icon");
 	}
 
 	/**
@@ -94,27 +99,31 @@ public abstract class TreePanel extends Panel {
 	 * 
 	 * @author Matej Knopp
 	 */
-	private class IconModel implements IModel {
+	private class IconModel implements IModel<Icon>
+	{
 		private static final long serialVersionUID = 1L;
 
 		/**
 		 * {@inheritDoc}
 		 */
-		public Object getObject() {
-			return getIcon(getDefaultModel());
+		public Icon getObject()
+		{
+			return getIcon(getDefaultNodeModel());
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
-		public void setObject(Object object) {
+		public void setObject(Icon object)
+		{
 			throw new UnsupportedOperationException();
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
-		public void detach() {
+		public void detach()
+		{
 		}
 	};
 
@@ -125,7 +134,7 @@ public abstract class TreePanel extends Panel {
 	 *            model for the TreeNode
 	 * @return icon instance or null
 	 */
-	protected abstract Icon getIcon(IModel model);
+	protected abstract Icon getIcon(IModel<I> model);
 
 	/**
 	 * Creates a new component for the given TreeNode.
@@ -136,30 +145,37 @@ public abstract class TreePanel extends Panel {
 	 *            model that returns the node
 	 * @return component for node
 	 */
-	protected abstract Component newNodeComponent(String id, IModel model);
+	protected abstract Component newNodeComponent(String id, IModel<I> model);
+
+	protected IModel<I> getDefaultNodeModel()
+	{
+		return (IModel<I>)getDefaultModel();
+	}
 
 	/**
-	 * Very simple border that adds a proper
-	 * <td></td>
-	 * around an icon
+	 * Very simple border that adds a proper <td></td> around an icon
 	 * 
 	 * @author Matej Knopp
 	 */
-	private static class IconBorder implements IComponentBorder {
-
+	private static class IconBorder extends Behavior
+	{
 		private static final long serialVersionUID = 1L;
 
 		/**
 		 * {@inheritDoc}
 		 */
-		public void renderBefore(Component component) {
+		@Override
+		public void beforeRender(Component component)
+		{
 			RequestCycle.get().getResponse().write("<td>");
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
-		public void renderAfter(Component component) {
+		@Override
+		public void afterRender(Component component)
+		{
 			RequestCycle.get().getResponse().write("</td>");
 		}
 
@@ -171,7 +187,8 @@ public abstract class TreePanel extends Panel {
 	 * 
 	 * @author Matej Knopp
 	 */
-	private static class JunctionBorder implements IComponentBorder {
+	private static class JunctionBorder extends Behavior
+	{
 		private static final long serialVersionUID = 1L;
 
 		private final int level;
@@ -182,24 +199,30 @@ public abstract class TreePanel extends Panel {
 		 * @param node
 		 * @param level
 		 */
-		public JunctionBorder(Object node, int level) {
+		public JunctionBorder(Object node, int level)
+		{
 			this.level = level;
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
-		public void renderAfter(Component component) {
+		@Override
+		public void afterRender(Component component)
+		{
 			RequestCycle.get().getResponse().write("</td>");
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
-		public void renderBefore(Component component) {
+		@Override
+		public void beforeRender(Component component)
+		{
 			Response response = RequestCycle.get().getResponse();
 
-			for (int i = level - 1; i >= 0; --i) {
+			for (int i = level - 1; i >= 0; --i)
+			{
 				response.write("<td class=\"imxt-spacer\"><span></span></td>");
 			}
 
@@ -207,8 +230,9 @@ public abstract class TreePanel extends Panel {
 		}
 	};
 
-	private TreeGridBody getTreeGridBody() {
-		return (TreeGridBody) findParent(TreeGridBody.class);
+	private TreeGridBody<T, I> getTreeGridBody()
+	{
+		return findParent(TreeGridBody.class);
 	};
 
 	/**
@@ -223,43 +247,61 @@ public abstract class TreePanel extends Panel {
 	 *            tree node for which the link should be created.
 	 * @return The link component
 	 */
-	protected Component newJunctionLink(MarkupContainer parent, final String id, final Object node) {
+	protected Component newJunctionLink(MarkupContainer parent, final String id, final Object node)
+	{
 		final MarkupContainer junctionLink;
 
-		TreeModel model  = (TreeModel) getTreeGridBody().getDefaultModelObject();
-		if (model.isLeaf(node) == false) {
-			junctionLink = newLink(id, new ILinkCallback() {
+		TreeModel model = (TreeModel)getTreeGridBody().getDefaultModelObject();
+		if (model.isLeaf(node) == false)
+		{
+			junctionLink = newLink(id, new ILinkCallback()
+			{
 				private static final long serialVersionUID = 1L;
 
-				public void onClick(AjaxRequestTarget target) {
-					if (getTreeGridBody().isNodeExpanded2(node)) {
+				public void onClick(AjaxRequestTarget target)
+				{
+					if (getTreeGridBody().isNodeExpanded2(node))
+					{
 						getTreeGridBody().getTreeState().collapseNode(node);
-					} else {
+					}
+					else
+					{
 						getTreeGridBody().getTreeState().expandNode(node);
 					}
 					onJunctionLinkClicked(target, node);
 					getTreeGridBody().updateTree(target);
 				}
 			});
-			junctionLink.add(new AbstractBehavior() {
+			junctionLink.add(new Behavior()
+			{
 				private static final long serialVersionUID = 1L;
 
-				public void onComponentTag(Component component, ComponentTag tag) {
-					if (getTreeGridBody().isNodeExpanded2(node)) {
+				@Override
+				public void onComponentTag(Component component, ComponentTag tag)
+				{
+					if (getTreeGridBody().isNodeExpanded2(node))
+					{
 						tag.put("class", "imxt-junction-open");
-					} else {
+					}
+					else
+					{
 						tag.put("class", "imxt-junction-closed");
 					}
 				}
 			});
-		} else {
-			junctionLink = new WebMarkupContainer(id) {
+		}
+		else
+		{
+			junctionLink = new WebMarkupContainer(id)
+			{
 				private static final long serialVersionUID = 1L;
 
 				/**
 				 * @see org.apache.wicket.Component#onComponentTag(org.apache.wicket.markup.ComponentTag)
 				 */
-				protected void onComponentTag(ComponentTag tag) {
+				@Override
+				protected void onComponentTag(ComponentTag tag)
+				{
 					super.onComponentTag(tag);
 					tag.setName("span");
 				}
@@ -275,7 +317,8 @@ public abstract class TreePanel extends Panel {
 	 * 
 	 * @author Matej Knopp
 	 */
-	public interface ILinkCallback extends IClusterable {
+	public interface ILinkCallback extends IClusterable
+	{
 		/**
 		 * Called when the click is executed.
 		 * 
@@ -295,14 +338,23 @@ public abstract class TreePanel extends Panel {
 	 *            The link call back
 	 * @return The link component
 	 */
-	public MarkupContainer newLink(String id, final ILinkCallback callback) {
-		return new AjaxSubmitLink(id) {
+	public MarkupContainer newLink(String id, final ILinkCallback callback)
+	{
+		return new AjaxSubmitLink(id)
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form form) {
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			{
 				callback.onClick(target);
-			}			
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form)
+			{
+
+			}
 		}.setDefaultFormProcessing(false);
 	}
 

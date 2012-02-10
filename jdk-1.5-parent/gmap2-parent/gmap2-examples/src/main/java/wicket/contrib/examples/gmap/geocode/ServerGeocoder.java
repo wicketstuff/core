@@ -13,7 +13,8 @@ import wicket.contrib.gmap.util.GeocoderException;
 /**
  * A serverside Geocoder.
  */
-public class ServerGeocoder {
+public class ServerGeocoder
+{
 
 	private Geocoder geocoder;
 
@@ -23,12 +24,14 @@ public class ServerGeocoder {
 	 * @throws IllegalArgumentException
 	 *             If the API key is <code>null</code>
 	 */
-	public ServerGeocoder(String gMapKey) {
-		if (gMapKey == null) {
+	public ServerGeocoder(String gMapKey)
+	{
+		if (gMapKey == null)
+		{
 			throw new IllegalArgumentException("API key cannot be null");
 		}
 
-		this.geocoder = new Geocoder(gMapKey);
+		geocoder = new Geocoder(gMapKey);
 	}
 
 	/**
@@ -40,7 +43,8 @@ public class ServerGeocoder {
 	 * @throws IOException
 	 *             If a connection error happened
 	 */
-	public GLatLng findAddress(String address) throws IOException {
+	public GLatLng findAddress(String address) throws IOException
+	{
 
 		URL url = new URL(geocoder.encode(address));
 

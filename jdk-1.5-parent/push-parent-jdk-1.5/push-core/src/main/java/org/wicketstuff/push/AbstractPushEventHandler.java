@@ -19,6 +19,7 @@ package org.wicketstuff.push;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * @author <a href="http://sebthom.de/">Sebastian Thomschke</a>
@@ -30,21 +31,22 @@ public abstract class AbstractPushEventHandler<EventType> implements IPushEventH
 	protected void appendHTML(final AjaxRequestTarget target, final Label component,
 		final String html)
 	{
+		Args.notNull(target, "target");
+		Args.notNull(component, "component");
+
 		if (html == null)
 			return;
 
 		// update the component's model object for the case when the page is refreshed using F5
 		component.setEscapeModelStrings(false);
 		final IModel<?> model = component.getDefaultModel();
-		if (model == null)
-			component.setDefaultModelObject(html);
-		else
-			component.setDefaultModelObject(model.toString() + html);
+		component.setDefaultModelObject(model == null || model.getObject() == null ? html
+			: model.getObject() + html);
 
 		// escape backslashes for JavaScript
 		final String escapedHTML = html.replaceAll("\\\\", "&#92;");
 
-		target.appendJavascript("" + //
+		target.appendJavaScript("" + //
 			"var target = document.getElementById('" + component.getMarkupId() + "');" + //
 			"target.innerHTML += '" + escapedHTML + "';" + //
 			"target.scrollTop = target.scrollHeight" //

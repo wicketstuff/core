@@ -35,17 +35,19 @@ import clojure.lang.Var;
 /**
  * Executes Clojure code.
  * <p>
- * stdout and stderr are captured. Bindings are pushed into user namespace, so
- * to access a binding named &quot;foo&quot; use &quot;user/foo&quot;. *
+ * stdout and stderr are captured. Bindings are pushed into user namespace, so to access a binding
+ * named &quot;foo&quot; use &quot;user/foo&quot;. *
  * 
  * @author cretzel
  */
-public class ClojureEngine implements IScriptEngine {
+public class ClojureEngine implements IScriptEngine
+{
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public synchronized IScriptExecutionResult execute(final String script) {
+	public synchronized IScriptExecutionResult execute(final String script)
+	{
 		return execute(script, null);
 	}
 
@@ -53,7 +55,8 @@ public class ClojureEngine implements IScriptEngine {
 	 * {@inheritDoc}
 	 */
 	public synchronized IScriptExecutionResult execute(final String script,
-			final Map<String, Object> bindings) {
+		final Map<String, Object> bindings)
+	{
 
 		Throwable exception = null;
 		String output = null;
@@ -64,8 +67,10 @@ public class ClojureEngine implements IScriptEngine {
 		final ByteArrayOutputStream bout = new ByteArrayOutputStream();
 		final PrintStream newOut = new PrintStream(bout, false);
 		final OutputStreamWriter newRtOut = new OutputStreamWriter(newOut);
+		boolean threadBindingPushed = false;
 
-		try {
+		try
+		{
 			System.setOut(newOut);
 			System.setErr(newOut);
 
@@ -75,39 +80,62 @@ public class ClojureEngine implements IScriptEngine {
 			mappings = mappings.assoc(RT.ERR, newRtOut);
 			mappings = applyBindings(bindings, mappings);
 			Var.pushThreadBindings(mappings);
+			threadBindingPushed = true;
 
 			returnValue = Compiler.load(new StringReader(script));
-		} catch (final Exception e) {
+		}
+		catch (final Exception e)
+		{
 			exception = e;
-		} finally {
+		}
+		finally
+		{
 
-			try {
-				Var.popThreadBindings();
+			try
+			{
+				if (threadBindingPushed)
+				{
+					Var.popThreadBindings();
+				}
 				newRtOut.flush();
 				newRtOut.close();
 				System.setOut(oldOut);
 				System.setErr(oldErr);
 
 				output = bout.toString();
-			} catch (final Exception e1) {
-				throw new ScriptEngineException(e1);
+			}
+			catch (final Exception e1)
+			{
+				ScriptEngineException see;
+				if (exception == null)
+				{
+					see = new ScriptEngineException(e1);
+				}
+				else
+				{
+					see = new ScriptEngineException("Failed to handle original exception: " +
+						exception, e1);
+				}
+
+				throw see;
 			}
 
 		}
 
-		return new DefaultScriptExecutionResult(script, exception, output,
-				returnValue);
+		return new DefaultScriptExecutionResult(script, exception, output, returnValue);
 	}
 
-	private Associative applyBindings(final Map<String, Object> bindings,
-			Associative mappings) {
-		if (bindings != null) {
+	private Associative applyBindings(final Map<String, Object> bindings, Associative mappings)
+	{
+		if (bindings != null)
+		{
 			final Set<Entry<String, Object>> entrySet = bindings.entrySet();
-			for (final Entry<String, Object> entry : entrySet) {
+			for (final Entry<String, Object> entry : entrySet)
+			{
 				final Symbol symbol = Symbol.intern(entry.getKey());
-				final Namespace userNs = Namespace.findOrCreate(Symbol
-						.create("user".intern()));
+				final Namespace userNs = Namespace.findOrCreate(Symbol.create("user".intern()));
 				final Var var = Var.intern(userNs, symbol);
+				var.setDynamic(true);
 				mappings = mappings.assoc(var, entry.getValue());
 			}
 		}

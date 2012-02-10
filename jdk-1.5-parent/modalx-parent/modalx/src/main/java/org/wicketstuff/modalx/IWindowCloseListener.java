@@ -17,24 +17,18 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.panel.Panel;
 
 
-
 // -[Class]-
 
 /**
- * Class Name : IWindowCloseListener
- * Diagram    : Wicket Generic Modal Windows
- * Project    : Echobase framework
- * Type       : interface
- * Interface for listeners of the window close event. A window close event is generated
- * whenever a ModalContentWindow is closed.
- * If you have a parent page, panel or form that you wish to be notified when a child
- * ModalForm is closed make that parent implement IWindowCloseListener and pass it as
- * the IWindowCloseListener parameter in the constructor.
+ * Class Name : IWindowCloseListener Diagram : Wicket Generic Modal Windows Project : Echobase
+ * framework Type : interface Interface for listeners of the window close event. A window close
+ * event is generated whenever a ModalContentWindow is closed. If you have a parent page, panel or
+ * form that you wish to be notified when a child ModalForm is closed make that parent implement
+ * IWindowCloseListener and pass it as the IWindowCloseListener parameter in the constructor.
  * 
  * @author Chris Colman
  */
-public abstract 
-interface IWindowCloseListener
+public abstract interface IWindowCloseListener
 {
 // -[KeepWithinClass]-
 
@@ -45,13 +39,9 @@ interface IWindowCloseListener
 // -[Methods]-
 
 
-
-
-/**
- * Called when the ModalContentWindow is closed.
- */
-public abstract void windowClosed(Panel panel, AjaxRequestTarget target);
+	/**
+	 * Called when the ModalContentWindow is closed.
+	 */
+	public abstract void windowClosed(Panel panel, AjaxRequestTarget target);
 
 }
-
-

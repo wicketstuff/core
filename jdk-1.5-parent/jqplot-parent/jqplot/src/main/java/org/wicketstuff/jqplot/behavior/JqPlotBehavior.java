@@ -17,25 +17,29 @@ package org.wicketstuff.jqplot.behavior;
 
 import java.util.List;
 
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+import org.apache.wicket.request.resource.CssResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 
-import br.digilabs.jqplot.JqPlotUtil;
-import br.digilabs.jqplot.chart.Chart;
+import br.com.digilabs.jqplot.Chart;
+import br.com.digilabs.jqplot.JqPlotUtils;
+
 
 /**
  * 
  * @author inaiat
  */
-public class JqPlotBehavior extends JQueryBehavior
+public class JqPlotBehavior extends Behavior
 {
 
 	private static final long serialVersionUID = -8088313975214875631L;
 
-	private static final ResourceReference JQPLOT_JS = new JavascriptResourceReference(
+	private static final ResourceReference JQPLOT_JS = new JavaScriptResourceReference(
 			JqPlotBehavior.class, "jquery.jqplot.min.js");
-	private static final ResourceReference JQPLOT_CSS = new ResourceReference(JqPlotBehavior.class,
+	private static final ResourceReference JQPLOT_CSS = new  CssResourceReference(JqPlotBehavior.class,
 			"jquery.jqplot.min.css");
 	private final List<String> resources;
 
@@ -46,21 +50,21 @@ public class JqPlotBehavior extends JQueryBehavior
 	{
 		this.chart = chart;
 		this.divId = divId;
-		this.resources = JqPlotUtil.retriveJavaScriptResources(chart);
+		this.resources = JqPlotUtils.retriveJavaScriptResources(chart);
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response)
+	public void renderHead(Component component, IHeaderResponse response)
 	{
-		super.renderHead(response);
-		response.renderJavascriptReference(JQPLOT_JS);
+		super.renderHead(component, response);
+		response.renderJavaScriptReference(JQPLOT_JS);
 		response.renderCSSReference(JQPLOT_CSS);
 		for (String resource : resources)
 		{
-			response.renderJavascriptReference(new ResourceReference(JqPlotBehavior.class, resource));
+			response.renderJavaScriptReference(new JavaScriptResourceReference(JqPlotBehavior.class, resource));
 		}
-		String json = JqPlotUtil.createJquery(chart, divId);
-		response.renderJavascript(json, null);
+		String json = JqPlotUtils.createJquery(chart, divId);
+		response.renderJavaScript(json, null);
 
 	}
 

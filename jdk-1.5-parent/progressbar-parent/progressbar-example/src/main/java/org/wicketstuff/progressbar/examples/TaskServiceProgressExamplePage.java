@@ -30,67 +30,89 @@ import org.wicketstuff.progressbar.spring.TaskProgressionModel;
  * <p>
  * Example of an active progress bar using the tasks service.
  * </p>
- *
+ * 
  * @author Christopher Hlubek (hlubek)
- *
+ * 
  */
-public class TaskServiceProgressExamplePage extends PageSupport {
+public class TaskServiceProgressExamplePage extends PageSupport
+{
 
-	private static class DummyTask extends Task {
+	private static final long serialVersionUID = 1L;
+
+	private static class DummyTask extends Task
+	{
 		private final int iterations;
 
-		public DummyTask(int iterations) {
+		public DummyTask(int iterations)
+		{
 			this.iterations = iterations;
 		}
 
 		@Override
-		protected void run() {
-			for(int i = 0; i < iterations; i++) {
-				try {
+		protected void run()
+		{
+			for (int i = 0; i < iterations; i++)
+			{
+				try
+				{
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {
+				}
+				catch (InterruptedException e)
+				{
 				}
 				updateProgress(i, iterations);
-				if(isCancelled()) return;
+				if (isCancelled())
+					return;
 			}
 		}
 	}
 
-	public TaskServiceProgressExamplePage() {
-		final Form form = new Form("form");
+	public TaskServiceProgressExamplePage()
+	{
+		final Form<Void> form = new Form<Void>("form");
 		final ProgressBar bar;
-		final TaskProgressionModel progressionModel = new TaskProgressionModel() {
+		final TaskProgressionModel progressionModel = new TaskProgressionModel()
+		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			protected ITaskService getTaskService() {
+			protected ITaskService getTaskService()
+			{
 				return getExampleApplication().getTaskService();
 			}
 		};
-		form.add(bar = new ProgressBar("bar", progressionModel) {
+		form.add(bar = new ProgressBar("bar", progressionModel)
+		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			protected void onFinished(AjaxRequestTarget target) {
-				ITaskService taskService = getExampleApplication()
-						.getTaskService();
+			protected void onFinished(AjaxRequestTarget target)
+			{
+				ITaskService taskService = getExampleApplication().getTaskService();
 				// finish the task!
 				taskService.finish(progressionModel.getTaskId());
 				// Hide progress bar after finish
 				setVisible(false);
 				// Add some JavaScript after finish
-				target.appendJavascript("alert('Task done and finished!')");
+				target.appendJavaScript("alert('Task done and finished!')");
 
 				// re-enable button
 				Component button = form.get("submit");
 				button.setEnabled(true);
-				target.addComponent(button);
+				target.add(button);
 			}
 		});
 		// Hide progress bar initially
 		bar.setVisible(false);
 
-		form.add(new IndicatingAjaxButton("submit", form) {
+		form.add(new IndicatingAjaxButton("submit", form)
+		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form form) {
-				ITaskService taskService = getExampleApplication()
-						.getTaskService();
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			{
+				ITaskService taskService = getExampleApplication().getTaskService();
 				// Schedule and start a new task
 				Long taskId = taskService.scheduleAndStart(new DummyTask(60));
 				// Set taskId for model
@@ -101,6 +123,15 @@ public class TaskServiceProgressExamplePage extends PageSupport {
 				// disable button
 				setEnabled(false);
 			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form)
+			{
+
+				target.prependJavaScript("alert('Failed to schedule task.');");
+
+			}
+
 		});
 		form.setOutputMarkupId(true);
 		add(form);

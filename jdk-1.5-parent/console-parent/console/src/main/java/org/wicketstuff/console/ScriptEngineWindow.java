@@ -28,62 +28,64 @@ import org.wicketstuff.console.engine.Lang;
  * 
  * @author cretzel
  */
-public abstract class ScriptEngineWindow extends ModalWindow {
+public abstract class ScriptEngineWindow extends ModalWindow
+{
 
-    private static final long serialVersionUID = 1L;
-    private final Lang lang;
-    private final ScriptEnginePanel enginePanel;
+	private static final long serialVersionUID = 1L;
+	private final Lang lang;
+	private final ScriptEnginePanel enginePanel;
 
-    /**
-     * Constructor.
-     * 
-     * @param id
-     *            id
-     * @param lang
-     *            source language
-     * @param windowTitle
-     *            window title, may be {@code null} for default
-     */
-    public ScriptEngineWindow(final String id, final Lang lang,
-            final IModel<String> windowTitle) {
-        super(id);
-        this.lang = lang;
+	/**
+	 * Constructor.
+	 * 
+	 * @param id
+	 *            id
+	 * @param lang
+	 *            source language
+	 * @param windowTitle
+	 *            window title, may be {@code null} for default
+	 */
+	public ScriptEngineWindow(final String id, final Lang lang, final IModel<String> windowTitle)
+	{
+		super(id);
+		this.lang = lang;
 
-        setTitle(windowTitle != null ? windowTitle : Model.of("Wicket Console"));
-        setResizable(false);
-        setInitialWidth(540);
-        setInitialHeight(408);
+		setTitle(windowTitle != null ? windowTitle : Model.of("Wicket Console"));
+		setAutoSize(true);
+		setInitialHeight(300);
+		setResizable(true);
 
-        enginePanel = newEnginePanel(getContentId(), lang);
-        setContent(enginePanel);
+		enginePanel = newEnginePanel(getContentId(), lang);
+		setContent(enginePanel);
 
-    }
+	}
 
-    /**
-     * Creates a new engine panel, override to customize.
-     * <p>
-     * Attention: This is called from the constructor.
-     * 
-     * @param wicketId
-     *            id
-     * @return a script engine panel
-     */
-    protected ScriptEnginePanel newEnginePanel(final String wicketId,
-            final Lang lang) {
+	/**
+	 * Creates a new engine panel, override to customize.
+	 * <p>
+	 * Attention: This is called from the constructor.
+	 * 
+	 * @param wicketId
+	 *            id
+	 * @return a script engine panel
+	 */
+	protected ScriptEnginePanel newEnginePanel(final String wicketId, final Lang lang)
+	{
 
-        final ScriptEnginePanel panel = ScriptEnginePanel.create(wicketId,
-                lang, Model.of(""));
-        panel.add(new AttributeAppender("style", Model.of("width:100%"), ";"));
+		final ScriptEnginePanel panel = ScriptEnginePanel.create(wicketId, lang);
+		panel.add(new AttributeAppender("style", Model.of("width:500px"), ";"));
 
-        return panel;
-    }
+		return panel;
+	}
 
-    public ScriptEnginePanel getEnginePanel() {
-        return enginePanel;
-    }
+	public ScriptEnginePanel getEnginePanel()
+	{
+		return enginePanel;
+	}
 
-    public Lang getLang() {
-        return lang;
-    }
+	public Lang getLang()
+	{
+		return lang;
+	}
 
 }

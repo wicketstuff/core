@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function clearTextarea(id) {
+function clearValue(id) {
 	document.getElementById(id).value = "";
 }
 
@@ -39,7 +39,7 @@ function doTab(e) {
 	}
 
 	var t = evt.target;
-	
+
 	// Tab key - insert tab expansion
 	var ss = t.selectionStart;
 	var se = t.selectionEnd;
@@ -100,4 +100,3 @@ function doTab(e) {
 		t.selectionStart = t.selectionEnd = ss + 4;
 	}
 }
-

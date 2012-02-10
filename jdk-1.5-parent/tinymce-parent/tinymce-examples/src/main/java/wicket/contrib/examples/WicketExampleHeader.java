@@ -23,20 +23,24 @@ import org.apache.wicket.markup.html.panel.Panel;
 
 /**
  * Navigation panel for the examples project.
- *
+ * 
  * @author Eelco Hillenius
  */
 public final class WicketExampleHeader extends Panel
 {
-    /**
-     * Construct.
-     *
-     * @param id           id of the component
-     * @param exampleTitle title of the example
-     */
-    public WicketExampleHeader(String id, String exampleTitle)
-    {
-        super(id);
-        add(new Label("exampleTitle", exampleTitle));
-    }
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Construct.
+	 * 
+	 * @param id
+	 *            id of the component
+	 * @param exampleTitle
+	 *            title of the example
+	 */
+	public WicketExampleHeader(String id, String exampleTitle)
+	{
+		super(id);
+		add(new Label("exampleTitle", exampleTitle));
+	}
 }

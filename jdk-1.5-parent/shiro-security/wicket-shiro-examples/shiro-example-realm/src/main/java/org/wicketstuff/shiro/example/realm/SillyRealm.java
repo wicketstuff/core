@@ -44,9 +44,9 @@ public class SillyRealm extends AuthorizingRealm
 	public SillyRealm()
 	{
 		log.info("constructor...");
-		
+
 		// Only do authentication once for each request
-		this.setCacheManager( new MemoryConstrainedCacheManager() );
+		setCacheManager(new MemoryConstrainedCacheManager());
 	}
 
 	/**
@@ -57,8 +57,7 @@ public class SillyRealm extends AuthorizingRealm
 	 * other credentials) in this method. The {@link org.apache.shiro.realm.AuthenticatingRealm
 	 * AuthenticatingRealm} superclass will do that automatically via the use of a configured
 	 * {@link org.apache.shiro.authc.credential.CredentialsMatcher CredentialsMatcher} (see this
-	 * example's corresponding <code>shiro.ini</code> file to see a configured credentials
-	 * matcher).
+	 * example's corresponding <code>shiro.ini</code> file to see a configured credentials matcher).
 	 * <p/>
 	 * All that is required is that the account information include directly the credentials found
 	 * in the EIS.
@@ -121,9 +120,11 @@ public class SillyRealm extends AuthorizingRealm
 		// simulate a call to an underlying data store:
 
 		// get only the principals that this realm cares about:
-		Collection thisRealmPrincipals = principals.fromRealm(getName());
-		if( thisRealmPrincipals == null || thisRealmPrincipals.isEmpty() ) {
-		  return null;
+		@SuppressWarnings("unchecked")
+		Collection<String> thisRealmPrincipals = principals.fromRealm(getName());
+		if (thisRealmPrincipals == null || thisRealmPrincipals.isEmpty())
+		{
+			return null;
 		}
 
 		// note that the return value of 'getName()' here is whatever you specify it to be in
@@ -136,7 +137,7 @@ public class SillyRealm extends AuthorizingRealm
 		// user logged-in and that method in this simple example has only one principal - a username
 		// - we can safely
 		// assume the only element in this collection is that username.
-		String username = (String)thisRealmPrincipals.iterator().next();
+		String username = thisRealmPrincipals.iterator().next();
 
 		// call the underlying EIS for the account data:
 		return getAccount(username);

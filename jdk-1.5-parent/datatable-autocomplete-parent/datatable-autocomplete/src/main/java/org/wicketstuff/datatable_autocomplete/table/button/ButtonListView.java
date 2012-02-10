@@ -15,54 +15,52 @@
  */
 package org.wicketstuff.datatable_autocomplete.table.button;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.Radio;
-import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
-import org.apache.wicket.model.Model;
 import org.wicketstuff.datatable_autocomplete.button.DTAAjaxFallbackButton;
-import org.wicketstuff.datatable_autocomplete.form.action.IFormSubmitAction;
-import org.wicketstuff.datatable_autocomplete.model.MarkupIDInStringModel;
+import org.wicketstuff.datatable_autocomplete.form.action.AbstractFormOnSubmitAction;
+import org.wicketstuff.datatable_autocomplete.form.action.IFormOnSubmitAction;
 import org.wicketstuff.datatable_autocomplete.table.ISelectableTableViewPanelButtonProvider;
 
 /**
  * @author mocleiri
- *
- * Expects the markup to look like:
- * <code>
- *<span wicket:id="any tag you want">
+ * 
+ *         Expects the markup to look like: <code>
+ * <span wicket:id="any tag you want">
  * <span wicket:id="button" />
  * </span>
  * </code>
  */
-public class ButtonListView extends ListView<ISelectableTableViewPanelButtonProvider> {
+public class ButtonListView extends ListView<ISelectableTableViewPanelButtonProvider>
+{
 
 	public static final String BUTTON_ID = "button";
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8897933872966515782L;
-	private final Form<?>		form;
-	private final String	displayEntityName;
-	private FormComponent<?> selectedContextField;
+	private final Form<?> form;
+	private final String displayEntityName;
+	private final FormComponent<?> selectedContextField;
 
 	/**
 	 * @param id
 	 * @param displayEntityName
 	 * @param list
 	 */
-	public ButtonListView(String id, Form<?> form, String displayEntityName, FormComponent<?>selectedContextField) {
+	public ButtonListView(String id, Form<?> form, String displayEntityName,
+		FormComponent<?> selectedContextField)
+	{
 
 		super(id);
 		this.form = form;
@@ -74,20 +72,19 @@ public class ButtonListView extends ListView<ISelectableTableViewPanelButtonProv
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.apache.wicket.markup.html.list.ListView#populateItem(org.apache
+	 * @see org.apache.wicket.markup.html.list.ListView#populateItem(org.apache
 	 * .wicket.markup.html.list.ListItem)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	protected void populateItem(ListItem<ISelectableTableViewPanelButtonProvider> item) {
+	protected void populateItem(ListItem<ISelectableTableViewPanelButtonProvider> item)
+	{
 
 		final ISelectableTableViewPanelButtonProvider buttonProvider = item.getModelObject();
-		
-		IFormSubmitAction buttonAction = buttonProvider
-				.getButtonAction();
 
-		if (buttonAction == null) {
+		IFormOnSubmitAction buttonAction = buttonProvider.getButtonAction();
+
+		if (buttonAction == null)
+		{
 			Label label;
 			// not visible
 			item.add(label = new Label(BUTTON_ID));
@@ -99,168 +96,168 @@ public class ButtonListView extends ListView<ISelectableTableViewPanelButtonProv
 			return;
 		}
 
-			// if the tow is required then
-			buttonAction = new IFormSubmitAction() {
+		// if the tow is required then
+		buttonAction = new AbstractFormOnSubmitAction()
+		{
 
-				/**
+
+			/**
 				 * 
 				 */
-				private static final long serialVersionUID = 5910571859628875165L;
+			private static final long serialVersionUID = 5910571859628875165L;
 
-				
-				public void onSubmit(AjaxRequestTarget target, Form form) {
 
-					if (buttonProvider.isSelectedRowRequired()) {
-						
-						if (selectedContextField.getModelObject() == null) {
-							if (target != null) {
-								target.prependJavascript("alert ('A selected row is required.');");
-							}
-							else
-								error("A selected row is required.");
-							
-							return;
+			public void onSubmit(AjaxRequestTarget target, Form<?> form)
+			{
+
+				if (buttonProvider.isSelectedRowRequired())
+				{
+
+					if (selectedContextField.getModelObject() == null)
+					{
+						if (target != null)
+						{
+							target.prependJavaScript("alert ('A selected row is required.');");
 						}
-						
-						// fall through
-					}
-					
-					// run the user logic
-					buttonProvider.getButtonAction().onSubmit(target, form);
+						else
+							error("A selected row is required.");
 
-
-					// else the action is defined.
-					if (buttonProvider.isClearSelectedRowOnAction()) {
-						// clear the value in the form.
-						selectedContextField.clearInput();
+						return;
 					}
 
+					// fall through
 				}
 
+				// run the user logic
+				buttonProvider.getButtonAction().onSubmit(target, form);
 
-				/* (non-Javadoc)
-				 * @see org.wicketstuff.datatable_autocomplete.form.action.IFormSubmitAction#onError(org.apache.wicket.ajax.AjaxRequestTarget, org.apache.wicket.markup.html.form.Form)
-				 */
-				public void onError(AjaxRequestTarget target, Form form) {
-					
-					buttonProvider.getButtonAction().onError(target, form);
-					
+
+				// else the action is defined.
+				if (buttonProvider.isClearSelectedRowOnAction())
+				{
+					// clear the value in the form.
+					selectedContextField.clearInput();
 				}
-				
-				
 
-			};
+			}
+
+		};
 
 		DTAAjaxFallbackButton button;
 
-//		if (buttonProvider.isSelectedRowRequired()) {
-//			
-//			IModel<String> requireASelectedRow;
-//			
-//			final List<Radio>radioList = new LinkedList<Radio>();
-//			
-//			if (selectedContextField instanceof RadioGroup) {
-//				RadioGroup rg = (RadioGroup) selectedContextField;
-//				
-//				rg.visitChildren(new IVisitor() {
+// if (buttonProvider.isSelectedRowRequired()) {
 //
-//					/* (non-Javadoc)
-//					 * @see org.apache.wicket.Component.IVisitor#component(org.apache.wicket.Component)
-//					 */
-//					public Object component(Component component) {
-//						
-//						if (component instanceof Radio) {
-//							
-//							radioList.add((Radio) component);
-//						}
-//						
-//						return IVisitor.CONTINUE_TRAVERSAL_BUT_DONT_GO_DEEPER;
-//					}
-//					
-//				});
-//				
-//				
-//				requireASelectedRow = createRadioRequireSelectedRowModel (radioList);
-//				
-//			}
-//			else {
-//				// String hidden field
-//			
-//			
-//			requireASelectedRow = new MarkupIDInStringModel(
-//					"if (Wicket.$('" + MarkupIDInStringModel.MARKUP_ID_TAG
-//							+ "').value == '') {"
-//							+ "\nalert ('A selected row is required.');"
-//							+ "\nreturn false;" + "}", selectedContextField);
-//			}
-//			
-//			button = new DTAAjaxFallbackButton(BUTTON_ID, buttonProvider
-//					.getButtonLabelText(displayEntityName), this.form,
-//					requireASelectedRow);
+// IModel<String> requireASelectedRow;
 //
-//			button.setSubmitAction(buttonAction);
-//		}
-//		else {
+// final List<Radio>radioList = new LinkedList<Radio>();
+//
+// if (selectedContextField instanceof RadioGroup) {
+// RadioGroup rg = (RadioGroup) selectedContextField;
+//
+// rg.visitChildren(new IVisitor() {
+//
+// /* (non-Javadoc)
+// * @see org.apache.wicket.Component.IVisitor#component(org.apache.wicket.Component)
+// */
+// public Object component(Component component) {
+//
+// if (component instanceof Radio) {
+//
+// radioList.add((Radio) component);
+// }
+//
+// return IVisitor.CONTINUE_TRAVERSAL_BUT_DONT_GO_DEEPER;
+// }
+//
+// });
+//
+//
+// requireASelectedRow = createRadioRequireSelectedRowModel (radioList);
+//
+// }
+// else {
+// // String hidden field
+//
+//
+// requireASelectedRow = new MarkupIDInStringModel(
+// "if (Wicket.$('" + MarkupIDInStringModel.MARKUP_ID_TAG
+// + "').value == '') {"
+// + "\nalert ('A selected row is required.');"
+// + "\nreturn false;" + "}", selectedContextField);
+// }
+//
+// button = new DTAAjaxFallbackButton(BUTTON_ID, buttonProvider
+// .getButtonLabelText(displayEntityName), this.form,
+// requireASelectedRow);
+//
+// button.setSubmitAction(buttonAction);
+// }
+// else {
 
-			button = new DTAAjaxFallbackButton(BUTTON_ID, buttonProvider
-					.getButtonLabelText(displayEntityName), this.form,
-					buttonAction);
-//		}
-		
+		button = new DTAAjaxFallbackButton(BUTTON_ID,
+			buttonProvider.getButtonLabelText(displayEntityName), form, buttonAction);
+// }
+
 		String cssClass = buttonProvider.getCSSClassName();
-		
-		if (cssClass != null) {
-			button.add(new AttributeModifier("class", true, new Model<String>(cssClass)));
+
+		if (cssClass != null)
+		{
+			button.add(AttributeModifier.replace("class", cssClass));
 		}
 
 		item.add(button);
 
 	}
 
-	private IModel<String> createRadioRequireSelectedRowModel(
-			final List<Radio> radioList) {
-		
-		return new LoadableDetachableModel<String>() {
+	private IModel<String> createRadioRequireSelectedRowModel(final List<Radio<?>> radioList)
+	{
+
+		return new LoadableDetachableModel<String>()
+		{
 
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 8113932643386163719L;
 
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see org.apache.wicket.model.LoadableDetachableModel#load()
 			 */
 			@Override
-			protected String load() {
-				
+			protected String load()
+			{
+
 				StringBuffer template = new StringBuffer();
-				
+
 				template.append("if (");
-				
-				
-				for (int i = 0; i < radioList.size(); i++) {
-					
-					Radio radio = radioList.get(i);
-					
-					template.append ("(Wicket.$('"+ radio.getMarkupId(true) +"').checked == false)");
-				
-					if (i > 0 && (i < (radioList.size()-1))) {
-						template.append (" and ");
+
+
+				for (int i = 0; i < radioList.size(); i++)
+				{
+
+					Radio<?> radio = radioList.get(i);
+
+					template.append("(Wicket.$('" + radio.getMarkupId(true) +
+						"').checked == false)");
+
+					if (i > 0 && i < radioList.size() - 1)
+					{
+						template.append(" and ");
 					}
 					radio.setOutputMarkupId(true);
 				}
-				
-				template.append("{"
-					+ "\nalert ('A selected row is required.');"
+
+				template.append("{" + "\nalert ('A selected row is required.');"
 					+ "\nreturn false;" + "\n}");
-				
-				
-				
+
+
 				return template.toString();
-				
+
 			}
-			
+
 		};
-		
+
 	}
 }

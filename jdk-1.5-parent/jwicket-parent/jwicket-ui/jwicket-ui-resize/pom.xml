@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>jwicket-ui</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>jwicket-ui-resize</artifactId>
+	<artifactId>wicketstuff-jwicket-ui-resize</artifactId>
 	<packaging>jar</packaging>
 
     <name>jWicket: jQuery Wicket integration - ui.resize</name>

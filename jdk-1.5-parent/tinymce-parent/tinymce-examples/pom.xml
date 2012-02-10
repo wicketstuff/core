@@ -1,30 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-	This file is part of Wicket-Contrib-TinyMce. See
-	<http://wicketstuff.org/confluence/display/STUFFWIKI/wicket-contrib-tinymce>
-	
-	Wicket-Contrib-TinyMce is free software: you can redistribute it and/
-	or modify it under the terms of the GNU Lesser General Public License
-	as published by the Free Software Foundation, either version 3 of the
-	License, or (at your option) any later version.
-	
-	Wicket-Contrib-TinyMce is distributed in the hope that it will be
-	useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU Lesser General Public License for more details.
-	
-	You should have received a copy of the GNU Lesser General Public
-	License along with Wicket-Contrib-TinyMce.  If not, see
-	<http://www.gnu.org/licenses />.
--->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<!-- This file is part of Wicket-Contrib-TinyMce. See <http://wicketstuff.org/confluence/display/STUFFWIKI/wicket-contrib-tinymce> 
+	Wicket-Contrib-TinyMce is free software: you can redistribute it and/ or 
+	modify it under the terms of the GNU Lesser General Public License as published 
+	by the Free Software Foundation, either version 3 of the License, or (at 
+	your option) any later version. Wicket-Contrib-TinyMce is distributed in 
+	the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the 
+	implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+	See the GNU Lesser General Public License for more details. You should have 
+	received a copy of the GNU Lesser General Public License along with Wicket-Contrib-TinyMce. 
+	If not, see <http://www.gnu.org/licenses />. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>tinymce-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>tinymce-examples</artifactId>
@@ -36,7 +29,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.wicketstuff</groupId>
-			<artifactId>tinymce</artifactId>
+			<artifactId>wicketstuff-tinymce</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
@@ -45,23 +38,13 @@
 			<version>0.5.2-rtext-1.4.1</version>
 		</dependency>
 
-		<!--  JETTY DEPENDENCIES -->
+
+		<!-- JETTY DEPENDENCIES FOR TESTING -->
 		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>jetty</artifactId>
-			<scope>provided</scope>
+			<groupId>org.eclipse.jetty.aggregate</groupId>
+			<artifactId>jetty-all-server</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>jetty-util</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>jetty-management</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		
+
 		<!-- Some logging-related dependencies to make 'mvn jetty:run' work -->
 		<dependency>
 			<groupId>log4j</groupId>
@@ -76,15 +59,6 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
+
 	</dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>maven-jetty-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>

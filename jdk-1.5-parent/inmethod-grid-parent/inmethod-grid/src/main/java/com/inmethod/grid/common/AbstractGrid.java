@@ -1,8 +1,5 @@
 package com.inmethod.grid.common;
 
-import java.io.Serializable;
-import java.lang.Override;
-import java.lang.String;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -17,9 +14,8 @@ import org.apache.wicket.ajax.IAjaxCallDecorator;
 import org.apache.wicket.ajax.WicketAjaxReference;
 import org.apache.wicket.ajax.calldecorator.AjaxCallDecorator;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WicketEventReference;
@@ -27,14 +23,15 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.util.string.AppendingStringBuffer;
-import org.apache.wicket.util.string.JavascriptUtils;
 import org.apache.wicket.util.string.Strings;
+import org.apache.wicket.util.visit.IVisit;
+import org.apache.wicket.util.visit.IVisitor;
 
 import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.IGridSortState;
@@ -47,9 +44,17 @@ import com.inmethod.grid.treegrid.TreeGrid;
 /**
  * Provides common functionality for {@link DataGrid} and {@link TreeGrid}.
  * 
+ * @param <M>
+ *            grid model object type
+ * @param <I>
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
-public abstract class AbstractGrid extends Panel implements IHeaderContributor {
+public abstract class AbstractGrid<M, I> extends Panel implements IHeaderContributor 
+{
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Creates new {@link AbstractGrid} instance
@@ -58,7 +63,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param model
 	 * @param columns
 	 */
-	public AbstractGrid(String id, IModel model, List<IGridColumn> columns) {
+	public AbstractGrid(String id, IModel<M> model, List<IGridColumn<M, I>> columns)
+	{
 		super(id, model);
 
 		setVersioned(false);
@@ -69,20 +75,23 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 
 		this.columns = columns;
 
-    Form form = new Form("form");
- 		add(form);
+		add(new Header("header"));
 
-		form.add(new Header("header"));
+		Form<Void> form = new Form<Void>("form");
+		add(form);
 
-		WebMarkupContainer bodyContainer = new WebMarkupContainer("bodyContainer") {
-
+		WebMarkupContainer bodyContainer = new WebMarkupContainer("bodyContainer")
+		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onComponentTag(ComponentTag tag) {
+			protected void onComponentTag(ComponentTag tag)
+			{
 				super.onComponentTag(tag);
-				if (getContentHeight() > 0 && getContentHeightSizeUnit() != null) {
-					tag.put("style", "height:" + getContentHeight() + getContentHeightSizeUnit().getValue());
+				if (getContentHeight() > 0 && getContentHeightSizeUnit() != null)
+				{
+					tag.put("style", "height:" + getContentHeight() +
+						getContentHeightSizeUnit().getValue());
 				}
 			}
 		};
@@ -96,31 +105,33 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 		form.add(bottomToolbarContainer = new RepeatingView("bottomToolbarContainer"));
 		form.add(headerToolbarContainer = new RepeatingView("headerToolbarContainer"));
 
-    // renders the initialization javascript right after the grid itself
-		add(new AbstractBehavior()
+		add(new Behavior()
 		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void renderHead(IHeaderResponse response)
+			public void renderHead(Component component, IHeaderResponse response)
 			{
+				super.renderHead(component, response);
 				// since javascript can be rendered at the tail
 				// of HTML document, do not initialize data grid
 				// component until "DOM ready" event.
 				if (!getWebRequest().isAjax())
 				{
-					response.renderOnDomReadyJavascript(getInitializationJavascript(false));
+					response.renderOnDomReadyJavaScript(getInitializationJavascript());
 				}
 			}
 
 			@Override
-			public void onRendered(Component component)
+			public void afterRender(Component component)
 			{
+				super.afterRender(component);
 				if (getWebRequest().isAjax())
-				{ // renders the initialization javascript right after the grid itself
-					getResponse().write(getInitializationJavascript(true));
+				{
+					AjaxRequestTarget.get().appendJavaScript(getInitializationJavascript());
 				}
 			}
+
 		});
 
 		columnState = new ColumnsState(columns);
@@ -128,8 +139,9 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 		add(submitColumnStateBehavior);
 	}
 
-	public Form getForm() {
-		return (Form) get("form");
+	public Form<Void> getForm()
+	{
+		return (Form<Void>)get("form");
 	};
 
 	/**
@@ -137,18 +149,23 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * 
 	 * @param column
 	 */
-	protected void columnSanityCheck(IGridColumn column) {
+	protected void columnSanityCheck(IGridColumn<M, I> column)
+	{
 		String id = column.getId();
-		if (Strings.isEmpty(id)) {
+		if (Strings.isEmpty(id))
+		{
 			throw new IllegalStateException("Column id must be a non-empty string.");
 		}
-		for (int i = 0; i < id.length(); ++i) {
+		for (int i = 0; i < id.length(); ++i)
+		{
 			char c = id.charAt(i);
-			if (!Character.isLetterOrDigit(c) && c != '.' && c != '-' && c != '_') {
+			if (!Character.isLetterOrDigit(c) && c != '.' && c != '-' && c != '_')
+			{
 				throw new IllegalStateException("Column id contains invalid character(s).");
 			}
 		}
-		if (column.isResizable() && column.getSizeUnit() != SizeUnit.PX) {
+		if (column.isResizable() && column.getSizeUnit() != SizeUnit.PX)
+		{
 			throw new IllegalStateException("Resizable columns size must be in the PX unit.");
 		}
 	}
@@ -158,18 +175,24 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * 
 	 * @param columns
 	 */
-	private void columnsSanityCheck(List<IGridColumn> columns) {
-		for (int i = 0; i < columns.size(); ++i) {
-			IGridColumn column = columns.get(i);
+	private void columnsSanityCheck(List<IGridColumn<M, I>> columns)
+	{
+		for (int i = 0; i < columns.size(); ++i)
+		{
+			IGridColumn<M, I> column = columns.get(i);
 			columnSanityCheck(column);
 		}
-		for (int i = 0; i < columns.size(); ++i) {
-			IGridColumn column = columns.get(i);
+		for (int i = 0; i < columns.size(); ++i)
+		{
+			IGridColumn<M, I> column = columns.get(i);
 
-			for (int j = 0; j < columns.size(); ++j) {
-				if (i != j) {
-					IGridColumn otherColumn = columns.get(j);
-					if (column.getId().equals(otherColumn.getId())) {
+			for (int j = 0; j < columns.size(); ++j)
+			{
+				if (i != j)
+				{
+					IGridColumn<M, I> otherColumn = columns.get(j);
+					if (column.getId().equals(otherColumn.getId()))
+					{
 						throw new IllegalStateException("Each column must have unique id");
 					}
 				}
@@ -182,7 +205,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * 
 	 * @see #getColumnState()
 	 */
-	public void onColumnStateChanged() {
+	public void onColumnStateChanged()
+	{
 
 	}
 
@@ -193,14 +217,18 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * 
 	 * @author Matej Knopp
 	 */
-	private class SubmitColumnStateBehavior extends AbstractDefaultAjaxBehavior {
+	private class SubmitColumnStateBehavior extends AbstractDefaultAjaxBehavior
+	{
 
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		protected void respond(AjaxRequestTarget target) {
+		protected void respond(AjaxRequestTarget target)
+		{
 			// get the columnState request parameter (set by javascript)
-			String state = getRequest().getParameter("columnState");
+			String state = getRequest().getRequestParameters()
+				.getParameterValue("columnState")
+				.toString();
 
 			// apply it to current state
 			columnState.updateColumnsState(state);
@@ -212,10 +240,12 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public CharSequence getCallbackScript() {
+		public CharSequence getCallbackScript()
+		{
 			// this assumes presence of columnState variable in the surrounding
 			// javacript context
-			return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl(false) + "&columnState=' + columnState");
+			return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() +
+				"&columnState=' + columnState");
 		}
 
 	};
@@ -231,7 +261,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @see ColumnsState
 	 * @return state of columns
 	 */
-	public ColumnsState getColumnState() {
+	public ColumnsState getColumnState()
+	{
 		return columnState;
 	}
 
@@ -243,38 +274,54 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param columnState
 	 *            new column state
 	 */
-	public void setColumnState(ColumnsState columnState) {
-		if (columnState == null) {
+	public void setColumnState(ColumnsState columnState)
+	{
+		if (columnState == null)
+		{
 			throw new IllegalArgumentException("ColumnStateManager may not be null.");
 		}
-		if (!columnState.matches(columns)) {
+		if (!columnState.matches(columns))
+		{
 			throw new IllegalArgumentException("ColumnStateManager doesn't match current columns.");
 		}
 		this.columnState = columnState;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.apache.wicket.Component#onInitialize()
+	 */
 	@Override
-	protected void onBeforeRender() {
-		// if this is first time render provide grid reference to the columns
-		if (hasBeenRendered() == false) {
-			for (IGridColumn column : columns) {
-				column.setGrid(this);
-			}
-		}
+	protected void onInitialize()
+	{
+		super.onInitialize();
 
+		for (IGridColumn<M, I> column : columns)
+		{
+			column.setGrid(this);
+		}
+	}
+
+	@Override
+	protected void onBeforeRender()
+	{
 		setFlag(FLAG_RENDERING, true);
 
 		super.onBeforeRender();
 	}
 
+  //TODO: w/ the OnInitialize -> OnBeforeRender can FLAG_RENDERING be removed?
 	@Override
-	protected void onAfterRender() {
+	protected void onAfterRender()
+	{
 		super.onAfterRender();
 
 		setFlag(FLAG_RENDERING, false);
 	}
 
-	boolean isRendering() {
+	boolean isRendering()
+	{
 		return getFlag(FLAG_RENDERING);
 	}
 
@@ -288,8 +335,10 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param toolbar
 	 * @param container
 	 */
-	private void addToolbar(AbstractToolbar toolbar, RepeatingView container) {
-		if (toolbar == null) {
+	private void addToolbar(AbstractToolbar<M, I> toolbar, RepeatingView container)
+	{
+		if (toolbar == null)
+		{
 			throw new IllegalArgumentException("argument 'toolbar' cannot be null");
 		}
 
@@ -308,7 +357,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param toolbar
 	 *            toolbar instance
 	 */
-	public void addTopToolbar(AbstractToolbar toolbar) {
+	public void addTopToolbar(AbstractToolbar<M, I> toolbar)
+	{
 		addToolbar(toolbar, topToolbarContainer);
 	}
 
@@ -319,7 +369,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param toolbar
 	 *            toolbar instance
 	 */
-	public void addBottomToolbar(AbstractToolbar toolbar) {
+	public void addBottomToolbar(AbstractToolbar<M, I> toolbar)
+	{
 		addToolbar(toolbar, bottomToolbarContainer);
 	}
 
@@ -330,7 +381,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param toolbar
 	 *            toolbar instance
 	 */
-	public void addHeaderToolbar(AbstractHeaderToolbar toolbar) {
+	public void addHeaderToolbar(AbstractHeaderToolbar<M, I> toolbar)
+	{
 		addToolbar(toolbar, headerToolbarContainer);
 	}
 
@@ -347,16 +399,19 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * 
 	 * @author Matej Knopp
 	 */
-	private class EmptyRowModel extends Model {
+	private class EmptyRowModel extends Model<String>
+	{
 		private static final long serialVersionUID = 1L;
 
 		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Serializable getObject() {
+		public String getObject()
+		{
 			StringBuilder result = new StringBuilder();
-			for (int i = 0; i < getActiveColumns().size(); ++i) {
+			for (int i = 0; i < getActiveColumns().size(); ++i)
+			{
 				result.append("<td></td>");
 			}
 			return result.toString();
@@ -369,21 +424,25 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @see ColumnsHeader
 	 * @author Matej Knopp
 	 */
-	private class Header extends ColumnsHeader {
+	private class Header extends ColumnsHeader<M, I>
+	{
 
 		private static final long serialVersionUID = 1L;
 
-		private Header(String id) {
+		private Header(String id)
+		{
 			super(id);
 		}
 
 		@Override
-		Collection<IGridColumn> getActiveColumns() {
+		Collection<IGridColumn<M, I>> getActiveColumns()
+		{
 			return AbstractGrid.this.getActiveColumns();
 		}
 
 		@Override
-		int getColumnWidth(IGridColumn column) {
+		int getColumnWidth(IGridColumn<M, I> column)
+		{
 			int width = getColumnState().getColumnWidth(column.getId());
 			if (width != -1 && column.getSizeUnit() == SizeUnit.PX)
 				return width;
@@ -392,8 +451,9 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 		}
 
 		@Override
-		protected void sortStateChanged(AjaxRequestTarget target) {
-			AbstractGrid.this.onSortStateChanged(target);
+		protected void sortStateChanged(AjaxRequestTarget target)
+		{
+			onSortStateChanged(target);
 		}
 
 	};
@@ -404,30 +464,27 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * 
 	 * @param target
 	 */
-	protected void onSortStateChanged(AjaxRequestTarget target) {
-		target.addComponent(this);
+	protected void onSortStateChanged(AjaxRequestTarget target)
+	{
+		target.add(this);
 	}
 
 	/**
-	 * Renders the javascript required to initialize the client state for this grid instance. Called
-	 * after every grid render.
+	 * Generates the javascript required to initialize the client state for this grid instance.
+	 * Called after every grid render.
 	 * 
-	 * @param response
+	 * @return generated javascript code
 	 */
-	private String getInitializationJavascript(boolean wrapInHtmlScriptTag)
+	private String getInitializationJavascript()
 	{
 		AppendingStringBuffer sb = new AppendingStringBuffer(128);
-		if (wrapInHtmlScriptTag)
-		{
-			sb.append(JavascriptUtils.SCRIPT_OPEN_TAG);
-		}
 		sb.append("(function() {\n");
 
 		// initialize the columns
 		sb.append("var columns = [\n");
-		Collection<IGridColumn> columns = getActiveColumns();
+		Collection<IGridColumn<M, I>> columns = getActiveColumns();
 		int i = 0;
-		for (IGridColumn column : columns)
+		for (IGridColumn<M, I> column : columns)
 		{
 			++i;
 			sb.append("  {");
@@ -455,19 +512,17 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 		sb.append("InMethod.XTableManager.instance.register(\"" + getMarkupId() +
 			"\", columns, submitStateCallback);\n");
 		sb.append("})();\n");
-		if (wrapInHtmlScriptTag)
-		{
-			sb.append(JavascriptUtils.SCRIPT_CLOSE_TAG);
-		}
+
 		return sb.toString();
-	}
+	};
 
 	/**
 	 * Returns collection of currently visible columns.
 	 * 
 	 * @return collection of currently visible columns
 	 */
-	public Collection<IGridColumn> getActiveColumns() {
+	public Collection<IGridColumn<M, I>> getActiveColumns()
+	{
 		return getColumnState().getVisibleColumns(columns);
 	}
 
@@ -476,12 +531,13 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * 
 	 * @return list of columns
 	 */
-	public List<IGridColumn> getAllColumns() {
+	public List<IGridColumn<M, I>> getAllColumns()
+	{
 		return Collections.unmodifiableList(columns);
 	}
 
 	// contains all columns
-	private final List<IGridColumn> columns;
+	private final List<IGridColumn<M, I>> columns;
 
 	private GridSortState sortState = null;
 
@@ -493,9 +549,11 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * 
 	 * @return sort state
 	 */
-	public GridSortState getSortState() {
-		if (sortState == null) {
-			sortState = new GridSortState();
+	public GridSortState getSortState()
+	{
+		if (sortState == null)
+		{
+			sortState = new GridSortState(this);
 		}
 		return sortState;
 	};
@@ -515,7 +573,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param theme
 	 *            theme identifier
 	 */
-	public void setTheme(String theme) {
+	public void setTheme(String theme)
+	{
 		this.theme = theme;
 	}
 
@@ -525,7 +584,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @return theme identifier
 	 * @see #setTheme(String)
 	 */
-	public String getTheme() {
+	public String getTheme()
+	{
 		return theme;
 	}
 
@@ -536,14 +596,17 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void onComponentTag(ComponentTag tag) {
+	protected void onComponentTag(ComponentTag tag)
+	{
 		super.onComponentTag(tag);
 
-		CharSequence klass = tag.getString("class");
-		if (klass == null) {
+		CharSequence klass = tag.getAttribute("class");
+		if (klass == null)
+		{
 			klass = "";
 		}
-		if (klass.length() > 0) {
+		if (klass.length() > 0)
+		{
 			klass = klass + " ";
 		}
 
@@ -553,32 +616,35 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 
 		tag.put("class", klass);
 
-		if (tag.getName().equals("table")) {
+		if (tag.getName().equals("table"))
+		{
 			tag.setName("div");
 		}
 	}
 
-	private static final JavascriptResourceReference JS_YAHOO = new JavascriptResourceReference(AbstractGrid.class,
-			"res/yahoo.js");
-	private static final JavascriptResourceReference JS_EVENT = new JavascriptResourceReference(AbstractGrid.class,
-			"res/event.js");
-	private static final JavascriptResourceReference JS_DOM = new JavascriptResourceReference(AbstractGrid.class,
-			"res/dom.js");
-	private static final JavascriptResourceReference JS_SCRIPT = new JavascriptResourceReference(AbstractGrid.class,
-			"res/script.js");
-	private static final CompressedResourceReference CSS = new CompressedResourceReference(AbstractGrid.class,
-			"res/style.css");
+	private static final JavaScriptResourceReference JS_YAHOO = new JavaScriptResourceReference(
+		AbstractGrid.class, "res/yahoo.js");
+	private static final JavaScriptResourceReference JS_EVENT = new JavaScriptResourceReference(
+		AbstractGrid.class, "res/event.js");
+	private static final JavaScriptResourceReference JS_DOM = new JavaScriptResourceReference(
+		AbstractGrid.class, "res/dom.js");
+	private static final JavaScriptResourceReference JS_SCRIPT = new JavaScriptResourceReference(
+		AbstractGrid.class, "res/script.js");
+	private static final PackageResourceReference CSS = new PackageResourceReference(
+		AbstractGrid.class, "res/style.css");
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void renderHead(IHeaderResponse response) {
-		response.renderJavascriptReference(WicketEventReference.INSTANCE);
-		response.renderJavascriptReference(WicketAjaxReference.INSTANCE);
-		response.renderJavascriptReference(JS_YAHOO);
-		response.renderJavascriptReference(JS_EVENT);
-		response.renderJavascriptReference(JS_DOM);
-		response.renderJavascriptReference(JS_SCRIPT);
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		response.renderJavaScriptReference(WicketEventReference.INSTANCE);
+		response.renderJavaScriptReference(WicketAjaxReference.INSTANCE);
+		response.renderJavaScriptReference(JS_YAHOO);
+		response.renderJavaScriptReference(JS_EVENT);
+		response.renderJavaScriptReference(JS_DOM);
+		response.renderJavaScriptReference(JS_SCRIPT);
 		response.renderCSSReference(CSS);
 	}
 
@@ -590,18 +656,16 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param selected
 	 *            <code>true</code> if the item should be selected, <code>false</code> otherwise.
 	 */
-	public abstract void selectItem(IModel itemModel, boolean selected);
+	public abstract void selectItem(IModel<I> itemModel, boolean selected);
 
 	/**
-	 * Marks all currently displayed items as selected. For {@link DataGrid}
-	 * this selects all items on current page, for {@link TreeGrid} this selects
-	 * all currently visible nodes.
+	 * Marks all currently displayed items as selected. For {@link DataGrid} this selects all items
+	 * on current page, for {@link TreeGrid} this selects all currently visible nodes.
 	 */
 	public abstract void selectAllVisibleItems();
 
 	/**
-	 * Deselects all items. This method marks all items (not just visible items)
-	 * as no selected.
+	 * Deselects all items. This method marks all items (not just visible items) as no selected.
 	 */
 	public abstract void resetSelectedItems();
 
@@ -612,14 +676,14 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 *            item model
 	 * @return <code>true</code> if the item is selected, <code>false</code> otherwise
 	 */
-	public abstract boolean isItemSelected(IModel itemModel);
+	public abstract boolean isItemSelected(IModel<I> itemModel);
 
 	/**
 	 * Returns the collection of models of all currently selected items.
 	 * 
 	 * @return collection of models of currently selected items
 	 */
-	public abstract Collection<IModel> getSelectedItems();
+	public abstract Collection<IModel<I>> getSelectedItems();
 
 	/**
 	 * Sets whether user will be able to select more than one item.
@@ -641,18 +705,15 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	/**
 	 * During an Ajax request this method updates the changed grid rows.
 	 * <p>
-	 * The definition of "changed" varies in {@link DataGrid} and
-	 * {@link TreeGrid}.
+	 * The definition of "changed" varies in {@link DataGrid} and {@link TreeGrid}.
 	 * <ul>
-	 * <li>In both grids the items for which the selection state changed are
-	 * considered changed.
-	 * <li>In {@link TreeGrid} the changes to {@link TreeModel} itself are
-	 * being tracked (assuming the proper listeners are fired) and all rows that
-	 * need to be updated are also considered changed.
-	 * <li>In {@link DataGrid} the items that need to be updated can be marked
-	 * by {@link DataGrid#markItemDirty(IModel)} or
-	 * {@link DataGrid#markAllItemsDirty()}. The grid itself doesn't track
-	 * changes to specific items (apart from the selection state).
+	 * <li>In both grids the items for which the selection state changed are considered changed.
+	 * <li>In {@link TreeGrid} the changes to {@link TreeModel} itself are being tracked (assuming
+	 * the proper listeners are fired) and all rows that need to be updated are also considered
+	 * changed.
+	 * <li>In {@link DataGrid} the items that need to be updated can be marked by
+	 * {@link DataGrid#markItemDirty(IModel)} or {@link DataGrid#markAllItemsDirty()}. The grid
+	 * itself doesn't track changes to specific items (apart from the selection state).
 	 * </ul>
 	 */
 	public abstract void update();
@@ -665,26 +726,32 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param newValue
 	 *            <code>true</code> if the item became selected, <code>false</code> otherwise.
 	 */
-	protected void onItemSelectionChanged(IModel item, boolean newValue) {
+	protected void onItemSelectionChanged(IModel<I> item, boolean newValue)
+	{
 
 	}
 
 	private String lastClickedColumn = null;
 
-	public IGridColumn getLastClickedColumn() {
-		for (IGridColumn column : columns) {
-			if (column.getId().equals(lastClickedColumn)) {
+	public IGridColumn<M, I> getLastClickedColumn()
+	{
+		for (IGridColumn<M, I> column : columns)
+		{
+			if (column.getId().equals(lastClickedColumn))
+			{
 				return column;
 			}
 		}
 		return null;
 	}
 
-	public void cleanLastClickedColumn() {
+	public void cleanLastClickedColumn()
+	{
 		lastClickedColumn = null;
 	};
 
-	protected boolean disableRowClickNotifications() {
+	protected boolean disableRowClickNotifications()
+	{
 		return false;
 	}
 
@@ -693,52 +760,63 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * 
 	 * @param rowComponent
 	 */
-	protected void onRowPopulated(final WebMarkupContainer rowComponent) {
+	protected void onRowPopulated(final WebMarkupContainer rowComponent)
+	{
 
 		if (disableRowClickNotifications())
 			return;
 
-		rowComponent.add(new AjaxFormSubmitBehavior(getForm(), "onclick") {
+		rowComponent.add(new AjaxFormSubmitBehavior(getForm(), "onclick")
+		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit(AjaxRequestTarget target) {
+			protected void onSubmit(AjaxRequestTarget target)
+			{
 
 			}
 
 			@Override
-			protected void onError(AjaxRequestTarget target) {
+			protected void onError(AjaxRequestTarget target)
+			{
 
 			}
 
 			@Override
-			protected void onEvent(AjaxRequestTarget target) {
-
+			protected void onEvent(AjaxRequestTarget target)
+			{
 				// preserve the entered values in form components
-				Form form = getForm();
-				form.visitFormComponentsPostOrder(new FormComponent.AbstractVisitor() {
-					@Override
-					public void onFormComponent(final FormComponent formComponent) {
-						if (formComponent.isVisibleInHierarchy()) {
+				Form<?> form = super.getForm();
+				form.visitFormComponentsPostOrder(new IVisitor<FormComponent<?>, Void>()
+				{
+
+					public void component(FormComponent<?> formComponent, IVisit<Void> visit)
+					{
+						if (formComponent.isVisibleInHierarchy())
+						{
 							formComponent.inputChanged();
 						}
 					}
 				});
 
-				String column = getRequest().getParameter("column");
+				String column = getRequest().getRequestParameters()
+					.getParameterValue("column")
+					.toString();
 
 				lastClickedColumn = column;
 
-				IModel model = rowComponent.getDefaultModel();
+				IModel<I> model = (IModel<I>)rowComponent.getDefaultModel();
 
-				IGridColumn lastClickedColumn = getLastClickedColumn();
+				IGridColumn<M, I> lastClickedColumn = getLastClickedColumn();
 				if (lastClickedColumn != null)
 				{
-					if (onCellClicked(target, model, lastClickedColumn) == true) {
+					if (onCellClicked(target, model, lastClickedColumn) == true)
+					{
 						return;
 					}
-					if (lastClickedColumn.cellClicked(model) == true) {
+					if (lastClickedColumn.cellClicked(model) == true)
+					{
 						return;
 					}
 				}
@@ -747,21 +825,26 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 			}
 
 			@Override
-			public CharSequence getCallbackUrl() {
+			public CharSequence getCallbackUrl()
+			{
 				return super.getCallbackUrl() + "&column='+col+'";
 			}
 
 			@Override
-			protected IAjaxCallDecorator getAjaxCallDecorator() {
-				return new AjaxCallDecorator() {
-
+			protected IAjaxCallDecorator getAjaxCallDecorator()
+			{
+				return new AjaxCallDecorator()
+				{
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public CharSequence decorateScript(CharSequence script) {
-						return super.decorateScript("if (InMethod.XTable.canSelectRow(event)) { "
-								+ "var col=(this.imxtClickedColumn || ''); this.imxtClickedColumn='';" + script
-								+ " }");
+					public CharSequence decorateScript(Component c, CharSequence script)
+					{
+						return super.decorateScript(
+							c,
+							"if (InMethod.XTable.canSelectRow(event)) { " +
+								"var col=(this.imxtClickedColumn || ''); this.imxtClickedColumn='';" +
+								script + " }");
 					}
 				};
 			}
@@ -769,15 +852,20 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 
 	}
 
-	protected boolean onCellClicked(AjaxRequestTarget target, IModel rowModel, IGridColumn column) 	{
+	protected boolean onCellClicked(AjaxRequestTarget target, IModel<I> rowModel,
+		IGridColumn<M, I> column)
+	{
 		return false;
 	}
 
-	protected void onRowClicked(AjaxRequestTarget target, IModel rowModel) {
-		if (isClickRowToSelect()) {
+	protected void onRowClicked(AjaxRequestTarget target, IModel<I> rowModel)
+	{
+		if (isClickRowToSelect())
+		{
 			boolean selected = isItemSelected(rowModel);
 
-			if (selected == false || isClickRowToDeselect()) {
+			if (selected == false || isClickRowToDeselect())
+			{
 				selectItem(rowModel, !selected);
 				update();
 			}
@@ -795,7 +883,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 *            <code>false</code> otherwise.
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public AbstractGrid setClickRowToSelect(boolean clickRowToSelect) {
+	public AbstractGrid<M, I> setClickRowToSelect(boolean clickRowToSelect)
+	{
 		this.clickRowToSelect = clickRowToSelect;
 		return this;
 	}
@@ -806,7 +895,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @return <code>true</code> if the row click should alter the row selection state,
 	 *         <code>false</code> otherwise.
 	 */
-	public boolean isClickRowToSelect() {
+	public boolean isClickRowToSelect()
+	{
 		return clickRowToSelect;
 	}
 
@@ -819,7 +909,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param clickRowToDeselect
 	 *            whether clicking a selected row should deselect it
 	 */
-	public void setClickRowToDeselect(boolean clickRowToDeselect) {
+	public void setClickRowToDeselect(boolean clickRowToDeselect)
+	{
 		this.clickRowToDeselect = clickRowToDeselect;
 	}
 
@@ -829,7 +920,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @return <code>true</code> if clicking a selected row deselects it, <code>false</code>
 	 *         otherwise.
 	 */
-	public boolean isClickRowToDeselect() {
+	public boolean isClickRowToDeselect()
+	{
 		return clickRowToDeselect;
 	}
 
@@ -848,13 +940,17 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param contentSizeUnit
 	 *            size unit for the <code>contentHeight</code>
 	 */
-	public void setContentHeight(Integer contentHeight, SizeUnit contentSizeUnit) {
-		if (contentHeight != null) {
+	public void setContentHeight(Integer contentHeight, SizeUnit contentSizeUnit)
+	{
+		if (contentHeight != null)
+		{
 			this.contentHeight = contentHeight;
-		} else {
+		}
+		else
+		{
 			this.contentHeight = 0;
 		}
-		this.contentHeightSizeUnit = contentSizeUnit;
+		contentHeightSizeUnit = contentSizeUnit;
 	}
 
 	/**
@@ -863,7 +959,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @return content height or 0 if the content height should be determined by the actual content.
 	 * @see #setContentHeight(Integer, SizeUnit)
 	 */
-	public int getContentHeight() {
+	public int getContentHeight()
+	{
 		return contentHeight;
 	}
 
@@ -872,7 +969,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * 
 	 * @return size unit
 	 */
-	public SizeUnit getContentHeightSizeUnit() {
+	public SizeUnit getContentHeightSizeUnit()
+	{
 		return contentHeightSizeUnit;
 	}
 
@@ -890,7 +988,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param rowModel
 	 * @return
 	 */
-	protected abstract WebMarkupContainer findRowComponent(IModel rowModel);
+	protected abstract WebMarkupContainer findRowComponent(IModel<I> rowModel);
 
 	/**
 	 * Marks the item from the given model as dirty. Dirty items are updated during Ajax requests
@@ -899,7 +997,7 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param itemModel
 	 *            model used to access the item
 	 */
-	public abstract void markItemDirty(IModel model);
+	public abstract void markItemDirty(IModel<I> model);
 
 	private boolean selectToEdit = false;
 
@@ -910,7 +1008,8 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param selectToEdit
 	 *            whether selected rows should be editable
 	 */
-	public void setSelectToEdit(boolean selectToEdit) {
+	public void setSelectToEdit(boolean selectToEdit)
+	{
 		this.selectToEdit = selectToEdit;
 	}
 
@@ -919,11 +1018,13 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * 
 	 * @return
 	 */
-	public boolean isSelectToEdit() {
+	public boolean isSelectToEdit()
+	{
 		return selectToEdit;
 	}
 
-	private final static MetaDataKey<Boolean> EDITING = new MetaDataKey<Boolean>() {
+	private final static MetaDataKey<Boolean> EDITING = new MetaDataKey<Boolean>()
+	{
 		private static final long serialVersionUID = 1L;
 	};
 
@@ -939,14 +1040,20 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 *            <code>true</code> if the row should be in editable mode, <code>false</code>
 	 *            otherwise.
 	 */
-	public void setItemEdit(IModel rowModel, boolean edit) {
-		if (isSelectToEdit()) {
+	public void setItemEdit(IModel<I> rowModel, boolean edit)
+	{
+		if (isSelectToEdit())
+		{
 			selectItem(rowModel, edit);
-		} else {
+		}
+		else
+		{
 			WebMarkupContainer rowComponent = findRowComponent(rowModel);
-			if (rowComponent != null) {
+			if (rowComponent != null)
+			{
 				boolean editing = Boolean.TRUE.equals(rowComponent.getMetaData(EDITING));
-				if (editing != edit) {
+				if (editing != edit)
+				{
 					rowComponent.setMetaData(EDITING, edit);
 					markItemDirty(rowModel);
 				}
@@ -960,14 +1067,21 @@ public abstract class AbstractGrid extends Panel implements IHeaderContributor {
 	 * @param rowModel
 	 * @return <code>true</code> if the row is in editable mode, <code>false</code> otherwise.
 	 */
-	public boolean isItemEdited(IModel rowModel) {
-		if (isSelectToEdit()) {
+	public boolean isItemEdited(IModel<I> rowModel)
+	{
+		if (isSelectToEdit())
+		{
 			return isItemSelected(rowModel);
-		} else {
+		}
+		else
+		{
 			WebMarkupContainer rowComponent = findRowComponent(rowModel);
-			if (rowComponent != null) {
+			if (rowComponent != null)
+			{
 				return Boolean.TRUE.equals(rowComponent.getMetaData(EDITING));
-			} else {
+			}
+			else
+			{
 				return false;
 			}
 		}

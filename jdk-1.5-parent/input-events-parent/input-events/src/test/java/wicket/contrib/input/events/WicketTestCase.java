@@ -25,18 +25,20 @@ import org.apache.wicket.util.tester.WicketTester;
 /**
  * Base class for tests which require comparing wicket response with a file.
  * <p>
- * To create/replace the expected result file with the new content, define the
- * system property like -Dwicket.replace.expected.results=true
+ * To create/replace the expected result file with the new content, define the system property like
+ * -Dwicket.replace.expected.results=true
  * 
  */
-public abstract class WicketTestCase extends TestCase {
+public abstract class WicketTestCase extends TestCase
+{
 	/** */
 	public WicketTester tester;
 
 	/**
 	 * Constructor
 	 */
-	public WicketTestCase() {
+	public WicketTestCase()
+	{
 	}
 
 	/**
@@ -45,34 +47,40 @@ public abstract class WicketTestCase extends TestCase {
 	 * @param name
 	 *            The test name
 	 */
-	public WicketTestCase(String name) {
+	public WicketTestCase(String name)
+	{
 		super(name);
 	}
 
 	/**
 	 * @see junit.framework.TestCase#setUp()
 	 */
-	protected void setUp() throws Exception {
+	@Override
+	protected void setUp() throws Exception
+	{
 		tester = new WicketTester();
 	}
 
 	/**
 	 * @see junit.framework.TestCase#tearDown()
 	 */
-	protected void tearDown() throws Exception {
+	@Override
+	protected void tearDown() throws Exception
+	{
 		tester.destroy();
 	}
 
 	/**
-	 * Use <code>-Dwicket.replace.expected.results=true</code> to
-	 * automatically replace the expected output file.
+	 * Use <code>-Dwicket.replace.expected.results=true</code> to automatically replace the expected
+	 * output file.
 	 * 
 	 * @param pageClass
 	 * @param filename
 	 * @throws Exception
 	 */
-	protected void executeTest(final Class pageClass, final String filename)
-			throws Exception {
+	protected void executeTest(final Class<? extends Page> pageClass, final String filename)
+		throws Exception
+	{
 		System.out.println("=== " + pageClass.getName() + " ===");
 		tester.startPage(pageClass);
 		tester.assertRenderedPage(pageClass);
@@ -87,12 +95,13 @@ public abstract class WicketTestCase extends TestCase {
 	 * @param filename
 	 * @throws Exception
 	 */
-	protected void executedListener(final Class clazz,
-			final Component component, final String filename) throws Exception {
+	protected void executedListener(final Class<?> clazz, final Component component,
+		final String filename) throws Exception
+	{
 		assertNotNull(component);
 
-		System.out.println("=== " + clazz.getName() + " : "
-				+ component.getPageRelativePath() + " ===");
+		System.out.println("=== " + clazz.getName() + " : " + component.getPageRelativePath() +
+			" ===");
 
 		tester.executeListener(component);
 		tester.assertResultPage(clazz, filename);
@@ -105,13 +114,12 @@ public abstract class WicketTestCase extends TestCase {
 	 * @param filename
 	 * @throws Exception
 	 */
-	protected void executedBehavior(final Class clazz,
-			final AbstractAjaxBehavior behavior, final String filename)
-			throws Exception {
+	protected void executedBehavior(final Class<?> clazz, final AbstractAjaxBehavior behavior,
+		final String filename) throws Exception
+	{
 		assertNotNull(behavior);
 
-		System.out.println("=== " + clazz.getName() + " : "
-				+ behavior.toString() + " ===");
+		System.out.println("=== " + clazz.getName() + " : " + behavior.toString() + " ===");
 
 		tester.executeBehavior(behavior);
 		tester.assertResultPage(clazz, filename);

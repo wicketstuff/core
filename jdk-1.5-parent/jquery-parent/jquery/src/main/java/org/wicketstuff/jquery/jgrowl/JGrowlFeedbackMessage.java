@@ -5,91 +5,103 @@ import org.apache.wicket.feedback.FeedbackMessage;
 import org.wicketstuff.jquery.Options;
 
 /**
- * A feedback message that will be shown as JGrowl message (http://www.stanlemon.net/projects/jgrowl.html)
+ * A feedback message that will be shown as JGrowl message
+ * (http://www.stanlemon.net/projects/jgrowl.html)
  * 
  * @author martin-g
  */
-public class JGrowlFeedbackMessage implements IClusterable {
+public class JGrowlFeedbackMessage implements IClusterable
+{
 
 	private static final long serialVersionUID = 1L;
 
 	private final String message;
-	
+
 	/**
-	 * A list with all supported messages could be found at: (http://www.stanlemon.net/projects/jgrowl.html#options)
+	 * A list with all supported messages could be found at:
+	 * (http://www.stanlemon.net/projects/jgrowl.html#options)
 	 */
 	private final Options options;
-	
-	public JGrowlFeedbackMessage(final FeedbackMessage feedbackMessage) {
-	
-		this.message = feedbackMessage.getMessage().toString();
-		
-		switch (feedbackMessage.getLevel()) {
-			case FeedbackMessage.ERROR:
-				this.options = newErrorOptions();
+
+	public JGrowlFeedbackMessage(final FeedbackMessage feedbackMessage)
+	{
+
+		message = feedbackMessage.getMessage().toString();
+
+		switch (feedbackMessage.getLevel())
+		{
+			case FeedbackMessage.ERROR :
+				options = newErrorOptions();
 				break;
-			case FeedbackMessage.FATAL:
+			case FeedbackMessage.FATAL :
 				options = newFatalOptions();
-				break;	
-			case FeedbackMessage.DEBUG:
+				break;
+			case FeedbackMessage.DEBUG :
 				options = newDebugOptions();
 				break;
-			case FeedbackMessage.WARNING:
+			case FeedbackMessage.WARNING :
 				options = newWarningOptions();
-				break;	
-			case FeedbackMessage.INFO:
+				break;
+			case FeedbackMessage.INFO :
 				options = newInfoOptions();
 				break;
-			default:
+			default :
 				options = new Options();
-		}	
+		}
 	}
-	
-	protected Options newFatalOptions() {
+
+	protected Options newFatalOptions()
+	{
 
 		return new Options();
 	}
 
-	protected Options newDebugOptions() {
+	protected Options newDebugOptions()
+	{
 
 		return new Options();
 	}
 
-	protected Options newWarningOptions() {
+	protected Options newWarningOptions()
+	{
 
 		return new Options();
 	}
 
-	protected Options newInfoOptions() {
+	protected Options newInfoOptions()
+	{
 
 		final Options infoOptions = new Options();
-		
+
 		return infoOptions;
 	}
 
-	protected Options newErrorOptions() {
+	protected Options newErrorOptions()
+	{
 
-		return new Options();		
+		return new Options();
 	}
 
 	/**
-	 * Constructs the JGrowl invocation
-	 * E.g.: '$.jGrowl("A message", {'option1' : 'value1', 'option2' : 'value2' })'
+	 * Constructs the JGrowl invocation E.g.: '$.jGrowl("A message", {'option1' : 'value1',
+	 * 'option2' : 'value2' })'
 	 * 
 	 * @return the jGrowl JavaScript
 	 */
-	public String toJavaScript() {
-		
+	public String toJavaScript()
+	{
+
 		final StringBuilder javaScript = new StringBuilder();
 		javaScript.append("$.jGrowl(\"");
 		javaScript.append(message);
 		javaScript.append("\"");
-		if (options != null) {
+		if (options != null)
+		{
 			javaScript.append(", ");
 			javaScript.append(options.toString());
 		}
 		javaScript.append(");");
-		
-		return  javaScript.toString();
+
+		return javaScript.toString();
 	}
 }

@@ -34,7 +34,7 @@ public class ManyPage extends WicketExamplePage
 
 				if (target != null)
 				{
-					target.addComponent(container);
+					target.add(container);
 				}
 			}
 		};
@@ -45,9 +45,8 @@ public class ManyPage extends WicketExamplePage
 		// To avoid XMLHttpRequest cross-site requests
 		// the GMapHeaderContributor needs to be present in a page if it
 		// potentially might initialize a GMap2 component.
-		// 
-		container
-				.add(new GMapHeaderContributor(GMapExampleApplication.get().getGoogleMapsAPIkey()));
+		//
+		container.add(new GMapHeaderContributor(GMapExampleApplication.get().getGoogleMapsAPIkey()));
 		add(container);
 
 		repeating = new RepeatingView("repeating");
@@ -59,7 +58,7 @@ public class ManyPage extends WicketExamplePage
 	protected void addPanel()
 	{
 		ManyPanel newPanel = new ManyPanel(repeating.newChildId(), GMapExampleApplication.get()
-				.getGoogleMapsAPIkey())
+			.getGoogleMapsAPIkey())
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -70,7 +69,7 @@ public class ManyPage extends WicketExamplePage
 
 				if (target != null)
 				{
-					target.addComponent(container);
+					target.add(container);
 				}
 			}
 		};

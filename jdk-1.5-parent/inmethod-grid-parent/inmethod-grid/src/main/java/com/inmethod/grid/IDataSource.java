@@ -13,21 +13,21 @@ import org.apache.wicket.model.IModel;
  * An example of situation when the row count can be determined:
  * 
  * <pre>
- * IDataSource source = new IDataSource() {
- * 		public void query(IQuery query, IQueryResult result) {
+ * IDataSource&lt;User> source = new IDataSource&lt;User>() {
+ * 		public void query(IQuery query, IQueryResult&lt;User> result) {
  * 			
  * 			UserDao dao = DaoManager.getUserDao(); // code to get a DAO or service object
  * 			
  * 			result.setTotalCount(dao.getUserCount());
  * 			
- * 			Collection users = dao.getUsers(query.getFrom(), query.getCount());
+ * 			Collection&lt;User> users = dao.getUsers(query.getFrom(), query.getCount());
  * 			result.setItems(users.iterator());
  * 		} 
  * 
- * 		public IModel model(Object object) {
- * 			return new DetachableUserModel(objecT);
+ * 		public IModel&lt;User> model(User object) {
+ * 			return new DetachableUserModel(object);
  * 		}    
- * } 
+ * }
  * </pre>
  * 
  * An example of situation when the row count can't be determined. The pagination then only allows
@@ -35,13 +35,13 @@ import org.apache.wicket.model.IModel;
  * whether the next page should be available:
  * 
  * <pre>
- * IDataSource source = new IDataSource() {
- * 		public void query(IQuery query, IQueryResult result) {
+ * IDataSource&lt;User> source = new IDataSource&lt;User>() {
+ * 		public void query(IQuery query, IQueryResult&lt;User> result) {
  * 			
  * 			UserDao dao = DaoManager.getUserDao(); // code to get a DAO or service object
- * 			Collection users = dao.getUsers(query.getFrom(), query.getCount() + 1);
+ * 			Collection&lt;User> users = dao.getUsers(query.getFrom(), query.getCount() + 1);
  * 
- * 			if (user.size() &lt; query.getCount() + 1) {
+ * 			if (users.size() &lt; query.getCount() + 1) {
  * 				result.setTotalCount(IQueryResult.NO_MORE_ITEMS);
  * 			} else {
  * 				result.setTotalCount(IQueryResult.MORE_ITEMS);
@@ -50,27 +50,31 @@ import org.apache.wicket.model.IModel;
  * 			result.setItems(users.iterator());
  * 	}
  * 
- * 	public IModel model(Object object) {
- * 			return new DetachableUserModel(objecT);
+ * 	public IModel&lt;User> model(User object) {
+ * 			return new DetachableUserModel(object);
  * 		}  
  * }
  * </pre>
  * 
+ * @param <T>
+ *            row/item model object type
+ * 
  * @author Matej Knopp
  */
-public interface IDataSource extends IDetachable, IClusterable {
+public interface IDataSource<T> extends IDetachable, IClusterable
+{
 
 	/**
 	 * Implementation of this method should load subset of the data specified by
-	 * <code>query.getFrom()</code> and <code>query.getCount()</code>. Also if the total item
-	 * count can be determined, it should be passed to <code>result</code>.
+	 * <code>query.getFrom()</code> and <code>query.getCount()</code>. Also if the total item count
+	 * can be determined, it should be passed to <code>result</code>.
 	 * 
 	 * @param query
 	 *            Specified the amount and position of items to be queried
 	 * @param result
 	 *            Allows to set the total item count and result items
 	 */
-	public void query(IQuery query, IQueryResult result);
+	public void query(IQuery query, IQueryResult<T> result);
 
 	/**
 	 * Allows wrapping the object in a model which will be set as model of the appropriate row. In
@@ -79,14 +83,15 @@ public interface IDataSource extends IDetachable, IClusterable {
 	 * @param object
 	 * @return model that can be used to access the object
 	 */
-	public IModel model(Object object);
+	public IModel<T> model(T object);
 
 	/**
 	 * Specifies the subset of data to be loaded.
 	 * 
 	 * @author Matej Knopp
 	 */
-	public interface IQuery {
+	public interface IQuery
+	{
 		/**
 		 * Returns the index of first item to be loaded
 		 * 
@@ -97,9 +102,8 @@ public interface IDataSource extends IDetachable, IClusterable {
 		/**
 		 * Returns the amount of items to be loaded. If the total amount is known (it was either set
 		 * by {@link IQueryResult#setTotalCount(int)} before calling this method or the previous
-		 * call to
-		 * {@link IDataSource#query(IDataSource.IQuery, IDataSource.IQueryResult)}
-		 * set {@link IQueryResult#NO_MORE_ITEMS} as total count), this method will return the exact
+		 * call to {@link IDataSource#query(IDataSource.IQuery, IDataSource.IQueryResult)} set
+		 * {@link IQueryResult#NO_MORE_ITEMS} as total count), this method will return the exact
 		 * amount of required rows. If the total amount of rows is not known, it will always return
 		 * the number of items per page.
 		 * 
@@ -134,9 +138,13 @@ public interface IDataSource extends IDetachable, IClusterable {
 	 * Used to pass the total row count and the loaded item to the caller of
 	 * {@link IDataSource#query(IDataSource.IQuery, IDataSource.IQueryResult)} method.
 	 * 
+	 * @param <T>
+	 *            row/item model object type
+	 * 
 	 * @author Matej Knopp
 	 */
-	public interface IQueryResult {
+	public interface IQueryResult<T>
+	{
 		/**
 		 * Constant indicating that there are more items left.
 		 */
@@ -168,6 +176,6 @@ public interface IDataSource extends IDetachable, IClusterable {
 		 * @param items
 		 *            iterator able to iterate through the loaded items.
 		 */
-		public void setItems(Iterator<?> items);
+		public void setItems(Iterator<? extends T> items);
 	};
 }

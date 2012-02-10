@@ -16,289 +16,246 @@
  */
 package org.wicketstuff.annotation.scan;
 
-import org.apache.wicket.*;
-import org.apache.wicket.request.target.coding.*;
-import org.wicketstuff.config.*;
-import org.wicketstuff.annotation.mount.*;
+import java.util.List;
 
-import java.lang.annotation.*;
-import java.lang.reflect.*;
-import java.util.*;
+import org.apache.wicket.Application;
+import org.apache.wicket.Page;
+import org.apache.wicket.request.IRequestMapper;
+import org.apache.wicket.request.component.IRequestablePage;
+import org.apache.wicket.request.mapper.MountedMapper;
+import org.wicketstuff.annotation.mount.MountPath;
+import org.wicketstuff.config.MatchingResources;
 
 /**
- * Looks for mount information by scanning for classes annotated with {@link MountPath}.
- * You can specify a package to scan (e.g., "org.mycompany.wicket.pages").  Wildcards
- * also work (e.g., "org.mycompany.*.pages" or "org.mycompany.**.pages").
- *
- * <p>You can also go more advanced, using any pattern supported by
- * {@link MatchingResources}.  For example, the first package example above is turned into
+ * Looks for mount information by scanning for classes annotated with {@link MountPath}. You can
+ * specify a package to scan (e.g., "org.mycompany.wicket.pages"). Wildcards also work (e.g.,
+ * "org.mycompany.*.pages" or "org.mycompany.**.pages").
+ * 
+ * <p>
+ * You can also go more advanced, using any pattern supported by {@link MatchingResources}. For
+ * example, the first package example above is turned into
  * "classpath*:/org/mycompany/wicket/pages/**&#47;*.class".
- *
- * <p>For each class that is annotated, an appropriate {@link IRequestTargetUrlCodingStrategy}
- * implementing class is created using the information in the {@link MountPath} annotation
- * and any supplemental annotations.  Each instance is added to the list to return.  Each item
- * in the returned list can then be mounted.
- *
- * <p>Typical usage is in your {@link Application#init()} method and utilizes the
+ * 
+ * <p>
+ * For each class that is annotated, an appropriate {@link IRequestMapper} implementing class is
+ * created using the information in the {@link MountPath} annotation and any supplemental
+ * annotations. Each instance is added to the list to return. Each item in the returned list can
+ * then be mounted.
+ * 
+ * <p>
+ * Typical usage is in your {@link Application#init()} method and utilizes the
  * {@link AnnotatedMountList#mount} convenience method.
- *
+ * 
  * <pre>
- *  protected void init()
- *  {
- *      new AnnotatedMountScanner().scanPackage("org.mycompany.wicket.pages").mount(this);
- *  }
+ * protected void init()
+ * {
+ * 	new AnnotatedMountScanner().scanPackage(&quot;org.mycompany.wicket.pages&quot;).mount(this);
+ * }
  * </pre>
- *
- * <p>You could scan the entire classpath if you wanted by passing in null, but that might
- * require more time to run than limiting it to known packages which have annotated classes.
- *
- * <p>Page classes annotation usage is as follows:
- *
+ * 
+ * <p>
+ * You could scan the entire classpath if you wanted by passing in null, but that might require more
+ * time to run than limiting it to known packages which have annotated classes.
+ * 
+ * <p>
+ * Page classes annotation usage is as follows:
+ * 
  * <pre>
- *  &#64;MountPath(path = "hello")
- *  private class HelloPage extends Page
- *  {
- *  }
- *
- *  &#64;MountPath(path = "dogs", alt = {"canines", "k9s"})
- *  &#64;MountMixedParam(parameterNames = {"dexter", "zorro"})
- *  private class DogsPage extends Page
- *  {
- *  }
+ * &#064;MountPath
+ * private class HelloPage extends Page
+ * {
+ * }
+ * 
+ * &#064;MountPath(&quot;hello&quot;)
+ * private class HelloPage extends Page
+ * {
+ * }
+ * 
+ * &#064;MountPath(value = &quot;dogs&quot;, alt = { &quot;canines&quot;, &quot;k9s&quot; })
+ * private class DogsPage extends Page
+ * {
+ * }
  * </pre>
- *
- * <p>The first example will mount HelloPage to /hello using the default encoding strategy (as
- * returned by {@link #getDefaultStrategy} which is {@link BookmarkablePageRequestTargetUrlCodingStrategy}.
- *
- * <p>The second example will mount DogsPage at "/dogs" (as the primary) and as "/canines" and "/k9s" as
- * alternates using the {@link MixedParamUrlCodingStrategy}.  Further, the second example specifies that
- * {"dexter", "zorro"} String array is to be passed to the constructor.  The value for the pageMapName
- * argument is null.
- *
+ * 
+ * <p>
+ * The first example will mount HelloPage to /HelloPage using the default mapper (as returned by
+ * {@link #getRequestMapper} which is {@link MountedMapper}.
+ * 
+ * <p>
+ * The second example will mount HelloPage to /hello using the default mapper (as returned by
+ * {@link #getRequestMapper} which is {@link MountedMapper}.
+ * 
+ * <p>
+ * The third example will mount DogsPage at "/dogs" (as the primary) and as "/canines" and "/k9s" as
+ * alternates using the {@link MountedMapper}.
+ * 
  * @author Doug Donohoe
+ * @author Ronald Tetsuo Miura
  */
 public class AnnotatedMountScanner
 {
-    //private static Logger logger = LoggerFactory.getLogger(AnnotatedMountScanner.class);
 
-    /**
-     * Get the Spring search pattern given a package name or part of a package name
-     * @param packageName a package name
-     * @return a Spring search pattern for the given package
-     */
-    public String getPatternForPackage(String packageName)
-    {
-        if (packageName == null) packageName = "";
-        packageName = packageName.replace('.', '/');
-        if (!packageName.endsWith("/"))
-        {
-            packageName += '/';
-        }
+	/**
+	 * Get the Spring search pattern given a package name or part of a package name
+	 * 
+	 * @param packageName
+	 *            a package name
+	 * @return a Spring search pattern for the given package
+	 */
+	public String getPatternForPackage(String packageName)
+	{
+		if (packageName == null)
+			packageName = "";
+		packageName = packageName.replace('.', '/');
+		if (!packageName.endsWith("/"))
+		{
+			packageName += '/';
+		}
 
-        return "classpath*:" + packageName + "**/*.class";
-    }
-
-
-    /**
-     * Scan given a package name or part of a package name and return list of classes with MountPath annotation.
-     * @return A List of classes annotated with &#64;MountPath
-     */
-    public List<Class<?>> getPackageMatches(String pattern)
-    {
-        return getPatternMatches(getPatternForPackage(pattern));
-    }
-
-    /**
-     * Scan given a Spring search pattern and return list of classes with MountPath annotation.
-     * @return A List of classes annotated with &#64;MountPath
-     */
-    public List<Class<?>> getPatternMatches(String pattern)
-    {
-        MatchingResources resources = new MatchingResources(pattern);
-        List<Class<?>> mounts = resources.getAnnotatedMatches(MountPath.class);
-        for (Class<?> mount : mounts)
-        {
-            if (!(Page.class.isAssignableFrom(mount)))
-            {
-                throw new RuntimeException("@MountPath annotated class should subclass Page: " + mount);
-            }
-        }
-        return mounts;
-    }
-
-    /**
-     * Scan given package name or part of a package name
-     * @param packageName a package to scan (e.g., "org.mycompany.pages)
-     * @return An {@link AnnotatedMountList}
-     */
-    public AnnotatedMountList scanPackage(String packageName)
-    {
-        return scanList(getPackageMatches(packageName));
-    }
-
-    /**
-     * Scan given a Spring search pattern.
-     * @param pattern
-     * @return An {@link AnnotatedMountList}
-     */
-    public AnnotatedMountList scanPattern(String pattern)
-    {
-        return scanList(getPatternMatches(pattern));
-    }
+		return "classpath*:" + packageName + "**/*.class";
+	}
 
 
-    /**
-     * Scan a list of classes which are annotated with MountPath
-     * @param mounts
-     * @return An {@link AnnotatedMountList}
-     */
-    @SuppressWarnings({"unchecked"})
-    protected AnnotatedMountList scanList(List<Class<?>> mounts)
-    {
-        AnnotatedMountList list = new AnnotatedMountList();
-        for (Class<?> mount : mounts)
-        {
-            Class<? extends Page> page = (Class<? extends Page>) mount;
-            scanClass(page, list);
-        }
-        return list;
-    }
+	/**
+	 * Scan given a package name or part of a package name and return list of classes with MountPath
+	 * annotation.
+	 * 
+	 * @return A List of classes annotated with &#64;MountPath
+	 */
+	public List<Class<?>> getPackageMatches(String pattern)
+	{
+		return getPatternMatches(getPatternForPackage(pattern));
+	}
 
-    /**
-     * Scan given a class that is a sublass of {@link Page}.
-     * @param pageClass {@link Page} subclass to scan
-     * @return An {@link AnnotatedMountList} containing the primary and alternate strategies created for the class.
-     */
-    public AnnotatedMountList scanClass(Class<? extends Page> pageClass)
-    {
-        AnnotatedMountList list = new AnnotatedMountList();
-        scanClass(pageClass, list);
-        return list;
-    }
+	/**
+	 * Scan given a Spring search pattern and return list of classes with MountPath annotation.
+	 * 
+	 * @return A List of classes annotated with &#64;MountPath
+	 */
+	public List<Class<?>> getPatternMatches(String pattern)
+	{
+		MatchingResources resources = new MatchingResources(pattern);
+		List<Class<?>> mounts = resources.getAnnotatedMatches(MountPath.class);
+		for (Class<?> mount : mounts)
+		{
+			if (!(Page.class.isAssignableFrom(mount)))
+			{
+				throw new RuntimeException("@MountPath annotated class should subclass Page: " +
+					mount);
+			}
+		}
+		return mounts;
+	}
 
-    /**
-     * Magic of all this is done here.
-     * @param pageClass
-     * @param list
-     */
-    private void scanClass(Class<? extends Page> pageClass, AnnotatedMountList list)
-    {
-        MountPath mountPath = pageClass.getAnnotation(MountPath.class);
-        if (mountPath == null) return;
+	/**
+	 * Scan given package name or part of a package name
+	 * 
+	 * @param packageName
+	 *            a package to scan (e.g., "org.mycompany.pages)
+	 * @return An {@link AnnotatedMountList}
+	 */
+	public AnnotatedMountList scanPackage(String packageName)
+	{
+		return scanList(getPackageMatches(packageName));
+	}
 
-        // find first annotation that is annotated with @MountDefinition
-        Annotation pageSpecificMountDetails = null;
-        Class<? extends Annotation> mountStrategyAnnotationClass = null;
-        MountDefinition mountDefinition = null;
-        Annotation[] annos = pageClass.getAnnotations();
-        for (Annotation anno : annos)
-        {
-            mountDefinition = anno.annotationType().getAnnotation(MountDefinition.class);
-            if (mountDefinition != null)
-            {
-                pageSpecificMountDetails = anno;
-                mountStrategyAnnotationClass = anno.getClass();
-                break;
-            }
-        }
+	/**
+	 * Scan given a Spring search pattern.
+	 * 
+	 * @param pattern
+	 * @return An {@link AnnotatedMountList}
+	 */
+	public AnnotatedMountList scanPattern(String pattern)
+	{
+		return scanList(getPatternMatches(pattern));
+	}
 
-        // default if no @MountDefinition annotated annotation is available
-        if (pageSpecificMountDetails == null)
-        {
-            // primary
-            list.add(getDefaultStrategy(mountPath.path(), pageClass));
 
-            // alternates
-            for (String alt : mountPath.alt())
-            {
-                list.add(getDefaultStrategy(alt, pageClass));
-            }
-            return;
-        }
+	/**
+	 * Scan a list of classes which are annotated with MountPath
+	 * 
+	 * @param mounts
+	 * @return An {@link AnnotatedMountList}
+	 */
+	@SuppressWarnings({ "unchecked" })
+	protected AnnotatedMountList scanList(List<Class<?>> mounts)
+	{
+		AnnotatedMountList list = new AnnotatedMountList();
+		for (Class<?> mount : mounts)
+		{
+			Class<? extends Page> page = (Class<? extends Page>)mount;
+			scanClass(page, list);
+		}
+		return list;
+	}
 
-        // get the actual strategy we'll be creating
-        Class<? extends IRequestTargetUrlCodingStrategy> strategyClass = mountDefinition.strategyClass();
+	/**
+	 * Scan given a class that is a sublass of {@link Page}.
+	 * 
+	 * @param pageClass
+	 *            {@link Page} subclass to scan
+	 * @return An {@link AnnotatedMountList} containing the primary and alternate strategies created
+	 *         for the class.
+	 */
+	public AnnotatedMountList scanClass(Class<? extends Page> pageClass)
+	{
+		AnnotatedMountList list = new AnnotatedMountList();
+		scanClass(pageClass, list);
+		return list;
+	}
 
-        // need to determine the constructor - we support constructors that
-        // take a String (mount path) and a Class (page)
-        int STANDARD_ARGS = 2;
-        String[] argOrder = mountDefinition.argOrder();
-        Class<?>[] paramTypes = new Class<?>[argOrder.length + STANDARD_ARGS];
-        Object[] initArgs = new Object[paramTypes.length];
+	/**
+	 * Magic of all this is done here.
+	 * 
+	 * @param pageClass
+	 * @param list
+	 */
+	private void scanClass(Class<? extends Page> pageClass, AnnotatedMountList list)
+	{
+		MountPath mountPath = pageClass.getAnnotation(MountPath.class);
+		if (mountPath == null)
+			return;
 
-        // deafult first two arguments - mount path and page class
-        paramTypes[0] = String.class;
-        paramTypes[1] = Class.class;
-        initArgs[0] = null; // provided below
-        initArgs[1] = pageClass;
+		String path = mountPath.value();
 
-        // get remaining constructor args which match those specified by 'argOrder'
-        for (int i = 0; i < argOrder.length; i++)
-        {
-            int index = i + STANDARD_ARGS;
-            Method method = null;
+		// default if no explicit path is provided
+		if ("".equals(path))
+		{
+			path = getDefaultMountPath(pageClass);
+		}
 
-            try
-            {
-                method = mountStrategyAnnotationClass.getDeclaredMethod(argOrder[i]);
-                paramTypes[index] = method.getReturnType();
-                initArgs[index] = method.invoke(pageSpecificMountDetails);
+		list.add(getRequestMapper(path, pageClass));
 
-                // can't default an annotation to null, so use this as a workaround
-                if (initArgs[index].equals(MountDefinition.NULL)) initArgs[index] = null;
-            }
-            catch (NoSuchMethodException e)
-            {
-                throw new RuntimeException("argOrder[" + i + "] = " + argOrder[i] + " not found in annotation " +
-                                            mountStrategyAnnotationClass.getName(), e);
-            }
-            catch (Exception e)
-            {
-                throw new RuntimeException("Unable to invoke method " + method + " on annotation " +
-                                            pageSpecificMountDetails.getClass().getName(), e);
-            }
-        }
+		// alternates
+		for (String alt : mountPath.alt())
+		{
+			list.add(getRequestMapper(alt, pageClass));
+		}
+	}
 
-        // get matching constructor
-        Constructor<? extends IRequestTargetUrlCodingStrategy> ctx = null;
-        try
-        {
-            ctx = strategyClass.getConstructor(paramTypes);
-        }
-        catch (NoSuchMethodException e)
-        {
-            throw new RuntimeException("No constructor matching parameters defined by 'argOrder' found for " +
-                                       strategyClass, e);
-        }
+	/**
+	 * Returns the default mapper given a mount path and class.
+	 * 
+	 * @param mountPath
+	 * @param pageClass
+	 * @return {@link MountedMapper}
+	 */
+	public IRequestMapper getRequestMapper(String mountPath,
+		Class<? extends IRequestablePage> pageClass)
+	{
+		return new MountedMapper(mountPath, pageClass);
+	}
 
-        // create new instances
-        try
-        {
-            // primary mount path
-            initArgs[0] = mountPath.path();
-            list.add(ctx.newInstance(initArgs));
-
-            // alternate paths
-            for (String alt : mountPath.alt())
-            {
-                initArgs[0] = alt;
-                list.add(ctx.newInstance(initArgs));
-            }
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException("Unable to invoke constructor " + ctx + " for " + strategyClass, e);
-        }
-    }
-
-    /**
-     * Returns the default coding strategy given a mount path and class.
-     * @param mountPath
-     * @param pageClass
-     * @return {@link BookmarkablePageRequestTargetUrlCodingStrategy}
-     */
-    public IRequestTargetUrlCodingStrategy getDefaultStrategy(String mountPath, Class<? extends Page> pageClass)
-    {
-        return new BookmarkablePageRequestTargetUrlCodingStrategy(mountPath, pageClass, null);
-    }
+	/**
+	 * Returns the default mount path for a given class (used if the path has not been specified in
+	 * the <code>@MountPath</code> annotation). By default, this method returns the
+	 * pageClass.getSimpleName().
+	 * 
+	 * @param pageClass
+	 * @return the default mount path for pageClass
+	 */
+	public String getDefaultMountPath(Class<? extends IRequestablePage> pageClass)
+	{
+		return pageClass.getSimpleName();
+	}
 }

@@ -20,8 +20,9 @@ import java.util.StringTokenizer;
 import wicket.contrib.gmap.js.Constructor;
 
 /**
- * Represents an Google Maps API's
- * <a href="http://www.google.com/apis/maps/documentation/reference.html#GLatLngBounds">GLatLngBounds</a>.
+ * Represents an Google Maps API's <a
+ * href="http://www.google.com/apis/maps/documentation/reference.html#GLatLngBounds"
+ * >GLatLngBounds</a>.
  */
 public class GLatLngBounds implements GValue
 {
@@ -29,7 +30,7 @@ public class GLatLngBounds implements GValue
 	 * Default serialVersionUID.
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private final GLatLng sw;
 	private final GLatLng ne;
 
@@ -54,7 +55,7 @@ public class GLatLngBounds implements GValue
 	{
 		return ne;
 	}
-	
+
 	@Override
 	public String toString()
 	{
@@ -66,7 +67,9 @@ public class GLatLngBounds implements GValue
 	 */
 	public String getJSconstructor()
 	{
-		return new Constructor("GLatLngBounds").add(sw.getJSconstructor()).add(ne.getJSconstructor()).toJS();
+		return new Constructor("GLatLngBounds").add(sw.getJSconstructor())
+			.add(ne.getJSconstructor())
+			.toJS();
 	}
 
 	@Override
@@ -85,7 +88,7 @@ public class GLatLngBounds implements GValue
 		}
 		return false;
 	}
-	
+
 	/**
 	 * ((37.34068368469045, -122.48519897460936), (37.72184917678752, -121.79855346679686))
 	 */
@@ -104,9 +107,11 @@ public class GLatLngBounds implements GValue
 		{
 			return null;
 		}
-		
-		GLatLng sw = new GLatLng(Float.valueOf(tokenizer.nextToken()), Float.valueOf(tokenizer.nextToken()));
-		GLatLng ne = new GLatLng(Float.valueOf(tokenizer.nextToken()), Float.valueOf(tokenizer.nextToken()));
+
+		GLatLng sw = new GLatLng(Float.valueOf(tokenizer.nextToken()),
+			Float.valueOf(tokenizer.nextToken()));
+		GLatLng ne = new GLatLng(Float.valueOf(tokenizer.nextToken()),
+			Float.valueOf(tokenizer.nextToken()));
 		return new GLatLngBounds(sw, ne);
 	}
 }

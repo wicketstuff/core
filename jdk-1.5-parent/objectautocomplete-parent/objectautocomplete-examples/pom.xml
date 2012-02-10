@@ -4,11 +4,11 @@
 
     <parent>
       <groupId>org.wicketstuff</groupId>
-      <artifactId>objectautocomplete-parent</artifactId>
-      <version>1.4-SNAPSHOT</version>
+      <artifactId>wicketstuff-objectautocomplete-parent</artifactId>
+      <version>1.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>objectautocomplete-examples</artifactId>
+    <artifactId>wicketstuff-objectautocomplete-examples</artifactId>
     <packaging>war</packaging>
 
     <name>ObjectAutoComplete - Examples</name>
@@ -17,8 +17,8 @@
     <dependencies>
         <!--  WICKET DEPENDENCIES -->
         <dependency>
-            <groupId>org.wicketstuff</groupId>
-            <artifactId>objectautocomplete</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wicketstuff-objectautocomplete</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -40,21 +40,11 @@
         </dependency>
 
         <!--  JETTY DEPENDENCIES FOR TESTING  -->
-        <dependency>
-            <groupId>org.mortbay.jetty</groupId>
-            <artifactId>jetty</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mortbay.jetty</groupId>
-            <artifactId>jetty-util</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mortbay.jetty</groupId>
-            <artifactId>jetty-management</artifactId>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty.aggregate</groupId>
+			<artifactId>jetty-all-server</artifactId>
+		</dependency>
+		
     </dependencies>
 
 </project>

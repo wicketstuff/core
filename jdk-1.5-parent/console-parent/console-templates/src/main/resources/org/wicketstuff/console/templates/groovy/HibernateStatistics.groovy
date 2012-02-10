@@ -1,4 +1,4 @@
-def sf = application.hibernateSessionFactory
+def sf = application.sessionFactory
 sf.settings.statisticsEnabled = true
 def stats = sf.statistics
 stats.statisticsEnabled = true

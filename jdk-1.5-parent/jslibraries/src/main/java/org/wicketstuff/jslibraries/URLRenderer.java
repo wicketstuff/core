@@ -20,6 +20,7 @@ package org.wicketstuff.jslibraries;
 
 import java.net.URL;
 
-interface URLRenderer {
+interface URLRenderer
+{
 	URL render(Library lib, Version v, boolean production);
 }

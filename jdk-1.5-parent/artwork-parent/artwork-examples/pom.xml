@@ -2,7 +2,7 @@
     <parent>
         <artifactId>artwork-parent</artifactId>
         <groupId>org.wicketstuff</groupId>
-        <version>1.4-SNAPSHOT</version>
+        <version>1.5-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wicketstuff</groupId>
@@ -17,49 +17,11 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**</include>
-                </includes>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>src/test/java</directory>
-                <includes>
-                    <include>**</include>
-                </includes>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </testResource>
-        </testResources>
-        <plugins>
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>maven-jetty-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <configuration>
-                    <downloadSources>true</downloadSources>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+       
     <dependencies>
         <dependency>
             <groupId>org.wicketstuff</groupId>
-            <artifactId>artwork</artifactId>
+            <artifactId>wicketstuff-artwork</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

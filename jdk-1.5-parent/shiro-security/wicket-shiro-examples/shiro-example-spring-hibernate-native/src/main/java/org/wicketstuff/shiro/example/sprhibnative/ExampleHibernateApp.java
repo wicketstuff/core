@@ -22,15 +22,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.wicketstuff.shiro.example.ExampleApplication;
 import org.wicketstuff.shiro.example.pages.LoginPage;
-import org.wicketstuff.shiro.example.sprhibnative.ExampleInfoPanel;
-import org.wicketstuff.shiro.example.sprhibnative.UserAuthHeader;
 
 public class ExampleHibernateApp extends ExampleApplication
 {
 	@Override
 	protected void init()
 	{
-		addComponentInstantiationListener(new SpringComponentInjector(this, context(), true));
+		getComponentInstantiationListeners().add(new SpringComponentInjector(this, context(), true));
 
 		// do the standard stuff...
 		super.init();
@@ -41,14 +39,16 @@ public class ExampleHibernateApp extends ExampleApplication
 		return WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
 	}
 
-  @Override
-  public Component getExampleInfoPanel(String id) {
-    return new ExampleInfoPanel( id );
-  }
-  
-  @Override
-	public Component getAuthHeaderPanel(String id) {
-	  return new UserAuthHeader(id, LoginPage.class);
+	@Override
+	public Component getExampleInfoPanel(String id)
+	{
+		return new ExampleInfoPanel(id);
+	}
+
+	@Override
+	public Component getAuthHeaderPanel(String id)
+	{
+		return new UserAuthHeader(id, LoginPage.class);
 	}
 
 }

@@ -14,49 +14,40 @@
 package org.wicketstuff.modalx;
 
 
-
 // -[KeepBeforeClass]-
 
 
 // -[Class]-
 
 /**
- * Class Name : ModalMgr
- * Diagram    : Wicket Generic Modal Windows
- * Project    : Echobase framework
- * Type       : interface
- * Manages the allocation and deallocation of modal windows.
- * An application implements this method (typically in a base Page class) and provides
- * for 'n' modalWindows. The markup for that base class should include the appropriate
- * number of modal window <divs>. For example if the maxumum depth of modal windows was
- * n = 2 then the base class markup should have:
+ * Class Name : ModalMgr Diagram : Wicket Generic Modal Windows Project : Echobase framework Type :
+ * interface Manages the allocation and deallocation of modal windows. An application implements
+ * this method (typically in a base Page class) and provides for 'n' modalWindows. The markup for
+ * that base class should include the appropriate number of modal window <divs>. For example if the
+ * maxumum depth of modal windows was n = 2 then the base class markup should have:
  * 
- * <div wicket:id="modalWindow_0"></div>
- * <div wicket:id="modalWindow_1"></div>
+ * <div wicket:id="modalWindow_0"></div> <div wicket:id="modalWindow_1"></div>
  * 
  * 
  * and the constructor of the ModalMgr implementor should contain code like this:
  * 
  * // Establish the ModalWindows
  * 
- * modalContentWindows = new ModalContentWindow[MAX_MODALS];
- * for (int m = 0; m < MAX_MODALS; m++)
- * {
- *     ModalContentWindow modalWindow = new PbModalWindow(this, "modalWindow_" + m, true);
- *     modalWindow.setInitialWidth(600);
+ * modalContentWindows = new ModalContentWindow[MAX_MODALS]; for (int m = 0; m < MAX_MODALS; m++) {
+ * ModalContentWindow modalWindow = new PbModalWindow(this, "modalWindow_" + m, true);
+ * modalWindow.setInitialWidth(600);
  * 
- *     modalWindow.setInitialHeight(400);
+ * modalWindow.setInitialHeight(400);
  * 
- *     body.add(modalWindow);
+ * body.add(modalWindow);
  * 
- *     modalContentWindows[m] = modalWindow;
+ * modalContentWindows[m] = modalWindow;
  * 
  * }
  * 
  * @author Chris Colman
  */
-public abstract 
-interface ModalMgr
+public abstract interface ModalMgr
 {
 // -[KeepWithinClass]-
 
@@ -67,28 +58,21 @@ interface ModalMgr
 // -[Methods]-
 
 
+	/**
+	 * Notifies the ModalMgr of wicket modal visit (which can be null if tracking is not required).
+	 */
+	public abstract void trackModalVisit(IWicketModalVisit wicketModalVisit);
 
 
-/**
- * Notifies the ModalMgr of wicket modal visit (which can be null if tracking is not
- * required).
- */
-public abstract void trackModalVisit(IWicketModalVisit wicketModalVisit);
+	/**
+	 * Releases a ModalContentWindow
+	 */
+	public abstract void releaseModalWindow(ModalContentWindow modalContentWindow);
 
 
-
-/**
- * Releases a ModalContentWindow
- */
-public abstract void releaseModalWindow(ModalContentWindow modalContentWindow);
-
-
-
-/**
- * Allocates a ModalContentWindow.
- */
-public abstract ModalContentWindow allocateModalWindow();
+	/**
+	 * Allocates a ModalContentWindow.
+	 */
+	public abstract ModalContentWindow allocateModalWindow();
 
 }
-
-

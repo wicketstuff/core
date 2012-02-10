@@ -5,10 +5,10 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>push-parent-jdk-1.6</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>push-cometd</artifactId>
+	<artifactId>wicketstuff-push-cometd</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Wicketstuff Push - CometD</name>
@@ -18,7 +18,7 @@
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>push-core</artifactId>
+			<artifactId>wicketstuff-push-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
@@ -40,6 +40,12 @@
 			<artifactId>cometd-java-server</artifactId>
 			<version>${cometd.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.cometd.java</groupId>
+			<artifactId>cometd-websocket-jetty</artifactId>
+			<version>${cometd.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -47,7 +53,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.0</version>
 				<executions>
 					<execution>
 						<id>unpack-cometd-javascript</id>

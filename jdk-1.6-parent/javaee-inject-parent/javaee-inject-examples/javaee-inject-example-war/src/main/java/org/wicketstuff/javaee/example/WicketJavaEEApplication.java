@@ -19,22 +19,26 @@ package org.wicketstuff.javaee.example;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.wicketstuff.javaee.example.pages.InsertContact;
-import org.wicketstuff.javaee.injection.JavaEEComponentInjector;
 import org.wicketstuff.javaee.example.pages.ListContacts;
+import org.wicketstuff.javaee.injection.JavaEEComponentInjector;
 
 /**
- *
+ * 
  * @author Filippo Diotalevi
  */
-public class WicketJavaEEApplication extends WebApplication {
+public class WicketJavaEEApplication extends WebApplication
+{
 
-    @Override
-    public Class<? extends Page> getHomePage() {
-        return ListContacts.class;
-    }
+	@Override
+	public Class<? extends Page> getHomePage()
+	{
+		return ListContacts.class;
+	}
 
-    protected void init() {
-        addComponentInstantiationListener(new JavaEEComponentInjector(this));
-        mountBookmarkablePage("/insert", InsertContact.class);
-    }
+	@Override
+	protected void init()
+	{
+		getComponentInstantiationListeners().add(new JavaEEComponentInjector(this));
+		mountPage("/insert", InsertContact.class);
+	}
 }

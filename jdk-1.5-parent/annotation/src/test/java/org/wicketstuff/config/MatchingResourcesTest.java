@@ -16,66 +16,71 @@
  */
 package org.wicketstuff.config;
 
-import junit.framework.*;
-import org.slf4j.*;
-import org.springframework.core.io.*;
+import java.net.URL;
 
-import java.net.*;
+import junit.framework.TestCase;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
 
 /**
  * @author Doug Donohoe
  */
 public class MatchingResourcesTest extends TestCase
 {
-    Logger logger = LoggerFactory.getLogger(MatchingResourcesTest.class);
+	Logger logger = LoggerFactory.getLogger(MatchingResourcesTest.class);
 
-    public void testFindResources()
-    {
-        MatchingResources mr = new MatchingResources("classpath*:org/wicketstuff/config/MatchingResources.class");
-        URL[] match = mr.getAllMatchesURL();
-        assertTrue(match.length == 1);
+	public void testFindResources()
+	{
+		MatchingResources mr = new MatchingResources(
+			"classpath*:org/wicketstuff/config/MatchingResources.class");
+		URL[] match = mr.getAllMatchesURL();
+		assertTrue(match.length == 1);
 
-        logger.info("URL: " + match[0]);
-        assertTrue(mr.getURL(null) == null);
+		logger.info("URL: " + match[0]);
+		assertTrue(mr.getURL(null) == null);
 
-        Resource[] none = new MatchingResources("classpath*:org/wicketstuff/config/NoSuchFile.class").getAllMatches();
-        assertTrue(none.length == 0);
-    }
+		Resource[] none = new MatchingResources(
+			"classpath*:org/wicketstuff/config/NoSuchFile.class").getAllMatches();
+		assertTrue(none.length == 0);
+	}
 
-    public void testFindResource()
-    {
-        Resource thiz = new MatchingResources("classpath*:org/wicketstuff/config/MatchingResourcesTest.class").getSingleRequiredResource();
-        assertNotNull(thiz);
+	public void testFindResource()
+	{
+		Resource thiz = new MatchingResources(
+			"classpath*:org/wicketstuff/config/MatchingResourcesTest.class").getSingleRequiredResource();
+		assertNotNull(thiz);
 
-        // test required
-        try
-        {
-            new MatchingResources("classpath*:org/wicketstuff/config/NoSuchFile.class").getSingleRequiredResource();
-            fail(); // should not get here
-        }
-        catch (RuntimeException e)
-        {
-            assertTrue(true);
-        }
+		// test required
+		try
+		{
+			new MatchingResources("classpath*:org/wicketstuff/config/NoSuchFile.class").getSingleRequiredResource();
+			fail(); // should not get here
+		}
+		catch (RuntimeException e)
+		{
+			assertTrue(true);
+		}
 
-        // test multiple matches
-        try
-        {
-            new MatchingResources("classpath*:org/wicketstuff/config/*.class").getSingleResource();
-            fail(); // should not get here
-        }
-        catch (RuntimeException e)
-        {
-            assertTrue(true);
-        }
+		// test multiple matches
+		try
+		{
+			new MatchingResources("classpath*:org/wicketstuff/config/*.class").getSingleResource();
+			fail(); // should not get here
+		}
+		catch (RuntimeException e)
+		{
+			assertTrue(true);
+		}
 
-    }
+	}
 
-    public void testToString()
-    {
-        MatchingResources mr = new MatchingResources("classpath*:org/wicketstuff/config/*.class");
-        assertTrue(mr.getAllMatches().length > 0);
+	public void testToString()
+	{
+		MatchingResources mr = new MatchingResources("classpath*:org/wicketstuff/config/*.class");
+		assertTrue(mr.getAllMatches().length > 0);
 
-        logger.info("URLs:\n" + mr);
-    }
+		logger.info("URLs:\n" + mr);
+	}
 }

@@ -16,40 +16,46 @@
 package org.wicketstuff.openlayers.api.layer;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
-import org.apache.wicket.behavior.HeaderContributor;
-
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.openlayers.js.JSUtils;
 
-public class Vector extends Layer implements Serializable {
+public class Vector extends Layer implements Serializable
+{
 
+	private static final long serialVersionUID = 1L;
 	private HashMap<String, String> options = new HashMap<String, String>();
 
-	public Vector(String name) {
+	public Vector(String name)
+	{
 		this(name, null);
 	}
 
-	public Vector(String name, HashMap<String, String> options) {
-		super("vec");
+	public Vector(String name, HashMap<String, String> options)
+	{
+		super();
 		setName(name);
 		this.options = options;
 	}
 
+
 	@Override
-	public List<HeaderContributor> getHeaderContributors() {
-		return new ArrayList<HeaderContributor>();
+	protected void bindHeaderContributors(IHeaderResponse response)
+	{
+		// mocleiri: intentionally does nothing
+
 	}
 
 	@Override
-	public String getJSconstructor() {
-		
+	public String getJSconstructor()
+	{
+
 		String options = super.getJSOptionsMap(this.options);
-		
-		return super.getJSconstructor("OpenLayers.Layer.Vector", Arrays.asList(JSUtils.getQuotedString(getName()), options));
-		
+
+		return super.getJSconstructor("OpenLayers.Layer.Vector",
+			Arrays.asList(JSUtils.getQuotedString(getName()), options));
+
 	}
 }

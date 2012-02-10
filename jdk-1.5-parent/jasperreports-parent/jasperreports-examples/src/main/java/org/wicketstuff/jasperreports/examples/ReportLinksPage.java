@@ -21,47 +21,71 @@ import javax.servlet.ServletContext;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.wicketstuff.jasperreports.*;
+import org.wicketstuff.jasperreports.JRConcreteResource;
+import org.wicketstuff.jasperreports.JRImageResource;
+import org.wicketstuff.jasperreports.JRResource;
+import org.wicketstuff.jasperreports.handlers.CsvResourceHandler;
+import org.wicketstuff.jasperreports.handlers.HtmlResourceHandler;
+import org.wicketstuff.jasperreports.handlers.PdfResourceHandler;
+import org.wicketstuff.jasperreports.handlers.RtfResourceHandler;
+import org.wicketstuff.jasperreports.handlers.TextResourceHandler;
 
 /**
  * Simple Jasper reports example with PDF output and a jasper reports panel..
  * 
  * @author Eelco Hillenius
  */
-public class ReportLinksPage extends WebPage {
+public class ReportLinksPage extends WebPage
+{
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructor.
 	 */
-	public ReportLinksPage() {
-		ServletContext context = ((WebApplication) getApplication()).getServletContext();
+	public ReportLinksPage()
+	{
+		ServletContext context = ((WebApplication)getApplication()).getServletContext();
 		final File reportFile = new File(context.getRealPath("/reports/WebappReport.jasper"));
 
-		final Map parameters = new HashMap();
+		final Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("BaseDir", new File(context.getRealPath("/reports")));
 
-		JRResource pdfResource = new JRPdfResource(reportFile).setReportParameters(parameters).setReportDataSource(new WebappDataSource());
-		add(new ResourceLink("linkToPdf", pdfResource));
+		JRResource pdfResource = new JRConcreteResource<PdfResourceHandler>(reportFile,
+			new PdfResourceHandler()).setReportParameters(parameters).setReportDataSource(
+			new WebappDataSource());
+		add(new ResourceLink<Void>("linkToPdf", pdfResource));
 
-		JRResource rtfResource = new JRRtfResource(reportFile).setReportParameters(parameters).setReportDataSource(new WebappDataSource());
-		add(new ResourceLink("linkToRtf", rtfResource));
+		JRResource rtfResource = new JRConcreteResource<RtfResourceHandler>(reportFile,
+			new RtfResourceHandler()).setReportParameters(parameters).setReportDataSource(
+			new WebappDataSource());
+		add(new ResourceLink<Void>("linkToRtf", rtfResource));
 
-		JRResource htmlResource = new JRHtmlResource(reportFile).setReportParameters(parameters).setReportDataSource(new WebappDataSource());
-		add(new ResourceLink("linkToHtml", htmlResource));
+		JRResource htmlResource = new JRConcreteResource<HtmlResourceHandler>(reportFile,
+			new HtmlResourceHandler()).setReportParameters(parameters).setReportDataSource(
+			new WebappDataSource());
+		add(new ResourceLink<Void>("linkToHtml", htmlResource));
 
-		JRResource textResource = new JRTextResource(reportFile).setReportParameters(parameters).setReportDataSource(new WebappDataSource());
-		add(new ResourceLink("linkToText", textResource));
+		JRResource textResource = new JRConcreteResource<TextResourceHandler>(reportFile,
+			new TextResourceHandler()).setReportParameters(parameters).setReportDataSource(
+			new WebappDataSource());
+		add(new ResourceLink<Void>("linkToText", textResource));
 
-		JRResource imageResource = new JRImageResource(reportFile).setReportParameters(parameters).setReportDataSource(new WebappDataSource());
-		add(new ResourceLink("linkToImage", imageResource));
+		JRResource imageResource = new JRImageResource(reportFile).setReportParameters(parameters)
+			.setReportDataSource(new WebappDataSource());
+		add(new ResourceLink<Void>("linkToImage", imageResource));
 
-		JRResource csvResource = new JRCsvResource(reportFile).setReportParameters(parameters).setReportDataSource(new WebappDataSource());
-		add(new ResourceLink("linkToCsv", csvResource));
+		JRResource csvResource = new JRConcreteResource<CsvResourceHandler>(reportFile,
+			new CsvResourceHandler()).setReportParameters(parameters).setReportDataSource(
+			new WebappDataSource());
+		add(new ResourceLink<Void>("linkToCsv", csvResource));
 	}
 
 	/**
-	 * @see wicket.Component#isVersioned()
+	 * @see org.apache.wicket.Component#isVersioned()
 	 */
-	public boolean isVersioned() {
+	@Override
+	public boolean isVersioned()
+	{
 		return false;
 	}
 }

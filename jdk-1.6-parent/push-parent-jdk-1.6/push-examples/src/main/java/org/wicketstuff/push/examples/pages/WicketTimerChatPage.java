@@ -16,7 +16,7 @@
  */
 package org.wicketstuff.push.examples.pages;
 
-import org.apache.wicket.PageParameters;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.push.timer.TimerPushService;
 
 /**
@@ -28,6 +28,6 @@ public class WicketTimerChatPage extends WicketAbstractChatPage
 
 	public WicketTimerChatPage(final PageParameters parameters)
 	{
-		super(parameters, "wicket-push-timer implementation", TimerPushService.get());
+		super(parameters, "wicket-push-timer implementation", TimerPushService.getRef());
 	}
 }

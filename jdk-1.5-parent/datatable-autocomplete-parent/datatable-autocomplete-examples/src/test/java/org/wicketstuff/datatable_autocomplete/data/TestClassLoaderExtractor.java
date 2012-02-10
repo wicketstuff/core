@@ -29,12 +29,14 @@ import junit.framework.TestCase;
  * @author mocleiri
  */
 
-public class TestClassLoaderExtractor extends TestCase {
+public class TestClassLoaderExtractor extends TestCase
+{
 
 	/**
 	 * 
 	 */
-	public TestClassLoaderExtractor() {
+	public TestClassLoaderExtractor()
+	{
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -42,12 +44,14 @@ public class TestClassLoaderExtractor extends TestCase {
 	/**
 	 * @param name
 	 */
-	public TestClassLoaderExtractor(String name) {
+	public TestClassLoaderExtractor(String name)
+	{
 		super(name);
 		// TODO Auto-generated constructor stub
 	}
 
-	public void testGetDetailsFromClassLoader() {
+	public void testGetDetailsFromClassLoader()
+	{
 
 		System.out.print("in method");
 
@@ -55,7 +59,8 @@ public class TestClassLoaderExtractor extends TestCase {
 
 		Enumeration<Object> e = p.keys();
 
-		while (e.hasMoreElements()) {
+		while (e.hasMoreElements())
+		{
 			Object key = e.nextElement();
 
 			Object value = p.get(key);
@@ -66,7 +71,8 @@ public class TestClassLoaderExtractor extends TestCase {
 
 	}
 
-	public void testLoadAllClassNamesFromBootClass() throws IOException {
+	public void testLoadAllClassNamesFromBootClass() throws IOException
+	{
 
 		String path = System.getProperty("sun.boot.class.path");
 
@@ -74,31 +80,34 @@ public class TestClassLoaderExtractor extends TestCase {
 
 		String targetPart = null;
 
-		for (String p : parts) {
+		for (String p : parts)
+		{
 
-			if (p.endsWith("rt.jar")) {
+			if (p.endsWith("rt.jar"))
+			{
 				targetPart = p;
 				break;
 			}
 		}
 
 		JarFile jar = new JarFile(targetPart);
-		
+
 		Enumeration<JarEntry> entries = jar.entries();
 
-		while (entries.hasMoreElements()) {
-			
-			JarEntry jarEntry = (JarEntry) entries.nextElement();
+		while (entries.hasMoreElements())
+		{
+
+			JarEntry jarEntry = entries.nextElement();
 
 			if (!jarEntry.getName().contains(".class"))
 				continue;
-			
-			Class clazz;
 
-			try {
+			Class<?> clazz;
 
-				String className = jarEntry.getName().replace("/", ".")
-						.replace(".class", "");
+			try
+			{
+
+				String className = jarEntry.getName().replace("/", ".").replace(".class", "");
 
 				System.out.println(className);
 
@@ -108,22 +117,26 @@ public class TestClassLoaderExtractor extends TestCase {
 
 				Method[] m = clazz.getDeclaredMethods();
 
-				for (Method method : m) {
+				for (Method method : m)
+				{
 
 					String parameterList = getParameters(method);
 
-					System.out.println(clazz.getCanonicalName() + " "
-							+ method.getName() + " ( " + parameterList + " )");
+					System.out.println(clazz.getCanonicalName() + " " + method.getName() + " ( " +
+						parameterList + " )");
 				}
 
-			} catch (ClassNotFoundException e) {
+			}
+			catch (ClassNotFoundException e)
+			{
 				// continue
 			}
 
 		}
 	}
 
-	private String getParameters(Method method) {
+	private String getParameters(Method method)
+	{
 
 		StringBuffer buffer = new StringBuffer();
 
@@ -131,10 +144,11 @@ public class TestClassLoaderExtractor extends TestCase {
 
 		if (types.length == 0)
 			return " ";
-		
+
 		int number = 1;
 
-		for (int i = 0; i < types.length - 1; i++) {
+		for (int i = 0; i < types.length - 1; i++)
+		{
 			Class<?> class1 = types[i];
 
 			buffer.append(class1.getName());

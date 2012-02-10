@@ -28,19 +28,22 @@ import org.junit.Test;
  * 
  * @author cretzel
  */
-public class LangFileFilterTest {
+public class LangFileFilterTest
+{
 
 	private LangFileFilter groovyFileFilter;
 	private LangFileFilter clojureFileFilter;
 
 	@Before
-	public void setup() {
+	public void setup()
+	{
 		groovyFileFilter = LangFileFilter.create(Lang.GROOVY);
 		clojureFileFilter = LangFileFilter.create(Lang.CLOJURE);
 	}
 
 	@Test
-	public void test_accept_groovy() throws Exception {
+	public void test_accept_groovy() throws Exception
+	{
 
 		assertTrue(groovyFileFilter.accept(null, "Main.groovy"));
 		assertTrue(groovyFileFilter.accept(null, "Main.GROOVY"));
@@ -53,7 +56,8 @@ public class LangFileFilterTest {
 	}
 
 	@Test
-	public void test_accept_clojure() throws Exception {
+	public void test_accept_clojure() throws Exception
+	{
 		assertTrue(clojureFileFilter.accept(null, "Main.clj"));
 		assertTrue(clojureFileFilter.accept(null, "Main.CLJ"));
 		assertTrue(clojureFileFilter.accept(null, "/home/files/Main.clj"));
