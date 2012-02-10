@@ -9,7 +9,7 @@ import org.apache.wicket.model.IModel;
  *
  * @author Tom Burton
  */
-public class CheckBoxPropertyColumn extends EditablePropertyColumn
+public class CheckBoxPropertyColumn<M, I> extends EditablePropertyColumn<M, I, Boolean>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,7 @@ public class CheckBoxPropertyColumn extends EditablePropertyColumn
 	 *            optional string that will be returned by {@link ISortState}
    *            to indicate that the column is being sorted
 	 */
-	public CheckBoxPropertyColumn(String columnId, IModel headerModel,
+	public CheckBoxPropertyColumn(String columnId, IModel<String> headerModel,
                                 String propertyExpression, String sortProperty)
   {
 		super(columnId, headerModel, propertyExpression, sortProperty);
@@ -42,7 +42,7 @@ public class CheckBoxPropertyColumn extends EditablePropertyColumn
 	 * @param propertyExpression
 	 *            property expression used to get the displayed value for row object
 	 */
-	public CheckBoxPropertyColumn(String columnId, IModel headerModel,
+	public CheckBoxPropertyColumn(String columnId, IModel<String> headerModel,
                                 String propertyExpression)
   {
 		super(columnId, headerModel, propertyExpression);
@@ -61,7 +61,7 @@ public class CheckBoxPropertyColumn extends EditablePropertyColumn
 	 *            optional string that will be returned by {@link ISortState}
    *            to indicate that the column is being sorted
 	 */
-	public CheckBoxPropertyColumn(IModel headerModel, String propertyExpression,
+	public CheckBoxPropertyColumn(IModel<String> headerModel, String propertyExpression,
                                 String sortProperty)
   {
 		super(headerModel, propertyExpression, sortProperty);
@@ -76,15 +76,15 @@ public class CheckBoxPropertyColumn extends EditablePropertyColumn
 	 * @param propertyExpression
 	 *            property expression used to get the displayed value for row object
 	 */
-	public CheckBoxPropertyColumn(IModel headerModel, String propertyExpression)
+	public CheckBoxPropertyColumn(IModel<String> headerModel, String propertyExpression)
   {
 		super(headerModel, propertyExpression);
 	}
 
   /** {@inheritDoc} */
 	@Override
-  protected EditableCellPanel newCellPanel(String componentId, IModel rowModel,
-                                           IModel cellModel)
+  protected EditableCellPanel newCellPanel(String componentId, IModel<I> rowModel,
+                                           IModel<Boolean> cellModel)
   {	return new CheckBoxPanel(componentId, cellModel, rowModel, this); }
 
 }

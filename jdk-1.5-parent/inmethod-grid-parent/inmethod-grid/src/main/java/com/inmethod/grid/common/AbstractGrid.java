@@ -834,8 +834,8 @@ public abstract class AbstractGrid<M, I> extends Panel
         ajaxCallListener.onPrecondition(precon);
         attributes.getAjaxCallListeners().add(ajaxCallListener);
 			}
-
-			@Override
+      
+      @Override
 			public CharSequence getCallbackScript()
 			{
 				return getCallbackFunction("col");

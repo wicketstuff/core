@@ -1,23 +1,34 @@
 package com.inmethod.grid.toolbar;
 
+import java.io.*;
+
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 
+import com.inmethod.grid.IDataSource;
 import com.inmethod.grid.datagrid.DataGrid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Created by IntelliJ IDEA.
- * User: tfburton
+ * User: Tom Burton
  * Date: 9/19/11
  * Time: 12:51 PM
- * TODO: make generic (when rest of package is made generic)
+ *
+ * @param <D>
+ *            datasource model object type = grid type
+ * @param <T>
+ *            row/item model object type - must be serializable for "deep copy"
+ *
+ * @Author Tom Burton
  */
-public class AddRecordsToolbar extends AbstractToolbar
+public class AddRecordsToolbar<D extends IDataSource<T>, T extends Serializable>
+       extends AbstractToolbar<D, T>
 {
   private static final Logger log = LoggerFactory
                                           .getLogger(AddRecordsToolbar.class);
@@ -25,20 +36,21 @@ public class AddRecordsToolbar extends AbstractToolbar
   private static final IModel<String> ADD_BUTTON_MODEL =
              new ResourceModel("datagrid.add-new-item", "Add New Item");
 
-  private DataGrid grid;
-  private final Serializable defaultObject; //final makes sure the default doesn't change
+  private DataGrid<D, T> grid; //todo: should this only get from super?
 
-  public AddRecordsToolbar(DataGrid grid, IModel model,
-                           final Serializable defaultObject)
+  private final T defaultObject; //final makes sure the default doesn't change
+
+  public AddRecordsToolbar(DataGrid<D, T> grid, IModel<T> model,
+                           final T defaultObject)
   {
-    this(grid,model,defaultObject,ADD_BUTTON_MODEL);
+    this(grid, model, defaultObject, ADD_BUTTON_MODEL);
   }
 
-  public AddRecordsToolbar(DataGrid datagrid, IModel model,
-                           final Serializable defaultObject,
+  public AddRecordsToolbar(DataGrid<D, T> datagrid, IModel<T> model,
+                           final T defaultObject,
                            IModel<String> labelModel)
   {
-    super(datagrid, model);
+    super(datagrid, labelModel);
     this.grid = datagrid;
     //ensure OutputMarkupId is set so the button will refresh properly
     datagrid.setOutputMarkupId(true);
@@ -54,9 +66,13 @@ public class AddRecordsToolbar extends AbstractToolbar
                                                       Form<?> form)
                               {
                                 insert();
+                                target.add(findParent(DataGrid.class).getParent());
+                              }
 
-                                target.addComponent(findParent(DataGrid.class)
-                                                        .getParent());
+                              @Override
+                              protected void onError(AjaxRequestTarget target, Form<?> form)
+                              { //TODO: should this be a feedbackPanel check?
+                                return;
                               }
                            };
     addButton.setLabel(labelModel);
@@ -71,16 +87,18 @@ public class AddRecordsToolbar extends AbstractToolbar
     pre = grid.getTotalRowCount();
     grid.insertRow(getNewData());
     post = grid.getTotalRowCount();
-    log.error("Pre: " + pre + " Post: " + post);
   }
 
   /** function to allow easy overrides for returning custom Data when adding
    *  new records to the table
    * @return the object to use for populating new rows of the data-view
    */
-  protected Serializable getNewData()
+  protected T getNewData()
   {
-    if ( defaultObject == null ) { log.error("ERROR: defaultObject is null"); }
+    if ( defaultObject == null )
+    { //note: should this return null instead?
+      throw new WicketRuntimeException("Can't deep copy a null object.");
+    }
     Object obj;
     ObjectOutputStream oos;
     ByteArrayOutputStream byteArray;
@@ -91,12 +109,11 @@ public class AddRecordsToolbar extends AbstractToolbar
       ObjectInputStream ois =
             new ObjectInputStream(new ByteArrayInputStream(byteArray.toByteArray()));
       obj = ois.readObject();
-      return (Serializable)obj;
+      return (T)obj;
     }
     catch(IOException ioe) { } //error writing output stream
     catch(ClassNotFoundException cnf ) {} //should never happen
     return defaultObject; //returns on Error or not serializable
   }
-
 
 }

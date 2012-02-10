@@ -197,9 +197,9 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 	}
 
 	/**
-	 * Panel that optionally displays checkbox for
-   * selecting all visible items / clearing selection of all items.
-	 *
+	 * Panel that optionally displays checkbox for selecting all visible items / clearing selection
+	 * of all item.
+	 * 
 	 * @author Matej Knopp
 	 */
 	private class HeadPanel extends Panel
@@ -322,9 +322,13 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 						                            .getParameterValue("checked")
                                         .toBoolean();
 					if (checked)
-						getGrid().selectAllVisibleItems();
-					else
-						getGrid().resetSelectedItems();
+          {	
+            getGrid().selectAllVisibleItems(); 
+          }
+					else 
+          {	
+            getGrid().resetSelectedItems(); 
+          }
 					getGrid().update();
 				}
 

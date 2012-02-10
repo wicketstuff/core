@@ -1,6 +1,11 @@
 package com.inmethod.grid.datagrid;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
@@ -10,7 +15,6 @@ import org.apache.wicket.markup.html.navigation.paging.IPageable;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.cycle.RequestCycle;
 
 import com.inmethod.grid.IAppendableDataSource;
 import com.inmethod.grid.IDataSource;
@@ -33,7 +37,6 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
        implements IPageable
 {
 	private static final long serialVersionUID = 1L;
-  //private static final Logger log = LoggerFactory.getLogger(DataGrid.class);
 
 	/**
 	 * Crates a new {@link DataGrid} instance.
@@ -415,12 +418,12 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 	}
 	
 	/**
-  * Insert the rowData into the grid
-  *
-  * @param rowData data to insert into the new row
-  * @return Item inserted Item
-  */
-  public Item insertRow(final T rowData)
+	 * Insert the rowData into the grid
+	 * 
+	 * @param rowData data to insert into the new row
+	 * @return Item inserted Item
+	 */
+	public Item insertRow(final T rowData)
   {
      IAppendableDataSource ADS;
      try { ADS = ((IAppendableDataSource)getDataSource()); }

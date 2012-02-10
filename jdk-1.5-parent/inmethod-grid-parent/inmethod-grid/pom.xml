@@ -13,11 +13,13 @@
 	</parent>
 
 	<artifactId>wicketstuff-inmethod-grid</artifactId>
-	<packaging>bundle</packaging>
+	<!--<packaging>bundle</packaging>  THIS is for local only -->
+  <packaging>jar</packaging>
 
 	<name>InMethod Grid</name>
 	<description>Advanced grid components for Apache Wicket</description>
 
+  <!--
 	<build>
 		<plugins>
 			<plugin>
@@ -44,4 +46,5 @@
 			</plugin>
 		</plugins>
 	</build>
+  -->
 </project>

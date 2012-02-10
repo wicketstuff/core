@@ -431,7 +431,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T>
 				totalCount = getCurrentPageFirstItem() + itemCache.size();
 			}
 
-			if ( totalCount == IQueryResult.MORE_ITEMS && getCurrentPage() != getPageCount()
+			if ( totalCount == IQueryResult.MORE_ITEMS && getCurrentPage() != getPageCount() 
         && realItemCount != UNKNOWN_COUNT )
 			{
 				// if we know the real item count and the page shown is not last page, we

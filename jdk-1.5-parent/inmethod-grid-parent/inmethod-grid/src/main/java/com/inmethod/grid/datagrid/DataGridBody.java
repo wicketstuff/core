@@ -2,6 +2,7 @@ package com.inmethod.grid.datagrid;
 
 import java.util.Collection;
 
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.navigation.paging.IPageable;
@@ -10,7 +11,9 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
 import org.apache.wicket.model.IModel;
 
+import com.inmethod.grid.IAppendableDataSource;
 import com.inmethod.grid.IDataSource;
+import com.inmethod.grid.IDataSource.IQuery;
 import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.IGridSortState;
 import com.inmethod.grid.common.AbstractGridRow;
@@ -246,8 +249,8 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 			Item<T> item = new RowItem(id, index, model);
 			item.setOutputMarkupId(true);
 			return item;
-		}
-
+		}    
+		
 		/**
 		 * Create a new Item for this DataGrid.
 		 * NOTE: The item has not been added to the grid.
@@ -262,7 +265,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
       return newItemFactory().newItem(i, itemModel);
     }
 	}
-  
+
 	protected IModel<T> getDefaultItemModel()
 	{
 		return (IModel<T>)getDefaultModel();
