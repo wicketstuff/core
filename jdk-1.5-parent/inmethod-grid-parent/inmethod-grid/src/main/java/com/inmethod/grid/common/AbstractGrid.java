@@ -27,6 +27,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.visit.IVisit;
@@ -52,7 +53,6 @@ import com.inmethod.grid.treegrid.TreeGrid;
  */
 public abstract class AbstractGrid<M, I> extends Panel
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -130,7 +130,6 @@ public abstract class AbstractGrid<M, I> extends Panel
 					AjaxRequestTarget.get().appendJavaScript(getInitializationJavascript());
 				}
 			}
-
 		});
 
 		columnState = new ColumnsState(columns);
@@ -246,7 +245,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 				"&columnState=' + columnState");
 		}
 
-	};
+	}
 
 	/**
 	 * Manages order, visibility and sizes of columns.
@@ -309,6 +308,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 		super.onBeforeRender();
 	}
 
+  //TODO: w/ the OnInitialize -> OnBeforeRender can FLAG_RENDERING be removed?
 	@Override
 	protected void onAfterRender()
 	{
@@ -334,10 +334,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 */
 	private void addToolbar(AbstractToolbar<M, I> toolbar, RepeatingView container)
 	{
-		if (toolbar == null)
-		{
-			throw new IllegalArgumentException("argument 'toolbar' cannot be null");
-		}
+    Args.notNull(container, "toolbar");
 
 		// create a container item for the toolbar (required by repeating view)
 		WebMarkupContainer item = new WebMarkupContainer(container.newChildId());
@@ -413,7 +410,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 			}
 			return result.toString();
 		}
-	};
+	}
 
 	/**
 	 * Component that represents the grid header.
@@ -441,9 +438,9 @@ public abstract class AbstractGrid<M, I> extends Panel
 		{
 			int width = getColumnState().getColumnWidth(column.getId());
 			if (width != -1 && column.getSizeUnit() == SizeUnit.PX)
-				return width;
+      {	return width; }
 			else
-				return column.getInitialSize();
+      { return column.getInitialSize(); }
 		}
 
 		@Override
@@ -452,7 +449,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 			onSortStateChanged(target);
 		}
 
-	};
+	}
 
 	/**
 	 * Invoked when sort state of this grid has changed (e.g. user clicked a sortable column
@@ -496,7 +493,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 			}
 			sb.append("\n");
 		}
-
+		;
 		sb.append("];\n");
 
 		// method that calls the proper listener when column state is changed
@@ -618,16 +615,21 @@ public abstract class AbstractGrid<M, I> extends Panel
 		}
 	}
 
-	private static final JavaScriptResourceReference JS_YAHOO = new JavaScriptResourceReference(
-		AbstractGrid.class, "res/yahoo.js");
-	private static final JavaScriptResourceReference JS_EVENT = new JavaScriptResourceReference(
-		AbstractGrid.class, "res/event.js");
-	private static final JavaScriptResourceReference JS_DOM = new JavaScriptResourceReference(
-		AbstractGrid.class, "res/dom.js");
-	private static final JavaScriptResourceReference JS_SCRIPT = new JavaScriptResourceReference(
-		AbstractGrid.class, "res/script.js");
-	private static final PackageResourceReference CSS = new PackageResourceReference(
-		AbstractGrid.class, "res/style.css");
+	private static final JavaScriptResourceReference JS_YAHOO =
+                           new JavaScriptResourceReference(AbstractGrid.class,
+                                                           "res/yahoo.js");
+	private static final JavaScriptResourceReference JS_EVENT =
+                           new JavaScriptResourceReference(AbstractGrid.class,
+                                                           "res/event.js");
+	private static final JavaScriptResourceReference JS_DOM =
+                           new JavaScriptResourceReference(AbstractGrid.class,
+                                                           "res/dom.js");
+	private static final JavaScriptResourceReference JS_SCRIPT =
+                           new JavaScriptResourceReference(AbstractGrid.class,
+                                                           "res/script.js");
+	private static final PackageResourceReference CSS =
+                              new PackageResourceReference(AbstractGrid.class,
+                                                           "res/style.css");
 
 	/**
 	 * {@inheritDoc}
@@ -744,7 +746,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	public void cleanLastClickedColumn()
 	{
 		lastClickedColumn = null;
-	};
+	}
 
 	protected boolean disableRowClickNotifications()
 	{
@@ -758,13 +760,10 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 */
 	protected void onRowPopulated(final WebMarkupContainer rowComponent)
 	{
-
-		if (disableRowClickNotifications())
-			return;
+		if (disableRowClickNotifications()) { return; }
 
 		rowComponent.add(new AjaxFormSubmitBehavior(getForm(), "onclick")
 		{
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -781,9 +780,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 
 			@Override
 			protected void onEvent(AjaxRequestTarget target)
-			{
-
-				// preserve the entered values in form components
+			{	// preserve the entered values in form components
 				Form<?> form = super.getForm();
 				form.visitFormComponentsPostOrder(new IVisitor<FormComponent<?>, Void>()
 				{
@@ -832,7 +829,6 @@ public abstract class AbstractGrid<M, I> extends Panel
 			{
 				return new AjaxCallDecorator()
 				{
-
 					private static final long serialVersionUID = 1L;
 
 					@Override
@@ -851,7 +847,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	}
 
 	protected boolean onCellClicked(AjaxRequestTarget target, IModel<I> rowModel,
-		IGridColumn<M, I> column)
+		                              IGridColumn<M, I> column)
 	{
 		return false;
 	}

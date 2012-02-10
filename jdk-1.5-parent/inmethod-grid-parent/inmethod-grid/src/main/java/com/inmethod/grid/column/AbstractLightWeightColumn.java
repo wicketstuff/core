@@ -27,7 +27,6 @@ import com.inmethod.grid.column.editable.EditablePropertyColumn;
  */
 public abstract class AbstractLightWeightColumn<M, I> extends AbstractColumn<M, I>
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**

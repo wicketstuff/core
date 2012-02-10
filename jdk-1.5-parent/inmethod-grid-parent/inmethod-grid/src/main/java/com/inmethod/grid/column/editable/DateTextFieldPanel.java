@@ -19,7 +19,7 @@ import com.inmethod.grid.column.AbstractColumn;
  *
  * @author Tom Burton
  */
-public class DateTextFieldPanel extends EditableCellPanel
+public class DateTextFieldPanel<M, I> extends EditableCellPanel<M, I, Date>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +33,7 @@ public class DateTextFieldPanel extends EditableCellPanel
 		 *  @param id component Id
 		 *  @param object model to be edited
 		 */
-		protected DefaultDateTextField(String id, IModel object)
+		protected DefaultDateTextField(String id, IModel<Date> object)
     { super(id, object, new StyleDateConverter(false)); }
 
     /** Constructor for DefaultDateTextField

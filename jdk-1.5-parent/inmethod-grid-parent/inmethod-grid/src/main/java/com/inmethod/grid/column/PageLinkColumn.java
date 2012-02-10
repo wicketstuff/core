@@ -1,24 +1,24 @@
 package com.inmethod.grid.column;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 /**
  * Created by IntelliJ IDEA.
- * User: tfburton
+ * User: Tom Burton
  * Date: 1/3/12
  * Time: 3:50 PM
  *
- * @author tfburton
+ * @author Tom Burton
  *         To change this template use File | Settings | File Templates.
  */
-public class PageLinkColumn extends LinkColumn
+public class PageLinkColumn<M, I> extends LinkColumn<M, I>
 {
   private Page page;
 
   public PageLinkColumn(String columnId, String propertyLabel,
-                        IModel headerModel,
+                        IModel<String> headerModel,
                         Page page)
   {
     super(columnId, propertyLabel, headerModel);
@@ -26,7 +26,7 @@ public class PageLinkColumn extends LinkColumn
   }
 
   public PageLinkColumn(String columnId, String propertyLabel,
-                        IModel headerModel,
+                        IModel<String> headerModel,
                         String sortProperty, Page page)
   {
     super(columnId, propertyLabel, headerModel, sortProperty);
@@ -34,6 +34,11 @@ public class PageLinkColumn extends LinkColumn
   }
 
   @Override
-  public void onClick() { RequestCycle.get().setResponsePage(page); }
+  public void onClick(IModel<I> rowModel)
+  {
+    //To change body of implemented methods use File | Settings | File
+    // Templates.
+    RequestCycle.get().setResponsePage(page);
+  }
 
 }

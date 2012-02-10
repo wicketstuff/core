@@ -38,7 +38,7 @@ public abstract class EditableCellPanel<M, I, P> extends Panel
 
 		Component textField = get("textfield");
 
-		if (target != null && isFocusTextField())
+		if (target != null && isFocusComponent())
 		{
 			target.focusComponent(textField);
 		}

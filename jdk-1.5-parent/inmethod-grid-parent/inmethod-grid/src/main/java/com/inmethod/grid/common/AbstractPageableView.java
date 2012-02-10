@@ -138,7 +138,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T>
 				count -= mod;
 
 				// get the actual page count
-				cachedPageCount = count / rowsPerPage + (mod > 0 ? 1 : 0);
+				cachedPageCount = (count / rowsPerPage) + (mod > 0 ? 1 : 0);
 			}
 		}
 		return cachedPageCount;
@@ -189,7 +189,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T>
 	 */
 	private transient QueryResult queryResult;
 
-  /** clears the queryResult so  the next use will be forced to re-initialize */
+  /** clears the queryResult cache so the next use will be forced to re-initialize */
   public void clearCache() { queryResult = null; }
 
 	/**
@@ -229,11 +229,10 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T>
 			// just the case when there are no items on current page
 			// but possible items on previous pages
 			if (queryResult.itemCache.size() == 0 && realItemCount != UNKOWN_COUNT &&
-				realItemCount != oldItemCount && realItemCount > 0)
+				  realItemCount != oldItemCount && realItemCount > 0)
 			{
-
-				// the data must have changed, the number of items has been reduced.
-				// try move to the last page
+				// the data must have changed, the number of items has been reduced. 
+				// try move to last page
 				int page = getPageCount() - 1;
 				if (page < 0)
 				{
@@ -364,6 +363,8 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T>
 	private class QueryResult implements IQueryResult<T>
 	{
 		// start with empty items
+    //TODO: wouldn't the Collections.Empty List constant be better ex follows? - Tom Burton(Raystorm)
+    //private Iterator<? extends T> altItems = Collections.<T>emptyList().iterator();
 		private Iterator<? extends T> items = new EmptyIterator<T>();
 
 		// and actual total count (could be UNKNOWN)
@@ -492,7 +493,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T>
 	private int getCurrentPageFirstItem()
 	{
 		int rowsPerPage = getRowsPerPage();
-		return currentPageFirstItem - currentPageFirstItem % rowsPerPage;
+		return currentPageFirstItem - (currentPageFirstItem % rowsPerPage);
 	}
 
 }
