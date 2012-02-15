@@ -249,7 +249,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 			Item<T> item = new RowItem(id, index, model);
 			item.setOutputMarkupId(true);
 			return item;
-		}    
+		}
 		
 		/**
 		 * Create a new Item for this DataGrid.
@@ -265,7 +265,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
       return newItemFactory().newItem(i, itemModel);
     }
 	}
-
+  
 	protected IModel<T> getDefaultItemModel()
 	{
 		return (IModel<T>)getDefaultModel();

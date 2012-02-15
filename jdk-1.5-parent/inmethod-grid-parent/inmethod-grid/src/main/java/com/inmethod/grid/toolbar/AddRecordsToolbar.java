@@ -11,8 +11,6 @@ import org.apache.wicket.model.ResourceModel;
 
 import com.inmethod.grid.IDataSource;
 import com.inmethod.grid.datagrid.DataGrid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Created by IntelliJ IDEA.
@@ -30,9 +28,6 @@ import org.slf4j.LoggerFactory;
 public class AddRecordsToolbar<D extends IDataSource<T>, T extends Serializable>
        extends AbstractToolbar<D, T>
 {
-  private static final Logger log = LoggerFactory
-                                          .getLogger(AddRecordsToolbar.class);
-
   private static final IModel<String> ADD_BUTTON_MODEL =
              new ResourceModel("datagrid.add-new-item", "Add New Item");
 
@@ -66,7 +61,7 @@ public class AddRecordsToolbar<D extends IDataSource<T>, T extends Serializable>
                                                       Form<?> form)
                               {
                                 insert();
-                                target.add(findParent(DataGrid.class).getParent());
+                                //target.add(findParent(DataGrid.class).getParent());
                               }
 
                               @Override
@@ -87,6 +82,8 @@ public class AddRecordsToolbar<D extends IDataSource<T>, T extends Serializable>
     pre = grid.getTotalRowCount();
     grid.insertRow(getNewData());
     post = grid.getTotalRowCount();
+    grid.update();
+    //log.error("Pre: " + pre + " Post: " + post);
   }
 
   /** function to allow easy overrides for returning custom Data when adding
@@ -95,7 +92,7 @@ public class AddRecordsToolbar<D extends IDataSource<T>, T extends Serializable>
    */
   protected T getNewData()
   {
-    if ( defaultObject == null )
+    if ( null == defaultObject )
     { //note: should this return null instead?
       throw new WicketRuntimeException("Can't deep copy a null object.");
     }

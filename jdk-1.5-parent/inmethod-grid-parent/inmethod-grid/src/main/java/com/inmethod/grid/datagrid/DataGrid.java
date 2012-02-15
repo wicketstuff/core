@@ -1,11 +1,6 @@
 package com.inmethod.grid.datagrid;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;

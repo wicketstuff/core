@@ -6,20 +6,16 @@ import java.util.List;
 
 import javax.swing.tree.TreeModel;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.attributes.AjaxCallListener;
-import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
-import org.apache.wicket.ajax.attributes.JavaScriptPrecondition;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -31,6 +27,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.resource.CoreLibrariesContributor;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.visit.IVisit;
@@ -237,8 +234,8 @@ public abstract class AbstractGrid<M, I> extends Panel
 
 			onColumnStateChanged();
 		}
-
-		@Override
+    
+    @Override
 		protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 		{
 			super.updateAjaxAttributes(attributes);
@@ -625,16 +622,21 @@ public abstract class AbstractGrid<M, I> extends Panel
 		}
 	}
 
-	private static final JavaScriptResourceReference JS_YAHOO = new JavaScriptResourceReference(
-		AbstractGrid.class, "res/yahoo.js");
-	private static final JavaScriptResourceReference JS_EVENT = new JavaScriptResourceReference(
-		AbstractGrid.class, "res/event.js");
-	private static final JavaScriptResourceReference JS_DOM = new JavaScriptResourceReference(
-		AbstractGrid.class, "res/dom.js");
-	private static final JavaScriptResourceReference JS_SCRIPT = new JavaScriptResourceReference(
-		AbstractGrid.class, "res/script.js");
-	private static final PackageResourceReference CSS = new PackageResourceReference(
-		AbstractGrid.class, "res/style.css");
+	private static final JavaScriptResourceReference JS_YAHOO =
+                           new JavaScriptResourceReference(AbstractGrid.class,
+                                                           "res/yahoo.js");
+	private static final JavaScriptResourceReference JS_EVENT =
+                           new JavaScriptResourceReference(AbstractGrid.class,
+                                                           "res/event.js");
+	private static final JavaScriptResourceReference JS_DOM =
+                           new JavaScriptResourceReference(AbstractGrid.class,
+                                                           "res/dom.js");
+	private static final JavaScriptResourceReference JS_SCRIPT =
+                           new JavaScriptResourceReference(AbstractGrid.class,
+                                                           "res/script.js");
+	private static final PackageResourceReference CSS =
+                              new PackageResourceReference(AbstractGrid.class,
+                                                           "res/style.css");
 
 	/**
 	 * {@inheritDoc}
@@ -820,8 +822,8 @@ public abstract class AbstractGrid<M, I> extends Panel
 
 				onRowClicked(target, model);
 			}
-
-			@Override
+      
+      @Override
 			protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 			{
 				super.updateAjaxAttributes(attributes);
