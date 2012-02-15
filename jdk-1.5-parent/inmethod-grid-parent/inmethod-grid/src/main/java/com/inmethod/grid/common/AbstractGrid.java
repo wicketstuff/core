@@ -27,6 +27,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.visit.IVisit;
@@ -621,16 +622,21 @@ public abstract class AbstractGrid<M, I> extends Panel
 		}
 	}
 
-	private static final JavaScriptResourceReference JS_YAHOO = new JavaScriptResourceReference(
-		AbstractGrid.class, "res/yahoo.js");
-	private static final JavaScriptResourceReference JS_EVENT = new JavaScriptResourceReference(
-		AbstractGrid.class, "res/event.js");
-	private static final JavaScriptResourceReference JS_DOM = new JavaScriptResourceReference(
-		AbstractGrid.class, "res/dom.js");
-	private static final JavaScriptResourceReference JS_SCRIPT = new JavaScriptResourceReference(
-		AbstractGrid.class, "res/script.js");
-	private static final PackageResourceReference CSS = new PackageResourceReference(
-		AbstractGrid.class, "res/style.css");
+	private static final JavaScriptResourceReference JS_YAHOO =
+                           new JavaScriptResourceReference(AbstractGrid.class,
+                                                           "res/yahoo.js");
+	private static final JavaScriptResourceReference JS_EVENT =
+                           new JavaScriptResourceReference(AbstractGrid.class,
+                                                           "res/event.js");
+	private static final JavaScriptResourceReference JS_DOM =
+                           new JavaScriptResourceReference(AbstractGrid.class,
+                                                           "res/dom.js");
+	private static final JavaScriptResourceReference JS_SCRIPT =
+                           new JavaScriptResourceReference(AbstractGrid.class,
+                                                           "res/script.js");
+	private static final PackageResourceReference CSS =
+                              new PackageResourceReference(AbstractGrid.class,
+                                                           "res/style.css");
 
 	/**
 	 * {@inheritDoc}
@@ -746,7 +752,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	public void cleanLastClickedColumn()
 	{
 		lastClickedColumn = null;
-	};
+	}
 
 	protected boolean disableRowClickNotifications()
 	{
@@ -795,8 +801,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 				});
 
 				String column = getRequest().getRequestParameters()
-					.getParameterValue("column")
-					.toString();
+                                    .getParameterValue("column").toString();
 
 				lastClickedColumn = column;
 
@@ -805,11 +810,11 @@ public abstract class AbstractGrid<M, I> extends Panel
 				IGridColumn<M, I> lastClickedColumn = getLastClickedColumn();
 				if (lastClickedColumn != null)
 				{
-					if (onCellClicked(target, model, lastClickedColumn) == true)
+					if (onCellClicked(target, model, lastClickedColumn))
 					{
 						return;
 					}
-					if (lastClickedColumn.cellClicked(model) == true)
+					if (lastClickedColumn.cellClicked(model))
 					{
 						return;
 					}
@@ -842,7 +847,6 @@ public abstract class AbstractGrid<M, I> extends Panel
 			{
 				return new AjaxCallDecorator()
 				{
-
 					private static final long serialVersionUID = 1L;
 
 					@Override

@@ -2,6 +2,8 @@ package com.inmethod.grid.common;
 
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.IAjaxCallDecorator;
+import org.apache.wicket.ajax.calldecorator.CancelEventIfNoAjaxDecorator;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.panel.Panel;
 
@@ -14,7 +16,6 @@ import com.inmethod.grid.IGridSortState;
  */
 public abstract class SortableHeaderLinkPanel extends Panel
 {
-
 	private static final long serialVersionUID = 1L;
 	private final String sortProperty;
 
@@ -57,6 +58,12 @@ public abstract class SortableHeaderLinkPanel extends Panel
 				}
 
 				sortStateChanged(target);
+			}
+
+			@Override
+			protected IAjaxCallDecorator getAjaxCallDecorator()
+			{
+				return new CancelEventIfNoAjaxDecorator();
 			}
 		});
 	}
@@ -118,7 +125,7 @@ public abstract class SortableHeaderLinkPanel extends Panel
 		{
 			return "imxt-sort-header imxt-sort-header-none";
 		}
-	};
+	}
 
 	/**
 	 * INTERNAL

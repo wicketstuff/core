@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.navigation.paging.IPageable;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 import com.inmethod.grid.IAppendableDataSource;
 import com.inmethod.grid.IDataSource;
@@ -161,11 +162,11 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 
 	/**
 	 * Returns the total count of items (sum of count of items on all pages) or
-	 * {@link AbstractPageableView#UNKNOWN_COUNT} in case the count can't be determined.
+	 * {@link AbstractPageableView#UNKOWN_COUNT} in case the count can't be determined.
 	 * 
-	 * @return total count of items or {@value AbstractPageableView#UNKNOWN_COUNT}
+	 * @return total count of items or {@value AbstractPageableView#UNKOWN_COUNT}
 	 */
-	public long getTotalRowCount()
+	public int getTotalRowCount()
 	{
 		return getBody().getTotalRowCount();
 	}
@@ -173,7 +174,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 	/**
 	 * @return The current page that is or will be rendered.
 	 */
-	public long getCurrentPage()
+	public int getCurrentPage()
 	{
 		return getBody().getCurrentPage();
 	}
@@ -183,7 +184,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 	 * 
 	 * @return The total number of pages this pageable object has
 	 */
-	public long getPageCount()
+	public int getPageCount()
 	{
 		return getBody().getPageCount();
 	}
@@ -194,7 +195,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 	 * @param page
 	 *            The page that should be rendered.
 	 */
-	public void setCurrentPage(long page)
+	public void setCurrentPage(int page)
 	{
 		if (getBody().getCurrentPage() != page)
 		{
@@ -209,7 +210,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 	/**
 	 * @return the amount of items on current page.
 	 */
-	public long getCurrentPageItemCount()
+	public int getCurrentPageItemCount()
 	{
 		return getBody().getCurrentPageItemCount();
 	}
@@ -416,36 +417,40 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 	}
 	
 	/**
-	 * Insert the rowData into the grid
-	 * 
-	 * @param rowData data to insert into the new row
-	 * @return Item inserted Item
-	 */
-	public Item insertRow(final T rowData)
+  * Insert the rowData into the grid
+  *
+  * @param rowData data to insert into the new row
+  * @return Item inserted Item
+  */
+  public Item insertRow(final T rowData)
   {
-     IAppendableDataSource ADS;
-     try
-     { ADS = ((IAppendableDataSource)getDataSource()); }
-     catch (ClassCastException cce)
-     { //TODO: localize this string
+      IAppendableDataSource ADS;
+      try
+      { ADS = ((IAppendableDataSource)getDataSource()); }
+      catch (ClassCastException cce)
+      { //TODO: localize this string
         //log.error( "Error BAD Data Source type. "
         //         + "IAppendableDataSource REQUIRED for addition");
         throw new WicketRuntimeException("Error BAD Data Source type. "
                  + "IAppendableDataSource REQUIRED for addition",cce);
-     }
-     ADS.InsertRow(getCurrentPageItemCount(),rowData);
-     Item item = getBody().createItem(getCurrentPageItemCount(),
-                                      getDataSource().model(rowData));
+      }
+      ADS.InsertRow(getCurrentPageItemCount(),rowData);
+      Item item = getBody().createItem(getCurrentPageItemCount(),
+                                       getDataSource().model(rowData));
 
-     //make sure the datagrid knows the rows need to be refreshed
-     getBody().clearCache(); //clears the cache, to make sure the data is reloaded
+      //make sure the datagrid knows the rows need to be refreshed
+      getBody().clearCache(); //clears the cache, to make sure the data is reloaded
 
-		 //both of these functions are "cached"
-     markAllItemsDirty();
-		 update();
-				
-		 return item;
-	}
+          //Commented out because the list updates but is not editable after.
+    //both of these functions are "cached"
+    //markAllItemsDirty();
+    //update();
+                               
+    AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
+    
+    target.add(this.getParent());
+    return item;
+  }
 
 	/**
 	 * {@inheritDoc}
@@ -466,12 +471,12 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 			}
 		}
 
-		if (selected == true && selectedItems.contains(itemModel) == false)
+		if (selected && !selectedItems.contains(itemModel))
 		{
 			selectedItems.add(itemModel);
 			onItemSelectionChanged(itemModel, selected);
 		}
-		else if (selected == false && selectedItems.contains(itemModel) == true)
+		else if (!selected && selectedItems.contains(itemModel))
 		{
 			selectedItems.remove(itemModel);
 			onItemSelectionChanged(itemModel, selected);
