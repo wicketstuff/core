@@ -426,7 +426,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 				{
 					klass = "";
 				}
-				if (klass.length() > 0)
+				else if (klass.length() > 0)
         {
           klass = klass + " ";
         }
@@ -450,14 +450,14 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 				tag.put("class", klass);
 			}
 		}
-		
+
 		@Override
 		protected Item<T> newItem(String id, final int index, final IModel<T> model)
 		{
 			Item<T> item = new RowItem(id, index, model);
 			item.setOutputMarkupId(true);
 			return item;
-		}    
+		}
 		
 		/**
 		 * Create a new Item for this DataGrid.
@@ -472,7 +472,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
       return newItemFactory().newItem(index, itemModel); 
     }
 	}
-
+  
 	protected IModel<T> getDefaultItemModel()
 	{
 		return (IModel<T>)getDefaultModel();
