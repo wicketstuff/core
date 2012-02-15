@@ -126,7 +126,7 @@ public abstract class SortableHeaderLinkPanel extends Panel
 		{
 			return "imxt-sort-header imxt-sort-header-none";
 		}
-	};
+	}
 
 	/**
 	 * INTERNAL

@@ -27,7 +27,7 @@ import com.inmethod.grid.common.AttachPrelightBehavior;
  * 
  * @author Matej Knopp
  */
-public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel 
+public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
        implements IPageable
 {
 	private static final long serialVersionUID = 1L;
@@ -73,14 +73,14 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
   protected Item createItem(int index, final IModel<T> rowModel)
   { return getData().createItem(index, rowModel); }
 
-  int getTotalRowCount()
+	int getTotalRowCount()
 	{
 		return getData().getTotalRowCount();
 	}
-  
-  void clearCache() 
-  { 
-    getData().clearCache(); 
+
+  void clearCache()
+  {
+    getData().clearCache();
   }
 
   int getCurrentPageItemCount()
@@ -144,7 +144,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
     @Override
 		protected IDataSource.IQuery wrapQuery(final IDataSource.IQuery original) 
     {
-			return new DataGrid.IGridQuery() 
+			return new IDataSource.IQuery() 
       {
 				public int getCount() 
         {
@@ -215,7 +215,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 				{
 					klass = "";
 				}
-				if (klass.length() > 0)
+				else if (klass.length() > 0)
         {
           klass = klass + " ";
         }

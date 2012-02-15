@@ -17,8 +17,6 @@ import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.IGridSortState;
 import com.inmethod.grid.common.AbstractGrid;
 import com.inmethod.grid.common.AbstractPageableView;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Advanced grid component. Supports resizable and reorderable columns.
@@ -35,8 +33,6 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 {
 	private static final long serialVersionUID = 1L;
   //private static final Logger log = LoggerFactory.getLogger(DataGrid.class);
-
-  private static final Logger log = LoggerFactory.getLogger(DataGrid.class);
 
 	/**
 	 * Crates a new {@link DataGrid} instance.
@@ -154,7 +150,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 	private void init()
 	{
 		((WebMarkupContainer)get("form:bodyContainer")).add(new Body("body"));
-  }
+	}
 
 	private Body getBody()
 	{
@@ -416,8 +412,8 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 		}
 		dirtyItems = null;
 	}
-	
-	/**
+
+  /**
   * Insert the rowData into the grid
   *
   * @param rowData data to insert into the new row
@@ -442,10 +438,13 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
       //make sure the datagrid knows the rows need to be refreshed
       getBody().clearCache(); //clears the cache, to make sure the data is reloaded
 
-//both of these functions are "cached"
-      markAllItemsDirty();
-      update();
-      return item;
+    //Commented out because the list updates but is not editable after.
+    //both of these functions are "cached"
+    //markAllItemsDirty();
+    //update();
+
+    AjaxRequestTarget.get().add(this.getParent());
+    return item;
   }
 
 	/**
@@ -467,31 +466,18 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 			}
 		}
 
-		if (selected == true && selectedItems.contains(itemModel) == false)
+		if (selected && selectedItems.contains(itemModel) == false)
 		{
 			selectedItems.add(itemModel);
 			onItemSelectionChanged(itemModel, selected);
 		}
-		else if (selected == false && selectedItems.contains(itemModel) == true)
+		else if (selected == false && selectedItems.contains(itemModel))
 		{
 			selectedItems.remove(itemModel);
 			onItemSelectionChanged(itemModel, selected);
 		}
 	}
 
-	/**
-	 * Extended query interface that makes it possible to obtain the {@link DataGrid} instance.
-	 * 
-	 * @author Matej Knopp
-	 */
-	public interface IGridQuery extends IDataSource.IQuery {
-		
-		/**
-		 * @return data grid issuing the query
-		 */
-		public DataGrid getDataGrid();
-	}
-	
 	/**
 	 * {@inheritDoc}
 	 */

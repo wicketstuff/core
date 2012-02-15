@@ -3,8 +3,10 @@ package com.inmethod.grid.common;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
 import javax.swing.tree.TreeModel;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
@@ -783,20 +785,19 @@ public abstract class AbstractGrid<M, I> extends Panel
 			{	// preserve the entered values in form components
 				Form<?> form = super.getForm();
 				form.visitFormComponentsPostOrder(new IVisitor<FormComponent<?>, Void>()
-				{
-
-					public void component(FormComponent<?> formComponent, IVisit<Void> visit)
-					{
-						if (formComponent.isVisibleInHierarchy())
-						{
-							formComponent.inputChanged();
-						}
-					}
-				});
+                                              {
+                                                public void component(FormComponent<?> formComponent,
+                                                                      IVisit<Void> visit)
+                                                {
+                                                  if (formComponent.isVisibleInHierarchy())
+                                                  {
+                                                    formComponent.inputChanged();
+                                                  }
+                                                }
+                                              });
 
 				String column = getRequest().getRequestParameters()
-					.getParameterValue("column")
-					.toString();
+                                    .getParameterValue("column").toString();
 
 				lastClickedColumn = column;
 
@@ -805,11 +806,11 @@ public abstract class AbstractGrid<M, I> extends Panel
 				IGridColumn<M, I> lastClickedColumn = getLastClickedColumn();
 				if (lastClickedColumn != null)
 				{
-					if (onCellClicked(target, model, lastClickedColumn) == true)
+					if (onCellClicked(target, model, lastClickedColumn))
 					{
 						return;
 					}
-					if (lastClickedColumn.cellClicked(model) == true)
+					if (lastClickedColumn.cellClicked(model))
 					{
 						return;
 					}
