@@ -3,10 +3,8 @@ package com.inmethod.grid.common;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
 import javax.swing.tree.TreeModel;
 
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
@@ -76,10 +74,10 @@ public abstract class AbstractGrid<M, I> extends Panel
 
 		this.columns = columns;
 
-		//Form<Void> form = new Form<Void>("form");
-		//add(form);
-
 		add(new Header("header"));
+
+		Form<Void> form = new Form<Void>("form");
+		add(form);
 
 		WebMarkupContainer bodyContainer = new WebMarkupContainer("bodyContainer")
 		{
@@ -96,35 +94,15 @@ public abstract class AbstractGrid<M, I> extends Panel
 				}
 			}
 		};
-		add(bodyContainer);
+		form.add(bodyContainer);
 		bodyContainer.setOutputMarkupId(true);
 
 		bodyContainer.add(new Label("firstRow", new EmptyRowModel())
-                 .setEscapeModelStrings(false));
+                            .setEscapeModelStrings(false));
 
-    AttributeModifier colspan = new AttributeModifier("colspan",
-                                                      columns.size()+1);
-
-    WebMarkupContainer topToolbarHolder =
-       new WebMarkupContainer("topToolbarContainerHolder");
-    topToolbarHolder.add(colspan);
-		topToolbarHolder.add(topToolbarContainer = new RepeatingView("topToolbarContainer"));
-    add(topToolbarHolder);
-
-    //makes sure the bottom toolbar is as wide as the table.
-    WebMarkupContainer bottomToolbarHolder =
-       new WebMarkupContainer("bottomToolbarContainerHolder");
-    bottomToolbarHolder.add(colspan);
-    bottomToolbarContainer = new RepeatingView("bottomToolbarContainer");
-    bottomToolbarHolder.add(bottomToolbarContainer);
-    add(bottomToolbarHolder);
-
-    WebMarkupContainer headerToolbarHolder =
-       new WebMarkupContainer("headerToolbarContainerHolder");
-    headerToolbarHolder.add(colspan);
-    headerToolbarHolder.add(headerToolbarContainer =
-                                  new RepeatingView("headerToolbarContainer"));
-    add(headerToolbarHolder);
+		add(topToolbarContainer = new RepeatingView("topToolbarContainer"));
+		add(bottomToolbarContainer = new RepeatingView("bottomToolbarContainer"));
+		add(headerToolbarContainer = new RepeatingView("headerToolbarContainer"));
 
 		add(new Behavior()
 		{
@@ -805,20 +783,19 @@ public abstract class AbstractGrid<M, I> extends Panel
 			{	// preserve the entered values in form components
 				Form<?> form = super.getForm();
 				form.visitFormComponentsPostOrder(new IVisitor<FormComponent<?>, Void>()
-				{
-
-					public void component(FormComponent<?> formComponent, IVisit<Void> visit)
-					{
-						if (formComponent.isVisibleInHierarchy())
-						{
-							formComponent.inputChanged();
-						}
-					}
-				});
+                                              {
+                                                public void component(FormComponent<?> formComponent,
+                                                                      IVisit<Void> visit)
+                                                {
+                                                  if (formComponent.isVisibleInHierarchy())
+                                                  {
+                                                    formComponent.inputChanged();
+                                                  }
+                                                }
+                                              });
 
 				String column = getRequest().getRequestParameters()
-					.getParameterValue("column")
-					.toString();
+                                    .getParameterValue("column").toString();
 
 				lastClickedColumn = column;
 
@@ -827,11 +804,11 @@ public abstract class AbstractGrid<M, I> extends Panel
 				IGridColumn<M, I> lastClickedColumn = getLastClickedColumn();
 				if (lastClickedColumn != null)
 				{
-					if (onCellClicked(target, model, lastClickedColumn) == true)
+					if (onCellClicked(target, model, lastClickedColumn))
 					{
 						return;
 					}
-					if (lastClickedColumn.cellClicked(model) == true)
+					if (lastClickedColumn.cellClicked(model))
 					{
 						return;
 					}
@@ -1102,5 +1079,4 @@ public abstract class AbstractGrid<M, I> extends Panel
 			}
 		}
 	}
-
 }

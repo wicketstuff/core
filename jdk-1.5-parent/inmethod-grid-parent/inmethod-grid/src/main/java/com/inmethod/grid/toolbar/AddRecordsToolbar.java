@@ -39,9 +39,7 @@ public class AddRecordsToolbar<D extends IDataSource<T>, T extends Serializable>
 
   public AddRecordsToolbar(DataGrid<D, T> grid, IModel<T> model,
                            final T defaultObject)
-  {
-    this(grid, model, defaultObject, ADD_BUTTON_MODEL);
-  }
+  { this(grid, model, defaultObject, ADD_BUTTON_MODEL); }
 
   public AddRecordsToolbar(DataGrid<D, T> datagrid, IModel<T> model,
                            final T defaultObject,
@@ -63,7 +61,7 @@ public class AddRecordsToolbar<D extends IDataSource<T>, T extends Serializable>
                                                       Form<?> form)
                               {
                                 insert();
-                                target.add(findParent(DataGrid.class).getParent());
+                                //target.add(findParent(DataGrid.class).getParent());
                               }
 
                               @Override
@@ -84,6 +82,7 @@ public class AddRecordsToolbar<D extends IDataSource<T>, T extends Serializable>
     pre = grid.getTotalRowCount();
     grid.insertRow(getNewData());
     post = grid.getTotalRowCount();
+    grid.update();
     //log.error("Pre: " + pre + " Post: " + post);
   }
 

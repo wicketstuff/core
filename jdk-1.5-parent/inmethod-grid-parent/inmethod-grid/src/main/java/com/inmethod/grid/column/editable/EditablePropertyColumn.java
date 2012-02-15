@@ -103,8 +103,9 @@ public class EditablePropertyColumn<M, I, P> extends PropertyColumn<M, I, P>
 		return new PropertyModel<P>(rowModel, getPropertyExpression());
 	}
 
-	protected EditableCellPanel<M, I, P> newCellPanel(String componentId, IModel<I> rowModel,
-		IModel<P> cellModel)
+	protected EditableCellPanel<M, I, P> newCellPanel(String componentId,
+                                                    IModel<I> rowModel,
+                                                    IModel<P> cellModel)
 	{
 		return new TextFieldPanel<M, I, P>(componentId, cellModel, rowModel, this);
 	}
@@ -127,6 +128,12 @@ public class EditablePropertyColumn<M, I, P> extends PropertyColumn<M, I, P>
 		// is called that only displays the item
 	}
 
+
+  /** Override this method to add validators to the displayed formComponent
+   *  EX: <code>component.setRequired(true);</code>
+   *  OR: <code>component.add(new myAwesomeValidator());</code>
+   * @param component
+   */
 	protected void addValidators(FormComponent<P> component)
 	{
 
@@ -154,7 +161,8 @@ public class EditablePropertyColumn<M, I, P> extends PropertyColumn<M, I, P>
 	@Override
 	public boolean cellClicked(IModel<I> rowModel)
 	{
-		if (!isClickToEdit() || getGrid().isClickRowToSelect() && getGrid().isSelectToEdit())
+		if ( !isClickToEdit() || getGrid().isClickRowToSelect()
+      && getGrid().isSelectToEdit())
 		{
 			return false;
 		}

@@ -149,14 +149,12 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 
 	private void init()
 	{
-		//((WebMarkupContainer)get("form:bodyContainer")).add(new Body("body"));
-    ((WebMarkupContainer)get("bodyContainer")).add(new Body("body"));
+		((WebMarkupContainer)get("form:bodyContainer")).add(new Body("body"));
 	}
 
 	private Body getBody()
 	{
-		//return (Body)get("form:bodyContainer:body");
-    return (Body)get("bodyContainer:body");
+		return (Body)get("form:bodyContainer:body");
 	}
 
 	/**
@@ -423,27 +421,30 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
   */
   public Item insertRow(final T rowData)
   {
-      IAppendableDataSource ADS;
-      try
-      { ADS = ((IAppendableDataSource)getDataSource()); }
-      catch (ClassCastException cce)
-      { //TODO: localize this string
-        //log.error( "Error BAD Data Source type. "
-        //         + "IAppendableDataSource REQUIRED for addition");
-        throw new WicketRuntimeException("Error BAD Data Source type. "
-                 + "IAppendableDataSource REQUIRED for addition",cce);
-      }
-      ADS.InsertRow(getCurrentPageItemCount(),rowData);
-      Item item = getBody().createItem(getCurrentPageItemCount(),
-                                       getDataSource().model(rowData));
+    IAppendableDataSource ADS;
+    try
+    { ADS = ((IAppendableDataSource)getDataSource()); }
+    catch (ClassCastException cce)
+    { //TODO: localize this string
+      //log.error( "Error BAD Data Source type. "
+      //         + "IAppendableDataSource REQUIRED for addition");
+      throw new WicketRuntimeException("Error BAD Data Source type. "
+               + "IAppendableDataSource REQUIRED for addition",cce);
+    }
+    ADS.InsertRow(getCurrentPageItemCount(),rowData);
+    Item item = getBody().createItem(getCurrentPageItemCount(),
+                                     getDataSource().model(rowData));
 
-      //make sure the datagrid knows the rows need to be refreshed
-      getBody().clearCache(); //clears the cache, to make sure the data is reloaded
+    //make sure the datagrid knows the rows need to be refreshed
+    getBody().clearCache(); //clears the cache, to make sure the data is reloaded
 
-//both of these functions are "cached"
-      markAllItemsDirty();
-      update();
-      return item;
+    //Commented out because the list updates but is not editable after.
+    //both of these functions are "cached"
+    //markAllItemsDirty();
+    //update();
+
+    AjaxRequestTarget.get().add(this.getParent());
+    return item;
   }
 
 	/**
@@ -465,12 +466,12 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 			}
 		}
 
-		if (selected == true && selectedItems.contains(itemModel) == false)
+		if (selected && selectedItems.contains(itemModel) == false)
 		{
 			selectedItems.add(itemModel);
 			onItemSelectionChanged(itemModel, selected);
 		}
-		else if (selected == false && selectedItems.contains(itemModel) == true)
+		else if (selected == false && selectedItems.contains(itemModel))
 		{
 			selectedItems.remove(itemModel);
 			onItemSelectionChanged(itemModel, selected);
@@ -485,5 +486,4 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 	{
 		return child.findParent(DataGridBody.Data.RowItem.class);
 	}
-
 }

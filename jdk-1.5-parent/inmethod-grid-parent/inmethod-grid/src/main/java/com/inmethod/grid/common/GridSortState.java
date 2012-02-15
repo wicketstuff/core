@@ -17,7 +17,6 @@ import com.inmethod.grid.IGridSortState;
  */
 public class GridSortState implements IGridSortState, IClusterable
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -55,7 +54,7 @@ public class GridSortState implements IGridSortState, IClusterable
 			return direction;
 		}
 
-	};
+	}
 
 	private final List<ISortStateColumn> columns = new ArrayList<ISortStateColumn>();
 

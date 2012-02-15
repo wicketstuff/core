@@ -62,7 +62,8 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 	{
 		return (Data)get("row");
 	}
-	
+
+  /** {@see AbstractPageableView#createItem(int, IModel) }
 	protected Item createItem(int index, final IModel rowModel)
   { return getData().createItem(index,rowModel); }
 
@@ -71,6 +72,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 		return getData().getTotalRowCount();
 	}
 
+  /** {@see AbstractPageableView#clearCache()} */
   void clearCache()
   {
     getData().clearCache();

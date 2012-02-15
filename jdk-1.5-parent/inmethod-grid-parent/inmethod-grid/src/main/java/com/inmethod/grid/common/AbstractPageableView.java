@@ -367,7 +367,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T>
 	private class QueryResult implements IQueryResult<T>
 	{
 		// start with empty items
-    //TODO: wouldn't the Collections.Empty List consant be better ex follows? - Tom Burton(Raystorm)
+    //TODO: wouldn't the Collections.Empty List constant be better ex follows? - Tom Burton(Raystorm)
     //private Iterator<? extends T> altItems = Collections.<T>emptyList().iterator();
 		private Iterator<? extends T> items = new EmptyIterator<T>();
 
