@@ -12,7 +12,6 @@ import com.inmethod.icon.Icon;
 
 public class SubmitCancelColumn<M, I> extends AbstractColumn<M, I>
 {
-
 	private static final long serialVersionUID = 1L;
 
 	public SubmitCancelColumn(String columnId, IModel<String> headerModel)
@@ -29,7 +28,6 @@ public class SubmitCancelColumn<M, I> extends AbstractColumn<M, I>
 	{
 		return new SubmitCancelPanel<M, I>(componentId, rowModel, getGrid())
 		{
-
 			private static final long serialVersionUID = 1L;
 
 			private WebMarkupContainer getRowComponent()

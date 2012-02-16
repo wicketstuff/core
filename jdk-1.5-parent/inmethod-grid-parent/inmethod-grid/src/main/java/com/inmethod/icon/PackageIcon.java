@@ -13,7 +13,6 @@ import org.apache.wicket.request.resource.ResourceReference;
  */
 public class PackageIcon implements Icon
 {
-
 	private static final long serialVersionUID = 1L;
 
 	private final ResourceReference reference;

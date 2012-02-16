@@ -12,7 +12,6 @@ import org.apache.wicket.markup.html.navigation.paging.PagingNavigation;
  */
 public class PagingNavigator extends AjaxPagingNavigator
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**

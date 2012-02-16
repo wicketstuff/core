@@ -14,8 +14,8 @@ import com.inmethod.grid.column.AbstractColumn;
 
 public abstract class EditableCellPanel<M, I, P> extends Panel
 {
-
 	private static final long serialVersionUID = 1L;
+  
 	private final AbstractColumn<M, I> column;
 
 	public EditableCellPanel(String id, AbstractColumn<M, I> column, IModel<I> rowModel)
@@ -38,14 +38,16 @@ public abstract class EditableCellPanel<M, I, P> extends Panel
 
 		Component textField = get("textfield");
 
-		if (target != null && isFocusTextField())
+		if (target != null && isFocusComponent())
 		{
 			target.focusComponent(textField);
 		}
 	}
 
-	protected boolean isFocusTextField()
-	{
+	/**
+	 * @return true when the last clicked column is *this* column, false otherwise
+	 */
+	protected boolean isFocusComponent() {
 		IGridColumn<M, I> lastClickedColumn = getColumn().getGrid().getLastClickedColumn();
 		if (lastClickedColumn == getColumn())
 		{

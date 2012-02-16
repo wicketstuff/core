@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	       xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+	                           http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -67,7 +69,8 @@
 		<url>http://ci.wicketstuff.org</url>
 	</ciManagement>
 
-	<distributionManagement>
+  <!--
+  <distributionManagement>
 		<site>
 			<id>localRepo</id>
 			<url>file:target/site</url>
@@ -81,6 +84,22 @@
 			<url>file:target/m2-snapshot-repo</url>
 		</snapshotRepository>
 	</distributionManagement>
+  -->
+  <!-- The Next section DOES NOT BELONG on GITHUB!! -->
+
+  <!-- REPO Server to "release" to -->
+  <distributionManagement>
+    <repository>
+      <id>DorCssAppTst02-Nexus</id>
+      <name>DorCssAppTst02-Nexus-releases</name>
+      <url>http://dorcssapptst02:8080/nexus/content/repositories/releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>DorCssAppTst02-Nexus</id>
+      <name>DorCssAppTst02-Nexus-snapshots</name>
+      <url>http://dorcssapptst02:8080/nexus/content/repositories/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
 
 	<profiles>
 		<profile>
@@ -1000,4 +1019,5 @@
 			</plugin>
 		</plugins>
 	</reporting>
+
 </project>

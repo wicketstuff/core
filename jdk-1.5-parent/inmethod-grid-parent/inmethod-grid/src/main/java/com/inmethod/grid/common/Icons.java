@@ -10,7 +10,6 @@ import com.inmethod.icon.PackageIcon;
  */
 public class Icons
 {
-
 	/**
 	 * Default icon for a closed folder.
 	 */
@@ -31,6 +30,8 @@ public class Icons
 
 	public static final Icon CANCEL = new PackageIcon(Icons.class, "res/icons/16-em-cross.png");
 
+  public static final Icon DELETE = new PackageIcon(Icons.class, "res/icons/trashcan-delete.png");
+	
 	private Icons()
 	{
 	}

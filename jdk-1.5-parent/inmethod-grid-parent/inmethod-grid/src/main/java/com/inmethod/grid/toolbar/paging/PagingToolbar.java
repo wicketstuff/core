@@ -22,7 +22,6 @@ import com.inmethod.grid.toolbar.AbstractToolbar;
  */
 public class PagingToolbar<D extends IDataSource<T>, T> extends AbstractToolbar<D, T>
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**

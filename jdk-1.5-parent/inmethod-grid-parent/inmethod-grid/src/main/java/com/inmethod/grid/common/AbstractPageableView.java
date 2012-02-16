@@ -23,9 +23,9 @@ import com.inmethod.grid.IGridSortState;
  * 
  * @author Matej Knopp
  */
-public abstract class AbstractPageableView<T> extends RefreshingView<T> implements IPageable
+public abstract class AbstractPageableView<T> extends RefreshingView<T>
+                                              implements IPageable
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -140,7 +140,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 				count -= mod;
 
 				// get the actual page count
-				cachedPageCount = count / rowsPerPage + (mod > 0 ? 1 : 0);
+				cachedPageCount = (count / rowsPerPage) + (mod > 0 ? 1 : 0);
 			}
 		}
 		return cachedPageCount;
@@ -191,6 +191,9 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	 * Cached query result for this request
 	 */
 	private transient QueryResult queryResult;
+
+  /** clears the queryResult cache so the next use will be forced to re-initialize */
+  public void clearCache() { queryResult = null; }
 
 	/**
 	 * Allows to wrap created query.
@@ -320,7 +323,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 		{
 			return result.totalCount;
 		}
-	};
+	}
 
 	/**
 	 * Convenience class representing an empty iterator
@@ -354,7 +357,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 		{
 			throw new UnsupportedOperationException();
 		}
-	};
+	}
 
 	/**
 	 * A {@link IQueryResult} implementation
@@ -364,6 +367,8 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	private class QueryResult implements IQueryResult<T>
 	{
 		// start with empty items
+    //TODO: wouldn't the Collections.Empty List constant be better ex follows? - Tom Burton(Raystorm)
+    //private Iterator<? extends T> altItems = Collections.<T>emptyList().iterator();
 		private Iterator<? extends T> items = new EmptyIterator<T>();
 
 		// and actual total count (could be UNKNOWN)
@@ -442,7 +447,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 				realItemCount = totalCount;
 			}
 		}
-	};
+	}
 
 	/**
 	 * Cleanup
@@ -479,7 +484,6 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	{
 		if (currentPageFirstItem != currentItem)
 		{
-
 			if (maxFirstItemReached < currentItem)
 			{
 				maxFirstItemReached = currentItem;
@@ -493,7 +497,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	private int getCurrentPageFirstItem()
 	{
 		int rowsPerPage = getRowsPerPage();
-		return currentPageFirstItem - currentPageFirstItem % rowsPerPage;
+		return currentPageFirstItem - (currentPageFirstItem % rowsPerPage);
 	}
 
 }

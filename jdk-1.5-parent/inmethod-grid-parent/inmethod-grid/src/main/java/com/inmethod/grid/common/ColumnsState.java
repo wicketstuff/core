@@ -19,7 +19,6 @@ import com.inmethod.grid.IGridColumn;
  */
 public class ColumnsState implements IClusterable, Cloneable
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -29,7 +28,6 @@ public class ColumnsState implements IClusterable, Cloneable
 	 */
 	public static class Entry implements IClusterable
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		private final String columnId;

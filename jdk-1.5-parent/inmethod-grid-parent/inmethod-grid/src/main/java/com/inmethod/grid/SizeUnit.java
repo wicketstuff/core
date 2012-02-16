@@ -7,7 +7,6 @@ package com.inmethod.grid;
  */
 public enum SizeUnit
 {
-
 	/**
 	 * CSS EM unit
 	 */
@@ -39,6 +38,5 @@ public enum SizeUnit
 	{
 		return value;
 	}
-
 
 };

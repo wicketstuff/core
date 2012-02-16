@@ -20,7 +20,6 @@ import com.inmethod.grid.IGridColumn;
  */
 public abstract class ColumnsHeader<M, I> extends Panel
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -36,7 +35,6 @@ public abstract class ColumnsHeader<M, I> extends Panel
 
 		add(new ColumnsHeaderRepeater<M, I>("header")
 		{
-
 			private static final long serialVersionUID = 1L;
 
 			@Override

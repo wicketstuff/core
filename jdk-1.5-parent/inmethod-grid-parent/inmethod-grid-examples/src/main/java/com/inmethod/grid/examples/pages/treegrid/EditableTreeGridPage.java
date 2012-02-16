@@ -24,7 +24,6 @@ import com.inmethod.grid.treegrid.TreeGrid;
  */
 public class EditableTreeGridPage extends BaseExamplePage
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**

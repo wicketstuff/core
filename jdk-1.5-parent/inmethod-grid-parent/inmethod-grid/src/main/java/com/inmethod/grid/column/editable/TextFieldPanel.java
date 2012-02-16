@@ -14,13 +14,16 @@ import com.inmethod.grid.column.AbstractColumn;
 /**
  * Panel with a TextField that updates the property of the row immediately after user leaves the
  * field.
+ *
+ * TODO: Javadoc what are M, I, and P?
  * 
  * @author Matej Knopp
  */
 public class TextFieldPanel<M, I, P> extends EditableCellPanel<M, I, P>
 {
-
-	/**
+  private static final long serialVersionUID = 1L;
+  
+  /**
 	 * Constructor
 	 * 
 	 * @param id
@@ -37,7 +40,6 @@ public class TextFieldPanel<M, I, P> extends EditableCellPanel<M, I, P>
 
 		TextField<P> tf = new TextField<P>("textfield", model)
 		{
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -66,7 +68,5 @@ public class TextFieldPanel<M, I, P> extends EditableCellPanel<M, I, P>
 	{
 		return (FormComponent<P>)get("textfield");
 	}
-
-	private static final long serialVersionUID = 1L;
-
+  	
 }

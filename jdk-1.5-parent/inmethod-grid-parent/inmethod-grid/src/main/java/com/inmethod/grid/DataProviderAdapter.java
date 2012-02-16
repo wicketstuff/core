@@ -22,7 +22,6 @@ import com.inmethod.grid.common.AbstractGrid;
  */
 public class DataProviderAdapter<T> implements IDataSource<T>
 {
-
 	private static final long serialVersionUID = 1L;
 
 	final IDataProvider<T> dataProvider;

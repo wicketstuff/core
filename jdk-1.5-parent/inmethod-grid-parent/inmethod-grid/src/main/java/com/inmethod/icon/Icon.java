@@ -9,7 +9,6 @@ import java.io.Serializable;
  */
 public interface Icon extends Serializable
 {
-
 	/**
 	 * Returns the URL of icon image.
 	 * 

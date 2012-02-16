@@ -17,10 +17,9 @@ import com.inmethod.icon.IconImage;
 
 abstract class SubmitCancelPanel<M, I> extends Panel
 {
-
 	private static final long serialVersionUID = 1L;
 
-	private AbstractGrid<M, I> getGrid()
+	protected AbstractGrid<M, I> getGrid()
 	{
 		return grid;
 	}
@@ -51,7 +50,6 @@ abstract class SubmitCancelPanel<M, I> extends Panel
 
 		AjaxLink<Void> cancel = new AjaxLink<Void>("cancel")
 		{
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -70,7 +68,6 @@ abstract class SubmitCancelPanel<M, I> extends Panel
 		add(cancel);
 
 		cancel.add(new IconImage("icon", getCancelIcon()));
-
 	}
 
 	protected abstract void onSubmitted(AjaxRequestTarget target);
@@ -85,13 +82,12 @@ abstract class SubmitCancelPanel<M, I> extends Panel
 
 	private class SubmitLink extends AjaxSubmitLink
 	{
+		private static final long serialVersionUID = 1L;
 
 		public SubmitLink(String id)
 		{
 			super(id, getGrid().getForm());
 		}
-
-		private static final long serialVersionUID = 1L;
 
 		private boolean formComponentActive(FormComponent<?> formComponent)
 		{
@@ -142,10 +138,8 @@ abstract class SubmitCancelPanel<M, I> extends Panel
 				{
 					public void component(FormComponent<?> formComponent, IVisit<Void> visit)
 					{
-
 						if (formComponentActive(formComponent))
 						{
-
 							formComponent.updateModel();
 
 							if (formComponent.processChildren())
@@ -168,16 +162,13 @@ abstract class SubmitCancelPanel<M, I> extends Panel
 				SubmitCancelPanel.this.onError(target);
 			}
 
-
 		}
 
 		@Override
 		protected void onError(AjaxRequestTarget target, Form<?> form)
 		{
 			// TODO Auto-generated method stub
-
 		}
 	};
-
 
 }

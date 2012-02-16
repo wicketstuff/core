@@ -37,7 +37,6 @@ import com.inmethod.grid.treegrid.TreeGrid;
  */
 public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -57,7 +56,8 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Component newCell(WebMarkupContainer parent, String componentId, IModel<I> rowModel)
+	public Component newCell(WebMarkupContainer parent, String componentId,
+                           IModel<I> rowModel)
 	{
 		return new BodyCheckBoxPanel(componentId, rowModel);
 	}
@@ -75,14 +75,11 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 	{
 		if (!isCheckBoxEnabled(model))
 		{
-
 			tag.put("disabled", "disabled");
-
 		}
 		else if (getGrid() instanceof TreeGrid &&
 			((TreeGrid<?, ?>)getGrid()).isAutoSelectChildren())
 		{
-
 			TreeGrid<?, ?> grid = (TreeGrid<?, ?>)getGrid();
 			Object parent = grid.getTree().getParentNode(model.getObject());
 			if (parent != null && grid.getTreeState().isNodeSelected(parent))
@@ -109,7 +106,6 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 	 */
 	private class BodyCheckBoxPanel extends Panel
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		private BodyCheckBoxPanel(String id, final IModel<I> model)
@@ -207,14 +203,13 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 	}
 
 	/**
-	 * Panel that optionally displays checkbox for selecting all visible items / clearing selection
-	 * of all item.
+	 * Panel that optionally displays checkbox for
+   * selecting all visible items / clearing selection of all items.
 	 * 
 	 * @author Matej Knopp
 	 */
 	private class HeadPanel extends Panel
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		private HeadPanel(String id)
@@ -223,7 +218,6 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 
 			add(new HeadCheckBoxPanel("checkbox")
 			{
-
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -239,7 +233,6 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 			// and also for displaying the tooltip
 			add(new WebMarkupContainer("space")
 			{
-
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -263,7 +256,7 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 				}
 			});
 		}
-	};
+	}
 
 	/**
 	 * The actual panel with checkbox in column header
@@ -272,7 +265,6 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 	 */
 	private class HeadCheckBoxPanel extends Panel
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		private HeadCheckBoxPanel(String id)
@@ -332,12 +324,16 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 					});
 
 					boolean checked = getRequest().getRequestParameters()
-						.getParameterValue("checked")
-						.toBoolean();
+						                            .getParameterValue("checked")
+                                        .toBoolean();
 					if (checked)
+          {
 						getGrid().selectAllVisibleItems();
+          }
 					else
+          {
 						getGrid().resetSelectedItems();
+          }
 					getGrid().update();
 				}
 

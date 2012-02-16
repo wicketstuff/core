@@ -15,7 +15,6 @@ import org.apache.wicket.model.Model;
  */
 public class IconImage extends WebMarkupContainer
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -88,9 +87,13 @@ public class IconImage extends WebMarkupContainer
 		{
 			CharSequence style = tag.getAttribute("style");
 			if (style == null)
-				style = "";
+      {
+        style = "";
+      }
 			else if (style.length() > 0)
-				style = style + ";";
+      {
+        style = style + ";";
+      }
 			style = style + "background-image: url('" + icon.getUrl() +
 				"'); background-repeat: no-repeat;";
 			tag.put("style", style);

@@ -1,6 +1,6 @@
 /**
  * @author Pointbreak, Amsterdam
- * @copyright Copyright © 2008, Pointbreak, Amsterdam, All rights reserved.
+ * @copyright Copyright ï¿½ 2008, Pointbreak, Amsterdam, All rights reserved.
  */
 
 (function() {

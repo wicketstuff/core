@@ -32,7 +32,6 @@ import com.inmethod.icon.Icon;
 public abstract class BaseTreeColumn<T extends TreeModel & Serializable, I extends TreeNode & Serializable>
 	extends AbstractColumn<T, I>
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -69,7 +68,6 @@ public abstract class BaseTreeColumn<T extends TreeModel & Serializable, I exten
 		AbstractTreeGridRow<T, I> row = (AbstractTreeGridRow<T, I>)parent;
 		return new TreePanel<T, I>(componentId, rowModel, row.getLevel())
 		{
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
