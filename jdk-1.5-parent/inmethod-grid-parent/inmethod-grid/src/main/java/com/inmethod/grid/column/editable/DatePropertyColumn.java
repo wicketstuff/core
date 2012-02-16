@@ -14,8 +14,6 @@ import org.apache.wicket.model.IModel;
  *            grid model object type
  * @param <I>
  *            row/item model object type
- * @param <P>
- *            type of the property (Must extend Java.util.Date)
  *
  * TODO: rename to EditableDateColumn
  */
