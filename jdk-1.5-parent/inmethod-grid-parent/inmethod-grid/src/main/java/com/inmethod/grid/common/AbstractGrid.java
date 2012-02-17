@@ -3,10 +3,8 @@ package com.inmethod.grid.common;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
 import javax.swing.tree.TreeModel;
 
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
