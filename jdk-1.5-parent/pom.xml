@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	       xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+	                           http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -15,7 +17,7 @@
 
 	<name>Java 5 Modules - Parent</name>
 	<description>
-	Wicketstuff core modules that can be built using java 5.
+	  Wicketstuff core modules that can be built using java 5.
 	</description>
 
 	<modules>
@@ -114,8 +116,10 @@
 	<build>
 		<plugins>
 			<plugin>
-				<!-- make sure our code doesn't have 1.6 dependencies except where we 
-					know it see * http://mojo.codehaus.org/animal-sniffer/index.html * http://weblogs.java.net/blog/kohsuke/archive/2008/11/compiling_with.html -->
+				<!-- make sure our code doesn't have 1.6 dependencies except where we know it
+				     see:
+					* http://mojo.codehaus.org/animal-sniffer/index.html
+					* http://weblogs.java.net/blog/kohsuke/archive/2008/11/compiling_with.html -->
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>animal-sniffer-maven-plugin</artifactId>
 				<configuration>

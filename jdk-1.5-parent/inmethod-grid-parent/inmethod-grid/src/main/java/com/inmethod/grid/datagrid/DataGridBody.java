@@ -27,9 +27,9 @@ import com.inmethod.grid.common.AttachPrelightBehavior;
  * 
  * @author Matej Knopp
  */
-public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel implements IPageable
+public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
+       implements IPageable
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -62,13 +62,28 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 	{
 		return (Data)get("row");
 	}
+  
+  protected Item insertRow(final IModel<T> rowModel) 
+  {
+		Item item = getData().createItem(getCurrentPageItemCount() + 1, rowModel);
+		getData().add(item);
+		return item;
+	}
+  
+  protected Item createItem(int index, final IModel<T> rowModel)
+  { return getData().createItem(index, rowModel); }
 
 	int getTotalRowCount()
 	{
 		return getData().getTotalRowCount();
 	}
 
-	int getCurrentPageItemCount()
+  void clearCache()
+  {
+    getData().clearCache();
+  }
+
+  int getCurrentPageItemCount()
 	{
 		return getData().getCurrentPageItemCount();
 	}
@@ -99,7 +114,6 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 
 	class Data extends AbstractPageableView<T>
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		private Data(String id)
@@ -124,6 +138,39 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 		protected IGridSortState getSortState()
 		{
 			return DataGridBody.this.getSortState();
+		}
+
+		//TODO: Should wrapQuery be removed?
+    @Override
+		protected IDataSource.IQuery wrapQuery(final IDataSource.IQuery original) 
+    {
+			return new IDataSource.IQuery() 
+      {
+				public int getCount() 
+        {
+					return original.getCount();
+				}
+
+				public int getFrom() 
+        {
+					return original.getFrom();
+				}
+
+				public IGridSortState getSortState() 
+        {
+					return original.getSortState();
+				}
+
+				public int getTotalCount() 
+        {
+					return original.getTotalCount();
+				}
+
+				public DataGrid getDataGrid() 
+        {
+					return (DataGrid) DataGridBody.this.findParent(DataGrid.class);
+				}
+			};
 		}
 
 		@Override
@@ -151,7 +198,6 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 
 		protected class RowItem extends Item<T>
 		{
-
 			private static final long serialVersionUID = 1L;
 
 			protected RowItem(String id, int index, IModel<T> model)
@@ -162,7 +208,6 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 			@Override
 			protected void onComponentTag(ComponentTag tag)
 			{
-
 				super.onComponentTag(tag);
 
 				CharSequence klass = tag.getAttribute("class");
@@ -170,8 +215,10 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 				{
 					klass = "";
 				}
-				if (klass.length() > 0)
-					klass = klass + " ";
+				else if (klass.length() > 0)
+        {
+          klass = klass + " ";
+        }
 
 				if (getIndex() % 2 == 0)
 				{
@@ -191,7 +238,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 
 				tag.put("class", klass);
 			}
-		};
+		}
 
 		@Override
 		protected Item<T> newItem(String id, final int index, final IModel<T> model)
@@ -200,8 +247,21 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 			item.setOutputMarkupId(true);
 			return item;
 		}
-	};
-
+		
+		/**
+		 * Create a new Item for this DataGrid.
+		 * NOTE: The item has not been added to the grid.
+		 * 
+		 * @param index row number for insertion
+		 * @param itemModel model of the data being inserted
+		 * @return Item item inserted
+		 */
+		protected Item createItem(final int index, final IModel<T> itemModel)
+    {	
+      return newItemFactory().newItem(index, itemModel); 
+    }
+	}
+  
 	protected IModel<T> getDefaultItemModel()
 	{
 		return (IModel<T>)getDefaultModel();

@@ -22,7 +22,6 @@ import com.inmethod.grid.toolbar.paging.PagingToolbar;
  */
 public class DefaultDataGrid<D extends IDataSource<T>, T> extends DataGrid<D, T>
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
