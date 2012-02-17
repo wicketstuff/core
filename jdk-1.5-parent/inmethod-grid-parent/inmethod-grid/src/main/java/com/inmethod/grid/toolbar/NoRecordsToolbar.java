@@ -64,7 +64,6 @@ public class NoRecordsToolbar<D extends IDataSource<T>, T> extends AbstractToolb
 	public NoRecordsToolbar(final DataGrid<D, T> grid, IModel<String> messageModel)
 	{
 		super(grid, null);
-
 		add(new Label("msg", messageModel));
 	}
 

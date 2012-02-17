@@ -2,7 +2,8 @@ package com.inmethod.grid.column;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.IAjaxCallDecorator;
+import org.apache.wicket.ajax.calldecorator.CancelEventIfNoAjaxDecorator;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -74,14 +75,11 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 	{
 		if (!isCheckBoxEnabled(model))
 		{
-
 			tag.put("disabled", "disabled");
-
 		}
 		else if (getGrid() instanceof TreeGrid &&
 			((TreeGrid<?, ?>)getGrid()).isAutoSelectChildren())
 		{
-
 			TreeGrid<?, ?> grid = (TreeGrid<?, ?>)getGrid();
 			Object parent = grid.getTree().getParentNode(model.getObject());
 			if (parent != null && grid.getTreeState().isNodeSelected(parent))
@@ -193,6 +191,12 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 				{
 					return "window.setTimeout(function(){this.checked=!this.checked}.bind(this),0);" +
 						super.getPreconditionScript();
+				}
+
+				@Override
+				protected IAjaxCallDecorator getAjaxCallDecorator()
+				{
+					return new CancelEventIfNoAjaxDecorator();
 				}
 			});
 		}
@@ -335,12 +339,9 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 				}
 
 				@Override
-				protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
+				public CharSequence getCallbackUrl()
 				{
-					super.updateAjaxAttributes(attributes);
-
-					CharSequence checkedParameter = "return {'checked': Wicket.$(attrs.c).checked}";
-					attributes.getDynamicExtraParameters().add(checkedParameter);
+					return super.getCallbackUrl() + "&checked='+this.checked+'";
 				}
 
 				@Override
@@ -348,6 +349,12 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 				{
 					return "window.setTimeout(function(){this.checked=!this.checked}.bind(this),0);" +
 						super.getPreconditionScript();
+				}
+
+				@Override
+				protected IAjaxCallDecorator getAjaxCallDecorator()
+				{
+					return new CancelEventIfNoAjaxDecorator();
 				}
 			});
 		}
