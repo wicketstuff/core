@@ -27,9 +27,9 @@ import com.inmethod.grid.common.AttachPrelightBehavior;
  * 
  * @author Matej Knopp
  */
-public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel implements IPageable
+public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel 
+       implements IPageable
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -191,7 +191,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 
 				tag.put("class", klass);
 			}
-		};
+		}
 
 		@Override
 		protected Item<T> newItem(String id, final int index, final IModel<T> model)
@@ -200,7 +200,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel im
 			item.setOutputMarkupId(true);
 			return item;
 		}
-	};
+	}
 
 	protected IModel<T> getDefaultItemModel()
 	{

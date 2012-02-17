@@ -30,8 +30,7 @@ import com.inmethod.grid.common.AbstractGrid;
  */
 public abstract class AbstractColumn<M, I> implements IGridColumn<M, I>
 {
-
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
 	private final String columnId;
 	private final IModel<String> headerModel;
