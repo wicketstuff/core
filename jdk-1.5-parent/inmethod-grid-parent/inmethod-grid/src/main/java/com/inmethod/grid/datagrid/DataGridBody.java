@@ -27,7 +27,7 @@ import com.inmethod.grid.common.AttachPrelightBehavior;
  * 
  * @author Matej Knopp
  */
-public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
+public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel 
        implements IPageable
 {
 	private static final long serialVersionUID = 1L;
@@ -73,12 +73,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
   protected Item createItem(long index, final IModel<T> rowModel)
   { return getData().createItem(index, rowModel); }
 
-	long getTotalRowCount()
-	{	
-    return getData().getTotalRowCount(); 
-  }
-  
-  void clearCache() 
+	void clearCache() 
   { 
     getData().clearCache(); 
   }

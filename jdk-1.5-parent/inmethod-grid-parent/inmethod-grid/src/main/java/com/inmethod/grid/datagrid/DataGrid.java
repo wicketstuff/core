@@ -413,7 +413,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 		}
 		dirtyItems = null;
 	}
-
+	
 	/**
   * Insert the rowData into the grid
   *

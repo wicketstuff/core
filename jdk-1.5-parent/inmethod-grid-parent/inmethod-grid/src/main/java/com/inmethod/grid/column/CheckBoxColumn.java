@@ -2,7 +2,8 @@ package com.inmethod.grid.column;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.IAjaxCallDecorator;
+import org.apache.wicket.ajax.calldecorator.CancelEventIfNoAjaxDecorator;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -268,7 +269,6 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 
 			WebMarkupContainer checkbox = new WebMarkupContainer("checkbox")
 			{
-
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -328,7 +328,7 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 					getGrid().update();
 				}
 
-				@Override
+        @Override
 				protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 				{
 					super.updateAjaxAttributes(attributes);
