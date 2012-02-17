@@ -84,15 +84,14 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.request.cycle.RequestCycle;
 
 import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.column.AbstractColumn;
 
 public abstract class EditableCellPanel<M, I, P> extends Panel
 {
-
 	private static final long serialVersionUID = 1L;
+
 	private final AbstractColumn<M, I> column;
 
 	public EditableCellPanel(String id, AbstractColumn<M, I> column, IModel<I> rowModel)
@@ -140,12 +139,16 @@ public abstract class EditableCellPanel<M, I, P> extends Panel
 		return (IModel<I>)getDefaultModel();
 	}
 
+  /** @return boolean indicating visibility determined
+   * by if the field has been edited or not
+   */
 	@Override
 	public boolean isVisible()
 	{
 		return column.getGrid().isItemEdited(getDefaultRowModel());
 	}
 
+  //TODO: javadoc comment this
 	protected abstract FormComponent<P> getEditComponent();
 
 >>>>>>> [InMethod Grid] Temporarily move back to jdk-1.5-parent to facilitate an easier cherry-pick of the Appendable Changes.

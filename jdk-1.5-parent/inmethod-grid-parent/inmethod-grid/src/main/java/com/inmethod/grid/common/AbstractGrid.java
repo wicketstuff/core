@@ -1097,17 +1097,15 @@ import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.attributes.AjaxCallListener;
-import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
-import org.apache.wicket.ajax.attributes.JavaScriptPrecondition;
+import org.apache.wicket.ajax.IAjaxCallDecorator;
+import org.apache.wicket.ajax.WicketAjaxReference;
+import org.apache.wicket.ajax.calldecorator.AjaxCallDecorator;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.head.CssHeaderItem;
-import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.WicketEventReference;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -1117,7 +1115,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.resource.CoreLibrariesContributor;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.visit.IVisit;
@@ -1172,7 +1169,6 @@ public abstract class AbstractGrid<M, I> extends Panel
 
 		WebMarkupContainer bodyContainer = new WebMarkupContainer("bodyContainer")
 		{
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -1189,7 +1185,8 @@ public abstract class AbstractGrid<M, I> extends Panel
 		form.add(bodyContainer);
 		bodyContainer.setOutputMarkupId(true);
 
-		bodyContainer.add(new Label("firstRow", new EmptyRowModel()).setEscapeModelStrings(false));
+		bodyContainer.add(new Label("firstRow", new EmptyRowModel())
+                 .setEscapeModelStrings(false));
 
 		add(topToolbarContainer = new RepeatingView("topToolbarContainer"));
 		add(bottomToolbarContainer = new RepeatingView("bottomToolbarContainer"));
@@ -1218,7 +1215,8 @@ public abstract class AbstractGrid<M, I> extends Panel
 				super.afterRender(component);
 
 				AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-				if (ajaxRequestTarget != null) {
+				if (ajaxRequestTarget != null) 
+        {
 					ajaxRequestTarget.appendJavaScript(getInitializationJavascript());
 				}
 			}
@@ -1232,7 +1230,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	public Form<Void> getForm()
 	{
 		return (Form<Void>)get("form");
-	};
+	}
 
 	/**
 	 * Checks whether the column is a valid grid column
@@ -1309,7 +1307,6 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 */
 	private class SubmitColumnStateBehavior extends AbstractDefaultAjaxBehavior
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -1325,8 +1322,8 @@ public abstract class AbstractGrid<M, I> extends Panel
 
 			onColumnStateChanged();
 		}
-
-		@Override
+    
+    @Override
 		protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 		{
 			super.updateAjaxAttributes(attributes);
@@ -1335,6 +1332,9 @@ public abstract class AbstractGrid<M, I> extends Panel
 			attributes.getDynamicExtraParameters().add(columnStateParameter);
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public CharSequence getCallbackScript()
 		{
@@ -1517,7 +1517,6 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 */
 	private class Header extends ColumnsHeader<M, I>
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		private Header(String id)
@@ -1547,7 +1546,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 			onSortStateChanged(target);
 		}
 
-	};
+	}
 
 	/**
 	 * Invoked when sort state of this grid has changed (e.g. user clicked a sortable column
@@ -1591,13 +1590,13 @@ public abstract class AbstractGrid<M, I> extends Panel
 			}
 			sb.append("\n");
 		}
-		;
+
 		sb.append("];\n");
 
 		// method that calls the proper listener when column state is changed
-		sb.append("var submitStateCallback = ");
+		sb.append("var submitStateCallback = function(columnState) { ");
 		sb.append(submitColumnStateBehavior.getCallbackScript());
-		sb.append("\n");
+		sb.append(" }\n");
 
 		// initialization
 		sb.append("InMethod.XTableManager.instance.register(\"" + getMarkupId() +
@@ -1605,7 +1604,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 		sb.append("})();\n");
 
 		return sb.toString();
-	};
+	}
 
 	/**
 	 * Returns collection of currently visible columns.
@@ -1647,7 +1646,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 			sortState = new GridSortState(this);
 		}
 		return sortState;
-	};
+	}
 
 	/**
 	 * Constant for the Vista theme (default).
@@ -1858,7 +1857,6 @@ public abstract class AbstractGrid<M, I> extends Panel
 
 		rowComponent.add(new AjaxFormSubmitBehavior(getForm(), "click")
 		{
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -1876,7 +1874,6 @@ public abstract class AbstractGrid<M, I> extends Panel
 			@Override
 			protected void onEvent(AjaxRequestTarget target)
 			{
-
 				// preserve the entered values in form components
 				Form<?> form = super.getForm();
 				form.visitFormComponentsPostOrder(new IVisitor<FormComponent<?>, Void>()
@@ -1914,8 +1911,8 @@ public abstract class AbstractGrid<M, I> extends Panel
 
 				onRowClicked(target, model);
 			}
-
-			@Override
+      
+      @Override
 			protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 			{
 				super.updateAjaxAttributes(attributes);
