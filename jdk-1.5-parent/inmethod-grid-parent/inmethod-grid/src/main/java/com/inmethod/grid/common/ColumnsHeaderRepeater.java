@@ -224,8 +224,10 @@ import java.util.Iterator;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.IMarkupFragment;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.Strings;
@@ -245,7 +247,6 @@ import com.inmethod.grid.IGridSortState;
  */
 public abstract class ColumnsHeaderRepeater<M, I> extends WebMarkupContainer
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -317,6 +318,12 @@ public abstract class ColumnsHeaderRepeater<M, I> extends WebMarkupContainer
 					add(panel);
 				}
 			}
+      if (column.getWrapText() )
+      {
+        get(componentId)
+          .add(new AttributeAppender("style",
+                                     Model.of("white-space: normal;"), "; "));
+      }
 		}
 		super.onBeforeRender();
 	}
@@ -352,7 +359,6 @@ public abstract class ColumnsHeaderRepeater<M, I> extends WebMarkupContainer
 	@Override
 	protected void onRender()
 	{
-
 		Response response = RequestCycle.get().getResponse();
 
 		Collection<IGridColumn<M, I>> columns = getActiveColumns();
