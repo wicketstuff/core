@@ -23,9 +23,9 @@ import com.inmethod.grid.IGridSortState;
  * 
  * @author Matej Knopp
  */
-public abstract class AbstractPageableView<T> extends RefreshingView<T> implements IPageable
+public abstract class AbstractPageableView<T> extends RefreshingView<T>
+       implements IPageable
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -63,7 +63,6 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	public long getTotalRowCount()
 	{
 		initialize();
-
 		return realItemCount;
 	}
 
@@ -75,7 +74,6 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	public int getCurrentPageItemCount()
 	{
 		initialize();
-
 		return queryResult.itemCache.size();
 	}
 
