@@ -3,7 +3,6 @@ package com.inmethod.grid.common;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
 import javax.swing.tree.TreeModel;
 
 import org.apache.wicket.Component;
@@ -82,7 +81,6 @@ public abstract class AbstractGrid<M, I> extends Panel
 
 		WebMarkupContainer bodyContainer = new WebMarkupContainer("bodyContainer")
 		{
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -99,7 +97,8 @@ public abstract class AbstractGrid<M, I> extends Panel
 		form.add(bodyContainer);
 		bodyContainer.setOutputMarkupId(true);
 
-		bodyContainer.add(new Label("firstRow", new EmptyRowModel()).setEscapeModelStrings(false));
+		bodyContainer.add(new Label("firstRow", new EmptyRowModel())
+                 .setEscapeModelStrings(false));
 
 		add(topToolbarContainer = new RepeatingView("topToolbarContainer"));
 		add(bottomToolbarContainer = new RepeatingView("bottomToolbarContainer"));
@@ -142,7 +141,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	public Form<Void> getForm()
 	{
 		return (Form<Void>)get("form");
-	};
+	}
 
 	/**
 	 * Checks whether the column is a valid grid column
@@ -219,7 +218,6 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 */
 	private class SubmitColumnStateBehavior extends AbstractDefaultAjaxBehavior
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -425,7 +423,6 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 */
 	private class Header extends ColumnsHeader<M, I>
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		private Header(String id)
@@ -499,7 +496,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 			}
 			sb.append("\n");
 		}
-		;
+
 		sb.append("];\n");
 
 		// method that calls the proper listener when column state is changed
@@ -513,7 +510,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 		sb.append("})();\n");
 
 		return sb.toString();
-	};
+	}
 
 	/**
 	 * Returns collection of currently visible columns.
@@ -555,7 +552,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 			sortState = new GridSortState(this);
 		}
 		return sortState;
-	};
+	}
 
 	/**
 	 * Constant for the Vista theme (default).
@@ -995,7 +992,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 * Marks the item from the given model as dirty. Dirty items are updated during Ajax requests
 	 * when {@link AbstractGrid#update()} method is called.
 	 * 
-	 * @param itemModel
+	 * @param model
 	 *            model used to access the item
 	 */
 	public abstract void markItemDirty(IModel<I> model);

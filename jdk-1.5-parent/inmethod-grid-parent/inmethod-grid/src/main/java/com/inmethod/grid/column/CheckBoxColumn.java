@@ -75,14 +75,11 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 	{
 		if (!isCheckBoxEnabled(model))
 		{
-
 			tag.put("disabled", "disabled");
-
 		}
 		else if (getGrid() instanceof TreeGrid &&
 			((TreeGrid<?, ?>)getGrid()).isAutoSelectChildren())
 		{
-
 			TreeGrid<?, ?> grid = (TreeGrid<?, ?>)getGrid();
 			Object parent = grid.getTree().getParentNode(model.getObject());
 			if (parent != null && grid.getTreeState().isNodeSelected(parent))

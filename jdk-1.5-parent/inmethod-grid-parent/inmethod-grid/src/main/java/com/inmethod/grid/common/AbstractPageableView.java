@@ -192,6 +192,9 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	 */
 	private transient QueryResult queryResult;
 
+  /** clears the queryResult so  the next use will be forced to re-initialize */
+  public void clearCache() { queryResult = null; }
+
 	/**
 	 * Allows to wrap created query.
 	 * 
@@ -223,16 +226,17 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 			// process the QueryResult
 			queryResult.process(dataSource);
 
-			// check for situation when we didn't get any items, but we know the real count
-			// this is not a case when there are no items at all, just the case when there are no
-// items on current page
+			// check for situation when we didn't get any items,
+			// but we know the real count
+			// this is not a case when there are no items at all,
+			// just the case when there are no items on current page
 			// but possible items on previous pages
 			if (queryResult.itemCache.size() == 0 && realItemCount != UNKOWN_COUNT &&
 				realItemCount != oldItemCount && realItemCount > 0)
 			{
 
-				// the data must have changed, the number of items has been reduced. try move to
-				// last page
+				// the data must have changed, the number of items has been reduced.
+				// try move to the last page
 				int page = getPageCount() - 1;
 				if (page < 0)
 				{
@@ -320,7 +324,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 		{
 			return result.totalCount;
 		}
-	};
+	}
 
 	/**
 	 * Convenience class representing an empty iterator
@@ -354,7 +358,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 		{
 			throw new UnsupportedOperationException();
 		}
-	};
+	}
 
 	/**
 	 * A {@link IQueryResult} implementation
@@ -442,7 +446,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 				realItemCount = totalCount;
 			}
 		}
-	};
+	}
 
 	/**
 	 * Cleanup

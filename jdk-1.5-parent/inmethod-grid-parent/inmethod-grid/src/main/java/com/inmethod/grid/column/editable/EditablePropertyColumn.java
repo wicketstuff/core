@@ -18,7 +18,6 @@ import com.inmethod.grid.column.PropertyColumn;
  */
 public class EditablePropertyColumn<M, I, P> extends PropertyColumn<M, I, P>
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -104,6 +103,16 @@ public class EditablePropertyColumn<M, I, P> extends PropertyColumn<M, I, P>
 		return new PropertyModel<P>(rowModel, getPropertyExpression());
 	}
 
+  /** creates the actual editable version of the cell
+   *
+   * @param componentId
+   *         The non-null id of this component
+   * @param rowModel
+   *          model for given row
+   * @param cellModel
+   *          model for given cell
+   * @return {@link EditableCellPanel} containing a {@link FormComponent}
+   */    
 	protected EditableCellPanel<M, I, P> newCellPanel(String componentId, IModel<I> rowModel,
 		IModel<P> cellModel)
 	{

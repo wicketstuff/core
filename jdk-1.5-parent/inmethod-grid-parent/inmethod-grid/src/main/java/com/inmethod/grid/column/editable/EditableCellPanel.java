@@ -14,8 +14,8 @@ import com.inmethod.grid.column.AbstractColumn;
 
 public abstract class EditableCellPanel<M, I, P> extends Panel
 {
-
 	private static final long serialVersionUID = 1L;
+
 	private final AbstractColumn<M, I> column;
 
 	public EditableCellPanel(String id, AbstractColumn<M, I> column, IModel<I> rowModel)
@@ -58,17 +58,21 @@ public abstract class EditableCellPanel<M, I, P> extends Panel
 		}
 	}
 
-	protected IModel<I> getDefaultRowModel()
+  protected IModel<I> getDefaultRowModel()
 	{
 		return (IModel<I>)getDefaultModel();
 	}
 
+  /** @return boolean indicating visibility determined
+   * by if the field has been edited or not
+   */
 	@Override
 	public boolean isVisible()
 	{
 		return column.getGrid().isItemEdited(getDefaultRowModel());
 	}
 
+  //TODO: javadoc comment this
 	protected abstract FormComponent<P> getEditComponent();
 
 }
