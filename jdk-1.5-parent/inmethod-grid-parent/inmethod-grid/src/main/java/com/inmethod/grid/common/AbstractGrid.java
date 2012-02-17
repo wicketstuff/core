@@ -3,8 +3,10 @@ package com.inmethod.grid.common;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
 import javax.swing.tree.TreeModel;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
@@ -341,7 +343,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 */
 	private void addToolbar(AbstractToolbar<M, I> toolbar, RepeatingView container)
 	{
-    Args.notNull(toolbar, "toolbar");
+    Args.notNull(container, "toolbar");
 
 		// create a container item for the toolbar (required by repeating view)
 		WebMarkupContainer item = new WebMarkupContainer(container.newChildId());
@@ -789,16 +791,16 @@ public abstract class AbstractGrid<M, I> extends Panel
 			{	// preserve the entered values in form components
 				Form<?> form = super.getForm();
 				form.visitFormComponentsPostOrder(new IVisitor<FormComponent<?>, Void>()
-				{
-
-					public void component(FormComponent<?> formComponent, IVisit<Void> visit)
-					{
-						if (formComponent.isVisibleInHierarchy())
-						{
-							formComponent.inputChanged();
-						}
-					}
-				});
+                                              {
+                                                public void component(FormComponent<?> formComponent,
+                                                                      IVisit<Void> visit)
+                                                {
+                                                  if (formComponent.isVisibleInHierarchy())
+                                                  {
+                                                    formComponent.inputChanged();
+                                                  }
+                                                }
+                                              });
 
 				String column = getRequest().getRequestParameters()
                                     .getParameterValue("column").toString();
@@ -835,8 +837,8 @@ public abstract class AbstractGrid<M, I> extends Panel
 				JavaScriptPrecondition precondition = new JavaScriptPrecondition(precon);
 				attributes.getPreconditions().add(precondition);
 			}
-      
-      @Override
+
+			@Override
 			public CharSequence getCallbackUrl()
 			{
 				return getCallbackFunction("col");
