@@ -10,8 +10,9 @@ import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.IAjaxCallDecorator;
-import org.apache.wicket.ajax.calldecorator.AjaxCallDecorator;
+import org.apache.wicket.ajax.attributes.AjaxCallListener;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.attributes.JavaScriptPrecondition;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
@@ -238,18 +239,20 @@ public abstract class AbstractGrid<M, I> extends Panel
 			onColumnStateChanged();
 		}
 
-		/**
-		 * {@inheritDoc}
-		 */
+		@Override
+		protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
+		{
+			super.updateAjaxAttributes(attributes);
+
+			CharSequence columnStateParameter = "return {'columnState': attrs.columnState}";
+			attributes.getDynamicExtraParameters().add(columnStateParameter);
+		}
+
 		@Override
 		public CharSequence getCallbackScript()
 		{
-			// this assumes presence of columnState variable in the surrounding
-			// javacript context
-			return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() +
-				"&columnState=' + columnState");
+			return getCallbackFunction("columnState");
 		}
-
 	};
 
 	/**
@@ -505,9 +508,9 @@ public abstract class AbstractGrid<M, I> extends Panel
 		sb.append("];\n");
 
 		// method that calls the proper listener when column state is changed
-		sb.append("var submitStateCallback = function(columnState) { ");
+		sb.append("var submitStateCallback = ");
 		sb.append(submitColumnStateBehavior.getCallbackScript());
-		sb.append(" }\n");
+		sb.append("\n");
 
 		// initialization
 		sb.append("InMethod.XTableManager.instance.register(\"" + getMarkupId() +
@@ -766,7 +769,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 		if (disableRowClickNotifications())
 			return;
 
-		rowComponent.add(new AjaxFormSubmitBehavior(getForm(), "onclick")
+		rowComponent.add(new AjaxFormSubmitBehavior(getForm(), "click")
 		{
 
 			private static final long serialVersionUID = 1L;
@@ -826,32 +829,24 @@ public abstract class AbstractGrid<M, I> extends Panel
 			}
 
 			@Override
-			public CharSequence getCallbackUrl()
+			protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 			{
-				return super.getCallbackUrl() + "&column='+col+'";
+				super.updateAjaxAttributes(attributes);
+
+				CharSequence columnParameter = "return {'column': Wicket.$(attrs.c).imxtClickedColumn}";
+				attributes.getDynamicExtraParameters().add(columnParameter);
+
+				CharSequence precon = "return InMethod.XTable.canSelectRow(attrs.event);";
+				JavaScriptPrecondition precondition = new JavaScriptPrecondition(precon);
+				attributes.getPreconditions().add(precondition);
 			}
 
 			@Override
-			protected IAjaxCallDecorator getAjaxCallDecorator()
+			public CharSequence getCallbackScript()
 			{
-				return new AjaxCallDecorator()
-				{
-
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public CharSequence decorateScript(Component c, CharSequence script)
-					{
-						return super.decorateScript(
-							c,
-							"if (InMethod.XTable.canSelectRow(event)) { " +
-								"var col=(this.imxtClickedColumn || ''); this.imxtClickedColumn='';" +
-								script + " }");
-					}
-				};
+				return getCallbackFunction("col");
 			}
 		});
-
 	}
 
 	protected boolean onCellClicked(AjaxRequestTarget target, IModel<I> rowModel,
@@ -996,7 +991,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 * Marks the item from the given model as dirty. Dirty items are updated during Ajax requests
 	 * when {@link AbstractGrid#update()} method is called.
 	 * 
-	 * @param itemModel
+	 * @param model
 	 *            model used to access the item
 	 */
 	public abstract void markItemDirty(IModel<I> model);

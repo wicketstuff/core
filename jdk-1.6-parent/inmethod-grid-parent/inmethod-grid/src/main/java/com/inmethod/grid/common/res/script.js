@@ -1517,7 +1517,7 @@ InMethod.XTable.prototype = {
 };
 
 InMethod.XTable.canSelectRow = function(event) {
-	var e = Wicket.fixEvent(event);
+	var e = Wicket.Event.fix(event);
 	var element = e.target ? e.target : e.srcElement;
 	
 	while (element != null && element != document.documentElement) {
@@ -1608,7 +1608,7 @@ function findParent(node, tagName)  {
 
 onKeyEvent = function(element, event) {
 	
-	var e = Wicket.fixEvent(event)
+	var e = Wicket.Event.fix(event)
 	var key = event.keyCode;
 	
 	if (key == 13 || key == 27) {					
@@ -1652,7 +1652,7 @@ InMethod.editKeyUp = function(element, event) {
 		onKeyEvent(element, event);
 	}
 	
-	var e = Wicket.fixEvent(event)
+	var e = Wicket.Event.fix(event)
 	var key = event.keyCode;
 	
 	if (key == 13 || key == 27) {
@@ -1668,7 +1668,7 @@ InMethod.editKeyPress = function(element, event) {
 		return onKeyEvent(element, event);
 	}
 	
-	var e = Wicket.fixEvent(event)
+	var e = Wicket.Event.fix(event)
 	var key = event.keyCode;
 	
 	if (key == 13 || key == 27) {
