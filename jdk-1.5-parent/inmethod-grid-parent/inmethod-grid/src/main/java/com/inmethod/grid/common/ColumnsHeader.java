@@ -20,7 +20,6 @@ import com.inmethod.grid.IGridColumn;
  */
 public abstract class ColumnsHeader<M, I> extends Panel
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**

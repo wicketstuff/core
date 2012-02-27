@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	       xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+	                           http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -25,13 +27,18 @@
 				<configuration>
 					<instructions>
 						<Export-Package>
-							com.inmethod.grid, com.inmethod.grid.treegrid, com.inmethod.grid.column,com.inmethod.grid.column.editable, com.inmethod.grid.column.tree,com.inmethod.grid.common, com.inmethod.grid.datagrid
+							com.inmethod.grid, com.inmethod.grid.treegrid,
+              com.inmethod.grid.column,com.inmethod.grid.column.editable,
+              com.inmethod.grid.column.tree,com.inmethod.grid.common,
+              com.inmethod.grid.datagrid
 						</Export-Package>
-						<Import-Package>javax.swing.tree, org.apache.wicket*
-						</Import-Package>
-						<Bundle-SymbolicName>${project.groupId}.${project.artifactId};singleton:=true
+						<Import-Package>javax.swing.tree, org.apache.wicket*</Import-Package>
+						<Bundle-SymbolicName>
+              ${project.groupId}.${project.artifactId};singleton:=true
 						</Bundle-SymbolicName>
-						<Bundle-RequiredExecutionEnvironment>J2SE-1.5,JavaSE-1.6</Bundle-RequiredExecutionEnvironment>
+						<Bundle-RequiredExecutionEnvironment>
+              J2SE-1.5,JavaSE-1.6
+            </Bundle-RequiredExecutionEnvironment>
 					</instructions>
 				</configuration>
 			</plugin>

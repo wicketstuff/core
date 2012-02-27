@@ -23,9 +23,9 @@ import com.inmethod.grid.IGridSortState;
  * 
  * @author Matej Knopp
  */
-public abstract class AbstractPageableView<T> extends RefreshingView<T> implements IPageable
+public abstract class AbstractPageableView<T> extends RefreshingView<T>
+       implements IPageable
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -63,7 +63,6 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	public int getTotalRowCount()
 	{
 		initialize();
-
 		return realItemCount;
 	}
 
@@ -75,7 +74,6 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	public int getCurrentPageItemCount()
 	{
 		initialize();
-
 		return queryResult.itemCache.size();
 	}
 
@@ -140,7 +138,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 				count -= mod;
 
 				// get the actual page count
-				cachedPageCount = count / rowsPerPage + (mod > 0 ? 1 : 0);
+				cachedPageCount = (count / rowsPerPage) + (mod > 0 ? 1 : 0);
 			}
 		}
 		return cachedPageCount;
@@ -154,7 +152,6 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	 */
 	public void setCurrentPage(int page)
 	{
-
 		int pageCount = getPageCount();
 		if (page < 0 || page >= pageCount && pageCount > 0)
 		{
@@ -192,6 +189,9 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	 */
 	private transient QueryResult queryResult;
 
+  /** clears the queryResult cache so the next use will be forced to re-initialize */
+  public void clearCache() { queryResult = null; }
+
 	/**
 	 * Allows to wrap created query.
 	 * 
@@ -223,16 +223,16 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 			// process the QueryResult
 			queryResult.process(dataSource);
 
-			// check for situation when we didn't get any items, but we know the real count
-			// this is not a case when there are no items at all, just the case when there are no
-// items on current page
+			// check for situation when we didn't get any items,
+			// but we know the real count
+			// this is not a case when there are no items at all,
+			// just the case when there are no items on current page
 			// but possible items on previous pages
 			if (queryResult.itemCache.size() == 0 && realItemCount != UNKOWN_COUNT &&
-				realItemCount != oldItemCount && realItemCount > 0)
+				  realItemCount != oldItemCount && realItemCount > 0)
 			{
-
-				// the data must have changed, the number of items has been reduced. try move to
-				// last page
+				// the data must have changed, the number of items has been reduced. 
+				// try move to last page
 				int page = getPageCount() - 1;
 				if (page < 0)
 				{
@@ -278,7 +278,6 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 		 */
 		public int getCount()
 		{
-
 			int totalCount = getTotalCount();
 			int rowsPerPage = getRowsPerPage();
 
@@ -320,7 +319,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 		{
 			return result.totalCount;
 		}
-	};
+	}
 
 	/**
 	 * Convenience class representing an empty iterator
@@ -354,7 +353,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 		{
 			throw new UnsupportedOperationException();
 		}
-	};
+	}
 
 	/**
 	 * A {@link IQueryResult} implementation
@@ -364,6 +363,8 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	private class QueryResult implements IQueryResult<T>
 	{
 		// start with empty items
+    //TODO: wouldn't the Collections.Empty List constant be better ex follows? - Tom Burton(Raystorm)
+    //private Iterator<? extends T> altItems = Collections.<T>emptyList().iterator();
 		private Iterator<? extends T> items = new EmptyIterator<T>();
 
 		// and actual total count (could be UNKNOWN)
@@ -442,7 +443,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 				realItemCount = totalCount;
 			}
 		}
-	};
+	}
 
 	/**
 	 * Cleanup
@@ -479,7 +480,6 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	{
 		if (currentPageFirstItem != currentItem)
 		{
-
 			if (maxFirstItemReached < currentItem)
 			{
 				maxFirstItemReached = currentItem;
@@ -493,7 +493,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T> implemen
 	private int getCurrentPageFirstItem()
 	{
 		int rowsPerPage = getRowsPerPage();
-		return currentPageFirstItem - currentPageFirstItem % rowsPerPage;
+		return currentPageFirstItem - (currentPageFirstItem % rowsPerPage);
 	}
 
 }

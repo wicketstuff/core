@@ -1,7 +1,10 @@
 .settings
 .project
-target/
 .classpath
+target/
+velocity.log
 *.i[mpw][lrs]
 META-INF
 .scala_dependencies
+.externalToolBuilders
+*~
