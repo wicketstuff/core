@@ -11,8 +11,6 @@ import org.apache.wicket.model.ResourceModel;
 
 import com.inmethod.grid.IDataSource;
 import com.inmethod.grid.datagrid.DataGrid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Created by IntelliJ IDEA.
@@ -30,9 +28,6 @@ import org.slf4j.LoggerFactory;
 public class AddRecordsToolbar<D extends IDataSource<T>, T extends Serializable>
        extends AbstractToolbar<D, T>
 {
-  private static final Logger log = LoggerFactory
-                                          .getLogger(AddRecordsToolbar.class);
-
   private static final IModel<String> ADD_BUTTON_MODEL =
              new ResourceModel("datagrid.add-new-item", "Add New Item");
 
