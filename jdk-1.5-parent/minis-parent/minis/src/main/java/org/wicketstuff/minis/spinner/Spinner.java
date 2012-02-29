@@ -183,7 +183,7 @@ public class Spinner extends AbstractBehavior
 			else
 			{
 				sb.append(':');
-				sb.append(Strings.toEscapedUnicode(String.valueOf(value)));
+				sb.append(String.valueOf(value)); // no Strings.toEscapedUnicode for properties like afterUpdate, ... that need to evaluate as JS functions, not strings
 			}
 			if (it.hasNext())
 				sb.append(',');
