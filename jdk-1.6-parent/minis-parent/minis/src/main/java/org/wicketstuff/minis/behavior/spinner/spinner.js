@@ -283,6 +283,7 @@ Wicket.Spinner.prototype = {
     this.updateValue(1);
     this.timeout = window.setTimeout(this.createDelegate(this.increment, this), this.getSpeed());
     this.options.onIncrement(this);
+    this.checkInputReplacement();
   },
   /**
    * Decrement the value
@@ -293,6 +294,14 @@ Wicket.Spinner.prototype = {
     this.updateValue(-1);
     this.timeout = window.setTimeout(this.createDelegate(this.decrement, (this)), this.getSpeed());
     this.options.onDecrement(this);
+    this.checkInputReplacement();
+  },
+  /**
+    * If the input element is replaced by Ajax while incrementing/decrementing using timer, that timer needs to get stopped
+    * or it will enter an endless loop of increment/decrement (no mouse out/key up will come to stop it rescheduling itself).
+    */
+  checkInputReplacement: function() {
+   	if (this.inputElement != this.get(this.inputElement.id)) this.stop();
   },
   /**
    * Get the delay for the next timeout
