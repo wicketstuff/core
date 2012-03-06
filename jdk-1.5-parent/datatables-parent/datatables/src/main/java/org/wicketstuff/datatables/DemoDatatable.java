@@ -4,7 +4,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.markup.html.PackageResourceReference;
 
 public class DemoDatatable extends WebMarkupContainer {
 
