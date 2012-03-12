@@ -1,0 +1,540 @@
+div.imxt-container1 {
+	overflow: hidden;
+	width: 100%;	
+}
+
+/* in case the grid is placed in another table make sure that it's all in table-layout:fixed */
+table.imxt-container-table {
+	table-layout:fixed; 
+	padding:0px;
+	margin:0px;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+table.imxt-container-table tr.imxt-container-table {
+	margin: 0px;
+	padding: 0px;
+}
+
+table.imxt-container-table td.imxt-container-table {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;	
+}
+
+div.imxt-head-container2 {
+	overflow:scroll;
+}
+
+div.imxt-head-container2 {
+	overflow: hidden;
+	width: 100%;
+	position: relative;
+}
+
+table.imxt-head,
+table.imxt-body {
+	table-layout: fixed;
+	empty-cells: show;
+	border-collapse: collapse;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+table.imxt-head th a.imxt-sort-header {
+	display: block;
+	text-decoration: none;
+	overflow: hidden;
+}
+
+table.imxt-head th a.imxt-sort-header-asc div.imxt-sort-header1 {
+	background-image: url("img/sort_asc.gif");
+	background-repeat: no-repeat;
+	background-position: right;
+		
+}
+
+table.imxt-head th a.imxt-sort-header-desc div.imxt-sort-header1 {
+	background-image: url("img/sort_desc.gif");
+	background-repeat: no-repeat;
+	background-position: right;
+	
+}
+
+table.imxt-head th {	
+    padding: 0px;
+    margin: 0px;    
+    cursor: default;    
+}
+
+table.imxt-head tr.imxt-columns th * {
+	white-space: nowrap;
+}
+
+table.imxt-head th a.imxt-handle {
+	position:absolute; 
+	width: 5px; 
+	height: 400px;         		
+	right: 0px;
+	_right: -1px;
+	top: 0px;	
+	cursor: e-resize !important;        	        		
+	display: block;
+	padding: 0px;
+	margin: 0px;
+	
+	/* this is necessary for IE */
+	background-color: black;
+	opacity: 0;
+	filter: alpha(opacity=0);	        
+}
+
+table.imxt-head tr.imxt-prelight a.imxt-handle {
+	opacity: 0.05; 
+	filter: alpha(opacity=5); 	
+	
+}
+table.imxt-head tr.imxt-prelight th.imxt-prelight a.imxt-handle {
+/*	opacity: 0.2; 
+	filter: alpha(opacity=20); */ 		
+}
+
+table.imxt-head tr.imxt-prelight th a.imxt-handle:hover, 
+table.imxt-head tr.imxt-prelight th.imxt-dragging a.imxt-handle {
+	opacity: 0.1; 
+	filter: alpha(opacity=10);	
+	
+}
+
+table.imxt-head tr.imxt-dragging * {
+	cursor: e-resize;
+}
+
+th.imxt-padding,
+td.imxt-padding {
+	border-right-width: 0px !important;
+	padding: 0px;
+	margin: 0px;
+	overflow: hidden;
+	width: 100%;
+}
+
+table.imxt-head th div.imxt-a {
+	position: relative;	
+	overflow: hidden;
+}
+
+table.imxt-head th div.imxt-b {
+	overflow: hidden;
+	width: 100%;
+}
+
+div.imxt-body-container1 {
+	overflow: auto;
+}
+
+table.imxt-body td {
+	overflow: hidden;
+    padding: 0px;
+    margin: 0px;
+}
+
+table.imxt-body tr.imxt-empty-row td {
+	border-right: 1px none black;
+
+}
+
+table.imxt-body tr.imxt-empty-row * {			
+	border-top-width: 0px !important;
+	border-bottom-width: 0px !important;	
+	padding: 0px !important;
+	margin: 0px !important;
+}
+
+
+a#imxt-arrow-up,
+a#imxt-arrow-down {
+	z-index: 99999;
+	display: block;
+	position: absolute;
+	overflow: hidden;
+	width: 16px;
+	height: 16px;
+	background-repeat: no-repeat; 	
+}
+
+a#imxt-arrow-up {	
+	background-image: url("img/arrow_up.gif"); 	
+}
+
+a#imxt-arrow-down {
+	background-image: url("img/arrow_down.gif");
+}
+
+div#imxt-drag-proxy {
+	border-top: 1px solid #81B9CF;
+	border-bottom: 1px solid #81B9CF;
+	opacity: 0.3;
+	filter: alpha(opacity=30);
+	position: absolute;
+	z-index: 99999;
+}
+div#imxt-drag-proxy1 {
+	background-color: #E3F7FF;
+	border-left: 1px solid #81B9CF;
+	border-right: 1px solid #81B9CF;
+}
+
+div#imxt-resize-proxy {
+	padding: 0px;
+	margin: 0px;
+	width: 2px;
+	/*
+	opacity: 0.3;
+	filter: alpha(opacity=30);
+	*/
+	position: absolute;
+	z-index: 99999;
+	background-color: #95D7EF;
+}
+
+div.imxt-wrap div,
+div.imxt-wrap {
+	white-space: normal;
+	overflow: hidden;
+}
+
+div.imxt-nowrap div,
+div.imxt-nowrap {
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+table.imxt-tree-content {
+	border-collapse: collapse;
+	empty-cells: show;
+	padding: 0px;
+	margin: 0px;
+	width: 100%;
+}
+
+table.imxt-tree-content td.imxt-main {
+	width: 100%;
+}
+
+table.imxt-tree-content,
+table.imxt-tree-content td,
+table.imxt-tree-content tr,
+table.imxt-tree-content th {
+	padding: 0px;
+	margin: 0px;
+}
+
+table.imxt-tree-content td.imxt-spacer {
+	width: 18px;
+	height: 100%;
+}
+
+table.imxt-tree-content td.imxt-spacer span {
+	display: block;
+	width: 18px;
+	height: 18px;
+}
+
+
+table.imxt-tree-content a.imxt-junction-open,
+table.imxt-tree-content a.imxt-junction-closed {
+	width: 16px;
+	height: 16px;
+	display: block;	
+	margin: 1px; padding: 0px; border-width: 0px;
+	-moz-outline: none;
+}
+
+table.imxt-tree-content a.imxt-junction-open,
+table.imxt-tree-content a.imxt-junction-closed {
+	background-image: url("img/tree-arrows.gif");
+	background-repeat: no-repeat;
+}
+
+table.imxt-tree-content a.imxt-junction-open {
+	background-position: -32px 0px;
+}
+
+table.imxt-tree-content a.imxt-junction-open:hover {
+	background-position: -48px 0px;
+}
+
+table.imxt-tree-content a.imxt-junction-closed {
+	background-position: 0px;
+}
+
+table.imxt-tree-content a.imxt-junction-closed:hover {
+	background-position: -16px;
+}
+
+img.imxt-tree-icon {
+	border-width: 0px;
+	padding: 0px;
+	margin: 0px;
+	display: block;
+}
+
+table.imxt-head div.imxt-select-container {
+	text-align: center; 
+	padding-right: 0.2em; 
+	overflow: hidden; 
+	vertical-align: middle; 
+	height: 1.2em;
+}
+
+table.imxt-body div.imxt-select-container {
+	text-align: center; 
+	padding-right: 0.2em;
+}
+
+div.imxt-ie table.imxt-head div.imxt-select-container1 {
+	margin-top: -0.2em;
+}
+
+div.imxt-ff table.imxt-head div.imxt-select-container1 {
+	margin-top: -0.1em;
+}
+
+.imxt-selectable table.imxt-body tr div {
+	cursor: default;
+}
+
+.imxt-selectable tr div a {
+	cursor: pointer;
+}
+
+div.imxt-navigator-toolbar {
+	background-color: #fcfcfc;
+	padding-left: 0.4em;
+}
+
+div.imxt-top-toolbar-container div.imxt-navigator-toolbar {
+	border-bottom: 1px solid #eee;
+}
+
+div.imxt-bottom-toolbar-container div.imxt-navigator-toolbar {
+	border-top: 1px solid #eee;
+}
+
+div.imxt-paging-navigator {
+	overflow:hidden;
+	_height: 0.1%;
+	padding-top: 0.1em;
+	padding-bottom: 0.1em;	
+	float:left;		
+}
+div.imxt-paging-navigator em {
+	font-style: normal;
+	display: block;			
+	color: #aaa;		
+}
+div.imxt-paging-navigator .imxt-navigator-float {
+	float: left;			
+}
+.imxt-paging-navigator-button {
+	padding: 0.0em 0.3em;
+	border: 1px solid transparent;
+	_border: 1px solid #FCFCFC;	
+}
+a.imxt-paging-navigator-button {
+	text-decoration: none;
+	color: black;
+	-moz-outline: none;
+}
+	
+span.imxt-navigator-float span.imxt-paging-navigator-button {
+	border: 1px solid #95D5EF;
+	background-color: #E3F7FF;
+	margin: 0px;			
+}
+
+span.imxt-navigator-float span.imxt-paging-navigator-button em {
+	color: black;
+}
+
+a.imxt-paging-navigator-button:hover {			
+	background-color: #EFFAFF;
+	border: 1px solid #CFF1FF;
+	margin: 0px;
+}
+
+div.imxt-no-records-toolbar {
+	padding: 1em;
+}
+
+td.imxt-no-padding-cell {
+	padding: 0px !important;
+}
+
+div.imxt-edit img {	
+	border-width: 0px;
+	padding: 0px;
+	margin: 0px;
+	display: block;
+	float: left;	
+}
+
+div.imxt-edit a.imxt-edit-submit img {
+	margin-right: 4px;
+}
+
+form.imxt-form {
+	border-width: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+
+fieldset.imxt-fieldset {
+	border-width: 0px;
+	margin: 0px;
+	padding: 0px;	
+}
+
+/*
+ * Vista theme
+ */
+div.imxt-vista {
+	background-color: white;
+	border: 1px solid #ddd;
+}
+
+div.imxt-vista div.imxt-head-container {
+	border-top: 1px solid white;
+	border-bottom: 1px solid #bbb;
+}
+
+div.imxt-vista div.imxt-head-container1 {
+	background-color: #F7F8FA;
+}
+
+div.imxt-vista div.imxt-body-container1 {
+	
+}
+
+div.imxt-vista table.imxt-head th div.imxt-a {
+	padding-top: 0.2em;
+	padding-bottom: 0.2em;	
+	padding-left: 0.2em;
+	
+	text-align: left;
+}
+
+
+div.imxt-vista table.imxt-head tr.imxt-columns {
+	background-color: white;
+	background-repeat: repeat-x;
+	background-position: bottom;
+	background-image: url("img/vista-bg-grey.png");
+}
+
+div.imxt-vista table.imxt-head th {	
+	border-right: 1px solid #ddd;
+	background-position: bottom;
+	background-repeat: repeat-x; 	
+	font-weight: normal;
+	color: black;		
+}
+
+div.imxt-vista table.imxt-head th a.imxt-sort-header {
+	color: black;
+}
+
+div.imxt-vista table.imxt-head th.imxt-prelight a.imxt-sort-header:hover {
+	color: blue;	
+}
+
+div.imxt-vista table.imxt-head th.imxt-sorted {
+	background-color: #F2F9FC;	
+	background-image: url("img/vista-bg-blue1.png");	
+}
+
+div.imxt-vista table.imxt-head th.imxt-prelight {
+	background-color: #E3F7FF;
+	background-image: url("img/vista-bg-blue2.png");
+}
+
+
+
+div.imxt-vista table.imxt-head th.imxt-padding div.imxt-a {
+	border-right: none;
+}
+
+div.imxt-vista tr.imxt-odd {
+	background-color: #fbfbfb;
+	
+}
+
+div.imxt-vista tr.imxt-even td.imxt-sorted {
+	background-color: #f9f9f9;
+}
+
+div.imxt-vista tr.imxt-odd td.imxt-sorted {
+	background-color: #f6f6f6;
+}
+
+div.imxt-vista tr.imxt-prelight td.imxt-cell,
+div.imxt-vista tr.imxt-prelight td.imxt-sorted {	
+	background-color: #EFFAFF
+}
+
+div.imxt-vista tr.imxt-grid-row:hover td.imxt-cell,
+div.imxt-vista tr.imxt-grid-row:hover td.imxt-sorted {	
+	background-color: #EFFAFF
+}
+
+
+div.imxt-vista tr.imxt-selected td.imxt-cell,
+div.imxt-vista tr.imxt-selected td.imxt-sorted,
+div.imxt-vista tr.imxt-selected:hover td.imxt-cell,
+div.imxt-vista tr.imxt-selected:hover td.imxt-sorted {
+	background-color: #DFF1FF;
+	border-bottom: 1px solid #f9f9f9;
+}
+
+div.imxt-vista td.imxt-cell {
+	border-right: 1px solid #ddd;
+	padding-top: 0.1em;
+	padding-bottom: 0.1em;
+	padding-left: 0.2em;
+	border-bottom: 1px solid #eee;		
+}
+
+div.imxt-vista td.imxt-select {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+div.imxt-vista tr.imxt-odd, 
+div.imxt-vista tr.imxt-even {
+	
+}
+
+div.imxt-vista table.imxt-body td.imxt-prelight,
+div.imxt-vista table.imxt-body tr:hover td.imxt-prelight {
+	background-color: #BFE4FF;
+}
+
+div.imxt-vista table.imxt-body td.imxt-edited-cell {
+	
+}
+
+div.imxt-vista table.imxt-body td.imxt-edited-cell input {
+	border-width: 0px; padding: 0px; margin:0px; width: 100%; background-color: white; display: block; float:left;
+}
+
+div.imxt-vista table.imxt-body td.imxt-edited-cell input.imxt-invalid {
+	background-color: #FFF2CC;
+}
+
+div.imxt-grid tr {
+	/* try to turn on has layout on IE, helps a lot with IE6, less with IE7 */ 
+	_height: 0.1% !important;	
+}
