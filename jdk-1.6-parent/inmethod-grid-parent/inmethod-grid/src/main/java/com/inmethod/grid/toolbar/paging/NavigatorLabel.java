@@ -16,13 +16,12 @@
  */
 package com.inmethod.grid.toolbar.paging;
 
-import org.apache.wicket.IClusterable;
+import com.inmethod.grid.IDataSource;
+import com.inmethod.grid.datagrid.DataGrid;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
-
-import com.inmethod.grid.IDataSource;
-import com.inmethod.grid.datagrid.DataGrid;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Label that provides Showing x to y of z message given for a DataGrid. The message can be

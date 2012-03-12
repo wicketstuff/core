@@ -6,6 +6,8 @@ package com.inmethod.grid.common;
 import java.util.Collection;
 import java.util.Iterator;
 
+import com.inmethod.grid.IGridColumn;
+import com.inmethod.grid.IGridSortState;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.IMarkupFragment;
@@ -13,9 +15,6 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.Strings;
-
-import com.inmethod.grid.IGridColumn;
-import com.inmethod.grid.IGridSortState;
 
 /**
  * Repeater that contains column header components.

@@ -7,10 +7,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.wicket.IClusterable;
-import org.apache.wicket.util.lang.WicketObjects;
-
 import com.inmethod.grid.IGridColumn;
+import org.apache.wicket.util.io.IClusterable;
+import org.apache.wicket.core.util.lang.WicketObjects;
 
 /**
  * Manages the state (visibility, order and size) of grid columns.

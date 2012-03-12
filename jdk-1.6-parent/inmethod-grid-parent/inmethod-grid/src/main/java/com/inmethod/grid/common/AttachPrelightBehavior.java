@@ -8,7 +8,7 @@ import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebRequest;
-import org.apache.wicket.util.string.JavaScriptUtils;
+import org.apache.wicket.core.util.string.JavaScriptUtils;
 
 /**
  * When a single item is (rendered using Ajax this behavior makes sure that it has the prelight

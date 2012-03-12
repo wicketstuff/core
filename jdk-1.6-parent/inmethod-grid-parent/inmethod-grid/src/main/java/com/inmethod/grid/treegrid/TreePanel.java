@@ -3,8 +3,9 @@ package com.inmethod.grid.treegrid;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 
+import com.inmethod.icon.Icon;
+import com.inmethod.icon.IconImage;
 import org.apache.wicket.Component;
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
@@ -16,9 +17,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
-
-import com.inmethod.icon.Icon;
-import com.inmethod.icon.IconImage;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Represents the content of a tree column cell.
