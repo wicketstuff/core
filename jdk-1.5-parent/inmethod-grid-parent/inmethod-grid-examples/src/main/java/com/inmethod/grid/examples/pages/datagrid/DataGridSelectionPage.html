@@ -1,0 +1,23 @@
+<wicket:extend xmlns:wicket="http://wicket.apache.org">
+	<div wicket:id="grid">
+	</div>
+	<br/>
+	
+	<div class="option">
+		<span class="label">Clean selection on page change:</span> 
+		<a wicket:id="cleanSelectionOnPageChangeOn">Yes</a>
+		<a wicket:id="cleanSelectionOnPageChangeOff">No</a>
+	</div>
+	<div class="option">
+		<span class="label">Allow selecting multiple items:</span> 
+		<a wicket:id="selectMultipleOn">Yes</a>
+		<a wicket:id="selectMultipleOff">No</a>
+	</div>
+	
+	<div>
+		<span class="label">Selected items:</span>
+		<span wicket:id="currentSelection">
+		</span>
+	</div>
+	
+</wicket:extend>
