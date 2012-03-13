@@ -19,6 +19,7 @@
 	</description>
 
 	<modules>
+		<module>annotation</module> 
 		<module>autocomplete-tagit-parent</module>
 		<module>browserid-parent</module>
 		<module>console-parent</module>
@@ -52,7 +53,6 @@
 
 		<!-- <module>scala-extensions-parent</module> -->
 		<!-- <module>jquery-parent</module> -->
-		<!-- <module>annotation</module> -->
 		<!-- <module>calendarviews-parent</module> -->
 		<!-- <module>client-and-server-validation</module> -->
 		<!-- <module>eidogo-parent</module> -->

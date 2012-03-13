@@ -21,7 +21,7 @@ import junit.framework.TestCase;
 import org.apache.wicket.Page;
 import org.apache.wicket.request.IRequestMapper;
 import org.apache.wicket.request.component.IRequestablePage;
-import org.apache.wicket.request.mapper.MountedMapper;
+import org.apache.wicket.core.request.mapper.MountedMapper;
 import org.wicketstuff.annotation.mount.MountPath;
 
 /**
