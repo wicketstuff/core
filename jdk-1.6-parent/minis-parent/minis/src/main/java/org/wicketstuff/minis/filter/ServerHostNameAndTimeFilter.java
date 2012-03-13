@@ -16,8 +16,8 @@
  */
 package org.wicketstuff.minis.filter;
 
-import static org.apache.wicket.util.string.JavaScriptUtils.SCRIPT_CLOSE_TAG;
-import static org.apache.wicket.util.string.JavaScriptUtils.SCRIPT_OPEN_TAG;
+import static org.apache.wicket.core.util.string.JavaScriptUtils.SCRIPT_CLOSE_TAG;
+import static org.apache.wicket.core.util.string.JavaScriptUtils.SCRIPT_OPEN_TAG;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

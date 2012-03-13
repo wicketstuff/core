@@ -10,7 +10,7 @@ import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.mapper.AbstractMapper;
-import org.apache.wicket.request.mapper.PackageMapper;
+import org.apache.wicket.core.request.mapper.PackageMapper;
 import org.apache.wicket.request.mapper.mount.MountMapper;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.lang.PackageName;

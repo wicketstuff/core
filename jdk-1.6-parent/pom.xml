@@ -33,6 +33,7 @@
 		<module>jquery-parent</module>
 		<module>jslibraries</module>
 		<module>mbeanview-parent</module>
+		<module>minis-parent</module>
 		<module>modalx-parent</module>
 		<module>phonebook</module>
 		<module>plugin</module>
@@ -61,7 +62,6 @@
 		<!-- <module>gmap2-parent</module> -->
 		<!-- <module>jasperreports-parent</module> -->
 
-		<!-- <module>minis-parent</module> -->
 		<!-- <module>theme-parent</module> -->
 		<!-- <module>mootools-meiomask-parent</module> -->
 		<!-- <module>objectautocomplete-parent</module> -->

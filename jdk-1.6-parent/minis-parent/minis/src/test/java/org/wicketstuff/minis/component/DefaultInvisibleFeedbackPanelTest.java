@@ -32,6 +32,7 @@ public class DefaultInvisibleFeedbackPanelTest
 
 		tester.startPage(tester.getLastRenderedPage());
 		tester.assertVisible(feedbackPanel.getId());
+		tester.clearFeedbackMessages();
 
 		tester.startPage(tester.getLastRenderedPage());
 		tester.assertInvisible(feedbackPanel.getId());

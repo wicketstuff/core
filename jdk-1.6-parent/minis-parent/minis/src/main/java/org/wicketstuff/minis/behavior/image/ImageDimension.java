@@ -1,6 +1,6 @@
 package org.wicketstuff.minis.behavior.image;
 
-import org.apache.wicket.IClusterable;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * A simple class that can represent a html img tag's width, height attributes.

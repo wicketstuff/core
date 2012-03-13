@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
@@ -28,6 +27,7 @@ import org.apache.wicket.markup.head.StringHeaderItem;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * StyleSwitcher
