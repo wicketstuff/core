@@ -1,6 +1,6 @@
 package org.wicketstuff.html5.fileapi;
 
-import org.apache.wicket.IClusterable;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Represents the FileList type from the Html5 FileApi. Contains a fix sized array of

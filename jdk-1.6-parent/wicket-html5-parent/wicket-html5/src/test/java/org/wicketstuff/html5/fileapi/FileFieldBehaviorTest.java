@@ -1,6 +1,12 @@
 package org.wicketstuff.html5.fileapi;
 
+import java.io.Serializable;
+import java.util.List;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
+import org.apache.wicket.feedback.FeedbackMessage;
+import org.apache.wicket.feedback.FeedbackMessages;
 import org.apache.wicket.mock.MockRequestParameters;
 import org.apache.wicket.util.lang.Bytes;
 import org.apache.wicket.util.tester.WicketTester;
@@ -87,9 +93,8 @@ public class FileFieldBehaviorTest
 		addParams();
 		page.getForm().setMaxSize(Bytes.kilobytes(1));
 		tester.executeBehavior(behavior);
-		Assert.assertTrue(tester.getSession()
-			.getFeedbackMessages()
-			.hasErrorMessageFor(page.getField()));
+		FeedbackMessage errorMessage = page.getField().getFeedbackMessages().first(FeedbackMessage.ERROR);
+		Assert.assertNotNull(errorMessage);
 	}
 
 	protected void addParams()

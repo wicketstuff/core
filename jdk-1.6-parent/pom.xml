@@ -48,8 +48,9 @@
 		<module>push-parent</module>
 		<module>scala-extensions-parent</module> 
 		<module>serializer-kryo</module>
-		<module>wicket-servlet3-parent</module>
 		<module>wicket-facebook-parent</module>
+		<module>wicket-html5-parent</module>
+		<module>wicket-servlet3-parent</module>
 
 		<!-- TODO: port these module to wicket 6 -->
 
@@ -74,7 +75,6 @@
 		<!-- <module>jsr303-parent</module> -->
 		<!-- <module>maven-support</module> -->
 
-		<!-- <module>wicket-html5-parent</module> -->
 		<!--		<module>twitter-parent</module> -->
 	</modules>
 

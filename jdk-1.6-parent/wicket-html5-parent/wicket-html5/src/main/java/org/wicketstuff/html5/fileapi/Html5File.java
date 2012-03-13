@@ -2,7 +2,7 @@ package org.wicketstuff.html5.fileapi;
 
 import java.util.Calendar;
 
-import org.apache.wicket.IClusterable;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Represents the File type from the Html5 FileApi. This is a simplified version so the Blob
