@@ -19,6 +19,8 @@ package org.apache.wicket.portlet;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.wicket.markup.head.CssUrlReferenceHeaderItem;
+import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.internal.HeaderResponse;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.response.StringResponse;
@@ -42,28 +44,39 @@ public class EmbeddedPortletHeaderResponse extends HeaderResponse
 	}
 
 	@Override
-	public void renderCSSReference(String url, String media)
+	public void render(HeaderItem headerItem)
 	{
 		if (!isClosed())
 		{
-			List<?> token = Arrays.asList(new Object[] { "css", url, media });
-
-			if (wasRendered(token) == false)
-			// The CSS reference has not been written to the response yet
+			if (headerItem instanceof CssUrlReferenceHeaderItem)
 			{
-				getResponse().write("<script type=\"text/javascript\">");
-				getResponse().write("var elem=document.createElement(\"link\");");
-				getResponse().write("elem.setAttribute(\"rel\",\"stylesheet\");");
-				getResponse().write("elem.setAttribute(\"type\",\"text/css\");");
-				getResponse().write("elem.setAttribute(\"href\",\"" + url + "\");");
-				if (media != null)
+				CssUrlReferenceHeaderItem cssUrlReferenceHeaderItem = (CssUrlReferenceHeaderItem) headerItem;
+				String media = cssUrlReferenceHeaderItem.getMedia();
+				String url = cssUrlReferenceHeaderItem.getUrl();
+
+				List<?> token = Arrays.asList(new Object[] { "css", url, media });
+
+				if (wasRendered(token) == false)
+				// The CSS reference has not been written to the response yet
 				{
-					getResponse().write("elem.setAttribute(\"media\",\"" + media + "\");");
+					getResponse().write("<script type=\"text/javascript\">");
+					getResponse().write("var elem=document.createElement(\"link\");");
+					getResponse().write("elem.setAttribute(\"rel\",\"stylesheet\");");
+					getResponse().write("elem.setAttribute(\"type\",\"text/css\");");
+					getResponse().write("elem.setAttribute(\"href\",\"" + url + "\");");
+					if (media != null)
+					{
+						getResponse().write("elem.setAttribute(\"media\",\"" + media + "\");");
+					}
+					getResponse().write("document.getElementsByTagName(\"head\")[0].appendChild(elem);");
+					getResponse().write("</script>");
+					getResponse().write("\n");
+					markRendered(token);
 				}
-				getResponse().write("document.getElementsByTagName(\"head\")[0].appendChild(elem);");
-				getResponse().write("</script>");
-				getResponse().write("\n");
-				markRendered(token);
+			}
+			else
+			{
+				super.render(headerItem);
 			}
 		}
 	}
