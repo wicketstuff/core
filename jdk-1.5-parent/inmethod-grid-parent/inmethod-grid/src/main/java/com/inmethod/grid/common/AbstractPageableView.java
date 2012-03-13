@@ -183,7 +183,7 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T>
 	/**
 	 * Index of the item which is at the beginning on current page
 	 */
-	private int currentPageFirstItem = 0;
+	private long currentPageFirstItem = 0;
 
 	/**
 	 * Cached query result for this request
