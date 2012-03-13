@@ -30,8 +30,10 @@
 		<module>htmlcompressor-parent</module>
 		<module>inmethod-grid-parent</module>
 		<module>input-events-parent</module>
+		<module>javaee-inject-parent</module>
 		<module>jquery-parent</module>
 		<module>jslibraries</module>
+		<module>jsr303-parent</module>
 		<module>mbeanview-parent</module>
 		<module>minis-parent</module>
 		<module>modalx-parent</module>
@@ -45,7 +47,6 @@
 		<module>wicketstuff-logback-parent</module>
 
 		<module>closure-compiler</module>
-		<module>javaee-inject-parent</module>
 		<module>push-parent</module>
 		<module>scala-extensions-parent</module> 
 		<module>serializer-kryo</module>
@@ -72,7 +73,6 @@
 		<!-- <module>tinymce-parent</module> -->
 		<!-- <module>wicket-security-parent</module> -->
 		<!-- <module>yav-parent</module> -->
-		<!-- <module>jsr303-parent</module> -->
 		<!-- <module>maven-support</module> -->
 
 		<!--		<module>twitter-parent</module> -->

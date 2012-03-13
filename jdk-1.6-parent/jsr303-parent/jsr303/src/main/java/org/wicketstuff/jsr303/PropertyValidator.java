@@ -58,7 +58,7 @@ public class PropertyValidator<T> implements INullAcceptingValidator<T>, Seriali
 	{
 		this.fc = componentToApplyTo;
 		Assert.parameterNotNull(apm, "apm");
-		this.beanClass = apm.getTarget().getClass();
+		this.beanClass = apm.getInnermostModelOrObject().getClass();
 		this.propertyExpression = apm.getPropertyExpression();
 	}
 
