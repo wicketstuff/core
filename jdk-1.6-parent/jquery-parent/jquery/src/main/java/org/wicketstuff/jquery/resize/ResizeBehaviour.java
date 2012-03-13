@@ -2,6 +2,7 @@ package org.wicketstuff.jquery.resize;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.Request;
@@ -46,11 +47,15 @@ public class ResizeBehaviour extends JQueryBehavior
 	}
 
 	@Override
-	protected CharSequence getCallbackScript()
+	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 	{
-		String mid = getComponent().getMarkupId();
-		return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() + "&height=' + $('#" +
-			mid + "').height() + '" + "&width=' + $('#" + mid + "').width()");
+		super.updateAjaxAttributes(attributes);
+
+		String markupId = getComponent().getMarkupId();
+		CharSequence heightAndWidth =
+				String.format("return { height: $('#%s').height(), width: $('#%s').width() }",
+					markupId, markupId);
+		attributes.getDynamicExtraParameters().add(heightAndWidth);
 	}
 
 	@Override

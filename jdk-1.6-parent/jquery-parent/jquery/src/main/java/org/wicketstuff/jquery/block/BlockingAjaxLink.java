@@ -16,16 +16,15 @@
  */
 package org.wicketstuff.jquery.block;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.IAjaxCallDecorator;
+import org.apache.wicket.ajax.attributes.AjaxCallListener;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.resource.JQueryResourceReference;
-import org.wicketstuff.jquery.JQueryBehavior;
 
 public abstract class BlockingAjaxLink<T> extends AjaxLink<T>
 {
@@ -56,41 +55,28 @@ public abstract class BlockingAjaxLink<T> extends AjaxLink<T>
 
 	/**
 	 * Returns ajax call decorator that will be used to decorate the ajax call.
-	 * 
+	 *
 	 * @return ajax call decorator
 	 */
 	@Override
-	protected IAjaxCallDecorator getAjaxCallDecorator()
+	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 	{
-		return new IAjaxCallDecorator()
+		super.updateAjaxAttributes(attributes);
+
+		AjaxCallListener ajaxCallListener = new AjaxCallListener();
+		StringBuilder js = new StringBuilder();
+		CharSequence sel = getBlockElementsSelector();
+		if (sel != null)
 		{
-			private static final long serialVersionUID = 1L;
+			js.append("$('").append(sel).append("').block( ");
+		}
+		else
+		{
+			js.append("$.blockUI( ");
+		}
+		js.append(options.toString()).append(" ); ");
 
-			public CharSequence decorateScript(Component component, CharSequence script)
-			{
-				StringBuilder js = new StringBuilder();
-				CharSequence sel = getBlockElementsSelector();
-				if (sel != null)
-				{
-					js.append("$('").append(sel).append("').block( ");
-				}
-				else
-				{
-					js.append("$.blockUI( ");
-				}
-				return js.append(options.toString()).append(" ); ").append(script);
-			}
-
-			public CharSequence decorateOnSuccessScript(Component component, CharSequence script)
-			{
-				return script;
-			}
-
-			public CharSequence decorateOnFailureScript(Component component, CharSequence script)
-			{
-				return script;
-			}
-		};
+		ajaxCallListener.onBefore(js);
 	}
 
 	public CharSequence getBlockElementsSelector()

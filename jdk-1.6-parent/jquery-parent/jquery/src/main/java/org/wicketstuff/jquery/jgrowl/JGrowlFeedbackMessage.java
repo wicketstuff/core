@@ -1,7 +1,7 @@
 package org.wicketstuff.jquery.jgrowl;
 
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.feedback.FeedbackMessage;
+import org.apache.wicket.util.io.IClusterable;
 import org.wicketstuff.jquery.Options;
 
 /**

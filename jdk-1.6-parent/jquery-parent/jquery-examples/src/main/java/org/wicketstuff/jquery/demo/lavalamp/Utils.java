@@ -3,10 +3,9 @@ package org.wicketstuff.jquery.demo.lavalamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.IAjaxCallDecorator;
-import org.apache.wicket.ajax.calldecorator.AjaxCallDecorator;
+import org.apache.wicket.ajax.attributes.AjaxCallListener;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
@@ -94,32 +93,14 @@ final class Utils
 			}
 
 			@Override
-			protected IAjaxCallDecorator getAjaxCallDecorator()
+			protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 			{
-				return new AjaxCallDecorator()
-				{
-					private static final long serialVersionUID = 1L;
+				super.updateAjaxAttributes(attributes);
 
-					@Override
-					public CharSequence decorateOnSuccessScript(Component component,
-						CharSequence script)
-					{
-						return "alert('Success');";
-					}
-
-					@Override
-					public CharSequence decorateOnFailureScript(Component component,
-						CharSequence script)
-					{
-						return "alert('Failure');";
-					}
-
-					@Override
-					public CharSequence decorateScript(Component component, CharSequence script)
-					{
-						return "alert('Before ajax call');" + script;
-					}
-				};
+				AjaxCallListener ajaxCallListener = new AjaxCallListener();
+				ajaxCallListener.onSuccess("alert('Success');");
+				ajaxCallListener.onFailure("alert('Failure');");
+				ajaxCallListener.onBefore("alert('Before ajax call');");
 			}
 
 		};

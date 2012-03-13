@@ -2,6 +2,7 @@ package org.wicketstuff.jquery.crop;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.Request;
@@ -70,13 +71,16 @@ public class CropBehaviour extends JQueryBehavior
 	}
 
 	@Override
-	protected CharSequence getCallbackScript()
+	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 	{
+		super.updateAjaxAttributes(attributes);
+
 		String c = "$('#" + getComponent().getMarkupId() + "')";
 
-		return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() + "&width=' + " + c +
-			".width() + '" + "&height=' + " + c + ".height() + '" + "&top=' + " + c +
-			".css('top') + '" + "&left=' + " + c + ".css('left')");
+		CharSequence coordinates = 
+				String.format("return { width: %s.width(), height: %s.height(), top: %s.top(), left: %s.left() }",
+						c, c, c, c);
+		attributes.getDynamicExtraParameters().add(coordinates);
 	}
 
 	@Override

@@ -30,6 +30,7 @@
 		<module>htmlcompressor-parent</module>
 		<module>inmethod-grid-parent</module>
 		<module>input-events-parent</module>
+		<module>jquery-parent</module>
 		<module>jslibraries</module>
 		<module>mbeanview-parent</module>
 		<module>modalx-parent</module>
@@ -52,7 +53,6 @@
 
 		<!-- TODO: port these module to wicket 6 -->
 
-		<!-- <module>jquery-parent</module> -->
 		<!-- <module>calendarviews-parent</module> -->
 		<!-- <module>client-and-server-validation</module> -->
 		<!-- <module>eidogo-parent</module> -->

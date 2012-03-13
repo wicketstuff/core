@@ -2,6 +2,7 @@ package org.wicketstuff.jquery.dnd;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.behavior.IBehaviorListener;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
@@ -88,11 +89,12 @@ public class DnDBehaviour extends JQueryBehavior implements IBehaviorListener
 	}
 
 	@Override
-	protected CharSequence getCallbackScript()
+	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 	{
-		return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() +
-			"&src=' + $(ui.draggable).attr('id') + '" + "&dest=' + $(this).attr('id')");
+		super.updateAjaxAttributes(attributes);
 
+		CharSequence params = "return {src: $(ui.draggable).attr('id'), dest: $(this).attr('id') }";
+		attributes.getDynamicExtraParameters().add(params);
 	}
 
 	public void onDrop(String srcId, String destId, AjaxRequestTarget target)
