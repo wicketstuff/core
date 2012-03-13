@@ -7,7 +7,7 @@
 	<parent>
 		<artifactId>wicket-eidogo-parent</artifactId>
 		<groupId>org.wicketstuff</groupId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.4.20</version>
 	</parent>
 
 	<artifactId>wicket-eidogo</artifactId>
