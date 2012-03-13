@@ -1,7 +1,7 @@
 package org.wicketstuff.springreference;
 
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.util.io.IClusterable;
 import org.springframework.context.ApplicationContext;
 
 /**

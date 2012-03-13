@@ -15,8 +15,8 @@ package org.wicketstuff.springreference;
 
 import java.lang.ref.Reference;
 
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * <p>

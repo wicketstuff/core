@@ -51,6 +51,7 @@
 		<module>wicket-facebook-parent</module>
 		<module>wicket-html5-parent</module>
 		<module>wicket-servlet3-parent</module>
+		<module>wicketstuff-springreference-parent</module>
 
 		<!-- TODO: port these module to wicket 6 -->
 
@@ -70,7 +71,6 @@
 		<!-- <module>shiro-security</module> -->
 		<!-- <module>tinymce-parent</module> -->
 		<!-- <module>wicket-security-parent</module> -->
-		<!-- <module>wicketstuff-springreference-parent</module> -->
 		<!-- <module>yav-parent</module> -->
 		<!-- <module>jsr303-parent</module> -->
 		<!-- <module>maven-support</module> -->
