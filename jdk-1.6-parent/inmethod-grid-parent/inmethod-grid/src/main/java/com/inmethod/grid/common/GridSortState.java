@@ -181,7 +181,7 @@ package com.inmethod.grid.common;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.IClusterable;
+import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.string.Strings;
 
 import com.inmethod.grid.IGridSortState;

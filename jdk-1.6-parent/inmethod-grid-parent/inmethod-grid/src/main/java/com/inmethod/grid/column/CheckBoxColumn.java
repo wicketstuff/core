@@ -423,7 +423,6 @@ import com.inmethod.grid.treegrid.TreeGrid;
  */
 public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -493,7 +492,6 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 	 */
 	private class BodyCheckBoxPanel extends Panel
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		private BodyCheckBoxPanel(String id, final IModel<I> model)
@@ -656,7 +654,6 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 	 */
 	private class HeadCheckBoxPanel extends Panel
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		private HeadCheckBoxPanel(String id)

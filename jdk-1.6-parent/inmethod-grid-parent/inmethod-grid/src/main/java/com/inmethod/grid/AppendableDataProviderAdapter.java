@@ -20,16 +20,14 @@ public class AppendableDataProviderAdapter<T>
        extends DataProviderAdapter<T> implements IAppendableDataSource<T>
 {
   public AppendableDataProviderAdapter(IDataProvider<T> dataProvider)
-  {
-    super(dataProvider);
-  }
+  { super(dataProvider); }
 
   //do I need this?
-  private int _newItemCount = 0;
-  private int appendIndex;
+  private long _newItemCount = 0;
+  private long appendIndex;
   private List items = null;
 
-  public void InsertRow(int index, T item)
+  public void InsertRow(long index, T item)
   {
     ++_newItemCount;
     if (null == items) { items = new ArrayList(); }
@@ -37,7 +35,7 @@ public class AppendableDataProviderAdapter<T>
     appendIndex = index;
   }
 
-  public void DeleteRow(int index, T item)
+  public void DeleteRow(long index, T item)
   {
     if ( null != items && _newItemCount > 0)
     { if (items.remove(item)){ --_newItemCount; } }
@@ -51,7 +49,11 @@ public class AppendableDataProviderAdapter<T>
     {
       result.setTotalCount(dataProvider.size() + _newItemCount);
       //TODO: THERE has GOT to be a better way to handle this
-      ArrayList AllItems = new ArrayList(dataProvider.size() + _newItemCount);
+      long longSize = dataProvider.size() + _newItemCount;
+      int intSize = 0;
+      if ( longSize > Integer.MAX_VALUE  ) { intSize = Integer.MAX_VALUE; }
+      //TODO: should an error be thrown instead?
+      ArrayList AllItems = new ArrayList(intSize);
       for ( Iterator it = dataProvider.iterator(query.getFrom(), query.getCount());
             it.hasNext(); )
       { AllItems.add(it.next()); }
@@ -59,8 +61,8 @@ public class AppendableDataProviderAdapter<T>
       //for(Object item : items ) { AllItems.add(item); }
       //AllItems.addAll(items);
 
-      try { AllItems.addAll(appendIndex,items); }
-      catch( IndexOutOfBoundsException iob )
+      try { AllItems.addAll((int)appendIndex,items); }
+      catch( Exception iob ) //will catch IndexOutOfBounds or ClassCast
       { AllItems.addAll(items); } //add failed for index, add to end
 
       result.setItems(AllItems.iterator());

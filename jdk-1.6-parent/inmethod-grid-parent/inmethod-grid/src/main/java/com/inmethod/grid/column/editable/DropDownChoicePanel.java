@@ -55,7 +55,7 @@ public class DropDownChoicePanel<M, I, P> extends EditableCellPanel<M, I, P>
 			if (!isValid())
       {
 				tag.put("class", "imxt-invalid");
-				FeedbackMessage message = getFeedbackMessage();
+				FeedbackMessage message = getFeedbackMessages().first();
 				if (message != null)
         {
           tag.put("title", message.getMessage().toString());

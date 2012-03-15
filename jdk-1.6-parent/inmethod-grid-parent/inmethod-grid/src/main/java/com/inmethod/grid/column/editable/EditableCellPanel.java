@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.inmethod.grid.column.editable;
 
 import org.apache.wicket.Component;
@@ -8,6 +5,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.column.AbstractColumn;

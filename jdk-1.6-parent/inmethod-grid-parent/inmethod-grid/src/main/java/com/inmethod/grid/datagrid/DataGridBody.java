@@ -65,12 +65,12 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
   
   protected Item insertRow(final IModel<T> rowModel) 
   {
-		Item item = getData().createItem(getCurrentPageItemCount() + 1, rowModel);
+		Item item = getData().createItem(getCurrentPageItemCount() + 1L, rowModel);
 		getData().add(item);
 		return item;
 	}
   
-  protected Item createItem(int index, final IModel<T> rowModel)
+  protected Item createItem(long index, final IModel<T> rowModel)
   { return getData().createItem(index, rowModel); }
 
 	long getTotalRowCount()
@@ -256,9 +256,10 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 		 * @param itemModel model of the data being inserted
 		 * @return Item item inserted
 		 */
-		protected Item createItem(final int index, final IModel<T> itemModel)
-    {	
-      return newItemFactory().newItem(index, itemModel); 
+		protected Item createItem(final long index, final IModel<T> itemModel)
+    {
+      int i = index > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int)index;
+      return newItemFactory().newItem(i, itemModel);
     }
 	}
   
