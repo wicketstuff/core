@@ -66,7 +66,7 @@ public class DateTextFieldPanel<M, I> extends EditableCellPanel<M, I, Date>
 			if (!isValid())
       {
 				tag.put("class", "imxt-invalid");
-				FeedbackMessage message = getFeedbackMessage();
+				FeedbackMessage message = getFeedbackMessages().first();
 				if (message != null)
         {
           tag.put("title", message.getMessage().toString());

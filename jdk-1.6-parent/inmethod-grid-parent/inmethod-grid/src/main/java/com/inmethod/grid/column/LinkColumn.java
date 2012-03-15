@@ -58,7 +58,8 @@ public abstract class LinkColumn<M, I> extends AbstractColumn<M, I>
     return new LinkPanel<M, I>(componentId,
                                new PropertyModel(rowModel.getObject(),
                                                  getPropertyLabel())
-                                           .getTarget().toString(),
+                                           .getInnermostModelOrObject().toString(),
+                                           //.getTarget().toString(),
                                rowModel)
                {
                   @Override

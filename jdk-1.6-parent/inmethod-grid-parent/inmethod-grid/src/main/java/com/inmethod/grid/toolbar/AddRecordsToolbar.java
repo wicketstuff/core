@@ -75,8 +75,8 @@ public class AddRecordsToolbar<D extends IDataSource<T>, T extends Serializable>
   /** inserts data into the table */
   protected void insert()
   {
-    int pre = 0;
-    int post = 0;
+    long pre = 0;
+    long post = 0;
     pre = grid.getTotalRowCount();
     grid.insertRow(getNewData());
     post = grid.getTotalRowCount();

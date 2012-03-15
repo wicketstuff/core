@@ -93,7 +93,7 @@ public class AddDeleteColumn<M, I> extends SubmitCancelColumn<M, I>
     if ( ag instanceof DataGrid )
     {
       DataGrid dg = (DataGrid)ag;
-      int rows = dg.getRowsPerPage();
+      long rows = dg.getRowsPerPage();
       IDataSource ds = dg.getDataSource();
       if ( ds instanceof IAppendableDataSource )
       {

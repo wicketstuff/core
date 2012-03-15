@@ -4,7 +4,6 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
@@ -16,6 +15,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.util.io.IClusterable;
 
 import com.inmethod.icon.Icon;
 import com.inmethod.icon.IconImage;
@@ -32,8 +32,8 @@ import com.inmethod.icon.IconImage;
  */
 public abstract class TreePanel<T extends TreeModel, I extends TreeNode> extends Panel
 {
-
 	private static final long serialVersionUID = 1L;
+
 	private static final String JUNCTION_LINK_ID = "junctionLink";
 	private static final String NODE_COMPONENT_ID = "nodeComponent";
 
@@ -159,7 +159,6 @@ public abstract class TreePanel<T extends TreeModel, I extends TreeNode> extends
 	 */
 	private static class IconBorder extends Behavior
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		/**
@@ -181,7 +180,7 @@ public abstract class TreePanel<T extends TreeModel, I extends TreeNode> extends
 		}
 
 		private static final IconBorder INSTANCE = new IconBorder();
-	};
+	}
 
 	/**
 	 * Class that wraps a link (or span) with a junction table cells.
@@ -229,12 +228,12 @@ public abstract class TreePanel<T extends TreeModel, I extends TreeNode> extends
 
 			response.write("<td class=\"imxt-spacer\">");
 		}
-	};
+	}
 
 	private TreeGridBody<T, I> getTreeGridBody()
 	{
 		return findParent(TreeGridBody.class);
-	};
+	}
 
 	/**
 	 * Creates the junction link for given node. Also (optionally) creates the junction image. If

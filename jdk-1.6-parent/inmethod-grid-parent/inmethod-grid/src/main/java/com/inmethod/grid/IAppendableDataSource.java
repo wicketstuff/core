@@ -14,7 +14,12 @@ public interface IAppendableDataSource<T> extends IDataSource<T>
    *  @param index the index value to insert the new Item into
    *  @param item Item to append to the end of the result data
    */
-  public void InsertRow(int index, T item);
+  public void InsertRow(long index, T item);
 
-  public void DeleteRow(int index, T item);
+  /** Function for deleting an item from the specified index
+   *  of the result data
+   *  @param index the index value to delete the Item from
+   *  @param item Item to be deleted
+   */
+  public void DeleteRow(long index, T item);
 }
