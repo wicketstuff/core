@@ -56,7 +56,7 @@ public abstract class EditableCellPanel<M, I, P> extends Panel
 		}
 	}
 
-  protected IModel<I> getDefaultRowModel()
+	protected IModel<I> getDefaultRowModel()
 	{
 		return (IModel<I>)getDefaultModel();
 	}

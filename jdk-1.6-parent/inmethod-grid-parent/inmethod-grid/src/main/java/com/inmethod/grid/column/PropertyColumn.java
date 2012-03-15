@@ -45,7 +45,7 @@ public class PropertyColumn<M, I, P> extends AbstractLightWeightColumn<M, I>
 	 *            column is being sorted
 	 */
 	public PropertyColumn(String columnId, IModel<String> headerModel, String propertyExpression,
-		String sortProperty)
+		                    String sortProperty)
 	{
 		super(columnId, headerModel, sortProperty);
 		this.propertyExpression = propertyExpression;

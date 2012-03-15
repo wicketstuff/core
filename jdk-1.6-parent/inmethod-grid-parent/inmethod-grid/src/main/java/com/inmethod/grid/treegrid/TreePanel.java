@@ -180,7 +180,7 @@ public abstract class TreePanel<T extends TreeModel, I extends TreeNode> extends
 		}
 
 		private static final IconBorder INSTANCE = new IconBorder();
-	};
+	}
 
 	/**
 	 * Class that wraps a link (or span) with a junction table cells.
@@ -228,12 +228,12 @@ public abstract class TreePanel<T extends TreeModel, I extends TreeNode> extends
 
 			response.write("<td class=\"imxt-spacer\">");
 		}
-	};
+	}
 
 	private TreeGridBody<T, I> getTreeGridBody()
 	{
 		return findParent(TreeGridBody.class);
-	};
+	}
 
 	/**
 	 * Creates the junction link for given node. Also (optionally) creates the junction image. If
@@ -272,6 +272,7 @@ public abstract class TreePanel<T extends TreeModel, I extends TreeNode> extends
 					getTreeGridBody().updateTree(target);
 				}
 			});
+      
 			junctionLink.add(new Behavior()
 			{
 				private static final long serialVersionUID = 1L;
@@ -359,8 +360,8 @@ public abstract class TreePanel<T extends TreeModel, I extends TreeNode> extends
 	}
 
 	/**
-	 * Callback function called after user clicked on an junction link. The node has already been
-	 * expanded/collapsed (depending on previous status).
+	 * Callback function called after user clicked on an junction link. 
+   * The node has already been expanded/collapsed (depending on previous status).
 	 * 
 	 * @param target
 	 *            Request target - may be null on non-ajax call

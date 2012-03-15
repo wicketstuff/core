@@ -9,9 +9,8 @@ import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.IAjaxCallDecorator;
+import org.apache.wicket.ajax.attributes.AjaxCallListener;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
-import org.apache.wicket.ajax.calldecorator.AjaxCallDecorator;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
@@ -237,8 +236,8 @@ public abstract class AbstractGrid<M, I> extends Panel
 
 			onColumnStateChanged();
 		}
-    
-    @Override
+
+		@Override
 		protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 		{
 			super.updateAjaxAttributes(attributes);
@@ -344,7 +343,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 */
 	private void addToolbar(AbstractToolbar<M, I> toolbar, RepeatingView container)
 	{
-    Args.notNull(container, "toolbar");
+    Args.notNull(toolbar, "toolbar");
 
 		// create a container item for the toolbar (required by repeating view)
 		WebMarkupContainer item = new WebMarkupContainer(container.newChildId());
@@ -507,9 +506,9 @@ public abstract class AbstractGrid<M, I> extends Panel
 		sb.append("];\n");
 
 		// method that calls the proper listener when column state is changed
-		sb.append("var submitStateCallback = function(columnState) { ");
+		sb.append("var submitStateCallback = ");
 		sb.append(submitColumnStateBehavior.getCallbackScript());
-		sb.append(" }\n");
+		sb.append("\n");
 
 		// initialization
 		sb.append("InMethod.XTableManager.instance.register(\"" + getMarkupId() +
@@ -792,16 +791,16 @@ public abstract class AbstractGrid<M, I> extends Panel
 			{	// preserve the entered values in form components
 				Form<?> form = super.getForm();
 				form.visitFormComponentsPostOrder(new IVisitor<FormComponent<?>, Void>()
-                                              {
-                                                public void component(FormComponent<?> formComponent,
-                                                                      IVisit<Void> visit)
-                                                {
-                                                  if (formComponent.isVisibleInHierarchy())
-                                                  {
-                                                    formComponent.inputChanged();
-                                                  }
-                                                }
-                                              });
+				{
+
+					public void component(FormComponent<?> formComponent, IVisit<Void> visit)
+					{
+						if (formComponent.isVisibleInHierarchy())
+						{
+							formComponent.inputChanged();
+						}
+					}
+				});
 
 				String column = getRequest().getRequestParameters()
                                     .getParameterValue("column").toString();
@@ -825,8 +824,8 @@ public abstract class AbstractGrid<M, I> extends Panel
 
 				onRowClicked(target, model);
 			}
-      
-      @Override
+
+			@Override
 			protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 			{
 				super.updateAjaxAttributes(attributes);
@@ -834,33 +833,16 @@ public abstract class AbstractGrid<M, I> extends Panel
 				CharSequence columnParameter = "return {'column': Wicket.$(attrs.c).imxtClickedColumn}";
 				attributes.getDynamicExtraParameters().add(columnParameter);
 
-				CharSequence precon = "return InMethod.XTable.canSelectRow(attrs.event);";
-				JavaScriptPrecondition precondition = new JavaScriptPrecondition(precon);
-				attributes.getPreconditions().add(precondition);
+				CharSequence precondition = "return InMethod.XTable.canSelectRow(attrs.event);";
+				AjaxCallListener ajaxCallListener = new AjaxCallListener();
+				ajaxCallListener.onPrecondition(precondition);
+				attributes.getAjaxCallListeners().add(ajaxCallListener);
 			}
 
 			@Override
-			public CharSequence getCallbackUrl()
+			public CharSequence getCallbackScript()
 			{
 				return getCallbackFunction("col");
-			}
-
-			@Override
-			protected IAjaxCallDecorator getAjaxCallDecorator()
-			{
-				return new AjaxCallDecorator()
-				{
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public CharSequence decorateScript(Component c, CharSequence script)
-					{
-						return super.decorateScript(c,
-							"if (InMethod.XTable.canSelectRow(event)) { " +
-								"var col=(this.imxtClickedColumn || ''); this.imxtClickedColumn='';" +
-								script + " }");
-					}
-				};
 			}
 		});
 	}
