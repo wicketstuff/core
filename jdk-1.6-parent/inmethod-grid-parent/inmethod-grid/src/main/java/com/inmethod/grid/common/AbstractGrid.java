@@ -9,9 +9,8 @@ import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.IAjaxCallDecorator;
+import org.apache.wicket.ajax.attributes.AjaxCallListener;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
-import org.apache.wicket.ajax.calldecorator.AjaxCallDecorator;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
@@ -835,8 +834,9 @@ public abstract class AbstractGrid<M, I> extends Panel
 				attributes.getDynamicExtraParameters().add(columnParameter);
 
 				CharSequence precon = "return InMethod.XTable.canSelectRow(attrs.event);";
-				JavaScriptPrecondition precondition = new JavaScriptPrecondition(precon);
-				attributes.getPreconditions().add(precondition);
+        AjaxCallListener ajaxCallListener = new AjaxCallListener();
+        ajaxCallListener.onPrecondition(precon);
+        attributes.getAjaxCallListeners().add(ajaxCallListener);
 			}
 
 			@Override
@@ -845,23 +845,6 @@ public abstract class AbstractGrid<M, I> extends Panel
 				return getCallbackFunction("col");
 			}
 
-			@Override
-			protected IAjaxCallDecorator getAjaxCallDecorator()
-			{
-				return new AjaxCallDecorator()
-				{
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public CharSequence decorateScript(Component c, CharSequence script)
-					{
-						return super.decorateScript(c,
-							"if (InMethod.XTable.canSelectRow(event)) { " +
-								"var col=(this.imxtClickedColumn || ''); this.imxtClickedColumn='';" +
-								script + " }");
-					}
-				};
-			}
 		});
 	}
 
