@@ -160,11 +160,11 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 
 	/**
 	 * Returns the total count of items (sum of count of items on all pages) or
-	 * {@link AbstractPageableView#UNKOWN_COUNT} in case the count can't be determined.
+	 * {@link AbstractPageableView#UNKNOWN_COUNT} in case the count can't be determined.
 	 * 
-	 * @return total count of items or {@value AbstractPageableView#UNKOWN_COUNT}
+	 * @return total count of items or {@value AbstractPageableView#UNKNOWN_COUNT}
 	 */
-	public int getTotalRowCount()
+	public long getTotalRowCount()
 	{
 		return getBody().getTotalRowCount();
 	}
@@ -172,7 +172,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 	/**
 	 * @return The current page that is or will be rendered.
 	 */
-	public int getCurrentPage()
+	public long getCurrentPage()
 	{
 		return getBody().getCurrentPage();
 	}
@@ -182,7 +182,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 	 * 
 	 * @return The total number of pages this pageable object has
 	 */
-	public int getPageCount()
+	public long getPageCount()
 	{
 		return getBody().getPageCount();
 	}
@@ -193,7 +193,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 	 * @param page
 	 *            The page that should be rendered.
 	 */
-	public void setCurrentPage(int page)
+	public void setCurrentPage(long page)
 	{
 		if (getBody().getCurrentPage() != page)
 		{
@@ -208,7 +208,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 	/**
 	 * @return the amount of items on current page.
 	 */
-	public int getCurrentPageItemCount()
+	public long getCurrentPageItemCount()
 	{
 		return getBody().getCurrentPageItemCount();
 	}
@@ -422,32 +422,30 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
   */
   public Item insertRow(final T rowData)
   {
-      IAppendableDataSource ADS;
-      try
-      { ADS = ((IAppendableDataSource)getDataSource()); }
-      catch (ClassCastException cce)
-      { //TODO: localize this string
+     IAppendableDataSource ADS;
+     try { ADS = ((IAppendableDataSource)getDataSource()); }
+     catch (ClassCastException cce)
+     { //TODO: localize this string
         //log.error( "Error BAD Data Source type. "
         //         + "IAppendableDataSource REQUIRED for addition");
         throw new WicketRuntimeException("Error BAD Data Source type. "
-                 + "IAppendableDataSource REQUIRED for addition",cce);
-      }
-      ADS.InsertRow(getCurrentPageItemCount(),rowData);
-      Item item = getBody().createItem(getCurrentPageItemCount(),
-                                       getDataSource().model(rowData));
+                  + "IAppendableDataSource REQUIRED for addition", cce);
+     }
+     ADS.InsertRow(getCurrentPageItemCount(), rowData);
+     Item item = getBody().createItem(getCurrentPageItemCount(),
+                                      getDataSource().model(rowData));
 
-      //make sure the datagrid knows the rows need to be refreshed
-      getBody().clearCache(); //clears the cache, to make sure the data is reloaded
+     //make sure the datagrid knows the rows need to be refreshed
+     getBody().clearCache(); //clears the cache, to make sure the data is reloaded
 
-          //Commented out because the list updates but is not editable after.
-    //both of these functions are "cached"
-    //markAllItemsDirty();
-    //update();
+     //Commented out because the list updates but is not editable after.
+     //both of these functions are "cached"
+     //markAllItemsDirty();
+     //update();
                                
-    AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
-    
-    target.add(this.getParent());
-    return item;
+     AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
+     target.add(this.getParent());
+     return item;
   }
 
 	/**

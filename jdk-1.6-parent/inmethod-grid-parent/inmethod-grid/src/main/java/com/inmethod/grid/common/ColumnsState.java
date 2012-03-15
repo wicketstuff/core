@@ -1,14 +1,9 @@
 package com.inmethod.grid.common;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
-import org.apache.wicket.IClusterable;
-import org.apache.wicket.util.lang.WicketObjects;
+import org.apache.wicket.core.util.lang.WicketObjects;
+import org.apache.wicket.util.io.IClusterable;
 
 import com.inmethod.grid.IGridColumn;
 
@@ -19,7 +14,6 @@ import com.inmethod.grid.IGridColumn;
  */
 public class ColumnsState implements IClusterable, Cloneable
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -29,7 +23,6 @@ public class ColumnsState implements IClusterable, Cloneable
 	 */
 	public static class Entry implements IClusterable
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		private final String columnId;

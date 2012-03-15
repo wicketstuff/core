@@ -40,7 +40,7 @@ public class CheckBoxPanel<M, I> extends EditableCellPanel<M, I, Boolean>
 			if (!isValid())
       {
 				tag.put("class", "imxt-invalid");
-				FeedbackMessage message = getFeedbackMessage();
+				FeedbackMessage message = getFeedbackMessages().first();
 				if (message != null)
         { tag.put("title", message.getMessage().toString()); }
 			}

@@ -3,7 +3,6 @@ package com.inmethod.grid.common;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
 import javax.swing.tree.TreeModel;
 
 import org.apache.wicket.Component;
@@ -11,11 +10,15 @@ import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxCallDecorator;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.calldecorator.AjaxCallDecorator;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -26,6 +29,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.resource.CoreLibrariesContributor;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
@@ -851,8 +855,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 					@Override
 					public CharSequence decorateScript(Component c, CharSequence script)
 					{
-						return super.decorateScript(
-							c,
+						return super.decorateScript(c,
 							"if (InMethod.XTable.canSelectRow(event)) { " +
 								"var col=(this.imxtClickedColumn || ''); this.imxtClickedColumn='';" +
 								script + " }");
