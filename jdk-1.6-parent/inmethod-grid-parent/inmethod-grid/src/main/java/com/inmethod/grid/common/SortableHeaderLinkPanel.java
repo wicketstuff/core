@@ -2,8 +2,6 @@ package com.inmethod.grid.common;
 
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.IAjaxCallDecorator;
-import org.apache.wicket.ajax.calldecorator.CancelEventIfNoAjaxDecorator;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.panel.Panel;
 
@@ -58,12 +56,6 @@ public abstract class SortableHeaderLinkPanel extends Panel
 				}
 
 				sortStateChanged(target);
-			}
-
-			@Override
-			protected IAjaxCallDecorator getAjaxCallDecorator()
-			{
-				return new CancelEventIfNoAjaxDecorator();
 			}
 		});
 	}

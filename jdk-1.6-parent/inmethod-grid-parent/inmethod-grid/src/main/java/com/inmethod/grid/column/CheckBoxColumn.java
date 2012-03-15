@@ -388,8 +388,6 @@ package com.inmethod.grid.column;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.IAjaxCallDecorator;
-import org.apache.wicket.ajax.calldecorator.CancelEventIfNoAjaxDecorator;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -577,12 +575,6 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 					return "window.setTimeout(function(){this.checked=!this.checked}.bind(this),0);" +
 						super.getPreconditionScript();
 				}
-
-				@Override
-				protected IAjaxCallDecorator getAjaxCallDecorator()
-				{
-					return new CancelEventIfNoAjaxDecorator();
-				}
 			});
 		}
 
@@ -733,12 +725,6 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 				{
 					return "window.setTimeout(function(){this.checked=!this.checked}.bind(this),0);" +
 						super.getPreconditionScript();
-				}
-
-				@Override
-				protected IAjaxCallDecorator getAjaxCallDecorator()
-				{
-					return new CancelEventIfNoAjaxDecorator();
 				}
 			});
 		}
