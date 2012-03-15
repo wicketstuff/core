@@ -26,7 +26,6 @@ public class GridSortState implements IGridSortState, IClusterable
 	 */
 	private static class SortStateColumn implements ISortStateColumn, IClusterable
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		private final String propertyName;
@@ -54,7 +53,6 @@ public class GridSortState implements IGridSortState, IClusterable
 		{
 			return direction;
 		}
-
 	}
 
 	private final List<ISortStateColumn> columns = new ArrayList<ISortStateColumn>();

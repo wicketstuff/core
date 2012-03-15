@@ -89,8 +89,8 @@ public class ColumnsState implements IClusterable, Cloneable
 		public String getColumnId()
 		{
 			return columnId;
-		};
-	};
+		}
+	}
 
 	private final Entry[] stateArray;
 
@@ -109,7 +109,7 @@ public class ColumnsState implements IClusterable, Cloneable
 			stateArray[i] = new Entry(column.getId());
 			++i;
 		}
-	};
+	}
 
 	/**
 	 * Creates new {@link ColumnsState} instance. The instance will be initialized from the

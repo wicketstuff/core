@@ -57,6 +57,7 @@ public class NavigatorLabel extends Label
           implements IClusterable
 	{
 		private static final long serialVersionUID = 1L;
+    
 		private final DataGrid<D, T> table;
 
 		/**
