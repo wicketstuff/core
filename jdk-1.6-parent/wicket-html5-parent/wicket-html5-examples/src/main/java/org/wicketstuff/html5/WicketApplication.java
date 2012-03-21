@@ -9,6 +9,9 @@ package org.wicketstuff.html5;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.crypt.CharEncoding;
+import org.wicketstuff.html5.eventsource.EventSourceDemo;
+import org.wicketstuff.html5.eventsource.EventSourceResource;
+import org.wicketstuff.html5.eventsource.EventSourceResourceReference;
 import org.wicketstuff.html5.fileapi.FileApiPage;
 import org.wicketstuff.html5.geolocation.GeolocationDemo;
 import org.wicketstuff.html5.markup.html.ProgressDemo;
@@ -44,5 +47,8 @@ public class WicketApplication extends WebApplication
 		mountPage("/form-number", NumberFieldDemo.class);
 		mountPage("/fileapi", FileApiPage.class);
 		mountPage("/progress", ProgressDemo.class);
+
+		mountPage("/eventSource", EventSourceDemo.class);
+		mountResource("/eventSourceResource", new EventSourceResourceReference());
 	}
 }
