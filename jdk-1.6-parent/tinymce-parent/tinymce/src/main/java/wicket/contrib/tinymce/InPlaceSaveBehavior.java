@@ -23,6 +23,7 @@ import java.util.UUID;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.model.IModel;
@@ -104,7 +105,9 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
 	 * This method gets called before the new content as received from the
 	 * TinyMce editor is pushed to the website. Override it to add additional
 	 * processing to the content.
-	 * 
+	 *
+	 * @param target
+	 *      the current ajax request handler
 	 * @param newContent
 	 *            The content as received from the editor.
 	 * @return The content that will be pushed back to your website.
@@ -122,8 +125,8 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
 		response.render(JavaScriptHeaderItem.forUrl(createCancelScript(), null));
 	}
 
-	private final String createSaveScript() {
-		String callback = getWicketPostScript();
+	private String createSaveScript() {
+		CharSequence callback = getWicketPostScript();
 		String markupId = getComponent().getMarkupId();
 		return "function "
 				+ getSaveCallbackName()
@@ -141,7 +144,7 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
 				+ "}";
 	}
 
-	private final String createCancelScript() {
+	private String createCancelScript() {
 		return "function " + getCancelCallbackName()
 				+ "(inst) {\n" //
 				+ (additionalJavaScript == null ? ""
@@ -149,11 +152,16 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
 				+ "}";
 	}
 
-	private final String getWicketPostScript() {
-		return generateCallbackScript(
-				"wicketAjaxPost('" + getCallbackUrl()
-						+ "', Wicket.Form.encode('" + PARAM_HTMLCONT
-						+ "') + '=' + Wicket.Form.encode(content) + '&'")
-				.toString();
+	private CharSequence getWicketPostScript() {
+		return getCallbackFunction("content");
+	}
+
+	@Override
+	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
+	{
+		super.updateAjaxAttributes(attributes);
+		attributes.setMethod(AjaxRequestAttributes.Method.POST);
+		attributes.getDynamicExtraParameters()
+				.add("return {" + PARAM_HTMLCONT + ": Wicket.Form.encode(attrs.content)}");
 	}
 }

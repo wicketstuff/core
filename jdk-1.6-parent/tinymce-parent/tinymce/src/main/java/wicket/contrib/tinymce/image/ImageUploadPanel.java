@@ -82,7 +82,7 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 					modalWindow.close(pTarget);
 					resetModalContent();
 					CharSequence url = ImageUploadPanel.this
-							.urlFor(IResourceListener.INTERFACE);
+							.urlFor(IResourceListener.INTERFACE, null);
 					XmlTag xmlImageTag = ImageUploadHelper.createImageTag(
 							pImageFileDescription, url);
 					pTarget.appendJavaScript("putImage('"

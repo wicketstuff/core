@@ -19,7 +19,7 @@
 package wicket.contrib.tinymce.settings;
 
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.util.string.JavaScriptUtils;
+import org.apache.wicket.core.util.string.JavaScriptUtils;
 
 import wicket.contrib.tinymce.InPlaceSaveBehavior;
 

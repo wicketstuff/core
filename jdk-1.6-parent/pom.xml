@@ -43,6 +43,7 @@
 		<module>progressbar-parent</module>
 		<module>push-parent</module>
 		<module>simile-timeline-parent</module>
+		<module>tinymce-parent</module>
 		<module>wicket-bundle-parent</module>
 		<module>wicket-osgi-parent</module>
 		<module>wicket-poi-parent</module>
@@ -70,7 +71,6 @@
 		<!-- <module>openlayers-parent</module> -->
 
 		<!-- <module>shiro-security</module> -->
-		<!-- <module>tinymce-parent</module> -->
 		<!-- <module>wicket-security-parent</module> -->
 		<!-- <module>yav-parent</module> -->
 		<!-- <module>maven-support</module> -->
