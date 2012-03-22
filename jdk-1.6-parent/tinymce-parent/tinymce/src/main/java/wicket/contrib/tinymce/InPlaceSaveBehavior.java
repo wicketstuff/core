@@ -121,8 +121,8 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
 		super.renderHead(c, response);
 		// Don't pass an id, since every EditableComponent will have its own
 		// submit script:
-		response.render(JavaScriptHeaderItem.forUrl(createSaveScript(), null));
-		response.render(JavaScriptHeaderItem.forUrl(createCancelScript(), null));
+		response.render(JavaScriptHeaderItem.forScript(createSaveScript(), null));
+		response.render(JavaScriptHeaderItem.forScript(createCancelScript(), null));
 	}
 
 	private String createSaveScript() {
@@ -153,7 +153,7 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
 	}
 
 	private CharSequence getWicketPostScript() {
-		return getCallbackFunction("content");
+		return "var sendContent = " + getCallbackFunction("content") + "sendContent(content);";
 	}
 
 	@Override
@@ -162,6 +162,6 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
 		super.updateAjaxAttributes(attributes);
 		attributes.setMethod(AjaxRequestAttributes.Method.POST);
 		attributes.getDynamicExtraParameters()
-				.add("return {" + PARAM_HTMLCONT + ": Wicket.Form.encode(attrs.content)}");
+				.add("return {'" + PARAM_HTMLCONT + "': Wicket.Form.encode(attrs.ep.content)}");
 	}
 }

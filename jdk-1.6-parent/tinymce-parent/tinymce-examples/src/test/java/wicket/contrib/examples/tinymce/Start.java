@@ -9,6 +9,8 @@ public class Start
 {
 	public static void main(String[] args) throws Exception
 	{
+//		System.setProperty("wicket.configuration", "development");
+
 		int timeout = (int)Duration.ONE_HOUR.getMilliseconds();
 
 		Server server = new Server();
@@ -17,7 +19,7 @@ public class Start
 		// Set some timeout options to make debugging easier.
 		connector.setMaxIdleTime(timeout);
 		connector.setSoLingerTime(-1);
-		connector.setPort(8081);
+		connector.setPort(8080);
 		server.addConnector(connector);
 
 		// check if a keystore for a SSL certificate is available, and
