@@ -5,13 +5,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.cycle.RequestCycle;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Tom Burton
- * Date: 1/3/12
- * Time: 3:50 PM
- *
+ * Displays a Link in the DataGrid to an Internal Wicket Page
  * @author Tom Burton
- *         To change this template use File | Settings | File Templates.
  */
 public class PageLinkColumn<M, I> extends LinkColumn<M, I>
 {

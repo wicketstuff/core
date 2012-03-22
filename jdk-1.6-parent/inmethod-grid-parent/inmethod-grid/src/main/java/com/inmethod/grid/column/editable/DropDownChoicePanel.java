@@ -19,7 +19,6 @@ import com.inmethod.grid.column.AbstractColumn;
  * user leaves the field.
  *
  * @author Tom Burton
- * TODO: make Generic
  */
 public class DropDownChoicePanel<M, I, P> extends EditableCellPanel<M, I, P>
 { //Does serialVersionUID really need to be explicitly set

@@ -9,7 +9,7 @@ import org.apache.wicket.model.IModel;
  *
  * @author Tom Burton
  */
-public class CheckBoxPropertyColumn<M, I> extends EditablePropertyColumn<M, I, Boolean>
+public class EditableCheckBoxColumn<M, I> extends EditablePropertyColumn<M, I, Boolean>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,7 @@ public class CheckBoxPropertyColumn<M, I> extends EditablePropertyColumn<M, I, B
 	 *            optional string that will be returned by {@link ISortState}
    *            to indicate that the column is being sorted
 	 */
-	public CheckBoxPropertyColumn(String columnId, IModel<String> headerModel,
+	public EditableCheckBoxColumn(String columnId, IModel<String> headerModel,
                                 String propertyExpression, String sortProperty)
   {
 		super(columnId, headerModel, propertyExpression, sortProperty);
@@ -42,7 +42,7 @@ public class CheckBoxPropertyColumn<M, I> extends EditablePropertyColumn<M, I, B
 	 * @param propertyExpression
 	 *            property expression used to get the displayed value for row object
 	 */
-	public CheckBoxPropertyColumn(String columnId, IModel<String> headerModel,
+	public EditableCheckBoxColumn(String columnId, IModel<String> headerModel,
                                 String propertyExpression)
   {
 		super(columnId, headerModel, propertyExpression);
@@ -61,7 +61,8 @@ public class CheckBoxPropertyColumn<M, I> extends EditablePropertyColumn<M, I, B
 	 *            optional string that will be returned by {@link ISortState}
    *            to indicate that the column is being sorted
 	 */
-	public CheckBoxPropertyColumn(IModel<String> headerModel, String propertyExpression,
+	public EditableCheckBoxColumn(IModel<String> headerModel,
+                                String propertyExpression,
                                 String sortProperty)
   {
 		super(headerModel, propertyExpression, sortProperty);
@@ -74,9 +75,11 @@ public class CheckBoxPropertyColumn<M, I> extends EditablePropertyColumn<M, I, B
 	 * @param headerModel
 	 *            model for column header
 	 * @param propertyExpression
-	 *            property expression used to get the displayed value for row object
+	 *            property expression used to get the displayed value for row
+   *            object
 	 */
-	public CheckBoxPropertyColumn(IModel<String> headerModel, String propertyExpression)
+	public EditableCheckBoxColumn(IModel<String> headerModel,
+                                String propertyExpression)
   {
 		super(headerModel, propertyExpression);
 	}

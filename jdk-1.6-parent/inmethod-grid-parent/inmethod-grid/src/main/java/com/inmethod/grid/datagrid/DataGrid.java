@@ -431,7 +431,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
         throw new WicketRuntimeException("Error BAD Data Source type. "
                   + "IAppendableDataSource REQUIRED for addition", cce);
      }
-     ADS.InsertRow(getCurrentPageItemCount(), rowData);
+     ADS.insertRow(getCurrentPageItemCount(), rowData);
      Item item = getBody().createItem(getCurrentPageItemCount(),
                                       getDataSource().model(rowData));
 

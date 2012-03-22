@@ -7,14 +7,10 @@ import java.util.List;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Tom B.
- * Date: 9/20/11
- * Time: 11:13 AM
+ * Appendable Data Provider Adapter that adds appendability
+ * to IDataProvider instances
  *
  * @author Tom B.
- *
- * TODO: make generic
  */
 public class AppendableDataProviderAdapter<T>
        extends DataProviderAdapter<T> implements IAppendableDataSource<T>
@@ -27,7 +23,7 @@ public class AppendableDataProviderAdapter<T>
   private long appendIndex;
   private List items = null;
 
-  public void InsertRow(long index, T item)
+  public void insertRow(long index, T item)
   {
     ++_newItemCount;
     if (null == items) { items = new ArrayList(); }
@@ -35,7 +31,7 @@ public class AppendableDataProviderAdapter<T>
     appendIndex = index;
   }
 
-  public void DeleteRow(long index, T item)
+  public void deleteRow(long index, T item)
   {
     if ( null != items && _newItemCount > 0)
     { if (items.remove(item)){ --_newItemCount; } }
