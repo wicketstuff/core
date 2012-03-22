@@ -175,7 +175,5 @@ abstract class SubmitCancelPanel<M, I> extends Panel
 			// TODO Auto-generated method stub
 
 		}
-	};
-
-
+	}
 }

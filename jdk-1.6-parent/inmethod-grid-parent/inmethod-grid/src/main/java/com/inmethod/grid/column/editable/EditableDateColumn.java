@@ -14,10 +14,8 @@ import org.apache.wicket.model.IModel;
  *            grid model object type
  * @param <I>
  *            row/item model object type
- *
- * TODO: rename to EditableDateColumn
  */
-public class DatePropertyColumn<M, I> extends EditablePropertyColumn<M, I, Date>
+public class EditableDateColumn<M, I> extends EditablePropertyColumn<M, I, Date>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -38,7 +36,7 @@ public class DatePropertyColumn<M, I> extends EditablePropertyColumn<M, I, Date>
    * @param dc
    *            DateConverter to use to display a properly formatted date/time
 	 */
-	public DatePropertyColumn(String columnId, IModel<String> headerModel,
+	public EditableDateColumn(String columnId, IModel<String> headerModel,
                             String propertyExpression, String sortProperty,
                             DateConverter dc)
   {
@@ -58,7 +56,7 @@ public class DatePropertyColumn<M, I> extends EditablePropertyColumn<M, I, Date>
    * @param dc
    *            DateConverter to use to display a properly formatted date/time
 	 */
-	public DatePropertyColumn(String columnId, IModel<String> headerModel,
+	public EditableDateColumn(String columnId, IModel<String> headerModel,
                             String propertyExpression,
                             DateConverter dc)
   {
@@ -80,7 +78,8 @@ public class DatePropertyColumn<M, I> extends EditablePropertyColumn<M, I, Date>
    * @param dc
    *            DateConverter to use to display a properly formatted date/time
 	 */
-	public DatePropertyColumn(IModel<String> headerModel, String propertyExpression,
+	public EditableDateColumn(IModel<String> headerModel,
+                            String propertyExpression,
                             String sortProperty, DateConverter dc)
   {
 		super(headerModel, propertyExpression, sortProperty);
@@ -98,7 +97,8 @@ public class DatePropertyColumn<M, I> extends EditablePropertyColumn<M, I, Date>
    * @param dc
    *            DataConverter for how to properly display the Date/Time info
 	 */
-	public DatePropertyColumn(IModel<String> headerModel, String propertyExpression,
+	public EditableDateColumn(IModel<String> headerModel,
+                            String propertyExpression,
                             DateConverter dc)
   {
 		super(headerModel, propertyExpression);
