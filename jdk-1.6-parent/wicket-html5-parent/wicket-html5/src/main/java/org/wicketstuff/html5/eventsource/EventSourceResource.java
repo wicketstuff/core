@@ -75,6 +75,7 @@ public abstract class EventSourceResource implements IResource
 				this.containerResponse = containerResponse;
 				this.out = containerResponse.getOutputStream();
 				this.parameters = parameters;
+				containerResponse.setCharacterEncoding("UTF-8");
 				containerResponse.setContentType("text/event-stream");
 			}
 			catch (IOException iox)
