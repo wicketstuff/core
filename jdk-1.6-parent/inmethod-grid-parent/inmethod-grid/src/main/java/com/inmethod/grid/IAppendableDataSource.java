@@ -1,10 +1,6 @@
 package com.inmethod.grid;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Tom B.
- * Date: 9/20/11
- * Time: 10:56 AM
+/** Interface that defines an Appendable Data Source
  *
  * @author Tom B.
  */
@@ -14,7 +10,7 @@ public interface IAppendableDataSource<T> extends IDataSource<T>
    *  @param index the index value to insert the new Item into
    *  @param item Item to append to the end of the result data
    */
-  public void InsertRow(long index, T item);
+  public void insertRow(long index, T item);
 
-  public void DeleteRow(long index, T item);
+  public void deleteRow(long index, T item);
 }

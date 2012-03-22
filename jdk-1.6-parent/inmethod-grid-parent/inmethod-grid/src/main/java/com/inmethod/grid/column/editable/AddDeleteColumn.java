@@ -13,13 +13,8 @@ import com.inmethod.grid.datagrid.DataGrid;
 import com.inmethod.icon.Icon;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Tom Burton
- * Date: 12/27/11
- * Time: 1:15 PM
- *
+ * Column that Displays Confirm, Cancel and Delete buttons
  * @author Tom Burton
- *         To change this template use File | Settings | File Templates.
  */
 public class AddDeleteColumn<M, I> extends SubmitCancelColumn<M, I>
 {
@@ -99,7 +94,7 @@ public class AddDeleteColumn<M, I> extends SubmitCancelColumn<M, I>
       {
         IAppendableDataSource ads = (IAppendableDataSource)ds;
         //TODO: get current row
-        ads.DeleteRow(0,rowModel.getObject());
+        ads.deleteRow(0, rowModel.getObject());
       }
       if ( dg.getCurrentPageItemCount() == 1) //only item on page
       {

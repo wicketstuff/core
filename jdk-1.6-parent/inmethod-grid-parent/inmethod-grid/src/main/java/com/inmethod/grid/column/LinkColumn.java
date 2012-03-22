@@ -9,10 +9,6 @@ import com.inmethod.grid.IRenderable;
 
 /**
  * Column to display links in the DataGrid
- * Created by IntelliJ IDEA.
- * User: Tom Burton
- * Date: 1/3/12
- * Time: 2:07 PM
  *
  * @author Tom Burton
  */
@@ -73,6 +69,6 @@ public abstract class LinkColumn<M, I> extends AbstractColumn<M, I>
   public void setPropertyLabel(String propertyLabel)
   { this.propertyLabel = propertyLabel; }
 
-  //TODO: should this work Like Page link? instead?
+  //should this work Like Pagelink instead?
   public abstract void onClick(IModel<I> rowModel);
 }

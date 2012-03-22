@@ -13,11 +13,7 @@ import com.inmethod.grid.IDataSource;
 import com.inmethod.grid.datagrid.DataGrid;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Tom Burton
- * Date: 9/19/11
- * Time: 12:51 PM
- *
+ * Toolbar that Adds a Button for Adding a new record to an existing DataGrid
  * @param <D>
  *            datasource model object type = grid type
  * @param <T>

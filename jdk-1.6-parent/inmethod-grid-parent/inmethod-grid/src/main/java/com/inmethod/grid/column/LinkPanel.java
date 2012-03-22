@@ -7,11 +7,8 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Tom Burton
- * Date: 1/3/12
- * Time: 2:11 PM
- *
+ * Backing Panel for the LinkColumn to do the actual "work"
+ * of properly displaying a link
  * @author Tom Burton
  *         Panel for Displaying a Link in a cell.
  */

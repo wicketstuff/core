@@ -360,8 +360,6 @@ abstract class SubmitCancelPanel<M, I> extends Panel
 			// TODO Auto-generated method stub
 
 		}
-	};
-
-
+	}
 }
 >>>>>>> [InMethod Grid] Cherry Picked Initial Raystorm-InMethod-Grid Cherry Pick into Master
