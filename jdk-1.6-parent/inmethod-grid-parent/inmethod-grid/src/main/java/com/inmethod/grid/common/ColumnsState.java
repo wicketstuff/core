@@ -1,15 +1,11 @@
 package com.inmethod.grid.common;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
+
+import org.apache.wicket.core.util.lang.WicketObjects;
+import org.apache.wicket.util.io.IClusterable;
 
 import com.inmethod.grid.IGridColumn;
-import org.apache.wicket.util.io.IClusterable;
-import org.apache.wicket.core.util.lang.WicketObjects;
 
 /**
  * Manages the state (visibility, order and size) of grid columns.
@@ -18,7 +14,6 @@ import org.apache.wicket.core.util.lang.WicketObjects;
  */
 public class ColumnsState implements IClusterable, Cloneable
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -28,7 +23,6 @@ public class ColumnsState implements IClusterable, Cloneable
 	 */
 	public static class Entry implements IClusterable
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		private final String columnId;
@@ -95,8 +89,8 @@ public class ColumnsState implements IClusterable, Cloneable
 		public String getColumnId()
 		{
 			return columnId;
-		};
-	};
+		}
+	}
 
 	private final Entry[] stateArray;
 
@@ -115,7 +109,7 @@ public class ColumnsState implements IClusterable, Cloneable
 			stateArray[i] = new Entry(column.getId());
 			++i;
 		}
-	};
+	}
 
 	/**
 	 * Creates new {@link ColumnsState} instance. The instance will be initialized from the

@@ -1,24 +1,14 @@
 package com.inmethod.grid.examples;
 
 import org.apache.wicket.Page;
+import org.apache.wicket.core.request.mapper.MountedMapper;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
-import org.apache.wicket.core.request.mapper.MountedMapper;
 
-import com.inmethod.grid.examples.pages.datagrid.DataGridColumnPropertiesPage;
-import com.inmethod.grid.examples.pages.datagrid.DataGridSelectionPage;
-import com.inmethod.grid.examples.pages.datagrid.DataGridWithUnknownItemCount;
-import com.inmethod.grid.examples.pages.datagrid.EditableDataGridPage;
-import com.inmethod.grid.examples.pages.datagrid.EditableDataGridWithSelectionPage;
-import com.inmethod.grid.examples.pages.datagrid.SimpleDataGridPage;
-import com.inmethod.grid.examples.pages.datagrid.VerticalScrollingDataGridPage;
-import com.inmethod.grid.examples.pages.treegrid.EditableTreeGridPage;
-import com.inmethod.grid.examples.pages.treegrid.SimpleTreeGridPage;
-import com.inmethod.grid.examples.pages.treegrid.TreeGridColumnPropertiesPage;
-import com.inmethod.grid.examples.pages.treegrid.TreeGridSelectionPage;
-import com.inmethod.grid.examples.pages.treegrid.VerticalScrollingTreeGridPage;
+import com.inmethod.grid.examples.pages.datagrid.*;
+import com.inmethod.grid.examples.pages.treegrid.*;
 
 /**
  *

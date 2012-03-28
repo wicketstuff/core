@@ -4,11 +4,11 @@ import java.util.Locale;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.Session;
+import org.apache.wicket.core.util.lang.PropertyResolver;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.util.convert.IConverter;
-import org.apache.wicket.core.util.lang.PropertyResolver;
 import org.apache.wicket.util.string.Strings;
 
 import com.inmethod.grid.IRenderable;
@@ -27,7 +27,6 @@ import com.inmethod.grid.IRenderable;
  */
 public class PropertyColumn<M, I, P> extends AbstractLightWeightColumn<M, I>
 {
-
 	private static final long serialVersionUID = 1L;
 
 	private final String propertyExpression;
@@ -46,7 +45,7 @@ public class PropertyColumn<M, I, P> extends AbstractLightWeightColumn<M, I>
 	 *            column is being sorted
 	 */
 	public PropertyColumn(String columnId, IModel<String> headerModel, String propertyExpression,
-		String sortProperty)
+		                    String sortProperty)
 	{
 		super(columnId, headerModel, sortProperty);
 		this.propertyExpression = propertyExpression;

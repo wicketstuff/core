@@ -23,7 +23,6 @@ import com.inmethod.grid.column.tree.PropertyTreeColumn;
 public class EditablePropertyTreeColumn<T extends TreeModel & Serializable, I extends TreeNode & Serializable, P>
 	extends PropertyTreeColumn<T, I, P>
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**

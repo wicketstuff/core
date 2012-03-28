@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.inmethod.grid.column.editable;
 
 import org.apache.wicket.feedback.FeedbackMessage;
@@ -19,6 +16,7 @@ import com.inmethod.grid.column.AbstractColumn;
  */
 public class TextFieldPanel<M, I, P> extends EditableCellPanel<M, I, P>
 {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor
@@ -66,7 +64,4 @@ public class TextFieldPanel<M, I, P> extends EditableCellPanel<M, I, P>
 	{
 		return (FormComponent<P>)get("textfield");
 	}
-
-	private static final long serialVersionUID = 1L;
-
 }

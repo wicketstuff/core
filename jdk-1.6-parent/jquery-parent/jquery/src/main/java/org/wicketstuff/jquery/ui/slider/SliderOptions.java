@@ -3,7 +3,8 @@ package org.wicketstuff.jquery.ui.slider;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONFunction;
 import net.sf.json.JSONObject;
-import org.apache.wicket.util.io.IClusterable;
+
+import org.apache.wicket.IClusterable;
 
 /**
  * An integration of JQuery UI Slider widget (http://docs.jquery.com/UI/Slider/slider)

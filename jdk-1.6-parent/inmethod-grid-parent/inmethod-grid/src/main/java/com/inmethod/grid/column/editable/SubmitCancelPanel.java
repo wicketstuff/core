@@ -17,10 +17,9 @@ import com.inmethod.icon.IconImage;
 
 abstract class SubmitCancelPanel<M, I> extends Panel
 {
-
 	private static final long serialVersionUID = 1L;
 
-	private AbstractGrid<M, I> getGrid()
+	protected AbstractGrid<M, I> getGrid()
 	{
 		return grid;
 	}
@@ -85,13 +84,12 @@ abstract class SubmitCancelPanel<M, I> extends Panel
 
 	private class SubmitLink extends AjaxSubmitLink
 	{
+		private static final long serialVersionUID = 1L;
 
 		public SubmitLink(String id)
 		{
 			super(id, getGrid().getForm());
 		}
-
-		private static final long serialVersionUID = 1L;
 
 		private boolean formComponentActive(FormComponent<?> formComponent)
 		{
@@ -177,7 +175,5 @@ abstract class SubmitCancelPanel<M, I> extends Panel
 			// TODO Auto-generated method stub
 
 		}
-	};
-
-
+	}
 }

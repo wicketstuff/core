@@ -29,7 +29,6 @@ import com.inmethod.icon.Icon;
 public abstract class AbstractTreeColumn<T extends TreeModel & Serializable, I extends TreeNode & Serializable>
 	extends BaseTreeColumn<T, I>
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**

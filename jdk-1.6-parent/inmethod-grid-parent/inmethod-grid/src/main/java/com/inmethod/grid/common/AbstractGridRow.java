@@ -30,7 +30,6 @@ import com.inmethod.grid.IRenderable;
  */
 public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -46,9 +45,7 @@ public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 
 	@Override
 	protected void onBeforeRender()
-	{
-		// make sure that the child component match currently active columns
-
+	{	// make sure that the child component match currently active columns
 		Collection<IGridColumn<M, I>> activeColumns = getActiveColumns();
 
 		// remove unneeded components
@@ -197,7 +194,6 @@ public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 	 */
 	private class InnerDivClassBehavior extends Behavior
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		private final IGridColumn<M, I> column;
@@ -257,7 +253,6 @@ public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 	@Override
 	protected void onRender()
 	{
-
 		Response response = RequestCycle.get().getResponse();
 
 		Collection<IGridColumn<M, I>> columns = getActiveColumns();
@@ -284,8 +279,7 @@ public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 				response.write("</div>");
 			}
 			else
-			{
-				// for non-lightweight components get the actual component and render it
+			{	// for non-lightweight components get the actual component and render it
 				Component component = get(column.getId());
 				if (component == null)
 				{
@@ -318,7 +312,7 @@ public abstract class AbstractGridRow<M, I> extends WebMarkupContainer
 	 * @return
 	 */
 	private boolean isComponentNeeded(final String componentId,
-		Collection<IGridColumn<M, I>> activeColumns)
+                                    Collection<IGridColumn<M, I>> activeColumns)
 	{
 		for (IGridColumn<M, I> column : activeColumns)
 		{

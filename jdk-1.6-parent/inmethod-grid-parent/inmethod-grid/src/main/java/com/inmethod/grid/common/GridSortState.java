@@ -3,9 +3,10 @@ package com.inmethod.grid.common;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.inmethod.grid.IGridSortState;
 import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.string.Strings;
+
+import com.inmethod.grid.IGridSortState;
 
 /**
  * An {@link IGridSortState} implementation.
@@ -16,7 +17,6 @@ import org.apache.wicket.util.string.Strings;
  */
 public class GridSortState implements IGridSortState, IClusterable
 {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -26,7 +26,6 @@ public class GridSortState implements IGridSortState, IClusterable
 	 */
 	private static class SortStateColumn implements ISortStateColumn, IClusterable
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		private final String propertyName;
@@ -54,8 +53,7 @@ public class GridSortState implements IGridSortState, IClusterable
 		{
 			return direction;
 		}
-
-	};
+	}
 
 	private final List<ISortStateColumn> columns = new ArrayList<ISortStateColumn>();
 

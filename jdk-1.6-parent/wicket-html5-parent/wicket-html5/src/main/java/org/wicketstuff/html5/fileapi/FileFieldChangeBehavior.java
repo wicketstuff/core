@@ -5,8 +5,6 @@ import java.util.Calendar;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.attributes.AjaxCallListener;
-import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
@@ -138,15 +136,17 @@ public abstract class FileFieldChangeBehavior extends AjaxEventBehavior
 	protected abstract void onEvent(AjaxRequestTarget target, FileList fileList);
 
 	@Override
-	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
+	protected CharSequence getCallbackScript()
 	{
-		super.updateAjaxAttributes(attributes);
-		attributes.setMethod(AjaxRequestAttributes.Method.POST);
-		AjaxCallListener ajaxCallListener = new AjaxCallListener();
-		ajaxCallListener.onPrecondition("return Wicketstuff.fileapi.supports(this)&&Wicket.$('" +
-			getComponent().getMarkupId() + "') != null;");
+		return generateCallbackScript("wicketAjaxPost('" + getCallbackUrl() +
+			"', function() {return Wicketstuff.fileapi.fileFieldToPostBody(this);}.bind(this)");
+	}
 
-		attributes.getDynamicExtraParameters().add("return Wicketstuff.fileapi.fileFieldToPostBody(Wicket.$(attrs.c));");
+	@Override
+	protected CharSequence getPreconditionScript()
+	{
+		return "return Wicketstuff.fileapi.supports(this)&&Wicket.$('" +
+			getComponent().getMarkupId() + "') != null;";
 	}
 
 	/**

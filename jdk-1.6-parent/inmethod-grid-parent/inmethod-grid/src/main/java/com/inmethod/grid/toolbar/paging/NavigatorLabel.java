@@ -16,12 +16,13 @@
  */
 package com.inmethod.grid.toolbar.paging;
 
-import com.inmethod.grid.IDataSource;
-import com.inmethod.grid.datagrid.DataGrid;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.util.io.IClusterable;
+
+import com.inmethod.grid.IDataSource;
+import com.inmethod.grid.datagrid.DataGrid;
 
 /**
  * Label that provides Showing x to y of z message given for a DataGrid. The message can be
@@ -43,7 +44,8 @@ public class NavigatorLabel extends Label
 	 * @param table
 	 *            pageable view
 	 */
-	public <D extends IDataSource<T>, T> NavigatorLabel(final String id, final DataGrid<D, T> table)
+	public <D extends IDataSource<T>, T> NavigatorLabel(final String id,
+                                                      final DataGrid<D, T> table)
 	{
 		super(id);
 		setDefaultModel(new StringResourceModel("NavigatorLabel", this,
@@ -51,7 +53,8 @@ public class NavigatorLabel extends Label
 			"Showing ${from} to ${to} of ${of}"));
 	}
 
-	private class LabelModelObject<D extends IDataSource<T>, T> implements IClusterable
+	private class LabelModelObject<D extends IDataSource<T>, T>
+          implements IClusterable
 	{
 		private static final long serialVersionUID = 1L;
 		private final DataGrid<D, T> table;

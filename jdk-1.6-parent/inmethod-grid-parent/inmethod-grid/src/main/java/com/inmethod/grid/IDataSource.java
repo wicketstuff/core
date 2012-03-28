@@ -2,9 +2,9 @@ package com.inmethod.grid;
 
 import java.util.Iterator;
 
-import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.model.IDetachable;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Interface used to provide data to data views. This interface allows to create a paged DataGrid
@@ -101,7 +101,7 @@ public interface IDataSource<T> extends IDetachable, IClusterable
 
 		/**
 		 * Returns the amount of items to be loaded. If the total amount is known (it was either set
-		 * by {@link IQueryResult#setTotalCount(long)} before calling this method or the previous
+		 * by {@link IQueryResult#setTotalCount(int)} before calling this method or the previous
 		 * call to {@link IDataSource#query(IDataSource.IQuery, IDataSource.IQueryResult)} set
 		 * {@link IQueryResult#NO_MORE_ITEMS} as total count), this method will return the exact
 		 * amount of required rows. If the total amount of rows is not known, it will always return
