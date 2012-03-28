@@ -3,8 +3,6 @@ package com.inmethod.grid.treegrid;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 
-import com.inmethod.icon.Icon;
-import com.inmethod.icon.IconImage;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -19,6 +17,9 @@ import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.io.IClusterable;
 
+import com.inmethod.icon.Icon;
+import com.inmethod.icon.IconImage;
+
 /**
  * Represents the content of a tree column cell.
  * 
@@ -31,8 +32,8 @@ import org.apache.wicket.util.io.IClusterable;
  */
 public abstract class TreePanel<T extends TreeModel, I extends TreeNode> extends Panel
 {
-
 	private static final long serialVersionUID = 1L;
+
 	private static final String JUNCTION_LINK_ID = "junctionLink";
 	private static final String NODE_COMPONENT_ID = "nodeComponent";
 
@@ -158,7 +159,6 @@ public abstract class TreePanel<T extends TreeModel, I extends TreeNode> extends
 	 */
 	private static class IconBorder extends Behavior
 	{
-
 		private static final long serialVersionUID = 1L;
 
 		/**
