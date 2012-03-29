@@ -9,11 +9,18 @@
 	</parent>
 
 	<artifactId>push-cometd</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 
 	<name>Wicketstuff Push - CometD</name>
 	<description>CometD (bayeux) implementation of Wicketstuff Push</description>
 
+	<properties>
+		<wicketstuff.osgi.import.package>org.apache.wicket.*; version="[${project.version},${project.version}]", org.wicketstuff.push.*; version="[${project.version},${project.version}]", *</wicketstuff.osgi.import.package>
+		<wicketstuff.osgi.private.package />
+		<wicketstuff.osgi.export.package>*; version="${project.version}"</wicketstuff.osgi.export.package>
+		<wicketstuff.osgi.embed.dependency />
+	</properties>
+	
 	<dependencies>
 
 		<dependency>
@@ -63,7 +70,7 @@
 									<version>${cometd.version}</version>
 									<type>war</type>
 									<overWrite>false</overWrite>
-									<outputDirectory>${project.build.outputDirectory}/org/wicketstuff/push/cometd</outputDirectory>
+									<outputDirectory>${project.build.directory}/dependency</outputDirectory>
 								</artifactItem>
 							</artifactItems>
 							<includes>**/*.js</includes>
@@ -73,6 +80,51 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<!-- here the phase you need -->
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${project.build.directory}/dependency/org</directory>
+								</resource>
+							</resources>
+							<outputDirectory>${project.build.outputDirectory}/org/wicketstuff/push/cometd/js</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>2.3.4</version>
+				<extensions>true</extensions>
+				<configuration>
+					<obrRepository>NONE</obrRepository>
+					<excludeDependencies>true</excludeDependencies>
+					<instructions>
+						<Bundle-Name>${project.artifactId}-${project.version}</Bundle-Name>
+						<Bundle-SymbolicName>${project.artifactId}-${project.version}</Bundle-SymbolicName>
+						<Bundle-Description>${project.description}</Bundle-Description>
+						<Bundle-Version>${project.version}</Bundle-Version>
+						<Export-Package>${wicketstuff.osgi.export.package}</Export-Package>
+						<Import-Package>${wicketstuff.osgi.import.package}</Import-Package>
+						<Private-Package>${wicketstuff.osgi.private.package}</Private-Package>
+						<Embed-Dependency>${wicketstuff.osgi.embed.dependency}</Embed-Dependency>
+					</instructions>
+				</configuration>
+			</plugin>
+			
 		</plugins>
 	</build>
 </project>
