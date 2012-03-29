@@ -16,6 +16,13 @@
 	<name>InMethod Grid</name>
 	<description>Advanced grid components for Apache Wicket</description>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.wicket</groupId>
+      <artifactId>wicket-datetime</artifactId>
+    </dependency>
+  </dependencies>
+
 	<build>
 		<plugins>
 			<plugin>

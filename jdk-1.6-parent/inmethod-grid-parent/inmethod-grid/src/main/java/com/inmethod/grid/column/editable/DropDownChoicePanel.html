@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC
+          "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd"
+      xml:lang="en"
+      lang="en">
+  <head>
+    <title>DropDownChoicePanel</title>
+  </head>
+  <body>
+  <wicket:panel>
+	<div style="padding-left: 1px; padding-right: 1px; border: 1px solid #88CFFF">
+    <select wicket:id="DropDownChoice" size="1"
+            onfocus="InMethod.setCursorPos(this, 0, this.value.length);"
+		        onkeyup="return InMethod.editKeyUp(this, event);"
+		        onkeypress="return InMethod.editKeyPress(this, event); ">
+      <option>[Options to be listed by Wicket]</option>
+    </select>
+	</div>
+</wicket:panel>
+  </body>
+</html>
