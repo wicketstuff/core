@@ -56,6 +56,7 @@
 		<module>wicket-html5-parent</module>
 		<module>wicket-servlet3-parent</module>
 		<module>wicketstuff-springreference-parent</module>
+		<module>wicket-security-parent</module>
 
 		<!-- TODO: port these module to wicket 6 -->
 
@@ -71,7 +72,6 @@
 		<!-- <module>openlayers-parent</module> -->
 
 		<!-- <module>shiro-security</module> -->
-		<!-- <module>wicket-security-parent</module> -->
 		<!-- <module>yav-parent</module> -->
 		<!-- <module>maven-support</module> -->
 
