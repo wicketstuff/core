@@ -176,7 +176,7 @@ public class Nio2ModificationWatcher extends ModificationWatcher
 			if (classPathEntry.endsWith(".jar") == false)
 			{
 				Path folder = Paths.get(classPathEntry);
-				if (folder.toFile().isDirectory())
+				if (Files.isDirectory(folder))
 				{
 					register(folder, watchService);
 
