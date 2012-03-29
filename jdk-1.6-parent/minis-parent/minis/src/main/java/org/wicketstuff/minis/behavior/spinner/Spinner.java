@@ -23,16 +23,16 @@ import java.util.Properties;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.core.util.string.JavaScriptUtils;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.request.Response;
-import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.util.string.JavaScriptUtils;
 import org.apache.wicket.util.string.Strings;
 
 /**
@@ -49,7 +49,7 @@ public class Spinner extends Behavior
 
 	private static final ResourceReference JS = new JavaScriptResourceReference(Spinner.class,
 		"spinner.js");
-	private static final ResourceReference CSS = new CssResourceReference(Spinner.class,
+	private static final ResourceReference CSS = new PackageResourceReference(Spinner.class,
 		"spinner.css");
 
 	private Component component;

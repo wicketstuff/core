@@ -2,7 +2,6 @@ package org.wicketstuff.jquery.ui.slider;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
@@ -42,9 +41,9 @@ public class SliderBehavior extends JQueryBehavior
 		if (sliderOptions.getOnChange() == null)
 		{
 
-			final CharSequence body = getCallbackFunction("e", "ui");
+			final String body = getCallbackScript();
 
-			sliderOptions.setOnChange(body.toString(), "e", "ui");
+			sliderOptions.setOnChange(body, "e", "ui");
 		}
 
 		final StringBuilder onReady = new StringBuilder("$('#" + getSlider().getMarkupId() +
@@ -56,13 +55,11 @@ public class SliderBehavior extends JQueryBehavior
 	}
 
 	@Override
-	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
+	protected String getCallbackScript()
 	{
-		super.updateAjaxAttributes(attributes);
-
-		// TODO pass 'e' and 'ui' as additional keys in attrs
-		CharSequence handleId = "return { handleId: getHandleId(e, ui), value: getValue(e, ui) }";
-		attributes.getDynamicExtraParameters().add(handleId);
+		return generateCallbackScript(
+			"wicketAjaxGet('" + getCallbackUrl() +
+				"&handleId=' + getHandleId(e, ui) + '&value=' + getValue(e, ui)").toString();
 	}
 
 	@Override

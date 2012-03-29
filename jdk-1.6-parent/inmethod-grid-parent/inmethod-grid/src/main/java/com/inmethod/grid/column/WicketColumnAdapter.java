@@ -36,8 +36,8 @@ import com.inmethod.grid.datagrid.DataGrid;
  */
 public class WicketColumnAdapter<M, I> extends AbstractColumn<M, I>
 {
-
 	private static final long serialVersionUID = 1L;
+
 	private final IColumn<I> delegate;
 
 	/**

@@ -1,8 +1,6 @@
 package org.wicketstuff.html5.markup.html.form;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
-import org.apache.wicket.ajax.attributes.ThrottlingSettings;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -34,7 +32,7 @@ public class RangeTextFieldDemo extends BasePage
 		rangeLabel.setOutputMarkupId(true);
 		add(rangeLabel);
 
-		rangeTextField.add(new AjaxFormComponentUpdatingBehavior("change")
+		rangeTextField.add(new AjaxFormComponentUpdatingBehavior("onchange")
 		{
 			private static final long serialVersionUID = 1L;
 
@@ -43,16 +41,7 @@ public class RangeTextFieldDemo extends BasePage
 			{
 				target.add(rangeLabel);
 			}
-
-			@Override
-			protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
-			{
-				super.updateAjaxAttributes(attributes);
-
-				ThrottlingSettings throttleSettings = new ThrottlingSettings("rangeTextFieldDemoId", Duration.milliseconds(500));
-				attributes.setThrottlingSettings(throttleSettings);
-			}
-		});
+		}.setThrottleDelay(Duration.milliseconds(500)));
 	}
 
 }
