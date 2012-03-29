@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 import org.wicketstuff.openlayers.js.Constructor;
 import org.wicketstuff.openlayers.js.JSUtils;
@@ -19,7 +21,7 @@ import org.wicketstuff.openlayers.js.ObjectLiteral;
 public abstract class Layer {
 	private String name;
 	private final String baseVariableName;
-	private Map<String, String> onEventHandlers;
+	private Map<String, IModel<String>> onEventHandlers;
 
 	/**
 	 * 
@@ -27,7 +29,7 @@ public abstract class Layer {
 	protected Layer(String baseVariableName) {
 		super();
 		this.baseVariableName = baseVariableName;
-		this.onEventHandlers = new LinkedHashMap<String, String>();
+		this.onEventHandlers = new LinkedHashMap<String, IModel<String>>();
 
 	}
 
@@ -77,9 +79,9 @@ public abstract class Layer {
 				
 				eventHandlerBuffer.append(" : ");
 				
-				eventHandlerBuffer.append("function (feature) {");
+				eventHandlerBuffer.append("function (e) {");
 				
-				eventHandlerBuffer.append(onEventHandlers.get(event));
+				eventHandlerBuffer.append(onEventHandlers.get(event).getObject());
 				
 				eventHandlerBuffer.append("}\n");
 				
@@ -178,8 +180,16 @@ public abstract class Layer {
 	 * 
 	 */
 	public void registerOnEventJavascript(String event,
-			String eventHandlingJavascript) {
+			IModel<String> eventHandlingJavascript) {
 
 		onEventHandlers.put(event, eventHandlingJavascript);
 	}
+	
+	
+	public void registerOnEventJavascript(String event,
+			String eventHandlingJavascript) {
+
+		this.registerOnEventJavascript(event, new Model<String>(eventHandlingJavascript));
+	}
+	
 }
