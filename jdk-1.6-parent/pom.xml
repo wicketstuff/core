@@ -19,6 +19,7 @@
 
 	<modules>
 		<module>javaee-inject-parent</module>
+		<module>gmap3-parent</module>
 		<module>push-parent-jdk-1.6</module>
 		<module>wicket-html5-parent</module>
 	</modules>
