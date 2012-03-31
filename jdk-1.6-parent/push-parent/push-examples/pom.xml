@@ -13,7 +13,7 @@
 	<artifactId>wicketstuff-push-examples</artifactId>
 	<packaging>war</packaging>
 
-	<name>Wicket Push Examples</name>
+	<name>Wicketstuff Push Examples</name>
 
 	<dependencies>
 		<dependency>
