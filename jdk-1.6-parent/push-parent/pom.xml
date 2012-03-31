@@ -11,7 +11,7 @@
 	<artifactId>push-parent</artifactId>
 	<packaging>pom</packaging>
 
-	<name>Push - Parent</name>
+	<name>Wicketstuff Push - Parent</name>
 	<description>See the child project "push-core" for more information</description>
 
 	<developers>
@@ -50,6 +50,11 @@
 
 	<properties>
 		<cometd.version>2.4.0.RC1</cometd.version>
+
+		<wicketstuff.osgi.import.package>org.apache.wicket.*;version="[${project.version},${project.version}]",*</wicketstuff.osgi.import.package>
+		<wicketstuff.osgi.private.package />
+		<wicketstuff.osgi.export.package>*; version="${project.version}"</wicketstuff.osgi.export.package>
+		<wicketstuff.osgi.embed.dependency />
 	</properties>
 
 	<dependencies>

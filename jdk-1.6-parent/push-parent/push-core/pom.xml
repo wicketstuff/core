@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -9,9 +10,32 @@
 	</parent>
 
 	<artifactId>wicketstuff-push-core</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 
 	<name>Wicketstuff Push - Core</name>
 	<description>An integration project for server side pushing in Wicket</description>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<obrRepository>NONE</obrRepository>
+					<excludeDependencies>true</excludeDependencies>
+					<instructions>
+						<Bundle-Name>${project.artifactId}-${project.version}</Bundle-Name>
+						<Bundle-SymbolicName>${project.artifactId}-${project.version}</Bundle-SymbolicName>
+						<Bundle-Description>${project.description}</Bundle-Description>
+						<Bundle-Version>${project.version}</Bundle-Version>
+						<Export-Package>${wicketstuff.osgi.export.package}</Export-Package>
+						<Import-Package>${wicketstuff.osgi.import.package}</Import-Package>
+						<Private-Package>${wicketstuff.osgi.private.package}</Private-Package>
+						<Embed-Dependency>${wicketstuff.osgi.embed.dependency}</Embed-Dependency>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
