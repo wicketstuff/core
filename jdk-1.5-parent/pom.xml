@@ -137,7 +137,10 @@
 		<module>simile-timeline-parent</module>
 		<module>tinymce-parent</module>
 		<!-- mocleiri: not included in module because it breaks jenkins -->
-<!--		<module>yui-parent</module> -->
+<!--		<module>yui-parent</module> 
+		ddcalendar is disabled because it depends on yui-parent
+		<module>ddcalendar-parent</module>
+		-->
 		<module>artwork-parent</module>
 		<module>yav-parent</module>
 		<module>plugin</module>
@@ -147,7 +150,6 @@
 		<module>flot-parent</module>
 		<module>jwicket-parent</module>
 		<module>mbeanview-parent</module>
-		<module>ddcalendar-parent</module>
 		<module>fixed-feedback-panel</module>
 		<module>maven-support</module>
 		<module>theme-parent</module>
