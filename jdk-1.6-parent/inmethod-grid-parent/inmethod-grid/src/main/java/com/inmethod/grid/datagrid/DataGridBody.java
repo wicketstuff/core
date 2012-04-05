@@ -231,7 +231,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 
 				klass = klass + " imxt-want-prelight imxt-grid-row";
 
-				if (isItemSelected(getDefaultItemModel()))
+				if (isItemSelected((IModel<T>)getDefaultModel()))
 				{
 					klass = klass + " imxt-selected";
 				}
@@ -262,9 +262,4 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
       return newItemFactory().newItem(i, itemModel);
     }
 	}
-  
-	protected IModel<T> getDefaultItemModel()
-	{
-		return (IModel<T>)getDefaultModel();
-	}
-}
+  }
