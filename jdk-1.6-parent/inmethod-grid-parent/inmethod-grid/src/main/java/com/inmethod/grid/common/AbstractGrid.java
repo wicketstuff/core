@@ -507,9 +507,9 @@ public abstract class AbstractGrid<M, I> extends Panel
 		sb.append("];\n");
 
 		// method that calls the proper listener when column state is changed
-		sb.append("var submitStateCallback = function(columnState) { ");
+		sb.append("var submitStateCallback = ");
 		sb.append(submitColumnStateBehavior.getCallbackScript());
-		sb.append(" }\n");
+		sb.append("\n");
 
 		// initialization
 		sb.append("InMethod.XTableManager.instance.register(\"" + getMarkupId() +
