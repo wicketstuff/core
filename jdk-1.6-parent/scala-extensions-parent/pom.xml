@@ -97,14 +97,14 @@
 				<artifactId>maven-scala-plugin</artifactId>
 			</plugin>
 			<plugin>
-                                <groupId>org.apache.maven.plugins</groupId>
-                                <artifactId>maven-source-plugin</artifactId>
-                                <configuration>
-                                        <includes>
-                                                <include>**/*</include>
-                                        </includes>
-                                </configuration>
-                        </plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+ 				<configuration>
+					<includes>
+						<include>**/*</include>
+					</includes>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
