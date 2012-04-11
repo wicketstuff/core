@@ -4,18 +4,21 @@ import Project.Initialize
 
 object WicketScalaParent extends Build
 {
-	val WicketVersion = "1.5-SNAPSHOT"
+	val WicketVersion = "6.0-SNAPSHOT"
 	val Organization  = "org.wicketstuff"
-	val ScalaVersion  = "2.9.0-1"
+	val ScalaVersion  = "2.9.1-1"
+	val ScalacOptions = Seq("-deprecation", "-unchecked", "-optimize", "-uniqid",
+		"-no-specialization", "-encoding", "UTF-8")
 
-	val ScalaCheckDep = "org.scala-tools.testing" %% "scalacheck" % "1.9"
+	val ScalaCheckDep = "org.scalacheck" % "scalacheck_2.9.1" % "1.9"
 	val JUnitDep      = "junit" % "junit" % "4.8.2" % "test->default"
-	val Specs1Dep     = "org.scala-tools.testing" % "specs_2.9.0-1" % "1.6.8" % "test->default"
+	val Specs1Dep     = "org.scala-tools.testing" % "specs_2.9.1" % "1.6.9" % "test->default"
 	val ServletDep    = "javax.servlet" % "servlet-api" % "2.5"
-	val Slf4jLog4jDep = "org.slf4j" % "slf4j-log4j12" % "1.6.1"
-	val WicketExtensionsDep = "org.apache.wicket" % "wicket-extensions" % "1.5-SNAPSHOT"
-	val WicketDep     = "org.apache.wicket" % "wicket" % "1.5-SNAPSHOT"
-	val ScalaTestDep  = "org.scalatest" % "scalatest" % "1.3" % "test->default"
+	val Slf4jLog4jDep = "org.slf4j" % "slf4j-log4j12" % "1.6.4"
+	val WicketDep     = "org.apache.wicket" % "wicket" % WicketVersion
+	val WicketExtensionsDep = "org.apache.wicket" % "wicket-extensions" % WicketVersion
+	val WicketDatetimeDep = "org.apache.wicket" % "wicket-datetime" % WicketVersion
+	val ScalaTestDep  = "org.scalatest" % "scalatest_2.9.1-1" % "1.7.1" % "test->default"
 
 	lazy val parent = Project("parent", file("."),
 		settings = Defaults.defaultSettings ++ Seq(
@@ -38,6 +41,7 @@ object WicketScalaParent extends Build
 			publishMavenStyle := true,
 			resolvers += "Apache Snapshots" at "http://repository.apache.org/snapshots",
 			retrieveManaged := true,
+			scalacOptions ++= ScalacOptions,
 
 			libraryDependencies ++= Seq(
 				ScalaCheckDep,
@@ -46,6 +50,7 @@ object WicketScalaParent extends Build
 				ScalaTestDep,
 				WicketDep,
 				WicketExtensionsDep,
+				WicketDatetimeDep,
 				ServletDep % "provided->default",
 				Slf4jLog4jDep
 			)
@@ -61,6 +66,7 @@ object WicketScalaParent extends Build
 			scalaVersion := ScalaVersion,
 			publishMavenStyle := true,
 			resolvers += "Apache Snapshots" at "http://repository.apache.org/snapshots",
+			scalacOptions ++= ScalacOptions,
 
 			libraryDependencies ++= Seq(
 				ScalaTestDep,
