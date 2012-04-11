@@ -20,7 +20,6 @@ import org.apache.wicket.{ Component, Application }
 import org.apache.wicket.Page
 import org.apache.wicket.validation.IValidatable
 import org.apache.wicket.validation.IValidator
-import org.apache.wicket.markup.html.form.Check
 import org.apache.wicket.markup.html.form.CheckBox
 import org.apache.wicket.Session
 

@@ -1,10 +1,5 @@
 package org.wicketstuff.scala
 
-import javax.swing._
-import java.applet._
-import org.apache.wicket.markup.html.basic.Label
-import org.apache.wicket.model.AbstractReadOnlyModel
-import org.apache.wicket.model._
 import org.apache.wicket.model.IModel
 
 /**
@@ -17,9 +12,8 @@ import org.apache.wicket.model.IModel
  * @author Antony Stubbs
  * @author Jan Kriesten
  */
-@serializable
 @SerialVersionUID(1L)
-class Fodel[T](getter: ⇒ T, setter:(T) ⇒ Unit) extends IModel[T] {
+class Fodel[T](getter: ⇒ T, setter:(T) ⇒ Unit) extends IModel[T] with Serializable {
 
   def this(getter: ⇒ T) = this(getter, null)
 
