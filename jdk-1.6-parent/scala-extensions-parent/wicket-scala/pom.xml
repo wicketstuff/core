@@ -25,12 +25,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.scala-tools.testing</groupId>
-			<artifactId>specs_2.9.0-1</artifactId>
-			<scope>test</scope>
+			<artifactId>specs_2.9.1</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.scalatest</groupId>
-			<artifactId>scalatest</artifactId>
+			<artifactId>scalatest_2.9.1-1</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
