@@ -371,7 +371,7 @@ public class Animator implements Serializable
 		{
 		}
 
-		public abstract IModel getScript();
+		public abstract IModel<String> getScript();
 
 		/**
 		 * @return a new {@link Action} representing the toggle command
@@ -381,9 +381,9 @@ public class Animator implements Serializable
 			return new Action()
 			{
 				@Override
-				public IModel getScript()
+				public IModel<String> getScript()
 				{
-					return new Model("${animatorId}.toggle();");
+					return new Model<String>("${animatorId}.toggle();");
 				}
 			};
 		}
@@ -396,9 +396,9 @@ public class Animator implements Serializable
 			return new Action()
 			{
 				@Override
-				public IModel getScript()
+				public IModel<String> getScript()
 				{
-					return new Model("${animatorId}.play();");
+					return new Model<String>("${animatorId}.play();");
 				}
 			};
 		}
@@ -411,9 +411,9 @@ public class Animator implements Serializable
 			return new Action()
 			{
 				@Override
-				public IModel getScript()
+				public IModel<String> getScript()
 				{
-					return new Model("${animatorId}.reverse();");
+					return new Model<String>("${animatorId}.reverse();");
 				}
 			};
 		}
@@ -430,9 +430,9 @@ public class Animator implements Serializable
 			return new Action()
 			{
 				@Override
-				public IModel getScript()
+				public IModel<String> getScript()
 				{
-					return new Model(String
+					return new Model<String>(String
 							.format("${animatorId}.seekFromTo(%.2f,%.2f);", from, to));
 				}
 			};
@@ -448,9 +448,9 @@ public class Animator implements Serializable
 			return new Action()
 			{
 				@Override
-				public IModel getScript()
+				public IModel<String> getScript()
 				{
-					return new Model(String.format("${animatorId}.seekTo(%.2f);", to));
+					return new Model<String>(String.format("${animatorId}.seekTo(%.2f);", to));
 				}
 			};
 		}
@@ -465,9 +465,9 @@ public class Animator implements Serializable
 			return new Action()
 			{
 				@Override
-				public IModel getScript()
+				public IModel<String> getScript()
 				{
-					return new Model(String.format("${animatorId}.jumpTo(%.2f);", to));
+					return new Model<String>(String.format("${animatorId}.jumpTo(%.2f);", to));
 				}
 			};
 		}
@@ -527,7 +527,7 @@ public class Animator implements Serializable
 			response.renderJavascriptReference(new JavascriptResourceReference(Animator.class,
 					"animator.js"));
 
-			Map<String, String> variables = new HashMap<String, String>();
+			Map<String, Object> variables = new HashMap<String, Object>();
 			variables.put("animatorId", animatorId);
 
 			StringBuffer optBuffer = new StringBuffer();
@@ -546,7 +546,7 @@ public class Animator implements Serializable
 			for (int i = 0; i < subjects.size(); i++)
 			{
 				init.append(".addSubject(");
-				init.append(((IAnimatorSubject)subjects.get(i)).getJavaScript());
+				init.append((subjects.get(i)).getJavaScript());
 				init.append(")");
 			}
 			variables.put("addSubjects", init.toString());
@@ -568,7 +568,7 @@ public class Animator implements Serializable
 			}
 			String script = getReplaceModel().getObject().toString();
 
-			getReplaceModel().setObject(script.replaceAll("\\$\\{animatorId\\}", animatorId));
+			( (IModel<String>) getReplaceModel() ).setObject(script.replaceAll("\\$\\{animatorId\\}", animatorId));
 
 		}
 	}
