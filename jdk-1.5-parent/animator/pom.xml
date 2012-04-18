@@ -8,5 +8,6 @@
     </parent>
 
    <artifactId>animator</artifactId>
+   <name>Animator</name>
 
 </project>

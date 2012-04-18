@@ -156,6 +156,7 @@
 		<module>jasperreports-parent</module>
 		<module>modalx-parent</module>
 		<module>spring-webflow-parent</module>
+		<module>animator</module>
 	  </modules>
 
 		</profile>
@@ -218,6 +219,7 @@
 		<module>jasperreports-parent</module>
 		<module>modalx-parent</module>
 		<module>spring-webflow-parent</module>
+		<module>animator</module>
 	  </modules>
 
 		</profile>
