@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>progressbar-parent</artifactId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.4.20.1</version>
 	</parent>
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>progressbar-spring</artifactId>
