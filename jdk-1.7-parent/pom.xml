@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>6.0-SNAPSHOT</version>
+		<version>6.0.0-beta1</version>
 	</parent>
 
 	<artifactId>jdk-1.7-parent</artifactId>
@@ -19,7 +19,11 @@
 	</description>
 
 	<modules>
-		<module>wicketstuff-wicket7</module>
+	<!-- mocleiri: the wicket functionality this module needs was not added until after
+	               the beta1 milesone was released. 
+		       So I am disabling it for the wicketstuff-core-6.0.0-beta1 release.
+			-->
+	<!-- <module>wicketstuff-wicket7</module> -->
 	</modules>
 
 	<build>
