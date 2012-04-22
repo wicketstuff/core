@@ -7,7 +7,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>6.0.0-beta1</version>
+	<version>6.0.0-beta1.1</version>
 
 	<name>WicketStuff Core Parent</name>
 	<description>
@@ -216,7 +216,7 @@
 	</mailingLists>
 
 	<scm>
-		<url>https://github.com/wicketstuff/core/tree/wicketstuff-core-6.0.0-beta1</url>
+		<url>https://github.com/wicketstuff/core/tree/wicketstuff-core-6.0.0-beta1.1</url>
 		<connection>scm:git:ssh://git@github.com:wicketstuff/core.git</connection>
 	</scm>
 
