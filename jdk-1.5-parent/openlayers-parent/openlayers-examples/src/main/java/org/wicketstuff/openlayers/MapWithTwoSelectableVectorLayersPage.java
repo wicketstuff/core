@@ -133,9 +133,9 @@ public class MapWithTwoSelectableVectorLayersPage extends WebPage {
 		
 		layers.add(v2 = new Vector("Vector Layer 2", v2Options));
 		
-		v1.registerOnEventJavascript("featureselected", "alert('selected feature '+feature.feature.id+' on Vector Layer 1');");
+		v1.registerOnEventJavascript("featureselected", "alert('selected feature '+e.feature.id+' on Vector Layer 1');");
 		
-		v2.registerOnEventJavascript("featureselected", "alert('selected feature '+feature.feature.id+' on Vector Layer 2');");
+		v2.registerOnEventJavascript("featureselected", "alert('selected feature '+e.feature.id+' on Vector Layer 2');");
 		
 		
 		HashMap<String, String> mapOptions = new LinkedHashMap<String, String>();

@@ -64,15 +64,15 @@ public class CometdPushBehavior extends AbstractDefaultAjaxBehavior
 	private static final String DEFAULT_COMETD_PATH = guessCometdServletPath();
 
 	private static final ResourceReference COMETD = new CompressedResourceReference(
-		CometdPushBehavior.class, "org/cometd.js");
+		CometdPushBehavior.class, "js/cometd.js");
 	private static final ResourceReference COMETD_ACK = new CompressedResourceReference(
-		CometdPushBehavior.class, "org/cometd/AckExtension.js");
+		CometdPushBehavior.class, "js/cometd/AckExtension.js");
 	private static final ResourceReference COMETD_RELOAD = new CompressedResourceReference(
-		CometdPushBehavior.class, "org/cometd/ReloadExtension.js");
+		CometdPushBehavior.class, "js/cometd/ReloadExtension.js");
 	private static final ResourceReference COMETD_TIMESTAMP = new CompressedResourceReference(
-		CometdPushBehavior.class, "org/cometd/TimeStampExtension.js");
+		CometdPushBehavior.class, "js/cometd/TimeStampExtension.js");
 	private static final ResourceReference COMETD_TIMESYNC = new CompressedResourceReference(
-		CometdPushBehavior.class, "org/cometd/TimeSyncExtension.js");
+		CometdPushBehavior.class, "js/cometd/TimeSyncExtension.js");
 
 	private static final PackagedTextTemplate TEMPLATE_INIT = new PackagedTextTemplate(
 		CometdPushBehavior.class, "CometdPushInit.js");

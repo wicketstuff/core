@@ -23,7 +23,7 @@ public class SelectFeatureControl extends AbstractControl {
 		this.parameters = parameters;
 	}
 	
-	public SelectFeatureControl (List<Layer>layers, ISelectFeatureControlOptions options) {
+	public SelectFeatureControl (List<? extends Layer>layers, ISelectFeatureControlOptions options) {
 		super("SelectFeature", false);
 		
 		this.setLayerList(layers);

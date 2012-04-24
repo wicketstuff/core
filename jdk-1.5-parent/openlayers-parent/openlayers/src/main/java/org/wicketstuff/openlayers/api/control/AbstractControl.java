@@ -43,7 +43,7 @@ public class AbstractControl implements IJavascriptComponent {
 
 	private final String name;
 	
-	private List<Layer> layerList = null;
+	private List<? extends Layer> layerList = null;
 	
 	private LinkedList<IModel<String>> eventJavascript = new LinkedList<IModel<String>>();
 	
@@ -256,11 +256,11 @@ public class AbstractControl implements IJavascriptComponent {
 		return map.getJSinvoke("controls['" + this.getId() + "']." + invocation);
 	}
 
-	public void setLayerList(List<Layer> layerList) {
+	public void setLayerList(List<? extends Layer> layerList) {
 		this.layerList = layerList;
 	}
 	
-	public List<Layer> getLayerList() {
+	public List<? extends Layer> getLayerList() {
 		return layerList;
 	}
 }

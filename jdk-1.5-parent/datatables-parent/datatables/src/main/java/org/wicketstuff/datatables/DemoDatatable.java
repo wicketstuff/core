@@ -1,10 +1,12 @@
 package org.wicketstuff.datatables;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Response;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.html.PackageResourceReference;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.resource.PackageResourceReference;
 
 public class DemoDatatable extends WebMarkupContainer {
 
@@ -15,10 +17,17 @@ public class DemoDatatable extends WebMarkupContainer {
 		setOutputMarkupId(true);
 
 		add(new AttributeModifier("class", new Model("display")));
+		
+	
 	}
 
+	
+	
 	@Override
-	public void renderHead(IHeaderResponse response) {
+	public void renderHead(HtmlHeaderContainer container) {
+		
+		IHeaderResponse response = container.getHeaderResponse();
+		
 		renderDemoCSS(response);
 		renderBasicJS(response);
 
@@ -30,7 +39,7 @@ public class DemoDatatable extends WebMarkupContainer {
 		js.append("	} );\n");
 		js.append("} );");
 
-		response.renderJavaScript(js, getId() + "_datatables");
+		response.renderJavascript(js, getId() + "_datatables");
 	}
 
 	private void renderDemoCSS(IHeaderResponse response) {
@@ -50,11 +59,11 @@ public class DemoDatatable extends WebMarkupContainer {
 	private void renderBasicJS(IHeaderResponse response) {
 		final Class<DemoDatatable> _ = DemoDatatable.class;
 
-		response.renderJavaScriptReference(new PackageResourceReference(_,
+		response.renderJavascriptReference(new PackageResourceReference(_,
 				"media/js/jquery.js"));
-		response.renderJavaScriptReference(new PackageResourceReference(_,
+		response.renderJavascriptReference(new PackageResourceReference(_,
 				"media/js/jquery.dataTables.min.js"));
-		response.renderJavaScriptReference(new PackageResourceReference(_,
+		response.renderJavascriptReference(new PackageResourceReference(_,
 				"media/js/jquery-ui-1.8.10.custom.min.js"));
 	}
 }
