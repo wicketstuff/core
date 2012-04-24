@@ -41,17 +41,18 @@ Wicket.Spinner.prototype = {
    * @param string/Element  downElement
    * @param object          options
    * Available Options:
-   *   interval     The amount to increment (default=1)
-   *   round        The number of decimal points to which to round (default=0)
-   *   min          The lowest allowed value, false for no min (default=false)
-   *   max          The highest allowed value, false for no max (default=false)
-   *   prefix       String to prepend when updating (default='')
-   *   suffix       String to append when updating (default='')
-   *   data         An array giving a list of items through which to iterate (default=false)
-   *   onIncrement  Function to call after incrementing
-   *   onDecrement  Function to call after decrementing
-   *   afterUpdate  Function to call after update of the value
-   *   onStop       Function to call on click or mouseup
+   *   interval         The amount to increment (default=1)
+   *   round            The number of decimal points to which to round (default=0)
+   *   min              The lowest allowed value, false for no min (default=false)
+   *   max              The highest allowed value, false for no max (default=false)
+   *   prefix           String to prepend when updating (default='')
+   *   suffix           String to append when updating (default='')
+   *   data             An array giving a list of items through which to iterate (default=false)
+   *   emptyInputCheck  A boolean stating whether or not an empty or null input should be changed into a value from data (default=true)
+   *   onIncrement      Function to call after incrementing
+   *   onDecrement      Function to call after decrementing
+   *   afterUpdate      Function to call after update of the value
+   *   onStop           Function to call on click or mouseup
    * @return void
    */
   initialize: function(inputElement, upElement, downElement, options) {
@@ -69,6 +70,7 @@ Wicket.Spinner.prototype = {
       prefix: '',
       suffix: '',
       data: false,
+      emptyInputCheck: true,
       onIncrement: function() {},      
       onDecrement: function() {},      
       afterUpdate: function() {},      
@@ -147,7 +149,7 @@ Wicket.Spinner.prototype = {
         this.options.afterUpdate(this);
       }, this);
       // set an initial value if not given
-      if (this.inputElement.value === '') {
+      if (this.options.emptyInputCheck && this.inputElement.value === '') {
         this.inputElement.value = this.options.min || 0;
       }
     } else if (this.options.data.constructor == Array && this.options.data.length) {
@@ -168,7 +170,7 @@ Wicket.Spinner.prototype = {
         this.options.afterUpdate(this);
       }, this);
       // set an initial value if not given
-      if (this.inputElement.value === '') {
+      if (this.options.emptyInputCheck && this.inputElement.value === '') {
         this.inputElement.value = this.options.data[0];
       }
     } else {
