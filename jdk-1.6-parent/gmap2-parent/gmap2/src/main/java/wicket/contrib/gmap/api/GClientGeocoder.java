@@ -60,9 +60,9 @@ public abstract class GClientGeocoder extends AjaxEventBehavior
 		GLatLng latLng);
 
 	@Override
-	protected CharSequence generateCallbackScript(CharSequence partialCall)
+	public CharSequence getCallbackScript()
 	{
-		return "Wicket.geocoder.getLatLng('" + getCallbackUrl() + "', '" +
+		return "Wicket.geocoder.getLatLng('" + getCallbackFunction("status", "address", "point") + "', '" +
 			addressField.getMarkupId() + "');" + "return false;";
 	}
 }

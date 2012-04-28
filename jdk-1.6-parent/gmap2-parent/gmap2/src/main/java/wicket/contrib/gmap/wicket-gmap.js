@@ -32,7 +32,7 @@ Wicket.geocoder = new WicketClientGeocoder();
 function WicketClientGeocoder(){
     this.coder = new GClientGeocoder();
     
-    this.getLatLng = function(callBackUrl, addressId){
+    this.getLatLng = function(callBackFunction, addressId){
     
         var address = Wicket.$(addressId).value;
         
@@ -46,14 +46,7 @@ function WicketClientGeocoder(){
                 coordinates = response.Placemark[0].Point.coordinates;
             }
             
-            wicketAjaxGet(callBackUrl + '&status=' + status + '&address=' + address +
-            '&point=(' +
-            coordinates[1] +
-            ',' +
-            coordinates[0] +
-            ')', function(){
-            }, function(){
-            });
+            callBackFunction(status, address, '('+coordinates[1] + ',' + coordinates[0] + ')');
         });
     }
 }
@@ -74,13 +67,7 @@ function WicketMap2(id){
         params['currentMapType'] = this.getMapTypeString(this.map.getCurrentMapType());
         params['infoWindow.hidden'] = this.map.getInfoWindow().isHidden();
         
-        for (var key in params) {
-            callBack = callBack + '&' + key + '=' + params[key];
-        }
-        
-        wicketAjaxGet(callBack, function(){
-        }, function(){
-        });
+        Wicket.Ajax.ajax({'u':callBack, 'ep': params});
     }
     
     this.addListener = function(event, callBack){

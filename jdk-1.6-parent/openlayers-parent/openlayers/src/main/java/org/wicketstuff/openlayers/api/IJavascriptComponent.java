@@ -15,8 +15,8 @@
  */
 package org.wicketstuff.openlayers.api;
 
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.util.io.IClusterable;
 import org.wicketstuff.openlayers.IOpenLayersMap;
 
 /**
