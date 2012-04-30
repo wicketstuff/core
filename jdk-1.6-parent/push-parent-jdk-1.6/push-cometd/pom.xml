@@ -68,12 +68,35 @@
 									<version>${cometd.version}</version>
 									<type>war</type>
 									<overWrite>false</overWrite>
-									<outputDirectory>${project.build.outputDirectory}/org/wicketstuff/push/cometd</outputDirectory>
+									<outputDirectory>${project.build.directory}/dependency</outputDirectory>
 								</artifactItem>
 							</artifactItems>
 							<includes>**/*.js</includes>
 							<excludes>**/*.properties</excludes>
 							<excludes>**/*.xml</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<!-- here the phase you need -->
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${project.build.directory}/dependency/org</directory>
+								</resource>
+							</resources>
+							<outputDirectory>${project.build.outputDirectory}/org/wicketstuff/push/cometd/js</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
