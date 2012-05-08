@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket - jQuery UI: form dialog box / create user</title>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div id="wrapper-panel-frame" class="ui-corner-all">
+		<form wicket:id="form">
+			<div class="ui-widget-content ui-corner-all" style="width: 480px; min-height: 120px; border: 1px solid #336699;">
+				<table cellspacing="0" style="width: 100%; padding: 1px;">
+					<tr>
+						<th width="40%">Name</th>
+						<th width="40%">Mail</th>
+						<th width="20%">Role</th>
+					</tr>
+					<tr wicket:id="user">
+						<td wicket:id="name"></td>
+						<td wicket:id="mail"></td>
+						<td wicket:id="role"></td>
+						<td>
+							<button wicket:id="edit">Edit</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<br/>
+			<button wicket:id="create">Create</button>
+			<br/><br/>
+			<div wicket:id="feedback" style="width: 360px;"></div>
+		</form>
+	</div>
+	<div wicket:id="dialog">[dialog]</div>	
+</wicket:extend>
+</body>
+</html>

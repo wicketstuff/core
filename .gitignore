@@ -1,1 +1,6 @@
+.project
+.classpath
+.settings
 target/
+
+wicket-jquery-ui-chart/

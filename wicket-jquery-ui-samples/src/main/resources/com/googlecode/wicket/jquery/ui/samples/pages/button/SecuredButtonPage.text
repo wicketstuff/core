@@ -1,0 +1,44 @@
+<code>SecuredButton</code> allows you to prevent a button from being clicked if the logged user does not have required permissions.<br/> 
+<br/>
+This class implements <code>IJQuerySecurityProvider</code> for code reading facility in this sample.<br/>
+<br/>
+It is usually better to let the session implementing <code>IJQuerySecurityProvider</code> so it is not needed to pass the <code>IJQuerySecurityProvider</code> argument to the button's constructor.<br/>
+
+<h4>Key point</h4>
+<br/>
+The <code>WebSession</code> could be like this implementation.<br/>
+Note that in this implementation, #hasRole() it only checks that the logged user as <u>at least</u> one role.<br/>
+<pre>
+public class SampleSession extends AuthenticatedWebSession implements IJQuerySecurityProvider
+{
+	/* ... */
+	
+	/**
+	 * @see IJQuerySecurityProvider#hasRole(String...)
+	 */
+	@Override
+	public final boolean hasRole(String... roles)
+	{
+		for (String role : roles)
+		{
+			if (this.hasRole(role))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+	
+	protected final boolean hasRole(String role)
+	{
+		//Assuming the session is extending <code>AbstractAuthenticatedWebSession</code>
+		return this.getRoles().hasRole(role); 
+	}
+}
+</pre>
+	
+<h4>Know limitations: </h4>
+<ul>
+	<li><code>SecuredButton</code> may not be applied on a <code>&lt;input type="submit" /&gt;</code> ; The lock icon is not displayed</code></li>
+</ul>

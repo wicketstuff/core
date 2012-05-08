@@ -1,0 +1,5 @@
+The <code>AutoCompleteTextField</code> component allows you to search against a (custom) bean list.<br/>
+
+<h4>Important</h4>
+As the suggestion list is displayed as text, the bean should override <code>#toString()</code> method.<br />
+This is even more true if you plan to use <code>AutoCompleteUtils</code> helper class.

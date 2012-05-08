@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>wicket-jquery-ui pom</name>
+	<description></description>
+
+	<groupId>com.googlecode.wicket-jquery-ui</groupId>
+	<artifactId>jquery-ui</artifactId>
+	<version>1.0</version>
+	<packaging>pom</packaging>
+
+	<repositories>
+		<repository>
+			<id>Apache Nexus</id>
+			<url>https://repository.apache.org/content/repositories/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<modules>
+	  <module>wicket-jquery-ui-core</module>
+	  <module>wicket-jquery-ui-kendo</module>
+	  <module>wicket-jquery-ui-chart</module>
+	  <module>wicket-jquery-ui-plugins</module>
+	  <module>wicket-jquery-ui-calendar</module>
+	  <module>wicket-jquery-ui-samples</module>
+	</modules>
+</project>

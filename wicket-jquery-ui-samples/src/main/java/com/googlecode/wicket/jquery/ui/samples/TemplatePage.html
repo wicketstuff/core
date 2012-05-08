@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+	<meta charset="utf-8" />
+	<meta name="description" content="Wicket jQuery UI integration" />
+	<meta name="keywords" content="wicket jquery, wicket jquery ui, autocomplete, dialog, draggable, droppable, progress bar, kendo ui, border layout, calendar" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.8.19.custom.css" media="all" />
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-30391399-1']);
+	  _gaq.push(['_trackPageview']);
+	
+	  (function() {
+	    var ga = document.createElement('script'); 
+	    ga.type = 'text/javascript';
+	    ga.async = true;
+	    ga.src = 'http://www.google-analytics.com/ga.js';
+
+	    var s = document.getElementsByTagName('script')[0];
+	    s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
+</head>
+<body>
+	<table id="wrapper" class="layout-grid" cellspacing="0" cellpadding="0">
+		<thead>
+			<tr>
+				<td width="20%"><br /></td>
+				<td width="80%">
+				 	<div id="wrapper-header" class="ui-widget-header ui-corner-all">
+						<h1><a href="/jquery-ui-samples/">Wicket - jQuery UI</a></h1>
+						<h3><i>jQuery UI integration in Wicket 1.5</i></h3>
+					</div>
+				</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="top">
+					<div id="wrapper-menu" class="ui-widget">
+						<div class="ui-widget-header ui-corner-all">Widgets</div>
+						<div class="ui-widget-content ui-corner-all">
+							<a href="/jquery-ui-samples/accordion/AccordionPage">Accordion</a>
+							<a href="/jquery-ui-samples/autocomplete/DefaultAutoCompletePage">AutoComplete</a>
+							<a href="/jquery-ui-samples/button/DefaultButtonPage">Button</a>
+							<a href="/jquery-ui-samples/datepicker/DefaultDatePickerPage">DatePicker</a>
+							<a href="/jquery-ui-samples/dialog/MessageDialogPage">Dialog</a>
+							<a href="/jquery-ui-samples/progressbar/DefaultProgressBarPage">ProgressBar</a>
+							<a href="/jquery-ui-samples/slider/DefaultSliderPage">Slider</a>
+							<a href="/jquery-ui-samples/tabs/DefaultTabsPage">Tabs</a>
+						</div>
+						
+						<div class="ui-widget-header ui-corner-all">Interactions</div>
+						<div class="ui-widget-content ui-corner-all">
+							<a href="/jquery-ui-samples/draggable/DefaultDraggablePage">Draggable</a>
+							<a href="/jquery-ui-samples/droppable/DefaultDroppablePage">Droppable</a>
+							<a href="/jquery-ui-samples/resizable/ResizablePage">Resizable</a>
+						</div>
+						
+						<div class="ui-widget-header ui-corner-all">Effects</div>
+						<div class="ui-widget-content ui-corner-all">
+							<a href="/jquery-ui-samples/effect/DefaultEffectPage">Effects</a>
+						</div>
+						
+						<div class="ui-widget-header ui-corner-all">Kendo UI</div>
+						<div class="ui-widget-content ui-corner-all">
+							<a href="/jquery-ui-samples/kendo/splitter/DefaultSplitterPage">Splitter / Border Layout</a>
+						</div>
+						
+						<div class="ui-widget-header ui-corner-all">Others</div>
+						<div class="ui-widget-content ui-corner-all">
+							<a href="/jquery-ui-samples/calendar/DefaultCalendarPage">Calendar</a>
+						</div>
+						
+						<div class="ui-widget-header ui-corner-all">Tutorials</div>
+						<div class="ui-widget-content ui-corner-all">
+							<a href="/jquery-ui-samples/plugins/FontSizePage">FontSize</a>
+							<a href="/jquery-ui-samples/plugins/DefaultSnippetPage">Snippet</a>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div id="wrapper-panel" class="ui-corner-all">
+						<wicket:child />
+					</div>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="2">
+					<div id="wrapper-footer" class="ui-state-default ui-corner-all">
+						<a href="http://wicket.apache.org/">Apache Wicket <span wicket:id="version"></span></a>
+					</div>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</body>
+</html>

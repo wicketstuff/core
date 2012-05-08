@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket - jQuery UI: effect container</title>
+
+	<link rel="stylesheet" type="text/css" href="css/kendo/kendo.common.min.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="css/kendo/kendo.default.min.css" media="all" />	
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div wicket:id="container">
+		<div id="tabs">
+			<ul>
+				<li><a href="#tab1">Tab 1</a></li>
+			</ul>
+			<div id="tab1">
+				Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam.
+				Integer ut neque. Vivamus nisi metus, molestie vel, gravida in,
+				condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros.
+				Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum
+				a velit eu ante scelerisque vulputate.
+			</div>
+		</div>
+	</div>
+	<br/>
+	<form wicket:id="form">
+		<button wicket:id="button">Play effect</button>
+		<select wicket:id="effects"></select>
+	</form>
+</wicket:extend>
+</body>
+</html>

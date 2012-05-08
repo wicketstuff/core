@@ -1,0 +1,32 @@
+<cite>
+Autocomplete, when added to an input field, enables users to quickly find and select from a pre-populated list of values as they type, leveraging searching and filtering.<br />
+<br />
+By giving an Autocomplete field focus or entering something into it, the plugin starts searching for entries that match and displays a list of values to choose from. By entering more characters, the user can filter down the list to better matches.<br/>
+<br/>
+<div style="text-align: right">http://jqueryui.com/demos/autocomplete/</div>
+</cite>
+
+<h4>Key point</h4>
+To implement an <code>AutoCompleteTextField</code>, just override the <code>#getChoices()</code> method.<br/>
+You may have a look at the <code>AutoCompleteUtils</code> class to help you dealing with simple lists.
+<pre>
+new AutoCompleteTextField&lt;String&gt;("autocomplete") {
+
+	@Override
+	protected List&lt;String&gt; getChoices(String input)
+	{
+		//TODO: return the list of choice available for the user input
+	}
+	
+	@Override
+	protected void onSelected(AjaxRequestTarget target)
+	{
+		// the model has been set on user selection,
+		// you can use this.getModelObject() to get the selected value
+	}
+}
+</pre>
+
+<h4>Important</h4>
+As the result is retrieved via ajax, the invocation has been "protected" by an <code>AjaxCallThrottlingDecorator</code>, with a duration of one second. That means that the widget prevent to send more than one request per second.
+

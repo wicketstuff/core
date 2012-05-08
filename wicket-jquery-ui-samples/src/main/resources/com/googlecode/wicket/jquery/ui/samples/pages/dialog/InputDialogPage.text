@@ -1,0 +1,23 @@
+Form-based dialog are designed to host a form and form components. Those dialogs are typically used to provide inputs (which are eventually validated) of model object properties.
+The model could be a simple String or Integer but can also be a more complex bean.<br/>
+<br/>
+<code>InputDialog</code> answers a common use case which is the ability to get a simple text-input from a user, through a dialog box.<br/>
+<code>InputDialog</code> is a form-based dialog.
+<pre>
+InputDialog&lt;String&gt; dialog = new InputDialog&lt;String&gt;("dialog", "title", "description", 
+				new Model&lt;String&gt;("")) {
+    
+    @Override
+    public void onSubmit(AjaxRequestTarget target)
+    {
+	    String answer = this.getModelObject();
+	    //TODO: do something with the answer
+    }
+};
+
+this.add(dialog); //the dialog is not in a form
+</pre>
+
+<h4>Warning with nested forms!</h4>
+Although Wicket allows nested forms, it is recommended to not nest a form-dialog within another form to avoid experiencing some troubles.
+Troubles could be like the dialogs does not close under certain circumstances (you re-attached the parent form for instance), the dialog's model could be set to null when the parent form is submitted and/or the parent form cannot be submitted due to some validators in the nested form (the dialog's one)...<br/>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket - jQuery UI: plugin / snippet</title>
+
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<pre id="code">
+public class SnippetBehavior extends JQueryBehavior
+{
+	private static final long serialVersionUID = 1L;
+	
+	public SnippetBehavior(String selector, Options options)
+	{
+		super(selector, "snippet", options);
+		
+		this.add(new JavaScriptResourceReference(SnippetBehavior.class,
+					"jquery.snippet.min.js"));
+		this.add(new CssResourceReference(SnippetBehavior.class,
+					"jquery.snippet.min.css"));
+	}
+}</pre>
+</wicket:extend>
+</body>
+</html>

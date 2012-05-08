@@ -1,0 +1,1 @@
+The progress bar is controlled by a slider using ProgressBar.respond() after its model has changed.

@@ -1,0 +1,25 @@
+The simplest use case is the need to display a single information/warning/error message with some common buttons (OK, OK-Cancel, Yes-No, Yes-No-Cancel), and an icon representing the message class (info, warn, light, error).<br/>
+<pre>
+HTML:
+	&lt;div wicket:id="dialog"&gt;[dialog]&lt;/div&gt;
+
+Java:
+	MessageDialog dialog = new MessageDialog("dialog", "Warning", "Is it ok?",
+						DialogButton.OK_CANCEL, DialogIcon.WARN)
+	{
+		protected void onClose(AjaxRequestTarget target, String button)
+		{
+			if (BTN_OK.equals(button))
+			{
+				//do something here
+				
+				//note: predefined button's value are:
+				//BTN_OK, BTN_CANCEL, BTN_YES, BTN_NO, BTN_CLOSE
+			}
+		}	
+	}
+	
+	this.add(dialog); //TODO: open it, using dialog.open(target);
+</pre>
+
+(<i>Any resemblance to living or dead visual-basic-6 MessageBox is purely coincidental...</i>)<br/>

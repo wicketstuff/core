@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+</head>
+<body>
+	<wicket:extend>
+		<a href="/jquery-ui-samples/" style="float: right;">Home</a>
+		<h2 wicket:id="title"></h2>
+		<wicket:child />
+	
+		<wicket:enclosure child="demo-list">
+			<br/>
+			<h3>Components / Samples</h3>
+			<div id="wrapper-panel-links">
+				<ul>
+					<li wicket:id="demo-list">
+						<a href="#" wicket:id="link"><span wicket:id="label">[link title]</span></a>
+					</li>
+				</ul>
+			</div>
+		</wicket:enclosure>
+		
+		<br/>
+		<h3>Description</h3>
+		<div id="wrapper-panel-description" wicket:id="source-desc">
+		</div>
+
+		<br/>
+		<h3>Sources</h3>
+		<div id="wrapper-panel-source">
+			<ul>
+				<li><a href="#tabs-java">Java</a></li>
+				<li><a href="#tabs-html">HTML</a></li>
+			</ul>
+			<div id="tabs-java" style="display: block;">
+				<pre><code wicket:id="source-java"></code></pre>
+			</div>
+			<div id="tabs-html" style="display: block;">
+				<pre><code wicket:id="source-html"></code></pre>
+			</div>
+		</div>
+	</wicket:extend>
+</body>
+</html>

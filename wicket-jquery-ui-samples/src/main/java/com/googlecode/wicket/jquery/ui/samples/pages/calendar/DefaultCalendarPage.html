@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket - jQuery UI: calendar / public feeds</title>
+	<style type="text/css">
+		.fc-event-skin.event-duchesse {
+			border-color: #993366;
+		}
+		
+		.fc-event-skin.event-duchesse .fc-event-skin {
+			background-color: #993366;
+			border-color: #993366;
+		} 
+	</style>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div id="wrapper-panel-frame" class="ui-corner-all">
+		<form wicket:id="form">
+			<div wicket:id="calendar"></div>
+			<br/>
+			<div wicket:id="feedback"></div>
+		</form>
+	</div>
+</wicket:extend>
+</body>
+</html>

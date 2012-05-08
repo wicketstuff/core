@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+	<head>
+	</head>
+	<body>
+		<wicket:panel>
+			<form wicket:id="form">
+				<table width="100%" cellpadding="5">
+					<tr>
+						<td width="20%">
+							Title:
+						</td>
+						<td width="80%">
+							<input wicket:id="title" type="text" style="width: 100%;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Starts:
+						</td>
+						<td>
+							<input wicket:id="start" type="text" style="width: 200px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Ends:
+						</td>
+						<td>
+							<input wicket:id="end" type="text" style="width: 200px;"></input>
+						</td>
+					</tr>
+				</table>
+				<div wicket:id="feedback"></div>
+			</form>
+		</wicket:panel>
+	</body>
+</html>

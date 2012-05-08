@@ -1,0 +1,79 @@
+If you wish to customize the dialog content (including the buttons) or if you want it to be reusable, you may create your own dialog by extending <code>AbstractDialog</code>. It is pretty straightforward but you need to create the corresponding panel markup, like:<br/>
+<pre>
+&lt;!DOCTYPE html&gt;
+&lt;html xmlns:wicket="http://wicket.apache.org"&gt;
+&lt;head&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;wicket:panel&gt;
+		Very simple dialog
+	&lt;/wicket:panel&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+The class looks like:<br/>
+<pre>
+public <b>abstract</b> class SimpleDialog extends AbstractDialog&lt;Void&gt;
+{
+	private static final long serialVersionUID = 1L;
+	
+	public SimpleDialog(String id, String title)
+	{
+		super(id, title, new Model&lt;Void&gt;(), true); //we do not use a model here
+		
+		//initialize your components, if any
+	}
+	
+	@Override
+	protected List&lt;String&gt; getButtons()
+	{
+		return Arrays.asList("I am sure", BTN_CANCEL); //with a customized buttons
+	}
+
+	@Override
+	public boolean isResizable()
+	{
+		return true;
+	}
+}
+</pre>
+The usage:<br/>
+<pre>
+HTML:
+	&lt;div wicket:id="dialog"&gt;[dialog]&lt;/div&gt;
+
+Java:
+	final SimpleDialog dialog = new SimpleDialog("dialog", "Simple dialog box")
+	{
+		@Override
+		protected void onClose(AjaxRequestTarget target, String button)
+		{
+			if (button.equals("I am sure"))
+			{
+				//do something here
+			}
+		}	
+	};
+	
+	this.add(dialog); //TODO: open it, using dialog.open(target);
+</pre>
+
+<h4>Manage the button behaviors</h4>
+By default, every button's actions close the dialog; and <code>#onClose()</code> event is triggered.<br/>
+<br/>
+If you want to define an action without having the dialog to be closed, you can override <code>#onClick(DialogEvent)</code> method. In this case the dialog will not be closed until <code>super.onClick(event)</code> or <code>close(AjaxRequestTarget, String)</code> is called.
+<pre>
+@Override
+protected void onClick(DialogEvent event)
+{
+	if (event.isClicked("do something")) //button was 'do something'
+	{
+		//TODO: do something here.
+		//event.getTarget() returns the AjaxRequestTarget
+	}
+	else
+	{
+		super.onClick(event); //will close the dialog
+	}
+}
+</pre>

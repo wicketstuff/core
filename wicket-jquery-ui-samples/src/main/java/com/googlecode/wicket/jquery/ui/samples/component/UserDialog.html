@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+	<head>
+	</head>
+	<body>
+		<wicket:panel>
+			<form wicket:id="form">
+				<table width="100%" cellpadding="5">
+					<tr>
+						<td width="30%">
+							Name:
+						</td>
+						<td width="70%">
+							<input wicket:id="name" type="text" style="width: 100%;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Email:
+						</td>
+						<td>
+							<input wicket:id="mail" type="email" style="width: 100%;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Role:
+						</td>
+						<td>
+							<div wicket:id="role"></div>
+						</td>
+					</tr>
+				</table>
+				<div wicket:id="feedback"></div>
+			</form>
+		</wicket:panel>
+	</body>
+</html>

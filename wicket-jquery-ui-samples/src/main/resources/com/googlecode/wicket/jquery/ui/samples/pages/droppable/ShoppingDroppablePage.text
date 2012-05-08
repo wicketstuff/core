@@ -1,0 +1,2 @@
+This is a demo of a shopping card.<br/>
+The shopping card is a <code>Droppable</code> container and book vignettes are <code>Draggable</code> components (that contains fragments). 

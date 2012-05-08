@@ -1,0 +1,13 @@
+<code>AjaxDatePicker</code> is close to <code>DatePicker</code> except that it performs an ajax post when the value changes.<br/>
+You may override <code>#onValueChanged()</code> as follow:<br/>
+<pre>
+form.add(new AjaxDatePicker("datepicker", model) {
+
+	@Override
+	protected void onValueChanged(AjaxRequestTarget target)
+	{
+		Date date = this.getModelObject();
+		//TODO: do something with the date...
+	}
+});
+</pre>

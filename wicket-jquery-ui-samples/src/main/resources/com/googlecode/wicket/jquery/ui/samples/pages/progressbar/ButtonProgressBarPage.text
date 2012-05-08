@@ -1,0 +1,1 @@
+The progress bar is controlled by buttons using ProgressBar.backward() & ProgressBar.forward()
