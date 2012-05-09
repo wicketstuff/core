@@ -46,9 +46,6 @@ public abstract class JQueryAjaxFormBehavior extends JQueryAjaxBehavior
 		this.form = form;
 	}
 
-	/**
-	 * TODO: wicket 6, to be changed using the new call (jQuery)
-	 */
 	@Override
 	public CharSequence getCallbackScript()
 	{

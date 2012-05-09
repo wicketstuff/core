@@ -193,8 +193,6 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 
 		/**
 		 * The formId may intentionally be null
-		 * 
-		 * TODO: wicket 6, to be changed using the new call (jQuery)
 		 */
 		@Override
 		public CharSequence getCallbackScript()

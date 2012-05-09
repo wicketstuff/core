@@ -110,9 +110,6 @@ public class Calendar extends JQueryContainer
 
 			private static final long serialVersionUID = 1L;
 
-			/**
-			 * TODO: wicket 6, to be changed using the new call (jQuery)
-			 */
 			@Override
 			public CharSequence getCallbackScript()
 			{

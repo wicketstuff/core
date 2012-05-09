@@ -55,9 +55,6 @@ public abstract class JQueryAjaxPostBehavior extends JQueryAjaxBehavior
 		this.components = components;
 	}
 
-	/**
-	 * TODO: wicket 6, to be changed using the new call (jQuery) 
-	 */
 	@Override
 	public CharSequence getCallbackScript()
 	{
