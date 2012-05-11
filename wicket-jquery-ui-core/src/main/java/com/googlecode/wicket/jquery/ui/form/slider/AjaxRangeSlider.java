@@ -28,6 +28,9 @@ import org.apache.wicket.model.IModel;
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxPostBehavior;
+import com.googlecode.wicket.jquery.ui.event.IValueChangedListener;
+import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior;
+import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEvent;
 
 /**
  * Provides a jQuery range slider based on a {@link FormComponentPanel}
@@ -35,7 +38,7 @@ import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxPostBehavior;
  *  
  * @author Sebastien Briquet - sebastien@7thweb.net
  */
-public class AjaxRangeSlider extends RangeSlider implements IAjaxSlider
+public class AjaxRangeSlider extends RangeSlider implements IValueChangedListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -71,6 +74,13 @@ public class AjaxRangeSlider extends RangeSlider implements IAjaxSlider
 		super(id, model, label);
 	}
 	
+	/**
+	 * TODO: to document
+	 * @param id
+	 * @param model
+	 * @param lower
+	 * @param upper
+	 */
 	public AjaxRangeSlider(String id, IModel<RangeValue> model, TextField<Integer> lower, TextField<Integer> upper)
 	{
 		super(id, model, lower, upper);
@@ -82,7 +92,7 @@ public class AjaxRangeSlider extends RangeSlider implements IAjaxSlider
 	{
 		super.onInitialize();  
 
-		this.add(this.changeBehavior = new ChangeBehavior(this, this.lower, this.upper));
+		this.add(this.changeBehavior = new JQueryAjaxChangeBehavior(this, this.lower, this.upper));
 	}
 
 	@Override

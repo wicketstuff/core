@@ -2,24 +2,14 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
 <wicket:head>
-	<title>Wicket - jQuery UI: slider</title>
+	<title>Wicket - jQuery UI: kendo-ui combo-box</title>
 </wicket:head>
 </head>
 <body>
 <wicket:extend>
 	<div id="wrapper-panel-frame" class="ui-corner-all">
 		<form wicket:id="form">
-			<table cellpadding="5">
-				<tr>
-					<td width="240">
-						<div wicket:id="slider"></div>
-					</td>
-					<td width="100">
-						<span wicket:id="label" id="label"></span>
-					</td>
-				</tr>
-			</table>
-			<br/>
+			<select wicket:id="select"></select>
 			<button wicket:id="submit" type="submit">Submit</button>
 			<button wicket:id="button">Ajax Button</button>
 			<br/><br/>

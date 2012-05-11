@@ -14,21 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.form.slider;
+package com.googlecode.wicket.jquery.ui.event;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.FormComponent;
 
-import com.googlecode.wicket.jquery.ui.JQueryEvent;
-import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxPostBehavior;
+import com.googlecode.wicket.jquery.ui.form.slider.AbstractSlider;
 
 /**
  * Specifies that an {@link AbstractSlider} has ajax capabilities
  *
  * @author Sebastien Briquet - sebastien@7thweb.net
  */
-public interface IAjaxSlider
+public interface IValueChangedListener
 {
 	/**
 	 * Triggers when the value has changed
@@ -36,36 +34,4 @@ public interface IAjaxSlider
 	 * @param form the {@link Form}
 	 */
 	void onValueChanged(AjaxRequestTarget target, Form<?> form);
-
-	// Event //
-	/**
-	 * Provides an event object that will be broadcasted by the {@link ChangeBehavior}
-	 */
-	class ChangeEvent extends JQueryEvent
-	{
-		public ChangeEvent(AjaxRequestTarget target)
-		{
-			super(target);
-		}
-	}
-
-	// Behavior //
-	/**
-	 * Provides a new {@link JQueryAjaxPostBehavior} that will be called on 'change' jQuery method
-	 */
-	class ChangeBehavior extends JQueryAjaxPostBehavior
-	{
-		private static final long serialVersionUID = 1L;
-
-		public ChangeBehavior(AbstractSlider<?> slider, FormComponent<?>... components)
-		{
-			super(slider, components);
-		}
-
-		@Override
-		protected JQueryEvent newEvent(AjaxRequestTarget target)
-		{
-			return new ChangeEvent(target);
-		}
-	}
 }

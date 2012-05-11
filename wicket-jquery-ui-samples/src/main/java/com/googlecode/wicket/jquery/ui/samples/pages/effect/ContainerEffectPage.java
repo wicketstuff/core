@@ -10,7 +10,7 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.effect.Effect;
 import com.googlecode.wicket.jquery.ui.effect.JQueryEffectContainer;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
-import com.googlecode.wicket.jquery.ui.kendo.combobox.ComboBox;
+import com.googlecode.wicket.jquery.ui.kendo.dropdown.DropDownList;
 
 public class ContainerEffectPage extends AbstractEffectPage
 {
@@ -36,8 +36,8 @@ public class ContainerEffectPage extends AbstractEffectPage
 		Form<Void> form = new Form<Void>("form");
 		this.add(form);
 		
-		// ComboBox (Kendo-UI widget) //
-		final ComboBox<Effect> dropdown = new ComboBox<Effect>("effects", new Model<Effect>(Effect.Explode), Arrays.asList(Effect.values()));
+		// DropDownList (Kendo-UI widget) //
+		final DropDownList<Effect> dropdown = new DropDownList<Effect>("effects", new Model<Effect>(Effect.Explode), Arrays.asList(Effect.values()));
 		form.add(dropdown);
 		
 		// Button //

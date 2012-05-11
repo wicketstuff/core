@@ -25,6 +25,7 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryContainer;
 import com.googlecode.wicket.jquery.ui.JQueryEvent;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEvent;
 
 /**
  * Provides a jQuery progress-bar based on a {@link JQueryContainer}
@@ -72,7 +73,7 @@ public class ProgressBar extends JQueryContainer
 	 */
 	private void init()
 	{
-		this.changeBehavior = this.newChangeBehavior(this); 
+		this.changeBehavior = newChangeBehavior(this); 
 	}
 	
 	/* Getters / Setters */
@@ -253,18 +254,5 @@ public class ProgressBar extends JQueryContainer
 				return new ChangeEvent(target);
 			}
 		};
-	}
-
-
-	/* Event classes */
-	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'change' callback
-	 */
-	public class ChangeEvent extends JQueryEvent
-	{
-		public ChangeEvent(AjaxRequestTarget target)
-		{
-			super(target);
-		}
 	}
 }

@@ -147,17 +147,6 @@ public class Slider extends AbstractSlider<Integer>
 		return (W) this;
 	}
 
-//	@Override
-//	public <W extends AbstractSlider<Integer>> W addRangeValidator(RangeValidator<Integer> validator)
-//	{
-//		if (this.input != null)
-//		{
-//			this.input.add(validator);	
-//		}
-//		
-//		return this;
-//	}
-	
 	/**
 	 * Get the label pattern to be used to display the value. Should be overridden with care!<br/>
 	 * <b>Note: </b> the pattern is a javascript string, where the value is represented by "ui.value".<br/>
