@@ -37,8 +37,8 @@ import org.apache.wicket.request.resource.ResourceReference;
 public abstract class JQueryAbstractBehavior extends Behavior
 {
 	private static final long serialVersionUID = 1L;
-	private static final PackageResourceReference CORE_JS = new JavaScriptResourceReference(JQueryBehavior.class, "jquery-1.7.2.min.js"); 
-	private static final PackageResourceReference CORE_UI = new JavaScriptResourceReference(JQueryBehavior.class, "jquery-ui-1.8.19.min.js");
+	public static final PackageResourceReference CORE_JS = new JavaScriptResourceReference(JQueryBehavior.class, "jquery-1.7.2.min.js"); 
+	public static final PackageResourceReference CORE_UI = new JavaScriptResourceReference(JQueryBehavior.class, "jquery-ui-1.8.19.min.js");
 
 	/**
 	 * Behavior name

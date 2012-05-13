@@ -16,19 +16,24 @@
  */
 package com.googlecode.wicket.jquery.ui.kendo;
 
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import com.googlecode.wicket.jquery.ui.template.IJQueryTemplate;
+import com.googlecode.wicket.jquery.ui.template.JQueryAbstractTemplateBehavior;
+import com.googlecode.wicket.jquery.ui.template.JQueryResourceStream;
 
-import com.googlecode.wicket.jquery.ui.JQueryBehavior;
-
-public class KendoAbstractBehavior extends JQueryBehavior
+public class KendoTemplateBehavior extends JQueryAbstractTemplateBehavior
 {
 	private static final long serialVersionUID = 1L;
 
-	public KendoAbstractBehavior(String selector, String method)
+	private final IJQueryTemplate template;
+
+	public KendoTemplateBehavior(IJQueryTemplate template)
 	{
-		super(selector, method);
-		
-		this.add(new JavaScriptResourceReference(KendoAbstractBehavior.class, "kendo.web.min.js"));
+		this.template = template;
 	}
 
+	@Override
+	protected JQueryResourceStream newResourceStream()
+	{
+		return new KendoResourceStream(this.template.getText(), this.getToken());
+	}
 }

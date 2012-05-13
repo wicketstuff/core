@@ -3,24 +3,34 @@
 <head>
 <wicket:head>
 	<title>Wicket - jQuery UI: auto-complete (custom bean)</title>
+	<style type="text/css">
+		.ui-autocomplete {
+			max-height: 200px;
+			overflow-y: auto;
+			overflow-x: hidden;
+			padding-right: 20px;
+		}	
+	</style>
 </wicket:head>
 </head>
 <body>
 <wicket:extend>
 	<div id="wrapper-panel-frame" class="ui-corner-all">
-		<table width="400" cellpadding="2" cellspacing="0">
-			<tr>
-				<td width="300" valign="top">
-					<div>Select a metal genre: (containing any char)</div>
-					<br/>
-					<input wicket:id="autocomplete" type="text" size="30"></input>
-				</td>
-				<td width="100" wicket:id="container">
-					<img wicket:id="cover" class="ui-corner-all" />
-					<div wicket:id="name" style="text-align: center;"></div>
-				</td>
-			</tr>
-		</table>
+		<form wicket:id="form">
+			<table width="400" cellpadding="2" cellspacing="0">
+				<tr>
+					<td width="300" valign="top">
+						<div>Select a metal genre: (containing any char)</div>
+						<br/>
+						<input wicket:id="autocomplete" type="text" size="30"></input>
+					</td>
+					<td width="100" wicket:id="container">
+						<img wicket:id="cover" class="ui-corner-all" />
+						<div wicket:id="name" style="text-align: center;"></div>
+					</td>
+				</tr>
+			</table>
+		</form>
 	</div>
 </wicket:extend>
 </body>

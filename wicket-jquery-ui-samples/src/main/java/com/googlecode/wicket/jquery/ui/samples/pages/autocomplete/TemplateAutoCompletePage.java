@@ -5,22 +5,23 @@ import java.util.List;
 
 import org.apache.wicket.IClusterable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.image.ContextImage;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.util.string.UrlUtils;
 
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteUtils;
+import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
+import com.googlecode.wicket.jquery.ui.template.IJQueryTemplate;
 
-public class CustomAutoCompletePage extends AbstractAutoCompletePage
+public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 {
 	private static final long serialVersionUID = 1L;
 	
-	public CustomAutoCompletePage()
+	public TemplateAutoCompletePage()
 	{
 		this.init();
 	}
@@ -34,12 +35,9 @@ public class CustomAutoCompletePage extends AbstractAutoCompletePage
 		final Form<String> form = new Form<String>("form");
 		this.add(form);
 
-		// Container for selected genre (name & cover) //
-		final WebMarkupContainer container = new WebMarkupContainer("container");
-		form.add(container.setOutputMarkupId(true));
-		
-		container.add(new ContextImage("cover", new PropertyModel<String>(model, "cover")));
-		container.add(new Label("name", new PropertyModel<String>(model, "name")));
+		// FeedbackPanel //
+		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
+		form.add(feedbackPanel.setOutputMarkupId(true));
 
 		// Auto-complete //
 		form.add(new AutoCompleteTextField<Genre>("autocomplete", model) {
@@ -55,11 +53,51 @@ public class CustomAutoCompletePage extends AbstractAutoCompletePage
 			@Override
 			protected void onSelected(AjaxRequestTarget target)
 			{
-				target.add(container); //the model has already been updated
+				info("Your favorite rock genre is: " + this.getModelObject());
+				target.add(feedbackPanel);
+			}
+			
+			@Override
+			protected IJQueryTemplate newTemplate()
+			{
+				return new IJQueryTemplate() {
+
+					private static final long serialVersionUID = 1L;
+
+					/**
+					 * For an AutoCompleteTextField, the template text should be of the form: <a>...</a>
+					 * 
+					 * The template text will be enclosed in a <script type="text/x-jquery-tmpl" />.
+					 * You can use the "\n" character to properly format the template.
+					 */
+					@Override
+					public String getText()
+					{
+						return  "<a>\n" +
+							"<table style='width: 100%' cellspacing='0' cellpadding='0'>\n" +
+							" <tr>\n" +
+							"  <td>\n" +
+							"   <img src='${ coverUrl }' width='50px' />\n" +
+							"  </td>\n" +
+							"  <td>\n" +
+							"   ${ name }</span>\n" +
+							"  </td>\n" +
+							" </tr>\n" +
+							"</table>\n" +
+							"</a>";
+					}
+
+					@Override
+					public List<String> getTextProperties()
+					{
+						return Arrays.asList("name", "coverUrl");
+					}
+					
+				};
 			}
 		});
 	}
-
+	
 	// List of Genre(s) //
 	static final List<Genre> GENRES = Arrays.asList(
 			new Genre("Black Metal", "cover-black-metal.png"),
@@ -98,9 +136,9 @@ public class CustomAutoCompletePage extends AbstractAutoCompletePage
 			return this.name;
 		}
 		
-		public String getCover()
+		public String getCoverUrl()
 		{
-			return "images/" + this.cover;
+			return UrlUtils.rewriteToContextRelative("images/" + this.cover, RequestCycle.get());
 		}
 		
 		/**

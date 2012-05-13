@@ -19,9 +19,10 @@ abstract class AbstractComboBoxPage extends AbstractKendoPage
 	protected List<DemoLink> getDemoLinks()
 	{
 		return Arrays.asList(
-				new DemoLink(DefaultComboBoxPage.class, "ComboBox: simple list"),
+				new DemoLink(DefaultComboBoxPage.class, "ComboBox widget"),
 				new DemoLink(CustomComboBoxPage.class, "ComboBox: custom beans"),
-				new DemoLink(TemplateComboBoxPage.class, "ComboBox: custom display")
+				new DemoLink(TemplateComboBoxPage.class, "ComboBox: custom template"),
+				new DemoLink(RendererComboBoxPage.class, "ComboBox: custom renderer")
 			);
 	}
 }

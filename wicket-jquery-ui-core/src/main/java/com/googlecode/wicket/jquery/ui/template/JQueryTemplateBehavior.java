@@ -14,21 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.kendo;
+package com.googlecode.wicket.jquery.ui.template;
 
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
-import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 
-public class KendoAbstractBehavior extends JQueryBehavior
+public class JQueryTemplateBehavior extends JQueryAbstractTemplateBehavior
 {
 	private static final long serialVersionUID = 1L;
 
-	public KendoAbstractBehavior(String selector, String method)
+	private final IJQueryTemplate template;
+
+	public JQueryTemplateBehavior(IJQueryTemplate template)
 	{
-		super(selector, method);
+		super();
 		
-		this.add(new JavaScriptResourceReference(KendoAbstractBehavior.class, "kendo.web.min.js"));
+		this.template = template;
 	}
 
+	@Override
+	protected JQueryResourceStream newResourceStream()
+	{
+		return new JQueryResourceStream(this.template.getText(), this.getToken());
+	}
 }

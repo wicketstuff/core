@@ -31,6 +31,10 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryEvent;
 import com.googlecode.wicket.jquery.ui.Options;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.ui.renderer.ITextRenderer;
+import com.googlecode.wicket.jquery.ui.renderer.TextRenderer;
+import com.googlecode.wicket.jquery.ui.template.IJQueryTemplate;
+import com.googlecode.wicket.jquery.ui.template.JQueryTemplateBehavior;
 import com.googlecode.wicket.jquery.ui.utils.RequestCycleUtils;
 
 /**
@@ -54,7 +58,14 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 * Behavior that will be called when the user enters an input
 	 */
 	private AutoCompleteBehavior<T> sourceBehavior;
-	
+
+	/**
+	 * TODO javadoc
+	 */
+	private final ITextRenderer<? super T> renderer;
+	private final IJQueryTemplate template;
+	private JQueryTemplateBehavior templateBehavior = null;
+
 	/**
 	 * Cache of current choices, needed to retrieve the user selected object
 	 */
@@ -66,7 +77,21 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 */
 	public AutoCompleteTextField(String id)
 	{
+		this(id, new TextRenderer<T>());
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param renderer
+	 */
+	public AutoCompleteTextField(String id, ITextRenderer<? super T> renderer)
+	{
 		super(id);
+		
+		this.renderer = renderer;
+		this.template = this.newTemplate();
+		
 		this.init();
 	}
 
@@ -77,7 +102,22 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 */
 	public AutoCompleteTextField(String id, IModel<T> model)
 	{
-		super(id, model);
+		this(id, model, new TextRenderer<T>());
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param renderer
+	 */
+	public AutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super T> renderer)
+	{
+		super(id, model); //maybe to replace by a 'new RendererModel(model) which wrap the model to provide the #toString(), if needed.
+
+		this.renderer = renderer;
+		this.template = this.newTemplate();
+		
 		this.init();
 	}
 	
@@ -133,6 +173,11 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 		this.add(this.sourceBehavior);
 		this.add(this.selectBehavior);
 		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
+		
+		if (this.template != null)
+		{
+			this.add(this.templateBehavior = new JQueryTemplateBehavior(this.template));
+		}
 	}
 
 	
@@ -186,7 +231,19 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 			{
 				this.setOption("source", Options.asString(sourceBehavior.getCallbackUrl()));
 				this.setOption("select", "function( event, ui ) { " + selectBehavior.getCallbackScript() + " }");
-//				minLength: 2,
+			}
+
+			@Override
+			protected String $()
+			{
+				if (templateBehavior != null)
+				{
+					// warning, the template text should be of the form <a>...</a> in order to work
+					String render = "$(function() { $('%s').data('autocomplete')._renderItem = function( ul, item ) { return $('<li></li>').data('item.autocomplete', item).append($.tmpl($('#%s').html(), item)).appendTo(ul) } });"; 
+					return super.$() + String.format(render, this.selector, templateBehavior.getToken());
+				}
+
+				return super.$();
 			}
 		};
 	}
@@ -194,12 +251,21 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	
 	// Factories //
 	/**
+	 * TODO: to document
+	 * @return
+	 */
+	protected IJQueryTemplate newTemplate()
+	{
+		return null;
+	}
+
+	/**
 	 * Gets a new {@link AutoCompleteBehavior}
 	 * @return
 	 */
 	private AutoCompleteBehavior<T> newAutoCompleteBehavior()
 	{
-		return new AutoCompleteBehavior<T>() {
+		return new AutoCompleteBehavior<T>(this.renderer) {
 
 			private static final long serialVersionUID = 1L;
 			
@@ -207,6 +273,17 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 			protected List<T> getChoices(String input)
 			{
 				return AutoCompleteTextField.this.internalGetChoices(input);
+			}
+
+			@Override
+			protected List<String> getProperties()
+			{
+				if (AutoCompleteTextField.this.template != null)
+				{
+					return AutoCompleteTextField.this.template.getTextProperties();
+				}
+
+				return super.getProperties();
 			}
 		};
 	}
@@ -229,7 +306,6 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 				return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() + "&index=' + ui.item.id");
 			}
 
-			
 			@Override
 			protected JQueryEvent newEvent(AjaxRequestTarget target)
 			{

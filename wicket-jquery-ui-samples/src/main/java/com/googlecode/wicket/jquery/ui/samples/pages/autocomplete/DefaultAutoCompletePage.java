@@ -24,13 +24,13 @@ public class DefaultAutoCompletePage extends AbstractAutoCompletePage
 	
 	private void init()
 	{
+		// Form //
 		final Form<String> form = new Form<String>("form");
 		this.add(form);
 
 		// FeedbackPanel //
 		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
 		form.add(feedbackPanel.setOutputMarkupId(true));
-
 		
 		// Auto-complete //
 		form.add(new AutoCompleteTextField<String>("autocomplete", new Model<String>()) {

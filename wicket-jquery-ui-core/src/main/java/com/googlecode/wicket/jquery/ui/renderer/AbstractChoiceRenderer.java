@@ -14,53 +14,72 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.kendo.combobox;
+package com.googlecode.wicket.jquery.ui.renderer;
 
 import org.apache.wicket.util.lang.PropertyResolver;
 
-import com.googlecode.wicket.jquery.ui.renderer.TextRenderer;
+import com.googlecode.wicket.jquery.ui.renderer.IChoiceRenderer;
 
 /**
- * TODO javadoc
+ * 
  * @author Sebastien Briquet - sebastien@7thweb.net
- *
+ * @deprecated TODO to be removed
  * @param <T>
  */
-public class ComboBoxRenderer<T> extends TextRenderer<T> /* AbstractChoiceRenderer<T> /* implements IChoiceRenderer<T> */
+public abstract class AbstractChoiceRenderer<T> implements IChoiceRenderer<T>
 {
 	private static final long serialVersionUID = 1L;
-	private static final String TEXT_FIELD = "cb_text"; 
-	private static final String VALUE_FIELD = "cb_value";
 
-	private String valueExpression = null; 
+	private final String textExpression;
+	private final String valueExpression;
 
-	public ComboBoxRenderer()
+	public AbstractChoiceRenderer()
 	{
-		
+		this.textExpression = null;
+		this.valueExpression = null;
 	}
 	
-	public ComboBoxRenderer(String textExpression)
+	public AbstractChoiceRenderer(String textExpression)
 	{
-		super(textExpression);
+		this.textExpression = textExpression;
+		this.valueExpression = null;
 	}
 
-	public ComboBoxRenderer(String textExpression, String valueExpression)
+	public AbstractChoiceRenderer(String textExpression, String valueExpression)
 	{
-		super(textExpression);
-		
+		this.textExpression = textExpression;
 		this.valueExpression = valueExpression;
 	}
 
-	public String getTextField()
+	public String getText(T object)
 	{
-		String testExpression = super.getExpression();
-
-		if (testExpression != null)
+		return this.getText(object, this.textExpression);
+	}
+	
+	@Override
+	public String getText(T object, String expression)
+	{
+		if (expression != null)
 		{
-			return testExpression;
+			Object value = PropertyResolver.getValue(expression, object); //if the object is null, null is returned
+			
+			if (value != null)
+			{
+				return value.toString();
+			}
 		}
-		
-		return TEXT_FIELD;
+
+		if (object != null)
+		{
+			return object.toString();
+		}
+
+		return "";
+	}
+	
+	public final String getTextExpression()
+	{
+		return this.textExpression;
 	}
 
 	/**
@@ -68,7 +87,8 @@ public class ComboBoxRenderer<T> extends TextRenderer<T> /* AbstractChoiceRender
 	 * @return the index as String if the object is null or the property expression has not been found
 	 * 
 	 */
-	public String getValue(T object)
+	@Override
+	public String getValue(T object, int index)
 	{
 		if (this.valueExpression != null)
 		{
@@ -80,16 +100,16 @@ public class ComboBoxRenderer<T> extends TextRenderer<T> /* AbstractChoiceRender
 			}
 		}
 
-		return this.getText(object);
+		if (object != null)
+		{
+			return this.getText(object); //fallback to textual representation
+		}
+
+		return Integer.toString(index);
 	}
 
-	public String getValueField()
+	public final String getValueExpression()
 	{
-		if (this.valueExpression != null)
-		{
-			return this.valueExpression;
-		}
-		
-		return VALUE_FIELD;
+		return this.valueExpression;
 	}
-} 
+}

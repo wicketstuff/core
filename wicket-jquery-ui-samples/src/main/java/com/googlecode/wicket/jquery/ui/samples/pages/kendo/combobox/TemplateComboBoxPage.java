@@ -15,8 +15,8 @@ import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteUtils;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.form.button.Button;
 import com.googlecode.wicket.jquery.ui.kendo.combobox.ComboBox;
-import com.googlecode.wicket.jquery.ui.kendo.combobox.IComboBoxTemplate;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
+import com.googlecode.wicket.jquery.ui.template.IJQueryTemplate;
 
 public class TemplateComboBoxPage extends AbstractComboBoxPage
 {
@@ -32,7 +32,41 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 		form.add(feedbackPanel.setOutputMarkupId(true));
 
 		// ComboBox (Kendo-UI widget) //
-		final ComboBox<Genre> dropdown = new ComboBox<Genre>("combobox", new Model<String>(), GENRES, this.newTemplate());
+		final ComboBox<Genre> dropdown = new ComboBox<Genre>("combobox", new Model<String>(), GENRES) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected IJQueryTemplate newTemplate()
+			{
+				return new IJQueryTemplate() {
+					
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public String getText()
+					{
+						return  "<table style='width: 100%'>\n" +
+							" <tr>\n" +
+							"  <td>\n" +
+							"   <img src='${ data.coverUrl }' width='50px' />\n" +
+							"  </td>\n" +
+							"  <td>\n" +
+							"   ${ data.name }</span>\n" +
+							"  </td>\n" +
+							" </tr>\n" +
+							"</table>\n";
+					}
+
+					@Override
+					public List<String> getTextProperties()
+					{
+						return Arrays.asList("name", "coverUrl");
+					}
+
+				};
+			}
+		};
 //		TODO: new ListModel<String> !!
 		form.add(dropdown);
 		
@@ -61,34 +95,6 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 		});
 	}
 
-	private IComboBoxTemplate newTemplate()
-	{
-		return new IComboBoxTemplate() {
-			
-			@Override
-			public String getHtml()
-			{
-				return  "<table style='width: 100%'>" +
-						"<tr>" +
-						"<td>" +
-						"<img src='${ data.coverUrl }' width='50px' />" +
-						"</td>" +
-						"<td>" +
-						"${ data.name }</span>" +
-						"</td>" +
-						"</tr>" +
-						"</table>";
-			}
-
-			@Override
-			public List<String> getProperties()
-			{
-				return Arrays.asList("name", "coverUrl");
-			}
-
-		};
-	}
-
 	private void info(ComboBox<Genre> dropdown)
 	{
 		String choice =  dropdown.getModelObject();
@@ -115,11 +121,6 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 	static class Genre implements IClusterable
 	{
 		private static final long serialVersionUID = 1L;
-
-		public static Genre emptyGenre()
-		{
-			return new Genre("", "cover-empty.png");
-		}
 
 		private final String name;
 		private final String cover;

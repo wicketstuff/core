@@ -16,6 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.form.autocomplete;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.Application;
@@ -29,6 +30,8 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.util.time.Duration;
 
+import com.googlecode.wicket.jquery.ui.renderer.ITextRenderer;
+
 /**
  * Provides the {@link AbstractDefaultAjaxBehavior} for the {@link AutoCompleteTextField}
  * 
@@ -40,8 +43,26 @@ abstract class AutoCompleteBehavior<T> extends AbstractDefaultAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String QUERY = "term";
+	private static final String QUOTE = "\"";
+	
+	private final ITextRenderer<? super T> renderer;
+
+	public AutoCompleteBehavior(ITextRenderer<? super T> renderer)
+	{
+		this.renderer = renderer;
+	}
 
 	protected abstract List<T> getChoices(String input);
+	
+	/**
+	 * TODO javadoc
+	 * @return
+	 */
+	protected List<String> getProperties()
+	{
+		return Collections.emptyList();
+	}
+	
 	
 	@Override
 	protected void respond(AjaxRequestTarget target)
@@ -77,7 +98,8 @@ abstract class AutoCompleteBehavior<T> extends AbstractDefaultAjaxBehavior
 				response.disableCaching();
 
 				List<T> choices = AutoCompleteBehavior.this.getChoices(input);
-				
+				List<String> properties = AutoCompleteBehavior.this.getProperties();
+
 				if (choices != null)
 				{
 					StringBuilder builder = new StringBuilder("[ ");
@@ -88,9 +110,19 @@ abstract class AutoCompleteBehavior<T> extends AbstractDefaultAjaxBehavior
 						if (index++ > 0) { builder.append(", "); }
 						
 						builder.append("{ ");
-						builder.append("\"id\": \"").append(String.valueOf(index)).append("\", ");
-//						builder.append("\"label\": \"").append(choice.toString()).append("\", ");
-						builder.append("\"value\": \"").append(choice.toString()).append("\"");
+						builder.append(QUOTE).append("id").append(QUOTE).append(": ").append(QUOTE).append(Integer.toString(index)).append(QUOTE); /* id is reserved*/
+						builder.append(", ");
+						builder.append(QUOTE).append("value").append(QUOTE).append(": ").append(QUOTE).append(renderer.getText(choice)).append(QUOTE); /* value is reserved */
+						
+						if (properties != null)
+						{
+							for (String property : properties)
+							{
+								builder.append(", ");
+								builder.append(QUOTE).append(property).append(QUOTE).append(": ").append(QUOTE).append(renderer.getText(choice, property)).append(QUOTE);
+							}
+						}
+
 						builder.append(" }");
 					}
 
