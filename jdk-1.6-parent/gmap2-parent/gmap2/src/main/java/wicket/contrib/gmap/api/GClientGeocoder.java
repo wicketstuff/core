@@ -3,6 +3,7 @@ package wicket.contrib.gmap.api;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.request.IRequestParameters;
@@ -62,7 +63,7 @@ public abstract class GClientGeocoder extends AjaxEventBehavior
 	@Override
 	public CharSequence getCallbackScript()
 	{
-		return "Wicket.geocoder.getLatLng('" + getCallbackFunction("status", "address", "point") + "', '" +
+		return "Wicket.geocoder.getLatLng('" + getCallbackFunction(CallbackParameter.explicit("status"), CallbackParameter.explicit("address"), CallbackParameter.explicit("point")) + "', '" +
 			addressField.getMarkupId() + "');" + "return false;";
 	}
 }

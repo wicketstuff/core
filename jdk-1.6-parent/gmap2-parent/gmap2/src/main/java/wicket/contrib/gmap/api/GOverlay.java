@@ -124,7 +124,7 @@ public abstract class GOverlay implements Serializable
 		// TODO
 		// && getParent().findPage() != null)
 		AjaxRequestTarget target = RequestCycle.get().find(AjaxRequestTarget.class);
-		if (target != null)
+		if (target != null && getParent() != null)
 		{
 			target.appendJavaScript(event.getJSadd(this));
 		}
