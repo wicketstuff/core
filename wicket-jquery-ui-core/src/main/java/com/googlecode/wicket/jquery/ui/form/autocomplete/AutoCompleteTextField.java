@@ -59,10 +59,8 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 */
 	private AutoCompleteBehavior<T> sourceBehavior;
 
-	/**
-	 * TODO javadoc
-	 */
 	private final ITextRenderer<? super T> renderer;
+
 	private final IJQueryTemplate template;
 	private JQueryTemplateBehavior templateBehavior = null;
 
@@ -83,7 +81,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	/**
 	 * Constructor
 	 * @param id the markup id
-	 * @param renderer
+	 * @param renderer the {@link ITextRenderer}
 	 */
 	public AutoCompleteTextField(String id, ITextRenderer<? super T> renderer)
 	{
@@ -109,11 +107,11 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 * Constructor
 	 * @param id the markup id
 	 * @param model the {@link IModel}
-	 * @param renderer
+	 * @param renderer the {@link ITextRenderer}
 	 */
 	public AutoCompleteTextField(String id, IModel<T> model, ITextRenderer<? super T> renderer)
 	{
-		super(id, model); //maybe to replace by a 'new RendererModel(model) which wrap the model to provide the #toString(), if needed.
+		super(id, model); //maybe to replace by a 'new RendererModel(model)' which wrap the model to provide the #toString(), if needed.
 
 		this.renderer = renderer;
 		this.template = this.newTemplate();
@@ -251,8 +249,10 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	
 	// Factories //
 	/**
-	 * TODO: to document
-	 * @return
+	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
+	 * The {@link IJQueryTemplate#getText()} should return a template text of the form "&lt;a&gt;...&lt;/a&gt;".<br/>
+	 * The properties used in the template text (ie: ${name}) should be identified in the list returned by {@link IJQueryTemplate#getTextProperties()}
+	 * @return null by default
 	 */
 	protected IJQueryTemplate newTemplate()
 	{
@@ -261,7 +261,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 	/**
 	 * Gets a new {@link AutoCompleteBehavior}
-	 * @return
+	 * @return the {@link AutoCompleteBehavior}
 	 */
 	private AutoCompleteBehavior<T> newAutoCompleteBehavior()
 	{

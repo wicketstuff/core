@@ -20,12 +20,25 @@ import com.googlecode.wicket.jquery.ui.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.ui.template.JQueryAbstractTemplateBehavior;
 import com.googlecode.wicket.jquery.ui.template.JQueryResourceStream;
 
+/**
+ * Provides the kendo-ui implementation of {@link JQueryAbstractTemplateBehavior} that works with a {@link IJQueryTemplate}.<br/>
+ * The content of the &lt;script /&gt; block (the resource stream) is given by the {@link IJQueryTemplate#getText()}.<br/>
+ * <br/>
+ * This implementation is different from JQueryTemplateBehavior as the &lt;script /&gt; block will have the kendo-ui type ("text/x-kendo-template")
+ * 
+ * @author Sebastien Briquet - sebastien@7thweb.net
+ *
+ */
 public class KendoTemplateBehavior extends JQueryAbstractTemplateBehavior
 {
 	private static final long serialVersionUID = 1L;
 
 	private final IJQueryTemplate template;
 
+	/**
+	 * Constructor
+	 * @param template the {@link IJQueryTemplate} that this behavior should render via the resource stream
+	 */
 	public KendoTemplateBehavior(IJQueryTemplate template)
 	{
 		this.template = template;

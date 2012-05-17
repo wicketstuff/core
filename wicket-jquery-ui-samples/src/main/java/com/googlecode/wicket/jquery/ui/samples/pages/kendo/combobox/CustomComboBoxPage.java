@@ -32,7 +32,6 @@ public class CustomComboBoxPage extends AbstractComboBoxPage
 
 		// ComboBox (Kendo-UI widget) //
 		final ComboBox<Genre> dropdown = new ComboBox<Genre>("combobox", new Model<String>(), GENRES);
-//		TODO: new ListModel<String> !!
 		form.add(dropdown);
 
 		// Buttons //

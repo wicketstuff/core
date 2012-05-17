@@ -50,23 +50,31 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	private final IJQueryTemplate template;
 	private KendoTemplateBehavior templateBehavior = null;
 	
-	//TODO: do all constructors, to document
-	
 	/**
-	 * @param id
+	 * Constructor
+	 * @param id the markup id
+	 * @param choices the list of choices
 	 */
 	public ComboBox(String id, List<? extends T> choices)
 	{
 		this(id, Model.ofList(choices), new ComboBoxRenderer<T>());
 	}
 
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param choices the list of choices
+	 * @param renderer the renderer to be used, so the renderer item text and its values can be dissociated
+	 */
 	public ComboBox(String id, List<? extends T> choices, ComboBoxRenderer<? super T> renderer)
 	{
 		this(id, Model.ofList(choices), renderer);
 	}
 
 	/**
-	 * @param id
+	 * Constructor
+	 * @param id the markup id
+	 * @param choices the list model of choices
 	 */
 	public ComboBox(String id, IModel<List<? extends T>> choices)
 	{
@@ -74,7 +82,10 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	}
 
 	/**
-	 * @param id
+	 * Constructor
+	 * @param id the markup id
+	 * @param choices the list model of choices
+	 * @param renderer the renderer to be used, so the renderer item text and its values can be dissociated
 	 */
 	public ComboBox(String id, IModel<List<? extends T>> choices, ComboBoxRenderer<? super T> renderer)
 	{
@@ -85,11 +96,11 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 		this.template = this.newTemplate();
 	}
 	
-	
-
 	/**
-	 * @param id
-	 * @param choices
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param choices the list of choices
 	 */
 	public ComboBox(String id, IModel<String> model, List<? extends T> choices)
 	{
@@ -97,11 +108,10 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	}
 
 	/**
-	 * 
-	 * @param id
-	 * @param model
-	 * @param choices
-	 * @param renderer
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param renderer the renderer to be used, so the renderer item text and its values can be dissociated
 	 */
 	public ComboBox(String id, IModel<String> model, List<? extends T> choices, ComboBoxRenderer<? super T> renderer)
 	{
@@ -109,14 +119,23 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	}
 
 	/**
-	 * @param id
-	 * @param choices
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param choices the list model of choices
 	 */
 	public ComboBox(String id, IModel<String> model, IModel<List<? extends T>> choices)
 	{
 		this(id, model, choices, new ComboBoxRenderer<T>());
 	}
 
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param choices the list model of choices
+	 * @param renderer the renderer to be used, so the renderer item text and its values can be dissociated
+	 */
 	public ComboBox(String id, IModel<String> model, IModel<List<? extends T>> choices, ComboBoxRenderer<? super T> renderer)
 	{
 		super(id, model);
@@ -126,15 +145,8 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 		this.template = this.newTemplate();
 	}
 	
-	/**
-	 * TODO: to document
-	 * @return
-	 */
-	protected IJQueryTemplate newTemplate()
-	{
-		return null;
-	}
-
+	
+	// Events //
 	@Override
 	protected void onInitialize()
 	{
@@ -149,8 +161,10 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	}
 
 	/**
-	 * to document
-	 * @param behavior
+	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering 
+	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
+	 * 
+	 * @param behavior the {@link JQueryBehavior}
 	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
@@ -216,5 +230,16 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 				ComboBox.this.onConfigure(this);
 			}
 		};
+	}
+	
+	// Factories //
+	/**
+	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
+	 * The properties used in the template text (ie: ${data.name}) should be of the prefixed by "data." and should be identified in the list returned by {@link IJQueryTemplate#getTextProperties()} (without "data.")
+	 * @return null by default
+	 */
+	protected IJQueryTemplate newTemplate()
+	{
+		return null;
 	}
 }

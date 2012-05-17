@@ -75,11 +75,11 @@ public class AjaxRangeSlider extends RangeSlider implements IValueChangedListene
 	}
 	
 	/**
-	 * TODO: to document
-	 * @param id
-	 * @param model
-	 * @param lower
-	 * @param upper
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param lower the {@link TextField} that will host the lower value
+	 * @param upper the {@link TextField} that will host the upper value
 	 */
 	public AjaxRangeSlider(String id, IModel<RangeValue> model, TextField<Integer> lower, TextField<Integer> upper)
 	{

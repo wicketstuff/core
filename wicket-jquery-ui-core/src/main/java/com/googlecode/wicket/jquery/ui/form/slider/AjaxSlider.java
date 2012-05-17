@@ -76,10 +76,10 @@ public class AjaxSlider extends Slider implements IValueChangedListener
 	}
 
 	/**
-	 * TODO: to document
-	 * @param id
-	 * @param model
-	 * @param input
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param input the {@link TextField} that will host the value
 	 */
 	public AjaxSlider(String id, Model<Integer> model, TextField<Integer> input)
 	{

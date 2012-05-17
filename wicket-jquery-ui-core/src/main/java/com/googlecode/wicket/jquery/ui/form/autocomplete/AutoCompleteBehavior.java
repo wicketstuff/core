@@ -52,11 +52,16 @@ abstract class AutoCompleteBehavior<T> extends AbstractDefaultAjaxBehavior
 		this.renderer = renderer;
 	}
 
+	/**
+	 * 
+	 * @param input
+	 * @return
+	 */
 	protected abstract List<T> getChoices(String input);
 	
 	/**
-	 * TODO javadoc
-	 * @return
+	 * Gets the property list that should be appended to the JSON response. The value corresponding to the property is retrieved from the {@link ITextRenderer#getText(Object, String)} 
+	 * @return the property list
 	 */
 	protected List<String> getProperties()
 	{

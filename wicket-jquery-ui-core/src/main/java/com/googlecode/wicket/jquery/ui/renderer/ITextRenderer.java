@@ -19,18 +19,22 @@ package com.googlecode.wicket.jquery.ui.renderer;
 import org.apache.wicket.IClusterable;
 
 /**
- * TODO javadoc 
+ * Provides the capability to get a specific text (likely from a property) for a bean type, for rendering purpose 
  */
-
 public interface ITextRenderer<T> extends IClusterable
 {
 	/**
-	 * TODO javadoc 
+	 * Gets the text that should be renderer for the supplied object
+	 * @param object the T object
+	 * @return the text
 	 */
 	String getText(T object);
 
 	/**
-	 * TODO javadoc 
+	 * Gets the text that should be renderer for the supplied object, for the given property
+	 * @param object the T object
+	 * @param expression the property expression
+	 * @return the text
 	 */
-	String getText(T object, String property);
+	String getText(T object, String expression);
 }

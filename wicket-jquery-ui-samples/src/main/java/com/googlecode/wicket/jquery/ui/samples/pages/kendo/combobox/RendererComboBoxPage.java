@@ -30,7 +30,6 @@ public class RendererComboBoxPage extends AbstractComboBoxPage
 
 		// ComboBox (Kendo-UI widget) //
 		final ComboBox<Genre> dropdown = new ComboBox<Genre>("combobox", new Model<String>(), GENRES, new ComboBoxRenderer<Genre>("name", "id"));
-//		TODO: new ListModel<String> !!
 		form.add(dropdown);
 		
 		// Buttons //

@@ -25,6 +25,7 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.ui.IJQueryWidget;
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
+import com.googlecode.wicket.jquery.ui.Options;
 import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
 
 public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
@@ -130,7 +131,12 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 
-	//TODO: to document
+	/**
+	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering 
+	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
+	 * 
+	 * @param behavior the {@link JQueryBehavior}
+	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
 	}

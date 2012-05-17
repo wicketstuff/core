@@ -19,10 +19,10 @@ package com.googlecode.wicket.jquery.ui.renderer;
 import org.apache.wicket.util.lang.PropertyResolver;
 
 /**
- * TODO javadoc
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * Provides the default {@link ITextRenderer}
  *
- * @param <T>
+ * @param <T> the model object type
+ * @author Sebastien Briquet - sebastien@7thweb.net
  */
 public class TextRenderer<T> implements ITextRenderer<T>
 {
@@ -30,16 +30,27 @@ public class TextRenderer<T> implements ITextRenderer<T>
 
 	private final String expression;
 
+	/**
+	 * Constructor
+	 */
 	public TextRenderer()
 	{
 		this.expression = null;
 	}
 	
+	/**
+	 * Constructor
+	 * @param expression the property expression that will be resolved for the bean supplied to {@link #getText(Object)}
+	 */
 	public TextRenderer(String expression)
 	{
 		this.expression = expression;
 	}
 	
+	/**
+	 * Gets the expression supplied in the constructor
+	 * @return null if the default constructor has been used
+	 */
 	public String getExpression()
 	{
 		return this.expression;

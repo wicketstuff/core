@@ -67,7 +67,7 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 				};
 			}
 		};
-//		TODO: new ListModel<String> !!
+
 		form.add(dropdown);
 		
 		// Buttons //
