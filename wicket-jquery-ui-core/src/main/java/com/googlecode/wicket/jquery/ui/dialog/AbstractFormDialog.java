@@ -34,21 +34,45 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 {
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
+	 */
 	public AbstractFormDialog(String id, String title)
 	{
 		super(id, title);
 	}
 
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
+	 * @param model the dialog's model
+	 */
 	public AbstractFormDialog(String id, String title, IModel<T> model)
 	{
 		super(id, title, model, true);
 	}
 	
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
+	 * @param modal indicates whether the dialog is modal
+	 */
 	public AbstractFormDialog(String id, String title, boolean modal)
 	{
 		super(id, title, modal);
 	}
 
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
+	 * @param model the dialog's model
+	 * @param modal indicates whether the dialog is modal
+	 */
 	public AbstractFormDialog(String id, String title, IModel<T> model, boolean modal)
 	{
 		super(id, title, model, modal);
@@ -64,8 +88,14 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	protected abstract String getSubmitButton();
 
 	
-	/* IFormSubmitter */
-	
+	/**
+	 * Returns whether form should be processed the default way. When false (default is true), all
+	 * validation and form updating is bypassed and the onSubmit method of that button is called
+	 * directly, and the onSubmit method of the parent form is not called. A common use for this is
+	 * to create a cancel button.
+	 * 
+	 * @return defaultFormProcessing
+	 */
 	public boolean getDefaultFormProcessing()
 	{
 		return true; //default
@@ -74,7 +104,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	/**
 	 * Gets the form to be validated by this dialog.<br/>
 	 * Warning, the onSubmit and the onError are being delegated to this dialog. However, it does not prevent the use of Form#onSubmit nor Form#onError
-	 * @return the form
+	 * @return the {@link Form} or <code>null</code>
 	 */
 	public abstract Form<?> getForm();
 	

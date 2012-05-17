@@ -73,7 +73,7 @@ public class ProgressBar extends JQueryContainer
 	 */
 	private void init()
 	{
-		this.changeBehavior = newChangeBehavior(this); 
+		this.changeBehavior = this.newChangeBehavior(this); 
 	}
 	
 	/* Getters / Setters */

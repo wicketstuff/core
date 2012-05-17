@@ -63,7 +63,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	
 	/**
 	 * Adds a reference to be added at {@link #renderHead(Component, IHeaderResponse)} time.
-	 * @param reference
+	 * @param reference a {@link CssResourceReference}, a {@link JavaScriptResourceReference} or a {@link JQueryPluginResourceReference}
 	 * @return true (as specified by Collection.add(E)) 
 	 */
 	protected boolean add(ResourceReference reference)
