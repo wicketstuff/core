@@ -13,7 +13,7 @@
 
 	<groupId>com.googlecode.wicket-jquery-ui</groupId>
 	<artifactId>jquery-ui-samples</artifactId>
-	<version>1.2-SNAPSHOT</version>
+	<version>1.1.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<licenses>
@@ -40,7 +40,7 @@
 
 	<properties>
 		<wicket.version>1.5.6</wicket.version>
-		<jquery.version>1.2-SNAPSHOT</jquery.version>
+		<jquery.version>1.1.1-SNAPSHOT</jquery.version>
 		<junit.version>4.8.1</junit.version>
 	</properties>
 

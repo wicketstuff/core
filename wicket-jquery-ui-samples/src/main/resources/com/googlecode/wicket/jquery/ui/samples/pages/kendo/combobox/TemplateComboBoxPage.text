@@ -1,0 +1,29 @@
+Available since wicket-jquery-ui-kendo-1.1.1<br/>
+<br/>
+<code>ComboBox</code> widget allows you to customize the item's display using a jQuery template, 
+which will be enclosed in a <code>&lt;script type="text/x-kendo-template" /&gt;</code> (so you can use the "<code>\n</code>" character to properly format the template).<br/>
+<br/>
+For a <code>ComboBox</code>, the properties used in the template text (ie: <code>${ data.name }</code>) should be of the prefixed by "<code>data.</code>" and should be identified in the list returned by <code>IJQueryTemplate#getTextProperties()</code>, without "<code>data.</code>".
+
+<pre>
+@Override
+protected IJQueryTemplate newTemplate()
+{
+	return new IJQueryTemplate() {
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public String getText()
+		{
+			return  "&lt;i&gt;${ data.name }&lt;/i&gt;";
+		}
+
+		@Override
+		public List<String> getTextProperties()
+		{
+			return Arrays.asList("name");
+		}
+	};
+}
+</pre>

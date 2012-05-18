@@ -31,7 +31,7 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
 		form.add(feedbackPanel.setOutputMarkupId(true));
 
-		// ComboBox (Kendo-UI widget) //
+		// ComboBox //
 		final ComboBox<Genre> dropdown = new ComboBox<Genre>("combobox", new Model<String>(), GENRES) {
 
 			private static final long serialVersionUID = 1L;

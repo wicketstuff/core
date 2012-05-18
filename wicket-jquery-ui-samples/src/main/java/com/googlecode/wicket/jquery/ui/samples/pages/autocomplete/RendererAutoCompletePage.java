@@ -37,7 +37,7 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
 		form.add(feedbackPanel.setOutputMarkupId(true));
 
-		// Auto-complete //
+		// Auto-complete (note that Genre does not overrides #toString()) //
 		form.add(new AutoCompleteTextField<Genre>("autocomplete", model, new TextRenderer<Genre>("name")) {
 
 			private static final long serialVersionUID = 1L;
