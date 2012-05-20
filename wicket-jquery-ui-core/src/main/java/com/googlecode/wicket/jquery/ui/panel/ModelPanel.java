@@ -19,15 +19,30 @@ package com.googlecode.wicket.jquery.ui.panel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
+/**
+ * Provides a {@link Panel} with a generized model
+ *  
+ * @param <T> the model object type
+ * @author Sebastien Briquet - sebastien@7thweb.net
+ */
 public class ModelPanel<T> extends Panel
 {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 */
 	public ModelPanel(String id)
 	{
 		super(id);
 	}
 
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 */
 	public ModelPanel(String id, IModel<T> model)
 	{
 		super(id, model);

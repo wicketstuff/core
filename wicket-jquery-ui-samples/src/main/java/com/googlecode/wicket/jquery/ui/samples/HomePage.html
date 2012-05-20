@@ -47,7 +47,7 @@
             <h4>Download jar(s)</h4>
             <div>
                 If you are not using maven, you need to download the core jar here: <a href="http://code.google.com/p/wicket-jquery-ui/downloads/list">http://code.google.com/p/wicket-jquery-ui/downloads/list</a><br/>
-                You may also download other jars as required (ie: jquery-ui-kendo). Once done, just include the jar(s) in your project's build path.
+                You may also download other jars as required (ie: <code>jquery-ui-kendo</code>code>). Once done, just include the jar(s) in your project's build path.
             </div>
             <h4>Using Maven</h4>
             <div>
@@ -55,7 +55,7 @@
 &lt;dependency&gt;
     &lt;groupId&gt;com.googlecode.wicket-jquery-ui&lt;/groupId&gt;
     &lt;artifactId&gt;jquery-ui-core&lt;/artifactId&gt;
-    &lt;version&gt;1.1&lt;/version&gt;
+    &lt;version&gt;1.2.0&lt;/version&gt;
 &lt;/dependency&gt;
                 </pre>
                 You might need to define the repository (either in your pom.xml or settings.xml)
@@ -85,14 +85,38 @@
             <h4>Setting up the HTML markup</h4>
             <div>
                 jQuery UI needs a CSS to work. No jQuery UI CSS has been shipped in the API, so you are free to use the one you wish.<br/>
-                You can get your own CSS at <a href="http://jqueryui.com/themeroller/">http://jqueryui.com/themeroller/</a>, and put it (the CSS only) into your website.<br/>
+                You can get your own CSS at <a href="http://jqueryui.com/themeroller/">http://jqueryui.com/themeroller/</a>, and put it (the <code>CSS</code> folder only) into your website.<br/>
                 <br/>
                 The base template page is the following: (you might change the CSS href accordingly)
                 <pre>
 &lt;!DOCTYPE html&gt;
 &lt;html xmlns:wicket="http://wicket.apache.org"&gt;
 &lt;head&gt;
-    &lt;link rel="stylesheet" type="text/css" href="styles/jquery-ui-1.8.19.custom.css" media="all" /&gt;
+    &lt;link rel="stylesheet" type="text/css" href="css/<i>ui-lightness</i>/jquery-ui-1.8.19.custom.css" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                </pre>
+            </div>
+            <h4>Setting up the HTML markup, for Kendo UI</h4>
+            <div>
+                Kendo UI also needs CSSs to work. You need to download your own copy of Kendo UI: <a href="http://www.kendoui.com/get-kendo-ui.aspx">http://www.kendoui.com/get-kendo-ui.aspx.</a><br/>
+                <br/>
+                Once done, you have to copy <code>kendo.common.min.css</code> and <code>kendo.<i>choosen_theme</i>.min.css</code> in into you webapp, as well as the corresponding theme folder and the "<code>texture</code>" folder.<br/>
+                <br/>
+                The base template page is then the following: (you might change the CSS href accordingly)
+                <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html xmlns:wicket="http://wicket.apache.org"&gt;
+&lt;head&gt;
+
+    &lt;!-- jQuery UI --&gt;
+    &lt;link rel="stylesheet" type="text/css" href="css/<i>ui-lightness</i>/jquery-ui-1.8.19.custom.css" /&gt;
+    
+    &lt;!-- Kendo UI --&gt;
+    &lt;link rel="stylesheet" type="text/css" href="css/kendo/kendo.common.min.css" media="all" /&gt;
+    &lt;link rel="stylesheet" type="text/css" href="css/kendo/kendo.default.min.css" media="all" /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 &lt;/body&gt;

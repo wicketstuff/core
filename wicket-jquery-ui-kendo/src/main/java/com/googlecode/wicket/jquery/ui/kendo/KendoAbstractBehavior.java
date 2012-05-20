@@ -20,10 +20,21 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 
+/**
+ * Provides the base class for Kendo UI behavior implementations
+ * 
+ * @author Sebastien Briquet - sebastien@7thweb.net
+ *
+ */
 public class KendoAbstractBehavior extends JQueryBehavior
 {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Constructor
+	 * @param selector the html selector (ie: "#myId")
+	 * @param method the kendo-ui method
+	 */
 	public KendoAbstractBehavior(String selector, String method)
 	{
 		super(selector, method);

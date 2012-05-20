@@ -20,6 +20,38 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 
 import com.googlecode.wicket.jquery.ui.Options;
 
+/**
+ * Provides a Border Layout based on a vertical and horizontal {@link SplitterBehavior}<br/>
+ * User may override {@link #getVerticalPanes()} and {@link #getHorizontalPanes()}, which return pane definitions in the JSON format.<br/>
+ * <br/>
+ * Alternatively, the HTML markup look like:
+ * <pre>
+&lt;div wicket:id="layout"&gt;
+	&lt;div id="vertical"&gt;
+		&lt;div&gt;
+			- top -
+		&lt;/div&gt;		
+		&lt;div id="horizontal"&gt;	
+			&lt;div&gt;
+				- left -
+			&lt;/div&gt;
+			&lt;div&gt;
+				- center -
+			&lt;/div&gt;
+			&lt;div&gt;
+				- right -
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div&gt;
+			- bottom -
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+ * </pre>
+ * 
+ * @author Sebastien Briquet - sebastien@7thweb.net
+ *
+ */
 public class BorderLayout extends WebMarkupContainer
 {
 	private static final long serialVersionUID = 1L;
@@ -27,12 +59,19 @@ public class BorderLayout extends WebMarkupContainer
 	private SplitterBehavior verticalBehavior;
 	private SplitterBehavior horizontalBehavior;
 
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 */
 	public BorderLayout(String id)
 	{
 		super(id);
 		this.init();
 	}
 	
+	/**
+	 * Initialization
+	 */
 	private void init()
 	{
 		this.verticalBehavior = new SplitterBehavior("#vertical");
@@ -54,11 +93,11 @@ public class BorderLayout extends WebMarkupContainer
 	
 	/**
 	 * Gets vertical panes JSON array
-	 * @return by default: 15% - middle - 15%
+	 * @return by default: 20% - middle - 20%
 	 */
 	protected String getVerticalPanes()
 	{
-		return "[ { resizable: false, size: '20%' }, {  }, { collapsible: true, size: '15%' } ]";
+		return "[ { resizable: false, size: '20%' }, {  }, { collapsible: true, size: '20%' } ]";
 	}
 
 	/**

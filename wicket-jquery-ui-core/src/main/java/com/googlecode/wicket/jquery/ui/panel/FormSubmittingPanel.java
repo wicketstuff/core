@@ -45,18 +45,30 @@ public abstract class FormSubmittingPanel<T> extends ModelPanel<T> implements IF
 	 */
 	private boolean processForm = true;
 
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 */
 	public FormSubmittingPanel(String id)
 	{
 		super(id);
 		this.init();
 	}
 
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 */
 	public FormSubmittingPanel(String id, IModel<T> model)
 	{
 		super(id, model);
 		this.init();
 	}
 
+	/**
+	 * Initialization
+	 */
 	private void init()
 	{
 		//As the Form is posted, Form#findSubmittingButton() expect to retrieve this component by the request parameter 'name'.

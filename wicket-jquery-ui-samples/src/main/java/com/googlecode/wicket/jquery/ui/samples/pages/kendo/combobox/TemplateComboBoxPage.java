@@ -11,7 +11,6 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.UrlUtils;
 
-import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteUtils;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.form.button.Button;
 import com.googlecode.wicket.jquery.ui.kendo.combobox.ComboBox;
@@ -141,10 +140,6 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 			return UrlUtils.rewriteToContextRelative("images/" + this.cover, RequestCycle.get());
 		}
 
-		/**
-		 * toString needs to be overridden: it is used by the suggestion display
-		 * and by {@link AutoCompleteUtils#contains(List, String)} method
-		 */
 		@Override
 		public String toString()
 		{

@@ -104,7 +104,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	/**
 	 * Gets the form to be validated by this dialog.<br/>
 	 * Warning, the onSubmit and the onError are being delegated to this dialog. However, it does not prevent the use of Form#onSubmit nor Form#onError
-	 * @return the {@link Form} or <code>null</code>
+	 * @return the form
 	 */
 	public abstract Form<?> getForm();
 	
@@ -114,7 +114,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	 * The callback script of {@link FormButtonAjaxBehavior} will differ depending on this.
 	 * 
 	 * @param button the dialog's button
-	 * @return the {@link Form}
+	 * @return the {@link Form} or <code>null</code>
 	 */
 	private Form<?> getForm(String button)
 	{

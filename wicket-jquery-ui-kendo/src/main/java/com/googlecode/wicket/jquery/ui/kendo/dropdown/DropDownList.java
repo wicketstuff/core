@@ -28,13 +28,21 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.Options;
 import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
 
+/**
+ * Provides a Kendo UI DropDownList widget. It extends built-in {@link DropDownChoice}<br/>
+ * 
+ * @author Sebastien Briquet - sebastien@7thweb.net
+ *
+ * @param <T> the model object type
+ */
 public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoDropDownList";
 
 	/**
-	 * @param id
+	 * Constructor
+	 * @param id the markup id
 	 */
 	public DropDownList(String id)
 	{
@@ -42,8 +50,9 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	}
 
 	/**
-	 * @param id
-	 * @param choices
+	 * Constructor
+	 * @param id the markup id
+	 * @param choices the collection of choices in the dropdown
 	 */
 	public DropDownList(String id, List<? extends T> choices)
 	{
@@ -51,9 +60,10 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	}
 
 	/**
-	 * @param id
-	 * @param choices
-	 * @param renderer
+	 * Constructor
+	 * @param id the markup id
+	 * @param choices the collection of choices in the dropdown
+	 * @param renderer the rendering engine
 	 */
 	public DropDownList(String id, List<? extends T> choices, IChoiceRenderer<? super T> renderer)
 	{
@@ -61,9 +71,10 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	}
 
 	/**
-	 * @param id
-	 * @param model
-	 * @param choices
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param choices the collection of choices in the dropdown
 	 */
 	public DropDownList(String id, IModel<T> model, List<? extends T> choices)
 	{
@@ -71,10 +82,11 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	}
 
 	/**
-	 * @param id
-	 * @param model
-	 * @param choices
-	 * @param renderer
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param choices the collection of choices in the dropdown
+	 * @param renderer the rendering engine
 	 */
 	public DropDownList(String id, IModel<T> model, List<? extends T> choices, IChoiceRenderer<? super T> renderer)
 	{
@@ -82,8 +94,9 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	}
 
 	/**
-	 * @param id
-	 * @param choices
+	 * Constructor
+	 * @param id the markup id
+	 * @param choices the collection of choices in the dropdown
 	 */
 	public DropDownList(String id, IModel<? extends List<? extends T>> choices)
 	{
@@ -91,9 +104,10 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	}
 
 	/**
-	 * @param id
-	 * @param model
-	 * @param choices
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param choices the collection of choices in the dropdown
 	 */
 	public DropDownList(String id, IModel<T> model, IModel<? extends List<? extends T>> choices)
 	{
@@ -101,9 +115,10 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	}
 
 	/**
-	 * @param id
-	 * @param choices
-	 * @param renderer
+	 * Constructor
+	 * @param id the markup id
+	 * @param choices the collection of choices in the dropdown
+	 * @param renderer the rendering engine
 	 */
 	public DropDownList(String id, IModel<? extends List<? extends T>> choices, IChoiceRenderer<? super T> renderer)
 	{
@@ -111,10 +126,11 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	}
 
 	/**
-	 * @param id
-	 * @param model
-	 * @param choices
-	 * @param renderer
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param choices the collection of choices in the dropdown
+	 * @param renderer the rendering engine
 	 */
 	public DropDownList(String id, IModel<T> model, IModel<? extends List<? extends T>> choices, IChoiceRenderer<? super T> renderer)
 	{

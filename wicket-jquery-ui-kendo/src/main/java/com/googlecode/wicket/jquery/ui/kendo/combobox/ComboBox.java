@@ -33,7 +33,7 @@ import com.googlecode.wicket.jquery.ui.kendo.KendoTemplateBehavior;
 import com.googlecode.wicket.jquery.ui.template.IJQueryTemplate;
 
 /**
- * Provides a Kendo UI ComboBox.<br/>
+ * Provides a Kendo UI ComboBox widget.<br/>
  * It should be created on a HTML &lt;input type="text" /&gt; element
  * 
  * @author Sebastien Briquet - sebastien@7thweb.net

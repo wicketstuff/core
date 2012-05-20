@@ -19,16 +19,31 @@ package com.googlecode.wicket.jquery.ui.kendo.splitter;
 import com.googlecode.wicket.jquery.ui.Options;
 import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
 
+/**
+ * Provides a Kendo UI splitter behavior
+ * 
+ * @author Sebastien Briquet - sebastien@7thweb.net
+ *
+ */
 public class SplitterBehavior extends KendoAbstractBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoSplitter";
 
+	/**
+	 * Constructor
+	 * @param selector the html selector (ie: "#myId")
+	 */
 	public SplitterBehavior(String selector)
 	{
 		this(selector, new Options());
 	}
 	
+	/**
+	 * Constructor
+	 * @param selector the html selector (ie: "#myId")
+	 * @param options the {@link Options}
+	 */
 	public SplitterBehavior(String selector, Options options)
 	{
 		super(selector, METHOD);

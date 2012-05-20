@@ -19,7 +19,8 @@ package com.googlecode.wicket.jquery.ui.kendo.splitter;
 import org.apache.wicket.Component;
 
 /**
- * 
+ * @deprecated use {@link BorderLayout} instead
+ *  
  * @author Sebastien Briquet - sebastien@7thweb.net
  *
  */

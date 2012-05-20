@@ -28,14 +28,13 @@ import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
-import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.ui.event.IValueChangedListener;
 import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior;
 import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEvent;
 
 /**
  * Provides a jQuery range slider based on a {@link FormComponentPanel}
- * This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called.
+ * This ajax version will post the {@link Component}, using a {@link JQueryAjaxChangeBehavior}, when the 'change' javascript method is called.
  * 
  * @author Sebastien Briquet - sebastien@7thweb.net
  */
