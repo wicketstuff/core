@@ -100,7 +100,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>${project.artifactId}</finalName>
+		<finalName>wicket-jquery-ui</finalName>
 
 		<plugins>
 			<plugin>
