@@ -23,7 +23,6 @@
 	<modules>
 	  <module>wicket-jquery-ui-core</module>
 	  <module>wicket-jquery-ui-kendo</module>
-	  <module>wicket-jquery-ui-chart</module>
 	  <module>wicket-jquery-ui-plugins</module>
 	  <module>wicket-jquery-ui-calendar</module>
 	  <module>wicket-jquery-ui-samples</module>
