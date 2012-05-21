@@ -11,5 +11,14 @@ if (!!navigator.geolocation){
 }
 
 function sendGeo(geoLat, geoLong){
-    wicketAjaxGet(Wicket.Html5.geo_${componentId} + '&lat='+geoLat+'&long='+geoLong);
+    Wicket.Ajax.get(
+		{
+			'u': Wicket.Html5.geo_${componentId},
+			'dep': [
+				function(){
+					return {'lat': geoLat, 'long': geoLong}
+				}
+			]
+		}
+	);
 }
