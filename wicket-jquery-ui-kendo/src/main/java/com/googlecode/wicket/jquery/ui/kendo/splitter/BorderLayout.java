@@ -16,13 +16,14 @@
  */
 package com.googlecode.wicket.jquery.ui.kendo.splitter;
 
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
-import com.googlecode.wicket.jquery.ui.Options;
-
 /**
- * Provides a Border Layout based on a vertical and horizontal {@link SplitterBehavior}<br/>
- * User may override {@link #getVerticalPanes()} and {@link #getHorizontalPanes()}, which return pane definitions in the JSON format.<br/>
+ * Provides a Border Layout {@link WebMarkupContainer} based on vertical and horizontal {@link SplitterBehavior}<pre>s</pre><br/>
+ * {@link #getVerticalPanes()} and {@link #getHorizontalPanes()} may be overridden to change the default layout<br/>
+ * <br/>
+ * <b>Note:</b> the {@link BorderLayout} IS a {@link WebMarkupContainer}. If you wish to apply a {@link BorderLayout} on an existing Page or an existing Panel, you can implement the {@link IBorderLayout} interface.<br/>
  * <br/>
  * Alternatively, the HTML markup look like:
  * <pre>
@@ -52,12 +53,9 @@ import com.googlecode.wicket.jquery.ui.Options;
  * @author Sebastien Briquet - sebastien@7thweb.net
  *
  */
-public class BorderLayout extends WebMarkupContainer
+public class BorderLayout extends WebMarkupContainer implements IBorderLayout
 {
 	private static final long serialVersionUID = 1L;
-
-	private SplitterBehavior verticalBehavior;
-	private SplitterBehavior horizontalBehavior;
 
 	/**
 	 * Constructor
@@ -66,48 +64,45 @@ public class BorderLayout extends WebMarkupContainer
 	public BorderLayout(String id)
 	{
 		super(id);
-		this.init();
 	}
 	
-	/**
-	 * Initialization
-	 */
-	private void init()
-	{
-		this.verticalBehavior = new SplitterBehavior("#vertical");
-		this.verticalBehavior.setOption("panes", getVerticalPanes());
-		this.verticalBehavior.setOption("orientation", Options.asString("vertical"));
-		
-		this.horizontalBehavior = new SplitterBehavior("#horizontal");
-		this.horizontalBehavior.setOption("panes", getHorizontalPanes());
-	}
-
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
 		
-		this.add(this.verticalBehavior);
-		this.add(this.horizontalBehavior);
+		this.addBorderLayout(this);
 	}
 	
-	/**
-	 * Gets vertical panes JSON array
-	 * @return by default: 20% - middle - 20%
-	 */
-	protected String getVerticalPanes()
+	@Override
+	public void addBorderLayout(MarkupContainer container)
 	{
-		return "[ { resizable: false, size: '20%' }, {  }, { collapsible: true, size: '20%' } ]";
+		container.add(new SplitterBehavior("#vertical").setOption("panes", this.getVerticalPanes()).setOption("orientation", "'vertical'"));
+		container.add(new SplitterBehavior("#horizontal").setOption("panes", this.getHorizontalPanes()));
 	}
 
 	/**
-	 * Gets horizontal panes JSON array
+	 * Gets vertical panes in a JSON array
+	 * @return by default: 15% - middle - 15%
+	 */
+	@Override
+	public String getVerticalPanes()
+	{
+		return "[ { resizable: false, size: '15%' }, {  }, { collapsible: true, size: '15%' } ]";
+	}
+
+	/**
+	 * Gets horizontal panes in a JSON array
 	 * @return by default: 15% - center - 15%
 	 */
-	protected String getHorizontalPanes()
+	@Override
+	public String getHorizontalPanes()
 	{
 		return "[ { size: '15%' }, { }, { size: '15%' } ]"; 
 	}
+
+	
+
 	
 
 }

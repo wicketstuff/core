@@ -41,16 +41,21 @@ public class Editor<T> extends TextArea<T> implements IJQueryWidget
 	private final Options options;
 
 	/**
-	 * Constructor
+	 * Constructor that provides a default {@link Options} that indicates the {@link Editor}
+	 * should submit encoded HTML tags (<code>{ encoded: false }</code>),
+	 * and sets the {@link #setEscapeModelStrings(boolean)} to false. 
+	 * 
 	 * @param id the markup id
 	 */
 	public Editor(String id)
 	{
-		this(id, new Options());
+		this(id, new Options("encoded", false));
+		this.setEscapeModelStrings(false);
 	}
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param options the {@link Options}
 	 */
@@ -62,17 +67,22 @@ public class Editor<T> extends TextArea<T> implements IJQueryWidget
 	}
 
 	/**
-	 * Constructor
+	 * Constructor that provides a default {@link Options} that indicates the {@link Editor}
+	 * should submit encoded HTML tags (<code>{ encoded: false }</code>),
+	 * and sets the {@link #setEscapeModelStrings(boolean)} to false.
+	 *  
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
 	public Editor(String id, IModel<T> model)
 	{
-		this(id, model, new Options());
+		this(id, model, new Options("encoded", false));
+		this.setEscapeModelStrings(false);
 	}
 
 	/**
 	 * Constructor
+	 * 
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param options the {@link Options}
@@ -80,7 +90,7 @@ public class Editor<T> extends TextArea<T> implements IJQueryWidget
 	public Editor(String id, IModel<T> model, Options options)
 	{
 		super(id, model);
-		
+
 		this.options = options;
 	}
 

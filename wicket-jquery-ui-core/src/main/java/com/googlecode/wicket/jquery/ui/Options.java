@@ -72,7 +72,6 @@ public class Options implements IClusterable
 
 	
 	private final Map<String, Serializable> map;
-	private boolean changed;
 	
 	/**
 	 * Constructor.
@@ -80,7 +79,18 @@ public class Options implements IClusterable
 	public Options()
 	{
 		this.map = new HashMap<String, Serializable>();
-		this.changed = false;
+	}
+	
+	/**
+	 * Constructor which adds an options defined by a key/value pair.
+	 * 
+	 * @param key
+	 * @param value
+	 */
+	public Options(String key, Serializable value)
+	{
+		this();
+		this.set(key, value);
 	}
 	
 	/**
@@ -96,8 +106,9 @@ public class Options implements IClusterable
 	/**
 	 * Adds or replace an options defined by a key/value pair.<br/>
 	 * If for a given key, the value is null, then the pair is removed.
-	 * @param key
-	 * @param value
+	 * 
+	 * @param key - key with which the specified value is to be associated
+	 * @param value - value to be associated with the specified key
 	 * @return this
 	 */
 	public Options set(String key, Serializable value)
@@ -111,18 +122,7 @@ public class Options implements IClusterable
 			this.map.remove(key); //TODO: to test, when the key does not exists
 		}
 		
-		this.changed = true;
-		
 		return this;
-	}
-	
-	/**
-	 * Indicates whether the options changed since {@link #toString()} has been invoked.
-	 * @return true or false
-	 */
-	public boolean changed()
-	{
-		return this.changed;
 	}
 	
 	/**
@@ -135,13 +135,10 @@ public class Options implements IClusterable
 	
 	/**
 	 * Gets the JSON representation of the Options<br/>
-	 * Resets the 'changed' flag.
 	 */
 	@Override
 	public String toString()
 	{
-		this.changed = false;
-		
 		StringBuilder builder = new StringBuilder("{");
 		
 		int i = 0;
