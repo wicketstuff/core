@@ -3,7 +3,6 @@ package embedded.jetty;
 import org.apache.wicket.util.time.Duration;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.bio.SocketConnector;
-import org.eclipse.jetty.server.session.AbstractSessionManager;
 import org.eclipse.jetty.server.ssl.SslSocketConnector;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
@@ -62,8 +61,6 @@ public class Start
 		bb.setServer(server);
 		bb.setContextPath(CONTEXT_PATH);
 		bb.setWar("src/main/webapp");
-
-		((AbstractSessionManager) bb.getSessionHandler().getSessionManager()).setUsingCookies(false);
 
 		// START JMX SERVER
 		// MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
