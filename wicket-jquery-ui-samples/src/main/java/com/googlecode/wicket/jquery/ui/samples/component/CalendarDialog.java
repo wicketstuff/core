@@ -35,7 +35,7 @@ public abstract class CalendarDialog extends AbstractFormDialog<CalendarEvent>
 
 		// Slider //
 		this.form.add(new RequiredTextField<String>("title"));
-		this.form.add(new DatePicker("start", "dd MMMM yyyy", options));
+		this.form.add(new DatePicker("start", "dd MMMM yyyy", options).setRequired(true));
 		this.form.add(new DatePicker("end", "dd MMMM yyyy", options));
 
 		// FeedbackPanel //

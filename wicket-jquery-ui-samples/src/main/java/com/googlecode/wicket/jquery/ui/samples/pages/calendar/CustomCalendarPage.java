@@ -12,11 +12,13 @@ import org.apache.wicket.model.Model;
 import com.googlecode.wicket.jquery.ui.calendar.Calendar;
 import com.googlecode.wicket.jquery.ui.calendar.CalendarEvent;
 import com.googlecode.wicket.jquery.ui.calendar.CalendarModel;
+import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.component.CalendarDialog;
 
 public class CustomCalendarPage extends AbstractCalendarPage
 {
 	private static final long serialVersionUID = 1L;
+	protected static final int NEW_ID = -1;
 
 	private final List<CalendarEvent> events;
 	
@@ -35,7 +37,7 @@ public class CustomCalendarPage extends AbstractCalendarPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedback = new FeedbackPanel("feedback");
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
 		form.add(feedback.setOutputMarkupId(true));
 		
 		// Dialog //
@@ -46,9 +48,18 @@ public class CustomCalendarPage extends AbstractCalendarPage
 			@Override
 			public void onSubmit(AjaxRequestTarget target)
 			{
-				//CalendarEvent event = this.getModelObject();
+				CalendarEvent event = this.getModelObject();
 				
-				target.add(form); //reloads the calendar with changes.
+				// new event //
+				// Code bellow is for demo purpose only.
+				if (event != null && event.getId() == NEW_ID)
+				{
+					//no need to synchronized(events) here
+					event.setId(events.size() + 1);
+					events.add(event);
+				}
+
+				target.add(form); //reloads the calendar with changes. TODO: reloads the same view (use the view parameter?) with something like this.refresh(target).
 			}
 		};
 
@@ -58,6 +69,19 @@ public class CustomCalendarPage extends AbstractCalendarPage
 		Calendar calendar = new Calendar("calendar", this.newCalendarModel()) {
 
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onDayClick(AjaxRequestTarget target, Date date)
+			{
+				super.onDayClick(target, date);
+
+				info("Selected date: " + date);
+				target.add(feedback);
+
+				CalendarEvent calendarEvent = new CalendarEvent(NEW_ID, "", date);
+				dialog.setModelObject(calendarEvent);
+				dialog.open(target);
+			}
 
 			@Override
 			protected void onClick(AjaxRequestTarget target, int eventId)

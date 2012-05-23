@@ -59,12 +59,17 @@ public class CalendarEvent implements Serializable
 
 	public int getId()
 	{
-		return id;
+		return this.id;
+	}
+	
+	public void setId(int id)
+	{
+		this.id = id;
 	}
 	
 	public CharSequence getUrl()
 	{
-		return url;
+		return this.url;
 	}
 
 	public void setUrl(CharSequence url)
@@ -74,7 +79,7 @@ public class CalendarEvent implements Serializable
 
 	public String getTitle()
 	{
-		return title;
+		return this.title;
 	}
 
 	public void setTitle(String title)
@@ -84,7 +89,7 @@ public class CalendarEvent implements Serializable
 
 	public String getSource()
 	{
-		return source;
+		return this.source;
 	}
 
 	public void setSource(String source)
@@ -94,7 +99,7 @@ public class CalendarEvent implements Serializable
 
 	public Boolean getAllDay()
 	{
-		return allDay;
+		return this.allDay;
 	}
 
 	public void setAllDay(Boolean allDay)
@@ -104,7 +109,7 @@ public class CalendarEvent implements Serializable
 
 	public Date getStart()
 	{
-		return start;
+		return this.start;
 	}
 
 	public void setStart(Date start)
@@ -114,7 +119,7 @@ public class CalendarEvent implements Serializable
 
 	public Date getEnd()
 	{
-		return end;
+		return this.end;
 	}
 
 	public void setEnd(Date end)
@@ -124,7 +129,7 @@ public class CalendarEvent implements Serializable
 
 	public String getClassName()
 	{
-		return className;
+		return this.className;
 	}
 
 	public void setClassName(String className)
@@ -134,7 +139,7 @@ public class CalendarEvent implements Serializable
 
 	public Boolean getEditable()
 	{
-		return editable;
+		return this.editable;
 	}
 
 	public void setEditable(Boolean editable)
