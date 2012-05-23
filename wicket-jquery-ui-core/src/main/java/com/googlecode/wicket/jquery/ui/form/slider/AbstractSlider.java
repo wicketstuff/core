@@ -88,8 +88,6 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 
 		this.label = new Label("slider", "");
 		this.add(this.label);
-		
-		this.add(this.newInputFragment("model"));
 	}
 
 	// Methods //
@@ -136,6 +134,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	{
 		super.onInitialize();
 
+		this.add(this.newInputFragment("model")); //cannot be in ctor as the model may not have been initialized before.
 		this.add(JQueryWidget.newWidgetBehavior(this, this.label)); //cannot be in ctor as the markupId may be set manually afterward
 	}
 

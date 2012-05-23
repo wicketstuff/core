@@ -9,8 +9,16 @@ import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-public class Start {
-	public static void main(String[] args) throws Exception {
+public class Start
+{
+	/**
+	 * The context path is hard-coded in TemplatePage.html
+	 */
+	public static final String CONTEXT_PATH = "/jquery-ui-samples";
+	private static final int PORT = 8080;
+	
+	public static void main(String[] args) throws Exception
+	{
 		int timeout = (int) Duration.ONE_HOUR.getMilliseconds();
 
 		Server server = new Server();
@@ -19,7 +27,7 @@ public class Start {
 		// Set some timeout options to make debugging easier.
 		connector.setMaxIdleTime(timeout);
 		connector.setSoLingerTime(-1);
-		connector.setPort(8080);
+		connector.setPort(PORT);
 		server.addConnector(connector);
 
 		// check if a keystore for a SSL certificate is available, and
@@ -30,7 +38,8 @@ public class Start {
 		// in the source.
 
 		Resource keystore = Resource.newClassPathResource("/keystore");
-		if (keystore != null && keystore.exists()) {
+		if (keystore != null && keystore.exists())
+		{
 			connector.setConfidentialPort(8443);
 
 			SslContextFactory factory = new SslContextFactory();
@@ -51,10 +60,10 @@ public class Start {
 
 		WebAppContext bb = new WebAppContext();
 		bb.setServer(server);
-		bb.setContextPath("/");
+		bb.setContextPath(CONTEXT_PATH);
 		bb.setWar("src/main/webapp");
 
-		((AbstractSessionManager)bb.getSessionHandler().getSessionManager()).setUsingCookies(false);
+		((AbstractSessionManager) bb.getSessionHandler().getSessionManager()).setUsingCookies(false);
 
 		// START JMX SERVER
 		// MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
@@ -64,14 +73,18 @@ public class Start {
 
 		server.setHandler(bb);
 
-		try {
+		try
+		{
 			System.out.println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
+			System.out.println(String.format(">>> http://localhost:%d%s", PORT, CONTEXT_PATH));
 			server.start();
 			System.in.read();
 			System.out.println(">>> STOPPING EMBEDDED JETTY SERVER");
 			server.stop();
 			server.join();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 			System.exit(1);
 		}
