@@ -20,7 +20,7 @@ abstract class AbstractAutoCompletePage extends SamplePage
 	protected List<DemoLink> getDemoLinks()
 	{
 		return Arrays.asList(
-				new DemoLink(DefaultAutoCompletePage.class, "Auto-complete widget"),
+				new DemoLink(DefaultAutoCompletePage.class, "Auto-complete"),
 				new DemoLink(CustomAutoCompletePage.class, "Auto-complete: custom beans"),
 				new DemoLink(TemplateAutoCompletePage.class, "Auto-complete: custom template"),
 				new DemoLink(RendererAutoCompletePage.class, "Auto-complete: custom renderer")

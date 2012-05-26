@@ -36,7 +36,7 @@ public class ContainerEffectPage extends AbstractEffectPage
 		Form<Void> form = new Form<Void>("form");
 		this.add(form);
 		
-		// DropDownList (Kendo-UI widget) //
+		// DropDownList //
 		final DropDownList<Effect> dropdown = new DropDownList<Effect>("effects", new Model<Effect>(Effect.Explode), Arrays.asList(Effect.values()));
 		form.add(dropdown);
 		

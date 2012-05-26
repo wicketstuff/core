@@ -19,6 +19,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.kendo.combobox.DefaultCombo
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.dropdown.DefaultDropDownPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.editor.DefaultEditorPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter.DefaultSplitterPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.kendo.timepicker.DefaultTimePickerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.FontSizePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.progressbar.ButtonProgressBarPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.resizable.ResizablePage;
@@ -61,6 +62,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/kendo/editor", DefaultEditorPage.class);
 		this.mountPackage("/kendo/dropdown", DefaultDropDownPage.class);
 		this.mountPackage("/kendo/combobox", DefaultComboBoxPage.class);
+		this.mountPackage("/kendo/timepicker", DefaultTimePickerPage.class);
 		this.mountPackage("/kendo/splitter", DefaultSplitterPage.class);
 
 		// Calendar //
