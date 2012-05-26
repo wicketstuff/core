@@ -41,13 +41,13 @@ public class CalendarEvent implements Serializable
 	private Date end;
 
 	private String className;
-	private Boolean editable = false;
+	private Boolean editable = null;
 
-	public CalendarEvent(int id, String title, Date day)
+	public CalendarEvent(int id, String title, Date date)
 	{
 		this.id = id;
 		this.title = title;
-		this.start = day;
+		this.start = date;
 	}
 
 	public CalendarEvent(int id, String title, Date start, Date end)
@@ -97,7 +97,7 @@ public class CalendarEvent implements Serializable
 		this.source = source;
 	}
 
-	public Boolean getAllDay()
+	public Boolean isAllDay()
 	{
 		return this.allDay;
 	}
@@ -137,7 +137,11 @@ public class CalendarEvent implements Serializable
 		this.className = className;
 	}
 
-	public Boolean getEditable()
+	/**
+	 * Overrides the master editable option for this single event.
+	 * @return true or false
+	 */
+	public Boolean isEditable()
 	{
 		return this.editable;
 	}

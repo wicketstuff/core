@@ -16,11 +16,15 @@
  */
 package com.googlecode.wicket.jquery.ui.calendar;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.event.IEvent;
+import org.apache.wicket.util.time.Duration;
 
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryContainer;
@@ -28,9 +32,6 @@ import com.googlecode.wicket.jquery.ui.JQueryEvent;
 import com.googlecode.wicket.jquery.ui.Options;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.ui.utils.RequestCycleUtils;
-import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.event.IEvent;
 
 /**
  * Provides calendar widget, based on the jQuery fullcalendar plugin.
@@ -44,22 +45,45 @@ public class Calendar extends JQueryContainer
 	private static final long serialVersionUID = 1L;
 
 	private final Options options;
+	
 	private Map<CharSequence, String> gcals;
 	
 	private CalendarModelBehavior modelBehavior; // events load
-	private JQueryAjaxBehavior eventBehavior; // event click
+
 	private JQueryAjaxBehavior dayClickBehavior; // day click
+	private JQueryAjaxBehavior selectBehavior; // date range-select behavior;
+
+	private JQueryAjaxBehavior eventClickBehavior; // event click
+	private JQueryAjaxBehavior eventDropBehavior; // event drop
+	private JQueryAjaxBehavior eventResizeBehavior; // event resize
  
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param options {@link Options}. Note that 'selectable' and 'selectHelper' options are set by overriding {@link #isSelectable()} (default is false)
+	 */
+	public Calendar(String id, Options options)
+	{
+		super(id);
+		
+		this.options = options;
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link CalendarModel}
+	 */
 	public Calendar(String id, CalendarModel model)
 	{
 		this(id, model, new Options());
 	}
 	
 	/**
-	 * 
+	 * Constructor
 	 * @param id the markup id
 	 * @param model the {@link CalendarModel}
-	 * @param options {@link Options}
+	 * @param options {@link Options}. Note that 'selectable' and 'selectHelper' options are set by overriding {@link #isSelectable()} (default is false)
 	 */
 	public Calendar(String id, CalendarModel model, Options options)
 	{
@@ -67,6 +91,7 @@ public class Calendar extends JQueryContainer
 		
 		this.options = options;
 	}
+
 
 	/**
 	 * Gets the calendar's model
@@ -77,6 +102,7 @@ public class Calendar extends JQueryContainer
 		return (CalendarModel) this.getDefaultModel();
 	}
 
+	// Methods //
 	/**
 	 * Adds a Google Calendar Feed
 	 * @param gcal url to xml feed
@@ -93,7 +119,7 @@ public class Calendar extends JQueryContainer
 	 */
 	public void addFeed(CharSequence gcal, String className)
 	{
-		if (gcals == null)
+		if (this.gcals == null)
 		{
 			this.gcals = new HashMap<CharSequence, String>();
 		}
@@ -101,6 +127,44 @@ public class Calendar extends JQueryContainer
 		this.gcals.put(gcal, className);
 	}
 	
+	/**
+	 * TODO: JAVADOC
+	 * @param target
+	 */
+	public void refresh(AjaxRequestTarget target)
+	{
+		target.appendJavaScript(String.format("$('%s').fullCalendar('refetchEvents');", JQueryWidget.getSelector(this)));
+	}
+
+	
+	// Properties //
+	/**
+	 * TODO javadoc
+	 * @return
+	 */
+	protected boolean isSelectable()
+	{
+		return false;
+	}
+	
+	/**
+	 * Indicates whether the event can be edited (ie, clicked). IIF true, an event can override this global setting to false by using CalendarEvent#setEditable(boolean);
+	 * @return true or false
+	 */
+	protected boolean isEditable()
+	{
+		return false;
+	}
+	
+	protected boolean isEventDropEnabled()
+	{
+		return false;
+	}
+	
+	protected boolean isEventResizeEnabled()
+	{
+		return false;
+	}
 
 	// Events //
 	@Override
@@ -109,23 +173,6 @@ public class Calendar extends JQueryContainer
 		super.onInitialize();
 		
 		this.add(this.modelBehavior = new CalendarModelBehavior(this.getModel()));
-
-		this.add(this.eventBehavior = new JQueryAjaxBehavior(this) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public CharSequence getCallbackScript()
-			{
-				return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() + "&eventId=' + calEvent.id");
-			}
-
-			@Override
-			protected JQueryEvent newEvent(AjaxRequestTarget target)
-			{
-				return new ClickEvent(target);
-			}
-		});
 
 		this.add(this.dayClickBehavior = new JQueryAjaxBehavior(this) {
 
@@ -143,6 +190,62 @@ public class Calendar extends JQueryContainer
 				return new DayClickEvent(target);
 			}
 		});
+
+		this.add(this.selectBehavior = new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public CharSequence getCallbackScript()
+			{
+				return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() + "&start=' + start.getTime() + '&end=' + end.getTime() + '&allDay=' + allDay");
+			}
+
+			@Override
+			protected JQueryEvent newEvent(AjaxRequestTarget target)
+			{
+				return new SelectEvent(target);
+			}
+		});
+
+		this.add(this.eventClickBehavior = new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public CharSequence getCallbackScript()
+			{
+				return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() + "&eventId=' + event.id");
+			}
+
+			@Override
+			protected JQueryEvent newEvent(AjaxRequestTarget target)
+			{
+				return new ClickEvent(target);
+			}
+		});
+
+		this.add(this.eventDropBehavior = new EventDeltaBehavior(this) {
+			
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected JQueryEvent newEvent(AjaxRequestTarget target)
+			{
+				return new DropEvent(target);
+			}
+		});
+
+		this.add(this.eventResizeBehavior = new EventDeltaBehavior(this) {
+			
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected JQueryEvent newEvent(AjaxRequestTarget target)
+			{
+				return new ResizeEvent(target);
+			}
+		});
 	}
 
 	/**
@@ -153,6 +256,12 @@ public class Calendar extends JQueryContainer
 	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
+		this.options.set("editable", this.isEditable());
+		this.options.set("selectable", this.isSelectable());
+		this.options.set("selectHelper", this.isSelectable());
+		this.options.set("disableDragging", !this.isEventDropEnabled());
+		this.options.set("disableResizing", !this.isEventResizeEnabled());
+
 		behavior.setOptions(this.options);
 	}
 
@@ -161,15 +270,37 @@ public class Calendar extends JQueryContainer
 	{
 		Object payload = event.getPayload();
 
-		if (payload instanceof ClickEvent)
-		{
-			ClickEvent clickEvent = (ClickEvent) payload;
-			this.onClick(clickEvent.getTarget(), clickEvent.getEventId());
-		}
-		else if (payload instanceof DayClickEvent)
+		if (payload instanceof DayClickEvent)
 		{
 			DayClickEvent dayClickEvent = (DayClickEvent) payload;
 			this.onDayClick(dayClickEvent.getTarget(), dayClickEvent.getDate());
+		}
+
+		else if (payload instanceof SelectEvent)
+		{
+			SelectEvent selectEvent = (SelectEvent) payload;
+			
+			this.onSelect(selectEvent.getTarget(), selectEvent.getStart(), selectEvent.getEnd(), selectEvent.isAllDay());
+		}
+
+		else if (payload instanceof ClickEvent)
+		{
+			ClickEvent clickEvent = (ClickEvent) payload;
+			this.onEventClick(clickEvent.getTarget(), clickEvent.getEventId());
+		}
+		
+		else if (payload instanceof DropEvent)
+		{
+			DropEvent dropEvent = (DropEvent) payload;
+			
+			this.onEventDrop(dropEvent.getTarget(), dropEvent.getEventId(), dropEvent.getDelta(), dropEvent.isAllDay());
+		}
+
+		else if (payload instanceof ResizeEvent)
+		{
+			ResizeEvent resizeEvent = (ResizeEvent) payload;
+			
+			this.onEventResize(resizeEvent.getTarget(), resizeEvent.getEventId(), resizeEvent.getDelta());
 		}
 	}
 
@@ -183,14 +314,49 @@ public class Calendar extends JQueryContainer
 	}
 
 	/**
+	 * 
+	 * @param target
+	 * @param start
+	 * @param end
+	 * @param allDay
+	 */
+	protected void onSelect(AjaxRequestTarget target, Date start, Date end, boolean allDay)
+	{
+	}
+
+	/**
 	 * Triggered when an event is clicked
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param eventId the {@link CalendarEvent} id 
 	 */
-	protected void onClick(AjaxRequestTarget target, int eventId)
+	protected void onEventClick(AjaxRequestTarget target, int eventId)
 	{
 	}
 	
+	/**
+	 * Triggered when an event is dropped (after being dragged)
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param eventId the {@link CalendarEvent} id 
+	 * @param date the event date
+	 * @param delta the delta (time) with the event date 
+	 * @param isAllDay TODO javadoc 
+	 */
+	protected void onEventDrop(AjaxRequestTarget target, int eventId, long delta, boolean isAllDay)
+	{
+	}
+	
+	/**
+	 * Triggered when an event is dropped (after being dragged)
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param eventId the {@link CalendarEvent} id 
+	 * @param date the event date
+	 * @param delta the delta (time) with the event date 
+	 * @param isAllDay TODO javadoc 
+	 */
+	protected void onEventResize(AjaxRequestTarget target, int eventId, long delta)
+	{
+	}
+
 	
 	// IJQueryWidget //
 	/**
@@ -224,29 +390,112 @@ public class Calendar extends JQueryContainer
 				this.setOption("eventSources", String.format("[%s]", sourceBuilder.toString()));
 
 				// behaviors //
-				this.setOption("eventClick", "function(calEvent, jsEvent, view) { " + eventBehavior.getCallbackScript() + "}");
-
+				//FIXME: should the dayClick be enabled if the calendar is not editable?
 				this.setOption("dayClick", "function(date, allDay, jsEvent, view) { " + dayClickBehavior.getCallbackScript() + "}");
+
+				if (Calendar.this.isEditable())
+				{
+					this.setOption("eventClick", "function(event, jsEvent, view) { " + eventClickBehavior.getCallbackScript() + "}");
+				}
+
+				if (Calendar.this.isSelectable())
+				{
+					this.setOption("select", "function(start, end, allDay) { " + selectBehavior.getCallbackScript() + " $.fullCalendar('unselect'); }");
+				}
+
+				if (Calendar.this.isEventDropEnabled())
+				{
+					this.setOption("eventDrop", "function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) { " + eventDropBehavior.getCallbackScript() + "}");
+				}
+				
+				if (Calendar.this.isEventResizeEnabled())
+				{
+					this.setOption("eventResize", "function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) { " + eventResizeBehavior.getCallbackScript() + "}");
+				}
 			}
 		};
 	}
 
-	// Options //
-	/**
-	 * Adds or replace an options defined by a key/value pair.<br/>
-	 * If for a given key, the value is null, then the pair is removed.
-	 */
-	public void setOption(String key, Serializable value)
+	
+	// Behavior classes //
+	private abstract class EventDeltaBehavior extends JQueryAjaxBehavior
 	{
-		this.options.set(key, value);
+		private static final long serialVersionUID = 1L;
+
+		public EventDeltaBehavior(Component source)
+		{
+			super(source);
+		}
+
+		@Override
+		public CharSequence getCallbackScript()
+		{
+			return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() + "&eventId=' + event.id + '&dayDelta=' + dayDelta + '&minuteDelta=' + minuteDelta + '&allDay=' + allDay");
+		}
 	}
 	
 	
-	/* Event classes */
+	// Event classes //
+	/**
+	 * An event object that will be broadcasted when the user clicks on a day cell
+	 */
+	private class DayClickEvent extends JQueryEvent
+	{
+		private final Date day;
+
+		public DayClickEvent(AjaxRequestTarget target)
+		{
+			super(target);
+
+			long date = RequestCycleUtils.getQueryParameterValue("date").toLong();
+			this.day = new Date(date);
+		}
+
+		public Date getDate()
+		{
+			return this.day;
+		}
+	}
+	
+	private class SelectEvent extends JQueryEvent
+	{
+		private final boolean isAllDay;
+		private final Date start;
+		private final Date end;
+		
+		public SelectEvent(AjaxRequestTarget target)
+		{
+			super(target);
+			
+			long start = RequestCycleUtils.getQueryParameterValue("start").toLong();
+			this.start = new Date(start);
+
+			long end = RequestCycleUtils.getQueryParameterValue("end").toLong();
+			this.end = new Date(end);
+
+			this.isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
+		}
+
+		public Date getStart()
+		{
+			return this.start;
+		}
+		
+		public Date getEnd()
+		{
+			return this.end;
+		}
+		
+		public boolean isAllDay()
+		{
+			return this.isAllDay;
+		}
+	}
+	
 	/**
 	 * An event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'change' callback
 	 */
-	private static class ClickEvent extends JQueryEvent
+	private class ClickEvent extends JQueryEvent
 	{
 		private final int eventId;
 
@@ -264,23 +513,57 @@ public class Calendar extends JQueryContainer
 	}
 
 	/**
-	 * An event object that will be broadcasted when the user clicks on a day cell
+	 * An event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'change' callback
 	 */
-	private static class DayClickEvent extends JQueryEvent
+	private abstract class DeltaEvent extends JQueryEvent
 	{
-		private final Date day;
+		private final int eventId;
+		private long delta;
 
-		public DayClickEvent(AjaxRequestTarget target)
+		public DeltaEvent(AjaxRequestTarget target)
 		{
 			super(target);
 
-			long date = RequestCycleUtils.getQueryParameterValue("date").toLong();
-			this.day = new Date(date);
+			this.eventId = RequestCycleUtils.getQueryParameterValue("eventId").toInt();
+
+			int dayDelta = RequestCycleUtils.getQueryParameterValue("dayDelta").toInt();
+			int minuteDelta = RequestCycleUtils.getQueryParameterValue("minuteDelta").toInt();
+			this.delta = (dayDelta * Duration.ONE_DAY.getMilliseconds()) + (minuteDelta * Duration.ONE_MINUTE.getMilliseconds());
 		}
 
-		public Date getDate()
+		public int getEventId()
 		{
-			return this.day;
+			return this.eventId;
+		}
+		
+		public long getDelta()
+		{
+			return this.delta;
+		}
+	}
+	
+	private class DropEvent extends DeltaEvent
+	{
+		private final boolean isAllDay;
+		
+		public DropEvent(AjaxRequestTarget target)
+		{
+			super(target);
+			
+			this.isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
+		}
+
+		public boolean isAllDay()
+		{
+			return this.isAllDay;
+		}
+	}
+
+	private class ResizeEvent extends DeltaEvent
+	{
+		public ResizeEvent(AjaxRequestTarget target)
+		{
+			super(target);
 		}
 	}
 }

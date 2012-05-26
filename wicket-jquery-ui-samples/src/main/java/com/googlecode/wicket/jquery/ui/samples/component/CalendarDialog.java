@@ -15,7 +15,7 @@ import com.googlecode.wicket.jquery.ui.dialog.AbstractFormDialog;
 import com.googlecode.wicket.jquery.ui.form.datepicker.DatePicker;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
-public abstract class CalendarDialog extends AbstractFormDialog<CalendarEvent>
+public abstract class CalendarDialog<T extends CalendarEvent> extends AbstractFormDialog<T>
 {
 	private static final long serialVersionUID = 1L;
 	protected static final String BTN_SUBMIT = "Save";
@@ -62,9 +62,9 @@ public abstract class CalendarDialog extends AbstractFormDialog<CalendarEvent>
 		return this.form;
 	}
 
-	public void setModelObject(CalendarEvent event)
+	public void setModelObject(T event)
 	{
-		this.setDefaultModel(new CompoundPropertyModel<CalendarEvent>(event));
+		this.setDefaultModel(new CompoundPropertyModel<T>(event));
 	}
 
 	// Events //
