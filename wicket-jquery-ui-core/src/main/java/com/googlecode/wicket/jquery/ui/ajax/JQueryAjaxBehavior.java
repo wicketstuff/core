@@ -110,7 +110,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	
 	/**
 	 * Constructor
-	 * @param source {@link Component} to which the event returned by {@link #newEvent(AjaxRequestTarget)} will be broadcasted.
+	 * @param source {@link Component} to which the event - returned by {@link #newEvent(AjaxRequestTarget)} - will be broadcasted.
 	 */
 	public JQueryAjaxBehavior(Component source)
 	{
@@ -119,7 +119,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 
 	/**
 	 * Constructor
-	 * @param source {@link Component} to which the event returned by {@link #newEvent(AjaxRequestTarget)} will be broadcasted.
+	 * @param source {@link Component} to which the event - returned by {@link #newEvent(AjaxRequestTarget)} - will be broadcasted.
 	 * @param duration {@link Duration}. If different than {@link Duration#NONE}, an {@link AjaxCallThrottlingDecorator} will be added with the specified {@link Duration}.
 	 */
 	public JQueryAjaxBehavior(Component source, Duration duration)

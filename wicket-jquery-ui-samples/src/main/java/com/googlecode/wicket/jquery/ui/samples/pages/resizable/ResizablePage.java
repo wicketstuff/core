@@ -1,7 +1,7 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.resizable;
 
-import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.Options;
+import com.googlecode.wicket.jquery.ui.interaction.ResizableBehavior;
 import com.googlecode.wicket.jquery.ui.samples.SamplePage;
 
 public class ResizablePage extends SamplePage
@@ -16,6 +16,6 @@ public class ResizablePage extends SamplePage
 		options.set("maxWidth", 700);
 		options.set("maxHeight", 240);
 
-		this.add(new JQueryBehavior("#resizable", "resizable", options));
+		this.add(new ResizableBehavior("#resizable", options));
 	}
 }

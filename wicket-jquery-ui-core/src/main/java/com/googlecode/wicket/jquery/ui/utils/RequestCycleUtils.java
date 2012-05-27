@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.jquery.ui.utils;
 
+import java.util.List;
+
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.StringValue;
@@ -39,6 +41,19 @@ public class RequestCycleUtils
 		final IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();
 
 		return parameters.getParameterValue(name);
+	}
+
+	/**
+	 * Gets the values of a query parameter
+	 * @param name the name of the query parameter
+	 * @return a {@link List} of {@link StringValue}
+	 */
+	public static List<StringValue> getQueryParameterValues(String name)
+	{
+		final RequestCycle requestCycle = RequestCycle.get();
+		final IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();
+
+		return parameters.getParameterValues(name);
 	}
 
 	/**

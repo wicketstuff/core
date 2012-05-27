@@ -105,22 +105,6 @@ public abstract class SecuredButton extends Button implements IJQueryWidget
 		return !this.provider.hasRole(this.roles);
 	}
 
-	// IJQueryWidget //
-	@Override
-	public JQueryBehavior newWidgetBehavior(String selector)
-	{
-		return new JQueryBehavior(selector, "button") {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				this.setOption("icons", String.format("{ primary: '%s' }", isLocked() ? JQueryIcon.Locked : JQueryIcon.Unlocked));
-			}
-		};
-	}
-
 	// Events //
 	@Override
 	protected void onInitialize()
@@ -136,5 +120,21 @@ public abstract class SecuredButton extends Button implements IJQueryWidget
 		super.onConfigure();
 
 		this.setEnabled(!this.isLocked());
+	}
+
+	// IJQueryWidget //
+	@Override
+	public JQueryBehavior newWidgetBehavior(String selector)
+	{
+		return new JQueryBehavior(selector, "button") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onConfigure(Component component)
+			{
+				this.setOption("icons", String.format("{ primary: '%s' }", isLocked() ? JQueryIcon.Locked : JQueryIcon.Unlocked));
+			}
+		};
 	}
 }

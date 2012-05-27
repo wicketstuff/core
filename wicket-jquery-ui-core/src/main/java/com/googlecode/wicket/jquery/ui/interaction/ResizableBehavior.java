@@ -14,22 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.event;
+package com.googlecode.wicket.jquery.ui.interaction;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.form.Form;
+import com.googlecode.wicket.jquery.ui.JQueryBehavior;
+import com.googlecode.wicket.jquery.ui.Options;
 
-/**
- * Specifies that a widget handle a selection-change AJAX behavior
- *
- * @author Sebastien Briquet - sebastien@7thweb.net
- */
-public interface ISelectionChangedListener
+public class ResizableBehavior extends JQueryBehavior
 {
+	private static final long serialVersionUID = 1L;
+	private static final String METHOD = "resizable";
+
 	/**
-	 * Triggers when the selection has changed
-	 * @param target the {@link AjaxRequestTarget}
-	 * @param form the {@link Form}
+	 * Constructor
+	 * @param selector the html selector (ie: "#myId")
 	 */
-	void onSelectionChanged(AjaxRequestTarget target, Form<?> form);
+	public ResizableBehavior(String selector)
+	{
+		super(selector, METHOD, new Options());
+	}
+
+	/**
+	 * Constructor
+	 * @param selector the html selector (ie: "#myId")
+	 * @param options the {@link Options}
+	 */
+	public ResizableBehavior(String selector, Options options)
+	{
+		super(selector, METHOD, options);
+	}
 }

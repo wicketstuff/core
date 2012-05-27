@@ -142,7 +142,7 @@ public abstract class Droppable<T> extends JQueryContainer
 		{
 			JQueryEvent payload = (JQueryEvent) event.getPayload();
 			
-			// register the draggable object that starts
+			// registers the draggable object that starts
 			if (payload instanceof Draggable.DragStartEvent)
 			{
 				this.draggable = (Draggable<?>) event.getSource();

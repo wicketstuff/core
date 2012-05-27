@@ -72,7 +72,6 @@ public abstract class JQueryAjaxPostBehavior extends JQueryAjaxBehavior
 				serialize.append("Wicket.Form.serializeElement(Wicket.$('").append(this.components[i].getMarkupId()).append("'))");
 			}
 
-			//old: wicketSerialize(Wicket.$('%s'))
 			final CharSequence script = String.format("wicketAjaxPost('%s', %s", this.getCallbackUrl(), serialize);
 
 			return this.generateCallbackScript(script) + "return false;";

@@ -170,22 +170,6 @@ public abstract class SecuredAjaxButton extends AjaxButton implements IJQueryWid
 		return !this.provider.hasRole(this.roles);
 	}
 
-	// IJQueryWidget //
-	@Override
-	public JQueryBehavior newWidgetBehavior(String selector)
-	{
-		return new JQueryBehavior(selector, "button") {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				this.setOption("icons", String.format("{ primary: '%s' }", isLocked() ? JQueryIcon.Locked : JQueryIcon.Unlocked));
-			}
-		};
-	}
-
 	// Events //
 	@Override
 	protected void onInitialize()
@@ -207,4 +191,20 @@ public abstract class SecuredAjaxButton extends AjaxButton implements IJQueryWid
 	protected void onError(AjaxRequestTarget target, Form<?> form)
 	{
 	}	
+
+	// IJQueryWidget //
+	@Override
+	public JQueryBehavior newWidgetBehavior(String selector)
+	{
+		return new JQueryBehavior(selector, "button") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onConfigure(Component component)
+			{
+				this.setOption("icons", String.format("{ primary: '%s' }", isLocked() ? JQueryIcon.Locked : JQueryIcon.Unlocked));
+			}
+		};
+	}
 }

@@ -85,6 +85,20 @@ public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form
 		return null;
 	}
 	
+	// Events //
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+
+		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
+	}
+
+	@Override
+	protected void onError(AjaxRequestTarget target, Form<?> form)
+	{
+	}	
+
 	// IJQueryWidget //
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
@@ -106,19 +120,4 @@ public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form
 			}
 		};
 	}
-
-
-	// Events //
-	@Override
-	protected void onInitialize()
-	{
-		super.onInitialize();
-
-		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
-	}
-
-	@Override
-	protected void onError(AjaxRequestTarget target, Form<?> form)
-	{
-	}	
 }

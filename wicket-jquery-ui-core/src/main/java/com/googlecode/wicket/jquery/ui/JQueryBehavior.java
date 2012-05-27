@@ -57,7 +57,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * Constructor
 	 * @param selector the html selector (ie: "#myId")
 	 * @param method the jquery method
-	 * @param options the options to be applied
+	 * @param options the {@link Options}
 	 */
 	public JQueryBehavior(String selector, String method, Options options)
 	{
@@ -88,7 +88,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Adds or replace behavior options
-	 * @param options
+	 * @param options the {@link Options}
 	 */
 	public void setOptions(Options options)
 	{
