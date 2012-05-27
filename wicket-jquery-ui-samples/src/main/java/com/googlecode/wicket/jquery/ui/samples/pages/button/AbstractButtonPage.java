@@ -6,7 +6,6 @@ import java.util.List;
 import com.googlecode.wicket.jquery.ui.samples.SamplePage;
 
 
-
 abstract class AbstractButtonPage extends SamplePage
 {
 	private static final long serialVersionUID = 1L;

@@ -42,8 +42,8 @@ public class SampleSession extends WebSession implements IJQuerySecurityProvider
 	/**
 	 * Check whether one of the supplied roles match a user role 
 	 * @see IJQuerySecurityProvider#hasRole(String...)
-	 * @param roles
-	 * @return
+	 * @param roles the roles to be checked 
+	 * @return true or false
 	 */
 	public final boolean hasRole(String... roles)
 	{

@@ -97,12 +97,13 @@ public class DemoCalendarDAO
 
 	protected int newId()
 	{
-		return ++id;
+		return ++this.id;
 	}
 
 	/**
-	 * Helper
-	 * @return boolean
+	 * Helper that indicates whether an event is in the given date range (between start date & end date)
+	 * 
+	 * @return true or false
 	 */
 	protected boolean isInRange(DemoCalendarEvent event, Date start, Date end)
 	{

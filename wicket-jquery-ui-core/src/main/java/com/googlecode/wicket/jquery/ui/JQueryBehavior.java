@@ -126,6 +126,6 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 */	
 	private String $(String selector, String method, String options)
 	{
-		return String.format("$(function() { $('%s').%s(%s) });", selector, method, options);
+		return String.format("$(function() { $('%s').%s(%s); });", selector, method, options);
 	}
 }

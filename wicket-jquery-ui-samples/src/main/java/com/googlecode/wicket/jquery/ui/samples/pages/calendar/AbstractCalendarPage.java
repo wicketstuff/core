@@ -7,7 +7,7 @@ import com.googlecode.wicket.jquery.ui.samples.SamplePage;
 
 
 
-abstract class AbstractCalendarPage extends SamplePage
+public abstract class AbstractCalendarPage extends SamplePage
 {
 	private static final long serialVersionUID = 1L;
 	

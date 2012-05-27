@@ -1,4 +1,4 @@
-package com.googlecode.wicket.jquery.ui.samples.pages.kendo.timepicker;
+package com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -8,18 +8,16 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.JQueryBehavior;
-import com.googlecode.wicket.jquery.ui.Options;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.form.button.Button;
-import com.googlecode.wicket.jquery.ui.kendo.timepicker.TimePicker;
+import com.googlecode.wicket.jquery.ui.kendo.datetime.TimePicker;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
-public class PatternTimePickerPage extends AbstractTimePickerPage
+public class DefaultTimePickerPage extends AbstractTimePickerPage
 {
 	private static final long serialVersionUID = 1L;
 	
-	public PatternTimePickerPage()
+	public DefaultTimePickerPage()
 	{
 		Form<Void> form = new Form<Void>("form");
 		this.add(form);
@@ -32,18 +30,7 @@ public class PatternTimePickerPage extends AbstractTimePickerPage
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(0, 0, 0, 14, 0); //2:00 PM
 
-		final TimePicker timepicker = new TimePicker("timepicker", new Model<Date>(calendar.getTime()), "HH:mm") {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onConfigure(JQueryBehavior behavior)
-			{
-				super.onConfigure(behavior);
-				
-				behavior.setOption("format", Options.asString(this.getTextFormat())); //the pattern - here - is the same between java & jQuery, so we can use #getTextFormat(). When it is not the case, you have to specify the jQuery time pattern, that matches the java time pattern, to the format option.
-			}
-		};
+		final TimePicker timepicker = new TimePicker("timepicker", new Model<Date>(calendar.getTime()));
 		form.add(timepicker);
 
 		// Buttons //
@@ -54,7 +41,7 @@ public class PatternTimePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info(timepicker.getModelObjectAsString());
+				this.info("" + timepicker.getModelObject() + " - " + timepicker.getModelObject().getTime());
 			}			
 		});
 

@@ -145,6 +145,6 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior
 	 */
 	private String $(String selector, String effect, String options, int speed, String callback)
 	{
-		return String.format("$(function() { $('%s').%s('%s', %s, %d, function() { %s }) });", selector, METHOD, effect, options, speed, callback);
+		return String.format("$(function() { $('%s').%s('%s', %s, %d, function() { %s }); });", selector, METHOD, effect, options, speed, callback);
 	}
 }

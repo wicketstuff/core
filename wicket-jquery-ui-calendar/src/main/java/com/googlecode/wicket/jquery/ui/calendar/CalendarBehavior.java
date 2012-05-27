@@ -54,12 +54,12 @@ class CalendarBehavior extends JQueryBehavior
 		IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
 
 		/* adds and configure the busy indicator */
-		response.renderJavaScript("$(function(){"
+		response.renderJavaScript("$(function(){ "
 				+ "$('<img />')"
 				+ ".attr('src', '" + RequestCycle.get().urlFor(handler).toString() + "')"
 				+ ".ajaxStart(function() { $(this).show(); })"
 				+ ".ajaxStop(function() { $(this).hide(); })"
-				+ ".appendTo('.fc-header-center')"
-				+ "});", this.getClass().getName());
+				+ ".appendTo('.fc-header-center');"
+				+ " });", this.getClass().getName());
 	}
 }

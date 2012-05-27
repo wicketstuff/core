@@ -5,7 +5,6 @@ import java.util.Date;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.Options;
 import com.googlecode.wicket.jquery.ui.calendar.Calendar;
@@ -18,6 +17,7 @@ import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarModel;
 public class ExtendedCalendarPage extends AbstractCalendarPage
 {
 	private static final long serialVersionUID = 1L;
+
 	private Calendar calendar;
 
 	public ExtendedCalendarPage()
@@ -27,7 +27,8 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 
 	private void init()
 	{
-		final Form<Date> form = new Form<Date>("form", new Model<Date>());
+		// Form //
+		final Form<Date> form = new Form<Date>("form");
 		this.add(form);
 
 		// FeedbackPanel //
@@ -89,9 +90,6 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			protected void onDayClick(AjaxRequestTarget target, Date date)
 			{
 				super.onDayClick(target, date);
-
-				this.info("Selected date: " + date);
-				target.add(feedback);
 
 				dialog.setModelObject(DemoCalendarDAO.emptyEvent(date));
 				dialog.open(target);
@@ -157,7 +155,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 				}
 			}
 		};
-		
+
 		form.add(this.calendar);
 	}
 }

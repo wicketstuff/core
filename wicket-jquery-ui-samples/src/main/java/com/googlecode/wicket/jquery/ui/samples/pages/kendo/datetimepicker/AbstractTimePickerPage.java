@@ -1,10 +1,9 @@
-package com.googlecode.wicket.jquery.ui.samples.pages.kendo.timepicker;
+package com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker;
 
 import java.util.Arrays;
 import java.util.List;
 
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.AbstractKendoPage;
-
 
 
 abstract class AbstractTimePickerPage extends AbstractKendoPage
@@ -19,8 +18,10 @@ abstract class AbstractTimePickerPage extends AbstractKendoPage
 	protected List<DemoLink> getDemoLinks()
 	{
 		return Arrays.asList(
+				new DemoLink(KendoDatePickerPage.class, "DatePicker"),
 				new DemoLink(DefaultTimePickerPage.class, "TimePicker"),
-				new DemoLink(PatternTimePickerPage.class, "TimePicker: using pattern")
+				new DemoLink(PatternTimePickerPage.class, "TimePicker: using pattern"),
+				new DemoLink(DateTimePickerPage.class, "DateTimePicker")
 			);
 	}
 }

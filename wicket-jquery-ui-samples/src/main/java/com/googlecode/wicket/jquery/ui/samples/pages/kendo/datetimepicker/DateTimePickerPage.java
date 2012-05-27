@@ -1,4 +1,4 @@
-package com.googlecode.wicket.jquery.ui.samples.pages.kendo.timepicker;
+package com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -10,14 +10,14 @@ import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.form.button.Button;
-import com.googlecode.wicket.jquery.ui.kendo.timepicker.TimePicker;
+import com.googlecode.wicket.jquery.ui.kendo.datetime.DateTimePicker;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
-public class DefaultTimePickerPage extends AbstractTimePickerPage
+public class DateTimePickerPage extends AbstractTimePickerPage
 {
 	private static final long serialVersionUID = 1L;
 	
-	public DefaultTimePickerPage()
+	public DateTimePickerPage()
 	{
 		Form<Void> form = new Form<Void>("form");
 		this.add(form);
@@ -28,10 +28,10 @@ public class DefaultTimePickerPage extends AbstractTimePickerPage
 
 		// TimePicker //
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(0, 0, 0, 14, 0); //2:00 PM
+		calendar.set(2012, 05, 27, 01, 03);
 
-		final TimePicker timepicker = new TimePicker("timepicker", new Model<Date>(calendar.getTime()));
-		form.add(timepicker);
+		final DateTimePicker datetimepicker = new DateTimePicker("datetimepicker", new Model<Date>(calendar.getTime()));
+		form.add(datetimepicker);
 
 		// Buttons //
 		form.add(new Button("submit") {
@@ -41,7 +41,7 @@ public class DefaultTimePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info(timepicker.getModelObjectAsString());
+				this.info("Date & Time: " + datetimepicker.getModelObject()); //warning, model object can be null
 			}			
 		});
 
@@ -52,7 +52,7 @@ public class DefaultTimePickerPage extends AbstractTimePickerPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				this.info(timepicker.getModelObjectAsString());
+				this.info("Date & Time: " + datetimepicker.getModelObject()); //warning, model object can be null
 				target.add(feedbackPanel);
 			}
 			

@@ -92,7 +92,6 @@ public class Calendar extends JQueryContainer
 		this.options = options;
 	}
 
-
 	/**
 	 * Gets the calendar's model
 	 * @return a {@link CalendarModel}
@@ -128,8 +127,9 @@ public class Calendar extends JQueryContainer
 	}
 	
 	/**
-	 * TODO: JAVADOC
-	 * @param target
+	 * Refreshes the events currently available in the selected view.
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void refresh(AjaxRequestTarget target)
 	{
@@ -139,8 +139,10 @@ public class Calendar extends JQueryContainer
 	
 	// Properties //
 	/**
-	 * TODO javadoc
-	 * @return
+	 * Indicated whether a cell can be selected.<br />
+	 * If true, the {@link #onSelect(AjaxRequestTarget, Date, Date, boolean)} event will be triggered
+	 * 
+	 * @return true or false
 	 */
 	protected boolean isSelectable()
 	{
@@ -148,7 +150,10 @@ public class Calendar extends JQueryContainer
 	}
 	
 	/**
-	 * Indicates whether the event can be edited (ie, clicked). IIF true, an event can override this global setting to false by using CalendarEvent#setEditable(boolean);
+	 * Indicates whether the event can be edited (ie, clicked).<br/>
+	 * IIF true, an event can override this global setting to false by using CalendarEvent#setEditable(boolean);
+	 * If true, the {@link #onEventClick(AjaxRequestTarget, int)} event will be triggered
+	 * 
 	 * @return true or false
 	 */
 	protected boolean isEditable()
@@ -156,11 +161,23 @@ public class Calendar extends JQueryContainer
 		return false;
 	}
 	
+	/**
+	 * Indicates whether the event can be dragged &#38; dropped.
+	 * If true, the {@link #onEventDrop(AjaxRequestTarget, int, long, boolean)} event will be triggered
+	 * 
+	 * @return true or false
+	 */
 	protected boolean isEventDropEnabled()
 	{
 		return false;
 	}
 	
+	/**
+	 * Indicates whether the event can be resized.
+	 * If true, the {@link #onEventResize(AjaxRequestTarget, int, long)} event will be triggered
+	 * 
+	 * @return true or false
+	 */
 	protected boolean isEventResizeEnabled()
 	{
 		return false;
@@ -307,51 +324,56 @@ public class Calendar extends JQueryContainer
 	/**
 	 * Triggered when a calendar day is clicked
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param date the {@link Date}
+	 * @param date the day
 	 */
 	protected void onDayClick(AjaxRequestTarget target, Date date)
 	{
 	}
 
 	/**
+	 * Triggered when an cell is selected.<br/>
+	 * {@link #isSelectable()} should return true for this event to be triggered.
 	 * 
-	 * @param target
-	 * @param start
-	 * @param end
-	 * @param allDay
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param start the event start {@link Date}
+	 * @param end the event end {@link Date}
+	 * @param allDay the event all-day property
 	 */
 	protected void onSelect(AjaxRequestTarget target, Date start, Date end, boolean allDay)
 	{
 	}
 
 	/**
-	 * Triggered when an event is clicked
+	 * Triggered when an event is clicked.<br/>
+	 * {@link #isEditable()} should return true for this event to be triggered.
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param eventId the {@link CalendarEvent} id 
+	 * @param eventId the {@link CalendarEvent} id
 	 */
 	protected void onEventClick(AjaxRequestTarget target, int eventId)
 	{
 	}
 	
 	/**
-	 * Triggered when an event is dropped (after being dragged)
+	 * Triggered when an event is dropped (after being dragged).<br/>
+	 * {@link #isEventDropEnabled()} should return true for this event to be triggered.
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param eventId the {@link CalendarEvent} id 
-	 * @param date the event date
-	 * @param delta the delta (time) with the event date 
-	 * @param isAllDay TODO javadoc 
+	 * @param eventId the {@link CalendarEvent} id
+	 * @param delta the delta (time) with the original event date
+	 * @param allDay the event all-day property
 	 */
-	protected void onEventDrop(AjaxRequestTarget target, int eventId, long delta, boolean isAllDay)
+	protected void onEventDrop(AjaxRequestTarget target, int eventId, long delta, boolean allDay)
 	{
 	}
 	
 	/**
-	 * Triggered when an event is dropped (after being dragged)
+	 * Triggered when an event is dropped (after being dragged).<br/>
+	 * {@link #isEventResizeEnabled()} should return true for this event to be triggered.
+	 * 
 	 * @param target the {@link AjaxRequestTarget}
-	 * @param eventId the {@link CalendarEvent} id 
-	 * @param date the event date
-	 * @param delta the delta (time) with the event date 
-	 * @param isAllDay TODO javadoc 
+	 * @param eventId the {@link CalendarEvent} id
+	 * @param delta the delta (time) with the original event date 
 	 */
 	protected void onEventResize(AjaxRequestTarget target, int eventId, long delta)
 	{
@@ -390,7 +412,7 @@ public class Calendar extends JQueryContainer
 				this.setOption("eventSources", String.format("[%s]", sourceBuilder.toString()));
 
 				// behaviors //
-				//FIXME: should the dayClick be enabled if the calendar is not editable?
+				//FIXME: Calendar: should the dayClick be enabled if the calendar is not editable?
 				this.setOption("dayClick", "function(date, allDay, jsEvent, view) { " + dayClickBehavior.getCallbackScript() + "}");
 
 				if (Calendar.this.isEditable())

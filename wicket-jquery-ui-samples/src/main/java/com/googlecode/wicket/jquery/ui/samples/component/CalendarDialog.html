@@ -5,13 +5,21 @@
 	<body>
 		<wicket:panel>
 			<form wicket:id="form">
-				<table width="100%" cellpadding="5">
+				<table width="100%" cellpadding="3">
 					<tr>
-						<td width="20%">
+						<td width="15%">
 							Title:
 						</td>
-						<td width="80%">
+						<td width="85%">
 							<input wicket:id="title" type="text" style="width: 100%;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<br />
+						</td>
+						<td>
+							<input wicket:id="allDay" type="checkbox" /><label wicket:id="label"></label>
 						</td>
 					</tr>
 					<tr>
@@ -19,7 +27,7 @@
 							Starts:
 						</td>
 						<td>
-							<input wicket:id="start" type="text" style="width: 200px;"></input>
+							<span wicket:id="start"></span>
 						</td>
 					</tr>
 					<tr>
@@ -27,7 +35,7 @@
 							Ends:
 						</td>
 						<td>
-							<input wicket:id="end" type="text" style="width: 200px;"></input>
+							<span wicket:id="end"></span>
 						</td>
 					</tr>
 				</table>

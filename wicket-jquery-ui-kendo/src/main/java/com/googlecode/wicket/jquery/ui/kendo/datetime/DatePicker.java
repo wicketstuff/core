@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.kendo.timepicker;
+package com.googlecode.wicket.jquery.ui.kendo.datetime;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,16 +29,15 @@ import com.googlecode.wicket.jquery.ui.Options;
 import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
 
 /**
- * Provides a Kendo UI TimePicker widget.<br/>
- * It should be created on a HTML &lt;input type="text" /&gt; element
- * 
+ * Provides a Kendo UI date-picker based on a {@link DateTextField}<br/>
+ * The code is quite identical to the jQuery DatePicker
+ *  
  * @author Sebastien Briquet - sebastien@7thweb.net
  */
-public class TimePicker extends DateTextField implements IJQueryWidget
+public class DatePicker extends DateTextField implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "kendoTimePicker";
-	private static final String DEFAULT_PATTERN = "hh:mm aaa"; // default java time pattern, matching the default jQuery time pattern	
+	private static final String METHOD = "kendoDatePicker";
 	
 	private Options options;
 	
@@ -46,7 +45,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 * Constructor
 	 * @param id the markup id
 	 */
-	public TimePicker(String id)
+	public DatePicker(String id)
 	{
 		this(id, new Options());
 	}
@@ -56,20 +55,11 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 * @param id the markup id
 	 * @param options {@link Options}
 	 */
-	public TimePicker(String id, Options options)
+	public DatePicker(String id, Options options)
 	{
-		this(id, DEFAULT_PATTERN, options);
-	}
-
-
-	/**
-	 * Constructor
-	 * @param id the markup id
-	 * @param pattern a <code>SimpleDateFormat</code> pattern
-	 */
-	public TimePicker(String id, String pattern)
-	{
-		this(id, pattern, new Options());
+		super(id);
+		
+		this.options = options;
 	}
 
 	/**
@@ -78,7 +68,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
 	 * @param options {@link Options}
 	 */
-	public TimePicker(String id, String pattern, Options options)
+	public DatePicker(String id, String pattern, Options options)
 	{
 		super(id, pattern);
 		
@@ -90,31 +80,23 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
-	public TimePicker(String id, IModel<Date> model)
+	public DatePicker(String id, IModel<Date> model)
 	{
 		this(id, model, new Options());
 	}
 
+	
 	/**
 	 * Constructor
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param options {@link Options}
 	 */
-	public TimePicker(String id, IModel<Date> model, Options options)
+	public DatePicker(String id, IModel<Date> model, Options options)
 	{
-		this(id, model, DEFAULT_PATTERN);
-	}
-	
-	/**
-	 * Constructor
-	 * @param id the markup id
-	 * @param model the {@link IModel}
-	 * @param pattern a <code>SimpleDateFormat</code> pattern
-	 */
-	public TimePicker(String id, IModel<Date> model, String pattern)
-	{
-		this(id, model, pattern, new Options());
+		super(id, model);
+		
+		this.options = options;
 	}
 	
 	/**
@@ -124,13 +106,13 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
 	 * @param options {@link Options}
 	 */
-	public TimePicker(String id, IModel<Date> model, String pattern, Options options)
+	public DatePicker(String id, IModel<Date> model, String pattern, Options options)
 	{
 		super(id, model, pattern);
 		
 		this.options = options;
 	}
-
+	
 	// Getters //
 	/**
 	 * Marked as final.
@@ -141,7 +123,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	{
 		return super.getTextFormat();
 	}
-	
+
 	/**
 	 * Gets a string representation given the time pattern in use.
 	 *  
@@ -168,6 +150,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
 	}	
 
+	
 	/**
 	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering 
 	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
@@ -190,7 +173,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 			@Override
 			public void onConfigure(Component component)
 			{
-				TimePicker.this.onConfigure(this);
+				DatePicker.this.onConfigure(this);
 			}
 		};
 	}
