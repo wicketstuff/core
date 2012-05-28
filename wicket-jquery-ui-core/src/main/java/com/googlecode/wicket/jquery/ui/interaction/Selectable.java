@@ -153,9 +153,10 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	}
 
 	/**
-	 * TODO: javadoc
-	 * @param target
-	 * @param list
+	 * Triggered when a selection has been made (stops)
+	 * 
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param list the {@link List} of selected items
 	 */
 	protected void onSelect(AjaxRequestTarget target, List<T> list)
 	{

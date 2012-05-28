@@ -158,17 +158,28 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 
 	/**
-	 * TODO: javadoc
-	 * @param id
-	 * @param model
-	 * @param datePattern
-	 * @return
+	 * Gets a new {@link DatePicker}
+	 * 
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param datePattern the date pattern to be used
+	 * 
+	 * @return the {@link DatePicker}
 	 */
 	protected DatePicker newDatePicker(String id, IModel<Date> model, String datePattern)
 	{
 		return new DatePicker(id, model, datePattern);
 	}
 
+	/**
+	 * Gets a new {@link TimePicker}
+	 * 
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param timePattern the date pattern to be used
+	 * 
+	 * @return the {@link TimePicker}
+	 */
 	protected TimePicker newTimePicker(String id, IModel<Date> model, String timePattern)
 	{
 		return new TimePicker(id, model, timePattern);
