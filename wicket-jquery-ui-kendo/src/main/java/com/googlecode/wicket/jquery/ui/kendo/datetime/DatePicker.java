@@ -39,6 +39,8 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoDatePicker";
 	
+	public static final String DEFAULT_PATTERN = "MM/dd/yyyy";
+	
 	private Options options;
 	
 	/**
@@ -47,7 +49,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 */
 	public DatePicker(String id)
 	{
-		this(id, new Options());
+		this(id, DEFAULT_PATTERN, new Options());
 	}
 
 	/**
@@ -57,9 +59,17 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 */
 	public DatePicker(String id, Options options)
 	{
-		super(id);
-		
-		this.options = options;
+		this(id, DEFAULT_PATTERN, options);
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param pattern a <code>SimpleDateFormat</code> pattern
+	 */
+	public DatePicker(String id, String pattern)
+	{
+		this(id, pattern, new Options());
 	}
 
 	/**
@@ -82,7 +92,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 */
 	public DatePicker(String id, IModel<Date> model)
 	{
-		this(id, model, new Options());
+		this(id, model, DEFAULT_PATTERN, new Options());
 	}
 
 	
@@ -94,9 +104,18 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 */
 	public DatePicker(String id, IModel<Date> model, Options options)
 	{
-		super(id, model);
-		
-		this.options = options;
+		this(id, model, DEFAULT_PATTERN, options);
+	}
+	
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param pattern a <code>SimpleDateFormat</code> pattern
+	 */
+	public DatePicker(String id, IModel<Date> model, String pattern)
+	{
+		this(id, model, pattern, new Options());
 	}
 	
 	/**

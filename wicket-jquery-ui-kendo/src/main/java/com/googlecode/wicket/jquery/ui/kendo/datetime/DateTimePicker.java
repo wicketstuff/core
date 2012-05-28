@@ -16,24 +16,35 @@
  */
 package com.googlecode.wicket.jquery.ui.kendo.datetime;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
+import org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.convert.ConversionException;
+import org.apache.wicket.util.convert.IConverter;
+import org.apache.wicket.util.convert.converter.DateConverter;
+import org.apache.wicket.validation.ValidationError;
 
 /**
  * Provides a date-time-picker based on a {@link DatePicker} and a {@link TimePicker}
  * 
  * @author Sebastien Briquet - sebastien@7thweb.net
  */
-public class DateTimePicker extends FormComponentPanel<Date>
+public class DateTimePicker extends FormComponentPanel<Date> implements ITextFormatProvider
 {
 	private static final long serialVersionUID = 1L;
 	
 	private DatePicker datePicker;
 	private TimePicker timePicker;
+
+	private final String datePattern;
+	private final String timePattern;
+
+	private IConverter<Date> converter;
 
 	/**
 	 * Constructor
@@ -41,7 +52,19 @@ public class DateTimePicker extends FormComponentPanel<Date>
 	 */
 	public DateTimePicker(String id)
 	{
+		this(id, DatePicker.DEFAULT_PATTERN, TimePicker.DEFAULT_PATTERN);
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 */
+	public DateTimePicker(String id, String datePattern, String timePattern)
+	{
 		super(id);
+		
+		this.datePattern = datePattern;
+		this.timePattern = timePattern;
 	}
 
 	/**
@@ -50,41 +73,144 @@ public class DateTimePicker extends FormComponentPanel<Date>
 	 */
 	public DateTimePicker(String id, IModel<Date> date)
 	{
+		this(id, date, DatePicker.DEFAULT_PATTERN, TimePicker.DEFAULT_PATTERN);
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 */
+	public DateTimePicker(String id, IModel<Date> date, String datePattern, String timePattern)
+	{
 		super(id, date);
+
+		this.datePattern = datePattern;
+		this.timePattern = timePattern;
 	}
 
 	// Methods //
 	@Override
 	protected void convertInput()
 	{
-		Date date = this.datePicker.getConvertedInput();
-		Date time = this.timePicker.getConvertedInput();
+		final IConverter<Date> converter = this.getConverter(Date.class);
+		String dateInput = this.datePicker.getInput();
+		String timeInput = this.timePicker.getInput();
 
-		if (date != null)
+		try
 		{
-			if (time == null)
-			{
-				this.setConvertedInput(new Date(date.getTime()));
-			}
-			else
-			{
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTimeInMillis(date.getTime() + time.getTime());
-
-				//FIXME: DateTimePicker: there is an issue with the time (it is always H-1 - at least in France). Maybe need to use the Locale...
-//				CalendarConverter converter = new CalendarConverter();
-//				new Date(date.getTime() + time.getTime());
-
-				this.setConvertedInput(calendar.getTime());
-			}
+			Date date = converter.convertToObject(String.format("%s %s", dateInput, timeInput), this.getLocale());
+			this.setConvertedInput(date);
 		}
+		catch (ConversionException e)
+		{
+			ValidationError error = new ValidationError();
+			error.addMessageKey("DateTimePicker.ConversionError");
+			error.setVariable("date", dateInput);
+			error.setVariable("time", timeInput);
+
+			this.error(error);
+		}
+
+//		Date date = this.datePicker.getConvertedInput();
+//		Date time = this.timePicker.getConvertedInput();
+//		this.setConvertedInput(new Date(date.getTime() + time.getTime()));
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public <C> IConverter<C> getConverter(Class<C> type)
+	{
+		if (Date.class.isAssignableFrom(type))
+		{
+			if (this.converter == null)
+			{
+				this.converter = this.newDateConverter();
+			}
+			
+			return (IConverter<C>) this.converter;
+		}
+
+		return super.getConverter(type);
+	}
+	
+	/**
+	 * Gets a new date converter.
+	 * 
+	 * @return the converter
+	 */
+	private IConverter<Date> newDateConverter()
+	{
+		return new DateConverter() {
+
+			private static final long serialVersionUID = 1L;
+	
+			@Override
+			public DateFormat getDateFormat(Locale locale)
+			{
+				if (locale == null)
+				{
+					locale = Locale.getDefault();
+				}
+				return new SimpleDateFormat(getTextFormat(), locale);
+			}
+		};
+	}
+
+	//It is not possible to get date & time pickers as they can be null (created at onInitialize(), because of the use of the models, which may be null in the constructor).
+//	/**
+//	 * Gets the underlying {@link DatePicker}
+//	 * 
+//	 * @return the {@link DatePicker}
+//	 */
+//	public final DatePicker getDatePicker()
+//	{
+//		return this.datePicker;
+//	}
+//
+//	/**
+//	 * Gets the underlying {@link TimePicker}
+//	 * 
+//	 * @return the  {@link TimePicker}
+//	 */
+//	public final TimePicker getTimePicker()
+//	{
+//		return this.timePicker;
+//	}
+	
+	/**
+	 * Gets the date pattern in use
+	 * 
+	 * @return the pattern
+	 */
+	public final String getDatePattern()
+	{
+		return this.datePattern;
 	}
 
 	/**
-	 * Gets a string representation given the time pattern in use.
-	 * TODO: Calendar: maybe use the CalendarConverter
+	 * Gets the time pattern in use
 	 * 
-	 * @deprecated Experimental.
+	 * @return the pattern
+	 */
+	public final String getTimePattern()
+	{
+		return this.timePattern;
+	}
+
+	/**
+	 * Returns the date-time pattern.
+	 * 
+	 * @see org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider#getTextFormat()
+	 */
+	@Override
+	public final String getTextFormat()
+	{
+		return String.format("%s %s", this.getDatePattern(), this.getTimePattern());
+	}
+
+	/**
+	 * Gets a string representation of the model object, given the date-time pattern in use.
+	 * 
 	 * @return the model object as string
 	 */
 	public String getModelObjectAsString()
@@ -93,44 +219,33 @@ public class DateTimePicker extends FormComponentPanel<Date>
 
 		if (date != null)
 		{
-			//maybe a little bit risky:
-			String pattern = String.format("%s %s", this.datePicker.getTextFormat(), this.timePicker.getTextFormat());
-			return new SimpleDateFormat(pattern).format(date);
+			return new SimpleDateFormat(this.getTextFormat()).format(date);
 		}
 
 		return "";
 	}
 
-	/**
-	 * Gets the underlying {@link DatePicker}
-	 * 
-	 * @return the {@link DatePicker}
-	 */
-	public final DatePicker getDatePicker()
-	{
-		return this.datePicker;
-	}
-
-	/**
-	 * Gets the underlying {@link TimePicker}
-	 * 
-	 * @return the  {@link TimePicker}
-	 */
-	public final TimePicker getTimePicker()
-	{
-		return this.timePicker;
-	}
-	
 	// Events //
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
 
-		this.datePicker = new DatePicker("datepicker", this.getModel());
-		this.timePicker = new TimePicker("timepicker", this.getModel());
+		this.datePicker = this.newDatePicker("datepicker", this.getModel(), this.getDatePattern());
+		this.timePicker = this.newTimePicker("timepicker", this.getModel(), this.getTimePattern());
 
 		this.add(this.datePicker);
 		this.add(this.timePicker);
 	}
+
+	protected DatePicker newDatePicker(String id, IModel<Date> model, String datePattern)
+	{
+		return new DatePicker(id, model, datePattern);
+	}
+
+	protected TimePicker newTimePicker(String id, IModel<Date> model, String timePattern)
+	{
+		return new TimePicker(id, model, timePattern);
+	}
+
 }

@@ -19,9 +19,11 @@ abstract class AbstractTimePickerPage extends AbstractKendoPage
 	{
 		return Arrays.asList(
 				new DemoLink(KendoDatePickerPage.class, "DatePicker"),
+				new DemoLink(PatternDatePickerPage.class, "DatePicker: using pattern"),
 				new DemoLink(DefaultTimePickerPage.class, "TimePicker"),
 				new DemoLink(PatternTimePickerPage.class, "TimePicker: using pattern"),
-				new DemoLink(DateTimePickerPage.class, "DateTimePicker")
+				new DemoLink(DateTimePickerPage.class, "DateTimePicker"),
+				new DemoLink(PatternDateTimePickerPage.class, "DateTimePicker: using pattern")
 			);
 	}
 }

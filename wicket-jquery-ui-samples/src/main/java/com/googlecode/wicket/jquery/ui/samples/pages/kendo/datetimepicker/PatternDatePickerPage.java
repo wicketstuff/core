@@ -4,18 +4,20 @@ import java.util.Date;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.ui.Options;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.form.button.Button;
 import com.googlecode.wicket.jquery.ui.kendo.datetime.DatePicker;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
-public class KendoDatePickerPage extends AbstractTimePickerPage
+public class PatternDatePickerPage extends AbstractTimePickerPage
 {
 	private static final long serialVersionUID = 1L;
 	
-	public KendoDatePickerPage()
+	public PatternDatePickerPage()
 	{
 		final Form<Date> form = new Form<Date>("form");
 		this.add(form);
@@ -24,7 +26,10 @@ public class KendoDatePickerPage extends AbstractTimePickerPage
 		form.add(new JQueryFeedbackPanel("feedback"));
 
 		// Date Picker //
-		final DatePicker datepicker = new DatePicker("datepicker", new Model<Date>(new Date()));
+		IModel<Date> model = new Model<Date>(new Date());
+		String pattern = "dd MMM yyyy"; //this pattern is compatible with both java & kendo-ui.
+		
+		final DatePicker datepicker = new DatePicker("datepicker", model, pattern, new Options("format", Options.asString(pattern)));
 		form.add(datepicker);
 
 		// Buttons //

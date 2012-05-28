@@ -1,4 +1,7 @@
-Available since wicket-jquery-ui-kendo-1.2.0
+Available since wicket-jquery-ui-kendo-1.2.1
+
+<h4>More info</h4>
+Custom date formats: <a href="http://demos.kendoui.com/web/globalization/index.html">http://demos.kendoui.com/web/globalization/index.html</a>
 
 <h4>Licensing</h4>
 Kendo UI is licensed under GPLv3, which is compatible with Apache License 2.0<br/>

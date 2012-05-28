@@ -36,14 +36,19 @@ public class PatternTimePickerPage extends AbstractTimePickerPage
 
 			private static final long serialVersionUID = 1L;
 
+			/**
+			 * This is different way to specify the kendo-ui format pattern. Look at the "DatePicker: using pattern" sample to the other way.
+			 */
 			@Override
 			protected void onConfigure(JQueryBehavior behavior)
 			{
 				super.onConfigure(behavior);
 				
-				behavior.setOption("format", Options.asString(this.getTextFormat())); //the pattern - here - is the same between java & jQuery, so we can use #getTextFormat(). When it is not the case, you have to specify the jQuery time pattern, that matches the java time pattern, to the format option.
+				//this pattern is compatible with both java & kendo-ui, so we can use #getTextFormat() to retrieve the pattern 
+				behavior.setOption("format", Options.asString(this.getTextFormat()));
 			}
 		};
+
 		form.add(timepicker);
 
 		// Buttons //

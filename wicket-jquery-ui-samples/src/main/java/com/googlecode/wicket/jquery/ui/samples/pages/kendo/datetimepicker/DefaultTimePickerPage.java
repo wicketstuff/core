@@ -41,7 +41,7 @@ public class DefaultTimePickerPage extends AbstractTimePickerPage
 			@Override
 			public void onSubmit()
 			{
-				this.info("" + timepicker.getModelObject() + " - " + timepicker.getModelObject().getTime());
+				this.info(timepicker.getModelObjectAsString());
 			}			
 		});
 
