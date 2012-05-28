@@ -48,6 +48,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	private static final long serialVersionUID = 1L;
 	
 	private JQueryAjaxBehavior stopBehavior;
+	private List<T> items; //selected items 
 
 	/**
 	 * Constructor
@@ -110,7 +111,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 
 		this.add(this.stopBehavior);
 	}
-	
+
 	/**
 	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
 	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
@@ -121,7 +122,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	{
 		//sets options here
 	}
-	
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public void onEvent(IEvent<?> event)
@@ -130,17 +131,26 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 		{
 			StopEvent payload = (StopEvent) event.getPayload();
 			
-			List<T> list = new ArrayList<T>();
-			
+			this.items = new ArrayList<T>();
+			List<T> list = this.getModelObject();
+
 			for (int index : payload.getIndexes())
 			{
-				list.add(this.getModelObject().get(index));
+				if (index >= 0 && index <= list.size())
+				{
+					this.items.add(list.get(index));
+				}
 			}
-			
-			this.onSelect(payload.getTarget(), list);
+
+			this.onSelect(payload.getTarget(), this.items);
 		}
 	}
 
+	/**
+	 * TODO: javadoc
+	 * @param target
+	 * @param list
+	 */
 	protected void onSelect(AjaxRequestTarget target, List<T> list)
 	{
 	}
@@ -163,6 +173,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 		};
 	}
 	
+	// Event class //
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'stop' callback
 	 */

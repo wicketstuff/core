@@ -11,13 +11,12 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
 import com.googlecode.wicket.jquery.ui.interaction.Selectable;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
-import com.googlecode.wicket.jquery.ui.samples.SamplePage;
 
-public class SelectablePage extends SamplePage
+public class DefaultSelectablePage extends AbstractSelectablePage
 {
 	private static final long serialVersionUID = 1L;
 	
-	public SelectablePage()
+	public DefaultSelectablePage()
 	{
 		List<String> list = Arrays.asList("item #1", "item #2", "item #3", "item #4", "item #5", "item #6");
 		
@@ -26,7 +25,7 @@ public class SelectablePage extends SamplePage
 		this.add(feedbackPanel.setOutputMarkupId(true));
 
 		// Selectable //
-		Selectable<String> selectable = new Selectable<String>("selectable", list) {
+		final Selectable<String> selectable = new Selectable<String>("selectable", list) {
 			
 			private static final long serialVersionUID = 1L;
 
@@ -37,9 +36,10 @@ public class SelectablePage extends SamplePage
 				target.add(feedbackPanel);
 			}
 		};
-		
+
 		this.add(selectable);
 		
+		// ListView //
 		selectable.add(new ListView<String>("items", list) {
 
 			private static final long serialVersionUID = 1L;
@@ -47,7 +47,6 @@ public class SelectablePage extends SamplePage
 			@Override
 			protected void populateItem(ListItem<String> item)
 			{
-//				item.setOutputMarkupId(true);
 				item.add(new Label("item", item.getModelObject()));
 			}
 		});

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket - jQuery UI: selectable (draggable)</title>
+	<style type="text/css">
+		.ui-selectable .ui-selecting { background: #FECA40; }
+		.ui-selectable .ui-selected { background: #F39814; color: white; }
+		.ui-selectable { list-style-type: none; margin: 1em; padding: 0; width: 30%; border: 1px solid #FECA40; }
+		.ui-selectable li { margin: 2px; padding: 3px; x-height: 18px; }
+	</style>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div class="ui-widget-content">
+		<ul wicket:id="selectable">
+			<li wicket:id="items">
+				<span wicket:id="drag">[icon]</span>
+				<span wicket:id="item">[label]</span>
+			</li>
+		</ul>
+		<br/>
+		<div wicket:id="feedback" style="width: 360px;"></div>
+	</div>
+</wicket:extend>
+</body>
+</html>
