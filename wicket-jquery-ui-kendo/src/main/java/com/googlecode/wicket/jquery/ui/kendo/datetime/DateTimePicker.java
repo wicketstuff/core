@@ -156,27 +156,24 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 		};
 	}
 
-	//It is not possible to get date & time pickers as they can be null (created at onInitialize(), because of the use of the models, which may be null in the constructor).
-//	/**
-//	 * Gets the underlying {@link DatePicker}
-//	 * 
-//	 * @return the {@link DatePicker}
-//	 */
-//	public final DatePicker getDatePicker()
-//	{
-//		return this.datePicker;
-//	}
-//
-//	/**
-//	 * Gets the underlying {@link TimePicker}
-//	 * 
-//	 * @return the  {@link TimePicker}
-//	 */
-//	public final TimePicker getTimePicker()
-//	{
-//		return this.timePicker;
-//	}
-	
+
+	/**
+	 * TODO: javadoc
+	 * @param id
+	 * @param model
+	 * @param datePattern
+	 * @return
+	 */
+	protected DatePicker newDatePicker(String id, IModel<Date> model, String datePattern)
+	{
+		return new DatePicker(id, model, datePattern);
+	}
+
+	protected TimePicker newTimePicker(String id, IModel<Date> model, String timePattern)
+	{
+		return new TimePicker(id, model, timePattern);
+	}
+
 	/**
 	 * Gets the date pattern in use
 	 * 
@@ -237,15 +234,4 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 		this.add(this.datePicker);
 		this.add(this.timePicker);
 	}
-
-	protected DatePicker newDatePicker(String id, IModel<Date> model, String datePattern)
-	{
-		return new DatePicker(id, model, datePattern);
-	}
-
-	protected TimePicker newTimePicker(String id, IModel<Date> model, String timePattern)
-	{
-		return new TimePicker(id, model, timePattern);
-	}
-
 }

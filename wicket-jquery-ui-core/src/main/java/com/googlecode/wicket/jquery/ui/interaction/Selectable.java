@@ -48,7 +48,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	private static final long serialVersionUID = 1L;
 	
 	private JQueryAjaxBehavior stopBehavior;
-	private List<T> items; //selected items 
+	private List<T> items; //selected items
 
 	/**
 	 * Constructor
@@ -83,9 +83,10 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 			{
 				//by ids:
 //				return generateCallbackScript("$( '.ui-selected', this ).each( function() { items+='&item='+Wicket.$(this).id; } ); wicketAjaxGet('" + getCallbackUrl() + "'+items");
-				
+
 				//by indexes
-				return generateCallbackScript("$( '.ui-selected', this ).each( function() { indexes+='&index='+$('" + JQueryWidget.getSelector(Selectable.this) + " li').index(this); } ); wicketAjaxGet('" + getCallbackUrl() + "'+indexes");
+				String selector = JQueryWidget.getSelector(Selectable.this) + " li";
+				return generateCallbackScript("$('.ui-selected', this).each( function() { indexes += '&index=' + $('" + selector + "').index(this); } ); wicketAjaxGet('" + getCallbackUrl() + "' + indexes");
 			}
 
 			@Override
@@ -101,6 +102,11 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	public List<T> getModelObject()
 	{
 		return (List<T>) this.getDefaultModelObject();
+	}
+
+	public List<T> getSelectedItems()
+	{
+		return this.items;
 	}
 
 	// Events //

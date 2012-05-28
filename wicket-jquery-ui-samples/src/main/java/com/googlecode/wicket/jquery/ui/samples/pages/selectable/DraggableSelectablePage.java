@@ -8,31 +8,32 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.markup.html.panel.Panel;
 
 import com.googlecode.wicket.jquery.ui.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
-import com.googlecode.wicket.jquery.ui.Options;
+import com.googlecode.wicket.jquery.ui.interaction.Draggable;
+import com.googlecode.wicket.jquery.ui.interaction.Droppable;
 import com.googlecode.wicket.jquery.ui.interaction.Selectable;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
 public class DraggableSelectablePage extends AbstractSelectablePage
 {
 	private static final long serialVersionUID = 1L;
+	private final FeedbackPanel feedbackPanel;
+	private final Selectable<String> selectable;
 	
 	public DraggableSelectablePage()
 	{
 		List<String> list = Arrays.asList("item #1", "item #2", "item #3", "item #4", "item #5", "item #6");
-		
+
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		this.add(feedbackPanel.setOutputMarkupId(true));
+		this.feedbackPanel = new JQueryFeedbackPanel("feedback");
+		this.add(this.feedbackPanel.setOutputMarkupId(true));
 
 		// Selectable //
-		final Selectable<String> selectable = new Selectable<String>("selectable", list) {
-			
+		this.selectable = new Selectable<String>("selectable", list) {
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -43,10 +44,13 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 			}
 		};
 
-		this.add(selectable);
-		
+		this.add(this.selectable);
+
+		// Droppable //
+		this.add(this.newDroppable("droppable"));
+
 		// ListView //
-		selectable.add(new ListView<String>("items", list) {
+		this.selectable.add(new ListView<String>("items", list) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -54,21 +58,29 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 			protected void populateItem(ListItem<String> item)
 			{
 				// Draggable //
-				Panel panel = new EmptyPanel("drag");
-				panel.add(AttributeModifier.append("class", "ui-icon ui-icon-arrow-4-diag"));
-				panel.add(AttributeModifier.append("style", "display: inline-block"));
-				item.add(panel);
-				
+				String selector = JQueryWidget.getSelector(selectable);
+				Draggable<String> draggable = newDraggable("drag", selector);
+				item.add(draggable);
+
 				// Label //
 				Label label = new Label("item", item.getModelObject());
 				label.add(AttributeModifier.append("style", "position: relative; top: 2px; vertical-align: top;"));
 				item.add(label);
 			}
 		});
+	}
 
-		// Draggable behavior (sandbox) //
-		String selector = JQueryWidget.getSelector(selectable);
-		String helper = "function() { " +
+	/**
+	 * 
+	 * @param id
+	 * @param selector the selectable selector
+	 * @return
+	 */
+	private Draggable<String> newDraggable(String id, String selector)
+	{
+		//FIXME: the icon disappears when the lasso is over
+
+		final String helper = "function() { " +
 			    "var container = $('<div/>').attr('id', 'draggingContainer');" +
 			    "$('" + selector + "').find('.ui-selected').each(" +
 	    		"  function() { " +
@@ -78,8 +90,41 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 			    "  return container; " +
 			    "}";
 
-		selectable.add(new JQueryBehavior(selector + " .ui-icon", "draggable", new Options("helper", helper)));
-		//TODO: replace with a Draggable. Warning, the Droppable is listening only one Draggable.
-		//FIXME: the icon disappears when the lasso is over
+		Draggable<String> draggable = new Draggable<String>(id) {
+
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			protected void onConfigure(JQueryBehavior behavior)
+			{
+				super.onConfigure(behavior);
+
+				behavior.setOption("helper", helper);
+			}
+		};
+
+		draggable.add(AttributeModifier.append("class", "ui-icon ui-icon-arrow-4-diag"));
+		draggable.add(AttributeModifier.append("style", "display: inline-block"));
+
+		return draggable;
+	}
+
+	/**
+	 * Gets a new Droppable.
+	 * By default 'over' and 'exit' ('out') events are disabled to minimize client/server round-trips.
+	 */
+	private Droppable<String> newDroppable(String id)
+	{
+		return new Droppable<String>(id) {
+	
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onDrop(AjaxRequestTarget target, Draggable<?> draggable)
+			{
+				info(String.format("Dropped %s", selectable.getSelectedItems()));
+				target.add(feedbackPanel);
+			}
+		};
 	}
 }
