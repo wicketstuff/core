@@ -5,11 +5,12 @@
 	<title>Wicket - jQuery UI: selectable (draggable)</title>
 	<style type="text/css">
 		.ui-droppable { width: 180px; height: 120px; padding: .5em; margin: .5em; float: right; background-color: #9cf;}
-	
+		.ui-droppable li { list-style-type: none; margin: 2px; padding: 3px; background: #F39814; color: white; }
+
 		.ui-selectable .ui-selecting { background: #FECA40; }
-		.ui-selectable .ui-selected { background: #F39814; color: white; }
+		.ui-selected { background: #F39814; color: white; }
 		.ui-selectable { list-style-type: none; margin: 1em; padding: 0; width: 30%; border: 1px solid #FECA40; }
-		.ui-selectable li { margin: 2px; padding: 3px; x-height: 18px; }
+		.ui-selectable li { margin: 2px; padding: 3px; }
 	</style>
 </wicket:head>
 </head>
@@ -17,7 +18,9 @@
 <wicket:extend>
 	<div class="ui-widget-content">
 		<div wicket:id="droppable" class="ui-corner-all">
-			<p>Drop here</p>
+			<li wicket:id="items">
+				<span wicket:id="item">[label]</span>
+			</li>
 		</div>
 		<ul wicket:id="selectable">
 			<li wicket:id="items">

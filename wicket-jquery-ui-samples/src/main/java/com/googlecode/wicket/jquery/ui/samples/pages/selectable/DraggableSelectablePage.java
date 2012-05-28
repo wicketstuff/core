@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.PropertyModel;
 
 import com.googlecode.wicket.jquery.ui.IJQueryWidget.JQueryWidget;
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
@@ -31,6 +32,7 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 		this.feedbackPanel = new JQueryFeedbackPanel("feedback");
 		this.add(this.feedbackPanel.setOutputMarkupId(true));
 
+		
 		// Selectable //
 		this.selectable = new Selectable<String>("selectable", list) {
 
@@ -46,10 +48,7 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 
 		this.add(this.selectable);
 
-		// Droppable //
-		this.add(this.newDroppable("droppable"));
-
-		// ListView //
+		// Selectable ListView //
 		this.selectable.add(new ListView<String>("items", list) {
 
 			private static final long serialVersionUID = 1L;
@@ -66,6 +65,23 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 				Label label = new Label("item", item.getModelObject());
 				label.add(AttributeModifier.append("style", "position: relative; top: 2px; vertical-align: top;"));
 				item.add(label);
+			}
+		});
+		
+		
+		// Droppable //
+		Droppable<String> droppable = this.newDroppable("droppable");
+		this.add(droppable);
+
+		// Droppable ListView //
+		droppable.add(new ListView<String>("items", new PropertyModel<List<String>>(this.selectable, "selectedItems")) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void populateItem(ListItem<String> item)
+			{
+				item.add(new Label("item", item.getModelObject()));
 			}
 		});
 	}
@@ -124,6 +140,7 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 			{
 				info(String.format("Dropped %s", selectable.getSelectedItems()));
 				target.add(feedbackPanel);
+				target.add(this); //refresh the listview
 			}
 		};
 	}
