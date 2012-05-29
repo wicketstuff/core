@@ -16,35 +16,35 @@
  */
 package com.googlecode.wicket.jquery.ui.interaction;
 
-import com.googlecode.wicket.jquery.ui.JQueryBehavior;
-import com.googlecode.wicket.jquery.ui.Options;
+import java.io.Serializable;
 
 /**
- * Provides a jQuery resizable behavior
- * 
+ * Provides a default implementation of {@link AbstractDraggableFactory} related to a {@link Selectable} widget<br/>
+ * <br/>
+ * <br/>
+ * Inspired from:<br/>
+ * http://stackoverflow.com/questions/793559/grouping-draggable-objects-with-jquery-ui-draggable<br/>
+
  * @author Sebastien Briquet - sebastien@7thweb.net
+ *
+ * @param <T> the model object type
  */
-public class ResizableBehavior extends JQueryBehavior
+public abstract class SelectableDraggableFactory<T extends Serializable> extends AbstractDraggableFactory<T>
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "resizable";
 
-	/**
-	 * Constructor
-	 * @param selector the html selector (ie: "#myId")
-	 */
-	public ResizableBehavior(String selector)
+	@Override
+	protected String getHelper(String selector)
 	{
-		super(selector, METHOD, new Options());
-	}
+		StringBuilder helper = new StringBuilder("function() { "); 
+		helper.append("var container = $('<div/>').attr('id', 'draggingContainer');");
+		helper.append("$('").append(selector).append("').find('.ui-selected').each(");
+		helper.append("  function() { ");
+		helper.append("    container.append($(this).clone()); }");
+		helper.append("  );");
+		helper.append("  return container; ");	    
+		helper.append("}");
 
-	/**
-	 * Constructor
-	 * @param selector the html selector (ie: "#myId")
-	 * @param options the {@link Options}
-	 */
-	public ResizableBehavior(String selector, Options options)
-	{
-		super(selector, METHOD, options);
+		return helper.toString();
 	}
 }

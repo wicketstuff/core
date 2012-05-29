@@ -165,7 +165,7 @@ public class Slider extends AbstractSlider<Integer>
 
 		if (this.rangeValidator != null)
 		{
-			this.input.add(this.rangeValidator); //let's throw a NPE if no input is defined.
+			this.input.add(this.rangeValidator); //let throw a NPE if no input is defined.
 		}
 	}
 	

@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.event.IEvent;
@@ -36,9 +37,30 @@ import com.googlecode.wicket.jquery.ui.utils.RequestCycleUtils;
 
 /**
  * Provides a jQuery UI selectable {@link JQueryContainer}.<br/>
- * Children of that container could be selected using the mouse or ctrl+click<br/>
+ * Children of that container can be selected using the mouse or by pressing ctrl+click<br/>
+ * Usage:
+ * <pre>
+ * &lt;ul wicket:id="selectable"&gt;
+ * 	&lt;li wicket:id="items"&gt;
+ * 		&lt;span wicket:id="item"&gt;[label]&lt;/span&gt;
+ * 	&lt;/li&gt;
+ * &lt;/ul&gt;
  * 
- * TODO: Selectable: sample of usage (with list ul/li) and other (like div)
+ * 
+ * final Selectable<String> selectable = new Selectable<String>("selectable", list) {
+ * 	
+ * 	protected void onSelect(AjaxRequestTarget target, List<String> items)
+ * 	{
+ * 		//items: gets the selected item
+ * 	}
+ * };
+ * 
+ * this.add(selectable);
+ * 
+ * // ... //
+ * 
+ * //selectable.getSelectedItems(): gets the selected items
+ * </pre>
  * 
  * @author Sebastien Briquet - sebastien@7thweb.net
  *
@@ -104,6 +126,10 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 		return (List<T>) this.getDefaultModelObject();
 	}
 
+	/**
+	 * Get the selected items
+	 * @return selected items
+	 */
 	public List<T> getSelectedItems()
 	{
 		return this.items;
@@ -180,26 +206,43 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 		};
 	}
 	
+	// DraggableFactory methods //
+	/**
+	 * Creates a {@link Draggable} object that is related to this {@link Selectable}.<br/>
+	 * Uses a default factory that will create a {@link Draggable} with a <code>ui-icon-arrow-4-diag</code> icon 
+	 * 
+	 * @param id the markup id
+	 * @return the {@link Draggable}
+	 */
+	public Draggable<String> createDraggable(String id)
+	{
+		return this.createDraggable(id, new DefaultDraggableFactory());
+	}
+
+	/**
+	 * Creates a {@link Draggable} object that is related to this {@link Selectable}
+	 * 
+	 * @param id the markup id
+	 * @param factory usually a {@link SelectableDraggableFactory} instance
+	 * @return the {@link Draggable}
+	 */
+	public Draggable<String> createDraggable(String id, AbstractDraggableFactory<T> factory)
+	{
+		return factory.create(id, JQueryWidget.getSelector(this)); //let throw a NPE if no factory is defined
+	}
+
 	// Event class //
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'stop' callback
 	 */
 	public class StopEvent extends JQueryEvent
 	{
-//		private final List<String> items;
 		private final List<Integer> indexes;
 
 		public StopEvent(AjaxRequestTarget target)
 		{
 			super(target);
 			
-//			this.items = new ArrayList<String>();
-//			
-//			for(StringValue value : RequestCycleUtils.getQueryParameterValues("item"))
-//			{
-//				this.items.add(value.toString());
-//			}
-
 			this.indexes = new ArrayList<Integer>();
 			
 			List<StringValue> values = RequestCycleUtils.getQueryParameterValues("index");
@@ -213,14 +256,42 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 			}
 		}
 
-//		public List<String> getItems()
-//		{
-//			return this.items;
-//		}
-
 		public List<Integer> getIndexes()
 		{
 			return this.indexes;
+		}
+	}
+
+	// Default Draggable Factory //
+	/**
+	 * Default {@link SelectableDraggableFactory} implementation which will create a {@link Draggable} with a <code>ui-icon-arrow-4-diag</code> icon 
+	 * 
+	 * @author Sebastien Briquet - sebastien@7thweb.net
+	 */
+	class DefaultDraggableFactory extends SelectableDraggableFactory<T>
+	{
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		protected Draggable<String> create(String id, String selector, final String helper)
+		{
+			Draggable<String> draggable = new Draggable<String>(id) {
+
+				private static final long serialVersionUID = 1L;
+				
+				@Override
+				protected void onConfigure(JQueryBehavior behavior)
+				{
+					super.onConfigure(behavior);
+
+					behavior.setOption("helper", helper);
+				}
+			};
+
+			draggable.add(AttributeModifier.append("class", "ui-icon ui-icon-arrow-4-diag"));
+			draggable.add(AttributeModifier.append("style", "display: inline-block; background-position: -16px -80px !important;")); // The background position is the same as ui-icon-arrow-4-diag. It is marked as important for the icon to not disappear while selecting over it.  
+
+			return draggable;
 		}
 	}
 }

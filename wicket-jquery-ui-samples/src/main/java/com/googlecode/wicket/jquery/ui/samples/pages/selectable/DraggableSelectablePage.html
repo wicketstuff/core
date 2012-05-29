@@ -4,10 +4,11 @@
 <wicket:head>
 	<title>Wicket - jQuery UI: selectable (draggable)</title>
 	<style type="text/css">
-		.ui-droppable { width: 180px; height: 120px; padding: .5em; margin: .5em; float: right; background-color: #9cf;}
+		.ui-droppable { width: 180px; height: 180px; padding: .5em; margin: .5em; float: right; background-color: #9cf;}
 		.ui-droppable li { list-style-type: none; margin: 2px; padding: 3px; background: #F39814; color: white; }
 
-		.ui-selectable .ui-selecting { background: #FECA40; }
+		.ui-selectable { height: 180px;  }
+		.ui-selecting { background: #FECA40; }
 		.ui-selected { background: #F39814; color: white; }
 		.ui-selectable { list-style-type: none; margin: 1em; padding: 0; width: 30%; border: 1px solid #FECA40; }
 		.ui-selectable li { margin: 2px; padding: 3px; }
@@ -28,8 +29,7 @@
 				<span wicket:id="item">[label]</span>
 			</li>
 		</ul>
-		<br/>
-		<div wicket:id="feedback" style="width: 360px;"></div>
+		<div wicket:id="feedback" style="width: 480px;"></div>
 	</div>
 </wicket:extend>
 </body>

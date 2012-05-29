@@ -167,8 +167,8 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 		
 		if (this.rangeValidator != null)
 		{
-			this.lower.add(this.rangeValidator); //let's throw a NPE if no input is defined.
-			this.upper.add(this.rangeValidator); //let's throw a NPE if no input is defined.
+			this.lower.add(this.rangeValidator); //let throw a NPE if no input is defined.
+			this.upper.add(this.rangeValidator); //let throw a NPE if no input is defined.
 		}
 	}
 	
