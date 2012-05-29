@@ -34,7 +34,7 @@ public class InputSliderPage extends AbstractSliderPage
 		form.add(input);
 
 		final Slider slider = new Slider("slider", input.getModel(), input); //input is responsible of the model object
-		slider.addRangeValidator(new RangeValidator<Integer>(0, 200));
+		slider.setRangeValidator(new RangeValidator<Integer>(0, 200));
 		form.add(slider.setMin(0).setMax(200));
 		
 		// Buttons //

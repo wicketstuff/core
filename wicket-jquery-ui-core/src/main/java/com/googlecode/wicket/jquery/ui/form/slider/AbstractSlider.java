@@ -95,14 +95,17 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	protected abstract void convertInput();
 	
 	/**
-	 * Adds a {@link RangeValidator} so slider value(s) are valid only if comprised between minimum and maximum specified.<br/>
-	 * <b>Warning: </b> it does not define the minimum and maximum values the slider can slide on, but only valid ones.<br/>
-	 * To define the minimum and maximum values the slider can slide on, use {@link #setMin(Integer)} and {@link #setMax(Integer)}
+	 * Adds a {@link RangeValidator} so slider value(s) are valid only if comprised between minimum and maximum.<br/>
+	 * <br/>
+	 * <b>Warning:</b> it does not define the minimum and maximum values the slider can slide on, but only valid ones.<br/>
+	 * To define the minimum and maximum values the slider can slide on, use {@link #setMin(Integer)} and {@link #setMax(Integer)}<br/>
+	 * <br/>
+	 * <b>Dev note:</b> this method is masked abstract to make sure the developer that will add the validator to the right input(s) in {@link #onInitialize()}
+	 * 
 	 * @param validator the {@link RangeValidator}
 	 * @return this
 	 */
-	public abstract <W extends AbstractSlider<T>> W addRangeValidator(RangeValidator<Integer> validator);
-
+	public abstract <W extends AbstractSlider<T>> W setRangeValidator(RangeValidator<Integer> validator);
 
 	// Properties //
 	/**

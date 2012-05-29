@@ -35,7 +35,7 @@ public abstract class SliderDialog extends AbstractFormDialog<Integer>
 
 		Slider slider = new Slider("slider", model, label);
 		slider.setStep(5);
-		slider.addRangeValidator(new RangeValidator<Integer>(10, 100));
+		slider.setRangeValidator(new RangeValidator<Integer>(10, 100));
 		
 		this.form.add(slider);
 

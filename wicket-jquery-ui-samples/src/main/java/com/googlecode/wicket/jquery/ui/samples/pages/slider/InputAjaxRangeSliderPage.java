@@ -56,7 +56,7 @@ public class InputAjaxRangeSliderPage extends AbstractSliderPage
 			}
 		};
 		
-		form.add(slider.addRangeValidator(new RangeValidator<Integer>(0, 100)));
+		form.add(slider.setRangeValidator(new RangeValidator<Integer>(0, 100)));
 	}
 
 	private void info(Component component, Form<?> form)

@@ -25,6 +25,7 @@ import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.string.Strings;
+import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.ValidationError;
 import org.apache.wicket.validation.validator.RangeValidator;
 
@@ -40,6 +41,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 {
 	private static final long serialVersionUID = 1L;
 
+	private IValidator<Integer> rangeValidator = null;
 	protected AbstractTextComponent<Integer> lower; // will be accessed in AjaxRangeSlider
 	protected AbstractTextComponent<Integer> upper; // will be accessed in AjaxRangeSlider
 
@@ -136,21 +138,13 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 			}
 		}
  	}
-	
+
 	@Override
 	@SuppressWarnings("unchecked")
-	public <W extends AbstractSlider<RangeValue>> W addRangeValidator(RangeValidator<Integer> validator)
+	public <W extends AbstractSlider<RangeValue>> W setRangeValidator(RangeValidator<Integer> validator)
 	{
-		if (this.lower != null)
-		{
-			this.lower.add(validator);
-		}
-		
-		if (this.upper != null)
-		{
-			this.upper.add(validator);
-		}
-		
+		this.rangeValidator = validator;
+
 		return (W) this;
 	}
 
@@ -166,6 +160,18 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	}
 
 	// Events //
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+		
+		if (this.rangeValidator != null)
+		{
+			this.lower.add(this.rangeValidator); //let's throw a NPE if no input is defined.
+			this.upper.add(this.rangeValidator); //let's throw a NPE if no input is defined.
+		}
+	}
+	
 	@Override
 	protected void onConfigure(JQueryBehavior behavior)
 	{
@@ -206,17 +212,16 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 		// lower & upper TextFields have not been specified in ctor //
 		if (this.lower == null || this.upper == null)
 		{
-			fragment = new Fragment(id, "range-fragment", this);
-			
 			this.lower = new HiddenField<Integer>("lower", new PropertyModel<Integer>(this.getModelObject(), "lower"), Integer.class);
-			fragment.add(this.lower.setOutputMarkupPlaceholderTag(true));
-
 			this.upper = new HiddenField<Integer>("upper", new PropertyModel<Integer>(this.getModelObject(), "upper"), Integer.class);
+
+			fragment = new Fragment(id, "range-fragment", this);
+			fragment.add(this.lower.setOutputMarkupPlaceholderTag(true));
 			fragment.add(this.upper.setOutputMarkupPlaceholderTag(true));
 		}
 		else
 		{
-			fragment = super.newInputFragment(id);
+			fragment = super.newInputFragment(id); //return empty fragment
 		}
 
 		return fragment;

@@ -23,6 +23,7 @@ import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.RangeValidator;
 
 import com.googlecode.wicket.jquery.ui.JQueryAbstractBehavior;
@@ -55,6 +56,7 @@ public class Slider extends AbstractSlider<Integer>
 	
 	private static final long serialVersionUID = 1L;
 
+	private IValidator<Integer> rangeValidator = null;
 	protected AbstractTextComponent<Integer> input = null; // will be accessed in AjaxSlider
 
 	/**
@@ -99,7 +101,7 @@ public class Slider extends AbstractSlider<Integer>
 	public Slider(String id, IModel<Integer> model, TextField<Integer> input)
 	{
 		super(id, model);
-	
+
 		this.input = input;
 		this.input.setRequired(true); //prevent null model object in case of no value is supplied.
 		this.input.setOutputMarkupId(true);
@@ -116,14 +118,14 @@ public class Slider extends AbstractSlider<Integer>
 		// input TextField has not been specified in ctor //
 		if (this.input == null)
 		{
-			fragment = new Fragment(id, "input-fragment", this);
 			this.input = new HiddenField<Integer>("input", this.getModel(), Integer.class);
-			
+
+			fragment = new Fragment(id, "input-fragment", this);
 			fragment.add(this.input.setOutputMarkupPlaceholderTag(true));
 		}
 		else
 		{
-			fragment = super.newInputFragment(id);
+			fragment = super.newInputFragment(id); //return empty fragment
 		}
 		
 		return fragment;
@@ -134,15 +136,12 @@ public class Slider extends AbstractSlider<Integer>
  	{
  		this.setConvertedInput(this.input.getConvertedInput());
  	}
-	
+
 	@Override
 	@SuppressWarnings("unchecked")
-	public <W extends AbstractSlider<Integer>> W addRangeValidator(RangeValidator<Integer> validator)
+	public <W extends AbstractSlider<Integer>> W setRangeValidator(RangeValidator<Integer> validator)
 	{
-		if (this.input != null)
-		{
-			this.input.add(validator);	
-		}
+		this.rangeValidator = validator;
 
 		return (W) this;
 	}
@@ -159,6 +158,17 @@ public class Slider extends AbstractSlider<Integer>
 	}
 
 	// Events //
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+
+		if (this.rangeValidator != null)
+		{
+			this.input.add(this.rangeValidator); //let's throw a NPE if no input is defined.
+		}
+	}
+	
 	@Override
 	protected void onConfigure(JQueryBehavior behavior)
 	{

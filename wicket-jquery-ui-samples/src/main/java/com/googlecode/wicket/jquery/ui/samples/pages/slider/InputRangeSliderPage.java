@@ -42,7 +42,7 @@ public class InputRangeSliderPage extends AbstractSliderPage
 		RangeSlider slider = new RangeSlider("slider", form.getModel(), lower, upper);
 		slider.setMin(-128);
 		slider.setMax(128);
-		slider.addRangeValidator(new RangeValidator<Integer>(-128, 128));
+		slider.setRangeValidator(new RangeValidator<Integer>(-128, 128));
 		form.add(slider);
 	
 		// Buttons //
