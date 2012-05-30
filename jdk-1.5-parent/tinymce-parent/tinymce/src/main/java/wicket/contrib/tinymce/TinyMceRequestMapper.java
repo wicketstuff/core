@@ -6,9 +6,9 @@ import java.util.List;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Url;
-import org.apache.wicket.request.handler.resource.ResourceRequestHandler;
+import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 import org.apache.wicket.request.mapper.AbstractMapper;
-import org.apache.wicket.request.resource.JavaScriptPackageResource;
+import org.apache.wicket.request.resource.PackageResourceReference;
 
 /**
  * A request mapper to enable TinyMCE JS to load at runtime other JS resources
@@ -32,9 +32,9 @@ public class TinyMceRequestMapper extends AbstractMapper
 				path += url.substring(url.indexOf(prefix));
 				if (TinyMceRequestMapper.class.getResource(path) != null)
 				{
-					JavaScriptPackageResource resource = new JavaScriptPackageResource(
-							TinyMceRequestMapper.class, path, null, null, null);
-					return new ResourceRequestHandler(resource, null);
+					PackageResourceReference resource = new PackageResourceReference(
+							TinyMceRequestMapper.class, path);
+					return new ResourceReferenceRequestHandler(resource, null);
 				}
 			}
 		}

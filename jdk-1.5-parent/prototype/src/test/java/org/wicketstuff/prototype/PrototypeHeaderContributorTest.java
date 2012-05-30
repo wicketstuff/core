@@ -58,7 +58,7 @@ public class PrototypeHeaderContributorTest extends TestCase
 		new PrototypeHeaderContributor().renderHead(null, mockResponse);
 
 		assertEquals(
-			"<script type=\"text/javascript\" src=\"wicket/resource/org.wicketstuff.prototype.PrototypeResourceReference/prototype.js\"></script>\n",
+			"<script type=\"text/javascript\" src=\"./wicket/resource/org.wicketstuff.prototype.PrototypeResourceReference/prototype.js\"></script>\n",
 			builder.toString());
 	}
 }
