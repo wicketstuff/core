@@ -33,7 +33,7 @@ import org.wicketstuff.security.components.SecureComponentHelper;
  * 
  * @author marrink
  */
-public class SecureTabbedPanel extends TabbedPanel
+public class SecureTabbedPanel<T extends ITab> extends TabbedPanel<T>
 {
 
 	/**
@@ -48,11 +48,9 @@ public class SecureTabbedPanel extends TabbedPanel
 	 * @param tabs
 	 * @see TabbedPanel#TabbedPanel(String, List)
 	 */
-	public SecureTabbedPanel(String id, List<ITab> tabs)
+	public SecureTabbedPanel(String id, List<T> tabs)
 	{
 		super(id, tabs);
-		// In jdk1.5 we can enforce a list ISecureTabs, in 1.4 we just have to
-		// guess what we get
 	}
 
 	/**
@@ -84,7 +82,7 @@ public class SecureTabbedPanel extends TabbedPanel
 	 */
 	protected Class<? extends Panel> getTabClass(int tabIndex)
 	{
-		ITab tab = getTabs().get(tabIndex);
+		T tab = getTabs().get(tabIndex);
 		if (tab instanceof ISecureTab)
 			return ((ISecureTab)tab).getPanel();
 		return null;
