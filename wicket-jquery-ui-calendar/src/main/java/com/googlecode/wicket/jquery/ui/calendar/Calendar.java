@@ -136,7 +136,6 @@ public class Calendar extends JQueryContainer
 		target.appendJavaScript(String.format("$('%s').fullCalendar('refetchEvents');", JQueryWidget.getSelector(this)));
 	}
 
-	
 	// Properties //
 	/**
 	 * Indicated whether a cell can be selected.<br />
@@ -151,8 +150,8 @@ public class Calendar extends JQueryContainer
 	
 	/**
 	 * Indicates whether the event can be edited (ie, clicked).<br/>
-	 * IIF true, an event can override this global setting to false by using CalendarEvent#setEditable(boolean);
-	 * If true, the {@link #onEventClick(AjaxRequestTarget, int)} event will be triggered
+	 * IIF true, an event can override this global setting to false by using CalendarEvent#setEditable(boolean);<br/>
+	 * If true, the {@link #onEventClick(AjaxRequestTarget, int)} event and {@link #onDayClick(AjaxRequestTarget, Date)} event will be triggered<br/>
 	 * 
 	 * @return true or false
 	 */
@@ -296,7 +295,6 @@ public class Calendar extends JQueryContainer
 		else if (payload instanceof SelectEvent)
 		{
 			SelectEvent selectEvent = (SelectEvent) payload;
-			
 			this.onSelect(selectEvent.getTarget(), selectEvent.getStart(), selectEvent.getEnd(), selectEvent.isAllDay());
 		}
 
@@ -309,14 +307,12 @@ public class Calendar extends JQueryContainer
 		else if (payload instanceof DropEvent)
 		{
 			DropEvent dropEvent = (DropEvent) payload;
-			
 			this.onEventDrop(dropEvent.getTarget(), dropEvent.getEventId(), dropEvent.getDelta(), dropEvent.isAllDay());
 		}
 
 		else if (payload instanceof ResizeEvent)
 		{
 			ResizeEvent resizeEvent = (ResizeEvent) payload;
-			
 			this.onEventResize(resizeEvent.getTarget(), resizeEvent.getEventId(), resizeEvent.getDelta());
 		}
 	}
@@ -412,11 +408,10 @@ public class Calendar extends JQueryContainer
 				this.setOption("eventSources", String.format("[%s]", sourceBuilder.toString()));
 
 				// behaviors //
-				//FIXME: Calendar: should the dayClick be enabled if the calendar is not editable?
-				this.setOption("dayClick", "function(date, allDay, jsEvent, view) { " + dayClickBehavior.getCallbackScript() + "}");
 
 				if (Calendar.this.isEditable())
 				{
+					this.setOption("dayClick", "function(date, allDay, jsEvent, view) { " + dayClickBehavior.getCallbackScript() + "}");
 					this.setOption("eventClick", "function(event, jsEvent, view) { " + eventClickBehavior.getCallbackScript() + "}");
 				}
 
@@ -440,6 +435,9 @@ public class Calendar extends JQueryContainer
 
 	
 	// Behavior classes //
+	/**
+	 * Base class for ajax behavior that will broadcast delta-based events
+	 */
 	private abstract class EventDeltaBehavior extends JQueryAjaxBehavior
 	{
 		private static final long serialVersionUID = 1L;
@@ -479,6 +477,9 @@ public class Calendar extends JQueryContainer
 		}
 	}
 	
+	/**
+	 * An event object that will be broadcasted when the user select a cell range
+	 */
 	private class SelectEvent extends JQueryEvent
 	{
 		private final boolean isAllDay;
@@ -515,7 +516,7 @@ public class Calendar extends JQueryContainer
 	}
 	
 	/**
-	 * An event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'change' callback
+	 * An event object that will be broadcasted when the user clicks on an event
 	 */
 	private class ClickEvent extends JQueryEvent
 	{
@@ -535,7 +536,7 @@ public class Calendar extends JQueryContainer
 	}
 
 	/**
-	 * An event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'change' callback
+	 * A base event object that contains a delta time
 	 */
 	private abstract class DeltaEvent extends JQueryEvent
 	{
@@ -564,6 +565,9 @@ public class Calendar extends JQueryContainer
 		}
 	}
 	
+	/**
+	 * An event object that will be broadcasted when the user moves (drag & drop) an event
+	 */
 	private class DropEvent extends DeltaEvent
 	{
 		private final boolean isAllDay;
@@ -581,6 +585,9 @@ public class Calendar extends JQueryContainer
 		}
 	}
 
+	/**
+	 * An event object that will be broadcasted when the user resizes an event
+	 */
 	private class ResizeEvent extends DeltaEvent
 	{
 		public ResizeEvent(AjaxRequestTarget target)

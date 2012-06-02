@@ -22,7 +22,8 @@ import java.util.Date;
 import com.googlecode.wicket.jquery.ui.Options;
 
 /**
- * Provides a base bean to be used in a {@link CalendarModel} 
+ * Provides a base bean that can be used with a {@link CalendarModel} 
+ * 
  * @author Sebastien Briquet - sebastien@7thweb.net
  *
  */
@@ -33,27 +34,31 @@ public class CalendarEvent implements Serializable
 	private int id;
 	private String title;
 
-	private CharSequence url;
-	private String source;
-	private Boolean allDay = true;
-
 	private Date start;
 	private Date end;
 
-	private String className;
+	private CharSequence url = null;
+	private String source = null;
+	private Boolean allDay = true;
 	private Boolean editable = null;
+	
+	// styling //
+	private String className = null;
+	private String color = null;
+	private String backgroundColor = null;
+	private String borderColor = null;
+	private String textColor = null;
 
 	public CalendarEvent(int id, String title, Date date)
 	{
-		this.id = id;
-		this.title = title;
-		this.start = date;
+		this(id, title, date, null);
 	}
 
 	public CalendarEvent(int id, String title, Date start, Date end)
 	{
-		this(id, title, start);
-
+		this.id = id;
+		this.title = title;
+		this.start = start;
 		this.end = end;
 	}
 
@@ -127,16 +132,6 @@ public class CalendarEvent implements Serializable
 		this.end = end;
 	}
 
-	public String getClassName()
-	{
-		return this.className;
-	}
-
-	public void setClassName(String className)
-	{
-		this.className = className;
-	}
-
 	/**
 	 * Overrides the master editable option for this single event.
 	 * @return true or false
@@ -150,6 +145,64 @@ public class CalendarEvent implements Serializable
 	{
 		this.editable = editable;
 	}
+	
+	// styling //
+	public String getClassName()
+	{
+		return this.className;
+	}
+
+	public void setClassName(String className)
+	{
+		this.className = className;
+	}
+
+	public String getColor()
+	{
+		return this.color;
+	}
+
+	public void setColor(String color)
+	{
+		this.color = color;
+	}
+
+	public void setColor(String backgroundColor, String borderColor)
+	{
+		this.backgroundColor = backgroundColor;
+		this.borderColor = borderColor; 
+	}
+	
+	public String getBackgroundColor()
+	{
+		return this.backgroundColor;
+	}
+	
+	public void setBackgroundColor(String backgroundColor)
+	{
+		this.backgroundColor = backgroundColor;
+	}
+	
+	public String getBorderColor()
+	{
+		return borderColor;
+	}
+	
+	public void setBorderColor(String borderColor)
+	{
+		this.borderColor = borderColor;
+	}
+	
+	public String getTextColor()
+	{
+		return this.textColor;
+	}
+	
+	public void setTextColor(String textColor)
+	{
+		this.textColor = textColor;
+	}
+
 
 	/**
 	 * Gets the JSON representation of this {@link CalendarEvent}
@@ -195,10 +248,31 @@ public class CalendarEvent implements Serializable
 		{
 			options.set("editable", editable);
 		}
-		
+
+		// styling //
 		if (this.className != null)
 		{
 			options.set("className", Options.asString(this.className));
+		}
+
+		if (this.color != null)
+		{
+			options.set("color", Options.asString(this.color));
+		}
+
+		if (this.backgroundColor != null)
+		{
+			options.set("backgroundColor", Options.asString(this.backgroundColor));
+		}
+
+		if (this.borderColor != null)
+		{
+			options.set("borderColor", Options.asString(this.borderColor));
+		}
+		
+		if (this.textColor != null)
+		{
+			options.set("textColor", Options.asString(this.textColor));
 		}
 		
 		return options.toString();

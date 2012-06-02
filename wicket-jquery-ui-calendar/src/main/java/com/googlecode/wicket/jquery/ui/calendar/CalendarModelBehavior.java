@@ -30,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Provides the behavior that gets the {@link CalendarEvent}<code>s</code> from the {@link CalendarModel}
  * 
  * @author Sebastien Briquet - sebastien@7thweb.net
  *
@@ -41,6 +42,11 @@ class CalendarModelBehavior extends AbstractAjaxBehavior
 
 	private CalendarModel model;
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param model the {@link CalendarModel}
+	 */
 	public CalendarModelBehavior(CalendarModel model)
 	{
 		this.model = model;
@@ -65,6 +71,11 @@ class CalendarModelBehavior extends AbstractAjaxBehavior
 		requestCycle.scheduleRequestHandlerAfterCurrent(handler);
 	}
 
+	/**
+	 * Gets the new {@link IRequestHandler} that will respond the list of {@link CalendarEvent} in a json format
+	 * 
+	 * @return the {@link IRequestHandler}
+	 */
 	private IRequestHandler newRequestHandler()
 	{
 		return new IRequestHandler()
@@ -104,7 +115,7 @@ class CalendarModelBehavior extends AbstractAjaxBehavior
 					}
 				}
 			}
-			
+
 			public void detach(final IRequestCycle requestCycle)
 			{
 			}

@@ -28,12 +28,12 @@ public class DemoCalendarDAO
 
 	public static DemoCalendarEvent emptyEvent(Date date)
 	{
-		return new DemoCalendarEvent(EMPTY_ID, "", null, date);
+		return new DemoCalendarEvent(EMPTY_ID, "", Category.PUBLIC, date);
 	}
 
 	public static DemoCalendarEvent emptyEvent(Date start, Date end)
 	{
-		return new DemoCalendarEvent(EMPTY_ID, "", null, start, end);
+		return new DemoCalendarEvent(EMPTY_ID, "", Category.PUBLIC, start, end);
 	}
 
 	public static DemoCalendarEvent getEvent(int eventId)
@@ -91,8 +91,8 @@ public class DemoCalendarDAO
 
 	private void initList()
 	{
-		this.list.add(new DemoCalendarEvent(this.newId(), "event #1", Category.RED, new Date()));
-		this.list.add(new DemoCalendarEvent(this.newId(), "event #2", Category.BLUE, new Date()));				
+		this.list.add(new DemoCalendarEvent(this.newId(), "Public event", Category.PUBLIC, new Date()));
+		this.list.add(new DemoCalendarEvent(this.newId(), "Private event", Category.PRIVATE, new Date()));				
 	}
 
 	protected int newId()

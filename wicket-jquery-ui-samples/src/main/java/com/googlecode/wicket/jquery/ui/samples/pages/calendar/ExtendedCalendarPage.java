@@ -9,7 +9,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import com.googlecode.wicket.jquery.ui.Options;
 import com.googlecode.wicket.jquery.ui.calendar.Calendar;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
-import com.googlecode.wicket.jquery.ui.samples.component.CalendarDialog;
+import com.googlecode.wicket.jquery.ui.samples.component.DemoCalendarDialog;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarDAO;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarModel;
@@ -36,7 +36,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Dialog //
-		final CalendarDialog<DemoCalendarEvent> dialog = new CalendarDialog<DemoCalendarEvent>("dialog", "Event details") {
+		final DemoCalendarDialog dialog = new DemoCalendarDialog("dialog", "Event details") {
 
 			private static final long serialVersionUID = 1L;
 
@@ -58,14 +58,18 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 		this.add(dialog);
 
 		// Calendar //
-		this.calendar = new Calendar("calendar", new DemoCalendarModel(), new Options("theme", true)) {
+		Options options = new Options();
+		options.set("theme", true);
+		options.set("header", "{ left: 'title', right: 'month,agendaWeek,agendaDay, today, prev,next' }");
+
+		this.calendar = new Calendar("calendar", new DemoCalendarModel(), options) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected boolean isSelectable()
 			{
-				return false;
+				return true;
 			}
 			
 			@Override
@@ -91,7 +95,9 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			{
 				super.onDayClick(target, date);
 
-				dialog.setModelObject(DemoCalendarDAO.emptyEvent(date));
+				DemoCalendarEvent event = DemoCalendarDAO.emptyEvent(date);
+				
+				dialog.setModelObject(event);
 				dialog.open(target);
 			}
 
@@ -130,8 +136,8 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 
 				if (event != null)
 				{
-					event.setStart(event.getStart() != null ? new Date(event.getStart().getTime() + delta) : null);
-					event.setEnd(event.getEnd() != null ? new Date(event.getEnd().getTime() + delta) : null);
+					event.setStart(event.getStart() != null ? new Date(event.getStart().getTime() + delta) : null);	//recompute start date
+					event.setEnd(event.getEnd() != null ? new Date(event.getEnd().getTime() + delta) : null);	// recompute end date
 					
 					this.info(String.format("%s changed to %s", event.getTitle(), event.getStart()));
 					target.add(feedback);

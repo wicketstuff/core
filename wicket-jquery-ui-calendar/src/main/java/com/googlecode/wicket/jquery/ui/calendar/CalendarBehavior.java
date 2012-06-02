@@ -28,6 +28,7 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 
 /**
+ * Provides the jQuery fullCalendar behavior
  * 
  * @author Sebastien Briquet - sebastien@7thweb.net
  *
@@ -45,7 +46,7 @@ class CalendarBehavior extends JQueryBehavior
 		this.add(new JavaScriptResourceReference(CalendarBehavior.class, "fullcalendar.min.js"));
 		this.add(new JavaScriptResourceReference(CalendarBehavior.class, "gcal.js"));
 	}
-	
+
 	@Override
 	public void renderHead(Component component, IHeaderResponse response)
 	{

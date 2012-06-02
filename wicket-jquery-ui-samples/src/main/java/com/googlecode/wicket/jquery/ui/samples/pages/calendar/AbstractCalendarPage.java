@@ -22,7 +22,7 @@ public abstract class AbstractCalendarPage extends SamplePage
 		return Arrays.asList(
 				new DemoLink(DefaultCalendarPage.class, "Calendar: public feeds"),
 				new DemoLink(CustomCalendarPage.class, "Calendar: custom events"),
-				new DemoLink(ExtendedCalendarPage.class, "Calendar: <b>extended demo</b>")
+				new DemoLink(ExtendedCalendarPage.class, "Calendar: <b>full demo</b>")
 			);
 	}
 }

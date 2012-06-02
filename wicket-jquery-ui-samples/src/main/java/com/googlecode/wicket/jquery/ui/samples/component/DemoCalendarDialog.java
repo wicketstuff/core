@@ -15,46 +15,45 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.calendar.CalendarEvent;
 import com.googlecode.wicket.jquery.ui.dialog.AbstractFormDialog;
+import com.googlecode.wicket.jquery.ui.form.RadioChoice;
 import com.googlecode.wicket.jquery.ui.kendo.datetime.DateTimePicker;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
+import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent;
+import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarEvent.Category;
 
-public abstract class CalendarDialog<T extends CalendarEvent> extends AbstractFormDialog<T>
+public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendarEvent>
 {
 	private static final long serialVersionUID = 1L;
 	protected static final String BTN_SUBMIT = "Save";
 	
-	static IModel<CalendarEvent> emptyModel()
+	static IModel<DemoCalendarEvent> emptyModel()
 	{
-		return new Model<CalendarEvent>(new CalendarEvent(0, "", new Date()));
+		return new Model<DemoCalendarEvent>(new DemoCalendarEvent(0, "", Category.PUBLIC, new Date()));
 	}
 
 	private Form<?> form;
 	private FeedbackPanel feedback;
 
-	@SuppressWarnings("unchecked")
-	public CalendarDialog(String id, String title)
+	public DemoCalendarDialog(String id, String title)
 	{
-		super(id, title, (IModel<T>) emptyModel(), true);
+		super(id, title, emptyModel(), true);
 		
 		this.init();
 	}
 	
 	private void init()
 	{
-		this.form = new Form<T>("form", new CompoundPropertyModel<T>(this.getModel()));
+		this.form = new Form<DemoCalendarEvent>("form", new CompoundPropertyModel<DemoCalendarEvent>(this.getModel()));
 		this.add(this.form);
 
 		this.form.add(new RequiredTextField<String>("title"));
-		
+		this.form.add(new RadioChoice<Category>("category", Arrays.asList(Category.values())));
+
 		CheckBox checkAllDay = new CheckBox("allDay");
 		this.form.add(checkAllDay.setOutputMarkupId(true));
-		this.form.add(new Label("label", "all day?").add(AttributeModifier.append("for", checkAllDay.getMarkupId())));
 
-//		Options options = new Options();
-//		options.set("dateFormat", Options.asString("dd MM yy"));
-		
+		this.form.add(new Label("label", "All day?").add(AttributeModifier.append("for", checkAllDay.getMarkupId())));
 		this.form.add(new DateTimePicker("start").setRequired(true));
 		this.form.add(new DateTimePicker("end"));
 
@@ -82,7 +81,7 @@ public abstract class CalendarDialog<T extends CalendarEvent> extends AbstractFo
 		return this.form;
 	}
 
-	public void setModelObject(T event)
+	public void setModelObject(DemoCalendarEvent event)
 	{
 		this.setDefaultModelObject(event);
 	}
