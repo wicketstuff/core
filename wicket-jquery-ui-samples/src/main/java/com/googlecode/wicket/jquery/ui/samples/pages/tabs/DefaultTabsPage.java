@@ -1,6 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.tabs;
 
-import com.googlecode.wicket.jquery.ui.JQueryBehavior;
+import com.googlecode.wicket.jquery.ui.widget.tabs.TabsBehavior;
 
 public class DefaultTabsPage extends AbstractTabsPage
 {
@@ -8,6 +8,6 @@ public class DefaultTabsPage extends AbstractTabsPage
 	
 	public DefaultTabsPage()
 	{
-		this.add(new JQueryBehavior("#tabs", "tabs"));
+		this.add(new TabsBehavior("#tabs"));
 	}
 }

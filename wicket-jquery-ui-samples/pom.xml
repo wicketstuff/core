@@ -14,7 +14,7 @@
 	<packaging>war</packaging>
 
 	<build>
-		<finalName>wicket-jquery-ui</finalName>
+		<finalName>${project.artifactId}</finalName>
 	</build>
 
 	<dependencies>

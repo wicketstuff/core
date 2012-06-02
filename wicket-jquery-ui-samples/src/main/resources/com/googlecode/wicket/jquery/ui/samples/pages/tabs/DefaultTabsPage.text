@@ -1,4 +1,6 @@
-This is a simple use of a JQueryBehavior; only the html markup is needed.<br/>
+Available since wicket-jquery-ui-core-1.2.1<br/>
+<br/>
+This is a simple use of a <code>TabsBehavior</code>; only the html markup is needed.<br/>
 <br/>
 <h4>Required markup & options</h4>
 <a href="http://jqueryui.com/demos/tabs/">http://jqueryui.com/demos/tabs/</a>

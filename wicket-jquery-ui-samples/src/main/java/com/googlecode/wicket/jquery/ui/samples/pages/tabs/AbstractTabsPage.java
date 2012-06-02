@@ -21,7 +21,7 @@ abstract class AbstractTabsPage extends SamplePage
 	{
 		return Arrays.asList(
 				new DemoLink(DefaultTabsPage.class, "Tabs Behavior"),
-				new DemoLink(WidgetTabsPage.class, "Tabs Widget")
+				new DemoLink(WidgetTabsPage.class, "Tabs Widget: TabbedPanel")
 			);
 	}
 }

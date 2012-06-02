@@ -26,6 +26,7 @@ import com.googlecode.wicket.jquery.ui.Options;
  * Provides a jQuery accordion based on a {@link JQueryContainer}
  * 
  * @author Sebastien Briquet - sebastien@7thweb.net
+ * @since 1.0
  */
 public class Accordion extends JQueryContainer
 {
