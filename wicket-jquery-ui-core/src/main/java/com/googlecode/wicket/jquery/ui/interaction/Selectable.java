@@ -19,10 +19,14 @@ package com.googlecode.wicket.jquery.ui.interaction;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.IAjaxCallDecorator;
+import org.apache.wicket.ajax.calldecorator.AjaxCallDecorator;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.util.ListModel;
@@ -47,9 +51,9 @@ import com.googlecode.wicket.jquery.ui.utils.RequestCycleUtils;
  * &lt;/ul&gt;
  * 
  * 
- * final Selectable<String> selectable = new Selectable<String>("selectable", list) {
+ * final Selectable&lt;String&gt; selectable = new Selectable&lt;String&gt;("selectable", list) {
  * 	
- * 	protected void onSelect(AjaxRequestTarget target, List<String> items)
+ * 	protected void onSelect(AjaxRequestTarget target, List&lt;String&gt; items)
  * 	{
  * 		//items: gets the selected item
  * 	}
@@ -81,7 +85,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	{
 		this(id, new ListModel<T>(list));
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -93,33 +97,16 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	
 		this.init();
 	}
-	
+
+	/**
+	 * Initialization
+	 */
 	private void init()
 	{
-		this.stopBehavior = new JQueryAjaxBehavior(this) {
-			
-			private static final long serialVersionUID = 1L;
-			
-			@Override
-			public CharSequence getCallbackScript()
-			{
-				//by ids:
-//				return generateCallbackScript("$( '.ui-selected', this ).each( function() { items+='&item='+Wicket.$(this).id; } ); wicketAjaxGet('" + getCallbackUrl() + "'+items");
-
-				//by indexes
-				String selector = JQueryWidget.getSelector(Selectable.this) + " li";
-				return generateCallbackScript("$('.ui-selected', this).each( function() { indexes += '&index=' + $('" + selector + "').index(this); } ); wicketAjaxGet('" + getCallbackUrl() + "' + indexes");
-			}
-
-			@Override
-			protected JQueryEvent newEvent(AjaxRequestTarget target)
-			{
-				return new StopEvent(target);
-			}
-		};
+		this.stopBehavior = this.newStopBehavior(); 
 	}
 
-	// Getter //
+	// Getters //
 	@SuppressWarnings("unchecked")
 	public List<T> getModelObject()
 	{
@@ -127,13 +114,25 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	}
 
 	/**
-	 * Get the selected items
+	 * Gets the selected items
 	 * @return selected items
 	 */
 	public List<T> getSelectedItems()
 	{
 		return this.items;
 	}
+
+	/**
+	 * Gets the selector that identifies the selectable item within a {@link Selectable}<br/>
+	 * The selector should be the path from the {@link Selectable} to the item (for instance '#myUL LI', where '#myUL' is the {@link Selectable}'s selector)
+	 * 
+	 * @return by default: JQueryWidget.getSelector(this) + " li" 
+	 */
+	protected String getItemSelector()
+	{
+		return JQueryWidget.getSelector(this) + " li";
+	}
+
 
 	// Events //
 	@Override
@@ -201,11 +200,56 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 			{
 				Selectable.this.onConfigure(this);
 				
-				this.options.set("stop", "function() { var indexes=''; " + stopBehavior.getCallbackScript() + " }");
+				this.setOption("stop", "function() { " + stopBehavior.getCallbackScript() + " }");
 			}
 		};
 	}
+
+
+	// Behavior factory //
+	/**
+	 * Gets the ajax behavior that will be triggered when the user has selected items
+	 * 
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	protected JQueryAjaxBehavior newStopBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+					
+			private static final long serialVersionUID = 1L;
 	
+			@Override
+			protected IAjaxCallDecorator getAjaxCallDecorator()
+			{
+				return new AjaxCallDecorator() {
+
+					private static final long serialVersionUID = 1L;
+					
+					@Override
+					public CharSequence decorateScript(Component c, CharSequence script)
+					{
+						String selector = Selectable.this.getItemSelector(); 
+						String indexes = "var indexes=[]; $('.ui-selected', this).each( function() { indexes.push($('" + selector + "').index(this)); } ); ";
+
+						return indexes + script;
+					}
+				};
+			}
+
+			@Override
+			public CharSequence getCallbackScript()
+			{
+				return generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() + "&indexes=' + indexes");
+			}
+
+			@Override
+			protected JQueryEvent newEvent(AjaxRequestTarget target)
+			{
+				return new StopEvent(target);
+			}
+		};
+	}
+
 	// DraggableFactory methods //
 	/**
 	 * Creates a {@link Draggable} object that is related to this {@link Selectable}.<br/>
@@ -231,6 +275,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 		return factory.create(id, JQueryWidget.getSelector(this)); //let throw a NPE if no factory is defined
 	}
 
+	
 	// Event class //
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'stop' callback
@@ -244,16 +289,28 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 			super(target);
 			
 			this.indexes = new ArrayList<Integer>();
-			
-			List<StringValue> values = RequestCycleUtils.getQueryParameterValues("index");
-			
+			StringValue values = RequestCycleUtils.getQueryParameterValue("indexes"); //ie: 1,2,3 (conforms wicket6 branch implementation)
+
 			if (values != null)
 			{
-				for(StringValue value : values)
+				Pattern pattern = Pattern.compile("(\\d+)");
+				Matcher matcher = pattern.matcher(values.toString());
+	
+				while (matcher.find())
 				{
-					this.indexes.add(value.toInt());
+					this.indexes.add(Integer.valueOf(matcher.group()));
 				}
 			}
+
+//			List<StringValue> values = RequestCycleUtils.getQueryParameterValues("index");
+//			
+//			if (values != null)
+//			{
+//				for(StringValue value : values)
+//				{
+//					this.indexes.add(value.toInt());
+//				}
+//			}
 		}
 
 		public List<Integer> getIndexes()
