@@ -115,7 +115,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 		this.renderer = renderer;
 		this.template = this.newTemplate();
-		
+
 		this.init();
 	}
 	
@@ -130,6 +130,12 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 	
 	// Methods //
+	@Override
+	protected String getModelValue()
+	{
+		return this.renderer.getText(this.getModelObject()); //renderer cannot be null.
+	}
+	
 	/**
 	 * Gets choices matching the provided input
 	 * @param input String that represent the query
