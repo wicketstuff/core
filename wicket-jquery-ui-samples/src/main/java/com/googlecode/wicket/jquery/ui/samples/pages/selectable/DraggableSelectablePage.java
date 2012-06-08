@@ -54,7 +54,7 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 			protected void populateItem(ListItem<String> item)
 			{
 				// Draggable //
-				Draggable<String> draggable = selectable.createDraggable("drag");
+				Draggable<?> draggable = selectable.createDraggable("drag");
 				item.add(draggable);
 
 				// Label //
@@ -65,7 +65,7 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 		});
 		
 		// Droppable //
-		Droppable<String> droppable = this.newDroppable("droppable");
+		Droppable<?> droppable = this.newDroppable("droppable");
 		this.add(droppable);
 
 		// Droppable ListView //
@@ -85,9 +85,9 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 	 * Gets a new Droppable.
 	 * By default 'over' and 'exit' ('out') events are disabled to minimize client/server round-trips.
 	 */
-	private Droppable<String> newDroppable(String id)
+	private Droppable<?> newDroppable(String id)
 	{
-		return new Droppable<String>(id) {
+		return new Droppable<Void>(id) {
 	
 			private static final long serialVersionUID = 1L;
 

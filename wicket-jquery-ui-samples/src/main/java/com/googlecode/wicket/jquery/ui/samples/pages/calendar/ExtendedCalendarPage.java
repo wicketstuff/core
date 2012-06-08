@@ -93,8 +93,6 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			@Override
 			protected void onDayClick(AjaxRequestTarget target, Date date)
 			{
-				super.onDayClick(target, date);
-
 				DemoCalendarEvent event = DemoCalendarDAO.emptyEvent(date);
 				
 				dialog.setModelObject(event);
@@ -104,8 +102,6 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			@Override
 			protected void onSelect(AjaxRequestTarget target, Date start, Date end, boolean allDay)
 			{
-				super.onSelect(target, start, end, allDay);
-				
 				DemoCalendarEvent event = DemoCalendarDAO.emptyEvent(start, end);
 				event.setAllDay(allDay);
 
@@ -116,8 +112,6 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			@Override
 			protected void onEventClick(AjaxRequestTarget target, int eventId)
 			{
-				super.onEventClick(target, eventId);
-
 				DemoCalendarEvent event = DemoCalendarDAO.getEvent(eventId);
 
 				if (event != null)
@@ -128,17 +122,16 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			}
 
 			@Override
-			protected void onEventDrop(AjaxRequestTarget target, int eventId, long delta, boolean isAllDay)
+			protected void onEventDrop(AjaxRequestTarget target, int eventId, long delta, boolean allDay)
 			{
-				super.onEventDrop(target, eventId, delta, isAllDay);
-
 				DemoCalendarEvent event = DemoCalendarDAO.getEvent(eventId);
 
 				if (event != null)
 				{
 					event.setStart(event.getStart() != null ? new Date(event.getStart().getTime() + delta) : null);	//recompute start date
 					event.setEnd(event.getEnd() != null ? new Date(event.getEnd().getTime() + delta) : null);	// recompute end date
-					
+					event.setAllDay(allDay);
+
 					this.info(String.format("%s changed to %s", event.getTitle(), event.getStart()));
 					target.add(feedback);
 				}
@@ -147,8 +140,6 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			@Override
 			protected void onEventResize(AjaxRequestTarget target, int eventId, long delta)
 			{
-				super.onEventResize(target, eventId, delta);
-
 				DemoCalendarEvent event = DemoCalendarDAO.getEvent(eventId);
 
 				if (event != null)

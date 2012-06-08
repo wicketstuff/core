@@ -16,7 +16,8 @@
  */
 package com.googlecode.wicket.jquery.ui.interaction;
 
-import java.io.Serializable;
+import com.googlecode.wicket.jquery.ui.JQueryBehavior;
+
 
 /**
  * Provides a default implementation of {@link AbstractDraggableFactory} related to a {@link Selectable} widget<br/>
@@ -29,7 +30,7 @@ import java.io.Serializable;
  *
  * @param <T> the model object type
  */
-public abstract class SelectableDraggableFactory<T extends Serializable> extends AbstractDraggableFactory<T>
+public class SelectableDraggableFactory extends AbstractDraggableFactory
 {
 	private static final long serialVersionUID = 1L;
 
@@ -47,4 +48,23 @@ public abstract class SelectableDraggableFactory<T extends Serializable> extends
 
 		return helper.toString();
 	}
+
+	@Override
+	protected Draggable<?> create(String id, String selector, final String helper)
+	{
+		return new Draggable<Void>(id) {
+
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			protected void onConfigure(JQueryBehavior behavior)
+			{
+				super.onConfigure(behavior);
+
+				behavior.setOption("helper", helper);
+			}
+		};
+	}
+	
+	
 }

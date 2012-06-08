@@ -16,8 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.interaction;
 
-import java.io.Serializable;
-
 import org.apache.wicket.IClusterable;
 
 /**
@@ -30,7 +28,7 @@ import org.apache.wicket.IClusterable;
  *
  * @param <T> the model object type
  */
-public abstract class AbstractDraggableFactory<T extends Serializable> implements IClusterable
+public abstract class AbstractDraggableFactory implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -46,7 +44,7 @@ public abstract class AbstractDraggableFactory<T extends Serializable> implement
 	 * @param selector the related component's selector
 	 * @return the {@link Draggable} object
 	 */
-	public final Draggable<String> create(String id, String selector)
+	public final Draggable<?> create(String id, String selector)
 	{
 		return this.create(id, selector, this.getHelper(selector));
 	}
@@ -73,5 +71,5 @@ public abstract class AbstractDraggableFactory<T extends Serializable> implement
 	 * 
 	 * @return the {@link Draggable} object
 	 */
-	protected abstract Draggable<String> create(String id, String selector, final String helper);
+	protected abstract Draggable<?> create(String id, String selector, final String helper);
 }

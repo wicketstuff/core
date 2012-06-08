@@ -21,7 +21,8 @@ abstract class AbstractSelectablePage extends SamplePage
 	{
 		return Arrays.asList(
 				new DemoLink(DefaultSelectablePage.class, "Selectable"),
-				new DemoLink(DraggableSelectablePage.class, "Selectable, with draggable")
+				new DemoLink(DraggableSelectablePage.class, "Selectable, with draggable (on list items)"),
+				new DemoLink(TableDraggableSelectablePage.class, "Selectable, with customized draggable (on table rows)")
 			);
 	}
 }

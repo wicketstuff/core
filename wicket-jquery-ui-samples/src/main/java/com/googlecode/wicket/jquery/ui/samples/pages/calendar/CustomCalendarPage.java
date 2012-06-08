@@ -15,7 +15,6 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class CustomCalendarPage extends AbstractCalendarPage
 {
 	private static final long serialVersionUID = 1L;
-	protected static final int NEW_ID = -1;
 
 	private final List<CalendarEvent> events;
 	
