@@ -23,7 +23,8 @@ abstract class AbstractAutoCompletePage extends SamplePage
 				new DemoLink(DefaultAutoCompletePage.class, "Auto-complete"),
 				new DemoLink(CustomAutoCompletePage.class, "Auto-complete: custom beans"),
 				new DemoLink(TemplateAutoCompletePage.class, "Auto-complete: custom template"),
-				new DemoLink(RendererAutoCompletePage.class, "Auto-complete: custom renderer")
+				new DemoLink(RendererAutoCompletePage.class, "Auto-complete: custom renderer"),
+				new DemoLink(ConverterAutoCompletePage.class, "Auto-complete: form submit")
 			);
 	}
 }

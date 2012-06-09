@@ -25,7 +25,7 @@ public class DefaultAutoCompletePage extends AbstractAutoCompletePage
 	private void init()
 	{
 		// Form //
-		final Form<String> form = new Form<String>("form");
+		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //

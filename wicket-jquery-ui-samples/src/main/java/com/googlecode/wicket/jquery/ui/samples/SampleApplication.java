@@ -74,7 +74,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/plugins", FontSizePage.class);
 		
 		// Test //
-		this.mountPage("/test", TestPage.class);
+		this.mountPackage("/test", TestPage.class);
 	}
 
 	/**

@@ -1,0 +1,5 @@
+The purpose of this sample is to test that the form submit use the internal <code>IConverter</code> to retrieve the bean, by passing the type class to the <code>AutoCompleteTextField</code> constructor.
+<br/>
+<h4>Since</h4>
+wicket-jquery-ui-core-1.2.1
+

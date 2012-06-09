@@ -8,37 +8,57 @@ import org.apache.wicket.IClusterable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
+import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.renderer.TextRenderer;
 
-public class RendererAutoCompletePage extends AbstractAutoCompletePage
+public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 {
 	private static final long serialVersionUID = 1L;
 	
-	public RendererAutoCompletePage()
+	public ConverterAutoCompletePage()
 	{
 		this.init();
 	}
 	
 	private void init()
 	{
-		// Model //
-		final IModel<Genre> model = new Model<Genre>();
-
 		// Form //
-		final Form<Void> form = new Form<Void>("form");
+		final Form<Genre> form = new Form<Genre>("form", new Model<Genre>(GENRES.get(0))); //test default value
 		this.add(form);
 
 		// FeedbackPanel //
 		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
 		form.add(feedbackPanel.setOutputMarkupId(true));
 
+		// Ajax button //
+		form.add(new AjaxButton("button") {
+			
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> unused)
+			{
+				Genre genre = form.getModelObject();
+				
+				if (genre != null)
+				{
+					info(String.format("Your favorite rock genre is: %s (id #%d)", genre.getName(), genre.getId()));
+				}
+				else
+				{
+					warn("Unknown rock genre!");
+				}
+
+				target.add(feedbackPanel);
+			}
+		});
+
 		// Auto-complete (note that Genre does not overrides #toString()) //
-		form.add(new AutoCompleteTextField<Genre>("autocomplete", model, new TextRenderer<Genre>("name")) {
+		form.add(new AutoCompleteTextField<Genre>("autocomplete", form.getModel(), new TextRenderer<Genre>("name"), Genre.class) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -53,25 +73,16 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 					if (genre.getName().toLowerCase().contains(input.toLowerCase()))
 					{
 						choices.add(genre);
-						
+
 						if (++count == 20) { break; } //limits the number of results
 					}
 				}
 
 				return choices;
 			}
-
-			@Override
-			protected void onSelected(AjaxRequestTarget target)
-			{
-				Genre genre = this.getModelObject();
-
-				info(String.format("Your favorite rock genre is: %s (id #%d)", genre.getName(), genre.getId()));
-				target.add(feedbackPanel);
-			}
 		});
 	}
-	
+
 	// List of Genre(s) //
 	static final List<Genre> GENRES = Arrays.asList(
 			new Genre(1, "Black Metal"),

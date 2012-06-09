@@ -32,7 +32,7 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 		final IModel<Genre> model = new Model<Genre>(Genre.emptyGenre());
 
 		// Form //
-		final Form<String> form = new Form<String>("form");
+		final Form<Void> form = new Form<Void>("form");
 		this.add(form);
 
 		// FeedbackPanel //
