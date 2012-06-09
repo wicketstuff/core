@@ -26,7 +26,6 @@ import org.apache.wicket.IClusterable;
  * 
  * @author Sebastien Briquet - sebastien@7thweb.net
  *
- * @param <T> the model object type
  */
 public abstract class AbstractDraggableFactory implements IClusterable
 {

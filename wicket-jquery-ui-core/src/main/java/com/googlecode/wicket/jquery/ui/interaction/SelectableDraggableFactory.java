@@ -25,10 +25,8 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
  * <br/>
  * Inspired from:<br/>
  * http://stackoverflow.com/questions/793559/grouping-draggable-objects-with-jquery-ui-draggable<br/>
-
+ * 
  * @author Sebastien Briquet - sebastien@7thweb.net
- *
- * @param <T> the model object type
  */
 public class SelectableDraggableFactory extends AbstractDraggableFactory
 {
