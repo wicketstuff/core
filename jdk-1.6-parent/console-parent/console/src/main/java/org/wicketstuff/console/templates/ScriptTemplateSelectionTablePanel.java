@@ -72,7 +72,7 @@ public class ScriptTemplateSelectionTablePanel extends Panel
 
 	private final ScriptEnginePanel enginePanel;
 
-	private DataTable<ScriptTemplate> table;
+	private DataTable<ScriptTemplate, Void> table;
 
 	public ScriptTemplateSelectionTablePanel(final String id, final ScriptEnginePanel enginePanel,
 		final IDataProvider<ScriptTemplate> dataProvider, final int rowsPerPage)
@@ -86,14 +86,14 @@ public class ScriptTemplateSelectionTablePanel extends Panel
 
 	private void init(final IDataProvider<ScriptTemplate> dataProvider, final int rowsPerPage)
 	{
-		table = new DataTable<ScriptTemplate>("table", createColumns(), dataProvider, rowsPerPage);
+		table = new DataTable<ScriptTemplate, Void>("table", createColumns(), dataProvider, rowsPerPage);
 		add(table);
 	}
 
-	protected List<IColumn<ScriptTemplate>> createColumns()
+	protected List<IColumn<ScriptTemplate, Void>> createColumns()
 	{
 
-		final List<IColumn<ScriptTemplate>> columns = new ArrayList<IColumn<ScriptTemplate>>();
+		final List<IColumn<ScriptTemplate, Void>> columns = new ArrayList<IColumn<ScriptTemplate, Void>>();
 		columns.add(new TitleColumn(this));
 		columns.add(new LangColumn(this));
 

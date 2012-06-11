@@ -23,7 +23,7 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-final class LangColumn extends PropertyColumn<ScriptTemplate>
+final class LangColumn extends PropertyColumn<ScriptTemplate, Void>
 {
 
 	private static final long serialVersionUID = 1L;

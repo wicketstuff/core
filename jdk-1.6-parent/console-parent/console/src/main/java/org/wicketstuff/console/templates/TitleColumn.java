@@ -28,7 +28,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
-final class TitleColumn extends PropertyColumn<ScriptTemplate>
+final class TitleColumn extends PropertyColumn<ScriptTemplate, Void>
 {
 
 	private final class TitleLink extends AjaxLink<ScriptTemplate>
