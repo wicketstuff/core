@@ -26,7 +26,7 @@ import com.googlecode.wicket.jquery.ui.JQueryIcon;
 /**
  * Provides a jQuery button based on the built-in Button
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public class Button extends org.apache.wicket.markup.html.form.Button implements IJQueryWidget

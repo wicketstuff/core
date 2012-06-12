@@ -23,7 +23,7 @@ import org.apache.wicket.model.IModel;
  * Provides a {@link Panel} with a generized model
  *  
  * @param <T> the model object type
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class ModelPanel<T> extends Panel
 {

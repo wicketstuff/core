@@ -30,7 +30,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 /**
  * Provides a {@link FeedbackPanel} customized with the jQuery theme
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public class JQueryFeedbackPanel extends FeedbackPanel

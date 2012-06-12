@@ -27,7 +27,7 @@ import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandle
 /**
  * Provides a {@link Panel} containing a loading indicator {@link Component}, which can be accessed (to be replaced for instance) by {@link #getInnerLabel()}  
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  * @since 1.2.1
  */
 public class LoadingPanel extends Panel

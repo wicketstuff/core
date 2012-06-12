@@ -24,7 +24,7 @@ import org.apache.wicket.markup.html.form.FormComponent;
  * Base class for implementing AJAX POST calls on JQuery {@link Component}<br/>
  * The difference with {@link JQueryAjaxFormBehavior} is that this behavior post a {@link FormComponent} so the receiver of the event can get the component back.
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public abstract class JQueryAjaxPostBehavior extends JQueryAjaxBehavior

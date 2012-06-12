@@ -37,7 +37,7 @@ import org.apache.wicket.Component;
  *	}	
  * </pre>
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public interface IJQueryWidget
@@ -63,6 +63,7 @@ public interface IJQueryWidget
 		
 		/**
 		 * Factory method that gets a new {@link JQueryBehavior} by invoking {@link IJQueryWidget#newWidgetBehavior(String)} on the supplied widget.
+		 * @param <T> the type
 		 * @param widget the {@link IJQueryWidget} object
 		 * @return the {@link JQueryBehavior}
 		 */

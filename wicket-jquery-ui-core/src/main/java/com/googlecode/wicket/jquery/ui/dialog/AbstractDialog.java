@@ -34,7 +34,7 @@ import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
 
 /**
  * Base class for implementing jQuery dialogs
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the type of the model object
  */
@@ -291,6 +291,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	 * Closes the dialogs in ajax.<br/>
 	 * It triggers the  {@link #onClose(AjaxRequestTarget, String)} event
 	 * @param target the {@link AjaxRequestTarget}
+	 * @param button the button that closes the dialog
 	 */
 	public final void close(AjaxRequestTarget target, String button)
 	{
@@ -307,7 +308,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	/**
 	 * Provides the {@link JQueryAjaxBehavior} being called by the button(s).
 	 * 
-	 * @author Sebastien Briquet - sebastien@7thweb.net
+	 * @author Sebastien Briquet - sebfz1
 	 *
 	 */
 	class ButtonAjaxBehavior extends JQueryAjaxBehavior

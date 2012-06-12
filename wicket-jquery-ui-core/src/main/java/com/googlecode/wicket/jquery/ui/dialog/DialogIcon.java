@@ -32,11 +32,20 @@ public enum DialogIcon
 	private final String icon;
 	private final String style;
 
+	/**
+	 * Private constructor
+	 * @param icon the icon jQuery UI class
+	 */
 	private DialogIcon(String icon)
 	{
 		this(icon, "");
 	}
 
+	/**
+	 * Private constructor
+	 * @param icon the icon jQuery UI class
+	 * @param style the surrounding style
+	 */
 	private DialogIcon(String icon, String style)
 	{
 		this.icon = icon;
@@ -45,6 +54,7 @@ public enum DialogIcon
 
 	/**
 	 * Gets the style variation (the jQuery style)
+	 * @return the style
 	 */
 	public String getStyle()
 	{

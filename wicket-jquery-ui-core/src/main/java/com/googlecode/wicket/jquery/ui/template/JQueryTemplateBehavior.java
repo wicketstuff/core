@@ -21,7 +21,7 @@ package com.googlecode.wicket.jquery.ui.template;
  * Provides the default implementation of {@link JQueryAbstractTemplateBehavior} that works with a {@link IJQueryTemplate}.<br/>
  * The content of the &lt;script /&gt; block (the resource stream) is given by the {@link IJQueryTemplate#getText()}
  *  
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class JQueryTemplateBehavior extends JQueryAbstractTemplateBehavior
 {

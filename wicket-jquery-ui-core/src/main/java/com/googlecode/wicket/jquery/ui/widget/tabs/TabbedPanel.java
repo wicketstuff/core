@@ -34,7 +34,7 @@ import com.googlecode.wicket.jquery.ui.Options;
 /**
  * Provides jQuery tabs based on a {@link JQueryPanel}
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class TabbedPanel extends JQueryPanel
 {
@@ -46,6 +46,7 @@ public class TabbedPanel extends JQueryPanel
 	/**
 	 * Constructor
 	 * @param id the markup id
+	 * @param tabs the list of {@link ITab}
 	 */
 	public TabbedPanel(String id, List<ITab> tabs)
 	{
@@ -55,6 +56,7 @@ public class TabbedPanel extends JQueryPanel
 	/**
 	 * Constructor
 	 * @param id the markup id
+	 * @param tabs the list of {@link ITab}
 	 * @param options {@link Options}
 	 */
 	public TabbedPanel(String id, List<ITab> tabs, Options options)

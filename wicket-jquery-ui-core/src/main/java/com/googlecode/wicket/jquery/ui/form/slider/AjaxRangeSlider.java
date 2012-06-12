@@ -36,7 +36,7 @@ import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEven
  * Provides a jQuery range slider based on a {@link FormComponentPanel}
  * This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called.
  *  
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class AjaxRangeSlider extends RangeSlider implements IValueChangedListener
 {

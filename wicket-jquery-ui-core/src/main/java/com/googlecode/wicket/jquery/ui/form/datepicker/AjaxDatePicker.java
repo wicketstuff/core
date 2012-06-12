@@ -34,7 +34,7 @@ import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxPostBehavior;
  * Provides a jQuery date-picker based on a {@link DateTextField}<br/>
  * This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'onSelect' javascript method is called.
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class AjaxDatePicker extends DatePicker
 {

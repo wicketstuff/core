@@ -26,7 +26,7 @@ import org.apache.wicket.model.IModel;
 
 /**
  * Base class for form-based dialogs
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the model object type
  */

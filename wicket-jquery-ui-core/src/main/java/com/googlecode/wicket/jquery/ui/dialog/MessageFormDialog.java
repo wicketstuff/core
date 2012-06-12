@@ -30,7 +30,7 @@ import org.apache.wicket.model.Model;
  * Provides a modal dialog box that display a specific message, with a predefined icon and a predefined button set.
  * <b>Note: </b> {@link MessageDialog} & {@link MessageFormDialog} are sharing the same code. There just do not extends the same class.
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public abstract class MessageFormDialog extends AbstractFormDialog<String>
 {

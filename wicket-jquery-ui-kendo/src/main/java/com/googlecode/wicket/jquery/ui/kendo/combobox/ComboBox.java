@@ -36,7 +36,7 @@ import com.googlecode.wicket.jquery.ui.template.IJQueryTemplate;
  * Provides a Kendo UI ComboBox widget.<br/>
  * It should be created on a HTML &lt;input type="text" /&gt; element
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the type of the model object
  */
@@ -111,6 +111,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	 * Constructor
 	 * @param id the markup id
 	 * @param model the {@link IModel}
+	 * @param choices the list model of choices
 	 * @param renderer the renderer to be used, so the renderer item text and its values can be dissociated
 	 */
 	public ComboBox(String id, IModel<String> model, List<? extends T> choices, ComboBoxRenderer<? super T> renderer)

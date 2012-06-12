@@ -32,7 +32,7 @@ import org.apache.wicket.IClusterable;
  * Provides a wrapper on a {@link Map} that will contains jQuery behavior options (key/value).<br/>
  * the {@link #toString()} methods returns the JSON representation of the options.
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public class Options implements IClusterable
@@ -127,6 +127,7 @@ public class Options implements IClusterable
 	
 	/**
 	 * Gets a read-only entry set of options
+	 * @return an unmodifiable set of internal map entries
 	 */
 	public Set<Entry<String, Serializable>> entries()
 	{

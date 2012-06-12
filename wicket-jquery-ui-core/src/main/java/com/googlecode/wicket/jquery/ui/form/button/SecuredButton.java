@@ -30,7 +30,7 @@ import com.googlecode.wicket.jquery.ui.JQueryIcon;
  * Provides a jQuery button based on the built-in AjaxButton, protected by roles. Roles are checked against an {@link IJQuerySecurityProvider}<br/>
  * Assuming the {@link WebSession} is implementing {@link IJQuerySecurityProvider} if not provided.
  *  
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public abstract class SecuredButton extends Button implements IJQueryWidget
@@ -65,6 +65,12 @@ public abstract class SecuredButton extends Button implements IJQueryWidget
 		this.provider = provider;
 	}
 
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param roles list of roles allowed to enable the button
+	 */
 	public SecuredButton(String id, IModel<String> model, String... roles)
 	{
 		this(id, model, (IJQuerySecurityProvider) WebSession.get(), roles);
@@ -74,6 +80,7 @@ public abstract class SecuredButton extends Button implements IJQueryWidget
 	 * Constructor
 	 * @param id the markup id
 	 * @param model the {@link IModel}
+	 * @param provider the {@link IJQuerySecurityProvider}
 	 * @param roles list of roles allowed to enable the button
 	 */
 	public SecuredButton(String id, IModel<String> model, IJQuerySecurityProvider provider, String... roles)
@@ -85,16 +92,14 @@ public abstract class SecuredButton extends Button implements IJQueryWidget
 	}
 
 
+	/**
+	 * Sets the roles allowed to enable the button
+	 * @param roles
+	 */
 	public void setRoles(String[] roles)
 	{
 		this.roles = roles;
 	}
-
-//	@Override
-//	public boolean isEnabled()
-//	{
-//		return super.isEnabled() && !this.isLocked(); //moved to onConfigure
-//	}
 
 	/**
 	 * Indicates whether the button is locked.

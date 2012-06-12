@@ -28,7 +28,7 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
  * Provides jQuery radio-buttons based on the built-in RadioChoice
  * 
  * @param <T> the model object type
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoice<T> implements IJQueryWidget
 {

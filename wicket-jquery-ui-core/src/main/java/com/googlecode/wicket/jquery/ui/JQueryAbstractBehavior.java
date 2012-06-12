@@ -31,7 +31,7 @@ import org.apache.wicket.request.resource.ResourceReference;
 /**
  * Provides the base class for every jQuery behavior.
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public abstract class JQueryAbstractBehavior extends Behavior

@@ -22,7 +22,7 @@ import org.apache.wicket.markup.html.form.Form;
 /**
  * Specifies that a widget handle a selection-change AJAX behavior
  *
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public interface ISelectionChangedListener
 {

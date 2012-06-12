@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides the behavior that gets the {@link CalendarEvent}<code>s</code> from the {@link CalendarModel}
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 class CalendarModelBehavior extends AbstractAjaxBehavior

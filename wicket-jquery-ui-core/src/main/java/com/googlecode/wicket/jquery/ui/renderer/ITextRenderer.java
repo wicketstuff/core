@@ -22,7 +22,7 @@ import org.apache.wicket.IClusterable;
  * Provides the capability to get a specific text (likely from a property) for a bean type, for rendering purpose
  *  
  * @param <T> the model object type
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public interface ITextRenderer<T> extends IClusterable
 {

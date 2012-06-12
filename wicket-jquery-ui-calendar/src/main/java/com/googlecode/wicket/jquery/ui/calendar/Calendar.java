@@ -36,7 +36,7 @@ import com.googlecode.wicket.jquery.ui.utils.RequestCycleUtils;
 /**
  * Provides calendar widget, based on the jQuery fullcalendar plugin.
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  * @author Martin Grigorov - martin-g
  *
  */

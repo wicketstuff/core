@@ -23,7 +23,7 @@ import com.googlecode.wicket.jquery.ui.Options;
 /**
  * Provides jQuery tabs based on a {@link JQueryContainer}
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class Tabs extends JQueryContainer
 {

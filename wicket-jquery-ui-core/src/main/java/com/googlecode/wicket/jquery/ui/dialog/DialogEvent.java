@@ -23,7 +23,7 @@ import com.googlecode.wicket.jquery.ui.JQueryEvent;
 /**
  * Provides a dialog event that will be transmitted to the dialog {@link AbstractDialog}
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class DialogEvent extends JQueryEvent
 {

@@ -19,7 +19,7 @@ package com.googlecode.wicket.jquery.ui;
 /**
  * Specifies that the implementing class is able to provide a control on user roles
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public interface IJQuerySecurityProvider

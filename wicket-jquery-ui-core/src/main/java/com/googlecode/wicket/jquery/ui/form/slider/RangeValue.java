@@ -21,7 +21,7 @@ import org.apache.wicket.IClusterable;
 /**
  * Provides the value type to be used as model object for {@link RangeSlider}
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class RangeValue implements IClusterable /*, Comparable<RangeValue> */
 {

@@ -22,7 +22,7 @@ import org.apache.wicket.util.lang.PropertyResolver;
  * Provides the default {@link ITextRenderer}
  *
  * @param <T> the model object type
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class TextRenderer<T> implements ITextRenderer<T>
 {

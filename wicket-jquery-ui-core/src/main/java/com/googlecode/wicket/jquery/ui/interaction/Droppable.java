@@ -30,7 +30,7 @@ import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
  * Provides a jQuery droppable area, on which {@link Draggable}<code>s</code> could be dropped.
  * 
  * @param <T> the model object type
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public abstract class Droppable<T> extends JQueryContainer
 {
@@ -55,6 +55,7 @@ public abstract class Droppable<T> extends JQueryContainer
 	/**
 	 * Constructor
 	 * @param id the markup id
+	 * @param model the {@link IModel}
 	 */
 	public Droppable(String id, IModel<T> model)
 	{

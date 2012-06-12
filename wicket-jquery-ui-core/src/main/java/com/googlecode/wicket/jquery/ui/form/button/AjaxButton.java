@@ -28,7 +28,7 @@ import com.googlecode.wicket.jquery.ui.JQueryIcon;
 /**
  * Provides a jQuery button based on the built-in AjaxButton
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form.AjaxButton implements IJQueryWidget

@@ -29,7 +29,7 @@ import com.googlecode.wicket.jquery.ui.Options;
 /**
  * Provides a jQuery date-picker based on a {@link DateTextField}
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class DatePicker extends DateTextField implements IJQueryWidget
 {

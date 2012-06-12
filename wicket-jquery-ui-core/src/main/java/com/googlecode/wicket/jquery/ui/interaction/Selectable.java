@@ -66,7 +66,8 @@ import com.googlecode.wicket.jquery.ui.utils.RequestCycleUtils;
  * //selectable.getSelectedItems(): gets the selected items
  * </pre>
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @param <T> the type of the model object
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public class Selectable<T extends Serializable> extends JQueryContainer

@@ -42,7 +42,7 @@ import com.googlecode.wicket.jquery.ui.utils.RequestCycleUtils;
 /**
  * Provides a jQuery auto-complete widget
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the type of the model object
  */

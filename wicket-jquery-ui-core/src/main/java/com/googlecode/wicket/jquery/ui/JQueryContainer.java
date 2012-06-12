@@ -24,7 +24,7 @@ import com.googlecode.wicket.jquery.ui.widget.ProgressBar;
 
 /**
  * Base class for a JQuery Container, like an {@link Accordion}
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public abstract class JQueryContainer extends WebMarkupContainer implements IJQueryWidget

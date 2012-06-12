@@ -25,7 +25,7 @@ import org.apache.wicket.util.string.StringValue;
 /**
  * Utility class for retrieving request parameters
  *
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public class RequestCycleUtils

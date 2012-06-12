@@ -33,7 +33,7 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 /**
  * Provides a modal dialog box that ask an input to the user
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the type of the model object of the {@link RequiredTextField}
  */

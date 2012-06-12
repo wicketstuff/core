@@ -30,7 +30,7 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
  * Provides jQuery check-buttons based on a {@link CheckBoxMultipleChoice}
  * 
  * @param <T> the model object type
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQueryWidget
 {

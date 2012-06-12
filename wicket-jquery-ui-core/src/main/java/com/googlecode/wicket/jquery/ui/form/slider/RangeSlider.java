@@ -35,7 +35,7 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 /**
  * Provides a jQuery range slider based on a {@link FormComponentPanel}
  *
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class RangeSlider extends AbstractSlider<RangeValue>
 {

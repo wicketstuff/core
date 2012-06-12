@@ -30,7 +30,7 @@ import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEven
 /**
  * Provides a jQuery progress-bar based on a {@link JQueryContainer}
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  * @since 1.0
  */
 public class ProgressBar extends JQueryContainer

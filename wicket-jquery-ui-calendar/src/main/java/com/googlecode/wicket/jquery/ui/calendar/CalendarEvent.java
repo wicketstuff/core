@@ -24,7 +24,7 @@ import com.googlecode.wicket.jquery.ui.Options;
 /**
  * Provides a base bean that can be used with a {@link CalendarModel} 
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public class CalendarEvent implements Serializable

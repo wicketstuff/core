@@ -30,7 +30,7 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 /**
  * Provides the jQuery fullCalendar behavior
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 class CalendarBehavior extends JQueryBehavior

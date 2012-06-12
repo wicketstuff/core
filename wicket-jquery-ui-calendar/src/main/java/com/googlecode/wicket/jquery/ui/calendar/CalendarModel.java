@@ -25,7 +25,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
  * Base class for implementing the list model of {@link CalendarEvent} to be retrieved.<br/>
  * {@link Calendar} widget takes those model in constructor; the inheriting class should be able to {@link #load()} events depending on the interval defined by {@link #getStart()} and {@link #getEnd()} dates.
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public abstract class CalendarModel extends LoadableDetachableModel<List<? extends CalendarEvent>>

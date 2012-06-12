@@ -32,7 +32,7 @@ import org.apache.wicket.validation.ValidationError;
 /**
  * Provides a date-time-picker based on a {@link DatePicker} and a {@link TimePicker}
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class DateTimePicker extends FormComponentPanel<Date> implements ITextFormatProvider
 {
@@ -58,6 +58,8 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	/**
 	 * Constructor
 	 * @param id the markup id
+	 * @param datePattern the SimpleDateFormat pattern for the date
+	 * @param timePattern the SimpleDateFormat pattern for the time
 	 */
 	public DateTimePicker(String id, String datePattern, String timePattern)
 	{
@@ -70,6 +72,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	/**
 	 * Constructor
 	 * @param id the markup id
+	 * @param date the initial date
 	 */
 	public DateTimePicker(String id, IModel<Date> date)
 	{
@@ -79,6 +82,9 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	/**
 	 * Constructor
 	 * @param id the markup id
+	 * @param date the initial date
+	 * @param datePattern the SimpleDateFormat pattern for the date
+	 * @param timePattern the SimpleDateFormat pattern for the time
 	 */
 	public DateTimePicker(String id, IModel<Date> date, String datePattern, String timePattern)
 	{

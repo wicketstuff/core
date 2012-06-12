@@ -22,7 +22,7 @@ import com.googlecode.wicket.jquery.ui.Options;
 /**
  * Provides a jQuery tabs behavior.
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  * @since 1.2.1
  */
 public class TabsBehavior extends JQueryBehavior

@@ -29,7 +29,7 @@ import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
 /**
  * Provides a {@link WebMarkupContainer} on which effect can be played
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public class JQueryEffectContainer extends WebMarkupContainer

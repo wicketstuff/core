@@ -40,7 +40,7 @@ import org.apache.wicket.MarkupContainer;
  * }
  * </pre>
  *  
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public interface IBorderLayout

@@ -18,7 +18,7 @@ package com.googlecode.wicket.jquery.ui.ajax;
 
 /**
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  * @deprecated not yet used
  *
  */

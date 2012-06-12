@@ -29,7 +29,7 @@ import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
  * Provides a Kendo UI Editor widget.<br/>
  * It should be created on a HTML &lt;textarea /&gt; element
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the object model type
  */

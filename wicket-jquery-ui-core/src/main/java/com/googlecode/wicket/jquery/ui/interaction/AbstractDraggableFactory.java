@@ -24,7 +24,7 @@ import org.apache.wicket.IClusterable;
  * The common use case is to have the ability to drag multiple {@link Draggable} object.<br/>
  * To achieve this, the role of the jQuery helper is important (see {@link #getHelper(String)} implementation in {@link SelectableDraggableFactory})<br/>
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public abstract class AbstractDraggableFactory implements IClusterable

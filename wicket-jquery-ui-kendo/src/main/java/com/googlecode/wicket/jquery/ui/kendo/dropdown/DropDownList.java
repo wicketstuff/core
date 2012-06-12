@@ -31,7 +31,7 @@ import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
 /**
  * Provides a Kendo UI DropDownList widget. It extends built-in {@link DropDownChoice}<br/>
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the model object type
  */

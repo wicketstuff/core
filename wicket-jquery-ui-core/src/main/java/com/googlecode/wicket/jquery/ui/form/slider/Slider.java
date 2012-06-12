@@ -32,7 +32,7 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 /**
  * Provides a jQuery slider based on a {@link FormComponentPanel}
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class Slider extends AbstractSlider<Integer>
 {

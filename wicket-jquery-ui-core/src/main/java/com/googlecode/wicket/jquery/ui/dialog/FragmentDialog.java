@@ -25,7 +25,7 @@ import org.apache.wicket.model.Model;
 /**
  * Provides a dialog where the content is coming from a {@link Fragment}
  *
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the type of the model object
  */

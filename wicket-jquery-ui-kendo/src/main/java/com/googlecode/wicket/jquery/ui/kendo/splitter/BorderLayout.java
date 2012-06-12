@@ -50,7 +50,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 &lt;/div&gt;
  * </pre>
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public class BorderLayout extends WebMarkupContainer implements IBorderLayout

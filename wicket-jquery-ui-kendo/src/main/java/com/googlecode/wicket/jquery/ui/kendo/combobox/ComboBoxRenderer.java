@@ -24,7 +24,7 @@ import com.googlecode.wicket.jquery.ui.renderer.TextRenderer;
  * Provides the default ComboBox renderer.
  *
  * @param <T> the model object type
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class ComboBoxRenderer<T> extends TextRenderer<T>
 {

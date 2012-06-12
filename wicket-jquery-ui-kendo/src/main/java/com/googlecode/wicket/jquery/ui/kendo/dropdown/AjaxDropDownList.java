@@ -34,7 +34,7 @@ import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEven
  * Provides a Kendo UI DropDownList widget.<br/>
  * This ajax version will post the component, using a {@link JQueryAjaxChangeBehavior}, when the 'change' javascript method is called.
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  * @param <T>
  */

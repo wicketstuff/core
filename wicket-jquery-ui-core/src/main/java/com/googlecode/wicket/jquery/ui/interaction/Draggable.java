@@ -35,7 +35,7 @@ import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
  * Provides a jQuery draggable element based on a {@link JQueryContainer}
  * 
  * @param <T> the object model type
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class Draggable<T> extends JQueryContainer
 {

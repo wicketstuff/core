@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Provides simple utils that can be used in {@link AutoCompleteTextField#getChoices(String)}
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public class AutoCompleteUtils
@@ -32,8 +32,11 @@ public class AutoCompleteUtils
 	/**
 	 * Returns a sub list of items of type T having their textual representation (toString()) containing the search criteria<br/>
 	 * The max size of the sub list is {@link #MAX}
+	 * @param <T> the type
 	 * @param search search criteria
 	 * @param list reference list
+	 * @param T the type
+	 * @return the sub list
 	 */
 	public static <T> List<T> contains(String search, List<T> list)
 	{
@@ -42,9 +45,12 @@ public class AutoCompleteUtils
 	
 	/**
 	 * Returns a sub list of items of type T having their textual representation (toString()) containing the search criteria<br/>
+	 * @param <T> the type
 	 * @param search search criteria
 	 * @param list reference list
 	 * @param max max size of the sub list to be returned
+	 * @param T the type
+	 * @return the sub list
 	 */
 	public static <T> List<T> contains(String search, List<T> list, int max)
 	{
@@ -67,8 +73,10 @@ public class AutoCompleteUtils
 	/**
 	 * Returns a sub list of items of type T having their textual representation (toString()) starting with the search criteria<br/>
 	 * The max size of the sub list is {@link #MAX}
+	 * @param <T> the type
 	 * @param search search criteria
 	 * @param list reference list
+	 * @return the sub list
 	 */
 	public static <T> List<T> startsWith(String search, List<T> list)
 	{
@@ -77,10 +85,11 @@ public class AutoCompleteUtils
 
 	/**
 	 * Returns a sub list of items of type T having their textual representation (toString()) starting with the search criteria<br/>
-	 * 
+	 * @param <T> the type
 	 * @param search search criteria
 	 * @param list reference list
 	 * @param max max size of the sub list to be returned
+	 * @return the sub list
 	 */
 	public static <T> List<T> startsWith(String search, List<T> list, int max)
 	{

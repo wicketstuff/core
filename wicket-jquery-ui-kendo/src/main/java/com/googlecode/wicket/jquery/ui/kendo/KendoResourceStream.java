@@ -22,7 +22,7 @@ import com.googlecode.wicket.jquery.ui.template.JQueryResourceStream;
  * Provides the resource stream for Kendo-UI templates.
  * The {@link #getString()} method returns a script block like &lt;script id="jquery-template-123456" type="text/x-kendo-template" /&gt;  
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class KendoResourceStream extends JQueryResourceStream
 {

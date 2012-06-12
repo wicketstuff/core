@@ -24,7 +24,7 @@ import org.apache.wicket.WicketRuntimeException;
 /**
  * Provides a default implementation of {@link JQueryAbstractBehavior}.
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  * @since 1.0
  */
 public class JQueryBehavior extends JQueryAbstractBehavior

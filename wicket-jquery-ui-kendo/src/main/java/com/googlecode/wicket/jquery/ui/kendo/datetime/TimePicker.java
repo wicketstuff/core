@@ -32,7 +32,7 @@ import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
  * Provides a Kendo UI TimePicker<br/>
  * It should be created on a HTML &lt;input type="text" /&gt; element
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class TimePicker extends DateTextField implements IJQueryWidget
 {

@@ -26,7 +26,7 @@ import com.googlecode.wicket.jquery.ui.template.JQueryResourceStream;
  * <br/>
  * This implementation is different from JQueryTemplateBehavior as the &lt;script /&gt; block will have the kendo-ui type ("text/x-kendo-template")
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public class KendoTemplateBehavior extends JQueryAbstractTemplateBehavior

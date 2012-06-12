@@ -22,7 +22,7 @@ import org.apache.wicket.model.IModel;
 /**
  * Base class for a jQuery widget based on a {@link Panel}.
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public abstract class JQueryPanel extends Panel implements IJQueryWidget

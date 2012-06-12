@@ -24,7 +24,7 @@ import org.apache.wicket.markup.html.form.FormComponent;
 /**
  * Base class for implementing AJAX POST on JQuery Form (submit)<br/>
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  * @deprecated will probably be never used as it post the whole form. It means that source is interested by receiving several {@link FormComponent}<code>s</code>
  *
  */

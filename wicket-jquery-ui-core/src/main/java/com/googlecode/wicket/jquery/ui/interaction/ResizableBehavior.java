@@ -22,7 +22,7 @@ import com.googlecode.wicket.jquery.ui.Options;
 /**
  * Provides a jQuery resizable behavior
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public class ResizableBehavior extends JQueryBehavior
 {

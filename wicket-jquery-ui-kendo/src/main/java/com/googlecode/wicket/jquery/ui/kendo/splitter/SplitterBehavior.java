@@ -22,7 +22,7 @@ import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
 /**
  * Provides a Kendo UI splitter behavior
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public class SplitterBehavior extends KendoAbstractBehavior

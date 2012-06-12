@@ -37,7 +37,7 @@ import com.googlecode.wicket.jquery.ui.panel.FormSubmittingPanel;
  * <b>Warning: </b> it is not possible to get a form component value - that is going to be changed - to be displayed in the dialog box message. The reason is that in order to get a form component (updated) model object, the form component should be validated. The dialog does not proceed to a (whole) form validation while being opened, because the form validation will occur when the user will confirm (by clicking on OK button). This the intended behavior.
  *
  * @see IFormSubmittingComponent
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public abstract class ConfirmButton extends FormSubmittingPanel<String>
 {

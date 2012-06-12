@@ -24,7 +24,7 @@ import org.apache.wicket.IClusterable;
  * Provides base interface for a jQuery template<br/>
  * Designed to be used in conjunction with {@link JQueryTemplateBehavior}
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  */
 public interface IJQueryTemplate extends IClusterable
 {

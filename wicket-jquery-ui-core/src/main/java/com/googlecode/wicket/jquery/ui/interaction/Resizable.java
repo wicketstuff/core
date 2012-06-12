@@ -26,7 +26,7 @@ import com.googlecode.wicket.jquery.ui.Options;
 /**
  * Provides a jQuery UI resizable {@link JQueryContainer}.<br/>
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public class Resizable extends JQueryContainer /* JQueryPanel? */

@@ -32,7 +32,7 @@ import com.googlecode.wicket.jquery.ui.JQueryIcon;
  * Provides a jQuery button based on the built-in AjaxButton, protected by roles. Roles are checked against an {@link IJQuerySecurityProvider}<br/>
  * Assuming the {@link WebSession} is implementing {@link IJQuerySecurityProvider} if not provided. 
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public abstract class SecuredAjaxButton extends AjaxButton implements IJQueryWidget

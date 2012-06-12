@@ -30,7 +30,7 @@ import com.googlecode.wicket.jquery.ui.Options;
 /**
  * Base class for implementing jQuery slider(s)
  *
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the model object type
  */
@@ -102,6 +102,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	 * <br/>
 	 * <b>Dev note:</b> this method is masked abstract to make sure the developer that will add the validator to the right input(s) in {@link #onInitialize()}
 	 * 
+	 * @param <W> the widget type 
 	 * @param validator the {@link RangeValidator}
 	 * @return this
 	 */
@@ -172,6 +173,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	// Options //
 	/**
 	 * Sets the min value
+	 * @param <W> the widget type
 	 * @param min
 	 * @return this
 	 */
@@ -184,6 +186,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 
 	/**
 	 * Sets the max value
+	 * @param <W> the widget type
 	 * @param max
 	 * @return this
 	 */
@@ -196,6 +199,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 
 	/**
 	 * Sets the step value
+	 * @param <W> the widget type
 	 * @param step
 	 * @return this
 	 */
@@ -208,6 +212,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 
 	/**
 	 * Sets the {@link Orientation}
+	 * @param <W> the widget type
 	 * @param orientation
 	 * @return this
 	 */

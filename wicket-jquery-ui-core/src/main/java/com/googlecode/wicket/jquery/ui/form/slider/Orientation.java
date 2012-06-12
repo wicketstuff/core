@@ -16,6 +16,11 @@
  */
 package com.googlecode.wicket.jquery.ui.form.slider;
 
+/**
+ * 
+ * @author Sebastien Briquet - sebfz1
+ *
+ */
 public enum Orientation {
 	HORIZONTAL("'horizontal'"),
 	VERTICAL("'vertical'");

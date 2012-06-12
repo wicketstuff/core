@@ -21,7 +21,7 @@ import com.googlecode.wicket.jquery.ui.form.button.Button;
 /**
  * Provides some default jQuery icon class. Might be used to decorate a {@link Button} for instance.
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public enum JQueryIcon

@@ -23,7 +23,7 @@ import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
 /**
  * Provides a specific jQuery behavior for playing effects.
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public class JQueryEffectBehavior extends JQueryAbstractBehavior

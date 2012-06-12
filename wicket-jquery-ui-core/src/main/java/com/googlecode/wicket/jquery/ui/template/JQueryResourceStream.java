@@ -22,7 +22,7 @@ import org.apache.wicket.util.resource.AbstractStringResourceStream;
  * Provides the default resource stream for jQuery templates.
  * The {@link #getString()} method returns a script block like &lt;script id="jquery-template-123456" type="text/x-jquery-tmpl" /&gt;  
  * 
- * @author Sebastien Briquet - sebastien@7thweb.net
+ * @author Sebastien Briquet - sebfz1
  *
  */
 public class JQueryResourceStream extends AbstractStringResourceStream
