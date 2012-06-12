@@ -164,7 +164,7 @@ public class ScalaEngineTest
 	public void test_returnValue() throws Exception
 	{
 		// Given
-		final String script = "val $result = 42";
+		final String script = "val $result = 42; print($result);";
 
 		// When
 		final IScriptExecutionResult result = engine.execute(script);
@@ -172,7 +172,7 @@ public class ScalaEngineTest
 		// Then
 		assertTrue(result.isSuccess());
 		assertNull(result.getException());
-		assertEquals(42, result.getReturnValue());
+		assertEquals("42", result.getOutput());
 
 	}
 
