@@ -19,6 +19,11 @@ package com.googlecode.wicket.jquery.ui.interaction;
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.Options;
 
+/**
+ * Provides a jQuery selectable behavior
+ * 
+ * @author Sebastien Briquet - sebastien@7thweb.net
+ */
 public class SelectableBehavior extends JQueryBehavior
 {
 	private static final long serialVersionUID = 1L;
