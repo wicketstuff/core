@@ -2,12 +2,15 @@ package org.wicketstuff.jqplot.examples;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.jqplot.JqPlotChart;
 
+import br.com.digilabs.jqplot.chart.AreaChart;
 import br.com.digilabs.jqplot.chart.BarChart;
 import br.com.digilabs.jqplot.chart.LabeledLineChart;
 import br.com.digilabs.jqplot.chart.LineChart;
@@ -23,6 +26,7 @@ import br.com.digilabs.jqplot.elements.MarkerOptions;
 import br.com.digilabs.jqplot.elements.RendererOptions;
 import br.com.digilabs.jqplot.elements.Serie;
 import br.com.digilabs.jqplot.elements.SeriesDefaults;
+import br.com.digilabs.jqplot.elements.TickOptions;
 import br.com.digilabs.jqplot.elements.Trendline;
 
 public class HomePage extends WebPage
@@ -45,10 +49,58 @@ public class HomePage extends WebPage
 		add(new JqPlotChart("pieChart2", pieChart2()));
 
 		add(new JqPlotChart("lineSeries1", lineSeries()));
+		
+		add(new JqPlotChart("areaChart1", areaChart1()));
 
+		add(new JqPlotChart("areaChart2", areaChart2()));
+		
 		addTestLineChartWithTicks();
 
 	}
+	
+	public AreaChart<Integer> areaChart1()
+	{
+
+		AreaChart<Integer> areaChart = new AreaChart<Integer>("Area chart Example");
+		areaChart.addValue(Arrays.<Integer> asList(11, 9, 5, 12, 14));
+		areaChart.addValue(Arrays.<Integer> asList(4, 8, 5, 3, 6));
+		areaChart.addValue(Arrays.<Integer> asList(12, 6, 13, 11, 2));
+		areaChart.setTicks(new String[] {"Mon", "Tue", "Wed", "Thr", "Fri"});
+		
+		return areaChart;
+	}
+	
+	public AreaChart<Integer> areaChart2()
+	{
+
+		AreaChart<Integer> areaChart = new AreaChart<Integer>("Area chart Example");
+		areaChart.addValue(Arrays.<Integer> asList(11, 9, 5, 12, 14, 8, 7, 9, 6, 11, 9, 3, 4));
+		areaChart.addValue(Arrays.<Integer> asList(4, 8, 5, 3, 6, 5, 3, 2, 6, 7, 4, 3, 2));
+		areaChart.addValue(Arrays.<Integer> asList(12, 6, 13, 11, 2, 3, 4, 2, 1, 5, 7, 4, 8));
+		areaChart.setTicks(new String[] {"Dec 10","Jan 11","Feb 11","Mar 11","Apr 11","May 11","Jun 11","Jul 11","Aug 11","Sep 11","Oct 11","Nov 11","Dec 11"});
+		
+		Collection<Serie> series = new ArrayList<Serie>();
+		series.add(new Serie("Beans"));
+		series.add(new Serie("Orange"));
+		series.add(new Serie("Crackers"));
+		areaChart.setSeries(series);
+		
+		areaChart.getSeriesDefaults().setFill(true);
+		RendererOptions options= new RendererOptions();
+		options.setHighlightMouseDown(true);
+		areaChart.getSeriesDefaults().setRendererOptions(options);
+		
+		Legend legend = new Legend();
+		legend.setShow(true);
+		legend.setPlacment("outsideGrid");
+		areaChart.setLegend(legend);
+		
+		TickOptions tickOptions = new TickOptions();
+		tickOptions.setAngle(-90);
+		areaChart.getAxes().getXaxis().setTickOptions(tickOptions);		
+		return areaChart;
+	}
+
 
 	private PieChart<Number> pieChart2()
 	{
