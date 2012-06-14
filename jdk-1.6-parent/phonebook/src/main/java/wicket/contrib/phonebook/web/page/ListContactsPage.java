@@ -63,7 +63,7 @@ public class ListContactsPage extends BasePage
 	@SpringBean(name = "contactDao")
 	private ContactDao dao;
 
-	private final DefaultDataTable<Contact> users;
+	private final DefaultDataTable<Contact,String> users;
 
 	private final Set<Long> selectedContactIds = new HashSet<Long>();
 
@@ -164,7 +164,7 @@ public class ListContactsPage extends BasePage
 		});
 
 		// create the data table
-		users = new DefaultDataTable<Contact>("users", createColumns(), dataProvider, 10);
+		users = new DefaultDataTable<Contact, String>("users", createColumns(), dataProvider, 10);
 		users.addTopToolbar(new FilterToolbar(users, form, dataProvider));
 
 		form.add(users);
@@ -172,9 +172,9 @@ public class ListContactsPage extends BasePage
 		add(form);
 	}
 
-	private List<IColumn<Contact>> createColumns()
+	private List<IColumn<Contact, String>> createColumns()
 	{
-		List<IColumn<Contact>> columns = new ArrayList<IColumn<Contact>>();
+		List<IColumn<Contact, String>> columns = new ArrayList<IColumn<Contact, String>>();
 		columns.add(new CheckBoxColumn<Contact>(new PropertyModel<Collection<Serializable>>(this,
 			"selectedContactIds"))
 		{
@@ -190,7 +190,7 @@ public class ListContactsPage extends BasePage
 		});
 		columns.add(createActionsColumn());
 		columns.add(createColumn("first.name", "firstname", "firstname"));
-		columns.add(new ChoiceFilteredPropertyColumn<Contact, String>(
+		columns.add(new ChoiceFilteredPropertyColumn<Contact, String, String>(
 			new ResourceModel("last.name"), "lastname", "lastname",
 			new LoadableDetachableModel<List<? extends String>>()
 			{
@@ -209,10 +209,10 @@ public class ListContactsPage extends BasePage
 		return columns;
 	}
 
-	private TextFilteredPropertyColumn<Contact, String> createColumn(String key,
+	private TextFilteredPropertyColumn<Contact, Contact, String> createColumn(String key,
 		String sortProperty, String propertyExpression)
 	{
-		return new TextFilteredPropertyColumn<Contact, String>(new ResourceModel(key),
+		return new TextFilteredPropertyColumn<Contact, Contact, String>(new ResourceModel(key),
 			sortProperty, propertyExpression);
 	}
 
@@ -221,9 +221,9 @@ public class ListContactsPage extends BasePage
 	 * UserActionsPanel as its cell contents. It also provides the go-and-clear filter control
 	 * panel.
 	 */
-	private FilteredAbstractColumn<Contact> createActionsColumn()
+	private FilteredAbstractColumn<Contact, String> createActionsColumn()
 	{
-		return new FilteredAbstractColumn<Contact>(new Model<String>(getString("actions")))
+		return new FilteredAbstractColumn<Contact, String>(new Model<String>(getString("actions")))
 		{
 			private static final long serialVersionUID = 1L;
 

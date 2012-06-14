@@ -41,7 +41,7 @@ import org.apache.wicket.util.resource.StringResourceStream;
  * @author ivaynberg
  * 
  */
-public abstract class CheckBoxColumn<T> extends HeaderlessColumn<T>
+public abstract class CheckBoxColumn<T> extends HeaderlessColumn<T, String>
 {
 	private static final long serialVersionUID = 1L;
 	private final IModel<Collection<Serializable>> selectionModel;

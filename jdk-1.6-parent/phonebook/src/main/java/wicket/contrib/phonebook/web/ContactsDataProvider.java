@@ -41,7 +41,7 @@ import wicket.contrib.phonebook.QueryParam;
  * 
  * @author igor
  */
-public class ContactsDataProvider extends SortableDataProvider<Contact> implements
+public class ContactsDataProvider extends SortableDataProvider<Contact, String> implements
 	IFilterStateLocator<Contact>
 {
 
