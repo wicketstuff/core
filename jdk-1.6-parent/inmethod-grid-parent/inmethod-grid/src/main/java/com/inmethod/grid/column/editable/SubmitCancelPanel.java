@@ -20,14 +20,14 @@ abstract class SubmitCancelPanel<M, I> extends Panel
 
 	private static final long serialVersionUID = 1L;
 
-	protected AbstractGrid<M, I> getGrid()
+	protected AbstractGrid<M, I, ?> getGrid()
 	{
 		return grid;
 	}
 
-	private final AbstractGrid<M, I> grid;
+	private final AbstractGrid<M, I, ?> grid;
 
-	SubmitCancelPanel(String id, final IModel<I> model, AbstractGrid<M, I> grid)
+	SubmitCancelPanel(String id, final IModel<I> model, AbstractGrid<M, I, ?> grid)
 	{
 		super(id);
 

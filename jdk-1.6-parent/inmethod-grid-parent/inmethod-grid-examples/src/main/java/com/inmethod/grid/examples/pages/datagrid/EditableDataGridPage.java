@@ -34,14 +34,15 @@ public class EditableDataGridPage extends BaseExamplePage
 	 */
 	public EditableDataGridPage()
 	{
-		List<IGridColumn<IDataSource<Contact>, Contact>> columns = new ArrayList<IGridColumn<IDataSource<Contact>, Contact>>();
+		List<IGridColumn<IDataSource<Contact>, Contact, String>> columns =
+				new ArrayList<IGridColumn<IDataSource<Contact>, Contact, String>>();
 
 		Form<Void> form = new Form<Void>("form");
 		add(form);
 
-		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, Long>(
+		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, Long, String>(
 			new ResourceModel("id"), "id"));
-		columns.add(new EditablePropertyColumn<IDataSource<Contact>, Contact, String>(
+		columns.add(new EditablePropertyColumn<IDataSource<Contact>, Contact, String, String>(
 			new ResourceModel("firstName"), "firstName", "firstName")
 		{
 
@@ -53,7 +54,7 @@ public class EditableDataGridPage extends BaseExamplePage
 				component.setRequired(true);
 			}
 		});
-		columns.add(new EditablePropertyColumn<IDataSource<Contact>, Contact, String>(
+		columns.add(new EditablePropertyColumn<IDataSource<Contact>, Contact, String, String>(
 			new ResourceModel("lastName"), "lastName", "lastName")
 		{
 
@@ -65,14 +66,14 @@ public class EditableDataGridPage extends BaseExamplePage
 				component.setRequired(true);
 			}
 		});
-		columns.add(new EditablePropertyColumn<IDataSource<Contact>, Contact, String>(
+		columns.add(new EditablePropertyColumn<IDataSource<Contact>, Contact, String, String>(
 			new ResourceModel("homePhone"), "homePhone"));
-		columns.add(new EditablePropertyColumn<IDataSource<Contact>, Contact, String>(
+		columns.add(new EditablePropertyColumn<IDataSource<Contact>, Contact, String, String>(
 			new ResourceModel("cellPhone"), "cellPhone"));
-		columns.add(new SubmitCancelColumn<IDataSource<Contact>, Contact>("esd", Model.of("Edit")));
+		columns.add(new SubmitCancelColumn<IDataSource<Contact>, Contact, String>("esd", Model.of("Edit")));
 
-		DataGrid<IDataSource<Contact>, Contact> grid = new DefaultDataGrid<IDataSource<Contact>, Contact>(
-			"grid", new ContactDataSource(), columns);
+		DataGrid<IDataSource<Contact>, Contact, String> grid =
+				new DefaultDataGrid<IDataSource<Contact>, Contact, String>("grid", new ContactDataSource(), columns);
 		form.add(grid);
 
 		grid.setAllowSelectMultiple(true);

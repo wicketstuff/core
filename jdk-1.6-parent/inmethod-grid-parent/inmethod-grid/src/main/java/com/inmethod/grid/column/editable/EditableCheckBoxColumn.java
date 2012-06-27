@@ -9,7 +9,7 @@ import org.apache.wicket.model.IModel;
  *
  * @author Tom Burton
  */
-public class EditableCheckBoxColumn<M, I> extends EditablePropertyColumn<M, I, Boolean>
+public class EditableCheckBoxColumn<M, I, S> extends EditablePropertyColumn<M, I, Boolean, S>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -27,7 +27,7 @@ public class EditableCheckBoxColumn<M, I> extends EditablePropertyColumn<M, I, B
    *            to indicate that the column is being sorted
 	 */
 	public EditableCheckBoxColumn(String columnId, IModel<String> headerModel,
-                                String propertyExpression, String sortProperty)
+                                String propertyExpression, S sortProperty)
   {
 		super(columnId, headerModel, propertyExpression, sortProperty);
 	}
@@ -61,9 +61,7 @@ public class EditableCheckBoxColumn<M, I> extends EditablePropertyColumn<M, I, B
 	 *            optional string that will be returned by {@link ISortState}
    *            to indicate that the column is being sorted
 	 */
-	public EditableCheckBoxColumn(IModel<String> headerModel,
-                                String propertyExpression,
-                                String sortProperty)
+	public EditableCheckBoxColumn(IModel<String> headerModel, String propertyExpression, S sortProperty)
   {
 		super(headerModel, propertyExpression, sortProperty);
 	}
@@ -86,8 +84,8 @@ public class EditableCheckBoxColumn<M, I> extends EditablePropertyColumn<M, I, B
 
   /** {@inheritDoc} */
 	@Override
-  protected EditableCellPanel newCellPanel(String componentId, IModel<I> rowModel,
+  protected EditableCellPanel<M, I, Boolean, S> newCellPanel(String componentId, IModel<I> rowModel,
                                            IModel<Boolean> cellModel)
-  {	return new CheckBoxPanel(componentId, cellModel, rowModel, this); }
+  {	return new CheckBoxPanel<M, I, S>(componentId, cellModel, rowModel, this); }
 
 }

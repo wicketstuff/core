@@ -20,7 +20,7 @@ import com.inmethod.grid.column.AbstractColumn;
  *
  * @author Tom Burton
  */
-public class DropDownChoicePanel<M, I, P> extends EditableCellPanel<M, I, P>
+public class DropDownChoicePanel<M, I, P, S> extends EditableCellPanel<M, I, P, S>
 { //Does serialVersionUID really need to be explicitly set
 	private static final long serialVersionUID = 1L;
 
@@ -78,18 +78,20 @@ public class DropDownChoicePanel<M, I, P> extends EditableCellPanel<M, I, P>
    * @param renderer
    *    how to display the data in the drop down
 	 */
-	public DropDownChoicePanel(String id, final IModel<P> model, IModel<I> rowModel,
-                             AbstractColumn column,
-                             IModel<? extends List<P>> choices,
-                             IChoiceRenderer<P> renderer)
+	public DropDownChoicePanel(String id, final IModel<P> model, IModel<I> rowModel, AbstractColumn<M, I, S> column,
+		IModel<? extends List<P>> choices, IChoiceRenderer<P> renderer)
   {
 		super(id, column, rowModel);
 		
-		DropDownChoice ddc;
-    if ( null == renderer )
-    { ddc = newDropDownChoice(DropDownChoice_ID, model, choices); }
-    else
-    { ddc = newDropDownChoice(DropDownChoice_ID, model, choices, renderer); }
+		DropDownChoice<P> ddc;
+		if ( null == renderer )
+		{
+			ddc = newDropDownChoice(DropDownChoice_ID, model, choices);
+		}
+		else
+		{
+			ddc = newDropDownChoice(DropDownChoice_ID, model, choices, renderer);
+		}
 		ddc.setOutputMarkupId(true);
 		ddc.setLabel(column.getHeaderModel());
 		add(ddc);
@@ -101,31 +103,30 @@ public class DropDownChoicePanel<M, I, P> extends EditableCellPanel<M, I, P>
    *  @param choices options to display in the drop down
 	 *  @return  DropDownChoice FormComponent
 	 */
-	protected DropDownChoice newDropDownChoice(String id, IModel<P> model,
-                                             IModel<? extends List<P>> choices)
+	protected DropDownChoice<P> newDropDownChoice(String id, IModel<P> model, IModel<? extends List<P>> choices)
   {
-		return new DefaultDropDownChoice(id, model, choices);
+		return new DefaultDropDownChoice<P>(id, model, choices);
 	}
 
   /** newDropDownChoice
-	 *  @param id component id
-	 *  @param model field model
-   *  @param choices options to display in the drop down
-   *  @param renderer how to display the data
-	 *  @return  DropDownChoice FormComponent
+	 * @param id component id
+	 * @param model field model
+	 * @param choices options to display in the drop down
+	 * @param renderer how to display the data
+	 * @return  DropDownChoice FormComponent
 	 */
-	protected DropDownChoice newDropDownChoice(String id, IModel<P> model,
+	protected DropDownChoice<P> newDropDownChoice(String id, IModel<P> model,
                                              IModel<? extends List<P>> choices,
                                              IChoiceRenderer<P> renderer)
   {
-		return new DefaultDropDownChoice(id, model, choices, renderer);
+		return new DefaultDropDownChoice<P>(id, model, choices, renderer);
 	}
 
   /** {@inheritDoc} */
 	@Override
-	public FormComponent getEditComponent()
+	public FormComponent<P> getEditComponent()
   {
-		return (FormComponent) get(DropDownChoice_ID);
+		return (FormComponent<P>) get(DropDownChoice_ID);
 	}
 
 }

@@ -17,7 +17,7 @@ import com.inmethod.grid.column.AbstractColumn;
  * 
  * @author Matej Knopp
  */
-public class TextFieldPanel<M, I, P> extends EditableCellPanel<M, I, P>
+public class TextFieldPanel<M, I, P, S> extends EditableCellPanel<M, I, P, S>
 {
 
 	/**
@@ -31,7 +31,7 @@ public class TextFieldPanel<M, I, P> extends EditableCellPanel<M, I, P>
 	 *            column to which this panel belongs
 	 */
 	public TextFieldPanel(String id, final IModel<P> model, IModel<I> rowModel,
-		AbstractColumn<M, I> column)
+		AbstractColumn<M, I, S> column)
 	{
 		super(id, column, rowModel);
 

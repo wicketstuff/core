@@ -25,8 +25,8 @@ import org.apache.wicket.model.PropertyModel;
  * @see AbstractTreeColumn
  * @author Matej Knopp
  */
-public class PropertyTreeColumn<T extends TreeModel & Serializable, I extends TreeNode & Serializable, P>
-	extends AbstractTreeColumn<T, I>
+public class PropertyTreeColumn<T extends TreeModel & Serializable, I extends TreeNode & Serializable, P, S>
+	extends AbstractTreeColumn<T, I, S>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -46,7 +46,7 @@ public class PropertyTreeColumn<T extends TreeModel & Serializable, I extends Tr
 	 *            column is being sorted
 	 */
 	public PropertyTreeColumn(String columnId, IModel<String> headerModel,
-		String propertyExpression, String sortProperty)
+		String propertyExpression, S sortProperty)
 	{
 		super(columnId, headerModel, sortProperty);
 		this.propertyExpression = propertyExpression;
@@ -80,7 +80,7 @@ public class PropertyTreeColumn<T extends TreeModel & Serializable, I extends Tr
 	 *            column is being sorted
 	 */
 	public PropertyTreeColumn(IModel<String> headerModel, String propertyExpression,
-		String sortProperty)
+		S sortProperty)
 	{
 		this(propertyExpression, headerModel, propertyExpression, sortProperty);
 	}

@@ -14,7 +14,7 @@ import com.inmethod.grid.column.AbstractColumn;
  * based on(read: copy-paste-modify) {@link TextFieldPanel} By Matej Knopp
  * @author Tom Burton
  */
-public class CheckBoxPanel<M, I> extends EditableCellPanel<M, I, Boolean>
+public class CheckBoxPanel<M, I, S> extends EditableCellPanel<M, I, Boolean, S>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -59,7 +59,7 @@ public class CheckBoxPanel<M, I> extends EditableCellPanel<M, I, Boolean>
 	 * 		column to which this panel belongs
 	 */
 	public CheckBoxPanel(String id, final IModel<Boolean> model, IModel<I> rowModel,
-                       AbstractColumn column)
+                       AbstractColumn<M, I, S> column)
   {
 		super(id, column, rowModel);
 		
@@ -79,6 +79,8 @@ public class CheckBoxPanel<M, I> extends EditableCellPanel<M, I, Boolean>
 
   /** @return the FormComponent for editing */
 	@Override
-	public FormComponent getEditComponent()
-  { return (FormComponent) get(CheckBox_ID); }
+	public FormComponent<Boolean> getEditComponent()
+	{
+		return (FormComponent<Boolean>) get(CheckBox_ID);
+	}
 }

@@ -13,19 +13,19 @@ import com.inmethod.grid.IGridColumn;
 import com.inmethod.grid.column.AbstractColumn;
 import org.apache.wicket.request.cycle.RequestCycle;
 
-public abstract class EditableCellPanel<M, I, P> extends Panel
+public abstract class EditableCellPanel<M, I, P, S> extends Panel
 {
 
 	private static final long serialVersionUID = 1L;
-	private final AbstractColumn<M, I> column;
+	private final AbstractColumn<M, I, S> column;
 
-	public EditableCellPanel(String id, AbstractColumn<M, I> column, IModel<I> rowModel)
+	public EditableCellPanel(String id, AbstractColumn<M, I, S> column, IModel<I> rowModel)
 	{
 		super(id, rowModel);
 		this.column = column;
 	}
 
-	public AbstractColumn<M, I> getColumn()
+	public AbstractColumn<M, I, S> getColumn()
 	{
 		return column;
 	}
@@ -47,7 +47,7 @@ public abstract class EditableCellPanel<M, I, P> extends Panel
 
 	protected boolean isFocusTextField()
 	{
-		IGridColumn<M, I> lastClickedColumn = getColumn().getGrid().getLastClickedColumn();
+		IGridColumn<M, I, S> lastClickedColumn = getColumn().getGrid().getLastClickedColumn();
 		if (lastClickedColumn == getColumn())
 		{
 			getColumn().getGrid().cleanLastClickedColumn();

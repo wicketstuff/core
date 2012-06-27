@@ -20,7 +20,7 @@ import com.inmethod.grid.common.AbstractGrid;
  * 
  * @author Matej Knopp
  */
-public class DataProviderAdapter<T> implements IDataSource<T>
+public class DataProviderAdapter<T, S> implements IDataSource<T>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -54,24 +54,24 @@ public class DataProviderAdapter<T> implements IDataSource<T>
 		return dataProvider.model(object);
 	}
 
-	private void setSortState(ISortState dest, IGridSortState gridSortState)
+	private void setSortState(ISortState<S> dest, IGridSortState<S> gridSortState)
 	{
-		AbstractGrid<?, ?> grid = gridSortState.getGrid();
-		Set<String> unsortedColumns = new HashSet<String>(grid.getAllColumns().size());
-		for (IGridColumn<?, ?> column : grid.getAllColumns())
+		AbstractGrid<?, ?, S> grid = gridSortState.getGrid();
+		Set<S> unsortedColumns = new HashSet<S>(grid.getAllColumns().size());
+		for (IGridColumn<?, ?, S> column : grid.getAllColumns())
 		{
 			if (column.getSortProperty() != null)
 			{
 				unsortedColumns.add(column.getSortProperty());
 			}
 		}
-		for (IGridSortState.ISortStateColumn column : gridSortState.getColumns())
+		for (IGridSortState.ISortStateColumn<S> column : gridSortState.getColumns())
 		{
 			unsortedColumns.remove(column.getPropertyName());
 		}
 		for (int i = gridSortState.getColumns().size(); i > 0; --i)
 		{
-			IGridSortState.ISortStateColumn column = gridSortState.getColumns().get(i - 1);
+			IGridSortState.ISortStateColumn<S> column = gridSortState.getColumns().get(i - 1);
 			SortOrder dir = SortOrder.NONE;
 			if (column.getDirection() == IGridSortState.Direction.ASC)
 			{
@@ -92,11 +92,11 @@ public class DataProviderAdapter<T> implements IDataSource<T>
 	{
 		if (dataProvider instanceof ISortStateLocator)
 		{
-			ISortStateLocator locator = (ISortStateLocator)dataProvider;
+			ISortStateLocator<S> locator = (ISortStateLocator<S>)dataProvider;
 
-			IGridSortState gridSortState = query.getSortState();
+			IGridSortState<S> gridSortState = query.getSortState();
 
-			ISortState state = locator.getSortState();
+			ISortState<S> state = locator.getSortState();
 			if (state != null)
 			{
 				setSortState(state, gridSortState);

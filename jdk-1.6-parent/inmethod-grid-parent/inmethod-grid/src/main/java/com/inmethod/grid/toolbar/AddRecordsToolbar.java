@@ -21,21 +21,21 @@ import com.inmethod.grid.datagrid.DataGrid;
  *
  * @Author Tom Burton
  */
-public class AddRecordsToolbar<D extends IDataSource<T>, T extends Serializable>
-       extends AbstractToolbar<D, T>
+public class AddRecordsToolbar<D extends IDataSource<T>, T extends Serializable, S>
+       extends AbstractToolbar<D, T, S>
 {
   private static final IModel<String> ADD_BUTTON_MODEL =
              new ResourceModel("datagrid.add-new-item", "Add New Item");
 
-  private DataGrid<D, T> grid; //todo: should this only get from super?
+  private DataGrid<D, T, S> grid; //todo: should this only get from super?
 
   private final T defaultObject; //final makes sure the default doesn't change
 
-  public AddRecordsToolbar(DataGrid<D, T> grid, IModel<T> model,
+  public AddRecordsToolbar(DataGrid<D, T, S> grid, IModel<T> model,
                            final T defaultObject)
   { this(grid, model, defaultObject, ADD_BUTTON_MODEL); }
 
-  public AddRecordsToolbar(DataGrid<D, T> datagrid, IModel<T> model,
+  public AddRecordsToolbar(DataGrid<D, T, S> datagrid, IModel<T> model,
                            final T defaultObject,
                            IModel<String> labelModel)
   {
@@ -46,7 +46,7 @@ public class AddRecordsToolbar<D extends IDataSource<T>, T extends Serializable>
     if (null != datagrid.getParent() )
     { datagrid.getParent().setOutputMarkupId(true); }
     this.defaultObject = defaultObject;
-    Form form = new Form<Void>("addForm");
+    Form<Void> form = new Form<Void>("addForm");
     add(form);
     AjaxButton addButton = new AjaxButton("add")
                            {

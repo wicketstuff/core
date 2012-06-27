@@ -52,10 +52,10 @@ public class ContactDataSourceWithUnknownItemCount implements IDataSource<Contac
 		if (query.getSortState().getColumns().size() > 0)
 		{
 			// get the most relevant column
-			ISortStateColumn state = query.getSortState().getColumns().get(0);
+			ISortStateColumn<Object> state = (ISortStateColumn<Object>) query.getSortState().getColumns().get(0);
 
 			// get the column sort properties
-			sortProperty = state.getPropertyName();
+			sortProperty = state.getPropertyName().toString();
 			sortAsc = state.getDirection() == IGridSortState.Direction.ASC;
 		}
 

@@ -29,7 +29,7 @@ import com.inmethod.grid.common.AbstractPageableView;
  * 
  * @author Matej Knopp
  */
-public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
+public class DataGrid<D extends IDataSource<T>, T, S> extends AbstractGrid<D, T, S>
        implements IPageable
 {
 	private static final long serialVersionUID = 1L;
@@ -45,7 +45,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 	 * @param columns
 	 *            list of grid columns
 	 */
-	public DataGrid(String id, IModel<D> model, List<IGridColumn<D, T>> columns)
+	public DataGrid(String id, IModel<D> model, List<IGridColumn<D, T, S>> columns)
 	{
 		super(id, model, columns);
 		init();
@@ -61,12 +61,12 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 	 * @param columns
 	 *            list of grid columns
 	 */
-	public DataGrid(String id, D dataSource, List<IGridColumn<D, T>> columns)
+	public DataGrid(String id, D dataSource, List<IGridColumn<D, T, S>> columns)
 	{
 		this(id, Model.of(dataSource), columns);
 	}
 
-	private class Body extends DataGridBody<D, T>
+	private class Body extends DataGridBody<D, T, S>
 	{
 		private static final long serialVersionUID = 1L;
 
@@ -76,7 +76,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 		}
 
 		@Override
-		protected Collection<IGridColumn<D, T>> getActiveColumns()
+		protected Collection<IGridColumn<D, T, S>> getActiveColumns()
 		{
 			return DataGrid.this.getActiveColumns();
 		}
@@ -94,7 +94,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 		}
 
 		@Override
-		protected IGridSortState getSortState()
+		protected IGridSortState<S> getSortState()
 		{
 			return DataGrid.this.getSortState();
 		}
@@ -132,7 +132,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 	 *            how many rows (max) should be displayed on one page
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public DataGrid<D, T> setRowsPerPage(int rowsPerPage)
+	public DataGrid<D, T, S> setRowsPerPage(int rowsPerPage)
 	{
 		this.rowsPerPage = rowsPerPage;
 		return this;
@@ -255,7 +255,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 	 *            whether the current page change should deselect all selected items
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public DataGrid<D, T> setCleanSelectionOnPageChange(boolean cleanSelectionOnPageChange)
+	public DataGrid<D, T, S> setCleanSelectionOnPageChange(boolean cleanSelectionOnPageChange)
 	{
 		this.cleanSelectionOnPageChange = cleanSelectionOnPageChange;
 		return this;
@@ -420,10 +420,10 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
   * @param rowData data to insert into the new row
   * @return Item inserted Item
   */
-  public Item insertRow(final T rowData)
+  public Item<T> insertRow(final T rowData)
   {
-     IAppendableDataSource ADS;
-     try { ADS = ((IAppendableDataSource)getDataSource()); }
+     IAppendableDataSource<T> ADS;
+     try { ADS = ((IAppendableDataSource<T>)getDataSource()); }
      catch (ClassCastException cce)
      { //TODO: localize this string
         //log.error( "Error BAD Data Source type. "
@@ -432,7 +432,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
                   + "IAppendableDataSource REQUIRED for addition", cce);
      }
      ADS.insertRow(getCurrentPageItemCount(), rowData);
-     Item item = getBody().createItem(getCurrentPageItemCount(),
+     Item<T> item = getBody().createItem(getCurrentPageItemCount(),
                                       getDataSource().model(rowData));
 
      //make sure the datagrid knows the rows need to be refreshed
@@ -489,7 +489,7 @@ public class DataGrid<D extends IDataSource<T>, T> extends AbstractGrid<D, T>
 		/**
 		 * @return data grid issuing the query
 		 */
-		public DataGrid getDataGrid();
+		public DataGrid<?, ?, ?> getDataGrid();
 	}
 	
 	/**

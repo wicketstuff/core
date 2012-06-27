@@ -18,11 +18,11 @@ import com.inmethod.grid.common.AbstractGrid;
  * 
  * @author Matej Knopp
  */
-public abstract class AbstractToolbar<M, I> extends Panel
+public abstract class AbstractToolbar<M, I, S> extends Panel
 {
 
 	private static final long serialVersionUID = 1L;
-	private final AbstractGrid<M, I> grid;
+	private final AbstractGrid<M, I, S> grid;
 
 	/**
 	 * Constructor
@@ -30,7 +30,7 @@ public abstract class AbstractToolbar<M, I> extends Panel
 	 * @param grid
 	 * @param model
 	 */
-	public AbstractToolbar(AbstractGrid<M, I> grid, IModel<String> model)
+	public AbstractToolbar(AbstractGrid<M, I, S> grid, IModel<String> model)
 	{
 		super(AbstractGrid.INTERNAL_TOOLBAR_ITEM_ID, model);
 		setRenderBodyOnly(true);
@@ -42,7 +42,7 @@ public abstract class AbstractToolbar<M, I> extends Panel
 	 * 
 	 * @return collection of active columns.
 	 */
-	public Collection<IGridColumn<M, I>> getActiveColumns()
+	public Collection<IGridColumn<M, I, S>> getActiveColumns()
 	{
 		return grid.getActiveColumns();
 	}
@@ -52,7 +52,7 @@ public abstract class AbstractToolbar<M, I> extends Panel
 	 * 
 	 * @return grid this toolbar belongs to
 	 */
-	public AbstractGrid<M, I> getGrid()
+	public AbstractGrid<M, I, S> getGrid()
 	{
 		return grid;
 	}

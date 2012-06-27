@@ -25,7 +25,7 @@ import com.inmethod.grid.column.editable.EditablePropertyColumn;
  * @see EditablePropertyColumn
  * @author Matej Knopp
  */
-public abstract class AbstractLightWeightColumn<M, I> extends AbstractColumn<M, I>
+public abstract class AbstractLightWeightColumn<M, I, S> extends AbstractColumn<M, I, S>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -42,7 +42,7 @@ public abstract class AbstractLightWeightColumn<M, I> extends AbstractColumn<M, 
 	 *            column is being sorted
 	 */
 	public AbstractLightWeightColumn(String columnId, IModel<String> headerModel,
-		String sortProperty)
+		S sortProperty)
 	{
 		super(columnId, headerModel, sortProperty);
 	}

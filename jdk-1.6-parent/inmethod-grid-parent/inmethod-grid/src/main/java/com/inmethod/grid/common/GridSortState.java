@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.inmethod.grid.IGridSortState;
 import org.apache.wicket.util.io.IClusterable;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
 
 /**
@@ -14,7 +15,7 @@ import org.apache.wicket.util.string.Strings;
  * 
  * @author Matej Knopp
  */
-public class GridSortState implements IGridSortState, IClusterable
+public class GridSortState<S> implements IGridSortState<S>, IClusterable
 {
 
 	private static final long serialVersionUID = 1L;
@@ -24,16 +25,16 @@ public class GridSortState implements IGridSortState, IClusterable
 	 * 
 	 * @author Matej Knopp
 	 */
-	private static class SortStateColumn implements ISortStateColumn, IClusterable
+	private static class SortStateColumn<S> implements ISortStateColumn<S>, IClusterable
 	{
 
 		private static final long serialVersionUID = 1L;
 
-		private final String propertyName;
+		private final S propertyName;
 
 		private final IGridSortState.Direction direction;
 
-		private SortStateColumn(String propertyName, IGridSortState.Direction direction)
+		private SortStateColumn(S propertyName, IGridSortState.Direction direction)
 		{
 			this.propertyName = propertyName;
 			this.direction = direction;
@@ -42,7 +43,7 @@ public class GridSortState implements IGridSortState, IClusterable
 		/**
 		 * {@inheritDoc}
 		 */
-		public String getPropertyName()
+		public S getPropertyName()
 		{
 			return propertyName;
 		}
@@ -57,9 +58,9 @@ public class GridSortState implements IGridSortState, IClusterable
 
 	};
 
-	private final List<ISortStateColumn> columns = new ArrayList<ISortStateColumn>();
+	private final List<ISortStateColumn<S>> columns = new ArrayList<ISortStateColumn<S>>();
 
-	private final AbstractGrid<?, ?> grid;
+	private final AbstractGrid<?, ?, S> grid;
 
 	/**
 	 * Constructor.
@@ -67,7 +68,7 @@ public class GridSortState implements IGridSortState, IClusterable
 	 * @param grid
 	 *            the related grid, not null
 	 */
-	public GridSortState(AbstractGrid<?, ?> grid)
+	public GridSortState(AbstractGrid<?, ?, S> grid)
 	{
 		this.grid = grid;
 	}
@@ -78,10 +79,10 @@ public class GridSortState implements IGridSortState, IClusterable
 	 * @param propertyName
 	 * @return
 	 */
-	private int getSortStateColumnIndex(String propertyName)
+	private int getSortStateColumnIndex(S propertyName)
 	{
 		int i = 0;
-		for (ISortStateColumn column : columns)
+		for (ISortStateColumn<S> column : columns)
 		{
 			if (column.getPropertyName().equals(propertyName))
 			{
@@ -105,7 +106,7 @@ public class GridSortState implements IGridSortState, IClusterable
 	 * 
 	 * @param propertyName
 	 */
-	public void clearSortState(String propertyName)
+	public void clearSortState(S propertyName)
 	{
 		setSortState(propertyName, null);
 	}
@@ -118,7 +119,7 @@ public class GridSortState implements IGridSortState, IClusterable
 	 * @return {@link IGridSortState.ISortStateColumn} for given property or null if there is no
 	 *         such entry
 	 */
-	public IGridSortState.ISortStateColumn getSortStateForProperty(String propertyName)
+	public IGridSortState.ISortStateColumn<S> getSortStateForProperty(S propertyName)
 	{
 		int i = getSortStateColumnIndex(propertyName);
 		if (i != -1)
@@ -138,10 +139,11 @@ public class GridSortState implements IGridSortState, IClusterable
 	 * @param direction
 	 * 
 	 */
-	public void setSortState(String propertyName, IGridSortState.Direction direction)
+	public void setSortState(S propertyName, IGridSortState.Direction direction)
 	{
+		Args.notNull(propertyName, "propertyName");
 
-		if (Strings.isEmpty(propertyName))
+		if (propertyName instanceof String && Strings.isEmpty((String) propertyName))
 		{
 			throw new IllegalArgumentException("'propertyName' must be a non-empty string.");
 		}
@@ -154,7 +156,7 @@ public class GridSortState implements IGridSortState, IClusterable
 
 		if (direction != null)
 		{
-			SortStateColumn column = new SortStateColumn(propertyName, direction);
+			SortStateColumn<S> column = new SortStateColumn<S>(propertyName, direction);
 			columns.add(0, column);
 		}
 	};
@@ -164,12 +166,12 @@ public class GridSortState implements IGridSortState, IClusterable
 	 * 
 	 * @return all {@link IGridSortState.ISortStateColumn} instances in this state
 	 */
-	public List<ISortStateColumn> getColumns()
+	public List<ISortStateColumn<S>> getColumns()
 	{
 		return columns;
 	}
 
-	public AbstractGrid<?, ?> getGrid()
+	public AbstractGrid<?, ?, S> getGrid()
 	{
 		return grid;
 	}

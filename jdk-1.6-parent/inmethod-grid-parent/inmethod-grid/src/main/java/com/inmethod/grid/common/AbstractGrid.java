@@ -12,6 +12,7 @@ import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxCallListener;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
@@ -54,7 +55,7 @@ import com.inmethod.grid.treegrid.TreeGrid;
  * 
  * @author Matej Knopp
  */
-public abstract class AbstractGrid<M, I> extends Panel
+public abstract class AbstractGrid<M, I, S> extends Panel
 {
 	private static final long serialVersionUID = 1L;
 
@@ -65,7 +66,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 * @param model
 	 * @param columns
 	 */
-	public AbstractGrid(String id, IModel<M> model, List<IGridColumn<M, I>> columns)
+	public AbstractGrid(String id, IModel<M> model, List<IGridColumn<M, I, S>> columns)
 	{
 		super(id, model);
 
@@ -152,7 +153,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 * 
 	 * @param column
 	 */
-	protected void columnSanityCheck(IGridColumn<M, I> column)
+	protected void columnSanityCheck(IGridColumn<M, I, S> column)
 	{
 		String id = column.getId();
 		if (Strings.isEmpty(id))
@@ -178,22 +179,22 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 * 
 	 * @param columns
 	 */
-	private void columnsSanityCheck(List<IGridColumn<M, I>> columns)
+	private void columnsSanityCheck(List<IGridColumn<M, I, S>> columns)
 	{
 		for (int i = 0; i < columns.size(); ++i)
 		{
-			IGridColumn<M, I> column = columns.get(i);
+			IGridColumn<M, I, S> column = columns.get(i);
 			columnSanityCheck(column);
 		}
 		for (int i = 0; i < columns.size(); ++i)
 		{
-			IGridColumn<M, I> column = columns.get(i);
+			IGridColumn<M, I, S> column = columns.get(i);
 
 			for (int j = 0; j < columns.size(); ++j)
 			{
 				if (i != j)
 				{
-					IGridColumn<M, I> otherColumn = columns.get(j);
+					IGridColumn<M, I, S> otherColumn = columns.get(j);
 					if (column.getId().equals(otherColumn.getId()))
 					{
 						throw new IllegalStateException("Each column must have unique id");
@@ -253,7 +254,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 		@Override
 		public CharSequence getCallbackScript()
 		{
-			return getCallbackFunction("columnState");
+			return getCallbackFunction(CallbackParameter.context("columnState"));
 		}
 	}
 
@@ -304,7 +305,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	{
 		super.onInitialize();
 
-		for (IGridColumn<M, I> column : columns)
+		for (IGridColumn<M, I, S> column : columns)
 		{
 			column.setGrid(this);
 		}
@@ -342,7 +343,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 * @param toolbar
 	 * @param container
 	 */
-	private void addToolbar(AbstractToolbar<M, I> toolbar, RepeatingView container)
+	private void addToolbar(AbstractToolbar<M, I, S> toolbar, RepeatingView container)
 	{
     Args.notNull(toolbar, "toolbar");
 
@@ -361,7 +362,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 * @param toolbar
 	 *            toolbar instance
 	 */
-	public void addTopToolbar(AbstractToolbar<M, I> toolbar)
+	public void addTopToolbar(AbstractToolbar<M, I, S> toolbar)
 	{
 		addToolbar(toolbar, topToolbarContainer);
 	}
@@ -373,7 +374,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 * @param toolbar
 	 *            toolbar instance
 	 */
-	public void addBottomToolbar(AbstractToolbar<M, I> toolbar)
+	public void addBottomToolbar(AbstractToolbar<M, I, S> toolbar)
 	{
 		addToolbar(toolbar, bottomToolbarContainer);
 	}
@@ -385,7 +386,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 * @param toolbar
 	 *            toolbar instance
 	 */
-	public void addHeaderToolbar(AbstractHeaderToolbar<M, I> toolbar)
+	public void addHeaderToolbar(AbstractHeaderToolbar<M, I, S> toolbar)
 	{
 		addToolbar(toolbar, headerToolbarContainer);
 	}
@@ -428,7 +429,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 * @see ColumnsHeader
 	 * @author Matej Knopp
 	 */
-	private class Header extends ColumnsHeader<M, I>
+	private class Header extends ColumnsHeader<M, I, S>
 	{
 		private static final long serialVersionUID = 1L;
 
@@ -438,13 +439,13 @@ public abstract class AbstractGrid<M, I> extends Panel
 		}
 
 		@Override
-		Collection<IGridColumn<M, I>> getActiveColumns()
+		Collection<IGridColumn<M, I, S>> getActiveColumns()
 		{
 			return AbstractGrid.this.getActiveColumns();
 		}
 
 		@Override
-		int getColumnWidth(IGridColumn<M, I> column)
+		int getColumnWidth(IGridColumn<M, I, S> column)
 		{
 			int width = getColumnState().getColumnWidth(column.getId());
 			if (width != -1 && column.getSizeUnit() == SizeUnit.PX)
@@ -485,9 +486,9 @@ public abstract class AbstractGrid<M, I> extends Panel
 
 		// initialize the columns
 		sb.append("var columns = [\n");
-		Collection<IGridColumn<M, I>> columns = getActiveColumns();
+		Collection<IGridColumn<M, I, S>> columns = getActiveColumns();
 		int i = 0;
-		for (IGridColumn<M, I> column : columns)
+		for (IGridColumn<M, I, S> column : columns)
 		{
 			++i;
 			sb.append("  {");
@@ -524,7 +525,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 * 
 	 * @return collection of currently visible columns
 	 */
-	public Collection<IGridColumn<M, I>> getActiveColumns()
+	public Collection<IGridColumn<M, I, S>> getActiveColumns()
 	{
 		return getColumnState().getVisibleColumns(columns);
 	}
@@ -534,15 +535,15 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 * 
 	 * @return list of columns
 	 */
-	public List<IGridColumn<M, I>> getAllColumns()
+	public List<IGridColumn<M, I, S>> getAllColumns()
 	{
 		return Collections.unmodifiableList(columns);
 	}
 
 	// contains all columns
-	private final List<IGridColumn<M, I>> columns;
+	private final List<IGridColumn<M, I, S>> columns;
 
-	private GridSortState sortState = null;
+	private GridSortState<S> sortState = null;
 
 	/**
 	 * Returns the sort state of this grid.
@@ -552,11 +553,11 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 * 
 	 * @return sort state
 	 */
-	public GridSortState getSortState()
+	public GridSortState<S> getSortState()
 	{
 		if (sortState == null)
 		{
-			sortState = new GridSortState(this);
+			sortState = new GridSortState<S>(this);
 		}
 		return sortState;
 	}
@@ -740,9 +741,9 @@ public abstract class AbstractGrid<M, I> extends Panel
 
 	private String lastClickedColumn = null;
 
-	public IGridColumn<M, I> getLastClickedColumn()
+	public IGridColumn<M, I, S> getLastClickedColumn()
 	{
-		for (IGridColumn<M, I> column : columns)
+		for (IGridColumn<M, I, S> column : columns)
 		{
 			if (column.getId().equals(lastClickedColumn))
 			{
@@ -810,7 +811,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 
 				IModel<I> model = (IModel<I>)rowComponent.getDefaultModel();
 
-				IGridColumn<M, I> lastClickedColumn = getLastClickedColumn();
+				IGridColumn<M, I, S> lastClickedColumn = getLastClickedColumn();
 				if (lastClickedColumn != null)
 				{
 					if (onCellClicked(target, model, lastClickedColumn))
@@ -843,13 +844,13 @@ public abstract class AbstractGrid<M, I> extends Panel
       @Override
 			public CharSequence getCallbackScript()
 			{
-				return getCallbackFunction("col");
+				return getCallbackFunction(CallbackParameter.context("col"));
 			}
 		});
 	}
 
 	protected boolean onCellClicked(AjaxRequestTarget target, IModel<I> rowModel,
-		                              IGridColumn<M, I> column)
+		                              IGridColumn<M, I, S> column)
 	{
 		return false;
 	}
@@ -879,7 +880,7 @@ public abstract class AbstractGrid<M, I> extends Panel
 	 *            <code>false</code> otherwise.
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public AbstractGrid<M, I> setClickRowToSelect(boolean clickRowToSelect)
+	public AbstractGrid<M, I, S> setClickRowToSelect(boolean clickRowToSelect)
 	{
 		this.clickRowToSelect = clickRowToSelect;
 		return this;

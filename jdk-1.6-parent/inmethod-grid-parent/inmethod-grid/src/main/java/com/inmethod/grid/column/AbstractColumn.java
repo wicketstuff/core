@@ -28,7 +28,7 @@ import com.inmethod.grid.common.AbstractGrid;
  * @see AbstractLightWeightColumn
  * @author Matej Knopp
  */
-public abstract class AbstractColumn<M, I> implements IGridColumn<M, I>
+public abstract class AbstractColumn<M, I, S> implements IGridColumn<M, I, S>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -36,7 +36,7 @@ public abstract class AbstractColumn<M, I> implements IGridColumn<M, I>
 	private final String columnId;
 	private final IModel<String> headerModel;
 	private IModel<String> headerTooltipModel;
-	private final String sortProperty;
+	private final S sortProperty;
 
 	/**
 	 * Creates instance with specified column id, header model and sort property.
@@ -49,7 +49,7 @@ public abstract class AbstractColumn<M, I> implements IGridColumn<M, I>
 	 *            optional string that will be returned by {@link ISortState} to indicate that the
 	 *            column is being sorted
 	 */
-	public AbstractColumn(String columnId, IModel<String> headerModel, String sortProperty)
+	public AbstractColumn(String columnId, IModel<String> headerModel, S sortProperty)
 	{
 		this.columnId = columnId;
 		this.headerModel = headerModel;
@@ -76,7 +76,7 @@ public abstract class AbstractColumn<M, I> implements IGridColumn<M, I>
 	 *            model for header tooltip
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public AbstractColumn<M, I> setHeaderTooltipModel(IModel<String> headerTooltipModel)
+	public AbstractColumn<M, I, S> setHeaderTooltipModel(IModel<String> headerTooltipModel)
 	{
 		this.headerTooltipModel = headerTooltipModel;
 		return this;
@@ -144,7 +144,7 @@ public abstract class AbstractColumn<M, I> implements IGridColumn<M, I>
 	 *            initial size of the column
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public AbstractColumn<M, I> setInitialSize(int initialSize)
+	public AbstractColumn<M, I, S> setInitialSize(int initialSize)
 	{
 		this.initialSize = initialSize;
 		return this;
@@ -166,7 +166,7 @@ public abstract class AbstractColumn<M, I> implements IGridColumn<M, I>
 	 * @param sizeUnit
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public AbstractColumn<M, I> setSizeUnit(SizeUnit sizeUnit)
+	public AbstractColumn<M, I, S> setSizeUnit(SizeUnit sizeUnit)
 	{
 		this.sizeUnit = sizeUnit;
 		return this;
@@ -190,7 +190,7 @@ public abstract class AbstractColumn<M, I> implements IGridColumn<M, I>
 	 *            maximal column size
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public AbstractColumn<M, I> setMaxSize(int maxSize)
+	public AbstractColumn<M, I, S> setMaxSize(int maxSize)
 	{
 		this.maxSize = maxSize;
 		return this;
@@ -215,7 +215,7 @@ public abstract class AbstractColumn<M, I> implements IGridColumn<M, I>
 	 * @return <code>this</code> (useful for method chaining)
 	 */
 
-	public AbstractColumn<M, I> setMinSize(int minSize)
+	public AbstractColumn<M, I, S> setMinSize(int minSize)
 	{
 		this.minSize = minSize;
 		return this;
@@ -232,7 +232,7 @@ public abstract class AbstractColumn<M, I> implements IGridColumn<M, I>
 	/**
 	 * {@inheritDoc}
 	 */
-	public String getSortProperty()
+	public S getSortProperty()
 	{
 		return sortProperty;
 	}
@@ -246,7 +246,7 @@ public abstract class AbstractColumn<M, I> implements IGridColumn<M, I>
 	 *            <code>true</code> if the column will be reorderable, <code>false</code> otherwise
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public AbstractColumn<M, I> setReorderable(boolean reorderable)
+	public AbstractColumn<M, I, S> setReorderable(boolean reorderable)
 	{
 		this.reorderable = reorderable;
 		return this;
@@ -271,7 +271,7 @@ public abstract class AbstractColumn<M, I> implements IGridColumn<M, I>
 	 *            <code>true</code> if the column will be resizable, <code>false</code> otherwise
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public AbstractColumn<M, I> setResizable(boolean resizable)
+	public AbstractColumn<M, I, S> setResizable(boolean resizable)
 	{
 		this.resizable = resizable;
 		return this;
@@ -342,12 +342,12 @@ public abstract class AbstractColumn<M, I> implements IGridColumn<M, I>
 
 	}
 
-	private AbstractGrid<M, I> grid = null;
+	private AbstractGrid<M, I, S> grid = null;
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setGrid(AbstractGrid<M, I> grid)
+	public void setGrid(AbstractGrid<M, I, S> grid)
 	{
 		if (this.grid != null && this.grid != grid)
 		{
@@ -362,7 +362,7 @@ public abstract class AbstractColumn<M, I> implements IGridColumn<M, I>
 	 * 
 	 * @return grid instance
 	 */
-	public AbstractGrid<M, I> getGrid()
+	public AbstractGrid<M, I, S> getGrid()
 	{
 		return grid;
 	}
@@ -377,7 +377,7 @@ public abstract class AbstractColumn<M, I> implements IGridColumn<M, I>
 	 *            <code>true<code> if the text will be wrapped, <code>false</code> otherwise.
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public AbstractColumn<M, I> setWrapText(boolean wrapText)
+	public AbstractColumn<M, I, S> setWrapText(boolean wrapText)
 	{
 		this.wrapText = wrapText;
 		return this;

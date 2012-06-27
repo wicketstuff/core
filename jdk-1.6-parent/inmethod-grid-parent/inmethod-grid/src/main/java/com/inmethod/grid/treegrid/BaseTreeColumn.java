@@ -29,8 +29,8 @@ import com.inmethod.icon.Icon;
  * 
  * @author Matej Knopp
  */
-public abstract class BaseTreeColumn<T extends TreeModel & Serializable, I extends TreeNode & Serializable>
-	extends AbstractColumn<T, I>
+public abstract class BaseTreeColumn<T extends TreeModel & Serializable, I extends TreeNode & Serializable, S>
+	extends AbstractColumn<T, I, S>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -42,7 +42,7 @@ public abstract class BaseTreeColumn<T extends TreeModel & Serializable, I exten
 	 * @param headerModel
 	 * @param sortProperty
 	 */
-	public BaseTreeColumn(String columnId, IModel<String> headerModel, String sortProperty)
+	public BaseTreeColumn(String columnId, IModel<String> headerModel, S sortProperty)
 	{
 		super(columnId, headerModel, sortProperty);
 	}
@@ -66,7 +66,7 @@ public abstract class BaseTreeColumn<T extends TreeModel & Serializable, I exten
 	{
 		if (!(parent instanceof AbstractTreeGridRow))
 			throw new IllegalArgumentException("Parent must be an " + AbstractTreeGridRow.class);
-		AbstractTreeGridRow<T, I> row = (AbstractTreeGridRow<T, I>)parent;
+		AbstractTreeGridRow<T, I, S> row = (AbstractTreeGridRow<T, I, S>)parent;
 		return new TreePanel<T, I>(componentId, rowModel, row.getLevel())
 		{
 
@@ -118,16 +118,16 @@ public abstract class BaseTreeColumn<T extends TreeModel & Serializable, I exten
 	 * 
 	 * @return {@link TreeGrid} this column belongs to.
 	 */
-	public TreeGrid<T, I> getTreeGrid()
+	public TreeGrid<T, I, S> getTreeGrid()
 	{
-		return (TreeGrid<T, I>)getGrid();
+		return (TreeGrid<T, I, S>)getGrid();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setGrid(AbstractGrid<T, I> grid)
+	public void setGrid(AbstractGrid<T, I, S> grid)
 	{
 		if (getTreeGrid() != null && getTreeGrid() != grid)
 		{

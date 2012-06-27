@@ -31,8 +31,8 @@ import com.inmethod.grid.common.AbstractGrid;
  * 
  * @author Matej Knopp
  */
-public class TreeGrid<T extends TreeModel & Serializable, I extends TreeNode & Serializable>
-	extends AbstractGrid<T, I>
+public class TreeGrid<T extends TreeModel & Serializable, I extends TreeNode & Serializable, S>
+	extends AbstractGrid<T, I, S>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -47,18 +47,18 @@ public class TreeGrid<T extends TreeModel & Serializable, I extends TreeNode & S
 	 * @param columns
 	 *            list of {@link IGridColumn}s.
 	 */
-	public TreeGrid(String id, IModel<T> model, List<IGridColumn<T, I>> columns)
+	public TreeGrid(String id, IModel<T> model, List<IGridColumn<T, I, S>> columns)
 	{
 		super(id, model, columns);
 
 		WebMarkupContainer bodyContainer = (WebMarkupContainer)get("form:bodyContainer");
-		bodyContainer.add(body = new TreeGridBody<T, I>("body", model)
+		bodyContainer.add(body = new TreeGridBody<T, I, S>("body", model)
 		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Collection<IGridColumn<T, I>> getActiveColumns()
+			protected Collection<IGridColumn<T, I, S>> getActiveColumns()
 			{
 				return TreeGrid.this.getActiveColumns();
 			}
@@ -220,12 +220,12 @@ public class TreeGrid<T extends TreeModel & Serializable, I extends TreeNode & S
 	 * @param columns
 	 *            list of {@link IGridColumn}s.
 	 */
-	public TreeGrid(String id, T model, List<IGridColumn<T, I>> columns)
+	public TreeGrid(String id, T model, List<IGridColumn<T, I, S>> columns)
 	{
 		this(id, Model.of(model), columns);
 	}
 
-	private TreeGridBody<T, I> body;
+	private TreeGridBody<T, I, S> body;
 
 	/**
 	 * Returns the inner tree of the {@link TreeGrid}.

@@ -12,11 +12,11 @@ import com.inmethod.grid.IGridSortState;
  * 
  * @author Matej Knopp
  */
-public abstract class SortableHeaderLinkPanel extends Panel
+public abstract class SortableHeaderLinkPanel<S> extends Panel
 {
 
 	private static final long serialVersionUID = 1L;
-	private final String sortProperty;
+	private final S sortProperty;
 
 	/**
 	 * Creates new {@link SortableHeaderLinkPanel} instance.
@@ -26,7 +26,7 @@ public abstract class SortableHeaderLinkPanel extends Panel
 	 * @param sortProperty
 	 *            sort property that will be reported by the {@link IGridSortState}
 	 */
-	public SortableHeaderLinkPanel(String id, String sortProperty)
+	public SortableHeaderLinkPanel(String id, S sortProperty)
 	{
 		super(id);
 
@@ -72,7 +72,7 @@ public abstract class SortableHeaderLinkPanel extends Panel
 		tag.put("class", getStyleClass());
 	}
 
-	private GridSortState getSortState()
+	private GridSortState<S> getSortState()
 	{
 		return (findParent(AbstractGrid.class)).getSortState();
 	}
@@ -84,7 +84,7 @@ public abstract class SortableHeaderLinkPanel extends Panel
 	 */
 	private IGridSortState.Direction getSortDirection()
 	{
-		IGridSortState state = getSortState();
+		IGridSortState<S> state = getSortState();
 		// we are interested only in the column with highest priority and it must match this panel's
 // sort property
 		if (state.getColumns().size() > 0 &&

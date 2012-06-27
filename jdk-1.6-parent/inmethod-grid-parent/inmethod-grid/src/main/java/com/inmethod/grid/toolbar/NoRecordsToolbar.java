@@ -37,7 +37,7 @@ import com.inmethod.grid.datagrid.DataGrid;
  * @author Igor Vaynberg (ivaynberg)
  * @author Matej Knopp
  */
-public class NoRecordsToolbar<D extends IDataSource<T>, T> extends AbstractToolbar<D, T>
+public class NoRecordsToolbar<D extends IDataSource<T>, T, S> extends AbstractToolbar<D, T, S>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -50,7 +50,7 @@ public class NoRecordsToolbar<D extends IDataSource<T>, T> extends AbstractToolb
 	 * @param table
 	 *            data table this toolbar will be attached to
 	 */
-	public NoRecordsToolbar(final DataGrid<D, T> table)
+	public NoRecordsToolbar(final DataGrid<D, T, S> table)
 	{
 		this(table, DEFAULT_MESSAGE_MODEL);
 	}
@@ -61,7 +61,7 @@ public class NoRecordsToolbar<D extends IDataSource<T>, T> extends AbstractToolb
 	 * @param messageModel
 	 *            model that will be used to display the "no records found" message
 	 */
-	public NoRecordsToolbar(final DataGrid<D, T> grid, IModel<String> messageModel)
+	public NoRecordsToolbar(final DataGrid<D, T, S> grid, IModel<String> messageModel)
 	{
 		super(grid, null);
 
@@ -73,9 +73,9 @@ public class NoRecordsToolbar<D extends IDataSource<T>, T> extends AbstractToolb
 	 * 
 	 * @return {@link DataGrid} instance this toolbar belongs to.
 	 */
-	public DataGrid<D, T> getDataGrid()
+	public DataGrid<D, T, S> getDataGrid()
 	{
-		return (DataGrid<D, T>)super.getGrid();
+		return (DataGrid<D, T, S>)super.getGrid();
 	}
 
 	/**

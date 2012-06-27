@@ -34,7 +34,7 @@ import com.inmethod.grid.treegrid.TreeGrid;
  * 
  * @author Matej Knopp
  */
-public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
+public class CheckBoxColumn<M, I, S> extends AbstractColumn<M, I, S>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -79,10 +79,10 @@ public class CheckBoxColumn<M, I> extends AbstractColumn<M, I>
 
 		}
 		else if (getGrid() instanceof TreeGrid &&
-			((TreeGrid<?, ?>)getGrid()).isAutoSelectChildren())
+			((TreeGrid<?, ?, S>)getGrid()).isAutoSelectChildren())
 		{
 
-			TreeGrid<?, ?> grid = (TreeGrid<?, ?>)getGrid();
+			TreeGrid<?, ?, S> grid = (TreeGrid<?, ?, S>)getGrid();
 			Object parent = grid.getTree().getParentNode(model.getObject());
 			if (parent != null && grid.getTreeState().isNodeSelected(parent))
 			{

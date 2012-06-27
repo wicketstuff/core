@@ -31,7 +31,7 @@ import com.inmethod.grid.common.AbstractGrid;
  * 
  * @author Matej Knopp
  */
-public interface IGridSortState
+public interface IGridSortState<S>
 {
 
 	/**
@@ -57,7 +57,7 @@ public interface IGridSortState
 	 * 
 	 * @author Matej Knopp
 	 */
-	public interface ISortStateColumn
+	public interface ISortStateColumn<S>
 	{
 		/**
 		 * Returns the property name
@@ -65,7 +65,7 @@ public interface IGridSortState
 		 * @see IGridColumn#getSortProperty()
 		 * @return property name
 		 */
-		public String getPropertyName();
+		public S getPropertyName();
 
 		/**
 		 * Returns the direction in which this column should be sorted
@@ -78,7 +78,7 @@ public interface IGridSortState
 	/**
 	 * @return the related grid, not null
 	 */
-	public AbstractGrid<?, ?> getGrid();
+	public AbstractGrid<?, ?, S> getGrid();
 
 	/**
 	 * Returns the sort state values for various columns sorted by column priority. Columns with
@@ -89,5 +89,5 @@ public interface IGridSortState
 	 * 
 	 * @return list of {@link ISortStateColumn} instances that determines the sort state of grid
 	 */
-	public List<IGridSortState.ISortStateColumn> getColumns();
+	public List<IGridSortState.ISortStateColumn<S>> getColumns();
 }

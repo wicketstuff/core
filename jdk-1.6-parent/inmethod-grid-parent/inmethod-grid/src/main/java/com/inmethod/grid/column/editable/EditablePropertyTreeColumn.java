@@ -20,8 +20,8 @@ import com.inmethod.grid.column.tree.PropertyTreeColumn;
  * 
  * @author Matej Knopp
  */
-public class EditablePropertyTreeColumn<T extends TreeModel & Serializable, I extends TreeNode & Serializable, P>
-	extends PropertyTreeColumn<T, I, P>
+public class EditablePropertyTreeColumn<T extends TreeModel & Serializable, I extends TreeNode & Serializable, P, S>
+	extends PropertyTreeColumn<T, I, P, S>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -40,7 +40,7 @@ public class EditablePropertyTreeColumn<T extends TreeModel & Serializable, I ex
 	 *            column is being sorted
 	 */
 	public EditablePropertyTreeColumn(String columnId, IModel<String> headerModel,
-		String propertyExpression, String sortProperty)
+		String propertyExpression, S sortProperty)
 	{
 		super(columnId, headerModel, propertyExpression, sortProperty);
 	}
@@ -74,7 +74,7 @@ public class EditablePropertyTreeColumn<T extends TreeModel & Serializable, I ex
 	 *            column is being sorted
 	 */
 	public EditablePropertyTreeColumn(IModel<String> headerModel, String propertyExpression,
-		String sortProperty)
+		S sortProperty)
 	{
 		super(headerModel, propertyExpression, sortProperty);
 	}
@@ -137,7 +137,7 @@ public class EditablePropertyTreeColumn<T extends TreeModel & Serializable, I ex
 
 			});
 
-			EditableCellPanel<T, I, P> panel = newCellPanel("panel", rowModel,
+			EditableCellPanel<T, I, P, S> panel = newCellPanel("panel", rowModel,
 				getFieldModel(rowModel));
 			addValidators(panel.getEditComponent());
 			add(panel);
@@ -155,10 +155,10 @@ public class EditablePropertyTreeColumn<T extends TreeModel & Serializable, I ex
 		return new PropertyModel<P>(rowModel, getPropertyExpression());
 	}
 
-	protected EditableCellPanel<T, I, P> newCellPanel(String componentId, IModel<I> rowModel,
+	protected EditableCellPanel<T, I, P, S> newCellPanel(String componentId, IModel<I> rowModel,
 		IModel<P> cellModel)
 	{
-		return new TextFieldPanel<T, I, P>(componentId, cellModel, rowModel, this);
+		return new TextFieldPanel<T, I, P, S>(componentId, cellModel, rowModel, this);
 	}
 
 	/**

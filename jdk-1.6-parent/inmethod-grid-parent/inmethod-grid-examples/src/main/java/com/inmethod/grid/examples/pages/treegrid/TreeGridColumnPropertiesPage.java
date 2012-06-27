@@ -33,9 +33,10 @@ public class TreeGridColumnPropertiesPage extends BaseExamplePage
 	 */
 	public TreeGridColumnPropertiesPage()
 	{
-		List<IGridColumn<DefaultTreeModel, DefaultMutableTreeNode>> columns = new ArrayList<IGridColumn<DefaultTreeModel, DefaultMutableTreeNode>>();
+		List<IGridColumn<DefaultTreeModel, DefaultMutableTreeNode, String>> columns =
+				new ArrayList<IGridColumn<DefaultTreeModel, DefaultMutableTreeNode, String>>();
 
-		columns.add(new PropertyTreeColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+		columns.add(new PropertyTreeColumn<DefaultTreeModel, DefaultMutableTreeNode, String, String>(
 			Model.of("Property 1"), "userObject.property1")
 		{
 			private static final long serialVersionUID = 1L;
@@ -55,7 +56,7 @@ public class TreeGridColumnPropertiesPage extends BaseExamplePage
 			}
 		}.setReorderable(false).setInitialSize(200).setMinSize(100).setMaxSize(250));
 
-		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String, String>(
 			Model.of("Property 2"), "userObject.property2")
 		{
 			private static final long serialVersionUID = 1L;
@@ -67,7 +68,7 @@ public class TreeGridColumnPropertiesPage extends BaseExamplePage
 			}
 		}.setResizable(false));
 
-		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String, String>(
 			Model.of("Property 3"), "userObject.property3")
 		{
 			private static final long serialVersionUID = 1L;
@@ -79,15 +80,16 @@ public class TreeGridColumnPropertiesPage extends BaseExamplePage
 			}
 		}.setHeaderTooltipModel(Model.of("Property 3 column")));
 
-		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String, String>(
 			Model.of("Property 4"), "userObject.property4").setWrapText(true));
-		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String, String>(
 			Model.of("Property 5"), "userObject.property5"));
-		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+		columns.add(new PropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String, String>(
 			Model.of("Property 6"), "userObject.property6"));
 
 		DefaultTreeModel model = TreeModelFactory.createTreeModel();
-		TreeGrid<DefaultTreeModel, DefaultMutableTreeNode> grid = new TreeGrid<DefaultTreeModel, DefaultMutableTreeNode>(
+		TreeGrid<DefaultTreeModel, DefaultMutableTreeNode, String> grid =
+				new TreeGrid<DefaultTreeModel, DefaultMutableTreeNode, String>(
 			"grid", model, columns);
 
 		// expand the root node

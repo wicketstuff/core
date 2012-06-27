@@ -14,8 +14,7 @@ import com.inmethod.icon.IconImage;
  */
 public abstract class AddDeletePanel<M, I> extends SubmitCancelPanel<M, I>
 {
-  protected AddDeletePanel(String id, final IModel<I> model,
-                           AbstractGrid<M, I> grid)
+  protected AddDeletePanel(String id, final IModel<I> model, AbstractGrid<M, I, ?> grid)
   {
     super(id,model,grid);
     AjaxLink<Void> cancel = new AjaxLink<Void>("delete")

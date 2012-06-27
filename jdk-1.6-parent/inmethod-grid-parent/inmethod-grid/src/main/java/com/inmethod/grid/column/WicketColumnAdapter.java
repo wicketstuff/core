@@ -34,11 +34,11 @@ import com.inmethod.grid.datagrid.DataGrid;
  * 
  * @author Matej Knopp
  */
-public class WicketColumnAdapter<M, I> extends AbstractColumn<M, I>
+public class WicketColumnAdapter<M, I, S> extends AbstractColumn<M, I, S>
 {
 
 	private static final long serialVersionUID = 1L;
-	private final IColumn<I> delegate;
+	private final IColumn<I, S> delegate;
 
 	/**
 	 * Constructor
@@ -48,7 +48,7 @@ public class WicketColumnAdapter<M, I> extends AbstractColumn<M, I>
 	 * @param column
 	 *            {@link IColumn} implementation
 	 */
-	public WicketColumnAdapter(String columnId, IColumn<I> column)
+	public WicketColumnAdapter(String columnId, IColumn<I, S> column)
 	{
 		super(columnId, null, null);
 		delegate = column;
@@ -93,7 +93,7 @@ public class WicketColumnAdapter<M, I> extends AbstractColumn<M, I>
 	{
 		if (delegate instanceof IStyledColumn)
 		{
-			return ((IStyledColumn<I>)delegate).getCssClass();
+			return ((IStyledColumn<I, S>)delegate).getCssClass();
 		}
 		else
 		{
@@ -105,7 +105,7 @@ public class WicketColumnAdapter<M, I> extends AbstractColumn<M, I>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getSortProperty()
+	public S getSortProperty()
 	{
 		if (delegate.isSortable())
 		{
@@ -125,7 +125,7 @@ public class WicketColumnAdapter<M, I> extends AbstractColumn<M, I>
 	 *            array of {@link IColumn}s
 	 * @return list of {@link IGridColumn}s
 	 */
-	public static <T, M, I> List<IGridColumn<M, I>> wrapColumns(IColumn<I> columns[])
+	public static <T, M, I, S> List<IGridColumn<M, I, S>> wrapColumns(IColumn<I, S> columns[])
 	{
 		return wrapColumns(Arrays.asList(columns));
 	}
@@ -139,13 +139,13 @@ public class WicketColumnAdapter<M, I> extends AbstractColumn<M, I>
 	 *            list of {@link IColumn}s
 	 * @return list of {@link IGridColumn}s
 	 */
-	public static <M, I> List<IGridColumn<M, I>> wrapColumns(List<IColumn<I>> columns)
+	public static <M, I, S> List<IGridColumn<M, I, S>> wrapColumns(List<IColumn<I, S>> columns)
 	{
-		List<IGridColumn<M, I>> result = new ArrayList<IGridColumn<M, I>>(columns.size());
+		List<IGridColumn<M, I, S>> result = new ArrayList<IGridColumn<M, I, S>>(columns.size());
 		int i = 0;
-		for (IColumn<I> column : columns)
+		for (IColumn<I, S> column : columns)
 		{
-			result.add(new WicketColumnAdapter<M, I>("column" + i++, column));
+			result.add(new WicketColumnAdapter<M, I, S>("column" + i++, column));
 		}
 		return result;
 	}

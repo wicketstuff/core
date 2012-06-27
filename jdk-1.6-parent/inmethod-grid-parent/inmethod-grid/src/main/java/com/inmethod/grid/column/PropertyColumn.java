@@ -25,7 +25,7 @@ import com.inmethod.grid.IRenderable;
  * 
  * @author Matej Knopp
  */
-public class PropertyColumn<M, I, P> extends AbstractLightWeightColumn<M, I>
+public class PropertyColumn<M, I, P, S> extends AbstractLightWeightColumn<M, I, S>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -46,7 +46,7 @@ public class PropertyColumn<M, I, P> extends AbstractLightWeightColumn<M, I>
 	 *            column is being sorted
 	 */
 	public PropertyColumn(String columnId, IModel<String> headerModel, String propertyExpression,
-		String sortProperty)
+		S sortProperty)
 	{
 		super(columnId, headerModel, sortProperty);
 		this.propertyExpression = propertyExpression;
@@ -79,7 +79,7 @@ public class PropertyColumn<M, I, P> extends AbstractLightWeightColumn<M, I>
 	 *            optional string that will be returned by {@link ISortState} to indicate that the
 	 *            column is being sorted
 	 */
-	public PropertyColumn(IModel<String> headerModel, String propertyExpression, String sortProperty)
+	public PropertyColumn(IModel<String> headerModel, String propertyExpression, S sortProperty)
 	{
 		this(propertyExpression, headerModel, propertyExpression, sortProperty);
 	}
@@ -107,7 +107,7 @@ public class PropertyColumn<M, I, P> extends AbstractLightWeightColumn<M, I>
 	 * @param escape
 	 * @return <code>this</code> (useful for method chaining)
 	 */
-	public PropertyColumn<M, I, P> setEscapeMarkup(boolean escape)
+	public PropertyColumn<M, I, P, S> setEscapeMarkup(boolean escape)
 	{
 		escapeMarkup = escape;
 		return this;

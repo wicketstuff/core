@@ -16,7 +16,7 @@ import com.inmethod.icon.Icon;
  * Column that Displays Confirm, Cancel and Delete buttons
  * @author Tom Burton
  */
-public class AddDeleteColumn<M, I> extends SubmitCancelColumn<M, I>
+public class AddDeleteColumn<M, I, S> extends SubmitCancelColumn<M, I, S>
 {
   public AddDeleteColumn(String columnId, IModel<String> headerModel)
   {
@@ -84,15 +84,15 @@ public class AddDeleteColumn<M, I> extends SubmitCancelColumn<M, I>
   protected void onDelete(AjaxRequestTarget target, IModel<I> rowModel,
                           WebMarkupContainer rowComponent)
   {
-    AbstractGrid ag = getGrid(); //check for only record on page
+    AbstractGrid<M, I, S> ag = getGrid(); //check for only record on page
     if ( ag instanceof DataGrid )
     {
-      DataGrid dg = (DataGrid)ag;
+      DataGrid<?, I, S> dg = (DataGrid<?, I, S>)ag;
       long rows = dg.getRowsPerPage();
-      IDataSource ds = dg.getDataSource();
+      IDataSource<I> ds = dg.getDataSource();
       if ( ds instanceof IAppendableDataSource )
       {
-        IAppendableDataSource ads = (IAppendableDataSource)ds;
+        IAppendableDataSource<I> ads = (IAppendableDataSource<I>)ds;
         //TODO: get current row
         ads.deleteRow(0, rowModel.getObject());
       }

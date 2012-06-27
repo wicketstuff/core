@@ -5,6 +5,9 @@ import java.util.Collection;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 
+import com.inmethod.grid.IGridColumn;
+import com.inmethod.grid.common.AbstractGridRow;
+import com.inmethod.grid.common.AttachPrelightBehavior;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
@@ -12,10 +15,6 @@ import org.apache.wicket.extensions.markup.html.tree.AbstractTree;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
-
-import com.inmethod.grid.IGridColumn;
-import com.inmethod.grid.common.AbstractGridRow;
-import com.inmethod.grid.common.AttachPrelightBehavior;
 
 /**
  * Body of {@link TreeGrid}. Contains the rows for tree nodes.
@@ -27,7 +26,7 @@ import com.inmethod.grid.common.AttachPrelightBehavior;
  * 
  * @author Matej Knopp
  */
-public abstract class TreeGridBody<T extends TreeModel, I extends TreeNode> extends AbstractTree
+public abstract class TreeGridBody<T extends TreeModel, I extends TreeNode, S> extends AbstractTree
 {
 
 	private static final long serialVersionUID = 1L;
@@ -48,13 +47,13 @@ public abstract class TreeGridBody<T extends TreeModel, I extends TreeNode> exte
 	@Override
 	protected void populateTreeItem(final WebMarkupContainer item, int level)
 	{
-		AbstractGridRow<T, I> row = new AbstractTreeGridRow<T, I>("item",
+		AbstractGridRow<T, I, S> row = new AbstractTreeGridRow<T, I, S>("item",
 			(IModel<I>)item.getDefaultModel(), level)
 		{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Collection<IGridColumn<T, I>> getActiveColumns()
+			protected Collection<IGridColumn<T, I, S>> getActiveColumns()
 			{
 				return TreeGridBody.this.getActiveColumns();
 			}
@@ -104,7 +103,7 @@ public abstract class TreeGridBody<T extends TreeModel, I extends TreeNode> exte
 	}
 
 	/**
-	 * @see org.apache.wicket.markup.html.tree.AbstractTree#isForceRebuildOnSelectionChange()
+	 * @see AbstractTree#isForceRebuildOnSelectionChange()
 	 */
 	@Override
 	protected boolean isForceRebuildOnSelectionChange()
@@ -117,7 +116,7 @@ public abstract class TreeGridBody<T extends TreeModel, I extends TreeNode> exte
 		return super.isNodeExpanded(object);
 	}
 
-	protected abstract Collection<IGridColumn<T, I>> getActiveColumns();
+	protected abstract Collection<IGridColumn<T, I, S>> getActiveColumns();
 
 	protected abstract void rowPopulated(WebMarkupContainer item);
 }

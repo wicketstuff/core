@@ -27,7 +27,7 @@ import com.inmethod.grid.common.AttachPrelightBehavior;
  * 
  * @author Matej Knopp
  */
-public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel 
+public abstract class DataGridBody<D extends IDataSource<T>, T, S> extends Panel
        implements IPageable
 {
 	private static final long serialVersionUID = 1L;
@@ -50,9 +50,9 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 
 	protected abstract long getRowsPerPage();
 
-	protected abstract IGridSortState getSortState();
+	protected abstract IGridSortState<S> getSortState();
 
-	protected abstract Collection<IGridColumn<D, T>> getActiveColumns();
+	protected abstract Collection<IGridColumn<D, T, S>> getActiveColumns();
 
 	protected abstract boolean isItemSelected(IModel<T> itemModel);
 
@@ -63,14 +63,14 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 		return (Data)get("row");
 	}
   
-  protected Item insertRow(final IModel<T> rowModel) 
+  protected Item<T> insertRow(final IModel<T> rowModel)
   {
-		Item item = getData().createItem(getCurrentPageItemCount() + 1L, rowModel);
+		Item<T> item = getData().createItem(getCurrentPageItemCount() + 1L, rowModel);
 		getData().add(item);
 		return item;
 	}
   
-  protected Item createItem(long index, final IModel<T> rowModel)
+  protected Item<T> createItem(long index, final IModel<T> rowModel)
   { return getData().createItem(index, rowModel); }
 
 	long getTotalRowCount()
@@ -135,40 +135,40 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 		}
 
 		@Override
-		protected IGridSortState getSortState()
+		protected IGridSortState<S> getSortState()
 		{
 			return DataGridBody.this.getSortState();
 		}
 
 		//TODO: Should wrapQuery be removed?
-    @Override
-		protected IDataSource.IQuery wrapQuery(final IDataSource.IQuery original) 
-    {
-			return new DataGrid.IGridQuery() 
-      {
-				public long getCount() 
+        @Override
+		protected IDataSource.IQuery wrapQuery(final IDataSource.IQuery original)
         {
+			return new DataGrid.IGridQuery() 
+			{
+				public long getCount() 
+				{
 					return original.getCount();
 				}
 
 				public long getFrom() 
-        {
+				{
 					return original.getFrom();
 				}
 
-				public IGridSortState getSortState() 
-        {
+				public IGridSortState<S> getSortState()
+				{
 					return original.getSortState();
 				}
 
 				public long getTotalCount() 
-        {
+				{
 					return original.getTotalCount();
 				}
 
-				public DataGrid getDataGrid() 
-        {
-					return (DataGrid) DataGridBody.this.findParent(DataGrid.class);
+				public DataGrid<D, T, S> getDataGrid()
+				{
+					return (DataGrid<D, T, S>) DataGridBody.this.findParent(DataGrid.class);
 				}
 			};
 		}
@@ -176,12 +176,12 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 		@Override
 		protected void populateItem(final Item<T> item)
 		{
-			item.add(new AbstractGridRow<D, T>("item", (IModel<T>)item.getDefaultModel())
+			item.add(new AbstractGridRow<D, T, S>("item", (IModel<T>)item.getDefaultModel())
 			{
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				protected Collection<IGridColumn<D, T>> getActiveColumns()
+				protected Collection<IGridColumn<D, T, S>> getActiveColumns()
 				{
 					return DataGridBody.this.getActiveColumns();
 				}
@@ -256,7 +256,7 @@ public abstract class DataGridBody<D extends IDataSource<T>, T> extends Panel
 		 * @param itemModel model of the data being inserted
 		 * @return Item item inserted
 		 */
-		protected Item createItem(final long index, final IModel<T> itemModel)
+		protected Item<T> createItem(final long index, final IModel<T> itemModel)
     {
       int i = index > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int)index;
       return newItemFactory().newItem(i, itemModel);

@@ -15,7 +15,7 @@ import org.apache.wicket.model.IModel;
  * @param <I>
  *            row/item model object type
  */
-public class EditableDateColumn<M, I> extends EditablePropertyColumn<M, I, Date>
+public class EditableDateColumn<M, I, S> extends EditablePropertyColumn<M, I, Date, S>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -37,11 +37,11 @@ public class EditableDateColumn<M, I> extends EditablePropertyColumn<M, I, Date>
    *            DateConverter to use to display a properly formatted date/time
 	 */
 	public EditableDateColumn(String columnId, IModel<String> headerModel,
-                            String propertyExpression, String sortProperty,
-                            DateConverter dc)
+							String propertyExpression, S sortProperty,
+							DateConverter dc)
   {
 		super(columnId, headerModel, propertyExpression, sortProperty);
-    converter = dc;
+	converter = dc;
 	}
 
 	/**
@@ -57,11 +57,11 @@ public class EditableDateColumn<M, I> extends EditablePropertyColumn<M, I, Date>
    *            DateConverter to use to display a properly formatted date/time
 	 */
 	public EditableDateColumn(String columnId, IModel<String> headerModel,
-                            String propertyExpression,
-                            DateConverter dc)
+							String propertyExpression,
+							DateConverter dc)
   {
 		super(columnId, headerModel, propertyExpression);
-    converter = dc;
+	converter = dc;
 	}
 
 	/**
@@ -78,12 +78,10 @@ public class EditableDateColumn<M, I> extends EditablePropertyColumn<M, I, Date>
    * @param dc
    *            DateConverter to use to display a properly formatted date/time
 	 */
-	public EditableDateColumn(IModel<String> headerModel,
-                            String propertyExpression,
-                            String sortProperty, DateConverter dc)
+	public EditableDateColumn(IModel<String> headerModel, String propertyExpression, S sortProperty, DateConverter dc)
   {
 		super(headerModel, propertyExpression, sortProperty);
-    converter = dc;
+	converter = dc;
 	}
 
   /**
@@ -97,29 +95,30 @@ public class EditableDateColumn<M, I> extends EditablePropertyColumn<M, I, Date>
    * @param dc
    *            DataConverter for how to properly display the Date/Time info
 	 */
-	public EditableDateColumn(IModel<String> headerModel,
-                            String propertyExpression,
-                            DateConverter dc)
+	public EditableDateColumn(IModel<String> headerModel, String propertyExpression, DateConverter dc)
   {
 		super(headerModel, propertyExpression);
-    converter = dc;
+	converter = dc;
 	}
 
-  /** {@inheritDoc} */
-  @Override
-	protected EditableCellPanel newCellPanel(String componentId, IModel<I> rowModel,
-                                           IModel<Date> cellModel)
+	@Override
+	protected EditableCellPanel<M, I, Date, S> newCellPanel(String componentId, IModel<I> rowModel,
+		IModel<Date> cellModel)
   {
-		return new DateTextFieldPanel(componentId, cellModel, rowModel, this,
-                                  converter);
+		return new DateTextFieldPanel<M, I, S>(componentId, cellModel, rowModel, this, converter);
 	}
 
-  /** {@inheritDoc} */
-  @Override
-  protected <C> CharSequence convertToString(C date)
-  {
-    if (null != date) { return converter.convertToString((Date)date, getLocale()); }
-    else { return ""; }
-  }
+	@Override
+	protected <C> CharSequence convertToString(C date)
+	{
+		if (null != date)
+		{
+			return converter.convertToString((Date)date, getLocale());
+		}
+		else
+		{
+			return "";
+		}
+	}
 
 }

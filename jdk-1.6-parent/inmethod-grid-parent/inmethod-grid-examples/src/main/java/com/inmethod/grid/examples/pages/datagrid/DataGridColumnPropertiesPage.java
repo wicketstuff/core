@@ -31,23 +31,24 @@ public class DataGridColumnPropertiesPage extends BaseExamplePage
 	 */
 	public DataGridColumnPropertiesPage()
 	{
-		List<IGridColumn<IDataSource<Contact>, Contact>> columns = new ArrayList<IGridColumn<IDataSource<Contact>, Contact>>();
+		List<IGridColumn<IDataSource<Contact>, Contact, String>> columns =
+				new ArrayList<IGridColumn<IDataSource<Contact>, Contact, String>>();
 
-		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, Long>(
+		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, Long, String>(
 			new ResourceModel("id"), "id").setInitialSize(3)
 			.setSizeUnit(SizeUnit.EM)
 			.setResizable(false)
 			.setReorderable(false)
 			.setHeaderTooltipModel(Model.of("Person Id")));
 
-		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String>(new ResourceModel(
+		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String, String>(new ResourceModel(
 			"firstName"), "firstName", "firstName").setReorderable(false)
 			.setInitialSize(200)
 			.setMinSize(100)
 			.setMaxSize(250)
 			.setHeaderTooltipModel(Model.of("Person First Name")));
 
-		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String>(new ResourceModel(
+		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String, String>(new ResourceModel(
 			"lastName"), "lastName", "lastName")
 		{
 			private static final long serialVersionUID = 1L;
@@ -59,7 +60,7 @@ public class DataGridColumnPropertiesPage extends BaseExamplePage
 			}
 		});
 
-		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String>(new ResourceModel(
+		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String, String>(new ResourceModel(
 			"homePhone"), "homePhone")
 		{
 			private static final long serialVersionUID = 1L;
@@ -71,13 +72,13 @@ public class DataGridColumnPropertiesPage extends BaseExamplePage
 			}
 		}.setInitialSize(10).setSizeUnit(SizeUnit.EM).setResizable(false));
 
-		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String>(new ResourceModel(
+		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String, String>(new ResourceModel(
 			"cellPhone"), "cellPhone").setInitialSize(10)
 			.setSizeUnit(SizeUnit.EM)
 			.setResizable(false));
 
-		DataGrid<IDataSource<Contact>, Contact> grid = new DefaultDataGrid<IDataSource<Contact>, Contact>(
-			"grid", new ContactDataSource(), columns);
+		DataGrid<IDataSource<Contact>, Contact, String> grid =
+				new DefaultDataGrid<IDataSource<Contact>, Contact, String>("grid", new ContactDataSource(), columns);
 		add(grid);
 
 		grid.setRowsPerPage(15);

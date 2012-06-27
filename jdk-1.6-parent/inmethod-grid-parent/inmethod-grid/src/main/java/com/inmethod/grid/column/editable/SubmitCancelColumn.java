@@ -10,7 +10,7 @@ import com.inmethod.grid.column.AbstractColumn;
 import com.inmethod.grid.common.Icons;
 import com.inmethod.icon.Icon;
 
-public class SubmitCancelColumn<M, I> extends AbstractColumn<M, I>
+public class SubmitCancelColumn<M, I, S> extends AbstractColumn<M, I, S>
 {
 
 	private static final long serialVersionUID = 1L;

@@ -43,7 +43,7 @@ public class NavigatorLabel extends Label
 	 * @param table
 	 *            pageable view
 	 */
-	public <D extends IDataSource<T>, T> NavigatorLabel(final String id, final DataGrid<D, T> table)
+	public <D extends IDataSource<T>, T> NavigatorLabel(final String id, final DataGrid<D, T, ?> table)
 	{
 		super(id);
 		setDefaultModel(new StringResourceModel("NavigatorLabel", this,
@@ -54,14 +54,14 @@ public class NavigatorLabel extends Label
 	private class LabelModelObject<D extends IDataSource<T>, T> implements IClusterable
 	{
 		private static final long serialVersionUID = 1L;
-		private final DataGrid<D, T> table;
+		private final DataGrid<D, T, ?> table;
 
 		/**
 		 * Construct.
 		 * 
 		 * @param table
 		 */
-		public LabelModelObject(DataGrid<D, T> table)
+		public LabelModelObject(DataGrid<D, T, ?> table)
 		{
 			this.table = table;
 		}

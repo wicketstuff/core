@@ -16,7 +16,7 @@ import com.inmethod.grid.column.PropertyColumn;
  * @author Matej Knopp
  * 
  */
-public class EditablePropertyColumn<M, I, P> extends PropertyColumn<M, I, P>
+public class EditablePropertyColumn<M, I, P, S> extends PropertyColumn<M, I, P, S>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -35,7 +35,7 @@ public class EditablePropertyColumn<M, I, P> extends PropertyColumn<M, I, P>
 	 *            column is being sorted
 	 */
 	public EditablePropertyColumn(String columnId, IModel<String> headerModel,
-		String propertyExpression, String sortProperty)
+		String propertyExpression, S sortProperty)
 	{
 		super(columnId, headerModel, propertyExpression, sortProperty);
 	}
@@ -69,7 +69,7 @@ public class EditablePropertyColumn<M, I, P> extends PropertyColumn<M, I, P>
 	 *            column is being sorted
 	 */
 	public EditablePropertyColumn(IModel<String> headerModel, String propertyExpression,
-		String sortProperty)
+		S sortProperty)
 	{
 		super(headerModel, propertyExpression, sortProperty);
 	}
@@ -104,10 +104,10 @@ public class EditablePropertyColumn<M, I, P> extends PropertyColumn<M, I, P>
 		return new PropertyModel<P>(rowModel, getPropertyExpression());
 	}
 
-	protected EditableCellPanel<M, I, P> newCellPanel(String componentId, IModel<I> rowModel,
+	protected EditableCellPanel<M, I, P, S> newCellPanel(String componentId, IModel<I> rowModel,
 		IModel<P> cellModel)
 	{
-		return new TextFieldPanel<M, I, P>(componentId, cellModel, rowModel, this);
+		return new TextFieldPanel<M, I, P, S>(componentId, cellModel, rowModel, this);
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class EditablePropertyColumn<M, I, P> extends PropertyColumn<M, I, P>
 		// when this method is called, it means that the row is not lightweight, which in turn
 		// means the the row is selected (see implementation of #isLightWeight(IModel).
 
-		EditableCellPanel<M, I, P> panel = newCellPanel(componentId, rowModel,
+		EditableCellPanel<M, I, P, S> panel = newCellPanel(componentId, rowModel,
 			getFieldModel(rowModel));
 		addValidators(panel.getEditComponent());
 		return panel;

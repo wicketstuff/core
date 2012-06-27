@@ -29,20 +29,21 @@ public class VerticalScrollingDataGridPage extends BaseExamplePage
 	 */
 	public VerticalScrollingDataGridPage()
 	{
-		List<IGridColumn<IDataSource<Contact>, Contact>> columns = new ArrayList<IGridColumn<IDataSource<Contact>, Contact>>();
+		List<IGridColumn<IDataSource<Contact>, Contact, String>> columns =
+				new ArrayList<IGridColumn<IDataSource<Contact>, Contact, String>>();
 
-		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, Long>(
+		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, Long, String>(
 			new ResourceModel("id"), "id"));
-		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String>(new ResourceModel(
+		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String, String>(new ResourceModel(
 			"firstName"), "firstName", "firstName"));
-		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String>(new ResourceModel(
+		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String, String>(new ResourceModel(
 			"lastName"), "lastName", "lastName"));
-		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String>(new ResourceModel(
+		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String, String>(new ResourceModel(
 			"homePhone"), "homePhone"));
-		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String>(new ResourceModel(
+		columns.add(new PropertyColumn<IDataSource<Contact>, Contact, String, String>(new ResourceModel(
 			"cellPhone"), "cellPhone"));
 
-		DataGrid<IDataSource<Contact>, Contact> grid = new DefaultDataGrid<IDataSource<Contact>, Contact>(
+		DataGrid<IDataSource<Contact>, Contact, String> grid = new DefaultDataGrid<IDataSource<Contact>, Contact, String>(
 			"grid", new ContactDataSource(), columns);
 		add(grid);
 

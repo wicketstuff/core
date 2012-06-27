@@ -19,7 +19,7 @@ import com.inmethod.grid.treegrid.TreeGrid;
  * 
  * @author Matej Knopp
  */
-public interface IGridColumn<M, I> extends IDetachable
+public interface IGridColumn<M, I, S> extends IDetachable
 {
 
 	/**
@@ -86,7 +86,7 @@ public interface IGridColumn<M, I> extends IDetachable
 	 * @see IGridSortState.ISortStateColumn#getPropertyName()
 	 * @return sort property or <code>null</code> if the column is not sortable
 	 */
-	public String getSortProperty();
+	public S getSortProperty();
 
 	/**
 	 * Returns whether user will be able to resize this column. If the column is resizable,
@@ -174,7 +174,7 @@ public interface IGridColumn<M, I> extends IDetachable
 	 * @param grid
 	 *            grid that contains this column
 	 */
-	public void setGrid(AbstractGrid<M, I> grid);
+	public void setGrid(AbstractGrid<M, I, S> grid);
 
 	/**
 	 * Determines the behavior when there is more text in cell than it fits in it. If the method

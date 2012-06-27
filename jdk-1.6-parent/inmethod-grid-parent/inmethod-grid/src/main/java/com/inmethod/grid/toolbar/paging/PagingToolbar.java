@@ -20,7 +20,7 @@ import com.inmethod.grid.toolbar.AbstractToolbar;
  * 
  * @author Matej Knopp
  */
-public class PagingToolbar<D extends IDataSource<T>, T> extends AbstractToolbar<D, T>
+public class PagingToolbar<D extends IDataSource<T>, T, S> extends AbstractToolbar<D, T, S>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -30,9 +30,9 @@ public class PagingToolbar<D extends IDataSource<T>, T> extends AbstractToolbar<
 	 * 
 	 * @return data grid
 	 */
-	public DataGrid<D, T> getDataGrid()
+	public DataGrid<D, T, S> getDataGrid()
 	{
-		return (DataGrid<D, T>)super.getGrid();
+		return (DataGrid<D, T, S>)super.getGrid();
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class PagingToolbar<D extends IDataSource<T>, T> extends AbstractToolbar<
 	 * @param grid
 	 *            data grid
 	 */
-	public PagingToolbar(DataGrid<D, T> grid)
+	public PagingToolbar(DataGrid<D, T, S> grid)
 	{
 		super(grid, null);
 

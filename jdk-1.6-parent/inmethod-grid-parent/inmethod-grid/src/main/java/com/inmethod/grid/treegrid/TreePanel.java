@@ -230,7 +230,7 @@ public abstract class TreePanel<T extends TreeModel, I extends TreeNode> extends
 		}
 	};
 
-	private TreeGridBody<T, I> getTreeGridBody()
+	private TreeGridBody<T, I, ?> getTreeGridBody()
 	{
 		return findParent(TreeGridBody.class);
 	};

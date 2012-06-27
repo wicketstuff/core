@@ -29,21 +29,22 @@ public class DataGridWithUnknownItemCount extends BaseExamplePage
 	 */
 	public DataGridWithUnknownItemCount()
 	{
-		List<IGridColumn<ContactDataSourceWithUnknownItemCount, Contact>> columns = new ArrayList<IGridColumn<ContactDataSourceWithUnknownItemCount, Contact>>();
+		List<IGridColumn<ContactDataSourceWithUnknownItemCount, Contact, String>> columns =
+				new ArrayList<IGridColumn<ContactDataSourceWithUnknownItemCount, Contact, String>>();
 
-		columns.add(new PropertyColumn<ContactDataSourceWithUnknownItemCount, Contact, Long>(
+		columns.add(new PropertyColumn<ContactDataSourceWithUnknownItemCount, Contact, Long, String>(
 			new ResourceModel("id"), "id"));
-		columns.add(new PropertyColumn<ContactDataSourceWithUnknownItemCount, Contact, String>(
+		columns.add(new PropertyColumn<ContactDataSourceWithUnknownItemCount, Contact, String, String>(
 			new ResourceModel("firstName"), "firstName", "firstName"));
-		columns.add(new PropertyColumn<ContactDataSourceWithUnknownItemCount, Contact, String>(
+		columns.add(new PropertyColumn<ContactDataSourceWithUnknownItemCount, Contact, String, String>(
 			new ResourceModel("lastName"), "lastName", "lastName"));
-		columns.add(new PropertyColumn<ContactDataSourceWithUnknownItemCount, Contact, String>(
+		columns.add(new PropertyColumn<ContactDataSourceWithUnknownItemCount, Contact, String, String>(
 			new ResourceModel("homePhone"), "homePhone"));
-		columns.add(new PropertyColumn<ContactDataSourceWithUnknownItemCount, Contact, String>(
+		columns.add(new PropertyColumn<ContactDataSourceWithUnknownItemCount, Contact, String, String>(
 			new ResourceModel("cellPhone"), "cellPhone"));
 
-		DataGrid<ContactDataSourceWithUnknownItemCount, Contact> grid = new DefaultDataGrid<ContactDataSourceWithUnknownItemCount, Contact>(
-			"grid", new ContactDataSourceWithUnknownItemCount(), columns);
+		DataGrid<ContactDataSourceWithUnknownItemCount, Contact, String> grid =
+				new DefaultDataGrid<ContactDataSourceWithUnknownItemCount, Contact, String>("grid", new ContactDataSourceWithUnknownItemCount(), columns);
 		add(grid);
 
 		grid.setRowsPerPage(50);

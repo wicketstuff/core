@@ -26,8 +26,8 @@ import com.inmethod.icon.Icon;
  * 
  * @author Matej Knopp
  */
-public abstract class AbstractTreeColumn<T extends TreeModel & Serializable, I extends TreeNode & Serializable>
-	extends BaseTreeColumn<T, I>
+public abstract class AbstractTreeColumn<T extends TreeModel & Serializable, I extends TreeNode & Serializable, S>
+	extends BaseTreeColumn<T, I, S>
 {
 
 	private static final long serialVersionUID = 1L;
@@ -43,7 +43,7 @@ public abstract class AbstractTreeColumn<T extends TreeModel & Serializable, I e
 	 *            optional string that will be returned by {@link ISortState} to indicate that the
 	 *            column is being sorted
 	 */
-	public AbstractTreeColumn(String columnId, IModel<String> headerModel, String sortProperty)
+	public AbstractTreeColumn(String columnId, IModel<String> headerModel, S sortProperty)
 	{
 		super(columnId, headerModel, sortProperty);
 	}

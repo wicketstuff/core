@@ -32,26 +32,27 @@ public class EditableTreeGridPage extends BaseExamplePage
 	 */
 	public EditableTreeGridPage()
 	{
-		List<IGridColumn<DefaultTreeModel, DefaultMutableTreeNode>> columns = new ArrayList<IGridColumn<DefaultTreeModel, DefaultMutableTreeNode>>();
+		List<IGridColumn<DefaultTreeModel, DefaultMutableTreeNode, String>> columns =
+				new ArrayList<IGridColumn<DefaultTreeModel, DefaultMutableTreeNode, String>>();
 
-		columns.add(new SubmitCancelColumn<DefaultTreeModel, DefaultMutableTreeNode>("edit",
+		columns.add(new SubmitCancelColumn<DefaultTreeModel, DefaultMutableTreeNode, String>("edit",
 			Model.of("Edit")));
-		columns.add(new EditablePropertyTreeColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+		columns.add(new EditablePropertyTreeColumn<DefaultTreeModel, DefaultMutableTreeNode, String, String>(
 			Model.of("Property 1"), "userObject.property1"));
-		columns.add(new EditablePropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+		columns.add(new EditablePropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String, String>(
 			Model.of("Property 2"), "userObject.property2"));
-		columns.add(new EditablePropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+		columns.add(new EditablePropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String, String>(
 			Model.of("Property 3"), "userObject.property3"));
-		columns.add(new EditablePropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+		columns.add(new EditablePropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String, String>(
 			Model.of("Property 4"), "userObject.property4"));
-		columns.add(new EditablePropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+		columns.add(new EditablePropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String, String>(
 			Model.of("Property 5"), "userObject.property5"));
-		columns.add(new EditablePropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String>(
+		columns.add(new EditablePropertyColumn<DefaultTreeModel, DefaultMutableTreeNode, String, String>(
 			Model.of("Property 6"), "userObject.property6"));
 
 		DefaultTreeModel model = TreeModelFactory.createTreeModel();
-		TreeGrid<DefaultTreeModel, DefaultMutableTreeNode> grid = new TreeGrid<DefaultTreeModel, DefaultMutableTreeNode>(
-			"grid", model, columns);
+		TreeGrid<DefaultTreeModel, DefaultMutableTreeNode, String> grid =
+				new TreeGrid<DefaultTreeModel, DefaultMutableTreeNode, String>("grid", model, columns);
 
 		grid.setContentHeight(23, SizeUnit.EM);
 		grid.setAllowSelectMultiple(true);

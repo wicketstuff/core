@@ -18,7 +18,7 @@ import com.inmethod.grid.IGridColumn;
  * @see ColumnsHeaderRepeater
  * @author Matej Knopp
  */
-public abstract class ColumnsHeader<M, I> extends Panel
+public abstract class ColumnsHeader<M, I, S> extends Panel
 {
 
 	private static final long serialVersionUID = 1L;
@@ -34,19 +34,19 @@ public abstract class ColumnsHeader<M, I> extends Panel
 
 		setRenderBodyOnly(true);
 
-		add(new ColumnsHeaderRepeater<M, I>("header")
+		add(new ColumnsHeaderRepeater<M, I, S>("header")
 		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			Collection<IGridColumn<M, I>> getActiveColumns()
+			Collection<IGridColumn<M, I, S>> getActiveColumns()
 			{
 				return ColumnsHeader.this.getActiveColumns();
 			}
 
 			@Override
-			int getColumnWidth(IGridColumn<M, I> column)
+			int getColumnWidth(IGridColumn<M, I, S> column)
 			{
 				return ColumnsHeader.this.getColumnWidth(column);
 			}
@@ -62,8 +62,8 @@ public abstract class ColumnsHeader<M, I> extends Panel
 
 	abstract protected void sortStateChanged(AjaxRequestTarget target);
 
-	abstract Collection<IGridColumn<M, I>> getActiveColumns();
+	abstract Collection<IGridColumn<M, I, S>> getActiveColumns();
 
-	abstract int getColumnWidth(IGridColumn<M, I> column);
+	abstract int getColumnWidth(IGridColumn<M, I, S> column);
 
 }

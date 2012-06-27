@@ -131,7 +131,7 @@ public interface IDataSource<T> extends IDetachable, IClusterable
 		 * 
 		 * @return sort state
 		 */
-		public IGridSortState getSortState();
+		public <S> IGridSortState<S> getSortState();
 	}
 
 	/**
