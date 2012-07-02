@@ -135,22 +135,26 @@ public class Timeline extends Panel
 	@Override
 	public void renderHead(IHeaderResponse response)
 	{
-
-		response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(getClass(),
-			"./timeline_js/timeline-api.js?timeline-use-local-resources=true&bundle=true")));
+		PageParameters pp= new PageParameters();
+		pp.add("timeline-use-local-resources", "true");
+		pp.add("bundle", "true");
+		response.render(JavaScriptHeaderItem.forReference(
+				new PackageResourceReference(getClass(), "./timeline_js/timeline-api.js"), pp, "timeline-api"));
 
 		StringBuffer parameters = new StringBuffer("");
 
-		parameters.append("Timeline_ajax_url='" + timelineUrl() + "';\n");
+		parameters.append("Timeline_ajax_url='")
+				.append(timelineUrl())
+				.append("';\n");
 
 		response.render(JavaScriptHeaderItem.forScript(parameters.toString(),
 			TIMELINE_PARAMS_JAVASCRIPT));
 		response.render(OnLoadHeaderItem.forScript(getLoadScriptName() + "()"));
 	}
 
-	private String timelineUrl()
+	private CharSequence timelineUrl()
 	{
 		return urlFor(new PackageResourceReference(getClass(), "timeline_ajax/simile-ajax-api.js"),
-			new PageParameters()).toString();
+			new PageParameters());
 	}
 }
