@@ -51,7 +51,7 @@ import org.apache.wicket.util.crypt.Base64;
  * the type of the used request handler. Its purpose is to implement all portlet
  * related functionality from WebRequestCodingStrategy, that was used in Wicket
  * 1.4.
- * 
+ *
  * @author Peter Pastrnak
  */
 public class PortletRequestMapper extends AbstractComponentMapper {
@@ -61,17 +61,14 @@ public class PortletRequestMapper extends AbstractComponentMapper {
 		this.systemMapper = new SystemMapper(application);
 	}
 
-	@Override
 	public IRequestHandler mapRequest(Request request) {
 		return systemMapper.mapRequest(request);
 	}
 
-	@Override
 	public int getCompatibilityScore(Request request) {
 		return systemMapper.getCompatibilityScore(request);
 	}
 
-	@Override
 	public Url mapHandler(IRequestHandler requestHandler) {
 		Url url = systemMapper.mapHandler(requestHandler);
 		if (ThreadPortletContext.getPortletRequest() == null) {

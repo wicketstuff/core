@@ -40,7 +40,7 @@ import org.apache.wicket.util.crypt.Base64;
  * functionality. It is responsible for the initialization of all portlet
  * specific settings of the WebApplication and wraps the portlet request and
  * portlet response objects by an http servlet request / response wrapper.
- * 
+ *
  * @author Peter Pastrnak
  */
 public class PortletFilter extends WicketFilter {
@@ -52,7 +52,7 @@ public class PortletFilter extends WicketFilter {
 
 	/**
 	 * Hack to access the application object (TODO: remove)
-	 * 
+	 *
 	 * @see org.apache.wicket.protocol.http.WicketFilter#getApplicationFactory()
 	 */
 	@Override
@@ -60,13 +60,12 @@ public class PortletFilter extends WicketFilter {
 		final IWebApplicationFactory applicationFactory = super.getApplicationFactory();
 
 		return new IWebApplicationFactory() {
-			@Override
+
 			public WebApplication createApplication(WicketFilter filter) {
 				application = applicationFactory.createApplication(filter);
 				return application;
 			}
 
-			@Override
 			public void destroy(WicketFilter filter) {
 				applicationFactory.destroy(filter);
 			}
@@ -116,7 +115,7 @@ public class PortletFilter extends WicketFilter {
 				if (nextSeparator > 0) {
 					String windowId = new String(Base64.decodeBase64(pathInfo.substring(SHARED_RESOURCE_URL_PORTLET_WINDOW_ID_PREFIX.length(), nextSeparator)));
 					HttpSession proxiedSession = PortletHttpSessionWrapper.createProxy(httpServletRequest, windowId);
-					
+
 					pathInfo = pathInfo.substring(nextSeparator);
 					httpServletRequest = new PortletServletRequestWrapper(filterConfig.getServletContext(), httpServletRequest, proxiedSession, filterPath, pathInfo);
 				}

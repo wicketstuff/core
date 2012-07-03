@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>jdk-1.5-parent</artifactId>
-		<version>1.5-SNAPSHOT</version>
+		<version>1.5.7</version>
 	</parent>
 
 	<artifactId>tinymce-parent</artifactId>
@@ -113,6 +113,7 @@
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
+			<version>20080701</version> <!-- use a JDK 1.5 build -->
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
