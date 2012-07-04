@@ -44,7 +44,6 @@ import javax.servlet.RequestDispatcher;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.settings.IRequestCycleSettings;
 import org.apache.wicket.util.file.File;
-import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -284,22 +283,55 @@ public class WicketPortlet extends GenericPortlet {
 	 */
 	protected String getWicketURL(final PortletRequest request, final PageType pageType, final String defaultPage) {
 		String wicketURL = null;
-		if (request instanceof ActionRequest)
+
+		if (request instanceof ActionRequest) {
 			// try to lookup the passed in wicket url parameter
 			wicketURL = request.getParameter(WICKET_URL_PORTLET_PARAMETER);
-		else if (request instanceof ResourceRequest)
+		}
+		else if (request instanceof ResourceRequest) {
 			wicketURL = ((ResourceRequest) request).getResourceID();
+		}
 		else {
 			// try to lookup the passed in wicket url parameter, suffixed with
 			// the portlet mode
 			final String parameterName = WICKET_URL_PORTLET_PARAMETER + request.getPortletMode().toString();
 			wicketURL = request.getParameter(parameterName);
 		}
-
-		// if the wicketURL could not be retrieved, return the url for the
-		// default page
-		if (wicketURL == null)
+		
+		if (wicketURL == null) {
+			// if the wicketURL could not be retrieved, return the url for the default page
 			wicketURL = defaultPage;
+		}
+		
+		Map<String, String[]> requestParameters = request.getParameterMap();
+
+		if ((wicketURL != null) && (requestParameters != null) && (!requestParameters.isEmpty()) && (request instanceof ResourceRequest)) {
+			// Many Javascript based components append parameters directly to the URL, so they are not part of the '_wu' or 'resourceId' parameter.
+			// Wicket can access these parameters, but they are not present in the querystring, so Wicket identifies them as POST parameters.
+			
+			ResourceRequest resourceRequest = (ResourceRequest) request;
+			
+			int queryDelimiter = wicketURL.indexOf('?');
+			if (queryDelimiter >= 0) {
+				Map<String, String[]> parameters = Utils.parseQueryString(wicketURL.substring(queryDelimiter + 1));
+				
+				if ("GET".equalsIgnoreCase(resourceRequest.getMethod())) {
+					parameters.putAll(requestParameters);
+				}
+				else {
+					for (Map.Entry<String, String[]> entry : requestParameters.entrySet()) {
+						if (entry.getKey().startsWith("wicket-ajax")) {
+							parameters.put(entry.getKey(), entry.getValue());
+						}
+					}
+				}
+				wicketURL = wicketURL.substring(0, queryDelimiter + 1) + Utils.buildQueryString(parameters);
+			}
+			else {
+				wicketURL += "?" + Utils.buildQueryString(requestParameters);
+			}
+		}
+
 		return wicketURL;
 	}
 
@@ -312,7 +344,7 @@ public class WicketPortlet extends GenericPortlet {
 
 		wicketFilterPath = buildWicketFilterPath(config.getInitParameter(WICKET_FILTER_PATH_PARAM));
 		String responseBufferFolderPath = config.getInitParameter(RESPONSE_BUFFER_FOLDER_PARAM);
-		if ((responseBufferFolderPath != null) && (!Strings.isEmpty(responseBufferFolderPath))) {
+		if ((responseBufferFolderPath != null) && (!responseBufferFolderPath.isEmpty())) {
 			responseBufferFolder = new File(responseBufferFolderPath);
 		}
 
@@ -539,7 +571,7 @@ public class WicketPortlet extends GenericPortlet {
 	 */
 	protected void processRequest(final PortletRequest request, final PortletResponse response, final PageType pageType) throws PortletException, IOException {
 		String wicketURL = null;
-
+		
 		// get the actual wicketURL for this request, to be passed onto Wicket
 		// core for processing
 		wicketURL = getWicketURL(request, pageType, getDefaultPage(pageType));
@@ -565,8 +597,6 @@ public class WicketPortlet extends GenericPortlet {
 			if (rd != null) {
 				// delegate to wicket filter - this is where the magic happens
 				rd.include(request, response);
-				// String newWicketURL = getWicketURL(request, pageType,
-				// getDefaultPage(pageType));
 				LOG.debug("wicket filter inclusion complete");
 				processActionResponseState(wicketURL, request, (ActionResponse) response, responseState);
 			}

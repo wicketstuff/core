@@ -42,8 +42,12 @@ public class MarkupIdPrepender implements IComponentInitializationListener {
 			String markupId = component.getMarkupId();
 			String markupIdFromMarkup = component.getMarkupIdFromMarkup();
 
-			if (markupId != markupIdFromMarkup) {
-				component.setMarkupId(getPrefix() + markupId);
+			if ((markupId != null) && (markupId != markupIdFromMarkup)) {
+				
+				String prefix = getPrefix();
+				if (!markupId.startsWith(prefix)) {
+					component.setMarkupId(prefix + markupId);
+				}
 			}
 		}
 	}

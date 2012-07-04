@@ -16,6 +16,7 @@
  */
 package org.apache.wicket.portlet;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +32,7 @@ import org.apache.wicket.util.string.Strings;
 public final class Utils {
 	private static final String DEFAULT_CHARSET_NAME = "UTF-8";
 
-	public static final boolean appendParameter(StringBuilder sb, boolean first, String name, String value) {
+	public static final boolean appendParameter(StringBuilder sb, boolean first, String name, String value, boolean encodeURL) {
 		if (!first) {
 			sb.append('&');
 		}
@@ -39,14 +40,26 @@ public final class Utils {
 			first = false;
 		}
 
-		sb.append(UrlEncoder.QUERY_INSTANCE.encode(name, DEFAULT_CHARSET_NAME));
-		if (value != null) {
-			sb.append('=').append(UrlEncoder.QUERY_INSTANCE.encode(value, DEFAULT_CHARSET_NAME));
+		if (encodeURL) {
+			sb.append(UrlEncoder.QUERY_INSTANCE.encode(name, DEFAULT_CHARSET_NAME));
+			if (value != null) {
+				sb.append('=').append(UrlEncoder.QUERY_INSTANCE.encode(value, DEFAULT_CHARSET_NAME));
+			}
+		}
+		else {
+			sb.append(name);
+			if (value != null) {
+				sb.append('=').append(value);
+			}
 		}
 		return first;
 	}
-
+	
 	public static final String buildQueryString(Map<String, String[]> parameterMap) {
+		return buildQueryString(parameterMap, true);
+	}
+	
+	public static final String buildQueryString(Map<String, String[]> parameterMap, boolean encodeURL) {
 		if ((parameterMap == null) || (parameterMap.isEmpty())) {
 			return null;
 		}
@@ -56,16 +69,13 @@ public final class Utils {
 
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 			String name = entry.getKey();
-			if ((!name.startsWith("p_p_")) || (!WicketPortlet.WICKET_URL_PORTLET_PARAMETER.equals(name))) {
-
-				String[] values = entry.getValue();
-				if ((values == null) || (values.length == 0)) {
-					first = appendParameter(sb, first, name, null);
-				}
-				else {
-					for (String value : values) {
-						first = appendParameter(sb, first, name, value);
-					}
+			String[] values = entry.getValue();
+			if ((values == null) || (values.length == 0)) {
+				first = appendParameter(sb, first, name, null, encodeURL);
+			}
+			else {
+				for (String value : values) {
+					first = appendParameter(sb, first, name, value, encodeURL);
 				}
 			}
 		}
@@ -88,10 +98,9 @@ public final class Utils {
 						parameterMap.put(parts[0], new String[] { (parts.length > 1 ? parts[1] : null) });
 					}
 					else {
-						String[] moreValues = new String[values.length + 1]; 
-						System.arraycopy(values, 0, moreValues, 0, values.length);
-						moreValues[values.length - 1] = (parts.length > 1 ? parts[1] : null);
-						parameterMap.put(parts[0], moreValues);
+						values = Arrays.copyOf(values, values.length + 1);
+						values[values.length - 1] = (parts.length > 1 ? parts[1] : null);
+						parameterMap.put(parts[0], values);
 					}
 				}
 			}

@@ -17,8 +17,10 @@
 package org.apache.wicket.portlet;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +41,8 @@ import javax.servlet.http.HttpSession;
  * @author Ronny Pscheidl
  */
 public class PortletServletRequestWrapper extends HttpServletRequestWrapper {
+	private static final Set<String> HIDDEN_REQUEST_ATTRIBUTES = new HashSet<String>(Arrays.asList("javax.servlet.error.request_uri", "javax.servlet.forward.request_uri", "javax.servlet.forward.servlet_path", "javax.servlet.forward.context_path", "javax.servlet.forward.query_string" ));
+
 	/**
 	 * Converts from a filterPath (path with a trailing slash), to a servletPath
 	 * (path with a leading slash).
@@ -136,7 +140,6 @@ public class PortletServletRequestWrapper extends HttpServletRequestWrapper {
 	 * @param request
 	 * @param filterPath
 	 */
-	@SuppressWarnings("unchecked")
 	protected PortletServletRequestWrapper(final ServletContext context, final HttpSession proxiedSession, final HttpServletRequest request, final String filterPath) {
 		super(request);
 
@@ -151,14 +154,12 @@ public class PortletServletRequestWrapper extends HttpServletRequestWrapper {
 		// if request is an include
 		if ((contextPath = (String) request.getAttribute("javax.servlet.include.context_path")) != null) {
 			requestURI = (String) request.getAttribute("javax.servlet.include.request_uri");
-			String wicketQueryString = (String) request.getAttribute("javax.servlet.include.query_string");
-			queryString = mergeQueryString(request.getParameterMap(), request.getQueryString(), wicketQueryString);
+			queryString = (String) request.getAttribute("javax.servlet.include.query_string");
 		}
 		// else if request is a forward
 		else if ((contextPath = (String) request.getAttribute("javax.servlet.forward.context_path")) != null) {
 			requestURI = (String) request.getAttribute("javax.servlet.forward.request_uri");
-			String wicketQueryString = (String) request.getAttribute("javax.servlet.forward.query_string");
-			queryString = mergeQueryString(request.getParameterMap(), request.getQueryString(), wicketQueryString);
+			queryString = (String) request.getAttribute("javax.servlet.include.query_string");
 		}
 		// else it is a normal request
 		else {
@@ -168,16 +169,6 @@ public class PortletServletRequestWrapper extends HttpServletRequestWrapper {
 		}
 	}
 	
-	private String mergeQueryString(Map<String, String[]> requestParameterMap, String requestQueryString, String wicketQueryString) {
-		// Many Javascript based components append parameters directly to the URL, so they are not part of the '_wu' or 'resourceId' parameter.
-		// Wicket can access these parameters, but they are not present in the querystring, so Wicket identifies them as POST parameters.
-		// As a workaround, we add all parameters from the original request to the query string. 
-		Map<String, String[]> parameterMap = Utils.parseQueryString(requestQueryString);
-		parameterMap.putAll(requestParameterMap);
-		parameterMap.putAll(Utils.parseQueryString(wicketQueryString));
-		return Utils.buildQueryString(parameterMap);
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -185,9 +176,9 @@ public class PortletServletRequestWrapper extends HttpServletRequestWrapper {
 	public Object getAttribute(final String name) {
 		// TODO: check if these can possibly be set/handled
 		// nullifying these for now to prevent Wicket
-		// ServletWebRequest.getRelativePathPrefixToWicketHandler() going the
+		// ServletWebRequest.getClientUrl() going the
 		// wrong route
-		if ("javax.servlet.error.request_uri".equals(name) || "javax.servlet.forward.servlet_path".equals(name))
+		if (HIDDEN_REQUEST_ATTRIBUTES.contains(name))
 			return null;
 		return super.getAttribute(name);
 	}
