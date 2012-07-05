@@ -9,7 +9,6 @@ import org.apache.wicket.markup.parser.IXmlPullParser;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.util.crypt.CharEncoding;
 import org.apache.wicket.util.io.Streams;
-import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
 
 import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
 
@@ -38,12 +37,12 @@ public class HtmlCompressingXmlPullParser implements IXmlPullParser
 		this.compressor = compressor;
 	}
 
-	public void parse(CharSequence string) throws IOException, ResourceStreamNotFoundException
+	public void parse(CharSequence string) throws IOException
 	{
 		parse(new ByteArrayInputStream(string.toString().getBytes()), null);
 	}
 
-	public void parse(InputStream inputStream) throws IOException, ResourceStreamNotFoundException
+	public void parse(InputStream inputStream) throws IOException
 	{
 		parse(inputStream, CharEncoding.UTF_8);
 	}
