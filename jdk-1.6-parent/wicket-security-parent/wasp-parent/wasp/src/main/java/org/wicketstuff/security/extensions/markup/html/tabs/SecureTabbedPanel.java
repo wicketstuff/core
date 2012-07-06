@@ -31,9 +31,12 @@ import org.wicketstuff.security.components.SecureComponentHelper;
  * A Tab bar that hides the tabs if the user has insufficient rights to see the contents. Note that
  * tabs not implementing the {@link ISecureTab} interface will always show up.
  * 
+ * @param <T>
+ *            The type of panel to be used for this component's tabs. Just use {@link ITab} if you
+ *            have no special needs here.
  * @author marrink
  */
-public class SecureTabbedPanel extends TabbedPanel
+public class SecureTabbedPanel<T extends ITab> extends TabbedPanel<T>
 {
 
 	/**
@@ -48,11 +51,9 @@ public class SecureTabbedPanel extends TabbedPanel
 	 * @param tabs
 	 * @see TabbedPanel#TabbedPanel(String, List)
 	 */
-	public SecureTabbedPanel(String id, List<ITab> tabs)
+	public SecureTabbedPanel(String id, List<T> tabs)
 	{
 		super(id, tabs);
-		// In jdk1.5 we can enforce a list ISecureTabs, in 1.4 we just have to
-		// guess what we get
 	}
 
 	/**
@@ -67,8 +68,9 @@ public class SecureTabbedPanel extends TabbedPanel
 		Class<? extends Panel> panelClass = getTabClass(index);
 		// We are using a LinkSecurityCheck instead of a ContainerSecurityCheck
 		// because it operates on classes instead of instances.
-		if (panelClass != null)
+		if (panelClass != null){
 			SecureComponentHelper.setSecurityCheck(link, new LinkSecurityCheck(link, panelClass));
+                }
 		// we can only set the check if we have a class, we could use
 		// getPanel("dummy") and get the class from that but then we would
 		// create some serious overhead instantiating panels twice.
@@ -85,8 +87,9 @@ public class SecureTabbedPanel extends TabbedPanel
 	protected Class<? extends Panel> getTabClass(int tabIndex)
 	{
 		ITab tab = getTabs().get(tabIndex);
-		if (tab instanceof ISecureTab)
+		if (tab instanceof ISecureTab){
 			return ((ISecureTab)tab).getPanel();
+                }
 		return null;
 	}
 }

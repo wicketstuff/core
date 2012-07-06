@@ -19,8 +19,8 @@ package org.apache.wicket.portlet;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.wicket.request.UrlDecoder;
-import org.apache.wicket.request.UrlEncoder;
+import org.apache.wicket.util.encoding.UrlDecoder;
+import org.apache.wicket.util.encoding.UrlEncoder;
 import org.apache.wicket.util.string.Strings;
 
 /**
