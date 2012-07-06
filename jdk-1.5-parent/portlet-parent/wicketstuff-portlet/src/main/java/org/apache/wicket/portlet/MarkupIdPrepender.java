@@ -22,7 +22,7 @@ import org.apache.wicket.application.IComponentInitializationListener;
 /**
  * If the markup id is not defined directly on the component tag, it prepends
  * the portlet namespace to the Wicket generated markup id.
- * 
+ *
  * @author Peter Pastrnak
  */
 public class MarkupIdPrepender implements IComponentInitializationListener {
@@ -35,7 +35,6 @@ public class MarkupIdPrepender implements IComponentInitializationListener {
 		return prefix;
 	}
 
-	@Override
 	public void onInitialize(Component component) {
 		boolean outputMarkupId = component.getOutputMarkupId();
 		if (outputMarkupId) {
