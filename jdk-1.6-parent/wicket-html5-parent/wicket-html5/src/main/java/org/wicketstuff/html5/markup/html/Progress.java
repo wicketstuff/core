@@ -48,6 +48,17 @@ public class Progress extends WebMarkupContainer
 		this.current = current;
 		this.max = max;
 	}
+	
+	/**
+	 * Constructs an indeterminate progress.
+	 * 
+	 * @param id
+	 *            the component id
+	 */
+	public Progress(String id)
+	{
+		this(id,null,null);
+	}
 
 	@Override
 	protected void onComponentTag(final ComponentTag tag)
@@ -55,9 +66,11 @@ public class Progress extends WebMarkupContainer
 		super.onComponentTag(tag);
 
 		checkComponentTag(tag, "progress");
-
-		tag.put("value", String.valueOf(getValue()));
-		tag.put("max", String.valueOf(getMax()));
+		if(isDeterminate())
+		{
+			tag.put("value", String.valueOf(getValue()));
+			tag.put("max", String.valueOf(getMax()));
+		}
 	}
 
 	@Override
@@ -71,12 +84,18 @@ public class Progress extends WebMarkupContainer
 	 */
 	protected CharSequence getBody()
 	{
-
-		double currentValue = getValue().doubleValue();
-		double maxValue = getMax().doubleValue();
-
-		Double percentage = maxValue == 0d ? maxValue : ((currentValue / maxValue) * 100);
-		return percentage.intValue() + " %";
+		if(isDeterminate())
+		{
+			double currentValue = getValue().doubleValue();
+			double maxValue = getMax().doubleValue();
+	
+			Double percentage = maxValue == 0d ? maxValue : ((currentValue / maxValue) * 100);
+			return percentage.intValue() + " %";
+		}
+		else
+		{
+			return "";
+		}
 	}
 
 	private Number getValue()
@@ -107,5 +126,14 @@ public class Progress extends WebMarkupContainer
 		}
 
 		return maxValue;
+	}
+	
+	/**
+	 * Returns {@code false} if this is an indeterminate progress.
+	 * 
+	 * @return {@code true} if this is a determinate progress
+	 */
+	public boolean isDeterminate() {
+		return ((max!=null)&&(current!=null));
 	}
 }
