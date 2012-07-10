@@ -119,22 +119,7 @@ public abstract class AbstractGrid<M, I, S> extends Panel
 				// since javascript can be rendered at the tail
 				// of HTML document, do not initialize data grid
 				// component until "DOM ready" event.
-				if (!getWebRequest().isAjax())
-				{
-					response.render(OnDomReadyHeaderItem.forScript(getInitializationJavascript()));
-				}
-			}
-
-			@Override
-			public void afterRender(Component component)
-			{
-				super.afterRender(component);
-
-				AjaxRequestTarget ajaxRequestTarget = getRequestCycle().find(AjaxRequestTarget.class);
-				if (null != ajaxRequestTarget)
-        {
-					ajaxRequestTarget.appendJavaScript(getInitializationJavascript());
-				}
+				response.render(OnDomReadyHeaderItem.forScript(getInitializationJavascript()));
 			}
 		});
 
