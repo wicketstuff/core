@@ -823,6 +823,7 @@ public abstract class AbstractGrid<M, I, S> extends Panel
 				CharSequence precondition = "return InMethod.XTable.canSelectRow(attrs.event);";
 				AjaxCallListener ajaxCallListener = new AjaxCallListener();
 				ajaxCallListener.onPrecondition(precondition);
+				attributes.setAllowDefault(true);
 				attributes.getAjaxCallListeners().add(ajaxCallListener);
 			}
       
