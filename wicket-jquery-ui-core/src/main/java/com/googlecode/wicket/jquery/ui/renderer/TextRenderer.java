@@ -59,6 +59,11 @@ public class TextRenderer<T> implements ITextRenderer<T>
 	@Override
 	public String getText(T object)
 	{
+		if (this.expression == null && object != null)
+		{
+			return object.toString();
+		}
+
 		return this.getText(object, this.expression);
 	}
 
@@ -73,11 +78,6 @@ public class TextRenderer<T> implements ITextRenderer<T>
 			{
 				return value.toString();
 			}
-		}
-
-		if (object != null)
-		{
-			return object.toString();
 		}
 
 		return "";
