@@ -63,8 +63,7 @@ public class BeanValidator
 
 		// basically copied from FormComponent, suggestions welcome
 
-		public String getMessage(final String key)
-		{
+		public String getMessage(String key, java.util.Map<String,Object> vars) {
 
 			// Use the following log4j config for detailed logging on the
 			// property resolution
@@ -109,6 +108,8 @@ public class BeanValidator
 			if (Strings.isEmpty(message))
 			{
 				message = null;
+			} else {
+				message = substitute(message, vars);
 			}
 			return message;
 		}
@@ -143,11 +144,7 @@ public class BeanValidator
 			return localizer.getString(key, component, "");
 		}
 
-		/**
-		 * @see org.apache.wicket.validation.IErrorMessageSource#substitute(java.lang.String,
-		 *      java.util.Map)
-		 */
-		public String substitute(final String string, final Map<String, Object> vars)
+		private String substitute(final String string, final Map<String, Object> vars)
 			throws IllegalStateException
 		{
 			return new MapVariableInterpolator(string, vars, Application.get()
