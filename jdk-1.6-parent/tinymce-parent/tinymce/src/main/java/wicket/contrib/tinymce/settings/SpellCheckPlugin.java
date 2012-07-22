@@ -18,6 +18,8 @@
 package wicket.contrib.tinymce.settings;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.resource.SharedResourceReference;
 
 import wicket.contrib.tinymce.TinyMceBehavior;
 
@@ -33,8 +35,6 @@ public class SpellCheckPlugin extends Plugin
 	private static final long serialVersionUID = 1L;
 
 	private static final String resourceKey = "spellcheck_rpc";
-	private static final String resourceUrl = "resources/" +
-		TinyMceBehavior.class.getCanonicalName() + "/" + resourceKey;
 
 	private PluginButton spellCheckButton;
 
@@ -65,7 +65,7 @@ public class SpellCheckPlugin extends Plugin
 	protected void definePluginSettings(StringBuffer buffer)
 	{
 		define(buffer, "spellchecker_languages", "+English=en");
-		define(buffer, "spellchecker_rpc_url", resourceUrl);
+		
+		define(buffer, "spellchecker_rpc_url", RequestCycle.get().urlFor(new SharedResourceReference(TinyMceBehavior.class, resourceKey), null).toString());
 	}
-
 }
