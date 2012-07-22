@@ -25,7 +25,7 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 
 /**
- * Provides a {@link Panel} containing a loading indicator {@link Component}, which can be accessed (to be replaced for instance) by {@link #getInnerLabel()}  
+ * Provides a {@link Panel} containing a loading indicator {@link Component}, which can be accessed (to be replaced for instance) by {@link #getPlaceholderComponent()}  
  * 
  * @author Sebastien Briquet - sebfz1
  * @since 1.2.1
@@ -60,11 +60,12 @@ public class LoadingPanel extends Panel
 	}
 
 	/**
-	 * Gets the label that contains the loading indicator
+	 * Gets the placeholder component (the label) that contains the loading indicator.<br/>
+	 * This component is designed to be replaced by another component (like a lazy-loaded component)
 	 * 
 	 * @return the {@link Label}
 	 */
-	public Label getInnerLabel()
+	public Label getPlaceholderComponent()
 	{
 		return this.label;
 	}

@@ -19,6 +19,7 @@ package com.googlecode.wicket.jquery.ui.widget.tabs;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -74,7 +75,19 @@ public class TabbedPanel extends JQueryPanel
 	 */
 	private void init()
 	{
-		final RepeatingView panels = new RepeatingView("panels");
+		final RepeatingView panels = new RepeatingView("panels") {
+			
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onConfigure()
+			{
+				super.onConfigure();
+
+				this.removeAll(); //fixes issue #7
+			}
+		};
+
 		this.add(panels);
 		
 		this.add(new ListView<ITab>("tabs", new ListModel<ITab>(this.tabs)) {
@@ -85,18 +98,22 @@ public class TabbedPanel extends JQueryPanel
 			protected void populateItem(ListItem<ITab> item)
 			{
 				final ITab tab = item.getModelObject();
-				final String newId = panels.newChildId();
+				
+				if (tab.isVisible())
+				{
+					final String newId = panels.newChildId();
 
-				// link (tab) //
-				WebMarkupContainer link = this.newLink(tab);
-				link.add(AttributeModifier.replace("href", "#" + newId)); 
-				link.add(new Label("title", tab.getTitle()).setRenderBodyOnly(true));
-				item.add(link);
+					// link (tab) //
+					WebMarkupContainer link = this.newLink(tab);
+					link.add(AttributeModifier.replace("href", "#" + newId)); 
+					link.add(new Label("title", tab.getTitle()).setRenderBodyOnly(true));
+					item.add(link);
 
-				// panel //
-				panels.add(tab.getPanel(newId).setMarkupId(newId).setOutputMarkupId(true));
+					// panel //
+					panels.add(tab.getPanel(newId).setMarkupId(newId).setOutputMarkupId(true));
+				}
 			}
-			
+
 			/**
 			 * Provides the tab's link
 			 * 
@@ -125,10 +142,33 @@ public class TabbedPanel extends JQueryPanel
 		this.add(this.newWidgetBehavior(JQueryWidget.getSelector(this)));
 	}
 	
+	/**
+	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering 
+	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
+	 * 
+	 * @param behavior the {@link JQueryBehavior}
+	 */
+	protected void onConfigure(JQueryBehavior behavior)
+	{
+		
+		
+	}
+
 	// IJQueryWidget //
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new TabsBehavior(selector, this.options);
+		return new TabsBehavior(selector, this.options) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onConfigure(Component component)
+			{
+				TabbedPanel.this.onConfigure(this);
+				
+				
+			}
+		};
 	}
 }
