@@ -22,7 +22,7 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
 
-import com.googlecode.wicket.jquery.ui.JQueryAbstractBehavior;
+import com.googlecode.wicket.jquery.ui.JQueryLibrarySettings;
 
 /**
  * Provides the base class for jQuery template behavior.<br/>
@@ -46,8 +46,12 @@ public abstract class JQueryAbstractTemplateBehavior extends Behavior
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		super.renderHead(component, response);
-		
-		response.renderJavaScriptReference(JQueryAbstractBehavior.CORE_JS);
+
+		if (JQueryLibrarySettings.CORE_JS != null)
+		{
+			response.renderJavaScriptReference(JQueryLibrarySettings.CORE_JS);
+		}
+
 		response.renderJavaScriptReference(JQueryAbstractTemplateBehavior.TMPL_JS);
 		response.renderString(this.newResourceStream().getString());
 	}

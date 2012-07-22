@@ -40,7 +40,7 @@ public class SampleApplication extends WebApplication
 		
 		this.getMarkupSettings().setStripWicketTags(true);
 		this.getResourceSettings().setThrowExceptionOnMissingResource(false);
-		
+
 		// widgets //
 		this.mountPackage("/accordion", AccordionPage.class);
 		this.mountPackage("/autocomplete", DefaultAutoCompletePage.class);

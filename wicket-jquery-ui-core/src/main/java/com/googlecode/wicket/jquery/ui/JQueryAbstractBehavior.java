@@ -25,7 +25,6 @@ import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
-import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
 /**
@@ -37,8 +36,6 @@ import org.apache.wicket.request.resource.ResourceReference;
 public abstract class JQueryAbstractBehavior extends Behavior
 {
 	private static final long serialVersionUID = 1L;
-	public static final PackageResourceReference CORE_JS = new JavaScriptResourceReference(JQueryBehavior.class, "jquery-1.7.2.min.js"); 
-	public static final PackageResourceReference CORE_UI = new JavaScriptResourceReference(JQueryBehavior.class, "jquery-ui-1.8.21.min.js");
 
 	/**
 	 * Behavior name
@@ -63,20 +60,27 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	
 	/**
 	 * Adds a reference to be added at {@link #renderHead(Component, IHeaderResponse)} time.
-	 * @param reference a {@link CssResourceReference}, a {@link JavaScriptResourceReference}
+	 * @param reference a {@link CssResourceReference} or a {@link JavaScriptResourceReference}
 	 * @return true (as specified by Collection.add(E)) 
 	 */
 	protected boolean add(ResourceReference reference)
 	{
 		return this.references.add(reference);
 	}	
-	
+
 	@Override
 	public void renderHead(Component component, IHeaderResponse response)
 	{
-		response.renderJavaScriptReference(JQueryAbstractBehavior.CORE_JS);
-		response.renderJavaScriptReference(JQueryAbstractBehavior.CORE_UI);
+		if (JQueryLibrarySettings.CORE_JS != null)
+		{
+			response.renderJavaScriptReference(JQueryLibrarySettings.CORE_JS);
+		}
 		
+		if (JQueryLibrarySettings.CORE_UI != null)
+		{
+			response.renderJavaScriptReference(JQueryLibrarySettings.CORE_UI);
+		}
+
 		for(ResourceReference reference : this.references)
 		{
 			if (reference instanceof JavaScriptResourceReference)
