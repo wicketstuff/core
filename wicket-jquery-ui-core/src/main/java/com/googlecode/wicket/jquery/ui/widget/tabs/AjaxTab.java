@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.widget.tabs;
 
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
