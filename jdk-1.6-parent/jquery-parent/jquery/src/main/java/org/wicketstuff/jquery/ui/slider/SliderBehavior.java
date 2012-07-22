@@ -3,6 +3,7 @@ package org.wicketstuff.jquery.ui.slider;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
@@ -42,7 +43,7 @@ public class SliderBehavior extends JQueryBehavior
 		if (sliderOptions.getOnChange() == null)
 		{
 
-			final CharSequence body = getCallbackFunction("e", "ui");
+			final CharSequence body = getCallbackFunctionBody();
 
 			sliderOptions.setOnChange(body.toString(), "e", "ui");
 		}
