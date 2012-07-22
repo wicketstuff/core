@@ -130,5 +130,5 @@ public class WordTinyMCEPage extends TinyMCEBasePage
 		+ "<p>Some <strong>element</strong>, this is to be editor 1. <br />"
 		+ "This editor instance has a 100% width to it. </p>"
 		+ "<p>Some paragraph. <a href=\"http://www.sourceforge.net/\">Some link</a></p>"
-		+ "<img src=\"logo.jpg\" border=\"0\" /><p>&nbsp;</p>";
+		+ "<img src=\"/logo.jpg\" border=\"0\" /><p>&nbsp;</p>";
 }
