@@ -35,7 +35,6 @@ public class AutoCompleteUtils
 	 * @param <T> the type
 	 * @param search search criteria
 	 * @param list reference list
-	 * @param T the type
 	 * @return the sub list
 	 */
 	public static <T> List<T> contains(String search, List<T> list)
@@ -49,7 +48,6 @@ public class AutoCompleteUtils
 	 * @param search search criteria
 	 * @param list reference list
 	 * @param max max size of the sub list to be returned
-	 * @param T the type
 	 * @return the sub list
 	 */
 	public static <T> List<T> contains(String search, List<T> list, int max)
