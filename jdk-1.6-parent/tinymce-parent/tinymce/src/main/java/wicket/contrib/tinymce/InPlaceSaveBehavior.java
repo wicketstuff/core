@@ -24,6 +24,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.model.IModel;
@@ -153,7 +154,7 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior {
 	}
 
 	private CharSequence getWicketPostScript() {
-		return "var sendContent = " + getCallbackFunction("content") + "sendContent(content);";
+		return "var sendContent = " + getCallbackFunction(CallbackParameter.explicit("content")) + "sendContent(content);";
 	}
 
 	@Override

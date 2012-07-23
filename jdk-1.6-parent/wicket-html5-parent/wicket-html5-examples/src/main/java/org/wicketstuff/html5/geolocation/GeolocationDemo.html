@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
-<wicket:extend>
+    <wicket:extend>
 
-<section id="wrapper">
-    <header>
-      <h1>Geolocation</h1>
-    </header>
-    <article>
-		<span wicket:id="geolocator"></span>
-    </article>
-    
-    <ul wicket:id="locations">
-    	<li wicket:id="location"></li>
-    </ul>	
-</section>
+        <section id="wrapper">
+            <header>
+                <h1>Geolocation</h1>
+            </header>
+            <article>
+                <span wicket:id="geolocator"></span>
+            </article>
 
-</wicket:extend>
+            <span wicket:id="wmcResult">
+                <span wicket:id="result"></span><br/>                
+            </span>
+
+        </section>
+
+    </wicket:extend>
 </html>

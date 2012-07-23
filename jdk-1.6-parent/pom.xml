@@ -46,6 +46,7 @@
 		<module>push-parent</module>
 		<module>simile-timeline-parent</module>
 		<module>tinymce-parent</module>
+		<module>twitter-parent</module> 
 		<module>wicket-bundle-parent</module>
 		<module>wicket-osgi-parent</module>
 		<module>wicket-poi-parent</module>
@@ -76,7 +77,6 @@
 		<!-- <module>yav-parent</module> -->
 		<!-- <module>maven-support</module> -->
 
-		<!--		<module>twitter-parent</module> -->
 	</modules>
 
 	<build>
