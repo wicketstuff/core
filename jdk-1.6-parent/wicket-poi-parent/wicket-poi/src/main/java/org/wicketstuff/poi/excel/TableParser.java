@@ -108,7 +108,9 @@ public class TableParser
 			}
 			if (tag.isOpen())
 			{
-				if ("tr".equals(tag.getName().toLowerCase()))
+				String tagName = tag.getName().toLowerCase();
+
+				if ("tr".equals(tagName))
 				{
 					if (tableDeep == 0)
 					{
@@ -119,7 +121,7 @@ public class TableParser
 					row = targetSheet.createRow(index);
 					cell = null;
 				}
-				else if ("td".equals(tag.getName().toLowerCase()))
+				else if ("td".equals(tagName) || "th".equals(tagName) )
 				{
 					int index = cell == null ? 0 : cell.getColumnIndex() + 1 + colsToSpan;
 					while (skipColumn(index))
