@@ -1,7 +1,7 @@
 package org.wicketstuff.twitter.behavior;
 
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.string.JavaScriptUtils;
+import org.apache.wicket.core.util.string.JavaScriptUtils;
 
 /**
  * 
