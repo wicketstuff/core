@@ -66,9 +66,10 @@ public class AuthorizationMessageSource implements IAuthorizationMessageSource
 	}
 
 	/**
-	 * @see org.apache.wicket.validation.IErrorMessageSource#getMessage(java.lang.String)
+	 * @see org.apache.wicket.validation.IErrorMessageSource#getMessage(java.lang.String, java.util.Map) 
 	 */
-	public final String getMessage(String key)
+        @Override
+	public final String getMessage(String key, Map<String, Object> vars)
 	{
 		Localizer localizer = Application.get().getResourceSettings().getLocalizer();
 		// Note: It is important that the default value of "" is provided
@@ -76,28 +77,23 @@ public class AuthorizationMessageSource implements IAuthorizationMessageSource
 		// return a default string like "[Warning: String ..."
 		String message = localizer.getString(key, getComponent(), "");
 		if (Strings.isEmpty(message))
+                {			
 			return null;
-		return message;
+                }
+		else
+		{
+		    return new MapVariableInterpolator(message, mergeVariables(vars), Application.get()
+			.getResourceSettings()
+			.getThrowExceptionOnMissingResource()).toString();
+		}
 	}
-
+	
 	/**
 	 * @see org.wicketstuff.security.log.IAuthorizationMessageSource#getComponent()
 	 */
 	public final Component getComponent()
 	{
 		return component;
-	}
-
-	/**
-	 * @see org.apache.wicket.validation.IErrorMessageSource#substitute(java.lang.String,
-	 *      java.util.Map)
-	 */
-	public final String substitute(String string, Map<String, Object> vars)
-		throws IllegalStateException
-	{
-		return new MapVariableInterpolator(string, mergeVariables(vars), Application.get()
-			.getResourceSettings()
-			.getThrowExceptionOnMissingResource()).toString();
 	}
 
 	/**

@@ -275,9 +275,9 @@ public abstract class WaspAuthorizationStrategy implements IAuthorizationStrateg
 	protected void logMessage(String key, Map<String, Object> variables,
 		IAuthorizationMessageSource message)
 	{
-		String msg = message.getMessage(key);
+		String msg = message.getMessage(key, variables);
 		if (!Strings.isEmpty(msg))
-			log.debug(message.substitute(msg, variables));
+                    log.debug(msg);
 	}
 
 	/**
