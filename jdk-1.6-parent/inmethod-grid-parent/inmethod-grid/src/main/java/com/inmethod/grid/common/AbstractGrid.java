@@ -611,19 +611,19 @@ public abstract class AbstractGrid<M, I, S> extends Panel
 		}
 	}
 
-	private static final JavaScriptResourceReference JS_YAHOO =
+	public static final JavaScriptResourceReference JS_YAHOO =
                            new JavaScriptResourceReference(AbstractGrid.class,
                                                            "res/yahoo.js");
-	private static final JavaScriptResourceReference JS_EVENT =
+	public static final JavaScriptResourceReference JS_EVENT =
                            new JavaScriptResourceReference(AbstractGrid.class,
                                                            "res/event.js");
-	private static final JavaScriptResourceReference JS_DOM =
+	public static final JavaScriptResourceReference JS_DOM =
                            new JavaScriptResourceReference(AbstractGrid.class,
                                                            "res/dom.js");
-	private static final JavaScriptResourceReference JS_SCRIPT =
+	public static final JavaScriptResourceReference JS_SCRIPT =
                            new JavaScriptResourceReference(AbstractGrid.class,
                                                            "res/script.js");
-	private static final PackageResourceReference CSS =
+	public static final PackageResourceReference CSS =
                               new PackageResourceReference(AbstractGrid.class,
                                                            "res/style.css");
 
