@@ -23,6 +23,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
+import com.googlecode.wicket.jquery.ui.dialog.DialogButton;
 import com.googlecode.wicket.jquery.ui.dialog.DialogButtons;
 import com.googlecode.wicket.jquery.ui.dialog.DialogIcon;
 import com.googlecode.wicket.jquery.ui.dialog.MessageFormDialog;
@@ -70,9 +71,9 @@ public abstract class ConfirmAjaxButton extends ModelPanel<String>
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected String getSubmitButton()
+			protected DialogButton getSubmitButton()
 			{
-				return BTN_OK;
+				return this.btnOk;
 			}
 
 			@Override

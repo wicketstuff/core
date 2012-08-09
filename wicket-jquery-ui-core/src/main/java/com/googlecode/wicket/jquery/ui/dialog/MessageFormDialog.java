@@ -100,7 +100,7 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	}
 
 	@Override
-	protected final List<String> getButtons()
+	protected final List<DialogButton> getButtons()
 	{
 		if (this.buttons != null)
 		{
@@ -117,7 +117,7 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	}
 
 	@Override
-	protected void onClose(AjaxRequestTarget target, String button)
+	protected void onClose(AjaxRequestTarget target, DialogButton button)
 	{
 		//not mandatory to override 
 	}

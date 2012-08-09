@@ -16,7 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.dialog;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,21 +25,26 @@ import java.util.List;
  */
 public enum DialogButtons
 {
-	OK(AbstractDialog.BTN_OK),
-	OK_CANCEL(AbstractDialog.BTN_OK, AbstractDialog.BTN_CANCEL),
+	OK(AbstractDialog.LBL_OK),
+	OK_CANCEL(AbstractDialog.LBL_OK, AbstractDialog.LBL_CANCEL),
 
-	YES_NO(AbstractDialog.BTN_YES, AbstractDialog.BTN_NO),
-	YES_NO_CANCEL(AbstractDialog.BTN_YES, AbstractDialog.BTN_NO, AbstractDialog.BTN_CANCEL);
+	YES_NO(AbstractDialog.LBL_YES, AbstractDialog.LBL_NO),
+	YES_NO_CANCEL(AbstractDialog.LBL_YES, AbstractDialog.LBL_NO, AbstractDialog.LBL_CANCEL);
 
-	private final String[] buttons;
+	private final List<DialogButton> buttons;
 
-	private DialogButtons(String... buttons)
+	private DialogButtons(String... labels)
 	{
-		this.buttons = buttons;
+		this.buttons = new ArrayList<DialogButton>();
+
+		for (String label : labels)
+		{
+			this.buttons.add(new DialogButton(label));
+		}
 	}
 
-	public List<String> toList()
+	public List<DialogButton> toList()
 	{
-		return Arrays.asList(this.buttons);
+		return this.buttons;
 	}
 }

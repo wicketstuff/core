@@ -6,6 +6,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.ui.dialog.DialogButton;
 import com.googlecode.wicket.jquery.ui.dialog.FragmentDialog;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -13,12 +14,12 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class FragmentDialogPage extends AbstractDialogPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public FragmentDialogPage()
 	{
 		this.init();
 	}
-	
+
 	private void init()
 	{
 		final Form<Void> form = new Form<Void>("form");
@@ -27,24 +28,26 @@ public class FragmentDialogPage extends AbstractDialogPage
 		// FeedbackPanel //
 		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
 		form.add(feedbackPanel.setOutputMarkupId(true));
-		
+
 		// Dialog //
 		final FragmentDialog<String> dialog = new FragmentDialog<String>("dialog", "Fragment dialog box", new Model<String>("I am the model object")) {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			protected Fragment newFragment(String id)
 			{
 				return new Fragment(id, "dialog-fragment", FragmentDialogPage.this);
 			}
-			
+
 			@Override
-			protected void onClose(AjaxRequestTarget target, String button)
+			protected void onClose(AjaxRequestTarget target, DialogButton button)
 			{
 				this.info(button + " has been clicked");
-				
-				if (BTN_OK.equals(button))
+
+				/* Warning: 1.2.2-SNAPSHOT syntax */
+				/* TODO: 1.2.2 - comment to be removed */
+				if (this.btnOk.equals(button))
 				{
 					this.info(String.format("The model object is: '%s'", this.getModelObject()));
 				}
@@ -52,7 +55,7 @@ public class FragmentDialogPage extends AbstractDialogPage
 				target.add(feedbackPanel);
 			}
 		};
-		
+
 		this.add(dialog);
 
 		// Buttons //

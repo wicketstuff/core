@@ -27,6 +27,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.selectable.DefaultSelectabl
 import com.googlecode.wicket.jquery.ui.samples.pages.slider.DefaultSliderPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.tabs.DefaultTabsPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.test.TestPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.wizard.DefaultWizardPage;
 
 public class SampleApplication extends WebApplication
 {    	
@@ -50,6 +51,7 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/progressbar", ButtonProgressBarPage.class);
 		this.mountPackage("/slider", DefaultSliderPage.class);
 		this.mountPackage("/tabs", DefaultTabsPage.class);
+		this.mountPackage("/wizard", DefaultWizardPage.class);
 		
 		// interactions //
 		this.mountPackage("/draggable", DefaultDraggablePage.class);

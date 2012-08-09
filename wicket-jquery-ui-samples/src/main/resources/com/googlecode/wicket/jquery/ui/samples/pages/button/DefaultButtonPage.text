@@ -7,5 +7,4 @@ Button button = new Button("button1") {
 	public void onSubmit() {
 				
 	}			
-};
-</pre>
+};</pre>

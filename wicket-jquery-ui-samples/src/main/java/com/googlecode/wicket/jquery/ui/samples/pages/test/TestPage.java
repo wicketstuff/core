@@ -5,6 +5,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.ui.dialog.DialogButton;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.TemplatePage;
@@ -12,12 +13,12 @@ import com.googlecode.wicket.jquery.ui.samples.TemplatePage;
 public class TestPage extends TemplatePage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public TestPage()
 	{
 		this.init();
 	}
-	
+
 	private void init()
 	{
 		final Form<Void> form = new Form<Void>("form");
@@ -26,18 +27,20 @@ public class TestPage extends TemplatePage
 		// FeedbackPanel //
 		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
 		form.add(feedbackPanel.setOutputMarkupId(true));
-		
+
 		// Dialog //
 		final TabDialog dialog = new TabDialog("dialog", "Tabs dialog box", new Model<String>()) {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
-			protected void onClose(AjaxRequestTarget target, String button)
+			protected void onClose(AjaxRequestTarget target, DialogButton button)
 			{
 				this.info(button + " has been clicked");
-				
-				if (BTN_OK.equals(button))
+
+				/* Warning: 1.2.2-SNAPSHOT syntax */
+				/* TODO: 1.2.2 - comment to be removed */
+				if (this.btnOk.equals(button))
 				{
 					this.info(String.format("The model object is: '%s'", this.getModelObject()));
 				}
@@ -45,7 +48,7 @@ public class TestPage extends TemplatePage
 				target.add(feedbackPanel);
 			}
 		};
-		
+
 		this.add(dialog);
 
 		// Buttons //

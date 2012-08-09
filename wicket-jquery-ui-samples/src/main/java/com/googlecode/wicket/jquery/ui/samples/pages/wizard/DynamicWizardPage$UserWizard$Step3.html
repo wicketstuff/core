@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+	<head>
+		<wicket:head>
+			<style type="text/css">
+				.avatar .selected {
+					background: #F39814;
+				}
+			</style>
+		</wicket:head>
+	</head>
+	<body>
+		<wicket:panel>
+			<div wicket:id="selectable" class="avatar">
+				<span wicket:id="items" style="padding: 1px; display: inline-block;"><img wicket:id="item" class="ui-corner-all" /></span>
+			</div>
+		</wicket:panel>
+	</body>
+</html>

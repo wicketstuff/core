@@ -17,7 +17,7 @@
 package com.googlecode.wicket.jquery.ui.form.slider;
 
 /**
- * 
+ * The slider's orientation type
  * @author Sebastien Briquet - sebfz1
  *
  */

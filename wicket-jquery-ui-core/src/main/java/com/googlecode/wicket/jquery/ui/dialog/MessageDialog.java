@@ -99,7 +99,7 @@ public abstract class MessageDialog extends AbstractDialog<String>
 	}
 
 	@Override
-	protected final List<String> getButtons()
+	protected final List<DialogButton> getButtons()
 	{
 		if (this.buttons != null)
 		{

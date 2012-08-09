@@ -11,13 +11,14 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.validation.validator.RangeValidator;
 
 import com.googlecode.wicket.jquery.ui.dialog.AbstractFormDialog;
+import com.googlecode.wicket.jquery.ui.dialog.DialogButton;
 import com.googlecode.wicket.jquery.ui.form.slider.Slider;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
 public abstract class SliderDialog extends AbstractFormDialog<Integer>
 {
 	private static final long serialVersionUID = 1L;
-	protected static final String BTN_SUBMIT = "Submit!";
+	protected final DialogButton btnSubmit = new DialogButton("Submit!");
 	
 	private Form<?> form;
 	private FeedbackPanel feedback;
@@ -45,15 +46,15 @@ public abstract class SliderDialog extends AbstractFormDialog<Integer>
 	}
 
 	@Override
-	protected List<String> getButtons()
+	protected List<DialogButton> getButtons()
 	{
-		return Arrays.asList(BTN_SUBMIT, BTN_CANCEL);
+		return Arrays.asList(this.btnSubmit, this.btnCancel);
 	}
 
 	@Override
-	protected String getSubmitButton()
+	protected DialogButton getSubmitButton()
 	{
-		return BTN_SUBMIT;
+		return this.btnSubmit;
 	}
 
 	@Override

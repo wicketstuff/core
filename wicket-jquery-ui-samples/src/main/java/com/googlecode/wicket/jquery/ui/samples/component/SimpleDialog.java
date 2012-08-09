@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.dialog.AbstractDialog;
+import com.googlecode.wicket.jquery.ui.dialog.DialogButton;
 
 public abstract class SimpleDialog extends AbstractDialog<String>
 {
@@ -23,9 +24,9 @@ public abstract class SimpleDialog extends AbstractDialog<String>
 	}
 
 	@Override
-	protected List<String> getButtons()
+	protected List<DialogButton> getButtons()
 	{
-		return Arrays.asList(BTN_OK, BTN_CANCEL);
+		return Arrays.asList(this.btnOk, this.btnCancel);
 	}
 	
 //	@Override

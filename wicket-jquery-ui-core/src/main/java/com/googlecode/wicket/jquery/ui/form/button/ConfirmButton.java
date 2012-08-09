@@ -24,6 +24,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
+import com.googlecode.wicket.jquery.ui.dialog.DialogButton;
 import com.googlecode.wicket.jquery.ui.dialog.DialogButtons;
 import com.googlecode.wicket.jquery.ui.dialog.DialogIcon;
 import com.googlecode.wicket.jquery.ui.dialog.MessageDialog;
@@ -71,9 +72,9 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 			private static final long serialVersionUID = 1L;
 			
 			@Override
-			protected void onClose(AjaxRequestTarget target, String button)
+			protected void onClose(AjaxRequestTarget target, DialogButton button)
 			{
-				if (BTN_OK.equals(button))
+				if (this.btnOk.equals(button))
 				{
 					ConfirmButton.this.submit(target);
 				}

@@ -9,21 +9,30 @@
     <wicket:extend>
         <h2>Welcome!</h2>
         <div>
-            Welcome to the demo site of the <b>Wicket - jQuery UI</b> project.<br/>
+            Welcome to the demo site of the <b>Wicket - jQuery UI</b> API.<br/>
             <br/>
-            The goal of this project is to provide a bridge between Wicket and jQuery UI.<br/>
-            The 'core' provides all jQuery UI built-in components.<br/>
+            The goal of this API is to provide a bridge between <a href="http://wicket.apache.org/" target="_new">Apache Wicket</a> and <a href="http://jqueryui.com/" target="_new">jQuery UI</a>. The 'core' provides all jQuery UI built-in components.<br/>
             <br/>
-            Apache Wicket: <a href="http://wicket.apache.org/">http://wicket.apache.org</a><br/>
-            jQuery UI: <a href="http://jqueryui.com/">http://jqueryui.com</a><br/>
-            Wicket - jQuery UI: <a href="http://code.google.com/p/wicket-jquery-ui/">http://code.google.com/p/wicket-jquery-ui/</a><br/>
-            <br />
-            Do not hesitate to leave a comment or ask a question in the <a href="https://groups.google.com/forum/?fromgroups#!forum/wicket-jquery-ui">forum</a>, or to open an issue if you encounter any problem: <a href="http://code.google.com/p/wicket-jquery-ui/issues/list">here</a>.
+            Useful links:
+            <ul>
+	            <li>
+	            	Source / Issues: <a target="ext" href="https://github.com/sebfz1/wicket-jquery-ui/">https://github.com/sebfz1/wicket-jquery-ui/</a>
+	            	<span class="ui-icon ui-icon-extlink" style="display: inline-block;"></span>
+	            </li>
+	            <li>
+	            	Annoncements / Questions: <a href="https://groups.google.com/forum/?fromgroups#!forum/wicket-jquery-ui">https://groups.google.com/.../wicket-jquery-ui</a>
+	            	<span class="ui-icon ui-icon-extlink" style="display: inline-block;"></span>
+	            </li>
+	            <li>
+	            	Releases infos (roadmaps, changelogs): <a href="http://wicket-jquery-ui.blogspot.fr/">http://wicket-jquery-ui.blogspot.fr/</a>
+	            	<span class="ui-icon ui-icon-extlink" style="display: inline-block;"></span>
+	            </li>
+            </ul>
         </div>
         <br/>
         <h3>About this demo site</h3>
         <div>
-        	This demo site aims to present all behaviors &#38; widgets (components) the API provides, including all jQuery UI components you may find on the <a href="http://jqueryui.com/demos/accordion/" target="jquery-ui">Query UI demo site</a>.<br/>
+        	This demo site aims to present all behaviors &#38; widgets (components) the API provides, including all jQuery UI components you may find on the <a href="http://jqueryui.com/demos/accordion/" target="jquery-ui">jQuery UI demo site</a>.<br/>
         	<br/>
         	For each main component class in the left's list, you may find several other related components (or other samples), including wicket-jquery-ui original ones (like message dialog-boxes or secured-button).<br />
         </div>
@@ -46,7 +55,7 @@
             In order to get started using this API, you may download appropriate jar(s) or set a maven dependency.<br/>
             <h4>Download jar(s)</h4>
             <div>
-                If you are not using maven, you need to download the core jar here: <a href="http://code.google.com/p/wicket-jquery-ui/downloads/list">http://code.google.com/p/wicket-jquery-ui/downloads/list</a><br/>
+                If you are not using maven, you need to download the core jar here: <a href="https://github.com/sebfz1/wicket-jquery-ui/downloads">https://github.com/sebfz1/wicket-jquery-ui/downloads</a><br/>
                 You may also download other jars as required (ie: <code>jquery-ui-kendo</code>). Once done, just include the jar(s) in your project's build path.
             </div>
             <h4>Using Maven</h4>
@@ -92,7 +101,7 @@
 &lt;!DOCTYPE html&gt;
 &lt;html xmlns:wicket="http://wicket.apache.org"&gt;
 &lt;head&gt;
-    &lt;link rel="stylesheet" type="text/css" href="css/<i>ui-lightness</i>/jquery-ui-1.8.21.custom.css" /&gt;
+    &lt;link rel="stylesheet" type="text/css" href="css/<i>ui-lightness</i>/jquery-ui-1.8.22.custom.css" /&gt;
 &lt;/head&gt;
 &lt;body&gt;
 &lt;/body&gt;
@@ -112,7 +121,7 @@
 &lt;head&gt;
 
     &lt;!-- jQuery UI --&gt;
-    &lt;link rel="stylesheet" type="text/css" href="css/<i>ui-lightness</i>/jquery-ui-1.8.21.custom.css" /&gt;
+    &lt;link rel="stylesheet" type="text/css" href="css/<i>ui-lightness</i>/jquery-ui-1.8.22.custom.css" /&gt;
     
     &lt;!-- Kendo UI --&gt;
     &lt;link rel="stylesheet" type="text/css" href="css/kendo/kendo.common.min.css" media="all" /&gt;

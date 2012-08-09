@@ -31,29 +31,29 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 
 /**
  * Provides a jQuery slider based on a {@link FormComponentPanel}
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public class Slider extends AbstractSlider<Integer>
 {
 	public enum Range {
-		MIN("'min'"),		
+		MIN("'min'"),
 		MAX("'max'");
-		
+
 		private String range;
-		
+
 		private Range(String range)
 		{
 			this.range = range;
 		}
-		
+
 		@Override
 		public String toString()
 		{
 			return this.range;
 		}
 	}
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private IValidator<Integer> rangeValidator = null;
@@ -68,7 +68,7 @@ public class Slider extends AbstractSlider<Integer>
 		super(id);
 		this.init();
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -114,7 +114,7 @@ public class Slider extends AbstractSlider<Integer>
 	protected Fragment newInputFragment(String id)
 	{
 		Fragment fragment;
-		
+
 		// input TextField has not been specified in ctor //
 		if (this.input == null)
 		{
@@ -127,7 +127,7 @@ public class Slider extends AbstractSlider<Integer>
 		{
 			fragment = super.newInputFragment(id); //return empty fragment
 		}
-		
+
 		return fragment;
 	}
 
@@ -149,7 +149,7 @@ public class Slider extends AbstractSlider<Integer>
 	/**
 	 * Get the label pattern to be used to display the value. Should be overridden with care!<br/>
 	 * <b>Note: </b> the pattern is a javascript string, where the value is represented by "ui.value".<br/>
-	 * 
+	 *
 	 * @return default to ui.value
 	 */
 	protected String getLabelPattern()
@@ -168,14 +168,14 @@ public class Slider extends AbstractSlider<Integer>
 			this.input.add(this.rangeValidator); //let throw a NPE if no input is defined.
 		}
 	}
-	
+
 	@Override
 	protected void onConfigure(JQueryBehavior behavior)
 	{
 		super.onConfigure(behavior);
-		
+
 		StringBuilder statements = new StringBuilder();
-		
+
 		statements.append("$('#").append(this.input.getMarkupId()).append("').val(ui.value); ");
 
 		if (super.labelId != null)
@@ -187,26 +187,12 @@ public class Slider extends AbstractSlider<Integer>
 		behavior.setOption("value", this.getModelObject());
 	}
 
-	// Options //
-	@Override
-	public <W extends AbstractSlider<Integer>> W setMin(Integer min)
-	{
-//		this.input.add(new MinimumValidator<Integer>(min));
 
-		return super.setMin(min);
-	}
-	
-	@Override
-	public <W extends AbstractSlider<Integer>> W setMax(Integer max)
-	{
-//		this.input.add(new MaximumValidator<Integer>(max));
-		
-		return super.setMax(max);
-	}
+	// Options //
 
 	/**
 	 * Sets the {@link Range}
-	 * @param range 
+	 * @param range
 	 * @return {@link Slider} (this)
 	 */
 	public Slider setRange(Range range)
@@ -218,7 +204,7 @@ public class Slider extends AbstractSlider<Integer>
 	// Factory //
 	/**
 	 * Gets a new behavior that will handle the change event triggered on provided input.<br/>
-	 * The behavior is added to the input that has been provided in the constructor (means it is visible and to user can interact with)
+	 * The behavior is added to the input that has been provided in the constructor (means it is visible and the user can interact with)
 	 * @return a {@link JQueryAbstractBehavior}
 	 */
 	private JQueryAbstractBehavior newInputBehavior()
@@ -229,11 +215,11 @@ public class Slider extends AbstractSlider<Integer>
 
 			@Override
 			protected String $() {
-				
+
 				StringBuilder statements = new StringBuilder();
 
-				statements.append("$('#").append(input.getMarkupId()).append("').on('change', function() { ");
-				statements.append("$('#").append(label.getMarkupId()).append("').slider('value', $(this).val()); "); //change the slider value (+slide)
+				statements.append("$('#").append(Slider.this.input.getMarkupId()).append("').on('change', function() { ");
+				statements.append("$('#").append(Slider.this.label.getMarkupId()).append("').slider('value', $(this).val()); "); //change the slider value (+slide)
 				statements.append("} );");
 
 				return String.format("$(function() { %s });", statements);

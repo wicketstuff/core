@@ -27,9 +27,9 @@ import com.googlecode.wicket.jquery.ui.JQueryEvent;
  */
 public class DialogEvent extends JQueryEvent
 {
-	private final String button;
+	private final DialogButton button;
 
-	DialogEvent(AjaxRequestTarget target, String button)
+	DialogEvent(AjaxRequestTarget target, DialogButton button)
 	{
 		super(target);
 		
@@ -40,7 +40,7 @@ public class DialogEvent extends JQueryEvent
 	 * Get the button that has been attached to this event object
 	 * @return the button
 	 */
-	public String getButton()
+	public DialogButton getButton()
 	{
 		return this.button;
 	}
@@ -50,7 +50,7 @@ public class DialogEvent extends JQueryEvent
 	 * @param button
 	 * @return true if the supplied button is not null and is equals to the button 
 	 */
-	public boolean isClicked(String button)
+	public boolean isClicked(DialogButton button)
 	{
 		return (this.button != null) && this.button.equals(button);
 	}

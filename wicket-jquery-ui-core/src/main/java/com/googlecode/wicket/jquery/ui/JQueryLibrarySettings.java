@@ -28,7 +28,7 @@ import org.apache.wicket.request.resource.ResourceReference;
 public class JQueryLibrarySettings
 {
 	public static ResourceReference CORE_JS = new JavaScriptResourceReference(JQueryLibrarySettings.class, "jquery-1.7.2.min.js"); 
-	public static ResourceReference CORE_UI = new JavaScriptResourceReference(JQueryLibrarySettings.class, "jquery-ui-1.8.21.min.js");
+	public static ResourceReference CORE_UI = new JavaScriptResourceReference(JQueryLibrarySettings.class, "jquery-ui-1.8.22.min.js");
 
 	/**
 	 * Sets the JQuery backing library resource reference
