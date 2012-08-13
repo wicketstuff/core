@@ -159,4 +159,9 @@ public class OsgiClassResolver implements IClassResolver
 			}
 		}
 	}
+	
+	public ClassLoader getClassLoader()
+	{
+		return Application.get().getClass().getClassLoader();
+	}        
 }
