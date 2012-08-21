@@ -1,4 +1,4 @@
-The Wizard component works like the built-in Wizard component; It uses an <code>IWizardModel</code> (<code>WizardModel</code> or <code>DynamicWizardModel</code>) that may contain several <code>WizardStep(s)</code> or <code>DynamicWizardModel(s)</code><br/> 
+The Wizard component works like the built-in <code>Wizard</code> component; It uses an <code>IWizardModel</code> (<code>WizardModel</code> or <code>DynamicWizardModel</code>) which may contains several <code>WizardStep(s)</code> or <code>DynamicWizardStep(s)</code><br/> 
 <br/>
 Wizard button's text can be customized using the following resource keys, either in <i>MyPage</i>.properties or <i>MyWizard</i>.properties:
 <ul>
