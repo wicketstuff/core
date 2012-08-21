@@ -54,6 +54,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	private DialogButton btnNext;
 	private DialogButton btnLast;
 	private DialogButton btnFinish;
+	private DialogButton btnCancel;
 
 	/**
 	 * Constructor
@@ -157,6 +158,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 		this.btnNext = new DialogButton(this.getString("wizard.button.next"));
 		this.btnLast = new DialogButton(this.getString("wizard.button.last"));
 		this.btnFinish = new DialogButton(this.getString("wizard.button.finish"));
+		this.btnCancel = new DialogButton(this.getString("wizard.button.cancel"));
 
 		// should be called *after* button's initialization
 		super.onInitialize();

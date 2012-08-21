@@ -35,14 +35,14 @@ import com.googlecode.wicket.jquery.ui.panel.ModelPanel;
  * <b>Note: </b> this component is not an {@link AjaxButton} itself but a Panel, it should not be attached to a &lt;button /&gt;; it can be attached on a &lt;div /&gt; or a &lt;span /&gt; for instance.<br/>
  * <br/>
  * <b>Warning: </b> it is not possible to get a form component value - that is going to be changed - to be displayed in the dialog box message. The reason is that in order to get a form component (updated) model object, the form component should be validated. The dialog does not proceed to a (whole) form validation while being opened, because the form validation will occur when the user will confirm (by clicking on OK button). This the intended behavior.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
 public abstract class ConfirmAjaxButton extends ModelPanel<String>
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Constructor
 	 * @param id markup id
@@ -73,7 +73,7 @@ public abstract class ConfirmAjaxButton extends ModelPanel<String>
 			@Override
 			protected DialogButton getSubmitButton()
 			{
-				return this.btnOk;
+				return this.findButton(DialogButton.LBL_OK);
 			}
 
 			@Override
@@ -101,7 +101,7 @@ public abstract class ConfirmAjaxButton extends ModelPanel<String>
 		final AjaxButton button = new AjaxButton("button") {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			protected JQueryIcon getIcon()
 			{
@@ -114,13 +114,13 @@ public abstract class ConfirmAjaxButton extends ModelPanel<String>
 				dialog.open(target);
 			}
 		};
-		
+
 		this.add(button.setDefaultFormProcessing(false)); //does not validate the form before the dialog is being displayed
 
 		button.add(new Label("label", new Model<String>(label)).setRenderBodyOnly(true));
 	}
-	
-	
+
+
 	// Events //
 	/**
 	 * Triggered when the form has been submitted, but the validation failed

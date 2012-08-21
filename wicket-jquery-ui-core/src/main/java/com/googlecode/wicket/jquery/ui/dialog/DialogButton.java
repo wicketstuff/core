@@ -28,6 +28,14 @@ import org.apache.wicket.model.IModel;
 public class DialogButton implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
+
+	public static final String LBL_OK = "OK";
+	public static final String LBL_NO = "No";
+	public static final String LBL_YES = "Yes";
+	public static final String LBL_CLOSE = "Close";
+	public static final String LBL_CANCEL = "Cancel";
+	public static final String LBL_SUBMIT = "Submit";
+
 	private static short sequence = 0;
 
 	private final int id;
@@ -77,14 +85,6 @@ public class DialogButton implements IClusterable
 
 
 	// Properties //
-	/**
-	 * Gets the button's text
-	 * @return the button's text
-	 */
-	public String getText()
-	{
-		return this.text;
-	}
 
 	/**
 	 * Indicates whether the button is enabled
@@ -130,7 +130,7 @@ public class DialogButton implements IClusterable
 	{
 		if (this.visible != visible)
 		{
-			if (this.visible = visible)
+			if (this.visible = visible) /* assignment */
 			{
 				this.show(target);
 			}
@@ -207,15 +207,27 @@ public class DialogButton implements IClusterable
 		return this.id;
 	}
 
+	/**
+	 * Indicates whether this {@link DialogButton} is equal to another {@link DialogButton}. Are considered equals buttons having the same text representation ({@link #toString()}), which is the text supplied to the constructor (if not overridden).
+	 *
+	 * @param object either a {@link DialogButton} or a {@link String}
+	 * @return true if considered as equal
+	 */
 	@Override
 	public boolean equals(Object object)
 	{
-		if (object instanceof DialogButton)
-		{
-			return (((DialogButton) object).id == this.id);
-		}
+//		if (object instanceof DialogButton)
+//		{
+//			return (((DialogButton) object).text == this.text);
+//		}
+//
+//		if (object instanceof String)
+//		{
+//			return object.toString().equals();
+//		}
 
-		return super.equals(object);
+		return (object != null) && (object.toString().equals(this.toString()));
+//		return super.equals(object);
 	}
 
 	@Override

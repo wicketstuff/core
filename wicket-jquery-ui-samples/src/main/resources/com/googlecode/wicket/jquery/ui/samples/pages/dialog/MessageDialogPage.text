@@ -7,14 +7,14 @@ Java:
 	MessageDialog dialog = new MessageDialog("dialog", "Warning", "Is it ok?",
 						DialogButton.OK_CANCEL, DialogIcon.WARN)
 	{
-		protected void onClose(AjaxRequestTarget target, String button)
+		protected void onClose(AjaxRequestTarget target, DialogButton button)
 		{
-			if (BTN_OK.equals(button))
+			if(button != null && button.equals(DialogButton.LBL_OK))
 			{
 				//do something here
 				
-				//note: predefined button's value are:
-				//BTN_OK, BTN_CANCEL, BTN_YES, BTN_NO, BTN_CLOSE
+				//note: predefined button's text are:
+				//LBL_OK, LBL_CANCEL, LBL_YES, LBL_NO, LBL_CLOSE, LBL_SUBMIT
 			}
 		}	
 	}

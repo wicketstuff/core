@@ -121,6 +121,7 @@ public class UserDialogPage extends AbstractDialogPage
 	{
 		private static final long serialVersionUID = 1L;
 		protected final DialogButton btnSubmit = new DialogButton("Save");
+		protected final DialogButton btnCancel = new DialogButton(DialogButton.LBL_CANCEL);
 
 		private Form<?> form;
 		private FeedbackPanel feedback;
@@ -146,7 +147,7 @@ public class UserDialogPage extends AbstractDialogPage
 		@Override
 		protected List<DialogButton> getButtons()
 		{
-			return Arrays.asList(this.btnSubmit, btnCancel);
+			return Arrays.asList(this.btnSubmit, this.btnCancel);
 		}
 
 		@Override
@@ -161,6 +162,7 @@ public class UserDialogPage extends AbstractDialogPage
 			return this.form;
 		}
 
+		@Override
 		public void setModelObject(User user)
 		{
 			this.setDefaultModel(new CompoundPropertyModel<User>(user));

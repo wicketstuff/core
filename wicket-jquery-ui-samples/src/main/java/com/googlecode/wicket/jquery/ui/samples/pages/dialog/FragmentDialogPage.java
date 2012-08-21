@@ -47,7 +47,7 @@ public class FragmentDialogPage extends AbstractDialogPage
 
 				/* Warning: 1.2.2-SNAPSHOT syntax */
 				/* TODO: 1.2.2 - comment to be removed */
-				if (this.btnOk.equals(button))
+				if (button != null && button.equals(DialogButton.LBL_OK))
 				{
 					this.info(String.format("The model object is: '%s'", this.getModelObject()));
 				}

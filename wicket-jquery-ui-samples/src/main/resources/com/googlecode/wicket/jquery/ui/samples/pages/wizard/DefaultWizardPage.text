@@ -6,6 +6,7 @@ Wizard button's text can be customized using the following resource keys, either
 	<li><code>wizard.button.next=My next</code></li>
 	<li><code>wizard.button.last=My last</code></li>
 	<li><code>wizard.button.finish=My finish</code></li>
+	<li><code>wizard.button.cancel=My cancel</code></li>
 </ul>
 <h4>Since</h4>
 wicket-jquery-ui-core-1.2.2-SNAPSHOT

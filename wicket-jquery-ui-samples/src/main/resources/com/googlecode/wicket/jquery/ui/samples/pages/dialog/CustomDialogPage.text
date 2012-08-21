@@ -17,6 +17,9 @@ public <b>abstract</b> class SimpleDialog extends AbstractDialog&lt;Void&gt;
 {
 	private static final long serialVersionUID = 1L;
 	
+	protected final DialogButton btnSure = new DialogButton("I am sure"); //with a customized text
+	protected final DialogButton btnCancel = new DialogButton(DialogButton.LBL_CANCEL); 
+	
 	public SimpleDialog(String id, String title)
 	{
 		super(id, title, new Model&lt;Void&gt;(), true); //we do not use a model here
@@ -25,9 +28,9 @@ public <b>abstract</b> class SimpleDialog extends AbstractDialog&lt;Void&gt;
 	}
 	
 	@Override
-	protected List&lt;String&gt; getButtons()
+	protected List&lt;DialogButton&gt; getButtons()
 	{
-		return Arrays.asList("I am sure", BTN_CANCEL); //with a customized buttons
+		return Arrays.asList(this.btnSure, this.btnCancel);
 	}
 
 	@Override
@@ -46,15 +49,15 @@ Java:
 	final SimpleDialog dialog = new SimpleDialog("dialog", "Simple dialog box")
 	{
 		@Override
-		protected void onClose(AjaxRequestTarget target, String button)
+		protected void onClose(AjaxRequestTarget target, DialogButton button)
 		{
-			if (button.equals("I am sure"))
+			if (button.equals(this.btnSure))
 			{
 				//do something here
 			}
 		}	
 	};
-	
+
 	this.add(dialog); //TODO: open it, using dialog.open(target);
 </pre>
 
@@ -66,7 +69,7 @@ If you want to define an action without having the dialog to be closed, you can 
 @Override
 protected void onClick(DialogEvent event)
 {
-	if (event.isClicked("do something")) //button was 'do something'
+	if (event.isClicked(this.btnMyButton))
 	{
 		//TODO: do something here.
 		//event.getTarget() returns the AjaxRequestTarget

@@ -19,17 +19,18 @@ public abstract class SliderDialog extends AbstractFormDialog<Integer>
 {
 	private static final long serialVersionUID = 1L;
 	protected final DialogButton btnSubmit = new DialogButton("Submit!");
-	
+	protected final DialogButton btnCancel = new DialogButton(DialogButton.LBL_CANCEL);
+
 	private Form<?> form;
 	private FeedbackPanel feedback;
-	
+
 	public SliderDialog(String id, String title, IModel<Integer> model)
 	{
 		super(id, title, model, true);
-		
+
 		this.form = new Form<Integer>("form");
 		this.add(this.form);
-		
+
 		// Slider //
 		Label label = new Label("label");
 		this.form.add(label);
@@ -37,12 +38,12 @@ public abstract class SliderDialog extends AbstractFormDialog<Integer>
 		Slider slider = new Slider("slider", model, label);
 		slider.setStep(5);
 		slider.setRangeValidator(new RangeValidator<Integer>(10, 100));
-		
+
 		this.form.add(slider);
 
 		// FeedbackPanel //
 		this.feedback = new JQueryFeedbackPanel("feedback");
-		this.form.add(this.feedback);	
+		this.form.add(this.feedback);
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public abstract class SliderDialog extends AbstractFormDialog<Integer>
 	{
 		return this.form;
 	}
-	
+
 	@Override
 	protected void onOpen(AjaxRequestTarget target)
 	{

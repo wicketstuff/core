@@ -1,7 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
@@ -12,6 +11,7 @@ import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.dialog.AbstractDialog;
 import com.googlecode.wicket.jquery.ui.dialog.DialogButton;
+import com.googlecode.wicket.jquery.ui.dialog.DialogButtons;
 import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
 import com.googlecode.wicket.jquery.ui.widget.tabs.TabbedPanel;
 
@@ -35,7 +35,7 @@ public abstract class TabDialog extends AbstractDialog<String>
 	@Override
 	protected List<DialogButton> getButtons()
 	{
-		return Arrays.asList(this.btnOk, this.btnCancel);
+		return DialogButtons.OK_CANCEL.toList();
 	}
 
 

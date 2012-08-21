@@ -17,7 +17,6 @@
 package com.googlecode.wicket.jquery.ui.dialog;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -32,7 +31,7 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
 /**
  * Provides a modal dialog box that ask an input to the user
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the type of the model object of the {@link RequiredTextField}
@@ -40,13 +39,13 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public abstract class InputDialog<T extends Serializable> extends AbstractFormDialog<T>
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private final Form<?> form;
-	
+
 	/**
 	 * Constructor supplying a new default model.
 	 * @param id the markupId, an html div suffice to host a dialog.
-	 * @param title the title of the dialog 
+	 * @param title the title of the dialog
 	 * @param label text that will be displayed in front of the text field.
 	 */
 	public InputDialog(String id, String title, String label)
@@ -55,9 +54,9 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	}
 
 	/**
-	 *  
+	 *
 	 * @param id the markupId, an html div suffice to host a dialog.
-	 * @param title the title of the dialog 
+	 * @param title the title of the dialog
 	 * @param label text that will be displayed in front of the text field.
 	 * @param model the model to be used
 	 */
@@ -70,7 +69,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 
 		this.form.add(new Label("label", label));
 		this.form.add(new RequiredTextField<T>("input", this.getModel()));
-		
+
 		FeedbackPanel feedback = new JQueryFeedbackPanel("feedback", this.form.get("input"));
 		this.form.add(feedback.setOutputMarkupId(true));
 	}
@@ -80,25 +79,25 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	{
 		return this.form;
 	}
-	
+
 	@Override
 	public boolean isResizable()
 	{
 		return true;
 	}
-	
+
 	@Override
 	protected List<DialogButton> getButtons()
 	{
-		return Arrays.asList(this.btnOk, this.btnCancel);
+		return DialogButtons.OK_CANCEL.toList();
 	}
-	
+
 	@Override
 	protected DialogButton getSubmitButton()
 	{
-		return this.btnOk;
+		return this.findButton(DialogButton.LBL_OK);
 	}
-	
+
 	@Override
 	protected void onOpen(AjaxRequestTarget target)
 	{

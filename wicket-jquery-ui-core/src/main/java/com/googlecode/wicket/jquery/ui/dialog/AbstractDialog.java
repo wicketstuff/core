@@ -43,12 +43,6 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "dialog";
 
-	static final String LBL_OK = "OK";
-	static final String LBL_NO = "No";
-	static final String LBL_YES = "Yes";
-	static final String LBL_CLOSE = "Close";
-	static final String LBL_CANCEL = "Cancel";
-
 	/** Default width */
 	private static final int WIDTH = 450;
 
@@ -56,11 +50,10 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	private boolean modal;
 	private JQueryBehavior widgetBehavior;
 
-	protected final DialogButton btnOk = new DialogButton(LBL_OK);
-	protected final DialogButton btnNo = new DialogButton(LBL_NO);
-	protected final DialogButton btnYes = new DialogButton(LBL_YES);
-	protected final DialogButton btnClose = new DialogButton(LBL_CLOSE);
-	protected final DialogButton btnCancel = new DialogButton(LBL_CANCEL);
+	/**
+	 * Default button
+	 */
+	private final DialogButton btnOk = new DialogButton(DialogButton.LBL_OK);
 
 	/**
 	 * @param id the markupId, an html div suffice to host a dialog.
@@ -164,7 +157,9 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 	// Properties //
 	/**
-	 * Gets the dialog's buttons
+	 * Gets the dialog's buttons.<br/>
+	 * It is allowed to return a predefined list (ie: DialogButtons#OK_CANCEL#toList()) as long as the buttons state (enable and/or visible) are not modified<br/>
+	 * <b>Warning: </b>It is not legal to create the buttons to be returned in this method.
 	 * @return {@link #btnOk} by default
 	 */
 	protected List<DialogButton> getButtons()
@@ -237,6 +232,26 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 		this.setDefaultModelObject(object);
 	}
 
+	// Methods //
+	/**
+	 * Finds a {@link DialogButton} - identified by its text - within the list of buttons returned by {@link #getButtons()}
+	 * @param text the button's text
+	 * @return the {@link DialogButton} if found, null otherwise
+	 */
+	public DialogButton findButton(String text)
+	{
+		for (DialogButton button : this.getButtons())
+		{
+			if (button != null && button.equals(text))
+			{
+				return button;
+			}
+		}
+
+		return null;
+	}
+
+
 	// IJQueryWidget //
 	/**
 	 * @see IJQueryWidget#newWidgetBehavior(String)
@@ -269,7 +284,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 					if (index++ > 0) { buttons.append(", "); }
 					buttons.append("{");
 					buttons.append("'id': '").append(button.getMarkupId()).append("', ");
-					buttons.append("'text': '").append(button.getText()).append("', ");
+					buttons.append("'text': '").append(button.toString()).append("', ");
 					if (!button.isEnabled()) { buttons.append("'disabled': true, "); }
 					buttons.append("'click': function() { ").append(behavior.getCallbackScript()).append(" }");
 					buttons.append("}");
