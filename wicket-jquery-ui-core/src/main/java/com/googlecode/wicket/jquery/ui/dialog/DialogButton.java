@@ -216,18 +216,7 @@ public class DialogButton implements IClusterable
 	@Override
 	public boolean equals(Object object)
 	{
-//		if (object instanceof DialogButton)
-//		{
-//			return (((DialogButton) object).text == this.text);
-//		}
-//
-//		if (object instanceof String)
-//		{
-//			return object.toString().equals();
-//		}
-
 		return (object != null) && (object.toString().equals(this.toString()));
-//		return super.equals(object);
 	}
 
 	@Override

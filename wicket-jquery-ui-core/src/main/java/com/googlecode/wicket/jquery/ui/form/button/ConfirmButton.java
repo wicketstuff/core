@@ -74,7 +74,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 			@Override
 			protected void onClose(AjaxRequestTarget target, DialogButton button)
 			{
-				if(button != null && button.equals(DialogButton.LBL_OK))
+				if (button != null && button.equals(DialogButton.LBL_OK))
 				{
 					ConfirmButton.this.submit(target);
 				}
