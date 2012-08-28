@@ -113,6 +113,7 @@
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
+      <version>20080701</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
