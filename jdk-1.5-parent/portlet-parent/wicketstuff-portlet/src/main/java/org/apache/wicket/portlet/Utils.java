@@ -26,7 +26,7 @@ import org.apache.wicket.util.string.Strings;
 
 /**
  * 100 times already implemented functions (partly taken from Wicket Url)
- * 
+ *
  * @author Peter Pastrnak
  */
 public final class Utils {
@@ -54,11 +54,11 @@ public final class Utils {
 		}
 		return first;
 	}
-	
+
 	public static final String buildQueryString(Map<String, String[]> parameterMap) {
 		return buildQueryString(parameterMap, true);
 	}
-	
+
 	public static final String buildQueryString(Map<String, String[]> parameterMap, boolean encodeURL) {
 		if ((parameterMap == null) || (parameterMap.isEmpty())) {
 			return null;
@@ -98,9 +98,10 @@ public final class Utils {
 						parameterMap.put(parts[0], new String[] { (parts.length > 1 ? parts[1] : null) });
 					}
 					else {
-						values = Arrays.copyOf(values, values.length + 1);
-						values[values.length - 1] = (parts.length > 1 ? parts[1] : null);
-						parameterMap.put(parts[0], values);
+						String[] newValues = new String[values.length + 1];
+						System.arraycopy(values, 0, newValues, 0, values.length);
+						newValues[values.length + 1] = (parts.length > 1 ? parts[1] : null);
+						parameterMap.put(parts[0], newValues);
 					}
 				}
 			}
