@@ -26,7 +26,7 @@ Java:
 			}
 			
 			@Override
-			protected void onClose(AjaxRequestTarget target, String button)
+			protected void onClose(AjaxRequestTarget target, DialogButton button)
 			{
 			}
 		};

@@ -19,7 +19,7 @@ public abstract class SliderDialog extends AbstractFormDialog<Integer>
 {
 	private static final long serialVersionUID = 1L;
 	protected final DialogButton btnSubmit = new DialogButton("Submit!");
-	protected final DialogButton btnCancel = new DialogButton(DialogButton.LBL_CANCEL);
+	protected final DialogButton btnCancel = new DialogButton(LBL_CANCEL);
 
 	private Form<?> form;
 	private FeedbackPanel feedback;

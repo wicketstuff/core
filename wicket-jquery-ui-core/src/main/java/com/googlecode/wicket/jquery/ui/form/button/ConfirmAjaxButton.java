@@ -73,7 +73,7 @@ public abstract class ConfirmAjaxButton extends ModelPanel<String>
 			@Override
 			protected DialogButton getSubmitButton()
 			{
-				return this.findButton(DialogButton.LBL_OK);
+				return this.findButton(LBL_OK);
 			}
 
 			@Override

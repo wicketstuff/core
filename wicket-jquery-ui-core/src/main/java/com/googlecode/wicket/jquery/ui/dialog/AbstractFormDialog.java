@@ -19,7 +19,6 @@ package com.googlecode.wicket.jquery.ui.dialog;
 import java.io.Serializable;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IFormSubmitter;
@@ -156,12 +155,12 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 
 				if (!form.hasError())
 				{
-					this.onClick(payload); //fires onClick & closes the dialog
+					this.onClick(payload); //fires onClick (& closes the dialog by default)
 				}
 			}
 			else
 			{
-				this.onClick(payload); //fires onClick & closes the dialog
+				this.onClick(payload); //fires onClick (& closes the dialog by default)
 			}
 		}
 	}
@@ -186,7 +185,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 
 	/**
 	 * Provides the form-dialog {@link IFormSubmitter}<br/>
-	 * This is basically the same technic used in {@link AjaxButton} class.
+	 * This is basically the same technics used in AjaxButton class.
 	 */
 	protected class DialogFormSubmitter implements IFormSubmitter
 	{

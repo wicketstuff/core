@@ -27,7 +27,7 @@ public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendar
 {
 	private static final long serialVersionUID = 1L;
 	protected final DialogButton btnSubmit = new DialogButton("Save");
-	protected final DialogButton btnCancel = new DialogButton(DialogButton.LBL_CANCEL);
+	protected final DialogButton btnCancel = new DialogButton(LBL_CANCEL);
 
 	static IModel<DemoCalendarEvent> emptyModel()
 	{

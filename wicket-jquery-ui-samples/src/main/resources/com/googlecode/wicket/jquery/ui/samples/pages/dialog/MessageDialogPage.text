@@ -5,15 +5,16 @@ HTML:
 
 Java:
 	MessageDialog dialog = new MessageDialog("dialog", "Warning", "Is it ok?",
-						DialogButton.OK_CANCEL, DialogIcon.WARN)
+						DialogButtons.OK_CANCEL, DialogIcon.WARN)
 	{
 		protected void onClose(AjaxRequestTarget target, DialogButton button)
 		{
-			if(button != null && button.equals(DialogButton.LBL_OK))
+			if(button != null && button.equals(LBL_OK))
 			{
 				//do something here
 				
-				//note: predefined button's text are:
+				//note1: #equals() compare either DialogButton or String (button text)
+				//note2: predefined button text are:
 				//LBL_OK, LBL_CANCEL, LBL_YES, LBL_NO, LBL_CLOSE, LBL_SUBMIT
 			}
 		}	

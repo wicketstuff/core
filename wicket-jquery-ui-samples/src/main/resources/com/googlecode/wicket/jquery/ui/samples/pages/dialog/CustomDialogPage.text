@@ -18,7 +18,7 @@ public <b>abstract</b> class SimpleDialog extends AbstractDialog&lt;Void&gt;
 	private static final long serialVersionUID = 1L;
 	
 	protected final DialogButton btnSure = new DialogButton("I am sure"); //with a customized text
-	protected final DialogButton btnCancel = new DialogButton(DialogButton.LBL_CANCEL); 
+	protected final DialogButton btnCancel = new DialogButton(LBL_CANCEL); 
 	
 	public SimpleDialog(String id, String title)
 	{

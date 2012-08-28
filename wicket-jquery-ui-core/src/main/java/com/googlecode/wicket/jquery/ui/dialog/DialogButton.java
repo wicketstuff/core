@@ -29,13 +29,6 @@ public class DialogButton implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
 
-	public static final String LBL_OK = "OK";
-	public static final String LBL_NO = "No";
-	public static final String LBL_YES = "Yes";
-	public static final String LBL_CLOSE = "Close";
-	public static final String LBL_CANCEL = "Cancel";
-	public static final String LBL_SUBMIT = "Submit";
-
 	private static short sequence = 0;
 
 	private final int id;

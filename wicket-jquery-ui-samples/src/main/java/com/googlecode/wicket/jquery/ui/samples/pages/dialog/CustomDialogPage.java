@@ -38,9 +38,7 @@ public class CustomDialogPage extends AbstractDialogPage
 			{
 				this.info(button + " has been clicked");
 
-				/* Warning: 1.2.2-SNAPSHOT syntax */
-				/* TODO: 1.2.2 - comment to be removed */
-				if (button != null && button.equals(DialogButton.LBL_OK))
+				if (button != null && button.equals(LBL_OK))
 				{
 					this.info(String.format("The model object is: '%s'", this.getModelObject()));
 				}

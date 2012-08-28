@@ -29,7 +29,7 @@ import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  * Provides the base class for every jQuery behavior.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -46,7 +46,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 * Additional references
 	 */
 	private final List<ResourceReference> references;
-	
+
 	/**
 	 * Constructor.
 	 * @param name the name of the behavior. It is used in the token so the behavior can be identified in the generated page.
@@ -57,7 +57,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		this.references = new ArrayList<ResourceReference>();
 	}
 
-	
+
 	/**
 	 * Adds a reference to be added at {@link #renderHead(Component, IHeaderResponse)} time.
 	 * @param reference a {@link CssResourceReference} or a {@link JavaScriptResourceReference}
@@ -66,7 +66,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	protected boolean add(ResourceReference reference)
 	{
 		return this.references.add(reference);
-	}	
+	}
 
 	@Override
 	public void renderHead(Component component, IHeaderResponse response)
@@ -96,7 +96,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 
 		response.renderJavaScript(this.$(), this.getToken());
 	}
-	
+
 	/**
 	 * Get the unique behavior token that act as the script id.
 	 * @return the token
@@ -105,7 +105,6 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	{
 		return String.format("jquery-%s-%d", this.name, this.hashCode());
 	}
-	
 
 	/**
 	 * <code>

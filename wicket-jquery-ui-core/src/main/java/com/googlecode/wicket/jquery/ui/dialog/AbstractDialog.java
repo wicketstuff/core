@@ -43,6 +43,14 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "dialog";
 
+	/* Default Button labels */
+	public static final String LBL_OK = "OK";
+	public static final String LBL_NO = "No";
+	public static final String LBL_YES = "Yes";
+	public static final String LBL_CLOSE = "Close";
+	public static final String LBL_CANCEL = "Cancel";
+	public static final String LBL_SUBMIT = "Submit";
+
 	/** Default width */
 	private static final int WIDTH = 450;
 
@@ -53,7 +61,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	/**
 	 * Default button
 	 */
-	private final DialogButton btnOk = new DialogButton(DialogButton.LBL_OK);
+	private final DialogButton btnOk = new DialogButton(LBL_OK);
 
 	/**
 	 * @param id the markupId, an html div suffice to host a dialog.
