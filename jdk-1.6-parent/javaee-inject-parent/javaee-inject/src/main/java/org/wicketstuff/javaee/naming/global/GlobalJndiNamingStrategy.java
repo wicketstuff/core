@@ -87,6 +87,9 @@ public class GlobalJndiNamingStrategy implements IJndiNamingStrategy
 	@Override
 	public String calculateName(String ejbName, Class<?> ejbType)
 	{
-		return baseName + (ejbName == null ? ejbType.getName() : ejbName);
+        if (ejbName == null) {
+            return baseName + ejbType.getName();
+        }
+        return baseName + ejbName + "!" + ejbType.getName();
 	}
 }
