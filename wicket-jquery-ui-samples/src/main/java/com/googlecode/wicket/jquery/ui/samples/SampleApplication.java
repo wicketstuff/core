@@ -5,7 +5,6 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
-
 import com.googlecode.wicket.jquery.ui.samples.pages.accordion.AccordionPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.autocomplete.DefaultAutoCompletePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.button.DefaultButtonPage;
@@ -30,7 +29,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.test.TestPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.wizard.DefaultWizardPage;
 
 public class SampleApplication extends WebApplication
-{    	
+{
 	/**
 	 * @see org.apache.wicket.Application#init()
 	 */
@@ -38,7 +37,7 @@ public class SampleApplication extends WebApplication
 	public void init()
 	{
 		super.init();
-		
+
 		this.getMarkupSettings().setStripWicketTags(true);
 		this.getResourceSettings().setThrowExceptionOnMissingResource(false);
 
@@ -52,13 +51,13 @@ public class SampleApplication extends WebApplication
 		this.mountPackage("/slider", DefaultSliderPage.class);
 		this.mountPackage("/tabs", DefaultTabsPage.class);
 		this.mountPackage("/wizard", DefaultWizardPage.class);
-		
+
 		// interactions //
 		this.mountPackage("/draggable", DefaultDraggablePage.class);
 		this.mountPackage("/droppable", DefaultDroppablePage.class);
 		this.mountPackage("/resizable", ResizablePage.class);
 		this.mountPackage("/selectable", DefaultSelectablePage.class);
-		
+
 		// Effects //
 		this.mountPackage("/effect", DefaultEffectPage.class);
 
@@ -74,7 +73,7 @@ public class SampleApplication extends WebApplication
 
 		// Plugins //
 		this.mountPackage("/plugins", FontSizePage.class);
-		
+
 		// Test //
 		this.mountPackage("/test", TestPage.class);
 	}
@@ -93,6 +92,6 @@ public class SampleApplication extends WebApplication
 	{
 		return new SampleSession(request);
 	}
-	
-	
+
+
 }

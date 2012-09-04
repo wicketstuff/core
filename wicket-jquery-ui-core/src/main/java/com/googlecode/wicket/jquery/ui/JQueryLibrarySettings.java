@@ -20,19 +20,29 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
 /**
- * Provides a static class for jQuery library settings (core js &#38; ui resource references).
- * 
+ * Provides an utility class for jQuery library settings (core js &#38; ui resource references).<br/>
+ * Intended to be used into WebApplication#init(), like:<br/>
+ * <code><pre>
+ * public class MyApplication extends WebApplication
+ * {
+ *     public void init()
+ *     {
+ *         JQueryLibrarySettings.setJQueryUIReference(new JavaScriptResourceReference(MyApplication.class, "jquery-ui-1.8.23.min.js"));
+ *     }
+ * }
+ * <pre></code>
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
 public class JQueryLibrarySettings
 {
-	public static ResourceReference CORE_JS = new JavaScriptResourceReference(JQueryLibrarySettings.class, "jquery-1.7.2.min.js"); 
-	public static ResourceReference CORE_UI = new JavaScriptResourceReference(JQueryLibrarySettings.class, "jquery-ui-1.8.22.min.js");
+	public static ResourceReference CORE_JS = new JavaScriptResourceReference(JQueryLibrarySettings.class, "jquery-1.8.0.min.js");
+	public static ResourceReference CORE_UI = new JavaScriptResourceReference(JQueryLibrarySettings.class, "jquery-ui-1.8.23.min.js");
 
 	/**
 	 * Sets the JQuery backing library resource reference
-	 * 
+	 *
 	 * @param reference the {@link ResourceReference}
 	 */
 	public static void setJQueryReference(ResourceReference reference)
@@ -42,7 +52,7 @@ public class JQueryLibrarySettings
 
 	/**
 	 * Sets the JQuery UI backing library resource reference
-	 * 
+	 *
 	 * @param reference the {@link ResourceReference}
 	 */
 	public static void setJQueryUIReference(ResourceReference reference)
