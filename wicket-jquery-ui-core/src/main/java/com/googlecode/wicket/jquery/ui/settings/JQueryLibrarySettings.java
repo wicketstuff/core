@@ -14,49 +14,75 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui;
+package com.googlecode.wicket.jquery.ui.settings;
 
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+
+import com.googlecode.wicket.jquery.ui.resource.JQueryResourceReference;
+import com.googlecode.wicket.jquery.ui.resource.JQueryUIResourceReference;
 
 /**
  * Provides an utility class for jQuery library settings (core js &#38; ui resource references).<br/>
- * Intended to be used into WebApplication#init(), like:<br/>
+ *
  * <code><pre>
  * public class MyApplication extends WebApplication
  * {
  *     public void init()
  *     {
+ *         super.init();
+ *
+ *         JQueryLibrarySettings.setJQueryReference(new JavaScriptResourceReference(MyApplication.class, "jquery-1.8.0.min.js"));
  *         JQueryLibrarySettings.setJQueryUIReference(new JavaScriptResourceReference(MyApplication.class, "jquery-ui-1.8.23.min.js"));
  *     }
  * }
  * <pre></code>
+ *
+ * <b>Note:</b> The reference given as parameter can be null.
  *
  * @author Sebastien Briquet - sebfz1
  *
  */
 public class JQueryLibrarySettings
 {
-	public static ResourceReference CORE_JS = new JavaScriptResourceReference(JQueryLibrarySettings.class, "jquery-1.8.0.min.js");
-	public static ResourceReference CORE_UI = new JavaScriptResourceReference(JQueryLibrarySettings.class, "jquery-ui-1.8.23.min.js");
+	private static ResourceReference jQueryReference = JQueryResourceReference.get();
+	private static ResourceReference jQueryUIReference = JQueryUIResourceReference.get();
+
+	/**
+	 * Gets the JQuery backing library resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
+	public static ResourceReference getJQueryReference()
+	{
+		return JQueryLibrarySettings.jQueryReference;
+	}
 
 	/**
 	 * Sets the JQuery backing library resource reference
 	 *
-	 * @param reference the {@link ResourceReference}
+	 * @param reference the {@link ResourceReference}, or null
 	 */
 	public static void setJQueryReference(ResourceReference reference)
 	{
-		JQueryLibrarySettings.CORE_JS = reference;
+		JQueryLibrarySettings.jQueryReference = reference;
 	}
 
 	/**
+	 * Gets the JQuery UI backing library resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
+	public static ResourceReference getJQueryUIReference()
+	{
+		return JQueryLibrarySettings.jQueryUIReference;
+	}
+	/**
 	 * Sets the JQuery UI backing library resource reference
 	 *
-	 * @param reference the {@link ResourceReference}
+	 * @param reference the {@link ResourceReference}, or null
 	 */
 	public static void setJQueryUIReference(ResourceReference reference)
 	{
-		JQueryLibrarySettings.CORE_UI = reference;
+		JQueryLibrarySettings.jQueryUIReference = reference;
 	}
 }

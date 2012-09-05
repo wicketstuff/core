@@ -27,6 +27,8 @@ import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
+import com.googlecode.wicket.jquery.ui.settings.JQueryLibrarySettings;
+
 /**
  * Provides the base class for every jQuery behavior.
  *
@@ -61,7 +63,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	/**
 	 * Adds a reference to be added at {@link #renderHead(Component, IHeaderResponse)} time.
 	 * @param reference a {@link CssResourceReference} or a {@link JavaScriptResourceReference}
-	 * @return true (as specified by Collection.add(E)) 
+	 * @return true (as specified by Collection.add(E))
 	 */
 	protected boolean add(ResourceReference reference)
 	{
@@ -71,14 +73,14 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	@Override
 	public void renderHead(Component component, IHeaderResponse response)
 	{
-		if (JQueryLibrarySettings.CORE_JS != null)
+		if (JQueryLibrarySettings.getJQueryReference() != null)
 		{
-			response.renderJavaScriptReference(JQueryLibrarySettings.CORE_JS);
+			response.renderJavaScriptReference(JQueryLibrarySettings.getJQueryReference());
 		}
-		
-		if (JQueryLibrarySettings.CORE_UI != null)
+
+		if (JQueryLibrarySettings.getJQueryUIReference() != null)
 		{
-			response.renderJavaScriptReference(JQueryLibrarySettings.CORE_UI);
+			response.renderJavaScriptReference(JQueryLibrarySettings.getJQueryUIReference());
 		}
 
 		for(ResourceReference reference : this.references)
@@ -87,7 +89,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 			{
 				response.renderJavaScriptReference(reference);
 			}
-			
+
 			if (reference instanceof CssResourceReference)
 			{
 				response.renderCSSReference(reference);
@@ -115,29 +117,29 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	public void beforeRender(Component component)
 	{
 		this.onBeforeRender();
-		
+
 		AjaxRequestTarget target = AjaxRequestTarget.get();
-		
+
 		if (target != null)
 		{
 			target.appendJavaScript(this.toString());
 		}
 	}
-	
+
 	/**
 	 * Gets the jQuery statement.
 	 * @return String like '$(function() { ... })'
 	 */
 	protected abstract String $();
-	
-	
+
+
 	// Events //
 	/**
 	 * Triggered before render
 	 */
 	protected void onBeforeRender()
 	{
-		
+
 	}
 
 

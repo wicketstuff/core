@@ -22,18 +22,18 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.PackageResourceReference;
 
-import com.googlecode.wicket.jquery.ui.JQueryLibrarySettings;
+import com.googlecode.wicket.jquery.ui.settings.JQueryLibrarySettings;
 
 /**
  * Provides the base class for jQuery template behavior.<br/>
  * A template behavior is designed to render a &lt;script id="jquery-template-123456" type="text/x-xxx" /&gt; block, coming from the JQueryResourceStream returned by {@link #newResourceStream()}
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public abstract class JQueryAbstractTemplateBehavior extends Behavior
 {
 	private static final long serialVersionUID = 1L;
-	public static final PackageResourceReference TMPL_JS = new JavaScriptResourceReference(JQueryAbstractTemplateBehavior.class, "jquery.tmpl.min.js"); 
+	public static final PackageResourceReference TMPL_JS = new JavaScriptResourceReference(JQueryAbstractTemplateBehavior.class, "jquery.tmpl.min.js");
 
 	/**
 	 * Constructor
@@ -47,9 +47,9 @@ public abstract class JQueryAbstractTemplateBehavior extends Behavior
 	{
 		super.renderHead(component, response);
 
-		if (JQueryLibrarySettings.CORE_JS != null)
+		if (JQueryLibrarySettings.getJQueryReference() != null)
 		{
-			response.renderJavaScriptReference(JQueryLibrarySettings.CORE_JS);
+			response.renderJavaScriptReference(JQueryLibrarySettings.getJQueryReference());
 		}
 
 		response.renderJavaScriptReference(JQueryAbstractTemplateBehavior.TMPL_JS);

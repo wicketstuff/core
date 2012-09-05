@@ -22,47 +22,47 @@ import org.apache.wicket.MarkupContainer;
  * Helping interface which specifies that a Kendo UI border-layout will be applied on the underlying {@link MarkupContainer}.<br />
  * For instance:<br/>
  * <pre>
- * public class BorderLayoutPage extends WebPage implements IBorderLayoutContainer
+ * public class BorderLayoutPage extends WebPage implements IBorderLayout
  * {
  * 	public BorderLayoutPage(PageParameters parameters)
  * 	{
  * 		super(parameters);
- * 		this.createBorderLayout(this);
+ * 		this.addBorderLayout(this);
  * 	}
- * 
- * 	public void createBorderLayout(MarkupContainer container)
+ *
+ * 	public void addBorderLayout(MarkupContainer container)
  * 	{
  * 		container.add(new SplitterBehavior("#vertical").setOption("panes", this.getVerticalPanes()).setOption("orientation", "'vertical'"));
  * 		container.add(new SplitterBehavior("#horizontal").setOption("panes", this.getHorizontalPanes()));
  * 	}
- * 
+ *
  *  ...
  * }
  * </pre>
- *  
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
 public interface IBorderLayout
 {
 	/**
-	 * Factory method that is designed to create the BorderLayout.<br/>
+	 * Method that is designed to create the BorderLayout.<br/>
 	 * A typical implementation is:<br/>
 	 * <pre>
 	 * container.add(new SplitterBehavior("#vertical").setOption("panes", this.getVerticalPanes()).setOption("orientation", "'vertical'"));
 	 * container.add(new SplitterBehavior("#horizontal").setOption("panes", this.getHorizontalPanes()));
 	 * </pre>
-	 * 
+	 *
 	 * @param container either a Page or a Panel.
 	 */
 	void addBorderLayout(MarkupContainer container);
-	
+
 	/**
 	 * Gets the vertical panes in a JSON array
 	 * @return a String that represent the JSON array
 	 */
 	String getVerticalPanes();
-	
+
 	/**
 	 * Gets the horizontal panes in a JSON array
 	 * @return a String that represent the JSON array

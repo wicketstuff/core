@@ -5,6 +5,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
+
 import com.googlecode.wicket.jquery.ui.samples.pages.accordion.AccordionPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.autocomplete.DefaultAutoCompletePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.button.DefaultButtonPage;
