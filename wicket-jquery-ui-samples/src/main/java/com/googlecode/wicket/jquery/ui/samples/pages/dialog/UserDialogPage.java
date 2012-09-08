@@ -15,12 +15,12 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.util.ListModel;
 
-import com.googlecode.wicket.jquery.ui.dialog.AbstractFormDialog;
-import com.googlecode.wicket.jquery.ui.dialog.DialogButton;
 import com.googlecode.wicket.jquery.ui.form.RadioChoice;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.User;
+import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 
 public class UserDialogPage extends AbstractDialogPage
 {

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.dialog;
+package com.googlecode.wicket.jquery.ui.widget.dialog;
 
 import java.util.List;
 
@@ -28,14 +28,15 @@ import org.apache.wicket.model.Model;
 
 /**
  * Provides a modal dialog box that display a specific message, with a predefined icon and a predefined button set.
- * <b>Note: </b> {@link MessageDialog} & {@link MessageFormDialog} are sharing the same code. There just do not extends the same class. 
+ * <b>Note: </b> {@link MessageDialog} & {@link MessageFormDialog} are sharing the same code. There just do not extends the same class.
+ * 
  * @author Sebastien Briquet - sebfz1
  */
-public abstract class MessageDialog extends AbstractDialog<String>
+public abstract class MessageFormDialog extends AbstractFormDialog<String>
 {
 	private static final long serialVersionUID = 1L;
 	
-	private Label label; 
+	private Label label;
 	private DialogButtons buttons;
 
 	/**
@@ -45,7 +46,7 @@ public abstract class MessageDialog extends AbstractDialog<String>
 	 * @param message the message to be displayed
 	 * @param buttons button set to display
 	 */
-	public MessageDialog(String id, String title, String message, DialogButtons buttons)
+	public MessageFormDialog(String id, String title, String message, DialogButtons buttons)
 	{
 		this(id, title, new Model<String>(message), buttons, DialogIcon.NONE);
 	}
@@ -57,7 +58,7 @@ public abstract class MessageDialog extends AbstractDialog<String>
 	 * @param message the message to be displayed
 	 * @param buttons button set to display
 	 */
-	public MessageDialog(String id, String title, IModel<String> message, DialogButtons buttons)
+	public MessageFormDialog(String id, String title, IModel<String> message, DialogButtons buttons)
 	{
 		this(id, title, message, buttons, DialogIcon.NONE);
 	}
@@ -70,7 +71,7 @@ public abstract class MessageDialog extends AbstractDialog<String>
 	 * @param buttons button set to display
 	 * @param icon the predefined icon to display
 	 */
-	public MessageDialog(String id, String title, String message, DialogButtons buttons, DialogIcon icon)
+	public MessageFormDialog(String id, String title, String message, DialogButtons buttons, DialogIcon icon)
 	{
 		this(id, title, new Model<String>(message), buttons, icon);
 	}
@@ -83,7 +84,7 @@ public abstract class MessageDialog extends AbstractDialog<String>
 	 * @param buttons button set to display
 	 * @param icon the predefined icon to display
 	 */
-	public MessageDialog(String id, String title, IModel<String> message, DialogButtons buttons, DialogIcon icon)
+	public MessageFormDialog(String id, String title, IModel<String> message, DialogButtons buttons, DialogIcon icon)
 	{
 		super(id, title, message, true);
 		this.buttons = buttons;
@@ -93,7 +94,7 @@ public abstract class MessageDialog extends AbstractDialog<String>
 
 		container.add(AttributeModifier.append("class", icon.getStyle()));
 		container.add(new EmptyPanel("icon").add(AttributeModifier.replace("class", icon)));
-		
+
 		this.label = new Label("message", this.getModel());
 		container.add(this.label.setOutputMarkupId(true));
 	}
@@ -113,5 +114,11 @@ public abstract class MessageDialog extends AbstractDialog<String>
 	protected void onOpen(AjaxRequestTarget target)
 	{
 		target.add(this.label);
+	}
+
+	@Override
+	protected void onClose(AjaxRequestTarget target, DialogButton button)
+	{
+		//not mandatory to override 
 	}
 }

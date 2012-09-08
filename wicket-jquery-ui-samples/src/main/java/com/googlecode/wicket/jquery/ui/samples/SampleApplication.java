@@ -93,6 +93,4 @@ public class SampleApplication extends WebApplication
 	{
 		return new SampleSession(request);
 	}
-
-
 }

@@ -9,9 +9,9 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.dialog.AbstractDialog;
-import com.googlecode.wicket.jquery.ui.dialog.DialogButton;
-import com.googlecode.wicket.jquery.ui.dialog.DialogButtons;
+import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButtons;
 import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
 import com.googlecode.wicket.jquery.ui.widget.tabs.TabbedPanel;
 

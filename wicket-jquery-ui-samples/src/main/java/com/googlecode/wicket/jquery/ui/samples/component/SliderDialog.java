@@ -10,10 +10,10 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.validation.validator.RangeValidator;
 
-import com.googlecode.wicket.jquery.ui.dialog.AbstractFormDialog;
-import com.googlecode.wicket.jquery.ui.dialog.DialogButton;
 import com.googlecode.wicket.jquery.ui.form.slider.Slider;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
+import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 
 public abstract class SliderDialog extends AbstractFormDialog<Integer>
 {

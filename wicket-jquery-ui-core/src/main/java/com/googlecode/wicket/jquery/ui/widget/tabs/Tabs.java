@@ -14,7 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.widget;
+package com.googlecode.wicket.jquery.ui.widget.tabs;
+
+import org.apache.wicket.Component;
 
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryContainer;
@@ -22,13 +24,12 @@ import com.googlecode.wicket.jquery.ui.Options;
 
 /**
  * Provides jQuery tabs based on a {@link JQueryContainer}
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public class Tabs extends JQueryContainer
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "tabs";
 
 	private final Options options;
 
@@ -49,26 +50,34 @@ public class Tabs extends JQueryContainer
 	public Tabs(String id, Options options)
 	{
 		super(id);
-		
+
 		this.options = options;
 	}
 
 	// Events //
-//	/**
-//	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering 
-//	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-//	 * 
-//	 * @param behavior the {@link JQueryBehavior}
-//	 */
-//	protected void onConfigure(JQueryBehavior behavior)
-//	{
-//		behavior.setOptions(this.options);
-//	}
+	/**
+	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
+	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
+	 *
+	 * @param behavior the {@link JQueryBehavior}
+	 */
+	protected void onConfigure(JQueryBehavior behavior)
+	{
+	}
 
 	// IJQueryWidget //
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new JQueryBehavior(selector, METHOD, this.options);
+		return new TabsBehavior(selector, this.options) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onConfigure(Component component)
+			{
+				Tabs.this.onConfigure(this);
+			}
+		};
 	}
 }

@@ -13,9 +13,9 @@ public class Start
 	/**
 	 * The context path is hard-coded in TemplatePage.html
 	 */
-	public static final String CONTEXT_PATH = "/jquery-ui-samples";
+	public static final String CONTEXT_PATH = "/wicket-jquery-ui";
 	private static final int PORT = 8080;
-	
+
 	public static void main(String[] args) throws Exception
 	{
 		int timeout = (int) Duration.ONE_HOUR.getMilliseconds();

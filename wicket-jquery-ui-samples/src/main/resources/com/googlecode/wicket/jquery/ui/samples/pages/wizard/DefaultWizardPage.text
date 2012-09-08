@@ -10,5 +10,4 @@ Wizard button's text can be customized using the following resource keys, either
 </ul>
 
 <h4>Since</h4>
-wicket-jquery-ui-core-1.2.2<br/>
-wicket-jquery-ui-core-6.0.0
+wicket-jquery-ui-core-1.2.2

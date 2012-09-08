@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.dialog.AbstractDialog;
-import com.googlecode.wicket.jquery.ui.dialog.DialogButton;
-import com.googlecode.wicket.jquery.ui.dialog.DialogButtons;
+import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButtons;
 
 public abstract class SimpleDialog extends AbstractDialog<String>
 {

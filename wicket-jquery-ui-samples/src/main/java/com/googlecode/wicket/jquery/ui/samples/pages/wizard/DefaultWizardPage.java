@@ -18,7 +18,7 @@ import com.googlecode.wicket.jquery.ui.form.RadioChoice;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.data.bean.User;
-import com.googlecode.wicket.jquery.ui.wizard.AbstractWizard;
+import com.googlecode.wicket.jquery.ui.widget.wizard.AbstractWizard;
 
 public class DefaultWizardPage extends AbstractWizardPage
 {

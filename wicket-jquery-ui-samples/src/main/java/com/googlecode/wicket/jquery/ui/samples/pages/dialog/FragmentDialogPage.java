@@ -6,10 +6,10 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.dialog.DialogButton;
-import com.googlecode.wicket.jquery.ui.dialog.FragmentDialog;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
+import com.googlecode.wicket.jquery.ui.widget.dialog.FragmentDialog;
 
 public class FragmentDialogPage extends AbstractDialogPage
 {

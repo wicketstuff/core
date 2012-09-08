@@ -73,16 +73,19 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	@Override
 	public void renderHead(Component component, IHeaderResponse response)
 	{
+		// Adds jQuery javascript resource reference //
 		if (JQueryLibrarySettings.getJQueryReference() != null)
 		{
 			response.renderJavaScriptReference(JQueryLibrarySettings.getJQueryReference());
 		}
 
+		// Adds jQuery UI javascript resource reference //
 		if (JQueryLibrarySettings.getJQueryUIReference() != null)
 		{
 			response.renderJavaScriptReference(JQueryLibrarySettings.getJQueryUIReference());
 		}
 
+		// Adds additional resource references //
 		for(ResourceReference reference : this.references)
 		{
 			if (reference instanceof JavaScriptResourceReference)
@@ -96,6 +99,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 			}
 		}
 
+		// Adds the statement //
 		response.renderJavaScript(this.$(), this.getToken());
 	}
 

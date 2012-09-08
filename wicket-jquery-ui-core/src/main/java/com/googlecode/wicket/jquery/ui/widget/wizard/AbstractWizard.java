@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.wizard;
+package com.googlecode.wicket.jquery.ui.widget.wizard;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -30,10 +30,10 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
-import com.googlecode.wicket.jquery.ui.dialog.AbstractFormDialog;
-import com.googlecode.wicket.jquery.ui.dialog.DialogButton;
-import com.googlecode.wicket.jquery.ui.dialog.DialogEvent;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
+import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogEvent;
 
 /**
  * Provides the base class for wizard-based dialogs

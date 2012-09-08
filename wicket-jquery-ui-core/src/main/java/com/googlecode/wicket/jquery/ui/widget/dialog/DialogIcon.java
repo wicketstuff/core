@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.dialog;
+package com.googlecode.wicket.jquery.ui.widget.dialog;
 
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 

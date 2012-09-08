@@ -1,7 +1,7 @@
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
-import com.googlecode.wicket.jquery.ui.dialog.AbstractDialog;
-import com.googlecode.wicket.jquery.ui.dialog.DialogButton;
+import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 
 
 public class MyDialog extends AbstractDialog<String>

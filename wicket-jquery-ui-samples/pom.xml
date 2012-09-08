@@ -13,41 +13,6 @@
 	<artifactId>jquery-ui-samples</artifactId>
 	<packaging>war</packaging>
 
-	<build>
-		<finalName>${project.artifactId}</finalName>
-		<resources>
-			<resource>
-				<filtering>false</filtering>
-				<directory>src/main/resources</directory>
-			</resource>
-			<resource>
-				<filtering>false</filtering>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**</include>
-				</includes>
-			</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>${jetty.version}</version>
-				<configuration>
-					<webAppConfig>
-						<contextPath>/jquery-ui-samples</contextPath>
-					</webAppConfig>
-					<connectors>
-						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-							<port>8080</port>
-							<maxIdleTime>3600000</maxIdleTime>
-						</connector>
-					</connectors>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
 	<dependencies>
 		<!-- JQUERY-UI DEPENDENCIES -->
 		<dependency>
@@ -112,5 +77,47 @@
 		</dependency>
 
 	</dependencies>
+
+	<build>
+		<finalName>wicket-jquery-ui</finalName>
+		<resources>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>${jetty.version}</version>
+				<configuration>
+					<webAppConfig>
+						<contextPath>/${project.build.finalName}</contextPath>
+					</webAppConfig>
+					<connectors>
+						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+							<port>8080</port>
+							<maxIdleTime>3600000</maxIdleTime>
+						</connector>
+					</connectors>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

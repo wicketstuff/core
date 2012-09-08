@@ -34,7 +34,7 @@ import com.googlecode.wicket.jquery.ui.Options;
 
 /**
  * Provides jQuery tabs based on a {@link JQueryPanel}
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public class TabbedPanel extends JQueryPanel
@@ -63,20 +63,20 @@ public class TabbedPanel extends JQueryPanel
 	public TabbedPanel(String id, List<ITab> tabs, Options options)
 	{
 		super(id);
-		
+
 		this.tabs = tabs;
 		this.options = options;
-		
+
 		this.init();
 	}
-	
+
 	/**
 	 * Initialization
 	 */
 	private void init()
 	{
 		final RepeatingView panels = new RepeatingView("panels") {
-			
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -89,7 +89,7 @@ public class TabbedPanel extends JQueryPanel
 		};
 
 		this.add(panels);
-		
+
 		this.add(new ListView<ITab>("tabs", new ListModel<ITab>(this.tabs)) {
 
 			private static final long serialVersionUID = 1L;
@@ -98,14 +98,14 @@ public class TabbedPanel extends JQueryPanel
 			protected void populateItem(ListItem<ITab> item)
 			{
 				final ITab tab = item.getModelObject();
-				
+
 				if (tab.isVisible())
 				{
 					final String newId = panels.newChildId();
 
 					// link (tab) //
 					WebMarkupContainer link = this.newLink(tab);
-					link.add(AttributeModifier.replace("href", "#" + newId)); 
+					link.add(AttributeModifier.replace("href", "#" + newId));
 					link.add(new Label("title", tab.getTitle()).setRenderBodyOnly(true));
 					item.add(link);
 
@@ -116,7 +116,7 @@ public class TabbedPanel extends JQueryPanel
 
 			/**
 			 * Provides the tab's link
-			 * 
+			 *
 			 * @param tab the ITab
 			 * @return a WebMarkupContainer that represent the tab link
 			 */
@@ -128,7 +128,7 @@ public class TabbedPanel extends JQueryPanel
 				}
 
 				return new WebMarkupContainer("link");
-			}			
+			}
 		});
 	}
 
@@ -141,17 +141,15 @@ public class TabbedPanel extends JQueryPanel
 
 		this.add(this.newWidgetBehavior(JQueryWidget.getSelector(this)));
 	}
-	
+
 	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering 
+	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
 	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 * 
+	 *
 	 * @param behavior the {@link JQueryBehavior}
 	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
-		
-		
 	}
 
 	// IJQueryWidget //
@@ -166,8 +164,6 @@ public class TabbedPanel extends JQueryPanel
 			public void onConfigure(Component component)
 			{
 				TabbedPanel.this.onConfigure(this);
-				
-				
 			}
 		};
 	}

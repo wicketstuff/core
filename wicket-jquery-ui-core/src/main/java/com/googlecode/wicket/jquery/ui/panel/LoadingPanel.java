@@ -25,8 +25,8 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 
 /**
- * Provides a {@link Panel} containing a loading indicator {@link Component}, which can be accessed (to be replaced for instance) by {@link #getPlaceholderComponent()}  
- * 
+ * Provides a {@link Panel} containing a loading indicator {@link Component}, which can be accessed (to be replaced for instance) by {@link #getPlaceholderComponent()}
+ *
  * @author Sebastien Briquet - sebfz1
  * @since 1.2.1
  */
@@ -43,7 +43,7 @@ public class LoadingPanel extends Panel
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param id the markup id
 	 */
 	public LoadingPanel(String id)
@@ -55,17 +55,17 @@ public class LoadingPanel extends Panel
 		this.label = new Label(LAZY_LOAD_COMPONENT_ID, String.format("<img alt=\"Loading...\" src=\"%s\"/>", RequestCycle.get().urlFor(handler)));
 		this.label.setEscapeModelStrings(false);
 		this.label.setOutputMarkupId(true);
-		
+
 		this.add(this.label);
 	}
 
 	/**
 	 * Gets the placeholder component (the label) that contains the loading indicator.<br/>
 	 * This component is designed to be replaced by another component (like a lazy-loaded component)
-	 * 
-	 * @return the {@link Label}
+	 *
+	 * @return the {@link Component} being replaced
 	 */
-	public Label getPlaceholderComponent()
+	public Component getPlaceholderComponent()
 	{
 		return this.label;
 	}

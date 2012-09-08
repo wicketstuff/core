@@ -23,11 +23,11 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
-import com.googlecode.wicket.jquery.ui.dialog.DialogButton;
-import com.googlecode.wicket.jquery.ui.dialog.DialogButtons;
-import com.googlecode.wicket.jquery.ui.dialog.DialogIcon;
-import com.googlecode.wicket.jquery.ui.dialog.MessageFormDialog;
 import com.googlecode.wicket.jquery.ui.panel.ModelPanel;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButtons;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogIcon;
+import com.googlecode.wicket.jquery.ui.widget.dialog.MessageFormDialog;
 
 /**
  * Provides a {@link AjaxButton} which pop-ups an OK-Cancel confirmation dialog when clicked. In case of confirmation, the form is sent via an ajax post.<br/>
