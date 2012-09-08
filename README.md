@@ -1,6 +1,11 @@
 # wicket-jquery-ui
 **jQuery UI integration in Wicket 1.5.x &amp; Wicket 6.x**  
 
+## Artifacts
+- jQuery UI `jquery-ui-core`
+- Kendo UI `jquery-ui-kendo`
+- FullCalendar `jquery-ui-calendar`
+
 ## Getting started
 In order to get started using this API, you may download appropriate jar(s) or set a maven dependency.  
 
@@ -52,7 +57,7 @@ The base template page is the following: (you might change the CSS href accordin
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
     <head>
-        <link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.8.22.custom.css" />
+        <link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.8.23.custom.css" />
     </head>
     <body>
     </body>
@@ -71,7 +76,7 @@ The base template page is then the following: (you might change the CSS href acc
     <head>
 
         <!-- jQuery UI -->
-        <link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.8.22.custom.css" />
+        <link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.8.23.custom.css" />
 
         <!-- Kendo UI -->
         <link rel="stylesheet" type="text/css" href="css/kendo/kendo.common.min.css" media="all" />
@@ -84,4 +89,4 @@ The base template page is then the following: (you might change the CSS href acc
 
 ## You are now ready to use wicket-jquery-ui!
 Look at the samples provided in the demo site to get started with the code...  
-<http://www.7thweb.net/jquery-ui-samples>
+<http://www.7thweb.net/wicket-jquery-ui>
