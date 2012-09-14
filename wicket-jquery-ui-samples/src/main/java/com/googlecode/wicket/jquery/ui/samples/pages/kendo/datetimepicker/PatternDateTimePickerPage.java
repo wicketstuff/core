@@ -11,8 +11,8 @@ import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.Options;
-import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
-import com.googlecode.wicket.jquery.ui.form.button.Button;
+import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
+import com.googlecode.wicket.jquery.ui.kendo.button.Button;
 import com.googlecode.wicket.jquery.ui.kendo.datetime.DatePicker;
 import com.googlecode.wicket.jquery.ui.kendo.datetime.DateTimePicker;
 import com.googlecode.wicket.jquery.ui.kendo.datetime.TimePicker;
@@ -21,12 +21,12 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class PatternDateTimePickerPage extends AbstractTimePickerPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public PatternDateTimePickerPage()
 	{
 		Form<Void> form = new Form<Void>("form");
 		this.add(form);
-		
+
 		// FeedbackPanel //
 		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
 		form.add(feedbackPanel.setOutputMarkupId(true));
@@ -34,11 +34,11 @@ public class PatternDateTimePickerPage extends AbstractTimePickerPage
 		// TimePicker //
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(2012, 05, 27, 02, 00, 00);
-		
+
 		IModel<Date> model = new Model<Date>(calendar.getTime());
 
 		final DateTimePicker datetimepicker = new DateTimePicker("datetimepicker", model, "dd MMM yyyy", "HH:mm:ss") {
-		
+
 			private static final long serialVersionUID = 1L;
 
 			/**
@@ -59,14 +59,14 @@ public class PatternDateTimePickerPage extends AbstractTimePickerPage
 			protected TimePicker newTimePicker(String id, IModel<Date> model, final String timePattern)
 			{
 				return new TimePicker(id, model, timePattern) {
-					
+
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					protected void onConfigure(JQueryBehavior behavior)
 					{
 						super.onConfigure(behavior);
-						
+
 						//Specified timePattern is not the default kendo-ui date pattern, but is compatible with both java & kendo-ui
 						//It can therefore be transmitted as-is to the TimePicker widget
 						behavior.setOption("format", Options.asString(timePattern));
@@ -86,7 +86,7 @@ public class PatternDateTimePickerPage extends AbstractTimePickerPage
 			public void onSubmit()
 			{
 				this.info("Date & Time: " + datetimepicker.getModelObjectAsString());
-			}			
+			}
 		});
 
 		form.add(new AjaxButton("button") {
@@ -99,7 +99,7 @@ public class PatternDateTimePickerPage extends AbstractTimePickerPage
 				this.info("Date & Time: " + datetimepicker.getModelObjectAsString());
 				target.add(feedbackPanel);
 			}
-			
+
 			@Override
 			protected void onError(AjaxRequestTarget target, Form<?> form)
 			{

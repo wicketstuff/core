@@ -10,20 +10,20 @@ import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.Options;
-import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
-import com.googlecode.wicket.jquery.ui.form.button.Button;
+import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
+import com.googlecode.wicket.jquery.ui.kendo.button.Button;
 import com.googlecode.wicket.jquery.ui.kendo.datetime.TimePicker;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
 public class PatternTimePickerPage extends AbstractTimePickerPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public PatternTimePickerPage()
 	{
 		Form<Void> form = new Form<Void>("form");
 		this.add(form);
-		
+
 		// FeedbackPanel //
 		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
 		form.add(feedbackPanel.setOutputMarkupId(true));
@@ -43,8 +43,8 @@ public class PatternTimePickerPage extends AbstractTimePickerPage
 			protected void onConfigure(JQueryBehavior behavior)
 			{
 				super.onConfigure(behavior);
-				
-				//this pattern is compatible with both java & kendo-ui, so we can use #getTextFormat() to retrieve the pattern 
+
+				//this pattern is compatible with both java & kendo-ui, so we can use #getTextFormat() to retrieve the pattern
 				behavior.setOption("format", Options.asString(this.getTextFormat()));
 			}
 		};
@@ -60,7 +60,7 @@ public class PatternTimePickerPage extends AbstractTimePickerPage
 			public void onSubmit()
 			{
 				this.info(timepicker.getModelObjectAsString());
-			}			
+			}
 		});
 
 		form.add(new AjaxButton("button") {
@@ -73,7 +73,7 @@ public class PatternTimePickerPage extends AbstractTimePickerPage
 				this.info(timepicker.getModelObjectAsString());
 				target.add(feedbackPanel);
 			}
-			
+
 			@Override
 			protected void onError(AjaxRequestTarget target, Form<?> form)
 			{

@@ -37,7 +37,7 @@ public class TextRenderer<T> implements ITextRenderer<T>
 	{
 		this.expression = null;
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param expression the property expression that will be resolved for the bean supplied to {@link #getText(Object)}
@@ -46,7 +46,7 @@ public class TextRenderer<T> implements ITextRenderer<T>
 	{
 		this.expression = expression;
 	}
-	
+
 	/**
 	 * Gets the expression supplied in the constructor
 	 * @return null if the default constructor has been used
@@ -73,7 +73,7 @@ public class TextRenderer<T> implements ITextRenderer<T>
 		if (expression != null)
 		{
 			Object value = PropertyResolver.getValue(expression, object); //if the object is null, null is returned
-			
+
 			if (value != null)
 			{
 				return value.toString();

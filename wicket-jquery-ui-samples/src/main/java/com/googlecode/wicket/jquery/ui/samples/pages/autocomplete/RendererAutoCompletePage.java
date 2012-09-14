@@ -18,12 +18,12 @@ import com.googlecode.wicket.jquery.ui.renderer.TextRenderer;
 public class RendererAutoCompletePage extends AbstractAutoCompletePage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public RendererAutoCompletePage()
 	{
 		this.init();
 	}
-	
+
 	private void init()
 	{
 		// Model //
@@ -38,7 +38,7 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 		form.add(feedbackPanel.setOutputMarkupId(true));
 
 		// Auto-complete (note that Genre does not overrides #toString()) //
-		form.add(new AutoCompleteTextField<Genre>("autocomplete", model, new TextRenderer<Genre>("name")) {
+		form.add(new AutoCompleteTextField<Genre>("autocomplete", model, new TextRenderer<Genre>("fullName")) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -53,7 +53,7 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 					if (genre.getName().toLowerCase().contains(input.toLowerCase()))
 					{
 						choices.add(genre);
-						
+
 						if (++count == 20) { break; } //limits the number of results
 					}
 				}
@@ -66,12 +66,12 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 			{
 				Genre genre = this.getModelObject();
 
-				info(String.format("Your favorite rock genre is: %s (id #%d)", genre.getName(), genre.getId()));
+				info("Your favorite rock genre is: " + genre.getName());
 				target.add(feedbackPanel);
 			}
 		});
 	}
-	
+
 	// List of Genre(s) //
 	static final List<Genre> GENRES = Arrays.asList(
 			new Genre(1, "Black Metal"),
@@ -83,7 +83,7 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 			new Genre(7, "Power Metal"),
 			new Genre(8, "Symphonic Metal"),
 			new Genre(9, "Trash Metal"),
-			new Genre(10, "Vicking Metal")); 
+			new Genre(10, "Vicking Metal"));
 
 	// Bean //
 	static class Genre implements IClusterable
@@ -97,21 +97,26 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 
 		private final int id;
 		private final String name;
-		
+
 		public Genre(final int id, final String name)
 		{
 			this.id = id;
 			this.name = name;
 		}
-		
+
 		public int getId()
 		{
 			return this.id;
 		}
-		
+
 		public String getName()
 		{
 			return this.name;
+		}
+
+		public String getFullName()
+		{
+			return String.format("%02d - %s", this.id, this.name);
 		}
 	}
 }

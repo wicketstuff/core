@@ -8,20 +8,20 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
-import com.googlecode.wicket.jquery.ui.form.button.Button;
+import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
+import com.googlecode.wicket.jquery.ui.kendo.button.Button;
 import com.googlecode.wicket.jquery.ui.kendo.datetime.TimePicker;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
 public class DefaultTimePickerPage extends AbstractTimePickerPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public DefaultTimePickerPage()
 	{
 		Form<Void> form = new Form<Void>("form");
 		this.add(form);
-		
+
 		// FeedbackPanel //
 		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
 		form.add(feedbackPanel.setOutputMarkupId(true));
@@ -42,7 +42,7 @@ public class DefaultTimePickerPage extends AbstractTimePickerPage
 			public void onSubmit()
 			{
 				this.info(timepicker.getModelObjectAsString());
-			}			
+			}
 		});
 
 		form.add(new AjaxButton("button") {
@@ -55,7 +55,7 @@ public class DefaultTimePickerPage extends AbstractTimePickerPage
 				this.info(timepicker.getModelObjectAsString());
 				target.add(feedbackPanel);
 			}
-			
+
 			@Override
 			protected void onError(AjaxRequestTarget target, Form<?> form)
 			{

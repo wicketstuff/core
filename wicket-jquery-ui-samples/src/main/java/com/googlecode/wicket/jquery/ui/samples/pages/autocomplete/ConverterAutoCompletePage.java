@@ -18,12 +18,12 @@ import com.googlecode.wicket.jquery.ui.renderer.TextRenderer;
 public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public ConverterAutoCompletePage()
 	{
 		this.init();
 	}
-	
+
 	private void init()
 	{
 		// Form //
@@ -34,31 +34,8 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
 		form.add(feedbackPanel.setOutputMarkupId(true));
 
-		// Ajax button //
-		form.add(new AjaxButton("button") {
-			
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> unused)
-			{
-				Genre genre = form.getModelObject();
-				
-				if (genre != null)
-				{
-					info(String.format("Your favorite rock genre is: %s (id #%d)", genre.getName(), genre.getId()));
-				}
-				else
-				{
-					warn("Unknown rock genre!");
-				}
-
-				target.add(feedbackPanel);
-			}
-		});
-
 		// Auto-complete (note that Genre does not overrides #toString()) //
-		form.add(new AutoCompleteTextField<Genre>("autocomplete", form.getModel(), new TextRenderer<Genre>("name"), Genre.class) {
+		final AutoCompleteTextField<Genre> autocomplete = new AutoCompleteTextField<Genre>("autocomplete", form.getModel(), new TextRenderer<Genre>("name"), Genre.class) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -80,6 +57,32 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 
 				return choices;
 			}
+		};
+
+		form.add(autocomplete);
+
+		// Ajax button //
+		form.add(new AjaxButton("button") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> unused)
+			{
+				Genre genre = form.getModelObject();
+
+				if (genre != null)
+				{
+					info(String.format("Your favorite rock genre is: %s (id #%d)", genre.getName(), genre.getId()));
+				}
+				else
+				{
+					warn("Unlisted genre");
+					info("User input is: " + autocomplete.getInput());
+				}
+
+				target.add(feedbackPanel);
+			}
 		});
 	}
 
@@ -94,7 +97,7 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 			new Genre(7, "Power Metal"),
 			new Genre(8, "Symphonic Metal"),
 			new Genre(9, "Trash Metal"),
-			new Genre(10, "Vicking Metal")); 
+			new Genre(10, "Vicking Metal"));
 
 	// Bean //
 	static class Genre implements IClusterable
@@ -108,18 +111,18 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 
 		private final int id;
 		private final String name;
-		
+
 		public Genre(final int id, final String name)
 		{
 			this.id = id;
 			this.name = name;
 		}
-		
+
 		public int getId()
 		{
 			return this.id;
 		}
-		
+
 		public String getName()
 		{
 			return this.name;

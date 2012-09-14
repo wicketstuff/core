@@ -14,30 +14,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.renderer;
+package com.googlecode.wicket.jquery.ui.kendo.button;
 
-import org.apache.wicket.IClusterable;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.model.IModel;
 
 /**
- * Provides the capability to get a specific text (likely from a property) for a bean type, for rendering purpose
+ * Provides a Kendo-ui button based on the built-in Button
  *
- * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
+ *
  */
-public interface ITextRenderer<T> extends IClusterable
+public class Button extends org.apache.wicket.markup.html.form.Button
 {
-	/**
-	 * Gets the text that should be renderer for the supplied object
-	 * @param object the T object
-	 * @return the text
-	 */
-	String getText(T object);
+	private static final long serialVersionUID = 1L;
+	private static final String CSS_CLASS = "k-button";
 
 	/**
-	 * Gets the text that should be renderer for the supplied object, for the given property
-	 * @param object the T object
-	 * @param expression the property expression
-	 * @return the text
+	 * Constructor
+	 * @param id the markup id
 	 */
-	String getText(T object, String expression);
+	public Button(String id)
+	{
+		super(id);
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 */
+	public Button(String id, IModel<String> model)
+	{
+		super(id, model);
+	}
+
+	// Events //
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+
+		this.add(AttributeModifier.replace("class", CSS_CLASS));
+	}
 }

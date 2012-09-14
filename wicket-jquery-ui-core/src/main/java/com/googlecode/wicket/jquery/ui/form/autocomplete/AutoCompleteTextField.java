@@ -27,7 +27,6 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
-
 import com.googlecode.wicket.jquery.ui.IJQueryWidget;
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryEvent;
@@ -41,28 +40,28 @@ import com.googlecode.wicket.jquery.ui.utils.RequestCycleUtils;
 
 /**
  * Provides a jQuery auto-complete widget
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the type of the model object
  */
 public abstract class AutoCompleteTextField<T extends Serializable> extends TextField<T> implements IJQueryWidget
 {
-	private static final long serialVersionUID = 1L;	
+	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "autocomplete";
-	
+
 	/**
 	 * Behavior that will called when the user selects a value from results
 	 */
 	private JQueryAjaxBehavior selectBehavior;
-	
+
 	/**
 	 * Behavior that will be called when the user enters an input
 	 */
 	private AutoCompleteBehavior<T> sourceBehavior;
 
 	private final ITextRenderer<? super T> renderer;
-	private IConverter<T> converter = null;
+	private final IConverter<T> converter;
 
 	private final IJQueryTemplate template;
 	private JQueryTemplateBehavior templateBehavior = null;
@@ -167,7 +166,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 		this.init();
 	}
-	
+
 	/**
 	 * Initialization
 	 */
@@ -177,21 +176,21 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 		this.selectBehavior = this.newSelectBehavior(this);
 	}
 
-	
+
 	// Methods //
 	@Override
 	protected String getModelValue()
 	{
 		return this.renderer.getText(this.getModelObject()); //renderer cannot be null.
 	}
-	
+
 	/**
 	 * Gets choices matching the provided input
 	 * @param input String that represent the query
 	 * @return the list of choices
 	 */
 	protected abstract List<T> getChoices(String input);
-	
+
 	/**
 	 * Call {@link #getChoices(String)} and cache the result<br/>
 	 * Internal use only
@@ -204,43 +203,42 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 		return this.choices;
 	}
-	
-	// before enabling this method, make sure 'source' option cannot be used.
-//	public FormComponent<T> setOption(String key, Serializable value)
-//	{
-//		if (this.widgetBehavior != null)
-//		{
-//			this.widgetBehavior.setOption(key, value);
-//		}
-//		
-//		return this;
-//	}
-	
+
 	@Override
 	@SuppressWarnings("unchecked")
-	public <C> IConverter<C> getConverter(Class<C> type)
+	public final <C> IConverter<C> getConverter(Class<C> type)
 	{
 		return (IConverter<C>) this.converter;
 	}
-	
-	
+
+
 	// Events //
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
-		
+
 		this.add(this.sourceBehavior);
 		this.add(this.selectBehavior);
 		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
-		
+
 		if (this.template != null)
 		{
 			this.add(this.templateBehavior = new JQueryTemplateBehavior(this.template));
 		}
 	}
 
-	
+
+	/**
+	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
+	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
+	 *
+	 * @param behavior the {@link JQueryBehavior}
+	 */
+	protected void onConfigure(JQueryBehavior behavior)
+	{
+	}
+
 	@Override
 	protected void onComponentTag(final ComponentTag tag)
 	{
@@ -255,29 +253,28 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	{
 		if (event.getPayload() instanceof AutoCompleteTextField.SelectEvent)
 		{
-			SelectEvent payload = (SelectEvent) event.getPayload(); 
-		
+			SelectEvent payload = (SelectEvent) event.getPayload();
+
 			int index = payload.getIndex();
 			if (index < this.choices.size())
 			{
 				T choice = AutoCompleteTextField.this.choices.get(index);
-				
+
 				this.setModelObject(choice);
 				this.onSelected(payload.getTarget());
 			}
 		}
 	}
-	
+
 	/**
 	 * Triggered when the user selects an item from results that matched its input
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	protected void onSelected(AjaxRequestTarget target)
 	{
-		
 	}
 
-	
+
 	// IJQueryWidget //
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
@@ -287,10 +284,13 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onConfigure(Component component) 
+			public void onConfigure(Component component)
 			{
+//				this.setOption("delay", Duration.ONE_SECOND.getMilliseconds());
 				this.setOption("source", Options.asString(sourceBehavior.getCallbackUrl()));
 				this.setOption("select", "function( event, ui ) { " + selectBehavior.getCallbackScript() + " }");
+
+				AutoCompleteTextField.this.onConfigure(this);
 			}
 
 			@Override
@@ -299,7 +299,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 				if (templateBehavior != null)
 				{
 					// warning, the template text should be of the form <a>...</a> in order to work
-					String render = "$(function() { $('%s').data('autocomplete')._renderItem = function( ul, item ) { return $('<li></li>').data('item.autocomplete', item).append($.tmpl($('#%s').html(), item)).appendTo(ul) } });"; 
+					String render = "$(function() { $('%s').data('autocomplete')._renderItem = function( ul, item ) { return $('<li></li>').data('item.autocomplete', item).append($.tmpl($('#%s').html(), item)).appendTo(ul) } });";
 					return super.$() + String.format(render, this.selector, templateBehavior.getToken());
 				}
 
@@ -307,8 +307,8 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 			}
 		};
 	}
-	
-	
+
+
 	// Factories //
 	/**
 	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
@@ -360,7 +360,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 		return new AutoCompleteBehavior<T>(this.renderer) {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			protected List<T> getChoices(String input)
 			{
@@ -379,7 +379,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 			}
 		};
 	}
-	
+
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'select' javascript method
 	 * @param source {@link Component} to which the event returned by {@link #newEvent(AjaxRequestTarget)} will be broadcasted.
@@ -388,7 +388,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	private JQueryAjaxBehavior newSelectBehavior(Component source)
 	{
 		return new JQueryAjaxBehavior(source) {
-			
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -404,7 +404,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 			}
 		};
 	}
-	
+
 
 	// Event classes //
 	/**
@@ -418,7 +418,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 		public SelectEvent(AjaxRequestTarget target)
 		{
 			super(target);
-			
+
 			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(1) - 1;
 		}
 

@@ -12,27 +12,27 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.UrlUtils;
 
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteUtils;
-import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
-import com.googlecode.wicket.jquery.ui.form.button.Button;
+import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
+import com.googlecode.wicket.jquery.ui.kendo.button.Button;
 import com.googlecode.wicket.jquery.ui.kendo.combobox.ComboBox;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
 public class CustomComboBoxPage extends AbstractComboBoxPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public CustomComboBoxPage()
 	{
 		Form<Void> form = new Form<Void>("form");
 		this.add(form);
-		
+
 		// FeedbackPanel //
 		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
 		form.add(feedbackPanel.setOutputMarkupId(true));
 
 		// ComboBox //
-		final ComboBox<Genre> dropdown = new ComboBox<Genre>("combobox", new Model<String>(), GENRES);
-		form.add(dropdown);
+		final ComboBox<Genre> combobox = new ComboBox<Genre>("combobox", new Model<String>(), GENRES);
+		form.add(combobox);
 
 		// Buttons //
 		form.add(new Button("submit") {
@@ -42,8 +42,8 @@ public class CustomComboBoxPage extends AbstractComboBoxPage
 			@Override
 			public void onSubmit()
 			{
-				CustomComboBoxPage.this.info(dropdown);
-			}			
+				CustomComboBoxPage.this.info(combobox);
+			}
 		});
 
 		form.add(new AjaxButton("button") {
@@ -53,16 +53,16 @@ public class CustomComboBoxPage extends AbstractComboBoxPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				CustomComboBoxPage.this.info(dropdown);
+				CustomComboBoxPage.this.info(combobox);
 				target.add(feedbackPanel);
 			}
 		});
 	}
 
 
-	private void info(ComboBox<Genre> dropdown)
+	private void info(ComboBox<Genre> combobox)
 	{
-		String choice =  (String)dropdown.getModelObject();
+		String choice =  combobox.getModelObject();
 
 		this.info(choice != null ? choice : "no choice");
 	}
@@ -79,9 +79,9 @@ public class CustomComboBoxPage extends AbstractComboBoxPage
 			new Genre("Power Metal", "cover-power-metal.png"),
 			new Genre("Symphonic Metal", "cover-symphonic-metal.png"),
 			new Genre("Trash Metal", "cover-trash-metal.png"),
-			new Genre("Vicking Metal", "cover-vicking-metal.png")); 
+			new Genre("Vicking Metal", "cover-vicking-metal.png"));
 
-	
+
 	// Bean //
 	static class Genre implements IClusterable
 	{
@@ -89,18 +89,18 @@ public class CustomComboBoxPage extends AbstractComboBoxPage
 
 		private final String name;
 		private final String cover;
-		
+
 		public Genre(final String name, final String cover)
 		{
 			this.name = name;
 			this.cover = cover;
 		}
-		
+
 		public String getName()
 		{
 			return this.name;
 		}
-		
+
 		public String getCoverUrl()
 		{
 			return UrlUtils.rewriteToContextRelative("images/" + this.cover, RequestCycle.get());

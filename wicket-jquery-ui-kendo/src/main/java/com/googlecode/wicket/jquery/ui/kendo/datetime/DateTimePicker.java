@@ -31,13 +31,13 @@ import org.apache.wicket.validation.ValidationError;
 
 /**
  * Provides a date-time-picker based on a {@link DatePicker} and a {@link TimePicker}
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public class DateTimePicker extends FormComponentPanel<Date> implements ITextFormatProvider
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private DatePicker datePicker;
 	private TimePicker timePicker;
 
@@ -64,7 +64,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	public DateTimePicker(String id, String datePattern, String timePattern)
 	{
 		super(id);
-		
+
 		this.datePattern = datePattern;
 		this.timePattern = timePattern;
 	}
@@ -116,12 +116,8 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 			this.error(error);
 		}
-
-//		Date date = this.datePicker.getConvertedInput();
-//		Date time = this.timePicker.getConvertedInput();
-//		this.setConvertedInput(new Date(date.getTime() + time.getTime()));
 	}
-	
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public <C> IConverter<C> getConverter(Class<C> type)
@@ -132,16 +128,16 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 			{
 				this.converter = this.newDateConverter();
 			}
-			
+
 			return (IConverter<C>) this.converter;
 		}
 
 		return super.getConverter(type);
 	}
-	
+
 	/**
 	 * Gets a new date converter.
-	 * 
+	 *
 	 * @return the converter
 	 */
 	private IConverter<Date> newDateConverter()
@@ -149,7 +145,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 		return new DateConverter() {
 
 			private static final long serialVersionUID = 1L;
-	
+
 			@Override
 			public DateFormat getDateFormat(Locale locale)
 			{
@@ -165,11 +161,11 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 	/**
 	 * Gets a new {@link DatePicker}
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param datePattern the date pattern to be used
-	 * 
+	 *
 	 * @return the {@link DatePicker}
 	 */
 	protected DatePicker newDatePicker(String id, IModel<Date> model, String datePattern)
@@ -179,11 +175,11 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 	/**
 	 * Gets a new {@link TimePicker}
-	 * 
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param timePattern the date pattern to be used
-	 * 
+	 *
 	 * @return the {@link TimePicker}
 	 */
 	protected TimePicker newTimePicker(String id, IModel<Date> model, String timePattern)
@@ -193,7 +189,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 	/**
 	 * Gets the date pattern in use
-	 * 
+	 *
 	 * @return the pattern
 	 */
 	public final String getDatePattern()
@@ -203,7 +199,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 	/**
 	 * Gets the time pattern in use
-	 * 
+	 *
 	 * @return the pattern
 	 */
 	public final String getTimePattern()
@@ -213,7 +209,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 	/**
 	 * Returns the date-time pattern.
-	 * 
+	 *
 	 * @see org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider#getTextFormat()
 	 */
 	@Override
@@ -224,7 +220,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 
 	/**
 	 * Gets a string representation of the model object, given the date-time pattern in use.
-	 * 
+	 *
 	 * @return the model object as string
 	 */
 	public String getModelObjectAsString()

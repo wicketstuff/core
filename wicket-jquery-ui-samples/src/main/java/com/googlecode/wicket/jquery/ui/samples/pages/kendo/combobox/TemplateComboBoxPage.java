@@ -11,8 +11,8 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.string.UrlUtils;
 
-import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
-import com.googlecode.wicket.jquery.ui.form.button.Button;
+import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
+import com.googlecode.wicket.jquery.ui.kendo.button.Button;
 import com.googlecode.wicket.jquery.ui.kendo.combobox.ComboBox;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.template.IJQueryTemplate;
@@ -20,18 +20,18 @@ import com.googlecode.wicket.jquery.ui.template.IJQueryTemplate;
 public class TemplateComboBoxPage extends AbstractComboBoxPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public TemplateComboBoxPage()
 	{
 		Form<Void> form = new Form<Void>("form");
 		this.add(form);
-		
+
 		// FeedbackPanel //
 		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
 		form.add(feedbackPanel.setOutputMarkupId(true));
 
 		// ComboBox //
-		final ComboBox<Genre> dropdown = new ComboBox<Genre>("combobox", new Model<String>(), GENRES) {
+		final ComboBox<Genre> combobox = new ComboBox<Genre>("combobox", new Model<String>(), GENRES) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -39,7 +39,7 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 			protected IJQueryTemplate newTemplate()
 			{
 				return new IJQueryTemplate() {
-					
+
 					private static final long serialVersionUID = 1L;
 
 					@Override
@@ -67,8 +67,8 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 			}
 		};
 
-		form.add(dropdown);
-		
+		form.add(combobox);
+
 		// Buttons //
 		form.add(new Button("submit") {
 
@@ -77,8 +77,8 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 			@Override
 			public void onSubmit()
 			{
-				TemplateComboBoxPage.this.info(dropdown);
-			}			
+				TemplateComboBoxPage.this.info(combobox);
+			}
 		});
 
 		form.add(new AjaxButton("button") {
@@ -88,16 +88,16 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				TemplateComboBoxPage.this.info(dropdown);
+				TemplateComboBoxPage.this.info(combobox);
 				target.add(feedbackPanel);
 			}
 		});
 	}
 
-	private void info(ComboBox<Genre> dropdown)
+	private void info(ComboBox<Genre> combobox)
 	{
-		String choice =  dropdown.getModelObject();
-		
+		String choice =  combobox.getModelObject();
+
 		this.info(choice != null ? choice : "no choice");
 	}
 
@@ -113,9 +113,9 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 			new Genre("Power Metal", "cover-power-metal.png"),
 			new Genre("Symphonic Metal", "cover-symphonic-metal.png"),
 			new Genre("Trash Metal", "cover-trash-metal.png"),
-			new Genre("Vicking Metal", "cover-vicking-metal.png")); 
+			new Genre("Vicking Metal", "cover-vicking-metal.png"));
 
-	
+
 	// Bean //
 	static class Genre implements IClusterable
 	{
@@ -123,18 +123,18 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 
 		private final String name;
 		private final String cover;
-		
+
 		public Genre(final String name, final String cover)
 		{
 			this.name = name;
 			this.cover = cover;
 		}
-		
+
 		public String getName()
 		{
 			return this.name;
 		}
-		
+
 		public String getCoverUrl()
 		{
 			return UrlUtils.rewriteToContextRelative("images/" + this.cover, RequestCycle.get());

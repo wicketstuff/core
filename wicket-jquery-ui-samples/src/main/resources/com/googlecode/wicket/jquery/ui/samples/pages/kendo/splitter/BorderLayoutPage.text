@@ -3,7 +3,7 @@ This sample shows how to use the <code>BorderLayer</code> based on Kendo UI <cod
 You may override <code>getVerticalPanes()</code> and <code>getHorizontalPanes()</code>, which return panes definitions in a JSON format.<br/>
 
 <h4>Note:</h4>
-The <code>BorderLayout</code> IS a <code>WebMarkupContainer</code>. If you wish to apply a <code>BorderLayout</code> on an existing <code>Page</code> or an existing <code>Panel</code>, you can implement the <code>IBorderLayout</code> interface.
+The <code>BorderLayout</code> IS-A <code>WebMarkupContainer</code>. If you wish to apply a <code>BorderLayout</code> on an existing <code>Page</code> or an existing <code>Panel</code>, you may implement the <code>IBorderLayout</code> interface.
 
 <h4>Mode info here</h4>
 <a href="http://demos.kendoui.com/web/splitter/index.html">http://demos.kendoui.com/web/splitter/index.html</a>

@@ -6,15 +6,15 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
-import com.googlecode.wicket.jquery.ui.form.button.Button;
+import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
+import com.googlecode.wicket.jquery.ui.kendo.button.Button;
 import com.googlecode.wicket.jquery.ui.kendo.datetime.DatePicker;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
 public class KendoDatePickerPage extends AbstractTimePickerPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public KendoDatePickerPage()
 	{
 		final Form<Date> form = new Form<Date>("form");
@@ -36,7 +36,7 @@ public class KendoDatePickerPage extends AbstractTimePickerPage
 			public void onSubmit()
 			{
 				this.info(datepicker.getModelObjectAsString());
-			}			
+			}
 		});
 
 		form.add(new AjaxButton("button") {

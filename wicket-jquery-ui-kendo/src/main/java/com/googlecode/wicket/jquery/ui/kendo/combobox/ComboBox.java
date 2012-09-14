@@ -16,10 +16,7 @@
  */
 package com.googlecode.wicket.jquery.ui.kendo.combobox;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
@@ -35,7 +32,7 @@ import com.googlecode.wicket.jquery.ui.template.IJQueryTemplate;
 /**
  * Provides a Kendo UI ComboBox widget.<br/>
  * It should be created on a HTML &lt;input type="text" /&gt; element
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the type of the model object
@@ -44,12 +41,12 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoComboBox";
-	
+
 	private final IModel<List<? extends T>> choices;
 	private final ComboBoxRenderer<? super T> renderer;
 	private final IJQueryTemplate template;
 	private KendoTemplateBehavior templateBehavior = null;
-	
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -90,12 +87,12 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	public ComboBox(String id, IModel<List<? extends T>> choices, ComboBoxRenderer<? super T> renderer)
 	{
 		super(id);
-		
+
 		this.choices = choices;
 		this.renderer = renderer;
 		this.template = this.newTemplate();
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -140,19 +137,19 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	public ComboBox(String id, IModel<String> model, IModel<List<? extends T>> choices, ComboBoxRenderer<? super T> renderer)
 	{
 		super(id, model);
-		
+
 		this.choices = choices;
 		this.renderer = renderer;
 		this.template = this.newTemplate();
 	}
-	
-	
+
+
 	// Events //
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
-		
+
 		this.add(JQueryWidget.newWidgetBehavior(this));
 
 		if (this.template != null)
@@ -162,19 +159,16 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	}
 
 	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering 
+	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
 	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 * 
+	 *
 	 * @param behavior the {@link JQueryBehavior}
 	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
 		// set template (if any) //
-		Set<String> properties = new HashSet<String>();
-		
 		if (this.template != null)
 		{
-			properties.addAll(this.template.getTextProperties());
 			behavior.setOption("template", String.format("$('#%s').html()", this.templateBehavior.getToken()));
 		}
 
@@ -183,15 +177,15 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 		behavior.setOption("dataValueField", Options.asString(this.renderer.getValueField()));
 
 		StringBuilder dataSource = new StringBuilder("[");
-		
+
 		List<? extends T> list = this.choices.getObject();
-		
+
 		if (list != null)
 		{
 			for (int index = 0 ; index < list.size(); index++)
 			{
 				T object = list.get(index);
-				
+
 				if (index > 0)
 				{
 					dataSource.append(", ");
@@ -202,10 +196,13 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 				dataSource.append(", ");
 				dataSource.append(this.renderer.getValueField()).append(": '").append(this.renderer.getValue(object)).append("'");
 
-				for (String property : properties)
+				if (this.template != null)
 				{
-					dataSource.append(", ");
-					dataSource.append(property).append(": '").append(this.renderer.getText(object, property)).append("'");
+					for (String property : this.template.getTextProperties())
+					{
+						dataSource.append(", ");
+						dataSource.append(property).append(": '").append(this.renderer.getText(object, property)).append("'");
+					}
 				}
 
 				dataSource.append(" }");
@@ -213,7 +210,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 		}
 
 		dataSource.append("]");
-		
+
 		behavior.setOption("dataSource", dataSource.toString());
 	}
 
@@ -232,7 +229,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 			}
 		};
 	}
-	
+
 	// Factories //
 	/**
 	 * Gets a new {@link IJQueryTemplate} to customize the rendering<br/>
