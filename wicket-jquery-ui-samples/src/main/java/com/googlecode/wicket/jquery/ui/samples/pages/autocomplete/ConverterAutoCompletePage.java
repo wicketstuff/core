@@ -59,12 +59,18 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 			}
 		};
 
-		form.add(autocomplete);
+		form.add(autocomplete.setRequired(true));
 
 		// Ajax button //
 		form.add(new AjaxButton("button") {
 
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form)
+			{
+				target.add(feedbackPanel);
+			}
 
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> unused)

@@ -30,7 +30,7 @@ public class RendererComboBoxPage extends AbstractComboBoxPage
 
 		// ComboBox //
 		final ComboBox<Genre> dropdown = new ComboBox<Genre>("combobox", new Model<String>(), GENRES, new ComboBoxRenderer<Genre>("name", "id"));
-		form.add(dropdown);
+		form.add(dropdown); //.setRequired(true)
 
 		// Buttons //
 		form.add(new Button("submit") {

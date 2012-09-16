@@ -27,6 +27,7 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
+
 import com.googlecode.wicket.jquery.ui.IJQueryWidget;
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryEvent;
@@ -206,9 +207,14 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <C> IConverter<C> getConverter(Class<C> type)
+	public <C> IConverter<C> getConverter(Class<C> type)
 	{
-		return (IConverter<C>) this.converter;
+		if (type != null && type.isAssignableFrom(this.getType()))
+		{
+			return (IConverter<C>) this.converter;
+		}
+
+		return super.getConverter(type);
 	}
 
 

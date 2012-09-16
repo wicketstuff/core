@@ -32,7 +32,7 @@ public class CustomComboBoxPage extends AbstractComboBoxPage
 
 		// ComboBox //
 		final ComboBox<Genre> combobox = new ComboBox<Genre>("combobox", new Model<String>(), GENRES);
-		form.add(combobox);
+		form.add(combobox); //.setRequired(true)
 
 		// Buttons //
 		form.add(new Button("submit") {

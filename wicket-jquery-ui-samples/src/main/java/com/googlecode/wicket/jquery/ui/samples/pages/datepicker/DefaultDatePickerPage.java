@@ -15,7 +15,7 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class DefaultDatePickerPage extends AbstractDatePickerPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public DefaultDatePickerPage()
 	{
 		this.init();
@@ -30,7 +30,7 @@ public class DefaultDatePickerPage extends AbstractDatePickerPage
 		form.add(new JQueryFeedbackPanel("feedback"));
 
 		// Date Picker //
-		form.add(new DatePicker("datepicker", form.getModel()));
+		form.add(new DatePicker("datepicker", form.getModel()).setRequired(true));
 
 		// Buttons //
 		form.add(new Button("submit") {
@@ -41,7 +41,7 @@ public class DefaultDatePickerPage extends AbstractDatePickerPage
 			public void onSubmit()
 			{
 				DefaultDatePickerPage.this.info(this, form);
-			}			
+			}
 		});
 
 		form.add(new AjaxButton("button") {

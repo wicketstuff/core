@@ -49,9 +49,9 @@ abstract class AutoCompleteBehavior<T> extends AbstractDefaultAjaxBehavior
 	}
 
 	/**
-	 *
-	 * @param input
-	 * @return
+	 * Gets choices matching the provided input
+	 * @param input String that represent the query
+	 * @return the list of choices
 	 */
 	protected abstract List<T> getChoices(String input);
 

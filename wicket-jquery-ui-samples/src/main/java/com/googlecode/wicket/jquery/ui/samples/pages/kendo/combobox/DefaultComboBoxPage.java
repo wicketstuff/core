@@ -29,7 +29,7 @@ public class DefaultComboBoxPage extends AbstractComboBoxPage
 
 		// ComboBox //
 		final ComboBox<String> combobox = new ComboBox<String>("combobox", new Model<String>(), GENRES); // new WildcardListModel(GENRES) can be used (but not ListModel)
-		form.add(combobox);
+		form.add(combobox); //.setRequired(true)
 
 		// Buttons //
 		form.add(new Button("submit") {
