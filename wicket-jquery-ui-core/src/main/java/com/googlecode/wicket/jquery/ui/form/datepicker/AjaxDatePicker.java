@@ -33,15 +33,15 @@ import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxPostBehavior;
 /**
  * Provides a jQuery date-picker based on a {@link DateTextField}<br/>
  * This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'onSelect' javascript method is called.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public class AjaxDatePicker extends DatePicker
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private JQueryAjaxBehavior selectBehavior;
-	
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -62,7 +62,7 @@ public class AjaxDatePicker extends DatePicker
 		super(id, model);
 		this.init();
 	}
-	
+
 	/**
 	 * Initialization
 	 */
@@ -71,24 +71,24 @@ public class AjaxDatePicker extends DatePicker
 		this.selectBehavior = this.newSelectBehavior(this);
 	}
 
-	
+
 	// Events //
 	@Override
 	protected void onInitialize()
 	{
-		super.onInitialize();  
+		super.onInitialize();
 
 		this.add(this.selectBehavior);
 	}
-	
+
 	@Override
 	protected void onConfigure(JQueryBehavior behavior)
 	{
 		super.onConfigure(behavior);
-		
+
 		behavior.setOption("onSelect", "function( dateText, inst ) { " + this.selectBehavior.getCallbackScript() + "}");
 	}
-	
+
 	@Override
 	public void onEvent(IEvent<?> event)
 	{
@@ -100,7 +100,7 @@ public class AjaxDatePicker extends DatePicker
 			this.onValueChanged(payload.getTarget());
 		}
 	}
-	
+
 	/**
 	 * Triggers when the value has changed
 	 * @param target the {@link AjaxRequestTarget}
@@ -109,7 +109,7 @@ public class AjaxDatePicker extends DatePicker
 	{
 	}
 
-	
+
 	// Factories (Ajax behavior) //
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'onSelect' javascript method
@@ -119,7 +119,7 @@ public class AjaxDatePicker extends DatePicker
 	private JQueryAjaxPostBehavior newSelectBehavior(FormComponent<?> component)
 	{
 		return new JQueryAjaxPostBehavior(component) {
-			
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -129,17 +129,17 @@ public class AjaxDatePicker extends DatePicker
 			}
 		};
 	}
-	
-	
+
+
 	// Event class //
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxPostBehavior} 'select' callback
 	 */
-	public class SelectEvent extends JQueryEvent
+	class SelectEvent extends JQueryEvent
 	{
 		public SelectEvent(AjaxRequestTarget target)
 		{
 			super(target);
 		}
-	}	
+	}
 }

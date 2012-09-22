@@ -1,0 +1,8 @@
+RangeDatePickerTextField is a <code>FormComponent</code> based on a <code>TextField</code> and a <code>RangeDatePicker</code>;<br/>
+The model object of this component is a <code>DateRange</code>.<br/>
+<br/>
+The <code>TextField</code>'s date format and separator can be customized by overriding <code>#newDateFormat()</code> and <code>#getSeparator()</code>.<br/>
+
+<h4>Since</h4>
+wicket-jquery-ui-plugin-1.2.3-SNAPSHOT<br/>
+wicket-jquery-ui-plugin-6.0.1-SNAPSHOT
