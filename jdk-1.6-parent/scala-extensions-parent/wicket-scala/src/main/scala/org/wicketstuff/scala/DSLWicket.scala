@@ -42,7 +42,9 @@ trait DSLWicket {
   def multiLineLabel[T](id: String, value: String): MultiLineLabel = { val label = new MultiLineLabel(id, value); add(label); label }
   // Label
   def label[T](id: String, model: IModel[T] = null): Label = { val label = new Label(id, model); add(label); label }
+  def labelf[T](id: String, gtr: ⇒ String): Label = { val label = new SLabel(id, gtr); add(label); label }
   def label[T](id: String, value: String): Label = { val label = new Label(id, value); add(label); label }
+
   implicit def ser2model[S <: Serializable](ser: S): IModel[S] = Model.of(ser)
   def textField[T](id: String)(implicit m: scala.reflect.Manifest[T]): STextField[T] = {
     val field = new TextField[T](id) with STextField[T]; field.setType(m.erasure); add(field); field
