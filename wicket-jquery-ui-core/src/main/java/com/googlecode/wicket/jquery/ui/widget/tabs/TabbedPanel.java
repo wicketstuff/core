@@ -104,7 +104,7 @@ public class TabbedPanel extends JQueryPanel
 					final String newId = panels.newChildId();
 
 					// link (tab) //
-					WebMarkupContainer link = this.newLink(tab);
+					WebMarkupContainer link = this.newLink("link", tab);
 					link.add(AttributeModifier.replace("href", "#" + newId));
 					link.add(new Label("title", tab.getTitle()).setRenderBodyOnly(true));
 					item.add(link);
@@ -120,14 +120,14 @@ public class TabbedPanel extends JQueryPanel
 			 * @param tab the ITab
 			 * @return a WebMarkupContainer that represent the tab link
 			 */
-			private WebMarkupContainer newLink(ITab tab)
+			private WebMarkupContainer newLink(String id, ITab tab)
 			{
 				if (tab instanceof AjaxTab)
 				{
-					return ((AjaxTab)tab).newLink("link");
+					return ((AjaxTab)tab).newLink(id);
 				}
 
-				return new WebMarkupContainer("link");
+				return new WebMarkupContainer(id);
 			}
 		});
 	}
@@ -139,7 +139,7 @@ public class TabbedPanel extends JQueryPanel
 	{
 		super.onInitialize();
 
-		this.add(this.newWidgetBehavior(JQueryWidget.getSelector(this)));
+		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 
 	/**

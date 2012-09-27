@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.ui.ajax;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxCallDecorator;
@@ -74,14 +75,14 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 			//do something with the target
 		}
 	}
-	
+
 	protected void onInitialize()
 	{
 		super.onInitialize();
-		
+
 		this.add(this.ajaxBehavior);
 		this.add(JQueryWidget.newWidgetBehavior(this));
-	}	
+	}
 
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
@@ -97,7 +98,7 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 	}
 }
  * </pre>
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -107,7 +108,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 
 	private final Component source;
 	private final Duration duration;
-	
+
 	/**
 	 * Constructor
 	 * @param source {@link Component} to which the event - returned by {@link #newEvent(AjaxRequestTarget)} - will be broadcasted.
@@ -154,6 +155,14 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	}
 
 	/**
+	 * @param target the {@link AjaxRequestTarget}
+	 * @return the {@link JQueryEvent} to be broadcasted to the source when the behavior will respond
+	 */
+	protected abstract JQueryEvent newEvent(AjaxRequestTarget target);
+
+
+	// wicket 1.5.x specific //
+	/**
 	 * Promotes visibility
 	 */
 	@Override
@@ -161,7 +170,16 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	{
 		return super.getCallbackScript();
 	}
-	
+
+	/**
+	 * TODO javadoc
+	 * @return
+	 */
+	public String getCallbackFunction()
+	{
+		throw new WicketRuntimeException("Not imlemented");
+	}
+
 	@Override
 	protected IAjaxCallDecorator getAjaxCallDecorator()
 	{
@@ -169,13 +187,14 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 		{
 			return new AjaxCallThrottlingDecorator("throttle", this.duration);
 		}
-		
+
 		return super.getAjaxCallDecorator();
 	}
 
-	/**
-	 * @param target the {@link AjaxRequestTarget}
-	 * @return the {@link JQueryEvent} to be broadcasted to the source when the behavior will respond
-	 */
-	protected abstract JQueryEvent newEvent(AjaxRequestTarget target);	
+	@Override
+	public String toString()
+	{
+		return this.getCallbackFunction();
+	}
+
 }
