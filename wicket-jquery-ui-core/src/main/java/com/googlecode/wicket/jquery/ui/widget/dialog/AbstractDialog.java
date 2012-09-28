@@ -120,7 +120,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 			this.add(this.newButtonAjaxBehavior(button));
 		}
 
-		this.add(this.widgetBehavior = this.newWidgetBehavior(JQueryWidget.getSelector(this))); //warning: ButtonAjaxBehavior(s) should be sets at this point as there are used on bind()
+		this.add(this.widgetBehavior = JQueryWidget.newWidgetBehavior(this)); //warning: ButtonAjaxBehavior(s) should be set at this point as there are used on bind()
 	}
 
 

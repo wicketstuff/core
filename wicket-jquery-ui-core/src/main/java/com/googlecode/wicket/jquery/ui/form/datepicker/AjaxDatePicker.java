@@ -40,7 +40,7 @@ public class AjaxDatePicker extends DatePicker
 {
 	private static final long serialVersionUID = 1L;
 
-	private JQueryAjaxBehavior selectBehavior;
+	private JQueryAjaxBehavior onSelectBehavior;
 
 	/**
 	 * Constructor
@@ -68,7 +68,7 @@ public class AjaxDatePicker extends DatePicker
 	 */
 	private void init()
 	{
-		this.selectBehavior = this.newSelectBehavior(this);
+		this.onSelectBehavior = this.newOnSelectBehavior(this);
 	}
 
 
@@ -78,7 +78,7 @@ public class AjaxDatePicker extends DatePicker
 	{
 		super.onInitialize();
 
-		this.add(this.selectBehavior);
+		this.add(this.onSelectBehavior);
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class AjaxDatePicker extends DatePicker
 	{
 		super.onConfigure(behavior);
 
-		behavior.setOption("onSelect", "function( dateText, inst ) { " + this.selectBehavior.getCallbackScript() + "}");
+		behavior.setOption("onSelect", this.onSelectBehavior.getCallbackFunction());
 	}
 
 	@Override
@@ -116,11 +116,17 @@ public class AjaxDatePicker extends DatePicker
 	 * @param component the {@link FormComponent}
 	 * @return the {@link JQueryAjaxPostBehavior}
 	 */
-	private JQueryAjaxPostBehavior newSelectBehavior(FormComponent<?> component)
+	private JQueryAjaxPostBehavior newOnSelectBehavior(FormComponent<?> component)
 	{
 		return new JQueryAjaxPostBehavior(component) {
 
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function( dateText, inst ) { " + this.getCallbackScript() + " }";
+			}
 
 			@Override
 			protected JQueryEvent newEvent(AjaxRequestTarget target)

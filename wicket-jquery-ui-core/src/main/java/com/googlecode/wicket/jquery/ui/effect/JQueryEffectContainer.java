@@ -28,14 +28,14 @@ import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
 
 /**
  * Provides a {@link WebMarkupContainer} on which effect can be played
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
 public class JQueryEffectContainer extends WebMarkupContainer
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private JQueryAjaxBehavior callback;
 	private JQueryEffectBehavior widgetBehavior;
 
@@ -46,11 +46,11 @@ public class JQueryEffectContainer extends WebMarkupContainer
 	public JQueryEffectContainer(String id)
 	{
 		super(id);
-		
+
 		this.init();
 	}
 
-	
+
 	// Methods //
 
 	/**
@@ -59,7 +59,7 @@ public class JQueryEffectContainer extends WebMarkupContainer
 	private void init()
 	{
 		this.callback = new JQueryAjaxBehavior(this) {
-			
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -87,7 +87,7 @@ public class JQueryEffectContainer extends WebMarkupContainer
 	{
 		target.appendJavaScript(this.widgetBehavior.$(effect));
 	}
-	
+
 	/**
 	 * Shows the container by playing the 'fadeIn' effect.
 	 * @param target the {@link AjaxRequestTarget}
@@ -97,7 +97,7 @@ public class JQueryEffectContainer extends WebMarkupContainer
 		JQueryBehavior behavior = new JQueryBehavior(JQueryWidget.getSelector(this), "fadeIn");
 		target.appendJavaScript(behavior.toString());
 	}
-	
+
 	/**
 	 * Hides the container by playing the 'fadeOut' effect.
 	 * @param target the {@link AjaxRequestTarget}
@@ -108,13 +108,13 @@ public class JQueryEffectContainer extends WebMarkupContainer
 		target.appendJavaScript(behavior.toString());
 	}
 
-	
+
 	// Events //
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
-		
+
 		this.add(this.callback);
 		this.add(this.widgetBehavior = this.newWidgetBehavior(JQueryWidget.getSelector(this))); //cannot be in ctor as the markupId may be set manually afterward
 	}
@@ -124,19 +124,19 @@ public class JQueryEffectContainer extends WebMarkupContainer
 	{
 		if (event.getPayload() instanceof CallbackEvent)
 		{
-			JQueryEvent payload = (JQueryEvent) event.getPayload();  
+			JQueryEvent payload = (JQueryEvent) event.getPayload();
 			this.onComplete(payload.getTarget());
 		}
 	}
-	
+
 	/**
 	 * Triggered when the effect completes
 	 */
 	protected void onComplete(AjaxRequestTarget target)
 	{
 	}
-	
-	
+
+
 	// Not IJQueryWidget //
 	/**
 	 * Gets a new {@link JQueryEffectBehavior}
@@ -146,7 +146,7 @@ public class JQueryEffectContainer extends WebMarkupContainer
 	public JQueryEffectBehavior newWidgetBehavior(String selector)
 	{
 		return new JQueryEffectBehavior(selector) {
-			
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -168,5 +168,5 @@ public class JQueryEffectContainer extends WebMarkupContainer
 		{
 			super(target);
 		}
-	}	
+	}
 }

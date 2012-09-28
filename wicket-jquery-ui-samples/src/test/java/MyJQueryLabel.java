@@ -36,6 +36,12 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 			private static final long serialVersionUID = 1L;
 
 			@Override
+			public String getCallbackFunction()
+			{
+				return "function(event, ui) { " + this.getCallbackScript() + " }";
+			}
+
+			@Override
 			protected JQueryEvent newEvent(AjaxRequestTarget target)
 			{
 				return new MyEvent(target);
@@ -53,15 +59,15 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 			// do something with the target
 		}
 	}
-	
+
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
-		
+
 		this.add(this.ajaxBehavior);
 		this.add(JQueryWidget.newWidgetBehavior(this));
-	}	
+	}
 
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
@@ -73,7 +79,7 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 			@Override
 			public void onConfigure(Component component)
 			{
-				this.setOption("jqueryevent", "function( event, ui ) { " + ajaxBehavior.getCallbackScript() + " }");
+				this.setOption("jqueryevent", ajaxBehavior.getCallbackFunction());
 			}
 		};
 	}

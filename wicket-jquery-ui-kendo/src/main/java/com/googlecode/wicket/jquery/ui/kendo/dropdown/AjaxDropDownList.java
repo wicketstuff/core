@@ -33,7 +33,7 @@ import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEven
 /**
  * Provides a Kendo UI DropDownList widget.<br/>
  * This ajax version will post the component, using a {@link JQueryAjaxChangeBehavior}, when the 'change' javascript method is called.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  * @param <T>
@@ -41,7 +41,7 @@ import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEven
 public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionChangedListener
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private JQueryAjaxBehavior changeBehavior;
 
 	/**
@@ -140,14 +140,14 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	{
 		super(id, model, choices, renderer);
 	}
-	
+
 	// Events //
 	@Override
 	protected void onInitialize()
 	{
-		super.onInitialize();  
+		super.onInitialize();
 
-		this.add(this.changeBehavior = new JQueryAjaxChangeBehavior(this));
+		this.add(this.changeBehavior = this.newOnChangeBehavior());
 	}
 
 	@Override
@@ -155,7 +155,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	{
 		super.onConfigure(behavior);
 
-		behavior.setOption("change", "function( event, ui ) { " + this.changeBehavior.getCallbackScript() + "}");
+		behavior.setOption("change", this.changeBehavior.getCallbackFunction());
 	}
 
 	@Override
@@ -166,12 +166,27 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 			ChangeEvent payload = (ChangeEvent) event.getPayload();
 
 			this.onSelectionChanged();
-			this.onSelectionChanged(payload.getTarget(), this.getForm()); 
+			this.onSelectionChanged(payload.getTarget(), this.getForm());
 		}
 	}
 
 	@Override
 	public void onSelectionChanged(AjaxRequestTarget target, Form<?> form)
 	{
+	}
+
+	// Factories //
+	private JQueryAjaxChangeBehavior newOnChangeBehavior()
+	{
+		return new JQueryAjaxChangeBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function(event, ui) { " + this.getCallbackScript() + " }";
+			}
+		};
 	}
 }

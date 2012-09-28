@@ -31,7 +31,7 @@ import org.apache.wicket.IClusterable;
 /**
  * Provides a wrapper on a {@link Map} that will contains jQuery behavior options (key/value).<br/>
  * the {@link #toString()} methods returns the JSON representation of the options.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -70,9 +70,9 @@ public class Options implements IClusterable
 		return Options.asString(df.format(date));
 	}
 
-	
+
 	private final Map<String, Serializable> map;
-	
+
 	/**
 	 * Constructor.
 	 */
@@ -80,10 +80,10 @@ public class Options implements IClusterable
 	{
 		this.map = new HashMap<String, Serializable>();
 	}
-	
+
 	/**
 	 * Constructor which adds an options defined by a key/value pair.
-	 * 
+	 *
 	 * @param key
 	 * @param value
 	 */
@@ -92,9 +92,9 @@ public class Options implements IClusterable
 		this();
 		this.set(key, value);
 	}
-	
+
 	/**
-	 * Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key. 
+	 * Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key.
 	 * @param key the key whose associated value is to be returned
 	 * @return the value to which the specified key is mapped, or null if this map contains no mapping for the key
 	 */
@@ -102,11 +102,11 @@ public class Options implements IClusterable
 	{
 		return this.map.get(key);
 	}
-	
+
 	/**
 	 * Adds or replace an options defined by a key/value pair.<br/>
 	 * If for a given key, the value is null, then the pair is removed.
-	 * 
+	 *
 	 * @param key - key with which the specified value is to be associated
 	 * @param value - value to be associated with the specified key
 	 * @return this
@@ -121,10 +121,10 @@ public class Options implements IClusterable
 		{
 			this.map.remove(key); //TODO: to test, when the key does not exists
 		}
-		
+
 		return this;
 	}
-	
+
 	/**
 	 * Gets a read-only entry set of options
 	 * @return an unmodifiable set of internal map entries
@@ -133,7 +133,7 @@ public class Options implements IClusterable
 	{
 		return Collections.unmodifiableSet(this.map.entrySet());
 	}
-	
+
 	/**
 	 * Gets the JSON representation of the Options<br/>
 	 */
@@ -141,7 +141,7 @@ public class Options implements IClusterable
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder("{");
-		
+
 		int i = 0;
 		for (Entry<String, Serializable> entry : this.map.entrySet())
 		{

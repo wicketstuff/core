@@ -35,15 +35,15 @@ import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEven
 /**
  * Provides a jQuery range slider based on a {@link FormComponentPanel}
  * This ajax version will post the {@link Component}, using a {@link JQueryAjaxPostBehavior}, when the 'change' javascript method is called.
- *  
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public class AjaxRangeSlider extends RangeSlider implements IValueChangedListener
 {
 	private static final long serialVersionUID = 1L;
 
-	private JQueryAjaxBehavior changeBehavior;
-	
+	private JQueryAjaxBehavior onChangeBehavior;
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -52,7 +52,7 @@ public class AjaxRangeSlider extends RangeSlider implements IValueChangedListene
 	{
 		super(id);
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -62,7 +62,7 @@ public class AjaxRangeSlider extends RangeSlider implements IValueChangedListene
 	{
 		super(id, model);
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -73,7 +73,7 @@ public class AjaxRangeSlider extends RangeSlider implements IValueChangedListene
 	{
 		super(id, model, label);
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -90,9 +90,9 @@ public class AjaxRangeSlider extends RangeSlider implements IValueChangedListene
 	@Override
 	protected void onInitialize()
 	{
-		super.onInitialize();  
+		super.onInitialize();
 
-		this.add(this.changeBehavior = new JQueryAjaxChangeBehavior(this, this.lower, this.upper));
+		this.add(this.onChangeBehavior = this.newOnChangeBehavior());
 	}
 
 	@Override
@@ -100,9 +100,9 @@ public class AjaxRangeSlider extends RangeSlider implements IValueChangedListene
 	{
 		super.onConfigure(behavior);
 
-		behavior.setOption("change", "function( event, ui ) { " + this.changeBehavior.getCallbackScript() + "}");
+		behavior.setOption("change", this.onChangeBehavior.getCallbackFunction());
 	}
-	
+
 	@Override
 	public void onEvent(IEvent<?> event)
 	{
@@ -137,5 +137,20 @@ public class AjaxRangeSlider extends RangeSlider implements IValueChangedListene
 	 */
 	protected void onError(AjaxRequestTarget target)
 	{
+	}
+
+	// Factories //
+	private JQueryAjaxChangeBehavior newOnChangeBehavior()
+	{
+		return new JQueryAjaxChangeBehavior(this, this.lower, this.upper) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function(event, ui) { " + this.getCallbackScript() + " }";
+			}
+		};
 	}
 }

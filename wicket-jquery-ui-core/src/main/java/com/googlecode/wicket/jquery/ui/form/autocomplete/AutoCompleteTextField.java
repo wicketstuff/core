@@ -54,7 +54,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	/**
 	 * Behavior that will called when the user selects a value from results
 	 */
-	private JQueryAjaxBehavior selectBehavior;
+	private JQueryAjaxBehavior onSelectBehavior;
 
 	/**
 	 * Behavior that will be called when the user enters an input
@@ -114,8 +114,6 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 		this.renderer = renderer;
 		this.template = this.newTemplate();
 		this.converter = this.newConverter();
-
-		this.init();
 	}
 
 	/**
@@ -164,17 +162,6 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 		this.renderer = renderer;
 		this.template = this.newTemplate();
 		this.converter = this.newConverter();
-
-		this.init();
-	}
-
-	/**
-	 * Initialization
-	 */
-	private void init()
-	{
-		this.sourceBehavior = this.newAutoCompleteBehavior();
-		this.selectBehavior = this.newSelectBehavior(this);
 	}
 
 
@@ -224,8 +211,8 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	{
 		super.onInitialize();
 
-		this.add(this.sourceBehavior);
-		this.add(this.selectBehavior);
+		this.add(this.sourceBehavior = this.newAutoCompleteBehavior());
+		this.add(this.onSelectBehavior = this.newSelectBehavior());
 		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
 
 		if (this.template != null)
@@ -292,11 +279,11 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 			@Override
 			public void onConfigure(Component component)
 			{
-//				this.setOption("delay", Duration.ONE_SECOND.getMilliseconds());
-				this.setOption("source", Options.asString(sourceBehavior.getCallbackUrl()));
-				this.setOption("select", "function( event, ui ) { " + selectBehavior.getCallbackScript() + " }");
-
 				AutoCompleteTextField.this.onConfigure(this);
+
+//				this.setOption("delay", Duration.ONE_SECOND.getMilliseconds());
+				this.setOption("source", Options.asString(AutoCompleteTextField.this.sourceBehavior.getCallbackUrl()));
+				this.setOption("select", AutoCompleteTextField.this.onSelectBehavior.getCallbackFunction());
 			}
 
 			@Override
@@ -391,11 +378,17 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	 * @param source {@link Component} to which the event returned by {@link #newEvent(AjaxRequestTarget)} will be broadcasted.
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	private JQueryAjaxBehavior newSelectBehavior(Component source)
+	private JQueryAjaxBehavior newSelectBehavior()
 	{
-		return new JQueryAjaxBehavior(source) {
+		return new JQueryAjaxBehavior(this) {
 
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function(event, ui) { " + this.getCallbackScript() + " }";
+			}
 
 			@Override
 			public CharSequence getCallbackScript()

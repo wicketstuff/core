@@ -29,7 +29,7 @@ import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEven
 
 /**
  * Provides a jQuery progress-bar based on a {@link JQueryContainer}
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  * @since 1.0
  */
@@ -39,9 +39,9 @@ public class ProgressBar extends JQueryContainer
 	private static final String METHOD = "progressbar";
 	private static final int MIN = 0;
 	private static final int MAX = 100;
-	
-	private JQueryAjaxBehavior changeBehavior = null;
-	
+
+	private JQueryAjaxBehavior onChangeBehavior = null;
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -62,21 +62,21 @@ public class ProgressBar extends JQueryContainer
 		super(id, model);
 		this.init();
 	}
-	
+
 //	public ProgressBar(String id, IModel<Integer> model, Duration duration)
 //	{
 //		super(id, model);
 //		this.init();
 //	}
-	
+
 	/**
 	 * Initialization
 	 */
 	private void init()
 	{
-		this.changeBehavior = this.newChangeBehavior(this); 
+		this.onChangeBehavior = this.newOnChangeBehavior();
 	}
-	
+
 	/* Getters / Setters */
 	/**
 	 * Gets the model (wrapping the value)
@@ -111,15 +111,15 @@ public class ProgressBar extends JQueryContainer
 		{
 			value = MAX;
 		}
-		
+
 		this.setDefaultModelObject(value);
 
 //		else if (MIN <= value && value <= MAX)
 //		{
 //		}
 	}
-	
-	
+
+
 	/* Ajax Methods */
 	/**
 	 * Increments the progress-bar value by 1
@@ -142,7 +142,7 @@ public class ProgressBar extends JQueryContainer
 	}
 
 	/**
-	 * Decrements the progress-bar value by 1 
+	 * Decrements the progress-bar value by 1
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public final void backward(AjaxRequestTarget target)
@@ -177,10 +177,10 @@ public class ProgressBar extends JQueryContainer
 	protected void onInitialize()
 	{
 		super.onInitialize();
-		
-		this.add(this.changeBehavior);
+
+		this.add(this.onChangeBehavior);
 	}
-	
+
 	@Override
 	public void onEvent(IEvent<?> event)
 	{
@@ -190,20 +190,20 @@ public class ProgressBar extends JQueryContainer
 			AjaxRequestTarget target = payload.getTarget();
 
 			this.onValueChanged(target);
-			
+
 			if(this.getModelObject() == MAX)
 			{
 				this.onComplete(target);
 			}
 		}
 	}
-	
+
 	@Override
 	protected void onModelChanged()
 	{
 		this.widgetBehavior.setOption("value", this.getModelObject()); //cannot be null?
 	}
-	
+
 	/**
 	 * Triggered when the value changed
 	 * @param target the {@link AjaxRequestTarget}
@@ -219,35 +219,40 @@ public class ProgressBar extends JQueryContainer
 	protected void onComplete(AjaxRequestTarget target)
 	{
 	}
-	
+
 
 	// IJQueryWidget //
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
 		return new JQueryBehavior(selector, METHOD) {
-			
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onConfigure(Component component)
 			{
 				this.setOption("value", ProgressBar.this.getModelObject()); //initial value
-				this.setOption("change", "function( event, ui ) { " + changeBehavior.getCallbackScript() + " }");
+				this.setOption("change", ProgressBar.this.onChangeBehavior.getCallbackFunction());
 			}
 		};
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'change' javascript method
-	 * @param component
-	 * @return
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'change' javascript event
+	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	private JQueryAjaxBehavior newChangeBehavior(Component component)
+	private JQueryAjaxBehavior newOnChangeBehavior()
 	{
-		return new JQueryAjaxBehavior(component) {
-			
+		return new JQueryAjaxBehavior(this) {
+
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function(event, ui) { " + this.getCallbackScript() + " }";
+			}
 
 			@Override
 			protected JQueryEvent newEvent(AjaxRequestTarget target)

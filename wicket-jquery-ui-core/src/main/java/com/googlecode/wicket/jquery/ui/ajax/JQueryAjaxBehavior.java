@@ -59,6 +59,11 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 
 			private static final long serialVersionUID = 1L;
 
+			public String getCallbackFunction()
+			{
+				return "function(event, ui) { " + this.getCallbackScript() + " }";
+			}
+
 			protected JQueryEvent newEvent(AjaxRequestTarget target)
 			{
 				return new MyEvent(target);
@@ -92,7 +97,7 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 
 			public void onConfigure(Component component)
 			{
-				this.setOption("jqueryevent", "function( event, ui ) { " + ajaxBehavior.getCallbackScript() + " }");
+				this.setOption("jqueryevent", ajaxBehavior.getCallbackFunction());
 			}
 		};
 	}
@@ -163,21 +168,24 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 
 	// wicket 1.5.x specific //
 	/**
+	 * Gets the jQuery callback function<br/>
+	 * Implementation is typically like:<br/>
+	 * <code>return "function( event, ui ) { " + this.getCallbackScript() + "}";</code>
+	 *
+	 * @return the jQuery callback function
+	 */
+	public String getCallbackFunction()
+	{
+		throw new WicketRuntimeException("Not imlemented");
+	}
+
+	/**
 	 * Promotes visibility
 	 */
 	@Override
 	public CharSequence getCallbackScript()
 	{
 		return super.getCallbackScript();
-	}
-
-	/**
-	 * TODO javadoc
-	 * @return
-	 */
-	public String getCallbackFunction()
-	{
-		throw new WicketRuntimeException("Not imlemented");
 	}
 
 	@Override
@@ -190,11 +198,4 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 
 		return super.getAjaxCallDecorator();
 	}
-
-	@Override
-	public String toString()
-	{
-		return this.getCallbackFunction();
-	}
-
 }

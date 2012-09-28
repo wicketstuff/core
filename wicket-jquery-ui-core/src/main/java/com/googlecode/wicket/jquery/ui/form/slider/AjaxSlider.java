@@ -35,15 +35,15 @@ import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEven
 /**
  * Provides a jQuery range slider based on a {@link FormComponentPanel}
  * This ajax version will post the {@link Component}, using a {@link JQueryAjaxChangeBehavior}, when the 'change' javascript method is called.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public class AjaxSlider extends Slider implements IValueChangedListener
 {
 	private static final long serialVersionUID = 1L;
 
-	private JQueryAjaxBehavior changeBehavior;
-	
+	private JQueryAjaxBehavior onChangeBehavior;
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -52,7 +52,7 @@ public class AjaxSlider extends Slider implements IValueChangedListener
 	{
 		super(id);
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -62,7 +62,7 @@ public class AjaxSlider extends Slider implements IValueChangedListener
 	{
 		super(id, model);
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -89,9 +89,9 @@ public class AjaxSlider extends Slider implements IValueChangedListener
 	@Override
 	protected void onInitialize()
 	{
-		super.onInitialize();  
+		super.onInitialize();
 
-		this.add(this.changeBehavior = new JQueryAjaxChangeBehavior(this, this.input));
+		this.add(this.onChangeBehavior = this.newOnChangeBehavior());
 	}
 
 	@Override
@@ -99,9 +99,9 @@ public class AjaxSlider extends Slider implements IValueChangedListener
 	{
 		super.onConfigure(behavior);
 
-		behavior.setOption("change", "function( event, ui ) { " + this.changeBehavior.getCallbackScript() + "}");
+		behavior.setOption("change", this.onChangeBehavior.getCallbackFunction());
 	}
-	
+
 	@Override
 	public void onEvent(IEvent<?> event)
 	{
@@ -112,7 +112,7 @@ public class AjaxSlider extends Slider implements IValueChangedListener
 			//In case of issue, consider copying code from AjaxFormComponentUpdatingBehavior.onEvent
 			this.input.processInput();
 			this.validate();
-			
+
 			if (this.isValid() && this.input.isValid())
 			{
 				this.onValueChanged(payload.getTarget(), this.getForm());
@@ -121,10 +121,9 @@ public class AjaxSlider extends Slider implements IValueChangedListener
 			{
 				this.onError(payload.getTarget());
 			}
-
 		}
 	}
-	
+
 	@Override
 	public void onValueChanged(AjaxRequestTarget target, Form<?> form)
 	{
@@ -136,5 +135,24 @@ public class AjaxSlider extends Slider implements IValueChangedListener
 	 */
 	protected void onError(AjaxRequestTarget target)
 	{
+	}
+
+	// Factories //
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'change' javascript event
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	private JQueryAjaxBehavior newOnChangeBehavior()
+	{
+		return new JQueryAjaxChangeBehavior(this, this.input) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function(event, ui) { " + this.getCallbackScript() + " }";
+			}
+		};
 	}
 }

@@ -28,7 +28,7 @@ import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
 
 /**
  * Provides a jQuery droppable area, on which {@link Draggable}<code>s</code> could be dropped.
- * 
+ *
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  */
@@ -36,9 +36,9 @@ public abstract class Droppable<T> extends JQueryContainer
 {
 	private static final long serialVersionUID = 1L;
 
-	private JQueryAjaxBehavior dropBehavior;
-	private JQueryAjaxBehavior overBehavior;
-	private JQueryAjaxBehavior exitBehavior;
+	private JQueryAjaxBehavior onDropBehavior;
+	private JQueryAjaxBehavior onOverBehavior;
+	private JQueryAjaxBehavior onExitBehavior;
 	private transient Draggable<?> draggable = null;  /* object being dragged */
 
 	/**
@@ -48,8 +48,6 @@ public abstract class Droppable<T> extends JQueryContainer
 	public Droppable(String id)
 	{
 		super(id);
-		
-		this.init();
 	}
 
 	/**
@@ -60,46 +58,8 @@ public abstract class Droppable<T> extends JQueryContainer
 	public Droppable(String id, IModel<T> model)
 	{
 		super(id, model);
-		
-		this.init();
 	}
-	
-	private void init()
-	{
-		this.dropBehavior = new JQueryAjaxBehavior(this) {
-			
-			private static final long serialVersionUID = 1L;
 
-			@Override
-			protected JQueryEvent newEvent(AjaxRequestTarget target)
-			{
-				return new DropEvent(target);
-			}
-		};
-		
-		this.overBehavior = new JQueryAjaxBehavior(this) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected JQueryEvent newEvent(AjaxRequestTarget target)
-			{
-				return new OverEvent(target);
-			}
-		};
-
-		this.exitBehavior = new JQueryAjaxBehavior(this) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected JQueryEvent newEvent(AjaxRequestTarget target)
-			{
-				return new ExitEvent(target);
-			}
-		};
-	}
-	
 	// Getters / Setters //
 	/**
 	 * Indicates whether the 'over' event is enabled.<br />
@@ -110,7 +70,7 @@ public abstract class Droppable<T> extends JQueryContainer
 	{
 		return false;
 	}
-	
+
 	/**
 	 * Indicates whether the 'exit' (or 'out') event is enabled.<br />
 	 * If false, the {@link #onExit(AjaxRequestTarget, Draggable)} event will not be triggered.
@@ -128,9 +88,9 @@ public abstract class Droppable<T> extends JQueryContainer
 	{
 		super.onInitialize();
 
-		this.add(this.dropBehavior);
-		this.add(this.overBehavior);
-		this.add(this.exitBehavior);
+		this.add(this.onDropBehavior = this.newOnDropBehavior());
+		this.add(this.onOverBehavior = this.newOnOverBehavior());
+		this.add(this.onExitBehavior = this.newOnExitBehavior());
 	}
 
 	/**
@@ -142,7 +102,7 @@ public abstract class Droppable<T> extends JQueryContainer
 		if (event.getPayload() instanceof JQueryEvent)
 		{
 			JQueryEvent payload = (JQueryEvent) event.getPayload();
-			
+
 			// registers the draggable object that starts
 			if (payload instanceof Draggable.DragStartEvent)
 			{
@@ -170,7 +130,7 @@ public abstract class Droppable<T> extends JQueryContainer
 	 * Triggered when a {@link Draggable} has been dropped
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param draggable the {@link Draggable} object
-	 */	
+	 */
 	protected abstract void onDrop(AjaxRequestTarget target, Draggable<?> draggable);
 
 	/**
@@ -178,17 +138,17 @@ public abstract class Droppable<T> extends JQueryContainer
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param draggable the {@link Draggable} object
 	 * @see #isOverEventEnabled()
-	 */	
+	 */
 	protected void onOver(AjaxRequestTarget target, Draggable<?> draggable)
 	{
 	}
-	
+
 	/**
 	 * Triggered when a {@link Draggable} exits the droppable area
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param draggable the {@link Draggable} object
 	 * @see #isExitEventEnabled()
-	 */	
+	 */
 	protected void onExit(AjaxRequestTarget target, Draggable<?> draggable)
 	{
 	}
@@ -205,22 +165,96 @@ public abstract class Droppable<T> extends JQueryContainer
 			@Override
 			public void onConfigure(Component component)
 			{
-				this.setOption("drop", "function( event, ui ) { " + dropBehavior.getCallbackScript() + " }");
-				
+				this.setOption("drop", Droppable.this.onDropBehavior.getCallbackFunction());
+
 				if (Droppable.this.isOverEventEnabled())
 				{
-					this.setOption("over", "function( event, ui ) { " + overBehavior.getCallbackScript() + " }");
+					this.setOption("over", Droppable.this.onOverBehavior.getCallbackFunction());
 				}
-				
+
 				if (Droppable.this.isExitEventEnabled())
 				{
-					this.setOption("out", "function( event, ui ) { " + exitBehavior.getCallbackScript() + " }");
+					this.setOption("out", Droppable.this.onExitBehavior.getCallbackFunction());
 				}
 			}
 		};
 	}
-	
-	
+
+
+	// Factories //
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'drop' javascript event
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	private JQueryAjaxBehavior newOnDropBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function(event, ui) { " + this.getCallbackScript() + " }";
+			}
+
+			@Override
+			protected JQueryEvent newEvent(AjaxRequestTarget target)
+			{
+				return new DropEvent(target);
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'over' javascript event
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	private JQueryAjaxBehavior newOnOverBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function(event, ui) { " + this.getCallbackScript() + " }";
+			}
+
+			@Override
+			protected JQueryEvent newEvent(AjaxRequestTarget target)
+			{
+				return new OverEvent(target);
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'exit' javascript event
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	private JQueryAjaxBehavior newOnExitBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function(event, ui) { " + this.getCallbackScript() + " }";
+			}
+
+			@Override
+			protected JQueryEvent newEvent(AjaxRequestTarget target)
+			{
+				return new ExitEvent(target);
+			}
+		};
+	}
+
+
 	// Event classes //
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'drop' callback
@@ -232,7 +266,7 @@ public abstract class Droppable<T> extends JQueryContainer
 			super(target);
 		}
 	}
-	
+
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'over' callback
 	 */
@@ -243,7 +277,7 @@ public abstract class Droppable<T> extends JQueryContainer
 			super(target);
 		}
 	}
-	
+
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'exit' callback
 	 */

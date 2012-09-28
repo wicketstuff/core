@@ -50,12 +50,12 @@ public class Calendar extends JQueryContainer
 
 	private CalendarModelBehavior modelBehavior; // events load
 
-	private JQueryAjaxBehavior dayClickBehavior; // day click
-	private JQueryAjaxBehavior selectBehavior; // date range-select behavior;
+	private JQueryAjaxBehavior onDayClickBehavior; // day click
+	private JQueryAjaxBehavior onSelectBehavior; // date range-select behavior;
 
-	private JQueryAjaxBehavior eventClickBehavior; // event click
-	private JQueryAjaxBehavior eventDropBehavior; // event drop
-	private JQueryAjaxBehavior eventResizeBehavior; // event resize
+	private JQueryAjaxBehavior onEventClickBehavior; // event click
+	private JQueryAjaxBehavior onEventDropBehavior; // event drop
+	private JQueryAjaxBehavior onEventResizeBehavior; // event resize
 
 	/**
 	 * Constructor
@@ -190,78 +190,11 @@ public class Calendar extends JQueryContainer
 
 		this.add(this.modelBehavior = new CalendarModelBehavior(this.getModel()));
 
-		this.add(this.dayClickBehavior = new JQueryAjaxBehavior(this) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public CharSequence getCallbackScript()
-			{
-				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&date=' + date.getTime()");
-			}
-
-			@Override
-			protected JQueryEvent newEvent(AjaxRequestTarget target)
-			{
-				return new DayClickEvent(target);
-			}
-		});
-
-		this.add(this.selectBehavior = new JQueryAjaxBehavior(this) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public CharSequence getCallbackScript()
-			{
-				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&start=' + start.getTime() + '&end=' + end.getTime() + '&allDay=' + allDay");
-			}
-
-			@Override
-			protected JQueryEvent newEvent(AjaxRequestTarget target)
-			{
-				return new SelectEvent(target);
-			}
-		});
-
-		this.add(this.eventClickBehavior = new JQueryAjaxBehavior(this) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public CharSequence getCallbackScript()
-			{
-				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&eventId=' + event.id");
-			}
-
-			@Override
-			protected JQueryEvent newEvent(AjaxRequestTarget target)
-			{
-				return new ClickEvent(target);
-			}
-		});
-
-		this.add(this.eventDropBehavior = new EventDeltaBehavior(this) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected JQueryEvent newEvent(AjaxRequestTarget target)
-			{
-				return new DropEvent(target);
-			}
-		});
-
-		this.add(this.eventResizeBehavior = new EventDeltaBehavior(this) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected JQueryEvent newEvent(AjaxRequestTarget target)
-			{
-				return new ResizeEvent(target);
-			}
-		});
+		this.add(this.onDayClickBehavior = this.newOnDayClickBehavior());
+		this.add(this.onSelectBehavior = this.newOnSelectBehavior());
+		this.add(this.onEventClickBehavior = this.newOnEventClickBehavior());
+		this.add(this.onEventDropBehavior = this.newOnEventDropBehavior());
+		this.add(this.onEventResizeBehavior = this.newOnEventResizeBehavior());
 	}
 
 	/**
@@ -392,7 +325,7 @@ public class Calendar extends JQueryContainer
 			{
 				Calendar.this.onConfigure(this); //set options
 
-				/* builds sources */
+				// builds sources //
 				StringBuilder sourceBuilder = new StringBuilder();
 				sourceBuilder.append("'").append(Calendar.this.modelBehavior.getCallbackUrl()).append("'");
 
@@ -408,27 +341,154 @@ public class Calendar extends JQueryContainer
 				this.setOption("eventSources", String.format("[%s]", sourceBuilder.toString()));
 
 				// behaviors //
-
 				if (Calendar.this.isEditable())
 				{
-					this.setOption("dayClick", "function(date, allDay, jsEvent, view) { " + Calendar.this.dayClickBehavior.getCallbackScript() + "}");
-					this.setOption("eventClick", "function(event, jsEvent, view) { " + Calendar.this.eventClickBehavior.getCallbackScript() + "}");
+					this.setOption("dayClick", Calendar.this.onDayClickBehavior.getCallbackFunction());
+					this.setOption("eventClick", Calendar.this.onEventClickBehavior.getCallbackFunction());
 				}
 
 				if (Calendar.this.isSelectable())
 				{
-					this.setOption("select", "function(start, end, allDay) { " + Calendar.this.selectBehavior.getCallbackScript() + " $.fullCalendar('unselect'); }");
+					this.setOption("select", Calendar.this.onSelectBehavior.getCallbackFunction());
 				}
 
 				if (Calendar.this.isEventDropEnabled())
 				{
-					this.setOption("eventDrop", "function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) { " + Calendar.this.eventDropBehavior.getCallbackScript() + "}");
+					this.setOption("eventDrop", Calendar.this.onEventDropBehavior.getCallbackFunction());
 				}
 
 				if (Calendar.this.isEventResizeEnabled())
 				{
-					this.setOption("eventResize", "function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) { " + Calendar.this.eventResizeBehavior.getCallbackScript() + "}");
+					this.setOption("eventResize", Calendar.this.onEventResizeBehavior.getCallbackFunction());
 				}
+			}
+		};
+	}
+
+
+	// Factories //
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dayClick' javascript event
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	private JQueryAjaxBehavior newOnDayClickBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function(date, allDay, jsEvent, view) { " + this.getCallbackScript() + " }";
+			}
+
+			@Override
+			public CharSequence getCallbackScript()
+			{
+				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&date=' + date.getTime()");
+			}
+
+			@Override
+			protected JQueryEvent newEvent(AjaxRequestTarget target)
+			{
+				return new DayClickEvent(target);
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'select' javascript event
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	private JQueryAjaxBehavior newOnSelectBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function(start, end, allDay) { " + this.getCallbackScript() + " $.fullCalendar('unselect'); }";
+			}
+
+			@Override
+			public CharSequence getCallbackScript()
+			{
+				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&start=' + start.getTime() + '&end=' + end.getTime() + '&allDay=' + allDay");
+			}
+
+			@Override
+			protected JQueryEvent newEvent(AjaxRequestTarget target)
+			{
+				return new SelectEvent(target);
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'eventClick' javascript event
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	private JQueryAjaxBehavior newOnEventClickBehavior()
+	{
+		return new JQueryAjaxBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function(event, jsEvent, view) { " + this.getCallbackScript() + " }";
+			}
+
+			@Override
+			public CharSequence getCallbackScript()
+			{
+				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&eventId=' + event.id");
+			}
+
+			@Override
+			protected JQueryEvent newEvent(AjaxRequestTarget target)
+			{
+				return new ClickEvent(target);
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'eventDrop' javascript event
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	private JQueryAjaxBehavior newOnEventDropBehavior()
+	{
+		return new EventDeltaBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected JQueryEvent newEvent(AjaxRequestTarget target)
+			{
+				return new DropEvent(target);
+			}
+		};
+	}
+
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'eventResize' javascript event
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
+	private JQueryAjaxBehavior newOnEventResizeBehavior()
+	{
+		return new EventDeltaBehavior(this) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected JQueryEvent newEvent(AjaxRequestTarget target)
+			{
+				return new ResizeEvent(target);
 			}
 		};
 	}
@@ -436,7 +496,7 @@ public class Calendar extends JQueryContainer
 
 	// Behavior classes //
 	/**
-	 * Base class for ajax behavior that will broadcast delta-based events
+	 * Base class for {@link JQueryAjaxBehavior} that will broadcast delta-based events
 	 */
 	private abstract class EventDeltaBehavior extends JQueryAjaxBehavior
 	{
@@ -445,6 +505,12 @@ public class Calendar extends JQueryContainer
 		public EventDeltaBehavior(Component source)
 		{
 			super(source);
+		}
+
+		@Override
+		public String getCallbackFunction()
+		{
+			return "function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) { " + this.getCallbackScript() + " }";
 		}
 
 		@Override

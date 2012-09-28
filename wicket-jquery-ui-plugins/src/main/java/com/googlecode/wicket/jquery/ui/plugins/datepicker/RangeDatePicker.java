@@ -174,7 +174,7 @@ public class RangeDatePicker extends JQueryContainer
 				// set options
 				this.setOption("date", builder.toString());
 				this.setOption("mode", Options.asString("range")); //immutable
-				this.setOption("onChange", "function(dates, el) { " + RangeDatePicker.this.onChangeBehavior.getCallbackScript() + "}");
+				this.setOption("onChange", RangeDatePicker.this.onChangeBehavior.getCallbackFunction());
 			}
 		};
 	}
@@ -189,6 +189,12 @@ public class RangeDatePicker extends JQueryContainer
 		return new JQueryAjaxBehavior(this) {
 
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getCallbackFunction()
+			{
+				return "function(dates, el) { " + this.getCallbackScript() + " }";
+			}
 
 			@Override
 			public CharSequence getCallbackScript()
