@@ -176,7 +176,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	 */
 	public String getCallbackFunction()
 	{
-		throw new WicketRuntimeException("Not imlemented");
+		return "function() { " + this.getCallbackScript() + " }";
 	}
 
 	/**

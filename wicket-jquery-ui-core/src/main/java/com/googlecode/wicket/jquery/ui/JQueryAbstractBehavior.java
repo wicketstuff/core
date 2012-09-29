@@ -120,8 +120,6 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	@Override
 	public void beforeRender(Component component)
 	{
-		this.onBeforeRender();
-
 		AjaxRequestTarget target = AjaxRequestTarget.get();
 
 		if (target != null)
@@ -135,17 +133,6 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 * @return String like '$(function() { ... })'
 	 */
 	protected abstract String $();
-
-
-	// Events //
-	/**
-	 * Triggered before render
-	 */
-	protected void onBeforeRender()
-	{
-
-	}
-
 
 	@Override
 	public final String toString()

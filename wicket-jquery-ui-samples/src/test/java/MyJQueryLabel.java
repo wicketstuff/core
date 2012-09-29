@@ -21,7 +21,7 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 		}
 	}
 
-	private JQueryAjaxBehavior ajaxBehavior;
+	private JQueryAjaxBehavior onJQueryEventBehavior;
 
 	public MyJQueryLabel(String id)
 	{
@@ -31,7 +31,7 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 
 	private void init()
 	{
-		this.ajaxBehavior = new JQueryAjaxBehavior(this) {
+		this.onJQueryEventBehavior = new JQueryAjaxBehavior(this) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -65,7 +65,7 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 	{
 		super.onInitialize();
 
-		this.add(this.ajaxBehavior);
+		this.add(this.onJQueryEventBehavior);
 		this.add(JQueryWidget.newWidgetBehavior(this));
 	}
 
@@ -79,7 +79,7 @@ public class MyJQueryLabel extends Label implements IJQueryWidget
 			@Override
 			public void onConfigure(Component component)
 			{
-				this.setOption("jqueryevent", ajaxBehavior.getCallbackFunction());
+				this.setOption("jqueryevent", onJQueryEventBehavior.getCallbackFunction());
 			}
 		};
 	}

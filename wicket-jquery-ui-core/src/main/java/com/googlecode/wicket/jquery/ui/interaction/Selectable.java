@@ -287,7 +287,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 			super(target);
 
 			this.indexes = new ArrayList<Integer>();
-			StringValue values = RequestCycleUtils.getQueryParameterValue("indexes"); //ie: 1,2,3 (conforms wicket6 branch implementation)
+			StringValue values = RequestCycleUtils.getQueryParameterValue("indexes");
 
 			if (values != null)
 			{
@@ -299,16 +299,6 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 					this.indexes.add(Integer.valueOf(matcher.group()));
 				}
 			}
-
-//			List<StringValue> values = RequestCycleUtils.getQueryParameterValues("index");
-//
-//			if (values != null)
-//			{
-//				for(StringValue value : values)
-//				{
-//					this.indexes.add(value.toInt());
-//				}
-//			}
 		}
 
 		public List<Integer> getIndexes()

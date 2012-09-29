@@ -75,12 +75,6 @@ abstract class AutoCompleteBehavior<T> extends AbstractDefaultAjaxBehavior
 		requestCycle.scheduleRequestHandlerAfterCurrent(handler);
 	}
 
-//	@Override
-//	protected IAjaxCallDecorator getAjaxCallDecorator()
-//	{
-//		return new AjaxCallThrottlingDecorator("throttle", Duration.ONE_SECOND);
-//	}
-
 	/**
 	 * Gets a new {@link IRequestHandler} that will call {@link #getChoices(String)} and will build be JSON response corresponding to the specified 'input' argument.
 	 * @param input user input

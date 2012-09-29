@@ -42,7 +42,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 {
 	private static final long serialVersionUID = 1L;
 
-	private JQueryAjaxBehavior changeBehavior;
+	private JQueryAjaxBehavior onChangeBehavior;
 
 	/**
 	 * Constructor
@@ -147,7 +147,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	{
 		super.onInitialize();
 
-		this.add(this.changeBehavior = this.newOnChangeBehavior());
+		this.add(this.onChangeBehavior = this.newOnChangeBehavior());
 	}
 
 	@Override
@@ -155,7 +155,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	{
 		super.onConfigure(behavior);
 
-		behavior.setOption("change", this.changeBehavior.getCallbackFunction());
+		behavior.setOption("change", this.onChangeBehavior.getCallbackFunction());
 	}
 
 	@Override
@@ -176,6 +176,10 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	}
 
 	// Factories //
+	/**
+	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'change' javascript event
+	 * @return the {@link JQueryAjaxBehavior}
+	 */
 	private JQueryAjaxChangeBehavior newOnChangeBehavior()
 	{
 		return new JQueryAjaxChangeBehavior(this) {

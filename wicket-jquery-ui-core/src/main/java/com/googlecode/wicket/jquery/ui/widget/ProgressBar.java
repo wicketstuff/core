@@ -49,7 +49,6 @@ public class ProgressBar extends JQueryContainer
 	public ProgressBar(String id)
 	{
 		super(id);
-		this.init();
 	}
 
 	/**
@@ -60,7 +59,6 @@ public class ProgressBar extends JQueryContainer
 	public ProgressBar(String id, IModel<Integer> model)
 	{
 		super(id, model);
-		this.init();
 	}
 
 //	public ProgressBar(String id, IModel<Integer> model, Duration duration)
@@ -69,13 +67,6 @@ public class ProgressBar extends JQueryContainer
 //		this.init();
 //	}
 
-	/**
-	 * Initialization
-	 */
-	private void init()
-	{
-		this.onChangeBehavior = this.newOnChangeBehavior();
-	}
 
 	/* Getters / Setters */
 	/**
@@ -178,7 +169,7 @@ public class ProgressBar extends JQueryContainer
 	{
 		super.onInitialize();
 
-		this.add(this.onChangeBehavior);
+		this.add(this.onChangeBehavior = this.newOnChangeBehavior());
 	}
 
 	@Override

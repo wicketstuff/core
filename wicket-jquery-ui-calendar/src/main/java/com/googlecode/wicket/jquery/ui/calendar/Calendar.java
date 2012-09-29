@@ -190,6 +190,7 @@ public class Calendar extends JQueryContainer
 
 		this.add(this.modelBehavior = new CalendarModelBehavior(this.getModel()));
 
+		// event behaviors //
 		this.add(this.onDayClickBehavior = this.newOnDayClickBehavior());
 		this.add(this.onSelectBehavior = this.newOnSelectBehavior());
 		this.add(this.onEventClickBehavior = this.newOnEventClickBehavior());
@@ -368,7 +369,8 @@ public class Calendar extends JQueryContainer
 
 	// Factories //
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'dayClick' javascript event
+	 * Gets the ajax behavior that will be triggered when the user clicks on a day cell
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	private JQueryAjaxBehavior newOnDayClickBehavior()
@@ -398,7 +400,8 @@ public class Calendar extends JQueryContainer
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'select' javascript event
+	 * Gets the ajax behavior that will be triggered when the user select a cell range
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	private JQueryAjaxBehavior newOnSelectBehavior()
@@ -428,7 +431,8 @@ public class Calendar extends JQueryContainer
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'eventClick' javascript event
+	 * Gets the ajax behavior that will be triggered when the user clicks on an event
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	private JQueryAjaxBehavior newOnEventClickBehavior()
@@ -458,7 +462,8 @@ public class Calendar extends JQueryContainer
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'eventDrop' javascript event
+	 * Gets the ajax behavior that will be triggered when the user moves (drag & drop) an event
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	private JQueryAjaxBehavior newOnEventDropBehavior()
@@ -476,7 +481,8 @@ public class Calendar extends JQueryContainer
 	}
 
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'eventResize' javascript event
+	 * Gets the ajax behavior that will be triggered when the user resizes an event
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	private JQueryAjaxBehavior newOnEventResizeBehavior()
@@ -540,7 +546,6 @@ public class Calendar extends JQueryContainer
 			long date = RequestCycleUtils.getQueryParameterValue("date").toLong();
 			this.day = new Date(date);
 		}
-
 
 		/**
 		 * Gets the event date
