@@ -100,7 +100,7 @@ public final class Utils {
 					else {
 						String[] newValues = new String[values.length + 1];
 						System.arraycopy(values, 0, newValues, 0, values.length);
-						newValues[values.length + 1] = (parts.length > 1 ? parts[1] : null);
+						newValues[values.length] = (parts.length > 1 ? parts[1] : null);
 						parameterMap.put(parts[0], newValues);
 					}
 				}
