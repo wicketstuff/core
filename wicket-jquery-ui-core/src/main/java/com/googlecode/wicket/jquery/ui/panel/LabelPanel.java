@@ -16,74 +16,33 @@
  */
 package com.googlecode.wicket.jquery.ui.panel;
 
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
 /**
- * Provides a {@link Panel} with a generized model
- *  
- * @param <T> the model object type
+ * Provides a {@link Panel} just containing a {@link Label}<br/>
+ * This is used, for instance, when a {@link WebMarkupContainer} is expected but just a Label is needed.
+ *
  * @author Sebastien Briquet - sebfz1
+ * @since 1.2.3
+ * @since 6.0.1
  */
-public class ModelPanel<T> extends Panel
+public class LabelPanel extends Panel
 {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
+	 * @param model the label's model
 	 */
-	public ModelPanel(String id)
+	public LabelPanel(String id, IModel<String> model)
 	{
 		super(id);
-	}
 
-	/**
-	 * Constructor
-	 * @param id the markup id
-	 * @param model the {@link IModel}
-	 */
-	public ModelPanel(String id, IModel<T> model)
-	{
-		super(id, model);
+		this.add(new Label("label", model).setRenderBodyOnly(true));
 	}
-
-	/**
-	 * Gets the model
-	 * @return the model
-	 */
-	@SuppressWarnings("unchecked")
-	public IModel<T> getModel()
-	{
-		return (IModel<T>) this.getDefaultModel();
-	}
-	
-	/**
-	 * Sets the model
-	 * @param model the model
-	 */
-	public void setModel(IModel<T> model)
-	{
-		this.setDefaultModel(model);
-	}
-	
-	/**
-	 * Gets the model object
-	 * @return the model object
-	 */
-	@SuppressWarnings("unchecked")
-	public T getModelObject()
-	{
-		return (T) this.getDefaultModelObject();
-	}
-
-	/**
-	 * Sets the model object
-	 * @param object the model object
-	 */
-	public void setModelObject(String object)
-	{
-		this.setDefaultModelObject(object);
-	}
-
 }

@@ -1,7 +1,0 @@
-This is one of the simplest jQuery widget to use; only the html markup is needed.<br/>
-
-<h4>Note:</h4>
-Accordion is itself a WebMarkupContainer, so elements can be added using <code><i>.add(...)</i></code><br/>
-
-<h4>Required markup & options</h4>
-<a href="http://jqueryui.com/demos/accordion/">http://jqueryui.com/demos/accordion/</a>

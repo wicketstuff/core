@@ -23,19 +23,20 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.IFormSubmittingComponent;
+import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.IJQueryWidget.JQueryWidget;
 
 /**
- * Provides a {@link ModelPanel} that implements {@link IFormSubmittingComponent}, so it is able to perform an form submit via HTTP 
- * 
+ * Provides a {@link ModelPanel} that implements {@link IFormSubmittingComponent}, so it is able to perform an form submit via HTTP
+ *
  * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the object model type
  */
-public abstract class FormSubmittingPanel<T> extends ModelPanel<T> implements IFormSubmittingComponent
+public abstract class FormSubmittingPanel<T> extends GenericPanel<T> implements IFormSubmittingComponent
 {
 	private static final long serialVersionUID = 1L;
 
@@ -75,7 +76,7 @@ public abstract class FormSubmittingPanel<T> extends ModelPanel<T> implements IF
 		//But as this component is not an input, it does not have a name attribute. Thus, it should match the #getInputName() path
 		this.add(new HiddenField<Serializable>("submitter", new Model<Serializable>()).add(AttributeModifier.replace("name", this.getId())));
 	}
-	
+
 	/**
 	 * Performs a form submit through the target
 	 * @param target the {@link AjaxRequestTarget}
@@ -91,9 +92,9 @@ public abstract class FormSubmittingPanel<T> extends ModelPanel<T> implements IF
 	{
 		return Form.findForm(this);
 	}
-	
+
 	/**
-	 * Gets the input element name that is supposed to be retrieved in the form once it has been submitted over http. 
+	 * Gets the input element name that is supposed to be retrieved in the form once it has been submitted over http.
 	 */
 	@Override
 	public String getInputName()
@@ -106,7 +107,7 @@ public abstract class FormSubmittingPanel<T> extends ModelPanel<T> implements IF
 	{
 		return this.processForm;
 	}
-	
+
 	@Override
 	public final FormSubmittingPanel<T> setDefaultFormProcessing(boolean processForm)
 	{

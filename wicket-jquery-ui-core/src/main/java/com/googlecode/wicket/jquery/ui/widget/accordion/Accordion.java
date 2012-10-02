@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.widget;
+package com.googlecode.wicket.jquery.ui.widget.accordion;
 
 import org.apache.wicket.Component;
 
@@ -24,15 +24,14 @@ import com.googlecode.wicket.jquery.ui.Options;
 
 /**
  * Provides a jQuery accordion based on a {@link JQueryContainer}
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  * @since 1.0
  */
 public class Accordion extends JQueryContainer
 {
 	private static final long serialVersionUID = 1L;
-	private static final String METHOD = "accordion";
-	
+
 	private final Options options;
 
 	/**
@@ -52,27 +51,26 @@ public class Accordion extends JQueryContainer
 	public Accordion(String id, Options options)
 	{
 		super(id);
-		
+
 		this.options = options;
 	}
 
 	// Events //
 	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering 
+	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
 	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 * 
+	 *
 	 * @param behavior the {@link JQueryBehavior}
 	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOptions(this.options);
 	}
 
 	// IJQueryWidget //
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new JQueryBehavior(selector, METHOD) {
+		return new AccordionBehavior(selector, this.options) {
 
 			private static final long serialVersionUID = 1L;
 

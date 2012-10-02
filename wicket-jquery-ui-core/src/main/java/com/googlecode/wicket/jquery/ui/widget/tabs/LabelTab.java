@@ -14,54 +14,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui;
+package com.googlecode.wicket.jquery.ui.widget.tabs;
 
+import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
 
-import com.googlecode.wicket.jquery.ui.widget.ProgressBar;
-import com.googlecode.wicket.jquery.ui.widget.accordion.Accordion;
+import com.googlecode.wicket.jquery.ui.panel.LabelPanel;
 
 /**
- * Base class for a JQuery Container, like an {@link Accordion}
- * @author Sebastien Briquet - sebfz1
+ * Provides a simple {@link AbstractTab} that embeds a {@link LabelPanel}
  *
+ * @author Sebastien Briquet - sebfz1
+ * @since 1.2.3
  */
-public abstract class JQueryContainer extends WebMarkupContainer implements IJQueryWidget
+public class LabelTab extends AbstractTab
 {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * keep a reference of the behavior, in case of special needs (ie {@link ProgressBar#respond(org.apache.wicket.ajax.AjaxRequestTarget)}
-	 */
-	protected JQueryBehavior widgetBehavior = null; 
+	private final IModel<String> content;
 
 	/**
-	 * Constructor.
-	 * @param id the markup id
+	 * Constructor
+	 *
+	 * @param title IModel used to represent the title of the tab
+	 * @param content IModel used to represent the content of the tab
 	 */
-	public JQueryContainer(String id)
+	public LabelTab(IModel<String> title, IModel<String> content)
 	{
-		super(id);		
+		super(title);
+
+		this.content = content;
 	}
-	
+
 	/**
-	 * Constructor.
-	 * @param id the markup id
-	 * @param model the model
+	 * Gets the {@link LabelPanel} that contains the content supplied in the constructor
+	 * @return the {@link LabelPanel}
 	 */
-	public JQueryContainer(String id, IModel<?> model)
-	{
-		super(id, model);
-	}
-	
-	
-	// Events //
 	@Override
-	protected void onInitialize()
+	public final WebMarkupContainer getPanel(String panelId)
 	{
-		super.onInitialize();
-		
-		this.add(this.widgetBehavior = JQueryWidget.newWidgetBehavior(this));
+		return new LabelPanel(panelId, this.content);
 	}
 }

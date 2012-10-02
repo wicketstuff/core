@@ -19,11 +19,11 @@ package com.googlecode.wicket.jquery.ui.form.button;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
-import com.googlecode.wicket.jquery.ui.panel.ModelPanel;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButtons;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogIcon;
@@ -39,7 +39,7 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.MessageFormDialog;
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class ConfirmAjaxButton extends ModelPanel<String>
+public abstract class ConfirmAjaxButton extends GenericPanel<String>
 {
 	private static final long serialVersionUID = 1L;
 

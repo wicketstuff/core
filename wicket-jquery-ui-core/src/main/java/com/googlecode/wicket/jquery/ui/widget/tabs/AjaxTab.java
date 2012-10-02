@@ -27,8 +27,8 @@ import org.apache.wicket.model.IModel;
 import com.googlecode.wicket.jquery.ui.panel.LoadingPanel;
 
 /**
- * Provides an {@link AbstractTab} which loads the panel when the {@link ITab} is clicked. 
- * 
+ * Provides an {@link AbstractTab} which loads the panel when the {@link ITab} is clicked.
+ *
  * @author Sebastien Briquet - sebfz1
  * @since 1.2.1
  */
@@ -46,7 +46,7 @@ public abstract class AjaxTab extends AbstractTab
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param title IModel used to represent the title of the tab.
 	 */
 	public AjaxTab(IModel<String> title)
@@ -57,6 +57,7 @@ public abstract class AjaxTab extends AbstractTab
 	/**
 	 * Gets the default panel (loading indicator)
 	 */
+	@Override
 	public final WebMarkupContainer getPanel(String panelId)
 	{
 		this.panel = new LoadingPanel(panelId);
@@ -67,7 +68,7 @@ public abstract class AjaxTab extends AbstractTab
 		}
 
 		// the component is already loaded //
-		else if (this.state == STATE_ADDED) 
+		else if (this.state == STATE_ADDED)
 		{
 			this.replaceComponent();
 		}
@@ -76,9 +77,9 @@ public abstract class AjaxTab extends AbstractTab
 	}
 
 	/**
-	 * Get the {@link Component} that will be lazy loaded
-	 * 
-	 * @return the {@link Component}
+	 * Get the {@link WebMarkupContainer} that will be lazy loaded
+	 *
+	 * @return the {@link WebMarkupContainer}
 	 */
 	protected final WebMarkupContainer getLazyPanel()
 	{
@@ -87,7 +88,7 @@ public abstract class AjaxTab extends AbstractTab
 
 	/**
 	 * Gets the {@link WebMarkupContainer} that will be lazy loaded
-	 * 
+	 *
 	 * @param panelId the markup id to use
 	 * @return the {@link WebMarkupContainer}
 	 */
@@ -95,7 +96,7 @@ public abstract class AjaxTab extends AbstractTab
 
 	/**
 	 * Replaces the loading panel's placeholder component by the lazy-loaded component.
-	 * 
+	 *
 	 * @return the lazy-loaded component
 	 */
 	private Component replaceComponent()
@@ -105,7 +106,7 @@ public abstract class AjaxTab extends AbstractTab
 
 	/**
 	 * Gets the {@link AjaxLink} for this {@link ITab}, which will handle the lazy-panel load.
-	 *  
+	 *
 	 * @param id the markup id
 	 * @return the {@link AjaxLink}
 	 */

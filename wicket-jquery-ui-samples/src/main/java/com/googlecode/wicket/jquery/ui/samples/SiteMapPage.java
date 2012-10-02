@@ -13,7 +13,7 @@ import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 
-import com.googlecode.wicket.jquery.ui.samples.pages.accordion.AccordionPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.accordion.DefaultAccordionPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.autocomplete.ConverterAutoCompletePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.autocomplete.CustomAutoCompletePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.autocomplete.DefaultAutoCompletePage;
@@ -97,7 +97,7 @@ public class SiteMapPage extends WebPage
 	@SuppressWarnings("unchecked")
 	private static final List<? extends Class<?>> LIST = Arrays.asList(
 			HomePage.class,
-			AccordionPage.class,
+			DefaultAccordionPage.class,
 			AjaxButtonPage.class,
 			AjaxDatePickerPage.class,
 			AjaxDropDownPage.class,
