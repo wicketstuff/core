@@ -149,7 +149,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 		else if (event.getPayload() instanceof AbstractDialog.CloseEvent)
 		{
-			AjaxRequestTarget target = ((AbstractDialog<?>.CloseEvent) event.getPayload()).getTarget();
+			AjaxRequestTarget target = ((AbstractDialog.CloseEvent) event.getPayload()).getTarget();
 			this.onClose(target, null);
 		}
 	}
@@ -455,7 +455,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	/**
 	 * An event object that will be broadcasted when the user clicks on the X-icon
 	 */
-	class CloseEvent extends JQueryEvent
+	static class CloseEvent extends JQueryEvent
 	{
 		/**
 		 * Constructor

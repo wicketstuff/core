@@ -166,7 +166,7 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 
 		else if (event.getPayload() instanceof AbstractDialog.CloseEvent)
 		{
-			AjaxRequestTarget target = ((AbstractDialog<?>.CloseEvent) event.getPayload()).getTarget();
+			AjaxRequestTarget target = ((AbstractDialog.CloseEvent) event.getPayload()).getTarget();
 			this.onClose(target, null);
 		}
 	}

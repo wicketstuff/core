@@ -164,8 +164,7 @@ public class AccordionPanel extends JQueryPanel
 	}
 
 	/**
-	 * Triggered when the accordion state is changing ('hangestart' event).<br/>
-	 * {@link #isChangingEventEnabled()} should return true for this event to be triggered.
+	 * Triggered when the accordion state is changing ('changestart' event).<br/>
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the accordion header that triggered this event
@@ -176,8 +175,8 @@ public class AccordionPanel extends JQueryPanel
 	}
 
 	/**
-	 * Triggered when the accordion state has changed ('hange' event).<br/>
-	 * {@link #isChangingEventEnabled()} should return true for this event to be triggered.
+	 * Triggered when the accordion state has changed ('change' event).<br/>
+	 * {@link #isChangedEventEnabled()} should return true for this event to be triggered.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the accordion header that triggered this event
