@@ -19,8 +19,9 @@ abstract class AbstractAccordionPage extends SamplePage
 	protected List<DemoLink> getDemoLinks()
 	{
 		return Arrays.asList(
-				new DemoLink(DefaultAccordionPage.class, "Accordion"),
-				new DemoLink(WidgetAccordionPage.class, "Accordion: 'change' event")
+				new DemoLink(DefaultAccordionPage.class, "Accordion behavior"),
+				new DemoLink(WidgetAccordionPage.class, "Accordion widget"),
+				new DemoLink(AccordionPanelPage.class, "AccordionPanel (using ITabs)")
 			);
 	}
 }

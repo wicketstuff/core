@@ -14,12 +14,12 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.MessageDialog;
 public class MessageDialogPage extends AbstractDialogPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public MessageDialogPage()
 	{
 		this.init();
 	}
-	
+
 	private void init()
 	{
 		final Form<Void> form = new Form<Void>("form");
@@ -28,7 +28,7 @@ public class MessageDialogPage extends AbstractDialogPage
 		// FeedbackPanel //
 		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
 		form.add(feedbackPanel.setOutputMarkupId(true));
-		
+
 		// Dialog //
 		final MessageDialog informDialog = new MessageDialog("infoDialog", "Information", "This is a information message", DialogButtons.OK_CANCEL, DialogIcon.INFO) {
 
@@ -51,7 +51,7 @@ public class MessageDialogPage extends AbstractDialogPage
 			{
 			}
 		};
-		
+
 		this.add(warningDialog);
 
 		final MessageDialog errorDialog = new MessageDialog("errorDialog", "Error", "This is an error message!", DialogButtons.OK, DialogIcon.ERROR) {
@@ -63,11 +63,11 @@ public class MessageDialogPage extends AbstractDialogPage
 			{
 			}
 		};
-		
+
 		this.add(errorDialog);
 
-		
-		// Buttons //		
+
+		// Buttons //
 		form.add(new AjaxButton("info") {
 
 			private static final long serialVersionUID = 1L;
@@ -78,7 +78,7 @@ public class MessageDialogPage extends AbstractDialogPage
 				informDialog.open(target);
 			}
 		});
-		
+
 		form.add(new AjaxButton("warning") {
 
 			private static final long serialVersionUID = 1L;
@@ -89,7 +89,7 @@ public class MessageDialogPage extends AbstractDialogPage
 				warningDialog.open(target);
 			}
 		});
-		
+
 		form.add(new AjaxButton("error") {
 
 			private static final long serialVersionUID = 1L;

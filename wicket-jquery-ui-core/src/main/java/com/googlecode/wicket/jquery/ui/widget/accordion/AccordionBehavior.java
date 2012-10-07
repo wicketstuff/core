@@ -23,7 +23,8 @@ import com.googlecode.wicket.jquery.ui.Options;
  * Provides a jQuery accordion behavior.
  *
  * @author Sebastien Briquet - sebfz1
- * @since 1.2.1
+ * @since 1.2.3
+ * @since 6.0.1
  */
 public class AccordionBehavior extends JQueryBehavior
 {

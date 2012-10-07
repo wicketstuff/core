@@ -124,6 +124,16 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	}
 
 	/**
+	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
+	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
+	 *
+	 * @param behavior the {@link JQueryBehavior}
+	 */
+	protected void onConfigure(JQueryBehavior behavior)
+	{
+	}
+
+	/**
 	 * DO NOT OVERRIDE UNLESS A VERY GOOD REASON
 	 */
 	@Override
@@ -273,12 +283,15 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 			@Override
 			public void onConfigure(Component component)
 			{
-				// immutable options //
+				// this options //
 				this.setOption("autoOpen", false);
 				this.setOption("title", Options.asString(AbstractDialog.this.title));
 				this.setOption("modal", AbstractDialog.this.modal);
 				this.setOption("resizable", AbstractDialog.this.isResizable());
 				this.setOption("width", AbstractDialog.this.getWidth());
+
+				// lazy options //
+				AbstractDialog.this.onConfigure(this);
 
 				// buttons events //
 				StringBuffer buttons = new StringBuffer("[ ");
