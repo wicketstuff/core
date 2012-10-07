@@ -30,7 +30,7 @@ import org.apache.wicket.model.Model;
 import com.googlecode.wicket.jquery.ui.IJQueryWidget.JQueryWidget;
 
 /**
- * Provides a {@link ModelPanel} that implements {@link IFormSubmittingComponent}, so it is able to perform an form submit via HTTP
+ * Provides a {@link GenericPanel} that implements {@link IFormSubmittingComponent}, so it is able to perform an form submit via HTTP
  *
  * @author Sebastien Briquet - sebfz1
  *

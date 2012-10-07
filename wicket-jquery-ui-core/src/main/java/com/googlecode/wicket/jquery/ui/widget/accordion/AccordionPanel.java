@@ -22,7 +22,6 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -95,44 +94,14 @@ public class AccordionPanel extends JQueryPanel
 
 				if (tab.isVisible())
 				{
-					WebMarkupContainer link = this.newLink("link", tab);
-					link.add(new Label("title", tab.getTitle()).setRenderBodyOnly(true));
-					item.add(link);
-
+					item.add(new Label("title", tab.getTitle()));
 					item.add(tab.getPanel("panel"));
 				}
-			}
-
-			/**
-			 * Provides the tab's link
-			 *
-			 * @param tab the ITab
-			 * @return a WebMarkupContainer that represent the tab link
-			 */
-			private WebMarkupContainer newLink(String id, ITab tab)
-			{
-				if (tab instanceof AjaxTab)
-				{
-					return ((AjaxTab)tab).newLink(id);
-				}
-
-				return new WebMarkupContainer(id);
 			}
 		});
 	}
 
 	// Properties //
-	/**
-	 * Indicates whether the 'changestart' event is enabled
-	 * If true, the {@link #onChanging(AjaxRequestTarget, int, ITab)} event will be triggered
-	 *
-	 * @return false by default
-	 */
-	protected boolean isChangingEventEnabled()
-	{
-		return false;
-	}
-
 	/**
 	 * Indicates whether the 'change' event is enabled
 	 * If true, the {@link #onChanging(AjaxRequestTarget, int, ITab)} event will be triggered
@@ -172,18 +141,24 @@ public class AccordionPanel extends JQueryPanel
 		if (event.getPayload() instanceof ChangeEvent)
 		{
 			ChangeEvent payload = (ChangeEvent) event.getPayload();
+
 			int index = payload.getIndex();
 			ITab tab = tabs.get(index);
+			AjaxRequestTarget target = payload.getTarget();
 
-			//action
 			if (payload.getStep() == ChangeEvent.Step.Start)
 			{
-				this.onChanging(payload.getTarget(), index, tab);
+				if (tab instanceof AjaxTab)
+				{
+					((AjaxTab)tab).load(target);
+				}
+
+				this.onChanging(target, index, tab);
 			}
 
 			if (payload.getStep() == ChangeEvent.Step.Stop)
 			{
-				this.onChanged(payload.getTarget(), index, tab);
+				this.onChanged(target, index, tab);
 			}
 		}
 	}
@@ -225,10 +200,7 @@ public class AccordionPanel extends JQueryPanel
 			{
 				AccordionPanel.this.onConfigure(this);
 
-				if (AccordionPanel.this.isChangingEventEnabled())
-				{
-					this.setOption("changestart", AccordionPanel.this.onChangingBehavior.getCallbackFunction());
-				}
+				this.setOption("changestart", AccordionPanel.this.onChangingBehavior.getCallbackFunction()); //allows to load AjaxTab
 
 				if (AccordionPanel.this.isChangedEventEnabled())
 				{

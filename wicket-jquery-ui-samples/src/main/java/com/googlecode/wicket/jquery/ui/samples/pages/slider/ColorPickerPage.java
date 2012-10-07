@@ -100,49 +100,10 @@ public class ColorPickerPage extends AbstractSliderPage
 		
 		private void init()
 		{
-			/* Slider: Red */
-			this.add(new AjaxSlider("r", this.modelR) {
-
-				private static final long serialVersionUID = 1L;
-				
-				public void onValueChanged(AjaxRequestTarget target, Form<?> form) {
-					
-					ColorPicker.this.changeColor(target, form);
-				};
-				
-			}.setRange(Range.MIN).setMax(255));
-
-			/* Slider: Green */
-			this.add(new AjaxSlider("g", this.modelG) {
-
-				private static final long serialVersionUID = 1L;
-				
-				public void onValueChanged(AjaxRequestTarget target, Form<?> form) {
-					
-					ColorPicker.this.changeColor(target, form);
-				};
-				
-			}.setRange(Range.MIN).setMax(255));
-			
-			/* Slider: Blue */
-			this.add(new AjaxSlider("b", this.modelB) {
-
-				private static final long serialVersionUID = 1L;
-				
-				public void onValueChanged(AjaxRequestTarget target, Form<?> form) {
-					
-					ColorPicker.this.changeColor(target, form);
-				};
-				
-			}.setRange(Range.MIN).setMax(255));
+			this.add(this.newAjaxSlider("r", this.modelR)); // Slider: Red
+			this.add(this.newAjaxSlider("g", this.modelG)); // Slider: Green
+			this.add(this.newAjaxSlider("b", this.modelB)); // Slider: Blue
 		}
-		
-		/**
-		 * Event which will be fired when the color has been changed.
-		 * @param target
-		 * @param form
-		 */
-		protected abstract void onColorChanged(AjaxRequestTarget target, Form<?> form);
 
 		/**
 		 * Updates the model with the new color.
@@ -157,6 +118,37 @@ public class ColorPickerPage extends AbstractSliderPage
 
 			this.setDefaultModelObject(String.format("#%02x%02x%02x", r, g, b));
 			this.onColorChanged(target, form);
+		}
+
+		// Events //
+		/**
+		 * Event which will be fired when the color has been changed.
+		 * @param target
+		 * @param form
+		 */
+		protected abstract void onColorChanged(AjaxRequestTarget target, Form<?> form);
+
+		// Factories //
+		/**
+		 * Gets a new {@link AjaxSlider} for the specified color model
+		 * @param id the markup id
+		 * @param model the (R|G|B) color model
+		 * @return the {@link AjaxSlider}
+		 */
+		private AjaxSlider newAjaxSlider(String id, IModel<Integer> model)
+		{
+			AjaxSlider slider = new AjaxSlider(id, model) {
+
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void onValueChanged(AjaxRequestTarget target, Form<?> form)
+				{
+					ColorPicker.this.changeColor(target, form);
+				}
+			};
+
+			return slider.setRange(Range.MIN).setMax(255);
 		}
 
 		/**

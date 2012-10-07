@@ -15,7 +15,7 @@ import com.googlecode.wicket.jquery.ui.Options;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.widget.accordion.AccordionPanel;
 import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
-import com.googlecode.wicket.jquery.ui.widget.tabs.LabelTab;
+import com.googlecode.wicket.jquery.ui.widget.tabs.SimpleTab;
 
 public class AccordionPanelPage extends AbstractAccordionPage
 {
@@ -37,12 +37,6 @@ public class AccordionPanelPage extends AbstractAccordionPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected boolean isChangingEventEnabled()
-			{
-				return true;
-			}
-
-			@Override
 			protected void onChanging(AjaxRequestTarget target, int index, ITab tab)
 			{
 				info(String.format("selected tab: #%d - %s", index, tab.getTitle().getObject()));
@@ -56,7 +50,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 		List<ITab> tabs = new ArrayList<ITab>();
 
 		// tab #1, using LabelTab //
-		tabs.add(new LabelTab(new Model<String>("Tab (LabelTab)"), new Model<String>("My content !")));
+		tabs.add(new SimpleTab(new Model<String>("Tab (LabelTab)"), new Model<String>("My content !")));
 
 		// tab #2, using AbstractTab //
 		tabs.add(new AbstractTab(new Model<String>("Tab (AbstractTab)")) {

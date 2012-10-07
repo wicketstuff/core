@@ -18,12 +18,10 @@ package com.googlecode.wicket.jquery.ui.widget.tabs;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
-
 import com.googlecode.wicket.jquery.ui.panel.LoadingPanel;
 
 /**
@@ -38,10 +36,9 @@ public abstract class AjaxTab extends AbstractTab
 
 	private static final byte STATE_INIT = 0;
 	private static final byte STATE_LOAD = 1;
-	private static final byte STATE_ADDED = 2;
+	private static final byte STATE_LOADED = 2;
 
-	private LoadingPanel panel;
-	private WebMarkupContainer container;
+	private LoadingPanel panel = null;
 	private byte state = STATE_INIT;
 
 	/**
@@ -60,17 +57,10 @@ public abstract class AjaxTab extends AbstractTab
 	@Override
 	public final WebMarkupContainer getPanel(String panelId)
 	{
-		this.panel = new LoadingPanel(panelId);
-
 		if (this.state == STATE_INIT)
 		{
+			this.panel = new LoadingPanel(panelId);
 			this.state = STATE_LOAD;
-		}
-
-		// the component is already loaded //
-		else if (this.state == STATE_ADDED)
-		{
-			this.replaceComponent();
 		}
 
 		return this.panel;
@@ -96,41 +86,32 @@ public abstract class AjaxTab extends AbstractTab
 
 	/**
 	 * Replaces the loading panel's placeholder component by the lazy-loaded component.
+	 * Warning, should be called only once!
 	 *
 	 * @return the lazy-loaded component
 	 */
 	private Component replaceComponent()
 	{
-		return this.panel.getPlaceholderComponent().replaceWith(this.container); //warning, inner panel is detached here.
+		return this.panel.getPlaceholderComponent().replaceWith(this.getLazyPanel()); //warning, inner panel is detached here.
 	}
 
 	/**
-	 * Gets the {@link AjaxLink} for this {@link ITab}, which will handle the lazy-panel load.
+	 * Loads the lazy component, if not already loaded.
+	 * @param target the {@link AjaxRequestTarget}
 	 *
-	 * @param id the markup id
-	 * @return the {@link AjaxLink}
+	 * @return True if the component has just been loaded. Otherwise false if the component has already been loaded
 	 */
-	public AjaxLink<Void> newLink(String id)
+	public boolean load(AjaxRequestTarget target)
 	{
-		return new AjaxLink<Void>(id) {
+		boolean load = (this.state == STATE_LOAD);
 
-			private static final long serialVersionUID = 1L;
+		if (load)
+		{
+			target.add(this.replaceComponent());
+			this.state = STATE_LOADED;
+			//this.getPage().dirty();
+		}
 
-			@Override
-			public void onClick(AjaxRequestTarget target)
-			{
-				if (AjaxTab.this.state == STATE_LOAD)
-				{
-					AjaxTab.this.container = AjaxTab.this.getLazyPanel();
-					target.add(AjaxTab.this.replaceComponent());
-
-					AjaxTab.this.state = STATE_ADDED;
-					this.getPage().dirty();
-
-					//this.unregisterHandler(); //to implement, unregister the click handler (wicket 1.5.x & wicket 6.x)
-					//note: or not, handler could be used to store/remember the selected tab
-				}
-			}
-		};
+		return load;
 	}
 }

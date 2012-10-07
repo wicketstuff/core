@@ -19,6 +19,7 @@ package com.googlecode.wicket.jquery.ui.widget.tabs;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.panel.LabelPanel;
 
@@ -27,8 +28,9 @@ import com.googlecode.wicket.jquery.ui.panel.LabelPanel;
  *
  * @author Sebastien Briquet - sebfz1
  * @since 1.2.3
+ * @since 6.0.1
  */
-public class LabelTab extends AbstractTab
+public class SimpleTab extends AbstractTab
 {
 	private static final long serialVersionUID = 1L;
 
@@ -37,10 +39,21 @@ public class LabelTab extends AbstractTab
 	/**
 	 * Constructor
 	 *
+	 * @param title the title of the tab
+	 * @param content the content of the tab
+	 */
+	public SimpleTab(String title, String content)
+	{
+		this(new Model<String>(title), new Model<String>(content));
+	}
+
+	/**
+	 * Constructor
+	 *
 	 * @param title IModel used to represent the title of the tab
 	 * @param content IModel used to represent the content of the tab
 	 */
-	public LabelTab(IModel<String> title, IModel<String> content)
+	public SimpleTab(IModel<String> title, IModel<String> content)
 	{
 		super(title);
 

@@ -11,12 +11,13 @@ import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.Options;
 import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
+import com.googlecode.wicket.jquery.ui.widget.tabs.SimpleTab;
 import com.googlecode.wicket.jquery.ui.widget.tabs.TabbedPanel;
 
 public class WidgetTabsPage extends AbstractTabsPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public WidgetTabsPage()
 	{
 		Options options = new Options();
@@ -30,7 +31,10 @@ public class WidgetTabsPage extends AbstractTabsPage
 		List<ITab> tabs = new ArrayList<ITab>();
 
 		// tab #1 //
-		tabs.add(new AbstractTab(new Model<String>("My Tab")) {
+		tabs.add(new SimpleTab(new Model<String>("Tab #1"), new Model<String>("my content")));
+
+		// tab #2 //
+		tabs.add(new AbstractTab(new Model<String>("Tab #2")) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -41,7 +45,7 @@ public class WidgetTabsPage extends AbstractTabsPage
 			}
 		});
 
-		// tab #2 //
+		// tab #3 //
 		tabs.add(new AjaxTab(new Model<String>("Tab (ajax)")) {
 
 			private static final long serialVersionUID = 1L;
