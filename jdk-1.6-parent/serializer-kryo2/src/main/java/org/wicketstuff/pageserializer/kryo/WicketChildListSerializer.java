@@ -20,7 +20,7 @@ import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.serialize.ISerializer;
 
 import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.serialize.FieldSerializer;
+import com.esotericsoftware.kryo.serializers.FieldSerializer;
 
 /**
  * A reworked WicketChildListSerializerFactory from <a

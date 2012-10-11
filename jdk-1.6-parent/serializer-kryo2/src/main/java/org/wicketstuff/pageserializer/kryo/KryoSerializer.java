@@ -21,21 +21,23 @@ import org.slf4j.LoggerFactory;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
+import com.esotericsoftware.kryo.serializers.DefaultSerializers.ClassSerializer;
+import com.esotericsoftware.kryo.serializers.DefaultSerializers.CurrencySerializer;
+import com.esotericsoftware.kryo.serializers.DefaultSerializers.StringBufferSerializer;
+import com.esotericsoftware.kryo.serializers.DefaultSerializers.StringBuilderSerializer;
 
 import de.javakaffee.kryoserializers.ArraysAsListSerializer;
-import de.javakaffee.kryoserializers.ClassSerializer;
 import de.javakaffee.kryoserializers.CollectionsEmptyListSerializer;
 import de.javakaffee.kryoserializers.CollectionsEmptyMapSerializer;
 import de.javakaffee.kryoserializers.CollectionsEmptySetSerializer;
 import de.javakaffee.kryoserializers.CollectionsSingletonListSerializer;
 import de.javakaffee.kryoserializers.CollectionsSingletonMapSerializer;
 import de.javakaffee.kryoserializers.CollectionsSingletonSetSerializer;
-import de.javakaffee.kryoserializers.CurrencySerializer;
 import de.javakaffee.kryoserializers.GregorianCalendarSerializer;
 import de.javakaffee.kryoserializers.JdkProxySerializer;
 import de.javakaffee.kryoserializers.KryoReflectionFactorySupport;
-import de.javakaffee.kryoserializers.StringBufferSerializer;
-import de.javakaffee.kryoserializers.StringBuilderSerializer;
 import de.javakaffee.kryoserializers.SynchronizedCollectionsSerializer;
 import de.javakaffee.kryoserializers.UnmodifiableCollectionsSerializer;
 import de.javakaffee.kryoserializers.cglib.CGLibProxySerializer;
@@ -83,19 +85,11 @@ public class KryoSerializer implements ISerializer
 	public byte[] serialize(final Object object)
 	{
 		LOG.debug("Going to serialize: '{}'", object);
-		ByteBuffer buffer = getBuffer(object);
+		Output buffer = getBuffer(object);
 		kryo.writeClassAndObject(buffer, object);
-		byte[] data;
-		if (buffer.hasArray())
-		{
-			data = new byte[buffer.position()];
-			buffer.flip();
-			buffer.get(data);
-		}
-		else
-		{
+		byte[] data=buffer.toBytes();
+		if (data==null) {
 			LOG.error("Kryo wasn't able to serialize: '{}'", object);
-			data = null;
 		}
 
 		// release the memory for the buffer
@@ -109,12 +103,12 @@ public class KryoSerializer implements ISerializer
 	@Override
 	public Object deserialize(byte[] data)
 	{
-		ByteBuffer buffer = ByteBuffer.wrap(data);
+		Input buffer = new Input(data);
 		Object object = kryo.readClassAndObject(buffer);
 		LOG.debug("Deserialized: '{}'", object);
 
 		// release the memory for the buffer
-		buffer.clear();
+		//buffer.clear();
 		buffer = null;
 		System.runFinalization();
 
@@ -129,9 +123,9 @@ public class KryoSerializer implements ISerializer
 	 *            use
 	 * @return the buffer that will be used to serialize the {@code target}
 	 */
-	protected ByteBuffer getBuffer(Object target)
+	protected Output getBuffer(Object target)
 	{
-		return ByteBuffer.allocate((int)bufferSize.bytes());
+		return new Output((int)bufferSize.bytes());
 	}
 
 	/**
@@ -144,29 +138,29 @@ public class KryoSerializer implements ISerializer
 	private void internalInit(final Kryo kryo)
 	{
 
-		kryo.register(Arrays.asList("").getClass(), new ArraysAsListSerializer(kryo));
-		kryo.register(Class.class, new ClassSerializer(kryo));
+		kryo.register(Arrays.asList("").getClass(), new ArraysAsListSerializer());
+		kryo.register(Class.class, new ClassSerializer());
 		kryo.register(Collections.EMPTY_LIST.getClass(), new CollectionsEmptyListSerializer());
 		kryo.register(Collections.EMPTY_MAP.getClass(), new CollectionsEmptyMapSerializer());
 		kryo.register(Collections.EMPTY_SET.getClass(), new CollectionsEmptySetSerializer());
 		kryo.register(Collections.singletonList("").getClass(),
-			new CollectionsSingletonListSerializer(kryo));
+			new CollectionsSingletonListSerializer());
 		kryo.register(Collections.singleton("").getClass(), new CollectionsSingletonSetSerializer(
-			kryo));
+			));
 		kryo.register(Collections.singletonMap("", "").getClass(),
-			new CollectionsSingletonMapSerializer(kryo));
-		kryo.register(Currency.class, new CurrencySerializer(kryo));
+			new CollectionsSingletonMapSerializer());
+		kryo.register(Currency.class, new CurrencySerializer());
 		kryo.register(GregorianCalendar.class, new GregorianCalendarSerializer());
-		kryo.register(InvocationHandler.class, new JdkProxySerializer(kryo));
-		kryo.register(StringBuffer.class, new StringBufferSerializer(kryo));
-		kryo.register(StringBuilder.class, new StringBuilderSerializer(kryo));
+		kryo.register(InvocationHandler.class, new JdkProxySerializer());
+		kryo.register(StringBuffer.class, new StringBufferSerializer());
+		kryo.register(StringBuilder.class, new StringBuilderSerializer());
 		UnmodifiableCollectionsSerializer.registerSerializers(kryo);
 		SynchronizedCollectionsSerializer.registerSerializers(kryo);
-		kryo.register(CGLibProxySerializer.CGLibProxyMarker.class, new CGLibProxySerializer(kryo));
-		kryo.register(InvocationHandler.class, new JdkProxySerializer(kryo));
+		kryo.register(CGLibProxySerializer.CGLibProxyMarker.class, new CGLibProxySerializer());
+		kryo.register(InvocationHandler.class, new JdkProxySerializer());
 		kryo.register(WicketChildListSerializer.CLASS, new WicketChildListSerializer(kryo));
 
-		kryo.setRegistrationOptional(true);
+		kryo.setRegistrationRequired(false);
 		kryo.register(Panel.class);
 		kryo.register(WebPage.class);
 		kryo.register(WebMarkupContainer.class);
