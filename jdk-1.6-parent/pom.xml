@@ -23,6 +23,7 @@
 		<module>javaee-inject-parent</module>
 		<module>push-parent-jdk-1.6</module>
 		<module>serializer-kryo</module>
+		<module>serializer-kryo2</module>
 		<module>wicket-html5-parent</module>
 		<module>wicket-servlet3-parent</module>
 		<module>wicket-facebook-parent</module>
