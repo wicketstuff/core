@@ -56,6 +56,7 @@
 		<module>closure-compiler</module>
 		<module>scala-extensions-parent</module> 
 		<module>serializer-kryo</module>
+		<module>serializer-kryo2</module>
 		<module>wicket-facebook-parent</module>
 		<module>wicket-html5-parent</module>
 		<module>wicket-servlet3-parent</module>
