@@ -8,6 +8,8 @@ import org.apache.wicket.util.lang.Args;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esotericsoftware.kryo.io.Output;
+
 import de.javakaffee.kryoserializers.KryoReflectionFactorySupport;
 
 /**
@@ -39,8 +41,7 @@ public class DebuggingKryo extends KryoReflectionFactorySupport
 	}
 
 	@Override
-	public void writeClassAndObject(ByteBuffer buffer, Object object)
-	{
+	public void writeClassAndObject(Output buffer, Object object) {
 
 		if (object != null)
 		{
