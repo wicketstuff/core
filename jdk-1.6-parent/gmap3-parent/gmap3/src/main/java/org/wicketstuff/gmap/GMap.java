@@ -148,7 +148,7 @@ public class GMap extends Panel implements GOverlayContainer
     {
         if (!initialized)
         {
-            response.render(JavaScriptHeaderItem.forUrl("http://maps.googleapis.com/maps/api/js?sensor=" + sensor + "&callback=initialize;"));
+            response.render(JavaScriptHeaderItem.forUrl("http://maps.googleapis.com/maps/api/js?sensor=" + sensor + "&callback=initialize"));
             initialized = true;
         }
         response.render(OnDomReadyHeaderItem.forScript(getJSinit()));
