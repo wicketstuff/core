@@ -112,7 +112,7 @@ if (!Wicket.Push.cometd){
     logLevel: '${logLevel}'
   });
 
-  Wicket.Event.addDomReadyEvent(function(){
+  Wicket.Event.add(window, "domready", function(){
     Wicket.Push.cometd.handshake();
   });
 }
