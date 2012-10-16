@@ -361,13 +361,16 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
   }
 
   function getPosition(obj) {
-    var leftPosition = 0;
-    var topPosition = 0;
-    do {
+    var leftPosition = obj.offsetLeft || 0;
+    var topPosition = obj.offsetTop || 0;
+    obj = obj.offsetParent;
+    while (obj && obj != document.documentElement && obj != document.body) {
       topPosition += obj.offsetTop || 0;
+      topPosition -= obj.scrollTop || 0;
       leftPosition += obj.offsetLeft || 0;
+      leftPosition -= obj.scrollLeft || 0;
       obj = obj.offsetParent;
-    } while (obj);
+    }
     return [leftPosition,topPosition];
   }
 
