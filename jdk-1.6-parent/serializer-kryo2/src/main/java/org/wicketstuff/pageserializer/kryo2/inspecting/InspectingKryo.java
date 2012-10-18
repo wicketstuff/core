@@ -13,10 +13,10 @@ import de.javakaffee.kryoserializers.KryoReflectionFactorySupport;
 public class InspectingKryo extends KryoReflectionFactorySupport {
 
 	private final static Logger LOG = LoggerFactory.getLogger(InspectingKryo.class);
-	private final ISerializationListener serializingListener;
+	private final InspectionKryoSerializer parent;
 	
-	public InspectingKryo(ISerializationListener serializingListener) {
-		this.serializingListener = serializingListener;
+	public InspectingKryo(InspectionKryoSerializer parent) {
+		this.parent = parent;
 	}
 	
 	@Override
@@ -81,11 +81,11 @@ public class InspectingKryo extends KryoReflectionFactorySupport {
 	}
 
 	private void before(Output output, Object object) {
-		serializingListener.begin(output.position(),object);
+		parent.serializingListener().begin(output.position(),object);
 	}
 
 	private void after(Output output, Object object) {
-		serializingListener.end(output.position(),object);
+		parent.serializingListener().end(output.position(),object);
 	}
 
 }
