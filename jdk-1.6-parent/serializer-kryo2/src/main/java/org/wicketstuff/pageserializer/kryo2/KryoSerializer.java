@@ -1,4 +1,4 @@
-package org.wicketstuff.pageserializer.kryo;
+package org.wicketstuff.pageserializer.kryo2;
 
 import java.lang.reflect.InvocationHandler;
 import java.nio.ByteBuffer;

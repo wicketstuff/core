@@ -1,4 +1,4 @@
-package org.wicketstuff.pageserializer.kryo;
+package org.wicketstuff.pageserializer.kryo2;
 
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;

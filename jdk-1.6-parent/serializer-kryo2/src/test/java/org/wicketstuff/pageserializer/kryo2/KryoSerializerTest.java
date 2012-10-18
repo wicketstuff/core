@@ -1,4 +1,4 @@
-package org.wicketstuff.pageserializer.kryo;
+package org.wicketstuff.pageserializer.kryo2;
 
 import org.apache.wicket.serialize.ISerializer;
 import org.apache.wicket.util.tester.WicketTester;
@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.wicketstuff.pageserializer.kryo2.KryoSerializer;
 
 /**
  * Simple test using the WicketTester
@@ -44,7 +45,7 @@ public class KryoSerializerTest
 		Assert.assertNotNull("The produced data should not be null!", data);
 
 		// data length can fluctuate based on the object field values
-		Assert.assertEquals("The produced data length is not correct!", 401, data.length);
+		Assert.assertEquals("The produced data length is not correct!", 403, data.length);
 
 		Object object = pageSerializer.deserialize(data);
 		Assert.assertTrue(
