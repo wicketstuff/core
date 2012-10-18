@@ -9,6 +9,12 @@ public class LoggingSerializationListener implements ISerializationListener {
 			.getLogger(LoggingSerializationListener.class);
 
 	@Override
+	public void start(Object object) {
+		LOG.error("Start for object: '{}'", 
+				object.getClass());
+	}
+	
+	@Override
 	public void begin(int position, Object object) {
 		LOG.error("Start at '{}' byte for object:  '{}'", position,
 				object != null ? object.getClass() : "NULL");
@@ -18,6 +24,12 @@ public class LoggingSerializationListener implements ISerializationListener {
 	public void end(int position, Object object) {
 		LOG.error("End at   '{}' bytes for object: '{}'", position,
 				object != null ? object.getClass() : "NULL");
+	}
+	
+	@Override
+	public void end(Object object) {
+		LOG.error("End for object:   '{}'", 
+				object.getClass());
 	}
 
 }

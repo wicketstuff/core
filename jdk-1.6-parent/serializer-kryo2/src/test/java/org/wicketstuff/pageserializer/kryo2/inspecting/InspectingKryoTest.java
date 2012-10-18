@@ -6,10 +6,8 @@ import java.util.List;
 
 import junit.framework.Assert;
 
+import org.apache.wicket.util.lang.Bytes;
 import org.junit.Test;
-
-import com.esotericsoftware.kryo.io.Input;
-import com.esotericsoftware.kryo.io.Output;
 
 public class InspectingKryoTest {
 
@@ -18,17 +16,13 @@ public class InspectingKryoTest {
 		List<String> stringList=new ArrayList<String>();
 		stringList.addAll(Arrays.asList("One","2","III"));
 		
-		InspectingKryo kryo=new InspectingKryo(new LoggingSerializationListener());
+		InspectionKryoSerializer kryo=new InspectionKryoSerializer(Bytes.bytes(100),new LoggingSerializationListener());
 		
-		Output buffer = new Output(100);
-		kryo.writeClassAndObject(buffer, stringList);
-		byte[] data=buffer.toBytes();
-		buffer.clear();
-		System.runFinalization();
+		byte[] data=kryo.serialize(stringList);
 		
 		Assert.assertNotNull(data);
 		
-		List<String> readBack=(List<String>) kryo.readClassAndObject(new Input(data));
+		List<String> readBack=(List<String>) kryo.deserialize(data);
 		
 		Assert.assertNotNull(readBack);
 		Assert.assertEquals(stringList, readBack);
