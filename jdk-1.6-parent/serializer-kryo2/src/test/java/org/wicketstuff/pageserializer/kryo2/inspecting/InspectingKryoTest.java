@@ -24,7 +24,7 @@ public class InspectingKryoTest {
 				return null;
 			}
 		};
-		ISerializedObjectTreeProcessor treeProcessor=new TypeSizeReport();
+		ISerializedObjectTreeProcessor treeProcessor=TreeProcessors.listOf(new TypeSizeReport(),new TreeSizeReport());
 		ISerializationListener listener = SerializationListener.listOf(new LoggingSerializationListener(),new AnalyzingSerializationListener(labelizer, treeProcessor));
 		InspectingKryoSerializer kryo=new InspectingKryoSerializer(Bytes.bytes(100),listener);
 		
