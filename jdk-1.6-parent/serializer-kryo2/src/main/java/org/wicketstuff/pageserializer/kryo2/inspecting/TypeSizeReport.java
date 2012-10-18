@@ -35,8 +35,16 @@ public class TypeSizeReport implements ISerializedObjectTreeProcessor {
 		
 		StringBuilder sb=new StringBuilder();
 		sb.append("\n-----------------------------\n");
+		int labelColumnSize=0;
+		int sizeColumnSize=0;
 		for (Map.Entry<Class<?>, Counter> e : sorted) {
-			sb.append(e.getKey().getName()).append("=").append(e.getValue().size).append("\n");
+			labelColumnSize=Math.max(labelColumnSize, e.getKey().getName().length());
+			sizeColumnSize=Math.max(sizeColumnSize, (""+e.getValue().size).length());
+		}
+		for (Map.Entry<Class<?>, Counter> e : sorted) {
+			Reports.label(sb, e.getKey().getName(),labelColumnSize+3,'.');
+			Reports.rightColumn(sb, sizeColumnSize, '.', ""+e.getValue().size, '<');
+			sb.append("\n");
 		}
 		LOG.debug(sb.toString());
 	}
