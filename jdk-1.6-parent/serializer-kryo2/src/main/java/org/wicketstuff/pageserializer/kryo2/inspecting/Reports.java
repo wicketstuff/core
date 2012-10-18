@@ -13,10 +13,10 @@ public class Reports {
 	}
 	
 	public static void label(StringBuilder sb, Ident ident, String label, int columnSize, char filler) {
-		for (int i=0;i<ident.count;i++) {
-			sb.append(ident.c);
+		for (int i=0;i<ident.size();i++) {
+			sb.append(ident.value());
 		}
-		int left=columnSize-ident.count;
+		int left=columnSize-ident.size();
 		int labelLength = label.length();
 		if (labelLength>left) {
 			sb.append(label.substring(0,left));
@@ -50,6 +50,14 @@ public class Reports {
 		public Ident(int count, char c) {
 			this.count = count;
 			this.c = c;
+		}
+		
+		public int size() {
+			return count;
+		}
+		
+		public char value() {
+			return c;
 		}
 	}
 }

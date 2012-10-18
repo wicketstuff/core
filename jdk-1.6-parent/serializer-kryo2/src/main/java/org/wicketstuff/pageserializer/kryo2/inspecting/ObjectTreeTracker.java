@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +38,11 @@ public class ObjectTreeTracker {
 	}
 	
 	public ISerializedObjectTree end(Object object) {
-		return new ImmutableTree(currentItem);
+		return new ImmutableTree(stripRootNode());
+	}
+
+	private Item stripRootNode() {
+		return currentItem.children().iterator().next();
 	}
 	
 
@@ -58,7 +63,7 @@ public class ObjectTreeTracker {
 			int childSize=0;
 			for (Item child : item.children()) {
 				ImmutableTree toAdd = new ImmutableTree(child);
-				childSize=childSize+toAdd.childSize();
+				childSize=childSize+toAdd.childSize()+toAdd.size();
 				lchildren.add(toAdd);
 			}
 			this.children=Collections.unmodifiableList(lchildren);
@@ -94,7 +99,7 @@ public class ObjectTreeTracker {
 	static class Item {
 
 		private final ItemKey key;
-		Map<ItemKey, Item> children=new HashMap<ItemKey, ObjectTreeTracker.Item>();
+		Map<ItemKey, Item> children=new LinkedHashMap<ItemKey, ObjectTreeTracker.Item>();
 		
 		int size=0;
 		
