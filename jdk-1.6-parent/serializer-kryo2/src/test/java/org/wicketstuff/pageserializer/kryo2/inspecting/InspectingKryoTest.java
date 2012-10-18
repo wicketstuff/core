@@ -14,9 +14,19 @@ public class InspectingKryoTest {
 	@Test
 	public void writeStringList() {
 		List<String> stringList=new ArrayList<String>();
-		stringList.addAll(Arrays.asList("One","2","III"));
+		String third = "III";
+		stringList.addAll(Arrays.asList("One","2",third,third));
 		
-		InspectionKryoSerializer kryo=new InspectionKryoSerializer(Bytes.bytes(100),new LoggingSerializationListener());
+		IObjectLabelizer labelizer=new IObjectLabelizer() {
+			
+			@Override
+			public String labelFor(Object object) {
+				return null;
+			}
+		};
+		ISerializedObjectTreeProcessor treeProcessor=new TypeSizeReport();
+		ISerializationListener listener = SerializationListener.listOf(new LoggingSerializationListener(),new AnalyzingSerializationListener(labelizer, treeProcessor));
+		InspectingKryoSerializer kryo=new InspectingKryoSerializer(Bytes.bytes(100),listener);
 		
 		byte[] data=kryo.serialize(stringList);
 		

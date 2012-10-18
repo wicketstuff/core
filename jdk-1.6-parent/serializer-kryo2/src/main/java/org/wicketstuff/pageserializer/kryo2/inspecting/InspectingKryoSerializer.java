@@ -5,11 +5,11 @@ import org.wicketstuff.pageserializer.kryo2.KryoSerializer;
 
 import com.esotericsoftware.kryo.Kryo;
 
-public class InspectionKryoSerializer extends KryoSerializer {
+public class InspectingKryoSerializer extends KryoSerializer {
 
 	private final ISerializationListener serializingListener;
 
-	public InspectionKryoSerializer(Bytes size, ISerializationListener serializingListener) {
+	public InspectingKryoSerializer(Bytes size, ISerializationListener serializingListener) {
 		super(size);
 		this.serializingListener = serializingListener;
 	}
@@ -22,7 +22,7 @@ public class InspectionKryoSerializer extends KryoSerializer {
 	@Override
 	public byte[] serialize(Object object) {
 		try {
-			serializingListener.start(object);
+			serializingListener.begin(object);
 			return super.serialize(object);
 		} finally {
 			serializingListener.end(object);
