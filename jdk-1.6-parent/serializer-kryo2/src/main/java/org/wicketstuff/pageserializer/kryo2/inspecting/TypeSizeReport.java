@@ -51,7 +51,7 @@ public class TypeSizeReport implements ISerializedObjectTreeProcessor {
 	
 	private void process(ISerializedObjectTree tree, Map<Class<?>, Counter> map) {
 		Counter counter=getOrCreate(map,tree.type());
-		counter.increment(tree.size()+tree.childSize());
+		counter.increment(tree.size());
 		
 		for (ISerializedObjectTree child : tree.children()) {
 			process(child,map);
