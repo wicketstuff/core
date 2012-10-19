@@ -1,10 +1,12 @@
-package org.wicketstuff.pageserializer.kryo2.inspecting;
+package org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report;
 
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketstuff.pageserializer.kryo2.inspecting.Reports.Ident;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTreeProcessor;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.Reports.Ident;
 
 public class TreeSizeReport implements ISerializedObjectTreeProcessor {
 

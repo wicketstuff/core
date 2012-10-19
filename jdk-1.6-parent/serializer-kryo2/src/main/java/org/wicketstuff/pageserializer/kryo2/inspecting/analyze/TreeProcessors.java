@@ -1,4 +1,6 @@
-package org.wicketstuff.pageserializer.kryo2.inspecting;
+package org.wicketstuff.pageserializer.kryo2.inspecting.analyze;
+
+import org.wicketstuff.pageserializer.kryo2.common.Interfaces;
 
 
 public class TreeProcessors {

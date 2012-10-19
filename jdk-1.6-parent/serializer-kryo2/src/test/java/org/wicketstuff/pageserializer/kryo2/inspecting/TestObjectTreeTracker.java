@@ -3,6 +3,9 @@ package org.wicketstuff.pageserializer.kryo2.inspecting;
 import junit.framework.Assert;
 
 import org.junit.Test;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.IObjectLabelizer;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ObjectTreeTracker;
 
 public class TestObjectTreeTracker {
 
