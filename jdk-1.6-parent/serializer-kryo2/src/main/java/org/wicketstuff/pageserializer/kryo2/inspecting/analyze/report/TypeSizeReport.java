@@ -1,4 +1,4 @@
-package org.wicketstuff.pageserializer.kryo2.inspecting;
+package org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,6 +10,8 @@ import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTreeProcessor;
 
 public class TypeSizeReport implements ISerializedObjectTreeProcessor {
 

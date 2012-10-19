@@ -1,4 +1,4 @@
-package org.wicketstuff.pageserializer.kryo2.inspecting;
+package org.wicketstuff.pageserializer.kryo2.common;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

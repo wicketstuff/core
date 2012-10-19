@@ -1,6 +1,5 @@
 package org.wicketstuff.pageserializer.kryo2.inspecting;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +8,13 @@ import junit.framework.Assert;
 
 import org.apache.wicket.util.lang.Bytes;
 import org.junit.Test;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.AnalyzingSerializationListener;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.IObjectLabelizer;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTreeProcessor;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.TreeProcessors;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SortedTreeSizeReport;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TreeSizeReport;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TypeSizeReport;
 
 public class InspectingKryoTest {
 

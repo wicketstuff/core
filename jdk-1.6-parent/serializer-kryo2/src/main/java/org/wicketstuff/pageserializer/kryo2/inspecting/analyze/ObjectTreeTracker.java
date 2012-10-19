@@ -1,12 +1,11 @@
-package org.wicketstuff.pageserializer.kryo2.inspecting;
+package org.wicketstuff.pageserializer.kryo2.inspecting.analyze;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 
 public class ObjectTreeTracker {
 
@@ -38,64 +37,26 @@ public class ObjectTreeTracker {
 	}
 	
 	public ISerializedObjectTree end(Object object) {
-		return new ImmutableTree(stripRootNode());
+		return asImmutableTree(stripRootNode());
 	}
 
 	private Item stripRootNode() {
 		return currentItem.children().iterator().next();
 	}
 	
-
-	static class ImmutableTree implements ISerializedObjectTree {
-		
-		final Class<?> type;
-		final String label;
-		final int size;
-		final int childSize;
-		
-		final List<ImmutableTree> children;
-		
-		public ImmutableTree(Item item) {
-			this.type=item.type();
-			this.label=item.label();
-			this.size=item.size();
-			List<ImmutableTree> lchildren=new ArrayList<ObjectTreeTracker.ImmutableTree>();
-			int childSize=0;
-			for (Item child : item.children()) {
-				ImmutableTree toAdd = new ImmutableTree(child);
-				childSize=childSize+toAdd.childSize()+toAdd.size();
-				lchildren.add(toAdd);
-			}
-			this.children=Collections.unmodifiableList(lchildren);
-			this.childSize=childSize;
+	private static List<ImmutableTree> cloneList(Collection<Item> source) {
+		List<ImmutableTree> lchildren=new ArrayList<ImmutableTree>();
+		for (Item child : source) {
+			lchildren.add(asImmutableTree(child));
 		}
-
-		@Override
-		public int size() {
-			return size;
-		}
-		
-		@Override
-		public int childSize() {
-			return childSize;
-		}
-
-		@Override
-		public Class<? extends Object> type() {
-			return type;
-		}
-
-		@Override
-		public String label() {
-			return label;
-		}
-
-		@Override
-		public List<? extends ISerializedObjectTree> children() {
-			return children;
-		}
+		return lchildren;
 	}
-	
+
+	private static ImmutableTree asImmutableTree(Item child) {
+		return new ImmutableTree(child.type(),child.label(),child.size(),cloneList(child.children()));
+	}
+
+
 	static class Item {
 
 		private final ItemKey key;
