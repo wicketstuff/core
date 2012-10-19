@@ -45,7 +45,7 @@ public class InspectingKryoTest {
 		Assert.assertEquals(root, readBack);
 	}
 	
-	static class Dummy implements Serializable {
+	static class Dummy {
 		String name="Huauuauauaajjjajajjajj";
 
 		@Override
@@ -76,7 +76,7 @@ public class InspectingKryoTest {
 		
 	}
 	
-	static class BiggerDummy implements Serializable {
+	static class BiggerDummy {
 		Dummy first=new Dummy();
 		Dummy second=new Dummy();
 		String city="lebunistan";
@@ -118,7 +118,7 @@ public class InspectingKryoTest {
 		}
 	}
 	
-	static class BiggestDummy implements Serializable {
+	static class BiggestDummy {
 		Dummy first=new Dummy();
 		BiggerDummy bigger=new BiggerDummy();
 		@Override
