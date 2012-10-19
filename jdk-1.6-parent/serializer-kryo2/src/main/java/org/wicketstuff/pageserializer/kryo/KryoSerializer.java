@@ -58,7 +58,11 @@ public class KryoSerializer implements ISerializer
 
 	private final Bytes bufferSize;
 
-	private ThreadLocal<Kryo> kryo;
+	/**
+	 * Store a per thread Kryo instance (as Kryo is 
+	 * not thread safe).
+	 */
+	private ThreadLocal<Kryo> kryo =  new ThreadLocal<Kryo>();
 
 	/**
 	 * Constructor using default buffer size.
