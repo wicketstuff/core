@@ -44,7 +44,7 @@ public class ObjectTreeTracker {
 		return currentItem.children().iterator().next();
 	}
 	
-	private static List<ImmutableTree> cloneList(Collection<Item> source) {
+	private static List<? extends ISerializedObjectTree> cloneList(Collection<Item> source) {
 		List<ImmutableTree> lchildren=new ArrayList<ImmutableTree>();
 		for (Item child : source) {
 			lchildren.add(asImmutableTree(child));

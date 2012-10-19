@@ -11,17 +11,17 @@ public final class ImmutableTree implements ISerializedObjectTree {
 	final int size;
 	final int childSize;
 	
-	final List<ImmutableTree> children;
+	final List<ISerializedObjectTree> children;
 	
-	public ImmutableTree(Class<?> type,String label,int size,List<ImmutableTree> children) {
+	public ImmutableTree(Class<?> type,String label,int size,List<? extends ISerializedObjectTree> children) {
 		this.type=type;
 		this.label=label;
 		this.size=size;
-		List<ImmutableTree> lchildren=new ArrayList<ImmutableTree>();
+		List<ISerializedObjectTree> lchildren=new ArrayList<ISerializedObjectTree>();
 		lchildren.addAll(children);
 		this.children=Collections.unmodifiableList(lchildren);
 		int childSize=0;
-		for (ImmutableTree child : children) {
+		for (ISerializedObjectTree child : children) {
 			childSize=childSize+child.childSize()+child.size();
 		}
 		this.childSize=childSize;
