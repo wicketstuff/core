@@ -13,13 +13,18 @@ public class TreeTransformator {
 
 	public static ISerializedObjectTree compact(ISerializedObjectTree source,
 			ITreeFilter filter) {
-		if (filter.accept(source)) {
+		return compact(source,filter,0);
+	}
+	
+	static ISerializedObjectTree compact(ISerializedObjectTree source,
+			ITreeFilter filter, int level) {
+		if (filter.accept(source,level)) {
 			if (!source.children().isEmpty()) {
 				boolean changed = false;
 
 				List<ISerializedObjectTree> filteredList = new ArrayList<ISerializedObjectTree>();
 				for (ISerializedObjectTree child : source.children()) {
-					ISerializedObjectTree filtered = compact(child, filter);
+					ISerializedObjectTree filtered = compact(child, filter,level + 1);
 					filteredList.add(filtered);
 					if (filtered != child)
 						changed = true;

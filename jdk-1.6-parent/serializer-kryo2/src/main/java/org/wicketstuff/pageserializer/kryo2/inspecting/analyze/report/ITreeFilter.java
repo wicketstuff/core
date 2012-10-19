@@ -4,6 +4,6 @@ import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObject
 
 public interface ITreeFilter {
 
-	boolean accept(ISerializedObjectTree source);
+	boolean accept(ISerializedObjectTree source, int level);
 
 }
