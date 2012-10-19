@@ -8,27 +8,47 @@ import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObject
 public class TestTreeTransformator {
 
 	@Test
-	public void noop() {
-		TreeSizeReport tr = new TreeSizeReport();
-
-		ISerializedObjectTree tree = Trees.build(String.class, 30)
-				.withChild(String.class, 20).withChild(String.class, 10)
-				.multiply(2).parent().multiply(2).asTree();
-
-		tr.process(tree);
+	public void compact() {
+		ISerializedObjectTree tree = treeOf3Strings();
 
 		ISerializedObjectTree filtered = TreeTransformator.compact(tree,
 				new AcceptAll());
 		Assert.assertTrue(Trees.equals(tree, filtered));
-		tr.process(filtered);
 
 		filtered = TreeTransformator.compact(tree, new MaxDepth(1));
 		Assert.assertFalse(Trees.equals(tree, filtered));
-		tr.process(filtered);
 		
 		ISerializedObjectTree expected = Trees.build(String.class, 30)
 				.withChild(String.class, 40).multiply(2).asTree();
 		Assert.assertTrue(Trees.equals(expected, filtered));
+	}
+	
+	@Test
+	public void strip() {
+		ISerializedObjectTree tree = treeOfStringsAndNumbers();
+		
+		ISerializedObjectTree filtered = TreeTransformator.strip(tree,
+				new NotDepth(1));
+		
+		ISerializedObjectTree expected = Trees.build(String.class, 70)
+				.withChild(Double.class, 10)
+				.multiply(4).asTree();
+		
+		Assert.assertTrue(Trees.equals(expected, filtered));
+	}
+
+	private ISerializedObjectTree treeOf3Strings() {
+		ISerializedObjectTree tree = Trees.build(String.class, 30)
+				.withChild(String.class, 20).withChild(String.class, 10)
+				.multiply(2).parent().multiply(2).asTree();
+		return tree;
+	}
+
+	private ISerializedObjectTree treeOfStringsAndNumbers() {
+		ISerializedObjectTree tree = Trees.build(String.class, 30)
+				.withChild(Integer.class, 20).withChild(Double.class, 10)
+				.multiply(2).parent().multiply(2).asTree();
+		return tree;
 	}
 
 	private static class AcceptAll implements ITreeFilter {
@@ -49,6 +69,21 @@ public class TestTreeTransformator {
 		@Override
 		public boolean accept(ISerializedObjectTree source, int level) {
 			return this.level > level;
+		}
+
+	}
+	
+	private static class NotDepth implements ITreeFilter {
+
+		private final int level;
+
+		public NotDepth(int level) {
+			this.level = level;
+		}
+
+		@Override
+		public boolean accept(ISerializedObjectTree source, int level) {
+			return this.level != level;
 		}
 
 	}
