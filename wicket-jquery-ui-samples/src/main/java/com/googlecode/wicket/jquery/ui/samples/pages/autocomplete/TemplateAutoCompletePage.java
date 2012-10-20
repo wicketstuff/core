@@ -20,12 +20,12 @@ import com.googlecode.wicket.jquery.ui.template.IJQueryTemplate;
 public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public TemplateAutoCompletePage()
 	{
 		this.init();
 	}
-	
+
 	private void init()
 	{
 		// Model //
@@ -56,7 +56,7 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 				info("Your favorite rock genre is: " + this.getModelObject());
 				target.add(feedbackPanel);
 			}
-			
+
 			@Override
 			protected IJQueryTemplate newTemplate()
 			{
@@ -66,7 +66,7 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 
 					/**
 					 * For an AutoCompleteTextField, the template text should be of the form: <a>...</a>
-					 * 
+					 *
 					 * The template text will be enclosed in a <script type="text/x-jquery-tmpl" />.
 					 * You can use the "\n" character to properly format the template.
 					 */
@@ -92,12 +92,12 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 					{
 						return Arrays.asList("name", "coverUrl");
 					}
-					
+
 				};
 			}
 		});
 	}
-	
+
 	// List of Genre(s) //
 	static final List<Genre> GENRES = Arrays.asList(
 			new Genre("Black Metal", "cover-black-metal.png"),
@@ -109,9 +109,9 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 			new Genre("Power Metal", "cover-power-metal.png"),
 			new Genre("Symphonic Metal", "cover-symphonic-metal.png"),
 			new Genre("Trash Metal", "cover-trash-metal.png"),
-			new Genre("Vicking Metal", "cover-vicking-metal.png")); 
+			new Genre("Vicking Metal", "cover-vicking-metal.png"));
 
-	
+
 	// Bean //
 	static class Genre implements IClusterable
 	{
@@ -124,23 +124,23 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 
 		private final String name;
 		private final String cover;
-		
+
 		public Genre(final String name, final String cover)
 		{
 			this.name = name;
 			this.cover = cover;
 		}
-		
+
 		public String getName()
 		{
 			return this.name;
 		}
-		
+
 		public String getCoverUrl()
 		{
 			return UrlUtils.rewriteToContextRelative("images/" + this.cover, RequestCycle.get());
 		}
-		
+
 		/**
 		 * #toString() needs to be overridden if no renderer is provided.
 		 * #toString() is also used by {@link AutoCompleteUtils#contains(List, String)} method.

@@ -30,7 +30,7 @@ import org.apache.wicket.model.IModel;
  * @author Sebastien Briquet - sebfz1
  * @param <T> the model object type
  */
-public abstract class AbstractFormDialog<T extends Serializable> extends AbstractDialog<T> // implements IFormSubmitter
+public abstract class AbstractFormDialog<T extends Serializable> extends AbstractDialog<T>
 {
 	private static final long serialVersionUID = 1L;
 

@@ -24,10 +24,11 @@ import org.apache.wicket.model.IModel;
 import com.googlecode.wicket.jquery.ui.IJQueryWidget;
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
+import com.googlecode.wicket.jquery.ui.Options;
 
 /**
  * Provides a jQuery button based on the built-in AjaxButton
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -75,7 +76,7 @@ public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form
 	{
 		super(id, model, form);
 	}
-	
+
 	/**
 	 * Gets the icon being displayed in the button
 	 * @return null by default
@@ -84,7 +85,7 @@ public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form
 	{
 		return null;
 	}
-	
+
 	// Events //
 	@Override
 	protected void onInitialize()
@@ -94,10 +95,24 @@ public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form
 		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
 	}
 
+	/**
+	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
+	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
+	 *
+	 * @param behavior the {@link JQueryBehavior}
+	 */
+	protected void onConfigure(JQueryBehavior behavior)
+	{
+		if (this.getIcon() != null)
+		{
+			behavior.setOption("icons", String.format("{ primary: '%s' }", this.getIcon()));
+		}
+	}
+
 	@Override
 	protected void onError(AjaxRequestTarget target, Form<?> form)
 	{
-	}	
+	}
 
 	// IJQueryWidget //
 	@Override
@@ -106,17 +121,11 @@ public abstract class AjaxButton extends org.apache.wicket.ajax.markup.html.form
 		return new JQueryBehavior(selector, METHOD) {
 
 			private static final long serialVersionUID = 1L;
-			
-			/**
-			 * Use onConfigure() to provide late options updates
-			 */
+
 			@Override
 			public void onConfigure(Component component)
 			{
-				if (getIcon() != null)
-				{
-					this.setOption("icons", String.format("{ primary: '%s' }", getIcon()));
-				}
+				AjaxButton.this.onConfigure(this);
 			}
 		};
 	}

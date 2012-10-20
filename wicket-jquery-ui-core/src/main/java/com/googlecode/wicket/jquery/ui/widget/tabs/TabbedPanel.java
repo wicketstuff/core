@@ -175,7 +175,7 @@ public class TabbedPanel extends JQueryPanel
 			{
 				TabbedPanel.this.onConfigure(this);
 
-				this.setOption("show", TabbedPanel.this.onShowBehavior.getCallbackFunction()); //'show' is used instead of 'select' for an AjaxTab to be loaded event if it is the first tab
+				this.setOption("show", TabbedPanel.this.onShowBehavior.getCallbackFunction()); //'show' is used instead of 'select' for an AjaxTab to be loaded even if it is the first tab
 			}
 		};
 	}

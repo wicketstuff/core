@@ -16,29 +16,25 @@
  */
 package com.googlecode.wicket.jquery.ui.form.button;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebSession;
 
 import com.googlecode.wicket.jquery.ui.IJQuerySecurityProvider;
-import com.googlecode.wicket.jquery.ui.IJQueryWidget;
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 
 /**
  * Provides a jQuery button based on the built-in AjaxButton, protected by roles. Roles are checked against an {@link IJQuerySecurityProvider}<br/>
- * Assuming the {@link WebSession} is implementing {@link IJQuerySecurityProvider} if not provided. 
- * 
+ * Assuming the {@link WebSession} is implementing {@link IJQuerySecurityProvider} if not provided.
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
-public abstract class SecuredAjaxButton extends AjaxButton implements IJQueryWidget
+public abstract class SecuredAjaxButton extends AjaxButton
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private String[] roles;
 	private final IJQuerySecurityProvider provider;
 
@@ -51,7 +47,7 @@ public abstract class SecuredAjaxButton extends AjaxButton implements IJQueryWid
 	{
 		this(id, (IJQuerySecurityProvider) WebSession.get(), roles);
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -61,7 +57,7 @@ public abstract class SecuredAjaxButton extends AjaxButton implements IJQueryWid
 	public SecuredAjaxButton(String id, IJQuerySecurityProvider provider, String... roles)
 	{
 		super(id);
-		
+
 		this.roles = roles;
 		this.provider = provider;
 	}
@@ -87,7 +83,7 @@ public abstract class SecuredAjaxButton extends AjaxButton implements IJQueryWid
 	public SecuredAjaxButton(String id, Form<?> form, IJQuerySecurityProvider provider, String... roles)
 	{
 		super(id, form);
-		
+
 		this.roles = roles;
 		this.provider = provider;
 	}
@@ -113,7 +109,7 @@ public abstract class SecuredAjaxButton extends AjaxButton implements IJQueryWid
 	public SecuredAjaxButton(String id, IModel<String> model, IJQuerySecurityProvider provider, String... roles)
 	{
 		super(id, model);
-		
+
 		this.roles = roles;
 		this.provider = provider;
 	}
@@ -141,7 +137,7 @@ public abstract class SecuredAjaxButton extends AjaxButton implements IJQueryWid
 	public SecuredAjaxButton(String id, IModel<String> model, Form<?> form, IJQuerySecurityProvider provider, String... roles)
 	{
 		super(id, model, form);
-		
+
 		this.roles = roles;
 		this.provider = provider;
 	}
@@ -155,12 +151,6 @@ public abstract class SecuredAjaxButton extends AjaxButton implements IJQueryWid
 		this.roles = roles;
 	}
 
-//	@Override
-//	public boolean isEnabled()
-//	{
-//		return super.isEnabled() && !this.isLocked(); //moved to onConfigure
-//	}
-	
 	/**
 	 * Indicates whether the button is locked.
 	 * @return the result of {@link IJQuerySecurityProvider#hasRole(String...)}
@@ -172,14 +162,6 @@ public abstract class SecuredAjaxButton extends AjaxButton implements IJQueryWid
 
 	// Events //
 	@Override
-	protected void onInitialize()
-	{
-		super.onInitialize();
-		
-		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
-	}
-
-	@Override
 	protected void onConfigure()
 	{
 		super.onConfigure();
@@ -188,23 +170,9 @@ public abstract class SecuredAjaxButton extends AjaxButton implements IJQueryWid
 	}
 
 	@Override
-	protected void onError(AjaxRequestTarget target, Form<?> form)
+	protected void onConfigure(JQueryBehavior behavior)
 	{
-	}	
-
-	// IJQueryWidget //
-	@Override
-	public JQueryBehavior newWidgetBehavior(String selector)
-	{
-		return new JQueryBehavior(selector, "button") {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				this.setOption("icons", String.format("{ primary: '%s' }", isLocked() ? JQueryIcon.Locked : JQueryIcon.Unlocked));
-			}
-		};
+		//super.onConfigure(behavior); do not call super
+		behavior.setOption("icons", String.format("{ primary: '%s' }", isLocked() ? JQueryIcon.Locked : JQueryIcon.Unlocked));
 	}
 }

@@ -20,7 +20,6 @@ import java.io.Serializable;
 
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 
 /**
  * Provides a dialog having a content coming from a {@link Fragment}
@@ -29,15 +28,16 @@ import org.apache.wicket.model.Model;
  *
  * @param <T> the type of the model object
  */
-public abstract class FragmentDialog<T extends Serializable> extends AbstractDialog<T>
+public abstract class FragmentFormDialog<T extends Serializable> extends AbstractFormDialog<T>
 {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @param id the markupId, an html div suffice to host a dialog.
-	 * @param title the title of the dialog
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
 	 */
-	public FragmentDialog(String id, String title)
+	public FragmentFormDialog(String id, String title)
 	{
 		super(id, title);
 
@@ -45,11 +45,12 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	}
 
 	/**
-	 * @param id the markupId, an html div suffice to host a dialog.
-	 * @param title the title of the dialog
-	 * @param model the model to be used in the dialog. It is retransmitted to the {@link DialogEvent} object.
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
+	 * @param model the dialog's model
 	 */
-	public FragmentDialog(String id, String title, Model<T> model)
+	public FragmentFormDialog(String id, String title, IModel<T> model)
 	{
 		super(id, title, model);
 
@@ -57,11 +58,12 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	}
 
 	/**
-	 * @param id the markupId, an html div suffice to host a dialog.
-	 * @param title the title of the dialog
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
 	 * @param modal indicates whether the dialog is modal
 	 */
-	public FragmentDialog(String id, String title, boolean modal)
+	public FragmentFormDialog(String id, String title, boolean modal)
 	{
 		super(id, title, modal);
 
@@ -69,12 +71,13 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	}
 
 	/**
-	 * @param id markupId, an html div suffice to host a dialog.
-	 * @param title the title of the dialog
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
+	 * @param model the dialog's model
 	 * @param modal indicates whether the dialog is modal
-	 * @param model the model to be used in the dialog; it is retransmitted to the {@link DialogEvent} object.
 	 */
-	public FragmentDialog(String id, String title, IModel<T> model, boolean modal)
+	public FragmentFormDialog(String id, String title, IModel<T> model, boolean modal)
 	{
 		super(id, title, model, modal);
 

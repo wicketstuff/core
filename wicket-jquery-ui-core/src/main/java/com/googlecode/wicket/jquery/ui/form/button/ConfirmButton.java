@@ -19,12 +19,12 @@ package com.googlecode.wicket.jquery.ui.form.button;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.IFormSubmittingComponent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.panel.FormSubmittingPanel;
+import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButtons;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogIcon;
@@ -37,7 +37,6 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.MessageDialog;
  * <br/>
  * <b>Warning: </b> it is not possible to get a form component value - that is going to be changed - to be displayed in the dialog box message. The reason is that in order to get a form component (updated) model object, the form component should be validated. The dialog does not proceed to a (whole) form validation while being opened, because the form validation will occur when the user will confirm (by clicking on OK button). This the intended behavior.
  *
- * @see IFormSubmittingComponent
  * @author Sebastien Briquet - sebfz1
  */
 public abstract class ConfirmButton extends FormSubmittingPanel<String>
@@ -67,20 +66,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 	{
 		super(id, message);
 
-		final MessageDialog dialog = new MessageDialog("dialog", title, this.getModel(), DialogButtons.OK_CANCEL, DialogIcon.WARN) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onClose(AjaxRequestTarget target, DialogButton button)
-			{
-				if (button != null && button.equals(LBL_OK))
-				{
-					ConfirmButton.this.submit(target);
-				}
-			}
-		};
-
+		final AbstractDialog<?> dialog = this.newDialog("dialog", title, this.getModel());
 		this.add(dialog);
 
 		final AjaxButton button = new AjaxButton("button") {
@@ -90,7 +76,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 			@Override
 			protected JQueryIcon getIcon()
 			{
-				return JQueryIcon.Alert;
+				return ConfirmButton.this.getIcon();
 			}
 
 			@Override
@@ -103,5 +89,42 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 		this.add(button.setDefaultFormProcessing(false)); //does not validate the form before the dialog is being displayed
 
 		button.add(new Label("label", new Model<String>(label)).setRenderBodyOnly(true));
+	}
+
+	// Properties //
+	/**
+	 * Gets the icon being displayed in the button
+	 * @return the {@link JQueryIcon}
+	 */
+	protected JQueryIcon getIcon()
+	{
+		return JQueryIcon.Alert;
+	}
+
+	// Factories //
+	/**
+	 * Create the dialog instance<br/>
+	 * <b>Warning:</b> to be overridden with care!
+	 *
+	 * @param id the markupId
+	 * @param title the title of the dialog
+	 * @param message the message to be displayed
+	 * @return the dialog instance
+	 */
+	protected AbstractDialog<?> newDialog(String id, String title, IModel<String> message)
+	{
+		return new MessageDialog(id, title, message, DialogButtons.OK_CANCEL, DialogIcon.WARN) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onClose(AjaxRequestTarget target, DialogButton button)
+			{
+				if (button != null && button.equals(LBL_OK))
+				{
+					ConfirmButton.this.submit(target);
+				}
+			}
+		};
 	}
 }
