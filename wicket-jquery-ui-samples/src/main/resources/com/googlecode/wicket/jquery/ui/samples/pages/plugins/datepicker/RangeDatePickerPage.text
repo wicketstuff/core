@@ -5,5 +5,5 @@
 This jQuery plugin serves as example for the tutorial "Step #3, handling callbacks" (<i>currently writing</i>)<br/>
 
 <h4>Since</h4>
-wicket-jquery-ui-plugin-1.2.3-SNAPSHOT<br/>
-wicket-jquery-ui-plugin-6.0.1-SNAPSHOT
+wicket-jquery-ui-plugin-1.3.0<br/>
+wicket-jquery-ui-plugin-6.1.0
