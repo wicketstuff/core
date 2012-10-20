@@ -4,7 +4,7 @@
 ## Artifacts
 - jQuery UI `jquery-ui-core`
 - Kendo UI `jquery-ui-kendo`
-- FullCalendar `jquery-ui-calendar`
+- Calendar `jquery-ui-calendar`
 
 ## Getting started
 In order to get started using this API, you may download appropriate jar(s) or set a maven dependency.  
@@ -21,17 +21,6 @@ You may also download other jars as required (ie: `jquery-ui-kendo`). Once done,
     <artifactId>jquery-ui-core</artifactId>
     <version>1.2.2</version>
 </dependency>
-```
-
-You might need to define the repository (either in your `pom.xml` or `settings.xml`)
-```xml
-<repositories>
-    <repository>
-       <id>sonatype-releases</id>
-       <name>Sonatype Releases Repository</name>
-       <url>http://oss.sonatype.org/content/repositories/releases/</url>
-    </repository>
-</repositories>
 ```
 
 If the version you specified is *snapshot*, you might define this repository:
