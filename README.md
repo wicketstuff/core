@@ -19,7 +19,7 @@ You may also download other jars as required (ie: `jquery-ui-kendo`). Once done,
 <dependency>
     <groupId>com.googlecode.wicket-jquery-ui</groupId>
     <artifactId>jquery-ui-core</artifactId>
-    <version>1.2.2</version>
+    <version>1.2.3</version> <!-- <version>6.1.0</version> -->
 </dependency>
 ```
 
@@ -56,7 +56,8 @@ The base template page is the following: (you might change the CSS href accordin
 ### Setting up the HTML markup, for Kendo UI
 Kendo UI also needs CSSs to work. You need to download your own copy of Kendo UI: <http://www.kendoui.com/get-kendo-ui.aspx>.  
 
-Once done, you have to copy `kendo.common.min.css` and `kendo.choosen_theme.min.css` in into you webapp, as well as the corresponding *theme* folder and the `texture` folder.  
+Once done, you have to copy `kendo.common.min.css` and `kendo.choosen_theme.min.css` in into you webapp,  
+as well as the `texture` folder and the corresponding `choosen_theme` folder.
 
 The base template page is then the following: (you might change the CSS href accordingly)
 ```html
