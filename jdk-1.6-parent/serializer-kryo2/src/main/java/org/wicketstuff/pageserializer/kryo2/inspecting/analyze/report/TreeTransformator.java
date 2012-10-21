@@ -1,109 +1,79 @@
 package org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ImmutableTree;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTreeProcessor;
 
-public class TreeTransformator
+public class TreeTransformator implements ISerializedObjectTreeProcessor
 {
-	static final Level TOP=new Level();
+	private final ISerializedObjectTreeProcessor destination;
+	private final IFilter[] filter;
 
-	private TreeTransformator()
+	public TreeTransformator(ISerializedObjectTreeProcessor destination, IFilter... filter)
 	{
-		// no instance
+		this.destination = destination;
+		this.filter = filter;
 	}
 
-	public static ISerializedObjectTree compact(ISerializedObjectTree source, ITreeFilter filter)
+	@Override
+	public void process(ISerializedObjectTree tree)
 	{
-		return compact(source, filter, TOP);
-	}
-
-	static ISerializedObjectTree compact(ISerializedObjectTree source, ITreeFilter filter, Level level)
-	{
-		if (filter.accept(source, level))
+		ISerializedObjectTree current = tree;
+		for (IFilter f : filter)
 		{
-			if (!source.children().isEmpty())
+			switch (f.filterType())
 			{
-				boolean changed = false;
-
-				List<ISerializedObjectTree> filteredList = new ArrayList<ISerializedObjectTree>();
-				for (ISerializedObjectTree child : source.children())
-				{
-					ISerializedObjectTree filtered = compact(child, filter, level.down());
-					filteredList.add(filtered);
-					if (filtered != child)
-					{
-						changed = true;
-					}
-				}
-
-				if (changed)
-				{
-					return new ImmutableTree(source.type(), source.label(), source.size(),
-						filteredList);
-				}
+				case COMPACT :
+					current = TreeTransformations.compact(current, f);
+					break;
+				case STRIP :
+					current = TreeTransformations.strip(current, f);
+					break;
 			}
-			return source;
 		}
-		else
-		{
-			return new ImmutableTree(source.type(), source.label(), source.size() +
-				source.childSize(), new ArrayList<ISerializedObjectTree>());
-		}
+		destination.process(current);
 	}
 
-	public static ISerializedObjectTree strip(ISerializedObjectTree source, ITreeFilter filter)
-	{
-		Level level = TOP;
-
-		if (!filter.accept(source, level))
-			throw new IllegalArgumentException("can not strip top level element");
-
-		return strip(source, filter, level);
+	public enum FilterType {
+		COMPACT, STRIP;
 	}
 
-	private static ISerializedObjectTree strip(ISerializedObjectTree source, ITreeFilter filter,
-		Level level)
+	public interface IFilter extends ITreeFilter
 	{
+		FilterType filterType();
+	}
+	
+	static class Filter implements IFilter {
 
-		boolean changed = false;
-		int localSize = 0;
-
-		List<ISerializedObjectTree> filteredList = new ArrayList<ISerializedObjectTree>();
+		private final ITreeFilter filter;
+		private final FilterType type;
 		
-		Level levelOneDown = level.down();
-		
-		for (ISerializedObjectTree child : source.children())
+		public Filter(FilterType type, ITreeFilter filter)
 		{
-			if (filter.accept(child, levelOneDown))
-			{
-				ISerializedObjectTree filtered = strip(child, filter, levelOneDown);
-				filteredList.add(filtered);
-				if (filtered != child)
-				{
-					changed = true;
-				}
-			}
-			else
-			{
-				changed = true;
-				localSize = localSize + child.size();
-				for (ISerializedObjectTree childOfChild : child.children())
-				{
-					ISerializedObjectTree filtered = strip(childOfChild, filter, levelOneDown);
-					filteredList.add(filtered);
-				}
-			}
+			this.type = type;
+			this.filter = filter;
+		}
+		
+		@Override
+		public boolean accept(ISerializedObjectTree source, Level current)
+		{
+			return filter.accept(source, current);
 		}
 
-		if (changed)
+		@Override
+		public FilterType filterType()
 		{
-			return new ImmutableTree(source.type(), source.label(), source.size() + localSize,
-				filteredList);
+			return type;
 		}
-		return source;
+		
 	}
 
+	public static IFilter strip(ITreeFilter f)
+	{
+		return new Filter(FilterType.STRIP,f);
+	}
+	
+	public static IFilter compact(ITreeFilter f)
+	{
+		return new Filter(FilterType.COMPACT,f);
+	}
 }
