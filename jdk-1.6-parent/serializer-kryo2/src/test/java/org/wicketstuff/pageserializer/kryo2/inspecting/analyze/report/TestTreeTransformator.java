@@ -11,7 +11,7 @@ public class TestTreeTransformator
 	@Test
 	public void compactWithNoChange()
 	{
-		ISerializedObjectTree tree = treeOf3Strings();
+		ISerializedObjectTree tree = treeOf3();
 
 		ISerializedObjectTree filtered = TreeTransformator.compact(tree, new AcceptAll());
 
@@ -22,12 +22,12 @@ public class TestTreeTransformator
 	@Test
 	public void compact()
 	{
-		ISerializedObjectTree tree = treeOf3Strings();
+		ISerializedObjectTree tree = treeOf3();
 
 		ISerializedObjectTree filtered = TreeTransformator.compact(tree, new MaxDepth(1));
 
-		ISerializedObjectTree expected = Trees.build(String.class, 30)
-			.withChild(String.class, 40)
+		ISerializedObjectTree expected = Trees.build(A.class, 30)
+			.withChild(B.class, 40)
 			.multiply(2)
 			.asTree();
 		Assert.assertTrue(Trees.equals(expected, filtered));
@@ -36,35 +36,23 @@ public class TestTreeTransformator
 	@Test
 	public void strip()
 	{
-		ISerializedObjectTree tree = treeOfStringsAndNumbers();
+		ISerializedObjectTree tree = treeOf3();
 
 		ISerializedObjectTree filtered = TreeTransformator.strip(tree, new NotDepth(1));
 
-		ISerializedObjectTree expected = Trees.build(String.class, 70)
-			.withChild(Double.class, 10)
+		ISerializedObjectTree expected = Trees.build(A.class, 70)
+			.withChild(C.class, 10)
 			.multiply(4)
 			.asTree();
 
 		Assert.assertTrue(Trees.equals(expected, filtered));
 	}
 
-	private ISerializedObjectTree treeOf3Strings()
+	private ISerializedObjectTree treeOf3()
 	{
-		ISerializedObjectTree tree = Trees.build(String.class, 30)
-			.withChild(String.class, 20)
-			.withChild(String.class, 10)
-			.multiply(2)
-			.parent()
-			.multiply(2)
-			.asTree();
-		return tree;
-	}
-
-	private ISerializedObjectTree treeOfStringsAndNumbers()
-	{
-		ISerializedObjectTree tree = Trees.build(String.class, 30)
-			.withChild(Integer.class, 20)
-			.withChild(Double.class, 10)
+		ISerializedObjectTree tree = Trees.build(A.class, 30)
+			.withChild(B.class, 20)
+			.withChild(C.class, 10)
 			.multiply(2)
 			.parent()
 			.multiply(2)
@@ -117,4 +105,23 @@ public class TestTreeTransformator
 
 	}
 
+	static class A
+	{
+
+	}
+
+	static class B
+	{
+
+	}
+
+	static class C
+	{
+
+	}
+
+	static class D
+	{
+
+	}
 }
