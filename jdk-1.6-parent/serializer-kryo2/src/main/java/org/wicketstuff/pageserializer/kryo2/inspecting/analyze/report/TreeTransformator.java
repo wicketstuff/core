@@ -8,6 +8,8 @@ import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ImmutableTree;
 
 public class TreeTransformator
 {
+	static final Level TOP=new Level();
+
 	private TreeTransformator()
 	{
 		// no instance
@@ -15,10 +17,10 @@ public class TreeTransformator
 
 	public static ISerializedObjectTree compact(ISerializedObjectTree source, ITreeFilter filter)
 	{
-		return compact(source, filter, 0);
+		return compact(source, filter, TOP);
 	}
 
-	static ISerializedObjectTree compact(ISerializedObjectTree source, ITreeFilter filter, int level)
+	static ISerializedObjectTree compact(ISerializedObjectTree source, ITreeFilter filter, Level level)
 	{
 		if (filter.accept(source, level))
 		{
@@ -29,7 +31,7 @@ public class TreeTransformator
 				List<ISerializedObjectTree> filteredList = new ArrayList<ISerializedObjectTree>();
 				for (ISerializedObjectTree child : source.children())
 				{
-					ISerializedObjectTree filtered = compact(child, filter, level + 1);
+					ISerializedObjectTree filtered = compact(child, filter, level.down());
 					filteredList.add(filtered);
 					if (filtered != child)
 					{
@@ -54,7 +56,7 @@ public class TreeTransformator
 
 	public static ISerializedObjectTree strip(ISerializedObjectTree source, ITreeFilter filter)
 	{
-		int level = 0;
+		Level level = TOP;
 
 		if (!filter.accept(source, level))
 			throw new IllegalArgumentException("can not strip top level element");
@@ -63,18 +65,21 @@ public class TreeTransformator
 	}
 
 	private static ISerializedObjectTree strip(ISerializedObjectTree source, ITreeFilter filter,
-		int level)
+		Level level)
 	{
 
 		boolean changed = false;
 		int localSize = 0;
 
 		List<ISerializedObjectTree> filteredList = new ArrayList<ISerializedObjectTree>();
+		
+		Level levelOneDown = level.down();
+		
 		for (ISerializedObjectTree child : source.children())
 		{
-			if (filter.accept(child, level + 1))
+			if (filter.accept(child, levelOneDown))
 			{
-				ISerializedObjectTree filtered = strip(child, filter, level + 1);
+				ISerializedObjectTree filtered = strip(child, filter, levelOneDown);
 				filteredList.add(filtered);
 				if (filtered != child)
 				{
@@ -87,7 +92,7 @@ public class TreeTransformator
 				localSize = localSize + child.size();
 				for (ISerializedObjectTree childOfChild : child.children())
 				{
-					ISerializedObjectTree filtered = strip(childOfChild, filter, level + 1);
+					ISerializedObjectTree filtered = strip(childOfChild, filter, levelOneDown);
 					filteredList.add(filtered);
 				}
 			}
