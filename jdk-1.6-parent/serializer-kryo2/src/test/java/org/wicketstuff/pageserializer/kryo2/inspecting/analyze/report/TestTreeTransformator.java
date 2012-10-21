@@ -20,7 +20,7 @@ public class TestTreeTransformator
 	}
 
 	@Test
-	public void compact()
+	public void removeAllNodesDeeperThan2()
 	{
 		ISerializedObjectTree tree = treeOf3();
 
@@ -63,7 +63,7 @@ public class TestTreeTransformator
 	private static class AcceptAll implements ITreeFilter
 	{
 		@Override
-		public boolean accept(ISerializedObjectTree source, int level)
+		public boolean accept(ISerializedObjectTree source, Level level)
 		{
 			return true;
 		}
@@ -80,9 +80,9 @@ public class TestTreeTransformator
 		}
 
 		@Override
-		public boolean accept(ISerializedObjectTree source, int level)
+		public boolean accept(ISerializedObjectTree source, Level level)
 		{
-			return this.level > level;
+			return level.distanceFromTop() < this.level ;
 		}
 
 	}
@@ -98,9 +98,9 @@ public class TestTreeTransformator
 		}
 
 		@Override
-		public boolean accept(ISerializedObjectTree source, int level)
+		public boolean accept(ISerializedObjectTree source, Level level)
 		{
-			return this.level != level;
+			return this.level != level.distanceFromTop();
 		}
 
 	}
