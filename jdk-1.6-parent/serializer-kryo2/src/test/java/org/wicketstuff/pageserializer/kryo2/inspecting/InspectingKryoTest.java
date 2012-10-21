@@ -10,10 +10,14 @@ import org.apache.wicket.util.lang.Bytes;
 import org.junit.Test;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.AnalyzingSerializationListener;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.IObjectLabelizer;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTreeProcessor;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.TreeProcessors;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.ITreeFilter;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.Level;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SortedTreeSizeReport;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TreeSizeReport;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TreeTransformator;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TypeSizeReport;
 
 public class InspectingKryoTest
@@ -43,9 +47,19 @@ public class InspectingKryoTest
 		};
 		ISerializedObjectTreeProcessor treeProcessor = TreeProcessors.listOf(new TypeSizeReport(),
 			new TreeSizeReport(), new SortedTreeSizeReport());
+		ITreeFilter filter=new ITreeFilter()
+		{
+			@Override
+			public boolean accept(ISerializedObjectTree source, Level current)
+			{
+				return source.type()!=Class.class;
+			}
+		};
+		ISerializedObjectTreeProcessor cleanedTreeProcessor = new TreeTransformator(treeProcessor, TreeTransformator.strip(filter));
 		ISerializationListener listener = SerializationListener.listOf(
 			new LoggingSerializationListener(), new AnalyzingSerializationListener(labelizer,
-				treeProcessor));
+				treeProcessor), new AnalyzingSerializationListener(labelizer,
+					cleanedTreeProcessor));
 		InspectingKryoSerializer kryo = new InspectingKryoSerializer(Bytes.bytes(1000), listener);
 
 		byte[] data = kryo.serialize(root);

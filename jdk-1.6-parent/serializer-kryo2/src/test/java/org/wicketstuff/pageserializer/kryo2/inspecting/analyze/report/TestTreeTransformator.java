@@ -13,7 +13,7 @@ public class TestTreeTransformator
 	{
 		ISerializedObjectTree tree = treeOf3();
 
-		ISerializedObjectTree filtered = TreeTransformator.compact(tree, new AcceptAll());
+		ISerializedObjectTree filtered = TreeTransformations.compact(tree, new AcceptAll());
 
 		Assert.assertTrue(Trees.equals(tree, filtered));
 		Assert.assertTrue(tree == filtered);
@@ -24,7 +24,7 @@ public class TestTreeTransformator
 	{
 		ISerializedObjectTree tree = treeOf3();
 
-		ISerializedObjectTree filtered = TreeTransformator.compact(tree, new MaxDepth(1));
+		ISerializedObjectTree filtered = TreeTransformations.compact(tree, new MaxDepth(1));
 
 		ISerializedObjectTree expected = Trees.build(A.class, 30)
 			.withChild(B.class, 40)
@@ -38,7 +38,7 @@ public class TestTreeTransformator
 	{
 		ISerializedObjectTree tree = treeOf3();
 
-		ISerializedObjectTree filtered = TreeTransformator.strip(tree, new NotDepth(1));
+		ISerializedObjectTree filtered = TreeTransformations.strip(tree, new NotDepth(1));
 
 		ISerializedObjectTree expected = Trees.build(A.class, 70)
 			.withChild(C.class, 10)
@@ -53,7 +53,7 @@ public class TestTreeTransformator
 	{
 		ISerializedObjectTree tree = treeOf3();
 
-		ISerializedObjectTree filtered = TreeTransformator.strip(tree, new NotDepth(2));
+		ISerializedObjectTree filtered = TreeTransformations.strip(tree, new NotDepth(2));
 
 		ISerializedObjectTree expected = Trees.build(A.class, 30)
 			.withChild(B.class, 40)
@@ -68,7 +68,7 @@ public class TestTreeTransformator
 	{
 		ISerializedObjectTree tree = treeOf3();
 
-		ISerializedObjectTree filtered = TreeTransformator.strip(tree, new NotDepth(0));
+		ISerializedObjectTree filtered = TreeTransformations.strip(tree, new NotDepth(0));
 	}
 	
 	private ISerializedObjectTree treeOf3()
