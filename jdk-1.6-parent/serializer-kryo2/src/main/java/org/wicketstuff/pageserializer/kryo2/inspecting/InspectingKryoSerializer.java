@@ -25,15 +25,17 @@ public class InspectingKryoSerializer extends KryoSerializer
 	@Override
 	public byte[] serialize(Object object)
 	{
-		try
+		byte[] ret;
+//		try
 		{
 			serializingListener.begin(object);
-			return super.serialize(object);
+			ret = super.serialize(object);
 		}
-		finally
+//		finally
 		{
 			serializingListener.end(object);
 		}
+		return ret;
 	}
 
 	protected final ISerializationListener serializingListener()

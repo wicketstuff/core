@@ -1,5 +1,6 @@
 package org.wicketstuff.pageserializer.kryo2.inspecting;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SortedTree
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TreeSizeReport;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TreeTransformator;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TypeSizeReport;
+import org.wicketstuff.pageserializer.kryo2.inspecting.validation.DefaultJavaSerializationValidator;
 
 public class InspectingKryoTest
 {
@@ -56,7 +58,7 @@ public class InspectingKryoTest
 			}
 		};
 		ISerializedObjectTreeProcessor cleanedTreeProcessor = new TreeTransformator(treeProcessor, TreeTransformator.strip(filter));
-		ISerializationListener listener = SerializationListener.listOf(
+		ISerializationListener listener = SerializationListener.listOf(new DefaultJavaSerializationValidator(),
 			new LoggingSerializationListener(), new AnalyzingSerializationListener(labelizer,
 				treeProcessor), new AnalyzingSerializationListener(labelizer,
 					cleanedTreeProcessor));
@@ -72,7 +74,7 @@ public class InspectingKryoTest
 		Assert.assertEquals(root, readBack);
 	}
 
-	static class Dummy
+	static class Dummy implements Serializable
 	{
 		String name = "Huauuauauaajjjajajjajj";
 
@@ -108,7 +110,7 @@ public class InspectingKryoTest
 
 	}
 
-	static class BiggerDummy
+	static class BiggerDummy implements Serializable
 	{
 		Dummy first = new Dummy();
 		Dummy second = new Dummy();
@@ -160,7 +162,7 @@ public class InspectingKryoTest
 		}
 	}
 
-	static class BiggestDummy
+	static class BiggestDummy implements Serializable
 	{
 		Dummy first = new Dummy();
 		BiggerDummy bigger = new BiggerDummy();
