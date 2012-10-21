@@ -7,136 +7,165 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ObjectTreeTracker {
+public class ObjectTreeTracker
+{
 
 	int lastPosition = 0;
 	private final IObjectLabelizer labelizer;
 	private Item currentItem;
 
-	public ObjectTreeTracker(IObjectLabelizer labelizer, Object root) {
+	public ObjectTreeTracker(IObjectLabelizer labelizer, Object root)
+	{
 		this.labelizer = labelizer;
 		this.currentItem = new Item(new ItemKey(root.getClass(), labelizer.labelFor(root)));
 	}
 
-	public void newItem(int position, Object object) {
+	public void newItem(int position, Object object)
+	{
 		int diff = updatePositionAndCalculateDiff(position);
-		currentItem = currentItem.newItem(diff, new ItemKey(object.getClass(),
-				labelizer.labelFor(object)));
+		currentItem = currentItem.newItem(diff,
+			new ItemKey(object.getClass(), labelizer.labelFor(object)));
 	}
 
-	public void closeItem(int position, Object object) {
+	public void closeItem(int position, Object object)
+	{
 		int diff = updatePositionAndCalculateDiff(position);
-		currentItem=currentItem.closeItem(diff, new ItemKey(object.getClass(),
-				labelizer.labelFor(object)));
+		currentItem = currentItem.closeItem(diff,
+			new ItemKey(object.getClass(), labelizer.labelFor(object)));
 	}
 
-	private int updatePositionAndCalculateDiff(int position) {
+	private int updatePositionAndCalculateDiff(int position)
+	{
 		int diff = position - lastPosition;
 		lastPosition = position;
 		return diff;
 	}
-	
-	public ISerializedObjectTree end(Object object) {
+
+	public ISerializedObjectTree end(Object object)
+	{
 		return asImmutableTree(stripRootNode());
 	}
 
-	private Item stripRootNode() {
+	private Item stripRootNode()
+	{
 		return currentItem.children().iterator().next();
 	}
-	
-	private static List<? extends ISerializedObjectTree> cloneList(Collection<Item> source) {
-		List<ImmutableTree> lchildren=new ArrayList<ImmutableTree>();
-		for (Item child : source) {
+
+	private static List<? extends ISerializedObjectTree> cloneList(Collection<Item> source)
+	{
+		List<ImmutableTree> lchildren = new ArrayList<ImmutableTree>();
+		for (Item child : source)
+		{
 			lchildren.add(asImmutableTree(child));
 		}
 		return lchildren;
 	}
 
-	private static ImmutableTree asImmutableTree(Item child) {
-		return new ImmutableTree(child.type(),child.label(),child.size(),cloneList(child.children()));
+	private static ImmutableTree asImmutableTree(Item child)
+	{
+		return new ImmutableTree(child.type(), child.label(), child.size(),
+			cloneList(child.children()));
 	}
 
 
-	static class Item {
+	static class Item
+	{
 
 		private final ItemKey key;
-		Map<ItemKey, Item> children=new LinkedHashMap<ItemKey, ObjectTreeTracker.Item>();
-		
-		int size=0;
-		
+		Map<ItemKey, Item> children = new LinkedHashMap<ItemKey, ObjectTreeTracker.Item>();
+
+		int size = 0;
+
 		Item parent = null;
 
-		public Item(ItemKey key) {
+		public Item(ItemKey key)
+		{
 			this.key = key;
 		}
 
-		public Item newItem(int diff, ItemKey key) {
-			size=size+diff;
+		public Item newItem(int diff, ItemKey key)
+		{
+			size = size + diff;
 			Item item = getOrCreateItem(key);
 			return item;
 		}
 
-		private Item getOrCreateItem(ItemKey key) {
-			Item item=children.get(key);
-			if (item==null) {
+		private Item getOrCreateItem(ItemKey key)
+		{
+			Item item = children.get(key);
+			if (item == null)
+			{
 				item = new Item(this, key);
 				children.put(key, item);
 			}
 			return item;
 		}
 
-		public Item closeItem(int diff, ItemKey key) {
-			if (!this.key.equals(key)) throw new IllegalArgumentException("key does not match "+this.key+"!="+key);
-			size=size+diff;
+		public Item closeItem(int diff, ItemKey key)
+		{
+			if (!this.key.equals(key))
+				throw new IllegalArgumentException("key does not match " + this.key + "!=" + key);
+			size = size + diff;
 			return parent;
 		}
 
-		private Item(Item parent, ItemKey key) {
+		private Item(Item parent, ItemKey key)
+		{
 			this(key);
 			this.parent = parent;
 		}
-		
-		public int size() {
+
+		public int size()
+		{
 			return size;
 		}
-		
-		public Class<? extends Object> type() {
+
+		public Class<? extends Object> type()
+		{
 			return key.type();
 		}
-		
-		public String label() {
+
+		public String label()
+		{
 			return key.label();
 		}
-		
-		public Collection<Item> children() {
+
+		public Collection<Item> children()
+		{
 			return children.values();
 		}
 	}
-	
-	static class ItemKey {
+
+	static class ItemKey
+	{
 		final Class<?> type;
 		final String label;
-		
-		public ItemKey(Class<?> type,String label) {
+
+		public ItemKey(Class<?> type, String label)
+		{
 			this.type = type;
 			this.label = label;
 		}
-		
-		public Class<?> type() {
+
+		public Class<?> type()
+		{
 			return type;
 		}
-		
-		public String label() {
+
+		public String label()
+		{
 			return label;
 		}
-		
+
 		@Override
-		public String toString() {
-			return "Key("+type+","+label+")";
+		public String toString()
+		{
+			return "Key(" + type + "," + label + ")";
 		}
-		
+
 		@Override
-		public int hashCode() {
+		public int hashCode()
+		{
 			final int prime = 31;
 			int result = 1;
 			result = prime * result + ((label == null) ? 0 : label.hashCode());
@@ -145,23 +174,28 @@ public class ObjectTreeTracker {
 		}
 
 		@Override
-		public boolean equals(Object obj) {
+		public boolean equals(Object obj)
+		{
 			if (this == obj)
 				return true;
 			if (obj == null)
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			ItemKey other = (ItemKey) obj;
-			if (label == null) {
+			ItemKey other = (ItemKey)obj;
+			if (label == null)
+			{
 				if (other.label != null)
 					return false;
-			} else if (!label.equals(other.label))
+			}
+			else if (!label.equals(other.label))
 				return false;
-			if (type == null) {
+			if (type == null)
+			{
 				if (other.type != null)
 					return false;
-			} else if (!type.equals(other.type))
+			}
+			else if (!type.equals(other.type))
 				return false;
 			return true;
 		}

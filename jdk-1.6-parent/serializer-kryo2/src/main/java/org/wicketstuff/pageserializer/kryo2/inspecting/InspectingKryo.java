@@ -10,82 +10,109 @@ import com.esotericsoftware.kryo.io.Output;
 
 import de.javakaffee.kryoserializers.KryoReflectionFactorySupport;
 
-public class InspectingKryo extends KryoReflectionFactorySupport {
+public class InspectingKryo extends KryoReflectionFactorySupport
+{
 
 	private final static Logger LOG = LoggerFactory.getLogger(InspectingKryo.class);
 	private final InspectingKryoSerializer parent;
-	
-	public InspectingKryo(InspectingKryoSerializer parent) {
+
+	public InspectingKryo(InspectingKryoSerializer parent)
+	{
 		this.parent = parent;
 	}
-	
+
 	@Override
-	public Registration writeClass(Output output, Class type) {
-		try {
+	public Registration writeClass(Output output, Class type)
+	{
+		try
+		{
 			before(output, type);
 			return super.writeClass(output, type);
-		} finally {
+		}
+		finally
+		{
 			after(output, type);
 		}
 	}
 
 	@Override
-	public void writeClassAndObject(Output output, Object object) {
-		try {
+	public void writeClassAndObject(Output output, Object object)
+	{
+		try
+		{
 			before(output, object);
 			super.writeClassAndObject(output, object);
-		} finally {
+		}
+		finally
+		{
 			after(output, object);
 		}
 	}
 
 	@Override
-	public void writeObject(Output output, Object object, Serializer serializer) {
-		try {
+	public void writeObject(Output output, Object object, Serializer serializer)
+	{
+		try
+		{
 			before(output, object);
 			super.writeObject(output, object, serializer);
-		} finally {
+		}
+		finally
+		{
 			after(output, object);
 		}
 	}
 
 	@Override
-	public void writeObject(Output output, Object object) {
-		try {
+	public void writeObject(Output output, Object object)
+	{
+		try
+		{
 			before(output, object);
 			super.writeObject(output, object);
-		} finally {
+		}
+		finally
+		{
 			after(output, object);
 		}
 	}
 
 	@Override
-	public void writeObjectOrNull(Output output, Object object, Class clazz) {
-		try {
+	public void writeObjectOrNull(Output output, Object object, Class clazz)
+	{
+		try
+		{
 			before(output, object);
 			super.writeObjectOrNull(output, object, clazz);
-		} finally {
+		}
+		finally
+		{
 			after(output, object);
 		}
 	}
 
 	@Override
-	public void writeObjectOrNull(Output output, Object object,
-			Serializer serializer) {
-		try {
+	public void writeObjectOrNull(Output output, Object object, Serializer serializer)
+	{
+		try
+		{
 			before(output, object);
 			super.writeObjectOrNull(output, object, serializer);
-		} finally {
+		}
+		finally
+		{
 			after(output, object);
 		}
 	}
 
-	private void before(Output output, Object object) {
-		parent.serializingListener().before(output.position(),object);
+	private void before(Output output, Object object)
+	{
+		parent.serializingListener().before(output.position(), object);
 	}
 
-	private void after(Output output, Object object) {
-		parent.serializingListener().after(output.position(),object);
+	private void after(Output output, Object object)
+	{
+		parent.serializingListener().after(output.position(), object);
 	}
 
 }

@@ -40,7 +40,8 @@ public class DebuggingKryo extends KryoReflectionFactorySupport
 	}
 
 	@Override
-	public void writeClassAndObject(Output buffer, Object object) {
+	public void writeClassAndObject(Output buffer, Object object)
+	{
 
 		if (object != null)
 		{

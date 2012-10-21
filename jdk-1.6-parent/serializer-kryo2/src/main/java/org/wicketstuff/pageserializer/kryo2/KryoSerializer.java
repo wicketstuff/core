@@ -133,7 +133,7 @@ public class KryoSerializer implements ISerializer
 		LOG.debug("Deserialized: '{}'", object);
 
 		// release the memory for the buffer
-		//buffer.clear();
+		// buffer.clear();
 		buffer = null;
 		System.runFinalization();
 
@@ -170,8 +170,7 @@ public class KryoSerializer implements ISerializer
 		kryo.register(Collections.EMPTY_SET.getClass(), new CollectionsEmptySetSerializer());
 		kryo.register(Collections.singletonList("").getClass(),
 			new CollectionsSingletonListSerializer());
-		kryo.register(Collections.singleton("").getClass(), new CollectionsSingletonSetSerializer(
-			));
+		kryo.register(Collections.singleton("").getClass(), new CollectionsSingletonSetSerializer());
 		kryo.register(Collections.singletonMap("", "").getClass(),
 			new CollectionsSingletonMapSerializer());
 		kryo.register(Currency.class, new CurrencySerializer());
