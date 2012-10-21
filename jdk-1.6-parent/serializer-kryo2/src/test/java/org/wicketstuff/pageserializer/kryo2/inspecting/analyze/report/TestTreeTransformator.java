@@ -34,7 +34,7 @@ public class TestTreeTransformator
 	}
 
 	@Test
-	public void strip()
+	public void removeAllBNodes()
 	{
 		ISerializedObjectTree tree = treeOf3();
 
@@ -48,6 +48,29 @@ public class TestTreeTransformator
 		Assert.assertTrue(Trees.equals(expected, filtered));
 	}
 
+	@Test
+	public void removeAllCNodes()
+	{
+		ISerializedObjectTree tree = treeOf3();
+
+		ISerializedObjectTree filtered = TreeTransformator.strip(tree, new NotDepth(2));
+
+		ISerializedObjectTree expected = Trees.build(A.class, 30)
+			.withChild(B.class, 40)
+			.multiply(2)
+			.asTree();
+		
+		Assert.assertTrue(Trees.equals(expected, filtered));
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void canNotRemoveANodes()
+	{
+		ISerializedObjectTree tree = treeOf3();
+
+		ISerializedObjectTree filtered = TreeTransformator.strip(tree, new NotDepth(0));
+	}
+	
 	private ISerializedObjectTree treeOf3()
 	{
 		ISerializedObjectTree tree = Trees.build(A.class, 30)
