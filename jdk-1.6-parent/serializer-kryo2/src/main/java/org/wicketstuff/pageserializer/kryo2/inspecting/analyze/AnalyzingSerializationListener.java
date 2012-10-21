@@ -26,14 +26,14 @@ public class AnalyzingSerializationListener implements ISerializationListener
 	public void before(int position, Object object)
 	{
 		ObjectTreeTracker treeTracker = tracker.get();
-		treeTracker.newItem(position, object);
+		if (object!=null) treeTracker.newItem(position, object);
 	}
 
 	@Override
 	public void after(int position, Object object)
 	{
 		ObjectTreeTracker treeTracker = tracker.get();
-		treeTracker.closeItem(position, object);
+		if (object!=null) treeTracker.closeItem(position, object);
 	}
 
 	@Override

@@ -11,27 +11,27 @@ public class LoggingSerializationListener implements ISerializationListener
 	@Override
 	public void begin(Object object)
 	{
-		LOG.error("Start for object: '{}'", object.getClass());
+		LOG.debug("Start for object: '{}'", object.getClass());
 	}
 
 	@Override
 	public void before(int position, Object object)
 	{
-		LOG.error("Start at '{}' byte for object:  '{}'", position,
+		LOG.debug("Start at '{}' byte for object:  '{}'", position,
 			object != null ? object.getClass() : "NULL");
 	}
 
 	@Override
 	public void after(int position, Object object)
 	{
-		LOG.error("End at   '{}' bytes for object: '{}'", position,
+		LOG.debug("End at   '{}' bytes for object: '{}'", position,
 			object != null ? object.getClass() : "NULL");
 	}
 
 	@Override
 	public void end(Object object)
 	{
-		LOG.error("End for object:   '{}'", object.getClass());
+		LOG.debug("End for object:   '{}'", object.getClass());
 	}
 
 }
