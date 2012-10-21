@@ -25,7 +25,7 @@ public class Interfaces
 				return null;
 			}
 		};
-		return (T)Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), new Class[] { type },
+		return (T)Proxy.newProxyInstance(Interfaces.class.getClassLoader(), new Class[] { type },
 			handler);
 	}
 }
