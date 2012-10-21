@@ -8,15 +8,21 @@ import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObject
 public class TestTreeTransformator {
 
 	@Test
-	public void compact() {
+	public void compactWithNoChange() {
 		ISerializedObjectTree tree = treeOf3Strings();
 
 		ISerializedObjectTree filtered = TreeTransformator.compact(tree,
 				new AcceptAll());
+		
 		Assert.assertTrue(Trees.equals(tree, filtered));
+		Assert.assertTrue(tree==filtered);
+	}
+	
+	@Test
+	public void compact() {
+		ISerializedObjectTree tree = treeOf3Strings();
 
-		filtered = TreeTransformator.compact(tree, new MaxDepth(1));
-		Assert.assertFalse(Trees.equals(tree, filtered));
+		ISerializedObjectTree filtered = TreeTransformator.compact(tree, new MaxDepth(1));
 		
 		ISerializedObjectTree expected = Trees.build(String.class, 30)
 				.withChild(String.class, 40).multiply(2).asTree();
