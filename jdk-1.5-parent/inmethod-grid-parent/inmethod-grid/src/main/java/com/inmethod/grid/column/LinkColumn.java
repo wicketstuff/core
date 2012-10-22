@@ -2,17 +2,15 @@ package com.inmethod.grid.column;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 
 import com.inmethod.grid.IRenderable;
+import com.inmethod.grid.datagrid.DataGrid;
 
 /**
- * Column to display links in the DataGrid
- * Created by IntelliJ IDEA.
- * User: Tom Burton
- * Date: 1/3/12
- * Time: 2:07 PM
+ * Abstract column for displaying links in a {@link DataGrid}
  *
  * @author Tom Burton
  */
@@ -20,6 +18,13 @@ public abstract class LinkColumn<M, I> extends AbstractColumn<M, I>
 {
   private String propertyLabel;
 
+  /**
+   *  Create a new Link Column
+   * @param columnId column id (must be unique within the grid)
+   * @param propertyLabel Label to display for the Link,
+   *        gotten from the model object itself ala {@link PropertyModel}
+   * @param headerModel model object for the column header
+   */
   public LinkColumn(String columnId, String propertyLabel,
                     IModel<String> headerModel)
   {
@@ -27,6 +32,14 @@ public abstract class LinkColumn<M, I> extends AbstractColumn<M, I>
     this.propertyLabel = propertyLabel;
   }
 
+  /**
+   *  Create a new Link Column
+   * @param columnId column id (must be unique within the grid)
+   * @param propertyLabel Label to display for the Link,
+   *        gotten from the model object itself ala {@link PropertyModel}
+   * @param headerModel model object for the column header
+   * @param sortProperty property to sort the column by
+   */
   public LinkColumn(String columnId, String propertyLabel,
                     IModel<String> headerModel, String sortProperty)
   {
@@ -67,11 +80,17 @@ public abstract class LinkColumn<M, I> extends AbstractColumn<M, I>
                };
   }
 
+  /** @return row model object property name for the link Text */
   public String getPropertyLabel() { return propertyLabel; }
 
+  /** @param propertyLabel row model object property name for the link Text */
   public void setPropertyLabel(String propertyLabel)
   { this.propertyLabel = propertyLabel; }
 
-  //TODO: should this work Like Page link? instead?
+  /**
+   * Called when a link is clicked.
+   * @see Link#onClick()
+   * @param rowModel Model Object for the DataGridRow being passed to the link
+   */
   public abstract void onClick(IModel<I> rowModel);
 }

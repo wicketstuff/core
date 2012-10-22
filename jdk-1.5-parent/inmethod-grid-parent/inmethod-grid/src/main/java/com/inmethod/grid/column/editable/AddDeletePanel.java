@@ -9,12 +9,8 @@ import com.inmethod.icon.Icon;
 import com.inmethod.icon.IconImage;
 
 /**
- * Panel for the AddDeleteColumn displays: Add, Cancel, and Delete buttons
- *
- * Created by IntelliJ IDEA.
- * User: Tom Burton
- * Date: 12/27/11
- * Time: 12:01 PM
+ * Backing Panel for {@link AddDeleteColumn}
+ * displays: Add, Cancel, and Delete buttons
  *
  * @author Tom Burton
  */

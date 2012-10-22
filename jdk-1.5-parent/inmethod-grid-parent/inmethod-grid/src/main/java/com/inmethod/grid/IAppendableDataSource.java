@@ -1,12 +1,10 @@
 package com.inmethod.grid;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Tom B.
- * Date: 9/20/11
- * Time: 10:56 AM
+ * Extends the {@link IDataSource} interface with methods necessary to support
+ * dynamically adding data to the provider
  *
- * @author Tom B.
+ * @author Tom Burton
  */
 public interface IAppendableDataSource<T> extends IDataSource<T>
 {
@@ -16,5 +14,10 @@ public interface IAppendableDataSource<T> extends IDataSource<T>
    */
   public void InsertRow(int index, T item);
 
+  /**
+   * Function for removing Data from the Provider at the specified index
+   *  @param index the index value to remove the data at
+   *  @param item Item to remove from the provider. (for confirmation)
+   */
   public void DeleteRow(int index, T item);
 }
