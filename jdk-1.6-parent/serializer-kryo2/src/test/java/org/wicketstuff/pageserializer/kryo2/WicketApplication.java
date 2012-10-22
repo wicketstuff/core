@@ -1,7 +1,9 @@
-package org.wicketstuff.pageserializer.kryo;
+package org.wicketstuff.pageserializer.kryo2;
 
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.lang.Bytes;
+import org.wicketstuff.pageserializer.kryo2.DebuggingKryo;
+import org.wicketstuff.pageserializer.kryo2.KryoSerializer;
 
 import com.esotericsoftware.kryo.Kryo;
 

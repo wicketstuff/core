@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.wicketstuff.pageserializer.kryo;
+package org.wicketstuff.pageserializer.kryo2;
 
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.serialize.ISerializer;
