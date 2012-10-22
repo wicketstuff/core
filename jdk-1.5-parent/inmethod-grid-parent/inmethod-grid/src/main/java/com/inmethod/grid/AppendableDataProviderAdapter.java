@@ -7,14 +7,10 @@ import java.util.List;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Tom B.
- * Date: 9/20/11
- * Time: 11:13 AM
+ * extends the functionality of {@link DataProviderAdapter} to
+ * make the DataProvider Appendable
  *
- * @author Tom B.
- *
- * TODO: make generic
+ * @author Tom Burton
  */
 public class AppendableDataProviderAdapter<T>
        extends DataProviderAdapter<T> implements IAppendableDataSource<T>
