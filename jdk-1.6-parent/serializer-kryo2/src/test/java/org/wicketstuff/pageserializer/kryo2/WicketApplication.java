@@ -2,10 +2,8 @@ package org.wicketstuff.pageserializer.kryo2;
 
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.lang.Bytes;
-import org.wicketstuff.pageserializer.kryo2.DebuggingKryo;
-import org.wicketstuff.pageserializer.kryo2.KryoSerializer;
-
-import com.esotericsoftware.kryo.Kryo;
+import org.wicketstuff.pageserializer.kryo2.inspecting.InspectingKryoSerializer;
+import org.wicketstuff.pageserializer.kryo2.inspecting.validation.DefaultJavaSerializationValidator;
 
 /**
  * Application object for your web application. If you want to run this application without
@@ -26,14 +24,6 @@ public class WicketApplication extends WebApplication
 	{
 		super.init();
 
-		getFrameworkSettings().setSerializer(new KryoSerializer(Bytes.bytes(500))
-		{
-
-			@Override
-			protected Kryo createKryo()
-			{
-				return new DebuggingKryo()/* .blacklist(Some.class) */;
-			}
-		});
+		getFrameworkSettings().setSerializer(new InspectingKryoSerializer(Bytes.bytes(1024*1024),new DefaultJavaSerializationValidator()));
 	}
 }

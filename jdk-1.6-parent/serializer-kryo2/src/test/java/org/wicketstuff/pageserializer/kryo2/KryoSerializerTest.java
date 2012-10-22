@@ -1,12 +1,12 @@
 package org.wicketstuff.pageserializer.kryo2;
 
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.serialize.ISerializer;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.wicketstuff.pageserializer.kryo2.KryoSerializer;
 
 /**
  * Simple test using the WicketTester
@@ -52,5 +52,36 @@ public class KryoSerializerTest
 			"The deserialized page must be of type HomePage. Type: " + object.getClass(),
 			object instanceof HomePage);
 
+	}
+
+	@Test
+	public void samplepageRendersSuccessfully()
+	{
+		// start and render the test page
+		SamplePage page = tester.startPage(SamplePage.class,
+			new PageParameters().add("Test", "asString"));
+
+		// assert rendered page class
+		tester.assertRenderedPage(SamplePage.class);
+
+		ISerializer pageSerializer = tester.getApplication().getFrameworkSettings().getSerializer();
+		Assert.assertTrue(
+			"The configured IObjectSerializer is not instance of KryoSerializer! Type: " +
+				pageSerializer.getClass(), pageSerializer instanceof KryoSerializer);
+
+		byte[] data = pageSerializer.serialize(page);
+		Assert.assertNotNull("The produced data should not be null!", data);
+
+		Object object = pageSerializer.deserialize(data);
+		Assert.assertTrue(
+			"The deserialized page must be of type HomePage. Type: " + object.getClass(),
+			object instanceof SamplePage);
+
+		SamplePage samplePage = (SamplePage)object;
+
+		tester.startPage(samplePage);
+
+		// assert rendered page class
+		tester.assertRenderedPage(SamplePage.class);
 	}
 }
