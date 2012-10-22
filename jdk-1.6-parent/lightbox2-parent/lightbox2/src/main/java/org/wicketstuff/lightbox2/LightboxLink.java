@@ -26,7 +26,8 @@ import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.lightbox2.references.LightboxCssResourceReference;
 import org.wicketstuff.lightbox2.references.LightboxJavascriptResourceReference;
 
-public class LightboxLink extends AbstractLink {
+public class LightboxLink extends AbstractLink
+{
 
 	private static final long serialVersionUID = 8055791489048600642L;
 
@@ -34,55 +35,64 @@ public class LightboxLink extends AbstractLink {
 	private final String contextRelativePath;
 	private final String group;
 
-	public LightboxLink(String id, final String contextRelativePath) {
-		this(id,contextRelativePath,null);
+	public LightboxLink(String id, final String contextRelativePath)
+	{
+		this(id, contextRelativePath, null);
 	}
-	
-	public LightboxLink(String id, final ResourceReference imageResource) {
-		this(id,imageResource,null);
+
+	public LightboxLink(String id, final ResourceReference imageResource)
+	{
+		this(id, imageResource, null);
 	}
-	
-	
-	public LightboxLink(String id, final String contextRelativePath, String group) {
+
+	public LightboxLink(String id, final String contextRelativePath, String group)
+	{
 		super(id);
 		this.contextRelativePath = contextRelativePath;
 		this.imageResourceReference = null;
 		this.group = group;
 	}
 
-	public LightboxLink(String id, final ResourceReference imageResource, String group) {
+	public LightboxLink(String id, final ResourceReference imageResource, String group)
+	{
 		super(id);
 		this.imageResourceReference = imageResource;
 		this.contextRelativePath = null;
 		this.group = group;
-	}	
+	}
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
+	public void renderHead(IHeaderResponse response)
+	{
 		super.renderHead(response);
 		response.render(JavaScriptHeaderItem.forReference(LightboxJavascriptResourceReference.get()));
 		response.render(CssHeaderItem.forReference(LightboxCssResourceReference.get()));
 	}
-	
+
 	@Override
-	protected void onComponentTag(ComponentTag tag) {
+	protected void onComponentTag(ComponentTag tag)
+	{
 		super.onComponentTag(tag);
 		checkComponentTag(tag, "a");
 		CharSequence charSequence = null;
-		if (contextRelativePath==null) {
-			charSequence = RequestCycle.get().urlFor(imageResourceReference, getPage().getPageParameters());
-		} else {
-			charSequence = contextRelativePath;			
+		if (contextRelativePath == null)
+		{
+			charSequence = RequestCycle.get().urlFor(imageResourceReference,
+				getPage().getPageParameters());
+		}
+		else
+		{
+			charSequence = contextRelativePath;
 		}
 		tag.put("href", charSequence);
 
 		StringBuilder stringRel = new StringBuilder();
 		stringRel.append("lightbox");
-		if (group!=null) {
+		if (group != null)
+		{
 			stringRel.append("[").append(group).append("]");
-		}		
+		}
 		tag.put("rel", stringRel);
 	}
-
 
 }

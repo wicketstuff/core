@@ -23,21 +23,25 @@ import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.lightbox2.LightboxLink;
 import org.wicketstuff.lightbox2.LightboxPanel;
 
-public class HomePage extends WebPage {
+public class HomePage extends WebPage
+{
 
 	private static final long serialVersionUID = -2090364494437192109L;
-	
-	public HomePage() {	
-		
+
+	public HomePage()
+	{
+
 		// Using Resoures
-		ResourceReference image = new PackageResourceReference(HomePage.class,"resources/image-1.jpg");		
-		ResourceReference thumbnail = new PackageResourceReference(HomePage.class,"resources/thumb-1.jpg");
+		ResourceReference image = new PackageResourceReference(HomePage.class,
+			"resources/image-1.jpg");
+		ResourceReference thumbnail = new PackageResourceReference(HomePage.class,
+			"resources/thumb-1.jpg");
 		add(new LightboxLink("link", image).add(new Image("image", thumbnail)));
 
-		//Image Set
-		add(new LightboxPanel("lightbox1", "images/image-1.jpg","images/thumb-1.jpg","plant"));		
-		add(new LightboxPanel("lightbox2", "images/image-2.jpg","images/thumb-2.jpg","plant"));		
-		add(new LightboxPanel("lightbox3", "images/image-3.jpg","images/thumb-3.jpg","plant"));		
+		// Image Set
+		add(new LightboxPanel("lightbox1", "images/image-1.jpg", "images/thumb-1.jpg", "plant"));
+		add(new LightboxPanel("lightbox2", "images/image-2.jpg", "images/thumb-2.jpg", "plant"));
+		add(new LightboxPanel("lightbox3", "images/image-3.jpg", "images/thumb-3.jpg", "plant"));
 
 	}
 

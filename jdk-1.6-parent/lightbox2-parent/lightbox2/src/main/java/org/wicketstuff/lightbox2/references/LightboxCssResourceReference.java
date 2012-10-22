@@ -18,17 +18,20 @@ package org.wicketstuff.lightbox2.references;
 
 import org.apache.wicket.request.resource.CssResourceReference;
 
-public class LightboxCssResourceReference extends CssResourceReference {
+public class LightboxCssResourceReference extends CssResourceReference
+{
 
 	private static final long serialVersionUID = 242982571994986917L;
 
 	private static final LightboxCssResourceReference INSTANCE = new LightboxCssResourceReference();
 
-	public static LightboxCssResourceReference get() {
+	public static LightboxCssResourceReference get()
+	{
 		return INSTANCE;
 	}
 
-	private LightboxCssResourceReference() {
+	private LightboxCssResourceReference()
+	{
 		super(LightboxCssResourceReference.class, "css/lightbox.css");
 	}
 }

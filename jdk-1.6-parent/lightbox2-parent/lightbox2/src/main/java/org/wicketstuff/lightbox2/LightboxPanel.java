@@ -20,27 +20,34 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.image.ContextImage;
 import org.apache.wicket.markup.html.panel.Panel;
 
-public class LightboxPanel extends Panel {
+public class LightboxPanel extends Panel
+{
 
 	private static final long serialVersionUID = 1021639483382388566L;
 
-	public LightboxPanel(String id, String image, String thumbnail) {
+	public LightboxPanel(String id, String image, String thumbnail)
+	{
 		this(id, image, thumbnail, null, null, null);
 	}
-	
-	public LightboxPanel(String id, String image, String thumbnail, String group) {
-		this(id, image, thumbnail, group, null, null);		
+
+	public LightboxPanel(String id, String image, String thumbnail, String group)
+	{
+		this(id, image, thumbnail, group, null, null);
 	}
 
-	public LightboxPanel(String id, String image, String thumbnail, String group, String linkTitle, String imageAlt) {
+	public LightboxPanel(String id, String image, String thumbnail, String group, String linkTitle,
+		String imageAlt)
+	{
 		super(id);
 		ContextImage contextImage = new ContextImage("imageResourceReference", thumbnail);
-		if (imageAlt != null) {
+		if (imageAlt != null)
+		{
 			contextImage.add(new AttributeModifier("alt", imageAlt));
 		}
 
-		LightboxLink lightboxLink = new LightboxLink("link", image,group);
-		if (linkTitle != null) {
+		LightboxLink lightboxLink = new LightboxLink("link", image, group);
+		if (linkTitle != null)
+		{
 			lightboxLink.add(new AttributeModifier("title", linkTitle));
 		}
 		lightboxLink.add(contextImage);

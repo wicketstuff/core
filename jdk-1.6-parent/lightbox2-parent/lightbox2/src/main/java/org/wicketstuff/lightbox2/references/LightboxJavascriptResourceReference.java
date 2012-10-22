@@ -25,29 +25,36 @@ import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
-public class LightboxJavascriptResourceReference extends JavaScriptResourceReference {
+public class LightboxJavascriptResourceReference extends JavaScriptResourceReference
+{
 
 	private static final long serialVersionUID = 8280254730894457750L;
-	
-    private static final LightboxJavascriptResourceReference INSTANCE = new LightboxJavascriptResourceReference();
 
-    public static LightboxJavascriptResourceReference get() {
-    	return INSTANCE;
-    }
-	
-    private LightboxJavascriptResourceReference() {
-        super(LightboxJavascriptResourceReference.class, "js/lightbox.js");
-    }    
-	
+	private static final LightboxJavascriptResourceReference INSTANCE = new LightboxJavascriptResourceReference();
+
+	public static LightboxJavascriptResourceReference get()
+	{
+		return INSTANCE;
+	}
+
+	private LightboxJavascriptResourceReference()
+	{
+		super(LightboxJavascriptResourceReference.class, "js/lightbox.js");
+	}
+
 	@Override
-	public Iterable<? extends HeaderItem> getDependencies() {
+	public Iterable<? extends HeaderItem> getDependencies()
+	{
 		List<HeaderItem> dependencies = new ArrayList<HeaderItem>();
-        for (Iterator<? extends HeaderItem> iterator = super.getDependencies().iterator(); iterator.hasNext();) {
-			HeaderItem headerItem = (HeaderItem) iterator.next();
+		for (Iterator<? extends HeaderItem> iterator = super.getDependencies().iterator(); iterator.hasNext();)
+		{
+			HeaderItem headerItem = (HeaderItem)iterator.next();
 			dependencies.add(headerItem);
-		}        
-        dependencies.add(JavaScriptHeaderItem.forReference(Application.get().getJavaScriptLibrarySettings().getJQueryReference()));
-        return dependencies;
+		}
+		dependencies.add(JavaScriptHeaderItem.forReference(Application.get()
+			.getJavaScriptLibrarySettings()
+			.getJQueryReference()));
+		return dependencies;
 	}
 
 }

@@ -19,10 +19,12 @@ package org.wicketstuff.lightbox2.example;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 
-public class Lightbox2Application extends WebApplication {
+public class Lightbox2Application extends WebApplication
+{
 
 	@Override
-	public Class<? extends Page> getHomePage() {
+	public Class<? extends Page> getHomePage()
+	{
 		return HomePage.class;
 	}
 
