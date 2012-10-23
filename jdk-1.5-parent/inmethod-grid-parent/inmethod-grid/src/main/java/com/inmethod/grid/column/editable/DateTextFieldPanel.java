@@ -116,7 +116,8 @@ public class DateTextFieldPanel<M, I> extends EditableCellPanel<M, I, Date>
 
 
 	@Override
-	public FormComponent getEditComponent() {
+	public FormComponent getEditComponent()
+  {
 		return (FormComponent) get(DateTextField_ID);
 	}
 }

@@ -9,9 +9,11 @@ import org.apache.wicket.model.IModel;
 import com.inmethod.grid.column.AbstractColumn;
 
 /**
+ * Backing Panel for {@link CheckBoxPropertyColumn}
  * Panel with a Checkbox that updates the property of the row immediately after
  * user leaves the field.
  * based on(read: copy-paste-modify) {@link TextFieldPanel} By Matej Knopp
+ *
  * @author Tom Burton
  */
 public class CheckBoxPanel<M, I> extends EditableCellPanel<M, I, Boolean>
