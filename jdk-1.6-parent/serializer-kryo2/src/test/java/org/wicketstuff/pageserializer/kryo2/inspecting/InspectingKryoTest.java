@@ -58,7 +58,7 @@ public class InspectingKryoTest
 			}
 		};
 		ISerializedObjectTreeProcessor cleanedTreeProcessor = new TreeTransformator(treeProcessor, TreeTransformator.strip(filter));
-		ISerializationListener listener = SerializationListener.listOf(new DefaultJavaSerializationValidator(),
+		ISerializationListener listener = SerializationListeners.listOf(new DefaultJavaSerializationValidator(),
 			new LoggingSerializationListener(), new AnalyzingSerializationListener(labelizer,
 				treeProcessor), new AnalyzingSerializationListener(labelizer,
 					cleanedTreeProcessor));
