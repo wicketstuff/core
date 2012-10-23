@@ -2,7 +2,7 @@ package org.wicketstuff.pageserializer.kryo2.inspecting;
 
 import org.wicketstuff.pageserializer.kryo2.common.Interfaces;
 
-public class SerializationListener
+public class SerializationListeners
 {
 
 	public static ISerializationListener listOf(ISerializationListener... listener)

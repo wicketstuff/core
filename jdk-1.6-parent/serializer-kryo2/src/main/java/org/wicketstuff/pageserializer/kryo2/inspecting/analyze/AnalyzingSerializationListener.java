@@ -1,11 +1,9 @@
 package org.wicketstuff.pageserializer.kryo2.inspecting.analyze;
 
-import org.wicketstuff.pageserializer.kryo2.inspecting.ISerializationListener;
+import org.wicketstuff.pageserializer.kryo2.inspecting.ThreadLocalContextSerializationListener;
 
-public class AnalyzingSerializationListener implements ISerializationListener
+public class AnalyzingSerializationListener extends ThreadLocalContextSerializationListener<ObjectTreeTracker>
 {
-
-	ThreadLocal<ObjectTreeTracker> tracker = new ThreadLocal<ObjectTreeTracker>();
 	private final IObjectLabelizer labelizer;
 	private final ISerializedObjectTreeProcessor treeProcessor;
 
@@ -17,33 +15,32 @@ public class AnalyzingSerializationListener implements ISerializationListener
 	}
 
 	@Override
-	public void begin(Object object)
+	protected ObjectTreeTracker createContext(Object object)
 	{
-		tracker.set(new ObjectTreeTracker(labelizer, object));
+		return new ObjectTreeTracker(labelizer, object);
+	}
+	
+	@Override
+	public void begin(ObjectTreeTracker treeTracker, Object object)
+	{
 	}
 
 	@Override
-	public void before(int position, Object object)
+	public void before(ObjectTreeTracker treeTracker, int position, Object object)
 	{
-		ObjectTreeTracker treeTracker = tracker.get();
 		if (object!=null) treeTracker.newItem(position, object);
 	}
 
 	@Override
-	public void after(int position, Object object)
+	public void after(ObjectTreeTracker treeTracker, int position, Object object)
 	{
-		ObjectTreeTracker treeTracker = tracker.get();
 		if (object!=null) treeTracker.closeItem(position, object);
 	}
 
 	@Override
-	public void end(Object object)
+	public void end(ObjectTreeTracker treeTracker, Object object)
 	{
-		ObjectTreeTracker treeTracker = tracker.get();
 		treeProcessor.process(treeTracker.end(object));
-		tracker.remove();
-
-
 	}
 
 }
