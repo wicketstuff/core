@@ -12,47 +12,67 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTreeProcessor;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.reportbuilder.AttributeBuilder;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.reportbuilder.Column;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.reportbuilder.Report;
 
 public class TypeSizeReport implements ISerializedObjectTreeProcessor
 {
 
 	private final static Logger LOG = LoggerFactory.getLogger(TypeSizeReport.class);
 
+	static final Column emptyFirst = new Column("",
+		new AttributeBuilder()
+			.set(Column.Separator, "|")
+			.build());
+	static final Column label = new Column("Type",
+		new AttributeBuilder().set(Column.FillAfter, '.')
+			.set(Column.Separator, "...")
+			.build());
+	static final Column size = new Column("bytes", new AttributeBuilder().set(Column.Align.Right)
+		.set(Column.FillBefore, '.')
+		.set(Column.Separator, "|")
+		.build());
+	
 	@Override
 	public void process(ISerializedObjectTree tree)
 	{
-		Map<Class<?>, Counter> map = new HashMap<Class<?>, TypeSizeReport.Counter>();
-		process(tree, map);
-
-		List<Map.Entry<Class<?>, Counter>> sorted = new ArrayList<Map.Entry<Class<?>, Counter>>();
-		sorted.addAll(map.entrySet());
-		Collections.sort(sorted, new Comparator<Map.Entry<Class<?>, Counter>>()
+		if (LOG.isDebugEnabled())
 		{
-			@Override
-			public int compare(Entry<Class<?>, Counter> o1, Entry<Class<?>, Counter> o2)
+			Map<Class<?>, Counter> map = new HashMap<Class<?>, TypeSizeReport.Counter>();
+			process(tree, map);
+	
+			List<Map.Entry<Class<?>, Counter>> sorted = new ArrayList<Map.Entry<Class<?>, Counter>>();
+			sorted.addAll(map.entrySet());
+			Collections.sort(sorted, new Comparator<Map.Entry<Class<?>, Counter>>()
 			{
-				int s1 = o1.getValue().size;
-				int s2 = o2.getValue().size;
-				return s1 == s2 ? 0 : s1 > s2 ? -1 : 1;
-			}
-		});
+				@Override
+				public int compare(Entry<Class<?>, Counter> o1, Entry<Class<?>, Counter> o2)
+				{
+					int s1 = o1.getValue().size;
+					int s2 = o2.getValue().size;
+					return s1 == s2 ? 0 : s1 > s2 ? -1 : 1;
+				}
+			});
 
-		StringBuilder sb = new StringBuilder();
-		sb.append("\n-----------------------------\n");
-		int labelColumnSize = 0;
-		int sizeColumnSize = 0;
-		for (Map.Entry<Class<?>, Counter> e : sorted)
-		{
-			labelColumnSize = Math.max(labelColumnSize, e.getKey().getName().length());
-			sizeColumnSize = Math.max(sizeColumnSize, ("" + e.getValue().size).length());
+// StringBuilder sb = new StringBuilder();
+
+// sb.append("\n-----------------------------\n");
+
+			Report report = new Report("\n");
+			for (Map.Entry<Class<?>, Counter> e : sorted)
+			{
+				report.newRow()
+					.set(label, 0, e.getKey().getName())
+					.set(size, 0, "" + e.getValue().size);
+			}
+			String result = report.export(emptyFirst, label, size)
+				.separateColumnNamesWith('-')
+				.tableBorderWith('=')
+				.asString();
+
+			LOG.debug(result);
 		}
-		for (Map.Entry<Class<?>, Counter> e : sorted)
-		{
-			Reports.label(sb, e.getKey().getName(), labelColumnSize + 3, '.');
-			Reports.rightColumn(sb, sizeColumnSize, '.', "" + e.getValue().size, '<');
-			sb.append("\n");
-		}
-		LOG.debug(sb.toString());
 	}
 
 	private void process(ISerializedObjectTree tree, Map<Class<?>, Counter> map)

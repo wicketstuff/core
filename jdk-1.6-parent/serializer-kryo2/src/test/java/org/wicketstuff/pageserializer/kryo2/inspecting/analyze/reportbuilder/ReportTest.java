@@ -70,8 +70,8 @@ public class ReportTest
 		row=report.newRow();
 		row.set(first, 1, "Start").set(number, 0, "20");
 		
-		String textReport = report.export(emptyStart, first, number).asString();
+		String textReport = report.export(emptyStart, first, number).separateColumnNamesWith('-').asString();
 
-		Assert.assertEquals("|Comp......|Calls|\n|Main......|  100|\n|--Login...|   80|\n|----Help..|   10|\n|--Start...|   20|\n", textReport);
+		Assert.assertEquals("|Comp......|Calls|\n------------------\n|Main......|  100|\n|--Login...|   80|\n|----Help..|   10|\n|--Start...|   20|\n", textReport);
 	}
 }
