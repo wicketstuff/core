@@ -11,9 +11,15 @@ import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.reportbuilder.Rep
 public class Report
 {
 	private final List<Row> rows = new ArrayList<Report.Row>();
+	private final String title;
 
-	public Report()
+	public Report() {
+		this(null);
+	}
+	
+	public Report(String title)
 	{
+		this.title = title;
 	}
 
 	public Row newRow()
@@ -76,11 +82,32 @@ public class Report
 
 		private final Column[] columns;
 		private final Report report;
+		boolean showColumnNames = true;
+		Character columnNamesSeparator = null;
+		Character tableBorder = null;
 
 		public Export(Report report, Column... columns)
 		{
 			this.report = report;
 			this.columns = columns;
+		}
+
+		public Export hideColumnNames()
+		{
+			showColumnNames = false;
+			return this;
+		}
+
+		public Export separateColumnNamesWith(char separator)
+		{
+			columnNamesSeparator = separator;
+			return this;
+		}
+
+		public Export tableBorderWith(char separator)
+		{
+			tableBorder = separator;
+			return this;
 		}
 
 		public String asString()
@@ -90,51 +117,82 @@ public class Report
 			{
 				String indent = c.attributes().get(Column.Indent, null);
 				int indentLen = indent != null ? indent.length() : 0;
-				columnWidth.put(c, Math.max(c.name.length(), report.width(c,indentLen)));
+				columnWidth.put(c, Math.max((showColumnNames ? c.name.length() : 0), report.width(c, indentLen)));
 			}
 
 			StringBuilder sb = new StringBuilder();
-			for (Column c : columns)
-			{
-				append(sb, columnWidth.get(c), 0, c.name, c.attributes());
-				sb.append(c.attributes().get(Column.Separator, ","));
+			if (report.title!=null) {
+				sb.append(report.title);
 			}
-			sb.append("\n");
+			
+			if (tableBorder!=null) {
+				lineSeparator(sb, columnWidth, tableBorder);
+			}
+			
+			if (showColumnNames) {
+				for (Column c : columns)
+				{
+					append(sb, columnWidth.get(c), 0, c.name, c.attributes());
+					sb.append(c.attributes().get(Column.Separator, ","));
+				}
+				sb.append("\n");
+				
+				if (columnNamesSeparator!=null) {
+					lineSeparator(sb, columnWidth, columnNamesSeparator);
+				}
+			}
 			for (Row r : report.rows)
 			{
 				for (Column c : columns)
 				{
 					RowColumnValue rcv = r.get(c);
-					String value=rcv!=null ? rcv.value() : null;
-					int indent=rcv!=null ? rcv.indent() : 0;
-					
+					String value = rcv != null ? rcv.value() : null;
+					int indent = rcv != null ? rcv.indent() : 0;
+
 					append(sb, columnWidth.get(c), indent, value, c.attributes());
 					sb.append(c.attributes().get(Column.Separator, ","));
 				}
 				sb.append("\n");
 			}
+			if (tableBorder!=null) {
+				lineSeparator(sb, columnWidth, tableBorder);
+			}
 			return sb.toString();
 		}
 
-		private void append(StringBuilder sb, int width, int indent, String value, IAttributes attributes)
+		private void lineSeparator(StringBuilder sb, Map<Column, Integer> columnWidth,
+			char separator)
+		{
+			for (Column c : columns)
+			{
+				fill(sb,columnWidth.get(c),separator);
+				fill(sb,c.attributes().get(Column.Separator, ",").length(),separator);
+			}					
+			sb.append("\n");
+		}
+
+		private void append(StringBuilder sb, int width, int indent, String value,
+			IAttributes attributes)
 		{
 			if (value == null)
 				value = "";
 
-			String indentValue=attributes.get(Column.Indent,"");
-			
+			String indentValue = attributes.get(Column.Indent, "");
+
 			switch (attributes.get(Column.Align.Left))
 			{
 				case Right :
-					fill(sb, width - value.length()-indentValue.length()*indent, attributes.get(Column.FillBefore, ' '));
+					fill(sb, width - value.length() - indentValue.length() * indent,
+						attributes.get(Column.FillBefore, ' '));
 					sb.append(value);
-					fill(sb, indent,indentValue);
+					fill(sb, indent, indentValue);
 					break;
 				case Left :
 				default :
-					fill(sb, indent,indentValue);
+					fill(sb, indent, indentValue);
 					sb.append(value);
-					fill(sb, width - value.length()-indentValue.length()*indent, attributes.get(Column.FillAfter, ' '));
+					fill(sb, width - value.length() - indentValue.length() * indent,
+						attributes.get(Column.FillAfter, ' '));
 					break;
 			}
 		}
@@ -147,7 +205,7 @@ public class Report
 			}
 
 		}
-		
+
 		private void fill(StringBuilder sb, int count, char c)
 		{
 			for (int i = 0; i < count; i++)
@@ -165,8 +223,8 @@ public class Report
 		int width = 0;
 		for (Row row : rows)
 		{
-			RowColumnValue rcv=row.get(c);
-			width = Math.max(width, rcv!=null ? rcv.width(indentLen) : 0);
+			RowColumnValue rcv = row.get(c);
+			width = Math.max(width, rcv != null ? rcv.width(indentLen) : 0);
 		}
 		return width;
 	}
