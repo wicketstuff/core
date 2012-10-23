@@ -54,10 +54,10 @@ public class ReportTest
 	}
 
 	@Test
-	public void createCustomReportWithIdent()
+	public void createCustomReportWithIndent()
 	{
 		Column emptyStart=new Column("",new AttributeBuilder().set(Column.Separator, "|").build());
-		Column first=new Column("Comp",new AttributeBuilder().set(Column.Separator, "..|").set(Column.Ident,"--").set(Column.FillAfter,'.').build());
+		Column first=new Column("Comp",new AttributeBuilder().set(Column.Separator, "..|").set(Column.Indent,"--").set(Column.FillAfter,'.').build());
 		Column number=new Column("Calls",new AttributeBuilder().set(Column.Align.Right).set(Column.Separator, "|").build());
 
 		Report report = new Report();

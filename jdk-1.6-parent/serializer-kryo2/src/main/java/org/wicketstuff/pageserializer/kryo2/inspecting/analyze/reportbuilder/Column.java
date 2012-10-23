@@ -50,5 +50,5 @@ public class Column
 	public static final TypedAttribute<Character> FillBefore = new CharType();
 	public static final TypedAttribute<Character> FillAfter = new CharType();
 	public static final TypedAttribute<String> Separator = new StringType();
-	public static final TypedAttribute<String> Ident = new StringType();
+	public static final TypedAttribute<String> Indent = new StringType();
 }
