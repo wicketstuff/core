@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTreeProcessor;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.Reports.Ident;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.reportbuilder.AttributeBuilder;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.reportbuilder.Column;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.reportbuilder.Report;
@@ -78,42 +77,10 @@ public class TreeSizeReport implements ISerializedObjectTreeProcessor
 		}
 	}
 
-	private void process(ISerializedObjectTree tree, StringBuilder sb, Ident ident, int level,
-		int allSize, int labelColumnSize)
-	{
-		Reports.label(sb, new Ident(ident.size() * level, ident.value()), label(tree),
-			labelColumnSize, '.');
-		Reports.rightColumn(sb, 4, '.', "" + ((tree.size() + tree.childSize()) * 100 / allSize),
-			'<');
-		sb.append("%.|");
-		Reports.rightColumn(sb, 8, '.', "" + (tree.size() + tree.childSize()), '<');
-		sb.append("|");
-		Reports.rightColumn(sb, 8, '.', "" + tree.size(), '<');
-		sb.append("|");
-		Reports.rightColumn(sb, 8, '.', "" + tree.childSize(), '<');
-		sb.append("\n");
-
-		for (ISerializedObjectTree child : preProcess(tree.children()))
-		{
-			process(child, sb, ident, level + 1, allSize, labelColumnSize);
-		}
-	}
-
 	protected List<? extends ISerializedObjectTree> preProcess(
 		List<? extends ISerializedObjectTree> children)
 	{
 		return children;
-	}
-
-	private int labelColumnSize(ISerializedObjectTree tree, Ident ident, int level,
-		int parentColumnSize)
-	{
-		int columnSize = label(tree).length() + level * ident.size();
-		for (ISerializedObjectTree child : tree.children())
-		{
-			columnSize = labelColumnSize(child, ident, level + 1, columnSize);
-		}
-		return Math.max(columnSize, parentColumnSize);
 	}
 
 	private String label(ISerializedObjectTree tree)
