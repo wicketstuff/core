@@ -27,11 +27,11 @@ public class Report
 	{
 		Map<Column, RowColumnValue> values = new HashMap<Column, RowColumnValue>();
 
-		public Row set(Column column, int ident, String value)
+		public Row set(Column column, int indent, String value)
 		{
 			if (value != null)
 			{
-				values.put(column, new RowColumnValue(ident, value));
+				values.put(column, new RowColumnValue(indent, value));
 			}
 			return this;
 		}
@@ -44,18 +44,18 @@ public class Report
 		static class RowColumnValue
 		{
 
-			private final int ident;
+			private final int indent;
 			private final String value;
 
-			public RowColumnValue(int ident, String value)
+			public RowColumnValue(int indent, String value)
 			{
-				this.ident = ident;
+				this.indent = indent;
 				this.value = value;
 			}
 
-			public int ident()
+			public int indent()
 			{
-				return ident;
+				return indent;
 			}
 
 			public String value()
@@ -63,9 +63,9 @@ public class Report
 				return value;
 			}
 
-			public int width(int identLen)
+			public int width(int indentLen)
 			{
-				return value.length() + identLen * ident;
+				return value.length() + indentLen * indent;
 			}
 		}
 
@@ -88,9 +88,9 @@ public class Report
 			Map<Column, Integer> columnWidth = new HashMap<Column, Integer>();
 			for (Column c : columns)
 			{
-				String ident = c.attributes().get(Column.Ident, null);
-				int identLen = ident != null ? ident.length() : 0;
-				columnWidth.put(c, Math.max(c.name.length(), report.width(c,identLen)));
+				String indent = c.attributes().get(Column.Indent, null);
+				int indentLen = indent != null ? indent.length() : 0;
+				columnWidth.put(c, Math.max(c.name.length(), report.width(c,indentLen)));
 			}
 
 			StringBuilder sb = new StringBuilder();
@@ -106,9 +106,9 @@ public class Report
 				{
 					RowColumnValue rcv = r.get(c);
 					String value=rcv!=null ? rcv.value() : null;
-					int ident=rcv!=null ? rcv.ident() : 0;
+					int indent=rcv!=null ? rcv.indent() : 0;
 					
-					append(sb, columnWidth.get(c), ident, value, c.attributes());
+					append(sb, columnWidth.get(c), indent, value, c.attributes());
 					sb.append(c.attributes().get(Column.Separator, ","));
 				}
 				sb.append("\n");
@@ -116,25 +116,25 @@ public class Report
 			return sb.toString();
 		}
 
-		private void append(StringBuilder sb, int width, int ident, String value, IAttributes attributes)
+		private void append(StringBuilder sb, int width, int indent, String value, IAttributes attributes)
 		{
 			if (value == null)
 				value = "";
 
-			String identValue=attributes.get(Column.Ident,"");
+			String indentValue=attributes.get(Column.Indent,"");
 			
 			switch (attributes.get(Column.Align.Left))
 			{
 				case Right :
-					fill(sb, width - value.length()-identValue.length()*ident, attributes.get(Column.FillBefore, ' '));
+					fill(sb, width - value.length()-indentValue.length()*indent, attributes.get(Column.FillBefore, ' '));
 					sb.append(value);
-					fill(sb, ident,identValue);
+					fill(sb, indent,indentValue);
 					break;
 				case Left :
 				default :
-					fill(sb, ident,identValue);
+					fill(sb, indent,indentValue);
 					sb.append(value);
-					fill(sb, width - value.length()-identValue.length()*ident, attributes.get(Column.FillAfter, ' '));
+					fill(sb, width - value.length()-indentValue.length()*indent, attributes.get(Column.FillAfter, ' '));
 					break;
 			}
 		}
@@ -160,13 +160,13 @@ public class Report
 
 	}
 
-	protected Integer width(Column c, int identLen)
+	protected Integer width(Column c, int indentLen)
 	{
 		int width = 0;
 		for (Row row : rows)
 		{
 			RowColumnValue rcv=row.get(c);
-			width = Math.max(width, rcv!=null ? rcv.width(identLen) : 0);
+			width = Math.max(width, rcv!=null ? rcv.width(indentLen) : 0);
 		}
 		return width;
 	}
