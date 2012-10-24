@@ -10,6 +10,8 @@ import com.inmethod.icon.IconImage;
 
 /**
  * Backing Panel for the {@link AddDeleteColumn }
+ * displays: Add, Cancel, and Delete buttons
+ *
  * @author Tom Burton
  */
 public abstract class AddDeletePanel<M, I> extends SubmitCancelPanel<M, I>

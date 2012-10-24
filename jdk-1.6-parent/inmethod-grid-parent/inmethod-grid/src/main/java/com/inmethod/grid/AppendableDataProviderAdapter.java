@@ -7,10 +7,10 @@ import java.util.List;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 
 /**
- * Appendable Data Provider Adapter that adds appendability
- * to IDataProvider instances
+ *  extends the functionality of {@link DataProviderAdapter} to
+ *  make @{link IDataProvider} instances Appendable
  *
- * @author Tom B.
+ * @author Tom Burton
  */
 public class AppendableDataProviderAdapter<T, S>
 	extends DataProviderAdapter<T, S> implements IAppendableDataSource<T>

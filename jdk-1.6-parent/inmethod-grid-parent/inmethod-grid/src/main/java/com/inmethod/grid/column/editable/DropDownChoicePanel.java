@@ -15,8 +15,8 @@ import org.apache.wicket.model.IModel;
 import com.inmethod.grid.column.AbstractColumn;
 
 /**
- * Panel with a DropDownChoice that updates the property of the row immediately after
- * user leaves the field.
+ * Backing Panel for {@link DropDownChoiceColumn} with a {@link DropDownChoice}
+ * that updates the property of the row immediately after the user leaves the field.
  *
  * @author Tom Burton
  */

@@ -18,6 +18,11 @@ import com.inmethod.icon.Icon;
  */
 public class AddDeleteColumn<M, I, S> extends SubmitCancelColumn<M, I, S>
 {
+
+  /** Create a new AddDeleteColumn
+   * @param columnId column identifier - must be unique within the grid
+   * @param headerModel model for column title
+   */
   public AddDeleteColumn(String columnId, IModel<String> headerModel)
   {
     super(columnId, headerModel);
@@ -33,7 +38,7 @@ public class AddDeleteColumn<M, I, S> extends SubmitCancelColumn<M, I, S>
 			private static final long serialVersionUID = 1L;
 
 			private WebMarkupContainer getRowComponent()
-      {	return getGrid().findParentRow(this); };
+      {	return getGrid().findParentRow(this); }
 
 			@Override
 			protected void onCancel(AjaxRequestTarget target)
