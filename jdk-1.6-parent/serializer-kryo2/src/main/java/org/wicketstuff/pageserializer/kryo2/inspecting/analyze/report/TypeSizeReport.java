@@ -34,6 +34,13 @@ import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.reportbuilder.Att
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.reportbuilder.Column;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.reportbuilder.Report;
 
+/**
+ * creates an report based on the types
+ * the size calculation can have some as we say in german "Ungenauigkeiten"
+ * because f.i. an array list can contain an array list, so the sizes of the sub list is added twice 
+ * @author mosmann
+ *
+ */
 public class TypeSizeReport implements ISerializedObjectTreeProcessor
 {
 
