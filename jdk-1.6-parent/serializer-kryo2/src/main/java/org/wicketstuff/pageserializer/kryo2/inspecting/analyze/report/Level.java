@@ -2,10 +2,18 @@ package org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * @author mosmann
+ *
+ */
 public class Level implements Serializable
 {
 	final Level parent;
 	
+	/**
+	 * Level Start
+	 */
 	public Level()
 	{
 		this(null);

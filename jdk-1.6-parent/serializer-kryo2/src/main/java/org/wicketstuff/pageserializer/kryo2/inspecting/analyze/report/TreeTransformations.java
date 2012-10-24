@@ -6,6 +6,11 @@ import java.util.List;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ImmutableTree;
 
+/**
+ * tree transformation utility class
+ * @author mosmann
+ *
+ */
 public class TreeTransformations
 {
 	static final Level TOP=new Level();
@@ -15,6 +20,12 @@ public class TreeTransformations
 		// no instance
 	}
 
+	/**
+	 * compact all child nodes into the marked by filter
+	 * @param source tree
+	 * @param filter filter
+	 * @return modified tree
+	 */
 	public static ISerializedObjectTree compact(ISerializedObjectTree source, ITreeFilter filter)
 	{
 		return compact(source, filter, TOP);
@@ -54,6 +65,12 @@ public class TreeTransformations
 		}
 	}
 
+	/**
+	 * removes matching nodes an reassign the child nodes
+	 * @param source tree
+	 * @param filter filter
+	 * @return modified tree
+	 */
 	public static ISerializedObjectTree strip(ISerializedObjectTree source, ITreeFilter filter)
 	{
 		Level level = TOP;

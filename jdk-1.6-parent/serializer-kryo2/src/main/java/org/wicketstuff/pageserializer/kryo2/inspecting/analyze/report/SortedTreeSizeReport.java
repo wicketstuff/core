@@ -7,6 +7,11 @@ import java.util.List;
 
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
 
+/**
+ * sort and render the tree based on absolute sizes
+ * @author mosmann
+ *
+ */
 public class SortedTreeSizeReport extends TreeSizeReport
 {
 

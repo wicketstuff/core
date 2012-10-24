@@ -4,7 +4,11 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * builder for generic typed attributes
+ * @author mosmann
+ *
+ */
 public class AttributeBuilder
 {
 	Map<Class<? extends Enum>, Enum> attributes = new HashMap<Class<? extends Enum>, Enum>();

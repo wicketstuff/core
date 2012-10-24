@@ -11,6 +11,11 @@ import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.reportbuilder.Col
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.reportbuilder.Report;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.reportbuilder.Report.Row;
 
+/**
+ * renders a tree into a report with sizes
+ * @author mosmann
+ *
+ */
 public class TreeSizeReport implements ISerializedObjectTreeProcessor
 {
 	static final Column emptyFirst = new Column("",
@@ -44,12 +49,6 @@ public class TreeSizeReport implements ISerializedObjectTreeProcessor
 	@Override
 	public void process(ISerializedObjectTree tree)
 	{
-//		Ident ident = new Ident(2, ' ');
-//		int labelColumnSize = labelColumnSize(tree, ident, 0, 0);
-
-//		StringBuilder sb = new StringBuilder();
-//		process(tree, sb, ident, 0, tree.size() + tree.childSize(), labelColumnSize);
-
 		if (LOG.isDebugEnabled()) {
 			Report report = new Report("\n");
 			process(tree, report, 0, tree.size() + tree.childSize());

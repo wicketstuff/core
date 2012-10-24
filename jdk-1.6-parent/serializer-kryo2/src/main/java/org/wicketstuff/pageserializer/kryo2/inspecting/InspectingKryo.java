@@ -9,13 +9,19 @@ import com.esotericsoftware.kryo.io.Output;
 
 import de.javakaffee.kryoserializers.KryoReflectionFactorySupport;
 
+/**
+ * main entry for serialization, deserialization
+ * 
+ * @author mosmann
+ * 
+ */
 public class InspectingKryo extends KryoReflectionFactorySupport
 {
 
 	private final static Logger LOG = LoggerFactory.getLogger(InspectingKryo.class);
 	private final InspectingKryoSerializer parent;
 
-	public InspectingKryo(InspectingKryoSerializer parent)
+	protected InspectingKryo(InspectingKryoSerializer parent)
 	{
 		this.parent = parent;
 	}

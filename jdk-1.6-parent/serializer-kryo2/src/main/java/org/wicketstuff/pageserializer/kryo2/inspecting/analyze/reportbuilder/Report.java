@@ -8,6 +8,11 @@ import java.util.Map;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.reportbuilder.Report.Row.RowColumnValue;
 
 
+/**
+ * report builder 
+ * @author mosmann
+ *
+ */
 public class Report
 {
 	private final List<Row> rows = new ArrayList<Report.Row>();
@@ -22,6 +27,10 @@ public class Report
 		this.title = title;
 	}
 
+	/**
+	 * adds a new row to the report
+	 * @return
+	 */
 	public Row newRow()
 	{
 		Row ret = new Row();
@@ -29,6 +38,11 @@ public class Report
 		return ret;
 	}
 
+	/**
+	 * a row with columns
+	 * @author mosmann
+	 *
+	 */
 	public static class Row
 	{
 		Map<Column, RowColumnValue> values = new HashMap<Column, RowColumnValue>();
@@ -77,6 +91,11 @@ public class Report
 
 	}
 
+	/**
+	 * report export 
+	 * @author mosmann
+	 *
+	 */
 	public static class Export
 	{
 
@@ -110,6 +129,10 @@ public class Report
 			return this;
 		}
 
+		/**
+		 * render report to string
+		 * @return
+		 */
 		public String asString()
 		{
 			Map<Column, Integer> columnWidth = new HashMap<Column, Integer>();
@@ -229,6 +252,11 @@ public class Report
 		return width;
 	}
 
+	/**
+	 * create report export
+	 * @param columns columns reported
+	 * @return report export
+	 */
 	public Export export(Column... columns)
 	{
 		return new Export(this, columns);

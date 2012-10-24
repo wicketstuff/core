@@ -7,7 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ObjectTreeTracker
+/**
+ * tree builder
+ * @author mosmann
+ *
+ */
+class ObjectTreeTracker
 {
 
 	int lastPosition = 0;
