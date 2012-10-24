@@ -16,32 +16,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.kryo2;
-
-import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.lang.Bytes;
-import org.wicketstuff.pageserializer.kryo2.inspecting.InspectingKryoSerializer;
-import org.wicketstuff.pageserializer.kryo2.inspecting.validation.DefaultJavaSerializationValidator;
+package org.wicketstuff.pageserializer.kryo2.inspecting.analyze;
 
 /**
- * Application object for your web application. If you want to run this application without
- * deploying, run the Start class.
- * 
- * @see org.wicketstuff.pageserializer.kryo.mycompany.Start#main(String[])
+ * tree processor utility class
+ * @author mosmann
+ *
  */
-public class WicketApplication extends WebApplication
+public final class TreeProcessors
 {
-	@Override
-	public Class<HomePage> getHomePage()
+	private TreeProcessors()
 	{
-		return HomePage.class;
+		// no instance
 	}
 
-	@Override
-	public void init()
+	/**
+	 * a list of tree processors listener as tree processor 
+	 * @param processors list of processors
+	 * @return wrap around the list
+	 */
+	public static ISerializedObjectTreeProcessor listOf(
+		final ISerializedObjectTreeProcessor... processors)
 	{
-		super.init();
-
-		getFrameworkSettings().setSerializer(new InspectingKryoSerializer(Bytes.bytes(1024*1024),new DefaultJavaSerializationValidator()));
+		return new ISerializedObjectTreeProcessor()
+		{
+			@Override
+			public void process(ISerializedObjectTree tree)
+			{
+				for (ISerializedObjectTreeProcessor p : processors)
+				{
+					p.process(tree);
+				}
+			}
+		};
 	}
 }

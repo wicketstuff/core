@@ -16,32 +16,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.kryo2;
+package org.wicketstuff.pageserializer.kryo2.inspecting.analyze;
 
-import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.lang.Bytes;
-import org.wicketstuff.pageserializer.kryo2.inspecting.InspectingKryoSerializer;
-import org.wicketstuff.pageserializer.kryo2.inspecting.validation.DefaultJavaSerializationValidator;
+import java.util.List;
 
 /**
- * Application object for your web application. If you want to run this application without
- * deploying, run the Start class.
+ * serialized tree
  * 
- * @see org.wicketstuff.pageserializer.kryo.mycompany.Start#main(String[])
+ * @author mosmann
+ * 
  */
-public class WicketApplication extends WebApplication
+public interface ISerializedObjectTree
 {
-	@Override
-	public Class<HomePage> getHomePage()
-	{
-		return HomePage.class;
-	}
 
-	@Override
-	public void init()
-	{
-		super.init();
+	/**
+	 * node type
+	 * 
+	 * @return type
+	 */
+	Class<? extends Object> type();
 
-		getFrameworkSettings().setSerializer(new InspectingKryoSerializer(Bytes.bytes(1024*1024),new DefaultJavaSerializationValidator()));
-	}
+	/**
+	 * node label if any
+	 * 
+	 * @return type
+	 */
+	String label();
+
+	/**
+	 * size of object without children
+	 * 
+	 * @return size in bytes
+	 */
+	int size();
+
+	/**
+	 * size of all children
+	 * 
+	 * @return size in bytes
+	 */
+	int childSize();
+
+	/**
+	 * list of children
+	 * 
+	 * @return immutable
+	 */
+	List<? extends ISerializedObjectTree> children();
+
 }

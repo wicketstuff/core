@@ -1,3 +1,21 @@
+/**
+ * Copyright (C) 2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.wicketstuff.pageserializer.kryo2;
 
 import java.lang.reflect.InvocationHandler;
@@ -111,18 +129,22 @@ public class KryoSerializer implements ISerializer
 	{
 		LOG.debug("Going to serialize: '{}'", object);
 		Output buffer = getBuffer(object);
-		getKryo().writeClassAndObject(buffer, object);
-		byte[] data=buffer.toBytes();
-		if (data==null) {
-			LOG.error("Kryo wasn't able to serialize: '{}'", object);
+		try {
+			getKryo().writeClassAndObject(buffer, object);
+			byte[] data = buffer.toBytes();
+			if (data == null)
+			{
+				LOG.error("Kryo wasn't able to serialize: '{}'", object);
+			}
+
+			// release the memory for the buffer
+			buffer.clear();
+			buffer = null;
+
+			return data;
+		} finally {
+			System.runFinalization();
 		}
-
-		// release the memory for the buffer
-		buffer.clear();
-		buffer = null;
-		System.runFinalization();
-
-		return data;
 	}
 
 	@Override
@@ -133,7 +155,7 @@ public class KryoSerializer implements ISerializer
 		LOG.debug("Deserialized: '{}'", object);
 
 		// release the memory for the buffer
-		//buffer.clear();
+		// buffer.clear();
 		buffer = null;
 		System.runFinalization();
 
@@ -170,8 +192,7 @@ public class KryoSerializer implements ISerializer
 		kryo.register(Collections.EMPTY_SET.getClass(), new CollectionsEmptySetSerializer());
 		kryo.register(Collections.singletonList("").getClass(),
 			new CollectionsSingletonListSerializer());
-		kryo.register(Collections.singleton("").getClass(), new CollectionsSingletonSetSerializer(
-			));
+		kryo.register(Collections.singleton("").getClass(), new CollectionsSingletonSetSerializer());
 		kryo.register(Collections.singletonMap("", "").getClass(),
 			new CollectionsSingletonMapSerializer());
 		kryo.register(Currency.class, new CurrencySerializer());

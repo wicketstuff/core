@@ -16,32 +16,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.kryo2;
+package org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report;
 
-import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.lang.Bytes;
-import org.wicketstuff.pageserializer.kryo2.inspecting.InspectingKryoSerializer;
-import org.wicketstuff.pageserializer.kryo2.inspecting.validation.DefaultJavaSerializationValidator;
+import java.io.Serializable;
 
 /**
- * Application object for your web application. If you want to run this application without
- * deploying, run the Start class.
  * 
- * @see org.wicketstuff.pageserializer.kryo.mycompany.Start#main(String[])
+ * @author mosmann
+ *
  */
-public class WicketApplication extends WebApplication
+public class Level implements Serializable
 {
-	@Override
-	public Class<HomePage> getHomePage()
+	final Level parent;
+	
+	/**
+	 * Level Start
+	 */
+	public Level()
 	{
-		return HomePage.class;
+		this(null);
 	}
-
-	@Override
-	public void init()
-	{
-		super.init();
-
-		getFrameworkSettings().setSerializer(new InspectingKryoSerializer(Bytes.bytes(1024*1024),new DefaultJavaSerializationValidator()));
+	
+	private Level(Level parent) {
+		this.parent=parent;
+	}
+	
+	public Level down() {
+		return new Level(this);
+	}
+	
+	public Level up() {
+		if (parent==null) throw new IllegalArgumentException("could not go up, parent is NULL");
+		return parent;
+	}
+	
+	public int distanceFromTop() {
+		return parent!=null ? 1 + parent.distanceFromTop() : 0;
 	}
 }

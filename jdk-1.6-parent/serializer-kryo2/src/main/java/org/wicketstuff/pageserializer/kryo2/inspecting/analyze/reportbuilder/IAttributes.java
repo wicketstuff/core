@@ -16,32 +16,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.kryo2;
+package org.wicketstuff.pageserializer.kryo2.inspecting.analyze.reportbuilder;
 
-import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.lang.Bytes;
-import org.wicketstuff.pageserializer.kryo2.inspecting.InspectingKryoSerializer;
-import org.wicketstuff.pageserializer.kryo2.inspecting.validation.DefaultJavaSerializationValidator;
+import java.io.Serializable;
 
 /**
- * Application object for your web application. If you want to run this application without
- * deploying, run the Start class.
- * 
- * @see org.wicketstuff.pageserializer.kryo.mycompany.Start#main(String[])
+ * typed attributes
+ * @author mosmann
+ *
  */
-public class WicketApplication extends WebApplication
+public interface IAttributes
 {
-	@Override
-	public Class<HomePage> getHomePage()
-	{
-		return HomePage.class;
-	}
+	/**
+	 * returns attribute with type T or defaultValue if not set
+	 * @param defaultValue 
+	 * @return attribute
+	 */
+	<T extends Enum<T>> T get(T defaultValue);
 
-	@Override
-	public void init()
-	{
-		super.init();
+	/**
+	 * returns attribute for id with type T
+	 * @param id attribute id
+	 * @param defaultValue default value
+	 * @return attribute
+	 */
+	<T extends Serializable> T get(TypedAttribute<T> id, T defaultValue);
 
-		getFrameworkSettings().setSerializer(new InspectingKryoSerializer(Bytes.bytes(1024*1024),new DefaultJavaSerializationValidator()));
-	}
 }

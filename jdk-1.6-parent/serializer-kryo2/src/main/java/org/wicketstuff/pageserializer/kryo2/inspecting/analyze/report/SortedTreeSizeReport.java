@@ -16,34 +16,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.kryo2;
+package org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
-public class HomePage extends WebPage
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
+
+/**
+ * sort and render the tree based on absolute sizes
+ * @author mosmann
+ *
+ */
+public class SortedTreeSizeReport extends TreeSizeReport
 {
-	private static final long serialVersionUID = 1L;
 
-	public HomePage(final PageParameters parameters)
+	@Override
+	protected List<? extends ISerializedObjectTree> preProcess(
+		List<? extends ISerializedObjectTree> children)
 	{
-		super(parameters);
 
-		add(new Label("label", "Kryo Rocks!"));
-
-		add(new AjaxLink<Void>("link")
+		List<ISerializedObjectTree> ret = new ArrayList<ISerializedObjectTree>();
+		ret.addAll(children);
+		Collections.sort(ret, new Comparator<ISerializedObjectTree>()
 		{
-			private static final long serialVersionUID = 1L;
-
 			@Override
-			public void onClick(AjaxRequestTarget target)
+			public int compare(ISerializedObjectTree o1, ISerializedObjectTree o2)
 			{
-				System.err.println("click");
+				int s1 = o1.size() + o1.childSize();
+				int s2 = o2.size() + o2.childSize();
+				return s1 == s2 ? 0 : s1 < s2 ? 1 : -1;
 			}
 		});
-
+		return ret;
 	}
 }

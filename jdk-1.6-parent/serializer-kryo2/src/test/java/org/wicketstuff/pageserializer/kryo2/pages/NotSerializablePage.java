@@ -16,32 +16,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.kryo2;
+package org.wicketstuff.pageserializer.kryo2.pages;
 
-import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.lang.Bytes;
-import org.wicketstuff.pageserializer.kryo2.inspecting.InspectingKryoSerializer;
-import org.wicketstuff.pageserializer.kryo2.inspecting.validation.DefaultJavaSerializationValidator;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.wicketstuff.pageserializer.kryo2.components.NotSerializablePanel;
 
-/**
- * Application object for your web application. If you want to run this application without
- * deploying, run the Start class.
- * 
- * @see org.wicketstuff.pageserializer.kryo.mycompany.Start#main(String[])
- */
-public class WicketApplication extends WebApplication
+public class NotSerializablePage extends SamplePage
 {
-	@Override
-	public Class<HomePage> getHomePage()
+	public NotSerializablePage(PageParameters pageParameters)
 	{
-		return HomePage.class;
+		super(pageParameters);
+		
+		add(new NotSerializablePanel("not"));
 	}
 
-	@Override
-	public void init()
-	{
-		super.init();
-
-		getFrameworkSettings().setSerializer(new InspectingKryoSerializer(Bytes.bytes(1024*1024),new DefaultJavaSerializationValidator()));
-	}
 }

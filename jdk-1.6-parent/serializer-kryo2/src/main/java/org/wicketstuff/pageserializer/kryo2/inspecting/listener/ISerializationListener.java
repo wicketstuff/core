@@ -16,32 +16,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.kryo2;
-
-import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.lang.Bytes;
-import org.wicketstuff.pageserializer.kryo2.inspecting.InspectingKryoSerializer;
-import org.wicketstuff.pageserializer.kryo2.inspecting.validation.DefaultJavaSerializationValidator;
+package org.wicketstuff.pageserializer.kryo2.inspecting.listener;
 
 /**
- * Application object for your web application. If you want to run this application without
- * deploying, run the Start class.
+ * serialization listener
  * 
- * @see org.wicketstuff.pageserializer.kryo.mycompany.Start#main(String[])
+ * @author mosmann
+ *
  */
-public class WicketApplication extends WebApplication
+public interface ISerializationListener
 {
-	@Override
-	public Class<HomePage> getHomePage()
-	{
-		return HomePage.class;
-	}
 
-	@Override
-	public void init()
-	{
-		super.init();
+	/**
+	 * called when serialization begins
+	 * @param object to be serialized
+	 */
+	void begin(Object object);
 
-		getFrameworkSettings().setSerializer(new InspectingKryoSerializer(Bytes.bytes(1024*1024),new DefaultJavaSerializationValidator()));
-	}
+	/**
+	 * before an object is written to output, this hook is called
+	 * @param position output stream position 
+	 * @param object
+	 */
+	void before(int position, Object object);
+
+	/**
+	 * after an object is written to output, this hook is called
+	 * if any exception is thrown, then this hook is NOT called
+	 * @param position
+	 * @param object
+	 */
+	void after(int position, Object object);
+
+	/**
+	 * callend when serialization ends
+	 * @param object the object it started with
+	 * @param exceptionIfAny if somethings throws an exception, this parameter is set
+	 */
+	void end(Object object, RuntimeException exceptionIfAny);
 }

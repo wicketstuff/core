@@ -16,32 +16,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.kryo2;
+package org.wicketstuff.pageserializer.kryo2.inspecting.listener;
 
-import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.lang.Bytes;
-import org.wicketstuff.pageserializer.kryo2.inspecting.InspectingKryoSerializer;
-import org.wicketstuff.pageserializer.kryo2.inspecting.validation.DefaultJavaSerializationValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Application object for your web application. If you want to run this application without
- * deploying, run the Start class.
+ * writes basic infos to log(Level=DEBUG)
  * 
- * @see org.wicketstuff.pageserializer.kryo.mycompany.Start#main(String[])
+ * @author mosmann
+ * 
  */
-public class WicketApplication extends WebApplication
+public class LoggingSerializationListener implements ISerializationListener
 {
+
+	private final static Logger LOG = LoggerFactory.getLogger(LoggingSerializationListener.class);
+
 	@Override
-	public Class<HomePage> getHomePage()
+	public void begin(Object object)
 	{
-		return HomePage.class;
+		LOG.debug("Start for object: '{}'", object.getClass());
 	}
 
 	@Override
-	public void init()
+	public void before(int position, Object object)
 	{
-		super.init();
-
-		getFrameworkSettings().setSerializer(new InspectingKryoSerializer(Bytes.bytes(1024*1024),new DefaultJavaSerializationValidator()));
+		LOG.debug("Start at '{}' byte for object:  '{}'", position,
+			object != null ? object.getClass() : "NULL");
 	}
+
+	@Override
+	public void after(int position, Object object)
+	{
+		LOG.debug("End at   '{}' bytes for object: '{}'", position,
+			object != null ? object.getClass() : "NULL");
+	}
+
+	@Override
+	public void end(Object object, RuntimeException exception)
+	{
+		LOG.debug("End for object:   '{}'", object.getClass());
+	}
+
 }

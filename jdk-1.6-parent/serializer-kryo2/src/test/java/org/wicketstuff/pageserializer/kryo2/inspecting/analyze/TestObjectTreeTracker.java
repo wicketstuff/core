@@ -16,34 +16,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.kryo2;
+package org.wicketstuff.pageserializer.kryo2.inspecting.analyze;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
+import junit.framework.Assert;
 
-public class HomePage extends WebPage
+import org.junit.Test;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.IObjectLabelizer;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ObjectTreeTracker;
+
+public class TestObjectTreeTracker
 {
-	private static final long serialVersionUID = 1L;
 
-	public HomePage(final PageParameters parameters)
+	@Test
+	public void testSizes()
 	{
-		super(parameters);
 
-		add(new Label("label", "Kryo Rocks!"));
+		Object a = "HA";
+		Object b = 1;
 
-		add(new AjaxLink<Void>("link")
+		IObjectLabelizer labelizer = new IObjectLabelizer()
 		{
-			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onClick(AjaxRequestTarget target)
+			public String labelFor(Object object)
 			{
-				System.err.println("click");
+				return null;
 			}
-		});
+		};
 
+		ObjectTreeTracker tracker = new ObjectTreeTracker(labelizer, a);
+		tracker.newItem(0, a);
+		tracker.newItem(12, b);
+		tracker.closeItem(14, b);
+		tracker.closeItem(24, a);
+
+		ISerializedObjectTree tree = tracker.end(a);
+		Assert.assertEquals("size", 22, tree.size());
+		Assert.assertEquals("size", 2, tree.childSize());
 	}
 }

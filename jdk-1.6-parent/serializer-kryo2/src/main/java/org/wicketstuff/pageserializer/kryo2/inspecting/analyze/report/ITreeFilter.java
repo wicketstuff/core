@@ -16,32 +16,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.kryo2;
+package org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report;
 
-import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.lang.Bytes;
-import org.wicketstuff.pageserializer.kryo2.inspecting.InspectingKryoSerializer;
-import org.wicketstuff.pageserializer.kryo2.inspecting.validation.DefaultJavaSerializationValidator;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
 
 /**
- * Application object for your web application. If you want to run this application without
- * deploying, run the Start class.
- * 
- * @see org.wicketstuff.pageserializer.kryo.mycompany.Start#main(String[])
+ * tree filter
+ * @author mosmann
+ *
  */
-public class WicketApplication extends WebApplication
+public interface ITreeFilter
 {
-	@Override
-	public Class<HomePage> getHomePage()
-	{
-		return HomePage.class;
-	}
+	/**
+	 * returns true if the node should not be touched 
+	 * @param node tree node
+	 * @param level
+	 * @return 
+	 */
+	boolean accept(ISerializedObjectTree node, Level level);
 
-	@Override
-	public void init()
-	{
-		super.init();
-
-		getFrameworkSettings().setSerializer(new InspectingKryoSerializer(Bytes.bytes(1024*1024),new DefaultJavaSerializationValidator()));
-	}
 }
