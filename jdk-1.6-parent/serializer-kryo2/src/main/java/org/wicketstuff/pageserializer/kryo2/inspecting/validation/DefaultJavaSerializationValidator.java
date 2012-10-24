@@ -2,8 +2,9 @@ package org.wicketstuff.pageserializer.kryo2.inspecting.validation;
 
 import java.io.Serializable;
 
-import org.apache.wicket.WicketRuntimeException;
 import org.wicketstuff.pageserializer.kryo2.inspecting.ISerializationListener;
+
+import com.esotericsoftware.kryo.KryoException;
 
 public class DefaultJavaSerializationValidator implements ISerializationListener
 {
@@ -23,15 +24,13 @@ public class DefaultJavaSerializationValidator implements ISerializationListener
 	@Override
 	public void after(int position, Object object)
 	{
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void end(Object object)
+	public void end(Object object,RuntimeException ex)
 	{
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	private void checkSerializable(Object object)
@@ -39,8 +38,16 @@ public class DefaultJavaSerializationValidator implements ISerializationListener
 		if (object==null) return;
 		
 		if (!(object instanceof Serializable)) {
-			throw new WicketRuntimeException(""+object.getClass()+" is not Serializable");
+			throw new NotSerializableException(""+object.getClass()+" is not Serializable");
 		}
 	}
 
+	static class NotSerializableException extends KryoException {
+
+		public NotSerializableException(String message)
+		{
+			super(message);
+		}
+		
+	}
 }

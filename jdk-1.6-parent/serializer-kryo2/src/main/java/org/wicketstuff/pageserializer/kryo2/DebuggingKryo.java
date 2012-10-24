@@ -1,12 +1,12 @@
 package org.wicketstuff.pageserializer.kryo2;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.util.lang.Args;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketstuff.pageserializer.kryo2.inspecting.InspectingKryo;
 
 import com.esotericsoftware.kryo.io.Output;
 
@@ -16,7 +16,11 @@ import de.javakaffee.kryoserializers.KryoReflectionFactorySupport;
  * An extension of {@link KryoReflectionFactorySupport} that logs the serialized objects and the
  * current size of the buffer after the write. Additionally provides the functionality to blacklist
  * the serialization of specific classes.
+ * 
+ * @deprecated
+ * @see InspectingKryo
  */
+@Deprecated
 public class DebuggingKryo extends KryoReflectionFactorySupport
 {
 

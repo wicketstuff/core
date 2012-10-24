@@ -7,6 +7,10 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.wicketstuff.pageserializer.kryo2.pages.NotSerializablePage;
+import org.wicketstuff.pageserializer.kryo2.pages.SamplePage;
+
+import com.esotericsoftware.kryo.KryoException;
 
 /**
  * Simple test using the WicketTester
@@ -36,10 +40,7 @@ public class KryoSerializerTest
 		// assert rendered page class
 		tester.assertRenderedPage(HomePage.class);
 
-		ISerializer pageSerializer = tester.getApplication().getFrameworkSettings().getSerializer();
-		Assert.assertTrue(
-			"The configured IObjectSerializer is not instance of KryoSerializer! Type: " +
-				pageSerializer.getClass(), pageSerializer instanceof KryoSerializer);
+		ISerializer pageSerializer = getAndCheckSerializer();
 
 		byte[] data = pageSerializer.serialize(page);
 		Assert.assertNotNull("The produced data should not be null!", data);
@@ -64,10 +65,7 @@ public class KryoSerializerTest
 		// assert rendered page class
 		tester.assertRenderedPage(SamplePage.class);
 
-		ISerializer pageSerializer = tester.getApplication().getFrameworkSettings().getSerializer();
-		Assert.assertTrue(
-			"The configured IObjectSerializer is not instance of KryoSerializer! Type: " +
-				pageSerializer.getClass(), pageSerializer instanceof KryoSerializer);
+		ISerializer pageSerializer = getAndCheckSerializer();
 
 		byte[] data = pageSerializer.serialize(page);
 		Assert.assertNotNull("The produced data should not be null!", data);
@@ -83,5 +81,29 @@ public class KryoSerializerTest
 
 		// assert rendered page class
 		tester.assertRenderedPage(SamplePage.class);
+	}
+	
+	@Test(expected=KryoException.class)
+	public void notSerializableCompontentThrowsException()
+	{
+		
+		NotSerializablePage page = tester.startPage(NotSerializablePage.class,
+			new PageParameters().add("Test", "asString"));
+
+		// assert rendered page class
+		tester.assertRenderedPage(NotSerializablePage.class);
+
+		ISerializer pageSerializer = getAndCheckSerializer();
+
+		byte[] data = pageSerializer.serialize(page);
+	}
+
+	private ISerializer getAndCheckSerializer()
+	{
+		ISerializer pageSerializer = tester.getApplication().getFrameworkSettings().getSerializer();
+		Assert.assertTrue(
+			"The configured IObjectSerializer is not instance of KryoSerializer! Type: " +
+				pageSerializer.getClass(), pageSerializer instanceof KryoSerializer);
+		return pageSerializer;
 	}
 }
