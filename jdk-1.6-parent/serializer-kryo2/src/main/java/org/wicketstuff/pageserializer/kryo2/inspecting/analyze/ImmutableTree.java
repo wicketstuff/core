@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * immutable implementation of a serialized tree 
+ * @author mosmann
+ *
+ */
 public final class ImmutableTree implements ISerializedObjectTree
 {
-
 	final Class<?> type;
 	final String label;
 	final int size;

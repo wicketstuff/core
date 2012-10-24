@@ -1,13 +1,24 @@
 package org.wicketstuff.pageserializer.kryo2.inspecting.analyze;
 
-import org.wicketstuff.pageserializer.kryo2.inspecting.ThreadLocalContextSerializationListener;
+import org.wicketstuff.pageserializer.kryo2.inspecting.listener.ThreadLocalContextSerializationListener;
 
+/**
+ * serialization listener with some aggregation hooks
+ * 
+ * @author mosmann
+ * 
+ */
 public class AnalyzingSerializationListener extends
 	ThreadLocalContextSerializationListener<ObjectTreeTracker>
 {
 	private final IObjectLabelizer labelizer;
 	private final ISerializedObjectTreeProcessor treeProcessor;
 
+	/**
+	 * creates an listener which processes tree data from serialization process 
+	 * @param labelizer a hook for label creation
+	 * @param treeProcessor tree processor
+	 */
 	public AnalyzingSerializationListener(IObjectLabelizer labelizer,
 		ISerializedObjectTreeProcessor treeProcessor)
 	{
@@ -43,7 +54,8 @@ public class AnalyzingSerializationListener extends
 	@Override
 	public void end(ObjectTreeTracker treeTracker, Object object, RuntimeException exception)
 	{
-		if (exception!=null) treeProcessor.process(treeTracker.end(object));
+		if (exception != null)
+			treeProcessor.process(treeTracker.end(object));
 	}
 
 }

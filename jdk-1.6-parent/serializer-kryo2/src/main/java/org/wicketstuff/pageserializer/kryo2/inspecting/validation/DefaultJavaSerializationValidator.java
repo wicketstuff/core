@@ -2,7 +2,7 @@ package org.wicketstuff.pageserializer.kryo2.inspecting.validation;
 
 import java.io.Serializable;
 
-import org.wicketstuff.pageserializer.kryo2.inspecting.ISerializationListener;
+import org.wicketstuff.pageserializer.kryo2.inspecting.listener.ISerializationListener;
 
 import com.esotericsoftware.kryo.KryoException;
 

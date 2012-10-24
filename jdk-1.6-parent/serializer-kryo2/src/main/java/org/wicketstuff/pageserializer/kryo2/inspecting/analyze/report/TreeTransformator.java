@@ -3,6 +3,11 @@ package org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTreeProcessor;
 
+/**
+ * a tree processor which filters incoming tree
+ * @author mosmann
+ *
+ */
 public class TreeTransformator implements ISerializedObjectTreeProcessor
 {
 	private final ISerializedObjectTreeProcessor destination;
@@ -37,6 +42,11 @@ public class TreeTransformator implements ISerializedObjectTreeProcessor
 		COMPACT, STRIP;
 	}
 
+	/**
+	 * which tree transformation should be used
+	 * @author mosmann
+	 *
+	 */
 	public interface IFilter extends ITreeFilter
 	{
 		FilterType filterType();
@@ -67,13 +77,19 @@ public class TreeTransformator implements ISerializedObjectTreeProcessor
 		
 	}
 
-	public static IFilter strip(ITreeFilter f)
+	/**
+	 * @see TreeTransformations#strip(ISerializedObjectTree, ITreeFilter)
+	 */
+	public static IFilter strip(ITreeFilter filter)
 	{
-		return new Filter(FilterType.STRIP,f);
+		return new Filter(FilterType.STRIP,filter);
 	}
 	
-	public static IFilter compact(ITreeFilter f)
+	/**
+	 * @see TreeTransformations#compact(ISerializedObjectTree, ITreeFilter)
+	 */
+	public static IFilter compact(ITreeFilter filter)
 	{
-		return new Filter(FilterType.COMPACT,f);
+		return new Filter(FilterType.COMPACT,filter);
 	}
 }

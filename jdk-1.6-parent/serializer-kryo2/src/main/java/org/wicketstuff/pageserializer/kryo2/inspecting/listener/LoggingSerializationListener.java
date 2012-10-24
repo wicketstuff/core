@@ -1,8 +1,14 @@
-package org.wicketstuff.pageserializer.kryo2.inspecting;
+package org.wicketstuff.pageserializer.kryo2.inspecting.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * writes basic infos to log(Level=DEBUG)
+ * 
+ * @author mosmann
+ * 
+ */
 public class LoggingSerializationListener implements ISerializationListener
 {
 
@@ -29,7 +35,7 @@ public class LoggingSerializationListener implements ISerializationListener
 	}
 
 	@Override
-	public void end(Object object,RuntimeException exception)
+	public void end(Object object, RuntimeException exception)
 	{
 		LOG.debug("End for object:   '{}'", object.getClass());
 	}

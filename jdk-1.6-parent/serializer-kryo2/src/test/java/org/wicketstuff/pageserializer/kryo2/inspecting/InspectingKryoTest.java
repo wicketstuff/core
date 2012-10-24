@@ -20,6 +20,9 @@ import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SortedTree
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TreeSizeReport;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TreeTransformator;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TypeSizeReport;
+import org.wicketstuff.pageserializer.kryo2.inspecting.listener.ISerializationListener;
+import org.wicketstuff.pageserializer.kryo2.inspecting.listener.LoggingSerializationListener;
+import org.wicketstuff.pageserializer.kryo2.inspecting.listener.SerializationListeners;
 import org.wicketstuff.pageserializer.kryo2.inspecting.validation.DefaultJavaSerializationValidator;
 
 public class InspectingKryoTest
