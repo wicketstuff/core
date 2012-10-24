@@ -21,7 +21,7 @@ When configured with
 
 it will be used to serialize any page for the IPageStore needs.
 
-It is based on [Kryo](http://code.google.com/p/kryo/) and [kryo-serializers](https://github.com/magro/kryo-serializers). 
+It is based on [Kryo2](http://code.google.com/p/kryo/) and [kryo2-serializers](https://github.com/magro/kryo-serializers/tree/kryo2). 
 
 Notes
 ----

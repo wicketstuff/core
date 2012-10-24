@@ -689,8 +689,13 @@
 					<version>1.9.0</version>
 					<configuration>
 						<aggregate>true</aggregate>
+						<strictCheck>true</strictCheck>
 						<quiet>false</quiet>
 						<failIfMissing>true</failIfMissing>
+						<includes>
+							<include>src/**</include>
+							<include>**/test/**</include>
+						</includes>
 						<excludes>
 							<exclude>**/*.gif</exclude>
 							<exclude>**/*.jpg</exclude>

@@ -1,4 +1,22 @@
-package org.wicketstuff.pageserializer.kryo;
+/**
+ * Copyright (C) 2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.wicketstuff.pageserializer.kryo2;
 
 import java.lang.reflect.InvocationHandler;
 import java.nio.ByteBuffer;
@@ -58,27 +76,52 @@ public class KryoSerializer implements ISerializer
 
 	private final Bytes bufferSize;
 
-	private final Kryo kryo;
+	/**
+	 * Store a per thread Kryo instance (as Kryo is 
+	 * not thread safe).
+	 */
+	private ThreadLocal<Kryo> kryo =  new ThreadLocal<Kryo>();
 
+	/**
+	 * Constructor using default buffer size.
+	 */
 	public KryoSerializer()
 	{
 		this(DEFAULT_BUFFER_SIZE);
 	}
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param bufferSize The buffer size;
+	 */
 	public KryoSerializer(final Bytes bufferSize)
 	{
-
 		this.bufferSize = Args.notNull(bufferSize, "bufferSize");
 		LOG.debug("Buffer size: '{}'", bufferSize);
-
-		kryo = createKryo();
-
-		internalInit(kryo);
 	}
 
+	/**
+	 * Factory method for Kryo serializers.
+	 * 
+	 * @return
+	 */
 	protected Kryo createKryo()
 	{
 		return new KryoReflectionFactorySupport();
+	}
+	
+	
+	/**
+	 * @return the Kryo serializer for the current thread.
+	 */
+	protected  Kryo getKryo() {
+		if(this.kryo.get() == null) {
+			Kryo kryo = createKryo();
+			internalInit(kryo);
+			this.kryo.set(kryo);
+		}
+		return this.kryo.get();
 	}
 
 	@Override
@@ -86,29 +129,33 @@ public class KryoSerializer implements ISerializer
 	{
 		LOG.debug("Going to serialize: '{}'", object);
 		Output buffer = getBuffer(object);
-		kryo.writeClassAndObject(buffer, object);
-		byte[] data=buffer.toBytes();
-		if (data==null) {
-			LOG.error("Kryo wasn't able to serialize: '{}'", object);
+		try {
+			getKryo().writeClassAndObject(buffer, object);
+			byte[] data = buffer.toBytes();
+			if (data == null)
+			{
+				LOG.error("Kryo wasn't able to serialize: '{}'", object);
+			}
+
+			// release the memory for the buffer
+			buffer.clear();
+			buffer = null;
+
+			return data;
+		} finally {
+			System.runFinalization();
 		}
-
-		// release the memory for the buffer
-		buffer.clear();
-		buffer = null;
-		System.runFinalization();
-
-		return data;
 	}
 
 	@Override
 	public Object deserialize(byte[] data)
 	{
 		Input buffer = new Input(data);
-		Object object = kryo.readClassAndObject(buffer);
+		Object object = getKryo().readClassAndObject(buffer);
 		LOG.debug("Deserialized: '{}'", object);
 
 		// release the memory for the buffer
-		//buffer.clear();
+		// buffer.clear();
 		buffer = null;
 		System.runFinalization();
 
@@ -145,8 +192,7 @@ public class KryoSerializer implements ISerializer
 		kryo.register(Collections.EMPTY_SET.getClass(), new CollectionsEmptySetSerializer());
 		kryo.register(Collections.singletonList("").getClass(),
 			new CollectionsSingletonListSerializer());
-		kryo.register(Collections.singleton("").getClass(), new CollectionsSingletonSetSerializer(
-			));
+		kryo.register(Collections.singleton("").getClass(), new CollectionsSingletonSetSerializer());
 		kryo.register(Collections.singletonMap("", "").getClass(),
 			new CollectionsSingletonMapSerializer());
 		kryo.register(Currency.class, new CurrencySerializer());
