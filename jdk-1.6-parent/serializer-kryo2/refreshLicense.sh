@@ -1,3 +1,4 @@
+#!/bin/sh
 #
 # Copyright (C) 2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
 #
@@ -17,11 +18,5 @@
 # limitations under the License.
 #
 
-log4j.appender.Stdout=org.apache.log4j.ConsoleAppender
-log4j.appender.Stdout.layout=org.apache.log4j.PatternLayout
-log4j.appender.Stdout.layout.conversionPattern=%-5p - %-26.26c{1} - %m\n
+mvn license:format
 
-log4j.rootLogger=WARN,Stdout
-
-log4j.logger.org.apache.wicket=WARN
-log4j.logger.org.wicketstuff=DEBUG

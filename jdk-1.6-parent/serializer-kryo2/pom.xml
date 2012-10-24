@@ -40,4 +40,21 @@
       <artifactId>jetty-all-server</artifactId>
     </dependency>
   </dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<!-- USAGE: mvn license:check OR mvn license:format -->
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<configuration>
+					<header>${header.location}</header>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<properties>
+		<header.location>lic/header.txt</header.location>
+	</properties>
 </project>
