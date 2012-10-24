@@ -76,27 +76,52 @@ public class KryoSerializer implements ISerializer
 
 	private final Bytes bufferSize;
 
-	private final Kryo kryo;
+	/**
+	 * Store a per thread Kryo instance (as Kryo is 
+	 * not thread safe).
+	 */
+	private ThreadLocal<Kryo> kryo =  new ThreadLocal<Kryo>();
 
+	/**
+	 * Constructor using default buffer size.
+	 */
 	public KryoSerializer()
 	{
 		this(DEFAULT_BUFFER_SIZE);
 	}
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param bufferSize The buffer size;
+	 */
 	public KryoSerializer(final Bytes bufferSize)
 	{
-
 		this.bufferSize = Args.notNull(bufferSize, "bufferSize");
 		LOG.debug("Buffer size: '{}'", bufferSize);
-
-		kryo = createKryo();
-
-		internalInit(kryo);
 	}
 
+	/**
+	 * Factory method for Kryo serializers.
+	 * 
+	 * @return
+	 */
 	protected Kryo createKryo()
 	{
 		return new KryoReflectionFactorySupport();
+	}
+	
+	
+	/**
+	 * @return the Kryo serializer for the current thread.
+	 */
+	protected  Kryo getKryo() {
+		if(this.kryo.get() == null) {
+			Kryo kryo = createKryo();
+			internalInit(kryo);
+			this.kryo.set(kryo);
+		}
+		return this.kryo.get();
 	}
 
 	@Override
@@ -105,7 +130,7 @@ public class KryoSerializer implements ISerializer
 		LOG.debug("Going to serialize: '{}'", object);
 		Output buffer = getBuffer(object);
 		try {
-			kryo.writeClassAndObject(buffer, object);
+			getKryo().writeClassAndObject(buffer, object);
 			byte[] data = buffer.toBytes();
 			if (data == null)
 			{
@@ -126,7 +151,7 @@ public class KryoSerializer implements ISerializer
 	public Object deserialize(byte[] data)
 	{
 		Input buffer = new Input(data);
-		Object object = kryo.readClassAndObject(buffer);
+		Object object = getKryo().readClassAndObject(buffer);
 		LOG.debug("Deserialized: '{}'", object);
 
 		// release the memory for the buffer
