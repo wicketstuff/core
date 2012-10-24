@@ -24,86 +24,50 @@ public class InspectingKryo extends KryoReflectionFactorySupport
 	public Registration writeClass(Output output, Class type)
 	{
 		Registration ret;
-//		try
-		{
-			before(output, type);
-			ret = super.writeClass(output, type);
-		}
-//		finally
-		{
-			after(output, type);
-		}
+		before(output, type);
+		ret = super.writeClass(output, type);
+		after(output, type);
 		return ret;
 	}
 
 	@Override
 	public void writeClassAndObject(Output output, Object object)
 	{
-//		try
-		{
-			before(output, object);
-			super.writeClassAndObject(output, object);
-		}
-//		finally
-		{
-			after(output, object);
-		}
+		before(output, object);
+		super.writeClassAndObject(output, object);
+		after(output, object);
 	}
 
 	@Override
 	public void writeObject(Output output, Object object, Serializer serializer)
 	{
-//		try
-		{
-			before(output, object);
-			super.writeObject(output, object, serializer);
-		}
-//		finally
-		{
-			after(output, object);
-		}
+		before(output, object);
+		super.writeObject(output, object, serializer);
+		after(output, object);
 	}
 
 	@Override
 	public void writeObject(Output output, Object object)
 	{
-//		try
-		{
-			before(output, object);
-			super.writeObject(output, object);
-		}
-//		finally
-		{
-			after(output, object);
-		}
+		before(output, object);
+		super.writeObject(output, object);
+		after(output, object);
 	}
 
 	@Override
 	public void writeObjectOrNull(Output output, Object object, Class clazz)
 	{
-//		try
-		{
-			before(output, object);
-			super.writeObjectOrNull(output, object, clazz);
-		}
-//		finally
-		{
-			after(output, object);
-		}
+		before(output, object);
+		super.writeObjectOrNull(output, object, clazz);
+		after(output, object);
 	}
 
 	@Override
 	public void writeObjectOrNull(Output output, Object object, Serializer serializer)
 	{
-//		try
-		{
-			before(output, object);
-			super.writeObjectOrNull(output, object, serializer);
-		}
-//		finally
-		{
-			after(output, object);
-		}
+		before(output, object);
+		super.writeObjectOrNull(output, object, serializer);
+		after(output, object);
 	}
 
 	private void before(Output output, Object object)

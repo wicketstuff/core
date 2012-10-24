@@ -25,15 +25,20 @@ public class InspectingKryoSerializer extends KryoSerializer
 	@Override
 	public byte[] serialize(Object object)
 	{
+		RuntimeException exceptionIfAny=null;
 		byte[] ret;
-//		try
+		try
 		{
 			serializingListener.begin(object);
 			ret = super.serialize(object);
 		}
-//		finally
+		catch (RuntimeException ex) {
+			exceptionIfAny=ex;
+			throw ex;
+		}
+		finally
 		{
-			serializingListener.end(object);
+			serializingListener.end(object,exceptionIfAny);
 		}
 		return ret;
 	}

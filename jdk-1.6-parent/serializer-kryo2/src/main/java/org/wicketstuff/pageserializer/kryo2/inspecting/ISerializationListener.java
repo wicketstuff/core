@@ -9,5 +9,5 @@ public interface ISerializationListener
 
 	void after(int position, Object object);
 
-	void end(Object object);
+	void end(Object object, RuntimeException exceptionIfAny);
 }
