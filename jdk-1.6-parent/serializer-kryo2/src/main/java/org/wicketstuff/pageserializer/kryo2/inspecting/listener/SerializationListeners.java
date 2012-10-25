@@ -65,7 +65,7 @@ public final class SerializationListeners
 			{
 				for (ISerializationListener l : listener)
 				{
-					l.before(position, object);
+					l.after(position, object);
 				}
 			}
 
