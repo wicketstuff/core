@@ -49,6 +49,9 @@
 				<artifactId>maven-license-plugin</artifactId>
 				<configuration>
 					<header>${header.location}</header>
+					<excludes>
+						<exclude>src/test/java/**.tree</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>

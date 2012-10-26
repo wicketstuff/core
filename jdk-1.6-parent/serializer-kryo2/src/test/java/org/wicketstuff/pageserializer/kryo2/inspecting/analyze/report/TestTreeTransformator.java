@@ -1,5 +1,7 @@
 /**
- * Copyright (C) 2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ * Copyright (C)
+ * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ * 	2012 Michael Mosmann <michael@mosmann.de>
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,89 +20,71 @@
  */
 package org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report;
 
+import java.io.IOException;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.filter.ITreeFilter;
 
 public class TestTreeTransformator
 {
 
 	@Test
-	public void compactWithNoChange()
+	public void compactWithNoChange() throws IOException
 	{
-		ISerializedObjectTree tree = treeOf3();
-
+		ISerializedObjectTree tree = Trees.fromResource(getClass(), "treeOf3");
 		ISerializedObjectTree filtered = TreeTransformations.compact(tree, new AcceptAll());
 
-		Assert.assertTrue(Trees.equals(tree, filtered));
+		Trees.assertEqualsTree(tree, filtered);
 		Assert.assertTrue(tree == filtered);
 	}
 
 	@Test
-	public void removeAllNodesDeeperThan2()
+	public void removeAllNodesDeeperThan2() throws IOException
 	{
-		ISerializedObjectTree tree = treeOf3();
+		ISerializedObjectTree tree = Trees.fromResource(getClass(), "treeOf3");
 
-		ISerializedObjectTree filtered = TreeTransformations.compact(tree, new MaxDepth(1));
+		ISerializedObjectTree filtered = TreeTransformations.compact(tree, new MaxDepth(2));
 
-		ISerializedObjectTree expected = Trees.build(null,A.class, 30)
-			.withChild(null,B.class, 40)
-			.multiply(2)
-			.asTree();
-		Assert.assertTrue(Trees.equals(expected, filtered));
+		ISerializedObjectTree expected = Trees.fromResource(getClass(), "treeOf3-maxDepth1");
+		
+		Trees.assertEqualsTree(expected, filtered);
 	}
 
 	@Test
-	public void removeAllBNodes()
+	public void removeAllBNodes() throws IOException
 	{
-		ISerializedObjectTree tree = treeOf3();
-
-		ISerializedObjectTree filtered = TreeTransformations.strip(tree, new NotDepth(1));
-
-		ISerializedObjectTree expected = Trees.build(null, A.class, 70)
-			.withChild(null,C.class, 10)
-			.multiply(4)
-			.asTree();
-
-		Assert.assertTrue(Trees.equals(expected, filtered));
-	}
-
-	@Test
-	public void removeAllCNodes()
-	{
-		ISerializedObjectTree tree = treeOf3();
+		ISerializedObjectTree tree = Trees.fromResource(getClass(), "treeOf3");
 
 		ISerializedObjectTree filtered = TreeTransformations.strip(tree, new NotDepth(2));
 
-		ISerializedObjectTree expected = Trees.build(null,A.class, 30)
-			.withChild(null,B.class, 40)
-			.multiply(2)
-			.asTree();
+		ISerializedObjectTree expected = Trees.fromResource(getClass(), "treeOf3-noDepth2");
 		
-		Assert.assertTrue(Trees.equals(expected, filtered));
+		Trees.assertEqualsTree(expected, filtered);
+	}
+
+	@Test
+	public void removeAllCNodes() throws IOException
+	{
+		ISerializedObjectTree tree = Trees.fromResource(getClass(), "treeOf3");
+
+		ISerializedObjectTree filtered = TreeTransformations.strip(tree, new NotDepth(3));
+
+		ISerializedObjectTree expected = Trees.fromResource(getClass(), "treeOf3-noDepth3");
+		
+		Trees.assertEqualsTree(expected, filtered);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void canNotRemoveANodes()
+	public void canNotRemoveANodes() throws IOException
 	{
-		ISerializedObjectTree tree = treeOf3();
+		ISerializedObjectTree tree = Trees.fromResource(getClass(), "treeOf3");
 
 		ISerializedObjectTree filtered = TreeTransformations.strip(tree, new NotDepth(0));
 	}
 	
-	private ISerializedObjectTree treeOf3()
-	{
-		ISerializedObjectTree tree = Trees.build(null,A.class, 30)
-			.withChild(null,B.class, 20)
-			.withChild(null,C.class, 10)
-			.multiply(2)
-			.parent()
-			.multiply(2)
-			.asTree();
-		return tree;
-	}
-
 	private static class AcceptAll implements ITreeFilter
 	{
 		@Override
@@ -146,6 +130,11 @@ public class TestTreeTransformator
 
 	}
 
+	static class Root
+	{
+
+	}
+	
 	static class A
 	{
 

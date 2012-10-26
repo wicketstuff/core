@@ -20,36 +20,20 @@
  */
 package org.wicketstuff.pageserializer.kryo2.inspecting.analyze;
 
-/**
- * tree processor utility class
- * @author mosmann
- *
- */
-public final class TreeProcessors
+public abstract class AbstractTreeTransformingProcessor implements ISerializedObjectTreeProcessor
 {
-	private TreeProcessors()
+	private final ISerializedObjectTreeProcessor parent;
+
+	public AbstractTreeTransformingProcessor(ISerializedObjectTreeProcessor parent)
 	{
-		// no instance
+		this.parent = parent;
 	}
 
-	/**
-	 * a list of tree processors listener as tree processor 
-	 * @param processors list of processors
-	 * @return wrap around the list
-	 */
-	public static ISerializedObjectTreeProcessor listOf(
-		final ISerializedObjectTreeProcessor... processors)
+	@Override
+	public void process(ISerializedObjectTree tree)
 	{
-		return new ISerializedObjectTreeProcessor()
-		{
-			@Override
-			public void process(ISerializedObjectTree tree)
-			{
-				for (ISerializedObjectTreeProcessor p : processors)
-				{
-					p.process(tree);
-				}
-			}
-		};
+		parent.process(transform(tree));
 	}
+
+	protected abstract ISerializedObjectTree transform(ISerializedObjectTree tree);
 }

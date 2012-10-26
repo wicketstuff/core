@@ -1,5 +1,7 @@
 /**
- * Copyright (C) 2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ * Copyright (C)
+ * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ * 	2012 Michael Mosmann <michael@mosmann.de>
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,9 +20,23 @@
  */
 package org.wicketstuff.pageserializer.kryo2;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.lang.Bytes;
 import org.wicketstuff.pageserializer.kryo2.inspecting.InspectingKryoSerializer;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.AnalyzingSerializationListener;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.IObjectLabelizer;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTreeProcessor;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.TreeProcessors;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.Level;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SimilarNodeTreeTransformator;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SortedTreeSizeReport;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TreeTransformator;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TypeSizeReport;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.filter.ITreeFilter;
+import org.wicketstuff.pageserializer.kryo2.inspecting.listener.ISerializationListener;
+import org.wicketstuff.pageserializer.kryo2.inspecting.listener.SerializationListeners;
 import org.wicketstuff.pageserializer.kryo2.inspecting.validation.DefaultJavaSerializationValidator;
 
 /**
@@ -41,7 +57,37 @@ public class WicketApplication extends WebApplication
 	public void init()
 	{
 		super.init();
+		
+		IObjectLabelizer labelizer = new IObjectLabelizer()
+		{
 
-		getFrameworkSettings().setSerializer(new InspectingKryoSerializer(Bytes.bytes(1024*1024),new DefaultJavaSerializationValidator()));
+			@Override
+			public String labelFor(Object object)
+			{
+				if (object instanceof Component) {
+					return ((Component) object).getId();
+				}
+				return null;
+			}
+		};
+		ISerializedObjectTreeProcessor treeProcessor = TreeProcessors.listOf(new TypeSizeReport(),
+		 new SortedTreeSizeReport(), new SimilarNodeTreeTransformator(
+				new SortedTreeSizeReport()));
+		ITreeFilter filter = new ITreeFilter()
+		{
+			@Override
+			public boolean accept(ISerializedObjectTree source, Level current)
+			{
+				return source.type() != Class.class;
+			}
+		};
+		ISerializedObjectTreeProcessor cleanedTreeProcessor = new TreeTransformator(treeProcessor,
+			TreeTransformator.strip(filter));
+		ISerializationListener listener = SerializationListeners.listOf(
+			new DefaultJavaSerializationValidator(), 
+			new AnalyzingSerializationListener(labelizer, cleanedTreeProcessor));
+
+
+		getFrameworkSettings().setSerializer(new InspectingKryoSerializer(Bytes.bytes(1024*1024),listener));
 	}
 }

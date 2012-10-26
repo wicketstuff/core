@@ -1,5 +1,7 @@
 /**
- * Copyright (C) 2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ * Copyright (C)
+ * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ * 	2012 Michael Mosmann <michael@mosmann.de>
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -29,15 +31,15 @@ import org.apache.wicket.util.lang.Bytes;
 import org.junit.Test;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.AnalyzingSerializationListener;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.IObjectLabelizer;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTreeProcessor;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.TreeProcessors;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.ITreeFilter;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.Level;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SimilarNodeTreeTransformator;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SortedTreeSizeReport;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TreeSizeReport;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TreeTransformator;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TypeSizeReport;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.filter.ITreeFilter;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.filter.TypeFilter;
 import org.wicketstuff.pageserializer.kryo2.inspecting.listener.ISerializationListener;
 import org.wicketstuff.pageserializer.kryo2.inspecting.listener.LoggingSerializationListener;
 import org.wicketstuff.pageserializer.kryo2.inspecting.listener.SerializationListeners;
@@ -69,20 +71,15 @@ public class InspectingKryoTest
 			}
 		};
 		ISerializedObjectTreeProcessor treeProcessor = TreeProcessors.listOf(new TypeSizeReport(),
-			new TreeSizeReport(), new SortedTreeSizeReport());
-		ITreeFilter filter=new ITreeFilter()
-		{
-			@Override
-			public boolean accept(ISerializedObjectTree source, Level current)
-			{
-				return source.type()!=Class.class;
-			}
-		};
-		ISerializedObjectTreeProcessor cleanedTreeProcessor = new TreeTransformator(treeProcessor, TreeTransformator.strip(filter));
-		ISerializationListener listener = SerializationListeners.listOf(new DefaultJavaSerializationValidator(),
-			new LoggingSerializationListener(), new AnalyzingSerializationListener(labelizer,
-				treeProcessor), new AnalyzingSerializationListener(labelizer,
-					cleanedTreeProcessor));
+			new TreeSizeReport(), new SortedTreeSizeReport(), new SimilarNodeTreeTransformator(
+				new SortedTreeSizeReport()));
+		ITreeFilter filter = new TypeFilter(Class.class);
+		ISerializedObjectTreeProcessor cleanedTreeProcessor = new TreeTransformator(treeProcessor,
+			TreeTransformator.strip(filter));
+		ISerializationListener listener = SerializationListeners.listOf(
+			new DefaultJavaSerializationValidator(), new LoggingSerializationListener(),
+			new AnalyzingSerializationListener(labelizer, treeProcessor),
+			new AnalyzingSerializationListener(labelizer, cleanedTreeProcessor));
 		InspectingKryoSerializer kryo = new InspectingKryoSerializer(Bytes.bytes(1000), listener);
 
 		byte[] data = kryo.serialize(root);

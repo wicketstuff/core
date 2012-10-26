@@ -1,5 +1,7 @@
 /**
- * Copyright (C) 2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ * Copyright (C)
+ * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ * 	2012 Michael Mosmann <michael@mosmann.de>
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -23,6 +25,7 @@ import java.util.List;
 
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ImmutableTree;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.filter.ITreeFilter;
 
 /**
  * tree transformation utility class

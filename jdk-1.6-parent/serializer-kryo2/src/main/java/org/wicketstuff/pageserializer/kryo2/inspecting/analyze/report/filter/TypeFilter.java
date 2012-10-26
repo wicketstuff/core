@@ -18,38 +18,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.kryo2.inspecting.analyze;
+package org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.filter;
 
-/**
- * tree processor utility class
- * @author mosmann
- *
- */
-public final class TreeProcessors
+import java.util.HashSet;
+import java.util.Set;
+
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.Level;
+
+public class TypeFilter implements ITreeFilter
 {
-	private TreeProcessors()
+	final Set<Class<?>> typeSet;
+
+	public TypeFilter(Class<?>... types)
 	{
-		// no instance
+		typeSet = new HashSet<Class<?>>();
+		for (Class<?> t : types)
+		{
+			typeSet.add(t);
+		}
 	}
 
-	/**
-	 * a list of tree processors listener as tree processor 
-	 * @param processors list of processors
-	 * @return wrap around the list
-	 */
-	public static ISerializedObjectTreeProcessor listOf(
-		final ISerializedObjectTreeProcessor... processors)
+	@Override
+	public boolean accept(ISerializedObjectTree source, Level level)
 	{
-		return new ISerializedObjectTreeProcessor()
-		{
-			@Override
-			public void process(ISerializedObjectTree tree)
-			{
-				for (ISerializedObjectTreeProcessor p : processors)
-				{
-					p.process(tree);
-				}
-			}
-		};
+		return !typeSet.contains(source.type());
 	}
 }

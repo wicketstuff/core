@@ -1,5 +1,7 @@
 /**
- * Copyright (C) 2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ * Copyright (C)
+ * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ * 	2012 Michael Mosmann <michael@mosmann.de>
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,27 +20,28 @@
  */
 package org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report;
 
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.AbstractTreeTransformingProcessor;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTreeProcessor;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.filter.ITreeFilter;
 
 /**
  * a tree processor which filters incoming tree
  * @author mosmann
  *
  */
-public class TreeTransformator implements ISerializedObjectTreeProcessor
+public class TreeTransformator extends AbstractTreeTransformingProcessor
 {
-	private final ISerializedObjectTreeProcessor destination;
 	private final IFilter[] filter;
 
 	public TreeTransformator(ISerializedObjectTreeProcessor destination, IFilter... filter)
 	{
-		this.destination = destination;
+		super(destination);
 		this.filter = filter;
 	}
 
 	@Override
-	public void process(ISerializedObjectTree tree)
+	protected ISerializedObjectTree transform(ISerializedObjectTree tree)
 	{
 		ISerializedObjectTree current = tree;
 		for (IFilter f : filter)
@@ -53,7 +56,7 @@ public class TreeTransformator implements ISerializedObjectTreeProcessor
 					break;
 			}
 		}
-		destination.process(current);
+		return current;
 	}
 
 	public enum FilterType {
