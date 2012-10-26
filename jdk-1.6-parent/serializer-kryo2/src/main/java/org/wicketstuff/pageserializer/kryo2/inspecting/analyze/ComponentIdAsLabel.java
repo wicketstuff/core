@@ -20,36 +20,18 @@
  */
 package org.wicketstuff.pageserializer.kryo2.inspecting.analyze;
 
-/**
- * tree processor utility class
- * @author mosmann
- *
- */
-public final class TreeProcessors
+import org.apache.wicket.Component;
+
+public class ComponentIdAsLabel implements IObjectLabelizer
 {
-	private TreeProcessors()
+
+	@Override
+	public String labelFor(Object object)
 	{
-		// no instance
+		if (object instanceof Component) {
+			return ((Component)object).getId();
+		}
+		return null;
 	}
 
-	/**
-	 * a list of tree processors listener as tree processor 
-	 * @param processors list of processors
-	 * @return wrap around the list
-	 */
-	public static ISerializedObjectTreeProcessor listOf(
-		final ISerializedObjectTreeProcessor... processors)
-	{
-		return new ISerializedObjectTreeProcessor()
-		{
-			@Override
-			public void process(ISerializedObjectTree tree)
-			{
-				for (ISerializedObjectTreeProcessor p : processors)
-				{
-					p.process(tree);
-				}
-			}
-		};
-	}
 }

@@ -1,5 +1,7 @@
 /**
- * Copyright (C) 2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ * Copyright (C)
+ * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ * 	2012 Michael Mosmann <michael@mosmann.de>
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -40,6 +42,10 @@ public class TreeSizeReport implements ISerializedObjectTreeProcessor
 		new AttributeBuilder()
 			.set(Column.Separator, "|")
 			.build());
+	static final Column id = new Column("#",
+		new AttributeBuilder().set(Column.Align.Right).set(Column.FillBefore, ' ')
+			.set(Column.Separator, "|")
+			.build());
 	static final Column label = new Column("Type",
 		new AttributeBuilder().set(Column.FillAfter, '.')
 			.set(Column.Separator, "...")
@@ -70,7 +76,7 @@ public class TreeSizeReport implements ISerializedObjectTreeProcessor
 		if (LOG.isDebugEnabled()) {
 			Report report = new Report("\n");
 			process(tree, report, 0, tree.size() + tree.childSize());
-			String result=report.export(emptyFirst, label, percent, sum, local, child)
+			String result=report.export(emptyFirst, id, label, percent, sum, local, child)
 				.separateColumnNamesWith('-')
 				.tableBorderWith('=')
 				.asString();
@@ -82,6 +88,7 @@ public class TreeSizeReport implements ISerializedObjectTreeProcessor
 	private void process(ISerializedObjectTree tree, Report report, int indent, int allSize)
 	{
 		Row row = report.newRow();
+		row.set(id, 0, "" + tree.id());
 		row.set(label, indent, label(tree));
 		row.set(percent, 0, "" + ((tree.size() + tree.childSize()) * 100 / allSize));
 		row.set(sum, 0, "" + (tree.size() + tree.childSize()));

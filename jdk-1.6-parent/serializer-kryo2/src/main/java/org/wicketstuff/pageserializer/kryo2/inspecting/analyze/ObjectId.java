@@ -1,5 +1,7 @@
 /**
- * Copyright (C) 2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ * Copyright (C)
+ * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ * 	2012 Michael Mosmann <michael@mosmann.de>
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,6 +20,11 @@
  */
 package org.wicketstuff.pageserializer.kryo2.inspecting.analyze;
 
+/**
+ * object id
+ * @author mosmann
+ *
+ */
 public final class ObjectId
 {
 	private final int id;
@@ -30,6 +37,12 @@ public final class ObjectId
 	public int getId()
 	{
 		return id;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "#"+id;
 	}
 
 	@Override

@@ -18,38 +18,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.pageserializer.kryo2.inspecting.analyze;
+package org.wicketstuff.pageserializer.kryo2.pages;
 
-/**
- * tree processor utility class
- * @author mosmann
- *
- */
-public final class TreeProcessors
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
+
+public class ListViewPage extends WebPage
 {
-	private TreeProcessors()
+	public ListViewPage()
 	{
-		// no instance
-	}
-
-	/**
-	 * a list of tree processors listener as tree processor 
-	 * @param processors list of processors
-	 * @return wrap around the list
-	 */
-	public static ISerializedObjectTreeProcessor listOf(
-		final ISerializedObjectTreeProcessor... processors)
-	{
-		return new ISerializedObjectTreeProcessor()
+		List<String> source = Arrays.asList("A", "B", "C");
+		add(new ListView<String>("list", source)
 		{
 			@Override
-			public void process(ISerializedObjectTree tree)
+			protected void populateItem(ListItem<String> item)
 			{
-				for (ISerializedObjectTreeProcessor p : processors)
-				{
-					p.process(tree);
-				}
+				item.add(new Label("label",item.getModel()));
 			}
-		};
+		});
+		
+		add(new ListView<String>("list2", source)
+		{
+			@Override
+			protected void populateItem(ListItem<String> item)
+			{
+			}
+		});
 	}
 }
