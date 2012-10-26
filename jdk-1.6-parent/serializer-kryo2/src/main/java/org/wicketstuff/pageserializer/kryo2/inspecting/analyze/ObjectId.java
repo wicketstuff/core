@@ -18,56 +18,44 @@
  */
 package org.wicketstuff.pageserializer.kryo2.inspecting.analyze;
 
-import java.util.List;
-
-/**
- * serialized tree
- * 
- * @author mosmann
- * 
- */
-public interface ISerializedObjectTree
+public final class ObjectId
 {
-	/**
-	 * node id
-	 * 
-	 * @return
-	 */
-	ObjectId id();
+	private final int id;
 
-	/**
-	 * node type
-	 * 
-	 * @return type
-	 */
-	Class<? extends Object> type();
+	public ObjectId(int id)
+	{
+		this.id = id;
+	}
 
-	/**
-	 * node label if any
-	 * 
-	 * @return type
-	 */
-	String label();
+	public int getId()
+	{
+		return id;
+	}
 
-	/**
-	 * size of object without children
-	 * 
-	 * @return size in bytes
-	 */
-	int size();
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
 
-	/**
-	 * size of all children
-	 * 
-	 * @return size in bytes
-	 */
-	int childSize();
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ObjectId other = (ObjectId)obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
 
-	/**
-	 * list of children
-	 * 
-	 * @return immutable
-	 */
-	List<? extends ISerializedObjectTree> children();
-
+	
+	
 }

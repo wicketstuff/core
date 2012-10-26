@@ -32,7 +32,8 @@ import java.util.Map;
  */
 class ObjectTreeTracker
 {
-
+	ObjectIdFactory objectIdFactory=new ObjectIdFactory();
+	
 	int lastPosition = 0;
 	private final IObjectLabelizer labelizer;
 	private Item currentItem;
@@ -40,21 +41,21 @@ class ObjectTreeTracker
 	public ObjectTreeTracker(IObjectLabelizer labelizer, Object root)
 	{
 		this.labelizer = labelizer;
-		this.currentItem = new Item(new ItemKey(root.getClass(), labelizer.labelFor(root)));
+		this.currentItem = new Item(new ItemKey(objectIdFactory.idFor(root),root.getClass(), labelizer.labelFor(root)));
 	}
 
 	public void newItem(int position, Object object)
 	{
 		int diff = updatePositionAndCalculateDiff(position);
 		currentItem = currentItem.newItem(diff,
-			new ItemKey(object.getClass(), labelizer.labelFor(object)));
+			new ItemKey(objectIdFactory.idFor(object), object.getClass(), labelizer.labelFor(object)));
 	}
 
 	public void closeItem(int position, Object object)
 	{
 		int diff = updatePositionAndCalculateDiff(position);
 		currentItem = currentItem.closeItem(diff,
-			new ItemKey(object.getClass(), labelizer.labelFor(object)));
+			new ItemKey(objectIdFactory.idFor(object),object.getClass(), labelizer.labelFor(object)));
 	}
 
 	private int updatePositionAndCalculateDiff(int position)
@@ -62,6 +63,10 @@ class ObjectTreeTracker
 		int diff = position - lastPosition;
 		lastPosition = position;
 		return diff;
+	}
+	
+	private ObjectId idFor(Object object) {
+		return null;
 	}
 
 	public ISerializedObjectTree end(Object object)
@@ -86,7 +91,7 @@ class ObjectTreeTracker
 
 	private static ImmutableTree asImmutableTree(Item child)
 	{
-		return new ImmutableTree(child.type(), child.label(), child.size(),
+		return new ImmutableTree(child.id(), child.type(), child.label(), child.size(),
 			cloneList(child.children()));
 	}
 
@@ -104,6 +109,11 @@ class ObjectTreeTracker
 		public Item(ItemKey key)
 		{
 			this.key = key;
+		}
+
+		public ObjectId id()
+		{
+			return key.id();
 		}
 
 		public Item newItem(int diff, ItemKey key)
@@ -161,13 +171,20 @@ class ObjectTreeTracker
 
 	static class ItemKey
 	{
+		final ObjectId id;
 		final Class<?> type;
 		final String label;
 
-		public ItemKey(Class<?> type, String label)
+		public ItemKey(ObjectId id, Class<?> type, String label)
 		{
+			this.id=id;
 			this.type = type;
 			this.label = label;
+		}
+		
+		public ObjectId id()
+		{
+			return id;
 		}
 
 		public Class<?> type()
@@ -183,7 +200,7 @@ class ObjectTreeTracker
 		@Override
 		public String toString()
 		{
-			return "Key(" + type + "," + label + ")";
+			return "Key(" + type + "#"+id+"," + label + ")";
 		}
 
 		@Override
@@ -191,6 +208,7 @@ class ObjectTreeTracker
 		{
 			final int prime = 31;
 			int result = 1;
+			result = prime * result + ((id == null) ? 0 : id.hashCode());
 			result = prime * result + ((label == null) ? 0 : label.hashCode());
 			result = prime * result + ((type == null) ? 0 : type.hashCode());
 			return result;
@@ -206,6 +224,13 @@ class ObjectTreeTracker
 			if (getClass() != obj.getClass())
 				return false;
 			ItemKey other = (ItemKey)obj;
+			if (id == null)
+			{
+				if (other.id != null)
+					return false;
+			}
+			else if (!id.equals(other.id))
+				return false;
 			if (label == null)
 			{
 				if (other.label != null)
@@ -222,6 +247,7 @@ class ObjectTreeTracker
 				return false;
 			return true;
 		}
+
 
 	}
 }

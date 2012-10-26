@@ -23,12 +23,14 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * immutable implementation of a serialized tree 
+ * immutable implementation of a serialized tree
+ * 
  * @author mosmann
- *
+ * 
  */
 public final class ImmutableTree implements ISerializedObjectTree
 {
+	final ObjectId id;
 	final Class<?> type;
 	final String label;
 	final int size;
@@ -36,9 +38,10 @@ public final class ImmutableTree implements ISerializedObjectTree
 
 	final List<ISerializedObjectTree> children;
 
-	public ImmutableTree(Class<?> type, String label, int size,
+	public ImmutableTree(ObjectId id, Class<?> type, String label, int size,
 		List<? extends ISerializedObjectTree> children)
 	{
+		this.id = id;
 		this.type = type;
 		this.label = label;
 		this.size = size;
@@ -51,6 +54,12 @@ public final class ImmutableTree implements ISerializedObjectTree
 			childSize = childSize + child.childSize() + child.size();
 		}
 		this.childSize = childSize;
+	}
+	
+	@Override
+	public ObjectId id()
+	{
+		return id;
 	}
 
 	@Override

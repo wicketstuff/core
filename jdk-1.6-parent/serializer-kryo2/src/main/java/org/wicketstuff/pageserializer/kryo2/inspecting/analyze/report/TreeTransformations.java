@@ -70,7 +70,7 @@ public class TreeTransformations
 
 				if (changed)
 				{
-					return new ImmutableTree(source.type(), source.label(), source.size(),
+					return new ImmutableTree(source.id(),source.type(), source.label(), source.size(),
 						filteredList);
 				}
 			}
@@ -78,7 +78,7 @@ public class TreeTransformations
 		}
 		else
 		{
-			return new ImmutableTree(source.type(), source.label(), source.size() +
+			return new ImmutableTree(source.id(),source.type(), source.label(), source.size() +
 				source.childSize(), new ArrayList<ISerializedObjectTree>());
 		}
 	}
@@ -135,7 +135,7 @@ public class TreeTransformations
 
 		if (changed)
 		{
-			return new ImmutableTree(source.type(), source.label(), source.size() + localSize,
+			return new ImmutableTree(source.id(),source.type(), source.label(), source.size() + localSize,
 				filteredList);
 		}
 		return source;

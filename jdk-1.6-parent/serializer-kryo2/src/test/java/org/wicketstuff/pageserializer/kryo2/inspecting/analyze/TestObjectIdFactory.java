@@ -18,56 +18,25 @@
  */
 package org.wicketstuff.pageserializer.kryo2.inspecting.analyze;
 
-import java.util.List;
+import junit.framework.Assert;
 
-/**
- * serialized tree
- * 
- * @author mosmann
- * 
- */
-public interface ISerializedObjectTree
+import org.junit.Test;
+
+public class TestObjectIdFactory
 {
-	/**
-	 * node id
-	 * 
-	 * @return
-	 */
-	ObjectId id();
-
-	/**
-	 * node type
-	 * 
-	 * @return type
-	 */
-	Class<? extends Object> type();
-
-	/**
-	 * node label if any
-	 * 
-	 * @return type
-	 */
-	String label();
-
-	/**
-	 * size of object without children
-	 * 
-	 * @return size in bytes
-	 */
-	int size();
-
-	/**
-	 * size of all children
-	 * 
-	 * @return size in bytes
-	 */
-	int childSize();
-
-	/**
-	 * list of children
-	 * 
-	 * @return immutable
-	 */
-	List<? extends ISerializedObjectTree> children();
-
+	@Test
+	public void validateIdFactory() {
+		ObjectIdFactory factory = new ObjectIdFactory();
+		
+		// jvm makes same strings from string const
+		ObjectId a=factory.idFor("HA");
+		ObjectId b=factory.idFor("HA");
+		
+		Assert.assertEquals(a, b);
+		
+		a=factory.idFor(new String("HA"));
+		b=factory.idFor(new String("HA"));
+		
+		Assert.assertFalse(a.equals(b));
+	}
 }
