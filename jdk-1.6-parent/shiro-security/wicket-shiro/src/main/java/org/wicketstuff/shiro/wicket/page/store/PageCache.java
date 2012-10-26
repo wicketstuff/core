@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.apache.wicket.IClusterable;
+import org.apache.wicket.util.io.IClusterable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
