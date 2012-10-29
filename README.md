@@ -19,7 +19,7 @@ You may also download other jars as required (ie: `jquery-ui-kendo`). Once done,
 <dependency>
     <groupId>com.googlecode.wicket-jquery-ui</groupId>
     <artifactId>jquery-ui-core</artifactId>
-    <version>1.2.3</version> <!-- <version>6.1.0</version> -->
+    <version>1.3.0</version> <!-- <version>6.1.0</version> -->
 </dependency>
 ```
 
