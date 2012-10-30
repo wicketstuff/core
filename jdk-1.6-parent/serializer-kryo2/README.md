@@ -196,7 +196,7 @@ You can customize a lot if you want to, but maybe this is a good start for some 
 
 Serializer Kryo
 ===============
-is an implementation of `org.apache.wicket.serialize.ISerializer` for Wicket 6
+is an implementation of `org.apache.wicket.serialize.ISerializer` for Wicket 1.5
 
 Such serializer can be used to convert almost any kind of object to/from byte array. Almost any because Kryo may need your help for some complex graph of objects. Refer to Kryo documentation to understand more about that.
 
