@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.util.string.AppendingStringBuffer;
@@ -61,16 +62,16 @@ public class SwarmActionFactory implements WaspActionFactory
 	/**
 	 * cache that maps int's to actions and Strings to actions
 	 */
-	private Map<String, SwarmAction> cachedStringActions = new HashMap<String, SwarmAction>();
+	private Map<String, SwarmAction> cachedStringActions = new ConcurrentHashMap<String, SwarmAction>();
 
-	private Map<Integer, SwarmAction> cachedIntActions = new HashMap<Integer, SwarmAction>();
+	private Map<Integer, SwarmAction> cachedIntActions = new ConcurrentHashMap<Integer, SwarmAction>();
 
 	/**
 	 * Maps int's to actions. and classes to actions.
 	 */
-	private Map<Integer, SwarmAction> registeredIntActions = new HashMap<Integer, SwarmAction>();
+	private Map<Integer, SwarmAction> registeredIntActions = new ConcurrentHashMap<Integer, SwarmAction>();
 
-	private Map<Class<? extends WaspAction>, SwarmAction> registeredClassActions = new HashMap<Class<? extends WaspAction>, SwarmAction>();
+	private Map<Class<? extends WaspAction>, SwarmAction> registeredClassActions = new ConcurrentHashMap<Class<? extends WaspAction>, SwarmAction>();
 
 	private int power = -1;
 
@@ -147,7 +148,7 @@ public class SwarmActionFactory implements WaspActionFactory
 	 * @param name
 	 * @param action
 	 */
-	protected synchronized final void cacheAction(String name, SwarmAction action)
+	protected final void cacheAction(String name, SwarmAction action)
 	{
 		cachedStringActions.put(name, action);
 	}
@@ -158,7 +159,7 @@ public class SwarmActionFactory implements WaspActionFactory
 	 * @param name
 	 * @return the cached action or null.
 	 */
-	protected synchronized final SwarmAction getCachedAction(String name)
+	protected final SwarmAction getCachedAction(String name)
 	{
 		return cachedStringActions.get(name);
 	}
@@ -194,7 +195,7 @@ public class SwarmActionFactory implements WaspActionFactory
 	 * @param actions
 	 * @param ja
 	 */
-	protected synchronized final void cacheAction(Integer actions, SwarmAction ja)
+	protected final void cacheAction(Integer actions, SwarmAction ja)
 	{
 		cachedIntActions.put(actions, ja);
 	}
@@ -205,7 +206,7 @@ public class SwarmActionFactory implements WaspActionFactory
 	 * @param actions
 	 * @return the cached action or null.
 	 */
-	protected synchronized final SwarmAction getCachedAction(int actions)
+	protected final SwarmAction getCachedAction(int actions)
 	{
 		return cachedIntActions.get(actions);
 	}
@@ -322,7 +323,7 @@ public class SwarmActionFactory implements WaspActionFactory
 	 * 
 	 * @see org.wicketstuff.security.actions.ActionFactory#getAction(java.lang.Class)
 	 */
-	public synchronized SwarmAction getAction(Class<? extends WaspAction> waspActionClass)
+	public SwarmAction getAction(Class<? extends WaspAction> waspActionClass)
 	{
 		if (AllActions.class.isAssignableFrom(waspActionClass))
 		{
@@ -345,7 +346,7 @@ public class SwarmActionFactory implements WaspActionFactory
 	 * @see org.wicketstuff.security.actions.ActionFactory#register(java.lang.Class,
 	 *      java.lang.String)
 	 */
-	public synchronized SwarmAction register(Class<? extends WaspAction> waspActionClass,
+	public SwarmAction register(Class<? extends WaspAction> waspActionClass,
 		String name) throws RegistrationException
 	{
 		if (AllActions.class.isAssignableFrom(waspActionClass))
@@ -434,7 +435,7 @@ public class SwarmActionFactory implements WaspActionFactory
 	 * @see SwarmAction#SwarmAction(int, String, ActionFactory)
 	 * 
 	 */
-	protected final synchronized SwarmAction register(Class<? extends WaspAction> waspActionClass,
+	protected final SwarmAction register(Class<? extends WaspAction> waspActionClass,
 		SwarmAction action) throws RegistrationException
 	{
 		// sanity checks
