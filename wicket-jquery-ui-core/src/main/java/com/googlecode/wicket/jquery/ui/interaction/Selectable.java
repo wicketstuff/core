@@ -278,7 +278,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'stop' callback
 	 */
-	class StopEvent extends JQueryEvent
+	protected class StopEvent extends JQueryEvent
 	{
 		private final List<Integer> indexes;
 
