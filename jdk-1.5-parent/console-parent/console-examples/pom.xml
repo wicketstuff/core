@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>console-parent</artifactId>
-		<version>1.5.8</version>
+		<version>1.5.8.1</version>
 	</parent>
 
 	<artifactId>console-examples</artifactId>

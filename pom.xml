@@ -7,7 +7,7 @@
 	<groupId>org.wicketstuff</groupId>
 	<artifactId>wicketstuff-core</artifactId>
 	<packaging>pom</packaging>
-	<version>1.5.8</version>
+	<version>1.5.8.1</version>
 
 	<name>WicketStuff Core Parent</name>
 	<description>

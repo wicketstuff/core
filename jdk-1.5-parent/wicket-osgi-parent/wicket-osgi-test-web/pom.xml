@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>wicket-osgi-parent</artifactId>
 		<groupId>org.wicketstuff</groupId>
-		<version>1.5.8</version>
+		<version>1.5.8.1</version>
 	</parent>
 	<artifactId>wicket-osgi-test-web</artifactId>
 	<packaging>bundle</packaging>
