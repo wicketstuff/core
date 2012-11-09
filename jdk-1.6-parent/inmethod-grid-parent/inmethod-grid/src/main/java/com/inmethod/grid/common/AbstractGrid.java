@@ -217,7 +217,6 @@ public abstract class AbstractGrid<M, I, S> extends Panel
 			String state = getRequest().getRequestParameters()
 				.getParameterValue("columnState")
 				.toString();
-
 			// apply it to current state
 			columnState.updateColumnsState(state);
 
@@ -229,7 +228,7 @@ public abstract class AbstractGrid<M, I, S> extends Panel
 		{
 			super.updateAjaxAttributes(attributes);
 
-			CharSequence columnStateParameter = "return {'columnState': attrs.columnState}";
+			CharSequence columnStateParameter = "return {'columnState': columnState}";
 			attributes.getDynamicExtraParameters().add(columnStateParameter);
 		}
 
