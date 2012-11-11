@@ -44,8 +44,8 @@ public abstract class ClickListener extends GEventListenerBehavior
         Request request = RequestCycle.get().getRequest();
         GLatLng latLng = null;
 
-        Double lat = request.getRequestParameters().getParameterValue("lat").toDouble();
-        Double lng = request.getRequestParameters().getParameterValue("lng").toDouble();
+        Double lat = Double.valueOf(request.getRequestParameters().getParameterValue("lat").toString());
+        Double lng = Double.valueOf(request.getRequestParameters().getParameterValue("lng").toString());
         latLng = new GLatLng(lat, lng);
 
         onClick(target, latLng);
