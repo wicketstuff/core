@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>twitter-parent</artifactId>
 		<groupId>org.wicketstuff</groupId>
-		<version>1.5-SNAPSHOT</version>
+		<version>1.5.9</version>
 	</parent>
 	<artifactId>wicketstuff-twitter-examples</artifactId>
 	<packaging>war</packaging>
