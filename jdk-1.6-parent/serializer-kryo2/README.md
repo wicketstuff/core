@@ -8,6 +8,16 @@ But if you should NOT use this in production environments, then what else could 
 
 There are not as many usefull features so far, but one could be very usefull: Answer the question: What makes my pages such big?
 
+### Maven Setup
+
+There is a Version for Wicket 1.5.x starting with 1.5.9.
+
+	<dependency>
+		<groupId>org.wicketstuff</groupId>
+		<artifactId>wicketstuff-serializer-kryo2</artifactId>
+		<version>1.5.9</version>
+	</dependency>
+
 ### Type and Tree Serialization Reports
 
 Change Application.init() like this:
