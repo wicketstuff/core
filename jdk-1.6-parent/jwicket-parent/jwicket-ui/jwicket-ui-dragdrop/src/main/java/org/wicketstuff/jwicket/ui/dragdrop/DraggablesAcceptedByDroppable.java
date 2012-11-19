@@ -1,11 +1,11 @@
 package org.wicketstuff.jwicket.ui.dragdrop;
 
 
+import org.apache.wicket.markup.html.IHeaderResponse;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.wicket.markup.html.IHeaderResponse;
 
 
 /**
@@ -156,7 +156,7 @@ public class DraggablesAcceptedByDroppable implements Serializable {
 	 */
 	public void renderJsDropAcceptFunction(final IHeaderResponse response) {
 		if (acceptedNames != null && acceptedNames.size() > 0) {
-			response.renderJavascript(
+			response.renderJavaScript(
 				"var " + getJsAcceptCheckerFunctionName() + " = function(candidate) {\n" +
 				"	var accepted = " + getTypesAsJsSet() + ";\n" +
 				"	var candidateString = jQuery(candidate).attr('" + DRAG_NAME_IDENTIFIER + "');\n" +
@@ -170,7 +170,7 @@ public class DraggablesAcceptedByDroppable implements Serializable {
 			);
 		}
 		else {
-			response.renderJavascript(
+			response.renderJavaScript(
 				"var " + getJsAcceptCheckerFunctionName() + " = function(candidate) {\n" +
 		    	"	return false;" +
 				"};"
