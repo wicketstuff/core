@@ -2,17 +2,17 @@ package org.wicketstuff.jwicket.ui.effect;
 
 
 import org.wicketstuff.jwicket.JQuery;
-import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryJavaScriptResourceReference;
 
 
 public class Drop extends AbstractJqueryUiEffect {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavascriptResourceReference jQueryUiEffectsDropJs
+	public static final JQueryJavaScriptResourceReference jQueryUiEffectsDropJs
 		= JQuery.isDebug()
-		? new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.drop.js")
-		: new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.drop.min.js");
+		? new JQueryJavaScriptResourceReference(Blind.class, "jquery.effects.drop.js")
+		: new JQueryJavaScriptResourceReference(Blind.class, "jquery.effects.drop.min.js");
 
 	public Drop() {
 		super(jQueryUiEffectsDropJs);

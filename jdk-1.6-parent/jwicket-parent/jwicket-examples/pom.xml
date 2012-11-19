@@ -1,17 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.wicketstuff</groupId>
-        <artifactId>jwicket-parent</artifactId>
+        <artifactId>wicketstuff-jwicket-parent</artifactId>
         <version>1.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jwicket-examples</artifactId>
+    <artifactId>wicketstuff-jwicket-examples</artifactId>
     <packaging>war</packaging>
 
-    <name>jWicket examples: jQuery Wicket integration examples</name>
+    <name>jWicket: jQuery Wicket integration - examples</name>
     <description>
         Examples of using jWicket
         WicketJQuery by Stefan Lindner has been renamed to jWicket, mavenized, and migrated
@@ -32,6 +33,14 @@
         </developer>
     </developers>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
@@ -81,8 +90,8 @@
             <artifactId>wicketstuff-dropdown-menu</artifactId>
             <version>${project.version}</version>
         </dependency>
-        
-        
+
+
         <!-- LOGGING DEPENDENCIES - LOG4J -->
         <dependency>
             <groupId>org.slf4j</groupId>

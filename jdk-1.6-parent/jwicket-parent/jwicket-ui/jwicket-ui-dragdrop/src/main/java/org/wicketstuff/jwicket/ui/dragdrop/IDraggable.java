@@ -6,7 +6,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.jwicket.SpecialKeys;
 
 
-/** This is a marker interfaece. You can mark any Wicket {@link Component}
+/** This is a marker interface. You can mark any Wicket {@link Component}
  * with this interface and implement the interface's methods. iF the corresponding
  * {@link DraggableBehavior} has activated the callbacks for the events
  * then the dragged Wicket {@link Component}'s methods are called

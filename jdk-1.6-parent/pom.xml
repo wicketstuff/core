@@ -37,6 +37,7 @@
 		<module>jquery-parent</module>
 		<module>jslibraries</module>
 		<module>jsr303-parent</module>
+        <module>jwicket-parent</module>
 		<module>mbeanview-parent</module>
 		<module>minis-parent</module>
 		<module>modalx-parent</module>

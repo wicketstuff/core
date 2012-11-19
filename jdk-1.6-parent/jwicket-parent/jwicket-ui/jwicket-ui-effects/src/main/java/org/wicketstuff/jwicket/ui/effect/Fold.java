@@ -2,17 +2,17 @@ package org.wicketstuff.jwicket.ui.effect;
 
 
 import org.wicketstuff.jwicket.JQuery;
-import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryJavaScriptResourceReference;
 
 
 public class Fold extends AbstractJqueryUiEffect {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavascriptResourceReference jQueryUiEffectsFoldJs
+	public static final JQueryJavaScriptResourceReference jQueryUiEffectsFoldJs
 		= JQuery.isDebug()
-		? new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.fold.js")
-		: new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.fold.min.js");
+		? new JQueryJavaScriptResourceReference(Blind.class, "jquery.effects.fold.js")
+		: new JQueryJavaScriptResourceReference(Blind.class, "jquery.effects.fold.min.js");
 
 	public Fold() {
 		super(jQueryUiEffectsFoldJs);

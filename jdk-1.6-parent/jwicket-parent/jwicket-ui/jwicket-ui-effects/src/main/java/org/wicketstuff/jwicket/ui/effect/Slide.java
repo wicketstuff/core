@@ -2,17 +2,17 @@ package org.wicketstuff.jwicket.ui.effect;
 
 
 import org.wicketstuff.jwicket.JQuery;
-import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryJavaScriptResourceReference;
 
 
 public class Slide extends AbstractJqueryUiEffect {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavascriptResourceReference jQueryUiEffectsSlideJs
+	public static final JQueryJavaScriptResourceReference jQueryUiEffectsSlideJs
 		= JQuery.isDebug()
-		? new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.slide.js")
-		: new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.slide.min.js");
+		? new JQueryJavaScriptResourceReference(Blind.class, "jquery.effects.slide.js")
+		: new JQueryJavaScriptResourceReference(Blind.class, "jquery.effects.slide.min.js");
 
 	public Slide() {
 		super(jQueryUiEffectsSlideJs);
