@@ -759,7 +759,7 @@
 					<version>2.5.1</version>
 					<configuration>
 						<debug>true</debug>
-						<optimise>true</optimise>
+						<optimize>true</optimize>
 						<showDeprecation>true</showDeprecation>
 						<showWarnings>true</showWarnings>
 						<verbose>true</verbose>
