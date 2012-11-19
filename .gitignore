@@ -4,6 +4,7 @@
 target/
 velocity.log
 *.i[mpw][lrs]
+.idea/
 META-INF
 .scala_dependencies
 .externalToolBuilders
