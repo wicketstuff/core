@@ -759,6 +759,7 @@
 					<version>2.3.2</version>
 					<configuration>
 						<debug>true</debug>
+                        <!--TODO shouldn't this be optimiZe?-->
 						<optimise>true</optimise>
 						<showDeprecation>true</showDeprecation>
 						<showWarnings>true</showWarnings>
