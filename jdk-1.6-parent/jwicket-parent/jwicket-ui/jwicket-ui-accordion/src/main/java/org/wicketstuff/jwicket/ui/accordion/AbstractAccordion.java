@@ -1,9 +1,6 @@
 package org.wicketstuff.jwicket.ui.accordion;
 
 
-import java.io.Serializable;
-import java.util.List;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -11,6 +8,9 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+
+import java.io.Serializable;
+import java.util.List;
 
 
 /**	This is the base class for all variations of jQuery's Accordion effect.

@@ -1,14 +1,14 @@
 package org.wicketstuff.jwicket.ui.accordion;
 
 
-import java.io.Serializable;
-import java.util.List;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
+
+import java.io.Serializable;
+import java.util.List;
 
 
 public abstract class LazyAccordion<T extends Serializable> extends AbstractAccordion<T> {
@@ -45,7 +45,7 @@ public abstract class LazyAccordion<T extends Serializable> extends AbstractAcco
 						// Placeholder with real content
 						ModelParkingLot modelParkingLot = (ModelParkingLot)content;
 						((WebMarkupContainer)contentAnchor).addOrReplace(getLazyContent("content", modelParkingLot.getModel(), index));
-						target.addComponent(contentAnchor);
+						target.add(contentAnchor);
 					}
 					// else: this was already expanded before
 				}
