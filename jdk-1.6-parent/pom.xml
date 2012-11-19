@@ -21,6 +21,7 @@
 	<modules>
 		<module>closure-compiler</module>
 		<module>javaee-inject-parent</module>
+        <module>jwicket-parent</module>
 		<module>push-parent-jdk-1.6</module>
 		<module>serializer-kryo</module>
 		<module>serializer-kryo2</module>
