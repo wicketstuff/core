@@ -127,21 +127,21 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
             if (eventType == EventType.CHANGE) {
                 if (oldContent != null && oldHeader != null) {
                     ComponentFinder finder = new ComponentFinder(oldHeader);
-                    component.getPage().visitChildren(finder);
-                    Component oldHeaderComponent = finder.getFoundComponent();
+
+                    Component oldHeaderComponent = component.getPage().visitChildren(finder);
                     finder = new ComponentFinder(oldContent);
-                    component.getPage().visitChildren(finder);
-                    Component oldContentComponent = finder.getFoundComponent();
+
+                    Component oldContentComponent = component.getPage().visitChildren(finder);
                     onCollapse(target, oldHeaderComponent, oldContentComponent, this.currentExpandedIndex);
                 }
 
                 if (newContent != null && newHeader != null) {
                     ComponentFinder finder = new ComponentFinder(newHeader);
-                    component.getPage().visitChildren(finder);
-                    Component newHeaderComponent = finder.getFoundComponent();
+
+                    Component newHeaderComponent = component.getPage().visitChildren(finder);
                     finder = new ComponentFinder(newContent);
-                    component.getPage().visitChildren(finder);
-                    Component newContentComponent = finder.getFoundComponent();
+
+                    Component newContentComponent = component.getPage().visitChildren(finder);
 
                     if (newHeaderComponent != null && newContentComponent != null) {
                         onExpand(target, newHeaderComponent, newContentComponent, activeIndex);

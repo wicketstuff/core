@@ -76,17 +76,20 @@ public class DraggableAndResizableElement extends GenericPanel<String>  {
 
 		private static final long serialVersionUID = 1L;
 
-		public void onDragStop(AjaxRequestTarget target, final SpecialKeys specialKeys) {
+		@Override
+        public void onDragStop(AjaxRequestTarget target, final SpecialKeys specialKeys) {
 			setModelObject("Drag me!");
-			target.addComponent(l);
+			target.add(l);
 		}
 
-		public void onDragStart(AjaxRequestTarget target, final SpecialKeys specialKeys) {
+		@Override
+        public void onDragStart(AjaxRequestTarget target, final SpecialKeys specialKeys) {
 			setModelObject("dragging...");
-			target.addComponent(l);
+			target.add(l);
 		}
 
-		public void onDrag(AjaxRequestTarget target, final SpecialKeys specialKeys) {}
+		@Override
+        public void onDrag(AjaxRequestTarget target, final SpecialKeys specialKeys) {}
 	}
 	
 
@@ -99,14 +102,17 @@ public class DraggableAndResizableElement extends GenericPanel<String>  {
 
 		private static final long serialVersionUID = 1L;
 
-		public void onResize(AjaxRequestTarget target, int top, int left, int width, int height, final SpecialKeys specialKeys) {
+		@Override
+        public void onResize(AjaxRequestTarget target, int top, int left, int width, int height, final SpecialKeys specialKeys) {
 			setModelObject("(" + left + ", " + top + ", " + height + ", " + width + ")");
-			target.addComponent(l);
+			target.add(l);
 		}
 
-		public void onResizeStart(AjaxRequestTarget target, int top, int left, int width, int height, final SpecialKeys specialKeys) {}
+		@Override
+        public void onResizeStart(AjaxRequestTarget target, int top, int left, int width, int height, final SpecialKeys specialKeys) {}
 
-		public void onResized(AjaxRequestTarget target, int top, int left, int width, int height,
+		@Override
+        public void onResized(AjaxRequestTarget target, int top, int left, int width, int height,
 				int originalTop, int originalLeft, int originalWidth, int originalHeight, final SpecialKeys specialKeys) {}
 	}
 	

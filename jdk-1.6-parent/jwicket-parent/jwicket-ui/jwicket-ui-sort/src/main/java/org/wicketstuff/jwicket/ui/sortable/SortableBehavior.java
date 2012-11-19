@@ -4,6 +4,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.request.Request;
+import org.apache.wicket.util.visit.IVisitor;
 import org.wicketstuff.jwicket.*;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 
@@ -119,9 +120,8 @@ public class SortableBehavior extends AbstractJqueryUiEmbeddedBehavior implement
                         ((ISortable) sortedComponent).onReceived(target, newPosition);
                     }
 
-                    ComponentFinder visitor = new ComponentFinder(otherSortableId);
-                    component.getPage().visitChildren(visitor);
-                    Component otherSortable = visitor.getFoundComponent();
+                    IVisitor<Component, Component> visitor = new ComponentFinder(otherSortableId);
+                    Component otherSortable = component.getPage().visitChildren(visitor);
                     onReceived(target, sortedComponent, newPosition, (Sortable<?>) otherSortable);
                 } catch (Exception e) {
                     // don't process
