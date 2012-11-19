@@ -86,23 +86,26 @@ public class DroppableElement extends GenericPanel<String>  {
 
 		private static final long serialVersionUID = 1L;
 
-		public void onDrop(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {
+		@Override
+        public void onDrop(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {
 			setModelObject("You dropped '" + draggedComponent.getId() + "' into me!");
-			target.addComponent(l);
+			target.add(l);
 			dropped = true;
 			effects.fire(target, droppable);
 		}
 
-		public void onActivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {
+		@Override
+        public void onActivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {
 			setModelObject("Drop '" + ((draggedComponent==null)?"<null>":draggedComponent.getId()) + "' into me!");
-			target.addComponent(l);
+			target.add(l);
 			dropped = false;
 		}
 
-		public void onDeactivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {
+		@Override
+        public void onDeactivate(final AjaxRequestTarget target, final Component draggedComponent, final SpecialKeys specialKeys) {
 			if (!dropped) {
 				setModelObject("Drop it!");
-				target.addComponent(l);
+				target.add(l);
 			}
 		}
 	}
