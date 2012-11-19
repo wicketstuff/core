@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de" xmlns:wicket="http://wicket.sourceforge.net/">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<link rel="stylesheet" type="text/css" href="krokodil.css" />
+</head>
+
+<body>
+
+	<wicket:panel>
+
+		<div class="invisibleParent" style="position: relative; top:0; bottom: 0; height:80px; width:200px;">
+			<div wicket:id="resizable" class="resizableComponent"  style="height:80px; width:200px;">
+				<div style="height:80px; width:200px;z-index: 999; position: relative; top:0; bottom: 0;">
+					I am resizable.
+					<div style="font-size:110%; font-weight:bold;" wicket:id="theModel"/>
+				</div>
+			</div>
+		</div>
+
+	</wicket:panel>
+
+</body>
+</html>
+  
