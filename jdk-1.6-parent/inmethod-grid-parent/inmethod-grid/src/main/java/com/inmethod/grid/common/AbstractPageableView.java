@@ -173,6 +173,15 @@ public abstract class AbstractPageableView<T> extends RefreshingView<T>
 	private long maxFirstItemReached;
 
 	/**
+	 * You should never need this method unless your pagingNavigator uses pageParametres 
+	 * and dataSource is with unknown item count
+	 * 
+	 * @param maxFirstItemReached
+	 */
+	public void setMaxFirstItemReached(long maxFirstItemReached) {
+		this.maxFirstItemReached = maxFirstItemReached;
+	}
+	/**
 	 * The actual count of items. This is set by either passing actual count of items
    * to {@link IQueryResult#setTotalCount(long)},
    * or by passing the {@link IQueryResult#NO_MORE_ITEMS} constant as item count.
