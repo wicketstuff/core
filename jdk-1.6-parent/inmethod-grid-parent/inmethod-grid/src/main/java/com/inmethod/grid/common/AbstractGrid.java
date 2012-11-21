@@ -215,12 +215,13 @@ public abstract class AbstractGrid<M, I, S> extends Panel
 		{
 			// get the columnState request parameter (set by javascript)
 			String state = getRequest().getRequestParameters()
-				.getParameterValue("columnState")
-				.toString();
-			// apply it to current state
-			columnState.updateColumnsState(state);
+				.getParameterValue("columnState").toString(null);
+			if(!Strings.isEmpty(state)){
+				// apply it to current state
+				columnState.updateColumnsState(state);
 
-			onColumnStateChanged();
+				onColumnStateChanged();
+			}
 		}
     
     @Override
