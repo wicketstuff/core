@@ -200,14 +200,16 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 		super.onComponentTag(tag);
 		if (cancelListener != null)
 		{
-			final String keypress = "if (event) { var kc=wicketKeyCode(event); if (kc==27) {" +
-				generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() +
-					"&cancel=true&force=true'") +
-				"; return false;} else if (kc==13) return false; else return true;}";
+			final String keypress =
+					"if (event) { var kc=Wicket.Event.keyCode(event); if (kc==27) {" +
+						"Wicket.Ajax.get({'u': '" + getCallbackUrl() + "&cancel=true&force=true'});" +
+						"return false;" +
+					"} else if (kc==13) " +
+							"return false; " +
+					"else return true;}";
 			tag.put("onkeypress", keypress);
 
-			final String onblur = generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() +
-				"&cancel=true'") +
+			final String onblur = "Wicket.Ajax.get({'u': '" + getCallbackUrl() + "&cancel=true' })" +
 				"; return false;";
 			tag.put("onblur", onblur);
 		}

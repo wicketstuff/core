@@ -29,6 +29,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebComponent;
@@ -43,7 +44,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.IWrapModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.value.IValueMap;
 
@@ -414,13 +414,23 @@ public class ObjectAutoCompleteField<O /* object */, I /* its id */extends Seria
 		}
 
 		@Override
-		protected CharSequence getEventHandler()
+		protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 		{
-			return generateCallbackScript(new AppendingStringBuffer("wicketAjaxPost('").append(
-				getCallbackUrl()).append(
-				"', wicketSerialize(Wicket.$('" + searchTextField.getMarkupId() + "')) + " +
-					"wicketSerialize(Wicket.$('" + objectField.getMarkupId() + "'))"));
+			super.updateAjaxAttributes(attributes);
+
+			attributes.setMethod(AjaxRequestAttributes.Method.POST);
+
+			String searchTextFieldMarkupId = searchTextField.getMarkupId();
+			String objectFieldMarkupId = objectField.getMarkupId();
+			String deps = "return [ " +
+					"{\"name\": \""+searchTextFieldMarkupId+"\", " +
+					"\"value\": Wicket.Form.serialize('"+searchTextFieldMarkupId+"') }," +
+					"{\"name\": \""+objectFieldMarkupId+"\", " +
+					"\"value\": Wicket.Form.serialize('"+objectFieldMarkupId+"') }," +
+					" ]";
+			attributes.getDynamicExtraParameters().add(deps);
 		}
+
 	}
 
 }
