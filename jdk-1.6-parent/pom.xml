@@ -67,11 +67,12 @@
 		<module>wicketstuff-springreference-parent</module>
 		<module>wicket-security-parent</module>
 
+         <module>yui-parent</module>
 
-		<!-- TODO: port these module to wicket 6 -->
+        <!-- TODO: port these module to wicket 6 -->
 
-		<!-- <module>calendarviews-parent</module> -->
-		<!-- <module>client-and-server-validation</module> -->
+        <!-- <module>calendarviews-parent</module> -->
+        <!-- <module>client-and-server-validation</module> -->
 		<!-- <module>eidogo-parent</module> -->
 		<!-- <module>jasperreports-parent</module> -->
 

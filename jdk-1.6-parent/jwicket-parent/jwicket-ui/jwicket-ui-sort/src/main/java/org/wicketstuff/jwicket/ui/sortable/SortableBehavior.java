@@ -17,11 +17,11 @@ public class SortableBehavior extends AbstractJqueryUiEmbeddedBehavior implement
 
     private static final String CONNECT_WITH_OPTION = "connectWith";
 
-    public static final JQueryJavaScriptResourceReference uiSortableJs
+    public static final JQueryResourceReference uiSortableJs
             = JQuery.isDebug()
-            ? new JQueryJavaScriptResourceReference(SortableBehavior.class, "jquery.ui.sortable.js")
-            : new JQueryJavaScriptResourceReference(SortableBehavior.class, "jquery.ui.sortable.min.js");
-    public static final JQueryJavaScriptResourceReference jWicketSortJs = new JQueryJavaScriptResourceReference(SortableBehavior.class, "jWicketSort.js");
+            ? new JQueryResourceReference(SortableBehavior.class, "jquery.ui.sortable.js")
+            : new JQueryResourceReference(SortableBehavior.class, "jquery.ui.sortable.min.js");
+    public static final JQueryResourceReference jWicketSortJs = new JQueryResourceReference(SortableBehavior.class, "jWicketSort.js");
 
     protected JsMap options = new JsMap();
 

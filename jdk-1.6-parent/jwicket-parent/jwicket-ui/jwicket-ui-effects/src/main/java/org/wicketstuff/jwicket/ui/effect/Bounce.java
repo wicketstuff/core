@@ -2,17 +2,17 @@ package org.wicketstuff.jwicket.ui.effect;
 
 
 import org.wicketstuff.jwicket.JQuery;
-import org.wicketstuff.jwicket.JQueryJavaScriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReference;
 
 
 public class Bounce extends AbstractJqueryUiEffect {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavaScriptResourceReference jQueryUiEffectsBounceJs
+	public static final JQueryResourceReference jQueryUiEffectsBounceJs
 		= JQuery.isDebug()
-		? new JQueryJavaScriptResourceReference(Blind.class, "jquery.effects.bounce.js")
-		: new JQueryJavaScriptResourceReference(Blind.class, "jquery.effects.bounce.min.js");
+		? new JQueryResourceReference(Blind.class, "jquery.effects.bounce.js")
+		: new JQueryResourceReference(Blind.class, "jquery.effects.bounce.min.js");
 
 	public Bounce() {
 		super(jQueryUiEffectsBounceJs);

@@ -2,17 +2,17 @@ package org.wicketstuff.jwicket.ui.effect;
 
 
 import org.wicketstuff.jwicket.JQuery;
-import org.wicketstuff.jwicket.JQueryJavaScriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReference;
 
 
 public class Blind extends AbstractJqueryUiEffect {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavaScriptResourceReference jQueryUiEffectsBlindJs
+	public static final JQueryResourceReference jQueryUiEffectsBlindJs
 		= JQuery.isDebug()
-		? new JQueryJavaScriptResourceReference(Blind.class, "jquery.effects.blind.js")
-		: new JQueryJavaScriptResourceReference(Blind.class, "jquery.effects.blind.min.js");
+		? new JQueryResourceReference(Blind.class, "jquery.effects.blind.js")
+		: new JQueryResourceReference(Blind.class, "jquery.effects.blind.min.js");
 
 	public Blind() {
 		super(jQueryUiEffectsBlindJs);

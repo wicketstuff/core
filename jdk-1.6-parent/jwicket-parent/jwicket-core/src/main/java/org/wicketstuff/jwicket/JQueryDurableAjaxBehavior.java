@@ -3,7 +3,8 @@ package org.wicketstuff.jwicket;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 
 
 /**
@@ -11,7 +12,7 @@ import org.apache.wicket.markup.html.IHeaderResponse;
  * Every time the component is rendered (e.g. after an Ajax update of the {@link Component})
  * the javascript code for the behavior is rendered into it's {@link IHeaderResponse}.
  * To ensure that the DOM for the {@link Component} is already rendered, the javascript for the
- * behavior is rendered through the {@link IHeaderResponse#renderOnDomReadyJavascript(String)}
+ * behavior is rendered through the {@link IHeaderResponse#render(org.apache.wicket.markup.head.HeaderItem)}
  * method.
  * <p/>
  * Each subclass that implements any such durable behavior must implement the method
@@ -67,7 +68,7 @@ public abstract class JQueryDurableAjaxBehavior extends JQueryAjaxBehavior {
         super.renderHead(component, response);
 
         if (!rendered || restoreAfterRedraw)
-            response.renderOnDomReadyJavaScript(getJsBuilder().toString());
+            response.render(OnDomReadyHeaderItem.forScript(getJsBuilder().toString()));
 
         rendered = true;
     }

@@ -2,14 +2,15 @@ package org.wicketstuff.jwicket.tooltip;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.util.string.JavaScriptUtils;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.IComponentAwareHeaderContributor;
-import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.util.string.JavaScriptUtils;
 import org.wicketstuff.jwicket.JQueryAjaxBehavior;
-import org.wicketstuff.jwicket.JQueryJavaScriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReference;
 import org.wicketstuff.jwicket.JQueryResourceReferenceType;
 
 /**
@@ -23,7 +24,7 @@ import org.wicketstuff.jwicket.JQueryResourceReferenceType;
 public class WalterZornTips extends AbstractToolTip {
     private static final long serialVersionUID = 1L;
 
-    public static final JQueryJavaScriptResourceReference walterzorn = new JQueryJavaScriptResourceReference(WalterZornTips.class, "walterzorn_tip.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
+    public static final JQueryResourceReference walterzorn = new JQueryResourceReference(WalterZornTips.class, "walterzorn_tip.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
 
 
     public WalterZornTips(final String tooltipText) {
@@ -59,8 +60,8 @@ public class WalterZornTips extends AbstractToolTip {
             public void renderHead(Component component, IHeaderResponse response) {
                 super.renderHead(component, response);
 
-                response.renderJavaScript("jQuery(function(){tt_Init();});", "initWzToolTips");
-                response.renderJavaScript(getJavaScript(), null);
+                response.render(OnDomReadyHeaderItem.forScript("jQuery(function(){tt_Init();});"));
+                response.render(OnDomReadyHeaderItem.forScript(getJavaScript()));
             }
         };
     }

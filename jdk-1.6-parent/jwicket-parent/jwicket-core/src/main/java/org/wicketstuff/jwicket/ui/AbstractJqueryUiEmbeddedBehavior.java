@@ -1,7 +1,10 @@
 package org.wicketstuff.jwicket.ui;
 
 
-import org.wicketstuff.jwicket.*;
+import org.wicketstuff.jwicket.JQuery;
+import org.wicketstuff.jwicket.JQueryCssResourceReference;
+import org.wicketstuff.jwicket.JQueryDurableAjaxBehavior;
+import org.wicketstuff.jwicket.JQueryResourceReference;
 
 
 public abstract class AbstractJqueryUiEmbeddedBehavior extends JQueryDurableAjaxBehavior {
@@ -10,22 +13,22 @@ public abstract class AbstractJqueryUiEmbeddedBehavior extends JQueryDurableAjax
 
 
 	// Javascript
-	public static final JQueryJavaScriptResourceReference jQueryUiCoreJs
+	public static final JQueryResourceReference jQueryUiCoreJs
 		= JQuery.isDebug()
-		? new JQueryJavaScriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.core.js")
-		: new JQueryJavaScriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.core.min.js");
-	public static final JQueryJavaScriptResourceReference jQueryUiWidgetJs
+		? new JQueryResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.core.js")
+		: new JQueryResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.core.min.js");
+	public static final JQueryResourceReference jQueryUiWidgetJs
 		= JQuery.isDebug()
-		? new JQueryJavaScriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.widget.js")
-		: new JQueryJavaScriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.widget.min.js");
-	public static final JQueryJavaScriptResourceReference jQueryUiMouseJs
+		? new JQueryResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.widget.js")
+		: new JQueryResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.widget.min.js");
+	public static final JQueryResourceReference jQueryUiMouseJs
 		= JQuery.isDebug()
-		? new JQueryJavaScriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.mouse.js")
-		: new JQueryJavaScriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.mouse.min.js");
-	public static final JQueryJavaScriptResourceReference jQueryUiPositionJs
+		? new JQueryResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.mouse.js")
+		: new JQueryResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.mouse.min.js");
+	public static final JQueryResourceReference jQueryUiPositionJs
 		= JQuery.isDebug()
-		? new JQueryJavaScriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.position.js")
-		: new JQueryJavaScriptResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.position.min.js");
+		? new JQueryResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.position.js")
+		: new JQueryResourceReference(AbstractJqueryUiEmbeddedBehavior.class, "jquery.ui.position.min.js");
 
 
 	// CSS

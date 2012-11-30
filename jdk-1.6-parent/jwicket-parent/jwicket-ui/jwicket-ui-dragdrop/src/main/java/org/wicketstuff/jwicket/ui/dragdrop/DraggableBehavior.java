@@ -17,10 +17,10 @@ import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
 public class DraggableBehavior extends AbstractDragDropBehavior {
 
     private static final long serialVersionUID = 1L;
-    public static final JQueryJavaScriptResourceReference jQueryUiDraggableJs
+    public static final JQueryResourceReference jQueryUiDraggableJs
             = JQuery.isDebug()
-            ? new JQueryJavaScriptResourceReference(DraggableBehavior.class, "jquery.ui.draggable.js")
-            : new JQueryJavaScriptResourceReference(DraggableBehavior.class, "jquery.ui.draggable.min.js");
+            ? new JQueryResourceReference(DraggableBehavior.class, "jquery.ui.draggable.js")
+            : new JQueryResourceReference(DraggableBehavior.class, "jquery.ui.draggable.min.js");
 
     private JsMap options = new JsMap();
 
