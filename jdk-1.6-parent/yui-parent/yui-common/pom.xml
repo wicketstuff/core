@@ -11,6 +11,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>wicketstuff-yui-common</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>org.devlib.schmidt</groupId>
+            <artifactId>imageinfo</artifactId>
+            <version>1.9</version>
+        </dependency>
+    </dependencies>
 
 
 </project>

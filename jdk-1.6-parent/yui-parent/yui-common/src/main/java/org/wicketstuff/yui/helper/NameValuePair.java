@@ -38,7 +38,6 @@ public abstract class NameValuePair<T> extends TokenSeparatedValues
 	/**
 	 * 
 	 * @param element
-	 * @param value
 	 */
 	@SuppressWarnings("unchecked")
 	public T add(String element, Object object)
@@ -111,13 +110,6 @@ public abstract class NameValuePair<T> extends TokenSeparatedValues
 		return list;
 	}
 
-	/**
-	 * this should always be true for now...
-	 * 
-	 * @param element
-	 * @param value
-	 * @return
-	 */
 	public boolean isValid(String key, Object value)
 	{
 		return true;

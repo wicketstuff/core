@@ -1,24 +1,20 @@
 package org.wicketstuff.yui.markup.html.contributor;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.behavior.AbstractHeaderContributor;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
 import org.apache.wicket.markup.html.IHeaderContributor;
-import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
-import org.apache.wicket.markup.html.resources.JavascriptResourceReference;
+import org.apache.wicket.request.resource.CssResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.yui.inc.YUI;
 
-public class YuiHeaderContributor extends AbstractHeaderContributor
+import java.net.URL;
+import java.util.*;
+
+public class YuiHeaderContributor implements IHeaderContributor
 {
 
 	private static final long serialVersionUID = 1L;
@@ -29,15 +25,19 @@ public class YuiHeaderContributor extends AbstractHeaderContributor
 
 	static final String YUI_BUILD_ROOT = "/org/wicketstuff/yui/inc";
 
-	static final Map<String, ResourceReference> moduleCache = Collections
-			.synchronizedMap(new HashMap<String, ResourceReference>());
+	static final Map<String, ResourceReference> moduleCache = Collections.synchronizedMap(new HashMap<String, ResourceReference>());
 
 	static final YuiDependencyResolver dependencyResolver = new YuiDependencyResolver();
 
 	List<YuiModuleHeaderContributor> contributors = new ArrayList<YuiModuleHeaderContributor>();
 
+    @Override
+    public void renderHead(IHeaderResponse response) {
+        for (IHeaderContributor iHeaderContributor : this.getHeaderContributors()) {
+            iHeaderContributor.renderHead(response);
+        }
+    }
 
-	@Override
 	public IHeaderContributor[] getHeaderContributors()
 	{
 		return contributors.toArray(new IHeaderContributor[] {});
@@ -163,15 +163,15 @@ public class YuiHeaderContributor extends AbstractHeaderContributor
 				{
 					if (debug)
 					{
-						moduleScript = new ResourceReference(YUI.class, path);
+						moduleScript = new JavaScriptResourceReference(YUI.class, path);
 					}
 					else
 					{
-						moduleScript = new JavascriptResourceReference(YUI.class, path);
+						moduleScript = new JavaScriptResourceReference(YUI.class, path);
 					}
 					YuiHeaderContributor.this.moduleCache.put(path, moduleScript);
 				}
-				response.renderJavascriptReference(moduleScript);
+				response.render(JavaScriptReferenceHeaderItem.forReference(moduleScript));
 				if (dependencyResolver.hasCssAsset(name, YUI_BUILD_ROOT + "/" + build))
 				{
 					// final String assetPath = YUI_BUILD_ROOT + "/" + build +
@@ -186,11 +186,11 @@ public class YuiHeaderContributor extends AbstractHeaderContributor
 					}
 					else
 					{
-						assetRef = new CompressedResourceReference(YUI.class, assetPath);
+						assetRef = new CssResourceReference(YUI.class, assetPath);
 						YuiHeaderContributor.this.moduleCache.put(assetPath, assetRef);
 					}
 
-					response.renderCSSReference(assetRef, "screen");
+					response.render(CssHeaderItem.forReference(assetRef, "screen"));
 				}
 			}
 			else

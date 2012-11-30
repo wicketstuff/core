@@ -89,7 +89,7 @@ public class YuiAttribute implements Serializable
 	 * validate that is valid key e.g. : borderWidth, lineHeight ....
 	 * 
 	 * @param element
-	 * @param value
+	 * @param attribute
 	 * @return
 	 */
 	private boolean isValid(String element, YuiProperty attribute)

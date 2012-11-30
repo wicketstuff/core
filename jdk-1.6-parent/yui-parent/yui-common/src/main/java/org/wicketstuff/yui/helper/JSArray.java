@@ -59,10 +59,6 @@ public class JSArray extends TokenSeparatedValues implements JavascriptObject
 		}
 	}
 
-	/**
-	 * 
-	 * @param string
-	 */
 	public JSArray add(String value)
 	{
 		values.add(value);

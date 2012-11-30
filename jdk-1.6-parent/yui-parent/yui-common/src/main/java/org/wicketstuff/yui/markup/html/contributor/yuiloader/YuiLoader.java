@@ -4,6 +4,7 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.yui.helper.JSArray;
 import org.wicketstuff.yui.inc.YUI;
@@ -21,9 +22,9 @@ public abstract class YuiLoader implements IHeaderContributor {
 
     protected static String DEBUG = "'debug'";
 
-    private static final ResourceReference YUILOADER = new ResourceReference(YUI.class, BUILD + "/yuiloader/yuiloader.js");
+    private static final ResourceReference YUILOADER = new JavaScriptResourceReference(YUI.class, BUILD + "/yuiloader/yuiloader.js");
 
-    protected static final ResourceReference BASE = new ResourceReference(YUI.class, BUILD + "/");
+    protected static final ResourceReference BASE = new JavaScriptResourceReference(YUI.class, BUILD + "/");
 
     private List<IYuiLoaderModule> modules = new ArrayList<IYuiLoaderModule>();
 
@@ -90,7 +91,7 @@ public abstract class YuiLoader implements IHeaderContributor {
     }
 
     protected static String getBase() {
-        return RequestCycle.get().urlFor(BASE).toString();
+        return RequestCycle.get().urlFor(BASE, null).toString();
     }
 
     public List<IYuiLoaderModule> getModules() {

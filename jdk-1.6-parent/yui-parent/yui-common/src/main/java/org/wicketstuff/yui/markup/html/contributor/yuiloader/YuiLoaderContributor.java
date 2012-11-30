@@ -1,12 +1,12 @@
 package org.wicketstuff.yui.markup.html.contributor.yuiloader;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.html.IHeaderContributor;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.wicket.Component;
-import org.apache.wicket.behavior.AbstractHeaderContributor;
-import org.apache.wicket.behavior.IBehavior;
-import org.apache.wicket.markup.html.IHeaderContributor;
 
 /**
  * a contributor that handles YuiLoaderModules
@@ -14,7 +14,7 @@ import org.apache.wicket.markup.html.IHeaderContributor;
  * @author josh
  * 
  */
-public class YuiLoaderContributor extends AbstractHeaderContributor
+public class YuiLoaderContributor extends Behavior implements IHeaderContributor
 {
 
 	private static final long serialVersionUID = 1L;
@@ -44,7 +44,19 @@ public class YuiLoaderContributor extends AbstractHeaderContributor
 	{
 	}
 
-	public static IBehavior addModule(IYuiLoaderModule yuiLoaderModule)
+    @Override
+    public void renderHead(Component component, IHeaderResponse response) {
+        this.renderHead(response);
+    }
+
+    @Override
+    public void renderHead(IHeaderResponse response) {
+        for (IHeaderContributor iHeaderContributor : getHeaderContributors()) {
+            iHeaderContributor.renderHead(response);
+        }
+    }
+
+    public static Behavior addModule(IYuiLoaderModule yuiLoaderModule)
 	{
 		return addModule(yuiLoaderModule, false);
 	}
@@ -55,7 +67,7 @@ public class YuiLoaderContributor extends AbstractHeaderContributor
 	 * @param useSandbox
 	 * @return
 	 */
-	public static IBehavior addModule(IYuiLoaderModule module, boolean useSandbox)
+	public static Behavior addModule(IYuiLoaderModule module, boolean useSandbox)
 	{
 		YuiLoaderContributor loader = getCurrentLoader();
 		if (useSandbox)
@@ -86,13 +98,11 @@ public class YuiLoaderContributor extends AbstractHeaderContributor
 		return loader;
 	}
 
-	@Override
 	public void detach(Component component)
 	{
 		threadLocalLoader.remove();
 	}
 
-	@Override
 	public IHeaderContributor[] getHeaderContributors()
 	{
 		List<IHeaderContributor> contributors = new ArrayList<IHeaderContributor>();

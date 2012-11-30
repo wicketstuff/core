@@ -1,7 +1,7 @@
 package org.wicketstuff.yui.helper;
 
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.markup.html.PackageResource;
+import org.apache.wicket.request.resource.PackageResource;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
 import org.devlib.schmidt.imageinfo.ImageInfo;
@@ -37,7 +37,7 @@ public class ImageResourceInfo
 	 */
 	public ImageResourceInfo(ResourceReference reference)
 	{
-		this(PackageResource.get(reference.getScope(), reference.getName()));
+		this(new PackageResource(reference.getScope(), reference.getName(), null, null, null){});
 	}
 
 	/**

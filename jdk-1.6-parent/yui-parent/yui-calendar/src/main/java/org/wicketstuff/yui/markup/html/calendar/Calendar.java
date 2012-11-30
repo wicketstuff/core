@@ -19,18 +19,20 @@
 package org.wicketstuff.yui.markup.html.calendar;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnLoadHeaderItem;
 import org.apache.wicket.markup.html.IHeaderContributor;
-import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.util.template.PackagedTextTemplate;
+import org.apache.wicket.request.resource.CssResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.util.template.PackageTextTemplate;
 import org.wicketstuff.yui.markup.html.contributor.YuiHeaderContributor;
 
 import java.util.HashMap;
@@ -38,145 +40,122 @@ import java.util.Map;
 
 /**
  * Calendar component based on the Calendar of Yahoo UI Library.
- * 
+ *
  * @author Eelco Hillenius
  */
-public class Calendar extends Panel implements IHeaderContributor
-{
-	/**
-	 * The container/ receiver of the javascript component.
-	 */
-	private final class CalendarElement extends FormComponent
-	{
-		private static final long serialVersionUID = 1L;
+public class Calendar extends Panel implements IHeaderContributor {
+    /**
+     * The container/ receiver of the javascript component.
+     */
+    private final class CalendarElement extends FormComponent {
+        private static final long serialVersionUID = 1L;
 
-		/**
-		 * Construct.
-		 * 
-		 * @param id
-		 */
-		public CalendarElement(String id)
-		{
-			super(id);
-			add(new AttributeModifier("id", true, new AbstractReadOnlyModel()
-			{
-				private static final long serialVersionUID = 1L;
+        /**
+         * Construct.
+         *
+         * @param id
+         */
+        public CalendarElement(String id) {
+            super(id);
+            add(new AttributeModifier("id", new AbstractReadOnlyModel() {
+                private static final long serialVersionUID = 1L;
 
-				@Override
-				public Object getObject()
-				{
-					return elementId;
-				}
-			}));
-		}
+                @Override
+                public Object getObject() {
+                    return elementId;
+                }
+            }));
+        }
 
-		/**
-		 * @see wicket.markup.html.form.FormComponent#updateModel()
-		 */
-		@Override
-		public void updateModel()
-		{
-			Calendar.this.updateModel();
-		}
-	}
+        @Override
+        public void updateModel() {
+            Calendar.this.updateModel();
+        }
+    }
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/** the receiving component. */
-	private CalendarElement calendarElement;
+    /**
+     * the receiving component.
+     */
+    private CalendarElement calendarElement;
 
-	/**
-	 * The DOM id of the element that hosts the javascript component.
-	 */
-	private String elementId;
+    /**
+     * The DOM id of the element that hosts the javascript component.
+     */
+    private String elementId;
 
-	/**
-	 * The JavaScript variable name of the calendar component.
-	 */
-	private String javaScriptId;
+    /**
+     * The JavaScript variable name of the calendar component.
+     */
+    private String javaScriptId;
 
-	/**
-	 * Construct.
-	 * 
-	 * @param id
-	 *            the component id
-	 */
-	public Calendar(String id)
-	{
-		super(id);
-		add(YuiHeaderContributor.forModule("calendar"));
-		add(HeaderContributor.forJavaScript(Calendar.class, "calendar.js"));
-		add(HeaderContributor.forCss(Calendar.class, "calendar.css"));
+    /**
+     * Construct.
+     *
+     * @param id the component id
+     */
+    public Calendar(String id) {
+        super(id);
 
-		Label initialization = new Label("initialization", new AbstractReadOnlyModel()
-		{
-			private static final long serialVersionUID = 1L;
+        Label initialization = new Label("initialization", new AbstractReadOnlyModel() {
+            private static final long serialVersionUID = 1L;
 
-			/**
-			 * @see wicket.model.IModel#getObject(wicket.Component)
-			 */
-			@Override
-			public Object getObject()
-			{
-				return getJavaScriptComponentInitializationScript();
-			}
-		});
-		initialization.setEscapeModelStrings(false);
-		add(initialization);
-		add(calendarElement = new CalendarElement("calendarContainer"));
-	}
+            @Override
+            public Object getObject() {
+                return getJavaScriptComponentInitializationScript();
+            }
+        });
+        initialization.setEscapeModelStrings(false);
+        add(initialization);
+        add(calendarElement = new CalendarElement("calendarContainer"));
+    }
 
-	/**
-	 * @see org.apache.wicket.markup.html.IHeaderContributor#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
-	 */
-	public void renderHead(IHeaderResponse response)
-	{
-		response.render(OnDomReadyHeaderItem.forScript("init" + javaScriptId + "();"));
-	}
+    public void renderHead(IHeaderResponse response) {
+        response.render(OnLoadHeaderItem.forScript("init" + javaScriptId + "();"));
 
-	/**
-	 * TODO implement
-	 */
-	public void updateModel()
-	{
-	}
+        YuiHeaderContributor.forModule("calendar").renderHead(response);
+        response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(Calendar.class, "calendar.js")));
+        response.render(CssHeaderItem.forReference(new CssResourceReference(Calendar.class, "calendar.css")));
+    }
 
-	/**
-	 * Gets the initilization script for the javascript component.
-	 * 
-	 * @return the initilization script
-	 */
-	protected String getJavaScriptComponentInitializationScript()
-	{
-		CharSequence leftImage = RequestCycle.get().urlFor(new ResourceReference(Calendar.class, "callt.gif")).toString();
-		CharSequence rightImage = RequestCycle.get().urlFor(new ResourceReference(Calendar.class, "calrt.gif")).toString();
+    /**
+     * TODO implement
+     */
+    public void updateModel() {
+    }
 
-		Map<String, Object> variables = new HashMap<String, Object>(4);
-		variables.put("javaScriptId", javaScriptId);
-		variables.put("elementId", elementId);
-		variables.put("navigationArrowLeft", leftImage);
-		variables.put("navigationArrowRight", rightImage);
+    /**
+     * Gets the initilization script for the javascript component.
+     *
+     * @return the initilization script
+     */
+    protected String getJavaScriptComponentInitializationScript() {
+        CharSequence leftImage = RequestCycle.get().urlFor(new PackageResourceReference(Calendar.class, "callt.gif"), null).toString();
+        CharSequence rightImage = RequestCycle.get().urlFor(new PackageResourceReference(Calendar.class, "calrt.gif"), null).toString();
 
-		PackagedTextTemplate template = new PackagedTextTemplate(Calendar.class, "init.js");
-		template.interpolate(variables);
+        Map<String, Object> variables = new HashMap<String, Object>(4);
+        variables.put("javaScriptId", javaScriptId);
+        variables.put("elementId", elementId);
+        variables.put("navigationArrowLeft", leftImage);
+        variables.put("navigationArrowRight", rightImage);
 
-		return template.getString();
-	}
+        PackageTextTemplate template = new PackageTextTemplate(Calendar.class, "init.js");
+        template.interpolate(variables);
 
-	/**
-	 * @see wicket.Component#onAttach()
-	 */
-	@Override
-	protected void onBeforeRender()
-	{
-		super.onBeforeRender();
+        return template.getString();
+    }
 
-		// initialize lazily
-		if (elementId == null) {
-			// assign the markup id
-			String id = getMarkupId();
-			elementId = id + "Element";
-			javaScriptId = elementId + "JS";
-		}
-	}
+    @Override
+    protected void onBeforeRender() {
+        super.onBeforeRender();
+
+        // initialize lazily
+        if (elementId == null) {
+            // assign the markup id
+            String id = getMarkupId();
+            elementId = id + "Element";
+            javaScriptId = elementId + "JS";
+        }
+    }
 }
