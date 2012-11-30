@@ -18,21 +18,23 @@
  */
 package org.wicketstuff.yui.markup.html.calendar;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.template.PackagedTextTemplate;
 import org.wicketstuff.yui.markup.html.contributor.YuiHeaderContributor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Calendar component based on the Calendar of Yahoo UI Library.
@@ -129,7 +131,7 @@ public class Calendar extends Panel implements IHeaderContributor
 	 */
 	public void renderHead(IHeaderResponse response)
 	{
-		response.renderOnLoadJavascript("init" + javaScriptId + "();");
+		response.render(OnDomReadyHeaderItem.forScript("init" + javaScriptId + "();"));
 	}
 
 	/**
