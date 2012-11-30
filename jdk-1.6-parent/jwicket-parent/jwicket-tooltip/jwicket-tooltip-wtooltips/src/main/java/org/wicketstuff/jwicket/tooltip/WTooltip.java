@@ -1,10 +1,11 @@
 package org.wicketstuff.jwicket.tooltip;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.IComponentAwareHeaderContributor;
-import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.jwicket.JQueryAjaxBehavior;
-import org.wicketstuff.jwicket.JQueryJavaScriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReference;
 import org.wicketstuff.jwicket.JQueryResourceReferenceType;
 
 /**
@@ -13,7 +14,7 @@ import org.wicketstuff.jwicket.JQueryResourceReferenceType;
 public class WTooltip extends AbstractToolTip {
     private static final long serialVersionUID = 1L;
 
-    private static final JQueryJavaScriptResourceReference wTooltip = new JQueryJavaScriptResourceReference(WTooltip.class, "wTooltip.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
+    private static final JQueryResourceReference wTooltip = new JQueryResourceReference(WTooltip.class, "wTooltip.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
 
     private String style;
     private String cssClassName;
@@ -39,7 +40,7 @@ public class WTooltip extends AbstractToolTip {
             public void renderHead(Component component, IHeaderResponse response) {
                 super.renderHead(component, response);
 
-                response.renderJavaScript(getJavaScript(), null);
+                response.render(OnDomReadyHeaderItem.forScript(getJavaScript()));
             }
         };
     }

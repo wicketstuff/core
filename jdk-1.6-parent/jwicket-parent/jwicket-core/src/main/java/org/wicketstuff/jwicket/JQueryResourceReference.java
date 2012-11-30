@@ -2,7 +2,7 @@ package org.wicketstuff.jwicket;
 
 
 import org.apache.wicket.WicketRuntimeException;
-import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.util.time.Time;
 import org.apache.wicket.util.watch.IModifiable;
 
@@ -35,7 +35,7 @@ import org.apache.wicket.util.watch.IModifiable;
  * {@link JQueryResourceReferenceType#NOT_OVERRIDABLE} with your own version
  * this will lead to a {@link WicketRuntimeException}.
  */
-public class JQueryResourceReference extends PackageResourceReference implements IModifiable {
+public class JQueryResourceReference extends JavaScriptResourceReference implements IModifiable {
 
     private static final long serialVersionUID = 1L;
 

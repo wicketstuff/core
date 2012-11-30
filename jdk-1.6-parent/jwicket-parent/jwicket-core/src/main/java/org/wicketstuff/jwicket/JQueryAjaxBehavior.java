@@ -5,7 +5,9 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.CssReferenceHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
 import java.io.PrintStream;
@@ -27,7 +29,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 
 
     public JQueryAjaxBehavior(final JQueryResourceReference baseLibrary) {
-        this(baseLibrary, new JQueryJavaScriptResourceReference[0]);
+        this(baseLibrary, new JQueryResourceReference[0]);
     }
 
     public JQueryAjaxBehavior(
@@ -139,7 +141,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 
     private void addJavascriptReference(IHeaderResponse response, JavaScriptResourceReference resource) {
         if (!response.wasRendered(resource)) {
-            response.renderJavaScriptReference(resource);
+            response.render(JavaScriptReferenceHeaderItem.forReference(resource));
             response.markRendered(resource);
         }
     }
@@ -147,14 +149,14 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 
     private void addJavascriptReference(IHeaderResponse response, JQueryResourceReference resource) {
         if (!response.wasRendered(resource)) {
-            if (resource instanceof org.wicketstuff.jwicket.JQueryJavaScriptResourceReference) {
+            if (resource instanceof org.wicketstuff.jwicket.JQueryResourceReference) {
                 if (resource.hasId()) {
-                    response.renderJavaScriptReference(resource, resource.getId());
+                    response.render(JavaScriptReferenceHeaderItem.forReference(resource, resource.getId()));
                 } else {
-                    response.renderJavaScriptReference(resource);
+                    response.render(JavaScriptReferenceHeaderItem.forReference(resource));
                 }
             } else {
-                response.renderCSSReference(resource);
+                response.render(CssReferenceHeaderItem.forReference(resource));
             }
             response.markRendered(resource);
         }
@@ -170,7 +172,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
         if (userProvidedResourceReferences.size() == 0) {
             // No user provided Resources, use internal resources
             addJavascriptReference(response, JQueryHeaderContributor.jQueryCoreJs);
-            response.renderJavaScript("jQuery.noConflict();", "noConflict");
+            response.render(JavaScriptReferenceHeaderItem.forScript("jQuery.noConflict();", "noConflict"));
 
             if (this.baseLibrary != null) {
                 addJavascriptReference(response, this.baseLibrary);

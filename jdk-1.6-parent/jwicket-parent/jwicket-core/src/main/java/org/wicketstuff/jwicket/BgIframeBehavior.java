@@ -15,7 +15,7 @@ public class BgIframeBehavior extends JQueryDurableAjaxBehavior {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavaScriptResourceReference jQueryBgiframeJs = new JQueryJavaScriptResourceReference(JQuery.class, "bgiframe-2.1.3pre.js");
+	public static final JQueryResourceReference jQueryBgiframeJs = new JQueryResourceReference(JQuery.class, "bgiframe-2.1.3pre.js");
 
 	private JsMap options = new JsMap();
 

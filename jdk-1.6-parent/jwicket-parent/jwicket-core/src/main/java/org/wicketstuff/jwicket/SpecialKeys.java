@@ -14,7 +14,7 @@ public class SpecialKeys implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public static final JQueryJavaScriptResourceReference specialKeysJs = new JQueryJavaScriptResourceReference(SpecialKeys.class, "SpecialKeys.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
+    public static final JQueryResourceReference specialKeysJs = new JQueryResourceReference(SpecialKeys.class, "SpecialKeys.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
 
 
     public SpecialKeys(final SpecialKey... additionalSpecialKeys) {
