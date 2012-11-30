@@ -2,8 +2,9 @@ package org.wicketstuff.jwicket.tooltip;
 
 
 import org.apache.wicket.Component;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.IComponentAwareHeaderContributor;
-import org.apache.wicket.markup.html.IHeaderResponse;
 import org.wicketstuff.jwicket.BgIframeBehavior;
 import org.wicketstuff.jwicket.JQueryAjaxBehavior;
 import org.wicketstuff.jwicket.JQueryJavaScriptResourceReference;
@@ -37,7 +38,7 @@ public class BeautyTips extends AbstractToolTip {
     public void renderHead(Component component, IHeaderResponse response) {
         super.renderHead(component, response);
 
-        response.renderJavaScript(getJavaScript(), null);
+        response.render(JavaScriptHeaderItem.forScript(getJavaScript(), null));
     }
 
     @Override
@@ -49,7 +50,7 @@ public class BeautyTips extends AbstractToolTip {
             public void renderHead(Component component, IHeaderResponse response) {
                 super.renderHead(component, response);
 
-                response.renderJavaScript(getJavaScript(), null);
+                response.render(JavaScriptHeaderItem.forScript(getJavaScript(), null));
             }
         };
     }

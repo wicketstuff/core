@@ -3,7 +3,7 @@ package org.wicketstuff.jwicket.ui.dragdrop;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.util.visit.IVisitor;
 import org.wicketstuff.jwicket.*;

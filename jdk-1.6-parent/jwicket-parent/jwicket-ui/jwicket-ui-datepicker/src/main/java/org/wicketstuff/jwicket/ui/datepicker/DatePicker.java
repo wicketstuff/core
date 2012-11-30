@@ -5,7 +5,8 @@ import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.resource.ResourceReference;
@@ -1421,7 +1422,7 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
             sb.append("      return datePickerDefaultShowDayState;\n");
             sb.append("};");
 
-            response.renderJavaScript(sb.toString(), getCheckFunctionName() + "ID");
+            response.render(JavaScriptHeaderItem.forScript(sb.toString(), getCheckFunctionName() + "ID"));
         }
     }
 

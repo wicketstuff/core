@@ -1,7 +1,8 @@
 package org.wicketstuff.jwicket.ui.dragdrop;
 
 
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptContentHeaderItem;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -156,27 +157,27 @@ public class DraggablesAcceptedByDroppable implements Serializable {
 	 */
 	public void renderJsDropAcceptFunction(final IHeaderResponse response) {
 		if (acceptedNames != null && acceptedNames.size() > 0) {
-			response.renderJavaScript(
-				"var " + getJsAcceptCheckerFunctionName() + " = function(candidate) {\n" +
-				"	var accepted = " + getTypesAsJsSet() + ";\n" +
-				"	var candidateString = jQuery(candidate).attr('" + DRAG_NAME_IDENTIFIER + "');\n" +
-				"	for (var i = 0; i < accepted.length; i++)\n" +
-				"		if (accepted[i] == candidateString)\n" +
-				"			return true;" +
-		    	"	return false;" +
-				"};"
-		    	,
-				id
-			);
+			response.render(JavaScriptContentHeaderItem.forScript(
+                    "var " + getJsAcceptCheckerFunctionName() + " = function(candidate) {\n" +
+                            "	var accepted = " + getTypesAsJsSet() + ";\n" +
+                            "	var candidateString = jQuery(candidate).attr('" + DRAG_NAME_IDENTIFIER + "');\n" +
+                            "	for (var i = 0; i < accepted.length; i++)\n" +
+                            "		if (accepted[i] == candidateString)\n" +
+                            "			return true;" +
+                            "	return false;" +
+                            "};"
+                    ,
+                    id
+            ));
 		}
 		else {
-			response.renderJavaScript(
+			response.render(JavaScriptContentHeaderItem.forScript(
 				"var " + getJsAcceptCheckerFunctionName() + " = function(candidate) {\n" +
 		    	"	return false;" +
 				"};"
 		    	,
 				id
-			);
+			));
 		}
 
 	}

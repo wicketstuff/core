@@ -6,7 +6,9 @@ package org.wicketstuff.menu;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.core.request.ClientInfo;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
@@ -16,7 +18,6 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.protocol.http.ClientProperties;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.protocol.http.request.WebClientInfo;
-import org.apache.wicket.request.ClientInfo;
 import org.wicketstuff.jwicket.IStyleResolver;
 import org.wicketstuff.jwicket.JQueryCssResourceReference;
 
@@ -342,7 +343,7 @@ public class MenuBarPanel extends Panel implements IStyleResolver {
         if (cssResources != null) {
             IHeaderResponse headerResponse = container.getHeaderResponse();
             for (JQueryCssResourceReference cssResource : cssResources) {
-                headerResponse.renderCSSReference(cssResource);
+                headerResponse.render(CssHeaderItem.forReference(cssResource));
             }
         }
     }

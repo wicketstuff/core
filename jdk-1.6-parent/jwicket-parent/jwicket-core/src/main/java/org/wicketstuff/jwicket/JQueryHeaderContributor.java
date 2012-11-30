@@ -2,16 +2,18 @@ package org.wicketstuff.jwicket;
 
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.AbstractBehavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 
-public class JQueryHeaderContributor extends AbstractBehavior {
+public class JQueryHeaderContributor extends Behavior {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,16 +41,10 @@ public class JQueryHeaderContributor extends AbstractBehavior {
         this.requiredLibraries = requiredLibraries;
     }
 
-    protected void addJavascriptReference(IHeaderResponse response, JavaScriptResourceReference resource) {
+    protected void addJavascriptReference(IHeaderResponse response, PackageResourceReference resource) {
         if (!response.wasRendered(resource)) {
-            response.renderJavaScriptReference(resource);
-            response.markRendered(resource);
-        }
-    }
-
-    protected void addJavascriptReference(IHeaderResponse response, JQueryJavaScriptResourceReference resource) {
-        if (!response.wasRendered(resource)) {
-            response.renderJavaScriptReference(resource);
+//            response.renderJavaScriptReference(resource);
+            response.render(JavaScriptHeaderItem.forReference(resource));
             response.markRendered(resource);
         }
     }
@@ -60,7 +56,8 @@ public class JQueryHeaderContributor extends AbstractBehavior {
         if (userProvidedResourceReferences.size() == 0) {
             // No user provided Resources, use internal resources
             addJavascriptReference(response, jQueryCoreJs);
-            response.renderJavaScript("jQuery.noConflict();", "noConflict");
+//            response.renderJavaScript("jQuery.noConflict();", "noConflict");
+            response.render(JavaScriptHeaderItem.forScript("jQuery.noConflict();", "noConflict"));
 
             if (this.baseLibrary != null) {
                 addJavascriptReference(response, this.baseLibrary);

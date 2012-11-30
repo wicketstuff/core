@@ -2,12 +2,13 @@ package org.wicketstuff.jwicket.tooltip;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.core.util.string.JavaScriptUtils;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.IComponentAwareHeaderContributor;
-import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.util.string.JavaScriptUtils;
 import org.wicketstuff.jwicket.JQueryAjaxBehavior;
 import org.wicketstuff.jwicket.JQueryJavaScriptResourceReference;
 import org.wicketstuff.jwicket.JQueryResourceReferenceType;
@@ -59,8 +60,8 @@ public class WalterZornTips extends AbstractToolTip {
             public void renderHead(Component component, IHeaderResponse response) {
                 super.renderHead(component, response);
 
-                response.renderJavaScript("jQuery(function(){tt_Init();});", "initWzToolTips");
-                response.renderJavaScript(getJavaScript(), null);
+                response.render(JavaScriptHeaderItem.forScript("jQuery(function(){tt_Init();});", "initWzToolTips"));
+                response.render(JavaScriptHeaderItem.forScript(getJavaScript(), null));
             }
         };
     }
