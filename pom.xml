@@ -241,7 +241,7 @@
 	<modules>
 		<module>jdk-1.6-parent</module>
 		<module>jdk-1.7-parent</module>
-	</modules>
+    </modules>
 
 	<dependencies>
 		<dependency>
