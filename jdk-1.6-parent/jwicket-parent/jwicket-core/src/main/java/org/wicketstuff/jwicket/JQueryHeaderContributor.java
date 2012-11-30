@@ -6,7 +6,6 @@ import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
-import org.apache.wicket.request.resource.PackageResourceReference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,33 +16,32 @@ public class JQueryHeaderContributor extends Behavior {
 
     private static final long serialVersionUID = 1L;
 
-    public static final JQueryJavaScriptResourceReference jQueryCoreJs
+    public static final JQueryResourceReference jQueryCoreJs
             = JQuery.isDebug()
-            ? new JQueryJavaScriptResourceReference(JQuery.class, "jquery-1.4.4.js")
-            : new JQueryJavaScriptResourceReference(JQuery.class, "jquery-1.4.4.min.js");
+            ? new JQueryResourceReference(JQuery.class, "jquery-1.4.4.js")
+            : new JQueryResourceReference(JQuery.class, "jquery-1.4.4.min.js");
 
 
-    private final JQueryJavaScriptResourceReference baseLibrary;
-    private final JQueryJavaScriptResourceReference[] requiredLibraries;
+    private final JQueryResourceReference baseLibrary;
+    private final JQueryResourceReference[] requiredLibraries;
     private static final List<JavaScriptResourceReference> userProvidedResourceReferences = new ArrayList<JavaScriptResourceReference>();
 
-    public JQueryHeaderContributor(final JQueryJavaScriptResourceReference baseLibrary) {
+    public JQueryHeaderContributor(final JQueryResourceReference baseLibrary) {
         super();
         this.baseLibrary = baseLibrary;
-        this.requiredLibraries = new JQueryJavaScriptResourceReference[0];
+        this.requiredLibraries = new JQueryResourceReference[0];
     }
 
     public JQueryHeaderContributor(
-            final JQueryJavaScriptResourceReference baseLibrary,
-            final JQueryJavaScriptResourceReference... requiredLibraries) {
+            final JQueryResourceReference baseLibrary,
+            final JQueryResourceReference... requiredLibraries) {
         super();
         this.baseLibrary = baseLibrary;
         this.requiredLibraries = requiredLibraries;
     }
 
-    protected void addJavascriptReference(IHeaderResponse response, PackageResourceReference resource) {
+    protected void addJavascriptReference(IHeaderResponse response, JavaScriptResourceReference resource) {
         if (!response.wasRendered(resource)) {
-//            response.renderJavaScriptReference(resource);
             response.render(JavaScriptHeaderItem.forReference(resource));
             response.markRendered(resource);
         }
@@ -63,7 +61,7 @@ public class JQueryHeaderContributor extends Behavior {
                 addJavascriptReference(response, this.baseLibrary);
             }
             if (this.requiredLibraries != null)
-                for (JQueryJavaScriptResourceReference requiredLibrary : this.requiredLibraries) {
+                for (JQueryResourceReference requiredLibrary : this.requiredLibraries) {
                     addJavascriptReference(response, requiredLibrary);
                 }
         } else {
@@ -76,7 +74,7 @@ public class JQueryHeaderContributor extends Behavior {
                 addJavascriptReference(response, this.baseLibrary);
             }
             if (this.requiredLibraries != null)
-                for (JQueryJavaScriptResourceReference requiredLibrary : this.requiredLibraries)
+                for (JQueryResourceReference requiredLibrary : this.requiredLibraries)
                     if (requiredLibrary.getType() == JQueryResourceReferenceType.NOT_OVERRIDABLE) {
                         addJavascriptReference(response, requiredLibrary);
                     }

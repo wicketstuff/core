@@ -3,17 +3,17 @@ package org.wicketstuff.jwicket.ui.effect;
 
 import org.apache.wicket.Component;
 import org.wicketstuff.jwicket.JQuery;
-import org.wicketstuff.jwicket.JQueryJavaScriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReference;
 
 
 public class Transfer extends AbstractJqueryUiEffect {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavaScriptResourceReference jQueryUiEffectsTransferJs
+	public static final JQueryResourceReference jQueryUiEffectsTransferJs
 		= JQuery.isDebug()
-		? new JQueryJavaScriptResourceReference(Blind.class, "jquery.effects.transfer.js")
-		: new JQueryJavaScriptResourceReference(Blind.class, "jquery.effects.transfer.min.js");
+		? new JQueryResourceReference(Blind.class, "jquery.effects.transfer.js")
+		: new JQueryResourceReference(Blind.class, "jquery.effects.transfer.min.js");
 
 	public Transfer() {
 		super(jQueryUiEffectsTransferJs);

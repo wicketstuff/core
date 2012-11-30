@@ -6,7 +6,7 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.jwicket.JQuery;
 import org.wicketstuff.jwicket.JQueryHeaderContributor;
-import org.wicketstuff.jwicket.JQueryJavaScriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReference;
 import org.wicketstuff.jwicket.JQuerySpeed;
 
 import java.util.ArrayList;
@@ -98,12 +98,12 @@ public abstract class AbstractJqueryUiEffect extends JQueryHeaderContributor  {
 
 	private static long nextId = 0;
 	
-	public static final JQueryJavaScriptResourceReference jQueryUiEffectsCoreJs
+	public static final JQueryResourceReference jQueryUiEffectsCoreJs
 		= JQuery.isDebug()
-		? new JQueryJavaScriptResourceReference(AbstractJqueryUiEffect.class, "jquery.effects.core.js")
-		: new JQueryJavaScriptResourceReference(AbstractJqueryUiEffect.class, "jquery.effects.core.min.js");
+		? new JQueryResourceReference(AbstractJqueryUiEffect.class, "jquery.effects.core.js")
+		: new JQueryResourceReference(AbstractJqueryUiEffect.class, "jquery.effects.core.min.js");
 
-	public AbstractJqueryUiEffect(final JQueryJavaScriptResourceReference... requiredLibraries) {
+	public AbstractJqueryUiEffect(final JQueryResourceReference... requiredLibraries) {
 		super(jQueryUiEffectsCoreJs, requiredLibraries);
 	}
 

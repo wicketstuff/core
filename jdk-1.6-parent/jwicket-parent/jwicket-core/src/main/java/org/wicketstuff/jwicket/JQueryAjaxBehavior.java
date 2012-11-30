@@ -29,7 +29,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 
 
     public JQueryAjaxBehavior(final JQueryResourceReference baseLibrary) {
-        this(baseLibrary, new JQueryJavaScriptResourceReference[0]);
+        this(baseLibrary, new JQueryResourceReference[0]);
     }
 
     public JQueryAjaxBehavior(
@@ -149,7 +149,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior {
 
     private void addJavascriptReference(IHeaderResponse response, JQueryResourceReference resource) {
         if (!response.wasRendered(resource)) {
-            if (resource instanceof org.wicketstuff.jwicket.JQueryJavaScriptResourceReference) {
+            if (resource instanceof org.wicketstuff.jwicket.JQueryResourceReference) {
                 if (resource.hasId()) {
                     response.render(JavaScriptReferenceHeaderItem.forReference(resource, resource.getId()));
                 } else {

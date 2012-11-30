@@ -29,16 +29,16 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
 
     private static final long serialVersionUID = 1L;
 
-    public static final JQueryJavaScriptResourceReference uiDatepickerJs
+    public static final JQueryResourceReference uiDatepickerJs
             = JQuery.isDebug()
-            ? new JQueryJavaScriptResourceReference(DatePicker.class, "jquery.ui.datepicker.js")
-            : new JQueryJavaScriptResourceReference(DatePicker.class, "jquery.ui.datepicker.min.js");
-    public static final JQueryJavaScriptResourceReference uiDatepickerJs_de
+            ? new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker.js")
+            : new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker.min.js");
+    public static final JQueryResourceReference uiDatepickerJs_de
             = JQuery.isDebug()
-            ? new JQueryJavaScriptResourceReference(DatePicker.class, "jquery.ui.datepicker-de.js")
-            : new JQueryJavaScriptResourceReference(DatePicker.class, "jquery.ui.datepicker-de.min.js");
+            ? new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker-de.js")
+            : new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker-de.min.js");
 
-    public static final JQueryJavaScriptResourceReference datePickerDefaultShowDayState = new JQueryJavaScriptResourceReference(DatePicker.class, "datePickerDefaultShowDayState.js");
+    public static final JQueryResourceReference datePickerDefaultShowDayState = new JQueryResourceReference(DatePicker.class, "datePickerDefaultShowDayState.js");
 
 
     protected JsMap options = new JsMap();
@@ -57,9 +57,9 @@ public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements ISty
         Locale locale = Session.get().getLocale();
         if (locale != null) {
             if (JQuery.isDebug()) {
-                addUserProvidedResourceReferences(new JQueryJavaScriptResourceReference(DatePicker.class, "jquery.ui.datepicker-" + locale.getLanguage() + ".js"));
+                addUserProvidedResourceReferences(new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker-" + locale.getLanguage() + ".js"));
             } else {
-                addUserProvidedResourceReferences(new JQueryJavaScriptResourceReference(DatePicker.class, "jquery.ui.datepicker-" + locale.getLanguage() + ".min.js"));
+                addUserProvidedResourceReferences(new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker-" + locale.getLanguage() + ".min.js"));
             }
         }
 

@@ -14,10 +14,10 @@ public class AccordionBehavior extends AbstractJqueryUiEmbeddedBehavior implemen
 
     private static final long serialVersionUID = 1L;
 
-    public static final JQueryJavaScriptResourceReference uiAccordionJs
+    public static final JQueryResourceReference uiAccordionJs
             = JQuery.isDebug()
-            ? new JQueryJavaScriptResourceReference(AccordionBehavior.class, "jquery.ui.accordion.js")
-            : new JQueryJavaScriptResourceReference(AccordionBehavior.class, "jquery.ui.accordion.min.js");
+            ? new JQueryResourceReference(AccordionBehavior.class, "jquery.ui.accordion.js")
+            : new JQueryResourceReference(AccordionBehavior.class, "jquery.ui.accordion.min.js");
 
     protected JsMap options = new JsMap();
 

@@ -6,7 +6,7 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.request.Request;
 import org.wicketstuff.jwicket.JQuery;
-import org.wicketstuff.jwicket.JQueryJavaScriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReference;
 import org.wicketstuff.jwicket.JsMap;
 import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
@@ -25,10 +25,10 @@ public class ResizableBehavior extends AbstractJqueryUiEmbeddedBehavior {
 
     private static final long serialVersionUID = 1L;
 
-    public static final JQueryJavaScriptResourceReference uiResizableJs
+    public static final JQueryResourceReference uiResizableJs
             = JQuery.isDebug()
-            ? new JQueryJavaScriptResourceReference(ResizableBehavior.class, "jquery.ui.resizable.js")
-            : new JQueryJavaScriptResourceReference(ResizableBehavior.class, "jquery.ui.resizable.min.js");
+            ? new JQueryResourceReference(ResizableBehavior.class, "jquery.ui.resizable.js")
+            : new JQueryResourceReference(ResizableBehavior.class, "jquery.ui.resizable.min.js");
 
     protected JsMap options = new JsMap();
     private boolean onResizeStartNotificationWanted = false;

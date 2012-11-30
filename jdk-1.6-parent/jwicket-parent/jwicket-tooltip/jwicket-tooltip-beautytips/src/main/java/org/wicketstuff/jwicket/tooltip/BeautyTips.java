@@ -3,11 +3,11 @@ package org.wicketstuff.jwicket.tooltip;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.IComponentAwareHeaderContributor;
 import org.wicketstuff.jwicket.BgIframeBehavior;
 import org.wicketstuff.jwicket.JQueryAjaxBehavior;
-import org.wicketstuff.jwicket.JQueryJavaScriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReference;
 import org.wicketstuff.jwicket.JQueryResourceReferenceType;
 
 
@@ -24,10 +24,10 @@ import org.wicketstuff.jwicket.JQueryResourceReferenceType;
 public class BeautyTips extends AbstractToolTip {
     private static final long serialVersionUID = 1L;
 
-    private static final JQueryJavaScriptResourceReference jqueryHoverIntent = new JQueryJavaScriptResourceReference(BeautyTips.class, "jquery.hoverIntent.minified.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
-    private static final JQueryJavaScriptResourceReference excanvas = new JQueryJavaScriptResourceReference(BeautyTips.class, "excanvas.compiled.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
-    private static final JQueryJavaScriptResourceReference bt = new JQueryJavaScriptResourceReference(BeautyTips.class, "jquery.bt.min.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
-    private static final JQueryJavaScriptResourceReference jqueryEasing = new JQueryJavaScriptResourceReference(BeautyTips.class, "jquery.easing.1.3.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
+    private static final JQueryResourceReference jqueryHoverIntent = new JQueryResourceReference(BeautyTips.class, "jquery.hoverIntent.minified.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
+    private static final JQueryResourceReference excanvas = new JQueryResourceReference(BeautyTips.class, "excanvas.compiled.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
+    private static final JQueryResourceReference bt = new JQueryResourceReference(BeautyTips.class, "jquery.bt.min.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
+    private static final JQueryResourceReference jqueryEasing = new JQueryResourceReference(BeautyTips.class, "jquery.easing.1.3.js", JQueryResourceReferenceType.NOT_OVERRIDABLE);
 
 
     public BeautyTips(final String tooltipText) {
@@ -38,7 +38,7 @@ public class BeautyTips extends AbstractToolTip {
     public void renderHead(Component component, IHeaderResponse response) {
         super.renderHead(component, response);
 
-        response.render(JavaScriptHeaderItem.forScript(getJavaScript(), null));
+        response.render(OnDomReadyHeaderItem.forScript(getJavaScript()));
     }
 
     @Override
@@ -50,7 +50,7 @@ public class BeautyTips extends AbstractToolTip {
             public void renderHead(Component component, IHeaderResponse response) {
                 super.renderHead(component, response);
 
-                response.render(JavaScriptHeaderItem.forScript(getJavaScript(), null));
+                response.render(OnDomReadyHeaderItem.forScript(getJavaScript()));
             }
         };
     }
