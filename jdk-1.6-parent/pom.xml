@@ -67,7 +67,8 @@
 		<module>wicketstuff-springreference-parent</module>
 		<module>wicket-security-parent</module>
 
-         <module>yui-parent</module>
+		<module>yui-parent</module>
+		<module>jasperreports-parent</module>
 
         <!-- TODO: port these module to wicket 6 -->
 

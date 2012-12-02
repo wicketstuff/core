@@ -83,7 +83,7 @@ public final class EmbeddedJRReport extends WebComponent implements IResourceLis
 				"Component " + getId() + " must be applied to a tag of type 'object' not " +
 					tag.toUserDebugString());
 		}
-		tag.put("data", getResponse().encodeURL(urlFor(IResourceListener.INTERFACE)));
+		tag.put("data", getResponse().encodeURL(urlFor(IResourceListener.INTERFACE, null)));
 		tag.put("type", resource.getContentType());
 		super.onComponentTag(tag);
 	}
