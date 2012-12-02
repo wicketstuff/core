@@ -46,12 +46,12 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 				DemoCalendarEvent event = this.getModelObject();
 
 				// new event //
-				if (DemoCalendarDAO.isNew(event)) 
+				if (DemoCalendarDAO.isNew(event))
 				{
 					DemoCalendarDAO.addEvent(event);
 				}
 
-				calendar.refresh(target); //use calendar.refresh() instead of target.add(calendar)
+				calendar.refresh(target); //use calendar.refresh(target) instead of target.add(calendar)
 			}
 		};
 
@@ -71,30 +71,30 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			{
 				return true;
 			}
-			
+
 			@Override
 			protected boolean isEditable()
 			{
 				return true;
 			}
-			
+
 			@Override
 			protected boolean isEventDropEnabled()
 			{
 				return true;
 			}
-			
+
 			@Override
 			protected boolean isEventResizeEnabled()
 			{
 				return true;
 			}
-			
+
 			@Override
 			protected void onDayClick(AjaxRequestTarget target, Date date)
 			{
 				DemoCalendarEvent event = DemoCalendarDAO.emptyEvent(date);
-				
+
 				dialog.setModelObject(event);
 				dialog.open(target);
 			}
