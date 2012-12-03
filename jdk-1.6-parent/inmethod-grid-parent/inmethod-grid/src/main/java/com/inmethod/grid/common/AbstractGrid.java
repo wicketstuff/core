@@ -128,6 +128,7 @@ public abstract class AbstractGrid<M, I, S> extends Panel
 		add(submitColumnStateBehavior);
 	}
 
+	@SuppressWarnings("unchecked")
 	public Form<Void> getForm()
 	{
 		return (Form<Void>)get("form");
@@ -620,12 +621,24 @@ public abstract class AbstractGrid<M, I, S> extends Panel
 	public static final JavaScriptResourceReference JS_DOM =
                            new JavaScriptResourceReference(AbstractGrid.class,
                                                            "res/dom.js");
+	
 	public static final JavaScriptResourceReference JS_SCRIPT =
+            new JavaScriptResourceReference(AbstractGrid.class,
+                                            "res/script.js");
+	
+	public static final JavaScriptResourceReference JS_SCRIPT_JQ =
                            new JavaScriptResourceReference(AbstractGrid.class,
-                                                           "res/script.js");
+                                                           "res/script-jq.js");
 	public static final PackageResourceReference CSS =
                               new PackageResourceReference(AbstractGrid.class,
                                                            "res/style.css");
+	
+	
+	/**
+	 * Flag to set/un-set the use of YUI as backing JS library. Its default is false and jquery is 
+	 * used as backing JS library.
+	 */
+	private boolean useYui = false;
 
 	/**
 	 * {@inheritDoc}
@@ -634,10 +647,15 @@ public abstract class AbstractGrid<M, I, S> extends Panel
 	public void renderHead(IHeaderResponse response)
 	{
 		CoreLibrariesContributor.contributeAjax(getApplication(), response);
-		response.render(JavaScriptHeaderItem.forReference(JS_YAHOO));
-		response.render(JavaScriptHeaderItem.forReference(JS_EVENT));
-		response.render(JavaScriptHeaderItem.forReference(JS_DOM));
-		response.render(JavaScriptHeaderItem.forReference(JS_SCRIPT));
+		if(isUseYui()) {
+			response.render(JavaScriptHeaderItem.forReference(JS_YAHOO));
+			response.render(JavaScriptHeaderItem.forReference(JS_EVENT));
+			response.render(JavaScriptHeaderItem.forReference(JS_DOM));
+			response.render(JavaScriptHeaderItem.forReference(JS_SCRIPT));
+		} else {
+			// jquery is already part of Wicket. So there is nothing more to include.
+			response.render(JavaScriptHeaderItem.forReference(JS_SCRIPT_JQ));
+		}
 		response.render(CssHeaderItem.forReference(CSS));
 	}
 
@@ -773,6 +791,7 @@ public abstract class AbstractGrid<M, I, S> extends Panel
 
 			}
 
+			@SuppressWarnings("unchecked")
 			@Override
 			protected void onEvent(AjaxRequestTarget target)
 			{	// preserve the entered values in form components
@@ -1068,5 +1087,13 @@ public abstract class AbstractGrid<M, I, S> extends Panel
 				return false;
 			}
 		}
+	}
+
+	public boolean isUseYui() {
+		return useYui;
+	}
+
+	public void setUseYui(boolean useYui) {
+		this.useYui = useYui;
 	}
 }
