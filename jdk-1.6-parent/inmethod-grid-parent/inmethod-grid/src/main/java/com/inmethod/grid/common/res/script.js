@@ -1638,8 +1638,8 @@ onKeyEvent = function(element, event) {
 				elements = D.getElementsByClassName("imxt-edit-cancel", "A", row);
 			}
 			
-			if (elements != null && elements.length > 0) {
-				elements[0].onclick.bind(elements[0])();
+			if (elements != null && elements.length > 0) {				
+				$(elements[0]).click();
 			}		
 		}		
 	}	

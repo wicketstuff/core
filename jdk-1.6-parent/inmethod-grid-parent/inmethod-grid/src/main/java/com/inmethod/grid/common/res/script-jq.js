@@ -1649,7 +1649,7 @@ onKeyEvent = function(element, event) {
 			}
 			
 			if (elements != null && elements.length > 0) {
-				elements[0].onclick.bind(elements[0])();
+				$(elements[0]).click();
 			}		
 		}		
 	}	
