@@ -61,6 +61,7 @@ public class TextFieldPanel<M, I, P, S> extends EditableCellPanel<M, I, P, S>
 		add(tf);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected FormComponent<P> getEditComponent()
 	{
