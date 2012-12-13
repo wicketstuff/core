@@ -21,10 +21,10 @@
  * @author Joachim F. Rohde
  */
 // Wicket Namespace
-var Wicket;
-if (!Wicket) {
-    Wicket = {}
-} else if (typeof Wicket != "object") {
+if (typeof(Wicket) === 'undefined') {
+    window.Wicket = {};
+}
+else if (typeof(Wicket) !== "object") {
     throw new Error("Wicket already exists but is not an object");
 }
 
