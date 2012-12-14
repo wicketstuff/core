@@ -144,7 +144,7 @@ public class AjaxRangeSlider extends RangeSlider implements IValueChangedListene
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'change' javascript event
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	private JQueryAjaxChangeBehavior newOnChangeBehavior()
+	protected JQueryAjaxChangeBehavior newOnChangeBehavior()
 	{
 		return new JQueryAjaxChangeBehavior(this, this.lower, this.upper) {
 

@@ -142,7 +142,7 @@ public class AjaxSlider extends Slider implements IValueChangedListener
 	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'change' javascript event
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	private JQueryAjaxBehavior newOnChangeBehavior()
+	protected JQueryAjaxBehavior newOnChangeBehavior()
 	{
 		return new JQueryAjaxChangeBehavior(this, this.input) {
 
