@@ -30,7 +30,7 @@ import org.apache.wicket.model.Model;
 import com.googlecode.wicket.jquery.ui.IJQueryWidget.JQueryWidget;
 
 /**
- * Provides a {@link GenericPanel} that implements {@link IFormSubmittingComponent}, so it is able to perform an form submit via HTTP
+ * Provides a {@link GenericPanel} that implements {@link IFormSubmittingComponent}, so it is able to perform an form submit trough HTTP
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -42,48 +42,51 @@ public abstract class FormSubmittingPanel<T> extends GenericPanel<T> implements 
 
 	/**
 	 * If false, all standard processing like validating and model updating is skipped.
+	 *
 	 * @see IFormSubmittingComponent
 	 */
 	private boolean processForm = true;
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 */
 	public FormSubmittingPanel(String id)
 	{
 		super(id);
-		this.init();
 	}
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 */
 	public FormSubmittingPanel(String id, IModel<T> model)
 	{
 		super(id, model);
-		this.init();
 	}
 
-	/**
-	 * Initialization
-	 */
-	private void init()
+	@Override
+	protected void onInitialize()
 	{
-		//As the Form is posted, Form#findSubmittingButton() expect to retrieve this component by the request parameter 'name'.
-		//But as this component is not an input, it does not have a name attribute. Thus, it should match the #getInputName() path
-		this.add(new HiddenField<Serializable>("submitter", new Model<Serializable>()).add(AttributeModifier.replace("name", this.getId())));
+
+		super.onInitialize();
+
+		// As the Form is posted, Form#findSubmittingButton() expect to retrieve this component by the request parameter 'name'.
+		// But as this component is not an input, it does not have a name attribute. Thus, it should match the #getInputName() path
+		this.add(new HiddenField<Serializable>("submitter", new Model<Serializable>()).add(AttributeModifier.replace("name", this.getInputName())));
 	}
 
 	/**
 	 * Performs a form submit through the target
+	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	public void submit(AjaxRequestTarget target)
 	{
-		target.appendJavaScript(String.format("$('%s').submit();", JQueryWidget.getSelector(this.getForm()))); //not tested in nested form
+		target.appendJavaScript(String.format("$('%s').submit();", JQueryWidget.getSelector(this.getForm()))); // not tested in nested form
 	}
 
 	// IFormSubmittingComponent //
