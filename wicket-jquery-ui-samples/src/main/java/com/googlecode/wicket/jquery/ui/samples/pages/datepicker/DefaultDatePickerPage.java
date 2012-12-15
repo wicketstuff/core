@@ -54,6 +54,12 @@ public class DefaultDatePickerPage extends AbstractDatePickerPage
 				DefaultDatePickerPage.this.info(this, form);
 				target.add(form);
 			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form)
+			{
+				target.add(form); //refresh feedback panel
+			}
 		});
 	}
 
