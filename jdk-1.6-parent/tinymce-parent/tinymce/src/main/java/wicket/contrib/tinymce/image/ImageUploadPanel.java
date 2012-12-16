@@ -45,7 +45,22 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 
 	private ModalWindow modalWindow;
 	private ImageUploadBehavior imageUploadBehavior;
+	private String uploadFolderPath;
 
+	public ImageUploadPanel(String pId, String uploadFolderPath) {
+		
+		this(pId);
+		this.uploadFolderPath = uploadFolderPath;
+	}
+	
+	@Override
+	protected void onInitialize(){
+		super.onInitialize();
+		
+		if(Strings.isEmpty(uploadFolderPath))
+			uploadFolderPath = ImageUploadHelper.getTemporaryDirPath();		
+	}
+	
 	public ImageUploadPanel(String pId) {
 		super(pId);
 		setOutputMarkupId(true);
@@ -76,7 +91,7 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 		@Override
 		protected void respond(AjaxRequestTarget pTarget) {
 			ImageUploadContentPanel content = new ImageUploadContentPanel(
-					modalWindow.getContentId()) {
+					modalWindow.getContentId(), uploadFolderPath) {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -134,9 +149,7 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 
 		FileInputStream inputStream = null;
 		try {
-			inputStream = new FileInputStream(
-					ImageUploadHelper.getTemporaryDirPath()
-							+ File.separatorChar + fileName);
+			inputStream = new FileInputStream(uploadFolderPath + File.separatorChar + fileName);
 		} catch (FileNotFoundException ex) {
 			log.error("Problem with getting image - " + ex.getMessage(), ex);
 			throw new RuntimeException("Problem with getting image");

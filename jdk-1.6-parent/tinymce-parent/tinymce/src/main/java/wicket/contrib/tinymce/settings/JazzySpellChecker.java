@@ -36,7 +36,7 @@ import com.swabunga.spell.event.SpellCheckEvent;
 import com.swabunga.spell.event.SpellCheckListener;
 import com.swabunga.spell.event.SpellChecker;
 import com.swabunga.spell.event.StringWordTokenizer;
-import org.apache.wicket.core.util.resource.IResourceStreamWriter;
+import  org.apache.wicket.util.resource.IResourceStreamWriter;
 import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
@@ -122,9 +122,11 @@ class JazzySpellChecker extends AbstractResource
 			@Override
 			public void writeData(Attributes attributes)
 			{
-				((IResourceStreamWriter)resourceStream).write(attributes.getResponse());
 				try
 				{
+					((IResourceStreamWriter)resourceStream).write(attributes.
+						getResponse().getOutputStream());
+				
 					resourceStream.close();
 				}
 				catch (IOException e)

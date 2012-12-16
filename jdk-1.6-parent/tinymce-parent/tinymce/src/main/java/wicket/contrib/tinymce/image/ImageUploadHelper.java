@@ -65,7 +65,7 @@ public class ImageUploadHelper
 			"src",
 			RequestCycle.get()
 				.getOriginalResponse()
-				.encodeURL(Strings.replaceAll(sb.toString(), "&", "&amp;")));
+				.encodeURL(sb.toString()));
 		return tag;
 	}
 }
