@@ -14,6 +14,7 @@ import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.ValidationError;
@@ -32,7 +33,23 @@ public class ImageUploadContentPanel extends Panel
 	private static final long serialVersionUID = -1794953981259227822L;
 	private static final Logger log = LoggerFactory.getLogger(ImageUploadContentPanel.class);
 	private static final FileExtensionValidator FILE_EXTENSION_VALIDATOR = new FileExtensionValidator();
-
+	private String uploadFolderPath;
+	
+	public ImageUploadContentPanel(String pId, String uploadFolderPath)
+	{
+		this(pId);
+		this.uploadFolderPath = uploadFolderPath;
+	}
+	
+	@Override
+	protected void onInitialize() 
+	{
+		super.onInitialize();
+		
+		if(Strings.isEmpty(uploadFolderPath))
+			uploadFolderPath = ImageUploadHelper.getTemporaryDirPath();		
+	}
+	
 	public ImageUploadContentPanel(String pId)
 	{
 		super(pId);
@@ -57,7 +74,7 @@ public class ImageUploadContentPanel extends Panel
 				String fileName = fileUpload.getClientFileName();
 				try
 				{
-					File currentEngineerDir = new File(ImageUploadHelper.getTemporaryDirPath());
+					File currentEngineerDir = new File(uploadFolderPath);
 					if (!currentEngineerDir.exists())
 					{
 						currentEngineerDir.mkdir();
