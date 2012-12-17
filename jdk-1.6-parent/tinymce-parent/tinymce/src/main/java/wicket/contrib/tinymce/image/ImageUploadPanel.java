@@ -11,6 +11,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow.WindowClosedCallback;
 import org.apache.wicket.markup.head.CssContentHeaderItem;
+import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
@@ -51,12 +52,7 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 		
 		this(pId);
 		this.uploadFolderPath = uploadFolderPath;
-	}
 	
-	@Override
-	protected void onInitialize(){
-		super.onInitialize();
-		
 		if(Strings.isEmpty(uploadFolderPath))
 			uploadFolderPath = ImageUploadHelper.getTemporaryDirPath();		
 	}
@@ -125,7 +121,7 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 			pResponse.render(OnDomReadyHeaderItem.forScript(script));
 			pResponse.render(JavaScriptHeaderItem
 					.forReference(IMAGE_UPLOAD_JS_RESOURCE));
-			pResponse.render(CssContentHeaderItem
+			pResponse.render(CssHeaderItem
 					.forReference(IMAGE_UPLOAD_CSS_RESOURCE));
 		}
 	}

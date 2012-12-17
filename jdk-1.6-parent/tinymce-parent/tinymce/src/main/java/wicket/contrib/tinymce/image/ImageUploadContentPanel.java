@@ -39,13 +39,7 @@ public class ImageUploadContentPanel extends Panel
 	{
 		this(pId);
 		this.uploadFolderPath = uploadFolderPath;
-	}
 	
-	@Override
-	protected void onInitialize() 
-	{
-		super.onInitialize();
-		
 		if(Strings.isEmpty(uploadFolderPath))
 			uploadFolderPath = ImageUploadHelper.getTemporaryDirPath();		
 	}
