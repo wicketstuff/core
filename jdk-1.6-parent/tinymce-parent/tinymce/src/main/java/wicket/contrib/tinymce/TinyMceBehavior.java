@@ -80,14 +80,7 @@ public class TinyMceBehavior extends Behavior implements IAjaxRegionMarkupIdProv
 
 		ResourceReferenceRequestHandler handler = new ResourceReferenceRequestHandler(
 				TinyMCESettings.javaScriptReference(), null);
-
-		Url url = new Url();
-		List<String> segments = url.getSegments();
-		segments.add(Application.get().getMapperContext().getNamespace());
-		segments.add(Application.get().getMapperContext().getResourceIdentifier());
-		segments.add(handler.getResourceReference().getScope().getName());
-		settings.setDocumentBaseUrl(url.toString());
-
+		
 		// TinyMce javascript:
 		if (mayRenderJavascriptDirect())
 		{
