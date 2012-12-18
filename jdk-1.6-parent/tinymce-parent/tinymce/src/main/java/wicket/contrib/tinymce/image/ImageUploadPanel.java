@@ -52,9 +52,14 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 		
 		this(pId);
 		this.uploadFolderPath = uploadFolderPath;
+	}
 	
+	@Override
+	protected void onInitialize() {
+		super.onInitialize();
+		
 		if(Strings.isEmpty(uploadFolderPath))
-			uploadFolderPath = ImageUploadHelper.getTemporaryDirPath();		
+			uploadFolderPath = ImageUploadHelper.getTemporaryDirPath();
 	}
 	
 	public ImageUploadPanel(String pId) {

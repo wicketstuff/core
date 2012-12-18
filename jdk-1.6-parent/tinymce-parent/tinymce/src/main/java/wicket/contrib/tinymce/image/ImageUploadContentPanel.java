@@ -38,10 +38,16 @@ public class ImageUploadContentPanel extends Panel
 	public ImageUploadContentPanel(String pId, String uploadFolderPath)
 	{
 		this(pId);
-		this.uploadFolderPath = uploadFolderPath;
+		this.uploadFolderPath = uploadFolderPath;	
+	}
 	
+	@Override
+	protected void onInitialize() 
+	{
+		super.onInitialize();
+		
 		if(Strings.isEmpty(uploadFolderPath))
-			uploadFolderPath = ImageUploadHelper.getTemporaryDirPath();		
+			uploadFolderPath = ImageUploadHelper.getTemporaryDirPath();	
 	}
 	
 	public ImageUploadContentPanel(String pId)
