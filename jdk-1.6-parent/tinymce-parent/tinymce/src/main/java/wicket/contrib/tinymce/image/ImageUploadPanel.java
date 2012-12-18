@@ -54,14 +54,6 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 		this.uploadFolderPath = uploadFolderPath;
 	}
 	
-	@Override
-	protected void onInitialize() {
-		super.onInitialize();
-		
-		if(Strings.isEmpty(uploadFolderPath))
-			uploadFolderPath = ImageUploadHelper.getTemporaryDirPath();
-	}
-	
 	public ImageUploadPanel(String pId) {
 		super(pId);
 		setOutputMarkupId(true);
@@ -77,6 +69,8 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 			}
 		});
 		add(imageUploadBehavior = new ImageUploadBehavior());
+		
+		uploadFolderPath = ImageUploadHelper.getTemporaryDirPath();
 	}
 
 	public void resetModalContent() {

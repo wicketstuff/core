@@ -39,21 +39,13 @@ public class ImageUploadContentPanel extends Panel
 	{
 		this(pId);
 		this.uploadFolderPath = uploadFolderPath;	
-	}
-	
-	@Override
-	protected void onInitialize() 
-	{
-		super.onInitialize();
-		
-		if(Strings.isEmpty(uploadFolderPath))
-			uploadFolderPath = ImageUploadHelper.getTemporaryDirPath();	
-	}
+	}	
 	
 	public ImageUploadContentPanel(String pId)
 	{
 		super(pId);
 		setOutputMarkupId(true);
+		uploadFolderPath = ImageUploadHelper.getTemporaryDirPath();
 		Form<?> form = new Form<Void>("form");
 		final FeedbackPanel feedback = new FeedbackPanel("feedback");
 		feedback.setOutputMarkupId(true);
