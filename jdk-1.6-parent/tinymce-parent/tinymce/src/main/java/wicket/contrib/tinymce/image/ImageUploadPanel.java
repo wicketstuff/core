@@ -10,6 +10,8 @@ import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow.WindowClosedCallback;
+import org.apache.wicket.markup.head.CssContentHeaderItem;
+import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
@@ -19,6 +21,7 @@ import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
+import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.string.Strings;
@@ -38,10 +41,22 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 			.getLogger(ImageUploadPanel.class);
 	private static final ResourceReference IMAGE_UPLOAD_JS_RESOURCE = new JavaScriptResourceReference(
 			ImageUploadPanel.class, "imageUpload.js");
+	private static final ResourceReference IMAGE_UPLOAD_CSS_RESOURCE = new CssResourceReference(
+			ImageUploadPanel.class, "imageUpload.css");
 
 	private ModalWindow modalWindow;
 	private ImageUploadBehavior imageUploadBehavior;
+	private String uploadFolderPath;
 
+	public ImageUploadPanel(String pId, String uploadFolderPath) {
+		
+		this(pId);
+		this.uploadFolderPath = uploadFolderPath;
+	
+		if(Strings.isEmpty(uploadFolderPath))
+			uploadFolderPath = ImageUploadHelper.getTemporaryDirPath();		
+	}
+	
 	public ImageUploadPanel(String pId) {
 		super(pId);
 		setOutputMarkupId(true);
@@ -72,7 +87,7 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 		@Override
 		protected void respond(AjaxRequestTarget pTarget) {
 			ImageUploadContentPanel content = new ImageUploadContentPanel(
-					modalWindow.getContentId()) {
+					modalWindow.getContentId(), uploadFolderPath) {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -106,6 +121,8 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 			pResponse.render(OnDomReadyHeaderItem.forScript(script));
 			pResponse.render(JavaScriptHeaderItem
 					.forReference(IMAGE_UPLOAD_JS_RESOURCE));
+			pResponse.render(CssHeaderItem
+					.forReference(IMAGE_UPLOAD_CSS_RESOURCE));
 		}
 	}
 
@@ -128,9 +145,7 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 
 		FileInputStream inputStream = null;
 		try {
-			inputStream = new FileInputStream(
-					ImageUploadHelper.getTemporaryDirPath()
-							+ File.separatorChar + fileName);
+			inputStream = new FileInputStream(uploadFolderPath + File.separatorChar + fileName);
 		} catch (FileNotFoundException ex) {
 			log.error("Problem with getting image - " + ex.getMessage(), ex);
 			throw new RuntimeException("Problem with getting image");
