@@ -46,19 +46,11 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 
 	private ModalWindow modalWindow;
 	private ImageUploadBehavior imageUploadBehavior;
-	private String uploadFolderPath;
+	private final String uploadFolderPath;
 
 	public ImageUploadPanel(String pId, String uploadFolderPath) {
-		
-		this(pId);
-		this.uploadFolderPath = uploadFolderPath;
-	
-		if(Strings.isEmpty(uploadFolderPath))
-			uploadFolderPath = ImageUploadHelper.getTemporaryDirPath();		
-	}
-	
-	public ImageUploadPanel(String pId) {
 		super(pId);
+		
 		setOutputMarkupId(true);
 		add(modalWindow = new ModalWindow("imageUploadDialog"));
 		modalWindow.setTitle(new ResourceModel("title.label"));
@@ -72,6 +64,11 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 			}
 		});
 		add(imageUploadBehavior = new ImageUploadBehavior());
+		this.uploadFolderPath = uploadFolderPath;
+	}
+	
+	public ImageUploadPanel(String pId) {
+		this(pId,  ImageUploadHelper.getTemporaryDirPath());
 	}
 
 	public void resetModalContent() {
