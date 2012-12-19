@@ -11,7 +11,7 @@
             // Register commands
             ed.addCommand('mceImageUpload', t._save, t);
             // Register buttons
-            ed.addButton('upload', {title : 'imageupload.title', cmd : 'mceImageUpload'});
+            ed.addButton('upload', {title : 'Upload image', cmd : 'mceImageUpload'});
 
         },
 
