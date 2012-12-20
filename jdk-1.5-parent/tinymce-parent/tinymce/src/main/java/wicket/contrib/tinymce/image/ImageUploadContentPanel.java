@@ -32,11 +32,18 @@ public class ImageUploadContentPanel extends Panel
 	private static final long serialVersionUID = -1794953981259227822L;
 	private static final Logger log = LoggerFactory.getLogger(ImageUploadContentPanel.class);
 	private static final FileExtensionValidator FILE_EXTENSION_VALIDATOR = new FileExtensionValidator();
+	private final String uploadFolderPath;
 
 	public ImageUploadContentPanel(String pId)
 	{
+		this(pId, ImageUploadHelper.getTemporaryDirPath());		
+	}
+	
+	public ImageUploadContentPanel(String pId, String customUploadFolderPath)
+	{
 		super(pId);
 		setOutputMarkupId(true);
+		this.uploadFolderPath = customUploadFolderPath;
 		Form<?> form = new Form<Void>("form");
 		final FeedbackPanel feedback = new FeedbackPanel("feedback");
 		feedback.setOutputMarkupId(true);
@@ -57,7 +64,7 @@ public class ImageUploadContentPanel extends Panel
 				String fileName = fileUpload.getClientFileName();
 				try
 				{
-					File currentEngineerDir = new File(ImageUploadHelper.getTemporaryDirPath());
+					File currentEngineerDir = new File(uploadFolderPath);
 					if (!currentEngineerDir.exists())
 					{
 						currentEngineerDir.mkdir();
