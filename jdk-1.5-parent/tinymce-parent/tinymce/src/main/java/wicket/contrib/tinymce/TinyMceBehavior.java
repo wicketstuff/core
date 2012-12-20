@@ -74,17 +74,7 @@ public class TinyMceBehavior extends Behavior implements IAjaxRegionMarkupIdProv
 	{
 		super.renderHead(c, response);
 		if (component == null)
-			throw new IllegalStateException("TinyMceBehavior is not bound to a component");
-
-		ResourceReferenceRequestHandler handler = new ResourceReferenceRequestHandler(
-				TinyMCESettings.javaScriptReference(), null);
-
-		Url url = new Url();
-		List<String> segments = url.getSegments();
-		segments.add(Application.get().getMapperContext().getNamespace());
-		segments.add(Application.get().getMapperContext().getResourceIdentifier());
-		segments.add(handler.getResourceReference().getScope().getName());
-		settings.setDocumentBaseUrl(url.toString());
+			throw new IllegalStateException("TinyMceBehavior is not bound to a component");		
 
 		// TinyMce javascript:
 		if (mayRenderJavascriptDirect())
