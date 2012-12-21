@@ -17,6 +17,7 @@ import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
+import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.string.Strings;
@@ -36,12 +37,16 @@ public class ImageUploadPanel extends Panel implements IResourceListener
 	private static final Logger log = LoggerFactory.getLogger(ImageUploadPanel.class);
 	private static final ResourceReference IMAGE_UPLOAD_JS_RESOURCE = new JavaScriptResourceReference(
 		ImageUploadPanel.class, "imageUpload.js");
+	private static final ResourceReference IMAGE_UPLOAD_CSS_RESOURCE = new CssResourceReference(
+				ImageUploadPanel.class, "imageUpload.css");
 
 	private ModalWindow modalWindow;
 	private ImageUploadBehavior imageUploadBehavior;
-
-	public ImageUploadPanel(String pId)
+	private final String uploadFolderPath;
+	
+	public ImageUploadPanel(String pId, String uploadFolderPath) 
 	{
+		
 		super(pId);
 		setOutputMarkupId(true);
 		add(modalWindow = new ModalWindow("imageUploadDialog"));
@@ -58,6 +63,13 @@ public class ImageUploadPanel extends Panel implements IResourceListener
 			}
 		});
 		add(imageUploadBehavior = new ImageUploadBehavior());
+		
+		this.uploadFolderPath = uploadFolderPath;
+	}
+	
+	public ImageUploadPanel(String pId)
+	{
+		this(pId, ImageUploadHelper.getTemporaryDirPath());
 	}
 
 	public void resetModalContent()
@@ -76,7 +88,7 @@ public class ImageUploadPanel extends Panel implements IResourceListener
 		protected void respond(AjaxRequestTarget pTarget)
 		{
 			ImageUploadContentPanel content = new ImageUploadContentPanel(
-				modalWindow.getContentId())
+				modalWindow.getContentId(), uploadFolderPath)
 			{
 				private static final long serialVersionUID = 1L;
 
@@ -109,6 +121,7 @@ public class ImageUploadPanel extends Panel implements IResourceListener
 			String script = getCallbackName() + " = function () { " + getCallbackScript() + " }";
 			pResponse.renderOnDomReadyJavaScript(script);
 			pResponse.renderJavaScriptReference(IMAGE_UPLOAD_JS_RESOURCE);
+			pResponse.renderCSSReference(IMAGE_UPLOAD_CSS_RESOURCE);
 		}
 	}
 
@@ -137,7 +150,7 @@ public class ImageUploadPanel extends Panel implements IResourceListener
 		FileInputStream inputStream = null;
 		try
 		{
-			inputStream = new FileInputStream(ImageUploadHelper.getTemporaryDirPath() +
+			inputStream = new FileInputStream(uploadFolderPath +
 				File.separatorChar + fileName);
 		}
 		catch (FileNotFoundException ex)
