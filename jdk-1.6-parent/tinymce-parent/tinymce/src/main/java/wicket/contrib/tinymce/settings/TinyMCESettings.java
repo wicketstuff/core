@@ -190,7 +190,7 @@ public class TinyMCESettings implements Serializable
 	{
 		this.blockFormats = blockFormats;
 	}
-
+        
 	public void setToolbarLocation(Location toolbarLocation)
 	{
 		this.toolbarLocation = toolbarLocation;
@@ -346,18 +346,6 @@ public class TinyMCESettings implements Serializable
 	{
 		if (button instanceof PluginButton)
 			register(((PluginButton)button).getPlugin());
-		controls.add(new Control(button, toolbar, position));
-	}
-
-	/**
-	 * Use {@link #add(Button, Toolbar, Position)} instead. It will check for and register Plugin
-	 * Buttons
-	 * 
-	 */
-	@Deprecated
-	public void add(PluginButton button, Toolbar toolbar, Position position)
-	{
-		register(button.getPlugin());
 		controls.add(new Control(button, toolbar, position));
 	}
 
