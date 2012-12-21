@@ -19,7 +19,9 @@
 package wicket.contrib.examples;
 
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.Panel;
+import wicket.contrib.examples.tinymce.TinyMCEBasePage;
 
 /**
  * Navigation panel for the examples project.
@@ -42,5 +44,6 @@ public final class WicketExampleHeader extends Panel
 	{
 		super(id);
 		add(new Label("exampleTitle", exampleTitle));
+                add(new BookmarkablePageLink("homelink", TinyMCEBasePage.class));
 	}
 }
