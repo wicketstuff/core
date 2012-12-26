@@ -11,6 +11,6 @@ var putImage = function(image) {
 
 var saveBookmark = function() {
     if (isIE) {
-        __lastPositionBookMark = activeEditor.selection.getBookmark();
+        __lastPositionBookMark = tinyMCE.activeEditor.selection.getBookmark();
     }
 };
