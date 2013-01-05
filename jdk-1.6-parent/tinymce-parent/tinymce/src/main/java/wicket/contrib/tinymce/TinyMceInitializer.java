@@ -14,7 +14,7 @@ public class TinyMceInitializer implements IInitializer {
         IPackageResourceGuard packageResourceGuard = application.getResourceSettings().getPackageResourceGuard();
         if (packageResourceGuard instanceof SecurePackageResourceGuard) {
             SecurePackageResourceGuard guard = (SecurePackageResourceGuard) packageResourceGuard;
-            guard.addPattern("+*.htm");
+            guard.addPattern("+wicket/contrib/tinymce/tiny_mce/**/*.htm");
         }
     }
 
