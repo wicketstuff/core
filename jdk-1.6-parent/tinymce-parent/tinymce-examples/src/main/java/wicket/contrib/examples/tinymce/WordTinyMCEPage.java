@@ -4,6 +4,7 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.Model;
 
 import wicket.contrib.tinymce.TinyMceBehavior;
+import wicket.contrib.tinymce.settings.AdvListPlugin;
 import wicket.contrib.tinymce.settings.Button;
 import wicket.contrib.tinymce.settings.ContextMenuPlugin;
 import wicket.contrib.tinymce.settings.DateTimePlugin;
@@ -18,6 +19,7 @@ import wicket.contrib.tinymce.settings.PrintPlugin;
 import wicket.contrib.tinymce.settings.SearchReplacePlugin;
 import wicket.contrib.tinymce.settings.TablePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
+import wicket.contrib.tinymce.settings.WordcountPlugin;
 
 /**
  * @author Iulian-Corneliu COSTAN
@@ -31,8 +33,9 @@ public class WordTinyMCEPage extends TinyMCEBasePage
 	{
 		TinyMCESettings settings = new TinyMCESettings(TinyMCESettings.Theme.advanced);
 
-		ContextMenuPlugin contextMenuPlugin = new ContextMenuPlugin();
-		settings.register(contextMenuPlugin);
+		settings.register(new ContextMenuPlugin());
+                settings.register(new WordcountPlugin());
+                settings.register(new AdvListPlugin());
 
 		// first toolbar
 		settings.add(Button.newdocument, TinyMCESettings.Toolbar.first,

@@ -2,8 +2,9 @@ package wicket.contrib.examples.tinymce;
 
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.Model;
-
 import wicket.contrib.tinymce.TinyMceBehavior;
+import wicket.contrib.tinymce.settings.AdvListPlugin;
+import wicket.contrib.tinymce.settings.AutoSavePlugin;
 import wicket.contrib.tinymce.settings.Button;
 import wicket.contrib.tinymce.settings.ContextMenuPlugin;
 import wicket.contrib.tinymce.settings.DateTimePlugin;
@@ -17,9 +18,9 @@ import wicket.contrib.tinymce.settings.PreviewPlugin;
 import wicket.contrib.tinymce.settings.PrintPlugin;
 import wicket.contrib.tinymce.settings.SavePlugin;
 import wicket.contrib.tinymce.settings.SearchReplacePlugin;
-import wicket.contrib.tinymce.settings.SpellCheckPlugin;
 import wicket.contrib.tinymce.settings.TablePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
+import wicket.contrib.tinymce.settings.WordcountPlugin;
 
 /**
  * @author syca
@@ -33,8 +34,11 @@ public class FullFeaturedTinyMCEPage extends TinyMCEBasePage
 	{
 		TinyMCESettings settings = new TinyMCESettings(TinyMCESettings.Theme.advanced);
 
-		ContextMenuPlugin contextMenuPlugin = new ContextMenuPlugin();
-		settings.register(contextMenuPlugin);
+                // Register non-buttuon plugins
+		settings.register(new ContextMenuPlugin());
+                settings.register(new AutoSavePlugin());
+                settings.register(new WordcountPlugin());
+                settings.register(new AdvListPlugin());
 
 		// first toolbar
 		SavePlugin savePlugin = new SavePlugin();
@@ -99,6 +103,8 @@ public class FullFeaturedTinyMCEPage extends TinyMCEBasePage
 		DirectionalityPlugin directionalityPlugin = new DirectionalityPlugin();
 		settings.add(tablePlugin.getTableControls(), TinyMCESettings.Toolbar.third,
 			TinyMCESettings.Position.before);
+                settings.add(Button.separator, TinyMCESettings.Toolbar.third, 
+                        TinyMCESettings.Position.after);
 		settings.add(emotionsPlugin.getEmotionsButton(), TinyMCESettings.Toolbar.third,
 			TinyMCESettings.Position.after);
 		settings.add(iespellPlugin.getIespellButton(), TinyMCESettings.Toolbar.third,
@@ -120,23 +126,31 @@ public class FullFeaturedTinyMCEPage extends TinyMCEBasePage
 		settings.add(fullScreenPlugin.getFullscreenButton(), TinyMCESettings.Toolbar.third,
 			TinyMCESettings.Position.after);
 
-		// fourth toolbar
-		SpellCheckPlugin spellCheckPlugin = new SpellCheckPlugin();
-		settings.add(spellCheckPlugin.getSpellCheckButton(), TinyMCESettings.Toolbar.fourth,
-			TinyMCESettings.Position.after);
-
 		// other settings
 		settings.setToolbarAlign(TinyMCESettings.Align.left);
 		settings.setToolbarLocation(TinyMCESettings.Location.top);
 		settings.setStatusbarLocation(TinyMCESettings.Location.bottom);
 		settings.setResizing(true);
+                
+                // custom settings
+                String styleFormats = "style_formats : ["
+                        + "{title : 'Bold text', inline : 'b'},"
+                        + "{title : 'Red text', inline : 'span', styles : {color : '#ff0000'}},"
+                        + "{title : 'Red header', block : 'h1', styles : {color : '#ff0000'}},"
+                        + "{title : 'Example 1', inline : 'span', classes : 'example1'},"
+                        + "{title : 'Example 2', inline : 'span', classes : 'example2'},"
+                        + "{title : 'Table styles'},"
+                        + "{title : 'Table row 1', selector : 'tr', classes : 'tablerow1'}]";
+                settings.addCustomSetting(styleFormats);
+                
+                settings.addCustomSetting("content_css : \"../../../../../content.css\"");
 
 		TextArea<String> textArea = new TextArea<String>("ta", new Model<String>(TEXT));
 		textArea.add(new TinyMceBehavior(settings));
 		add(textArea);
 	}
 
-	private static final String TEXT = "<p><img src=\"/logo.jpg\" alt=\" \" hspace=\"5\" vspace=\"5\" width=\"250\" height=\"48\" align=\"right\" />"
+	private static final String TEXT = "<p><img src=\"../../../../logo.jpg\" alt=\" \" hspace=\"5\" vspace=\"5\" width=\"250\" height=\"48\" align=\"right\" />"
 		+ "TinyMCE is a platform independent web based Javascript HTML <strong>WYSIWYG</strong> editor control released as Open Source under LGPL by Moxiecode Systems AB. "
 		+ "It has the ability to convert HTML TEXTAREA fields or other HTML elements to editor instances. TinyMCE is very easy to integrate into other Content Management Systems.</p>"
 		+ "<p>We recommend <a href=\"http://www.getfirefox.com\" target=\"_blank\">Firefox</a> and <a href=\"http://www.google.com\" target=\"_blank\">Google</a> <br /></p>";
