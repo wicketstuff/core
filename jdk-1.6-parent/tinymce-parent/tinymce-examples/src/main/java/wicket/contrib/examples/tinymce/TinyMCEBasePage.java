@@ -1,11 +1,11 @@
 package wicket.contrib.examples.tinymce;
 
-import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 
 import wicket.contrib.examples.WicketExamplePage;
 
 /**
- * @author Iulian-Corneliu COSTAN
+ * @author Iulian-Corneliu COSTAN, JavaLuigi
  */
 public class TinyMCEBasePage extends WicketExamplePage
 {
@@ -14,72 +14,11 @@ public class TinyMCEBasePage extends WicketExamplePage
 
 	public TinyMCEBasePage()
 	{
-		add(new Link("simple")
-		{
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onClick()
-			{
-				setResponsePage(SimpleTinyMCEPage.class);
-			}
-		});
-		add(new Link("full")
-		{
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onClick()
-			{
-				setResponsePage(FullFeaturedTinyMCEPage.class);
-			}
-		});
-		add(new Link("word")
-		{
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onClick()
-			{
-				setResponsePage(WordTinyMCEPage.class);
-			}
-		});
-		add(new Link("ajax")
-		{
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onClick()
-			{
-				setResponsePage(AjaxTinyMCEPage.class);
-			}
-
-		});
-		add(new Link("inline")
-		{
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onClick()
-			{
-				setResponsePage(InlineTinyMCEPage.class);
-			}
-		});
-		add(new Link("image")
-		{
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onClick()
-			{
-				setResponsePage(ImageUploadTinyMCEPage.class);
-			}
-		});
+		add(new BookmarkablePageLink("simple", SimpleTinyMCEPage.class));
+		add(new BookmarkablePageLink("full", FullFeaturedTinyMCEPage.class));
+		add(new BookmarkablePageLink("word", WordTinyMCEPage.class));
+		add(new BookmarkablePageLink("ajax", AjaxTinyMCEPage.class));
+		add(new BookmarkablePageLink("inline", InlineTinyMCEPage.class));
+		add(new BookmarkablePageLink("image", ImageUploadTinyMCEPage.class));
 	}
 }
