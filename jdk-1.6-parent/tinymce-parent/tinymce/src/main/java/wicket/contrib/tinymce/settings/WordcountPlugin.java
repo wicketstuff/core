@@ -19,14 +19,16 @@ package wicket.contrib.tinymce.settings;
 
 /**
  * Displays the current word count in the status bar.
- * 
+ *
  * @author JavaLuigi
  */
-public class WordcountPlugin extends Plugin {
+public class WordcountPlugin extends Plugin
+{
 
-    private static final long serialVersionUID = 1L;
-    
-    public WordcountPlugin() {
-        super("wordcount");
-    }
+	private static final long serialVersionUID = 1L;
+
+	public WordcountPlugin()
+	{
+		super("wordcount");
+	}
 }

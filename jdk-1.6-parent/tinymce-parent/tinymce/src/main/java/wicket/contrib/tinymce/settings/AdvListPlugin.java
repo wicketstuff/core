@@ -19,27 +19,30 @@
 /**
  *
  * Advanced List for bullist and numlist
- * 
+ *
  * @author JavaLuigi
  */
-public class AdvListPlugin extends Plugin {
+public class AdvListPlugin extends Plugin
+{
 
-    private static final long serialVersionUID = 1L;
-    private PluginButton numlist;
-    private PluginButton bullist;
-    
-    public AdvListPlugin() {
-        super("advlist");
-        numlist = new PluginButton("numlist", this);
-        bullist = new PluginButton("bullist", this);
-    }
-    
-    public PluginButton getBullistButton() {
-        return bullist;
-    }
-    
-    public PluginButton getNumlistButton() {
-        return numlist;
-    }
-    
+	private static final long serialVersionUID = 1L;
+	private PluginButton numlist;
+	private PluginButton bullist;
+
+	public AdvListPlugin()
+	{
+		super("advlist");
+		numlist = new PluginButton("numlist", this);
+		bullist = new PluginButton("bullist", this);
+	}
+
+	public PluginButton getBullistButton()
+	{
+		return bullist;
+	}
+
+	public PluginButton getNumlistButton()
+	{
+		return numlist;
+	}
 }
