@@ -1,10 +1,7 @@
 package wicket.contrib.examples.tinymce;
 
-import org.apache.wicket.SharedResources;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.resource.CssResourceReference;
-
 import wicket.contrib.tinymce.TinyMceBehavior;
 import wicket.contrib.tinymce.settings.AdvListPlugin;
 import wicket.contrib.tinymce.settings.AutoSavePlugin;
@@ -21,7 +18,6 @@ import wicket.contrib.tinymce.settings.PreviewPlugin;
 import wicket.contrib.tinymce.settings.PrintPlugin;
 import wicket.contrib.tinymce.settings.SavePlugin;
 import wicket.contrib.tinymce.settings.SearchReplacePlugin;
-import wicket.contrib.tinymce.settings.SpellCheckPlugin;
 import wicket.contrib.tinymce.settings.TablePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
 import wicket.contrib.tinymce.settings.WordcountPlugin;
