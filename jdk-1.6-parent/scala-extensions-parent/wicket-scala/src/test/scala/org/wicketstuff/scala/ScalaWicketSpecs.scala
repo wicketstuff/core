@@ -42,20 +42,20 @@ class ScalaWicketSpecs extends SpecificationWithJUnit with ScalaTest with ScalaW
 
   import org.apache.wicket.util.tester.WicketTester
   
-  "Fodel converters" should { doBefore{ new WicketTester() }
-    "convert anonymous functions to Fodels" in {
-      var clickCount = 0
-      val l = new Label("name", () => { clickCount })
-      clickCount += 1
-      l.getDefaultModelObject must be(1)
-    }
-    "convert anonymous functions to Fodels with shorter syntax" in {
-      var clickCount = 0
-      val l = new Label("name", () => clickCount)
-      clickCount += 1
-      l.getDefaultModelObject must be(1)
-    }
-  }
+//  "Fodel converters" should { doBefore{ new WicketTester() }
+//    "convert anonymous functions to Fodels" in {
+//      var clickCount = 0
+//      val l = new Label("name", () => { clickCount })
+//      clickCount += 1
+//      l.getDefaultModelObject must be(1)
+//    }
+//    "convert anonymous functions to Fodels with shorter syntax" in {
+//      var clickCount = 0
+//      val l = new Label("name", () => clickCount)
+//      clickCount += 1
+//      l.getDefaultModelObject must be(1)
+//    }
+//  }
   
   "Implicit list conversion" should {
     "convert to an ArrayList implicitly" in {

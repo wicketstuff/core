@@ -27,9 +27,9 @@ class HomePage extends WebPage with ScalaWicket {
   add(form)
 
   // create an anonymous function and have it implicitly converted into a fodel
-  val nf = () ⇒ { println ("nff1"); name }
-  form.add(new Label("helloworld1", nf))
-  form.add(new Label("helloworld3", () ⇒ { println ("label gtr"); name }))
+//  val nf = () ⇒ { println ("nff1"); name }
+  form.add(new Label("helloworld1", "nf"))
+  form.add(new Label("helloworld3", """() ⇒ { println ("label gtr"); name }"""))
 
   // explicit fodel with debug lines
   form.add(new TextField("name1", new Fodel[String]({println ("stf-getter"); name}, {println ("stf-setter"); name = _}) ) )
