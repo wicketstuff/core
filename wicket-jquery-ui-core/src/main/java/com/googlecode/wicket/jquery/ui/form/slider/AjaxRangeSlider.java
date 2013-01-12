@@ -141,20 +141,11 @@ public class AjaxRangeSlider extends RangeSlider implements IValueChangedListene
 
 	// Factories //
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'change' javascript event
-	 * @return the {@link JQueryAjaxBehavior}
+	 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript event
+	 * @return the {@link JQueryAjaxPostBehavior}
 	 */
-	protected JQueryAjaxChangeBehavior newOnChangeBehavior()
+	protected JQueryAjaxPostBehavior newOnChangeBehavior()
 	{
-		return new JQueryAjaxChangeBehavior(this, this.lower, this.upper) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public String getCallbackFunction()
-			{
-				return "function(event, ui) { " + this.getCallbackScript() + " }";
-			}
-		};
+		return new JQueryAjaxChangeBehavior(this, this.lower, this.upper);
 	}
 }

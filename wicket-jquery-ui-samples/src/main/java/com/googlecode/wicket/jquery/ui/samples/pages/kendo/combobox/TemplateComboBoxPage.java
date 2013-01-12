@@ -8,8 +8,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.UrlUtils;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.util.string.UrlUtils;
 
 import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.kendo.button.Button;
@@ -51,7 +51,7 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 							"   <img src='${ data.coverUrl }' width='50px' />\n" +
 							"  </td>\n" +
 							"  <td>\n" +
-							"   ${ data.name }</span>\n" +
+							"   ${ data.name }\n" +
 							"  </td>\n" +
 							" </tr>\n" +
 							"</table>\n";

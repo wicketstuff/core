@@ -50,11 +50,20 @@ public class JQueryAjaxChangeBehavior extends JQueryAjaxPostBehavior
 	}
 
 	@Override
+	public String getCallbackFunction()
+	{
+		return "function(event, ui) { " + this.getCallbackScript() + " }";
+	}
+
+
+	// Factories //
+	@Override
 	protected JQueryEvent newEvent(AjaxRequestTarget target)
 	{
 		return new ChangeEvent(target);
 	}
 
+	// Event Object //
 	/**
 	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxChangeBehavior}
 	 */

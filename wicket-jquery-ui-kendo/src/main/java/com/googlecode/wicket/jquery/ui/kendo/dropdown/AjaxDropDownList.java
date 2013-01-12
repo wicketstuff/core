@@ -26,6 +26,7 @@ import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.ui.event.ISelectionChangedListener;
 import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior;
 import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEvent;
@@ -186,20 +187,11 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 	// Factories //
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'change' javascript event
-	 * @return the {@link JQueryAjaxBehavior}
+	 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript event
+	 * @return the {@link JQueryAjaxPostBehavior}
 	 */
-	private JQueryAjaxChangeBehavior newOnChangeBehavior()
+	protected JQueryAjaxPostBehavior newOnChangeBehavior()
 	{
-		return new JQueryAjaxChangeBehavior(this, this.dropdown) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public String getCallbackFunction()
-			{
-				return "function(event, ui) { " + this.getCallbackScript() + " }";
-			}
-		};
+		return new JQueryAjaxChangeBehavior(this, this.dropdown);
 	}
 }

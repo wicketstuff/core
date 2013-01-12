@@ -28,6 +28,7 @@ import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.ui.event.IValueChangedListener;
 import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior;
 import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEvent;
@@ -139,20 +140,11 @@ public class AjaxSlider extends Slider implements IValueChangedListener
 
 	// Factories //
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that will be called on 'change' javascript event
-	 * @return the {@link JQueryAjaxBehavior}
+	 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'change' javascript event
+	 * @return the {@link JQueryAjaxPostBehavior}
 	 */
-	protected JQueryAjaxBehavior newOnChangeBehavior()
+	protected JQueryAjaxPostBehavior newOnChangeBehavior()
 	{
-		return new JQueryAjaxChangeBehavior(this, this.input) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public String getCallbackFunction()
-			{
-				return "function(event, ui) { " + this.getCallbackScript() + " }";
-			}
-		};
+		return new JQueryAjaxChangeBehavior(this, this.input);
 	}
 }
