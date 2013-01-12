@@ -25,12 +25,12 @@ public class DefaultDropDownPage extends AbstractDropDownPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
-		// DropDownChoice //
-		final DropDownList<String> dropdown = new DropDownList<String>("select", new Model<String>(), new ListModel<String>(GENRES));
-		form.add(dropdown);
+		// DropDownList //
+		final DropDownList<String> dropdown = new DropDownList<String>("dropdown", new Model<String>(), new ListModel<String>(GENRES));
+		form.add(dropdown.setOutputMarkupId(true));
 
 		// Buttons //
 		form.add(new Button("submit") {
@@ -52,7 +52,7 @@ public class DefaultDropDownPage extends AbstractDropDownPage
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				DefaultDropDownPage.this.info(dropdown);
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		});
 	}

@@ -47,15 +47,6 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	/**
 	 * Constructor
 	 * @param id the markup id
-	 */
-	public AjaxDropDownList(String id)
-	{
-		super(id);
-	}
-
-	/**
-	 * Constructor
-	 * @param id the markup id
 	 * @param choices the collection of choices in the dropdown
 	 */
 	public AjaxDropDownList(String id, List<? extends T> choices)
@@ -165,13 +156,31 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 		{
 			ChangeEvent payload = (ChangeEvent) event.getPayload();
 
-			this.onSelectionChanged();
-			this.onSelectionChanged(payload.getTarget(), this.getForm());
+			//In case of issue, consider copying code from AjaxFormComponentUpdatingBehavior.onEvent
+			this.dropdown.processInput();
+			this.validate();
+
+			if (this.isValid() && this.dropdown.isValid())
+			{
+				this.onSelectionChanged(payload.getTarget(), this.getForm());
+			}
+			else
+			{
+				this.onError(payload.getTarget());
+			}
 		}
 	}
 
 	@Override
 	public void onSelectionChanged(AjaxRequestTarget target, Form<?> form)
+	{
+	}
+
+	/**
+	 * Triggered when the validation failed
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	protected void onError(AjaxRequestTarget target)
 	{
 	}
 
@@ -182,7 +191,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 	 */
 	private JQueryAjaxChangeBehavior newOnChangeBehavior()
 	{
-		return new JQueryAjaxChangeBehavior(this) {
+		return new JQueryAjaxChangeBehavior(this, this.dropdown) {
 
 			private static final long serialVersionUID = 1L;
 

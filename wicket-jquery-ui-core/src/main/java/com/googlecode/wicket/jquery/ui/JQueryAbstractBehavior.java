@@ -100,7 +100,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		}
 
 		// Adds the statement //
-		response.renderJavaScript(this.$(), this.getToken());
+		response.renderJavaScript(this.toString(), this.getToken());
 	}
 
 	/**

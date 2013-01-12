@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
 
@@ -29,25 +30,20 @@ import com.googlecode.wicket.jquery.ui.Options;
 import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
 
 /**
- * Provides a Kendo UI DropDownList widget. It extends built-in {@link DropDownChoice}<br/>
- * 
+ * Provides a Kendo UI DropDownList widget.<br/>
+ * Embeds a built-in {@link DropDownChoice}<br/>
+ *
  * @author Sebastien Briquet - sebfz1
  *
  * @param <T> the model object type
  */
-public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
+public class DropDownList<T> extends FormComponentPanel<T> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoDropDownList";
+	private static final String DROPDOWN_ID = "select";
 
-	/**
-	 * Constructor
-	 * @param id the markup id
-	 */
-	public DropDownList(String id)
-	{
-		super(id);
-	}
+	protected final DropDownChoice<T> dropdown;
 
 	/**
 	 * Constructor
@@ -56,7 +52,9 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	 */
 	public DropDownList(String id, List<? extends T> choices)
 	{
-		super(id, choices);
+		super(id);
+
+		this.dropdown = new DropDownChoice<T>(DROPDOWN_ID, this.getModel(), choices);
 	}
 
 	/**
@@ -67,7 +65,9 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	 */
 	public DropDownList(String id, List<? extends T> choices, IChoiceRenderer<? super T> renderer)
 	{
-		super(id, choices, renderer);
+		super(id);
+
+		this.dropdown = new DropDownChoice<T>(DROPDOWN_ID, this.getModel(), choices, renderer);
 	}
 
 	/**
@@ -78,7 +78,9 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	 */
 	public DropDownList(String id, IModel<T> model, List<? extends T> choices)
 	{
-		super(id, model, choices);
+		super(id, model);
+
+		this.dropdown = new DropDownChoice<T>(DROPDOWN_ID, this.getModel(), choices);
 	}
 
 	/**
@@ -90,7 +92,9 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	 */
 	public DropDownList(String id, IModel<T> model, List<? extends T> choices, IChoiceRenderer<? super T> renderer)
 	{
-		super(id, model, choices, renderer);
+		super(id, model);
+
+		this.dropdown = new DropDownChoice<T>(DROPDOWN_ID, this.getModel(), choices, renderer);
 	}
 
 	/**
@@ -100,7 +104,9 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	 */
 	public DropDownList(String id, IModel<? extends List<? extends T>> choices)
 	{
-		super(id, choices);
+		super(id);
+
+		this.dropdown = new DropDownChoice<T>(DROPDOWN_ID, this.getModel(), choices);
 	}
 
 	/**
@@ -111,7 +117,9 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	 */
 	public DropDownList(String id, IModel<T> model, IModel<? extends List<? extends T>> choices)
 	{
-		super(id, model, choices);
+		super(id, model);
+
+		this.dropdown = new DropDownChoice<T>(DROPDOWN_ID, this.getModel(), choices);
 	}
 
 	/**
@@ -122,7 +130,9 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	 */
 	public DropDownList(String id, IModel<? extends List<? extends T>> choices, IChoiceRenderer<? super T> renderer)
 	{
-		super(id, choices, renderer);
+		super(id);
+
+		this.dropdown = new DropDownChoice<T>(DROPDOWN_ID, this.getModel(), choices, renderer);
 	}
 
 	/**
@@ -134,7 +144,9 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	 */
 	public DropDownList(String id, IModel<T> model, IModel<? extends List<? extends T>> choices, IChoiceRenderer<? super T> renderer)
 	{
-		super(id, model, choices, renderer);
+		super(id, model);
+
+		this.dropdown = new DropDownChoice<T>(DROPDOWN_ID, this.getModel(), choices, renderer);
 	}
 
 	// Events //
@@ -144,18 +156,28 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	{
 		super.onInitialize();
 
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(this.dropdown);
+		this.add(JQueryWidget.newWidgetBehavior(this, this.dropdown));
 	}
 
 	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering 
+	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
 	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-	 * 
+	 *
 	 * @param behavior the {@link JQueryBehavior}
 	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
 	}
+
+
+	// Methods //
+	@Override
+ 	protected void convertInput()
+ 	{
+ 		this.setConvertedInput(this.dropdown.getConvertedInput());
+ 	}
+
 
 	// IJQueryWidget //
 	@Override

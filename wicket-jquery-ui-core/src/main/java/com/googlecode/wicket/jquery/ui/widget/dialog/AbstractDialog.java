@@ -288,6 +288,37 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 		return null;
 	}
 
+	/**
+	 * Opens the dialogs in ajax.<br/>
+	 * It triggers the  {@link #onOpen(AjaxRequestTarget)} event
+	 * @param target the {@link AjaxRequestTarget}
+	 */
+	public final void open(AjaxRequestTarget target)
+	{
+		this.onOpen(target);
+
+		if (this.widgetBehavior != null)
+		{
+			target.appendJavaScript(this.widgetBehavior.$("'open'"));
+		}
+	}
+
+	/**
+	 * Closes the dialogs in ajax.<br/>
+	 * It triggers the  {@link #onClose(AjaxRequestTarget, DialogButton)} event
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param button the button that closes the dialog
+	 */
+	public final void close(AjaxRequestTarget target, DialogButton button)
+	{
+		if (this.widgetBehavior != null)
+		{
+			target.appendJavaScript(this.widgetBehavior.$("'close'"));
+		}
+
+		this.onClose(target, button);
+	}
+
 
 	// IJQueryWidget //
 	/**
@@ -377,38 +408,6 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 				return new CloseEvent(target);
 			}
 		};
-	}
-
-	// Methods //
-	/**
-	 * Opens the dialogs in ajax.<br/>
-	 * It triggers the  {@link #onOpen(AjaxRequestTarget)} event
-	 * @param target the {@link AjaxRequestTarget}
-	 */
-	public final void open(AjaxRequestTarget target)
-	{
-		this.onOpen(target);
-
-		if (this.widgetBehavior != null)
-		{
-			target.appendJavaScript(this.widgetBehavior.$("'open'"));
-		}
-	}
-
-	/**
-	 * Closes the dialogs in ajax.<br/>
-	 * It triggers the  {@link #onClose(AjaxRequestTarget, DialogButton)} event
-	 * @param target the {@link AjaxRequestTarget}
-	 * @param button the button that closes the dialog
-	 */
-	public final void close(AjaxRequestTarget target, DialogButton button)
-	{
-		if (this.widgetBehavior != null)
-		{
-			target.appendJavaScript(this.widgetBehavior.$("'close'"));
-		}
-
-		this.onClose(target, button);
 	}
 
 

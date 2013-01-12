@@ -16,19 +16,19 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class AjaxDropDownPage extends AbstractDropDownPage
 {
 	private static final long serialVersionUID = 1L;
-	private static final List<String> GENRES = Arrays.asList("Black Metal", "Death Metal", "Doom Metal", "Folk Metal", "Gothic Metal", "Heavy Metal", "Power Metal", "Symphonic Metal", "Trash Metal", "Vicking Metal"); 
-	
+	private static final List<String> GENRES = Arrays.asList("Black Metal", "Death Metal", "Doom Metal", "Folk Metal", "Gothic Metal", "Heavy Metal", "Power Metal", "Symphonic Metal", "Trash Metal", "Vicking Metal");
+
 	public AjaxDropDownPage()
 	{
 		Form<Void> form = new Form<Void>("form");
 		this.add(form);
-		
+
 		// FeedbackPanel //
 		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
 		form.add(feedbackPanel.setOutputMarkupId(true));
 
 		// ComboBox //
-		final DropDownList<String> dropdown = new AjaxDropDownList<String>("select", new Model<String>(), new ListModel<String>(GENRES)) {
+		final DropDownList<String> dropdown = new AjaxDropDownList<String>("dropdown", new Model<String>(), new ListModel<String>(GENRES)) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -36,12 +36,12 @@ public class AjaxDropDownPage extends AbstractDropDownPage
 			public void onSelectionChanged(AjaxRequestTarget target, Form<?> form)
 			{
 				String choice =  this.getModelObject();
-				
+
 				this.info(choice != null ? choice : "no choice");
 				target.add(feedbackPanel);
 			}
 		};
-		
+
 		form.add(dropdown);
 	}
 }

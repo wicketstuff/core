@@ -119,7 +119,7 @@ public class Options implements IClusterable
 		}
 		else
 		{
-			this.map.remove(key); //TODO: to test, when the key does not exists
+			this.map.remove(key);
 		}
 
 		return this;

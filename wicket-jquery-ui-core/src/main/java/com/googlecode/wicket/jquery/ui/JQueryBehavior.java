@@ -23,18 +23,18 @@ import org.apache.wicket.WicketRuntimeException;
 
 /**
  * Provides a default implementation of {@link JQueryAbstractBehavior}.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  * @since 1.0
  */
 public class JQueryBehavior extends JQueryAbstractBehavior
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	protected final String selector;
 	protected final String method;
 	protected final Options options;
-	
+
 	/**
 	 * Constructor
 	 * @param selector the html selector (ie: "#myId")
@@ -53,7 +53,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	{
 		this(selector, method, new Options());
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param selector the html selector (ie: "#myId")
@@ -63,7 +63,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	public JQueryBehavior(String selector, String method, Options options)
 	{
 		super(method);
-		
+
 		this.method = method;
 		this.options = options;
 		this.selector = selector;
@@ -79,9 +79,9 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	{
 		if (this.options == null)
 		{
-			throw new WicketRuntimeException("Options have not been defined (null has been passed to the constructor)");
+			throw new WicketRuntimeException("Options have not been defined (null has been supplied to the constructor)");
 		}
-		
+
 		this.options.set(key, value);
 
 		return this;
@@ -99,7 +99,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 		}
 	}
 
-	
+
 	// Statements //
 	@Override
 	protected String $()
@@ -109,9 +109,9 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Gets the jQuery statement.<br/>
-	 * <b>Warning:</b> If {@link #$()} is overridden to handle a different statement, this method could be inefficient.
+	 * <b>Warning: </b> This method is *not* called by this behavior directly (only {@link #$()} is).
 	 * @param options the options to be applied
-	 * @return String like '$(function() { ... })'
+	 * @return Statement like '$(function() { ... })'
 	 */
 	public String $(String options)
 	{
@@ -119,12 +119,24 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	}
 
 	/**
+	 * Gets the jQuery statement.<br/>
+	 * <b>Warning: </b> This method is *not* called by this behavior directly (only {@link #$()} is).
+	 * @param method the jQuery method to invoke
+	 * @param options the options to be applied
+	 * @return Statement like '$(function() { ... })'
+	 */
+	public String $(String method, String options)
+	{
+		return this.$(this.selector, method, options);
+	}
+
+	/**
 	 * Gets the jQuery statement.
 	 * @param selector the html selector (ie: "#myId")
 	 * @param method the jQuery method to invoke
 	 * @param options the options to be applied
-	 * @return String like '$(function() { ... })'
-	 */	
+	 * @return Statement like '$(function() { ... })'
+	 */
 	private String $(String selector, String method, String options)
 	{
 		return String.format("$(function() { $('%s').%s(%s); });", selector, method, options);
