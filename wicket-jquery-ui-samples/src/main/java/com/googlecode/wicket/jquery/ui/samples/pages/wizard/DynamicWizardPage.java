@@ -154,7 +154,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 					public String getIdValue(Boolean bool, int index)
 					{
 						return Integer.toString(index);
-					};
+					}
 				}));
 			}
 
@@ -296,7 +296,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 								@Override
 								protected String $()
 								{
-									return String.format("$('#%s').addClass('selected');", item.getMarkupId());
+									return String.format("jQuery('#%s').addClass('selected');", item.getMarkupId());
 								}
 							});
 						}

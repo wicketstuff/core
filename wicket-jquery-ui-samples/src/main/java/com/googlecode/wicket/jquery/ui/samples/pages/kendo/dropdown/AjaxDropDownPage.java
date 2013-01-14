@@ -27,8 +27,8 @@ public class AjaxDropDownPage extends AbstractDropDownPage
 		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
 		form.add(feedbackPanel.setOutputMarkupId(true));
 
-		// ComboBox //
-		final DropDownList<String> dropdown = new AjaxDropDownList<String>("dropdown", new Model<String>(), new ListModel<String>(GENRES)) {
+		// DropDownList //
+		final DropDownList<String> dropdown = new AjaxDropDownList<String>("select", new Model<String>(), new ListModel<String>(GENRES)) {
 
 			private static final long serialVersionUID = 1L;
 

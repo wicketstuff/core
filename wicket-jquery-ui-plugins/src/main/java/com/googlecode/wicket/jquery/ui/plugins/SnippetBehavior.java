@@ -36,10 +36,10 @@ public class SnippetBehavior extends JQueryBehavior
 		this.add(new JavaScriptResourceReference(SnippetBehavior.class, "jquery.snippet.min.js"));
 		this.add(new CssResourceReference(SnippetBehavior.class, "jquery.snippet.min.css"));
 	}
-	
+
 	@Override
 	protected String $()
 	{
-		return String.format("$(function() { $('%s').%s('%s', %s); });", super.selector, super.method, this.language, super.options);
+		return String.format("jQuery(function() { jQuery('%s').%s('%s', %s); });", super.selector, super.method, this.language, super.options);
 	}
 }

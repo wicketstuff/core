@@ -86,7 +86,7 @@ public abstract class FormSubmittingPanel<T> extends GenericPanel<T> implements 
 	 */
 	public void submit(AjaxRequestTarget target)
 	{
-		target.appendJavaScript(String.format("$('%s').submit();", JQueryWidget.getSelector(this.getForm()))); // not tested in nested form
+		target.appendJavaScript(String.format("jQuery('%s').submit();", JQueryWidget.getSelector(this.getForm()))); // not tested in nested form
 	}
 
 	// IFormSubmittingComponent //

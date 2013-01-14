@@ -80,7 +80,7 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 							"   <img src='${ coverUrl }' width='50px' />\n" +
 							"  </td>\n" +
 							"  <td>\n" +
-							"   ${ name }</span>\n" +
+							"   ${ name }\n" +
 							"  </td>\n" +
 							" </tr>\n" +
 							"</table>\n" +

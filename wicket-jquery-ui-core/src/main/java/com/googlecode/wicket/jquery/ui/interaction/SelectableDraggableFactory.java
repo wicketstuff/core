@@ -25,7 +25,7 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
  * <br/>
  * Inspired from:<br/>
  * http://stackoverflow.com/questions/793559/grouping-draggable-objects-with-jquery-ui-draggable<br/>
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public class SelectableDraggableFactory extends AbstractDraggableFactory
@@ -35,13 +35,13 @@ public class SelectableDraggableFactory extends AbstractDraggableFactory
 	@Override
 	protected String getHelper(String selector)
 	{
-		StringBuilder helper = new StringBuilder("function() { "); 
-		helper.append("var container = $('<div/>').attr('id', 'draggingContainer');");
-		helper.append("$('").append(selector).append("').find('.ui-selected').each(");
+		StringBuilder helper = new StringBuilder("function() { ");
+		helper.append("var container = jQuery('<div/>').attr('id', 'draggingContainer');");
+		helper.append("jQuery('").append(selector).append("').find('.ui-selected').each(");
 		helper.append("  function() { ");
-		helper.append("    container.append($(this).clone()); }");
+		helper.append("    container.append(jQuery(this).clone()); }");
 		helper.append("  );");
-		helper.append("  return container; ");	    
+		helper.append("  return container; ");
 		helper.append("}");
 
 		return helper.toString();
@@ -53,7 +53,7 @@ public class SelectableDraggableFactory extends AbstractDraggableFactory
 		return new Draggable<Void>(id) {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			protected void onConfigure(JQueryBehavior behavior)
 			{
@@ -63,6 +63,6 @@ public class SelectableDraggableFactory extends AbstractDraggableFactory
 			}
 		};
 	}
-	
-	
+
+
 }

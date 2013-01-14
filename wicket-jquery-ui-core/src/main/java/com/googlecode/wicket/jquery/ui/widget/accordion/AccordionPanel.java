@@ -270,7 +270,7 @@ public class AccordionPanel extends JQueryPanel
 		public CharSequence getCallbackScript()
 		{
 			return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&index=' + ui.options.active");
-			//+ '&title=' + $(ui.newHeader.context).text()");
+			//+ '&title=' + jQuery(ui.newHeader.context).text()");
 		}
 	}
 

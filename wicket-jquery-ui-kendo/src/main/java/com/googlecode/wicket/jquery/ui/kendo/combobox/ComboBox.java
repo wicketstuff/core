@@ -169,7 +169,7 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 		// set template (if any) //
 		if (this.template != null)
 		{
-			behavior.setOption("template", String.format("$('#%s').html()", this.templateBehavior.getToken()));
+			behavior.setOption("template", String.format("jQuery('#%s').html()", this.templateBehavior.getToken()));
 		}
 
 		// set data source //

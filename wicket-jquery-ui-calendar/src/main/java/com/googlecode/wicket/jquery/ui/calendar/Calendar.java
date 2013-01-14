@@ -133,7 +133,7 @@ public class Calendar extends JQueryContainer
 	 */
 	public void refresh(AjaxRequestTarget target)
 	{
-		target.appendJavaScript(String.format("$('%s').fullCalendar('refetchEvents');", JQueryWidget.getSelector(this)));
+		target.appendJavaScript(String.format("jQuery('%s').fullCalendar('refetchEvents');", JQueryWidget.getSelector(this)));
 	}
 
 	// Properties //
@@ -335,7 +335,9 @@ public class Calendar extends JQueryContainer
 					for (Entry<CharSequence, String> gcal : Calendar.this.gcals.entrySet())
 					{
 						sourceBuilder.append(", ");
-						sourceBuilder.append("$.fullCalendar.gcalFeed('").append(gcal.getKey()).append("', { className: '").append(gcal.getValue()).append("' })");
+						sourceBuilder.append("jQuery.fullCalendar.gcalFeed('").append(gcal.getKey()).append("', { className: '").append(gcal.getValue()).append("' })");
+						//TODO remove this
+						//('").append(selector).append("')
 					}
 				}
 

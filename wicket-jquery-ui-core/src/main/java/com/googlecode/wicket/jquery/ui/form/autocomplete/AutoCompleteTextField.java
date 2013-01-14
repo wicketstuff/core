@@ -292,7 +292,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 				if (templateBehavior != null)
 				{
 					// warning, the template text should be of the form <a>...</a> in order to work
-					String render = "$(function() { $('%s').data('autocomplete')._renderItem = function( ul, item ) { return $('<li></li>').data('item.autocomplete', item).append($.tmpl($('#%s').html(), item)).appendTo(ul); } });";
+					String render = "jQuery(function() { jQuery('%s').data('autocomplete')._renderItem = function( ul, item ) { return jQuery('<li></li>').data('item.autocomplete', item).append(jQuery.tmpl(jQuery('#%s').html(), item)).appendTo(ul); } });";
 					return super.$() + String.format(render, this.selector, templateBehavior.getToken());
 				}
 

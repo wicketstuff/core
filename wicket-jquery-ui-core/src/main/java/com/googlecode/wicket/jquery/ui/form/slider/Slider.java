@@ -176,11 +176,11 @@ public class Slider extends AbstractSlider<Integer>
 
 		StringBuilder statements = new StringBuilder();
 
-		statements.append("$('#").append(this.input.getMarkupId()).append("').val(ui.value); ");
+		statements.append("jQuery('#").append(this.input.getMarkupId()).append("').val(ui.value); ");
 
 		if (super.labelId != null)
 		{
-			statements.append("$('#").append(super.labelId).append("').text(").append(this.getLabelPattern()).append("); ");
+			statements.append("jQuery('#").append(super.labelId).append("').text(").append(this.getLabelPattern()).append("); ");
 		}
 
 		behavior.setOption("slide", String.format("function(event, ui) { %s }", statements));
@@ -218,11 +218,11 @@ public class Slider extends AbstractSlider<Integer>
 
 				StringBuilder statements = new StringBuilder();
 
-				statements.append("$('#").append(Slider.this.input.getMarkupId()).append("').on('change', function() { ");
-				statements.append("$('#").append(Slider.this.label.getMarkupId()).append("').slider('value', $(this).val()); "); //change the slider value (+slide)
+				statements.append("jQuery('#").append(Slider.this.input.getMarkupId()).append("').on('change', function() { ");
+				statements.append("jQuery('#").append(Slider.this.label.getMarkupId()).append("').slider('value', jQuery(this).val()); "); //change the slider value (+slide)
 				statements.append("} );");
 
-				return String.format("$(function() { %s });", statements);
+				return String.format("jQuery(function() { %s });", statements);
 			}
 		};
 	}

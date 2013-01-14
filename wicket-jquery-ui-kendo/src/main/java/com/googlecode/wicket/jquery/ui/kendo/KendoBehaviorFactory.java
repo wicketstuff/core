@@ -45,7 +45,7 @@ public final class KendoBehaviorFactory
 			@Override
 			protected String $()
 			{
-				return String.format("$(function() { $('%s').closest('.k-widget').show(); });", this.selector);
+				return String.format("jQuery(function() { jQuery('%s').closest('.k-widget').show(); });", this.selector);
 			}
 
 		};
@@ -77,7 +77,7 @@ public final class KendoBehaviorFactory
 			@Override
 			protected String $()
 			{
-				return String.format("$(function() { $('%s').closest('.k-widget').hide(); });", this.selector);
+				return String.format("jQuery(function() { jQuery('%s').closest('.k-widget').hide(); });", this.selector);
 			}
 		};
 	}

@@ -111,7 +111,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * Gets the jQuery statement.<br/>
 	 * <b>Warning: </b> This method is *not* called by this behavior directly (only {@link #$()} is).
 	 * @param options the options to be applied
-	 * @return Statement like '$(function() { ... })'
+	 * @return Statement like 'jQuery(function() { ... })'
 	 */
 	public String $(String options)
 	{
@@ -123,7 +123,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * <b>Warning: </b> This method is *not* called by this behavior directly (only {@link #$()} is).
 	 * @param method the jQuery method to invoke
 	 * @param options the options to be applied
-	 * @return Statement like '$(function() { ... })'
+	 * @return Statement like 'jQuery(function() { ... })'
 	 */
 	public String $(String method, String options)
 	{
@@ -135,10 +135,10 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 	 * @param selector the html selector (ie: "#myId")
 	 * @param method the jQuery method to invoke
 	 * @param options the options to be applied
-	 * @return Statement like '$(function() { ... })'
+	 * @return Statement like 'jQuery(function() { ... })'
 	 */
 	private String $(String selector, String method, String options)
 	{
-		return String.format("$(function() { $('%s').%s(%s); });", selector, method, options);
+		return String.format("jQuery(function() { jQuery('%s').%s(%s); });", selector, method, options);
 	}
 }

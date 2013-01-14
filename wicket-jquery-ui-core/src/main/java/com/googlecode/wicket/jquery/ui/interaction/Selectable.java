@@ -233,7 +233,7 @@ public class Selectable<T extends Serializable> extends JQueryContainer
 					public CharSequence decorateScript(Component c, CharSequence script)
 					{
 						String selector = String.format("%s %s", JQueryWidget.getSelector(Selectable.this), Selectable.this.getItemSelector());
-						String indexes = "var indexes=[]; $('.ui-selected', this).each( function() { indexes.push($('" + selector + "').index(this)); } ); ";
+						String indexes = "var indexes=[]; jQuery('.ui-selected', this).each( function() { indexes.push(jQuery('" + selector + "').index(this)); } ); ";
 
 						return indexes + script;
 					}

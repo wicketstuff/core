@@ -98,7 +98,7 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 		this.upper.setRequired(true); //prevent null model object in case of no value is supplied.
 		this.upper.setOutputMarkupId(true);
 		this.upper.add(this.newUpperBehavior());
-		
+
 		this.init();
 	}
 
@@ -164,14 +164,14 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 	protected void onInitialize()
 	{
 		super.onInitialize();
-		
+
 		if (this.rangeValidator != null)
 		{
 			this.lower.add(this.rangeValidator); //let throw a NPE if no input is defined.
 			this.upper.add(this.rangeValidator); //let throw a NPE if no input is defined.
 		}
 	}
-	
+
 	@Override
 	protected void onConfigure(JQueryBehavior behavior)
 	{
@@ -179,12 +179,12 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 
 		StringBuilder statements = new StringBuilder();
 
-		statements.append("$('#").append(this.lower.getMarkupId()).append("').val(ui.values[0]); ");
-		statements.append("$('#").append(this.upper.getMarkupId()).append("').val(ui.values[1]); ");
+		statements.append("jQuery('#").append(this.lower.getMarkupId()).append("').val(ui.values[0]); ");
+		statements.append("jQuery('#").append(this.upper.getMarkupId()).append("').val(ui.values[1]); ");
 
 		if (!Strings.isEmpty(super.labelId))
 		{
-			statements.append("$('#").append(super.labelId).append("').text(").append(this.getLabelPattern()).append("); ");
+			statements.append("jQuery('#").append(super.labelId).append("').text(").append(this.getLabelPattern()).append("); ");
 		}
 
 		behavior.setOption("slide", String.format("function(event, ui) { %s }", statements));
@@ -243,11 +243,11 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 
 				StringBuilder statements = new StringBuilder();
 
-				statements.append("$('#").append(lower.getMarkupId()).append("').on('change', function() { ");
-				statements.append("$('#").append(label.getMarkupId()).append("').slider('values', 0, $(this).val()); "); //change the slider value (+slide)
+				statements.append("jQuery('#").append(lower.getMarkupId()).append("').on('change', function() { ");
+				statements.append("jQuery('#").append(label.getMarkupId()).append("').slider('values', 0, jQuery(this).val()); "); //change the slider value (+slide)
 				statements.append("} );");
 
-				return String.format("$(function() { %s });", statements);
+				return String.format("jQuery(function() { %s });", statements);
 			}
 		};
 	}
@@ -268,11 +268,11 @@ public class RangeSlider extends AbstractSlider<RangeValue>
 
 				StringBuilder statements = new StringBuilder();
 
-				statements.append("$('#").append(upper.getMarkupId()).append("').on('change', function() { ");
-				statements.append("$('#").append(label.getMarkupId()).append("').slider('values', 1, $(this).val()); "); //change the slider value (+slide)
+				statements.append("jQuery('#").append(upper.getMarkupId()).append("').on('change', function() { ");
+				statements.append("jQuery('#").append(label.getMarkupId()).append("').slider('values', 1, jQuery(this).val()); "); //change the slider value (+slide)
 				statements.append("} );");
 
-				return String.format("$(function() { %s });", statements);
+				return String.format("jQuery(function() { %s });", statements);
 			}
 		};
 	}

@@ -29,7 +29,7 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 
 /**
  * Provides the jQuery fullCalendar behavior
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -37,7 +37,7 @@ class CalendarBehavior extends JQueryBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "fullCalendar";
-	
+
 	public CalendarBehavior(final String selector)
 	{
 		super(selector, METHOD);
@@ -55,11 +55,11 @@ class CalendarBehavior extends JQueryBehavior
 		IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
 
 		/* adds and configure the busy indicator */
-		response.renderJavaScript("$(function(){ "
-				+ "$('<img />')"
+		response.renderJavaScript("jQuery(function(){ "
+				+ "jQuery('<img />')"
 				+ ".attr('src', '" + RequestCycle.get().urlFor(handler).toString() + "')"
-				+ ".ajaxStart(function() { $(this).show(); })"
-				+ ".ajaxStop(function() { $(this).hide(); })"
+				+ ".ajaxStart(function() { jQuery(this).show(); })"
+				+ ".ajaxStop(function() { jQuery(this).hide(); })"
 				+ ".appendTo('.fc-header-center');"
 				+ " });", this.getClass().getName());
 	}
