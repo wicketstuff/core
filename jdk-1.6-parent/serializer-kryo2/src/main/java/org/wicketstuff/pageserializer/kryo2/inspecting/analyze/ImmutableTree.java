@@ -93,4 +93,9 @@ public final class ImmutableTree implements ISerializedObjectTree
 	{
 		return children;
 	}
+	
+	@Override
+	public String toString() {
+		return "#"+id+" "+type+"("+label+") ["+children().size()+"]";
+	}
 }

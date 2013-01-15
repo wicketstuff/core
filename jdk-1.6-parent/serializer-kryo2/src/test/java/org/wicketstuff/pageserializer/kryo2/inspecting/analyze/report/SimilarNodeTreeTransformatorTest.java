@@ -105,6 +105,19 @@ public class SimilarNodeTreeTransformatorTest
 	}
 	
 	@Test
+	public void secondNodeHasMoreChilds() throws IOException {
+		ISerializedObjectTree source = Trees.fromResource(getClass(), "nodeChildSize");
+		Assert.assertEquals("asSample", source.label());
+		new TreeSizeReport().process(source);
+		ISerializedObjectTree result = SimilarNodeTreeTransformator.transformTree(source);
+		new TreeSizeReport().process(result);
+		ISerializedObjectTree match = Trees.fromResource(getClass(), "nodeChildSize-match");
+		new TreeSizeReport().process(match);
+		
+		Trees.assertEqualsTree(match, result);
+	}
+	
+	@Test
 	public void testTreeType() throws IOException {
 		ISerializedObjectTree sourceA = Trees.fromResource(getClass(), "treeType-A");
 		ISerializedObjectTree sourceB = Trees.fromResource(getClass(), "treeType-B");
@@ -159,6 +172,11 @@ public class SimilarNodeTreeTransformatorTest
 	}
 
 	static class C
+	{
+
+	}
+	
+	static class D
 	{
 
 	}
