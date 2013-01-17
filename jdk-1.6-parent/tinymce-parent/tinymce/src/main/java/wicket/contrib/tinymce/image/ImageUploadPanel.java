@@ -113,8 +113,8 @@ public class ImageUploadPanel extends Panel implements IResourceListener {
 
 		@Override
 		public void renderHead(Component c, IHeaderResponse pResponse) {
-			String script = getCallbackName() + " = function () { "
-					+ getCallbackScript() + " }";
+			String script = getCallbackName() + " = function () { if(isImgSelected())openImageForm(); else "
+					+ getCallbackScript() + "; }";
 			pResponse.render(OnDomReadyHeaderItem.forScript(script));
 			pResponse.render(JavaScriptHeaderItem
 					.forReference(IMAGE_UPLOAD_JS_RESOURCE));
