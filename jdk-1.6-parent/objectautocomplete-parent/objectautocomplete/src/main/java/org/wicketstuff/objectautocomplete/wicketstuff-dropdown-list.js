@@ -56,7 +56,7 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
   // Make this object available in key handlers
   var ddObject = this;
 
-  var obj = wicketGet(elementId);
+  var obj = Wicket.Ajax.get(elementId);
 
   objonkeydown = obj.onkeydown;
   objonblur = obj.onblur;
@@ -89,7 +89,7 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
   }
 
   obj.onkeydown = function(event) {
-    switch (wicketKeyCode(Wicket.fixEvent(event))) {
+    switch (wicketKeyCode(Wicket.Event.fix(event))) {
       case KEY_UP:
         if (selected > -1)selected--;
         if (selected == -1) {
@@ -138,7 +138,7 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
   }
 
   obj.onkeyup = function(event) {
-    switch (wicketKeyCode(Wicket.fixEvent(event))) {
+    switch (wicketKeyCode(Wicket.Event.fix(event))) {
       case KEY_ENTER:
         return killEvent(event);
       case KEY_UP:
@@ -159,7 +159,7 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
   }
 
   obj.onkeypress = function(event) {
-    if (wicketKeyCode(Wicket.fixEvent(event)) == KEY_ENTER) {
+    if (wicketKeyCode(Wicket.Event.fix(event)) == KEY_ENTER) {
       if (selected > -1 || hidingAutocomplete == 1) {
         hidingAutocomplete = 0;
         return killEvent(event);
@@ -221,9 +221,9 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
   }
 
   this.showDropDown = function() {
-    var position = getPosition(wicketGet(elementId));
+    var position = getPosition(Wicket.Ajax.get(elementId));
     var container = getAutocompleteContainer();
-    var input = wicketGet(elementId);
+    var input = Wicket.Ajax.get(elementId);
     var index = getOffsetParentZIndex(elementId);
     var width = config.width ? config.width : input.offsetWidth;
     container.show();
@@ -309,10 +309,10 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
       container.id = menuId + "-container";
 
       container.show = function() {
-        wicketShow(this.id)
+         Wicket.DOM.show(this.id)
       };
       container.hide = function() {
-        wicketHide(this.id)
+         Wicket.DOM.hide(this.id)
       };
 
       choiceDiv = document.createElement("div");

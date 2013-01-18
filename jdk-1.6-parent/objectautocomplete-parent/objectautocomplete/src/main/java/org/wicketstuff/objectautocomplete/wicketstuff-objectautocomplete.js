@@ -9,7 +9,7 @@ Wicketstuff.ObjectAutoComplete=function(elementId, objectElementId, callbackUrl,
   // ===============================================================================
 
   function updateChoices(dropDown,elementId) {
-    var value = wicketGet(elementId).value;
+    var value = Wicket.Ajax.get(elementId).value;
     var request = new Wicket.Ajax.Request(
             callbackUrl + "&q=" + (encodeURIComponent ? encodeURIComponent(value) : escape(value)),
             doUpdateChoices, false, true, false, "wicket-autocomplete|d");
@@ -18,7 +18,7 @@ Wicketstuff.ObjectAutoComplete=function(elementId, objectElementId, callbackUrl,
     // Callback method
     function doUpdateChoices(resp) {
       // check if the input hasn't been cleared in the meanwhile
-      var input = wicketGet(elementId);
+      var input = Wicket.Ajax.get(elementId);
       if (!cfg.showListOnEmptyInput && (input.value == null || input.value == "")) {
         dropDown.hideDropDown();
         return;
@@ -27,7 +27,7 @@ Wicketstuff.ObjectAutoComplete=function(elementId, objectElementId, callbackUrl,
       dropDown.setSelectablesFromHtml(resp);
 
       window.setTimeout(function() {
-        var input = wicketGet(elementId);
+        var input = Wicket.Ajax.get(elementId);
         if (!cfg.showListOnEmptyInput && (input.value == null || input.value == "")) {
           dropDown.hideDropDown();
         }
@@ -37,8 +37,8 @@ Wicketstuff.ObjectAutoComplete=function(elementId, objectElementId, callbackUrl,
   }
 
   function updateValue(dropDown,elementId,selectedElement) {
-    var objElement = wicketGet(objectElementId);
-    var textElement = wicketGet(elementId);
+    var objElement = Wicket.Ajax.get(objectElementId);
+    var textElement = Wicket.Ajax.get(elementId);
     var selected = dropDown.getSelectedElement();
     var attr = selected.attributes['textvalue'];
     var idAttr = selected.attributes['idvalue'];
