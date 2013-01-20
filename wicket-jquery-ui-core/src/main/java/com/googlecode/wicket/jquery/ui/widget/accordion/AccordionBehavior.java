@@ -16,6 +16,8 @@
  */
 package com.googlecode.wicket.jquery.ui.widget.accordion;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.Options;
 
@@ -50,5 +52,15 @@ public class AccordionBehavior extends JQueryBehavior
 	public AccordionBehavior(String selector, Options options)
 	{
 		super(selector, METHOD, options);
+	}
+
+	/**
+	 * Activates the selected tab, identified by the index
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param index the tab's index
+	 */
+	public void activate(int index, AjaxRequestTarget target)
+	{
+		target.appendJavaScript(this.$("'option'", "'active'", index));
 	}
 }

@@ -11,13 +11,13 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class DefaultDroppablePage extends AbstractDroppablePage
 {
 	private static final long serialVersionUID = 1L;
-	final FeedbackPanel feedbackPanel;
+	final FeedbackPanel feedback;
 	
 	public DefaultDroppablePage()
 	{
 		// FeedbackPanel //
-		this.feedbackPanel = new JQueryFeedbackPanel("feedback");
-		this.add(this.feedbackPanel.setOutputMarkupId(true));
+		this.feedback = new JQueryFeedbackPanel("feedback");
+		this.add(this.feedback.setOutputMarkupId(true));
 		
 		this.add(this.newDroppable("droppable1", "green area"));
 		this.add(this.newDroppable("droppable2", "blue area"));
@@ -53,7 +53,7 @@ public class DefaultDroppablePage extends AbstractDroppablePage
 					info(String.format("%s dropped in %s", draggable.getDefaultModelObjectAsString(), this.getDefaultModelObjectAsString()));
 				}
 
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 
 			@Override

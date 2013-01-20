@@ -153,6 +153,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 				{
 					locale = Locale.getDefault();
 				}
+
 				return new SimpleDateFormat(getTextFormat(), locale);
 			}
 		};

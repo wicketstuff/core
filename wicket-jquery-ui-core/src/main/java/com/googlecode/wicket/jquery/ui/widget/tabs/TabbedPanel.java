@@ -21,7 +21,6 @@ import java.util.List;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
@@ -49,12 +48,13 @@ public class TabbedPanel extends JQueryPanel
 	private final Options options;
 	private final List<ITab> tabs;
 
-	private JQueryAjaxBehavior onShowBehavior;
+	private TabsBehavior widgetBehavior;
+	private JQueryAjaxBehavior activateEventBehavior;
 
 	/**
 	 * Constructor
 	 * @param id the markup id
-	 * @param tabs the list of {@link ITab}
+	 * @param tabs the list of {@link ITab}<code>s</code>
 	 */
 	public TabbedPanel(String id, List<ITab> tabs)
 	{
@@ -64,7 +64,7 @@ public class TabbedPanel extends JQueryPanel
 	/**
 	 * Constructor
 	 * @param id the markup id
-	 * @param tabs the list of {@link ITab}
+	 * @param tabs the list of {@link ITab}<code>s</code>
 	 * @param options {@link Options}
 	 */
 	public TabbedPanel(String id, List<ITab> tabs, Options options)
@@ -129,14 +129,59 @@ public class TabbedPanel extends JQueryPanel
 	}
 
 
+	// Properties //
+	/**
+	 * Gets the list of {@link ITab}<code>s</code>
+	 * @return the list of {@link ITab}<code>s</code>
+	 */
+	public List<ITab> getTabs()
+	{
+		return this.tabs;
+	}
+
+	/**
+	 * Activates the selected tab
+	 * @param index the tab's index to activate
+	 * @return this, for chaining
+	 */
+	public TabbedPanel setActiveTab(int index)
+	{
+		this.options.set("active", index);
+
+		return this;
+	}
+
+	/**
+	 * Activates the selected tab<br/>
+	 * <b>Warning: </b> invoking this method results to a dual client-server round-trip. Use this method if you cannot use {@link #setActiveTab(int)} followed by <code>target.add(myTabbedPannel)</code>
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param index the tab's index to activate
+	 */
+	public void setActiveTab(int index, AjaxRequestTarget target)
+	{
+		this.widgetBehavior.activate(index, target); //sets 'active' option, that fires 'activate' event (best would be that is also fires a 'show' event)
+	}
+
+	// Methods //
+	/**
+	 * Helper method. Adds an {@link ITab} to the list of tabs.
+	 * @param tab the {@link ITab} to be added
+	 * @return true (as specified by Collection.add)
+	 */
+	public boolean add(ITab tab)
+	{
+		return this.tabs.add(tab);
+	}
+
+
 	// Events //
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
 
-		this.add(this.onShowBehavior = this.newOnShowBehavior());
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(this.activateEventBehavior = this.newActivateEventBehavior());
+		this.add(this.widgetBehavior = (TabsBehavior) JQueryWidget.newWidgetBehavior(this));
 	}
 
 	/**
@@ -152,21 +197,37 @@ public class TabbedPanel extends JQueryPanel
 	@Override
 	public void onEvent(IEvent<?> event)
 	{
-		if (event.getPayload() instanceof ShowEvent)
+		if (event.getPayload() instanceof ActivateEvent)
 		{
-			ShowEvent payload = (ShowEvent) event.getPayload();
-
+			ActivateEvent payload = (ActivateEvent) event.getPayload();
 			AjaxRequestTarget target = payload.getTarget();
-			int index = payload.getIndex();
-			ITab tab = tabs.get(index);
 
-			if (tab instanceof AjaxTab)
+			int index = payload.getIndex();
+
+			if (index > -1) /* index could be not known depending on options / user action */
 			{
-				((AjaxTab)tab).load(target);
+				ITab tab = this.tabs.get(index);
+
+				if (tab instanceof AjaxTab)
+				{
+					((AjaxTab)tab).load(target);
+				}
+
+				this.onActivate(target, index, tab);
 			}
 		}
 	}
 
+	/**
+	 * Triggered when an accordion tab has been activated ('activate' event).<br/>
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param index the accordion header that triggered this event
+	 * @param tab the {@link ITab} that corresponds to the index
+	 */
+	protected void onActivate(AjaxRequestTarget target, int index, ITab tab)
+	{
+	}
 
 	// IJQueryWidget //
 	@Override
@@ -181,7 +242,8 @@ public class TabbedPanel extends JQueryPanel
 			{
 				TabbedPanel.this.onConfigure(this);
 
-				this.setOption("show", TabbedPanel.this.onShowBehavior.getCallbackFunction()); //'show' is used instead of 'select' for an AjaxTab to be loaded even if it is the first tab
+				this.setOption("create", activateEventBehavior.getCallbackFunction());
+				this.setOption("activate", activateEventBehavior.getCallbackFunction());
 			}
 		};
 	}
@@ -189,10 +251,10 @@ public class TabbedPanel extends JQueryPanel
 
 	// Factories //
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'show' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' javascript callback
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	private JQueryAjaxBehavior newOnShowBehavior()
+	private JQueryAjaxBehavior newActivateEventBehavior()
 	{
 		return new JQueryAjaxBehavior(this) {
 
@@ -207,13 +269,13 @@ public class TabbedPanel extends JQueryPanel
 			@Override
 			public CharSequence getCallbackScript()
 			{
-				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&index=' + ui.index");
+				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&index=' + jQuery(event.target).tabs('option', 'active')");
 			}
 
 			@Override
 			protected JQueryEvent newEvent(AjaxRequestTarget target)
 			{
-				return new ShowEvent(target);
+				return new ActivateEvent(target);
 			}
 		};
 	}
@@ -221,9 +283,9 @@ public class TabbedPanel extends JQueryPanel
 
 	// Event objects //
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'show' callback
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'activate' callback
 	 */
-	static class ShowEvent extends JQueryEvent
+	private class ActivateEvent extends JQueryEvent
 	{
 		private final int index;
 
@@ -232,11 +294,11 @@ public class TabbedPanel extends JQueryPanel
 		 * @param target the {@link AjaxRequestTarget}
 		 * @param step the {@link Step} (Start or Stop)
 		 */
-		public ShowEvent(AjaxRequestTarget target)
+		public ActivateEvent(AjaxRequestTarget target)
 		{
 			super(target);
 
-			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt();
+			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(-1);
 		}
 
 		/**

@@ -42,17 +42,7 @@ class GoogleAnalyticsBehavior extends Behavior
 
 	public GoogleAnalyticsBehavior(final WebPage page)
 	{
-		this.url = this.getUrl(page);
-	}
-
-	private String getUrl(WebPage page)
-	{
-		Url pageUrl = Url.parse(page.urlFor(page.getClass(), null).toString());
-		Url baseUrl = new Url(page.getRequestCycle().getUrlRenderer().getBaseUrl());
-
-		baseUrl.resolveRelative(pageUrl);
-
-		return String.format("%s/%s", page.getRequest().getContextPath(), baseUrl);
+		this.url = GoogleAnalyticsBehavior.getUrl(page);
 	}
 
 	private IModel<Map<String, Object>> newResourceModel()
@@ -74,5 +64,15 @@ class GoogleAnalyticsBehavior extends Behavior
 		super.renderHead(component, response);
 
 		response.renderJavaScriptReference(this.newResourceReference(), "gaq");
+	}
+
+	private static String getUrl(WebPage page)
+	{
+		Url pageUrl = Url.parse(page.urlFor(page.getClass(), null).toString());
+		Url baseUrl = new Url(page.getRequestCycle().getUrlRenderer().getBaseUrl());
+
+		baseUrl.resolveRelative(pageUrl);
+
+		return String.format("%s/%s", page.getRequest().getContextPath(), baseUrl);
 	}
 }

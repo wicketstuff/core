@@ -26,8 +26,8 @@ public class MessageDialogPage extends AbstractDialogPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// Dialog //
 		final MessageDialog informDialog = new MessageDialog("infoDialog", "Information", "This is a information message", DialogButtons.OK_CANCEL, DialogIcon.INFO) {

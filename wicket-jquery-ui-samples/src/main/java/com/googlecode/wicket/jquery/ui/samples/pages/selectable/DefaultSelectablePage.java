@@ -21,8 +21,8 @@ public class DefaultSelectablePage extends AbstractSelectablePage
 		List<String> list = Arrays.asList("item #1", "item #2", "item #3", "item #4", "item #5", "item #6");
 		
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		this.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		this.add(feedback.setOutputMarkupId(true));
 
 		// Selectable //
 		final Selectable<String> selectable = new Selectable<String>("selectable", list) {
@@ -33,7 +33,7 @@ public class DefaultSelectablePage extends AbstractSelectablePage
 			protected void onSelect(AjaxRequestTarget target, List<String> items)
 			{
 				this.info("items: " + items.toString());
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		};
 

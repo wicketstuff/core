@@ -132,7 +132,7 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior
 	 */
 	public String $(String effect, String options)
 	{
-		return this.$(this.selector, effect, options, this.speed, String.format("%s", (this.callback != null ? this.callback.getCallbackScript() : "")));
+		return JQueryEffectBehavior.$(this.selector, effect, options, this.speed, String.format("%s", (this.callback != null ? this.callback.getCallbackScript() : "")));
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class JQueryEffectBehavior extends JQueryAbstractBehavior
 	 * @param callback the callback script to run once the effect completes
 	 * @return Statement like 'jQuery(function() { ... })'
 	 */
-	private String $(String selector, String effect, String options, int speed, String callback)
+	private static String $(String selector, String effect, String options, int speed, String callback)
 	{
 		return String.format("jQuery(function() { jQuery('%s').%s('%s', %s, %d, function() { %s }); });", selector, METHOD, effect, options, speed, callback);
 	}

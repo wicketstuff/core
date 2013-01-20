@@ -26,8 +26,8 @@ public class AjaxRangeSliderPage extends AbstractSliderPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// Sliders //
 		final Label label = new Label("label", form.getModel()); //the supplied model allows the initial display
@@ -41,7 +41,7 @@ public class AjaxRangeSliderPage extends AbstractSliderPage
 			public void onValueChanged(AjaxRequestTarget target, Form<?> form)
 			{
 				AjaxRangeSliderPage.this.info(this, form);
-				target.add(feedbackPanel); //do never add 'this' or the form here!
+				target.add(feedback); //do never add 'this' or the form here!
 			}
 		});
 	}

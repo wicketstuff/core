@@ -100,7 +100,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	 */
 	protected JQueryIcon getIcon()
 	{
-		return JQueryIcon.Alert;
+		return JQueryIcon.ALERT;
 	}
 
 

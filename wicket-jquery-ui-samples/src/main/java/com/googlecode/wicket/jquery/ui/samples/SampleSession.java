@@ -17,15 +17,15 @@ public class SampleSession extends WebSession implements IJQuerySecurityProvider
 	{
 		return (SampleSession)Session.get();
 	}
-	
+
 	private final List<String> roles;
-	
+
 	public SampleSession(Request request)
 	{
 		super(request);
 		this.roles = new ArrayList<String>();
 	}
-	
+
 	public final void login()
 	{
 		if (!this.roles.contains(SampleRoles.DEMO_ROLE))
@@ -38,13 +38,14 @@ public class SampleSession extends WebSession implements IJQuerySecurityProvider
 	{
 		this.roles.clear();
 	}
-	
+
 	/**
-	 * Check whether one of the supplied roles match a user role 
+	 * Check whether one of the supplied roles match a user role
 	 * @see IJQuerySecurityProvider#hasRole(String...)
-	 * @param roles the roles to be checked 
+	 * @param roles the roles to be checked
 	 * @return true or false
 	 */
+	@Override
 	public final boolean hasRole(String... roles)
 	{
 		for (String role : roles)
@@ -62,5 +63,5 @@ public class SampleSession extends WebSession implements IJQuerySecurityProvider
 	{
 		return this.roles.contains(role);
 	}
-	
+
 }

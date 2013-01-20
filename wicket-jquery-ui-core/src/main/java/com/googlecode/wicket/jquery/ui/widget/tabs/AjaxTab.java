@@ -22,6 +22,7 @@ import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
+
 import com.googlecode.wicket.jquery.ui.panel.LoadingPanel;
 
 /**
@@ -82,10 +83,10 @@ public abstract class AjaxTab extends AbstractTab
 	 * @param panelId the markup id to use
 	 * @return the {@link WebMarkupContainer}
 	 */
-	public abstract WebMarkupContainer getLazyPanel(String panelId);
+	protected abstract WebMarkupContainer getLazyPanel(String panelId);
 
 	/**
-	 * Replaces the loading panel's placeholder component by the lazy-loaded component.
+	 * Replaces the loading panel's placeholder component (indicator) by the lazy-loaded component.
 	 * Warning, should be called only once!
 	 *
 	 * @return the lazy-loaded component
@@ -93,6 +94,7 @@ public abstract class AjaxTab extends AbstractTab
 	private Component replaceComponent()
 	{
 		return this.panel.getPlaceholderComponent().replaceWith(this.getLazyPanel()); //warning, inner panel is detached here.
+//		return this.panel.replace(this.getLazyPanel()); //warning, inner panel is detached here.
 	}
 
 	/**

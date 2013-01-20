@@ -24,8 +24,8 @@ public class ButtonProgressBarPage extends AbstractProgressBarPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// ProgressBar //
 		final ProgressBar progressBar = new ProgressBar("progress", new Model<Integer>(90)) {
@@ -36,14 +36,14 @@ public class ButtonProgressBarPage extends AbstractProgressBarPage
 			protected void onValueChanged(AjaxRequestTarget target)
 			{
 				info("value: " + this.getDefaultModelObjectAsString());
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 			
 			@Override
 			protected void onComplete(AjaxRequestTarget target)
 			{
 				info("completed!");
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		};
 		

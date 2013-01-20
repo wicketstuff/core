@@ -26,7 +26,7 @@ import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 
 /**
  * Provides jQuery radio-buttons based on the built-in RadioChoice
- * 
+ *
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  */
@@ -55,13 +55,13 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 		super(id, choices);
 		this.init();
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param id the markup id
 	 * @param choices the collection of choices in the radio choice
 	 * @param renderer the rendering engine
-	 */	
+	 */
 	public RadioChoice(String id, List<? extends T> choices, IChoiceRenderer<? super T> renderer)
 	{
 		super(id, choices, renderer);
@@ -116,7 +116,7 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 		super(id, model, choices, renderer);
 		this.init();
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -149,7 +149,7 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 	{
 		this.setSuffix(""); // prevent the <br/> tag
 	}
-	
+
 	// Events //
 	@Override
 	protected void onInitialize()
@@ -160,6 +160,7 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 	}
 
 	// IJQueryWidget //
+	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
 		return new JQueryBehavior(selector, METHOD);

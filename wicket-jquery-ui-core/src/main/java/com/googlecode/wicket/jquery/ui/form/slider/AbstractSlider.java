@@ -93,7 +93,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	// Methods //
 	@Override
 	protected abstract void convertInput();
-	
+
 	/**
 	 * Adds a {@link RangeValidator} so slider value(s) are valid only if comprised between minimum and maximum.<br/>
 	 * <br/>
@@ -101,8 +101,8 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	 * To define the minimum and maximum values the slider can slide on, use {@link #setMin(Integer)} and {@link #setMax(Integer)}<br/>
 	 * <br/>
 	 * <b>Dev note:</b> this method is masked abstract to make sure the developer that will add the validator to the right input(s) in {@link #onInitialize()}
-	 * 
-	 * @param <W> the widget type 
+	 *
+	 * @param <W> the widget type
 	 * @param validator the {@link RangeValidator}
 	 * @return this
 	 */
@@ -131,7 +131,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	{
 		return new Fragment(id, "empty-fragment", this);
 	}
-	
+
 	// Events //
 	@Override
 	protected void onInitialize()
@@ -151,14 +151,13 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOptions(this.options);
 	}
 
 	// IJQueryWidget //
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new JQueryBehavior(selector, METHOD) {
+		return new JQueryBehavior(selector, METHOD, this.options) {
 
 			private static final long serialVersionUID = 1L;
 

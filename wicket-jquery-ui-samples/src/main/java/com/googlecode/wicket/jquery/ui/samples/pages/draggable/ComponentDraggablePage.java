@@ -13,8 +13,8 @@ public class ComponentDraggablePage extends AbstractDraggablePage
 	public ComponentDraggablePage()
 	{
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		this.add(feedbackPanel.setOutputMarkupId(true));		
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		this.add(feedback.setOutputMarkupId(true));		
 		
 		this.add(new Draggable<Void>("draggable") {
 
@@ -30,14 +30,14 @@ public class ComponentDraggablePage extends AbstractDraggablePage
 			protected void onDragStart(AjaxRequestTarget target)
 			{
 				info("Drag started");
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 			
 			@Override
 			protected void onDragStop(AjaxRequestTarget target)
 			{
 				info("Drag stoped");
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		});
 	}

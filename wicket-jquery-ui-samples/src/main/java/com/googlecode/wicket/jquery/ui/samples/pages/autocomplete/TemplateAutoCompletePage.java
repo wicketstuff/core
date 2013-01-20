@@ -36,8 +36,8 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// Auto-complete //
 		form.add(new AutoCompleteTextField<Genre>("autocomplete", model) {
@@ -54,7 +54,7 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 			protected void onSelected(AjaxRequestTarget target)
 			{
 				info("Your favorite rock genre is: " + this.getModelObject());
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 
 			@Override

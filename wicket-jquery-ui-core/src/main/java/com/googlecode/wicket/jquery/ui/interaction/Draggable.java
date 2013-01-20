@@ -164,13 +164,12 @@ public class Draggable<T> extends JQueryContainer
 	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOptions(this.options);
 	}
 
 	@Override
 	public void onEvent(IEvent<?> event)
 	{
-		// dragStartBehavior is multicasted; need to check that 'this' is the right source (in case of several Draggables)
+		// dragStartBehavior is multicasted; need to check that 'this' is the expected source (in case of several Draggables)
 		if ((event.getPayload() instanceof JQueryEvent) && (event.getSource() == this))
 		{
 			JQueryEvent payload = (JQueryEvent) event.getPayload();
@@ -208,7 +207,7 @@ public class Draggable<T> extends JQueryContainer
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new JQueryBehavior(selector, "draggable") {
+		return new JQueryBehavior(selector, "draggable", this.options) {
 
 			private static final long serialVersionUID = 1L;
 

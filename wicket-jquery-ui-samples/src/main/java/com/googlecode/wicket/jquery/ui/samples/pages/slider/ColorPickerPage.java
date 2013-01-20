@@ -34,8 +34,8 @@ public class ColorPickerPage extends AbstractSliderPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// Color panel //
 		final EmptyPanel colorPanel = new EmptyPanel("color");
@@ -55,7 +55,7 @@ public class ColorPickerPage extends AbstractSliderPage
 				target.add(colorPanel);
 
 				ColorPickerPage.this.info(this);
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		});
 	}

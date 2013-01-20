@@ -26,8 +26,8 @@ public class FragmentDialogPage extends AbstractDialogPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// Dialog //
 		final FragmentDialog<String> dialog = new FragmentDialog<String>("dialog", "Fragment dialog box", new Model<String>("I am the model object")) {
@@ -50,7 +50,7 @@ public class FragmentDialogPage extends AbstractDialogPage
 					this.info(String.format("The model object is: '%s'", this.getModelObject()));
 				}
 
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		};
 

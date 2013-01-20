@@ -6,6 +6,10 @@ body {
     min-height: 100%;
 }
 
+h4 {
+	margin-bottom: 0.4em;
+}
+
 a {
 	color: #336699;
 	text-decoration: none;
@@ -42,7 +46,7 @@ pre {
 	margin: 1px 0 0 0;
 	padding: 4px;
 
-	font-size: 1.1em;
+	font-size: 1.2em;
 }
 
 #wrapper-menu a, #content-menu em {
@@ -96,4 +100,9 @@ pre {
 
 .top {
 	vertical-align: top;	
+}
+
+/* Overrides jquery-ui */
+.ui-widget {
+    font-size: 1.0em !important;
 }

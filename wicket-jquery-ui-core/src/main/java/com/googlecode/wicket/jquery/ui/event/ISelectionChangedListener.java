@@ -20,7 +20,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 
 /**
- * Specifies that a widget handle a selection-change AJAX behavior
+ * Specifies that a widget handles a selection-change AJAX behavior
  *
  * @author Sebastien Briquet - sebfz1
  */

@@ -23,8 +23,8 @@ public class RangeDatePickerPage extends AbstractRangeDatePickerPage
 		options.set("calendars", 3);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		this.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		this.add(feedback.setOutputMarkupId(true));
 
 		// RangeDatePicker //
 		this.add(new RangeDatePicker("datepicker", new Model<DateRange>(DateRange.today()), options) {
@@ -39,7 +39,7 @@ public class RangeDatePickerPage extends AbstractRangeDatePickerPage
 
 				info(String.format("%s - %s", df.format(dateRange.getStart()), df.format(dateRange.getEnd())));
 
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		});
 	}

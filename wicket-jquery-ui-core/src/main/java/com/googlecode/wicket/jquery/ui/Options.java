@@ -70,6 +70,28 @@ public class Options implements IClusterable
 		return Options.asString(df.format(date));
 	}
 
+	/**
+	 * Converts a list of options to a comma delimited string.
+	 * @param objects options
+	 * @return a comma delimited string
+	 */
+	public static String fromList(Object... objects)
+	{
+		StringBuilder builder = new StringBuilder();
+
+		for (int i = 0; i < objects.length; i++)
+		{
+			if (i > 0)
+			{
+				builder.append(", ");
+			}
+
+			builder.append(objects[i]);
+		}
+
+		return builder.toString();
+	}
+
 
 	private final Map<String, Serializable> map;
 
@@ -84,8 +106,8 @@ public class Options implements IClusterable
 	/**
 	 * Constructor which adds an options defined by a key/value pair.
 	 *
-	 * @param key
-	 * @param value
+	 * @param key the option name
+	 * @param value the option value
 	 */
 	public Options(String key, Serializable value)
 	{

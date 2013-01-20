@@ -336,8 +336,6 @@ public class Calendar extends JQueryContainer
 					{
 						sourceBuilder.append(", ");
 						sourceBuilder.append("jQuery.fullCalendar.gcalFeed('").append(gcal.getKey()).append("', { className: '").append(gcal.getValue()).append("' })");
-						//TODO remove this
-						//('").append(selector).append("')
 					}
 				}
 

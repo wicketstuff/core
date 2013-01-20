@@ -23,8 +23,8 @@ public class AjaxButtonPage extends AbstractButtonPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// Buttons //
 		form.add(new AjaxButton("button1") {
@@ -35,7 +35,7 @@ public class AjaxButtonPage extends AbstractButtonPage
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				AjaxButtonPage.this.info(this);
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}			
 		});
 

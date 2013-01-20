@@ -24,8 +24,8 @@ public class DefaultComboBoxPage extends AbstractComboBoxPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// ComboBox //
 		final ComboBox<String> combobox = new ComboBox<String>("combobox", new Model<String>(), GENRES); // new WildcardListModel(GENRES) can be used (but not ListModel)
@@ -51,7 +51,7 @@ public class DefaultComboBoxPage extends AbstractComboBoxPage
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				DefaultComboBoxPage.this.info(combobox);
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		});
 	}

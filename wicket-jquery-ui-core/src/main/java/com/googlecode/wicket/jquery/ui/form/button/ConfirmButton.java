@@ -98,7 +98,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 	 */
 	protected JQueryIcon getIcon()
 	{
-		return JQueryIcon.Alert;
+		return JQueryIcon.ALERT;
 	}
 
 	// Factories //

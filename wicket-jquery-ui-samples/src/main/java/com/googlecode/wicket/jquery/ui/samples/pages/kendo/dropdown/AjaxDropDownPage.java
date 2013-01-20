@@ -24,10 +24,10 @@ public class AjaxDropDownPage extends AbstractDropDownPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
-		// DropDownList //
+		// ComboBox //
 		final DropDownList<String> dropdown = new AjaxDropDownList<String>("select", new Model<String>(), new ListModel<String>(GENRES)) {
 
 			private static final long serialVersionUID = 1L;
@@ -38,7 +38,7 @@ public class AjaxDropDownPage extends AbstractDropDownPage
 				String choice =  this.getModelObject();
 
 				this.info(choice != null ? choice : "no choice");
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		};
 

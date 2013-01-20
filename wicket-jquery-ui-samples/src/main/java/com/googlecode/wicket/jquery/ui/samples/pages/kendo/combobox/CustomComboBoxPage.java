@@ -27,8 +27,8 @@ public class CustomComboBoxPage extends AbstractComboBoxPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// ComboBox //
 		final ComboBox<Genre> combobox = new ComboBox<Genre>("combobox", new Model<String>(), GENRES);
@@ -54,7 +54,7 @@ public class CustomComboBoxPage extends AbstractComboBoxPage
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				CustomComboBoxPage.this.info(combobox);
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		});
 	}

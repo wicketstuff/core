@@ -28,8 +28,8 @@ public class InputAjaxRangeSliderPage extends AbstractSliderPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// Sliders //
 		TextField<Integer> lower = new TextField<Integer>("lower", new PropertyModel<Integer>(form.getModelObject(), "lower"), Integer.class);
@@ -45,14 +45,14 @@ public class InputAjaxRangeSliderPage extends AbstractSliderPage
 			@Override
 			protected void onError(AjaxRequestTarget target)
 			{
-				target.add(feedbackPanel); //do never add 'this' or the form here!
+				target.add(feedback); //do never add 'this' or the form here!
 			}
 
 			@Override
 			public void onValueChanged(AjaxRequestTarget target, Form<?> form)
 			{
 				InputAjaxRangeSliderPage.this.info(this, form);
-				target.add(feedbackPanel); //do never add 'this' or the form here!
+				target.add(feedback); //do never add 'this' or the form here!
 			}
 		};
 		

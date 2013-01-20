@@ -23,19 +23,20 @@ import org.apache.wicket.markup.html.form.FormComponent;
 
 /**
  * Base class for implementing AJAX POST on JQuery Form (submit)<br/>
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  * @deprecated will probably be never used as it post the whole form. It means that source is interested by receiving several {@link FormComponent}<code>s</code>
  *
  */
+@Deprecated
 public abstract class JQueryAjaxFormBehavior extends JQueryAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
 
 	private final Form<?> form;
-	
+
 	/**
-	 * 
+	 *
 	 * @param source {@link Component} to which the event returned by {@link #newEvent(AjaxRequestTarget)} will be broadcasted.
 	 * @param form the {@link Form} to post. If null, the behavior fallback to an AJAX GET callback script
 	 */
@@ -51,7 +52,7 @@ public abstract class JQueryAjaxFormBehavior extends JQueryAjaxBehavior
 	{
 		if (this.form != null)
 		{
-			final CharSequence script = String.format("wicketSubmitFormById('%s', '%s', null", this.form.getMarkupId(), this.getCallbackUrl()); 
+			final CharSequence script = String.format("wicketSubmitFormById('%s', '%s', null", this.form.getMarkupId(), this.getCallbackUrl());
 			return this.generateCallbackScript(script) + "return false;";
 		}
 

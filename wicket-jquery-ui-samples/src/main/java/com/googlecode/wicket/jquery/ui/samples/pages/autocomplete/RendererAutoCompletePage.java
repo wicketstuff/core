@@ -34,8 +34,8 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// Auto-complete (note that Genre does not overrides #toString()) //
 		form.add(new AutoCompleteTextField<Genre>("autocomplete", model, new TextRenderer<Genre>("fullName")) {
@@ -67,7 +67,7 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 				Genre genre = this.getModelObject();
 
 				info("Your favorite rock genre is: " + genre.getName());
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		});
 	}

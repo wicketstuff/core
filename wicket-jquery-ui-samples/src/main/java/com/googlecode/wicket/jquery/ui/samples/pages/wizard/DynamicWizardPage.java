@@ -78,7 +78,7 @@ public class DynamicWizardPage extends AbstractWizardPage
 			@Override
 			protected JQueryIcon getIcon()
 			{
-				return JQueryIcon.Gear;
+				return JQueryIcon.GEAR;
 			}
 
 			@Override

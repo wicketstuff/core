@@ -33,8 +33,8 @@ public class ConfirmButtonPage extends AbstractButtonPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 		
 		// TextField //
 		final RequiredTextField<String> textField = new RequiredTextField<String>("text", new Model<String>());

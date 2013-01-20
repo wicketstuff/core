@@ -31,8 +31,8 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// Auto-complete (note that Genre does not overrides #toString()) //
 		final AutoCompleteTextField<Genre> autocomplete = new AutoCompleteTextField<Genre>("autocomplete", form.getModel(), new TextRenderer<Genre>("name"), Genre.class) {
@@ -69,7 +69,7 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 			@Override
 			protected void onError(AjaxRequestTarget target, Form<?> form)
 			{
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 
 			@Override
@@ -87,7 +87,7 @@ public class ConverterAutoCompletePage extends AbstractAutoCompletePage
 					info("User input is: " + autocomplete.getInput());
 				}
 
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		});
 	}

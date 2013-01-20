@@ -25,8 +25,8 @@ public class RendererComboBoxPage extends AbstractComboBoxPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// ComboBox //
 		final ComboBox<Genre> dropdown = new ComboBox<Genre>("combobox", new Model<String>(), GENRES, new ComboBoxRenderer<Genre>("name", "id"));
@@ -52,7 +52,7 @@ public class RendererComboBoxPage extends AbstractComboBoxPage
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				RendererComboBoxPage.this.info(dropdown);
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		});
 	}

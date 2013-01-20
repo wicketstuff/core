@@ -22,14 +22,14 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class TableDraggableSelectablePage extends AbstractSelectablePage
 {
 	private static final long serialVersionUID = 1L;
-	private final FeedbackPanel feedbackPanel;
+	private final FeedbackPanel feedback;
 	private final Selectable<Genre> selectable;
 	
 	public TableDraggableSelectablePage()
 	{
 		// FeedbackPanel //
-		this.feedbackPanel = new JQueryFeedbackPanel("feedback");
-		this.add(this.feedbackPanel.setOutputMarkupId(true));
+		this.feedback = new JQueryFeedbackPanel("feedback");
+		this.add(this.feedback.setOutputMarkupId(true));
 		
 		// Selectable //
 		this.selectable = new Selectable<Genre>("selectable", GENRES) {
@@ -46,7 +46,7 @@ public class TableDraggableSelectablePage extends AbstractSelectablePage
 			protected void onSelect(AjaxRequestTarget target, List<Genre> items)
 			{
 				this.info("items: " + items.toString());
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		};
 
@@ -107,7 +107,7 @@ public class TableDraggableSelectablePage extends AbstractSelectablePage
 			{
 				info(String.format("Dropped %s", selectable.getSelectedItems()));
 
-				target.add(feedbackPanel);
+				target.add(feedback);
 				target.add(this); //refresh the listview
 			}
 		};

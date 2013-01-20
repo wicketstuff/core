@@ -31,6 +31,16 @@ public class DialogButton implements IClusterable
 
 	private static short sequence = 0;
 
+	/**
+	 * Gets the next id-sequence. This is used to generate the markupId
+	 * @return 0x0000 to 0x7FFF
+	 */
+	private static synchronized int nextSequence()
+	{
+		return (DialogButton.sequence++ % Short.MAX_VALUE);
+	}
+
+
 	private final int id;
 	private final String text;
 	private boolean enabled;
@@ -71,7 +81,7 @@ public class DialogButton implements IClusterable
 	 */
 	public DialogButton(String text, boolean enabled)
 	{
-		this.id = this.nextSequence();
+		this.id = DialogButton.nextSequence();
 		this.text = text;
 		this.enabled = enabled;
 	}
@@ -123,7 +133,9 @@ public class DialogButton implements IClusterable
 	{
 		if (this.visible != visible)
 		{
-			if (this.visible = visible) /* assignment */
+			this.visible = visible;
+
+			if (this.visible)
 			{
 				this.show(target);
 			}
@@ -147,15 +159,6 @@ public class DialogButton implements IClusterable
 
 
 	// Methods //
-
-	/**
-	 * Gets the next id-sequence. This is used to generate the markupId
-	 * @return 0x0000 to 0x7FFF
-	 */
-	private synchronized int nextSequence()
-	{
-		return (DialogButton.sequence++ % Short.MAX_VALUE);
-	}
 
 	/**
 	 * Enables the button

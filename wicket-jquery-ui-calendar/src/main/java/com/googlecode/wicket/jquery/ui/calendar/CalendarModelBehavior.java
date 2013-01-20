@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides the behavior that gets the {@link CalendarEvent}<code>s</code> from the {@link CalendarModel}
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -41,10 +41,10 @@ class CalendarModelBehavior extends AbstractAjaxBehavior
 	private static final Logger LOG = LoggerFactory.getLogger(CalendarModelBehavior.class);
 
 	private CalendarModel model;
-	
+
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param model the {@link CalendarModel}
 	 */
 	public CalendarModelBehavior(CalendarModel model)
@@ -57,29 +57,30 @@ class CalendarModelBehavior extends AbstractAjaxBehavior
 	{
 		final RequestCycle requestCycle = RequestCycle.get();
 		IRequestParameters parameters = requestCycle.getRequest().getQueryParameters();
-		
+
 		final long start = parameters.getParameterValue("start").toLong(0);
 		final long end = parameters.getParameterValue("end").toLong(0);
-		
+
 		if (this.model != null)
 		{
 			this.model.setStart(new Date(start  * 1000));
 			this.model.setEnd(new Date(end * 1000));
 		}
-		
+
 		final IRequestHandler handler = this.newRequestHandler();
 		requestCycle.scheduleRequestHandlerAfterCurrent(handler);
 	}
 
 	/**
 	 * Gets the new {@link IRequestHandler} that will respond the list of {@link CalendarEvent} in a json format
-	 * 
+	 *
 	 * @return the {@link IRequestHandler}
 	 */
 	private IRequestHandler newRequestHandler()
 	{
 		return new IRequestHandler()
 		{
+			@Override
 			public void respond(final IRequestCycle requestCycle)
 			{
 				WebResponse response = (WebResponse)requestCycle.getResponse();
@@ -87,15 +88,15 @@ class CalendarModelBehavior extends AbstractAjaxBehavior
 				final String encoding = Application.get().getRequestCycleSettings().getResponseRequestEncoding();
 				response.setContentType("text/json; charset=" + encoding);
 				response.disableCaching();
-				
+
 				if (model != null)
 				{
 					List<? extends CalendarEvent> list =  model.getObject(); // calls load()
-					
+
 					if (list != null)
 					{
 						StringBuilder builder = new StringBuilder("[ ");
-						
+
 						int count = 0;
 						for (CalendarEvent event : list)
 						{
@@ -103,19 +104,20 @@ class CalendarModelBehavior extends AbstractAjaxBehavior
 							{
 								event.accept((ICalendarVisitor) model); //last chance to set options
 							}
-				
+
 							if (count++ > 0) { builder.append(", "); }
 							builder.append(event.toString());
 						}
-	
+
 						builder.append(" ]");
-						
+
 						LOG.debug(builder.toString());
 						response.write(builder);
 					}
 				}
 			}
 
+			@Override
 			public void detach(final IRequestCycle requestCycle)
 			{
 			}

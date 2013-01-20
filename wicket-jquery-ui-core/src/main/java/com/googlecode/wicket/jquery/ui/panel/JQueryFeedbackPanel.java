@@ -148,7 +148,6 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 	}
 
 	/**
-	 * TODO: Wicket ML: open a JIRA request, to be able to customize css class (container AND message)
 	 * TODO: Wicket ML: open a JIRA request, to be able to sort message by type (so an enclosing class could be defined).
 	 */
 	@Override

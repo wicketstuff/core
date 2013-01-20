@@ -26,8 +26,8 @@ public class RangeDatePickerTextFieldPage extends AbstractRangeDatePickerPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// RangeDatePicker //
 		final IModel<DateRange> model = new Model<DateRange>(new DateRange(new Date(new Date().getTime() - Duration.ONE_DAY.getMilliseconds() * 3), new Date()));

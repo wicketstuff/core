@@ -7,11 +7,13 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.Options;
+import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.widget.accordion.AccordionPanel;
 import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
@@ -23,24 +25,40 @@ public class AccordionPanelPage extends AbstractAccordionPage
 
 	public AccordionPanelPage()
 	{
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		this.add(feedbackPanel.setOutputMarkupId(true));
+		final Form<?> form = new Form<Void>("form");
+		this.add(form);
 
-		// Options that are recommended when using dynamic content (AjaxTab) //
+		// Feedback Panel //
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
+
+		// Recommended options when using dynamic content (AjaxTab) //
 		Options options = new Options();
-		options.set("autoHeight", false);
-		options.set("clearStyle", true);
+		options.set("heightStyle", Options.asString("content"));
 
 		// Accordion //
-		this.add(new AccordionPanel("accordion", this.newTabList(), options) {
+		final AccordionPanel accordion = new AccordionPanel("accordion", this.newTabList(), options) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onChanging(AjaxRequestTarget target, int index, ITab tab)
+			protected void onActivate(AjaxRequestTarget target, int index, ITab tab)
 			{
 				info(String.format("selected tab: #%d - %s", index, tab.getTitle().getObject()));
-				target.add(feedbackPanel);
+				target.add(feedback);
+			}
+		};
+
+		form.add(accordion);
+
+		form.add(new AjaxButton("button") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+			{
+				target.add(accordion.setActiveTab(2));
 			}
 		});
 	}

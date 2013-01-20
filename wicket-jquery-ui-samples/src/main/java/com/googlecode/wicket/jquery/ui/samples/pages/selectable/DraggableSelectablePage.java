@@ -19,7 +19,7 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class DraggableSelectablePage extends AbstractSelectablePage
 {
 	private static final long serialVersionUID = 1L;
-	private final FeedbackPanel feedbackPanel;
+	private final FeedbackPanel feedback;
 	private final Selectable<String> selectable;
 	
 	public DraggableSelectablePage()
@@ -27,8 +27,8 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 		List<String> list = Arrays.asList("item #1", "item #2", "item #3", "item #4", "item #5", "item #6");
 
 		// FeedbackPanel //
-		this.feedbackPanel = new JQueryFeedbackPanel("feedback");
-		this.add(this.feedbackPanel.setOutputMarkupId(true));
+		this.feedback = new JQueryFeedbackPanel("feedback");
+		this.add(this.feedback.setOutputMarkupId(true));
 		
 		// Selectable //
 		this.selectable = new Selectable<String>("selectable", list) {
@@ -39,7 +39,7 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 			protected void onSelect(AjaxRequestTarget target, List<String> items)
 			{
 				this.info("items: " + items.toString());
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		};
 
@@ -96,7 +96,7 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 			{
 				info(String.format("Dropped %s", selectable.getSelectedItems()));
 
-				target.add(feedbackPanel);
+				target.add(feedback);
 				target.add(this); //refresh the listview
 			}
 		};

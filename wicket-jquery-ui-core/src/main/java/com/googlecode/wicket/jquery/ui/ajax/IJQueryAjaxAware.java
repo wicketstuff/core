@@ -17,11 +17,12 @@
 package com.googlecode.wicket.jquery.ui.ajax;
 
 /**
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  * @deprecated not yet used
  *
  */
+@Deprecated
 public interface IJQueryAjaxAware
 {
 	boolean fireEvents();

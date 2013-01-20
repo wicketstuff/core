@@ -10,18 +10,19 @@ import com.googlecode.wicket.jquery.ui.samples.SamplePage;
 abstract class AbstractTabsPage extends SamplePage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public AbstractTabsPage()
 	{
-		
+
 	}
-	
+
 	@Override
 	protected List<DemoLink> getDemoLinks()
 	{
 		return Arrays.asList(
 				new DemoLink(DefaultTabsPage.class, "Tabs Behavior"),
-				new DemoLink(WidgetTabsPage.class, "Tabs Widget: TabbedPanel")
+				new DemoLink(TabbedPanelPage.class, "TabbedPanel"),
+				new DemoLink(AdvancedTabsPage.class, "TabbedPanel: demo")
 			);
 	}
 }

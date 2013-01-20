@@ -23,9 +23,9 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.markup.html.list.Loop;
+import org.apache.wicket.markup.html.list.LoopItem;
+import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryEvent;
@@ -33,7 +33,6 @@ import com.googlecode.wicket.jquery.ui.JQueryPanel;
 import com.googlecode.wicket.jquery.ui.Options;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.ui.utils.RequestCycleUtils;
-import com.googlecode.wicket.jquery.ui.widget.accordion.AccordionPanel.ChangeEvent.Step;
 import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
 
 /**
@@ -49,13 +48,13 @@ public class AccordionPanel extends JQueryPanel
 
 	private final List<ITab> tabs;
 	private final Options options;
-	private JQueryAjaxBehavior onChangingBehavior;
-	private JQueryAjaxBehavior onChangedBehavior;
+	private AccordionBehavior widgetBehavior;
+	private JQueryAjaxBehavior activateEventBehavior;
 
 	/**
 	 * Constructor
 	 * @param id the markup id
-	 * @param tabs the list of {@link ITab}
+	 * @param tabs the list of {@link ITab}<code>s</code>
 	 */
 	public AccordionPanel(String id, List<ITab> tabs)
 	{
@@ -65,7 +64,7 @@ public class AccordionPanel extends JQueryPanel
 	/**
 	 * Constructor
 	 * @param id the markup id
-	 * @param tabs the list of {@link ITab}
+	 * @param tabs the list of {@link ITab}<code>s</code>
 	 * @param options {@link Options}
 	 */
 	public AccordionPanel(String id, List<ITab> tabs, Options options)
@@ -83,14 +82,15 @@ public class AccordionPanel extends JQueryPanel
 	 */
 	private void init()
 	{
-		this.add(new ListView<ITab>("tabs", new ListModel<ITab>(this.tabs)) {
+		this.add(new Loop("tabs", this.getCountModel()) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void populateItem(ListItem<ITab> item)
+			protected void populateItem(LoopItem item)
 			{
-				final ITab tab = item.getModelObject();
+				int index = item.getIndex();
+				final ITab tab = AccordionPanel.this.tabs.get(index);
 
 				if (tab.isVisible())
 				{
@@ -101,16 +101,47 @@ public class AccordionPanel extends JQueryPanel
 		});
 	}
 
+
 	// Properties //
 	/**
-	 * Indicates whether the 'change' event is enabled
-	 * If true, the {@link #onChanging(AjaxRequestTarget, int, ITab)} event will be triggered
-	 *
-	 * @return false by default
+	 * Activates the selected tab
+	 * @param index the tab's index to activate
+	 * @return this, for chaining
 	 */
-	protected boolean isChangedEventEnabled()
+	public AccordionPanel setActiveTab(int index)
 	{
-		return false;
+		this.options.set("active", index);
+
+		return this;
+	}
+
+	/**
+	 * Activates the selected tab<br/>
+	 * <b>Warning: </b> invoking this method results to a dual client-server round-trip. Use this method if you cannot use {@link #setActiveTab(int)} followed by <code>target.add(myTabbedPannel)</code>
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param index the tab's index to activate
+	 */
+	public void setActiveTab(int index, AjaxRequestTarget target)
+	{
+		this.widgetBehavior.activate(index, target); //sets 'active' option, that fires 'activate' event (best would be that is also fires a 'show' event)
+	}
+
+	/**
+	 * Gets the model of tab's count
+	 * @return the {@link Model}
+	 */
+	private Model<Integer> getCountModel()
+	{
+		return new Model<Integer>() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Integer getObject()
+			{
+				return AccordionPanel.this.tabs.size();
+			}
+		};
 	}
 
 	// Events //
@@ -119,9 +150,8 @@ public class AccordionPanel extends JQueryPanel
 	{
 		super.onInitialize();
 
-		this.add(this.onChangingBehavior = this.newOnChangingBehavior());
-		this.add(this.onChangedBehavior = this.newOnChangedBehavior());
-		this.add(JQueryWidget.newWidgetBehavior(this));
+		this.add(this.activateEventBehavior = this.newActivateEventBehavior());
+		this.add(this.widgetBehavior = (AccordionBehavior) JQueryWidget.newWidgetBehavior(this));
 	}
 
 	/**
@@ -132,57 +162,40 @@ public class AccordionPanel extends JQueryPanel
 	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOptions(this.options);
 	}
 
 	@Override
 	public void onEvent(IEvent<?> event)
 	{
-		if (event.getPayload() instanceof ChangeEvent)
+		if (event.getPayload() instanceof ActivateEvent)
 		{
-			ChangeEvent payload = (ChangeEvent) event.getPayload();
-
-			int index = payload.getIndex();
-			ITab tab = tabs.get(index);
+			ActivateEvent payload = (ActivateEvent) event.getPayload();
 			AjaxRequestTarget target = payload.getTarget();
 
-			if (payload.getStep() == ChangeEvent.Step.Start)
+			int index = payload.getIndex();
+
+			if (index > -1) /* index could be not known depending on options and user action */
 			{
+				ITab tab = this.tabs.get(index);
+
 				if (tab instanceof AjaxTab)
 				{
 					((AjaxTab)tab).load(target);
 				}
 
-				this.onChanging(target, index, tab);
-			}
-
-			if (payload.getStep() == ChangeEvent.Step.Stop)
-			{
-				this.onChanged(target, index, tab);
+				this.onActivate(target, index, tab);
 			}
 		}
 	}
 
 	/**
-	 * Triggered when the accordion state is changing ('changestart' event).<br/>
+	 * Triggered when an accordion tab has been activated ('activate' event).<br/>
 	 *
 	 * @param target the {@link AjaxRequestTarget}
 	 * @param index the accordion header that triggered this event
 	 * @param tab the {@link ITab} that corresponds to the index
 	 */
-	protected void onChanging(AjaxRequestTarget target, int index, ITab tab)
-	{
-	}
-
-	/**
-	 * Triggered when the accordion state has changed ('change' event).<br/>
-	 * {@link #isChangedEventEnabled()} should return true for this event to be triggered.
-	 *
-	 * @param target the {@link AjaxRequestTarget}
-	 * @param index the accordion header that triggered this event
-	 * @param tab the {@link ITab} that corresponds to the index
-	 */
-	protected void onChanged(AjaxRequestTarget target, int index, ITab tab)
+	protected void onActivate(AjaxRequestTarget target, int index, ITab tab)
 	{
 	}
 
@@ -190,7 +203,7 @@ public class AccordionPanel extends JQueryPanel
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new AccordionBehavior(selector) {
+		return new AccordionBehavior(selector, this.options) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -199,112 +212,60 @@ public class AccordionPanel extends JQueryPanel
 			{
 				AccordionPanel.this.onConfigure(this);
 
-				this.setOption("changestart", AccordionPanel.this.onChangingBehavior.getCallbackFunction()); //allows to load AjaxTab
-
-				if (AccordionPanel.this.isChangedEventEnabled())
-				{
-					this.setOption("change", AccordionPanel.this.onChangedBehavior.getCallbackFunction());
-				}
+				this.setOption("create", activateEventBehavior.getCallbackFunction());
+				this.setOption("activate", activateEventBehavior.getCallbackFunction());
 			}
 		};
 	}
-
 
 	// Factories //
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'changestart' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' callback
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
-	private JQueryAjaxBehavior newOnChangingBehavior()
+	private JQueryAjaxBehavior newActivateEventBehavior()
 	{
-		return new OnChangeBehavior(this) {
+		return new JQueryAjaxBehavior(this) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected JQueryEvent newEvent(AjaxRequestTarget target)
+			public String getCallbackFunction()
 			{
-				return new ChangeEvent(target, Step.Start);
+				return "function(event, ui) { " + this.getCallbackScript() + " }";
 			}
-		};
-	}
 
-	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'change' javascript callback
-	 * @return the {@link JQueryAjaxBehavior}
-	 */
-	private JQueryAjaxBehavior newOnChangedBehavior()
-	{
-		return new OnChangeBehavior(this) {
-
-			private static final long serialVersionUID = 1L;
+			@Override
+			public CharSequence getCallbackScript()
+			{
+				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&index=' + jQuery(event.target).accordion('option', 'active')");
+			}
 
 			@Override
 			protected JQueryEvent newEvent(AjaxRequestTarget target)
 			{
-				return new ChangeEvent(target, Step.Stop);
+				return new ActivateEvent(target);
 			}
 		};
-	}
-
-	// Event behaviors //
-	/**
-	 * Provides the base class for 'changestart' and 'change' events
-	 */
-	abstract class OnChangeBehavior extends JQueryAjaxBehavior
-	{
-		private static final long serialVersionUID = 1L;
-
-		public OnChangeBehavior(Component source)
-		{
-			super(source);
-		}
-
-		@Override
-		public String getCallbackFunction()
-		{
-			return "function(event, ui) { " + this.getCallbackScript() + " }";
-		}
-
-		@Override
-		public CharSequence getCallbackScript()
-		{
-			return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&index=' + ui.options.active");
-			//+ '&title=' + jQuery(ui.newHeader.context).text()");
-		}
 	}
 
 	// Event objects //
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'change' callback
+	 * Base class for accordion event objects
 	 */
-	static class ChangeEvent extends JQueryEvent
+	private class ActivateEvent extends JQueryEvent
 	{
-		enum Step { Start, Stop };
-
-		private final Step step;
 		private final int index;
 
 		/**
 		 * Constructor
 		 * @param target the {@link AjaxRequestTarget}
-		 * @param step the {@link Step} (Start or Stop)
 		 */
-		public ChangeEvent(AjaxRequestTarget target, Step step)
+		public ActivateEvent(AjaxRequestTarget target)
 		{
 			super(target);
 
-			this.step = step;
-			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt();
-		}
-
-		/**
-		 * Gets the {@link Step} (Start or Stop)
-		 * @return the {@link Step}
-		 */
-		public Step getStep()
-		{
-			return this.step;
+			this.index = RequestCycleUtils.getQueryParameterValue("index").toInt(-1);
 		}
 
 		/**

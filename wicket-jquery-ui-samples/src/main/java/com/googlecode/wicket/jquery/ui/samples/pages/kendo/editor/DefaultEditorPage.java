@@ -18,8 +18,8 @@ public class DefaultEditorPage extends AbstractEditorPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel);
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback);
 
 		// ComboBox //
 		final Editor<String> editor = new Editor<String>("editor", new Model<String>("<p>test</p>"));

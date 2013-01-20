@@ -31,8 +31,8 @@ import com.googlecode.wicket.jquery.ui.resource.JQueryUIResourceReference;
  *     {
  *         super.init();
  *
- *         JQueryLibrarySettings.setJQueryReference(new JavaScriptResourceReference(MyApplication.class, "jquery-1.8.0.min.js"));
- *         JQueryLibrarySettings.setJQueryUIReference(new JavaScriptResourceReference(MyApplication.class, "jquery-ui-1.8.23.min.js"));
+ *         JQueryLibrarySettings.setJQueryReference(new JavaScriptResourceReference(MyApplication.class, "jquery-1.8.2.min.js"));
+ *         JQueryLibrarySettings.setJQueryUIReference(new JavaScriptResourceReference(MyApplication.class, "jquery-ui-1.9.0.min.js"));
  *     }
  * }
  * <pre></code>
@@ -46,6 +46,10 @@ public class JQueryLibrarySettings
 {
 	private static ResourceReference jQueryReference = JQueryResourceReference.get();
 	private static ResourceReference jQueryUIReference = JQueryUIResourceReference.get();
+	private static ResourceReference jQueryGlobalizeReference = null; //should be explicitly set by user
+
+
+	// jQuery Core //
 
 	/**
 	 * Gets the JQuery backing library resource reference
@@ -67,6 +71,9 @@ public class JQueryLibrarySettings
 		JQueryLibrarySettings.jQueryReference = reference;
 	}
 
+
+	// jQuery UI //
+
 	/**
 	 * Gets the JQuery UI backing library resource reference
 	 *
@@ -76,6 +83,7 @@ public class JQueryLibrarySettings
 	{
 		return JQueryLibrarySettings.jQueryUIReference;
 	}
+
 	/**
 	 * Sets the JQuery UI backing library resource reference
 	 *
@@ -85,4 +93,26 @@ public class JQueryLibrarySettings
 	{
 		JQueryLibrarySettings.jQueryUIReference = reference;
 	}
+
+	// jQuery UI //
+	/**
+	 * Gets the JQuery UI backing library resource reference
+	 *
+	 * @return the {@link ResourceReference}
+	 */
+	public static ResourceReference getJQueryGlobalizeReference()
+	{
+		return JQueryLibrarySettings.jQueryGlobalizeReference;
+	}
+
+	/**
+	 * Sets the JQuery UI backing library resource reference
+	 *
+	 * @param reference the {@link ResourceReference}, or null
+	 */
+	public static void setJQueryGlobalizeReference(ResourceReference reference)
+	{
+		JQueryLibrarySettings.jQueryGlobalizeReference = reference;
+	}
+
 }

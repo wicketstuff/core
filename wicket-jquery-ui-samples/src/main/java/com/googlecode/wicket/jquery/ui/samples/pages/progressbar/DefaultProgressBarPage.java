@@ -26,8 +26,8 @@ public class DefaultProgressBarPage extends AbstractProgressBarPage implements I
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// Timer //
 		final AbstractAjaxTimerBehavior timer = new AbstractAjaxTimerBehavior(Duration.ONE_SECOND) {
@@ -52,7 +52,7 @@ public class DefaultProgressBarPage extends AbstractProgressBarPage implements I
 			protected void onValueChanged(AjaxRequestTarget target)
 			{
 				info("value: " + this.getDefaultModelObjectAsString());
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 			
 			@Override
@@ -61,7 +61,7 @@ public class DefaultProgressBarPage extends AbstractProgressBarPage implements I
 				timer.stop();
 
 				info("completed!");
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		};
 

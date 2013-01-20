@@ -173,6 +173,6 @@ public abstract class SecuredAjaxButton extends AjaxButton
 	protected void onConfigure(JQueryBehavior behavior)
 	{
 		//super.onConfigure(behavior); do not call super
-		behavior.setOption("icons", String.format("{ primary: '%s' }", isLocked() ? JQueryIcon.Locked : JQueryIcon.Unlocked));
+		behavior.setOption("icons", String.format("{ primary: '%s' }", isLocked() ? JQueryIcon.LOCKED : JQueryIcon.UNLOCKED));
 	}
 }

@@ -16,12 +16,14 @@
  */
 package com.googlecode.wicket.jquery.ui.widget.tabs;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.Options;
 
 /**
  * Provides a jQuery tabs behavior.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  * @since 1.2.1
  */
@@ -32,22 +34,33 @@ public class TabsBehavior extends JQueryBehavior
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 */
 	public TabsBehavior(String selector)
 	{
 		super(selector, METHOD);
 	}
-	
+
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param selector the html selector (ie: "#myId")
 	 * @param options the {@link Options}
 	 */
 	public TabsBehavior(String selector, Options options)
 	{
 		super(selector, METHOD, options);
+	}
+
+
+	/**
+	 * Activates the selected tab, identified by the index
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param index the tab's index
+	 */
+	public void activate(int index, AjaxRequestTarget target)
+	{
+		target.appendJavaScript(this.$("'option'", "'active'", index));
 	}
 }

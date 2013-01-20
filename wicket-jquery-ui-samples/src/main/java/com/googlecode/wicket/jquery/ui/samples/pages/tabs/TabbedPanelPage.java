@@ -14,11 +14,11 @@ import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
 import com.googlecode.wicket.jquery.ui.widget.tabs.SimpleTab;
 import com.googlecode.wicket.jquery.ui.widget.tabs.TabbedPanel;
 
-public class WidgetTabsPage extends AbstractTabsPage
+public class TabbedPanelPage extends AbstractTabsPage
 {
 	private static final long serialVersionUID = 1L;
 
-	public WidgetTabsPage()
+	public TabbedPanelPage()
 	{
 		Options options = new Options();
 		options.set("collapsible", true);
@@ -41,7 +41,7 @@ public class WidgetTabsPage extends AbstractTabsPage
 			@Override
 			public WebMarkupContainer getPanel(String panelId)
 			{
-				return new Fragment(panelId, "panel-1", WidgetTabsPage.this);
+				return new Fragment(panelId, "panel-1", TabbedPanelPage.this);
 			}
 		});
 
@@ -63,7 +63,7 @@ public class WidgetTabsPage extends AbstractTabsPage
 					error(e.getMessage());
 				}
 
-				return new Fragment(panelId, "panel-2", WidgetTabsPage.this);
+				return new Fragment(panelId, "panel-2", TabbedPanelPage.this);
 			}
 		});
 

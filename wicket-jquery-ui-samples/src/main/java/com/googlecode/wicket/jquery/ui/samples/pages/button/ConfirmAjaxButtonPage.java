@@ -34,8 +34,8 @@ public class ConfirmAjaxButtonPage extends AbstractButtonPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// TextField //
 		final RequiredTextField<String> textField = new RequiredTextField<String>("text", new Model<String>());
@@ -50,14 +50,14 @@ public class ConfirmAjaxButtonPage extends AbstractButtonPage
 			protected void onError(AjaxRequestTarget target, Form<?> form)
 			{
 				this.error("Validation failed!");
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				this.info("Model object: " + textField.getModelObject());
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		});
 	}

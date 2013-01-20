@@ -28,8 +28,8 @@ public class AjaxSliderPage extends AbstractSliderPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// Sliders //
 		final Label label = new Label("label", this.model); //the supplied model allows the initial display
@@ -43,7 +43,7 @@ public class AjaxSliderPage extends AbstractSliderPage
 			public void onValueChanged(AjaxRequestTarget target, Form<?> form)
 			{
 				AjaxSliderPage.this.info(this);
-				target.add(feedbackPanel); //do never add 'this' or the form here!
+				target.add(feedback); //do never add 'this' or the form here!
 			}
 		});
 	}

@@ -52,14 +52,14 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	private static final String METHOD = "autocomplete";
 
 	/**
-	 * Behavior that will called when the user selects a value from results
-	 */
-	private JQueryAjaxBehavior onSelectBehavior;
-
-	/**
 	 * Behavior that will be called when the user enters an input
 	 */
 	private AutoCompleteBehavior<T> sourceBehavior;
+
+	/**
+	 * Behavior that will called when the user selects a value from results
+	 */
+	private JQueryAjaxBehavior onSelectBehavior;
 
 	private final ITextRenderer<? super T> renderer;
 	private final IConverter<T> converter;
@@ -292,7 +292,7 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 				if (templateBehavior != null)
 				{
 					// warning, the template text should be of the form <a>...</a> in order to work
-					String render = "jQuery(function() { jQuery('%s').data('autocomplete')._renderItem = function( ul, item ) { return jQuery('<li></li>').data('item.autocomplete', item).append(jQuery.tmpl(jQuery('#%s').html(), item)).appendTo(ul); } });";
+					String render = "jQuery(function() { jQuery('%s').data('autocomplete')._renderItem = function( ul, item ) { return jQuery('<li></li>').data('item.autocomplete', item).append(jQuery.tmpl(jQuery('#%s').html(), item)).appendTo(ul) } });";
 					return super.$() + String.format(render, this.selector, templateBehavior.getToken());
 				}
 

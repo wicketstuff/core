@@ -65,7 +65,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 * @param reference a {@link CssResourceReference} or a {@link JavaScriptResourceReference}
 	 * @return true (as specified by Collection.add(E))
 	 */
-	protected boolean add(ResourceReference reference)
+	public boolean add(ResourceReference reference)
 	{
 		return this.references.add(reference);
 	}
@@ -73,7 +73,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	@Override
 	public void renderHead(Component component, IHeaderResponse response)
 	{
-		// Adds jQuery javascript resource reference //
+		// Adds jQuery Core javascript resource reference //
 		if (JQueryLibrarySettings.getJQueryReference() != null)
 		{
 			response.renderJavaScriptReference(JQueryLibrarySettings.getJQueryReference());
@@ -83,6 +83,12 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		if (JQueryLibrarySettings.getJQueryUIReference() != null)
 		{
 			response.renderJavaScriptReference(JQueryLibrarySettings.getJQueryUIReference());
+		}
+
+		// Adds jQuery Globalize javascript resource reference //
+		if (JQueryLibrarySettings.getJQueryGlobalizeReference() != null)
+		{
+			response.renderJavaScriptReference(JQueryLibrarySettings.getJQueryGlobalizeReference());
 		}
 
 		// Adds additional resource references //

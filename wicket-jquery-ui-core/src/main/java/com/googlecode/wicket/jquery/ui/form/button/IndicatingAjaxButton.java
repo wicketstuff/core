@@ -24,7 +24,7 @@ import org.apache.wicket.model.IModel;
 /**
  * Provides a jQuery button based on the built-in AjaxButton, with an ajax indicator the time the {@link #onSubmit()} process.
  * <b>Note</b> Designed for version 6+
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public abstract class IndicatingAjaxButton extends AjaxButton implements IAjaxIndicatorAware
@@ -75,8 +75,8 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IAjaxIn
 		super(id, model, form);
 		this.init();
 	}
-	
-	
+
+
 	/**
 	 * Initialization
 	 */
@@ -84,14 +84,15 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IAjaxIn
 	{
 		this.add(this.indicatorAppender);
 	}
-	
+
 	/**
 	 * @see IAjaxIndicatorAware#getAjaxIndicatorMarkupId()
 	 * @return the markup id of the ajax indicator
-	 * 
+	 *
 	 */
+	@Override
 	public String getAjaxIndicatorMarkupId()
 	{
 		return this.indicatorAppender.getMarkupId();
-	}	
+	}
 }

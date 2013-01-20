@@ -83,7 +83,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.slider.InputSliderPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.slider.OptionSliderPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.slider.RangeSliderPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.tabs.DefaultTabsPage;
-import com.googlecode.wicket.jquery.ui.samples.pages.tabs.WidgetTabsPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.tabs.TabbedPanelPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.wizard.DefaultWizardPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.wizard.DynamicWizardPage;
 
@@ -169,7 +169,7 @@ public class SiteMapPage extends WebPage
 			TemplateComboBoxPage.class,
 			UserDialogPage.class,
 			WidgetSnippetPage.class,
-			WidgetTabsPage.class
+			TabbedPanelPage.class
 			);
 
 	public SiteMapPage()

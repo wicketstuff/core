@@ -23,8 +23,8 @@ public class DefaultTimePickerPage extends AbstractTimePickerPage
 		this.add(form);
 
 		// FeedbackPanel //
-		final FeedbackPanel feedbackPanel = new JQueryFeedbackPanel("feedback");
-		form.add(feedbackPanel.setOutputMarkupId(true));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// TimePicker //
 		Calendar calendar = Calendar.getInstance();
@@ -53,13 +53,13 @@ public class DefaultTimePickerPage extends AbstractTimePickerPage
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 			{
 				this.info(timepicker.getModelObjectAsString());
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 
 			@Override
 			protected void onError(AjaxRequestTarget target, Form<?> form)
 			{
-				target.add(feedbackPanel);
+				target.add(feedback);
 			}
 		});
 	}
