@@ -20,7 +20,6 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
 import com.googlecode.wicket.jquery.ui.settings.JQueryLibrarySettings;
 
-
 /**
  * The resource reference for the jQuery UI javascript library.<br/>
  * To add a jQuery UI resource reference to a component, do not use this reference, but use

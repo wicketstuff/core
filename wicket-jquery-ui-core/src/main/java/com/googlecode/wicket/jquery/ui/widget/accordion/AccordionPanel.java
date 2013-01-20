@@ -53,6 +53,7 @@ public class AccordionPanel extends JQueryPanel
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param tabs the list of {@link ITab}<code>s</code>
 	 */
@@ -63,6 +64,7 @@ public class AccordionPanel extends JQueryPanel
 
 	/**
 	 * Constructor
+	 *
 	 * @param id the markup id
 	 * @param tabs the list of {@link ITab}<code>s</code>
 	 * @param options {@link Options}
@@ -101,10 +103,10 @@ public class AccordionPanel extends JQueryPanel
 		});
 	}
 
-
 	// Properties //
 	/**
 	 * Activates the selected tab
+	 *
 	 * @param index the tab's index to activate
 	 * @return this, for chaining
 	 */
@@ -128,6 +130,7 @@ public class AccordionPanel extends JQueryPanel
 
 	/**
 	 * Gets the model of tab's count
+	 *
 	 * @return the {@link Model}
 	 */
 	private Model<Integer> getCountModel()
@@ -180,7 +183,7 @@ public class AccordionPanel extends JQueryPanel
 
 				if (tab instanceof AjaxTab)
 				{
-					((AjaxTab)tab).load(target);
+					((AjaxTab) tab).load(target);
 				}
 
 				this.onActivate(target, index, tab);
@@ -221,6 +224,7 @@ public class AccordionPanel extends JQueryPanel
 	// Factories //
 	/**
 	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' callback
+	 *
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	private JQueryAjaxBehavior newActivateEventBehavior()
@@ -259,6 +263,7 @@ public class AccordionPanel extends JQueryPanel
 
 		/**
 		 * Constructor
+		 *
 		 * @param target the {@link AjaxRequestTarget}
 		 */
 		public ActivateEvent(AjaxRequestTarget target)
@@ -270,6 +275,7 @@ public class AccordionPanel extends JQueryPanel
 
 		/**
 		 * Gets the tab's index
+		 *
 		 * @return the index
 		 */
 		public int getIndex()

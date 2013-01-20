@@ -94,7 +94,6 @@ public abstract class AjaxTab extends AbstractTab
 	private Component replaceComponent()
 	{
 		return this.panel.getPlaceholderComponent().replaceWith(this.getLazyPanel()); //warning, inner panel is detached here.
-//		return this.panel.replace(this.getLazyPanel()); //warning, inner panel is detached here.
 	}
 
 	/**

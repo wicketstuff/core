@@ -17,18 +17,12 @@ import com.googlecode.wicket.jquery.ui.form.button.Button;
 import com.googlecode.wicket.jquery.ui.form.spinner.Spinner;
 import com.googlecode.wicket.jquery.ui.kendo.dropdown.AjaxDropDownList;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
-import com.googlecode.wicket.jquery.ui.resource.JQueryGlobalizeResourceReference;
 import com.googlecode.wicket.jquery.ui.samples.SampleApplication;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.AbstractKendoPage;
-import com.googlecode.wicket.jquery.ui.settings.JQueryLibrarySettings;
 
 public class OptionSpinnerPage extends AbstractKendoPage
 {
 	private static final long serialVersionUID = 1L;
-
-	static {
-		JQueryLibrarySettings.setJQueryGlobalizeReference(JQueryGlobalizeResourceReference.get());
-	}
 
 	private FeedbackPanel feedback;
 	private CultureSpinner spinner;
