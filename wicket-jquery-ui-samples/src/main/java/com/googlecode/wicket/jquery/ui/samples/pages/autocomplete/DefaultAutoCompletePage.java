@@ -11,6 +11,7 @@ import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
+import com.googlecode.wicket.jquery.ui.widget.tooltip.TooltipBehavior;
 
 public class DefaultAutoCompletePage extends AbstractAutoCompletePage
 {
@@ -68,5 +69,8 @@ public class DefaultAutoCompletePage extends AbstractAutoCompletePage
 				target.add(feedback);
 			}
 		});
+
+		// Tooltip Behavior //
+		this.add(new TooltipBehavior());
 	}
 }
