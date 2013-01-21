@@ -9,4 +9,5 @@
 	<artifactId>wicketstuff-editable-grid</artifactId>
 	<name>Advanced grid components for Apache Wicket</name>
 	<description>Editable grid component for Apache Wicket</description>
+
 </project>

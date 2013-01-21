@@ -30,6 +30,16 @@
 		<module>editable-grid-examples</module>
 	</modules>
 	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>wicketstuff-editable-grid</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
 	<dependencies>
         <dependency>
             <groupId>org.apache.wicket</groupId>
