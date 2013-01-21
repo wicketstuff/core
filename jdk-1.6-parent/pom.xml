@@ -69,6 +69,7 @@
 
 		<module>yui-parent</module>
 		<module>jasperreports-parent</module>
+		<module>editable-grid-parent</module>
 
         <!-- TODO: port these module to wicket 6 -->
 
