@@ -7,7 +7,11 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.wicketstuff.egrid.component.EditableDataTable;
-
+/**
+ * 
+ * @author Nadeem Mohammad
+ *
+ */
 public class EditableGridNavigationToolbar extends AbstractEditableGridToolbar {
 
 	private static final long serialVersionUID = 1L;

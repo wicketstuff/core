@@ -15,7 +15,11 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.wicketstuff.egrid.component.EditableDataTable;
 import org.wicketstuff.egrid.component.EditableDataTable.CssAttributeBehavior;
-
+/**
+ * 
+ * @author Nadeem Mohammad
+ *
+ */
 public class EditableGridHeadersToolbar<T, S> extends AbstractEditableGridToolbar
 {
 

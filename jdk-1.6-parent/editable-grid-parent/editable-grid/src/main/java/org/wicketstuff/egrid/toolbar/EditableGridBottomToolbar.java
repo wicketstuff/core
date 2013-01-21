@@ -20,7 +20,11 @@ import org.wicketstuff.egrid.column.AbstractEditablePropertyColumn;
 import org.wicketstuff.egrid.column.EditableCellPanel;
 import org.wicketstuff.egrid.component.EditableDataTable;
 import org.wicketstuff.egrid.component.EditableGridSubmitLink;
-
+/**
+ * 
+ * @author Nadeem Mohammad
+ *
+ */
 public abstract class EditableGridBottomToolbar<T, S> extends AbstractEditableGridToolbar
 {
 

@@ -2,7 +2,11 @@ package org.wicketstuff.egrid.column;
 
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
-
+/**
+ * 
+ * @author Nadeem Mohammad
+ *
+ */
 public class RequiredEditableTextFieldColumn<T, S> extends EditableTextFieldPropertyColumn<T, S>
 {
 

@@ -15,7 +15,11 @@ import org.wicketstuff.egrid.component.EditableDataTable;
 import org.wicketstuff.egrid.provider.IEditableDataProvider;
 import org.wicketstuff.egrid.toolbar.EditableGridHeadersToolbar;
 import org.wicketstuff.egrid.toolbar.EditableGridNavigationToolbar;
-
+/**
+ * 
+ * @author Nadeem Mohammad
+ *
+ */
 public class EditableGrid<T, S> extends Panel
 {
 

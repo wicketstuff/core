@@ -3,7 +3,11 @@ package org.wicketstuff.egrid.toolbar;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.wicketstuff.egrid.component.EditableDataTable;
-
+/**
+ * 
+ * @author Nadeem Mohammad
+ *
+ */
 public class AbstractEditableGridToolbar extends Panel
 {
 

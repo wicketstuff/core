@@ -1,7 +1,11 @@
 package org.wicketstuff.egrid.model;
 
 import java.io.Serializable;
-
+/**
+ * 
+ * @author Nadeem Mohammad
+ *
+ */
 public class GridOperationData<D> implements Serializable
 {
 

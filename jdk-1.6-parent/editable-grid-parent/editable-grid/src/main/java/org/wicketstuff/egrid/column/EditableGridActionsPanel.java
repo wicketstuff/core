@@ -13,7 +13,11 @@ import org.wicketstuff.egrid.component.EditableDataTable;
 import org.wicketstuff.egrid.component.EditableGridSubmitLink;
 import org.wicketstuff.egrid.model.GridOperationData;
 import org.wicketstuff.egrid.model.OperationType;
-
+/**
+ * 
+ * @author Nadeem Mohammad
+ *
+ */
 public abstract class EditableGridActionsPanel<T> extends Panel
 {
 	public final static MetaDataKey<Boolean> EDITING = new MetaDataKey<Boolean>()
