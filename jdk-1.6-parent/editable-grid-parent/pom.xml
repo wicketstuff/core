@@ -29,4 +29,11 @@
 		<module>editable-grid</module>
 		<module>editable-grid-examples</module>
 	</modules>
+	
+	<dependencies>
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-extensions</artifactId>
+        </dependency>      
+    </dependencies>
 </project>
