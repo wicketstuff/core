@@ -19,7 +19,7 @@ Wicketstuff.ObjectAutoComplete=function(elementId, objectElementId, callbackUrl,
     // Callback method
     function doUpdateChoices(data, textStatus, jqXHR, attrs) {
 
-        console.log("E: " + elementId + " - " + listAllProperties(data));
+        console.log("E: " + elementId + " - " + data);
         // check if the input hasn't been cleared in the meanwhile
       var input = Wicket.DOM.get(elementId);
       if (!cfg.showListOnEmptyInput && (input.value == null || input.value == "")) {
