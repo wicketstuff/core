@@ -14,6 +14,7 @@ public class HTMLAttribute extends BaseHTMLAttribute {
 	public static final String ROWS							= "rows";
 	public static final String SIZE       					= "size";
 	public static final String TITLE						= "title";
+	public static final String STYLE						= "style";
 
 	public HTMLAttribute() {
 		super();
