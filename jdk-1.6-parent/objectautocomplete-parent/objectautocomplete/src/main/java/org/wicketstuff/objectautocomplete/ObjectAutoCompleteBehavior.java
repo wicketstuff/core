@@ -22,6 +22,7 @@ import java.util.Iterator;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AbstractAutoCompleteBehavior;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteSettings;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompleteRenderer;
@@ -41,11 +42,11 @@ import org.apache.wicket.settings.IDebugSettings;
 /**
  * Behaviour for object auto completion using a slightly modified variant of {@see
  * org.apache.wicket.extensions.ajax.markup.html.autocomplete.AbstractAutoCompleteBehavior}
- * 
+ *
  * An (hidden) element is required to store the object id which has been selected.
- * 
+ *
  * The type parameter is the type of the object to be rendered (not it's id)
- * 
+ *
  * @author roland
  * @since May 18, 2008
  */
@@ -109,7 +110,7 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 	 * Temporarily solution until patch from WICKET-1651 is applied. Note, that we avoid a call to
 	 * super to avoid the initialization in the direct parent class, but we have to copy over all
 	 * other code from the parent,
-	 * 
+	 *
 	 * @param response
 	 *            response to write to
 	 */
@@ -120,7 +121,14 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 		initHead(response);
 	}
 
-	@Override
+    @Override
+    protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
+        super.updateAjaxAttributes(attributes);
+        attributes.setWicketAjaxResponse(false);
+        attributes.setDataType("html");
+    }
+
+    @Override
 	protected void onRequest(final String input, RequestCycle requestCycle)
 	{
 		IRequestHandler target = new IRequestHandler()
@@ -180,7 +188,7 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 
 	/**
 	 * Initialize response with our own java script
-	 * 
+	 *
 	 * @param response
 	 *            response to write to
 	 */

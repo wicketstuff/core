@@ -52,7 +52,7 @@ function WicketstuffDropDown(elementId,updateChoicesFunc,updateValueFunc,config)
   // Make this object available in key handlers
   var ddObject = this;
 
-  var obj = Wicket.Ajax.get(elementId);
+  var obj = Wicket.DOM.get(elementId);
 
   objonkeydown = obj.onkeydown;
   objonblur = obj.onblur;
@@ -85,7 +85,7 @@ function WicketstuffDropDown(elementId,updateChoicesFunc,updateValueFunc,config)
   }
 
   obj.onkeydown = function(event) {
-    switch (wicketKeyCode(Wicket.Event.fix(event))) {
+    switch (wicketKeyCode(Wicket.Event.keyCode(event))) {
       case KEY_UP:
         if (selected > -1)selected--;
         if (selected == -1) {
@@ -134,7 +134,7 @@ function WicketstuffDropDown(elementId,updateChoicesFunc,updateValueFunc,config)
   }
 
   obj.onkeyup = function(event) {
-    switch (wicketKeyCode(Wicket.Event.fix(event))) {
+    switch (wicketKeyCode(Wicket.Event.keyCode(event))) {
       case KEY_ENTER:
         return killEvent(event);
       case KEY_UP:
@@ -155,7 +155,7 @@ function WicketstuffDropDown(elementId,updateChoicesFunc,updateValueFunc,config)
   }
 
   obj.onkeypress = function(event) {
-    if (wicketKeyCode(Wicket.Event.fix(event)) == KEY_ENTER) {
+    if (wicketKeyCode(Wicket.Event.keyCode(event)) == KEY_ENTER) {
       if (selected > -1 || hidingAutocomplete == 1) {
         hidingAutocomplete = 0;
         return killEvent(event);
@@ -218,9 +218,9 @@ function WicketstuffDropDown(elementId,updateChoicesFunc,updateValueFunc,config)
   }
 
   this.showDropDown = function() {
-    var position = getPosition(Wicket.Ajax.get(elementId));
+    var position = getPosition(Wicket.DOM.get(elementId));
     var container = getAutocompleteContainer();
-    var input = Wicket.Ajax.get(elementId);
+    var input = Wicket.DOM.get(elementId);
     var index = getOffsetParentZIndex(elementId);
     container.show();
     container.style.zIndex = (!isNaN(Number(index)) ? Number(index) + 1 : index);

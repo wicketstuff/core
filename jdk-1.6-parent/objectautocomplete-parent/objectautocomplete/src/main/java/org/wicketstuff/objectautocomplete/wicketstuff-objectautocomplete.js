@@ -9,36 +9,39 @@ Wicketstuff.ObjectAutoComplete=function(elementId, objectElementId, callbackUrl,
   // ===============================================================================
 
   function updateChoices(dropDown,elementId) {
-    var value = Wicket.Ajax.get(elementId).value;
-    var request = new Wicket.Ajax.Request(
-            callbackUrl + "&q=" + (encodeURIComponent ? encodeURIComponent(value) : escape(value)),
-            doUpdateChoices, false, true, false, "wicket-autocomplete|d");
-    request.get();
+    var value = Wicket.DOM.get(elementId).value;
+//    var request = new Wicket.Ajax.get(
+//            callbackUrl + "&q=" + (encodeURIComponent ? encodeURIComponent(value) : escape(value)),
+//            doUpdateChoices, false, true, false, "wicket-autocomplete|d");
+      var url = callbackUrl + "&q=" + (encodeURIComponent ? encodeURIComponent(value) : escape(value));
+     Wicket.Ajax.get({ 'u': url, 'wr': false, 'fh' : false, 'ch' : "wicket-autocomplete|d", 'sh' : [doUpdateChoices] });
 
     // Callback method
-    function doUpdateChoices(resp) {
-      // check if the input hasn't been cleared in the meanwhile
-      var input = Wicket.Ajax.get(elementId);
+    function doUpdateChoices(data, textStatus, jqXHR, attrs) {
+
+        console.log("E: " + elementId + " - " + listAllProperties(data));
+        // check if the input hasn't been cleared in the meanwhile
+      var input = Wicket.DOM.get(elementId);
       if (!cfg.showListOnEmptyInput && (input.value == null || input.value == "")) {
         dropDown.hideDropDown();
         return;
       }
 
-      dropDown.setSelectablesFromHtml(resp);
+      dropDown.setSelectablesFromHtml(data);
 
       window.setTimeout(function() {
-        var input = Wicket.Ajax.get(elementId);
+        var input = Wicket.DOM.get(elementId);
         if (!cfg.showListOnEmptyInput && (input.value == null || input.value == "")) {
           dropDown.hideDropDown();
         }
       }, 100);
-      Wicket.Ajax.invokePostCallHandlers();
+
     }
   }
 
   function updateValue(dropDown,elementId,selectedElement) {
-    var objElement = Wicket.Ajax.get(objectElementId);
-    var textElement = Wicket.Ajax.get(elementId);
+    var objElement = Wicket.DOM.get(objectElementId);
+    var textElement = Wicket.DOM.get(elementId);
     var selected = dropDown.getSelectedElement();
     var attr = selected.attributes['textvalue'];
     var idAttr = selected.attributes['idvalue'];
