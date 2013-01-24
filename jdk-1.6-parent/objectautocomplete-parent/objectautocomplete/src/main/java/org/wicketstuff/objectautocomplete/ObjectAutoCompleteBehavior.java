@@ -121,12 +121,12 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 		initHead(response);
 	}
 
-    @Override
-    protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
-        super.updateAjaxAttributes(attributes);
-        attributes.setWicketAjaxResponse(false);
-        attributes.setDataType("html");
-    }
+//    @Override
+//    protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
+//        super.updateAjaxAttributes(attributes);
+//        attributes.setWicketAjaxResponse(false);
+//        attributes.setDataType("html");
+//    }
 
     @Override
 	protected void onRequest(final String input, RequestCycle requestCycle)
@@ -217,9 +217,10 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 					"else return true;}";
 			tag.put("onkeypress", keypress);
 
-			final String onblur = "Wicket.Ajax.get({'u': '" + getCallbackUrl() + "&cancel=true' })" +
-				"; return false;";
-			tag.put("onblur", onblur);
+//            somehow leads to the field emptying - no idea why, disabled it works
+//			final String onblur = "Wicket.Ajax.get({'u': '" + getCallbackUrl() + "&cancel=true' })" +
+//				"; return false;";
+//			tag.put("onblur", onblur);
 		}
 	}
 

@@ -285,7 +285,7 @@ public class ObjectAutoCompleteField<O /* object */, I /* its id */extends Seria
 		{
 			target.add(ObjectAutoCompleteField.this);
 			String id = searchTextField.getMarkupId();
-			target.appendJavaScript("wicketGet('" + id + "').focus();" + "wicketGet('" + id +
+			target.appendJavaScript("Wicket.DOM.get('" + id + "').focus();" + "Wicket.DOM.get('" + id +
 				"').select();");
 		}
 	}
