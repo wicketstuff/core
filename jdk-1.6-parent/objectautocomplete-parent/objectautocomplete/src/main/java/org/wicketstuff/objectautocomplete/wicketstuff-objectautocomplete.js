@@ -4,22 +4,24 @@ if (typeof(Wicketstuff) == "undefined") {
 
 Wicketstuff.ObjectAutoComplete=function(elementId, objectElementId, callbackUrl, cfg) {
 
-  return new Wicketstuff.DropDownList(elementId,updateChoices,updateValue,cfg);
+  return new Wicketstuff.DropDownList(elementId, updateChoices, updateValue, cfg);
 
   // ===============================================================================
 
   function updateChoices(dropDown,elementId) {
     var value = Wicket.DOM.get(elementId).value;
-//    var request = new Wicket.Ajax.get(
-//            callbackUrl + "&q=" + (encodeURIComponent ? encodeURIComponent(value) : escape(value)),
-//            doUpdateChoices, false, true, false, "wicket-autocomplete|d");
-      var url = callbackUrl + "&q=" + (encodeURIComponent ? encodeURIComponent(value) : escape(value));
-     Wicket.Ajax.get({ 'u': url, 'wr': false, 'fh' : false, 'ch' : "wicket-autocomplete|d", 'sh' : [doUpdateChoices] });
 
-    // Callback method  , textStatus, jqXHR, attrs
-    function doUpdateChoices(sh, data) {
-        //get the responseText
-      var response = data.responseText;
+    var url = callbackUrl + "&q=" + (encodeURIComponent ? encodeURIComponent(value) : escape(value));
+    Wicket.Ajax.get({
+        u: url,
+        wr: false,
+        dt: 'text',
+        ch : "wicket-autocomplete|d",
+        sh : [doUpdateChoices]
+    });
+
+    function doUpdateChoices(attrs, jqXHR, data, textStatus) {
+
         // check if the input hasn't been cleared in the meanwhile
       var input = Wicket.DOM.get(elementId);
       if (!cfg.showListOnEmptyInput && (input.value == null || input.value == "")) {
@@ -27,7 +29,7 @@ Wicketstuff.ObjectAutoComplete=function(elementId, objectElementId, callbackUrl,
         return;
       }
 
-      dropDown.setSelectablesFromHtml(response);
+      dropDown.setSelectablesFromHtml(data);
 
       window.setTimeout(function() {
         var input = Wicket.DOM.get(elementId);
@@ -39,10 +41,9 @@ Wicketstuff.ObjectAutoComplete=function(elementId, objectElementId, callbackUrl,
     }
   }
 
-  function updateValue(dropDown,elementId,selectedElement) {
+  function updateValue(dropDown, elementId, selected) {
     var objElement = Wicket.DOM.get(objectElementId);
     var textElement = Wicket.DOM.get(elementId);
-    var selected = dropDown.getSelectedElement();
     var attr = selected.attributes['textvalue'];
     var idAttr = selected.attributes['idvalue'];
     var value;
@@ -53,5 +54,6 @@ Wicketstuff.ObjectAutoComplete=function(elementId, objectElementId, callbackUrl,
     }
     objElement.value = idAttr.value;
     textElement.value = value.replace(/<[^>]+>/g,"");
+    jQuery(textElement).trigger('objectchange');
   }
 }

@@ -2,9 +2,9 @@ if (typeof(Wicketstuff) == "undefined") {
 	var Wicketstuff = { };
 }
 
-Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,config) {
+Wicketstuff.DropDownList = function(elementId, updateChoicesFunc, updateValueFunc, config) {
 
-  // member variables, must be set from within the updteChoicesFunc
+  // member variables, must be set from within the updateChoicesFunc
   this.selectables = [];
 
   // ========================================================================
@@ -36,8 +36,6 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
   var objonblur;
   var objonkeyup;
   var objonkeypress;
-  var objonchange;
-  var objonchangeoriginal;
 
   // ========================================================================
 
@@ -70,18 +68,10 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
      };
   }
 
-  // WICKET-1280
-  objonchangeoriginal = obj.onchange;
-  obj.onchange = function(event) {
-    if (mouseactive == 1) return false;
-    if (typeof objonchangeoriginal == "function") objonchangeoriginal(event);
-  }
-  objonchange = obj.onchange;
-
   obj.onblur = function(event) {
     if (mouseactive == 1) {
       Wicket.$(elementId).focus();
-      return killEvent(event);
+      return Wicket.Event.stop(event);
     }
     ddObject.hideDropDown();
     if (typeof objonblur == "function")objonblur();
@@ -96,7 +86,7 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
           } else {
           ddObject.render();
         }
-        if (Wicket.Browser.isSafari())return killEvent(event);
+        if (Wicket.Browser.isSafari())return Wicket.Event.stop(event);
         break;
       case KEY_DOWN:
         if (selected < ddObject.selectables.length - 1) {
@@ -108,18 +98,17 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
           ddObject.render();
           ddObject.showDropDown();
         }
-        if (Wicket.Browser.isSafari())return killEvent(event);
+        if (Wicket.Browser.isSafari())return Wicket.Event.stop(event);
         break;
       case KEY_ESC:
         ddObject.hideDropDown();
-        return killEvent(event);
+        return Wicket.Event.stop(event);
         break;
       case KEY_ENTER:
         if (selected > -1) {
           ddObject.updateValue();
           ddObject.hideDropDown();
           hidingAutocomplete = 1;
-          if (typeof objonchange == "function")objonchange();
         } else if (config.enterHidesWithNoSelection) {
           ddObject.hideDropDown();
           hidingAutocomplete = 1;
@@ -128,7 +117,7 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
         if (typeof objonkeydown == "function")objonkeydown();
 
         if (selected > -1) {
-          //return killEvent(event);
+          //return Wicket.Event.stop(event);
         }
         return true;
         break;
@@ -139,7 +128,7 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
   obj.onkeyup = function(event) {
     switch (Wicket.Event.keyCode(event)) {
       case KEY_ENTER:
-        return killEvent(event);
+        return Wicket.Event.stop(event);
       case KEY_UP:
       case KEY_DOWN:
       case KEY_ESC:
@@ -161,7 +150,7 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
     if (Wicket.Event.keyCode(event) == KEY_ENTER) {
       if (selected > -1 || hidingAutocomplete == 1) {
         hidingAutocomplete = 0;
-        return killEvent(event);
+        return Wicket.Event.stop(event);
       }
     }
     if (typeof objonkeypress == "function") {
@@ -259,7 +248,6 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
     node.onclick = function() {
       mouseactive = 0;
       ddObject.updateValue();
-      if (typeof objonchange == "function") objonchange();
       ddObject.hideDropDown();
     }
   }
@@ -452,24 +440,6 @@ Wicketstuff.DropDownList = function(elementId,updateChoicesFunc,updateValueFunc,
 
   function isVisible(obj) {
     return getStyle(obj, "visibility");
-  }
-
-  function killEvent(event) {
-    if (!event)event = window.event;
-    if (!event)return false;
-    if (event.cancelBubble != null) {
-      event.cancelBubble = true;
-    }
-    if (event.returnValue) {
-      event.returnValue = false;
-    }
-    if (event.stopPropagation) {
-      event.stopPropagation();
-    }
-    if (event.preventDefault) {
-      event.preventDefault();
-    }
-    return false;
   }
 
   function extractSelectables(element) {

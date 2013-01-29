@@ -16,9 +16,6 @@
  */
 package org.wicketstuff.objectautocomplete;
 
-import java.io.Serializable;
-import java.util.Iterator;
-
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -37,7 +34,9 @@ import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.resource.CoreLibrariesContributor;
-import org.apache.wicket.settings.IDebugSettings;
+
+import java.io.Serializable;
+import java.util.Iterator;
 
 /**
  * Behaviour for object auto completion using a slightly modified variant of {@see
@@ -72,7 +71,7 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 	// =====================================================================================================
 	// Specific configuration options:
 
-	// tag name which indicates the possible choices (typically thhis is a "li")
+	// tag name which indicates the possible choices (typically this is a "li")
 	private final String choiceTagName;
 
 	// alignment of menu
@@ -84,7 +83,7 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 	// delay for how long to wait for the update
 	private final long delay;
 
-	// weether search should be triggered on paste event
+	// whether search should be triggered on paste event
 	private final boolean searchOnPaste;
 
 	<I extends Serializable> ObjectAutoCompleteBehavior(Component pObjectElement,
@@ -121,22 +120,20 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 		initHead(response);
 	}
 
-//    @Override
-//    protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
-//        super.updateAjaxAttributes(attributes);
-//        attributes.setWicketAjaxResponse(false);
-//        attributes.setDataType("html");
-//    }
+    @Override
+    protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
+        super.updateAjaxAttributes(attributes);
+        attributes.setWicketAjaxResponse(false);
+        attributes.setDataType("text");
+    }
 
     @Override
 	protected void onRequest(final String input, RequestCycle requestCycle)
 	{
 		IRequestHandler target = new IRequestHandler()
 		{
-
 			public void respond(IRequestCycle requestCycle)
 			{
-
 				WebResponse response = (WebResponse)requestCycle.getResponse();
 
 				// Determine encoding
@@ -170,7 +167,6 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 
 			public void detach(IRequestCycle requestCycle)
 			{
-
 			}
 
 		};
@@ -181,8 +177,6 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 	// in WICKET-1651 gets applied
 	private void abstractDefaultAjaxBehaviour_renderHead(Component component, IHeaderResponse response)
 	{
-		final IDebugSettings debugSettings = Application.get().getDebugSettings();
-
 		CoreLibrariesContributor.contributeAjax(component.getApplication(), response);
 	}
 
@@ -217,9 +211,7 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 					"else return true;}";
 			tag.put("onkeypress", keypress);
 
-//            somehow leads to the field emptying - no idea why, disabled it works
-//			final String onblur = "Wicket.Ajax.get({'u': '" + getCallbackUrl() + "&cancel=true' })" +
-//				"; return false;";
+//			final String onblur = "Wicket.Ajax.get({'u': '" + getCallbackUrl() + "&cancel=true' }); return false;";
 //			tag.put("onblur", onblur);
 		}
 	}
