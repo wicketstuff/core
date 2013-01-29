@@ -31,6 +31,7 @@ import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteBehavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -124,7 +125,6 @@ public class ObjectAutoCompleteField<O /* object */, I /* its id */extends Seria
 		Model<String> searchTextModel = new Model<String>();
 		addSearchTextField(searchTextModel, pBuilder);
 		addReadOnlyPanel(searchTextModel, pBuilder);
-
 		clearInputOnSelection = pBuilder.clearInputOnSelection;
 	}
 
@@ -285,7 +285,7 @@ public class ObjectAutoCompleteField<O /* object */, I /* its id */extends Seria
 		{
 			target.add(ObjectAutoCompleteField.this);
 			String id = searchTextField.getMarkupId();
-			target.appendJavaScript("wicketGet('" + id + "').focus();" + "wicketGet('" + id +
+			target.appendJavaScript("Wicket.DOM.get('" + id + "').focus();" + "Wicket.DOM.get('" + id +
 				"').select();");
 		}
 	}

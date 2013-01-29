@@ -59,7 +59,7 @@ Wicket.AutoComplete = function(elementId, callbackUrl, cfg) {
   var acObject = this;
 
   function initialize() {
-    var obj = wicketGet(elementId);
+    var obj = Wicket.DOM.get(elementId);
 
     objonkeydown = obj.onkeydown;
     objonblur = obj.onblur;
@@ -183,10 +183,10 @@ Wicket.AutoComplete = function(elementId, callbackUrl, cfg) {
       container.id = acObject.getMenuId() + "-container";
 
       container.show = function() {
-        wicketShow(this.id)
+        Wicket.DOM.show(this.id)
       };
       container.hide = function() {
-        wicketHide(this.id)
+         Wicket.DOM.hide(this.id)
       };
 
       choiceDiv = document.createElement("div");
@@ -239,8 +239,8 @@ Wicket.AutoComplete = function(elementId, callbackUrl, cfg) {
     else {
       selected = -1;
     }
-    var value = wicketGet(elementId).value;
-    var request = new Wicket.Ajax.Request(callbackUrl + "&q=" + processValue(value), doUpdateChoices, false, true, false, "wicket-autocomplete|d");
+    var value = Wicket.DOM.get(elementId).value;
+    var request = new Wicket.Ajax.get(callbackUrl + "&q=" + processValue(value), doUpdateChoices, false, true, false, "wicket-autocomplete|d");
     request.get();
   }
 
@@ -249,9 +249,9 @@ Wicket.AutoComplete = function(elementId, callbackUrl, cfg) {
   }
 
   function showAutoComplete() {
-    var position = getPosition(wicketGet(elementId));
+    var position = getPosition(Wicket.DOM.get(elementId));
     var container = getAutocompleteContainer();
-    var input = wicketGet(elementId);
+    var input = Wicket.DOM.get(elementId);
     var index = getOffsetParentZIndex(elementId);
     container.show();
     container.style.zIndex = (!isNaN(Number(index)) ? Number(index) + 1 : index); 
@@ -286,7 +286,7 @@ Wicket.AutoComplete = function(elementId, callbackUrl, cfg) {
   function doUpdateChoices(resp) {
 
     // check if the input hasn't been cleared in the meanwhile
-    var input = wicketGet(elementId);
+    var input = Wicket.DOM.get(elementId);
     if (!cfg.showListOnEmptyInput && (input.value == null || input.value == "")) {
       hideAutoComplete();
       return;
@@ -323,7 +323,6 @@ Wicket.AutoComplete = function(elementId, callbackUrl, cfg) {
     scheduleEmptyCheck();
 
     Wicket.Log.info("Response processed successfully.");
-    Wicket.Ajax.invokePostCallHandlers();
   }
 
   function extractSelectables(element) {
@@ -350,7 +349,7 @@ Wicket.AutoComplete = function(elementId, callbackUrl, cfg) {
 
   function scheduleEmptyCheck() {
     window.setTimeout(function() {
-      var input = wicketGet(elementId);
+      var input = Wicket.DOM.get(elementId);
       if (!cfg.showListOnEmptyInput && (input.value == null || input.value == "")) {
         hideAutoComplete();
       }
@@ -358,7 +357,7 @@ Wicket.AutoComplete = function(elementId, callbackUrl, cfg) {
   }
 
   this.updateValue = function() {
-    var obj = wicketGet(elementId);
+    var obj = Wicket.DOM.get(elementId);
     obj.value = this.getSelectedValue();
   }
 
