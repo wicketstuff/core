@@ -10,7 +10,7 @@ import org.apache.wicket.model.IModel;
  * @author Nadeem Mohammad
  *
  */
-public abstract class AbstractEditablePropertyColumn<T, S> extends PropertyColumn<T, S> implements IEditableGridColumn<T>
+public abstract class AbstractEditablePropertyColumn<T, S> extends PropertyColumn<T, S> implements IEditableGridColumn
 {
 
 	private static final long serialVersionUID 	= 1L;
@@ -36,9 +36,9 @@ public abstract class AbstractEditablePropertyColumn<T, S> extends PropertyColum
 		
 		if (inEditiingMode(rowItem) && isEditable)
 		{
-			EditableCellPanel<T> provider 		= getEditableCellPanel(componentId);
-			FormComponent<T> editorComponent 	= provider.getEditableComponent();
-			editorComponent.setModel((IModel<T>) getDataModel(rowModel));
+			EditableCellPanel provider 			= getEditableCellPanel(componentId);
+			FormComponent<?> editorComponent 	= provider.getEditableComponent();
+			editorComponent.setDefaultModel((IModel<Object>) getDataModel(rowModel));
 			item.add(provider);
 		}
 		else 

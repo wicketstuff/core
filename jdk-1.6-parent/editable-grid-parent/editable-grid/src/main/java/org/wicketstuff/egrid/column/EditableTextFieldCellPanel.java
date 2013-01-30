@@ -8,7 +8,7 @@ import org.apache.wicket.markup.html.form.TextField;
  * @author Nadeem Mohammad
  *
  */
-public class EditableTextFieldCellPanel<T, S> extends EditableCellPanel<T>
+public class EditableTextFieldCellPanel<T, S> extends EditableCellPanel
 {
 
 	private static final long serialVersionUID = 1L;

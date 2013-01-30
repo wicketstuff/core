@@ -144,9 +144,9 @@ public abstract class EditableGridBottomToolbar<T, S> extends AbstractEditableGr
 
 	private Component newCell(AbstractEditablePropertyColumn<T, S> editableGridColumn)
 	{
-		EditableCellPanel<T> panel 			= editableGridColumn.getEditableCellPanel(CELL_ID);
-		FormComponent<T> editorComponent 	= panel.getEditableComponent();
-		editorComponent.setModel(new PropertyModel<T>(newRow , editableGridColumn.getPropertyExpression()));
+		EditableCellPanel panel 			= editableGridColumn.getEditableCellPanel(CELL_ID);
+		FormComponent<?> editorComponent 	= panel.getEditableComponent();
+		editorComponent.setDefaultModel(new PropertyModel<T>(newRow , editableGridColumn.getPropertyExpression()));
 		return panel;
 	}
 

@@ -5,7 +5,7 @@ package org.wicketstuff.egrid.column;
  * @author Nadeem Mohammad
  *
  */
-public interface IEditableGridColumn<T>
+public interface IEditableGridColumn
 {
-	EditableCellPanel<T> getEditableCellPanel(String componentId);
+	EditableCellPanel getEditableCellPanel(String componentId);
 }

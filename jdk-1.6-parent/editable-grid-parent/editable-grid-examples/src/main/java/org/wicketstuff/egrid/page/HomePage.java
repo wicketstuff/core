@@ -70,7 +70,7 @@ public class HomePage extends WebPage
 
 			private static final long serialVersionUID = 1L;
 
-			public EditableCellPanel<Person> getEditableCellPanel(String componentId)
+			public EditableCellPanel getEditableCellPanel(String componentId)
 			{
 				return new EditableRequiredDropDownCellPanel<Person, String>(componentId, this, Arrays.asList("10","11","12","13","14","15"));
 			}

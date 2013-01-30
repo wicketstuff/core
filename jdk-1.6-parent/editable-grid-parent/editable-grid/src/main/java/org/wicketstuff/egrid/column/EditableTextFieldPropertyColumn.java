@@ -24,7 +24,7 @@ public class EditableTextFieldPropertyColumn<T, S> extends AbstractEditablePrope
 	}
 
 	@Override
-	public EditableCellPanel<T> getEditableCellPanel(String componentId)
+	public EditableCellPanel getEditableCellPanel(String componentId)
 	{
 		return new EditableTextFieldCellPanel<T, S>(componentId, this)
 		{

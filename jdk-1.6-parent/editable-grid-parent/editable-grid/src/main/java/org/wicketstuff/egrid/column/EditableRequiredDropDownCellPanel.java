@@ -10,7 +10,7 @@ import org.apache.wicket.markup.html.form.FormComponent;
  * @author Nadeem Mohammad
  *
  */
-public class EditableRequiredDropDownCellPanel<T, S> extends EditableCellPanel<T>
+public class EditableRequiredDropDownCellPanel<T, S> extends EditableCellPanel
 {
 
 	private static final long serialVersionUID = 1L;
@@ -25,10 +25,9 @@ public class EditableRequiredDropDownCellPanel<T, S> extends EditableCellPanel<T
 		add(field);	
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public FormComponent<T> getEditableComponent()
+	public FormComponent<?> getEditableComponent()
 	{
-		return (FormComponent<T>) get("dropdown");
+		return (FormComponent<?>) get("dropdown");
 	}
 }

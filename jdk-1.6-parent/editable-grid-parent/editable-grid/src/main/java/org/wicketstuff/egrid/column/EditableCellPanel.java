@@ -7,11 +7,11 @@ import org.apache.wicket.markup.html.panel.Panel;
  * @author Nadeem Mohammad
  *
  */
-public abstract class EditableCellPanel<T> extends Panel
+public abstract class EditableCellPanel extends Panel
 {
 
 	private static final long serialVersionUID = 1L;
-	public abstract FormComponent<T> getEditableComponent();
+	public abstract FormComponent<?> getEditableComponent();
 
 	public EditableCellPanel(String id)
 	{
