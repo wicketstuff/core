@@ -4,6 +4,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.wicketstuff.examples.gmap.WicketExamplePage;
+import org.wicketstuff.gmap.GMapHeaderContributor;
 
 /**
  * SimplePage for the wicket-contrib-gmap3 project
@@ -13,6 +14,7 @@ public class SimplePage extends WicketExamplePage
 
   public SimplePage()
   {
+    add(new GMapHeaderContributor());
     final MapPanel p = new MapPanel("map");
     p.setVisible(false);
     p.setOutputMarkupId(true);

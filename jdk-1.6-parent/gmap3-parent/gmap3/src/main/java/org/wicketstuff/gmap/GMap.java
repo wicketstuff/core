@@ -146,11 +146,6 @@ public class GMap extends Panel implements GOverlayContainer
     @Override
     public void renderHead(IHeaderResponse response)
     {
-        if (!initialized)
-        {
-            response.render(JavaScriptHeaderItem.forUrl("http://maps.googleapis.com/maps/api/js?sensor=" + sensor + "&callback=initialize"));
-            initialized = true;
-        }
         response.render(OnDomReadyHeaderItem.forScript(getJSinit()));
     }
 
