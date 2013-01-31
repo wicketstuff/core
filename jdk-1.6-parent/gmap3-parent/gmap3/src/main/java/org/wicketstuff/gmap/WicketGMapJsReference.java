@@ -13,7 +13,8 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
  */
 public class WicketGMapJsReference extends JavaScriptResourceReference {
 
-	public static final WicketGMapJsReference INSTANCE = new WicketGMapJsReference();
+  private static final long serialVersionUID = 1L;
+  public static final WicketGMapJsReference INSTANCE = new WicketGMapJsReference();
 
 	/**
 	 * Constructor.

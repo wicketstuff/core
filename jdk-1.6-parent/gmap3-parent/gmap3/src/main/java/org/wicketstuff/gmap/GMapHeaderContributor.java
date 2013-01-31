@@ -1,9 +1,11 @@
 package org.wicketstuff.gmap;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 public class GMapHeaderContributor extends Behavior
 {
@@ -52,8 +54,8 @@ public class GMapHeaderContributor extends Behavior
     public void renderHead(Component component, IHeaderResponse response)
     {
         super.renderHead(component, response);
-        response.render(JavaScriptHeaderItem.forUrl(String.format(GMAP_API_URL, schema, sensor)));
         response.render(JavaScriptHeaderItem.forReference(WicketGMapJsReference.INSTANCE));
+        response.render(JavaScriptHeaderItem.forUrl(String.format(GMAP_API_URL, schema, sensor)));
     }
 
     public String getSensor()

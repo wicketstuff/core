@@ -9,6 +9,7 @@ import org.wicketstuff.gmap.api.GLatLng;
  */
 public class SimplePage extends WicketExamplePage
 {
+  private static final long serialVersionUID = 1L;
 
     public SimplePage()
     {
