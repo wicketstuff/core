@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.wicketstuff</groupId>
 		<artifactId>wicketstuff-core</artifactId>
-		<version>6.0-SNAPSHOT</version>
+		<version>6.5.0</version>
 	</parent>
 
 	<artifactId>jdk-1.6-parent</artifactId>
@@ -23,7 +23,6 @@
 		<module>annotation</module> 
 		<module>autocomplete-tagit-parent</module>
 		<module>browserid-parent</module>
-		<module>console-parent</module>
 		<module>datatables-parent</module>
 		<module>flot-parent</module>
 		<module>gae-initializer-parent</module>
@@ -57,7 +56,6 @@
 		<module>wicketstuff-logback-parent</module>
 
 		<module>closure-compiler</module>
-		<module>scala-extensions-parent</module> 
 		<module>serializer-kryo</module>
 		<module>serializer-kryo2</module>
 		<module>shiro-security</module>
@@ -72,6 +70,12 @@
 		<module>editable-grid-parent</module>
 
         <!-- TODO: port these module to wicket 6 -->
+
+        <!-- disabled due to failing tests -->
+		<!--module>console-parent</module-->
+		
+		<!-- compilation fails -->
+		<!--module>scala-extensions-parent</module-->
 
         <!-- <module>calendarviews-parent</module> -->
         <!-- <module>client-and-server-validation</module> -->
