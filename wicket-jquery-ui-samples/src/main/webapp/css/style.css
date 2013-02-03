@@ -102,6 +102,10 @@ pre {
 	vertical-align: top;	
 }
 
+.float-right {
+	float: right;
+}
+
 /* Overrides jquery-ui */
 .ui-widget {
     font-size: 1.0em !important;
