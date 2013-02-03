@@ -94,14 +94,14 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		// Adds additional resource references //
 		for(ResourceReference reference : this.references)
 		{
-			if (reference instanceof JavaScriptResourceReference)
-			{
-				response.renderJavaScriptReference(reference);
-			}
-
 			if (reference instanceof CssResourceReference)
 			{
 				response.renderCSSReference(reference);
+			}
+
+			if (reference instanceof JavaScriptResourceReference)
+			{
+				response.renderJavaScriptReference(reference);
 			}
 		}
 

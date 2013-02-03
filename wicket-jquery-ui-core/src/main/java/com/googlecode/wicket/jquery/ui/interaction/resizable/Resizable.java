@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.interaction;
+package com.googlecode.wicket.jquery.ui.interaction.resizable;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
@@ -25,10 +25,12 @@ import com.googlecode.wicket.jquery.ui.Options;
 
 /**
  * Provides a jQuery UI resizable {@link JQueryContainer}.<br/>
- * 
+ *
  * @author Sebastien Briquet - sebfz1
+ * @deprecated use {@link ResizablePanel} instead. Will be removed in next version, if you still need to use it, please open a thread in the wicket-jquery-ui forum
  *
  */
+@Deprecated
 public class Resizable extends JQueryContainer /* JQueryPanel? */
 {
 	private static final long serialVersionUID = 1L;
@@ -51,7 +53,7 @@ public class Resizable extends JQueryContainer /* JQueryPanel? */
 	{
 		super(id, model);
 	}
-	
+
 	// Events //
 	/**
 	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
@@ -69,7 +71,7 @@ public class Resizable extends JQueryContainer /* JQueryPanel? */
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
 		return new ResizableBehavior(selector) {
-			
+
 			private static final long serialVersionUID = 1L;
 
 			@Override

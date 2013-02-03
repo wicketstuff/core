@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket - jQuery UI: resizable panel</title>
+	<style type="text/css">
+		.resizable {
+			width: 360px;
+			height: 200px;
+			border: 1px solid #EEEEEE;
+			overflow: hidden;
+			display: inline-block;
+			padding: 12px;
+		}
+	</style>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<div wicket:id="feedback"></div>
+	<br/>
+	<div wicket:id="resizable" class="resizable ui-corner-all"></div>
+</wicket:extend>
+</body>
+</html>

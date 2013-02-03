@@ -23,7 +23,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter.DefaultSplit
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.FontSizePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.datepicker.RangeDatePickerPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.progressbar.ButtonProgressBarPage;
-import com.googlecode.wicket.jquery.ui.samples.pages.resizable.ResizablePage;
+import com.googlecode.wicket.jquery.ui.samples.pages.resizable.DefaultResizablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.selectable.DefaultSelectablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.slider.DefaultSliderPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.spinner.DefaultSpinnerPage;
@@ -68,7 +68,7 @@ public class SampleApplication extends WebApplication
 		// interactions //
 		this.mountPackage("/draggable", DefaultDraggablePage.class);
 		this.mountPackage("/droppable", DefaultDroppablePage.class);
-		this.mountPackage("/resizable", ResizablePage.class);
+		this.mountPackage("/resizable", DefaultResizablePage.class);
 		this.mountPackage("/selectable", DefaultSelectablePage.class);
 
 		// Effects //

@@ -47,7 +47,7 @@ public class AccordionPanel extends JQueryPanel
 	private static final long serialVersionUID = 1L;
 
 	private final List<ITab> tabs;
-	private final Options options;
+
 	private AccordionBehavior widgetBehavior;
 	private JQueryAjaxBehavior activateEventBehavior;
 
@@ -71,11 +71,9 @@ public class AccordionPanel extends JQueryPanel
 	 */
 	public AccordionPanel(String id, List<ITab> tabs, Options options)
 	{
-		super(id);
+		super(id, options);
 
 		this.tabs = tabs;
-		this.options = options;
-
 		this.init();
 	}
 
@@ -125,7 +123,7 @@ public class AccordionPanel extends JQueryPanel
 	 */
 	public void setActiveTab(int index, AjaxRequestTarget target)
 	{
-		this.widgetBehavior.activate(index, target); //sets 'active' option, that fires 'activate' event (best would be that is also fires a 'show' event)
+		this.widgetBehavior.activate(index, target); // sets 'active' option, that fires 'activate' event (best would be that is also fires a 'show' event)
 	}
 
 	/**
@@ -158,8 +156,8 @@ public class AccordionPanel extends JQueryPanel
 	}
 
 	/**
-	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
+	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering cycle has begun, the behavior can modify the
+	 * configuration of the component (i.e. {@link Options})
 	 *
 	 * @param behavior the {@link JQueryBehavior}
 	 */

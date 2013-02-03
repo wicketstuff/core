@@ -94,9 +94,9 @@ public class JQueryLibrarySettings
 		JQueryLibrarySettings.jQueryUIReference = reference;
 	}
 
-	// jQuery UI //
+	// jQuery Globalize //
 	/**
-	 * Gets the JQuery UI backing library resource reference
+	 * Gets the JQuery Globalize backing library resource reference
 	 *
 	 * @return the {@link ResourceReference}
 	 */
@@ -106,7 +106,7 @@ public class JQueryLibrarySettings
 	}
 
 	/**
-	 * Sets the JQuery UI backing library resource reference
+	 * Sets the JQuery Globalize backing library resource reference
 	 *
 	 * @param reference the {@link ResourceReference}, or null
 	 */

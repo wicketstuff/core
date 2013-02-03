@@ -21,7 +21,7 @@ import org.apache.wicket.model.IModel;
 
 /**
  * Base class for a jQuery widget based on a {@link Panel}.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -29,15 +29,28 @@ public abstract class JQueryPanel extends Panel implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
 
+	protected final Options options;
+
 	/**
-	 * Constructor.
+	 * Constructor
 	 * @param id the markup id
 	 */
 	protected JQueryPanel(String id)
 	{
-		super(id);
+		this(id, new Options());
 	}
 
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param options the {@link Options}
+	 */
+	public JQueryPanel(String id, Options options)
+	{
+		super(id);
+
+		this.options = options;
+	}
 	/**
 	 * Constructor
 	 * @param id the markup id
@@ -45,6 +58,19 @@ public abstract class JQueryPanel extends Panel implements IJQueryWidget
 	 */
 	protected JQueryPanel(String id, IModel<?> model)
 	{
+		this(id, model, new Options());
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param options the {@link Options}
+	 */
+	public JQueryPanel(String id, IModel<?> model, Options options)
+	{
 		super(id, model);
+
+		this.options = options;
 	}
 }
