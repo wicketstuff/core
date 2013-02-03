@@ -137,7 +137,9 @@ public class Draggable<T> extends JQueryContainer
 	}
 
 	/**
-	 * Indicates whether the 'stop' event is enabled. If false, the {@link #onDragStop(AjaxRequestTarget)} event will not be triggered.
+	 * Indicates whether the 'stop' event is enabled.<br />
+	 * If true, the {@link #onDragStop(AjaxRequestTarget)} event will be triggered.
+	 *
 	 * @return false by default
 	 */
 	protected boolean isStopEventEnabled()

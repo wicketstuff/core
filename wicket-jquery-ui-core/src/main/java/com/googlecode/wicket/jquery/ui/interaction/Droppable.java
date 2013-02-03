@@ -63,7 +63,7 @@ public abstract class Droppable<T> extends JQueryContainer
 	// Getters / Setters //
 	/**
 	 * Indicates whether the 'over' event is enabled.<br />
-	 * If false, the {@link #onOver(AjaxRequestTarget, Draggable)} event will not be triggered.
+	 * If true, the {@link #onOver(AjaxRequestTarget, Draggable)} event will be triggered.
 	 * @return false by default
 	 */
 	protected boolean isOverEventEnabled()
@@ -73,7 +73,7 @@ public abstract class Droppable<T> extends JQueryContainer
 
 	/**
 	 * Indicates whether the 'exit' (or 'out') event is enabled.<br />
-	 * If false, the {@link #onExit(AjaxRequestTarget, Draggable)} event will not be triggered.
+	 * If true, the {@link #onExit(AjaxRequestTarget, Draggable)} event will be triggered.
 	 * @return false by default
 	 */
 	protected boolean isExitEventEnabled()

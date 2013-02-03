@@ -9,4 +9,5 @@ To get the position back (<code>top</code>, <code>left</code>) in the event call
 The overflow (scrollbars) are controlled with CSS. You may have a look at source code (<code>ResizablePanelPage$MyResizablePanel.html</code>) to see how this sample works.<br/>
 <br/>
 <h4>Since</h4>
-wicket-jquery-ui-core-6.2.1-SNAPSHOT
+wicket-jquery-ui-core-1.4.1
+wicket-jquery-ui-core-6.2.1
