@@ -1,12 +1,11 @@
 package org.wicketstuff.gmap;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-import org.apache.wicket.markup.html.IHeaderContributor;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
-import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 public class GMapHeaderContributor extends Behavior
 {
@@ -16,7 +15,6 @@ public class GMapHeaderContributor extends Behavior
     private static final String GMAP_API_URL = "%s://maps.google.com/maps/api/js?v=3&sensor=%s";
     private static final String HTTP = "http";
     // We have some custom Javascript.
-    private static final ResourceReference WICKET_GMAP_JS = new JavaScriptResourceReference(GMap.class, "wicket-gmap.js");
     private String schema;
     private String sensor = "false";
 
@@ -52,15 +50,12 @@ public class GMapHeaderContributor extends Behavior
         }
     }
 
-    /**
-     * @see org.apache.wicket.markup.html.IHeaderContributor#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
-     */
     @Override
     public void renderHead(Component component, IHeaderResponse response)
     {
         super.renderHead(component, response);
+        response.render(JavaScriptHeaderItem.forReference(WicketGMapJsReference.INSTANCE));
         response.render(JavaScriptHeaderItem.forUrl(String.format(GMAP_API_URL, schema, sensor)));
-        response.render(JavaScriptHeaderItem.forReference(WICKET_GMAP_JS));
     }
 
     public String getSensor()
