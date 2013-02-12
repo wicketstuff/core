@@ -128,7 +128,7 @@ var mouseIn = function(ev, instance) {
 		if (id) {
 			var c = Wicket.$(id);
 			if (c != null && $(e).parents().index($(c))==0 && $(c).parents().index($(e))==0)  {
-				mouseOut.bind(c)(null, instance);
+				Wicket.bind(mouseOut,c)(null, instance);
 			}
 		}
 	}
@@ -165,7 +165,7 @@ var attachPrelight = function(elements, instance) {
 					
 		if (element.imxtPrelightAttached != true && !ignorePrelight(element)) {			
 			if (curPrelight != null && curPrelight[getElementId(element)] != null) {
-				mouseIn.bind(element)(null, instance);
+				Wicket.bind(mouseIn,element)(null, instance);
 			}					
 			addListener(element, "mouseover", mouseIn, instance, false);
 			addListener(element, "mouseout", mouseOut, instance, false);
@@ -215,7 +215,7 @@ InMethod.Drag.prototype = {
 			addListener(document, "mousemove", e.data.onMouseMove, e.data, true);
 			addListener(document, "mouseup", e.data.onMouseUp, e.data, true);	
 			
-			e.data.onDragBegin.bind(e.data.thisRef)(Wicket.$(e.data.elementId), e);
+			Wicket.bind(e.data.onDragBegin,e.data.thisRef)(Wicket.$(e.data.elementId), e);
 		}
 		
 		return false;
@@ -232,7 +232,7 @@ InMethod.Drag.prototype = {
 		var deltaX = e.clientX - e.data.lastMouseX;
 		var deltaY = e.clientY - e.data.lastMouseY;
 				
-		var res = e.data.onDrag.bind(e.data.thisRef)(Wicket.$(e.data.elementId), deltaX, deltaY, e);
+		var res = Wicket.bind(e.data.onDrag,e.data.thisRef)(Wicket.$(e.data.elementId), deltaX, deltaY, e);
 			
 		if (res == null)
 			res = [0, 0];
@@ -251,7 +251,7 @@ InMethod.Drag.prototype = {
 		$(document).off("mousemove", e.data.onMouseMove);
 		$(document).off("mouseup", e.data.onMouseUp);
 		
-		e.data.onDragEnd.bind(e.data.thisRef)(Wicket.$(e.data.elementId), e);
+		Wicket.bind(e.data.onDragEnd,e.data.thisRef)(Wicket.$(e.data.elementId), e);
 		
 		return false;
 	},
@@ -486,9 +486,9 @@ InMethod.XTable.prototype = {
 	 */	
 	getElement: function(tagName, className, root) {
 		var id = this.getCacheId(className);
-		return this.getElementCached(id, function() {
+		return this.getElementCached(id, Wicket.bind(function() {
 			return this.getElements(tagName, className, root)[0];
-		}.bind(this));						
+		},this));						
 	},
 	
 	/**
@@ -496,10 +496,10 @@ InMethod.XTable.prototype = {
 	 */
 	getHeadRows: function() {
 		var id = this.getCacheId("head-first-row");
-		var firstRow = this.getElementCached(id, function() {
+		var firstRow = this.getElementCached(id, Wicket.bind(function() {
 			var head = this.getHeadTable();
 			return head.getElementsByTagName("tr")[0];
-		}.bind(this));
+		},this));
 		
 		return getChildren(firstRow.parentNode, "TR");		
 	},
@@ -509,10 +509,10 @@ InMethod.XTable.prototype = {
 	 */
 	getBodyRows: function() {
 		var id = this.getCacheId("body-first-row");
-		var firstRow = this.getElementCached(id, function() {
+		var firstRow = this.getElementCached(id, Wicket.bind(function() {
 			var body = this.getBodyTable();
 			return body.getElementsByTagName("tr")[0];
-		}.bind(this));
+		},this));
 		
 		return getChildren(firstRow.parentNode, "TR");
 	},
@@ -895,7 +895,7 @@ InMethod.XTable.prototype = {
 		
 		// the prelight has not been updated during dragging, update it now
 		if (Wicket.Browser.isIE()) // flickers otherwise
-			window.setTimeout(this.updatePrelight.bind(this), 100);
+			window.setTimeout(Wicket.bind(this.updatePrelight,this), 100);
 		else
 			this.updatePrelight();
 			
@@ -1316,7 +1316,7 @@ InMethod.XTable.prototype = {
 		
 		var other = ths[i + delta];		
 						
-		var fixSpans = function(cells) {
+		var fixSpans = Wicket.bind(function(cells) {
 			var hide = 0;
 			
 			for (var i = 0; i < cells.length; ++i) {
@@ -1337,10 +1337,10 @@ InMethod.XTable.prototype = {
 				}
 			}
 			
-		}.bind(this);
+		}, this);
 						
 		// helper function that reorders columns in the given rows
-		var updateRows = function(rows, fixSpans) {			
+		var updateRows = Wicket.bind(function(rows, fixSpans) {			
 			for (var j = 0; j < rows.length; ++j) {
 				var row = rows[j];
 				var tds = getChildren(row, ["TD", "TH"]);
@@ -1364,7 +1364,7 @@ InMethod.XTable.prototype = {
 					fixSpans(getChildren(row, ["TD", "TH"]));					
 				}
 			}
-		}.bind(this);
+		}, this);
 		
 		// update rows in both tables
 		updateRows(this.getHeadRows());
@@ -1403,7 +1403,7 @@ InMethod.XTable.prototype = {
 	updatePrelight: function(element) {		
 		if (this.dragging != true) {
 		 		
-		 	var update = function(e) {
+		 	var update = Wicket.bind(function(e) {
 		 		
 		 		var scrollLeft;
 		 		
@@ -1426,7 +1426,7 @@ InMethod.XTable.prototype = {
 					bodyContainer1.scrollLeft = scrollLeft;
 				}
 				
-			}.bind(this);
+			}, this);
 		 	
 		 		
 			if (typeof(element) != "undefined") {				
@@ -1552,7 +1552,7 @@ InMethod.XTableManager.prototype = {
 		if (Wicket.Browser.isIELessThan7()) {
 			interval = 500;
 		}
-		window.setInterval(this.update.bind(this), interval);
+		window.setInterval(Wicket.bind(this.update, this), interval);
 	},
 	
 	update: function() {						
