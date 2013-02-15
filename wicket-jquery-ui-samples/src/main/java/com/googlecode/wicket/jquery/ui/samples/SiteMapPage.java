@@ -61,6 +61,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.kendo.dropdown.DefaultDropD
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.editor.DefaultEditorPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter.BorderLayoutPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter.DefaultSplitterPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.menu.DefaultMenuPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.DefaultSnippetPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.FontSizePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.OptionSnippetPage;
@@ -129,6 +130,7 @@ public class SiteMapPage extends WebPage
 			DefaultDroppablePage.class,
 			DefaultEditorPage.class,
 			DefaultEffectPage.class,
+			DefaultMenuPage.class,
 			DefaultProgressBarPage.class,
 			DefaultSelectablePage.class,
 			DefaultSliderPage.class,
