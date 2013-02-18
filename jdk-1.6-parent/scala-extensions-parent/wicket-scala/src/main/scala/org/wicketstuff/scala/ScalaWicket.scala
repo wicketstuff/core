@@ -1,5 +1,7 @@
 package org.wicketstuff.scala
 
+import scala.language.implicitConversions
+
 /**
  * <p>The "language level" Wicket extensions.</p>
  * 
@@ -25,7 +27,7 @@ trait ScalaWicket {
       // otherwise the ?() function would be further down the stack.
       case e: NullPointerException if e.getStackTrace()(2).getMethodName == "$qmark" ⇒ {null}
       // for any other NullPointerException, or otherwise, re-throw the exception.
-      case e => throw e
+      case e: Exception => throw e
     }
   }
 
@@ -51,7 +53,7 @@ trait ScalaWicket {
   
   /**
    * Automatically converts between Scala Sequences and Java's ArrayList. Used for 
-   * example, when constructing a {@link org.apache.wicket.markup.html.list.ListView}
+   * example, when constructing a org.apache.wicket.markup.html.list.ListView
    * and passing in a Scala List, this function will implicitly convert it to an ArrayList.
    * 
    * @see http://stubbisms.wordpress.com/2009/02/18/fighting-scala-scala-to-java-list-conversion/

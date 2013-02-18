@@ -13,14 +13,11 @@ import org.apache.wicket.model.IModel
  * @author Jan Kriesten
  */
 @SerialVersionUID(1L)
-class Fodel[T](getter: ⇒ T, setter:(T) ⇒ Unit) extends IModel[T] with Serializable {
+class Fodel[T](getter: ⇒ T,
+               setter:(T) ⇒ Unit)
+  extends IModel[T] {
 
   def this(getter: ⇒ T) = this(getter, null)
-
-  /**
-   * Constructs a fodel with only a setter, which also returns the backing object, so can be used as a setter
-   */
-  //def this(setter:(T) => T) = this(null, setter)
 
   /**
    * Executes the embedded getter function #getter, to return the backing object.
@@ -32,14 +29,13 @@ class Fodel[T](getter: ⇒ T, setter:(T) ⇒ Unit) extends IModel[T] with Serial
    *
    * @throws UnsupportedOperationException if the Fodel is read-only ( has no setter functionn).
    */
-  override def setObject(value:T):Unit = {
-    if(setter==null)
+  override def setObject(value: T) {
+    if (setter == null)
       throw new UnsupportedOperationException( "You cannot set the object on a readonly model.")
   	setter(value)
   }
 
   def detach = ()
-
 }
 
 /**
@@ -47,6 +43,13 @@ class Fodel[T](getter: ⇒ T, setter:(T) ⇒ Unit) extends IModel[T] with Serial
  *
  * @author Antony Stubbs
  */
-class FodelString(getter: ⇒ String, setter:(String) ⇒ Unit) extends Fodel[String](getter, setter) {
+class FodelString(getter: ⇒ String,
+                  setter:(String) ⇒ Unit)
+  extends Fodel[String](getter, setter) {
+
   def this(getter: ⇒ String) = this(getter, null)
+}
+
+object FodelString {
+  def apply(getter: ⇒ String) = new FodelString(getter, null)
 }
