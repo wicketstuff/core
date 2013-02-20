@@ -43,7 +43,7 @@
 	</scm>
 
 	<properties>
-		<wicket.version>1.5.9</wicket.version>
+		<wicket.version>1.5.10</wicket.version>
 		<junit.version>4.8.2</junit.version>
 		<jetty.version>7.6.3.v20120416</jetty.version>
 	</properties>
@@ -56,6 +56,12 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+
+		<repository>
+			<id>Apache Nexus Staging</id>
+			<url>https://repository.apache.org/content/repositories/orgapachewicket-274/</url>
+		</repository>
+		
 	</repositories>
 
 	<build>

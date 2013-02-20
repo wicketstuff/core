@@ -21,9 +21,8 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import com.googlecode.wicket.jquery.ui.settings.JQueryLibrarySettings;
 
 /**
- * The resource reference for the jQuery UI javascript library.<br/>
- * To add a jQuery UI resource reference to a component, do not use this reference, but use
- * {@link JQueryLibrarySettings#getJQueryUIReference()} to prevent version conflicts.
+ * The resource reference for the jQuery Globalize javascript library.<br/>
+ * This reference is not added by default. See {@link JQueryLibrarySettings}.
  *
  * @author Sebastien Briquet - sebfz1
  *
@@ -36,7 +35,7 @@ public class JQueryGlobalizeResourceReference extends JavaScriptResourceReferenc
 
 	/**
 	 * Normally you should not use this method, but use
-	 * {@link JQueryLibrarySettings#getJQueryUIReference()} to prevent version conflicts.
+	 * {@link JQueryLibrarySettings#getJQueryGlobalizeReference()} to prevent version conflicts.
 	 *
 	 * @return the single instance of the resource reference
 	 */

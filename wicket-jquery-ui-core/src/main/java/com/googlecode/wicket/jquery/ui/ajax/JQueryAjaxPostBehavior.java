@@ -58,6 +58,7 @@ public abstract class JQueryAjaxPostBehavior extends JQueryAjaxBehavior
 	@Override
 	public CharSequence getCallbackScript()
 	{
+
 		if (this.components.length > 0)
 		{
 			StringBuilder serialize = new StringBuilder();

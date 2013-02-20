@@ -196,9 +196,12 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 	@SuppressWarnings("unchecked")
 	public <C> IConverter<C> getConverter(Class<C> type)
 	{
-		if (type != null && type.isAssignableFrom(this.getType()))
+		if(!String.class.isAssignableFrom(this.getType())) /* TODO: manage String (property)model object in a better way */
 		{
-			return (IConverter<C>) this.converter;
+			if (type != null && type.isAssignableFrom(this.getType()))
+			{
+				return (IConverter<C>) this.converter;
+			}
 		}
 
 		return super.getConverter(type);
