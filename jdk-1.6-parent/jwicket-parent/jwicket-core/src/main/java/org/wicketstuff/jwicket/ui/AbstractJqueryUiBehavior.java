@@ -1,16 +1,13 @@
 package org.wicketstuff.jwicket.ui;
 
-
 import org.wicketstuff.jwicket.JQueryAjaxBehavior;
-import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
-
+import org.wicketstuff.jwicket.JQueryResourceReference;
 
 public abstract class AbstractJqueryUiBehavior extends JQueryAjaxBehavior {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public AbstractJqueryUiBehavior(final JQueryJavascriptResourceReference... requiredLibraries) {
-		super(AbstractJqueryUiEmbeddedBehavior.jQueryUiCoreJs, requiredLibraries);
-	}
-
+    protected AbstractJqueryUiBehavior(final JQueryResourceReference... requiredLibraries) {
+        super(AbstractJqueryUiEmbeddedBehavior.jQueryUiCoreJs, requiredLibraries);
+    }
 }

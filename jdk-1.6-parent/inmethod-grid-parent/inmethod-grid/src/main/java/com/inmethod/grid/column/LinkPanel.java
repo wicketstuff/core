@@ -16,14 +16,25 @@ public abstract class LinkPanel<M, I> extends Panel //implements IRenderable
 {
   private String label;
 
-  /** @see Component#Component(String) */
+  /**
+   * Creates a new LinkPanel
+   * @param id Panel Id
+   * @param Label link display text
+   * @see Component#Component(String)
+   */
   public LinkPanel(String id, String Label)
   {
     super(id);
     label = Label;
   }
 
-  /** @see Component#Component(String, IModel) */
+ /**
+  * Creates a new LinkPanel
+  * @param id Panel Id
+  * @param Label link display text
+  * @param model backing model used by the panel
+  * @see Component#Component(String, IModel)
+  */
   public LinkPanel(String id, String Label, IModel<I> model)
   {
     super(id, model);
@@ -32,31 +43,24 @@ public abstract class LinkPanel<M, I> extends Panel //implements IRenderable
 
   /**
    * Called just before a component is rendered.
-   * <p>
-   * <strong>NOTE</strong>: If you override this, you *must* call
-   * super.onBeforeRender() within
-   * your implementation.
-   *
-   * Because this method is responsible for cascading {@link #onBeforeRender()}
-   * call to its
-   * children it is strongly recommended that super call is made at the end of
-   * the override.
-   * </p>
-   *
-   * @ see Component#callOnBeforeRenderIfNotVisible()
+   * {@inheritDoc}
    */
   @Override
   protected void onBeforeRender()
-  {
-    this.add(new Link<Void>("link")
-                 {
-                    /** Called when a link is clicked. */
-                    @Override
-                    public void onClick()
+  { //TODO: should this be moved to onInitialize()?
+    Link link = new Link<Void>("link")
                     {
-                      LinkPanel.this.onClick();
-                    }
-                 }.add(new Label("label",label)));
+                        /** Called when a link is clicked. */
+                        @Override
+                        public void onClick()
+                        {
+                          LinkPanel.this.onClick();
+                        }
+                    };
+    link.add(new Label("label",label));
+
+    if ( null != get("link") ) { this.replace(link); }
+    else { this.add(link); }
 
     super.onBeforeRender();
   }
@@ -83,5 +87,4 @@ public abstract class LinkPanel<M, I> extends Panel //implements IRenderable
 
   /** override this function to do the actual work when a link is clicked. */
   public abstract void onClick(); // { }
-
 }

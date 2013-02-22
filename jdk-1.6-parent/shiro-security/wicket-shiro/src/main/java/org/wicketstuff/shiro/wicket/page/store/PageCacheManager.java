@@ -16,7 +16,8 @@
  */
 package org.wicketstuff.shiro.wicket.page.store;
 
-import org.apache.wicket.IClusterable;
+
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * continues effort started by Richard Wilkinson (<a

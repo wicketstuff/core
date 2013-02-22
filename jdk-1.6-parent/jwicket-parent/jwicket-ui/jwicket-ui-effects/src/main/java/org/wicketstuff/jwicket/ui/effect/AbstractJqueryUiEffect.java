@@ -1,16 +1,16 @@
 package org.wicketstuff.jwicket.ui.effect;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketstuff.jwicket.JQuery;
-import org.wicketstuff.jwicket.JQuerySpeed;
 import org.wicketstuff.jwicket.JQueryHeaderContributor;
-import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReference;
+import org.wicketstuff.jwicket.JQuerySpeed;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /** This is the base class for all jQuery UI effects. The general usage is
@@ -98,12 +98,12 @@ public abstract class AbstractJqueryUiEffect extends JQueryHeaderContributor  {
 
 	private static long nextId = 0;
 	
-	public static final JQueryJavascriptResourceReference jQueryUiEffectsCoreJs
+	public static final JQueryResourceReference jQueryUiEffectsCoreJs
 		= JQuery.isDebug()
-		? new JQueryJavascriptResourceReference(AbstractJqueryUiEffect.class, "jquery.effects.core.js")
-		: new JQueryJavascriptResourceReference(AbstractJqueryUiEffect.class, "jquery.effects.core.min.js");
+		? new JQueryResourceReference(AbstractJqueryUiEffect.class, "jquery.effects.core.js")
+		: new JQueryResourceReference(AbstractJqueryUiEffect.class, "jquery.effects.core.min.js");
 
-	public AbstractJqueryUiEffect(final JQueryJavascriptResourceReference... requiredLibraries) {
+	public AbstractJqueryUiEffect(final JQueryResourceReference... requiredLibraries) {
 		super(jQueryUiEffectsCoreJs, requiredLibraries);
 	}
 
@@ -384,7 +384,7 @@ public abstract class AbstractJqueryUiEffect extends JQueryHeaderContributor  {
 				else
 					throw new WicketRuntimeException("You must not fire a jQuery effet on a component wich hast not set output markupId to true! Component: " + component);
 
-		target.appendJavascript(jsString.toString());
+		target.appendJavaScript(jsString.toString());
 		//target.getHeaderResponse().renderOnLoadJavascript(jsString.toString());
 	}
 

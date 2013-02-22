@@ -37,9 +37,11 @@
 		<module>jquery-parent</module>
 		<module>jslibraries</module>
 		<module>jsr303-parent</module>
+        <module>jwicket-parent</module>
 		<module>mbeanview-parent</module>
 		<module>minis-parent</module>
 		<module>modalx-parent</module>
+		<module>objectautocomplete-parent</module>
 		<module>openlayers-parent</module>
 		<module>phonebook</module>
 		<module>plugin</module>
@@ -58,25 +60,27 @@
 		<module>scala-extensions-parent</module> 
 		<module>serializer-kryo</module>
 		<module>serializer-kryo2</module>
+		<module>shiro-security</module>
 		<module>wicket-facebook-parent</module>
 		<module>wicket-html5-parent</module>
 		<module>wicket-servlet3-parent</module>
 		<module>wicketstuff-springreference-parent</module>
 		<module>wicket-security-parent</module>
 
+		<module>yui-parent</module>
+		<module>jasperreports-parent</module>
+		<module>editable-grid-parent</module>
 
-		<!-- TODO: port these module to wicket 6 -->
+        <!-- TODO: port these module to wicket 6 -->
 
-		<!-- <module>calendarviews-parent</module> -->
-		<!-- <module>client-and-server-validation</module> -->
+        <!-- <module>calendarviews-parent</module> -->
+        <!-- <module>client-and-server-validation</module> -->
 		<!-- <module>eidogo-parent</module> -->
 		<!-- <module>jasperreports-parent</module> -->
 
 		<!-- <module>theme-parent</module> -->
 		<!-- <module>mootools-meiomask-parent</module> -->
-		<!-- <module>objectautocomplete-parent</module> -->
-
-		<!-- <module>shiro-security</module> -->
+		
 		<!-- <module>yav-parent</module> -->
 		<!-- <module>maven-support</module> -->
 

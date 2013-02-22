@@ -16,19 +16,11 @@
  */
 package org.wicketstuff.objectautocomplete;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebComponent;
@@ -43,9 +35,17 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.IWrapModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.value.IValueMap;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Wicket component for selecting a single object of type T with an identifier of type I via
@@ -124,7 +124,6 @@ public class ObjectAutoCompleteField<O /* object */, I /* its id */extends Seria
 		Model<String> searchTextModel = new Model<String>();
 		addSearchTextField(searchTextModel, pBuilder);
 		addReadOnlyPanel(searchTextModel, pBuilder);
-
 		clearInputOnSelection = pBuilder.clearInputOnSelection;
 	}
 
@@ -285,7 +284,7 @@ public class ObjectAutoCompleteField<O /* object */, I /* its id */extends Seria
 		{
 			target.add(ObjectAutoCompleteField.this);
 			String id = searchTextField.getMarkupId();
-			target.appendJavaScript("wicketGet('" + id + "').focus();" + "wicketGet('" + id +
+			target.appendJavaScript("Wicket.DOM.get('" + id + "').focus();" + "Wicket.DOM.get('" + id +
 				"').select();");
 		}
 	}
@@ -397,7 +396,8 @@ public class ObjectAutoCompleteField<O /* object */, I /* its id */extends Seria
 
 		ObjectUpdateBehavior()
 		{
-			super("onchange");
+            // uses a custom event name to avoid clashes with 'change' event
+			super("objectchange");
 		}
 
 		@Override
@@ -414,13 +414,18 @@ public class ObjectAutoCompleteField<O /* object */, I /* its id */extends Seria
 		}
 
 		@Override
-		protected CharSequence getEventHandler()
+		protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 		{
-			return generateCallbackScript(new AppendingStringBuffer("wicketAjaxPost('").append(
-				getCallbackUrl()).append(
-				"', wicketSerialize(Wicket.$('" + searchTextField.getMarkupId() + "')) + " +
-					"wicketSerialize(Wicket.$('" + objectField.getMarkupId() + "'))"));
+			super.updateAjaxAttributes(attributes);
+
+			attributes.setMethod(AjaxRequestAttributes.Method.POST);
+
+			String searchTextFieldMarkupId = searchTextField.getMarkupId();
+			String objectFieldMarkupId = objectField.getMarkupId();
+			String deps = "return [].concat(Wicket.Form.serializeElement('"+searchTextFieldMarkupId+"')).concat(Wicket.Form.serializeElement('"+objectFieldMarkupId+"'))";
+			attributes.getDynamicExtraParameters().add(deps);
 		}
+
 	}
 
 }

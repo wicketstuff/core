@@ -21,38 +21,36 @@
  * @author Joachim F. Rohde
  */
 // Wicket Namespace
-var Wicket;
-if (!Wicket) {
-    Wicket = {}
-} else if (typeof Wicket != "object") {
+if (typeof(Wicket) === 'undefined') {
+    window.Wicket = {};
+}
+else if (typeof(Wicket) !== "object") {
     throw new Error("Wicket already exists but is not an object");
 }
-
-Wicket.geocoder = new WicketClientGeocoder();
 
 function WicketClientGeocoder() {
 
     this.coder = new google.maps.Geocoder();
 
     this.getLatLng = function(callBack, addressId){
-    
+
         var address = Wicket.$(addressId).value;
-        
+
         this.coder.geocode({
             'address': address
         }, function(results, status){
-        
+
             var params = {};
             if (status == google.maps.GeocoderStatus.OK) {
                 params['address'] = results[0].formatted_address;
                 params['coordinates'] = results[0].geometry.location;
                 params['status'] = status;
             }
-            
+
             for ( var key in params) {
                 callBack = callBack + '&' + key + '=' + params[key];
             }
-            
+
             Wicket.Ajax.ajax({
                 'u':callBack, 
                 'ep': params
@@ -71,7 +69,7 @@ function WicketMap(id) {
     this.overlays = {};
     this.singleInfoWindo = null;
     this.infoWindow = null;
-	
+
 
     this.onEvent = function(callBack, params) {
         params['center'] = this.map.getCenter();
@@ -88,10 +86,10 @@ function WicketMap(id) {
             'ep': params
         });
     }
-	
+
     this.addListener = function(event, callBack) {
         var self = this;
-       
+
         google.maps.event.addListener(this.map, event, function() {
             var params = {};
             for ( var p = 0; p < arguments.length; p++) {
@@ -108,7 +106,7 @@ function WicketMap(id) {
             self.onEvent(callBack, params);
         });
     }
-    
+
 
     this.addOverlayListener = function(overlayID, event) {
         var self = this;
@@ -155,12 +153,12 @@ function WicketMap(id) {
         this.options.scaleControl = enabled;
         this.map.setOptions(this.options);
     }
-	
+
     this.setZoomControlEnabled = function(enabled) {
         this.options.zoomControl = enabled;
         this.map.setOptions(this.options);
     }
-	
+
     this.setMapTypeControlEnabled = function(enabled) {
         this.options.mapTypeControl = enabled;
         this.map.setOptions(this.options);
@@ -195,7 +193,7 @@ function WicketMap(id) {
                 break;
         }
     }
-    
+
     this.setMapType = function(mapType) {
         this.map.setMapTypeId(mapType);
     }
@@ -248,5 +246,8 @@ function WicketMap(id) {
         }
         this.overlays = {};
     }
-
 }
+
+Wicket.Event.add(window, "load", function(event){
+	if(typeof(Wicket.geocoder) === 'undefined') Wicket.geocoder = new WicketClientGeocoder();
+});

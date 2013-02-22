@@ -1,10 +1,10 @@
 package org.wicketstuff.jwicket.ui.dragdrop;
 
 
-import java.io.Serializable;
-
-import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReference;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
+
+import java.io.Serializable;
 
 
 public abstract class AbstractDragDropBehavior extends AbstractJqueryUiEmbeddedBehavior {
@@ -12,7 +12,7 @@ public abstract class AbstractDragDropBehavior extends AbstractJqueryUiEmbeddedB
 	private static final long serialVersionUID = 1L;
 
 
-	public AbstractDragDropBehavior(final JQueryJavascriptResourceReference... requiredLibraries) {
+	public AbstractDragDropBehavior(final JQueryResourceReference... requiredLibraries) {
 		super(requiredLibraries);
 	}
 

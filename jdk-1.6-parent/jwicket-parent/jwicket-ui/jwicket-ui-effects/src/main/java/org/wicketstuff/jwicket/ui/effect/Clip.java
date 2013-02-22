@@ -2,17 +2,17 @@ package org.wicketstuff.jwicket.ui.effect;
 
 
 import org.wicketstuff.jwicket.JQuery;
-import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReference;
 
 
 public class Clip extends AbstractJqueryUiEffect {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavascriptResourceReference jQueryUiEffectsClipJs
+	public static final JQueryResourceReference jQueryUiEffectsClipJs
 		= JQuery.isDebug()
-		? new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.clip.js")
-		: new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.clip.min.js");
+		? new JQueryResourceReference(Blind.class, "jquery.effects.clip.js")
+		: new JQueryResourceReference(Blind.class, "jquery.effects.clip.min.js");
 
 	public Clip() {
 		super(jQueryUiEffectsClipJs);

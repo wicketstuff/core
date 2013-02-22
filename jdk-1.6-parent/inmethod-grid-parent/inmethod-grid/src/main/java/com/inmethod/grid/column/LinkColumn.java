@@ -2,13 +2,15 @@ package com.inmethod.grid.column;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 
 import com.inmethod.grid.IRenderable;
+import com.inmethod.grid.datagrid.DataGrid;
 
 /**
- * Column to display links in the DataGrid
+ * Abstract column to display links in a {@link DataGrid}
  *
  * @author Tom Burton
  */
@@ -16,12 +18,27 @@ public abstract class LinkColumn<M, I, S> extends AbstractColumn<M, I, S>
 {
 	private String propertyLabel;
 
+  /**
+   *  Create a new Link Column
+   * @param columnId column id (must be unique within the grid)
+   * @param propertyLabel Label to display for the Link,
+   *        gotten from the model object itself ala {@link PropertyModel}
+   * @param headerModel model object for the column header
+   */
 	public LinkColumn(String columnId, String propertyLabel, IModel<String> headerModel)
 	{
 		super(columnId, headerModel);
 		this.propertyLabel = propertyLabel;
 	}
 
+  /**
+   * Create a new Link Column
+   * @param columnId column id (must be unique within the grid)
+   * @param propertyLabel Label to display for the Link,
+   *        gotten from the model object itself ala {@link PropertyModel}
+   * @param headerModel model object for the column header
+   * @param sortProperty property to sort the column by
+   */
 	public LinkColumn(String columnId, String propertyLabel, IModel<String> headerModel, S sortProperty)
 	{
 		super(columnId, headerModel, sortProperty);
@@ -57,16 +74,22 @@ public abstract class LinkColumn<M, I, S> extends AbstractColumn<M, I, S>
 				};
 	}
 
+  /** @return row model object property name for the link Text */
 	public String getPropertyLabel()
 	{
 		return propertyLabel;
 	}
 
+  /** @param propertyLabel row model object property name for the link Text */
 	public void setPropertyLabel(String propertyLabel)
 	{
 		this.propertyLabel = propertyLabel;
 	}
 
-	//should this work Like Pagelink instead?
+	/**
+   * Called when a link is clicked.
+   * @see Link#onClick()
+   * @param rowModel Model Object for the DataGridRow being passed to the link
+   */
 	public abstract void onClick(IModel<I> rowModel);
 }

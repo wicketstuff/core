@@ -1,14 +1,14 @@
 package org.wicketstuff.jwicket.ui.accordion;
 
 
-import java.io.Serializable;
-import java.util.List;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.wicketstuff.jwicket.ui.sortable.SortableBehavior;
+
+import java.io.Serializable;
+import java.util.List;
 
 
 public class SimpleSortableAccordion<T extends Serializable> extends AbstractAccordion<T> {

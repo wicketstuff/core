@@ -1,17 +1,17 @@
 package org.wicketstuff.jwicket.ui.effect;
 
 import org.wicketstuff.jwicket.JQuery;
-import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReference;
 
 
 public class Puff extends AbstractJqueryUiEffect {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavascriptResourceReference jQueryUiEffectsPussJs
+	public static final JQueryResourceReference jQueryUiEffectsPussJs
 		= JQuery.isDebug()
-		? new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.scale.js")
-		: new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.scale.min.js");
+		? new JQueryResourceReference(Blind.class, "jquery.effects.scale.js")
+		: new JQueryResourceReference(Blind.class, "jquery.effects.scale.min.js");
 
 	public Puff() {
 		super(jQueryUiEffectsPussJs);

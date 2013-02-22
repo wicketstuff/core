@@ -2,17 +2,17 @@ package org.wicketstuff.jwicket.ui.effect;
 
 
 import org.wicketstuff.jwicket.JQuery;
-import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReference;
 
 
 public class Explode extends AbstractJqueryUiEffect {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavascriptResourceReference jQueryUiEffectsExplodeJs
+	public static final JQueryResourceReference jQueryUiEffectsExplodeJs
 		= JQuery.isDebug()
-		? new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.explode.js")
-		: new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.explode.min.js");
+		? new JQueryResourceReference(Blind.class, "jquery.effects.explode.js")
+		: new JQueryResourceReference(Blind.class, "jquery.effects.explode.min.js");
 
 	public Explode() {
 		super(jQueryUiEffectsExplodeJs);

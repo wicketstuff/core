@@ -2,17 +2,17 @@ package org.wicketstuff.jwicket.ui.effect;
 
 
 import org.wicketstuff.jwicket.JQuery;
-import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReference;
 
 
 public class Shake extends AbstractJqueryUiEffect {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavascriptResourceReference jQueryUiEffectsShakeJs
+	public static final JQueryResourceReference jQueryUiEffectsShakeJs
 		= JQuery.isDebug()
-		? new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.shake.js")
-		: new JQueryJavascriptResourceReference(Blind.class, "jquery.effects.shake.min.js");
+		? new JQueryResourceReference(Blind.class, "jquery.effects.shake.js")
+		: new JQueryResourceReference(Blind.class, "jquery.effects.shake.min.js");
 
 	public Shake() {
 		super(jQueryUiEffectsShakeJs);

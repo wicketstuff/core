@@ -1,8 +1,10 @@
 package com.inmethod.grid;
 
 /** 
- * Interface that defines an Appendable Data Source
- * @author Tom B.
+ * Extends the {@link IDataSource} interface with methods necessary to support
+ * dynamically adding data to the provider
+ *
+ * @author Tom Burton
  */
 public interface IAppendableDataSource<T> extends IDataSource<T>
 {

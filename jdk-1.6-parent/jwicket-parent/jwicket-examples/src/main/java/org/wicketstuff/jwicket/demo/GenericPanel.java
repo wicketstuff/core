@@ -9,11 +9,11 @@ public abstract class GenericPanel<T> extends Panel {
 
 	private static final long serialVersionUID = 1L;
 
-	public GenericPanel(final String id) {
+	protected GenericPanel(final String id) {
 		super(id);
 	}
 
-	public GenericPanel(final String id, final IModel<T> model) {
+	protected GenericPanel(final String id, final IModel<T> model) {
 		super(id, model);
 	}
 

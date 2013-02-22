@@ -15,6 +15,10 @@
  */
 package org.wicketstuff.gmap.api;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.StringTokenizer;
 import org.wicketstuff.gmap.js.Constructor;
 
@@ -80,10 +84,13 @@ public class GLatLng implements GValue
     @Override
     public String getJSconstructor()
     {
-        return new Constructor("google.maps.LatLng").add(Double.valueOf(lat)).add(Double.valueOf(lng)).add(
+      
+        return new Constructor("google.maps.LatLng").add(BigDecimal.valueOf(lat).toString()).add(BigDecimal.valueOf(lng).toString()).add(
                 Boolean.valueOf(unbounded)).toJS();
     }
 
+    
+    
     /**
      * @see java.lang.Object#hashCode()
      */

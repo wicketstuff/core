@@ -13,6 +13,7 @@ import org.apache.wicket.model.IModel;
 import com.inmethod.grid.column.AbstractColumn;
 
 /**
+ * Backing Panel for {@link EditableDateColumn}
  * Panel with a DateTextField that updates the property of the row immediately after
  * user leaves the field.
  * Based on (Read: Copy-Paste Modify) {@link EditablePropertyColumn}

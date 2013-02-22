@@ -1,9 +1,6 @@
 package org.wicketstuff.jwicket;
 
 
-import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
-
-
 /**
  * Sometimes a DOM element should be shown in front of other DOM elements but the
  * z-index CSS property does not work in IE6:
@@ -18,7 +15,7 @@ public class BgIframeBehavior extends JQueryDurableAjaxBehavior {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavascriptResourceReference jQueryBgiframeJs = new JQueryJavascriptResourceReference(JQuery.class, "bgiframe-2.1.3pre.js");
+	public static final JQueryResourceReference jQueryBgiframeJs = new JQueryResourceReference(JQuery.class, "bgiframe-2.1.3pre.js");
 
 	private JsMap options = new JsMap();
 

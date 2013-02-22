@@ -131,6 +131,24 @@
             <param-value>org.wicketstuff.examples.gmap.polygones.PolygonesGMapApplication</param-value>
         </init-param>		
     </filter>
+    
+    <filter>
+        <filter-name>SimpleAjaxGMapApplication</filter-name>
+        <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+        <init-param>
+            <param-name>applicationClassName</param-name>
+           <param-value>org.wicketstuff.examples.gmap.simple.ajax.SimpleGMapApplication</param-value>
+        </init-param>
+    </filter>
+    
+    <filter>
+        <filter-name>AdvancedInfoWindowGMapApplication</filter-name>
+        <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+        <init-param>
+            <param-name>applicationClassName</param-name>
+            <param-value>org.wicketstuff.examples.gmap.info.advanced.AdvancedInfoWindowGMapApplication</param-value>
+        </init-param>
+    </filter>
 
     <filter-mapping>
         <filter-name>GeoCodeGMapApplication</filter-name>
@@ -201,7 +219,17 @@
         <filter-name>PolygonesGMapApplication</filter-name>
         <url-pattern>/polygones/*</url-pattern>
     </filter-mapping>
-
+    
+    <filter-mapping>
+        <filter-name>SimpleAjaxGMapApplication</filter-name>
+        <url-pattern>/simple/ajax/*</url-pattern>
+    </filter-mapping>
+    
+    <filter-mapping>
+        <filter-name>AdvancedInfoWindowGMapApplication</filter-name>
+        <url-pattern>/info/advanced/*</url-pattern>
+    </filter-mapping>
+    
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

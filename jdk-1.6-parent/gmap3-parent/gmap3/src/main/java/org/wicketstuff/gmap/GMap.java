@@ -146,11 +146,6 @@ public class GMap extends Panel implements GOverlayContainer
     @Override
     public void renderHead(IHeaderResponse response)
     {
-        if (!initialized)
-        {
-            response.render(JavaScriptHeaderItem.forUrl("http://maps.googleapis.com/maps/api/js?sensor=" + sensor + "&callback=initialize"));
-            initialized = true;
-        }
         response.render(OnDomReadyHeaderItem.forScript(getJSinit()));
     }
 
@@ -783,14 +778,15 @@ public class GMap extends Panel implements GOverlayContainer
      */
     public void update()
     {
-        final Request request = RequestCycle.get().getRequest();
+      final Request request = RequestCycle.get().getRequest();
 
-        // Attention: don't use setters as this will result in an endless
-        // AJAX request loop
-        bounds = GLatLngBounds.parse(request.getRequestParameters().getParameterValue("bounds").toString());
-        center = GLatLng.parse(request.getRequestParameters().getParameterValue("center").toString());
-        zoom = Integer.parseInt(request.getRequestParameters().getParameterValue("zoom").toString());
-        mapType = GMapType.valueOf(request.getRequestParameters().getParameterValue("currentMapType").toString());
+      // Attention: don't use setters as this will result in an endless
+      // AJAX request loop
+      bounds = GLatLngBounds.parse(request.getRequestParameters().getParameterValue("bounds").toString());
+      center = GLatLng.parse(request.getRequestParameters().getParameterValue("center").toString());
+      zoom = request.getRequestParameters().getParameterValue("zoom").toInt(zoom);
+      String requestMapType = request.getRequestParameters().getParameterValue("currentMapType").toString();
+      mapType = requestMapType != null ? GMapType.valueOf(request.getRequestParameters().getParameterValue("currentMapType").toString()) : mapType;
     }
 
     public void setOverlays(final List<GOverlay> overlays)

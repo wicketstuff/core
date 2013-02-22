@@ -2,8 +2,8 @@ package org.wicketstuff.objectautocomplete;
 
 import java.io.Serializable;
 
+import org.apache.wicket.core.util.lang.PropertyResolver;
 import org.apache.wicket.request.Response;
-import org.apache.wicket.util.lang.PropertyResolver;
 
 /**
  * @author roland
@@ -114,8 +114,7 @@ public class AbstractObjectAutoCompleteRenderer<O> implements Serializable
 	/**
 	 * Render the visual portion of the assist. Usually the html representing the assist choice
 	 * object is written out to the response use
-	 * {@link org.apache.wicket.Response#write(CharSequence)}
-	 * 
+	 *
 	 * @param object
 	 *            current assist choice
 	 * @param response

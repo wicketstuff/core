@@ -56,14 +56,17 @@ public class ResizableElement extends GenericPanel<String>  {
 
 		private static final long serialVersionUID = 1L;
 
-		public void onResize(AjaxRequestTarget target, int top, int left, int width, int height, final SpecialKeys specialKeys) {
+		@Override
+        public void onResize(AjaxRequestTarget target, int top, int left, int width, int height, final SpecialKeys specialKeys) {
 			setModelObject("(" + left + ", " + top + ", " + height + ", " + width + ")");
-			target.addComponent(l);
+			target.add(l);
 		}
 
-		public void onResizeStart(AjaxRequestTarget target, int top, int left, int width, int height, final SpecialKeys specialKeys) {}
+		@Override
+        public void onResizeStart(AjaxRequestTarget target, int top, int left, int width, int height, final SpecialKeys specialKeys) {}
 
-		public void onResized(AjaxRequestTarget target,
+		@Override
+        public void onResized(AjaxRequestTarget target,
 				int top, int left, int width, int height,
 				int originalTop, int originalLeft, int originalWidth, int originalHeight, final SpecialKeys specialKeys) {}
 	}

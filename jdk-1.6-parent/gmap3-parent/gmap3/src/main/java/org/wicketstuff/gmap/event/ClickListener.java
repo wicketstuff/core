@@ -18,9 +18,14 @@
  */
 package org.wicketstuff.gmap.event;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.util.string.StringValueConversionException;
 import org.wicketstuff.gmap.api.GLatLng;
 
 /**
@@ -42,10 +47,21 @@ public abstract class ClickListener extends GEventListenerBehavior
     protected void onEvent(AjaxRequestTarget target)
     {
         Request request = RequestCycle.get().getRequest();
+        NumberFormat fmt = DecimalFormat.getInstance(Locale.US);
         GLatLng latLng = null;
 
-        Double lat = request.getRequestParameters().getParameterValue("lat").toDouble();
-        Double lng = request.getRequestParameters().getParameterValue("lng").toDouble();
+        String latStr = request.getRequestParameters().getParameterValue("lat").toString();
+        String lngStr = request.getRequestParameters().getParameterValue("lng").toString();
+        Double lat = null;
+        Double lng = null;
+        try
+        {
+          lat = fmt.parse(latStr).doubleValue();
+          lng = fmt.parse(lngStr).doubleValue();
+        } catch (ParseException e)
+        {
+          throw new StringValueConversionException("Unable to convert 'lat/lng' to a double value", e);
+        }
         latLng = new GLatLng(lat, lng);
 
         onClick(target, latLng);

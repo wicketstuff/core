@@ -1,13 +1,13 @@
 package org.wicketstuff.menu;
 
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.Model;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -28,7 +28,7 @@ public class Menu implements Serializable {
 	 * Constructs a menu.
 	 *
 	 * @param model The {@link Model} that name of the menu
-	 * @param menuItems A {@code List} of the {@link MenuItem}s that belong to this {@link Menu}.
+	 * @param menuItems A {@code List} of the IMenuLink that belong to this {@link Menu}.
 	 */
 	public Menu(final Model<String> model, final List<IMenuLink> menuItems) {
 		if (model == null) {
@@ -67,9 +67,9 @@ public class Menu implements Serializable {
 
 
 	/**
-	 * Gets the {@link MenuItem}s of this {@link Menu}.
+	 * Gets the {@link IMenuLink}s of this {@link Menu}.
 	 *
-	 * @return All {@link MenuItem}s of this {@link Menu}.
+	 * @return All {@link IMenuLink}s of this {@link Menu}.
 	 */
 	public List<IMenuLink> getMenuItems() {
 		return this.menuItems;
@@ -110,7 +110,7 @@ public class Menu implements Serializable {
 
 	public void redraw(final AjaxRequestTarget target) {
 		if (this.associatedComponent != null) {
-			target.addComponent(this.associatedComponent);
+			target.add(this.associatedComponent);
 		}
 	}
 

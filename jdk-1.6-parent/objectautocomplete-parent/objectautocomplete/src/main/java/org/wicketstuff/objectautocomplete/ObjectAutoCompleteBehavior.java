@@ -16,12 +16,10 @@
  */
 package org.wicketstuff.objectautocomplete;
 
-import java.io.Serializable;
-import java.util.Iterator;
-
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AbstractAutoCompleteBehavior;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteSettings;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompleteRenderer;
@@ -36,16 +34,18 @@ import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.resource.CoreLibrariesContributor;
-import org.apache.wicket.settings.IDebugSettings;
+
+import java.io.Serializable;
+import java.util.Iterator;
 
 /**
  * Behaviour for object auto completion using a slightly modified variant of {@see
  * org.apache.wicket.extensions.ajax.markup.html.autocomplete.AbstractAutoCompleteBehavior}
- * 
+ *
  * An (hidden) element is required to store the object id which has been selected.
- * 
+ *
  * The type parameter is the type of the object to be rendered (not it's id)
- * 
+ *
  * @author roland
  * @since May 18, 2008
  */
@@ -71,7 +71,7 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 	// =====================================================================================================
 	// Specific configuration options:
 
-	// tag name which indicates the possible choices (typically thhis is a "li")
+	// tag name which indicates the possible choices (typically this is a "li")
 	private final String choiceTagName;
 
 	// alignment of menu
@@ -83,7 +83,7 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 	// delay for how long to wait for the update
 	private final long delay;
 
-	// weether search should be triggered on paste event
+	// whether search should be triggered on paste event
 	private final boolean searchOnPaste;
 
 	<I extends Serializable> ObjectAutoCompleteBehavior(Component pObjectElement,
@@ -109,7 +109,7 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 	 * Temporarily solution until patch from WICKET-1651 is applied. Note, that we avoid a call to
 	 * super to avoid the initialization in the direct parent class, but we have to copy over all
 	 * other code from the parent,
-	 * 
+	 *
 	 * @param response
 	 *            response to write to
 	 */
@@ -120,15 +120,20 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 		initHead(response);
 	}
 
-	@Override
+    @Override
+    protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
+        super.updateAjaxAttributes(attributes);
+        attributes.setWicketAjaxResponse(false);
+        attributes.setDataType("text");
+    }
+
+    @Override
 	protected void onRequest(final String input, RequestCycle requestCycle)
 	{
 		IRequestHandler target = new IRequestHandler()
 		{
-
 			public void respond(IRequestCycle requestCycle)
 			{
-
 				WebResponse response = (WebResponse)requestCycle.getResponse();
 
 				// Determine encoding
@@ -162,7 +167,6 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 
 			public void detach(IRequestCycle requestCycle)
 			{
-
 			}
 
 		};
@@ -173,14 +177,12 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 	// in WICKET-1651 gets applied
 	private void abstractDefaultAjaxBehaviour_renderHead(Component component, IHeaderResponse response)
 	{
-		final IDebugSettings debugSettings = Application.get().getDebugSettings();
-
 		CoreLibrariesContributor.contributeAjax(component.getApplication(), response);
 	}
 
 	/**
 	 * Initialize response with our own java script
-	 * 
+	 *
 	 * @param response
 	 *            response to write to
 	 */
@@ -200,16 +202,17 @@ public class ObjectAutoCompleteBehavior<O> extends AbstractAutoCompleteBehavior
 		super.onComponentTag(tag);
 		if (cancelListener != null)
 		{
-			final String keypress = "if (event) { var kc=wicketKeyCode(event); if (kc==27) {" +
-				generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() +
-					"&cancel=true&force=true'") +
-				"; return false;} else if (kc==13) return false; else return true;}";
+			final String keypress =
+					"if (event) { var kc=Wicket.Event.keyCode(event); if (kc==27) {" +
+						"Wicket.Ajax.get({'u': '" + getCallbackUrl() + "&cancel=true&force=true'});" +
+						"return false;" +
+					"} else if (kc==13) " +
+							"return false; " +
+					"else return true;}";
 			tag.put("onkeypress", keypress);
 
-			final String onblur = generateCallbackScript("wicketAjaxGet('" + getCallbackUrl() +
-				"&cancel=true'") +
-				"; return false;";
-			tag.put("onblur", onblur);
+//			final String onblur = "Wicket.Ajax.get({'u': '" + getCallbackUrl() + "&cancel=true' }); return false;";
+//			tag.put("onblur", onblur);
 		}
 	}
 

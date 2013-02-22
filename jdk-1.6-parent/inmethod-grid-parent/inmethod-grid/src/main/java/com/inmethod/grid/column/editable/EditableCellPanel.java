@@ -59,6 +59,7 @@ public abstract class EditableCellPanel<M, I, P, S> extends Panel
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	protected IModel<I> getDefaultRowModel()
 	{
 		return (IModel<I>)getDefaultModel();

@@ -1,31 +1,21 @@
 package org.wicketstuff.jwicket.ui.datepicker;
 
 
-import java.io.Serializable;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Locale;
-
 import org.apache.wicket.Component;
-import org.apache.wicket.Request;
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.Session;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.form.FormComponent;
-import org.wicketstuff.jwicket.IStyleResolver;
-import org.wicketstuff.jwicket.JQuery;
-import org.wicketstuff.jwicket.JQueryCssResourceReference;
-import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
-import org.wicketstuff.jwicket.JQuerySpeed;
-import org.wicketstuff.jwicket.JsMap;
-import org.wicketstuff.jwicket.JsScript;
-import org.wicketstuff.jwicket.SpecialKeys;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.resource.ResourceReference;
+import org.wicketstuff.jwicket.*;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
+
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.util.*;
 
 
 /**
@@ -37,1430 +27,1516 @@ import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
  */
 public class DatePicker extends AbstractJqueryUiEmbeddedBehavior implements IStyleResolver {
 
-	private static final long serialVersionUID = 1L;
-
-	public static final JQueryJavascriptResourceReference uiDatepickerJs
-		= JQuery.isDebug()
-		? new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker.js")
-		: new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker.min.js");
-	public static final JQueryJavascriptResourceReference uiDatepickerJs_de
-		= JQuery.isDebug()
-		? new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker-de.js")
-		:new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker-de.min.js");
-
-	public static final JQueryJavascriptResourceReference datePickerDefaultShowDayState = new JQueryJavascriptResourceReference(DatePicker.class, "datePickerDefaultShowDayState.js");
-
-
-	protected JsMap options = new JsMap();
-
-	public DatePicker() {
-		this(null);
-	}
-
-	public DatePicker(final ResourceReference icon) {
-		super(	SpecialKeys.specialKeysJs, datePickerDefaultShowDayState,
-				uiDatepickerJs
-		);
-		addCssResources(getCssResources());
-
-
-		Locale locale = Session.get().getLocale();
-		if (locale != null) {
-			if (JQuery.isDebug())
-				addUserProvidedResourceReferences(new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker-" + locale.getLanguage() + ".js"));
-			else
-				addUserProvidedResourceReferences(new JQueryJavascriptResourceReference(DatePicker.class, "jquery.ui.datepicker-" + locale.getLanguage() + ".min.js"));
-		}
-
-		if (icon != null)
-			setButtonImage(icon);
-		
-		setRestoreAfterRedraw(true);
-	}
-
-	/**
-	 * Handles the event processing during resizing.
-	 */
-	@Override
-	protected void respond(final AjaxRequestTarget target) {
-		Component component = getComponent();
-		Request request;
-		if (component != null && (request = component.getRequest()) != null) {
-			EventType eventType = EventType.stringToType(request.getParameter(EventType.IDENTIFIER));
-			if (eventType == EventType.ON_SELECT) {
-				String selectedDate = request.getParameter("date");
-				SpecialKeys specialKeys = new SpecialKeys(request);
-				onSelect(target, selectedDate, specialKeys);
-				Locale locale = Session.get().getLocale();
-				DateFormat df;
-				if (locale != null) {
-					df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
-				}
-				else {
-					df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-				}
-
-				Date parsedDate = null;
-				java.sql.Date parsedSqlDate = null;
-				try {
-					parsedDate = df.parse(selectedDate);
-					parsedSqlDate = new java.sql.Date(parsedDate.getTime());
-				} catch (Exception e) {
-					throw new WicketRuntimeException("Error converting '" + selectedDate + "' to a Date object.", e);
-				}
-				if (parsedDate != null) {
-					onSelect(target, parsedDate, specialKeys);
-				}
-				if (parsedSqlDate != null) {
-					onSelect(target, parsedSqlDate, specialKeys);
-				}
-
-				if (component instanceof FormComponent<?>) {
-					((FormComponent<?>)component).inputChanged();
-				}
-			}
-			else if (eventType == EventType.ON_CLOSE) {
-				onClose(target, request.getParameter("date"), new SpecialKeys(request));
-			}
-			else if (eventType == EventType.ON_CHANGE_MONTH_YEAR) {
-				onChangeMonthYear(target, request.getParameter("year"), request.getParameter("month"), new SpecialKeys(request));
-			}
-			else if (eventType == EventType.BEFORE_SHOW) {
-				onBeforeShow(target);
-			}
-		}
-	}
-
-
-	/**	
-	 * Sets the 'buttonImageOnly' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setButtonImageOnly(final boolean value) {
-		if (!value)
-			options.remove("buttonImageOnly");
-		else
-			options.put("buttonImageOnly", value);
-		return this;
-	}
-	public DatePicker setButtonImageOnly(final AjaxRequestTarget target, final boolean value) {
-		setButtonImageOnly(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','buttonImageOnly'," + value + ");");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'autoSize' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setAutoSize(final boolean value) {
-		if (!value)
-			options.remove("autoSize");
-		else
-			options.put("autoSize", value);
-		return this;
-	}
-	public DatePicker setAutoSize(final AjaxRequestTarget target, final boolean value) {
-		setAutoSize(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','autoSize'," + value + ");");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'buttonText' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value The new buttonText or {@code null} to remove this option.
-	 * @return this object
-	 */
-	public DatePicker setButtonText(final String value) {
-		if (value == null)
-			options.remove("buttonText");
-		else
-			options.put("buttonText", value);
-		return this;
-	}
-	public DatePicker setButtonText(final AjaxRequestTarget target, final String value) {
-		setButtonText(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','buttonText','" + value + "');");
-		return this;
-	}
-
-
-	/**	Sets a button image that is displayed near the {@link TextField} for the visual date
-	 *	representation.
-	 */
-	public DatePicker setButtonImage(final String value) {
-		if (value == null || value.trim().length() == 0) {
-			options.remove("buttonImage");
-			options.remove("showOn");
-		}
-		else {
-			options.put("buttonImage", value);
-			options.put("showOn", "button");
-		}
-		return this;
-	}
-	public DatePicker setButtonImage(final AjaxRequestTarget target, final String value) {
-		setButtonImage(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','buttonImage','" + ((value==null)?"":value) + "','showOn','button');");
-		return this;
-	}
-
-
-
-	/**	Sets a button image that is displayed near the {@link TextField} for the visual date
-	 *	representation.
-	 */
-	public DatePicker setButtonImage(final ResourceReference value) {
-		if (value == null) {
-			options.remove("buttonImage");
-			options.remove("showOn");
-		}
-		else {
-			options.put("buttonImage", "resources/" + value.getSharedResourceKey());
-			options.put("showOn", "button");
-		}
-		return this;
-	}
-	public DatePicker setButtonImage(final AjaxRequestTarget target, final ResourceReference value) {
-		setButtonImage(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','buttonImage','" + ((value==null)?"":value.getSharedResourceKey()) + "','showOn','button');");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'changeMonth' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setChangeMonth(final boolean value) {
-		if (!value)
-			options.remove("changeMonth");
-		else
-			options.put("changeMonth", value);
-		return this;
-	}
-	public DatePicker setChangeMonth(final AjaxRequestTarget target, final boolean value) {
-		setChangeMonth(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','changeMonth'," + value + ");");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'changeYear' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setChangeYear(final boolean value) {
-		if (!value)
-			options.remove("changeYear");
-		else
-			options.put("changeYear", value);
-		return this;
-	}
-	public DatePicker setChangeYear(final AjaxRequestTarget target, final boolean value) {
-		setChangeYear(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','changeYear'," + value + ");");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'closeText' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setCloseText(final String value) {
-		if (value == null || value.trim().length() == 0)
-			options.remove("closeText");
-		else
-			options.put("closeText", value);
-		return this;
-	}
-	public DatePicker setCloseText(final AjaxRequestTarget target, final String value) {
-		setCloseText(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','closeText','" + value + "');");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'constraintInput' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setConstraintInput(final boolean value) {
-		if (!value)
-			options.remove("constraintInput");
-		else
-			options.put("constraintInput", value);
-		return this;
-	}
-	public DatePicker setConstraintInput(final AjaxRequestTarget target, final boolean value) {
-		setConstraintInput(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','constraintInput'," + value + ");");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'currentText' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value Text to be dsiplayes on button
-	 * @return this object
-	 */
-	public DatePicker setCurrentText(final String value) {
-		if (value == null || value.trim().length() == 0)
-			options.remove("currentText");
-		else
-			options.put("currentText", value);
-		return this;
-	}
-	public DatePicker setCurrentText(final AjaxRequestTarget target, final String value) {
-		setCurrentText(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','currentText','" + value + "');");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'dateFormat' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value the date format
-	 * @return this object
-	 */
-	public DatePicker setDateFormat(final String value) {
-		if (value == null || value.trim().length() == 0)
-			options.remove("dateFormat");
-		else
-			options.put("dateFormat", value);
-		return this;
-	}
-	public DatePicker setDateFormat(final AjaxRequestTarget target, final String value) {
-		setDateFormat(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','dateFormat','" + value + "');");
-		return this;
-	}
-
-	
-	
-	public DatePicker setDate(final AjaxRequestTarget target, final Date date) {
-		Locale locale = Session.get().getLocale();
-		DateFormat df;
-		if (locale != null)
-			df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
-		else
-			df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('setDate','" + df.format(date) + "');");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'duration' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value duration in ms
-	 * @return this object
-	 */
-	public DatePicker setDuration(final String value) {
-		if (value == null || value.trim().length() == 0)
-			options.remove("duration");
-		else
-			options.put("duration", value);
-		return this;
-	}
-	public DatePicker setDuration(final AjaxRequestTarget target, final String value) {
-		setDuration(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','duration','" + value + "');");
-		return this;
-	}
-
-	public DatePicker setDuration(final int value) {
-		if (value <= 0)
-			options.remove("duration");
-		else
-			options.put("duration", value);
-		return this;
-	}
-	public DatePicker setDuration(final AjaxRequestTarget target, final int value) {
-		setDuration(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','duration'," + value + ");");
-		return this;
-	}
-
-
-
-	/**	
-	 * Sets the 'duration' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value duration
-	 * @return this object
-	 */
-	public DatePicker setDuration(final JQuerySpeed value) {
-		if (value == null)
-			options.remove("duration");
-		else
-			options.put("duration", value.getSpeed());
-		return this;
-	}
-	public DatePicker setDuration(final AjaxRequestTarget target, final JQuerySpeed value) {
-		setDuration(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','duration','" + value.getSpeed() + "');");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'maxDate' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value max date as String
-	 * @return this object
-	 */
-	public DatePicker setMaxDate(final String value) {
-		if (value == null)
-			options.remove("maxDate");
-		else
-			options.put("maxDate", value);
-		return this;
-	}
-	public DatePicker setMaxDate(final AjaxRequestTarget target, final String value) {
-		setMaxDate(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate','" + value + "');");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'maxDate' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value max date as String
-	 * @return this object
-	 */
-	public DatePicker setMaxDate(final Date value) {
-		if (value == null)
-			options.remove("maxDate");
-		else {
-			// to avoid problems with different date formats, we use a JAvaScript Date object instead
-			Locale locale = Session.get().getLocale();
-			Calendar cal;
-			if (locale != null)
-				cal = Calendar.getInstance(locale);
-			else
-				cal = Calendar.getInstance();
-			cal.setTime(value);
-
-			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
-			options.put("maxDate", new JsScript(jsDate));
-		}
-		return this;
-	}
-	public DatePicker setMaxDate(final AjaxRequestTarget target, final Date value) {
-		setMaxDate(value);
-		if (value == null)
-			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate',null);");
-		else {
-			// to avoid problems with different date formats, we use a JAvaScript Date object instead
-			Locale locale = Session.get().getLocale();
-			Calendar cal;
-			if (locale != null)
-				cal = Calendar.getInstance(locale);
-			else
-				cal = Calendar.getInstance();
-			cal.setTime(value);
-
-			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
-			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate'," + jsDate + ");");
-		}
-		return this;
-	}
-
-	public DatePicker setMaxDate(final java.sql.Date value) {
-		if (value == null)
-			options.remove("maxDate");
-		else {
-			// to avoid problems with different date formats, we use a JAvaScript Date object instead
-			Locale locale = Session.get().getLocale();
-			Calendar cal;
-			if (locale != null)
-				cal = Calendar.getInstance(locale);
-			else
-				cal = Calendar.getInstance();
-			cal.setTimeInMillis(value.getTime());
-
-			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
-			options.put("maxDate", new JsScript(jsDate));
-		}
-		return this;
-	}
-	public DatePicker setMaxDate(final AjaxRequestTarget target, final java.sql.Date value) {
-		setMaxDate(value);
-		if (value == null)
-			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate',null);");
-		else {
-			// to avoid problems with different date formats, we use a JAvaScript Date object instead
-			Locale locale = Session.get().getLocale();
-			Calendar cal;
-			if (locale != null)
-				cal = Calendar.getInstance(locale);
-			else
-				cal = Calendar.getInstance();
-			cal.setTimeInMillis(value.getTime());
-
-			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
-			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate'," + jsDate + ");");
-		}
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'minDate' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value min date as String
-	 * @return this object
-	 */
-	public DatePicker setMinDate(final String value) {
-		if (value == null)
-			options.remove("minDate");
-		else
-			options.put("minDate", value);
-		return this;
-	}
-	public DatePicker setMinDate(final AjaxRequestTarget target, final String value) {
-		setMinDate(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate','" + value + "');");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'minDate' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value min date as String
-	 * @return this object
-	 */
-	public DatePicker setMinDate(final Date value) {
-		if (value == null)
-			options.remove("minDate");
-		else {
-			// to avoid problems with different date formats, we use a JAvaScript Date object instead
-			Locale locale = Session.get().getLocale();
-			Calendar cal;
-			if (locale != null)
-				cal = Calendar.getInstance(locale);
-			else
-				cal = Calendar.getInstance();
-			cal.setTime(value);
-
-			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
-
-			options.put("minDate", new JsScript(jsDate));
-		}
-		return this;
-	}
-	public DatePicker setMinDate(final AjaxRequestTarget target, final Date value) {
-		setMinDate(value);
-		if (value == null)
-			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate',null);");
-		else {
-			// to avoid problems with different date formats, we use a JAvaScript Date object instead
-			Locale locale = Session.get().getLocale();
-			Calendar cal;
-			if (locale != null)
-				cal = Calendar.getInstance(locale);
-			else
-				cal = Calendar.getInstance();
-			cal.setTime(value);
-
-			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
-
-			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate'," + jsDate + ");");
-		}
-		return this;
-	}
-
-	public DatePicker setMinDate(final java.sql.Date value) {
-		if (value == null)
-			options.remove("minDate");
-		else {
-			// to avoid problems with different date formats, we use a JAvaScript Date object instead
-			Locale locale = Session.get().getLocale();
-			Calendar cal;
-			if (locale != null)
-				cal = Calendar.getInstance(locale);
-			else
-				cal = Calendar.getInstance();
-			cal.setTimeInMillis(value.getTime());
-
-			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
-
-			options.put("minDate", new JsScript(jsDate));
-		}
-		return this;
-	}
-	public DatePicker setMinDate(final AjaxRequestTarget target, final java.sql.Date value) {
-		setMinDate(value);
-		if (value == null)
-			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate',null);");
-		else {
-			// to avoid problems with different date formats, we use a JAvaScript Date object instead
-			Locale locale = Session.get().getLocale();
-			Calendar cal;
-			if (locale != null)
-				cal = Calendar.getInstance(locale);
-			else
-				cal = Calendar.getInstance();
-			cal.setTimeInMillis(value.getTime());
-
-			String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
-
-			target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate'," + jsDate + ");");
-		}
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'numberOfMonths' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value the number of months to show at one
-	 * @return this object
-	 */
-	public DatePicker setNumberOfMonths(final int value) {
-		if (value == 0)
-			options.remove("numberOfMonths");
-		else
-			options.put("numberOfMonths", value);
-		return this;
-	}
-	public DatePicker setNumberOfMonths(final AjaxRequestTarget target, final int value) {
-		setNumberOfMonths(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','numberOfMonths'," + value + ");");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'numberOfMonths' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value the number of months to show at one
-	 * @return this object
-	 */
-	public DatePicker setNumberOfMonths(final int rows, final int columns) {
-		if (rows == 0 || columns == 0)
-			options.remove("numberOfMonths");
-		else
-			options.put("numberOfMonths", new Object[]{rows,columns});
-		return this;
-	}
-	public DatePicker setNumberOfMonths(final AjaxRequestTarget target, final int rows, final int columns) {
-		setNumberOfMonths(rows, columns);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() +
-				"').datepicker('option','numberOfMonths',[" + rows + "," + columns + "]);");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'selectOtherMonths' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setSelectOtherMonths(final boolean value) {
-		if (!value)
-			options.remove("selectOtherMonths");
-		else
-			options.put("selectOtherMonths", value);
-		return this;
-	}
-	public DatePicker setSelectOtherMonths(final AjaxRequestTarget target, final boolean value) {
-		setSelectOtherMonths(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','selectOtherMonths'," + value + ");");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'showAnim' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setShowAnim(final ShowAnim value) {
-		if (value == null)
-			options.remove("showAnim");
-		else
-			options.put("showAnim", value.getAnimName());
-		return this;
-	}
-	public DatePicker setShowAnim(final AjaxRequestTarget target, final ShowAnim value) {
-		setShowAnim(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','showAnim'," + value.getAnimName() + ");");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'showButtonPanel' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setShowButtonPanel(final boolean value) {
-		if (!value)
-			options.remove("showButtonPanel");
-		else
-			options.put("showButtonPanel", value);
-		return this;
-	}
-	public DatePicker setShowButtonPanel(final AjaxRequestTarget target, final boolean value) {
-		setShowButtonPanel(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','showButtonPanel'," + value + ");");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'showCurrentAtPos' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setShowCurrentAtPos(final boolean value) {
-		if (!value)
-			options.remove("showCurrentAtPos");
-		else
-			options.put("showCurrentAtPos", value);
-		return this;
-	}
-	public DatePicker setShowCurrentAtPos(final AjaxRequestTarget target, final boolean value) {
-		setShowCurrentAtPos(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','showCurrentAtPos'," + value + ");");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'showMonthAfterYear' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setShowMonthAfterYear(final boolean value) {
-		if (!value)
-			options.remove("showMonthAfterYear");
-		else
-			options.put("showMonthAfterYear", value);
-		return this;
-	}
-	public DatePicker setShowMonthAfterYear(final AjaxRequestTarget target, final boolean value) {
-		setShowMonthAfterYear(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','showMonthAfterYear'," + value + ");");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'showOn' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setShowOn(final ShowOnTrigger value) {
-		if (value == null)
-			options.remove("showOn");
-		else
-			options.put("showOn", value);
-		return this;
-	}
-	public DatePicker setShowOn(final AjaxRequestTarget target, final ShowOnTrigger value) {
-		setShowOn(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','showOn','" + value.getTriggerName() + "');");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'showOtherMonths' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setShowOtherMonths(final boolean value) {
-		if (!value)
-			options.remove("showOtherMonths");
-		else
-			options.put("showOtherMonths", value);
-		return this;
-	}
-	public DatePicker setShowOtherMonths(final AjaxRequestTarget target, final boolean value) {
-		setShowOtherMonths(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','showOtherMonths'," + value + ");");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'showWeek' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setShowWeek(final boolean value) {
-		if (!value)
-			options.remove("showWeek");
-		else
-			options.put("showWeek", value);
-		return this;
-	}
-	public DatePicker setShowWeek(final AjaxRequestTarget target, final boolean value) {
-		setShowWeek(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','showWeek'," + value + ");");
-		return this;
-	}
-
-
-	/**	
-	 * Sets the 'stepMonths' property for this DatePicker. Please consult the
-	 * jQuery documentation for a detailed description of this property.
-	 * @param value how many months to move in one step
-	 * @return this object
-	 */
-	public DatePicker setStepMonths(final int value) {
-		if (value <= 0)
-			options.remove("stepMonths");
-		else
-			options.put("stepMonths", value);
-		return this;
-	}
-	public DatePicker setStepMonths(final AjaxRequestTarget target, final int value) {
-		setStepMonths(value);
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','stepMonths'," + value + ");");
-		return this;
-	}
-	
-	
-	
-	private String cssClass = null;
-	
-	/** If you want en individual style for a DatePicker you may set this style with this method.
-	 * The DatePicker the gets sourrounded with a &lt;div class="..."&gt;.
-	 * Normally a DatePicker element looks like
-<pre>
-&lt;div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ....&gt;...&lt;/div&gt;
-</pre>
- 	 * If you set a cssClass the DatePicket looks like
-<pre>
-&lt;div class="cssClass"&gt;&lt;div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ....&gt;...&lt;/div&gt;&lt;/div&gt;
-</pre>
-	 * 
-	 * @param cssClass your custom css class
-	 */
-	public void setCssClass(final String cssClass) {
-		this.cssClass = cssClass;
-	}
-	
-	
-	
-	
-	
-
-	
-
-	
-	
-	
-	
-
-
-
-	
-	
-	
-	
-
-
-	private boolean onSelectNotificationWanted = false;
-	/**
-	 * If set to {@code true}, the callback-Method {@link #onSelect(AjaxRequestTarget, String, SpecialKeys) }
-	 * is called when a date was picked.
-	 * See the jquery-ui documentation for more information
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setWantOnSelectNotification(final boolean value) {
-		onSelectNotificationWanted = value;
-		return this;
-	}
-
-
-
-	private boolean onCloseNotificationWanted = false;
-	/**
-	 * If set to {@code true}, the callback-Method {@link #onClose(AjaxRequestTarget, String, SpecialKeys) }
-	 * is called when a date was picked.
-	 * See the jquery-ui documentation for more information
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setWantOnCloseNotification(final boolean value) {
-		onCloseNotificationWanted = value;
-		return this;
-	}
-
-
-
-	private boolean onChangeMonthYearNotificationWanted = false;
-	/**
-	 * If set to {@code true}, the callback-Method {@link #onChangeMonthYear(AjaxRequestTarget, String, String, SpecialKeys) }
-	 * is called when a date was picked.
-	 * See the jquery-ui documentation for more information
-	 * @param value {@code true} or {@code false}.
-	 * @return this object
-	 */
-	public DatePicker setWantOnChangeMonthYearNotification(final boolean value) {
-		onChangeMonthYearNotificationWanted = value;
-		return this;
-	}
-
-
-
-	private boolean onBeforeShowNotificationWanted = false;
-	/**
-	 * If set to {@code true}, the callback-Method {@link #onBeforeShowDay(AjaxRequestTarget, String)}
-	 * is called before the DatePicker gets displayed.
-	 *
-	 * See the jquery-ui documentation for detailed information
-	 * @return this object
-	 */
-	public DatePicker setWantOnBeforeShowNotificationWanted(final boolean value) {
-		onBeforeShowNotificationWanted = value;
-		return this;
-	}
-
-
-	
-	/*
-	private boolean destroyBeforeRedraw = true;
-	public void setDestroyBeforeRedraw(final boolean value) {
-		this.destroyBeforeRedraw = value;
-	}
-	*/
-
-	@Override
-	protected JsBuilder getJsBuilder() {
-		if (onBeforeShowNotificationWanted)
-			options.put(EventType.BEFORE_SHOW.eventName,
-				new JsFunction("function(dateText,inst) { wicketAjaxGet('" +
-								this.getCallbackUrl() +
-								"&" + EventType.IDENTIFIER + "=" + EventType.BEFORE_SHOW +
-								"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-								");}"));
-		else
-			options.remove(EventType.BEFORE_SHOW.getEventName());
-
-
-		if (onSelectNotificationWanted)
-			options.put(EventType.ON_SELECT.eventName,
-				new JsFunction("function(dateText,inst) { wicketAjaxGet('" +
-								this.getCallbackUrl() +
-								"&date='+dateText" +
-								"+'&" + EventType.IDENTIFIER + "=" + EventType.ON_SELECT +
-								"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-								");}"));
-		else
-			options.remove(EventType.ON_SELECT.getEventName());
-
-
-		if (onCloseNotificationWanted)
-			options.put(EventType.ON_CLOSE.eventName,
-				new JsFunction("function(dateText,inst) { wicketAjaxGet('" +
-								this.getCallbackUrl() +
-								"&date='+dateText" +
-								"+'&" + EventType.IDENTIFIER + "=" + EventType.ON_CLOSE +
-								"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-								");}"));
-		else
-			options.remove(EventType.ON_CLOSE.getEventName());
-
-
-		if (onChangeMonthYearNotificationWanted)
-			options.put(EventType.ON_CHANGE_MONTH_YEAR.eventName,
-				new JsFunction("function(year,month,inst) { wicketAjaxGet('" +
-								this.getCallbackUrl() +
-								"&year='+year" +
-								"+'&month='+month" +
-								"+'&" + EventType.IDENTIFIER + "=" + EventType.ON_CHANGE_MONTH_YEAR +
-								"&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
-								");}"));
-		else
-			options.remove(EventType.ON_CHANGE_MONTH_YEAR.getEventName());
-
-
-		if (showDayStates != null && showDayStates.size() > 0) {
-			options.put(EventType.BEFORE_SHOW_DAY.eventName,
-				new JsFunction(	"function(date) {" +
-								"return " + getCheckFunctionName() + "(date);" +
-								"}"));
-		}
-		else
-			options.remove(EventType.BEFORE_SHOW_DAY.getEventName());
-
-
-		JsBuilder builder = new JsBuilder();
-		
-		
-		/*	It's always the same Ajax pain.
-		 *	- having a tag <input type="text"/>
-		 *	- having a DatePicker attached to this input filed
-		 *	- the DatePicker has a button displayed that triggers the DataPicker
-		 *	- this results in <input type="text" id="someId"/><button type="button" class="ui-datepicker-trigger"><img src=".....calendar22x24.gif" alt="..." title="..."></button>
-		 *	If we redraw the input field in an Ajax call, only the <input> field is redrawed and
-		 *	jQuery places a second button after the input field. The original button is not removed or updated.
-		 *
-		 *	One soution would be to put a <div> around the <input> tag like
-		 *		<div id="someId">
-		 *			<input/><button generated button/>
-		 *		</div>
-		 *	and to redraw the surrounding div insteda of the input tag. But this is not a transparent
-		 *	sulution becaus the user must always take care of this and can not use the DatePicker carelessly.
-		 *
-		 *	Another solution would be to try to remove the button that was generated by jQuery
-		 *	before the DatePicker is re-applies to the input field with a new image.
-		 *	So I try to do this by selecting "#idOfInput+button" to catch the button after
-		 *	the input. This might not work under all circumstances and with all browsers but
-		 *	it seems to work even with IE6.
-		 *
-		 *	The best solution would be to have a unique id for the button but this would mean to modify
-		 *	jQuery's js files.
-		 *
-		 * 	I have created a ticket for this: http://dev.jqueryui.com/ticket/5384
-		 *	Let's see what happens.
-		 */
-		if (isAlreadyRendered())
-			builder.append("jQuery('#" + getComponent().getMarkupId() + "+button').remove();");
-
-		/* Normal processing */
-		builder.append("jQuery('#" + getComponent().getMarkupId() + "').datepicker(");
-		builder.append("{");
-		builder.append(options.toString(rawOptions));
-		builder.append("}");
-		builder.append(")");
-		
-		
-		if (cssClass != null) {
-			builder.append(";jQuery('#ui-datepicker-div').wrap('<div class=\"");
-			builder.append(cssClass);
-			builder.append("\" />')");
-		}
-
-		return builder;
-	}
-
-
-	protected void onBeforeShow(final AjaxRequestTarget target) {}
-
-	/**
-	 * If you have set {@link #setWantOnSelectNotification(boolean)} to {@code true}
-	 * this method is called after the user picked a date in the datepicker.
-	 *
-	 * @param target the AjaxRequestTarget of the resize operation.
-	 * @param pickedDate The selected date as {@code String}
-	 * @param specialKeys the special keys that were pressed when the event occurs
-	 */
-	protected void onSelect(final AjaxRequestTarget target, final String pickedDate, final SpecialKeys specialKeys) {}
-
-	/**
-	 * If you have set {@link #setWantOnSelectNotification(boolean)} to {@code true}
-	 * this method is called after the user picked a date in the datepicker. This method is called after
-	 * {@link #onSelect(AjaxRequestTarget, String, SpecialKeys) was called only if the picked date can be parsed into
-	 * a Java Date object.
-	 *
-	 * @param target the AjaxRequestTarget of the resize operation.
-	 * @param pickedDate The selected date as {@link java.util.Date}
-	 * @param specialKeys the special keys that were pressed when the event occurs
-	 */
-	protected void onSelect(final AjaxRequestTarget target, final java.util.Date pickedDate, final SpecialKeys specialKeys) {}
-
-	/**
-	 * If you have set {@link #setWantOnSelectNotification(boolean)} to {@code true}
-	 * this method is called after the user picked a date in the datepicker. This method is called after
-	 * {@link #onSelect(AjaxRequestTarget, String, SpecialKeys) was called only if the picked date can be parsed into
-	 * a Java Date object.
-	 *
-	 * @param target the AjaxRequestTarget of the resize operation.
-	 * @param pickedDate The selected date as {@link java.util.Date}
-	 * @param specialKeys the special keys that were pressed when the event occurs
-	 */
-	protected void onSelect(final AjaxRequestTarget target, final java.sql.Date pickedDate, final SpecialKeys specialKeys) {}
-
-
-	/**
-	 * If you have set {@link #setWantOnCloseNotification(boolean)} to {@code true}
-	 * this method is called after the datepicker was closed, regardless of picking a date.
-	 *
-	 * @param target the AjaxRequestTarget of the resize operation.
-	 * @param specialKeys the special keys that were pressed when the event occurs
-	 */
-	protected void onClose(final AjaxRequestTarget target, final String pickedDate, final SpecialKeys specialKeys) {}
-
-
-	/**
-	 * If you have set {@link #setWantOnChangeMonthYearNotification(boolean)} to {@code true}
-	 * this method is called after another moth or year is displayed, regardless of picking a date.
-	 *
-	 * @param target the AjaxRequestTarget of the resize operation.
-	 * @param specialKeys the special keys that were pressed when the event occurs
-	 */
-	protected void onChangeMonthYear(final AjaxRequestTarget target, final String year, final String month, final SpecialKeys specialKeys) {}
-
-
-	
-	
-	
-	private Collection<ShowDay> showDayStates = null;
-
-	/** Add one more special treatment for a day. If you don't provide a {@link ShowDay} object for a day it is
-	 *	selectable by default.
-	 *	Use this method if you want a special treatment (selectable, CSS class oder tooltip text)
-	 *	for a day.
-	 *	You may call this method as often as you like. The state is added to the existing list of states.
-	 *	Do not provide different states for one day. The resulting behavior is not defined.
-	 *
-	 *	@param state as specific treatment for one day.
-	 */
-	public void addShowDayState(final ShowDay state) {
-		if (showDayStates == null)
-			showDayStates = new ArrayList<DatePicker.ShowDay>(1);
-		showDayStates.add(state);
-		dayCheckerRendered = false;
-	}
-
-
-	/** Set the special treatments for multiple days at one. This removes all former definitons and
-	 *	replaces them with the new {@code states}.
-	 * 
-	 *	@param states A {@code Collection} of states.
-	 */
-	public void setShowDayStates(final Collection<ShowDay> states) {
-		this.showDayStates = states;
-		dayCheckerRendered = false;
-	}
-
-	
-	
-	/** This Class controls the visibility of a single day rectangle in the DatePicker popup and the
-	 *	ability to select this day and an optional text popup for a single day.
-	 */
-	public static class ShowDay implements Serializable {
-		private static final long serialVersionUID = 1L;
-
-		/** If the day corresponding to parameter {@code day} should be selectable, the parameter {@code selectable} should be set to
-		 *	{@code true}, if not it should be set to {@code false}.
-		 *
-		 *	@param date the day
-		 *	@param selectable {@code true} if the day should be selectable and {@code false} if the day sould net be selectable.
-		 */
-		public ShowDay(final Date date, final boolean selectable) {
-			this(date, selectable, "", "");
-		}
-
-
-		/** If the day corresponding to parameter {@code day} should be selectable, the parameter {@code selectable} should be set to
-		 *	{@code true}, if not it should be set to {@code false}. The CSS class of the day can be controlled
-		 *	with parameter {@code cssClass}.
-		 *
-		 *	@param date the day
-		 *	@param selectable {@code true} if the day should be selectable and {@code false} if the day sould net be selectable.
-		 *	@param cssClass regardless from {@code selectable} state of the day this CSS class is assigned to the day rectangle
-		 */
-		public ShowDay(final Date date, final boolean selectable, final String cssClass) {
-			this(date, selectable, cssClass, "");
-		}
-
-
-		/** If the day corresponding to parameter {@code day} should be selectable, the parameter {@code selectable} should be set to
-		 *	{@code true}, if not it should be set to {@code false}. The CSS class of the day can be controlled
-		 *	with parameter {@code cssClass}.
-		 *
-		 *	@param date the day
-		 *	@param selectable {@code true} if the day should be selectable and {@code false} if the day sould net be selectable.
-		 *	@param cssClass regardless from {@code selectable} state of the day this CSS class is assigned to the day rectangle
-		 *	@param tooltip a tooltip text to be shon wehn the mouse is placed over the given day
-		 */
-		public ShowDay(final Date date, final boolean selectable, final String cssClass, final String tooltip) {
-			setDate(date);
-			setSelectable(selectable);
-			setCssClass(cssClass);
-			setTooltip(tooltip);
-		}
-
-
-		private Date date;
-		public Date getDate() {
-			return this.date;
-		}
-		public void setDate(final Date value) {
-			this.date = value;
-		}
-
-
-		private boolean selectable;
-		public boolean isSelectable() {
-			return this.selectable;
-		}
-		public void setSelectable(final boolean value) {
-			this.selectable = value;
-		}
-
-
-		private String cssClass;
-		public String getCssClass() {
-			return this.cssClass;
-		}
-		public void setCssClass(final String value) {
-			this.cssClass = value;
-		}
-
-
-		private String tooltip;
-		public String getTooltip() {
-			return this.tooltip;
-		}
-		public void setTooltip(final String value) {
-			this.tooltip = value;
-		}
-
-
-		@Override
-		public String toString() {
-			return "ShowDay: selectable=" + isSelectable() + ", CSS class=" + getCssClass() + ", tooltip=" + getTooltip();
-		}
-	}
-
-	
-	private boolean dayCheckerRendered = false;
-
-	@Override
-	public void renderHead(final IHeaderResponse response) {
-		super.renderHead(response);
-		if (showDayStates != null && showDayStates.size() > 0 && ! dayCheckerRendered) {
-			//draggablesAcceptedByDroppable.renderJsDropAcceptFunction(response);
-			dayCheckerRendered = true;
-			
-			Calendar cal = Calendar.getInstance();
-			StringBuilder sb = new StringBuilder();
-			sb.append("var " + getCheckFunctionName()+"days = {");
-			boolean first = true;
-			for (ShowDay day : showDayStates) {
-				if (!first)
-					sb.append(",");
-				else
-					first = false;
-				cal.setTime(day.getDate());
-				
-				// Hash code for day
-				sb.append("'");
-				// Day
-				int numVal = cal.get(Calendar.DAY_OF_MONTH);
-				if (numVal < 10)
-					sb.append("0");
-				sb.append(numVal);
-				// Month
-				numVal = cal.get(Calendar.MONTH)+1;
-				if (numVal < 10)
-					sb.append("0");
-				sb.append(numVal);
-				// Year
-				numVal = cal.get(Calendar.YEAR);
-				if (numVal < 1000)
-					sb.append("0");
-				if (numVal < 100)
-					sb.append("0");
-				if (numVal < 10)
-					sb.append("0");
-				sb.append(numVal);
-				sb.append("':new Array(");
-				sb.append(day.isSelectable()?"true":"false");
-				sb.append(",'");
-				sb.append(day.getCssClass());
-				sb.append("','");
-				sb.append(day.getTooltip());
-				sb.append("')");
-			}
-			sb.append("};\n");
-
-			sb.append("var ");
-			sb.append(getCheckFunctionName());
-			sb.append(" = function(date) {\n");
-			sb.append("   var hash = '';\n");
-			// Day for hash
-			sb.append("   var intVal = date.getDate();\n");
-			sb.append("   if (intVal < 10)\n");
-			sb.append("      hash += '0';\n");
-			sb.append("   hash += intVal;\n");
-			// Month for Hash
-			sb.append("   intVal = date.getMonth()+1;\n");
-			sb.append("   if (intVal < 10)\n");
-			sb.append("      hash += '0';\n");
-			sb.append("   hash += intVal;\n");
-			// Year
-			sb.append("   intVal = date.getFullYear();\n");
-			sb.append("   if (intVal < 1000)\n");
-			sb.append("      hash += '0';\n");
-			sb.append("   if (intVal < 100)\n");
-			sb.append("      hash += '0';\n");
-			sb.append("   if (intVal < 10)\n");
-			sb.append("      hash += '0';\n");
-			sb.append("   hash += intVal;\n");
-			// retrieve the day from array
-			sb.append("   var found = ");
-			sb.append(getCheckFunctionName());
-			sb.append("days[hash];\n");
-			sb.append("   if (found != null)\n");
-			sb.append("      return found;\n");
-			sb.append("   else\n");
-			sb.append("      return datePickerDefaultShowDayState;\n");
-			sb.append("};");
-
-			response.renderJavascript(sb.toString(), getCheckFunctionName()+"ID");
-		}
-	}
-
-
-	private String getCheckFunctionName() {
-		return "jWicketCheckBeforeShowDayFor" + getComponent().getMarkupId();
-	}
-
-
-
-
-
-
-
-	/**
-	 * Disable the datepicker
-	 *
-	 * @param target An AjaxRequestTarget
-	 */
-	public void disable(final AjaxRequestTarget target) {
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker( 'disable' );");
-		target.addComponent(getComponent());
-	}
-
-
-	/**
-	 * Enable the datepicker
-	 *
-	 * @param target An AjaxRequestTarget
-	 */
-	public void enable(final AjaxRequestTarget target) {
-		target.appendJavascript("jQuery('#" + getComponent().getMarkupId() + "').datepicker( 'enable' );");
-		target.appendJavascript(getJsBuilder().toString());
-	}
-
-
-
-	
-	private enum EventType implements Serializable {
-
-		UNKNOWN("*"),
-		BEFORE_SHOW("beforeShow"),
-		BEFORE_SHOW_DAY("beforeShowDay"),
-		ON_CHANGE_MONTH_YEAR("onChangeMonthYear"),
-		ON_CLOSE("onClose"),
-		ON_SELECT("onSelect")
-		;
-
-		public static final String IDENTIFIER="wicketDatepickerEvent";
-
-		private final String eventName;
-		
-		private EventType(final String eventName) {
-			this.eventName = eventName;
-		}
-		
-		public String getEventName() {
-			return this.eventName;
-		}
-		
-		public static EventType stringToType(final String s) {
-			for (EventType t : EventType.values())
-				if (t.getEventName().equals(s))
-					return t;
-			return UNKNOWN;
-		}
-		
-		public String toString() {
-			return this.eventName;
-		}
-	}
-
-	
-	
-	public enum ShowAnim implements Serializable {
-		SHOW("show"),
-		SLIDE_DOWN("slideSown"),
-		FADE_IN("fadeIn");
-
-		private final String animName;
-		
-		private ShowAnim(final String animName) {
-			this.animName = animName;
-		}
-		
-		public String getAnimName() {
-			return this.animName;
-		}
-		
-		public String toString() {
-			return this.animName;
-		}
-	}
-
-
-
-	public enum ShowOnTrigger implements Serializable {
-		FOCUS("focus"),
-		BUTTON("button"),
-		BOTH("both");
-
-		private final String triggerName;
-		
-		private ShowOnTrigger(final String triggerName) {
-			this.triggerName = triggerName;
-		}
-		
-		public String getTriggerName() {
-			return this.triggerName;
-		}
-		
-		public String toString() {
-			return this.triggerName;
-		}
-	}
-
-
-
-	@Override
-	public JQueryCssResourceReference[] getCssResources() {
-		return new JQueryCssResourceReference[] {
-			AbstractJqueryUiEmbeddedBehavior.jQueryUiBaseCss,
-			AbstractJqueryUiEmbeddedBehavior.jQueryUiThemeCss
-		};
-	}
+    private static final long serialVersionUID = 1L;
+
+    public static final JQueryResourceReference uiDatepickerJs
+            = JQuery.isDebug()
+            ? new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker.js")
+            : new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker.min.js");
+    public static final JQueryResourceReference uiDatepickerJs_de
+            = JQuery.isDebug()
+            ? new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker-de.js")
+            : new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker-de.min.js");
+
+    public static final JQueryResourceReference datePickerDefaultShowDayState = new JQueryResourceReference(DatePicker.class, "datePickerDefaultShowDayState.js");
+
+
+    protected JsMap options = new JsMap();
+
+    public DatePicker() {
+        this(null);
+    }
+
+    public DatePicker(final ResourceReference icon) {
+        super(SpecialKeys.specialKeysJs, datePickerDefaultShowDayState,
+                uiDatepickerJs
+        );
+        addCssResources(getCssResources());
+
+
+        Locale locale = Session.get().getLocale();
+        if (locale != null) {
+            if (JQuery.isDebug()) {
+                addUserProvidedResourceReferences(new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker-" + locale.getLanguage() + ".js"));
+            } else {
+                addUserProvidedResourceReferences(new JQueryResourceReference(DatePicker.class, "jquery.ui.datepicker-" + locale.getLanguage() + ".min.js"));
+            }
+        }
+
+        if (icon != null) {
+            setButtonImage(icon);
+        }
+
+        setRestoreAfterRedraw(true);
+    }
+
+    /**
+     * Handles the event processing during resizing.
+     */
+    @Override
+    protected void respond(final AjaxRequestTarget target) {
+        Component component = getComponent();
+        Request request;
+        if (component != null && (request = component.getRequest()) != null) {
+            EventType eventType = EventType.stringToType(request.getRequestParameters().getParameterValue(EventType.IDENTIFIER).toString());
+            if (eventType == EventType.ON_SELECT) {
+                String selectedDate = request.getRequestParameters().getParameterValue("date").toString();
+                SpecialKeys specialKeys = new SpecialKeys(request);
+                onSelect(target, selectedDate, specialKeys);
+                Locale locale = Session.get().getLocale();
+                DateFormat df;
+                if (locale != null) {
+                    df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+                } else {
+                    df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+                }
+
+                Date parsedDate = null;
+                java.sql.Date parsedSqlDate = null;
+                try {
+                    parsedDate = df.parse(selectedDate);
+                    parsedSqlDate = new java.sql.Date(parsedDate.getTime());
+                } catch (Exception e) {
+                    throw new WicketRuntimeException("Error converting '" + selectedDate + "' to a Date object.", e);
+                }
+                onSelect(target, parsedDate, specialKeys);
+                onSelect(target, parsedSqlDate, specialKeys);
+
+                if (component instanceof FormComponent<?>) {
+                    ((FormComponent<?>) component).inputChanged();
+                }
+            } else if (eventType == EventType.ON_CLOSE) {
+                onClose(target, request.getRequestParameters().getParameterValue("date").toString(), new SpecialKeys(request));
+            } else if (eventType == EventType.ON_CHANGE_MONTH_YEAR) {
+                onChangeMonthYear(target, request.getRequestParameters().getParameterValue("year").toString(), request.getRequestParameters().getParameterValue("month").toString(), new SpecialKeys(request));
+            } else if (eventType == EventType.BEFORE_SHOW) {
+                onBeforeShow(target);
+            }
+        }
+    }
+
+
+    /**
+     * Sets the 'buttonImageOnly' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value {@code true} or {@code false}.
+     * @return this object
+     */
+    public DatePicker setButtonImageOnly(final boolean value) {
+        if (!value) {
+            this.options.remove("buttonImageOnly");
+        } else {
+            this.options.put("buttonImageOnly", value);
+        }
+        return this;
+    }
+
+    public DatePicker setButtonImageOnly(final AjaxRequestTarget target, final boolean value) {
+        setButtonImageOnly(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','buttonImageOnly'," + value + ");");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'autoSize' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value {@code true} or {@code false}.
+     * @return this object
+     */
+    public DatePicker setAutoSize(final boolean value) {
+        if (!value) {
+            this.options.remove("autoSize");
+        } else {
+            this.options.put("autoSize", value);
+        }
+        return this;
+    }
+
+    public DatePicker setAutoSize(final AjaxRequestTarget target, final boolean value) {
+        setAutoSize(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','autoSize'," + value + ");");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'buttonText' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value The new buttonText or {@code null} to remove this option.
+     * @return this object
+     */
+    public DatePicker setButtonText(final String value) {
+        if (value == null) {
+            this.options.remove("buttonText");
+        } else {
+            this.options.put("buttonText", value);
+        }
+        return this;
+    }
+
+    public DatePicker setButtonText(final AjaxRequestTarget target, final String value) {
+        setButtonText(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','buttonText','" + value + "');");
+        return this;
+    }
+
+
+    /**
+     * Sets a button image that is displayed near the {@link org.apache.wicket.markup.html.form.TextField} for the visual date
+     * representation.
+     */
+    public DatePicker setButtonImage(final String value) {
+        if (value == null || value.trim().length() == 0) {
+            this.options.remove("buttonImage");
+            this.options.remove("showOn");
+        } else {
+            this.options.put("buttonImage", value);
+            this.options.put("showOn", "button");
+        }
+        return this;
+    }
+
+    public DatePicker setButtonImage(final AjaxRequestTarget target, final String value) {
+        setButtonImage(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','buttonImage','" + (value == null ? "" : value) + "','showOn','button');");
+        return this;
+    }
+
+
+    /**
+     * Sets a button image that is displayed near the {@link org.apache.wicket.markup.html.form.TextField} for the visual date
+     * representation.
+     */
+    public DatePicker setButtonImage(final ResourceReference value) {
+        if (value == null) {
+            this.options.remove("buttonImage");
+            this.options.remove("showOn");
+        } else {
+//            TODO_WICKET15
+            this.options.put("buttonImage", "resources/" + value.getKey());
+//            this.options.put("buttonImage", "resources/" + value.getSharedResourceKey());
+            this.options.put("showOn", "button");
+        }
+        return this;
+    }
+
+    public DatePicker setButtonImage(final AjaxRequestTarget target, final ResourceReference value) {
+        setButtonImage(value);
+        //            TODO_WICKET15
+//        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','buttonImage','" + (value == null ? "" : value.getSharedResourceKey()) + "','showOn','button');");
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','buttonImage','" + (value == null ? "" : value.getKey()) + "','showOn','button');");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'changeMonth' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value {@code true} or {@code false}.
+     * @return this object
+     */
+    public DatePicker setChangeMonth(final boolean value) {
+        if (!value) {
+            this.options.remove("changeMonth");
+        } else {
+            this.options.put("changeMonth", value);
+        }
+        return this;
+    }
+
+    public DatePicker setChangeMonth(final AjaxRequestTarget target, final boolean value) {
+        setChangeMonth(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','changeMonth'," + value + ");");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'changeYear' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value {@code true} or {@code false}.
+     * @return this object
+     */
+    public DatePicker setChangeYear(final boolean value) {
+        if (!value) {
+            this.options.remove("changeYear");
+        } else {
+            this.options.put("changeYear", value);
+        }
+        return this;
+    }
+
+    public DatePicker setChangeYear(final AjaxRequestTarget target, final boolean value) {
+        setChangeYear(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','changeYear'," + value + ");");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'closeText' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value {@code true} or {@code false}.
+     * @return this object
+     */
+    public DatePicker setCloseText(final String value) {
+        if (value == null || value.trim().length() == 0) {
+            this.options.remove("closeText");
+        } else {
+            this.options.put("closeText", value);
+        }
+        return this;
+    }
+
+    public DatePicker setCloseText(final AjaxRequestTarget target, final String value) {
+        setCloseText(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','closeText','" + value + "');");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'constraintInput' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value {@code true} or {@code false}.
+     * @return this object
+     */
+    public DatePicker setConstraintInput(final boolean value) {
+        if (!value) {
+            this.options.remove("constraintInput");
+        } else {
+            this.options.put("constraintInput", value);
+        }
+        return this;
+    }
+
+    public DatePicker setConstraintInput(final AjaxRequestTarget target, final boolean value) {
+        setConstraintInput(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','constraintInput'," + value + ");");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'currentText' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value Text to be dsiplayes on button
+     * @return this object
+     */
+    public DatePicker setCurrentText(final String value) {
+        if (value == null || value.trim().length() == 0) {
+            this.options.remove("currentText");
+        } else {
+            this.options.put("currentText", value);
+        }
+        return this;
+    }
+
+    public DatePicker setCurrentText(final AjaxRequestTarget target, final String value) {
+        setCurrentText(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','currentText','" + value + "');");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'dateFormat' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value the date format
+     * @return this object
+     */
+    public DatePicker setDateFormat(final String value) {
+        if (value == null || value.trim().length() == 0) {
+            this.options.remove("dateFormat");
+        } else {
+            this.options.put("dateFormat", value);
+        }
+        return this;
+    }
+
+    public DatePicker setDateFormat(final AjaxRequestTarget target, final String value) {
+        setDateFormat(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','dateFormat','" + value + "');");
+        return this;
+    }
+
+
+    public DatePicker setDate(final AjaxRequestTarget target, final Date date) {
+        Locale locale = Session.get().getLocale();
+        DateFormat df;
+        if (locale != null) {
+            df = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+        } else {
+            df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        }
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('setDate','" + df.format(date) + "');");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'duration' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value duration in ms
+     * @return this object
+     */
+    public DatePicker setDuration(final String value) {
+        if (value == null || value.trim().length() == 0) {
+            this.options.remove("duration");
+        } else {
+            this.options.put("duration", value);
+        }
+        return this;
+    }
+
+    public DatePicker setDuration(final AjaxRequestTarget target, final String value) {
+        setDuration(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','duration','" + value + "');");
+        return this;
+    }
+
+    public DatePicker setDuration(final int value) {
+        if (value <= 0) {
+            this.options.remove("duration");
+        } else {
+            this.options.put("duration", value);
+        }
+        return this;
+    }
+
+    public DatePicker setDuration(final AjaxRequestTarget target, final int value) {
+        setDuration(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','duration'," + value + ");");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'duration' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value duration
+     * @return this object
+     */
+    public DatePicker setDuration(final JQuerySpeed value) {
+        if (value == null) {
+            this.options.remove("duration");
+        } else {
+            this.options.put("duration", value.getSpeed());
+        }
+        return this;
+    }
+
+    public DatePicker setDuration(final AjaxRequestTarget target, final JQuerySpeed value) {
+        setDuration(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','duration','" + value.getSpeed() + "');");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'maxDate' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value max date as String
+     * @return this object
+     */
+    public DatePicker setMaxDate(final String value) {
+        if (value == null) {
+            this.options.remove("maxDate");
+        } else {
+            this.options.put("maxDate", value);
+        }
+        return this;
+    }
+
+    public DatePicker setMaxDate(final AjaxRequestTarget target, final String value) {
+        setMaxDate(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate','" + value + "');");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'maxDate' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value max date as String
+     * @return this object
+     */
+    public DatePicker setMaxDate(final Date value) {
+        if (value == null) {
+            this.options.remove("maxDate");
+        } else {
+            // to avoid problems with different date formats, we use a JAvaScript Date object instead
+            Locale locale = Session.get().getLocale();
+            Calendar cal;
+            if (locale != null) {
+                cal = Calendar.getInstance(locale);
+            } else {
+                cal = Calendar.getInstance();
+            }
+            cal.setTime(value);
+
+            String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+            this.options.put("maxDate", new JsScript(jsDate));
+        }
+        return this;
+    }
+
+    public DatePicker setMaxDate(final AjaxRequestTarget target, final Date value) {
+        setMaxDate(value);
+        if (value == null) {
+            target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate',null);");
+        } else {
+            // to avoid problems with different date formats, we use a JAvaScript Date object instead
+            Locale locale = Session.get().getLocale();
+            Calendar cal;
+            if (locale != null) {
+                cal = Calendar.getInstance(locale);
+            } else {
+                cal = Calendar.getInstance();
+            }
+            cal.setTime(value);
+
+            String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+            target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate'," + jsDate + ");");
+        }
+        return this;
+    }
+
+    public DatePicker setMaxDate(final java.sql.Date value) {
+        if (value == null) {
+            this.options.remove("maxDate");
+        } else {
+            // to avoid problems with different date formats, we use a JAvaScript Date object instead
+            Locale locale = Session.get().getLocale();
+            Calendar cal;
+            if (locale != null) {
+                cal = Calendar.getInstance(locale);
+            } else {
+                cal = Calendar.getInstance();
+            }
+            cal.setTimeInMillis(value.getTime());
+
+            String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+            this.options.put("maxDate", new JsScript(jsDate));
+        }
+        return this;
+    }
+
+    public DatePicker setMaxDate(final AjaxRequestTarget target, final java.sql.Date value) {
+        setMaxDate(value);
+        if (value == null) {
+            target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate',null);");
+        } else {
+            // to avoid problems with different date formats, we use a JAvaScript Date object instead
+            Locale locale = Session.get().getLocale();
+            Calendar cal;
+            if (locale != null) {
+                cal = Calendar.getInstance(locale);
+            } else {
+                cal = Calendar.getInstance();
+            }
+            cal.setTimeInMillis(value.getTime());
+
+            String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+            target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','maxDate'," + jsDate + ");");
+        }
+        return this;
+    }
+
+
+    /**
+     * Sets the 'minDate' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value min date as String
+     * @return this object
+     */
+    public DatePicker setMinDate(final String value) {
+        if (value == null) {
+            this.options.remove("minDate");
+        } else {
+            this.options.put("minDate", value);
+        }
+        return this;
+    }
+
+    public DatePicker setMinDate(final AjaxRequestTarget target, final String value) {
+        setMinDate(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate','" + value + "');");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'minDate' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value min date as String
+     * @return this object
+     */
+    public DatePicker setMinDate(final Date value) {
+        if (value == null) {
+            this.options.remove("minDate");
+        } else {
+            // to avoid problems with different date formats, we use a JAvaScript Date object instead
+            Locale locale = Session.get().getLocale();
+            Calendar cal;
+            if (locale != null) {
+                cal = Calendar.getInstance(locale);
+            } else {
+                cal = Calendar.getInstance();
+            }
+            cal.setTime(value);
+
+            String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+
+            this.options.put("minDate", new JsScript(jsDate));
+        }
+        return this;
+    }
+
+    public DatePicker setMinDate(final AjaxRequestTarget target, final Date value) {
+        setMinDate(value);
+        if (value == null) {
+            target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate',null);");
+        } else {
+            // to avoid problems with different date formats, we use a JAvaScript Date object instead
+            Locale locale = Session.get().getLocale();
+            Calendar cal;
+            if (locale != null) {
+                cal = Calendar.getInstance(locale);
+            } else {
+                cal = Calendar.getInstance();
+            }
+            cal.setTime(value);
+
+            String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+
+            target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate'," + jsDate + ");");
+        }
+        return this;
+    }
+
+    public DatePicker setMinDate(final java.sql.Date value) {
+        if (value == null) {
+            this.options.remove("minDate");
+        } else {
+            // to avoid problems with different date formats, we use a JAvaScript Date object instead
+            Locale locale = Session.get().getLocale();
+            Calendar cal;
+            if (locale != null) {
+                cal = Calendar.getInstance(locale);
+            } else {
+                cal = Calendar.getInstance();
+            }
+            cal.setTimeInMillis(value.getTime());
+
+            String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+
+            this.options.put("minDate", new JsScript(jsDate));
+        }
+        return this;
+    }
+
+    public DatePicker setMinDate(final AjaxRequestTarget target, final java.sql.Date value) {
+        setMinDate(value);
+        if (value == null) {
+            target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate',null);");
+        } else {
+            // to avoid problems with different date formats, we use a JAvaScript Date object instead
+            Locale locale = Session.get().getLocale();
+            Calendar cal;
+            if (locale != null) {
+                cal = Calendar.getInstance(locale);
+            } else {
+                cal = Calendar.getInstance();
+            }
+            cal.setTimeInMillis(value.getTime());
+
+            String jsDate = "new Date(" + cal.get(Calendar.YEAR) + "," + cal.get(Calendar.MONTH) + "," + cal.get(Calendar.DAY_OF_MONTH) + ")";
+
+            target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','minDate'," + jsDate + ");");
+        }
+        return this;
+    }
+
+
+    /**
+     * Sets the 'numberOfMonths' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value the number of months to show at one
+     * @return this object
+     */
+    public DatePicker setNumberOfMonths(final int value) {
+        if (value == 0) {
+            this.options.remove("numberOfMonths");
+        } else {
+            this.options.put("numberOfMonths", value);
+        }
+        return this;
+    }
+
+    public DatePicker setNumberOfMonths(final AjaxRequestTarget target, final int value) {
+        setNumberOfMonths(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','numberOfMonths'," + value + ");");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'numberOfMonths' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     */
+    public DatePicker setNumberOfMonths(final int rows, final int columns) {
+        if (rows == 0 || columns == 0) {
+            this.options.remove("numberOfMonths");
+        } else {
+            this.options.put("numberOfMonths", rows, columns);
+        }
+        return this;
+    }
+
+    public DatePicker setNumberOfMonths(final AjaxRequestTarget target, final int rows, final int columns) {
+        setNumberOfMonths(rows, columns);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() +
+                "').datepicker('option','numberOfMonths',[" + rows + "," + columns + "]);");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'selectOtherMonths' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value {@code true} or {@code false}.
+     * @return this object
+     */
+    public DatePicker setSelectOtherMonths(final boolean value) {
+        if (!value) {
+            this.options.remove("selectOtherMonths");
+        } else {
+            this.options.put("selectOtherMonths", value);
+        }
+        return this;
+    }
+
+    public DatePicker setSelectOtherMonths(final AjaxRequestTarget target, final boolean value) {
+        setSelectOtherMonths(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','selectOtherMonths'," + value + ");");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'showAnim' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value {@code true} or {@code false}.
+     * @return this object
+     */
+    public DatePicker setShowAnim(final ShowAnim value) {
+        if (value == null) {
+            this.options.remove("showAnim");
+        } else {
+            this.options.put("showAnim", value.getAnimName());
+        }
+        return this;
+    }
+
+    public DatePicker setShowAnim(final AjaxRequestTarget target, final ShowAnim value) {
+        setShowAnim(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','showAnim'," + value.getAnimName() + ");");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'showButtonPanel' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value {@code true} or {@code false}.
+     * @return this object
+     */
+    public DatePicker setShowButtonPanel(final boolean value) {
+        if (!value) {
+            this.options.remove("showButtonPanel");
+        } else {
+            this.options.put("showButtonPanel", value);
+        }
+        return this;
+    }
+
+    public DatePicker setShowButtonPanel(final AjaxRequestTarget target, final boolean value) {
+        setShowButtonPanel(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','showButtonPanel'," + value + ");");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'showCurrentAtPos' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value {@code true} or {@code false}.
+     * @return this object
+     */
+    public DatePicker setShowCurrentAtPos(final boolean value) {
+        if (!value) {
+            this.options.remove("showCurrentAtPos");
+        } else {
+            this.options.put("showCurrentAtPos", value);
+        }
+        return this;
+    }
+
+    public DatePicker setShowCurrentAtPos(final AjaxRequestTarget target, final boolean value) {
+        setShowCurrentAtPos(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','showCurrentAtPos'," + value + ");");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'showMonthAfterYear' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value {@code true} or {@code false}.
+     * @return this object
+     */
+    public DatePicker setShowMonthAfterYear(final boolean value) {
+        if (!value) {
+            this.options.remove("showMonthAfterYear");
+        } else {
+            this.options.put("showMonthAfterYear", value);
+        }
+        return this;
+    }
+
+    public DatePicker setShowMonthAfterYear(final AjaxRequestTarget target, final boolean value) {
+        setShowMonthAfterYear(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','showMonthAfterYear'," + value + ");");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'showOn' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value {@code true} or {@code false}.
+     * @return this object
+     */
+    public DatePicker setShowOn(final ShowOnTrigger value) {
+        if (value == null) {
+            this.options.remove("showOn");
+        } else {
+            this.options.put("showOn", value);
+        }
+        return this;
+    }
+
+    public DatePicker setShowOn(final AjaxRequestTarget target, final ShowOnTrigger value) {
+        setShowOn(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','showOn','" + value.getTriggerName() + "');");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'showOtherMonths' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value {@code true} or {@code false}.
+     * @return this object
+     */
+    public DatePicker setShowOtherMonths(final boolean value) {
+        if (!value) {
+            this.options.remove("showOtherMonths");
+        } else {
+            this.options.put("showOtherMonths", value);
+        }
+        return this;
+    }
+
+    public DatePicker setShowOtherMonths(final AjaxRequestTarget target, final boolean value) {
+        setShowOtherMonths(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','showOtherMonths'," + value + ");");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'showWeek' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value {@code true} or {@code false}.
+     * @return this object
+     */
+    public DatePicker setShowWeek(final boolean value) {
+        if (!value) {
+            this.options.remove("showWeek");
+        } else {
+            this.options.put("showWeek", value);
+        }
+        return this;
+    }
+
+    public DatePicker setShowWeek(final AjaxRequestTarget target, final boolean value) {
+        setShowWeek(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','showWeek'," + value + ");");
+        return this;
+    }
+
+
+    /**
+     * Sets the 'stepMonths' property for this DatePicker. Please consult the
+     * jQuery documentation for a detailed description of this property.
+     *
+     * @param value how many months to move in one step
+     * @return this object
+     */
+    public DatePicker setStepMonths(final int value) {
+        if (value <= 0) {
+            this.options.remove("stepMonths");
+        } else {
+            this.options.put("stepMonths", value);
+        }
+        return this;
+    }
+
+    public DatePicker setStepMonths(final AjaxRequestTarget target, final int value) {
+        setStepMonths(value);
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker('option','stepMonths'," + value + ");");
+        return this;
+    }
+
+
+    private String cssClass = null;
+
+    /**
+     * If you want en individual style for a DatePicker you may set this style with this method.
+     * The DatePicker the gets sourrounded with a &lt;div class="..."&gt;.
+     * Normally a DatePicker element looks like
+     * <pre>
+     * &lt;div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ....&gt;...&lt;/div&gt;
+     * </pre>
+     * If you set a cssClass the DatePicket looks like
+     * <pre>
+     * &lt;div class="cssClass"&gt;&lt;div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ....&gt;...&lt;/div&gt;&lt;/div&gt;
+     * </pre>
+     *
+     * @param cssClass your custom css class
+     */
+    public void setCssClass(final String cssClass) {
+        this.cssClass = cssClass;
+    }
+
+
+    private boolean onSelectNotificationWanted = false;
+
+    /**
+     * If set to {@code true}, the callback-Method {@link #onSelect(AjaxRequestTarget, String, SpecialKeys) }
+     * is called when a date was picked.
+     * See the jquery-ui documentation for more information
+     *
+     * @param value {@code true} or {@code false}.
+     * @return this object
+     */
+    public DatePicker setWantOnSelectNotification(final boolean value) {
+        this.onSelectNotificationWanted = value;
+        return this;
+    }
+
+
+    private boolean onCloseNotificationWanted = false;
+
+    /**
+     * If set to {@code true}, the callback-Method {@link #onClose(AjaxRequestTarget, String, SpecialKeys) }
+     * is called when a date was picked.
+     * See the jquery-ui documentation for more information
+     *
+     * @param value {@code true} or {@code false}.
+     * @return this object
+     */
+    public DatePicker setWantOnCloseNotification(final boolean value) {
+        this.onCloseNotificationWanted = value;
+        return this;
+    }
+
+
+    private boolean onChangeMonthYearNotificationWanted = false;
+
+    /**
+     * If set to {@code true}, the callback-Method {@link #onChangeMonthYear(AjaxRequestTarget, String, String, SpecialKeys) }
+     * is called when a date was picked.
+     * See the jquery-ui documentation for more information
+     *
+     * @param value {@code true} or {@code false}.
+     * @return this object
+     */
+    public DatePicker setWantOnChangeMonthYearNotification(final boolean value) {
+        this.onChangeMonthYearNotificationWanted = value;
+        return this;
+    }
+
+
+    private boolean onBeforeShowNotificationWanted = false;
+
+    /**
+     * If set to {@code true}, the callback-Method {@link #onBeforeShow(org.apache.wicket.ajax.AjaxRequestTarget)}
+     * is called before the DatePicker gets displayed.
+     * <p/>
+     * See the jquery-ui documentation for detailed information
+     *
+     * @return this object
+     */
+    public DatePicker setWantOnBeforeShowNotificationWanted(final boolean value) {
+        this.onBeforeShowNotificationWanted = value;
+        return this;
+    }
+
+
+    /*
+     private boolean destroyBeforeRedraw = true;
+     public void setDestroyBeforeRedraw(final boolean value) {
+         this.destroyBeforeRedraw = value;
+     }
+     */
+
+    @Override
+    protected JsBuilder getJsBuilder() {
+        if (this.onBeforeShowNotificationWanted) {
+            this.options.put(EventType.BEFORE_SHOW.eventName,
+                    new JsFunction("function(dateText,inst) { wicketAjaxGet('" +
+                            this.getCallbackUrl() +
+                            "&" + EventType.IDENTIFIER + "=" + EventType.BEFORE_SHOW +
+                            "&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
+                            ");}"));
+        } else {
+            this.options.remove(EventType.BEFORE_SHOW.getEventName());
+        }
+
+
+        if (this.onSelectNotificationWanted) {
+            this.options.put(EventType.ON_SELECT.eventName,
+                    new JsFunction("function(dateText,inst) { wicketAjaxGet('" +
+                            this.getCallbackUrl() +
+                            "&date='+dateText" +
+                            "+'&" + EventType.IDENTIFIER + "=" + EventType.ON_SELECT +
+                            "&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
+                            ");}"));
+        } else {
+            this.options.remove(EventType.ON_SELECT.getEventName());
+        }
+
+
+        if (this.onCloseNotificationWanted) {
+            this.options.put(EventType.ON_CLOSE.eventName,
+                    new JsFunction("function(dateText,inst) { wicketAjaxGet('" +
+                            this.getCallbackUrl() +
+                            "&date='+dateText" +
+                            "+'&" + EventType.IDENTIFIER + "=" + EventType.ON_CLOSE +
+                            "&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
+                            ");}"));
+        } else {
+            this.options.remove(EventType.ON_CLOSE.getEventName());
+        }
+
+
+        if (this.onChangeMonthYearNotificationWanted) {
+            this.options.put(EventType.ON_CHANGE_MONTH_YEAR.eventName,
+                    new JsFunction("function(year,month,inst) { wicketAjaxGet('" +
+                            this.getCallbackUrl() +
+                            "&year='+year" +
+                            "+'&month='+month" +
+                            "+'&" + EventType.IDENTIFIER + "=" + EventType.ON_CHANGE_MONTH_YEAR +
+                            "&keys='+jQuery.jWicketSpecialKeysGetPressed()" +
+                            ");}"));
+        } else {
+            this.options.remove(EventType.ON_CHANGE_MONTH_YEAR.getEventName());
+        }
+
+
+        if (this.showDayStates != null && this.showDayStates.size() > 0) {
+            this.options.put(EventType.BEFORE_SHOW_DAY.eventName,
+                    new JsFunction("function(date) {" +
+                            "return " + getCheckFunctionName() + "(date);" +
+                            "}"));
+        } else {
+            this.options.remove(EventType.BEFORE_SHOW_DAY.getEventName());
+        }
+
+
+        JsBuilder builder = new JsBuilder();
+
+
+        /*	It's always the same Ajax pain.
+           *	- having a tag <input type="text"/>
+           *	- having a DatePicker attached to this input filed
+           *	- the DatePicker has a button displayed that triggers the DataPicker
+           *	- this results in <input type="text" id="someId"/><button type="button" class="ui-datepicker-trigger"><img src=".....calendar22x24.gif" alt="..." title="..."></button>
+           *	If we redraw the input field in an Ajax call, only the <input> field is redrawed and
+           *	jQuery places a second button after the input field. The original button is not removed or updated.
+           *
+           *	One soution would be to put a <div> around the <input> tag like
+           *		<div id="someId">
+           *			<input/><button generated button/>
+           *		</div>
+           *	and to redraw the surrounding div insteda of the input tag. But this is not a transparent
+           *	sulution becaus the user must always take care of this and can not use the DatePicker carelessly.
+           *
+           *	Another solution would be to try to remove the button that was generated by jQuery
+           *	before the DatePicker is re-applies to the input field with a new image.
+           *	So I try to do this by selecting "#idOfInput+button" to catch the button after
+           *	the input. This might not work under all circumstances and with all browsers but
+           *	it seems to work even with IE6.
+           *
+           *	The best solution would be to have a unique id for the button but this would mean to modify
+           *	jQuery's js files.
+           *
+           * 	I have created a ticket for this: http://dev.jqueryui.com/ticket/5384
+           *	Let's see what happens.
+           */
+        if (isAlreadyRendered()) {
+            builder.append("jQuery('#" + getComponent().getMarkupId() + "+button').remove();");
+        }
+
+        /* Normal processing */
+        builder.append("jQuery('#" + getComponent().getMarkupId() + "').datepicker(");
+        builder.append("{");
+        builder.append(this.options.toString(this.rawOptions));
+        builder.append("}");
+        builder.append(")");
+
+
+        if (this.cssClass != null) {
+            builder.append(";jQuery('#ui-datepicker-div').wrap('<div class=\"");
+            builder.append(this.cssClass);
+            builder.append("\" />')");
+        }
+
+        return builder;
+    }
+
+
+    protected void onBeforeShow(final AjaxRequestTarget target) {
+    }
+
+    /**
+     * If you have set {@link #setWantOnSelectNotification(boolean)} to {@code true}
+     * this method is called after the user picked a date in the datepicker.
+     *
+     * @param target      the AjaxRequestTarget of the resize operation.
+     * @param pickedDate  The selected date as {@code String}
+     * @param specialKeys the special keys that were pressed when the event occurs
+     */
+    protected void onSelect(final AjaxRequestTarget target, final String pickedDate, final SpecialKeys specialKeys) {
+    }
+
+    /**
+     * If you have set {@link #setWantOnSelectNotification(boolean)} to {@code true}
+     * this method is called after the user picked a date in the datepicker. This method is called after
+     * {@link #onSelect(AjaxRequestTarget, String, SpecialKeys) was called only if the picked date can be parsed into
+     * a Java Date object.
+     *
+     * @param target      the AjaxRequestTarget of the resize operation.
+     * @param pickedDate  The selected date as {@link java.util.Date}
+     * @param specialKeys the special keys that were pressed when the event occurs
+     */
+    protected void onSelect(final AjaxRequestTarget target, final java.util.Date pickedDate, final SpecialKeys specialKeys) {
+    }
+
+    /**
+     * If you have set {@link #setWantOnSelectNotification(boolean)} to {@code true}
+     * this method is called after the user picked a date in the datepicker. This method is called after
+     * {@link #onSelect(AjaxRequestTarget, String, SpecialKeys) was called only if the picked date can be parsed into
+     * a Java Date object.
+     *
+     * @param target      the AjaxRequestTarget of the resize operation.
+     * @param pickedDate  The selected date as {@link java.util.Date}
+     * @param specialKeys the special keys that were pressed when the event occurs
+     */
+    protected void onSelect(final AjaxRequestTarget target, final java.sql.Date pickedDate, final SpecialKeys specialKeys) {
+    }
+
+
+    /**
+     * If you have set {@link #setWantOnCloseNotification(boolean)} to {@code true}
+     * this method is called after the datepicker was closed, regardless of picking a date.
+     *
+     * @param target      the AjaxRequestTarget of the resize operation.
+     * @param specialKeys the special keys that were pressed when the event occurs
+     */
+    protected void onClose(final AjaxRequestTarget target, final String pickedDate, final SpecialKeys specialKeys) {
+    }
+
+
+    /**
+     * If you have set {@link #setWantOnChangeMonthYearNotification(boolean)} to {@code true}
+     * this method is called after another moth or year is displayed, regardless of picking a date.
+     *
+     * @param target      the AjaxRequestTarget of the resize operation.
+     * @param specialKeys the special keys that were pressed when the event occurs
+     */
+    protected void onChangeMonthYear(final AjaxRequestTarget target, final String year, final String month, final SpecialKeys specialKeys) {
+    }
+
+
+    private Collection<ShowDay> showDayStates = null;
+
+    /**
+     * Add one more special treatment for a day. If you don't provide a {@link ShowDay} object for a day it is
+     * selectable by default.
+     * Use this method if you want a special treatment (selectable, CSS class oder tooltip text)
+     * for a day.
+     * You may call this method as often as you like. The state is added to the existing list of states.
+     * Do not provide different states for one day. The resulting behavior is not defined.
+     *
+     * @param state as specific treatment for one day.
+     */
+    public void addShowDayState(final ShowDay state) {
+        if (this.showDayStates == null) {
+            this.showDayStates = new ArrayList<ShowDay>(1);
+        }
+        this.showDayStates.add(state);
+        this.dayCheckerRendered = false;
+    }
+
+
+    /**
+     * Set the special treatments for multiple days at one. This removes all former definitons and
+     * replaces them with the new {@code states}.
+     *
+     * @param states A {@code Collection} of states.
+     */
+    public void setShowDayStates(final Collection<ShowDay> states) {
+        this.showDayStates = states;
+        this.dayCheckerRendered = false;
+    }
+
+
+    /**
+     * This Class controls the visibility of a single day rectangle in the DatePicker popup and the
+     * ability to select this day and an optional text popup for a single day.
+     */
+    public static class ShowDay implements Serializable {
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * If the day corresponding to parameter {@code day} should be selectable, the parameter {@code selectable} should be set to
+         * {@code true}, if not it should be set to {@code false}.
+         *
+         * @param date       the day
+         * @param selectable {@code true} if the day should be selectable and {@code false} if the day sould net be selectable.
+         */
+        public ShowDay(final Date date, final boolean selectable) {
+            this(date, selectable, "", "");
+        }
+
+
+        /**
+         * If the day corresponding to parameter {@code day} should be selectable, the parameter {@code selectable} should be set to
+         * {@code true}, if not it should be set to {@code false}. The CSS class of the day can be controlled
+         * with parameter {@code cssClass}.
+         *
+         * @param date       the day
+         * @param selectable {@code true} if the day should be selectable and {@code false} if the day sould net be selectable.
+         * @param cssClass   regardless from {@code selectable} state of the day this CSS class is assigned to the day rectangle
+         */
+        public ShowDay(final Date date, final boolean selectable, final String cssClass) {
+            this(date, selectable, cssClass, "");
+        }
+
+
+        /**
+         * If the day corresponding to parameter {@code day} should be selectable, the parameter {@code selectable} should be set to
+         * {@code true}, if not it should be set to {@code false}. The CSS class of the day can be controlled
+         * with parameter {@code cssClass}.
+         *
+         * @param date       the day
+         * @param selectable {@code true} if the day should be selectable and {@code false} if the day sould net be selectable.
+         * @param cssClass   regardless from {@code selectable} state of the day this CSS class is assigned to the day rectangle
+         * @param tooltip    a tooltip text to be shon wehn the mouse is placed over the given day
+         */
+        public ShowDay(final Date date, final boolean selectable, final String cssClass, final String tooltip) {
+            setDate(date);
+            setSelectable(selectable);
+            setCssClass(cssClass);
+            setTooltip(tooltip);
+        }
+
+
+        private Date date;
+
+        public Date getDate() {
+            return this.date;
+        }
+
+        public void setDate(final Date value) {
+            this.date = value;
+        }
+
+
+        private boolean selectable;
+
+        public boolean isSelectable() {
+            return this.selectable;
+        }
+
+        public void setSelectable(final boolean value) {
+            this.selectable = value;
+        }
+
+
+        private String cssClass;
+
+        public String getCssClass() {
+            return this.cssClass;
+        }
+
+        public void setCssClass(final String value) {
+            this.cssClass = value;
+        }
+
+
+        private String tooltip;
+
+        public String getTooltip() {
+            return this.tooltip;
+        }
+
+        public void setTooltip(final String value) {
+            this.tooltip = value;
+        }
+
+
+        @Override
+        public String toString() {
+            return "ShowDay: selectable=" + isSelectable() + ", CSS class=" + getCssClass() + ", tooltip=" + getTooltip();
+        }
+    }
+
+
+    private boolean dayCheckerRendered = false;
+
+    @Override
+    public void renderHead(Component component, final IHeaderResponse response) {
+        super.renderHead(component, response);
+        if (this.showDayStates != null && this.showDayStates.size() > 0 && !this.dayCheckerRendered) {
+            //draggablesAcceptedByDroppable.renderJsDropAcceptFunction(response);
+            this.dayCheckerRendered = true;
+
+            Calendar cal = Calendar.getInstance();
+            StringBuilder sb = new StringBuilder();
+            sb.append("var ").append(getCheckFunctionName()).append("days = {");
+            boolean first = true;
+            for (ShowDay day : this.showDayStates) {
+                if (!first) {
+                    sb.append(",");
+                } else {
+                    first = false;
+                }
+                cal.setTime(day.getDate());
+
+                // Hash code for day
+                sb.append("'");
+                // Day
+                int numVal = cal.get(Calendar.DAY_OF_MONTH);
+                if (numVal < 10) {
+                    sb.append("0");
+                }
+                sb.append(numVal);
+                // Month
+                numVal = cal.get(Calendar.MONTH) + 1;
+                if (numVal < 10) {
+                    sb.append("0");
+                }
+                sb.append(numVal);
+                // Year
+                numVal = cal.get(Calendar.YEAR);
+                if (numVal < 1000) {
+                    sb.append("0");
+                }
+                if (numVal < 100) {
+                    sb.append("0");
+                }
+                if (numVal < 10) {
+                    sb.append("0");
+                }
+                sb.append(numVal);
+                sb.append("':new Array(");
+                sb.append(day.isSelectable() ? "true" : "false");
+                sb.append(",'");
+                sb.append(day.getCssClass());
+                sb.append("','");
+                sb.append(day.getTooltip());
+                sb.append("')");
+            }
+            sb.append("};\n");
+
+            sb.append("var ");
+            sb.append(getCheckFunctionName());
+            sb.append(" = function(date) {\n");
+            sb.append("   var hash = '';\n");
+            // Day for hash
+            sb.append("   var intVal = date.getDate();\n");
+            sb.append("   if (intVal < 10)\n");
+            sb.append("      hash += '0';\n");
+            sb.append("   hash += intVal;\n");
+            // Month for Hash
+            sb.append("   intVal = date.getMonth()+1;\n");
+            sb.append("   if (intVal < 10)\n");
+            sb.append("      hash += '0';\n");
+            sb.append("   hash += intVal;\n");
+            // Year
+            sb.append("   intVal = date.getFullYear();\n");
+            sb.append("   if (intVal < 1000)\n");
+            sb.append("      hash += '0';\n");
+            sb.append("   if (intVal < 100)\n");
+            sb.append("      hash += '0';\n");
+            sb.append("   if (intVal < 10)\n");
+            sb.append("      hash += '0';\n");
+            sb.append("   hash += intVal;\n");
+            // retrieve the day from array
+            sb.append("   var found = ");
+            sb.append(getCheckFunctionName());
+            sb.append("days[hash];\n");
+            sb.append("   if (found != null)\n");
+            sb.append("      return found;\n");
+            sb.append("   else\n");
+            sb.append("      return datePickerDefaultShowDayState;\n");
+            sb.append("};");
+
+            response.render(JavaScriptHeaderItem.forScript(sb.toString(), getCheckFunctionName() + "ID"));
+        }
+    }
+
+
+    private String getCheckFunctionName() {
+        return "jWicketCheckBeforeShowDayFor" + getComponent().getMarkupId();
+    }
+
+
+    /**
+     * Disable the datepicker
+     *
+     * @param target An AjaxRequestTarget
+     */
+    public void disable(final AjaxRequestTarget target) {
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker( 'disable' );");
+        target.add(getComponent());
+    }
+
+
+    /**
+     * Enable the datepicker
+     *
+     * @param target An AjaxRequestTarget
+     */
+    public void enable(final AjaxRequestTarget target) {
+        target.appendJavaScript("jQuery('#" + getComponent().getMarkupId() + "').datepicker( 'enable' );");
+        target.appendJavaScript(getJsBuilder().toString());
+    }
+
+
+    private enum EventType implements Serializable {
+
+        UNKNOWN("*"),
+        BEFORE_SHOW("beforeShow"),
+        BEFORE_SHOW_DAY("beforeShowDay"),
+        ON_CHANGE_MONTH_YEAR("onChangeMonthYear"),
+        ON_CLOSE("onClose"),
+        ON_SELECT("onSelect");
+
+        public static final String IDENTIFIER = "wicketDatepickerEvent";
+
+        private final String eventName;
+
+        private EventType(final String eventName) {
+            this.eventName = eventName;
+        }
+
+        public String getEventName() {
+            return this.eventName;
+        }
+
+        public static EventType stringToType(final String s) {
+            for (EventType t : EventType.values()) {
+                if (t.getEventName().equals(s)) {
+                    return t;
+                }
+            }
+            return UNKNOWN;
+        }
+
+        public String toString() {
+            return this.eventName;
+        }
+    }
+
+
+    public enum ShowAnim implements Serializable {
+        SHOW("show"),
+        SLIDE_DOWN("slideSown"),
+        FADE_IN("fadeIn");
+
+        private final String animName;
+
+        private ShowAnim(final String animName) {
+            this.animName = animName;
+        }
+
+        public String getAnimName() {
+            return this.animName;
+        }
+
+        public String toString() {
+            return this.animName;
+        }
+    }
+
+
+    public enum ShowOnTrigger implements Serializable {
+        FOCUS("focus"),
+        BUTTON("button"),
+        BOTH("both");
+
+        private final String triggerName;
+
+        private ShowOnTrigger(final String triggerName) {
+            this.triggerName = triggerName;
+        }
+
+        public String getTriggerName() {
+            return this.triggerName;
+        }
+
+        public String toString() {
+            return this.triggerName;
+        }
+    }
+
+//    @Override
+    public JQueryCssResourceReference[] getCssResources() {
+        return new JQueryCssResourceReference[]{
+                AbstractJqueryUiEmbeddedBehavior.jQueryUiBaseCss,
+                AbstractJqueryUiEmbeddedBehavior.jQueryUiThemeCss
+        };
+    }
 
 }

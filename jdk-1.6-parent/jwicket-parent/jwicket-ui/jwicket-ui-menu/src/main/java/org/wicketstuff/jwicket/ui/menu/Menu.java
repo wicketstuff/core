@@ -3,7 +3,7 @@ package org.wicketstuff.jwicket.ui.menu;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.wicketstuff.jwicket.JQueryJavascriptResourceReference;
+import org.wicketstuff.jwicket.JQueryResourceReference;
 import org.wicketstuff.jwicket.JsMap;
 import org.wicketstuff.jwicket.SpecialKeys;
 import org.wicketstuff.jwicket.ui.AbstractJqueryUiEmbeddedBehavior;
@@ -20,7 +20,7 @@ public class Menu extends AbstractJqueryUiEmbeddedBehavior {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final JQueryJavascriptResourceReference uiMenuJs = new JQueryJavascriptResourceReference(Menu.class, "menu.js");
+	public static final JQueryResourceReference uiMenuJs = new JQueryResourceReference(Menu.class, "menu.js");
 
 	private JsMap options = new JsMap();
 
@@ -34,7 +34,7 @@ public class Menu extends AbstractJqueryUiEmbeddedBehavior {
 		);
 	}
 
-	/**
+    /**
 	 * Handles the event processing during resizing.
 	 */
 	@Override

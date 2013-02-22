@@ -1,42 +1,32 @@
 package org.wicketstuff.jwicket;
 
-
-import java.io.Serializable;
-
 import org.apache.wicket.Component;
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
+
+import java.io.Serializable;
 
 
 /**
  * Find a page's child component by it's markup id
  */
-public class ComponentFinder implements IVisitor<Component, Void>, Serializable {
-	private static final long serialVersionUID = 1L;
-	private final String id;
-	private Component found;
+public class ComponentFinder implements IVisitor<Component, Component>, Serializable {
+    private static final long serialVersionUID = 1L;
 
-	public ComponentFinder(String id) {
-		this.id = id;
-	}
+    private final String markupId;
 
-	
-	public void component(Component component, IVisit<Void> visit) {
-		
-		if (component.getMarkupId().equals(id)) {
-			this.found = component;
-			visit.stop();
-		}
-		if (component instanceof MarkupContainer) {
-			((MarkupContainer)component).visitChildren(this);
-			
-			visit.stop();
-		}
-	}
+    public ComponentFinder(String markupId) {
+        this.markupId = markupId;
+    }
 
-	public Component getFoundComponent() {
-		return found;
-	}
+    @Override
+    public void component(Component component, IVisit<Component> visit) {
+        if (component.getMarkupId().equals(getMarkupId())) {
+            visit.stop(component);
+        }
+    }
 
+    private String getMarkupId() {
+        return this.markupId;
+    }
 }

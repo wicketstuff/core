@@ -1,0 +1,9 @@
+org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TestTreeTransformator$Root     | 0
+  org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TestTreeTransformator$A      | 50
+    org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TestTreeTransformator$C    | 40
+    org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TestTreeTransformator$C    | 40
+    org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TestTreeTransformator$C    | 40
+    org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TestTreeTransformator$C    | 40
+    org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TestTreeTransformator$C    | 40
+    org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TestTreeTransformator$C    | 40
+      
