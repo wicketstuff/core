@@ -26,22 +26,24 @@ import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.ui.interaction.behavior.DisplayNoneBehavior;
+
 /**
  * Provides a modal dialog box that display a specific message, with a predefined icon and a predefined button set.
- * <b>Note: </b> {@link MessageDialog} & {@link MessageFormDialog} are sharing the same code. There just do not extends the same class. 
+ * <b>Note: </b> {@link MessageDialog} & {@link MessageFormDialog} are sharing the same code. There just do not extends the same class.
  * @author Sebastien Briquet - sebfz1
  */
 public abstract class MessageDialog extends AbstractDialog<String>
 {
 	private static final long serialVersionUID = 1L;
-	
-	private Label label; 
+
+	private Label label;
 	private DialogButtons buttons;
 
 	/**
 	 * Constructor.
 	 * @param id the markupId, an html div suffice to host a dialog.
-	 * @param title the title of the dialog 
+	 * @param title the title of the dialog
 	 * @param message the message to be displayed
 	 * @param buttons button set to display
 	 */
@@ -53,7 +55,7 @@ public abstract class MessageDialog extends AbstractDialog<String>
 	/**
 	 * Constructor.
 	 * @param id the markupId, an html div suffice to host a dialog.
-	 * @param title the title of the dialog 
+	 * @param title the title of the dialog
 	 * @param message the message to be displayed
 	 * @param buttons button set to display
 	 */
@@ -65,7 +67,7 @@ public abstract class MessageDialog extends AbstractDialog<String>
 	/**
 	 * Constructor.
 	 * @param id the markupId, an html div suffice to host a dialog.
-	 * @param title the title of the dialog 
+	 * @param title the title of the dialog
 	 * @param message the message to be displayed
 	 * @param buttons button set to display
 	 * @param icon the predefined icon to display
@@ -78,7 +80,7 @@ public abstract class MessageDialog extends AbstractDialog<String>
 	/**
 	 * Constructor.
 	 * @param id the markupId, an html div suffice to host a dialog.
-	 * @param title the title of the dialog 
+	 * @param title the title of the dialog
 	 * @param message the message to be displayed
 	 * @param buttons button set to display
 	 * @param icon the predefined icon to display
@@ -87,13 +89,15 @@ public abstract class MessageDialog extends AbstractDialog<String>
 	{
 		super(id, title, message, true);
 		this.buttons = buttons;
-		
+
+		this.add(new DisplayNoneBehavior()); //enhancement, fixes issue #22
+
 		WebMarkupContainer container = new WebMarkupContainer("container");
 		this.add(container);
 
 		container.add(AttributeModifier.append("class", icon.getStyle()));
 		container.add(new EmptyPanel("icon").add(AttributeModifier.replace("class", icon)));
-		
+
 		this.label = new Label("message", this.getModel());
 		container.add(this.label.setOutputMarkupId(true));
 	}
@@ -108,7 +112,7 @@ public abstract class MessageDialog extends AbstractDialog<String>
 
 		return super.getButtons(); //cannot happen
 	}
-	
+
 	@Override
 	protected void onOpen(AjaxRequestTarget target)
 	{
