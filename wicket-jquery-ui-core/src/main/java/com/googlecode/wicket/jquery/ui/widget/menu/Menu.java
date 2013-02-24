@@ -29,7 +29,10 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
 import com.googlecode.wicket.jquery.ui.JQueryEvent;
@@ -39,7 +42,7 @@ import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.ui.utils.RequestCycleUtils;
 
 /**
- * TODO javadoc
+ * Provides the jQuery menu based on a {@link JQueryPanel}
  *
  * @author Sebastien Briquet - sebfz1
  */
@@ -47,13 +50,13 @@ public class Menu extends JQueryPanel
 {
 	private static final long serialVersionUID = 1L;
 
-	private final List<MenuItem> items;
+	private final List<IMenuItem> items; //root level items
 	private WebMarkupContainer root;
 
 	/**
-	 * Keep a reference to the {@link MenuItem} hash
+	 * Keep a reference to the {@link MenuItem}<code>s</code> hash
 	 */
-	private Map<String, MenuItem> map = new HashMap<String, MenuItem>();
+	private Map<String, IMenuItem> map = new HashMap<String, IMenuItem>();
 
 	private JQueryAjaxBehavior onSelectBehavior;
 
@@ -63,14 +66,15 @@ public class Menu extends JQueryPanel
 	 */
 	public Menu(String id)
 	{
-		this(id, new ArrayList<MenuItem>());
+		this(id, new ArrayList<IMenuItem>());
 	}
 
 	/**
 	 * Constructor
 	 * @param id the markup id
+	 * @param items the menu-items
 	 */
-	public Menu(String id, List<MenuItem> items)
+	public Menu(String id, List<IMenuItem> items)
 	{
 		super(id);
 
@@ -85,15 +89,16 @@ public class Menu extends JQueryPanel
 	 */
 	public Menu(String id, Options options)
 	{
-		this(id, new ArrayList<MenuItem>() , options);
+		this(id, new ArrayList<IMenuItem>() , options);
 	}
 
 	/**
 	 * Constructor
 	 * @param id the markup id
+	 * @param items the menu-items
 	 * @param options {@link Options}
 	 */
-	public Menu(String id, List<MenuItem> items, Options options)
+	public Menu(String id, List<IMenuItem> items, Options options)
 	{
 		super(id, options);
 
@@ -101,6 +106,9 @@ public class Menu extends JQueryPanel
 		this.init();
 	}
 
+	/**
+	 * Initialization
+	 */
 	private void init()
 	{
 		this.root = new WebMarkupContainer("root");
@@ -139,7 +147,7 @@ public class Menu extends JQueryPanel
 			SelectEvent payload = (SelectEvent) event.getPayload();
 			AjaxRequestTarget target = payload.getTarget();
 
-			MenuItem item = this.map.get(payload.getHash());
+			IMenuItem item = this.map.get(payload.getHash());
 
 			if (item != null)
 			{
@@ -149,9 +157,13 @@ public class Menu extends JQueryPanel
 		}
 	}
 
-	protected void onClick(AjaxRequestTarget target, MenuItem item)
+	/**
+	 * Triggered when a menu-item is clicked
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param item the {@link IMenuItem}
+	 */
+	protected void onClick(AjaxRequestTarget target, IMenuItem item)
 	{
-
 	}
 
 	// IJQueryWidget //
@@ -173,10 +185,9 @@ public class Menu extends JQueryPanel
 	}
 
 
-
 	// Factories //
 	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'activate' javascript callback
+	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'select' javascript callback
 	 * @return the {@link JQueryAjaxBehavior}
 	 */
 	private JQueryAjaxBehavior newOnSelectBehavior()
@@ -208,7 +219,7 @@ public class Menu extends JQueryPanel
 
 	// Event objects //
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'activate' callback
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'select' callback
 	 */
 	private class SelectEvent extends JQueryEvent
 	{
@@ -217,7 +228,6 @@ public class Menu extends JQueryPanel
 		/**
 		 * Constructor
 		 * @param target the {@link AjaxRequestTarget}
-		 * @param step the {@link Step} (Start or Stop)
 		 */
 		public SelectEvent(AjaxRequestTarget target)
 		{
@@ -227,8 +237,8 @@ public class Menu extends JQueryPanel
 		}
 
 		/**
-		 * Gets the tab's index
-		 * @return the index
+		 * Gets the menu's id-hash
+		 * @return the id-hash
 		 */
 		public String getHash()
 		{
@@ -236,11 +246,16 @@ public class Menu extends JQueryPanel
 		}
 	}
 
-	class MenuFragment extends Fragment
+
+	// Fragments //
+	/**
+	 * Represents a menu {@link Fragment}. Could be either the root or the a sub-menu
+	 */
+	private class MenuFragment extends Fragment
 	{
 		private static final long serialVersionUID = 1L;
 
-		public MenuFragment(String id, List<MenuItem> items)
+		public MenuFragment(String id, List<IMenuItem> items)
 		{
 			super(id, "menu-fragment", Menu.this);
 
@@ -249,41 +264,53 @@ public class Menu extends JQueryPanel
 		}
 	}
 
-	class ListFragment extends Fragment
+	/**
+	 * Represents a {@link Fragment} of a list of menu-items
+	 */
+	private class ListFragment extends Fragment
 	{
 		private static final long serialVersionUID = 1L;
 
-		public ListFragment(String id, List<MenuItem> items)
+		public ListFragment(String id, List<IMenuItem> items)
 		{
 			super(id, "list-fragment", Menu.this);
 
-			this.add(new ListView<MenuItem>("items", items) {
+			this.add(new ListView<IMenuItem>("items", items) {
 
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				protected void populateItem(ListItem<MenuItem> item)
+				protected void populateItem(ListItem<IMenuItem> item)
 				{
-					MenuItem mi = item.getModelObject();
+					IMenuItem menuItem = item.getModelObject();
+					Menu.this.map.put(menuItem.getId(), menuItem);
 
-					map.put(mi.getId(), mi);
+					item.add(AttributeModifier.replace("id", menuItem.getId()));
+					item.add(new ItemFragment("item", menuItem));
+					item.add(new MenuFragment("menu", menuItem.getItems()));
 
-					item.add(AttributeModifier.replace("id", mi.getId()));
-					item.add(new ItemFragment("item", item.getModelObject()));
-					item.add(new MenuFragment("menu", item.getModelObject().getItems()));
+					if (!menuItem.isEnabled())
+					{
+						item.add(AttributeModifier.append("class", Model.of("ui-state-disabled")));
+					}
+
 				}
 			});
 		}
 	}
 
-	class ItemFragment extends Fragment
+	/**
+	 * Represents a {@link Fragment} of a menu-item
+	 */
+	private class ItemFragment extends Fragment
 	{
 		private static final long serialVersionUID = 1L;
 
-		public ItemFragment(String id, MenuItem item)
+		public ItemFragment(String id, IMenuItem item)
 		{
 			super(id, "item-fragment", Menu.this);
 
+			this.add(new EmptyPanel("icon").add(AttributeModifier.append("class", new PropertyModel<String>(item, "iconClass"))));
 			this.add(new Label("title", item.getTitle()));
 		}
 	}

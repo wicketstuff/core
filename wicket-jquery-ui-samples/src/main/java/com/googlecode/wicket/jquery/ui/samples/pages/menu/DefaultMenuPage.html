@@ -3,11 +3,19 @@
 <head>
 <wicket:head>
 	<title>Wicket - jQuery UI: Menu</title>
+	<style type="text/css">
+		/* sub menus */
+		.ui-menu .ui-menu {
+			width: 150px;
+		}
+	</style>
 </wicket:head>
 </head>
 <body>
 <wicket:extend>
 	<div wicket:id="menu" style="width: 200px;"></div>
+	<br/>
+	<div wicket:id="feedback" style="width: 360px;"></div>
 </wicket:extend>
 </body>
 </html>

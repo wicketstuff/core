@@ -26,6 +26,8 @@ import com.googlecode.wicket.jquery.ui.form.button.Button;
  */
 public enum JQueryIcon
 {
+	NONE(""),
+
 	CARAT_1_N("ui-icon-carat-1-n"),
 	CARAT_1_NE("ui-icon-carat-1-ne"),
 	CARAT_1_E("ui-icon-carat-1-e"),
