@@ -249,7 +249,7 @@ public class Menu extends JQueryPanel
 
 	// Fragments //
 	/**
-	 * Represents a menu {@link Fragment}. Could be either the root or the a sub-menu
+	 * Represents a menu {@link Fragment}. Could be either the root or a sub-menu
 	 */
 	private class MenuFragment extends Fragment
 	{
