@@ -16,8 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.panel;
 
-import java.util.Iterator;
-
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
@@ -25,7 +23,6 @@ import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
@@ -100,13 +97,42 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 		WebMarkupContainer container = new WebMarkupContainer(id);
 		container.add(new EmptyPanel("icon").add(AttributeModifier.replace("class", this.getIconClass(message))));
 		container.add(super.newMessageDisplayComponent("label", message));
+		container.add(AttributeModifier.replace("class", this.getMessageClass(message)));
 
 		return container;
 	}
 
+	@Override
+	protected String getCSSClass(FeedbackMessage message)
+	{
+		return ""; //not used, because it would be applied onto both 'message' and 'label'
+	}
 
 	/**
-	 * Gets the icon class for the given message.
+	 * Gets the CSS class for the given message.
+	 * @param message the {@link FeedbackMessage}
+	 * @return the label class
+	 */
+	protected String getMessageClass(FeedbackMessage message)
+	{
+		switch (message.getLevel())
+		{
+			case FeedbackMessage.INFO:
+				return INFO_CSS;
+
+			case FeedbackMessage.WARNING:
+				return WARN_CSS;
+
+			case FeedbackMessage.ERROR:
+				return ERROR_CSS;
+
+			default:
+				return this.getCSSClass(message);
+		}
+	}
+
+	/**
+	 * Gets the icon CSS class for the given message.
 	 * @param message the {@link FeedbackMessage}
 	 * @return the icon class
 	 */
@@ -124,49 +150,7 @@ public class JQueryFeedbackPanel extends FeedbackPanel
 				return ERROR_ICO;
 
 			default:
-				return super.getCSSClass(message);
-		}
-	}
-
-	@Override
-	protected String getCSSClass(FeedbackMessage message)
-	{
-		switch (message.getLevel())
-		{
-			case FeedbackMessage.INFO:
-				return INFO_CSS;
-
-			case FeedbackMessage.WARNING:
-				return WARN_CSS;
-
-			case FeedbackMessage.ERROR:
-				return ERROR_CSS;
-
-			default:
-				return super.getCSSClass(message);
-		}
-	}
-
-	/**
-	 * TODO: Wicket ML: open a JIRA request, to be able to sort message by type (so an enclosing class could be defined).
-	 */
-	@Override
-	protected void onBeforeRender()
-	{
-		super.onBeforeRender();
-
-		// removes the 'errorLevel' class on span wicket:id="message".
-		ListView<?> messages = (ListView<?>) this.get("feedbackul:messages");
-		Iterator<Component> iterator = messages.iterator();
-
-		while (iterator.hasNext())
-		{
-			Component component = iterator.next().get("message"); //iterator.next() returns the ListItem
-
-			if (component != null)
-			{
-				component.add(AttributeModifier.remove("class"));
-			}
+				return this.getCSSClass(message);
 		}
 	}
 }
