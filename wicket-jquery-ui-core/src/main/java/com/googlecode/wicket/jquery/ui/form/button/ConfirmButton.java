@@ -52,7 +52,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 	 */
 	public ConfirmButton(String id, String label, String title, String message)
 	{
-		this(id, label, title, new Model<String>(message));
+		this(id, Model.of(label), Model.of(title), new Model<String>(message));
 	}
 
 	/**
@@ -62,7 +62,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 	 * @param title the dialog title
 	 * @param message the dialog message, also acts as model object
 	 */
-	public ConfirmButton(String id, String label, String title, IModel<String> message)
+	public ConfirmButton(String id, IModel<String> label, IModel<String> title, IModel<String> message)
 	{
 		super(id, message);
 
@@ -88,7 +88,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 
 		this.add(button.setDefaultFormProcessing(false)); //does not validate the form before the dialog is being displayed
 
-		button.add(new Label("label", new Model<String>(label)).setRenderBodyOnly(true));
+		button.add(new Label("label", label).setRenderBodyOnly(true));
 	}
 
 	// Properties //
@@ -111,7 +111,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 	 * @param message the message to be displayed
 	 * @return the dialog instance
 	 */
-	protected AbstractDialog<?> newDialog(String id, String title, IModel<String> message)
+	protected AbstractDialog<?> newDialog(String id, IModel<String> title, IModel<String> message)
 	{
 		return new MessageDialog(id, title, message, DialogButtons.OK_CANCEL, DialogIcon.WARN) {
 

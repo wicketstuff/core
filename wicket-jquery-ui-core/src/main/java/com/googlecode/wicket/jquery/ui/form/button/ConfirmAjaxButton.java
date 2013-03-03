@@ -53,7 +53,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	 */
 	public ConfirmAjaxButton(String id, String label, String title, String message)
 	{
-		this(id, label, title, new Model<String>(message));
+		this(id, Model.of(label), Model.of(title), Model.of(message));
 	}
 
 	/**
@@ -63,7 +63,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	 * @param title the dialog title
 	 * @param message the dialog message
 	 */
-	public ConfirmAjaxButton(String id, String label, String title, IModel<String> message)
+	public ConfirmAjaxButton(String id, IModel<String> label, IModel<String> title, IModel<String> message)
 	{
 		super(id, message);
 
@@ -89,7 +89,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 
 		this.add(button.setDefaultFormProcessing(false)); //does not validate the form before the dialog is being displayed
 
-		button.add(new Label("label", new Model<String>(label)).setRenderBodyOnly(true));
+		button.add(new Label("label", label).setRenderBodyOnly(true));
 	}
 
 
@@ -130,7 +130,7 @@ public abstract class ConfirmAjaxButton extends GenericPanel<String>
 	 * @param message the message to be displayed
 	 * @return the dialog instance
 	 */
-	protected AbstractFormDialog<?> newFormDialog(String id, String title, IModel<String> message)
+	protected AbstractFormDialog<?> newFormDialog(String id, IModel<String> title, IModel<String> message)
 	{
 		return new MessageFormDialog(id, title, message, DialogButtons.OK_CANCEL, DialogIcon.WARN) {
 

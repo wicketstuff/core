@@ -61,7 +61,7 @@ public class SimpleTab extends AbstractTab
 	}
 
 	/**
-	 * Gets the {@link LabelPanel} that contains the content supplied in the constructor
+	 * Gets the {@link LabelPanel} that contains the content supplied to the constructor
 	 * @return the {@link LabelPanel}
 	 */
 	@Override

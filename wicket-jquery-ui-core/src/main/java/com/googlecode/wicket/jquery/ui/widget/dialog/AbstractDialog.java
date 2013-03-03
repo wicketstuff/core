@@ -24,6 +24,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.IJQueryWidget;
 import com.googlecode.wicket.jquery.ui.JQueryBehavior;
@@ -31,6 +32,7 @@ import com.googlecode.wicket.jquery.ui.JQueryEvent;
 import com.googlecode.wicket.jquery.ui.JQueryPanel;
 import com.googlecode.wicket.jquery.ui.Options;
 import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.ui.interaction.behavior.DisplayNoneBehavior;
 
 /**
  * Base class for implementing jQuery dialogs
@@ -54,17 +56,16 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	/** Default width */
 	private static final int WIDTH = 450;
 
-	private String title;
+	private IModel<String> title;
 	private boolean modal;
 	private JQueryBehavior widgetBehavior;
 	private JQueryAjaxBehavior onDefaultClose;
 
-	/**
-	 * Default button
-	 */
+	/** Default button */
 	private final DialogButton btnOk = new DialogButton(LBL_OK);
 
 	/**
+	 * Constructor
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 */
@@ -74,6 +75,17 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	}
 
 	/**
+	 * Constructor
+	 * @param id the markupId, an html div suffice to host a dialog.
+	 * @param title the title of the dialog
+	 */
+	public AbstractDialog(String id, IModel<String> title)
+	{
+		this(id, title, null, true);
+	}
+
+	/**
+	 * Constructor
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param model the model to be used in the dialog. It is retransmitted to the {@link DialogEvent} object.
@@ -84,6 +96,18 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	}
 
 	/**
+	 * Constructor
+	 * @param id the markupId, an html div suffice to host a dialog.
+	 * @param title the title of the dialog
+	 * @param model the model to be used in the dialog. It is retransmitted to the {@link DialogEvent} object.
+	 */
+	public AbstractDialog(String id, IModel<String> title, IModel<T> model)
+	{
+		this(id, title, model, true);
+	}
+
+	/**
+	 * Constructor
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param modal indicates whether the dialog is modal
@@ -94,6 +118,18 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	}
 
 	/**
+	 * Constructor
+	 * @param id the markupId, an html div suffice to host a dialog.
+	 * @param title the title of the dialog
+	 * @param modal indicates whether the dialog is modal
+	 */
+	public AbstractDialog(String id, IModel<String> title, boolean modal)
+	{
+		this(id, title, null, modal);
+	}
+
+	/**
+	 * Constructor
 	 * @param id markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param modal indicates whether the dialog is modal
@@ -101,11 +137,24 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	 */
 	public AbstractDialog(String id, String title, IModel<T> model, boolean modal)
 	{
+		this(id, Model.of(title), model, modal);
+	}
+
+	/**
+	 * Constructor
+	 * @param id markupId, an html div suffice to host a dialog.
+	 * @param title the title of the dialog
+	 * @param modal indicates whether the dialog is modal
+	 * @param model the model to be used in the dialog; it is retransmitted to the {@link DialogEvent} object.
+	 */
+	public AbstractDialog(String id, IModel<String> title, IModel<T> model, boolean modal)
+	{
 		super(id, model);
 
 		this.title = title;
 		this.modal = modal;
 
+		this.add(new DisplayNoneBehavior()); //enhancement, fixes issue #22
 		this.setOutputMarkupPlaceholderTag(true);
 	}
 
@@ -204,16 +253,30 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 	/**
 	 * Gets the dialog's title
-	 * @return the title supplied in the constructor by default
+	 * @return the dialog's title
 	 */
-	public String getTitle()
+	public IModel<String> getTitle()
 	{
 		return this.title;
 	}
 
 	/**
+	 * Sets the dialog's title
+	 * @param title the dialog's title
+	 */
+	public void setTitle(IModel<String> title)
+	{
+		if (title == null)
+		{
+			throw new IllegalArgumentException("argument title must be not null");
+		}
+
+		this.title = title;
+	}
+
+	/**
 	 * Gets the modal flag
-	 * @return the modal flag supplied in the constructor by default
+	 * @return the modal flag supplied to the constructor by default
 	 */
 	public boolean isModal()
 	{
@@ -339,7 +402,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 				// class options //
 				this.setOption("autoOpen", false);
-				this.setOption("title", Options.asString(AbstractDialog.this.title));
+				this.setOption("title", Options.asString(AbstractDialog.this.title.getObject()));
 				this.setOption("modal", AbstractDialog.this.modal);
 				this.setOption("resizable", AbstractDialog.this.isResizable());
 				this.setOption("width", AbstractDialog.this.getWidth());

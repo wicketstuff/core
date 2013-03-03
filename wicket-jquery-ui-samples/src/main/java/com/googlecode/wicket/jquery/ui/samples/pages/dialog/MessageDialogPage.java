@@ -3,6 +3,7 @@ package com.googlecode.wicket.jquery.ui.samples.pages.dialog;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.StringResourceModel;
 
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -54,7 +55,7 @@ public class MessageDialogPage extends AbstractDialogPage
 
 		this.add(warningDialog);
 
-		final MessageDialog errorDialog = new MessageDialog("errorDialog", "Error", "This is an error message!", DialogButtons.OK, DialogIcon.ERROR) {
+		final MessageDialog errorDialog = new MessageDialog("errorDialog", new StringResourceModel("dialog.error.title", this, null), new StringResourceModel("dialog.error.message", this, null), DialogButtons.OK, DialogIcon.ERROR) {
 
 			private static final long serialVersionUID = 1L;
 

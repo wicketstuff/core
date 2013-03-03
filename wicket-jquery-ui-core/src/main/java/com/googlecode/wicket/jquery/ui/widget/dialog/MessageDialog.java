@@ -26,8 +26,6 @@ import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.interaction.behavior.DisplayNoneBehavior;
-
 /**
  * Provides a modal dialog box that display a specific message, with a predefined icon and a predefined button set.
  * <b>Note: </b> {@link MessageDialog} & {@link MessageFormDialog} are sharing the same code. There just do not extends the same class.
@@ -49,7 +47,7 @@ public abstract class MessageDialog extends AbstractDialog<String>
 	 */
 	public MessageDialog(String id, String title, String message, DialogButtons buttons)
 	{
-		this(id, title, new Model<String>(message), buttons, DialogIcon.NONE);
+		this(id, title, message, buttons, DialogIcon.NONE);
 	}
 
 	/**
@@ -59,7 +57,7 @@ public abstract class MessageDialog extends AbstractDialog<String>
 	 * @param message the message to be displayed
 	 * @param buttons button set to display
 	 */
-	public MessageDialog(String id, String title, IModel<String> message, DialogButtons buttons)
+	public MessageDialog(String id, IModel<String> title, IModel<String> message, DialogButtons buttons)
 	{
 		this(id, title, message, buttons, DialogIcon.NONE);
 	}
@@ -74,7 +72,7 @@ public abstract class MessageDialog extends AbstractDialog<String>
 	 */
 	public MessageDialog(String id, String title, String message, DialogButtons buttons, DialogIcon icon)
 	{
-		this(id, title, new Model<String>(message), buttons, icon);
+		this(id, Model.of(title), Model.of(message), buttons, icon);
 	}
 
 	/**
@@ -85,12 +83,10 @@ public abstract class MessageDialog extends AbstractDialog<String>
 	 * @param buttons button set to display
 	 * @param icon the predefined icon to display
 	 */
-	public MessageDialog(String id, String title, IModel<String> message, DialogButtons buttons, DialogIcon icon)
+	public MessageDialog(String id, IModel<String> title, IModel<String> message, DialogButtons buttons, DialogIcon icon)
 	{
 		super(id, title, message, true);
 		this.buttons = buttons;
-
-		this.add(new DisplayNoneBehavior()); //enhancement, fixes issue #22
 
 		WebMarkupContainer container = new WebMarkupContainer("container");
 		this.add(container);

@@ -48,9 +48,30 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	 * Constructor
 	 * @param id the markup id
 	 * @param title the dialog's title
+	 */
+	public AbstractFormDialog(String id, IModel<String> title)
+	{
+		super(id, title);
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
 	 * @param model the dialog's model
 	 */
 	public AbstractFormDialog(String id, String title, IModel<T> model)
+	{
+		super(id, title, model, true);
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
+	 * @param model the dialog's model
+	 */
+	public AbstractFormDialog(String id, IModel<String> title, IModel<T> model)
 	{
 		super(id, title, model, true);
 	}
@@ -70,10 +91,33 @@ public abstract class AbstractFormDialog<T extends Serializable> extends Abstrac
 	 * Constructor
 	 * @param id the markup id
 	 * @param title the dialog's title
+	 * @param modal indicates whether the dialog is modal
+	 */
+	public AbstractFormDialog(String id, IModel<String> title, boolean modal)
+	{
+		super(id, title, modal);
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
 	 * @param model the dialog's model
 	 * @param modal indicates whether the dialog is modal
 	 */
 	public AbstractFormDialog(String id, String title, IModel<T> model, boolean modal)
+	{
+		super(id, title, model, modal);
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
+	 * @param model the dialog's model
+	 * @param modal indicates whether the dialog is modal
+	 */
+	public AbstractFormDialog(String id, IModel<String> title, IModel<T> model, boolean modal)
 	{
 		super(id, title, model, modal);
 	}

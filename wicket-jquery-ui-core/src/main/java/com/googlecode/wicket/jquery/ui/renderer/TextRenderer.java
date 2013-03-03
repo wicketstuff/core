@@ -48,7 +48,7 @@ public class TextRenderer<T> implements ITextRenderer<T>
 	}
 
 	/**
-	 * Gets the expression supplied in the constructor
+	 * Gets the expression supplied to the constructor
 	 * @return null if the default constructor has been used
 	 */
 	public String getExpression()

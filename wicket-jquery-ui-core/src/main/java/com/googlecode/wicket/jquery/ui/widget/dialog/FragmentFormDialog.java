@@ -48,9 +48,34 @@ public abstract class FragmentFormDialog<T extends Serializable> extends Abstrac
 	 * Constructor
 	 * @param id the markup id
 	 * @param title the dialog's title
+	 */
+	public FragmentFormDialog(String id, IModel<String> title)
+	{
+		super(id, title);
+
+		this.init();
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
 	 * @param model the dialog's model
 	 */
 	public FragmentFormDialog(String id, String title, IModel<T> model)
+	{
+		super(id, title, model);
+
+		this.init();
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
+	 * @param model the dialog's model
+	 */
+	public FragmentFormDialog(String id, IModel<String> title, IModel<T> model)
 	{
 		super(id, title, model);
 
@@ -74,10 +99,37 @@ public abstract class FragmentFormDialog<T extends Serializable> extends Abstrac
 	 * Constructor
 	 * @param id the markup id
 	 * @param title the dialog's title
+	 * @param modal indicates whether the dialog is modal
+	 */
+	public FragmentFormDialog(String id, IModel<String> title, boolean modal)
+	{
+		super(id, title, modal);
+
+		this.init();
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
 	 * @param model the dialog's model
 	 * @param modal indicates whether the dialog is modal
 	 */
 	public FragmentFormDialog(String id, String title, IModel<T> model, boolean modal)
+	{
+		super(id, title, model, modal);
+
+		this.init();
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
+	 * @param model the dialog's model
+	 * @param modal indicates whether the dialog is modal
+	 */
+	public FragmentFormDialog(String id, IModel<String> title, IModel<T> model, boolean modal)
 	{
 		super(id, title, model, modal);
 

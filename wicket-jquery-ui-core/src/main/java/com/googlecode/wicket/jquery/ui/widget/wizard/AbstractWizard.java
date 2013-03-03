@@ -30,6 +30,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
+
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
@@ -70,9 +71,32 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	 * Constructor
 	 * @param id the markup id
 	 * @param title the dialog's title
+	 */
+	public AbstractWizard(String id, IModel<String> title)
+	{
+		super(id, title);
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
 	 * @param wizardModel the {@link IWizardModel}
 	 */
 	public AbstractWizard(String id, String title, IWizardModel wizardModel)
+	{
+		super(id, title);
+
+		this.init(wizardModel);
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
+	 * @param wizardModel the {@link IWizardModel}
+	 */
+	public AbstractWizard(String id, IModel<String> title, IWizardModel wizardModel)
 	{
 		super(id, title);
 
@@ -94,6 +118,17 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	 * Constructor
 	 * @param id the markup id
 	 * @param title the dialog's title
+	 * @param modal indicates whether the dialog is modal
+	 */
+	public AbstractWizard(String id, IModel<String> title, boolean modal)
+	{
+		super(id, title, modal);
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
 	 * @param model the dialog's model
 	 * @param modal indicates whether the dialog is modal
 	 */
@@ -107,8 +142,31 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	 * @param id the markup id
 	 * @param title the dialog's title
 	 * @param model the dialog's model
+	 * @param modal indicates whether the dialog is modal
+	 */
+	public AbstractWizard(String id, IModel<String> title, IModel<T> model, boolean modal)
+	{
+		super(id, title, model, modal);
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
+	 * @param model the dialog's model
 	 */
 	public AbstractWizard(String id, String title, IModel<T> model)
+	{
+		super(id, title, model);
+	}
+
+	/**
+	 * Constructor
+	 * @param id the markup id
+	 * @param title the dialog's title
+	 * @param model the dialog's model
+	 */
+	public AbstractWizard(String id, IModel<String> title, IModel<T> model)
 	{
 		super(id, title, model);
 	}

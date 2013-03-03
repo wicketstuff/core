@@ -34,6 +34,7 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Constructor
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 */
@@ -45,6 +46,19 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	}
 
 	/**
+	 * Constructor
+	 * @param id the markupId, an html div suffice to host a dialog.
+	 * @param title the title of the dialog
+	 */
+	public FragmentDialog(String id, IModel<String> title)
+	{
+		super(id, title);
+
+		this.init();
+	}
+
+	/**
+	 * Constructor
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param model the model to be used in the dialog. It is retransmitted to the {@link DialogEvent} object.
@@ -57,6 +71,20 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	}
 
 	/**
+	 * Constructor
+	 * @param id the markupId, an html div suffice to host a dialog.
+	 * @param title the title of the dialog
+	 * @param model the model to be used in the dialog. It is retransmitted to the {@link DialogEvent} object.
+	 */
+	public FragmentDialog(String id, IModel<String> title, Model<T> model)
+	{
+		super(id, title, model);
+
+		this.init();
+	}
+
+	/**
+	 * Constructor
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param modal indicates whether the dialog is modal
@@ -69,12 +97,40 @@ public abstract class FragmentDialog<T extends Serializable> extends AbstractDia
 	}
 
 	/**
+	 * Constructor
+	 * @param id the markupId, an html div suffice to host a dialog.
+	 * @param title the title of the dialog
+	 * @param modal indicates whether the dialog is modal
+	 */
+	public FragmentDialog(String id, IModel<String> title, boolean modal)
+	{
+		super(id, title, modal);
+
+		this.init();
+	}
+
+	/**
+	 * Constructor
 	 * @param id markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
 	 * @param modal indicates whether the dialog is modal
 	 * @param model the model to be used in the dialog; it is retransmitted to the {@link DialogEvent} object.
 	 */
 	public FragmentDialog(String id, String title, IModel<T> model, boolean modal)
+	{
+		super(id, title, model, modal);
+
+		this.init();
+	}
+
+	/**
+	 * Constructor
+	 * @param id markupId, an html div suffice to host a dialog.
+	 * @param title the title of the dialog
+	 * @param modal indicates whether the dialog is modal
+	 * @param model the model to be used in the dialog; it is retransmitted to the {@link DialogEvent} object.
+	 */
+	public FragmentDialog(String id, IModel<String> title, IModel<T> model, boolean modal)
 	{
 		super(id, title, model, modal);
 

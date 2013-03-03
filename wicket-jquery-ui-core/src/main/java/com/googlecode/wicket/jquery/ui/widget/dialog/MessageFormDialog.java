@@ -29,36 +29,24 @@ import org.apache.wicket.model.Model;
 /**
  * Provides a modal dialog box that display a specific message, with a predefined icon and a predefined button set.
  * <b>Note: </b> {@link MessageDialog} & {@link MessageFormDialog} are sharing the same code. There just do not extends the same class.
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public abstract class MessageFormDialog extends AbstractFormDialog<String>
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Label label;
 	private DialogButtons buttons;
 
 	/**
 	 * Constructor.
 	 * @param id the markupId, an html div suffice to host a dialog.
-	 * @param title the title of the dialog 
+	 * @param title the title of the dialog
 	 * @param message the message to be displayed
 	 * @param buttons button set to display
 	 */
 	public MessageFormDialog(String id, String title, String message, DialogButtons buttons)
-	{
-		this(id, title, new Model<String>(message), buttons, DialogIcon.NONE);
-	}
-
-	/**
-	 * Constructor.
-	 * @param id the markupId, an html div suffice to host a dialog.
-	 * @param title the title of the dialog 
-	 * @param message the message to be displayed
-	 * @param buttons button set to display
-	 */
-	public MessageFormDialog(String id, String title, IModel<String> message, DialogButtons buttons)
 	{
 		this(id, title, message, buttons, DialogIcon.NONE);
 	}
@@ -66,29 +54,41 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	/**
 	 * Constructor.
 	 * @param id the markupId, an html div suffice to host a dialog.
-	 * @param title the title of the dialog 
+	 * @param title the title of the dialog
+	 * @param message the message to be displayed
+	 * @param buttons button set to display
+	 */
+	public MessageFormDialog(String id, IModel<String> title, IModel<String> message, DialogButtons buttons)
+	{
+		this(id, title, message, buttons, DialogIcon.NONE);
+	}
+
+	/**
+	 * Constructor.
+	 * @param id the markupId, an html div suffice to host a dialog.
+	 * @param title the title of the dialog
 	 * @param message the message to be displayed
 	 * @param buttons button set to display
 	 * @param icon the predefined icon to display
 	 */
 	public MessageFormDialog(String id, String title, String message, DialogButtons buttons, DialogIcon icon)
 	{
-		this(id, title, new Model<String>(message), buttons, icon);
+		this(id, Model.of(title), Model.of(message), buttons, icon);
 	}
 
 	/**
 	 * Constructor.
 	 * @param id the markupId, an html div suffice to host a dialog.
-	 * @param title the title of the dialog 
+	 * @param title the title of the dialog
 	 * @param message the message to be displayed
 	 * @param buttons button set to display
 	 * @param icon the predefined icon to display
 	 */
-	public MessageFormDialog(String id, String title, IModel<String> message, DialogButtons buttons, DialogIcon icon)
+	public MessageFormDialog(String id, IModel<String> title, IModel<String> message, DialogButtons buttons, DialogIcon icon)
 	{
 		super(id, title, message, true);
 		this.buttons = buttons;
-		
+
 		WebMarkupContainer container = new WebMarkupContainer("container");
 		this.add(container);
 
@@ -109,7 +109,7 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 
 		return super.getButtons(); //cannot happen
 	}
-	
+
 	@Override
 	protected void onOpen(AjaxRequestTarget target)
 	{
@@ -119,6 +119,6 @@ public abstract class MessageFormDialog extends AbstractFormDialog<String>
 	@Override
 	protected void onClose(AjaxRequestTarget target, DialogButton button)
 	{
-		//not mandatory to override 
+		//not mandatory to override
 	}
 }

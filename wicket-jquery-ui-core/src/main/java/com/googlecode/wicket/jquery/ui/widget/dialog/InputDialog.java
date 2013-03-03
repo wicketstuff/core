@@ -41,6 +41,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	private static final long serialVersionUID = 1L;
 
 	private final Form<?> form;
+	private IModel<String> label;
 
 	/**
 	 * Constructor supplying a new default model.
@@ -54,6 +55,17 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	}
 
 	/**
+	 * Constructor supplying a new default model.
+	 * @param id the markupId, an html div suffice to host a dialog.
+	 * @param title the title of the dialog
+	 * @param label text that will be displayed in front of the text field.
+	 */
+	public InputDialog(String id, IModel<String> title, IModel<String> label)
+	{
+		this(id, title, label, new Model<T>());
+	}
+
+	/**
 	 *
 	 * @param id the markupId, an html div suffice to host a dialog.
 	 * @param title the title of the dialog
@@ -62,16 +74,54 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 	 */
 	public InputDialog(String id, String title, String label, IModel<T> model)
 	{
+		this(id, Model.of(title), Model.of(label), model);
+	}
+
+	/**
+	 *
+	 * @param id the markupId, an html div suffice to host a dialog.
+	 * @param title the title of the dialog
+	 * @param label text that will be displayed in front of the text field.
+	 * @param model the model to be used
+	 */
+	public InputDialog(String id, IModel<String> title, IModel<String> label, IModel<T> model)
+	{
 		super(id, title, model, true);
+
+		this.label = label;
 
 		this.form = new Form<T>("form");
 		this.add(this.form);
 
-		this.form.add(new Label("label", label));
+		this.form.add(new Label("label", this.label));
 		this.form.add(new RequiredTextField<T>("input", this.getModel()));
 
 		FeedbackPanel feedback = new JQueryFeedbackPanel("feedback", this.form.get("input"));
 		this.form.add(feedback.setOutputMarkupId(true));
+	}
+
+	// Properties //
+	/**
+	 * Sets the text that will be displayed in front of the text field.
+	 * @return the dialog's label
+	 */
+	public IModel<String> getLabel()
+	{
+		return this.label;
+	}
+
+	/**
+	 * Sets the text that will be displayed in front of the text field.
+	 * @param label the dialog's label
+	 */
+	public void setLabel(IModel<String> label)
+	{
+		if (label == null)
+		{
+			throw new IllegalArgumentException("argument label must be not null");
+		}
+
+		this.label = label;
 	}
 
 	@Override
