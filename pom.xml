@@ -56,12 +56,10 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-
 		<repository>
 			<id>Apache Nexus Staging</id>
 			<url>https://repository.apache.org/content/repositories/orgapachewicket-274/</url>
 		</repository>
-		
 	</repositories>
 
 	<build>

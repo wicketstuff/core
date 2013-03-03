@@ -52,7 +52,7 @@ public abstract class ConfirmButton extends FormSubmittingPanel<String>
 	 */
 	public ConfirmButton(String id, String label, String title, String message)
 	{
-		this(id, Model.of(label), Model.of(title), new Model<String>(message));
+		this(id, Model.of(label), Model.of(title), Model.of(message));
 	}
 
 	/**
