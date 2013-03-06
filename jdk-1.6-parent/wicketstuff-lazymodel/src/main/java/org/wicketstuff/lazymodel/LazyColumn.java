@@ -36,6 +36,8 @@ import org.wicketstuff.lazymodel.LazyModel.Evaluation;
  * 
  * @param T
  *            row object type
+ * @param S
+ *            sort property type
  * @param R
  *            cell object type
  * 
@@ -43,39 +45,39 @@ import org.wicketstuff.lazymodel.LazyModel.Evaluation;
  * 
  * @author svenmeier
  */
-public class LazyColumn<T, R> extends AbstractColumn<T, LazyModel<R>> implements
-		IExportableColumn<T, LazyModel<R>, R> {
+public class LazyColumn<T, S, R> extends AbstractColumn<T, S> implements
+		IExportableColumn<T, S, R> {
 
 	private final LazyModel<R> model;
 
-	/**
-	 * Create a non-sortable column.
-	 * 
+        /**
+         * Creates a new non-sortable column.
+         *
 	 * @param displayModel
 	 *            model for the header
 	 * @param evaluationResult
 	 *            result of an evaluation
-	 */
-	public LazyColumn(IModel<String> displayModel, R evaluationResult) {
-		this(displayModel, evaluationResult, false);
-	}
+         */
+        public LazyColumn(IModel<String> displayModel, R evaluationResult)
+        {
+            this(displayModel, evaluationResult, null);
+        }
 
-	/**
-	 * Create a column.
-	 * 
+        /**
+         * Creates a new column. If the {@code sortProperty} is not {@code null}, then the column will be sortable.
+         *
 	 * @param displayModel
 	 *            model for the header
 	 * @param evaluationResult
 	 *            result of an evaluation
-	 * @param sortable
-	 *            is this column sortable
-	 */
-	public LazyColumn(IModel<String> displayModel, R evaluationResult,
-			boolean sortable) {
-		super(displayModel, sortable ? model(evaluationResult) : null);
-
-		this.model = model(evaluationResult);
-	}
+         * @param sortProperty
+         *            sort property to use when sorting by this column
+         */
+        public LazyColumn(IModel<String> displayModel, R evaluationResult, S sortProperty)
+        {
+            super(displayModel, sortProperty);
+            this.model = model(evaluationResult);
+        }
 
 	@Override
 	public void detach() {

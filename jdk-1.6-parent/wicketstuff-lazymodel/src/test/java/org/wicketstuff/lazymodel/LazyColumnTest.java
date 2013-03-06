@@ -34,7 +34,7 @@ public class LazyColumnTest {
 
 	@Test
 	public void bindToRow() {
-		LazyColumn<A, B> column = new LazyColumn<A, B>(
+		LazyColumn<A, Void, B> column = new LazyColumn<A, Void, B>(
 				Model.of("test"), from(A.class).getB());
 
 		A a1 = new A();
