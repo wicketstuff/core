@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.googlecode.wicket-jquery-ui</groupId>
 		<artifactId>jquery-ui-parent</artifactId>
-		<version>1.4.2-SNAPSHOT</version>
+		<version>1.4.2</version>
 	</parent>
 
 	<artifactId>jquery-ui-kendo</artifactId>
@@ -18,7 +18,7 @@
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>jquery-ui-core</artifactId>
-			<version>1.4.2-SNAPSHOT</version>
+			<version>1.4.2</version>
 		</dependency>
 
 		<!-- WICKET DEPENDENCIES -->
