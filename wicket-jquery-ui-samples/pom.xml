@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.googlecode.wicket-jquery-ui</groupId>
 		<artifactId>jquery-ui-parent</artifactId>
-		<version>1.4.2</version>
+		<version>1.4.3-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jquery-ui-samples</artifactId>
@@ -18,22 +18,22 @@
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>jquery-ui-core</artifactId>
-			<version>1.4.2</version>
+			<version>1.4.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>jquery-ui-kendo</artifactId>
-			<version>1.4.2</version>
+			<version>1.4.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>jquery-ui-calendar</artifactId>
-			<version>1.4.2</version>
+			<version>1.4.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
 			<artifactId>jquery-ui-plugins</artifactId>
-			<version>1.4.2</version>
+			<version>1.4.3-SNAPSHOT</version>
 		</dependency>
 
 		<!-- WICKET DEPENDENCIES -->
