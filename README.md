@@ -22,7 +22,7 @@ Once done, just include the jar(s) in your project's build path.
 <dependency>
     <groupId>com.googlecode.wicket-jquery-ui</groupId>
     <artifactId>jquery-ui-core</artifactId>
-    <version>1.4.1</version> <!-- <version>6.2.1</version> -->
+    <version>1.4.2</version> <!-- <version>6.2.2</version> -->
 </dependency>
 ```
 
@@ -49,7 +49,7 @@ The base template page is the following: (you might change the CSS href accordin
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
     <head>
-        <link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.10.0.custom.css" />
+        <link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.10.1.custom.css" />
     </head>
     <body>
     </body>
@@ -69,7 +69,7 @@ The base template page is then the following: (you might change the CSS href acc
     <head>
 
         <!-- jQuery UI -->
-        <link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.10.0.custom.css" />
+        <link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.10.1.custom.css" />
 
         <!-- Kendo UI -->
         <link rel="stylesheet" type="text/css" href="css/kendo/kendo.common.min.css" media="all" />
