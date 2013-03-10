@@ -1,4 +1,5 @@
 package org.wicketstuff.egrid.component;
+
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
@@ -39,7 +40,7 @@ import org.wicketstuff.egrid.toolbar.EditableGridBottomToolbar;
  * 
  * 
  * @author Nadeem
- *
+ * 
  * @param <T>
  *            The model object type
  * @param <S>
@@ -74,17 +75,17 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 	 *            number of rows per page
 	 */
 	public EditableDataTable(final String id, final List<? extends IColumn<T, S>> newColumns,
-		final IEditableDataProvider<T, S> dataProvider, final long rowsPerPage, Class<T> clazz) 
+		final IEditableDataProvider<T, S> dataProvider, final long rowsPerPage, Class<T> clazz)
 	{
 		super(id);
 
 		Args.notEmpty(newColumns, "columns");
 
-		this.columns 		= newColumns;
-		this.caption 		= new Caption("caption", getCaptionModel());	
-		this.body 			= newBodyContainer("body");
-		this.datagrid   	= newDataGrid(newColumns, dataProvider, rowsPerPage);
-		this.topToolbars 	= new ToolbarsContainer("topToolbars");
+		this.columns = newColumns;
+		this.caption = new Caption("caption", getCaptionModel());
+		this.body = newBodyContainer("body");
+		this.datagrid = newDataGrid(newColumns, dataProvider, rowsPerPage);
+		this.topToolbars = new ToolbarsContainer("topToolbars");
 		this.bottomToolbars = new ToolbarsContainer("bottomToolbars");
 
 		this.body.add(datagrid);
@@ -100,30 +101,35 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 	private void init(Class<T> clazz)
 	{
 		this.setOutputMarkupId(true);
-	
-		addBottomToolbar(new EditableGridBottomToolbar<T, S>(this, clazz) {
+
+		addBottomToolbar(new EditableGridBottomToolbar<T, S>(this, clazz)
+		{
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onAdd(T newRow, AjaxRequestTarget target) {
+			protected void onAdd(AjaxRequestTarget target, T newRow)
+			{
 				getDataProvider().add(newRow);
 				target.add(EditableDataTable.this);
+				EditableDataTable.this.onAdd(target, newRow);
 			}
+
 			@Override
-			protected void onError(AjaxRequestTarget target) {
+			protected void onError(AjaxRequestTarget target)
+			{
 				super.onError(target);
 				EditableDataTable.this.onError(target);
 			}
-			
+
 		});
 	}
 
 	private EditableDataGridView<T, S> newDataGrid(final List<? extends IColumn<T, S>> columns,
-			final IEditableDataProvider<T, S> dataProvider,
-			final long rowsPerPage)
+		final IEditableDataProvider<T, S> dataProvider, final long rowsPerPage)
 	{
-		EditableDataGridView<T, S> datagrid 	= new EditableDataGridView<T, S>("rows", columns, dataProvider);
+		EditableDataGridView<T, S> datagrid = new EditableDataGridView<T, S>("rows", columns,
+			dataProvider);
 
 		datagrid.setItemsPerPage(rowsPerPage);
 		return datagrid;
@@ -226,12 +232,13 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 	@SuppressWarnings("unchecked")
 	public final IEditableDataProvider<T, S> getDataProvider()
 	{
-		return (IEditableDataProvider<T, S>) datagrid.getDataProvider();
+		return (IEditableDataProvider<T, S>)datagrid.getDataProvider();
 	}
 
 	/**
 	 * @return array of column objects this table displays
 	 */
+	@Override
 	public final List<? extends IColumn<T, S>> getColumns()
 	{
 		return columns;
@@ -306,6 +313,7 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 	 *            number of items to display per page
 	 * 
 	 */
+	@Override
 	public void setItemsPerPage(final long items)
 	{
 		datagrid.setItemsPerPage(items);
@@ -320,7 +328,8 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 		return datagrid.getItemCount();
 	}
 
-	private void addToolbar(final AbstractEditableGridToolbar toolbar, final ToolbarsContainer container)
+	private void addToolbar(final AbstractEditableGridToolbar toolbar,
+		final ToolbarsContainer container)
 	{
 		Args.notNull(toolbar, "toolbar");
 
@@ -431,8 +440,8 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 	}
 
 	/**
-	 * A caption for the table. It renders itself only if {@link EditableDataTable#getCaptionModel()} has
-	 * non-empty value.
+	 * A caption for the table. It renders itself only if
+	 * {@link EditableDataTable#getCaptionModel()} has non-empty value.
 	 */
 	private static class Caption extends Label
 	{
@@ -468,23 +477,26 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 			return null;
 		}
 	}
-	
-	private class EditableDataGridView<R, U> extends DataGridView<R> implements IItemRefreashable<R>
+
+	private class EditableDataGridView<R, U> extends DataGridView<R>
+		implements
+			IItemRefreashable<R>
 	{
 
 		private static final long serialVersionUID = 1L;
 
-		public EditableDataGridView(String id, List<? extends ICellPopulator<R>> populators, IEditableDataProvider<R, U> dataProvider)
+		public EditableDataGridView(String id, List<? extends ICellPopulator<R>> populators,
+			IEditableDataProvider<R, U> dataProvider)
 		{
 			super(id, populators, dataProvider);
 		}
-	
+
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		@Override
 		protected Item newCellItem(final String id, final int index, final IModel model)
 		{
 			Item item = EditableDataTable.this.newCellItem(id, index, model);
-			final IColumn<R, U> column = (IColumn<R, U>) EditableDataTable.this.columns.get(index);
+			final IColumn<R, U> column = (IColumn<R, U>)EditableDataTable.this.columns.get(index);
 			if (column instanceof IStyledColumn)
 			{
 				item.add(new CssAttributeBehavior()
@@ -500,13 +512,16 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 			}
 			return item;
 		}
+
 		@Override
 		protected Item<R> newRowItem(String id, int index, IModel<R> model)
 		{
 			return new RowItem<R>(id, index, model);
 		}
 
-		public void refreash(Item<R> rowItem) {
+		@Override
+		public void refreash(Item<R> rowItem)
+		{
 			rowItem.removeAll();
 			populateItem(rowItem);
 		}
@@ -515,30 +530,33 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 		{
 
 			private static final long serialVersionUID = 1L;
-			
-			public RowItem(final String id, int index, final IModel<RI> model) {
+
+			public RowItem(final String id, int index, final IModel<RI> model)
+			{
 				super(id, index, model);
 				this.setOutputMarkupId(true);
 				this.setMetaData(EditableGridActionsPanel.EDITING, Boolean.FALSE);
-			}		
-		}		
+			}
+		}
 	}
 
-	public void onEvent(IEvent<?> event) 
+	@Override
+	public void onEvent(IEvent<?> event)
 	{
 
 		if (event.getPayload() instanceof Item)
 		{
 			@SuppressWarnings("unchecked")
-			Item<T> rowItem = ((Item<T>) event.getPayload());
+			Item<T> rowItem = ((Item<T>)event.getPayload());
 			this.datagrid.refreash(rowItem);
 			event.stop();
 		}
 		else if (event.getPayload() instanceof GridOperationData)
 		{
 			@SuppressWarnings("unchecked")
-			GridOperationData<T> gridOperationData = (GridOperationData<T>) event.getPayload();
-			if (null != gridOperationData && OperationType.DELETE.equals(gridOperationData.getOperationType()))
+			GridOperationData<T> gridOperationData = (GridOperationData<T>)event.getPayload();
+			if (null != gridOperationData &&
+				OperationType.DELETE.equals(gridOperationData.getOperationType()))
 			{
 				getDataProvider().remove(gridOperationData.getData());
 				event.stop();
@@ -565,8 +583,14 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 			}
 		}
 	}
-	
-	protected void onError(AjaxRequestTarget target) {
-		
+
+	protected void onError(AjaxRequestTarget target)
+	{
+
+	}
+
+	protected void onAdd(AjaxRequestTarget target, T newRow)
+	{
+
 	}
 }

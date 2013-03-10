@@ -34,7 +34,7 @@ public abstract class EditableGridBottomToolbar<T, S> extends AbstractEditableGr
 
 	private T newRow							= null;
 	
-	protected abstract void onAdd(T newRow, AjaxRequestTarget target);
+	protected abstract void onAdd(AjaxRequestTarget target, T newRow);
 
 	public EditableGridBottomToolbar(EditableDataTable<?, ?> table, Class<T> clazz)
 	{
@@ -94,7 +94,7 @@ public abstract class EditableGridBottomToolbar<T, S> extends AbstractEditableGr
 			@Override
 			protected void onSuccess(AjaxRequestTarget target)
 			{
-				onAdd(newRow, target);
+				onAdd(target, newRow);
 				createNewInstance((Class<T>) newRow.getClass());
 				target.add(getTable());
 				
