@@ -11,30 +11,36 @@ import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.form.{Form, TextField}
 import org.apache.wicket.markup.html.link.Link
 import org.apache.wicket.markup.html.list.{ListView, ListItem, PropertyListView}
-import org.apache.wicket.model.{IModel, Model}
+import org.apache.wicket.model.IModel
 
-class SForm[T](id:String, model:IModel[T] , onSubmitFunc: ⇒ Unit) extends Form[T](id, model:IModel[T]) {
+class SForm[T](id:String,
+               model:IModel[T] ,
+               onSubmitFunc: ⇒ Unit)
+  extends Form[T](id, model:IModel[T]) {
 
-  override def onSubmit = onSubmitFunc
-
+  override def onSubmit =
+    onSubmitFunc
 }
 
-class SLabel(id:String, gtr: ⇒ String) extends Label(id, new Fodel(gtr, null)) {
-  
-  def print = println(gtr)
-  
-}
 
-class SLink(id:String, onClickFunc: ⇒ Unit) extends Link(id) {
+class SLabel(id:String,
+             gtr: ⇒ String)
+  extends Label(id, new Fodel(gtr, null))
+
+
+class SLink(id:String,
+            onClickFunc: ⇒ Unit)
+  extends Link(id) {
 
   override def onClick = onClickFunc
-
 }
 
-class SListView[T](id:String, list:java.util.List[T], populateItemFunc:(ListItem[T]) ⇒ Unit) extends ListView[T](id, list) {
+class SListView[T](id:String,
+                   list:java.util.List[T],
+                   populateItemFunc:(ListItem[T]) ⇒ Unit)
+  extends ListView[T](id, list) {
 
   override def populateItem(li:ListItem[T]) = populateItemFunc(li)
-
 }
 
 /**
@@ -44,7 +50,11 @@ class SListView[T](id:String, list:java.util.List[T], populateItemFunc:(ListItem
  * 
  * <p>Regarding only having a single constructor - see http://groups.google.com/group/maven-and-scala/msg/e541cbef70e2cbe9?")
  */
-class SPropertyListView[T](id:String, model:Fodel[_ <: java.util.List[_ <: T]], populateItemFunc:(ListItem[T]) ⇒ Unit) extends PropertyListView[T](id, model) with ScalaWicket {
+class SPropertyListView[T](id:String,
+                           model:Fodel[_ <: java.util.List[_ <: T]],
+                           populateItemFunc:(ListItem[T]) ⇒ Unit)
+  extends PropertyListView[T](id, model)
+  with ScalaWicket {
 //class SPropertyListView[T](id:String, list: ⇒ java.util.List[_ <: T], populateItemFunc:(ListItem[T]) ⇒ Unit) extends PropertyListView[T](id, new Fodel[java.util.List[_ <: T]](list)) with ScalaWicket {
   //class SPropertyListView[T](id:String, list: ⇒ java.util.List[_ <: T], populateItemFunc:(ListItem[T]) ⇒ Unit) extends PropertyListView[T](id, model) with ScalaWicket {
   
@@ -56,10 +66,10 @@ class SPropertyListView[T](id:String, model:Fodel[_ <: java.util.List[_ <: T]], 
 
 }
 
-class STextField[T](id:String, fodel:Fodel[T]) extends TextField[T](id, fodel) {
+class STextField[T](id:String,
+                    fodel:Fodel[T])
+  extends TextField[T](id, fodel) {
   
   def this(id:String, getter: ⇒ T, setter:(T) ⇒ Unit) = this(id, new Fodel[T](getter, setter ) )
   
-  def print = println(fodel.getObject)
- 
 }

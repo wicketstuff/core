@@ -28,8 +28,6 @@ else if (typeof(Wicket) !== "object") {
     throw new Error("Wicket already exists but is not an object");
 }
 
-Wicket.geocoder = new WicketClientGeocoder();
-
 function WicketClientGeocoder() {
 
     this.coder = new google.maps.Geocoder();
@@ -248,5 +246,8 @@ function WicketMap(id) {
         }
         this.overlays = {};
     }
-
 }
+
+Wicket.Event.add(window, "load", function(event){
+	if(typeof(Wicket.geocoder) === 'undefined') Wicket.geocoder = new WicketClientGeocoder();
+});

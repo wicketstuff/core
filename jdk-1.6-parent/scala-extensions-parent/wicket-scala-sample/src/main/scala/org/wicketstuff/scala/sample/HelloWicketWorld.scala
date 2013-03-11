@@ -1,17 +1,17 @@
 package org.wicketstuff.scala.sample
 
-import org.apache.wicket._
-import org.apache.wicket.protocol.http._
-import org.apache.wicket.markup.html._
-import org.apache.wicket.markup.html.form._
-import org.apache.wicket.model.{PropertyModel, CompoundPropertyModel}
 import org.apache.wicket.markup.html.panel.FeedbackPanel
-import org.apache.wicket.feedback.{ContainerFeedbackMessageFilter, ComponentFeedbackMessageFilter, FeedbackMessage}
+import org.apache.wicket.feedback.ContainerFeedbackMessageFilter
 import org.apache.wicket.markup.html.basic.Label
 import org.apache.wicket.markup.html.list.ListItem
 import org.apache.wicket.validation.validator.EmailAddressValidator
 
+import scala.language.postfixOps
 import org.wicketstuff.scala._
+import org.apache.wicket.protocol.http.WebApplication
+import org.apache.wicket.markup.html.WebPage
+import org.apache.wicket.markup.html.form.{TextField, Form}
+import org.apache.wicket.model.{CompoundPropertyModel, IModel}
 
 class HelloWicketWorld extends WebApplication {
    def getHomePage = classOf[HomePage]
@@ -27,9 +27,10 @@ class HomePage extends WebPage with ScalaWicket {
   add(form)
 
   // create an anonymous function and have it implicitly converted into a fodel
-  val nf = () ⇒ { println ("nff1"); name }
+  val nf: IModel[_] = () ⇒ { println ("nff1"); name }
   form.add(new Label("helloworld1", nf))
-  form.add(new Label("helloworld3", () ⇒ { println ("label gtr"); name }))
+  val getter: IModel[_] = () ⇒ { println ("label gtr"); name }
+  form.add(new Label("helloworld3", getter))
 
   // explicit fodel with debug lines
   form.add(new TextField("name1", new Fodel[String]({println ("stf-getter"); name}, {println ("stf-setter"); name = _}) ) )
@@ -53,7 +54,7 @@ class HomePage extends WebPage with ScalaWicket {
   add(new Form[Presentation]("form2", new CompoundPropertyModel(new Presentation)){
     add(new TextField("name"))
     add(new TextField("author"))
-    override def onSubmit {
+    override def onSubmit() {
       val newP = getModelObject
       Presentation add newP
       println ("presentations: "+Presentation.stub)
@@ -62,7 +63,7 @@ class HomePage extends WebPage with ScalaWicket {
   })
 
   add(new SPropertyListView[Presentation]("presentations", Presentation.stub, (li:ListItem[Presentation]) ⇒ { // list gets passed in by name
-    val p = li.getModelObject()
+    val p = li.getModelObject
     li add(new SLabel("name", p name))
     li add(new SLabel("author", p author))
     li add(new SLabel("votes", p.votes.toString))
@@ -70,7 +71,7 @@ class HomePage extends WebPage with ScalaWicket {
     li add(new Form[Vote]("form", new CompoundPropertyModel[Vote](new Vote)) {
       add(new TextField("email").add(EmailAddressValidator.getInstance))
       add(new FeedbackPanel("feedback", new ContainerFeedbackMessageFilter(li)))
-      override def onSubmit {
+      override def onSubmit() {
         val v = getModelObject
         p.addVotes(v)
         // we dont need to do anything with the returned presentation,

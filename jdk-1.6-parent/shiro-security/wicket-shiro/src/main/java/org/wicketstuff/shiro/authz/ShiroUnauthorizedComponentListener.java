@@ -84,7 +84,7 @@ public class ShiroUnauthorizedComponentListener implements
 	public void onUnauthorizedInstantiation(final Component component)
 	{
 		final Subject subject = SecurityUtils.getSubject();
-		final boolean notLoggedIn = subject.getPrincipal() == null;
+		final boolean notLoggedIn = !subject.isAuthenticated();
 		final Class<? extends Page> page = notLoggedIn ? loginPage : unauthorizedPage;
 
 		if (annotationStrategy != null)

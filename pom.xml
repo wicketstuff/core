@@ -223,7 +223,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>6.3.0</wicket.version>
+		<wicket.version>6.5.0</wicket.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -235,6 +235,8 @@
 		<slf4j.version>1.6.4</slf4j.version>
 		<log4j.version>1.2.16</log4j.version>
 		<spring.version>3.0.6.RELEASE</spring.version>
+		<cglib.version>2.2.2</cglib.version>
+		<objenesis.version>1.2</objenesis.version>
 	</properties>
 
 	<!-- build contract is java 6 first then java 7 -->
@@ -623,12 +625,22 @@
 			<dependency>
 				<groupId>org.scala-lang</groupId>
 				<artifactId>scala-compiler</artifactId>
-				<version>2.9.2</version>
+				<version>2.10.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.scala-lang</groupId>
 				<artifactId>scala-library</artifactId>
-				<version>2.9.2</version>
+				<version>2.10.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.objenesis</groupId>
+				<artifactId>objenesis</artifactId>
+				<version>${objenesis.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cglib</groupId>
+				<artifactId>cglib-nodep</artifactId>
+				<version>${cglib.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -808,8 +820,7 @@
 								<Specification-Title>${project.name}</Specification-Title>
 								<Specification-Version>${project.version}</Specification-Version>
 								<Implementation-Title>${project.name}</Implementation-Title>
-								<Implementation-Version>${project.version} ${buildNumber} - ${user.name}</Implementation-Version>
-								<SCM-Revision>${buildNumber}</SCM-Revision>
+								<Implementation-Version>${project.version}</Implementation-Version>
 								<SCM-url>${project.scm.url}</SCM-url>
 							</manifestEntries>
 						</archive>
