@@ -1,0 +1,10 @@
+.TreeTypeMapTest$Root(asSample)     | 1
+  .TreeTypeMapTest$A(a)             | 0
+    .TreeTypeMapTest$B(1)           | 0
+      .TreeTypeMapTest$D(0)         | 0
+    .TreeTypeMapTest$C(2)           | 0
+  .TreeTypeMapTest$A(b)             | 0
+    .TreeTypeMapTest$C(3)           | 0
+    .TreeTypeMapTest$B(4)           | 0
+      .TreeTypeMapTest$D(0)         | 0
+  

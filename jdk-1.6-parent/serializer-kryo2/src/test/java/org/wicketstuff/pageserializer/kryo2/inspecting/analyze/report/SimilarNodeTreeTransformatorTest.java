@@ -37,12 +37,11 @@ import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObject
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ImmutableTree;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ObjectId;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.TreeProcessors;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SimilarNodeTreeTransformator.TreeType;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.filter.TypeFilter;
 import org.wicketstuff.pageserializer.kryo2.pages.ListViewPage;
 
 public class SimilarNodeTreeTransformatorTest
-{
+{	
 	@Test
 	public void dontChangeAnything()
 	{
@@ -100,7 +99,7 @@ public class SimilarNodeTreeTransformatorTest
 		new TreeSizeReport().process(result);
 		ISerializedObjectTree match = Trees.fromResource(getClass(), "sample1-match");
 		new TreeSizeReport().process(match);
-		
+
 		Trees.assertEqualsTree(match, result);
 	}
 	

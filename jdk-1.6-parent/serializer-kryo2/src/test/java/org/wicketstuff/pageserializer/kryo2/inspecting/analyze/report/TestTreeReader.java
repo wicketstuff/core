@@ -20,6 +20,8 @@
  */
 package org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report;
 
+import java.io.IOException;
+
 import junit.framework.Assert;
 
 import org.apache.wicket.markup.html.list.ListView;
@@ -64,7 +66,7 @@ public class TestTreeReader
 	}
 
 	@Test
-	public void lineLines()
+	public void lineLines() throws IOException
 	{
 		String lines = "org.wicketstuff.pageserializer.kryo2.pages.ListViewPage(0)         |   141\n"
 			+ "  java.lang.Integer                                                |     9\n"
