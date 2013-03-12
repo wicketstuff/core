@@ -59,7 +59,7 @@ public class TreeReader
 		}
 	}
 
-	public static ISerializedObjectTree fromString(String asString)
+	public static ISerializedObjectTree fromString(String asString) throws IOException
 	{
 		List<Line> lines = new ArrayList<Line>();
 		String[] textLines = Strings.split(asString, '\n');
@@ -96,7 +96,7 @@ public class TreeReader
 			
 			return parent.asObjectTree();
 		}
-		return null;
+		throw new IOException("empty file");
 	}
 
 

@@ -50,12 +50,12 @@ public class Trees
 	
 	public static void assertEqualsTree(ISerializedObjectTree expected, ISerializedObjectTree result)
 	{
-		Assert.assertEquals("id", expected.id(), result.id());
-		Assert.assertEquals("type", expected.type(), result.type());
-		Assert.assertEquals("label", expected.label(), result.label());
-		Assert.assertEquals("size", expected.size(), result.size());
-		Assert.assertEquals("childSize", expected.childSize(), result.childSize());
-		Assert.assertEquals("children", expected.children().size(), result.children().size());
+		Assert.assertEquals(expected+":id", expected.id(), result.id());
+		Assert.assertEquals(expected+":type", expected.type(), result.type());
+		Assert.assertEquals(expected+":label", expected.label(), result.label());
+		Assert.assertEquals(expected+":size", expected.size(), result.size());
+		Assert.assertEquals(expected+":childSize", expected.childSize(), result.childSize());
+		Assert.assertEquals(expected+":children", expected.children().size(), result.children().size());
 		for (int i = 0, s = expected.children().size(); i < s; i++)
 		{
 			assertEqualsTree(expected.children().get(i), result.children().get(i));
