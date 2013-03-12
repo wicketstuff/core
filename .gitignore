@@ -6,3 +6,4 @@ target/
 .idea/
 META-INF
 .scala_dependencies
+nb-configuration.xml
