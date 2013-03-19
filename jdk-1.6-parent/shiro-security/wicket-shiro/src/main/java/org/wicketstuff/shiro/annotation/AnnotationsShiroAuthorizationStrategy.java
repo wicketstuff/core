@@ -16,8 +16,6 @@
  */
 package org.wicketstuff.shiro.annotation;
 
-import java.lang.annotation.Annotation;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.wicket.Component;
@@ -27,6 +25,11 @@ import org.apache.wicket.request.component.IRequestableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketstuff.shiro.ShiroAction;
+
+import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AnnotationsShiroAuthorizationStrategy implements IAuthorizationStrategy
 {
@@ -97,11 +100,16 @@ public class AnnotationsShiroAuthorizationStrategy implements IAuthorizationStra
 	public <T extends IRequestableComponent> ShiroSecurityConstraint checkInvalidInstantiation(
 		final Class<T> componentClass)
 	{
-		ShiroSecurityConstraint fail = checkInvalidInstantiation(componentClass.getAnnotations(),
-			ShiroAction.INSTANTIATE);
+		Annotation[] componentClassAnnotations = componentClass.getAnnotations();
+		ShiroSecurityConstraint fail = checkInvalidInstantiation(
+				findShiroSecurityConstraintAnnotations(componentClassAnnotations), ShiroAction.INSTANTIATE);
+
 		if (fail == null)
 		{
-			fail = checkInvalidInstantiation(componentClass.getPackage().getAnnotations(),
+			//TODO: Allow ShiroSecurityConstraint annotations on packages OR remove this check as the annotation is
+			// currently only allowed on types
+			Annotation[] packageAnnotations = componentClass.getPackage().getAnnotations();
+			fail = checkInvalidInstantiation(findShiroSecurityConstraintAnnotations(packageAnnotations),
 				ShiroAction.INSTANTIATE);
 		}
 		return fail;
@@ -117,10 +125,15 @@ public class AnnotationsShiroAuthorizationStrategy implements IAuthorizationStra
 			: ShiroAction.ENABLE;
 
 		final Class<? extends Component> clazz = component.getClass();
-		ShiroSecurityConstraint fail = checkInvalidInstantiation(clazz.getAnnotations(), _action);
+		Annotation[] componentClassAnnotations = clazz.getAnnotations();
+		ShiroSecurityConstraint fail = checkInvalidInstantiation(
+				findShiroSecurityConstraintAnnotations(componentClassAnnotations), ShiroAction.INSTANTIATE);
 		if (fail == null)
 		{
-			fail = checkInvalidInstantiation(clazz.getPackage().getAnnotations(), _action);
+			//TODO: Allow ShiroSecurityConstraint annotations on packages OR remove this check as the annotation is
+			// currently only allowed on types
+			Annotation[] packageAnnotations = clazz.getPackage().getAnnotations();
+			fail = checkInvalidInstantiation(findShiroSecurityConstraintAnnotations(packageAnnotations), _action);
 		}
 		return fail == null;
 	}
@@ -139,5 +152,20 @@ public class AnnotationsShiroAuthorizationStrategy implements IAuthorizationStra
 			return false;
 		}
 		return true;
+	}
+
+	private ShiroSecurityConstraint[] findShiroSecurityConstraintAnnotations(Annotation[] componentClassAnnotations) {
+		List<Annotation> annotations = new ArrayList<Annotation>();
+		for (Annotation annotation : componentClassAnnotations)
+		{
+			if (annotation instanceof ShiroSecurityConstraint)
+			{
+				annotations.add(annotation);
+			} else if (annotation instanceof ShiroSecurityConstraints)
+			{
+				annotations.addAll(Arrays.asList(((ShiroSecurityConstraints) annotation).value()));
+			}
+		}
+		return annotations.toArray(new ShiroSecurityConstraint[annotations.size()]);
 	}
 }
