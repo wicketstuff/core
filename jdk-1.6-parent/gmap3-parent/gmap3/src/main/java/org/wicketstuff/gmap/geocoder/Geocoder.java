@@ -21,45 +21,39 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.StringTokenizer;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.wicketstuff.gmap.api.GLatLng;
 
 /**
- * Geocoder. See: http://www.google.com/apis/maps/documentation/services.html# Geocoding_Direct
+ * Geocoder. See: https://developers.google.com/maps/documentation/geocoding/
  *
  * @author Thijs Vonk
+ * @author Dieter Tremel
  */
 public class Geocoder implements Serializable
 {
 
     private static final long serialVersionUID = 1L;
     // Constants
-    public static final String OUTPUT_CSV = "csv";
     public static final String OUTPUT_XML = "xml";
-    public static final String OUTPUT_KML = "kml";
     public static final String OUTPUT_JSON = "json";
-    private final String output = OUTPUT_CSV;
+    private final String output = OUTPUT_JSON;
 
     public Geocoder()
     {
     }
 
-    public GLatLng decode(String response) throws GeocoderException
-    {
-
-        StringTokenizer gLatLng = new StringTokenizer(response, ",");
-
-        String status = gLatLng.nextToken();
-        gLatLng.nextToken(); // skip precision
-        String latitude = gLatLng.nextToken();
-        String longitude = gLatLng.nextToken();
-
-        if (Integer.parseInt(status) != GeocoderException.G_GEO_SUCCESS)
-        {
-            throw new GeocoderException(Integer.parseInt(status));
+    public GLatLng decode(String response) throws GeocoderException, JSONException {
+        JSONObject jsonResponse = new JSONObject(response);
+        GeocoderStatus status = GeocoderStatus.valueOf(jsonResponse.getString("status"));
+        if (status != GeocoderStatus.OK) {
+            throw new GeocoderException(status);
         }
-
-        return new GLatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+        JSONArray results = jsonResponse.getJSONArray("results");
+        JSONObject location = results.getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
+        return new GLatLng(location.getDouble("lat"), location.getDouble("lng"));
     }
 
     /**
@@ -70,7 +64,12 @@ public class Geocoder implements Serializable
      */
     public String encode(final String address)
     {
-        return "http://maps.google.com/maps/geo?q=" + urlEncode(address) + "&output=" + output;
+        StringBuilder sb = new StringBuilder("http://maps.googleapis.com/maps/api/geocode/");
+        sb.append(output);
+        sb.append("?");
+        sb.append("address=").append(urlEncode(address));
+        sb.append("&sensor=false");
+        return sb.toString();
     }
 
     /**
@@ -78,7 +77,7 @@ public class Geocoder implements Serializable
      * @return
      * @throws IOException
      */
-    public GLatLng geocode(final String address) throws IOException
+    public GLatLng geocode(final String address) throws Exception
     {
         InputStream is = invokeService(encode(address));
         if (is != null)
