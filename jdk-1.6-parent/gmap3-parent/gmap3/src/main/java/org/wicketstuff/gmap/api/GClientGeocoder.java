@@ -9,7 +9,8 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.wicketstuff.gmap.GMapHeaderContributor;
 import org.wicketstuff.gmap.geocoder.GeocoderException;
-import org.wicketstuff.gmap.geocoder.GeocoderException.GeocoderStatus;
+import org.wicketstuff.gmap.geocoder.GeocoderStatus;
+import org.wicketstuff.gmap.geocoder.GeocoderStatus;
 
 /**
  */
@@ -70,7 +71,7 @@ public abstract class GClientGeocoder extends AjaxEventBehavior
 
     }
 
-    public abstract void onGeoCode(AjaxRequestTarget target, GeocoderException.GeocoderStatus status, String address, GLatLng latLng);
+    public abstract void onGeoCode(AjaxRequestTarget target, GeocoderStatus status, String address, GLatLng latLng);
 
     /**
      * @see org.apache.wicket.ajax.AjaxEventBehavior#generateCallbackScript(java.lang.CharSequence)
