@@ -30,7 +30,7 @@ public class ServerGeocoder
      * @throws IOException
      * If a connection error happened
      */
-    public GLatLng findAddress(String address) throws IOException
+    public GLatLng findAddress(String address) throws Exception
     {
         URL url = new URL(geocoder.encode(address));
         URLConnection connection = url.openConnection();

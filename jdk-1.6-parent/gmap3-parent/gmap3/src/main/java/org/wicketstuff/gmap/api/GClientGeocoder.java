@@ -8,8 +8,6 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.wicketstuff.gmap.GMapHeaderContributor;
-import org.wicketstuff.gmap.geocoder.GeocoderException;
-import org.wicketstuff.gmap.geocoder.GeocoderStatus;
 import org.wicketstuff.gmap.geocoder.GeocoderStatus;
 
 /**

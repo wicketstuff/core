@@ -1,6 +1,5 @@
 package org.wicketstuff.examples.gmap.geocode;
 
-import java.io.IOException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.form.Button;
@@ -14,7 +13,7 @@ import org.wicketstuff.gmap.api.GClientGeocoder;
 import org.wicketstuff.gmap.api.GInfoWindow;
 import org.wicketstuff.gmap.api.GLatLng;
 import org.wicketstuff.gmap.api.GMapType;
-import org.wicketstuff.gmap.geocoder.GeocoderException;
+import org.wicketstuff.gmap.geocoder.GeocoderStatus;
 
 /**
  * Demonstrates geocoding client- and serverwise.
@@ -51,9 +50,9 @@ public class HomePage extends WicketExamplePage
             private static final long serialVersionUID = 1L;
 
             @Override
-            public void onGeoCode(AjaxRequestTarget target, GeocoderException.GeocoderStatus status, String address, GLatLng latLng)
+            public void onGeoCode(AjaxRequestTarget target, GeocoderStatus status, String address, GLatLng latLng)
             {
-                if (status == GeocoderException.GeocoderStatus.OK)
+                if (status == GeocoderStatus.OK)
                 {
                     bottomMap.addOverlay(new GInfoWindow(latLng, "address: " + address));
                 }
@@ -82,7 +81,7 @@ public class HomePage extends WicketExamplePage
                     GLatLng latLng = geocoder.findAddress(address);
                     bottomMap.addOverlay(new GInfoWindow(latLng, "address: " + address));
                 }
-                catch (IOException e)
+                catch (Exception e)
                 {
                     target.appendJavaScript("Unable to geocode (" + e.getMessage() + ")");
                 }
