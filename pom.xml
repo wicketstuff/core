@@ -200,6 +200,16 @@
 		</profile>
 	</profiles>
 
+	<repositories>
+
+        <repository>
+            <id>Wicket670</id>
+            <url>https://repository.apache.org/content/repositories/orgapachewicket-014/</url>
+        </repository>
+
+	</repositories>
+
+
 	<issueManagement>
 		<system>github</system>
 		<url>https://github.com/wicketstuff/core/issues</url>
@@ -223,7 +233,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>6.7.0-SNAPSHOT</wicket.version>
+		<wicket.version>6.7.0</wicket.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

@@ -6,6 +6,7 @@ import org.apache.wicket.request.cycle.RequestCycle
 import org.apache.wicket.{ThreadContext, Session, Application}
 import scala.concurrent._
 import scala.concurrent.duration._
+import scala.transient
 
 object FutureModel {
   private val Executor =
@@ -40,12 +41,15 @@ class FutureModel[T](body: => T,
                     (implicit val ec: ExecutionContext = FutureModel.Executor)
   extends AbstractReadOnlyModel[T] {
 
+  @transient
   private[this] val appName: String = Application.get().getName
 
+  @transient
   private[this] val session =
     if (Session.exists()) Session.get()
     else null
 
+  @transient
   private[this] val cycle = RequestCycle.get()
 
   private[this] val f: Future[T] = future {
