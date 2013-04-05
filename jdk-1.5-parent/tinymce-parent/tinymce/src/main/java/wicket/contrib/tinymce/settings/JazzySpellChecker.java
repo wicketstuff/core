@@ -34,7 +34,6 @@ import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.resource.AbstractResource;
-import org.apache.wicket.util.resource.IResourceStreamWriter;
 import org.apache.wicket.util.resource.StringBufferResourceStream;
 import org.apache.wicket.util.time.Time;
 import org.json.JSONArray;
@@ -123,15 +122,7 @@ class JazzySpellChecker extends AbstractResource
 			@Override
 			public void writeData(Attributes attributes)
 			{
-				((IResourceStreamWriter)resourceStream).write(attributes.getResponse());
-				try
-				{
-					resourceStream.close();
-				}
-				catch (IOException e)
-				{
-					throw new RuntimeException(e);
-				}
+				attributes.getResponse().write(resourceStream.asString()); 
 			}
 		});
 		return resourceResponse;
