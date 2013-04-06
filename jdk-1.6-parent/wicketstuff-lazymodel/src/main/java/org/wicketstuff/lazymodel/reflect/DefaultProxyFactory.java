@@ -56,10 +56,10 @@ public final class DefaultProxyFactory implements IProxyFactory {
 			interfaces = clazz.getInterfaces();
 			clazz = Object.class;
 		} else if (Factory.class.isAssignableFrom(clazz)) {
-			interfaces = new Class[0];
+			interfaces = null;
 			clazz = clazz.getSuperclass();
 		} else {
-			interfaces = new Class[0];
+			interfaces = null;
 		}
 
 		if (Modifier.isFinal(clazz.getModifiers())) {
