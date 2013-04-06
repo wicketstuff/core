@@ -48,6 +48,8 @@ public class LazyModelTest {
 		final int[] got = new int[1];
 
 		IModel<String> string = new AbstractReadOnlyModel<String>() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public String getObject() {
 				got[0]++;
@@ -248,6 +250,19 @@ public class LazyModelTest {
 		assertEquals("i.ts", model.toString());
 
 		assertEquals(a.b.cs, model.getObject());
+	}
+
+	@Test
+	public void getRawList() {
+		B b = new B();
+		b.cs.add(new C());
+
+		LazyModel<Object> model = model(from(b).getRs().get(0));
+
+		assertEquals(Object.class, Generics.getClass(model.getObjectClass()));
+		assertEquals("rs.get(i)", model.toString());
+		
+		assertEquals(b.cs.get(0), model.getObject());
 	}
 
 	@Test
@@ -588,12 +603,13 @@ public class LazyModelTest {
 	@Test
 	public void getEntryFromGenericListInObjectClassAwareModelFails() {
 		B b = new B();
+		b.cs.add(new C());
 
 		PropertyModel<List<C>> target = new PropertyModel<List<C>>(b, "cs");
 
 		try {
-			model(from(target).get(0));
-
+			model(from(target).get(0).getString());
+			
 			fail();
 		} catch (ClassCastException expected) {
 		}
@@ -813,6 +829,11 @@ public class LazyModelTest {
 
 		@Override
 		public List<C> getTs() {
+			return cs;
+		}
+		
+		@SuppressWarnings("rawtypes")
+		public List getRs() {
 			return cs;
 		}
 	}
