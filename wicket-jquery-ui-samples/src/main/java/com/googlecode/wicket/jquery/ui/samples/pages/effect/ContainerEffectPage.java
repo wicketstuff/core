@@ -22,7 +22,6 @@ public class ContainerEffectPage extends AbstractEffectPage
 
 			private static final long serialVersionUID = 1L;
 
-			//XXX: report as changed: protected void onComplete(AjaxRequestTarget target) > public void onEffectComplete
 			@Override
 			public void onEffectComplete(AjaxRequestTarget target)
 			{

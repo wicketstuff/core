@@ -38,7 +38,6 @@ import com.googlecode.wicket.jquery.core.Options;
  *
  * @author Sebastien Briquet - sebfz1
  */
-//XXX: report as changed - getTabs() > getModelObject()
 public class TabbedPanel extends JQueryPanel implements ITabsListener
 {
 	private static final long serialVersionUID = 1L;

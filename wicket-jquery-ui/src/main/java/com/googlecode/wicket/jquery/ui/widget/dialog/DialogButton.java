@@ -61,7 +61,6 @@ public class DialogButton implements IClusterable
 	 * @param text the button's text
 	 * @param icon the button's icon
 	 */
-	//XXX: report as new
 	public DialogButton(String text, String icon)
 	{
 		this(text, icon, true);

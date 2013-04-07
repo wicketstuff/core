@@ -40,7 +40,6 @@ interface IDialogListener
 	 * @param button the button that closed the dialog
 	 */
 	void onClick(AjaxRequestTarget target, DialogButton button);
-	//XXX: report as changes: public void onClick(DialogEvent event) -> onClick(AjaxRequestTarget target, DialogButton button);
 
 	/**
 	 * Triggered when the dialog closes.

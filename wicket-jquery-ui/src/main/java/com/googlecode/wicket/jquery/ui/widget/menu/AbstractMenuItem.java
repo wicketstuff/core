@@ -77,7 +77,6 @@ public abstract class AbstractMenuItem implements IMenuItem
 		this.title = title;
 	}
 
-	//XXX: report as changed: getIconClass > getIcon
 	@Override
 	public String getIcon()
 	{
@@ -88,7 +87,6 @@ public abstract class AbstractMenuItem implements IMenuItem
 	 * Sets the icon css class being displayed in the {@link Menu} (ie: ui-my-icon)
 	 * @param icon the icon css class
 	 */
-	//XXX: report as changed: setIconClass > getIcon
 	public void setIcon(String icon)
 	{
 		this.icon = icon;

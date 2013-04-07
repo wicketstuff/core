@@ -29,6 +29,5 @@ public interface ISelectionChangedListener
 	 * Triggers when the selection has changed
 	 * @param target the {@link AjaxRequestTarget}
 	 */
-	//XXX: report as changed - onSelectionChanged(AjaxRequestTarget target, Form<?> form) - onSelectionChanged(AjaxRequestTarget target)
 	void onSelectionChanged(AjaxRequestTarget target);
 }

@@ -26,17 +26,14 @@ import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.ui.widget.accordion.AccordionBehavior;
-import com.googlecode.wicket.jquery.ui.widget.accordion.AccordionPanel;
 
 /**
  * Provides jQuery tabs based on a {@link JQueryContainer}
  *
  * @author Sebastien Briquet - sebfz1
- * @deprecated use <code>new JQueryBehavior("#myAccordion", "accordion")</code>, {@link AccordionBehavior} or {@link AccordionPanel} instead
+ * @deprecated use <code>new JQueryBehavior("#myTabs", "tabs")</code>, {@link TabsBehavior} or {@link TabbedPanel} instead
  *
  * XXX: remove in next version (6.8.0?)
- * XXX: report as deprecated
  */
 @Deprecated
 public class Tabs extends JQueryContainer

@@ -106,7 +106,6 @@ public abstract class SecuredButton extends Button
 		return !this.provider.hasRole(this.roles);
 	}
 
-	//XXX: report as changed
 	@Override
 	protected String getIcon()
 	{

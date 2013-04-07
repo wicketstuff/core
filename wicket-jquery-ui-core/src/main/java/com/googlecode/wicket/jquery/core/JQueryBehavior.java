@@ -146,18 +146,6 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 		}
 	}
 
-	// Events //
-//	XXX: report as changed - to remove, too confusing with #onConfigure(Component),
-//	/**
-//	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
-//	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
-//	 *
-//	 * @param behavior the {@link JQueryBehavior}
-//	 */
-//	public void onConfigure(JQueryBehavior behavior)
-//	{
-//	}
-
 	// Statements //
 	/**
 	 * Registers a jQuery event callback

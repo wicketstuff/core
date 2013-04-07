@@ -25,7 +25,6 @@ import com.googlecode.wicket.jquery.core.Options;
  * Provides the base class for Kendo UI behavior implementations
  *
  * @author Sebastien Briquet - sebfz1
- * XXX: report as changed: jquery-ui-kendo > wicket-kendo-ui
  */
 public class KendoAbstractBehavior extends JQueryBehavior
 {

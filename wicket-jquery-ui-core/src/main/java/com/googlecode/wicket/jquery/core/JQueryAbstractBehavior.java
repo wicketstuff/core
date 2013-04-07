@@ -41,7 +41,6 @@ import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
  * @author Sebastien Briquet - sebfz1
  *
  */
-//XXX: report as changed - new 'core' package
 public abstract class JQueryAbstractBehavior extends Behavior
 {
 	private static final long serialVersionUID = 1L;

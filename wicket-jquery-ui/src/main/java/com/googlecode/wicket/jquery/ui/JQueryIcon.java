@@ -28,7 +28,7 @@ public class JQueryIcon
 {
 	public static final String NONE = "";
 
-	public static final String BLANK = "ui-icon-blank"; //XXX: report as new
+	public static final String BLANK = "ui-icon-blank";
 	public static final String CARAT_1_N = "ui-icon-carat-1-n";
 	public static final String CARAT_1_NE = "ui-icon-carat-1-ne";
 	public static final String CARAT_1_E = "ui-icon-carat-1-e";

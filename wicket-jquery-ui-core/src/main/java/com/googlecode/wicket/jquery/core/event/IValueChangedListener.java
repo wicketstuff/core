@@ -30,6 +30,4 @@ public interface IValueChangedListener
 	 * @param target the {@link AjaxRequestTarget}
 	 */
 	void onValueChanged(AjaxRequestTarget target);
-
-	//XXX: report as changed - public void onValueChanged(AjaxRequestTarget target, Form<?> unused) > public void onValueChanged(AjaxRequestTarget target)
 }

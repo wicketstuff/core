@@ -102,7 +102,6 @@ public class RangeDatePicker extends JQueryContainer implements IRangeDatePicker
 	{
 	}
 
-	//XXX: report as changed - onValueChanged(AjaxRequestTarget target) > onValueChanged(AjaxRequestTarget target, DateRange range)
 	@Override
 	public void onValueChanged(AjaxRequestTarget target, DateRange range)
 	{

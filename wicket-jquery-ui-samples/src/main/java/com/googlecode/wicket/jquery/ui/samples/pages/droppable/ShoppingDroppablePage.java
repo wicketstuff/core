@@ -48,7 +48,6 @@ public class ShoppingDroppablePage extends AbstractDroppablePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			//XXX: report as changed: protected void onDrop(AjaxRequestTarget target, Draggable<?> draggable) to:
 			public void onDrop(AjaxRequestTarget target, Component component)
 			{
 				if (component != null)

@@ -35,7 +35,6 @@ import com.googlecode.wicket.jquery.core.Options;
  * @deprecated use <code>new JQueryBehavior("#myAccordion", "accordion")</code>, {@link AccordionBehavior} or {@link AccordionPanel} instead
  *
  * XXX: remove in next version (6.8.0?)
- * XXX: report as deprecated
  */
 @Deprecated
 public class Accordion extends JQueryContainer

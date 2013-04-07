@@ -160,7 +160,6 @@ public abstract class SecuredAjaxButton extends AjaxButton
 		return !this.provider.hasRole(this.roles);
 	}
 
-	//XXX: report as changed
 	@Override
 	protected String getIcon()
 	{

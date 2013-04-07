@@ -166,19 +166,16 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	@Override
-	//XXX: report as changed - onSelect(AjaxRequestTarget target, Date start, Date end, boolean allDay) > onSelect(AjaxRequestTarget target, Date start, Date end, boolean allDay, CalendarView view)
 	public void onSelect(AjaxRequestTarget target, CalendarView view, Date start, Date end, boolean allDay)
 	{
 	}
 
 	@Override
-	//XXX: report as changed - onDayClick(AjaxRequestTarget target, Date date) > onDayClick(AjaxRequestTarget target, CalendarView view, Date date)
 	public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date)
 	{
 	}
 
 	@Override
-	//XXX: report as changed - onEventClick(AjaxRequestTarget target, int eventId)  onEventClick(AjaxRequestTarget target, CalendarView view, int eventId)
 	public void onEventClick(AjaxRequestTarget target, CalendarView view, int eventId)
 	{
 	}
