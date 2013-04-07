@@ -8,6 +8,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.calendar.Calendar;
+import com.googlecode.wicket.jquery.ui.calendar.CalendarView;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.component.DemoCalendarDialog;
 import com.googlecode.wicket.jquery.ui.samples.data.DemoCalendarDAO;
@@ -91,7 +92,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			}
 
 			@Override
-			public void onDayClick(AjaxRequestTarget target, Date date)
+			public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date)
 			{
 				DemoCalendarEvent event = DemoCalendarDAO.emptyEvent(date);
 
@@ -100,7 +101,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			}
 
 			@Override
-			public void onSelect(AjaxRequestTarget target, Date start, Date end, boolean allDay)
+			public void onSelect(AjaxRequestTarget target, CalendarView view, Date start, Date end, boolean allDay)
 			{
 				DemoCalendarEvent event = DemoCalendarDAO.emptyEvent(start, end);
 				event.setAllDay(allDay);
@@ -110,7 +111,7 @@ public class ExtendedCalendarPage extends AbstractCalendarPage
 			}
 
 			@Override
-			public void onEventClick(AjaxRequestTarget target, int eventId)
+			public void onEventClick(AjaxRequestTarget target, CalendarView view, int eventId)
 			{
 				DemoCalendarEvent event = DemoCalendarDAO.getEvent(eventId);
 

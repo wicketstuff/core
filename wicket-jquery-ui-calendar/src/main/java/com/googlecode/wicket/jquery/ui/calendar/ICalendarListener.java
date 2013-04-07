@@ -30,7 +30,7 @@ interface ICalendarListener
 	/**
 	 * Indicates whether the event can be edited (ie, clicked).<br/>
 	 * IIF true, an event can override this global setting to false by using CalendarEvent#setEditable(boolean);<br/>
-	 * If true, the {@link #onEventClick(AjaxRequestTarget, int)} event and {@link #onDayClick(AjaxRequestTarget, Date)} event will be triggered<br/>
+	 * If true, the {@link #onEventClick(AjaxRequestTarget, CalendarView, int)} event and {@link #onDayClick(AjaxRequestTarget, CalendarView, Date)} event will be triggered<br/>
 	 *
 	 * @return false by default
 	 */
@@ -38,7 +38,7 @@ interface ICalendarListener
 
 	/**
 	 * Indicated whether a cell can be selected.<br />
-	 * If true, the {@link #onSelect(AjaxRequestTarget, Date, Date, boolean)} event will be triggered
+	 * If true, the {@link #onSelect(AjaxRequestTarget, CalendarView, Date, Date, boolean)} event will be triggered
 	 *
 	 * @return false by default
 	 */
@@ -65,27 +65,30 @@ interface ICalendarListener
 	 * {@link #isSelectable()} should return true for this event to be triggered.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
+	 * @param view the current calendar view
 	 * @param start the event start {@link Date}
 	 * @param end the event end {@link Date}
 	 * @param allDay the event all-day property
 	 */
-	void onSelect(AjaxRequestTarget target, Date start, Date end, boolean allDay);
+	void onSelect(AjaxRequestTarget target, CalendarView view, Date start, Date end, boolean allDay);
 
 	/**
 	 * Triggered when a calendar day is clicked
 	 * @param target the {@link AjaxRequestTarget}
+	 * @param view the current calendar view
 	 * @param date the day
 	 */
-	void onDayClick(AjaxRequestTarget target, Date date);
+	void onDayClick(AjaxRequestTarget target, CalendarView view, Date date);
 
 	/**
 	 * Triggered when an event is clicked.<br/>
 	 * {@link #isEditable()} should return true for this event to be triggered.
 	 *
 	 * @param target the {@link AjaxRequestTarget}
+	 * @param view the current calendar view
 	 * @param eventId the {@link CalendarEvent} id
 	 */
-	void onEventClick(AjaxRequestTarget target, int eventId);
+	void onEventClick(AjaxRequestTarget target, CalendarView view, int eventId);
 
 	/**
 	 * Triggered when an event is dropped (after being dragged).<br/>

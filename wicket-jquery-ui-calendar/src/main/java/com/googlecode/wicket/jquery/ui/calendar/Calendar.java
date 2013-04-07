@@ -166,17 +166,20 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	}
 
 	@Override
-	public void onSelect(AjaxRequestTarget target, Date start, Date end, boolean allDay)
+	//XXX: report as changed - onSelect(AjaxRequestTarget target, Date start, Date end, boolean allDay) > onSelect(AjaxRequestTarget target, Date start, Date end, boolean allDay, CalendarView view)
+	public void onSelect(AjaxRequestTarget target, CalendarView view, Date start, Date end, boolean allDay)
 	{
 	}
 
 	@Override
-	public void onDayClick(AjaxRequestTarget target, Date date)
+	//XXX: report as changed - onDayClick(AjaxRequestTarget target, Date date) > onDayClick(AjaxRequestTarget target, CalendarView view, Date date)
+	public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date)
 	{
 	}
 
 	@Override
-	public void onEventClick(AjaxRequestTarget target, int eventId)
+	//XXX: report as changed - onEventClick(AjaxRequestTarget target, int eventId)  onEventClick(AjaxRequestTarget target, CalendarView view, int eventId)
+	public void onEventClick(AjaxRequestTarget target, CalendarView view, int eventId)
 	{
 	}
 
@@ -251,21 +254,21 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			}
 
 			@Override
-			public void onSelect(AjaxRequestTarget target, Date start, Date end, boolean allDay)
+			public void onSelect(AjaxRequestTarget target, CalendarView view, Date start, Date end, boolean allDay)
 			{
-				Calendar.this.onSelect(target, start, end, allDay);
+				Calendar.this.onSelect(target, view, start, end, allDay);
 			}
 
 			@Override
-			public void onDayClick(AjaxRequestTarget target, Date date)
+			public void onDayClick(AjaxRequestTarget target, CalendarView view, Date date)
 			{
-				Calendar.this.onDayClick(target, date);
+				Calendar.this.onDayClick(target, view, date);
 			}
 
 			@Override
-			public void onEventClick(AjaxRequestTarget target, int eventId)
+			public void onEventClick(AjaxRequestTarget target, CalendarView view, int eventId)
 			{
-				Calendar.this.onEventClick(target, eventId);
+				Calendar.this.onEventClick(target, view, eventId);
 			}
 
 			@Override

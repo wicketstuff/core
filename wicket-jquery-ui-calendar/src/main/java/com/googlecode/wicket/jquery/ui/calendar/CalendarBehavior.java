@@ -157,19 +157,19 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		if (event instanceof DayClickEvent)
 		{
 			DayClickEvent dayClickEvent = (DayClickEvent) event;
-			this.onDayClick(target, dayClickEvent.getDate());
+			this.onDayClick(target, dayClickEvent.getView(), dayClickEvent.getDate());
 		}
 
 		else if (event instanceof SelectEvent)
 		{
 			SelectEvent selectEvent = (SelectEvent) event;
-			this.onSelect(target, selectEvent.getStart(), selectEvent.getEnd(), selectEvent.isAllDay());
+			this.onSelect(target, selectEvent.getView(), selectEvent.getStart(), selectEvent.getEnd(), selectEvent.isAllDay());
 		}
 
 		else if (event instanceof ClickEvent)
 		{
 			ClickEvent clickEvent = (ClickEvent) event;
-			this.onEventClick(target, clickEvent.getEventId());
+			this.onEventClick(target, clickEvent.getView(), clickEvent.getEventId());
 		}
 
 		else if (event instanceof DropEvent)
@@ -206,7 +206,8 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 						CallbackParameter.converted("date", "date.getTime()"),
 						CallbackParameter.explicit("allDay"),
 						CallbackParameter.context("jsEvent"),
-						CallbackParameter.context("view")
+						CallbackParameter.context("view"),
+						CallbackParameter.resolved("viewName", "view.name")
 				};
 			}
 
@@ -239,7 +240,8 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 						CallbackParameter.converted("end", "end.getTime()"),
 						CallbackParameter.explicit("allDay"),
 						CallbackParameter.context("jsEvent"),
-						CallbackParameter.context("view")
+						CallbackParameter.context("view"),
+						CallbackParameter.resolved("viewName", "view.name")
 				};
 			}
 
@@ -271,7 +273,8 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 						CallbackParameter.context("event"),
 						CallbackParameter.context("jsEvent"),
 						CallbackParameter.context("view"),
-						CallbackParameter.resolved("eventId", "event.id")
+						CallbackParameter.resolved("eventId", "event.id"),
+						CallbackParameter.resolved("viewName", "view.name")
 				};
 			}
 
@@ -361,6 +364,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	protected static class DayClickEvent extends JQueryEvent
 	{
 		private final Date day;
+		private final String viewName;
 
 		/**
 		 * Constructor
@@ -369,6 +373,8 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		{
 			long date = RequestCycleUtils.getQueryParameterValue("date").toLong();
 			this.day = new Date(date);
+
+			this.viewName = RequestCycleUtils.getQueryParameterValue("viewName").toString();
 		}
 
 		/**
@@ -379,6 +385,15 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		{
 			return this.day;
 		}
+
+		/**
+		 * Gets the current {@link CalendarView}
+		 * @return the view name
+		 */
+		public CalendarView getView()
+		{
+			return CalendarView.valueOf(this.viewName);
+		}
 	}
 
 	/**
@@ -386,9 +401,10 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	 */
 	protected static class SelectEvent extends JQueryEvent
 	{
-		private final boolean isAllDay;
 		private final Date start;
 		private final Date end;
+		private final boolean isAllDay;
+		private final String viewName;
 
 		public SelectEvent()
 		{
@@ -399,6 +415,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 			this.end = new Date(end);
 
 			this.isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
+			this.viewName = RequestCycleUtils.getQueryParameterValue("viewName").toString();
 		}
 
 		/**
@@ -427,6 +444,15 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		{
 			return this.isAllDay;
 		}
+
+		/**
+		 * Gets the current {@link CalendarView}
+		 * @return the view name
+		 */
+		public CalendarView getView()
+		{
+			return CalendarView.valueOf(this.viewName);
+		}
 	}
 
 	/**
@@ -435,6 +461,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	protected static class ClickEvent extends JQueryEvent
 	{
 		private final int eventId;
+		private final String viewName;
 
 		/**
 		 * Constructor
@@ -442,6 +469,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		public ClickEvent()
 		{
 			this.eventId = RequestCycleUtils.getQueryParameterValue("eventId").toInt();
+			this.viewName = RequestCycleUtils.getQueryParameterValue("viewName").toString();
 		}
 
 		/**
@@ -451,6 +479,15 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		public int getEventId()
 		{
 			return this.eventId;
+		}
+
+		/**
+		 * Gets the current {@link CalendarView}
+		 * @return the view name
+		 */
+		public CalendarView getView()
+		{
+			return CalendarView.valueOf(this.viewName);
 		}
 	}
 
