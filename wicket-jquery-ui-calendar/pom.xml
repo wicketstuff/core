@@ -6,19 +6,19 @@
 
 	<parent>
 		<groupId>com.googlecode.wicket-jquery-ui</groupId>
-		<artifactId>jquery-ui-parent</artifactId>
-		<version>1.4.3-SNAPSHOT</version>
+		<artifactId>wicket-jquery-ui-parent</artifactId>
+		<version>6.7.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>jquery-ui-calendar</artifactId>
+	<artifactId>wicket-jquery-ui-calendar</artifactId>
 	<packaging>jar</packaging>
 
 	<dependencies>
 		<!-- JQUERY-UI DEPENDENCIES -->
 		<dependency>
 			<groupId>com.googlecode.wicket-jquery-ui</groupId>
-			<artifactId>jquery-ui-core</artifactId>
-			<version>1.4.3-SNAPSHOT</version>
+			<artifactId>wicket-jquery-ui-core</artifactId>
+			<version>6.7.0-SNAPSHOT</version>
 		</dependency>
 
 		<!-- WICKET DEPENDENCIES -->

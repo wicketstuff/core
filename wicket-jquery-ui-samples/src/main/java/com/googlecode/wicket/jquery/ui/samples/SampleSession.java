@@ -7,7 +7,7 @@ import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
 
-import com.googlecode.wicket.jquery.ui.IJQuerySecurityProvider;
+import com.googlecode.wicket.jquery.core.IJQuerySecurityProvider;
 
 public class SampleSession extends WebSession implements IJQuerySecurityProvider
 {

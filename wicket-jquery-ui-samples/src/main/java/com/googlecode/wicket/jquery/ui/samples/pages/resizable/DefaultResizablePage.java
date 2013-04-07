@@ -1,6 +1,8 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.resizable;
 
-import com.googlecode.wicket.jquery.ui.Options;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.interaction.resizable.ResizableBehavior;
 
 public class DefaultResizablePage extends AbstractResizablePage
@@ -15,6 +17,31 @@ public class DefaultResizablePage extends AbstractResizablePage
 		options.set("minHeight", 100);
 		options.set("maxHeight", 300);
 
-		this.add(new ResizableBehavior("#resizable", options));
+		this.add(new ResizableBehavior("#resizable", options) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isResizeStartEventEnabled()
+			{
+				return false;
+			}
+
+			@Override
+			public boolean isResizeStopEventEnabled()
+			{
+				return false;
+			}
+
+			@Override
+			public void onResizeStart(AjaxRequestTarget target, int top, int left, int width, int height)
+			{
+			}
+
+			@Override
+			public void onResizeStop(AjaxRequestTarget target, int top, int left, int width, int height)
+			{
+			}
+		});
 	}
 }

@@ -3,22 +3,22 @@ package com.googlecode.wicket.jquery.ui.samples;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.resource.ResourceUtil;
+import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.template.PackageTextTemplate;
 
-import com.googlecode.wicket.jquery.ui.JQueryBehavior;
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
 
 public abstract class SamplePage extends TemplatePage
 {
 	private static final long serialVersionUID = 1L;
 	private enum Source { HTML, JAVA, TEXT }
-	
+
 	public SamplePage()
 	{
 		super();
@@ -36,13 +36,13 @@ public abstract class SamplePage extends TemplatePage
 			@Override
 			protected void populateItem(ListItem<DemoLink> item)
 			{
-				DemoLink object = item.getModelObject(); 
+				DemoLink object = item.getModelObject();
 				Link<SamplePage> link = new BookmarkablePageLink<SamplePage>("link", object.getPage());
 				link.add(new Label("label", object.getLabel()).setEscapeModelStrings(false)); //new StringResourceModel("title", ), getString("title", type)
-				
+
 				item.add(link);
 			}
-			
+
 			@Override
 			public boolean isVisible()
 			{
@@ -65,7 +65,7 @@ public abstract class SamplePage extends TemplatePage
 	private String getSource(Source source, Class<? extends SamplePage> scope)
 	{
 		PackageTextTemplate stream = new PackageTextTemplate(scope, String.format("%s.%s", scope.getSimpleName(), source.toString().toLowerCase()));
-		
+
 		return ResourceUtil.readString(stream);
 
 	}
@@ -74,25 +74,25 @@ public abstract class SamplePage extends TemplatePage
 	{
 		return Collections.emptyList();
 	}
-	
+
 	protected class DemoLink implements IClusterable
 	{
 		private static final long serialVersionUID = 1L;
 
 		private final Class<? extends SamplePage> page;
 		private final String label;
-		
+
 		public DemoLink(Class<? extends SamplePage> page, String label)
 		{
 			this.page = page;
 			this.label = label;
 		}
-		
+
 		public Class<? extends SamplePage> getPage()
 		{
 			return this.page;
 		}
-		
+
 		public String getLabel()
 		{
 			return this.label;

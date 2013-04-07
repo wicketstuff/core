@@ -18,7 +18,7 @@ package com.googlecode.wicket.jquery.ui.plugins.datepicker;
 
 import java.util.Date;
 
-import org.apache.wicket.IClusterable;
+import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Provides the value type to be used as model object for {@link RangeDatePicker} and {@link RangeDatePickerTextField}

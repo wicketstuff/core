@@ -13,7 +13,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.event.JQueryAjaxChangeBehavior.ChangeEvent;
+import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.samples.component.NavigationAjaxButton;
 import com.googlecode.wicket.jquery.ui.samples.component.TabDialog;
@@ -60,7 +60,7 @@ public class AdvancedTabsPage extends AbstractTabsPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onActivate(AjaxRequestTarget target, int index, ITab tab)
+			public void onActivate(AjaxRequestTarget target, int index, ITab tab)
 			{
 				tabIndex = index;
 				this.send(buttons, Broadcast.EXACT, new ChangeEvent(target));
@@ -110,7 +110,7 @@ public class AdvancedTabsPage extends AbstractTabsPage
 			{
 				super.onConfigure();
 
-				int max = tabPanel.getTabs().size() - 1;
+				int max = tabPanel.getModelObject().size() - 1;
 
 				this.getBackwardButton().setEnabled(tabIndex > 0);
 				this.getForwardButton().setEnabled(tabIndex < max);
@@ -128,7 +128,7 @@ public class AdvancedTabsPage extends AbstractTabsPage
 			@Override
 			protected void onForward(AjaxRequestTarget target, AjaxButton button)
 			{
-				int max = tabPanel.getTabs().size() - 1;
+				int max = tabPanel.getModelObject().size() - 1;
 
 				if (tabIndex < max)
 				{
@@ -195,5 +195,20 @@ public class AdvancedTabsPage extends AbstractTabsPage
 		});
 
 		return tabs;
+	}
+
+	static class ChangeEvent extends JQueryEvent
+	{
+		private final AjaxRequestTarget target;
+
+		public ChangeEvent(AjaxRequestTarget target)
+		{
+			this.target = target;
+		}
+
+		public AjaxRequestTarget getTarget()
+		{
+			return this.target;
+		}
 	}
 }

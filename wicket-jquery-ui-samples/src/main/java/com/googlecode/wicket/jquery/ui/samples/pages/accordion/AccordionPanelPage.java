@@ -12,7 +12,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.Options;
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.widget.accordion.AccordionPanel;
@@ -42,7 +42,7 @@ public class AccordionPanelPage extends AbstractAccordionPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onActivate(AjaxRequestTarget target, int index, ITab tab)
+			public void onActivate(AjaxRequestTarget target, int index, ITab tab)
 			{
 				info(String.format("selected tab: #%d - %s", index, tab.getTitle().getObject()));
 				target.add(feedback);

@@ -11,15 +11,15 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.time.Duration;
 
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
-import com.googlecode.wicket.jquery.ui.widget.ProgressBar;
+import com.googlecode.wicket.jquery.ui.widget.progressbar.ProgressBar;
 
 public class DefaultProgressBarPage extends AbstractProgressBarPage implements IAjaxIndicatorAware
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private final ProgressBar progressBar;
 	private final AjaxIndicatorAppender indicator = new AjaxIndicatorAppender();
-	
+
 	public DefaultProgressBarPage()
 	{
 		final Form<Void> form = new Form<Void>("form");
@@ -31,7 +31,7 @@ public class DefaultProgressBarPage extends AbstractProgressBarPage implements I
 
 		// Timer //
 		final AbstractAjaxTimerBehavior timer = new AbstractAjaxTimerBehavior(Duration.ONE_SECOND) {
-			
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -42,23 +42,23 @@ public class DefaultProgressBarPage extends AbstractProgressBarPage implements I
 		};
 
 		form.add(timer);
-		
+
 		// ProgressBar //
 		this.progressBar = new ProgressBar("progress", new Model<Integer>(36)) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onValueChanged(AjaxRequestTarget target)
+			public void onValueChanged(AjaxRequestTarget target)
 			{
 				info("value: " + this.getDefaultModelObjectAsString());
 				target.add(feedback);
 			}
-			
+
 			@Override
 			protected void onComplete(AjaxRequestTarget target)
 			{
-				timer.stop();
+				timer.stop(target); //wicket6
 
 				info("completed!");
 				target.add(feedback);
@@ -69,11 +69,11 @@ public class DefaultProgressBarPage extends AbstractProgressBarPage implements I
 
 		// Indicator //
 		form.add(new EmptyPanel("indicator").add(this.indicator));
-		
+
 		// Initialize FeedbackPanel //
 		this.info("value: " + this.progressBar.getDefaultModelObjectAsString());
 	}
-	
+
 	@Override
 	public String getAjaxIndicatorMarkupId()
 	{

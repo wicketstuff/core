@@ -23,16 +23,15 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.convert.IConverter;
 
-import com.googlecode.wicket.jquery.ui.JQueryAbstractBehavior;
-import com.googlecode.wicket.jquery.ui.Options;
-import com.googlecode.wicket.jquery.ui.event.IValueChangedListener;
+import com.googlecode.wicket.jquery.core.JQueryAbstractBehavior;
+import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.event.IValueChangedListener;
 
 /**
  * Provides a {@link FormComponentPanel} based on a {@link TextField} and a {@link RangeDatePicker}
@@ -111,12 +110,12 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onValueChanged(AjaxRequestTarget target)
+			public void onValueChanged(AjaxRequestTarget target, DateRange range)
 			{
 				RangeDatePickerTextField.this.input.modelChanged();
 				target.add(RangeDatePickerTextField.this.input);
 
-				RangeDatePickerTextField.this.onValueChanged(target, RangeDatePickerTextField.this.getForm());
+				RangeDatePickerTextField.this.onValueChanged(target);
 			}
 		};
 
@@ -151,7 +150,7 @@ public class RangeDatePickerTextField extends FormComponentPanel<DateRange> impl
 
 	// Events //
 	@Override
-	public void onValueChanged(AjaxRequestTarget target, Form<?> form)
+	public void onValueChanged(AjaxRequestTarget target)
 	{
 	}
 

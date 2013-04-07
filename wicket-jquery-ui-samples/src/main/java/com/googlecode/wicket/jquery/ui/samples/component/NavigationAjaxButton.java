@@ -40,7 +40,7 @@ public class NavigationAjaxButton extends Panel
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected JQueryIcon getIcon()
+			protected String getIcon()
 			{
 				return JQueryIcon.CIRCLE_TRIANGLE_W;
 			}
@@ -61,7 +61,7 @@ public class NavigationAjaxButton extends Panel
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected JQueryIcon getIcon()
+			protected String getIcon()
 			{
 				return JQueryIcon.CIRCLE_TRIANGLE_E;
 			}

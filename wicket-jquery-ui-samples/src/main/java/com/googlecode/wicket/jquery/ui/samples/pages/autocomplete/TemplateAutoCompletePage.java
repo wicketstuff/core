@@ -3,7 +3,6 @@ package com.googlecode.wicket.jquery.ui.samples.pages.autocomplete;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -11,11 +10,12 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.UrlUtils;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.util.io.IClusterable;
 
+import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteUtils;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
-import com.googlecode.wicket.jquery.ui.template.IJQueryTemplate;
 
 public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 {
@@ -143,7 +143,7 @@ public class TemplateAutoCompletePage extends AbstractAutoCompletePage
 
 		/**
 		 * #toString() needs to be overridden if no renderer is provided.
-		 * #toString() is also used by {@link AutoCompleteUtils#contains(List, String)} method.
+		 * #toString() is also used by {@link AutoCompleteUtils#contains(String, List)} method.
 		 */
 		@Override
 		public String toString()

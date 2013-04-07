@@ -13,7 +13,7 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class AjaxDatePickerPage extends AbstractDatePickerPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public AjaxDatePickerPage()
 	{
 		this.init();
@@ -34,7 +34,7 @@ public class AjaxDatePickerPage extends AbstractDatePickerPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onValueChanged(AjaxRequestTarget target)
+			public void onValueChanged(AjaxRequestTarget target)
 			{
 				info("Selected date: " + this.getModelObject());
 				target.add(feedback);

@@ -33,7 +33,7 @@ public class AjaxDropDownPage extends AbstractDropDownPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onSelectionChanged(AjaxRequestTarget target, Form<?> form)
+			public void onSelectionChanged(AjaxRequestTarget target)
 			{
 				String choice =  this.getModelObject();
 

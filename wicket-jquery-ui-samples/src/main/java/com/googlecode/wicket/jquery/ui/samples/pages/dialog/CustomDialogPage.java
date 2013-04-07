@@ -34,7 +34,7 @@ public class CustomDialogPage extends AbstractDialogPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onClose(AjaxRequestTarget target, DialogButton button)
+			public void onClose(AjaxRequestTarget target, DialogButton button)
 			{
 				this.info(button + " has been clicked");
 

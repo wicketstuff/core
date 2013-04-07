@@ -4,7 +4,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 
-import com.googlecode.wicket.jquery.ui.IJQuerySecurityProvider;
+import com.googlecode.wicket.jquery.core.IJQuerySecurityProvider;
 import com.googlecode.wicket.jquery.ui.form.button.SecuredAjaxButton;
 import com.googlecode.wicket.jquery.ui.form.button.SecuredButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -15,12 +15,12 @@ import com.googlecode.wicket.jquery.ui.samples.panel.LoginPanel;
 public class SecuredButtonPage extends AbstractButtonPage implements IJQuerySecurityProvider
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public SecuredButtonPage()
 	{
 		this.init();
 	}
-	
+
 	private void init()
 	{
 		this.add(new LoginPanel("login"));
@@ -30,7 +30,7 @@ public class SecuredButtonPage extends AbstractButtonPage implements IJQuerySecu
 
 		/* FeedbackPanel */
 		form.add(new JQueryFeedbackPanel("feedback"));
-		
+
 		/* Button 1: The Session extends IJQuerySecurityProvider, no need to provide the IJQuerySecurityProvider parameter */
 		form.add(new SecuredButton("submit", SampleRoles.DEMO_ROLE) {
 

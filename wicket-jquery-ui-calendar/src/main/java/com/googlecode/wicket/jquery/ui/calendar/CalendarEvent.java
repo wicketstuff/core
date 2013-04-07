@@ -19,11 +19,11 @@ package com.googlecode.wicket.jquery.ui.calendar;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.googlecode.wicket.jquery.ui.Options;
+import com.googlecode.wicket.jquery.core.Options;
 
 /**
- * Provides a base bean that can be used with a {@link CalendarModel} 
- * 
+ * Provides a base bean that can be used with a {@link CalendarModel}
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -41,7 +41,7 @@ public class CalendarEvent implements Serializable
 	private String source = null;
 	private Boolean allDay = true;
 	private Boolean editable = null;
-	
+
 	// styling //
 	private String className = null;
 	private String color = null;
@@ -66,12 +66,12 @@ public class CalendarEvent implements Serializable
 	{
 		return this.id;
 	}
-	
+
 	public void setId(int id)
 	{
 		this.id = id;
 	}
-	
+
 	public CharSequence getUrl()
 	{
 		return this.url;
@@ -145,7 +145,7 @@ public class CalendarEvent implements Serializable
 	{
 		this.editable = editable;
 	}
-	
+
 	// styling //
 	public String getClassName()
 	{
@@ -170,34 +170,34 @@ public class CalendarEvent implements Serializable
 	public void setColor(String backgroundColor, String borderColor)
 	{
 		this.backgroundColor = backgroundColor;
-		this.borderColor = borderColor; 
+		this.borderColor = borderColor;
 	}
-	
+
 	public String getBackgroundColor()
 	{
 		return this.backgroundColor;
 	}
-	
+
 	public void setBackgroundColor(String backgroundColor)
 	{
 		this.backgroundColor = backgroundColor;
 	}
-	
+
 	public String getBorderColor()
 	{
 		return borderColor;
 	}
-	
+
 	public void setBorderColor(String borderColor)
 	{
 		this.borderColor = borderColor;
 	}
-	
+
 	public String getTextColor()
 	{
 		return this.textColor;
 	}
-	
+
 	public void setTextColor(String textColor)
 	{
 		this.textColor = textColor;
@@ -211,39 +211,39 @@ public class CalendarEvent implements Serializable
 	public String toString()
 	{
 		Options options = new Options();
-		
+
 		options.set("id", this.id);
-		
+
 		if (this.title != null)
 		{
 			options.set("title", Options.asString(this.title));
 		}
-		
+
 		if (this.start != null)
 		{
-			options.set("start", Options.asDate(this.start)); 
+			options.set("start", Options.asDate(this.start));
 		}
-		
+
 		if (this.end != null)
 		{
 			options.set("end", Options.asDate(this.end));
 		}
-		
+
 		if (this.url != null)
 		{
 			options.set("url", Options.asString(this.url));
 		}
-		
+
 		if (this.source != null)
 		{
 			options.set("source", Options.asString(this.source));
 		}
-		
+
 		if (this.allDay != null)
 		{
 			options.set("allDay", this.allDay);
 		}
-		
+
 		if (this.editable != null)
 		{
 			options.set("editable", editable);
@@ -269,12 +269,12 @@ public class CalendarEvent implements Serializable
 		{
 			options.set("borderColor", Options.asString(this.borderColor));
 		}
-		
+
 		if (this.textColor != null)
 		{
 			options.set("textColor", Options.asString(this.textColor));
 		}
-		
+
 		return options.toString();
 	}
 

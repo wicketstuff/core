@@ -24,6 +24,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.button.CheckButtonPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.button.ConfirmAjaxButtonPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.button.ConfirmButtonPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.button.DefaultButtonPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.button.IndicatingAjaxButtonPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.button.RadioButtonPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.button.SecuredButtonPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.calendar.CustomCalendarPage;
@@ -146,6 +147,7 @@ public class SiteMapPage extends WebPage
 			FontSizePage.class,
 			FormDialogPage.class,
 			FragmentDialogPage.class,
+			IndicatingAjaxButtonPage.class,
 			InputAjaxRangeSliderPage.class,
 			InputAjaxSliderPage.class,
 			InputDialogPage.class,

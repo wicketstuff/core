@@ -6,8 +6,8 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
-import com.googlecode.wicket.jquery.ui.interaction.Draggable;
-import com.googlecode.wicket.jquery.ui.interaction.Draggable.Containment;
+import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
+import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable.Containment;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
 public class ComponentOptionDraggablePage extends AbstractDraggablePage
@@ -26,20 +26,20 @@ public class ComponentOptionDraggablePage extends AbstractDraggablePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected boolean isStopEventEnabled()
+			public boolean isStopEventEnabled()
 			{
 				return true;
 			}
 
 			@Override
-			protected void onDragStart(AjaxRequestTarget target)
+			public void onDragStart(AjaxRequestTarget target)
 			{
 				ComponentOptionDraggablePage.this.info(this, "started");
 				target.add(feedback);
 			}
 
 			@Override
-			protected void onDragStop(AjaxRequestTarget target)
+			public void onDragStop(AjaxRequestTarget target)
 			{
 				ComponentOptionDraggablePage.this.info(this, "stopped");
 				target.add(feedback);
@@ -54,20 +54,20 @@ public class ComponentOptionDraggablePage extends AbstractDraggablePage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected boolean isStopEventEnabled()
+			public boolean isStopEventEnabled()
 			{
 				return true;
 			}
 
 			@Override
-			protected void onDragStart(AjaxRequestTarget target)
+			public void onDragStart(AjaxRequestTarget target)
 			{
 				ComponentOptionDraggablePage.this.info(this, "started");
 				target.add(feedback);
 			}
 
 			@Override
-			protected void onDragStop(AjaxRequestTarget target)
+			public void onDragStop(AjaxRequestTarget target)
 			{
 				ComponentOptionDraggablePage.this.info(this, "stopped");
 				target.add(feedback);

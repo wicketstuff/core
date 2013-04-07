@@ -7,7 +7,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.Options;
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.kendo.button.Button;
 import com.googlecode.wicket.jquery.ui.kendo.datetime.DatePicker;

@@ -5,7 +5,8 @@ import java.util.Map;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
@@ -63,7 +64,7 @@ class GoogleAnalyticsBehavior extends Behavior
 	{
 		super.renderHead(component, response);
 
-		response.renderJavaScriptReference(this.newResourceReference(), "gaq");
+		response.render(JavaScriptHeaderItem.forReference(this.newResourceReference(), "gaq"));
 	}
 
 	private static String getUrl(WebPage page)

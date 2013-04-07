@@ -26,7 +26,3 @@ new AutoCompleteTextField&lt;String&gt;("autocomplete") {
 	}
 }
 </pre>
-
-<h4>Important</h4>
-As the result is retrieved via ajax, the invocation has been "protected" by an <code>AjaxCallThrottlingDecorator</code>, with a duration of one second. That means that the widget prevent to send more than one request per second.
-

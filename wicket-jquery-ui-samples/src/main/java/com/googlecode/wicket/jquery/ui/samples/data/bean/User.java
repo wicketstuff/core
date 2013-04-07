@@ -1,6 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.data.bean;
 
-import org.apache.wicket.IClusterable;
+import org.apache.wicket.util.io.IClusterable;
 
 public class User implements IClusterable
 {

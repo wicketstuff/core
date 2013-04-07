@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
-import com.googlecode.wicket.jquery.ui.Options;
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.calendar.Calendar;
 import com.googlecode.wicket.jquery.ui.calendar.CalendarEvent;
 import com.googlecode.wicket.jquery.ui.calendar.CalendarModel;
@@ -17,7 +17,7 @@ public class CustomCalendarPage extends AbstractCalendarPage
 	private static final long serialVersionUID = 1L;
 
 	private final List<CalendarEvent> events;
-	
+
 	public CustomCalendarPage()
 	{
 		this.events = new ArrayList<CalendarEvent>();
@@ -40,7 +40,7 @@ public class CustomCalendarPage extends AbstractCalendarPage
 	private CalendarModel newCalendarModel()
 	{
 		return new CalendarModel() {
-			
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -49,7 +49,7 @@ public class CustomCalendarPage extends AbstractCalendarPage
 				// Loads events from the data access layer, using:
 				// Date start = this.getStart();
 				// Date end = this.getEnd();
-				
+
 				return events;
 			}
 		};

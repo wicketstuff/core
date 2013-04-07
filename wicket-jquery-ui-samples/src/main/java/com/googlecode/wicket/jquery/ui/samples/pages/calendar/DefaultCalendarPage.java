@@ -2,13 +2,13 @@ package com.googlecode.wicket.jquery.ui.samples.pages.calendar;
 
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
-import com.googlecode.wicket.jquery.ui.Options;
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.calendar.Calendar;
 
 public class DefaultCalendarPage extends AbstractCalendarPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public DefaultCalendarPage()
 	{
 		this.init();

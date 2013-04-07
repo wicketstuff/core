@@ -16,19 +16,13 @@
  */
 package com.googlecode.wicket.jquery.ui.plugins.datepicker;
 
-import java.util.Date;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.event.IEvent;
 import org.apache.wicket.model.IModel;
 
-import com.googlecode.wicket.jquery.ui.JQueryBehavior;
-import com.googlecode.wicket.jquery.ui.JQueryContainer;
-import com.googlecode.wicket.jquery.ui.JQueryEvent;
-import com.googlecode.wicket.jquery.ui.Options;
-import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
-import com.googlecode.wicket.jquery.ui.utils.RequestCycleUtils;
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.core.JQueryContainer;
+import com.googlecode.wicket.jquery.core.Options;
 
 /**
  * Provides a jQuery integration of foxrunsoftware's (range) DatePicker<br/>
@@ -36,12 +30,11 @@ import com.googlecode.wicket.jquery.ui.utils.RequestCycleUtils;
  *
  * @author Sebastien Briquet - sebfz1
  */
-public class RangeDatePicker extends JQueryContainer
+public class RangeDatePicker extends JQueryContainer implements IRangeDatePickerListener
 {
 	private static final long serialVersionUID = 1L;
 
 	private Options options;
-	private JQueryAjaxBehavior onChangeBehavior;
 
 	/**
 	 * Constructor
@@ -97,15 +90,8 @@ public class RangeDatePicker extends JQueryContainer
 		this.setDefaultModelObject(object);
 	}
 
+
 	// Events //
-	@Override
-	protected void onInitialize()
-	{
-		super.onInitialize();
-
-		this.add(this.onChangeBehavior = this.newOnChangeBehavior());
-	}
-
 	/**
 	 * Called immediately after the onConfigure method in a behavior. Since this is before the rendering
 	 * cycle has begun, the behavior can modify the configuration of the component (i.e. {@link Options})
@@ -114,26 +100,11 @@ public class RangeDatePicker extends JQueryContainer
 	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOptions(this.options);
 	}
 
+	//XXX: report as changed - onValueChanged(AjaxRequestTarget target) > onValueChanged(AjaxRequestTarget target, DateRange range)
 	@Override
-	public void onEvent(IEvent<?> event)
-	{
-		if (event.getPayload() instanceof ChangeEvent)
-		{
-			ChangeEvent payload = (ChangeEvent) event.getPayload();
-
-			this.setModelObject(new DateRange(payload.getStart(), payload.getEnd()));
-			this.onValueChanged(payload.getTarget());
-		}
-	}
-
-	/**
-	 * Triggered when the date(s) changed
-	 * @param target the {@link AjaxRequestTarget}
-	 */
-	protected void onValueChanged(AjaxRequestTarget target)
+	public void onValueChanged(AjaxRequestTarget target, DateRange range)
 	{
 	}
 
@@ -141,13 +112,15 @@ public class RangeDatePicker extends JQueryContainer
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new RangeDatePickerBehavior(selector) {
+		return new RangeDatePickerBehavior(selector, this.options) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onConfigure(Component component)
 			{
+				super.onConfigure(component);
+
 				RangeDatePicker.this.onConfigure(this);
 
 				// build date array
@@ -174,78 +147,14 @@ public class RangeDatePicker extends JQueryContainer
 				// set options
 				this.setOption("date", builder.toString());
 				this.setOption("mode", Options.asString("range")); //immutable
-				this.setOption("onChange", RangeDatePicker.this.onChangeBehavior.getCallbackFunction());
+			}
+
+			@Override
+			public void onValueChanged(AjaxRequestTarget target, DateRange range)
+			{
+				RangeDatePicker.this.setModelObject(range);
+				RangeDatePicker.this.onValueChanged(target, range);
 			}
 		};
-	}
-
-	// Factories //
-	/**
-	 * Gets a new {@link JQueryAjaxBehavior} that acts as the 'change' javascript callback
-	 * @return the {@link JQueryAjaxBehavior}
-	 */
-	private JQueryAjaxBehavior newOnChangeBehavior()
-	{
-		return new JQueryAjaxBehavior(this) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public String getCallbackFunction()
-			{
-				return "function(dates, el) { " + this.getCallbackScript() + " }";
-			}
-
-			@Override
-			public CharSequence getCallbackScript()
-			{
-				return this.generateCallbackScript("wicketAjaxGet('" + this.getCallbackUrl() + "&start=' + dates[0].getTime() + '&end=' + dates[1].getTime()");
-			}
-
-			@Override
-			protected JQueryEvent newEvent(AjaxRequestTarget target)
-			{
-				return new ChangeEvent(target);
-			}
-		};
-	}
-
-	// Event class //
-	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} 'change' callback
-	 */
-	class ChangeEvent extends JQueryEvent
-	{
-		private final Date start;
-		private final Date end;
-
-		public ChangeEvent(AjaxRequestTarget target)
-		{
-			super(target);
-
-			long start = RequestCycleUtils.getQueryParameterValue("start").toLong();
-			this.start = new Date(start);
-
-			long end = RequestCycleUtils.getQueryParameterValue("end").toLong();
-			this.end = new Date(end);
-		}
-
-		/**
-		 * Gets the event's start date
-		 * @return the start date
-		 */
-		public Date getStart()
-		{
-			return this.start;
-		}
-
-		/**
-		 * Gets the event's end date
-		 * @return the end date
-		 */
-		public Date getEnd()
-		{
-			return this.end;
-		}
 	}
 }

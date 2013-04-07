@@ -36,7 +36,7 @@ public class MessageDialogPage extends AbstractDialogPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onClose(AjaxRequestTarget target, DialogButton button)
+			public void onClose(AjaxRequestTarget target, DialogButton button)
 			{
 			}
 		};
@@ -48,7 +48,7 @@ public class MessageDialogPage extends AbstractDialogPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onClose(AjaxRequestTarget target, DialogButton button)
+			public void onClose(AjaxRequestTarget target, DialogButton button)
 			{
 			}
 		};
@@ -60,7 +60,7 @@ public class MessageDialogPage extends AbstractDialogPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onClose(AjaxRequestTarget target, DialogButton button)
+			public void onClose(AjaxRequestTarget target, DialogButton button)
 			{
 			}
 		};

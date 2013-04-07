@@ -18,7 +18,7 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class ColorPickerPage extends AbstractSliderPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	// Models //
 	private final Model<String> model;
 
@@ -27,7 +27,7 @@ public class ColorPickerPage extends AbstractSliderPage
 		this.model = new Model<String>("#336699");
 		this.init();
 	}
-	
+
 	private void init()
 	{
 		final Form<Void> form = new Form<Void>("form");
@@ -44,11 +44,11 @@ public class ColorPickerPage extends AbstractSliderPage
 
 		// Color Slider(s) //
 		form.add(new ColorPicker("picker", this.model) {
-			
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onColorChanged(AjaxRequestTarget target, Form<?> form)
+			protected void onColorChanged(AjaxRequestTarget target)
 			{
 				// change the color of the color-panel //
 				colorPanel.add(ColorPickerPage.this.newBackgroundAttributeModifier());
@@ -70,8 +70,8 @@ public class ColorPickerPage extends AbstractSliderPage
 		this.info(component.getMarkupId() + " has been clicked");
 		this.info("The model object is: " + this.model.getObject());
 	}
-	
-	
+
+
 	/**
 	 * A FormComponentFragment would have been perfect here, but... it does not exists :s
 	 *
@@ -82,7 +82,7 @@ public class ColorPickerPage extends AbstractSliderPage
 		private static final int INDEX_R = 1;	//#RRxxxx
 		private static final int INDEX_G = 3;	//#xxGGxx
 		private static final int INDEX_B = 5;	//#xxxxBB
-		
+
 		private final IModel<Integer> modelR;
 		private final IModel<Integer> modelG;
 		private final IModel<Integer> modelB;
@@ -90,14 +90,14 @@ public class ColorPickerPage extends AbstractSliderPage
 		public ColorPicker(String id, IModel<String> model)
 		{
 			super(id, "color-picker", ColorPickerPage.this, model);
-			
+
 			this.modelR = this.newColorModel(INDEX_R);
 			this.modelG = this.newColorModel(INDEX_G);
 			this.modelB = this.newColorModel(INDEX_B);
-			
+
 			this.init();
 		}
-		
+
 		private void init()
 		{
 			this.add(this.newAjaxSlider("r", this.modelR)); // Slider: Red
@@ -110,23 +110,22 @@ public class ColorPickerPage extends AbstractSliderPage
 		 * @param target
 		 * @param form
 		 */
-		private void changeColor(AjaxRequestTarget target, Form<?> form)
+		private void changeColor(AjaxRequestTarget target)
 		{
 			Integer r = this.modelR.getObject();
 			Integer g = this.modelG.getObject();
 			Integer b = this.modelB.getObject();
 
 			this.setDefaultModelObject(String.format("#%02x%02x%02x", r, g, b));
-			this.onColorChanged(target, form);
+			this.onColorChanged(target);
 		}
 
 		// Events //
 		/**
 		 * Event which will be fired when the color has been changed.
-		 * @param target
-		 * @param form
+		 * @param target the {@link AjaxRequestTarget}
 		 */
-		protected abstract void onColorChanged(AjaxRequestTarget target, Form<?> form);
+		protected abstract void onColorChanged(AjaxRequestTarget target);
 
 		// Factories //
 		/**
@@ -142,9 +141,9 @@ public class ColorPickerPage extends AbstractSliderPage
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void onValueChanged(AjaxRequestTarget target, Form<?> form)
+				public void onValueChanged(AjaxRequestTarget target)
 				{
-					ColorPicker.this.changeColor(target, form);
+					ColorPicker.this.changeColor(target);
 				}
 			};
 

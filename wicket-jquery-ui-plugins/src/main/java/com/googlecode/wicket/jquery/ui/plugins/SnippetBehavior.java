@@ -19,8 +19,8 @@ package com.googlecode.wicket.jquery.ui.plugins;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
-import com.googlecode.wicket.jquery.ui.JQueryBehavior;
-import com.googlecode.wicket.jquery.ui.Options;
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.core.Options;
 
 public class SnippetBehavior extends JQueryBehavior
 {

@@ -14,7 +14,7 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class InputAjaxSliderPage extends AbstractSliderPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	// Model //
 	private final Model<Integer> model = new Model<Integer>(15);
 
@@ -22,7 +22,7 @@ public class InputAjaxSliderPage extends AbstractSliderPage
 	{
 		this.init();
 	}
-	
+
 	private void init()
 	{
 		final Form<Void> form = new Form<Void>("form");
@@ -35,7 +35,7 @@ public class InputAjaxSliderPage extends AbstractSliderPage
 		// Sliders //
 		TextField<Integer> input = new TextField<Integer>("input", this.model, Integer.class);
 		form.add(input);
-		
+
 		AjaxSlider slider = new AjaxSlider("slider", this.model, input) {
 
 			private static final long serialVersionUID = 1L;
@@ -47,19 +47,19 @@ public class InputAjaxSliderPage extends AbstractSliderPage
 			}
 
 			@Override
-			public void onValueChanged(AjaxRequestTarget target, Form<?> form)
+			public void onValueChanged(AjaxRequestTarget target)
 			{
 				InputAjaxSliderPage.this.info(this);
 				target.add(feedback); //do never add 'this' or the form here!
 			}
 		};
-		
+
 		form.add(slider.setRangeValidator(new RangeValidator<Integer>(0, 100)));
 	}
 
 	private void info(Component component)
 	{
-		this.info(component.getMarkupId() + " has been clicked");
+		this.info(component.getMarkupId() + " has been slided");
 		this.info("The model object is: " + this.model.getObject());
 	}
 }

@@ -29,9 +29,9 @@ public class DefaultMenuPage extends AbstractMenuPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onClick(AjaxRequestTarget target, IMenuItem item)
+			public void onClick(AjaxRequestTarget target, IMenuItem item)
 			{
-				this.info("Clicked on " + item.getTitle().getObject());
+				this.info("Clicked " + item.getTitle().getObject());
 
 				target.add(this);
 				target.add(feedback);
@@ -55,7 +55,7 @@ public class DefaultMenuPage extends AbstractMenuPage
 			}
 		});
 		list.add(new MenuItem("Another menu item"));
-		list.add(new MenuItem("Menu item, with sub-menu", JQueryIcon.BOOKMARK, this.newSubMenuList()));
+		list.add(new MenuItem("Menu item, with sub-menu", JQueryIcon.BOOKMARK, this.newSubMenuList())); // css-class are also allowed
 		list.add(new MenuItem("Desactivate me") {
 
 			private static final long serialVersionUID = 1L;

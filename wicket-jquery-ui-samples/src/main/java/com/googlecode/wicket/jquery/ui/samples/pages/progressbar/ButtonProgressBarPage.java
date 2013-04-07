@@ -7,12 +7,12 @@ import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
-import com.googlecode.wicket.jquery.ui.widget.ProgressBar;
+import com.googlecode.wicket.jquery.ui.widget.progressbar.ProgressBar;
 
 public class ButtonProgressBarPage extends AbstractProgressBarPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public ButtonProgressBarPage()
 	{
 		this.init();
@@ -33,12 +33,12 @@ public class ButtonProgressBarPage extends AbstractProgressBarPage
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onValueChanged(AjaxRequestTarget target)
+			public void onValueChanged(AjaxRequestTarget target)
 			{
 				info("value: " + this.getDefaultModelObjectAsString());
 				target.add(feedback);
 			}
-			
+
 			@Override
 			protected void onComplete(AjaxRequestTarget target)
 			{
@@ -46,7 +46,7 @@ public class ButtonProgressBarPage extends AbstractProgressBarPage
 				target.add(feedback);
 			}
 		};
-		
+
 		form.add(progressBar);
 
 		// Buttons //
@@ -60,7 +60,7 @@ public class ButtonProgressBarPage extends AbstractProgressBarPage
 				progressBar.backward(target);
 			}
 		});
-		
+
 		form.add(new AjaxButton("forward") {
 
 			private static final long serialVersionUID = 1L;

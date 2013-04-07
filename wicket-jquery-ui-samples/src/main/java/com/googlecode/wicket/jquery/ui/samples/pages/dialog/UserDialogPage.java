@@ -15,6 +15,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.util.ListModel;
 
+import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.form.RadioChoice;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
@@ -65,7 +66,7 @@ public class UserDialogPage extends AbstractDialogPage
 			}
 
 			@Override
-			protected void onClose(AjaxRequestTarget target, DialogButton button)
+			public void onClose(AjaxRequestTarget target, DialogButton button)
 			{
 				target.add(form);
 			}
@@ -120,8 +121,8 @@ public class UserDialogPage extends AbstractDialogPage
 	abstract class UserDialog extends AbstractFormDialog<User>
 	{
 		private static final long serialVersionUID = 1L;
-		protected final DialogButton btnSubmit = new DialogButton("Save");
-		protected final DialogButton btnCancel = new DialogButton(LBL_CANCEL);
+		protected final DialogButton btnSubmit = new DialogButton("Save", JQueryIcon.CHECK);
+		protected final DialogButton btnCancel = new DialogButton(LBL_CANCEL, JQueryIcon.CANCEL);
 
 		private Form<?> form;
 		private FeedbackPanel feedback;

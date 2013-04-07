@@ -2,7 +2,6 @@ package com.googlecode.wicket.jquery.ui.samples.pages.test;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
@@ -47,7 +46,7 @@ public class MySlider extends FormComponentPanel<RangeValue>
 			}
 
 			@Override
-			public void onValueChanged(AjaxRequestTarget target, Form<?> form)
+			public void onValueChanged(AjaxRequestTarget target)
 			{
 				MySlider.this.onValueChanged(target);
 			}

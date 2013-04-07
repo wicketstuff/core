@@ -1,86 +1,118 @@
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.event.IEvent;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.markup.html.basic.Label;
 
-import com.googlecode.wicket.jquery.ui.IJQueryWidget;
-import com.googlecode.wicket.jquery.ui.JQueryBehavior;
-import com.googlecode.wicket.jquery.ui.JQueryEvent;
-import com.googlecode.wicket.jquery.ui.ajax.JQueryAjaxBehavior;
+import com.googlecode.wicket.jquery.core.IJQueryWidget;
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.core.JQueryEvent;
+import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
+import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 
-public class MyJQueryLabel extends Label implements IJQueryWidget
+interface IMyJQueryListener
+{
+	void onMyEvent(AjaxRequestTarget target);
+}
+
+public class MyJQueryLabel extends Label implements IJQueryWidget, IMyJQueryListener
 {
 	private static final long serialVersionUID = 1L;
-
-	// Mainly used to cast to the exact type
-	class MyEvent extends JQueryEvent
-	{
-		public MyEvent(AjaxRequestTarget target)
-		{
-			super(target);
-		}
-	}
-
-	private JQueryAjaxBehavior onJQueryEventBehavior;
 
 	public MyJQueryLabel(String id)
 	{
 		super(id);
-		this.init();
 	}
 
-	private void init()
-	{
-		this.onJQueryEventBehavior = new JQueryAjaxBehavior(this) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public String getCallbackFunction()
-			{
-				return "function(event, ui) { " + this.getCallbackScript() + " }";
-			}
-
-			@Override
-			protected JQueryEvent newEvent(AjaxRequestTarget target)
-			{
-				return new MyEvent(target);
-			}
-		};
-	}
-
-	@Override
-	public void onEvent(IEvent<?> event)
-	{
-		if (event.getPayload() instanceof MyEvent)
-		{
-//			JQueryEvent payload = (JQueryEvent) event.getPayload();
-//			AjaxRequestTarget target = payload.getTarget();
-			// do something with the target
-		}
-	}
-
+	// Events //
 	@Override
 	protected void onInitialize()
 	{
 		super.onInitialize();
 
-		this.add(this.onJQueryEventBehavior);
 		this.add(JQueryWidget.newWidgetBehavior(this));
+	}
+
+	@Override
+	public void onMyEvent(AjaxRequestTarget target)
+	{
+		// do something here
 	}
 
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new JQueryBehavior(selector, "jquerymethod") {
+		return new MyJQueryBehavior(selector, "jquerymethod") {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onConfigure(Component component)
+			public void onMyEvent(AjaxRequestTarget target)
 			{
-				this.setOption("jqueryevent", onJQueryEventBehavior.getCallbackFunction());
+				MyJQueryLabel.this.onMyEvent(target);
 			}
 		};
+	}
+
+	static abstract class MyJQueryBehavior extends JQueryBehavior implements IJQueryAjaxAware, IMyJQueryListener
+	{
+		private static final long serialVersionUID = 1L;
+		private JQueryAjaxBehavior onJQueryEventBehavior;
+
+		public MyJQueryBehavior(String selector, String method)
+		{
+			super(selector, method);
+		}
+
+		@Override
+		public void bind(Component component)
+		{
+			super.bind(component);
+
+			component.add(this.onJQueryEventBehavior = this.newJQueryAjaxBehavior());
+		}
+
+		// Events //
+		@Override
+		public void onConfigure(Component component)
+		{
+			super.onConfigure(component);
+
+			this.setOption("jqueryevent", this.onJQueryEventBehavior.getCallbackFunction());
+		}
+
+		@Override
+		public void onAjax(AjaxRequestTarget target, JQueryEvent event)
+		{
+			if (event instanceof MyEvent)
+			{
+				this.onMyEvent(target);
+			}
+		}
+
+		// Factory //
+		protected JQueryAjaxBehavior newJQueryAjaxBehavior()
+		{
+			return new JQueryAjaxBehavior(this) {
+
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected CallbackParameter[] getCallbackParameters()
+				{
+					return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
+				}
+
+				@Override
+				protected JQueryEvent newEvent()
+				{
+					return new MyEvent();
+				}
+			};
+		}
+
+		// Event Class //
+		protected static class MyEvent extends JQueryEvent
+		{
+		}
 	}
 }

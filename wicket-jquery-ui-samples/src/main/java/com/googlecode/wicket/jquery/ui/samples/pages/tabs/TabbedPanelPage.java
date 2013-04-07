@@ -9,7 +9,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.ui.Options;
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.widget.tabs.AjaxTab;
 import com.googlecode.wicket.jquery.ui.widget.tabs.SimpleTab;
 import com.googlecode.wicket.jquery.ui.widget.tabs.TabbedPanel;

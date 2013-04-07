@@ -14,12 +14,12 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class AjaxRangeSliderPage extends AbstractSliderPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public AjaxRangeSliderPage()
 	{
 		this.init();
 	}
-	
+
 	private void init()
 	{
 		final Form<RangeValue> form = new Form<RangeValue>("form", new Model<RangeValue>(new RangeValue(16, 64)));
@@ -32,13 +32,13 @@ public class AjaxRangeSliderPage extends AbstractSliderPage
 		// Sliders //
 		final Label label = new Label("label", form.getModel()); //the supplied model allows the initial display
 		form.add(label);
-		
+
 		form.add(new AjaxRangeSlider("slider", form.getModel(), label) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onValueChanged(AjaxRequestTarget target, Form<?> form)
+			public void onValueChanged(AjaxRequestTarget target)
 			{
 				AjaxRangeSliderPage.this.info(this, form);
 				target.add(feedback); //do never add 'this' or the form here!
@@ -50,7 +50,7 @@ public class AjaxRangeSliderPage extends AbstractSliderPage
 	{
 		RangeValue value = (RangeValue) form.getModelObject(); //need to cast because 'form' argument is generic with ?
 
-		this.info(component.getMarkupId() + " has been clicked");
+		this.info(component.getMarkupId() + " has been slided");
 		this.info(String.format("lower value is %d and upper value is %d", value.getLower(), value.getUpper()));
 	}
 }

@@ -14,9 +14,7 @@ public class MyDialog extends AbstractDialog<String>
 	}
 
 	@Override
-	protected void onClose(AjaxRequestTarget target, DialogButton button)
+	public void onClose(AjaxRequestTarget target, DialogButton button)
 	{
-
-
 	}
 }

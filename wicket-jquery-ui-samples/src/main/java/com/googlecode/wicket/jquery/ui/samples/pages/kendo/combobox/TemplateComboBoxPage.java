@@ -3,19 +3,19 @@ package com.googlecode.wicket.jquery.ui.samples.pages.kendo.combobox;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.UrlUtils;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.util.io.IClusterable;
 
+import com.googlecode.wicket.jquery.core.template.IJQueryTemplate;
 import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.kendo.button.Button;
 import com.googlecode.wicket.jquery.ui.kendo.combobox.ComboBox;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
-import com.googlecode.wicket.jquery.ui.template.IJQueryTemplate;
 
 public class TemplateComboBoxPage extends AbstractComboBoxPage
 {
@@ -67,7 +67,7 @@ public class TemplateComboBoxPage extends AbstractComboBoxPage
 			}
 		};
 
-		form.add(combobox);
+		form.add(combobox.setListWidth(200));
 
 		// Buttons //
 		form.add(new Button("submit") {

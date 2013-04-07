@@ -3,11 +3,11 @@ package com.googlecode.wicket.jquery.ui.samples.pages.kendo.combobox;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.kendo.button.Button;

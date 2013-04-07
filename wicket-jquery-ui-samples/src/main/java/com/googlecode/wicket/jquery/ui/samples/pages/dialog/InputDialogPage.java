@@ -12,12 +12,12 @@ import com.googlecode.wicket.jquery.ui.widget.dialog.InputDialog;
 public class InputDialogPage extends AbstractDialogPage
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public InputDialogPage()
 	{
 		this.init();
 	}
-	
+
 	private void init()
 	{
 		final Form<Void> form = new Form<Void>("form");
@@ -25,12 +25,12 @@ public class InputDialogPage extends AbstractDialogPage
 
 		// FeedbackPanel //
 		form.add(new JQueryFeedbackPanel("feedback"));
-		
+
 		// Dialog //
 		final InputDialog<String> dialog = new InputDialog<String>("dialog", "Input", "Please provide a value:", new Model<String>("a sample value")) {
-			
+
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			public void onSubmit(AjaxRequestTarget target)
 			{
@@ -39,7 +39,7 @@ public class InputDialogPage extends AbstractDialogPage
 			}
 
 			@Override
-			protected void onClose(AjaxRequestTarget target, DialogButton button)
+			public void onClose(AjaxRequestTarget target, DialogButton button)
 			{
 				this.info(button + " has been clicked");
 				target.add(form);
@@ -47,7 +47,7 @@ public class InputDialogPage extends AbstractDialogPage
 		};
 
 		this.add(dialog); //the dialog is not within the form
-		
+
 		// Buttons //
 		form.add(new AjaxButton("open") {
 

@@ -18,8 +18,8 @@ package com.googlecode.wicket.jquery.ui.plugins;
 
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
-import com.googlecode.wicket.jquery.ui.JQueryBehavior;
-import com.googlecode.wicket.jquery.ui.Options;
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.core.Options;
 
 public class FontSizeBehavior extends JQueryBehavior
 {
@@ -28,7 +28,7 @@ public class FontSizeBehavior extends JQueryBehavior
 	public FontSizeBehavior(String selector, Options options)
 	{
 		super(selector, "jfontsize", options);
-		
+
 		this.add(new JavaScriptResourceReference(FontSizeBehavior.class, "jquery.jfontsize-1.0.min.js"));
 	}
 

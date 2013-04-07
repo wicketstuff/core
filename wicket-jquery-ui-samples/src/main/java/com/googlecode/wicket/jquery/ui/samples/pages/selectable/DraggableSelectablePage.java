@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -11,9 +12,9 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 
-import com.googlecode.wicket.jquery.ui.interaction.Draggable;
-import com.googlecode.wicket.jquery.ui.interaction.Droppable;
-import com.googlecode.wicket.jquery.ui.interaction.Selectable;
+import com.googlecode.wicket.jquery.ui.interaction.draggable.Draggable;
+import com.googlecode.wicket.jquery.ui.interaction.droppable.Droppable;
+import com.googlecode.wicket.jquery.ui.interaction.selectable.Selectable;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
 public class DraggableSelectablePage extends AbstractSelectablePage
@@ -21,7 +22,7 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 	private static final long serialVersionUID = 1L;
 	private final FeedbackPanel feedback;
 	private final Selectable<String> selectable;
-	
+
 	public DraggableSelectablePage()
 	{
 		List<String> list = Arrays.asList("item #1", "item #2", "item #3", "item #4", "item #5", "item #6");
@@ -29,7 +30,7 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 		// FeedbackPanel //
 		this.feedback = new JQueryFeedbackPanel("feedback");
 		this.add(this.feedback.setOutputMarkupId(true));
-		
+
 		// Selectable //
 		this.selectable = new Selectable<String>("selectable", list) {
 
@@ -63,7 +64,7 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 				item.add(label);
 			}
 		});
-		
+
 		// Droppable //
 		Droppable<?> droppable = this.newDroppable("droppable");
 		this.add(droppable);
@@ -88,11 +89,11 @@ public class DraggableSelectablePage extends AbstractSelectablePage
 	private Droppable<?> newDroppable(String id)
 	{
 		return new Droppable<Void>(id) {
-	
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onDrop(AjaxRequestTarget target, Draggable<?> draggable)
+			public void onDrop(AjaxRequestTarget target, Component component)
 			{
 				info(String.format("Dropped %s", selectable.getSelectedItems()));
 

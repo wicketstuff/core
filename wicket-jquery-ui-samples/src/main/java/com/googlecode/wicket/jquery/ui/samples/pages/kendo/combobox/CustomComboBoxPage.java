@@ -3,13 +3,13 @@ package com.googlecode.wicket.jquery.ui.samples.pages.kendo.combobox;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.UrlUtils;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteUtils;
 import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
@@ -108,7 +108,7 @@ public class CustomComboBoxPage extends AbstractComboBoxPage
 
 		/**
 		 * toString needs to be overridden: it is used by the suggestion display
-		 * and by {@link AutoCompleteUtils#contains(List, String)} method
+		 * and by {@link AutoCompleteUtils#contains(String, List)} method
 		 */
 		@Override
 		public String toString()
