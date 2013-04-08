@@ -188,7 +188,7 @@ public class CheckChoice<T> extends CheckBoxMultipleChoice<T> implements IJQuery
 	}
 
 	/**
-	 * TODO: javadoc
+	 * Provides jQuery check-buttons {@link JQueryBehavior}
 	 */
 	public static class CheckChoiceBehavior extends JQueryBehavior
 	{

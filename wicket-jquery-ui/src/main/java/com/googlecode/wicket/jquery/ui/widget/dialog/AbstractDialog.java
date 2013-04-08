@@ -417,8 +417,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 
 
 	/**
-	 * TODO javadoc?
-	 * Gets a new ButtonAjaxBehavior that will be called by the corresponding dialog's button.<br/>
+	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link DialogButton}.<br/>
 	 * This method mays be overridden internally to provide another behavior
 	 *
 	 * @param button the button that is passed to the behavior so it can be retrieved via the <code>DialogBehavior#ClickEvent</code>

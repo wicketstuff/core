@@ -19,7 +19,7 @@ package com.googlecode.wicket.jquery.ui.plugins.datepicker;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * TODO: javadoc
+ * Specifies that a widget handles a value-changed AJAX behavior, with a {@link DateRange}
  *
  * @author Sebastien Briquet - sebfz1
  */

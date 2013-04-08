@@ -56,7 +56,7 @@ public class MyJQueryLabel extends Label implements IJQueryWidget, IMyJQueryList
 	static abstract class MyJQueryBehavior extends JQueryBehavior implements IJQueryAjaxAware, IMyJQueryListener
 	{
 		private static final long serialVersionUID = 1L;
-		private JQueryAjaxBehavior onJQueryEventBehavior;
+		private JQueryAjaxBehavior onMyEventBehavior;
 
 		public MyJQueryBehavior(String selector, String method)
 		{
@@ -68,7 +68,7 @@ public class MyJQueryLabel extends Label implements IJQueryWidget, IMyJQueryList
 		{
 			super.bind(component);
 
-			component.add(this.onJQueryEventBehavior = this.newJQueryAjaxBehavior());
+			component.add(this.onMyEventBehavior = this.newJQueryAjaxBehavior());
 		}
 
 		// Events //
@@ -77,7 +77,7 @@ public class MyJQueryLabel extends Label implements IJQueryWidget, IMyJQueryList
 		{
 			super.onConfigure(component);
 
-			this.setOption("jqueryevent", this.onJQueryEventBehavior.getCallbackFunction());
+			this.setOption("jqueryevent", this.onMyEventBehavior.getCallbackFunction());
 		}
 
 		@Override

@@ -146,7 +146,6 @@ public class DropDownList<T> extends DropDownChoice<T> implements IJQueryWidget
 	 * Gets the (inner) list width.
 	 * @return the list width
 	 */
-	//XXX: report as new feature
 	public int getListWidth()
 	{
 		return this.width;

@@ -173,7 +173,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 
 
 	/**
-	 * TODO javadoc
+	 * Provides a Kendo UI DropDownList {@link JQueryBehavior}
 	 */
 	protected static abstract class AjaxDropDownListBehavior extends KendoAbstractBehavior implements IJQueryAjaxAware, ISelectionChangedListener
 	{

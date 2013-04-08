@@ -33,7 +33,7 @@ import com.googlecode.wicket.jquery.core.event.JQueryAjaxChangeBehavior;
 import com.googlecode.wicket.jquery.core.event.JQueryAjaxChangeBehavior.ChangeEvent;
 
 /**
- * Provides a jQuery range slider based on a {@link FormComponentPanel}
+ * Provides a jQuery slider based on a {@link FormComponentPanel}<br/>
  * This ajax version will post the {@link Component}, using a {@link JQueryAjaxChangeBehavior}, when the 'change' javascript method is called.
  *
  * @author Sebastien Briquet - sebfz1

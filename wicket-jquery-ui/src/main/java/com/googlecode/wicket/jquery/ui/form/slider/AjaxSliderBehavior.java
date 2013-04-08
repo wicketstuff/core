@@ -18,7 +18,9 @@ package com.googlecode.wicket.jquery.ui.form.slider;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.form.FormComponent;
 
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
@@ -27,8 +29,8 @@ import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 import com.googlecode.wicket.jquery.ui.form.slider.AbstractSlider.SliderBehavior;
 
 /**
- * TODO javadoc
- * {@link #onAjax(AjaxRequestTarget, JQueryEvent)}} is delegated to AjaxSlider (need to validate AjaxSlider as FormComponent)
+ * Provides a jQuery ajax-slider {@link JQueryBehavior}<br/>
+ * {@link #onAjax(AjaxRequestTarget, JQueryEvent)}} is delegated to AjaxSlider (need to validate AjaxSlider as a {@link FormComponent})
  *
  * @author Sebastien Briquet - sebfz1
  *

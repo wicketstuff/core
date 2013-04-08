@@ -306,7 +306,7 @@ public class Spinner<T extends Number> extends TextField<T> implements IJQueryCu
 
 
 	/**
-	 * TODO: javadoc
+	 * Provides a jQuery spinner {@link JQueryBehavior}
 	 */
 	public static class SpinnerBehavior extends JQueryBehavior
 	{

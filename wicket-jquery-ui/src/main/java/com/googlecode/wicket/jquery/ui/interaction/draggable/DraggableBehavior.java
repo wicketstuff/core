@@ -112,8 +112,10 @@ public abstract class DraggableBehavior extends JQueryBehavior implements IJQuer
 
 	// Factories //
 	/**
-	 * TODO javadoc
-	 * @return
+	 * Gets a new {@link DroppableBehavior} visitor.<br/>
+	 * This {@link IVisitor} is responsible for register the {@link DroppableBehavior} to this {@link DraggableBehavior}
+	 *
+	 * @return a {@link IVisitor}
 	 */
 	private IVisitor<Component, ?> newDroppableBehaviorVisitor()
 	{

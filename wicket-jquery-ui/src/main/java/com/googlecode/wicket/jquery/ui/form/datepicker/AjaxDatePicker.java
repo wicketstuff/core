@@ -48,8 +48,9 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 	}
 
 	/**
-	 * @param id
-	 * @param options
+	 * Constructor
+	 * @param id the markup id
+	 * @param options the {@link Options}
 	 */
 	public AjaxDatePicker(String id, Options options)
 	{
@@ -57,9 +58,10 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 	}
 
 	/**
-	 * @param id
-	 * @param pattern
-	 * @param options
+	 * Constructor
+	 * @param id the markup id
+	 * @param pattern a <code>SimpleDateFormat</code> pattern
+	 * @param options the {@link Options}
 	 */
 	public AjaxDatePicker(String id, String pattern, Options options)
 	{
@@ -77,10 +79,10 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 	}
 
 	/**
-	 * TODO javadoc
-	 * @param id
-	 * @param model
-	 * @param options
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param options the {@link Options}
 	 */
 	public AjaxDatePicker(String id, IModel<Date> model, Options options)
 	{
@@ -88,10 +90,11 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 	}
 
 	/**
-	 * @param id
-	 * @param model
-	 * @param pattern
-	 * @param options
+	 * Constructor
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param pattern a <code>SimpleDateFormat</code> pattern
+	 * @param options the {@link Options}
 	 */
 	public AjaxDatePicker(String id, IModel<Date> model, String pattern, Options options)
 	{

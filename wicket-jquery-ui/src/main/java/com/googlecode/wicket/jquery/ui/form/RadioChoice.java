@@ -187,7 +187,7 @@ public class RadioChoice<T> extends org.apache.wicket.markup.html.form.RadioChoi
 	}
 
 	/**
-	 * TODO: javadoc
+	 * Provides jQuery radio-buttons {@link JQueryBehavior}
 	 */
 	public static class RadioChoiceBehavior extends JQueryBehavior
 	{

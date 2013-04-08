@@ -222,9 +222,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	}
 
 	/**
-	 * TODO: javadoc
-	 * @author Sebastien Briquet - sebfz1
-	 *
+	 * Provides a jQuery slider {@link JQueryBehavior}
 	 */
 	public static class SliderBehavior extends JQueryBehavior
 	{

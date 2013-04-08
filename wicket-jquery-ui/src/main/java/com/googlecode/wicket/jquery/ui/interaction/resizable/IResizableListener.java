@@ -19,7 +19,8 @@ package com.googlecode.wicket.jquery.ui.interaction.resizable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * TODO javadoc
+ * Event listener shared by the {@link Resizable} widget and the {@link ResizableBehavior}
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */

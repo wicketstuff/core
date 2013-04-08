@@ -21,7 +21,8 @@ import java.util.Date;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * TODO javadoc
+ * Event listener shared by the {@link Calendar} widget and the {@link CalendarBehavior}
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */

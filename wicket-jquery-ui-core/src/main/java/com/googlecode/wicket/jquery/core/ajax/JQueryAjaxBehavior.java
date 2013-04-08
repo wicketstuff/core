@@ -16,7 +16,6 @@
  */
 package com.googlecode.wicket.jquery.core.ajax;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
@@ -25,81 +24,110 @@ import org.apache.wicket.ajax.attributes.ThrottlingSettings;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.util.time.Duration;
 
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 
 /**
- * TODO: change javadoc
- * Base class for implementing AJAX GET calls on JQuery components<br />
- * The 'source' constructor argument is the {@link Component} to which the event returned by {@link #newEvent()} will be broadcasted.<br/>
+ * Base class for implementing AJAX GET calls to a {@link IJQueryAjaxAware} source, which is usually a {@link JQueryBehavior}<br />
+ * <br />
+ * <b>Example</b>
  * <pre>
-public class MyJQueryLabel extends Label implements IJQueryWidget
+interface IMyJQueryListener
+{
+	void onMyEvent(AjaxRequestTarget target);
+}
+
+public class MyJQueryLabel extends Label implements IJQueryWidget, IMyJQueryListener
 {
 	private static final long serialVersionUID = 1L;
-
-	// Mainly used to cast to the exact type
-	class MyEvent extends JQueryEvent
-	{
-		public MyEvent(AjaxRequestTarget target)
-		{
-			super(target);
-		}
-	}
-
-	private JQueryAjaxBehavior ajaxBehavior;
 
 	public MyJQueryLabel(String id)
 	{
 		super(id);
-		this.init();
 	}
 
-	private void init()
-	{
-		this.ajaxBehavior = new JQueryAjaxBehavior(this) {
-
-			private static final long serialVersionUID = 1L;
-
-			public String getCallbackFunction()
-			{
-				return "function(event, ui) { " + this.getCallbackScript() + " }";
-			}
-
-			protected JQueryEvent newEvent(AjaxRequestTarget target)
-			{
-				return new MyEvent(target);
-			}
-		};
-	}
-
-	public void onEvent(IEvent<?> event)
-	{
-		if (event.getPayload() instanceof MyEvent)
-		{
-			JQueryEvent payload = (JQueryEvent) event.getPayload();
-			AjaxRequestTarget target = payload.getTarget();
-			//do something with the target
-		}
-	}
-
+	// Events //
 	protected void onInitialize()
 	{
 		super.onInitialize();
 
-		this.add(this.ajaxBehavior);
 		this.add(JQueryWidget.newWidgetBehavior(this));
+	}
+
+	public void onMyEvent(AjaxRequestTarget target)
+	{
+		// do something here
 	}
 
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new JQueryBehavior(selector, "jquerymethod") {
+		return new MyJQueryBehavior(selector, "jquerymethod") {
 
 			private static final long serialVersionUID = 1L;
 
-			public void onConfigure(Component component)
+			public void onMyEvent(AjaxRequestTarget target)
 			{
-				this.setOption("jqueryevent", ajaxBehavior.getCallbackFunction());
+				MyJQueryLabel.this.onMyEvent(target);
 			}
 		};
+	}
+
+	static abstract class MyJQueryBehavior extends JQueryBehavior implements IJQueryAjaxAware, IMyJQueryListener
+	{
+		private static final long serialVersionUID = 1L;
+		private JQueryAjaxBehavior onMyEventBehavior;
+
+		public MyJQueryBehavior(String selector, String method)
+		{
+			super(selector, method);
+		}
+
+		public void bind(Component component)
+		{
+			super.bind(component);
+
+			component.add(this.onMyEventBehavior = this.newJQueryAjaxBehavior());
+		}
+
+		// Events //
+		public void onConfigure(Component component)
+		{
+			super.onConfigure(component);
+
+			this.setOption("jqueryevent", this.onMyEventBehavior.getCallbackFunction());
+		}
+
+		public void onAjax(AjaxRequestTarget target, JQueryEvent event)
+		{
+			if (event instanceof MyEvent)
+			{
+				this.onMyEvent(target);
+			}
+		}
+
+		// Factory //
+		protected JQueryAjaxBehavior newJQueryAjaxBehavior()
+		{
+			return new JQueryAjaxBehavior(this) {
+
+				private static final long serialVersionUID = 1L;
+
+				protected CallbackParameter[] getCallbackParameters()
+				{
+					return new CallbackParameter[] { CallbackParameter.context("event"), CallbackParameter.context("ui") };
+				}
+
+				protected JQueryEvent newEvent()
+				{
+					return new MyEvent();
+				}
+			};
+		}
+
+		// Event Class //
+		protected static class MyEvent extends JQueryEvent
+		{
+		}
 	}
 }
  * </pre>
@@ -145,8 +173,8 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	}
 
 	/**
-	 * TODO: javadoc
-	 * @return the {@link JQueryEvent} to be broadcasted to the source when the behavior will respond
+	 * Gets the {@link JQueryEvent} to be broadcasted to the {@link IJQueryAjaxAware} source when the behavior will respond
+	 * @return the {@link JQueryEvent}
 	 */
 	protected abstract JQueryEvent newEvent();
 

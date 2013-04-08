@@ -19,7 +19,8 @@ package com.googlecode.wicket.jquery.ui.effect;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * TODO javadoc
+ * Event listener shared by the {@link JQueryEffectContainer} and the {@link JQueryEffectBehavior}
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */

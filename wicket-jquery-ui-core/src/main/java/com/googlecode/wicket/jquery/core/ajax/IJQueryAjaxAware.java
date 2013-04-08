@@ -18,12 +18,14 @@ package com.googlecode.wicket.jquery.core.ajax;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
 
 /**
- * TODO: javadoc
+ * Specifies that the implementing class, usually a {@link JQueryBehavior}, is aware of ajax calls that may be made by a {@link JQueryAjaxBehavior}<br/>
  *
  * @author Sebastien Briquet - sebfz1
+ * @see JQueryAjaxBehavior
  */
 public interface IJQueryAjaxAware
 {

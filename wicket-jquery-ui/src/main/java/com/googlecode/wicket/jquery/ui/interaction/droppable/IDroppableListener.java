@@ -22,7 +22,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import com.googlecode.wicket.jquery.ui.interaction.draggable.DraggableBehavior;
 
 /**
- * TODO javadoc
+ * Event listener shared by the {@link Droppable} widget and the {@link DroppableBehavior}
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */

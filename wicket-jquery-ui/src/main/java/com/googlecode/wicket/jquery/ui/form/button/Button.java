@@ -101,7 +101,7 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 	}
 
 	/**
-	 * TODO: javadoc
+	 * Provides a jQuery button {@link JQueryBehavior}
 	 */
 	public static class ButtonBehavior extends JQueryBehavior
 	{

@@ -153,7 +153,6 @@ public class ComboBox<T> extends TextField<String> implements IJQueryWidget
 	 * Gets the (inner) list width.
 	 * @return the list width
 	 */
-	//XXX: report as new feature
 	public int getListWidth()
 	{
 		return this.width;

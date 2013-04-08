@@ -19,7 +19,8 @@ package com.googlecode.wicket.jquery.ui.widget.menu;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * TODO javadoc
+ * Event listener shared by the {@link Menu} widget and the {@link MenuBehavior}
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */

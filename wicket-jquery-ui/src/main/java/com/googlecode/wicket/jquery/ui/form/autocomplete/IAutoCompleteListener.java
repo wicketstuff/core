@@ -19,7 +19,8 @@ package com.googlecode.wicket.jquery.ui.form.autocomplete;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * TODO javadoc
+ * Event listener shared by the {@link AutoCompleteTextField} widget and the {@link AutoCompleteBehavior}
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */

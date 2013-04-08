@@ -19,7 +19,8 @@ package com.googlecode.wicket.jquery.ui.widget.dialog;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * TODO javadoc
+ * Event listener shared by the {@link AbstractDialog} widget and the {@link DialogBehavior}
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */

@@ -20,13 +20,19 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 
 /**
- * TODO javadoc
+ * Event listener shared by the {@link TabbedPanel} widget and the {@link TabsBehavior}
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
 interface ITabsListener
 {
-	//TODO javadoc
+	/**
+	 * Indicates whether the 'beforeActivate' event is enabled.<br />
+	 * If true, the {@link #onActivating(AjaxRequestTarget, int, ITab)} event will be triggered.
+	 *
+	 * @return false by default
+	 */
 	boolean isOnActivatingEventEnabled();
 
 	/**

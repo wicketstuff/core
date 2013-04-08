@@ -19,7 +19,8 @@ package com.googlecode.wicket.jquery.ui.form.datepicker;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * TODO javadoc
+ * Event listener shared by the {@link DatePicker} widget and the {@link DatePickerBehavior}
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */

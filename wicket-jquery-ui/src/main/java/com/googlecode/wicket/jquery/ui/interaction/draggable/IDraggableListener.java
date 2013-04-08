@@ -19,7 +19,8 @@ package com.googlecode.wicket.jquery.ui.interaction.draggable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * TODO javadoc
+ * Event listener shared by the {@link Draggable} widget and the {@link DraggableBehavior}
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */

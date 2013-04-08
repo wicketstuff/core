@@ -20,7 +20,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 
 /**
- * TODO javadoc
+ * Event listener shared by the {@link AccordionPanel} widget and the {@link AccordionBehavior}
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */

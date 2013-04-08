@@ -22,7 +22,8 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * TODO javadoc
+ * Event listener shared by the {@link Selectable} widget and the {@link SelectableBehavior}
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
