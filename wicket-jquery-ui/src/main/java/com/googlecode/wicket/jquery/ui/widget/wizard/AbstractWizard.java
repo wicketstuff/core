@@ -32,6 +32,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
+import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractFormDialog;
 import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
 
@@ -201,6 +202,10 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	}
 
 	// Properties //
+	/**
+	 * Gets the wizard {@link FeedbackPanel}
+	 * @return the {@link FeedbackPanel}
+	 */
 	public FeedbackPanel getFeedbackPanel()
 	{
 		return this.feedback;
@@ -252,10 +257,9 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	}
 
 	/**
-	 * TODO: javadoc
-	 * Triggered when a button is clicked.
+	 * Triggered when a wizard button is clicked.
 	 * If the button is a form-submitter button, the validation should have succeeded for this event to be triggered.
-	 * This implementation overrides the default implementation to not close the dialog.
+	 * This implementation overrides the default {@link AbstractDialog#onClick(AjaxRequestTarget, DialogButton)} implementation in order to not close the dialog.
 	 */
 	@Override
 	public final void onClick(AjaxRequestTarget target, DialogButton button)
@@ -296,7 +300,7 @@ public abstract class AbstractWizard<T extends Serializable> extends AbstractFor
 	@Override
 	protected void onSubmit(AjaxRequestTarget target)
 	{
-		/* If the clicked button was a form-submitter, calls step#applyState() */
+		// If the clicked button was a form-submitter, calls step#applyState() //
 		IWizardModel wizardModel = this.getWizardModel();
 		wizardModel.getActiveStep().applyState();
 	}
