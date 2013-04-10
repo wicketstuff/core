@@ -231,7 +231,7 @@ public class Menu extends JQueryPanel implements IMenuListener
 		{
 			super(id, "item-fragment", Menu.this);
 
-			this.add(new EmptyPanel("icon").add(AttributeModifier.append("class", new PropertyModel<String>(item, "iconClass"))));
+			this.add(new EmptyPanel("icon").add(AttributeModifier.append("class", new PropertyModel<String>(item, "icon"))));
 			this.add(new Label("title", item.getTitle()));
 		}
 	}

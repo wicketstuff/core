@@ -21,6 +21,8 @@ import java.util.List;
 
 import org.apache.wicket.model.IModel;
 
+import com.googlecode.wicket.jquery.ui.JQueryIcon;
+
 /**
  * Base class for {@link Menu} item
  *
@@ -39,16 +41,7 @@ public abstract class AbstractMenuItem implements IMenuItem
 	/**
 	 * Constructor
 	 * @param title {@link IModel} that represent the title of the menu-item
-	 */
-	public AbstractMenuItem(IModel<String> title)
-	{
-		this(title, "");
-	}
-
-	/**
-	 * Constructor
-	 * @param title {@link IModel} that represent the title of the menu-item
-	 * @param icon the icon css class (ie: ui-my-icon)
+	 * @param icon the icon css class; <code>'ui-icon-blank'</code> or {@link JQueryIcon#BLANK} may be used to not display any icon.
 	 */
 	public AbstractMenuItem(IModel<String> title, String icon)
 	{

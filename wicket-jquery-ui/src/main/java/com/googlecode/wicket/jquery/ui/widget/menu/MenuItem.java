@@ -23,6 +23,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import com.googlecode.wicket.jquery.ui.JQueryIcon;
+
 /**
  * Provides a standard menu-item that supports sub-menus
  *
@@ -43,7 +45,7 @@ public class MenuItem extends AbstractMenuItem
 	 */
 	public MenuItem(String title)
 	{
-		this(Model.of(title), "");
+		this(Model.of(title), JQueryIcon.BLANK);
 	}
 
 	/**
@@ -62,7 +64,7 @@ public class MenuItem extends AbstractMenuItem
 	 */
 	public MenuItem(IModel<String> title)
 	{
-		this(title, "");
+		this(title, JQueryIcon.BLANK);
 	}
 
 	/**
@@ -85,7 +87,7 @@ public class MenuItem extends AbstractMenuItem
 	 */
 	public MenuItem(String title, List<IMenuItem> items)
 	{
-		this(Model.of(title), "", items);
+		this(Model.of(title), JQueryIcon.BLANK, items);
 	}
 
 	/**
@@ -106,7 +108,7 @@ public class MenuItem extends AbstractMenuItem
 	 */
 	public MenuItem(IModel<String> title, List<IMenuItem> items)
 	{
-		this(title, "", items);
+		this(title, JQueryIcon.BLANK, items);
 	}
 
 	/**
