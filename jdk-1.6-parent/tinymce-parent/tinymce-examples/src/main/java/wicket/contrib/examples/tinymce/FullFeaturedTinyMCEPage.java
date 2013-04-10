@@ -18,6 +18,7 @@ import wicket.contrib.tinymce.settings.PreviewPlugin;
 import wicket.contrib.tinymce.settings.PrintPlugin;
 import wicket.contrib.tinymce.settings.SavePlugin;
 import wicket.contrib.tinymce.settings.SearchReplacePlugin;
+import wicket.contrib.tinymce.settings.SpellCheckPlugin;
 import wicket.contrib.tinymce.settings.TablePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
 import wicket.contrib.tinymce.settings.WordcountPlugin;
@@ -125,7 +126,12 @@ public class FullFeaturedTinyMCEPage extends TinyMCEBasePage
 			TinyMCESettings.Position.after);
 		settings.add(fullScreenPlugin.getFullscreenButton(), TinyMCESettings.Toolbar.third,
 			TinyMCESettings.Position.after);
-
+		
+		// fourth toolbar
+		SpellCheckPlugin spellCheckPlugin = new SpellCheckPlugin();
+		settings.add(spellCheckPlugin.getSpellCheckButton(), TinyMCESettings.Toolbar.fourth,
+		TinyMCESettings.Position.after);
+		
 		// other settings
 		settings.setToolbarAlign(TinyMCESettings.Align.left);
 		settings.setToolbarLocation(TinyMCESettings.Location.top);
