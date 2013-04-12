@@ -18,14 +18,15 @@ package com.googlecode.wicket.jquery.ui.kendo.datetime;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.model.IModel;
-
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
 
 /**
@@ -39,7 +40,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoDatePicker";
 
-	public static final String DEFAULT_PATTERN = "MM/dd/yyyy";
+	protected static final String DEFAULT_PATTERN = "MM/dd/yyyy";
 
 	private Options options;
 
@@ -55,7 +56,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	/**
 	 * Constructor
 	 * @param id the markup id
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public DatePicker(String id, Options options)
 	{
@@ -73,10 +74,10 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	}
 
 	/**
-	 * Constructor
+	 * Main constructor
 	 * @param id the markup id
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
-	 * @param options {@link Options}
+	 * @param options the {@link Options}
 	 */
 	public DatePicker(String id, String pattern, Options options)
 	{
@@ -84,6 +85,28 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 
 		this.options = options;
 	}
+
+	/**
+	 * Constructor, which use {@link Locale} and Kengo UI Globalization
+	 * @param id the markup id
+	 * @param locale the {@link Locale}
+	 */
+	public DatePicker(String id, Locale locale)
+	{
+		this(id, locale, new Options());
+	}
+
+	/**
+	 * Constructor, which use {@link Locale} and Kengo UI Globalization
+	 * @param id the markup id
+	 * @param locale the {@link Locale}
+	 * @param options the {@link Options}
+	 */
+	public DatePicker(String id, Locale locale, Options options)
+	{
+		this(id, LocaleUtils.getLocaleDatePattern(locale, DEFAULT_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
+	}
+
 
 	/**
 	 * Constructor
@@ -94,7 +117,6 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	{
 		this(id, model, DEFAULT_PATTERN, new Options());
 	}
-
 
 	/**
 	 * Constructor
@@ -119,7 +141,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	}
 
 	/**
-	 * Constructor
+	 * Main constructor
 	 * @param id the markup id
 	 * @param model the {@link IModel}
 	 * @param pattern a <code>SimpleDateFormat</code> pattern
@@ -130,6 +152,29 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 		super(id, model, pattern);
 
 		this.options = options;
+	}
+
+	/**
+	 * Constructor, which use {@link Locale} and Kengo UI Globalization
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param locale the {@link Locale}
+	 */
+	public DatePicker(String id, IModel<Date> model, Locale locale)
+	{
+		this(id, model, locale, new Options());
+	}
+
+	/**
+	 * Constructor, which use {@link Locale} and Kengo UI Globalization
+	 * @param id the markup id
+	 * @param model the {@link IModel}
+	 * @param locale the {@link Locale}
+	 * @param options the {@link Options}
+	 */
+	public DatePicker(String id, IModel<Date> model, Locale locale, Options options)
+	{
+		this(id, model, LocaleUtils.getLocaleDatePattern(locale, DEFAULT_PATTERN), options.set("culture", Options.asString(LocaleUtils.getLangageCode(locale))));
 	}
 
 	// Getters //

@@ -87,6 +87,5 @@ public class RequestCycleUtils
 	 */
 	private RequestCycleUtils()
 	{
-
 	}
 }

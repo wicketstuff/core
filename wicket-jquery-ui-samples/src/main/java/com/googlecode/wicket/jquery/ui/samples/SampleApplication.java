@@ -6,9 +6,6 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 
-import com.googlecode.wicket.jquery.core.resource.JQueryGlobalizeResourceReference;
-import com.googlecode.wicket.jquery.core.settings.IJQueryLibrarySettings;
-import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
 import com.googlecode.wicket.jquery.ui.samples.pages.accordion.DefaultAccordionPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.autocomplete.DefaultAutoCompletePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.button.DefaultButtonPage;
@@ -49,9 +46,9 @@ public class SampleApplication extends WebApplication
 		this.getResourceSettings().setThrowExceptionOnMissingResource(false);
 
 		// jQuery Globalize Resource References //
-		IJQueryLibrarySettings librarySettings = new JQueryLibrarySettings();
-		librarySettings.setJQueryGlobalizeReference(JQueryGlobalizeResourceReference.get());
-		this.setJavaScriptLibrarySettings(librarySettings);
+//		IJQueryLibrarySettings librarySettings = new JQueryLibrarySettings();
+//		librarySettings.setJQueryGlobalizeReference(JQueryGlobalizeResourceReference.get());
+//		this.setJavaScriptLibrarySettings(librarySettings);
 
 		// SiteMap //
 		this.mountPage("/sitemap.xml", SiteMapPage.class);

@@ -1,0 +1,36 @@
+Kendo-UI DatePicker that use a Java Locale and the Kendo-UI Globalization<br/>
+<br/>
+The Kendo-UI culture file, corresponding to the Locale to be handled, should be included to the page or to the component.<br/>
+For instance:<br/>
+<ul>
+<li><tt>Locale.FRENCH</tt> corresponds to <tt>kendo.culture.fr.min.js</tt>
+<li><tt>Locale.FRANCE</tt> corresponds to <tt>kendo.culture.fr-FR.min.js</tt>
+</ul>
+<br/>
+<pre>
+public void renderHead(IHeaderResponse response)
+{
+	super.renderHead(response);
+
+	response.render(
+		JavaScriptHeaderItem.forReference(
+			new JavaScriptResourceReference(SampleApplication.class,
+				"kendo.culture.fr.min.js")));
+}
+</pre>
+
+<h4>Limitation</h4>
+It seems that Kendo-UI Globalize is conflicting with jQuery Globalize. Therefore it is not recommended to use both in conjunction.
+
+<h4>Licensing</h4>
+Kendo UI is licensed under GPLv3, which is compatible with Apache License 2.0<br/>
+<br/>
+<cite>
+GPLv3 is also newly compatible with a few other licenses. The Apache License 2.0 is a prime example. Lots of great free software is available under this license, with strong communities surrounding it. We hope that this change in GPLv3 will foster more cooperation and sharing within the free software community.
+</cite>
+<br/><br/>
+More info here: <a href="http://www.gnu.org/licenses/quick-guide-gplv3.html">http://www.gnu.org/licenses/quick-guide-gplv3.html</a> 
+
+<br/>
+<h4>Since</h4>
+wicket-jquery-ui-kendo-6.7.0

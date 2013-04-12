@@ -30,7 +30,7 @@ import org.apache.wicket.util.convert.converter.DateConverter;
 import org.apache.wicket.validation.ValidationError;
 
 /**
- * Provides a date-time-picker based on a {@link DatePicker} and a {@link TimePicker}
+ * Provides a datetime-picker based on a {@link DatePicker} and a {@link TimePicker}
  *
  * @author Sebastien Briquet - sebfz1
  */
@@ -195,7 +195,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 */
 	public final String getDatePattern()
 	{
-		return this.datePattern;
+		return this.datePicker.getTextFormat();
 	}
 
 	/**
@@ -205,7 +205,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 */
 	public final String getTimePattern()
 	{
-		return this.timePattern;
+		return this.timePicker.getTextFormat();
 	}
 
 	/**
@@ -242,8 +242,8 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	{
 		super.onInitialize();
 
-		this.datePicker = this.newDatePicker("datepicker", this.getModel(), this.getDatePattern());
-		this.timePicker = this.newTimePicker("timepicker", this.getModel(), this.getTimePattern());
+		this.datePicker = this.newDatePicker("datepicker", this.getModel(), this.datePattern);
+		this.timePicker = this.newTimePicker("timepicker", this.getModel(), this.timePattern);
 
 		this.add(this.datePicker);
 		this.add(this.timePicker);

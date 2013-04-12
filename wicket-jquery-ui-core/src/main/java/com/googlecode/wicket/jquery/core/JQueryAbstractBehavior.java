@@ -113,12 +113,12 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		{
 			if (reference instanceof CssResourceReference)
 			{
-				response.render(CssHeaderItem.forReference(reference));
+				response.render(new PriorityHeaderItem(CssHeaderItem.forReference(reference)));
 			}
 
 			if (reference instanceof JavaScriptResourceReference)
 			{
-				response.render(JavaScriptHeaderItem.forReference(reference));
+				response.render(new PriorityHeaderItem(JavaScriptHeaderItem.forReference(reference)));
 			}
 		}
 
