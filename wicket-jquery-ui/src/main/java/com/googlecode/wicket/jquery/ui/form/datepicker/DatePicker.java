@@ -20,12 +20,15 @@ import java.util.Date;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.model.IModel;
 
 import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.core.JQueryEvent;
 import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxPostBehavior;
 
 /**
  * Provides a jQuery date-picker based on a {@link DateTextField}
@@ -110,7 +113,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 		this.options = options;
 	}
 
-	// IResizableListener //
+	// IDatePickerListener //
 	@Override
 	public boolean isOnSelectEventEnabled()
 	{
@@ -167,6 +170,28 @@ public class DatePicker extends DateTextField implements IJQueryWidget, IDatePic
 			public void onSelect(AjaxRequestTarget target, String date)
 			{
 				DatePicker.this.onSelect(target, date);
+			}
+
+			@Override
+			protected JQueryAjaxPostBehavior newOnSelectBehavior()
+			{
+				return new JQueryAjaxPostBehavior(this, DatePicker.this) {
+
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					protected CallbackParameter[] getCallbackParameters()
+					{
+						//function( dateText, inst ) { ... }
+						return new CallbackParameter[] { CallbackParameter.explicit("dateText"), CallbackParameter.context("inst") };
+					}
+
+					@Override
+					protected JQueryEvent newEvent()
+					{
+						return new SelectEvent();
+					}
+				};
 			}
 		};
 	}

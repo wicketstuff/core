@@ -9,11 +9,11 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
+import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 
 public class RendererAutoCompletePage extends AbstractAutoCompletePage
 {
@@ -84,39 +84,4 @@ public class RendererAutoCompletePage extends AbstractAutoCompletePage
 			new Genre(8, "Symphonic Metal"),
 			new Genre(9, "Trash Metal"),
 			new Genre(10, "Vicking Metal"));
-
-	// Bean //
-	static class Genre implements IClusterable
-	{
-		private static final long serialVersionUID = 1L;
-
-		public static Genre emptyGenre()
-		{
-			return new Genre(0, "");
-		}
-
-		private final int id;
-		private final String name;
-
-		public Genre(final int id, final String name)
-		{
-			this.id = id;
-			this.name = name;
-		}
-
-		public int getId()
-		{
-			return this.id;
-		}
-
-		public String getName()
-		{
-			return this.name;
-		}
-
-		public String getFullName()
-		{
-			return String.format("%02d - %s", this.id, this.name);
-		}
-	}
 }

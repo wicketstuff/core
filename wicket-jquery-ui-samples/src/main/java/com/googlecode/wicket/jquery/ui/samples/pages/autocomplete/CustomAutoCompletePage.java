@@ -11,10 +11,10 @@ import org.apache.wicket.markup.html.image.ContextImage;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.util.io.IClusterable;
 
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
 import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteUtils;
+import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 
 public class CustomAutoCompletePage extends AbstractAutoCompletePage
 {
@@ -72,45 +72,4 @@ public class CustomAutoCompletePage extends AbstractAutoCompletePage
 			new Genre("Symphonic Metal", "cover-symphonic-metal.png"),
 			new Genre("Trash Metal", "cover-trash-metal.png"),
 			new Genre("Vicking Metal", "cover-vicking-metal.png"));
-
-
-	// Bean //
-	static class Genre implements IClusterable
-	{
-		private static final long serialVersionUID = 1L;
-
-		public static Genre emptyGenre()
-		{
-			return new Genre("", "cover-empty.png");
-		}
-
-		private final String name;
-		private final String cover;
-
-		public Genre(final String name, final String cover)
-		{
-			this.name = name;
-			this.cover = cover;
-		}
-
-		public String getName()
-		{
-			return this.name;
-		}
-
-		public String getCover()
-		{
-			return "images/" + this.cover;
-		}
-
-		/**
-		 * #toString() needs to be overridden if no renderer is provided.
-		 * #toString() is also used by {@link AutoCompleteUtils#contains(String, List)} method.
-		 */
-		@Override
-		public String toString()
-		{
-			return this.name;
-		}
-	}
 }

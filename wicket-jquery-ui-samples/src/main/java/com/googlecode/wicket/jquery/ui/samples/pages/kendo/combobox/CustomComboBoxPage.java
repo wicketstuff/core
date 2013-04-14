@@ -7,15 +7,12 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.UrlUtils;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.util.io.IClusterable;
 
-import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteUtils;
 import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.kendo.button.Button;
 import com.googlecode.wicket.jquery.ui.kendo.combobox.ComboBox;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
+import com.googlecode.wicket.jquery.ui.samples.data.bean.Genre;
 
 public class CustomComboBoxPage extends AbstractComboBoxPage
 {
@@ -80,40 +77,4 @@ public class CustomComboBoxPage extends AbstractComboBoxPage
 			new Genre("Symphonic Metal", "cover-symphonic-metal.png"),
 			new Genre("Trash Metal", "cover-trash-metal.png"),
 			new Genre("Vicking Metal", "cover-vicking-metal.png"));
-
-
-	// Bean //
-	static class Genre implements IClusterable
-	{
-		private static final long serialVersionUID = 1L;
-
-		private final String name;
-		private final String cover;
-
-		public Genre(final String name, final String cover)
-		{
-			this.name = name;
-			this.cover = cover;
-		}
-
-		public String getName()
-		{
-			return this.name;
-		}
-
-		public String getCoverUrl()
-		{
-			return UrlUtils.rewriteToContextRelative("images/" + this.cover, RequestCycle.get());
-		}
-
-		/**
-		 * toString needs to be overridden: it is used by the suggestion display
-		 * and by {@link AutoCompleteUtils#contains(String, List)} method
-		 */
-		@Override
-		public String toString()
-		{
-			return this.name;
-		}
-	}
 }

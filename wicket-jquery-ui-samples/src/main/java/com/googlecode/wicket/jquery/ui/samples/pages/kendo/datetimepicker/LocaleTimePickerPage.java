@@ -35,19 +35,7 @@ public class LocaleTimePickerPage extends AbstractTimePickerPage
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(0, 0, 0, 14, 0); //2:00 PM
 
-		final TimePicker timepicker = new TimePicker("timepicker", new Model<Date>(calendar.getTime()), Locale.FRENCH) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void renderHead(IHeaderResponse response)
-			{
-				super.renderHead(response);
-
-				response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(SampleApplication.class, "kendo.culture.fr.min.js")));
-			}
-		};
-
+		final TimePicker timepicker = new TimePicker("timepicker", new Model<Date>(calendar.getTime()), Locale.FRENCH);
 		form.add(timepicker);
 
 		// Buttons //
@@ -79,5 +67,16 @@ public class LocaleTimePickerPage extends AbstractTimePickerPage
 				target.add(feedback);
 			}
 		});
+	}
+
+	/**
+	 * renderHead could be overridden directly in DatePicker if using wicket6+ (javascript dependencies priority are handled)
+	 */
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(SampleApplication.class, "kendo.culture.fr.min.js")));
 	}
 }

@@ -101,6 +101,13 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 		super(id, model, pattern, options);
 	}
 
+	// IDatePickerListener //
+	@Override
+	public boolean isOnSelectEventEnabled()
+	{
+		return true;
+	}
+
 	// Events //
 	@Override
 	protected void onConfigure(JQueryBehavior behavior)
@@ -118,35 +125,5 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 	@Override
 	public void onValueChanged(AjaxRequestTarget target)
 	{
-	}
-
-	// IJQueryWidget //
-	@Override
-	public JQueryBehavior newWidgetBehavior(String selector)
-	{
-		return new DatePickerBehavior(selector, this.options) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isOnSelectEventEnabled()
-			{
-				return true;
-			}
-
-			@Override
-			public void onConfigure(Component component)
-			{
-				super.onConfigure(component);
-
-				AjaxDatePicker.this.onConfigure(this);
-			}
-
-			@Override
-			public void onSelect(AjaxRequestTarget target, String date)
-			{
-				AjaxDatePicker.this.onSelect(target, date);
-			}
-		};
 	}
 }

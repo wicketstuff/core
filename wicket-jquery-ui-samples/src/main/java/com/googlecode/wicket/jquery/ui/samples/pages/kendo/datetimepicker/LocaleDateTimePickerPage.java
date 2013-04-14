@@ -53,14 +53,6 @@ public class LocaleDateTimePickerPage extends AbstractTimePickerPage
 			{
 				return new TimePicker(id, model, Locale.FRENCH);
 			}
-
-			@Override
-			public void renderHead(IHeaderResponse response)
-			{
-				super.renderHead(response);
-
-				response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(SampleApplication.class, "kendo.culture.fr.min.js")));
-			}
 		};
 
 		form.add(datetimepicker);
@@ -94,5 +86,16 @@ public class LocaleDateTimePickerPage extends AbstractTimePickerPage
 				target.add(feedback);
 			}
 		});
+	}
+
+	/**
+	 * renderHead could be overridden directly in DatePicker if using wicket6+ (javascript dependencies priority are handled)
+	 */
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(SampleApplication.class, "kendo.culture.fr.min.js")));
 	}
 }

@@ -29,19 +29,7 @@ public class LocaleDatePickerPage extends AbstractTimePickerPage
 		form.add(new JQueryFeedbackPanel("feedback"));
 
 		// Date Picker //
-		final DatePicker datepicker = new DatePicker("datepicker", new Model<Date>(new Date()), Locale.FRENCH) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void renderHead(IHeaderResponse response)
-			{
-				super.renderHead(response);
-
-				response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(SampleApplication.class, "kendo.culture.fr.min.js")));
-			}
-		};
-
+		final DatePicker datepicker = new DatePicker("datepicker", new Model<Date>(new Date()), Locale.FRENCH);
 		form.add(datepicker);
 
 		// Buttons //
@@ -67,5 +55,16 @@ public class LocaleDatePickerPage extends AbstractTimePickerPage
 				target.add(form);
 			}
 		});
+	}
+
+	/**
+	 * renderHead could be overridden directly in DatePicker if using wicket6+ (javascript dependencies priority are handled)
+	 */
+	@Override
+	public void renderHead(IHeaderResponse response)
+	{
+		super.renderHead(response);
+
+		response.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(SampleApplication.class, "kendo.culture.fr.min.js")));
 	}
 }

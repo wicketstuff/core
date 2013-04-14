@@ -47,6 +47,7 @@ public abstract class JQueryAjaxPostBehavior extends JQueryAjaxBehavior
 		this.components = components;
 	}
 
+	// wicket 6.x //
 	@Override
 	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 	{

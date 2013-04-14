@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
 
@@ -191,7 +192,7 @@ public class AjaxDropDownList<T> extends DropDownList<T> implements ISelectionCh
 		{
 			super.bind(component);
 
-			component.add(this.onChangeBehavior = new JQueryAjaxChangeBehavior(this));
+			component.add(this.onChangeBehavior = new JQueryAjaxChangeBehavior(this, (FormComponent<?>)component));
 		}
 
 		@Override

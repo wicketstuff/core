@@ -27,7 +27,7 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 /**
  * Provides the base class for jQuery template behavior.<br/>
  * A template behavior is designed to render a &lt;script id="jquery-template-123456" type="text/x-xxx" /&gt; block, coming from the JQueryResourceStream returned by {@link #newResourceStream()}
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public abstract class JQueryAbstractTemplateBehavior extends Behavior

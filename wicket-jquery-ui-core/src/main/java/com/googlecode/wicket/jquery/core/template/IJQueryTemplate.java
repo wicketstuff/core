@@ -23,7 +23,7 @@ import org.apache.wicket.util.io.IClusterable;
 /**
  * Provides base interface for a jQuery template<br/>
  * Designed to be used in conjunction with {@link JQueryTemplateBehavior}
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public interface IJQueryTemplate extends IClusterable
@@ -38,5 +38,5 @@ public interface IJQueryTemplate extends IClusterable
 	 * Gets the list of properties used in the template text
 	 * @return the list of properties
 	 */
-	List<String> getTextProperties();	
+	List<String> getTextProperties();
 }

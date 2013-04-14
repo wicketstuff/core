@@ -179,7 +179,7 @@ public abstract class JQueryAjaxBehavior extends AbstractDefaultAjaxBehavior
 	protected abstract JQueryEvent newEvent();
 
 
-	// wicket 6.x specific //
+	// wicket 6.x //
 	@Override
 	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 	{

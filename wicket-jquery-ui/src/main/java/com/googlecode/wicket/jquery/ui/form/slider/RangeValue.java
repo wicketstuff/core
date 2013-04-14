@@ -20,7 +20,7 @@ import org.apache.wicket.util.io.IClusterable;
 
 /**
  * Provides the value type to be used as model object for {@link RangeSlider}
- * 
+ *
  * @author Sebastien Briquet - sebfz1
  */
 public class RangeValue implements IClusterable /*, Comparable<RangeValue> */
@@ -38,7 +38,7 @@ public class RangeValue implements IClusterable /*, Comparable<RangeValue> */
 	{
 		this(0, 0);
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param lower the lower value
@@ -85,7 +85,7 @@ public class RangeValue implements IClusterable /*, Comparable<RangeValue> */
 	{
 		this.upper = upper;
 	}
-	
+
 	@Override
 	public String toString()
 	{
@@ -100,12 +100,12 @@ public class RangeValue implements IClusterable /*, Comparable<RangeValue> */
 //		{
 //			return 0;
 //		}
-//		
+//
 //		if (this.lower < value.lower)
 //		{
 //			return -1;
 //		}
-//		
+//
 //		if (this.upper > value.upper)
 //		{
 //			return 1;
