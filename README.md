@@ -13,7 +13,7 @@ In order to get started using this API, you may download appropriate jar(s) or s
 If you are not using maven, you need to download the core jar here:
 <https://oss.sonatype.org/index.html#nexus-search;quick~wicket-jquery-ui>
 
-You may also download other jars as required (ie: `jquery-kendo-ui`).
+You may also download other jars as required (ie: `wicket-kendo-ui`).
 Once done, just include the jar(s) in your project's build path.
 
 ### Using Maven
