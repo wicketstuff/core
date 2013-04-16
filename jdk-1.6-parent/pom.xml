@@ -20,6 +20,7 @@
 
 	<modules>
 		<module>lightbox2-parent</module>
+                <module>jqplot-parent</module>
 		<module>annotation</module> 
 		<module>autocomplete-tagit-parent</module>
 		<module>browserid-parent</module>
