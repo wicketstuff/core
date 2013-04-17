@@ -13,7 +13,7 @@ In order to get started using this API, you may download appropriate jar(s) or s
 If you are not using maven, you need to download the core jar here:
 <https://oss.sonatype.org/index.html#nexus-search;quick~wicket-jquery-ui>
 
-You may also download other jars as required (ie: `jquery-ui-kendo`).
+You may also download other jars as required (ie: `wicket-kendo-ui`).
 Once done, just include the jar(s) in your project's build path.
 
 ### Using Maven
@@ -22,7 +22,7 @@ Once done, just include the jar(s) in your project's build path.
 <dependency>
     <groupId>com.googlecode.wicket-jquery-ui</groupId>
     <artifactId>wicket-jquery-ui</artifactId>
-    <version>6.7.0</version> <!-- *or* 1.5.10 -->
+    <version>6.7.0</version> <!-- or 1.5.10 -->
 </dependency>
 ```
 
@@ -39,6 +39,19 @@ If the version you specified is *snapshot*, you might define this repository:
     </repository>
 </repositories>
 ```
+
+### Versions
+
+<table>
+<tr><th>Wicket</th><th>jQuery UI</th><th>wicket-jquery-ui</th></tr>
+<tr><td>6.7.0</td><td>1.10.2</td><td>6.7.0</td></tr>
+<tr><td>6.6.0</td><td>1.10.1</td><td>6.2.1</td></tr>
+<tr><td>6.5.0</td><td>1.9.2</td><td>6.2.0</td></tr>
+<tr><td>6.1.0</td><td>1.8.23</td><td>6.1.0</td></tr>
+<tr><td>1.5.10</td><td>1.10.2</td><td>1.5.10</td></tr>
+<tr><td>1.5.9</td><td>1.10.1</td><td>1.4.1</td></tr>
+<tr><td>1.5.8</td><td>1.8.23</td><td>1.3.0</td></tr>
+</table>
 
 ## Setting up the HTML markup
 jQuery UI needs a CSS to work. No jQuery UI CSS has been shipped in the API, so you are free to use the one you wish.
