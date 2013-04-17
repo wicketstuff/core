@@ -38,7 +38,7 @@ object FutureModel {
  */
 class FutureModel[T](body: => T,
                      duration: Duration = 10.seconds)
-                    (implicit val ec: ExecutionContext = FutureModel.Executor)
+                    (@transient implicit val ec: ExecutionContext = FutureModel.Executor)
   extends AbstractReadOnlyModel[T] {
 
   @transient
@@ -52,6 +52,7 @@ class FutureModel[T](body: => T,
   @transient
   private[this] val cycle = RequestCycle.get()
 
+  @transient
   private[this] val f: Future[T] = future {
     try {
       ThreadContext.setApplication(Application.get(appName))
