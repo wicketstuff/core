@@ -236,8 +236,8 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 				//http://arshaw.com/fullcalendar/docs/selection/select_callback/
 				//function(startDate, endDate, allDay, jsEvent, view) { }
 				return new CallbackParameter[] {
-						CallbackParameter.converted("start", "start.getTime()"),
-						CallbackParameter.converted("end", "end.getTime()"),
+						CallbackParameter.converted("startDate", "startDate.getTime()"),
+						CallbackParameter.converted("endDate", "endDate.getTime()"),
 						CallbackParameter.explicit("allDay"),
 						CallbackParameter.context("jsEvent"),
 						CallbackParameter.context("view"),
@@ -293,9 +293,27 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	 */
 	protected JQueryAjaxBehavior newOnEventDropBehavior()
 	{
-		return new EventDeltaBehavior(this) {
+		return new JQueryAjaxBehavior(this) {
 
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				//http://arshaw.com/fullcalendar/docs/event_ui/eventResize/
+				//function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {  }
+				return new CallbackParameter[] {
+						CallbackParameter.context("event"),
+						CallbackParameter.explicit("dayDelta"), //retrieved
+						CallbackParameter.explicit("minuteDelta"), //retrieved
+						CallbackParameter.explicit("allDay"), //retrieved
+						CallbackParameter.context("revertFunc"),
+						CallbackParameter.context("jsEvent"),
+						CallbackParameter.context("ui"),
+						CallbackParameter.context("view"),
+						CallbackParameter.resolved("eventId", "event.id") //retrieved
+				};
+			}
 
 			@Override
 			protected JQueryEvent newEvent()
@@ -312,9 +330,26 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	 */
 	protected JQueryAjaxBehavior newOnEventResizeBehavior()
 	{
-		return new EventDeltaBehavior(this) {
+		return new JQueryAjaxBehavior(this) {
 
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected CallbackParameter[] getCallbackParameters()
+			{
+				//http://arshaw.com/fullcalendar/docs/event_ui/eventResize/
+				//function(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {  }
+				return new CallbackParameter[] {
+						CallbackParameter.context("event"),
+						CallbackParameter.explicit("dayDelta"), //retrieved
+						CallbackParameter.explicit("minuteDelta"), //retrieved
+						CallbackParameter.context("revertFunc"),
+						CallbackParameter.context("jsEvent"),
+						CallbackParameter.context("ui"),
+						CallbackParameter.context("view"),
+						CallbackParameter.resolved("eventId", "event.id") //retrieved
+				};
+			}
 
 			@Override
 			protected JQueryEvent newEvent()
@@ -322,38 +357,6 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 				return new ResizeEvent();
 			}
 		};
-	}
-
-
-	// Behavior classes //
-	/**
-	 * Base class for {@link JQueryAjaxBehavior} that will broadcast delta-based events
-	 */
-	protected abstract class EventDeltaBehavior extends JQueryAjaxBehavior
-	{
-		private static final long serialVersionUID = 1L;
-
-		public EventDeltaBehavior(IJQueryAjaxAware source)
-		{
-			super(source);
-		}
-
-		@Override
-		protected CallbackParameter[] getCallbackParameters()
-		{
-			//http://arshaw.com/fullcalendar/docs/event_ui/eventResize/
-			//function(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {  }
-			return new CallbackParameter[] {
-					CallbackParameter.context("event"),
-					CallbackParameter.explicit("dayDelta"), //retrieved
-					CallbackParameter.explicit("minuteDelta"), //retrieved
-					CallbackParameter.context("revertFunc"),
-					CallbackParameter.context("jsEvent"),
-					CallbackParameter.context("ui"),
-					CallbackParameter.context("view"),
-					CallbackParameter.resolved("eventId", "event.id") //retrieved
-			};
-		}
 	}
 
 
@@ -408,10 +411,10 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 
 		public SelectEvent()
 		{
-			long start = RequestCycleUtils.getQueryParameterValue("start").toLong();
+			long start = RequestCycleUtils.getQueryParameterValue("startDate").toLong();
 			this.start = new Date(start);
 
-			long end = RequestCycleUtils.getQueryParameterValue("end").toLong();
+			long end = RequestCycleUtils.getQueryParameterValue("endDate").toLong();
 			this.end = new Date(end);
 
 			this.isAllDay = RequestCycleUtils.getQueryParameterValue("allDay").toBoolean();
