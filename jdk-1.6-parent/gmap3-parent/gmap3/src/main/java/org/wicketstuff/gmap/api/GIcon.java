@@ -27,6 +27,7 @@ public class GIcon implements GValue, Cloneable
 {
 
     private static final long serialVersionUID = 1714038753187423501L;
+    private static final String DEFAULT_URL = "http://www.google.com/mapfiles/marker.png";
     private final String url;
     private GSize size = null;
     private GPoint origin = null;
@@ -35,13 +36,21 @@ public class GIcon implements GValue, Cloneable
 
     public GIcon()
     {
-        url = "http://www.google.com/mapfiles/marker.png";
+        url = DEFAULT_URL;
     }
 
     public GIcon(final String image)
     {
         this.url = image;
 
+    }
+
+    public GIcon(final char character) {
+        if (Character.isLetter(character)) {
+            url = "http://www.google.com/mapfiles/marker" + Character.toUpperCase(character) + ".png";
+        } else {
+            url = DEFAULT_URL;
+        }
     }
 
     public GIcon(final String image, final GSize iconSize, final GPoint iconAnchor, final GPoint origin,
