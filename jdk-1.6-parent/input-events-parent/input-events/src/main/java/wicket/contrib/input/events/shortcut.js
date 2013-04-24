@@ -1,6 +1,6 @@
 /**
  * http://www.openjs.com/scripts/events/keyboard_shortcuts/
- * Version : 2.01.A
+ * Version : 2.01.B
  * By Binny V A
  * License : BSD
  */
@@ -22,7 +22,7 @@ shortcut = {
 			}
 		}
 
-		var ele = opt.target
+		var ele = opt.target;
 		if(typeof opt.target == 'string') ele = document.getElementById(opt.target);
 		var ths = this;
 		shortcut_combination = shortcut_combination.toLowerCase();
@@ -47,7 +47,7 @@ shortcut = {
 			
 			if(code == 188) character=","; //If the user presses , when the type is onkeydown
 			if(code == 190) character="."; //If the user presses , when the type is onkeydown
-	
+
 			var keys = shortcut_combination.split("+");
 			//Key Pressed - counts the number of valid keypresses - if it is same as the number of keys, the shortcut function is invoked
 			var kp = 0;
@@ -173,7 +173,7 @@ shortcut = {
 					}
 				}
 			}
-
+			
 			if(kp == keys.length && 
 						modifiers.ctrl.pressed == modifiers.ctrl.wanted &&
 						modifiers.shift.pressed == modifiers.shift.wanted &&
@@ -195,9 +195,6 @@ shortcut = {
 				}
 			}
 		}
-		//Remove existing shortcuts
-		this.remove(shortcut_combination);
-		//Remember new shortcut
 		this.all_shortcuts[shortcut_combination] = {
 			'callback':func, 
 			'target':ele, 
