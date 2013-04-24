@@ -8,11 +8,11 @@
     </parent>
     <name>sitemap-xml-examples</name>  
     <groupId>org.wicketstuff</groupId>
-    <artifactId>sitemap-xml-examples</artifactId>
+    <artifactId>wicketstuff-sitemap-xml-examples</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.wicketstuff</groupId>
-            <artifactId>sitemap-xml</artifactId>
+            <artifactId>wicketstuff-sitemap-xml</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
