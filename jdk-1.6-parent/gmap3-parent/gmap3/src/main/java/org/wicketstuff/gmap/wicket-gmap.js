@@ -52,7 +52,7 @@ function WicketClientGeocoder() {
             }
 
             Wicket.Ajax.ajax({
-                'u':callBack, 
+                'u':callBack,
                 'ep': params
             });
         });
@@ -82,7 +82,7 @@ function WicketMap(id) {
         }
 
         Wicket.Ajax.ajax({
-            'u':callBack, 
+            'u':callBack,
             'ep': params
         });
     }
@@ -246,6 +246,14 @@ function WicketMap(id) {
         }
         this.overlays = {};
     }
+
+    this.triggerEvent = function(event) {
+		google.maps.event.trigger(this.map, event);
+	}
+
+	this.triggerResize = function() {
+		this.triggerEvent('resize');
+	}
 }
 
 Wicket.Event.add(window, "load", function(event){

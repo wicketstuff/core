@@ -1,11 +1,9 @@
 package org.wicketstuff.gmap;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-import org.apache.wicket.request.cycle.RequestCycle;
 
 public class GMapHeaderContributor extends Behavior
 {
@@ -62,6 +60,6 @@ public class GMapHeaderContributor extends Behavior
     {
         return sensor;
     }
-    
-    
+
+
 }
