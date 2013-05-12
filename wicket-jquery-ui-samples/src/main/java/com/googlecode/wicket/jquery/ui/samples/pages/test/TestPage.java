@@ -1,24 +1,22 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.test;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.head.CssContentHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.markup.html.panel.Fragment;
 
-import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
-import com.googlecode.wicket.jquery.ui.kendo.button.Button;
-import com.googlecode.wicket.jquery.ui.kendo.dropdown.DropDownList;
+import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.AbstractKendoPage;
+import com.googlecode.wicket.jquery.ui.widget.dialog.AbstractDialog;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
+import com.googlecode.wicket.jquery.ui.widget.dialog.FragmentDialog;
 
 public class TestPage extends AbstractKendoPage
 {
 	private static final long serialVersionUID = 1L;
-	private static final List<String> GENRES = Arrays.asList("Black Metal", "Death Metal", "Doom Metal", "Folk Metal", "Gothic Metal", "Heavy Metal", "Power Metal", "Symphonic Metal", "Trash Metal", "Vicking Metal");
 
 	public TestPage()
 	{
@@ -27,51 +25,78 @@ public class TestPage extends AbstractKendoPage
 
 	private void init()
 	{
-		final Form<Void> form = new Form<Void>("form");
-		this.add(form);
-
 		// FeedbackPanel //
 		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
-		form.add(feedback.setOutputMarkupId(true));
+		this.add(feedback.setOutputMarkupId(true));
 
 		// DropDownList //
-		final DropDownList<String> dropdown = new DropDownList<String>("select", new Model<String>(), new ListModel<String>(GENRES));
-		form.add(dropdown.setVisible(false).setOutputMarkupPlaceholderTag(true));
-
-		// Buttons //
-		form.add(new Button("button") {
+		final AbstractDialog<?> dialog = new MyDialog("dialog") {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onSubmit()
+			public void onClose(AjaxRequestTarget target, DialogButton button)
 			{
-				TestPage.this.info(dropdown);
-			}
-		});
+				// TODO Auto-generated method stub
 
-		form.add(new AjaxButton("toggle") {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> form)
-			{
-				target.add(dropdown.setVisible(!dropdown.isVisible()));
 			}
 
-			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form)
-			{
-				target.add(feedback);
-			}
-		});
+		};
+
+		this.add(dialog);
 	}
 
-	private void info(DropDownList<String> dropdown)
-	{
-		String choice =  dropdown.getModelObject();
+	abstract class MyDialog extends FragmentDialog<String> {
 
-		this.info(choice != null ? choice : "no choice");
+		private static final long serialVersionUID = 1L;
+
+		public MyDialog(String id)
+		{
+			super(id, "title");
+		}
+
+		@Override
+		protected Fragment newFragment(String id)
+		{
+			return new Fragment(id, "dialog-fragment", TestPage.this);
+		}
+
+		@Override
+		public void renderHead(IHeaderResponse response)
+		{
+			super.renderHead(response);
+
+			// @see: http://api.jqueryui.com/dialog/
+			response.render(new CssContentHeaderItem(".no-close .ui-dialog-titlebar-close { display: none; }", "dialog-noclose", ""));
+		}
+
+		@Override
+		protected void onInitialize()
+		{
+			super.onInitialize();
+
+			// @see: http://api.jqueryui.com/dialog/#method-open
+			this.add(new JQueryBehavior(JQueryWidget.getSelector(MyDialog.this), "dialog") {
+
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected String $()
+				{
+					return this.$(Options.asString("open"));
+				}
+			});
+		}
+
+
+		@Override
+		protected void onConfigure(JQueryBehavior behavior)
+		{
+			super.onConfigure(behavior);
+
+//			behavior.setOption("autoOpen", true);
+			behavior.setOption("closeOnEscape", false);
+			behavior.setOption("dialogClass", Options.asString("no-close"));
+		}
 	}
 }

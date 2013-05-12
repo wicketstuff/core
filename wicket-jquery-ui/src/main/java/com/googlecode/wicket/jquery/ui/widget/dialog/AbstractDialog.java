@@ -384,15 +384,15 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 			{
 				super.onConfigure(component);
 
-				// lazy options //
-				AbstractDialog.this.onConfigure(this);
-
 				// class options //
 				this.setOption("autoOpen", false);
 				this.setOption("title", Options.asString(AbstractDialog.this.title.getObject()));
 				this.setOption("modal", AbstractDialog.this.modal);
 				this.setOption("resizable", AbstractDialog.this.isResizable());
 				this.setOption("width", AbstractDialog.this.getWidth());
+
+				// lazy options //
+				AbstractDialog.this.onConfigure(this);
 			}
 
 			@Override

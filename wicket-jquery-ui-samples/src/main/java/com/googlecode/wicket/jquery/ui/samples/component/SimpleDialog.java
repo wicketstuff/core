@@ -28,24 +28,4 @@ public abstract class SimpleDialog extends AbstractDialog<String>
 	{
 		return DialogButtons.OK_CANCEL.toList(); //this syntax is allowed until the button state (enable and/or visible) is not altered
 	}
-
-//	@Override
-//	@SuppressWarnings("unchecked")
-//	public void onEvent(IEvent<?> event)
-//	{
-//		if (event.getPayload() instanceof DialogEvent<?>)
-//		{
-//			DialogEvent<String> payload = (DialogEvent<String>) event.getPayload();
-//
-//			if (payload.isClicked(BTN_REFRESH))
-//			{
-//				System.out.println(BTN_REFRESH);
-////				payload.getTarget().(this);
-//			}
-//			else
-//			{
-//				super.onEvent(event); //close the dialog
-//			}
-//		}
-//	}
 }
