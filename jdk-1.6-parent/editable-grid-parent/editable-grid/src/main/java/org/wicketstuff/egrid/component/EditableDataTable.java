@@ -32,7 +32,6 @@ import org.wicketstuff.egrid.model.GridOperationData;
 import org.wicketstuff.egrid.model.OperationType;
 import org.wicketstuff.egrid.provider.IEditableDataProvider;
 import org.wicketstuff.egrid.toolbar.AbstractEditableGridToolbar;
-import org.wicketstuff.egrid.toolbar.EditableGridBottomToolbar;
 
 /**
  * 
@@ -101,28 +100,6 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 	private void init(Class<T> clazz)
 	{
 		this.setOutputMarkupId(true);
-
-		addBottomToolbar(new EditableGridBottomToolbar<T, S>(this, clazz)
-		{
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onAdd(AjaxRequestTarget target, T newRow)
-			{
-				getDataProvider().add(newRow);
-				target.add(EditableDataTable.this);
-				EditableDataTable.this.onAdd(target, newRow);
-			}
-
-			@Override
-			protected void onError(AjaxRequestTarget target)
-			{
-				super.onError(target);
-				EditableDataTable.this.onError(target);
-			}
-
-		});
 	}
 
 	private EditableDataGridView<T, S> newDataGrid(final List<? extends IColumn<T, S>> columns,
@@ -585,11 +562,6 @@ public class EditableDataTable<T, S> extends Panel implements IPageableItems, IC
 	}
 
 	protected void onError(AjaxRequestTarget target)
-	{
-
-	}
-
-	protected void onAdd(AjaxRequestTarget target, T newRow)
 	{
 
 	}
