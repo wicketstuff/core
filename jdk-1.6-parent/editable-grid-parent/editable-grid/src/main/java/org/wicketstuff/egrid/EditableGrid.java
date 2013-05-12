@@ -7,6 +7,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.IFormSubmitter;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -40,10 +41,25 @@ public class EditableGrid<T, S> extends Panel
 	private Component buildForm(final List<? extends IColumn<T, S>> columns,
 		final IEditableDataProvider<T, S> dataProvider, long rowsPerPage, Class<T> clazz)
 	{
-		Form<T> form = new Form<T>("form");
+		Form<T> form = new NonValidatingForm<T>("form");
 		form.setOutputMarkupId(true);
 		form.add(newDataTable(columns, dataProvider, rowsPerPage, clazz));
 		return form;
+	}
+	
+	private static class NonValidatingForm<T> extends Form<T>
+	{
+		private static final long serialVersionUID = 1L;
+		public NonValidatingForm(String id)
+		{
+			super(id);
+		}
+		@Override
+		public void process(IFormSubmitter submittingComponent)
+		{
+			delegateSubmit(submittingComponent);
+		}
+		
 	}
 
 	private Component newDataTable(final List<? extends IColumn<T, S>> columns,
