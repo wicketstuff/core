@@ -27,6 +27,10 @@ function newUrlUtil(options) {
 	}
 
 	return {
+		setFragment : function(name, value) {
+			this.editedFragment = true;
+			window.location.hash = hashIdentifier.concat(name).concat(options.keyValueDelimiter).concat(value);
+		},
 		setFragmentParameter : function(name, value) {
 			var fragmentParameters = getFragmentParameters(),
 			    hash = hashIdentifier;
