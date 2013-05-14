@@ -74,6 +74,7 @@
 
 		<module>wicketstuff-lazymodel</module>
 		<module>sitemap-xml-parent</module>
+		<module>urlfragment-parent</module>
 
 <!-- 
 Commented because its build fails
