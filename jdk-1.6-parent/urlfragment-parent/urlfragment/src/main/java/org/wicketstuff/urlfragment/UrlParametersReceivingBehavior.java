@@ -153,6 +153,30 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 		AjaxRequestTarget target);
 
 	/**
+	 * Prepends a JavaScript to the given {@link AjaxRequestTarget} that will replace URL fragment
+	 * with the constructed with given parameters. All existing parameters will be dropped.
+	 * <p>
+	 * Be aware that the returned JavaScript depends on the JavaScript coming from
+	 * {@link #getJS(Class)}.
+	 * </p>
+	 * 
+	 * @param target
+	 *            the you want to prepend the JavaScript to
+	 * @param parameterName
+	 *            the name of your URL fragment parameter to set
+	 * @param parameterValue
+	 *            the value of your URL fragment parameter to set
+	 */
+	public static void setFragment(AjaxRequestTarget target, String parameterName,
+		Object parameterValue)
+	{
+		target.prependJavaScript(String.format(
+			"try{if(window.UrlUtil){window.UrlUtil.setFragment('%s','%s');}}catch(e){}",
+			parameterName, parameterValue.toString()));
+	}
+
+
+	/**
 	 * Prepends a JavaScript to the given {@link AjaxRequestTarget} that will put the given
 	 * parameter into the URL fragment. The parameter will be overwritten if it already exists in
 	 * the URL fragment. The script keeps the order of already existing parameters.
