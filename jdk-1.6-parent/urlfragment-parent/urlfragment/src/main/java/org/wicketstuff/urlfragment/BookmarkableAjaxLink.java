@@ -98,7 +98,7 @@ public abstract class BookmarkableAjaxLink<T> extends AjaxLink<T> implements IBo
 	{
 		if (this.defaultarameterName != "" && this.defaultParamterValue != "")
 		{
-			urlFragment().setParameter(defaultarameterName, defaultParamterValue);
+			urlFragment().putParameter(defaultarameterName, defaultParamterValue);
 		}
 		this.target = target;
 		this.onBookmarkableClick(target);
@@ -119,7 +119,7 @@ public abstract class BookmarkableAjaxLink<T> extends AjaxLink<T> implements IBo
 	{
 		if (this.target != null && parameterName != "" && parameterValue != "")
 		{
-			urlFragment().setParameter(parameterName, parameterValue);
+			urlFragment().putParameter(parameterName, parameterValue);
 		}
 	}
 
@@ -129,7 +129,7 @@ public abstract class BookmarkableAjaxLink<T> extends AjaxLink<T> implements IBo
 	{
 		if (this.target != null && parameterName != "" && parameterValue != "")
 		{
-			urlFragment().addParameter(parameterName, parameterValue, delimiter);
+			urlFragment().putParameter(parameterName, parameterValue, delimiter);
 		}
 	}
 

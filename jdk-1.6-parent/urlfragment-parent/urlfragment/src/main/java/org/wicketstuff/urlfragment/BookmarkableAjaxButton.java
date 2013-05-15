@@ -92,7 +92,7 @@ public abstract class BookmarkableAjaxButton extends AjaxButton implements IBook
 	{
 		if (this.target != null && parameterName != "" && parameterValue != "")
 		{
-			urlFragment().setParameter(parameterName, parameterValue);
+			urlFragment().putParameter(parameterName, parameterValue);
 		}
 	}
 
@@ -102,7 +102,7 @@ public abstract class BookmarkableAjaxButton extends AjaxButton implements IBook
 	{
 		if (this.target != null && parameterName != "" && parameterValue != "")
 		{
-			urlFragment().addParameter(parameterName, parameterValue, delimiter);
+			urlFragment().putParameter(parameterName, parameterValue, delimiter);
 		}
 	}
 

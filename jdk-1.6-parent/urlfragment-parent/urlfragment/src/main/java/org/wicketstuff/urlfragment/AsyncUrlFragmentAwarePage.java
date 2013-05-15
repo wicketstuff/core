@@ -102,7 +102,7 @@ public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBook
 	{
 		if (this.target != null && parameterName != "" && parameterValue != "")
 		{
-			urlFragment().setParameter(parameterName, parameterValue);
+			urlFragment().putParameter(parameterName, parameterValue);
 		}
 	}
 
@@ -112,7 +112,7 @@ public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBook
 	{
 		if (this.target != null && parameterName != "" && parameterValue != "")
 		{
-			urlFragment().addParameter(parameterName, parameterValue, delimiter);
+			urlFragment().putParameter(parameterName, parameterValue, delimiter);
 		}
 	}
 

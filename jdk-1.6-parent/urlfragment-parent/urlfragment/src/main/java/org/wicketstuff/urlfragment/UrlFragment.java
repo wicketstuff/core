@@ -31,35 +31,80 @@ public class UrlFragment
 		this.target = target;
 	}
 
-	public UrlFragment setParameter(String parameterName, Object parameterValue)
-	{
-		addJsToTarget(String.format(
-			"try{if(window.UrlUtil){window.UrlUtil.setFragmentParameter('%s','%s');}}catch(e){}",
-			parameterName, parameterValue.toString()));
-		return this;
-	}
-
-	public UrlFragment addParameter(String parameterName, Object parameterValue, String delimiter)
-	{
-		addJsToTarget(String.format(
-			"try{if(window.UrlUtil){window.UrlUtil.addFragmentParameter('%s','%s','%s');}}catch(e){}",
-			parameterName, parameterValue.toString(), delimiter));
-		return this;
-	}
-
-	public UrlFragment removeParameter(String parameterName)
-	{
-		addJsToTarget(String.format(
-			"try{if(window.UrlUtil){window.UrlUtil.removeFragmentParameter('%s');}}catch(e){}",
-			parameterName));
-		return this;
-	}
-
+	/**
+	 * Sets the value of window.location.hash to the given String.
+	 * 
+	 * @param urlFragment
+	 * @return
+	 */
 	public UrlFragment set(Object urlFragment)
 	{
 		addJsToTarget(String.format(
 			"try{if(window.UrlUtil){window.UrlUtil.setFragment('%s');}}catch(e){}",
 			urlFragment.toString()));
+		return this;
+	}
+
+	/**
+	 * Sets the value of window.location.hash to the given key-value-pair.
+	 * 
+	 * @param parameterName
+	 * @param parameterValue
+	 * @return
+	 */
+	public UrlFragment set(String parameterName, Object parameterValue)
+	{
+		addJsToTarget(String.format(
+			"try{if(window.UrlUtil){window.UrlUtil.setFragment('%s','%s');}}catch(e){}",
+			parameterName, parameterValue.toString()));
+		return this;
+	}
+
+	/**
+	 * Puts the given key-value-pair into window.location.hash.
+	 * 
+	 * @param parameterName
+	 * @param parameterValue
+	 * @return
+	 */
+	public UrlFragment putParameter(String parameterName, Object parameterValue)
+	{
+		addJsToTarget(String.format(
+			"try{if(window.UrlUtil){window.UrlUtil.putFragmentParameter('%s','%s');}}catch(e){}",
+			parameterName, parameterValue.toString()));
+		return this;
+	}
+
+	/**
+	 * Puts the given key-value-pair into window.location.hash. If the key already exists the value
+	 * will be appended to the existing value with the given delimiter.
+	 * 
+	 * @param parameterName
+	 * @param parameterValue
+	 * @param valueDelimiter
+	 * @return
+	 */
+	public UrlFragment putParameter(String parameterName, Object parameterValue,
+		String valueDelimiter)
+	{
+		addJsToTarget(String.format(
+			"try{if(window.UrlUtil){window.UrlUtil.putFragmentParameter('%s','%s','%s');}}catch(e){}",
+			parameterName, parameterValue.toString(), valueDelimiter));
+		return this;
+	}
+
+	/**
+	 * Removes the key-value-pair from window.location.hash that is identified by the given
+	 * parameter name.
+	 * 
+	 * @param parameterName
+	 * @return
+	 */
+	public UrlFragment removeParameter(String parameterName)
+	{
+		addJsToTarget(String.format(
+			"try{if(window.UrlUtil){window.UrlUtil.removeFragmentParameter('%s');}}catch(e){}",
+			parameterName));
 		return this;
 	}
 

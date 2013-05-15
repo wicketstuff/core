@@ -27,32 +27,26 @@ function newUrlUtil(options) {
 	}
 
 	return {
-		setFragment : function(hash) {
-			this.editedFragment = true;
-			window.location.hash = hashIdentifier.concat(hash);
-		},
-		setFragmentParameter : function(name, value) {
-		  var fragmentParameters = getFragmentParameters(),
-		  hash = hashIdentifier;
-		  
-		  fragmentParameters[name] = value;
-		  for (parameter in fragmentParameters) {
-		    var hashBegin = hash === hashIdentifier ? '' : '&';
-		    hash = hash.concat(hashBegin).concat(parameter).concat(options.keyValueDelimiter)
-		    .concat(fragmentParameters[parameter]);
-		  }
-		  
-		  this.editedFragment = true;
-		  window.location.hash = hash;
-		},
-		addFragmentParameter : function(name, value, keyValueDelimiteriter) {
+    setFragment : function(name, value) {
+      this.editedFragment = true;
+      if(value) {
+        window.location.hash = hashIdentifier.concat(name).concat(options.keyValueDelimiter).concat(value);
+      } else {
+        window.location.hash = hashIdentifier.concat(name);
+      }
+    },
+		putFragmentParameter : function(name, value, keyValuePairDelimiter) {
 			var fragmentParameters = getFragmentParameters(),
 			hash = hashIdentifier;
 			
-			if(fragmentParameters[name]) {
-				fragmentParameters[name] = fragmentParameters[name].concat(keyValueDelimiteriter).concat(value);			
+			if(keyValuePairDelimiter) {
+			  if(fragmentParameters[name]) {
+			    fragmentParameters[name] = fragmentParameters[name].concat(keyValuePairDelimiter).concat(value);			
+			  } else {
+			    fragmentParameters[name] = value;
+			  }
 			} else {
-				fragmentParameters[name] = value;
+			  fragmentParameters[name] = value;
 			}
 			
 			for (parameter in fragmentParameters) {

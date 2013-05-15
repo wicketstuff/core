@@ -42,26 +42,50 @@ public class ContentPanel extends Panel
 		sortingLabel.setOutputMarkupId(true);
 		add(sortingLabel);
 
-		add(new BookmarkableAjaxLink<Void>("addParam")
+		add(new BookmarkableAjaxLink<Void>("setFragment")
 		{
 
 			@Override
 			public void onBookmarkableClick(AjaxRequestTarget target)
 			{
-				urlFragment().addParameter("linkParam", "add", "|");
+				target.add(sortingLabel);
+				urlFragment().set("inbox");
+			}
+
+		});
+
+		add(new BookmarkableAjaxLink<Void>("setFragmentParameter")
+		{
+
+			@Override
+			public void onBookmarkableClick(AjaxRequestTarget target)
+			{
+				target.add(sortingLabel);
+				urlFragment().set("sent", "sf78nsf");
+			}
+
+		});
+
+		add(new BookmarkableAjaxLink<Void>("appendParam")
+		{
+
+			@Override
+			public void onBookmarkableClick(AjaxRequestTarget target)
+			{
+				urlFragment().putParameter("linkParam", "appended", "|");
 				target.add(sortingLabel);
 			}
 
 		});
 
-		add(new BookmarkableAjaxLink<Void>("setParam")
+		add(new BookmarkableAjaxLink<Void>("putParam")
 		{
 
 			@Override
 			public void onBookmarkableClick(AjaxRequestTarget target)
 			{
 				target.add(sortingLabel);
-				urlFragment().setParameter("linkParam", "set");
+				urlFragment().putParameter("linkParam", "put");
 			}
 
 		});
@@ -78,19 +102,7 @@ public class ContentPanel extends Panel
 
 		});
 
-		add(new BookmarkableAjaxLink<Void>("setFragment")
-		{
-
-			@Override
-			public void onBookmarkableClick(AjaxRequestTarget target)
-			{
-				target.add(sortingLabel);
-				urlFragment().set("calendar");
-			}
-
-		});
-
-		final Model<String> formModel = Model.of("");
+		final Model<String> formModel = Model.of("something");
 		final Form<String> form = new StatelessForm<String>("form");
 		form.setOutputMarkupId(true);
 		form.add(new TextField<String>("formParam", formModel));
@@ -100,7 +112,7 @@ public class ContentPanel extends Panel
 			@Override
 			protected void onBookmarkableSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				urlFragment().setParameter("formParam", formModel.getObject());
+				urlFragment().putParameter("formParam", formModel.getObject());
 				target.add(form);
 			}
 

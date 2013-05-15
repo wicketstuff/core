@@ -18,19 +18,35 @@ $ = {
   }
 };
 
-exports.should_set_hash = function(test) {
+exports.should_replace_fragment = function(test) {
   var UrlUtil = require('./urlfragment.js').UrlUtil();
 
   window = {
       location: {
-        hash: '',
-        search: '?queryParam=2'
+        hash: '#previousState',
+        search: ''
       }
   };
   
-  UrlUtil.setFragment(' state');
+  UrlUtil.setFragment('newState');
   
-  test.equal(window.location.hash, '#!state');
+  test.equal(window.location.hash, '#!newState');
+  test.done();
+};
+
+exports.should_replace_fragment_with_key_value_pair = function(test) {
+  var UrlUtil = require('./urlfragment.js').UrlUtil();
+
+  window = {
+      location: {
+        hash: '#previousState',
+        search: ''
+      }
+  };
+  
+  UrlUtil.setFragment('key', 'value');
+  
+  test.equal(window.location.hash, '#!key=value');
   test.done();
 };
 
@@ -64,7 +80,7 @@ exports.should_prefix_first_fragment_parameter = function(test) {
       }
   };
   
-  UrlUtil.setFragmentParameter('newParam', '666');
+  UrlUtil.putFragmentParameter('newParam', '666');
   
   test.equal(window.location.hash, '#!newParam=666');
   test.done();
@@ -80,7 +96,7 @@ exports.should_concat_fragment_parameter = function(test) {
       }
   };
   
-  UrlUtil.setFragmentParameter('newParam', '666');
+  UrlUtil.putFragmentParameter('newParam', '666');
   
   test.equal(window.location.hash, '#!hashParam=1&newParam=666');
   test.done();
@@ -96,7 +112,7 @@ exports.should_change_fragment_parameter = function(test) {
       }
   };
   
-  UrlUtil.setFragmentParameter('hashParam', '666');
+  UrlUtil.putFragmentParameter('hashParam', '666');
   
   test.equal(window.location.hash, '#!hashParam=666');
   test.done();
@@ -134,7 +150,7 @@ exports.should_remove_prefix_when_last_fragment_parameter_removed = function(tes
   test.done();
 };
 
-exports.should_set_editedFragmentParameter_true_after_setFragmentParameter = function(test) {
+exports.should_set_editedFragmentParameter_true_after_putFragmentParameter = function(test) {
   var UrlUtil = require('./urlfragment.js').UrlUtil();
   
   window = {
@@ -144,7 +160,7 @@ exports.should_set_editedFragmentParameter_true_after_setFragmentParameter = fun
       }
   };
   
-  UrlUtil.setFragmentParameter('hashParam', '666');
+  UrlUtil.putFragmentParameter('hashParam', '666');
   
   test.ok(UrlUtil.editedFragment);
   test.done();
@@ -176,7 +192,7 @@ exports.should_add_fragment_parameter = function(test) {
       }
   };
   
-  UrlUtil.addFragmentParameter('hashParam', '666', '|');
+  UrlUtil.putFragmentParameter('hashParam', '666', '|');
 
   test.equal(window.location.hash, '#!hashParam=1|666');
   test.done();
@@ -192,7 +208,7 @@ exports.adding_should_create_fragment_parameter_if_doesnt_exit_yet = function(te
       }
   };
   
-  UrlUtil.addFragmentParameter('newParam', '666', '|');
+  UrlUtil.putFragmentParameter('newParam', '666', '|');
 
   test.equal(window.location.hash, '#!hashParam=1&newParam=666');
   test.done();
@@ -208,7 +224,7 @@ exports.adding_should_create_fragment_parameter_if_none_exits_yet = function(tes
       }
   };
   
-  UrlUtil.addFragmentParameter('newParam', '666', '|');
+  UrlUtil.putFragmentParameter('newParam', '666', '|');
 
   test.equal(window.location.hash, '#!newParam=666');
   test.done();
