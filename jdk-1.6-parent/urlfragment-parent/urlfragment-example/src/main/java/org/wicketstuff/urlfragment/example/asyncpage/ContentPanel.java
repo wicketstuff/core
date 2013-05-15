@@ -17,19 +17,18 @@ import org.wicketstuff.urlfragment.BookmarkableAjaxLink;
 public class ContentPanel extends Panel
 {
 
-	private final StringValue sorting;
-	private final IModel<String> amount = Model.of("10000");
+	private final StringValue linkParam;
 
 	public ContentPanel(String id, IRequestParameters requestParameters)
 	{
 		super(id);
-		sorting = requestParameters.getParameterValue("sorting");
+		linkParam = requestParameters.getParameterValue("linkParam");
 	}
 
 	public ContentPanel(String id, PageParameters requestParameters)
 	{
 		super(id);
-		sorting = requestParameters.get("sorting");
+		linkParam = requestParameters.get("linkParam");
 	}
 
 	@Override
@@ -37,52 +36,76 @@ public class ContentPanel extends Panel
 	{
 		super.onInitialize();
 
-		final IModel<String> sortingModel = Model.of(sorting == null ? "" : sorting.toString());
+		final IModel<String> sortingModel = Model.of(linkParam == null ? "" : linkParam.toString());
 
-		final Label sortingLabel = new Label("sorting", sortingModel);
+		final Label sortingLabel = new Label("fragment", sortingModel);
 		sortingLabel.setOutputMarkupId(true);
 		add(sortingLabel);
 
-		add(new BookmarkableAjaxLink<Void>("zins_asc")
+		add(new BookmarkableAjaxLink<Void>("addParam")
 		{
 
 			@Override
 			public void onBookmarkableClick(AjaxRequestTarget target)
 			{
-				sortingModel.setObject("zins_asc");
-				addFragmentParameter("sorting", "zins_asc", "|");
+				urlFragment().addParameter("linkParam", "add", "|");
 				target.add(sortingLabel);
 			}
 
 		});
 
-		add(new BookmarkableAjaxLink<Void>("zins_desc", "sorting", "zins_desc")
+		add(new BookmarkableAjaxLink<Void>("setParam")
 		{
 
 			@Override
 			public void onBookmarkableClick(AjaxRequestTarget target)
 			{
-				sortingModel.setObject("zins_desc");
 				target.add(sortingLabel);
+				urlFragment().setParameter("linkParam", "set");
 			}
 
 		});
 
+		add(new BookmarkableAjaxLink<Void>("removeParam")
+		{
+
+			@Override
+			public void onBookmarkableClick(AjaxRequestTarget target)
+			{
+				target.add(sortingLabel);
+				urlFragment().removeParameter("linkParam");
+			}
+
+		});
+
+		add(new BookmarkableAjaxLink<Void>("setFragment")
+		{
+
+			@Override
+			public void onBookmarkableClick(AjaxRequestTarget target)
+			{
+				target.add(sortingLabel);
+				urlFragment().set("calendar");
+			}
+
+		});
+
+		final Model<String> formModel = Model.of("");
 		final Form<String> form = new StatelessForm<String>("form");
 		form.setOutputMarkupId(true);
-		form.add(new TextField<String>("text", amount));
+		form.add(new TextField<String>("formParam", formModel));
 		form.add(new BookmarkableAjaxButton("submit")
 		{
 
 			@Override
-			protected void onBookmarkableSubmit(AjaxRequestTarget target, Form<?> arg1)
+			protected void onBookmarkableSubmit(AjaxRequestTarget target, Form<?> form)
 			{
-				setFragmentParameter("betrag", amount.getObject());
+				urlFragment().setParameter("formParam", formModel.getObject());
 				target.add(form);
 			}
 
 			@Override
-			protected void onBookmarkableError(AjaxRequestTarget target, Form<?> arg1)
+			protected void onBookmarkableError(AjaxRequestTarget target, Form<?> form)
 			{
 			}
 		});

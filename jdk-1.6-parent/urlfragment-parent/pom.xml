@@ -10,7 +10,6 @@
   <artifactId>wicketstuff-urlfragment-parent</artifactId>
   <packaging>pom</packaging>
   <properties>
-      <wicket.version>6.7.0</wicket.version>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <modules>

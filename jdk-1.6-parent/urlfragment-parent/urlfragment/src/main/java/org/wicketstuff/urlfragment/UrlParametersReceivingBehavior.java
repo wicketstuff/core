@@ -34,15 +34,8 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.PackageResourceReference;
 
 /**
- * Read and write URL fragment parameters. This {@link Behavior} will execute an AJAX call to itself
- * with the URL query and fragment parameters. For examples, see
- * {@link #UrlFragmentBehavior(String[])} and {@link #UrlFragmentBehavior(String[], Component...)}.
- * <p>
- * This class also provides the necessary JavaScript to set and remove URL fragment parameters if
- * you so wish. You can prepend or append the scripts to your AJAX events. For examples, see
- * {@link #setFragmentParameter(String, String)} and
- * {@link #removeFragmentParameter(String, String)}.
- * </p>
+ * Reads URL fragment parameters. This {@link Behavior} will execute an AJAX call to itself with the
+ * URL query and fragment parameters.
  * 
  * @author Martin Knopf
  * 
@@ -128,7 +121,6 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 			addComponentsToBeRendered(target);
 	}
 
-
 	@Override
 	protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
 	{
@@ -151,81 +143,6 @@ public abstract class UrlParametersReceivingBehavior extends AbstractDefaultAjax
 	 */
 	protected abstract void onParameterArrival(IRequestParameters requestParameters,
 		AjaxRequestTarget target);
-
-	/**
-	 * Prepends a JavaScript to the given {@link AjaxRequestTarget} that will put the given
-	 * parameter into the URL fragment. The parameter will be overwritten if it already exists in
-	 * the URL fragment. The script keeps the order of already existing parameters.
-	 * <p>
-	 * Be aware that the returned JavaScript depends on the JavaScript coming from
-	 * {@link #getJS(Class)}.
-	 * </p>
-	 * 
-	 * @param target
-	 *            the you want to prepend the JavaScript to
-	 * @param parameterName
-	 *            the name of your URL fragment parameter to set
-	 * @param parameterValue
-	 *            the value of your URL fragment parameter to set
-	 * @return
-	 */
-	public static void setFragmentParameter(AjaxRequestTarget target, String parameterName,
-		Object parameterValue)
-	{
-		target.prependJavaScript(String.format(
-			"try{if(window.UrlUtil){window.UrlUtil.setFragmentParameter('%s','%s');}}catch(e){}",
-			parameterName, parameterValue.toString()));
-	}
-
-	/**
-	 * Prepends a JavaScript to the given {@link AjaxRequestTarget} that will put the given
-	 * parameter into the URL fragment if it doesn't exist there. The value will be appended
-	 * delimited by the specified delimiter if the parameter already exists in the URL fragment. The
-	 * script keeps the order of already existing parameters.
-	 * <p>
-	 * Be aware that the returned JavaScript depends on the JavaScript coming from
-	 * {@link #getJS(Class)}.
-	 * </p>
-	 * 
-	 * @param target
-	 *            the you want to prepend the JavaScript to
-	 * @param parameterName
-	 *            the name of your URL fragment parameter to set
-	 * @param parameterValue
-	 *            the value of your URL fragment parameter to set
-	 * @param delimiter
-	 *            the delimiter the given value will be appended with if the given parameter already
-	 *            exists
-	 * @return
-	 */
-	public static void addFragmentParameter(AjaxRequestTarget target, String parameterName,
-		Object parameterValue, String delimiter)
-	{
-		target.prependJavaScript(String.format(
-			"try{if(window.UrlUtil){window.UrlUtil.addFragmentParameter('%s','%s','%s');}}catch(e){}",
-			parameterName, parameterValue.toString(), delimiter));
-	}
-
-	/**
-	 * Prepends a JavaScript to the given {@link AjaxRequestTarget} that will remove the given
-	 * parameter from the URL fragment. The script keeps the order of already existing parameters.
-	 * <p>
-	 * Be aware that the returned JavaScript depends on the JavaScript coming from
-	 * {@link #getJS(Class)}.
-	 * </p>
-	 * 
-	 * @param target
-	 *            the you want to prepend the JavaScript to
-	 * @param parameterName
-	 *            the name of your URL fragment parameter to remove
-	 * @return
-	 */
-	public static void removeFragmentParameter(AjaxRequestTarget target, String parameterName)
-	{
-		target.prependJavaScript(String.format(
-			"try{if(window.UrlUtil){window.UrlUtil.removeFragmentParameter('%s');}}catch(e){}",
-			parameterName));
-	}
 
 	/**
 	 * Returns the {@link HeaderItem} representing the JavaScript library used to read and write URL

@@ -27,19 +27,23 @@ function newUrlUtil(options) {
 	}
 
 	return {
-		setFragmentParameter : function(name, value) {
-			var fragmentParameters = getFragmentParameters(),
-			    hash = hashIdentifier;
-			
-			fragmentParameters[name] = value;
-			for (parameter in fragmentParameters) {
-				var hashBegin = hash === hashIdentifier ? '' : '&';
-				hash = hash.concat(hashBegin).concat(parameter).concat(options.keyValueDelimiter)
-						.concat(fragmentParameters[parameter]);
-			}
-			
+		setFragment : function(hash) {
 			this.editedFragment = true;
-			window.location.hash = hash;
+			window.location.hash = hashIdentifier.concat(hash);
+		},
+		setFragmentParameter : function(name, value) {
+		  var fragmentParameters = getFragmentParameters(),
+		  hash = hashIdentifier;
+		  
+		  fragmentParameters[name] = value;
+		  for (parameter in fragmentParameters) {
+		    var hashBegin = hash === hashIdentifier ? '' : '&';
+		    hash = hash.concat(hashBegin).concat(parameter).concat(options.keyValueDelimiter)
+		    .concat(fragmentParameters[parameter]);
+		  }
+		  
+		  this.editedFragment = true;
+		  window.location.hash = hash;
 		},
 		addFragmentParameter : function(name, value, keyValueDelimiteriter) {
 			var fragmentParameters = getFragmentParameters(),

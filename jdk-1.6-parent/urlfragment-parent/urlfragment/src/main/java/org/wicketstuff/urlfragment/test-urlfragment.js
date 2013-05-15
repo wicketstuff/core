@@ -18,6 +18,22 @@ $ = {
   }
 };
 
+exports.should_set_hash = function(test) {
+  var UrlUtil = require('./urlfragment.js').UrlUtil();
+
+  window = {
+      location: {
+        hash: '',
+        search: '?queryParam=2'
+      }
+  };
+  
+  UrlUtil.setFragment(' state');
+  
+  test.equal(window.location.hash, '#!state');
+  test.done();
+};
+
 exports.readParameters_should_be_initialized_false = function(test) {
   var UrlUtil = require('./urlfragment.js').UrlUtil();
   

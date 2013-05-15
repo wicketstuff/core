@@ -17,7 +17,7 @@ package org.wicketstuff.urlfragment;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
- * @see AsyncUrlFragmentAwarePage
+ * WORK IN PROGRESS
  * 
  * @author Martin Knopf
  * 

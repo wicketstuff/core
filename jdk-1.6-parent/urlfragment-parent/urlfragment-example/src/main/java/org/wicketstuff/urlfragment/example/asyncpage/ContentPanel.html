@@ -1,10 +1,13 @@
 <wicket:panel>
-    <p><a wicket:id="zins_asc">ASC</a></p>
-    <p><a wicket:id="zins_desc">DESC</a></p>
-    <p>sorting: <span wicket:id="sorting"></span></p>
+    <p>parameter 'linkParam' from initial page request: <span wicket:id="fragment"></span></p>
+    
+    <p><a wicket:id="addParam">add parameter</a></p>
+    <p><a wicket:id="setParam">set parameter</a></p>
+    <p><a wicket:id="removeParam">remove parameter</a></p>
+    <p><a wicket:id="setFragment">set fragment</a></p>
        
     <form wicket:id="form">
-        <input wicket:id="text" type="text" />
+        <input wicket:id="formParam" type="text" />
         <input wicket:id="submit" type="submit" />
     </form>
 </wicket:panel>

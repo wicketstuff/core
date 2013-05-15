@@ -42,7 +42,7 @@ import org.apache.wicket.request.IRequestParameters;
  * @author Martin Knopf
  * 
  */
-public abstract class AsyncUrlFragmentAwarePanel extends Panel
+public abstract class AsyncUrlFragmentAwarePanel extends Panel implements IBookmarkableComponent
 {
 
 	private transient AjaxRequestTarget target = null;
@@ -101,7 +101,7 @@ public abstract class AsyncUrlFragmentAwarePanel extends Panel
 
 	/**
 	 * This is where you can grab the URL query and fragment parameters, your site was requested
-	 * with.
+	 * with. You can use {@link #urlFragment()} inside this method.
 	 * 
 	 * @param requestParameters
 	 * @param target
@@ -109,67 +109,33 @@ public abstract class AsyncUrlFragmentAwarePanel extends Panel
 	protected abstract void onParameterIncome(IRequestParameters requestParameters,
 		AjaxRequestTarget target);
 
-	/**
-	 * Sets the given URL fragment parameter by adding a JavaScript to the current
-	 * {@link AjaxRequestTarget}.
-	 * <p>
-	 * The parameter will be overwritten if it already exists.
-	 * </p>
-	 * 
-	 * @param parameterName
-	 *            the name of your URL fragment parameter to set
-	 * @param parameterValue
-	 *            the value of your URL fragment parameter to set
-	 */
-	protected void setFragmentParameter(String parameterName, Object parameterValue)
+	@Override
+	@Deprecated
+	public void setFragmentParameter(String parameterName, Object parameterValue)
 	{
 		if (this.target != null && parameterName != "" && parameterValue != "")
 		{
-			UrlParametersReceivingBehavior.setFragmentParameter(this.target, parameterName,
-				parameterValue.toString());
+			urlFragment().setParameter(parameterName, parameterValue);
 		}
 	}
 
-	/**
-	 * Sets the given URL fragment parameter by adding a JavaScript to the current
-	 * {@link AjaxRequestTarget}.
-	 * <p>
-	 * The parameter will be created if it doesn't exists yet.
-	 * </p>
-	 * <p>
-	 * The value will be appended with the specified delimiter if the parameter already exists.
-	 * </p>
-	 * 
-	 * @param parameterName
-	 *            the name of your URL fragment parameter to set
-	 * @param parameterValue
-	 *            the value of your URL fragment parameter to set
-	 * @param delimiter
-	 *            the delimiter the given value will be appended with if the given parameter already
-	 *            exists
-	 */
-	protected void addFragmentParameter(String parameterName, Object parameterValue,
-		String delimiter)
+	@Override
+	@Deprecated
+	public void addFragmentParameter(String parameterName, Object parameterValue, String delimiter)
 	{
 		if (this.target != null && parameterName != "" && parameterValue != "")
 		{
-			UrlParametersReceivingBehavior.addFragmentParameter(this.target, parameterName,
-				parameterValue.toString(), delimiter);
+			urlFragment().addParameter(parameterName, parameterValue, delimiter);
 		}
 	}
 
-	/**
-	 * Removes the given URL fragment parameter by adding a JavaScript to the current
-	 * {@link AjaxRequestTarget}.
-	 * 
-	 * @param parameterName
-	 *            the name of your URL fragment parameter to set
-	 */
-	protected void removeFragmentParameter(String parameterName)
+	@Override
+	@Deprecated
+	public void removeFragmentParameter(String parameterName)
 	{
 		if (this.target != null && parameterName != "")
 		{
-			UrlParametersReceivingBehavior.removeFragmentParameter(this.target, parameterName);
+			urlFragment().removeParameter(parameterName);
 		}
 	}
 
@@ -178,6 +144,17 @@ public abstract class AsyncUrlFragmentAwarePanel extends Panel
 	{
 		super.renderHead(response);
 		response.render(UrlParametersReceivingBehavior.getJS(AsyncUrlFragmentAwarePanel.class));
+	}
+
+	/**
+	 * Returns a {@link UrlFragment} connected to the current {@link AjaxRequestTarget}. Use the
+	 * {@link UrlFragment} to update the URL fragment in the browser after the current AJAX event.
+	 * 
+	 * @return
+	 */
+	protected UrlFragment urlFragment()
+	{
+		return new UrlFragment(target);
 	}
 
 }
