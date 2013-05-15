@@ -203,12 +203,12 @@ public class CalendarEvent implements Serializable
 		this.textColor = textColor;
 	}
 
-
 	/**
-	 * Gets the JSON representation of this {@link CalendarEvent}
+	 * Create an {@link Options} JSON-object that will embed the (default) properties of this {@link CalendarEvent}
+	 *
+	 * @return a new {@link Options} object
 	 */
-	@Override
-	public String toString()
+	protected Options createOptions()
 	{
 		Options options = new Options();
 
@@ -275,7 +275,16 @@ public class CalendarEvent implements Serializable
 			options.set("textColor", Options.asString(this.textColor));
 		}
 
-		return options.toString();
+		return options;
+	}
+
+	/**
+	 * Gets the JSON representation of this {@link CalendarEvent}
+	 */
+	@Override
+	public String toString()
+	{
+		return this.createOptions().toString();
 	}
 
 	/**

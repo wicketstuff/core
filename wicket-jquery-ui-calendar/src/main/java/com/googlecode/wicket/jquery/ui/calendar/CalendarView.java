@@ -28,4 +28,21 @@ public enum CalendarView
     basicDay,
     agendaWeek,
     agendaDay;
+
+    /**
+     * Safely get the {@link CalendarView} corresponding to the supplied view name
+     *
+     * @param viewName the view name
+     * @return null if the view name does not correspond to a view of the enum
+     */
+    public static CalendarView get(String viewName)
+	{
+		try
+	    {
+	        return CalendarView.valueOf(viewName);
+	    }
+	    catch (IllegalArgumentException e) { /* not handled */ }
+
+	    return null;
+    }
 }

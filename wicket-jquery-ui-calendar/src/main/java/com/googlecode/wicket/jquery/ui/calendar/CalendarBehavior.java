@@ -395,8 +395,8 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		 */
 		public CalendarView getView()
 		{
-			return CalendarView.valueOf(this.viewName);
-		}
+	        return CalendarView.get(this.viewName);
+	    }
 	}
 
 	/**
@@ -454,7 +454,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		 */
 		public CalendarView getView()
 		{
-			return CalendarView.valueOf(this.viewName);
+			return CalendarView.get(this.viewName);
 		}
 	}
 
@@ -490,7 +490,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		 */
 		public CalendarView getView()
 		{
-			return CalendarView.valueOf(this.viewName);
+			return CalendarView.get(this.viewName);
 		}
 	}
 
