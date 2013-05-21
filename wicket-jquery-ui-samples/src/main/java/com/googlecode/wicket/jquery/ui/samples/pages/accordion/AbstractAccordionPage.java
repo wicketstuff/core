@@ -20,7 +20,6 @@ abstract class AbstractAccordionPage extends SamplePage
 	{
 		return Arrays.asList(
 				new DemoLink(DefaultAccordionPage.class, "Accordion behavior"),
-				new DemoLink(WidgetAccordionPage.class, "Accordion widget"),
 				new DemoLink(AccordionPanelPage.class, "AccordionPanel (using ITabs)")
 			);
 	}
