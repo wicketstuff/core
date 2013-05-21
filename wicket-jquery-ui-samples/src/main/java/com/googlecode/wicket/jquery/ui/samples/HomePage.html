@@ -85,6 +85,19 @@
 &lt;/body&gt;
 &lt;/html&gt;
                 </pre>
+                It is highly recommended to strip wicket tags from the HTML rendering.
+                <pre>
+/**
+ * @see org.apache.wicket.Application#init()
+ */
+@Override
+public void init()
+{
+	super.init();
+
+	this.getMarkupSettings().setStripWicketTags(true); //IMPORTANT!
+}
+                </pre>
             </div>
             <h4>Setting up the HTML markup, for Kendo UI</h4>
             <div>

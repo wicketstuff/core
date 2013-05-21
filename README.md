@@ -69,6 +69,20 @@ The base template page is the following: (you might change the CSS href accordin
 </html>
 ```
 
+It is highly recommended to strip wicket tags from the HTML rendering.
+```java
+/**
+ * @see org.apache.wicket.Application#init()
+ */
+@Override
+public void init()
+{
+	super.init();
+
+	this.getMarkupSettings().setStripWicketTags(true); //IMPORTANT!
+}
+```
+
 ### Setting up the HTML markup, for Kendo UI
 Kendo UI also needs CSSs to work. You need to download your own copy of Kendo UI: <http://www.kendoui.com/get-kendo-ui.aspx>.
 

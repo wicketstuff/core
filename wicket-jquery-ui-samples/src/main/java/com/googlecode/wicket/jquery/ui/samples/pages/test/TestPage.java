@@ -37,8 +37,6 @@ public class TestPage extends AbstractKendoPage
 			@Override
 			public void onClose(AjaxRequestTarget target, DialogButton button)
 			{
-				// TODO Auto-generated method stub
-
 			}
 
 		};
