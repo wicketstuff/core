@@ -50,6 +50,6 @@ public class JQueryUIResourceReference extends JQueryPluginResourceReference
 	 */
 	private JQueryUIResourceReference()
 	{
-		super(JQueryUIResourceReference.class, "jquery-ui-1.10.2.custom.min.js");
+		super(JQueryUIResourceReference.class, "jquery-ui-1.10.3.custom.min.js");
 	}
 }
