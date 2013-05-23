@@ -172,6 +172,6 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior
 		super.updateAjaxAttributes(attributes);
 		attributes.setMethod(AjaxRequestAttributes.Method.POST);
 		attributes.getDynamicExtraParameters()
-			.add("return {'" + PARAM_HTMLCONT + "': Wicket.Form.encode(attrs.ep.content)}");
+			.add("return {'" + PARAM_HTMLCONT + "': attrs.ep.content}");
 	}
 }
