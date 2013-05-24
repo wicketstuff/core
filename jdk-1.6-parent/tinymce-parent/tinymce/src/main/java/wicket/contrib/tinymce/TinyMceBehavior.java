@@ -98,7 +98,7 @@ public class TinyMceBehavior extends Behavior implements IAjaxRegionMarkupIdProv
 	}
 	
 	/**
-	 * Wraps the initialization script for TinyMCE into a HeaderItem. In this way we can control
+	 * Wrap the initialization script for TinyMCE into a HeaderItem. In this way we can control
 	 * when and how the script should be executed.
 	 * 
 	 * @param settingScript
