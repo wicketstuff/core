@@ -24,7 +24,9 @@ import java.util.UUID;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnEventHeaderItem;
 
 import wicket.contrib.tinymce.settings.TinyMCESettings;
 import wicket.contrib.tinymce.settings.TinyMCESettings.Mode;
@@ -55,54 +57,14 @@ public class InPlaceEditBehavior extends TinyMceBehavior
 	 */
 	public InPlaceEditBehavior(TinyMCESettings settings, Component triggerComponent)
 	{
-		super(settings);
-		if (triggerComponent != null)
-			triggerComponent.add(createTriggerBehavior());
+		super(settings);		
 	}
-
-	private Behavior createTriggerBehavior()
-	{
-		return new Behavior()
-		{
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onComponentTag(Component component, ComponentTag tag)
-			{
-				super.onComponentTag(component, tag);
-				tag.put("onclick", getStartEditorScriptName() + "();");
-			}
-		};
-	}
-
-	protected String getRenderOnDomReadyJavascript(IHeaderResponse response)
-	{
-		return null;
-	}
-
-	protected String getRenderJavascript(IHeaderResponse response)
-	{
-		return "" //
-				+ "function " + getStartEditorScriptName()
-				+ "() {" //
-				+ getAddTinyMceSettingsScript(Mode.none, Collections.EMPTY_LIST) //
-				+ " tinyMCE.execCommand('mceAddControl',true,'"
-				+ getComponent().getMarkupId(true)
-				+ "');" //
-				+ "}";
-	}
-
-	/**
-	 * @return The name of the (no-argument) JavaScript that will replace the
-	 *         component that is bound to this behavior with a TinyMce editor.
-	 */
-	public final String getStartEditorScriptName()
-	{
-		if (startEditorScriptName == null)
-		{
-			String uuid = UUID.randomUUID().toString().replace('-', '_');
-			startEditorScriptName = "startmce_" + uuid;
-		}
-		return startEditorScriptName;
+	
+	
+	@Override
+	protected HeaderItem wrapTinyMceSettingsScript(String settingScript,
+			Component component) {
+		OnEventHeaderItem headerItem = new OnEventHeaderItem("'" + component.getMarkupId() + "'", "click", settingScript);
+		return headerItem;
 	}
 }
