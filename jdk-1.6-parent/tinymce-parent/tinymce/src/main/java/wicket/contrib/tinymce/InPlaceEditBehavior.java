@@ -38,28 +38,7 @@ import wicket.contrib.tinymce.settings.TinyMCESettings.Mode;
  */
 public class InPlaceEditBehavior extends TinyMceBehavior
 {
-	private static final long serialVersionUID = 1L;
-	private String startEditorScriptName;
-
-	/**
-	 * Construct in-place-editing behavior to a component. It makes the content
-	 * of the component editable with a TinyMce WYSIWYG editor.
-	 * 
-	 * @param settings
-	 *            TinyMceSettings for the editor when opened.
-	 * @param triggerComponent
-	 *            Component that will get an onclick event to make the component
-	 *            that this behavior is added to editable. Can be the editable
-	 *            component itself, but can also be another component, e.g. a
-	 *            button. If set to null, you will have to start the editable
-	 *            state via a call to the javascriptfunction with name:
-	 *            {@link #getStartEditorScriptName()}
-	 */
-	public InPlaceEditBehavior(TinyMCESettings settings, Component triggerComponent)
-	{
-		super(settings);		
-	}
-	
+	private static final long serialVersionUID = 1L;	
 	
 	@Override
 	protected HeaderItem wrapTinyMceSettingsScript(String settingScript,
