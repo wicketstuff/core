@@ -12,20 +12,7 @@
             ed.addCommand('mceImageUpload', t._save, t);
             // Register buttons
             ed.addButton('upload', {title : 'Upload image', cmd : 'mceImageUpload'});
-            
-            ed.onNodeChange.add(function(ed, cm, n) {
-            	var currentNode = ed.selection;
-            	var nodeName = '';
-            	var buttonActive = false;
-            	
-            	if(currentNode)
-            		nodeName = currentNode.getNode().nodeName;
-            	
-            	if(nodeName === 'IMG')
-            		buttonActive = true;
-            	
-            	cm.setActive('upload',buttonActive);            	
-            });
+
         },
 
         getInfo : function() {
