@@ -31,6 +31,8 @@ import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.resource.JQueryPluginResourceReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.wicket.jquery.core.settings.IJQueryLibrarySettings;
 import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
@@ -44,6 +46,7 @@ import com.googlecode.wicket.jquery.core.settings.JQueryLibrarySettings;
 public abstract class JQueryAbstractBehavior extends Behavior
 {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(JQueryAbstractBehavior.class);
 
 	/**
 	 * Behavior name
@@ -74,20 +77,6 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	public boolean add(ResourceReference reference)
 	{
 		return this.references.add(reference);
-	}
-
-	/**
-	 * Gets the {@link IJQueryLibrarySettings}
-	 * @return the {@link IJQueryLibrarySettings}
-	 */
-	private IJQueryLibrarySettings getJavaScriptLibrarySettings()
-	{
-		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IJQueryLibrarySettings))
-		{
-			return (IJQueryLibrarySettings) Application.get().getJavaScriptLibrarySettings();
-		}
-
-		return new JQueryLibrarySettings();
 	}
 
 	@Override
@@ -139,6 +128,29 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	}
 
 	/**
+	 * Gets the jQuery statement.
+	 * @return Statement like 'jQuery(function() { ... })'
+	 */
+	protected abstract String $();
+
+
+	// Properties //
+
+	/**
+	 * Gets the {@link IJQueryLibrarySettings}
+	 * @return the {@link IJQueryLibrarySettings}
+	 */
+	private IJQueryLibrarySettings getJavaScriptLibrarySettings()
+	{
+		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IJQueryLibrarySettings))
+		{
+			return (IJQueryLibrarySettings) Application.get().getJavaScriptLibrarySettings();
+		}
+
+		return new JQueryLibrarySettings();
+	}
+
+	/**
 	 * Get the unique behavior token that act as the script id.
 	 * @return the token
 	 */
@@ -147,11 +159,17 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		return String.format("jquery-%s-%d", this.name, this.hashCode());
 	}
 
-	/**
-	 * Gets the jQuery statement.
-	 * @return Statement like 'jQuery(function() { ... })'
-	 */
-	protected abstract String $();
+	// Events //
+	@Override
+	public void onConfigure(Component component)
+	{
+		super.onConfigure(component);
+
+		if (Application.exists() && !Application.get().getMarkupSettings().getStripWicketTags())
+		{
+			LOG.warn("Application>MarkupSettings>StripWicketTags setting is currently set to false. It is highly recommended to set it to true to prevent widget misbehaviors.");
+		}
+	}
 
 	@Override
 	public final String toString()
