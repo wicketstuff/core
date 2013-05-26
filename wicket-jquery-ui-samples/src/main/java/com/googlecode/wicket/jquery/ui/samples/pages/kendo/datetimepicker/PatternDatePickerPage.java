@@ -4,10 +4,10 @@ import java.util.Date;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.kendo.button.Button;
 import com.googlecode.wicket.jquery.ui.kendo.datetime.DatePicker;
@@ -23,13 +23,14 @@ public class PatternDatePickerPage extends AbstractTimePickerPage
 		this.add(form);
 
 		// FeedbackPanel //
-		form.add(new JQueryFeedbackPanel("feedback"));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// Date Picker //
 		IModel<Date> model = new Model<Date>(new Date());
-		String pattern = "dd MMM yyyy"; //this pattern is compatible with both java & kendo-ui.
+		String pattern = "dd MMM yyyy"; //java & kendo-ui patterns are compatible
 
-		final DatePicker datepicker = new DatePicker("datepicker", model, pattern, new Options("format", Options.asString(pattern)));
+		final DatePicker datepicker = new DatePicker("datepicker", model, pattern); //not needed anymore: new Options("format", Options.asString(pattern)));
 		form.add(datepicker);
 
 		// Buttons //
@@ -53,6 +54,12 @@ public class PatternDatePickerPage extends AbstractTimePickerPage
 			{
 				this.info(datepicker.getModelObjectAsString());
 				target.add(form);
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form)
+			{
+				target.add(feedback);
 			}
 		});
 	}

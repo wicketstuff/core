@@ -1,8 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker;
 
 import java.util.Calendar;
-import java.util.Date;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -28,9 +26,9 @@ public class DateTimePickerPage extends AbstractTimePickerPage
 
 		// TimePicker //
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(2012, 05, 27, 02, 00);
+		calendar.set(2013, 05, 27, 02, 00);
 
-		final DateTimePicker datetimepicker = new DateTimePicker("datetimepicker", new Model<Date>(calendar.getTime()));
+		final DateTimePicker datetimepicker = new DateTimePicker("datetimepicker", Model.of(calendar.getTime()));
 		form.add(datetimepicker);
 
 		// Buttons //

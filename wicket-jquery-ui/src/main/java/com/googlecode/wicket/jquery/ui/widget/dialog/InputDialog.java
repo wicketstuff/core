@@ -97,7 +97,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 		this.form.add(new RequiredTextField<T>("input", this.getModel()));
 
 		FeedbackPanel feedback = new JQueryFeedbackPanel("feedback", this.form.get("input"));
-		this.form.add(feedback.setOutputMarkupId(true));
+		this.form.add(feedback);
 	}
 
 	// Properties //

@@ -41,7 +41,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoTimePicker";
 
-	protected static final String DEFAULT_PATTERN = "hh:mm aaa"; // default java time pattern, matching the default jQuery time pattern
+	protected static final String DEFAULT_PATTERN = "hh:mm aaa"; // default java time pattern, matching the default Kendo UI time pattern
 
 	private Options options;
 
@@ -85,6 +85,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 		super(id, pattern);
 
 		this.options = options;
+		this.options.set("format", Options.asString(pattern));
 	}
 
 	/**
@@ -153,6 +154,7 @@ public class TimePicker extends DateTextField implements IJQueryWidget
 		super(id, model, pattern);
 
 		this.options = options;
+		this.options.set("format", Options.asString(pattern));
 	}
 
 	/**

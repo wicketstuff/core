@@ -1,7 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples.pages.kendo.datetimepicker;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -35,7 +34,7 @@ public class LocaleTimePickerPage extends AbstractTimePickerPage
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(0, 0, 0, 14, 0); //2:00 PM
 
-		final TimePicker timepicker = new TimePicker("timepicker", new Model<Date>(calendar.getTime()), Locale.FRENCH);
+		final TimePicker timepicker = new TimePicker("timepicker", Model.of(calendar.getTime()), Locale.FRENCH);
 		form.add(timepicker);
 
 		// Buttons //

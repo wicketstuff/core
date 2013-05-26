@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 
 import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
@@ -21,10 +22,11 @@ public class KendoDatePickerPage extends AbstractTimePickerPage
 		this.add(form);
 
 		// FeedbackPanel //
-		form.add(new JQueryFeedbackPanel("feedback"));
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
 		// Date Picker //
-		final DatePicker datepicker = new DatePicker("datepicker", new Model<Date>(new Date()));
+		final DatePicker datepicker = new DatePicker("datepicker", Model.of(new Date()));
 		form.add(datepicker);
 
 		// Buttons //
@@ -48,6 +50,12 @@ public class KendoDatePickerPage extends AbstractTimePickerPage
 			{
 				this.info(datepicker.getModelObjectAsString());
 				target.add(form);
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form)
+			{
+				target.add(feedback);
 			}
 		});
 	}

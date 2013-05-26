@@ -9,13 +9,9 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import com.googlecode.wicket.jquery.core.JQueryBehavior;
-import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.kendo.button.AjaxButton;
 import com.googlecode.wicket.jquery.ui.kendo.button.Button;
-import com.googlecode.wicket.jquery.ui.kendo.datetime.DatePicker;
 import com.googlecode.wicket.jquery.ui.kendo.datetime.DateTimePicker;
-import com.googlecode.wicket.jquery.ui.kendo.datetime.TimePicker;
 import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
 public class PatternDateTimePickerPage extends AbstractTimePickerPage
@@ -37,44 +33,7 @@ public class PatternDateTimePickerPage extends AbstractTimePickerPage
 
 		IModel<Date> model = new Model<Date>(calendar.getTime());
 
-		final DateTimePicker datetimepicker = new DateTimePicker("datetimepicker", model, "dd MMM yyyy", "HH:mm:ss") {
-
-			private static final long serialVersionUID = 1L;
-
-			/**
-			 * First way to specify the kendo-ui format
-			 */
-			@Override
-			protected DatePicker newDatePicker(String id, IModel<Date> model, String datePattern)
-			{
-				//Specified date pattern is not the default kendo-ui date pattern, but is compatible with both java & kendo-ui
-				//It can therefore be transmitted as-is to the DatePicker widget
-				return new DatePicker(id, model, datePattern, new Options("format", Options.asString(datePattern)));
-			}
-
-			/**
-			 * Second way to specify the kendo-ui format
-			 */
-			@Override
-			protected TimePicker newTimePicker(String id, IModel<Date> model, final String timePattern)
-			{
-				return new TimePicker(id, model, timePattern) {
-
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					protected void onConfigure(JQueryBehavior behavior)
-					{
-						super.onConfigure(behavior);
-
-						//Specified time pattern is not the default kendo-ui date pattern, but is compatible with both java & kendo-ui
-						//It can therefore be transmitted as-is to the TimePicker widget
-						behavior.setOption("format", Options.asString(timePattern));
-					}
-				};
-			}
-		};
-
+		final DateTimePicker datetimepicker = new DateTimePicker("datetimepicker", model, "dd MMM yyyy", "HH:mm:ss");
 		form.add(datetimepicker);
 
 		// Buttons //

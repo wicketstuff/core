@@ -84,6 +84,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 		super(id, pattern);
 
 		this.options = options;
+		this.options.set("format", Options.asString(pattern));
 	}
 
 	/**
@@ -152,6 +153,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 		super(id, model, pattern);
 
 		this.options = options;
+		this.options.set("format", Options.asString(pattern));
 	}
 
 	/**

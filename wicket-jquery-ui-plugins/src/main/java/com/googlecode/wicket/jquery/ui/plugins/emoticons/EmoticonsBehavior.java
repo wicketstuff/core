@@ -29,7 +29,6 @@ import com.googlecode.wicket.jquery.ui.plugins.emoticons.settings.IEmoticonsLibr
  * Provides the jQuery css-emoticons plugin behavior
  *
  * @author Sebastien Briquet - sebfz1
- * XXX report as new
  */
 public class EmoticonsBehavior extends JQueryBehavior
 {
