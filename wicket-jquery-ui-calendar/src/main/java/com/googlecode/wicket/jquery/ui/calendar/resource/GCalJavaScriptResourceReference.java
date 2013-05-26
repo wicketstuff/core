@@ -14,33 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.core.resource;
+package com.googlecode.wicket.jquery.ui.calendar.resource;
 
 import org.apache.wicket.resource.JQueryPluginResourceReference;
 
-import com.googlecode.wicket.jquery.core.settings.IJQueryLibrarySettings;
+import com.googlecode.wicket.jquery.ui.calendar.settings.ICalendarLibrarySettings;
 
 /**
- * Provides the resource reference for the jQuery UI javascript library.<br/>
- * To add a jQuery UI resource reference to a component, do not use this reference, but use
- * {@link IJQueryLibrarySettings#getJQueryUIReference()} to prevent version conflicts.
+ * Provides the resource reference for the fullcalendar gcal library.<br/>
+ * This class is supposed to be used internally, see {@link ICalendarLibrarySettings} to specify another resource reference
  *
+ * @see ICalendarLibrarySettings
  * @author Sebastien Briquet - sebfz1
  *
  */
-public class JQueryUIResourceReference extends JQueryPluginResourceReference
+public class GCalJavaScriptResourceReference extends JQueryPluginResourceReference
 {
 	private static final long serialVersionUID = 1L;
 
-	private static final JQueryUIResourceReference INSTANCE = new JQueryUIResourceReference();
+	private static final GCalJavaScriptResourceReference INSTANCE = new GCalJavaScriptResourceReference();
 
 	/**
-	 * Normally you should not use this method, but use
-	 * {@link IJQueryLibrarySettings#getJQueryUIReference()} to prevent version conflicts.
+	 * Gets the instance of the resource reference
 	 *
 	 * @return the single instance of the resource reference
 	 */
-	public static JQueryUIResourceReference get()
+	public static GCalJavaScriptResourceReference get()
 	{
 		return INSTANCE;
 	}
@@ -48,8 +47,8 @@ public class JQueryUIResourceReference extends JQueryPluginResourceReference
 	/**
 	 * Private constructor
 	 */
-	private JQueryUIResourceReference()
+	private GCalJavaScriptResourceReference()
 	{
-		super(JQueryUIResourceReference.class, "jquery-ui-1.10.3.custom.min.js");
+		super(GCalJavaScriptResourceReference.class, "gcal.js");
 	}
 }

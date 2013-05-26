@@ -76,25 +76,28 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		return this.references.add(reference);
 	}
 
+	/**
+	 * Gets the {@link IJQueryLibrarySettings}
+	 * @return the {@link IJQueryLibrarySettings}
+	 */
+	private IJQueryLibrarySettings getJavaScriptLibrarySettings()
+	{
+		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IJQueryLibrarySettings))
+		{
+			return (IJQueryLibrarySettings) Application.get().getJavaScriptLibrarySettings();
+		}
+
+		return new JQueryLibrarySettings();
+	}
+
 	@Override
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		// Gets the library settings //
-		IJQueryLibrarySettings settings;
-
-		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IJQueryLibrarySettings))
-		{
-			settings = (IJQueryLibrarySettings) Application.get().getJavaScriptLibrarySettings();
-		}
-		else
-		{
-			settings = new JQueryLibrarySettings();
-		}
+		IJQueryLibrarySettings settings = this.getJavaScriptLibrarySettings();
 
 		//TODO: implement this
-		//IJQueryLibrarySettings#references() ... for (ResourceReference reference : settings#references())
-		//IJQueryUILibrarySettings
-		//IKendoUILibrarySettings
+		//if (IJQueryLibrarySettings instanceof IJQueryUILibrarySettings)
 
 		// Adds jQuery UI javascript resource reference //
 		if (settings.getJQueryUIReference() != null)

@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.ui.calendar;
 
 import java.util.Date;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -27,8 +28,7 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
-import org.apache.wicket.request.resource.CssResourceReference;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 import org.apache.wicket.util.time.Duration;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
@@ -37,6 +37,10 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.ajax.IJQueryAjaxAware;
 import com.googlecode.wicket.jquery.core.ajax.JQueryAjaxBehavior;
 import com.googlecode.wicket.jquery.core.utils.RequestCycleUtils;
+import com.googlecode.wicket.jquery.ui.calendar.resource.CalendarJavaScriptResourceReference;
+import com.googlecode.wicket.jquery.ui.calendar.resource.CalendarStyleSheetResourceReference;
+import com.googlecode.wicket.jquery.ui.calendar.resource.GCalJavaScriptResourceReference;
+import com.googlecode.wicket.jquery.ui.calendar.settings.ICalendarLibrarySettings;
 
 /**
  * Provides the jQuery fullCalendar behavior
@@ -57,20 +61,79 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	private JQueryAjaxBehavior onEventResizeBehavior = null; // event resize
 
 
+	/**
+	 * Constructor
+	 * @param selector the html selector (ie: "#myId")
+	 */
 	public CalendarBehavior(final String selector)
 	{
 		this(selector, new Options());
 	}
 
+	/**
+	 * Constructor
+	 * @param selector the html selector (ie: "#myId")
+	 * @param options the {@link Options}
+	 */
 	public CalendarBehavior(final String selector, Options options)
 	{
 		super(selector, METHOD, options);
 
-		this.add(new CssResourceReference(CalendarBehavior.class, "fullcalendar.css"));
-		this.add(new JavaScriptResourceReference(CalendarBehavior.class, "fullcalendar.min.js"));
-		this.add(new JavaScriptResourceReference(CalendarBehavior.class, "gcal.js"));
+		this.initReferences();
 	}
 
+	/**
+	 * Initializes CSS & JavaScript resource references
+	 */
+	private void initReferences()
+	{
+		ICalendarLibrarySettings settings = this.getLibrarySettings();
+
+		// fullcalendar.css //
+		if (settings != null && settings.getCalendarStyleSheetReference() != null)
+		{
+			this.add(settings.getCalendarStyleSheetReference());
+		}
+		else
+		{
+			this.add(CalendarStyleSheetResourceReference.get());
+		}
+
+		// fullcalendar.min.js //
+		if (settings != null && settings.getCalendarJavaScriptReference() != null)
+		{
+			this.add(settings.getCalendarJavaScriptReference());
+		}
+		else
+		{
+			this.add(CalendarJavaScriptResourceReference.get());
+		}
+
+		// gcal.js //
+		if (settings != null && settings.getGCalJavaScriptReference() != null)
+		{
+			this.add(settings.getGCalJavaScriptReference());
+		}
+		else
+		{
+			this.add(GCalJavaScriptResourceReference.get());
+		}
+	}
+
+	/**
+	 * Gets the {@link ICalendarLibrarySettings}
+	 *
+	 * @return null if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link ICalendarLibrarySettings}
+	 */
+	private ICalendarLibrarySettings getLibrarySettings()
+	{
+		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof ICalendarLibrarySettings))
+		{
+			return (ICalendarLibrarySettings) Application.get().getJavaScriptLibrarySettings();
+		}
+
+		return null;
+	}
 
 	// Methods //
 	@Override
