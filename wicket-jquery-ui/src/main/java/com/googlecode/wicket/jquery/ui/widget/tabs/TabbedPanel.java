@@ -175,7 +175,7 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 					final String newId = panels.newChildId();
 
 					// link (tab) //
-					Label link = new Label("link", tab.getTitle());
+					Label link = TabbedPanel.this.newTitleLabel("link", tab.getTitle());
 					link.add(AttributeModifier.replace("href", "#" + newId));
 					item.add(link);
 
@@ -205,6 +205,19 @@ public class TabbedPanel extends JQueryPanel implements ITabsListener
 	@Override
 	public void onActivate(AjaxRequestTarget target, int index, ITab tab)
 	{
+	}
+
+	// Factories //
+	/**
+	 * Gets a new {@link Label} for the tab's title
+	 *
+	 * @param id the markup id
+	 * @param title the tab's title model
+	 * @return a new {@link Label}
+	 */
+	protected Label newTitleLabel(String id, IModel<String> title)
+	{
+		return new Label(id, title);
 	}
 
 

@@ -155,7 +155,7 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 
 				if (tab.isVisible())
 				{
-					item.add(new Label("title", tab.getTitle()));
+					item.add(AccordionPanel.this.newTitleLabel("title", tab.getTitle()));
 					item.add(tab.getPanel("panel"));
 				}
 			}
@@ -177,6 +177,19 @@ public class AccordionPanel extends JQueryPanel implements IAccordionListener
 	@Override
 	public void onActivate(AjaxRequestTarget target, int index, ITab tab)
 	{
+	}
+
+	// Factories //
+	/**
+	 * Gets a new {@link Label} for the tab's title
+	 *
+	 * @param id the markup id
+	 * @param title the tab's title model
+	 * @return a new {@link Label}
+	 */
+	protected Label newTitleLabel(String id, IModel<String> title)
+	{
+		return new Label(id, title);
 	}
 
 	// IJQueryWidget //
