@@ -27,7 +27,7 @@ public class PatternDatePickerPage extends AbstractTimePickerPage
 		form.add(feedback.setOutputMarkupId(true));
 
 		// Date Picker //
-		IModel<Date> model = new Model<Date>(new Date());
+		IModel<Date> model = Model.of(new Date());
 		String pattern = "dd MMM yyyy"; //java & kendo-ui patterns are compatible
 
 		final DatePicker datepicker = new DatePicker("datepicker", model, pattern); //not needed anymore: new Options("format", Options.asString(pattern)));

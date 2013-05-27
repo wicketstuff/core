@@ -110,14 +110,13 @@ public class Editor<T> extends TextArea<T> implements IJQueryWidget
 	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOptions(this.options);
 	}
 
 	// IJQueryWidget //
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new KendoAbstractBehavior(selector, Editor.METHOD) {
+		return new KendoAbstractBehavior(selector, Editor.METHOD, this.options) {
 
 			private static final long serialVersionUID = 1L;
 

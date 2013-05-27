@@ -31,7 +31,7 @@ public class PatternDateTimePickerPage extends AbstractTimePickerPage
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(2012, 05, 27, 02, 00, 00);
 
-		IModel<Date> model = new Model<Date>(calendar.getTime());
+		IModel<Date> model = Model.of(calendar.getTime());
 
 		final DateTimePicker datetimepicker = new DateTimePicker("datetimepicker", model, "dd MMM yyyy", "HH:mm:ss");
 		form.add(datetimepicker);

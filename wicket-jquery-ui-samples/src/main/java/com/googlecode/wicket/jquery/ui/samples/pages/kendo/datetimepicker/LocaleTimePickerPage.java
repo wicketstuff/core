@@ -69,7 +69,7 @@ public class LocaleTimePickerPage extends AbstractTimePickerPage
 	}
 
 	/**
-	 * renderHead could be overridden directly in DatePicker if using wicket6+ (javascript dependencies priority are handled)
+	 * renderHead could be overridden directly in DatePicker if using wicket6+ (javascript dependencies priority)
 	 */
 	@Override
 	public void renderHead(IHeaderResponse response)

@@ -28,6 +28,7 @@ import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.utils.LocaleUtils;
 import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
+import com.googlecode.wicket.jquery.ui.kendo.utils.KendoDateTimeUtils;
 
 /**
  * Provides a Kendo UI date-picker based on a {@link DateTextField}<br/>
@@ -40,7 +41,7 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoDatePicker";
 
-	protected static final String DEFAULT_PATTERN = "MM/dd/yyyy";
+	protected static final String DEFAULT_PATTERN = "MM/dd/yyyy"; //default java date pattern
 
 	private Options options;
 
@@ -84,7 +85,6 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 		super(id, pattern);
 
 		this.options = options;
-		this.options.set("format", Options.asString(pattern));
 	}
 
 	/**
@@ -153,7 +153,6 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 		super(id, model, pattern);
 
 		this.options = options;
-		this.options.set("format", Options.asString(pattern));
 	}
 
 	/**
@@ -225,14 +224,17 @@ public class DatePicker extends DateTextField implements IJQueryWidget
 	 */
 	protected void onConfigure(JQueryBehavior behavior)
 	{
-		behavior.setOptions(this.options);
+		if (this.options.get("format") == null)
+		{
+			this.options.set("format", Options.asString(KendoDateTimeUtils.toPattern(this.getTextFormat())));
+		}
 	}
 
 	// IJQueryWidget //
 	@Override
 	public JQueryBehavior newWidgetBehavior(String selector)
 	{
-		return new KendoAbstractBehavior(selector, METHOD) {
+		return new KendoAbstractBehavior(selector, METHOD, this.options) {
 
 			private static final long serialVersionUID = 1L;
 

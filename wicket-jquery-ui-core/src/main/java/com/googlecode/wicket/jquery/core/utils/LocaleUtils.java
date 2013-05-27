@@ -48,7 +48,7 @@ public class LocaleUtils
 	}
 
 	/**
-	 * Gets the date pattern for the given {@link Locale} and style
+	 * Gets the date pattern for the given {@link Locale}
 	 * @param locale the {@link Locale}
 	 * @return the pattern
 	 */
@@ -69,7 +69,7 @@ public class LocaleUtils
 	}
 
 	/**
-	 * Gets the date pattern for the given {@link Locale} and style
+	 * Gets the date pattern for the given {@link Locale}
 	 * @param locale the {@link Locale}
 	 * @param defaultPattern default pattern to be returned if the found {@link DateFormat} is not an instance of {@link SimpleDateFormat}
 	 * @return the pattern
@@ -100,7 +100,7 @@ public class LocaleUtils
 
 
 	/**
-	 * Gets the time pattern for the given {@link Locale} and style
+	 * Gets the time pattern for the given {@link Locale}
 	 * @param locale the {@link Locale}
 	 * @return the pattern
 	 */
@@ -121,7 +121,7 @@ public class LocaleUtils
 	}
 
 	/**
-	 * Gets the time pattern for the given {@link Locale} and style
+	 * Gets the time pattern for the given {@link Locale}
 	 * @param locale the {@link Locale}
 	 * @param defaultPattern default pattern to be returned if the found {@link DateFormat} is not an instance of {@link SimpleDateFormat}
 	 * @return the pattern
