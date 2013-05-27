@@ -165,9 +165,12 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	{
 		super.onConfigure(component);
 
-		if (Application.exists() && !Application.get().getMarkupSettings().getStripWicketTags())
+		if (Application.exists() && Application.get().usesDevelopmentConfig())
 		{
-			LOG.warn("Application>MarkupSettings>StripWicketTags setting is currently set to false. It is highly recommended to set it to true to prevent widget misbehaviors.");
+			if (!Application.get().getMarkupSettings().getStripWicketTags())
+			{
+				LOG.warn("Application>MarkupSettings>StripWicketTags setting is currently set to false. It is highly recommended to set it to true to prevent widget misbehaviors.");
+			}
 		}
 	}
 
