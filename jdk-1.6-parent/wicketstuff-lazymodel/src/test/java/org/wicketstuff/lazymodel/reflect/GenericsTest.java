@@ -17,6 +17,7 @@
 package org.wicketstuff.lazymodel.reflect;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -34,7 +35,6 @@ public class GenericsTest {
 
 	@Test
 	public void variableType() throws Exception {
-
 		Method method = Foo.class.getMethod("put", Object.class, Object.class);
 
 		assertEquals(String.class, Generics.variableType(
@@ -46,6 +46,24 @@ public class GenericsTest {
 				(TypeVariable<?>) method.getGenericParameterTypes()[1]));
 	}
 
+	@Test
+	public void classForType() throws Exception {
+
+		assertEquals(HashMap.class,
+				Generics.getClass(new Foo().getClass().getGenericSuperclass()));
+
+		Method method = Foo.class.getMethod("put", Object.class, Object.class);
+
+		try {
+			Generics.getClass((TypeVariable<?>) method
+					.getGenericParameterTypes()[0]);
+
+			fail();
+		} catch (IllegalArgumentException expected) {
+		}
+	}
+
 	public static class Foo extends HashMap<String, Integer> {
+		private static final long serialVersionUID = 1L;
 	}
 }

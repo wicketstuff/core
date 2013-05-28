@@ -20,6 +20,7 @@
 
 	<modules>
 		<module>lightbox2-parent</module>
+                <module>jqplot-parent</module>
 		<module>annotation</module> 
 		<module>autocomplete-tagit-parent</module>
 		<module>browserid-parent</module>
@@ -36,7 +37,7 @@
 		<module>jquery-parent</module>
 		<module>jslibraries</module>
 		<module>jsr303-parent</module>
-        <module>jwicket-parent</module>
+		<module>jwicket-parent</module>
 		<module>mbeanview-parent</module>
 		<module>minis-parent</module>
 		<module>modalx-parent</module>
@@ -59,6 +60,7 @@
 		<module>scala-extensions-parent</module> 
 		<module>serializer-kryo</module>
 		<module>serializer-kryo2</module>
+		<module>stateless-parent</module>
 		<module>shiro-security</module>
 		<module>wicket-facebook-parent</module>
 		<module>wicket-html5-parent</module>
@@ -69,6 +71,10 @@
 		<module>yui-parent</module>
 		<module>jasperreports-parent</module>
 		<module>editable-grid-parent</module>
+
+		<module>wicketstuff-lazymodel</module>
+		<module>sitemap-xml-parent</module>
+		<module>urlfragment-parent</module>
 
 <!-- 
 Commented because its build fails

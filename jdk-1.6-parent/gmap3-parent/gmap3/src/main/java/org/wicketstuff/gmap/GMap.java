@@ -24,7 +24,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -236,6 +235,23 @@ public class GMap extends Panel implements GOverlayContainer
     }
 
     /**
+     * Returns the script for triggering an event on map.
+     *
+     * @param event
+     * @return
+     */
+    public CharSequence getTriggerEventScript(String event) {
+		return "Wicket.maps['"+getMapId()+ "'].triggerEvent('"+event+"')";
+	}
+
+    /**
+     * @return returns the script to make map re-paint after resize.
+     */
+	public CharSequence getTriggerResizeScript() {
+		return "Wicket.maps['"+getMapId()+ "'].triggerResize();";
+	}
+
+    /**
      * Sets if dragging should be allowed or not.
      * @param enabled true if dragging should be allowed, false otherwise
      */
@@ -295,7 +311,7 @@ public class GMap extends Panel implements GOverlayContainer
     /**
      * Sets if zooming-by-mousewheel should be allowed or not.
      * @param enabled true if zooming-by-mousewheel should be allowed, false otherwise
-     */    
+     */
     public void setScrollWheelZoomEnabled(final boolean enabled)
     {
         if (this.scrollWheelZoomEnabled != enabled)
@@ -313,7 +329,7 @@ public class GMap extends Panel implements GOverlayContainer
     /**
      * Is the function zooming-by-mousewheel enabled?
      * Disabled by default.
-     * 
+     *
      * @return true if enabled, false if disabled
      */
     public boolean isScrollWheelZoomEnabled()
@@ -335,7 +351,7 @@ public class GMap extends Panel implements GOverlayContainer
     /**
      * Sets if the StreeView control should be visible or not.
      * @param enabled true if StreetView should be allowed, false otherwise
-     */        
+     */
     public void setStreetViewControlEnabled(boolean enabled)
     {
         if (this.streetViewControlEnabled != enabled)
@@ -364,7 +380,7 @@ public class GMap extends Panel implements GOverlayContainer
     /**
      * Sets if the zoom control should be visible or not.
      * @param enabled true if the zoom-control should be enabled, false otherwise
-     */        
+     */
     public void setZoomControlEnabled(boolean enabled)
     {
         if (this.zoomControlEnabled != enabled)
@@ -394,7 +410,7 @@ public class GMap extends Panel implements GOverlayContainer
      * Sets if the map type control should be visible or not.
      * @param enabled true if you want the user to have the possibility to
      * change the map type, false otherwise
-     */        
+     */
     public void setMapTypeControlEnabled(boolean enabled)
     {
 
@@ -424,7 +440,7 @@ public class GMap extends Panel implements GOverlayContainer
     /**
      * Sets if the scale control should be visible or not.
      * @param enabled true if the scale-control should be enabled, false otherwise
-     */            
+     */
     public void setScaleControlEnabled(boolean enabled)
     {
         if (this.scaleControlEnabled != enabled)
@@ -453,7 +469,7 @@ public class GMap extends Panel implements GOverlayContainer
     /**
      * Sets if the pan control should be visible or not.
      * @param enabled true if the pan-control should be enabled, false otherwise
-     */            
+     */
     public void setPanControlEnabled(boolean enabled)
     {
         if (this.panControlEnabled != enabled)

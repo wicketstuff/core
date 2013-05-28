@@ -200,6 +200,16 @@
 		</profile>
 	</profiles>
 
+	<repositories>
+
+        <repository>
+            <id>Wicket670</id>
+            <url>https://repository.apache.org/content/repositories/orgapachewicket-014/</url>
+        </repository>
+
+	</repositories>
+
+
 	<issueManagement>
 		<system>github</system>
 		<url>https://github.com/wicketstuff/core/issues</url>
@@ -223,7 +233,7 @@
 	<!-- mocleiri: for distribution in to central repository sections in the main pom are not allowed -->
 
 	<properties>
-		<wicket.version>6.5.0</wicket.version>
+		<wicket.version>6.8.0-SNAPSHOT</wicket.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -265,6 +275,11 @@
 			</dependency>
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-core</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
 				<artifactId>wicket-datetime</artifactId>
 				<version>${wicket.version}</version>
 			</dependency>
@@ -291,6 +306,11 @@
 			<dependency>
 				<groupId>org.apache.wicket</groupId>
 				<artifactId>wicket-velocity</artifactId>
+				<version>${wicket.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-devutils</artifactId>
 				<version>${wicket.version}</version>
 			</dependency>
 			<dependency>

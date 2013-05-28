@@ -20,8 +20,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 
-import org.apache.wicket.WicketRuntimeException;
-
 /**
  * Generics utilities.
  * 
@@ -31,7 +29,7 @@ public final class Generics {
 
 	private Generics() {
 	}
-	
+
 	/**
 	 * Get the type for a class type variable.
 	 * 
@@ -64,8 +62,10 @@ public final class Generics {
 	 * Get the {@link Class} for a generic type.
 	 * 
 	 * @param type
-	 *            type
-	 * @return class
+	 *            type a {@link Class} or {@link ParameterizedType}
+	 * @return class class
+	 * @throws IllegalArgumentException
+	 *             if type doesn't represent a class
 	 */
 	public static Class<?> getClass(Type type) {
 		Class<?> clazz;
@@ -75,7 +75,7 @@ public final class Generics {
 		} else if (type instanceof ParameterizedType) {
 			clazz = (Class<?>) ((ParameterizedType) type).getRawType();
 		} else {
-			throw new WicketRuntimeException();
+			throw new IllegalArgumentException(String.format("%s is not a class or parameterizedType", type));
 		}
 
 		return clazz;

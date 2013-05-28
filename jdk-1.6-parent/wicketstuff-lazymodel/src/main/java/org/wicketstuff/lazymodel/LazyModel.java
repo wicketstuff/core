@@ -66,6 +66,8 @@ import org.wicketstuff.lazymodel.reflect.IProxyFactory.Callback;
 public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		IObjectTypeAwareModel<T> {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * The resolver for {@link Method}s.
 	 */
@@ -138,10 +140,13 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 			Type previousType = type;
 			type = iterator.getType();
-			if (type instanceof TypeVariable
-					&& previousType instanceof ParameterizedType) {
-				type = Generics.variableType((ParameterizedType) previousType,
-						(TypeVariable<?>) type);
+			if (type instanceof TypeVariable) {
+				if (previousType instanceof ParameterizedType) {
+					type = Generics.variableType((ParameterizedType) previousType,
+							(TypeVariable<?>) type);
+				} else {
+					type = Object.class;
+				}
 			}
 		}
 
@@ -562,8 +567,12 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 			Type candidate = method.getGenericReturnType();
 			if (candidate instanceof TypeVariable) {
-				candidate = Generics.variableType((ParameterizedType) type,
-						(TypeVariable) candidate);
+				if (type instanceof ParameterizedType) {
+					candidate = Generics.variableType((ParameterizedType) type,
+							(TypeVariable) candidate);
+				} else {
+					candidate = Object.class;
+				}
 			}
 			type = candidate;
 
@@ -675,6 +684,8 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 */
 	private class LoadableDetachableWrapper extends LoadableDetachableModel<T>
 			implements IObjectClassAwareModel<T>, IObjectTypeAwareModel<T> {
+
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		protected T load() {

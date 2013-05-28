@@ -1,0 +1,14 @@
+<wicket:panel>
+    <p>parameter 'linkParam' from initial page request (reload page to update): <span wicket:id="fragment"></span></p>
+    
+    <p><a wicket:id="setFragment">replace fragment with anything</a></p>
+    <p><a wicket:id="setFragmentParameter">replace fragment with key-value-pair</a></p>
+    <p><a wicket:id="putParam">put parameter into fragment</a></p>
+    <p><a wicket:id="appendParam">append parameter</a></p>
+    <p><a wicket:id="removeParam">remove parameter</a></p>
+       
+    <form wicket:id="form">
+        <input wicket:id="formParam" type="text" />
+        <input wicket:id="submit" type="submit" />
+    </form>
+</wicket:panel>
