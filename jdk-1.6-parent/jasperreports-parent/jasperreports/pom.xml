@@ -31,8 +31,9 @@
 
 		<!-- Module-specific -->
 		<dependency>
-			<groupId>jasperreports</groupId>
+			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
+                        <version>5.1.0</version>
 		</dependency>
 
 		<!-- Provided -->
