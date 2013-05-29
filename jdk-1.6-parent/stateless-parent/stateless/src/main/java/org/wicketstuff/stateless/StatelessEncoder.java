@@ -40,6 +40,12 @@ final class StatelessEncoder
 
         Set<String> setParameters = new HashSet<String>();
 
+        int indexedCount = params.getIndexedCount();
+        for (int i = 0; i < indexedCount; i++)
+        {
+            mergedUrl.getSegments().add(params.get(i).toString());
+        }
+
         for (INamedParameters.NamedPair pair : params.getAllNamed())
         {
             String key = urlEncoder.encode(pair.getKey(), charset);
