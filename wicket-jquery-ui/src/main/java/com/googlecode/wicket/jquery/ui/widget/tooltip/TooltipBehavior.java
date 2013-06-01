@@ -95,7 +95,7 @@ public class TooltipBehavior extends JQueryBehavior
 	{
 		if (this.selector == null)
 		{
-			return TooltipBehavior.$(this.method, options.toString());
+			return TooltipBehavior.$(this.method, this.options.toString());
 		}
 
 		return super.$();

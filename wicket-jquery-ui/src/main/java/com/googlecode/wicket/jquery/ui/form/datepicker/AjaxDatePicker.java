@@ -103,7 +103,7 @@ public class AjaxDatePicker extends DatePicker implements IValueChangedListener
 
 	// IDatePickerListener //
 	@Override
-	public boolean isOnSelectEventEnabled()
+	public final boolean isOnSelectEventEnabled()
 	{
 		return true;
 	}

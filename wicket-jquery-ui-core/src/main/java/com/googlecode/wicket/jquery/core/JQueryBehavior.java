@@ -181,7 +181,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Gets the jQuery statement.<br/>
-	 * <b>Warning: </b> This method is *not* called by this behavior directly (only {@link #$()} is).
+	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
 	 * @param options the list of options to be supplied to the current method
 	 * @return Statement like 'jQuery(function() { ... })'
 	 */
@@ -192,7 +192,7 @@ public class JQueryBehavior extends JQueryAbstractBehavior
 
 	/**
 	 * Gets the jQuery statement.<br/>
-	 * <b>Warning: </b> This method is *not* called by this behavior directly (only {@link #$()} is).
+	 * <b>Warning: </b> This method is *not* called by the behavior directly (only {@link #$()} is).
 	 * @param options the options to be supplied to the current method
 	 * @return Statement like 'jQuery(function() { ... })'
 	 */

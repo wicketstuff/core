@@ -18,6 +18,8 @@ package com.googlecode.wicket.jquery.ui.form.datepicker;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.CallbackParameter;
+import org.apache.wicket.markup.html.form.FormComponent;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryEvent;
@@ -96,13 +98,41 @@ public abstract class DatePickerBehavior extends JQueryBehavior implements IJQue
 	/**
 	 * Gets a new {@link JQueryAjaxPostBehavior} that will be called on 'select' javascript method
 	 *
-	 * @return the {@link JQueryAjaxPostBehavior}
+	 * @return the {@link JQueryAjaxPostBehavior}, typically a {@link OnSelectBehavior}
 	 */
 	protected abstract JQueryAjaxPostBehavior newOnSelectBehavior();
 
+
+	// Behavior class //
+	/**
+	 * Provides a {@link JQueryAjaxPostBehavior} that can be returned by {@link DatePickerBehavior#newOnSelectBehavior()}
+	 */
+	protected static class OnSelectBehavior extends JQueryAjaxPostBehavior
+	{
+		private static final long serialVersionUID = 1L;
+
+		public OnSelectBehavior(final IJQueryAjaxAware source, final FormComponent<?> component)
+		{
+			super(source, component);
+		}
+
+		@Override
+		protected CallbackParameter[] getCallbackParameters()
+		{
+			//function( dateText, inst ) { ... }
+			return new CallbackParameter[] { CallbackParameter.explicit("dateText"), CallbackParameter.context("inst") };
+		}
+
+		@Override
+		protected JQueryEvent newEvent()
+		{
+			return new SelectEvent();
+		}
+	}
+
 	// Event classes //
 	/**
-	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxBehavior} select callback
+	 * Provides an event object that will be broadcasted by the {@link JQueryAjaxPostBehavior} select callback
 	 */
 	protected static class SelectEvent extends JQueryEvent
 	{
