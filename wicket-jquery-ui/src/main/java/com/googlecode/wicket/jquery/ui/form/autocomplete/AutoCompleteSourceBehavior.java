@@ -27,6 +27,7 @@ import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
 
+import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 
 /**
@@ -40,7 +41,6 @@ abstract class AutoCompleteSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
 	private static final String QUERY = "term";
-	private static final String QUOTE = "\"";
 
 	private final ITextRenderer<? super T> renderer;
 
@@ -107,16 +107,16 @@ abstract class AutoCompleteSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 						if (index++ > 0) { builder.append(", "); }
 
 						builder.append("{ ");
-						builder.append(QUOTE).append("id").append(QUOTE).append(": ").append(QUOTE).append(Integer.toString(index)).append(QUOTE); /* id is a reserved word */
+						builder.append(Options.QUOTE).append("id").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(Integer.toString(index)).append(Options.QUOTE); /* id is a reserved word */
 						builder.append(", ");
-						builder.append(QUOTE).append("value").append(QUOTE).append(": ").append(QUOTE).append(renderer.getText(choice)).append(QUOTE); /* value is a reserved word */
+						builder.append(Options.QUOTE).append("value").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(renderer.getText(choice)).append(Options.QUOTE); /* value is a reserved word */
 
 						if (properties != null)
 						{
 							for (String property : properties)
 							{
 								builder.append(", ");
-								builder.append(QUOTE).append(property).append(QUOTE).append(": ").append(QUOTE).append(renderer.getText(choice, property)).append(QUOTE);
+								builder.append(Options.QUOTE).append(property).append(Options.QUOTE).append(": ").append(Options.QUOTE).append(renderer.getText(choice, property)).append(Options.QUOTE);
 							}
 						}
 

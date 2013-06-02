@@ -38,6 +38,7 @@ import org.apache.wicket.util.io.IClusterable;
 public class Options implements IClusterable
 {
 	private static final long serialVersionUID = 1L;
+	public static final String QUOTE = "\"";
 
 	/**
 	 * Converts a string representation of an object to its javascript representation. ie: "myvalue" (with the double quotes)
@@ -56,7 +57,7 @@ public class Options implements IClusterable
 	 */
 	public static String asString(String value)
 	{
-		return String.format("\"%s\"", value);
+		return String.format("%s%s%s", QUOTE, value, QUOTE);
 	}
 
 	/**
@@ -162,15 +163,15 @@ public class Options implements IClusterable
 	@Override
 	public String toString()
 	{
-		StringBuilder builder = new StringBuilder("{");
+		StringBuilder builder = new StringBuilder("{ ");
 
 		int i = 0;
 		for (Entry<String, Serializable> entry : this.map.entrySet())
 		{
 			if (i++ > 0) { builder.append(", "); }
-			builder.append("\"").append(entry.getKey()).append("\": ").append(entry.getValue());
+			builder.append(QUOTE).append(entry.getKey()).append(QUOTE).append(": ").append(entry.getValue());
 		}
 
-		return builder.append("}").toString();
+		return builder.append(" }").toString();
 	}
 }
