@@ -90,6 +90,11 @@
             <artifactId>wicketstuff-dropdown-menu</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>wicketstuff-jwicket-ui-tooltip</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
 
         <!-- LOGGING DEPENDENCIES - LOG4J -->

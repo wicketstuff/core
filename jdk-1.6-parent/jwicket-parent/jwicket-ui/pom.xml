@@ -51,6 +51,7 @@
     	<module>jwicket-ui-datepicker</module>
     	<module>jwicket-ui-sort</module>
     	<module>jwicket-ui-accordion</module>
+    	<module>jwicket-ui-tooltip</module>
     </modules>
 
 
