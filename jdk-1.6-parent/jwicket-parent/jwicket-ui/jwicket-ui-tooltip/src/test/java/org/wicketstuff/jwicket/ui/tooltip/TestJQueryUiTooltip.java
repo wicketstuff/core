@@ -96,6 +96,16 @@ public class TestJQueryUiTooltip
 	}
 
 	@Test
+	public void shouldUseDefaultContentWhenNoContentProvided()
+	{
+		verify(widget).setOption("content", "function(){" /**/
+			+ "var title=$(this).attr('title');" /**/
+			+ "if(typeof title!=='undefined' && title!==false){return title;}" /**/
+			+ "else{return $(this).attr('data-tooltip');}" /**/
+			+ "}");
+	}
+
+	@Test
 	public void shouldSurroundContentOptionWithSingleQuotes()
 	{
 		tooltip.setContent("<h1>tooltip content</h1>");

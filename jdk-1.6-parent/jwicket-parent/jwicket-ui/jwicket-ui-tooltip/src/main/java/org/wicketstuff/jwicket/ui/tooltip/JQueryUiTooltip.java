@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.CssReferenceHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.request.resource.CssResourceReference;
@@ -30,13 +31,18 @@ import org.wicketstuff.jwicket.JsOption;
 
 /**
  * This is an integration of the jQuery UI tooltip widget. You can add it to a Wicket
- * {@link Component} to give it a jQuery UI tooltip. The generated jQuery code will use the
- * component's markup id as the selector.
+ * {@link Component} to give it a jQuery UI tooltip. This {@link Behavior} will generate the tooltip
+ * JavaScript.
  * <p/>
- * All configuration options of the jQuery UI tooltip widget are available. You can also use custom
- * CSS through {@link ResourceReference}s. If no user {@link ResourceReference} for CSS is provided
- * a default style will be used. <strong>The used style will be applied to ALL tooltips created with
- * {@link JQueryUiTooltip}.</strong>
+ * adf
+ * <p/>
+ * <strong>Default selector: </strong>the component's markup id
+ * <p/>
+ * <strong>Default tooltip content: </strong>value(s) of the <code>title</code> attribute(s) or the
+ * <code>data-tolltip</code> attribute(s) dynamically obtained by a JS function
+ * <p/>
+ * You can use custom CSS through {@link ResourceReference}s. If no user {@link ResourceReference}
+ * for CSS is provided a default style will be used.
  * <p/>
  * An instance of this class can be added to one and only one {@link Component}. Another
  * {@link Component} that should have exactly the same behavior needs it's own instance.
@@ -46,7 +52,6 @@ import org.wicketstuff.jwicket.JsOption;
  */
 public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 {
-
 	private static final String WIDGET_NAME = "tooltip";
 
 	public static final JQueryResourceReference uiTooltipJs_1_10_3 = JQuery.isDebug()
@@ -59,24 +64,42 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 		? new CssResourceReference(JQueryUiTooltip.class, "jquery-ui-1.10.3.custom.css")
 		: new CssResourceReference(JQueryUiTooltip.class, "jquery-ui-1.10.3.custom.min.css");
 
+	private final String componentSelector;
+	private final String defaultContent = "function(){" /**/
+		+ "var title=$(this).attr('title');" /**/
+		+ "if(typeof title!=='undefined' && title!==false){return title;}" /**/
+		+ "else{return $(this).attr('data-tooltip');}" /**/
+		+ "}";
 	private final List<ResourceReference> cssResourceReferences;
-
 	private final JQueryUiWidget widget;
 
-	public JQueryUiTooltip()
-	{
-		super(uiTooltipJs_1_10_3);
-		this.widget = new JQueryUiWidget(WIDGET_NAME);
-		this.cssResourceReferences = new ArrayList<ResourceReference>();
-		addUserProvidedResourceReferences(org.apache.wicket.resource.JQueryResourceReference.get());
-	}
-
+	/**
+	 * 
+	 * @param customJQueryUiTooltipJs
+	 *            a {@link JQueryResourceReference} which should provide all jQuery UI libraries
+	 *            needed to use the jQuery UI tooltip widget
+	 */
 	public JQueryUiTooltip(JQueryResourceReference customJQueryUiTooltipJs)
 	{
+		this("", customJQueryUiTooltipJs);
+	}
+
+	/**
+	 * 
+	 * @param componentSelector
+	 *            the selector which will be used by jQuery to add the tooltip(s)
+	 * @param customJQueryUiTooltipJs
+	 *            a {@link JQueryResourceReference} which should provide all jQuery UI libraries
+	 *            needed to use the jQuery UI tooltip widget
+	 */
+	public JQueryUiTooltip(String componentSelector, JQueryResourceReference customJQueryUiTooltipJs)
+	{
 		super(customJQueryUiTooltipJs);
+		this.componentSelector = componentSelector;
 		this.widget = new JQueryUiWidget(WIDGET_NAME);
 		this.cssResourceReferences = new ArrayList<ResourceReference>();
 		addUserProvidedResourceReferences(org.apache.wicket.resource.JQueryResourceReference.get());
+		setContent(new JsFunction(defaultContent));
 	}
 
 	/**
@@ -87,9 +110,11 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	protected JQueryUiTooltip(JQueryUiWidget widget)
 	{
 		super(uiTooltipJs_1_10_3);
+		this.componentSelector = "";
 		this.widget = widget;
 		this.cssResourceReferences = new ArrayList<ResourceReference>();
 		addUserProvidedResourceReferences(org.apache.wicket.resource.JQueryResourceReference.get());
+		setContent(new JsFunction(defaultContent));
 	}
 
 	/**
@@ -99,7 +124,20 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	 */
 	public static JQueryUiTooltip tooltip_1_10_3()
 	{
-		return new JQueryUiTooltip();
+		return new JQueryUiTooltip(uiTooltipJs_1_10_3);
+	}
+
+	/**
+	 * 
+	 * Factory method.
+	 * 
+	 * @param componentSelector
+	 *            the selector which will be used by jQuery to add the tooltip(s)
+	 * @return a new instance of {@link JQueryUiTooltip} using jQuery UI 1.10.3
+	 */
+	public static JQueryUiTooltip tooltip_1_10_3(String componentSelector)
+	{
+		return new JQueryUiTooltip(componentSelector, uiTooltipJs_1_10_3);
 	}
 
 	@Override
@@ -134,7 +172,14 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 
 	private String componentSelector()
 	{
-		return "'#".concat(getComponent().getMarkupId()).concat("'");
+		if (componentSelector.isEmpty())
+		{
+			return "'#".concat(getComponent().getMarkupId()).concat("'");
+		}
+		else
+		{
+			return "'" + componentSelector + "'";
+		}
 	}
 
 	/**
@@ -170,8 +215,8 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	}
 
 	/**
-	 * Sets the <code>content</code> option of the tooltip widget like this: {@code content:
-	 * '<h1>tooltip content</h1>'}.
+	 * Sets the <code>content</code> option of the tooltip widget like this:
+	 * <code>content:function(){return 'tooltip content';}</code>.
 	 * <p/>
 	 * Note: The <code>content</code> option has to stay in sync with the <code>items</code> option
 	 * (see <a href="http ://api.jqueryui
@@ -180,7 +225,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	 * @param content
 	 *            a {@link JsFunction} containing a JavaScript function which returns the content of
 	 *            this tooltip (e.g.
-	 *            <code>new JsFunction("function(){return'tooltip content';}")</code>)
+	 *            <code>new JsFunction("function(){return 'tooltip content';}")</code>)
 	 * @return
 	 */
 	public JQueryUiTooltip setContent(JsFunction content)

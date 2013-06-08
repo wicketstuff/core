@@ -20,6 +20,7 @@
 package org.wicketstuff.jwicket.demo.tooltip;
 
 import static org.wicketstuff.jwicket.ui.tooltip.JQueryUiTooltip.tooltip_1_10_3;
+import static org.wicketstuff.jwicket.ui.tooltip.JQueryUiTooltipContent.tooltipContent;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -47,35 +48,26 @@ public class JQueryUiTooltipPage extends WebPage
 		// jQuery 1.6+ required for the jQueryUi tooltip widget
 		JQueryUiTooltip.addUserProvidedResourceReferences(JQueryResourceReference.get());
 
-		// tooltip with content from title attribute and custom style
-		Component titleTooltip = new WebMarkupContainer("staticTooltip");
-		add(titleTooltip);
-		titleTooltip.add(tooltip_1_10_3() /**/
-		.setPosition(new JsOption("my", "'center bottom-20'"), new JsOption("at", "'center top'")) /**/
-		.addCssResource(uiTooltipCss) /**/
-		);
+		Component individualTooltip = new WebMarkupContainer("individualTooltip");
+		individualTooltip.add(tooltip_1_10_3() /**/
+		.setContent("tooltip content") /**/
+		.setItems("#" + individualTooltip.getMarkupId()) /**/
+		.setPosition(new JsOption("my", "'center bottom-20'"), new JsOption("at", "'left top'")) /**/
+		.addCssResource(uiTooltipCss));
+		add(individualTooltip);
 
-		// tooltip with dynamic content
-		Component dynamicTooltip1 = new WebMarkupContainer("dynamicTooltip");
-		add(dynamicTooltip1);
-		dynamicTooltip1.add(tooltip_1_10_3() /**/
-		.setContent("<div class=\"tooltip-content\">tooltip content</div>") /**/
-		.setItems("#" + dynamicTooltip1.getMarkupId()) /**/
+		// make multiple tooltips look the same by providing a CSS class selector to the tooltip
+		add(tooltip_1_10_3(".textWithTooltip") /**/
+		.setItems(".textWithTooltip") /**/
 		.setPosition(new JsOption("my", "'center bottom-20'"), new JsOption("at", "'center top'")) /**/
 		);
 
-		Component c = new TooltipContent("tooltipContent");
-		add(c);
+		add(new WebMarkupContainer("tooltipFromTitle"));
+		add(new WebMarkupContainer("tooltipFromDataTooltip"));
+		add(new WebMarkupContainer("tooltipWithMarkup").add(tooltipContent("<strong>tooltip content with markup</strong>")));
 
-		// tooltip with dynamic content from another component
-		Component dynamicTooltip2 = new WebMarkupContainer("dynamicTooltipFromAnotherComponent");
-		add(dynamicTooltip2);
-		dynamicTooltip2.add(tooltip_1_10_3() /**/
-		.setContent(c) /**/
-		.setItems("#" + dynamicTooltip2.getMarkupId()) /**/
-		.setPosition(new JsOption("my", "'center bottom-20'"), new JsOption("at", "'center top'")) /**/
-		);
-
+		TooltipContent tooltipContent = new TooltipContent("tooltipContent");
+		add(tooltipContent);
+		add(new WebMarkupContainer("tooltipFromComponent").add(tooltipContent(tooltipContent)));
 	}
-
 }
