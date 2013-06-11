@@ -187,8 +187,6 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	/**
 	 * Adds the given CSS {@link ResourceReference} to the response for custom tooltip styling. If
 	 * no user {@link ResourceReference} is provided a default style will be used.
-	 * <p/>
-	 * Overwrites
 	 * 
 	 * @param cssResourceReference
 	 * @return
@@ -201,7 +199,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	}
 
 	/**
-	 * Turns of automatically adding the default jQuery UI CSS to the response.
+	 * Turns of adding any jQuery UI CSS to the response (even the default one).
 	 */
 	public JQueryUiTooltip withoutCss()
 	{
