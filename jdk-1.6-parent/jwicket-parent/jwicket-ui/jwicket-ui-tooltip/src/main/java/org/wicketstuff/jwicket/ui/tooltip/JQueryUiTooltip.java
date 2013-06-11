@@ -71,7 +71,9 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 		+ "else{return $(this).attr('data-tooltip');}" /**/
 		+ "}";
 	private final List<ResourceReference> cssResourceReferences;
+	private boolean withoutCss;
 	private final JQueryUiWidget widget;
+
 
 	/**
 	 * 
@@ -145,7 +147,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	{
 		super.renderHead(component, response);
 
-		if (!response.wasRendered(uiTooltipCss_1_10_3))
+		if (!response.wasRendered(uiTooltipCss_1_10_3) && !withoutCss)
 		{
 			if (this.cssResourceReferences.isEmpty())
 			{
@@ -185,6 +187,8 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	/**
 	 * Adds the given CSS {@link ResourceReference} to the response for custom tooltip styling. If
 	 * no user {@link ResourceReference} is provided a default style will be used.
+	 * <p/>
+	 * Overwrites
 	 * 
 	 * @param cssResourceReference
 	 * @return
@@ -192,6 +196,16 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	public JQueryUiTooltip addCssResource(ResourceReference cssResourceReference)
 	{
 		this.cssResourceReferences.add(cssResourceReference);
+		this.withoutCss = false;
+		return this;
+	}
+
+	/**
+	 * Turns of automatically adding the default jQuery UI CSS to the response.
+	 */
+	public JQueryUiTooltip withoutCss()
+	{
+		withoutCss = true;
 		return this;
 	}
 
