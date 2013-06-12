@@ -16,17 +16,17 @@
  */
 package org.wicketstuff.event;
 
-import static org.apache.wicket.event.Broadcast.BREADTH;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.mock.MockApplication;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import static org.apache.wicket.event.Broadcast.BREADTH;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
 
 /**
  * Tests for AnnotationEventDispatcher
@@ -44,9 +44,6 @@ public class AnnotationEventDispatcherTest
 	@Before
 	public void setup()
 	{
-		AnnotationEventDispatcher dispatcher = new AnnotationEventDispatcher();
-		testApp.getComponentInstantiationListeners().add(dispatcher);
-		testApp.getFrameworkSettings().add(dispatcher);
 		reset(mock);
 	}
 
