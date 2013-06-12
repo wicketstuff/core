@@ -20,16 +20,13 @@ package wicket.contrib.tinymce;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
-import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.IAjaxRegionMarkupIdProvider;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
-import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceReferenceRequestHandler;
 import org.apache.wicket.request.http.WebRequest;
@@ -91,9 +88,14 @@ public class TinyMceBehavior extends Behavior implements IAjaxRegionMarkupIdProv
 			TinyMCESettings.lazyLoadTinyMCEResource(response);
 		}
 
-		String renderOnDomReady = getAddTinyMceSettingsScript(Mode.exact,
-				Collections.singletonList(component));
-		response.render(OnDomReadyHeaderItem.forScript(renderOnDomReady));
+		String renderOnDomReady = getRenderOnDomReadyJavascript();
+		if (renderOnDomReady != null) {
+			response.render(OnDomReadyHeaderItem.forScript(renderOnDomReady));
+		}
+	}
+
+	protected String getRenderOnDomReadyJavascript() {
+		return getAddTinyMceSettingsScript(Mode.exact, Collections.singletonList(component));
 	}
 
 
