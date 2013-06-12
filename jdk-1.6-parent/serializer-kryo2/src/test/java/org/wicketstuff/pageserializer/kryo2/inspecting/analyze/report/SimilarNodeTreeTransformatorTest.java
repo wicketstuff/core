@@ -84,34 +84,40 @@ public class SimilarNodeTreeTransformatorTest
 		tester.startPage(ListViewPage.class, new PageParameters());
 		Assert.assertNotNull(tester.getLastRenderedPage());
 
+		IReportOutput reportOutput=new LoggerReportOutput();
+
 		InspectingKryoSerializer kryo = new InspectingKryoSerializer(Bytes.megabytes(1),
 			new AnalyzingSerializationListener(new ComponentIdAsLabel(), TreeProcessors.listOf(
-				new TreeSizeReport(), new TreeTransformator(new SimilarNodeTreeTransformator(
-					new TreeSizeReport()), TreeTransformator.strip(new TypeFilter(Class.class))))));
+				new TreeSizeReport(reportOutput), new TreeTransformator(new SimilarNodeTreeTransformator(
+					new TreeSizeReport(reportOutput)), TreeTransformator.strip(new TypeFilter(Class.class))))));
 		kryo.serialize(tester.getLastRenderedPage());
 	}
 	
 	@Test
 	public void testCompression() throws IOException {
+		IReportOutput reportOutput=new LoggerReportOutput();
+
 		ISerializedObjectTree source = Trees.fromResource(getClass(), "sample1");
 		Assert.assertEquals("asSample", source.label());
 		ISerializedObjectTree result = SimilarNodeTreeTransformator.transformTree(source);
-		new TreeSizeReport().process(result);
+		new TreeSizeReport(reportOutput).process(result);
 		ISerializedObjectTree match = Trees.fromResource(getClass(), "sample1-match");
-		new TreeSizeReport().process(match);
+		new TreeSizeReport(reportOutput).process(match);
 
 		Trees.assertEqualsTree(match, result);
 	}
 	
 	@Test
 	public void secondNodeHasMoreChilds() throws IOException {
+		IReportOutput reportOutput=new LoggerReportOutput();
+		
 		ISerializedObjectTree source = Trees.fromResource(getClass(), "nodeChildSize");
 		Assert.assertEquals("asSample", source.label());
-		new TreeSizeReport().process(source);
+		new TreeSizeReport(reportOutput).process(source);
 		ISerializedObjectTree result = SimilarNodeTreeTransformator.transformTree(source);
-		new TreeSizeReport().process(result);
+		new TreeSizeReport(reportOutput).process(result);
 		ISerializedObjectTree match = Trees.fromResource(getClass(), "nodeChildSize-match");
-		new TreeSizeReport().process(match);
+		new TreeSizeReport(reportOutput).process(match);
 		
 		Trees.assertEqualsTree(match, result);
 	}

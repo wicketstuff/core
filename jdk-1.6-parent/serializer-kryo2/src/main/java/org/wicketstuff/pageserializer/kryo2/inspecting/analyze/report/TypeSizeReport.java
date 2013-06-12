@@ -60,46 +60,48 @@ public class TypeSizeReport implements ISerializedObjectTreeProcessor
 		.set(Column.FillBefore, '.')
 		.set(Column.Separator, "|")
 		.build());
+
+	private final IReportOutput reportOutput;
+	
+	public TypeSizeReport(IReportOutput reportOutput) {
+		this.reportOutput = reportOutput;
+	}
 	
 	@Override
-	public void process(ISerializedObjectTree tree)
-	{
-		if (LOG.isDebugEnabled())
-		{
-			Map<Class<?>, Counter> map = new HashMap<Class<?>, TypeSizeReport.Counter>();
-			process(tree, map);
-	
-			List<Map.Entry<Class<?>, Counter>> sorted = new ArrayList<Map.Entry<Class<?>, Counter>>();
-			sorted.addAll(map.entrySet());
-			Collections.sort(sorted, new Comparator<Map.Entry<Class<?>, Counter>>()
-			{
-				@Override
-				public int compare(Entry<Class<?>, Counter> o1, Entry<Class<?>, Counter> o2)
-				{
-					int s1 = o1.getValue().size;
-					int s2 = o2.getValue().size;
-					return s1 == s2 ? 0 : s1 > s2 ? -1 : 1;
+	public void process(ISerializedObjectTree tree) {
+		
+		reportOutput.write(tree, new IReportRenderer() {
+
+			@Override
+			public String render(ISerializedObjectTree tree) {
+				Map<Class<?>, Counter> map = new HashMap<Class<?>, TypeSizeReport.Counter>();
+				process(tree, map);
+
+				List<Map.Entry<Class<?>, Counter>> sorted = new ArrayList<Map.Entry<Class<?>, Counter>>();
+				sorted.addAll(map.entrySet());
+				Collections.sort(sorted,
+						new Comparator<Map.Entry<Class<?>, Counter>>() {
+							@Override
+							public int compare(Entry<Class<?>, Counter> o1,
+									Entry<Class<?>, Counter> o2) {
+								int s1 = o1.getValue().size;
+								int s2 = o2.getValue().size;
+								return s1 == s2 ? 0 : s1 > s2 ? -1 : 1;
+							}
+						});
+
+				Report report = new Report("TypeSizeReport\n");
+				for (Map.Entry<Class<?>, Counter> e : sorted) {
+					report.newRow().set(label, 0, e.getKey().getName())
+							.set(size, 0, "" + e.getValue().size);
 				}
-			});
+				String result = report.export(emptyFirst, label, size)
+						.separateColumnNamesWith('-').tableBorderWith('=')
+						.asString();
 
-// StringBuilder sb = new StringBuilder();
-
-// sb.append("\n-----------------------------\n");
-
-			Report report = new Report("\n");
-			for (Map.Entry<Class<?>, Counter> e : sorted)
-			{
-				report.newRow()
-					.set(label, 0, e.getKey().getName())
-					.set(size, 0, "" + e.getValue().size);
+				return result;
 			}
-			String result = report.export(emptyFirst, label, size)
-				.separateColumnNamesWith('-')
-				.tableBorderWith('=')
-				.asString();
-
-			LOG.debug(result);
-		}
+		});
 	}
 
 	private void process(ISerializedObjectTree tree, Map<Class<?>, Counter> map)
