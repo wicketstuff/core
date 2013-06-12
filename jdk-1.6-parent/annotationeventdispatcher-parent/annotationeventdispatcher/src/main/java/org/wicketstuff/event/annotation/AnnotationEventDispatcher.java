@@ -14,15 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.event;
-
-import java.lang.reflect.Method;
+package org.wicketstuff.event.annotation;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.IEventDispatcher;
 import org.apache.wicket.application.IComponentInstantiationListener;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.util.collections.ClassMetaCache;
+
+import java.lang.reflect.Method;
 
 /**
  * <p>

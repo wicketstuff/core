@@ -1,4 +1,4 @@
-package org.wicketstuff.event;
+package org.wicketstuff.event.annotation;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.IInitializer;

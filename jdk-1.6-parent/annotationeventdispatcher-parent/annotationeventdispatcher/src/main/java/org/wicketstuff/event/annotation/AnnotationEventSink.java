@@ -14,21 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.event;
+package org.wicketstuff.event.annotation;
 
-import static java.lang.reflect.Modifier.isPublic;
-import static java.util.Arrays.asList;
-import static org.apache.wicket.RuntimeConfigurationType.DEVELOPMENT;
-import static org.wicketstuff.event.CompatibleTypesCache.getCompatibleTypes;
+import org.apache.wicket.Application;
+import org.apache.wicket.event.IEvent;
+import org.apache.wicket.util.collections.ClassMetaCache;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.wicket.Application;
-import org.apache.wicket.event.IEvent;
-import org.apache.wicket.util.collections.ClassMetaCache;
+import static java.lang.reflect.Modifier.isPublic;
+import static java.util.Arrays.asList;
+import static org.apache.wicket.RuntimeConfigurationType.DEVELOPMENT;
 
 class AnnotationEventSink
 {
@@ -112,7 +111,7 @@ class AnnotationEventSink
 		if (onEventMethods == null)
 		{
 			onEventMethods = new HashSet<Method>();
-			for (Class<?> type : getCompatibleTypes(payloadType))
+			for (Class<?> type : CompatibleTypesCache.getCompatibleTypes(payloadType))
 			{
 				Set<Method> methods = onEventMethodsByParameterType.get(type);
 				if (methods != null)
