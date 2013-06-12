@@ -33,6 +33,8 @@ import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.AnalyzingSerializ
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.IObjectLabelizer;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTreeProcessor;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.TreeProcessors;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.IReportOutput;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.LoggerReportOutput;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SimilarNodeTreeTransformator;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SortedTreeSizeReport;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TreeSizeReport;
@@ -70,9 +72,12 @@ public class InspectingKryoTest
 				return null;
 			}
 		};
-		ISerializedObjectTreeProcessor treeProcessor = TreeProcessors.listOf(new TypeSizeReport(),
-			new TreeSizeReport(), new SortedTreeSizeReport(), new SimilarNodeTreeTransformator(
-				new SortedTreeSizeReport()));
+		
+		IReportOutput reportOutput=new LoggerReportOutput();
+
+		ISerializedObjectTreeProcessor treeProcessor = TreeProcessors.listOf(new TypeSizeReport(reportOutput),
+			new TreeSizeReport(reportOutput), new SortedTreeSizeReport(reportOutput), new SimilarNodeTreeTransformator(
+				new SortedTreeSizeReport(reportOutput)));
 		ITreeFilter filter = new TypeFilter(Class.class);
 		ISerializedObjectTreeProcessor cleanedTreeProcessor = new TreeTransformator(treeProcessor,
 			TreeTransformator.strip(filter));

@@ -28,6 +28,8 @@ import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ComponentIdAsLabe
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTreeProcessor;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.NativeTypesAsLabel;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.TreeProcessors;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.IReportOutput;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.LoggerReportOutput;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SimilarNodeTreeTransformator;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SortedTreeSizeReport;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TreeTransformator;
@@ -55,12 +57,12 @@ public class Application extends WebApplication
 	public void init()
 	{
 		super.init();
-
+		IReportOutput reportOutput=new LoggerReportOutput();
 
 		// output of report of type sizes, sorted tree report (by size), aggregated tree 
 		ISerializedObjectTreeProcessor typeAndSortedTreeAndCollapsedSortedTreeProcessors = TreeProcessors.listOf(
-			new TypeSizeReport(), new SortedTreeSizeReport(), new SimilarNodeTreeTransformator(
-				new SortedTreeSizeReport()));
+			new TypeSizeReport(reportOutput), new SortedTreeSizeReport(reportOutput), new SimilarNodeTreeTransformator(
+				new SortedTreeSizeReport(reportOutput)));
 
 		// strips class object writes from tree
 		TreeTransformator treeProcessors = new TreeTransformator(
