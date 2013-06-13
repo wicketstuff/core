@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.Page;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.CssReferenceHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -101,7 +102,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 		this.widget = new JQueryUiWidget(WIDGET_NAME);
 		this.cssResourceReferences = new ArrayList<ResourceReference>();
 		addUserProvidedResourceReferences(org.apache.wicket.resource.JQueryResourceReference.get());
-		setContent(new JsFunction(defaultContent));
+		setDefaultOptions();
 	}
 
 	/**
@@ -116,7 +117,7 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 		this.widget = widget;
 		this.cssResourceReferences = new ArrayList<ResourceReference>();
 		addUserProvidedResourceReferences(org.apache.wicket.resource.JQueryResourceReference.get());
-		setContent(new JsFunction(defaultContent));
+		setDefaultOptions();
 	}
 
 	/**
@@ -167,20 +168,41 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 	@Override
 	protected JsBuilder getJsBuilder()
 	{
+		if (this.widget.getOption("items") == null)
+		{
+			if (getComponent() instanceof Page)
+			{
+				this.widget.setOption("items", "document");
+				;
+			}
+			else
+			{
+				this.widget.setOption("items", "'#" + getComponent().getMarkupId() + "'");
+			}
+
+		}
 		JsBuilder builder = new JsBuilder();
-		builder.append(this.widget.buildJS(componentSelector()));
+		builder.append(this.widget.buildJS("'".concat(componentSelector()).concat("'")));
 		return builder;
+	}
+
+	/**
+	 * Sets some default options.
+	 */
+	private void setDefaultOptions()
+	{
+		setContent(new JsFunction(defaultContent));
 	}
 
 	private String componentSelector()
 	{
 		if (componentSelector.isEmpty())
 		{
-			return "'#".concat(getComponent().getMarkupId()).concat("'");
+			return "#".concat(getComponent().getMarkupId());
 		}
 		else
 		{
-			return "'" + componentSelector + "'";
+			return componentSelector;
 		}
 	}
 
@@ -200,6 +222,8 @@ public class JQueryUiTooltip extends JQueryDurableAjaxBehavior
 
 	/**
 	 * Turns of adding any jQuery UI CSS to the response (even the default one).
+	 * 
+	 * @return
 	 */
 	public JQueryUiTooltip withoutCss()
 	{

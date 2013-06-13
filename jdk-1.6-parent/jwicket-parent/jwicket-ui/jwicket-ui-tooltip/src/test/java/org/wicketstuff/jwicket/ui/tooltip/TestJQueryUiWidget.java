@@ -86,4 +86,19 @@ public class TestJQueryUiWidget
 			this.widget.buildJS("'.selector'"));
 	}
 
+	@Test
+	public void shouldReturnSetOption()
+	{
+		this.widget.setOption("content", "test conent");
+
+		assertEquals("test conent", this.widget.getOption("content"));
+	}
+
+	@Test
+	public void shouldReturnSetEventHandler()
+	{
+		this.widget.setEventHandler("close", "function(){close}");
+
+		assertEquals("function(){close}", this.widget.getEventHandler("close"));
+	}
 }

@@ -14,6 +14,7 @@
  */
 package org.wicketstuff.jwicket.ui.tooltip;
 
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -179,7 +180,7 @@ public class TestJQueryUiTooltip
 	}
 
 	@Test
-	public void shouldonvertHideOptionFromJsOptionsToString()
+	public void shouldConvertHideOptionFromJsOptionsToString()
 	{
 		JsOption effect = new JsOption("effect", "'explode'");
 		JsOption duration = new JsOption("duration", "1000");
@@ -194,6 +195,28 @@ public class TestJQueryUiTooltip
 		tooltip.setItems(".someItem");
 
 		verify(widget).setOption("items", "'.someItem'");
+	}
+
+	@Test
+	public void shouldUseMarkupIdAsDefaultItemsOption()
+	{
+		tooltip.getJsBuilder();
+
+		verify(widget, atLeastOnce()).setOption("items", "'#" + component.getMarkupId() + "'");
+	}
+
+	@Test
+	public void shouldUseDocumentAsDefaultItemsOptionWhenAddedToPage()
+	{
+		tester = new WicketTester();
+		TestPage page = new TestPage();
+		tester.startPage(page);
+		JQueryUiTooltip tooltip = new JQueryUiTooltip(widget);
+		page.add(tooltip);
+
+		tooltip.getJsBuilder();
+
+		verify(widget, atLeastOnce()).setOption("items", "document");
 	}
 
 	@Test

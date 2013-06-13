@@ -66,4 +66,14 @@ public class JQueryUiWidget implements Serializable
 		return String.format("$(%s).%s(%s);", selector, this.widgetName, configJsObject);
 	}
 
+	public Object getOption(String option)
+	{
+		return this.options.get(option);
+	}
+
+	public Object getEventHandler(String event)
+	{
+		return this.events.get(event);
+	}
+
 }
