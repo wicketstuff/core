@@ -15,6 +15,7 @@
 package org.wicketstuff.jwicket.ui.tooltip;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -93,6 +94,22 @@ public class TestJQueryUiTooltip
 
 		verify(response, times(1)).render(
 			Mockito.eq(CssReferenceHeaderItem.forReference(tooltip.uiTooltipCss_1_10_3)));
+	}
+
+	@SuppressWarnings("static-access")
+	@Test
+	public void shouldNotAddCssToResponse()
+	{
+		IHeaderResponse response = mock(IHeaderResponse.class);
+		CssResourceReference customCssResourceReference = new CssResourceReference(
+			JQueryUiTooltip.class, "test.css");
+
+		tooltip.addCssResource(customCssResourceReference);
+		tooltip.withoutCss();
+		tooltip.renderHead(component, response);
+
+		verify(response, never()).render(
+			CssReferenceHeaderItem.forReference(tooltip.uiTooltipCss_1_10_3));
 	}
 
 	@Test

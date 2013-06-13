@@ -69,20 +69,30 @@ public class TreeSizeReport implements ISerializedObjectTreeProcessor
 		.build());
 
 	private final static Logger LOG = LoggerFactory.getLogger(TreeSizeReport.class);
+	
+	private final IReportOutput reportOutput;
 
+	public TreeSizeReport(IReportOutput reportOutput) {
+		this.reportOutput = reportOutput;
+	}
+	
 	@Override
-	public void process(ISerializedObjectTree tree)
-	{
-		if (LOG.isDebugEnabled()) {
-			Report report = new Report("\n");
-			process(tree, report, 0, tree.size() + tree.childSize());
-			String result=report.export(emptyFirst, id, label, percent, sum, local, child)
-				.separateColumnNamesWith('-')
-				.tableBorderWith('=')
-				.asString();
+	public void process(ISerializedObjectTree tree) {
+		reportOutput.write(tree, new IReportRenderer() {
 
-			LOG.debug(result);
-		}
+			@Override
+			public String render(ISerializedObjectTree tree) {
+
+				Report report = new Report("TreeSizeReport\n");
+				process(tree, report, 0, tree.size() + tree.childSize());
+				String result = report
+						.export(emptyFirst, id, label, percent, sum, local,
+								child).separateColumnNamesWith('-')
+						.tableBorderWith('=').asString();
+
+				return result;
+			}
+		});
 	}
 
 	private void process(ISerializedObjectTree tree, Report report, int indent, int allSize)

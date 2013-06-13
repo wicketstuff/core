@@ -14,12 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.event;
+package org.wicketstuff.event.annotation;
+
+import org.apache.wicket.util.collections.ClassMetaCache;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import org.apache.wicket.util.collections.ClassMetaCache;
 
 class CompatibleTypesCache
 {
