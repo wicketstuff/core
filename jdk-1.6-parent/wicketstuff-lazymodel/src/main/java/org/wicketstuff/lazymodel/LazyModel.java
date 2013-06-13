@@ -128,13 +128,14 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * Get the evaluation result's type.
 	 * 
 	 * @return result type
+	 * @throws WicketRuntimeException if this model is not bound to a target
 	 */
 	public Type getObjectType() {
 		checkBound();
 
 		Type type = getTargetType();
 
-		MethodIterator iterator = new MethodIterator();
+		StackIterator iterator = new StackIterator();
 		while (iterator.hasNext()) {
 			iterator.next(Generics.getClass(type));
 
@@ -176,6 +177,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * Get the evaluation result.
 	 * 
 	 * @return evaluation result
+	 * @throws WicketRuntimeException if this model is not bound to a target
 	 */
 	public T getObject() {
 		checkBound();
@@ -185,7 +187,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			result = ((IModel<T>) result).getObject();
 		}
 
-		MethodIterator invocations = new MethodIterator();
+		StackIterator invocations = new StackIterator();
 		while (result != null && invocations.hasNext()) {
 			invocations.next(result.getClass());
 
@@ -200,13 +202,14 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * 
 	 * @param evaluation
 	 *            result
+	 * @throws WicketRuntimeException if this model is not bound to a target
 	 */
 	public void setObject(T result) {
 		checkBound();
 
 		Object target = this.target;
 
-		MethodIterator invocations = new MethodIterator();
+		StackIterator invocations = new StackIterator();
 		if (!invocations.hasNext()) {
 			if (target instanceof IModel) {
 				((IModel<T>) target).setObject(result);
@@ -252,22 +255,37 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	}
 
 	/**
-	 * String represenation of the evaluation.
+	 * String representation of the evaluation.
+	 * 
+	 * @see #getPath()
+	 */
+	@Override
+	public String toString() {
+		if (target == null) {
+			return "";
+		}
+		
+		return getPath();
+	}
+	
+	/**
+	 * Get the invoked method path for the evaluation.
 	 * <p>
 	 * For evaluations accessing simple properties only, the representation
 	 * equals the property expression of a corresponding {@link PropertyModel}.
 	 * 
+	 * @return invoked method path
+	 * @throws WicketRuntimeException if this model is not bound
 	 * @see PropertyModel#getPropertyExpression()
 	 */
-	@Override
-	public String toString() {
+	public String getPath() {
 		checkBound();
 
 		StringBuilder string = new StringBuilder();
 
 		Type type = getTargetType();
 
-		MethodIterator invocations = new MethodIterator();
+		StackIterator invocations = new StackIterator();
 		while (invocations.hasNext()) {
 			invocations.next(Generics.getClass(type));
 
@@ -320,7 +338,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	/**
 	 * Iterator over the evaluation's methods.
 	 */
-	private class MethodIterator {
+	private class StackIterator {
 
 		/**
 		 * The current index in the stack.
@@ -455,18 +473,18 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	}
 
 	/**
-	 * An evaluation sequence.
+	 * A method evaluation sequence.
 	 */
 	@SuppressWarnings("rawtypes")
 	protected static class Evaluation implements Callback {
 
 		/**
-		 * The target of the evaluation.
+		 * The target of the evaluation, may be {@code null}.
 		 */
 		private final Object target;
 
 		/**
-		 * Each invoked method's identifier followed by its arguments.
+		 * Each invoked method followed by its arguments.
 		 */
 		private final List<Object> stack = new ArrayList<Object>();
 
@@ -516,9 +534,23 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			if (stack.size() == 0) {
 				return null;
 			} else if (stack.size() == 1) {
-				return stack.get(0);
+				return methodResolver.getId((Method) stack.get(0));
 			} else {
-				return stack.toArray();
+				Object[] array = new Object[stack.size()];
+				int index = 0;
+				while (index < array.length) {
+					Method method = (Method) stack.get(index);
+					
+					array[index] = methodResolver.getId(method);
+					
+					index += 1;
+					
+					for (int p = 0; p < method.getParameterTypes().length; p++) {
+						array[index] = stack.get(index);
+						index++;
+					}
+				}
+				return array;
 			}
 		}
 
@@ -537,7 +569,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 				return null;
 			}
 
-			stack.add(methodResolver.getId(method));
+			stack.add(method);
 
 			for (Object param : parameters) {
 				if (param == null) {
@@ -605,6 +637,29 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 			return clazz.cast(proxyFactory.createInstance(proxyClass, this));
 		}
+
+		/**
+		 * Path representation.
+		 * 
+		 * @return method path
+		 */
+		public String getPath() {
+			StringBuilder path = new StringBuilder();
+
+			int index = 0;
+			while (index < stack.size()) {
+				if (path.length() > 0) {
+					path.append(".");
+				}
+
+				Method method = (Method) stack.get(index);
+				path.append(methodResolver.getId(method));
+				
+				index += 1 + method.getParameterTypes().length;  
+			}
+
+			return path.toString();
+		}
 	}
 
 	/**
@@ -658,14 +713,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		return (T) evaluation.proxy();
 	}
 
-	/**
-	 * Create a model for the given evaluation.
-	 * 
-	 * @param result
-	 *            evaluation result
-	 * @return lazy model
-	 */
-	public static <R> LazyModel<R> model(R result) {
+	private static <R> Evaluation evaluation(R result) {
 		Evaluation evaluation = (Evaluation) proxyFactory.getCallback(result);
 		if (evaluation == null) {
 			evaluation = lastNonProxyableEvaluation.get();
@@ -674,7 +722,33 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 				throw new WicketRuntimeException("no evaluation result given");
 			}
 		}
+		return evaluation;
+	}
+
+	/**
+	 * Create a model for the given evaluation.
+	 * 
+	 * @param result
+	 *            evaluation result
+	 * @return lazy model
+	 */
+	public static <R> LazyModel<R> model(R result) {
+		Evaluation evaluation = evaluation(result);
+		
 		return new LazyModel<R>(evaluation.getTarget(), evaluation.getStack());
+	}
+
+	/**
+	 * Get the method invocation path for the given evaluation.
+	 * 
+	 * @param result
+	 *            evaluation result
+	 * @return method invocation path
+	 */
+	public static <R> String path(R result) {
+		Evaluation evaluation = evaluation(result);
+		
+		return evaluation.getPath();
 	}
 
 	/**

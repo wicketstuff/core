@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.wicketstuff.lazymodel.LazyModel.from;
+import static org.wicketstuff.lazymodel.LazyModel.path;
 import static org.wicketstuff.lazymodel.LazyModel.model;
 
 import java.io.Serializable;
@@ -87,7 +88,7 @@ public class LazyModelTest {
 		LazyModel<A> model = model(from(a));
 
 		assertEquals(A.class, model.getObjectType());
-		assertEquals("", model.toString());
+		assertEquals("", model.getPath());
 
 		assertEquals(a, model.getObject());
 	}
@@ -112,7 +113,7 @@ public class LazyModelTest {
 		LazyModel<A> model = model(from(a));
 
 		assertEquals(A.class, model.getObjectType());
-		assertEquals("", model.toString());
+		assertEquals("", model.getPath());
 
 		try {
 			model.setObject(new A());
@@ -131,7 +132,7 @@ public class LazyModelTest {
 		LazyModel<Integer> model = model(from(a).getInteger());
 
 		assertEquals(Integer.TYPE, model.getObjectType());
-		assertEquals("integer", model.toString());
+		assertEquals("integer", model.getPath());
 
 		assertEquals(Integer.valueOf(42), model.getObject());
 	}
@@ -143,7 +144,7 @@ public class LazyModelTest {
 		LazyModel<Integer> model = model(from(a).getInteger());
 
 		assertEquals(Integer.TYPE, model.getObjectType());
-		assertEquals("integer", model.toString());
+		assertEquals("integer", model.getPath());
 
 		model.setObject(Integer.valueOf(42));
 
@@ -159,7 +160,7 @@ public class LazyModelTest {
 		LazyModel<Boolean> model = model(from(a).isBool());
 
 		assertEquals(Boolean.TYPE, model.getObjectType());
-		assertEquals("bool", model.toString());
+		assertEquals("bool", model.getPath());
 
 		assertEquals(Boolean.TRUE, model.getObject());
 	}
@@ -171,7 +172,7 @@ public class LazyModelTest {
 		LazyModel<Boolean> model = model(from(a).isBool());
 
 		assertEquals(Boolean.TYPE, model.getObjectType());
-		assertEquals("bool", model.toString());
+		assertEquals("bool", model.getPath());
 
 		model.setObject(Boolean.TRUE);
 
@@ -185,7 +186,7 @@ public class LazyModelTest {
 		LazyModel<Integer> model = model(from(a).getInteger());
 
 		assertEquals(Integer.TYPE, model.getObjectType());
-		assertEquals("integer", model.toString());
+		assertEquals("integer", model.getPath());
 
 		try {
 			model.setObject(null);
@@ -204,7 +205,7 @@ public class LazyModelTest {
 		LazyModel<B> model = model(from(a).getB());
 
 		assertEquals(B.class, model.getObjectType());
-		assertEquals("b", model.toString());
+		assertEquals("b", model.getPath());
 
 		assertEquals(a.b, model.getObject());
 	}
@@ -216,7 +217,7 @@ public class LazyModelTest {
 		LazyModel<B> model = model(from(a).getB());
 
 		assertEquals(B.class, model.getObjectType());
-		assertEquals("b", model.toString());
+		assertEquals("b", model.getPath());
 
 		B b = new B();
 		model.setObject(b);
@@ -233,7 +234,7 @@ public class LazyModelTest {
 		LazyModel<I<C>> model = model(from(a).getI());
 
 		assertEquals(I.class, Generics.getClass(model.getObjectType()));
-		assertEquals("i", model.toString());
+		assertEquals("i", model.getPath());
 
 		assertEquals(a.b, model.getObject());
 	}
@@ -247,7 +248,7 @@ public class LazyModelTest {
 		LazyModel<List<C>> model = model(from(a).getI().getTs());
 
 		assertEquals(List.class, Generics.getClass(model.getObjectType()));
-		assertEquals("i.ts", model.toString());
+		assertEquals("i.ts", model.getPath());
 
 		assertEquals(a.b.cs, model.getObject());
 	}
@@ -260,7 +261,7 @@ public class LazyModelTest {
 		LazyModel<Object> model = model(from(b).getRs().get(0));
 
 		assertEquals(Object.class, Generics.getClass(model.getObjectClass()));
-		assertEquals("rs.get(i)", model.toString());
+		assertEquals("rs.get(i)", model.getPath());
 		
 		assertEquals(b.cs.get(0), model.getObject());
 	}
@@ -275,7 +276,7 @@ public class LazyModelTest {
 				.getStrings());
 
 		assertEquals(Map.class, Generics.getClass(model.getObjectType()));
-		assertEquals("b.strings", model.toString());
+		assertEquals("b.strings", model.getPath());
 
 		assertEquals(a.b.strings, model.getObject());
 	}
@@ -290,7 +291,7 @@ public class LazyModelTest {
 				.getStrings());
 
 		assertEquals(Map.class, Generics.getClass(model.getObjectType()));
-		assertEquals("b.strings", model.toString());
+		assertEquals("b.strings", model.getPath());
 
 		Map<String, String> strings = new HashMap<String, String>();
 		model.setObject(strings);
@@ -304,7 +305,7 @@ public class LazyModelTest {
 		LazyModel<Character> model = model(from(a).getB().getCharacter());
 
 		assertEquals(Character.TYPE, model.getObjectType());
-		assertEquals("b.character", model.toString());
+		assertEquals("b.character", model.getPath());
 
 		assertEquals(null, model.getObject());
 	}
@@ -316,7 +317,7 @@ public class LazyModelTest {
 		LazyModel<Character> model = model(from(a).getB().getCharacter());
 
 		assertEquals(Character.TYPE, model.getObjectType());
-		assertEquals("b.character", model.toString());
+		assertEquals("b.character", model.getPath());
 
 		try {
 			model.setObject('c');
@@ -338,7 +339,7 @@ public class LazyModelTest {
 				.get("key"));
 
 		assertEquals(String.class, model.getObjectType());
-		assertEquals("b.strings.get(O)", model.toString());
+		assertEquals("b.strings.get(O)", model.getPath());
 
 		assertEquals("value", model.getObject());
 	}
@@ -353,7 +354,7 @@ public class LazyModelTest {
 				.get("key"));
 
 		assertEquals(String.class, model.getObjectType());
-		assertEquals("b.strings.get(O)", model.toString());
+		assertEquals("b.strings.get(O)", model.getPath());
 
 		model.setObject("value");
 
@@ -367,7 +368,7 @@ public class LazyModelTest {
 		LazyModel<List<C>> model = model(from(a).getB().getCs());
 
 		assertEquals(List.class, Generics.getClass(model.getObjectType()));
-		assertEquals("b.cs", model.toString());
+		assertEquals("b.cs", model.getPath());
 
 		assertEquals(null, model.getObject());
 	}
@@ -389,7 +390,7 @@ public class LazyModelTest {
 		LazyModel<C> model = model(from(target).get(0));
 
 		assertEquals(C.class, model.getObjectType());
-		assertEquals("get(i)", model.toString());
+		assertEquals("get(i)", model.getPath());
 
 		assertEquals(c, model.getObject());
 	}
@@ -409,7 +410,7 @@ public class LazyModelTest {
 		LazyModel<C> model = model(from(target).get(0));
 
 		assertEquals(C.class, model.getObjectType());
-		assertEquals("get(i)", model.toString());
+		assertEquals("get(i)", model.getPath());
 
 		C c = new C();
 		model.setObject(c);
@@ -425,7 +426,7 @@ public class LazyModelTest {
 		LazyModel<List<C>> model = model(from(a).getB().getCs());
 
 		assertEquals(List.class, Generics.getClass(model.getObjectType()));
-		assertEquals("b.cs", model.toString());
+		assertEquals("b.cs", model.getPath());
 
 		assertEquals(a.b.cs, model.getObject());
 	}
@@ -438,7 +439,7 @@ public class LazyModelTest {
 		LazyModel<List<C>> model = model(from(a).getB().getCs());
 
 		assertEquals(List.class, Generics.getClass(model.getObjectType()));
-		assertEquals("b.cs", model.toString());
+		assertEquals("b.cs", model.getPath());
 
 		List<C> cs = new ArrayList<C>();
 		model.setObject(cs);
@@ -459,7 +460,7 @@ public class LazyModelTest {
 		LazyModel<C> model = model(from(a).getB().getC(0));
 
 		assertEquals(C.class, model.getObjectType());
-		assertEquals("b.getC(i)", model.toString());
+		assertEquals("b.getC(i)", model.getPath());
 
 		assertEquals(c, model.getObject());
 	}
@@ -477,7 +478,7 @@ public class LazyModelTest {
 		LazyModel<C> model = model(from(a).getB().getCs().get(0));
 
 		assertEquals(C.class, model.getObjectType());
-		assertEquals("b.cs.get(i)", model.toString());
+		assertEquals("b.cs.get(i)", model.getPath());
 
 		assertEquals(c, model.getObject());
 	}
@@ -495,7 +496,7 @@ public class LazyModelTest {
 		LazyModel<String> model = model(from(a).getB().getC(0).getString());
 
 		assertEquals(String.class, model.getObjectType());
-		assertEquals("b.getC(i).string", model.toString());
+		assertEquals("b.getC(i).string", model.getPath());
 
 		assertEquals("string", model.getObject());
 	}
@@ -511,7 +512,7 @@ public class LazyModelTest {
 		LazyModel<String> model = model(from(a).getB().getC(0).getString());
 
 		assertEquals(String.class, model.getObjectType());
-		assertEquals("b.getC(i).string", model.toString());
+		assertEquals("b.getC(i).string", model.getPath());
 
 		model.setObject("string");
 
@@ -569,7 +570,7 @@ public class LazyModelTest {
 		LazyModel<A> model = model(from(target));
 
 		assertEquals(A.class, model.getObjectType());
-		assertEquals("", model.toString());
+		assertEquals("", model.getPath());
 
 		A a = new A();
 
@@ -591,7 +592,7 @@ public class LazyModelTest {
 		LazyModel<C> model = model(from(target).getC(0));
 
 		assertEquals(C.class, model.getObjectType());
-		assertEquals("getC(i)", model.toString());
+		assertEquals("getC(i)", model.getPath());
 
 		assertEquals(a.b.cs.get(0), model.getObject());
 	}
@@ -628,7 +629,7 @@ public class LazyModelTest {
 		LazyModel<C> model = model(from(b).getC(from(a).getInteger()));
 
 		assertEquals(C.class, model.getObjectType());
-		assertEquals("getC(i)", model.toString());
+		assertEquals("getC(i)", model.getPath());
 
 		assertEquals(c, model.getObject());
 	}
@@ -645,7 +646,7 @@ public class LazyModelTest {
 		LazyModel<C> model = model(from(b).getC(from(a).getInteger()));
 
 		assertEquals(C.class, model.getObjectType());
-		assertEquals("getC(i)", model.toString());
+		assertEquals("getC(i)", model.getPath());
 
 		model.setObject(c);
 
@@ -670,7 +671,7 @@ public class LazyModelTest {
 		LazyModel<C> model = model(from(target).getB().getC(0));
 
 		assertEquals(C.class, model.getObjectType());
-		assertEquals("b.getC(i)", model.toString());
+		assertEquals("b.getC(i)", model.getPath());
 
 		assertEquals(a.b.cs.get(0), model.getObject());
 	}
@@ -683,7 +684,7 @@ public class LazyModelTest {
 		LazyModel<F> model = model(from(a).getF());
 
 		assertEquals(F.class, model.getObjectType());
-		assertEquals("f", model.toString());
+		assertEquals("f", model.getPath());
 
 		assertEquals(a.f, model.getObject());
 	}
@@ -737,6 +738,11 @@ public class LazyModelTest {
 		assertEquals(b, a.b);
 	}
 
+	@Test
+	public void getPath() {
+		assertEquals("b.cs.size()", path(from(A.class).getB().getCs().size()));
+	}
+	
 	public static class A implements Serializable {
 
 		B b;

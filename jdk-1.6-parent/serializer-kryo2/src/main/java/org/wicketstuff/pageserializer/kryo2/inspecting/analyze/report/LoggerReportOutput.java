@@ -1,4 +1,8 @@
-/*
+/**
+ * Copyright (C)
+ * 	2008 Jeremy Thomerson <jeremy@thomersonfamily.com>
+ * 	2012 Michael Mosmann <michael@mosmann.de>
+ *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -14,22 +18,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wicketstuff.event;
+package org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report;
 
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+public class LoggerReportOutput implements IReportOutput {
 
-/**
- * Annotation used to tag methods that should be called by {@link AnnotationEventDispatcher} to
- * handle the events. The methods should be public and take exactly one parameter. The method will
- * be called only if the event payload type matches the method's parameter type.
- */
-@Target(METHOD)
-@Retention(RUNTIME)
-public @interface OnEvent
-{
-	// marker annotation
+	private final static Logger LOG = LoggerFactory.getLogger(LoggerReportOutput.class);
+
+	@Override
+	public void write(ISerializedObjectTree tree, IReportRenderer renderer) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(renderer.render(tree));
+		}
+	}
+
+
 }
