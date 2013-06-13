@@ -119,16 +119,7 @@ public class InPlaceEditComponent extends AbstractTextComponent
 	public final void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag)
 	{
 		replaceComponentTagBody(markupStream, openTag, getValue());
-	}
-
-	/**
-	 * @return The name of the (no-argument) JavaScript that will replace this component with a
-	 *         TinyMce editor.
-	 */
-	public final String getStartEditorScriptName()
-	{
-		return inPlaceEditBehavior.getStartEditorScriptName();
-	}
+	}	
 
 	public InPlaceSaveBehavior getInPlaceSaveBehavior()
 	{

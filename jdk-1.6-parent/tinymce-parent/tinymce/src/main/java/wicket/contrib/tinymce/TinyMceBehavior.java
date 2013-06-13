@@ -26,6 +26,7 @@ import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.IAjaxRegionMarkupIdProvider;
 import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
@@ -93,9 +94,24 @@ public class TinyMceBehavior extends Behavior implements IAjaxRegionMarkupIdProv
 
 		String renderOnDomReady = getAddTinyMceSettingsScript(Mode.exact,
 				Collections.singletonList(component));
-		response.render(OnDomReadyHeaderItem.forScript(renderOnDomReady));
+		response.render(wrapTinyMceSettingsScript(renderOnDomReady, component));
 	}
-
+	
+	/**
+	 * Wrap the initialization script for TinyMCE into a HeaderItem. In this way we can control
+	 * when and how the script should be executed.
+	 * 
+	 * @param settingScript
+	 * 			the actual initialization script for TinyMCE
+	 * @param component
+	 * 			the target component that must be decorated with TinyMCE 
+	 * @return
+	 * 			the HeaderItem containing {@paramref settingScript}
+	 * 
+	 */
+	protected HeaderItem wrapTinyMceSettingsScript(String settingScript, Component component){
+		return OnDomReadyHeaderItem.forScript(settingScript);
+	}
 
 	private boolean mayRenderJavascriptDirect()
 	{
