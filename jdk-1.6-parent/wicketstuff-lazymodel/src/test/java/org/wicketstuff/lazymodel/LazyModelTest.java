@@ -33,6 +33,7 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.IObjectClassAwareModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.junit.Test;
 import org.wicketstuff.lazymodel.reflect.Generics;
@@ -690,7 +691,7 @@ public class LazyModelTest {
 	}
 
 	@Test
-	public void getStrinFromFinalfails() {
+	public void getStringFromFinalfails() {
 		final A a = new A();
 		a.f = new F();
 		a.f.string = "string";
@@ -716,26 +717,58 @@ public class LazyModelTest {
 	}
 
 	@Test
-	public void bindAndGet() {
-		LazyModel<B> model = model(from(A.class).getB());
-
+	public void bindToModel() {
 		final A a = new A();
 		a.b = new B();
 
-		assertEquals(a.b, model.bind(a).getObject());
+		LazyModel<B> model = model(from(A.class).getB()).bind(new AbstractReadOnlyModel<A>() {
+			@Override
+			public A getObject() {
+				return a;
+			}
+		});
+
+		assertEquals(B.class, model.getObjectType());	
+		assertEquals("b", model.getPath());
+		assertEquals(a.b, model.getObject());
 	}
 
 	@Test
-	public void bindAndSet() {
-		LazyModel<B> model = model(from(A.class).getB());
-
+	public void bindToTypeErasedModel() {
 		final A a = new A();
+		a.b = new B();
 
-		B b = new B();
+		LazyModel<B> model = model(from(A.class).getB()).bind(new Model<A>(a));
 
-		model.bind(a).setObject(b);
+		try {
+			assertEquals(B.class, model.getObjectType());
+			fail();
+		} catch (Exception typeErased) {
+		}
 
-		assertEquals(b, a.b);
+		// ... but class can be derived from model object
+		assertEquals(B.class, model.getObjectClass());
+		
+		try {
+			assertEquals("b", model.getPath());
+			fail();
+		} catch (Exception typeErased) {
+		}
+		
+		assertEquals(a.b, model.getObject());
+	}
+
+	@Test
+	public void bindToObject() {
+		final A a = new A();
+		a.b = new B();
+
+		LazyModel<B> model = model(from(A.class).getB()).bind(a);
+
+		assertEquals(B.class, model.getObjectType());
+		assertEquals("b", model.getPath());
+
+		assertEquals(a.b, model.getObject());
 	}
 
 	@Test
