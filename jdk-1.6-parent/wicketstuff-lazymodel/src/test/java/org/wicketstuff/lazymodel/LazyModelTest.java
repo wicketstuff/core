@@ -602,19 +602,16 @@ public class LazyModelTest {
 	 * A {@link IObjectClassAwareModel} doesn't provide generic information,
 	 * thus the type of the model result is {@code List<Object>} only.
 	 */
-	@Test
+	@Test(expected=ClassCastException.class)
 	public void getEntryFromGenericListInObjectClassAwareModelFails() {
 		B b = new B();
 		b.cs.add(new C());
 
 		PropertyModel<List<C>> target = new PropertyModel<List<C>>(b, "cs");
 
-		try {
-			model(from(target).get(0).getString());
-			
-			fail();
-		} catch (ClassCastException expected) {
-		}
+		model(from(target).get(0).getString());
+		
+		fail();
 	}
 
 	@Test
@@ -774,6 +771,19 @@ public class LazyModelTest {
 	@Test
 	public void getPath() {
 		assertEquals("b.cs.size()", path(from(A.class).getB().getCs().size()));
+	}
+	
+	@Test
+	public void bindUnboundLazyModelToNonIObjectClassAwareModel() {
+		LazyModel<B> model = model(from(A.class).getB());
+		
+		final A a = new A();
+		
+		B b = new B();
+		
+		model.bind(Model.of(b));
+		
+		assertEquals(B.class, ((IObjectClassAwareModel<B>) model.bind(Model.of(a))).getObjectClass());
 	}
 	
 	public static class A implements Serializable {

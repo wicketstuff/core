@@ -96,13 +96,19 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	protected final Object target;
 
 	/**
+	 * The target type.
+	 */
+	protected final Type targetType;
+
+	/**
 	 * Each invoked method's identifier followed by its arguments.
 	 */
 	protected final Object stack;
 
-	LazyModel(Object target, Object stack) {
+	LazyModel(Object target, Object stack, Type targetType) {
 		this.target = target;
 		this.stack = stack;
+		this.targetType = targetType;
 	}
 
 	/**
@@ -261,7 +267,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * @return bound model
 	 */
 	public LazyModel<T> bind(Object target) {
-		return new LazyModel<T>(target, stack);
+		return new LazyModel<T>(target, stack, targetType);
 	}
 
 	/**
@@ -316,7 +322,9 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	private Type getTargetType() {
 		Type type;
 
-		if (target instanceof IObjectTypeAwareModel) {
+		if (targetType != null) {
+			type = targetType;
+		} else if (target instanceof IObjectTypeAwareModel) {
 			type = ((IObjectTypeAwareModel<?>) target).getObjectType();
 		} else if (target instanceof IObjectClassAwareModel) {
 			type = ((IObjectClassAwareModel<?>) target).getObjectClass();
@@ -503,10 +511,16 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		 */
 		private Type type;
 
+		/**
+		 * The root target type.
+		 */
+		private final Type targetType;
+
 		protected Evaluation(Object target) {
 			this.target = target;
 
 			type = target.getClass();
+			targetType = type;
 		}
 
 		protected Evaluation(IModel target) {
@@ -528,12 +542,14 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 					throw new WicketRuntimeException(ex);
 				}
 			}
+			targetType = type;
 		}
 
 		protected Evaluation(Type type) {
 			this.target = null;
 
 			this.type = type;
+			this.targetType = type;
 		}
 
 		public Object getTarget() {
@@ -588,7 +604,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 					if (evaluation != null) {
 						lastNonProxyableEvaluation.remove();
 						stack.add(new LazyModel(evaluation.getTarget(),
-								evaluation.getStack()));
+								evaluation.getStack(), targetType));
 						continue;
 					}
 				}
@@ -599,7 +615,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 							.getCallback(param);
 					if (evaluation != null) {
 						stack.add(new LazyModel(evaluation.getTarget(),
-								evaluation.getStack()));
+								evaluation.getStack(), targetType));
 						continue;
 					}
 				}
@@ -745,7 +761,8 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	public static <R> LazyModel<R> model(R result) {
 		Evaluation evaluation = evaluation(result);
 		
-		return new LazyModel<R>(evaluation.getTarget(), evaluation.getStack());
+		return new LazyModel<R>(evaluation.getTarget(), evaluation.getStack(),
+		    evaluation.targetType);
 	}
 
 	/**
