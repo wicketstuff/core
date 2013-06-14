@@ -124,10 +124,17 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		try {
 			return (Class<T>) Generics.getClass(getObjectType());
 		} catch (Exception ex) {
+			// the object type might not be available if the target's generic
+			// type was erased ...
 		}
 
 		try {
-			return (Class<T>) getObject().getClass();
+			// ... so use the object's type if available
+			T object = getObject();
+			
+			if (object != null) {
+				return (Class<T>) object.getClass();
+			}
 		} catch (Exception ex) {
 		}
 
@@ -138,7 +145,8 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * Get the evaluation result's type.
 	 * 
 	 * @return result type
-	 * @throws WicketRuntimeException if this model is not bound to a target
+	 * @throws WicketRuntimeException
+	 *             if this model is not bound to a target
 	 */
 	public Type getObjectType() {
 		checkBound();
@@ -153,7 +161,8 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			type = iterator.getType();
 			if (type instanceof TypeVariable) {
 				if (previousType instanceof ParameterizedType) {
-					type = Generics.variableType((ParameterizedType) previousType,
+					type = Generics.variableType(
+							(ParameterizedType) previousType,
 							(TypeVariable<?>) type);
 				} else {
 					type = Object.class;
@@ -187,7 +196,8 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * Get the evaluation result.
 	 * 
 	 * @return evaluation result
-	 * @throws WicketRuntimeException if this model is not bound to a target
+	 * @throws WicketRuntimeException
+	 *             if this model is not bound to a target
 	 */
 	public T getObject() {
 		checkBound();
@@ -212,7 +222,8 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * 
 	 * @param evaluation
 	 *            result
-	 * @throws WicketRuntimeException if this model is not bound to a target
+	 * @throws WicketRuntimeException
+	 *             if this model is not bound to a target
 	 */
 	public void setObject(T result) {
 		checkBound();
@@ -274,10 +285,10 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		if (target == null) {
 			return "";
 		}
-		
+
 		return getPath();
 	}
-	
+
 	/**
 	 * Get the invoked method path for the evaluation.
 	 * <p>
@@ -285,7 +296,8 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * equals the property expression of a corresponding {@link PropertyModel}.
 	 * 
 	 * @return invoked method path
-	 * @throws WicketRuntimeException if this model is not bound
+	 * @throws WicketRuntimeException
+	 *             if this model is not bound
 	 * @see PropertyModel#getPropertyExpression()
 	 */
 	public String getPath() {
@@ -295,16 +307,16 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 		Type type = getTargetType();
 
-		StackIterator invocations = new StackIterator();
-		while (invocations.hasNext()) {
-			invocations.next(Generics.getClass(type));
+		StackIterator iterator = new StackIterator();
+		while (iterator.hasNext()) {
+			iterator.next(Generics.getClass(type));
 
 			if (string.length() > 0) {
 				string.append(".");
 			}
-			string.append(invocations.getId().toString());
+			string.append(iterator.getId().toString());
 
-			type = invocations.getType();
+			type = iterator.getType();
 		}
 
 		return string.toString();
@@ -314,18 +326,24 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 * The type of the target.
 	 */
 	private Type getTargetType() {
-		Type type;
+		Type type = null;
 
-		if (target instanceof IObjectTypeAwareModel) {
-			type = ((IObjectTypeAwareModel<?>) target).getObjectType();
-		} else if (target instanceof IObjectClassAwareModel) {
-			type = ((IObjectClassAwareModel<?>) target).getObjectClass();
-		} else if (target instanceof IModel) {
-			try {
-				type = target.getClass().getMethod("getObject")
-						.getGenericReturnType();
-			} catch (Exception ex) {
-				throw new WicketRuntimeException(ex);
+		if (target instanceof IModel) {
+			if (target instanceof IObjectTypeAwareModel) {
+				type = ((IObjectTypeAwareModel<?>) target).getObjectType();
+			}
+
+			if (type == null && target instanceof IObjectClassAwareModel) {
+				type = ((IObjectClassAwareModel<?>) target).getObjectClass();
+			}
+
+			if (type == null) {
+				try {
+					type = Generics.getReturnType(target.getClass().getMethod(
+							"getObject"));
+				} catch (Exception ex) {
+					throw new WicketRuntimeException(ex);
+				}
 			}
 		} else {
 			type = target.getClass();
@@ -522,8 +540,8 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 			if (type == null) {
 				try {
-					type = target.getClass().getMethod("getObject")
-							.getGenericReturnType();
+					type = Generics.getReturnType(target.getClass().getMethod(
+							"getObject"));
 				} catch (Exception ex) {
 					throw new WicketRuntimeException(ex);
 				}
@@ -550,11 +568,11 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 				int index = 0;
 				while (index < array.length) {
 					Method method = (Method) stack.get(index);
-					
+
 					array[index] = methodResolver.getId(method);
-					
+
 					index += 1;
-					
+
 					for (int p = 0; p < method.getParameterTypes().length; p++) {
 						array[index] = stack.get(index);
 						index++;
@@ -664,8 +682,8 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 				Method method = (Method) stack.get(index);
 				path.append(methodResolver.getId(method));
-				
-				index += 1 + method.getParameterTypes().length;  
+
+				index += 1 + method.getParameterTypes().length;
 			}
 
 			return path.toString();
@@ -744,7 +762,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 */
 	public static <R> LazyModel<R> model(R result) {
 		Evaluation evaluation = evaluation(result);
-		
+
 		return new LazyModel<R>(evaluation.getTarget(), evaluation.getStack());
 	}
 
@@ -757,7 +775,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 */
 	public static <R> String path(R result) {
 		Evaluation evaluation = evaluation(result);
-		
+
 		return evaluation.getPath();
 	}
 

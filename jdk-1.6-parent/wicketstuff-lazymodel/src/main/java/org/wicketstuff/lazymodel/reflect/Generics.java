@@ -16,6 +16,7 @@
  */
 package org.wicketstuff.lazymodel.reflect;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
@@ -62,7 +63,7 @@ public final class Generics {
 	 * Get the {@link Class} for a generic type.
 	 * 
 	 * @param type
-	 *            type a {@link Class} or {@link ParameterizedType}
+	 *            {@link Class} or {@link ParameterizedType}
 	 * @return class class
 	 * @throws IllegalArgumentException
 	 *             if type doesn't represent a class
@@ -75,9 +76,27 @@ public final class Generics {
 		} else if (type instanceof ParameterizedType) {
 			clazz = (Class<?>) ((ParameterizedType) type).getRawType();
 		} else {
-			throw new IllegalArgumentException(String.format("%s is not a class or parameterizedType", type));
+			throw new IllegalArgumentException(String.format(
+					"%s is not a class or parameterizedType", type));
 		}
 
 		return clazz;
+	}
+
+	/**
+	 * Get the return type of the given method.
+	 * 
+	 * @param method
+	 *            method
+	 * @return {@link Class} or {@link ParameterizedType}
+	 */
+	public static Type getReturnType(Method method) throws Exception {
+		Type type = method.getGenericReturnType();
+
+		if (type instanceof TypeVariable) {
+			type = method.getReturnType();
+		}
+
+		return type;
 	}
 }
