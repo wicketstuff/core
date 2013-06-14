@@ -117,11 +117,21 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	/**
 	 * Get the evaluation result's class.
 	 * 
-	 * @return result class
+	 * @return result class or {@code null} if it cannot be determined
 	 */
 	@Override
 	public Class<T> getObjectClass() {
-		return (Class<T>) Generics.getClass(getObjectType());
+		try {
+			return (Class<T>) Generics.getClass(getObjectType());
+		} catch (Exception ex) {
+		}
+
+		try {
+			return (Class<T>) getObject().getClass();
+		} catch (Exception ex) {
+		}
+
+		return null;
 	}
 
 	/**
