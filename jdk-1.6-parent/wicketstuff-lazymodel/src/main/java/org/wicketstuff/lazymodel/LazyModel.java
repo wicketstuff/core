@@ -124,7 +124,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		try {
 			return (Class<T>) Generics.getClass(getObjectType());
 		} catch (Exception ex) {
-			// the object type might not be available if the target's generic
+			// the object type might not be available when the target's generic
 			// type was erased ...
 		}
 
@@ -339,11 +339,22 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 			if (type == null) {
 				try {
-					type = Generics.getReturnType(target.getClass().getMethod(
-							"getObject"));
+					type = target.getClass().getMethod(
+							"getObject").getGenericReturnType();
+
+					if (type instanceof TypeVariable) {
+						type = null;
+					}
 				} catch (Exception ex) {
-					throw new WicketRuntimeException(ex);
 				}
+			}
+			
+			if (type == null) {
+				Object object = ((IModel) target).getObject();
+				if (object == null) {
+					throw new WicketRuntimeException("cannot detect target type");
+				}
+				type = object.getClass();
 			}
 		} else {
 			type = target.getClass();
@@ -540,10 +551,14 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 			if (type == null) {
 				try {
-					type = Generics.getReturnType(target.getClass().getMethod(
-							"getObject"));
+					type = target.getClass().getMethod(
+							"getObject").getGenericReturnType();
 				} catch (Exception ex) {
 					throw new WicketRuntimeException(ex);
+				}
+				
+				if (type instanceof TypeVariable<?>) {
+					throw new WicketRuntimeException("cannot detect target type");
 				}
 			}
 		}
@@ -710,16 +725,16 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	/**
 	 * Start a lazy evaluation.
 	 * 
-	 * @param model
+	 * @param target
 	 *            model holding the target object
 	 * @return a result proxy for further evaluation
 	 */
-	public static <T> T from(IModel<T> model) {
-		if (model == null) {
+	public static <T> T from(IModel<T> target) {
+		if (target == null) {
 			throw new WicketRuntimeException("target must not be null");
 		}
 
-		Evaluation evaluation = new Evaluation(model);
+		Evaluation evaluation = new Evaluation(target);
 
 		return (T) evaluation.proxy();
 	}
@@ -727,16 +742,16 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	/**
 	 * Start a lazy evaluation.
 	 * 
-	 * @param clazz
+	 * @param targetType
 	 *            class of target object
 	 * @return a result proxy for further evaluation
 	 */
-	public static <T> T from(Class<T> clazz) {
-		if (clazz == null) {
-			throw new WicketRuntimeException("target must not be null");
+	public static <T> T from(Class<T> targetType) {
+		if (targetType == null) {
+			throw new WicketRuntimeException("target type must not be null");
 		}
 
-		Evaluation evaluation = new Evaluation(clazz);
+		Evaluation evaluation = new Evaluation(targetType);
 
 		return (T) evaluation.proxy();
 	}

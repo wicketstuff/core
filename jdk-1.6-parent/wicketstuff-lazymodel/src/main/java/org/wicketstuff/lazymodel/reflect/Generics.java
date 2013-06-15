@@ -16,7 +16,6 @@
  */
 package org.wicketstuff.lazymodel.reflect;
 
-import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
@@ -81,22 +80,5 @@ public final class Generics {
 		}
 
 		return clazz;
-	}
-
-	/**
-	 * Get the return type of the given method.
-	 * 
-	 * @param method
-	 *            method
-	 * @return {@link Class} or {@link ParameterizedType}
-	 */
-	public static Type getReturnType(Method method) throws Exception {
-		Type type = method.getGenericReturnType();
-
-		if (type instanceof TypeVariable) {
-			type = method.getReturnType();
-		}
-
-		return type;
 	}
 }
