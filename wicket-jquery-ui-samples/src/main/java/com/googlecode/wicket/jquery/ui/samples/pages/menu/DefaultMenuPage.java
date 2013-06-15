@@ -17,7 +17,7 @@ public class DefaultMenuPage extends AbstractMenuPage
 {
 	private static final long serialVersionUID = 1L;
 
-	static List<IMenuItem> newMenuList()
+	static List<IMenuItem> newMenuItemList()
 	{
 		List<IMenuItem> list = new ArrayList<IMenuItem>();
 
@@ -67,7 +67,7 @@ public class DefaultMenuPage extends AbstractMenuPage
 		this.add(feedback.setOutputMarkupId(true));
 
 		// Menu //
-		this.add(new Menu("menu", DefaultMenuPage.newMenuList()) {
+		this.add(new Menu("menu", DefaultMenuPage.newMenuItemList()) {
 
 			private static final long serialVersionUID = 1L;
 

@@ -1,3 +1,5 @@
+<h4 style="color: red;">Warning: on development stage, implementation is subject to change</h4>
+
 <h4>Licensing</h4>
 Kendo UI is licensed under GPLv3, which is compatible with Apache License 2.0<br/>
 <br/>
@@ -9,4 +11,4 @@ More info here: <a href="http://www.gnu.org/licenses/quick-guide-gplv3.html">htt
 
 <br/>
 <h4>Since</h4>
-wicket-kendo-ui-6.9.0
+wicket-kendo-ui-6.8.2-SNAPSHOT

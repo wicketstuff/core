@@ -1,7 +1,4 @@
 <code>ContextMenu</code> is triggered when a <code>Component</code> holding a <code>ContextMenuBehavior</code> fires the 'contextmenu' event.
 
-<h4>Known limitation</h4>
-The <code>Component</code> cannot be a 'clickable' element (such as a <code>link</code> for instance).
-
 <h4>Since</h4>
 wicket-jquery-ui-6.8.2-SNAPSHOT

@@ -30,6 +30,7 @@ import com.googlecode.wicket.jquery.core.Options;
  *
  * @author Sebastien Briquet - sebfz1
  */
+//TODO: remove -SNAPSHOT (and/or change version) from wepapp text
 public class ContextMenu extends Menu
 {
 	private static final long serialVersionUID = 1L;
@@ -126,7 +127,7 @@ public class ContextMenu extends Menu
 
 				StringBuilder builder = new StringBuilder();
 				builder.append("jQuery(function() {\n");
-				builder.append("jQuery(document).click(function(e) { if (!jQuery(e.target).is('.").append(ContextMenuBehavior.COMPONENT_CSS).append("')) { jQuery('").append(selector).append("').hide(); } } );\n"); // hide on click
+				builder.append("jQuery(document).click(function(e) { if (!(jQuery(e.target).is('.").append(ContextMenuBehavior.COMPONENT_CSS).append("') && e.which == 3)) { jQuery('").append(selector).append("').hide(); } } );\n"); // hide on click (assume context-menu click is the right-click)
 				builder.append("jQuery(document).keyup(function(e) { if (e.which == 27) { jQuery('").append(selector).append("').hide(); } });\n"); // hide on escape
 				builder.append("});");
 

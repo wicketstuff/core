@@ -21,7 +21,7 @@ public class ContextMenuPage extends AbstractMenuPage
 		this.add(feedback.setOutputMarkupId(true));
 
 		// Menu //
-		final ContextMenu menu = new ContextMenu("menu", DefaultMenuPage.newMenuList()) {
+		final ContextMenu menu = new ContextMenu("menu", DefaultMenuPage.newMenuItemList()) {
 
 			private static final long serialVersionUID = 1L;
 
