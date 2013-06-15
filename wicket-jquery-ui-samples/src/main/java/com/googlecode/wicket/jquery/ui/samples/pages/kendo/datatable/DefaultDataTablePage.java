@@ -20,8 +20,8 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 	public DefaultDataTablePage()
 	{
 		// DataTable //
-		IDataProvider<Product> provider = this.newDataProvider();
-		List<IColumn<Product>> columns = this.newColumnList();
+		IDataProvider<Product> provider = newDataProvider();
+		List<IColumn<Product>> columns = newColumnList();
 
 		Options options = new Options();
 		options.set("height", 430);
@@ -32,12 +32,12 @@ public class DefaultDataTablePage extends AbstractDataTablePage
 	}
 
 
-	private IDataProvider<Product> newDataProvider()
+	private static IDataProvider<Product> newDataProvider()
 	{
 		return new ListDataProvider<Product>(ProductsDAO.all());
 	}
 
-	private List<IColumn<Product>> newColumnList()
+	private static List<IColumn<Product>> newColumnList()
 	{
 		List<IColumn<Product>> columns = new ArrayList<IColumn<Product>>();
 

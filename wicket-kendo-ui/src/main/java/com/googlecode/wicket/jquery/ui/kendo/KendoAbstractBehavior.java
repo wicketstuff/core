@@ -34,6 +34,22 @@ public class KendoAbstractBehavior extends JQueryBehavior
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Gets the {@link ICalendarLibrarySettings}
+	 *
+	 * @return null if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link ICalendarLibrarySettings}
+	 */
+	private static IKendoUILibrarySettings getLibrarySettings()
+	{
+		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IKendoUILibrarySettings))
+		{
+			return (IKendoUILibrarySettings) Application.get().getJavaScriptLibrarySettings();
+		}
+
+		return null;
+	}
+
+
+	/**
 	 * Constructor
 	 * @param selector the html selector (ie: "#myId")
 	 * @param method the kendo-ui method
@@ -61,7 +77,7 @@ public class KendoAbstractBehavior extends JQueryBehavior
 	 */
 	private void initReferences()
 	{
-		IKendoUILibrarySettings settings = this.getLibrarySettings();
+		IKendoUILibrarySettings settings = getLibrarySettings();
 
 		// kendo.common.min.css //
 		if (settings != null && settings.getKendoUICommonStyleSheetReference() != null)
@@ -85,20 +101,4 @@ public class KendoAbstractBehavior extends JQueryBehavior
 			this.add(KendoUIJavaScriptResourceReference.get());
 		}
 	}
-
-	/**
-	 * Gets the {@link ICalendarLibrarySettings}
-	 *
-	 * @return null if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link ICalendarLibrarySettings}
-	 */
-	private IKendoUILibrarySettings getLibrarySettings()
-	{
-		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IKendoUILibrarySettings))
-		{
-			return (IKendoUILibrarySettings) Application.get().getJavaScriptLibrarySettings();
-		}
-
-		return null;
-	}
-
 }

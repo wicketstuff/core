@@ -55,6 +55,7 @@ public class Button extends org.apache.wicket.markup.html.form.Button implements
 
 	/**
 	 * Gets the icon being displayed in the button
+	 * @return the icon class
 	 */
 	protected String getIcon()
 	{

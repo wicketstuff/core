@@ -159,7 +159,9 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 	 * Gets a new ButtonAjaxBehavior that will be called by the corresponding dialog's button.<br/>
 	 * This method mays be overridden internally to provide another behavior;
 	 *
+	 * @param source the {@link IJQueryAjaxAware} source
 	 * @param button the button that is passed to the behavior so it can be retrieved via the {@link ClickEvent}
+	 * @return the {@link ButtonAjaxBehavior}
 	 */
 	protected abstract ButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, DialogButton button);
 

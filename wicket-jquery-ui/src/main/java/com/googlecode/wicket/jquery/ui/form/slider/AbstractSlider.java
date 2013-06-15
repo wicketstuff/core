@@ -161,6 +161,7 @@ public abstract class AbstractSlider<T> extends FormComponentPanel<T> implements
 	/**
 	 * Gets a new {@link Fragment} containing the input<br/>
 	 * Overridden methods should provide a {@link Fragment} containing input(s) when no input(s) has been specified in implementation constructors.
+	 * @param id the markup-id
 	 * @return the empty-fragment by default
 	 */
 	protected Fragment newInputFragment(String id)

@@ -62,11 +62,17 @@ public class MySlider extends FormComponentPanel<RangeValue>
 	}
 
 	// Events //
+	/**
+	 * @param target
+	 */
 	protected void onValueChanged(AjaxRequestTarget target)
 	{
 
 	}
 
+	/**
+	 * @param target
+	 */
 	protected void onError(AjaxRequestTarget target)
 	{
 

@@ -20,7 +20,7 @@ public class DemoCalendarDAO
 
 		return instance;
 	}
-	
+
 	public static boolean isNew(DemoCalendarEvent event)
 	{
 		return (event != null && event.getId() == EMPTY_ID);
@@ -52,7 +52,7 @@ public class DemoCalendarDAO
 	public static List<DemoCalendarEvent> getEvents(Date start, Date end)
 	{
 		List<DemoCalendarEvent> events = new ArrayList<DemoCalendarEvent>();
-		
+
 		DemoCalendarDAO dao = get();
 
 		for (DemoCalendarEvent event : dao.list)
@@ -79,7 +79,7 @@ public class DemoCalendarDAO
 		}
 	}
 
-	
+
 	private final List<DemoCalendarEvent> list;
 	private int id = 0;
 
@@ -92,7 +92,7 @@ public class DemoCalendarDAO
 	private void initList()
 	{
 		this.list.add(new DemoCalendarEvent(this.newId(), "Public event", Category.PUBLIC, new Date()));
-		this.list.add(new DemoCalendarEvent(this.newId(), "Private event", Category.PRIVATE, new Date()));				
+		this.list.add(new DemoCalendarEvent(this.newId(), "Private event", Category.PRIVATE, new Date()));
 	}
 
 	protected int newId()
@@ -102,7 +102,10 @@ public class DemoCalendarDAO
 
 	/**
 	 * Helper that indicates whether an event is in the given date range (between start date & end date)
-	 * 
+	 *
+	 * @param event
+	 * @param start
+	 * @param end
 	 * @return true or false
 	 */
 	protected boolean isInRange(DemoCalendarEvent event, Date start, Date end)

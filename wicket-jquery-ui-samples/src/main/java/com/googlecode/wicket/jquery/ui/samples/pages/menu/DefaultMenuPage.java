@@ -17,29 +17,7 @@ public class DefaultMenuPage extends AbstractMenuPage
 {
 	private static final long serialVersionUID = 1L;
 
-	public DefaultMenuPage()
-	{
-		// FeedbackPanel //
-		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
-		this.add(feedback.setOutputMarkupId(true));
-
-		// Menu //
-		this.add(new Menu("menu", this.newMenuList()) {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onClick(AjaxRequestTarget target, IMenuItem item)
-			{
-				this.info("Clicked " + item.getTitle().getObject());
-
-				target.add(this);
-				target.add(feedback);
-			}
-		});
-	}
-
-	private List<IMenuItem> newMenuList()
+	static List<IMenuItem> newMenuList()
 	{
 		List<IMenuItem> list = new ArrayList<IMenuItem>();
 
@@ -55,7 +33,7 @@ public class DefaultMenuPage extends AbstractMenuPage
 			}
 		});
 		list.add(new MenuItem("Another menu item"));
-		list.add(new MenuItem("Menu item, with sub-menu", JQueryIcon.BOOKMARK, this.newSubMenuList())); // css-class are also allowed
+		list.add(new MenuItem("Menu item, with sub-menu", JQueryIcon.BOOKMARK, newSubMenuList())); // css-class are also allowed
 		list.add(new MenuItem("Desactivate me") {
 
 			private static final long serialVersionUID = 1L;
@@ -70,7 +48,7 @@ public class DefaultMenuPage extends AbstractMenuPage
 		return list;
 	}
 
-	private List<IMenuItem> newSubMenuList()
+	static List<IMenuItem> newSubMenuList()
 	{
 		List<IMenuItem> list = new ArrayList<IMenuItem>();
 
@@ -79,5 +57,28 @@ public class DefaultMenuPage extends AbstractMenuPage
 		list.add(new MenuItem("Sub-menu #3"));
 
 		return list;
+	}
+
+
+	public DefaultMenuPage()
+	{
+		// FeedbackPanel //
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		this.add(feedback.setOutputMarkupId(true));
+
+		// Menu //
+		this.add(new Menu("menu", DefaultMenuPage.newMenuList()) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClick(AjaxRequestTarget target, IMenuItem item)
+			{
+				this.info("Clicked " + item.getTitle().getObject());
+
+				target.add(this);
+				target.add(feedback);
+			}
+		});
 	}
 }

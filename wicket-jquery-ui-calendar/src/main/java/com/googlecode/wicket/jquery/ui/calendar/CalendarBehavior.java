@@ -53,6 +53,22 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "fullCalendar";
 
+	/**
+	 * Gets the {@link ICalendarLibrarySettings}
+	 *
+	 * @return null if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link ICalendarLibrarySettings}
+	 */
+	private static ICalendarLibrarySettings getLibrarySettings()
+	{
+		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof ICalendarLibrarySettings))
+		{
+			return (ICalendarLibrarySettings) Application.get().getJavaScriptLibrarySettings();
+		}
+
+		return null;
+	}
+
+
 	private JQueryAjaxBehavior onDayClickBehavior; // day click
 	private JQueryAjaxBehavior onSelectBehavior = null; // date range-select behavior;
 
@@ -87,7 +103,7 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 	 */
 	private void initReferences()
 	{
-		ICalendarLibrarySettings settings = this.getLibrarySettings();
+		ICalendarLibrarySettings settings = getLibrarySettings();
 
 		// fullcalendar.css //
 		if (settings != null && settings.getCalendarStyleSheetReference() != null)
@@ -120,20 +136,6 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		}
 	}
 
-	/**
-	 * Gets the {@link ICalendarLibrarySettings}
-	 *
-	 * @return null if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link ICalendarLibrarySettings}
-	 */
-	private ICalendarLibrarySettings getLibrarySettings()
-	{
-		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof ICalendarLibrarySettings))
-		{
-			return (ICalendarLibrarySettings) Application.get().getJavaScriptLibrarySettings();
-		}
-
-		return null;
-	}
 
 	// Methods //
 	@Override

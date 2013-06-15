@@ -24,39 +24,52 @@ import com.googlecode.wicket.jquery.ui.plugins.fixedheadertable.resource.FixedHe
 import com.googlecode.wicket.jquery.ui.plugins.fixedheadertable.resource.FixedHeaderTableStyleSheetResourceReference;
 import com.googlecode.wicket.jquery.ui.plugins.fixedheadertable.settings.IFixedHeaderTableLibrarySettings;
 
-public class FixedHeaderTableBehavior extends JQueryBehavior {
+public class FixedHeaderTableBehavior extends JQueryBehavior
+{
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "fixedHeaderTable";
 
-	public FixedHeaderTableBehavior(String selector) {
+	private static IFixedHeaderTableLibrarySettings getLibrarySettings()
+	{
+		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IFixedHeaderTableLibrarySettings))
+		{
+			return (IFixedHeaderTableLibrarySettings) Application.get().getJavaScriptLibrarySettings();
+		}
+
+		return null;
+	}
+
+	public FixedHeaderTableBehavior(String selector)
+	{
 		this(selector, new Options());
 	}
 
-	public FixedHeaderTableBehavior(String selector, Options options) {
+	public FixedHeaderTableBehavior(String selector, Options options)
+	{
 		super(selector, METHOD, options);
 		initReferences();
 	}
-	
-	private void initReferences() {
-		IFixedHeaderTableLibrarySettings settings = this.getLibrarySettings();
-		
-		if (settings != null && settings.getFixedHeaderTableStyleSheetReference() != null) {
+
+	private void initReferences()
+	{
+		IFixedHeaderTableLibrarySettings settings = getLibrarySettings();
+
+		if (settings != null && settings.getFixedHeaderTableStyleSheetReference() != null)
+		{
 			this.add(settings.getFixedHeaderTableStyleSheetReference());
-		} else {
+		}
+		else
+		{
 			this.add(FixedHeaderTableStyleSheetResourceReference.get());
 		}
 
-		if (settings != null && settings.getFixedHeaderTableJavaScriptReference() != null) {
+		if (settings != null && settings.getFixedHeaderTableJavaScriptReference() != null)
+		{
 			this.add(settings.getFixedHeaderTableJavaScriptReference());
-		} else {
+		}
+		else
+		{
 			this.add(FixedHeaderTableJavaScriptResourceReference.get());
 		}
-	}
-
-	private IFixedHeaderTableLibrarySettings getLibrarySettings() {
-		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IFixedHeaderTableLibrarySettings)) {
-			return (IFixedHeaderTableLibrarySettings)Application.get().getJavaScriptLibrarySettings();
-		}
-		return null;
 	}
 }

@@ -112,6 +112,16 @@ public class Menu extends JQueryPanel implements IMenuListener
 	}
 
 
+	/**
+	 * Gets the menu-item list
+	 * @return the menu-item {@link List}
+	 */
+	public List<IMenuItem> getItemList()
+	{
+		return this.items;
+
+	}
+
 	// Events //
 	@Override
 	protected void onInitialize()

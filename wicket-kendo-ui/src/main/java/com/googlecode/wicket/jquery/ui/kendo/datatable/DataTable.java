@@ -177,9 +177,12 @@ public class DataTable<T> extends WebMarkupContainer implements IJQueryWidget
 
 	/**
 	 * Gets a new {@link AutoCompleteSourceBehavior}
+	 * @param columns TODO javadoc
+	 * @param provider
+	 * @param rows
 	 * @return the {@link AutoCompleteSourceBehavior}
 	 */
-	private AbstractAjaxBehavior newDataTableSourceBehavior(final List<? extends IColumn<T>> columns, final IDataProvider<T> provider, final long rows)
+	protected AbstractAjaxBehavior newDataTableSourceBehavior(final List<? extends IColumn<T>> columns, final IDataProvider<T> provider, final long rows)
 	{
 		return new DataTableSourceBehavior<T>(columns, provider, rows);
 	}

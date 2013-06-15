@@ -12,6 +12,17 @@ import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 public class DefaultDroppablePage extends AbstractDroppablePage
 {
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Gets a new Draggable
+	 * By default 'stop' event is disabled to minimize client/server round-trips.
+	 */
+	private static Draggable<String> newDraggable(String id, String label)
+	{
+		return new Draggable<String>(id, new Model<String>(label)).setContainment("#wrapper-panel-frame");
+	}
+
+
 	final FeedbackPanel feedback;
 
 	public DefaultDroppablePage()
@@ -23,17 +34,8 @@ public class DefaultDroppablePage extends AbstractDroppablePage
 		this.add(this.newDroppable("droppable1", "green area"));
 		this.add(this.newDroppable("droppable2", "blue area"));
 
-		this.add(this.newDraggable("draggable1", "Draggable #1"));
-		this.add(this.newDraggable("draggable2", "Draggable #2"));
-	}
-
-	/**
-	 * Gets a new Draggable
-	 * By default 'stop' event is disabled to minimize client/server round-trips.
-	 */
-	private Draggable<String> newDraggable(String id, String label)
-	{
-		return new Draggable<String>(id, new Model<String>(label)).setContainment("#wrapper-panel-frame");
+		this.add(newDraggable("draggable1", "Draggable #1"));
+		this.add(newDraggable("draggable2", "Draggable #2"));
 	}
 
 	/**

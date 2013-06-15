@@ -10,18 +10,10 @@ public class WidgetSnippetPage extends AbstractSnippetPage
 {
 	private static final long serialVersionUID = 1L;
 
-	public WidgetSnippetPage()
-	{
-		Options options = new Options();
-		options.set("style", Options.asString("ide-eclipse"));
-
-		this.add(new SnippetLabel("code", "html", options, this.newSnippetModel()));
-	}
-
 	/**
 	 * @return the Model to be used as source for the SnippetLabel
 	 */
-	private IModel<String> newSnippetModel()
+	private static IModel<String> newSnippetModel()
 	{
 		return new LoadableDetachableModel<String>() {
 
@@ -40,5 +32,14 @@ public class WidgetSnippetPage extends AbstractSnippetPage
 					"</div>\n";
 			}
 		};
+	}
+
+
+	public WidgetSnippetPage()
+	{
+		Options options = new Options();
+		options.set("style", Options.asString("ide-eclipse"));
+
+		this.add(new SnippetLabel("code", "html", options, newSnippetModel()));
 	}
 }

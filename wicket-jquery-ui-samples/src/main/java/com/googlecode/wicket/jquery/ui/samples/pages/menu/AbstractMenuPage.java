@@ -19,7 +19,8 @@ abstract class AbstractMenuPage extends SamplePage
 	protected List<DemoLink> getDemoLinks()
 	{
 		return Arrays.asList(
-				new DemoLink(DefaultMenuPage.class, "Menu")
+				new DemoLink(DefaultMenuPage.class, "Menu"),
+				new DemoLink(ContextMenuPage.class, "Context Menu")
 			);
 	}
 }

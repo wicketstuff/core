@@ -36,6 +36,21 @@ public class EmoticonsBehavior extends JQueryBehavior
 	private static final String METHOD = "emoticonize";
 
 	/**
+	 * Gets the {@link IEmoticonsLibrarySettings}
+	 * @return null if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link IEmoticonsLibrarySettings}
+	 */
+	private static IEmoticonsLibrarySettings getLibrarySettings()
+	{
+		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IEmoticonsLibrarySettings))
+		{
+			return (IEmoticonsLibrarySettings) Application.get().getJavaScriptLibrarySettings();
+		}
+
+		return null;
+	}
+
+
+	/**
 	 * Constructor
 	 * @param selector the html selector (ie: "#myId")
 	 */
@@ -61,7 +76,7 @@ public class EmoticonsBehavior extends JQueryBehavior
 	 */
 	private void initReferences()
 	{
-		IEmoticonsLibrarySettings settings = this.getLibrarySettings();
+		IEmoticonsLibrarySettings settings = getLibrarySettings();
 
 		// jquery.cssemoticons.css //
 		if (settings != null && settings.getEmoticonsStyleSheetReference() != null)
@@ -82,19 +97,5 @@ public class EmoticonsBehavior extends JQueryBehavior
 		{
 			this.add(EmoticonsJavaScriptResourceReference.get());
 		}
-	}
-
-	/**
-	 * Gets the {@link IEmoticonsLibrarySettings}
-	 * @return null if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link IEmoticonsLibrarySettings}
-	 */
-	private IEmoticonsLibrarySettings getLibrarySettings()
-	{
-		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IEmoticonsLibrarySettings))
-		{
-			return (IEmoticonsLibrarySettings) Application.get().getJavaScriptLibrarySettings();
-		}
-
-		return null;
 	}
 }

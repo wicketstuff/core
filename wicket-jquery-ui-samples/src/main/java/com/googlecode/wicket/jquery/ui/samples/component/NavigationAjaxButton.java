@@ -3,6 +3,7 @@ package com.googlecode.wicket.jquery.ui.samples.component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
+
 import com.googlecode.wicket.jquery.ui.JQueryIcon;
 import com.googlecode.wicket.jquery.ui.form.button.AjaxButton;
 
@@ -74,10 +75,18 @@ public class NavigationAjaxButton extends Panel
 		};
 	}
 
+	/**
+	 * @param target
+	 * @param button
+	 */
 	protected void onBackward(AjaxRequestTarget target, AjaxButton button)
 	{
 	}
 
+	/**
+	 * @param target
+	 * @param button
+	 */
 	protected void onForward(AjaxRequestTarget target, AjaxButton button)
 	{
 	}

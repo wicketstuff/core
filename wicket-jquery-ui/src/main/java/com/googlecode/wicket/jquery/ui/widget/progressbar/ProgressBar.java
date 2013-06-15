@@ -91,16 +91,18 @@ public class ProgressBar extends JQueryContainer implements IJQueryAjaxAware, IV
 	 */
 	public void setModelObject(Integer value)
 	{
-		if (value < MIN)
+		Integer v = value;
+
+		if (v < MIN)
 		{
-			value = MIN;
+			v = MIN;
 		}
-		else if (value > MAX)
+		else if (v > MAX)
 		{
-			value = MAX;
+			v = MAX;
 		}
 
-		this.setDefaultModelObject(value);
+		this.setDefaultModelObject(v);
 	}
 
 

@@ -1,5 +1,6 @@
 package com.googlecode.wicket.jquery.ui.samples;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,6 +19,21 @@ public abstract class SamplePage extends TemplatePage
 {
 	private static final long serialVersionUID = 1L;
 	private enum Source { HTML, JAVA, TEXT }
+
+	private static String getSource(Source source, Class<? extends SamplePage> scope)
+	{
+		PackageTextTemplate stream = new PackageTextTemplate(scope, String.format("%s.%s", scope.getSimpleName(), source.toString().toLowerCase()));
+		String string = ResourceUtil.readString(stream);
+
+		try
+		{
+			stream.close();
+		}
+		catch (IOException e) { /* not handled */ }
+
+		return string;
+	}
+
 
 	public SamplePage()
 	{
@@ -59,15 +75,7 @@ public abstract class SamplePage extends TemplatePage
 
 	private String getSource(Source source)
 	{
-		return this.getSource(source, this.getClass());
-	}
-
-	private String getSource(Source source, Class<? extends SamplePage> scope)
-	{
-		PackageTextTemplate stream = new PackageTextTemplate(scope, String.format("%s.%s", scope.getSimpleName(), source.toString().toLowerCase()));
-
-		return ResourceUtil.readString(stream);
-
+		return SamplePage.getSource(source, this.getClass());
 	}
 
 	protected List<DemoLink> getDemoLinks()

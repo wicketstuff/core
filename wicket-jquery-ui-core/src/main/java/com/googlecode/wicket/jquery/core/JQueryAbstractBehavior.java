@@ -49,6 +49,22 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	private static final Logger LOG = LoggerFactory.getLogger(JQueryAbstractBehavior.class);
 
 	/**
+	 * Gets the {@link IJQueryLibrarySettings}
+	 * @return the {@link IJQueryLibrarySettings}
+	 */
+	private static IJQueryLibrarySettings getJavaScriptLibrarySettings()
+	{
+		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IJQueryLibrarySettings))
+		{
+			return (IJQueryLibrarySettings) Application.get().getJavaScriptLibrarySettings();
+		}
+
+		return new JQueryLibrarySettings();
+	}
+
+
+
+	/**
 	 * Behavior name
 	 */
 	private final String name;
@@ -83,7 +99,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		// Gets the library settings //
-		IJQueryLibrarySettings settings = this.getJavaScriptLibrarySettings();
+		IJQueryLibrarySettings settings = getJavaScriptLibrarySettings();
 
 		//TODO: implement this
 		//if (IJQueryLibrarySettings instanceof IJQueryUILibrarySettings)
@@ -135,20 +151,6 @@ public abstract class JQueryAbstractBehavior extends Behavior
 
 
 	// Properties //
-
-	/**
-	 * Gets the {@link IJQueryLibrarySettings}
-	 * @return the {@link IJQueryLibrarySettings}
-	 */
-	private IJQueryLibrarySettings getJavaScriptLibrarySettings()
-	{
-		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IJQueryLibrarySettings))
-		{
-			return (IJQueryLibrarySettings) Application.get().getJavaScriptLibrarySettings();
-		}
-
-		return new JQueryLibrarySettings();
-	}
 
 	/**
 	 * Get the unique behavior token that act as the script id.

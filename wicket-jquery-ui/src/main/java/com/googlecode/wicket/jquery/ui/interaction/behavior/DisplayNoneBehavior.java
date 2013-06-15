@@ -32,7 +32,7 @@ public class DisplayNoneBehavior extends AttributeAppender
 
 	public DisplayNoneBehavior()
 	{
-		super("style", Model.of("display: none"));
+		super("style", Model.of("display: none;"));
 	}
 
 	@Override

@@ -183,7 +183,6 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	 */
 	protected void onOpen(AjaxRequestTarget target)
 	{
-
 	}
 
 	/**
@@ -420,7 +419,9 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	 * Gets a new {@link ButtonAjaxBehavior} that will be called by the corresponding {@link DialogButton}.<br/>
 	 * This method mays be overridden internally to provide another behavior
 	 *
+	 * @param source the {@link IJQueryAjaxAware} source
 	 * @param button the button that is passed to the behavior so it can be retrieved via the <code>DialogBehavior#ClickEvent</code>
+	 * @return the {@link ButtonAjaxBehavior}
 	 */
 	protected ButtonAjaxBehavior newButtonAjaxBehavior(IJQueryAjaxAware source, DialogButton button)
 	{

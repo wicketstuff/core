@@ -36,6 +36,8 @@ public abstract class AbstractDraggableFactory implements IClusterable
 	/**
 	 * Gets the helper that might be used by the {@link Draggable}.<br/>
 	 * The returned value is supplied to the {@link #create(String, String, String)} method.
+	 * @param selector the selector
+	 * @return the helper
 	 */
 	protected abstract String getHelper(String selector);
 

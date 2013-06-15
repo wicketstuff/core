@@ -149,12 +149,14 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 			@Override
 			public DateFormat getDateFormat(Locale locale)
 			{
-				if (locale == null)
+				Locale l = locale;
+
+				if (l == null)
 				{
-					locale = Locale.getDefault();
+					l = Locale.getDefault();
 				}
 
-				return new SimpleDateFormat(getTextFormat(), locale);
+				return new SimpleDateFormat(getTextFormat(), l);
 			}
 		};
 	}
