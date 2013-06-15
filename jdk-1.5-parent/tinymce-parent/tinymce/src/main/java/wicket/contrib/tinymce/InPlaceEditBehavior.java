@@ -75,7 +75,13 @@ public class InPlaceEditBehavior extends TinyMceBehavior
 		};
 	}
 
-	protected String getRenderOnDomReadyJavascript(IHeaderResponse response)
+	@Override
+	public void renderHead(Component c, IHeaderResponse response) {
+		super.renderHead(c, response);
+		response.renderJavaScript(getRenderJavascript(response), null); 
+	}
+	
+	protected String getRenderOnDomReadyJavascript()
 	{
 		return null;
 	}
@@ -85,7 +91,7 @@ public class InPlaceEditBehavior extends TinyMceBehavior
 		return "" //
 				+ "function " + getStartEditorScriptName()
 				+ "() {" //
-				+ getAddTinyMceSettingsScript(Mode.none, Collections.EMPTY_LIST) //
+				+ getAddTinyMceSettingsScript(Mode.none, Collections.<Component>emptyList()) //
 				+ " tinyMCE.execCommand('mceAddControl',true,'"
 				+ getComponent().getMarkupId(true)
 				+ "');" //

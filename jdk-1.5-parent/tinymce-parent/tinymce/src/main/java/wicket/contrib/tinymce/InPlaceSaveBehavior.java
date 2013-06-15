@@ -153,6 +153,6 @@ public class InPlaceSaveBehavior extends AbstractDefaultAjaxBehavior
 	{
 		return generateCallbackScript(
 			"wicketAjaxPost('" + getCallbackUrl() + "', Wicket.Form.encode('" + PARAM_HTMLCONT +
-				"') + '=' + Wicket.Form.encode(content) + '&'").toString();
+				"') + '=' + content + '&'").toString();
 	}
 }

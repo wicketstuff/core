@@ -86,10 +86,15 @@ public class TinyMceBehavior extends Behavior implements IAjaxRegionMarkupIdProv
 			TinyMCESettings.lazyLoadTinyMCEResource(response);
 		}
 
-		String renderOnDomReady = getAddTinyMceSettingsScript(Mode.exact,
-				Collections.singletonList(component));
-		response.renderOnDomReadyJavaScript(renderOnDomReady);
+		String renderOnDomReady = getRenderOnDomReadyJavascript();
+		if (renderOnDomReady != null) {
+		   response.renderOnDomReadyJavaScript(renderOnDomReady);
+		}
 	}
+		
+	protected String getRenderOnDomReadyJavascript() {
+	    return getAddTinyMceSettingsScript(Mode.exact, Collections.singletonList(component));
+	} 
 
 
 	private boolean mayRenderJavascriptDirect()
