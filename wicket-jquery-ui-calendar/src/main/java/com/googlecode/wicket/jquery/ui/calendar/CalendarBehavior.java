@@ -173,13 +173,15 @@ public abstract class CalendarBehavior extends JQueryBehavior implements IJQuery
 		IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
 
 		/* adds and configure the busy indicator */
-		response.render(JavaScriptHeaderItem.forScript("jQuery(function(){ "
-				+ "jQuery('<img />')"
-				+ ".attr('src', '" + RequestCycle.get().urlFor(handler).toString() + "')"
-				+ ".ajaxStart(function() { jQuery(this).show(); })"
-				+ ".ajaxStop(function() { jQuery(this).hide(); })"
-				+ ".appendTo('.fc-header-center');"
-				+ " });", this.getClass().getName()));
+		StringBuilder builder = new StringBuilder();
+
+		builder.append("jQuery(function(){\n");//allows only one calendar.
+		builder.append("jQuery(\"<img id='calendar-indicator' src='").append(RequestCycle.get().urlFor(handler)).append("' />\").appendTo('.fc-header-center');\n");
+		builder.append("jQuery(document).ajaxStart(function() { jQuery('#calendar-indicator').show(); });\n");
+		builder.append("jQuery(document).ajaxStop(function() { jQuery('#calendar-indicator').hide(); });\n");
+		builder.append("});\n");
+
+		response.render(JavaScriptHeaderItem.forScript(builder, this.getClass().getSimpleName() + "-indicator"));
 	}
 
 	// Events //

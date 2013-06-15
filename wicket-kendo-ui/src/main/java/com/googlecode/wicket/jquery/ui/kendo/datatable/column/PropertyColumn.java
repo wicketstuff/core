@@ -22,7 +22,7 @@ import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 
 /**
- * TODO license & javadoc
+ * TODO javadoc
  * @author Sebastien Briquet - sebfz1
  *
  * @param <T>

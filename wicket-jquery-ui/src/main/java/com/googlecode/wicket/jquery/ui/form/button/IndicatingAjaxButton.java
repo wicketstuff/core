@@ -22,7 +22,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.IRequestHandler;
@@ -121,17 +120,22 @@ public abstract class IndicatingAjaxButton extends AjaxButton implements IJQuery
 
 				IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
 
-				/* adds and configure the busy indicator */
+				// adds the busy indicator style //
 				response.render(CssHeaderItem.forCSS(".ui-icon.ui-icon-indicator { background-image: url(" + RequestCycle.get().urlFor(handler).toString() + ") !important; background-position: 0 0; }", "jquery-ui-icon-indicator"));
+			}
 
-				/* adds and configure the busy indicator */
-				StringBuilder script = new StringBuilder("jQuery(function() {");
-				script.append("jQuery('").append(selector).append("')");
-				script.append(".click(function() { jQuery(this).button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": 'ui-icon-indicator' }); })");
-				script.append(".ajaxStop(function() { jQuery(this).button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": null }); })");
-				script.append("});");
+			@Override
+			protected String $()
+			{
+				// configure the busy indicator start & stop //
+				StringBuilder builder = new StringBuilder(super.$());
 
-				response.render(JavaScriptHeaderItem.forScript(script, this.getClass().getName() + "-" + selector));
+				builder.append("jQuery(function() {");
+				builder.append("jQuery('").append(this.selector).append("')").append(".click(function() { jQuery(this).button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": 'ui-icon-indicator' }); }); ");
+				builder.append("jQuery(document).ajaxStop(function() { jQuery('").append(this.selector).append("').button('option', 'icons', {").append(position == Position.LEFT ? "primary" : "secondary").append(": null }); }); ");
+				builder.append("});");
+
+				return builder.toString();
 			}
 		};
 	}

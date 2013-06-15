@@ -19,7 +19,7 @@ package com.googlecode.wicket.jquery.ui.kendo.datatable.column;
 import org.apache.wicket.util.io.IClusterable;
 
 /**
- * TODO licence & javadoc
+ * TODO javadoc
  * @author Sebastien Briquet - sebfz1
  *
  * @param <T>
