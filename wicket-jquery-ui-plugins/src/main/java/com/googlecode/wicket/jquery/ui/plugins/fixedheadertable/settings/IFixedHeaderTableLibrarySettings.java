@@ -20,7 +20,9 @@ import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
-public interface IFixedHeaderTableLibrarySettings extends IJavaScriptLibrarySettings {
+public interface IFixedHeaderTableLibrarySettings extends IJavaScriptLibrarySettings
+{
 	CssResourceReference getFixedHeaderTableStyleSheetReference();
+
 	JavaScriptResourceReference getFixedHeaderTableJavaScriptReference();
 }
