@@ -16,6 +16,7 @@ public class ComponentDraggablePage extends AbstractDraggablePage
 		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
 		this.add(feedback.setOutputMarkupId(true));
 
+		// Draggable //
 		this.add(new Draggable<Void>("draggable") {
 
 			private static final long serialVersionUID = 1L;

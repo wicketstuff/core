@@ -17,6 +17,7 @@
 package com.googlecode.wicket.jquery.ui.interaction.draggable;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 import org.apache.wicket.util.visit.IVisit;
@@ -42,7 +43,7 @@ public abstract class DraggableBehavior extends JQueryBehavior implements IJQuer
 
 	private JQueryAjaxBehavior onDragStartBehavior;
 	private JQueryAjaxBehavior onDragStopBehavior = null;
-	private Component component;
+	private Component component = null;
 
 	/**
 	 * Constructor
@@ -69,15 +70,20 @@ public abstract class DraggableBehavior extends JQueryBehavior implements IJQuer
 	{
 		super.bind(component);
 
-		component.add(this.onDragStartBehavior = this.newOnDragStartBehavior());
+		if (this.component != null)
+		{
+			throw new WicketRuntimeException("Behavior is already bound to another component.");
+		}
+
+		this.component = component; //warning, not thread-safe: the instance of this behavior should only be used once
+		this.component.add(this.onDragStartBehavior = this.newOnDragStartBehavior());
 
 		// these events are not enabled by default to prevent unnecessary server round-trips.
 		if (this.isStopEventEnabled())
 		{
-			component.add(this.onDragStopBehavior = this.newOnDragStopBehavior());
+			this.component.add(this.onDragStopBehavior = this.newOnDragStopBehavior());
 		}
 
-		this.component = component; //warning, not thread-safe: the instance of this behavior should only be used once
 	}
 
 	// Events //

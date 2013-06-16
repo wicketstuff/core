@@ -18,6 +18,7 @@ package com.googlecode.wicket.jquery.ui.widget.menu;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.CallbackParameter;
 
@@ -39,13 +40,13 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Class used to identify the component that invoke the context menu, in order
+	 * CSS class used to identify the component that invoke the context menu, in order
 	 * to avoid events conflict (with the registered click in {@link ContextMenu})
 	 */
 	public static final String COMPONENT_CSS = "context-menu-invoker";
 
 	private final ContextMenu menu;
-	private Component component;
+	private Component component = null;
 
 	private JQueryAjaxBehavior onContextMenuEventBehavior;
 
@@ -68,6 +69,11 @@ public class ContextMenuBehavior extends JQueryAbstractBehavior implements IJQue
 	public void bind(Component component)
 	{
 		super.bind(component);
+
+		if (this.component != null)
+		{
+			throw new WicketRuntimeException("Behavior is already bound to another component.");
+		}
 
 		this.component = component;
 		this.component.add(AttributeModifier.append("class", COMPONENT_CSS));
