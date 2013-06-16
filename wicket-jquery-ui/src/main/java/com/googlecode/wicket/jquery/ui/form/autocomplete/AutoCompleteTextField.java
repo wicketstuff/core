@@ -182,6 +182,15 @@ public abstract class AutoCompleteTextField<T extends Serializable> extends Text
 		return this.choices;
 	}
 
+	/**
+	 * Gets the {@link ITextRenderer}
+	 * @return the {@link ITextRenderer}
+	 */
+	public ITextRenderer<? super T> getRenderer()
+	{
+		return this.renderer;
+	}
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public <C> IConverter<C> getConverter(Class<C> type)
