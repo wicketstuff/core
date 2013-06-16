@@ -23,6 +23,7 @@ import java.util.Map.Entry;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
@@ -146,6 +147,12 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 		return false;
 	}
 
+	@Override
+	public boolean isViewDisplayEnabled()
+	{
+		return false;
+	}
+
 	// Events //
 	@Override
 	protected void onInitialize()
@@ -190,6 +197,11 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 	{
 	}
 
+	@Override
+	public void onViewDisplay(AjaxRequestTarget target, CalendarView view)
+	{
+	}
+
 
 	// IJQueryWidget //
 	/**
@@ -224,6 +236,12 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			public boolean isEventResizeEnabled()
 			{
 				return Calendar.this.isEventResizeEnabled();
+			}
+
+			@Override
+			public boolean isViewDisplayEnabled()
+			{
+				return Calendar.this.isViewDisplayEnabled();
 			}
 
 			@Override
@@ -278,6 +296,12 @@ public class Calendar extends JQueryContainer implements ICalendarListener
 			public void onEventResize(AjaxRequestTarget target, int eventId, long delta)
 			{
 				Calendar.this.onEventResize(target, eventId, delta);
+			}
+
+			@Override
+			public void onViewDisplay(AjaxRequestTarget target, CalendarView view)
+			{
+				Calendar.this.onViewDisplay(target, view);
 			}
 		};
 	}
