@@ -27,6 +27,7 @@ import com.googlecode.wicket.jquery.ui.samples.pages.kendo.splitter.DefaultSplit
 import com.googlecode.wicket.jquery.ui.samples.pages.menu.DefaultMenuPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.FontSizePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.plugins.datepicker.RangeDatePickerPage;
+import com.googlecode.wicket.jquery.ui.samples.pages.plugins.wysiwyg.WysiwygEditorPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.progressbar.ButtonProgressBarPage;
 import com.googlecode.wicket.jquery.ui.samples.pages.resizable.DefaultResizablePage;
 import com.googlecode.wicket.jquery.ui.samples.pages.selectable.DefaultSelectablePage;
@@ -94,6 +95,7 @@ public class SampleApplication extends WebApplication
 		// Plugins //
 		this.mountPackage("/plugins", FontSizePage.class);
 		this.mountPackage("/plugins/datepicker", RangeDatePickerPage.class);
+		this.mountPackage("/plugins/wysiwyg", WysiwygEditorPage.class);
 
 		// Test //
 		this.mountPackage("/test", TestPage.class);

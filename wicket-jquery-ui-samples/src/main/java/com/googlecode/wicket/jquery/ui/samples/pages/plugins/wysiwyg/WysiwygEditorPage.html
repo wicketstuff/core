@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<wicket:head>
+	<title>Wicket - jQuery UI: plugin / wysiwyg</title>
+	<style type="text/css">
+		.wysiwyg-editor {
+			height: 200px;
+			max-height: 300px;
+		}
+	</style>
+</wicket:head>
+</head>
+<body>
+<wicket:extend>
+	<form wicket:id="form">
+		<div wicket:id="toolbar"></div>
+		<div wicket:id="wysiwyg"></div>
+		<br/>		
+		<button type="button" wicket:id="button">display</button>
+		<div wicket:id="feedback"></div>
+	</form>
+</wicket:extend>
+</body>
+</html>

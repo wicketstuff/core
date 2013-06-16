@@ -30,7 +30,7 @@ import com.googlecode.wicket.jquery.core.Options;
  *
  * @author Sebastien Briquet - sebfz1
  */
-//TODO: remove -SNAPSHOT (and/or change version) from wepapp text
+//TODO remove 6.8.2-SNAPSHOT in description
 public class ContextMenu extends Menu
 {
 	private static final long serialVersionUID = 1L;

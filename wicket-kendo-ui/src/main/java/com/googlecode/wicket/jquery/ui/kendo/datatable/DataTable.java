@@ -35,7 +35,7 @@ import com.googlecode.wicket.jquery.ui.kendo.datatable.column.IColumn;
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  */
-//TODO: remove -SNAPSHOT from doc
+//TODO remove 6.8.2-SNAPSHOT in description
 public class DataTable<T> extends WebMarkupContainer implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;
