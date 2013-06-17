@@ -94,14 +94,6 @@ public class FormComponentTest {
 	public void targetInTypeErasedModel() {
 		IModel<Target> wrapper = new Model<Target>(new Target());
 
-		try {
-			LazyModel.model(LazyModel.from(wrapper).getValue());
-
-			fail();
-		} catch (Exception typeErased) {
-			assertEquals("cannot detect target type", typeErased.getMessage());
-		}
-
 		IModel<Long> model = LazyModel.model(
 				LazyModel.from(Target.class).getValue()).bind(wrapper);
 
@@ -123,7 +115,7 @@ public class FormComponentTest {
 				LazyModel.from(Target.class).getValue()).bind(wrapper);
 
 		try {
-			TestPage<Long> page = tester.startPage(new TestPage<Long>(model));
+			tester.startPage(new TestPage<Long>(model));
 
 			fail();
 		} catch (Exception typeErased) {

@@ -740,14 +740,21 @@ public class LazyModelTest {
 		LazyModel<B> model = model(from(A.class).getB()).bind(new Model<A>(a));
 
 		assertEquals(B.class, model.getObjectClass());
-		
-		try {
-			assertEquals("b", model.getPath());
-			fail();
-		} catch (Exception typeErased) {
-		}
-		
+		assertEquals("b", model.getPath());
 		assertEquals(a.b, model.getObject());
+	}
+
+	@Test
+	public void bindToTypeErasedModelWithNull() {
+		LazyModel<B> model = model(from(A.class).getB()).bind(new Model<A>(null));
+
+		try {
+			assertEquals(B.class, model.getObjectClass());
+			
+			fail();
+		} catch (Exception ex) {
+			assertEquals("cannot detect target type", ex.getMessage());
+		}
 	}
 
 	@Test
@@ -759,7 +766,6 @@ public class LazyModelTest {
 
 		assertEquals(B.class, model.getObjectClass());
 		assertEquals("b", model.getPath());
-
 		assertEquals(a.b, model.getObject());
 	}
 
