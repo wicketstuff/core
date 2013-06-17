@@ -101,9 +101,6 @@ public abstract class JQueryAbstractBehavior extends Behavior
 		// Gets the library settings //
 		IJQueryLibrarySettings settings = getJavaScriptLibrarySettings();
 
-		//TODO: implement this
-		//if (IJQueryLibrarySettings instanceof IJQueryUILibrarySettings)
-
 		// Adds jQuery UI javascript resource reference //
 		if (settings.getJQueryUIReference() != null)
 		{

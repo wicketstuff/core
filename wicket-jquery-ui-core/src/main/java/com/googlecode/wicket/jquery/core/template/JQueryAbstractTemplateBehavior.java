@@ -33,7 +33,7 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 public abstract class JQueryAbstractTemplateBehavior extends Behavior
 {
 	private static final long serialVersionUID = 1L;
-	public static final PackageResourceReference TMPL_JS = new JavaScriptResourceReference(JQueryAbstractTemplateBehavior.class, "jquery.tmpl.min.js"); 
+	public static final PackageResourceReference TMPL_JS = new JavaScriptResourceReference(JQueryAbstractTemplateBehavior.class, "jquery.tmpl.min.js");
 
 	/**
 	 * Constructor
