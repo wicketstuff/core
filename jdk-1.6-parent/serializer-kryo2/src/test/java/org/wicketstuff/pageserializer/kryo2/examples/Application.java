@@ -21,6 +21,7 @@
 package org.wicketstuff.pageserializer.kryo2.examples;
 
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.util.file.Files;
 import org.apache.wicket.util.lang.Bytes;
 import org.wicketstuff.pageserializer.kryo2.inspecting.InspectingKryoSerializer;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.AnalyzingSerializationListener;
@@ -57,6 +58,7 @@ public class Application extends WebApplication
 	public void init()
 	{
 		super.init();
+		
 		IReportOutput reportOutput=new LoggerReportOutput();
 
 		// output of report of type sizes, sorted tree report (by size), aggregated tree 

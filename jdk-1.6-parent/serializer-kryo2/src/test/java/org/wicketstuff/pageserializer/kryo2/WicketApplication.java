@@ -20,6 +20,9 @@
  */
 package org.wicketstuff.pageserializer.kryo2;
 
+import java.io.File;
+import java.util.UUID;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.lang.Bytes;
@@ -32,11 +35,15 @@ import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.TreeProcessors;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.IReportOutput;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.Level;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.LoggerReportOutput;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.RenderTreeProcessor;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SimilarNodeTreeTransformator;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SortedTreeSizeReport;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TreeTransformator;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.TypeSizeReport;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.d3js.D3DataFileRenderer;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.filter.ITreeFilter;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.io.DirectoryBasedReportOutput;
+import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.io.Keys;
 import org.wicketstuff.pageserializer.kryo2.inspecting.listener.ISerializationListener;
 import org.wicketstuff.pageserializer.kryo2.inspecting.listener.SerializationListeners;
 import org.wicketstuff.pageserializer.kryo2.inspecting.validation.DefaultJavaSerializationValidator;
@@ -73,11 +80,12 @@ public class WicketApplication extends WebApplication
 			}
 		};
 		
-		IReportOutput reportOutput=new LoggerReportOutput();
+		DirectoryBasedReportOutput reportOutput=new DirectoryBasedReportOutput(tempDirectory("reports"));
 		
-		ISerializedObjectTreeProcessor treeProcessor = TreeProcessors.listOf(new TypeSizeReport(reportOutput),
-		 new SortedTreeSizeReport(reportOutput), new SimilarNodeTreeTransformator(
-				new SortedTreeSizeReport(reportOutput)));
+		ISerializedObjectTreeProcessor treeProcessor = TreeProcessors.listOf(new TypeSizeReport(reportOutput.with(Keys.withNameAndFileExtension("TypeSizeReport", "txt"))),
+				new SortedTreeSizeReport(reportOutput.with(Keys.withNameAndFileExtension("SortedTreeSizeReport", "txt"))), 
+				new RenderTreeProcessor(reportOutput.with(Keys.withNameAndFileExtension("d3js", "js")),new D3DataFileRenderer()), 
+				new SimilarNodeTreeTransformator(new SortedTreeSizeReport(reportOutput.with(Keys.withNameAndFileExtension("StrippedSortedTreeSizeReport", "txt")))));
 		ITreeFilter filter = new ITreeFilter()
 		{
 			@Override
@@ -94,5 +102,17 @@ public class WicketApplication extends WebApplication
 
 
 		getFrameworkSettings().setSerializer(new InspectingKryoSerializer(Bytes.bytes(1024*1024),listener));
+	}
+
+	private File tempDirectory(String prefix) {
+		File baseDir = new File(System.getProperty("java.io.tmpdir"));
+		String baseName = prefix + "-" + UUID.randomUUID().toString();
+
+		File tempDir = new File(baseDir, baseName);
+		if (tempDir.mkdir()) {
+			return tempDir;
+		}
+
+		throw new RuntimeException("Could not create tempdir " + baseName + " in " + baseDir);
 	}
 }
