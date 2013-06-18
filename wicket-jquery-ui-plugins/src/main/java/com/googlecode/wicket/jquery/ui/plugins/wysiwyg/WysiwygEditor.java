@@ -33,12 +33,11 @@ import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.toolbar.IWysiwygToolbar;
  * Provides an implementation of bootstrap-wysiwyg<br/>
  * {@link WysiwygEditor} should be contained in a {@link Form} in order to work properly
  *
- * TODO remove 6.8.2-SNAPSHOT in description
- *
  * @author sebfz1
  * @author solomax
  * @author andunslg
  */
+//XXX: remove 6.8.2-SNAPSHOT in description
 public class WysiwygEditor extends FormComponentPanel<String> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;

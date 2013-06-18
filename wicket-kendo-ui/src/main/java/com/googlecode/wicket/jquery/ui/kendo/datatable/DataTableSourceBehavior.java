@@ -35,7 +35,7 @@ import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.kendo.datatable.column.IColumn;
 
 /**
- * Provides the {@link AbstractDefaultAjaxBehavior} source for {@link DataTable} data
+ * Provides the {@link DataTable} data source {@link AbstractDefaultAjaxBehavior}
  *
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
@@ -48,10 +48,10 @@ class DataTableSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 	private final List<? extends IColumn<T>> columns;
 
 	/**
-	 * TODO javadoc
-	 * @param columns
-	 * @param provider
-	 * @param rows
+	 * Constructor
+	 * @param columns the list of {@link IColumn}
+	 * @param provider the {@link IDataProvider}
+	 * @param rows the number of rows per page to be displayed
 	 */
 	public DataTableSourceBehavior(final List<? extends IColumn<T>> columns, final IDataProvider<T> provider, final long rows)
 	{
@@ -71,10 +71,10 @@ class DataTableSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 	}
 
 	/**
-	 * TODO javadoc
-	 * argument.
-	 * @param count
-	 * @param first
+	 * Gets the new {@link IRequestHandler} that will respond the data in a json format
+	 *
+	 * @param first the first row number
+	 * @param count the count of rows
 	 * @return a new {@link IRequestHandler}
 	 */
 	private IRequestHandler newRequestHandler(final int first, final int count)
@@ -119,6 +119,11 @@ class DataTableSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 		};
 	}
 
+	/**
+	 * Gets a new JSON object from the bean
+	 * @param bean T
+	 * @return a new JSON object
+	 */
 	protected String newJsonObject(T bean)
 	{
 		JSONStringer stringer = new JSONStringer();

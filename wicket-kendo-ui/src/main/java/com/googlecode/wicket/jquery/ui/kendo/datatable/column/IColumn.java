@@ -18,11 +18,13 @@ package com.googlecode.wicket.jquery.ui.kendo.datatable.column;
 
 import org.apache.wicket.util.io.IClusterable;
 
+import com.googlecode.wicket.jquery.ui.kendo.datatable.DataTable;
+
 /**
- * TODO javadoc
- * @author Sebastien Briquet - sebfz1
+ * Specifies the column definition of a {@link DataTable}
  *
- * @param <T>
+ * @param <T> the type of the model object
+ * @author Sebastien Briquet - sebfz1
  */
 public interface IColumn<T> extends IClusterable
 {

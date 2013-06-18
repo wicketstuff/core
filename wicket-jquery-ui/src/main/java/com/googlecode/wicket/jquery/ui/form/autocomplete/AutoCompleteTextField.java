@@ -38,9 +38,8 @@ import com.googlecode.wicket.jquery.core.template.JQueryTemplateBehavior;
 /**
  * Provides a jQuery auto-complete widget
  *
- * @author Sebastien Briquet - sebfz1
- *
  * @param <T> the type of the model object
+ * @author Sebastien Briquet - sebfz1
  */
 public abstract class AutoCompleteTextField<T extends Serializable> extends TextField<T> implements IJQueryWidget, IAutoCompleteListener
 {

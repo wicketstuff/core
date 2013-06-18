@@ -20,11 +20,10 @@ import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 
-import com.googlecode.wicket.jquery.core.IJQueryWidget;
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
+import com.googlecode.wicket.jquery.core.JQueryContainer;
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.kendo.KendoAbstractBehavior;
 import com.googlecode.wicket.jquery.ui.kendo.datatable.column.IColumn;
@@ -35,8 +34,8 @@ import com.googlecode.wicket.jquery.ui.kendo.datatable.column.IColumn;
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  */
-//TODO remove 6.8.2-SNAPSHOT in description
-public class DataTable<T> extends WebMarkupContainer implements IJQueryWidget
+//XXX: remove 6.8.2-SNAPSHOT in description
+public class DataTable<T> extends JQueryContainer
 {
 	private static final long serialVersionUID = 1L;
 	private static final String METHOD = "kendoGrid";
@@ -52,7 +51,7 @@ public class DataTable<T> extends WebMarkupContainer implements IJQueryWidget
 	/**
 	 * Constructor
 	 * @param id the markup id
-	 * @param columns
+	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
 	 * @param rows the number of rows per page to be displayed
 	 */
@@ -64,7 +63,7 @@ public class DataTable<T> extends WebMarkupContainer implements IJQueryWidget
 	/**
 	 * Main constructor
 	 * @param id the markup id
-	 * @param columns
+	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
 	 * @param rows the number of rows per page to be displayed
 	 * @param options the {@link Options}
@@ -87,7 +86,6 @@ public class DataTable<T> extends WebMarkupContainer implements IJQueryWidget
 		super.onInitialize();
 
 		this.add(this.sourceBehavior = this.newDataTableSourceBehavior(this.columns, this.provider, this.rows));
-		this.add(JQueryWidget.newWidgetBehavior(this)); //cannot be in ctor as the markupId may be set manually afterward
 	}
 
 	/**
@@ -162,6 +160,7 @@ public class DataTable<T> extends WebMarkupContainer implements IJQueryWidget
 						builder.append(", ");
 						builder.append(Options.QUOTE).append("width").append(Options.QUOTE).append(": ").append(column.getWidth());
 					}
+
 //					builder.append(", ");
 //					builder.append(Options.QUOTE).append("format").append(Options.QUOTE).append(": ").append(Options.QUOTE).append(column.getFormat()).append(Options.QUOTE);
 
@@ -178,9 +177,9 @@ public class DataTable<T> extends WebMarkupContainer implements IJQueryWidget
 
 	/**
 	 * Gets a new {@link AutoCompleteSourceBehavior}
-	 * @param columns TODO javadoc
-	 * @param provider
-	 * @param rows
+	 * @param columns the list of {@link IColumn}
+	 * @param provider the {@link IDataProvider}
+	 * @param rows the number of rows per page to be displayed
 	 * @return the {@link AutoCompleteSourceBehavior}
 	 */
 	protected AbstractAjaxBehavior newDataTableSourceBehavior(final List<? extends IColumn<T>> columns, final IDataProvider<T> provider, final long rows)

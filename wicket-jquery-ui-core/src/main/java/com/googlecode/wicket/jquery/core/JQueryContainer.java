@@ -20,7 +20,8 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
 
 /**
- * Base class for a JQuery Container, like an Accordion
+ * Base class for a JQuery {@link WebMarkupContainer}
+ *
  * @author Sebastien Briquet - sebfz1
  *
  */
@@ -31,7 +32,7 @@ public abstract class JQueryContainer extends WebMarkupContainer implements IJQu
 	/**
 	 * keep a reference of the behavior, in case of special needs, ie: ProgressBar#respond()
 	 */
-	protected JQueryBehavior widgetBehavior = null; //TODO: to be removed?
+	protected JQueryBehavior widgetBehavior = null;
 
 	/**
 	 * Constructor.
@@ -59,6 +60,6 @@ public abstract class JQueryContainer extends WebMarkupContainer implements IJQu
 	{
 		super.onInitialize();
 
-		this.add(this.widgetBehavior = JQueryWidget.newWidgetBehavior(this));
+		this.add(this.widgetBehavior = JQueryWidget.newWidgetBehavior(this));  //cannot be in ctor as the markupId may be set manually afterward
 	}
 }

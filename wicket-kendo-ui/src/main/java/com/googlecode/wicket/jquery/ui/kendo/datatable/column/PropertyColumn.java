@@ -20,12 +20,13 @@ import java.io.Serializable;
 
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
+import com.googlecode.wicket.jquery.ui.kendo.datatable.DataTable;
 
 /**
- * TODO javadoc
- * @author Sebastien Briquet - sebfz1
+ * Provides a property column for a {@link DataTable}
  *
- * @param <T>
+ *  @param <T> the type of the model object
+ *  @author Sebastien Briquet - sebfz1
  */
 public class PropertyColumn<T extends Serializable> implements IColumn<T>
 {
