@@ -20,7 +20,7 @@ import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 /**
- * Provides an extension to {@link IJavaScriptLibrarySettings}, which allows to specifies the JQuery UI backing library resource reference.
+ * Provides the jQuery UI backing library resource references.
  *
  * @author Sebastien Briquet - sebfz1
  *

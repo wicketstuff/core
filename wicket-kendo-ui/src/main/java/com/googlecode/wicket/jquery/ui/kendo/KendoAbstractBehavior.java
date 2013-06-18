@@ -21,8 +21,8 @@ import org.apache.wicket.settings.IJavaScriptLibrarySettings;
 
 import com.googlecode.wicket.jquery.core.JQueryBehavior;
 import com.googlecode.wicket.jquery.core.Options;
-import com.googlecode.wicket.jquery.ui.kendo.resource.KendoUIJavaScriptResourceReference;
 import com.googlecode.wicket.jquery.ui.kendo.settings.IKendoUILibrarySettings;
+import com.googlecode.wicket.jquery.ui.kendo.settings.KendoUILibrarySettings;
 
 /**
  * Provides the base class for Kendo UI behavior implementations
@@ -34,9 +34,9 @@ public class KendoAbstractBehavior extends JQueryBehavior
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Gets the {@link ICalendarLibrarySettings}
+	 * Gets the {@link IKendoUILibrarySettings}
 	 *
-	 * @return null if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link ICalendarLibrarySettings}
+	 * @return null if Application's {@link IJavaScriptLibrarySettings} is not an instance of {@link IKendoUILibrarySettings}
 	 */
 	private static IKendoUILibrarySettings getLibrarySettings()
 	{
@@ -45,7 +45,7 @@ public class KendoAbstractBehavior extends JQueryBehavior
 			return (IKendoUILibrarySettings) Application.get().getJavaScriptLibrarySettings();
 		}
 
-		return null;
+		return KendoUILibrarySettings.get();
 	}
 
 
@@ -80,25 +80,21 @@ public class KendoAbstractBehavior extends JQueryBehavior
 		IKendoUILibrarySettings settings = getLibrarySettings();
 
 		// kendo.common.min.css //
-		if (settings != null && settings.getKendoUICommonStyleSheetReference() != null)
+		if (settings.getKendoUICommonStyleSheetReference() != null)
 		{
 			this.add(settings.getKendoUICommonStyleSheetReference());
 		}
 
 		// kendo.<theme>.min.css //
-		if (settings != null && settings.getKendoUIThemeStyleSheetReference() != null)
+		if (settings.getKendoUIThemeStyleSheetReference() != null)
 		{
 			this.add(settings.getKendoUIThemeStyleSheetReference());
 		}
 
 		// kendo.web.min.js //
-		if (settings != null && settings.getKendoUIJavaScriptReference() != null)
+		if (settings.getKendoUIJavaScriptReference() != null)
 		{
 			this.add(settings.getKendoUIJavaScriptReference());
-		}
-		else
-		{
-			this.add(KendoUIJavaScriptResourceReference.get());
 		}
 	}
 }

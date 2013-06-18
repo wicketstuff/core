@@ -52,16 +52,15 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	 * Gets the {@link IJQueryLibrarySettings}
 	 * @return the {@link IJQueryLibrarySettings}
 	 */
-	private static IJQueryLibrarySettings getJavaScriptLibrarySettings()
+	public static IJQueryLibrarySettings getJQueryLibrarySettings()
 	{
 		if (Application.exists() && (Application.get().getJavaScriptLibrarySettings() instanceof IJQueryLibrarySettings))
 		{
 			return (IJQueryLibrarySettings) Application.get().getJavaScriptLibrarySettings();
 		}
 
-		return new JQueryLibrarySettings();
+		return JQueryLibrarySettings.get();
 	}
-
 
 
 	/**
@@ -99,7 +98,7 @@ public abstract class JQueryAbstractBehavior extends Behavior
 	public void renderHead(Component component, IHeaderResponse response)
 	{
 		// Gets the library settings //
-		IJQueryLibrarySettings settings = getJavaScriptLibrarySettings();
+		IJQueryLibrarySettings settings = getJQueryLibrarySettings();
 
 		// Adds jQuery UI javascript resource reference //
 		if (settings.getJQueryUIReference() != null)

@@ -31,13 +31,11 @@ import com.googlecode.wicket.jquery.core.resource.JQueryUIResourceReference;
  *     {
  *         super.init();
  *
- *         IJQueryLibrarySettings librarySettings = new JQueryLibrarySettings();
- *         librarySettings.setJQueryUIReference(new JQueryPluginResourceReference(MyApplication.class, "jquery-ui-x.x.x.min.js"));
+ *         IJQueryLibrarySettings settings = new JQueryLibrarySettings();
+ *         settings.setJQueryReference(new PackageResourceReference(SampleApplication.class, "jquery-1.9.1.js"));	// jQuery
+ *         settings.setJQueryGlobalizeReference(JQueryGlobalizeResourceReference.get());							// jQuery Globalize
  *
- *         //to enable globalization:
- *         librarySettings.setJQueryGlobalizeReference(JQueryGlobalizeResourceReference.get());
- *
- *         this.setJavaScriptLibrarySettings(librarySettings);
+ *         this.setJavaScriptLibrarySettings(settings);
  *     }
  * }
  * <pre></code>
@@ -49,11 +47,35 @@ import com.googlecode.wicket.jquery.core.resource.JQueryUIResourceReference;
  */
 public class JQueryLibrarySettings extends JavaScriptLibrarySettings implements IJQueryLibrarySettings
 {
+	private static JQueryLibrarySettings instance = null;
+
 	private ResourceReference jQueryUIReference = JQueryUIResourceReference.get();
 	private ResourceReference jQueryGlobalizeReference = null; //null by default, meaning the user has to set it explicitly
 
-	// jQuery UI //
+	/**
+	 * INTERNAL USE<br/>
+	 * Gets the {@link JQueryLibrarySettings} instance
+	 * @return the {@link JQueryLibrarySettings} instance
+	 */
+	public static synchronized JQueryLibrarySettings get()
+	{
+		if (JQueryLibrarySettings.instance == null)
+		{
+			JQueryLibrarySettings.instance = new JQueryLibrarySettings();
+		}
 
+		return JQueryLibrarySettings.instance;
+	}
+
+
+	/**
+	 * Constructor
+	 */
+	public JQueryLibrarySettings()
+	{
+	}
+
+	// jQuery UI //
 	@Override
 	public ResourceReference getJQueryUIReference()
 	{
@@ -67,7 +89,6 @@ public class JQueryLibrarySettings extends JavaScriptLibrarySettings implements 
 	}
 
 	// jQuery Globalize //
-
 	@Override
 	public ResourceReference getJQueryGlobalizeReference()
 	{
@@ -79,5 +100,4 @@ public class JQueryLibrarySettings extends JavaScriptLibrarySettings implements 
 	{
 		this.jQueryGlobalizeReference = reference;
 	}
-
 }
