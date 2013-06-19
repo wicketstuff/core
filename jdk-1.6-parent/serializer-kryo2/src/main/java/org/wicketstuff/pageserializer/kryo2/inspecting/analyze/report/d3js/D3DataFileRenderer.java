@@ -1,10 +1,16 @@
 package org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.d3js;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.wicket.util.io.Streams;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.IReportRenderer;
 
 public class D3DataFileRenderer implements IReportRenderer {
 
+	static final String TEMPLATE=readTemplateFromResource(D3DataFileRenderer.class,"d3js-partition-template.html"); 
+	
 	@Override
 	public String render(ISerializedObjectTree tree) {
 		JSonBuilder sb = new JSonBuilder(new StringBuilder());
@@ -14,9 +20,9 @@ public class D3DataFileRenderer implements IReportRenderer {
 		sb.openArray("children");
 		render(sb, tree);
 		sb.closeArray();
-		sb.end();
+		sb.end(true);
 
-		return sb.toString();
+		return TEMPLATE.replace("${DATA}", sb.toString());
 	}
 
 	private void render(JSonBuilder sb, ISerializedObjectTree tree) {
@@ -65,8 +71,16 @@ public class D3DataFileRenderer implements IReportRenderer {
 		}
 
 		JSonBuilder end() {
+			return end(false);
+		}
+		
+		JSonBuilder end(boolean lastOne) {
 			indent--;
-			indent().raw("},\n");
+			if (lastOne) {
+				indent().raw("}\n"); 
+			} else {
+				indent().raw("},\n");
+			}
 			return this;
 		}
 
@@ -105,4 +119,20 @@ public class D3DataFileRenderer implements IReportRenderer {
 			return _sb.toString();
 		}
 	}
+	
+	private static String readTemplateFromResource(Class<?> clazz, String resourceName) {
+		InputStream resourceAsStream = clazz.getResourceAsStream(resourceName);
+		try {
+			return Streams.readString(resourceAsStream, "UTF-8");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} finally {
+			try {
+				resourceAsStream.close();
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
+
 }
