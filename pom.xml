@@ -200,16 +200,6 @@
 		</profile>
 	</profiles>
 
-	<repositories>
-
-        <repository>
-            <id>Wicket670</id>
-            <url>https://repository.apache.org/content/repositories/orgapachewicket-014/</url>
-        </repository>
-
-	</repositories>
-
-
 	<issueManagement>
 		<system>github</system>
 		<url>https://github.com/wicketstuff/core/issues</url>

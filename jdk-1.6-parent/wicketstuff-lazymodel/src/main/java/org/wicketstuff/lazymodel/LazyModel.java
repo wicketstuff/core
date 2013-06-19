@@ -121,7 +121,11 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 	 */
 	@Override
 	public Class<T> getObjectClass() {
-		return (Class<T>) Generics.getClass(getObjectType());
+		Type type = getObjectType();
+		if (type == null) {
+			return null;
+		}
+		return (Class<T>) Generics.getClass(type);
 	}
 
 	/**
@@ -135,20 +139,21 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		checkBound();
 
 		Type type = getTargetType();
+		if (type != null) {
+			StackIterator iterator = new StackIterator();
+			while (iterator.hasNext()) {
+				iterator.next(Generics.getClass(type));
 
-		StackIterator iterator = new StackIterator();
-		while (iterator.hasNext()) {
-			iterator.next(Generics.getClass(type));
-
-			Type previousType = type;
-			type = iterator.getType();
-			if (type instanceof TypeVariable) {
-				if (previousType instanceof ParameterizedType) {
-					type = Generics.variableType(
-							(ParameterizedType) previousType,
-							(TypeVariable<?>) type);
-				} else {
-					type = Object.class;
+				Type previousType = type;
+				type = iterator.getType();
+				if (type instanceof TypeVariable) {
+					if (previousType instanceof ParameterizedType) {
+						type = Generics.variableType(
+								(ParameterizedType) previousType,
+								(TypeVariable<?>) type);
+					} else {
+						type = Object.class;
+					}
 				}
 			}
 		}
@@ -289,6 +294,9 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		StringBuilder string = new StringBuilder();
 
 		Type type = getTargetType();
+		if (type == null) {
+			throw new WicketRuntimeException("cannot detect target type");
+		}
 
 		StackIterator iterator = new StackIterator();
 		while (iterator.hasNext()) {
@@ -314,9 +322,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		if (target instanceof IModel) {
 			if (target instanceof IObjectTypeAwareModel) {
 				type = ((IObjectTypeAwareModel<?>) target).getObjectType();
-			}
-
-			if (type == null && target instanceof IObjectClassAwareModel) {
+			} else if (target instanceof IObjectClassAwareModel) {
 				type = ((IObjectClassAwareModel<?>) target).getObjectClass();
 			}
 
@@ -333,12 +339,10 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			}
 
 			if (type == null) {
-				Object object = ((IModel) target).getObject();
-				if (object == null) {
-					throw new WicketRuntimeException(
-							"cannot detect target type");
+				Object object = ((IModel<?>) target).getObject();
+				if (object != null) {
+					type = object.getClass();
 				}
-				type = object.getClass();
 			}
 		} else {
 			type = target.getClass();
@@ -527,9 +531,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 
 			if (target instanceof IObjectTypeAwareModel) {
 				type = ((IObjectTypeAwareModel) target).getObjectType();
-			}
-
-			if (type == null && target instanceof IObjectClassAwareModel) {
+			} else if (target instanceof IObjectClassAwareModel) {
 				type = ((IObjectClassAwareModel) target).getObjectClass();
 			}
 
@@ -790,7 +792,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		private static final long serialVersionUID = 1L;
 
 		private transient Type type;
-		
+
 		@Override
 		protected T load() {
 			return LazyModel.this.getObject();
@@ -811,7 +813,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 		@Override
 		public Type getObjectType() {
 			if (type == null) {
-				type = LazyModel.this.getObjectType(); 
+				type = LazyModel.this.getObjectType();
 			}
 			return type;
 		}
@@ -821,7 +823,7 @@ public class LazyModel<T> implements IModel<T>, IObjectClassAwareModel<T>,
 			super.detach();
 
 			type = null;
-			
+
 			LazyModel.this.detach();
 		}
 	}

@@ -3,6 +3,7 @@ package org.wicketstuff.stateless;
 import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
 
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.mapper.parameter.INamedParameters;
@@ -41,9 +42,28 @@ final class StatelessEncoder
         Set<String> setParameters = new HashSet<String>();
 
         int indexedCount = params.getIndexedCount();
-        for (int i = 0; i < indexedCount; i++)
+        if (indexedCount > 0) 
         {
-            mergedUrl.getSegments().add(params.get(i).toString());
+            String jsessionidString = null;
+            List<String> segments = mergedUrl.getSegments();
+            if (segments.size() > 0) 
+            {
+                String lastSegment = segments.get(segments.size() - 1);
+                int jsessionidIndex = lastSegment.indexOf(";jsessionid=");
+                if (jsessionidIndex != -1) 
+                {
+                   segments.set(segments.size() - 1, lastSegment.substring(0, jsessionidIndex));
+                   jsessionidString = lastSegment.substring(jsessionidIndex);
+                }
+            }
+            for (int i = 0; i < indexedCount; i++)
+            {
+                segments.add(params.get(i).toString());
+            }
+            if (jsessionidString != null)
+            {
+                segments.set(segments.size() - 1, segments.get(segments.size() - 1).concat(jsessionidString));
+            }
         }
 
         for (INamedParameters.NamedPair pair : params.getAllNamed())

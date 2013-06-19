@@ -78,4 +78,19 @@ public class StatelessEncoderTest {
         // XXX compares Map content vs. its toString(). Improve the assertion!
         assertEquals(Url.parse("val1/val2?test2=val3&test2=val4"), encoded);
     }
+
+    @Test
+    public void putIndexedParametersBeforeJsessionId()
+    {
+        Url originalUrl = Url.parse("/wicket/page;jsessionid=1255ckl9n31uj1baf4wv9yqv7r?0-1.ILinkListener-link");
+        final PageParameters params = new PageParameters();
+
+        params.set(0, "val1");
+        params.set(1, "val2");
+        params.add("test2", new String[] { "val3", "val4" });
+
+        final Url encoded = StatelessEncoder.mergeParameters(originalUrl, params);
+
+        assertEquals(Url.parse("/wicket/page/val1/val2;jsessionid=1255ckl9n31uj1baf4wv9yqv7r?0-1.ILinkListener-link&test2=val3&test2=val4"), encoded);
+    }
 }

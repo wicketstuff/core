@@ -17,6 +17,7 @@
 package org.wicketstuff.lazymodel;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.wicketstuff.lazymodel.LazyModel.from;
@@ -96,14 +97,14 @@ public class LazyModelTest {
 	@Test
 	public void getTargetNotBoundFails() {
 		LazyModel<String> model = model(from(String.class));
-	
+
 		try {
 			model.getObject();
-	
+
 			fail();
 		} catch (Exception ex) {
 		}
-	
+
 	}
 
 	@Test
@@ -262,7 +263,7 @@ public class LazyModelTest {
 
 		assertEquals(Object.class, model.getObjectClass());
 		assertEquals("rs.get(i)", model.getPath());
-		
+
 		assertEquals(b.cs.get(0), model.getObject());
 	}
 
@@ -335,8 +336,7 @@ public class LazyModelTest {
 
 		a.b.strings.put("key", "value");
 
-		LazyModel<String> model = model(from(a).getB().getStrings()
-				.get("key"));
+		LazyModel<String> model = model(from(a).getB().getStrings().get("key"));
 
 		assertEquals(String.class, model.getObjectClass());
 		assertEquals("b.strings.get(O)", model.getPath());
@@ -350,8 +350,7 @@ public class LazyModelTest {
 
 		a.b = new B();
 
-		LazyModel<String> model = model(from(a).getB().getStrings()
-				.get("key"));
+		LazyModel<String> model = model(from(a).getB().getStrings().get("key"));
 
 		assertEquals(String.class, model.getObjectClass());
 		assertEquals("b.strings.get(O)", model.getPath());
@@ -610,7 +609,7 @@ public class LazyModelTest {
 
 		try {
 			model(from(target).get(0).getString());
-			
+
 			fail();
 		} catch (ClassCastException expected) {
 		}
@@ -720,14 +719,15 @@ public class LazyModelTest {
 		final A a = new A();
 		a.b = new B();
 
-		LazyModel<B> model = model(from(A.class).getB()).bind(new AbstractReadOnlyModel<A>() {
-			@Override
-			public A getObject() {
-				return a;
-			}
-		});
+		LazyModel<B> model = model(from(A.class).getB()).bind(
+				new AbstractReadOnlyModel<A>() {
+					@Override
+					public A getObject() {
+						return a;
+					}
+				});
 
-		assertEquals(B.class, model.getObjectClass());	
+		assertEquals(B.class, model.getObjectClass());
 		assertEquals("b", model.getPath());
 		assertEquals(a.b, model.getObject());
 	}
@@ -746,15 +746,11 @@ public class LazyModelTest {
 
 	@Test
 	public void bindToTypeErasedModelWithNull() {
-		LazyModel<B> model = model(from(A.class).getB()).bind(new Model<A>(null));
+		LazyModel<B> model = model(from(A.class).getB()).bind(
+				new Model<A>(null));
 
-		try {
-			assertEquals(B.class, model.getObjectClass());
-			
-			fail();
-		} catch (Exception ex) {
-			assertEquals("cannot detect target type", ex.getMessage());
-		}
+		assertNull(model.getObjectType());
+		assertNull(model.getObjectClass());
 	}
 
 	@Test
@@ -773,7 +769,7 @@ public class LazyModelTest {
 	public void getPath() {
 		assertEquals("b.cs.size()", path(from(A.class).getB().getCs().size()));
 	}
-	
+
 	public static class A implements Serializable {
 
 		B b;
@@ -868,7 +864,7 @@ public class LazyModelTest {
 		public List<C> getTs() {
 			return cs;
 		}
-		
+
 		@SuppressWarnings("rawtypes")
 		public List getRs() {
 			return cs;
