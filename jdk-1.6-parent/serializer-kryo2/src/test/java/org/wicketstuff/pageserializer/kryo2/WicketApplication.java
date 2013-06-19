@@ -32,9 +32,7 @@ import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.IObjectLabelizer;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTreeProcessor;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.TreeProcessors;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.IReportOutput;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.Level;
-import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.LoggerReportOutput;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.RenderTreeProcessor;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SimilarNodeTreeTransformator;
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.SortedTreeSizeReport;
@@ -84,7 +82,7 @@ public class WicketApplication extends WebApplication
 		
 		ISerializedObjectTreeProcessor treeProcessor = TreeProcessors.listOf(new TypeSizeReport(reportOutput.with(Keys.withNameAndFileExtension("TypeSizeReport", "txt"))),
 				new SortedTreeSizeReport(reportOutput.with(Keys.withNameAndFileExtension("SortedTreeSizeReport", "txt"))), 
-				new RenderTreeProcessor(reportOutput.with(Keys.withNameAndFileExtension("d3js", "js")),new D3DataFileRenderer()), 
+				new RenderTreeProcessor(reportOutput.with(Keys.withNameAndFileExtension("d3js-chart", "html")),new D3DataFileRenderer()), 
 				new SimilarNodeTreeTransformator(new SortedTreeSizeReport(reportOutput.with(Keys.withNameAndFileExtension("StrippedSortedTreeSizeReport", "txt")))));
 		ITreeFilter filter = new ITreeFilter()
 		{
