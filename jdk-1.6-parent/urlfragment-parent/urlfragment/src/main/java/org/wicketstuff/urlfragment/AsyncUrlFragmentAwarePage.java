@@ -20,7 +20,9 @@ import java.util.Map;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.IRequestParameters;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * This is a {@link WebPage} which will receive the URL query and fragment parameters asynchronously
@@ -46,6 +48,21 @@ public abstract class AsyncUrlFragmentAwarePage extends WebPage implements IBook
 
 	private transient AjaxRequestTarget target = null;
 	protected UrlParametersReceivingBehavior urlParametersReceivingBehavior;
+
+	public AsyncUrlFragmentAwarePage()
+	{
+		super();
+	}
+
+	public AsyncUrlFragmentAwarePage(IModel<?> model)
+	{
+		super(model);
+	}
+
+	public AsyncUrlFragmentAwarePage(PageParameters parameters)
+	{
+		super(parameters);
+	}
 
 	@Override
 	protected void onInitialize()
