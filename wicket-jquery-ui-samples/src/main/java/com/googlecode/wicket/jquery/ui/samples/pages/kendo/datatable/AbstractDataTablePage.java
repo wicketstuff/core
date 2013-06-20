@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.googlecode.wicket.jquery.ui.samples.pages.kendo.AbstractKendoPage;
 
-
-
 abstract class AbstractDataTablePage extends AbstractKendoPage
 {
 	private static final long serialVersionUID = 1L;
@@ -20,7 +18,8 @@ abstract class AbstractDataTablePage extends AbstractKendoPage
 	{
 		return Arrays.asList(
 				new DemoLink(DefaultDataTablePage.class, "DataTable"),
-				new DemoLink(InfiniteDataTablePage.class, "DataTable, with infinite scroll")
+				new DemoLink(InfiniteDataTablePage.class, "DataTable, with infinite scroll"),
+				new DemoLink(CommandsDataTablePage.class, "DataTable, with commands")
 			);
 	}
 }

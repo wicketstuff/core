@@ -16,33 +16,62 @@
  */
 package com.googlecode.wicket.jquery.ui.kendo.datatable.column;
 
-import org.apache.wicket.util.io.IClusterable;
+import java.util.List;
 
+import com.googlecode.wicket.jquery.ui.kendo.datatable.ColumnButton;
 import com.googlecode.wicket.jquery.ui.kendo.datatable.DataTable;
 
 /**
- * Specifies the column definition of a {@link DataTable}
+ * Provides a commands column for a {@link DataTable}
  *
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-public interface IColumn<T> extends IClusterable
+public abstract class CommandsColumn<T> extends AbstractColumn<T>
 {
-	/**
-	 * Gets the text of the column header
-	 * @return the column title
-	 */
-	String getTitle();
+	private static final long serialVersionUID = 1L;
+
+	private List<ColumnButton> buttons = null;
 
 	/**
-	 * Get the field in the data set that this column should be bound to.
-	 * @return the field name
+	 * Constructor
+	 * @param title the text of the column header
 	 */
-	String getField();
+	public CommandsColumn(String title)
+	{
+		super(title);
+	}
 
 	/**
-	 * Gets the desired width of the column.
-	 * @return the column's width
+	 * Constructor
+	 * @param title the text of the column header
+	 * @param width the desired width of the column
 	 */
-	int getWidth();
+	public CommandsColumn(String title, int width)
+	{
+		super(title, width);
+	}
+
+
+	/**
+	 * Gets a new {@link List} a {@link ColumnButton}
+	 *
+	 * @return a new {@link List} a {@link ColumnButton}
+	 */
+	protected abstract List<ColumnButton> newButtons();
+
+	/**
+	 * Gets the list of {@link ColumnButton}
+	 *
+	 * @return the list of {@link ColumnButton}
+	 */
+	public synchronized final List<ColumnButton> getButtons()
+	{
+		if (this.buttons == null)
+		{
+			this.buttons = this.newButtons();
+		}
+
+		return this.buttons;
+	}
 }

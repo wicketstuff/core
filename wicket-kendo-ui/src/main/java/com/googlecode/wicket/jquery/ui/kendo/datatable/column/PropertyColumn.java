@@ -16,8 +16,6 @@
  */
 package com.googlecode.wicket.jquery.ui.kendo.datatable.column;
 
-import java.io.Serializable;
-
 import com.googlecode.wicket.jquery.core.renderer.ITextRenderer;
 import com.googlecode.wicket.jquery.core.renderer.TextRenderer;
 import com.googlecode.wicket.jquery.ui.kendo.datatable.DataTable;
@@ -25,31 +23,26 @@ import com.googlecode.wicket.jquery.ui.kendo.datatable.DataTable;
 /**
  * Provides a property column for a {@link DataTable}
  *
- *  @param <T> the type of the model object
- *  @author Sebastien Briquet - sebfz1
+ * @param <T> the type of the model object
+ * @author Sebastien Briquet - sebfz1
  */
-public class PropertyColumn<T extends Serializable> implements IColumn<T>
+public class PropertyColumn<T> extends AbstractColumn<T>
 {
 	private static final long serialVersionUID = 1L;
 
-	/** Default width. */
-	private static final int WIDTH = -1;
-
-	private final String title;
-	private final String property;
 	private final ITextRenderer<T> renderer;
 
-	private Integer width;
-
 	/**
+	 * Constructor
 	 * @param title the text of the column header
 	 */
 	public PropertyColumn(String title)
 	{
-		this(title, title, WIDTH);
+		this(title, title, AbstractColumn.WIDTH);
 	}
 
 	/**
+	 * Constructor
 	 * @param title the text of the column header
 	 * @param width the desired width of the column
 	 */
@@ -59,48 +52,38 @@ public class PropertyColumn<T extends Serializable> implements IColumn<T>
 	}
 
 	/**
+	 * Constructor
 	 * @param title the text of the column header
 	 * @param property the object property name
 	 */
 	public PropertyColumn(String title, String property)
 	{
-		this(title, property, WIDTH);
+		this(title, property, AbstractColumn.WIDTH);
 	}
 
 	/**
+	 * Constructor
 	 * @param title the text of the column header
 	 * @param property the object property name
 	 * @param width the desired width of the column
 	 */
 	public PropertyColumn(String title, String property, int width)
 	{
-		this.title = title;
-		this.width = width;
-		this.property = property;
+		super(title, property, width);
+
 		this.renderer = new TextRenderer<T>(property);
 	}
 
-	@Override
-	public final String getTitle()
-	{
-		return this.title;
-	}
-
-	@Override
-	public final String getField()
-	{
-		return this.property;
-	}
-
-	@Override
+	/**
+	 * Gets the value of the supplied object.<br/>
+	 * Implementation may call {@link #getField()}
+	 *
+	 * @param object the model object
+	 * @return the value of the object
+	 */
 	public final String getValue(T object)
 	{
 		return this.renderer.getText(object);
 	}
 
-	@Override
-	public int getWidth()
-	{
-		return this.width;
-	}
 }

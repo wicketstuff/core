@@ -33,6 +33,7 @@ import org.apache.wicket.util.convert.ConversionException;
 
 import com.googlecode.wicket.jquery.core.Options;
 import com.googlecode.wicket.jquery.ui.kendo.datatable.column.IColumn;
+import com.googlecode.wicket.jquery.ui.kendo.datatable.column.PropertyColumn;
 
 /**
  * Provides the {@link DataTable} data source {@link AbstractDefaultAjaxBehavior}
@@ -40,7 +41,7 @@ import com.googlecode.wicket.jquery.ui.kendo.datatable.column.IColumn;
  * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-class DataTableSourceBehavior<T> extends AbstractDefaultAjaxBehavior
+class DataSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 {
 	private static final long serialVersionUID = 1L;
 
@@ -53,7 +54,7 @@ class DataTableSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 	 * @param provider the {@link IDataProvider}
 	 * @param rows the number of rows per page to be displayed
 	 */
-	public DataTableSourceBehavior(final List<? extends IColumn<T>> columns, final IDataProvider<T> provider, final long rows)
+	public DataSourceBehavior(final List<? extends IColumn<T>> columns, final IDataProvider<T> provider, final long rows)
 	{
 		this.columns = columns;
 		this.provider = provider;
@@ -104,7 +105,7 @@ class DataTableSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 				{
 					if (index > 0) { builder.append(", "); }
 
-					builder.append(DataTableSourceBehavior.this.newJsonObject(iterator.next()));
+					builder.append(DataSourceBehavior.this.newJsonRow(iterator.next()));
 				}
 
 				builder.append(" ] }");
@@ -121,10 +122,10 @@ class DataTableSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 
 	/**
 	 * Gets a new JSON object from the bean
-	 * @param bean T
+	 * @param bean T object
 	 * @return a new JSON object
 	 */
-	protected String newJsonObject(T bean)
+	protected String newJsonRow(T bean)
 	{
 		JSONStringer stringer = new JSONStringer();
 
@@ -134,7 +135,11 @@ class DataTableSourceBehavior<T> extends AbstractDefaultAjaxBehavior
 
 			for (IColumn<T> column : this.columns)
 			{
-				stringer.key(column.getField()).value(column.getValue(bean));
+				if (column instanceof PropertyColumn<?>)
+				{
+					PropertyColumn<T> pc = (PropertyColumn<T>) column;
+					stringer.key(pc.getField()).value(pc.getValue(bean));
+				}
 			}
 
 			stringer.endObject();

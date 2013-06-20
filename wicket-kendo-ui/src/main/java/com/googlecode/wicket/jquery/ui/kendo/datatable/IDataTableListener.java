@@ -14,35 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.wicket.jquery.ui.kendo.datatable.column;
+package com.googlecode.wicket.jquery.ui.kendo.datatable;
 
-import org.apache.wicket.util.io.IClusterable;
-
-import com.googlecode.wicket.jquery.ui.kendo.datatable.DataTable;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
- * Specifies the column definition of a {@link DataTable}
+ * Event listener shared by the {@link DataTable} widget and the {@link DataTableBehavior}
  *
- * @param <T> the type of the model object
  * @author Sebastien Briquet - sebfz1
  */
-public interface IColumn<T> extends IClusterable
+interface IDataTableListener
 {
 	/**
-	 * Gets the text of the column header
-	 * @return the column title
+	 * Triggered when a button is clicked.
+	 *
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param button the button being clicked
+	 * @param value value retrieved from the row, according to the property supplied to the {@link ColumnButton} that fired the event
 	 */
-	String getTitle();
-
-	/**
-	 * Get the field in the data set that this column should be bound to.
-	 * @return the field name
-	 */
-	String getField();
-
-	/**
-	 * Gets the desired width of the column.
-	 * @return the column's width
-	 */
-	int getWidth();
+	void onClick(AjaxRequestTarget target, ColumnButton button, String value);
 }
