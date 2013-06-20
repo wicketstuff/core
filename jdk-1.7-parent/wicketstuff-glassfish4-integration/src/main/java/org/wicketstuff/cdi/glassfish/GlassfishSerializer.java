@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.viewsystems.wicketstuff.cdi.glassfish;
+package org.wicketstuff.cdi.glassfish;
 
 import com.sun.enterprise.container.common.spi.util.JavaEEObjectInputStream;
 import com.sun.enterprise.container.common.spi.util.JavaEEObjectOutputStream;
