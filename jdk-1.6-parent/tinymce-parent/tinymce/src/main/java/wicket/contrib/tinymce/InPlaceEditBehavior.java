@@ -65,7 +65,23 @@ public class InPlaceEditBehavior extends TinyMceBehavior
 	@Override
 	protected HeaderItem wrapTinyMceSettingsScript(String settingScript,
 			Component component) {
-		OnEventHeaderItem headerItem = new OnEventHeaderItem("'" + componentMarkupId + "'", "click", settingScript);
+		//workaround for issue https://issues.apache.org/jira/browse/WICKET-5248
+		OnEventHeaderItem headerItem = new OnEventHeaderItem("'" + componentMarkupId + "'", "click", settingScript){
+			@Override
+			public CharSequence getJavaScript()
+			{
+				StringBuilder result = new StringBuilder();
+				result.append("Wicket.Event.add(")
+				.append(getTarget())
+				.append(", \"")
+				.append(getEvent())
+				.append("\", function(event) { ")
+				.append(super.getJavaScript())
+				.append(";});");
+				return result;
+			} 
+		};
+		
 		return headerItem;
 	}
 }
