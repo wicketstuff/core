@@ -157,12 +157,12 @@ public class DataTable<T> extends JQueryContainer implements IDataTableListener
 
 	// Factories //
 	/**
-	 * Gets a new {@link AutoCompleteSourceBehavior}
+	 * Gets a new {@link DataSourceBehavior}
 	 *
 	 * @param columns the list of {@link IColumn}
 	 * @param provider the {@link IDataProvider}
 	 * @param rows the number of rows per page to be displayed
-	 * @return the {@link AutoCompleteSourceBehavior}
+	 * @return the {@link AbstractAjaxBehavior}
 	 */
 	protected AbstractAjaxBehavior newDataSourceBehavior(final List<? extends IColumn<T>> columns, final IDataProvider<T> provider, final long rows)
 	{

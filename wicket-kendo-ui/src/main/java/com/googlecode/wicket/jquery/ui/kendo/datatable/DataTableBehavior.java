@@ -266,7 +266,7 @@ public abstract class DataTableBehavior extends KendoAbstractBehavior implements
 	// Events classes //
 
 	/**
-	 * Provides a dialog event that will be transmitted to the dialog {@link AbstractDialog}
+	 * Provides a click event that will be transmitted to the {@link DataTable}
 	 */
 	protected static class ClickEvent extends JQueryEvent
 	{

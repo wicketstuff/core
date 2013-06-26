@@ -232,7 +232,7 @@ public abstract class DialogBehavior extends JQueryBehavior implements IJQueryAj
 
 	// Events classes //
 	/**
-	 * Provides a dialog event that will be transmitted to the dialog {@link AbstractDialog}
+	 * Provides a dialog event that will be transmitted to the {@link AbstractDialog}
 	 */
 	protected static class ClickEvent extends JQueryEvent
 	{
