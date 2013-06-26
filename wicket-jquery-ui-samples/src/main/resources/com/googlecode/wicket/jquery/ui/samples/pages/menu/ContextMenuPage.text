@@ -1,4 +1,4 @@
 <code>ContextMenu</code> is triggered when a <code>Component</code> holding a <code>ContextMenuBehavior</code> fires the 'contextmenu' event.
 
 <h4>Since</h4>
-wicket-jquery-ui-6.8.2-SNAPSHOT
+wicket-jquery-ui-6.9.0

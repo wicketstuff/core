@@ -37,7 +37,6 @@ import com.googlecode.wicket.jquery.ui.plugins.wysiwyg.toolbar.IWysiwygToolbar;
  * @author solomax
  * @author andunslg
  */
-//XXX: remove 6.8.2-SNAPSHOT in description
 public class WysiwygEditor extends FormComponentPanel<String> implements IJQueryWidget
 {
 	private static final long serialVersionUID = 1L;

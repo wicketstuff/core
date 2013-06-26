@@ -35,7 +35,6 @@ import com.googlecode.wicket.jquery.ui.kendo.datatable.column.IColumn;
  * @param <T> the model object type
  * @author Sebastien Briquet - sebfz1
  */
-//XXX: remove 6.8.2-SNAPSHOT in description
 public class DataTable<T> extends JQueryContainer implements IDataTableListener
 {
 	private static final long serialVersionUID = 1L;
@@ -78,14 +77,14 @@ public class DataTable<T> extends JQueryContainer implements IDataTableListener
 		this.rows = rows;
 	}
 
-	
+
 	// Properties //
 	protected List<ColumnButton> getButtons()
 	{
 		return Collections.emptyList();
 	}
 
-	
+
 	// Events //
 	@Override
 	protected void onInitialize()
