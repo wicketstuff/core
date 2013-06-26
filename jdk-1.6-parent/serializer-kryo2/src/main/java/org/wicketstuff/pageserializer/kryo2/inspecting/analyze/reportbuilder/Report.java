@@ -251,11 +251,21 @@ public class Report
 
 		private void fill(StringBuilder sb, int count, char c)
 		{
-			for (int i = 0; i < count; i++)
-			{
-				sb.append(c);
+			if (count<10) {
+				for (int i = 0; i < count; i++)
+				{
+					sb.append(c);
+				}
 			}
-
+			else 
+			{
+				char[] buffer=new char[count];
+				for (int i = 0; i< count; i++)
+				{
+					buffer[i]=c;
+				}
+				sb.append(buffer);
+			}
 		}
 
 
