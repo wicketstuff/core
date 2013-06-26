@@ -53,11 +53,11 @@ public class TypeSizeReport implements ISerializedObjectTreeProcessor
 			.set(Column.Separator, "|")
 			.build());
 	static final Column label = new Column("Type",
-		new AttributeBuilder().set(Column.FillAfter, '.')
-			.set(Column.Separator, "...")
+		new AttributeBuilder().set(Column.FillAfter, ' ')
+			.set(Column.Separator, "|")
 			.build());
 	static final Column size = new Column("bytes", new AttributeBuilder().set(Column.Align.Right)
-		.set(Column.FillBefore, '.')
+		.set(Column.FillBefore, ' ')
 		.set(Column.Separator, "|")
 		.build());
 
@@ -95,7 +95,7 @@ public class TypeSizeReport implements ISerializedObjectTreeProcessor
 					report.newRow().set(label, 0, e.getKey().getName())
 							.set(size, 0, "" + e.getValue().size);
 				}
-				String result = report.export(emptyFirst, label, size)
+				String result = report.export(emptyFirst, size, label)
 						.separateColumnNamesWith('-').tableBorderWith('=')
 						.asString();
 

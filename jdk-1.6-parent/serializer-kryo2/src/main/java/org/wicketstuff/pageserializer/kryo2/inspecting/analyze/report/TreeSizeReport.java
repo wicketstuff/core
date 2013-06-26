@@ -44,27 +44,27 @@ public class TreeSizeReport implements ISerializedObjectTreeProcessor
 			.build());
 	static final Column id = new Column("#",
 		new AttributeBuilder().set(Column.Align.Right).set(Column.FillBefore, ' ')
-			.set(Column.Separator, "|")
+			.set(Column.Separator, "| ")
 			.build());
 	static final Column label = new Column("Type",
-		new AttributeBuilder().set(Column.FillAfter, '.')
-			.set(Column.Separator, "...")
+		new AttributeBuilder().set(Column.FillAfter, ' ')
+			.set(Column.Separator, "|")
 			.set(Column.Indent, "  ")
 			.build());
 	static final Column percent = new Column("", new AttributeBuilder().set(Column.Align.Right)
-		.set(Column.FillBefore, '.')
-		.set(Column.Separator, "%|.")
+		.set(Column.FillBefore, ' ')
+		.set(Column.Separator, "%| ")
 		.build());
 	static final Column sum = new Column("sum", new AttributeBuilder().set(Column.Align.Right)
-		.set(Column.FillBefore, '.')
-		.set(Column.Separator, "|.")
+		.set(Column.FillBefore, ' ')
+		.set(Column.Separator, "| ")
 		.build());
 	static final Column local = new Column("local", new AttributeBuilder().set(Column.Align.Right)
-		.set(Column.FillBefore, '.')
-		.set(Column.Separator, "|.")
+		.set(Column.FillBefore, ' ')
+		.set(Column.Separator, "| ")
 		.build());
 	static final Column child = new Column("child", new AttributeBuilder().set(Column.Align.Right)
-		.set(Column.FillBefore, '.')
+		.set(Column.FillBefore, ' ')
 		.set(Column.Separator, "|")
 		.build());
 
@@ -86,8 +86,8 @@ public class TreeSizeReport implements ISerializedObjectTreeProcessor
 				Report report = new Report("TreeSizeReport\n");
 				process(tree, report, 0, tree.size() + tree.childSize());
 				String result = report
-						.export(emptyFirst, id, label, percent, sum, local,
-								child).separateColumnNamesWith('-')
+						.export(emptyFirst, id, percent, sum, local,
+								child, label).separateColumnNamesWith('-')
 						.tableBorderWith('=').asString();
 
 				return result;
