@@ -23,6 +23,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -94,7 +95,18 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 		this.add(this.form);
 
 		this.form.add(new Label("label", this.label));
-		this.form.add(new RequiredTextField<T>("input", this.getModel()));
+		this.form.add(new TextField<T>("input", this.getModel()) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onConfigure()
+			{
+				super.onConfigure();
+
+				this.setRequired(InputDialog.this.isRequired());
+			}
+		});
 
 		FeedbackPanel feedback = new JQueryFeedbackPanel("feedback", this.form.get("input"));
 		this.form.add(feedback);
@@ -124,6 +136,15 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 		this.label = label;
 	}
 
+	/**
+	 * Indicated whether the underlying input is required
+	 * @return true by default
+	 */
+	public boolean isRequired()
+	{
+		return true;
+	}
+
 	@Override
 	public Form<?> getForm()
 	{
@@ -148,6 +169,7 @@ public abstract class InputDialog<T extends Serializable> extends AbstractFormDi
 		return this.findButton(LBL_OK);
 	}
 
+	// Events //
 	@Override
 	protected void onOpen(AjaxRequestTarget target)
 	{

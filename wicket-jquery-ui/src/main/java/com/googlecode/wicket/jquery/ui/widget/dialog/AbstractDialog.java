@@ -261,7 +261,7 @@ public abstract class AbstractDialog<T extends Serializable> extends JQueryPanel
 	}
 
 	/**
-	 * Gets the resizable flag
+	 * Indicated whether the dialog is resizable
 	 * @return false by default
 	 */
 	public boolean isResizable()
