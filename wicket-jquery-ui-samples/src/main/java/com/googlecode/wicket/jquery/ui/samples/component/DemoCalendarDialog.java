@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
@@ -52,12 +53,39 @@ public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendar
 		this.form.add(new RequiredTextField<String>("title"));
 		this.form.add(new RadioChoice<Category>("category", Arrays.asList(Category.values())));
 
-		CheckBox checkAllDay = new CheckBox("allDay");
-		this.form.add(checkAllDay.setOutputMarkupId(true));
+		// TimePickers //
+		final DateTimePicker startDateTimePicker = new DateTimePicker("start");
+		final DateTimePicker endDateTimePicker = new DateTimePicker("end");
 
+		this.form.add(startDateTimePicker.setRequired(true));
+		this.form.add(endDateTimePicker);
+
+		// All-day checkbox //
+		CheckBox checkAllDay = new AjaxCheckBox("allDay") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onConfigure()
+			{
+				super.onConfigure();
+
+				Boolean allday = this.getModelObject();
+				startDateTimePicker.setTimePickerEnabled(!allday);
+				endDateTimePicker.setTimePickerEnabled(!allday);
+			}
+
+			@Override
+			protected void onUpdate(AjaxRequestTarget target)
+			{
+				Boolean allday = this.getModelObject();
+				startDateTimePicker.setTimePickerEnabled(target, !allday);
+				endDateTimePicker.setTimePickerEnabled(target, !allday);
+			}
+		};
+
+		this.form.add(checkAllDay.setOutputMarkupId(true));
 		this.form.add(new Label("label", "All day?").add(AttributeModifier.append("for", checkAllDay.getMarkupId())));
-		this.form.add(new DateTimePicker("start").setRequired(true));
-		this.form.add(new DateTimePicker("end"));
 
 		// FeedbackPanel //
 		this.feedback = new JQueryFeedbackPanel("feedback");

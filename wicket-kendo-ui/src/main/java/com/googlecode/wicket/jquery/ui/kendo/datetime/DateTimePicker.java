@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.model.IModel;
@@ -94,17 +95,19 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 		this.timePattern = timePattern;
 	}
 
+
 	// Methods //
 	@Override
 	protected void convertInput()
 	{
 		final IConverter<Date> converter = this.getConverter(Date.class);
+
 		String dateInput = this.datePicker.getInput();
 		String timeInput = this.timePicker.getInput();
 
 		try
 		{
-			Date date = converter.convertToObject(String.format("%s %s", dateInput, timeInput), this.getLocale());
+			Date date = converter.convertToObject(this.formatInput(dateInput, timeInput), this.getLocale());
 			this.setConvertedInput(date);
 		}
 		catch (ConversionException e)
@@ -118,6 +121,26 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 		}
 	}
 
+	/**
+	 * Gets a formated value of input(s)<br/>
+	 * This method is designed to provide the 'value' argument of {@link IConverter#convertToObject(String, Locale)}
+	 *
+	 * @param dateInput the date input
+	 * @param timeInput the time input
+	 * @return a formated value
+	 */
+	private String formatInput(String dateInput, String timeInput)
+	{
+		if (!this.isTimePickerEnabled())
+		{
+			return dateInput;
+		}
+
+		return String.format("%s %s", dateInput, timeInput);
+	}
+
+
+	// Properties //
 	@Override
 	@SuppressWarnings("unchecked")
 	public <C> IConverter<C> getConverter(Class<C> type)
@@ -135,6 +158,106 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 		return super.getConverter(type);
 	}
 
+	/**
+	 * Gets the date pattern in use
+	 *
+	 * @return the pattern
+	 */
+	public final String getDatePattern()
+	{
+		return this.datePicker.getTextFormat();
+	}
+
+	/**
+	 * Gets the time pattern in use
+	 *
+	 * @return the pattern
+	 */
+	public final String getTimePattern()
+	{
+		return this.timePicker.getTextFormat();
+	}
+
+	/**
+	 * Indicates whether the time-picker is enabled.<br/>
+	 * This method is marked final because an override will not change the time-picker 'enable' flag
+	 *
+	 * @return the enabled flag
+	 */
+	public final boolean isTimePickerEnabled()
+	{
+		return this.timePicker.isEnabled();
+	}
+
+	/**
+	 * Sets the time-picker enabled flag
+	 * @param enabled the enabled flag
+	 */
+	public final void setTimePickerEnabled(boolean enabled)
+	{
+		this.timePicker.setEnabled(enabled);
+	}
+
+	/**
+	 * Sets the time-picker enabled flag
+	 * @param target the {@link AjaxRequestTarget}
+	 * @param enabled the enabled flag
+	 */
+	public final void setTimePickerEnabled(AjaxRequestTarget target, boolean enabled)
+	{
+		this.setTimePickerEnabled(enabled);
+
+		target.add(this.timePicker);
+	}
+
+	/**
+	 * Returns the date-time pattern.
+	 *
+	 * @see org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider#getTextFormat()
+	 */
+	@Override
+	public final String getTextFormat()
+	{
+		if (!this.isTimePickerEnabled())
+		{
+			return this.getDatePattern();
+		}
+
+		return String.format("%s %s", this.getDatePattern(), this.getTimePattern());
+	}
+
+	/**
+	 * Gets a string representation of the model object, given the date-time pattern in use.
+	 *
+	 * @return the model object as string
+	 */
+	public String getModelObjectAsString()
+	{
+		Date date = this.getModelObject();
+
+		if (date != null)
+		{
+			return new SimpleDateFormat(this.getTextFormat()).format(date);
+		}
+
+		return "";
+	}
+
+
+	// Events //
+	@Override
+	protected void onInitialize()
+	{
+		super.onInitialize();
+
+		this.datePicker = this.newDatePicker("datepicker", this.getModel(), this.datePattern);
+		this.timePicker = this.newTimePicker("timepicker", this.getModel(), this.timePattern);
+
+		this.add(this.datePicker);
+		this.add(this.timePicker);
+	}
+
+	// Factories //
 	/**
 	 * Gets a new date converter.
 	 *
@@ -160,7 +283,6 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 			}
 		};
 	}
-
 
 	/**
 	 * Gets a new {@link DatePicker}
@@ -188,66 +310,5 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	protected TimePicker newTimePicker(String id, IModel<Date> model, String timePattern)
 	{
 		return new TimePicker(id, model, timePattern);
-	}
-
-	/**
-	 * Gets the date pattern in use
-	 *
-	 * @return the pattern
-	 */
-	public final String getDatePattern()
-	{
-		return this.datePicker.getTextFormat();
-	}
-
-	/**
-	 * Gets the time pattern in use
-	 *
-	 * @return the pattern
-	 */
-	public final String getTimePattern()
-	{
-		return this.timePicker.getTextFormat();
-	}
-
-	/**
-	 * Returns the date-time pattern.
-	 *
-	 * @see org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider#getTextFormat()
-	 */
-	@Override
-	public final String getTextFormat()
-	{
-		return String.format("%s %s", this.getDatePattern(), this.getTimePattern());
-	}
-
-	/**
-	 * Gets a string representation of the model object, given the date-time pattern in use.
-	 *
-	 * @return the model object as string
-	 */
-	public String getModelObjectAsString()
-	{
-		Date date = this.getModelObject();
-
-		if (date != null)
-		{
-			return new SimpleDateFormat(this.getTextFormat()).format(date);
-		}
-
-		return "";
-	}
-
-	// Events //
-	@Override
-	protected void onInitialize()
-	{
-		super.onInitialize();
-
-		this.datePicker = this.newDatePicker("datepicker", this.getModel(), this.datePattern);
-		this.timePicker = this.newTimePicker("timepicker", this.getModel(), this.timePattern);
-
-		this.add(this.datePicker);
-		this.add(this.timePicker);
 	}
 }
