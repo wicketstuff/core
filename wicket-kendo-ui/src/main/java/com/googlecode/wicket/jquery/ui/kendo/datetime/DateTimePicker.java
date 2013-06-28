@@ -129,7 +129,7 @@ public class DateTimePicker extends FormComponentPanel<Date> implements ITextFor
 	 * @param timeInput the time input
 	 * @return a formated value
 	 */
-	private String formatInput(String dateInput, String timeInput)
+	protected String formatInput(String dateInput, String timeInput)
 	{
 		if (!this.isTimePickerEnabled())
 		{
