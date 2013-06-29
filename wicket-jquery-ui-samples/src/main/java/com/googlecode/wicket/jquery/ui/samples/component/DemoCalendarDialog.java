@@ -53,7 +53,7 @@ public abstract class DemoCalendarDialog extends AbstractFormDialog<DemoCalendar
 		this.form.add(new RequiredTextField<String>("title"));
 		this.form.add(new RadioChoice<Category>("category", Arrays.asList(Category.values())));
 
-		// TimePickers //
+		// DateTimePickers //
 		final DateTimePicker startDateTimePicker = new DateTimePicker("start");
 		final DateTimePicker endDateTimePicker = new DateTimePicker("end");
 
