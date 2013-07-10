@@ -715,7 +715,7 @@ public class LazyModelTest {
 	}
 
 	@Test
-	public void bindToModel() {
+	public void bindToGenericModel() {
 		final A a = new A();
 		a.b = new B();
 
@@ -745,12 +745,33 @@ public class LazyModelTest {
 	}
 
 	@Test
+	public void fromTypeErasedModelFails() {
+		final A a = new A();
+		
+		try {
+			from(new Model<A>(a));
+			
+			fail();
+		} catch (WicketRuntimeException ex) {
+			assertEquals("cannot detect target type", ex.getMessage());
+		}		
+	}
+
+	@Test
 	public void bindToTypeErasedModelWithNull() {
 		LazyModel<B> model = model(from(A.class).getB()).bind(
 				new Model<A>(null));
 
 		assertNull(model.getObjectType());
 		assertNull(model.getObjectClass());
+		
+		try {
+			model.getPath();
+			
+			fail();
+		} catch (WicketRuntimeException ex) {
+			assertEquals("cannot detect target type", ex.getMessage());
+		}
 	}
 
 	@Test
