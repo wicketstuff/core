@@ -20,18 +20,33 @@
  */
 package org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.io;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import org.junit.Test;
-
 
 public class TimeStampKeyGeneratorTest {
 
 	@Test
 	public void formatedDateShouldContainAllParts() {
-		String key = TimeStampKeyGenerator.format(TimeStampKeyGenerator.DEFAULT_WITH_MILLISECONDS, new Date(123456l*2345678l));
-		assertEquals("1979-03-06--060703-168",key);
+		String key = TimeStampKeyGenerator.format(
+				TimeStampKeyGenerator.DEFAULT_WITH_MILLISECONDS, sampleDate());
+		assertEquals("1979-03-06--060703-168", key);
 	}
+
+	private Date sampleDate() {
+		Calendar calendar = Calendar.getInstance(Locale.GERMAN);
+		calendar.set(Calendar.YEAR, 1979);
+		calendar.set(Calendar.MONTH, 2);
+		calendar.set(Calendar.DAY_OF_MONTH, 6);
+		calendar.set(Calendar.HOUR_OF_DAY, 6);
+		calendar.set(Calendar.MINUTE, 7);
+		calendar.set(Calendar.SECOND, 3);
+		calendar.set(Calendar.MILLISECOND, 168);
+		return calendar.getTime();
+	}
+
 }
