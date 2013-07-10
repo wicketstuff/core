@@ -22,6 +22,7 @@ package org.wicketstuff.pageserializer.kryo2.inspecting.analyze.report.io;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import org.wicketstuff.pageserializer.kryo2.inspecting.analyze.ISerializedObjectTree;
 
@@ -41,7 +42,7 @@ public class TimeStampKeyGenerator implements IReportKeyGenerator {
 	}
 	
 	protected static String format(String pattern, Date currentTime) {
-		return new SimpleDateFormat(pattern).format(currentTime);
+		return new SimpleDateFormat(pattern,Locale.GERMAN).format(currentTime);
 	}
 
 	public static IReportKeyGenerator withMilliseconds() {
